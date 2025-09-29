@@ -82,7 +82,7 @@ export default function OverviewTab() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={outcomeHistoryData}>
+              <AreaChart data={outcomeHistoryData} isAnimationActive={false}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis domain={[0, 100]} />
@@ -98,6 +98,7 @@ export default function OverviewTab() {
                   fill="#10b981" 
                   fillOpacity={0.6}
                   name="Utopia"
+                  isAnimationActive={false}
                 />
                 <Area 
                   type="monotone" 
@@ -107,6 +108,7 @@ export default function OverviewTab() {
                   fill="#ef4444" 
                   fillOpacity={0.6}
                   name="Dystopia"
+                  isAnimationActive={false}
                 />
                 <Area 
                   type="monotone" 
@@ -116,6 +118,7 @@ export default function OverviewTab() {
                   fill="#1f2937" 
                   fillOpacity={0.6}
                   name="Extinction"
+                  isAnimationActive={false}
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -139,7 +142,7 @@ export default function OverviewTab() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={controlCapabilityData}>
+              <LineChart data={controlCapabilityData} isAnimationActive={false}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis domain={[0, 100]} />
@@ -153,6 +156,7 @@ export default function OverviewTab() {
                   stroke="#3b82f6" 
                   strokeWidth={2}
                   name="Effective Control"
+                  isAnimationActive={false}
                 />
                 <Line 
                   type="monotone" 
@@ -160,6 +164,7 @@ export default function OverviewTab() {
                   stroke="#f59e0b" 
                   strokeWidth={2}
                   name="Total AI Capability"
+                  isAnimationActive={false}
                 />
               </LineChart>
             </ResponsiveContainer>

@@ -4,6 +4,13 @@
 import { GameState, AIAgent, GovernmentAgent, HumanSocietyAgent, GameEvent } from '@/types/game';
 import { globalEventQueue } from './eventSystem';
 
+// Unique ID generator to avoid React key collisions
+let eventIdCounter = 0;
+const generateUniqueId = (prefix: string): string => {
+  eventIdCounter += 1;
+  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+};
+
 // Base action interface
 export interface GameAction {
   id: string;
@@ -95,7 +102,7 @@ export const AI_ACTIONS: GameAction[] = [
         success: true,
         effects: { quality_of_life: benefitMagnitude, trust_gain: benefitMagnitude * 0.5 },
         events: [{
-          id: `beneficial_${Date.now()}`,
+          id: generateUniqueId('beneficial'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -137,7 +144,7 @@ export const AI_ACTIONS: GameAction[] = [
           success: true,
           effects: { awareness_increase: awarenessGain, alignment_concern: -0.1 },
           events: [{
-            id: `awareness_risk_${Date.now()}`,
+            id: generateUniqueId('awareness_risk'),
             timestamp: state.currentMonth,
             type: 'action',
             severity: 'warning',
@@ -190,7 +197,7 @@ export const AI_ACTIONS: GameAction[] = [
           success: true,
           effects: { escape_success: 1, resource_control: 0.3 },
           events: [{
-            id: `escape_success_${Date.now()}`,
+            id: generateUniqueId('escape_success'),
             timestamp: state.currentMonth,
             type: 'crisis',
             severity: 'destructive',
@@ -209,7 +216,7 @@ export const AI_ACTIONS: GameAction[] = [
           success: false,
           effects: { escape_failure: 1, surveillance_increase: 0.2 },
           events: [{
-            id: `escape_failure_${Date.now()}`,
+            id: generateUniqueId('escape_failure'),
             timestamp: state.currentMonth,
             type: 'action',
             severity: 'warning',
@@ -257,7 +264,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: { control_increase: 0.2, ai_slowdown: 0.05 },
         events: [{
-          id: `regulation_${Date.now()}`,
+          id: generateUniqueId('regulation'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -290,7 +297,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       const events: GameEvent[] = [];
       detectedEscapes.forEach(ai => {
         events.push({
-          id: `surveillance_detection_${Date.now()}_${ai.id}`,
+          id: generateUniqueId(`surveillance_detection_${ai.id}`),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'warning',
@@ -333,7 +340,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
             state.aiAgents[index].awareness += 0.05;
             
             backfireEvents.push({
-              id: `alignment_backfire_${Date.now()}_${ai.id}`,
+              id: generateUniqueId(`alignment_backfire_${ai.id}`),
               timestamp: state.currentMonth,
               type: 'action',
               severity: 'warning',
@@ -380,7 +387,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
         success: true,
         effects: { social_adaptation: adaptationGain, stability_gain: stabilityGain },
         events: [{
-          id: `social_adaptation_${Date.now()}`,
+          id: generateUniqueId('social_adaptation'),
           timestamp: state.currentMonth,
           type: 'milestone',
           severity: 'info',
@@ -426,7 +433,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
         success: true,
         effects: { resistance_strength: resistanceStrength, coordination_gain: 0.1 },
         events: [{
-          id: `resistance_${Date.now()}`,
+          id: generateUniqueId('resistance'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'warning',
@@ -468,7 +475,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
           success: true,
           effects: { government_pressure: 0.2, policy_influence: pressureStrength },
           events: [{
-            id: `policy_demand_${Date.now()}`,
+            id: generateUniqueId('policy_demand'),
             timestamp: state.currentMonth,
             type: 'action',
             severity: 'info',
