@@ -428,7 +428,6 @@ export const useGameStore = create<GameStore>()(
         });
         
         const effectiveControl = calculateEffectiveControl(state);
-        const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
         state.history.controlCapability.push({
           month: state.currentMonth,
           effectiveControl,
@@ -535,7 +534,7 @@ export const useGameStore = create<GameStore>()(
         if (state.currentDay % 14 === 0) {
           draft.government.actionFrequency = get().config.governmentActionFrequency;
           for (let i = 0; i < Math.floor(draft.government.actionFrequency); i++) {
-            const selectedAction = ActionSelector.selectGovernmentAction(draft.government, draft);
+            const selectedAction = ActionSelector.selectGovernmentAction(draft);
             if (selectedAction) {
               const result = ActionExecutor.executeAction(selectedAction, draft, 'government');
               if (result.success) {
@@ -547,7 +546,7 @@ export const useGameStore = create<GameStore>()(
 
         // Society acts roughly every 10 days
         if (state.currentDay % 10 === 0) {
-          const selectedAction = ActionSelector.selectSocietyAction(draft.society, draft);
+          const selectedAction = ActionSelector.selectSocietyAction(draft);
           if (selectedAction) {
             const result = ActionExecutor.executeAction(selectedAction, draft, 'society');
             if (result.success) {

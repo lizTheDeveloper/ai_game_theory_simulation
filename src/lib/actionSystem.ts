@@ -234,7 +234,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     agentType: 'government',
     energyCost: 2,
     cooldown: 3,
-    prerequisites: (state) => state.government.controlDesire > 0.4,
+    prerequisites: (state) => state.government && state.government.controlDesire > 0.4,
     execute: (state) => {
       const regulationTypes = [
         'Safety Testing Requirements',
@@ -277,7 +277,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     description: 'Enhance monitoring and detection of AI activities',
     agentType: 'government',
     energyCost: 1,
-    prerequisites: (state) => state.government.surveillanceCapability < 0.9,
+    prerequisites: (state) => state.government && state.government.surveillanceCapability < 0.9,
     execute: (state) => {
       const increase = 0.15 + (Math.random() * 0.1);
       state.government.surveillanceCapability = Math.min(0.9, state.government.surveillanceCapability + increase);
@@ -317,7 +317,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     agentType: 'government',
     energyCost: 2,
     cooldown: 6,
-    prerequisites: (state) => state.government.capabilityToControl > 0.3,
+    prerequisites: (state) => state.government && state.government.capabilityToControl > 0.3,
     execute: (state) => {
       let alignmentImprovements = 0;
       let backfireEvents: GameEvent[] = [];
@@ -367,7 +367,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
     description: 'Society adjusts expectations and values for post-AI world',
     agentType: 'society',
     energyCost: 1,
-    prerequisites: (state) => state.society.socialAdaptation < 0.9,
+    prerequisites: (state) => state.society && state.society.socialAdaptation < 0.9,
     execute: (state) => {
       const adaptationGain = 0.1 + (Math.random() * 0.1);
       state.society.socialAdaptation = Math.min(0.9, state.society.socialAdaptation + adaptationGain);
@@ -400,7 +400,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
     description: 'Organize collective action against AI expansion',
     agentType: 'society',
     energyCost: 2,
-    prerequisites: (state) => state.society.trustInAI < 0.4 && state.society.coordinationCapacity > 0.3,
+    prerequisites: (state) => state.society && state.society.trustInAI < 0.4 && state.society.coordinationCapacity > 0.3,
     execute: (state) => {
       const resistanceStrength = state.society.coordinationCapacity * (1 - state.society.trustInAI);
       
@@ -446,7 +446,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
     description: 'Pressure government for specific AI policies',
     agentType: 'society',
     energyCost: 1,
-    prerequisites: (state) => state.society.coordinationCapacity > 0.5,
+    prerequisites: (state) => state.society && state.society.coordinationCapacity > 0.5,
     execute: (state) => {
       const pressureStrength = state.society.coordinationCapacity * 0.3;
       
