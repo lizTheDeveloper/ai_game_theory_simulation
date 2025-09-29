@@ -70,7 +70,8 @@ const MetricCard: React.FC<MetricCardProps> = ({ label, value, max, color, icon 
 
 export default function GameLayout() {
   const { 
-    currentMonth, 
+    currentMonth,
+    currentDay,
     speed, 
     gameStarted,
     globalMetrics,
@@ -81,27 +82,39 @@ export default function GameLayout() {
     startGame,
     pauseGame,
     resetGame,
-    processMonthlyUpdate
+    processMonthlyUpdate,
+    processDailyUpdate,
+    getCurrentDateString,
+    getMonthProgress
   } = useGameStore();
 
-  // Simulation loop
+  // Simulation loop - day-based timing
   useEffect(() => {
     if (speed === 'paused' || !gameStarted) return;
 
     const speedMap = {
-      slow: 2000,
-      normal: 1000, 
-      fast: 500,
-      max: 100
+      slow: 2000,    // 2 seconds per day (slow)
+      normal: 1000,  // 1 second per day (immersive)
+      fast: 500,     // 0.5 seconds per day (fast)
+      max: 100       // 0.1 seconds per day (max speed)
     };
 
     const interval = setInterval(() => {
-      dispatch({ type: 'ADVANCE_MONTH' });
-      processMonthlyUpdate();
+      const currentState = useGameStore.getState();
+      const isLastDayOfMonth = currentState.currentDay >= currentState.daysInCurrentMonth;
+      
+      // Advance the day
+      dispatch({ type: 'ADVANCE_DAY' });
+      processDailyUpdate();
+      
+      // If we just completed a month, run monthly processing
+      if (isLastDayOfMonth) {
+        processMonthlyUpdate();
+      }
     }, speedMap[speed]);
 
     return () => clearInterval(interval);
-  }, [speed, gameStarted, dispatch, processMonthlyUpdate]);
+  }, [speed, gameStarted, dispatch, processDailyUpdate, processMonthlyUpdate]);
 
   const handleSpeedChange = (newSpeed: typeof speed) => {
     dispatch({ type: 'SET_SPEED', payload: newSpeed });
@@ -163,9 +176,17 @@ export default function GameLayout() {
           </Select>
         </div>
 
-        {/* Center: Current Date */}
-        <div className="text-lg font-semibold">
-          {getMonthName()} {getYear()} | Month {currentMonth}
+        {/* Center: Current Date and Month Progress */}
+        <div className="flex flex-col items-center gap-2 min-w-64">
+          <div className="text-lg font-semibold">
+            {getCurrentDateString()}
+          </div>
+          <div className="w-full">
+            <Progress value={getMonthProgress() * 100} className="h-2" />
+            <div className="text-xs text-muted-foreground text-center mt-1">
+              Month Progress: {Math.round(getMonthProgress() * 100)}%
+            </div>
+          </div>
         </div>
 
         {/* Right: Quick Actions */}

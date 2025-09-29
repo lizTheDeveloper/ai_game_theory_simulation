@@ -93,8 +93,11 @@ export interface ConfigurationSettings {
 }
 
 export interface GameState {
-  // Core state
+  // Core state  
   currentMonth: number;
+  currentDay: number; // Day of the month (1-31)
+  currentYear: number; // Year for leap year calculations
+  daysInCurrentMonth: number; // Days in current month (28-31)
   speed: 'paused' | 'slow' | 'normal' | 'fast' | 'max';
   gameStarted: boolean;
   
@@ -122,6 +125,7 @@ export interface GameState {
 
 // Action types for game events
 export type GameAction = 
+  | { type: 'ADVANCE_DAY' }
   | { type: 'ADVANCE_MONTH' }
   | { type: 'SET_SPEED'; payload: GameState['speed'] }
   | { type: 'UPDATE_CONFIG'; payload: Partial<ConfigurationSettings> }

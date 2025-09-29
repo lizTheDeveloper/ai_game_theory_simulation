@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useGameStore } from '@/lib/gameStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -51,6 +52,11 @@ const MetricCard: React.FC<MetricCardProps> = ({ label, value, max, color, icon 
 
 export default function OverviewTab() {
   const { globalMetrics, history, calculateEffectiveControl } = useGameStore();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Prepare chart data
   const outcomeHistoryData = history.outcomeProbs.map(point => ({
@@ -120,6 +126,16 @@ export default function OverviewTab() {
         <Card>
           <CardHeader>
             <CardTitle>Control vs AI Capability</CardTitle>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                <span>Control</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                <span>Capabilities</span>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -248,7 +264,7 @@ export default function OverviewTab() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span>Effective Control:</span>
-                <span>{(calculateEffectiveControl() * 100).toFixed(0)}%</span>
+                <span>{mounted ? (calculateEffectiveControl() * 100).toFixed(0) : '--'}%</span>
               </div>
               <div className="flex justify-between">
                 <span>Quality Score:</span>

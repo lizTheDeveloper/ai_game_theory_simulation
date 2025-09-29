@@ -15,26 +15,10 @@
 - **Real-time Gameplay**: Agents act autonomously creating dynamic narratives ✅
 - **Production Ready**: App configured for port 3333, all core bugs resolved ✅
 
-### 🔧 Critical Fixes - September 29:
-- **Agent State Tracking**: Fixed action counters stuck at 0, now properly track all agent decisions
-- **Immer Integration**: Resolved state management issues with inline action processing
-- **Real-time Updates**: UI now shows live agent activity with accurate metrics
-- **Simulation Integrity**: All agent mutations work correctly with immutable state
-- **Verified Functionality**: Agents make meaningful decisions affecting game outcomes
-
-### 🎯 Dynamic Agent System Features:
-- **Event Queue System**: 6 event types with condition/probability triggers
-- **Agent Action Framework**: 11+ unique actions across all agent types  
-- **Intelligent Decision Making**: Context-aware action selection per agent
-- **Emergent Narrative**: Rich story generation through agent interactions
-- **Complex Feedback Loops**: Actions trigger events affecting future decisions
-
-### 📊 Current Capabilities:
-- **AI Agents**: Self-improvement, beneficial contributions, awareness, escape attempts
-- **Government**: Regulation, surveillance, alignment training with backfire risks
-- **Society**: Adaptation, resistance, policy demands based on coordination
-- **Events**: Breakthroughs, crises, coordination, regulation, competition pressure
-- **Real-time Processing**: 4x/month AI actions, 2x/month society, configurable government
+### 📝 Development Log
+*For detailed development history, see `/devlog/` directory*
+- **September 29**: Agent action tracking system fixed and day progression implemented
+- **Current**: Core simulation stable, ready for Phase 3 enhancements
 
 ### 🔄 Ready for Phase 3:
 **Core simulation is fully functional and stable:**

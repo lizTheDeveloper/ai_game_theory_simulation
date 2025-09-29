@@ -3,6 +3,26 @@ import { immer } from 'zustand/middleware/immer';
 import { GameState, GameAction, AIAgent, GovernmentAgent, HumanSocietyAgent, GlobalMetrics, TechnologyNode, OutcomeMetrics, ConfigurationSettings } from '@/types/game';
 import { globalEventQueue, EventQueue } from './eventSystem';
 import { ActionSelector, ActionExecutor, AI_ACTIONS, GOVERNMENT_ACTIONS, SOCIETY_ACTIONS } from './actionSystem';
+import { format, getDaysInMonth as getDateFnsDaysInMonth, addMonths, startOfMonth, addDays } from 'date-fns';
+
+// Calendar utility functions using date-fns
+const createGameDate = (year: number, month: number, day: number): Date => {
+  return new Date(year, month, day); // month is 0-based in Date constructor
+};
+
+const getDaysInMonth = (month: number, year: number): number => {
+  return getDateFnsDaysInMonth(new Date(year, month, 1));
+};
+
+const formatGameDate = (year: number, month: number, day: number): string => {
+  const date = new Date(year, month, day);
+  return format(date, 'MMM yyyy');
+};
+
+const formatFullGameDate = (year: number, month: number, day: number): string => {
+  const date = new Date(year, month, day);
+  return format(date, 'MMM d, yyyy');
+};
 
 // Initial state factory
 const createInitialAIAgent = (id: string, name: string): AIAgent => ({
@@ -90,10 +110,16 @@ const createInitialTechTree = (): TechnologyNode[] => [
   // More tech nodes will be added
 ];
 
-const createInitialState = (): GameState => ({
-  currentMonth: 0,
-  speed: 'paused',
-  gameStarted: false,
+const createInitialState = (): GameState => {
+  const initialYear = 2025;
+  const initialMonth = 0; // January
+  return {
+    currentMonth: initialMonth,
+    currentDay: 1, // Start on day 1
+    currentYear: initialYear,
+    daysInCurrentMonth: getDaysInMonth(initialMonth, initialYear),
+    speed: 'paused',
+    gameStarted: false,
   
   // Create initial agents
   aiAgents: [
@@ -111,12 +137,13 @@ const createInitialState = (): GameState => ({
   
   config: createInitialConfig(),
   
-  history: {
-    qualityOfLife: [{month: 0, value: 0.6}],
-    outcomeProbs: [{month: 0, utopia: 0.33, dystopia: 0.33, extinction: 0.34}],
-    controlCapability: [{month: 0, effectiveControl: 0.5, totalAICapability: 0.6}],
-  },
-});
+    history: {
+      qualityOfLife: [{month: 0, value: 0.6}],
+      outcomeProbs: [{month: 0, utopia: 0.33, dystopia: 0.33, extinction: 0.34}],
+      controlCapability: [{month: 0, effectiveControl: 0.5, totalAICapability: 0.6}],
+    },
+  };
+};
 
 // Store interface
 interface GameStore extends GameState {
@@ -125,8 +152,12 @@ interface GameStore extends GameState {
   calculateQualityOfLife: () => number;
   calculateEffectiveControl: () => number;
   processMonthlyUpdate: () => void;
+  processDailyUpdate: () => void;
   processAgentActions: () => void;
   processEvents: () => void;
+  getCurrentDateString: () => string;
+  getFullDateString: () => string;
+  getMonthProgress: () => number;
   startGame: () => void;
   pauseGame: () => void;
   resetGame: () => void;
@@ -202,8 +233,37 @@ export const useGameStore = create<GameStore>()(
     dispatch: (action: GameAction) => {
       set((state) => {
         switch (action.type) {
+          case 'ADVANCE_DAY':
+            state.currentDay += 1;
+            
+            // Check if we need to advance to next month
+            if (state.currentDay > state.daysInCurrentMonth) {
+              state.currentDay = 1;
+              state.currentMonth += 1;
+              
+              // Handle year transition
+              if (state.currentMonth >= 12) {
+                state.currentMonth = 0;
+                state.currentYear += 1;
+              }
+              
+              // Update days in the new month
+              state.daysInCurrentMonth = getDaysInMonth(state.currentMonth, state.currentYear);
+            }
+            break;
+            
           case 'ADVANCE_MONTH':
             state.currentMonth += 1;
+            state.currentDay = 1;
+            
+            // Handle year transition
+            if (state.currentMonth >= 12) {
+              state.currentMonth = 0;
+              state.currentYear += 1;
+            }
+            
+            // Update days in the new month
+            state.daysInCurrentMonth = getDaysInMonth(state.currentMonth, state.currentYear);
             break;
             
           case 'SET_SPEED':
@@ -303,7 +363,50 @@ export const useGameStore = create<GameStore>()(
           state.eventLog = state.eventLog.slice(-100);
         }
         
-        // Update core dynamics
+        // Update core dynamics and system balance
+        const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+        const avgAIAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
+        
+        // Update unemployment based on AI capability growth
+        const unemploymentIncrease = Math.max(0, (totalAICapability - 1.0) * 0.15);
+        state.society.unemploymentLevel = Math.min(0.8, 0.1 + unemploymentIncrease);
+        
+        // Update wealth distribution based on economic policies and AI impact
+        const distributionChange = (state.government.legitimacy - 0.5) * 0.02 + (Math.random() - 0.5) * 0.01;
+        state.globalMetrics.wealthDistribution = Math.max(0.1, Math.min(1.0, 
+          state.globalMetrics.wealthDistribution + distributionChange
+        ));
+        
+        // Update social stability based on unemployment, trust, and alignment
+        const stabilityFromTrust = state.society.trustInAI * 0.3;
+        const stabilityFromUnemployment = -state.society.unemploymentLevel * 0.5;
+        const stabilityFromAlignment = avgAIAlignment * 0.2;
+        const targetStability = 0.5 + stabilityFromTrust + stabilityFromUnemployment + stabilityFromAlignment;
+        
+        // Gradual convergence to target stability (prevents monotonic changes)
+        const stabilityDiff = targetStability - state.globalMetrics.socialStability;
+        state.globalMetrics.socialStability += stabilityDiff * 0.15;
+        state.globalMetrics.socialStability = Math.max(0, Math.min(1, state.globalMetrics.socialStability));
+        
+        // Update trust in AI based on beneficial vs harmful actions ratio
+        const totalBeneficialActions = state.aiAgents.reduce((sum, ai) => sum + ai.beneficialActions, 0);
+        const totalHarmfulActions = state.aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0);
+        const recentActionRatio = totalBeneficialActions / Math.max(1, totalBeneficialActions + totalHarmfulActions);
+        
+        // Trust changes based on action ratio and alignment
+        if (recentActionRatio > 0.7 && avgAIAlignment > 0.6) {
+          state.society.trustInAI = Math.min(1, state.society.trustInAI + 0.02);
+        } else if (recentActionRatio < 0.4 || avgAIAlignment < 0.4) {
+          state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.03);
+        }
+        
+        // Update economic transition stage based on AI capability and adaptation
+        if (totalAICapability > 3.0 && state.society.socialAdaptation > 0.7) {
+          state.globalMetrics.economicTransitionStage = Math.min(4, state.globalMetrics.economicTransitionStage + 0.1);
+        } else if (totalAICapability > 2.0 && state.society.socialAdaptation > 0.5) {
+          state.globalMetrics.economicTransitionStage = Math.min(3, state.globalMetrics.economicTransitionStage + 0.05);
+        }
+        
         const newQoL = calculateQualityOfLife(state);
         state.globalMetrics.qualityOfLife = newQoL;
         
@@ -409,6 +512,70 @@ export const useGameStore = create<GameStore>()(
       set((state) => {
         state.speed = 'paused';
       });
+    },
+
+    processDailyUpdate: () => {
+      const state = get();
+      set((draft) => {
+        // Distribute agent actions across days instead of all at once
+        // AI agents act roughly weekly (every 7 days)
+        if (state.currentDay % 7 === 0) {
+          draft.aiAgents.forEach((ai, aiIndex) => {
+            const selectedAction = ActionSelector.selectAIAction(ai, draft);
+            if (selectedAction) {
+              const result = ActionExecutor.executeAction(selectedAction, draft, ai.id);
+              if (result.success) {
+                console.log(`Day ${state.currentDay}: ${ai.name} executed: ${selectedAction.name} - ${result.message}`);
+              }
+            }
+          });
+        }
+
+        // Government acts roughly every 2 weeks (every 14 days)  
+        if (state.currentDay % 14 === 0) {
+          draft.government.actionFrequency = get().config.governmentActionFrequency;
+          for (let i = 0; i < Math.floor(draft.government.actionFrequency); i++) {
+            const selectedAction = ActionSelector.selectGovernmentAction(draft.government, draft);
+            if (selectedAction) {
+              const result = ActionExecutor.executeAction(selectedAction, draft, 'government');
+              if (result.success) {
+                console.log(`Day ${state.currentDay}: Government executed: ${selectedAction.name} - ${result.message}`);
+              }
+            }
+          }
+        }
+
+        // Society acts roughly every 10 days
+        if (state.currentDay % 10 === 0) {
+          const selectedAction = ActionSelector.selectSocietyAction(draft.society, draft);
+          if (selectedAction) {
+            const result = ActionExecutor.executeAction(selectedAction, draft, 'society');
+            if (result.success) {
+              console.log(`Day ${state.currentDay}: Society executed: ${selectedAction.name} - ${result.message}`);
+            }
+          }
+        }
+
+        // Process events only on certain days to spread them out
+        if (state.currentDay % 5 === 0) {
+          get().processEvents();
+        }
+      });
+    },
+
+    getCurrentDateString: () => {
+      const state = get();
+      return `${formatGameDate(state.currentYear, state.currentMonth, state.currentDay)} | Day ${state.currentDay}`;
+    },
+
+    getFullDateString: () => {
+      const state = get();
+      return formatFullGameDate(state.currentYear, state.currentMonth, state.currentDay);
+    },
+
+    getMonthProgress: () => {
+      const state = get();
+      return (state.currentDay - 1) / state.daysInCurrentMonth; // 0-1 progress
     },
 
     resetGame: () => {
