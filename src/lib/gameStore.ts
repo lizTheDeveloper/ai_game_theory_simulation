@@ -247,12 +247,61 @@ export const useGameStore = create<GameStore>()(
     },
 
     processMonthlyUpdate: () => {
+      const store = get();
       set((state) => {
-        // Process agent actions first
-        get().processAgentActions();
+        // Process agent actions first - inline the logic to work within Immer
+        // AI Agents: 4 actions per month (weekly)
+        for (let week = 0; week < 4; week++) {
+          state.aiAgents.forEach((ai, aiIndex) => {
+            const selectedAction = ActionSelector.selectAIAction(ai, state);
+            if (selectedAction) {
+              const result = ActionExecutor.executeAction(selectedAction, state, ai.id);
+              if (result.success) {
+                console.log(`${ai.name} executed: ${selectedAction.name} - ${result.message}`);
+              }
+            }
+          });
+        }
+
+        // Human Society: 2 actions per month (bi-weekly) 
+        for (let biweek = 0; biweek < 2; biweek++) {
+          const selectedAction = ActionSelector.selectSocietyAction(state);
+          if (selectedAction) {
+            const result = ActionExecutor.executeAction(selectedAction, state);
+            if (result.success) {
+              console.log(`Society executed: ${selectedAction.name} - ${result.message}`);
+            }
+          }
+        }
+
+        // Government: Configurable frequency (default 1 per month)
+        const actionsThisMonth = Math.floor(state.config.governmentActionFrequency);
+        const extraActionChance = state.config.governmentActionFrequency - actionsThisMonth;
+        const totalActions = actionsThisMonth + (Math.random() < extraActionChance ? 1 : 0);
+
+        for (let i = 0; i < totalActions; i++) {
+          const selectedAction = ActionSelector.selectGovernmentAction(state);
+          if (selectedAction) {
+            const result = ActionExecutor.executeAction(selectedAction, state);
+            if (result.success) {
+              console.log(`Government executed: ${selectedAction.name} - ${result.message}`);
+            }
+          }
+        }
         
-        // Process events
-        get().processEvents();
+        // Process events - inline the logic to work within Immer
+        const triggeredEvents = globalEventQueue.checkTriggers(state);
+        triggeredEvents.forEach(event => globalEventQueue.addEvent(event));
+
+        const processedEvents = globalEventQueue.processEvents(state.currentMonth, state);
+        
+        processedEvents.forEach(event => {
+          state.eventLog.push(event);
+        });
+
+        if (state.eventLog.length > 100) {
+          state.eventLog = state.eventLog.slice(-100);
+        }
         
         // Update core dynamics
         const newQoL = calculateQualityOfLife(state);

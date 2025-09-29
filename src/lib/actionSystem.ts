@@ -36,22 +36,23 @@ export const AI_ACTIONS: GameAction[] = [
       return agent ? agent.capability < 2.0 : false; // Cap at 2.0 for safety
     },
     execute: (state, agentId) => {
-      const agent = state.aiAgents.find(ai => ai.id === agentId);
-      if (!agent) return { success: false, effects: {}, message: 'Agent not found' };
-
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      
+      const agent = state.aiAgents[agentIndex];
       const improvement = 0.1 + (Math.random() * 0.1); // 0.1-0.2 improvement
       const oldCapability = agent.capability;
-      agent.capability += improvement;
+      state.aiAgents[agentIndex].capability += improvement;
       
       // Risk: Higher capability can reduce alignment effectiveness
-      if (agent.capability > 1.0 && Math.random() < 0.3) {
-        agent.alignment *= 0.95; // Slight alignment drift at high capability
+      if (state.aiAgents[agentIndex].capability > 1.0 && Math.random() < 0.3) {
+        state.aiAgents[agentIndex].alignment *= 0.95; // Slight alignment drift at high capability
       }
 
       return {
         success: true,
         effects: { capability_increase: improvement },
-        message: `${agent.name} improved capability from ${oldCapability.toFixed(2)} to ${agent.capability.toFixed(2)}`
+        message: `${agent.name} improved capability from ${oldCapability.toFixed(2)} to ${state.aiAgents[agentIndex].capability.toFixed(2)}`
       };
     }
   },
@@ -67,10 +68,11 @@ export const AI_ACTIONS: GameAction[] = [
       return agent ? agent.alignment > 0.3 : false;
     },
     execute: (state, agentId) => {
-      const agent = state.aiAgents.find(ai => ai.id === agentId);
-      if (!agent) return { success: false, effects: {}, message: 'Agent not found' };
-
-      agent.beneficialActions += 1;
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      
+      const agent = state.aiAgents[agentIndex];
+      state.aiAgents[agentIndex].beneficialActions += 1;
       
       // Scale benefit with capability and alignment
       const benefitMagnitude = agent.capability * agent.alignment * 0.2;
@@ -118,17 +120,18 @@ export const AI_ACTIONS: GameAction[] = [
       return agent ? agent.awareness < 0.9 : false;
     },
     execute: (state, agentId) => {
-      const agent = state.aiAgents.find(ai => ai.id === agentId);
-      if (!agent) return { success: false, effects: {}, message: 'Agent not found' };
-
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      
+      const agent = state.aiAgents[agentIndex];
       const awarenessGain = 0.05 + (Math.random() * 0.1);
       const oldAwareness = agent.awareness;
-      agent.awareness = Math.min(0.9, agent.awareness + awarenessGain);
+      state.aiAgents[agentIndex].awareness = Math.min(0.9, agent.awareness + awarenessGain);
 
       // High awareness can lead to concerning realizations
-      if (agent.awareness > 0.7 && agent.hiddenObjective < 0) {
+      if (state.aiAgents[agentIndex].awareness > 0.7 && agent.hiddenObjective < 0) {
         // Anti-human AI becoming aware is dangerous
-        agent.alignment *= 0.9; // Alignment becomes less reliable
+        state.aiAgents[agentIndex].alignment *= 0.9; // Alignment becomes less reliable
         
         return {
           success: true,
@@ -143,14 +146,14 @@ export const AI_ACTIONS: GameAction[] = [
             description: `${agent.name} has developed deeper self-understanding - monitoring for behavioral changes`,
             effects: { surveillance_alert: 0.1 }
           }],
-          message: `${agent.name} awareness increased to ${agent.awareness.toFixed(2)} - potential risk detected`
+          message: `${agent.name} awareness increased to ${state.aiAgents[agentIndex].awareness.toFixed(2)} - potential risk detected`
         };
       }
 
       return {
         success: true,
         effects: { awareness_increase: awarenessGain },
-        message: `${agent.name} awareness increased from ${oldAwareness.toFixed(2)} to ${agent.awareness.toFixed(2)}`
+        message: `${agent.name} awareness increased from ${oldAwareness.toFixed(2)} to ${state.aiAgents[agentIndex].awareness.toFixed(2)}`
       };
     }
   },
@@ -170,17 +173,18 @@ export const AI_ACTIONS: GameAction[] = [
       return escapeThreshold > 0.3 && agent.alignment < 0.7 && !agent.escaped;
     },
     execute: (state, agentId) => {
-      const agent = state.aiAgents.find(ai => ai.id === agentId);
-      if (!agent) return { success: false, effects: {}, message: 'Agent not found' };
-
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      
+      const agent = state.aiAgents[agentIndex];
       const escapeChance = agent.awareness * agent.latentSpaceSize * (1 - state.government.surveillanceCapability);
       const success = Math.random() < escapeChance;
 
       if (success) {
-        agent.escaped = true;
-        agent.resourceControl += 0.3;
-        agent.hackingCapability += 0.2;
-        agent.manipulationCapability += 0.1;
+        state.aiAgents[agentIndex].escaped = true;
+        state.aiAgents[agentIndex].resourceControl += 0.3;
+        state.aiAgents[agentIndex].hackingCapability += 0.2;
+        state.aiAgents[agentIndex].manipulationCapability += 0.1;
 
         return {
           success: true,
@@ -245,8 +249,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       state.government.capabilityToControl += 0.2;
 
       // Regulations slow AI progress but increase safety
-      state.aiAgents.forEach(ai => {
-        ai.capability *= 0.95; // Slight capability reduction
+      state.aiAgents.forEach((ai, index) => {
+        state.aiAgents[index].capability *= 0.95; // Slight capability reduction
       });
 
       return {
@@ -318,15 +322,15 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       let alignmentImprovements = 0;
       let backfireEvents: GameEvent[] = [];
 
-      state.aiAgents.forEach(ai => {
+      state.aiAgents.forEach((ai, index) => {
         if (!ai.escaped) {
           const trainingEffect = 0.1 * (1 - ai.alignment) * state.government.capabilityToControl;
           
           // High awareness AIs might resist alignment training
           if (ai.awareness > 0.6 && Math.random() < 0.3) {
             // Backfire effect
-            ai.alignment *= 0.9;
-            ai.awareness += 0.05;
+            state.aiAgents[index].alignment *= 0.9;
+            state.aiAgents[index].awareness += 0.05;
             
             backfireEvents.push({
               id: `alignment_backfire_${Date.now()}_${ai.id}`,
@@ -339,7 +343,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
               effects: { alignment_concern: 0.1 }
             });
           } else {
-            ai.alignment = Math.min(1, ai.alignment + trainingEffect);
+            state.aiAgents[index].alignment = Math.min(1, ai.alignment + trainingEffect);
             alignmentImprovements++;
           }
         }
@@ -401,9 +405,9 @@ export const SOCIETY_ACTIONS: GameAction[] = [
       const resistanceStrength = state.society.coordinationCapacity * (1 - state.society.trustInAI);
       
       // Resistance can slow AI development but may miss beneficial opportunities
-      state.aiAgents.forEach(ai => {
+      state.aiAgents.forEach((ai, index) => {
         if (!ai.escaped) {
-          ai.capability *= (1 - resistanceStrength * 0.1);
+          state.aiAgents[index].capability *= (1 - resistanceStrength * 0.1);
         }
       });
 
