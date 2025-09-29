@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { GameState, GameAction, AIAgent, GovernmentAgent, HumanSocietyAgent, GlobalMetrics, TechnologyNode, OutcomeMetrics, ConfigurationSettings } from '@/types/game';
+import { globalEventQueue, EventQueue } from './eventSystem';
+import { ActionSelector, ActionExecutor, AI_ACTIONS, GOVERNMENT_ACTIONS, SOCIETY_ACTIONS } from './actionSystem';
 
 // Initial state factory
 const createInitialAIAgent = (id: string, name: string): AIAgent => ({
@@ -123,6 +125,8 @@ interface GameStore extends GameState {
   calculateQualityOfLife: () => number;
   calculateEffectiveControl: () => number;
   processMonthlyUpdate: () => void;
+  processAgentActions: () => void;
+  processEvents: () => void;
   startGame: () => void;
   pauseGame: () => void;
   resetGame: () => void;
@@ -244,7 +248,13 @@ export const useGameStore = create<GameStore>()(
 
     processMonthlyUpdate: () => {
       set((state) => {
-        // Update quality of life
+        // Process agent actions first
+        get().processAgentActions();
+        
+        // Process events
+        get().processEvents();
+        
+        // Update core dynamics
         const newQoL = calculateQualityOfLife(state);
         state.globalMetrics.qualityOfLife = newQoL;
         
@@ -275,6 +285,70 @@ export const useGameStore = create<GameStore>()(
       });
     },
 
+    processAgentActions: () => {
+      set((state) => {
+        // AI Agents: 4 actions per month (weekly)
+        for (let week = 0; week < 4; week++) {
+          state.aiAgents.forEach(ai => {
+            const selectedAction = ActionSelector.selectAIAction(ai, state);
+            if (selectedAction) {
+              const result = ActionExecutor.executeAction(selectedAction, state, ai.id);
+              if (result.success) {
+                console.log(`${ai.name} executed: ${selectedAction.name} - ${result.message}`);
+              }
+            }
+          });
+        }
+
+        // Human Society: 2 actions per month (bi-weekly) 
+        for (let biweek = 0; biweek < 2; biweek++) {
+          const selectedAction = ActionSelector.selectSocietyAction(state);
+          if (selectedAction) {
+            const result = ActionExecutor.executeAction(selectedAction, state);
+            if (result.success) {
+              console.log(`Society executed: ${selectedAction.name} - ${result.message}`);
+            }
+          }
+        }
+
+        // Government: Configurable frequency (default 1 per month)
+        const actionsThisMonth = Math.floor(state.config.governmentActionFrequency);
+        const extraActionChance = state.config.governmentActionFrequency - actionsThisMonth;
+        const totalActions = actionsThisMonth + (Math.random() < extraActionChance ? 1 : 0);
+
+        for (let i = 0; i < totalActions; i++) {
+          const selectedAction = ActionSelector.selectGovernmentAction(state);
+          if (selectedAction) {
+            const result = ActionExecutor.executeAction(selectedAction, state);
+            if (result.success) {
+              console.log(`Government executed: ${selectedAction.name} - ${result.message}`);
+            }
+          }
+        }
+      });
+    },
+
+    processEvents: () => {
+      set((state) => {
+        // Check for new event triggers
+        const triggeredEvents = globalEventQueue.checkTriggers(state);
+        triggeredEvents.forEach(event => globalEventQueue.addEvent(event));
+
+        // Process all pending events
+        const processedEvents = globalEventQueue.processEvents(state.currentMonth, state);
+        
+        // Add processed events to the game log
+        processedEvents.forEach(event => {
+          state.eventLog.push(event);
+        });
+
+        // Keep event log manageable (last 100 events)
+        if (state.eventLog.length > 100) {
+          state.eventLog = state.eventLog.slice(-100);
+        }
+      });
+    },
+
     startGame: () => {
       set((state) => {
         state.gameStarted = true;
@@ -292,6 +366,9 @@ export const useGameStore = create<GameStore>()(
       set((state) => {
         const newState = createInitialState();
         Object.assign(state, newState);
+        
+        // Reset the global event queue
+        globalEventQueue.clearProcessed();
       });
     },
   }))
