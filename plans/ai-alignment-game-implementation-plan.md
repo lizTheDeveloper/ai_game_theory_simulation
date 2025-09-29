@@ -15,7 +15,7 @@
 - **Real-time Gameplay**: Agents act autonomously creating dynamic narratives ✅
 - **Production Ready**: App configured for port 3333, all core bugs resolved ✅
 
-### 🔧 Critical Fixes - December 2024:
+### 🔧 Critical Fixes - September 29:
 - **Agent State Tracking**: Fixed action counters stuck at 0, now properly track all agent decisions
 - **Immer Integration**: Resolved state management issues with inline action processing
 - **Real-time Updates**: UI now shows live agent activity with accurate metrics
@@ -43,7 +43,12 @@
 - ✅ Dynamic gameplay with emergent narratives
 - ✅ Production deployment ready (port 3333)
 
-**Next priorities:**
+**Priority UX Enhancement (Phase 2.5):**
+- ⏱️ **Immersive Time Progression**: Implement day-by-day simulation timing (1 second per day)
+- 📅 **Month Progress Visualization**: Add progress bar and day counter for enhanced engagement
+- 🎯 **Realistic Calendar**: Match real month durations (30/31 days) for authentic experience
+
+**Phase 3 Priorities:**
 - Technology tree implementation 
 - Breakthrough mechanics integration
 - Economic transition system refinement
@@ -97,6 +102,41 @@
 - [x] Implement overview tab with charts
 - [ ] Create configuration sliders (government_action_frequency, social_adaptation_rate, ai_coordination_multiplier, economic_transition_rate) - Framework in place
 - [ ] Add basic data export functionality
+
+## Phase 2.5: Immersive Time Progression (Priority UX Enhancement)
+**Goal: Transform simulation timing to create engaging day-by-day progression**
+
+### 2.5.1 Day-Based Simulation Engine
+- [ ] Implement day-level time progression (1 second = 1 day)
+- [ ] Create calendar system with accurate month lengths
+  - [ ] January: 31 days, February: 28/29 days, March: 31 days, etc.
+  - [ ] Handle leap year calculations for February
+- [ ] Modify simulation loop to tick daily instead of monthly
+- [ ] Distribute monthly agent actions across appropriate days
+  - [ ] AI agents: ~1 action every 7-8 days (weekly)
+  - [ ] Society: ~1 action every 14-15 days (bi-weekly)  
+  - [ ] Government: Actions distributed throughout month based on frequency
+
+### 2.5.2 Visual Time Progression Interface
+- [ ] Add day counter to main header (e.g., "Day 15 of 31")
+- [ ] Implement month progress bar showing completion percentage
+- [ ] Update date display to show current day progression
+- [ ] Add visual transitions for day changes
+- [ ] Create anticipation as months approach completion
+
+### 2.5.3 Timing System Integration
+- [ ] Maintain proper game speed controls (pause, 1x, 2x, etc.)
+- [ ] Ensure all existing monthly calculations work with daily ticks
+- [ ] Verify event system triggers correctly with new timing
+- [ ] Test performance with more frequent state updates
+- [ ] Add option to skip/fast-forward through days if desired
+
+### 2.5.4 Enhanced User Experience
+- [ ] Add subtle animations for day progression
+- [ ] Create visual feedback for agent actions on specific days
+- [ ] Implement "end of month" summary animations
+- [ ] Add sound effects for time progression (optional)
+- [ ] Ensure smooth 30-31 second month experience feels natural
 
 ## Phase 3: Technology Tree and Breakthroughs
 **Goal: Implement the research and breakthrough system**
@@ -292,7 +332,9 @@
 ## Implementation Notes
 
 ### Priority Considerations
-- **Phases 1-3** are absolutely essential - the game cannot function without them
+- **Phases 1-2** are complete and verified working ✅
+- **Phase 2.5** is the immediate priority - immersive time progression will significantly enhance user engagement
+- **Phase 3** technology tree implementation becomes essential after timing enhancement
 - **Phases 4-5** add the critical complexity that makes the simulation interesting
 - **Phase 6** is essential for balanced outcomes (not just dystopia/extinction)
 - **Phases 7-8** add depth but could be partially deferred if needed
