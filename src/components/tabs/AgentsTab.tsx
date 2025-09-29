@@ -1,18 +1,21 @@
 'use client';
 
 import { useGameStore } from '@/lib/gameStore';
+import { REGULATION_INFO } from '@/lib/actionSystem';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Brain, Building, Users, AlertTriangle, CheckCircle } from 'lucide-react';
 
 export default function AgentsTab() {
   const { aiAgents, government, society } = useGameStore();
 
   return (
-    <div className="p-4 h-full overflow-auto">
-      <div className="grid grid-cols-3 gap-4">
+    <TooltipProvider>
+      <div className="p-4 h-full overflow-auto">
+        <div className="grid grid-cols-3 gap-4">
         {/* AI Agents Column */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
@@ -211,12 +214,98 @@ export default function AgentsTab() {
                 {government.activeRegulations.length > 0 && (
                   <div className="mt-3">
                     <div className="text-xs font-medium mb-2">Active Regulations:</div>
-                    <div className="space-y-1">
+                    <div className="flex flex-wrap gap-1">
                       {government.activeRegulations.map((reg, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs">
-                          {reg}
-                        </Badge>
+                        <Tooltip key={idx}>
+                          <TooltipTrigger asChild>
+                            <Badge variant="outline" className="text-xs cursor-help">
+                              {reg}
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-md">
+                            <div className="space-y-3">
+                              <div className="font-medium text-sm">{reg}</div>
+                              <div className="text-xs text-muted-foreground">
+                                {REGULATION_INFO[reg]?.description || 'No description available'}
+                              </div>
+                              
+                              {REGULATION_INFO[reg]?.directEffects && (
+                                <div className="border-t pt-2">
+                                  <div className="font-medium text-xs mb-1 text-blue-600">Direct Effects:</div>
+                                  <div className="text-xs space-y-1">
+                                    {REGULATION_INFO[reg].directEffects.map((effect, idx) => (
+                                      <div key={idx} className="font-mono text-xs">{effect}</div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {REGULATION_INFO[reg]?.calculationImpacts && (
+                                <div className="border-t pt-2">
+                                  <div className="font-medium text-xs mb-1 text-purple-600">Formula Impacts:</div>
+                                  <div className="text-xs space-y-1">
+                                    {REGULATION_INFO[reg].calculationImpacts.map((impact, idx) => (
+                                      <div key={idx} className="font-mono text-xs">{impact}</div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {REGULATION_INFO[reg]?.thresholds && (
+                                <div className="border-t pt-2">
+                                  <div className="font-medium text-xs mb-1 text-orange-600">Thresholds:</div>
+                                  <div className="text-xs space-y-1">
+                                    {REGULATION_INFO[reg].thresholds.map((threshold, idx) => (
+                                      <div key={idx} className="font-mono text-xs">{threshold}</div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {REGULATION_INFO[reg]?.specialEffects && (
+                                <div className="border-t pt-2">
+                                  <div className="font-medium text-xs mb-1 text-green-600">Special Effects:</div>
+                                  <div className="text-xs space-y-1">
+                                    {REGULATION_INFO[reg].specialEffects!.map((effect, idx) => (
+                                      <div key={idx} className="font-mono text-xs">{effect}</div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {government.activeRegulations.length > 0 && (
+                  <div className="mt-3">
+                    <div className="text-xs font-medium mb-2 text-slate-700">Cumulative Regulatory Effects:</div>
+                    <div className="space-y-1 text-xs bg-slate-50 p-2 rounded">
+                      <div className="flex justify-between">
+                        <span>Control Capability Bonus:</span>
+                        <span className="font-mono text-blue-600">
+                          +{(government.activeRegulations.length * 0.2).toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>AI Capability Reduction:</span>
+                        <span className="font-mono text-red-600">
+                          ×{Math.pow(0.95, government.activeRegulations.length).toFixed(3)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Effective Control Impact:</span>
+                        <span className="font-mono text-purple-600">
+                          {((government.controlDesire * (government.capabilityToControl) / 
+                             (1 + Math.pow(2.0, 1.5))) * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1 pt-1 border-t">
+                        Active regulations: {government.activeRegulations.length}/5 types
+                      </div>
                     </div>
                   </div>
                 )}
@@ -360,7 +449,8 @@ export default function AgentsTab() {
             </CardContent>
           </Card>
         </div>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }

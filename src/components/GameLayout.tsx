@@ -33,6 +33,7 @@ import TechnologyTab from './tabs/TechnologyTab';
 import EconomyTab from './tabs/EconomyTab';
 import ControlsTab from './tabs/ControlsTab';
 import AnalysisTab from './tabs/AnalysisTab';
+import ActionsSidebar from './ActionsSidebar';
 
 // Metric card component
 interface MetricCardProps {
@@ -269,109 +270,124 @@ export default function GameLayout() {
           </Collapsible>
         </div>
 
-        {/* Right Sidebar */}
-        <div className="w-80 border-l p-4 space-y-4 overflow-y-auto">
-          <h3 className="font-semibold">Key Indicators</h3>
+        {/* Right Sidebar with Tabs */}
+        <div className="w-80 border-l flex flex-col">
+          <Tabs defaultValue="indicators" className="flex-1 flex flex-col">
+            <TabsList className="grid w-full grid-cols-2 m-2">
+              <TabsTrigger value="indicators">Indicators</TabsTrigger>
+              <TabsTrigger value="actions">Actions</TabsTrigger>
+            </TabsList>
 
-          {/* Outcome Probabilities */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm">Outcome Probabilities</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Utopia</span>
-                  <span className="text-sm font-medium">
-                    {(outcomeMetrics.utopiaProbability * 100).toFixed(1)}%
-                  </span>
-                </div>
-                <Progress value={outcomeMetrics.utopiaProbability * 100} className="h-2" />
+            <TabsContent value="indicators" className="flex-1 overflow-hidden m-0">
+              <div className="p-4 space-y-4 h-full overflow-y-auto">
+                <h3 className="font-semibold">Key Indicators</h3>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Dystopia</span>
-                  <span className="text-sm font-medium">
-                    {(outcomeMetrics.dystopiaProbability * 100).toFixed(1)}%
-                  </span>
-                </div>
-                <Progress value={outcomeMetrics.dystopiaProbability * 100} className="h-2" />
+                {/* Outcome Probabilities */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm">Outcome Probabilities</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">Utopia</span>
+                        <span className="text-sm font-medium">
+                          {(outcomeMetrics.utopiaProbability * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <Progress value={outcomeMetrics.utopiaProbability * 100} className="h-2" />
 
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Extinction</span>
-                  <span className="text-sm font-medium">
-                    {(outcomeMetrics.extinctionProbability * 100).toFixed(1)}%
-                  </span>
-                </div>
-                <Progress value={outcomeMetrics.extinctionProbability * 100} className="h-2" />
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">Dystopia</span>
+                        <span className="text-sm font-medium">
+                          {(outcomeMetrics.dystopiaProbability * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <Progress value={outcomeMetrics.dystopiaProbability * 100} className="h-2" />
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">Extinction</span>
+                        <span className="text-sm font-medium">
+                          {(outcomeMetrics.extinctionProbability * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <Progress value={outcomeMetrics.extinctionProbability * 100} className="h-2" />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Critical Metrics */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm">Critical Metrics</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4">
+                      <MetricCard 
+                        label="Quality of Life"
+                        value={globalMetrics.qualityOfLife}
+                        max={1}
+                        color="green"
+                        icon={<Heart className="h-4 w-4" />}
+                      />
+                      <MetricCard 
+                        label="Social Stability"
+                        value={globalMetrics.socialStability}
+                        max={1}
+                        color="blue"
+                        icon={<Users className="h-4 w-4" />}
+                      />
+                      <MetricCard 
+                        label="Info Integrity"
+                        value={globalMetrics.informationIntegrity}
+                        max={1}
+                        color="purple"
+                        icon={<Shield className="h-4 w-4" />}
+                      />
+                      <MetricCard 
+                        label="Economic Stage"
+                        value={globalMetrics.economicTransitionStage}
+                        max={4}
+                        color="amber"
+                        icon={<TrendingUp className="h-4 w-4" />}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Game Status */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm">Game Status</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Status:</span>
+                        <Badge variant={gameStarted ? 'default' : 'outline'}>
+                          {gameStarted ? 'Running' : 'Ready'}
+                        </Badge>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Speed:</span>
+                        <span>{speed}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Active Attractor:</span>
+                        <Badge variant={outcomeMetrics.activeAttractor === 'none' ? 'outline' : 'default'}>
+                          {outcomeMetrics.activeAttractor}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-            </CardContent>
-          </Card>
+            </TabsContent>
 
-          {/* Critical Metrics */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm">Critical Metrics</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                <MetricCard 
-                  label="Quality of Life"
-                  value={globalMetrics.qualityOfLife}
-                  max={1}
-                  color="green"
-                  icon={<Heart className="h-4 w-4" />}
-                />
-                <MetricCard 
-                  label="Social Stability"
-                  value={globalMetrics.socialStability}
-                  max={1}
-                  color="blue"
-                  icon={<Users className="h-4 w-4" />}
-                />
-                <MetricCard 
-                  label="Info Integrity"
-                  value={globalMetrics.informationIntegrity}
-                  max={1}
-                  color="purple"
-                  icon={<Shield className="h-4 w-4" />}
-                />
-                <MetricCard 
-                  label="Economic Stage"
-                  value={globalMetrics.economicTransitionStage}
-                  max={4}
-                  color="amber"
-                  icon={<TrendingUp className="h-4 w-4" />}
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Game Status */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm">Game Status</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Status:</span>
-                  <Badge variant={gameStarted ? 'default' : 'outline'}>
-                    {gameStarted ? 'Running' : 'Ready'}
-                  </Badge>
-                </div>
-                <div className="flex justify-between">
-                  <span>Speed:</span>
-                  <span>{speed}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Active Attractor:</span>
-                  <Badge variant={outcomeMetrics.activeAttractor === 'none' ? 'outline' : 'default'}>
-                    {outcomeMetrics.activeAttractor}
-                  </Badge>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            <TabsContent value="actions" className="flex-1 overflow-hidden m-0">
+              <ActionsSidebar />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

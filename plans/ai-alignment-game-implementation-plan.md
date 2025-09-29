@@ -18,8 +18,9 @@
 
 ### 📝 Development Log
 *For detailed development history, see `/devlog/` directory*
-- **September 29**: Agent action tracking fixed, day progression implemented, UX enhancements deployed
-- **Current**: Phase 2.5 complete, simulation fully balanced and immersive
+- **September 29 AM**: Agent action tracking fixed, day progression implemented, UX enhancements deployed
+- **September 29 PM**: Trust dynamics enhanced, actions sidebar created, regulation system detailed
+- **Current**: Phase 2.5+ complete with enhanced trust dynamics and comprehensive UI improvements
 
 ### ✅ **Phase 2.5 COMPLETED**: Immersive Time Progression
 - ✅ **Day-by-day simulation**: 1 second = 1 day with accurate calendar timing
@@ -31,12 +32,14 @@
 - ✅ **Bug fixes**: Resolved runtime errors, React key collisions, hydration mismatches
 
 ### 🔄 Ready for Phase 3:
-**Production-ready simulation with immersive experience:**
+**Production-ready simulation with enhanced trust dynamics and comprehensive UI:**
 - ✅ All core systems verified working and stable
 - ✅ Day-by-day progression creates engaging anticipation
 - ✅ Real calendar timing feels authentic and meaningful  
-- ✅ Balanced dynamics prevent monotonic outcomes
-- ✅ Professional UI without distracting animations
+- ✅ **Enhanced trust dynamics** with volatility, decay, and context sensitivity
+- ✅ **Complete action transparency** with dedicated sidebar and real-time feeds
+- ✅ **Mathematical precision** in regulation effects with detailed tooltips
+- ✅ Professional UI with comprehensive agent action visibility
 - ✅ Comprehensive error handling and state management
 
 **Phase 3 Priorities:**
@@ -65,7 +68,7 @@
 - [x] Implement effective control calculation: `effective_control = control_desire × capability_to_control / (1 + Σ AI_capability^growth_factor)`
 - [x] Implement quality of life calculation
 - [x] Build win condition checker for three primary outcomes (Dystopia, Extinction, Utopia)
-- [ ] Implement trust dynamics function - Basic calculation done, full dynamics pending
+- [x] Implement trust dynamics function - ✅ **ENHANCED** with volatility, decay, context sensitivity, and random events
 - [ ] Create unemployment and economic transition stage system - Basic structure in place
 
 ## Phase 2: Economic and Control Systems
@@ -83,7 +86,7 @@
 - [ ] Add backfire mechanics for high-awareness AIs
 - [ ] Create escape capability activation system
 - [ ] Build surveillance and enforcement dynamics
-- [ ] Implement government regulatory actions
+- [x] Implement government regulatory actions - ✅ **ENHANCED** with 5 regulation types, duplicate prevention, and mathematical effect transparency
 
 ### 2.3 Basic UI and Configuration
 - [x] Build basic visualization for state variables - Done with charts and metrics
@@ -129,6 +132,33 @@
 - [x] Ensured smooth 30-31 second month experience feels natural - **IMMERSIVE**
 
 **✨ Phase 2.5 Result**: The simulation now provides a truly immersive experience where users feel the passage of time, see agents acting naturally across days, and experience anticipation as months progress. The calendar system is authentic, the visual feedback is polished, and the entire system is production-ready.
+
+### ✅ **Phase 2.5+ COMPLETED**: Enhanced Trust Dynamics & UI System
+**Goal: Address monotonic trust behavior and create comprehensive action visibility**
+
+#### 2.5+.1 Dynamic Trust System ✅
+- [x] **Multi-factor trust calculation** - Trust now considers capability growth, unemployment, alignment, escaped AIs
+- [x] **Natural trust decay** - 0.5% monthly erosion without maintenance creates realistic skepticism
+- [x] **Volatility system** - Trust changes amplified during stress periods (unemployment, rapid AI growth)
+- [x] **Context-sensitive impacts** - Same actions affect trust differently based on current conditions
+- [x] **Random trust events** - 10% monthly chance of trust-affecting public events (scandals, breakthroughs)
+- [x] **Trust recovery mechanisms** - Amplified positive action impact when trust is very low (<0.2)
+
+#### 2.5+.2 Comprehensive Actions Interface ✅  
+- [x] **Actions sidebar** - Dedicated tabbed interface showing all available agent actions
+- [x] **Real-time action feed** - Live display of recent agent activities with full context
+- [x] **Action tooltips** - Detailed descriptions of energy costs, cooldowns, and effects
+- [x] **Action statistics** - Summary tracking beneficial vs harmful actions across all agents
+- [x] **No action restrictions** - Complete visibility into agent decision-making
+
+#### 2.5+.3 Enhanced Regulation System ✅
+- [x] **Duplicate prevention** - Government cannot implement same regulation twice
+- [x] **Regulation enhancement** - When all regulations active, existing ones are strengthened instead
+- [x] **Mathematical transparency** - Detailed tooltips showing exact multiplier effects and formula impacts
+- [x] **Cumulative effects display** - Real-time calculation of combined regulatory impact
+- [x] **Threshold visibility** - Clear breakpoints and trigger conditions for each regulation type
+
+**✨ Phase 2.5+ Result**: Trust dynamics are now realistic and volatile instead of monotonic. Users have complete visibility into agent actions and regulatory effects with mathematical precision. The system creates engaging uncertainty and strategic depth while maintaining educational transparency.
 
 ## Phase 3: Technology Tree and Breakthroughs
 **Goal: Implement the research and breakthrough system**
@@ -312,7 +342,7 @@
 - [ ] Add scenario presets
 - [ ] Implement save/load functionality
 - [ ] Create tutorial or guided mode
-- [ ] Add detailed tooltips and help system
+- [x] Add detailed tooltips and help system - ✅ **COMPREHENSIVE** regulation tooltips with mathematical effects, formulas, and thresholds
 
 ### 10.3 Data and Analytics
 - [ ] Implement comprehensive data export
@@ -324,8 +354,9 @@
 ## Implementation Notes
 
 ### Priority Considerations
-- **Phases 1-2.5** are complete and verified working ✅ 
+- **Phases 1-2.5+** are complete and verified working ✅ 
 - **Phase 2.5** delivered transformative immersive experience with day-by-day progression ✅
+- **Phase 2.5+** enhanced trust dynamics and comprehensive UI transparency ✅
 - **Phase 3** technology tree implementation is now the clear next priority
 - **Phases 4-5** add the critical complexity that makes the simulation interesting
 - **Phase 6** is essential for balanced outcomes (not just dystopia/extinction)

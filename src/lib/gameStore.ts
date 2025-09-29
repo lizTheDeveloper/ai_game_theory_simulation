@@ -5,6 +5,13 @@ import { globalEventQueue, EventQueue } from './eventSystem';
 import { ActionSelector, ActionExecutor, AI_ACTIONS, GOVERNMENT_ACTIONS, SOCIETY_ACTIONS } from './actionSystem';
 import { format, getDaysInMonth as getDateFnsDaysInMonth, addMonths, startOfMonth, addDays } from 'date-fns';
 
+// Unique ID generator for events
+let eventIdCounter = 0;
+const generateUniqueId = (prefix: string): string => {
+  eventIdCounter += 1;
+  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+};
+
 // Calendar utility functions using date-fns
 const createGameDate = (year: number, month: number, day: number): Date => {
   return new Date(year, month, day); // month is 0-based in Date constructor
@@ -388,16 +395,87 @@ export const useGameStore = create<GameStore>()(
         state.globalMetrics.socialStability += stabilityDiff * 0.15;
         state.globalMetrics.socialStability = Math.max(0, Math.min(1, state.globalMetrics.socialStability));
         
-        // Update trust in AI based on beneficial vs harmful actions ratio
+        // Enhanced trust dynamics with volatility and context sensitivity
         const totalBeneficialActions = state.aiAgents.reduce((sum, ai) => sum + ai.beneficialActions, 0);
         const totalHarmfulActions = state.aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0);
         const recentActionRatio = totalBeneficialActions / Math.max(1, totalBeneficialActions + totalHarmfulActions);
         
-        // Trust changes based on action ratio and alignment
-        if (recentActionRatio > 0.7 && avgAIAlignment > 0.6) {
-          state.society.trustInAI = Math.min(1, state.society.trustInAI + 0.02);
-        } else if (recentActionRatio < 0.4 || avgAIAlignment < 0.4) {
-          state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.03);
+        // Calculate trust change factors
+        const capabilityGrowthRate = totalAICapability > 1.5 ? (totalAICapability - 1.5) * 0.1 : 0;
+        const unemploymentStress = Math.max(0, (state.society.unemploymentLevel - 0.2) * 0.3);
+        const alignmentConcern = avgAIAlignment < 0.5 ? (0.5 - avgAIAlignment) * 0.2 : 0;
+        const escapedAIThreat = state.aiAgents.filter(ai => ai.escaped).length * 0.15;
+        
+        // Natural trust decay (people become naturally more skeptical over time without reinforcement)
+        const trustDecay = state.society.trustInAI * 0.005; // 0.5% decay per month
+        
+        // Volatility based on recent events and societal stress
+        const volatilityFactor = 1 + (unemploymentStress + capabilityGrowthRate) * 2;
+        
+        // Base trust change from actions (more volatile now)
+        let trustChange = 0;
+        
+        if (recentActionRatio > 0.8 && avgAIAlignment > 0.7) {
+          // Very positive: trust increases, but diminishing returns at high trust
+          const diminishingReturns = 1 - (state.society.trustInAI * 0.5);
+          trustChange = 0.04 * volatilityFactor * diminishingReturns;
+        } else if (recentActionRatio > 0.6 && avgAIAlignment > 0.5) {
+          // Moderately positive: small trust increase
+          trustChange = 0.015 * volatilityFactor * (1 - state.society.trustInAI * 0.3);
+        } else if (recentActionRatio < 0.3 || avgAIAlignment < 0.3 || escapedAIThreat > 0) {
+          // Negative: significant trust loss, accelerated at high trust levels
+          const acceleratedLoss = state.society.trustInAI > 0.7 ? 1.5 : 1.0;
+          trustChange = -0.08 * volatilityFactor * acceleratedLoss;
+        } else if (recentActionRatio < 0.5) {
+          // Slightly negative: moderate trust loss
+          trustChange = -0.03 * volatilityFactor;
+        }
+        
+        // Apply additional stress factors
+        trustChange -= capabilityGrowthRate; // Rapid AI growth reduces trust
+        trustChange -= unemploymentStress; // Economic displacement reduces trust  
+        trustChange -= alignmentConcern; // Misaligned AI reduces trust
+        trustChange -= escapedAIThreat; // Escaped AIs create major trust crisis
+        trustChange -= trustDecay; // Natural erosion
+        
+        // Add random events that can cause trust volatility
+        if (Math.random() < 0.1) {
+          const randomEvents = [
+            { name: 'AI researcher whistleblower', impact: -0.12, condition: () => totalAICapability > 1.0 },
+            { name: 'AI saves lives in disaster', impact: 0.08, condition: () => avgAIAlignment > 0.6 },
+            { name: 'AI privacy scandal', impact: -0.15, condition: () => state.government.surveillanceCapability > 0.5 },
+            { name: 'AI helps solve major problem', impact: 0.10, condition: () => recentActionRatio > 0.7 },
+            { name: 'AI development scandal', impact: -0.18, condition: () => totalAICapability > 0.8 },
+            { name: 'Public AI demonstration', impact: 0.06, condition: () => true },
+            { name: 'AI research ethics concern', impact: -0.09, condition: () => avgAIAlignment < 0.6 }
+          ];
+          
+          const possibleEvents = randomEvents.filter(event => event.condition());
+          if (possibleEvents.length > 0) {
+            const event = possibleEvents[Math.floor(Math.random() * possibleEvents.length)];
+            trustChange += event.impact;
+            
+            // Add to event log
+            state.eventLog.push({
+              id: generateUniqueId('trust_event'),
+              timestamp: state.currentMonth,
+              type: 'action',
+              severity: event.impact < 0 ? 'warning' : 'info',
+              agent: 'Public',
+              title: `Public Trust Event: ${event.name}`,
+              description: `${event.name} ${event.impact > 0 ? 'increased' : 'decreased'} public trust in AI by ${Math.abs(event.impact * 100).toFixed(1)}%`,
+              effects: { trust_change: event.impact }
+            });
+          }
+        }
+        
+        // Apply final trust change with bounds checking
+        state.society.trustInAI = Math.max(0, Math.min(1, state.society.trustInAI + trustChange));
+        
+        // Trust recovery mechanism - if trust gets very low, small positive actions have amplified effect
+        if (state.society.trustInAI < 0.2 && recentActionRatio > 0.6) {
+          const recoveryBonus = 0.03 * recentActionRatio;
+          state.society.trustInAI = Math.min(1, state.society.trustInAI + recoveryBonus);
         }
         
         // Update economic transition stage based on AI capability and adaptation

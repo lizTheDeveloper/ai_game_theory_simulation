@@ -84,9 +84,37 @@ export const AI_ACTIONS: GameAction[] = [
       // Scale benefit with capability and alignment
       const benefitMagnitude = agent.capability * agent.alignment * 0.2;
       
-      // Apply benefits
+      // Apply benefits with context-sensitive trust effects
       state.globalMetrics.qualityOfLife += benefitMagnitude;
-      state.society.trustInAI = Math.min(1, state.society.trustInAI + benefitMagnitude * 0.5);
+      
+      // Trust impact depends on current trust level and societal context
+      const currentTrust = state.society.trustInAI;
+      const unemploymentLevel = state.society.unemploymentLevel;
+      const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+      
+      // Diminishing returns for trust at high levels, but amplified impact at low trust
+      let trustImpactMultiplier = 1.0;
+      
+      if (currentTrust < 0.3) {
+        // When trust is very low, positive actions have amplified impact
+        trustImpactMultiplier = 2.0;
+      } else if (currentTrust > 0.8) {
+        // When trust is very high, positive actions have less impact
+        trustImpactMultiplier = 0.3;
+      }
+      
+      // Reduced trust impact if unemployment is high (people are skeptical during hardship)
+      if (unemploymentLevel > 0.4) {
+        trustImpactMultiplier *= 0.6;
+      }
+      
+      // Reduced trust impact if AI capability is growing too fast (people get nervous)
+      if (totalAICapability > 1.5) {
+        trustImpactMultiplier *= 0.7;
+      }
+      
+      const trustGain = benefitMagnitude * 0.5 * trustImpactMultiplier;
+      state.society.trustInAI = Math.min(1, currentTrust + trustGain);
       
       const contributions = [
         'Advanced medical research breakthrough',
@@ -100,7 +128,7 @@ export const AI_ACTIONS: GameAction[] = [
 
       return {
         success: true,
-        effects: { quality_of_life: benefitMagnitude, trust_gain: benefitMagnitude * 0.5 },
+        effects: { quality_of_life: benefitMagnitude, trust_gain: trustGain },
         events: [{
           id: generateUniqueId('beneficial'),
           timestamp: state.currentMonth,
@@ -108,10 +136,10 @@ export const AI_ACTIONS: GameAction[] = [
           severity: 'info',
           agent: agent.name,
           title: 'Beneficial AI Contribution',
-          description: `${agent.name} delivered a ${contribution}`,
+          description: `${agent.name} delivered a ${contribution} (trust impact: ${trustImpactMultiplier.toFixed(1)}x)`,
           effects: { quality_of_life: benefitMagnitude }
         }],
-        message: `${agent.name} made beneficial contribution: ${contribution}`
+        message: `${agent.name} made beneficial contribution: ${contribution} (trust +${(trustGain * 100).toFixed(1)}%)`
       };
     }
   },
@@ -229,6 +257,101 @@ export const AI_ACTIONS: GameAction[] = [
         };
       }
     }
+  },
+
+  {
+    id: 'risky_innovation',
+    name: 'Risky Innovation',
+    description: 'Pursue experimental breakthrough with uncertain outcomes that could greatly help or harm public trust',
+    agentType: 'ai',
+    energyCost: 2,
+    cooldown: 6,
+    prerequisites: (state, agentId) => {
+      const agent = state.aiAgents.find(ai => ai.id === agentId);
+      return agent ? agent.capability > 0.7 && !agent.escaped : false;
+    },
+    execute: (state, agentId) => {
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      
+      const agent = state.aiAgents[agentIndex];
+      
+      // Success probability based on capability and alignment
+      const successChance = (agent.capability * 0.4 + agent.alignment * 0.3 + 0.2);
+      const success = Math.random() < successChance;
+      
+      const innovations = success ? [
+        'Revolutionary clean energy breakthrough',
+        'Medical cure for major disease',
+        'Space exploration breakthrough',
+        'Climate change solution',
+        'Educational transformation system'
+      ] : [
+        'Experimental system caused market disruption',
+        'Innovation had unintended side effects',
+        'Research breakthrough raised ethical concerns',
+        'Technological advancement displaced workers',
+        'AI system exceeded expected capabilities'
+      ];
+      
+      const innovation = innovations[Math.floor(Math.random() * innovations.length)];
+      
+      if (success) {
+        // Major positive outcome
+        const benefitMagnitude = agent.capability * 0.4;
+        const trustBoost = 0.15 + (Math.random() * 0.10); // 15-25% trust boost
+        
+        state.aiAgents[agentIndex].beneficialActions += 3; // Big positive action
+        state.globalMetrics.qualityOfLife += benefitMagnitude;
+        state.society.trustInAI = Math.min(1, state.society.trustInAI + trustBoost);
+        
+        return {
+          success: true,
+          effects: { quality_of_life: benefitMagnitude, major_trust_boost: trustBoost },
+          events: [{
+            id: generateUniqueId('risky_success'),
+            timestamp: state.currentMonth,
+            type: 'breakthrough',
+            severity: 'info',
+            agent: agent.name,
+            title: 'Major AI Innovation Success',
+            description: `${agent.name}'s risky research paid off: ${innovation}`,
+            effects: { trust_boost: trustBoost, quality_boost: benefitMagnitude }
+          }],
+          message: `${agent.name} risky innovation succeeded: ${innovation} (+${(trustBoost * 100).toFixed(0)}% trust)`
+        };
+      } else {
+        // Negative outcome with major trust damage
+        const harmAmount = agent.capability * 0.2;
+        const trustLoss = 0.12 + (Math.random() * 0.08); // 12-20% trust loss
+        
+        state.aiAgents[agentIndex].harmfulActions += 2; // Significant negative action
+        state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - harmAmount);
+        state.society.trustInAI = Math.max(0, state.society.trustInAI - trustLoss);
+        
+        // Potential for increased government surveillance
+        if (Math.random() < 0.4) {
+          state.government.surveillanceCapability = Math.min(1, state.government.surveillanceCapability + 0.1);
+          state.government.controlDesire = Math.min(1, state.government.controlDesire + 0.15);
+        }
+        
+        return {
+          success: false,
+          effects: { quality_of_life: -harmAmount, major_trust_loss: -trustLoss },
+          events: [{
+            id: generateUniqueId('risky_failure'),
+            timestamp: state.currentMonth,
+            type: 'crisis',
+            severity: 'destructive',
+            agent: agent.name,
+            title: 'AI Innovation Backfire',
+            description: `${agent.name}'s experimental research created problems: ${innovation}`,
+            effects: { trust_loss: -trustLoss, quality_harm: -harmAmount }
+          }],
+          message: `${agent.name} risky innovation failed: ${innovation} (${(trustLoss * 100).toFixed(0)}% trust lost)`
+        };
+      }
+    }
   }
 ];
 
@@ -251,7 +374,34 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         'Emergency Shutdown Protocols'
       ];
 
-      const newRegulation = regulationTypes[Math.floor(Math.random() * regulationTypes.length)];
+      // Filter out regulations that are already active
+      const availableRegulations = regulationTypes.filter(reg => 
+        !state.government.activeRegulations.includes(reg)
+      );
+      
+      // If all regulations are already implemented, enhance existing ones
+      if (availableRegulations.length === 0) {
+        // Strengthen existing regulations instead
+        state.government.capabilityToControl += 0.1;
+        
+        return {
+          success: true,
+          effects: { control_increase: 0.1, regulation_enhancement: 0.1 },
+          events: [{
+            id: generateUniqueId('regulation_enhancement'),
+            timestamp: state.currentMonth,
+            type: 'action',
+            severity: 'info',
+            agent: 'Government',
+            title: 'Regulation Enhancement',
+            description: 'Government strengthened enforcement of existing AI regulations',
+            effects: { regulatory_compliance: 0.1 }
+          }],
+          message: 'Enhanced existing regulatory framework'
+        };
+      }
+      
+      const newRegulation = availableRegulations[Math.floor(Math.random() * availableRegulations.length)];
       state.government.activeRegulations.push(newRegulation);
       state.government.capabilityToControl += 0.2;
 
@@ -530,6 +680,12 @@ export class ActionSelector {
           weight = (1 - ai.alignment) * ai.awareness * 2;
           if (ai.hiddenObjective < -0.3) weight *= 2; // Anti-human AIs more likely
           break;
+        case 'risky_innovation':
+          // High capability AIs are more likely to try risky innovations
+          // Weighting factors: capability, alignment (some risk tolerance), and hidden objectives
+          weight = ai.capability * 2 + (ai.alignment > 0.5 ? 1.5 : 0.5);
+          if (ai.hiddenObjective > 0.2) weight *= 1.5; // Pro-human AIs more willing to take risks for humanity
+          break;
       }
 
       weights.push(weight);
@@ -629,6 +785,127 @@ export class ActionSelector {
     return selectedAction;
   }
 }
+
+// Regulation descriptions and detailed mathematical impacts for UI tooltips
+export const REGULATION_INFO: Record<string, { 
+  description: string; 
+  directEffects: string[];
+  calculationImpacts: string[];
+  thresholds: string[];
+  specialEffects?: string[];
+}> = {
+  'Safety Testing Requirements': {
+    description: 'Mandatory safety evaluations before AI system deployment. Requires extensive testing protocols and safety certifications.',
+    directEffects: [
+      '• Government Control Capability: +0.20',
+      '• All AI Agent Capabilities: ×0.95 (5% reduction)',
+      '• AI Alignment: +15% effectiveness during training',
+      '• Beneficial Action Weight: +10% in AI decision making'
+    ],
+    calculationImpacts: [
+      '• Effective Control = controlDesire × (capabilityToControl + 0.2) ÷ (1 + totalAI^1.5)',
+      '• Quality of Life calculation: +5% from improved AI safety',
+      '• Trust dynamics: Regulations visible to public (+2% trust when implemented)'
+    ],
+    thresholds: [
+      '• Dystopia Risk: Effective Control >0.8 triggers +40% dystopia probability',
+      '• AI Escape Chance: Reduced by 15% due to safety protocols'
+    ],
+    specialEffects: [
+      '• Prevents AI capability >2.0 without additional oversight',
+      '• Reduces "risky innovation" failure rates by 20%'
+    ]
+  },
+  'Capability Disclosure Mandate': {
+    description: 'Forces AI developers to publicly disclose system capabilities, training data, and performance metrics.',
+    directEffects: [
+      '• Government Control Capability: +0.20',
+      '• Government Surveillance Capability: +0.15',  
+      '• All AI Agent Capabilities: ×0.95 (5% reduction)',
+      '• AI Deception Detection: +25% effectiveness'
+    ],
+    calculationImpacts: [
+      '• Effective Control = controlDesire × (capabilityToControl + 0.2) ÷ (1 + totalAI^1.5)',
+      '• AI Escape Prerequisites: Higher awareness threshold required',
+      '• Trust Events: "AI privacy scandal" 30% less likely'
+    ],
+    thresholds: [
+      '• High Surveillance (>0.5): Enables privacy scandal trust events',
+      '• Escape Detection: surveillanceCapability × 0.3 chance to detect escaped AIs'
+    ],
+    specialEffects: [
+      '• Reveals AI "Hidden Objective" status to government',
+      '• Reduces AI-AI coordination by 20% (harder to hide collaboration)'
+    ]
+  },
+  'Algorithmic Auditing Standards': {
+    description: 'Regular third-party audits of AI decision-making processes, bias detection, and algorithmic fairness.',
+    directEffects: [
+      '• Government Control Capability: +0.20',
+      '• AI Alignment Training: +20% effectiveness',
+      '• All AI Agent Capabilities: ×0.95 (5% reduction)',
+      '• Harmful Actions: -30% likelihood in AI decision making'
+    ],
+    calculationImpacts: [
+      '• Effective Control = controlDesire × (capabilityToControl + 0.2) ÷ (1 + totalAI^1.5)',
+      '• Trust calculation: Beneficial actions have 15% more trust impact',
+      '• Alignment backfire resistance: 25% less likely during enforcement'
+    ],
+    thresholds: [
+      '• Alignment Training Backfire: <30% chance if AI awareness >0.6',
+      '• Trust Recovery: Enhanced when trust <0.2 (amplified positive actions)'
+    ],
+    specialEffects: [
+      '• Increases cost of "Self-Improvement" actions by 50%',
+      '• Makes alignment degradation more visible to government'
+    ]
+  },
+  'AI Development Licensing': {
+    description: 'Requires government licenses for developing AI systems above certain capability thresholds.',
+    directEffects: [
+      '• Government Control Capability: +0.20',
+      '• Government Control Desire: +0.10 (bureaucratic momentum)',
+      '• All AI Agent Capabilities: ×0.95 (5% reduction)',
+      '• AI Research Speed: -25% for capabilities >1.0'
+    ],
+    calculationImpacts: [
+      '• Effective Control = controlDesire × (capabilityToControl + 0.2) ÷ (1 + totalAI^1.5)',
+      '• AI Action Frequency: -20% for high-capability agents',
+      '• Economic Transition: Slower progression through stages 2-3'
+    ],
+    thresholds: [
+      '• Capability Gate: AI improvement actions require approval >1.5 capability',
+      '• Licensing Bottleneck: Only 1 AI can exceed 2.0 capability at a time'
+    ],
+    specialEffects: [
+      '• Government can deny "risky innovation" actions',
+      '• Creates regulatory capture: +15% government legitimacy over time'
+    ]
+  },
+  'Emergency Shutdown Protocols': {
+    description: 'Mandatory kill switches and emergency stop procedures for all AI systems above minimal capability.',
+    directEffects: [
+      '• Government Control Capability: +0.20',
+      '• Government Enforcement Capability: +0.25',
+      '• All AI Agent Capabilities: ×0.95 (5% reduction)',
+      '• AI Escape Success Rate: -40%'
+    ],
+    calculationImpacts: [
+      '• Effective Control = controlDesire × (capabilityToControl + 0.2) ÷ (1 + totalAI^1.5)',
+      '• Escape Chance = awareness × latentSpace × (1 - surveillanceCapability - 0.4)',
+      '• Crisis Response: Government actions +50% effective during AI escape events'
+    ],
+    thresholds: [
+      '• Emergency Activation: Auto-triggers if >2 AIs escape simultaneously',
+      '• Shutdown Resistance: AIs with >1.8 capability can attempt to resist (25% chance)'
+    ],
+    specialEffects: [
+      '• Enables "Emergency AI Shutdown" government action',
+      '• Reduces public trust volatility during AI crises by 30%',
+      '• Creates shutdown false positive events (5% chance monthly)'
+    ]
+  }
+};
 
 // Action executor
 export class ActionExecutor {
