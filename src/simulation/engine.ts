@@ -15,7 +15,8 @@ import {
   calculateSocialStability,
   calculateTotalAICapability,
   calculateAverageAlignment,
-  detectCrisis
+  detectCrisis,
+  determineActualOutcome
 } from './calculations';
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
@@ -248,11 +249,10 @@ export class SimulationEngine {
    */
   run(initialState: GameState, stopConditions?: {
     maxMonths?: number;
-    outcomeThreshold?: number; // Stop when an outcome exceeds this probability
-    crisisDetected?: boolean; // Stop when crisis is detected
+    checkActualOutcomes?: boolean; // Stop when ACTUAL outcomes occur (not probabilities)
   }): SimulationRunResult {
     const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;
-    const outcomeThreshold = stopConditions?.outcomeThreshold ?? 0.9;
+    const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;
     const logLevel = this.config.logLevel ?? 'quartile';
     
     // Initialize logger with estimated duration
@@ -260,6 +260,7 @@ export class SimulationEngine {
     
     let state = initialState;
     const history: SimulationStepResult[] = [];
+    let actualOutcome: 'utopia' | 'dystopia' | 'extinction' | null = null;
     
     for (let month = 0; month < maxMonths; month++) {
       const stepResult = this.step(state);
@@ -269,19 +270,18 @@ export class SimulationEngine {
       // Log this step
       logger.logStep(state, stepResult.events);
       
-      // Check stop conditions
-      if (stopConditions?.crisisDetected && stepResult.metrics.crisisDetected) {
-        break;
-      }
-      
-      const maxOutcomeProb = Math.max(
-        stepResult.metrics.outcomeProbs.utopiaProbability,
-        stepResult.metrics.outcomeProbs.dystopiaProbability,
-        stepResult.metrics.outcomeProbs.extinctionProbability
-      );
-      
-      if (maxOutcomeProb >= outcomeThreshold) {
-        break;
+      // Check for ACTUAL outcomes (not probabilities)
+      if (checkActualOutcomes) {
+        const outcomeCheck = determineActualOutcome(state, month);
+        if (outcomeCheck.outcome !== 'active') {
+          actualOutcome = outcomeCheck.outcome;
+          // Log why the game ended
+          console.log(`\n🎮 Simulation ended: ${outcomeCheck.outcome.toUpperCase()}`);
+          console.log(`   Reason: ${outcomeCheck.reason}`);
+          console.log(`   Confidence: ${(outcomeCheck.confidence * 100).toFixed(0)}%`);
+          console.log(`   Month: ${month}\n`);
+          break;
+        }
       }
     }
     
@@ -291,7 +291,16 @@ export class SimulationEngine {
     let finalOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
     let finalOutcomeProbability: number;
     
-    if (outcomes.utopiaProbability > outcomes.dystopiaProbability && 
+    // If we found an actual outcome, use that
+    if (actualOutcome) {
+      finalOutcome = actualOutcome;
+      // Use the corresponding probability
+      if (actualOutcome === 'utopia') finalOutcomeProbability = outcomes.utopiaProbability;
+      else if (actualOutcome === 'dystopia') finalOutcomeProbability = outcomes.dystopiaProbability;
+      else finalOutcomeProbability = outcomes.extinctionProbability;
+    } 
+    // Otherwise, use probability-based outcome for max month reached
+    else if (outcomes.utopiaProbability > outcomes.dystopiaProbability && 
         outcomes.utopiaProbability > outcomes.extinctionProbability) {
       finalOutcome = 'utopia';
       finalOutcomeProbability = outcomes.utopiaProbability;

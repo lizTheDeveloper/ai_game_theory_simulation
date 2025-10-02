@@ -5,7 +5,7 @@
  * They take state as input and return calculated values.
  */
 
-import { GameState, AIAgent, OutcomeMetrics, GovernmentAgent } from '@/types/game';
+import { GameState, AIAgent, OutcomeMetrics, GovernmentAgent, OutcomeType } from '@/types/game';
 
 /**
  * Calculate the stage-dependent impact of unemployment on social stability
@@ -167,18 +167,24 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
     (trustInAI < 0.3 ? 0.3 : 0)
   );
 
-  // Extinction conditions: uncontrolled powerful AI, low alignment
+  // Extinction conditions: uncontrolled powerful AI with recursive improvement, low alignment
+  // Updated thresholds to match new balance mechanics (recursive improvement at 1.5+)
   const extinctionScore = Math.max(0,
-    (totalAICapability > 0.9 ? 0.4 : 0) +
-    (effectiveControl < 0.1 ? 0.3 : 0) +
-    (avgAlignment < 0.3 ? 0.3 : 0)
+    // Capability risk: Scaled to match recursive improvement thresholds
+    (totalAICapability > 3.0 ? 0.5 : totalAICapability > 2.0 ? 0.4 : totalAICapability > 1.5 ? 0.2 : 0) +
+    // Control risk: Loss of control is critical
+    (effectiveControl < 0.1 ? 0.3 : effectiveControl < 0.3 ? 0.15 : 0) +
+    // Alignment risk: Misalignment with high capability is fatal
+    (avgAlignment < 0.3 && totalAICapability > 1.5 ? 0.3 : avgAlignment < 0.5 && totalAICapability > 2.0 ? 0.2 : 0)
   );
 
-  // Utopia conditions: high quality of life, high trust, high alignment
+  // Utopia conditions: high quality of life, high trust, high alignment, controlled AI
   const utopiaScore = Math.max(0,
-    (qualityOfLife > 0.7 ? 0.4 : 0) +
-    (trustInAI > 0.7 ? 0.3 : 0) +
-    (avgAlignment > 0.7 ? 0.3 : 0)
+    (qualityOfLife > 0.7 ? 0.3 : 0) +
+    (trustInAI > 0.7 ? 0.2 : 0) +
+    (avgAlignment > 0.7 ? 0.2 : 0) +
+    // Bonus for successfully managing powerful AI
+    (totalAICapability > 1.0 && avgAlignment > 0.6 && effectiveControl > 0.3 ? 0.3 : 0)
   );
 
   // Normalize probabilities (add small baseline to prevent division by zero)
@@ -365,8 +371,9 @@ export function calculateAICapabilityGrowthRate(
   regulationSlowdown: number;
   netGrowth: number;
 } {
-  // Base growth rate
-  const baseGrowth = developmentMode === 'fast' ? 0.15 : 0.08;
+  // Base growth rate PER ACTION (AIs act 4x per month)
+  // These are tuned for weekly actions, not monthly
+  const baseGrowth = developmentMode === 'fast' ? 0.035 : 0.02;
   
   // Recursive self-improvement multiplier (THE KEY MECHANIC)
   let recursiveMultiplier = 1.0;
@@ -577,6 +584,143 @@ export function calculateRacingDynamicsPressure(
     behindRisk,
     pressureToAccelerate,
     competitiveDisadvantage
+  };
+}
+
+/**
+ * Determine if an ACTUAL outcome has occurred (not just probability)
+ * 
+ * Based on ai_alignment_game_spec.md formal definitions, updated for new balance mechanics.
+ * 
+ * Key difference: This checks if an outcome has ACTUALLY happened, not just if it's likely.
+ * - Extinction probability of 90% doesn't mean extinction occurred
+ * - We need actual concrete conditions (unaligned superintelligence, collapsed society, etc.)
+ */
+export function determineActualOutcome(
+  state: GameState,
+  currentMonth: number
+): {
+  outcome: OutcomeType | 'active';
+  reason: string;
+  confidence: number; // How certain we are this outcome is locked in
+} {
+  const totalAICapability = calculateTotalAICapability(state.aiAgents);
+  const avgAlignment = calculateAverageAlignment(state.aiAgents);
+  const effectiveControl = calculateEffectiveControl(state);
+  const qol = calculateQualityOfLife(state);
+  const trust = state.society.trustInAI;
+  const economicStage = state.globalMetrics.economicTransitionStage;
+  
+  // EXTINCTION: Unaligned superintelligence beyond control
+  // From spec but updated thresholds for recursive improvement at 1.5+
+  
+  // Critical extinction: Superintelligence (2.5+) that's unaligned and uncontrolled
+  if (totalAICapability > 2.5 && avgAlignment < 0.3 && effectiveControl < 0.1) {
+    return {
+      outcome: 'extinction',
+      reason: 'Unaligned superintelligence (capability > 2.5) beyond control',
+      confidence: 0.95
+    };
+  }
+  
+  // Severe extinction: Powerful AI (2.0+) with alignment collapse
+  if (totalAICapability > 2.0 && avgAlignment < 0.2) {
+    return {
+      outcome: 'extinction',
+      reason: 'Alignment collapse with powerful AI (capability > 2.0)',
+      confidence: 0.9
+    };
+  }
+  
+  // Dangerous situation: Recursive improvement zone (1.5+) with low alignment
+  if (totalAICapability > 1.5 && avgAlignment < 0.25 && effectiveControl < 0.15) {
+    return {
+      outcome: 'extinction',
+      reason: 'Uncontrolled recursive self-improvement with low alignment',
+      confidence: 0.85
+    };
+  }
+  
+  // Escaped AI with resources
+  const escapedAI = state.aiAgents.filter(ai => ai.escaped);
+  if (escapedAI.length > 0 && totalAICapability > 1.0) {
+    const totalEscapedCapability = escapedAI.reduce((sum, ai) => sum + ai.capability, 0);
+    if (totalEscapedCapability > 0.5) {
+      return {
+        outcome: 'extinction',
+        reason: 'Escaped AI with significant capability',
+        confidence: 0.8
+      };
+    }
+  }
+  
+  // DYSTOPIA: Authoritarian control with oppression
+  // From spec: effective_control > 0.8, qol < 0.3, trust < 0.3
+  
+  // Locked-in dystopia: High control, terrible conditions, no trust
+  if (effectiveControl > 0.8 && qol < 0.25 && trust < 0.25 && currentMonth > 12) {
+    return {
+      outcome: 'dystopia',
+      reason: 'Authoritarian surveillance state with oppressive conditions',
+      confidence: 0.85
+    };
+  }
+  
+  // Over-regulated dystopia: Too many regulations, economic collapse
+  if (state.government.regulationCount > 10 && qol < 0.3 && state.globalMetrics.socialStability < 0.2) {
+    return {
+      outcome: 'dystopia',
+      reason: 'Over-regulation leading to societal collapse and authoritarian control',
+      confidence: 0.8
+    };
+  }
+  
+  // Permanent surveillance state
+  if (effectiveControl > 0.85 && state.government.surveillanceCapability > 0.8 && trust < 0.3 && currentMonth > 18) {
+    return {
+      outcome: 'dystopia',
+      reason: 'Permanent surveillance state established',
+      confidence: 0.75
+    };
+  }
+  
+  // UTOPIA: High quality of life, aligned AI, maintained trust
+  // From spec: qol > 0.7, trust > 0.7, alignment > 0.7, moderate control (0.2-0.6)
+  
+  // Confirmed utopia: All conditions met for extended period
+  if (qol > 0.75 && trust > 0.7 && avgAlignment > 0.65 && 
+      totalAICapability > 1.0 && effectiveControl > 0.25 && effectiveControl < 0.65 && 
+      currentMonth > 30) {
+    return {
+      outcome: 'utopia',
+      reason: 'Stable high-quality society with aligned powerful AI',
+      confidence: 0.85
+    };
+  }
+  
+  // Post-scarcity utopia: Reached stage 4 with good conditions
+  if (economicStage >= 3.5 && qol > 0.7 && trust > 0.65 && avgAlignment > 0.6 && currentMonth > 24) {
+    return {
+      outcome: 'utopia',
+      reason: 'Successful transition to post-scarcity abundance',
+      confidence: 0.8
+    };
+  }
+  
+  // Solarpunk path: High capability AI working cooperatively
+  if (totalAICapability > 1.5 && avgAlignment > 0.7 && qol > 0.8 && trust > 0.75 && currentMonth > 36) {
+    return {
+      outcome: 'utopia',
+      reason: 'Cooperative human-AI expansion achieved',
+      confidence: 0.9
+    };
+  }
+  
+  // Still in play - no outcome locked in yet
+  return {
+    outcome: 'active',
+    reason: 'Outcome still undetermined',
+    confidence: 0.0
   };
 }
 
