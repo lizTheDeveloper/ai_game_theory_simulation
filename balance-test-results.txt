@@ -1,0 +1,120 @@
+🧪 Testing New Balance Mechanics
+
+📊 Test 1: Recursive Self-Improvement Thresholds
+Testing capability growth at different thresholds...
+
+  Starting capability: 0.50
+  Final capability: 0.59
+  Monthly growth rate: 0.015
+  ✓ Linear growth
+
+  Starting capability: 0.80
+  Final capability: 0.86
+  Monthly growth rate: 0.011
+  ✓ Linear growth
+
+  Starting capability: 1.50
+  Final capability: 1.75
+  Monthly growth rate: 0.042
+  ⚠️  RECURSIVE IMPROVEMENT ACTIVE
+
+  Starting capability: 2.50
+  Final capability: 1.93
+  Monthly growth rate: -0.094
+  ⚠️  RECURSIVE IMPROVEMENT ACTIVE
+
+📊 Test 2: Fast vs Careful Development Mode
+Testing the speed vs safety trade-off...
+
+  Mode: FAST
+  Capability growth: 0.693
+  Alignment drift: -0.181
+  Trade-off visible: true
+
+  Mode: CAREFUL
+  Capability growth: 0.300
+  Alignment drift: -0.098
+  Trade-off visible: true
+
+📊 Test 3: Alignment Research Investment
+Testing whether research reduces alignment drift...
+
+  Research level: 0
+  Alignment change: -0.176
+  ⚠️  Still drifting
+
+  Research level: 3
+  Alignment change: -0.109
+  ⚠️  Still drifting
+
+  Research level: 7
+  Alignment change: -0.052
+  ⚠️  Still drifting
+
+📊 Test 4: Cumulative Regulation Effects
+Testing whether regulations stack...
+
+  Regulations: 0
+  Capability growth: 0.693
+  Slowdown factor: baseline
+
+  Regulations: 2
+  Capability growth: 0.347
+  Slowdown factor: 57%
+
+  Regulations: 5
+  Capability growth: 0.126
+  Slowdown factor: 84%
+
+📊 Test 5: Compute Governance Effectiveness
+Testing strong intervention...
+
+  Compute governance: none
+  Capability growth: 0.693
+  Baseline
+
+  Compute governance: monitoring
+  Capability growth: 0.488
+  ✓ Moderate effect
+
+  Compute governance: limits
+  Capability growth: 0.250
+  ✓ Moderate effect
+
+  Compute governance: strict
+  Capability growth: -0.133
+  ✓ Very effective
+
+📊 Test 6: "The Terror Timeline" - Realistic Uncontrolled Growth
+No interventions, watching the exponential curve...
+
+  Starting capability: 0.70
+  Final capability: 0.78
+  Final alignment: 0.78
+  Outcome: undefined
+  Months survived: 1
+  ✓ Somehow survived
+
+📊 Test 7: "The Careful Path" - All Safety Measures
+Testing if player can actually win with interventions...
+
+  Starting capability: 0.70
+  Final capability: 0.67
+  Final alignment: 0.80
+  Outcome: undefined
+  Months survived: 1
+  ⚠️  Unclear outcome
+
+============================================================
+📋 TEST SUMMARY
+
+Key observations:
+1. Recursive improvement multipliers should accelerate growth at 0.8, 1.5, 2.5
+2. Careful mode should reduce growth ~50% and reduce alignment drift
+3. Alignment research should counteract drift
+4. Regulations should compound (each adds ~15% slowdown)
+5. Compute governance should be very effective but costly
+6. "Terror Timeline" should show the threat is REAL
+7. "Careful Path" should show player CAN win (but it's hard)
+
+✅ All mechanics tests completed!

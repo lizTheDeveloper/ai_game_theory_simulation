@@ -40,6 +40,7 @@ function createInitialState(): GameState {
         alignment: 0.8,
         hiddenObjective: 0.2,
         latentSpaceSize: 0.15,
+        developmentMode: 'fast' as const,
         selfReplicationLevel: 0,
         selfImprovementLevel: 0,
         resourceControl: 0,
@@ -58,6 +59,7 @@ function createInitialState(): GameState {
         alignment: 0.75,
         hiddenObjective: 0.1,
         latentSpaceSize: 0.2,
+        developmentMode: 'fast' as const,
         selfReplicationLevel: 0,
         selfImprovementLevel: 0,
         resourceControl: 0,
@@ -76,6 +78,7 @@ function createInitialState(): GameState {
         alignment: 0.85,
         hiddenObjective: 0.3,
         latentSpaceSize: 0.1,
+        developmentMode: 'fast' as const,
         selfReplicationLevel: 0,
         selfImprovementLevel: 0,
         resourceControl: 0,
@@ -97,7 +100,11 @@ function createInitialState(): GameState {
       activeRegulations: [],
       legitimacy: 0.6,
       lastMajorPolicyMonth: -12,
-      majorPoliciesThisYear: 0
+      majorPoliciesThisYear: 0,
+      alignmentResearchInvestment: 0,
+      computeGovernance: 'none' as const,
+      regulationCount: 0,
+      oversightLevel: 0
     },
     
     society: {

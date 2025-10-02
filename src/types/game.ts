@@ -9,6 +9,9 @@ export interface AIAgent {
   hiddenObjective: number; // [-1,1] Hidden preference (anti-human to pro-human)
   latentSpaceSize: number; // [0,1] Capacity for ungoverned actions
   
+  // Development strategy
+  developmentMode: 'fast' | 'careful'; // Speed vs safety trade-off
+  
   // Escape capabilities (activated when acting outside alignment)
   selfReplicationLevel: number; // [0,∞) Ability to create copies
   selfImprovementLevel: number; // [0,∞) Ability to enhance capabilities
@@ -33,6 +36,12 @@ export interface GovernmentAgent {
   legitimacy: number; // [0,1] Public support
   lastMajorPolicyMonth: number; // Track when last major policy was enacted
   majorPoliciesThisYear: number; // Count of major policies in current year
+  
+  // New: Alignment & Compute Governance
+  alignmentResearchInvestment: number; // [0,10] Level of investment in alignment research
+  computeGovernance: 'none' | 'monitoring' | 'limits' | 'strict'; // Compute governance policy
+  regulationCount: number; // Track cumulative regulations for stacking effects
+  oversightLevel: number; // [0,10] Overall oversight capability
 }
 
 export interface HumanSocietyAgent {

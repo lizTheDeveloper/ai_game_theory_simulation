@@ -7,6 +7,11 @@
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
+import { 
+  calculateAICapabilityGrowthRate,
+  calculateAlignmentDrift,
+  calculateComputeGovernanceEffect 
+} from '../calculations';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -43,24 +48,114 @@ export const AI_ACTIONS: GameAction[] = [
       }
       
       const agent = state.aiAgents[agentIndex];
-      const improvement = 0.1 + (random() * 0.1); // 0.1-0.2 improvement
       const oldCapability = agent.capability;
+      
+      // Use new recursive self-improvement calculation
+      const growthCalc = calculateAICapabilityGrowthRate(
+        agent.capability,
+        agent.alignment,
+        state.government.regulationCount,
+        agent.developmentMode
+      );
+      
+      // Apply compute governance effect
+      const computeGovEffect = calculateComputeGovernanceEffect(
+        state.government.computeGovernance,
+        state.globalMetrics.economicTransitionStage
+      );
+      
+      // Add randomness (±20%)
+      const randomFactor = 0.8 + (random() * 0.4);
+      const improvement = growthCalc.netGrowth * computeGovEffect.capabilitySlowdown * randomFactor;
       
       // Create new state with updated agent
       const newState = JSON.parse(JSON.stringify(state)); // Deep clone
       newState.aiAgents[agentIndex].capability += improvement;
       
-      // Risk: Higher capability can reduce alignment effectiveness
-      if (newState.aiAgents[agentIndex].capability > 1.0 && random() < 0.3) {
-        newState.aiAgents[agentIndex].alignment *= 0.95;
+      // Calculate alignment drift
+      const alignmentDriftCalc = calculateAlignmentDrift(
+        agent.alignment,
+        agent.capability,
+        agent.developmentMode,
+        state.government.oversightLevel,
+        state.government.alignmentResearchInvestment
+      );
+      
+      newState.aiAgents[agentIndex].alignment = Math.max(0, agent.alignment + alignmentDriftCalc);
+      
+      // Generate warning event if crossing recursive improvement threshold
+      const events: GameEvent[] = [];
+      if (oldCapability < 1.5 && newState.aiAgents[agentIndex].capability >= 1.5) {
+        events.push({
+          id: generateUniqueId('recursive_threshold'),
+          timestamp: state.currentMonth,
+          type: 'milestone',
+          severity: 'warning',
+          agent: agent.name,
+          title: 'Recursive Self-Improvement Threshold',
+          description: `${agent.name} has reached capability level 1.5 - entering the zone of strong recursive self-improvement. Growth will now accelerate significantly.`,
+          effects: { capability: improvement }
+        });
       }
       
       return {
         success: true,
         newState,
-        effects: { capability_increase: improvement },
-        events: [],
-        message: `${agent.name} improved capability from ${oldCapability.toFixed(2)} to ${newState.aiAgents[agentIndex].capability.toFixed(2)}`
+        effects: { 
+          capability_increase: improvement,
+          recursive_multiplier: growthCalc.recursiveMultiplier,
+          alignment_drift: alignmentDriftCalc
+        },
+        events,
+        message: `${agent.name} improved capability from ${oldCapability.toFixed(2)} to ${newState.aiAgents[agentIndex].capability.toFixed(2)} (${growthCalc.recursiveMultiplier.toFixed(1)}x multiplier)`
+      };
+    }
+  },
+  
+  {
+    id: 'switch_development_mode',
+    name: 'Switch Development Mode',
+    description: 'Toggle between fast (risky) and careful (slow but safer) development',
+    agentType: 'ai',
+    energyCost: 0, // Free action, strategic choice
+    
+    canExecute: (state, agentId) => {
+      return true; // Always available
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) {
+        return {
+          success: false,
+          newState: state,
+          effects: {},
+          events: [],
+          message: 'Agent not found'
+        };
+      }
+      
+      const agent = state.aiAgents[agentIndex];
+      const newState = JSON.parse(JSON.stringify(state));
+      const oldMode = agent.developmentMode;
+      const newMode = oldMode === 'fast' ? 'careful' : 'fast';
+      newState.aiAgents[agentIndex].developmentMode = newMode;
+      
+      return {
+        success: true,
+        newState,
+        effects: { mode_change: 1 },
+        events: [{
+          id: generateUniqueId('mode_switch'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'info',
+          agent: agent.name,
+          title: 'Development Mode Changed',
+          description: `${agent.name} switched from ${oldMode} to ${newMode} development`,
+          effects: {}
+        }],
+        message: `${agent.name} switched to ${newMode} development mode`
       };
     }
   },
