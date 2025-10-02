@@ -171,6 +171,14 @@ export class SimulationEngine {
     newState = societyResult.newState;
     events.push(...societyResult.events);
     
+    // Check for crisis points (critical decision moments)
+    const { processCrisisPoints } = require('./crisisPoints');
+    const crisisResult = processCrisisPoints(newState, rng);
+    if (crisisResult.crisisTriggered) {
+      newState = crisisResult.newState;
+      events.push(...crisisResult.events);
+    }
+    
     // 1. Update unemployment based on AI capability
     const newUnemployment = calculateUnemployment(newState);
     newState.society = {
@@ -254,6 +262,10 @@ export class SimulationEngine {
     const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;
     const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;
     const logLevel = this.config.logLevel ?? 'quartile';
+    
+    // Reset crisis points for this run
+    const { resetCrisisPoints } = require('./crisisPoints');
+    resetCrisisPoints();
     
     // Initialize logger with estimated duration
     const logger = new SimulationLogger(this.config.seed!, logLevel, maxMonths);
