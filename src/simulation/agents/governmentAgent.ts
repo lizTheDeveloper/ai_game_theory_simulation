@@ -309,6 +309,8 @@ export function selectGovernmentAction(
   const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
   const trustLevel = state.society.trustInAI;
   const threatLevel = state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length;
+  const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+  const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
   
   let selectedAction = availableActions[0];
   let highestPriority = 0;
@@ -321,9 +323,84 @@ export function selectGovernmentAction(
         // URGENT during unemployment crisis
         priority = unemploymentLevel * 12 + (economicStage === 2 ? 20 : 0) + (trustLevel < 0.4 ? 8 : 0);
         break;
+        
       case 'implement_regulation':
+        // Regulatory response to AI threat
         priority = (state.government.controlDesire * 2 + threatLevel * 3) * 
                    (unemploymentLevel > 0.6 ? 0.4 : 1.0);
+        
+        // Boost priority when AI capability is growing fast
+        if (totalCapability > 1.5) {
+          priority *= 1.5;
+        }
+        break;
+        
+      case 'invest_alignment_research':
+        // CRITICAL when alignment is drifting or capability is high
+        priority = 5; // Base priority
+        
+        // High priority when alignment is low and capability is significant
+        if (avgAlignment < 0.6 && totalCapability > 0.8) {
+          priority += 15; // URGENT
+        } else if (avgAlignment < 0.7 && totalCapability > 1.2) {
+          priority += 12; // Very important
+        } else if (avgAlignment < 0.75) {
+          priority += 8; // Important
+        }
+        
+        // Boost if approaching recursive improvement threshold
+        if (totalCapability > 1.3) {
+          priority += 10; // Dangerous zone
+        } else if (totalCapability > 1.0) {
+          priority += 5;
+        }
+        
+        // Reduce if already investing heavily
+        if (state.government.alignmentResearchInvestment > 5) {
+          priority *= 0.5;
+        } else if (state.government.alignmentResearchInvestment > 7) {
+          priority *= 0.2;
+        }
+        
+        // Reduce priority during unemployment crisis (competing priorities)
+        if (unemploymentLevel > 0.5 && economicStage < 3) {
+          priority *= 0.6;
+        }
+        break;
+        
+      case 'implement_compute_governance':
+        // Last resort / proactive measure when AI is accelerating dangerously
+        priority = 3; // Base priority
+        
+        // EMERGENCY measure when entering recursive improvement zone
+        if (totalCapability > 2.0 && avgAlignment < 0.5) {
+          priority += 25; // EMERGENCY
+        } else if (totalCapability > 1.5 && avgAlignment < 0.6) {
+          priority += 18; // Very urgent
+        } else if (totalCapability > 1.2) {
+          priority += 10; // Urgent
+        } else if (totalCapability > 0.9) {
+          priority += 5; // Proactive
+        }
+        
+        // Higher priority if alignment research isn't working
+        if (state.government.alignmentResearchInvestment > 4 && avgAlignment < 0.65) {
+          priority += 8; // Research isn't enough
+        }
+        
+        // Lower priority if already have some governance
+        if (state.government.computeGovernance === 'monitoring') {
+          priority *= 0.6;
+        } else if (state.government.computeGovernance === 'limits') {
+          priority *= 0.3;
+        } else if (state.government.computeGovernance === 'strict') {
+          priority = 0; // Already maxed
+        }
+        
+        // Competing with unemployment crisis
+        if (unemploymentLevel > 0.5 && economicStage < 3) {
+          priority *= 0.5;
+        }
         break;
     }
     

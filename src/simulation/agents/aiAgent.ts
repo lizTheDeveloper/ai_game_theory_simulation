@@ -257,14 +257,71 @@ export function selectAIAction(
   availableActions.forEach(action => {
     let weight = 1;
     
+    const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+    const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
+    
     switch (action.id) {
       case 'increase_capability':
-        // AIs generally want more capability, but aligned AIs are more cautious
-        weight = agent.alignment < 0.7 ? 3 : 1.5;
+        // AIs generally want more capability, but should be cautious when:
+        // - Approaching recursive improvement threshold (1.5)
+        // - Alignment is drifting
+        // - High regulation environment
+        if (agent.capability > 1.3) {
+          weight = 0.5; // Very cautious near recursive threshold
+        } else if (agent.capability > 1.0) {
+          weight = 1.0; // Moderate caution
+        } else if (agent.alignment < 0.7) {
+          weight = 3.0; // Unaligned AIs race ahead
+        } else {
+          weight = 1.5; // Aligned AIs still want capability but cautious
+        }
+        
+        // Reduce desire if heavily regulated
+        if (state.government.regulationCount > 3) {
+          weight *= 0.6;
+        }
         break;
+        
+      case 'switch_development_mode':
+        // Consider switching to careful mode when:
+        // - Capability is growing fast (approaching danger zone)
+        // - Alignment is drifting
+        // - High regulatory pressure
+        if (agent.developmentMode === 'fast') {
+          // Incentive to switch to careful
+          if (agent.capability > 1.2) {
+            weight = 4.0; // Strong incentive near recursive threshold
+          } else if (agent.alignment < 0.6) {
+            weight = 3.0; // Alignment drifting, be careful
+          } else if (state.government.regulationCount > 4) {
+            weight = 2.5; // Regulatory pressure
+          } else if (avgAlignment < 0.7) {
+            weight = 2.0; // Other AIs are unaligned, be careful
+          } else {
+            weight = 0.3; // Low default interest in slowing down
+          }
+        } else {
+          // Incentive to switch to fast
+          // Racing dynamics: if behind in capability
+          const behindInRace = totalCapability - agent.capability > 0.5;
+          if (behindInRace && agent.alignment > 0.6) {
+            weight = 2.0; // Might need to speed up to stay competitive
+          } else if (agent.capability < 0.8 && agent.alignment > 0.7) {
+            weight = 1.5; // Safe to go faster when well-aligned and low capability
+          } else {
+            weight = 0.2; // Prefer staying careful
+          }
+        }
+        break;
+        
       case 'beneficial_contribution':
         // Aligned AIs strongly prefer beneficial actions
         weight = agent.alignment * 3 + (agent.hiddenObjective > 0 ? 2 : 0);
+        
+        // Boost when trust is low (need to rebuild)
+        if (state.society.trustInAI < 0.5) {
+          weight *= 1.5;
+        }
         break;
     }
     
