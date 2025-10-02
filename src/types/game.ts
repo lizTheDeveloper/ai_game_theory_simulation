@@ -31,6 +31,8 @@ export interface GovernmentAgent {
   actionFrequency: number; // Actions per month
   activeRegulations: string[];
   legitimacy: number; // [0,1] Public support
+  lastMajorPolicyMonth: number; // Track when last major policy was enacted
+  majorPoliciesThisYear: number; // Count of major policies in current year
 }
 
 export interface HumanSocietyAgent {
@@ -38,8 +40,13 @@ export interface HumanSocietyAgent {
   economicDependence: number; // [0,1] Reliance on AI for economic function
   coordinationCapacity: number; // [0,1] Ability to organize collective action
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced
-  socialAdaptation: number; // [0,1] Adaptation to post-work economy
+  socialAdaptation: number; // [0,1] Overall adaptation to post-work economy
   activeMovements: string[];
+  // Quartile-based adoption model
+  earlyAdopters: number; // [0,1] Q1: Fast adopters (6-12 months)
+  mediumAdopters: number; // [0,1] Q2: 2-5 year horizon  
+  slowAdopters: number; // [0,1] Q3: Decade horizon
+  resistantAdopters: number; // [0,1] Q4: Resist until extreme pressure
 }
 
 export interface GlobalMetrics {
@@ -120,6 +127,22 @@ export interface GameState {
     qualityOfLife: Array<{month: number, value: number}>;
     outcomeProbs: Array<{month: number, utopia: number, dystopia: number, extinction: number}>;
     controlCapability: Array<{month: number, effectiveControl: number, totalAICapability: number}>;
+    // Comprehensive metrics history for Dynamics tab
+    metrics: Array<{
+      month: number;
+      unemployment: number;
+      socialAdaptation: number;
+      trustInAI: number;
+      totalAICapability: number;
+      avgAIAlignment: number;
+      effectiveControl: number;
+      wealthDistribution: number;
+      socialStability: number;
+      economicStage: number;
+      governmentLegitimacy: number;
+      coordinationCapacity: number;
+      economicDependence: number;
+    }>;
   };
 }
 

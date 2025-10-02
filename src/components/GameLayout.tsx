@@ -29,6 +29,7 @@ import {
 // Individual tab components
 import OverviewTab from './tabs/OverviewTab';
 import AgentsTab from './tabs/AgentsTab';
+import DynamicsTab from './tabs/DynamicsTab';
 import TechnologyTab from './tabs/TechnologyTab';
 import EconomyTab from './tabs/EconomyTab';
 import ControlsTab from './tabs/ControlsTab';
@@ -203,9 +204,10 @@ export default function GameLayout() {
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
           <Tabs defaultValue="overview" className="flex-1 flex flex-col">
-            <TabsList className="grid w-full grid-cols-6">
+            <TabsList className="grid w-full grid-cols-7">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="agents">Agents</TabsTrigger>
+              <TabsTrigger value="dynamics">Dynamics</TabsTrigger>
               <TabsTrigger value="technology">Technology</TabsTrigger>
               <TabsTrigger value="economy">Economy</TabsTrigger>
               <TabsTrigger value="controls">Controls</TabsTrigger>
@@ -218,6 +220,9 @@ export default function GameLayout() {
               </TabsContent>
               <TabsContent value="agents" className="h-full">
                 <AgentsTab />
+              </TabsContent>
+              <TabsContent value="dynamics" className="h-full">
+                <DynamicsTab />
               </TabsContent>
               <TabsContent value="technology" className="h-full">
                 <TechnologyTab />

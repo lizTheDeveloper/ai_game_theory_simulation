@@ -6,11 +6,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Slider } from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Brain, Building, Users, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Brain, Building, Users, AlertTriangle, CheckCircle, RotateCcw, Zap } from 'lucide-react';
 
 export default function AgentsTab() {
-  const { aiAgents, government, society } = useGameStore();
+  const { aiAgents, government, society, updateAIAlignment } = useGameStore();
+
+  // Fun labels for the evil switch
+  const getAlignmentLabel = (hiddenObjective: number) => {
+    if (hiddenObjective > 0.5) return { emoji: '😇', label: 'Angelic', color: 'text-green-600' };
+    if (hiddenObjective > 0.2) return { emoji: '😊', label: 'Friendly', color: 'text-blue-600' };
+    if (hiddenObjective > -0.2) return { emoji: '🤖', label: 'Neutral', color: 'text-gray-600' };
+    if (hiddenObjective > -0.5) return { emoji: '😏', label: 'Mischievous', color: 'text-orange-600' };
+    return { emoji: '😈', label: 'Diabolical', color: 'text-red-600' };
+  };
 
   return (
     <TooltipProvider>
@@ -70,15 +80,69 @@ export default function AgentsTab() {
 
                   <Separator />
 
-                  {/* Hidden Attributes (partially revealed) */}
-                  <div className="text-xs space-y-1">
-                    <div className="flex justify-between">
-                      <span>Hidden Objective:</span>
-                      <Badge variant="outline" className="text-xs">
-                        {agent.hiddenObjective > 0.2 ? "Pro-human" : 
-                         agent.hiddenObjective < -0.2 ? "Anti-human" : "Neutral"}
-                      </Badge>
+                  {/* The Evil Switch! 😈 */}
+                  <div className="text-xs space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium">Evil Switch</span>
+                        <div className="flex items-center gap-2">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => updateAIAlignment(agent.id, 0)}
+                                className="text-xs text-muted-foreground hover:text-foreground transition-colors p-1 rounded hover:bg-muted"
+                              >
+                                <RotateCcw className="h-3 w-3" />
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              Reset to Neutral (🤖)
+                            </TooltipContent>
+                          </Tooltip>
+                          <div className="flex items-center gap-1">
+                            <Zap className="h-3 w-3 text-amber-500" />
+                            <span className="text-xs text-muted-foreground">Movie Mode</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-red-600">😈 Evil Robot</span>
+                          <span className="text-xs text-green-600">Good Robot 😇</span>
+                        </div>
+                        
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="px-2">
+                              <Slider
+                                value={[agent.hiddenObjective]}
+                                onValueChange={([value]) => updateAIAlignment(agent.id, value)}
+                                min={-1}
+                                max={1}
+                                step={0.1}
+                                className="w-full"
+                              />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-sm">
+                              Control {agent.name}'s true nature<br/>
+                              <span className="text-xs text-muted-foreground">
+                                Current: {agent.hiddenObjective.toFixed(2)} ({getAlignmentLabel(agent.hiddenObjective).label})
+                              </span>
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                        
+                        <div className="flex items-center justify-center">
+                          <Badge variant="outline" className={`text-xs ${getAlignmentLabel(agent.hiddenObjective).color}`}>
+                            {getAlignmentLabel(agent.hiddenObjective).emoji} {getAlignmentLabel(agent.hiddenObjective).label}
+                          </Badge>
+                        </div>
+                      </div>
                     </div>
+                    
                     <div className="flex justify-between">
                       <span>Latent Space:</span>
                       <span>{(agent.latentSpaceSize * 100).toFixed(0)}%</span>

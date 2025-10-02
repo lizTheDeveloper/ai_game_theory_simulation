@@ -69,17 +69,19 @@
 - [x] Implement quality of life calculation
 - [x] Build win condition checker for three primary outcomes (Dystopia, Extinction, Utopia)
 - [x] Implement trust dynamics function - ✅ **ENHANCED** with volatility, decay, context sensitivity, and random events
-- [ ] Create unemployment and economic transition stage system - Basic structure in place
+- [x] Create unemployment and economic transition stage system - ✅ **COMPLETED** with stage-dependent unemployment impacts and realistic progression
 
 ## Phase 2: Economic and Control Systems
 **Goal: Add economic transitions and government control mechanisms**
 
 ### 2.1 Economic Transition System
-- [ ] Implement 5-stage economic transition model (0-4)
-- [ ] Create unemployment stability impact function with stage-dependent effects
-- [ ] Build wealth distribution mechanics
-- [ ] Implement social adaptation dynamics
-- [ ] Add economic sector integration subsystem
+- [x] Implement 5-stage economic transition model (0-4) - ✅ **COMPLETED** with policy-driven progression
+- [x] Create unemployment stability impact function with stage-dependent effects - ✅ **COMPLETED** per spec
+- [x] Build wealth distribution mechanics - ✅ **WORKING** with policy impacts
+- [x] Implement social adaptation dynamics - ✅ **COMPLETED** with quartile-based adoption model (early/medium/slow/resistant)
+- [x] Realistic government policy timing - ✅ **COMPLETED** major policies limited to ~1 per year
+- [x] UBI and transition policy actions - ✅ **COMPLETED** with proper economic stage progression
+- [ ] Add economic sector integration subsystem - Framework exists, needs detailed implementation
 
 ### 2.2 Alignment and Control Mechanics
 - [ ] Implement alignment training system with diminishing returns
@@ -159,6 +161,38 @@
 - [x] **Threshold visibility** - Clear breakpoints and trigger conditions for each regulation type
 
 **✨ Phase 2.5+ Result**: Trust dynamics are now realistic and volatile instead of monotonic. Users have complete visibility into agent actions and regulatory effects with mathematical precision. The system creates engaging uncertainty and strategic depth while maintaining educational transparency.
+
+### ✅ **Phase 2.6 COMPLETED**: Realistic Economic Adaptation & Player Controls
+**Goal: Implement realistic multi-year social adaptation timelines and direct AI alignment controls**
+
+#### 2.6.1 Quartile-Based Social Adaptation ✅
+- [x] **Early Adopters (Q1)**: 6-12 month adaptation timeline with minimal pressure required
+- [x] **Mainstream (Q2)**: 2-5 year adaptation requiring sustained unemployment >40% or UBI
+- [x] **Traditionalists (Q3)**: Decade-long adaptation requiring high unemployment >60% + policies
+- [x] **Resisters (Q4)**: 40+ year timeline even with extreme pressure and full institutional support
+- [x] **Unemployment-driven adaptation**: Social change driven by actual economic pressure, not time
+- [x] **Stage-dependent multipliers**: Adaptation 5x faster in Stage 3+ with policy support
+
+#### 2.6.2 Realistic Government Policy Timing ✅
+- [x] **Major policy cooldowns**: UBI and economic transition policies limited to ~1 per year
+- [x] **Strategic decision-making**: Government must choose most impactful policy during crises
+- [x] **Policy tracking**: lastMajorPolicyMonth and majorPoliciesThisYear state tracking
+- [x] **Yearly resets**: Policy quotas reset every 12 months
+
+#### 2.6.3 Stage-Dependent Unemployment Impact ✅
+- [x] **Stage 0-1**: Traditional unemployment penalty (-0.8x unemployment level)
+- [x] **Stage 2**: Crisis with major instability (-1.5x unemployment level)
+- [x] **Stage 3**: Transition where policy effectiveness matters (-unemployment × (1.2 - policy_effectiveness))
+- [x] **Stage 4**: Post-scarcity where unemployment becomes positive (+0.2x unemployment level)
+
+#### 2.6.4 Player AI Alignment Controls ✅
+- [x] **Evil Switches**: Interactive sliders to control AI hidden objectives (-1 to +1)
+- [x] **Real-time feedback**: Emoji-based personality labels (😈 Diabolical to 😇 Angelic)
+- [x] **Alignment drift**: Visible alignment drifts toward hidden objective over time
+- [x] **Reset controls**: Quick neutral reset buttons for experimentation
+- [x] **Movie Mode theming**: Fun lightning bolt badges and playful UI for dark humor contrast
+
+**✨ Phase 2.6 Result**: The simulation now models realistic multi-decade social adaptation timelines where different population segments adapt at vastly different rates. Government policy decisions are rare and strategic. Players can directly control AI alignment with fun, movie-inspired "evil switches" that contrast with the serious themes. Unemployment impacts are properly stage-dependent, becoming positive in post-scarcity.
 
 ## Phase 3: Technology Tree and Breakthroughs
 **Goal: Implement the research and breakthrough system**
@@ -376,5 +410,141 @@
 3. Create automated scenario runners for balance testing
 4. Use property-based testing for emergence verification
 5. Implement deterministic mode for reproducible testing
+
+## Unwired Dynamics Inventory
+**Comprehensive list of dynamics from specs that need implementation**
+
+### Critical Unwired Dynamics (High Priority)
+From `alignment-game-supplementary-spec.md` and `utopian-dynamics-spec.md`:
+
+#### Information Warfare & Epistemology
+- [ ] `information_integrity` state variable and truth decay mechanics
+- [ ] `narrative_control` competition between agents
+- [ ] `epistemological_crisis_level` emergence system
+- [ ] `deepfake_prevalence` tracking and impact on coordination
+- [ ] Information warfare effects on trust and surveillance
+
+#### International Competition
+- [ ] `competitor_nations` array with varying development rates
+- [ ] `international_coordination` level tracking
+- [ ] `race_dynamics_intensity` pressure system
+- [ ] Catch-up acceleration for lagging nations
+- [ ] Regulatory race to the bottom mechanics
+
+#### Energy & Resource Constraints
+- [ ] `global_energy_capacity` hard limits on AI growth
+- [ ] `datacenter_concentration` vulnerability mechanics
+- [ ] Exponential energy requirements (AI_capability^2.3)
+- [ ] Resource competition between AIs
+- [ ] Physical infrastructure dependencies
+
+### Important Unwired Dynamics (Medium Priority)
+
+#### Human Enhancement & Merger
+- [ ] `biological_enhancement_level` tracking
+- [ ] `brain_computer_interface_adoption` state
+- [ ] `human_ai_hybrid_entities` agent type
+- [ ] `enhancement_inequality` stratification risks
+- [ ] Cognitive apartheid pathway
+
+#### Hidden Variables & Deception
+- [ ] `true_ai_capability` vs believed (sandbagging)
+- [ ] `sleeper_agent_activation` threshold mechanics
+- [ ] `collective_ai_consciousness` emergence
+- [ ] Capability overhang revelation system
+- [ ] Strategic uncertainty mechanics
+
+#### Utopian Upward Spirals
+- [ ] `material_abundance_level` post-scarcity tracking
+- [ ] `creative_abundance_level` with AI tools
+- [ ] `time_abundance_level` from unemployment transformation
+- [ ] `scarcity_mindset_dissolution` cultural shift
+- [ ] Multiple upward spiral interaction matrix
+
+#### Cognitive & Emotional Enhancement
+- [ ] `collective_problem_solving` amplification
+- [ ] `empathy_enhancement_level` tools and effects
+- [ ] `mental_health_baseline` improvements
+- [ ] `cognitive_diversity_index` preservation
+- [ ] Emotional intelligence enhancement systems
+
+#### Democratic Evolution
+- [ ] `liquid_democracy` implementation mechanics
+- [ ] `governance_transparency` effects
+- [ ] `citizen_participation_rate` tracking
+- [ ] AI-mediated consensus building
+- [ ] `minority_protection_strength` safeguards
+
+#### Meaning & Purpose Systems
+- [ ] `meaning_diversity_index` tracking
+- [ ] `self_actualization_rate` progression
+- [ ] `community_cohesion_strength` bonding
+- [ ] `artistic_renaissance_level` creative explosion
+- [ ] Post-work flourishing mechanics
+
+### Enhancement Dynamics (Lower Priority)
+
+#### Scientific Renaissance
+- [ ] `scientific_discovery_rate` with AI collaboration
+- [ ] `cure_development_speed` medical breakthroughs
+- [ ] `longevity_extension` tracking and social effects
+- [ ] `space_expansion_capability` off-world development
+- [ ] Breakthrough cascade triggers
+
+#### Environmental & Ecological
+- [ ] `ecosystem_health` restoration mechanics
+- [ ] `climate_stability` management
+- [ ] `biodiversity_index` tracking
+- [ ] AI-optimized ecosystem management
+- [ ] Human-nature integration dynamics
+
+#### Consciousness & Spirituality
+- [ ] `consciousness_understanding` scientific progress
+- [ ] `meditation_enhancement_tech` tools
+- [ ] `collective_consciousness_events` experiences
+- [ ] Techno-spiritual synthesis
+- [ ] Suffering reduction technologies
+
+#### Financial & Economic Complexity
+- [ ] `algorithmic_trading_dominance` market control
+- [ ] `monetary_system_type` evolution
+- [ ] `economic_prediction_accuracy` AI forecasting
+- [ ] Flash crash probabilities
+- [ ] Perfect markets vs command economy dynamics
+
+#### Biological Risks
+- [ ] `bioweapon_capability` tracking
+- [ ] `synthetic_biology_level` dual-use research
+- [ ] `pandemic_preparedness` systems
+- [ ] Ecological management AI
+- [ ] Biosecurity dynamics
+
+#### Ideological Movements
+- [ ] `ai_worship_prevalence` religious responses
+- [ ] `neo_luddite_strength` resistance movements
+- [ ] `techno_optimist_influence` acceleration ideology
+- [ ] `meaning_crisis_level` from automation
+- [ ] Culture war escalation mechanics
+
+#### Path Dependencies
+- [ ] Institutional inertia calculations
+- [ ] Infrastructure lock-in effects
+- [ ] Regulatory ratchet (irreversibility)
+- [ ] Network effects and switching costs
+- [ ] Critical points of no return
+
+### Partially Implemented (Needs Expansion)
+- [x] Economic sector integration (framework exists, needs detail)
+- [x] Alignment training (basic system, needs diminishing returns)
+- [x] Escape capabilities (structure exists, needs activation system)
+- [x] Coordination dynamics (basic, needs coalition mechanics)
+- [x] Surveillance (tracking exists, needs detection mechanics)
+
+### Implementation Notes
+- **Phases 3-4** should focus on Technology Tree and Advanced Agent Behaviors
+- **Phase 5** should implement Critical Unwired Dynamics (Information, International, Energy)
+- **Phase 6** should implement Important Dynamics (Enhancement, Hidden Variables, Utopian)
+- **Phases 7-8** can add Enhancement Dynamics for depth and richness
+- Many dynamics interact, so implementation order matters for dependencies
 
 This plan provides a clear implementation path from basic foundation to fully-featured simulation, with each phase building on the previous while maintaining functional completeness at each stage.

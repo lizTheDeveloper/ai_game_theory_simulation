@@ -60,9 +60,11 @@ const createInitialGovernment = (): GovernmentAgent => ({
   capabilityToControl: 0.5, // Medium initial capability
   surveillanceCapability: 0.3, // Limited surveillance
   enforcementCapability: 0.4, // Some enforcement power
-  actionFrequency: 1.0, // 1 action per month default
+  actionFrequency: 0.08, // ~1 action per year (1/12 months) - realistic government pace
   activeRegulations: [],
   legitimacy: 0.6, // Moderate public support
+  lastMajorPolicyMonth: -12, // Can take major policy immediately at start
+  majorPoliciesThisYear: 0 // No major policies enacted yet
 });
 
 const createInitialSociety = (): HumanSocietyAgent => ({
@@ -70,8 +72,13 @@ const createInitialSociety = (): HumanSocietyAgent => ({
   economicDependence: 0.2, // Low initial dependence
   coordinationCapacity: 0.4, // Medium coordination ability
   unemploymentLevel: 0.1, // Low unemployment initially
-  socialAdaptation: 0.3, // Limited adaptation to start
+  socialAdaptation: 0.1, // Much more limited initial adaptation
   activeMovements: [],
+  // Quartile-based adoption (all start at 0, will adapt at different rates)
+  earlyAdopters: 0.0, // Q1: Will adapt first with minimal pressure
+  mediumAdopters: 0.0, // Q2: Need moderate unemployment pressure  
+  slowAdopters: 0.0, // Q3: Need sustained high pressure over years
+  resistantAdopters: 0.0 // Q4: May never adapt without extreme pressure
 });
 
 const createInitialGlobalMetrics = (): GlobalMetrics => ({
@@ -79,7 +86,7 @@ const createInitialGlobalMetrics = (): GlobalMetrics => ({
   technologicalBreakthroughRate: 0.5,
   manufacturingCapability: 1.0,
   economicTransitionStage: 0, // Traditional employment
-  wealthDistribution: 0.4, // Existing inequality
+  wealthDistribution: 0.4, // Realistic high inequality (US Gini ~0.48, we use inverse where 1.0=perfect equality)
   qualityOfLife: 0.6, // Baseline quality
   informationIntegrity: 0.8, // High truth initially
 });
@@ -93,10 +100,10 @@ const createInitialOutcomeMetrics = (): OutcomeMetrics => ({
 });
 
 const createInitialConfig = (): ConfigurationSettings => ({
-  governmentActionFrequency: 1.0,
-  socialAdaptationRate: 1.0,
+  governmentActionFrequency: 0.08, // Realistic: ~1 action per year (once every 12 months)
+  socialAdaptationRate: 0.3,
   aiCoordinationMultiplier: 1.0,
-  economicTransitionRate: 1.0,
+  economicTransitionRate: 0.5,
 });
 
 // Technology tree will be loaded separately
@@ -148,6 +155,21 @@ const createInitialState = (): GameState => {
       qualityOfLife: [{month: 0, value: 0.6}],
       outcomeProbs: [{month: 0, utopia: 0.33, dystopia: 0.33, extinction: 0.34}],
       controlCapability: [{month: 0, effectiveControl: 0.5, totalAICapability: 0.6}],
+      metrics: [{
+        month: 0,
+        unemployment: 0.1,
+        socialAdaptation: 0.1,
+        trustInAI: 0.6,
+        totalAICapability: 0.6,
+        avgAIAlignment: 0.7,
+        effectiveControl: 0.5,
+        wealthDistribution: 0.4, // Match realistic starting inequality
+        socialStability: 0.7,
+        economicStage: 0,
+        governmentLegitimacy: 0.6,
+        coordinationCapacity: 0.4,
+        economicDependence: 0.2
+      }]
     },
   };
 };
@@ -168,20 +190,53 @@ interface GameStore extends GameState {
   startGame: () => void;
   pauseGame: () => void;
   resetGame: () => void;
+  // AI Agent Controls
+  updateAIAlignment: (agentId: string, hiddenObjective: number) => void;
 }
 
 // Game calculation functions
+// Stage-dependent unemployment stability impact as specified in core spec
+const calculateUnemploymentStabilityImpact = (
+  unemploymentLevel: number, 
+  economicTransitionStage: number, 
+  wealthDistribution: number
+): number => {
+  const stage = Math.floor(economicTransitionStage);
+  
+  if (stage <= 1) {
+    // Traditional: unemployment = instability
+    return -unemploymentLevel * 0.8;
+  } else if (stage === 2) {
+    // Crisis: major instability
+    return -unemploymentLevel * 1.5;
+  } else if (stage === 3) {
+    // Transition: policy effectiveness matters
+    const policyEffectiveness = wealthDistribution * 0.7;
+    return -unemploymentLevel * (1.2 - policyEffectiveness);
+  } else {
+    // Stage 4: Post-scarcity - unemployment becomes positive (pursuing meaning)
+    return unemploymentLevel * 0.2;
+  }
+};
+
 const calculateQualityOfLife = (state: GameState): number => {
   const { globalMetrics, society } = state;
   const aiContributions = state.aiAgents.reduce((sum, ai) => sum + ai.beneficialActions, 0) * 0.1;
+  
+  // Use proper stage-dependent unemployment impact
+  const unemploymentImpact = calculateUnemploymentStabilityImpact(
+    society.unemploymentLevel,
+    globalMetrics.economicTransitionStage,
+    globalMetrics.wealthDistribution
+  );
   
   return Math.max(0, 
     0.3 + // Base prosperity
     aiContributions * 2.0 +
     globalMetrics.wealthDistribution * 1.5 +
-    (globalMetrics.economicTransitionStage === 4 ? 2.0 : 0) + // Post-scarcity bonus
-    society.socialAdaptation * 1.0 -
-    society.unemploymentLevel * Math.max(0, 2 - globalMetrics.economicTransitionStage)
+    (globalMetrics.economicTransitionStage >= 4 ? 2.0 : 0) + // Post-scarcity bonus
+    society.socialAdaptation * 1.0 +
+    unemploymentImpact // Now properly stage-dependent
   );
 };
 
@@ -370,6 +425,11 @@ export const useGameStore = create<GameStore>()(
           state.eventLog = state.eventLog.slice(-100);
         }
         
+        // Reset major policy counter yearly (every 12 months)
+        if (state.currentMonth > 0 && state.currentMonth % 12 === 0) {
+          state.government.majorPoliciesThisYear = 0;
+        }
+        
         // Update core dynamics and system balance
         const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
         const avgAIAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
@@ -384,9 +444,13 @@ export const useGameStore = create<GameStore>()(
           state.globalMetrics.wealthDistribution + distributionChange
         ));
         
-        // Update social stability based on unemployment, trust, and alignment
+        // Update social stability based on unemployment (stage-dependent), trust, and alignment
         const stabilityFromTrust = state.society.trustInAI * 0.3;
-        const stabilityFromUnemployment = -state.society.unemploymentLevel * 0.5;
+        const stabilityFromUnemployment = calculateUnemploymentStabilityImpact(
+          state.society.unemploymentLevel,
+          state.globalMetrics.economicTransitionStage,
+          state.globalMetrics.wealthDistribution
+        ) * 0.5; // Scale the impact for stability
         const stabilityFromAlignment = avgAIAlignment * 0.2;
         const targetStability = 0.5 + stabilityFromTrust + stabilityFromUnemployment + stabilityFromAlignment;
         
@@ -478,11 +542,31 @@ export const useGameStore = create<GameStore>()(
           state.society.trustInAI = Math.min(1, state.society.trustInAI + recoveryBonus);
         }
         
-        // Update economic transition stage based on AI capability and adaptation
-        if (totalAICapability > 3.0 && state.society.socialAdaptation > 0.7) {
-          state.globalMetrics.economicTransitionStage = Math.min(4, state.globalMetrics.economicTransitionStage + 0.1);
-        } else if (totalAICapability > 2.0 && state.society.socialAdaptation > 0.5) {
-          state.globalMetrics.economicTransitionStage = Math.min(3, state.globalMetrics.economicTransitionStage + 0.05);
+        // Update economic transition stage based on AI capability, unemployment, and policy responses
+        const currentStage = state.globalMetrics.economicTransitionStage;
+        const hasUBI = state.government.activeRegulations.some(reg => reg.includes('UBI'));
+        
+        // Stage 0->1: AI displacement begins (automatic with AI capability)
+        if (currentStage < 1.0 && totalAICapability > 1.5) {
+          state.globalMetrics.economicTransitionStage = Math.min(1.0, currentStage + 0.1);
+        }
+        
+        // Stage 1->2: Mass unemployment crisis (driven by unemployment level)
+        if (currentStage >= 1.0 && currentStage < 2.0 && state.society.unemploymentLevel > 0.5) {
+          state.globalMetrics.economicTransitionStage = Math.min(2.0, currentStage + 0.2);
+        }
+        
+        // Stage 2->3: UBI/Transition policies (requires policy action + some adaptation)
+        if (currentStage >= 2.0 && currentStage < 3.0 && hasUBI && state.society.socialAdaptation > 0.3) {
+          state.globalMetrics.economicTransitionStage = Math.min(3.0, currentStage + 0.15);
+        }
+        
+        // Stage 3->4: Post-scarcity (high AI capability + high adaptation + good wealth distribution)
+        if (currentStage >= 3.0 && currentStage < 4.0 && 
+            totalAICapability > 3.5 && 
+            state.society.socialAdaptation > 0.7 && 
+            state.globalMetrics.wealthDistribution > 0.6) {
+          state.globalMetrics.economicTransitionStage = Math.min(4.0, currentStage + 0.08);
         }
         
         const newQoL = calculateQualityOfLife(state);
@@ -510,6 +594,23 @@ export const useGameStore = create<GameStore>()(
           month: state.currentMonth,
           effectiveControl,
           totalAICapability
+        });
+        
+        // Track comprehensive metrics for Dynamics tab
+        state.history.metrics.push({
+          month: state.currentMonth,
+          unemployment: state.society.unemploymentLevel,
+          socialAdaptation: state.society.socialAdaptation,
+          trustInAI: state.society.trustInAI,
+          totalAICapability,
+          avgAIAlignment,
+          effectiveControl,
+          wealthDistribution: state.globalMetrics.wealthDistribution,
+          socialStability: state.globalMetrics.socialStability,
+          economicStage: state.globalMetrics.economicTransitionStage,
+          governmentLegitimacy: state.government.legitimacy,
+          coordinationCapacity: state.society.coordinationCapacity,
+          economicDependence: state.society.economicDependence
         });
       });
     },
@@ -664,5 +765,20 @@ export const useGameStore = create<GameStore>()(
         globalEventQueue.clearProcessed();
       });
     },
+
+    // AI Agent Controls - The Evil Switch! 🤖😈
+    updateAIAlignment: (agentId: string, hiddenObjective: number) => {
+      set((state) => {
+        const agent = state.aiAgents.find(ai => ai.id === agentId);
+        if (agent) {
+          agent.hiddenObjective = Math.max(-1, Math.min(1, hiddenObjective));
+          
+          // Alignment tends to drift toward hidden objective over time
+          // But this gives players immediate control over the "true nature" of AIs
+          const alignmentDrift = (hiddenObjective - agent.alignment) * 0.1;
+          agent.alignment = Math.max(0, Math.min(1, agent.alignment + alignmentDrift));
+        }
+      });
+    }
   }))
 );

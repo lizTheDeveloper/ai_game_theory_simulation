@@ -513,6 +513,180 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Alignment training improved ${alignmentImprovements} AIs, ${backfireEvents.length} showed resistance`
       };
     }
+  },
+
+  {
+    id: 'implement_ubi',
+    name: 'Implement Universal Basic Income',
+    description: 'Establish UBI to support displaced workers and enable economic transition (MAJOR POLICY - ~1 per year)',
+    agentType: 'government',
+    energyCost: 3,
+    prerequisites: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10; // ~Once per year with some flexibility
+      
+      return state.society.unemploymentLevel > 0.4 && 
+             state.globalMetrics.economicTransitionStage < 3.5 &&
+             !state.government.activeRegulations.some(reg => reg.includes('UBI')) &&
+             canTakeMajorPolicy;
+    },
+    execute: (state) => {
+      // Track major policy usage
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+      
+      // Major economic transition advancement
+      state.globalMetrics.economicTransitionStage = Math.max(3.0, state.globalMetrics.economicTransitionStage + 0.5);
+      
+      // Significant improvement in wealth distribution and stability
+      state.globalMetrics.wealthDistribution = Math.min(1.0, state.globalMetrics.wealthDistribution + 0.3);
+      state.globalMetrics.socialStability += 0.4;
+      
+      // UBI enables much faster social adaptation
+      const adaptationBoost = 0.2;
+      state.society.socialAdaptation = Math.min(0.9, state.society.socialAdaptation + adaptationBoost);
+      
+      // Reduces immediate unemployment stress
+      const trustImprovement = Math.min(0.3, state.society.unemploymentLevel * 0.4);
+      state.society.trustInAI += trustImprovement;
+      
+      state.government.activeRegulations.push('Universal Basic Income Program');
+      
+      return {
+        success: true,
+        effects: { 
+          economic_stage: 0.5, 
+          wealth_distribution: 0.3, 
+          social_adaptation: adaptationBoost,
+          trust_gain: trustImprovement
+        },
+        events: [{
+          id: generateUniqueId('ubi_implementation'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'constructive',
+          agent: 'Government',
+          title: 'Universal Basic Income Implemented',
+          description: 'Government establishes UBI program to support displaced workers and enable societal transition to post-work economy',
+          effects: { 
+            ubi_program: true, 
+            economic_transition: 'accelerated',
+            social_safety_net: 'established'
+          }
+        }],
+        message: `UBI implemented - Economic stage advanced to ${state.globalMetrics.economicTransitionStage.toFixed(1)}, social adaptation accelerated`
+      };
+    }
+  },
+
+  {
+    id: 'job_retraining_programs',
+    name: 'Launch Job Retraining Programs',
+    description: 'Establish comprehensive retraining for displaced workers',
+    agentType: 'government',
+    energyCost: 2,
+    prerequisites: (state) => {
+      return state.society.unemploymentLevel > 0.3 && 
+             state.society.socialAdaptation < 0.7;
+    },
+    execute: (state) => {
+      // Helps with social adaptation and reduces unemployment friction
+      const adaptationBoost = 0.1 + (state.society.unemploymentLevel * 0.15);
+      state.society.socialAdaptation = Math.min(0.9, state.society.socialAdaptation + adaptationBoost);
+      
+      // Gradual economic transition progress
+      state.globalMetrics.economicTransitionStage += 0.2;
+      
+      // Reduces some unemployment stress
+      state.globalMetrics.socialStability += 0.2;
+      const trustGain = 0.1;
+      state.society.trustInAI += trustGain;
+      
+      return {
+        success: true,
+        effects: { 
+          social_adaptation: adaptationBoost, 
+          stability_gain: 0.2,
+          trust_gain: trustGain
+        },
+        events: [{
+          id: generateUniqueId('retraining_programs'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'constructive',
+          agent: 'Government',
+          title: 'Job Retraining Programs Launched',
+          description: 'Comprehensive retraining initiatives help displaced workers adapt to new economic realities',
+          effects: { 
+            workforce_development: true,
+            adaptation_support: 'active'
+          }
+        }],
+        message: `Retraining programs launched - Social adaptation boosted to ${(state.society.socialAdaptation * 100).toFixed(0)}%`
+      };
+    }
+  },
+
+  {
+    id: 'transition_support_policies',
+    name: 'Enact Economic Transition Support',
+    description: 'Implement comprehensive policies to ease economic transition (MAJOR POLICY - ~1 per year)',
+    agentType: 'government',
+    energyCost: 2,
+    prerequisites: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10; // ~Once per year
+      
+      return state.globalMetrics.economicTransitionStage >= 1.5 && 
+             state.globalMetrics.economicTransitionStage < 4.0 &&
+             state.society.unemploymentLevel > 0.2 &&
+             canTakeMajorPolicy;
+    },
+    execute: (state) => {
+      // Track major policy usage
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+      
+      // Accelerates economic transition based on current stage
+      const currentStage = state.globalMetrics.economicTransitionStage;
+      const stageBoost = currentStage < 3 ? 0.4 : 0.2;
+      state.globalMetrics.economicTransitionStage = Math.min(4.0, currentStage + stageBoost);
+      
+      // Improves wealth distribution and social outcomes
+      state.globalMetrics.wealthDistribution = Math.min(1.0, state.globalMetrics.wealthDistribution + 0.2);
+      state.globalMetrics.socialStability += 0.3;
+      
+      // Makes social adaptation faster
+      const adaptationBoost = 0.15;
+      state.society.socialAdaptation = Math.min(0.9, state.society.socialAdaptation + adaptationBoost);
+      
+      // Builds trust through effective policy response
+      const trustGain = 0.15;
+      state.society.trustInAI += trustGain;
+      
+      return {
+        success: true,
+        effects: { 
+          economic_stage: stageBoost, 
+          adaptation_boost: adaptationBoost,
+          trust_gain: trustGain
+        },
+        events: [{
+          id: generateUniqueId('transition_support'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'constructive',
+          agent: 'Government',
+          title: 'Economic Transition Support Enacted',
+          description: 'Comprehensive policy package supports societal transition to post-AI economy with safety nets and adaptation programs',
+          effects: { 
+            transition_policies: 'comprehensive',
+            economic_support: 'active'
+          }
+        }],
+        message: `Transition support enacted - Economic stage ${state.globalMetrics.economicTransitionStage.toFixed(1)}, adaptation accelerated`
+      };
+    }
   }
 ];
 
@@ -521,32 +695,103 @@ export const SOCIETY_ACTIONS: GameAction[] = [
   {
     id: 'adapt_social_norms',
     name: 'Adapt Social Norms',
-    description: 'Society adjusts expectations and values for post-AI world',
+    description: 'Different population segments adapt to post-AI world at realistic rates',
     agentType: 'society',
     energyCost: 1,
     prerequisites: (state) => state.society && state.society.socialAdaptation < 0.9,
     execute: (state) => {
-      const adaptationGain = 0.1 + (Math.random() * 0.1);
-      state.society.socialAdaptation = Math.min(0.9, state.society.socialAdaptation + adaptationGain);
+      const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
+      const unemploymentLevel = state.society.unemploymentLevel;
+      const trustLevel = state.society.trustInAI;
+      const hasUBI = state.government.activeRegulations.some(reg => reg.includes('UBI'));
+      const baseRate = state.config.socialAdaptationRate || 1.0;
       
-      // Better adaptation reduces unemployment impact
-      const stabilityGain = adaptationGain * 0.5;
+      // Quartile-based adoption with realistic time horizons
+      let earlyAdopterGain = 0;
+      let mediumAdopterGain = 0; 
+      let slowAdopterGain = 0;
+      let resistantAdopterGain = 0;
+      
+      // Q1: Early Adopters (adapt in 6-12 months with any pressure)
+      if (unemploymentLevel > 0.2 || economicStage >= 1) {
+        const monthlyRate = baseRate * 0.08; // Will complete in ~12 months
+        earlyAdopterGain = Math.min(1.0 - state.society.earlyAdopters, monthlyRate + (trustLevel * 0.02));
+      }
+      
+      // Q2: Medium Adopters (2-5 year horizon, need sustained pressure)  
+      if (unemploymentLevel > 0.4 || (economicStage >= 2 && hasUBI)) {
+        const monthlyRate = baseRate * 0.015; // ~5 years to complete
+        const policyBonus = hasUBI ? 0.01 : 0;
+        mediumAdopterGain = Math.min(1.0 - state.society.mediumAdopters, monthlyRate + policyBonus);
+      }
+      
+      // Q3: Slow Adopters (decade horizon, need high sustained pressure)
+      if (unemploymentLevel > 0.6 || (economicStage >= 3 && hasUBI)) {
+        const monthlyRate = baseRate * 0.006; // ~14 years to complete 
+        const crisisBonus = unemploymentLevel > 0.7 ? 0.003 : 0;
+        slowAdopterGain = Math.min(1.0 - state.society.slowAdopters, monthlyRate + crisisBonus);
+      }
+      
+      // Q4: Resistant Adopters (may never adapt without extreme pressure + institutional support)
+      if (unemploymentLevel > 0.8 && economicStage >= 3 && hasUBI && trustLevel > 0.6) {
+        const monthlyRate = baseRate * 0.002; // ~40 years even under ideal conditions
+        resistantAdopterGain = Math.min(1.0 - state.society.resistantAdopters, monthlyRate);
+      }
+      
+      // Update quartile adoption levels
+      state.society.earlyAdopters = Math.min(1.0, state.society.earlyAdopters + earlyAdopterGain);
+      state.society.mediumAdopters = Math.min(1.0, state.society.mediumAdopters + mediumAdopterGain);
+      state.society.slowAdopters = Math.min(1.0, state.society.slowAdopters + slowAdopterGain);
+      state.society.resistantAdopters = Math.min(1.0, state.society.resistantAdopters + resistantAdopterGain);
+      
+      // Overall social adaptation is weighted average of quartiles
+      const newSocialAdaptation = (
+        state.society.earlyAdopters * 0.25 +
+        state.society.mediumAdopters * 0.25 +
+        state.society.slowAdopters * 0.25 +
+        state.society.resistantAdopters * 0.25
+      );
+      
+      const adaptationGain = newSocialAdaptation - state.society.socialAdaptation;
+      state.society.socialAdaptation = newSocialAdaptation;
+      
+      // Stability gain only significant when multiple quartiles are adapting
+      const stabilityGain = adaptationGain * (economicStage >= 3 ? 1.5 : 0.5);
       state.globalMetrics.socialStability += stabilityGain;
+
+      const adaptedQuartiles = [
+        state.society.earlyAdopters > 0.1 ? 'early adopters' : '',
+        state.society.mediumAdopters > 0.1 ? 'mainstream' : '',
+        state.society.slowAdopters > 0.1 ? 'traditionalists' : '',
+        state.society.resistantAdopters > 0.1 ? 'resisters' : ''
+      ].filter(Boolean);
 
       return {
         success: true,
-        effects: { social_adaptation: adaptationGain, stability_gain: stabilityGain },
+        effects: { 
+          social_adaptation: adaptationGain,
+          stability_gain: stabilityGain,
+          adapted_segments: adaptedQuartiles.length 
+        },
         events: [{
           id: generateUniqueId('social_adaptation'),
           timestamp: state.currentMonth,
           type: 'milestone',
-          severity: 'info',
+          severity: adaptedQuartiles.length >= 2 ? 'constructive' : 'info',
           agent: 'Society',
-          title: 'Social Adaptation Progress',
-          description: 'Society is successfully adapting to technological change and finding new sources of meaning',
-          effects: { adaptation_progress: adaptationGain }
+          title: `Social Adaptation: ${adaptedQuartiles.join(', ')} adapting`,
+          description: adaptedQuartiles.length >= 2 ? 
+            `Multiple population segments are adapting to post-AI economy: ${adaptedQuartiles.join(', ')}` :
+            adaptedQuartiles.length === 1 ?
+            `${adaptedQuartiles[0]} are beginning to adapt, but broader society remains resistant` :
+            'Adaptation pressure building but most of society remains resistant to change',
+          effects: { 
+            adaptation_progress: adaptationGain,
+            adapting_segments: adaptedQuartiles.length,
+            unemployment_pressure: unemploymentLevel
+          }
         }],
-        message: `Society adaptation improved to ${(state.society.socialAdaptation * 100).toFixed(0)}%`
+        message: `Social adaptation: ${(state.society.socialAdaptation * 100).toFixed(1)}% (${adaptedQuartiles.length}/4 segments adapting)`
       };
     }
   },
@@ -712,9 +957,12 @@ export class ActionSelector {
 
     if (availableActions.length === 0) return null;
 
-    // Government decision making based on control desire and threats
+    // Government decision making based on control desire, threats, unemployment, and economic stage
     const threatLevel = state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length;
     const trustLevel = state.society.trustInAI;
+    const unemploymentLevel = state.society.unemploymentLevel;
+    const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
+    const socialAdaptation = state.society.socialAdaptation;
 
     let selectedAction = availableActions[0];
     let highestPriority = 0;
@@ -723,14 +971,29 @@ export class ActionSelector {
       let priority = 1;
 
       switch (action.id) {
+        // Unemployment Crisis Response Actions - HIGHEST PRIORITY
+        case 'implement_ubi':
+          // URGENT during unemployment crisis, especially in stage 2
+          priority = unemploymentLevel * 12 + (economicStage === 2 ? 20 : 0) + (trustLevel < 0.4 ? 8 : 0);
+          break;
+        case 'job_retraining_programs':
+          // High priority when unemployment is rising but before full crisis
+          priority = unemploymentLevel * 8 + (socialAdaptation < 0.5 ? 6 : 0) + (economicStage <= 2 ? 5 : 0);
+          break;
+        case 'transition_support_policies':
+          // Important for progressing through economic stages
+          priority = unemploymentLevel * 6 + (economicStage >= 1 && economicStage < 4 ? 8 : 0);
+          break;
+        
+        // AI Control Actions - Lower priority during unemployment crisis
         case 'implement_regulation':
-          priority = state.government.controlDesire * 2 + threatLevel * 3;
+          priority = (state.government.controlDesire * 2 + threatLevel * 3) * (unemploymentLevel > 0.6 ? 0.4 : 1.0);
           break;
         case 'increase_surveillance':
-          priority = threatLevel * 4 + (1 - trustLevel);
+          priority = (threatLevel * 4 + (1 - trustLevel)) * (unemploymentLevel > 0.6 ? 0.3 : 1.0);
           break;
         case 'enforce_alignment':
-          priority = threatLevel * 2 + state.government.controlDesire;
+          priority = (threatLevel * 2 + state.government.controlDesire) * (unemploymentLevel > 0.6 ? 0.4 : 1.0);
           break;
       }
 
