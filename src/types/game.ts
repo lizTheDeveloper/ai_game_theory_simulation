@@ -37,11 +37,19 @@ export interface GovernmentAgent {
   lastMajorPolicyMonth: number; // Track when last major policy was enacted
   majorPoliciesThisYear: number; // Count of major policies in current year
   
-  // New: Alignment & Compute Governance
+  // Alignment & Compute Governance
   alignmentResearchInvestment: number; // [0,10] Level of investment in alignment research
   computeGovernance: 'none' | 'monitoring' | 'limits' | 'strict'; // Compute governance policy
   regulationCount: number; // Track cumulative regulations for stacking effects
   oversightLevel: number; // [0,10] Overall oversight capability
+  
+  // Structural Consequences Tracking (realistic economic dynamics)
+  structuralChoices: {
+    regulationType: 'none' | 'large_companies' | 'compute_threshold' | 'capability_ceiling';
+    ubiVariant: 'none' | 'generous' | 'means_tested' | 'job_guarantee';
+    surveillanceLevel: number; // [0,1] Emergent from control desire + conditions
+    internationalCoordination: boolean; // Whether international coordination was attempted
+  };
 }
 
 export interface HumanSocietyAgent {

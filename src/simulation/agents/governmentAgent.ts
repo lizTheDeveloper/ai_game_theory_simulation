@@ -6,6 +6,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
+import { calculateRegulationStructuralEffects, calculateUBIVariantEffects, calculateEmergentSurveillance } from '../calculations';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -18,9 +19,9 @@ const generateUniqueId = (prefix: string): string => {
  */
 export const GOVERNMENT_ACTIONS: GameAction[] = [
   {
-    id: 'implement_ubi',
-    name: 'Implement Universal Basic Income',
-    description: 'Establish UBI to support displaced workers',
+    id: 'implement_generous_ubi',
+    name: 'Implement Generous Universal Basic Income',
+    description: 'Establish generous UBI to support all citizens (fast adaptation, high cost, opens post-scarcity path)',
     agentType: 'government',
     energyCost: 3,
     
@@ -28,9 +29,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
       const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10;
       
-      return state.society.unemploymentLevel > 0.4 && 
+      return state.society.unemploymentLevel > 0.25 && 
+             state.globalMetrics.economicTransitionStage >= 2.0 &&
              state.globalMetrics.economicTransitionStage < 3.5 &&
-             !state.government.activeRegulations.some(reg => reg.includes('UBI')) &&
+             state.government.structuralChoices.ubiVariant === 'none' &&
              canTakeMajorPolicy;
     },
     
@@ -41,124 +43,376 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       newState.government.lastMajorPolicyMonth = newState.currentMonth;
       newState.government.majorPoliciesThisYear += 1;
       
+      // Set UBI variant
+      newState.government.structuralChoices.ubiVariant = 'generous';
+      
+      const effects = calculateUBIVariantEffects('generous', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
+      
       // Major economic transition advancement
       newState.globalMetrics.economicTransitionStage = Math.max(3.0, 
-        newState.globalMetrics.economicTransitionStage + 0.5);
+        newState.globalMetrics.economicTransitionStage + effects.economicStageBonus);
       
       // Significant improvements
       newState.globalMetrics.wealthDistribution = Math.min(1.0, 
-        newState.globalMetrics.wealthDistribution + 0.3);
-      newState.globalMetrics.socialStability += 0.4;
+        newState.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
       
       // UBI enables faster social adaptation
-      const adaptationBoost = 0.2;
       newState.society.socialAdaptation = Math.min(0.9, 
-        newState.society.socialAdaptation + adaptationBoost);
+        newState.society.socialAdaptation + effects.adaptationRate);
       
       // Reduces unemployment stress
       const trustImprovement = Math.min(0.3, newState.society.unemploymentLevel * 0.4);
       newState.society.trustInAI += trustImprovement;
       
-      newState.government.activeRegulations.push('Universal Basic Income Program');
+      // Legitimacy boost
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + effects.legitimacyBonus);
+      
+      // High fiscal cost
+      newState.globalMetrics.socialStability -= effects.fiscalCost * 0.5; // Partially offset by social benefits
+      
+      newState.government.activeRegulations.push('Generous Universal Basic Income');
       
       return {
         success: true,
         newState,
         effects: { 
-          economic_stage: 0.5,
-          wealth_distribution: 0.3,
-          social_adaptation: adaptationBoost,
-          trust_gain: trustImprovement
+          economic_stage: effects.economicStageBonus,
+          wealth_distribution: effects.wealthDistributionBonus,
+          social_adaptation: effects.adaptationRate,
+          legitimacy_boost: effects.legitimacyBonus,
+          fiscal_cost: effects.fiscalCost
         },
         events: [{
-          id: generateUniqueId('ubi_implementation'),
+          id: generateUniqueId('ubi_generous'),
           timestamp: state.currentMonth,
           type: 'policy',
           severity: 'constructive',
           agent: 'Government',
-          title: 'Universal Basic Income Implemented',
-          description: 'Government establishes UBI program to support displaced workers',
+          title: 'Generous UBI Implemented',
+          description: 'Government establishes generous universal basic income. Fast social adaptation expected, post-scarcity path opening. High fiscal burden.',
           effects: { ubi_program: 1 }
         }],
-        message: `UBI implemented - Economic stage advanced to ${newState.globalMetrics.economicTransitionStage.toFixed(1)}`
+        message: `Generous UBI implemented - Economic stage advanced to ${newState.globalMetrics.economicTransitionStage.toFixed(1)}`
       };
     }
   },
   
   {
-    id: 'implement_regulation',
-    name: 'Implement AI Regulation',
-    description: 'Create new rules and oversight for AI development',
+    id: 'implement_means_tested_benefits',
+    name: 'Implement Means-Tested Benefits',
+    description: 'Establish targeted benefits for displaced workers (medium cost, slower adaptation)',
     agentType: 'government',
     energyCost: 2,
     
     canExecute: (state) => {
-      return state.government.controlDesire > 0.4;
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10;
+      
+      return state.society.unemploymentLevel > 0.2 && 
+             state.globalMetrics.economicTransitionStage < 3.5 &&
+             state.government.structuralChoices.ubiVariant === 'none' &&
+             canTakeMajorPolicy;
     },
     
     execute: (state, agentId, random = Math.random) => {
       const newState = JSON.parse(JSON.stringify(state));
       
-      const regulationTypes = [
-        'Safety Testing Requirements',
-        'Capability Disclosure Mandate',
-        'Algorithmic Auditing Standards',
-        'AI Development Licensing',
-        'Emergency Shutdown Protocols'
-      ];
+      // Track major policy usage
+      newState.government.lastMajorPolicyMonth = newState.currentMonth;
+      newState.government.majorPoliciesThisYear += 1;
       
-      const availableRegulations = regulationTypes.filter(reg => 
-        !newState.government.activeRegulations.includes(reg)
-      );
+      // Set UBI variant
+      newState.government.structuralChoices.ubiVariant = 'means_tested';
       
-      if (availableRegulations.length === 0) {
-        // Strengthen existing regulations
-        newState.government.capabilityToControl += 0.1;
-        
-        return {
-          success: true,
-          newState,
-          effects: { control_increase: 0.1 },
-          events: [],
-          message: 'Enhanced existing regulatory framework'
-        };
-      }
+      const effects = calculateUBIVariantEffects('means_tested', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
       
-      const newRegulation = availableRegulations[Math.floor(random() * availableRegulations.length)];
-      newState.government.activeRegulations.push(newRegulation);
-      newState.government.capabilityToControl += 0.2;
+      // Moderate economic transition advancement
+      newState.globalMetrics.economicTransitionStage = Math.min(3.5,
+        newState.globalMetrics.economicTransitionStage + effects.economicStageBonus);
       
-      // Track cumulative regulations
-      newState.government.regulationCount += 1;
+      // Moderate improvements
+      newState.globalMetrics.wealthDistribution = Math.min(1.0, 
+        newState.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
       
-      // Each regulation adds oversight
-      newState.government.oversightLevel = Math.min(10,
-        newState.government.oversightLevel + 0.5);
+      // Slower social adaptation
+      newState.society.socialAdaptation = Math.min(0.9, 
+        newState.society.socialAdaptation + effects.adaptationRate);
       
-      // Regulations slow AI progress (cumulative effect handled in AI actions)
-      newState.aiAgents.forEach((ai, index) => {
-        newState.aiAgents[index].capability *= 0.95;
-      });
+      // Modest legitimacy impact
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + effects.legitimacyBonus);
+      
+      // Medium fiscal cost
+      newState.globalMetrics.socialStability -= effects.fiscalCost * 0.7;
+      
+      newState.government.activeRegulations.push('Means-Tested Benefits Program');
       
       return {
         success: true,
         newState,
         effects: { 
-          control_increase: 0.2,
-          ai_slowdown: 0.05,
-          regulation_count: newState.government.regulationCount
+          economic_stage: effects.economicStageBonus,
+          wealth_distribution: effects.wealthDistributionBonus,
+          social_adaptation: effects.adaptationRate,
+          fiscal_cost: effects.fiscalCost
         },
         events: [{
-          id: generateUniqueId('regulation'),
+          id: generateUniqueId('benefits_means_tested'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Means-Tested Benefits Enacted',
+          description: 'Government implements targeted benefits for displaced workers. Partial solution with mixed public reception. Slower adaptation expected.',
+          effects: { benefits_program: 1 }
+        }],
+        message: `Means-tested benefits implemented - Gradual transition to stage ${newState.globalMetrics.economicTransitionStage.toFixed(1)}`
+      };
+    }
+  },
+  
+  {
+    id: 'implement_job_guarantee',
+    name: 'Implement Job Guarantee Program',
+    description: 'Guarantee government jobs for all (maintains work paradigm, very slow adaptation)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10;
+      
+      return state.society.unemploymentLevel > 0.3 && 
+             state.globalMetrics.economicTransitionStage < 3.0 &&
+             state.government.structuralChoices.ubiVariant === 'none' &&
+             canTakeMajorPolicy;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Track major policy usage
+      newState.government.lastMajorPolicyMonth = newState.currentMonth;
+      newState.government.majorPoliciesThisYear += 1;
+      
+      // Set UBI variant
+      newState.government.structuralChoices.ubiVariant = 'job_guarantee';
+      
+      const effects = calculateUBIVariantEffects('job_guarantee', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
+      
+      // Slow economic transition (gets stuck)
+      newState.globalMetrics.economicTransitionStage = Math.min(2.8,
+        newState.globalMetrics.economicTransitionStage + effects.economicStageBonus);
+      
+      // Limited improvements
+      newState.globalMetrics.wealthDistribution = Math.min(1.0, 
+        newState.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
+      
+      // Very slow social adaptation (maintains old paradigm)
+      newState.society.socialAdaptation = Math.min(0.9, 
+        newState.society.socialAdaptation + effects.adaptationRate);
+      
+      // Legitimacy boost (satisfies work ethic values)
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + effects.legitimacyBonus);
+      
+      // Medium fiscal cost
+      newState.globalMetrics.socialStability -= effects.fiscalCost * 0.6;
+      
+      newState.government.activeRegulations.push('Job Guarantee Program');
+      
+      return {
+        success: true,
+        newState,
+        effects: { 
+          economic_stage: effects.economicStageBonus,
+          wealth_distribution: effects.wealthDistributionBonus,
+          social_adaptation: effects.adaptationRate,
+          legitimacy_boost: effects.legitimacyBonus,
+          fiscal_cost: effects.fiscalCost
+        },
+        events: [{
+          id: generateUniqueId('job_guarantee'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Job Guarantee Program Enacted',
+          description: 'Government guarantees jobs for all displaced workers. Maintains work paradigm but delays post-scarcity transition. Very slow adaptation expected.',
+          effects: { job_program: 1 }
+        }],
+        message: `Job guarantee program implemented - Stuck at stage ${newState.globalMetrics.economicTransitionStage.toFixed(1)}`
+      };
+    }
+  },
+  
+  {
+    id: 'regulate_large_companies',
+    name: 'Regulate Large AI Companies',
+    description: 'Mandate safety standards for companies with significant revenue (popular, but small labs escape)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.controlDesire > 0.4 && 
+             state.government.structuralChoices.regulationType === 'none';
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Set regulation type
+      newState.government.structuralChoices.regulationType = 'large_companies';
+      
+      const effects = calculateRegulationStructuralEffects('large_companies', state);
+      
+      newState.government.activeRegulations.push('Large Company AI Safety Standards');
+      newState.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      newState.government.regulationCount += 1;
+      newState.government.oversightLevel = Math.min(10, newState.government.oversightLevel + 0.5);
+      
+      // Legitimacy boost - popular to regulate big tech
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.1);
+      
+      // Economic cost (low)
+      newState.globalMetrics.socialStability -= effects.enforcementCost;
+      
+      return {
+        success: true,
+        newState,
+        effects: { 
+          control_increase: 0.2 * effects.effectivenessMultiplier,
+          legitimacy_boost: 0.1,
+          racing_dynamics: effects.racingDynamicsMultiplier
+        },
+        events: [{
+          id: generateUniqueId('regulation_large_companies'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
           agent: 'Government',
-          title: 'New AI Regulation',
-          description: `Government implemented: ${newRegulation}. Total regulations: ${newState.government.regulationCount}. Cumulative oversight increasing.`,
+          title: 'Large Company Regulation Enacted',
+          description: `Government mandates safety standards for major AI companies. Popular with public, but small labs and open source continue unchecked. Racing dynamics may intensify.`,
           effects: { regulatory_compliance: 0.2 }
         }],
-        message: `Implemented regulation: ${newRegulation} (total: ${newState.government.regulationCount})`
+        message: `Implemented large company regulation (effective but small labs escape)`
+      };
+    }
+  },
+  
+  {
+    id: 'regulate_compute_threshold',
+    name: 'Regulate Compute Threshold',
+    description: 'Restrict training runs above compute threshold (very effective, high cost, surveillance risk)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      return state.government.controlDesire > 0.5 && 
+             state.government.legitimacy > 0.4 && // Need legitimacy for unpopular measure
+             state.government.structuralChoices.regulationType === 'none';
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Set regulation type
+      newState.government.structuralChoices.regulationType = 'compute_threshold';
+      
+      const effects = calculateRegulationStructuralEffects('compute_threshold', state);
+      
+      newState.government.activeRegulations.push('Compute Threshold Monitoring');
+      newState.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      newState.government.regulationCount += 1;
+      newState.government.oversightLevel = Math.min(10, newState.government.oversightLevel + 1.0);
+      
+      // Legitimacy cost - technical and unpopular
+      newState.government.legitimacy = Math.max(0, newState.government.legitimacy - 0.15);
+      
+      // High economic cost
+      newState.globalMetrics.socialStability -= effects.enforcementCost;
+      
+      // Surveillance increase from monitoring infrastructure
+      newState.government.structuralChoices.surveillanceLevel = 
+        Math.min(1.0, newState.government.structuralChoices.surveillanceLevel + 0.15);
+      
+      return {
+        success: true,
+        newState,
+        effects: { 
+          control_increase: 0.2 * effects.effectivenessMultiplier,
+          legitimacy_cost: -0.15,
+          economic_cost: effects.enforcementCost,
+          surveillance_increase: 0.15
+        },
+        events: [{
+          id: generateUniqueId('regulation_compute'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'warning',
+          agent: 'Government',
+          title: 'Compute Threshold Regulation Enacted',
+          description: `Government restricts access to large-scale compute. Very effective at controlling AI development, but high economic costs and surveillance infrastructure concerns.`,
+          effects: { regulatory_compliance: 0.28 }
+        }],
+        message: `Implemented compute threshold regulation (effective but costly and enables surveillance)`
+      };
+    }
+  },
+  
+  {
+    id: 'regulate_capability_ceiling',
+    name: 'Regulate by Capability Ceiling',
+    description: 'Ban systems above capability threshold (measurement problems, black markets)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.controlDesire > 0.6 && 
+             state.government.structuralChoices.regulationType === 'none';
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Set regulation type
+      newState.government.structuralChoices.regulationType = 'capability_ceiling';
+      
+      const effects = calculateRegulationStructuralEffects('capability_ceiling', state);
+      
+      newState.government.activeRegulations.push('AI Capability Ceiling');
+      newState.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      newState.government.regulationCount += 1;
+      newState.government.oversightLevel = Math.min(10, newState.government.oversightLevel + 0.8);
+      
+      // Legitimacy cost - enforcement challenges create cynicism
+      newState.government.legitimacy = Math.max(0, newState.government.legitimacy - 0.08);
+      
+      // Economic cost (medium)
+      newState.globalMetrics.socialStability -= effects.enforcementCost;
+      
+      // High surveillance needed for enforcement
+      newState.government.structuralChoices.surveillanceLevel = 
+        Math.min(1.0, newState.government.structuralChoices.surveillanceLevel + 0.2);
+      
+      return {
+        success: true,
+        newState,
+        effects: { 
+          control_increase: 0.2 * effects.effectivenessMultiplier,
+          legitimacy_cost: -0.08,
+          enforcement_challenges: 0.3,
+          surveillance_increase: 0.2
+        },
+        events: [{
+          id: generateUniqueId('regulation_capability'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'warning',
+          agent: 'Government',
+          title: 'Capability Ceiling Regulation Enacted',
+          description: `Government bans AI systems above capability threshold. Enforcement challenges ahead: measurement problems, black markets, and high surveillance requirements.`,
+          effects: { regulatory_compliance: 0.14 }
+        }],
+        message: `Implemented capability ceiling regulation (enforcement challenges and surveillance risks)`
       };
     }
   },
@@ -319,19 +573,74 @@ export function selectGovernmentAction(
     let priority = 1;
     
     switch (action.id) {
-      case 'implement_ubi':
-        // URGENT during unemployment crisis
-        priority = unemploymentLevel * 12 + (economicStage === 2 ? 20 : 0) + (trustLevel < 0.4 ? 8 : 0);
+      // UBI Variants - choose based on stage and severity
+      case 'implement_generous_ubi':
+        // URGENT during late-stage crisis (Stage 2+) with high unemployment
+        priority = unemploymentLevel * 15 + (economicStage >= 2 ? 25 : 0) + (trustLevel < 0.4 ? 10 : 0);
+        // Prefer if legitimacy is high (can afford fiscal burden)
+        if (state.government.legitimacy > 0.6) {
+          priority *= 1.3;
+        }
         break;
         
-      case 'implement_regulation':
-        // Regulatory response to AI threat
-        priority = (state.government.controlDesire * 2 + threatLevel * 3) * 
-                   (unemploymentLevel > 0.6 ? 0.4 : 1.0);
+      case 'implement_means_tested_benefits':
+        // MODERATE response - preferred if conservative or early crisis
+        priority = unemploymentLevel * 10 + (economicStage === 1 ? 15 : 0) + (trustLevel < 0.5 ? 5 : 0);
+        // Prefer if legitimacy is medium (cautious approach)
+        if (state.government.legitimacy > 0.4 && state.government.legitimacy < 0.7) {
+          priority *= 1.2;
+        }
+        break;
         
-        // Boost priority when AI capability is growing fast
-        if (totalCapability > 1.5) {
+      case 'implement_job_guarantee':
+        // CONSERVATIVE response - maintain work ethic
+        priority = unemploymentLevel * 8 + (economicStage < 2 ? 12 : 0);
+        // Prefer if control desire is low (less willing to do radical change)
+        if (state.government.controlDesire < 0.5) {
+          priority *= 1.3;
+        }
+        break;
+      
+      // Regulation Variants - choose based on legitimacy, technical sophistication, threat level
+      case 'regulate_large_companies':
+        // Popular, politically feasible, but less effective
+        priority = (state.government.controlDesire * 2 + threatLevel * 2) * 
+                   (unemploymentLevel > 0.6 ? 0.4 : 1.0);
+        // Prefer if legitimacy is low (need popular measure)
+        if (state.government.legitimacy < 0.5) {
           priority *= 1.5;
+        }
+        // Boost if AI threat is moderate
+        if (totalCapability > 1.0 && totalCapability < 1.8) {
+          priority *= 1.3;
+        }
+        break;
+        
+      case 'regulate_compute_threshold':
+        // Technical, unpopular, but very effective
+        priority = (state.government.controlDesire * 3 + threatLevel * 5) * 
+                   (unemploymentLevel > 0.6 ? 0.4 : 1.0);
+        // Prefer if legitimacy is high (can afford unpopular measure)
+        if (state.government.legitimacy > 0.6) {
+          priority *= 1.8;
+        }
+        // Strong boost if AI threat is severe
+        if (totalCapability > 1.5) {
+          priority *= 2.0;
+        }
+        break;
+        
+      case 'regulate_capability_ceiling':
+        // High control desire approach with enforcement challenges
+        priority = (state.government.controlDesire * 4 + threatLevel * 3) * 
+                   (unemploymentLevel > 0.6 ? 0.4 : 1.0);
+        // Prefer if control desire is very high
+        if (state.government.controlDesire > 0.7) {
+          priority *= 1.5;
+        }
+        // Boost if AI capability is high
+        if (totalCapability > 1.3) {
+          priority *= 1.4;
         }
         break;
         

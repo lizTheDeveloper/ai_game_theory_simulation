@@ -104,7 +104,13 @@ function createInitialState(): GameState {
       alignmentResearchInvestment: 0,
       computeGovernance: 'none' as const,
       regulationCount: 0,
-      oversightLevel: 0
+      oversightLevel: 0,
+      structuralChoices: {
+        regulationType: 'none',
+        ubiVariant: 'none',
+        surveillanceLevel: 0,
+        internationalCoordination: false
+      }
     },
     
     society: {
@@ -249,7 +255,7 @@ async function runSingleSimulation(options: any) {
   const startTime = Date.now();
   const result = engine.run(initialState, {
     maxMonths: options.maxMonths,
-    outcomeThreshold: 0.85
+    checkActualOutcomes: true
   });
   const elapsed = Date.now() - startTime;
   
