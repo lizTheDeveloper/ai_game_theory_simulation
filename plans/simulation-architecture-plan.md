@@ -1,12 +1,14 @@
 # Simulation Architecture Refactoring Plan
 
+**Status:** Phase 2 Complete ✅ | Phase 3: UI Integration Pending
+
 ## Problem Statement
 
 The current game architecture has simulation logic tightly coupled to the UI layer (Zustand store, React components). This makes it difficult to:
-- Run Monte Carlo simulations independently of the UI
-- Test economic models and scenarios programmatically
-- Validate balancing assumptions from the economic-system-balancing-plan
-- Run parameter sweeps and sensitivity analyses
+- Run Monte Carlo simulations independently of the UI ✅ **SOLVED**
+- Test economic models and scenarios programmatically ✅ **SOLVED**
+- Validate balancing assumptions from the economic-system-balancing-plan ✅ **SOLVED**
+- Run parameter sweeps and sensitivity analyses ✅ **SOLVED**
 
 ## Architecture Goals
 
@@ -88,194 +90,184 @@ src/
 
 ## Implementation Steps
 
-### Phase 1: Extract Core Simulation Engine
+### Phase 1: Extract Core Simulation Engine ✅ **COMPLETE**
 
-#### 1.1 Create Pure Calculation Functions
-Extract from `gameStore.ts` and `actionSystem.ts`:
-- `calculateQualityOfLife(state): number`
-- `calculateEffectiveControl(state): number`
-- `calculateOutcomeProbabilities(state): OutcomeMetrics`
-- `calculateUnemploymentStabilityImpact(unemployment, stage, wealth): number`
-- `calculateUnemployment(state): number` (NEW - from balancing plan)
+#### 1.1 Create Pure Calculation Functions ✅
+Extracted from `gameStore.ts` and `actionSystem.ts` into `src/simulation/calculations.ts`:
+- ✅ `calculateQualityOfLife(state): number`
+- ✅ `calculateEffectiveControl(state): number`
+- ✅ `calculateOutcomeProbabilities(state): OutcomeMetrics`
+- ✅ `calculateUnemploymentStabilityImpact(unemployment, stage, wealth): number`
+- ✅ `calculateUnemployment(state): number` (from balancing plan)
+- ✅ `calculateAICapabilityGrowthRate()` - recursive self-improvement
+- ✅ `calculateAlignmentDrift()` - Goodhart's Law
+- ✅ `calculateAlignmentResearchEffect()` - research interventions
+- ✅ `calculateCumulativeRegulationEffect()` - stacking regulations
+- ✅ `calculateComputeGovernanceEffect()` - compute limits
+- ✅ `calculateRacingDynamicsPressure()` - competitive dynamics
+- ✅ `determineActualOutcome()` - definitive outcome determination
 
-#### 1.2 Create State Transition Functions
-```typescript
-// simulation/transitions.ts
-export interface SimulationState extends GameState {
-  // All state is here, no Zustand dependencies
-}
+#### 1.2 Create State Transition Functions ✅
+Implemented in `src/simulation/engine.ts`:
+- ✅ `SimulationEngine.step()` - advances simulation by one time unit
+- ✅ `SimulationEngine.run()` - runs full simulation with stop conditions
+- ✅ Pure state transitions using `SeededRandom` for reproducibility
+- ✅ Economic model in `src/simulation/economics.ts` with stage transitions
+- ✅ Crisis detection and event generation
+- ✅ Outcome determination (probability vs actual)
 
-export function advanceDay(state: SimulationState): SimulationState {
-  // Pure function - returns new state
-}
+#### 1.3 Create Agent Decision Modules ✅
+Implemented agent logic with realistic coordination hierarchy:
+- ✅ `src/simulation/agents/aiAgent.ts` - Strategic AI decision-making
+  - Action selection with weighted priorities
+  - Development mode switching (fast/careful)
+  - Capability growth with recursive self-improvement
+  - Response to regulatory pressure
+- ✅ `src/simulation/agents/governmentAgent.ts` - Coordinated government response
+  - Priority-based action selection (unemployment vs AI threat)
+  - Alignment research investment
+  - Compute governance implementation
+  - Regulation with cumulative effects
+- ✅ `src/simulation/agents/societyAgent.ts` - Stochastic societal reactions
+  - Threshold-based protest/support
+  - Demand for safety/progress
+  - Economic adaptation
+- ✅ `src/simulation/crisisPoints.ts` - Critical decision moments
+  - Crisis choice points for agents
+  - Structural consequences of choices
 
-export function advanceMonth(state: SimulationState): SimulationState {
-  // Combines daily updates, agent actions, calculations
-}
+### Phase 2: Build Simulation Engine API ✅ **COMPLETE**
 
-export function processAgentActions(state: SimulationState): SimulationState {
-  // All agent decision making
-}
-```
-
-#### 1.3 Create Agent Decision Modules
-```typescript
-// simulation/agents/aiAgent.ts
-export interface AIAgentDecision {
-  action: GameAction;
-  reasoning: string;
-  expectedUtility: number;
-}
-
-export function selectAIAction(
-  agent: AIAgent, 
-  state: SimulationState
-): AIAgentDecision {
-  // Pure decision logic
-}
-
-export function executeAIAction(
-  agent: AIAgent,
-  action: GameAction,
-  state: SimulationState
-): SimulationState {
-  // Pure execution - returns new state
-}
-```
-
-### Phase 2: Build Simulation Engine API
+Fully implemented in `src/simulation/engine.ts`:
 
 ```typescript
-// simulation/engine.ts
 export class SimulationEngine {
-  constructor(
-    private config: SimulationConfig,
-    private rng: RandomNumberGenerator // Seedable RNG for reproducibility
-  ) {}
-
-  /**
-   * Initialize a new simulation from config
-   */
-  initialize(): SimulationState {
-    // Create initial state
+  private rng: SeededRandom;
+  
+  constructor(seed?: number) {
+    this.rng = new SeededRandom(seed);
   }
 
-  /**
-   * Step the simulation forward by one time unit
-   */
-  step(state: SimulationState): SimulationResult {
-    return {
-      state: this.advanceSimulation(state),
-      events: [...],
-      metrics: this.calculateMetrics(state)
-    };
-  }
-
-  /**
-   * Run simulation to completion or max steps
-   */
-  run(
-    initialState: SimulationState,
-    maxSteps: number = 1000,
-    stopConditions?: StopCondition[]
-  ): SimulationRun {
-    let state = initialState;
-    const history: SimulationState[] = [state];
-    
-    for (let step = 0; step < maxSteps; step++) {
-      const result = this.step(state);
-      state = result.state;
-      history.push(state);
-      
-      if (this.shouldStop(state, stopConditions)) {
-        break;
-      }
-    }
-    
-    return {
-      finalState: state,
-      history,
-      metrics: this.analyzeRun(history)
-    };
+  // ✅ Step function with agent actions, economic updates, crisis detection
+  step(state: GameState, config: SimulationConfig): GameState
+  
+  // ✅ Full simulation run with hierarchical logging
+  run(config: SimulationConfig): SimulationRunResult {
+    // Includes:
+    // - Agent action processing (AI: 4x/month, Gov: 1x/month, Society: 1x/month)
+    // - Economic stage transitions
+    // - Crisis point detection and choices
+    // - Outcome determination (actual vs probability)
+    // - Stop conditions based on outcomes or max months
+    // - Hierarchical logging (full/monthly/quartile/summary)
   }
 }
 ```
 
-### Phase 3: Create Monte Carlo Runner
+**Key Features Implemented:**
+- ✅ Seedable RNG for reproducible simulations
+- ✅ Hierarchical logging system (`src/simulation/logging.ts`)
+- ✅ Agent coordination hierarchy (AI > Government > Society)
+- ✅ Crisis choice points with structural consequences
+- ✅ Actual outcome determination vs probability
+- ✅ Economic stage transitions with realistic thresholds
+
+### Phase 3: Create Monte Carlo Runner ✅ **COMPLETE**
+
+Fully implemented in `src/simulation-runner/monteCarlo.ts`:
 
 ```typescript
-// simulation-runner/monteCarlo.ts
-export interface MonteCarloConfig {
-  numRuns: number;
-  maxSteps: number;
-  initialStateVariation: StateVariationConfig;
-  parameters: ParameterSweep;
-  parallel?: boolean;
-}
+// ✅ Batch simulation runner
+export function runMonteCarlo(
+  baseConfig: SimulationConfig,
+  runs: number,
+  seedOffset: number = 0
+): MonteCarloResults
 
-export interface MonteCarloResults {
-  runs: SimulationRun[];
-  aggregateMetrics: AggregateStatistics;
-  outcomeDistribution: {
-    utopia: number;
-    dystopia: number;
-    extinction: number;
-  };
-  parameterSensitivity: ParameterSensitivityAnalysis;
-}
+// ✅ Parameter sweep with multiple values
+export function runParameterSweep(
+  baseConfig: SimulationConfig,
+  parameterSweeps: ParameterSweeps,
+  runsPerConfig: number = 100
+): ParameterSweepResults
 
-export async function runMonteCarlo(
-  config: MonteCarloConfig
-): Promise<MonteCarloResults> {
-  const engine = new SimulationEngine(config, createSeededRNG());
-  
-  const runs = await (config.parallel 
-    ? runParallel(config, engine)
-    : runSequential(config, engine)
-  );
-  
-  return analyzeResults(runs);
-}
+// ✅ Export results with hierarchical summarization
+export function exportResults(
+  results: MonteCarloResults,
+  filePath: string
+): void
 ```
 
-### Phase 4: Update UI Layer
+**Features Implemented:**
+- ✅ Batch simulation execution with different seeds
+- ✅ Outcome distribution analysis (utopia/dystopia/extinction)
+- ✅ Parameter sweep capabilities
+- ✅ Hierarchical summarization (prevents memory overflow)
+- ✅ Average trajectory calculation across runs
+- ✅ Quartile progression analysis
+- ✅ Event frequency analysis
+- ✅ JSON export for external analysis
 
+**Scripts Created:**
+- ✅ `scripts/runSimulation.ts` - CLI for single/batch simulations
+- ✅ `scripts/testScenarios.ts` - Scenario comparison tool
+- ✅ `scripts/testBalancedMechanics.ts` - Balance validation
+- ✅ `scripts/diagnoseAgentBehavior.ts` - Agent action tracking
+
+**Documentation:**
+- ✅ `SIMULATION_USAGE.md` - Usage guide
+- ✅ `HIERARCHICAL_LOGGING.md` - Logging system docs
+- ✅ `PHASE_2_COMPLETE.md` - Phase 2 summary
+
+### Phase 4: Update UI Layer ⏳ **PENDING**
+
+**Status:** Not started - UI still uses old `gameStore.ts` directly
+
+**Planned Changes:**
 ```typescript
-// lib/gameStore.ts (simplified)
+// lib/gameStore.ts (to be simplified)
 import { SimulationEngine } from '@/simulation/engine';
+import { selectAIAction, executeAIAction } from '@/simulation/agents/aiAgent';
+// ... etc
 
 export const useGameStore = create<GameStore>()(
   immer((set, get) => {
-    const engine = new SimulationEngine(defaultConfig, randomRNG());
+    const engine = new SimulationEngine();
     
     return {
       // UI state
-      ...engine.initialize(),
+      ...createInitialState(),
       
-      // Actions become thin wrappers
+      // Actions become thin wrappers around simulation engine
       dispatch: (action: GameAction) => {
         set((state) => {
-          // Just call the engine
-          const result = engine.step(state);
-          Object.assign(state, result.state);
+          const newState = engine.step(state, defaultConfig);
+          Object.assign(state, newState);
         });
       },
       
       processMonthlyUpdate: () => {
         set((state) => {
-          const result = engine.step(state);
-          Object.assign(state, result.state);
+          const newState = engine.step(state, defaultConfig);
+          Object.assign(state, newState);
         });
       },
       
-      // Calculations delegate to engine
+      // Calculations delegate to pure functions
       calculateQualityOfLife: () => {
-        return engine.calculateQualityOfLife(get());
+        return calculateQualityOfLife(get());
       }
     };
   })
 );
 ```
+
+**Tasks Remaining:**
+- [ ] Refactor `gameStore.ts` to use `SimulationEngine`
+- [ ] Remove duplicated calculation logic from UI
+- [ ] Update components to work with new store
+- [ ] Verify game plays identically to before
+- [ ] Test all UI interactions
 
 ## Testing Strategy
 
@@ -419,38 +411,86 @@ main();
 ## Deliverables
 
 ### Code
-- [ ] `src/simulation/engine.ts` - Core simulation engine
-- [ ] `src/simulation/calculations.ts` - Pure calculation functions
-- [ ] `src/simulation/agents/` - Agent decision logic
-- [ ] `src/simulation-runner/monteCarlo.ts` - Monte Carlo runner
-- [ ] `scripts/runSimulation.ts` - CLI runner script
+- ✅ `src/simulation/engine.ts` - Core simulation engine
+- ✅ `src/simulation/calculations.ts` - Pure calculation functions
+- ✅ `src/simulation/economics.ts` - Economic model with stage transitions
+- ✅ `src/simulation/logging.ts` - Hierarchical logging system
+- ✅ `src/simulation/crisisPoints.ts` - Crisis choice point system
+- ✅ `src/simulation/agents/` - Agent decision logic (AI, Government, Society)
+- ✅ `src/simulation-runner/monteCarlo.ts` - Monte Carlo runner
+- ✅ `scripts/runSimulation.ts` - CLI runner script
+- ✅ `scripts/testScenarios.ts` - Scenario testing
+- ✅ `scripts/testBalancedMechanics.ts` - Balance validation
+- ✅ `scripts/diagnoseAgentBehavior.ts` - Agent diagnostics
+- ⏳ `src/lib/gameStore.ts` - UI integration (pending)
 
 ### Documentation
-- [ ] API documentation for simulation engine
-- [ ] Guide for running headless simulations
-- [ ] Monte Carlo configuration guide
-- [ ] Analysis and visualization guide
+- ✅ `SIMULATION_USAGE.md` - Guide for running headless simulations
+- ✅ `HIERARCHICAL_LOGGING.md` - Logging system documentation
+- ✅ `PHASE_2_COMPLETE.md` - Phase 2 completion summary
+- ✅ `devlog/simulation-architecture-refactor.md` - Implementation notes
+- ✅ `devlog/phase-2-agent-actions-integration.md` - Agent integration notes
+- ✅ `devlog/scenario-analysis-oct-2024.md` - Balance analysis
+- ✅ `devlog/realistic-balance-oct-2024.md` - Realistic balance philosophy
+- ✅ `devlog/realism-over-balance.md` - Realism priority documentation
+- ✅ `devlog/balance-philosophy.md` - Balance design philosophy
+- ⏳ API documentation for simulation engine (partial)
 
-### Tests
-- [ ] Unit tests for all pure functions
-- [ ] Integration tests for full simulation runs
-- [ ] Validation tests for economic scenarios
-- [ ] Performance benchmarks
+### Tests & Validation
+- ✅ Manual testing of pure functions via test scripts
+- ✅ Integration tests via scenario comparison
+- ✅ Economic scenario validation (Stage 0-4 transitions)
+- ✅ Balance mechanics validation (recursive growth, alignment drift, etc.)
+- ✅ Agent behavior diagnostics
+- ⏳ Automated unit tests (not yet implemented)
+- ⏳ Performance benchmarks (not yet implemented)
 
 ### Analysis
-- [ ] Monte Carlo results for baseline scenario
-- [ ] Parameter sensitivity analysis
-- [ ] Validation of economic balancing plan
-- [ ] Report on optimal game parameters
+- ✅ Monte Carlo results for multiple scenarios
+- ✅ Baseline vs intervention comparison
+- ✅ Outcome distribution analysis (utopia/dystopia/extinction rates)
+- ✅ Agent action frequency tracking
+- ✅ Crisis event analysis
+- ⏳ Parameter sensitivity analysis (basic implementation, needs refinement)
+- ⏳ Optimal game parameters report (pending Phase 4)
 
-## Next Steps
+## Current Status & Next Steps
 
-1. **Review and approve this plan**
-2. **Start with Phase 1**: Extract core simulation logic
-3. **Build test harness**: Ensure new system matches old behavior
-4. **Implement Monte Carlo runner**: Enable batch simulations
-5. **Run validation scenarios**: Test economic balancing predictions
-6. **Iterate and refine**: Adjust based on simulation results
+### ✅ Completed (Phases 1-3)
+1. ✅ **Phase 1**: Extracted core simulation logic into pure functions
+2. ✅ **Phase 2**: Built simulation engine with agent actions
+3. ✅ **Phase 3**: Implemented Monte Carlo runner with hierarchical logging
+4. ✅ Validated economic model and crisis detection
+5. ✅ Implemented realistic agent decision-making with coordination hierarchy
+6. ✅ Created crisis choice point system
+7. ✅ Distinguished outcome probability from actual outcomes
+8. ✅ Reframed economic dynamics for flexible government responses
 
-This refactoring will enable serious modeling and analysis while keeping the game playable and fun.
+### ⏳ In Progress
+- **Economic System Implementation**: Implementing the new `realistic-economic-dynamics.md` plan
+  - Priority-based government responses
+  - Structural consequences of intervention choices
+  - Competing priorities system
+  - Crisis multipliers
+
+### 📋 Pending (Phase 4+)
+1. **Phase 4**: Update UI layer to use simulation engine
+   - Refactor `gameStore.ts` to be thin wrapper
+   - Remove duplicated calculations from UI
+   - Test game plays identically
+2. **Fix Quartile Logging Bug**: Month 0 appearing in all quartile snapshots
+3. **Run Large-Scale Analysis**: 1000+ simulations to map outcome space
+4. **Analyze Crisis Choices**: Determine which choices lead to which outcomes
+5. **Automated Testing**: Unit tests for all pure functions
+6. **Performance Optimization**: Benchmark and optimize simulation speed
+7. **Parameter Tuning**: Fine-tune based on large-scale results
+
+### 🎯 Current Focus
+Implementing the new economic dynamics plan with:
+- Flexible, priority-driven government responses
+- Structural consequences from intervention types
+- Realistic crisis multipliers
+- Emergent outcomes rather than predetermined paths
+
+This refactoring has successfully enabled serious modeling and analysis. The simulation engine is now defensible to AI safety researchers, prioritizing realism over game balance.
 
