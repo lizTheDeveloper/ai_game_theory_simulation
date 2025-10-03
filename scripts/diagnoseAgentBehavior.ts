@@ -49,7 +49,13 @@ function createInitialState(): GameState {
       alignmentResearchInvestment: 0,
       computeGovernance: 'none',
       regulationCount: 0,
-      oversightLevel: 0
+      oversightLevel: 0,
+      structuralChoices: {
+        regulationType: 'none',
+        ubiVariant: 'none',
+        surveillanceLevel: 0,
+        internationalCoordination: false
+      }
     },
     
     society: {
