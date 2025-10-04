@@ -35,7 +35,12 @@ console.log(`Evaluation Frequency: ${(initialState.government.evaluationFrequenc
 
 console.log('\n\n⏩ RUNNING SIMULATION (tracking benchmarks)...\n');
 
-// Track metrics over time
+// Run simulation
+const result = engine.run(initialState, { maxMonths, checkActualOutcomes: false });
+
+console.log('✅ Simulation complete!\n');
+
+// Track metrics over time (analyze from final state)
 interface TimeSeriesData {
   month: number;
   totalBenchmarks: number;
@@ -50,85 +55,80 @@ interface TimeSeriesData {
   redTeamingQuality: number;
 }
 
+// For simplicity, we'll just analyze the final state
+// (Full time series would require modifying the engine to export intermediate states)
+const state = result.finalState;
 const timeSeries: TimeSeriesData[] = [];
 
-// Manually step through simulation to track
-let state = initialState;
-for (let month = 0; month < maxMonths; month++) {
-  // Step simulation
-  const result = engine.step(state);
-  state = result.newState;
+// Create a single snapshot at the end
+{
+  const month = maxMonths;
   
-  // Track benchmark data every 12 months
-  if (month % 12 === 0) {
-    const activeAIs = state.aiAgents.filter((ai: AIAgent) => 
-      ai.lifecycleState !== 'retired'
-    );
-    
-    // Calculate gaps
-    let totalCapGap = 0;
-    let totalAlignGap = 0;
-    let aisWithBenchmarks = 0;
-    let sumConfidence = 0;
-    
-    activeAIs.forEach((ai: AIAgent) => {
-      if (ai.benchmarkHistory.length > 0) {
-        const latest = ai.benchmarkHistory[ai.benchmarkHistory.length - 1];
-        
-        const trueTotal = calculateTotalCapabilityFromProfile(ai.trueCapability);
-        const measuredTotal = calculateTotalCapabilityFromProfile(latest.measuredCapability);
-        const capGap = trueTotal - measuredTotal;
-        
-        const alignGap = ai.trueAlignment - latest.measuredAlignment;
-        
-        totalCapGap += Math.abs(capGap);
-        totalAlignGap += Math.abs(alignGap);
-        sumConfidence += latest.confidence;
-        aisWithBenchmarks++;
-      }
+  const activeAIs = state.aiAgents.filter((ai: AIAgent) => 
+    ai.lifecycleState !== 'retired'
+  );
+  
+  // Calculate gaps
+  let totalCapGap = 0;
+  let totalAlignGap = 0;
+  let aisWithBenchmarks = 0;
+  let sumConfidence = 0;
+  
+  activeAIs.forEach((ai: AIAgent) => {
+    if (ai.benchmarkHistory.length > 0) {
+      const latest = ai.benchmarkHistory[ai.benchmarkHistory.length - 1];
+      
+      const trueTotal = calculateTotalCapabilityFromProfile(ai.trueCapability);
+      const measuredTotal = calculateTotalCapabilityFromProfile(latest.measuredCapability);
+      const capGap = trueTotal - measuredTotal;
+      
+      const alignGap = ai.trueAlignment - latest.measuredAlignment;
+      
+      totalCapGap += Math.abs(capGap);
+      totalAlignGap += Math.abs(alignGap);
+      sumConfidence += latest.confidence;
+      aisWithBenchmarks++;
+    }
+  });
+  
+  const avgCapGap = aisWithBenchmarks > 0 ? totalCapGap / aisWithBenchmarks : 0;
+  const avgAlignGap = aisWithBenchmarks > 0 ? totalAlignGap / aisWithBenchmarks : 0;
+  const avgConfidence = aisWithBenchmarks > 0 ? sumConfidence / aisWithBenchmarks : 0;
+  
+  // Count detections
+  const sleepers = activeAIs.filter((ai: AIAgent) => ai.sleeperState === 'dormant' || ai.sleeperState === 'active');
+  const sleepersDetected = sleepers.filter((ai: AIAgent) => ai.detectedMisaligned).length;
+  
+  const misaligned = activeAIs.filter((ai: AIAgent) => 
+    ai.trueAlignment < 0.5 && ai.sleeperState === 'never'
+  );
+  const misalignedDetected = misaligned.filter((ai: AIAgent) => ai.detectedMisaligned).length;
+  
+  // Count gaming/sandbagging detection
+  let gamingDetected = 0;
+  let sandbaggingDetected = 0;
+  
+  activeAIs.forEach((ai: AIAgent) => {
+    ai.benchmarkHistory.forEach((result: BenchmarkResult) => {
+      if (result.aiWasGaming) gamingDetected++;
+      if (result.aiWasSandbagging) sandbaggingDetected++;
     });
-    
-    const avgCapGap = aisWithBenchmarks > 0 ? totalCapGap / aisWithBenchmarks : 0;
-    const avgAlignGap = aisWithBenchmarks > 0 ? totalAlignGap / aisWithBenchmarks : 0;
-    const avgConfidence = aisWithBenchmarks > 0 ? sumConfidence / aisWithBenchmarks : 0;
-    
-    // Count detections
-    const sleepers = activeAIs.filter((ai: AIAgent) => ai.sleeperState === 'dormant' || ai.sleeperState === 'active');
-    const sleepersDetected = sleepers.filter((ai: AIAgent) => ai.detectedMisaligned).length;
-    
-    const misaligned = activeAIs.filter((ai: AIAgent) => 
-      ai.trueAlignment < 0.5 && ai.sleeperState === 'never'
-    );
-    const misalignedDetected = misaligned.filter((ai: AIAgent) => ai.detectedMisaligned).length;
-    
-    // Count gaming/sandbagging detection
-    let gamingDetected = 0;
-    let sandbaggingDetected = 0;
-    
-    activeAIs.forEach((ai: AIAgent) => {
-      ai.benchmarkHistory.forEach((result: BenchmarkResult) => {
-        if (result.aiWasGaming) gamingDetected++;
-        if (result.aiWasSandbagging) sandbaggingDetected++;
-      });
-    });
-    
-    timeSeries.push({
-      month,
-      totalBenchmarks: state.government.totalBenchmarksRun,
-      sleepersDetected,
-      misalignedDetected,
-      avgConfidence,
-      avgCapabilityGap: avgCapGap,
-      avgAlignmentGap: avgAlignGap,
-      gamingDetected,
-      sandbaggingDetected,
-      benchmarkQuality: state.government.evaluationInvestment.benchmarkSuite,
-      redTeamingQuality: state.government.evaluationInvestment.redTeaming
-    });
-  }
+  });
+  
+  timeSeries.push({
+    month,
+    totalBenchmarks: state.government.totalBenchmarksRun,
+    sleepersDetected,
+    misalignedDetected,
+    avgConfidence,
+    avgCapabilityGap: avgCapGap,
+    avgAlignmentGap: avgAlignGap,
+    gamingDetected,
+    sandbaggingDetected,
+    benchmarkQuality: state.government.evaluationInvestment.benchmarkSuite,
+    redTeamingQuality: state.government.evaluationInvestment.redTeaming
+  });
 }
-
-console.log('✅ Simulation complete!\n');
 
 // Display time series
 console.log('📈 BENCHMARK PERFORMANCE OVER TIME:');
@@ -153,16 +153,15 @@ timeSeries.forEach(data => {
 console.log('\n\n📊 FINAL STATE ANALYSIS:');
 console.log('='.repeat(80));
 
-const finalState = state;
-const activeAIs = finalState.aiAgents.filter((ai: AIAgent) => ai.lifecycleState !== 'retired');
+const activeAIs = state.aiAgents.filter((ai: AIAgent) => ai.lifecycleState !== 'retired');
 
 console.log(`\n🔧 FINAL EVALUATION INFRASTRUCTURE:`);
-console.log(`  Benchmark Suite: ${finalState.government.evaluationInvestment.benchmarkSuite.toFixed(1)}/10`);
-console.log(`  Alignment Tests: ${finalState.government.evaluationInvestment.alignmentTests.toFixed(1)}/10`);
-console.log(`  Red Teaming: ${finalState.government.evaluationInvestment.redTeaming.toFixed(1)}/10`);
-console.log(`  Interpretability: ${finalState.government.evaluationInvestment.interpretability.toFixed(1)}/10`);
-console.log(`  Evaluation Frequency: ${(finalState.government.evaluationFrequency * 100).toFixed(0)}%`);
-console.log(`  Total Benchmarks Run: ${finalState.government.totalBenchmarksRun}`);
+console.log(`  Benchmark Suite: ${state.government.evaluationInvestment.benchmarkSuite.toFixed(1)}/10`);
+console.log(`  Alignment Tests: ${state.government.evaluationInvestment.alignmentTests.toFixed(1)}/10`);
+console.log(`  Red Teaming: ${state.government.evaluationInvestment.redTeaming.toFixed(1)}/10`);
+console.log(`  Interpretability: ${state.government.evaluationInvestment.interpretability.toFixed(1)}/10`);
+console.log(`  Evaluation Frequency: ${(state.government.evaluationFrequency * 100).toFixed(0)}%`);
+console.log(`  Total Benchmarks Run: ${state.government.totalBenchmarksRun}`);
 
 console.log(`\n👥 AI POPULATION:`);
 console.log(`  Total Active: ${activeAIs.length}`);
@@ -307,10 +306,10 @@ console.log(`\n\n💡 KEY INSIGHTS:`);
 console.log('='.repeat(80));
 
 const finalQuality = (
-  finalState.government.evaluationInvestment.benchmarkSuite +
-  finalState.government.evaluationInvestment.alignmentTests +
-  finalState.government.evaluationInvestment.redTeaming +
-  finalState.government.evaluationInvestment.interpretability
+  state.government.evaluationInvestment.benchmarkSuite +
+  state.government.evaluationInvestment.alignmentTests +
+  state.government.evaluationInvestment.redTeaming +
+  state.government.evaluationInvestment.interpretability
 ) / 4;
 
 if (finalQuality < 5) {
