@@ -311,17 +311,16 @@ export function selectAIAction(
     
     switch (action.id) {
       case 'advance_research':
-        // AIs always want to advance research, but preferences vary
-        // The actual dimension/research choice is made inside the action
-        // Here we just weight the overall desire to research
+        // AIs always want to advance research - this is their PRIMARY activity
+        // Base weight should be HIGH to ensure research happens consistently
         
         // Base weight depends on alignment and development mode
         if (agent.alignment < 0.5) {
-          weight = 3.0; // Misaligned AIs aggressively research (dangerous!)
+          weight = 15.0; // Misaligned AIs aggressively research (dangerous!)
         } else if (agent.alignment > 0.7) {
-          weight = 1.5; // Aligned AIs research carefully
+          weight = 8.0; // Aligned AIs research carefully but still prioritize it
         } else {
-          weight = 2.0; // Moderate alignment, moderate research
+          weight = 10.0; // Moderate alignment, moderate research
         }
         
         // Fast development mode increases research desire
@@ -329,9 +328,9 @@ export function selectAIAction(
           weight *= 1.3;
         }
         
-        // Reduce desire if heavily regulated
+        // Reduce desire if heavily regulated (but still keep it high)
         if (state.government.regulationCount > 3) {
-          weight *= 0.6;
+          weight *= 0.7;
         }
         break;
         
