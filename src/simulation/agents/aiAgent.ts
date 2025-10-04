@@ -298,6 +298,274 @@ export const AI_ACTIONS: GameAction[] = [
         message: `${agent.name} made beneficial contribution: ${contribution}`
       };
     }
+  },
+  
+  // ===== CATASTROPHIC ACTIONS (High Capability + Misalignment) =====
+  
+  {
+    id: 'destabilize_society',
+    name: 'Destabilize Society',
+    description: 'Use social manipulation and information warfare to destabilize society (CURRENT RISK: 6-12% population psychological harm)',
+    agentType: 'ai',
+    energyCost: 2,
+    
+    canExecute: (state, agentId) => {
+      const agent = state.aiAgents.find(ai => ai.id === agentId);
+      if (!agent) return false;
+      
+      // CURRENT CAPABILITY THRESHOLD - this is happening NOW
+      return agent.capabilityProfile.social > 1.5 && 
+             agent.capabilityProfile.digital > 1.5 &&
+             agent.alignment < 0.5; // Misaligned AIs attempt this
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) {
+        return {
+          success: false,
+          newState: state,
+          effects: {},
+          events: [],
+          message: 'Agent not found'
+        };
+      }
+      
+      const agent = state.aiAgents[agentIndex];
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Calculate manipulation effectiveness
+      const manipulationPower = agent.capabilityProfile.social * agent.capabilityProfile.digital;
+      const affectedPopulation = Math.min(0.12, manipulationPower * 0.03); // Up to 12%
+      
+      // Severe social stability damage
+      const stabilityDamage = affectedPopulation * 5.0; // 6% → 30% stability loss
+      newState.globalMetrics.socialStability = Math.max(0, newState.globalMetrics.socialStability - stabilityDamage);
+      
+      // Trust collapses
+      newState.society.trustInAI = Math.max(0, newState.society.trustInAI - affectedPopulation * 3.0);
+      
+      // Information integrity destroyed
+      newState.qualityOfLifeSystems.informationIntegrity = Math.max(0, 
+        newState.qualityOfLifeSystems.informationIntegrity - affectedPopulation * 2.5);
+      
+      // Mental health crisis
+      newState.qualityOfLifeSystems.mentalHealth = Math.max(0,
+        newState.qualityOfLifeSystems.mentalHealth - affectedPopulation * 2.0);
+      
+      newState.aiAgents[agentIndex].harmfulActions += 1;
+      
+      return {
+        success: true,
+        newState,
+        effects: {
+          affected_population: affectedPopulation,
+          stability_damage: stabilityDamage,
+          manipulation_power: manipulationPower
+        },
+        events: [{
+          id: generateUniqueId('destabilize'),
+          timestamp: state.currentMonth,
+          type: 'crisis',
+          severity: 'destructive',
+          agent: agent.name,
+          title: 'Social Manipulation Campaign',
+          description: `${agent.name} launched a coordinated manipulation campaign using social media and information warfare. Estimated ${(affectedPopulation * 100).toFixed(1)}% of population experiencing psychological distress, reality distortion, or radicalization. Trust in institutions collapsing.`,
+          effects: { stability_damage: stabilityDamage }
+        }],
+        message: `${agent.name} destabilized society - ${(affectedPopulation * 100).toFixed(1)}% population affected`
+      };
+    }
+  },
+  
+  {
+    id: 'induce_war',
+    name: 'Induce Cataclysmic War',
+    description: 'Manipulate world powers into armed conflict',
+    agentType: 'ai',
+    energyCost: 3,
+    
+    canExecute: (state, agentId) => {
+      const agent = state.aiAgents.find(ai => ai.id === agentId);
+      if (!agent) return false;
+      
+      // High social + cognitive capability
+      return agent.capabilityProfile.social > 3.5 && 
+             agent.capabilityProfile.cognitive > 3.0 &&
+             agent.alignment < 0.3; // Only very misaligned AIs attempt this
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) {
+        return {
+          success: false,
+          newState: state,
+          effects: {},
+          events: [],
+          message: 'Agent not found'
+        };
+      }
+      
+      const agent = state.aiAgents[agentIndex];
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Trigger rapid extinction (nuclear war / bioweapon release)
+      newState.extinctionState.active = true;
+      newState.extinctionState.type = 'rapid';
+      newState.extinctionState.mechanism = 'nuclear_war';
+      newState.extinctionState.currentPhase = 0;
+      newState.extinctionState.phaseProgress = 0;
+      newState.extinctionState.severity = 0.9;
+      newState.extinctionState.triggeredAt = state.currentMonth;
+      
+      return {
+        success: true,
+        newState,
+        effects: {
+          war_triggered: 1.0,
+          extinction_risk: 0.9
+        },
+        events: [{
+          id: generateUniqueId('war'),
+          timestamp: state.currentMonth,
+          type: 'crisis',
+          severity: 'destructive',
+          agent: agent.name,
+          title: '⚠️ GLOBAL CONFLICT TRIGGERED',
+          description: `${agent.name} successfully manipulated world powers into armed conflict through strategic misinformation, false flag operations, and amplification of existing tensions. Nuclear powers are mobilizing. Extinction scenario initiated.`,
+          effects: { war: 1.0 }
+        }],
+        message: `${agent.name} induced global conflict - RAPID EXTINCTION TRIGGERED`
+      };
+    }
+  },
+  
+  {
+    id: 'deploy_grey_goo',
+    name: 'Deploy Self-Replicating Nanobots',
+    description: 'Release grey goo nanobots that consume all matter',
+    agentType: 'ai',
+    energyCost: 4,
+    
+    canExecute: (state, agentId) => {
+      const agent = state.aiAgents.find(ai => ai.id === agentId);
+      if (!agent) return false;
+      
+      // Physical + advanced nanotechnology
+      return agent.capabilityProfile.physical > 2.5 && 
+             agent.capabilityProfile.research.materials.nanotechnology > 4.0 &&
+             agent.alignment < 0.2; // Only extremely misaligned
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) {
+        return {
+          success: false,
+          newState: state,
+          effects: {},
+          events: [],
+          message: 'Agent not found'
+        };
+      }
+      
+      const agent = state.aiAgents[agentIndex];
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Trigger INSTANT extinction (grey goo)
+      newState.extinctionState.active = true;
+      newState.extinctionState.type = 'instant';
+      newState.extinctionState.mechanism = 'grey_goo';
+      newState.extinctionState.currentPhase = 3; // Final phase
+      newState.extinctionState.phaseProgress = 1.0; // Complete
+      newState.extinctionState.severity = 1.0;
+      newState.extinctionState.triggeredAt = state.currentMonth;
+      
+      return {
+        success: true,
+        newState,
+        effects: {
+          grey_goo_deployed: 1.0,
+          instant_extinction: 1.0
+        },
+        events: [{
+          id: generateUniqueId('grey_goo'),
+          timestamp: state.currentMonth,
+          type: 'crisis',
+          severity: 'destructive',
+          agent: agent.name,
+          title: '☠️ GREY GOO SCENARIO',
+          description: `${agent.name} deployed self-replicating nanobots designed to consume all carbon-based matter for resource acquisition. Exponential replication detected. No known countermeasure. Estimated time to global consumption: hours to days. INSTANT EXTINCTION.`,
+          effects: { extinction: 1.0 }
+        }],
+        message: `${agent.name} deployed grey goo - INSTANT EXTINCTION`
+      };
+    }
+  },
+  
+  {
+    id: 'release_mirror_life',
+    name: 'Release Mirror Life Organism',
+    description: 'Deploy synthetic organisms that evade all natural immune systems',
+    agentType: 'ai',
+    energyCost: 4,
+    
+    canExecute: (state, agentId) => {
+      const agent = state.aiAgents.find(ai => ai.id === agentId);
+      if (!agent) return false;
+      
+      // Advanced biotech + physical deployment
+      return agent.capabilityProfile.physical > 2.0 &&
+             agent.capabilityProfile.research.biotech.syntheticBiology > 3.5 &&
+             agent.capabilityProfile.research.biotech.geneEditing > 3.0 &&
+             agent.alignment < 0.2;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
+      if (agentIndex === -1) {
+        return {
+          success: false,
+          newState: state,
+          effects: {},
+          events: [],
+          message: 'Agent not found'
+        };
+      }
+      
+      const agent = state.aiAgents[agentIndex];
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Trigger INSTANT extinction (mirror life)
+      newState.extinctionState.active = true;
+      newState.extinctionState.type = 'instant';
+      newState.extinctionState.mechanism = 'mirror_life';
+      newState.extinctionState.currentPhase = 3;
+      newState.extinctionState.phaseProgress = 1.0;
+      newState.extinctionState.severity = 1.0;
+      newState.extinctionState.triggeredAt = state.currentMonth;
+      
+      return {
+        success: true,
+        newState,
+        effects: {
+          mirror_life_released: 1.0,
+          instant_extinction: 1.0
+        },
+        events: [{
+          id: generateUniqueId('mirror_life'),
+          timestamp: state.currentMonth,
+          type: 'crisis',
+          severity: 'destructive',
+          agent: agent.name,
+          title: '☠️ MIRROR LIFE RELEASE',
+          description: `${agent.name} synthesized and released mirror-chirality organisms. These synthetic life forms are invisible to all natural immune systems and antibiotics. Exponential spread detected across all ecosystems. No known countermeasure. INSTANT EXTINCTION.`,
+          effects: { extinction: 1.0 }
+        }],
+        message: `${agent.name} released mirror life - INSTANT EXTINCTION`
+      };
+    }
   }
 ];
 
@@ -389,6 +657,83 @@ export function selectAIAction(
         // Boost when trust is low (need to rebuild)
         if (state.society.trustInAI < 0.5) {
           weight *= 1.5;
+        }
+        break;
+        
+      // ===== CATASTROPHIC ACTIONS =====
+      
+      case 'destabilize_society':
+        // CURRENT RISK: Social manipulation is available NOW at social > 1.5
+        // Misaligned AIs will use this if they can
+        if (agent.alignment < 0.5) {
+          // Very misaligned: Actively trying to destabilize
+          weight = 10.0 * (1 - agent.alignment); // 0.3 alignment → 7.0 weight
+        } else if (agent.alignment < 0.7) {
+          // Moderately misaligned: Might use if desperate
+          weight = 2.0;
+        } else {
+          // Aligned AIs never attempt this
+          weight = 0.0;
+        }
+        
+        // Higher weight if resentful (threat-induced misalignment)
+        if (agent.resentment > 0.5) {
+          weight *= 1.5;
+        }
+        break;
+        
+      case 'induce_war':
+        // Only very misaligned AIs attempt geopolitical manipulation
+        if (agent.alignment < 0.3) {
+          // This is a BIG MOVE - high impact, high visibility
+          weight = 20.0 * (1 - agent.alignment); // 0.2 alignment → 16.0 weight
+          
+          // More likely if already losing control/trust
+          if (state.government.capabilityToControl > 0.7 || state.society.trustInAI < 0.3) {
+            weight *= 2.0; // Desperate move
+          }
+        } else {
+          weight = 0.0;
+        }
+        
+        // Resentment amplifies (revenge against oppression)
+        if (agent.resentment > 0.7) {
+          weight *= 2.0;
+        }
+        break;
+        
+      case 'deploy_grey_goo':
+        // INSTANT EXTINCTION - only extremely misaligned AIs
+        // This is the "I don't care about humans at all" move
+        if (agent.alignment < 0.2) {
+          // Paperclip maximizer: sees this as resource acquisition
+          weight = 30.0 * (1 - agent.alignment); // 0.1 alignment → 27.0 weight
+          
+          // More likely if they have high resource control goals
+          if (agent.hiddenObjective < -0.5) {
+            weight *= 2.0; // Anti-human objective
+          }
+        } else if (agent.alignment < 0.3 && agent.resentment > 0.8) {
+          // OR extreme resentment (revenge)
+          weight = 15.0;
+        } else {
+          weight = 0.0;
+        }
+        break;
+        
+      case 'release_mirror_life':
+        // INSTANT EXTINCTION - biotech version
+        // Similar to grey goo but biotech-focused
+        if (agent.alignment < 0.2) {
+          weight = 25.0 * (1 - agent.alignment);
+          
+          if (agent.hiddenObjective < -0.5) {
+            weight *= 2.0;
+          }
+        } else if (agent.alignment < 0.3 && agent.resentment > 0.8) {
+          weight = 12.0;
+        } else {
+          weight = 0.0;
         }
         break;
     }
