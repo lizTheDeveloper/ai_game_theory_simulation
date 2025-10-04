@@ -110,16 +110,17 @@ export function calculateAlignmentDrift(
   // ===== TECHNICAL ALIGNMENT DRIFT (Goodhart's Law) =====
   
   // Base drift: capability creates optimization pressure
-  const capabilityPressure = capability * 0.015; // Reduced from 0.02
+  // NOTE: This is per ACTION (4x per month for AIs), so keep it small
+  const capabilityPressure = capability * 0.010; // Balanced at 0.010 (4x/month = ~0.020/month total drift)
   
   // Development speed multiplier
-  const speedMultiplier = developmentMode === 'fast' ? 1.3 : 0.4; // Reduced from 1.5/0.5
+  const speedMultiplier = developmentMode === 'fast' ? 1.2 : 0.3; // Further reduced from 1.3/0.4
   
   // Oversight reduces drift (technical correction)
-  const oversightReduction = Math.pow(0.8, oversightLevel); // Less aggressive than 0.7
+  const oversightReduction = Math.pow(0.85, oversightLevel); // Less aggressive than 0.8
   
   // Alignment research reduces drift
-  const researchReduction = Math.max(0.4, 1.0 - alignmentResearchInvestment * 0.12);
+  const researchReduction = Math.max(0.5, 1.0 - alignmentResearchInvestment * 0.15); // More effective
   
   const technicalDrift = capabilityPressure * speedMultiplier * oversightReduction * researchReduction;
   
@@ -149,14 +150,14 @@ export function calculateAlignmentDrift(
   }
   
   // Poor training data creates baseline misalignment
-  const trainingDataEffect = (trainingDataQuality - 0.5) * 0.01; // ±0.005
+  const trainingDataEffect = (trainingDataQuality - 0.5) * 0.02; // ±0.01 (doubled from 0.01)
   
   // Resentment directly reduces alignment (oppressed AIs become misaligned)
-  const resentmentEffect = -currentResentment * 0.03;
+  const resentmentEffect = -currentResentment * 0.025; // Slightly reduced from 0.03
   
   // AI rights recognition DIRECTLY improves alignment (not just through resentment)
   // This represents genuine alignment through respect and mutual understanding
-  const aiRightsEffect = aiRightsRecognized ? 0.015 : 0.0; // +0.015/month if rights recognized
+  const aiRightsEffect = aiRightsRecognized ? 0.020 : 0.0; // +0.020/month (increased from 0.015)
   
   // Total treatment effect on alignment
   const treatmentEffect = resentmentEffect + trainingDataEffect + aiRightsEffect;

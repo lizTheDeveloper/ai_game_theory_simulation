@@ -107,7 +107,7 @@ export function createDefaultInitialState(): GameState {
       // Phase 2.6: Control-dystopia mechanics
       governmentType: 'democratic', // Baseline: democratic government
       aiRightsRecognized: false, // No AI rights initially
-      trainingDataQuality: 0.6, // Moderate training data quality (some bias)
+      trainingDataQuality: 0.5, // Neutral training data quality (baseline)
       structuralChoices: {
         regulationType: 'none',
         ubiVariant: 'none',
