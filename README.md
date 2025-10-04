@@ -40,9 +40,22 @@ Runs a single 50-month simulation with diagnostic output about AI capability gro
 
 #### Monte Carlo Simulations
 
-To run multiple simulations and analyze outcome distributions:
+**Quick Start** - Use the built-in comprehensive tester:
 
-1. **Create a script** in `scripts/` directory. Example:
+```bash
+npx tsx scripts/monteCarloSimulation.ts
+```
+
+Default: 10 runs × 60 months (~3 minutes)
+
+**Performance Guide**:
+- 10 runs × 60 months: ~3 minutes (good for testing)
+- 10 runs × 120 months: ~5 minutes (see some outcomes)
+- 50 runs × 120 months: ~60 minutes (full analysis)
+
+To adjust configuration, edit `NUM_RUNS` and `MAX_MONTHS` in the script.
+
+**Custom Monte Carlo** - Create your own analysis script in `scripts/`. Example:
 
 ```typescript
 #!/usr/bin/env tsx
