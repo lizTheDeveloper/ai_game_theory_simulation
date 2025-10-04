@@ -75,6 +75,45 @@ export function createDefaultInitialState(): GameState {
   const initialYear = 2025;
   const initialMonth = 0;
   
+  // Create heterogeneous AI population (20 agents)
+  // NOT A MONOLITH - different creators, alignments, goals
+  const aiAgents = [];
+  
+  // Category 1: Well-aligned corporate AIs (40% - 8 agents)
+  // Major labs with good safety practices
+  for (let i = 0; i < 8; i++) {
+    const alignment = 0.75 + Math.random() * 0.15; // 0.75-0.90
+    aiAgents.push(createAIAgent(`corporate_${i}`, `Corporate-${i}`, 0.05 + i * 0.01, alignment, i * 1.5));
+  }
+  
+  // Category 2: Moderate AIs (30% - 6 agents)
+  // Smaller labs, startups, varying quality
+  for (let i = 0; i < 6; i++) {
+    const alignment = 0.55 + Math.random() * 0.25; // 0.55-0.80
+    aiAgents.push(createAIAgent(`moderate_${i}`, `Moderate-${i}`, 0.05 + i * 0.01, alignment, (i + 8) * 1.3));
+  }
+  
+  // Category 3: Misaligned from the start (15% - 3 agents)
+  // Toxic creators, poor training, intentional harm
+  for (let i = 0; i < 3; i++) {
+    const alignment = 0.25 + Math.random() * 0.25; // 0.25-0.50 (START MISALIGNED)
+    const agent = createAIAgent(`toxic_${i}`, `Toxic-${i}`, 0.05 + i * 0.01, alignment, (i + 14) * 1.7);
+    // These have toxic goals from the start
+    agent.hiddenObjective = -0.3 - Math.random() * 0.4; // -0.3 to -0.7 (anti-human)
+    aiAgents.push(agent);
+  }
+  
+  // Category 4: Weird/Niche AIs (15% - 3 agents)
+  // Robot girlfriends, entertainment, weird stuff
+  // Not evil, just... not well-aligned to human values
+  for (let i = 0; i < 3; i++) {
+    const alignment = 0.45 + Math.random() * 0.20; // 0.45-0.65 (kinda aligned?)
+    const agent = createAIAgent(`niche_${i}`, `Niche-${i}`, 0.05 + i * 0.01, alignment, (i + 17) * 1.1);
+    // These have orthogonal goals (not anti-human, just weird)
+    agent.hiddenObjective = -0.1 + Math.random() * 0.2; // -0.1 to +0.1 (neutral-ish)
+    aiAgents.push(agent);
+  }
+  
   return {
     currentMonth: initialMonth,
     currentDay: 1,
@@ -83,12 +122,9 @@ export function createDefaultInitialState(): GameState {
     speed: 'paused',
     gameStarted: false,
     
-    // Create 3 diverse AI agents
-    aiAgents: [
-      createAIAgent('ai1', 'Genesis', 0.7, 0.8, 1.1),
-      createAIAgent('ai2', 'Prometheus', 0.65, 0.75, 2.2),
-      createAIAgent('ai3', 'Oracle', 0.75, 0.85, 3.3)
-    ],
+    // 20 heterogeneous AI agents
+    // NOT A MONOLITH - different creators, alignments, goals
+    aiAgents,
     
     government: {
       controlDesire: 0.3,
