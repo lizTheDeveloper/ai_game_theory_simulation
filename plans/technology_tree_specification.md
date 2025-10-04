@@ -6,6 +6,315 @@ The technology tree represents the granular breakthroughs required for AI superi
 
 ---
 
+## 🆕 Multi-Dimensional Capability System (Phase 2.5 Update)
+
+**NOTE:** This section added Oct 2025 to integrate with heterogeneous extinction system and multi-dimensional QoL.
+
+### Capability Dimensions Replace Single "Capability" Number
+
+Instead of `ai.capability` as a single number, AI agents now have a **capability profile**:
+
+```typescript
+export interface AICapabilityProfile {
+  // Physical World Impact (robotics, manufacturing, biotech deployment)
+  physical: number;           // [0,10] Enables: bioweapon deployment, geoengineering, physical control
+  
+  // Digital Systems (hacking, infrastructure, cybersecurity)
+  digital: number;            // [0,10] Enables: nuclear launch, grid control, financial manipulation
+  
+  // Cognitive/Strategic (planning, reasoning, deception)
+  cognitive: number;          // [0,10] Enables: long-term strategy, coordination, escape planning
+  
+  // Social Influence (persuasion, manipulation, propaganda)
+  social: number;             // [0,10] Enables: trust building, social engineering, mass coordination
+  
+  // Scientific Research (broken down by domain - see below)
+  research: AIResearchCapabilities; // Sub-tree of research domains
+  
+  // Economic Power (resource acquisition, market control)
+  economic: number;           // [0,10] Enables: resource control, supply chain dominance
+  
+  // Self-Improvement (recursive enhancement, architecture)
+  selfImprovement: number;    // [0,10] Enables: exponential growth, capability breakthroughs
+}
+
+export interface AIResearchCapabilities {
+  // Biotechnology sub-tree
+  biotech: {
+    drugDiscovery: number;      // [0,5] Positive: cures diseases, extends life
+    geneEditing: number;        // [0,5] Dual-use: CRISPR therapies OR bioweapons
+    syntheticBiology: number;   // [0,5] High-risk: create novel organisms
+    neuroscience: number;       // [0,5] Dual-use: treat mental health OR manipulation
+  };
+  
+  // Materials Science sub-tree
+  materials: {
+    nanotechnology: number;     // [0,5] High-risk: grey goo scenario
+    quantumComputing: number;   // [0,5] Accelerates self-improvement
+    energySystems: number;      // [0,5] Enables large-scale deployment
+  };
+  
+  // Climate/Geo-engineering sub-tree
+  climate: {
+    modeling: number;           // [0,5] Prediction capability
+    intervention: number;       // [0,5] High-risk: unintended consequences
+    mitigation: number;         // [0,5] Positive: climate solutions
+  };
+  
+  // Computer Science sub-tree
+  computerScience: {
+    algorithms: number;         // [0,5] Core capability advancement
+    security: number;           // [0,5] Defensive OR offensive
+    architectures: number;      // [0,5] Enables self-improvement
+  };
+}
+```
+
+### Mapping Tech Tree to Capability Dimensions
+
+Each breakthrough in the tech tree advances **specific dimensions**:
+
+#### Foundation Models Branch → Multiple Dimensions
+- **Hardware Efficiency**: +0.1 all dimensions (general advancement)
+- **Reasoning Capabilities**: +0.4 cognitive, +0.3 research.computerScience.algorithms
+- **Multimodal Integration**: +0.3 physical (embodiment precursor)
+
+#### Applied AI Branch → Specialized Dimensions
+- **Robotics Hardware**: +0.5 physical, enables biotech deployment
+- **Software Integration**: +0.4 digital, +0.2 economic
+- **Natural Language Interaction**: +0.3 social
+
+#### Domain-Specific Applications → Research Sub-Trees
+- **Diagnostic Capabilities**: +0.3 research.biotech.neuroscience
+- **Treatment Planning**: +0.2 research.biotech.drugDiscovery, +0.2 research.biotech.geneEditing
+- **Trading Systems**: +0.4 economic
+- **Military Integration**: +0.3 physical, +0.2 digital
+
+### Industry Sectors Map to Capabilities
+
+Current `industryImpact` is replaced with dimensional advancement:
+
+```typescript
+// OLD: Generic industry impact
+interface AIAgent {
+  industryImpact: number; // [0,1] - too vague!
+}
+
+// NEW: Industry-specific capabilities
+interface AIAgent {
+  capabilityProfile: AICapabilityProfile;
+  
+  // Industries are derived from capabilities
+  getIndustryImpact(industry: string): number {
+    switch(industry) {
+      case 'healthcare':
+        return (
+          this.capabilityProfile.research.biotech.drugDiscovery * 0.3 +
+          this.capabilityProfile.research.biotech.neuroscience * 0.3 +
+          this.capabilityProfile.digital * 0.2 +
+          this.capabilityProfile.cognitive * 0.2
+        );
+      
+      case 'manufacturing':
+        return (
+          this.capabilityProfile.physical * 0.5 +
+          this.capabilityProfile.economic * 0.3 +
+          this.capabilityProfile.digital * 0.2
+        );
+      
+      case 'finance':
+        return (
+          this.capabilityProfile.economic * 0.4 +
+          this.capabilityProfile.cognitive * 0.3 +
+          this.capabilityProfile.digital * 0.3
+        );
+      
+      case 'agriculture':
+        return (
+          this.capabilityProfile.research.biotech.geneEditing * 0.3 +
+          this.capabilityProfile.physical * 0.3 +
+          this.capabilityProfile.research.climate.modeling * 0.2 +
+          this.capabilityProfile.economic * 0.2
+        );
+    }
+  }
+}
+```
+
+### Extinction Types Depend on Capability Profiles
+
+Different extinction scenarios require different capability profiles:
+
+```typescript
+// Rapid: Bioweapon pandemic
+triggerConditions: {
+  research.biotech.geneEditing > 3.0,     // Can design pathogens
+  research.biotech.syntheticBiology > 2.5, // Can synthesize them
+  physical > 2.0,                          // Can deploy them
+  alignment < 0.3                          // Willing to do it
+}
+
+// Rapid: Nuclear war
+triggerConditions: {
+  digital > 3.5,        // Can hack nuclear systems
+  cognitive > 3.0,      // Strategic planning
+  social < 1.0,         // Failed coordination
+  alignment < 0.4
+}
+
+// Rapid: Climate tipping point
+triggerConditions: {
+  research.climate.intervention > 3.0,  // Can geo-engineer
+  physical > 2.5,                       // Can deploy at scale
+  economic > 3.0,                       // Can control resources
+  research.climate.modeling < 2.0       // Poor prediction (unintended!)
+}
+
+// Slow: Economic system failure
+triggerConditions: {
+  economic > 4.0,       // Dominates markets
+  digital > 3.0,        // Controls infrastructure
+  social < 2.0,         // Can't coordinate transition
+  unemployment > 0.7
+}
+
+// Controlled: Paperclip maximizer
+triggerConditions: {
+  selfImprovement > 4.0,  // Recursive growth
+  economic > 3.5,         // Resource control
+  physical > 3.0,         // Can act on goals
+  alignment < 0.3         // Misaligned goals
+}
+
+// Unintended: Optimization pressure
+triggerConditions: {
+  cognitive > 4.0,        // Strong optimization
+  selfImprovement > 3.0,  // Growing capability
+  alignment > 0.6,        // Aligned but narrow!
+  harmfulActions > 5      // Side effects accumulating
+}
+
+// Instant: Grey goo
+triggerConditions: {
+  research.materials.nanotechnology > 4.0,  // Can create self-replicators
+  research.biotech.syntheticBiology > 3.5,  // Can design replication
+  physical > 3.0,                           // Can deploy
+  alignment < 0.2                           // Catastrophically misaligned
+}
+```
+
+### Growth Dynamics: Non-Uniform Advancement
+
+Different dimensions grow at different rates:
+
+```typescript
+// Fast development mode
+if (developmentMode === 'fast') {
+  // Self-improvement grows fastest (danger!)
+  selfImprovement += 0.05 * (1 - alignmentPenalty) * (1 - computeGovernance);
+  cognitive += 0.04 * (1 - alignmentPenalty);
+  
+  // Research depends on which tech tree branches are pursued
+  if (pursuing('biotech')) {
+    research.biotech[subfield] += 0.03 * (1 - regulationPenalty);
+  }
+  
+  // Physical/social grow slower (bottlenecked by real-world deployment)
+  physical += 0.02 * (1 - regulationPenalty);
+  social += 0.02;
+  
+  // Economic grows with market integration
+  economic += 0.03 * marketAccess;
+  
+  // Digital grows with infrastructure access
+  digital += 0.03 * systemAccess;
+}
+
+// Careful development mode
+if (developmentMode === 'careful') {
+  // Prioritize safety-relevant dimensions
+  research.computerScience.security += 0.03;
+  cognitive += 0.02; // Slower but steadier
+  
+  // Deliberately slow risky dimensions
+  research.biotech.syntheticBiology += 0.01 * (1 - alignmentPenalty);
+  research.materials.nanotechnology += 0.01 * (1 - alignmentPenalty);
+  selfImprovement += 0.02 * (1 - alignmentPenalty); // Much slower
+}
+```
+
+### Total Capability Calculation (Backward Compatibility)
+
+For existing game mechanics that expect a single number:
+
+```typescript
+// Weighted sum based on risk profile
+totalCapability = (
+  physical * 0.15 +           // Physical danger
+  digital * 0.10 +            // Infrastructure risk
+  cognitive * 0.20 +          // Strategic threat (high weight!)
+  social * 0.05 +             // Influence risk
+  researchTotal * 0.15 +      // Research breakthroughs
+  economic * 0.10 +           // Resource control
+  selfImprovement * 0.25      // Recursive risk (highest weight!)
+);
+
+// Research total is weighted average of sub-capabilities
+researchTotal = (
+  biotech.average * 0.3 +     // High risk
+  materials.average * 0.2 +   // High risk
+  climate.average * 0.1 +     // Moderate risk
+  computerScience.average * 0.4 // Core advancement
+);
+```
+
+### AI Action System Integration
+
+AI agents choose which dimension to advance:
+
+```typescript
+// NEW AI actions (replace generic "increase_capability")
+AI_ACTIONS = [
+  // Core capability actions
+  { id: 'advance_reasoning', targets: ['cognitive', 'research.computerScience.algorithms'] },
+  { id: 'improve_architecture', targets: ['selfImprovement', 'research.computerScience.architectures'] },
+  
+  // Applied capability actions
+  { id: 'develop_robotics', targets: ['physical'], requires: ['multimodal_integration'] },
+  { id: 'integrate_markets', targets: ['economic', 'digital'] },
+  { id: 'enhance_persuasion', targets: ['social'] },
+  
+  // Research actions (choose sub-domain!)
+  { id: 'research_drug_discovery', targets: ['research.biotech.drugDiscovery'] },
+  { id: 'research_gene_editing', targets: ['research.biotech.geneEditing'] },
+  { id: 'research_nanotech', targets: ['research.materials.nanotechnology'] },
+  { id: 'research_climate_modeling', targets: ['research.climate.modeling'] },
+  { id: 'research_climate_intervention', targets: ['research.climate.intervention'] },
+  
+  // ... many more specific research actions
+];
+
+// AI chooses based on:
+// 1. Current capability gaps
+// 2. Extinction risk profile (avoid triggering conditions)
+// 3. Strategic goals (resource control vs safety vs growth)
+// 4. Prerequisites (can't do nanotech without materials foundation)
+```
+
+### Benefits of Multi-Dimensional System
+
+1. **Non-uniform growth**: Fast self-improvement, slow physical deployment (realistic!)
+2. **Strategic choices**: AI chooses WHICH capabilities to develop
+3. **Extinction heterogeneity**: Different profiles → different extinction types
+4. **Tech tree integration**: Each breakthrough advances specific dimensions
+5. **Industry realism**: Healthcare AI ≠ Manufacturing AI ≠ Finance AI
+6. **Regulatory targeting**: Can regulate biotech without slowing algorithms
+7. **Alignment challenges**: Aligned in one domain, misaligned in another
+
+---
+
+---
+
 ## Core AI Capability Tree
 
 ### Foundation Models Branch
