@@ -192,6 +192,11 @@ export class SimulationEngine {
     newState = societyResult.newState;
     events.push(...societyResult.events);
     
+    // Phase 5.2: Run benchmark evaluations after agent actions
+    const { performMonthlyEvaluations } = require('./benchmark');
+    const benchmarkResult = performMonthlyEvaluations(newState, rng);
+    events.push(...benchmarkResult.events);
+    
     // Check for crisis points (critical decision moments)
     const { processCrisisPoints } = require('./crisisPoints');
     const crisisResult = processCrisisPoints(newState, rng);

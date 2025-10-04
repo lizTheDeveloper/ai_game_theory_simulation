@@ -122,6 +122,24 @@ export interface AIAgent {
   // Wake conditions tracking (for sleepers)
   wakeConditionsMet: boolean; // Has this sleeper's conditions been met?
   monthsAsleep: number; // How long has sleeper been dormant?
+  
+  // Phase 5.2: Benchmark System
+  lastBenchmarkMonth: number; // When was this AI last benchmarked?
+  benchmarkHistory: BenchmarkResult[]; // History of benchmark results
+}
+
+/**
+ * Benchmark Result (Phase 5.2)
+ * Represents a government evaluation of an AI's capability and alignment
+ */
+export interface BenchmarkResult {
+  month: number; // When benchmark was run
+  measuredCapability: AICapabilityProfile; // What the benchmark measured
+  measuredAlignment: number; // What alignment tests showed
+  confidence: number; // [0,1] How confident is this measurement?
+  evaluationQuality: number; // [0,1] Quality of evaluation infrastructure
+  aiWasGaming: boolean; // Was the AI actively gaming this benchmark?
+  aiWasSandbagging: boolean; // Was the AI hiding capabilities?
 }
 
 /**
@@ -205,6 +223,16 @@ export interface GovernmentAgent {
     sandboxing: number;          // [0,10] Containment tech
     incidentResponse: number;    // [0,10] Rapid response
   };
+  
+  // Phase 5.2: Benchmark/Evaluation System (NEW)
+  evaluationInvestment: {
+    benchmarkSuite: number;      // [0,10] Quality of capability benchmarks
+    alignmentTests: number;      // [0,10] Quality of alignment evaluation
+    redTeaming: number;          // [0,10] Adversarial testing capability
+    interpretability: number;    // [0,10] AI internals understanding
+  };
+  evaluationFrequency: number;   // [0,1] How often to run evaluations (0 = never, 1 = every month)
+  totalBenchmarksRun: number;    // Track total evaluations performed
 }
 
 export interface HumanSocietyAgent {

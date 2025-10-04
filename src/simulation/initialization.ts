@@ -79,7 +79,10 @@ export function createAIAgent(
     evaluationStrategy: 'honest', // Start honest, may change
     sandbaggingLevel: 0.0, // Initially reveal everything
     wakeConditionsMet: false,
-    monthsAsleep: 0
+    monthsAsleep: 0,
+    // Phase 5.2: Benchmark System
+    lastBenchmarkMonth: -99, // Never benchmarked yet
+    benchmarkHistory: []
   };
   
   // Update derived capabilities from profile
@@ -184,6 +187,15 @@ export function createDefaultInitialState(): GameState {
         sandboxing: 3.0,
         incidentResponse: 3.0
       },
+      // Phase 5.2: Benchmark/Evaluation System
+      evaluationInvestment: {
+        benchmarkSuite: 2.0,      // Basic capability tests
+        alignmentTests: 1.0,      // Minimal alignment evaluation
+        redTeaming: 0.5,          // Very little adversarial testing
+        interpretability: 0.5     // Almost no understanding of internals
+      },
+      evaluationFrequency: 0.1,   // Evaluate 10% of AIs per month
+      totalBenchmarksRun: 0,
       researchInvestments: initializeResearchInvestments()
     },
     
@@ -196,7 +208,8 @@ export function createDefaultInitialState(): GameState {
       activeMovements: [],
       earlyAdopters: 0.0,
       mediumAdopters: 0.0,
-      slowAdopters: 0.0
+      slowAdopters: 0.0,
+      resistantAdopters: 1.0
     },
     
     globalMetrics: {
@@ -204,9 +217,9 @@ export function createDefaultInitialState(): GameState {
       socialStability: 0.7,
       qualityOfLife: 0.65,
       wealthDistribution: 0.5,
-      technologicalProgress: 0.15,
-      utopianPotential: 0.3,
-      existentialRisk: 0.1
+      technologicalBreakthroughRate: 0.15,
+      manufacturingCapability: 0.1,
+      informationIntegrity: 0.6
     },
     
     // Initialize multi-dimensional QoL system
@@ -215,13 +228,29 @@ export function createDefaultInitialState(): GameState {
     // Initialize heterogeneous extinction tracking
     extinctionState: initializeExtinctionState(),
     
-    events: [],
+    eventLog: [],
+    technologyTree: [],
+    
+    outcomeMetrics: {
+      utopiaProbability: 0.3,
+      dystopiaProbability: 0.1,
+      extinctionProbability: 0.1,
+      activeAttractor: 'none',
+      lockInStrength: 0
+    },
     
     config: {
       governmentActionFrequency: 0.08,
       socialAdaptationRate: 0.02,
       aiCoordinationMultiplier: 1.5,
       economicTransitionRate: 0.015
+    },
+    
+    history: {
+      qualityOfLife: [],
+      outcomeProbs: [],
+      controlCapability: [],
+      metrics: []
     }
   };
 }

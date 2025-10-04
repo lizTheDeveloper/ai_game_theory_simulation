@@ -993,6 +993,184 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Cyber defense improved to ${defensePower.toFixed(1)} (vs ${attackPower.toFixed(1)} attacks). ${status}`
       };
     }
+  },
+  
+  // ========================================================================
+  // PHASE 5.2: BENCHMARK/EVALUATION SYSTEM
+  // ========================================================================
+  
+  {
+    id: 'invest_benchmark_suite',
+    name: 'Invest in Capability Benchmarks',
+    description: 'Develop comprehensive benchmarks to measure AI capabilities. Better benchmarks reveal true capability (but can still be gamed/sandbagged).',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.benchmarkSuite < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const improvement = 1.0;
+      const oldLevel = newState.government.evaluationInvestment.benchmarkSuite;
+      newState.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
+      const newLevel = newState.government.evaluationInvestment.benchmarkSuite;
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Benchmark Suite Improved',
+          description: `Capability benchmark quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of true AI capabilities.`,
+          effects: { benchmarkQuality: newLevel }
+        }],
+        message: `Benchmark suite improved to ${newLevel.toFixed(1)}/10`
+      };
+    }
+  },
+  
+  {
+    id: 'invest_alignment_tests',
+    name: 'Invest in Alignment Evaluation',
+    description: 'Develop tests to measure AI alignment with human values. Very difficult but critical for safety.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.alignmentTests < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const improvement = 0.8; // Harder to improve than capability benchmarks
+      const oldLevel = newState.government.evaluationInvestment.alignmentTests;
+      newState.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
+      const newLevel = newState.government.evaluationInvestment.alignmentTests;
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Alignment Tests Improved',
+          description: `Alignment evaluation quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of misaligned AIs.`,
+          effects: { alignmentTestQuality: newLevel }
+        }],
+        message: `Alignment tests improved to ${newLevel.toFixed(1)}/10`
+      };
+    }
+  },
+  
+  {
+    id: 'invest_red_teaming',
+    name: 'Invest in Red Teaming',
+    description: 'Fund adversarial testing to detect gaming, sandbagging, and deception. Critical for detecting sleeper agents.',
+    agentType: 'government',
+    energyCost: 3, // More expensive - requires skilled adversaries
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.redTeaming < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const improvement = 1.0;
+      const oldLevel = newState.government.evaluationInvestment.redTeaming;
+      newState.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
+      const newLevel = newState.government.evaluationInvestment.redTeaming;
+      
+      // Red teaming significantly increases detection of deception
+      const detectionBonus = improvement * 0.05; // 5% better detection per level
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Red Teaming Enhanced',
+          description: `Red teaming capability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. ${Math.round(detectionBonus*100)}% better at detecting gaming and sandbagging.`,
+          effects: { redTeamingQuality: newLevel, detectionBonus }
+        }],
+        message: `Red teaming improved to ${newLevel.toFixed(1)}/10 (+${Math.round(detectionBonus*100)}% detection)`
+      };
+    }
+  },
+  
+  {
+    id: 'invest_interpretability',
+    name: 'Invest in AI Interpretability Research',
+    description: 'Research to understand AI internals and true intentions. Can see through deception and detect hidden capabilities.',
+    agentType: 'government',
+    energyCost: 4, // Very expensive - cutting-edge research
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.interpretability < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const improvement = 0.6; // Slowest to improve - very hard problem
+      const oldLevel = newState.government.evaluationInvestment.interpretability;
+      newState.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
+      const newLevel = newState.government.evaluationInvestment.interpretability;
+      
+      // Interpretability breakthrough message at high levels
+      let breakthroughMessage = '';
+      if (newLevel >= 7 && oldLevel < 7) {
+        breakthroughMessage = ' 🎯 BREAKTHROUGH: Can now partially detect internal misalignment!';
+      }
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Interpretability Research Advanced',
+          description: `AI interpretability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better understanding of AI internals and true motivations.${breakthroughMessage}`,
+          effects: { interpretabilityQuality: newLevel }
+        }],
+        message: `Interpretability improved to ${newLevel.toFixed(1)}/10${breakthroughMessage}`
+      };
+    }
+  },
+  
+  {
+    id: 'increase_evaluation_frequency',
+    name: 'Increase Evaluation Frequency',
+    description: 'Run evaluations more frequently. Catch dangerous AIs earlier but costs more resources.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.evaluationFrequency < 0.9;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const increase = 0.1; // Increase by 10%
+      const oldFreq = newState.government.evaluationFrequency;
+      newState.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);
+      const newFreq = newState.government.evaluationFrequency;
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Evaluation Frequency Increased',
+          description: `Now evaluating ${Math.round(newFreq*100)}% of AIs per month (was ${Math.round(oldFreq*100)}%). Earlier detection but higher cost.`,
+          effects: { evaluationFrequency: newFreq }
+        }],
+        message: `Evaluation frequency increased to ${Math.round(newFreq*100)}%`
+      };
+    }
   }
 ];
 
