@@ -795,7 +795,15 @@ export function executeAIAgentActions(
   
   // AI Agents: 4 actions per month (weekly)
   for (let week = 0; week < 4; week++) {
-    for (const agent of state.aiAgents) {
+    // Get active AIs from current state (not initial state)
+    // Filter out retired AIs and only include deployed or testing AIs
+    const activeAIs = currentState.aiAgents.filter(ai => 
+      ai.lifecycleState === 'deployed_closed' || 
+      ai.lifecycleState === 'deployed_open' ||
+      ai.lifecycleState === 'testing'
+    );
+    
+    for (const agent of activeAIs) {
       const selectedAction = selectAIAction(agent, currentState, random);
       if (selectedAction) {
         const result = selectedAction.execute(currentState, agent.id, random);
