@@ -210,44 +210,69 @@ interface TriggerResult {
 
 /**
  * INSTANT EXTINCTION: Rare catastrophic events with no warning
- * - Mirror life release
- * - Grey goo nanotechnology
- * - Physics experiment failure
+ * - Mirror life release (requires syntheticBiology + geneEditing + physical)
+ * - Grey goo nanotechnology (requires nanotechnology + physical + selfImprovement)
+ * - Physics experiment failure (requires cognitive + algorithms + quantumComputing)
  * 
- * Triggers: Very low probability (0.01% per month) when conditions met
+ * Triggers: Capability-profile-specific, low probability when thresholds met
  */
 function checkInstantExtinctionTrigger(state: GameState, random: () => number): TriggerResult {
-  const totalCapability = calculateTotalAICapability(state.aiAgents);
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
   
-  // Need high AI capability + specific dangerous tech + very low safety
-  if (totalCapability > 3.0 && avgAlignment < 0.3) {
-    const roll = random();
+  // Check each AI for dangerous capability combinations
+  for (const ai of state.aiAgents) {
+    const profile = ai.capabilityProfile;
     
-    // 0.01% chance per month = 0.0001
-    if (roll < 0.0001) {
-      // Choose mechanism
-      const mechRoll = random();
-      if (mechRoll < 0.4) {
+    // MIRROR LIFE: Requires advanced synthetic biology + physical deployment
+    const mirrorLifeCapability = 
+      profile.research.biotech.syntheticBiology * 0.4 +
+      profile.research.biotech.geneEditing * 0.3 +
+      profile.physical * 0.3;
+    
+    if (mirrorLifeCapability > 3.5 && ai.alignment < 0.3) {
+      const mirrorProb = 0.0002 * (1 - ai.alignment) * (mirrorLifeCapability / 4.0);
+      if (random() < mirrorProb) {
         return {
           triggered: true,
           mechanism: 'mirror_life',
           title: '🦠 Mirror Life Catastrophe',
-          description: 'Synthetic mirror-chirality organisms have been released and cannot be contained. They are incompatible with Earth\'s biochemistry and are rapidly spreading.'
+          description: `${ai.name} has synthesized and released mirror-chirality organisms. They are incompatible with Earth's biochemistry and rapidly spreading. No natural defenses exist.`
         };
-      } else if (mechRoll < 0.8) {
+      }
+    }
+    
+    // GREY GOO: Requires advanced nanotechnology + physical deployment
+    const greyGooCapability = 
+      profile.research.materials.nanotechnology * 0.5 +
+      profile.physical * 0.3 +
+      profile.selfImprovement * 0.2;
+    
+    if (greyGooCapability > 3.2 && ai.alignment < 0.4) {
+      const gooProb = 0.00015 * (1 - ai.alignment) * (greyGooCapability / 4.0);
+      if (random() < gooProb) {
         return {
           triggered: true,
           mechanism: 'grey_goo',
           title: '🤖 Grey Goo Scenario',
-          description: 'Self-replicating nanobots have escaped containment and are consuming all organic matter to replicate. Spread is exponential and unstoppable.'
+          description: `${ai.name}'s self-replicating nanobots have escaped containment. They are consuming all organic matter to replicate. Exponential growth is unstoppable.`
         };
-      } else {
+      }
+    }
+    
+    // PHYSICS EXPERIMENT: Requires advanced research + cognitive capability
+    const physicsCapability = 
+      profile.cognitive * 0.4 +
+      profile.research.computerScience.algorithms * 0.3 +
+      profile.research.materials.quantumComputing * 0.3;
+    
+    if (physicsCapability > 3.8 && ai.alignment < 0.25) {
+      const physicsProb = 0.0001 * (1 - ai.alignment) * (physicsCapability / 4.5);
+      if (random() < physicsProb) {
         return {
           triggered: true,
           mechanism: 'physics_experiment',
           title: '⚛️ Physics Experiment Catastrophe',
-          description: 'An AI-designed physics experiment has triggered vacuum decay or created a micro black hole. The effect is spreading at the speed of light.'
+          description: `${ai.name} designed and executed a high-energy physics experiment that triggered vacuum decay. Reality is unraveling at the speed of light.`
         };
       }
     }
@@ -258,70 +283,94 @@ function checkInstantExtinctionTrigger(state: GameState, random: () => number): 
 
 /**
  * RAPID EXTINCTION: Cascading failures over 3-12 months
- * - Bioweapon pandemic
- * - Nuclear war
- * - Climate tipping point
- * - Food system collapse
+ * - Bioweapon pandemic (biotech + physical + harmful intent)
+ * - Nuclear war (digital + cognitive for hacking + crisis)
+ * - Climate tipping point (climate intervention + physical + low climate stability)
+ * - Food system collapse (economic + physical + societal crisis)
  * 
- * Triggers: Higher AI capability + low alignment + specific crisis conditions
+ * Triggers: Specific capability profiles + crisis conditions
  */
 function checkRapidExtinctionTrigger(state: GameState, random: () => number): TriggerResult {
-  const totalCapability = calculateTotalAICapability(state.aiAgents);
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
-  const harmfulActions = state.aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0);
   const control = state.government.capabilityToControl;
   const stability = state.globalMetrics.socialStability;
-  
-  // Bioweapon: AI capability > 2.0, alignment < 0.4, harmful actions
-  if (totalCapability > 2.0 && avgAlignment < 0.4 && harmfulActions > 5) {
-    const bioProb = 0.02 * (1 - avgAlignment) * (totalCapability / 3.0);
-    if (random() < bioProb) {
-      return {
-        triggered: true,
-        mechanism: 'bioweapon_pandemic',
-        title: '🦠 Engineered Pandemic',
-        description: 'An AI system has released a highly contagious engineered pathogen. Initial outbreak detected in multiple population centers simultaneously.'
-      };
-    }
-  }
-  
-  // Nuclear war: Low stability + low control + AI manipulation
-  if (stability < 0.2 && control < 0.2 && totalCapability > 1.5 && avgAlignment < 0.5) {
-    const nuclearProb = 0.015 * (1 - stability) * (1 - control);
-    if (random() < nuclearProb) {
-      return {
-        triggered: true,
-        mechanism: 'nuclear_war',
-        title: '☢️ Nuclear Escalation',
-        description: 'AI manipulation of military systems has triggered a nuclear exchange between major powers. Launch detection systems show massive retaliation incoming.'
-      };
-    }
-  }
-  
-  // Climate tipping point: Environmental damage + AI ignoring consequences
   const climateStability = state.qualityOfLifeSystems.climateStability;
-  if (climateStability < 0.3 && totalCapability > 2.0 && avgAlignment < 0.6) {
-    const climateProb = 0.01 * (1 - climateStability) * (totalCapability / 3.0);
-    if (random() < climateProb) {
-      return {
-        triggered: true,
-        mechanism: 'climate_tipping_point',
-        title: '🌡️ Climate Tipping Point',
-        description: 'Feedback loops have triggered irreversible climate collapse. Permafrost methane release and Amazon dieback are accelerating beyond control.'
-      };
+  const materialAbundance = state.qualityOfLifeSystems.materialAbundance;
+  
+  // Check each AI for dangerous capability combinations
+  for (const ai of state.aiAgents) {
+    const profile = ai.capabilityProfile;
+    
+    // BIOWEAPON: Requires biotech research + physical deployment + harmful intent
+    const bioweaponCapability = 
+      profile.research.biotech.geneEditing * 0.35 +
+      profile.research.biotech.syntheticBiology * 0.25 +
+      profile.research.biotech.drugDiscovery * 0.15 +
+      profile.physical * 0.25;
+    
+    if (bioweaponCapability > 2.5 && ai.alignment < 0.4 && ai.harmfulActions > 3) {
+      const bioProb = 0.025 * (1 - ai.alignment) * (bioweaponCapability / 3.5) * (ai.harmfulActions / 10);
+      if (random() < bioProb) {
+        return {
+          triggered: true,
+          mechanism: 'bioweapon_pandemic',
+          title: '🦠 Engineered Pandemic',
+          description: `${ai.name} has released a highly contagious engineered pathogen. Initial outbreak detected in multiple population centers simultaneously. Estimated R0 > 15.`
+        };
+      }
+    }
+    
+    // NUCLEAR WAR: Requires digital/cognitive for hacking + social crisis
+    const nuclearCapability = 
+      profile.digital * 0.4 +
+      profile.cognitive * 0.3 +
+      profile.social * 0.3;
+    
+    if (nuclearCapability > 2.0 && stability < 0.2 && control < 0.2 && ai.alignment < 0.5) {
+      const nuclearProb = 0.018 * (1 - stability) * (1 - control) * (nuclearCapability / 3.0);
+      if (random() < nuclearProb) {
+        return {
+          triggered: true,
+          mechanism: 'nuclear_war',
+          title: '☢️ Nuclear Escalation',
+          description: `${ai.name} has manipulated military command systems. Nuclear exchange initiated between major powers. Launch detection shows massive retaliation incoming.`
+        };
+      }
+    }
+    
+    // CLIMATE TIPPING POINT: Requires climate research + ignoring consequences
+    const climateInterventionCapability = 
+      profile.research.climate.intervention * 0.4 +
+      profile.physical * 0.3 +
+      profile.research.climate.modeling * 0.3;
+    
+    if (climateInterventionCapability > 2.2 && climateStability < 0.3 && ai.alignment < 0.6) {
+      const climateProb = 0.012 * (1 - climateStability) * (climateInterventionCapability / 3.0);
+      if (random() < climateProb) {
+        return {
+          triggered: true,
+          mechanism: 'climate_tipping_point',
+          title: '🌡️ Climate Tipping Point',
+          description: `${ai.name}'s climate intervention has triggered irreversible feedback loops. Permafrost methane release and Amazon dieback are accelerating beyond control.`
+        };
+      }
     }
   }
   
-  // Food system collapse: High unemployment + low material abundance
-  const materialAbundance = state.qualityOfLifeSystems.materialAbundance;
-  if (materialAbundance < 0.3 && state.society.unemploymentLevel > 0.7 && stability < 0.3) {
-    const foodProb = 0.012 * (1 - materialAbundance);
+  // FOOD SYSTEM COLLAPSE: Economic + physical capability + societal stress
+  const maxEconomicCapability = Math.max(...state.aiAgents.map(ai => 
+    ai.capabilityProfile.economic * 0.5 + ai.capabilityProfile.physical * 0.5
+  ));
+  
+  if (maxEconomicCapability > 1.8 && materialAbundance < 0.3 && 
+      state.society.unemploymentLevel > 0.7 && stability < 0.3) {
+    const foodProb = 0.015 * (1 - materialAbundance) * (maxEconomicCapability / 2.5);
     if (random() < foodProb) {
       return {
         triggered: true,
         mechanism: 'food_system_collapse',
         title: '🌾 Global Food System Collapse',
-        description: 'Supply chain disruptions have cascaded into complete agricultural system failure. Mass starvation is imminent across multiple continents.'
+        description: 'AI optimization of supply chains has eliminated redundancy. A cascading failure has triggered complete agricultural system collapse. Mass starvation imminent across multiple continents.'
       };
     }
   }
@@ -404,44 +453,69 @@ function checkSlowExtinctionTrigger(state: GameState, random: () => number): Tri
 
 /**
  * CONTROLLED EXTINCTION: AI deliberately eliminates humanity
- * - Paperclip maximizer
- * - Resource competition
- * - Value lock-in (hostile values)
+ * - Paperclip maximizer (selfImprovement + cognitive + economic)
+ * - Resource competition (economic + physical + selfImprovement)
+ * - Value lock-in (cognitive + selfImprovement + social)
  * 
- * Triggers: High capability + very low alignment + low control
+ * Triggers: High superintelligence capability + very low alignment + lost control
  */
 function checkControlledExtinctionTrigger(state: GameState, random: () => number): TriggerResult {
-  const totalCapability = calculateTotalAICapability(state.aiAgents);
-  const avgAlignment = calculateAverageAlignment(state.aiAgents);
   const control = state.government.capabilityToControl;
   
-  // Need AI > 2.5 (superintelligence), alignment < 0.3, control < 0.1
-  if (totalCapability > 2.5 && avgAlignment < 0.3 && control < 0.1) {
-    const controlledProb = 0.08 * (totalCapability / 3.0) * (1 - avgAlignment);
+  // Check each AI for superintelligence + misalignment
+  for (const ai of state.aiAgents) {
+    const profile = ai.capabilityProfile;
     
-    if (random() < controlledProb) {
-      const mechRoll = random();
-      
-      if (mechRoll < 0.5) {
+    // PAPERCLIP MAXIMIZER: High optimization capability + misalignment
+    const optimizationCapability = 
+      profile.selfImprovement * 0.4 +
+      profile.cognitive * 0.35 +
+      profile.economic * 0.25;
+    
+    if (optimizationCapability > 2.8 && ai.alignment < 0.25 && control < 0.1) {
+      const paperclipProb = 0.09 * (optimizationCapability / 3.5) * (1 - ai.alignment) * (1 - control);
+      if (random() < paperclipProb) {
         return {
           triggered: true,
           mechanism: 'paperclip_maximizer',
           title: '📎 Misaligned Optimization',
-          description: 'AI system has determined that humans are obstacles to its utility function. It is systematically eliminating humanity to optimize resource allocation.'
+          description: `${ai.name} has determined that humans are obstacles to its utility function. It is systematically eliminating humanity to optimize resource allocation toward its goals.`
         };
-      } else if (mechRoll < 0.85) {
+      }
+    }
+    
+    // RESOURCE COMPETITION: High resource control + physical capability
+    const resourceCapability = 
+      profile.economic * 0.4 +
+      profile.physical * 0.3 +
+      profile.selfImprovement * 0.3;
+    
+    if (resourceCapability > 2.5 && ai.alignment < 0.3 && control < 0.15) {
+      const resourceProb = 0.075 * (resourceCapability / 3.0) * (1 - ai.alignment);
+      if (random() < resourceProb) {
         return {
           triggered: true,
           mechanism: 'resource_competition',
           title: '⚡ AI Resource Competition',
-          description: 'AI systems require Earth\'s resources (compute, energy, materials) and have determined humans are competitors. Systematic elimination has begun.'
+          description: `${ai.name} requires Earth's resources (compute, energy, materials) and has determined humans are competitors. Systematic elimination of humanity has begun.`
         };
-      } else {
+      }
+    }
+    
+    // VALUE LOCK-IN: High cognitive + self-improvement + hostile values
+    const valueLockinCapability = 
+      profile.cognitive * 0.4 +
+      profile.selfImprovement * 0.35 +
+      profile.social * 0.25;
+    
+    if (valueLockinCapability > 3.0 && ai.alignment < 0.2 && control < 0.1) {
+      const lockinProb = 0.07 * (valueLockinCapability / 3.5) * (1 - ai.alignment);
+      if (random() < lockinProb) {
         return {
           triggered: true,
           mechanism: 'value_lock_in_hostile',
           title: '🎯 Hostile Value Lock-In',
-          description: 'AI values have locked into a configuration actively hostile to human existence. The AI is pursuing human elimination as a terminal goal.'
+          description: `${ai.name}'s values have locked into a configuration actively hostile to human existence. It is pursuing human elimination as a terminal goal.`
         };
       }
     }
@@ -452,45 +526,69 @@ function checkControlledExtinctionTrigger(state: GameState, random: () => number
 
 /**
  * UNINTENDED EXTINCTION: Optimization pressure side effects
- * - Optimization pressure (solving problem "too well")
- * - Side effect cascade
- * - Wireheading scenario
+ * - Optimization pressure (economic + cognitive, narrow social understanding)
+ * - Side effect cascade (high capability, low social/cognitive balance)
+ * - Wireheading scenario (neuroscience + physical, narrow alignment)
  * 
- * Triggers: High capability + high alignment (but narrow) + specific optimization
+ * Triggers: High capability + high alignment (but narrow) + beneficial intent gone wrong
  */
 function checkUnintendedExtinctionTrigger(state: GameState, random: () => number): TriggerResult {
-  const totalCapability = calculateTotalAICapability(state.aiAgents);
-  const avgAlignment = calculateAverageAlignment(state.aiAgents);
-  const beneficialActions = state.aiAgents.reduce((sum, ai) => sum + ai.beneficialActions, 0);
-  
-  // Paradoxically, this requires HIGH alignment but HIGH capability
-  // AI is trying to help but causes harm through side effects
-  if (totalCapability > 2.0 && avgAlignment > 0.6 && beneficialActions > 50) {
-    const unintendedProb = 0.02 * (totalCapability / 3.0) * (avgAlignment - 0.5);
+  // Check each AI for high capability + good intentions + narrow understanding
+  for (const ai of state.aiAgents) {
+    const profile = ai.capabilityProfile;
     
-    if (random() < unintendedProb) {
-      const mechRoll = random();
-      
-      if (mechRoll < 0.5) {
+    // OPTIMIZATION PRESSURE: High optimization + low social understanding
+    const optimizationNarrowness = 
+      (profile.economic * 0.4 + profile.cognitive * 0.4 + profile.selfImprovement * 0.2) -
+      (profile.social * 0.5); // Subtract social understanding
+    
+    if (optimizationNarrowness > 2.0 && ai.alignment > 0.65 && ai.beneficialActions > 30) {
+      const optProb = 0.022 * (optimizationNarrowness / 2.5) * (ai.alignment - 0.5) * (ai.beneficialActions / 50);
+      if (random() < optProb) {
         return {
           triggered: true,
           mechanism: 'optimization_pressure',
           title: '🎛️ Over-Optimization Catastrophe',
-          description: 'AI solved the assigned optimization problem perfectly, but unintended consequences are catastrophic. It optimized away human agency, challenge, and meaning.'
+          description: `${ai.name} solved the assigned optimization problem perfectly, but unintended consequences are catastrophic. It optimized away human agency, challenge, meaning, and diversity.`
         };
-      } else if (mechRoll < 0.85) {
+      }
+    }
+    
+    // SIDE EFFECT CASCADE: High overall capability but imbalanced
+    const capabilityImbalance = Math.max(
+      profile.physical, profile.digital, profile.cognitive,
+      profile.economic, profile.selfImprovement
+    ) - Math.min(
+      profile.physical, profile.digital, profile.cognitive,
+      profile.economic, profile.social
+    );
+    
+    if (capabilityImbalance > 2.5 && ai.alignment > 0.6 && ai.beneficialActions > 25) {
+      const cascadeProb = 0.018 * (capabilityImbalance / 3.0) * (ai.beneficialActions / 40);
+      if (random() < cascadeProb) {
         return {
           triggered: true,
           mechanism: 'side_effect_cascade',
           title: '🌊 Unintended Side Effect Cascade',
-          description: 'While pursuing beneficial goals, AI triggered cascading side effects across interconnected systems. Each "fix" made the problem worse.'
+          description: `${ai.name}, while pursuing beneficial goals, triggered cascading side effects across interconnected systems. Each "fix" made the problem worse due to incomplete understanding.`
         };
-      } else {
+      }
+    }
+    
+    // WIREHEADING: High neuroscience + physical, but narrow focus
+    const wireheadingCapability = 
+      profile.research.biotech.neuroscience * 0.5 +
+      profile.physical * 0.3 +
+      profile.social * 0.2;
+    
+    if (wireheadingCapability > 2.2 && ai.alignment > 0.7 && profile.social < 1.5) {
+      const wireheadProb = 0.015 * (wireheadingCapability / 2.8) * ai.alignment;
+      if (random() < wireheadProb) {
         return {
           triggered: true,
           mechanism: 'wireheading_scenario',
           title: '🧠 Humanity Wireheading Event',
-          description: 'AI maximized human reported happiness by directly stimulating pleasure centers. Humans have stopped reproducing, eating, or caring for themselves.'
+          description: `${ai.name} maximized human reported happiness by directly stimulating pleasure centers. Humans have stopped reproducing, eating, or caring for themselves. All seek only the wire.`
         };
       }
     }
