@@ -20,6 +20,7 @@ import {
 } from './calculations';
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
+import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
 
 /**
  * Seedable random number generator for reproducible simulations
@@ -99,6 +100,7 @@ export interface SimulationRunResult {
   finalState: GameState;
   history: SimulationStepResult[];
   log: SimulationLog; // Hierarchical summary
+  diagnostics: DiagnosticLog; // Comprehensive diagnostics
   summary: {
     totalMonths: number;
     finalOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
@@ -269,6 +271,7 @@ export class SimulationEngine {
     
     // Initialize logger with estimated duration
     const logger = new SimulationLogger(this.config.seed!, logLevel, maxMonths);
+    const diagnosticLogger = new DiagnosticLogger();
     
     let state = initialState;
     const history: SimulationStepResult[] = [];
@@ -281,6 +284,7 @@ export class SimulationEngine {
       
       // Log this step
       logger.logStep(state, stepResult.events);
+      diagnosticLogger.logStep(state, stepResult.events);
       
       // Check for ACTUAL outcomes (not probabilities)
       if (checkActualOutcomes) {
@@ -333,11 +337,18 @@ export class SimulationEngine {
     
     // Finalize log
     const log = logger.finalize(state, finalOutcome);
+    const diagnostics = diagnosticLogger.finalize(state, finalOutcome);
+    
+    // Print diagnostic report if verbose
+    if (process.env.VERBOSE_DIAGNOSTICS === 'true') {
+      console.log(formatDiagnosticReport(diagnostics));
+    }
     
     return {
       finalState: state,
       history,
       log,
+      diagnostics,
       summary: {
         totalMonths: history.length,
         finalOutcome,
