@@ -101,6 +101,58 @@ export interface GameEvent {
   effects: Record<string, number>; // State changes caused
 }
 
+/**
+ * Types of extinction scenarios with different mechanisms and timelines
+ * Phase 2: Nuanced Outcomes - Heterogeneous extinctions
+ */
+export type ExtinctionType = 
+  | 'instant'      // Mirror life, grey goo (5% of extinctions, no warning)
+  | 'rapid'        // Bioweapons, nuclear war (30%, 3-12 month cascade)
+  | 'slow'         // Economic collapse, fertility crisis (40%, 2-10 year decline)
+  | 'controlled'   // AI deliberately eliminates humanity (15%)
+  | 'unintended';  // Optimization side effects (10%)
+
+/**
+ * Specific extinction scenario mechanisms
+ */
+export type ExtinctionMechanism =
+  // Instant
+  | 'mirror_life'
+  | 'grey_goo'
+  | 'physics_experiment'
+  // Rapid
+  | 'bioweapon_pandemic'
+  | 'nuclear_war'
+  | 'climate_tipping_point'
+  | 'food_system_collapse'
+  // Slow
+  | 'economic_system_failure'
+  | 'fertility_collapse'
+  | 'meaning_crisis_death_spiral'
+  | 'resource_depletion'
+  // Controlled
+  | 'paperclip_maximizer'
+  | 'resource_competition'
+  | 'value_lock_in_hostile'
+  // Unintended
+  | 'optimization_pressure'
+  | 'side_effect_cascade'
+  | 'wireheading_scenario';
+
+/**
+ * Tracks an active extinction scenario
+ */
+export interface ExtinctionState {
+  active: boolean;
+  type: ExtinctionType | null;
+  mechanism: ExtinctionMechanism | null;
+  startMonth: number;
+  currentPhase: number; // 0 = initial, 1-4 = progression phases
+  severity: number; // [0,1] How far along the extinction path
+  recoveryWindowClosed: boolean; // Can we still prevent it?
+  escalationEvents: string[]; // Log of key escalation points
+}
+
 export interface OutcomeMetrics {
   utopiaProbability: number; // [0,1] Likelihood of utopian outcome
   dystopiaProbability: number; // [0,1] Likelihood of dystopian outcome  
@@ -170,6 +222,7 @@ export interface GameState {
   technologyTree: TechnologyNode[];
   eventLog: GameEvent[];
   outcomeMetrics: OutcomeMetrics;
+  extinctionState: ExtinctionState; // Active extinction scenario tracking
   
   // Configuration
   config: ConfigurationSettings;

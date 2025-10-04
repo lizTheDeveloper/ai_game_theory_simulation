@@ -22,6 +22,7 @@ import {
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
+import { checkExtinctionTriggers, progressExtinction } from './extinctions';
 
 /**
  * Seedable random number generator for reproducible simulations
@@ -234,6 +235,34 @@ export class SimulationEngine {
     // 8. Detect crisis
     const crisis = detectCrisis(newState);
     
+    // 8b. Check for extinction triggers (if not already in one)
+    if (!newState.extinctionState.active) {
+      const extinctionCheck = checkExtinctionTriggers(newState, this.random.bind(this));
+      newState.extinctionState = extinctionCheck.newExtinctionState;
+      events.push(...extinctionCheck.events);
+    }
+    
+    // 8c. Progress any active extinction scenario
+    if (newState.extinctionState.active) {
+      const extinctionProgress = progressExtinction(newState, this.random.bind(this));
+      newState.extinctionState = extinctionProgress.newExtinctionState;
+      events.push(...extinctionProgress.events);
+      
+      // If extinction is complete, log it
+      if (extinctionProgress.isComplete) {
+        events.push({
+          id: `extinction-complete-${newState.currentMonth}`,
+          timestamp: newState.currentMonth,
+          type: 'crisis',
+          severity: 'destructive',
+          agent: 'system',
+          title: 'Extinction Event Complete',
+          description: `Humanity has been extinguished via ${newState.extinctionState.mechanism}. ${newState.extinctionState.type} extinction pathway.`,
+          effects: {}
+        });
+      }
+    }
+    
     // 9. Advance time
     newState.currentMonth += 1;
     if (newState.currentMonth >= 12) {
@@ -290,6 +319,16 @@ export class SimulationEngine {
       // Log this step
       logger.logStep(state, stepResult.events);
       diagnosticLogger.logStep(state, stepResult.events);
+      
+      // Check for extinction completion (Phase 2: Heterogeneous extinctions)
+      if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {
+        actualOutcome = 'extinction';
+        console.log(`\n💀 EXTINCTION EVENT: ${state.extinctionState.type?.toUpperCase()}`);
+        console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
+        console.log(`   Duration: ${month - state.extinctionState.startMonth} months`);
+        console.log(`   Month: ${month}\n`);
+        break;
+      }
       
       // Check for ACTUAL outcomes (not probabilities)
       if (checkActualOutcomes) {
