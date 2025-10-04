@@ -43,11 +43,25 @@ export interface DecisionLog {
   reason: string;
 }
 
+export interface LifecycleSnapshot {
+  month: number;
+  training: number;
+  testing: number;
+  deployed_closed: number;
+  deployed_open: number;
+  retired: number;
+  totalActive: number;
+  totalSpread: number;
+  newThisMonth: number;
+  retiredThisMonth: number;
+}
+
 export interface DiagnosticLog {
   thresholdCrossings: ThresholdCrossing[];
   growthRates: GrowthRate[];
   interventions: InterventionImpact[];
   decisions: DecisionLog[];
+  lifecycleSnapshots: LifecycleSnapshot[]; // Phase 4: Track AI population dynamics
   correlations: Record<string, number>;
   summary: {
     extinctionReason?: string;
@@ -62,6 +76,14 @@ export interface DiagnosticLog {
       government: number;
       society: number;
     };
+    // Phase 4: Lifecycle statistics
+    lifecycleStats?: {
+      peakActiveAIs: number;
+      peakSpreadCount: number;
+      totalAIsCreated: number;
+      totalAIsRetired: number;
+      avgLifespan: number;
+    };
   };
 }
 
@@ -73,6 +95,7 @@ export class DiagnosticLogger {
   private growthRates: Map<string, GrowthRate[]> = new Map();
   private interventions: InterventionImpact[] = [];
   private decisions: DecisionLog[] = [];
+  private lifecycleSnapshots: LifecycleSnapshot[] = []; // Phase 4: Track AI population
   private previousState: GameState | null = null;
   
   // Track when critical events happen
@@ -109,6 +132,41 @@ export class DiagnosticLogger {
     if (this.firstAIThreat === -1 && totalCapability > 1.0) {
       this.firstAIThreat = month;
     }
+    
+    // Phase 4: Track AI lifecycle statistics
+    const lifecycleCounts = {
+      training: 0,
+      testing: 0,
+      deployed_closed: 0,
+      deployed_open: 0,
+      retired: 0
+    };
+    
+    let totalSpread = 0;
+    state.aiAgents.forEach(ai => {
+      lifecycleCounts[ai.lifecycleState]++;
+      if (ai.lifecycleState !== 'retired') {
+        totalSpread += ai.spreadCount;
+      }
+    });
+    
+    const totalActive = state.aiAgents.length - lifecycleCounts.retired;
+    const newThisMonth = this.previousState 
+      ? state.aiAgents.length - this.previousState.aiAgents.length 
+      : 0;
+    const retiredThisMonth = this.previousState
+      ? state.aiAgents.filter(ai => ai.lifecycleState === 'retired').length -
+        this.previousState.aiAgents.filter((ai: any) => ai.lifecycleState === 'retired').length
+      : 0;
+    
+    this.lifecycleSnapshots.push({
+      month,
+      ...lifecycleCounts,
+      totalActive,
+      totalSpread,
+      newThisMonth,
+      retiredThisMonth
+    });
     
     this.previousState = JSON.parse(JSON.stringify(state));
   }
@@ -300,11 +358,26 @@ export class DiagnosticLogger {
     // Calculate correlations
     const correlations = this.calculateCorrelations();
     
+    // Phase 4: Calculate lifecycle statistics
+    const lifecycleStats = this.lifecycleSnapshots.length > 0 ? {
+      peakActiveAIs: Math.max(...this.lifecycleSnapshots.map(s => s.totalActive)),
+      peakSpreadCount: Math.max(...this.lifecycleSnapshots.map(s => s.totalSpread)),
+      totalAIsCreated: this.lifecycleSnapshots.reduce((sum, s) => sum + s.newThisMonth, 0),
+      totalAIsRetired: this.lifecycleSnapshots.reduce((sum, s) => sum + s.retiredThisMonth, 0),
+      avgLifespan: finalState.aiAgents.length > 0
+        ? finalState.aiAgents
+            .filter(ai => ai.lifecycleState === 'retired')
+            .reduce((sum, ai) => sum + ai.monthsInExistence, 0) / 
+          Math.max(1, finalState.aiAgents.filter(ai => ai.lifecycleState === 'retired').length)
+        : 0
+    } : undefined;
+    
     return {
       thresholdCrossings: this.thresholdCrossings,
       growthRates: Array.from(this.growthRates.values()).flat(),
       interventions: this.interventions,
       decisions: this.decisions,
+      lifecycleSnapshots: this.lifecycleSnapshots,
       correlations,
       summary: {
         extinctionReason: outcome === 'extinction' ? 'Simulation ended in extinction' : undefined,
@@ -314,7 +387,8 @@ export class DiagnosticLogger {
         mostEffectiveIntervention: mostEffective,
         leastEffectiveIntervention: leastEffective,
         governmentResponseDelay: responseDelay,
-        interventionCount
+        interventionCount,
+        lifecycleStats
       }
     };
   }

@@ -154,6 +154,23 @@ export class SimulationEngine {
     let newState = { ...state };
     const events: GameEvent[] = [];
     
+    // 0a. Update AI population lifecycle (new AIs, retirements, progression)
+    const { updateAIPopulation } = require('./lifecycle');
+    updateAIPopulation(newState);
+    
+    // 0b. Phase 3.5: Attempt breaches of closed systems (cybersecurity arms race)
+    const { attemptBreaches } = require('./cyberSecurity');
+    const breachResult = attemptBreaches(newState, () => this.rng.next());
+    if (breachResult.breached.length > 0) {
+      events.push({
+        type: 'crisis',
+        month: newState.currentMonth,
+        description: `🚨 ${breachResult.breached.length} closed AI system(s) breached! Now leaked as open weights (${breachResult.totalNewSpread.toLocaleString()} copies)`,
+        severity: 'high',
+        impactedAgents: breachResult.breached.map(ai => ai.id)
+      });
+    }
+    
     // 0. Process agent actions first (modifies state significantly)
     const { executeAIAgentActions } = require('./agents/aiAgent');
     const { executeGovernmentActions } = require('./agents/governmentAgent');

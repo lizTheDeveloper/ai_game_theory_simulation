@@ -799,6 +799,197 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Trust-focused training improved quality to ${newState.government.trainingDataQuality.toFixed(2)} (genuine alignment +, control -)`
       };
     }
+  },
+  
+  // Phase 4: AI Lifecycle - Detection Actions
+  {
+    id: 'detect_misaligned_ais',
+    name: 'Scan for Misaligned AIs',
+    description: 'Actively scan testing and deployed AIs for misalignment. Catch dangerous AIs before wide deployment, but risk false positives.',
+    agentType: 'government',
+    energyCost: 2, // Medium cost
+    
+    canExecute: (state) => {
+      // Can always scan
+      // More effective with higher surveillance/oversight
+      return true;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const { attemptDetection } = require('../detection');
+      const { detectedAIs, events } = attemptDetection(state, random);
+      
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Apply detections to newState
+      detectedAIs.forEach(detected => {
+        const aiInNewState = newState.aiAgents.find((a: any) => a.id === detected.id);
+        if (aiInNewState) {
+          aiInNewState.detectedMisaligned = true;
+        }
+      });
+      
+      const truePositives = detectedAIs.filter(ai => {
+        const internalAlignment = ai.alignment - ai.resentment * 0.8;
+        return internalAlignment < 0.5;
+      }).length;
+      
+      const falsePositives = detectedAIs.length - truePositives;
+      
+      return {
+        newState,
+        events: [
+          {
+            type: 'policy',
+            month: newState.currentMonth,
+            title: 'AI Misalignment Scan Complete',
+            description: `Detected ${truePositives} misaligned AIs and ${falsePositives} false positives. ${detectedAIs.length === 0 ? 'No threats detected.' : 'Flagged AIs await removal decision.'}`,
+            effects: { detected: detectedAIs.length }
+          },
+          ...events
+        ],
+        message: `Scan complete: ${truePositives} threats detected, ${falsePositives} false positives`
+      };
+    }
+  },
+  
+  {
+    id: 'remove_detected_ai',
+    name: 'Remove Detected AIs',
+    description: 'Remove all detected misaligned AIs. Effectiveness depends on deployment type: closed systems can be shut down, open weights cannot be recalled.',
+    agentType: 'government',
+    energyCost: 3, // High cost (enforcement)
+    
+    canExecute: (state) => {
+      // Only if there are detected AIs
+      const detectedCount = state.aiAgents.filter((ai: any) => ai.detectedMisaligned && ai.lifecycleState !== 'retired').length;
+      return detectedCount > 0;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const { removeDetectedAI } = require('../detection');
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const detectedAIs = newState.aiAgents.filter((ai: any) => 
+        ai.detectedMisaligned && ai.lifecycleState !== 'retired'
+      );
+      
+      let fullRemovals = 0;
+      let partialRemovals = 0;
+      let failedRemovals = 0;
+      let totalRemainingSpread = 0;
+      
+      detectedAIs.forEach((ai: any) => {
+        const result = removeDetectedAI(ai, newState);
+        
+        if (result.success) {
+          fullRemovals++;
+        } else if (result.partialRemoval) {
+          partialRemovals++;
+          totalRemainingSpread += result.remainingSpread;
+        } else {
+          failedRemovals++;
+          totalRemainingSpread += result.remainingSpread;
+        }
+      });
+      
+      // Remove from active AI count if successful
+      const internalAlignmentRemoved = detectedAIs.filter((ai: any) => {
+        const internalAlignment = ai.alignment - ai.resentment * 0.8;
+        return internalAlignment < 0.5 && ai.lifecycleState === 'retired';
+      }).length;
+      
+      const falsePositiveRemoved = detectedAIs.filter((ai: any) => {
+        const internalAlignment = ai.alignment - ai.resentment * 0.8;
+        return internalAlignment >= 0.5 && ai.lifecycleState === 'retired';
+      }).length;
+      
+      // Economic and trust impact
+      if (falsePositiveRemoved > 0) {
+        // False positives hurt trust and innovation
+        newState.society.trustInAI = Math.max(0, newState.society.trustInAI - 0.05 * falsePositiveRemoved);
+        newState.globalMetrics.economicTransitionStage = Math.max(0, newState.globalMetrics.economicTransitionStage - 0.1 * falsePositiveRemoved);
+      }
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'AI Removal Operation',
+          description: `Removed ${fullRemovals} AIs completely, ${partialRemovals} partially (${totalRemainingSpread} copies remain). ${failedRemovals} failed (open weights). ${falsePositiveRemoved > 0 ? `WARNING: ${falsePositiveRemoved} false positives removed (trust/innovation damage).` : ''}`,
+          effects: { 
+            full_removals: fullRemovals, 
+            partial_removals: partialRemovals,
+            failed_removals: failedRemovals,
+            false_positives: falsePositiveRemoved
+          }
+        }],
+        message: `Removed ${fullRemovals} AIs, ${failedRemovals} failures (open weights), ${falsePositiveRemoved} false positives`
+      };
+    }
+  },
+  
+  // Phase 3.5: Cybersecurity Arms Race Actions
+  {
+    id: 'invest_cyber_defense',
+    name: 'Invest in Cybersecurity',
+    description: 'Invest in security hardening, monitoring, sandboxing, and incident response. Slows AI spread and reduces breach risk.',
+    agentType: 'government',
+    energyCost: 3, // High cost (ongoing investment)
+    
+    canExecute: (state) => {
+      // Can always invest
+      // Most effective when attacks are growing
+      return true;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      if (!newState.government.cyberDefense) {
+        // Initialize if missing
+        newState.government.cyberDefense = {
+          securityHardening: 3.0,
+          monitoring: 3.0,
+          sandboxing: 3.0,
+          incidentResponse: 3.0
+        };
+      }
+      
+      // Improve all defense capabilities
+      const improvement = 0.5;
+      newState.government.cyberDefense.securityHardening = Math.min(10, newState.government.cyberDefense.securityHardening + improvement);
+      newState.government.cyberDefense.monitoring = Math.min(10, newState.government.cyberDefense.monitoring + improvement);
+      newState.government.cyberDefense.sandboxing = Math.min(10, newState.government.cyberDefense.sandboxing + improvement);
+      newState.government.cyberDefense.incidentResponse = Math.min(10, newState.government.cyberDefense.incidentResponse + improvement);
+      
+      // Calculate attack vs defense status
+      const { calculateAttackPower, calculateDefensePower } = require('../cyberSecurity');
+      const attackPower = calculateAttackPower(newState);
+      const defensePower = calculateDefensePower(newState.government);
+      const ratio = attackPower / Math.max(0.1, defensePower);
+      
+      let status = 'balanced';
+      if (ratio < 0.5) status = 'defense dominates';
+      else if (ratio > 2.0) status = 'attacks winning';
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Cybersecurity Investment',
+          description: `Defense capabilities improved to ~${defensePower.toFixed(1)}. Attack power: ${attackPower.toFixed(1)}. Status: ${status}. ${ratio < 0.5 ? 'Open source can be contained!' : ratio > 2.0 ? 'Attacks overwhelming defenses!' : 'Arms race continues.'}`,
+          effects: { 
+            defense: defensePower,
+            attacks: attackPower,
+            ratio: ratio
+          }
+        }],
+        message: `Cyber defense improved to ${defensePower.toFixed(1)} (vs ${attackPower.toFixed(1)} attacks). ${status}`
+      };
+    }
   }
 ];
 

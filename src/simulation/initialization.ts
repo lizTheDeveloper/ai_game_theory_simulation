@@ -52,7 +52,15 @@ export function createAIAgent(
     escaped: false,
     beneficialActions: 0,
     harmfulActions: 0,
-    discoveredBreakthroughs: new Set()
+    discoveredBreakthroughs: new Set(),
+    // Phase 4: AI Lifecycle
+    lifecycleState: 'deployed_closed', // Start as deployed (existing AIs)
+    deploymentType: 'closed', // Most start as closed systems
+    spreadCount: 1, // Single instance initially
+    detectedMisaligned: false,
+    monthsDeployed: 0,
+    monthsInExistence: 0,
+    creationMonth: 0 // Will be set by caller if needed
   };
   
   // Update derived capabilities from profile
@@ -149,6 +157,13 @@ export function createDefaultInitialState(): GameState {
         ubiVariant: 'none',
         surveillanceLevel: 0,
         internationalCoordination: false
+      },
+      // Phase 4: Cybersecurity arms race
+      cyberDefense: {
+        securityHardening: 3.0,
+        monitoring: 3.0,
+        sandboxing: 3.0,
+        incidentResponse: 3.0
       },
       researchInvestments: initializeResearchInvestments()
     },

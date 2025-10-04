@@ -95,6 +95,15 @@ export interface AIAgent {
   beneficialActions: number;
   harmfulActions: number;
   discoveredBreakthroughs: Set<string>;
+  
+  // Phase 4: AI Lifecycle (NEW)
+  lifecycleState: 'training' | 'testing' | 'deployed_closed' | 'deployed_open' | 'retired';
+  deploymentType: 'closed' | 'open_weights' | 'enterprise' | 'research';
+  spreadCount: number; // How many copies exist (1 for closed, 1000s for open)
+  detectedMisaligned: boolean; // Has government detected this AI?
+  monthsDeployed: number; // How long has it been deployed?
+  monthsInExistence: number; // Total age of this AI
+  creationMonth: number; // When was this AI created?
 }
 
 /**
@@ -169,6 +178,14 @@ export interface GovernmentAgent {
     ubiVariant: 'none' | 'generous' | 'means_tested' | 'job_guarantee';
     surveillanceLevel: number; // [0,1] Emergent from control desire + conditions
     internationalCoordination: boolean; // Whether international coordination was attempted
+  };
+  
+  // Phase 4: Cybersecurity Arms Race (NEW)
+  cyberDefense?: {
+    securityHardening: number;   // [0,10] System hardening
+    monitoring: number;          // [0,10] Anomaly detection
+    sandboxing: number;          // [0,10] Containment tech
+    incidentResponse: number;    // [0,10] Rapid response
   };
 }
 
