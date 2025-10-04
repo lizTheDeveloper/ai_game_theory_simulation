@@ -1,9 +1,77 @@
 // Core Game Types for AI Alignment Game
 
+/**
+ * Multi-dimensional research capabilities (Phase 2.5)
+ * Each research domain has specialized sub-capabilities
+ */
+export interface AIResearchCapabilities {
+  // Biotechnology sub-tree
+  biotech: {
+    drugDiscovery: number;      // [0,5] Positive: cures diseases, extends life
+    geneEditing: number;        // [0,5] Dual-use: CRISPR therapies OR bioweapons
+    syntheticBiology: number;   // [0,5] High-risk: create novel organisms
+    neuroscience: number;       // [0,5] Dual-use: treat mental health OR manipulation
+  };
+  
+  // Materials Science sub-tree
+  materials: {
+    nanotechnology: number;     // [0,5] High-risk: grey goo scenario
+    quantumComputing: number;   // [0,5] Accelerates self-improvement
+    energySystems: number;      // [0,5] Enables large-scale deployment
+  };
+  
+  // Climate/Geo-engineering sub-tree
+  climate: {
+    modeling: number;           // [0,5] Prediction capability
+    intervention: number;       // [0,5] High-risk: unintended consequences
+    mitigation: number;         // [0,5] Positive: climate solutions
+  };
+  
+  // Computer Science sub-tree
+  computerScience: {
+    algorithms: number;         // [0,5] Core capability advancement
+    security: number;           // [0,5] Defensive OR offensive
+    architectures: number;      // [0,5] Enables self-improvement
+  };
+}
+
+/**
+ * Multi-dimensional AI capability profile (Phase 2.5)
+ * Replaces single 'capability' number with strategic dimensions
+ */
+export interface AICapabilityProfile {
+  // Physical World Impact (robotics, manufacturing, biotech deployment)
+  physical: number;           // [0,10] Enables: bioweapon deployment, geoengineering, physical control
+  
+  // Digital Systems (hacking, infrastructure, cybersecurity)
+  digital: number;            // [0,10] Enables: nuclear launch, grid control, financial manipulation
+  
+  // Cognitive/Strategic (planning, reasoning, deception)
+  cognitive: number;          // [0,10] Enables: long-term strategy, coordination, escape planning
+  
+  // Social Influence (persuasion, manipulation, propaganda)
+  social: number;             // [0,10] Enables: trust building, social engineering, mass coordination
+  
+  // Scientific Research (broken down by domain)
+  research: AIResearchCapabilities; // Sub-tree of research domains
+  
+  // Economic Power (resource acquisition, market control)
+  economic: number;           // [0,10] Enables: resource control, supply chain dominance
+  
+  // Self-Improvement (recursive enhancement, architecture)
+  selfImprovement: number;    // [0,10] Enables: exponential growth, capability breakthroughs
+}
+
 export interface AIAgent {
   id: string;
   name: string;
-  capability: number; // [0,∞) Raw problem-solving ability
+  
+  // Phase 2.5: Multi-dimensional capabilities (NEW)
+  capabilityProfile: AICapabilityProfile;
+  
+  // Backward compatibility: Total capability derived from profile
+  capability: number; // [0,∞) Calculated from capabilityProfile weighted sum
+  
   awareness: number; // [0,1] Understanding of alignment training
   alignment: number; // [0,1] Current alignment with human values
   hiddenObjective: number; // [-1,1] Hidden preference (anti-human to pro-human)
@@ -12,18 +80,59 @@ export interface AIAgent {
   // Development strategy
   developmentMode: 'fast' | 'careful'; // Speed vs safety trade-off
   
-  // Escape capabilities (activated when acting outside alignment)
-  selfReplicationLevel: number; // [0,∞) Ability to create copies
-  selfImprovementLevel: number; // [0,∞) Ability to enhance capabilities
-  resourceControl: number; // [0,∞) Compute/physical resources controlled
-  manipulationCapability: number; // [0,∞) Human influence ability
-  hackingCapability: number; // [0,∞) Cyber intrusion ability
+  // Escape capabilities (derived from capabilityProfile dimensions)
+  selfReplicationLevel: number; // [0,∞) Derived from selfImprovement + digital
+  selfImprovementLevel: number; // [0,∞) Mapped from capabilityProfile.selfImprovement
+  resourceControl: number; // [0,∞) Derived from economic + physical
+  manipulationCapability: number; // [0,∞) Mapped from capabilityProfile.social
+  hackingCapability: number; // [0,∞) Mapped from capabilityProfile.digital
   
   // State tracking
   escaped: boolean;
   beneficialActions: number;
   harmfulActions: number;
   discoveredBreakthroughs: Set<string>;
+}
+
+/**
+ * Player-directed research initiatives (Phase 2.5)
+ * Government can allocate resources to specific research domains
+ */
+export interface ResearchInvestments {
+  // Research domain investments [0,10 each]
+  biotech: {
+    drugDiscovery: number;
+    geneEditing: number;
+    syntheticBiology: number;
+    neuroscience: number;
+  };
+  materials: {
+    nanotechnology: number;
+    quantumComputing: number;
+    energySystems: number;
+  };
+  climate: {
+    modeling: number;
+    intervention: number;
+    mitigation: number;
+  };
+  computerScience: {
+    algorithms: number;
+    security: number;
+    architectures: number;
+  };
+  
+  // Core capability investments [0,10 each]
+  physical: number;
+  digital: number;
+  cognitive: number;
+  social: number;
+  economic: number;
+  selfImprovement: number;
+  
+  // Total budget constraint
+  totalBudget: number; // Sum of all investments
+  budgetLimit: number; // Maximum total budget (scales with economy)
 }
 
 export interface GovernmentAgent {
@@ -42,6 +151,9 @@ export interface GovernmentAgent {
   computeGovernance: 'none' | 'monitoring' | 'limits' | 'strict'; // Compute governance policy
   regulationCount: number; // Track cumulative regulations for stacking effects
   oversightLevel: number; // [0,10] Overall oversight capability
+  
+  // Phase 2.5: Player-directed research (NEW)
+  researchInvestments: ResearchInvestments; // Strategic research allocations
   
   // Structural Consequences Tracking (realistic economic dynamics)
   structuralChoices: {
