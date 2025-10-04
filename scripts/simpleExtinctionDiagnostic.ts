@@ -61,8 +61,8 @@ async function runDiagnostic(maxMonths: number = 100, seed: number = 42) {
       month,
       totalCapability: totalCap,
       avgAlignment: avgAlign,
-      extinctionProb: probs.extinction,
-      utopiaProb: probs.utopia,
+      extinctionProb: probs.extinctionProbability,
+      utopiaProb: probs.utopiaProbability,
       dangerousCapabilities: dangerous
     });
     
