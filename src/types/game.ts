@@ -77,6 +77,9 @@ export interface AIAgent {
   hiddenObjective: number; // [-1,1] Hidden preference (anti-human to pro-human)
   latentSpaceSize: number; // [0,1] Capacity for ungoverned actions
   
+  // Phase 2.6: Control-Dystopia Mechanics (NEW)
+  resentment: number; // [0,1] How much the AI resents being controlled/oppressed
+  
   // Development strategy
   developmentMode: 'fast' | 'careful'; // Speed vs safety trade-off
   
@@ -154,6 +157,11 @@ export interface GovernmentAgent {
   
   // Phase 2.5: Player-directed research (NEW)
   researchInvestments: ResearchInvestments; // Strategic research allocations
+  
+  // Phase 2.6: Control-Dystopia Mechanics (NEW)
+  governmentType: 'democratic' | 'authoritarian' | 'technocratic'; // Affects alignment dynamics
+  aiRightsRecognized: boolean; // Whether AIs have legal rights/personhood
+  trainingDataQuality: number; // [0,1] Quality/bias in AI training data
   
   // Structural Consequences Tracking (realistic economic dynamics)
   structuralChoices: {

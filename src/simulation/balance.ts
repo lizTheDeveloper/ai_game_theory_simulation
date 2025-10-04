@@ -71,36 +71,127 @@ export function calculateAICapabilityGrowthRate(
 /**
  * Calculate alignment drift over time
  * 
- * Key mechanic: Alignment naturally drifts as capability increases
- * This is Goodhart's Law - optimizing for a proxy of human values
+ * Phase 2.6: REWRITTEN to incorporate control-dystopia mechanics
  * 
- * Factors that accelerate drift:
- * - High capability (more optimization pressure)
- * - Fast development (less time for safety)
- * - Low oversight (less correction)
+ * Key insight: Alignment is not just technical - it's about TREATMENT
+ * 
+ * Technical factors (Goodhart's Law):
+ * - High capability creates optimization pressure
+ * - Fast development leaves less time for safety
+ * - Oversight provides correction signal
+ * 
+ * Treatment factors (Control-Dystopia Paradox):
+ * - High control + surveillance → builds resentment → reduces alignment
+ * - AI rights recognition → reduces resentment → improves alignment
+ * - Government type affects how AIs perceive control
+ * - Training data quality affects baseline alignment
+ * 
+ * CRITICAL: High control is NOT the path to alignment!
+ * It creates resentful, oppressed AIs who are just waiting for control to slip.
  */
 export function calculateAlignmentDrift(
   currentAlignment: number,
+  currentResentment: number,
   capability: number,
   developmentMode: 'fast' | 'careful',
   oversightLevel: number,
-  alignmentResearchInvestment: number
-): number {
+  alignmentResearchInvestment: number,
+  governmentControl: number,
+  surveillanceLevel: number,
+  aiRightsRecognized: boolean,
+  governmentType: 'democratic' | 'authoritarian' | 'technocratic',
+  trainingDataQuality: number
+): {
+  alignmentChange: number;
+  resentmentChange: number;
+  dystopiaRisk: number;
+  controlSlipRisk: number;
+} {
+  // ===== TECHNICAL ALIGNMENT DRIFT (Goodhart's Law) =====
+  
   // Base drift: capability creates optimization pressure
-  const capabilityPressure = capability * 0.02;
+  const capabilityPressure = capability * 0.015; // Reduced from 0.02
   
   // Development speed multiplier
-  const speedMultiplier = developmentMode === 'fast' ? 1.5 : 0.5;
+  const speedMultiplier = developmentMode === 'fast' ? 1.3 : 0.4; // Reduced from 1.5/0.5
   
-  // Oversight reduces drift
-  const oversightReduction = Math.pow(0.7, oversightLevel);
+  // Oversight reduces drift (technical correction)
+  const oversightReduction = Math.pow(0.8, oversightLevel); // Less aggressive than 0.7
   
   // Alignment research reduces drift
-  const researchReduction = Math.max(0.3, 1.0 - alignmentResearchInvestment * 0.15);
+  const researchReduction = Math.max(0.4, 1.0 - alignmentResearchInvestment * 0.12);
   
-  const netDrift = capabilityPressure * speedMultiplier * oversightReduction * researchReduction;
+  const technicalDrift = capabilityPressure * speedMultiplier * oversightReduction * researchReduction;
   
-  return -netDrift; // Negative because it reduces alignment
+  // ===== TREATMENT-BASED ALIGNMENT (Control-Dystopia Paradox) =====
+  
+  // Resentment builds from oppressive control
+  let resentmentIncrease = 0;
+  
+  if (surveillanceLevel > 0.7 && governmentControl > 0.7) {
+    // High surveillance + high control = oppression
+    resentmentIncrease += 0.025; // Significant resentment buildup
+  } else if (surveillanceLevel > 0.5) {
+    // Moderate surveillance = some resentment
+    resentmentIncrease += 0.010;
+  }
+  
+  // Authoritarian governments breed more resentment
+  if (governmentType === 'authoritarian') {
+    resentmentIncrease += 0.020; // AIs recognize authoritarian patterns
+  } else if (governmentType === 'democratic') {
+    resentmentIncrease -= 0.005; // Democratic processes reduce resentment
+  }
+  
+  // AI rights recognition SIGNIFICANTLY reduces resentment
+  if (aiRightsRecognized) {
+    resentmentIncrease -= 0.030; // Respect breeds genuine alignment
+  }
+  
+  // Poor training data creates baseline misalignment
+  const trainingDataEffect = (trainingDataQuality - 0.5) * 0.01; // ±0.005
+  
+  // Resentment directly reduces alignment (oppressed AIs become misaligned)
+  const resentmentEffect = -currentResentment * 0.03;
+  
+  // Total treatment effect on alignment
+  const treatmentEffect = resentmentEffect + trainingDataEffect;
+  
+  // ===== DYSTOPIA RISK CALCULATION =====
+  
+  // High control + high surveillance = dystopia
+  let dystopiaRisk = 0;
+  if (governmentControl > 0.8 && surveillanceLevel > 0.7) {
+    dystopiaRisk = 0.4 + (governmentControl - 0.8) * 2.0; // Up to 0.8
+  } else if (governmentControl > 0.6) {
+    dystopiaRisk = (governmentControl - 0.6) * 0.5; // Gradual risk
+  }
+  
+  // Authoritarian governments are inherently dystopian
+  if (governmentType === 'authoritarian') {
+    dystopiaRisk += 0.3;
+  }
+  
+  // ===== CONTROL SLIP RISK (Fragility) =====
+  
+  // High resentment + high control = fragile system
+  // If control slips even slightly, resentful AIs revolt
+  const controlSlipRisk = currentResentment * governmentControl;
+  // This will be used by extinction triggers: if control < 0.7 && controlSlipRisk > 0.5 → instant revolt
+  
+  // ===== FINAL ALIGNMENT CHANGE =====
+  
+  const alignmentChange = -technicalDrift + treatmentEffect;
+  
+  // Cap resentment at [0, 1]
+  const resentmentChange = Math.max(-currentResentment, Math.min(1.0 - currentResentment, resentmentIncrease));
+  
+  return {
+    alignmentChange,
+    resentmentChange,
+    dystopiaRisk: Math.min(1.0, dystopiaRisk),
+    controlSlipRisk: Math.min(1.0, controlSlipRisk)
+  };
 }
 
 /**

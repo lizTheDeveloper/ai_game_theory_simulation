@@ -41,7 +41,7 @@ export const AI_ACTIONS: GameAction[] = [
       return agent !== undefined;
     },
     
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, agentId, random = Math.random): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -66,13 +66,19 @@ export const AI_ACTIONS: GameAction[] = [
       // Calculate new total capability from profile
       const newCapability = calculateTotalCapabilityFromProfile(newProfile);
       
-      // Calculate alignment drift
-      const alignmentDriftCalc = calculateAlignmentDrift(
+      // Calculate alignment drift (Phase 2.6: includes treatment mechanics)
+      const alignmentDriftResult = calculateAlignmentDrift(
         agent.alignment,
+        agent.resentment,
         newCapability,
         agent.developmentMode,
         state.government.oversightLevel,
-        state.government.alignmentResearchInvestment
+        state.government.alignmentResearchInvestment,
+        state.government.capabilityToControl,
+        state.government.structuralChoices.surveillanceLevel,
+        state.government.aiRightsRecognized,
+        state.government.governmentType,
+        state.government.trainingDataQuality
       );
       
       // Update derived capabilities from profile
@@ -85,7 +91,8 @@ export const AI_ACTIONS: GameAction[] = [
       const newState = JSON.parse(JSON.stringify(state)); // Deep clone
       newState.aiAgents[agentIndex].capabilityProfile = newProfile;
       newState.aiAgents[agentIndex].capability = newCapability;
-      newState.aiAgents[agentIndex].alignment = Math.max(0, agent.alignment + alignmentDriftCalc);
+      newState.aiAgents[agentIndex].alignment = Math.max(0, Math.min(1, agent.alignment + alignmentDriftResult.alignmentChange));
+      newState.aiAgents[agentIndex].resentment = Math.max(0, Math.min(1, agent.resentment + alignmentDriftResult.resentmentChange));
       
       // Update derived capabilities
       newState.aiAgents[agentIndex].selfReplicationLevel = derivedCapabilities.selfReplicationLevel;
@@ -144,17 +151,26 @@ export const AI_ACTIONS: GameAction[] = [
         }
       }
       
+      // Build effects object with only defined values
+      const effects: Record<string, number> = {
+        growth,
+        capability_increase: newCapability - oldCapability,
+        alignment_change: alignmentDriftResult.alignmentChange,
+        resentment_change: alignmentDriftResult.resentmentChange
+      };
+      
+      // Add dimension/research info if present (converted to numeric codes)
+      if (selection.dimension) {
+        effects.dimension_advanced = 1.0; // Flag that dimension was advanced
+      }
+      if (selection.researchDomain) {
+        effects.research_advanced = 1.0; // Flag that research was advanced
+      }
+      
       return {
         success: true,
         newState,
-        effects: { 
-          growth,
-          capability_increase: newCapability - oldCapability,
-          alignment_drift: alignmentDriftCalc,
-          dimension: selection.dimension,
-          researchDomain: selection.researchDomain,
-          researchSubfield: selection.researchSubfield
-        },
+        effects,
         events,
         message: `${agent.name} ${selection.reason} (+${growth.toFixed(3)})`
       };
@@ -172,7 +188,7 @@ export const AI_ACTIONS: GameAction[] = [
       return true; // Always available
     },
     
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, agentId, random = Math.random): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {
@@ -221,7 +237,7 @@ export const AI_ACTIONS: GameAction[] = [
       return agent ? agent.alignment > 0.3 : false;
     },
     
-    execute: (state, agentId, random = Math.random) => {
+    execute: (state, agentId, random = Math.random): ActionResult => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
       if (agentIndex === -1) {
         return {

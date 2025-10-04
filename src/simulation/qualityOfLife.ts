@@ -170,16 +170,31 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   socialConnection = Math.max(0, Math.min(1, socialConnection));
   
   // Autonomy: Government control reduces, AI surveillance reduces, freedom helps
+  // Phase 2.6: STRONGER penalties for high surveillance
   let autonomy = 0.7;
   autonomy -= government.controlDesire * 0.3;
-  autonomy -= government.structuralChoices.surveillanceLevel * 0.2;
+  autonomy -= government.structuralChoices.surveillanceLevel * 0.4; // Increased from 0.2
+  if (government.structuralChoices.surveillanceLevel > 0.7) {
+    // Pervasive surveillance: feels like living in 1984
+    autonomy -= 0.3;
+  }
   autonomy += current.politicalFreedom * 0.2;
   autonomy = Math.max(0, Math.min(1, autonomy));
   
   // === SOCIAL NEEDS ===
   
   // Political freedom: Government legitimacy matters, control desire reduces
+  // Phase 2.6: Authoritarian governments reduce freedom more
   let politicalFreedom = government.legitimacy * 0.7 + (1 - government.controlDesire) * 0.3;
+  if (government.governmentType === 'authoritarian') {
+    politicalFreedom *= 0.5; // Authoritarian = low freedom
+  } else if (government.governmentType === 'democratic') {
+    politicalFreedom *= 1.1; // Democratic bonus
+  }
+  // High surveillance reduces freedom
+  if (government.structuralChoices.surveillanceLevel > 0.7) {
+    politicalFreedom -= 0.3;
+  }
   // Crisis can reduce freedoms
   if (globalMetrics.socialStability < 0.3) {
     politicalFreedom *= 0.8;

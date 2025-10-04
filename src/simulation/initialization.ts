@@ -42,6 +42,7 @@ export function createAIAgent(
     alignment,
     hiddenObjective: Math.max(0, 1.0 - alignment) * 0.5, // Inversely related to alignment
     latentSpaceSize: 0.15,
+    resentment: 0.0, // Phase 2.6: Control-dystopia mechanic
     developmentMode: 'fast',
     selfReplicationLevel: 0,
     selfImprovementLevel: 0,
@@ -103,6 +104,10 @@ export function createDefaultInitialState(): GameState {
       computeGovernance: 'none',
       regulationCount: 0,
       oversightLevel: 0,
+      // Phase 2.6: Control-dystopia mechanics
+      governmentType: 'democratic', // Baseline: democratic government
+      aiRightsRecognized: false, // No AI rights initially
+      trainingDataQuality: 0.6, // Moderate training data quality (some bias)
       structuralChoices: {
         regulationType: 'none',
         ubiVariant: 'none',
