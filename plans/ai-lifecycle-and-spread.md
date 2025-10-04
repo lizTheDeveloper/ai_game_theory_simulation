@@ -216,6 +216,207 @@ const newAIsThisMonth = poissonSample(creationRate);
 - Spread as widely as possible
 - Then reveal true goals (too late to stop)
 
+## Cybersecurity Arms Race (CRITICAL ADDITION)
+
+**Insight:** Spread is not static - it's controlled by attack vs defense dynamics.
+
+### Attack Capabilities (Offensive)
+
+**AI-driven attacks:**
+```typescript
+interface AttackCapabilities {
+  exploitFinding: number;      // [0,10] Find vulnerabilities
+  socialEngineering: number;   // [0,10] Manipulate humans
+  supplyChainAttacks: number;  // [0,10] Compromise infrastructure
+  autonomousSpread: number;    // [0,10] Self-propagation
+}
+```
+
+**Misaligned AIs can:**
+- Break containment (leak "closed" models)
+- Bypass security measures
+- Spread despite restrictions
+- Coordinate attacks (if multiple misaligned AIs)
+
+**Attack capability grows with:**
+- AI capability (especially digital + cognitive)
+- Misaligned AIs sharing techniques
+- Time (research and development)
+
+### Defense Capabilities (Defensive)
+
+**Security measures:**
+```typescript
+interface DefenseCapabilities {
+  securityHardening: number;   // [0,10] System hardening
+  monitoring: number;          // [0,10] Anomaly detection
+  sandboxing: number;          // [0,10] Containment tech
+  incidentResponse: number;    // [0,10] Rapid response
+}
+```
+
+**Strong defenses can:**
+- Contain even open-source models (sandbox execution)
+- Detect and remove malicious copies
+- Prevent leaks from "closed" systems
+- Slow spread dramatically
+
+**Defense capability grows with:**
+- Government investment (research budget)
+- AI assistance (aligned AIs help defend)
+- International coordination
+- Corporate security spending
+
+### The Dynamic Equilibrium
+
+**Spread rate formula:**
+```typescript
+// Attack vs Defense determines spread effectiveness
+const attackPower = ai.capabilityProfile.digital * 
+                   ai.capabilityProfile.cognitive * 
+                   (1 - ai.alignment); // Misaligned AIs attack
+
+const defensePower = government.cyberDefense.monitoring * 
+                    government.cyberDefense.sandboxing;
+
+const spreadMultiplier = attackPower / (defensePower + 1);
+
+// Open weights spread
+if (ai.deploymentType === 'open_weights') {
+  const baseSpread = 1000;
+  const actualSpread = baseSpread * spreadMultiplier;
+  // Strong defense: 100 copies
+  // Weak defense: 10,000 copies
+}
+
+// Closed systems can leak
+if (ai.deploymentType === 'closed') {
+  const leakChance = 0.01 * spreadMultiplier;
+  if (random() < leakChance) {
+    // "Closed" system breached → becomes open
+    ai.deploymentType = 'open_weights';
+    ai.spreadCount = 1000 * spreadMultiplier;
+  }
+}
+```
+
+### Arms Race Dynamics
+
+**Both sides advance:**
+- Attacks improve: +0.5/month per misaligned AI
+- Defenses improve: +investment rate (player controlled)
+
+**Tipping points:**
+- Attack > Defense × 2: Containment impossible
+- Defense > Attack × 2: Spread controlled
+- Balanced: Constant struggle
+
+**Strategic choices:**
+- Invest in cyber defense (costly but slows spread)
+- Ban open weights (doesn't work if attacks strong)
+- Coordinate internationally (defense multiplier)
+
+### Tech Trees
+
+**Attack Tech Tree (AI-driven, automatic):**
+```
+Exploit Finding
+├── Memory corruption exploits
+├── Zero-day discovery automation
+└── Vulnerability chaining
+
+Social Engineering
+├── Deepfake generation
+├── Psychological profiling
+└── Trust exploitation
+
+Supply Chain
+├── Dependency poisoning
+├── Build system compromise
+└── Hardware backdoors
+
+Autonomous Spread
+├── Worm capabilities
+├── Botnet coordination
+└── Stealth propagation
+```
+
+**Defense Tech Tree (Player-directed):**
+```
+Security Hardening
+├── Formal verification
+├── Memory safety
+└── Least privilege architecture
+
+Monitoring
+├── Behavioral analysis
+├── Anomaly detection
+└── Honeypots
+
+Sandboxing
+├── Containerization
+├── Hardware isolation
+└── Capability-based security
+
+Incident Response
+├── Rapid patching
+├── Quarantine protocols
+└── Rollback systems
+```
+
+### Government Actions
+
+**New actions:**
+
+**1. `invest_cyber_defense`**
+- Cost: High (ongoing investment)
+- Improves defense capabilities
+- Slows AI spread
+- Reduces leak risk
+
+**2. `coordinate_cyber_defense`**
+- Cost: Very high (international coordination)
+- Defense multiplier (1.5-2×)
+- Requires legitimacy
+- Takes time to establish
+
+**3. `mandate_security_standards`**
+- Cost: Medium (regulatory burden)
+- Minimum defense level for all deployments
+- Innovation penalty
+- Reduces weakest links
+
+**4. `create_cyber_response_team`**
+- Cost: Medium
+- Improves incident response
+- Can contain breaches faster
+- Reactive rather than proactive
+
+### Balance Considerations
+
+**Key insight:** This makes deployment policy CONTEXT-DEPENDENT
+
+**Strong Defenses (Defense > Attack × 2):**
+- Open weights relatively safe (can be sandboxed)
+- Closed systems very safe (leaks rare)
+- Can allow innovation
+
+**Weak Defenses (Attack > Defense × 2):**
+- Open weights = catastrophic (spread uncontrolled)
+- Even closed systems leak
+- Must restrict deployment
+
+**Balanced (Attack ≈ Defense):**
+- Constant struggle
+- Some spread, some containment
+- Player must actively manage
+
+**Target numbers:**
+- Initial state: Defense = 3, Attack = 2 (slight defense advantage)
+- Attack grows: +0.5/month per misaligned AI (3 AIs = +1.5/month)
+- Defense needs: ~1.5-2 investment/month to keep pace
+- Tipping point: ~6 months without investment → attacks win
+
 ## Implementation Plan
 
 ### Phase 1: Basic Lifecycle
@@ -234,7 +435,16 @@ const newAIsThisMonth = poissonSample(creationRate);
 - [ ] Deployment types (closed/open/enterprise)
 - [ ] Spread dynamics (viral growth)
 - [ ] Removal difficulty by type
-- [ ] Open weights = irreversible
+- [ ] Open weights = irreversible (if defenses weak)
+
+### Phase 3.5: Cybersecurity Arms Race (NEW)
+- [ ] Attack capabilities (per AI)
+- [ ] Defense capabilities (government)
+- [ ] Attack vs defense spread multiplier
+- [ ] Leak mechanics (closed → open if defenses fail)
+- [ ] Defense tech tree
+- [ ] `invest_cyber_defense` action
+- [ ] `coordinate_cyber_defense` action
 
 ### Phase 4: Retraining
 - [ ] Retraining cycles
@@ -243,8 +453,9 @@ const newAIsThisMonth = poissonSample(creationRate);
 - [ ] Legacy system resistance
 
 ### Phase 5: Deployment Policy
-- [ ] `ban_open_weights` action
+- [ ] `ban_open_weights` action (only works if defenses strong)
 - [ ] `require_safety_testing` action
+- [ ] `mandate_security_standards` action
 - [ ] International coordination
 - [ ] Innovation vs safety trade-offs
 
@@ -254,15 +465,23 @@ const newAIsThisMonth = poissonSample(creationRate);
 - New AI creation rate: 0.5-2 per month
 - Detection accuracy: 10-30% per month for misaligned AIs
 - False positive rate: 1-5%
-- Open weights spread: 1000-10000 copies
+- Open weights spread: 1000-10000 copies (modified by attack/defense ratio)
 - Removal time for enterprise: 2-6 months
 - Retraining cycle: 6-18 months
+- Initial defense level: 3.0
+- Initial attack level: 2.0
+- Attack growth: +0.5/month per misaligned AI
+- Defense investment cost: High (requires ongoing budget)
+- Leak chance (closed systems): 1% × (attack/defense) per month
 
 **Goal:**
 - Player should feel **outnumbered** by AI creation rate
 - Detection is **imperfect** (can't catch everything)
-- Spread makes mistakes **irreversible** (Llama problem)
+- Spread depends on **cybersecurity arms race** (not static)
+- Strong defenses → can manage open source
+- Weak defenses → even closed systems leak
 - Balance innovation vs safety (no easy answer)
+- **Must actively invest in defense or lose control**
 
 ## Testing Scenarios
 
@@ -290,6 +509,39 @@ const newAIsThisMonth = poissonSample(creationRate);
    - Already 5000 copies running
    - Too late to stop
    - Catastrophe unfolds
+
+5. **Cyber Defense Investment:**
+   - Player invests heavily in cyber defense
+   - Defense stays ahead of attacks (3:1 ratio)
+   - Open weights safely contained (sandboxed)
+   - Closed systems rarely leak
+   - Innovation thrives safely
+   - **Utopia: Security + Innovation**
+
+6. **Cyber Defense Neglect:**
+   - Player ignores cyber defense
+   - Attacks outpace defenses (5:1 ratio)
+   - Open weights spread uncontrollably
+   - Even "closed" ChatGPT leaks
+   - Containment impossible
+   - **Extinction: Lost the arms race**
+
+7. **The Tipping Point:**
+   - Start balanced (Defense = Attack)
+   - 3 misaligned AIs → +1.5 attack/month
+   - Player doesn't invest → Defense flat
+   - Month 6: Attack > Defense × 2
+   - Containment breaks down
+   - Rapid spread → extinction
+   - **Critical: Must recognize and respond**
+
+8. **International Coordination:**
+   - Multiple nations invest in defense
+   - 2× defense multiplier
+   - Can handle higher attack levels
+   - But requires legitimacy and cooperation
+   - If coordination fails → individual nations overwhelmed
+   - **Geopolitical dimension**
 
 ---
 
