@@ -478,12 +478,13 @@ main();
    - Refactor `gameStore.ts` to be thin wrapper
    - Remove duplicated calculations from UI
    - Test game plays identically
-2. **Fix Quartile Logging Bug**: Month 0 appearing in all quartile snapshots
+2. ⚠️  **Fix Quartile Logging Bug**: Month 0 appearing in all quartile snapshots (under investigation)
 3. **Run Large-Scale Analysis**: 1000+ simulations to map outcome space
 4. **Analyze Crisis Choices**: Determine which choices lead to which outcomes
 5. **Automated Testing**: Unit tests for all pure functions
 6. **Performance Optimization**: Benchmark and optimize simulation speed
 7. **Parameter Tuning**: Fine-tune based on large-scale results
+8. 🔬 **Investigate 100% Extinction Rate**: Comprehensive diagnostics added, analyzing runaway dynamics
 
 ### 🎯 Current Focus
 Implementing the new economic dynamics plan with:
