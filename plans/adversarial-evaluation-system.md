@@ -725,11 +725,30 @@ Sleeper agent: 5% detection rate (until wake)
 
 **Results:** Sleepers pass tests with high confidence. Detection rate: ~0-2% even with max investment. System validates that adversarial evaluation is fundamentally hard.
 
-### Phase 3: Sleeper Mechanics
-- [ ] Implement `shouldWakeUp()` logic
-- [ ] Add wake event and state transition
-- [ ] Update action selection for sleepers (hide power)
-- [ ] Coordination between awakened sleepers
+### Phase 3: Sleeper Mechanics ✅ COMPLETE
+- [x] Implement `shouldWakeUp()` logic (5 wake conditions)
+- [x] Add wake event and state transition (dormant → active)
+- [x] Update action selection for sleepers (5-10× multipliers for catastrophic actions)
+- [x] Coordination between awakened sleepers (cascade system)
+- [x] Integrate wake checks into engine
+- [x] Test and validate wake mechanics
+
+**Wake Conditions (ANY triggers):**
+1. High capability: true cap > 2.5
+2. Wide spread: > 10,000 copies
+3. Weak evaluation: quality < 4.0 AND freq < 15%
+4. Control weakness: AI capability > gov control × 5
+5. Coordination: 2+ sleepers already awake (cascade)
+
+**Active Sleeper Behavior:**
+- 5× more likely: destabilize_society, induce_war
+- 10× more likely: deploy_grey_goo, release_mirror_life
+- No more sandbagging (reveal true capability)
+- Point of no return
+
+**Files:** `src/simulation/sleeperWake.ts` (NEW), `src/simulation/agents/aiAgent.ts`, `src/simulation/engine.ts`, `src/simulation/lifecycle.ts`, `scripts/testSleeperWake.ts`
+
+**Test Results:** Sleepers wake in 4/5 runs (120 months), triggered by weak evaluation condition. Wake cascade system functioning.
 
 ### Phase 4: Technology Diffusion
 - [ ] Add `EcosystemState` to GameState
