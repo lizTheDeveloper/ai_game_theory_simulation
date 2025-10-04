@@ -13,6 +13,7 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { GameState } from '../src/types/game';
 import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
+import { initializeExtinctionState } from '../src/simulation/extinctions';
 import fs from 'fs';
 
 // Create initial state with new fields
@@ -97,16 +98,14 @@ function createTestState(): GameState {
     eventLog: [],
     
     outcomeMetrics: {
-      probabilityUtopia: 0.33,
-      probabilityDystopia: 0.33,
-      probabilityExtinction: 0.34,
-      effectiveControl: 0.5,
-      totalAICapability: 0.5,
-      alignmentStatus: 'aligned',
-      riskFactors: [],
-      crisisType: null,
-      monthsUntilCrisis: null
+      utopiaProbability: 0.33,
+      dystopiaProbability: 0.33,
+      extinctionProbability: 0.34,
+      activeAttractor: 'none',
+      lockInStrength: 0
     },
+    
+    extinctionState: initializeExtinctionState(),
     
     config: {
       governmentActionFrequency: 1.0,

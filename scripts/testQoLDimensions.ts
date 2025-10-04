@@ -12,6 +12,7 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { GameState } from '../src/types/game';
 import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
+import { initializeExtinctionState } from '../src/simulation/extinctions';
 
 function createScenario(name: string, modifications: Partial<GameState>): GameState {
   const base: GameState = {
@@ -98,6 +99,8 @@ function createScenario(name: string, modifications: Partial<GameState>): GameSt
       activeAttractor: 'none',
       lockInStrength: 0
     },
+    
+    extinctionState: initializeExtinctionState(),
     
     config: {
       governmentActionFrequency: 1.0,

@@ -7,6 +7,7 @@ import { SimulationEngine } from '../src/simulation/engine';
 import { GameState } from '../src/types/game';
 import { formatDiagnosticReport } from '../src/simulation/diagnostics';
 import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
+import { initializeExtinctionState } from '../src/simulation/extinctions';
 
 function createInitialState(): GameState {
   return {
@@ -96,6 +97,8 @@ function createInitialState(): GameState {
       activeAttractor: 'none',
       lockInStrength: 0
     },
+    
+    extinctionState: initializeExtinctionState(),
     
     config: {
       governmentActionFrequency: 0.08,

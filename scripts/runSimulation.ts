@@ -17,6 +17,7 @@ import { SimulationEngine, SimulationConfig } from '../src/simulation/engine';
 import { runMonteCarlo, exportResults, MonteCarloConfig } from '../src/simulation-runner/monteCarlo';
 import { GameState } from '../src/types/game';
 import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
+import { initializeExtinctionState } from '../src/simulation/extinctions';
 
 // Import initial state creation from gameStore
 // For now, we'll create a minimal initial state
@@ -150,6 +151,8 @@ function createInitialState(): GameState {
       activeAttractor: 'none',
       lockInStrength: 0
     },
+    
+    extinctionState: initializeExtinctionState(),
     
     config: {
       governmentActionFrequency: 0.08,

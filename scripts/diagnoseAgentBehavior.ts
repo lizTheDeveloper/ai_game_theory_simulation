@@ -5,6 +5,7 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { GameState } from '../src/types/game';
 import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
+import { initializeExtinctionState } from '../src/simulation/extinctions';
 
 function createInitialState(): GameState {
   return {
@@ -91,13 +92,11 @@ function createInitialState(): GameState {
       utopiaProbability: 0.33,
       dystopiaProbability: 0.33,
       extinctionProbability: 0.34,
-      effectiveControl: 0.5,
-      totalAICapability: 0.5,
-      alignmentStatus: 'aligned',
-      riskFactors: [],
-      crisisType: null,
-      monthsUntilCrisis: null
+      activeAttractor: 'none',
+      lockInStrength: 0
     },
+    
+    extinctionState: initializeExtinctionState(),
     
     config: {
       governmentActionFrequency: 1.0,

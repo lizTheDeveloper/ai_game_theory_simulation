@@ -237,14 +237,14 @@ export class SimulationEngine {
     
     // 8b. Check for extinction triggers (if not already in one)
     if (!newState.extinctionState.active) {
-      const extinctionCheck = checkExtinctionTriggers(newState, this.random.bind(this));
+      const extinctionCheck = checkExtinctionTriggers(newState, () => this.rng.next());
       newState.extinctionState = extinctionCheck.newExtinctionState;
       events.push(...extinctionCheck.events);
     }
     
     // 8c. Progress any active extinction scenario
     if (newState.extinctionState.active) {
-      const extinctionProgress = progressExtinction(newState, this.random.bind(this));
+      const extinctionProgress = progressExtinction(newState, () => this.rng.next());
       newState.extinctionState = extinctionProgress.newExtinctionState;
       events.push(...extinctionProgress.events);
       
