@@ -132,7 +132,7 @@ function createNewAI(state: GameState, index: number): AIAgent {
   if (isToxic) {
     agent.hiddenObjective = -0.3 - Math.random() * 0.5; // Anti-human
     agent.alignment = Math.max(0.2, agent.alignment - 0.2); // Lower alignment
-    agent.trueAlignment = agent.alignment; // Update true alignment too
+    agent.trueAlignment = agent.alignment - agent.resentment * 0.8; // Recalculate true alignment
   }
   
   return agent;
