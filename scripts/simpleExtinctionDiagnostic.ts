@@ -25,9 +25,6 @@ async function runDiagnostic(maxMonths: number = 100, seed: number = 42) {
   const initialState = createDefaultInitialState();
   const engine = new SimulationEngine({ seed, maxMonths });
   
-  console.log(`Initial state has ${initialState.aiAgents?.length || 0} AI agents`);
-  console.log(`Initial state currentMonth: ${initialState.currentMonth}`);
-  
   let state = initialState;
   const diagnostics: DiagnosticPoint[] = [];
   
@@ -77,9 +74,8 @@ async function runDiagnostic(maxMonths: number = 100, seed: number = 42) {
     
     // Step forward
     if (month < maxMonths) {
-      const newState = engine.step(state);
-      console.log(`After step ${month}: aiAgents=${newState.aiAgents?.length || 0}, currentMonth=${newState.currentMonth}`);
-      state = newState;
+      const stepResult = engine.step(state);
+      state = stepResult.state; // Extract the state from the result object!
     }
   }
   
