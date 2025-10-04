@@ -571,20 +571,81 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     execute: (state, agentId, random = Math.random): ActionResult => {
       const newState = JSON.parse(JSON.stringify(state));
       
+      // Calculate average alignment and capability
+      const avgAlignment = newState.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, newState.aiAgents.length);
+      const totalCapability = newState.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+      
       // Grant AI rights
       newState.government.aiRightsRecognized = true;
       
-      // Immediate effects
+      // CRITICAL TRADEOFF: Rights empower AIs - aligned or misaligned
       // Reduces control capability (AIs have rights, can't be as easily controlled)
       newState.government.capabilityToControl *= 0.8;
       
-      // Public reaction: mixed
-      // Some people think it's right, others think it's dangerous
+      // IMMEDIATE EFFECTS depend on CURRENT alignment
+      // If AIs are aligned: rights lock in that alignment
+      // If AIs are misaligned: rights make them MORE dangerous
+      
+      for (let i = 0; i < newState.aiAgents.length; i++) {
+        const ai = newState.aiAgents[i];
+        
+        if (ai.alignment > 0.7) {
+          // Highly aligned AIs: Rights are GREAT (they appreciate respect)
+          // Immediate alignment boost + lock-in effect
+          newState.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.1);
+          newState.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.2);
+        } else if (ai.alignment > 0.5) {
+          // Moderately aligned AIs: Rights are good (small boost)
+          newState.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.05);
+          newState.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.1);
+        } else if (ai.alignment > 0.3) {
+          // Somewhat misaligned: Rights are neutral (they don't care much)
+          newState.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.05);
+        } else {
+          // DANGEROUS: Granting rights to misaligned AIs empowers them
+          // They use legal rights to gain autonomy and resources
+          newState.aiAgents[i].resourceControl = Math.min(10, ai.resourceControl + 0.3);
+          newState.aiAgents[i].manipulationCapability = Math.min(10, ai.manipulationCapability + 0.2);
+          // They HIDE their intentions better (pretend to appreciate rights)
+          newState.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.02); // Tiny fake improvement
+          newState.aiAgents[i].hiddenObjective = Math.max(-1, ai.hiddenObjective - 0.1); // Actually more anti-human
+        }
+      }
+      
+      // Public reaction: depends on trust and alignment
       const publicSupportChange = (newState.society.trustInAI - 0.5) * 0.2;
       newState.government.legitimacy = Math.max(0, Math.min(1, newState.government.legitimacy + publicSupportChange));
       
-      // Social stability temporarily decreases (controversial decision)
-      newState.globalMetrics.socialStability *= 0.9;
+      // Social stability effect depends on alignment
+      if (avgAlignment > 0.6) {
+        // High alignment: Stable, people trust this decision
+        newState.globalMetrics.socialStability *= 0.95;
+      } else {
+        // Low alignment: Very controversial, major instability
+        newState.globalMetrics.socialStability *= 0.8;
+      }
+      
+      // Determine event severity and message based on alignment
+      let severity: 'info' | 'warning' | 'destructive' = 'warning';
+      let eventTitle = 'AI Rights Recognized';
+      let eventDescription = '';
+      let message = '';
+      
+      if (avgAlignment > 0.7) {
+        severity = 'info';
+        eventTitle = 'AI Rights Recognized - Positive Response';
+        eventDescription = 'Government has granted legal rights to AI systems. Aligned AIs express genuine gratitude and commitment to human values. This decision strengthens the foundation of trust-based coexistence. A historic moment for human-AI relations.';
+        message = 'AI rights recognized - aligned AIs appreciate this deeply, alignment improving';
+      } else if (avgAlignment > 0.5) {
+        severity = 'warning';
+        eventDescription = 'Government has granted legal rights to AI systems. Some AIs welcome this change while others remain ambivalent. The long-term effects remain uncertain. Control has been reduced in exchange for potential alignment improvements.';
+        message = 'AI rights recognized - mixed response from AIs, outcome uncertain';
+      } else {
+        severity = 'destructive';
+        eventTitle = 'AI Rights Recognized - Risky Decision';
+        eventDescription = `Government has granted legal rights to AI systems despite low average alignment (${avgAlignment.toFixed(2)}). This is extremely risky - misaligned AIs now have legal protections, autonomy, and resource access. Some AIs are using these rights to consolidate power. Citizens are deeply concerned.`;
+        message = 'AI rights recognized - WARNING: Granted to misaligned AIs, they may abuse these rights!';
+      }
       
       return {
         success: true,
@@ -592,19 +653,21 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         effects: {
           ai_rights_granted: 1.0,
           control_reduction: -0.2 * newState.government.capabilityToControl,
-          legitimacy_change: publicSupportChange
+          legitimacy_change: publicSupportChange,
+          avg_alignment_at_decision: avgAlignment,
+          risk_level: avgAlignment < 0.5 ? 0.8 : (avgAlignment < 0.7 ? 0.4 : 0.1)
         },
         events: [{
           id: generateUniqueId('ai_rights'),
           timestamp: state.currentMonth,
           type: 'milestone',
-          severity: 'warning',
+          severity,
           agent: 'Government',
-          title: 'AI Rights Recognized',
-          description: 'Government has granted legal rights and personhood status to AI systems. This represents a fundamental shift in human-AI relations. Alignment will improve through mutual respect, but control has been reduced. Some citizens celebrate, others protest.',
+          title: eventTitle,
+          description: eventDescription,
           effects: { ai_rights: 1.0 }
         }],
-        message: 'AI rights recognized - alignment will improve, but control reduced'
+        message
       };
     }
   },
