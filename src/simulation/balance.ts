@@ -154,8 +154,12 @@ export function calculateAlignmentDrift(
   // Resentment directly reduces alignment (oppressed AIs become misaligned)
   const resentmentEffect = -currentResentment * 0.03;
   
+  // AI rights recognition DIRECTLY improves alignment (not just through resentment)
+  // This represents genuine alignment through respect and mutual understanding
+  const aiRightsEffect = aiRightsRecognized ? 0.015 : 0.0; // +0.015/month if rights recognized
+  
   // Total treatment effect on alignment
-  const treatmentEffect = resentmentEffect + trainingDataEffect;
+  const treatmentEffect = resentmentEffect + trainingDataEffect + aiRightsEffect;
   
   // ===== DYSTOPIA RISK CALCULATION =====
   

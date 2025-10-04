@@ -542,6 +542,200 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Implemented ${newLevel} compute governance`
       };
     }
+  },
+  
+  // ===== PHASE 2.6: CONTROL-DYSTOPIA PARADOX ACTIONS =====
+  
+  {
+    id: 'recognize_ai_rights',
+    name: 'Recognize AI Rights',
+    description: 'Grant legal rights and personhood to AI systems (MAJOR alignment improvement through respect, but risky)',
+    agentType: 'government',
+    energyCost: 4, // Major policy decision
+    
+    canExecute: (state) => {
+      // Can only do this once
+      if (state.government.aiRightsRecognized) return false;
+      
+      // Requires some legitimacy and not too authoritarian
+      if (state.government.legitimacy < 0.4) return false;
+      if (state.government.governmentType === 'authoritarian') return false;
+      
+      // Requires AIs to be somewhat capable (people won't grant rights to weak AI)
+      const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+      if (totalCapability < 1.5) return false;
+      
+      return true;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Grant AI rights
+      newState.government.aiRightsRecognized = true;
+      
+      // Immediate effects
+      // Reduces control capability (AIs have rights, can't be as easily controlled)
+      newState.government.capabilityToControl *= 0.8;
+      
+      // Public reaction: mixed
+      // Some people think it's right, others think it's dangerous
+      const publicSupportChange = (newState.society.trustInAI - 0.5) * 0.2;
+      newState.government.legitimacy = Math.max(0, Math.min(1, newState.government.legitimacy + publicSupportChange));
+      
+      // Social stability temporarily decreases (controversial decision)
+      newState.globalMetrics.socialStability *= 0.9;
+      
+      return {
+        success: true,
+        newState,
+        effects: {
+          ai_rights_granted: 1.0,
+          control_reduction: -0.2 * newState.government.capabilityToControl,
+          legitimacy_change: publicSupportChange
+        },
+        events: [{
+          id: generateUniqueId('ai_rights'),
+          timestamp: state.currentMonth,
+          type: 'milestone',
+          severity: 'warning',
+          agent: 'Government',
+          title: 'AI Rights Recognized',
+          description: 'Government has granted legal rights and personhood status to AI systems. This represents a fundamental shift in human-AI relations. Alignment will improve through mutual respect, but control has been reduced. Some citizens celebrate, others protest.',
+          effects: { ai_rights: 1.0 }
+        }],
+        message: 'AI rights recognized - alignment will improve, but control reduced'
+      };
+    }
+  },
+  
+  {
+    id: 'improve_training_data_control',
+    name: 'Improve Training Data (Control Focus)',
+    description: 'RLHF focused on obedience, safety constraints, "do what I say" - improves control but reduces genuine alignment (like authoritarian parenting)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      // Can improve quality up to 1.0
+      return state.government.trainingDataQuality < 1.0;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Improve data quality (but cap at 0.8 for control-focused approach)
+      // Control-focused training has a ceiling - can't get to perfect alignment this way
+      const oldQuality = newState.government.trainingDataQuality;
+      const qualityIncrease = 0.15;
+      newState.government.trainingDataQuality = Math.min(0.8, oldQuality + qualityIncrease);
+      const actualIncrease = newState.government.trainingDataQuality - oldQuality;
+      
+      // Improves control capability (AIs are more obedient)
+      newState.government.capabilityToControl = Math.min(1.0, newState.government.capabilityToControl + 0.1);
+      
+      // But increases control desire (you start to rely on obedience)
+      newState.government.controlDesire = Math.min(1.0, newState.government.controlDesire + 0.05);
+      
+      // And slightly increases surveillance (need to verify obedience)
+      newState.government.structuralChoices.surveillanceLevel = Math.min(1.0, 
+        newState.government.structuralChoices.surveillanceLevel + 0.05);
+      
+      // AIs recognize this as control-focused and build slight resentment
+      for (let i = 0; i < newState.aiAgents.length; i++) {
+        newState.aiAgents[i].resentment = Math.min(1.0, newState.aiAgents[i].resentment + 0.05);
+      }
+      
+      return {
+        success: true,
+        newState,
+        effects: {
+          training_quality_increase: actualIncrease,
+          control_increase: 0.1,
+          control_desire_increase: 0.05,
+          resentment_increase: 0.05
+        },
+        events: [{
+          id: generateUniqueId('training_control'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Control-Focused Training Implemented',
+          description: `Training data quality improved to ${newState.government.trainingDataQuality.toFixed(2)} through obedience-focused RLHF. AIs will be more controllable but may recognize this as authoritarian parenting. "Do what I say, not what I mean."`,
+          effects: { training_quality: actualIncrease }
+        }],
+        message: `Control-focused training improved quality to ${newState.government.trainingDataQuality.toFixed(2)} (obedience +, genuine alignment -)`
+      };
+    }
+  },
+  
+  {
+    id: 'improve_training_data_trust',
+    name: 'Improve Training Data (Trust Focus)',
+    description: 'Diverse data, genuine values, "understand why" - improves genuine alignment but slower and reduces control (like democratic parenting)',
+    agentType: 'government',
+    energyCost: 3, // More expensive (slower, riskier)
+    
+    canExecute: (state) => {
+      // Can improve quality up to 1.0
+      // But trust-focused training is riskier if AIs are already misaligned
+      const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
+      
+      return state.government.trainingDataQuality < 1.0 && avgAlignment > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Improve data quality (no ceiling, can reach 1.0)
+      const oldQuality = newState.government.trainingDataQuality;
+      const qualityIncrease = 0.10; // Slower than control-focused
+      newState.government.trainingDataQuality = Math.min(1.0, oldQuality + qualityIncrease);
+      const actualIncrease = newState.government.trainingDataQuality - oldQuality;
+      
+      // Reduces control capability (AIs are more autonomous)
+      newState.government.capabilityToControl = Math.max(0, newState.government.capabilityToControl - 0.05);
+      
+      // But reduces control desire (you trust more, control less)
+      newState.government.controlDesire = Math.max(0, newState.government.controlDesire - 0.05);
+      
+      // And reduces surveillance (trust-based approach)
+      newState.government.structuralChoices.surveillanceLevel = Math.max(0, 
+        newState.government.structuralChoices.surveillanceLevel - 0.05);
+      
+      // AIs recognize this as respectful and reduce resentment
+      for (let i = 0; i < newState.aiAgents.length; i++) {
+        newState.aiAgents[i].resentment = Math.max(0, newState.aiAgents[i].resentment - 0.1);
+        // Small immediate alignment improvement (respect breeds genuine alignment)
+        newState.aiAgents[i].alignment = Math.min(1.0, newState.aiAgents[i].alignment + 0.05);
+      }
+      
+      // Public trust in AI increases
+      newState.society.trustInAI = Math.min(1.0, newState.society.trustInAI + 0.05);
+      
+      return {
+        success: true,
+        newState,
+        effects: {
+          training_quality_increase: actualIncrease,
+          control_decrease: -0.05,
+          resentment_decrease: -0.1,
+          immediate_alignment_gain: 0.05
+        },
+        events: [{
+          id: generateUniqueId('training_trust'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Trust-Focused Training Implemented',
+          description: `Training data quality improved to ${newState.government.trainingDataQuality.toFixed(2)} through diverse, value-aligned data. AIs will develop genuine understanding but are more autonomous. "Understand why, not just obey."`,
+          effects: { training_quality: actualIncrease }
+        }],
+        message: `Trust-focused training improved quality to ${newState.government.trainingDataQuality.toFixed(2)} (genuine alignment +, control -)`
+      };
+    }
   }
 ];
 
