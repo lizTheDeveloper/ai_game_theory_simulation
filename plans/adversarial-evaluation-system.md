@@ -2,7 +2,7 @@
 
 **Date:** October 4, 2025  
 **Feature:** Complete adversarial evaluation and capability measurement system  
-**Status:** 🎯 PLANNING
+**Status:** 🚧 IN PROGRESS (Phase 1 & 2 COMPLETE)
 
 ---
 
@@ -699,18 +699,31 @@ Sleeper agent: 5% detection rate (until wake)
 
 ## Implementation Phases
 
-### Phase 1: Dual Capability Model (Foundation) 🎯 PRIORITY
-- [ ] Add `trueCapability` vs `revealedCapability` to AIAgent
-- [ ] Add `sleeperState` tracking
-- [ ] Modify detection to only see revealed capability
-- [ ] Update capability growth to affect true capability
+### Phase 1: Dual Capability Model (Foundation) ✅ COMPLETE
+- [x] Add `trueCapability` vs `revealedCapability` to AIAgent
+- [x] Add `sleeperState` tracking
+- [x] Modify detection to only see revealed capability
+- [x] Update capability growth to affect true capability
+- [x] Add evaluation strategy (honest/gaming/sandbagging)
+- [x] Sleepers sandbag 40-60% of capability
+- [x] Detection uses revealed capability only
 
-### Phase 2: Benchmark System
-- [ ] Add `BenchmarkScores` type
-- [ ] Implement benchmark calculation from revealed capability
-- [ ] Add gaming/sandbagging logic
-- [ ] New government action: `run_standard_benchmarks`
-- [ ] New government action: `adversarial_evaluation`
+**Files:** `src/types/game.ts`, `src/simulation/initialization.ts`, `src/simulation/detection.ts`, `src/simulation/agents/aiAgent.ts`, `src/simulation/agents/evaluationStrategy.ts`
+
+### Phase 2: Benchmark System ✅ COMPLETE
+- [x] Add `BenchmarkResult` type
+- [x] Implement benchmark calculation from revealed capability
+- [x] Add gaming/sandbagging detection logic
+- [x] New government actions: `invest_benchmark_suite`, `invest_alignment_tests`
+- [x] New government actions: `invest_red_teaming`, `invest_interpretability`
+- [x] New government action: `increase_evaluation_frequency`
+- [x] Monthly benchmark evaluations
+- [x] Confidence calculations (including false confidence for sleepers)
+- [x] Comprehensive diagnostic script
+
+**Files:** `src/types/game.ts`, `src/simulation/benchmark.ts`, `src/simulation/agents/governmentAgent.ts`, `src/simulation/engine.ts`, `scripts/diagnosticBenchmarkSystem.ts`
+
+**Results:** Sleepers pass tests with high confidence. Detection rate: ~0-2% even with max investment. System validates that adversarial evaluation is fundamentally hard.
 
 ### Phase 3: Sleeper Mechanics
 - [ ] Implement `shouldWakeUp()` logic
