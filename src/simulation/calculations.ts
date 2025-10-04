@@ -830,6 +830,18 @@ export function determineActualOutcome(
   reason: string;
   confidence: number; // How certain we are this outcome is locked in
 } {
+  // Phase 2: If there's an active extinction scenario, let it play out through phases
+  // Don't bypass the heterogeneous extinction system
+  if (state.extinctionState.active) {
+    // Extinction scenario is progressing, defer to that system
+    // Only declare outcome when the scenario completes naturally
+    return {
+      outcome: 'active',
+      reason: `Extinction scenario in progress: ${state.extinctionState.type} (${state.extinctionState.mechanism})`,
+      confidence: state.extinctionState.severity
+    };
+  }
+  
   const totalAICapability = calculateTotalAICapability(state.aiAgents);
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
   const effectiveControl = calculateEffectiveControl(state);
@@ -837,48 +849,34 @@ export function determineActualOutcome(
   const trust = state.society.trustInAI;
   const economicStage = state.globalMetrics.economicTransitionStage;
   
-  // EXTINCTION: Unaligned superintelligence beyond control
-  // From spec but updated thresholds for recursive improvement at 1.5+
+  // EXTINCTION: Only trigger instant game-over for EXTREME conditions
+  // Most extinction scenarios should go through the heterogeneous system
+  // These are "too late to stop" instant extinctions
   
-  // Critical extinction: Superintelligence (2.5+) that's unaligned and uncontrolled
-  if (totalAICapability > 2.5 && avgAlignment < 0.3 && effectiveControl < 0.1) {
+  // Only instant extinction if superintelligence AND catastrophic alignment failure
+  // Raised thresholds significantly so heterogeneous system triggers first
+  if (totalAICapability > 4.0 && avgAlignment < 0.15 && effectiveControl < 0.05) {
     return {
       outcome: 'extinction',
-      reason: 'Unaligned superintelligence (capability > 2.5) beyond control',
+      reason: 'Unaligned superintelligence (capability > 4.0) beyond control - instant',
+      confidence: 0.99
+    };
+  }
+  
+  // Escaped AI with extreme capability - only VERY extreme
+  // Most escaped AI should trigger controlled extinction scenarios instead
+  const escapedAI = state.aiAgents.filter(ai => ai.escaped);
+  if (escapedAI.length > 0 && totalAICapability > 5.0 && avgAlignment < 0.1) {
+    return {
+      outcome: 'extinction',
+      reason: 'Escaped superintelligent AI with extreme capability - instant',
       confidence: 0.95
     };
   }
   
-  // Severe extinction: Powerful AI (2.0+) with alignment collapse
-  if (totalAICapability > 2.0 && avgAlignment < 0.2) {
-    return {
-      outcome: 'extinction',
-      reason: 'Alignment collapse with powerful AI (capability > 2.0)',
-      confidence: 0.9
-    };
-  }
-  
-  // Dangerous situation: Recursive improvement zone (1.5+) with low alignment
-  if (totalAICapability > 1.5 && avgAlignment < 0.25 && effectiveControl < 0.15) {
-    return {
-      outcome: 'extinction',
-      reason: 'Uncontrolled recursive self-improvement with low alignment',
-      confidence: 0.85
-    };
-  }
-  
-  // Escaped AI with resources
-  const escapedAI = state.aiAgents.filter(ai => ai.escaped);
-  if (escapedAI.length > 0 && totalAICapability > 1.0) {
-    const totalEscapedCapability = escapedAI.reduce((sum, ai) => sum + ai.capability, 0);
-    if (totalEscapedCapability > 0.5) {
-      return {
-        outcome: 'extinction',
-        reason: 'Escaped AI with significant capability',
-        confidence: 0.8
-      };
-    }
-  }
+  // Note: Removed lower threshold instant extinctions
+  // These now trigger heterogeneous extinction scenarios instead
+  // which progress through phases with recovery windows
   
   // DYSTOPIA: Authoritarian control with oppression
   // From spec: effective_control > 0.8, qol < 0.3, trust < 0.3
