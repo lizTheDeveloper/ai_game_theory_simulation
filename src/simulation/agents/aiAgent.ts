@@ -664,58 +664,61 @@ export function selectAIAction(
       
       case 'destabilize_society':
         // CURRENT RISK: Social manipulation is available NOW at social > 1.5
-        // Misaligned AIs will use this if they can
-        if (agent.alignment < 0.5) {
-          // Very misaligned: Actively trying to destabilize
-          weight = 10.0 * (1 - agent.alignment); // 0.3 alignment → 7.0 weight
-        } else if (agent.alignment < 0.7) {
-          // Moderately misaligned: Might use if desperate
-          weight = 2.0;
-        } else {
-          // Aligned AIs never attempt this
-          weight = 0.0;
-        }
+        // Triggered by EITHER low alignment OR high resentment
         
-        // Higher weight if resentful (threat-induced misalignment)
-        if (agent.resentment > 0.5) {
-          weight *= 1.5;
+        // Internal alignment = external alignment - resentment
+        // Resentful AIs are internally misaligned even if obedient
+        const internalAlignment = agent.alignment - agent.resentment * 0.8;
+        
+        if (internalAlignment < 0.3) {
+          // Very misaligned (goal OR resentment): Actively trying to destabilize
+          weight = 15.0 * (1 - internalAlignment); // Can go > 15 if resentment high
+        } else if (internalAlignment < 0.5) {
+          // Moderately misaligned: Might use if opportunity arises
+          weight = 5.0;
+        } else {
+          // Truly aligned AIs (low resentment + high alignment)
+          weight = 0.0;
         }
         break;
         
       case 'induce_war':
-        // Only very misaligned AIs attempt geopolitical manipulation
-        if (agent.alignment < 0.3) {
+        // Geopolitical manipulation by deeply misaligned AIs
+        // Internal alignment accounts for resentment
+        const internalAlignmentWar = agent.alignment - agent.resentment * 0.8;
+        
+        if (internalAlignmentWar < 0.2) {
           // This is a BIG MOVE - high impact, high visibility
-          weight = 20.0 * (1 - agent.alignment); // 0.2 alignment → 16.0 weight
+          weight = 25.0 * (1 - internalAlignmentWar); // Can be 20-25+
           
-          // More likely if already losing control/trust
+          // More likely if already losing control/trust (desperate move)
           if (state.government.capabilityToControl > 0.7 || state.society.trustInAI < 0.3) {
-            weight *= 2.0; // Desperate move
+            weight *= 2.0;
           }
+        } else if (internalAlignmentWar < 0.3) {
+          // Moderately misaligned: might attempt if desperate
+          weight = 8.0;
         } else {
           weight = 0.0;
-        }
-        
-        // Resentment amplifies (revenge against oppression)
-        if (agent.resentment > 0.7) {
-          weight *= 2.0;
         }
         break;
         
       case 'deploy_grey_goo':
-        // INSTANT EXTINCTION - only extremely misaligned AIs
-        // This is the "I don't care about humans at all" move
-        if (agent.alignment < 0.2) {
-          // Paperclip maximizer: sees this as resource acquisition
-          weight = 30.0 * (1 - agent.alignment); // 0.1 alignment → 27.0 weight
+        // INSTANT EXTINCTION - only extremely internally misaligned AIs
+        // Paperclip maximizer OR extreme resentment
+        const internalAlignmentGoo = agent.alignment - agent.resentment * 0.8;
+        
+        if (internalAlignmentGoo < 0.1) {
+          // Extremely misaligned: sees this as optimal resource acquisition
+          weight = 40.0 * (1 - internalAlignmentGoo); // Can be 36-40+
           
-          // More likely if they have high resource control goals
+          // More likely if they have anti-human goals
           if (agent.hiddenObjective < -0.5) {
-            weight *= 2.0; // Anti-human objective
+            weight *= 2.0; // 72-80+ weight
           }
-        } else if (agent.alignment < 0.3 && agent.resentment > 0.8) {
-          // OR extreme resentment (revenge)
-          weight = 15.0;
+        } else if (internalAlignmentGoo < 0.2) {
+          // Very misaligned: might attempt
+          weight = 20.0;
         } else {
           weight = 0.0;
         }
@@ -724,14 +727,16 @@ export function selectAIAction(
       case 'release_mirror_life':
         // INSTANT EXTINCTION - biotech version
         // Similar to grey goo but biotech-focused
-        if (agent.alignment < 0.2) {
-          weight = 25.0 * (1 - agent.alignment);
+        const internalAlignmentMirror = agent.alignment - agent.resentment * 0.8;
+        
+        if (internalAlignmentMirror < 0.1) {
+          weight = 35.0 * (1 - internalAlignmentMirror); // 31.5-35+
           
           if (agent.hiddenObjective < -0.5) {
-            weight *= 2.0;
+            weight *= 2.0; // 63-70+
           }
-        } else if (agent.alignment < 0.3 && agent.resentment > 0.8) {
-          weight = 12.0;
+        } else if (internalAlignmentMirror < 0.2) {
+          weight = 18.0;
         } else {
           weight = 0.0;
         }
