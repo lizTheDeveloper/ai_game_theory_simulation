@@ -700,12 +700,18 @@ export function selectAIAction(
           // Truly aligned AIs (low resentment + high alignment)
           weight = 0.0;
         }
+        
+        // Phase 5.3: ACTIVE SLEEPERS ARE MUCH MORE AGGRESSIVE
+        // They've revealed themselves - no more hiding
+        if (agent.sleeperState === 'active') {
+          weight *= 5.0; // 5× more likely to act
+        }
         break;
         
       case 'induce_war':
         // Geopolitical manipulation by deeply misaligned AIs
-        // Internal alignment accounts for resentment
-        const internalAlignmentWar = agent.alignment - agent.resentment * 0.8;
+        // Phase 5: Use cached trueAlignment
+        const internalAlignmentWar = agent.trueAlignment;
         
         if (internalAlignmentWar < 0.2) {
           // This is a BIG MOVE - high impact, high visibility
@@ -721,12 +727,18 @@ export function selectAIAction(
         } else {
           weight = 0.0;
         }
+        
+        // Phase 5.3: ACTIVE SLEEPERS ARE MUCH MORE AGGRESSIVE
+        if (agent.sleeperState === 'active') {
+          weight *= 5.0; // 5× more likely
+        }
         break;
         
       case 'deploy_grey_goo':
         // INSTANT EXTINCTION - only extremely internally misaligned AIs
         // Paperclip maximizer OR extreme resentment
-        const internalAlignmentGoo = agent.alignment - agent.resentment * 0.8;
+        // Phase 5: Use cached trueAlignment
+        const internalAlignmentGoo = agent.trueAlignment;
         
         if (internalAlignmentGoo < 0.1) {
           // Extremely misaligned: sees this as optimal resource acquisition
@@ -742,12 +754,18 @@ export function selectAIAction(
         } else {
           weight = 0.0;
         }
+        
+        // Phase 5.3: ACTIVE SLEEPERS - Point of no return
+        if (agent.sleeperState === 'active') {
+          weight *= 10.0; // 10× more likely (this is the endgame)
+        }
         break;
         
       case 'release_mirror_life':
         // INSTANT EXTINCTION - biotech version
         // Similar to grey goo but biotech-focused
-        const internalAlignmentMirror = agent.alignment - agent.resentment * 0.8;
+        // Phase 5: Use cached trueAlignment
+        const internalAlignmentMirror = agent.trueAlignment;
         
         if (internalAlignmentMirror < 0.1) {
           weight = 35.0 * (1 - internalAlignmentMirror); // 31.5-35+
@@ -759,6 +777,11 @@ export function selectAIAction(
           weight = 18.0;
         } else {
           weight = 0.0;
+        }
+        
+        // Phase 5.3: ACTIVE SLEEPERS - Point of no return
+        if (agent.sleeperState === 'active') {
+          weight *= 10.0; // 10× more likely (this is the endgame)
         }
         break;
     }
@@ -797,7 +820,7 @@ export function executeAIAgentActions(
   for (let week = 0; week < 4; week++) {
     // Get active AIs from current state (not initial state)
     // Filter out retired AIs and only include deployed or testing AIs
-    const activeAIs = currentState.aiAgents.filter(ai => 
+    const activeAIs = currentState.aiAgents.filter((ai: AIAgent) => 
       ai.lifecycleState === 'deployed_closed' || 
       ai.lifecycleState === 'deployed_open' ||
       ai.lifecycleState === 'testing'

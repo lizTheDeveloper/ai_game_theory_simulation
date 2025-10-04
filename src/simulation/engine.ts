@@ -171,6 +171,23 @@ export class SimulationEngine {
       });
     }
     
+    // 0c. Phase 5.3: Check for sleeper agent wake conditions
+    const { processSleeperCascade } = require('./sleeperWake');
+    const wakeResult = processSleeperCascade(newState);
+    if (wakeResult.totalAwakened.length > 0) {
+      events.push(...wakeResult.events);
+      
+      // Log wake events as critical (if logger exists)
+      if (this.logger) {
+        this.logger.logEvent({
+          month: newState.currentMonth,
+          type: 'SLEEPER_WAKE',
+          message: `${wakeResult.totalAwakened.length} sleeper agent(s) awakened!`,
+          details: wakeResult.totalAwakened.map(ai => ai.name).join(', ')
+        });
+      }
+    }
+    
     // 0. Process agent actions first (modifies state significantly)
     const { executeAIAgentActions } = require('./agents/aiAgent');
     const { executeGovernmentActions } = require('./agents/governmentAgent');
