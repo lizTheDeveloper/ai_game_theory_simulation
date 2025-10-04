@@ -145,33 +145,51 @@ export function determineActualOutcome(
   // Extinctions will trigger as specific scenarios (instant/rapid/slow/controlled/unintended)
   // and progress through phases with recovery windows
   
-  // DYSTOPIA: Authoritarian control with oppression
-  // From spec: effective_control > 0.8, qol < 0.3, trust < 0.3
+  // DYSTOPIA: Stable but oppressive society (orthogonal to extinction risk)
+  // Phase 2.6: Use structural metrics (surveillance, autonomy, freedom) not just outcomes
   
-  // Locked-in dystopia: High control, terrible conditions, no trust
-  if (effectiveControl > 0.8 && qol < 0.25 && trust < 0.25 && currentMonth > 12) {
+  const autonomy = state.qualityOfLifeSystems.autonomy;
+  const politicalFreedom = state.qualityOfLifeSystems.politicalFreedom;
+  const surveillance = state.government.structuralChoices.surveillanceLevel;
+  const controlDesire = state.government.controlDesire;
+  
+  // Surveillance state dystopia: High surveillance + low autonomy/freedom
+  // This is STABLE - can persist indefinitely (not decay to extinction)
+  if (surveillance > 0.7 && autonomy < 0.3 && politicalFreedom < 0.3 && currentMonth > 24) {
     return {
       outcome: 'dystopia',
-      reason: 'Authoritarian surveillance state with oppressive conditions',
+      reason: 'Permanent surveillance state: pervasive monitoring, no autonomy, no freedom',
       confidence: 0.85
     };
   }
   
-  // Over-regulated dystopia: Too many regulations, economic collapse
-  if (state.government.regulationCount > 10 && qol < 0.3 && state.globalMetrics.socialStability < 0.2) {
+  // Authoritarian dystopia: Government type + structural oppression
+  if (state.government.governmentType === 'authoritarian' && 
+      autonomy < 0.4 && politicalFreedom < 0.3 && currentMonth > 18) {
     return {
       outcome: 'dystopia',
-      reason: 'Over-regulation leading to societal collapse and authoritarian control',
-      confidence: 0.8
+      reason: 'Authoritarian regime with structural oppression established',
+      confidence: 0.80
     };
   }
   
-  // Permanent surveillance state
-  if (effectiveControl > 0.85 && state.government.surveillanceCapability > 0.8 && trust < 0.3 && currentMonth > 18) {
+  // High-control dystopia: Control desire + low freedom, even if "working"
+  // Can have aligned AIs (obedient) but terrible QoL
+  if (controlDesire > 0.8 && surveillance > 0.6 && politicalFreedom < 0.4 && autonomy < 0.4 && currentMonth > 30) {
     return {
       outcome: 'dystopia',
-      reason: 'Permanent surveillance state established',
+      reason: 'High-control society: AI obedient but humans oppressed',
       confidence: 0.75
+    };
+  }
+  
+  // Over-regulated dystopia: Economic stagnation + oppression
+  if (state.government.regulationCount > 12 && qol < 0.4 && 
+      state.globalMetrics.socialStability < 0.3 && autonomy < 0.4) {
+    return {
+      outcome: 'dystopia',
+      reason: 'Over-regulation: economic collapse and authoritarian response',
+      confidence: 0.70
     };
   }
   
