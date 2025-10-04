@@ -16,6 +16,7 @@
 import { SimulationEngine, SimulationConfig } from '../src/simulation/engine';
 import { runMonteCarlo, exportResults, MonteCarloConfig } from '../src/simulation-runner/monteCarlo';
 import { GameState } from '../src/types/game';
+import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
 
 // Import initial state creation from gameStore
 // For now, we'll create a minimal initial state
@@ -135,6 +136,9 @@ function createInitialState(): GameState {
       qualityOfLife: 0.6,
       informationIntegrity: 0.8
     },
+    
+    // Multi-dimensional quality of life tracking
+    qualityOfLifeSystems: initializeQualityOfLifeSystems(),
     
     technologyTree: [],
     eventLog: [],

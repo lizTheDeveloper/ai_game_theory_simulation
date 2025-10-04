@@ -8,6 +8,7 @@
 import { GameState, GameEvent, OutcomeMetrics } from '@/types/game';
 import {
   calculateQualityOfLife,
+  updateQualityOfLifeSystems,
   calculateEffectiveControl,
   calculateOutcomeProbabilities,
   calculateUnemployment,
@@ -215,21 +216,25 @@ export class SimulationEngine {
       socialStability: newStability
     };
     
-    // 5. Calculate quality of life
-    const qualityOfLife = calculateQualityOfLife(newState);
+    // 5. Update multi-dimensional quality of life systems
+    const updatedQoLSystems = updateQualityOfLifeSystems(newState);
+    newState.qualityOfLifeSystems = updatedQoLSystems;
+    
+    // 6. Calculate aggregate quality of life from systems
+    const qualityOfLife = calculateQualityOfLife(updatedQoLSystems);
     newState.globalMetrics = {
       ...newState.globalMetrics,
       qualityOfLife
     };
     
-    // 6. Calculate outcome probabilities
+    // 7. Calculate outcome probabilities
     const outcomeProbs = calculateOutcomeProbabilities(newState);
     newState.outcomeMetrics = outcomeProbs;
     
-    // 7. Detect crisis
+    // 8. Detect crisis
     const crisis = detectCrisis(newState);
     
-    // 8. Advance time
+    // 9. Advance time
     newState.currentMonth += 1;
     if (newState.currentMonth >= 12) {
       newState.currentMonth = 0;

@@ -12,6 +12,7 @@
 
 import { SimulationEngine } from '../src/simulation/engine';
 import { GameState } from '../src/types/game';
+import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
 import fs from 'fs';
 
 // Create initial state with new fields
@@ -89,6 +90,8 @@ function createTestState(): GameState {
       qualityOfLife: 0.6,
       informationIntegrity: 0.8
     },
+    
+    qualityOfLifeSystems: initializeQualityOfLifeSystems(),
     
     technologyTree: [],
     eventLog: [],

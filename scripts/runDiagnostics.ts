@@ -6,6 +6,7 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { GameState } from '../src/types/game';
 import { formatDiagnosticReport } from '../src/simulation/diagnostics';
+import { initializeQualityOfLifeSystems } from '../src/simulation/calculations';
 
 function createInitialState(): GameState {
   return {
@@ -82,6 +83,8 @@ function createInitialState(): GameState {
       qualityOfLife: 0.65,
       informationIntegrity: 0.8
     },
+    
+    qualityOfLifeSystems: initializeQualityOfLifeSystems(),
     
     technologyTree: [],
     eventLog: [],

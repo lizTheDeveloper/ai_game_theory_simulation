@@ -116,6 +116,40 @@ export interface ConfigurationSettings {
   economicTransitionRate: number; // [0.3, 3.0] evolution speed
 }
 
+/**
+ * Multi-dimensional quality of life system
+ * Replaces simple QoL with nuanced tracking across 5 major categories
+ * Enables "dark valley" dynamics where some dimensions drop while others rise
+ */
+export interface QualityOfLifeSystems {
+  // Basic Needs (weight: 0.3)
+  materialAbundance: number;      // [0,2] Food, shelter, goods access
+  energyAvailability: number;     // [0,2] Access to energy
+  physicalSafety: number;         // [0,1] Violence, accidents, threats
+  
+  // Psychological Needs (weight: 0.25)
+  mentalHealth: number;           // [0,1] Depression, anxiety levels (inverted)
+  meaningAndPurpose: number;      // [0,1] Life satisfaction, fulfillment
+  socialConnection: number;       // [0,1] Community, relationships quality
+  autonomy: number;               // [0,1] Control over own life
+  
+  // Social Needs (weight: 0.2)
+  politicalFreedom: number;       // [0,1] Democracy, rights, liberty
+  informationIntegrity: number;   // [0,1] Truth vs manipulation/propaganda
+  communityStrength: number;      // [0,1] Local cohesion, mutual aid
+  culturalVitality: number;       // [0,1] Art, creativity, expression
+  
+  // Health and Longevity (weight: 0.15)
+  healthcareQuality: number;      // [0,1] Medical outcomes, access
+  longevityGains: number;         // [0,2] Lifespan increases above baseline
+  diseasesBurden: number;         // [0,1] Illness prevalence (inverted in calc)
+  
+  // Environmental (weight: 0.1)
+  ecosystemHealth: number;        // [0,1] Nature access, biodiversity
+  climateStability: number;       // [0,1] Weather extremes (inverted)
+  pollutionLevel: number;         // [0,1] Air/water quality (inverted in calc)
+}
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -132,6 +166,7 @@ export interface GameState {
   
   // Global state
   globalMetrics: GlobalMetrics;
+  qualityOfLifeSystems: QualityOfLifeSystems; // Multi-dimensional QoL tracking
   technologyTree: TechnologyNode[];
   eventLog: GameEvent[];
   outcomeMetrics: OutcomeMetrics;
