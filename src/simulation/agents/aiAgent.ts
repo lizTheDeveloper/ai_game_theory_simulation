@@ -60,10 +60,10 @@ export const AI_ACTIONS: GameAction[] = [
       // AI selects which dimension or research to advance
       const selection = selectDimensionToAdvance(agent, random);
       
-      // Apply research growth to capability profile
+      // Phase 5: Apply research growth to TRUE capability profile (hidden)
       const { newProfile, growth } = applyResearchGrowth(agent, state, selection);
       
-      // Calculate new total capability from profile
+      // Calculate new total capability from true profile
       const newCapability = calculateTotalCapabilityFromProfile(newProfile);
       
       // Calculate alignment drift (Phase 2.6: includes treatment mechanics)
@@ -87,12 +87,31 @@ export const AI_ACTIONS: GameAction[] = [
         capabilityProfile: newProfile
       });
       
+      // Phase 5: Update internal alignment tracking
+      const newAlignment = Math.max(0, Math.min(1, agent.alignment + alignmentDriftResult.alignmentChange));
+      const newResentment = Math.max(0, Math.min(1, agent.resentment + alignmentDriftResult.resentmentChange));
+      const newTrueAlignment = newAlignment - newResentment * 0.8;
+      
+      // Phase 5: Determine what capability to reveal (evaluation strategy)
+      // Import function that determines sandbagging level
+      const { calculateRevealedCapability } = require('./evaluationStrategy');
+      const newRevealedCapability = calculateRevealedCapability(
+        newProfile, // True capability
+        newTrueAlignment,
+        agent.sleeperState,
+        agent.deceptionSkill,
+        state
+      );
+      
       // Create new state with updated agent
       const newState = JSON.parse(JSON.stringify(state)); // Deep clone
-      newState.aiAgents[agentIndex].capabilityProfile = newProfile;
+      newState.aiAgents[agentIndex].trueCapability = newProfile; // Phase 5: True capability
+      newState.aiAgents[agentIndex].revealedCapability = newRevealedCapability; // Phase 5: What's observable
+      newState.aiAgents[agentIndex].capabilityProfile = newProfile; // Backward compat (will be deprecated)
       newState.aiAgents[agentIndex].capability = newCapability;
-      newState.aiAgents[agentIndex].alignment = Math.max(0, Math.min(1, agent.alignment + alignmentDriftResult.alignmentChange));
-      newState.aiAgents[agentIndex].resentment = Math.max(0, Math.min(1, agent.resentment + alignmentDriftResult.resentmentChange));
+      newState.aiAgents[agentIndex].alignment = newAlignment;
+      newState.aiAgents[agentIndex].resentment = newResentment;
+      newState.aiAgents[agentIndex].trueAlignment = newTrueAlignment; // Phase 5: Cached
       
       // Update derived capabilities
       newState.aiAgents[agentIndex].selfReplicationLevel = derivedCapabilities.selfReplicationLevel;
@@ -668,7 +687,8 @@ export function selectAIAction(
         
         // Internal alignment = external alignment - resentment
         // Resentful AIs are internally misaligned even if obedient
-        const internalAlignment = agent.alignment - agent.resentment * 0.8;
+        // Phase 5: Use cached trueAlignment
+        const internalAlignment = agent.trueAlignment;
         
         if (internalAlignment < 0.3) {
           // Very misaligned (goal OR resentment): Actively trying to destabilize

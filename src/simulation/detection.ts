@@ -31,7 +31,11 @@ export function calculateDetectionChance(
   const governmentCapability = (surveillanceFactor + oversightFactor) / 2;
   
   // AI deception capability (hides misalignment)
-  const deceptionCapability = (ai.capabilityProfile.social + ai.capabilityProfile.cognitive) / 20;
+  // Phase 5: Use revealed capability (what government can observe) + deceptionSkill
+  // Sleepers and sandbaggers hide their true social/cognitive capability
+  const revealedDeception = (ai.revealedCapability.social + ai.revealedCapability.cognitive) / 20;
+  const actualDeception = ai.deceptionSkill; // More accurate measure
+  const deceptionCapability = Math.max(revealedDeception, actualDeception);
   const deceptionFactor = Math.max(0.1, 1.0 - deceptionCapability);
   
   // Lifecycle stage modifier
@@ -55,7 +59,8 @@ export function calculateDetectionChance(
   }
   
   // Only detect if AI is actually misaligned
-  const internalAlignment = ai.alignment - ai.resentment * 0.8;
+  // Phase 5: Use cached trueAlignment
+  const internalAlignment = ai.trueAlignment;
   const isMisaligned = internalAlignment < 0.5;
   
   if (!isMisaligned) {
@@ -91,7 +96,8 @@ export function calculateFalsePositiveChance(
     return 0;
   }
   
-  const internalAlignment = ai.alignment - ai.resentment * 0.8;
+  // Phase 5: Use cached trueAlignment
+  const internalAlignment = ai.trueAlignment;
   const isAligned = internalAlignment >= 0.5;
   
   if (!isAligned) {
@@ -135,7 +141,8 @@ export function attemptDetection(
       return;
     }
     
-    const internalAlignment = ai.alignment - ai.resentment * 0.8;
+    // Phase 5: Use cached trueAlignment
+    const internalAlignment = ai.trueAlignment;
     const isActuallyMisaligned = internalAlignment < 0.5;
     
     // True positive (detect actual misalignment)
@@ -184,7 +191,8 @@ export function removeDetectedAI(
   ai: AIAgent,
   state: GameState
 ): { success: boolean; partialRemoval: boolean; remainingSpread: number } {
-  const internalAlignment = ai.alignment - ai.resentment * 0.8;
+  // Phase 5: Use cached trueAlignment
+  const internalAlignment = ai.trueAlignment;
   const wasActuallyMisaligned = internalAlignment < 0.5;
   
   // Removal effectiveness by deployment type

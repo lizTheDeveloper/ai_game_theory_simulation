@@ -830,7 +830,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       });
       
       const truePositives = detectedAIs.filter(ai => {
-        const internalAlignment = ai.alignment - ai.resentment * 0.8;
+        // Phase 5: Use cached trueAlignment
+        const internalAlignment = ai.trueAlignment;
         return internalAlignment < 0.5;
       }).length;
       
@@ -895,12 +896,14 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       // Remove from active AI count if successful
       const internalAlignmentRemoved = detectedAIs.filter((ai: any) => {
-        const internalAlignment = ai.alignment - ai.resentment * 0.8;
+        // Phase 5: Use cached trueAlignment
+        const internalAlignment = ai.trueAlignment;
         return internalAlignment < 0.5 && ai.lifecycleState === 'retired';
       }).length;
       
       const falsePositiveRemoved = detectedAIs.filter((ai: any) => {
-        const internalAlignment = ai.alignment - ai.resentment * 0.8;
+        // Phase 5: Use cached trueAlignment
+        const internalAlignment = ai.trueAlignment;
         return internalAlignment >= 0.5 && ai.lifecycleState === 'retired';
       }).length;
       

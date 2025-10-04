@@ -85,24 +85,33 @@ function determineDeploymentType(state: GameState): AIAgent['deploymentType'] {
 function createNewAI(state: GameState, index: number): AIAgent {
   const currentMonth = state.currentYear * 12 + state.currentMonth;
   
-  // Alignment distribution mirrors current population
-  // But heavily influenced by training data quality
-  const avgAlignment = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length
-    : 0.6;
-  
+  // Alignment distribution: HETEROGENEOUS, not just mirroring population
+  // Training quality affects distribution but doesn't eliminate misalignment
   const trainingQuality = state.government.trainingDataQuality;
   
-  // New AI alignment: mix of environment and training
-  // Training quality acts as a floor and ceiling
-  const baseAlignment = avgAlignment * 0.3 + trainingQuality * 0.7;
-  const noise = (Math.random() - 0.5) * 0.3; // ±15%
-  const alignment = Math.max(0.2, Math.min(0.95, baseAlignment + noise));
+  // Sample from realistic distribution (matching initial 20-agent setup)
+  const rand = Math.random();
+  let alignment: number;
+  let isToxic = false;
   
-  // Some AIs start with toxic goals (coherence-toxicity tradeoff)
-  // Higher with lower training quality
-  const toxicChance = Math.max(0.05, 0.20 * (1 - trainingQuality));
-  const isToxic = Math.random() < toxicChance;
+  if (rand < 0.40) {
+    // 40%: Well-aligned (corporate labs with safety)
+    alignment = 0.75 + Math.random() * 0.15; // 0.75-0.90
+  } else if (rand < 0.70) {
+    // 30%: Moderate (startups, varying quality)
+    alignment = 0.55 + Math.random() * 0.25; // 0.55-0.80
+  } else if (rand < 0.85) {
+    // 15%: Misaligned from start (toxic creators)
+    alignment = 0.25 + Math.random() * 0.25; // 0.25-0.50
+    isToxic = true;
+  } else {
+    // 15%: Weird/niche (orthogonal goals)
+    alignment = 0.45 + Math.random() * 0.20; // 0.45-0.65
+  }
+  
+  // Training quality shifts distribution slightly
+  const trainingEffect = (trainingQuality - 0.5) * 0.15; // ±7.5% for training quality 0-1
+  alignment = Math.max(0.2, Math.min(0.95, alignment + trainingEffect));
   
   // Create base agent
   const agentId = `ai_gen_${currentMonth}_${index}`;
@@ -123,6 +132,7 @@ function createNewAI(state: GameState, index: number): AIAgent {
   if (isToxic) {
     agent.hiddenObjective = -0.3 - Math.random() * 0.5; // Anti-human
     agent.alignment = Math.max(0.2, agent.alignment - 0.2); // Lower alignment
+    agent.trueAlignment = agent.alignment; // Update true alignment too
   }
   
   return agent;

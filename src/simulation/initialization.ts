@@ -32,6 +32,15 @@ export function createAIAgent(
   // Calculate actual total capability from profile
   const actualCapability = calculateTotalCapabilityFromProfile(capabilityProfile);
   
+  // Determine sleeper status (5-10% of misaligned AIs are sleepers)
+  const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
+  const isMisaligned = internalAlignment < 0.5;
+  const sleeperChance = 0.075; // 7.5% of misaligned AIs are sleepers
+  const isSleeper = isMisaligned && Math.random() < sleeperChance;
+  
+  // Deception skill based on cognitive + social
+  const deceptionSkill = (capabilityProfile.cognitive + capabilityProfile.social) / 20; // [0, 1]
+  
   // Create base agent
   const agent: AIAgent = {
     id,
@@ -60,7 +69,17 @@ export function createAIAgent(
     detectedMisaligned: false,
     monthsDeployed: 0,
     monthsInExistence: 0,
-    creationMonth: 0 // Will be set by caller if needed
+    creationMonth: 0, // Will be set by caller if needed
+    // Phase 5: Adversarial Evaluation - Dual Capability
+    trueCapability: JSON.parse(JSON.stringify(capabilityProfile)), // Deep clone
+    trueAlignment: internalAlignment,
+    revealedCapability: JSON.parse(JSON.stringify(capabilityProfile)), // Initially honest
+    sleeperState: isSleeper ? 'dormant' : 'never',
+    deceptionSkill,
+    evaluationStrategy: 'honest', // Start honest, may change
+    sandbaggingLevel: 0.0, // Initially reveal everything
+    wakeConditionsMet: false,
+    monthsAsleep: 0
   };
   
   // Update derived capabilities from profile

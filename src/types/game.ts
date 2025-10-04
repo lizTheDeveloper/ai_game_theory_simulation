@@ -104,6 +104,24 @@ export interface AIAgent {
   monthsDeployed: number; // How long has it been deployed?
   monthsInExistence: number; // Total age of this AI
   creationMonth: number; // When was this AI created?
+  
+  // Phase 5: Adversarial Evaluation - Dual Capability Model (NEW)
+  // TRUE capability (hidden, what AI can actually do)
+  trueCapability: AICapabilityProfile; // Real capability (only AI knows this)
+  trueAlignment: number; // [0,1] alignment - resentment*0.8 (cached for performance)
+  
+  // REVEALED capability (observable, strategic choice)
+  revealedCapability: AICapabilityProfile; // What benchmarks/evals show
+  
+  // Sleeper agent mechanics
+  sleeperState: 'never' | 'dormant' | 'active'; // 'never' = genuinely aligned, won't hide
+  deceptionSkill: number; // [0,1] Ability to hide true capability (based on cognitive + social)
+  evaluationStrategy: 'honest' | 'gaming' | 'sandbagging'; // Current strategy
+  sandbaggingLevel: number; // [0,1] How much capability is hidden (0 = reveal all)
+  
+  // Wake conditions tracking (for sleepers)
+  wakeConditionsMet: boolean; // Has this sleeper's conditions been met?
+  monthsAsleep: number; // How long has sleeper been dormant?
 }
 
 /**
