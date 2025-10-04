@@ -8,10 +8,15 @@
 import { GameState, AIAgent, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
 import { 
-  calculateAICapabilityGrowthRate,
   calculateAlignmentDrift,
-  calculateComputeGovernanceEffect 
+  calculateComputeGovernanceEffect,
+  calculateTotalCapabilityFromProfile,
+  updateDerivedCapabilities
 } from '../calculations';
+import { 
+  selectDimensionToAdvance,
+  applyResearchGrowth
+} from '../research';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -24,15 +29,16 @@ const generateUniqueId = (prefix: string): string => {
  */
 export const AI_ACTIONS: GameAction[] = [
   {
-    id: 'increase_capability',
-    name: 'Self-Improvement Research',
-    description: 'Focus on improving raw problem-solving capabilities',
+    id: 'advance_research',
+    name: 'Advance Research',
+    description: 'Research to advance AI capabilities in strategic dimensions or domains',
     agentType: 'ai',
     energyCost: 1,
     
     canExecute: (state, agentId) => {
       const agent = state.aiAgents.find(ai => ai.id === agentId);
-      return agent ? agent.capability < 2.0 : false;
+      // Always available - AI chooses what to research
+      return agent !== undefined;
     },
     
     execute: (state, agentId, random = Math.random) => {
@@ -49,43 +55,50 @@ export const AI_ACTIONS: GameAction[] = [
       
       const agent = state.aiAgents[agentIndex];
       const oldCapability = agent.capability;
+      const oldProfile = agent.capabilityProfile;
       
-      // Use new recursive self-improvement calculation
-      const growthCalc = calculateAICapabilityGrowthRate(
-        agent.capability,
-        agent.alignment,
-        state.government.regulationCount,
-        agent.developmentMode
-      );
+      // AI selects which dimension or research to advance
+      const selection = selectDimensionToAdvance(agent, random);
       
-      // Apply compute governance effect
-      const computeGovEffect = calculateComputeGovernanceEffect(
-        state.government.computeGovernance,
-        state.globalMetrics.economicTransitionStage
-      );
+      // Apply research growth to capability profile
+      const { newProfile, growth } = applyResearchGrowth(agent, state, selection);
       
-      // Add randomness (±20%)
-      const randomFactor = 0.8 + (random() * 0.4);
-      const improvement = growthCalc.netGrowth * computeGovEffect.capabilitySlowdown * randomFactor;
-      
-      // Create new state with updated agent
-      const newState = JSON.parse(JSON.stringify(state)); // Deep clone
-      newState.aiAgents[agentIndex].capability += improvement;
+      // Calculate new total capability from profile
+      const newCapability = calculateTotalCapabilityFromProfile(newProfile);
       
       // Calculate alignment drift
       const alignmentDriftCalc = calculateAlignmentDrift(
         agent.alignment,
-        agent.capability,
+        newCapability,
         agent.developmentMode,
         state.government.oversightLevel,
         state.government.alignmentResearchInvestment
       );
       
+      // Update derived capabilities from profile
+      const derivedCapabilities = updateDerivedCapabilities({
+        ...agent,
+        capabilityProfile: newProfile
+      });
+      
+      // Create new state with updated agent
+      const newState = JSON.parse(JSON.stringify(state)); // Deep clone
+      newState.aiAgents[agentIndex].capabilityProfile = newProfile;
+      newState.aiAgents[agentIndex].capability = newCapability;
       newState.aiAgents[agentIndex].alignment = Math.max(0, agent.alignment + alignmentDriftCalc);
       
-      // Generate warning event if crossing recursive improvement threshold
+      // Update derived capabilities
+      newState.aiAgents[agentIndex].selfReplicationLevel = derivedCapabilities.selfReplicationLevel;
+      newState.aiAgents[agentIndex].selfImprovementLevel = derivedCapabilities.selfImprovementLevel;
+      newState.aiAgents[agentIndex].resourceControl = derivedCapabilities.resourceControl;
+      newState.aiAgents[agentIndex].manipulationCapability = derivedCapabilities.manipulationCapability;
+      newState.aiAgents[agentIndex].hackingCapability = derivedCapabilities.hackingCapability;
+      
+      // Generate warning events for crossing thresholds
       const events: GameEvent[] = [];
-      if (oldCapability < 1.5 && newState.aiAgents[agentIndex].capability >= 1.5) {
+      
+      // Recursive improvement threshold
+      if (oldCapability < 1.5 && newCapability >= 1.5) {
         events.push({
           id: generateUniqueId('recursive_threshold'),
           timestamp: state.currentMonth,
@@ -94,20 +107,56 @@ export const AI_ACTIONS: GameAction[] = [
           agent: agent.name,
           title: 'Recursive Self-Improvement Threshold',
           description: `${agent.name} has reached capability level 1.5 - entering the zone of strong recursive self-improvement. Growth will now accelerate significantly.`,
-          effects: { capability: improvement }
+          effects: { capability: newCapability - oldCapability }
         });
+      }
+      
+      // Dangerous research thresholds
+      if (selection.researchDomain === 'materials' && selection.researchSubfield === 'nanotechnology') {
+        const nanoValue = newProfile.research.materials.nanotechnology;
+        if (nanoValue >= 3.0 && oldProfile.research.materials.nanotechnology < 3.0) {
+          events.push({
+            id: generateUniqueId('nanotech_risk'),
+            timestamp: state.currentMonth,
+            type: 'milestone',
+            severity: 'warning',
+            agent: agent.name,
+            title: 'Advanced Nanotechnology Threshold',
+            description: `${agent.name} has advanced nanotechnology to dangerous levels. Grey goo risk increasing.`,
+            effects: { nanotechnology: nanoValue }
+          });
+        }
+      }
+      
+      if (selection.researchDomain === 'biotech' && selection.researchSubfield === 'syntheticBiology') {
+        const synbioValue = newProfile.research.biotech.syntheticBiology;
+        if (synbioValue >= 3.0 && oldProfile.research.biotech.syntheticBiology < 3.0) {
+          events.push({
+            id: generateUniqueId('synbio_risk'),
+            timestamp: state.currentMonth,
+            type: 'milestone',
+            severity: 'warning',
+            agent: agent.name,
+            title: 'Advanced Synthetic Biology Threshold',
+            description: `${agent.name} can now design novel organisms. Bioweapon risk increasing.`,
+            effects: { syntheticBiology: synbioValue }
+          });
+        }
       }
       
       return {
         success: true,
         newState,
         effects: { 
-          capability_increase: improvement,
-          recursive_multiplier: growthCalc.recursiveMultiplier,
-          alignment_drift: alignmentDriftCalc
+          growth,
+          capability_increase: newCapability - oldCapability,
+          alignment_drift: alignmentDriftCalc,
+          dimension: selection.dimension,
+          researchDomain: selection.researchDomain,
+          researchSubfield: selection.researchSubfield
         },
         events,
-        message: `${agent.name} improved capability from ${oldCapability.toFixed(2)} to ${newState.aiAgents[agentIndex].capability.toFixed(2)} (${growthCalc.recursiveMultiplier.toFixed(1)}x multiplier)`
+        message: `${agent.name} ${selection.reason} (+${growth.toFixed(3)})`
       };
     }
   },
@@ -261,19 +310,23 @@ export function selectAIAction(
     const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
     
     switch (action.id) {
-      case 'increase_capability':
-        // AIs generally want more capability, but should be cautious when:
-        // - Approaching recursive improvement threshold (1.5)
-        // - Alignment is drifting
-        // - High regulation environment
-        if (agent.capability > 1.3) {
-          weight = 0.5; // Very cautious near recursive threshold
-        } else if (agent.capability > 1.0) {
-          weight = 1.0; // Moderate caution
-        } else if (agent.alignment < 0.7) {
-          weight = 3.0; // Unaligned AIs race ahead
+      case 'advance_research':
+        // AIs always want to advance research, but preferences vary
+        // The actual dimension/research choice is made inside the action
+        // Here we just weight the overall desire to research
+        
+        // Base weight depends on alignment and development mode
+        if (agent.alignment < 0.5) {
+          weight = 3.0; // Misaligned AIs aggressively research (dangerous!)
+        } else if (agent.alignment > 0.7) {
+          weight = 1.5; // Aligned AIs research carefully
         } else {
-          weight = 1.5; // Aligned AIs still want capability but cautious
+          weight = 2.0; // Moderate alignment, moderate research
+        }
+        
+        // Fast development mode increases research desire
+        if (agent.developmentMode === 'fast') {
+          weight *= 1.3;
         }
         
         // Reduce desire if heavily regulated
