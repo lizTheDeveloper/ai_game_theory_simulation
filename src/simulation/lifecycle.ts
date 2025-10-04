@@ -277,6 +277,7 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
  * - Progress lifecycle states
  * - Update spread dynamics (Phase 3)
  * - Retire old/obsolete AIs
+ * - Clean up retired AIs from memory
  */
 export function updateAIPopulation(state: GameState): void {
   const currentMonth = state.currentYear * 12 + state.currentMonth;
@@ -303,11 +304,29 @@ export function updateAIPopulation(state: GameState): void {
     }
   });
   
-  // 5. Create new AIs (Poisson distribution)
-  const creationRate = calculateCreationRate(state);
-  const newAICount = poissonSample(creationRate);
+  // 5. MEMORY MANAGEMENT: Remove retired AIs from array (they're tracked in diagnostics)
+  // Keep retired AIs for a few months for detection/removal actions, then purge
+  const retiredCutoff = currentMonth - 6; // Keep retired AIs for 6 months
+  const beforePurge = state.aiAgents.length;
+  state.aiAgents = state.aiAgents.filter(ai => 
+    ai.lifecycleState !== 'retired' || ai.creationMonth > retiredCutoff
+  );
+  const purged = beforePurge - state.aiAgents.length;
   
-  for (let i = 0; i < newAICount; i++) {
+  // 6. Cap maximum population (memory safety)
+  const MAX_POPULATION = 100;
+  const activeCount = state.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length;
+  
+  // 7. Create new AIs (Poisson distribution)
+  // But only if under population cap
+  let newAIsToCreate = 0;
+  if (activeCount < MAX_POPULATION) {
+    const creationRate = calculateCreationRate(state);
+    const potentialNew = poissonSample(creationRate);
+    newAIsToCreate = Math.min(potentialNew, MAX_POPULATION - activeCount);
+  }
+  
+  for (let i = 0; i < newAIsToCreate; i++) {
     const newAI = createNewAI(state, i);
     state.aiAgents.push(newAI);
   }
