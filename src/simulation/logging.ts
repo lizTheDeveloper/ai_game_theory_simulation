@@ -48,6 +48,25 @@ export interface MetricSnapshot {
   utopiaProbability: number;
   dystopiaProbability: number;
   extinctionProbability: number;
+  
+  // Multi-dimensional QoL (optional for backward compatibility)
+  materialAbundance?: number;
+  energyAvailability?: number;
+  physicalSafety?: number;
+  mentalHealth?: number;
+  meaningAndPurpose?: number;
+  socialConnection?: number;
+  autonomy?: number;
+  politicalFreedom?: number;
+  informationIntegrity?: number;
+  communityStrength?: number;
+  culturalVitality?: number;
+  healthcareQuality?: number;
+  longevityGains?: number;
+  diseasesBurden?: number;
+  ecosystemHealth?: number;
+  climateStability?: number;
+  pollutionLevel?: number;
 }
 
 /**
@@ -150,7 +169,26 @@ export class SimulationLogger {
       governmentLegitimacy: state.government.legitimacy,
       utopiaProbability: state.outcomeMetrics.utopiaProbability,
       dystopiaProbability: state.outcomeMetrics.dystopiaProbability,
-      extinctionProbability: state.outcomeMetrics.extinctionProbability
+      extinctionProbability: state.outcomeMetrics.extinctionProbability,
+      
+      // Multi-dimensional QoL systems
+      materialAbundance: state.qualityOfLifeSystems.materialAbundance,
+      energyAvailability: state.qualityOfLifeSystems.energyAvailability,
+      physicalSafety: state.qualityOfLifeSystems.physicalSafety,
+      mentalHealth: state.qualityOfLifeSystems.mentalHealth,
+      meaningAndPurpose: state.qualityOfLifeSystems.meaningAndPurpose,
+      socialConnection: state.qualityOfLifeSystems.socialConnection,
+      autonomy: state.qualityOfLifeSystems.autonomy,
+      politicalFreedom: state.qualityOfLifeSystems.politicalFreedom,
+      informationIntegrity: state.qualityOfLifeSystems.informationIntegrity,
+      communityStrength: state.qualityOfLifeSystems.communityStrength,
+      culturalVitality: state.qualityOfLifeSystems.culturalVitality,
+      healthcareQuality: state.qualityOfLifeSystems.healthcareQuality,
+      longevityGains: state.qualityOfLifeSystems.longevityGains,
+      diseasesBurden: state.qualityOfLifeSystems.diseasesBurden,
+      ecosystemHealth: state.qualityOfLifeSystems.ecosystemHealth,
+      climateStability: state.qualityOfLifeSystems.climateStability,
+      pollutionLevel: state.qualityOfLifeSystems.pollutionLevel
     };
   }
   
