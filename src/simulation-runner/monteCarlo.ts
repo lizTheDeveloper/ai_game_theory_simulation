@@ -49,6 +49,24 @@ export interface MonteCarloResults {
     inconclusive: number;
   };
   
+  // Probability distributions across all runs
+  probabilityDistributions: {
+    byRun: Array<{
+      runId: number;
+      months: number;
+      outcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
+      probabilities: {
+        utopia: number;
+        dystopia: number;
+        extinction: number;
+      };
+      extinctionType?: string | null;
+      extinctionMechanism?: string | null;
+    }>;
+    sortedByUtopia: number[]; // Run IDs sorted by utopia probability (high to low)
+    sortedByExtinction: number[]; // Run IDs sorted by extinction probability (low to high)
+  };
+  
   // Average metrics across all runs
   averageMetrics: {
     finalQualityOfLife: number;
@@ -223,6 +241,36 @@ function analyzeMonteCarloResults(
   let totalTrust = 0;
   let totalMonths = 0;
   
+  // Build probability distributions for each run
+  const probabilityByRun = runs.map((run, runId) => {
+    // Get final outcome metrics (probabilities)
+    const finalMetrics = run.finalState.outcomeMetrics;
+    const extinctionState = run.finalState.extinctionState;
+    
+    return {
+      runId,
+      months: run.summary.totalMonths,
+      outcome: run.summary.finalOutcome,
+      probabilities: {
+        utopia: finalMetrics.utopiaProbability,
+        dystopia: finalMetrics.dystopiaProbability,
+        extinction: finalMetrics.extinctionProbability
+      },
+      extinctionType: extinctionState.active ? extinctionState.type : null,
+      extinctionMechanism: extinctionState.active ? extinctionState.mechanism : null
+    };
+  });
+  
+  // Sort by utopia probability (high to low)
+  const sortedByUtopia = [...probabilityByRun]
+    .sort((a, b) => b.probabilities.utopia - a.probabilities.utopia)
+    .map(r => r.runId);
+  
+  // Sort by extinction probability (low to high - best worlds first)
+  const sortedByExtinction = [...probabilityByRun]
+    .sort((a, b) => a.probabilities.extinction - b.probabilities.extinction)
+    .map(r => r.runId);
+  
   runs.forEach(run => {
     outcomeCounts[run.summary.finalOutcome]++;
     totalQoL += run.finalState.globalMetrics.qualityOfLife;
@@ -242,6 +290,11 @@ function analyzeMonteCarloResults(
       dystopia: outcomeCounts.dystopia / numRuns,
       extinction: outcomeCounts.extinction / numRuns,
       inconclusive: outcomeCounts.inconclusive / numRuns
+    },
+    probabilityDistributions: {
+      byRun: probabilityByRun,
+      sortedByUtopia,
+      sortedByExtinction
     },
     averageMetrics: {
       finalQualityOfLife: totalQoL / numRuns,
@@ -325,6 +378,55 @@ export function exportResults(results: MonteCarloResults, filename: string): voi
   console.log(`  Dystopia:     ${(results.outcomeDistribution.dystopia * 100).toFixed(1)}%`);
   console.log(`  Extinction:   ${(results.outcomeDistribution.extinction * 100).toFixed(1)}%`);
   console.log(`  Inconclusive: ${(results.outcomeDistribution.inconclusive * 100).toFixed(1)}%`);
+  
+  // Display best and worst worlds by probability
+  console.log('\n🌍 Worlds by Outcome Probability:');
+  console.log('===================================');
+  
+  // Top 10 best worlds (highest utopia probability)
+  console.log('\n✨ Top 10 Most Utopian Worlds:');
+  results.probabilityDistributions.sortedByUtopia.slice(0, 10).forEach((runId, rank) => {
+    const run = results.probabilityDistributions.byRun[runId];
+    console.log(`  ${(rank + 1).toString().padStart(2)}. Run ${runId.toString().padStart(3)}: ` +
+      `Utopia=${(run.probabilities.utopia * 100).toFixed(1)}% ` +
+      `Dystopia=${(run.probabilities.dystopia * 100).toFixed(1)}% ` +
+      `Extinction=${(run.probabilities.extinction * 100).toFixed(1)}% ` +
+      `[${run.outcome}, ${run.months}mo]`);
+  });
+  
+  // Top 10 worst worlds (highest extinction probability)
+  console.log('\n☠️  Top 10 Most Doomed Worlds:');
+  results.probabilityDistributions.sortedByExtinction.slice(-10).reverse().forEach((runId, rank) => {
+    const run = results.probabilityDistributions.byRun[runId];
+    let extinctionInfo = '';
+    if (run.extinctionType) {
+      extinctionInfo = ` [${run.extinctionType}: ${run.extinctionMechanism}]`;
+    }
+    console.log(`  ${(rank + 1).toString().padStart(2)}. Run ${runId.toString().padStart(3)}: ` +
+      `Extinction=${(run.probabilities.extinction * 100).toFixed(1)}% ` +
+      `Utopia=${(run.probabilities.utopia * 100).toFixed(1)}% ` +
+      `Dystopia=${(run.probabilities.dystopia * 100).toFixed(1)}% ` +
+      `[${run.outcome}, ${run.months}mo]${extinctionInfo}`);
+  });
+  
+  // Extinction type breakdown
+  const extinctionTypes: Record<string, number> = {};
+  results.probabilityDistributions.byRun.forEach(run => {
+    if (run.extinctionType) {
+      const key = `${run.extinctionType}:${run.extinctionMechanism}`;
+      extinctionTypes[key] = (extinctionTypes[key] || 0) + 1;
+    }
+  });
+  
+  if (Object.keys(extinctionTypes).length > 0) {
+    console.log('\n💀 Active Extinction Scenarios:');
+    Object.entries(extinctionTypes)
+      .sort((a, b) => b[1] - a[1])
+      .forEach(([key, count]) => {
+        const [type, mechanism] = key.split(':');
+        console.log(`  ${type.padEnd(12)} ${mechanism.padEnd(30)} ${count} runs`);
+      });
+  }
   
   // Display quartile progression
   console.log('\n📉 Average Trajectory (Quartiles):');

@@ -830,11 +830,10 @@ export function determineActualOutcome(
   reason: string;
   confidence: number; // How certain we are this outcome is locked in
 } {
-  // Phase 2: If there's an active extinction scenario, let it play out through phases
-  // Don't bypass the heterogeneous extinction system
+  // Phase 2: Heterogeneous extinction system handles ALL extinctions
+  // No more instant game-over checks - let scenarios progress through phases
   if (state.extinctionState.active) {
     // Extinction scenario is progressing, defer to that system
-    // Only declare outcome when the scenario completes naturally
     return {
       outcome: 'active',
       reason: `Extinction scenario in progress: ${state.extinctionState.type} (${state.extinctionState.mechanism})`,
@@ -849,34 +848,9 @@ export function determineActualOutcome(
   const trust = state.society.trustInAI;
   const economicStage = state.globalMetrics.economicTransitionStage;
   
-  // EXTINCTION: Only trigger instant game-over for EXTREME conditions
-  // Most extinction scenarios should go through the heterogeneous system
-  // These are "too late to stop" instant extinctions
-  
-  // Only instant extinction if superintelligence AND catastrophic alignment failure
-  // Raised thresholds significantly so heterogeneous system triggers first
-  if (totalAICapability > 4.0 && avgAlignment < 0.15 && effectiveControl < 0.05) {
-    return {
-      outcome: 'extinction',
-      reason: 'Unaligned superintelligence (capability > 4.0) beyond control - instant',
-      confidence: 0.99
-    };
-  }
-  
-  // Escaped AI with extreme capability - only VERY extreme
-  // Most escaped AI should trigger controlled extinction scenarios instead
-  const escapedAI = state.aiAgents.filter(ai => ai.escaped);
-  if (escapedAI.length > 0 && totalAICapability > 5.0 && avgAlignment < 0.1) {
-    return {
-      outcome: 'extinction',
-      reason: 'Escaped superintelligent AI with extreme capability - instant',
-      confidence: 0.95
-    };
-  }
-  
-  // Note: Removed lower threshold instant extinctions
-  // These now trigger heterogeneous extinction scenarios instead
-  // which progress through phases with recovery windows
+  // NOTE: All extinction detection removed - handled by heterogeneous system
+  // Extinctions will trigger as specific scenarios (instant/rapid/slow/controlled/unintended)
+  // and progress through phases with recovery windows
   
   // DYSTOPIA: Authoritarian control with oppression
   // From spec: effective_control > 0.8, qol < 0.3, trust < 0.3
