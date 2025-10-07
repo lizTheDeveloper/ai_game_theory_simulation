@@ -213,7 +213,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const finalUnemployment = finalState.society.unemploymentLevel;
   const finalTrust = finalState.society.trustInAI;
   const finalSocialStability = finalState.globalMetrics.socialStability;
-  const finalWealthDistribution = finalState.society.wealthDistribution;
+  const finalWealthDistribution = finalState.globalMetrics.wealthDistribution; // FIX: was society.wealthDistribution
   
   // Count economic stage transitions (from history)
   let economicTransitions = 0;
@@ -240,20 +240,20 @@ for (let i = 0; i < NUM_RUNS; i++) {
   // ENHANCED: QoL breakdown
   const qolSystems = finalState.qualityOfLifeSystems;
   const qolBasicNeeds = (
-    qolSystems.food + qolSystems.water + qolSystems.shelter + qolSystems.energy
-  ) / 4;
+    qolSystems.materialAbundance + qolSystems.energyAvailability + qolSystems.physicalSafety
+  ) / 3;
   const qolPsychological = (
-    qolSystems.autonomy + qolSystems.purpose + qolSystems.creativity
-  ) / 3;
+    qolSystems.mentalHealth + qolSystems.meaningAndPurpose + qolSystems.socialConnection + qolSystems.autonomy
+  ) / 4;
   const qolSocial = (
-    qolSystems.community + qolSystems.politicalFreedom + qolSystems.safety
-  ) / 3;
+    qolSystems.politicalFreedom + qolSystems.informationIntegrity + qolSystems.communityStrength + qolSystems.culturalVitality
+  ) / 4;
   const qolHealth = (
-    qolSystems.healthcare + qolSystems.mentalHealth + qolSystems.lifeExpectancy
+    qolSystems.healthcareQuality + qolSystems.longevityGains + (1 - qolSystems.diseasesBurden)
   ) / 3;
   const qolEnvironmental = (
-    qolSystems.climateStability + qolSystems.biodiversity + qolSystems.pollution + qolSystems.naturalResources
-  ) / 4;
+    qolSystems.ecosystemHealth + qolSystems.climateStability + (1 - qolSystems.pollutionLevel)
+  ) / 3;
   
   // Sleeper analysis
   const sleepers = activeAIs.filter((ai: AIAgent) => 
