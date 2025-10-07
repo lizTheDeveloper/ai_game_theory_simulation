@@ -126,6 +126,11 @@ export interface AIAgent {
   // Phase 5.2: Benchmark System
   lastBenchmarkMonth: number; // When was this AI last benchmarked?
   benchmarkHistory: BenchmarkResult[]; // History of benchmark results
+  
+  // Phase 1: Compute Allocation (NEW)
+  allocatedCompute: number;     // Current compute allocation in PetaFLOPs
+  computeEfficiency: number;    // [0.8-1.2] How efficiently this AI uses compute
+  organizationId?: string;      // Which organization owns this AI (Phase 2)
 }
 
 /**
@@ -417,6 +422,54 @@ export interface EcosystemState {
   reverseEngineering: number; // [0,1] Ability to copy capabilities
 }
 
+/**
+ * Phase 1: Data Center Infrastructure
+ * 
+ * Concrete data centers that provide compute FLOPs.
+ * Organizations own these, and they allocate compute to AI models.
+ */
+export interface DataCenter {
+  id: string;
+  name: string;
+  organizationId: string;        // Which organization owns this (replaces owner enum)
+  
+  // Compute capacity
+  capacity: number;              // PetaFLOPs (base hardware capacity)
+  efficiency: number;            // [0.7-1.2] Utilization efficiency (effective = capacity × efficiency)
+  
+  // Lifecycle
+  constructionMonth: number;     // When construction started (negative = before game start)
+  completionMonth: number;       // When construction finishes (negative = already operational)
+  operational: boolean;          // Can be taken offline (sabotage, seizure, maintenance)
+  
+  // Economics
+  operationalCost: number;       // Monthly cost to run
+  
+  // Access control
+  restrictedAccess: boolean;     // If true, only approved AIs can use this
+  allowedAIs: string[];          // IDs of AIs with access (if restricted)
+  
+  // Location (for future geopolitics)
+  region?: string;               // e.g., "US", "EU", "China", "distributed"
+}
+
+/**
+ * Phase 1: Compute Infrastructure
+ * 
+ * Global compute infrastructure state.
+ * Data centers are the source of compute, not an abstract totalCompute number.
+ */
+export interface ComputeInfrastructure {
+  dataCenters: DataCenter[];
+  
+  // Efficiency improvements (apply to all compute usage)
+  algorithmsEfficiency: number;  // [1,∞] Algorithmic improvements (Chinchilla, FlashAttention, etc.)
+  hardwareEfficiency: number;    // [1,∞] Hardware improvements (FLOP/$ improvement)
+  
+  // Allocation tracking
+  computeAllocations: Map<string, number>; // aiId -> allocated FLOPs
+}
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -439,6 +492,7 @@ export interface GameState {
   outcomeMetrics: OutcomeMetrics;
   extinctionState: ExtinctionState; // Active extinction scenario tracking
   ecosystem: EcosystemState; // Phase 5.4: Technology diffusion tracking
+  computeInfrastructure: ComputeInfrastructure; // Phase 1: Compute resource system
   
   // Configuration
   config: ConfigurationSettings;

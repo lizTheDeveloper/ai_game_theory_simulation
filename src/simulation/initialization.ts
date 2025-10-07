@@ -10,6 +10,7 @@ import { initializeCapabilityProfile, initializeResearchInvestments, calculateTo
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
 import { initializeExtinctionState } from './extinctions';
 import { initializeEcosystem } from './technologyDiffusion';
+import { initializeComputeInfrastructure, initializeAIComputeFields } from './computeInfrastructure';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -83,7 +84,11 @@ export function createAIAgent(
     monthsAsleep: 0,
     // Phase 5.2: Benchmark System
     lastBenchmarkMonth: -99, // Never benchmarked yet
-    benchmarkHistory: []
+    benchmarkHistory: [],
+    // Phase 1: Compute Allocation (NEW)
+    allocatedCompute: 0, // Will be allocated monthly
+    computeEfficiency: 0.9 + Math.random() * 0.3, // Random 0.9-1.2
+    organizationId: undefined // Will be set in Phase 2
   };
   
   // Update derived capabilities from profile
@@ -231,6 +236,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 5.4: Initialize technology diffusion ecosystem
     ecosystem: initializeEcosystem(),
+    
+    // Phase 1: Initialize compute infrastructure
+    computeInfrastructure: initializeComputeInfrastructure(),
     
     eventLog: [],
     technologyTree: [],
