@@ -11,6 +11,7 @@ import { initializeQualityOfLifeSystems } from './qualityOfLife';
 import { initializeExtinctionState } from './extinctions';
 import { initializeEcosystem } from './technologyDiffusion';
 import { initializeComputeInfrastructure, initializeAIComputeFields } from './computeInfrastructure';
+import { initializeOrganizations, linkDataCentersToOrganizations, linkAIModelsToOrganizations } from './organizations';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -150,7 +151,7 @@ export function createDefaultInitialState(): GameState {
     aiAgents.push(agent);
   }
   
-  return {
+  const state: GameState = {
     currentMonth: initialMonth,
     currentDay: 1,
     currentYear: initialYear,
@@ -161,6 +162,9 @@ export function createDefaultInitialState(): GameState {
     // 20 heterogeneous AI agents
     // NOT A MONOLITH - different creators, alignments, goals
     aiAgents,
+    
+    // Phase 2: Initialize organizations (will be linked after state creation)
+    organizations: [],
     
     government: {
       controlDesire: 0.3,
@@ -265,6 +269,13 @@ export function createDefaultInitialState(): GameState {
       metrics: []
     }
   };
+  
+  // Phase 2: Initialize and link organizations
+  state.organizations = initializeOrganizations();
+  linkDataCentersToOrganizations(state);
+  linkAIModelsToOrganizations(state);
+  
+  return state;
 }
 
 /**

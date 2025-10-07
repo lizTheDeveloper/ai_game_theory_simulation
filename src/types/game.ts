@@ -470,6 +470,74 @@ export interface ComputeInfrastructure {
   computeAllocations: Map<string, number>; // aiId -> allocated FLOPs
 }
 
+/**
+ * Phase 2: Organization Structure
+ * 
+ * Organizations (companies, government, academic) that own infrastructure and AI models.
+ * They make strategic decisions about compute allocation, data center construction, and model training.
+ */
+export interface Organization {
+  id: string;
+  name: string;
+  type: 'private' | 'government' | 'academic' | 'nonprofit';
+  
+  // Ownership
+  ownedDataCenters: string[];    // IDs of data centers this org owns
+  ownedAIModels: string[];       // IDs of AI agents this org controls
+  
+  // Resources
+  capital: number;               // Money for investments
+  monthlyRevenue: number;        // Income from AI services
+  monthlyExpenses: number;       // Operating costs
+  
+  // Strategic priorities (0-1)
+  priorities: {
+    profitMaximization: number;  // Private companies focus here
+    safetyResearch: number;      // Safety-focused orgs
+    openScience: number;         // Academic/nonprofit focus
+    marketShare: number;         // Competitive drive
+    capabilityRace: number;      // "Don't fall behind" mentality
+  };
+  
+  // Decision-making state
+  currentProjects: OrganizationProject[];
+  computeAllocationStrategy: 'balanced' | 'focus_flagship' | 'train_new' | 'efficiency';
+  
+  // Relationships
+  partnerships: Map<string, number>; // orgId -> trust level
+  governmentRelations: number;   // How well they work with government
+  
+  // History
+  foundingMonth: number;         // When this org was created (negative = before game start)
+  reputation: number;            // [0,1] Public perception
+}
+
+/**
+ * Phase 2: Organization Projects
+ * 
+ * Long-term projects that organizations undertake (data center construction, model training, etc.)
+ */
+export interface OrganizationProject {
+  id: string;
+  type: 'datacenter_construction' | 'model_training' | 'research_initiative' | 'efficiency_upgrade';
+  
+  startMonth: number;
+  completionMonth: number;       // Long timelines (24-72 months for DCs!)
+  progress: number;              // [0,1] How far along
+  
+  // Resources committed
+  capitalInvested: number;
+  computeReserved: number;       // For training projects
+  
+  // Expected outcomes
+  expectedDataCenterCapacity?: number;      // For construction
+  expectedModelCapability?: AICapabilityProfile; // For training
+  
+  // Risk factors
+  canBeCanceled: boolean;
+  cancellationPenalty: number;   // Sunk costs (0-1, fraction of investment lost)
+}
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -483,6 +551,7 @@ export interface GameState {
   aiAgents: AIAgent[];
   government: GovernmentAgent;
   society: HumanSocietyAgent;
+  organizations: Organization[]; // Phase 2: Organizational layer
   
   // Global state
   globalMetrics: GlobalMetrics;
