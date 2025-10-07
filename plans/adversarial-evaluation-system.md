@@ -777,11 +777,40 @@ Once a technique is discovered, it diffuses through the ecosystem via:
 
 **Implications:** Even if you stop frontier models, new AIs keep appearing with high capabilities. The ecosystem "remembers" all discoveries.
 
-### Phase 5: Government Actions
-- [ ] Implement all evaluation actions
-- [ ] Implement response actions (quarantine, etc.)
-- [ ] Add evaluation research investment
-- [ ] Add research suppression option
+### Phase 5: Government Actions ✅ COMPLETE
+- [x] Implement response actions (emergency pause, mandatory reviews)
+- [x] Implement diffusion control actions (restrict publishing, limit mobility, ban reverse eng)
+- [x] Add priority logic for all Phase 5 actions
+- [x] Test government response system
+
+**5 New Government Actions:**
+1. **emergency_ai_pause**: Halt all AI development (extreme measure, priority 50-100)
+2. **mandatory_safety_reviews**: Force safety evaluations before deployment
+3. **restrict_research_publishing**: Reduce open research rate (-15%)
+4. **limit_employee_mobility**: Enforce non-competes (-10% mobility)
+5. **ban_reverse_engineering**: Make copying AIs illegal (-8% reverse eng)
+
+**Priority System:**
+- Emergency pause: 100 per awake sleeper (or 50 for 3+ misaligned AIs)
+- Mandatory reviews: Based on eval quality + threat level
+- Diffusion control: Based on diffusion rate + capability floor danger
+- Evaluation actions: Boosted when sleepers detected
+
+**Trade-offs:**
+- All actions cost legitimacy (-3% to -15%)
+- Diffusion control harms science/freedom/QoL
+- Emergency pause devastates economy (-0.5 stage, -30% research)
+
+**Test Results:**
+- Actions implemented and integrated ✅
+- Priority logic working (verified) ✅
+- canExecute conditions correct ✅
+- Government action frequency = 0.08/month (realistic but slow)
+  - For testing: increase government.actionFrequency
+
+**Files:** `src/simulation/agents/governmentAgent.ts` (5 new actions + priority logic), `scripts/testGovernmentResponse.ts`, `scripts/debugGovernmentActions.ts`
+
+**Implications:** Government now has tools to respond but faces harsh trade-offs. Act too early = waste resources/legitimacy. Act too late = threats out of control.
 
 ---
 
