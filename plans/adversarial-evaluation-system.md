@@ -750,11 +750,32 @@ Sleeper agent: 5% detection rate (until wake)
 
 **Test Results:** Sleepers wake in 4/5 runs (120 months), triggered by weak evaluation condition. Wake cascade system functioning.
 
-### Phase 4: Technology Diffusion
-- [ ] Add `EcosystemState` to GameState
-- [ ] Implement frontier discovery detection
-- [ ] Add diffusion mechanics
-- [ ] Update new AI creation to inherit capability floor
+### Phase 4: Technology Diffusion ✅ COMPLETE
+- [x] Add `EcosystemState` to GameState
+- [x] Implement frontier discovery detection (breakthrough detection)
+- [x] Add diffusion mechanics (floor rises toward frontier)
+- [x] Update new AI creation to inherit capability floor
+- [x] Test diffusion system
+
+**The Ratchet Effect:**
+Once a technique is discovered, it diffuses through the ecosystem via:
+1. Open research (60% publication rate)
+2. Employee mobility (30% knowledge transfer)
+3. Reverse engineering (20% capability copying)
+
+**Diffusion Rate:** 5-20% per month (base 5% + factors)
+
+**Result:** Capability floor rises toward frontier (91-95% ratio in tests). New AIs start with near-frontier capabilities. **Capabilities can only go up** - this is a one-way ratchet that makes alignment progressively harder.
+
+**Test Results (3 runs × 120 months):**
+- Frontier: 0 → 1.26
+- Floor: 0 → 1.16 (following frontier closely)
+- Breakthroughs: ~280 per run
+- Risk Level: CRITICAL (self-improvement floor → 2.25)
+
+**Files:** `src/types/game.ts` (EcosystemState), `src/simulation/technologyDiffusion.ts` (NEW), `src/simulation/capabilities.ts` (createEmptyCapabilityProfile), `src/simulation/initialization.ts`, `src/simulation/lifecycle.ts` (apply floor), `src/simulation/engine.ts`, `scripts/testTechnologyDiffusion.ts`
+
+**Implications:** Even if you stop frontier models, new AIs keep appearing with high capabilities. The ecosystem "remembers" all discoveries.
 
 ### Phase 5: Government Actions
 - [ ] Implement all evaluation actions
