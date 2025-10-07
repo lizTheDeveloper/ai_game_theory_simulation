@@ -179,21 +179,188 @@ export function initializeAIComputeFields(ai: any): void {
 }
 
 /**
- * Simple equal allocation for Phase 1 (before organizations)
- * This will be replaced by org-based allocation in Phase 3
+ * Phase 3: Allocate compute within an organization based on their strategy
+ */
+export function allocateComputeWithinOrganization(
+  org: any, // Organization type
+  state: GameState
+): void {
+  // Calculate total compute owned by this organization
+  let ownedCompute = state.computeInfrastructure.dataCenters
+    .filter(dc => org.ownedDataCenters.includes(dc.id))
+    .filter(dc => dc.operational)
+    .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  
+  // Get organization's active AI models
+  const ownedModels = state.aiAgents.filter(
+    ai => org.ownedAIModels.includes(ai.id) && ai.lifecycleState !== 'retired'
+  );
+  
+  if (ownedModels.length === 0) {
+    // No models to allocate to
+    return;
+  }
+  
+  // If organization has no data centers, they can access "truly unrestricted" DCs
+  // (e.g., Anthropic uses AWS/cloud, accesses academic/open DCs)
+  // But they share with other orgs that also have no DCs
+  if (ownedCompute === 0) {
+    // Find unrestricted DCs that aren't owned by orgs with models
+    // (i.e., academic DCs are truly open to all)
+    const trulyUnrestrictedCompute = state.computeInfrastructure.dataCenters
+      .filter(dc => {
+        if (!dc.operational || dc.restrictedAccess) return false;
+        // Check if this DC's owner has AIs using it
+        const dcOrg = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+        if (!dcOrg) return true; // No owner, truly open
+        const dcOrgAIs = state.aiAgents.filter(ai => 
+          ai.organizationId === dcOrg.id && ai.lifecycleState !== 'retired'
+        );
+        // If owner has no AIs, it's available to others
+        return dcOrgAIs.length === 0;
+      })
+      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+    
+    // Count total models from orgs with no owned DCs
+    const orgsWithoutDCs = state.organizations.filter(o => {
+      const compute = state.computeInfrastructure.dataCenters
+        .filter(dc => o.ownedDataCenters.includes(dc.id) && dc.operational)
+        .reduce((s, dc) => s + dc.capacity * dc.efficiency, 0);
+      return compute === 0;
+    });
+    
+    const totalModelsNeedingCompute = orgsWithoutDCs.reduce((sum, o) => {
+      const ais = state.aiAgents.filter(ai => o.ownedAIModels.includes(ai.id) && ai.lifecycleState !== 'retired');
+      return sum + ais.length;
+    }, 0);
+    
+    if (totalModelsNeedingCompute > 0 && trulyUnrestrictedCompute > 0) {
+      ownedCompute = (ownedModels.length / totalModelsNeedingCompute) * trulyUnrestrictedCompute;
+    } else if (ownedModels.length > 0) {
+      // Fallback: give minimal compute (1 PF per model)
+      ownedCompute = ownedModels.length * 1;
+    }
+  }
+  
+  // Allocate based on organization's strategy
+  switch (org.computeAllocationStrategy) {
+    case 'balanced':
+      // Equal shares to all models
+      const equalShare = ownedCompute / ownedModels.length;
+      ownedModels.forEach(ai => {
+        ai.allocatedCompute = equalShare;
+      });
+      break;
+    
+    case 'focus_flagship':
+      // 60% to best model, 40% split among rest
+      const sortedByCapability = [...ownedModels].sort(
+        (a, b) => b.capability - a.capability
+      );
+      const flagship = sortedByCapability[0];
+      flagship.allocatedCompute = ownedCompute * 0.6;
+      
+      if (sortedByCapability.length > 1) {
+        const remainingCompute = ownedCompute * 0.4;
+        const remainingModels = sortedByCapability.slice(1);
+        const sharePerRemaining = remainingCompute / remainingModels.length;
+        remainingModels.forEach(ai => {
+          ai.allocatedCompute = sharePerRemaining;
+        });
+      }
+      break;
+    
+    case 'train_new':
+      // Reserve 40% for future training, 60% split among existing
+      const existingShare = (ownedCompute * 0.6) / ownedModels.length;
+      ownedModels.forEach(ai => {
+        ai.allocatedCompute = existingShare;
+      });
+      // Note: The reserved 40% isn't allocated yet, saved for future training projects
+      break;
+    
+    case 'efficiency':
+      // Allocate based on ROI (capability × alignment)
+      const rois = ownedModels.map(ai => ({
+        ai,
+        roi: ai.capability * ai.externalAlignment
+      }));
+      const totalROI = rois.reduce((sum, item) => sum + item.roi, 0);
+      
+      if (totalROI > 0) {
+        rois.forEach(({ ai, roi }) => {
+          ai.allocatedCompute = (roi / totalROI) * ownedCompute;
+        });
+      } else {
+        // Fallback to equal if no ROI
+        const fallbackShare = ownedCompute / ownedModels.length;
+        ownedModels.forEach(ai => {
+          ai.allocatedCompute = fallbackShare;
+        });
+      }
+      break;
+    
+    default:
+      // Default to balanced
+      const defaultShare = ownedCompute / ownedModels.length;
+      ownedModels.forEach(ai => {
+        ai.allocatedCompute = defaultShare;
+      });
+  }
+  
+  // Update allocation tracking
+  ownedModels.forEach(ai => {
+    state.computeInfrastructure.computeAllocations.set(ai.id, ai.allocatedCompute);
+  });
+}
+
+/**
+ * Phase 3: Allocate compute globally (all organizations)
+ * This replaces allocateComputeEqually from Phase 1
+ */
+export function allocateComputeGlobally(state: GameState): void {
+  // Clear previous allocations
+  state.computeInfrastructure.computeAllocations.clear();
+  
+  // Reset all AI allocations to 0
+  state.aiAgents.forEach(ai => {
+    ai.allocatedCompute = 0;
+  });
+  
+  // Allocate compute for each organization
+  state.organizations.forEach(org => {
+    allocateComputeWithinOrganization(org, state);
+  });
+  
+  // Handle orphaned AIs (AIs without an organization)
+  const orphanedAIs = state.aiAgents.filter(
+    ai => !ai.organizationId && ai.lifecycleState !== 'retired'
+  );
+  
+  if (orphanedAIs.length > 0) {
+    console.warn(`[Compute Allocation] Found ${orphanedAIs.length} orphaned AIs (no organization)`);
+    
+    // Give them minimal compute from unrestricted data centers
+    const unrestrictedCompute = state.computeInfrastructure.dataCenters
+      .filter(dc => !dc.restrictedAccess && dc.operational)
+      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+    
+    const computePerOrphan = unrestrictedCompute / (orphanedAIs.length + 100); // Small share
+    
+    orphanedAIs.forEach(ai => {
+      ai.allocatedCompute = computePerOrphan;
+      state.computeInfrastructure.computeAllocations.set(ai.id, computePerOrphan);
+    });
+  }
+}
+
+/**
+ * DEPRECATED: Simple equal allocation for Phase 1 (before organizations)
+ * Kept for backwards compatibility, but use allocateComputeGlobally instead
  */
 export function allocateComputeEqually(state: GameState): void {
-  const totalCompute = getTotalCompute(state.computeInfrastructure);
-  const activeAIs = state.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
-  
-  if (activeAIs.length === 0) return;
-  
-  const computePerAI = totalCompute / activeAIs.length;
-  
-  activeAIs.forEach(ai => {
-    ai.allocatedCompute = computePerAI;
-    state.computeInfrastructure.computeAllocations.set(ai.id, computePerAI);
-  });
+  console.warn('[Compute] allocateComputeEqually is deprecated, use allocateComputeGlobally');
+  allocateComputeGlobally(state);
 }
 
 /**
