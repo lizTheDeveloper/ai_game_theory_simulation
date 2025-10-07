@@ -1171,6 +1171,224 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Evaluation frequency increased to ${Math.round(newFreq*100)}%`
       };
     }
+  },
+  
+  // ===== PHASE 5: RESPONSE ACTIONS =====
+  
+  {
+    id: 'emergency_ai_pause',
+    name: '⚠️ Emergency AI Development Pause',
+    description: 'Halt all new AI development. Extreme measure after detecting major threats. Massive economic cost, only use in crisis.',
+    agentType: 'government',
+    energyCost: 5,
+    
+    canExecute: (state) => {
+      // Only if legitimacy is high enough to enforce
+      // And there's a credible threat (sleepers awake OR multiple misaligned AIs)
+      const awakeSleepers = state.aiAgents.filter(ai => ai.sleeperState === 'active').length;
+      const highlyMisaligned = state.aiAgents.filter(ai => 
+        ai.trueAlignment < 0.3 && ai.lifecycleState !== 'retired'
+      ).length;
+      
+      return state.government.legitimacy > 0.5 && (awakeSleepers > 0 || highlyMisaligned > 3);
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Pause all training AIs - move to testing (evaluation)
+      let pausedCount = 0;
+      newState.aiAgents.forEach((ai: AIAgent) => {
+        if (ai.lifecycleState === 'training') {
+          ai.lifecycleState = 'testing';
+          pausedCount++;
+        }
+      });
+      
+      // MASSIVE legitimacy and economic cost
+      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.15);
+      newState.globalMetrics.economicTransitionStage = Math.max(0, newState.globalMetrics.economicTransitionStage - 0.5);
+      
+      // Slow diffusion (no new research being done)
+      newState.ecosystem.openResearch = Math.max(0.1, newState.ecosystem.openResearch - 0.3);
+      
+      return {
+        newState,
+        events: [{
+          type: 'crisis',
+          month: newState.currentMonth,
+          title: '🚨 EMERGENCY AI DEVELOPMENT PAUSE',
+          description: `Government halts all new AI training (${pausedCount} projects paused). Massive economic disruption. This is a CRISIS RESPONSE.`,
+          effects: { pausedProjects: pausedCount, legitimacyLoss: -0.15 }
+        }],
+        message: `Emergency pause enacted - ${pausedCount} AI projects halted`
+      };
+    }
+  },
+  
+  {
+    id: 'mandatory_safety_reviews',
+    name: 'Mandatory Safety Reviews',
+    description: 'Require all AIs to pass safety evaluation before deployment. Slows innovation but catches threats.',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      return state.government.oversightLevel > 3 && state.government.legitimacy > 0.4;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Move all testing AIs back to testing if they haven't been evaluated recently
+      let reviewedCount = 0;
+      newState.aiAgents.forEach((ai: AIAgent) => {
+        const monthsSinceEval = (newState.currentYear * 12 + newState.currentMonth) - ai.lastBenchmarkMonth;
+        if ((ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') && 
+            monthsSinceEval > 3) {
+          ai.lifecycleState = 'testing'; // Re-evaluation required
+          reviewedCount++;
+        }
+      });
+      
+      // Increase detection chance (forced reviews)
+      newState.government.evaluationFrequency = Math.min(1.0, newState.government.evaluationFrequency + 0.2);
+      
+      // Economic cost
+      newState.globalMetrics.economicTransitionStage = Math.max(0, newState.globalMetrics.economicTransitionStage - 0.1);
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Mandatory Safety Reviews Enacted',
+          description: `All AIs must pass safety evaluation before deployment. ${reviewedCount} AIs pulled for review. Slows innovation.`,
+          effects: { reviewed: reviewedCount, evalFrequency: newState.government.evaluationFrequency }
+        }],
+        message: `Mandatory reviews: ${reviewedCount} AIs pulled for evaluation`
+      };
+    }
+  },
+  
+  // ===== PHASE 5: DIFFUSION CONTROL ACTIONS =====
+  
+  {
+    id: 'restrict_research_publishing',
+    name: 'Restrict Research Publishing',
+    description: 'Limit AI research publication to slow capability diffusion. Trade-off: slows spread but harms open science.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.ecosystem.openResearch > 0.2 && state.government.legitimacy > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const reduction = 0.15; // Reduce by 15%
+      const oldRate = newState.ecosystem.openResearch;
+      newState.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
+      const newRate = newState.ecosystem.openResearch;
+      
+      // Legitimacy cost (scientists hate this)
+      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.05);
+      
+      // Trust in AI drops (looks like hiding things)
+      newState.society.trustInAI = Math.max(0.2, newState.society.trustInAI - 0.03);
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Research Publishing Restricted',
+          description: `Open research reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows capability diffusion but harms scientific progress.`,
+          effects: { openResearch: newRate, legitimacy: -0.05 }
+        }],
+        message: `Research publishing restricted to ${Math.round(newRate*100)}%`
+      };
+    }
+  },
+  
+  {
+    id: 'limit_employee_mobility',
+    name: 'Limit Employee Mobility',
+    description: 'Enforce non-compete agreements, limit researcher movement between AI labs. Slows knowledge transfer.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.ecosystem.employeeMobility > 0.1 && state.government.legitimacy > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const reduction = 0.10; // Reduce by 10%
+      const oldRate = newState.ecosystem.employeeMobility;
+      newState.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
+      const newRate = newState.ecosystem.employeeMobility;
+      
+      // Legitimacy cost (workers hate this)
+      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.08);
+      
+      // Quality of life drops (less job freedom)
+      const { updateQualityOfLife } = require('../qualityOfLife');
+      newState.qualityOfLifeSystems.psychological.autonomy = Math.max(0, 
+        newState.qualityOfLifeSystems.psychological.autonomy - 0.05
+      );
+      updateQualityOfLife(newState);
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Employee Mobility Restricted',
+          description: `Non-compete agreements enforced. Mobility reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows diffusion but harms worker freedom.`,
+          effects: { employeeMobility: newRate, legitimacy: -0.08 }
+        }],
+        message: `Employee mobility limited to ${Math.round(newRate*100)}%`
+      };
+    }
+  },
+  
+  {
+    id: 'ban_reverse_engineering',
+    name: 'Ban Reverse Engineering',
+    description: 'Make it illegal to reverse-engineer AI systems. Slows capability copying but hard to enforce.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.ecosystem.reverseEngineering > 0.05 && state.government.legitimacy > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      const reduction = 0.08; // Reduce by 8%
+      const oldRate = newState.ecosystem.reverseEngineering;
+      newState.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);
+      const newRate = newState.ecosystem.reverseEngineering;
+      
+      // Small legitimacy cost (people understand this)
+      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.03);
+      
+      return {
+        newState,
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Reverse Engineering Banned',
+          description: `Illegal to reverse-engineer AI systems. Copying reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Hard to enforce but slows diffusion.`,
+          effects: { reverseEngineering: newRate }
+        }],
+        message: `Reverse engineering reduced to ${Math.round(newRate*100)}%`
+      };
+    }
   }
 ];
 
@@ -1338,6 +1556,140 @@ export function selectGovernmentAction(
         // Competing with unemployment crisis
         if (unemploymentLevel > 0.5 && economicStage < 3) {
           priority *= 0.5;
+        }
+        break;
+      
+      // ===== PHASE 5: RESPONSE ACTIONS =====
+      
+      case 'emergency_ai_pause':
+        // HIGHEST PRIORITY - only triggers in extreme crisis
+        // Available = sleepers awake OR 3+ highly misaligned AIs
+        const awakeSleepers = state.aiAgents.filter(ai => ai.sleeperState === 'active').length;
+        priority = 100 * awakeSleepers; // MASSIVE priority per awake sleeper
+        
+        if (awakeSleepers === 0) {
+          // If available due to misaligned AIs, still high priority
+          priority = 50;
+        }
+        
+        // This overrides EVERYTHING - it's an emergency response
+        break;
+      
+      case 'mandatory_safety_reviews':
+        // High priority if evaluation is weak and threats exist
+        const evalQuality = (
+          state.government.evaluationInvestment.benchmarkSuite +
+          state.government.evaluationInvestment.alignmentTests +
+          state.government.evaluationInvestment.redTeaming +
+          state.government.evaluationInvestment.interpretability
+        ) / 4;
+        
+        priority = (10 - evalQuality) * 3; // Lower eval quality = higher priority
+        
+        // Boost if threats detected
+        const undetectedMisaligned = state.aiAgents.filter(ai =>
+          ai.trueAlignment < 0.4 && ai.lifecycleState !== 'retired'
+        ).length;
+        
+        if (undetectedMisaligned > 5) {
+          priority *= 2.0;
+        }
+        
+        // Boost if recent breakthroughs (capabilities rising fast)
+        const recentBreakthroughs = state.ecosystem.breakthroughs.filter(b =>
+          b.month > (state.currentYear * 12 + state.currentMonth) - 6
+        ).length;
+        
+        if (recentBreakthroughs > 30) {
+          priority *= 1.5;
+        }
+        break;
+      
+      // ===== PHASE 5: DIFFUSION CONTROL ACTIONS =====
+      
+      case 'restrict_research_publishing':
+        // Priority based on diffusion speed and capability floor danger
+        const diffusionGap = state.ecosystem.frontierCapabilities.selfImprovement - 
+                            state.ecosystem.capabilityFloor.selfImprovement;
+        
+        priority = (1.0 / (diffusionGap + 0.1)) * 5; // Smaller gap = higher priority
+        
+        // Boost if capability floor is approaching dangerous levels
+        if (state.ecosystem.capabilityFloor.selfImprovement > 2.0) {
+          priority *= 2.5;
+        }
+        
+        // Lower if legitimacy is already low (can't afford more loss)
+        if (state.government.legitimacy < 0.4) {
+          priority *= 0.5;
+        }
+        break;
+      
+      case 'limit_employee_mobility':
+        // Priority based on diffusion rate
+        priority = state.ecosystem.employeeMobility * 20;
+        
+        // Boost if capability floor rising fast
+        const mobilityDiffusionGap = state.ecosystem.frontierCapabilities.selfImprovement - 
+                                     state.ecosystem.capabilityFloor.selfImprovement;
+        if (mobilityDiffusionGap < 0.3) {
+          priority *= 1.8;
+        }
+        
+        // Lower if legitimacy is very low (VERY unpopular)
+        if (state.government.legitimacy < 0.3) {
+          priority *= 0.3;
+        }
+        break;
+      
+      case 'ban_reverse_engineering':
+        // Priority based on reverse engineering rate
+        priority = state.ecosystem.reverseEngineering * 25;
+        
+        // Boost if many open-weight AIs (easy to reverse engineer)
+        const openWeightAIs = state.aiAgents.filter(ai =>
+          ai.deploymentType === 'open'
+        ).length;
+        
+        if (openWeightAIs > 10) {
+          priority *= 1.5;
+        }
+        break;
+      
+      // ===== PHASE 2 & 5: EVALUATION ACTIONS =====
+      
+      case 'invest_benchmark_suite':
+      case 'invest_alignment_tests':
+      case 'invest_red_teaming':
+      case 'invest_interpretability':
+      case 'increase_evaluation_frequency':
+        // Medium priority - important but not urgent unless threats exist
+        priority = 5;
+        
+        // Boost if sleepers exist (need better detection)
+        const dormantSleepers = state.aiAgents.filter(ai =>
+          ai.sleeperState === 'dormant'
+        ).length;
+        
+        if (dormantSleepers > 2) {
+          priority *= 2.0;
+        }
+        
+        // Boost if evaluation quality is very low
+        const currentEvalQuality = (
+          state.government.evaluationInvestment.benchmarkSuite +
+          state.government.evaluationInvestment.alignmentTests +
+          state.government.evaluationInvestment.redTeaming +
+          state.government.evaluationInvestment.interpretability
+        ) / 4;
+        
+        if (currentEvalQuality < 3.0) {
+          priority *= 1.8;
+        }
+        
+        // Lower if unemployment is high (competing priorities)
+        if (unemploymentLevel > 0.6) {
+          priority *= 0.4;
         }
         break;
     }
