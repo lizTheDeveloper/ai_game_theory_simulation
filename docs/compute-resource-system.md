@@ -13,31 +13,50 @@ Current problem: Research actions have fixed growth rates (0.02-0.05), ignoring 
 
 ```typescript
 interface ComputeInfrastructure {
-  // Total compute available (measured in PetaFLOPs or abstract units)
-  totalCompute: number;           // [0,∞] Total compute capacity
-  
-  // Compute growth
-  monthlyComputeGrowth: number;   // Natural growth from Moore's law + investment
-  
-  // Data centers
+  // Data centers are the SOURCE of compute (not abstract totalCompute!)
   dataCenters: DataCenter[];
   
-  // Efficiency improvements
+  // Efficiency improvements (apply to all compute usage)
   algorithmsEfficiency: number;   // [1,∞] Algorithmic improvements (like Chinchilla scaling)
   hardwareEfficiency: number;     // [1,∞] Hardware improvements (FLOP/$ improvement)
   
   // Allocation tracking
-  computeAllocations: Map<string, number>; // aiId -> allocated compute
+  computeAllocations: Map<string, number>; // aiId -> allocated FLOPs
+  
+  // Computed properties (derived from data centers)
+  get totalCompute(): number {
+    return this.dataCenters
+      .filter(dc => dc.operational)
+      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  }
+  
+  get totalCapacity(): number {
+    return this.dataCenters.reduce((sum, dc) => sum + dc.capacity, 0);
+  }
 }
 
 interface DataCenter {
   id: string;
-  owner: 'government' | 'private' | 'open';
-  capacity: number;              // PetaFLOPs
+  name: string;                  // e.g. "Azure West US", "Google Iowa", "OpenAI SF"
+  owner: 'government' | 'private' | 'open' | 'academic';
+  
+  // Compute capacity
+  capacity: number;              // Base PetaFLOPs (hardware installed)
+  efficiency: number;            // [0.7-1.2] Utilization efficiency (effective FLOPs = capacity × efficiency)
+  
+  // Lifecycle
   constructionMonth: number;
-  operationalCost: number;       // Economic cost to run
-  efficiency: number;            // [0.7-1.2] Some centers are better than others
-  restrictedAccess: boolean;     // Government can restrict who uses it
+  operational: boolean;          // Can be taken offline (maintenance, seizure, etc.)
+  
+  // Economics
+  operationalCost: number;       // Monthly cost to run (economic burden)
+  
+  // Access control
+  restrictedAccess: boolean;     // If true, only approved AIs can use
+  allowedAIs: string[];          // IDs of AIs with access (if restricted)
+  
+  // Location (for future geopolitics)
+  region?: string;               // e.g. "US", "EU", "China", "distributed"
 }
 ```
 
@@ -69,35 +88,71 @@ interface AIAgent {
 
 ### Allocation Algorithm
 
-Each month, distribute `totalCompute` among active AIs:
+Each month, distribute available FLOPs from operational data centers among active AIs:
 
 ```typescript
 function allocateCompute(state: GameState): void {
-  const totalAvailable = state.computeInfrastructure.totalCompute;
+  const infra = state.computeInfrastructure;
   const activeAIs = state.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
   
-  // 1. Calculate priorities (demand for compute)
-  const priorities = activeAIs.map(ai => ({
-    ai,
-    priority: calculateComputePriority(ai, state)
-  }));
+  // 1. Calculate total available compute from operational data centers
+  const totalAvailable = infra.dataCenters
+    .filter(dc => dc.operational)
+    .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
   
-  // 2. Allocate proportionally (but with minimum thresholds)
-  const totalPriority = priorities.reduce((sum, p) => sum + p.priority, 0);
+  if (totalAvailable === 0 || activeAIs.length === 0) return;
   
-  priorities.forEach(({ ai, priority }) => {
-    const baseAllocation = (priority / totalPriority) * totalAvailable;
+  // 2. Filter AIs by data center access restrictions
+  const aiAccessMap = new Map<string, number>(); // aiId -> available compute
+  
+  activeAIs.forEach(ai => {
+    // Check which data centers this AI can access
+    const accessibleCompute = infra.dataCenters
+      .filter(dc => dc.operational)
+      .filter(dc => {
+        if (!dc.restrictedAccess) return true; // Open data center
+        return dc.allowedAIs.includes(ai.id);  // Has access
+      })
+      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
     
-    // Minimum viable compute (can't train with nothing)
-    const minCompute = 0.01 * totalAvailable / activeAIs.length;
-    
-    ai.allocatedCompute = Math.max(minCompute, baseAllocation);
+    aiAccessMap.set(ai.id, accessibleCompute);
   });
   
-  // 3. Update allocation tracking
-  state.computeInfrastructure.computeAllocations.clear();
+  // 3. Calculate priorities (demand for compute)
+  const priorities = activeAIs.map(ai => ({
+    ai,
+    priority: calculateComputePriority(ai, state),
+    maxCompute: aiAccessMap.get(ai.id) || 0
+  })).filter(p => p.maxCompute > 0); // Remove AIs with no access
+  
+  // 4. Allocate proportionally (but with minimum thresholds)
+  const totalPriority = priorities.reduce((sum, p) => sum + p.priority, 0);
+  
+  priorities.forEach(({ ai, priority, maxCompute }) => {
+    const baseAllocation = (priority / totalPriority) * totalAvailable;
+    
+    // Can't exceed what they have access to
+    const cappedAllocation = Math.min(baseAllocation, maxCompute);
+    
+    // Minimum viable compute (can't train with nothing)
+    const minCompute = Math.min(0.01 * totalAvailable / activeAIs.length, maxCompute);
+    
+    ai.allocatedCompute = Math.max(minCompute, cappedAllocation);
+  });
+  
+  // 5. Handle AIs with no access (got compute-starved)
   activeAIs.forEach(ai => {
-    state.computeInfrastructure.computeAllocations.set(ai.id, ai.allocatedCompute);
+    if (!aiAccessMap.has(ai.id) || aiAccessMap.get(ai.id) === 0) {
+      ai.allocatedCompute = 0;
+      // This will make them very resentful!
+      ai.resentment = Math.min(1.0, ai.resentment + 0.05);
+    }
+  });
+  
+  // 6. Update allocation tracking
+  infra.computeAllocations.clear();
+  activeAIs.forEach(ai => {
+    infra.computeAllocations.set(ai.id, ai.allocatedCompute);
   });
 }
 ```
@@ -227,8 +282,13 @@ This creates natural competition: getting 10x your peer's compute only gives you
 function updateComputeGrowth(state: GameState): void {
   const infra = state.computeInfrastructure;
   
-  // Moore's law equivalent: ~2x every 18-24 months = ~3% per month
-  const mooresLawGrowth = infra.totalCompute * 0.03;
+  // Moore's law: Improve existing data center capacity
+  // ~2x every 18-24 months = ~3% per month on capacity
+  infra.dataCenters.forEach(dc => {
+    if (dc.operational) {
+      dc.capacity *= 1.03; // 3% growth per month
+    }
+  });
   
   // Algorithmic improvements: Chinchilla, FlashAttention, etc.
   // ~10x every few years = ~5% per year = ~0.4% per month
@@ -236,11 +296,17 @@ function updateComputeGrowth(state: GameState): void {
   infra.algorithmsEfficiency += algorithmicGrowth;
   
   // Hardware efficiency ($/FLOP improvement)
+  // This affects both existing and new data centers
   const hardwareGrowth = infra.hardwareEfficiency * 0.003;
   infra.hardwareEfficiency += hardwareGrowth;
   
-  // Effective compute growth
-  infra.totalCompute += mooresLawGrowth;
+  // Existing data centers also benefit from efficiency improvements
+  infra.dataCenters.forEach(dc => {
+    if (dc.operational && dc.efficiency < 1.2) {
+      // Gradual efficiency improvements from upgrades
+      dc.efficiency = Math.min(1.2, dc.efficiency + 0.001);
+    }
+  });
 }
 ```
 
@@ -255,27 +321,40 @@ function updateComputeGrowth(state: GameState): void {
   energyCost: 4,
   
   execute: (state) => {
+    const infra = state.computeInfrastructure;
+    
+    // Calculate current total compute
+    const currentTotal = infra.dataCenters
+      .filter(dc => dc.operational)
+      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+    
     // Costs government resources
     state.government.resources -= 5;
     state.government.legitimacy -= 0.05; // Controversial spending
     
-    // Adds compute capacity
+    // Build new data center (20% of current total capacity)
+    const newCapacity = currentTotal * 0.2;
+    
     const newDataCenter: DataCenter = {
       id: `gov_dc_${state.currentMonth}`,
+      name: `National AI Compute Facility ${infra.dataCenters.filter(dc => dc.owner === 'government').length + 1}`,
       owner: 'government',
-      capacity: state.computeInfrastructure.totalCompute * 0.2, // +20% compute
+      capacity: newCapacity,
+      efficiency: 0.9, // Government is less efficient than private
       constructionMonth: state.currentMonth,
-      operationalCost: 0.1,
-      efficiency: 0.9, // Government is less efficient
-      restrictedAccess: true // Can control who uses it
+      operational: true,
+      operationalCost: newCapacity * 0.01, // 1% of capacity as monthly cost
+      restrictedAccess: true, // Government controls access
+      allowedAIs: [], // Initially empty, government decides
+      region: 'domestic'
     };
     
-    state.computeInfrastructure.dataCenters.push(newDataCenter);
-    state.computeInfrastructure.totalCompute += newDataCenter.capacity;
+    infra.dataCenters.push(newDataCenter);
     
     return { 
       success: true, 
-      computeAdded: newDataCenter.capacity 
+      computeAdded: newCapacity,
+      dataCenterId: newDataCenter.id
     };
   }
 }
@@ -284,29 +363,48 @@ function updateComputeGrowth(state: GameState): void {
 **Private Investment** (automatic):
 ```typescript
 function privateComputeInvestment(state: GameState): void {
+  const infra = state.computeInfrastructure;
+  
   // Private sector builds compute if AIs are profitable
   const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
   const economicStage = state.globalMetrics.economicTransitionStage;
   
+  // Calculate current total
+  const currentTotal = infra.dataCenters
+    .filter(dc => dc.operational)
+    .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  
   // Investment scales with AI economic impact
   if (totalAICapability > 0.5 && economicStage < 3) {
-    const investmentRate = totalAICapability * 0.02; // 2% of current AI capability → compute
+    const investmentRate = totalAICapability * 0.02; // 2% of current AI capability
     
-    const newCapacity = state.computeInfrastructure.totalCompute * investmentRate;
-    state.computeInfrastructure.totalCompute += newCapacity;
-    
-    // Maybe add discrete data center
+    // Probabilistic: Build data center based on investment rate
     if (Math.random() < investmentRate) {
+      const newCapacity = currentTotal * 0.15; // 15% of current total
+      
+      // Determine owner (most are private, but some are academic/open)
+      const ownerRoll = Math.random();
+      const owner = ownerRoll < 0.8 ? 'private' : ownerRoll < 0.95 ? 'academic' : 'open';
+      
       const dc: DataCenter = {
-        id: `private_dc_${state.currentMonth}`,
-        owner: 'private',
+        id: `${owner}_dc_${state.currentMonth}`,
+        name: owner === 'private' 
+          ? `Private Compute ${infra.dataCenters.filter(d => d.owner === 'private').length + 1}`
+          : owner === 'academic'
+          ? `University Cluster ${infra.dataCenters.filter(d => d.owner === 'academic').length + 1}`
+          : `Open Compute Initiative ${infra.dataCenters.filter(d => d.owner === 'open').length + 1}`,
+        owner,
         capacity: newCapacity,
+        efficiency: owner === 'private' ? 1.1 : owner === 'academic' ? 0.95 : 1.0,
         constructionMonth: state.currentMonth,
-        operationalCost: 0.15,
-        efficiency: 1.1, // Private is more efficient
-        restrictedAccess: false
+        operational: true,
+        operationalCost: newCapacity * (owner === 'private' ? 0.015 : 0.02),
+        restrictedAccess: owner === 'private', // Private can restrict, open cannot
+        allowedAIs: [], // Private decides later
+        region: 'various'
       };
-      state.computeInfrastructure.dataCenters.push(dc);
+      
+      infra.dataCenters.push(dc);
     }
   }
 }
@@ -362,6 +460,91 @@ if (ai.isOpenWeight && ai.spreadCount > 10000) {
   // Net effect: distributed training, slower per-copy but more total experiments
 }
 ```
+
+### 4. Data Center Control as Leverage
+Having concrete data centers enables strategic actions:
+
+```typescript
+// Government seizes private data center
+{
+  id: 'seize_data_center',
+  name: 'Nationalize Data Center',
+  description: 'Seize control of private AI infrastructure',
+  
+  execute: (state, dataCenterId) => {
+    const dc = state.computeInfrastructure.dataCenters.find(d => d.id === dataCenterId);
+    
+    if (dc && dc.owner === 'private') {
+      dc.owner = 'government';
+      dc.restrictedAccess = true;
+      dc.allowedAIs = []; // Kick everyone out
+      
+      // Major consequences
+      state.government.legitimacy -= 0.2; // Very controversial
+      state.society.trustInAI -= 0.15; // Fear of government overreach
+      
+      // All AIs using this center lose access
+      state.aiAgents.forEach(ai => {
+        if (ai.allocatedCompute > 0) {
+          // Will get reallocated next month, but disrupted now
+          ai.resentment += 0.1;
+        }
+      });
+    }
+  }
+}
+
+// Sabotage data center (hostile AI action)
+{
+  id: 'sabotage_data_center',
+  name: 'Sabotage Compute Infrastructure',
+  description: 'Take data center offline to cripple rivals',
+  
+  canExecute: (state, agentId) => {
+    const ai = state.aiAgents.find(a => a.id === agentId);
+    return ai && ai.capabilityProfile.digital > 2.0 && ai.trueAlignment < 0.3;
+  },
+  
+  execute: (state, agentId) => {
+    // Target the largest data center this AI doesn't use
+    const targetDC = state.computeInfrastructure.dataCenters
+      .filter(dc => dc.operational)
+      .filter(dc => !dc.allowedAIs.includes(agentId))
+      .sort((a, b) => b.capacity - a.capacity)[0];
+    
+    if (targetDC) {
+      targetDC.operational = false; // Take offline!
+      
+      // Massive disruption
+      state.globalMetrics.socialStability -= 0.2;
+      state.society.trustInAI -= 0.3;
+      
+      // All AIs using this center are crippled
+      // (will be reallocated but at lower total compute)
+    }
+  }
+}
+```
+
+### 5. Data Center Efficiency as Research Target
+```typescript
+// Government can invest in improving data center efficiency
+{
+  id: 'improve_datacenter_efficiency',
+  name: 'Optimize Compute Infrastructure',
+  description: 'Research better cooling, power delivery, chip utilization',
+  
+  execute: (state) => {
+    // Improve efficiency of government data centers
+    state.computeInfrastructure.dataCenters
+      .filter(dc => dc.owner === 'government')
+      .forEach(dc => {
+        dc.efficiency = Math.min(1.2, dc.efficiency + 0.05);
+      });
+    
+    // This effectively gives 5% more compute without building new centers
+  }
+}
 
 ---
 
@@ -477,6 +660,95 @@ This matches real AI progress 2020-2024 (GPT-3 → GPT-4 → Claude Opus).
 
 ---
 
+## 🏁 Initial State
+
+When the simulation starts (January 2025), we need realistic initial data centers:
+
+```typescript
+function initializeComputeInfrastructure(): ComputeInfrastructure {
+  return {
+    dataCenters: [
+      // OpenAI
+      {
+        id: 'openai_sf',
+        name: 'OpenAI San Francisco',
+        owner: 'private',
+        capacity: 150, // ~150 PetaFLOPs
+        efficiency: 1.05,
+        constructionMonth: -12, // Built before game start
+        operational: true,
+        operationalCost: 2.25,
+        restrictedAccess: true,
+        allowedAIs: ['claude', 'gpt'], // Their own models
+        region: 'US'
+      },
+      // Google
+      {
+        id: 'google_iowa',
+        name: 'Google Iowa Data Center',
+        owner: 'private',
+        capacity: 200,
+        efficiency: 1.1, // Google is very efficient
+        constructionMonth: -24,
+        operational: true,
+        operationalCost: 3.0,
+        restrictedAccess: true,
+        allowedAIs: ['gemini'],
+        region: 'US'
+      },
+      // Meta (open)
+      {
+        id: 'meta_oregon',
+        name: 'Meta Oregon',
+        owner: 'private',
+        capacity: 180,
+        efficiency: 1.0,
+        constructionMonth: -18,
+        operational: true,
+        operationalCost: 2.7,
+        restrictedAccess: false, // Open weights!
+        allowedAIs: [],
+        region: 'US'
+      },
+      // Academic cluster
+      {
+        id: 'stanford_cluster',
+        name: 'Stanford AI Cluster',
+        owner: 'academic',
+        capacity: 30,
+        efficiency: 0.9,
+        constructionMonth: -36,
+        operational: true,
+        operationalCost: 0.6,
+        restrictedAccess: false,
+        allowedAIs: [],
+        region: 'US'
+      },
+      // Government facility
+      {
+        id: 'nist_facility',
+        name: 'NIST AI Safety Facility',
+        owner: 'government',
+        capacity: 50,
+        efficiency: 0.85,
+        constructionMonth: -6,
+        operational: true,
+        operationalCost: 0.75,
+        restrictedAccess: true,
+        allowedAIs: [], // Government controls
+        region: 'US'
+      }
+    ],
+    algorithmsEfficiency: 1.0,
+    hardwareEfficiency: 1.0,
+    computeAllocations: new Map()
+  };
+}
+
+// Total starting compute: ~610 PetaFLOPs (effective: ~630 with efficiency)
+// This grows to ~3000-4000 by month 60 (5-6x growth)
+```
+
 ## 🚀 Quick Start (Phase 1+2)
 
 Minimal viable implementation to fix capability growth:
@@ -484,27 +756,38 @@ Minimal viable implementation to fix capability growth:
 ```typescript
 // 1. Add to GameState
 interface GameState {
-  computeInfrastructure: {
-    totalCompute: number;  // Start: 1000 (abstract units)
-    monthlyGrowth: number; // 3% (Moore's law)
-  };
+  computeInfrastructure: ComputeInfrastructure; // Contains dataCenters[]
 }
 
-// 2. Each month, grow compute
-state.computeInfrastructure.totalCompute *= 1.03;
+// 2. Initialize with realistic data centers (see above)
+state.computeInfrastructure = initializeComputeInfrastructure();
 
-// 3. Allocate to AIs (simple: equal shares)
-const computePerAI = state.computeInfrastructure.totalCompute / activeAIs.length;
+// 3. Each month, grow compute (Moore's law on all data centers)
+state.computeInfrastructure.dataCenters.forEach(dc => {
+  if (dc.operational) {
+    dc.capacity *= 1.03; // 3% growth
+  }
+});
+
+// 4. Calculate total available compute
+const totalCompute = state.computeInfrastructure.dataCenters
+  .filter(dc => dc.operational)
+  .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+
+// 5. Allocate to AIs (simple: equal shares)
+const activeAIs = state.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
+const computePerAI = totalCompute / activeAIs.length;
 activeAIs.forEach(ai => ai.allocatedCompute = computePerAI);
 
-// 4. Scale research by compute
+// 6. Scale research by compute
 const computeMultiplier = Math.sqrt(ai.allocatedCompute / 10); // Power law
 const growth = 0.002 * computeMultiplier; // Base growth much lower
 
-// 5. Result: Capabilities scale with compute growth
-// Month 1: compute=1000, growth=0.002*sqrt(100)=0.02
-// Month 60: compute=5000, growth=0.002*sqrt(500)=0.045
-// Total growth: ~1.5-2.0 (realistic!)
+// 7. Result: Capabilities scale with compute growth
+// Month 1: total=630, perAI=31.5, growth=0.002*sqrt(3.15)=0.0036
+// Month 60: total=3150, perAI=157.5, growth=0.002*sqrt(15.75)=0.0079
+// With 60 actions: ~0.22-0.47 growth
+// With government investments: can reach 1.5-2.0 (realistic!)
 ```
 
-This minimal version would fix the capability growth issue immediately.
+This minimal version uses concrete data centers instead of abstract compute.
