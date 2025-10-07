@@ -385,6 +385,38 @@ export interface QualityOfLifeSystems {
   pollutionLevel: number;         // [0,1] Air/water quality (inverted in calc)
 }
 
+/**
+ * Phase 5.4: Technology Diffusion Ecosystem State
+ * 
+ * Tracks the spread of AI capabilities through the ecosystem.
+ * Once a capability breakthrough happens, it diffuses to other AIs over time.
+ * This creates a "capability floor" - new AIs start with baseline capabilities.
+ */
+export interface EcosystemState {
+  // Capability floor: minimum capabilities for new AIs (rises over time)
+  capabilityFloor: AICapabilityProfile;
+  
+  // Frontier capabilities: highest achieved in each dimension
+  frontierCapabilities: AICapabilityProfile;
+  
+  // Diffusion tracking: how fast capabilities spread (0-1, 0=instant, 1=never)
+  diffusionRate: number; // Base rate: 0.05 = 5% per month
+  
+  // Breakthrough history (for analysis)
+  breakthroughs: Array<{
+    month: number;
+    aiId: string;
+    dimension: string;
+    value: number;
+    description: string;
+  }>;
+  
+  // Knowledge ecosystem metrics
+  openResearch: number;      // [0,1] How much research is openly published
+  employeeMobility: number;  // [0,1] Rate of knowledge transfer via people
+  reverseEngineering: number; // [0,1] Ability to copy capabilities
+}
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -406,6 +438,7 @@ export interface GameState {
   eventLog: GameEvent[];
   outcomeMetrics: OutcomeMetrics;
   extinctionState: ExtinctionState; // Active extinction scenario tracking
+  ecosystem: EcosystemState; // Phase 5.4: Technology diffusion tracking
   
   // Configuration
   config: ConfigurationSettings;

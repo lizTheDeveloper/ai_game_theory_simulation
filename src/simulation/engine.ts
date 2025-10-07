@@ -201,6 +201,16 @@ export class SimulationEngine {
     newState = aiResult.newState;
     events.push(...aiResult.events);
     
+    // Phase 5.4: Detect capability breakthroughs after AI actions
+    const { updateFrontierCapabilities } = require('./technologyDiffusion');
+    const activeAIs = newState.aiAgents.filter(ai => 
+      ai.lifecycleState !== 'retired'
+    );
+    for (const ai of activeAIs) {
+      const breakthroughEvents = updateFrontierCapabilities(newState, ai);
+      events.push(...breakthroughEvents);
+    }
+    
     const govResult = executeGovernmentActions(newState, rng);
     newState = govResult.newState;
     events.push(...govResult.events);
@@ -302,6 +312,10 @@ export class SimulationEngine {
       }
     }
     
+    // 8. Phase 5.4: Diffuse capabilities through ecosystem
+    const { diffuseCapabilities } = require('./technologyDiffusion');
+    diffuseCapabilities(newState);
+    
     // 9. Advance time
     newState.currentMonth += 1;
     if (newState.currentMonth >= 12) {
@@ -309,7 +323,7 @@ export class SimulationEngine {
       newState.currentYear += 1;
     }
     
-    // 9. Calculate metrics for tracking
+    // 10. Calculate metrics for tracking
     const metrics = {
       qualityOfLife,
       effectiveControl: calculateEffectiveControl(newState),

@@ -9,6 +9,7 @@ import { GameState, AIAgent } from '@/types/game';
 import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities } from './capabilities';
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
 import { initializeExtinctionState } from './extinctions';
+import { initializeEcosystem } from './technologyDiffusion';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -227,6 +228,9 @@ export function createDefaultInitialState(): GameState {
     
     // Initialize heterogeneous extinction tracking
     extinctionState: initializeExtinctionState(),
+    
+    // Phase 5.4: Initialize technology diffusion ecosystem
+    ecosystem: initializeEcosystem(),
     
     eventLog: [],
     technologyTree: [],

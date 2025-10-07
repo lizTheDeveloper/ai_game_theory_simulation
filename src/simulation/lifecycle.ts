@@ -120,6 +120,39 @@ function createNewAI(state: GameState, index: number): AIAgent {
   
   const agent = createAIAgent(agentId, agentName, 0.05, alignment, seed);
   
+  // Phase 5.4: Apply capability floor from technology diffusion
+  // New AIs start with access to known techniques (rising capability floor)
+  const { getCapabilityFloorForNewAI } = require('./technologyDiffusion');
+  const capabilityFloor = getCapabilityFloorForNewAI(state);
+  
+  // Set each dimension to MAX(current, floor)
+  // This ensures new AIs never start below the ecosystem capability floor
+  agent.capabilityProfile.physical = Math.max(agent.capabilityProfile.physical, capabilityFloor.physical);
+  agent.capabilityProfile.digital = Math.max(agent.capabilityProfile.digital, capabilityFloor.digital);
+  agent.capabilityProfile.cognitive = Math.max(agent.capabilityProfile.cognitive, capabilityFloor.cognitive);
+  agent.capabilityProfile.social = Math.max(agent.capabilityProfile.social, capabilityFloor.social);
+  agent.capabilityProfile.economic = Math.max(agent.capabilityProfile.economic, capabilityFloor.economic);
+  agent.capabilityProfile.selfImprovement = Math.max(agent.capabilityProfile.selfImprovement, capabilityFloor.selfImprovement);
+  
+  // Research dimensions (nested)
+  const researchCategories: Array<keyof typeof agent.capabilityProfile.research> = [
+    'biotech', 'materials', 'climate', 'computerScience'
+  ];
+  
+  for (const category of researchCategories) {
+    const agentCat = agent.capabilityProfile.research[category];
+    const floorCat = capabilityFloor.research[category];
+    
+    const subDimKeys = Object.keys(agentCat) as Array<keyof typeof agentCat>;
+    for (const key of subDimKeys) {
+      (agentCat[key] as number) = Math.max(agentCat[key] as number, floorCat[key] as number);
+    }
+  }
+  
+  // Recalculate total capability and derived capabilities
+  const { updateDerivedCapabilities } = require('./capabilities');
+  updateDerivedCapabilities(agent);
+  
   // Set lifecycle state
   agent.lifecycleState = 'training'; // Start in training
   agent.deploymentType = determineDeploymentType(state);

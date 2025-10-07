@@ -11,6 +11,44 @@ import { AICapabilityProfile, AIResearchCapabilities, ResearchInvestments, AIAge
  * Initialize a fresh capability profile for a new AI agent
  * Starts with small random values to create diversity
  */
+/**
+ * Create an empty (zero-initialized) capability profile
+ * Used for initializing capability floor in ecosystem
+ */
+export function createEmptyCapabilityProfile(): AICapabilityProfile {
+  return {
+    physical: 0,
+    digital: 0,
+    cognitive: 0,
+    social: 0,
+    economic: 0,
+    selfImprovement: 0,
+    research: {
+      biotech: {
+        drugDiscovery: 0,
+        geneEditing: 0,
+        syntheticBiology: 0,
+        neuroscience: 0
+      },
+      materials: {
+        nanotechnology: 0,
+        quantumComputing: 0,
+        energySystems: 0
+      },
+      climate: {
+        modeling: 0,
+        intervention: 0,
+        mitigation: 0
+      },
+      computerScience: {
+        algorithms: 0,
+        security: 0,
+        architectures: 0
+      }
+    }
+  };
+}
+
 export function initializeCapabilityProfile(seed: number = Math.random()): AICapabilityProfile {
   // Create variation using seed
   const variation = (offset: number) => 0.3 + (Math.sin(seed * 100 + offset) * 0.2);
