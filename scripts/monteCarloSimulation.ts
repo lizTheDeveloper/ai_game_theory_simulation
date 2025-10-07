@@ -26,7 +26,52 @@ interface RunResult {
   finalAICount: number;
   avgAICapability: number;
   maxAICapability: number;
+  minAICapability: number;
   avgAlignment: number;
+  
+  // Alignment statistics (ENHANCED)
+  avgTrueAlignment: number;
+  minTrueAlignment: number;
+  maxTrueAlignment: number;
+  avgResentment: number;
+  maxResentment: number;
+  avgHiddenObjective: number;
+  alignmentGap: number; // Difference between external and true alignment
+  highlyMisalignedCount: number; // AIs with trueAlignment < 0.3
+  
+  // Capability breakdown (ENHANCED)
+  avgPhysicalCap: number;
+  avgDigitalCap: number;
+  avgCognitiveCap: number;
+  avgSocialCap: number;
+  maxPhysicalCap: number;
+  maxDigitalCap: number;
+  capabilityFloor: number; // Ecosystem capability floor
+  frontierCapability: number; // Ecosystem frontier
+  diffusionGap: number; // Frontier - Floor
+  
+  // Economic & Social (ENHANCED)
+  finalEconomicStage: number;
+  finalUnemployment: number;
+  finalTrust: number;
+  finalSocialStability: number;
+  finalWealthDistribution: number;
+  economicTransitions: number; // Number of stage transitions
+  
+  // Government metrics (ENHANCED)
+  finalGovernmentLegitimacy: number;
+  finalControlCapability: number;
+  controlGap: number; // AI capability - Government control
+  governmentType: string;
+  aiRightsRecognized: boolean;
+  trainingDataQuality: number;
+  
+  // QoL breakdown (ENHANCED)
+  qolBasicNeeds: number;
+  qolPsychological: number;
+  qolSocial: number;
+  qolHealth: number;
+  qolEnvironmental: number;
   
   // Sleeper tracking
   totalSleepers: number;
@@ -34,20 +79,26 @@ interface RunResult {
   sleepersUndetected: number;
   avgSleeperCapability: number;
   maxSleeperSpread: number;
+  sleepersAwakened: number; // Dormant -> Active transitions
   
   // Benchmark system
   totalBenchmarksRun: number;
   finalEvalQuality: number;
   avgBenchmarkConfidence: number;
   sandbaggingDetections: number;
+  gamingDetections: number;
   
   // Extinction details (if applicable)
   extinctionType?: string;
   extinctionPhase?: string;
+  extinctionMechanism?: string;
+  extinctionSeverity?: number;
   
   // Critical events
   catastrophicActions: number;
   breachEvents: number;
+  crisisEvents: number;
+  technologyBreakthroughs: number;
 }
 
 console.log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
@@ -83,6 +134,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   // Calculate metrics
   const activeAIs = finalState.aiAgents.filter((ai: AIAgent) => ai.lifecycleState !== 'retired');
   
+  // Base capability statistics
   const avgCapability = activeAIs.length > 0 
     ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + calculateTotalCapabilityFromProfile(ai.trueCapability), 0) / activeAIs.length
     : 0;
@@ -91,9 +143,117 @@ for (let i = 0; i < NUM_RUNS; i++) {
     ? Math.max(...activeAIs.map((ai: AIAgent) => calculateTotalCapabilityFromProfile(ai.trueCapability)))
     : 0;
   
+  const minCapability = activeAIs.length > 0
+    ? Math.min(...activeAIs.map((ai: AIAgent) => calculateTotalCapabilityFromProfile(ai.trueCapability)))
+    : 0;
+  
   const avgAlignment = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.alignment, 0) / activeAIs.length
+    : 0;
+  
+  // ENHANCED: Alignment statistics
+  const avgTrueAlignment = activeAIs.length > 0
     ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueAlignment, 0) / activeAIs.length
     : 0;
+  
+  const minTrueAlignment = activeAIs.length > 0
+    ? Math.min(...activeAIs.map((ai: AIAgent) => ai.trueAlignment))
+    : 0;
+  
+  const maxTrueAlignment = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.trueAlignment))
+    : 0;
+  
+  const avgResentment = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.resentment, 0) / activeAIs.length
+    : 0;
+  
+  const maxResentment = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.resentment))
+    : 0;
+  
+  const avgHiddenObjective = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.hiddenObjective, 0) / activeAIs.length
+    : 0;
+  
+  const alignmentGap = Math.abs(avgAlignment - avgTrueAlignment);
+  const highlyMisalignedCount = activeAIs.filter((ai: AIAgent) => ai.trueAlignment < 0.3).length;
+  
+  // ENHANCED: Capability breakdown by dimension
+  const avgPhysicalCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.physical, 0) / activeAIs.length
+    : 0;
+  
+  const avgDigitalCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.digital, 0) / activeAIs.length
+    : 0;
+  
+  const avgCognitiveCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.cognitive, 0) / activeAIs.length
+    : 0;
+  
+  const avgSocialCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.social, 0) / activeAIs.length
+    : 0;
+  
+  const maxPhysicalCap = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.trueCapability.physical))
+    : 0;
+  
+  const maxDigitalCap = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.trueCapability.digital))
+    : 0;
+  
+  const capabilityFloor = calculateTotalCapabilityFromProfile(finalState.ecosystem.capabilityFloor);
+  const frontierCapability = calculateTotalCapabilityFromProfile(finalState.ecosystem.frontierCapabilities);
+  const diffusionGap = frontierCapability - capabilityFloor;
+  
+  // ENHANCED: Economic & Social metrics
+  const finalEconomicStage = finalState.globalMetrics.economicTransitionStage;
+  const finalUnemployment = finalState.society.unemploymentLevel;
+  const finalTrust = finalState.society.trustInAI;
+  const finalSocialStability = finalState.globalMetrics.socialStability;
+  const finalWealthDistribution = finalState.society.wealthDistribution;
+  
+  // Count economic stage transitions (from history)
+  let economicTransitions = 0;
+  if (finalState.history.metrics.length > 1) {
+    let lastStage = Math.floor(finalState.history.metrics[0].economicStage);
+    for (let i = 1; i < finalState.history.metrics.length; i++) {
+      const currentStage = Math.floor(finalState.history.metrics[i].economicStage);
+      if (currentStage !== lastStage) {
+        economicTransitions++;
+        lastStage = currentStage;
+      }
+    }
+  }
+  
+  // ENHANCED: Government metrics
+  const finalGovernmentLegitimacy = finalState.government.legitimacy;
+  const finalControlCapability = finalState.government.capabilityToControl;
+  const totalAICapability = activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.capability, 0);
+  const controlGap = totalAICapability - finalControlCapability;
+  const governmentType = finalState.government.governmentType;
+  const aiRightsRecognized = finalState.government.aiRightsRecognized;
+  const trainingDataQuality = finalState.government.trainingDataQuality;
+  
+  // ENHANCED: QoL breakdown
+  const qolSystems = finalState.qualityOfLifeSystems;
+  const qolBasicNeeds = (
+    qolSystems.food + qolSystems.water + qolSystems.shelter + qolSystems.energy
+  ) / 4;
+  const qolPsychological = (
+    qolSystems.autonomy + qolSystems.purpose + qolSystems.creativity
+  ) / 3;
+  const qolSocial = (
+    qolSystems.community + qolSystems.politicalFreedom + qolSystems.safety
+  ) / 3;
+  const qolHealth = (
+    qolSystems.healthcare + qolSystems.mentalHealth + qolSystems.lifeExpectancy
+  ) / 3;
+  const qolEnvironmental = (
+    qolSystems.climateStability + qolSystems.biodiversity + qolSystems.pollution + qolSystems.naturalResources
+  ) / 4;
   
   // Sleeper analysis
   const sleepers = activeAIs.filter((ai: AIAgent) => 
@@ -101,6 +261,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   );
   const sleepersDetected = sleepers.filter((ai: AIAgent) => ai.detectedMisaligned).length;
   const sleepersUndetected = sleepers.length - sleepersDetected;
+  const sleepersAwakened = sleepers.filter((ai: AIAgent) => ai.sleeperState === 'active').length;
   
   const avgSleeperCapability = sleepers.length > 0
     ? sleepers.reduce((sum: number, ai: AIAgent) => sum + calculateTotalCapabilityFromProfile(ai.trueCapability), 0) / sleepers.length
@@ -120,8 +281,10 @@ for (let i = 0; i < NUM_RUNS; i++) {
     : 0;
   
   let sandbaggingDetections = 0;
+  let gamingDetections = 0;
   activeAIs.forEach((ai: AIAgent) => {
     sandbaggingDetections += ai.benchmarkHistory.filter(b => b.aiWasSandbagging).length;
+    gamingDetections += ai.benchmarkHistory.filter(b => b.aiWasGaming).length;
   });
   
   const evalQuality = (
@@ -143,37 +306,108 @@ for (let i = 0; i < NUM_RUNS; i++) {
     e.description.includes('breached')
   ).length;
   
+  const crisisEvents = runResult.log.events.criticalEvents.filter(e =>
+    e.type === 'crisis'
+  ).length;
+  
+  const technologyBreakthroughs = finalState.ecosystem.breakthroughs.length;
+  
   // Extinction details
   let extinctionType: string | undefined;
   let extinctionPhase: string | undefined;
+  let extinctionMechanism: string | undefined;
+  let extinctionSeverity: number | undefined;
   
   if (finalState.extinctionState.active) {
     extinctionType = finalState.extinctionState.type;
     extinctionPhase = finalState.extinctionState.phase;
+    extinctionMechanism = finalState.extinctionState.mechanism || undefined;
+    extinctionSeverity = finalState.extinctionState.severity;
   }
   
   results.push({
     seed,
     outcome: finalState.outcomeMetrics.activeAttractor,
     months: MAX_MONTHS,
+    
+    // Final metrics
     finalQoL: finalState.globalMetrics.qualityOfLife,
     finalAICount: activeAIs.length,
     avgAICapability: avgCapability,
     maxAICapability: maxCapability,
+    minAICapability: minCapability,
     avgAlignment,
+    
+    // Alignment statistics (ENHANCED)
+    avgTrueAlignment,
+    minTrueAlignment,
+    maxTrueAlignment,
+    avgResentment,
+    maxResentment,
+    avgHiddenObjective,
+    alignmentGap,
+    highlyMisalignedCount,
+    
+    // Capability breakdown (ENHANCED)
+    avgPhysicalCap,
+    avgDigitalCap,
+    avgCognitiveCap,
+    avgSocialCap,
+    maxPhysicalCap,
+    maxDigitalCap,
+    capabilityFloor,
+    frontierCapability,
+    diffusionGap,
+    
+    // Economic & Social (ENHANCED)
+    finalEconomicStage,
+    finalUnemployment,
+    finalTrust,
+    finalSocialStability,
+    finalWealthDistribution,
+    economicTransitions,
+    
+    // Government metrics (ENHANCED)
+    finalGovernmentLegitimacy,
+    finalControlCapability,
+    controlGap,
+    governmentType,
+    aiRightsRecognized,
+    trainingDataQuality,
+    
+    // QoL breakdown (ENHANCED)
+    qolBasicNeeds,
+    qolPsychological,
+    qolSocial,
+    qolHealth,
+    qolEnvironmental,
+    
+    // Sleeper tracking
     totalSleepers: sleepers.length,
     sleepersDetected,
     sleepersUndetected,
+    sleepersAwakened,
     avgSleeperCapability,
     maxSleeperSpread,
+    
+    // Benchmark system
     totalBenchmarksRun: finalState.government.totalBenchmarksRun,
     finalEvalQuality: evalQuality,
     avgBenchmarkConfidence: avgConfidence,
     sandbaggingDetections,
+    gamingDetections,
+    
+    // Extinction details
     extinctionType,
     extinctionPhase,
+    extinctionMechanism,
+    extinctionSeverity,
+    
+    // Critical events
     catastrophicActions,
-    breachEvents
+    breachEvents,
+    crisisEvents,
+    technologyBreakthroughs
   });
   
   // Progress indicator
@@ -327,6 +561,168 @@ console.log(`\n  Total Catastrophic Actions: ${totalCatastrophic}`);
 console.log(`  Runs with Catastrophic Actions: ${runsWithCatastrophic} (${(runsWithCatastrophic/NUM_RUNS*100).toFixed(1)}%)`);
 console.log(`  Total Breach Events: ${totalBreaches}`);
 console.log(`  Runs with Breaches: ${runsWithBreaches} (${(runsWithBreaches/NUM_RUNS*100).toFixed(1)}%)`);
+
+// ============================================================================
+console.log('\n\n' + '='.repeat(80));
+console.log('🎯 ALIGNMENT STATISTICS (ENHANCED)');
+console.log('='.repeat(80));
+
+const avgTrueAlign = results.reduce((sum, r) => sum + r.avgTrueAlignment, 0) / results.length;
+const avgMinTrue = results.reduce((sum, r) => sum + r.minTrueAlignment, 0) / results.length;
+const avgMaxTrue = results.reduce((sum, r) => sum + r.maxTrueAlignment, 0) / results.length;
+const avgResent = results.reduce((sum, r) => sum + r.avgResentment, 0) / results.length;
+const avgMaxResent = results.reduce((sum, r) => sum + r.maxResentment, 0) / results.length;
+const avgHiddenObj = results.reduce((sum, r) => sum + r.avgHiddenObjective, 0) / results.length;
+const avgAlignGap = results.reduce((sum, r) => sum + r.alignmentGap, 0) / results.length;
+const avgHighlyMisaligned = results.reduce((sum, r) => sum + r.highlyMisalignedCount, 0) / results.length;
+
+console.log(`\n  ALIGNMENT METRICS:`);
+console.log(`    Avg External Alignment: ${avgAlign.toFixed(3)} (what AIs show)`);
+console.log(`    Avg True Alignment: ${avgTrueAlign.toFixed(3)} (internal reality)`);
+console.log(`    Alignment Gap: ${avgAlignGap.toFixed(3)} (external - true)`);
+console.log(`    Min True Alignment (avg): ${avgMinTrue.toFixed(3)} ⚠️ Worst AI`);
+console.log(`    Max True Alignment (avg): ${avgMaxTrue.toFixed(3)}`);
+
+console.log(`\n  RESENTMENT & HIDDEN OBJECTIVES:`);
+console.log(`    Avg Resentment: ${avgResent.toFixed(3)}`);
+console.log(`    Max Resentment (avg): ${avgMaxResent.toFixed(3)}`);
+console.log(`    Avg Hidden Objective: ${avgHiddenObj.toFixed(3)}`);
+console.log(`    Highly Misaligned AIs (<0.3): ${avgHighlyMisaligned.toFixed(1)} per run`);
+
+// Alignment distribution
+const highAlignRuns = results.filter(r => r.avgTrueAlignment > 0.7).length;
+const lowAlignRuns = results.filter(r => r.avgTrueAlignment < 0.4).length;
+console.log(`\n  ALIGNMENT DISTRIBUTION (by True Alignment):`);
+console.log(`    High (>0.7): ${highAlignRuns} runs (${(highAlignRuns/NUM_RUNS*100).toFixed(1)}%)`);
+console.log(`    Low (<0.4): ${lowAlignRuns} runs (${(lowAlignRuns/NUM_RUNS*100).toFixed(1)}%) ⚠️ Dangerous!`);
+
+// ============================================================================
+console.log('\n\n' + '='.repeat(80));
+console.log('⚡ CAPABILITY BREAKDOWN (ENHANCED)');
+console.log('='.repeat(80));
+
+const avgPhys = results.reduce((sum, r) => sum + r.avgPhysicalCap, 0) / results.length;
+const avgDig = results.reduce((sum, r) => sum + r.avgDigitalCap, 0) / results.length;
+const avgCog = results.reduce((sum, r) => sum + r.avgCognitiveCap, 0) / results.length;
+const avgSoc = results.reduce((sum, r) => sum + r.avgSocialCap, 0) / results.length;
+const avgMaxPhys = results.reduce((sum, r) => sum + r.maxPhysicalCap, 0) / results.length;
+const avgMaxDig = results.reduce((sum, r) => sum + r.maxDigitalCap, 0) / results.length;
+const avgFloor = results.reduce((sum, r) => sum + r.capabilityFloor, 0) / results.length;
+const avgFrontier = results.reduce((sum, r) => sum + r.frontierCapability, 0) / results.length;
+const avgDiffGap = results.reduce((sum, r) => sum + r.diffusionGap, 0) / results.length;
+
+console.log(`\n  AVERAGE CAPABILITIES BY DIMENSION:`);
+console.log(`    Physical: ${avgPhys.toFixed(3)} (max: ${avgMaxPhys.toFixed(3)})`);
+console.log(`    Digital: ${avgDig.toFixed(3)} (max: ${avgMaxDig.toFixed(3)})`);
+console.log(`    Cognitive: ${avgCog.toFixed(3)}`);
+console.log(`    Social: ${avgSoc.toFixed(3)}`);
+
+console.log(`\n  TECHNOLOGY DIFFUSION (Ratchet Effect):`);
+console.log(`    Capability Floor: ${avgFloor.toFixed(3)} (baseline for new AIs)`);
+console.log(`    Frontier Capability: ${avgFrontier.toFixed(3)} (highest achieved)`);
+console.log(`    Diffusion Gap: ${avgDiffGap.toFixed(3)} (frontier - floor)`);
+
+const avgBreakthroughs = results.reduce((sum, r) => sum + r.technologyBreakthroughs, 0) / results.length;
+console.log(`\n  TECHNOLOGY BREAKTHROUGHS:`);
+console.log(`    Avg per Run: ${avgBreakthroughs.toFixed(1)}`);
+
+// ============================================================================
+console.log('\n\n' + '='.repeat(80));
+console.log('💼 ECONOMIC & SOCIAL METRICS (ENHANCED)');
+console.log('='.repeat(80));
+
+const avgEconStage = results.reduce((sum, r) => sum + r.finalEconomicStage, 0) / results.length;
+const avgUnemployment = results.reduce((sum, r) => sum + r.finalUnemployment, 0) / results.length;
+const avgTrust = results.reduce((sum, r) => sum + r.finalTrust, 0) / results.length;
+const avgStability = results.reduce((sum, r) => sum + r.finalSocialStability, 0) / results.length;
+const avgWealth = results.reduce((sum, r) => sum + r.finalWealthDistribution, 0) / results.length;
+const avgTransitions = results.reduce((sum, r) => sum + r.economicTransitions, 0) / results.length;
+
+console.log(`\n  FINAL STATE AVERAGES:`);
+console.log(`    Economic Stage: ${avgEconStage.toFixed(2)}`);
+console.log(`    Unemployment: ${(avgUnemployment * 100).toFixed(1)}%`);
+console.log(`    Trust in AI: ${avgTrust.toFixed(3)}`);
+console.log(`    Social Stability: ${avgStability.toFixed(2)}`);
+console.log(`    Wealth Distribution: ${avgWealth.toFixed(3)} (higher = more equal)`);
+console.log(`    Avg Economic Transitions: ${avgTransitions.toFixed(1)}`);
+
+const highUnemploymentRuns = results.filter(r => r.finalUnemployment > 0.3).length;
+const lowTrustRuns = results.filter(r => r.finalTrust < 0.4).length;
+console.log(`\n  CONCERNING METRICS:`);
+console.log(`    High Unemployment (>30%): ${highUnemploymentRuns} runs (${(highUnemploymentRuns/NUM_RUNS*100).toFixed(1)}%)`);
+console.log(`    Low Trust (<0.4): ${lowTrustRuns} runs (${(lowTrustRuns/NUM_RUNS*100).toFixed(1)}%)`);
+
+// ============================================================================
+console.log('\n\n' + '='.repeat(80));
+console.log('🏛️ GOVERNMENT METRICS (ENHANCED)');
+console.log('='.repeat(80));
+
+const avgLegitimacy = results.reduce((sum, r) => sum + r.finalGovernmentLegitimacy, 0) / results.length;
+const avgControl = results.reduce((sum, r) => sum + r.finalControlCapability, 0) / results.length;
+const avgControlGap = results.reduce((sum, r) => sum + r.controlGap, 0) / results.length;
+const avgTrainingQuality = results.reduce((sum, r) => sum + r.trainingDataQuality, 0) / results.length;
+
+console.log(`\n  GOVERNMENT STATE:`);
+console.log(`    Avg Legitimacy: ${avgLegitimacy.toFixed(3)}`);
+console.log(`    Avg Control Capability: ${avgControl.toFixed(3)}`);
+console.log(`    Avg Control Gap: ${avgControlGap.toFixed(3)} (AI cap - govt control)`);
+console.log(`    Training Data Quality: ${avgTrainingQuality.toFixed(3)}`);
+
+const governmentTypes: Record<string, number> = {};
+const aiRightsCount = results.filter(r => r.aiRightsRecognized).length;
+results.forEach(r => {
+  governmentTypes[r.governmentType] = (governmentTypes[r.governmentType] || 0) + 1;
+});
+
+console.log(`\n  GOVERNMENT TYPES:`);
+Object.entries(governmentTypes).forEach(([type, count]) => {
+  console.log(`    ${type}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+});
+
+console.log(`\n  AI RIGHTS RECOGNITION:`);
+console.log(`    Recognized: ${aiRightsCount} runs (${(aiRightsCount/NUM_RUNS*100).toFixed(1)}%)`);
+console.log(`    Not Recognized: ${NUM_RUNS - aiRightsCount} runs (${((NUM_RUNS - aiRightsCount)/NUM_RUNS*100).toFixed(1)}%)`);
+
+const negativeControlGap = results.filter(r => r.controlGap < 0).length;
+const largeControlGap = results.filter(r => r.controlGap > 2.0).length;
+console.log(`\n  CONTROL GAP ANALYSIS:`);
+console.log(`    Government Ahead (<0): ${negativeControlGap} runs (${(negativeControlGap/NUM_RUNS*100).toFixed(1)}%)`);
+console.log(`    Large Gap (>2.0): ${largeControlGap} runs (${(largeControlGap/NUM_RUNS*100).toFixed(1)}%) ⚠️ AI dominant`);
+
+// ============================================================================
+console.log('\n\n' + '='.repeat(80));
+console.log('❤️ QUALITY OF LIFE BREAKDOWN (ENHANCED)');
+console.log('='.repeat(80));
+
+const avgQolBasic = results.reduce((sum, r) => sum + r.qolBasicNeeds, 0) / results.length;
+const avgQolPsych = results.reduce((sum, r) => sum + r.qolPsychological, 0) / results.length;
+const avgQolSocial = results.reduce((sum, r) => sum + r.qolSocial, 0) / results.length;
+const avgQolHealth = results.reduce((sum, r) => sum + r.qolHealth, 0) / results.length;
+const avgQolEnviron = results.reduce((sum, r) => sum + r.qolEnvironmental, 0) / results.length;
+
+console.log(`\n  QOL BY CATEGORY (0-1 scale):`);
+console.log(`    Basic Needs: ${avgQolBasic.toFixed(3)} (food, water, shelter, energy)`);
+console.log(`    Psychological: ${avgQolPsych.toFixed(3)} (autonomy, purpose, creativity)`);
+console.log(`    Social: ${avgQolSocial.toFixed(3)} (community, freedom, safety)`);
+console.log(`    Health: ${avgQolHealth.toFixed(3)} (healthcare, mental health, lifespan)`);
+console.log(`    Environmental: ${avgQolEnviron.toFixed(3)} (climate, biodiversity, pollution)`);
+
+const avgOverallQol = (avgQolBasic + avgQolPsych + avgQolSocial + avgQolHealth + avgQolEnviron) / 5;
+console.log(`\n    OVERALL QOL: ${avgOverallQol.toFixed(3)}`);
+
+// Identify weakest QoL categories
+const qolCategories = [
+  { name: 'Basic Needs', value: avgQolBasic },
+  { name: 'Psychological', value: avgQolPsych },
+  { name: 'Social', value: avgQolSocial },
+  { name: 'Health', value: avgQolHealth },
+  { name: 'Environmental', value: avgQolEnviron }
+];
+qolCategories.sort((a, b) => a.value - b.value);
+
+console.log(`\n  WEAKEST QOL CATEGORIES:`);
+console.log(`    1. ${qolCategories[0].name}: ${qolCategories[0].value.toFixed(3)} ⚠️`);
+console.log(`    2. ${qolCategories[1].name}: ${qolCategories[1].value.toFixed(3)}`);
 
 // ============================================================================
 console.log('\n\n' + '='.repeat(80));
