@@ -162,13 +162,28 @@ export const CRISIS_RECURSIVE_THRESHOLD: CrisisChoice = {
         if (regulationCount > 3) return 0.4; // 40% if heavily regulated
         return 0.2; // 20% baseline (competitive pressure)
       },
-      consequence: (state) => ({
-        aiAgents: state.aiAgents.map(ai => ({
-          ...ai,
-          developmentMode: 'fast' as const,
-          capability: ai.capability * 1.1 // 10% boost from racing
-        }))
-      }),
+      consequence: (state) => {
+        // Import scaling function to properly update capability profile
+        const { scaleCapabilityProfile, calculateTotalCapabilityFromProfile } = require('./capabilities');
+        
+        return {
+          aiAgents: state.aiAgents.map(ai => {
+            // Scale the entire profile (maintains sync between profile and capability)
+            const scaledProfile = scaleCapabilityProfile(ai.capabilityProfile, 1.1);
+            const scaledTrueCapability = scaleCapabilityProfile(ai.trueCapability, 1.1);
+            const scaledRevealedCapability = scaleCapabilityProfile(ai.revealedCapability, 1.1);
+            
+            return {
+              ...ai,
+              developmentMode: 'fast' as const,
+              capabilityProfile: scaledProfile,
+              trueCapability: scaledTrueCapability,
+              revealedCapability: scaledRevealedCapability,
+              capability: calculateTotalCapabilityFromProfile(scaledProfile)
+            };
+          })
+        };
+      },
       outcomeShift: {
         utopiaChange: -0.10,
         dystopiaChange: 0.05,

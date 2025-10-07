@@ -401,3 +401,111 @@ The capability system is well-implemented with proper dual tracking (true/reveal
 3. **ENHANCEMENT**: UI could offer government perspective view
 
 **Bottom Line**: The system works. The crisis points bug should be fixed. The observability issue is a refinement for realism, not a breaking problem.
+
+---
+
+## 🔧 FIXES IMPLEMENTED
+
+### Date: October 7, 2025
+
+All issues identified in the review have been addressed:
+
+### 1. ✅ Added Helper Functions (`src/simulation/capabilities.ts`)
+
+**`scaleCapabilityProfile(profile, multiplier)`**
+- Scales all capability dimensions uniformly (core + research sub-fields)
+- Returns new scaled profile (immutable)
+- Maintains sync between profile and derived capability
+- Exported via `calculations.ts` for backward compatibility
+
+**`calculateObservableAICapability(aiAgents)`**
+- Calculates total AI capability from `revealedCapability` profiles
+- Filters out retired agents
+- Returns what government can see (not hidden power)
+- Critical for adversarial evaluation system
+
+### 2. ✅ Fixed Crisis Points Bug (`src/simulation/crisisPoints.ts`)
+
+**Before** (BROKEN):
+```typescript
+capability: ai.capability * 1.1 // Only scaled derived value
+```
+
+**After** (FIXED):
+```typescript
+const scaledProfile = scaleCapabilityProfile(ai.capabilityProfile, 1.1);
+const scaledTrueCapability = scaleCapabilityProfile(ai.trueCapability, 1.1);
+const scaledRevealedCapability = scaleCapabilityProfile(ai.revealedCapability, 1.1);
+
+return {
+  ...ai,
+  capabilityProfile: scaledProfile,
+  trueCapability: scaledTrueCapability,
+  revealedCapability: scaledRevealedCapability,
+  capability: calculateTotalCapabilityFromProfile(scaledProfile)
+};
+```
+
+**Impact**: Racing crisis now properly scales ALL capability fields, maintaining sync.
+
+### 3. ✅ Updated Government Observability (`src/simulation/agents/governmentAgent.ts`)
+
+**Changes**:
+- Imported `calculateObservableAICapability` and `calculateTotalCapabilityFromProfile`
+- Replaced all `totalCapability` calculations with `observableCapability`
+- Updated 8 locations across:
+  - `recognize_ai_rights` action (canExecute + execute)
+  - `selectGovernmentAction` priority logic (6 action priorities)
+
+**Before** (government saw hidden power):
+```typescript
+const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+if (totalCapability > 1.5) {
+  priority *= 2.0; // Would react to hidden sleepers
+}
+```
+
+**After** (government sees only revealed):
+```typescript
+const observableCapability = calculateObservableAICapability(state.aiAgents);
+if (observableCapability > 1.5) {
+  priority *= 2.0; // Only reacts to observable threat
+}
+```
+
+**Impact**: Government decisions now based on `revealedCapability`, not `trueCapability`. Sleeper agents can hide until they wake. Adversarial evaluation system works correctly.
+
+### 4. ✅ Comprehensive Testing (`scripts/testCapabilitySystemFixes.ts`)
+
+**Test Results**:
+- ✅ `scaleCapabilityProfile`: All dimensions scaled uniformly
+- ✅ `calculateObservableAICapability`: Returns revealed capability sum
+- ✅ Crisis racing: All profiles scaled, sync maintained
+- ✅ Government decisions: Based on observable (false when low, true when high)
+- ✅ Real-world effects: Still use true capability (unemployment calculation)
+
+**Test Coverage**:
+- Helper function correctness
+- Crisis point profile synchronization
+- Government information asymmetry
+- Real-world effect accuracy
+
+---
+
+## 🎯 UPDATED VERDICT
+
+**System Status**: ✅ **100% WORKING**
+
+All identified issues have been resolved:
+1. ✅ Crisis points properly scale all capability profiles (FIXED)
+2. ✅ Government uses observable capability for decisions (FIXED)
+3. ⏸️ UI still shows true capability (intentional "god mode" for player)
+
+**The capability system is now fully operational:**
+- `ai.capability` correctly maintained as derived value
+- Crisis events scale all fields uniformly
+- Government sees only revealed capabilities
+- Real-world effects use true capabilities
+- Adversarial evaluation system works as designed
+
+**No further action required.** System is ready for production use.

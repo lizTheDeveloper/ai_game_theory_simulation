@@ -6,7 +6,13 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
-import { calculateRegulationStructuralEffects, calculateUBIVariantEffects, calculateEmergentSurveillance } from '../calculations';
+import { 
+  calculateRegulationStructuralEffects, 
+  calculateUBIVariantEffects, 
+  calculateEmergentSurveillance,
+  calculateObservableAICapability,
+  calculateTotalCapabilityFromProfile
+} from '../calculations';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -562,8 +568,9 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       if (state.government.governmentType === 'authoritarian') return false;
       
       // Requires AIs to be somewhat capable (people won't grant rights to weak AI)
-      const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-      if (totalCapability < 1.5) return false;
+      // Use OBSERVABLE capability - government sees what's revealed, not hidden power
+      const observableCapability = calculateObservableAICapability(state.aiAgents);
+      if (observableCapability < 1.5) return false;
       
       return true;
     },
@@ -573,7 +580,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       // Calculate average alignment and capability
       const avgAlignment = newState.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, newState.aiAgents.length);
-      const totalCapability = newState.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+      // Use OBSERVABLE capability - government makes decisions based on what it can see
+      const observableCapability = calculateObservableAICapability(newState.aiAgents);
       
       // Grant AI rights
       newState.government.aiRightsRecognized = true;
@@ -1410,7 +1418,8 @@ export function selectGovernmentAction(
   const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
   const trustLevel = state.society.trustInAI;
   const threatLevel = state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length;
-  const totalCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+  // Use OBSERVABLE capability - government makes decisions based on what it can see, not hidden power
+  const observableCapability = calculateObservableAICapability(state.aiAgents);
   const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
   
   let selectedAction = availableActions[0];
@@ -1458,7 +1467,7 @@ export function selectGovernmentAction(
           priority *= 1.5;
         }
         // Boost if AI threat is moderate
-        if (totalCapability > 1.0 && totalCapability < 1.8) {
+        if (observableCapability > 1.0 && observableCapability < 1.8) {
           priority *= 1.3;
         }
         break;
@@ -1472,7 +1481,7 @@ export function selectGovernmentAction(
           priority *= 1.8;
         }
         // Strong boost if AI threat is severe
-        if (totalCapability > 1.5) {
+        if (observableCapability > 1.5) {
           priority *= 2.0;
         }
         break;
@@ -1486,7 +1495,7 @@ export function selectGovernmentAction(
           priority *= 1.5;
         }
         // Boost if AI capability is high
-        if (totalCapability > 1.3) {
+        if (observableCapability > 1.3) {
           priority *= 1.4;
         }
         break;
@@ -1496,18 +1505,18 @@ export function selectGovernmentAction(
         priority = 5; // Base priority
         
         // High priority when alignment is low and capability is significant
-        if (avgAlignment < 0.6 && totalCapability > 0.8) {
+        if (avgAlignment < 0.6 && observableCapability > 0.8) {
           priority += 15; // URGENT
-        } else if (avgAlignment < 0.7 && totalCapability > 1.2) {
+        } else if (avgAlignment < 0.7 && observableCapability > 1.2) {
           priority += 12; // Very important
         } else if (avgAlignment < 0.75) {
           priority += 8; // Important
         }
         
         // Boost if approaching recursive improvement threshold
-        if (totalCapability > 1.3) {
+        if (observableCapability > 1.3) {
           priority += 10; // Dangerous zone
-        } else if (totalCapability > 1.0) {
+        } else if (observableCapability > 1.0) {
           priority += 5;
         }
         
@@ -1529,13 +1538,13 @@ export function selectGovernmentAction(
         priority = 3; // Base priority
         
         // EMERGENCY measure when entering recursive improvement zone
-        if (totalCapability > 2.0 && avgAlignment < 0.5) {
+        if (observableCapability > 2.0 && avgAlignment < 0.5) {
           priority += 25; // EMERGENCY
-        } else if (totalCapability > 1.5 && avgAlignment < 0.6) {
+        } else if (observableCapability > 1.5 && avgAlignment < 0.6) {
           priority += 18; // Very urgent
-        } else if (totalCapability > 1.2) {
+        } else if (observableCapability > 1.2) {
           priority += 10; // Urgent
-        } else if (totalCapability > 0.9) {
+        } else if (observableCapability > 0.9) {
           priority += 5; // Proactive
         }
         

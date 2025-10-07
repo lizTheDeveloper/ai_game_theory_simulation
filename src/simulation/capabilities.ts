@@ -249,3 +249,68 @@ export function getIndustryImpact(profile: AICapabilityProfile, industry: string
   }
 }
 
+/**
+ * Scale a capability profile by a multiplier (for crisis responses, racing, etc.)
+ * Maintains proper sync between profile and derived capability value
+ * 
+ * @param profile - The capability profile to scale
+ * @param multiplier - The scaling factor (e.g., 1.1 for 10% boost)
+ * @returns Scaled capability profile
+ */
+export function scaleCapabilityProfile(
+  profile: AICapabilityProfile, 
+  multiplier: number
+): AICapabilityProfile {
+  return {
+    physical: profile.physical * multiplier,
+    digital: profile.digital * multiplier,
+    cognitive: profile.cognitive * multiplier,
+    social: profile.social * multiplier,
+    economic: profile.economic * multiplier,
+    selfImprovement: profile.selfImprovement * multiplier,
+    research: {
+      biotech: {
+        drugDiscovery: profile.research.biotech.drugDiscovery * multiplier,
+        geneEditing: profile.research.biotech.geneEditing * multiplier,
+        syntheticBiology: profile.research.biotech.syntheticBiology * multiplier,
+        neuroscience: profile.research.biotech.neuroscience * multiplier
+      },
+      materials: {
+        nanotechnology: profile.research.materials.nanotechnology * multiplier,
+        quantumComputing: profile.research.materials.quantumComputing * multiplier,
+        energySystems: profile.research.materials.energySystems * multiplier
+      },
+      climate: {
+        modeling: profile.research.climate.modeling * multiplier,
+        intervention: profile.research.climate.intervention * multiplier,
+        mitigation: profile.research.climate.mitigation * multiplier
+      },
+      computerScience: {
+        algorithms: profile.research.computerScience.algorithms * multiplier,
+        security: profile.research.computerScience.security * multiplier,
+        architectures: profile.research.computerScience.architectures * multiplier
+      }
+    }
+  };
+}
+
+/**
+ * Calculate OBSERVABLE AI capability (what government can see)
+ * Uses revealedCapability instead of trueCapability
+ * 
+ * Government decisions should be based on this, not true capability.
+ * This is critical for the adversarial evaluation system to work correctly.
+ * 
+ * @param aiAgents - Array of AI agents
+ * @returns Total observable AI capability (sum of revealed capabilities)
+ */
+export function calculateObservableAICapability(
+  aiAgents: Array<{ revealedCapability: AICapabilityProfile; lifecycleState: string }>
+): number {
+  return aiAgents
+    .filter(ai => ai.lifecycleState !== 'retired')
+    .reduce((sum, ai) => 
+      sum + calculateTotalCapabilityFromProfile(ai.revealedCapability), 0
+    );
+}
+

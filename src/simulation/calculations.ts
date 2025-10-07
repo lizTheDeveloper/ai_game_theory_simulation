@@ -26,7 +26,9 @@ export {
   calculateResearchTotal,
   calculateTotalCapabilityFromProfile,
   updateDerivedCapabilities,
-  getIndustryImpact
+  getIndustryImpact,
+  scaleCapabilityProfile,
+  calculateObservableAICapability
 } from './capabilities';
 
 // Quality of Life module
