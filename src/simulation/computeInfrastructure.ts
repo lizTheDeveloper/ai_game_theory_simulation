@@ -319,6 +319,11 @@ export function allocateComputeWithinOrganization(
  * This replaces allocateComputeEqually from Phase 1
  */
 export function allocateComputeGlobally(state: GameState): void {
+  // Ensure computeAllocations is a Map (in case state was spread/copied)
+  if (!(state.computeInfrastructure.computeAllocations instanceof Map)) {
+    state.computeInfrastructure.computeAllocations = new Map();
+  }
+  
   // Clear previous allocations
   state.computeInfrastructure.computeAllocations.clear();
   

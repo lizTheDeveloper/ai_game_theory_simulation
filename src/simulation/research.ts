@@ -13,10 +13,37 @@ import { AIAgent, AICapabilityProfile, GameState, ResearchInvestments } from '@/
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 
 /**
+ * Phase 4: Compute scaling law
+ * 
+ * Implements Chinchilla/Kaplan scaling laws: capability growth ∝ compute^α
+ * where α ≈ 0.34 (empirical from GPT-3/4, PaLM, etc.)
+ * 
+ * 10x compute → 2.15x capability growth
+ * 100x compute → 4.6x capability growth
+ * 
+ * Reference compute: 30 PF (baseline for 1.0x multiplier)
+ */
+export function calculateComputeScalingMultiplier(allocatedCompute: number): number {
+  const REFERENCE_COMPUTE = 30; // PetaFLOPs baseline
+  const SCALING_EXPONENT = 0.34; // Chinchilla scaling law exponent
+  
+  if (allocatedCompute <= 0) {
+    return 0.1; // Minimal compute → minimal progress
+  }
+  
+  // Scaling law: (compute / reference)^α
+  const multiplier = Math.pow(allocatedCompute / REFERENCE_COMPUTE, SCALING_EXPONENT);
+  
+  // Cap at 10x to avoid runaway (even 1000 PF shouldn't give infinite speed)
+  return Math.min(multiplier, 10.0);
+}
+
+/**
  * Calculate research progress for a specific capability dimension
  * 
  * Progress depends on:
  * - Base growth rate (varies by dimension)
+ * - **PHASE 4: Allocated compute (scaling law)**
  * - Development mode (fast vs careful)
  * - Current capability level (diminishing returns)
  * - Government investment multiplier
@@ -30,16 +57,21 @@ export function calculateDimensionGrowth(
   governmentInvestment: number,
   aiCapabilityInDimension: number,
   regulationPenalty: number,
-  computeGovernancePenalty: number
+  computeGovernancePenalty: number,
+  allocatedCompute: number = 30 // Phase 4: Add compute parameter (default for backwards compat)
 ): number {
+  // Phase 4: Compute scaling multiplier (CRITICAL for fixing slow growth)
+  const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
+  
   // Base growth rates by dimension (per action, 4 actions/month)
+  // Phase 4: Reduced by 50% since compute multiplier will scale them up
   const baseGrowthRates = {
-    selfImprovement: 0.05,  // Fastest (highest risk!)
-    cognitive: 0.04,        // Fast (strategic advantage)
-    digital: 0.03,          // Medium-fast (infrastructure)
-    economic: 0.03,         // Medium-fast (market integration)
-    social: 0.02,           // Slow (real-world deployment)
-    physical: 0.02          // Slow (bottlenecked by hardware)
+    selfImprovement: 0.025,  // Fastest (highest risk!) - reduced from 0.05
+    cognitive: 0.020,        // Fast (strategic advantage) - reduced from 0.04
+    digital: 0.015,          // Medium-fast (infrastructure) - reduced from 0.03
+    economic: 0.015,         // Medium-fast (market integration) - reduced from 0.03
+    social: 0.010,           // Slow (real-world deployment) - reduced from 0.02
+    physical: 0.010          // Slow (bottlenecked by hardware) - reduced from 0.02
   };
   
   const baseGrowth = baseGrowthRates[dimension] * (developmentMode === 'fast' ? 1.0 : 0.6);
@@ -56,7 +88,8 @@ export function calculateDimensionGrowth(
   // Apply penalties
   const penaltyMultiplier = regulationPenalty * computeGovernancePenalty;
   
-  return baseGrowth * diminishingReturns * govMultiplier * aiMultiplier * penaltyMultiplier;
+  // Phase 4: Include compute multiplier in calculation
+  return baseGrowth * computeMultiplier * diminishingReturns * govMultiplier * aiMultiplier * penaltyMultiplier;
 }
 
 /**
@@ -66,6 +99,8 @@ export function calculateDimensionGrowth(
  * - Some are faster (algorithms, drug discovery)
  * - Some are riskier (nanotech, synthetic biology)
  * - Some are bottlenecked (climate intervention needs modeling first)
+ * 
+ * **Phase 4: Now scaled by allocated compute**
  */
 export function calculateResearchGrowth(
   domain: 'biotech' | 'materials' | 'climate' | 'computerScience',
@@ -75,8 +110,11 @@ export function calculateResearchGrowth(
   governmentInvestment: number,
   aiResearchCapability: number,
   alignment: number,
-  regulationPenalty: number
+  regulationPenalty: number,
+  allocatedCompute: number = 30 // Phase 4: Add compute parameter
 ): number {
+  // Phase 4: Compute scaling multiplier
+  const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
   // Base growth rates by domain and subfield
   const growthRates: Record<string, Record<string, number>> = {
     biotech: {
@@ -132,7 +170,8 @@ export function calculateResearchGrowth(
     }
   }
   
-  return baseGrowth * diminishingReturns * govMultiplier * aiMultiplier * 
+  // Phase 4: Include compute multiplier in calculation
+  return baseGrowth * computeMultiplier * diminishingReturns * govMultiplier * aiMultiplier * 
     riskMultiplier * prerequisiteGate * regulationPenalty;
 }
 
@@ -270,6 +309,9 @@ export function applyResearchGrowth(
   
   let growth = 0;
   
+  // Phase 4: Get AI's allocated compute (critical for research speed)
+  const allocatedCompute = ai.allocatedCompute || 30; // Fallback to reference if not set
+  
   if (selection.dimension) {
     // Advance core dimension
     const dim = selection.dimension;
@@ -280,7 +322,8 @@ export function applyResearchGrowth(
       govInvestment[dim],
       newProfile[dim], // AI's current capability in this dimension
       regulationPenalty,
-      computeGovernancePenalty
+      computeGovernancePenalty,
+      allocatedCompute // Phase 4: Pass allocated compute
     );
     
     newProfile[dim] = Math.min(10, newProfile[dim] + growth);
@@ -306,7 +349,8 @@ export function applyResearchGrowth(
       govResearchInvestment,
       aiResearchCapability,
       ai.alignment,
-      regulationPenalty
+      regulationPenalty,
+      allocatedCompute // Phase 4: Pass allocated compute
     );
     
     newProfile.research[domain][subfield] = Math.min(5, currentValue + growth);

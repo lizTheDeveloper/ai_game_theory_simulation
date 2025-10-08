@@ -154,6 +154,11 @@ export class SimulationEngine {
     let newState = { ...state };
     const events: GameEvent[] = [];
     
+    // Phase 4: Allocate compute to all AIs at start of month
+    // This must happen before AI actions so they have compute for research
+    const { allocateComputeGlobally } = require('./computeInfrastructure');
+    allocateComputeGlobally(newState);
+    
     // 0a. Update AI population lifecycle (new AIs, retirements, progression)
     const { updateAIPopulation } = require('./lifecycle');
     updateAIPopulation(newState);
