@@ -556,6 +556,91 @@ export interface GoldenAgeState {
   entryReason: string;          // Why did we enter Golden Age?
 }
 
+/**
+ * Environmental Accumulation State (Phase 2: Environmental Accumulation)
+ * 
+ * Tracks environmental costs that accumulate silently from production/growth,
+ * then manifest as crises when thresholds are crossed.
+ * 
+ * High production can maintain high QoL while secretly depleting reserves.
+ * This creates the "Golden Age illusion" - prosperity masking accumulating debt.
+ */
+export interface EnvironmentalAccumulation {
+  // Resource depletion (starts at 1.0, depletes toward 0)
+  resourceReserves: number;     // [0, 1] Rare materials, minerals, etc.
+  
+  // Pollution accumulation (starts at 0, accumulates toward 1)
+  pollutionLevel: number;       // [0, 1] Toxic waste, contamination
+  
+  // Climate degradation (starts at 1.0, degrades toward 0)
+  climateStability: number;     // [0, 1] Weather patterns, temperature stability
+  
+  // Biodiversity loss (starts at 1.0, degrades toward 0)
+  biodiversityIndex: number;    // [0, 1] Ecosystem health, species diversity
+  
+  // Crisis tracking
+  resourceCrisisActive: boolean;    // Has resource crisis been triggered?
+  pollutionCrisisActive: boolean;   // Has pollution crisis been triggered?
+  climateCrisisActive: boolean;     // Has climate crisis been triggered?
+  ecosystemCrisisActive: boolean;   // Has ecosystem crisis been triggered?
+}
+
+/**
+ * Social Cohesion & Meaning Crisis State (Phase 3: Social Accumulation)
+ * 
+ * Tracks psychological and social costs from rapid automation and economic transition.
+ * These accumulate slowly, then manifest as mental health collapse or social unrest.
+ * 
+ * High QoL can mask eroding social fabric and meaning crisis.
+ * UBI provides material security but doesn't solve work-identity collapse or institutional lag.
+ */
+export interface SocialAccumulation {
+  // Meaning crisis (starts low, rises with automation)
+  meaningCrisisLevel: number;        // [0, 1] Work-identity collapse, existential despair
+  
+  // Institutional legitimacy (starts high, erodes without adaptation)
+  institutionalLegitimacy: number;   // [0, 1] Government effectiveness, public trust
+  
+  // Social cohesion (starts moderate, depletes with inequality/isolation)
+  socialCohesion: number;            // [0, 1] Community bonds, mutual aid, solidarity
+  
+  // Cultural adaptation (starts low, improves slowly)
+  culturalAdaptation: number;        // [0, 1] New meaning frameworks, post-work culture
+  
+  // Crisis tracking
+  meaningCollapseActive: boolean;        // Has meaning crisis triggered collapse?
+  institutionalFailureActive: boolean;   // Has government failure occurred?
+  socialUnrestActive: boolean;           // Has widespread unrest erupted?
+}
+
+/**
+ * Technological Risk State (Phase 4: Technological Risk Accumulation)
+ * 
+ * Tracks risks from fast AI capability growth and technology deployment.
+ * These compound silently, then suddenly manifest as catastrophic events.
+ * 
+ * Golden Age prosperity can create complacency, reducing vigilance while risks accumulate.
+ * Fast capability growth without proportional safety research creates "safety debt".
+ */
+export interface TechnologicalRisk {
+  // Misalignment risk (starts low, rises with capability growth)
+  misalignmentRisk: number;         // [0, 1] Probability of catastrophic AI action
+  
+  // Safety debt (accumulates when capability > safety research)
+  safetyDebt: number;               // [0, 1] Gap between capability and safety understanding
+  
+  // Concentration risk (rises with market consolidation)
+  concentrationRisk: number;        // [0, 1] Single point of failure risk
+  
+  // Complacency (rises in Golden Age, reduces vigilance)
+  complacencyLevel: number;         // [0, 1] "Everything is fine" blindness
+  
+  // Crisis tracking
+  controlLossActive: boolean;       // Has AI control been lost?
+  corporateDystopiaActive: boolean; // Has corporate feudalism emerged?
+  complacencyCrisisActive: boolean; // Has safety lapse occurred?
+}
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -583,6 +668,9 @@ export interface GameState {
   endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
   catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
   goldenAgeState: GoldenAgeState; // Phase: Golden Age detection (immediate prosperity tracking)
+  environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
+  socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
+  technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
   
   // Configuration
   config: ConfigurationSettings;

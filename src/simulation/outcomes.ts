@@ -357,9 +357,100 @@ export function determineActualOutcome(
     };
   }
   
-  // TODO (Phase 5): Add Utopia declaration once accumulation systems implemented
-  // Requirements: Golden Age + low environmental debt + low social fragmentation + low tech risk
-  // For now, Golden Age continues indefinitely (will see what emerges)
+  // Phase 6: Collapse Pathways from Golden Age
+  // Check if Golden Age has collapsed due to accumulation crises
+  // This happens BEFORE Utopia check - a failed Golden Age blocks Utopia
+  
+  if (state.goldenAgeState.active) {
+    // Import crisis checkers
+    const { hasEnvironmentalCrisis } = require('./environmental');
+    const { hasSocialCrisis } = require('./socialCohesion');
+    const { hasTechnologicalCrisis } = require('./technologicalRisk');
+    
+    const envCrisis = hasEnvironmentalCrisis(state.environmentalAccumulation);
+    const socCrisis = hasSocialCrisis(state.socialAccumulation);
+    const techCrisis = hasTechnologicalCrisis(state.technologicalRisk);
+    
+    // MULTIPLE CRISES → Collapse (potential extinction pathway)
+    const crisisCount = [envCrisis, socCrisis, techCrisis].filter(Boolean).length;
+    if (crisisCount >= 2 && qol < 0.4) {
+      return {
+        outcome: 'active', // Let extinction system handle it
+        reason: `Golden Age collapsed: Multiple crises (environmental:${envCrisis}, social:${socCrisis}, tech:${techCrisis}) + QoL crashed`,
+        confidence: 0.0
+      };
+    }
+    
+    // SOCIAL CRISIS + INSTITUTIONAL FAILURE → Dystopia
+    if (state.socialAccumulation.institutionalFailureActive && 
+        (state.socialAccumulation.socialUnrestActive || state.socialAccumulation.meaningCollapseActive)) {
+      return {
+        outcome: 'dystopia',
+        reason: 'Golden Age collapsed into dystopia: Institutional failure + social breakdown led to authoritarian takeover',
+        confidence: 0.80
+      };
+    }
+    
+    // CORPORATE DYSTOPIA PATH
+    if (state.technologicalRisk.corporateDystopiaActive && state.globalMetrics.wealthDistribution < 0.3) {
+      return {
+        outcome: 'dystopia',
+        reason: 'Golden Age transformed into corporate dystopia: AI-powered feudalism with extreme inequality',
+        confidence: 0.75
+      };
+    }
+  }
+  
+  // Phase 5: Utopia Sustainability Check
+  // Golden Age + low accumulation across all systems = Utopia
+  // This requires sustained prosperity WITHOUT hidden problems accumulating
+  
+  if (state.goldenAgeState.active && state.goldenAgeState.duration >= 12) {
+    // Require at least 12 months of sustained Golden Age
+    
+    // Import sustainability functions (already exported from calculations.ts)
+    const { getEnvironmentalSustainability, hasEnvironmentalCrisis } = require('./environmental');
+    const { getSocialSustainability, hasSocialCrisis } = require('./socialCohesion');
+    const { getTechnologicalSafety, hasTechnologicalCrisis } = require('./technologicalRisk');
+    
+    const envSustainability = getEnvironmentalSustainability(state.environmentalAccumulation);
+    const socialSustainability = getSocialSustainability(state.socialAccumulation);
+    const techSafety = getTechnologicalSafety(state.technologicalRisk);
+    
+    const hasEnvCrisis = hasEnvironmentalCrisis(state.environmentalAccumulation);
+    const hasSocCrisis = hasSocialCrisis(state.socialAccumulation);
+    const hasTechCrisis = hasTechnologicalCrisis(state.technologicalRisk);
+    
+    // Overall sustainability (weighted average)
+    const overallSustainability = (
+      envSustainability * 0.35 +
+      socialSustainability * 0.35 +
+      techSafety * 0.30
+    );
+    
+    // Utopia requires high sustainability AND no active crises
+    const isUtopia = overallSustainability > 0.65 && !hasEnvCrisis && !hasSocCrisis && !hasTechCrisis;
+    
+    if (isUtopia) {
+      return {
+        outcome: 'utopia',
+        reason: `Sustained Golden Age with environmental, social, and technological sustainability (${state.goldenAgeState.duration} months)`,
+        confidence: 0.85 + Math.min(0.1, overallSustainability - 0.65)
+      };
+    } else {
+      // Golden Age continues, but not yet Utopia
+      const blockingFactors = [];
+      if (envSustainability < 0.65 || hasEnvCrisis) blockingFactors.push('environmental');
+      if (socialSustainability < 0.65 || hasSocCrisis) blockingFactors.push('social');
+      if (techSafety < 0.65 || hasTechCrisis) blockingFactors.push('technological');
+      
+      return {
+        outcome: 'active',
+        reason: `Golden Age ongoing (${state.goldenAgeState.duration} months) - sustainability issues: ${blockingFactors.join(', ')}`,
+        confidence: 0.0
+      };
+    }
+  }
   
   // Still in play - no outcome locked in yet
   return {

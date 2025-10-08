@@ -13,6 +13,9 @@ import { initializeEcosystem } from './technologyDiffusion';
 import { initializeComputeInfrastructure, initializeAIComputeFields } from './computeInfrastructure';
 import { initializeOrganizations, linkDataCentersToOrganizations, linkAIModelsToOrganizations } from './organizations';
 import { initializeCatastrophicScenarios } from './catastrophicScenarios';
+import { initializeEnvironmentalAccumulation } from './environmental';
+import { initializeSocialAccumulation } from './socialCohesion';
+import { initializeTechnologicalRisk } from './technologicalRisk';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -256,6 +259,15 @@ export function createDefaultInitialState(): GameState {
       duration: 0,
       entryReason: ''
     },
+    
+    // Phase 2: Environmental Accumulation
+    environmentalAccumulation: initializeEnvironmentalAccumulation(),
+    
+    // Phase 3: Social Cohesion & Meaning Crisis
+    socialAccumulation: initializeSocialAccumulation(),
+    
+    // Phase 4: Technological Risk Accumulation
+    technologicalRisk: initializeTechnologicalRisk(),
     
     eventLog: [],
     technologyTree: [],

@@ -1,0 +1,331 @@
+/**
+ * Social Cohesion & Meaning Crisis System (Phase 3: Golden Age & Accumulation Systems)
+ * 
+ * Tracks psychological and social costs from rapid automation and economic transition.
+ * These accumulate slowly, then manifest as mental health collapse or social unrest.
+ * 
+ * Key mechanisms:
+ * - Meaning Crisis: Automation → work-identity collapse → existential despair
+ * - Institutional Erosion: Tech pace > government adaptation → legitimacy declines
+ * - Social Fragmentation: Inequality + isolation → community bonds break
+ * - Cultural Adaptation: Slow development of new meaning frameworks
+ * 
+ * Critical insight: UBI solves material poverty but NOT meaning crisis or institutional lag.
+ * High QoL can mask eroding social fabric until sudden collapse.
+ */
+
+import { GameState, SocialAccumulation } from '@/types/game';
+
+/**
+ * Initialize social accumulation state
+ * 
+ * Starting values represent 2025 baseline:
+ * - Low meaning crisis (work still central to identity)
+ * - Moderate institutional legitimacy (some trust erosion)
+ * - Moderate social cohesion (atomization already occurring)
+ * - Low cultural adaptation (no post-work frameworks yet)
+ */
+export function initializeSocialAccumulation(): SocialAccumulation {
+  return {
+    meaningCrisisLevel: 0.15,           // Baseline existential anxiety
+    institutionalLegitimacy: 0.65,      // Moderate trust in government
+    socialCohesion: 0.60,                // Some atomization already
+    culturalAdaptation: 0.10,            // Minimal post-work culture
+    meaningCollapseActive: false,
+    institutionalFailureActive: false,
+    socialUnrestActive: false
+  };
+}
+
+/**
+ * Update social accumulation based on economic transitions
+ * 
+ * Called each month to track psychological and social debt accumulation.
+ */
+export function updateSocialAccumulation(
+  state: GameState
+): void {
+  const social = state.socialAccumulation;
+  const economicStage = state.globalMetrics.economicTransitionStage;
+  const unemployment = state.society.unemploymentLevel;
+  const wealthDistribution = state.globalMetrics.wealthDistribution;
+  const trustInAI = state.society.trustInAI;
+  const governmentLegitimacy = state.government.legitimacy;
+  
+  // Check for mitigating technologies/policies
+  const hasUBI = economicStage >= 3.0 || state.government.structuralChoices.ubiVariant !== 'none';
+  const hasEducationPrograms = state.government.researchInvestments.general > 5.0;
+  const hasCommunityPrograms = state.globalMetrics.socialStability > 0.7;
+  
+  // === MEANING CRISIS ACCUMULATION ===
+  // Automation destroys work-based identity
+  let meaningCrisisRate = unemployment * 0.010; // 1% per month at full unemployment
+  
+  // Rapid job loss spikes meaning crisis
+  const previousUnemployment = Math.max(0.1, unemployment - 0.05); // Approximate
+  const jobLossRate = unemployment - previousUnemployment;
+  meaningCrisisRate += Math.max(0, jobLossRate) * 0.15; // Rapid transitions hurt
+  
+  // Stage 2 (Mass Unemployment) is peak meaning crisis
+  if (economicStage >= 2.0 && economicStage < 3.5) {
+    meaningCrisisRate += 0.012; // Crisis period
+  }
+  
+  // AI replacing cognitive work hits harder (identity threat)
+  const avgAICapability = state.aiAgents.length > 0
+    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
+    : 0;
+  meaningCrisisRate += avgAICapability * 0.004;
+  
+  // Mitigation from policies
+  if (hasUBI) {
+    meaningCrisisRate *= 0.7; // 30% reduction (provides security, not meaning)
+  }
+  if (hasEducationPrograms) {
+    meaningCrisisRate *= 0.8; // 20% reduction (retraining helps somewhat)
+  }
+  if (social.culturalAdaptation > 0.5) {
+    meaningCrisisRate *= 0.5; // 50% reduction (new frameworks emerging)
+  }
+  
+  // Apply meaning crisis accumulation
+  social.meaningCrisisLevel = Math.max(0, Math.min(1, social.meaningCrisisLevel + meaningCrisisRate));
+  
+  // === INSTITUTIONAL LEGITIMACY EROSION ===
+  // Governments lag behind technological change
+  const techPace = avgAICapability + economicStage * 0.2;
+  let legitimacyErosionRate = techPace * 0.006; // Faster tech = more lag
+  
+  // Failed policies damage legitimacy
+  if (governmentLegitimacy < 0.5) {
+    legitimacyErosionRate += 0.008; // Legitimacy crisis accelerates
+  }
+  
+  // Low trust compounds erosion
+  if (trustInAI < 0.4) {
+    legitimacyErosionRate += 0.006; // People lose faith in institutions
+  }
+  
+  // High surveillance damages legitimacy (authoritarian perception)
+  const surveillanceLevel = state.government.structuralChoices.surveillanceLevel;
+  legitimacyErosionRate += surveillanceLevel * 0.008;
+  
+  // Mitigation from effective governance
+  const effectiveGovernance = governmentLegitimacy * (1 - surveillanceLevel);
+  if (effectiveGovernance > 0.6) {
+    legitimacyErosionRate *= 0.5; // 50% reduction (good governance maintains trust)
+  }
+  
+  // Successful policy adaptation improves legitimacy
+  let legitimacyRecoveryRate = 0;
+  if (hasUBI && unemployment > 0.3) {
+    legitimacyRecoveryRate += 0.005; // UBI helps in crisis
+  }
+  if (state.government.activeRegulations.length > 0 && state.government.activeRegulations.length < 8) {
+    legitimacyRecoveryRate += 0.003; // Balanced regulation works
+  }
+  
+  // Apply legitimacy change
+  social.institutionalLegitimacy = Math.max(0, Math.min(1, 
+    social.institutionalLegitimacy - legitimacyErosionRate + legitimacyRecoveryRate
+  ));
+  
+  // === SOCIAL COHESION DEPLETION ===
+  // Inequality erodes solidarity
+  let cohesionLossRate = (1 - wealthDistribution) * 0.008; // High inequality = rapid loss
+  
+  // Unemployment creates resentment
+  cohesionLossRate += unemployment * 0.006;
+  
+  // Isolation from automation (remote work, AI services)
+  if (avgAICapability > 0.5) {
+    cohesionLossRate += 0.005; // AI mediation reduces human connection
+  }
+  
+  // Meaning crisis spreads atomization
+  cohesionLossRate += social.meaningCrisisLevel * 0.006;
+  
+  // Institutional failure erodes trust in collective action
+  if (social.institutionalLegitimacy < 0.4) {
+    cohesionLossRate += 0.008; // "Why bother?" mindset
+  }
+  
+  // Mitigation from community programs
+  let cohesionRecoveryRate = 0;
+  if (hasCommunityPrograms) {
+    cohesionRecoveryRate += 0.008; // Active community building
+  }
+  if (hasUBI) {
+    cohesionRecoveryRate += 0.004; // Reduced competition, more cooperation
+  }
+  if (state.globalMetrics.qualityOfLife > 0.75) {
+    cohesionRecoveryRate += 0.005; // Abundance reduces zero-sum mindset
+  }
+  
+  // Apply cohesion change
+  social.socialCohesion = Math.max(0, Math.min(1,
+    social.socialCohesion - cohesionLossRate + cohesionRecoveryRate
+  ));
+  
+  // === CULTURAL ADAPTATION (SLOW IMPROVEMENT) ===
+  // Base adaptation rate (very slow - generational change)
+  let adaptationRate = 0.002; // 0.2% per month (years to shift culture)
+  
+  // Stage 3+ accelerates adaptation (necessity)
+  if (economicStage >= 3.0) {
+    adaptationRate += 0.008; // UBI era forces cultural shift
+  }
+  
+  // High unemployment pushes adaptation
+  if (unemployment > 0.4) {
+    adaptationRate += 0.006; // Crisis forces change
+  }
+  
+  // Education and community programs help
+  if (hasEducationPrograms) {
+    adaptationRate += 0.005;
+  }
+  if (hasCommunityPrograms) {
+    adaptationRate += 0.004;
+  }
+  
+  // Already-adapted people accelerate others (exponential)
+  if (social.culturalAdaptation > 0.3) {
+    adaptationRate *= (1 + social.culturalAdaptation); // Positive feedback
+  }
+  
+  // Institutional failure slows adaptation (no coordination)
+  if (social.institutionalLegitimacy < 0.3) {
+    adaptationRate *= 0.5; // Hard to coordinate without institutions
+  }
+  
+  // Apply cultural adaptation
+  social.culturalAdaptation = Math.max(0, Math.min(1,
+    social.culturalAdaptation + adaptationRate
+  ));
+  
+  // === CRISIS TRIGGERS ===
+  checkSocialCrises(state);
+}
+
+/**
+ * Check if social accumulation has crossed crisis thresholds
+ * 
+ * Crises trigger QoL impacts, social unrest, and potential dystopia transitions.
+ */
+function checkSocialCrises(state: GameState): void {
+  const social = state.socialAccumulation;
+  const qol = state.qualityOfLifeSystems;
+  
+  // MEANING COLLAPSE: Existential despair exceeds 60%
+  if (social.meaningCrisisLevel > 0.6 && !social.meaningCollapseActive) {
+    social.meaningCollapseActive = true;
+    console.log(`\n😔 MEANING COLLAPSE TRIGGERED (Month ${state.currentMonth})`);
+    console.log(`   Meaning Crisis Level: ${(social.meaningCrisisLevel * 100).toFixed(1)}%`);
+    console.log(`   Impact: Mental health crisis, suicide epidemic, despair\n`);
+    
+    // Severe QoL impacts
+    qol.mentalHealth *= 0.65; // 35% drop
+    qol.meaningAndPurpose *= 0.4; // 60% drop
+    qol.socialConnection *= 0.7; // 30% drop (isolation spirals)
+    state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.35); // Blame AI
+    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.35);
+  }
+  
+  // INSTITUTIONAL FAILURE: Government legitimacy below 30%
+  if (social.institutionalLegitimacy < 0.3 && !social.institutionalFailureActive) {
+    social.institutionalFailureActive = true;
+    console.log(`\n🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month ${state.currentMonth})`);
+    console.log(`   Institutional Legitimacy: ${(social.institutionalLegitimacy * 100).toFixed(1)}%`);
+    console.log(`   Impact: Governance collapse, potential authoritarian takeover\n`);
+    
+    // Critical QoL impacts
+    qol.politicalFreedom *= 0.6; // 40% drop (power vacuum)
+    qol.autonomy *= 0.7; // 30% drop
+    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.6);
+    state.government.legitimacy = Math.min(0.25, state.government.legitimacy); // Floor legitimacy
+    
+    // High risk of dystopia transition
+    // Government may become authoritarian to restore order
+    if (Math.random() < 0.4) {
+      state.government.governmentType = 'authoritarian';
+      console.log(`   🚨 Authoritarian takeover in response to chaos\n`);
+    }
+  }
+  
+  // SOCIAL UNREST: Cohesion below 30%
+  if (social.socialCohesion < 0.3 && !social.socialUnrestActive) {
+    social.socialUnrestActive = true;
+    console.log(`\n🔥 SOCIAL UNREST TRIGGERED (Month ${state.currentMonth})`);
+    console.log(`   Social Cohesion: ${(social.socialCohesion * 100).toFixed(1)}%`);
+    console.log(`   Impact: Riots, community breakdown, potential civil conflict\n`);
+    
+    // Severe QoL impacts
+    qol.physicalSafety *= 0.5; // 50% drop (violence)
+    qol.communityStrength *= 0.4; // 60% drop
+    qol.politicalFreedom *= 0.7; // 30% drop (crackdowns)
+    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.5);
+    
+    // Government responds with control
+    state.government.controlDesire = Math.min(1, state.government.controlDesire + 0.3);
+    state.government.structuralChoices.surveillanceLevel = Math.min(1, 
+      state.government.structuralChoices.surveillanceLevel + 0.2
+    );
+  }
+  
+  // === ONGOING CRISIS IMPACTS ===
+  // Once triggered, crises continue to degrade society
+  
+  if (social.meaningCollapseActive) {
+    // Ongoing despair
+    qol.mentalHealth = Math.max(0, qol.mentalHealth - 0.012);
+    qol.meaningAndPurpose = Math.max(0, qol.meaningAndPurpose - 0.015);
+  }
+  
+  if (social.institutionalFailureActive) {
+    // Ongoing governance failure
+    qol.politicalFreedom = Math.max(0, qol.politicalFreedom - 0.010);
+    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.012);
+  }
+  
+  if (social.socialUnrestActive) {
+    // Ongoing violence and breakdown
+    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.015);
+    qol.communityStrength = Math.max(0, qol.communityStrength - 0.010);
+  }
+}
+
+/**
+ * Get social sustainability score (0-1)
+ * 
+ * Used by Golden Age → Utopia transition logic.
+ * Returns how socially stable and adapted the society is.
+ */
+export function getSocialSustainability(social: SocialAccumulation): number {
+  // Inverse meaning crisis (low crisis = good)
+  const meaningScore = 1 - social.meaningCrisisLevel;
+  
+  // Institutional legitimacy (high = good)
+  const institutionScore = social.institutionalLegitimacy;
+  
+  // Social cohesion (high = good)
+  const cohesionScore = social.socialCohesion;
+  
+  // Cultural adaptation (high = good)
+  const adaptationScore = social.culturalAdaptation;
+  
+  // Weighted average (meaning and cohesion most critical)
+  return (meaningScore * 0.3 + institutionScore * 0.25 + cohesionScore * 0.3 + adaptationScore * 0.15);
+}
+
+/**
+ * Check if any social crisis would block Utopia
+ * 
+ * Utopia requires social stability and cultural adaptation, not just material prosperity.
+ */
+export function hasSocialCrisis(social: SocialAccumulation): boolean {
+  return social.meaningCollapseActive || 
+         social.institutionalFailureActive || 
+         social.socialUnrestActive;
+}
+

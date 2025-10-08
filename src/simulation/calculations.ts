@@ -67,6 +67,30 @@ export {
   checkGoldenAgeConditions  // Phase: Golden Age & Accumulation Systems
 } from './outcomes';
 
+// Environmental Accumulation module (Phase 2)
+export {
+  initializeEnvironmentalAccumulation,
+  updateEnvironmentalAccumulation,
+  getEnvironmentalSustainability,
+  hasEnvironmentalCrisis
+} from './environmental';
+
+// Social Cohesion module (Phase 3)
+export {
+  initializeSocialAccumulation,
+  updateSocialAccumulation,
+  getSocialSustainability,
+  hasSocialCrisis
+} from './socialCohesion';
+
+// Technological Risk module (Phase 4)
+export {
+  initializeTechnologicalRisk,
+  updateTechnologicalRisk,
+  getTechnologicalSafety,
+  hasTechnologicalCrisis
+} from './technologicalRisk';
+
 // ============================================================================
 // Core utilities (remain in this file)
 // ============================================================================

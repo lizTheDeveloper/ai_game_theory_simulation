@@ -18,7 +18,10 @@ import {
   calculateAverageAlignment,
   detectCrisis,
   determineActualOutcome,
-  updateGoldenAgeState  // Phase: Golden Age & Accumulation Systems
+  updateGoldenAgeState,  // Phase: Golden Age & Accumulation Systems
+  updateEnvironmentalAccumulation,  // Phase 2: Environmental Accumulation
+  updateSocialAccumulation,  // Phase 3: Social Cohesion
+  updateTechnologicalRisk  // Phase 4: Technological Risk
 } from './calculations';
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
@@ -477,6 +480,18 @@ export class SimulationEngine {
       // Phase: Golden Age & Accumulation Systems
       // Update Golden Age state each month (tracks entry/exit/duration)
       updateGoldenAgeState(state, month);
+      
+      // Phase 2: Environmental Accumulation
+      // Track environmental debt from production/growth
+      updateEnvironmentalAccumulation(state);
+      
+      // Phase 3: Social Cohesion & Meaning Crisis
+      // Track psychological and social costs from automation
+      updateSocialAccumulation(state);
+      
+      // Phase 4: Technological Risk Accumulation
+      // Track AI safety debt and complacency
+      updateTechnologicalRisk(state);
       
       // Check for ACTUAL outcomes (not probabilities)
       if (checkActualOutcomes) {
