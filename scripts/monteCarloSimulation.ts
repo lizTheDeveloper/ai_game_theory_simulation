@@ -248,6 +248,9 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'none' });
   const initialState = createDefaultInitialState();
   
+  // Set run label for logging
+  initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS}`;
+  
   const runResult = engine.run(initialState, { 
     maxMonths: MAX_MONTHS, 
     checkActualOutcomes: true 

@@ -354,6 +354,7 @@ export interface ConfigurationSettings {
   socialAdaptationRate: number; // [0.1, 2.0] speed multiplier
   aiCoordinationMultiplier: number; // [0.8, 3.0] coordination efficiency
   economicTransitionRate: number; // [0.3, 3.0] evolution speed
+  runLabel?: string; // Optional label for logs (e.g., "Run 1/10" in Monte Carlo)
 }
 
 /**

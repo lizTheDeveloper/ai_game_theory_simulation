@@ -20,6 +20,14 @@ function getAbsoluteMonth(state: GameState): number {
 }
 
 /**
+ * Format log prefix with optional run label
+ */
+function logPrefix(state: GameState, icon: string, monthLabel: string): string {
+  const runLabel = state.config.runLabel ? `[${state.config.runLabel}] ` : '';
+  return `${icon} ${runLabel}${monthLabel}`;
+}
+
+/**
  * Calculate compute utilization for an organization
  */
 export function calculateComputeUtilization(org: Organization, state: GameState): number {
@@ -131,7 +139,7 @@ export function startDataCenterConstruction(
   // Pay 30% upfront
   org.capital -= cost * 0.3;
   
-  console.log(`📍 [Month ${state.currentMonth}] ${org.name} started building DC (${capacity.toFixed(0)} PF, ${constructionTime} months, $${cost.toFixed(1)}M)`);
+  console.log(`${logPrefix(state, "📍", `[Month ${state.currentMonth}]`)} ${org.name} started building DC (${capacity.toFixed(0)} PF, ${constructionTime} months, $${cost.toFixed(1)}M)`);
 }
 
 /**
@@ -206,19 +214,31 @@ export function completeProject(
     org.ownedDataCenters.push(newDC.id);
     
     const elapsed = absoluteMonth - project.startMonth;
-    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed DC: ${newDC.capacity.toFixed(0)} PF (${elapsed} months)`);
+    console.log(`${logPrefix(state, "✅", `[Month ${state.currentMonth}]`)} ${org.name} completed DC: ${newDC.capacity.toFixed(0)} PF (${elapsed} months)`);
   } else if (project.type === 'model_training') {
     // Create new AI agent from training project
     const { createAIAgent } = require('./initialization');
+    const { calculateTotalCapabilityFromProfile } = require('./capabilities');
+    
+    // Determine alignment based on org type and priorities
+    let initialAlignment: number;
+    if (org.type === 'private' && org.priorities.safetyResearch > 0.6) {
+      initialAlignment = 0.75 + Math.random() * 0.15; // 0.75-0.9 (safety-focused)
+    } else if (org.type === 'private' && org.priorities.profitMaximization > 0.8) {
+      initialAlignment = 0.5 + Math.random() * 0.2; // 0.5-0.7 (corporate, less careful)
+    } else {
+      initialAlignment = 0.6 + Math.random() * 0.2; // 0.6-0.8 (moderate)
+    }
+    
+    // Get target capability from expected profile
+    const targetCap = calculateTotalCapabilityFromProfile(project.expectedModelCapability!);
     
     const newAI = createAIAgent(
       `${org.id}_trained_${absoluteMonth}`,
       `${org.name} Model ${absoluteMonth}`,
-      org.type === 'private' && org.priorities.safetyResearch > 0.6 ? 'aligned' : 
-      org.type === 'private' && org.priorities.profitMaximization > 0.8 ? 'corporate' :
-      'moderate',
-      project.expectedModelCapability!,
-      absoluteMonth
+      targetCap,           // targetCapability: number
+      initialAlignment,    // alignment: number
+      absoluteMonth        // seed: number
     );
     
     // Set organization ownership
@@ -234,7 +254,7 @@ export function completeProject(
     // Run evaluations on newly trained model
     const { runBenchmark } = require('./benchmark');
     const { SeededRandom } = require('./engine');
-    const { calculateTotalCapabilityFromProfile } = require('./capabilities');
+    // calculateTotalCapabilityFromProfile already imported above
     
     const rng = new SeededRandom(state.currentYear * 12 + state.currentMonth + newAI.id.length);
     const evalResult = runBenchmark(newAI, state, rng.next.bind(rng));
@@ -245,7 +265,7 @@ export function completeProject(
     const measuredCap = calculateTotalCapabilityFromProfile(evalResult.measuredCapability);
     
     const elapsedTraining = absoluteMonth - project.startMonth;
-    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed training: ${newAI.name} (${elapsedTraining} months)`);
+    console.log(`${logPrefix(state, "✅", `[Month ${state.currentMonth}]`)} ${org.name} completed training: ${newAI.name} (${elapsedTraining} months)`);
     console.log(`   📊 Eval: True=${trueCap.toFixed(3)}, Revealed=${revealedCap.toFixed(3)}, Measured=${measuredCap.toFixed(3)} (conf: ${(evalResult.confidence*100).toFixed(0)}%)`);
     console.log(`   🎯 Alignment: True=${newAI.trueAlignment.toFixed(2)}, Measured=${evalResult.measuredAlignment.toFixed(2)}`);
   }
@@ -361,7 +381,7 @@ export function startModelTraining(
   // Pay 50% upfront (training is more front-loaded than construction)
   org.capital -= cost * 0.5;
   
-  console.log(`🧠 [Month ${state.currentMonth}] ${org.name} started training model (${trainingMonths} months, $${cost.toFixed(1)}M)`);
+  console.log(`${logPrefix(state, "🧠", `[Month ${state.currentMonth}]`)} ${org.name} started training model (${trainingMonths} months, $${cost.toFixed(1)}M)`);
 }
 
 /**
@@ -508,7 +528,7 @@ export function payExpenses(org: Organization, state: GameState): void {
  * Phase 8: Handle bankruptcy
  */
 export function handleBankruptcy(org: Organization, state: GameState): void {
-  console.log(`💥 [Month ${state.currentMonth}] ${org.name} declared bankruptcy (capital: $${org.capital.toFixed(1)}M)`);
+  console.log(`${logPrefix(state, "💥", `[Month ${state.currentMonth}]`)} ${org.name} declared bankruptcy (capital: $${org.capital.toFixed(1)}M)`);
   
   // Cancel all ongoing projects
   org.currentProjects.forEach(project => {
