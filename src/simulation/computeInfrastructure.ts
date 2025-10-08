@@ -180,16 +180,23 @@ export function initializeAIComputeFields(ai: any): void {
 
 /**
  * Phase 3: Allocate compute within an organization based on their strategy
+ * Phase 5: Now includes efficiency multipliers (hardware + algorithmic)
  */
 export function allocateComputeWithinOrganization(
   org: any, // Organization type
   state: GameState
 ): void {
+  const infra = state.computeInfrastructure;
+  
   // Calculate total compute owned by this organization
-  let ownedCompute = state.computeInfrastructure.dataCenters
+  // Phase 5: Include efficiency multipliers
+  let ownedCompute = infra.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id))
     .filter(dc => dc.operational)
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  
+  // Apply global efficiency multipliers (Moore's Law + algorithmic improvements)
+  ownedCompute *= infra.hardwareEfficiency * infra.algorithmsEfficiency;
   
   // Get organization's active AI models
   const ownedModels = state.aiAgents.filter(
@@ -207,7 +214,7 @@ export function allocateComputeWithinOrganization(
   if (ownedCompute === 0) {
     // Find unrestricted DCs that aren't owned by orgs with models
     // (i.e., academic DCs are truly open to all)
-    const trulyUnrestrictedCompute = state.computeInfrastructure.dataCenters
+    let trulyUnrestrictedCompute = infra.dataCenters
       .filter(dc => {
         if (!dc.operational || dc.restrictedAccess) return false;
         // Check if this DC's owner has AIs using it
@@ -220,6 +227,9 @@ export function allocateComputeWithinOrganization(
         return dcOrgAIs.length === 0;
       })
       .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+    
+    // Phase 5: Apply efficiency multipliers
+    trulyUnrestrictedCompute *= infra.hardwareEfficiency * infra.algorithmsEfficiency;
     
     // Count total models from orgs with no owned DCs
     const orgsWithoutDCs = state.organizations.filter(o => {
@@ -366,6 +376,54 @@ export function allocateComputeGlobally(state: GameState): void {
 export function allocateComputeEqually(state: GameState): void {
   console.warn('[Compute] allocateComputeEqually is deprecated, use allocateComputeGlobally');
   allocateComputeGlobally(state);
+}
+
+/**
+ * Phase 5: Apply Moore's Law and algorithmic improvements
+ * 
+ * Moore's Law: Hardware improves ~3% per month (40% per year, 2x every 2 years)
+ * Algorithmic efficiency: Periodic breakthroughs (less predictable)
+ * 
+ * Target: 627 PF → 3000-4000 PF over 60 months
+ */
+export function applyComputeGrowth(state: GameState, random: () => number = Math.random): void {
+  const infra = state.computeInfrastructure;
+  
+  // Moore's Law: 3% monthly hardware improvement
+  // This represents: faster chips, better cooling, denser racks, etc.
+  const MOORES_LAW_RATE = 0.03; // 3% per month
+  infra.hardwareEfficiency *= (1 + MOORES_LAW_RATE);
+  
+  // Algorithmic improvements: Less frequent but larger jumps
+  // Examples: Chinchilla scaling, FlashAttention, quantization, etc.
+  // ~5% chance per month of a breakthrough
+  const ALGO_BREAKTHROUGH_CHANCE = 0.05;
+  const ALGO_BREAKTHROUGH_SIZE = 0.15; // 15% improvement when it happens
+  
+  if (random() < ALGO_BREAKTHROUGH_CHANCE) {
+    infra.algorithmsEfficiency *= (1 + ALGO_BREAKTHROUGH_SIZE);
+    
+    // Don't log during normal simulation (too noisy), only in tests
+    // Log the breakthrough
+    // console.log(`🚀 [Month ${state.currentMonth}] Algorithmic breakthrough! Efficiency: ${infra.algorithmsEfficiency.toFixed(2)}x`);
+  }
+  
+  // Note: Data center capacity growth is handled in Phase 6 (construction)
+  // For now, we only grow efficiency of existing infrastructure
+}
+
+/**
+ * Phase 5: Calculate total effective compute with efficiency multipliers
+ * 
+ * Effective compute = base capacity × hardware efficiency × algorithmic efficiency
+ */
+export function getTotalEffectiveCompute(infra: ComputeInfrastructure): number {
+  const baseCompute = infra.dataCenters
+    .filter(dc => dc.operational)
+    .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  
+  // Apply global efficiency multipliers
+  return baseCompute * infra.hardwareEfficiency * infra.algorithmsEfficiency;
 }
 
 /**

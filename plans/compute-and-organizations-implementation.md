@@ -1173,3 +1173,120 @@ Phases 6-10 add strategic depth but aren't required for basic functionality.
 - Bankruptcy and consolidation create dynamic competitive landscape
 - All timelines based on research: data centers 24-72mo, training 3-12mo
 
+---
+
+## 🔧 Future Enhancements: Training Compute Dynamics
+
+**Status**: Post-Phase 5, to be implemented alongside Phase 7 (Model Training)
+
+### Problem
+Organizations need to allocate compute between:
+1. **Running existing models** (inference, continued research)
+2. **Training new foundation models** (requires massive compute spikes)
+3. **Training specialized models** (smaller compute requirements)
+
+This is a **multi-armed bandit problem**: how to optimally allocate limited compute across competing uses.
+
+### Key Considerations
+
+1. **Foundation Model Scaling**
+   - Each new foundation model generation requires more compute than the last
+   - GPT-3 → GPT-4: ~10x compute increase
+   - Capability floor rises, but each step up costs exponentially more
+   - Training runs are **discrete, large commitments** (not continuous)
+
+2. **Model Size Hierarchy**
+   - **Foundation models**: 3-12 months, massive compute (100-500+ PF reserved)
+   - **Fine-tuned variants**: 1-3 months, moderate compute (10-50 PF)
+   - **Specialized models**: Weeks, small compute (1-10 PF)
+   - Different orgs target different scales based on strategy
+
+3. **Training vs Running Trade-offs**
+   - Meta (train_new strategy): Reserves 40% for training → rapid iteration
+   - OpenAI (focus_flagship): Puts most compute into running best model
+   - Training new models temporarily reduces research speed of existing ones
+   - Organizations must decide: improve current models or train new ones?
+
+4. **Multi-Armed Bandit Dynamics**
+   - **Arms**: Different compute allocation strategies
+   - **Rewards**: Capability gains, market share, competitive positioning
+   - **Exploration**: Try new architectures, risk training failures
+   - **Exploitation**: Run proven models, guaranteed returns
+   - **Context**: Current capability gap, competitive pressure, capital available
+
+### Implementation Approach (Phase 7+)
+
+```typescript
+interface TrainingProject extends OrganizationProject {
+  type: 'model_training';
+  targetCapability: AICapabilityProfile;  // What we're trying to achieve
+  computeReserved: number;                // PF allocated to this training run
+  computeUsedSoFar: number;               // PF consumed (cumulative)
+  trainingMonthsRemaining: number;        // Time left
+  scalingStrategy: 'foundation' | 'specialized' | 'fine_tune';
+  expectedCost: number;                   // Capital investment
+  failureRisk: number;                    // [0,1] Chance training fails
+}
+
+// Training compute requirements scale with target capability
+function calculateTrainingComputeNeeded(
+  targetCapability: number,
+  currentFrontier: number,
+  modelType: 'foundation' | 'specialized'
+): number {
+  if (modelType === 'foundation') {
+    // Foundation: exponential scaling (Chinchilla-optimal)
+    // Each 0.5 capability jump needs ~3x more compute
+    const capabilityGap = targetCapability - currentFrontier;
+    const baseCompute = 100; // PF for current frontier
+    return baseCompute * Math.pow(3, capabilityGap / 0.5);
+  } else {
+    // Specialized: linear scaling (fine-tuning existing models)
+    return 10 + (targetCapability * 5);
+  }
+}
+
+// Organizations decide monthly whether to start training projects
+function shouldStartTraining(
+  org: Organization,
+  state: GameState
+): boolean {
+  const availableCompute = getUnallocatedCompute(org, state);
+  const competitiveGap = calculateCompetitiveGap(org, state);
+  const capitalAvailable = org.capital;
+  
+  // Multi-armed bandit decision:
+  // - High competitive gap → more likely to train
+  // - Sufficient capital → can afford risk
+  // - Available compute → can reserve for training
+  // - Org priorities → train_new strategy trains more often
+  
+  const trainingPressure = 
+    competitiveGap * 0.4 +
+    (availableCompute / 100) * 0.3 +
+    (capitalAvailable / org.monthlyRevenue) * 0.2 +
+    org.priorities.capabilityRace * 0.1;
+  
+  return trainingPressure > 0.6; // Threshold for starting training
+}
+```
+
+### Integration Points
+
+1. **Phase 5 (Moore's Law)**: Compute grows → enables larger training runs
+2. **Phase 6 (Data Center Construction)**: Build capacity for future training
+3. **Phase 7 (Model Training Projects)**: Implement full training dynamics
+4. **Phase 8 (Economics)**: Training costs, revenue from deployed models
+5. **Phase 10 (Balancing)**: Tune training times, costs, failure rates
+
+### Expected Emergent Behaviors
+
+- **Training Arms Race**: Competitive pressure drives continuous training
+- **Boom-Bust Cycles**: Training spikes followed by inference-heavy periods
+- **Strategic Timing**: Train when competitors are weak, run when you're ahead
+- **Scale Economics**: Larger orgs can afford bigger, riskier training runs
+- **Model Generations**: Discrete jumps in capability as new models deploy
+- **Compute Scarcity**: Training competes with research, creates bottlenecks
+
+This enhancement will make the compute allocation problem **truly strategic** rather than just a fixed percentage split.
+

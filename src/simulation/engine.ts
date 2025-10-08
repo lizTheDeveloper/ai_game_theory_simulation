@@ -154,9 +154,16 @@ export class SimulationEngine {
     let newState = { ...state };
     const events: GameEvent[] = [];
     
+    // Use bound RNG for deterministic actions
+    const rng = this.rng.next.bind(this.rng);
+    
+    // Phase 5: Apply compute growth (Moore's Law + algorithmic improvements)
+    // This must happen before allocation so efficiency multipliers are applied
+    const { applyComputeGrowth, allocateComputeGlobally } = require('./computeInfrastructure');
+    applyComputeGrowth(newState, rng);
+    
     // Phase 4: Allocate compute to all AIs at start of month
     // This must happen before AI actions so they have compute for research
-    const { allocateComputeGlobally } = require('./computeInfrastructure');
     allocateComputeGlobally(newState);
     
     // 0a. Update AI population lifecycle (new AIs, retirements, progression)
@@ -197,9 +204,6 @@ export class SimulationEngine {
     const { executeAIAgentActions } = require('./agents/aiAgent');
     const { executeGovernmentActions } = require('./agents/governmentAgent');
     const { executeSocietyActions } = require('./agents/societyAgent');
-    
-    // Use bound RNG for deterministic actions
-    const rng = this.rng.next.bind(this.rng);
     
     // Execute all agent actions
     const aiResult = executeAIAgentActions(newState, rng);
