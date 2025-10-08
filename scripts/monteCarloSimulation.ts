@@ -298,21 +298,31 @@ for (let i = 0; i < NUM_RUNS; i++) {
   
   // ENHANCED: QoL breakdown
   const qolSystems = finalState.qualityOfLifeSystems;
-  const qolBasicNeeds = (
+  
+  // Guard: If QoL systems missing, use defaults
+  if (!qolSystems) {
+    console.warn(`⚠️ Run ${runIndex}: Missing qualityOfLifeSystems, using defaults`);
+  }
+  
+  const qolBasicNeeds = qolSystems ? (
     qolSystems.materialAbundance + qolSystems.energyAvailability + qolSystems.physicalSafety
-  ) / 3;
-  const qolPsychological = (
+  ) / 3 : 0.5;
+  
+  const qolPsychological = qolSystems ? (
     qolSystems.mentalHealth + qolSystems.meaningAndPurpose + qolSystems.socialConnection + qolSystems.autonomy
-  ) / 4;
-  const qolSocial = (
+  ) / 4 : 0.5;
+  
+  const qolSocial = qolSystems ? (
     qolSystems.politicalFreedom + qolSystems.informationIntegrity + qolSystems.communityStrength + qolSystems.culturalVitality
-  ) / 4;
-  const qolHealth = (
+  ) / 4 : 0.5;
+  
+  const qolHealth = qolSystems ? (
     qolSystems.healthcareQuality + qolSystems.longevityGains + (1 - qolSystems.diseasesBurden)
-  ) / 3;
-  const qolEnvironmental = (
+  ) / 3 : 0.5;
+  
+  const qolEnvironmental = qolSystems ? (
     qolSystems.ecosystemHealth + qolSystems.climateStability + (1 - qolSystems.pollutionLevel)
-  ) / 3;
+  ) / 3 : 0.5;
   
   // Sleeper analysis
   const sleepers = activeAIs.filter((ai: AIAgent) => 
