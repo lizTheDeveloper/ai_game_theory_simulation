@@ -371,6 +371,27 @@ export function updateAIPopulation(state: GameState): void {
   
   for (let i = 0; i < newAIsToCreate; i++) {
     const newAI = createNewAI(state, i);
+    
+    // Phase 10 FIX: Assign new AIs to organizations
+    // Randomly assign to a private organization (weighted by their model count)
+    const privateOrgs = state.organizations.filter(o => o.type === 'private' && o.capital > 0);
+    if (privateOrgs.length > 0) {
+      // Weight by number of existing models (big orgs train more)
+      const weights = privateOrgs.map(org => Math.max(1, org.ownedAIModels.length));
+      const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+      const rand = Math.random() * totalWeight;
+      
+      let cumulative = 0;
+      for (let j = 0; j < privateOrgs.length; j++) {
+        cumulative += weights[j];
+        if (rand < cumulative) {
+          newAI.organizationId = privateOrgs[j].id;
+          privateOrgs[j].ownedAIModels.push(newAI.id);
+          break;
+        }
+      }
+    }
+    
     state.aiAgents.push(newAI);
   }
 }
