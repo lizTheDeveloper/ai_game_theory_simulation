@@ -1,13 +1,16 @@
 /**
- * Phase 6: Organization Management & Data Center Construction
+ * Phase 6 & 7: Organization Management
  * 
  * Organizations can:
- * - Build new data centers (24-72 month timelines)
- * - Manage construction projects
+ * - Build new data centers (24-72 month timelines) [Phase 6]
+ * - Train new AI models (3-12 month timelines) [Phase 7]
+ * - Manage construction and training projects
  * - Make strategic decisions about capacity expansion
  */
 
-import { GameState, Organization, OrganizationProject, DataCenter } from '@/types/game';
+import { GameState, Organization, OrganizationProject, DataCenter, AIAgent, AICapabilityProfile } from '@/types/game';
+import { getCapabilityFloorForNewAI } from './technologyDiffusion';
+import { calculateTotalCapabilityFromProfile } from './capabilities';
 
 /**
  * Calculate compute utilization for an organization
@@ -126,7 +129,7 @@ export function startDataCenterConstruction(
 }
 
 /**
- * Task 6.3: Update all organization projects monthly
+ * Task 6.3 & 7.3: Update all organization projects monthly
  */
 export function updateProjects(org: Organization, state: GameState): void {
   const completedProjects: OrganizationProject[] = [];
@@ -136,9 +139,14 @@ export function updateProjects(org: Organization, state: GameState): void {
     const duration = project.completionMonth - project.startMonth;
     project.progress = Math.min(1.0, elapsed / duration);
     
-    // Pay monthly costs (remaining 70% spread over construction period)
+    // Pay monthly costs
     if (project.type === 'datacenter_construction') {
+      // Remaining 70% spread over construction period
       const monthlyCost = (project.capitalInvested * 0.7) / duration;
+      org.capital -= monthlyCost;
+    } else if (project.type === 'model_training') {
+      // Remaining 50% spread over training period
+      const monthlyCost = (project.capitalInvested * 0.5) / duration;
       org.capital -= monthlyCost;
     }
     
@@ -160,7 +168,7 @@ export function updateProjects(org: Organization, state: GameState): void {
 }
 
 /**
- * Task 6.4: Complete a project
+ * Task 6.4 & 7.4: Complete a project
  */
 export function completeProject(
   org: Organization, 
@@ -189,7 +197,144 @@ export function completeProject(
     org.ownedDataCenters.push(newDC.id);
     
     console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed DC: ${newDC.capacity.toFixed(0)} PF (${state.currentMonth - project.startMonth} months)`);
+  } else if (project.type === 'model_training') {
+    // Create new AI agent from training project
+    const { createAIAgent } = require('./initialization');
+    
+    const newAI = createAIAgent(
+      `${org.id}_trained_${state.currentMonth}`,
+      `${org.name} Model ${state.currentMonth}`,
+      org.type === 'private' && org.priorities.safetyResearch > 0.6 ? 'aligned' : 
+      org.type === 'private' && org.priorities.profitMaximization > 0.8 ? 'corporate' :
+      'moderate',
+      project.expectedModelCapability!,
+      state.currentMonth
+    );
+    
+    // Set organization ownership
+    newAI.organizationId = org.id;
+    
+    // Set lifecycle state to deployed (skip testing since org trained it)
+    newAI.lifecycleState = 'deployed';
+    
+    // Add to state
+    state.aiAgents.push(newAI);
+    org.ownedAIModels.push(newAI.id);
+    
+    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed training: ${newAI.name} (capability: ${newAI.capability.toFixed(3)}, ${state.currentMonth - project.startMonth} months)`);
   }
+}
+
+/**
+ * =============================================================================
+ * PHASE 7: MODEL TRAINING
+ * =============================================================================
+ */
+
+/**
+ * Task 7.1: Decision logic for training new models
+ */
+export function shouldTrainNewModel(
+  org: Organization,
+  state: GameState,
+  random: () => number = Math.random
+): boolean {
+  // Only private orgs train models for now (government/academic in Phase 9)
+  if (org.type !== 'private') {
+    return false;
+  }
+  
+  // Check if already training
+  const alreadyTraining = org.currentProjects.some(p => p.type === 'model_training');
+  if (alreadyTraining) return false;
+  
+  // Spare compute check - need <70% utilization to have room for new model
+  const utilization = calculateComputeUtilization(org, state);
+  const hasSpare = utilization < 0.7;
+  
+  // Technology has advanced check - is capability floor significantly higher?
+  const capFloor = getCapabilityFloorForNewAI(state);
+  const capFloorTotal = calculateTotalCapabilityFromProfile(capFloor);
+  
+  const newestModel = state.aiAgents
+    .filter(ai => org.ownedAIModels.includes(ai.id))
+    .sort((a, b) => b.createdAt - a.createdAt)[0];
+  
+  const worthTraining = !newestModel || capFloorTotal > newestModel.capability * 1.2;
+  
+  // Market gap check - do we have fewer models than competitors?
+  const avgModelsPerOrg = state.organizations
+    .filter(o => o.type === 'private')
+    .reduce((sum, o) => sum + o.ownedAIModels.length, 0) / 
+    state.organizations.filter(o => o.type === 'private').length;
+  
+  const marketGap = org.ownedAIModels.length < avgModelsPerOrg * 1.2;
+  
+  // Capital check (5x monthly revenue)
+  const cost = 5 * org.monthlyRevenue;
+  const canAfford = org.capital > cost * 2; // Need 2x buffer
+  
+  // Strategic priorities
+  const hasCapabilityRace = org.priorities.capabilityRace > 0.6;
+  const hasMarketShare = org.priorities.marketShare > 0.7;
+  
+  // Train if:
+  // 1. Technology has advanced significantly
+  // 2. AND we have spare compute
+  // 3. AND we can afford it
+  // 4. AND (we're behind on models OR we prioritize capability/market)
+  const shouldTrain = worthTraining && 
+                     hasSpare && 
+                     canAfford && 
+                     (marketGap || hasCapabilityRace || hasMarketShare);
+  
+  // Add randomness (20% chance per month if conditions met)
+  return shouldTrain && random() < 0.2;
+}
+
+/**
+ * Task 7.2: Start model training project
+ */
+export function startModelTraining(
+  org: Organization,
+  state: GameState,
+  random: () => number = Math.random
+): void {
+  // Get capability floor
+  const capFloor = getCapabilityFloorForNewAI(state);
+  
+  // Training time: 3-12 months
+  const trainingMonths = 3 + Math.floor(random() * 9);
+  
+  // Cost: 5x monthly revenue
+  const cost = 5 * org.monthlyRevenue;
+  
+  // Compute reservation: 10-30% of org's compute
+  const ownedCompute = state.computeInfrastructure.dataCenters
+    .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
+    .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  
+  const computeReserved = ownedCompute * (0.1 + random() * 0.2);
+  
+  const project: OrganizationProject = {
+    id: `training_${org.id}_${state.currentMonth}`,
+    type: 'model_training',
+    startMonth: state.currentMonth,
+    completionMonth: state.currentMonth + trainingMonths,
+    progress: 0,
+    capitalInvested: cost,
+    computeReserved: computeReserved,
+    expectedModelCapability: capFloor,
+    canBeCanceled: true,
+    cancellationPenalty: 0.7 // 70% lost if canceled (trained models can't be "returned")
+  };
+  
+  org.currentProjects.push(project);
+  
+  // Pay 50% upfront (training is more front-loaded than construction)
+  org.capital -= cost * 0.5;
+  
+  console.log(`🧠 [Month ${state.currentMonth}] ${org.name} started training model (${trainingMonths} months, $${cost.toFixed(1)}M)`);
 }
 
 /**
@@ -215,7 +360,7 @@ export function payExpenses(org: Organization, state: GameState): void {
 }
 
 /**
- * Task 6.5: Process organization turn (called monthly)
+ * Task 6.5 & 7.5: Process organization turn (called monthly)
  */
 export function processOrganizationTurn(
   org: Organization, 
@@ -232,8 +377,14 @@ export function processOrganizationTurn(
   payExpenses(org, state);
   
   // 4. Make strategic decisions
+  // Priority 1: Build data centers if capacity constrained
   if (shouldBuildDataCenter(org, state, random)) {
     startDataCenterConstruction(org, state, random);
+  }
+  
+  // Priority 2: Train new models if technology has advanced
+  if (shouldTrainNewModel(org, state, random)) {
+    startModelTraining(org, state, random);
   }
   
   // 5. Check bankruptcy (Phase 8 will handle this fully)
