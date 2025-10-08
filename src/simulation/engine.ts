@@ -162,6 +162,11 @@ export class SimulationEngine {
     const { applyComputeGrowth, allocateComputeGlobally } = require('./computeInfrastructure');
     applyComputeGrowth(newState, rng);
     
+    // Phase 6: Process organization turns (projects, revenue, expenses, decisions)
+    // This must happen before compute allocation so new DCs are available
+    const { processAllOrganizations } = require('./organizationManagement');
+    processAllOrganizations(newState, rng);
+    
     // Phase 4: Allocate compute to all AIs at start of month
     // This must happen before AI actions so they have compute for research
     allocateComputeGlobally(newState);
