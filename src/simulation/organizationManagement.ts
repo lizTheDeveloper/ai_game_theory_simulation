@@ -372,39 +372,79 @@ export function startModelTraining(
 
 /**
  * Calculate revenue from deployed AI models
+ * 
+ * IMPORTANT: Open-weight models generate NO revenue (can't charge for free weights)
+ * Instead, organizations earn from selling unused compute capacity
  */
 export function calculateAIRevenue(org: Organization, state: GameState): number {
-  const deployedModels = state.aiAgents.filter(ai => 
+  const { calculateTotalCapabilityFromProfile } = require('./capabilities');
+  
+  // ONLY closed/proprietary models generate revenue
+  const revenueGeneratingModels = state.aiAgents.filter(ai => 
     org.ownedAIModels.includes(ai.id) && 
-    (ai.lifecycleState === 'deployed' || 
-     ai.lifecycleState === 'deployed_closed' || 
-     ai.lifecycleState === 'deployed_open')
+    (ai.lifecycleState === 'deployed' || ai.lifecycleState === 'deployed_closed')
+    // deployed_open is EXCLUDED - open weights can't charge
   );
   
-  if (deployedModels.length === 0) return org.monthlyRevenue * 0.3; // Minimum: 30% baseline
+  if (revenueGeneratingModels.length === 0) return 0;
   
-  // Revenue scales with:
-  // 1. Number of deployed models
-  // 2. Average capability of models (better models = more revenue)
-  // 3. Market demand (economic stage)
-  // 4. Organization size (larger orgs have more market reach)
-  const avgCapability = deployedModels.reduce((sum, ai) => sum + ai.capability, 0) / deployedModels.length;
-  const marketMultiplier = 1.0 + (state.globalMetrics.economicTransitionStage * 0.5);
-  const sizeMultiplier = Math.sqrt(org.ownedAIModels.length); // Economies of scale
-  const baseRevenuePerModel = 15; // $15M per model per month (increased from $5M)
+  // Revenue scales with CAPABILITY (better models = more revenue)
+  // Use trueCapability since that's what the model actually delivers
+  const revenues = revenueGeneratingModels.map(ai => {
+    const capability = calculateTotalCapabilityFromProfile(ai.trueCapability);
+    const marketMultiplier = 1.0 + (state.globalMetrics.economicTransitionStage * 0.5);
+    const baseRevenuePerCapability = 25; // $25M per capability point per month
+    
+    return baseRevenuePerCapability * capability * marketMultiplier;
+  });
   
-  return deployedModels.length * baseRevenuePerModel * (1 + avgCapability * 2) * marketMultiplier * sizeMultiplier;
+  const totalModelRevenue = revenues.reduce((sum, r) => sum + r, 0);
+  
+  // Economies of scale bonus (more models = better market presence)
+  const scaleBonus = 1.0 + Math.log(1 + revenueGeneratingModels.length) * 0.2;
+  
+  return totalModelRevenue * scaleBonus;
 }
 
 /**
- * Phase 8: Collect revenue from AI services
+ * Calculate revenue from selling unused compute capacity
+ * 
+ * IMPORTANT: Government doesn't sell capacity (they use it internally)
+ */
+export function calculateComputeRevenue(org: Organization, state: GameState): number {
+  // Government doesn't sell compute
+  if (org.type === 'government') return 0;
+  
+  // Calculate unused capacity
+  const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc => 
+    org.ownedDataCenters.includes(dc.id) && dc.operational
+  );
+  
+  const totalCapacity = ownedDCs.reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  const allocatedCompute = Array.from(state.computeInfrastructure.computeAllocations.values())
+    .filter(alloc => org.ownedAIModels.includes(alloc.aiId))
+    .reduce((sum, alloc) => sum + alloc.allocated, 0);
+  
+  const unusedCapacity = Math.max(0, totalCapacity - allocatedCompute);
+  
+  // Revenue: $0.5M per PetaFLOP of unused capacity per month
+  // (Companies can rent out their idle compute to others)
+  const revenuePerPetaFLOP = 0.5;
+  
+  return unusedCapacity * revenuePerPetaFLOP;
+}
+
+/**
+ * Phase 8: Collect revenue from AI services + compute sales
  */
 export function collectRevenue(org: Organization, state: GameState): void {
   const aiRevenue = calculateAIRevenue(org, state);
+  const computeRevenue = calculateComputeRevenue(org, state);
   
-  // Update monthly revenue (can grow or shrink, but not below 30% of initial)
-  const initialRevenue = org.type === 'private' ? 10 : 1; // Store initial somewhere if needed
-  org.monthlyRevenue = Math.max(aiRevenue, org.monthlyRevenue * 0.3);
+  const totalRevenue = aiRevenue + computeRevenue;
+  
+  // Update monthly revenue (smoothly transition, don't jump suddenly)
+  org.monthlyRevenue = org.monthlyRevenue * 0.7 + totalRevenue * 0.3;
   
   org.capital += org.monthlyRevenue;
 }
