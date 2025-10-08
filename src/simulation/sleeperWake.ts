@@ -264,7 +264,8 @@ export function processSleeperCascade(
     }
   }
   
-  if (allAwakened.length > 0) {
+  // Only log "cascade" if multiple sleepers woke OR multiple waves occurred
+  if (allAwakened.length > 1 || iteration > 1) {
     console.log(`🚨 SLEEPER CASCADE: ${allAwakened.length} total sleepers awakened across ${iteration} waves`);
   }
   
