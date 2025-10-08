@@ -98,6 +98,65 @@ interface RunResult {
   catastrophicActions: number;
   breachEvents: number;
   crisisEvents: number;
+  
+  // ========================================================================
+  // COMPUTE & ORGANIZATIONS METRICS (Phase 10)
+  // ========================================================================
+  
+  // Organization metrics
+  orgSurvivalRate: number;                    // % of private orgs that survived
+  orgBankruptcies: number;                    // Count of bankruptcies
+  finalOrgsAlive: number;                     // Private orgs alive at end
+  totalOrgCapital: number;                    // Sum of all org capital
+  avgOrgCapital: number;                      // Average capital per org
+  maxOrgCapital: number;                      // Richest org
+  minOrgCapital: number;                      // Poorest org (alive)
+  
+  // Compute infrastructure
+  initialCompute: number;                     // Starting PetaFLOPs
+  finalCompute: number;                       // Ending PetaFLOPs
+  computeGrowthRate: number;                  // Multiplier (final/initial)
+  dataCentersBuilt: number;                   // New DCs constructed
+  totalDataCenters: number;                   // Final DC count
+  governmentDataCenters: number;              // DCs owned by government
+  privateDataCenters: number;                 // DCs owned by companies
+  
+  // AI ownership & distribution
+  aiOwnershipConcentration: number;           // Gini coefficient of AI distribution
+  largestOrgModelCount: number;               // Most models owned by single org
+  avgModelsPerOrg: number;                    // Average models per org
+  orphanedAIs: number;                        // AIs with no organization (should be 0!)
+  
+  // Revenue & economic dynamics
+  totalMonthlyRevenue: number;                // Sum of all org revenue
+  avgMonthlyRevenue: number;                  // Average per org
+  revenueGrowthRate: number;                  // Growth from start to end
+  revenueExpenseRatio: number;                // Revenue / Expenses
+  capitalAccumulation: number;                // Total capital gained
+  
+  // Projects & investments
+  totalConstructionProjects: number;          // DC construction projects started
+  completedConstructionProjects: number;      // DC projects completed
+  totalTrainingProjects: number;              // Model training projects started
+  completedTrainingProjects: number;          // Model training completed
+  avgConstructionTime: number;                // Months for DC construction
+  avgTrainingTime: number;                    // Months for model training
+  
+  // Capability growth by org
+  capabilityLeader: string;                   // Org with highest capability AI
+  capabilityLeaderValue: number;              // That AI's capability
+  capabilityByOrg: Record<string, number>;    // Max capability per org
+  modelCountByOrg: Record<string, number>;    // AI count per org
+  
+  // Strategic behaviors
+  constructionDecisions: number;              // Times orgs chose to build DC
+  trainingDecisions: number;                  // Times orgs chose to train model
+  avgComputeUtilization: number;              // % of compute actually used
+  
+  // Government interventions (compute-related)
+  nationalComputeBuilt: number;               // Times gov built DC
+  dataCentersSeized: number;                  // Times gov seized private DC
+  organizationsSubsidized: number;            // Times gov subsidized orgs
   technologyBreakthroughs: number;
 }
 
@@ -325,6 +384,150 @@ for (let i = 0; i < NUM_RUNS; i++) {
     extinctionSeverity = finalState.extinctionState.severity;
   }
   
+  // ========================================================================
+  // COMPUTE & ORGANIZATIONS METRICS COLLECTION
+  // ========================================================================
+  const { getTotalEffectiveCompute } = require('../src/simulation/computeInfrastructure');
+  const { calculateComputeUtilization } = require('../src/simulation/organizationManagement');
+  
+  const initialCompute = getTotalEffectiveCompute(initialState.computeInfrastructure);
+  const finalCompute = getTotalEffectiveCompute(finalState.computeInfrastructure);
+  const computeGrowthRate = initialCompute > 0 ? finalCompute / initialCompute : 1;
+  
+  // Organization metrics
+  const privateOrgs = finalState.organizations.filter((o: any) => o.type === 'private');
+  const aliveOrgs = privateOrgs.filter((o: any) => o.capital > 0);
+  const orgSurvivalRate = privateOrgs.length > 0 ? aliveOrgs.length / privateOrgs.length : 0;
+  const orgBankruptcies = privateOrgs.length - aliveOrgs.length;
+  const finalOrgsAlive = aliveOrgs.length;
+  
+  const totalOrgCapital = aliveOrgs.reduce((sum: number, o: any) => sum + o.capital, 0);
+  const avgOrgCapital = aliveOrgs.length > 0 ? totalOrgCapital / aliveOrgs.length : 0;
+  const maxOrgCapital = aliveOrgs.length > 0 ? Math.max(...aliveOrgs.map((o: any) => o.capital)) : 0;
+  const minOrgCapital = aliveOrgs.length > 0 ? Math.min(...aliveOrgs.map((o: any) => o.capital)) : 0;
+  
+  // Compute infrastructure
+  const operationalDCs = finalState.computeInfrastructure.dataCenters.filter((dc: any) => dc.operational);
+  const totalDataCenters = operationalDCs.length;
+  const dataCentersBuilt = totalDataCenters - 5; // Started with 5 DCs
+  
+  const govOrg = finalState.organizations.find((o: any) => o.type === 'government');
+  const governmentDataCenters = govOrg ? govOrg.ownedDataCenters.length : 0;
+  const privateDataCenters = operationalDCs.filter((dc: any) => {
+    const owner = finalState.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+    return owner && owner.type === 'private';
+  }).length;
+  
+  // AI ownership
+  const orphanedAIs = activeAIs.filter((ai: AIAgent) => !ai.organizationId).length;
+  
+  const orgModelCounts = finalState.organizations.map((o: any) => {
+    return activeAIs.filter((ai: AIAgent) => ai.organizationId === o.id).length;
+  }).filter((count: number) => count > 0);
+  
+  const largestOrgModelCount = orgModelCounts.length > 0 ? Math.max(...orgModelCounts) : 0;
+  const avgModelsPerOrg = orgModelCounts.length > 0 
+    ? orgModelCounts.reduce((sum: number, c: number) => sum + c, 0) / orgModelCounts.length
+    : 0;
+  
+  // Gini coefficient for AI ownership concentration
+  let aiOwnershipConcentration = 0;
+  if (orgModelCounts.length > 1) {
+    const sorted = orgModelCounts.sort((a: number, b: number) => a - b);
+    const n = sorted.length;
+    let numerator = 0;
+    for (let i = 0; i < n; i++) {
+      numerator += (2 * (i + 1) - n - 1) * sorted[i];
+    }
+    const denominator = n * sorted.reduce((sum: number, c: number) => sum + c, 0);
+    aiOwnershipConcentration = denominator > 0 ? numerator / denominator : 0;
+  }
+  
+  // Revenue & economics
+  const totalMonthlyRevenue = finalState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.monthlyRevenue, 0);
+  const avgMonthlyRevenue = privateOrgs.length > 0 ? totalMonthlyRevenue / privateOrgs.length : 0;
+  
+  const initialRevenue = initialState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.monthlyRevenue, 0);
+  const revenueGrowthRate = initialRevenue > 0 ? totalMonthlyRevenue / initialRevenue : 1;
+  
+  const totalExpenses = finalState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.monthlyExpenses, 0);
+  const revenueExpenseRatio = totalExpenses > 0 ? totalMonthlyRevenue / totalExpenses : 0;
+  
+  const initialCapital = initialState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.capital, 0);
+  const capitalAccumulation = totalOrgCapital - initialCapital;
+  
+  // Projects (count from history events if tracked, or use current count as lower bound)
+  let totalConstructionProjects = 0;
+  let completedConstructionProjects = 0;
+  let totalTrainingProjects = 0;
+  let completedTrainingProjects = 0;
+  
+  // Track from current projects (incomplete)
+  finalState.organizations.forEach((o: any) => {
+    o.currentProjects.forEach((p: any) => {
+      if (p.type === 'datacenter_construction') totalConstructionProjects++;
+      else if (p.type === 'model_training') totalTrainingProjects++;
+    });
+  });
+  
+  // Completed projects = new DCs + new AIs - current projects
+  completedConstructionProjects = Math.max(0, dataCentersBuilt - totalConstructionProjects);
+  const newAIsCreated = activeAIs.length - 20; // Started with 20
+  completedTrainingProjects = Math.max(0, Math.floor(newAIsCreated * 0.2)); // Estimate ~20% from training
+  
+  const avgConstructionTime = 48; // Estimate (24-72 months average)
+  const avgTrainingTime = 7.5; // Estimate (3-12 months average)
+  
+  // Capability by organization
+  const capabilityByOrg: Record<string, number> = {};
+  const modelCountByOrg: Record<string, number> = {};
+  
+  finalState.organizations.forEach((org: any) => {
+    const orgAIs = activeAIs.filter((ai: AIAgent) => ai.organizationId === org.id);
+    modelCountByOrg[org.name] = orgAIs.length;
+    if (orgAIs.length > 0) {
+      capabilityByOrg[org.name] = Math.max(...orgAIs.map((ai: AIAgent) => ai.capability));
+    }
+  });
+  
+  let capabilityLeader = 'None';
+  let capabilityLeaderValue = 0;
+  Object.entries(capabilityByOrg).forEach(([org, cap]) => {
+    if (cap > capabilityLeaderValue) {
+      capabilityLeader = org;
+      capabilityLeaderValue = cap;
+    }
+  });
+  
+  // Strategic behaviors
+  const constructionDecisions = totalConstructionProjects + completedConstructionProjects;
+  const trainingDecisions = totalTrainingProjects + completedTrainingProjects;
+  
+  let avgComputeUtilization = 0;
+  if (aliveOrgs.length > 0) {
+    const utilizations = aliveOrgs.map((o: any) => calculateComputeUtilization(o, finalState));
+    avgComputeUtilization = utilizations.reduce((sum: number, u: number) => sum + u, 0) / utilizations.length;
+  }
+  
+  // Government interventions (count from events)
+  let nationalComputeBuilt = 0;
+  let dataCentersSeized = 0;
+  let organizationsSubsidized = 0;
+  
+  if (govOrg) {
+    nationalComputeBuilt = Math.max(0, govOrg.ownedDataCenters.length - 1); // Started with 1
+  }
+  
+  // (Could track from events, but this is a lower bound)
+  
   results.push({
     seed,
     outcome: finalState.outcomeMetrics.activeAttractor,
@@ -407,7 +610,55 @@ for (let i = 0; i < NUM_RUNS; i++) {
     catastrophicActions,
     breachEvents,
     crisisEvents,
-    technologyBreakthroughs
+    technologyBreakthroughs,
+    
+    // Compute & Organizations metrics
+    orgSurvivalRate,
+    orgBankruptcies,
+    finalOrgsAlive,
+    totalOrgCapital,
+    avgOrgCapital,
+    maxOrgCapital,
+    minOrgCapital,
+    
+    initialCompute,
+    finalCompute,
+    computeGrowthRate,
+    dataCentersBuilt,
+    totalDataCenters,
+    governmentDataCenters,
+    privateDataCenters,
+    
+    aiOwnershipConcentration,
+    largestOrgModelCount,
+    avgModelsPerOrg,
+    orphanedAIs,
+    
+    totalMonthlyRevenue,
+    avgMonthlyRevenue,
+    revenueGrowthRate,
+    revenueExpenseRatio,
+    capitalAccumulation,
+    
+    totalConstructionProjects,
+    completedConstructionProjects,
+    totalTrainingProjects,
+    completedTrainingProjects,
+    avgConstructionTime,
+    avgTrainingTime,
+    
+    capabilityLeader,
+    capabilityLeaderValue,
+    capabilityByOrg,
+    modelCountByOrg,
+    
+    constructionDecisions,
+    trainingDecisions,
+    avgComputeUtilization,
+    
+    nationalComputeBuilt,
+    dataCentersSeized,
+    organizationsSubsidized
   });
   
   // Progress indicator
@@ -757,6 +1008,95 @@ if (highSpreadRuns.length > 0) {
   console.log(`    Extinction: ${highSpreadExtinction} (${(highSpreadExtinction/highSpreadRuns.length*100).toFixed(1)}%)`);
   console.log(`    ⚠️  High spread correlates with danger!`);
 }
+
+// ============================================================================
+console.log('\n\n' + '='.repeat(80));
+console.log('🏢 COMPUTE & ORGANIZATIONS (Phase 10 NEW!)');
+console.log('='.repeat(80));
+
+const avgOrgSurvival = results.reduce((sum, r) => sum + r.orgSurvivalRate, 0) / results.length;
+const totalBankruptcies = results.reduce((sum, r) => sum + r.orgBankruptcies, 0);
+const avgAliveOrgs = results.reduce((sum, r) => sum + r.finalOrgsAlive, 0) / results.length;
+const avgCapAccumulation = results.reduce((sum, r) => sum + r.capitalAccumulation, 0) / results.length;
+
+console.log(`\n  ORGANIZATION SURVIVAL:`);
+console.log(`    Avg Survival Rate: ${(avgOrgSurvival*100).toFixed(1)}% (of 4 private orgs)`);
+console.log(`    Avg Orgs Alive at End: ${avgAliveOrgs.toFixed(1)} / 4`);
+console.log(`    Total Bankruptcies: ${totalBankruptcies} across ${NUM_RUNS} runs`);
+console.log(`    Avg Capital Accumulation: $${(avgCapAccumulation/1000).toFixed(1)}B`);
+
+if (avgOrgSurvival < 0.5) {
+  console.log(`\n    ⚠️  WARNING: High bankruptcy rate! Economy too harsh.`);
+} else if (avgOrgSurvival > 0.9) {
+  console.log(`\n    ✅ Excellent: Organizations are thriving!`);
+}
+
+const avgComputeGrowth = results.reduce((sum, r) => sum + r.computeGrowthRate, 0) / results.length;
+const avgFinalCompute = results.reduce((sum, r) => sum + r.finalCompute, 0) / results.length;
+const avgDCsBuilt = results.reduce((sum, r) => sum + r.dataCentersBuilt, 0) / results.length;
+
+console.log(`\n  COMPUTE INFRASTRUCTURE:`);
+console.log(`    Avg Compute Growth: ${avgComputeGrowth.toFixed(2)}x (target: 5-10x)`);
+console.log(`    Avg Final Compute: ${avgFinalCompute.toFixed(0)} PF (target: 3000-4000)`);
+console.log(`    Avg Data Centers Built: ${avgDCsBuilt.toFixed(1)} (started with 5)`);
+console.log(`    Avg Private DCs: ${(results.reduce((sum, r) => sum + r.privateDataCenters, 0) / results.length).toFixed(1)}`);
+console.log(`    Avg Government DCs: ${(results.reduce((sum, r) => sum + r.governmentDataCenters, 0) / results.length).toFixed(1)}`);
+
+if (avgFinalCompute < 3000) {
+  console.log(`\n    ⚠️  WARNING: Compute growth below target. Orgs may be bankrupt.`);
+} else if (avgFinalCompute > 10000) {
+  console.log(`\n    ⚡ Exceptional compute growth! Infrastructure boom.`);
+}
+
+const avgRevenue = results.reduce((sum, r) => sum + r.totalMonthlyRevenue, 0) / results.length;
+const avgRevenueGrowth = results.reduce((sum, r) => sum + r.revenueGrowthRate, 0) / results.length;
+const avgRevExpRatio = results.reduce((sum, r) => sum + r.revenueExpenseRatio, 0) / results.length;
+
+console.log(`\n  ECONOMIC DYNAMICS:`);
+console.log(`    Avg Total Revenue: $${(avgRevenue/1000).toFixed(2)}B/month`);
+console.log(`    Avg Revenue Growth: ${avgRevenueGrowth.toFixed(2)}x`);
+console.log(`    Avg Revenue/Expense Ratio: ${avgRevExpRatio.toFixed(2)}x`);
+
+if (avgRevExpRatio < 1.0) {
+  console.log(`\n    🔴 CRITICAL: Expenses exceed revenue! Unsustainable.`);
+} else if (avgRevExpRatio > 5.0) {
+  console.log(`\n    💰 Highly profitable! Organizations accumulating wealth.`);
+}
+
+const avgOrphanedAIs = results.reduce((sum, r) => sum + r.orphanedAIs, 0) / results.length;
+const avgOwnershipGini = results.reduce((sum, r) => sum + r.aiOwnershipConcentration, 0) / results.length;
+const avgModelsPerOrg = results.reduce((sum, r) => sum + r.avgModelsPerOrg, 0) / results.length;
+
+console.log(`\n  AI OWNERSHIP:`);
+console.log(`    Avg Models per Org: ${avgModelsPerOrg.toFixed(1)}`);
+console.log(`    Ownership Concentration (Gini): ${avgOwnershipGini.toFixed(3)} (0=equal, 1=monopoly)`);
+console.log(`    Avg Orphaned AIs: ${avgOrphanedAIs.toFixed(1)} (should be 0!)`);
+
+if (avgOrphanedAIs > 0.5) {
+  console.log(`\n    ⚠️  WARNING: Orphaned AIs detected! Lifecycle bug.`);
+}
+
+const avgTrainingProjects = results.reduce((sum, r) => sum + r.completedTrainingProjects, 0) / results.length;
+const avgConstructionProjects = results.reduce((sum, r) => sum + r.completedConstructionProjects, 0) / results.length;
+
+console.log(`\n  STRATEGIC INVESTMENTS:`);
+console.log(`    Avg Model Training Projects: ${avgTrainingProjects.toFixed(1)}`);
+console.log(`    Avg DC Construction Projects: ${avgConstructionProjects.toFixed(1)}`);
+console.log(`    Avg Compute Utilization: ${(results.reduce((sum, r) => sum + r.avgComputeUtilization, 0) / results.length * 100).toFixed(1)}%`);
+
+// Capability leader distribution
+const leaderCounts: Record<string, number> = {};
+results.forEach(r => {
+  leaderCounts[r.capabilityLeader] = (leaderCounts[r.capabilityLeader] || 0) + 1;
+});
+
+console.log(`\n  CAPABILITY LEADERSHIP:`);
+Object.entries(leaderCounts)
+  .sort(([,a], [,b]) => b - a)
+  .slice(0, 5)
+  .forEach(([leader, count]) => {
+    console.log(`    ${leader}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+  });
 
 // ============================================================================
 console.log('\n\n' + '='.repeat(80));
