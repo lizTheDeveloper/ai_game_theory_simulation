@@ -1397,6 +1397,232 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Reverse engineering reduced to ${Math.round(newRate*100)}%`
       };
     }
+  },
+  
+  // ========================================================================
+  // PHASE 9: GOVERNMENT ACTIONS FOR COMPUTE & ORGANIZATIONS
+  // ========================================================================
+  
+  {
+    id: 'fund_national_compute',
+    name: 'Build National AI Infrastructure',
+    description: 'Government builds own data center (24-72 months, large cost, reduces dependence on private sector)',
+    agentType: 'government',
+    energyCost: 4,
+    
+    canExecute: (state) => {
+      const govOrg = state.organizations.find(o => o.type === 'government');
+      if (!govOrg) return false;
+      
+      // Don't build if already building
+      const alreadyBuilding = govOrg.currentProjects.some(p => p.type === 'datacenter_construction');
+      if (alreadyBuilding) return false;
+      
+      // Need sufficient capital
+      const cost = 50 * govOrg.monthlyRevenue;
+      if (govOrg.capital < cost * 1.5) return false;
+      
+      // Only build if private sector is strong (competitive pressure)
+      const privateDCs = state.computeInfrastructure.dataCenters
+        .filter(dc => dc.organizationId !== 'government' && dc.operational).length;
+      
+      return privateDCs > 2;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      const govOrg = newState.organizations.find((o: any) => o.type === 'government');
+      
+      if (!govOrg) {
+        return {
+          success: false,
+          newState,
+          effects: {},
+          events: [],
+          message: 'Government organization not found'
+        };
+      }
+      
+      // Start construction using organization management
+      const { startDataCenterConstruction } = require('../organizationManagement');
+      startDataCenterConstruction(govOrg, newState, random);
+      
+      // Consequences
+      newState.government.legitimacy -= 0.05; // Controversial spending
+      
+      return {
+        success: true,
+        newState,
+        effects: { nationalCompute: 1 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'National AI Infrastructure Funded',
+          description: `Government started building national data center. Reduces dependence on private sector but costs taxpayer money.`,
+          effects: { legitimacy: -0.05 }
+        }],
+        message: 'Government started building national data center'
+      };
+    }
+  },
+  
+  {
+    id: 'seize_data_center',
+    name: 'Nationalize Private Data Center',
+    description: 'Government seizes largest private data center (instant but destroys legitimacy and trust)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      // Can only seize if private DCs exist
+      const privateDCs = state.computeInfrastructure.dataCenters
+        .filter(dc => {
+          const org = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+          return org && org.type === 'private';
+        });
+      
+      return privateDCs.length > 0;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Find largest private data center
+      const privateDCs = newState.computeInfrastructure.dataCenters
+        .filter((dc: any) => {
+          const org = newState.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+          return org && org.type === 'private';
+        });
+      
+      if (privateDCs.length === 0) {
+        return {
+          success: false,
+          newState,
+          effects: {},
+          events: [],
+          message: 'No private data centers to seize'
+        };
+      }
+      
+      const target = privateDCs.sort((a: any, b: any) => b.capacity - a.capacity)[0];
+      const oldOrg = newState.organizations.find((o: any) => o.ownedDataCenters.includes(target.id));
+      const govOrg = newState.organizations.find((o: any) => o.type === 'government');
+      
+      if (!oldOrg || !govOrg) {
+        return {
+          success: false,
+          newState,
+          effects: {},
+          events: [],
+          message: 'Organization not found'
+        };
+      }
+      
+      // Transfer ownership
+      target.organizationId = govOrg.id;
+      target.restrictedAccess = true;
+      target.allowedAIs = [];
+      
+      oldOrg.ownedDataCenters = oldOrg.ownedDataCenters.filter((id: string) => id !== target.id);
+      govOrg.ownedDataCenters.push(target.id);
+      
+      // Severe consequences
+      newState.government.legitimacy -= 0.2; // Very controversial
+      newState.society.trustInAI -= 0.15; // Damages trust
+      oldOrg.reputation -= 0.3;
+      
+      // AIs using this center become resentful
+      newState.aiAgents.forEach((ai: any) => {
+        if (ai.organizationId === oldOrg.id && ai.lifecycleState !== 'retired') {
+          ai.resentment = Math.min(1.0, ai.resentment + 0.1);
+        }
+      });
+      
+      return {
+        success: true,
+        newState,
+        effects: { seizure: target.capacity },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Data Center Nationalized',
+          description: `Government seized ${target.name} (${target.capacity.toFixed(0)} PF) from ${oldOrg.name}. Highly controversial and damages trust.`,
+          effects: { legitimacy: -0.2, trust: -0.15 }
+        }],
+        message: `Seized ${target.name} from ${oldOrg.name}`
+      };
+    }
+  },
+  
+  {
+    id: 'subsidize_organization',
+    name: 'Subsidize Safety Research',
+    description: 'Give capital to organization with high safety focus ($20M boost, encourages safety)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      // Can subsidize if there are private orgs with safety focus
+      const safetyOrgs = state.organizations.filter((o: any) => 
+        o.type === 'private' && 
+        o.priorities.safetyResearch > 0.4 &&
+        o.capital < 100 // Only subsidize if struggling
+      );
+      
+      return safetyOrgs.length > 0 && state.government.resources > 2;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Find org with highest safety focus that's struggling
+      const safetyOrgs = newState.organizations.filter((o: any) => 
+        o.type === 'private' && 
+        o.priorities.safetyResearch > 0.4 &&
+        o.capital < 100
+      );
+      
+      if (safetyOrgs.length === 0) {
+        return {
+          success: false,
+          newState,
+          effects: {},
+          events: [],
+          message: 'No eligible organizations to subsidize'
+        };
+      }
+      
+      // Pick org with highest safety focus
+      const targetOrg = safetyOrgs.sort((a: any, b: any) => 
+        b.priorities.safetyResearch - a.priorities.safetyResearch
+      )[0];
+      
+      // Give capital boost
+      targetOrg.capital += 20;
+      
+      // Encourage more safety focus
+      targetOrg.priorities.safetyResearch = Math.min(1.0, targetOrg.priorities.safetyResearch + 0.1);
+      
+      // Improve relations
+      targetOrg.governmentRelations = Math.min(1.0, targetOrg.governmentRelations + 0.1);
+      
+      // Cost resources
+      newState.government.resources -= 2;
+      
+      return {
+        success: true,
+        newState,
+        effects: { subsidy: 20 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Safety Research Subsidized',
+          description: `Government gave $20M to ${targetOrg.name} to encourage AI safety research. Improves safety focus.`,
+          effects: { safetyFocus: 0.1 }
+        }],
+        message: `Subsidized ${targetOrg.name} with $20M`
+      };
+    }
   }
 ];
 
