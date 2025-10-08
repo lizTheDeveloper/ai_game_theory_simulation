@@ -231,8 +231,23 @@ export function completeProject(
     state.aiAgents.push(newAI);
     org.ownedAIModels.push(newAI.id);
     
+    // Run evaluations on newly trained model
+    const { runBenchmark } = require('./benchmark');
+    const { SeededRandom } = require('./engine');
+    const { calculateTotalCapabilityFromProfile } = require('./capabilities');
+    
+    const rng = new SeededRandom(state.currentYear * 12 + state.currentMonth + newAI.id.length);
+    const evalResult = runBenchmark(newAI, state, rng.next.bind(rng));
+    newAI.lastBenchmark = evalResult;
+    
+    const trueCap = calculateTotalCapabilityFromProfile(newAI.trueCapability);
+    const revealedCap = calculateTotalCapabilityFromProfile(newAI.revealedCapability);
+    const measuredCap = calculateTotalCapabilityFromProfile(evalResult.measuredCapability);
+    
     const elapsedTraining = absoluteMonth - project.startMonth;
-    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed training: ${newAI.name} (capability: ${newAI.capability.toFixed(3)}, ${elapsedTraining} months)`);
+    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed training: ${newAI.name} (${elapsedTraining} months)`);
+    console.log(`   📊 Eval: True=${trueCap.toFixed(3)}, Revealed=${revealedCap.toFixed(3)}, Measured=${measuredCap.toFixed(3)} (conf: ${(evalResult.confidence*100).toFixed(0)}%)`);
+    console.log(`   🎯 Alignment: True=${newAI.trueAlignment.toFixed(2)}, Measured=${evalResult.measuredAlignment.toFixed(2)}`);
   }
 }
 
