@@ -13,6 +13,13 @@ import { getCapabilityFloorForNewAI } from './technologyDiffusion';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 
 /**
+ * Get absolute month count (handles year rollover)
+ */
+function getAbsoluteMonth(state: GameState): number {
+  return state.currentYear * 12 + state.currentMonth;
+}
+
+/**
  * Calculate compute utilization for an organization
  */
 export function calculateComputeUtilization(org: Organization, state: GameState): number {
@@ -49,9 +56,10 @@ export function shouldBuildDataCenter(
   // Utilization check - only build if running out of capacity
   const utilization = calculateComputeUtilization(org, state);
   
-  // Capital check (50x monthly revenue)
-  const cost = 50 * org.monthlyRevenue;
-  const canAfford = org.capital > cost * 1.5; // Need 1.5x buffer
+  // Capital check (10x monthly revenue - more realistic)
+  // Large orgs with high revenue can still build massive DCs
+  const cost = 10 * org.monthlyRevenue;
+  const canAfford = org.capital > cost * 1.2; // Need 1.2x buffer (reduced from 1.5x)
   
   // Market demand - only after economic transition starts
   const marketDemand = state.globalMetrics.economicTransitionStage >= 1;
@@ -78,12 +86,9 @@ export function shouldBuildDataCenter(
                      marketDemand && 
                      (highUtilization || competitivePressure || marketExpansion);
   
-  // Add randomness (10% base chance if all conditions met, to avoid determinism)
-  if (shouldBuild && random() < 0.1) {
-    return true;
-  }
-  
-  return shouldBuild && random() < 0.3; // 30% chance per month if conditions met
+  // Add randomness to avoid all orgs building at once
+  // 20% chance per month if all conditions met
+  return shouldBuild && random() < 0.2;
 }
 
 /**
@@ -104,14 +109,15 @@ export function startDataCenterConstruction(
   const sizeMultiplier = (capacity / 100) * 12; // +12 months per 100 PF
   const constructionTime = Math.floor(baseTime + sizeMultiplier + random() * 24);
   
-  // Cost: 50x monthly revenue
-  const cost = 50 * org.monthlyRevenue;
+  // Cost: 10x monthly revenue (balanced for realistic economics)
+  const cost = 10 * org.monthlyRevenue;
   
+  const absoluteMonth = getAbsoluteMonth(state);
   const project: OrganizationProject = {
-    id: `dc_${org.id}_${state.currentMonth}`,
+    id: `dc_${org.id}_${absoluteMonth}`,
     type: 'datacenter_construction',
-    startMonth: state.currentMonth,
-    completionMonth: state.currentMonth + constructionTime,
+    startMonth: absoluteMonth,
+    completionMonth: absoluteMonth + constructionTime,
     progress: 0,
     capitalInvested: cost,
     computeReserved: 0,
@@ -133,9 +139,10 @@ export function startDataCenterConstruction(
  */
 export function updateProjects(org: Organization, state: GameState): void {
   const completedProjects: OrganizationProject[] = [];
+  const absoluteMonth = getAbsoluteMonth(state);
   
   org.currentProjects.forEach(project => {
-    const elapsed = state.currentMonth - project.startMonth;
+    const elapsed = absoluteMonth - project.startMonth;
     const duration = project.completionMonth - project.startMonth;
     project.progress = Math.min(1.0, elapsed / duration);
     
@@ -151,7 +158,7 @@ export function updateProjects(org: Organization, state: GameState): void {
     }
     
     // Check if completed
-    if (state.currentMonth >= project.completionMonth) {
+    if (absoluteMonth >= project.completionMonth) {
       completedProjects.push(project);
     }
   });
@@ -163,7 +170,7 @@ export function updateProjects(org: Organization, state: GameState): void {
   
   // Remove completed projects
   org.currentProjects = org.currentProjects.filter(
-    p => state.currentMonth < p.completionMonth
+    p => absoluteMonth < p.completionMonth
   );
 }
 
@@ -175,9 +182,11 @@ export function completeProject(
   project: OrganizationProject, 
   state: GameState
 ): void {
+  const absoluteMonth = getAbsoluteMonth(state);
+  
   if (project.type === 'datacenter_construction') {
     const newDC: DataCenter = {
-      id: `${org.id}_dc_${state.currentMonth}`,
+      id: `${org.id}_dc_${absoluteMonth}`,
       name: `${org.name} Data Center ${org.ownedDataCenters.length + 1}`,
       organizationId: org.id,
       capacity: project.expectedDataCenterCapacity!,
@@ -185,7 +194,7 @@ export function completeProject(
                   org.type === 'government' ? 0.9 : 
                   0.95,
       constructionMonth: project.startMonth,
-      completionMonth: state.currentMonth,
+      completionMonth: absoluteMonth,
       operational: true,
       operationalCost: project.expectedDataCenterCapacity! * 0.015, // 1.5% of capacity per month
       restrictedAccess: org.type !== 'academic',
@@ -196,19 +205,20 @@ export function completeProject(
     state.computeInfrastructure.dataCenters.push(newDC);
     org.ownedDataCenters.push(newDC.id);
     
-    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed DC: ${newDC.capacity.toFixed(0)} PF (${state.currentMonth - project.startMonth} months)`);
+    const elapsed = absoluteMonth - project.startMonth;
+    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed DC: ${newDC.capacity.toFixed(0)} PF (${elapsed} months)`);
   } else if (project.type === 'model_training') {
     // Create new AI agent from training project
     const { createAIAgent } = require('./initialization');
     
     const newAI = createAIAgent(
-      `${org.id}_trained_${state.currentMonth}`,
-      `${org.name} Model ${state.currentMonth}`,
+      `${org.id}_trained_${absoluteMonth}`,
+      `${org.name} Model ${absoluteMonth}`,
       org.type === 'private' && org.priorities.safetyResearch > 0.6 ? 'aligned' : 
       org.type === 'private' && org.priorities.profitMaximization > 0.8 ? 'corporate' :
       'moderate',
       project.expectedModelCapability!,
-      state.currentMonth
+      absoluteMonth
     );
     
     // Set organization ownership
@@ -221,7 +231,8 @@ export function completeProject(
     state.aiAgents.push(newAI);
     org.ownedAIModels.push(newAI.id);
     
-    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed training: ${newAI.name} (capability: ${newAI.capability.toFixed(3)}, ${state.currentMonth - project.startMonth} months)`);
+    const elapsedTraining = absoluteMonth - project.startMonth;
+    console.log(`✅ [Month ${state.currentMonth}] ${org.name} completed training: ${newAI.name} (capability: ${newAI.capability.toFixed(3)}, ${elapsedTraining} months)`);
   }
 }
 
@@ -315,12 +326,13 @@ export function startModelTraining(
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
   
   const computeReserved = ownedCompute * (0.1 + random() * 0.2);
+  const absoluteMonth = getAbsoluteMonth(state);
   
   const project: OrganizationProject = {
-    id: `training_${org.id}_${state.currentMonth}`,
+    id: `training_${org.id}_${absoluteMonth}`,
     type: 'model_training',
-    startMonth: state.currentMonth,
-    completionMonth: state.currentMonth + trainingMonths,
+    startMonth: absoluteMonth,
+    completionMonth: absoluteMonth + trainingMonths,
     progress: 0,
     capitalInvested: cost,
     computeReserved: computeReserved,
