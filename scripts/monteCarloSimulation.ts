@@ -33,47 +33,51 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
-// Create write stream
-const logStream = fs.createWriteStream(outputFile, { flags: 'a' });
-
-// Custom logger that writes to both console and file
+// Use synchronous writes for reliability (append mode)
+// This is slower but ensures logs are never lost
 function log(message: string) {
   console.log(message);
-  logStream.write(message + '\n');
+  try {
+    fs.appendFileSync(outputFile, message + '\n', 'utf8');
+  } catch (err) {
+    console.error('Failed to write to log file:', err);
+  }
 }
 
 function logWarn(message: string) {
-  logWarn(message);
-  logStream.write(`WARN: ${message}\n`);
+  console.warn(message);
+  try {
+    fs.appendFileSync(outputFile, `WARN: ${message}\n`, 'utf8');
+  } catch (err) {
+    console.error('Failed to write warning to log file:', err);
+  }
 }
 
 function logError(message: string) {
   console.error(message);
-  logStream.write(`ERROR: ${message}\n`);
+  try {
+    fs.appendFileSync(outputFile, `ERROR: ${message}\n`, 'utf8');
+  } catch (err) {
+    console.error('Failed to write error to log file:', err);
+  }
 }
 
-// Log file location
+// Log file location and header
 console.log(`📝 Writing output to: ${outputFile}\n`);
-logStream.write(`Monte Carlo Simulation Run\n`);
-logStream.write(`Timestamp: ${new Date().toISOString()}\n`);
-logStream.write(`Output File: ${outputFile}\n`);
-logStream.write(`${'='.repeat(80)}\n\n`);
+fs.appendFileSync(outputFile, `Monte Carlo Simulation Run\n`, 'utf8');
+fs.appendFileSync(outputFile, `Timestamp: ${new Date().toISOString()}\n`, 'utf8');
+fs.appendFileSync(outputFile, `Output File: ${outputFile}\n`, 'utf8');
+fs.appendFileSync(outputFile, `${'='.repeat(80)}\n\n`, 'utf8');
 
-// Handle process termination to ensure logs are saved
-process.on('exit', () => {
-  logStream.end();
-});
-
+// Handle process termination for clean logs
 process.on('SIGINT', () => {
   log('\n\n⚠️  Simulation interrupted by user');
-  logStream.end();
   process.exit(130);
 });
 
 process.on('uncaughtException', (err) => {
   logError(`\n\n❌ UNCAUGHT EXCEPTION: ${err.message}`);
   logError(err.stack || '');
-  logStream.end();
   process.exit(1);
 });
 
@@ -1219,7 +1223,5 @@ log(`\n✅ Monte Carlo analysis complete!`);
 log(`   ${NUM_RUNS} runs, ${MAX_MONTHS} months each`);
 log(`   Total simulation time: ${totalTime.toFixed(1)}s\n`);
 
-// Close log stream
-logStream.end(() => {
-  console.log(`\n💾 Full output saved to: ${outputFile}`);
-});
+// Log file is complete (sync writes, no need to close stream)
+console.log(`\n💾 Full output saved to: ${outputFile}`);
