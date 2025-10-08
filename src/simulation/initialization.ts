@@ -249,6 +249,14 @@ export function createDefaultInitialState(): GameState {
     // Phase 11: Initialize catastrophic scenarios with prerequisite tracking
     catastrophicScenarios: initializeCatastrophicScenarios(),
     
+    // Phase: Golden Age & Accumulation Systems
+    goldenAgeState: {
+      active: false,
+      entryMonth: null,
+      duration: 0,
+      entryReason: ''
+    },
+    
     eventLog: [],
     technologyTree: [],
     

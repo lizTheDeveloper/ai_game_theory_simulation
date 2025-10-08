@@ -62,7 +62,9 @@ export {
   calculateAverageAlignment,
   calculateEffectiveControl,
   calculateOutcomeProbabilities,
-  determineActualOutcome
+  determineActualOutcome,
+  updateGoldenAgeState,  // Phase: Golden Age & Accumulation Systems
+  checkGoldenAgeConditions  // Phase: Golden Age & Accumulation Systems
 } from './outcomes';
 
 // ============================================================================

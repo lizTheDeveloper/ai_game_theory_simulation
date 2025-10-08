@@ -540,6 +540,22 @@ export interface OrganizationProject {
   cancellationPenalty: number;   // Sunk costs (0-1, fraction of investment lost)
 }
 
+/**
+ * Golden Age State (Phase: Golden Age & Accumulation Systems)
+ * 
+ * Tracks whether the simulation is in a "Golden Age" - immediate prosperity
+ * that looks great but may be masking accumulating problems.
+ * 
+ * Golden Age is a STATE, not an OUTCOME. The simulation continues running
+ * to see if it transitions to Utopia (sustained) or Collapse (problems manifest).
+ */
+export interface GoldenAgeState {
+  active: boolean;              // Are we currently in a Golden Age?
+  entryMonth: number | null;    // When did the Golden Age begin?
+  duration: number;             // How many months have we been in Golden Age?
+  entryReason: string;          // Why did we enter Golden Age?
+}
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -566,6 +582,7 @@ export interface GameState {
   computeInfrastructure: ComputeInfrastructure; // Phase 1: Compute resource system
   endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
   catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
+  goldenAgeState: GoldenAgeState; // Phase: Golden Age detection (immediate prosperity tracking)
   
   // Configuration
   config: ConfigurationSettings;

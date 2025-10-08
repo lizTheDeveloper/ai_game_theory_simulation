@@ -17,7 +17,8 @@ import {
   calculateTotalAICapability,
   calculateAverageAlignment,
   detectCrisis,
-  determineActualOutcome
+  determineActualOutcome,
+  updateGoldenAgeState  // Phase: Golden Age & Accumulation Systems
 } from './calculations';
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
@@ -472,6 +473,10 @@ export class SimulationEngine {
         console.log(`   Month: ${month}\n`);
         break;
       }
+      
+      // Phase: Golden Age & Accumulation Systems
+      // Update Golden Age state each month (tracks entry/exit/duration)
+      updateGoldenAgeState(state, month);
       
       // Check for ACTUAL outcomes (not probabilities)
       if (checkActualOutcomes) {

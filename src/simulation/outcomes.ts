@@ -3,9 +3,13 @@
  * 
  * Determines which outcome (utopia/dystopia/extinction) is occurring
  * based on game state conditions.
+ * 
+ * Phase: Golden Age & Accumulation Systems
+ * - Golden Age detection: Immediate prosperity (fragile)
+ * - Utopia detection: Sustained Golden Age + low accumulation (stable)
  */
 
-import { GameState, OutcomeMetrics, OutcomeType } from '@/types/game';
+import { GameState, OutcomeMetrics, OutcomeType, GoldenAgeState } from '@/types/game';
 import { calculateQualityOfLife } from './qualityOfLife';
 
 /**
@@ -107,6 +111,107 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
 }
 
 /**
+ * Check if Golden Age conditions are met
+ * 
+ * Golden Age = immediate prosperity that looks great now but may be masking problems.
+ * 
+ * Entry conditions:
+ * - High QoL across multiple dimensions (≥ 0.7)
+ * - Material abundance (Stage 3+)
+ * - High trust (≥ 0.65)
+ * - Low active conflict
+ * - Economic stability
+ */
+export function checkGoldenAgeConditions(state: GameState): {
+  met: boolean;
+  reason: string;
+} {
+  const qol = calculateQualityOfLife(state.qualityOfLifeSystems);
+  const trust = state.society.trustInAI;
+  const economicStage = state.globalMetrics.economicTransitionStage;
+  const socialStability = state.globalMetrics.socialStability;
+  const avgAlignment = calculateAverageAlignment(state.aiAgents);
+  
+  // High QoL threshold
+  if (qol < 0.7) {
+    return { met: false, reason: 'QoL below Golden Age threshold' };
+  }
+  
+  // Material abundance (Stage 3+)
+  if (economicStage < 3.0) {
+    return { met: false, reason: 'Economic stage below 3 (not yet abundant)' };
+  }
+  
+  // High trust requirement
+  if (trust < 0.65) {
+    return { met: false, reason: 'Trust below Golden Age threshold' };
+  }
+  
+  // Social stability (not in active crisis)
+  if (socialStability < 0.4) {
+    return { met: false, reason: 'Social instability too high' };
+  }
+  
+  // Not in active extinction
+  if (state.extinctionState.active) {
+    return { met: false, reason: 'Active extinction scenario in progress' };
+  }
+  
+  // Determine entry reason based on conditions
+  let reason = 'High prosperity achieved: ';
+  if (economicStage >= 3.5) {
+    reason += 'post-scarcity abundance';
+  } else {
+    reason += 'high QoL + material abundance';
+  }
+  
+  if (avgAlignment > 0.7) {
+    reason += ' + aligned AI';
+  }
+  
+  return { met: true, reason };
+}
+
+/**
+ * Update Golden Age state based on current conditions
+ * 
+ * Called each month to:
+ * 1. Check if we should enter Golden Age
+ * 2. Update duration if already in Golden Age
+ * 3. Exit Golden Age if conditions no longer met
+ */
+export function updateGoldenAgeState(
+  state: GameState,
+  currentMonth: number
+): void {
+  const conditions = checkGoldenAgeConditions(state);
+  
+  if (conditions.met && !state.goldenAgeState.active) {
+    // Enter Golden Age
+    state.goldenAgeState.active = true;
+    state.goldenAgeState.entryMonth = currentMonth;
+    state.goldenAgeState.duration = 0;
+    state.goldenAgeState.entryReason = conditions.reason;
+    
+    console.log(`\n🌟 GOLDEN AGE BEGINS (Month ${currentMonth})`);
+    console.log(`   Reason: ${conditions.reason}`);
+    console.log(`   Note: This is immediate prosperity - sustainability not yet proven\n`);
+  } else if (!conditions.met && state.goldenAgeState.active) {
+    // Exit Golden Age (conditions no longer met)
+    const duration = currentMonth - (state.goldenAgeState.entryMonth || 0);
+    console.log(`\n⚠️  GOLDEN AGE ENDED (Month ${currentMonth})`);
+    console.log(`   Duration: ${duration} months`);
+    console.log(`   Reason: ${conditions.reason}\n`);
+    
+    state.goldenAgeState.active = false;
+    state.goldenAgeState.duration = duration;
+  } else if (conditions.met && state.goldenAgeState.active) {
+    // Continue Golden Age - update duration
+    state.goldenAgeState.duration = currentMonth - (state.goldenAgeState.entryMonth || 0);
+  }
+}
+
+/**
  * Determine if an ACTUAL outcome has occurred (not just probability)
  * 
  * Based on ai_alignment_game_spec.md formal definitions, updated for new balance mechanics.
@@ -114,6 +219,10 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
  * Key difference: This checks if an outcome has ACTUALLY happened, not just if it's likely.
  * - Extinction probability of 90% doesn't mean extinction occurred
  * - We need actual concrete conditions (unaligned superintelligence, collapsed society, etc.)
+ * 
+ * Phase: Golden Age & Accumulation Systems
+ * - Check for Golden Age first (immediate prosperity)
+ * - Only declare Utopia if Golden Age + sustainability verified
  */
 export function determineActualOutcome(
   state: GameState,
@@ -194,36 +303,63 @@ export function determineActualOutcome(
   }
   
   // UTOPIA: High quality of life, aligned AI, maintained trust
-  // From spec: qol > 0.7, trust > 0.7, alignment > 0.7, moderate control (0.2-0.6)
+  // Phase: Golden Age & Accumulation Systems
+  // 
+  // NEW LOGIC: Check for Golden Age conditions first
+  // - If conditions met but not yet in Golden Age → enter Golden Age, continue sim
+  // - If in Golden Age → continue sim to verify sustainability
+  // - Only declare Utopia once accumulation systems verify sustainability
+  // 
+  // For now (Phase 1), we detect Golden Age but DON'T declare Utopia
+  // This prevents the 100% Utopia outcome by continuing the simulation
   
-  // Confirmed utopia: All conditions met for extended period
+  // Check 1: Confirmed high-prosperity conditions
+  // (Previously declared immediate Utopia)
   if (qol > 0.75 && trust > 0.7 && avgAlignment > 0.65 && 
       totalAICapability > 1.0 && effectiveControl > 0.25 && effectiveControl < 0.65 && 
       currentMonth > 30) {
+    // This is Golden Age territory - but need to verify sustainability
+    // Return 'active' to continue simulation
     return {
-      outcome: 'utopia',
-      reason: 'Stable high-quality society with aligned powerful AI',
-      confidence: 0.85
+      outcome: 'active',
+      reason: state.goldenAgeState.active 
+        ? `Golden Age ongoing (${state.goldenAgeState.duration} months) - verifying sustainability`
+        : 'High-quality conditions met - checking for Golden Age entry',
+      confidence: 0.0
     };
   }
   
-  // Post-scarcity utopia: Reached stage 4 with good conditions
+  // Check 2: Post-scarcity conditions
+  // (Previously declared immediate Utopia - this was causing 100% Utopia)
   if (economicStage >= 3.5 && qol > 0.7 && trust > 0.65 && avgAlignment > 0.6 && currentMonth > 24) {
+    // This is Golden Age territory - but need to verify sustainability
+    // Return 'active' to continue simulation
     return {
-      outcome: 'utopia',
-      reason: 'Successful transition to post-scarcity abundance',
-      confidence: 0.8
+      outcome: 'active',
+      reason: state.goldenAgeState.active
+        ? `Golden Age (post-scarcity) ongoing (${state.goldenAgeState.duration} months) - verifying sustainability`
+        : 'Post-scarcity conditions met - checking for Golden Age entry',
+      confidence: 0.0
     };
   }
   
-  // Solarpunk path: High capability AI working cooperatively
+  // Check 3: Solarpunk cooperative path
+  // (Previously declared immediate Utopia)
   if (totalAICapability > 1.5 && avgAlignment > 0.7 && qol > 0.8 && trust > 0.75 && currentMonth > 36) {
+    // This is Golden Age territory - but need to verify sustainability
+    // Return 'active' to continue simulation
     return {
-      outcome: 'utopia',
-      reason: 'Cooperative human-AI expansion achieved',
-      confidence: 0.9
+      outcome: 'active',
+      reason: state.goldenAgeState.active
+        ? `Golden Age (cooperative AI) ongoing (${state.goldenAgeState.duration} months) - verifying sustainability`
+        : 'Cooperative AI conditions met - checking for Golden Age entry',
+      confidence: 0.0
     };
   }
+  
+  // TODO (Phase 5): Add Utopia declaration once accumulation systems implemented
+  // Requirements: Golden Age + low environmental debt + low social fragmentation + low tech risk
+  // For now, Golden Age continues indefinitely (will see what emerges)
   
   // Still in play - no outcome locked in yet
   return {
