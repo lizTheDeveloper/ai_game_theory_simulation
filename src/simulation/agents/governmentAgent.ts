@@ -1942,6 +1942,44 @@ export function selectGovernmentAction(
  * Execute government actions for one month
  * Government action frequency is configurable (default 1 per month)
  */
+/**
+ * Automatic evaluation investment based on public trust in AI
+ * 
+ * Higher public trust → More willingness to invest in evaluation
+ * Lower trust → Government focuses on immediate concerns instead
+ */
+function autoInvestInEvaluation(state: GameState): void {
+  const publicTrust = state.society.trustInAI;
+  
+  // Investment rate scales with trust
+  // High trust (0.7+): 0.2 points/month across all categories
+  // Medium trust (0.4-0.7): 0.1 points/month
+  // Low trust (<0.4): 0.05 points/month (minimal investment)
+  const investmentRate = publicTrust > 0.7 ? 0.2 :
+                        publicTrust > 0.4 ? 0.1 :
+                        0.05;
+  
+  // Spread investment across all 4 categories
+  const perCategory = investmentRate / 4;
+  
+  state.government.evaluationInvestment.benchmarkSuite = Math.min(
+    10,
+    state.government.evaluationInvestment.benchmarkSuite + perCategory
+  );
+  state.government.evaluationInvestment.alignmentTests = Math.min(
+    10,
+    state.government.evaluationInvestment.alignmentTests + perCategory
+  );
+  state.government.evaluationInvestment.redTeaming = Math.min(
+    10,
+    state.government.evaluationInvestment.redTeaming + perCategory
+  );
+  state.government.evaluationInvestment.interpretability = Math.min(
+    10,
+    state.government.evaluationInvestment.interpretability + perCategory
+  );
+}
+
 export function executeGovernmentActions(
   state: GameState,
   random: () => number = Math.random
@@ -1950,6 +1988,9 @@ export function executeGovernmentActions(
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
   const messages: string[] = [];
+  
+  // AUTOMATIC: Invest in evaluation based on public trust
+  autoInvestInEvaluation(currentState);
   
   // Government: Configurable frequency
   const actionsThisMonth = Math.floor(currentState.config.governmentActionFrequency);
