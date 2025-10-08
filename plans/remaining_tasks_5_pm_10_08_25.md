@@ -28,7 +28,13 @@
 - `8fdcce6` feat: Implement Phase 1 Utopia Path Enhancements & Dystopia Mechanics
 - `6851de9` chore: Add session summary and Cursor IDE configuration
 
-**Testing:** Monte Carlo validation running to observe emergent outcome changes
+**Monte Carlo Result:** Phase 1 led to 100% Utopia (unrealistic)
+
+**New Direction:**
+- ✅ **Research Complete:** `post-scarcity-timeline-research.md` - Mechanism-focused research
+- ✅ **New Plan Created:** `golden-age-and-accumulation-systems.md` - Golden Age vs Utopia distinction
+- 🎯 **Core Insight:** Immediate prosperity (Golden Age) ≠ Sustainable prosperity (Utopia)
+- 🎯 **Next Focus:** Add accumulation systems (environmental, social, technological) to create fragility
 
 ---
 
@@ -72,10 +78,75 @@
 
 ## 🚧 Major Unimplemented Systems
 
+### 0. Golden Age & Accumulation Systems (NEW - Oct 8, 2025)
+
+**Status:** 📋 PLANNED
+**Plan:** `golden-age-and-accumulation-systems.md`
+**Priority:** CRITICAL (fixes 100% Utopia problem)
+**Complexity:** HIGH
+
+**Core Problem:** Simulation declares "Utopia" when reaching high QoL, but doesn't track hidden accumulating problems.
+
+**Solution:** Distinguish Golden Age (immediate prosperity, fragile) from Utopia (sustained, stable).
+
+#### Implementation Checklist:
+
+**Phase 1: Golden Age Detection**
+- [ ] Add Golden Age state detection (high QoL + Stage 3+ + high trust)
+- [ ] Distinguish Golden Age (continue sim) from Utopia (end sim)
+- [ ] Golden Age is a STATE, not an OUTCOME
+- [ ] Log Golden Age entry/duration
+
+**Phase 2: Environmental Accumulation**
+- [ ] Create `environmental.ts` module
+- [ ] Track: resource reserves, pollution level, climate stability, biodiversity
+- [ ] Production → resource depletion (unless mitigated)
+- [ ] Energy usage → pollution accumulation
+- [ ] Rapid growth → climate degradation
+- [ ] Mitigation: clean energy, conservation tech, ecosystem management
+- [ ] Crisis triggers: resource crisis, pollution crisis, climate catastrophe, ecosystem collapse
+
+**Phase 3: Social Cohesion & Meaning Crisis**
+- [ ] Create `socialCohesion.ts` module
+- [ ] Track: meaning crisis level, institutional legitimacy, social cohesion, cultural adaptation
+- [ ] Automation → meaning crisis accumulation
+- [ ] Tech pace → institutional erosion
+- [ ] Inequality → social fragmentation
+- [ ] Mitigation: UBI, education reform, community programs, purpose frameworks
+- [ ] Crisis triggers: meaning collapse, institutional failure, social unrest
+
+**Phase 4: Technological Risk Accumulation**
+- [ ] Create `technologicalRisk.ts` module
+- [ ] Track: misalignment risk, safety debt, concentration risk, complacency level
+- [ ] Fast capability growth → misalignment risk
+- [ ] Capability > safety research → safety debt
+- [ ] Market concentration → single point of failure
+- [ ] Golden Age → complacency → reduced vigilance
+- [ ] Mitigation: alignment research, compute governance, safety reviews
+- [ ] Crisis triggers: control loss, corporate dystopia, complacency crisis
+
+**Phase 5: Utopia Sustainability Check**
+- [ ] Utopia requires: Golden Age + low accumulation across all 3 systems
+- [ ] Let model determine duration (no prescriptive "must last X months")
+- [ ] Test: Utopia only when truly sustainable
+
+**Phase 6: Collapse Pathways**
+- [ ] Golden Age → Environmental collapse → QoL drop → extinction
+- [ ] Golden Age → Social collapse → unrest → dystopia
+- [ ] Golden Age → Technological collapse → catastrophic scenarios
+- [ ] Cascading failures (multiple systems)
+
+**Phase 7: Validation**
+- [ ] Monte Carlo runs to observe emergent distribution
+- [ ] Trust the model - no outcome targets
+- [ ] If still 100% Utopia, investigate missing mechanisms
+
+---
+
 ### 1. Utopian Dynamics (From `utopian-dynamics-spec.md`)
 
-**Status:** ❌ NOT STARTED
-**Priority:** HIGH (missing realistic positive feedback loops in post-scarcity scenarios)
+**Status:** ❌ NOT STARTED → 🔄 PARTIALLY SUPERSEDED by Golden Age plan
+**Priority:** MEDIUM (Phase 1 done, accumulation systems more critical now)
 **Complexity:** VERY HIGH
 
 #### 1.1 Abundance Generation Systems
