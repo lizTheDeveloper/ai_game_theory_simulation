@@ -196,7 +196,7 @@ export function completeProject(
       constructionMonth: project.startMonth,
       completionMonth: absoluteMonth,
       operational: true,
-      operationalCost: project.expectedDataCenterCapacity! * 0.015, // 1.5% of capacity per month
+      operationalCost: project.expectedDataCenterCapacity! * 0.005, // 0.5% of capacity per month (6%/year, realistic)
       restrictedAccess: org.type !== 'academic',
       allowedAIs: [],
       region: 'domestic'
@@ -332,8 +332,8 @@ export function startModelTraining(
   // Training time: 3-12 months
   const trainingMonths = 3 + Math.floor(random() * 9);
   
-  // Cost: 5x monthly revenue
-  const cost = 5 * org.monthlyRevenue;
+  // Cost: 2x monthly revenue (reduced from 5x based on research: GPT-4 ~$100-200M, largest ~$1B)
+  const cost = 2 * org.monthlyRevenue;
   
   // Compute reservation: 10-30% of org's compute
   const ownedCompute = state.computeInfrastructure.dataCenters
@@ -421,15 +421,23 @@ export function calculateComputeRevenue(org: Organization, state: GameState): nu
   );
   
   const totalCapacity = ownedDCs.reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-  const allocatedCompute = Array.from(state.computeInfrastructure.computeAllocations.values())
-    .filter(alloc => org.ownedAIModels.includes(alloc.aiId))
-    .reduce((sum, alloc) => sum + alloc.allocated, 0);
+  
+  // Handle computeAllocations as either Map or Object (after JSON serialization)
+  const allocations = state.computeInfrastructure.computeAllocations;
+  const allocationValues = allocations instanceof Map 
+    ? Array.from(allocations.values())
+    : Object.values(allocations);
+  
+  const allocatedCompute = allocationValues
+    .filter((alloc: any) => org.ownedAIModels.includes(alloc.aiId))
+    .reduce((sum: number, alloc: any) => sum + alloc.allocated, 0);
   
   const unusedCapacity = Math.max(0, totalCapacity - allocatedCompute);
   
-  // Revenue: $0.5M per PetaFLOP of unused capacity per month
-  // (Companies can rent out their idle compute to others)
-  const revenuePerPetaFLOP = 0.5;
+  // Revenue: $2M per PetaFLOP of unused capacity per month
+  // Based on research: AWS/Azure charge ~$2-4/GPU-hour, 1 PFLOP ≈ 1000 GPUs
+  // 1 PFLOP × 720 hr/mo × $3/hr = ~$2.16M/month
+  const revenuePerPetaFLOP = 2.0;
   
   return unusedCapacity * revenuePerPetaFLOP;
 }
