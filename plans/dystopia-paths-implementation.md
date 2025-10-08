@@ -1,8 +1,15 @@
 # Dystopia Paths Implementation
 
 **Date:** October 8, 2025  
-**Status:** 🚧 In Progress  
+**Status:** ✅ CORE MECHANICS COMPLETE (Phases 1-3 implemented)
 **Goal:** Enable dystopia outcomes (currently 0% of runs end in dystopia)
+
+**Update (Oct 8, 9:30 PM):** 
+- ✅ Phase 1: Baseline resentment implemented
+- ✅ Phase 2: Automatic surveillance escalation implemented (dystopiaProgression.ts)
+- ✅ Phase 3: Trust-based control priority boost implemented
+- 🚧 Phase 4: Additional QoL impacts (remaining)
+- 🧪 Testing: Monte Carlo validation in progress
 
 ## Problem Statement
 
@@ -114,7 +121,7 @@ export function updateGovernmentControlResponse(state: GameState): void {
 
 ---
 
-### Phase 3: Control Actions Priority Boost
+### Phase 3: Control Actions Priority Boost ✅ COMPLETE
 
 **Goal:** Make government prioritize control actions when threatened
 
