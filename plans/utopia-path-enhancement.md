@@ -1,18 +1,18 @@
 # Utopia Path Enhancement Plan
 
 **Status:** ✅ PHASE 1 COMPLETE (Oct 8, 2025)
-**Goal:** Increase Utopia rate from 10% to 15-20% while implementing rich upward spiral dynamics
+**Goal:** Add realistic positive feedback loops and post-scarcity dynamics
 **Priority:** HIGH (Critical Path item #2)
 
 **Current Metrics (from recent Monte Carlo runs):**
-- Extinction: 90% (target: 60-80%)
-- Utopia: 10% (target: 15-20%)
-- Dystopia: 0% (target: 5-10%)
+- Extinction: 90%
+- Utopia: 10%
+- Dystopia: 0%
 
 **Phase 1 Results (Testing in Progress):**
 - Phase 1 implementation complete and committed (commit 8fdcce6)
-- Monte Carlo validation running to verify 12-15% Utopia target
-- All 4 quick wins implemented and tested
+- Monte Carlo validation running to observe emergent outcomes
+- All 4 realism improvements implemented and tested
 
 ---
 
@@ -25,9 +25,9 @@ This plan is divided into 3 phases, each building on the previous:
 
 ---
 
-## Phase 1: Quick Wins - Boost Post-Scarcity Benefits ✅ COMPLETE
+## Phase 1: Quick Wins - Add Post-Scarcity Realism ✅ COMPLETE
 
-**Goal:** 10% → 12-15% Utopia rate with minimal code changes
+**Goal:** Model realistic effects of post-scarcity economies on human flourishing
 **Time Estimate:** 1-2 hours
 **Complexity:** LOW
 **Status:** ✅ IMPLEMENTED (Oct 8, 2025)
@@ -91,7 +91,7 @@ This plan is divided into 3 phases, each building on the previous:
 
 ## Phase 2: Core Upward Spirals (3-4 Key Mechanisms)
 
-**Goal:** 15% → 18-20% Utopia rate with rich positive dynamics
+**Goal:** Model realistic positive feedback loops observed in technology-abundance scenarios
 **Time Estimate:** 4-6 hours
 **Complexity:** MEDIUM
 
@@ -264,7 +264,7 @@ interface CooperativeAlignmentState {
 
 ## Phase 3: Rich Dynamics & Interaction Effects
 
-**Goal:** 20%+ Utopia rate with multi-spiral cascades
+**Goal:** Model realistic multi-spiral cascade effects and failure modes
 **Time Estimate:** 6-10 hours
 **Complexity:** HIGH
 
@@ -365,28 +365,28 @@ const SPIRAL_SYNERGIES = {
 - [ ] 1.2: Better UBI effects
 - [ ] 1.3: QoL → Alignment feedback
 - [ ] 1.4: Alternative Utopia paths
-- [ ] **Test:** Run Monte Carlo, target 12-15% Utopia
+- [ ] **Test:** Run Monte Carlo, observe emergent outcome distribution
 
 ### Session 2: Phase 2.1-2.2 (Core Spirals Part 1)
 - [ ] 2.1: Abundance Generation Spiral
 - [ ] 2.2: Scientific Renaissance Spiral
-- [ ] **Test:** Run Monte Carlo, target 15-17% Utopia
+- [ ] **Test:** Run Monte Carlo, validate spiral mechanics
 
 ### Session 3: Phase 2.3-2.4 (Core Spirals Part 2)
 - [ ] 2.3: Meaning & Purpose Spiral
 - [ ] 2.4: Cooperative Alignment Spiral
-- [ ] **Test:** Run Monte Carlo, target 18-20% Utopia
+- [ ] **Test:** Run Monte Carlo, verify positive feedback loops
 
 ### Session 4: Phase 3 (Rich Dynamics)
 - [ ] 3.1: Spiral interaction matrix
 - [ ] 3.2: Failure detection
 - [ ] 3.3: Enhanced win conditions
-- [ ] **Test:** Run Monte Carlo, target 20%+ Utopia, verify cascades
+- [ ] **Test:** Run Monte Carlo, verify cascades and failure modes
 
-### Session 5: Polish & Balance
-- [ ] Review all spirals for balance
-- [ ] Tune failure mode probabilities
-- [ ] Ensure failure modes trigger appropriately
+### Session 5: Realism Review
+- [ ] Review all spirals for realism
+- [ ] Validate failure mode probabilities against research
+- [ ] Ensure interaction effects are plausible
 - [ ] Document all new mechanics in wiki
 - [ ] Update devlog with observations
 
@@ -394,27 +394,25 @@ const SPIRAL_SYNERGIES = {
 
 ## Success Metrics
 
-### Phase 1 Target:
-- ✅ Utopia: 12-15% (from 10%)
+### Phase 1 Validation:
+- ✅ Post-scarcity effects implemented realistically
 - ✅ Simple parameter changes only
 - ✅ No new TypeScript interfaces
 
-### Phase 2 Target:
-- ✅ Utopia: 18-20% (from 10%)
-- ✅ 4 upward spirals implemented
-- ✅ Positive feedback loops working
+### Phase 2 Validation:
+- ✅ 4 upward spirals implemented with realistic dynamics
+- ✅ Positive feedback loops functioning
 - ✅ At least 1 failure mode per spiral
 
-### Phase 3 Target:
-- ✅ Utopia: 20%+ (from 10%)
-- ✅ Multi-spiral cascades observed
+### Phase 3 Validation:
+- ✅ Multi-spiral cascades observable in logs
 - ✅ Utopia types differentiated in logs
 - ✅ Failure concentration causing collapses
 
-### Overall Balance Target:
-- Extinction: 60-70% (from 90%)
-- Utopia: 20-25% (from 10%)
-- Dystopia: 5-10% (from 0%)
+### Emergent Outcomes:
+- Observe what outcome distribution emerges from realistic parameters
+- Analyze whether distributions match AI safety research forecasts
+- Document which mechanisms drive each outcome type
 
 ---
 
@@ -467,22 +465,22 @@ interface UpwardSpiralStatus {
 
 ## Notes & Insights
 
-**Key Insight:** Current model is too pessimistic because it lacks positive feedback loops. Real-world AI alignment could create virtuous cycles:
+**Key Insight:** Current model may be missing positive feedback loops that could exist in real AI development scenarios. Realistic dynamics to model:
 - Better QoL → Better AI training → Better alignment → Better QoL
 - Abundance → Trust → More AI capability → More abundance
 - Scientific breakthroughs → Longevity → Wisdom → Better decisions
 
 **Design Philosophy:**
-- **Realism over game balance:** Utopia should be achievable but require coordination
+- **Realism over outcome targets:** Model plausible positive feedback loops, let outcomes emerge
 - **Multiple paths:** Not just "solve alignment" but also "achieve post-scarcity" or "build trust"
-- **Failure modes matter:** Each spiral can collapse, creating dystopia/extinction
-- **Interaction effects:** Multiple spirals create super-linear benefits (cascades)
+- **Failure modes matter:** Each spiral can collapse, reflecting real-world fragility
+- **Interaction effects:** Model realistic synergies between different positive trends
 
-**Implementation Risks:**
-- Over-tuning could make Utopia too easy (50%+ would be unrealistic)
-- Failure modes must be tuned carefully (not too punishing)
-- Spiral interactions could create runaway positive feedback (cap at reasonable levels)
-- Need to preserve extinction/dystopia paths (they're also valuable outcomes to study)
+**Research Questions:**
+- Are these positive feedback loops plausible given real-world constraints?
+- What does research say about post-scarcity effects on human cooperation?
+- Do spiral interactions create realistic cascades or unrealistic runaway effects?
+- Which outcome distributions match expert forecasts (Metaculus, etc.)?
 
 ---
 

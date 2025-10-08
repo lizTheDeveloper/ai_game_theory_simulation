@@ -28,7 +28,7 @@
 - `8fdcce6` feat: Implement Phase 1 Utopia Path Enhancements & Dystopia Mechanics
 - `6851de9` chore: Add session summary and Cursor IDE configuration
 
-**Testing:** Monte Carlo validation running to verify 12-15% Utopia target
+**Testing:** Monte Carlo validation running to observe emergent outcome changes
 
 ---
 
@@ -75,7 +75,7 @@
 ### 1. Utopian Dynamics (From `utopian-dynamics-spec.md`)
 
 **Status:** ❌ NOT STARTED
-**Priority:** HIGH (needed for realistic Utopia path - only 10% Utopia in recent runs)
+**Priority:** HIGH (missing realistic positive feedback loops in post-scarcity scenarios)
 **Complexity:** VERY HIGH
 
 #### 1.1 Abundance Generation Systems
@@ -487,20 +487,20 @@ From various specs, many government actions planned but not implemented:
 
 ## 🔧 System Improvements Needed
 
-### 1. Extinction System Tuning
+### 1. Extinction System Research Questions
 
-**Status:** ⚠️ NEEDS TUNING
+**Status:** ⚠️ NEEDS ANALYSIS
 **Priority:** HIGH
-**Source:** Recent Monte Carlo (90% extinction, target 60-80%)
+**Source:** Recent Monte Carlo (90% extinction rate)
 
-**Problem:** Still too high extinction rate
+**Research Questions:** Is 90% extinction realistic given model assumptions?
 
-**Needed Changes:**
-- [ ] Increase trigger probabilities for underused mechanisms
-- [ ] Better balance between instant vs heterogeneous extinctions
-- [ ] Fix progression timelines for rapid extinctions
-- [ ] Add more recovery windows
-- [ ] Early warning system improvements
+**Potential Realism Improvements:**
+- [ ] Compare with AI safety expert forecasts (Metaculus, Ord, Carlsmith)
+- [ ] Analyze which mechanisms drive extinction in current runs
+- [ ] Identify what's missing that could prevent extinction (international coordination, pause mechanisms)
+- [ ] Validate progression timelines against real-world development speeds
+- [ ] Add recovery window mechanics if research supports them
 
 
 
@@ -512,9 +512,9 @@ From various specs, many government actions planned but not implemented:
 
 **Status:** ✅ PHASE 1 COMPLETE (Oct 8, 2025)
 **Priority:** HIGH
-**Source:** Recent Monte Carlo (10% Utopia, needs boost to ~15-20%)
+**Source:** Recent Monte Carlo (10% Utopia rate)
 
-**Problem:** Utopia too rare, needs more viable paths
+**Goal:** Add realistic positive feedback loops and post-scarcity dynamics
 
 **Phase 1 Changes (COMPLETE):**
 - [x] Strengthen post-scarcity Stage 4 benefits (+0.8 material, +0.6 energy)
@@ -535,9 +535,9 @@ From various specs, many government actions planned but not implemented:
 
 **Status:** ✅ CORE MECHANICS IMPLEMENTED (Oct 8, 2025)
 **Priority:** MEDIUM
-**Source:** Recent Monte Carlo (0% Dystopia)
+**Source:** Recent Monte Carlo (0% Dystopia rate)
 
-**Problem:** Dystopia never reached, extinction happens first
+**Research Question:** Can stable AI-enabled authoritarianism exist, or does extinction always happen first?
 
 **Implemented Changes:**
 - [x] Government control response system (automatic surveillance escalation)
@@ -690,15 +690,20 @@ This gives a scientifically defensible, playable simulation in ~6-9 weeks of foc
 - ✅ All adversarial evaluation phases (benchmarks, sandbagging, detection)
 
 **Key Metrics from Recent Runs:**
-- Extinction: 90% (target: 60-80%) ⚠️
-- Utopia: 10% (target: 15-20%) ⚠️
-- Dystopia: 0% (target: 5-10%) ⚠️
+- Extinction: 90%
+- Utopia: 10%
+- Dystopia: 0%
 - Avg AI Capability: 2.5-3.0 (good range for danger)
 - Sleeper Detection: 0% (correct - adversarial problem hard)
 - Org Survival: 100% (excellent)
 
+**Research Questions:**
+- Does 90% extinction match expert AI safety forecasts?
+- What enables the successful 10% utopia cases?
+- Why doesn't stable dystopia emerge before extinction?
+
 ---
 
 **Last Updated:** October 8, 2025, 5:30 PM
-**Next Review:** After Phase A (critical balance tuning) completion
-**Status:** Many more systems working than initially documented! Core simulation in good shape, needs balance tuning + enrichment features.
+**Next Review:** After realism improvements (international competition, energy constraints)
+**Status:** Many more systems working than initially documented! Core simulation in good shape, needs realism improvements + enrichment features.

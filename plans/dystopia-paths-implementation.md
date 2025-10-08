@@ -1,8 +1,8 @@
 # Dystopia Paths Implementation
 
-**Date:** October 8, 2025  
+**Date:** October 8, 2025
 **Status:** ✅ CORE MECHANICS COMPLETE (Phases 1-3 implemented)
-**Goal:** Enable dystopia outcomes (currently 0% of runs end in dystopia)
+**Goal:** Model realistic surveillance-state and authoritarian control dynamics
 
 **Update (Oct 8, 9:30 PM):** 
 - ✅ Phase 1: Baseline resentment implemented
@@ -214,12 +214,12 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
 - Government type: Always democratic
 - Control desire: Stuck at 0.3
 
-### After (Target)
-- Dystopia: 10-30% of runs
-- Surveillance increases dynamically with AI threat
-- Some runs transition to authoritarian government
+### After (Expected Emergent Behavior)
+- Surveillance increases dynamically with AI threat (fear response)
+- Some runs transition to authoritarian government under high threat
 - Control desire increases with AI capability gap
 - QoL dimensions (freedom, autonomy) decay under surveillance
+- Observe whether dystopia is a realistic stable outcome or if extinction always happens first
 
 ---
 
