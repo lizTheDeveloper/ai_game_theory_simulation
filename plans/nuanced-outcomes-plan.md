@@ -1,7 +1,8 @@
 # Nuanced Outcomes and Extinction Mechanics Plan
 
 **Date:** October 3, 2025  
-**Status:** Planning  
+**Last Updated:** October 8, 2025  
+**Status:** ✅ Phases 1-2 COMPLETE (Multi-dimensional QoL & Heterogeneous Extinctions)  
 **Refs:** technology_tree_specification.md, utopian-dynamics-spec.md, DIAGNOSTIC_FINDINGS.md
 
 ## Problem Statement
@@ -507,19 +508,27 @@ function calculateOverallCapability(dims: AICapabilityDimensions): number {
 
 ## Implementation Plan
 
-### Phase 1: Multi-Dimensional QoL (Week 1)
-- [ ] Add QualityOfLifeSystems to GameState
-- [ ] Implement calculateQualityOfLife() with all dimensions
-- [ ] Update AI actions to affect specific dimensions
-- [ ] Update government actions to affect specific dimensions
-- [ ] Test dark valley → utopia transitions
+### Phase 1: Multi-Dimensional QoL (Week 1) ✅ COMPLETE
+- [x] Add QualityOfLifeSystems to GameState
+- [x] Implement calculateQualityOfLife() with all dimensions
+- [x] Update AI actions to affect specific dimensions
+- [x] Update government actions to affect specific dimensions
+- [x] Test dark valley → utopia transitions
 
-### Phase 2: Heterogeneous Extinctions (Week 1-2)
-- [ ] Define ExtinctionType enum and ExtinctionState interface
-- [ ] Implement 5 extinction progression systems
-- [ ] Add crisis escalation mechanics
-- [ ] Add recovery window checks
-- [ ] Update diagnostics to track extinction pathways
+**Implementation:** 17 QoL dimensions across 5 categories (Basic Needs, Psychological, Social, Health, Environmental). Full integration with actions, structural effects, and outcome determination.
+
+**Files:** `src/types/game.ts`, `src/simulation/qol.ts`, `src/simulation/structuralEffects.ts`
+
+### Phase 2: Heterogeneous Extinctions (Week 1-2) ✅ COMPLETE
+- [x] Define ExtinctionType enum and ExtinctionState interface
+- [x] Implement 5 extinction progression systems
+- [x] Add crisis escalation mechanics
+- [x] Add recovery window checks
+- [x] Update diagnostics to track extinction pathways
+
+**Implementation:** 5 extinction types (instant, rapid, slow, controlled, unintended) with phase-based progression, severity tracking, and recovery mechanics. Integrated with catastrophic AI actions.
+
+**Files:** `src/types/game.ts`, `src/simulation/extinction.ts`, `src/simulation/catastrophicActions.ts`, `scripts/monteCarloSimulation.ts`
 
 ### Phase 3: End-Game Dynamics (Week 2)
 - [ ] Add EndGameState to GameState

@@ -1,8 +1,9 @@
 # Adversarial Evaluation System: Benchmarks, Sleeper Agents, and Technology Diffusion
 
 **Date:** October 4, 2025  
+**Last Updated:** October 8, 2025  
 **Feature:** Complete adversarial evaluation and capability measurement system  
-**Status:** 🚧 IN PROGRESS (Phase 1 & 2 COMPLETE)
+**Status:** ✅ COMPLETE (All 5 phases + critical bug fixes)
 
 ---
 
@@ -821,9 +822,45 @@ Once a technique is discovered, it diffuses through the ecosystem via:
 
 ---
 
-**Status:** PLANNING COMPLETE - Ready for implementation  
+**Status:** ✅ IMPLEMENTATION COMPLETE (October 8, 2025)  
 **Priority:** CRITICAL - Addresses core realism gap  
 **Complexity:** VERY HIGH - Touches all systems  
 **Impact:** FUNDAMENTAL - Changes game from "manage AIs" to "adversarial evaluation problem"
 
 This IS superalignment research.
+
+---
+
+## Post-Implementation: Critical Bug Fixes (October 8, 2025)
+
+### Fixed Issues:
+1. **Sleeper Cascade False Positives** (`sleeperWake.ts`)
+   - Issue: Single sleeper wakes logged as "CASCADE" 
+   - Fix: Only log cascade if `allAwakened.length > 1` or `iteration > 1`
+   - Impact: Cleaner logs, no false alarm cascades
+
+2. **Alignment NaN Bug** (`organizationManagement.ts`)
+   - Issue: New AIs from model training had `NaN` alignment
+   - Fix: Corrected parameter order in `createAIAgent` calls
+   - Impact: All trained models now have valid alignment values
+
+3. **Auto Evaluation Investment** (`governmentAgent.ts`)
+   - Issue: Government never invested in evaluation capacity
+   - Fix: Added `autoInvestInEvaluation()` based on `society.trustInAI`
+   - Impact: Evaluation capacity grows with public trust, makes detection more realistic
+
+4. **Evaluation on Training Models** (`organizationManagement.ts`)
+   - Issue: Running benchmarks on models still in training (lifecycle = 'training')
+   - Fix: Added lifecycle state check before running evaluations
+   - Impact: Only deployed/testing models get evaluated
+
+### System Health:
+- ✅ All 5 phases working as designed
+- ✅ Sleeper mechanics functioning correctly
+- ✅ Benchmark system detecting capability gaps
+- ✅ Technology diffusion raising capability floor
+- ✅ Government response actions executing
+
+### Related Documents:
+- `devlog/phase-11-critical-fixes.md` - Detailed bug analysis
+- `devlog/phase-11-monte-carlo-production-ready.md` - Production system summary

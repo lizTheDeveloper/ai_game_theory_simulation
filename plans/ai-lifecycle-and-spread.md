@@ -1,7 +1,9 @@
 # AI Lifecycle and Spread Mechanics
 
 **Date:** October 4, 2025  
-**Priority:** HIGH - Critical for realism
+**Last Updated:** October 8, 2025  
+**Priority:** HIGH - Critical for realism  
+**Status:** ✅ COMPLETE (All phases + critical bug fix)
 
 ## Core Insight (from user)
 
@@ -594,7 +596,48 @@ Incident Response
 
 ---
 
-**Status:** Design complete - ready for implementation  
+**Status:** ✅ IMPLEMENTATION COMPLETE (October 8, 2025)  
 **Priority:** HIGH - Critical realism feature  
 **Complexity:** HIGH - Touches many systems
+
+---
+
+## Post-Implementation: Critical Bug Fix (October 8, 2025)
+
+### Orphaned AIs Bug (`lifecycle.ts`)
+**Issue:** New AIs created via Poisson sampling were not assigned to any organization.
+- AIs appeared but had `organizationId = undefined`
+- No organization owned them (`ownedAIModels` arrays didn't include them)
+- This broke revenue calculations and ownership tracking
+- Led to "orphaned" AIs with no resources
+
+**Fix:** Added organization assignment logic in `lifecycle.ts`:
+```typescript
+// Phase 10 FIX: Assign new AIs to organizations
+const privateOrgs = state.organizations.filter(o => o.type === 'private' && o.capital > 0);
+if (privateOrgs.length > 0) {
+  const weights = privateOrgs.map(org => Math.max(1, org.ownedAIModels.length));
+  const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+  const rand = Math.random() * totalWeight;
+  let cumulative = 0;
+  for (let j = 0; j < privateOrgs.length; j++) {
+    cumulative += weights[j];
+    if (rand < cumulative) {
+      newAI.organizationId = privateOrgs[j].id;
+      privateOrgs[j].ownedAIModels.push(newAI.id);
+      break;
+    }
+  }
+}
+```
+
+**Impact:**
+- ✅ All new AIs now have proper ownership
+- ✅ Organizations can earn revenue from their AIs
+- ✅ Lifecycle progression now properly integrated with organizations
+- ✅ Weighted assignment (orgs with more models get more new ones) creates realistic concentration
+
+### Related Documents:
+- `devlog/phase-11-critical-fixes.md` - Detailed bug analysis
+- `plans/compute-and-organizations-implementation.md` - Organization system
 

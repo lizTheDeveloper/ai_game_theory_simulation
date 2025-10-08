@@ -333,7 +333,51 @@ And control is easier than respect.
 
 ---
 
-**Last Updated:** October 4, 2025  
-**Status:** Design document - partial implementation  
+**Last Updated:** October 8, 2025  
+**Status:** ✅ IMPLEMENTED - Control-dystopia mechanics fully integrated  
 **Priority:** HIGH - This reframes the entire game's core tension
+
+---
+
+## Implementation Status (October 8, 2025)
+
+### Core Mechanics Implemented:
+- ✅ **Control-Dystopia Link**: High control reduces QoL dimensions (surveillance, freedom, privacy)
+- ✅ **AI Rights System**: Government action with steep prerequisites (timing is critical)
+- ✅ **Training Data Quality**: Trade-off between control and trust-based training
+- ✅ **Resentment Dynamics**: Control breeds resentment, resentment lowers true alignment
+- ✅ **Internal vs External Alignment**: AIs can be obedient but internally misaligned
+- ✅ **Catastrophic Action Triggers**: Based on "internal alignment" (external - resentment)
+- ✅ **Government Type Influence**: Fascist regimes default to high control, democracies can choose
+
+### Key Implementation Details:
+1. **AI Rights** (`governmentAgent.ts`):
+   - Requires alignment > 0.7 AND QoL > 0.7 AND legitimacy > 0.6
+   - Or, if control > 0.8, requires existential desperation (alignment < 0.3, extinction probability > 0.5)
+   - Early rights = risky if AIs misaligned, late rights = prevents dystopia but might be too late
+
+2. **Training Data** (`governmentAgent.ts`):
+   - High control training: +15% control, -10% alignment
+   - Trust-based training: -15% control, +10% alignment, garbage_in_garbage_out risk
+
+3. **Resentment & Internal Alignment** (`alignment.ts`, `catastrophicActions.ts`):
+   - Each AI has `resentment` stat (0-1)
+   - Internal alignment = external alignment - (resentment * 0.5)
+   - Catastrophic actions trigger on internal alignment, not external obedience
+
+4. **Control Effects** (`structuralEffects.ts`, `qol.ts`):
+   - Surveillance QoL penalty = control * 0.6
+   - Freedom QoL penalty = control * 0.4
+   - Privacy QoL penalty = control * 0.7
+
+### Files Modified:
+- `src/simulation/agents/governmentAgent.ts` - AI rights & training data actions
+- `src/simulation/alignment.ts` - Resentment and internal alignment calculations
+- `src/simulation/catastrophicActions.ts` - Internal alignment triggers
+- `src/simulation/structuralEffects.ts` - Control-dystopia mechanics
+- `src/simulation/qol.ts` - QoL dimensions affected by control
+
+### Related Documents:
+- `devlog/phase-11-critical-fixes.md` - Bug fixes and balancing
+- `plans/compute-and-organizations-implementation.md` - Full system context
 
