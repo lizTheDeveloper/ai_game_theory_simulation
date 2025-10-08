@@ -119,6 +119,11 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   const harmfulActions = aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0);
   const economicStage = globalMetrics.economicTransitionStage;
   
+  // Phase 1.2: Check for UBI (strengthens safety net effects)
+  const hasUBI = government.activeRegulations.some(reg => reg.includes('UBI'));
+  const ubiVariant = government.structuralChoices.ubiVariant || 'none';
+  const hasGenerousUBI = ubiVariant === 'generous';
+  
   // === BASIC NEEDS ===
   
   // Material abundance: AI capability helps, unemployment hurts, stage matters
@@ -126,16 +131,56 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   const unemploymentPenalty = society.unemploymentLevel * (economicStage < 3 ? -0.3 : 0.1); // Becomes positive in post-scarcity
   const wealthBonus = globalMetrics.wealthDistribution * 0.3;
   let materialAbundance = 0.8 + aiProductionBonus + unemploymentPenalty + wealthBonus;
-  if (economicStage >= 4) materialAbundance += 0.5; // Post-scarcity bonus
-  materialAbundance = Math.max(0, Math.min(2, materialAbundance));
+  
+  // Phase 1.2: UBI at Stage 3 guarantees basic material needs
+  if (economicStage >= 3 && hasUBI) {
+    // UBI ensures material needs are met even with high unemployment
+    const ubiFloor = hasGenerousUBI ? 0.9 : 0.75; // Generous UBI = very high floor
+    materialAbundance = Math.max(materialAbundance, ubiFloor);
+  }
+  
+  // Phase 1.1: Post-scarcity QoL multipliers
+  if (economicStage >= 4) {
+    // Full automation → material abundance explodes
+    materialAbundance += 0.8; // Increased from 0.5
+    // AI capability accelerates abundance
+    materialAbundance += totalAICapability * 0.15; // Additional scaling
+  }
+  
+  // Phase 1.1: Remove cap for Stage 4 (allow > 1.0 abundance)
+  if (economicStage >= 4) {
+    materialAbundance = Math.max(0, materialAbundance); // No upper limit!
+  } else {
+    materialAbundance = Math.max(0, Math.min(2, materialAbundance));
+  }
   
   // Energy availability: AI helps, stage advances
   let energyAvailability = 0.9 + totalAICapability * 0.05 + economicStage * 0.1;
-  energyAvailability = Math.max(0, Math.min(2, energyAvailability));
+  
+  // Phase 1.1: Post-scarcity energy abundance
+  if (economicStage >= 4) {
+    // Renewable/fusion breakthrough assumption at Stage 4
+    energyAvailability += 0.6;
+    // AI optimization of energy systems
+    energyAvailability += totalAICapability * 0.1;
+  }
+  
+  // Phase 1.1: Remove cap for Stage 4 (allow > 1.0 energy)
+  if (economicStage >= 4) {
+    energyAvailability = Math.max(0, energyAvailability); // No upper limit!
+  } else {
+    energyAvailability = Math.max(0, Math.min(2, energyAvailability));
+  }
   
   // Physical safety: Stability matters, harmful AI reduces, government control helps
   let physicalSafety = globalMetrics.socialStability * 0.8 + government.legitimacy * 0.2;
   physicalSafety -= harmfulActions * 0.05;
+  
+  // Phase 1.1: Post-scarcity reduces scarcity-driven crime/conflict
+  if (economicStage >= 4 && materialAbundance > 1.5) {
+    physicalSafety += 0.2; // Less crime when everyone has enough
+  }
+  
   physicalSafety = Math.max(0, Math.min(1, physicalSafety));
   
   // === PSYCHOLOGICAL NEEDS ===
@@ -145,6 +190,19 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   mentalHealth += globalMetrics.socialStability * 0.3;
   mentalHealth -= society.unemploymentLevel * (economicStage < 3 ? 0.4 : -0.2); // Unemployment becomes freedom later
   mentalHealth += current.meaningAndPurpose * 0.2;
+  
+  // Phase 1.2: UBI at Stage 3 reduces economic anxiety
+  if (economicStage >= 3 && hasUBI) {
+    // UBI reduces stress from unemployment
+    const stressReduction = hasGenerousUBI ? 0.2 : 0.12;
+    mentalHealth += stressReduction;
+  }
+  
+  // Phase 1.1: Post-scarcity reduces economic anxiety
+  if (economicStage >= 4 && materialAbundance > 1.5) {
+    mentalHealth += 0.15; // Less stress when material needs are effortlessly met
+  }
+  
   mentalHealth = Math.max(0, Math.min(1, mentalHealth));
   
   // Meaning and purpose: Post-work transition matters

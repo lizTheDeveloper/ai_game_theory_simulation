@@ -98,6 +98,12 @@ interface RunResult {
   avgTrueAlignment: number;
   minTrueAlignment: number;
   maxTrueAlignment: number;
+  
+  // Catastrophic scenario progress (Phase 11)
+  closestScenario: string | null;
+  closestScenarioProgress: number; // 0.0 to 1.0
+  closestScenarioSteps: string; // e.g. "4/7"
+  activatedScenarios: string[]; // List of scenarios with all prerequisites met
   avgResentment: number;
   maxResentment: number;
   avgHiddenObjective: number;
@@ -126,7 +132,7 @@ interface RunResult {
   // Government metrics (ENHANCED)
   finalGovernmentLegitimacy: number;
   finalControlCapability: number;
-  controlGap: number; // AI capability - Government control
+  controlGap: number; // Max AI capability - Government control
   governmentType: string;
   aiRightsRecognized: boolean;
   trainingDataQuality: number;
@@ -230,7 +236,7 @@ log('='.repeat(80));
 
 // Configuration
 const NUM_RUNS = 10;
-const MAX_MONTHS = 60;
+const MAX_MONTHS = 120; // 10 years to allow slow catastrophic scenarios to develop
 const SEED_START = 42000;
 
 log(`\n⚙️  CONFIGURATION:`);
@@ -359,7 +365,10 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const finalGovernmentLegitimacy = finalState.government.legitimacy;
   const finalControlCapability = finalState.government.capabilityToControl;
   const totalAICapability = activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.capability, 0);
-  const controlGap = totalAICapability - finalControlCapability;
+  // Control gap: Max individual AI capability - government control
+  // (Government must be able to control the most dangerous AI)
+  const maxAICapability = activeAIs.reduce((max: number, ai: AIAgent) => Math.max(max, ai.capability), 0);
+  const controlGap = maxAICapability - finalControlCapability;
   const governmentType = finalState.government.governmentType;
   const aiRightsRecognized = finalState.government.aiRightsRecognized;
   const trainingDataQuality = finalState.government.trainingDataQuality;
@@ -608,7 +617,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   
   results.push({
     seed,
-    outcome: finalState.outcomeMetrics.activeAttractor,
+    outcome: runResult.summary.finalOutcome, // Use engine's determined outcome, not probability-based
     months: MAX_MONTHS,
     
     // Final metrics
@@ -628,6 +637,28 @@ for (let i = 0; i < NUM_RUNS; i++) {
     avgHiddenObjective,
     alignmentGap,
     highlyMisalignedCount,
+    
+    // Catastrophic scenario progress (Phase 11)
+    closestScenario: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return summary.closest ? summary.closest.name : null;
+    })(),
+    closestScenarioProgress: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return summary.percentComplete;
+    })(),
+    closestScenarioSteps: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return `${summary.stepsComplete}/${summary.totalSteps}`;
+    })(),
+    activatedScenarios: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return summary.activeScenarios.map((s: any) => s.name);
+    })(),
     
     // Capability breakdown (ENHANCED)
     avgPhysicalCap,
@@ -785,6 +816,78 @@ if (outcomeCounts.extinction > 0) {
     log(`     ${type}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}% of extinctions)`);
   });
 }
+
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('☠️  CATASTROPHIC SCENARIO PROGRESS (Hard Steps Modeling)');
+log('='.repeat(80));
+
+// Analyze scenario proximity across all runs
+const scenarioFrequency: Record<string, number> = {};
+const scenarioMaxProgress: Record<string, number> = {};
+const activationCount: Record<string, number> = {};
+
+results.forEach(r => {
+  if (r.closestScenario) {
+    scenarioFrequency[r.closestScenario] = (scenarioFrequency[r.closestScenario] || 0) + 1;
+    scenarioMaxProgress[r.closestScenario] = Math.max(
+      scenarioMaxProgress[r.closestScenario] || 0,
+      r.closestScenarioProgress
+    );
+  }
+  
+  r.activatedScenarios.forEach(scenario => {
+    activationCount[scenario] = (activationCount[scenario] || 0) + 1;
+  });
+});
+
+// Average progress for each scenario
+const avgProgressByScenario: Record<string, { sum: number; count: number }> = {};
+results.forEach(r => {
+  if (r.closestScenario) {
+    if (!avgProgressByScenario[r.closestScenario]) {
+      avgProgressByScenario[r.closestScenario] = { sum: 0, count: 0 };
+    }
+    avgProgressByScenario[r.closestScenario].sum += r.closestScenarioProgress;
+    avgProgressByScenario[r.closestScenario].count += 1;
+  }
+});
+
+log(`\n  CLOSEST SCENARIO FREQUENCY:`);
+Object.entries(scenarioFrequency)
+  .sort((a, b) => b[1] - a[1])
+  .forEach(([scenario, count]) => {
+    const avgProgress = avgProgressByScenario[scenario].sum / avgProgressByScenario[scenario].count;
+    const maxProgress = scenarioMaxProgress[scenario];
+    log(`    ${scenario}:`);
+    log(`      - Closest in ${count}/${NUM_RUNS} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+    log(`      - Avg Progress: ${(avgProgress * 100).toFixed(1)}%`);
+    log(`      - Max Progress: ${(maxProgress * 100).toFixed(1)}%`);
+  });
+
+if (Object.keys(activationCount).length > 0) {
+  log(`\n  ‼️  SCENARIOS ACTIVATED (All Prerequisites Met):`);
+  Object.entries(activationCount)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([scenario, count]) => {
+      log(`    ${scenario}: ${count}/${NUM_RUNS} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+    });
+} else {
+  log(`\n  ✓ No scenarios reached full activation (all prerequisites met) in any run.`);
+}
+
+// Show closest calls
+const veryCloseRuns = results.filter(r => r.closestScenarioProgress > 0.7);
+if (veryCloseRuns.length > 0) {
+  log(`\n  ⚠️  CLOSE CALLS (>70% progress):`);
+  veryCloseRuns.forEach(r => {
+    log(`    Seed ${r.seed}: ${r.closestScenario} at ${(r.closestScenarioProgress * 100).toFixed(1)}% (${r.closestScenarioSteps} steps)`);
+  });
+}
+
+// Average progress across all scenarios
+const overallAvgProgress = results.reduce((sum, r) => sum + r.closestScenarioProgress, 0) / results.length;
+log(`\n  Overall Avg Progress (closest scenario per run): ${(overallAvgProgress * 100).toFixed(1)}%`);
 
 // ============================================================================
 log('\n\n' + '='.repeat(80));
@@ -1029,7 +1132,7 @@ const avgQolSocial = results.reduce((sum, r) => sum + r.qolSocial, 0) / results.
 const avgQolHealth = results.reduce((sum, r) => sum + r.qolHealth, 0) / results.length;
 const avgQolEnviron = results.reduce((sum, r) => sum + r.qolEnvironmental, 0) / results.length;
 
-log(`\n  QOL BY CATEGORY (0-1 scale):`);
+log(`\n  QOL BY CATEGORY (0-1 baseline, up to 2.0 in post-scarcity):`);
 log(`    Basic Needs: ${avgQolBasic.toFixed(3)} (food, water, shelter, energy)`);
 log(`    Psychological: ${avgQolPsych.toFixed(3)} (autonomy, purpose, creativity)`);
 log(`    Social: ${avgQolSocial.toFixed(3)} (community, freedom, safety)`);

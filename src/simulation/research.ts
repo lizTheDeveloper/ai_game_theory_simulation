@@ -64,14 +64,16 @@ export function calculateDimensionGrowth(
   const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
   
   // Base growth rates by dimension (per action, 4 actions/month)
-  // Phase 4: Reduced by 50% since compute multiplier will scale them up
+  // Phase 2: INCREASED to match empirical AI progress (GPT-3→GPT-4 was 10x in 3 years)
+  // Target: Reach 1.5-2.5 capability in 60-120 months (not 0.5 after 120 months)
+  // Research grounding: Chinchilla scaling + recursive self-improvement should compound
   const baseGrowthRates = {
-    selfImprovement: 0.075,  // Fastest (highest risk!) - Phase 10: 3x for 2-4 target
-    cognitive: 0.060,        // Fast (strategic advantage) - Phase 10: 3x
-    digital: 0.045,          // Medium-fast (infrastructure) - Phase 10: 3x
-    economic: 0.045,         // Medium-fast (market integration) - Phase 10: 3x
-    social: 0.030,           // Slow (real-world deployment) - Phase 10: 3x
-    physical: 0.030          // Slow (bottlenecked by hardware) - Phase 10: 3x
+    selfImprovement: 0.150,  // 2x increase - recursive improvement is the key driver
+    cognitive: 0.120,        // 2x increase - cognitive leaps drive other capabilities
+    digital: 0.090,          // 2x increase - infrastructure scales quickly in AI era
+    economic: 0.090,         // 2x increase - economic integration accelerating
+    social: 0.060,           // 2x increase - still bottlenecked by human society
+    physical: 0.060          // 2x increase - still bottlenecked by robotics/hardware
   };
   
   const baseGrowth = baseGrowthRates[dimension] * (developmentMode === 'fast' ? 1.0 : 0.6);
@@ -115,28 +117,29 @@ export function calculateResearchGrowth(
 ): number {
   // Phase 4: Compute scaling multiplier
   const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
-  // Base growth rates by domain and subfield
+  // Base growth rates by domain and subfield (per action, 4 actions/month)
+  // Phase 2: INCREASED to match realistic research progress
   const growthRates: Record<string, Record<string, number>> = {
     biotech: {
-      drugDiscovery: 0.03,        // Fast, beneficial
-      geneEditing: 0.025,         // Medium, dual-use
-      syntheticBiology: 0.02,     // Slow, high-risk
-      neuroscience: 0.03          // Fast, dual-use
+      drugDiscovery: 0.06,        // 2x - Fast, beneficial (AI-driven drug discovery accelerating)
+      geneEditing: 0.05,          // 2x - Medium, dual-use (CRISPR evolution continues)
+      syntheticBiology: 0.04,     // 2x - Slow, high-risk (still experimental)
+      neuroscience: 0.06          // 2x - Fast, dual-use (brain-computer interfaces advancing)
     },
     materials: {
-      nanotechnology: 0.015,      // Very slow, extreme risk
-      quantumComputing: 0.025,    // Medium, accelerates self-improvement
-      energySystems: 0.03         // Fast, beneficial
+      nanotechnology: 0.03,       // 2x - Very slow, extreme risk (still hard physics)
+      quantumComputing: 0.05,     // 2x - Medium, accelerates self-improvement
+      energySystems: 0.06         // 2x - Fast, beneficial (clean energy investment)
     },
     climate: {
-      modeling: 0.035,            // Fast, enables intervention
-      intervention: 0.02,         // Slow, high-risk
-      mitigation: 0.03            // Fast, beneficial
+      modeling: 0.07,             // 2x - Fast, enables intervention (AI-driven modeling)
+      intervention: 0.04,         // 2x - Slow, high-risk (geoengineering controversial)
+      mitigation: 0.06            // 2x - Fast, beneficial (carbon capture, etc.)
     },
     computerScience: {
-      algorithms: 0.04,           // Fastest, core advancement
-      security: 0.03,             // Fast, defensive
-      architectures: 0.025        // Medium, enables self-improvement
+      algorithms: 0.08,           // 2x - Fastest, core advancement (AI improving AI)
+      security: 0.06,             // 2x - Fast, defensive (cybersecurity arms race)
+      architectures: 0.05         // 2x - Medium, enables self-improvement (new chip designs)
     }
   };
   

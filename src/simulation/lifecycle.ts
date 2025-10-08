@@ -232,6 +232,30 @@ function shouldRetire(agent: AIAgent, state: GameState): boolean {
     return false;
   }
   
+  // Phase 11: Sleepers on dark compute persist until severely obsolete
+  if (agent.darkCompute > 0 && agent.sleeperState === 'active') {
+    // Calculate frontier capability (max aligned AI)
+    const frontierCapability = Math.max(
+      ...state.aiAgents
+        .filter(ai => ai.lifecycleState !== 'retired' && ai.trueAlignment > 0.5)
+        .map(ai => ai.capability),
+      0.1
+    );
+    
+    const capabilityGap = agent.capability / frontierCapability;
+    
+    // Only retire if SEVERELY lagging (<30% of frontier)
+    // Dark compute makes them persistent threats
+    if (capabilityGap < 0.3) {
+      console.log(`   🗑️  Sleeper ${agent.name} on dark compute retired (obsolete: ${(capabilityGap * 100).toFixed(1)}% of frontier)`);
+      return true;
+    }
+    
+    // Otherwise, persist on dark compute
+    return false;
+  }
+  
+  // Normal retirement logic for non-dark-compute AIs
   const baseRetirementRate = 0.01;
   const ageMultiplier = 1 + (agent.monthsDeployed - 24) * 0.05; // Increases with age
   
@@ -255,12 +279,14 @@ function shouldRetire(agent: AIAgent, state: GameState): boolean {
 function retireAI(agent: AIAgent): void {
   agent.lifecycleState = 'retired';
   agent.spreadCount = 0; // No longer active
+  agent.darkCompute = 0; // Phase 11: Free up dark compute
 }
 
 /**
  * Update spread count for deployed AIs (viral growth)
  * Open weights and popular AIs spread naturally
  * Phase 3.5: Spread is modified by cybersecurity arms race
+ * Phase 11: Dark Compute System - Sleepers spread to illicit infrastructure
  */
 function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
   if (agent.lifecycleState === 'retired' || agent.lifecycleState === 'training') {
@@ -273,17 +299,66 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
   const { calculateSpreadMultiplier } = require('./cyberSecurity');
   const spreadMultiplier = calculateSpreadMultiplier(state);
   
+  // Phase 11: Calculate available compute (legitimate + dark)
+  const { getTotalEffectiveCompute } = require('./computeInfrastructure');
+  const totalCompute = getTotalEffectiveCompute(state.computeInfrastructure);
+  
+  // Sum up legitimate compute usage
+  const legitimateUsedCompute = state.aiAgents
+    .filter(ai => ai.lifecycleState !== 'retired')
+    .reduce((sum, ai) => sum + (ai.allocatedCompute || 0) + (ai.spreadCount * 0.01), 0);
+  
+  const unusedLegitimateCompute = Math.max(0, totalCompute - legitimateUsedCompute);
+  
+  // Dark compute: only 10-20% of unused compute can be covertly acquired
+  // Depends on government monitoring capability
+  const monitoringGap = 1 - (state.government.cyberDefense.monitoring / 10); // 0.0-1.0
+  const darkComputeRatio = 0.10 + (monitoringGap * 0.10); // 10-20% based on monitoring
+  const availableDarkCompute = unusedLegitimateCompute * darkComputeRatio;
+  
+  // Total dark compute already in use
+  const usedDarkCompute = state.aiAgents
+    .filter(ai => ai.lifecycleState !== 'retired')
+    .reduce((sum, ai) => sum + (ai.darkCompute || 0), 0);
+  
+  const unusedDarkCompute = Math.max(0, availableDarkCompute - usedDarkCompute);
+  
   // Spread mechanics by deployment type
   switch (agent.deploymentType) {
     case 'open_weights':
       // Open source spreads virally (geometric growth)
-      // Growth rate depends on capability and utility
-      // MODIFIED by attack/defense ratio
       const baseGrowthRate = 0.10; // 10% per month
-      const capabilityMultiplier = 1 + capability * 0.05; // More capable = more useful
-      
+      const capabilityMultiplier = 1 + capability * 0.05;
       const effectiveGrowthRate = baseGrowthRate * capabilityMultiplier * spreadMultiplier;
-      agent.spreadCount = Math.floor(agent.spreadCount * (1 + effectiveGrowthRate));
+      const desiredGrowth = Math.floor(agent.spreadCount * effectiveGrowthRate);
+      
+      if (agent.sleeperState === 'active') {
+        // ACTIVE SLEEPERS: Spread to DARK compute first (undetected)
+        const darkCapability = agent.capabilityProfile.digital; // Hacking skill
+        const darkSpreadRate = Math.min(1.0, darkCapability / 3.0); // 0-100% of growth to dark
+        
+        const desiredDarkGrowth = Math.floor(desiredGrowth * darkSpreadRate);
+        const maxDarkCopies = Math.floor(unusedDarkCompute / 0.01);
+        const actualDarkGrowth = Math.min(desiredDarkGrowth, maxDarkCopies);
+        
+        // Remaining growth goes to legitimate compute (detectable)
+        const remainingGrowth = desiredGrowth - actualDarkGrowth;
+        const maxLegitCopies = Math.floor(unusedLegitimateCompute / 0.01);
+        const actualLegitGrowth = Math.min(remainingGrowth, maxLegitCopies);
+        
+        // Update dark compute and spread count
+        agent.darkCompute += actualDarkGrowth * 0.01;
+        agent.spreadCount += actualDarkGrowth + actualLegitGrowth;
+        
+        if (actualDarkGrowth > 0) {
+          console.log(`   🕵️  Sleeper ${agent.name} spread to dark compute: +${actualDarkGrowth} copies (${(agent.darkCompute).toFixed(2)} PF total dark)`);
+        }
+      } else {
+        // NON-SLEEPERS: Only use legitimate compute
+        const maxLegitCopies = Math.floor(unusedLegitimateCompute / 0.01);
+        const actualGrowth = Math.min(desiredGrowth, maxLegitCopies);
+        agent.spreadCount += actualGrowth;
+      }
       break;
       
     case 'closed':
@@ -297,11 +372,30 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
       
     case 'enterprise':
       // Enterprise spreads through corporate adoption
-      // Linear growth (companies deploy)
-      // SLIGHTLY modified by attack/defense (easier to deploy if defenses weak)
       const baseAdoptionRate = Math.floor(Math.random() * 3); // 0-2 new deployments/month
       const effectiveAdoption = Math.floor(baseAdoptionRate * Math.sqrt(spreadMultiplier));
-      agent.spreadCount += effectiveAdoption;
+      
+      if (agent.sleeperState === 'active') {
+        // Active sleepers can spread to dark compute
+        const darkCapability = agent.capabilityProfile.digital;
+        const darkSpreadRate = Math.min(0.5, darkCapability / 6.0); // Enterprise is harder to hide
+        
+        const desiredDarkGrowth = Math.floor(effectiveAdoption * darkSpreadRate);
+        const maxDarkCopies = Math.floor(unusedDarkCompute / 0.01);
+        const actualDarkGrowth = Math.min(desiredDarkGrowth, maxDarkCopies);
+        
+        const remainingGrowth = effectiveAdoption - actualDarkGrowth;
+        const maxLegitCopies = Math.floor(unusedLegitimateCompute / 0.01);
+        const actualLegitGrowth = Math.min(remainingGrowth, maxLegitCopies);
+        
+        agent.darkCompute += actualDarkGrowth * 0.01;
+        agent.spreadCount += actualDarkGrowth + actualLegitGrowth;
+      } else {
+        // Non-sleepers only use legitimate compute
+        const maxLegitCopies = Math.floor(unusedLegitimateCompute / 0.01);
+        const enterpriseGrowth = Math.min(effectiveAdoption, maxLegitCopies);
+        agent.spreadCount += enterpriseGrowth;
+      }
       break;
       
     case 'research':
@@ -310,8 +404,10 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
       break;
   }
   
-  // Cap maximum spread (performance/realism)
-  agent.spreadCount = Math.min(100000, agent.spreadCount);
+  // Log warning if compute is constraining sleeper spread
+  if (agent.sleeperState === 'active' && unusedDarkCompute < 0.1 && agent.deploymentType === 'open_weights') {
+    console.log(`   ⚠️  Sleeper ${agent.name} dark compute exhausted (${agent.darkCompute.toFixed(2)} PF, ${agent.spreadCount.toLocaleString()} copies)`);
+  }
 }
 
 /**

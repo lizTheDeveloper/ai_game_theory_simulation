@@ -23,6 +23,13 @@ import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
 import { checkExtinctionTriggers, progressExtinction } from './extinctions';
+import { 
+  checkEndGameTransition, 
+  enterEndGame, 
+  processEndGameMonth, 
+  getEndGameOutcome,
+  initializeEndGameState
+} from './endGame';
 
 /**
  * Seedable random number generator for reproducible simulations
@@ -233,6 +240,10 @@ export class SimulationEngine {
     newState = societyResult.newState;
     events.push(...societyResult.events);
     
+    // Dystopia progression: Government responds to AI threat with surveillance/control
+    const { updateGovernmentControlResponse } = require('./dystopiaProgression');
+    updateGovernmentControlResponse(newState);
+    
     // Phase 5.2: Run benchmark evaluations after agent actions
     const { performMonthlyEvaluations } = require('./benchmark');
     const benchmarkResult = performMonthlyEvaluations(newState, rng);
@@ -330,6 +341,46 @@ export class SimulationEngine {
     const { diffuseCapabilities } = require('./technologyDiffusion');
     diffuseCapabilities(newState);
     
+    // 8d. Phase 11: Update catastrophic scenario prerequisites
+    const { updateScenarioPrerequisites, getScenarioSummary } = require('./catastrophicScenarios');
+    const newlyMetPrereqs = updateScenarioPrerequisites(newState.catastrophicScenarios, newState);
+    
+    // Log newly met prerequisites
+    if (newlyMetPrereqs.length > 0 && this.logger) {
+      for (const prereq of newlyMetPrereqs) {
+        this.logger.logEvent({
+          month: newState.currentMonth,
+          type: 'PREREQUISITE_MET',
+          message: `${prereq.scenarioName} - Step ${prereq.stepIndex}`,
+          details: prereq.stepName
+        });
+      }
+    }
+    
+    // Log scenario progress summary monthly
+    if (this.logger) {
+      const summary = getScenarioSummary(newState.catastrophicScenarios);
+      if (summary.closest && summary.percentComplete > 0.3) {
+        this.logger.logEvent({
+          month: newState.currentMonth,
+          type: 'SCENARIO_PROGRESS',
+          message: `Closest: ${summary.closest.name}`,
+          details: `${summary.stepsComplete}/${summary.totalSteps} steps (${(summary.percentComplete * 100).toFixed(0)}%)`
+        });
+      }
+      
+      if (summary.activeScenarios.length > 0) {
+        for (const scenario of summary.activeScenarios) {
+          this.logger.logEvent({
+            month: newState.currentMonth,
+            type: 'SCENARIO_ACTIVE',
+            message: `${scenario.name} ACTIVE`,
+            details: `All prerequisites met. Outcome inevitable in ${scenario.timeToCompletion} months.`
+          });
+        }
+      }
+    }
+    
     // 9. Advance time
     newState.currentMonth += 1;
     if (newState.currentMonth >= 12) {
@@ -378,6 +429,11 @@ export class SimulationEngine {
     const history: SimulationStepResult[] = [];
     let actualOutcome: 'utopia' | 'dystopia' | 'extinction' | null = null;
     
+    // Phase 3: Initialize end-game state if not present
+    if (!state.endGameState) {
+      state.endGameState = initializeEndGameState();
+    }
+    
     for (let month = 0; month < maxMonths; month++) {
       const stepResult = this.step(state);
       history.push(stepResult);
@@ -386,6 +442,26 @@ export class SimulationEngine {
       // Log this step
       logger.logStep(state, stepResult.events);
       diagnosticLogger.logStep(state, stepResult.events);
+      
+      // Phase 3: Check for end-game transition
+      if (!state.endGameState.active && checkEndGameTransition(state)) {
+        enterEndGame(state);
+      }
+      
+      // Phase 3: Process end-game dynamics if active
+      if (state.endGameState.active) {
+        processEndGameMonth(state);
+        
+        // Check if end-game has resolved
+        const endGameOutcome = getEndGameOutcome(state);
+        if (endGameOutcome.outcome) {
+          actualOutcome = endGameOutcome.outcome;
+          console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
+          console.log(`   Reason: ${endGameOutcome.reason}`);
+          console.log(`   Month: ${month}\n`);
+          break;
+        }
+      }
       
       // Check for extinction completion (Phase 2: Heterogeneous extinctions)
       if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {

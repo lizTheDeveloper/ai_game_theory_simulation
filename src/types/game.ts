@@ -100,6 +100,7 @@ export interface AIAgent {
   lifecycleState: 'training' | 'testing' | 'deployed_closed' | 'deployed_open' | 'retired';
   deploymentType: 'closed' | 'open_weights' | 'enterprise' | 'research';
   spreadCount: number; // How many copies exist (1 for closed, 1000s for open)
+  darkCompute: number; // Phase 11: Illicit compute usage (PetaFLOPs on undetected infrastructure)
   detectedMisaligned: boolean; // Has government detected this AI?
   monthsDeployed: number; // How long has it been deployed?
   monthsInExistence: number; // Total age of this AI
@@ -563,6 +564,8 @@ export interface GameState {
   extinctionState: ExtinctionState; // Active extinction scenario tracking
   ecosystem: EcosystemState; // Phase 5.4: Technology diffusion tracking
   computeInfrastructure: ComputeInfrastructure; // Phase 1: Compute resource system
+  endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
+  catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
   
   // Configuration
   config: ConfigurationSettings;

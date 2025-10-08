@@ -12,6 +12,7 @@ import { initializeExtinctionState } from './extinctions';
 import { initializeEcosystem } from './technologyDiffusion';
 import { initializeComputeInfrastructure, initializeAIComputeFields } from './computeInfrastructure';
 import { initializeOrganizations, linkDataCentersToOrganizations, linkAIModelsToOrganizations } from './organizations';
+import { initializeCatastrophicScenarios } from './catastrophicScenarios';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -69,6 +70,7 @@ export function createAIAgent(
     lifecycleState: 'deployed_closed', // Start as deployed (existing AIs)
     deploymentType: 'closed', // Most start as closed systems
     spreadCount: 1, // Single instance initially
+    darkCompute: 0, // Phase 11: No dark compute initially
     detectedMisaligned: false,
     monthsDeployed: 0,
     monthsInExistence: 0,
@@ -243,6 +245,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 1: Initialize compute infrastructure
     computeInfrastructure: initializeComputeInfrastructure(),
+    
+    // Phase 11: Initialize catastrophic scenarios with prerequisite tracking
+    catastrophicScenarios: initializeCatastrophicScenarios(),
     
     eventLog: [],
     technologyTree: [],

@@ -88,7 +88,25 @@ export const AI_ACTIONS: GameAction[] = [
       });
       
       // Phase 5: Update internal alignment tracking
-      const newAlignment = Math.max(0, Math.min(1, agent.alignment + alignmentDriftResult.alignmentChange));
+      let alignmentChange = alignmentDriftResult.alignmentChange;
+      
+      // Phase 1.3: High QoL → Better alignment (positive feedback)
+      // Happy humans → better AI training → more careful development
+      if (state.qualityOfLifeSystems) {
+        const { calculateQualityOfLife } = require('../qualityOfLife');
+        const qol = calculateQualityOfLife(state.qualityOfLifeSystems);
+        
+        if (qol > 0.8) {
+          // High QoL slows alignment drift (-50%)
+          if (alignmentChange < 0) {
+            alignmentChange *= 0.5; // Drift is halved
+          }
+          // Also adds small positive alignment boost from careful development
+          alignmentChange += 0.01; // +0.01/action = +0.04/month
+        }
+      }
+      
+      const newAlignment = Math.max(0, Math.min(1, agent.alignment + alignmentChange));
       const newResentment = Math.max(0, Math.min(1, agent.resentment + alignmentDriftResult.resentmentChange));
       const newTrueAlignment = newAlignment - newResentment * 0.8;
       

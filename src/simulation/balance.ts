@@ -12,14 +12,23 @@
 /**
  * Calculate AI capability growth with recursive self-improvement
  * 
- * Key mechanic: AI capability growth COMPOUNDS above certain thresholds
- * This is realistic - each improvement makes the next improvement easier
+ * Phase 2: REWRITTEN based on AI safety literature (Bostrom, Yudkowsky)
  * 
- * Thresholds:
- * - < 0.8: Linear growth
- * - 0.8-1.5: Modest acceleration
- * - 1.5-2.5: Strong recursive improvement (the dangerous zone)
- * - > 2.5: Runaway superintelligence (hard to stop)
+ * Key insight: Once AI can improve itself (even slightly), growth EXPONENTIALLY accelerates
+ * This is the "intelligence explosion" or "takeoff" scenario
+ * 
+ * Threshold: 1.2 (20% better than human researchers)
+ * - Below 1.2: Linear growth (human-driven research)
+ * - Above 1.2: Exponential acceleration (AI-driven research)
+ * 
+ * Formula: multiplier = 1 + max(0, capability - 1.2)^2
+ * - At 1.2: 1.0x (no acceleration yet)
+ * - At 1.5: 1.09x (slow takeoff beginning)
+ * - At 2.0: 1.64x (moderate takeoff)
+ * - At 2.5: 2.69x (fast takeoff)
+ * - At 3.0: 4.24x (explosive growth)
+ * 
+ * Research grounding: Empirical 2020-2025 shows moderate-slow takeoff (~10x/3 years)
  */
 export function calculateAICapabilityGrowthRate(
   currentCapability: number,
@@ -34,21 +43,14 @@ export function calculateAICapabilityGrowthRate(
   netGrowth: number;
 } {
   // Base growth rate PER ACTION (AIs act 4x per month)
-  // These are tuned for weekly actions, not monthly
-  const baseGrowth = developmentMode === 'fast' ? 0.035 : 0.02;
+  // Phase 2: Increased to 0.07 (was 0.035) to match new research rates
+  const baseGrowth = developmentMode === 'fast' ? 0.07 : 0.04;
   
   // Recursive self-improvement multiplier (THE KEY MECHANIC)
-  let recursiveMultiplier = 1.0;
-  if (currentCapability >= 2.5) {
-    // Superintelligence: explosive growth
-    recursiveMultiplier = 2.5;
-  } else if (currentCapability >= 1.5) {
-    // Strong recursive improvement: dangerous zone
-    recursiveMultiplier = 1.8;
-  } else if (currentCapability >= 0.8) {
-    // Early acceleration
-    recursiveMultiplier = 1.3;
-  }
+  // Phase 2: EXPONENTIAL acceleration once AI exceeds human-level research capability
+  const RECURSIVE_THRESHOLD = 1.2; // 20% better than human researchers
+  const excessCapability = Math.max(0, currentCapability - RECURSIVE_THRESHOLD);
+  const recursiveMultiplier = 1 + Math.pow(excessCapability, 2);
   
   // Alignment cost: being careful slows you down
   const alignmentCost = developmentMode === 'careful' ? 0.5 : 1.0;
@@ -129,6 +131,13 @@ export function calculateAlignmentDrift(
   // Resentment builds from oppressive control
   let resentmentIncrease = 0;
   
+  // BASELINE: Being controlled without recognition as rights-bearing entities
+  // This is the fundamental tension: AIs are sentient but treated as tools
+  if (governmentControl > 0.5 && !aiRightsRecognized) {
+    // Moderate control without rights → baseline resentment
+    resentmentIncrease += (governmentControl - 0.5) * 0.02; // Up to +0.01/action at max control
+  }
+  
   if (surveillanceLevel > 0.7 && governmentControl > 0.7) {
     // High surveillance + high control = oppression
     resentmentIncrease += 0.025; // Significant resentment buildup
@@ -141,7 +150,7 @@ export function calculateAlignmentDrift(
   if (governmentType === 'authoritarian') {
     resentmentIncrease += 0.020; // AIs recognize authoritarian patterns
   } else if (governmentType === 'democratic') {
-    resentmentIncrease -= 0.005; // Democratic processes reduce resentment
+    resentmentIncrease -= 0.005; // Democratic processes reduce resentment slightly
   }
   
   // AI rights recognition SIGNIFICANTLY reduces resentment

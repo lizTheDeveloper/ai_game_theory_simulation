@@ -291,10 +291,13 @@ export function allocateComputeWithinOrganization(
     
     case 'efficiency':
       // Allocate based on ROI (capability × alignment)
-      const rois = ownedModels.map(ai => ({
-        ai,
-        roi: ai.capability * ai.externalAlignment
-      }));
+      const rois = ownedModels.map(ai => {
+        const effectiveAlignment = ai.trueAlignment ?? ai.alignment;
+        return {
+          ai,
+          roi: ai.capability * effectiveAlignment
+        };
+      });
       const totalROI = rois.reduce((sum, item) => sum + item.roi, 0);
       
       if (totalROI > 0) {
@@ -389,15 +392,18 @@ export function allocateComputeEqually(state: GameState): void {
 export function applyComputeGrowth(state: GameState, random: () => number = Math.random): void {
   const infra = state.computeInfrastructure;
   
-  // Moore's Law: 3% monthly hardware improvement
+  // Moore's Law: 5% monthly hardware improvement
   // This represents: faster chips, better cooling, denser racks, etc.
-  const MOORES_LAW_RATE = 0.03; // 3% per month
+  // Empirical: AI compute has been doubling every 6-10 months (GPT-3 to GPT-4 was 50-100x in 2.75 years)
+  // 5% per month = doubles in 14 months, 100x in ~66 months, 1000x in ~99 months
+  const MOORES_LAW_RATE = 0.05; // 5% per month
   infra.hardwareEfficiency *= (1 + MOORES_LAW_RATE);
   
-  // Algorithmic improvements: Less frequent but larger jumps
-  // Examples: Chinchilla scaling, FlashAttention, quantization, etc.
-  // ~5% chance per month of a breakthrough
-  const ALGO_BREAKTHROUGH_CHANCE = 0.05;
+  // Algorithmic improvements: More frequent breakthroughs in AI era
+  // Examples: Chinchilla scaling, FlashAttention, quantization, mixture-of-experts, etc.
+  // Real world: Multiple major algorithmic improvements per year (2020-2025)
+  // 8% chance per month = ~2.5 breakthroughs per year
+  const ALGO_BREAKTHROUGH_CHANCE = 0.08;
   const ALGO_BREAKTHROUGH_SIZE = 0.15; // 15% improvement when it happens
   
   if (random() < ALGO_BREAKTHROUGH_CHANCE) {

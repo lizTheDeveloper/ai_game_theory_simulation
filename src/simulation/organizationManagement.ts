@@ -29,11 +29,17 @@ function logPrefix(state: GameState, icon: string, monthLabel: string): string {
 
 /**
  * Calculate compute utilization for an organization
+ * 
+ * Phase 10 FIX: Include global efficiency multipliers (hardwareEfficiency * algorithmsEfficiency)
+ * to match the allocation logic, otherwise utilization shows 600%+ instead of ~100%
  */
 export function calculateComputeUtilization(org: Organization, state: GameState): number {
-  const ownedCompute = state.computeInfrastructure.dataCenters
+  let ownedCompute = state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+  
+  // Apply global efficiency multipliers to match allocation
+  ownedCompute *= state.computeInfrastructure.hardwareEfficiency * state.computeInfrastructure.algorithmsEfficiency;
   
   if (ownedCompute === 0) return 0;
   
@@ -61,16 +67,18 @@ export function shouldBuildDataCenter(
   const alreadyBuilding = org.currentProjects.some(p => p.type === 'datacenter_construction');
   if (alreadyBuilding) return false;
   
-  // Utilization check - only build if running out of capacity
+  // Utilization check - build proactively before hitting capacity limits
   const utilization = calculateComputeUtilization(org, state);
   
-  // Capital check (10x monthly revenue - more realistic)
-  // Large orgs with high revenue can still build massive DCs
+  // Capital check (10x monthly revenue - realistic per research)
+  // Real world: Meta/OpenAI build $1-10B DCs when they have the capital
+  // Lowered barrier: Only need 50% of cost upfront (can finance rest)
   const cost = 10 * org.monthlyRevenue;
-  const canAfford = org.capital > cost * 1.2; // Need 1.2x buffer (reduced from 1.5x)
+  const canAfford = org.capital > cost * 0.5; // 50% upfront, rest financed
   
-  // Market demand - only after economic transition starts
-  const marketDemand = state.globalMetrics.economicTransitionStage >= 1;
+  // Market demand - removed gate, AI companies are always expanding
+  // Real world: OpenAI/Anthropic/Meta building compute as fast as possible
+  const marketDemand = true; // Always true in AI gold rush era
   
   // Competitive pressure - if others are building, we should too
   const competitorBuilding = state.organizations
@@ -82,21 +90,22 @@ export function shouldBuildDataCenter(
   const hasMarketSharePriority = org.priorities.marketShare > 0.6;
   
   // Build if:
-  // 1. Running out of capacity (>80% utilization)
-  // 2. OR competitor is building AND we have capability race priority
-  // 3. AND we can afford it
-  // 4. AND market demand exists
-  const highUtilization = utilization > 0.8;
+  // 1. Running out of capacity (>65% utilization) - build earlier, not at crisis point
+  // 2. OR competitor is building AND we have capability race priority (racing dynamics)
+  // 3. OR we're focused on market share and have >50% utilization (growth mode)
+  // 4. AND we can afford it
+  const highUtilization = utilization > 0.65; // Build earlier (was 0.8)
   const competitivePressure = competitorBuilding && hasCapabilityRacePriority;
-  const marketExpansion = hasMarketSharePriority && utilization > 0.6;
+  const marketExpansion = hasMarketSharePriority && utilization > 0.5; // Build earlier (was 0.6)
   
   const shouldBuild = canAfford && 
                      marketDemand && 
                      (highUtilization || competitivePressure || marketExpansion);
   
   // Add randomness to avoid all orgs building at once
-  // 20% chance per month if all conditions met
-  return shouldBuild && random() < 0.2;
+  // 50% chance per month if all conditions met (was 20%)
+  // Real world: Once conditions are right, orgs move fast
+  return shouldBuild && random() < 0.5;
 }
 
 /**
@@ -111,11 +120,12 @@ export function startDataCenterConstruction(
   const baseCapacity = org.priorities.capabilityRace > 0.7 ? 150 : 100;
   const capacity = baseCapacity + random() * 100;
   
-  // Construction time: 24-72 months
-  // Larger DCs take longer
+  // Construction time: 24-48 months (was 24-72)
+  // Real world: Meta built $10B data center in ~3 years
+  // Larger DCs take longer, but not as much as before
   const baseTime = 24;
-  const sizeMultiplier = (capacity / 100) * 12; // +12 months per 100 PF
-  const constructionTime = Math.floor(baseTime + sizeMultiplier + random() * 24);
+  const sizeMultiplier = (capacity / 100) * 8; // +8 months per 100 PF (was 12)
+  const constructionTime = Math.floor(baseTime + sizeMultiplier + random() * 16); // +0-16 random (was 24)
   
   // Cost: 10x monthly revenue (balanced for realistic economics)
   const cost = 10 * org.monthlyRevenue;

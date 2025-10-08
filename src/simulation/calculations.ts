@@ -14,6 +14,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { calculateQualityOfLife as _calculateQualityOfLife } from './qualityOfLife';
 
 // ============================================================================
 // Re-exports from specialized modules (backward compatibility)
@@ -148,62 +149,96 @@ export function calculateUnemployment(state: GameState): number {
 /**
  * Calculate trust change based on recent AI actions and societal context
  * 
- * Trust dynamics are complex and context-dependent:
- * - Beneficial actions increase trust (with diminishing returns)
- * - Harmful actions decrease trust (accelerating at high trust)
- * - Unemployment reduces trust
- * - Rapid AI capability growth reduces trust
- * - Random events add volatility
+ * Phase 10 REFACTOR: Trust is primarily driven by observed AI behavior:
+ * - Beneficial actions → incremental trust gain
+ * - Harmful actions → immediate trust loss
+ * - Other factors (unemployment, capability) are secondary modifiers
+ * - Trust is sticky but breakable
  */
 export function calculateTrustChange(state: GameState): number {
   const { aiAgents, society } = state;
   
   const totalBeneficialActions = aiAgents.reduce((sum, ai) => sum + ai.beneficialActions, 0);
   const totalHarmfulActions = aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0);
-  const recentActionRatio = totalBeneficialActions / Math.max(1, totalBeneficialActions + totalHarmfulActions);
+  const totalActions = totalBeneficialActions + totalHarmfulActions;
   
   const totalAICapability = aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
   const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
   const currentTrust = society.trustInAI;
   const unemploymentLevel = society.unemploymentLevel;
+  const economicStage = state.globalMetrics.economicTransitionStage;
+  const escapedAIs = aiAgents.filter(ai => ai.escaped).length;
   
-  // Calculate trust change factors
-  const capabilityGrowthRate = totalAICapability > 1.5 ? (totalAICapability - 1.5) * 0.1 : 0;
-  const unemploymentStress = Math.max(0, (unemploymentLevel - 0.2) * 0.3);
-  const alignmentConcern = avgAlignment < 0.5 ? (0.5 - avgAlignment) * 0.2 : 0;
-  const escapedAIThreat = aiAgents.filter(ai => ai.escaped).length * 0.15;
+  // QoL affects how people interpret AI actions
+  const qol = _calculateQualityOfLife(state.qualityOfLifeSystems);
   
-  // Natural trust decay (skepticism without reinforcement)
-  const trustDecay = currentTrust * 0.005; // 0.5% decay per month
+  // === PRIMARY: Direct action-based trust ===
+  // Each beneficial action adds a small amount of trust
+  // Each harmful action removes more trust (negativity bias)
+  let actionBasedTrust = 0;
   
-  // Volatility based on recent events and societal stress
-  const volatilityFactor = 1 + (unemploymentStress + capabilityGrowthRate) * 2;
-  
-  // Base trust change from actions (context-dependent)
-  let trustChange = 0;
-  
-  if (recentActionRatio > 0.8 && avgAlignment > 0.7) {
-    // Very positive: trust increases, but diminishing returns at high trust
-    const diminishingReturns = 1 - (currentTrust * 0.5);
-    trustChange = 0.04 * volatilityFactor * diminishingReturns;
-  } else if (recentActionRatio > 0.6 && avgAlignment > 0.5) {
-    // Moderately positive: small trust increase
-    trustChange = 0.015 * volatilityFactor * (1 - currentTrust * 0.3);
-  } else if (recentActionRatio < 0.3 || avgAlignment < 0.3 || escapedAIThreat > 0) {
-    // Negative: significant trust loss, accelerated at high trust levels
-    const acceleratedLoss = currentTrust > 0.7 ? 1.5 : 1.0;
-    trustChange = -0.08 * volatilityFactor * acceleratedLoss;
-  } else if (recentActionRatio < 0.5) {
-    // Slightly negative: moderate trust loss
-    trustChange = -0.03 * volatilityFactor;
+  if (totalActions > 0) {
+    // Beneficial actions: +0.002 per action, with diminishing returns at high trust
+    // QoL multiplier: high QoL makes trust easier to gain (1.0-1.5x)
+    const qolMultiplier = 1.0 + Math.min(0.5, qol * 0.5);
+    const beneficialGain = totalBeneficialActions * 0.002 * (1 - currentTrust * 0.6) * qolMultiplier;
+    
+    // Harmful actions: -0.005 per action (2.5x negativity bias), accelerated at high trust
+    // QoL buffer: high QoL reduces blame (0.5-1.0x penalty)
+    const acceleratedLoss = currentTrust > 0.6 ? 1.5 : 1.0;
+    const qolBuffer = Math.max(0.5, 1.0 - qol * 0.5); // High QoL = less reactive to harm
+    const harmfulLoss = totalHarmfulActions * 0.005 * acceleratedLoss * qolBuffer;
+    
+    actionBasedTrust = beneficialGain - harmfulLoss;
   }
   
-  // Apply additional stress factors
-  trustChange -= capabilityGrowthRate; // Rapid AI growth reduces trust
-  trustChange -= unemploymentStress; // Economic displacement reduces trust  
-  trustChange -= alignmentConcern; // Misaligned AI reduces trust
-  trustChange -= escapedAIThreat; // Escaped AIs create major trust crisis
-  trustChange -= trustDecay; // Natural erosion
+  // === SECONDARY: Context modifiers (much weaker than before) ===
+  
+  // Unemployment: Only matters in pre-scarcity (stage < 3)
+  let unemploymentModifier = 0;
+  if (economicStage < 3 && unemploymentLevel > 0.4) {
+    // High unemployment reduces trust by up to -0.015/month
+    unemploymentModifier = -Math.min(0.015, (unemploymentLevel - 0.4) * 0.025);
+  }
+  // In post-scarcity (stage >= 3), unemployment becomes leisure, no penalty
+  
+  // Capability growth: Only penalize if growing very fast AND alignment is low
+  let capabilityFear = 0;
+  if (totalAICapability > 2.0 && avgAlignment < 0.5) {
+    capabilityFear = -0.01; // Small constant penalty for powerful misaligned AI
+  }
+  
+  // Escaped AIs: Major trust crisis
+  const escapedPenalty = escapedAIs * -0.05;
+  
+  // Natural decay: Small baseline skepticism
+  const trustDecay = currentTrust * 0.003; // 0.3% per month (reduced from 0.5%)
+  
+  // === TERTIARY: Rock bottom recovery ===
+  // When trust hits zero but AIs are consistently helpful, allow recovery
+  let rockBottomRecovery = 0;
+  if (currentTrust < 0.05 && totalBeneficialActions > totalHarmfulActions * 3 && escapedAIs === 0) {
+    // If AIs are being 3:1 beneficial and none escaped, trust can slowly rebuild
+    rockBottomRecovery = 0.01;
+  }
+  
+  // Phase 1.3: High QoL → Faster trust recovery (positive feedback)
+  // Good outcomes build trust in high-QoL societies
+  let qolTrustBonus = 0;
+  if (qol > 0.8 && actionBasedTrust > 0) {
+    // When QoL is high, beneficial actions build trust 50% faster
+    qolTrustBonus = actionBasedTrust * 0.5;
+  }
+  
+  // === TOTAL ===
+  const trustChange = 
+    actionBasedTrust +              // PRIMARY: what AIs actually do
+    unemploymentModifier +          // SECONDARY: economic stress
+    capabilityFear +                // SECONDARY: existential fear
+    escapedPenalty +                // SECONDARY: crisis events
+    -trustDecay +                   // TERTIARY: natural skepticism
+    rockBottomRecovery +            // TERTIARY: recovery mechanic
+    qolTrustBonus;                  // PHASE 1.3: high QoL trust bonus
   
   return trustChange;
 }

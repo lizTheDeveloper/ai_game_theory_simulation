@@ -1343,11 +1343,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.08);
       
       // Quality of life drops (less job freedom)
-      const { updateQualityOfLife } = require('../qualityOfLife');
-      newState.qualityOfLifeSystems.psychological.autonomy = Math.max(0, 
-        newState.qualityOfLifeSystems.psychological.autonomy - 0.05
-      );
-      updateQualityOfLife(newState);
+      if (newState.qualityOfLifeSystems) {
+        newState.qualityOfLifeSystems.autonomy = Math.max(0, 
+          newState.qualityOfLifeSystems.autonomy - 0.05
+        );
+      }
       
       return {
         newState,
@@ -1710,6 +1710,12 @@ export function selectGovernmentAction(
         if (observableCapability > 1.5) {
           priority *= 2.0;
         }
+        // Low trust → fear → control response
+        if (trustLevel < 0.4) {
+          priority *= 1.5; // Fear drives control
+        } else if (trustLevel < 0.6) {
+          priority *= 1.2; // Moderate concern
+        }
         break;
         
       case 'regulate_capability_ceiling':
@@ -1723,6 +1729,12 @@ export function selectGovernmentAction(
         // Boost if AI capability is high
         if (observableCapability > 1.3) {
           priority *= 1.4;
+        }
+        // Low trust → fear → hard limits
+        if (trustLevel < 0.4) {
+          priority *= 1.6; // Panic response
+        } else if (trustLevel < 0.6) {
+          priority *= 1.3;
         }
         break;
         
@@ -1777,6 +1789,13 @@ export function selectGovernmentAction(
         // Higher priority if alignment research isn't working
         if (state.government.alignmentResearchInvestment > 4 && avgAlignment < 0.65) {
           priority += 8; // Research isn't enough
+        }
+        
+        // Low trust + high capability → compute governance NOW
+        if (trustLevel < 0.4 && observableCapability > 1.0) {
+          priority += 15; // Fear-driven control
+        } else if (trustLevel < 0.5 && observableCapability > 1.2) {
+          priority += 10; // Concerned response
         }
         
         // Lower priority if already have some governance
@@ -1838,6 +1857,11 @@ export function selectGovernmentAction(
         if (recentBreakthroughs > 30) {
           priority *= 1.5;
         }
+        
+        // Low trust → mandatory verification
+        if (trustLevel < 0.5) {
+          priority *= 1.4; // Need to verify everything
+        }
         break;
       
       // ===== PHASE 5: DIFFUSION CONTROL ACTIONS =====
@@ -1852,6 +1876,11 @@ export function selectGovernmentAction(
         // Boost if capability floor is approaching dangerous levels
         if (state.ecosystem.capabilityFloor.selfImprovement > 2.0) {
           priority *= 2.5;
+        }
+        
+        // Low trust → control information flow
+        if (trustLevel < 0.5) {
+          priority *= 1.3; // Don't let dangerous info spread
         }
         
         // Lower if legitimacy is already low (can't afford more loss)
@@ -1869,6 +1898,11 @@ export function selectGovernmentAction(
                                      state.ecosystem.capabilityFloor.selfImprovement;
         if (mobilityDiffusionGap < 0.3) {
           priority *= 1.8;
+        }
+        
+        // Low trust → control people movement
+        if (trustLevel < 0.4) {
+          priority *= 1.5; // Authoritarian control
         }
         
         // Lower if legitimacy is very low (VERY unpopular)
