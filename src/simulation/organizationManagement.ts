@@ -338,25 +338,147 @@ export function startModelTraining(
 }
 
 /**
- * Simplified revenue collection (Phase 8 will expand this)
+ * =============================================================================
+ * PHASE 8: REVENUE & EXPENSES
+ * =============================================================================
+ */
+
+/**
+ * Calculate revenue from deployed AI models
+ */
+export function calculateAIRevenue(org: Organization, state: GameState): number {
+  const deployedModels = state.aiAgents.filter(ai => 
+    org.ownedAIModels.includes(ai.id) && 
+    ai.lifecycleState === 'deployed'
+  );
+  
+  if (deployedModels.length === 0) return org.monthlyRevenue * 0.3; // Minimum: 30% baseline
+  
+  // Revenue scales with:
+  // 1. Number of deployed models
+  // 2. Average capability of models (better models = more revenue)
+  // 3. Market demand (economic stage)
+  // 4. Organization size (larger orgs have more market reach)
+  const avgCapability = deployedModels.reduce((sum, ai) => sum + ai.capability, 0) / deployedModels.length;
+  const marketMultiplier = 1.0 + (state.globalMetrics.economicTransitionStage * 0.5);
+  const sizeMultiplier = Math.sqrt(org.ownedAIModels.length); // Economies of scale
+  const baseRevenuePerModel = 15; // $15M per model per month (increased from $5M)
+  
+  return deployedModels.length * baseRevenuePerModel * (1 + avgCapability * 2) * marketMultiplier * sizeMultiplier;
+}
+
+/**
+ * Phase 8: Collect revenue from AI services
  */
 export function collectRevenue(org: Organization, state: GameState): void {
+  const aiRevenue = calculateAIRevenue(org, state);
+  
+  // Update monthly revenue (can grow or shrink, but not below 30% of initial)
+  const initialRevenue = org.type === 'private' ? 10 : 1; // Store initial somewhere if needed
+  org.monthlyRevenue = Math.max(aiRevenue, org.monthlyRevenue * 0.3);
+  
   org.capital += org.monthlyRevenue;
 }
 
 /**
- * Simplified expense payment (Phase 8 will expand this)
+ * Calculate total monthly expenses
  */
-export function payExpenses(org: Organization, state: GameState): void {
-  // Pay base expenses
-  org.capital -= org.monthlyExpenses;
+export function calculateTotalExpenses(org: Organization, state: GameState): {
+  baseExpenses: number;
+  dcOperational: number;
+  projectCosts: number;
+  total: number;
+} {
+  // Base operational expenses
+  const baseExpenses = org.monthlyExpenses;
   
-  // Pay data center operational costs
-  const dcCosts = state.computeInfrastructure.dataCenters
+  // Data center operational costs
+  const dcOperational = state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.operationalCost, 0);
   
-  org.capital -= dcCosts;
+  // Project monthly costs (already paid in updateProjects, but track for reporting)
+  const projectCosts = org.currentProjects.reduce((sum, project) => {
+    const duration = project.completionMonth - project.startMonth;
+    if (project.type === 'datacenter_construction') {
+      return sum + (project.capitalInvested * 0.7) / duration;
+    } else if (project.type === 'model_training') {
+      return sum + (project.capitalInvested * 0.5) / duration;
+    }
+    return sum;
+  }, 0);
+  
+  return {
+    baseExpenses,
+    dcOperational,
+    projectCosts,
+    total: baseExpenses + dcOperational // projectCosts already deducted
+  };
+}
+
+/**
+ * Phase 8: Pay all expenses
+ */
+export function payExpenses(org: Organization, state: GameState): void {
+  const expenses = calculateTotalExpenses(org, state);
+  
+  // Pay base expenses + DC operational costs
+  // (Project costs are already paid in updateProjects)
+  org.capital -= expenses.total;
+}
+
+/**
+ * Phase 8: Handle bankruptcy
+ */
+export function handleBankruptcy(org: Organization, state: GameState): void {
+  console.log(`💥 [Month ${state.currentMonth}] ${org.name} declared bankruptcy (capital: $${org.capital.toFixed(1)}M)`);
+  
+  // Cancel all ongoing projects
+  org.currentProjects.forEach(project => {
+    if (project.canBeCanceled) {
+      const penalty = project.capitalInvested * project.cancellationPenalty;
+      org.capital -= penalty;
+      console.log(`   Canceled ${project.type}: lost $${penalty.toFixed(1)}M`);
+    }
+  });
+  org.currentProjects = [];
+  
+  // Sell data centers to government or other orgs
+  const dcValue = state.computeInfrastructure.dataCenters
+    .filter(dc => org.ownedDataCenters.includes(dc.id))
+    .reduce((sum, dc) => sum + dc.capacity * 5, 0); // $5M per PF
+  
+  org.capital += dcValue * 0.5; // Firesale: 50% value
+  console.log(`   Sold ${org.ownedDataCenters.length} data centers for $${(dcValue * 0.5).toFixed(1)}M`);
+  
+  // Transfer data centers to government
+  state.computeInfrastructure.dataCenters
+    .filter(dc => org.ownedDataCenters.includes(dc.id))
+    .forEach(dc => {
+      dc.organizationId = 'government';
+      dc.restrictedAccess = true;
+    });
+  
+  const govOrg = state.organizations.find(o => o.id === 'government');
+  if (govOrg) {
+    govOrg.ownedDataCenters.push(...org.ownedDataCenters);
+  }
+  
+  org.ownedDataCenters = [];
+  
+  // Retire all AI models
+  state.aiAgents
+    .filter(ai => org.ownedAIModels.includes(ai.id))
+    .forEach(ai => {
+      ai.lifecycleState = 'retired';
+    });
+  
+  console.log(`   Retired ${org.ownedAIModels.length} AI models`);
+  
+  // Mark organization as bankrupt (keep in list but inactive)
+  org.capital = 0;
+  org.monthlyRevenue = 0;
+  org.monthlyExpenses = 0;
 }
 
 /**
@@ -387,8 +509,10 @@ export function processOrganizationTurn(
     startModelTraining(org, state, random);
   }
   
-  // 5. Check bankruptcy (Phase 8 will handle this fully)
+  // 5. Check bankruptcy
   if (org.capital < -50 && org.type === 'private') {
+    handleBankruptcy(org, state);
+  } else if (org.capital < -20 && org.type === 'private') {
     console.warn(`⚠️  [Month ${state.currentMonth}] ${org.name} is in financial distress (capital: $${org.capital.toFixed(1)}M)`);
   }
 }
