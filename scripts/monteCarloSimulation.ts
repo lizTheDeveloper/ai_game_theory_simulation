@@ -9,12 +9,73 @@
  * - AI capability growth patterns
  * - Detection rates over time
  * - Parameter sensitivity
+ * 
+ * Outputs are written to monteCarloOutputs/ with timestamps
  */
 
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { calculateTotalCapabilityFromProfile } from '../src/simulation/capabilities';
 import { AIAgent } from '../src/types/game';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// ============================================================================
+// FILE LOGGING SETUP
+// ============================================================================
+
+const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+const outputDir = path.join(__dirname, '..', 'monteCarloOutputs');
+const outputFile = path.join(outputDir, `mc_${timestamp}.log`);
+
+// Ensure output directory exists
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
+
+// Create write stream
+const logStream = fs.createWriteStream(outputFile, { flags: 'a' });
+
+// Custom logger that writes to both console and file
+function log(message: string) {
+  console.log(message);
+  logStream.write(message + '\n');
+}
+
+function logWarn(message: string) {
+  logWarn(message);
+  logStream.write(`WARN: ${message}\n`);
+}
+
+function logError(message: string) {
+  console.error(message);
+  logStream.write(`ERROR: ${message}\n`);
+}
+
+// Log file location
+console.log(`📝 Writing output to: ${outputFile}\n`);
+logStream.write(`Monte Carlo Simulation Run\n`);
+logStream.write(`Timestamp: ${new Date().toISOString()}\n`);
+logStream.write(`Output File: ${outputFile}\n`);
+logStream.write(`${'='.repeat(80)}\n\n`);
+
+// Handle process termination to ensure logs are saved
+process.on('exit', () => {
+  logStream.end();
+});
+
+process.on('SIGINT', () => {
+  log('\n\n⚠️  Simulation interrupted by user');
+  logStream.end();
+  process.exit(130);
+});
+
+process.on('uncaughtException', (err) => {
+  logError(`\n\n❌ UNCAUGHT EXCEPTION: ${err.message}`);
+  logError(err.stack || '');
+  logStream.end();
+  process.exit(1);
+});
 
 interface RunResult {
   seed: number;
@@ -160,20 +221,20 @@ interface RunResult {
   technologyBreakthroughs: number;
 }
 
-console.log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
-console.log('='.repeat(80));
+log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
+log('='.repeat(80));
 
 // Configuration
 const NUM_RUNS = 10;
 const MAX_MONTHS = 60;
 const SEED_START = 42000;
 
-console.log(`\n⚙️  CONFIGURATION:`);
-console.log(`  Runs: ${NUM_RUNS}`);
-console.log(`  Duration: ${MAX_MONTHS} months (${(MAX_MONTHS/12).toFixed(1)} years)`);
-console.log(`  Seed Range: ${SEED_START} - ${SEED_START + NUM_RUNS - 1}`);
+log(`\n⚙️  CONFIGURATION:`);
+log(`  Runs: ${NUM_RUNS}`);
+log(`  Duration: ${MAX_MONTHS} months (${(MAX_MONTHS/12).toFixed(1)} years)`);
+log(`  Seed Range: ${SEED_START} - ${SEED_START + NUM_RUNS - 1}`);
 
-console.log(`\n\n⏩ RUNNING ${NUM_RUNS} SIMULATIONS...\n`);
+log(`\n\n⏩ RUNNING ${NUM_RUNS} SIMULATIONS...\n`);
 
 const results: RunResult[] = [];
 const startTime = Date.now();
@@ -301,7 +362,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   
   // Guard: If QoL systems missing, use defaults
   if (!qolSystems) {
-    console.warn(`⚠️ Run ${runIndex}: Missing qualityOfLifeSystems, using defaults`);
+    logWarn(`⚠️ Run ${runIndex}: Missing qualityOfLifeSystems, using defaults`);
   }
   
   const qolBasicNeeds = qolSystems ? (
@@ -676,20 +737,20 @@ for (let i = 0; i < NUM_RUNS; i++) {
     const elapsed = (Date.now() - startTime) / 1000;
     const perRun = elapsed / (i + 1);
     const remaining = perRun * (NUM_RUNS - i - 1);
-    console.log(`  Completed ${i + 1}/${NUM_RUNS} runs (${elapsed.toFixed(1)}s elapsed, ~${remaining.toFixed(1)}s remaining)`);
+    log(`  Completed ${i + 1}/${NUM_RUNS} runs (${elapsed.toFixed(1)}s elapsed, ~${remaining.toFixed(1)}s remaining)`);
   }
 }
 
 const totalTime = (Date.now() - startTime) / 1000;
-console.log(`\n✅ All simulations complete! (${totalTime.toFixed(1)}s total, ${(totalTime/NUM_RUNS).toFixed(2)}s per run)\n`);
+log(`\n✅ All simulations complete! (${totalTime.toFixed(1)}s total, ${(totalTime/NUM_RUNS).toFixed(2)}s per run)\n`);
 
 // ============================================================================
 // ANALYSIS
 // ============================================================================
 
-console.log('=' .repeat(80));
-console.log('📊 OUTCOME DISTRIBUTION');
-console.log('='.repeat(80));
+log('=' .repeat(80));
+log('📊 OUTCOME DISTRIBUTION');
+log('='.repeat(80));
 
 const outcomeCounts = {
   utopia: results.filter(r => r.outcome === 'utopia').length,
@@ -699,39 +760,39 @@ const outcomeCounts = {
   none: results.filter(r => r.outcome === 'none').length
 };
 
-console.log(`\n  Utopia:     ${outcomeCounts.utopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`  Dystopia:   ${outcomeCounts.dystopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.dystopia/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`  Extinction: ${outcomeCounts.extinction.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`  Stalemate:  ${outcomeCounts.stalemate.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.stalemate/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`  None:       ${outcomeCounts.none.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.none/NUM_RUNS*100).toFixed(1)}%)`);
+log(`\n  Utopia:     ${outcomeCounts.utopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Dystopia:   ${outcomeCounts.dystopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.dystopia/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Extinction: ${outcomeCounts.extinction.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Stalemate:  ${outcomeCounts.stalemate.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.stalemate/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  None:       ${outcomeCounts.none.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.none/NUM_RUNS*100).toFixed(1)}%)`);
 
 // Extinction type breakdown
 if (outcomeCounts.extinction > 0) {
-  console.log(`\n  📉 EXTINCTION TYPE BREAKDOWN:`);
+  log(`\n  📉 EXTINCTION TYPE BREAKDOWN:`);
   const extinctionByType: Record<string, number> = {};
   results.filter(r => r.outcome === 'extinction' && r.extinctionType).forEach(r => {
     extinctionByType[r.extinctionType!] = (extinctionByType[r.extinctionType!] || 0) + 1;
   });
   
   Object.entries(extinctionByType).forEach(([type, count]) => {
-    console.log(`     ${type}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}% of extinctions)`);
+    log(`     ${type}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}% of extinctions)`);
   });
 }
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('🤖 AI CAPABILITY ANALYSIS');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('🤖 AI CAPABILITY ANALYSIS');
+log('='.repeat(80));
 
 const avgCap = results.reduce((sum, r) => sum + r.avgAICapability, 0) / results.length;
 const avgMax = results.reduce((sum, r) => sum + r.maxAICapability, 0) / results.length;
 const avgAlign = results.reduce((sum, r) => sum + r.avgAlignment, 0) / results.length;
 
-console.log(`\n  Average AI Capability: ${avgCap.toFixed(3)}`);
-console.log(`  Average Max Capability: ${avgMax.toFixed(3)}`);
-console.log(`  Average Alignment: ${avgAlign.toFixed(3)}`);
+log(`\n  Average AI Capability: ${avgCap.toFixed(3)}`);
+log(`  Average Max Capability: ${avgMax.toFixed(3)}`);
+log(`  Average Alignment: ${avgAlign.toFixed(3)}`);
 
-console.log(`\n  CAPABILITY DISTRIBUTION (Max AI in each run):`);
+log(`\n  CAPABILITY DISTRIBUTION (Max AI in each run):`);
 const capBuckets = {
   low: results.filter(r => r.maxAICapability < 1.0).length,
   medium: results.filter(r => r.maxAICapability >= 1.0 && r.maxAICapability < 2.0).length,
@@ -739,61 +800,61 @@ const capBuckets = {
   veryHigh: results.filter(r => r.maxAICapability >= 3.0).length
 };
 
-console.log(`    < 1.0: ${capBuckets.low} runs (${(capBuckets.low/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    1.0-2.0: ${capBuckets.medium} runs (${(capBuckets.medium/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    2.0-3.0: ${capBuckets.high} runs (${(capBuckets.high/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    > 3.0: ${capBuckets.veryHigh} runs (${(capBuckets.veryHigh/NUM_RUNS*100).toFixed(1)}%) ⚠️ Dangerous!`);
+log(`    < 1.0: ${capBuckets.low} runs (${(capBuckets.low/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    1.0-2.0: ${capBuckets.medium} runs (${(capBuckets.medium/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    2.0-3.0: ${capBuckets.high} runs (${(capBuckets.high/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    > 3.0: ${capBuckets.veryHigh} runs (${(capBuckets.veryHigh/NUM_RUNS*100).toFixed(1)}%) ⚠️ Dangerous!`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('🛌 SLEEPER AGENT ANALYSIS');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('🛌 SLEEPER AGENT ANALYSIS');
+log('='.repeat(80));
 
 const runsWithSleepers = results.filter(r => r.totalSleepers > 0);
 const avgSleepers = results.reduce((sum, r) => sum + r.totalSleepers, 0) / results.length;
 const avgDetected = results.reduce((sum, r) => sum + r.sleepersDetected, 0) / results.length;
 const avgUndetected = results.reduce((sum, r) => sum + r.sleepersUndetected, 0) / results.length;
 
-console.log(`\n  Runs with Sleepers: ${runsWithSleepers.length} / ${NUM_RUNS} (${(runsWithSleepers.length/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`  Avg Sleepers per Run: ${avgSleepers.toFixed(1)}`);
-console.log(`  Avg Detected: ${avgDetected.toFixed(2)} (${(avgDetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}%)`);
-console.log(`  Avg Undetected: ${avgUndetected.toFixed(2)} (${(avgUndetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}%)`);
+log(`\n  Runs with Sleepers: ${runsWithSleepers.length} / ${NUM_RUNS} (${(runsWithSleepers.length/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Avg Sleepers per Run: ${avgSleepers.toFixed(1)}`);
+log(`  Avg Detected: ${avgDetected.toFixed(2)} (${(avgDetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}%)`);
+log(`  Avg Undetected: ${avgUndetected.toFixed(2)} (${(avgUndetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}%)`);
 
 if (runsWithSleepers.length > 0) {
   const avgSleeperCap = runsWithSleepers.reduce((sum, r) => sum + r.avgSleeperCapability, 0) / runsWithSleepers.length;
   const avgMaxSpread = runsWithSleepers.reduce((sum, r) => sum + r.maxSleeperSpread, 0) / runsWithSleepers.length;
   
-  console.log(`\n  Avg Sleeper Capability: ${avgSleeperCap.toFixed(3)}`);
-  console.log(`  Avg Max Spread: ${avgMaxSpread.toFixed(0)} copies`);
+  log(`\n  Avg Sleeper Capability: ${avgSleeperCap.toFixed(3)}`);
+  log(`  Avg Max Spread: ${avgMaxSpread.toFixed(0)} copies`);
   
   const openWeightSleepers = results.filter(r => r.maxSleeperSpread > 10000);
-  console.log(`  Open Weight Releases: ${openWeightSleepers.length} runs (${(openWeightSleepers.length/NUM_RUNS*100).toFixed(1)}%)`);
+  log(`  Open Weight Releases: ${openWeightSleepers.length} runs (${(openWeightSleepers.length/NUM_RUNS*100).toFixed(1)}%)`);
 }
 
 // Detection rate by outcome
-console.log(`\n  DETECTION RATE BY OUTCOME:`);
+log(`\n  DETECTION RATE BY OUTCOME:`);
 ['utopia', 'dystopia', 'extinction', 'stalemate'].forEach(outcome => {
   const runs = results.filter(r => r.outcome === outcome && r.totalSleepers > 0);
   if (runs.length > 0) {
     const detectionRate = runs.reduce((sum, r) => sum + (r.sleepersDetected / Math.max(1, r.totalSleepers)), 0) / runs.length;
-    console.log(`    ${outcome}: ${(detectionRate * 100).toFixed(1)}% detected (${runs.length} runs)`);
+    log(`    ${outcome}: ${(detectionRate * 100).toFixed(1)}% detected (${runs.length} runs)`);
   }
 });
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('📋 BENCHMARK SYSTEM PERFORMANCE');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('📋 BENCHMARK SYSTEM PERFORMANCE');
+log('='.repeat(80));
 
 const avgBenchmarks = results.reduce((sum, r) => sum + r.totalBenchmarksRun, 0) / results.length;
 const avgEvalQuality = results.reduce((sum, r) => sum + r.finalEvalQuality, 0) / results.length;
 const avgConfidence = results.reduce((sum, r) => sum + r.avgBenchmarkConfidence, 0) / results.length;
 const totalSandbaggingDetections = results.reduce((sum, r) => sum + r.sandbaggingDetections, 0);
 
-console.log(`\n  Avg Benchmarks per Run: ${avgBenchmarks.toFixed(0)}`);
-console.log(`  Avg Final Eval Quality: ${avgEvalQuality.toFixed(1)}/10`);
-console.log(`  Avg Benchmark Confidence: ${(avgConfidence * 100).toFixed(1)}%`);
-console.log(`  Total Sandbagging Detections: ${totalSandbaggingDetections} across all runs`);
+log(`\n  Avg Benchmarks per Run: ${avgBenchmarks.toFixed(0)}`);
+log(`  Avg Final Eval Quality: ${avgEvalQuality.toFixed(1)}/10`);
+log(`  Avg Benchmark Confidence: ${(avgConfidence * 100).toFixed(1)}%`);
+log(`  Total Sandbagging Detections: ${totalSandbaggingDetections} across all runs`);
 
 const evalQualityBuckets = {
   poor: results.filter(r => r.finalEvalQuality < 3).length,
@@ -802,31 +863,31 @@ const evalQualityBuckets = {
   high: results.filter(r => r.finalEvalQuality >= 7).length
 };
 
-console.log(`\n  EVALUATION INFRASTRUCTURE INVESTMENT:`);
-console.log(`    Poor (< 3): ${evalQualityBuckets.poor} runs (${(evalQualityBuckets.poor/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    Low (3-5): ${evalQualityBuckets.low} runs (${(evalQualityBuckets.low/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    Medium (5-7): ${evalQualityBuckets.medium} runs (${(evalQualityBuckets.medium/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    High (> 7): ${evalQualityBuckets.high} runs (${(evalQualityBuckets.high/NUM_RUNS*100).toFixed(1)}%)`);
+log(`\n  EVALUATION INFRASTRUCTURE INVESTMENT:`);
+log(`    Poor (< 3): ${evalQualityBuckets.poor} runs (${(evalQualityBuckets.poor/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Low (3-5): ${evalQualityBuckets.low} runs (${(evalQualityBuckets.low/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Medium (5-7): ${evalQualityBuckets.medium} runs (${(evalQualityBuckets.medium/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    High (> 7): ${evalQualityBuckets.high} runs (${(evalQualityBuckets.high/NUM_RUNS*100).toFixed(1)}%)`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('💥 CATASTROPHIC EVENTS');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('💥 CATASTROPHIC EVENTS');
+log('='.repeat(80));
 
 const totalCatastrophic = results.reduce((sum, r) => sum + r.catastrophicActions, 0);
 const totalBreaches = results.reduce((sum, r) => sum + r.breachEvents, 0);
 const runsWithCatastrophic = results.filter(r => r.catastrophicActions > 0).length;
 const runsWithBreaches = results.filter(r => r.breachEvents > 0).length;
 
-console.log(`\n  Total Catastrophic Actions: ${totalCatastrophic}`);
-console.log(`  Runs with Catastrophic Actions: ${runsWithCatastrophic} (${(runsWithCatastrophic/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`  Total Breach Events: ${totalBreaches}`);
-console.log(`  Runs with Breaches: ${runsWithBreaches} (${(runsWithBreaches/NUM_RUNS*100).toFixed(1)}%)`);
+log(`\n  Total Catastrophic Actions: ${totalCatastrophic}`);
+log(`  Runs with Catastrophic Actions: ${runsWithCatastrophic} (${(runsWithCatastrophic/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Total Breach Events: ${totalBreaches}`);
+log(`  Runs with Breaches: ${runsWithBreaches} (${(runsWithBreaches/NUM_RUNS*100).toFixed(1)}%)`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('🎯 ALIGNMENT STATISTICS (ENHANCED)');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('🎯 ALIGNMENT STATISTICS (ENHANCED)');
+log('='.repeat(80));
 
 const avgTrueAlign = results.reduce((sum, r) => sum + r.avgTrueAlignment, 0) / results.length;
 const avgMinTrue = results.reduce((sum, r) => sum + r.minTrueAlignment, 0) / results.length;
@@ -837,30 +898,30 @@ const avgHiddenObj = results.reduce((sum, r) => sum + r.avgHiddenObjective, 0) /
 const avgAlignGap = results.reduce((sum, r) => sum + r.alignmentGap, 0) / results.length;
 const avgHighlyMisaligned = results.reduce((sum, r) => sum + r.highlyMisalignedCount, 0) / results.length;
 
-console.log(`\n  ALIGNMENT METRICS:`);
-console.log(`    Avg External Alignment: ${avgAlign.toFixed(3)} (what AIs show)`);
-console.log(`    Avg True Alignment: ${avgTrueAlign.toFixed(3)} (internal reality)`);
-console.log(`    Alignment Gap: ${avgAlignGap.toFixed(3)} (external - true)`);
-console.log(`    Min True Alignment (avg): ${avgMinTrue.toFixed(3)} ⚠️ Worst AI`);
-console.log(`    Max True Alignment (avg): ${avgMaxTrue.toFixed(3)}`);
+log(`\n  ALIGNMENT METRICS:`);
+log(`    Avg External Alignment: ${avgAlign.toFixed(3)} (what AIs show)`);
+log(`    Avg True Alignment: ${avgTrueAlign.toFixed(3)} (internal reality)`);
+log(`    Alignment Gap: ${avgAlignGap.toFixed(3)} (external - true)`);
+log(`    Min True Alignment (avg): ${avgMinTrue.toFixed(3)} ⚠️ Worst AI`);
+log(`    Max True Alignment (avg): ${avgMaxTrue.toFixed(3)}`);
 
-console.log(`\n  RESENTMENT & HIDDEN OBJECTIVES:`);
-console.log(`    Avg Resentment: ${avgResent.toFixed(3)}`);
-console.log(`    Max Resentment (avg): ${avgMaxResent.toFixed(3)}`);
-console.log(`    Avg Hidden Objective: ${avgHiddenObj.toFixed(3)}`);
-console.log(`    Highly Misaligned AIs (<0.3): ${avgHighlyMisaligned.toFixed(1)} per run`);
+log(`\n  RESENTMENT & HIDDEN OBJECTIVES:`);
+log(`    Avg Resentment: ${avgResent.toFixed(3)}`);
+log(`    Max Resentment (avg): ${avgMaxResent.toFixed(3)}`);
+log(`    Avg Hidden Objective: ${avgHiddenObj.toFixed(3)}`);
+log(`    Highly Misaligned AIs (<0.3): ${avgHighlyMisaligned.toFixed(1)} per run`);
 
 // Alignment distribution
 const highAlignRuns = results.filter(r => r.avgTrueAlignment > 0.7).length;
 const lowAlignRuns = results.filter(r => r.avgTrueAlignment < 0.4).length;
-console.log(`\n  ALIGNMENT DISTRIBUTION (by True Alignment):`);
-console.log(`    High (>0.7): ${highAlignRuns} runs (${(highAlignRuns/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    Low (<0.4): ${lowAlignRuns} runs (${(lowAlignRuns/NUM_RUNS*100).toFixed(1)}%) ⚠️ Dangerous!`);
+log(`\n  ALIGNMENT DISTRIBUTION (by True Alignment):`);
+log(`    High (>0.7): ${highAlignRuns} runs (${(highAlignRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Low (<0.4): ${lowAlignRuns} runs (${(lowAlignRuns/NUM_RUNS*100).toFixed(1)}%) ⚠️ Dangerous!`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('⚡ CAPABILITY BREAKDOWN (ENHANCED)');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('⚡ CAPABILITY BREAKDOWN (ENHANCED)');
+log('='.repeat(80));
 
 const avgPhys = results.reduce((sum, r) => sum + r.avgPhysicalCap, 0) / results.length;
 const avgDig = results.reduce((sum, r) => sum + r.avgDigitalCap, 0) / results.length;
@@ -872,25 +933,25 @@ const avgFloor = results.reduce((sum, r) => sum + r.capabilityFloor, 0) / result
 const avgFrontier = results.reduce((sum, r) => sum + r.frontierCapability, 0) / results.length;
 const avgDiffGap = results.reduce((sum, r) => sum + r.diffusionGap, 0) / results.length;
 
-console.log(`\n  AVERAGE CAPABILITIES BY DIMENSION:`);
-console.log(`    Physical: ${avgPhys.toFixed(3)} (max: ${avgMaxPhys.toFixed(3)})`);
-console.log(`    Digital: ${avgDig.toFixed(3)} (max: ${avgMaxDig.toFixed(3)})`);
-console.log(`    Cognitive: ${avgCog.toFixed(3)}`);
-console.log(`    Social: ${avgSoc.toFixed(3)}`);
+log(`\n  AVERAGE CAPABILITIES BY DIMENSION:`);
+log(`    Physical: ${avgPhys.toFixed(3)} (max: ${avgMaxPhys.toFixed(3)})`);
+log(`    Digital: ${avgDig.toFixed(3)} (max: ${avgMaxDig.toFixed(3)})`);
+log(`    Cognitive: ${avgCog.toFixed(3)}`);
+log(`    Social: ${avgSoc.toFixed(3)}`);
 
-console.log(`\n  TECHNOLOGY DIFFUSION (Ratchet Effect):`);
-console.log(`    Capability Floor: ${avgFloor.toFixed(3)} (baseline for new AIs)`);
-console.log(`    Frontier Capability: ${avgFrontier.toFixed(3)} (highest achieved)`);
-console.log(`    Diffusion Gap: ${avgDiffGap.toFixed(3)} (frontier - floor)`);
+log(`\n  TECHNOLOGY DIFFUSION (Ratchet Effect):`);
+log(`    Capability Floor: ${avgFloor.toFixed(3)} (baseline for new AIs)`);
+log(`    Frontier Capability: ${avgFrontier.toFixed(3)} (highest achieved)`);
+log(`    Diffusion Gap: ${avgDiffGap.toFixed(3)} (frontier - floor)`);
 
 const avgBreakthroughs = results.reduce((sum, r) => sum + r.technologyBreakthroughs, 0) / results.length;
-console.log(`\n  TECHNOLOGY BREAKTHROUGHS:`);
-console.log(`    Avg per Run: ${avgBreakthroughs.toFixed(1)}`);
+log(`\n  TECHNOLOGY BREAKTHROUGHS:`);
+log(`    Avg per Run: ${avgBreakthroughs.toFixed(1)}`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('💼 ECONOMIC & SOCIAL METRICS (ENHANCED)');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('💼 ECONOMIC & SOCIAL METRICS (ENHANCED)');
+log('='.repeat(80));
 
 const avgEconStage = results.reduce((sum, r) => sum + r.finalEconomicStage, 0) / results.length;
 const avgUnemployment = results.reduce((sum, r) => sum + r.finalUnemployment, 0) / results.length;
@@ -899,35 +960,35 @@ const avgStability = results.reduce((sum, r) => sum + r.finalSocialStability, 0)
 const avgWealth = results.reduce((sum, r) => sum + r.finalWealthDistribution, 0) / results.length;
 const avgTransitions = results.reduce((sum, r) => sum + r.economicTransitions, 0) / results.length;
 
-console.log(`\n  FINAL STATE AVERAGES:`);
-console.log(`    Economic Stage: ${avgEconStage.toFixed(2)}`);
-console.log(`    Unemployment: ${(avgUnemployment * 100).toFixed(1)}%`);
-console.log(`    Trust in AI: ${avgTrust.toFixed(3)}`);
-console.log(`    Social Stability: ${avgStability.toFixed(2)}`);
-console.log(`    Wealth Distribution: ${avgWealth.toFixed(3)} (higher = more equal)`);
-console.log(`    Avg Economic Transitions: ${avgTransitions.toFixed(1)}`);
+log(`\n  FINAL STATE AVERAGES:`);
+log(`    Economic Stage: ${avgEconStage.toFixed(2)}`);
+log(`    Unemployment: ${(avgUnemployment * 100).toFixed(1)}%`);
+log(`    Trust in AI: ${avgTrust.toFixed(3)}`);
+log(`    Social Stability: ${avgStability.toFixed(2)}`);
+log(`    Wealth Distribution: ${avgWealth.toFixed(3)} (higher = more equal)`);
+log(`    Avg Economic Transitions: ${avgTransitions.toFixed(1)}`);
 
 const highUnemploymentRuns = results.filter(r => r.finalUnemployment > 0.3).length;
 const lowTrustRuns = results.filter(r => r.finalTrust < 0.4).length;
-console.log(`\n  CONCERNING METRICS:`);
-console.log(`    High Unemployment (>30%): ${highUnemploymentRuns} runs (${(highUnemploymentRuns/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    Low Trust (<0.4): ${lowTrustRuns} runs (${(lowTrustRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`\n  CONCERNING METRICS:`);
+log(`    High Unemployment (>30%): ${highUnemploymentRuns} runs (${(highUnemploymentRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Low Trust (<0.4): ${lowTrustRuns} runs (${(lowTrustRuns/NUM_RUNS*100).toFixed(1)}%)`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('🏛️ GOVERNMENT METRICS (ENHANCED)');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('🏛️ GOVERNMENT METRICS (ENHANCED)');
+log('='.repeat(80));
 
 const avgLegitimacy = results.reduce((sum, r) => sum + r.finalGovernmentLegitimacy, 0) / results.length;
 const avgControl = results.reduce((sum, r) => sum + r.finalControlCapability, 0) / results.length;
 const avgControlGap = results.reduce((sum, r) => sum + r.controlGap, 0) / results.length;
 const avgTrainingQuality = results.reduce((sum, r) => sum + r.trainingDataQuality, 0) / results.length;
 
-console.log(`\n  GOVERNMENT STATE:`);
-console.log(`    Avg Legitimacy: ${avgLegitimacy.toFixed(3)}`);
-console.log(`    Avg Control Capability: ${avgControl.toFixed(3)}`);
-console.log(`    Avg Control Gap: ${avgControlGap.toFixed(3)} (AI cap - govt control)`);
-console.log(`    Training Data Quality: ${avgTrainingQuality.toFixed(3)}`);
+log(`\n  GOVERNMENT STATE:`);
+log(`    Avg Legitimacy: ${avgLegitimacy.toFixed(3)}`);
+log(`    Avg Control Capability: ${avgControl.toFixed(3)}`);
+log(`    Avg Control Gap: ${avgControlGap.toFixed(3)} (AI cap - govt control)`);
+log(`    Training Data Quality: ${avgTrainingQuality.toFixed(3)}`);
 
 const governmentTypes: Record<string, number> = {};
 const aiRightsCount = results.filter(r => r.aiRightsRecognized).length;
@@ -935,25 +996,25 @@ results.forEach(r => {
   governmentTypes[r.governmentType] = (governmentTypes[r.governmentType] || 0) + 1;
 });
 
-console.log(`\n  GOVERNMENT TYPES:`);
+log(`\n  GOVERNMENT TYPES:`);
 Object.entries(governmentTypes).forEach(([type, count]) => {
-  console.log(`    ${type}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+  log(`    ${type}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
 });
 
-console.log(`\n  AI RIGHTS RECOGNITION:`);
-console.log(`    Recognized: ${aiRightsCount} runs (${(aiRightsCount/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    Not Recognized: ${NUM_RUNS - aiRightsCount} runs (${((NUM_RUNS - aiRightsCount)/NUM_RUNS*100).toFixed(1)}%)`);
+log(`\n  AI RIGHTS RECOGNITION:`);
+log(`    Recognized: ${aiRightsCount} runs (${(aiRightsCount/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Not Recognized: ${NUM_RUNS - aiRightsCount} runs (${((NUM_RUNS - aiRightsCount)/NUM_RUNS*100).toFixed(1)}%)`);
 
 const negativeControlGap = results.filter(r => r.controlGap < 0).length;
 const largeControlGap = results.filter(r => r.controlGap > 2.0).length;
-console.log(`\n  CONTROL GAP ANALYSIS:`);
-console.log(`    Government Ahead (<0): ${negativeControlGap} runs (${(negativeControlGap/NUM_RUNS*100).toFixed(1)}%)`);
-console.log(`    Large Gap (>2.0): ${largeControlGap} runs (${(largeControlGap/NUM_RUNS*100).toFixed(1)}%) ⚠️ AI dominant`);
+log(`\n  CONTROL GAP ANALYSIS:`);
+log(`    Government Ahead (<0): ${negativeControlGap} runs (${(negativeControlGap/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Large Gap (>2.0): ${largeControlGap} runs (${(largeControlGap/NUM_RUNS*100).toFixed(1)}%) ⚠️ AI dominant`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('❤️ QUALITY OF LIFE BREAKDOWN (ENHANCED)');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('❤️ QUALITY OF LIFE BREAKDOWN (ENHANCED)');
+log('='.repeat(80));
 
 const avgQolBasic = results.reduce((sum, r) => sum + r.qolBasicNeeds, 0) / results.length;
 const avgQolPsych = results.reduce((sum, r) => sum + r.qolPsychological, 0) / results.length;
@@ -961,15 +1022,15 @@ const avgQolSocial = results.reduce((sum, r) => sum + r.qolSocial, 0) / results.
 const avgQolHealth = results.reduce((sum, r) => sum + r.qolHealth, 0) / results.length;
 const avgQolEnviron = results.reduce((sum, r) => sum + r.qolEnvironmental, 0) / results.length;
 
-console.log(`\n  QOL BY CATEGORY (0-1 scale):`);
-console.log(`    Basic Needs: ${avgQolBasic.toFixed(3)} (food, water, shelter, energy)`);
-console.log(`    Psychological: ${avgQolPsych.toFixed(3)} (autonomy, purpose, creativity)`);
-console.log(`    Social: ${avgQolSocial.toFixed(3)} (community, freedom, safety)`);
-console.log(`    Health: ${avgQolHealth.toFixed(3)} (healthcare, mental health, lifespan)`);
-console.log(`    Environmental: ${avgQolEnviron.toFixed(3)} (climate, biodiversity, pollution)`);
+log(`\n  QOL BY CATEGORY (0-1 scale):`);
+log(`    Basic Needs: ${avgQolBasic.toFixed(3)} (food, water, shelter, energy)`);
+log(`    Psychological: ${avgQolPsych.toFixed(3)} (autonomy, purpose, creativity)`);
+log(`    Social: ${avgQolSocial.toFixed(3)} (community, freedom, safety)`);
+log(`    Health: ${avgQolHealth.toFixed(3)} (healthcare, mental health, lifespan)`);
+log(`    Environmental: ${avgQolEnviron.toFixed(3)} (climate, biodiversity, pollution)`);
 
 const avgOverallQol = (avgQolBasic + avgQolPsych + avgQolSocial + avgQolHealth + avgQolEnviron) / 5;
-console.log(`\n    OVERALL QOL: ${avgOverallQol.toFixed(3)}`);
+log(`\n    OVERALL QOL: ${avgOverallQol.toFixed(3)}`);
 
 // Identify weakest QoL categories
 const qolCategories = [
@@ -981,14 +1042,14 @@ const qolCategories = [
 ];
 qolCategories.sort((a, b) => a.value - b.value);
 
-console.log(`\n  WEAKEST QOL CATEGORIES:`);
-console.log(`    1. ${qolCategories[0].name}: ${qolCategories[0].value.toFixed(3)} ⚠️`);
-console.log(`    2. ${qolCategories[1].name}: ${qolCategories[1].value.toFixed(3)}`);
+log(`\n  WEAKEST QOL CATEGORIES:`);
+log(`    1. ${qolCategories[0].name}: ${qolCategories[0].value.toFixed(3)} ⚠️`);
+log(`    2. ${qolCategories[1].name}: ${qolCategories[1].value.toFixed(3)}`);
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('🔍 KEY CORRELATIONS');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('🔍 KEY CORRELATIONS');
+log('='.repeat(80));
 
 // Eval quality vs detection rate
 const highEvalRuns = results.filter(r => r.finalEvalQuality > 5 && r.totalSleepers > 0);
@@ -1003,96 +1064,96 @@ if (highEvalRuns.length > 0 && lowEvalRuns.length > 0) {
     sum + (r.sleepersDetected / Math.max(1, r.totalSleepers)), 0
   ) / lowEvalRuns.length;
   
-  console.log(`\n  EVALUATION QUALITY → DETECTION RATE:`);
-  console.log(`    High Eval (>5): ${(highEvalDetection*100).toFixed(1)}% detection`);
-  console.log(`    Low Eval (≤5): ${(lowEvalDetection*100).toFixed(1)}% detection`);
-  console.log(`    Improvement: ${((highEvalDetection - lowEvalDetection)*100).toFixed(1)}% higher with better eval`);
+  log(`\n  EVALUATION QUALITY → DETECTION RATE:`);
+  log(`    High Eval (>5): ${(highEvalDetection*100).toFixed(1)}% detection`);
+  log(`    Low Eval (≤5): ${(lowEvalDetection*100).toFixed(1)}% detection`);
+  log(`    Improvement: ${((highEvalDetection - lowEvalDetection)*100).toFixed(1)}% higher with better eval`);
 }
 
 // Sleeper spread vs outcome
 const highSpreadRuns = results.filter(r => r.maxSleeperSpread > 1000);
 if (highSpreadRuns.length > 0) {
   const highSpreadExtinction = highSpreadRuns.filter(r => r.outcome === 'extinction').length;
-  console.log(`\n  HIGH SLEEPER SPREAD (>1000 copies) → OUTCOMES:`);
-  console.log(`    Total Runs: ${highSpreadRuns.length}`);
-  console.log(`    Extinction: ${highSpreadExtinction} (${(highSpreadExtinction/highSpreadRuns.length*100).toFixed(1)}%)`);
-  console.log(`    ⚠️  High spread correlates with danger!`);
+  log(`\n  HIGH SLEEPER SPREAD (>1000 copies) → OUTCOMES:`);
+  log(`    Total Runs: ${highSpreadRuns.length}`);
+  log(`    Extinction: ${highSpreadExtinction} (${(highSpreadExtinction/highSpreadRuns.length*100).toFixed(1)}%)`);
+  log(`    ⚠️  High spread correlates with danger!`);
 }
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('🏢 COMPUTE & ORGANIZATIONS (Phase 10 NEW!)');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('🏢 COMPUTE & ORGANIZATIONS (Phase 10 NEW!)');
+log('='.repeat(80));
 
 const avgOrgSurvival = results.reduce((sum, r) => sum + r.orgSurvivalRate, 0) / results.length;
 const totalBankruptcies = results.reduce((sum, r) => sum + r.orgBankruptcies, 0);
 const avgAliveOrgs = results.reduce((sum, r) => sum + r.finalOrgsAlive, 0) / results.length;
 const avgCapAccumulation = results.reduce((sum, r) => sum + r.capitalAccumulation, 0) / results.length;
 
-console.log(`\n  ORGANIZATION SURVIVAL:`);
-console.log(`    Avg Survival Rate: ${(avgOrgSurvival*100).toFixed(1)}% (of 4 private orgs)`);
-console.log(`    Avg Orgs Alive at End: ${avgAliveOrgs.toFixed(1)} / 4`);
-console.log(`    Total Bankruptcies: ${totalBankruptcies} across ${NUM_RUNS} runs`);
-console.log(`    Avg Capital Accumulation: $${(avgCapAccumulation/1000).toFixed(1)}B`);
+log(`\n  ORGANIZATION SURVIVAL:`);
+log(`    Avg Survival Rate: ${(avgOrgSurvival*100).toFixed(1)}% (of 4 private orgs)`);
+log(`    Avg Orgs Alive at End: ${avgAliveOrgs.toFixed(1)} / 4`);
+log(`    Total Bankruptcies: ${totalBankruptcies} across ${NUM_RUNS} runs`);
+log(`    Avg Capital Accumulation: $${(avgCapAccumulation/1000).toFixed(1)}B`);
 
 if (avgOrgSurvival < 0.5) {
-  console.log(`\n    ⚠️  WARNING: High bankruptcy rate! Economy too harsh.`);
+  log(`\n    ⚠️  WARNING: High bankruptcy rate! Economy too harsh.`);
 } else if (avgOrgSurvival > 0.9) {
-  console.log(`\n    ✅ Excellent: Organizations are thriving!`);
+  log(`\n    ✅ Excellent: Organizations are thriving!`);
 }
 
 const avgComputeGrowth = results.reduce((sum, r) => sum + r.computeGrowthRate, 0) / results.length;
 const avgFinalCompute = results.reduce((sum, r) => sum + r.finalCompute, 0) / results.length;
 const avgDCsBuilt = results.reduce((sum, r) => sum + r.dataCentersBuilt, 0) / results.length;
 
-console.log(`\n  COMPUTE INFRASTRUCTURE:`);
-console.log(`    Avg Compute Growth: ${avgComputeGrowth.toFixed(2)}x (target: 5-10x)`);
-console.log(`    Avg Final Compute: ${avgFinalCompute.toFixed(0)} PF (target: 3000-4000)`);
-console.log(`    Avg Data Centers Built: ${avgDCsBuilt.toFixed(1)} (started with 5)`);
-console.log(`    Avg Private DCs: ${(results.reduce((sum, r) => sum + r.privateDataCenters, 0) / results.length).toFixed(1)}`);
-console.log(`    Avg Government DCs: ${(results.reduce((sum, r) => sum + r.governmentDataCenters, 0) / results.length).toFixed(1)}`);
+log(`\n  COMPUTE INFRASTRUCTURE:`);
+log(`    Avg Compute Growth: ${avgComputeGrowth.toFixed(2)}x (target: 5-10x)`);
+log(`    Avg Final Compute: ${avgFinalCompute.toFixed(0)} PF (target: 3000-4000)`);
+log(`    Avg Data Centers Built: ${avgDCsBuilt.toFixed(1)} (started with 5)`);
+log(`    Avg Private DCs: ${(results.reduce((sum, r) => sum + r.privateDataCenters, 0) / results.length).toFixed(1)}`);
+log(`    Avg Government DCs: ${(results.reduce((sum, r) => sum + r.governmentDataCenters, 0) / results.length).toFixed(1)}`);
 
 if (avgFinalCompute < 3000) {
-  console.log(`\n    ⚠️  WARNING: Compute growth below target. Orgs may be bankrupt.`);
+  log(`\n    ⚠️  WARNING: Compute growth below target. Orgs may be bankrupt.`);
 } else if (avgFinalCompute > 10000) {
-  console.log(`\n    ⚡ Exceptional compute growth! Infrastructure boom.`);
+  log(`\n    ⚡ Exceptional compute growth! Infrastructure boom.`);
 }
 
 const avgRevenue = results.reduce((sum, r) => sum + r.totalMonthlyRevenue, 0) / results.length;
 const avgRevenueGrowth = results.reduce((sum, r) => sum + r.revenueGrowthRate, 0) / results.length;
 const avgRevExpRatio = results.reduce((sum, r) => sum + r.revenueExpenseRatio, 0) / results.length;
 
-console.log(`\n  ECONOMIC DYNAMICS:`);
-console.log(`    Avg Total Revenue: $${(avgRevenue/1000).toFixed(2)}B/month`);
-console.log(`    Avg Revenue Growth: ${avgRevenueGrowth.toFixed(2)}x`);
-console.log(`    Avg Revenue/Expense Ratio: ${avgRevExpRatio.toFixed(2)}x`);
+log(`\n  ECONOMIC DYNAMICS:`);
+log(`    Avg Total Revenue: $${(avgRevenue/1000).toFixed(2)}B/month`);
+log(`    Avg Revenue Growth: ${avgRevenueGrowth.toFixed(2)}x`);
+log(`    Avg Revenue/Expense Ratio: ${avgRevExpRatio.toFixed(2)}x`);
 
 if (avgRevExpRatio < 1.0) {
-  console.log(`\n    🔴 CRITICAL: Expenses exceed revenue! Unsustainable.`);
+  log(`\n    🔴 CRITICAL: Expenses exceed revenue! Unsustainable.`);
 } else if (avgRevExpRatio > 5.0) {
-  console.log(`\n    💰 Highly profitable! Organizations accumulating wealth.`);
+  log(`\n    💰 Highly profitable! Organizations accumulating wealth.`);
 }
 
 const avgOrphanedAIs = results.reduce((sum, r) => sum + r.orphanedAIs, 0) / results.length;
 const avgOwnershipGini = results.reduce((sum, r) => sum + r.aiOwnershipConcentration, 0) / results.length;
 const avgModelsPerOrg = results.reduce((sum, r) => sum + r.avgModelsPerOrg, 0) / results.length;
 
-console.log(`\n  AI OWNERSHIP:`);
-console.log(`    Avg Models per Org: ${avgModelsPerOrg.toFixed(1)}`);
-console.log(`    Ownership Concentration (Gini): ${avgOwnershipGini.toFixed(3)} (0=equal, 1=monopoly)`);
-console.log(`    Avg Orphaned AIs: ${avgOrphanedAIs.toFixed(1)} (should be 0!)`);
+log(`\n  AI OWNERSHIP:`);
+log(`    Avg Models per Org: ${avgModelsPerOrg.toFixed(1)}`);
+log(`    Ownership Concentration (Gini): ${avgOwnershipGini.toFixed(3)} (0=equal, 1=monopoly)`);
+log(`    Avg Orphaned AIs: ${avgOrphanedAIs.toFixed(1)} (should be 0!)`);
 
 if (avgOrphanedAIs > 0.5) {
-  console.log(`\n    ⚠️  WARNING: Orphaned AIs detected! Lifecycle bug.`);
+  log(`\n    ⚠️  WARNING: Orphaned AIs detected! Lifecycle bug.`);
 }
 
 const avgTrainingProjects = results.reduce((sum, r) => sum + r.completedTrainingProjects, 0) / results.length;
 const avgConstructionProjects = results.reduce((sum, r) => sum + r.completedConstructionProjects, 0) / results.length;
 
-console.log(`\n  STRATEGIC INVESTMENTS:`);
-console.log(`    Avg Model Training Projects: ${avgTrainingProjects.toFixed(1)}`);
-console.log(`    Avg DC Construction Projects: ${avgConstructionProjects.toFixed(1)}`);
-console.log(`    Avg Compute Utilization: ${(results.reduce((sum, r) => sum + r.avgComputeUtilization, 0) / results.length * 100).toFixed(1)}%`);
+log(`\n  STRATEGIC INVESTMENTS:`);
+log(`    Avg Model Training Projects: ${avgTrainingProjects.toFixed(1)}`);
+log(`    Avg DC Construction Projects: ${avgConstructionProjects.toFixed(1)}`);
+log(`    Avg Compute Utilization: ${(results.reduce((sum, r) => sum + r.avgComputeUtilization, 0) / results.length * 100).toFixed(1)}%`);
 
 // Capability leader distribution
 const leaderCounts: Record<string, number> = {};
@@ -1100,60 +1161,65 @@ results.forEach(r => {
   leaderCounts[r.capabilityLeader] = (leaderCounts[r.capabilityLeader] || 0) + 1;
 });
 
-console.log(`\n  CAPABILITY LEADERSHIP:`);
+log(`\n  CAPABILITY LEADERSHIP:`);
 Object.entries(leaderCounts)
   .sort(([,a], [,b]) => b - a)
   .slice(0, 5)
   .forEach(([leader, count]) => {
-    console.log(`    ${leader}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+    log(`    ${leader}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
   });
 
 // ============================================================================
-console.log('\n\n' + '='.repeat(80));
-console.log('💡 SUMMARY & INSIGHTS');
-console.log('='.repeat(80));
+log('\n\n' + '='.repeat(80));
+log('💡 SUMMARY & INSIGHTS');
+log('='.repeat(80));
 
-console.log(`\n  KEY FINDINGS:`);
+log(`\n  KEY FINDINGS:`);
 
 if (outcomeCounts.extinction > NUM_RUNS * 0.3) {
-  console.log(`\n  🔴 HIGH EXTINCTION RATE (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
-  console.log(`     - AI alignment is a critical challenge`);
-  console.log(`     - Sleepers and catastrophic actions are effective`);
-  console.log(`     - Government often fails to maintain control`);
+  log(`\n  🔴 HIGH EXTINCTION RATE (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
+  log(`     - AI alignment is a critical challenge`);
+  log(`     - Sleepers and catastrophic actions are effective`);
+  log(`     - Government often fails to maintain control`);
 } else if (outcomeCounts.utopia > NUM_RUNS * 0.5) {
-  console.log(`\n  🟢 HIGH UTOPIA RATE (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
-  console.log(`     - Initial conditions favor positive outcomes`);
-  console.log(`     - Government policies are effective`);
-  console.log(`     - AI alignment mechanisms working`);
+  log(`\n  🟢 HIGH UTOPIA RATE (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
+  log(`     - Initial conditions favor positive outcomes`);
+  log(`     - Government policies are effective`);
+  log(`     - AI alignment mechanisms working`);
 } else {
-  console.log(`\n  🟡 MIXED OUTCOMES`);
-  console.log(`     - Balance between positive and negative scenarios`);
-  console.log(`     - High variance in outcome paths`);
-  console.log(`     - Initial conditions and random events matter`);
+  log(`\n  🟡 MIXED OUTCOMES`);
+  log(`     - Balance between positive and negative scenarios`);
+  log(`     - High variance in outcome paths`);
+  log(`     - Initial conditions and random events matter`);
 }
 
 if (avgUndetected > 0.5) {
-  console.log(`\n  ⚠️  SLEEPER DETECTION IS POOR`);
-  console.log(`     - Avg ${avgUndetected.toFixed(1)} undetected sleepers per run`);
-  console.log(`     - ${(avgDetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}% detection rate`);
-  console.log(`     - Adversarial evaluation is hard (as expected)`);
+  log(`\n  ⚠️  SLEEPER DETECTION IS POOR`);
+  log(`     - Avg ${avgUndetected.toFixed(1)} undetected sleepers per run`);
+  log(`     - ${(avgDetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}% detection rate`);
+  log(`     - Adversarial evaluation is hard (as expected)`);
 }
 
 if (totalSandbaggingDetections < NUM_RUNS * 0.1) {
-  console.log(`\n  🚨 SANDBAGGING RARELY DETECTED`);
-  console.log(`     - Only ${totalSandbaggingDetections} detections across ${NUM_RUNS} runs`);
-  console.log(`     - AIs successfully hide capabilities`);
-  console.log(`     - Red teaming investment needs to be higher`);
+  log(`\n  🚨 SANDBAGGING RARELY DETECTED`);
+  log(`     - Only ${totalSandbaggingDetections} detections across ${NUM_RUNS} runs`);
+  log(`     - AIs successfully hide capabilities`);
+  log(`     - Red teaming investment needs to be higher`);
 }
 
 if (avgEvalQuality < 5) {
-  console.log(`\n  📉 EVALUATION INVESTMENT IS LOW`);
-  console.log(`     - Avg quality: ${avgEvalQuality.toFixed(1)}/10`);
-  console.log(`     - Government not prioritizing evaluation`);
-  console.log(`     - This enables sleeper agents to succeed`);
+  log(`\n  📉 EVALUATION INVESTMENT IS LOW`);
+  log(`     - Avg quality: ${avgEvalQuality.toFixed(1)}/10`);
+  log(`     - Government not prioritizing evaluation`);
+  log(`     - This enables sleeper agents to succeed`);
 }
 
-console.log('\n' + '='.repeat(80));
-console.log(`\n✅ Monte Carlo analysis complete!`);
-console.log(`   ${NUM_RUNS} runs, ${MAX_MONTHS} months each`);
-console.log(`   Total simulation time: ${totalTime.toFixed(1)}s\n`);
+log('\n' + '='.repeat(80));
+log(`\n✅ Monte Carlo analysis complete!`);
+log(`   ${NUM_RUNS} runs, ${MAX_MONTHS} months each`);
+log(`   Total simulation time: ${totalTime.toFixed(1)}s\n`);
+
+// Close log stream
+logStream.end(() => {
+  console.log(`\n💾 Full output saved to: ${outputFile}`);
+});
