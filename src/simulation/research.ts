@@ -66,12 +66,12 @@ export function calculateDimensionGrowth(
   // Base growth rates by dimension (per action, 4 actions/month)
   // Phase 4: Reduced by 50% since compute multiplier will scale them up
   const baseGrowthRates = {
-    selfImprovement: 0.025,  // Fastest (highest risk!) - reduced from 0.05
-    cognitive: 0.020,        // Fast (strategic advantage) - reduced from 0.04
-    digital: 0.015,          // Medium-fast (infrastructure) - reduced from 0.03
-    economic: 0.015,         // Medium-fast (market integration) - reduced from 0.03
-    social: 0.010,           // Slow (real-world deployment) - reduced from 0.02
-    physical: 0.010          // Slow (bottlenecked by hardware) - reduced from 0.02
+    selfImprovement: 0.075,  // Fastest (highest risk!) - Phase 10: 3x for 2-4 target
+    cognitive: 0.060,        // Fast (strategic advantage) - Phase 10: 3x
+    digital: 0.045,          // Medium-fast (infrastructure) - Phase 10: 3x
+    economic: 0.045,         // Medium-fast (market integration) - Phase 10: 3x
+    social: 0.030,           // Slow (real-world deployment) - Phase 10: 3x
+    physical: 0.030          // Slow (bottlenecked by hardware) - Phase 10: 3x
   };
   
   const baseGrowth = baseGrowthRates[dimension] * (developmentMode === 'fast' ? 1.0 : 0.6);

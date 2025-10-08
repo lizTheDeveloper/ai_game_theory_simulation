@@ -349,7 +349,9 @@ export function startModelTraining(
 export function calculateAIRevenue(org: Organization, state: GameState): number {
   const deployedModels = state.aiAgents.filter(ai => 
     org.ownedAIModels.includes(ai.id) && 
-    ai.lifecycleState === 'deployed'
+    (ai.lifecycleState === 'deployed' || 
+     ai.lifecycleState === 'deployed_closed' || 
+     ai.lifecycleState === 'deployed_open')
   );
   
   if (deployedModels.length === 0) return org.monthlyRevenue * 0.3; // Minimum: 30% baseline
