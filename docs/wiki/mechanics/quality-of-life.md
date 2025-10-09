@@ -154,7 +154,7 @@ function calculateQoLPenalties(state: GameState): number {
     penalties -= unemployment * 0.5;
   }
 
-  // Active crisis
+  // Active crisis (basic)
   if (hasCrisis) {
     penalties -= 0.3;
   }
@@ -177,6 +177,122 @@ function calculateQoLPenalties(state: GameState): number {
   return penalties;
 }
 ```
+
+## Crisis Degradation Mechanics (October 2025)
+
+**New:** QoL is now degraded by active crises across 3 accumulation systems.
+
+### Crisis Impact Types
+
+**Immediate Impact** (when crisis triggers):
+- Applied to specific QoL dimensions
+- One-time penalty when crisis activates
+- Example: Pollution Crisis → Environmental QoL -0.20, Healthcare -0.10
+
+**Ongoing Degradation** (each month while active):
+- Monthly penalty applied while crisis remains active
+- Compounds over time
+- Example: Climate Catastrophe → -0.015 per month
+
+### 10 Crisis Types & QoL Impacts
+
+| Crisis | Immediate Impact | Ongoing (per month) | Dimensions Affected |
+|--------|------------------|---------------------|---------------------|
+| **Resource Crisis** | -0.15 Material, -0.10 Economic | -0.005 | Material, Economic |
+| **Pollution Crisis** | -0.20 Environmental, -0.10 Healthcare | -0.01 | Environmental, Healthcare |
+| **Climate Catastrophe** | -0.25 Environmental, -0.15 Material, -0.10 Safety | -0.015 | Environmental, Material, Safety |
+| **Ecosystem Collapse** | -0.20 Environmental, -0.10 Material, -0.05 Mental | -0.01 | Environmental, Material, Mental Health |
+| **Meaning Collapse** | -0.25 Purpose, -0.20 Mental Health, -0.10 Social | -0.015 | Purpose, Mental Health, Social |
+| **Institutional Failure** | -0.15 Freedom, -0.15 Safety, -0.10 Economic | -0.01 | Freedom, Safety, Economic |
+| **Social Unrest** | -0.20 Social, -0.15 Safety, -0.10 Freedom | -0.01 | Social, Safety, Freedom |
+| **Control Loss** | -0.20 Safety, -0.15 Freedom, -0.10 Trust | -0.025 | Safety, Freedom, Trust |
+| **Corporate Dystopia** | -0.20 Freedom, -0.15 Economic, -0.10 Social | -0.01 | Freedom, Economic, Social |
+| **Complacency Crisis** | -0.10 Safety, -0.05 Trust | -0.01 | Safety, Trust |
+
+### Crisis Cascade Multiplier
+
+**When 3+ crises are active simultaneously, all degradation compounds:**
+
+```typescript
+const cascadeMultiplier = getCrisisCascadeMultiplier(activeCrisisCount);
+
+// All crisis degradation multiplied:
+environmentalDegradation *= cascadeMultiplier;
+socialDegradation *= cascadeMultiplier;
+technologicalDegradation *= cascadeMultiplier;
+```
+
+**Multiplier Values:**
+- 1-2 crises: 1.0x (baseline)
+- 3 crises: 1.5x (50% worse)
+- 4 crises: 2.0x (2x worse)
+- 5 crises: 2.5x (2.5x worse)
+- 6+ crises: 3.0x (death spiral)
+
+**Example: 6 Simultaneous Crises**
+```
+Base degradation per month: -0.07
+With 3.0x multiplier: -0.21 per month
+QoL drops from 0.60 to 0.39 in 1 month
+QoL drops to 0.18 in 2 months → Dystopia threshold
+```
+
+**See:** [Crisis Cascades](./crisis-cascades.md) for detailed mechanics
+
+## Technology QoL Boosts (October 2025)
+
+**New:** Breakthrough technologies provide direct QoL improvements.
+
+### Technology Effects on QoL
+
+**Mental Health Boost:**
+```typescript
+const mentalHealthBoost =
+  tech.mentalHealthAI.deploymentLevel * 0.15 +
+  tech.purposeFrameworks.deploymentLevel * 0.10;
+
+mentalHealthDimension += mentalHealthBoost;
+```
+
+**Healthcare Boost:**
+```typescript
+const healthcareBoost =
+  tech.diseaseElimination.deploymentLevel * 0.20 +
+  tech.longevityTherapies.deploymentLevel * 0.15;
+
+healthcareDimension += healthcareBoost;
+```
+
+**Environmental Boost:**
+```typescript
+const environmentalBoost =
+  tech.cleanEnergy.deploymentLevel * 0.05 +
+  tech.ecosystemManagement.deploymentLevel * 0.10 +
+  tech.fusionPower.deploymentLevel * 0.08;
+
+environmentalQualityDimension += environmentalBoost;
+```
+
+**Community Boost:**
+```typescript
+const communityBoost =
+  tech.communityPlatforms.deploymentLevel * 0.08;
+
+socialConnectionDimension += communityBoost;
+```
+
+### Maximum Technology Boosts
+
+With all 11 technologies fully deployed (deployment = 1.0):
+- Mental Health: +0.25 (huge impact)
+- Healthcare: +0.35 (very large)
+- Environmental: +0.23
+- Social Connection: +0.08
+- Purpose & Meaning: +0.10 (indirect, via reduced meaning crisis)
+
+**Note:** Technology boosts are **additive** with base dimension values, allowing dimensions to exceed 1.0.
+
+**See:** [Breakthrough Technologies](../systems/breakthrough-technologies.md) for tech system details
 
 ## Economic Stage Effects
 
@@ -367,8 +483,14 @@ From recent 100-run simulation:
 
 - [Economics](./economics.md) - Economic stage heavily influences QoL
 - [Outcomes](./outcomes.md) - QoL determines Utopia vs Dystopia
+- [Golden Age](./golden-age.md) - High QoL (≥0.65) required for Golden Age
 - [Society](../systems/society.md) - Trust, adaptation affect QoL
 - [AI Agents](../systems/ai-agents.md) - Beneficial contributions
+- [Environmental System](../systems/environmental.md) - Environmental crises degrade QoL
+- [Social Cohesion](../systems/social-cohesion.md) - Social crises degrade QoL
+- [Technological Risk](../systems/technological-risk.md) - Tech crises degrade QoL
+- [Breakthrough Technologies](../systems/breakthrough-technologies.md) - Technologies boost QoL
+- [Crisis Cascades](./crisis-cascades.md) - Multiple crises compound degradation
 
 ---
 
@@ -376,3 +498,4 @@ From recent 100-run simulation:
 - **v1.0** (Oct 2025): 17-dimensional QoL system (commit 2b728e4)
 - **v1.1** (Oct 2025): Dark valley dynamics (commit 2b728e4)
 - **v1.2** (Oct 2025): Fix NaN bug with guards (commit 1f0884f)
+- **v2.0** (Oct 9, 2025): Crisis degradation mechanics, technology boosts, cascade multipliers

@@ -239,6 +239,16 @@ export interface GovernmentAgent {
   };
   evaluationFrequency: number;   // [0,1] How often to run evaluations (0 = never, 1 = every month)
   totalBenchmarksRun: number;    // Track total evaluations performed
+  
+  // Phase 2B+: Governance Quality & Democratic Resilience (NEW)
+  governanceQuality: {
+    decisionQuality: number;          // [0,1] Effectiveness of policy decisions (AI-augmented)
+    transparency: number;              // [0,1] Openness of government processes
+    participationRate: number;         // [0,1] Citizen engagement in governance
+    institutionalCapacity: number;     // [0,1] Ability to implement decisions
+    consensusBuildingEfficiency: number; // [0,1] Speed of democratic agreement (liquid democracy)
+    minorityProtectionStrength: number;  // [0,1] Safeguards for vulnerable groups (AI bias detection)
+  };
 }
 
 export interface HumanSocietyAgent {
@@ -671,6 +681,7 @@ export interface GameState {
   environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
   socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
+  breakthroughTech: import('../types/technologies').BreakthroughTechState; // Phase 2A: Breakthrough technologies
   
   // Configuration
   config: ConfigurationSettings;

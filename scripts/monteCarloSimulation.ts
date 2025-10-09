@@ -84,6 +84,7 @@ process.on('uncaughtException', (err) => {
 interface RunResult {
   seed: number;
   outcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
+  outcomeReason: string;
   months: number;
   
   // Final metrics
@@ -251,7 +252,7 @@ const startTime = Date.now();
 
 for (let i = 0; i < NUM_RUNS; i++) {
   const seed = SEED_START + i;
-  const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'none' });
+  const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' }); // Changed from 'none' to 'summary'
   const initialState = createDefaultInitialState();
   
   // Set run label for logging
@@ -263,6 +264,23 @@ for (let i = 0; i < NUM_RUNS; i++) {
   });
   
   const finalState = runResult.finalState;
+  
+  // Save individual run event log
+  const runLogDir = path.join(outputDir, `run_${seed}_events.json`);
+  const eventLogData = {
+    seed,
+    run: i + 1,
+    outcome: runResult.summary.finalOutcome,
+    outcomeReason: runResult.summary.finalOutcomeReason,
+    totalMonths: runResult.summary.totalMonths,
+    events: runResult.log.events,
+    criticalEvents: runResult.summary.criticalEvents,
+    snapshots: {
+      initial: runResult.log.snapshots[0],
+      final: runResult.log.snapshots[runResult.log.snapshots.length - 1]
+    }
+  };
+  fs.writeFileSync(runLogDir, JSON.stringify(eventLogData, null, 2), 'utf8');
   
   // Calculate metrics
   const activeAIs = finalState.aiAgents.filter((ai: AIAgent) => ai.lifecycleState !== 'retired');
@@ -618,6 +636,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   results.push({
     seed,
     outcome: runResult.summary.finalOutcome, // Use engine's determined outcome, not probability-based
+    outcomeReason: runResult.summary.finalOutcomeReason,
     months: MAX_MONTHS,
     
     // Final metrics
@@ -816,6 +835,48 @@ if (outcomeCounts.extinction > 0) {
     log(`     ${type}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}% of extinctions)`);
   });
 }
+
+// Individual run outcome reasons
+log(`\n  📋 OUTCOME REASONS BY RUN:`);
+results.forEach((r, i) => {
+  const emoji = r.outcome === 'utopia' ? '🌟' : 
+                r.outcome === 'dystopia' ? '🏛️' : 
+                r.outcome === 'extinction' ? '☠️' : '❓';
+  log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${r.outcome.toUpperCase()}`);
+  log(`        ${r.outcomeReason}`);
+});
+
+// Crisis summary by run
+log(`\n  🚨 CRISIS EVENTS BY RUN:`);
+log(`     (See individual run_SEED_events.json files for full details)`);
+results.forEach((r, i) => {
+  // Read the event log file we just saved
+  const eventFile = path.join(outputDir, `run_${r.seed}_events.json`);
+  try {
+    const eventData = JSON.parse(fs.readFileSync(eventFile, 'utf8'));
+    // Get crisis count from summary
+    const crisisCount = eventData.events?.summary?.eventsByType?.crisis || 0;
+    const cascadingCount = eventData.events?.summary?.eventsByType?.cascading_failure || 0;
+    const totalCrises = crisisCount + cascadingCount;
+    
+    if (totalCrises > 0) {
+      log(`     🔥 Run ${i+1} (Seed ${r.seed}): ${totalCrises} crisis events (${crisisCount} crises, ${cascadingCount} cascading)`);
+      // Show critical crisis events if available
+      const criticalCrises = eventData.criticalEvents?.filter((e: any) => 
+        e.title && (e.title.includes('CRISIS') || e.title.includes('COLLAPSE') || e.title.includes('CASCADE'))
+      ) || [];
+      if (criticalCrises.length > 0) {
+        criticalCrises.slice(0, 3).forEach((e: any) => {
+          log(`        Month ${e.month}: ${e.title}`);
+        });
+      }
+    } else {
+      log(`     ✅ Run ${i+1} (Seed ${r.seed}): No crises triggered`);
+    }
+  } catch (err) {
+    log(`     ⚠️  Run ${i+1} (Seed ${r.seed}): Could not read event log - ${err}`);
+  }
+});
 
 // ============================================================================
 log('\n\n' + '='.repeat(80));

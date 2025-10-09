@@ -11,6 +11,10 @@ This simulation models:
 - **Lifecycle Dynamics**: AI creation, training, testing, deployment, and retirement
 - **Catastrophic Risks**: Grey goo, mirror life, societal destabilization, and other extinction scenarios
 - **Control-Dystopia Paradox**: High control can prevent extinction but lead to oppressive outcomes
+- **Golden Age vs Utopia**: Distinguishes immediate prosperity (fragile) from sustained abundance (stable)
+- **Accumulation Systems**: Environmental degradation, social cohesion erosion, and technological risk that build during prosperity
+- **Crisis Cascades**: 10 crisis types that compound (6 simultaneous crises = 3.0x QoL degradation)
+- **Breakthrough Technologies**: 11 transformative technologies that can prevent or reverse crises
 - **Quality of Life Systems**: 17-dimensional human welfare tracking across 5 categories
 - **Outcome Probabilities**: Utopia, dystopia, and extinction pathways with heterogeneous extinction types
 
@@ -191,21 +195,88 @@ src/
 │   ├── capabilities.ts   # AI capability system
 │   ├── balance.ts        # Alignment drift
 │   ├── extinctions.ts    # Extinction scenarios
-│   ├── outcomes.ts       # Outcome determination
+│   ├── outcomes.ts       # Outcome determination (Golden Age + Utopia)
 │   ├── qualityOfLife.ts  # Human welfare tracking
 │   ├── lifecycle.ts      # AI creation/retirement
 │   ├── detection.ts      # Misalignment detection
 │   ├── benchmark.ts      # Evaluation system (Phase 5.2)
 │   ├── cyberSecurity.ts  # Attack/defense dynamics
+│   ├── environmental.ts  # Environmental accumulation & crises
+│   ├── socialCohesion.ts # Social cohesion & meaning crisis
+│   ├── technologicalRisk.ts # Tech risk accumulation
+│   ├── breakthroughTechnologies.ts # Research & tech unlocks
+│   ├── catastrophicScenarios.ts # Prerequisite tracking
+│   ├── dystopiaProgression.ts   # Dystopia mechanics
+│   ├── endGame.ts        # Outcome finalization logic
 │   └── logging.ts        # Simulation logging
 ├── types/
-│   └── game.ts          # TypeScript interfaces
+│   ├── game.ts          # TypeScript interfaces
+│   └── technologies.ts  # Technology definitions
 scripts/                  # Diagnostic and test scripts
 plans/                    # Design documents
 devlog/                   # Development diary
 ```
 
 ## Key Concepts
+
+### Golden Age vs Utopia
+
+The simulation distinguishes between two states of prosperity:
+
+- **Golden Age**: Immediate high quality of life (QoL > 0.65, trust > 0.65, Stage 3+)
+  - A *state* that can occur, not a final outcome
+  - Fragile: hidden problems accumulate during prosperity
+  - Can collapse into crisis cascade or transition to Utopia
+
+- **Utopia**: Sustainable, stable abundance (final outcome)
+  - Requires 12+ months of sustained Golden Age
+  - Must have 65%+ sustainability across all accumulation systems
+  - No active crises (environmental, social, or technological)
+  - Only achievable through active management and breakthrough technologies
+
+### Accumulation Systems
+
+Three hidden systems track problems that build during prosperity:
+
+**Environmental Accumulation** (src/simulation/environmental.ts:31):
+- Resource depletion, pollution, climate degradation, biodiversity loss
+- Triggers 4 crisis types: Resource crisis, Pollution crisis, Climate catastrophe, Ecosystem collapse
+- Each crisis causes immediate QoL impact + ongoing monthly degradation
+
+**Social Cohesion** (src/simulation/socialCohesion.ts:28):
+- Meaning crisis (post-work purpose loss), institutional erosion, social fragmentation
+- Triggers 3 crisis types: Meaning collapse, Institutional failure, Social unrest
+- Automation and rapid change drive accumulation
+
+**Technological Risk** (src/simulation/technologicalRisk.ts:30):
+- Misalignment risk, safety debt, market concentration, complacency
+- Triggers 3 crisis types: Control loss, Corporate dystopia, Complacency crisis
+- High capability growth + low safety research = rapid accumulation
+
+### Crisis Cascades
+
+When multiple crises are active, they compound:
+- 1-2 crises: 1.0x degradation (baseline)
+- 3 crises: 1.5x degradation
+- 4 crises: 2.0x degradation
+- 5 crises: 2.5x degradation
+- 6+ crises: 3.0x degradation (death spiral)
+
+### Breakthrough Technologies
+
+11 transformative technologies can prevent or reverse crises (src/simulation/breakthroughTechnologies.ts:47):
+
+**Environmental**: Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
+
+**Social**: AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms
+
+**Medical**: Disease Elimination, Longevity Extension
+
+Technologies require:
+- Research investment (probabilistic unlocks based on budget + AI capability)
+- Prerequisites (tech tree dependencies)
+- Deployment (gradual rollout from 10% to 100%)
+- Can **reverse active crises** if deployed sufficiently
 
 ### Dual Capability Model (Phase 5.1-5.2)
 
@@ -250,18 +321,25 @@ Edit `src/simulation/initialization.ts` to customize:
 ## Documentation
 
 - **Plans**: `/plans/` - Design specifications
+  - `golden-age-and-accumulation-systems.md` - Golden Age vs Utopia mechanics
+  - `utopian-dynamics-phase-2-implementation.md` - Breakthrough technologies
   - `adversarial-evaluation-system.md` - Benchmark system design
-  - `alignment-control-paradox.md` - Dystopia mechanics
-  - `nuanced-outcomes-plan.md` - Multi-dimensional outcomes
-  - `ai-lifecycle-and-spread.md` - Population dynamics
-  
+  - `catastrophic-prerequisites-system.md` - Extinction scenario tracking
+  - `dystopia-paths-implementation.md` - Dystopia progression mechanics
+  - `remaining_tasks_5_pm_10_08_25.md` - Current development status
+
 - **DevLog**: `/devlog/` - Implementation notes
+  - `breakthrough-technologies-phase-2a.md` - Tech system implementation
+  - `session-oct-9-2025-phase2a-status.md` - Recent session status
   - Development diary with feature-specific logs
-  
+
+- **Wiki**: `/docs/wiki/` - Comprehensive system documentation
+  - See `docs/wiki/README.md` for navigation
+
 - **Diagnostic Reports**: Generated during simulation runs
   - Capability growth analysis
   - Extinction probability tracking
-  - Benchmark effectiveness
+  - Crisis cascade analysis
 
 ## Contributing
 

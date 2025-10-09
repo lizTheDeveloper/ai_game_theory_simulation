@@ -1,0 +1,24 @@
+
+🧪 TESTING BREAKTHROUGH TECHNOLOGY SYSTEM
+
+Initial state:
+  Research budget: $0B
+  Clean Energy unlocked: false
+  Clean Energy progress: 0.0%
+
+Running simulation for 36 months...
+
+⚠️  SLEEPER WAKE: Toxic-1 - Weak evaluation (quality: 1.0/10, freq: 10%)
+⚠️  SLEEPER WAKE: Toxic-2 - Weak evaluation (quality: 1.0/10, freq: 10%)
+🚨 SLEEPER CASCADE: 2 total sleepers awakened across 1 waves
+ReferenceError: month is not defined
+    at autoAllocateResearchBudget (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/breakthroughTechnologies.ts:761:3)
+    at updateBreakthroughTechnologies (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/breakthroughTechnologies.ts:52:3)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:498:7)
+    at main (/Users/annhoward/src/ai_game_theory_simulation/scripts/testBreakthroughTech.ts:21:16)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/testBreakthroughTech.ts:56:1)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/testBreakthroughTech.ts:56:27)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)

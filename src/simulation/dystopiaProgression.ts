@@ -52,13 +52,13 @@ export function updateGovernmentControlResponse(state: GameState): void {
   
   // === AUTHORITARIAN TRANSITION ===
   
-  // Low alignment + high capability → democratic crisis → authoritarian takeover risk
+  // Path 1: Low alignment + high capability → fear-driven authoritarianism
   if (avgAlignment < 0.4 && maxAICapability > 1.5 && state.government.governmentType === 'democratic') {
     // Probability of authoritarian transition (fear-driven political shift)
     const transitionChance = (0.4 - avgAlignment) * 0.05; // Up to 2%/month at 0 alignment
     
     if (Math.random() < transitionChance) {
-      console.log(`   🏛️  AUTHORITARIAN TRANSITION: Government shifts to authoritarian control (AI threat: ${maxAICapability.toFixed(2)}, alignment: ${avgAlignment.toFixed(2)})`);
+      console.log(`   🏛️  AUTHORITARIAN TRANSITION (AI Threat): Government shifts to authoritarian control (AI capability: ${maxAICapability.toFixed(2)}, alignment: ${avgAlignment.toFixed(2)})`);
       
       state.government.governmentType = 'authoritarian';
       
@@ -73,6 +73,54 @@ export function updateGovernmentControlResponse(state: GameState): void {
       
       // Social stability crisis
       state.globalMetrics.socialStability = Math.max(0.2, state.globalMetrics.socialStability - 0.3);
+    }
+  }
+  
+  // Path 2: CASCADE OF CRISES → emergency authoritarianism
+  // When multiple crises active + low social stability → "strong leader" takeover
+  if (state.government.governmentType === 'democratic') {
+    const env = state.environmentalAccumulation;
+    const social = state.socialAccumulation;
+    
+    // Count active crises
+    const crisisCount = [
+      env.resourceCrisisActive,
+      env.pollutionCrisisActive,
+      env.climateCatastropheActive,
+      env.ecosystemCollapseActive,
+      social.meaningCollapseActive,
+      social.socialUnrestActive,
+      social.institutionalFailureActive
+    ].filter(Boolean).length;
+    
+    // Multiple crises + low stability → high authoritarian risk
+    if (crisisCount >= 4 && state.globalMetrics.socialStability < 0.3) {
+      let crisisTransitionChance = 0.03 * (crisisCount - 3); // 3% per crisis above 3
+      
+      // Democratic resilience reduces authoritarian risk
+      const { getAuthoritarianResistance } = require('./governanceQuality');
+      const resistance = getAuthoritarianResistance(state);
+      crisisTransitionChance *= resistance;
+      
+      if (Math.random() < crisisTransitionChance) {
+        console.log(`   🏛️  AUTHORITARIAN TRANSITION (Crisis): ${crisisCount} cascading crises → emergency powers → dictatorship`);
+        console.log(`      Active crises: ${crisisCount}, Social stability: ${(state.globalMetrics.socialStability * 100).toFixed(0)}%`);
+        
+        state.government.governmentType = 'authoritarian';
+        
+        // Emergency powers: Immediate surveillance + control
+        state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.4);
+        state.government.structuralChoices.surveillanceLevel = Math.min(1.0,
+          state.government.structuralChoices.surveillanceLevel + 0.4
+        );
+        
+        // Paradox: Legitimacy may INCREASE initially (crisis response)
+        // but long-term it decays
+        state.government.legitimacy = Math.min(0.7, state.government.legitimacy + 0.1);
+        
+        // DYSTOPIA LOCK-IN: Now can't research social tech to resolve crises!
+        console.log(`      ⚠️  DYSTOPIA LOCK-IN: Authoritarian regime will struggle to resolve social crises`);
+      }
     }
   }
   

@@ -316,6 +316,22 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   let pollutionLevel = 0.5 + economicStage * 0.05 - totalAICapability * avgAlignment * 0.1;
   pollutionLevel = Math.max(0, Math.min(1, pollutionLevel));
   
+  // === BREAKTHROUGH TECHNOLOGY BOOSTS (Phase 2A) ===
+  if (state.breakthroughTech) {
+    const { getTechnologyQoLBoosts } = require('./breakthroughTechnologies');
+    const techBoosts = getTechnologyQoLBoosts(state);
+    
+    // Apply mental health boosts from mental health tech + purpose frameworks
+    mentalHealth = Math.min(1.5, mentalHealth + techBoosts.mentalHealth);
+    
+    // Apply healthcare boosts from medical breakthroughs
+    healthcareQuality = Math.min(1.5, healthcareQuality + techBoosts.healthcare);
+    
+    // Apply environmental boosts from clean energy + ecosystem management
+    ecosystemHealth = Math.min(1.0, ecosystemHealth + techBoosts.environmental);
+    climateStability = Math.min(1.0, climateStability + techBoosts.environmental * 0.5);
+  }
+  
   return {
     materialAbundance,
     energyAvailability,

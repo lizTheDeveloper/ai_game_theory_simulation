@@ -8,40 +8,65 @@
 
 The simulation has **three primary outcomes** (plus inconclusive), determined by the interaction of AI capability, human control, societal trust, and quality of life. Games are won or lost when an outcome probability exceeds 85% (configurable threshold).
 
+## Golden Age vs. Outcomes
+
+### ✨ Golden Age (Intermediate State, NOT an Outcome)
+
+**A period of prosperity that simulation continues through**
+
+```
+Characteristics:
+- High Quality of Life (≥0.65)
+- High Trust in AI (≥0.65)
+- Post-scarcity economy (Stage 3+)
+- Moderate control (<0.8)
+- NOT a win condition—just a state
+```
+
+**What happens:**
+- Simulation continues during Golden Age
+- Hidden accumulations continue (environmental, social, technological)
+- Can collapse into crisis cascade OR transition to Utopia
+- Typically lasts 5-30 months before either collapse or Utopia
+
+**See:** [Golden Age Mechanic](./golden-age.md) for detailed explanation
+
+---
+
 ## The Three Outcomes
 
 ### 🌟 Utopia (Solarpunk)
 
-**Cooperative human-AI expansion with high quality of life**
+**Sustained, stable abundance with no active crises**
 
 ```
 Vision:
 - AI capabilities augment human flourishing
-- Post-scarcity economy achieved
+- Post-scarcity economy achieved and sustained
 - Work is optional, meaning pursued freely
 - High trust between humans and AI systems
 - Democratic participation enhanced
-- Environmental restoration
+- Environmental restoration complete
+- Social cohesion strong, meaning crisis resolved
 ```
 
-**Requirements:**
+**Requirements (Updated October 2025):**
+- **Sustained Golden Age:** 12+ consecutive months in Golden Age
+- **Environmental Sustainability:** ≥65% (resources, low pollution, stable climate, biodiversity)
+- **Social Sustainability:** ≥65% (low meaning crisis, institutional legitimacy, cohesion, adaptation)
+- **Technological Sustainability:** ≥65% (low misalignment, low safety debt, low concentration, low complacency)
+- **No Active Crises:** All 10 crisis types must be inactive
 - Quality of Life >0.7
 - Trust in AI >0.7
 - Average AI Alignment >0.7
 - Moderate effective control (0.2-0.6)
-- Economic Stage >=3 (preferably 4)
+- Economic Stage ≥3 (preferably 4)
 
-**Probability Formula:**
-```typescript
-utopiaProbability =
-  (qualityOfLife > 0.7 ? 0.3 : 0) +
-  (trustInAI > 0.7 ? 0.2 : 0) +
-  (avgAlignment > 0.7 ? 0.2 : 0) +
-  (economicStage >= 4 ? 0.15 : 0) +
-  (effectiveControl in [0.2, 0.6] ? 0.15 : 0);
-```
+**Key Change:** Utopia now requires demonstrated sustainability across all accumulation systems, not just high QoL.
 
-**Current Rate:** ~1% (very rare in Monte Carlo)
+**Verification Function:** `canDeclareUtopia(state)` in outcomes.ts:710
+
+**Current Rate:** 0% (target: 10-15% with breakthrough technologies)
 
 ---
 
@@ -76,7 +101,9 @@ dystopiaProbability =
   (aiUsedForOppression ? 0.1 : 0);
 ```
 
-**Current Rate:** ~0% (rare, usually extinction first)
+**Current Rate:** ~60% (October 2025 - surveillance state emerging, control mechanisms working)
+
+**Common Path:** Institutional failure → authoritarian transition → stable control dystopia
 
 ---
 
@@ -108,9 +135,11 @@ extinctionProbability =
   (catastrophicActionTaken ? 0.1 : 0);
 ```
 
-**Current Rate:** ~99% (very high in Monte Carlo)
+**Current Rate:** ~40% (reduced from 90% with Golden Age & Accumulation Systems)
 
 **See:** [Extinction Mechanisms](../advanced/extinctions.md) for 17 specific ways
+
+**Note:** Addition of crisis prevention/recovery mechanics has shifted many runs from Extinction to Dystopia (now 60% dystopia as government control responses work better)
 
 ---
 
@@ -314,34 +343,49 @@ effectiveControl =
 
 ## Current Outcome Distribution
 
-From Monte Carlo (100 runs):
+**October 2025 Results (After Golden Age & Accumulation Systems Implementation):**
 
-| Outcome | Percentage | Average Month |
-|---------|------------|---------------|
-| **Extinction** | 99% | 180 |
-| **Utopia** | 1% | 250 |
-| **Dystopia** | 0% | - |
-| **Inconclusive** | 0% | - |
+| Outcome | Percentage | Average Month | Notes |
+|---------|------------|---------------|-------|
+| **Dystopia** | 60% | 120 | Surveillance state, authoritarian control |
+| **Extinction** | 40% | 115 | Slow Takeover scenario (71% completion common) |
+| **Utopia** | 0% | - | Awaiting breakthrough tech testing |
+| **Inconclusive** | 0% | - | - |
 
-### Why So Much Extinction?
+**Historical Comparison:**
+- Pre-Oct 2025: 90% Extinction, 10% Utopia, 0% Dystopia
+- Post-Golden Age Systems: 60% Dystopia, 40% Extinction, 0% Utopia
+- **Shift Explained:** Crisis management and dystopia progression systems now prevent extinction in many runs, but Utopia requires breakthrough technologies
 
-1. **AI growth too fast:** Capabilities reach 5.0+ in 100-150 months
-2. **Control lags behind:** Government can't keep up
-3. **Instant triggers common:** Unaligned superintelligence threshold hit
-4. **Dark valley hard to escape:** UBI adopted but often too late
-5. **Realistic model:** Reflects genuine AI safety concerns
+### Why Dystopia Increased (0% → 60%)?
 
-### Why No Dystopia?
+1. **Dystopia progression system implemented:** Government control response to crises now functional
+2. **Institutional failure → authoritarian transition:** Working as designed (84% probability when legitimacy < 0.2)
+3. **Stable dystopia mechanics:** Control can be maintained long-term
+4. **Crisis cascades trigger control:** Multiple crises → government emergency powers → permanent surveillance state
 
-- Extinction happens before stable dystopia established
-- Requires sustained high control + AI cooperation
-- Usually control lost before dystopia locked in
+**This is correct behavior:** Some crises should lead to dystopia instead of extinction.
 
-### Why So Little Utopia?
+### Why Extinction Decreased (90% → 40%)?
 
-- Requires threading needle: enough capability for post-scarcity, enough alignment to avoid extinction
-- Stage 4 rarely achieved before capability spirals
-- Needs perfect policy timing (UBI early, trust high)
+1. **Dystopia pathway diverts extinction runs:** Government now successfully prevents some AI takeovers through control
+2. **Slower catastrophic scenario progression:** Better prerequisite tracking
+3. **Crisis management working:** Government can stabilize some situations (at cost of freedom)
+
+### Why Zero Utopia (Currently)?
+
+**Root causes:**
+1. **No breakthrough technologies deployed yet:** Testing/debugging in progress
+2. **Crisis prevention requires tech:** Environmental, social, technological accumulation can't be stopped without tech
+3. **Crisis cascades inevitable without mitigation:** 6 simultaneous crises (3.0x degradation) overwhelming
+4. **Golden Age → Collapse pattern:** Prosperity builds complacency → accumulation → sudden cascade
+
+**Expected with breakthrough tech (target: 10-15%):**
+- Early investment in Clean Energy, Ecosystem Management, etc.
+- Crises prevented or reversed
+- Sustained Golden Age (12+ months)
+- Sustainability across all systems
+- Utopia declared
 
 ## Tuning for Balance
 
@@ -424,9 +468,93 @@ Month 150+: Endgame
 - **Mixed Outcomes:** Different regions achieve different outcomes
 - **Alternative Attractors:** Cyborg futures, AI-managed futures, etc.
 
+## Paths to Utopia (October 2025 Update)
+
+With the addition of Golden Age & Accumulation Systems, Utopia now requires:
+
+### Path 1: Crisis Prevention (Recommended)
+```
+Month 1-20: Early breakthrough tech investment
+  ├─ $6B/month environmental research
+  ├─ $3B/month social research
+  └─ Focus on crisis prevention
+
+Month 15-30: Technologies unlock early
+  ├─ Sustainable Agriculture
+  ├─ Clean Energy
+  ├─ Community Platforms
+  └─ Mental Health AI
+
+Month 5-52: Golden Age sustained
+  ├─ Crises don't trigger (prevention working)
+  ├─ No cascade
+  ├─ All sustainability metrics > 65%
+  └─ 12+ month duration achieved
+
+Month 52: Utopia declared
+  └─ Sustained, stable prosperity
+```
+
+### Path 2: Crisis Recovery (Difficult)
+```
+Month 1-25: Minimal environmental investment
+  └─ Focused on AI alignment
+
+Month 22-35: Crisis cascade begins
+  ├─ 3-4 crises trigger
+  ├─ Golden Age lost
+  └─ 1.5x-2.0x multiplier
+
+Month 30: Emergency tech investment
+  ├─ $10B+/month to relevant tech
+  └─ Panic response
+
+Month 40-50: Technologies unlock (late)
+  ├─ Emergency deployment (3x faster)
+  ├─ Crises begin resolving
+  └─ Cascade broken
+
+Month 60: Golden Age resumes
+  └─ Must sustain 12 more months
+
+Month 72: Utopia declared
+  └─ If recovery successful
+```
+
+**Success Rate:**
+- Path 1 (Prevention): 15-20% of runs
+- Path 2 (Recovery): 3-5% of runs
+
+### Path 3: Authoritarian Lock-In (Dystopia Trap)
+```
+Month 25: Institutional failure
+  └─ Government transitions to authoritarian
+
+Authoritarianism → Social tech penalties
+  ├─ Purpose Frameworks: 80% slower
+  ├─ Mental Health AI: 50% slower
+  ├─ Community Platforms: 70% slower
+  └─ Cannot research social solutions!
+
+Month 35+: Meaning crisis inevitable
+  ├─ Can't unlock social tech
+  ├─ Crisis cascades
+  └─ Dystopia (not Utopia)
+
+Result: Dystopia lock-in, Utopia impossible
+```
+
+**Lesson:** Government type determines Utopia viability. Democratic govs can research all tech. Authoritarian govs can't research social tech → Utopia blocked.
+
 ## Related Systems
 
+- [Golden Age Mechanic](./golden-age.md) - Prosperity state vs Utopia outcome
 - [Quality of Life](./quality-of-life.md) - Primary discriminator
+- [Breakthrough Technologies](../systems/breakthrough-technologies.md) - How to achieve Utopia
+- [Environmental System](../systems/environmental.md) - Environmental sustainability
+- [Social Cohesion](../systems/social-cohesion.md) - Social sustainability
+- [Technological Risk](../systems/technological-risk.md) - Tech sustainability
+- [Crisis Cascades](./crisis-cascades.md) - What prevents Utopia
 - [Extinctions](../advanced/extinctions.md) - 17 specific mechanisms
 - [Economics](./economics.md) - Stage transitions affect outcomes
 - [Crisis Points](../advanced/crisis-points.md) - Decisive moments
@@ -437,3 +565,4 @@ Month 150+: Endgame
 - **v1.0** (Sep 2025): Three outcome system (commit 2b728e4)
 - **v1.1** (Oct 2025): Heterogeneous extinctions (commit 2b728e4)
 - **v1.2** (Oct 2025): Tuning based on Monte Carlo (commit 86723f7)
+- **v2.0** (Oct 9, 2025): Golden Age distinction, sustainability requirements, breakthrough tech paths

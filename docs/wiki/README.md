@@ -24,6 +24,10 @@ The fundamental building blocks of the simulation:
 | [🤖 AI Agents](./systems/ai-agents.md) | ✅ | AI models, capabilities, alignment, lifecycles |
 | [🏛️ Government](./systems/government.md) | ✅ | Regulations, control, policies |
 | [👥 Society](./systems/society.md) | ✅ | Trust, unemployment, adaptation |
+| [🌍 Environmental](./systems/environmental.md) | ✅ | Resource depletion, pollution, climate, biodiversity |
+| [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis, institutional erosion, social bonds |
+| [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
+| [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | Research, unlocks, crisis recovery |
 
 ### Game Mechanics
 
@@ -34,6 +38,8 @@ How the simulation operates and what determines outcomes:
 | [💰 Economics](./mechanics/economics.md) | ✅ | Stages, revenue, expenses, UBI transitions |
 | [📊 Quality of Life](./mechanics/quality-of-life.md) | ✅ | 17-dimensional welfare measurement |
 | [🎯 Outcomes](./mechanics/outcomes.md) | ✅ | Utopia, Dystopia, Extinction attractors |
+| [✨ Golden Age](./mechanics/golden-age.md) | ✅ | Prosperity state vs Utopia outcome |
+| [⚡ Crisis Cascades](./mechanics/crisis-cascades.md) | ✅ | How multiple crises compound |
 | [⚡ Actions](./mechanics/actions.md) | ✅ | What each agent type can do |
 | [⚙️ Simulation Loop](./mechanics/simulation-loop.md) | ✅ | Monthly processing order |
 
@@ -70,37 +76,45 @@ Implementation details and code references:
 - **AI Capabilities**: Multi-dimensional profiles with true vs revealed
 - **Detection System**: Benchmarks, evals, sleeper detection
 - **Quality of Life**: 17-dimensional measurement system
+- **Golden Age Detection**: Prosperity state tracking, distinct from Utopia
+- **Accumulation Systems**: Environmental, social cohesion, and technological risk tracking
+- **Crisis Cascades**: 10 crisis types with compounding degradation (up to 3.0x)
+- **Breakthrough Technologies**: 11 technologies with research, unlock, and deployment mechanics
+- **Crisis Recovery**: Technologies can reverse active environmental and social crises
 - **Monte Carlo**: 1000+ runs in ~10 seconds
 
 ### What Needs Tuning ⚠️
 
-- **Extinction System**: Only climate triggers reliably (99% extinction rate)
-- **Economic Balance**: Revenue/expense ratios need adjustment
-- **AI Growth Rate**: Capabilities increase too quickly
-- **Government Response**: Action frequency vs effectiveness balance
+- **Breakthrough Tech Research Budget**: Currently using auto-allocation for testing
+- **Crisis Resolution Timing**: Balance between prevention and recovery pathways
+- **Technology Unlock Timing**: Ensure breakthroughs can arrive in time to prevent cascades
+- **Outcome Balance**: Current distribution needs validation (0% Utopia, 60% Dystopia, 40% Extinction)
 
 ### What's Planned 📋
 
+- **Government Research Prioritization**: Strategic tech research allocation actions
+- **Technology Synergies**: Combinations of technologies with enhanced effects
+- **International dynamics**: Multiple governments, tech sharing/racing
 - **Multi-agent coordination**: Explicit AI coalitions
-- **International dynamics**: Multiple governments
-- **Public opinion**: More granular trust mechanics
-- **Intervention tools**: Emergency pause, compute caps
+- **Public opinion**: More granular trust mechanics influenced by tech breakthroughs
 
 ## 📊 Current Simulation Characteristics
 
-Based on recent Monte Carlo results (100+ runs):
+Based on recent Monte Carlo results (October 2025):
 
-| Metric | Average | Range |
+| Metric | Latest Results | Notes |
 |--------|---------|-------|
-| **Game Duration** | 150-250 months | 60-300 |
-| **Max AI Capability** | 5.8 | 2.0-8.0 |
-| **Outcome: Extinction** | 99% | - |
-| **Outcome: Utopia** | 1% | - |
-| **Outcome: Dystopia** | 0% | - |
-| **Economic Stage Reached** | 3.8 | 2.5-4.0 |
-| **Final Unemployment** | 95% | 70-99% |
+| **Outcome: Dystopia** | 60% | Surveillance state emerging, control mechanisms working |
+| **Outcome: Extinction** | 40% | Slow Takeover scenario reaching 71% in multiple runs |
+| **Outcome: Utopia** | 0% | Needs breakthrough tech testing/tuning |
+| **Game Duration** | 120 months avg | Testing with 60-120 month runs |
+| **Max AI Capability** | 2.5-3.0 | Good range for danger modeling |
+| **Economic Stage Reached** | 3-4 | Post-scarcity transitions occurring |
+| **Crisis Cascades** | Common | 6 simultaneous crises observed (3.0x degradation) |
+| **Golden Age Duration** | 5-30 months | Fragile, often collapses into crisis cascade |
+| **QoL Degradation** | Severe | Social: 0.45, Psychological: 0.59 (lowest categories) |
 
-> **Note**: High extinction rate reflects conservative/realistic modeling. This is defensible for AI safety research but may need player engagement tuning.
+> **Note**: Recent implementation of Golden Age & Accumulation Systems has shifted outcomes from 90% Extinction to 60% Dystopia / 40% Extinction. Breakthrough Technologies system expected to enable Utopia paths (10-15% target).
 
 ## 🎮 Using This Wiki
 
@@ -142,6 +156,6 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: October 2025
-**Version**: 1.0 (based on commit 6a34f56)
-**Status**: Core systems working, tuning ongoing
+**Last Updated**: October 9, 2025
+**Version**: 2.0 (Golden Age & Accumulation Systems + Breakthrough Technologies)
+**Status**: Major systems complete, breakthrough tech testing in progress

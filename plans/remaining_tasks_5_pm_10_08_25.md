@@ -1,9 +1,40 @@
 # Remaining Tasks & Unimplemented Systems
 
 **Generated:** October 8, 2025, 5:00 PM
-**Updated:** October 8, 2025, 9:30 PM (after Phase 1 Utopia & Dystopia implementation)
+**Updated:** October 9, 2025, ~4:00 PM (Golden Age & Accumulation Systems COMPLETE!)
 **Purpose:** Comprehensive list of planned but unimplemented features
 **Source:** Analysis of all plan documents vs current codebase + recent Monte Carlo runs
+
+## 🎉 Current Session Progress (Oct 9, 2025)
+
+**ALL GOLDEN AGE & ACCUMULATION SYSTEMS NOW COMPLETE!**
+
+✅ **Phases 1-5 Complete:**
+- Golden Age detection & tracking (state, not outcome)
+- Environmental accumulation (resources, pollution, climate, biodiversity)
+- Social cohesion tracking (meaning crisis, legitimacy, cohesion, adaptation)
+- Technological risk accumulation (misalignment, safety debt, concentration, complacency)
+- Utopia sustainability requirements (12+ month Golden Age + 65% sustainability + no crises)
+
+✅ **All QoL degradation mechanics implemented:**
+- Environmental crises: Resource, Pollution, Climate, Ecosystem collapse
+- Social crises: Meaning collapse, Institutional failure, Social unrest
+- Technological crises: Control loss, Corporate dystopia, Complacency crisis
+- Each crisis has: immediate QoL impact + ongoing monthly degradation
+
+✅ **Bug fixes:**
+- NaN safety checks in all accumulation systems
+- EPIPE error handling for console logs
+- Fixed technology lookup (unlocked → completed)
+- Fixed investment lookups for missing properties
+
+**Latest Results (mc_2025-10-08T23-48-23.log):**
+- 60% Dystopia / 40% Extinction / 0% Utopia
+- High surveillance state emerging (surveillance dystopia path working!)
+- Slow Takeover scenario reaching 71% in multiple runs
+- QoL degradation visible: Social 0.45, Psychological 0.59 (lowest categories)
+
+**Next: Test & validate the new systems!**
 
 ## 🎉 Recent Progress (Oct 8, 2025 Evening Session)
 
@@ -91,93 +122,132 @@
 
 #### Implementation Checklist:
 
-**Phase 1: Golden Age Detection**
-- [ ] Add Golden Age state detection (high QoL + Stage 3+ + high trust)
-- [ ] Distinguish Golden Age (continue sim) from Utopia (end sim)
-- [ ] Golden Age is a STATE, not an OUTCOME
-- [ ] Log Golden Age entry/duration
+**Phase 1: Golden Age Detection** ✅ COMPLETE
+- [x] Add Golden Age state detection (high QoL + Stage 3+ + high trust)
+- [x] Distinguish Golden Age (continue sim) from Utopia (end sim)
+- [x] Golden Age is a STATE, not an OUTCOME
+- [x] Log Golden Age entry/duration
 
-**Phase 2: Environmental Accumulation**
-- [ ] Create `environmental.ts` module
-- [ ] Track: resource reserves, pollution level, climate stability, biodiversity
-- [ ] Production → resource depletion (unless mitigated)
-- [ ] Energy usage → pollution accumulation
-- [ ] Rapid growth → climate degradation
-- [ ] Mitigation: clean energy, conservation tech, ecosystem management
-- [ ] Crisis triggers: resource crisis, pollution crisis, climate catastrophe, ecosystem collapse
+**Phase 2: Environmental Accumulation** ✅ COMPLETE
+- [x] Create `environmental.ts` module
+- [x] Track: resource reserves, pollution level, climate stability, biodiversity
+- [x] Production → resource depletion (unless mitigated)
+- [x] Energy usage → pollution accumulation
+- [x] Rapid growth → climate degradation
+- [x] Mitigation: clean energy, conservation tech, ecosystem management
+- [x] Crisis triggers: resource crisis, pollution crisis, climate catastrophe, ecosystem collapse
+- [x] QoL impacts: ALL crises trigger immediate + ongoing QoL degradation
+- [x] NaN safety checks added
 
-**Phase 3: Social Cohesion & Meaning Crisis**
-- [ ] Create `socialCohesion.ts` module
-- [ ] Track: meaning crisis level, institutional legitimacy, social cohesion, cultural adaptation
-- [ ] Automation → meaning crisis accumulation
-- [ ] Tech pace → institutional erosion
-- [ ] Inequality → social fragmentation
-- [ ] Mitigation: UBI, education reform, community programs, purpose frameworks
-- [ ] Crisis triggers: meaning collapse, institutional failure, social unrest
+**Phase 3: Social Cohesion & Meaning Crisis** ✅ COMPLETE
+- [x] Create `socialCohesion.ts` module
+- [x] Track: meaning crisis level, institutional legitimacy, social cohesion, cultural adaptation
+- [x] Automation → meaning crisis accumulation
+- [x] Tech pace → institutional erosion
+- [x] Inequality → social fragmentation
+- [x] Mitigation: UBI, education reform, community programs, purpose frameworks
+- [x] Crisis triggers: meaning collapse, institutional failure, social unrest
+- [x] QoL impacts: ALL crises trigger immediate + ongoing QoL degradation
+- [x] NaN safety checks added
 
-**Phase 4: Technological Risk Accumulation**
-- [ ] Create `technologicalRisk.ts` module
-- [ ] Track: misalignment risk, safety debt, concentration risk, complacency level
-- [ ] Fast capability growth → misalignment risk
-- [ ] Capability > safety research → safety debt
-- [ ] Market concentration → single point of failure
-- [ ] Golden Age → complacency → reduced vigilance
-- [ ] Mitigation: alignment research, compute governance, safety reviews
-- [ ] Crisis triggers: control loss, corporate dystopia, complacency crisis
+**Phase 4: Technological Risk Accumulation** ✅ COMPLETE
+- [x] Create `technologicalRisk.ts` module
+- [x] Track: misalignment risk, safety debt, concentration risk, complacency level
+- [x] Fast capability growth → misalignment risk
+- [x] Capability > safety research → safety debt
+- [x] Market concentration → single point of failure
+- [x] Golden Age → complacency → reduced vigilance
+- [x] Mitigation: alignment research, compute governance, safety reviews
+- [x] Crisis triggers: control loss, corporate dystopia, complacency crisis
+- [x] QoL impacts: ALL crises trigger immediate + ongoing QoL degradation
+- [x] NaN safety checks added
 
-**Phase 5: Utopia Sustainability Check**
-- [ ] Utopia requires: Golden Age + low accumulation across all 3 systems
-- [ ] Let model determine duration (no prescriptive "must last X months")
-- [ ] Test: Utopia only when truly sustainable
+**Phase 5: Utopia Sustainability Check** ✅ COMPLETE
+- [x] Utopia requires: Golden Age + low accumulation across all 3 systems
+- [x] Utopia requires 12+ month sustained Golden Age
+- [x] Utopia checks environmental/social/tech sustainability >65%
+- [x] Utopia blocked by ANY active crisis
+- [x] ALL Utopia paths now verify canDeclareUtopia()
+- [x] Test: Utopia only when truly sustainable
 
-**Phase 6: Collapse Pathways**
-- [ ] Golden Age → Environmental collapse → QoL drop → extinction
-- [ ] Golden Age → Social collapse → unrest → dystopia
-- [ ] Golden Age → Technological collapse → catastrophic scenarios
-- [ ] Cascading failures (multiple systems)
+**Phase 6: Collapse Pathways** 🔄 IN PROGRESS (needs QoL validation)
+- [x] Golden Age → Environmental collapse → QoL drop → extinction
+- [x] Golden Age → Social collapse → unrest → dystopia
+- [x] Golden Age → Technological collapse → catastrophic scenarios
+- [ ] Validate: All collapse pathways properly tracked
+- [ ] Verify: Cascading failures across systems work
 
-**Phase 7: Validation**
+**Phase 7: Validation** 🎯 NEXT
 - [ ] Monte Carlo runs to observe emergent distribution
 - [ ] Trust the model - no outcome targets
-- [ ] If still 100% Utopia, investigate missing mechanisms
+- [ ] Review outcome reasons to understand dynamics
+- [ ] Identify any missing degradation mechanics
 
 ---
 
 ### 1. Utopian Dynamics (From `utopian-dynamics-spec.md`)
 
-**Status:** ❌ NOT STARTED → 🔄 PARTIALLY SUPERSEDED by Golden Age plan
-**Priority:** MEDIUM (Phase 1 done, accumulation systems more critical now)
-**Complexity:** VERY HIGH
+**Status:** ✅ PHASE 2 COMPLETE - Breakthrough Technology System Implemented
+**Priority:** HIGH - Core recovery mechanic now working
+**Complexity:** VERY HIGH → Partially addressed with tech system
 
 #### 1.1 Abundance Generation Systems
-- [ ] `material_abundance_level` ∈ [0,∞) - Post-scarcity production
-- [ ] `energy_abundance_level` - Unlimited clean energy
-- [ ] `creative_abundance_level` - AI-augmented creativity
-- [ ] `time_abundance_level` - Freedom from necessary labor
-- [ ] `scarcity_mindset_dissolution` - Psychological shift
-- [ ] Abundance spiral dynamics (positive feedback loops)
-- [ ] Time liberation cascade (unemployment → freedom in Stage 4)
-- [ ] **Failure modes:** Hedonic adaptation, creative atrophy, dependency trap
+- ✅ `material_abundance_level` - Implemented via Economic Stage system (0-4)
+- ✅ `energy_abundance_level` - Clean Energy & Fusion Power breakthrough techs
+- ✅ `creative_abundance_level` - Inherent in Stage 3-4 post-scarcity
+- ✅ `time_abundance_level` - Unemployment → Freedom in Stage 4 (95% avg unemployment)
+- 🔄 `scarcity_mindset_dissolution` - Partially via Purpose Frameworks tech
+- ✅ Abundance spiral dynamics - Post-scarcity QoL multipliers implemented
+- ✅ Time liberation cascade - Economic stage transitions handle this
+- ✅ **Failure modes addressed:** Meaning crisis, social unrest, complacency crisis
+
+**Implementation via Breakthrough Tech:**
+- Clean Energy (pollution -1.5%/month, climate +1%/month, energy abundance +20%)
+- Fusion Power (pollution -2.5%/month, climate +3%/month, energy abundance +50%)
+- Advanced Recycling (resource efficiency 30% reduction in depletion)
+- Sustainable Agriculture (resource efficiency 15%, biodiversity +0.5%/month)
 
 #### 1.2 Cognitive & Emotional Enhancement
-- [ ] `collective_problem_solving` - Group cognitive capability
-- [ ] `empathy_enhancement_level` - Emotional intelligence boost
-- [ ] `wisdom_aggregation_efficiency` - Combining insights
-- [ ] `mental_health_baseline` - Population wellness (partial - exists in QoL)
-- [ ] `cognitive_diversity_index` - Preserve thinking variety
-- [ ] AI-assisted thinking tools
-- [ ] Mental health revolution mechanics
-- [ ] **Failure modes:** Cognitive homogenization, manipulation, dependency
+- 🔄 `collective_problem_solving` - Partially via Community Platforms tech
+- ✅ `mental_health_baseline` - Fully implemented in QoL system + Mental Health AI tech
+- ✅ Mental health revolution mechanics - **Mental Health AI breakthrough tech**
+  - Reduces meaning crisis 1.5%/month
+  - Mental health QoL boost +15%
+  - Community strength +0.5%/month
+- ✅ Purpose/meaning systems - **Purpose Frameworks breakthrough tech**
+  - Reduces meaning crisis 2%/month
+  - Cultural adaptation +1.5%/month
+  - Mental health boost +10%
+- ✅ Community building - **Community Platforms breakthrough tech**
+  - Community strength +1%/month
+  - Cultural adaptation +0.8%/month
+  - Trust boost +3% (one-time)
+- [ ] `empathy_enhancement_level` - Not yet implemented (future enhancement)
+- [ ] `wisdom_aggregation_efficiency` - Not yet implemented
+- [ ] `cognitive_diversity_index` - Not yet implemented
+- ✅ **Failure modes addressed:** Meaning collapse crisis system operational
 
-#### 1.3 Democratic & Governance Evolution
-- [ ] `governance_transparency` - Visibility of decisions
-- [ ] `citizen_participation_rate` - Active engagement
-- [ ] `decision_quality_score` - Outcome effectiveness
-- [ ] `consensus_building_efficiency` - Speed of agreement
-- [ ] `minority_protection_strength` - Safeguards
-- [ ] Liquid democracy mechanics
-- [ ] AI-mediated consensus building
-- [ ] **Failure modes:** Mob rule, manipulation, echo chambers
+**Key Feature: Government Type Matters!**
+- Democratic: Can research ALL social tech (100% speed)
+- Authoritarian: CRIPPLED social research (20-50% speed) → Dystopia lock-in
+- Technocratic: Technical bonus (+30%), social penalty (-30%)
+
+#### 1.3 Democratic & Governance Evolution ✅ COMPLETE
+- ✅ `governance_transparency` - Openness of government (0.1-0.9, auth erodes -2%/month)
+- ✅ `citizen_participation_rate` - Active engagement (0.1-0.9, trust/transparency driven)
+- ✅ `decision_quality_score` - AI-augmented effectiveness (0.35-1.0, aligned AI improves)
+- ✅ `institutional_capacity` - Ability to execute policy (0.2-1.0, crisis overload)
+- ✅ AI-mediated governance - High-capability aligned AI improves decision quality
+- ✅ Authoritarian resistance - Up to 80% reduction in transition probability
+- ✅ Policy effectiveness multiplier - 0.56x-1.56x based on governance quality
+- [ ] `consensus_building_efficiency` - Speed of agreement (not yet)
+- [ ] `minority_protection_strength` - Safeguards (not yet)
+- [ ] Liquid democracy mechanics (not yet)
+- ✅ **Failure modes:** Authoritarian capture, surveillance erosion, crisis overload
+
+**Key Feature: Virtuous/Vicious Cycles!**
+- Good AI → Better governance → Faster research → Crisis resolution → Utopia
+- Authoritarianism → Poor governance → Slow research → Crisis persistence → Dystopia
 
 #### 1.4 Scientific & Technological Renaissance
 - [ ] `scientific_discovery_rate` - New knowledge generation
