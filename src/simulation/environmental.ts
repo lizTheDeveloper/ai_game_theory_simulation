@@ -52,12 +52,12 @@ export function updateEnvironmentalAccumulation(
   const manufacturingCap = state.globalMetrics.manufacturingCapability;
   
   // Check if we have technologies that mitigate environmental impact
-  const hasFusion = state.technologyTree.some(t => t.id === 'fusion_energy' && t.unlocked);
-  const hasAdvancedMaterials = state.technologyTree.some(t => t.id === 'advanced_materials' && t.unlocked);
-  const hasNanotech = state.technologyTree.some(t => t.id === 'molecular_manufacturing' && t.unlocked);
-  const hasCleanEnergy = state.technologyTree.some(t => t.id === 'clean_energy' && t.unlocked);
-  const hasRecycling = state.technologyTree.some(t => t.id === 'advanced_recycling' && t.unlocked);
-  const hasEcosystemManagement = state.technologyTree.some(t => t.id === 'ecosystem_management_ai' && t.unlocked);
+  const hasFusion = state.technologyTree.some(t => t.id === 'fusion_energy' && t.completed);
+  const hasAdvancedMaterials = state.technologyTree.some(t => t.id === 'advanced_materials' && t.completed);
+  const hasNanotech = state.technologyTree.some(t => t.id === 'molecular_manufacturing' && t.completed);
+  const hasCleanEnergy = state.technologyTree.some(t => t.id === 'clean_energy' && t.completed);
+  const hasRecycling = state.technologyTree.some(t => t.id === 'advanced_recycling' && t.completed);
+  const hasEcosystemManagement = state.technologyTree.some(t => t.id === 'ecosystem_management_ai' && t.completed);
   
   // === RESOURCE DEPLETION ===
   // Base extraction rate increases with economic stage
@@ -70,12 +70,20 @@ export function updateEnvironmentalAccumulation(
   const stageGrowthRate = Math.max(0, economicStage - (economicStage - 0.1)); // Approximate growth
   resourceDepletionRate += stageGrowthRate * 0.03;
   
-  // Mitigation from technologies
+  // Mitigation from technologies (old tech tree - may be deprecated)
   if (hasAdvancedMaterials) resourceDepletionRate *= 0.5; // 50% reduction (material efficiency)
   if (hasNanotech) resourceDepletionRate *= 0.25; // Additional 75% reduction (molecular manufacturing)
   
+  // Mitigation from breakthrough technologies (Phase 2A)
+  if (state.breakthroughTech) {
+    const { getResourceEfficiencyMultiplier } = require('./breakthroughTechnologies');
+    const efficiencyMultiplier = getResourceEfficiencyMultiplier(state);
+    resourceDepletionRate *= efficiencyMultiplier;
+  }
+  
   // Apply depletion
-  env.resourceReserves = Math.max(0, env.resourceReserves - resourceDepletionRate);
+  const currentReserves = isNaN(env.resourceReserves) ? 1.0 : env.resourceReserves;
+  env.resourceReserves = Math.max(0, currentReserves - resourceDepletionRate);
   
   // === POLLUTION ACCUMULATION ===
   // Base pollution from production
@@ -98,7 +106,8 @@ export function updateEnvironmentalAccumulation(
   const naturalDegradation = 0.003; // 0.3% per month natural cleanup
   
   // Apply pollution (accumulation - degradation)
-  env.pollutionLevel = Math.max(0, Math.min(1, env.pollutionLevel + pollutionRate - naturalDegradation));
+  const currentPollution = isNaN(env.pollutionLevel) ? 0.0 : env.pollutionLevel;
+  env.pollutionLevel = Math.max(0, Math.min(1, currentPollution + pollutionRate - naturalDegradation));
   
   // === CLIMATE DEGRADATION ===
   // Energy usage drives climate impact
@@ -124,7 +133,8 @@ export function updateEnvironmentalAccumulation(
   const naturalStabilization = 0.001; // 0.1% per month
   
   // Apply climate degradation
-  env.climateStability = Math.max(0, Math.min(1, env.climateStability - climateDegradationRate + naturalStabilization));
+  const currentClimate = isNaN(env.climateStability) ? 1.0 : env.climateStability;
+  env.climateStability = Math.max(0, Math.min(1, currentClimate - climateDegradationRate + naturalStabilization));
   
   // === BIODIVERSITY LOSS ===
   // Habitat disruption from expansion
@@ -147,7 +157,8 @@ export function updateEnvironmentalAccumulation(
   const naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
   
   // Apply biodiversity loss
-  env.biodiversityIndex = Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery));
+  const currentBiodiversity = isNaN(env.biodiversityIndex) ? 1.0 : env.biodiversityIndex;
+  env.biodiversityIndex = Math.max(0, Math.min(1, currentBiodiversity - biodiversityLossRate + naturalRecovery));
   
   // === CRISIS TRIGGERS ===
   checkEnvironmentalCrises(state);
@@ -165,9 +176,19 @@ function checkEnvironmentalCrises(state: GameState): void {
   // RESOURCE CRISIS: Reserves depleted below 30%
   if (env.resourceReserves < 0.3 && !env.resourceCrisisActive) {
     env.resourceCrisisActive = true;
-    console.log(`\n⚠️  RESOURCE CRISIS TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Resource Reserves: ${(env.resourceReserves * 100).toFixed(1)}%`);
-    console.log(`   Impact: Manufacturing disrupted, QoL declining\n`);
+    try {
+      console.log(`\n⚠️  RESOURCE CRISIS TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Resource Reserves: ${(env.resourceReserves * 100).toFixed(1)}%`);
+      console.log(`   Impact: Manufacturing disrupted, QoL declining\n`);
+    } catch (e) { /* Ignore EPIPE */ }
+    
+    // Log event
+    state.eventLog.push({
+      type: 'crisis',
+      month: state.currentMonth,
+      description: `Resource Crisis: Reserves depleted to ${(env.resourceReserves * 100).toFixed(1)}%`,
+      impact: 'Material abundance -30%, Energy -20%, Social stability -0.3'
+    });
     
     // Immediate QoL impacts
     qol.materialAbundance *= 0.7; // 30% drop in material goods
@@ -178,9 +199,18 @@ function checkEnvironmentalCrises(state: GameState): void {
   // POLLUTION CRISIS: Pollution exceeds 70%
   if (env.pollutionLevel > 0.7 && !env.pollutionCrisisActive) {
     env.pollutionCrisisActive = true;
-    console.log(`\n⚠️  POLLUTION CRISIS TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Pollution Level: ${(env.pollutionLevel * 100).toFixed(1)}%`);
-    console.log(`   Impact: Health crisis, ecosystem contamination\n`);
+    try {
+      console.log(`\n⚠️  POLLUTION CRISIS TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Pollution Level: ${(env.pollutionLevel * 100).toFixed(1)}%`);
+      console.log(`   Impact: Health crisis, ecosystem contamination\n`);
+    } catch (e) { /* Ignore EPIPE */ }
+    
+    state.eventLog.push({
+      type: 'crisis',
+      month: state.currentMonth,
+      description: `Pollution Crisis: Pollution level ${(env.pollutionLevel * 100).toFixed(1)}%`,
+      impact: 'Healthcare -25%, Diseases +0.3, Ecosystem -40%, QoL -0.25'
+    });
     
     // Immediate QoL impacts
     qol.healthcareQuality *= 0.75; // 25% drop (pollution-related diseases)
@@ -192,9 +222,18 @@ function checkEnvironmentalCrises(state: GameState): void {
   // CLIMATE CATASTROPHE: Stability below 40%
   if (env.climateStability < 0.4 && !env.climateCrisisActive) {
     env.climateCrisisActive = true;
-    console.log(`\n🌡️  CLIMATE CATASTROPHE TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Climate Stability: ${(env.climateStability * 100).toFixed(1)}%`);
-    console.log(`   Impact: Cascading failures, potential extinction pathway\n`);
+    try {
+      console.log(`\n🌡️  CLIMATE CATASTROPHE TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Climate Stability: ${(env.climateStability * 100).toFixed(1)}%`);
+      console.log(`   Impact: Cascading failures, potential extinction pathway\n`);
+    } catch (e) { /* Ignore EPIPE */ }
+    
+    state.eventLog.push({
+      type: 'crisis',
+      month: state.currentMonth,
+      description: `Climate Catastrophe: Stability ${(env.climateStability * 100).toFixed(1)}%`,
+      impact: 'Physical safety -40%, Material -50%, Ecosystem -60%, Social stability -0.5'
+    });
     
     // Severe QoL impacts
     qol.physicalSafety *= 0.6; // 40% drop (extreme weather, disasters)
@@ -205,16 +244,27 @@ function checkEnvironmentalCrises(state: GameState): void {
     // Check for extinction trigger
     // Climate catastrophe can lead to slow collapse
     if (env.biodiversityIndex < 0.4) {
-      console.log(`   ⚠️  Combined with ecosystem collapse - extinction risk elevated\n`);
+      try {
+        console.log(`   ⚠️  Combined with ecosystem collapse - extinction risk elevated\n`);
+      } catch (e) { /* Ignore EPIPE */ }
     }
   }
   
   // ECOSYSTEM COLLAPSE: Biodiversity below 30%
   if (env.biodiversityIndex < 0.3 && !env.ecosystemCrisisActive) {
     env.ecosystemCrisisActive = true;
-    console.log(`\n🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Biodiversity Index: ${(env.biodiversityIndex * 100).toFixed(1)}%`);
-    console.log(`   Impact: Food system failure, life support degradation\n`);
+    try {
+      console.log(`\n🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Biodiversity Index: ${(env.biodiversityIndex * 100).toFixed(1)}%`);
+      console.log(`   Impact: Food system failure, life support degradation\n`);
+    } catch (e) { /* Ignore EPIPE */ }
+    
+    state.eventLog.push({
+      type: 'crisis',
+      month: state.currentMonth,
+      description: `Ecosystem Collapse: Biodiversity ${(env.biodiversityIndex * 100).toFixed(1)}%`,
+      impact: 'Material -40%, Healthcare -30%, Ecosystem floor 0.2, QoL -0.4'
+    });
     
     // Critical QoL impacts
     qol.materialAbundance *= 0.6; // 40% drop (food system collapse)
@@ -226,28 +276,62 @@ function checkEnvironmentalCrises(state: GameState): void {
   // === ONGOING CRISIS IMPACTS ===
   // Once triggered, crises continue to degrade QoL
   
+  // Calculate cascading failure multiplier
+  const cascadeMultiplier = calculateCascadingFailureMultiplier(state);
+  
   if (env.resourceCrisisActive) {
     // Ongoing resource scarcity
-    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.01); // Continued decline
-    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.01);
+    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.01 * cascadeMultiplier);
+    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.01 * cascadeMultiplier);
   }
   
   if (env.pollutionCrisisActive) {
     // Ongoing health impacts
-    qol.healthcareQuality = Math.max(0, qol.healthcareQuality - 0.008);
-    qol.diseasesBurden = Math.min(1, qol.diseasesBurden + 0.01);
+    qol.healthcareQuality = Math.max(0, qol.healthcareQuality - 0.008 * cascadeMultiplier);
+    qol.diseasesBurden = Math.min(1, qol.diseasesBurden + 0.01 * cascadeMultiplier);
   }
   
   if (env.climateCrisisActive) {
     // Ongoing climate disasters
-    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.012);
-    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.015);
+    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.012 * cascadeMultiplier);
+    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.015 * cascadeMultiplier);
   }
   
   if (env.ecosystemCrisisActive) {
     // Ongoing ecosystem degradation
-    qol.ecosystemHealth = Math.max(0, qol.ecosystemHealth - 0.01);
-    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.01);
+    qol.ecosystemHealth = Math.max(0, qol.ecosystemHealth - 0.01 * cascadeMultiplier);
+    qol.materialAbundance = Math.max(0, qol.materialAbundance - 0.01 * cascadeMultiplier);
+  }
+  
+  // Extra cascading failure warning
+  if (cascadeMultiplier > 1.5) {
+    try {
+      const activeCount = Math.round((cascadeMultiplier - 1.0) / 0.5 + 2);
+      const crisisDetails = [
+        env.resourceCrisisActive && 'Resource',
+        env.pollutionCrisisActive && 'Pollution',
+        env.climateCrisisActive && 'Climate',
+        env.ecosystemCrisisActive && 'Ecosystem',
+        state.socialAccumulation.meaningCollapseActive && 'Meaning',
+        state.socialAccumulation.institutionalFailureActive && 'Institutional',
+        state.socialAccumulation.socialUnrestActive && 'SocialUnrest',
+        state.technologicalRisk.controlLossActive && 'ControlLoss',
+        state.technologicalRisk.corporateDystopiaActive && 'Corporate',
+        state.technologicalRisk.complacencyCrisisActive && 'Complacency'
+      ].filter(Boolean).join(', ');
+      console.log(`   ⚠️⚠️⚠️  CASCADING FAILURES (Month ${state.currentMonth}): ${activeCount} crises active [${crisisDetails}], degradation accelerated ${cascadeMultiplier.toFixed(1)}x`);
+      
+      // Log cascading failure event (only once per month to avoid spam)
+      const lastCascade = state.eventLog.filter(e => e.type === 'cascading_failure').slice(-1)[0];
+      if (!lastCascade || (lastCascade as any).month < state.currentMonth) {
+        state.eventLog.push({
+          type: 'cascading_failure',
+          month: state.currentMonth,
+          description: `Cascading Failures: ${activeCount} crises active`,
+          impact: `Degradation accelerated ${cascadeMultiplier.toFixed(1)}x - Active: ${crisisDetails}`
+        });
+      }
+    } catch (e) { /* Ignore EPIPE */ }
   }
 }
 
@@ -279,5 +363,41 @@ export function hasEnvironmentalCrisis(env: EnvironmentalAccumulation): boolean 
          env.pollutionCrisisActive || 
          env.climateCrisisActive || 
          env.ecosystemCrisisActive;
+}
+
+/**
+ * Calculate cascading failure multiplier based on total active crises
+ * 
+ * When multiple crises are active across all systems, they amplify each other.
+ * 2 crises: 1.0x (baseline)
+ * 3 crises: 1.5x degradation
+ * 4 crises: 2.0x degradation
+ * 5+ crises: 2.5x+ degradation (catastrophic)
+ * 
+ * This represents systemic collapse where failures compound.
+ */
+function calculateCascadingFailureMultiplier(state: GameState): number {
+  const activeCrises = [
+    // Environmental (4 possible)
+    state.environmentalAccumulation.resourceCrisisActive,
+    state.environmentalAccumulation.pollutionCrisisActive,
+    state.environmentalAccumulation.climateCrisisActive,
+    state.environmentalAccumulation.ecosystemCrisisActive,
+    // Social (3 possible)
+    state.socialAccumulation.meaningCollapseActive,
+    state.socialAccumulation.institutionalFailureActive,
+    state.socialAccumulation.socialUnrestActive,
+    // Technological (3 possible)
+    state.technologicalRisk.controlLossActive,
+    state.technologicalRisk.corporateDystopiaActive,
+    state.technologicalRisk.complacencyCrisisActive
+  ].filter(Boolean).length;
+  
+  if (activeCrises <= 2) {
+    return 1.0; // No amplification for 1-2 crises
+  }
+  
+  // Each crisis beyond 2 adds 50% more degradation
+  return 1.0 + (activeCrises - 2) * 0.5;
 }
 

@@ -23,6 +23,7 @@ import {
   updateSocialAccumulation,  // Phase 3: Social Cohesion
   updateTechnologicalRisk  // Phase 4: Technological Risk
 } from './calculations';
+import { updateBreakthroughTechnologies, checkCrisisResolution } from './breakthroughTechnologies';
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
@@ -117,6 +118,7 @@ export interface SimulationRunResult {
   summary: {
     totalMonths: number;
     finalOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
+    finalOutcomeReason: string;
     finalOutcomeProbability: number;
     criticalEvents: GameEvent[];
     economicStageReached: number;
@@ -243,6 +245,10 @@ export class SimulationEngine {
     const societyResult = executeSocietyActions(newState, rng);
     newState = societyResult.newState;
     events.push(...societyResult.events);
+    
+    // Governance quality: Update democratic health & policy effectiveness
+    const { updateGovernanceQuality } = require('./governanceQuality');
+    updateGovernanceQuality(newState);
     
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
@@ -387,10 +393,7 @@ export class SimulationEngine {
     
     // 9. Advance time
     newState.currentMonth += 1;
-    if (newState.currentMonth >= 12) {
-      newState.currentMonth = 0;
-      newState.currentYear += 1;
-    }
+    newState.currentYear = Math.floor(newState.currentMonth / 12);
     
     // 10. Calculate metrics for tracking
     const metrics = {
@@ -402,6 +405,16 @@ export class SimulationEngine {
       avgAlignment: calculateAverageAlignment(newState.aiAgents),
       crisisDetected: crisis.inCrisis
     };
+    
+    // 11. Collect events from state.eventLog (crisis events, cascading failures, etc.)
+    // These are events logged by environmental, social, and tech modules
+    if (newState.eventLog && newState.eventLog.length > 0) {
+      // Only collect NEW events from this step (avoid duplicates across steps)
+      const newEventsThisStep = newState.eventLog.filter(
+        (e: GameEvent) => e.month === newState.currentMonth
+      );
+      events.push(...newEventsThisStep);
+    }
     
     return {
       state: newState,
@@ -432,6 +445,7 @@ export class SimulationEngine {
     let state = initialState;
     const history: SimulationStepResult[] = [];
     let actualOutcome: 'utopia' | 'dystopia' | 'extinction' | null = null;
+    let actualOutcomeReason: string = '';
     
     // Phase 3: Initialize end-game state if not present
     if (!state.endGameState) {
@@ -442,6 +456,7 @@ export class SimulationEngine {
       const stepResult = this.step(state);
       history.push(stepResult);
       state = stepResult.state;
+      
       
       // Log this step
       logger.logStep(state, stepResult.events);
@@ -493,11 +508,22 @@ export class SimulationEngine {
       // Track AI safety debt and complacency
       updateTechnologicalRisk(state);
       
+      // Phase 2A: Breakthrough Technologies
+      // Research, unlock, and deploy transformative technologies
+      try {
+        updateBreakthroughTechnologies(state, month);
+        checkCrisisResolution(state, month);
+      } catch (error) {
+        console.error(`\n❌ BREAKTHROUGH TECH ERROR: ${error}`);
+        console.error(error);
+      }
+      
       // Check for ACTUAL outcomes (not probabilities)
       if (checkActualOutcomes) {
         const outcomeCheck = determineActualOutcome(state, month);
         if (outcomeCheck.outcome !== 'active') {
           actualOutcome = outcomeCheck.outcome;
+          actualOutcomeReason = outcomeCheck.reason;
           // Log why the game ended
           console.log(`\n🎮 Simulation ended: ${outcomeCheck.outcome.toUpperCase()}`);
           console.log(`   Reason: ${outcomeCheck.reason}`);
@@ -559,6 +585,7 @@ export class SimulationEngine {
       summary: {
         totalMonths: history.length,
         finalOutcome,
+        finalOutcomeReason: actualOutcomeReason || `Reached max months (${maxMonths}) with ${finalOutcome} probability dominant`,
         finalOutcomeProbability,
         criticalEvents: log.events.criticalEvents,
         economicStageReached: state.globalMetrics.economicTransitionStage

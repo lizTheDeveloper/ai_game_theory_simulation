@@ -54,7 +54,12 @@ export function updateSocialAccumulation(
   
   // Check for mitigating technologies/policies
   const hasUBI = economicStage >= 3.0 || state.government.structuralChoices.ubiVariant !== 'none';
-  const hasEducationPrograms = state.government.researchInvestments.general > 5.0;
+  // Use overall research investment as proxy for education programs
+  const totalResearchInvestment = state.government.researchInvestments.physical + 
+    state.government.researchInvestments.digital + 
+    state.government.researchInvestments.cognitive + 
+    state.government.researchInvestments.social;
+  const hasEducationPrograms = totalResearchInvestment > 20.0;
   const hasCommunityPrograms = state.globalMetrics.socialStability > 0.7;
   
   // === MEANING CRISIS ACCUMULATION ===
@@ -89,7 +94,8 @@ export function updateSocialAccumulation(
   }
   
   // Apply meaning crisis accumulation
-  social.meaningCrisisLevel = Math.max(0, Math.min(1, social.meaningCrisisLevel + meaningCrisisRate));
+  const currentMeaningCrisis = isNaN(social.meaningCrisisLevel) ? 0.0 : social.meaningCrisisLevel;
+  social.meaningCrisisLevel = Math.max(0, Math.min(1, currentMeaningCrisis + meaningCrisisRate));
   
   // === INSTITUTIONAL LEGITIMACY EROSION ===
   // Governments lag behind technological change
@@ -126,8 +132,9 @@ export function updateSocialAccumulation(
   }
   
   // Apply legitimacy change
+  const currentLegitimacy = isNaN(social.institutionalLegitimacy) ? 0.7 : social.institutionalLegitimacy;
   social.institutionalLegitimacy = Math.max(0, Math.min(1, 
-    social.institutionalLegitimacy - legitimacyErosionRate + legitimacyRecoveryRate
+    currentLegitimacy - legitimacyErosionRate + legitimacyRecoveryRate
   ));
   
   // === SOCIAL COHESION DEPLETION ===
@@ -163,8 +170,9 @@ export function updateSocialAccumulation(
   }
   
   // Apply cohesion change
+  const currentCohesion = isNaN(social.socialCohesion) ? 0.7 : social.socialCohesion;
   social.socialCohesion = Math.max(0, Math.min(1,
-    social.socialCohesion - cohesionLossRate + cohesionRecoveryRate
+    currentCohesion - cohesionLossRate + cohesionRecoveryRate
   ));
   
   // === CULTURAL ADAPTATION (SLOW IMPROVEMENT) ===
@@ -200,8 +208,9 @@ export function updateSocialAccumulation(
   }
   
   // Apply cultural adaptation
+  const currentAdaptation = isNaN(social.culturalAdaptation) ? 0.2 : social.culturalAdaptation;
   social.culturalAdaptation = Math.max(0, Math.min(1,
-    social.culturalAdaptation + adaptationRate
+    currentAdaptation + adaptationRate
   ));
   
   // === CRISIS TRIGGERS ===
@@ -220,9 +229,11 @@ function checkSocialCrises(state: GameState): void {
   // MEANING COLLAPSE: Existential despair exceeds 60%
   if (social.meaningCrisisLevel > 0.6 && !social.meaningCollapseActive) {
     social.meaningCollapseActive = true;
-    console.log(`\n😔 MEANING COLLAPSE TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Meaning Crisis Level: ${(social.meaningCrisisLevel * 100).toFixed(1)}%`);
-    console.log(`   Impact: Mental health crisis, suicide epidemic, despair\n`);
+    try {
+      console.log(`\n😔 MEANING COLLAPSE TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Meaning Crisis Level: ${(social.meaningCrisisLevel * 100).toFixed(1)}%`);
+      console.log(`   Impact: Mental health crisis, suicide epidemic, despair\n`);
+    } catch (e) { /* Ignore EPIPE */ }
     
     // Severe QoL impacts
     qol.mentalHealth *= 0.65; // 35% drop
@@ -235,9 +246,11 @@ function checkSocialCrises(state: GameState): void {
   // INSTITUTIONAL FAILURE: Government legitimacy below 30%
   if (social.institutionalLegitimacy < 0.3 && !social.institutionalFailureActive) {
     social.institutionalFailureActive = true;
-    console.log(`\n🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Institutional Legitimacy: ${(social.institutionalLegitimacy * 100).toFixed(1)}%`);
-    console.log(`   Impact: Governance collapse, potential authoritarian takeover\n`);
+    try {
+      console.log(`\n🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Institutional Legitimacy: ${(social.institutionalLegitimacy * 100).toFixed(1)}%`);
+      console.log(`   Impact: Governance collapse, potential authoritarian takeover\n`);
+    } catch (e) { /* Ignore EPIPE */ }
     
     // Critical QoL impacts
     qol.politicalFreedom *= 0.6; // 40% drop (power vacuum)
@@ -249,16 +262,20 @@ function checkSocialCrises(state: GameState): void {
     // Government may become authoritarian to restore order
     if (Math.random() < 0.4) {
       state.government.governmentType = 'authoritarian';
-      console.log(`   🚨 Authoritarian takeover in response to chaos\n`);
+      try {
+        console.log(`   🚨 Authoritarian takeover in response to chaos\n`);
+      } catch (e) { /* Ignore EPIPE */ }
     }
   }
   
   // SOCIAL UNREST: Cohesion below 30%
   if (social.socialCohesion < 0.3 && !social.socialUnrestActive) {
     social.socialUnrestActive = true;
-    console.log(`\n🔥 SOCIAL UNREST TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Social Cohesion: ${(social.socialCohesion * 100).toFixed(1)}%`);
-    console.log(`   Impact: Riots, community breakdown, potential civil conflict\n`);
+    try {
+      console.log(`\n🔥 SOCIAL UNREST TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Social Cohesion: ${(social.socialCohesion * 100).toFixed(1)}%`);
+      console.log(`   Impact: Riots, community breakdown, potential civil conflict\n`);
+    } catch (e) { /* Ignore EPIPE */ }
     
     // Severe QoL impacts
     qol.physicalSafety *= 0.5; // 50% drop (violence)
@@ -276,22 +293,25 @@ function checkSocialCrises(state: GameState): void {
   // === ONGOING CRISIS IMPACTS ===
   // Once triggered, crises continue to degrade society
   
+  // Calculate cascading failure multiplier (counts crises across ALL systems)
+  const cascadeMultiplier = calculateCascadingFailureMultiplier(state);
+  
   if (social.meaningCollapseActive) {
     // Ongoing despair
-    qol.mentalHealth = Math.max(0, qol.mentalHealth - 0.012);
-    qol.meaningAndPurpose = Math.max(0, qol.meaningAndPurpose - 0.015);
+    qol.mentalHealth = Math.max(0, qol.mentalHealth - 0.012 * cascadeMultiplier);
+    qol.meaningAndPurpose = Math.max(0, qol.meaningAndPurpose - 0.015 * cascadeMultiplier);
   }
   
   if (social.institutionalFailureActive) {
     // Ongoing governance failure
-    qol.politicalFreedom = Math.max(0, qol.politicalFreedom - 0.010);
-    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.012);
+    qol.politicalFreedom = Math.max(0, qol.politicalFreedom - 0.010 * cascadeMultiplier);
+    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.012 * cascadeMultiplier);
   }
   
   if (social.socialUnrestActive) {
     // Ongoing violence and breakdown
-    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.015);
-    qol.communityStrength = Math.max(0, qol.communityStrength - 0.010);
+    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.015 * cascadeMultiplier);
+    qol.communityStrength = Math.max(0, qol.communityStrength - 0.010 * cascadeMultiplier);
   }
 }
 
@@ -327,5 +347,33 @@ export function hasSocialCrisis(social: SocialAccumulation): boolean {
   return social.meaningCollapseActive || 
          social.institutionalFailureActive || 
          social.socialUnrestActive;
+}
+
+/**
+ * Calculate cascading failure multiplier - shared across all systems
+ */
+function calculateCascadingFailureMultiplier(state: GameState): number {
+  const activeCrises = [
+    // Environmental (4 possible)
+    state.environmentalAccumulation.resourceCrisisActive,
+    state.environmentalAccumulation.pollutionCrisisActive,
+    state.environmentalAccumulation.climateCrisisActive,
+    state.environmentalAccumulation.ecosystemCrisisActive,
+    // Social (3 possible)
+    state.socialAccumulation.meaningCollapseActive,
+    state.socialAccumulation.institutionalFailureActive,
+    state.socialAccumulation.socialUnrestActive,
+    // Technological (3 possible)
+    state.technologicalRisk.controlLossActive,
+    state.technologicalRisk.corporateDystopiaActive,
+    state.technologicalRisk.complacencyCrisisActive
+  ].filter(Boolean).length;
+  
+  if (activeCrises <= 2) {
+    return 1.0; // No amplification for 1-2 crises
+  }
+  
+  // Each crisis beyond 2 adds 50% more degradation
+  return 1.0 + (activeCrises - 2) * 0.5;
 }
 

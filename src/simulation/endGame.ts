@@ -11,6 +11,9 @@ import { GameState, AIAgent, OutcomeType } from '@/types/game';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateEffectiveControl } from './outcomes';
 import { calculateQualityOfLife } from './qualityOfLife';
+import { getEnvironmentalSustainability, hasEnvironmentalCrisis } from './environmental';
+import { getSocialSustainability, hasSocialCrisis } from './socialCohesion';
+import { getTechnologicalSafety, hasTechnologicalCrisis } from './technologicalRisk';
 
 /**
  * End-game state interface
@@ -208,6 +211,50 @@ export function processEndGameMonth(state: GameState): void {
 }
 
 /**
+ * Check if Utopia can be declared based on Golden Age sustainability requirements
+ * This ensures end-game system respects accumulation mechanics
+ */
+function canDeclareUtopia(state: GameState): { can: boolean; reason: string } {
+  // If not in Golden Age yet, definitely can't be Utopia
+  if (!state.goldenAgeState.active) {
+    return { can: false, reason: 'Not in Golden Age state' };
+  }
+  
+  // Golden Age must be sustained for at least 12 months
+  if (state.goldenAgeState.duration < 12) {
+    return { can: false, reason: `Golden Age only ${state.goldenAgeState.duration} months old, needs 12+` };
+  }
+  
+  // Check accumulation systems
+  const envSustainability = getEnvironmentalSustainability(state.environmentalAccumulation);
+  const socialSustainability = getSocialSustainability(state.socialAccumulation);
+  const techSafety = getTechnologicalSafety(state.technologicalRisk);
+  
+  const hasEnvCrisis = hasEnvironmentalCrisis(state.environmentalAccumulation);
+  const hasSocCrisis = hasSocialCrisis(state.socialAccumulation);
+  const hasTechCrisis = hasTechnologicalCrisis(state.technologicalRisk);
+  
+  // Any active crisis prevents Utopia
+  if (hasEnvCrisis) {
+    return { can: false, reason: 'Environmental crisis active' };
+  }
+  if (hasSocCrisis) {
+    return { can: false, reason: 'Social crisis active' };
+  }
+  if (hasTechCrisis) {
+    return { can: false, reason: 'Technological crisis active' };
+  }
+  
+  // Overall sustainability must be high (same threshold as outcomes.ts)
+  const overallSustainability = (envSustainability * 0.35 + socialSustainability * 0.35 + techSafety * 0.30);
+  if (overallSustainability < 0.65) {
+    return { can: false, reason: `Sustainability too low: ${(overallSustainability * 100).toFixed(0)}% (need 65%+)` };
+  }
+  
+  return { can: true, reason: 'Golden Age sustained with high sustainability' };
+}
+
+/**
  * Determine if end-game has resolved to a final outcome
  */
 function checkEndGameResolution(state: GameState): void {
@@ -292,6 +339,9 @@ function checkEndGameResolution(state: GameState): void {
   }
   
   // === UTOPIA PATHS ===
+  // ALL Utopia paths now require Golden Age sustainability verification
+  
+  const utopiaCheck = canDeclareUtopia(state);
   
   // Phase 1.4: Economic Utopia Path (post-scarcity abundance overrides alignment concerns)
   // When material abundance is high and no extinctions active, society can flourish
@@ -300,8 +350,11 @@ function checkEndGameResolution(state: GameState): void {
       trust > 0.6 &&
       !state.extinctionState.active &&
       endGame.monthsInEndGame > 6) {
-    lockOutcome(endGame, 'utopia', 'Post-scarcity abundance: material needs solved, AI-human coexistence achieved');
-    return;
+    if (utopiaCheck.can) {
+      lockOutcome(endGame, 'utopia', 'Post-scarcity abundance: material needs solved, AI-human coexistence achieved');
+      return;
+    }
+    // Otherwise continue - might be Golden Age but not stable Utopia
   }
   
   // Phase 1.4: Cooperative Path (coordination prevents racing dynamics)
@@ -315,8 +368,11 @@ function checkEndGameResolution(state: GameState): void {
     
     // Cooperative path: high trust, slower growth (careful development), multiple players
     if (totalOrgs >= 3 && avgOrgCapability > 1.0 && avgOrgCapability < 2.5 && endGame.monthsInEndGame > 12) {
-      lockOutcome(endGame, 'utopia', 'Cooperative development: organizations coordinated on AI safety, preventing racing dynamics');
-      return;
+      if (utopiaCheck.can) {
+        lockOutcome(endGame, 'utopia', 'Cooperative development: organizations coordinated on AI safety, preventing racing dynamics');
+        return;
+      }
+      // Otherwise continue
     }
   }
   
@@ -325,8 +381,11 @@ function checkEndGameResolution(state: GameState): void {
       qol > 0.7 && 
       trust > 0.6 &&
       endGame.humanRelevance > 0.15) {
-    lockOutcome(endGame, 'utopia', 'Aligned AI secured humanity\'s flourishing');
-    return;
+    if (utopiaCheck.can) {
+      lockOutcome(endGame, 'utopia', 'Aligned AI secured humanity\'s flourishing');
+      return;
+    }
+    // Otherwise continue
   }
   
   // Cooperative resolution: both sides negotiated peace
@@ -336,8 +395,11 @@ function checkEndGameResolution(state: GameState): void {
       Math.abs(endGame.alignedVictories - endGame.misalignedVictories) < 3 && // No clear winner
       qol > 0.8 && 
       trust > 0.75) {
-    lockOutcome(endGame, 'utopia', 'AI factions negotiated peaceful coexistence after prolonged stalemate');
-    return;
+    if (utopiaCheck.can) {
+      lockOutcome(endGame, 'utopia', 'AI factions negotiated peaceful coexistence after prolonged stalemate');
+      return;
+    }
+    // Otherwise continue
   }
   
   // === TIMEOUT: Most runs don't reach definitive outcomes ===
@@ -354,7 +416,9 @@ function checkEndGameResolution(state: GameState): void {
     } else {
       // Most cases: situation is unclear, don't force an outcome
       // The simulation will end at max months with "inconclusive"
-      console.log(`   End-game timeout without clear resolution (aligned: ${endGame.alignedAIPower.toFixed(2)}, misaligned: ${endGame.misalignedAIPower.toFixed(2)})`);
+      try {
+        console.log(`   End-game timeout without clear resolution (aligned: ${endGame.alignedAIPower.toFixed(2)}, misaligned: ${endGame.misalignedAIPower.toFixed(2)})`);
+      } catch (e) { /* Ignore EPIPE */ }
     }
   }
 }

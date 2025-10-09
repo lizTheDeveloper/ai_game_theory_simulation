@@ -1,0 +1,34 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T03-44-42.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+
+
+❌ UNCAUGHT EXCEPTION: Cannot find module './governanceQuality'
+Require stack:
+- /Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts
+- /Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts
+Error: Cannot find module './governanceQuality'
+Require stack:
+- /Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts
+- /Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts
+    at node:internal/modules/cjs/loader:1249:15
+    at nextResolveSimple (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1004)
+    at /Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:2630
+    at /Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1542
+    at resolveTsPaths (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:4:760)
+    at /Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1102
+    at m._resolveFilename (file:///Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-B7jrtLTO.mjs:1:789)
+    at Function._load (node:internal/modules/cjs/loader:1075:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:219:24)

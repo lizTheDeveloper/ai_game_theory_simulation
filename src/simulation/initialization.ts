@@ -16,6 +16,7 @@ import { initializeCatastrophicScenarios } from './catastrophicScenarios';
 import { initializeEnvironmentalAccumulation } from './environmental';
 import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
+import { initializeBreakthroughTech } from './breakthroughTechnologies';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -211,7 +212,13 @@ export function createDefaultInitialState(): GameState {
       },
       evaluationFrequency: 0.1,   // Evaluate 10% of AIs per month
       totalBenchmarksRun: 0,
-      researchInvestments: initializeResearchInvestments()
+      researchInvestments: initializeResearchInvestments(0), // Start at stage 0
+      governanceQuality: {
+        decisionQuality: 0.5,
+        transparency: 0.6,
+        participationRate: 0.4,
+        institutionalCapacity: 0.6
+      }
     },
     
     society: {
@@ -268,6 +275,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 4: Technological Risk Accumulation
     technologicalRisk: initializeTechnologicalRisk(),
+    
+    // Phase 2A: Breakthrough Technologies
+    breakthroughTech: initializeBreakthroughTech(),
     
     eventLog: [],
     technologyTree: [],

@@ -8,6 +8,7 @@
 ┌─────────────────────────────────────────────────────────┐
 │  OUTCOME LAYER                                          │
 │  - Utopia / Dystopia / Extinction Attractors           │
+│  - Golden Age Detection (prosperity state)              │
 │  - Quality of Life Discriminator                        │
 └─────────────────────────────────────────────────────────┘
          ↑                    ↑                    ↑
@@ -16,11 +17,24 @@
 │   ECONOMICS    │  │   SOCIETY        │  │  GOVERNMENT   │
 │   - Stages 0-4 │  │   - Trust        │  │  - Control    │
 │   - UBI        │  │   - Adaptation   │  │  - Policies   │
-│   - Wealth     │  │   - Unemployment │  │  - Actions    │
+│   - Wealth     │  │   - Unemployment │  │  - Research   │
 └────────────────┘  └──────────────────┘  └───────────────┘
          ↑                    ↑                    ↑
          │                    │                    │
          └────────────────────┴────────────────────┘
+                              │
+         ┌────────────────────┴────────────────────┐
+         │                                         │
+┌────────────────────┐                  ┌──────────────────────┐
+│ ACCUMULATION       │                  │ BREAKTHROUGH TECH    │
+│ - Environmental    │◄─────────────────┤ - Research           │
+│ - Social Cohesion  │                  │ - Unlocks            │
+│ - Tech Risk        │                  │ - Crisis Recovery    │
+│ - 10 Crisis Types  │                  │ - 11 Technologies    │
+└────────────────────┘                  └──────────────────────┘
+         ↑                                         ↑
+         │                                         │
+         └────────────────────┬────────────────────┘
                               │
                   ┌───────────────────────┐
                   │   AI AGENTS           │
@@ -182,6 +196,98 @@ Even More Dependence
 
 **Risk:** If AI becomes misaligned, society cannot shut it down without collapse
 
+### Golden Age Fragility Loop
+
+```
+High QoL + Stage 3+
+  ↓
+Golden Age Begins
+  ↓
+Hidden Accumulation:
+  ├─ Environmental (resources depleting, pollution rising)
+  ├─ Social (meaning crisis, institutional erosion)
+  └─ Technological (safety debt, complacency)
+  ↓
+First Crisis Triggers (e.g., Ecosystem Collapse)
+  ↓
+QoL Drops → More Crises Trigger
+  ↓
+Crisis Cascade (2 → 3 → 4 → 6 crises)
+  ↓
+3.0x QoL Degradation Multiplier
+  ↓
+Golden Age Lost → Dystopia or Extinction
+```
+
+**Escape:** Breakthrough technologies can reverse crises if unlocked in time
+
+### Crisis Cascade Compounding
+
+```
+Environmental Crises:
+  ├─ Resource Crisis (reserves < 40%)
+  ├─ Pollution Crisis (pollution > 70%)
+  ├─ Climate Catastrophe (stability < 30%)
+  └─ Ecosystem Collapse (biodiversity < 40%)
+
+Social Crises:
+  ├─ Meaning Collapse (meaning crisis > 70%)
+  ├─ Institutional Failure (legitimacy < 30%)
+  └─ Social Unrest (cohesion < 40%)
+
+Technological Crises:
+  ├─ Control Loss (misalignment risk > 80%)
+  ├─ Corporate Dystopia (concentration > 80% + low alignment)
+  └─ Complacency Crisis (complacency > 70%)
+
+Each crisis:
+  ├─ Immediate QoL impact (category-specific)
+  ├─ Ongoing monthly degradation (-0.5% to -2.5%)
+  └─ Contributes to cascade multiplier
+```
+
+**Cascade Multiplier:**
+- 1-2 crises: 1.0x (baseline)
+- 3 crises: 1.5x
+- 4 crises: 2.0x
+- 5 crises: 2.5x
+- 6+ crises: 3.0x (death spiral)
+
+### Technology Recovery Pathway
+
+```
+Government Invests in Research
+  ↓
+Probabilistic Tech Unlocks (based on AI capability + budget)
+  ↓
+Technology Tree:
+  ├─ Clean Energy (24 months, $20B)
+  ├─ Advanced Recycling (18 months, $15B)
+  ├─ Carbon Capture (30 months, $30B, requires Clean Energy)
+  ├─ Ecosystem Management (36 months, $40B, requires Clean + Recycling)
+  └─ ... 7 more technologies
+  ↓
+Deployment Phase (10% → 100%, costs money)
+  ↓
+Effects Applied Monthly (scaled by deployment level):
+  ├─ Pollution Reduction (-1.5% per month from Clean Energy)
+  ├─ Climate Stabilization (+2% per month from Carbon Capture)
+  ├─ Biodiversity Recovery (+2% per month from Ecosystem Management)
+  └─ ... other effects
+  ↓
+Crisis Resolution When Thresholds Met:
+  ├─ Pollution < 50% → Crisis resolves
+  ├─ Climate > 70% → Catastrophe averted
+  └─ Biodiversity > 60% → Collapse reversed
+  ↓
+Golden Age Can Resume → Path to Utopia Opens
+```
+
+**Critical Timing:**
+- Early investment (Month 1-15) → Prevention
+- Mid investment (Month 15-35) → Crisis interruption
+- Late investment (Month 35+) → Often too late (cascade already 3.0x)
+
 ## Advanced Systems
 
 ### 🛡️ Detection & Evasion
@@ -282,22 +388,49 @@ Unintended (AI-driven, accidental)
    ├─ Social adaptation rate
    └─ Effective control
 
-7. Update Quality of Life
-   ├─ Calculate 17 dimensions
-   ├─ Apply multipliers (post-scarcity, trust)
-   ├─ Apply penalties (crisis, control)
-   └─ Aggregate weighted score
+7. Update Accumulation Systems
+   ├─ Environmental: resources, pollution, climate, biodiversity
+   ├─ Social Cohesion: meaning crisis, legitimacy, cohesion
+   ├─ Technological Risk: misalignment, safety debt, concentration
+   └─ Check crisis triggers for each metric
 
-8. Check Outcome Conditions
-   ├─ Calculate probabilities (Utopia, Dystopia, Extinction)
-   ├─ Check instant extinction triggers
-   ├─ Check heterogeneous extinction mechanisms
-   └─ If outcome >85%, game ends
+8. Update Breakthrough Technologies
+   ├─ Allocate research budget (environmental/social/medical)
+   ├─ Advance research progress (probabilistic)
+   ├─ Check unlock conditions (AI capability + prerequisites)
+   ├─ Increase deployment level (if unlocked + budget)
+   └─ Apply technology effects (scaled by deployment)
 
-9. Update Visualizations
-   └─ Send state to UI
+9. Check Crisis Resolution
+   ├─ Pollution crisis: check if < 50% (from tech effects)
+   ├─ Climate catastrophe: check if > 70%
+   ├─ Ecosystem collapse: check if > 60%
+   ├─ Meaning collapse: check if < 50%
+   └─ Deactivate resolved crises
 
-10. Increment Month
+10. Update Quality of Life
+    ├─ Calculate 17 dimensions
+    ├─ Apply multipliers (post-scarcity, trust)
+    ├─ Apply penalties (control)
+    ├─ Apply crisis degradation (immediate + ongoing)
+    ├─ Apply cascade multiplier (1.0x to 3.0x)
+    ├─ Apply technology boosts (from deployed tech)
+    └─ Aggregate weighted score
+
+11. Check Outcome Conditions
+    ├─ Check Golden Age conditions (QoL, trust, stage)
+    ├─ Track Golden Age duration
+    ├─ Calculate sustainability (environmental + social + tech)
+    ├─ Check Utopia conditions (sustained Golden Age + sustainability)
+    ├─ Calculate probabilities (Utopia, Dystopia, Extinction)
+    ├─ Check instant extinction triggers
+    ├─ Check heterogeneous extinction mechanisms
+    └─ If outcome >85%, game ends
+
+12. Update Visualizations
+    └─ Send state to UI
+
+13. Increment Month
 ```
 
 ## System Dependencies
@@ -439,5 +572,5 @@ Months 80-150:
 
 ---
 
-**Last Updated:** October 2025
-**Commit:** 6a34f56
+**Last Updated:** October 9, 2025
+**Version:** 2.0 (Golden Age & Accumulation Systems + Breakthrough Technologies)
