@@ -214,7 +214,7 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   
   // Count deployed breakthroughs (>50%)
   const deployedCount = Object.values(breakthrough)
-    .filter((t: any) => t?.deployed && t.deployed > 0.5).length;
+    .filter((t: any) => t?.deploymentLevel && t.deploymentLevel > 0.5).length;
   
   // Research investment (as % of economy)
   const researchInvestments = state.government.researchInvestments;
@@ -227,8 +227,8 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   const aiAccelerated = avgAICapability > 1.2; // Lowered from 2.0 - AI is already 3x-ing papers at GPT-4 level
   
   const wasActive = spiral.active;
-  // Need multiple breakthroughs AND ongoing investment AND AI acceleration
-  spiral.active = unlockedCount >= 4 && researchIntensive && aiAccelerated;
+  // Need multiple breakthroughs DEPLOYED (>50%) AND ongoing investment AND AI acceleration
+  spiral.active = deployedCount >= 4 && researchIntensive && aiAccelerated;
   
   if (spiral.active) {
     spiral.strength = (
@@ -581,13 +581,13 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   
   // SCIENTIFIC SPIRAL
   const unlockedCount = Object.values(breakthrough).filter((t: any) => t?.unlocked).length;
-  const deployedCount = Object.values(breakthrough).filter((t: any) => t?.deployed && t.deployed > 0.5).length;
+  const deployedCount = Object.values(breakthrough).filter((t: any) => t?.deploymentLevel && t.deploymentLevel > 0.5).length;
   const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
   const researchIntensive = totalResearch > 50;
   const aiAccelerated = avgAI > 1.2; // Lowered from 2.0 - AI already accelerating science at GPT-4 level
   
   console.log(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${unlockedCount >= 4 ? '✅' : '❌'} (need 4+ unlocked)`);
+  console.log(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${deployedCount >= 4 ? '✅' : '❌'} (need 4+ deployed >50%)`);
   console.log(`   Research Investment: $${Number(totalResearch || 0).toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
   console.log(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >1.2)`);
   
