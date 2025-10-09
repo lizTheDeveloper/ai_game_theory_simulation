@@ -23,6 +23,7 @@ import { initializeConflictResolution } from './conflictResolution';
 import { initializeDiplomaticAI } from './diplomaticAI';
 import { initializeNuclearStates, initializeMADDeterrence, initializeBilateralTensions } from './nuclearStates';
 import { initializeResourceEconomy } from './resourceEconomy';
+import { initializeDefensiveAI } from './defensiveAI';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -307,6 +308,9 @@ export function createDefaultInitialState(): GameState {
     
     // Resource Economy (Phase 2.9)
     resourceEconomy: initializeResourceEconomy(),
+    
+    // Defensive AI (Phase 2.10)
+    defensiveAI: initializeDefensiveAI(),
     
     eventLog: [],
     technologyTree: [],

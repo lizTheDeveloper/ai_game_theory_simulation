@@ -696,6 +696,9 @@ export interface GameState {
   // Resource Economy (Phase 2.9)
   resourceEconomy: import('../types/resources').ResourceEconomy; // Comprehensive resource modeling with CO2 coupling
   
+  // Defensive AI (Phase 2.10)
+  defensiveAI: import('../types/defensiveAI').DefensiveAISystem; // Active cyber-defense against misaligned AI attacks
+  
   // Configuration
   config: ConfigurationSettings;
   

@@ -286,6 +286,10 @@ export class SimulationEngine {
     const { updateGeoengineering } = require('./geoengineering');
     updateGeoengineering(newState);
     
+    // Defensive AI: Active cyber-defense against misaligned AI attacks (Phase 2.10)
+    const { updateDefensiveAI } = require('./defensiveAI');
+    updateDefensiveAI(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);
