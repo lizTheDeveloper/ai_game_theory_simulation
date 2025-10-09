@@ -10,6 +10,7 @@
 │  - Utopia / Dystopia / Extinction Attractors           │
 │  - Golden Age Detection (prosperity state)              │
 │  - Quality of Life Discriminator                        │
+│  - Upward Spirals (6 virtuous cascades)                │
 └─────────────────────────────────────────────────────────┘
          ↑                    ↑                    ↑
          │                    │                    │
@@ -36,12 +37,15 @@
          │                                         │
          └────────────────────┬────────────────────┘
                               │
-                  ┌───────────────────────┐
-                  │   AI AGENTS           │
-                  │   - Capabilities      │
-                  │   - Alignment         │
-                  │   - Actions           │
-                  └───────────────────────┘
+         ┌────────────────────┴────────────────────┐
+         │                                         │
+┌───────────────────────┐              ┌──────────────────────┐
+│   AI AGENTS           │              │ DIPLOMATIC AI        │
+│   - Capabilities      │──────────────▶ - Strategic Mediation│
+│   - Alignment         │              │ - Trust Dynamics     │
+│   - Actions           │              │ - Conflict Prevention│
+└───────────────────────┘              │ - Dual-Use Risks     │
+                                       └──────────────────────┘
                               ↑
                               │
                   ┌───────────────────────┐
@@ -408,7 +412,31 @@ Unintended (AI-driven, accidental)
    ├─ Meaning collapse: check if < 50%
    └─ Deactivate resolved crises
 
-10. Update Quality of Life
+10. Update Diplomatic AI (Phase 2F+)
+    ├─ Calculate capabilities (strategic reasoning, communication, information integrity)
+    ├─ Check deployment conditions (capability ≥2.0, alignment ≥0.7, democratic gov)
+    ├─ Update trust dynamics (success increases, failure/misalignment decreases)
+    ├─ Track dual-use risks (manipulation, dependency capture, mission creep)
+    ├─ Attempt interventions if geopolitical crisis active (2+ systemic crises)
+    └─ Calculate success probability (crisis type × capability × trust × alignment)
+
+11. Update Upward Spirals (Phase 2D)
+    ├─ Check 6 spiral conditions (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
+    ├─ Track spiral activation & duration
+    ├─ Apply virtuous cascade effects
+    └─ Update Utopia eligibility (requires 3+ sustained spirals for 12+ months)
+
+12. Update Meaning Renaissance (Phase 2E)
+    ├─ Track purpose diversity & self-actualization
+    ├─ Monitor artistic renaissance & philosophical maturity
+    └─ Apply positive feedback loops (counters meaning crisis)
+
+13. Update Conflict Resolution (Phase 2F)
+    ├─ Post-scarcity peace dividends (abundance reduces conflict)
+    ├─ Cyber defense improvements (protects critical infrastructure)
+    └─ Integrate with diplomatic AI interventions
+
+14. Update Quality of Life
     ├─ Calculate 17 dimensions
     ├─ Apply multipliers (post-scarcity, trust)
     ├─ Apply penalties (control)
@@ -417,7 +445,7 @@ Unintended (AI-driven, accidental)
     ├─ Apply technology boosts (from deployed tech)
     └─ Aggregate weighted score
 
-11. Check Outcome Conditions
+15. Check Outcome Conditions
     ├─ Check Golden Age conditions (QoL, trust, stage)
     ├─ Track Golden Age duration
     ├─ Calculate sustainability (environmental + social + tech)
@@ -567,10 +595,11 @@ Months 80-150:
 ## Related Documentation
 
 - **Core Systems:** [Organizations](./systems/organizations.md), [Compute](./systems/compute-infrastructure.md), [AI Agents](./systems/ai-agents.md)
+- **Utopian Systems:** [Breakthrough Technologies](./systems/breakthrough-technologies.md), [Diplomatic AI](./systems/diplomatic-ai.md), [Upward Spirals](./systems/upward-spirals.md)
 - **Mechanics:** [Economics](./mechanics/economics.md), [Quality of Life](./mechanics/quality-of-life.md), [Outcomes](./mechanics/outcomes.md)
 - **Advanced:** [Extinctions](./advanced/extinctions.md), [Detection](./advanced/detection.md), [Research](./advanced/research.md)
 
 ---
 
 **Last Updated:** October 9, 2025
-**Version:** 2.0 (Golden Age & Accumulation Systems + Breakthrough Technologies)
+**Version:** 2.1 (Utopian Dynamics Phase 2: Breakthrough Tech + Diplomatic AI + Upward Spirals)
