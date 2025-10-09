@@ -14,6 +14,7 @@
 
 import { GameState, ExtinctionState, ExtinctionType, ExtinctionMechanism, GameEvent } from '@/types/game';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
+import { calculateTotalCapabilityFromProfile } from './capabilities';
 
 /**
  * Initialize a blank extinction state
