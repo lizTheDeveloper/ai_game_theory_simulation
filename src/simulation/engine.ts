@@ -263,6 +263,10 @@ export class SimulationEngine {
     const { updateConflictResolution } = require('./conflictResolution');
     updateConflictResolution(newState);
     
+    // Diplomatic AI: Research-based mediation with dual-use risks (Phase 2F+)
+    const { updateDiplomaticAI } = require('./diplomaticAI');
+    updateDiplomaticAI(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);

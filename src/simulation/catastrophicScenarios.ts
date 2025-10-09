@@ -999,11 +999,11 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
       // Need at least 2 simultaneous crises for geopolitical breakdown
       let geopoliticalCrisis = crisisCount >= 2;
       
-      // Phase 2F: AI-mediated diplomacy can prevent crisis
+      // Phase 2F+: AI-mediated diplomacy can prevent crisis (research-based)
       if (geopoliticalCrisis) {
-        const { attemptDiplomaticIntervention } = require('./conflictResolution');
-        const diplomaticSuccess = attemptDiplomaticIntervention(state);
-        if (diplomaticSuccess) {
+        const { attemptDiplomaticIntervention } = require('./diplomaticAI');
+        const result = attemptDiplomaticIntervention(state, 'resource'); // Assume resource conflict
+        if (result.success) {
           geopoliticalCrisis = false; // Crisis defused!
         }
       }

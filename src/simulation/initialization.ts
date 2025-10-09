@@ -20,6 +20,7 @@ import { initializeBreakthroughTech } from './breakthroughTechnologies';
 import { initializeUpwardSpirals } from './upwardSpirals';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
 import { initializeConflictResolution } from './conflictResolution';
+import { initializeDiplomaticAI } from './diplomaticAI';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -290,6 +291,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 2F: Conflict Resolution (Peace systems)
     conflictResolution: initializeConflictResolution(),
+    
+    // Phase 2F+: Diplomatic AI (Research-based, dual-use)
+    diplomaticAI: initializeDiplomaticAI(),
     
     eventLog: [],
     technologyTree: [],
