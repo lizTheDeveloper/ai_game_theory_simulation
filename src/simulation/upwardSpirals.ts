@@ -218,7 +218,7 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   
   // Research investment (as % of economy)
   const researchInvestments = state.government.researchInvestments;
-  const totalResearch = Object.values(researchInvestments).reduce((sum, val) => sum + val, 0);
+  const totalResearch = Object.values(researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
   const researchIntensive = totalResearch > 50; // $50B+/month
   
   // AI-accelerated research
@@ -228,7 +228,17 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   
   const wasActive = spiral.active;
   // Need multiple breakthroughs DEPLOYED (>50%) AND ongoing investment AND AI acceleration
-  spiral.active = deployedCount >= 4 && researchIntensive && aiAccelerated;
+  const deployedCheck = deployedCount >= 4;
+  spiral.active = deployedCheck && researchIntensive && aiAccelerated;
+  
+  // Debug: Log actual values when close to activating
+  if (deployedCount >= 4 && !spiral.active) {
+    console.log(`🔍 SCIENTIFIC SPIRAL DEBUG:`);
+    console.log(`   deployedCount: ${deployedCount} (check: ${deployedCheck})`);
+    console.log(`   totalResearch: ${totalResearch} (check: ${researchIntensive})`);
+    console.log(`   avgAICapability: ${avgAICapability.toFixed(2)} (check: ${aiAccelerated})`);
+    console.log(`   Combined: ${deployedCheck} && ${researchIntensive} && ${aiAccelerated} = ${spiral.active}`);
+  }
   
   if (spiral.active) {
     spiral.strength = (
