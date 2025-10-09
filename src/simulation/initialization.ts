@@ -18,6 +18,7 @@ import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
 import { initializeBreakthroughTech } from './breakthroughTechnologies';
 import { initializeUpwardSpirals } from './upwardSpirals';
+import { initializeMeaningRenaissance } from './meaningRenaissance';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -282,6 +283,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 2D: Upward Spirals (Utopia detection system)
     upwardSpirals: initializeUpwardSpirals(),
+    
+    // Phase 2E: Meaning Renaissance (Cultural flourishing)
+    meaningRenaissance: initializeMeaningRenaissance(),
     
     eventLog: [],
     technologyTree: [],

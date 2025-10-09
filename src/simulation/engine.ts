@@ -255,6 +255,10 @@ export class SimulationEngine {
     const { updateUpwardSpirals } = require('./upwardSpirals');
     updateUpwardSpirals(newState, newState.currentMonth);
     
+    // Meaning renaissance: Cultural flourishing & purpose discovery (Phase 2E)
+    const { updateMeaningRenaissance } = require('./meaningRenaissance');
+    updateMeaningRenaissance(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);
