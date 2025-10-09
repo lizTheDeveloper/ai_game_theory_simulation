@@ -163,15 +163,14 @@ export function updateMADDeterrence(state: GameState): void {
   const russiaState = states.find(s => s.name === 'Russia')!;
   
   // AI capability in player's nation (assume US)
-  const domesticAI = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-  
-  // Model other nations' AI development (simplified)
-  const chinaAI = domesticAI * 0.8; // Catching up
-  const russiaAI = domesticAI * 0.6; // Lagging
-  
-  // AI RACE INTENSITY
-  const aiRaceIntensity = Math.min(1, Math.abs(domesticAI - chinaAI) * 2);
+  // AI RACE INTENSITY (from National AI system if available, fallback to simple calc)
+  const aiRaceIntensity = state.nationalAI?.raceIntensity?.raceIntensity ?? (() => {
+    // Fallback: Simple calculation if national AI not initialized yet
+    const domesticAI = state.aiAgents.length > 0 ?
+      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
+    const chinaAI = domesticAI * 0.8;
+    return Math.min(1, Math.abs(domesticAI - chinaAI) * 2);
+  })();
   
   // DANGEROUS AI TRACKING
   // Only very misaligned (<0.2) or sleeper AIs threaten nuclear stability

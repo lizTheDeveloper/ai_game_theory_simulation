@@ -268,10 +268,18 @@ export class SimulationEngine {
     const { updateDiplomaticAI } = require('./diplomaticAI');
     updateDiplomaticAI(newState);
     
+    // National AI Capabilities: Asymmetry & race dynamics (Phase 2.11)
+    // MUST run before MAD deterrence to calculate accurate race intensity
+    const { updateNationalAI, applyNationalAIToMAD } = require('./nationalAI');
+    updateNationalAI(newState);
+    
     // Nuclear states & MAD deterrence: Track bilateral deterrence (Phase 3)
     const { updateMADDeterrence, updateBilateralTensions } = require('./nuclearStates');
     updateMADDeterrence(newState);
     updateBilateralTensions(newState);
+    
+    // Apply national AI race intensity to MAD
+    applyNationalAIToMAD(newState);
     
     // Resource Economy: Depletion, CO2 coupling, ocean health, industry opposition (Phase 2.9)
     const { updateResourceEconomy } = require('./resourceDepletion');

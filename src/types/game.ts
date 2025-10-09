@@ -699,6 +699,9 @@ export interface GameState {
   // Defensive AI (Phase 2.10)
   defensiveAI: import('../types/defensiveAI').DefensiveAISystem; // Active cyber-defense against misaligned AI attacks
   
+  // National AI Capabilities (Phase 2.11)
+  nationalAI: import('../types/nationalAI').NationalAISystem; // National capability asymmetry & AI race dynamics
+  
   // Configuration
   config: ConfigurationSettings;
   
