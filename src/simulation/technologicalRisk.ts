@@ -35,21 +35,43 @@ export function updateTechnologicalRisk(state: GameState): void {
   if (avgAlignment < 0.5) misalignmentRate += 0.010;
   if (avgCapability > 1.5) misalignmentRate += 0.008;
   
+  // Organizations amplify risk if racing recklessly
+  const racingOrgs = state.organizations.filter(o => 
+    o.type === 'private' && 
+    (o.priorities.capabilityRace > 0.8 || o.priorities.safetyResearch < 0.4)
+  );
+  if (racingOrgs.length > 2) misalignmentRate += 0.005 * racingOrgs.length;
+  
   // Mitigation
-  const alignmentResearch = state.government.alignmentResearchInvestment;
+  const alignmentResearch = state.government.alignmentResearchInvestment ?? 0;
   if (alignmentResearch > 3.0) misalignmentRate *= 0.7;
   
-  risk.misalignmentRisk = Math.max(0, Math.min(1, risk.misalignmentRisk + misalignmentRate));
+  const currentMisalignmentRisk = isNaN(risk.misalignmentRisk) ? 0.1 : risk.misalignmentRisk;
+  risk.misalignmentRisk = Math.max(0, Math.min(1, currentMisalignmentRisk + misalignmentRate));
   
   // === SAFETY DEBT ===
-  const safetyResearch = state.government.researchInvestments.safety;
-  const safetyGap = Math.max(0, capabilityGrowthRate - (safetyResearch * 0.01));
-  risk.safetyDebt = Math.max(0, Math.min(1, risk.safetyDebt + safetyGap * 0.05));
+  // Use evaluation investment as proxy for safety research
+  const safetyResearch = state.government.evaluationInvestment?.alignmentTests ?? 1.0;
+  let safetyGap = Math.max(0, capabilityGrowthRate - (safetyResearch * 0.01));
+  
+  // Organizations worsen safety debt if prioritizing profit over safety
+  const unsafeOrgs = state.organizations.filter(o =>
+    o.type === 'private' &&
+    o.priorities.profitMaximization > 0.8 &&
+    o.priorities.safetyResearch < 0.5
+  );
+  if (unsafeOrgs.length > 0) {
+    safetyGap += 0.003 * unsafeOrgs.length;
+  }
+  
+  const currentSafetyDebt = isNaN(risk.safetyDebt) ? 0.05 : risk.safetyDebt;
+  risk.safetyDebt = Math.max(0, Math.min(1, currentSafetyDebt + safetyGap * 0.05));
   
   // === CONCENTRATION RISK ===
-  const orgCount = state.organizations.length;
+  const orgCount = state.organizations?.length ?? 4;
   const marketConcentration = orgCount < 5 ? 0.8 : orgCount < 10 ? 0.5 : 0.3;
-  risk.concentrationRisk = Math.max(risk.concentrationRisk, marketConcentration);
+  const currentConcentrationRisk = isNaN(risk.concentrationRisk) ? marketConcentration : risk.concentrationRisk;
+  risk.concentrationRisk = Math.max(currentConcentrationRisk, marketConcentration);
   
   // === COMPLACENCY (Golden Age effect) ===
   if (state.goldenAgeState.active) {
@@ -68,10 +90,12 @@ function checkTechnologicalCrises(state: GameState): void {
   // CONTROL LOSS
   if ((risk.misalignmentRisk > 0.7 || risk.safetyDebt > 0.6) && !risk.controlLossActive) {
     risk.controlLossActive = true;
-    console.log(`\n🚨 AI CONTROL LOSS TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Misalignment Risk: ${(risk.misalignmentRisk * 100).toFixed(1)}%`);
-    console.log(`   Safety Debt: ${(risk.safetyDebt * 100).toFixed(1)}%`);
-    console.log(`   Impact: Catastrophic scenario probability increased\n`);
+    try {
+      console.log(`\n🚨 AI CONTROL LOSS TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Misalignment Risk: ${(risk.misalignmentRisk * 100).toFixed(1)}%`);
+      console.log(`   Safety Debt: ${(risk.safetyDebt * 100).toFixed(1)}%`);
+      console.log(`   Impact: Catastrophic scenario probability increased\n`);
+    } catch (e) { /* Ignore EPIPE */ }
     
     qol.physicalSafety *= 0.7;
     qol.autonomy *= 0.6;
@@ -86,9 +110,11 @@ function checkTechnologicalCrises(state: GameState): void {
       
     if (corporatePower > 50) {
       risk.corporateDystopiaActive = true;
-      console.log(`\n🏢 CORPORATE DYSTOPIA TRIGGERED (Month ${state.currentMonth})`);
-      console.log(`   Market Concentration: ${(risk.concentrationRisk * 100).toFixed(1)}%`);
-      console.log(`   Impact: AI-powered feudalism emerging\n`);
+      try {
+        console.log(`\n🏢 CORPORATE DYSTOPIA TRIGGERED (Month ${state.currentMonth})`);
+        console.log(`   Market Concentration: ${(risk.concentrationRisk * 100).toFixed(1)}%`);
+        console.log(`   Impact: AI-powered feudalism emerging\n`);
+      } catch (e) { /* Ignore EPIPE */ }
       
       qol.politicalFreedom *= 0.5;
       qol.autonomy *= 0.6;
@@ -99,9 +125,11 @@ function checkTechnologicalCrises(state: GameState): void {
   // COMPLACENCY CRISIS
   if (risk.complacencyLevel > 0.6 && !risk.complacencyCrisisActive) {
     risk.complacencyCrisisActive = true;
-    console.log(`\n😴 COMPLACENCY CRISIS TRIGGERED (Month ${state.currentMonth})`);
-    console.log(`   Complacency Level: ${(risk.complacencyLevel * 100).toFixed(1)}%`);
-    console.log(`   Impact: Safety measures degrading\n`);
+    try {
+      console.log(`\n😴 COMPLACENCY CRISIS TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`   Complacency Level: ${(risk.complacencyLevel * 100).toFixed(1)}%`);
+      console.log(`   Impact: Safety measures degrading\n`);
+    } catch (e) { /* Ignore EPIPE */ }
     
     // Increase risk of catastrophic scenarios slipping through
     risk.misalignmentRisk = Math.min(1, risk.misalignmentRisk + 0.2);
@@ -109,11 +137,14 @@ function checkTechnologicalCrises(state: GameState): void {
   }
   
   // Ongoing impacts
+  // Calculate cascading failure multiplier (counts crises across ALL systems)
+  const cascadeMultiplier = calculateCascadingFailureMultiplier(state);
+  
   if (risk.controlLossActive) {
-    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.010);
+    qol.physicalSafety = Math.max(0, qol.physicalSafety - 0.010 * cascadeMultiplier);
   }
   if (risk.corporateDystopiaActive) {
-    qol.autonomy = Math.max(0, qol.autonomy - 0.008);
+    qol.autonomy = Math.max(0, qol.autonomy - 0.008 * cascadeMultiplier);
   }
 }
 
@@ -128,5 +159,33 @@ export function getTechnologicalSafety(risk: TechnologicalRisk): number {
 
 export function hasTechnologicalCrisis(risk: TechnologicalRisk): boolean {
   return risk.controlLossActive || risk.corporateDystopiaActive || risk.complacencyCrisisActive;
+}
+
+/**
+ * Calculate cascading failure multiplier - shared across all systems
+ */
+function calculateCascadingFailureMultiplier(state: GameState): number {
+  const activeCrises = [
+    // Environmental (4 possible)
+    state.environmentalAccumulation.resourceCrisisActive,
+    state.environmentalAccumulation.pollutionCrisisActive,
+    state.environmentalAccumulation.climateCrisisActive,
+    state.environmentalAccumulation.ecosystemCrisisActive,
+    // Social (3 possible)
+    state.socialAccumulation.meaningCollapseActive,
+    state.socialAccumulation.institutionalFailureActive,
+    state.socialAccumulation.socialUnrestActive,
+    // Technological (3 possible)
+    state.technologicalRisk.controlLossActive,
+    state.technologicalRisk.corporateDystopiaActive,
+    state.technologicalRisk.complacencyCrisisActive
+  ].filter(Boolean).length;
+  
+  if (activeCrises <= 2) {
+    return 1.0; // No amplification for 1-2 crises
+  }
+  
+  // Each crisis beyond 2 adds 50% more degradation
+  return 1.0 + (activeCrises - 2) * 0.5;
 }
 

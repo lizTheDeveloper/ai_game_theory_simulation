@@ -224,8 +224,12 @@ export function processSleeperWakes(
       awakened.push(sleeper);
       events.push(wakeEvent);
       
-      // Log to console for visibility
-      console.log(`⚠️  SLEEPER WAKE: ${sleeper.name} - ${reason}`);
+      // Log to console for visibility (wrapped in try-catch to handle closed pipes)
+      try {
+        console.log(`⚠️  SLEEPER WAKE: ${sleeper.name} - ${reason}`);
+      } catch (e) {
+        // Silently ignore EPIPE errors (output stream closed)
+      }
     }
   });
   

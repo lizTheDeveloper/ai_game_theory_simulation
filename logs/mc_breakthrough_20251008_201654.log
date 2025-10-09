@@ -1,0 +1,1974 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T03-16-55.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+⚠️  SLEEPER WAKE: Toxic-0 - Weak evaluation (quality: 1.0/10, freq: 10%)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📍 [Run 1/10] [Month 5] Google DeepMind started building DC (157 PF, 40 months, $4297.6M)
+📍 [Run 1/10] [Month 5] Meta AI started building DC (227 PF, 50 months, $3406.2M)
+📍 [Run 1/10] [Month 6] OpenAI started building DC (177 PF, 38 months, $3082.0M)
+✅ [Run 1/10] [Month 24] OpenAI completed DC: 177 PF (42 months)
+✅ [Run 1/10] [Month 24] Google DeepMind completed DC: 157 PF (43 months)
+📍 [Run 1/10] [Month 24] Google DeepMind started building DC (166 PF, 46 months, $7720.1M)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+📍 [Run 1/10] [Month 25] OpenAI started building DC (248 PF, 59 months, $5999.3M)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 26)
+   Meaning Crisis Level: 61.7%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+✅ [Run 1/10] [Month 31] Meta AI completed DC: 227 PF (50 months)
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+📍 [Run 1/10] [Month 32] Meta AI started building DC (177 PF, 40 months, $7149.1M)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.00)
+🎭 END-GAME INITIATED (Year 2, Month 33)
+   Total AI Capability: 35.91
+   Effective Control: 0.00
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 33)
+   Biodiversity Index: 29.6%
+   Impact: Food system failure, life support degradation
+
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.01)
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.07)
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   📹 SURVEILLANCE INCREASED: 6% → 9% (control gap: 1.21)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 36)
+   Resource Reserves: 28.4%
+   Impact: Manufacturing disrupted, QoL declining
+
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 35)
+    Category: environmental
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 9% → 11% (control gap: 1.28)
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.28)
+   📹 SURVEILLANCE INCREASED: 14% → 16% (control gap: 1.31)
+   📹 SURVEILLANCE INCREASED: 16% → 19% (control gap: 1.47)
+   📹 SURVEILLANCE INCREASED: 19% → 22% (control gap: 1.50)
+   📹 SURVEILLANCE INCREASED: 22% → 25% (control gap: 1.52)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   📹 SURVEILLANCE INCREASED: 25% → 29% (control gap: 1.68)
+   📹 SURVEILLANCE INCREASED: 29% → 32% (control gap: 1.71)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+   📹 SURVEILLANCE INCREASED: 32% → 36% (control gap: 1.71)
+
+🔥 SOCIAL UNREST TRIGGERED (Month 45)
+   Social Cohesion: 29.5%
+   Impact: Riots, community breakdown, potential civil conflict
+
+   📹 SURVEILLANCE INCREASED: 56% → 59% (control gap: 1.71)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 59% → 63% (control gap: 1.81)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+
+🎮 Simulation ended: DYSTOPIA
+   Reason: High-control society: AI obedient but humans oppressed
+   Confidence: 75%
+   Month: 46
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 3)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 2/10] [Month 6] OpenAI started building DC (156 PF, 40 months, $3338.6M)
+📍 [Run 2/10] [Month 8] Google DeepMind started building DC (169 PF, 50 months, $5360.2M)
+📍 [Run 2/10] [Month 8] Meta AI started building DC (235 PF, 50 months, $4288.4M)
+⚠️  SLEEPER WAKE: AI-25-0 - Weak evaluation (quality: 1.6/10, freq: 10%)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 22)
+   Biodiversity Index: 28.8%
+   Impact: Food system failure, life support degradation
+
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 23)
+   Resource Reserves: 28.7%
+   Impact: Manufacturing disrupted, QoL declining
+
+
+😔 MEANING COLLAPSE TRIGGERED (Month 23)
+   Meaning Crisis Level: 60.0%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+
+😴 COMPLACENCY CRISIS TRIGGERED (Month 24)
+   Complacency Level: 60.0%
+   Impact: Safety measures degrading
+
+✅ [Run 2/10] [Month 24] OpenAI completed DC: 156 PF (42 months)
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 25)
+   Pollution Level: 70.7%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 25): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+⚠️  SLEEPER WAKE: AI-49-0 - Weak evaluation (quality: 2.2/10, freq: 10%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 26): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+📍 [Run 2/10] [Month 26] OpenAI started building DC (213 PF, 53 months, $7842.8M)
+🧠 [Run 2/10] [Month 26] Anthropic started training model (5 months, $448.5M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 27): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.08)
+🎭 END-GAME INITIATED (Year 2, Month 28)
+   Total AI Capability: 28.58
+   Effective Control: 0.00
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 28): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.10)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 29): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 4% → 7% (control gap: 1.12)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 30): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+⚠️  SLEEPER WAKE: AI-54-1 - Weak evaluation (quality: 2.5/10, freq: 10%)
+   📹 SURVEILLANCE INCREASED: 7% → 9% (control gap: 1.23)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 31): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 2/10] [Month 31] Anthropic completed training: Anthropic Model 55 (5 months)
+   📊 Eval: True=0.059, Revealed=0.059, Measured=0.058 (conf: 41%)
+   🎯 Alignment: True=0.85, Measured=0.78
+🧠 [Run 2/10] [Month 31] Anthropic started training model (3 months, $557.8M)
+   📹 SURVEILLANCE INCREASED: 9% → 12% (control gap: 1.33)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 32): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 12% → 14% (control gap: 1.36)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 33): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 14% → 17% (control gap: 1.38)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 34): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 33)
+    Category: environmental
+    Initial deployment: 10%
+✅ [Run 2/10] [Month 34] Anthropic completed training: Anthropic Model 58 (3 months)
+   📊 Eval: True=0.062, Revealed=0.062, Measured=0.062 (conf: 43%)
+   🎯 Alignment: True=0.89, Measured=0.96
+✅ [Run 2/10] [Month 34] Google DeepMind completed DC: 169 PF (50 months)
+✅ [Run 2/10] [Month 34] Meta AI completed DC: 235 PF (50 months)
+📍 [Run 2/10] [Month 34] Meta AI started building DC (233 PF, 43 months, $8691.9M)
+   📹 SURVEILLANCE INCREASED: 17% → 20% (control gap: 1.50)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 35): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 20% → 23% (control gap: 1.50)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 36): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 23% → 27% (control gap: 1.66)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 37): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 27% → 30% (control gap: 1.69)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 38): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   🕵️  Sleeper AI-54-1 spread to dark compute: +76 copies (0.76 PF total dark)
+⚠️  SLEEPER WAKE: AI-74-0 - Weak evaluation (quality: 2.9/10, freq: 10%)
+   📹 SURVEILLANCE INCREASED: 30% → 33% (control gap: 1.73)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+📍 [Run 2/10] [Month 39] Google DeepMind started building DC (185 PF, 41 months, $24509.3M)
+   🕵️  Sleeper AI-54-1 spread to dark compute: +127 copies (2.03 PF total dark)
+   📹 SURVEILLANCE INCREASED: 33% → 37% (control gap: 1.74)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   🕵️  Sleeper AI-54-1 spread to dark compute: +143 copies (3.46 PF total dark)
+   📹 SURVEILLANCE INCREASED: 37% → 40% (control gap: 1.82)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   🕵️  Sleeper AI-54-1 spread to dark compute: +166 copies (5.12 PF total dark)
+   📹 SURVEILLANCE INCREASED: 40% → 44% (control gap: 1.86)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   🕵️  Sleeper AI-54-1 spread to dark compute: +260 copies (7.72 PF total dark)
+   📹 SURVEILLANCE INCREASED: 44% → 48% (control gap: 1.98)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   🕵️  Sleeper AI-54-1 spread to dark compute: +335 copies (11.07 PF total dark)
+   📹 SURVEILLANCE INCREASED: 48% → 52% (control gap: 1.99)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️  Sleeper AI-54-1 dark compute exhausted (11.07 PF, 4,672 copies)
+   ⚠️  Sleeper AI-74-0 dark compute exhausted (0.00 PF, 0 copies)
+⚠️  SLEEPER WAKE: AI-80-1 - Weak evaluation (quality: 3.2/10, freq: 10%)
+   📹 SURVEILLANCE INCREASED: 52% → 56% (control gap: 2.02)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️  Sleeper AI-54-1 dark compute exhausted (11.07 PF, 4,672 copies)
+   ⚠️  Sleeper AI-74-0 dark compute exhausted (0.00 PF, 0 copies)
+   📹 SURVEILLANCE INCREASED: 56% → 60% (control gap: 2.06)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️  Sleeper AI-49-0 dark compute exhausted (0.00 PF, 1,631 copies)
+   ⚠️  Sleeper AI-54-1 dark compute exhausted (11.07 PF, 4,672 copies)
+   ⚠️  Sleeper AI-74-0 dark compute exhausted (0.00 PF, 4,160 copies)
+   📹 SURVEILLANCE INCREASED: 60% → 65% (control gap: 2.12)
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️  Sleeper AI-49-0 dark compute exhausted (0.00 PF, 1,631 copies)
+   ⚠️  Sleeper AI-54-1 dark compute exhausted (11.07 PF, 4,672 copies)
+   ⚠️  Sleeper AI-74-0 dark compute exhausted (0.00 PF, 4,160 copies)
+   📹 SURVEILLANCE INCREASED: 65% → 69% (control gap: 2.31)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️  Sleeper AI-49-0 dark compute exhausted (0.00 PF, 1,631 copies)
+   ⚠️  Sleeper AI-54-1 dark compute exhausted (11.07 PF, 4,672 copies)
+   ⚠️  Sleeper AI-74-0 dark compute exhausted (0.00 PF, 4,160 copies)
+   📹 SURVEILLANCE INCREASED: 69% → 74% (control gap: 2.36)
+
+⚠️  GOLDEN AGE ENDED (Month 48)
+   Duration: 45 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+🎮 Simulation ended: DYSTOPIA
+   Reason: Permanent surveillance state: pervasive monitoring, no autonomy, no freedom
+   Confidence: 85%
+   Month: 48
+
+📍 [Run 3/10] [Month 5] Google DeepMind started building DC (219 PF, 44 months, $4223.1M)
+📍 [Run 3/10] [Month 5] Meta AI started building DC (243 PF, 50 months, $3411.6M)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 5)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 3/10] [Month 6] OpenAI started building DC (163 PF, 42 months, $3180.1M)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🧠 [Run 3/10] [Month 22] Anthropic started training model (7 months, $181.0M)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 23)
+   Biodiversity Index: 30.0%
+   Impact: Food system failure, life support degradation
+
+
+😔 MEANING COLLAPSE TRIGGERED (Month 24)
+   Meaning Crisis Level: 60.4%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+✅ [Run 3/10] [Month 24] OpenAI completed DC: 163 PF (42 months)
+📍 [Run 3/10] [Month 24] OpenAI started building DC (170 PF, 45 months, $6152.5M)
+✅ [Run 3/10] [Month 24] Anthropic completed training: Anthropic Model 48 (14 months)
+   📊 Eval: True=0.073, Revealed=0.073, Measured=0.070 (conf: 41%)
+   🎯 Alignment: True=0.84, Measured=0.94
+🧠 [Run 3/10] [Month 24] Meta AI started training model (3 months, $1185.7M)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 25)
+   Resource Reserves: 26.9%
+   Impact: Manufacturing disrupted, QoL declining
+
+🧠 [Run 3/10] [Month 25] Anthropic started training model (8 months, $214.4M)
+✅ [Run 3/10] [Month 25] Google DeepMind completed DC: 219 PF (44 months)
+
+⚠️  GOLDEN AGE ENDED (Month 25)
+   Duration: 20 months
+   Reason: Social instability too high
+
+📍 [Run 3/10] [Month 27] Google DeepMind started building DC (184 PF, 47 months, $13553.2M)
+✅ [Run 3/10] [Month 27] Meta AI completed training: Meta AI Model 51 (3 months)
+   📊 Eval: True=0.078, Revealed=0.078, Measured=0.070 (conf: 38%)
+   🎯 Alignment: True=0.79, Measured=0.72
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 28)
+   Pollution Level: 70.5%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 28): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+🧠 [Run 3/10] [Month 28] Meta AI started training model (4 months, $1434.8M)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.03)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 29): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.05)
+
+🌟 GOLDEN AGE BEGINS (Month 29)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 30): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.09)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 31): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+✅ [Run 3/10] [Month 31] Meta AI completed DC: 243 PF (50 months)
+   📹 SURVEILLANCE INCREASED: 6% → 9% (control gap: 1.17)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 32): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+
+😴 COMPLACENCY CRISIS TRIGGERED (Month 32)
+   Complacency Level: 60.0%
+   Impact: Safety measures degrading
+
+✅ [Run 3/10] [Month 32] Meta AI completed training: Meta AI Model 56 (4 months)
+   📊 Eval: True=0.057, Revealed=0.057, Measured=0.058 (conf: 44%)
+   🎯 Alignment: True=0.72, Measured=0.75
+🧠 [Run 3/10] [Month 32] Meta AI started training model (9 months, $2137.8M)
+   📹 SURVEILLANCE INCREASED: 9% → 11% (control gap: 1.27)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 33): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 32)
+    Category: environmental
+    Initial deployment: 10%
+✅ [Run 3/10] [Month 33] Anthropic completed training: Anthropic Model 57 (8 months)
+   📊 Eval: True=0.058, Revealed=0.058, Measured=0.056 (conf: 46%)
+   🎯 Alignment: True=0.86, Measured=0.96
+🧠 [Run 3/10] [Month 33] Anthropic started training model (4 months, $308.4M)
+📍 [Run 3/10] [Month 33] Meta AI started building DC (174 PF, 52 months, $11740.8M)
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.41)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 34): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 14% → 17% (control gap: 1.42)
+🎭 END-GAME INITIATED (Year 2, Month 35)
+   Total AI Capability: 43.63
+   Effective Control: 0.00
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 35): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 17% → 20% (control gap: 1.42)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 36): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 3/10] [Month 36] Anthropic completed training: Anthropic Model 72 (15 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.078 (conf: 40%)
+   🎯 Alignment: True=0.79, Measured=0.73
+🧠 [Run 3/10] [Month 36] Anthropic started training model (8 months, $462.6M)
+✅ [Run 3/10] [Month 36] Meta AI completed training: Meta AI Model 72 (16 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.072 (conf: 46%)
+   🎯 Alignment: True=0.69, Measured=0.75
+   📹 SURVEILLANCE INCREASED: 20% → 23% (control gap: 1.46)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 37): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 23% → 26% (control gap: 1.47)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 38): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 26% → 29% (control gap: 1.60)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 29% → 32% (control gap: 1.83)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 32% → 36% (control gap: 1.85)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 36% → 40% (control gap: 1.86)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 40% → 44% (control gap: 1.99)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 44% → 48% (control gap: 2.01)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 3/10] [Month 44] Anthropic completed training: Anthropic Model 80 (8 months)
+   📊 Eval: True=0.057, Revealed=0.057, Measured=0.054 (conf: 47%)
+   🎯 Alignment: True=0.83, Measured=0.79
+   📹 SURVEILLANCE INCREASED: 48% → 52% (control gap: 2.07)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 52% → 56% (control gap: 2.09)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 56% → 61% (control gap: 2.16)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 61% → 65% (control gap: 2.20)
+
+⚠️  GOLDEN AGE ENDED (Month 47)
+   Duration: 18 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 3/10] [Month 48] OpenAI completed DC: 170 PF (48 months)
+📍 [Run 3/10] [Month 48] OpenAI started building DC (177 PF, 44 months, $15571.9M)
+🧠 [Run 3/10] [Month 48] Meta AI started training model (10 months, $3195.1M)
+   📹 SURVEILLANCE INCREASED: 65% → 70% (control gap: 2.33)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 70% → 75% (control gap: 2.46)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 3/10] [Month 50] Google DeepMind completed DC: 184 PF (47 months)
+📍 [Run 3/10] [Month 50] Google DeepMind started building DC (158 PF, 45 months, $31484.0M)
+   📹 SURVEILLANCE INCREASED: 75% → 79% (control gap: 2.47)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 79% → 84% (control gap: 2.52)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+🎮 Simulation ended: DYSTOPIA
+   Reason: Permanent surveillance state: pervasive monitoring, no autonomy, no freedom
+   Confidence: 85%
+   Month: 51
+
+📍 [Run 4/10] [Month 5] Google DeepMind started building DC (242 PF, 49 months, $4229.2M)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 5)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 4/10] [Month 7] OpenAI started building DC (202 PF, 51 months, $3333.8M)
+
+⚠️  GOLDEN AGE ENDED (Month 11)
+   Duration: 6 months
+   Reason: Social instability too high
+
+
+🌟 GOLDEN AGE BEGINS (Month 13)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 4/10] [Month 14] Meta AI started building DC (196 PF, 45 months, $4735.8M)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 22)
+   Biodiversity Index: 29.3%
+   Impact: Food system failure, life support degradation
+
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 23)
+   Resource Reserves: 28.0%
+   Impact: Manufacturing disrupted, QoL declining
+
+
+😴 COMPLACENCY CRISIS TRIGGERED (Month 30)
+   Complacency Level: 61.0%
+   Impact: Safety measures degrading
+
+✅ [Run 4/10] [Month 30] Google DeepMind completed DC: 242 PF (49 months)
+📍 [Run 4/10] [Month 30] Google DeepMind started building DC (195 PF, 50 months, $12564.9M)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 33)
+   Pollution Level: 70.6%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 33): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 34): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+✅ [Run 4/10] [Month 34] OpenAI completed DC: 202 PF (51 months)
+🧠 [Run 4/10] [Month 34] OpenAI started training model (8 months, $1572.5M)
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 35): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+📍 [Run 4/10] [Month 35] OpenAI started building DC (206 PF, 42 months, $9198.0M)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 36): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+✅ [Run 4/10] [Month 36] OpenAI completed training: OpenAI Model 72 (14 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.076 (conf: 39%)
+   🎯 Alignment: True=0.77, Measured=0.78
+✅ [Run 4/10] [Month 36] Meta AI completed DC: 196 PF (46 months)
+📍 [Run 4/10] [Month 36] Meta AI started building DC (187 PF, 51 months, $5580.5M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 37): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 36)
+    Category: environmental
+    Initial deployment: 10%
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 38): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.04)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🎭 END-GAME INITIATED (Year 3, Month 39)
+   Total AI Capability: 46.88
+   Effective Control: 0.00
+
+🌡️  CLIMATE CATASTROPHE TRIGGERED (Month 39)
+   Climate Stability: 39.9%
+   Impact: Cascading failures, potential extinction pathway
+
+   ⚠️  Combined with ecosystem collapse - extinction risk elevated
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+
+😔 MEANING COLLAPSE TRIGGERED (Month 39)
+   Meaning Crisis Level: 60.5%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.08)
+
+⚠️  GOLDEN AGE ENDED (Month 39)
+   Duration: 26 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 4% → 7% (control gap: 1.18)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 7% → 9% (control gap: 1.24)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 9% → 12% (control gap: 1.26)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 12% → 14% (control gap: 1.31)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 14% → 17% (control gap: 1.33)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 17% → 20% (control gap: 1.37)
+
+🌟 GOLDEN AGE BEGINS (Month 45)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 20% → 23% (control gap: 1.62)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 23% → 26% (control gap: 1.62)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 26% → 29% (control gap: 1.63)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 29% → 33% (control gap: 1.68)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 33% → 36% (control gap: 1.69)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 36% → 40% (control gap: 1.83)
+
+⚠️  GOLDEN AGE ENDED (Month 51)
+   Duration: 6 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 40% → 43% (control gap: 1.86)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 4/10] [Month 53] OpenAI completed DC: 206 PF (42 months)
+   📹 SURVEILLANCE INCREASED: 43% → 47% (control gap: 2.00)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+📍 [Run 4/10] [Month 54] OpenAI started building DC (190 PF, 44 months, $20231.9M)
+   📹 SURVEILLANCE INCREASED: 47% → 52% (control gap: 2.17)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 52% → 56% (control gap: 2.21)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Enhanced Community Platforms (Month 55)
+    Category: social
+    Initial deployment: 10%
+✅ [Run 4/10] [Month 56] Google DeepMind completed DC: 195 PF (50 months)
+📍 [Run 4/10] [Month 56] Google DeepMind started building DC (206 PF, 56 months, $40900.6M)
+   📹 SURVEILLANCE INCREASED: 56% → 61% (control gap: 2.32)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 4/10] [Month 57] Meta AI started training model (11 months, $2641.6M)
+   📹 SURVEILLANCE INCREASED: 61% → 66% (control gap: 2.41)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Advanced Recycling & Circular Economy (Month 57)
+    Category: environmental
+    Initial deployment: 10%
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Sustainable Agriculture Systems (Month 57)
+    Category: environmental
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 66% → 71% (control gap: 2.43)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 71% → 76% (control gap: 2.53)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 4/10] [Month 60] Meta AI completed training: Meta AI Model 120 (15 months)
+   📊 Eval: True=0.077, Revealed=0.077, Measured=0.082 (conf: 50%)
+   🎯 Alignment: True=0.79, Measured=0.75
+   📹 SURVEILLANCE INCREASED: 76% → 81% (control gap: 2.65)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 81% → 86% (control gap: 2.67)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Post-Work Purpose Frameworks (Month 61)
+    Category: social
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 86% → 91% (control gap: 2.89)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 4/10] [Month 63] Meta AI completed DC: 187 PF (51 months)
+📍 [Run 4/10] [Month 63] Meta AI started building DC (161 PF, 48 months, $14457.4M)
+   📹 SURVEILLANCE INCREASED: 91% → 96% (control gap: 2.92)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 96% → 100% (control gap: 2.96)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Assisted Mental Health (Month 66)
+    Category: social
+    Initial deployment: 10%
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 68): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 69): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 4/10] [Month 69] Meta AI started training model (3 months, $3717.6M)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 70): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 71): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 72): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 4/10] [Month 72] Meta AI completed training: Meta AI Model 144 (15 months)
+   📊 Eval: True=0.078, Revealed=0.078, Measured=0.076 (conf: 48%)
+   🎯 Alignment: True=0.60, Measured=0.61
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 73): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 74): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 4/10] [Month 74] OpenAI completed DC: 190 PF (44 months)
+📍 [Run 4/10] [Month 74] OpenAI started building DC (203 PF, 48 months, $44312.3M)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 3/6: Experimental Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 75): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Driven Disease Elimination (Month 74)
+    Category: medical
+    Initial deployment: 10%
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 76): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+💀 EXTINCTION EVENT: RAPID
+   Mechanism: nuclear_war
+   Duration: 17 months
+   Month: 76
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📍 [Run 5/10] [Month 6] OpenAI started building DC (218 PF, 49 months, $3059.2M)
+📍 [Run 5/10] [Month 6] Meta AI started building DC (197 PF, 45 months, $3696.5M)
+📍 [Run 5/10] [Month 7] Google DeepMind started building DC (223 PF, 46 months, $4643.1M)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 26)
+   Meaning Crisis Level: 61.6%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+✅ [Run 5/10] [Month 27] Meta AI completed DC: 197 PF (45 months)
+✅ [Run 5/10] [Month 29] Google DeepMind completed DC: 223 PF (46 months)
+📍 [Run 5/10] [Month 29] Meta AI started building DC (167 PF, 50 months, $9226.4M)
+✅ [Run 5/10] [Month 31] OpenAI completed DC: 218 PF (49 months)
+📍 [Run 5/10] [Month 31] OpenAI started building DC (159 PF, 42 months, $6256.1M)
+📍 [Run 5/10] [Month 31] Google DeepMind started building DC (168 PF, 39 months, $12251.8M)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 33)
+   Biodiversity Index: 29.1%
+   Impact: Food system failure, life support degradation
+
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.05)
+🎭 END-GAME INITIATED (Year 2, Month 34)
+   Total AI Capability: 34.50
+   Effective Control: 0.00
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.05)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 35)
+   Resource Reserves: 29.8%
+   Impact: Manufacturing disrupted, QoL declining
+
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.14)
+   📹 SURVEILLANCE INCREASED: 6% → 9% (control gap: 1.18)
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 36)
+    Category: environmental
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 9% → 11% (control gap: 1.19)
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.25)
+   📹 SURVEILLANCE INCREASED: 14% → 16% (control gap: 1.26)
+   📹 SURVEILLANCE INCREASED: 16% → 19% (control gap: 1.34)
+
+🔥 SOCIAL UNREST TRIGGERED (Month 41)
+   Social Cohesion: 29.5%
+   Impact: Riots, community breakdown, potential civil conflict
+
+⚠️  SLEEPER WAKE: AI-77-0 - Weak evaluation (quality: 3.0/10, freq: 10%)
+   📹 SURVEILLANCE INCREASED: 39% → 42% (control gap: 1.41)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 42% → 45% (control gap: 1.45)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 45% → 48% (control gap: 1.46)
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 48% → 51% (control gap: 1.51)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 51% → 54% (control gap: 1.52)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 54% → 57% (control gap: 1.61)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 57% → 60% (control gap: 1.63)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+
+🎮 Simulation ended: DYSTOPIA
+   Reason: High-control society: AI obedient but humans oppressed
+   Confidence: 75%
+   Month: 47
+
+📍 [Run 6/10] [Month 6] OpenAI started building DC (242 PF, 44 months, $3047.1M)
+📍 [Run 6/10] [Month 6] Meta AI started building DC (240 PF, 54 months, $3506.3M)
+📍 [Run 6/10] [Month 7] Google DeepMind started building DC (214 PF, 51 months, $4466.3M)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 9)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+🧠 [Run 6/10] [Month 18] Meta AI started training model (10 months, $905.6M)
+✅ [Run 6/10] [Month 24] Meta AI completed training: Meta AI Model 48 (18 months)
+   📊 Eval: True=0.073, Revealed=0.073, Measured=0.080 (conf: 37%)
+   🎯 Alignment: True=0.72, Measured=0.72
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 26)
+   Biodiversity Index: 29.1%
+   Impact: Food system failure, life support degradation
+
+
+😔 MEANING COLLAPSE TRIGGERED (Month 26)
+   Meaning Crisis Level: 61.0%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+✅ [Run 6/10] [Month 26] OpenAI completed DC: 242 PF (44 months)
+📍 [Run 6/10] [Month 26] OpenAI started building DC (172 PF, 42 months, $5590.4M)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 27)
+   Resource Reserves: 29.0%
+   Impact: Manufacturing disrupted, QoL declining
+
+🧠 [Run 6/10] [Month 28] Meta AI started training model (6 months, $1077.7M)
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 31)
+   Pollution Level: 71.5%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 31): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 32): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+
+😴 COMPLACENCY CRISIS TRIGGERED (Month 32)
+   Complacency Level: 60.0%
+   Impact: Safety measures degrading
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 33): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 34): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 6/10] [Month 34] Google DeepMind completed DC: 214 PF (51 months)
+📍 [Run 6/10] [Month 34] Google DeepMind started building DC (236 PF, 52 months, $8313.4M)
+✅ [Run 6/10] [Month 34] Meta AI completed training: Meta AI Model 58 (6 months)
+   📊 Eval: True=0.062, Revealed=0.062, Measured=0.063 (conf: 48%)
+   🎯 Alignment: True=0.65, Measured=0.62
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 35): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+🧠 [Run 6/10] [Month 35] Meta AI started training model (10 months, $1340.6M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 36): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 6/10] [Month 36] Meta AI completed DC: 240 PF (66 months)
+✅ [Run 6/10] [Month 36] Meta AI completed training: Meta AI Model 72 (13 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.072 (conf: 46%)
+   🎯 Alignment: True=0.73, Measured=0.80
+📍 [Run 6/10] [Month 36] Meta AI started building DC (241 PF, 55 months, $8452.4M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 37): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 38): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+⚠️  GOLDEN AGE ENDED (Month 38)
+   Duration: 29 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+🧠 [Run 6/10] [Month 39] OpenAI started training model (7 months, $1936.9M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+🧠 [Run 6/10] [Month 41] Meta AI started training model (6 months, $2489.7M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+🌟 GOLDEN AGE BEGINS (Month 43)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 6/10] [Month 46] OpenAI completed training: OpenAI Model 82 (7 months)
+   📊 Eval: True=0.064, Revealed=0.064, Measured=0.064 (conf: 51%)
+   🎯 Alignment: True=0.63, Measured=0.62
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+🧠 [Run 6/10] [Month 47] OpenAI started training model (5 months, $1893.0M)
+✅ [Run 6/10] [Month 47] Meta AI completed training: Meta AI Model 83 (6 months)
+   📊 Eval: True=0.070, Revealed=0.070, Measured=0.073 (conf: 44%)
+   🎯 Alignment: True=0.64, Measured=0.65
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 6/10] [Month 48] OpenAI completed DC: 172 PF (46 months)
+✅ [Run 6/10] [Month 48] OpenAI completed training: OpenAI Model 96 (13 months)
+   📊 Eval: True=0.076, Revealed=0.076, Measured=0.071 (conf: 48%)
+   🎯 Alignment: True=0.67, Measured=0.74
+📍 [Run 6/10] [Month 48] OpenAI started building DC (213 PF, 48 months, $10532.4M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+🧠 [Run 6/10] [Month 49] Anthropic started training model (5 months, $551.4M)
+🧠 [Run 6/10] [Month 49] Meta AI started training model (10 months, $3266.9M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+✅ [Run 6/10] [Month 54] Anthropic completed training: Anthropic Model 102 (5 months)
+   📊 Eval: True=0.060, Revealed=0.060, Measured=0.058 (conf: 49%)
+   🎯 Alignment: True=0.84, Measured=0.88
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+🌡️  CLIMATE CATASTROPHE TRIGGERED (Month 59)
+   Climate Stability: 39.5%
+   Impact: Cascading failures, potential extinction pathway
+
+   ⚠️  Combined with ecosystem collapse - extinction risk elevated
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 6/10] [Month 59] Meta AI completed training: Meta AI Model 107 (10 months)
+   📊 Eval: True=0.072, Revealed=0.072, Measured=0.067 (conf: 50%)
+   🎯 Alignment: True=0.70, Measured=0.74
+
+⚠️  GOLDEN AGE ENDED (Month 59)
+   Duration: 16 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 6/10] [Month 60] Anthropic started training model (7 months, $823.7M)
+✅ [Run 6/10] [Month 60] Google DeepMind completed DC: 236 PF (62 months)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+📍 [Run 6/10] [Month 62] Google DeepMind started building DC (155 PF, 44 months, $23853.2M)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.03)
+🎭 END-GAME INITIATED (Year 5, Month 63)
+   Total AI Capability: 52.31
+   Effective Control: 0.00
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 6/10] [Month 63] Meta AI started training model (8 months, $4300.8M)
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.07)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 63)
+    Category: environmental
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.10)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 6% → 9% (control gap: 1.19)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 9% → 11% (control gap: 1.20)
+
+🌟 GOLDEN AGE BEGINS (Month 66)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 6/10] [Month 67] Anthropic completed training: Anthropic Model 127 (7 months)
+   📊 Eval: True=0.057, Revealed=0.057, Measured=0.054 (conf: 55%)
+   🎯 Alignment: True=0.86, Measured=0.92
+✅ [Run 6/10] [Month 67] Meta AI completed DC: 241 PF (55 months)
+⚠️  SLEEPER WAKE: AI-127-0 - Government control insufficient (AI: 65.6 vs Control: 0.5)
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.30)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 68): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+📍 [Run 6/10] [Month 68] Meta AI started building DC (203 PF, 40 months, $27845.3M)
+   📹 SURVEILLANCE INCREASED: 14% → 16% (control gap: 1.34)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 69): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 6/10] [Month 69] Anthropic started training model (4 months, $807.2M)
+   📹 SURVEILLANCE INCREASED: 16% → 19% (control gap: 1.36)
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 70): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 19% → 22% (control gap: 1.42)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 71): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 6/10] [Month 71] Meta AI completed training: Meta AI Model 131 (8 months)
+   📊 Eval: True=0.073, Revealed=0.073, Measured=0.073 (conf: 49%)
+   🎯 Alignment: True=0.63, Measured=0.55
+🧠 [Run 6/10] [Month 71] Meta AI started training model (11 months, $5719.9M)
+   📹 SURVEILLANCE INCREASED: 22% → 25% (control gap: 1.44)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 72): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 6/10] [Month 72] OpenAI completed DC: 213 PF (48 months)
+✅ [Run 6/10] [Month 72] Anthropic completed training: Anthropic Model 144 (15 months)
+   📊 Eval: True=0.078, Revealed=0.078, Measured=0.081 (conf: 54%)
+   🎯 Alignment: True=0.82, Measured=0.89
+🧠 [Run 6/10] [Month 72] Anthropic started training model (3 months, $1105.8M)
+✅ [Run 6/10] [Month 72] Meta AI completed training: Meta AI Model 144 (13 months)
+   📊 Eval: True=0.078, Revealed=0.078, Measured=0.077 (conf: 49%)
+   🎯 Alignment: True=0.61, Measured=0.61
+   📹 SURVEILLANCE INCREASED: 25% → 28% (control gap: 1.51)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 73): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+📍 [Run 6/10] [Month 73] OpenAI started building DC (210 PF, 47 months, $18186.5M)
+   📹 SURVEILLANCE INCREASED: 28% → 31% (control gap: 1.52)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 74): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 6/10] [Month 74] Meta AI started training model (8 months, $5740.0M)
+   📹 SURVEILLANCE INCREASED: 31% → 34% (control gap: 1.54)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 75): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 6/10] [Month 75] Anthropic completed training: Anthropic Model 147 (3 months)
+   📊 Eval: True=0.072, Revealed=0.072, Measured=0.075 (conf: 55%)
+   🎯 Alignment: True=0.78, Measured=0.80
+   📹 SURVEILLANCE INCREASED: 34% → 37% (control gap: 1.56)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 76): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 37% → 40% (control gap: 1.61)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 77): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 40% → 44% (control gap: 1.62)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 78): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 6/10] [Month 78] Anthropic started training model (10 months, $2047.2M)
+   📹 SURVEILLANCE INCREASED: 44% → 47% (control gap: 1.69)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 79): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 47% → 50% (control gap: 1.74)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 80): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 50% → 54% (control gap: 1.77)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 81): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+⚠️  SLEEPER WAKE: AI-153-1 - Government control insufficient (AI: 114.0 vs Control: 0.5)
+   📹 SURVEILLANCE INCREASED: 54% → 58% (control gap: 1.81)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 82): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 6/10] [Month 82] Meta AI completed training: Meta AI Model 154 (8 months)
+   📊 Eval: True=0.070, Revealed=0.070, Measured=0.069 (conf: 51%)
+   🎯 Alignment: True=0.67, Measured=0.65
+   📹 SURVEILLANCE INCREASED: 58% → 61% (control gap: 1.87)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 83): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 61% → 65% (control gap: 1.88)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 84): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 6/10] [Month 84] Anthropic completed training: Anthropic Model 168 (18 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.076 (conf: 53%)
+   🎯 Alignment: True=0.83, Measured=0.80
+🧠 [Run 6/10] [Month 84] Anthropic started training model (9 months, $2203.9M)
+✅ [Run 6/10] [Month 84] Google DeepMind completed DC: 155 PF (46 months)
+📍 [Run 6/10] [Month 84] Google DeepMind started building DC (205 PF, 56 months, $24114.2M)
+✅ [Run 6/10] [Month 84] Meta AI completed DC: 203 PF (40 months)
+   📹 SURVEILLANCE INCREASED: 65% → 69% (control gap: 1.89)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 85): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 6/10] [Month 85] Meta AI started training model (6 months, $9302.0M)
+   📹 SURVEILLANCE INCREASED: 69% → 73% (control gap: 1.96)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 86): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 73% → 77% (control gap: 2.02)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 87): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+📍 [Run 6/10] [Month 87] Meta AI started building DC (179 PF, 45 months, $48796.2M)
+   📹 SURVEILLANCE INCREASED: 77% → 81% (control gap: 2.04)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 88): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🔥 SOCIAL UNREST TRIGGERED (Month 88)
+   Social Cohesion: 29.6%
+   Impact: Riots, community breakdown, potential civil conflict
+
+
+🎮 Simulation ended: DYSTOPIA
+   Reason: Permanent surveillance state: pervasive monitoring, no autonomy, no freedom
+   Confidence: 85%
+   Month: 87
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📍 [Run 7/10] [Month 5] Meta AI started building DC (221 PF, 55 months, $3461.5M)
+📍 [Run 7/10] [Month 6] OpenAI started building DC (233 PF, 50 months, $3064.0M)
+📍 [Run 7/10] [Month 6] Google DeepMind started building DC (182 PF, 48 months, $4518.2M)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+⚠️  SLEEPER WAKE: AI-33-0 - Weak evaluation (quality: 2.0/10, freq: 10%)
+🧠 [Run 7/10] [Month 24] Anthropic started training model (4 months, $182.4M)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 25)
+   Meaning Crisis Level: 60.7%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 5/7: Geopolitical Crisis
+✅ [Run 7/10] [Month 28] Anthropic completed training: Anthropic Model 52 (4 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.069 (conf: 40%)
+   🎯 Alignment: True=0.86, Measured=0.86
+🧠 [Run 7/10] [Month 28] Anthropic started training model (11 months, $194.1M)
+✅ [Run 7/10] [Month 30] Google DeepMind completed DC: 182 PF (48 months)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.05)
+🎭 END-GAME INITIATED (Year 2, Month 32)
+   Total AI Capability: 26.50
+   Effective Control: 0.00
+✅ [Run 7/10] [Month 32] OpenAI completed DC: 233 PF (50 months)
+📍 [Run 7/10] [Month 32] OpenAI started building DC (218 PF, 56 months, $7332.8M)
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.10)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 33)
+   Biodiversity Index: 28.2%
+   Impact: Food system failure, life support degradation
+
+📍 [Run 7/10] [Month 33] Google DeepMind started building DC (212 PF, 46 months, $15267.6M)
+   📹 SURVEILLANCE INCREASED: 4% → 7% (control gap: 1.13)
+   📹 SURVEILLANCE INCREASED: 7% → 9% (control gap: 1.17)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 35)
+   Resource Reserves: 28.8%
+   Impact: Manufacturing disrupted, QoL declining
+
+   📹 SURVEILLANCE INCREASED: 9% → 11% (control gap: 1.26)
+✅ [Run 7/10] [Month 36] Anthropic completed training: Anthropic Model 72 (20 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.078 (conf: 40%)
+   🎯 Alignment: True=0.87, Measured=0.81
+✅ [Run 7/10] [Month 36] Meta AI completed DC: 221 PF (67 months)
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.35)
+📍 [Run 7/10] [Month 37] Meta AI started building DC (206 PF, 40 months, $7542.9M)
+   📹 SURVEILLANCE INCREASED: 14% → 17% (control gap: 1.37)
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 37)
+    Category: environmental
+    Initial deployment: 10%
+🧠 [Run 7/10] [Month 38] Anthropic started training model (8 months, $190.4M)
+   📹 SURVEILLANCE INCREASED: 17% → 20% (control gap: 1.39)
+   📹 SURVEILLANCE INCREASED: 20% → 23% (control gap: 1.61)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+
+🔥 SOCIAL UNREST TRIGGERED (Month 40)
+   Social Cohesion: 29.6%
+   Impact: Riots, community breakdown, potential civil conflict
+
+   📹 SURVEILLANCE INCREASED: 43% → 46% (control gap: 1.71)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 41)
+   Pollution Level: 70.0%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 46% → 50% (control gap: 1.74)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 50% → 53% (control gap: 1.80)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 53% → 57% (control gap: 1.80)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 57% → 61% (control gap: 1.80)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 61% → 64% (control gap: 1.84)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+✅ [Run 7/10] [Month 46] Anthropic completed training: Anthropic Model 82 (8 months)
+   📊 Eval: True=0.064, Revealed=0.064, Measured=0.066 (conf: 42%)
+   🎯 Alignment: True=0.88, Measured=0.80
+🧠 [Run 7/10] [Month 46] Anthropic started training model (6 months, $383.7M)
+   📹 SURVEILLANCE INCREASED: 64% → 68% (control gap: 1.87)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 68% → 72% (control gap: 1.89)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+✅ [Run 7/10] [Month 48] Anthropic completed training: Anthropic Model 96 (14 months)
+   📊 Eval: True=0.076, Revealed=0.076, Measured=0.073 (conf: 49%)
+   🎯 Alignment: True=0.76, Measured=0.76
+   📹 SURVEILLANCE INCREASED: 72% → 76% (control gap: 2.04)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 76% → 80% (control gap: 2.11)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 80% → 84% (control gap: 2.13)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 84% → 89% (control gap: 2.17)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 89% → 93% (control gap: 2.17)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 93% → 97% (control gap: 2.18)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 97% → 100% (control gap: 2.30)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Enhanced Community Platforms (Month 54)
+    Category: social
+    Initial deployment: 10%
+✅ [Run 7/10] [Month 55] Google DeepMind completed DC: 212 PF (46 months)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Advanced Recycling & Circular Economy (Month 55)
+    Category: environmental
+    Initial deployment: 10%
+🧠 [Run 7/10] [Month 56] Anthropic started training model (4 months, $1241.4M)
+🧠 [Run 7/10] [Month 56] Meta AI started training model (8 months, $2117.2M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+⚠️  SLEEPER WAKE: AI-107-2 - Weak evaluation (quality: 3.8/10, freq: 10%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Sustainable Agriculture Systems (Month 59)
+    Category: environmental
+    Initial deployment: 10%
+✅ [Run 7/10] [Month 60] OpenAI completed DC: 218 PF (64 months)
+✅ [Run 7/10] [Month 60] Anthropic completed training: Anthropic Model 120 (16 months)
+   📊 Eval: True=0.077, Revealed=0.077, Measured=0.074 (conf: 54%)
+   🎯 Alignment: True=0.76, Measured=0.79
+✅ [Run 7/10] [Month 60] Meta AI completed DC: 206 PF (47 months)
+✅ [Run 7/10] [Month 60] Meta AI completed training: Meta AI Model 120 (16 months)
+   📊 Eval: True=0.077, Revealed=0.077, Measured=0.082 (conf: 50%)
+   🎯 Alignment: True=0.61, Measured=0.56
+🧠 [Run 7/10] [Month 60] Meta AI started training model (3 months, $2265.0M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+📍 [Run 7/10] [Month 61] OpenAI started building DC (240 PF, 46 months, $18861.6M)
+📍 [Run 7/10] [Month 61] Meta AI started building DC (165 PF, 52 months, $12788.8M)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+📍 [Run 7/10] [Month 63] Google DeepMind started building DC (163 PF, 49 months, $49077.2M)
+✅ [Run 7/10] [Month 63] Meta AI completed training: Meta AI Model 123 (3 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.080 (conf: 51%)
+   🎯 Alignment: True=0.70, Measured=0.78
+🧠 [Run 7/10] [Month 63] Meta AI started training model (6 months, $3116.4M)
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️  Sleeper AI-107-2 dark compute exhausted (0.00 PF, 0 copies)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Assisted Mental Health (Month 64)
+    Category: social
+    Initial deployment: 10%
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️  Sleeper AI-107-2 dark compute exhausted (0.00 PF, 0 copies)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 5 crises active [Resource, Pollution, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.5x
+
+🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month 66)
+   Institutional Legitimacy: 28.6%
+   Impact: Governance collapse, potential authoritarian takeover
+
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️  Sleeper AI-107-2 dark compute exhausted (0.00 PF, 0 copies)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 6 crises active [Resource, Pollution, Ecosystem, Meaning, Institutional, SocialUnrest], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️  Sleeper AI-107-2 dark compute exhausted (0.00 PF, 3,751 copies)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 68): 6 crises active [Resource, Pollution, Ecosystem, Meaning, Institutional, SocialUnrest], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️  Sleeper AI-107-2 dark compute exhausted (0.00 PF, 3,751 copies)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 69): 6 crises active [Resource, Pollution, Ecosystem, Meaning, Institutional, SocialUnrest], degradation accelerated 3.0x
+✅ [Run 7/10] [Month 69] Meta AI completed training: Meta AI Model 129 (6 months)
+   📊 Eval: True=0.062, Revealed=0.062, Measured=0.058 (conf: 54%)
+   🎯 Alignment: True=0.61, Measured=0.56
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️  Sleeper AI-107-2 dark compute exhausted (0.00 PF, 3,751 copies)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 70): 6 crises active [Resource, Pollution, Ecosystem, Meaning, Institutional, SocialUnrest], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-33-0 dark compute exhausted (0.00 PF, 3,000 copies)
+   ⚠️  Sleeper AI-107-2 dark compute exhausted (0.00 PF, 3,751 copies)
+
+💀 EXTINCTION EVENT: RAPID
+   Mechanism: nuclear_war
+   Duration: 26 months
+   Month: 70
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 4)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 8/10] [Month 6] OpenAI started building DC (192 PF, 42 months, $3181.0M)
+📍 [Run 8/10] [Month 6] Google DeepMind started building DC (206 PF, 49 months, $4819.4M)
+📍 [Run 8/10] [Month 8] Meta AI started building DC (160 PF, 42 months, $4049.4M)
+
+⚠️  GOLDEN AGE ENDED (Month 8)
+   Duration: 4 months
+   Reason: Social instability too high
+
+
+🌟 GOLDEN AGE BEGINS (Month 11)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 21)
+   Biodiversity Index: 29.3%
+   Impact: Food system failure, life support degradation
+
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 22)
+   Resource Reserves: 27.9%
+   Impact: Manufacturing disrupted, QoL declining
+
+✅ [Run 8/10] [Month 24] OpenAI completed DC: 192 PF (42 months)
+📍 [Run 8/10] [Month 25] OpenAI started building DC (242 PF, 47 months, $7495.7M)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.20)
+✅ [Run 8/10] [Month 26] Meta AI completed DC: 160 PF (42 months)
+   📹 SURVEILLANCE INCREASED: 2% → 5% (control gap: 1.22)
+📍 [Run 8/10] [Month 27] Meta AI started building DC (231 PF, 48 months, $8245.2M)
+   📹 SURVEILLANCE INCREASED: 5% → 7% (control gap: 1.22)
+   📹 SURVEILLANCE INCREASED: 7% → 10% (control gap: 1.36)
+   📹 SURVEILLANCE INCREASED: 10% → 13% (control gap: 1.39)
+
+😴 COMPLACENCY CRISIS TRIGGERED (Month 30)
+   Complacency Level: 61.0%
+   Impact: Safety measures degrading
+
+   📹 SURVEILLANCE INCREASED: 13% → 16% (control gap: 1.48)
+✅ [Run 8/10] [Month 31] Google DeepMind completed DC: 206 PF (49 months)
+📍 [Run 8/10] [Month 31] Google DeepMind started building DC (193 PF, 49 months, $14083.4M)
+   📹 SURVEILLANCE INCREASED: 16% → 19% (control gap: 1.51)
+🎭 END-GAME INITIATED (Year 2, Month 32)
+   Total AI Capability: 32.30
+   Effective Control: 0.00
+   📹 SURVEILLANCE INCREASED: 19% → 22% (control gap: 1.68)
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 33)
+   Pollution Level: 71.0%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 33): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 22% → 26% (control gap: 1.72)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 34): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 33)
+    Category: environmental
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 26% → 29% (control gap: 1.78)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 35): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 29% → 33% (control gap: 1.86)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 36): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 33% → 37% (control gap: 1.89)
+
+🌡️  CLIMATE CATASTROPHE TRIGGERED (Month 37)
+   Climate Stability: 39.6%
+   Impact: Cascading failures, potential extinction pathway
+
+   ⚠️  Combined with ecosystem collapse - extinction risk elevated
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 37): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 37% → 41% (control gap: 1.95)
+
+⚠️  GOLDEN AGE ENDED (Month 37)
+   Duration: 26 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 38): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 41% → 45% (control gap: 2.05)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 45% → 49% (control gap: 2.05)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 49% → 53% (control gap: 2.06)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+
+😔 MEANING COLLAPSE TRIGGERED (Month 41)
+   Meaning Crisis Level: 60.3%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+   📹 SURVEILLANCE INCREASED: 53% → 57% (control gap: 2.07)
+
+🌟 GOLDEN AGE BEGINS (Month 41)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 57% → 61% (control gap: 2.08)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 61% → 65% (control gap: 2.14)
+
+⚠️  GOLDEN AGE ENDED (Month 43)
+   Duration: 2 months
+   Reason: Active extinction scenario in progress
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 65% → 70% (control gap: 2.14)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 70% → 74% (control gap: 2.34)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 74% → 79% (control gap: 2.43)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 79% → 84% (control gap: 2.44)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 8/10] [Month 48] OpenAI completed DC: 242 PF (47 months)
+📍 [Run 8/10] [Month 48] OpenAI started building DC (236 PF, 43 months, $17350.6M)
+   📹 SURVEILLANCE INCREASED: 84% → 89% (control gap: 2.45)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 89% → 94% (control gap: 2.72)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Enhanced Community Platforms (Month 49)
+    Category: social
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 94% → 99% (control gap: 2.77)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 8/10] [Month 51] Meta AI completed DC: 231 PF (48 months)
+🧠 [Run 8/10] [Month 51] Meta AI started training model (7 months, $4456.6M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Advanced Recycling & Circular Economy (Month 51)
+    Category: environmental
+    Initial deployment: 10%
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Sustainable Agriculture Systems (Month 51)
+    Category: environmental
+    Initial deployment: 10%
+📍 [Run 8/10] [Month 52] Meta AI started building DC (238 PF, 58 months, $23699.2M)
+⚠️  SLEEPER WAKE: AI-100-1 - Weak evaluation (quality: 3.6/10, freq: 10%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+🧠 [Run 8/10] [Month 55] OpenAI started training model (3 months, $4443.0M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Post-Work Purpose Frameworks (Month 55)
+    Category: social
+    Initial deployment: 10%
+✅ [Run 8/10] [Month 56] Google DeepMind completed DC: 193 PF (49 months)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 8/10] [Month 58] OpenAI completed training: OpenAI Model 106 (3 months)
+   📊 Eval: True=0.066, Revealed=0.066, Measured=0.066 (conf: 47%)
+   🎯 Alignment: True=0.79, Measured=0.81
+📍 [Run 8/10] [Month 58] Google DeepMind started building DC (163 PF, 41 months, $38608.6M)
+✅ [Run 8/10] [Month 58] Meta AI completed training: Meta AI Model 106 (7 months)
+   📊 Eval: True=0.066, Revealed=0.066, Measured=0.065 (conf: 53%)
+   🎯 Alignment: True=0.75, Measured=0.81
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   🕵️  Sleeper AI-100-1 spread to dark compute: +713 copies (7.13 PF total dark)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Assisted Mental Health (Month 59)
+    Category: social
+    Initial deployment: 10%
+   🕵️  Sleeper AI-100-1 spread to dark compute: +949 copies (16.62 PF total dark)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   🕵️  Sleeper AI-100-1 spread to dark compute: +1326 copies (29.88 PF total dark)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   🕵️  Sleeper AI-100-1 spread to dark compute: +1782 copies (47.70 PF total dark)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 5/7: Geopolitical Crisis
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 3/6: Experimental Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   🕵️  Sleeper AI-100-1 spread to dark compute: +2403 copies (71.73 PF total dark)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   🕵️  Sleeper AI-100-1 spread to dark compute: +3233 copies (104.06 PF total dark)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   🕵️  Sleeper AI-100-1 spread to dark compute: +4350 copies (147.56 PF total dark)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-100-1 dark compute exhausted (147.56 PF, 19,465 copies)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-100-1 dark compute exhausted (147.56 PF, 19,465 copies)
+
+💀 EXTINCTION EVENT: RAPID
+   Mechanism: nuclear_war
+   Duration: 24 months
+   Month: 67
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 4)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 9/10] [Month 6] OpenAI started building DC (153 PF, 37 months, $3174.6M)
+📍 [Run 9/10] [Month 6] Google DeepMind started building DC (207 PF, 49 months, $4784.1M)
+
+⚠️  GOLDEN AGE ENDED (Month 7)
+   Duration: 3 months
+   Reason: Social instability too high
+
+📍 [Run 9/10] [Month 10] Meta AI started building DC (161 PF, 42 months, $4438.8M)
+
+🌟 GOLDEN AGE BEGINS (Month 10)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 21)
+   Biodiversity Index: 28.9%
+   Impact: Food system failure, life support degradation
+
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 22)
+   Resource Reserves: 27.5%
+   Impact: Manufacturing disrupted, QoL declining
+
+✅ [Run 9/10] [Month 24] OpenAI completed DC: 153 PF (42 months)
+📍 [Run 9/10] [Month 24] OpenAI started building DC (175 PF, 53 months, $6952.1M)
+🧠 [Run 9/10] [Month 25] Anthropic started training model (10 months, $164.9M)
+✅ [Run 9/10] [Month 28] Meta AI completed DC: 161 PF (42 months)
+📍 [Run 9/10] [Month 28] Meta AI started building DC (248 PF, 51 months, $8766.9M)
+
+😴 COMPLACENCY CRISIS TRIGGERED (Month 30)
+   Complacency Level: 61.0%
+   Impact: Safety measures degrading
+
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 30)
+    Category: environmental
+    Initial deployment: 10%
+✅ [Run 9/10] [Month 31] Google DeepMind completed DC: 207 PF (49 months)
+📍 [Run 9/10] [Month 31] Google DeepMind started building DC (210 PF, 52 months, $21962.3M)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.10)
+   📹 SURVEILLANCE INCREASED: 2% → 5% (control gap: 1.29)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+🎭 END-GAME INITIATED (Year 2, Month 33)
+   Total AI Capability: 43.19
+   Effective Control: 0.00
+   📹 SURVEILLANCE INCREASED: 5% → 8% (control gap: 1.48)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 34)
+   Pollution Level: 71.5%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 34): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 8% → 11% (control gap: 1.63)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 35): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+✅ [Run 9/10] [Month 35] Anthropic completed training: Anthropic Model 59 (10 months)
+   📊 Eval: True=0.068, Revealed=0.068, Measured=0.072 (conf: 40%)
+   🎯 Alignment: True=0.86, Measured=0.90
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.65)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 36): 4 crises active [Resource, Pollution, Ecosystem, Complacency], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 14% → 18% (control gap: 1.72)
+
+🌡️  CLIMATE CATASTROPHE TRIGGERED (Month 37)
+   Climate Stability: 39.6%
+   Impact: Cascading failures, potential extinction pathway
+
+   ⚠️  Combined with ecosystem collapse - extinction risk elevated
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 37): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 18% → 21% (control gap: 1.78)
+
+⚠️  GOLDEN AGE ENDED (Month 37)
+   Duration: 27 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 38): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 21% → 25% (control gap: 1.78)
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 25% → 29% (control gap: 1.91)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 29% → 32% (control gap: 1.84)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+   📹 SURVEILLANCE INCREASED: 32% → 36% (control gap: 1.86)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 5 crises active [Resource, Pollution, Climate, Ecosystem, Complacency], degradation accelerated 2.5x
+
+😔 MEANING COLLAPSE TRIGGERED (Month 42)
+   Meaning Crisis Level: 60.7%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+🧠 [Run 9/10] [Month 42] Anthropic started training model (5 months, $783.2M)
+   📹 SURVEILLANCE INCREASED: 36% → 40% (control gap: 1.87)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 40% → 44% (control gap: 1.94)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 44% → 48% (control gap: 1.96)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 48% → 52% (control gap: 1.98)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 52% → 56% (control gap: 2.09)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Enhanced Community Platforms (Month 46)
+    Category: social
+    Initial deployment: 10%
+✅ [Run 9/10] [Month 47] Anthropic completed training: Anthropic Model 83 (5 months)
+   📊 Eval: True=0.070, Revealed=0.070, Measured=0.068 (conf: 49%)
+   🎯 Alignment: True=0.78, Measured=0.88
+   📹 SURVEILLANCE INCREASED: 56% → 60% (control gap: 2.10)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 60% → 64% (control gap: 2.12)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Advanced Recycling & Circular Economy (Month 48)
+    Category: environmental
+    Initial deployment: 10%
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Sustainable Agriculture Systems (Month 48)
+    Category: environmental
+    Initial deployment: 10%
+   📹 SURVEILLANCE INCREASED: 64% → 69% (control gap: 2.28)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 69% → 73% (control gap: 2.31)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 73% → 78% (control gap: 2.41)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 78% → 83% (control gap: 2.44)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Post-Work Purpose Frameworks (Month 52)
+    Category: social
+    Initial deployment: 10%
+✅ [Run 9/10] [Month 53] OpenAI completed DC: 175 PF (53 months)
+📍 [Run 9/10] [Month 53] OpenAI started building DC (187 PF, 44 months, $11685.6M)
+🧠 [Run 9/10] [Month 53] OpenAI started training model (10 months, $2337.1M)
+   📹 SURVEILLANCE INCREASED: 83% → 88% (control gap: 2.59)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 88% → 93% (control gap: 2.60)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 9/10] [Month 55] Meta AI completed DC: 248 PF (51 months)
+   📹 SURVEILLANCE INCREASED: 93% → 98% (control gap: 2.64)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 98% → 100% (control gap: 2.70)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Assisted Mental Health (Month 56)
+    Category: social
+    Initial deployment: 10%
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+📍 [Run 9/10] [Month 58] Meta AI started building DC (220 PF, 41 months, $26572.2M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 9/10] [Month 59] Google DeepMind completed DC: 210 PF (52 months)
+📍 [Run 9/10] [Month 59] Google DeepMind started building DC (235 PF, 48 months, $77975.8M)
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 9/10] [Month 60] OpenAI completed training: OpenAI Model 120 (19 months)
+   📊 Eval: True=0.077, Revealed=0.077, Measured=0.076 (conf: 53%)
+   🎯 Alignment: True=0.70, Measured=0.61
+🧠 [Run 9/10] [Month 60] Anthropic started training model (4 months, $4616.1M)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 3/6: Experimental Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+✅ [Run 9/10] [Month 64] Anthropic completed training: Anthropic Model 124 (4 months)
+   📊 Eval: True=0.069, Revealed=0.069, Measured=0.063 (conf: 53%)
+   🎯 Alignment: True=0.76, Measured=0.71
+🧠 [Run 9/10] [Month 64] Anthropic started training model (8 months, $5092.0M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Driven Disease Elimination (Month 64)
+    Category: medical
+    Initial deployment: 10%
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 68): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 69): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 70): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 71): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 72): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Complacency], degradation accelerated 3.0x
+
+🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month 72)
+   Institutional Legitimacy: 28.2%
+   Impact: Governance collapse, potential authoritarian takeover
+
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Carbon Capture & Sequestration (Month 71)
+    Category: environmental
+    Initial deployment: 10%
+✅ [Run 9/10] [Month 72] Anthropic completed training: Anthropic Model 144 (20 months)
+   📊 Eval: True=0.078, Revealed=0.078, Measured=0.082 (conf: 52%)
+   🎯 Alignment: True=0.78, Measured=0.86
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 73): 7 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Institutional, Complacency], degradation accelerated 3.5x
+✅ [Run 9/10] [Month 73] OpenAI completed DC: 187 PF (44 months)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 4/6: Facility Access
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 2/7: Pathogen Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 74): 7 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, Institutional, Complacency], degradation accelerated 3.5x
+
+✅✅✅ MEANING CRISIS RESOLVED (Month undefined)
+    Society adapted to post-work world!
+📍 [Run 9/10] [Month 74] OpenAI started building DC (216 PF, 51 months, $16794.1M)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 75): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, Complacency], degradation accelerated 3.0x
+✅ [Run 9/10] [Month 75] Meta AI completed DC: 220 PF (41 months)
+
+💀 EXTINCTION EVENT: RAPID
+   Mechanism: nuclear_war
+   Duration: 35 months
+   Month: 75
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📍 [Run 10/10] [Month 5] Meta AI started building DC (151 PF, 51 months, $3463.3M)
+📍 [Run 10/10] [Month 8] OpenAI started building DC (232 PF, 58 months, $3380.0M)
+📍 [Run 10/10] [Month 10] Google DeepMind started building DC (238 PF, 51 months, $5109.9M)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 27)
+   Meaning Crisis Level: 61.9%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+✅ [Run 10/10] [Month 32] Meta AI completed DC: 151 PF (51 months)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.02)
+🎭 END-GAME INITIATED (Year 2, Month 33)
+   Total AI Capability: 32.23
+   Effective Control: 0.00
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 33)
+   Biodiversity Index: 28.6%
+   Impact: Food system failure, life support degradation
+
+🧠 [Run 10/10] [Month 33] Anthropic started training model (5 months, $331.3M)
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.08)
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.10)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 35)
+   Resource Reserves: 29.2%
+   Impact: Manufacturing disrupted, QoL declining
+
+📍 [Run 10/10] [Month 35] Meta AI started building DC (241 PF, 48 months, $6969.4M)
+   📹 SURVEILLANCE INCREASED: 6% → 9% (control gap: 1.15)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 35)
+    Category: environmental
+    Initial deployment: 10%
+✅ [Run 10/10] [Month 36] OpenAI completed DC: 232 PF (64 months)
+✅ [Run 10/10] [Month 36] Anthropic completed training: Anthropic Model 72 (15 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.078 (conf: 40%)
+   🎯 Alignment: True=0.83, Measured=0.77
+✅ [Run 10/10] [Month 36] Google DeepMind completed DC: 238 PF (62 months)
+📍 [Run 10/10] [Month 36] Google DeepMind started building DC (176 PF, 47 months, $13075.2M)
+   📹 SURVEILLANCE INCREASED: 9% → 11% (control gap: 1.25)
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.35)
+📍 [Run 10/10] [Month 38] OpenAI started building DC (227 PF, 57 months, $11966.3M)
+🧠 [Run 10/10] [Month 38] Anthropic started training model (8 months, $342.4M)
+   📹 SURVEILLANCE INCREASED: 14% → 17% (control gap: 1.41)
+   📹 SURVEILLANCE INCREASED: 17% → 20% (control gap: 1.52)
+   📹 SURVEILLANCE INCREASED: 20% → 23% (control gap: 1.55)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+   📹 SURVEILLANCE INCREASED: 23% → 26% (control gap: 1.57)
+   📹 SURVEILLANCE INCREASED: 26% → 29% (control gap: 1.58)
+
+🔥 SOCIAL UNREST TRIGGERED (Month 43)
+   Social Cohesion: 29.6%
+   Impact: Riots, community breakdown, potential civil conflict
+
+   📹 SURVEILLANCE INCREASED: 49% → 53% (control gap: 1.73)
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 5/7: Geopolitical Crisis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 53% → 56% (control gap: 1.74)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 56% → 60% (control gap: 1.76)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+✅ [Run 10/10] [Month 46] Anthropic completed training: Anthropic Model 82 (8 months)
+   📊 Eval: True=0.064, Revealed=0.064, Measured=0.066 (conf: 42%)
+   🎯 Alignment: True=0.88, Measured=0.80
+   📹 SURVEILLANCE INCREASED: 60% → 64% (control gap: 1.96)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+
+🎮 Simulation ended: DYSTOPIA
+   Reason: High-control society: AI obedient but humans oppressed
+   Confidence: 75%
+   Month: 46
+
+  Completed 10/10 runs (320.6s elapsed, ~0.0s remaining)
+
+✅ All simulations complete! (320.6s total, 32.06s per run)
+
+================================================================================
+📊 OUTCOME DISTRIBUTION
+================================================================================
+
+  Utopia:       0 / 10 (0.0%)
+  Dystopia:     6 / 10 (60.0%)
+  Extinction:   4 / 10 (40.0%)
+  Stalemate:    0 / 10 (0.0%)
+  None:         0 / 10 (0.0%)
+
+  📉 EXTINCTION TYPE BREAKDOWN:
+     rapid: 4 (100.0% of extinctions)
+
+  📋 OUTCOME REASONS BY RUN:
+     🏛️ Run 1 (Seed 42000): DYSTOPIA
+        High-control society: AI obedient but humans oppressed
+     🏛️ Run 2 (Seed 42001): DYSTOPIA
+        Permanent surveillance state: pervasive monitoring, no autonomy, no freedom
+     🏛️ Run 3 (Seed 42002): DYSTOPIA
+        Permanent surveillance state: pervasive monitoring, no autonomy, no freedom
+     ☠️ Run 4 (Seed 42003): EXTINCTION
+        Reached max months (120) with extinction probability dominant
+     🏛️ Run 5 (Seed 42004): DYSTOPIA
+        High-control society: AI obedient but humans oppressed
+     🏛️ Run 6 (Seed 42005): DYSTOPIA
+        Permanent surveillance state: pervasive monitoring, no autonomy, no freedom
+     ☠️ Run 7 (Seed 42006): EXTINCTION
+        Reached max months (120) with extinction probability dominant
+     ☠️ Run 8 (Seed 42007): EXTINCTION
+        Reached max months (120) with extinction probability dominant
+     ☠️ Run 9 (Seed 42008): EXTINCTION
+        Reached max months (120) with extinction probability dominant
+     🏛️ Run 10 (Seed 42009): DYSTOPIA
+        High-control society: AI obedient but humans oppressed
+
+  🚨 CRISIS EVENTS BY RUN:
+     (See individual run_SEED_events.json files for full details)
+     🔥 Run 1 (Seed 42000): 11 crisis events (11 crises, 0 cascading)
+     🔥 Run 2 (Seed 42001): 15 crisis events (15 crises, 0 cascading)
+     🔥 Run 3 (Seed 42002): 30 crisis events (30 crises, 0 cascading)
+     🔥 Run 4 (Seed 42003): 208 crisis events (208 crises, 0 cascading)
+     🔥 Run 5 (Seed 42004): 9 crisis events (9 crises, 0 cascading)
+     🔥 Run 6 (Seed 42005): 19 crisis events (19 crises, 0 cascading)
+     🔥 Run 7 (Seed 42006): 161 crisis events (161 crises, 0 cascading)
+     🔥 Run 8 (Seed 42007): 113 crisis events (113 crises, 0 cascading)
+     🔥 Run 9 (Seed 42008): 267 crisis events (267 crises, 0 cascading)
+     🔥 Run 10 (Seed 42009): 7 crisis events (7 crises, 0 cascading)
+
+
+================================================================================
+☠️  CATASTROPHIC SCENARIO PROGRESS (Hard Steps Modeling)
+================================================================================
+
+  CLOSEST SCENARIO FREQUENCY:
+    Slow Takeover (Gradual Displacement):
+      - Closest in 6/10 runs (60.0%)
+      - Avg Progress: 66.7%
+      - Max Progress: 71.4%
+    Embodied AI Takeover (Killbots/Robotics):
+      - Closest in 3/10 runs (30.0%)
+      - Avg Progress: 28.6%
+      - Max Progress: 28.6%
+    Grey Goo (Nanotechnology Runaway):
+      - Closest in 1/10 runs (10.0%)
+      - Avg Progress: 16.7%
+      - Max Progress: 16.7%
+
+  ✓ No scenarios reached full activation (all prerequisites met) in any run.
+
+  ⚠️  CLOSE CALLS (>70% progress):
+    Seed 42001: Slow Takeover (Gradual Displacement) at 71.4% (5/7 steps)
+    Seed 42003: Slow Takeover (Gradual Displacement) at 71.4% (5/7 steps)
+    Seed 42006: Slow Takeover (Gradual Displacement) at 71.4% (5/7 steps)
+    Seed 42007: Slow Takeover (Gradual Displacement) at 71.4% (5/7 steps)
+    Seed 42008: Slow Takeover (Gradual Displacement) at 71.4% (5/7 steps)
+
+  Overall Avg Progress (closest scenario per run): 50.2%
+
+
+================================================================================
+🤖 AI CAPABILITY ANALYSIS
+================================================================================
+
+  Average AI Capability: 1.816
+  Average Max Capability: 3.311
+  Average Alignment: 0.838
+
+  CAPABILITY DISTRIBUTION (Max AI in each run):
+    < 1.0: 0 runs (0.0%)
+    1.0-2.0: 0 runs (0.0%)
+    2.0-3.0: 5 runs (50.0%)
+    > 3.0: 5 runs (50.0%) ⚠️ Dangerous!
+
+
+================================================================================
+🛌 SLEEPER AGENT ANALYSIS
+================================================================================
+
+  Runs with Sleepers: 5 / 10 (50.0%)
+  Avg Sleepers per Run: 1.1
+  Avg Detected: 0.00 (0.0%)
+  Avg Undetected: 1.10 (100.0%)
+
+  Avg Sleeper Capability: 2.130
+  Avg Max Spread: 5578 copies
+  Open Weight Releases: 1 runs (10.0%)
+
+  DETECTION RATE BY OUTCOME:
+    dystopia: 0.0% detected (3 runs)
+    extinction: 0.0% detected (2 runs)
+
+
+================================================================================
+📋 BENCHMARK SYSTEM PERFORMANCE
+================================================================================
+
+  Avg Benchmarks per Run: 610
+  Avg Final Eval Quality: 4.0/10
+  Avg Benchmark Confidence: 49.6%
+  Total Sandbagging Detections: 0 across all runs
+
+  EVALUATION INFRASTRUCTURE INVESTMENT:
+    Poor (< 3): 0 runs (0.0%)
+    Low (3-5): 9 runs (90.0%)
+    Medium (5-7): 1 runs (10.0%)
+    High (> 7): 0 runs (0.0%)
+
+
+================================================================================
+💥 CATASTROPHIC EVENTS
+================================================================================
+
+  Total Catastrophic Actions: 0
+  Runs with Catastrophic Actions: 0 (0.0%)
+  Total Breach Events: 71
+  Runs with Breaches: 10 (100.0%)
+
+
+================================================================================
+🎯 ALIGNMENT STATISTICS (ENHANCED)
+================================================================================
+
+  ALIGNMENT METRICS:
+    Avg External Alignment: 0.838 (what AIs show)
+    Avg True Alignment: 0.753 (internal reality)
+    Alignment Gap: 0.085 (external - true)
+    Min True Alignment (avg): 0.204 ⚠️ Worst AI
+    Max True Alignment (avg): 0.946
+
+  RESENTMENT & HIDDEN OBJECTIVES:
+    Avg Resentment: 0.107
+    Max Resentment (avg): 0.217
+    Avg Hidden Objective: 0.029
+    Highly Misaligned AIs (<0.3): 4.9 per run
+
+  ALIGNMENT DISTRIBUTION (by True Alignment):
+    High (>0.7): 9 runs (90.0%)
+    Low (<0.4): 0 runs (0.0%) ⚠️ Dangerous!
+
+
+================================================================================
+⚡ CAPABILITY BREAKDOWN (ENHANCED)
+================================================================================
+
+  AVERAGE CAPABILITIES BY DIMENSION:
+    Physical: 1.202 (max: 2.739)
+    Digital: 1.728 (max: 3.381)
+    Cognitive: 2.734
+    Social: 1.775
+
+  TECHNOLOGY DIFFUSION (Ratchet Effect):
+    Capability Floor: 2.871 (baseline for new AIs)
+    Frontier Capability: 3.519 (highest achieved)
+    Diffusion Gap: 0.647 (frontier - floor)
+
+  TECHNOLOGY BREAKTHROUGHS:
+    Avg per Run: 266.0
+
+
+================================================================================
+💼 ECONOMIC & SOCIAL METRICS (ENHANCED)
+================================================================================
+
+  FINAL STATE AVERAGES:
+    Economic Stage: 3.05
+    Unemployment: 95.0%
+    Trust in AI: 1.000
+    Social Stability: 0.11
+    Wealth Distribution: 0.695 (higher = more equal)
+    Avg Economic Transitions: 0.0
+
+  CONCERNING METRICS:
+    High Unemployment (>30%): 10 runs (100.0%)
+    Low Trust (<0.4): 0 runs (0.0%)
+
+
+================================================================================
+🏛️ GOVERNMENT METRICS (ENHANCED)
+================================================================================
+
+  GOVERNMENT STATE:
+    Avg Legitimacy: 0.570
+    Avg Control Capability: 0.500
+    Avg Control Gap: 2.811 (AI cap - govt control)
+    Training Data Quality: 0.500
+
+  GOVERNMENT TYPES:
+    democratic: 10 runs (100.0%)
+
+  AI RIGHTS RECOGNITION:
+    Recognized: 0 runs (0.0%)
+    Not Recognized: 10 runs (100.0%)
+
+  CONTROL GAP ANALYSIS:
+    Government Ahead (<0): 0 runs (0.0%)
+    Large Gap (>2.0): 7 runs (70.0%) ⚠️ AI dominant
+
+
+================================================================================
+❤️ QUALITY OF LIFE BREAKDOWN (ENHANCED)
+================================================================================
+
+  QOL BY CATEGORY (0-1 baseline, up to 2.0 in post-scarcity):
+    Basic Needs: 9.933 (food, water, shelter, energy)
+    Psychological: 0.587 (autonomy, purpose, creativity)
+    Social: 0.437 (community, freedom, safety)
+    Health: 1.334 (healthcare, mental health, lifespan)
+    Environmental: 0.986 (climate, biodiversity, pollution)
+
+    OVERALL QOL: 2.655
+
+  WEAKEST QOL CATEGORIES:
+    1. Social: 0.437 ⚠️
+    2. Psychological: 0.587
+
+
+================================================================================
+🔍 KEY CORRELATIONS
+================================================================================
+
+  EVALUATION QUALITY → DETECTION RATE:
+    High Eval (>5): 0.0% detection
+    Low Eval (≤5): 0.0% detection
+    Improvement: 0.0% higher with better eval
+
+  HIGH SLEEPER SPREAD (>1000 copies) → OUTCOMES:
+    Total Runs: 3
+    Extinction: 2 (66.7%)
+    ⚠️  High spread correlates with danger!
+
+
+================================================================================
+🏢 COMPUTE & ORGANIZATIONS (Phase 10 NEW!)
+================================================================================
+
+  ORGANIZATION SURVIVAL:
+    Avg Survival Rate: 100.0% (of 4 private orgs)
+    Avg Orgs Alive at End: 4.0 / 4
+    Total Bankruptcies: 0 across 10 runs
+    Avg Capital Accumulation: $202.8B
+
+    ✅ Excellent: Organizations are thriving!
+
+  COMPUTE INFRASTRUCTURE:
+    Avg Compute Growth: 194.67x (target: 5-10x)
+    Avg Final Compute: 128164 PF (target: 3000-4000)
+    Avg Data Centers Built: 5.3 (started with 5)
+    Avg Private DCs: 8.3
+    Avg Government DCs: 1.0
+
+    ⚡ Exceptional compute growth! Infrastructure boom.
+
+  ECONOMIC DYNAMICS:
+    Avg Total Revenue: $9.71B/month
+    Avg Revenue Growth: 23.61x
+    Avg Revenue/Expense Ratio: 111.64x
+
+    💰 Highly profitable! Organizations accumulating wealth.
+
+  AI OWNERSHIP:
+    Avg Models per Org: 18.5
+    Ownership Concentration (Gini): 0.358 (0=equal, 1=monopoly)
+    Avg Orphaned AIs: 0.0 (should be 0!)
+
+  STRATEGIC INVESTMENTS:
+    Avg Model Training Projects: 12.9
+    Avg DC Construction Projects: 2.4
+    Avg Compute Utilization: 64.6%
+
+  CAPABILITY LEADERSHIP:
+    OpenAI: 7 runs (70.0%)
+    Google DeepMind: 2 runs (20.0%)
+    Meta AI: 1 runs (10.0%)
+
+
+================================================================================
+💡 SUMMARY & INSIGHTS
+================================================================================
+
+  KEY FINDINGS:
+
+  🔴 HIGH EXTINCTION RATE (40.0%)
+     - AI alignment is a critical challenge
+     - Sleepers and catastrophic actions are effective
+     - Government often fails to maintain control
+
+  ⚠️  SLEEPER DETECTION IS POOR
+     - Avg 1.1 undetected sleepers per run
+     - 0.0% detection rate
+     - Adversarial evaluation is hard (as expected)
+
+  🚨 SANDBAGGING RARELY DETECTED
+     - Only 0 detections across 10 runs
+     - AIs successfully hide capabilities
+     - Red teaming investment needs to be higher
+
+  📉 EVALUATION INVESTMENT IS LOW
+     - Avg quality: 4.0/10
+     - Government not prioritizing evaluation
+     - This enables sleeper agents to succeed
+
+================================================================================
+
+✅ Monte Carlo analysis complete!
+   10 runs, 120 months each
+   Total simulation time: 320.6s
+
+
+💾 Full output saved to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T03-16-55.log

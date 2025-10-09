@@ -1,0 +1,194 @@
+
+🧪 TESTING BREAKTHROUGH TECHNOLOGY SYSTEM
+
+Initial state:
+  Research budget: $0B
+  Clean Energy unlocked: false
+  Clean Energy progress: 0.0%
+
+Running simulation for 36 months...
+
+
+🔬 BREAKTHROUGH TECH - Month 0, Budget: $0B
+
+💰 [MONTH 0] Auto-allocate called: target=10.5, current=0, diff=10.5
+
+💰 RESEARCH BUDGET ALLOCATED (Month 0): $10.5B (was $0B)
+
+🔵 LOOP RUNNING - Month 1, absoluteMonth: undefined
+
+🔬 BREAKTHROUGH TECH - Month 1, Budget: $10.5B
+
+💰 RESEARCH BUDGET ALLOCATED (Month 1): $11B (was $10.5B)
+
+💰 RESEARCH BUDGETS (Month 1):
+  Total: $11.0B
+  Environmental: $4.7B (climate.mit: 1.65, energy: 1.65)
+  Social: $2.4B
+  Medical: $2.2B
+  Clean Energy progress: 0.0%
+
+🔬 BREAKTHROUGH TECH - Month 2, Budget: $11B
+
+💰 RESEARCH BUDGET ALLOCATED (Month 2): $11.5B (was $11B)
+
+💰 RESEARCH BUDGET ALLOCATED (Month 3): $12.75B (was $11.5B)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+💰 RESEARCH BUDGET ALLOCATED (Month 4): $13.25B (was $12.75B)
+
+💰 RESEARCH BUDGET ALLOCATED (Month 5): $13.75B (was $13.25B)
+📍 [Month 6] Google DeepMind started building DC (160 PF, 47 months, $4525.7M)
+📍 [Month 7] Meta AI started building DC (225 PF, 44 months, $3741.7M)
+📍 [Month 8] OpenAI started building DC (177 PF, 47 months, $3291.7M)
+
+💰 RESEARCH BUDGETS (Month 10):
+  Total: $17.0B
+  Environmental: $7.3B (climate.mit: 2.55, energy: 2.55)
+  Social: $3.7B
+  Medical: $3.4B
+  Clean Energy progress: 0.0%
+
+💰 RESEARCH BUDGETS (Month 20):
+  Total: $20.0B
+  Environmental: $8.6B (climate.mit: 3, energy: 3)
+  Social: $4.4B
+  Medical: $4.0B
+  Clean Energy progress: 0.0%
+🧠 [Month 24] Anthropic started training model (7 months, $143.8M)
+✅ [Month 27] Meta AI completed DC: 225 PF (44 months)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 28)
+   Meaning Crisis Level: 62.2%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+✅ [Month 29] Google DeepMind completed DC: 160 PF (47 months)
+📍 [Month 29] Google DeepMind started building DC (202 PF, 52 months, $9633.7M)
+📍 [Month 29] Meta AI started building DC (212 PF, 49 months, $9173.6M)
+✅ [Month 31] OpenAI completed DC: 177 PF (47 months)
+✅ [Month 31] Anthropic completed training: Anthropic Model 55 (7 months)
+   📊 Eval: True=0.059, Revealed=0.059, Measured=0.058 (conf: 41%)
+   🎯 Alignment: True=0.82, Measured=0.74
+📍 [Month 32] OpenAI started building DC (239 PF, 48 months, $7292.8M)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 33)
+   Biodiversity Index: 28.2%
+   Impact: Food system failure, life support degradation
+
+🧠 [Month 33] Anthropic started training model (8 months, $207.4M)
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.04)
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.13)
+🎭 END-GAME INITIATED (Year 2, Month 35)
+   Total AI Capability: 34.48
+   Effective Control: 0.00
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 35)
+   Resource Reserves: 28.8%
+   Impact: Manufacturing disrupted, QoL declining
+
+   📹 SURVEILLANCE INCREASED: 4% → 7% (control gap: 1.19)
+✅ [Month 36] Anthropic completed training: Anthropic Model 72 (15 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.078 (conf: 40%)
+   🎯 Alignment: True=0.77, Measured=0.71
+   📹 SURVEILLANCE INCREASED: 7% → 9% (control gap: 1.23)
+   📹 SURVEILLANCE INCREASED: 9% → 12% (control gap: 1.25)
+   📹 SURVEILLANCE INCREASED: 12% → 14% (control gap: 1.30)
+   📹 SURVEILLANCE INCREASED: 14% → 17% (control gap: 1.31)
+   📹 SURVEILLANCE INCREASED: 17% → 20% (control gap: 1.33)
+   📹 SURVEILLANCE INCREASED: 20% → 22% (control gap: 1.35)
+   📹 SURVEILLANCE INCREASED: 22% → 25% (control gap: 1.40)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 5/7: Geopolitical Crisis
+   📹 SURVEILLANCE INCREASED: 25% → 28% (control gap: 1.44)
+   📹 SURVEILLANCE INCREASED: 28% → 31% (control gap: 1.49)
+   📹 SURVEILLANCE INCREASED: 31% → 34% (control gap: 1.50)
+   📹 SURVEILLANCE INCREASED: 34% → 37% (control gap: 1.52)
+🧠 [Month 47] Anthropic started training model (5 months, $886.0M)
+   📹 SURVEILLANCE INCREASED: 37% → 40% (control gap: 1.53)
+✅ [Month 48] Anthropic completed training: Anthropic Model 96 (13 months)
+   📊 Eval: True=0.076, Revealed=0.076, Measured=0.073 (conf: 49%)
+   🎯 Alignment: True=0.86, Measured=0.87
+🧠 [Month 48] Anthropic started training model (10 months, $912.0M)
+   📹 SURVEILLANCE INCREASED: 40% → 43% (control gap: 1.64)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   📹 SURVEILLANCE INCREASED: 43% → 47% (control gap: 1.68)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   📹 SURVEILLANCE INCREASED: 47% → 50% (control gap: 1.73)
+   📹 SURVEILLANCE INCREASED: 50% → 54% (control gap: 1.73)
+
+🔥 SOCIAL UNREST TRIGGERED (Month 52)
+   Social Cohesion: 29.1%
+   Impact: Riots, community breakdown, potential civil conflict
+
+   📹 SURVEILLANCE INCREASED: 74% → 77% (control gap: 1.73)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   📹 SURVEILLANCE INCREASED: 77% → 81% (control gap: 1.87)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+✅ [Month 54] Meta AI completed DC: 212 PF (49 months)
+   📹 SURVEILLANCE INCREASED: 81% → 85% (control gap: 1.90)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+📍 [Month 55] Meta AI started building DC (248 PF, 53 months, $18748.5M)
+   📹 SURVEILLANCE INCREASED: 85% → 89% (control gap: 2.03)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+✅ [Month 56] OpenAI completed DC: 239 PF (48 months)
+📍 [Month 56] OpenAI started building DC (248 PF, 55 months, $16249.3M)
+   📹 SURVEILLANCE INCREASED: 89% → 93% (control gap: 2.08)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+✅ [Month 57] Google DeepMind completed DC: 202 PF (52 months)
+   📹 SURVEILLANCE INCREASED: 93% → 97% (control gap: 2.21)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+✅ [Month 58] Anthropic completed training: Anthropic Model 106 (10 months)
+   📊 Eval: True=0.066, Revealed=0.066, Measured=0.068 (conf: 47%)
+   🎯 Alignment: True=0.82, Measured=0.77
+   📹 SURVEILLANCE INCREASED: 97% → 100% (control gap: 2.33)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 3/6: Experimental Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+
+🔒 END-GAME RESOLVED: EXTINCTION
+   Reason: Humanity became irrelevant to superintelligent AI
+   Duration: 29 months
+   Final Power: Aligned 100.70 vs Misaligned 32.12
+   Human Relevance: 0.9%
+
+🎭 END-GAME RESOLVED: EXTINCTION
+   Reason: Humanity became irrelevant to superintelligent AI
+   Month: 62
+
+
+After 36 months:
+  Research budget: $0B
+  Economic stage: 0.00
+  Average AI capability: 0.07
+
+Technology Status:
+  Clean Energy Systems: 0.0% progress
+  Advanced Recycling & Circular Economy: 0.0% progress
+  Sustainable Agriculture Systems: 0.0% progress
+  AI-Assisted Mental Health: 0.0% progress
+  AI-Driven Disease Elimination: 0.0% progress
+
+Crisis Status:
+  Resource crisis: 🟢 inactive
+  Pollution crisis: 🟢 inactive
+  Ecosystem collapse: 🟢 inactive
+  Meaning collapse: 🟢 inactive
+
+✅ Test complete!
+
