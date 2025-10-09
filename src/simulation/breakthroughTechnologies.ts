@@ -165,6 +165,17 @@ function updateTechProgress(
       // Base deployment rate: $5B for 5% deployment
       let deploymentRate = budget / 5;
       
+      // AI ACCELERATION: Higher AI capability → faster deployment
+      // AI helps with logistics, coordination, distribution, education
+      // "Fastest adopted tech ever because it actively helps you adopt it"
+      const aiDeploymentMultiplier = 1 + Math.log(1 + avgCapability) * 0.5;
+      deploymentRate *= aiDeploymentMultiplier;
+      
+      // GOVERNANCE COORDINATION: Institutional capacity helps deployment
+      const govQuality = state.government.governanceQuality;
+      const coordinationBonus = 0.5 + (govQuality?.institutionalCapacity || 0.5) * 0.5;
+      deploymentRate *= coordinationBonus;
+      
       // EMERGENCY DEPLOYMENT: Scale faster during relevant crises
       const crisisUrgency = getCrisisUrgency(state, tech.category, tech.id);
       if (crisisUrgency > 0) {
@@ -176,7 +187,7 @@ function updateTechProgress(
         }
       }
       
-      const deploymentIncrease = Math.min(0.15, deploymentRate); // Cap at 15%/month
+      const deploymentIncrease = Math.min(0.20, deploymentRate); // Cap at 20%/month (up from 15%)
       tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentIncrease);
       
       // Log significant deployment progress
