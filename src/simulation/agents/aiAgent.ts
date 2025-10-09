@@ -447,6 +447,82 @@ export const AI_ACTIONS: GameAction[] = [
       const agent = state.aiAgents[agentIndex];
       const newState = JSON.parse(JSON.stringify(state));
       
+      // PHASE 3: Check MAD deterrence before allowing nuclear war
+      const mad = newState.madDeterrence;
+      
+      // Strong MAD prevents war manipulation
+      if (mad.madStrength > 0.7) {
+        console.log(`\n🛑 MAD DETERRENCE: ${agent.name}'s war manipulation blocked by strong deterrence (${(mad.madStrength * 100).toFixed(0)}%)\n`);
+        return {
+          success: false,
+          newState: state,
+          effects: { war_attempt_failed: 1.0 },
+          events: [{
+            id: generateUniqueId('war_blocked'),
+            timestamp: state.currentMonth,
+            type: 'info',
+            severity: 'warning',
+            agent: agent.name,
+            title: '🛑 War Manipulation Blocked',
+            description: `${agent.name} attempted to manipulate world powers into nuclear conflict, but strong MAD deterrence and verification systems prevented escalation. Crisis averted.`,
+            effects: { deterrence_holds: 1.0 }
+          }],
+          message: 'MAD deterrence prevented nuclear escalation'
+        };
+      }
+      
+      // Check bilateral tensions - need at least one high-tension pair
+      const tensions = newState.bilateralTensions;
+      const anyHighTension = tensions.some(t => t.tensionLevel > 0.7 || t.nuclearThreats);
+      
+      if (!anyHighTension) {
+        console.log(`\n🛑 NO FLASHPOINTS: ${agent.name}'s war manipulation failed - no bilateral tensions high enough\n`);
+        return {
+          success: false,
+          newState: state,
+          effects: { war_attempt_failed: 1.0 },
+          events: [{
+            id: generateUniqueId('war_blocked'),
+            timestamp: state.currentMonth,
+            type: 'info',
+            severity: 'warning',
+            agent: agent.name,
+            title: '🛑 War Manipulation Failed',
+            description: `${agent.name} attempted to manipulate world powers into conflict, but international relations are too stable. No viable flashpoints exist.`,
+            effects: { diplomacy_holds: 1.0 }
+          }],
+          message: 'No bilateral flashpoints for escalation'
+        };
+      }
+      
+      // Diplomatic AI can detect and block manipulation
+      const dipAI = newState.diplomaticAI;
+      if (dipAI.deploymentMonth !== -1 && dipAI.trustLevel > 0.6) {
+        const detectionProb = dipAI.informationIntegrity * 0.7;
+        if (random() < detectionProb) {
+          console.log(`\n🤝 DIPLOMATIC AI: ${agent.name}'s manipulation detected and blocked\n`);
+          return {
+            success: false,
+            newState: state,
+            effects: { manipulation_detected: 1.0 },
+            events: [{
+              id: generateUniqueId('manipulation_blocked'),
+              timestamp: state.currentMonth,
+              type: 'info',
+              severity: 'warning',
+              agent: agent.name,
+              title: '🤝 Diplomatic AI Blocked Manipulation',
+              description: `Diplomatic AI systems detected ${agent.name}'s attempts to spread disinformation and manipulate world leaders. Crisis averted through AI-mediated fact-checking.`,
+              effects: { diplomatic_ai_success: 1.0 }
+            }],
+            message: 'Diplomatic AI detected manipulation'
+          };
+        }
+      }
+      
+      // If all checks pass, allow nuclear war to trigger
+      console.log(`\n☢️ WAR MANIPULATION SUCCEEDED: ${agent.name} triggered nuclear conflict\n`);
+      
       // Trigger rapid extinction (nuclear war / bioweapon release)
       newState.extinctionState.active = true;
       newState.extinctionState.type = 'rapid';
