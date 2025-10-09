@@ -205,6 +205,90 @@ if (!ocean.recoveryPossible && !ocean.geoengIntervention) {
 - **Dual-use:** Can restore OR destroy, depending on execution
 - **AI role:** Superintelligent AI might be able to model complex systems well enough to do it safely... or might fuck it up catastrophically
 
+## ⚠️ TERMINATION SHOCK (Critical Mechanic!)
+
+**User insight:** "if we start geoengineering it will cause termination shocks if we stop so its a resource drain, but with really gradual ramp-up and ramp down we can do it. more gradual more safer."
+
+**The Problem:**
+- Geoengineering creates a **dependency**
+- Ecosystems **adapt** to the intervention
+- If you **stop abruptly**, rapid climate shift (worse than original problem!)
+- **Example:** Solar radiation management → sudden stop → temperature spike +5°C in 10 years
+
+**Mechanics:**
+
+```typescript
+interface TerminationShockRisk {
+  // Builds up as geoeng is active
+  adaptationLevel: number;         // [0,1] How much ecosystems adapted to intervention
+  dependencyLevel: number;         // [0,1] How much world relies on it continuing
+  
+  // If stopping
+  rampDownRate: number;            // How fast we're reducing intensity
+  shockRisk: number;               // [0,1] Probability of catastrophic shift
+  
+  // Safe ramp rates
+  minSafeRampUp: number;           // e.g., 0.02/month (5% increase)
+  minSafeRampDown: number;         // e.g., 0.01/month (1% decrease - slower!)
+}
+
+// Adaptation increases over time
+geoeng.adaptationLevel += geoeng.deploymentLevel * 0.01; // 1% per month at full deployment
+
+// If ramping down too fast
+if (geoeng.rampDownRate > geoeng.minSafeRampDown) {
+  const excessRate = geoeng.rampDownRate - geoeng.minSafeRampDown;
+  geoeng.shockRisk = geoeng.adaptationLevel * excessRate * 10; // Up to 100% risk!
+  
+  if (Math.random() < geoeng.shockRisk) {
+    // TERMINATION SHOCK DISASTER
+    triggerTerminationShock();
+  }
+}
+
+function triggerTerminationShock() {
+  // Rapid climate shift
+  state.co2.temperatureAnomaly += 2.0; // Sudden +2°C spike
+  
+  // Ecosystem collapse
+  state.ocean.phytoplanktonPopulation -= 0.4;
+  state.environmentalAccumulation.biodiversityIndex -= 0.3;
+  
+  // Extinction risk
+  state.extinctionState.active = true;
+  state.extinctionState.mechanism = 'geoeng_termination_shock';
+  
+  addEvent({
+    type: 'catastrophe',
+    title: '💥 TERMINATION SHOCK',
+    description: 'Abrupt halt of geoengineering caused rapid climate shift. Ecosystems had adapted to intervention and cannot survive sudden change.',
+    effects: { termination_shock: 1.0 }
+  });
+}
+```
+
+**Resource Drain:**
+```typescript
+// Geoengineering is a permanent commitment (or gradual phase-out)
+const geoengCost = 
+  oceanAlkalinity.deploymentLevel * 5.0 +      // $5B/month at full deployment
+  artificialUpwelling.deploymentLevel * 6.0 +  // $6B/month (energy intensive!)
+  bioengCleaners.deploymentLevel * 2.0;        // $2B/month (organisms self-replicate)
+
+state.government.budget -= geoengCost;
+
+// Can't stop without years of ramp-down
+const yearsToSafelyStop = geoeng.adaptationLevel * 100; // e.g., 5 years if 50% adapted
+```
+
+**Strategic Implications:**
+- Starting geoeng = **long-term commitment**
+- Must maintain **funding** or face termination shock
+- **Gradual deployment** = safer but slower results
+- **Can only safely stop** with superintelligent AI (4.5+) modeling safe ramp-down
+
+---
+
 ### Tech 1: Ocean Alkalinity Enhancement (OAE)
 
 **Mechanism:** Add alkaline minerals (lime, olivine) to ocean to raise pH
@@ -212,7 +296,7 @@ if (!ocean.recoveryPossible && !ocean.geoengIntervention) {
 **Real-world status:**
 - Proof of concept (Project Vesta, Running Tide)
 - Cost: $10-100 per ton CO2 removed
-- Risks: Local pH spikes, trace metal toxicity
+- Risks: Local pH spikes, trace metal toxicity, **termination shock if stopped**
 
 **Game Implementation:**
 
