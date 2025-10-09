@@ -6,6 +6,7 @@
  */
 
 import { QualityOfLifeSystems, GameState } from '@/types/game';
+import { getTrustInAI } from './socialCohesion';
 
 /**
  * Calculate multi-dimensional quality of life from all component systems
@@ -277,7 +278,8 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   politicalFreedom = Math.max(0, Math.min(1, politicalFreedom));
   
   // Information integrity: AI manipulation hurts, trust matters
-  let informationIntegrity = 0.5 + society.trustInAI * 0.3;
+  const trustInAI = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
+  let informationIntegrity = 0.5 + trustInAI * 0.3;
   informationIntegrity -= (totalAICapability * (1 - avgAlignment)) * 0.2; // Misaligned AI manipulates
   informationIntegrity = Math.max(0, Math.min(1, informationIntegrity));
   
