@@ -246,7 +246,10 @@ export function updateParanoia(state: GameState): void {
   
   // Smooth transition (don't jump instantly)
   const smoothing = 0.3; // 30% new value, 70% old value
-  society.trustInAI = society.trustInAI * (1 - smoothing) + trustFromParanoia * smoothing;
+  const newTrust = society.trustInAI * (1 - smoothing) + trustFromParanoia * smoothing;
+  
+  // Cap trust at ceiling (prevent smoothing from exceeding limits)
+  society.trustInAI = Math.max(0.2, Math.min(0.95, newTrust));
 }
 
 /**
