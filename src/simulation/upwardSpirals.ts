@@ -224,7 +224,7 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   // AI-accelerated research
   const avgAICapability = state.aiAgents.length > 0 ?
     state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-  const aiAccelerated = avgAICapability > 2.0;
+  const aiAccelerated = avgAICapability > 1.2; // Lowered from 2.0 - AI is already 3x-ing papers at GPT-4 level
   
   const wasActive = spiral.active;
   // Need multiple breakthroughs AND ongoing investment AND AI acceleration
@@ -584,12 +584,12 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const deployedCount = Object.values(breakthrough).filter((t: any) => t?.deployed && t.deployed > 0.5).length;
   const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
   const researchIntensive = totalResearch > 50;
-  const aiAccelerated = avgAI > 2.0;
+  const aiAccelerated = avgAI > 1.2; // Lowered from 2.0 - AI already accelerating science at GPT-4 level
   
   console.log(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   console.log(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${unlockedCount >= 4 ? '✅' : '❌'} (need 4+ unlocked)`);
   console.log(`   Research Investment: $${Number(totalResearch || 0).toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
-  console.log(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >2.0)`);
+  console.log(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >1.2)`);
   
   // MEANING SPIRAL
   const meaningFulfilled = social.meaningCrisisLevel < 0.2;
