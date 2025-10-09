@@ -339,15 +339,40 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
       const aiControlGap = Math.max(0, totalAICapability - control);
       const governmentCanStop = aiControlGap < 1.5;
       
-      if (!governmentCanStop) {
+      // DEBUG: Log nuclear war conditions
+      console.log(`\n🔍 NUCLEAR WAR CHECK (${ai.name}):`);
+      console.log(`   Nuclear capability: ${nuclearCapability.toFixed(2)} (digital: ${profile.digital.toFixed(1)}, cognitive: ${profile.cognitive.toFixed(1)}, social: ${profile.social.toFixed(1)})`);
+      console.log(`   Stability: ${(stability * 100).toFixed(0)}%`);
+      console.log(`   Dangerous AI: YES (alignment: ${((ai.trueAlignment ?? ai.alignment) * 100).toFixed(0)}%, sleeper: ${ai.sleeperState})`);
+      console.log(`   AI control gap: ${aiControlGap.toFixed(2)} (total: ${totalAICapability.toFixed(2)}, control: ${control.toFixed(2)})`);
+      
+      // FIX: Even if government "can stop", dangerous AIs with nuclear capability are still a threat
+      // Only give government benefit of doubt if control is reasonably high (>1.0)
+      const strongControl = control > 1.0 && aiControlGap < 1.0;
+      console.log(`   Government control: ${strongControl ? 'STRONG' : 'WEAK'} (control: ${control.toFixed(2)}, gap: ${aiControlGap.toFixed(2)})`);
+      
+      if (strongControl) {
+        console.log(`   ✅ STRONG GOVERNMENT CONTROL: Nuclear war prevented\n`);
+        return { triggered: false };
+      }
+      
+      // Weak control or large gap → check MAD deterrence
+      {
         // Phase 3: Check MAD deterrence system
         const mad = state.madDeterrence;
         const tensions = state.bilateralTensions;
         
+        console.log(`   MAD strength: ${(mad.madStrength * 100).toFixed(0)}%`);
+        console.log(`   Dangerous AI count: ${mad.dangerousAICount} (${(mad.dangerousFactor * 100).toFixed(0)}%)`);
+        console.log(`   Bilateral tensions: ${tensions.map(t => `${t.nationA.slice(0,3)}-${t.nationB.slice(0,3)}:${(t.tensionLevel * 100).toFixed(0)}%`).join(', ')}`);
+        
         // Strong MAD prevents nuclear war even with dangerous AI
         if (mad.madStrength > 0.7) {
+          console.log(`   ✅ DETERRENCE HOLDS: MAD strength ${(mad.madStrength * 100).toFixed(0)}% > 70%\n`);
           return { triggered: false }; // Deterrence holds
         }
+        
+        console.log(`   ⚠️  WEAK DETERRENCE: MAD strength ${(mad.madStrength * 100).toFixed(0)}% - checking bilateral pairs...`);
         
         // Check which nation-pairs are at risk
         let nuclearRisk = false;
@@ -415,6 +440,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
         }
         
         if (nuclearRisk) {
+          console.log(`   ☢️ NUCLEAR WAR TRIGGERED!\n`);
           return {
             triggered: true,
             mechanism: 'nuclear_war',
@@ -422,8 +448,10 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
             description: riskReason
           };
         }
-      }
-    }
+        
+        console.log(`   ✅ NO BILATERAL PAIR TRIGGERED: All pairs blocked by deterrence/veto/diplomacy\n`);
+      } // End MAD deterrence check block
+    } // End nuclear war capability check
     
     // CLIMATE TIPPING POINT: Requires climate research + ignoring consequences
     const climateInterventionCapability = 
