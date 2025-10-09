@@ -24,6 +24,7 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
     mentalHealthAI: createMentalHealthAITech(),
     purposeFrameworks: createPurposeFrameworksTech(),
     communityPlatforms: createCommunityPlatformsTech(),
+    interspeciesComm: createInterspeciesCommTech(),
     
     // Medical Technologies
     diseaseElimination: createDiseaseEliminationTech(),
@@ -123,13 +124,16 @@ function updateSocialTech(state: GameState, budget: number, month: number): void
   const avgCapability = calculateAverageCapability(state);
   
   // Mental Health AI - foundational
-  updateTechProgress(state, tech.mentalHealthAI, budget * 0.4, avgCapability, month);
+  updateTechProgress(state, tech.mentalHealthAI, budget * 0.35, avgCapability, month);
   
   // Purpose Frameworks - parallel
-  updateTechProgress(state, tech.purposeFrameworks, budget * 0.35, avgCapability, month);
+  updateTechProgress(state, tech.purposeFrameworks, budget * 0.30, avgCapability, month);
   
   // Community Platforms
-  updateTechProgress(state, tech.communityPlatforms, budget * 0.25, avgCapability, month);
+  updateTechProgress(state, tech.communityPlatforms, budget * 0.20, avgCapability, month);
+  
+  // Interspecies Communication - parallel (NEW!)
+  updateTechProgress(state, tech.interspeciesComm, budget * 0.15, avgCapability, month);
 }
 
 /**
@@ -724,6 +728,44 @@ function createCommunityPlatformsTech(): TechnologyNode {
       communityStrengthBoost: 0.01,
       culturalAdaptation: 0.008,
       trustBoost: 0.03,
+    },
+  };
+}
+
+function createInterspeciesCommTech(): TechnologyNode {
+  return {
+    id: 'interspeciesComm',
+    name: 'Interspecies Communication AI',
+    category: 'social',
+    unlocked: false,
+    researchProgress: 0,
+    deploymentLevel: 0,
+    requirements: {
+      minAICapability: 1.8,        // Need advanced NLP + pattern recognition
+      minEconomicStage: 2,
+      requiredInvestment: 12,       // Moderate investment (field research + AI)
+      prerequisiteTechs: [],
+    },
+    monthlyResearchCost: 1.2,
+    monthsToUnlock: 18,              // Moderate timeline (real projects started 2020)
+    effects: {
+      // MEANING & PURPOSE: Contact with other intelligent beings
+      meaningCrisisReduction: -0.04,  // -4% per month at full deployment (profound impact!)
+      purposeDiscovery: 0.02,          // New purpose: understanding non-human minds
+      
+      // COMMUNITY & BIOSPHERE: Expand circle of moral concern
+      communityStrengthBoost: 0.008,   // Includes non-human beings in community
+      biodiversityBoost: 0.015,        // Helps restoration (understand whale migration, octopus habitats)
+      
+      // ENVIRONMENTAL: Better ecosystem understanding
+      ecosystemHealthBoost: 0.01,      // AI helps us understand ecosystem needs from animals' perspective
+      
+      // CULTURAL: Paradigm shift in human identity
+      culturalAdaptation: 0.012,       // Forces us to adapt worldview
+      creativityBoost: 0.015,          // Inspiring! Artists, philosophers, scientists energized
+      
+      // TRUST: Amazing beneficial tech, no risks
+      trustBoost: 0.05,                // People LOVE this (everyone wanted to talk to dolphins!)
     },
   };
 }
