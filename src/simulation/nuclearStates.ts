@@ -200,7 +200,11 @@ export function updateMADDeterrence(state: GameState): void {
   }
   
   // ALIGNED AI HELPS DETERRENCE!
-  if (avgAlignment > 0.7 && domesticAI > 2.0 && mad.dangerousFactor < 0.1) {
+  // Get US AI capability for this check
+  const usAICapabilityCheck = state.nationalAI?.nations?.find(n => n.nation === 'United States')?.effectiveCapability ?? 
+    (state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0);
+  
+  if (avgAlignment > 0.7 && usAICapabilityCheck > 2.0 && mad.dangerousFactor < 0.1) {
     mad.earlyWarningReliability = Math.min(0.95, mad.earlyWarningReliability * 1.01);
     if (mad.earlyWarningReliability > 0.85 && !mad.hotlinesOperational) {
       mad.hotlinesOperational = true;
