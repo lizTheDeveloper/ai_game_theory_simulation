@@ -27,11 +27,12 @@ The fundamental building blocks of the simulation:
 | [🌍 Environmental](./systems/environmental.md) | ✅ | Resource depletion, pollution, climate, biodiversity |
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis, institutional erosion, social bonds |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
-| [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | Research, unlocks, crisis recovery |
+| [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | 12 technologies (includes Interspecies Comm 🐋), resource regeneration |
 | [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
 | [🌟 Upward Spirals](./systems/upward-spirals.md) | ✅ | 6 virtuous cascades, multiple paths to Utopia |
 | [🎨 Meaning Renaissance](./systems/meaning-renaissance.md) | ✅ | Cultural flourishing, 4 dimensions of meaning |
-| [🕊️ Conflict Resolution](./systems/conflict-resolution.md) | ✅ | Diplomatic AI, post-scarcity peace, cyber defense |
+| [🕊️ Conflict Resolution](./systems/conflict-resolution.md) | ✅ | Diplomatic AI, post-scarcity peace, cyber defense, 4 pillars |
+| [☢️ Nuclear Deterrence](./systems/nuclear-deterrence.md) | ✅ | 5 nuclear states, MAD mechanics, bilateral tensions, escalation ladder |
 
 ### Game Mechanics
 
@@ -89,6 +90,10 @@ Implementation details and code references:
 - **Upward Spirals**: 6 virtuous cascades (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological) with cross-amplification (Phase 2D)
 - **Meaning Renaissance**: 4 dimensions of cultural flourishing (purpose diversity, self-actualization, artistic renaissance, philosophical maturity) (Phase 2E)
 - **Conflict Resolution**: AI-mediated diplomacy, post-scarcity peace dividend, cyber defense systems (Phase 2F)
+- **Nuclear Deterrence**: 5 nuclear states, MAD mechanics, escalation ladder, reduced nuclear war 80% → 20% (Oct 2025)
+- **Interspecies Communication AI**: Talk to whales/dolphins/octopi, meaning crisis reduction, 12th breakthrough technology (Oct 2025)
+- **Resource Regeneration**: Tech-enabled recovery (+4.8%/month), enables Ecological Spiral activation (Oct 2025)
+- **Paranoia/Trust System**: Trust can recover via decay + beneficial tech, unblocks Cognitive Spiral (Oct 2025)
 - **Monte Carlo**: 1000+ runs in ~10 seconds
 
 ### What Needs Tuning ⚠️
@@ -190,5 +195,12 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 ---
 
 **Last Updated**: October 9, 2025
-**Version**: 2.1 (Phase 2B-F: Utopian Dynamics Complete)
-**Status**: Full Phase 2 implementation complete (Phases 2A-2F), tuning needed for spiral activation
+**Version**: 2.2 (Phase 2F+: Nuclear Deterrence & Paranoia Systems)
+**Status**: Full Phase 2 complete (2A-2F) + October enhancements (nuclear deterrence, interspecies comm, resource regeneration, paranoia/trust)
+
+**October 2025 Additions:**
+- ☢️ Nuclear Deterrence System (5 nuclear states, MAD mechanics, escalation ladder)
+- 🐋 Interspecies Communication AI (12th breakthrough technology)
+- ♻️ Resource Regeneration (+4.8%/month recovery, enables Ecological Spiral)
+- 🧠 Paranoia/Trust System (trust recovery mechanics, unblocks Cognitive Spiral)
+- 🎯 Target: 10-30% Utopia rate (testing in progress)

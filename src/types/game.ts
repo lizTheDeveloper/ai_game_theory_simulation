@@ -693,6 +693,9 @@ export interface GameState {
   madDeterrence: import('../types/nuclearStates').MADDeterrence; // MAD deterrence system
   bilateralTensions: import('../types/nuclearStates').BilateralTension[]; // Bilateral relationships
   
+  // Resource Economy (Phase 2.9)
+  resourceEconomy: import('../types/resources').ResourceEconomy; // Comprehensive resource modeling with CO2 coupling
+  
   // Configuration
   config: ConfigurationSettings;
   

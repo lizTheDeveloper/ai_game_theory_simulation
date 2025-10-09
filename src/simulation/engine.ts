@@ -273,6 +273,10 @@ export class SimulationEngine {
     updateMADDeterrence(newState);
     updateBilateralTensions(newState);
     
+    // Resource Economy: Depletion, CO2 coupling, ocean health, industry opposition (Phase 2.9)
+    const { updateResourceEconomy } = require('./resourceDepletion');
+    updateResourceEconomy(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);
