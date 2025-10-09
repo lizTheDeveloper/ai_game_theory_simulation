@@ -582,6 +582,12 @@ export class SimulationEngine {
       }
     }
     
+    // Log if reached max months without definitive outcome
+    if (!actualOutcome) {
+      console.log(`\n⏱️  SIMULATION REACHED MAX DURATION: ${maxMonths} months (${(maxMonths/12).toFixed(1)} years)`);
+      console.log(`   No definitive outcome - determining based on final probabilities`);
+    }
+    
     // Determine final outcome
     const finalMetrics = history[history.length - 1].metrics;
     const outcomes = finalMetrics.outcomeProbs;
@@ -601,12 +607,18 @@ export class SimulationEngine {
         outcomes.utopiaProbability > outcomes.extinctionProbability) {
       finalOutcome = 'utopia';
       finalOutcomeProbability = outcomes.utopiaProbability;
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   🌟 UTOPIA trajectory dominant\n`);
     } else if (outcomes.dystopiaProbability > outcomes.extinctionProbability) {
       finalOutcome = 'dystopia';
       finalOutcomeProbability = outcomes.dystopiaProbability;
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   🏛️  DYSTOPIA trajectory dominant\n`);
     } else if (outcomes.extinctionProbability > 0.3) {
       finalOutcome = 'extinction';
       finalOutcomeProbability = outcomes.extinctionProbability;
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   ☠️  EXTINCTION trajectory dominant\n`);
     } else {
       finalOutcome = 'inconclusive';
       finalOutcomeProbability = Math.max(
@@ -614,6 +626,8 @@ export class SimulationEngine {
         outcomes.dystopiaProbability,
         outcomes.extinctionProbability
       );
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   ❓ INCONCLUSIVE - no clear trajectory\n`);
     }
     
     // Finalize log
