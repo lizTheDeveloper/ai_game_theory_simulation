@@ -209,7 +209,11 @@ export function updateMADDeterrence(state: GameState): void {
   }
   
   // AI INTEGRATION IN C&C SYSTEMS
-  const militaryAIIntegration = Math.min(0.9, domesticAI / 5.0);
+  // Get US AI capability from national AI system if available
+  const usAICapability = state.nationalAI?.nations?.find(n => n.nation === 'United States')?.effectiveCapability ?? 
+    (state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0);
+  
+  const militaryAIIntegration = Math.min(0.9, usAICapability / 5.0);
   usState.aiIntegration = militaryAIIntegration;
   chinaState.aiIntegration = militaryAIIntegration * 1.2;
   russiaState.aiIntegration = militaryAIIntegration * 0.8;
