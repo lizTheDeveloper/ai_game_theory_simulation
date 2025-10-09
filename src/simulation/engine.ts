@@ -475,6 +475,7 @@ export class SimulationEngine {
         const endGameOutcome = getEndGameOutcome(state);
         if (endGameOutcome.outcome) {
           actualOutcome = endGameOutcome.outcome;
+          actualOutcomeReason = endGameOutcome.reason;
           console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
           console.log(`   Reason: ${endGameOutcome.reason}`);
           console.log(`   Month: ${month}\n`);
@@ -485,6 +486,7 @@ export class SimulationEngine {
       // Check for extinction completion (Phase 2: Heterogeneous extinctions)
       if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {
         actualOutcome = 'extinction';
+        actualOutcomeReason = `${state.extinctionState.type} extinction via ${state.extinctionState.mechanism}`;
         console.log(`\n💀 EXTINCTION EVENT: ${state.extinctionState.type?.toUpperCase()}`);
         console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
         console.log(`   Duration: ${month - state.extinctionState.startMonth} months`);

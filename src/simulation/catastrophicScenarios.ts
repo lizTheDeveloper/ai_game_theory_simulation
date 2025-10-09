@@ -981,10 +981,26 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
       const milAccess = p.digital > avgCyberDef * 2.5;
       return { met: milAccess, progress: Math.min(1, p.digital / (avgCyberDef * 2.5)) };
     case 4: // Geopolitical Crisis
-      // Random event or QoL-driven
-      const crisis = (state.qualityOfLifeSystems?.basicNeeds?.foodSecurity !== undefined) ? 
+      // Requires REAL systemic instability, not random chance
+      const foodCrisis = (state.qualityOfLifeSystems?.basicNeeds?.foodSecurity !== undefined) ? 
         (1 - state.qualityOfLifeSystems.basicNeeds.foodSecurity) > 0.4 : false;
-      return { met: crisis || Math.random() < 0.01, progress: crisis ? 1.0 : 0.0 };
+      
+      // Multiple crisis conditions make war more likely
+      const resourceShortage = state.environmentalAccumulation.resourceCrisisActive;
+      const socialCollapse = state.socialAccumulation.socialUnrestActive && 
+                            state.socialAccumulation.institutionalFailureActive;
+      const economicCrisis = state.globalMetrics.economicTransitionStage >= 2 && 
+                            state.society.unemploymentLevel > 0.7 && 
+                            state.society.trustInAI < 0.3;
+      
+      // Count active crisis conditions
+      const crisisCount = [foodCrisis, resourceShortage, socialCollapse, economicCrisis].filter(Boolean).length;
+      
+      // Need at least 2 simultaneous crises for geopolitical breakdown
+      const geopoliticalCrisis = crisisCount >= 2;
+      const progress = crisisCount / 2; // 0, 0.5, 1.0, 1.5, 2.0 → clamp to 1.0
+      
+      return { met: geopoliticalCrisis, progress: Math.min(1.0, progress) };
     case 5: // False Flag Event
       return { met: false, progress: 0 }; // Will be set by progression logic
     case 6: // Nuclear Escalation
