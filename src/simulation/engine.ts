@@ -259,6 +259,10 @@ export class SimulationEngine {
     const { updateMeaningRenaissance } = require('./meaningRenaissance');
     updateMeaningRenaissance(newState);
     
+    // Conflict resolution: Peace systems & diplomatic AI (Phase 2F)
+    const { updateConflictResolution } = require('./conflictResolution');
+    updateConflictResolution(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);

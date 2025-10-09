@@ -684,6 +684,7 @@ export interface GameState {
   breakthroughTech: import('../types/technologies').BreakthroughTechState; // Phase 2A: Breakthrough technologies
   upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance
+  conflictResolution: import('../simulation/conflictResolution').ConflictResolutionState; // Phase 2F: Peace systems
   
   // Configuration
   config: ConfigurationSettings;

@@ -997,7 +997,17 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
       const crisisCount = [foodCrisis, resourceShortage, socialCollapse, economicCrisis].filter(Boolean).length;
       
       // Need at least 2 simultaneous crises for geopolitical breakdown
-      const geopoliticalCrisis = crisisCount >= 2;
+      let geopoliticalCrisis = crisisCount >= 2;
+      
+      // Phase 2F: AI-mediated diplomacy can prevent crisis
+      if (geopoliticalCrisis) {
+        const { attemptDiplomaticIntervention } = require('./conflictResolution');
+        const diplomaticSuccess = attemptDiplomaticIntervention(state);
+        if (diplomaticSuccess) {
+          geopoliticalCrisis = false; // Crisis defused!
+        }
+      }
+      
       const progress = crisisCount / 2; // 0, 0.5, 1.0, 1.5, 2.0 → clamp to 1.0
       
       return { met: geopoliticalCrisis, progress: Math.min(1.0, progress) };

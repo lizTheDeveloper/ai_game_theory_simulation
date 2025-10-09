@@ -19,6 +19,7 @@ import { initializeTechnologicalRisk } from './technologicalRisk';
 import { initializeBreakthroughTech } from './breakthroughTechnologies';
 import { initializeUpwardSpirals } from './upwardSpirals';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
+import { initializeConflictResolution } from './conflictResolution';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -286,6 +287,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 2E: Meaning Renaissance (Cultural flourishing)
     meaningRenaissance: initializeMeaningRenaissance(),
+    
+    // Phase 2F: Conflict Resolution (Peace systems)
+    conflictResolution: initializeConflictResolution(),
     
     eventLog: [],
     technologyTree: [],
