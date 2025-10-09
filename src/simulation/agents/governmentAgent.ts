@@ -2026,10 +2026,31 @@ export function executeGovernmentActions(
   // AUTOMATIC: Invest in evaluation based on public trust
   autoInvestInEvaluation(currentState);
   
-  // Government: Configurable frequency
-  const actionsThisMonth = Math.floor(currentState.config.governmentActionFrequency);
-  const extraActionChance = currentState.config.governmentActionFrequency - actionsThisMonth;
+  // Government: Configurable frequency + CRISIS BOOST
+  // Rationale: Governments act more frequently during crises (emergency sessions, special legislation)
+  // Real-world precedent: COVID-19, 2008 financial crisis, etc.
+  let baseFrequency = currentState.config.governmentActionFrequency;
+  
+  // CRISIS MULTIPLIERS
+  const unemploymentCrisis = currentState.society.unemploymentLevel > 0.25 ? 
+    Math.min(3.0, 1.0 + currentState.society.unemploymentLevel * 2.0) : 1.0; // Up to 3x at 100% unemployment
+  
+  const institutionalCrisis = currentState.socialAccumulation.institutionalCrisis > 0.5 ?
+    Math.min(2.0, 1.0 + currentState.socialAccumulation.institutionalCrisis) : 1.0; // Up to 2x
+  
+  const controlLossCrisis = currentState.socialAccumulation.controlLossCrisis > 0.5 ?
+    Math.min(2.0, 1.0 + currentState.socialAccumulation.controlLossCrisis) : 1.0; // Up to 2x
+  
+  const maxMultiplier = Math.max(unemploymentCrisis, institutionalCrisis, controlLossCrisis);
+  const adjustedFrequency = baseFrequency * maxMultiplier;
+  
+  const actionsThisMonth = Math.floor(adjustedFrequency);
+  const extraActionChance = adjustedFrequency - actionsThisMonth;
   const totalActions = actionsThisMonth + (random() < extraActionChance ? 1 : 0);
+  
+  if (maxMultiplier > 1.5) {
+    console.log(`🏛️ CRISIS RESPONSE: Government frequency ${baseFrequency.toFixed(2)} → ${adjustedFrequency.toFixed(2)} (${totalActions} actions this month)`);
+  }
   
   for (let i = 0; i < totalActions; i++) {
     const selectedAction = selectGovernmentAction(currentState, random);
