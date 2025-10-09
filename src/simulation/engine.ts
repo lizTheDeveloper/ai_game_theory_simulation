@@ -268,8 +268,9 @@ export class SimulationEngine {
     updateDiplomaticAI(newState);
     
     // Nuclear states & MAD deterrence: Track bilateral deterrence (Phase 3)
-    const { updateMADDeterrence } = require('./nuclearStates');
+    const { updateMADDeterrence, updateBilateralTensions } = require('./nuclearStates');
     updateMADDeterrence(newState);
+    updateBilateralTensions(newState);
     
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');

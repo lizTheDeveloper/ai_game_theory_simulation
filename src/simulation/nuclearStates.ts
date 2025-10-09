@@ -180,8 +180,8 @@ export function updateMADDeterrence(state: GameState): void {
   
   const dangerousAIs = state.aiAgents.filter(ai => 
     (ai.trueAlignment ?? ai.alignment) < 0.2 || 
-    ai.lifecycle === 'sleeper' || 
-    (ai.hiddenObjective ?? 0) > 0.5
+    ai.sleeperState === 'active' || 
+    ai.sleeperState === 'dormant'
   );
   
   mad.dangerousAICount = dangerousAIs.length;
@@ -273,5 +273,88 @@ export function updateMADDeterrence(state: GameState): void {
     militaryAIIntegration * 0.3 + 
     mad.cyberThreats * 0.3
   );
+}
+
+/**
+ * Update bilateral tensions based on crises and AI race (monthly)
+ */
+export function updateBilateralTensions(state: GameState): void {
+  const tensions = state.bilateralTensions;
+  const mad = state.madDeterrence;
+  const env = state.environmentalAccumulation;
+  const social = state.socialAccumulation;
+  
+  // AI race intensity
+  const aiRaceIntensity = state.aiAgents.length > 0 ?
+    Math.min(1, state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length / 5) : 0;
+  
+  for (const tension of tensions) {
+    // === TENSION DRIVERS ===
+    
+    // 1. RESOURCE SCARCITY drives conflict
+    const resourceScarcity = 1 - (env.resourceReserves || 0.5);
+    if (env.resourceCrisisActive && resourceScarcity > 0.5) {
+      tension.tensionLevel = Math.min(1, tension.tensionLevel + 0.02);
+      if (resourceScarcity > 0.8 && !tension.flashpoints.includes('Resource Wars')) {
+        tension.flashpoints.push('Resource Wars');
+      }
+    }
+    
+    // 2. AI RACE increases US-China, US-Russia tensions
+    if ((tension.nationA === 'United States' || tension.nationB === 'United States') && 
+        aiRaceIntensity > 0.5) {
+      tension.tensionLevel = Math.min(1, tension.tensionLevel + 0.01 * aiRaceIntensity);
+      if (aiRaceIntensity > 0.7 && !tension.flashpoints.includes('AI Supremacy')) {
+        tension.flashpoints.push('AI Supremacy');
+      }
+    }
+    
+    // 3. SOCIAL COLLAPSE can trigger regional conflicts
+    if (social.socialUnrestActive && tension.tensionLevel > 0.6) {
+      tension.tensionLevel = Math.min(1, tension.tensionLevel + 0.01);
+    }
+    
+    // === ESCALATION LADDER ===
+    
+    // Tension drives escalation
+    if (tension.tensionLevel > 0.9 && tension.escalationLadder < 7) {
+      // High tension but not yet nuclear
+      if (!tension.nuclearThreats && Math.random() < 0.05) {
+        tension.escalationLadder = Math.min(7, tension.escalationLadder + 1);
+        console.log(`⚠️ ESCALATION: ${tension.nationA}-${tension.nationB} tension at ladder step ${tension.escalationLadder}`);
+      }
+    }
+    
+    // Update flags based on escalation ladder
+    tension.conventionalConflict = tension.escalationLadder >= 4;
+    tension.nuclearThreats = tension.escalationLadder >= 5;
+    
+    // === DE-ESCALATION ===
+    
+    // Diplomatic AI can reduce tensions
+    const dipAI = state.diplomaticAI;
+    if (dipAI.deploymentMonth !== -1 && dipAI.trustLevel > 0.6) {
+      const deEscalationProb = dipAI.successRate * 0.1;
+      if (Math.random() < deEscalationProb && tension.escalationLadder > 1) {
+        tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
+        tension.tensionLevel = Math.max(0.3, tension.tensionLevel - 0.05);
+        console.log(`🤝 DIPLOMATIC AI: De-escalated ${tension.nationA}-${tension.nationB} from ladder step ${tension.escalationLadder + 1}`);
+      }
+    }
+    
+    // Post-scarcity peace (Phase 2F)
+    const economicStage = state.globalMetrics.economicTransitionStage || 0;
+    if (economicStage >= 3 && tension.escalationLadder < 4) {
+      tension.tensionLevel = Math.max(0.2, tension.tensionLevel - 0.01);
+    }
+    
+    // Crisis stability improves with peace
+    if (mad.crisisStability > 0.7 && tension.escalationLadder >= 3) {
+      // High stability prevents escalation
+      if (Math.random() < 0.1) {
+        tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
+      }
+    }
+  }
 }
 

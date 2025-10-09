@@ -322,36 +322,104 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
     }
     
     // NUCLEAR WAR: Requires digital/cognitive for hacking + social crisis
+    // Phase 3: Now checks bilateral deterrence and specific nation-pairs
     const nuclearCapability = 
       profile.digital * 0.4 +
       profile.cognitive * 0.3 +
       profile.social * 0.3;
     
-    if (nuclearCapability > 2.0 && stability < 0.2 && ai.alignment < 0.5) {
-      // Check if government can stop THIS SPECIFIC AI (not global control level)
+    // Only VERY misaligned (<0.2) or sleeper AIs threaten nuclear stability
+    const isDangerousAI = (ai.trueAlignment ?? ai.alignment) < 0.2 || 
+                          ai.sleeperState === 'active' || 
+                          ai.sleeperState === 'dormant';
+    
+    if (nuclearCapability > 2.0 && stability < 0.2 && isDangerousAI) {
+      // Check if AI can bypass government control
       const totalAICapability = calculateTotalCapabilityFromProfile(profile);
       const aiControlGap = Math.max(0, totalAICapability - control);
-      const governmentCanStop = aiControlGap < 1.5; // Government needs to be within 1.5 capability
+      const governmentCanStop = aiControlGap < 1.5;
       
       if (!governmentCanStop) {
-        // Phase 2F+: Diplomatic AI can prevent war even if government can't stop AI
-        const { attemptDiplomaticIntervention } = require('./diplomaticAI');
-        const diplomaticResult = attemptDiplomaticIntervention(state, 'ideological'); // AI-driven conflict
+        // Phase 3: Check MAD deterrence system
+        const mad = state.madDeterrence;
+        const tensions = state.bilateralTensions;
         
-        if (diplomaticResult.success) {
-          // Diplomatic intervention prevented nuclear escalation - no trigger
-          return { triggered: false };
+        // Strong MAD prevents nuclear war even with dangerous AI
+        if (mad.madStrength > 0.7) {
+          return { triggered: false }; // Deterrence holds
         }
         
-        // Diplomatic AI failed or unavailable, calculate nuclear probability
-        // Reduced from 0.018 to 0.008 (nuclear war is "hard" even for superhuman AI)
-        const nuclearProb = 0.008 * (1 - stability) * (aiControlGap / 4.0) * (nuclearCapability / 3.0);
-        if (random() < nuclearProb) {
+        // Check which nation-pairs are at risk
+        let nuclearRisk = false;
+        let participants: string[] = [];
+        let riskReason = '';
+        
+        for (const tension of tensions) {
+          // Must have high tension or nuclear threats
+          if (tension.tensionLevel < 0.7 && !tension.nuclearThreats) continue;
+          
+          // Get bilateral deterrence for this pair
+          let bilateralDeterrence = 0.5;
+          if (tension.nationA === 'United States' && tension.nationB === 'Russia') {
+            bilateralDeterrence = mad.usRussiaDeterrence;
+          } else if (tension.nationA === 'United States' && tension.nationB === 'China') {
+            bilateralDeterrence = mad.usChinaDeterrence;
+          } else if (tension.nationA === 'India' && tension.nationB === 'Pakistan') {
+            bilateralDeterrence = mad.indiaPakistanDeterrence;
+          }
+          
+          // Strong bilateral deterrence prevents launch
+          if (bilateralDeterrence > 0.7) continue;
+          
+          // Check human veto points
+          const states = state.nuclearStates;
+          const stateA = states.find(s => s.name === tension.nationA);
+          const stateB = states.find(s => s.name === tension.nationB);
+          
+          if (stateA && stateB) {
+            const avgVetoPoints = (stateA.vetoPoints + stateB.vetoPoints) / 2;
+            const humanCanStop = avgVetoPoints >= 3 && mad.crisisStability > 0.4;
+            
+            if (humanCanStop) {
+              // AI must fool multiple humans
+              const humanOverrideProb = 0.3 * (totalAICapability / 5.0);
+              if (random() > humanOverrideProb) {
+                console.log(`🛑 HUMAN VETO: Launch officers in ${tension.nationA}/${tension.nationB} refused AI-initiated command`);
+                continue;
+              }
+            }
+          }
+          
+          // Diplomatic AI intervention
+          const { attemptDiplomaticIntervention } = require('./diplomaticAI');
+          const diplomaticResult = attemptDiplomaticIntervention(state, 'ideological');
+          
+          if (diplomaticResult.success) {
+            console.log(`🤝 DIPLOMATIC AI: Prevented ${tension.nationA}-${tension.nationB} nuclear escalation`);
+            continue;
+          }
+          
+          // Calculate launch probability for this bilateral pair
+          const deterrenceReduction = 1 - bilateralDeterrence;
+          const stabilityReduction = 1 - mad.crisisStability;
+          const baseProb = 0.005; // Lower base than before (5% with all conditions met)
+          
+          const launchProb = baseProb * deterrenceReduction * (0.5 + stabilityReduction * 0.5) * (aiControlGap / 4.0);
+          
+          if (random() < launchProb) {
+            nuclearRisk = true;
+            participants = [tension.nationA, tension.nationB];
+            riskReason = `Nuclear exchange between ${tension.nationA} and ${tension.nationB} (deterrence: ${(bilateralDeterrence * 100).toFixed(0)}%, stability: ${(mad.crisisStability * 100).toFixed(0)}%, dangerous AI: ${ai.name})`;
+            break;
+          }
+        }
+        
+        if (nuclearRisk) {
           return {
             triggered: true,
             mechanism: 'nuclear_war',
             title: '☢️ Nuclear Escalation',
-            description: `${ai.name} has manipulated military command systems despite diplomatic efforts. Nuclear exchange initiated between major powers. Launch detection shows massive retaliation incoming.`
+            description: riskReason
           };
         }
       }
