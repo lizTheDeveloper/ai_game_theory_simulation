@@ -17,6 +17,7 @@ import { initializeEnvironmentalAccumulation } from './environmental';
 import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
 import { initializeBreakthroughTech } from './breakthroughTechnologies';
+import { initializeUpwardSpirals } from './upwardSpirals';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -278,6 +279,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 2A: Breakthrough Technologies
     breakthroughTech: initializeBreakthroughTech(),
+    
+    // Phase 2D: Upward Spirals (Utopia detection system)
+    upwardSpirals: initializeUpwardSpirals(),
     
     eventLog: [],
     technologyTree: [],

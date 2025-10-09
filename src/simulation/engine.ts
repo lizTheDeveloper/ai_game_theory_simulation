@@ -29,7 +29,8 @@ import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
 import { checkExtinctionTriggers, progressExtinction } from './extinctions';
 import { 
-  checkEndGameTransition, 
+  checkEndGameTransition,
+  initializeEndGameState, 
   enterEndGame, 
   processEndGameMonth, 
   getEndGameOutcome,
@@ -249,6 +250,10 @@ export class SimulationEngine {
     // Governance quality: Update democratic health & policy effectiveness
     const { updateGovernanceQuality } = require('./governanceQuality');
     updateGovernanceQuality(newState);
+    
+    // Upward spirals: Check for virtuous cascades (Phase 2D)
+    const { updateUpwardSpirals } = require('./upwardSpirals');
+    updateUpwardSpirals(newState, newState.currentMonth);
     
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');

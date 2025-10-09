@@ -682,6 +682,7 @@ export interface GameState {
   socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
   breakthroughTech: import('../types/technologies').BreakthroughTechState; // Phase 2A: Breakthrough technologies
+  upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   
   // Configuration
   config: ConfigurationSettings;
