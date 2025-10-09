@@ -237,7 +237,24 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     autonomy -= 0.3;
   }
   autonomy += current.politicalFreedom * 0.2;
-  autonomy = Math.max(0, Math.min(1, autonomy));
+  
+  // Phase 2.7: AUTONOMY FLOOR - Tech & governance can counter surveillance
+  // Research basis: Zuboff (2019), Lessig (2006) - "Code is law, but code can be rewritten"
+  const govQuality = government.governanceQuality;
+  const democraticFloor = government.governmentType === 'democratic' ? 0.25 : 
+                          government.governmentType === 'technocratic' ? 0.15 : 0.05;
+  const transparencyFloor = (govQuality?.transparency || 0.5) * 0.15;
+  const participationFloor = (govQuality?.participationRate || 0.5) * 0.10;
+  
+  // Breakthrough tech can provide counter-surveillance tools
+  const autonomyBreakthrough = state.breakthroughTech;
+  const counterSurveillanceTech = 
+    (autonomyBreakthrough.communityPlatforms?.deploymentLevel || 0) * 0.15 + // Decentralized communication
+    (autonomyBreakthrough.purposeFrameworks?.deploymentLevel || 0) * 0.10;    // Self-actualization pathways
+  
+  const minimumAutonomy = democraticFloor + transparencyFloor + participationFloor + counterSurveillanceTech;
+  
+  autonomy = Math.max(minimumAutonomy, Math.min(1, autonomy));
   
   // === SOCIAL NEEDS ===
   
@@ -266,6 +283,14 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   
   // Community strength: Adaptation helps, stability helps
   let communityStrength = 0.5 + society.socialAdaptation * 0.3 + globalMetrics.socialStability * 0.2;
+  
+  // Phase 2.7: Tech & economic stage boost community
+  const communityBreakthrough = state.breakthroughTech;
+  const communityTechBoost = (communityBreakthrough.communityPlatforms?.deploymentLevel || 0) * 0.15; // Digital community tools
+  const postScarcityBoost = economicStage >= 3 ? 0.10 : 0; // Time freedom enables community
+  const ubiBoost = hasUBI ? 0.05 : 0; // Reduces economic stress
+  
+  communityStrength += communityTechBoost + postScarcityBoost + ubiBoost;
   communityStrength = Math.max(0, Math.min(1, communityStrength));
   
   // Cultural vitality: Freedom helps, AI can enhance or suppress
