@@ -230,6 +230,7 @@ export function createDefaultInitialState(): GameState {
     
     society: {
       trustInAI: 0.6,
+      paranoiaLevel: 0.1,  // Phase 2.8: Slight baseline caution about AI
       economicDependence: 0.2,
       coordinationCapacity: 0.4,
       unemploymentLevel: 0.1,

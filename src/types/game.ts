@@ -253,6 +253,7 @@ export interface GovernmentAgent {
 
 export interface HumanSocietyAgent {
   trustInAI: number; // [0,1] General confidence in AI systems
+  paranoiaLevel: number; // [0,1] Fear/anxiety about AI (Phase 2.8: Paranoia System)
   economicDependence: number; // [0,1] Reliance on AI for economic function
   coordinationCapacity: number; // [0,1] Ability to organize collective action
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced

@@ -13,6 +13,7 @@ import {
   calculateOutcomeProbabilities,
   calculateUnemployment,
   calculateTrustChange,
+  updateParanoia,
   calculateSocialStability,
   calculateTotalAICapability,
   calculateAverageAlignment,
@@ -309,12 +310,10 @@ export class SimulationEngine {
       ))
     };
     
-    // 3. Update trust dynamics
-    const trustChange = calculateTrustChange(newState);
-    newState.society = {
-      ...newState.society,
-      trustInAI: Math.max(0, Math.min(1, newState.society.trustInAI + trustChange))
-    };
+    // 3. Update trust dynamics (Phase 2.8: Paranoia System)
+    // NEW: Paranoia decays, trust recovers, harmful events refresh paranoia
+    // Trust is now calculated inside updateParanoia as inverse of paranoia
+    updateParanoia(newState);
     
     // 4. Update social stability
     const newStability = calculateSocialStability(newState);
