@@ -391,11 +391,21 @@ export class SimulationEngine {
       }
     }
     
-    // 9. Advance time
+    // 9. Collect events from state.eventLog BEFORE advancing time
+    // (crisis events, cascading failures, etc. are logged with current month)
+    if (newState.eventLog && newState.eventLog.length > 0) {
+      // Only collect NEW events from this step (avoid duplicates across steps)
+      const newEventsThisStep = newState.eventLog.filter(
+        (e: GameEvent) => e.month === newState.currentMonth
+      );
+      events.push(...newEventsThisStep);
+    }
+    
+    // 10. Advance time
     newState.currentMonth += 1;
     newState.currentYear = Math.floor(newState.currentMonth / 12);
     
-    // 10. Calculate metrics for tracking
+    // 11. Calculate metrics for tracking
     const metrics = {
       qualityOfLife,
       effectiveControl: calculateEffectiveControl(newState),
@@ -405,16 +415,6 @@ export class SimulationEngine {
       avgAlignment: calculateAverageAlignment(newState.aiAgents),
       crisisDetected: crisis.inCrisis
     };
-    
-    // 11. Collect events from state.eventLog (crisis events, cascading failures, etc.)
-    // These are events logged by environmental, social, and tech modules
-    if (newState.eventLog && newState.eventLog.length > 0) {
-      // Only collect NEW events from this step (avoid duplicates across steps)
-      const newEventsThisStep = newState.eventLog.filter(
-        (e: GameEvent) => e.month === newState.currentMonth
-      );
-      events.push(...newEventsThisStep);
-    }
     
     return {
       state: newState,
