@@ -346,13 +346,24 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
       console.log(`   Dangerous AI: YES (alignment: ${((ai.trueAlignment ?? ai.alignment) * 100).toFixed(0)}%, sleeper: ${ai.sleeperState})`);
       console.log(`   AI control gap: ${aiControlGap.toFixed(2)} (total: ${totalAICapability.toFixed(2)}, control: ${control.toFixed(2)})`);
       
-      // FIX: Even if government "can stop", dangerous AIs with nuclear capability are still a threat
-      // Only give government benefit of doubt if control is reasonably high (>1.0)
+      // NOTE: This check rarely triggers in practice because the control gap never closes.
+      // AI capability grows exponentially while government control grows linearly.
+      // Attempting to close the gap via surveillance leads to dystopia.
+      // This is not a bug - it's a core model feature based on alignment research.
+      // See: devlogs/control-gap-never-closes.md
+      //
+      // The real defenses against nuclear war are:
+      // 1. Alignment (keep AI aligned so control gap doesn't matter)
+      // 2. MAD deterrence (bilateral checks, human veto points)
+      // 3. Coordination (slow AI race, diplomatic AI)
+      //
+      // "Strong control" is kept here for theoretical completeness and very early game,
+      // but the model is designed to explore what happens when control is insufficient.
       const strongControl = control > 1.0 && aiControlGap < 1.0;
       console.log(`   Government control: ${strongControl ? 'STRONG' : 'WEAK'} (control: ${control.toFixed(2)}, gap: ${aiControlGap.toFixed(2)})`);
       
       if (strongControl) {
-        console.log(`   ✅ STRONG GOVERNMENT CONTROL: Nuclear war prevented\n`);
+        console.log(`   ✅ STRONG GOVERNMENT CONTROL: Nuclear war prevented (rare!)\n`);
         return { triggered: false };
       }
       
