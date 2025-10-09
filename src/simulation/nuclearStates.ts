@@ -194,13 +194,19 @@ export function updateMADDeterrence(state: GameState): void {
     console.log(`📜 ARMS CONTROL COLLAPSE: AI race + ${mad.dangerousAICount} dangerous AIs prevent treaty renewal`);
   }
   // TREATY RENEWAL: If race cools down + danger is low + global peace high
+  // Democratic governments MUCH more likely to negotiate (authoritarian regimes resist)
   else if (!mad.treatiesActive && aiRaceIntensity < 0.4 && mad.dangerousFactor < 0.1) {
     const conflictRes = state.conflictResolution;
     const highPeace = conflictRes && conflictRes.globalPeaceLevel > 0.75;
-    if (highPeace) {
+    const isDemocratic = state.government.governmentType === 'democratic';
+    
+    // Democratic: 75% peace threshold, Authoritarian: 85% peace threshold (harder)
+    const peaceThreshold = isDemocratic ? 0.75 : 0.85;
+    
+    if (highPeace && conflictRes.globalPeaceLevel >= peaceThreshold) {
       mad.treatiesActive = true;
       mad.verificationInPlace = true;
-      console.log(`📜 ARMS CONTROL RESTORED: Peace ${(conflictRes.globalPeaceLevel * 100).toFixed(0)}%, AI race cooled to ${(aiRaceIntensity * 100).toFixed(0)}%`);
+      console.log(`📜 ARMS CONTROL RESTORED: Peace ${(conflictRes.globalPeaceLevel * 100).toFixed(0)}%, AI race cooled to ${(aiRaceIntensity * 100).toFixed(0)}% [${state.government.governmentType}]`);
     }
   }
   
