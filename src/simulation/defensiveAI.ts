@@ -129,20 +129,30 @@ export function checkDefensiveAITriggers(state: GameState): DefensiveAITriggers 
   };
   
   // === CAPABILITY CHECKS ===
+  // LOWERED THRESHOLDS (Oct 9 2025): Incremental deployment approach
+  // Phase 1: 1 AI at 1.5 cap, 0.6 align (GPT-4 level) - monitoring only
+  // Phase 2: 2 AIs at 2.0 cap, 0.65 align - active defense with human approval
+  // Phase 3: 3+ AIs at 2.5 cap, 0.7 align - autonomous defense
+  // 
+  // Rationale: Real-world AI security (Microsoft Security Copilot, Darktrace)
+  // deploys incrementally at GPT-4 level, not waiting for superintelligence.
+  // See: devlog/defensive-ai-deployment-thresholds.md
+  
   const alignedAIs = state.aiAgents.filter(ai => 
-    ai.alignment > 0.7 && ai.capability > 2.5
+    ai.alignment > 0.6 && ai.capability > 1.5  // LOWERED from 0.7, 2.5
   );
   
-  triggers.sufficientAlignedAIs = alignedAIs.length >= 3;
+  triggers.sufficientAlignedAIs = alignedAIs.length >= 1; // LOWERED from 3
   
   if (alignedAIs.length > 0) {
     const avgCap = alignedAIs.reduce((sum, ai) => sum + ai.capability, 0) / alignedAIs.length;
     const avgAlign = alignedAIs.reduce((sum, ai) => sum + ai.alignment, 0) / alignedAIs.length;
     
-    triggers.highCapability = avgCap > 3.0;
-    triggers.highAlignment = avgAlign > 0.75;
+    triggers.highCapability = avgCap > 1.5; // LOWERED from 3.0
+    triggers.highAlignment = avgAlign > 0.65; // LOWERED from 0.75
   }
   
+  // Easier to meet: just need aligned AIs to exist
   triggers.capabilityMet = [
     triggers.sufficientAlignedAIs,
     triggers.highCapability,
@@ -199,16 +209,40 @@ export function attemptDefensiveAIDeployment(state: GameState): void {
   // DEPLOY!
   defense.deployed = true;
   defense.deploymentMonth = state.currentMonth;
-  defense.deploymentLevel = 0.3; // Start at 30%, ramp up over time
   
-  // Initialize capabilities based on aligned AIs
+  // Initialize capabilities based on aligned AIs (UPDATED thresholds)
   const alignedAIs = state.aiAgents.filter(ai => 
-    ai.alignment > 0.7 && ai.capability > 2.5
+    ai.alignment > 0.6 && ai.capability > 1.5  // Match new thresholds
   );
   
   defense.alignedAICount = alignedAIs.length;
   defense.avgAlignment = alignedAIs.reduce((sum, ai) => sum + ai.alignment, 0) / alignedAIs.length;
   defense.avgCapability = alignedAIs.reduce((sum, ai) => sum + ai.capability, 0) / alignedAIs.length;
+  
+  // TIERED DEPLOYMENT based on AI count and capability
+  // Phase 1 (Limited): 1 AI → 30% coverage, monitoring only
+  // Phase 2 (Operational): 2 AIs + 2.0 cap → 60% coverage, can veto with human
+  // Phase 3 (Full): 3+ AIs + 2.5 cap → 100% coverage, autonomous
+  
+  if (alignedAIs.length >= 3 && defense.avgCapability >= 2.5 && defense.avgAlignment >= 0.7) {
+    // PHASE 3: Full autonomous deployment
+    defense.deploymentLevel = 1.0;
+    defense.autonomyOverride.humanInLoop = false; // Can act autonomously
+    defense.autonomyOverride.failsafeActive = true;
+    console.log(`🛡️ DEFENSIVE AI PHASE 3: Full autonomous deployment (${alignedAIs.length} AIs, cap ${defense.avgCapability.toFixed(2)})`);
+  } else if (alignedAIs.length >= 2 && defense.avgCapability >= 2.0 && defense.avgAlignment >= 0.65) {
+    // PHASE 2: Operational with human oversight
+    defense.deploymentLevel = 0.6;
+    defense.autonomyOverride.humanInLoop = true; // Requires human approval
+    defense.autonomyOverride.failsafeActive = true;
+    console.log(`🛡️ DEFENSIVE AI PHASE 2: Operational deployment (${alignedAIs.length} AIs, cap ${defense.avgCapability.toFixed(2)})`);
+  } else {
+    // PHASE 1: Limited monitoring only
+    defense.deploymentLevel = 0.3;
+    defense.autonomyOverride.humanInLoop = true;
+    defense.autonomyOverride.canVeto = false; // Cannot veto autonomously yet
+    console.log(`🛡️ DEFENSIVE AI PHASE 1: Limited deployment (${alignedAIs.length} AIs, cap ${defense.avgCapability.toFixed(2)})`);
+  }
   
   // Set initial capabilities (scale with AI capability)
   const capabilityFactor = Math.min(1.0, defense.avgCapability / 4.0);
