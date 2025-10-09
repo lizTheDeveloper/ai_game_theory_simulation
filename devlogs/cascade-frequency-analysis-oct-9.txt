@@ -1,0 +1,55 @@
+================================================================================
+🚨 CASCADE ANALYSIS - Monte Carlo Test (10 runs)
+================================================================================
+
+CRISIS FREQUENCY IN CASCADES (sed/awk analysis):
+
+  544  Resource        ████████████████████████████████████████ 100%  ⚠️ ALWAYS
+  544  Ecosystem       ████████████████████████████████████████ 100%  ⚠️ ALWAYS
+  527  ControlLoss     ██████████████████████████████████████   97%   ⚠️ NEARLY ALWAYS
+  417  Pollution       ███████████████████████████████          77%
+  376  Complacency     ██████████████████████████               69%
+  375  Meaning         ██████████████████████████               69%
+  196  Institutional   ██████████████                           36%
+  189  SocialUnrest    ██████████████                           35%
+   47  Climate         ███                                       9%
+
+KEY FINDINGS:
+
+1. TRIPLE CRISIS CORE (97%+ frequency):
+   - Resource depletion (always triggers first)
+   - Ecosystem collapse (coupled to resources)
+   - Control loss (AI capability > govt control)
+   
+   These three form the foundation of nearly every cascade!
+
+2. SECONDARY CASCADE MEMBERS (69-77%):
+   - Pollution (environmental degradation continues)
+   - Complacency (society not responding fast enough)
+   - Meaning Crisis (post-work identity crisis)
+   
+   Join the cascade in mid-game (Month 48-60)
+
+3. TERTIARY MEMBERS (35-36%):
+   - Institutional failure (govt legitimacy collapses)
+   - Social unrest (trust breakdown)
+   
+   Only in severe cases with authoritarian transition
+
+4. RARE IN CASCADES (9%):
+   - Climate catastrophe (gradual, easier to stabilize)
+   
+   Climate is doing BETTER than other environmental metrics!
+
+AMPLIFICATION MECHANIC:
+- 6 active crises → 3.0x degradation multiplier
+- Most runs hit 6 crises by Month 48-60
+- Creates death spiral: degradation → more crises → faster degradation
+
+ROOT CAUSE:
+- Resources hit critical (0%) at Month 24-36
+- Ecosystem collapses with it (coupled mechanics)
+- Control gap structural (AI grows exponentially)
+- Tech solutions unlock too late (Month 50-72)
+- 20-40 month gap between crisis and fix
+================================================================================
