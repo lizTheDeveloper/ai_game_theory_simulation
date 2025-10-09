@@ -999,6 +999,19 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
       // Need at least 2 simultaneous crises for geopolitical breakdown
       let geopoliticalCrisis = crisisCount >= 2;
       
+      // Phase 3: MAD deterrence prevents war even during crises
+      const mad = state.madDeterrence;
+      if (geopoliticalCrisis && mad.madStrength > 0.7) {
+        geopoliticalCrisis = false; // Strong deterrence holds
+      }
+      
+      // Check bilateral tensions - need at least one pair at high risk
+      const tensions = state.bilateralTensions;
+      const anyHighTension = tensions.some(t => t.tensionLevel > 0.8 || t.nuclearThreats);
+      if (geopoliticalCrisis && !anyHighTension) {
+        geopoliticalCrisis = false; // Crises exist but no bilateral flashpoints
+      }
+      
       // Phase 2F+: AI-mediated diplomacy can prevent crisis (research-based)
       if (geopoliticalCrisis) {
         const { attemptDiplomaticIntervention } = require('./diplomaticAI');
@@ -1008,9 +1021,9 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
         }
       }
       
-      const progress = crisisCount / 2; // 0, 0.5, 1.0, 1.5, 2.0 → clamp to 1.0
+      const progress = Math.min(1.0, crisisCount / 2 * (anyHighTension ? 1.0 : 0.5));
       
-      return { met: geopoliticalCrisis, progress: Math.min(1.0, progress) };
+      return { met: geopoliticalCrisis, progress };
     case 5: // False Flag Event
       return { met: false, progress: 0 }; // Will be set by progression logic
     case 6: // Nuclear Escalation
