@@ -93,11 +93,22 @@ Implementation details and code references:
 
 ### What Needs Tuning ⚠️
 
-- **Spiral Activation Timing**: Upward spirals not activating in testing (0% Utopia observed)
-- **AI-Accelerated Deployment**: Deployment too slow, scientific spiral blocked
-- **Diplomatic Interventions**: Not triggering (0 attempts in 10 runs), need lower thresholds
-- **Meaning Spiral**: Renaissance system needs testing to validate activation rates
-- **Outcome Balance**: Current distribution (0% Utopia, 60% Dystopia, 40% Extinction) needs improvement with Phase 2B-F systems
+**See [Diagnostic Findings](./DIAGNOSTIC_FINDINGS.md) for detailed analysis**
+
+**Top 5 Blockers Identified:**
+1. **Deployment Bottleneck** - 9 techs unlocked, 0 deployed (Month 84) 🚨
+2. **Cognitive Spiral Catch-22** - Trust collapses before AI capability threshold
+3. **Resource/Ecosystem Death Spiral** - 100% of cascades, never recovers
+4. **Surveillance-Autonomy Trap** - Autonomy → 0%, blocks Meaning spiral
+5. **Community Cohesion** - Stuck at 63%, need 70%
+
+**Fixes Implemented (Phase 2F+):**
+- ✅ AI-accelerated deployment (1.2x-1.9x based on capability)
+- ✅ Autonomy floor & recovery mechanics (prevents 0% lock-in)
+- ✅ Community cohesion enhancement (post-scarcity + tech bonuses)
+- ✅ Distribution efficiency modeling
+
+**Expected:** 10-30% Utopia rate (testing in progress)
 
 ### What's Planned 📋
 
@@ -156,11 +167,21 @@ If you're working on the codebase:
 
 ## 🔗 External References
 
+### Planning & Specification
 - **Original Spec**: `/plans/ai_alignment_game_spec.md`
 - **Agent Spec**: `/plans/agent_types_specification.md`
 - **Compute Plan**: `/docs/compute-resource-system.md`
 - **Organization Plan**: `/docs/organization-agents-system.md`
+
+### Testing & Analysis
 - **Monte Carlo Results**: `/docs/MONTE_CARLO_RESULTS.md`
+- **[Diagnostic Findings](./DIAGNOSTIC_FINDINGS.md)**: October 2025 deep dive into 0% Utopia blockers
+
+### Devlogs (Recent Key Findings)
+- `devlogs/monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
+- `devlogs/spiral-diagnostic-findings-oct-9-2025.md` - Spiral activation rates
+- `devlogs/session-oct-9-blockers-fixed.md` - Phase 2F+ implementation
+- `devlogs/ai-accelerated-deployment-enhancement.md` - Distribution insight
 
 ## 📖 Legend
 

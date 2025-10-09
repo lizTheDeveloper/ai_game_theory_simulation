@@ -18,11 +18,21 @@
 - **Biodiversity hub** (80% of all life)
 - **Economic value:** $24 trillion/year
 
-**Dead oceans = Game Over:**
+**Dead oceans = Game Over (for humans, maybe not Earth):**
 - No oxygen replenishment (atmosphere becomes stagnant)
 - No protein for billions (famine)
 - No CO2 absorption (runaway warming)
 - No recovery without intervention (anoxic oceans last millions of years)
+
+**User insight on resilience:** "the earth bounces back after ice ages and asteroid impacts so maybe it'll be ok eventually, hominids lived through an ice age."
+
+**Nuance:**
+- **Earth will recover** (given millions of years, life always finds a way)
+- **Human civilization won't** (we need specific conditions: O2, stable climate, food)
+- **Anoxic oceans take 1-10 million years** to recover naturally (Purple Earth periods)
+- **Hominids survived ice ages** because oceans were healthy (oxygen, fish stocks intact)
+- **This is different:** Ocean collapse = no oxygen source, no food base
+- **Timescale matters:** Earth recovers in 10M years, humans extinct in 10 years
 
 ### Current Ocean Threats (Not Fully Modeled)
 

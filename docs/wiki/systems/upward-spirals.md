@@ -568,23 +568,48 @@ if (spirals.abundance.active) {
 - No virtuous cascades
 - No spiral tracking
 
-**Post-Implementation (Phase 2D):**
-- Utopia: 0% (still - spirals not activating!)
-- Dystopia: 60%
-- Extinction: 40%
-- Virtuous cascades: **0 observed**
-- Spiral activation: **Very rare**
+**Post-Implementation (Phase 2D - Diagnostic Data):**
+- Utopia: 0% (spirals activating but not enough/too late)
+- Dystopia: 30%
+- Extinction: 70%
+- Virtuous cascades: **0 observed at Utopia threshold**
+- Spiral activation rates (from 69 checks across 10 runs):
 
-**Root Cause (Diagnosed):**
-- **Scientific spiral:** Never activating (deployment too slow)
-- **Meaning spiral:** Rarely activating (only 1 tech helps)
-- **Ecological spiral:** Sometimes activating (but late)
-- **Abundance/Cognitive/Democratic:** Activating but alone
+```
+Abundance:   49/69 (71%) ✅ WORKING - Proves system viable!
+Cognitive:    7/69 (10%) ❌ Trust collapses before threshold
+Democratic:   0/69 (0%)  ❌ Quality stuck at 69% vs need 70%
+Scientific:   0/69 (0%)  ❌ 9 unlocked, 0 deployed (deployment bottleneck!)
+Meaning:      0/69 (0%)  ❌ Autonomy → 0%, community 63%
+Ecological:   0/69 (0%)  ❌ Resource/ecosystem collapse (100% of cascades)
+```
 
-**Phase 2E-2F Fixes:**
-- Meaning Renaissance (4 dimensions, not just 1 tech)
-- AI-accelerated deployment (faster tech scaling)
-- Expected result: 10-20% Utopia rate
+**Late-Game Recovery Observed (Run 5, Month 84):**
+- ✅ Abundance: ACTIVE (Material 67.65x, Energy 42.48x!)
+- ✅ Cognitive: ACTIVE (AI 2.73, meaning 9%, trust 79%)
+- ✅ Democratic: ACTIVE (Decision 84%, capacity 78%, participation 90%)
+- ❌ Scientific: BLOCKED (9 unlocked, 0 deployed - smoking gun!)
+- ❌ Meaning: BLOCKED (autonomy 0%, community 63%)
+- ❌ Ecological: BLOCKED (pollution 94%, biodiversity 1%)
+
+**Root Causes (Diagnosed - See [DIAGNOSTIC_FINDINGS.md](../../DIAGNOSTIC_FINDINGS.md)):**
+1. **Deployment Bottleneck** - 9 techs unlocked, 0 deployed by Month 84
+2. **Trust Catch-22** - Collapses from 100% → 26% as capability grows
+3. **Autonomy Trap** - Surveillance drives autonomy to 0%
+4. **Community Stagnation** - Stuck at 63%, need 70%
+5. **Resource/Ecosystem Death Spiral** - Never recovers from collapse
+
+**Phase 2F+ Fixes Implemented:**
+- AI-accelerated deployment (1.2x-1.9x based on capability)
+- Autonomy floor & recovery (prevents 0% lock-in)
+- Community cohesion enhancement (tech + post-scarcity bonuses)
+- Distribution efficiency modeling
+
+**Expected Result (Post-Fix):**
+- Utopia: 10-30% (deployment faster, autonomy recoverable)
+- Scientific spiral activates Month 60-70 (not never)
+- Meaning spiral activates with autonomy floor 35-70%
+- 3+ spirals achievable by Month 75-85
 
 ---
 
