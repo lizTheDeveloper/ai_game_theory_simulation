@@ -9,7 +9,7 @@
  * - Substitution technology effects
  */
 
-import { GameState } from '../types/game';
+import { GameState, GameEvent } from '../types/game';
 import {
   ResourceEconomy,
   FossilFuelResource,
@@ -22,7 +22,16 @@ import {
   TimberResource,
   CO2System,
 } from '../types/resources';
-import { addEvent } from '../lib/eventSystem';
+
+// Helper to add events to state
+function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
+  const fullEvent: GameEvent = {
+    ...event,
+    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    timestamp: state.currentMonth,
+  };
+  state.eventLog.push(fullEvent);
+}
 
 // ============================================================================
 // MAIN UPDATE FUNCTION
@@ -67,7 +76,7 @@ function updateFossilFuelDepletion(state: GameState, resources: ResourceEconomy)
     resources.oil.spillSeverity = Math.random() * 0.3 + 0.1; // 10-40% severity
     resources.ocean.pollutionLoad += resources.oil.spillSeverity * 0.05;
     
-    addEvent({
+    addEvent(state, {
       id: `oil_spill_${state.currentMonth}`,
       timestamp: state.currentMonth,
       type: 'crisis',
@@ -516,7 +525,7 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
     
     // First month of crisis
     if (!wasInCrisis) {
-      addEvent({
+      addEvent(state, {
         id: `ocean_crisis_${state.currentMonth}`,
         timestamp: state.currentMonth,
         type: 'crisis',
@@ -540,7 +549,7 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
       state.extinctionState.mechanism = 'anoxic_ocean';
       state.extinctionState.severity = 1.0;
       
-      addEvent({
+      addEvent(state, {
         id: `anoxic_extinction_${state.currentMonth}`,
         timestamp: state.currentMonth,
         type: 'catastrophe',
@@ -598,7 +607,7 @@ function updateIndustryOpposition(state: GameState, resources: ResourceEconomy):
   if (fossil.desperation > 0.7 && Math.random() < 0.01) {
     fossil.sabotageAttempts++;
     
-    addEvent({
+    addEvent(state, {
       id: `fossil_sabotage_${state.currentMonth}`,
       timestamp: state.currentMonth,
       type: 'crisis',
@@ -675,7 +684,7 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   // === DEPLETION WARNINGS ===
   
   if (resources.oil.reserves < 0.2 && month % 12 === 0) {
-    addEvent({
+    addEvent(state, {
       id: `oil_depletion_${month}`,
       timestamp: month,
       type: 'crisis',
@@ -687,7 +696,7 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   }
   
   if (resources.rareEarths.reserves < 0.3 && month % 12 === 0) {
-    addEvent({
+    addEvent(state, {
       id: `rare_earth_bottleneck_${month}`,
       timestamp: month,
       type: 'crisis',
@@ -699,7 +708,7 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   }
   
   if (resources.lithium.reserves < 0.2 && month % 12 === 0) {
-    addEvent({
+    addEvent(state, {
       id: `lithium_crisis_${month}`,
       timestamp: month,
       type: 'crisis',
@@ -713,7 +722,7 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   // === FOOD/WATER CRISES ===
   
   if (resources.food.reserves < 0.5 && month % 6 === 0) {
-    addEvent({
+    addEvent(state, {
       id: `food_shortage_${month}`,
       timestamp: month,
       type: 'crisis',
@@ -725,7 +734,7 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   }
   
   if (resources.water.reserves < 0.4 && month % 6 === 0) {
-    addEvent({
+    addEvent(state, {
       id: `water_crisis_${month}`,
       timestamp: month,
       type: 'crisis',
@@ -741,7 +750,7 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   if (resources.co2.temperatureAnomaly > 1.5 && month % 12 === 0) {
     const milestone = Math.floor(resources.co2.temperatureAnomaly * 2) / 2; // Round to 0.5°C
     
-    addEvent({
+    addEvent(state, {
       id: `climate_milestone_${milestone}_${month}`,
       timestamp: month,
       type: 'crisis',

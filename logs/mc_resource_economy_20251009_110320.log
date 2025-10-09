@@ -1,0 +1,28 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T18-03-22.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+
+
+❌ UNCAUGHT EXCEPTION: (0 , import_eventSystem.addEvent) is not a function
+TypeError: (0 , import_eventSystem.addEvent) is not a function
+    at checkResourceEvents (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/resourceDepletion.ts:744:5)
+    at updateResourceEconomy (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/resourceDepletion.ts:48:3)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:278:5)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:481:31)
+    at avgModelsPerOrg (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:261:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1394:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
