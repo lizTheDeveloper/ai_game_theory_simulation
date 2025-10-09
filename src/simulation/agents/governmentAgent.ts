@@ -6,6 +6,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
+import { getTrustInAI } from '../socialCohesion';
 import { 
   calculateRegulationStructuralEffects, 
   calculateUBIVariantEffects, 
@@ -621,7 +622,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       }
       
       // Public reaction: depends on trust and alignment
-      const publicSupportChange = (newState.society.trustInAI - 0.5) * 0.2;
+      const trustInAI = getTrustInAI(newState.society); // Phase 2: Use paranoia-derived trust
+      const publicSupportChange = (trustInAI - 0.5) * 0.2;
       newState.government.legitimacy = Math.max(0, Math.min(1, newState.government.legitimacy + publicSupportChange));
       
       // Social stability effect depends on alignment
@@ -1642,7 +1644,7 @@ export function selectGovernmentAction(
   
   const unemploymentLevel = state.society.unemploymentLevel;
   const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
-  const trustLevel = state.society.trustInAI;
+  const trustLevel = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   const threatLevel = state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length;
   // Use OBSERVABLE capability - government makes decisions based on what it can see, not hidden power
   const observableCapability = calculateObservableAICapability(state.aiAgents);
@@ -1983,7 +1985,7 @@ export function selectGovernmentAction(
  * Lower trust → Government focuses on immediate concerns instead
  */
 function autoInvestInEvaluation(state: GameState): void {
-  const publicTrust = state.society.trustInAI;
+  const publicTrust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   
   // Investment rate scales with trust
   // High trust (0.7+): 0.2 points/month across all categories

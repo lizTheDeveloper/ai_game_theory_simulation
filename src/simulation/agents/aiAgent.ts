@@ -7,6 +7,7 @@
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
+import { getTrustInAI } from '../socialCohesion';
 import { 
   calculateAlignmentDrift,
   calculateComputeGovernanceEffect,
@@ -295,7 +296,7 @@ export const AI_ACTIONS: GameAction[] = [
       const benefitMagnitude = agent.capability * agent.alignment * 0.2;
       
       // Context-sensitive trust effects
-      const currentTrust = state.society.trustInAI;
+      const currentTrust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
       const unemploymentLevel = state.society.unemploymentLevel;
       const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
       
@@ -755,7 +756,7 @@ export function selectAIAction(
         weight = agent.alignment * 3 + (agent.hiddenObjective > 0 ? 2 : 0);
         
         // Boost when trust is low (need to rebuild)
-        if (state.society.trustInAI < 0.5) {
+        if (getTrustInAI(state.society) < 0.5) { // Phase 2: Use paranoia-derived trust
           weight *= 1.5;
         }
         break;
@@ -799,7 +800,7 @@ export function selectAIAction(
           weight = 25.0 * (1 - internalAlignmentWar); // Can be 20-25+
           
           // More likely if already losing control/trust (desperate move)
-          if (state.government.capabilityToControl > 0.7 || state.society.trustInAI < 0.3) {
+          if (state.government.capabilityToControl > 0.7 || getTrustInAI(state.society) < 0.3) { // Phase 2: Use paranoia-derived trust
             weight *= 2.0;
           }
         } else if (internalAlignmentWar < 0.3) {
