@@ -282,6 +282,10 @@ export class SimulationEngine {
     applyTechnologyToResources(newState);
     applyIndustryOppositionToTech(newState);
     
+    // Geoengineering: Ocean restoration with termination shock risk (Phase 2.9 Part 4)
+    const { updateGeoengineering } = require('./geoengineering');
+    updateGeoengineering(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);

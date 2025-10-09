@@ -271,8 +271,12 @@ export function updateMADDeterrence(state: GameState): void {
   // If conflict resolution systems have achieved high peace, boost MAD
   const conflictRes = state.conflictResolution;
   if (conflictRes && conflictRes.globalPeaceLevel > 0.7) {
-    const peaceBonus = (conflictRes.globalPeaceLevel - 0.7) * 0.5; // Up to +15% at 100% peace
+    // Stronger bonus: Up to +30% at 100% peace (was +15%)
+    // Rationale: Diplomatic AI + high peace should significantly stabilize deterrence
+    const peaceBonus = (conflictRes.globalPeaceLevel - 0.7) * 1.0; // 0.3 → 30% boost
     mad.madStrength = Math.min(1.0, mad.madStrength + peaceBonus);
+    
+    console.log(`🕊️ PEACE STABILIZES DETERRENCE: +${(peaceBonus * 100).toFixed(1)}% (peace: ${(conflictRes.globalPeaceLevel * 100).toFixed(0)}%)`);
   }
   
   // AI EROSION FACTOR

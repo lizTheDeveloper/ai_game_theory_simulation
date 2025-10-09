@@ -266,10 +266,10 @@ export interface OceanHealth {
   monthsInCrisis: number;            // Duration counter
   recoveryPossible: boolean;         // False if past point of no return (pH < 7.5)
   
-  // Geoengineering
-  geoengInterventionActive: boolean; // Any geoeng tech deployed?
-  geoengIntensity: number;           // [0, 1] How much intervention
-  terminationShockRisk: number;      // [0, 1] Risk if we stop abruptly
+  // Geoengineering intervention
+  geoengInterventionActive: boolean; // Any geoeng tech deployed
+  geoengIntensity: number;           // [0, 1] Total intervention level
+  terminationShockRisk: number;      // [0, 1] Risk if stopped abruptly
 }
 
 // ============================================================================
@@ -409,4 +409,70 @@ export type EnergySource =
 export type GeoengType = 
   | 'ironFertilization' | 'oceanAlkalinity' 
   | 'artificialUpwelling' | 'bioengineeredCleaners';
+
+// ============================================================================
+// GEOENGINEERING TECHNOLOGIES (Phase 2.9 - Part 4)
+// ============================================================================
+
+// Base interface for all geoengineering technologies
+export interface GeoengTechnology {
+  unlocked: boolean;
+  deploymentLevel: number;           // [0,1] How much is deployed
+  deploymentQuality: number;         // [0,1] How well it's working
+  monthsActive: number;              // Time active (for adaptation tracking)
+  cumulativeImpact: number;          // Total effect over time
+  disasterOccurred: boolean;         // Has a failure happened?
+  
+  // Termination shock mechanics
+  adaptationTime: number;            // Months ecosystems have adapted
+  rampUpRate: number;                // How fast ramping up
+  rampDownRate: number;              // How fast ramping down
+  minSafeRampRate: number;           // Min safe ramp rate (0.01 = 1%/month)
+}
+
+export interface IronFertilizationState extends GeoengTechnology {
+  // Benefits
+  phytoplanktonBoost: number;        // Monthly boost to plankton
+  co2Sequestration: number;          // Monthly CO2 removal
+  
+  // Risks
+  bloomCrashes: number;              // Count of failed blooms
+}
+
+export interface OceanAlkalinityState extends GeoengTechnology {
+  // Benefits
+  pHRecovery: number;                // Monthly pH increase
+  carbonSequestered: number;         // Total CO2 locked away
+  totalAlkalinityAdded: number;      // PERMANENT change to ocean chemistry
+  
+  // Risks
+  localPHSpikes: number;             // Count of pH disasters
+}
+
+export interface ArtificialUpwellingState extends GeoengTechnology {
+  // Requirements
+  energyConsumption: number;         // Energy needed per month
+  pumpsActive: number;               // Number of active pumps
+  
+  // Benefits
+  oxygenationRate: number;           // Monthly O2 boost
+  nutrientFlux: number;              // Nutrient delivery
+}
+
+export interface BioengineeredCleanersState extends GeoengTechnology {
+  // Tracking
+  organismsReleased: number;         // Number of organisms
+  populationGrowth: number;          // Growth rate
+  
+  // Catastrophic risks
+  invasiveEvent: boolean;            // Has it gone invasive?
+  containmentAttempts: number;       // Attempts to stop it
+}
+
+export interface GeoengSystemState {
+  ironFertilization?: IronFertilizationState;
+  oceanAlkalinity?: OceanAlkalinityState;
+  artificialUpwelling?: ArtificialUpwellingState;
+  bioengineeredCleaners?: BioengineeredCleanersState;
+}
 
