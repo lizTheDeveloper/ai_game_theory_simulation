@@ -369,21 +369,21 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
       
       // Weak control or large gap → check MAD deterrence
       {
-        // Phase 3: Check MAD deterrence system
+        // Phase 3: Check MAD deterrence system (abstracted)
+        const { checkNuclearDeterrence } = require('./nuclearDeterrence');
+        const deterrenceCheck = checkNuclearDeterrence(state, `Rapid Extinction Check: ${ai.name}`, random);
+        
+        if (!deterrenceCheck.allowed) {
+          // Deterrence blocked nuclear war
+          return { triggered: false };
+        }
+        
+        // Basic deterrence check passed (weak MAD, flashpoints exist, diplomatic AI failed)
+        // Now do detailed bilateral analysis with human veto points
         const mad = state.madDeterrence;
         const tensions = state.bilateralTensions;
         
-        console.log(`   MAD strength: ${(mad.madStrength * 100).toFixed(0)}%`);
-        console.log(`   Dangerous AI count: ${mad.dangerousAICount} (${(mad.dangerousFactor * 100).toFixed(0)}%)`);
-        console.log(`   Bilateral tensions: ${tensions.map(t => `${t.nationA.slice(0,3)}-${t.nationB.slice(0,3)}:${(t.tensionLevel * 100).toFixed(0)}%`).join(', ')}`);
-        
-        // Strong MAD prevents nuclear war even with dangerous AI
-        if (mad.madStrength > 0.7) {
-          console.log(`   ✅ DETERRENCE HOLDS: MAD strength ${(mad.madStrength * 100).toFixed(0)}% > 70%\n`);
-          return { triggered: false }; // Deterrence holds
-        }
-        
-        console.log(`   ⚠️  WEAK DETERRENCE: MAD strength ${(mad.madStrength * 100).toFixed(0)}% - checking bilateral pairs...`);
+        console.log(`   ⚠️  WEAK DETERRENCE: MAD strength ${(mad.madStrength * 100).toFixed(0)}% - checking bilateral pairs with human veto...`);
         
         // Check which nation-pairs are at risk
         let nuclearRisk = false;
