@@ -187,13 +187,24 @@ export function updateMADDeterrence(state: GameState): void {
   mad.dangerousFactor = state.aiAgents.length > 0 ?
     dangerousAIs.length / state.aiAgents.length : 0;
   
-  // Racing erodes arms control (but ONLY if dangerous AIs exist)
+  // ARMS CONTROL: Racing erodes, peace + low danger restores
   if (aiRaceIntensity > 0.6 && mad.dangerousFactor > 0.2 && mad.treatiesActive) {
     mad.treatiesActive = false;
     mad.verificationInPlace = false;
     console.log(`📜 ARMS CONTROL COLLAPSE: AI race + ${mad.dangerousAICount} dangerous AIs prevent treaty renewal`);
   }
+  // TREATY RENEWAL: If race cools down + danger is low + global peace high
+  else if (!mad.treatiesActive && aiRaceIntensity < 0.4 && mad.dangerousFactor < 0.1) {
+    const conflictRes = state.conflictResolution;
+    const highPeace = conflictRes && conflictRes.globalPeaceLevel > 0.75;
+    if (highPeace) {
+      mad.treatiesActive = true;
+      mad.verificationInPlace = true;
+      console.log(`📜 ARMS CONTROL RESTORED: Peace ${(conflictRes.globalPeaceLevel * 100).toFixed(0)}%, AI race cooled to ${(aiRaceIntensity * 100).toFixed(0)}%`);
+    }
+  }
   
+  // HOTLINE: Disrupted by danger, restored by peace
   if (aiRaceIntensity > 0.7 && mad.dangerousFactor > 0.3 && mad.hotlinesOperational) {
     mad.hotlinesOperational = false;
     console.log(`📞 HOTLINE FAILURE: ${mad.dangerousAICount} dangerous AIs disrupt US-Russia/China communication`);
