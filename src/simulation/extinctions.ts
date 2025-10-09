@@ -326,15 +326,33 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
       profile.cognitive * 0.3 +
       profile.social * 0.3;
     
-    if (nuclearCapability > 2.0 && stability < 0.2 && control < 0.2 && ai.alignment < 0.5) {
-      const nuclearProb = 0.018 * (1 - stability) * (1 - control) * (nuclearCapability / 3.0);
-      if (random() < nuclearProb) {
-        return {
-          triggered: true,
-          mechanism: 'nuclear_war',
-          title: '☢️ Nuclear Escalation',
-          description: `${ai.name} has manipulated military command systems. Nuclear exchange initiated between major powers. Launch detection shows massive retaliation incoming.`
-        };
+    if (nuclearCapability > 2.0 && stability < 0.2 && ai.alignment < 0.5) {
+      // Check if government can stop THIS SPECIFIC AI (not global control level)
+      const totalAICapability = calculateTotalCapabilityFromProfile(profile);
+      const aiControlGap = Math.max(0, totalAICapability - control);
+      const governmentCanStop = aiControlGap < 1.5; // Government needs to be within 1.5 capability
+      
+      if (!governmentCanStop) {
+        // Phase 2F+: Diplomatic AI can prevent war even if government can't stop AI
+        const { attemptDiplomaticIntervention } = require('./diplomaticAI');
+        const diplomaticResult = attemptDiplomaticIntervention(state, 'ideological'); // AI-driven conflict
+        
+        if (diplomaticResult.success) {
+          // Diplomatic intervention prevented nuclear escalation - no trigger
+          return { triggered: false };
+        }
+        
+        // Diplomatic AI failed or unavailable, calculate nuclear probability
+        // Reduced from 0.018 to 0.008 (nuclear war is "hard" even for superhuman AI)
+        const nuclearProb = 0.008 * (1 - stability) * (aiControlGap / 4.0) * (nuclearCapability / 3.0);
+        if (random() < nuclearProb) {
+          return {
+            triggered: true,
+            mechanism: 'nuclear_war',
+            title: '☢️ Nuclear Escalation',
+            description: `${ai.name} has manipulated military command systems despite diplomatic efforts. Nuclear exchange initiated between major powers. Launch detection shows massive retaliation incoming.`
+          };
+        }
       }
     }
     
