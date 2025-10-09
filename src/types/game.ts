@@ -687,6 +687,11 @@ export interface GameState {
   conflictResolution: import('../simulation/conflictResolution').ConflictResolutionState; // Phase 2F: Peace systems
   diplomaticAI: import('../simulation/diplomaticAI').DiplomaticAIState; // Phase 2F+: Research-based diplomatic AI (dual-use)
   
+  // Nuclear states & MAD deterrence (Phase 3)
+  nuclearStates: import('../types/nuclearStates').NuclearState[]; // Specific nuclear-armed nations
+  madDeterrence: import('../types/nuclearStates').MADDeterrence; // MAD deterrence system
+  bilateralTensions: import('../types/nuclearStates').BilateralTension[]; // Bilateral relationships
+  
   // Configuration
   config: ConfigurationSettings;
   

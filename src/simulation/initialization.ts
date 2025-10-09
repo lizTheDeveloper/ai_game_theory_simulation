@@ -21,6 +21,7 @@ import { initializeUpwardSpirals } from './upwardSpirals';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
 import { initializeConflictResolution } from './conflictResolution';
 import { initializeDiplomaticAI } from './diplomaticAI';
+import { initializeNuclearStates, initializeMADDeterrence, initializeBilateralTensions } from './nuclearStates';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -221,7 +222,9 @@ export function createDefaultInitialState(): GameState {
         decisionQuality: 0.5,
         transparency: 0.6,
         participationRate: 0.4,
-        institutionalCapacity: 0.6
+        institutionalCapacity: 0.6,
+        consensusBuildingEfficiency: 0.5,
+        minorityProtectionStrength: 0.5,
       }
     },
     
@@ -294,6 +297,11 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 2F+: Diplomatic AI (Research-based, dual-use)
     diplomaticAI: initializeDiplomaticAI(),
+    
+    // Nuclear states & MAD deterrence
+    nuclearStates: initializeNuclearStates(),
+    madDeterrence: initializeMADDeterrence(),
+    bilateralTensions: initializeBilateralTensions(),
     
     eventLog: [],
     technologyTree: [],
