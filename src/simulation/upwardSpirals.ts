@@ -87,6 +87,11 @@ export function updateUpwardSpirals(state: GameState, currentMonth: number): voi
   if (spirals.cascadeActive) {
     applyVirtuousCascadeEffects(state, spirals.cascadeStrength);
   }
+  
+  // 🔍 DIAGNOSTIC: Log spiral status every 12 months
+  if (currentMonth % 12 === 0 && currentMonth > 0) {
+    logSpiralDiagnostics(state, currentMonth);
+  }
 }
 
 /**
@@ -517,5 +522,115 @@ function getSustainedSpiralNames(spirals: UpwardSpiralState): string[] {
  */
 export function getVirtuousCascadeMultiplier(state: GameState): number {
   return state.upwardSpirals.cascadeStrength;
+}
+
+/**
+ * 🔍 DIAGNOSTIC: Log detailed spiral status
+ * Shows what's working and what's blocking each spiral
+ */
+function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
+  const spirals = state.upwardSpirals;
+  const qol = state.qualityOfLifeSystems;
+  const social = state.socialAccumulation;
+  const env = state.environmentalAccumulation;
+  const gov = state.government.governanceQuality;
+  const breakthrough = state.breakthroughTech;
+  
+  console.log(`\n🔍 SPIRAL DIAGNOSTICS (Month ${currentMonth})`);
+  console.log(`================================================================================`);
+  
+  // Count active spirals
+  const activeSpiralNames = getActiveSpiralNames(spirals);
+  
+  console.log(`Active Spirals: ${activeSpiralNames.length}/6`);
+  if (activeSpiralNames.length > 0) {
+    console.log(`  ✅ ${activeSpiralNames.join(', ')}`);
+  }
+  
+  // ABUNDANCE SPIRAL
+  const materialAbundant = qol.materialAbundance > 1.5;
+  const energyAbundant = qol.energyAvailability > 1.5;
+  const timeLiberated = state.society.unemploymentLevel > 0.6 && 
+                       state.globalMetrics.economicTransitionStage >= 3;
+  
+  console.log(`\n📦 ABUNDANCE SPIRAL: ${spirals.abundance.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  console.log(`   Material: ${qol.materialAbundance.toFixed(2)} ${materialAbundant ? '✅' : '❌'} (need >1.5)`);
+  console.log(`   Energy: ${qol.energyAvailability.toFixed(2)} ${energyAbundant ? '✅' : '❌'} (need >1.5)`);
+  console.log(`   Time Liberation: unemployment ${(state.society.unemploymentLevel * 100).toFixed(0)}%, stage ${state.globalMetrics.economicTransitionStage} ${timeLiberated ? '✅' : '❌'} (need >60% + stage 3+)`);
+  
+  // COGNITIVE SPIRAL
+  const avgAI = state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
+  const mentalHealthy = qol.diseasesBurden < 0.3 && qol.healthcareQuality > 0.8;
+  const purposeful = social.meaningCrisisLevel < 0.3;
+  const cognitiveEnhanced = avgAI > 1.5 && state.society.trustInAI > 0.6;
+  
+  console.log(`\n🧠 COGNITIVE SPIRAL: ${spirals.cognitive.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  console.log(`   Mental Health: disease ${(qol.diseasesBurden * 100).toFixed(0)}%, healthcare ${(qol.healthcareQuality * 100).toFixed(0)}% ${mentalHealthy ? '✅' : '❌'} (need <30% disease, >80% healthcare)`);
+  console.log(`   Purpose: meaning crisis ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${purposeful ? '✅' : '❌'} (need <30%)`);
+  console.log(`   AI Augmentation: avg capability ${avgAI.toFixed(2)}, trust ${(state.society.trustInAI * 100).toFixed(0)}% ${cognitiveEnhanced ? '✅' : '❌'} (need >1.5 capability, >60% trust)`);
+  
+  // DEMOCRATIC SPIRAL
+  const qualityGovernance = gov.decisionQuality > 0.7 && gov.institutionalCapacity > 0.7;
+  const democraticEngagement = gov.participationRate > 0.6 && gov.transparency > 0.7;
+  const notAuth = state.government.governmentType !== 'authoritarian';
+  
+  console.log(`\n🗳️  DEMOCRATIC SPIRAL: ${spirals.democratic.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  console.log(`   Governance Quality: decision ${(gov.decisionQuality * 100).toFixed(0)}%, capacity ${(gov.institutionalCapacity * 100).toFixed(0)}% ${qualityGovernance ? '✅' : '❌'} (need both >70%)`);
+  console.log(`   Democratic Engagement: participation ${(gov.participationRate * 100).toFixed(0)}%, transparency ${(gov.transparency * 100).toFixed(0)}% ${democraticEngagement ? '✅' : '❌'} (need >60% participation, >70% transparency)`);
+  console.log(`   Government Type: ${state.government.governmentType} ${notAuth ? '✅' : '❌'} (cannot be authoritarian)`);
+  
+  // SCIENTIFIC SPIRAL
+  const unlockedCount = Object.values(breakthrough).filter((t: any) => t?.unlocked).length;
+  const deployedCount = Object.values(breakthrough).filter((t: any) => t?.deployed && t.deployed > 0.5).length;
+  const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
+  const researchIntensive = totalResearch > 50;
+  const aiAccelerated = avgAI > 2.0;
+  
+  console.log(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  console.log(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${unlockedCount >= 4 ? '✅' : '❌'} (need 4+ unlocked)`);
+  console.log(`   Research Investment: $${Number(totalResearch || 0).toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
+  console.log(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >2.0)`);
+  
+  // MEANING SPIRAL
+  const meaningFulfilled = social.meaningCrisisLevel < 0.2;
+  const strongCommunity = social.socialCohesion > 0.7;
+  const culturallyAdapted = social.culturalAdaptation > 0.7;
+  const autonomous = qol.autonomy > 0.7 && qol.culturalVitality > 0.7;
+  
+  console.log(`\n💫 MEANING SPIRAL: ${spirals.meaning.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  console.log(`   Meaning Crisis: ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${meaningFulfilled ? '✅' : '❌'} (need <20%)`);
+  console.log(`   Community: ${(social.socialCohesion * 100).toFixed(0)}% ${strongCommunity ? '✅' : '❌'} (need >70%)`);
+  console.log(`   Cultural Adaptation: ${(social.culturalAdaptation * 100).toFixed(0)}% ${culturallyAdapted ? '✅' : '❌'} (need >70%)`);
+  console.log(`   Autonomy & Creativity: autonomy ${(qol.autonomy * 100).toFixed(0)}%, cultural ${(qol.culturalVitality * 100).toFixed(0)}% ${autonomous ? '✅' : '❌'} (need both >70%)`);
+  
+  // ECOLOGICAL SPIRAL
+  const envSustainable = env.resourceReserves > 0.7 && env.pollutionLevel < 0.3;
+  const climateSafe = env.climateStability > 0.7;
+  const bioHealthy = env.biodiversityIndex > 0.7;
+  
+  console.log(`\n🌍 ECOLOGICAL SPIRAL: ${spirals.ecological.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  console.log(`   Environmental: resources ${(env.resourceReserves * 100).toFixed(0)}%, pollution ${(env.pollutionLevel * 100).toFixed(0)}% ${envSustainable ? '✅' : '❌'} (need >70% resources, <30% pollution)`);
+  console.log(`   Climate: ${(env.climateStability * 100).toFixed(0)}% ${climateSafe ? '✅' : '❌'} (need >70%)`);
+  console.log(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(0)}% ${bioHealthy ? '✅' : '❌'} (need >70%)`);
+  
+  // VIRTUOUS CASCADE
+  console.log(`\n✨ VIRTUOUS CASCADE: ${spirals.cascadeActive ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  console.log(`   Active Count: ${activeSpiralNames.length}/6 (need 4+ for cascade)`);
+  if (spirals.cascadeActive) {
+    console.log(`   Cascade Strength: ${spirals.cascadeStrength.toFixed(2)}x`);
+    console.log(`   Cascade Duration: ${spirals.cascadeMonths} months (need 6+ for Utopia)`);
+  }
+  
+  // UTOPIA CHECK
+  const utopiaResult = canDeclareUtopia(state);
+  console.log(`\n🌟 UTOPIA ELIGIBILITY: ${utopiaResult.can ? '✅ ELIGIBLE' : '❌ NOT YET'}`);
+  console.log(`   ${utopiaResult.reason}`);
+  if (utopiaResult.spiralCount < 3) {
+    const sustainedNames = getSustainedSpiralNames(spirals);
+    if (sustainedNames.length > 0) {
+      console.log(`   Sustained spirals (12+ months): ${sustainedNames.join(', ')}`);
+    }
+  }
+  console.log(`================================================================================\n`);
 }
 
