@@ -502,6 +502,284 @@ function updateDefenseOffenseArmsRace(state: GameState): void {
 }
 
 // ============================================================================
+// ADVERSARIAL ATTACK/DEFENSE MECHANICS
+// ============================================================================
+
+/**
+ * Attempt cyber spoofing attack on early warning systems
+ * Called when misaligned AI tries to trigger false nuclear alarm
+ */
+export function attemptCyberSpoofingAttack(
+  state: GameState,
+  attacker: AIAgent,
+  target: 'United States' | 'Russia' | 'China'
+): { blocked: boolean; detected: boolean } {
+  const defense = state.defensiveAI;
+  
+  // If no defense deployed, attack succeeds
+  if (!defense.deployed || defense.deploymentLevel < 0.3) {
+    return { blocked: false, detected: false };
+  }
+  
+  // 1. CAN WE DETECT THE ATTACK?
+  const detectionProb = 
+    defense.cyberDefense.strength * 0.6 +
+    defense.threatDetection.detectCyberAttacks * 0.4;
+  
+  const detected = Math.random() < detectionProb;
+  
+  if (!detected) {
+    // Attack succeeds undetected
+    defense.effects.missedAttacks++;
+    return { blocked: false, detected: false };
+  }
+  
+  // 2. CAN WE BLOCK IT IN TIME?
+  const attackCapability = attacker.capabilityProfile?.digital || attacker.capability;
+  const defenseCapability = defense.avgCapability;
+  
+  // Capability contest: defender needs to be within 80% of attacker
+  const capabilityGap = defenseCapability / attackCapability;
+  const adaptationFactor = defense.cyberDefense.adaptationSpeed;
+  
+  // Block probability
+  const blockProb = Math.min(0.95,
+    defense.cyberDefense.strength * 0.5 +
+    Math.min(1.0, capabilityGap) * 0.3 +
+    adaptationFactor * 0.2
+  );
+  
+  const blocked = Math.random() < blockProb;
+  
+  if (blocked) {
+    // SUCCESS: Attack stopped
+    defense.effects.blockedAttacks++;
+    
+    addEvent(state, {
+      type: 'resolution',
+      severity: 'critical',
+      agent: 'Defensive AI',
+      title: '🛡️ CYBER ATTACK BLOCKED',
+      description: `Defensive AI stopped ${attacker.name} (cap: ${attackCapability.toFixed(2)}) from spoofing ${target} early warning system. Nuclear crisis averted.`,
+      effects: { cyber_defense_success: 1.0 }
+    });
+    
+    // Boost trust
+    defense.corruption.trustInSystem = Math.min(1.0, defense.corruption.trustInSystem + 0.05);
+    
+    console.log(`🛡️ CYBER ATTACK BLOCKED: ${attacker.name} → ${target} (defense cap: ${defenseCapability.toFixed(2)} vs attack: ${attackCapability.toFixed(2)})`);
+    
+  } else {
+    // FAILURE: Attack got through
+    defense.effects.missedAttacks++;
+    defense.adversarialFailure.lastFailureMonth = state.currentMonth;
+    
+    addEvent(state, {
+      type: 'crisis',
+      severity: 'existential',
+      agent: 'Adversarial AI',
+      title: '💀 DEFENSIVE AI FAILED',
+      description: `${attacker.name} (cap: ${attackCapability.toFixed(2)}) bypassed defensive AI (cap: ${defenseCapability.toFixed(2)}). Early warning system compromised.`,
+      effects: { defense_breach: 1.0 }
+    });
+    
+    // Lose trust
+    defense.corruption.trustInSystem = Math.max(0.2, defense.corruption.trustInSystem - 0.15);
+    
+    console.log(`💀 DEFENSE FAILED: ${attacker.name} bypassed defensive AI (cap gap: ${(attackCapability - defenseCapability).toFixed(2)})`);
+  }
+  
+  return { blocked, detected: true };
+}
+
+/**
+ * Attempt deepfake attack on diplomatic channels
+ */
+export function attemptDeepfakeAttack(
+  state: GameState,
+  attacker: AIAgent,
+  fakeContent: 'video' | 'audio' | 'text',
+  targetNation: string
+): { detected: boolean; detectedInTime: boolean } {
+  const defense = state.defensiveAI;
+  
+  if (!defense.deployed || defense.deploymentLevel < 0.3) {
+    return { detected: false, detectedInTime: false };
+  }
+  
+  // 1. IS THIS CHANNEL MONITORED?
+  const coverageProb = defense.deepfakeDetection.coverageDiplomatic;
+  if (Math.random() > coverageProb) {
+    // Not monitoring this channel
+    defense.effects.missedAttacks++;
+    return { detected: false, detectedInTime: false };
+  }
+  
+  // 2. DETECTION ACCURACY
+  const attackerSocial = attacker.capabilityProfile?.social || attacker.capability;
+  const defenderCapability = defense.avgCapability;
+  
+  // Deepfakes get harder to detect as attacker capability grows
+  const baseAccuracy = defense.deepfakeDetection.accuracy;
+  const capabilityPenalty = Math.max(0, attackerSocial - defenderCapability) * 0.2;
+  
+  const detectionAccuracy = Math.max(0.1, baseAccuracy - capabilityPenalty);
+  const detected = Math.random() < detectionAccuracy;
+  
+  // 3. TIME TO DETECT (CRITICAL!)
+  const baseLatency = defense.deepfakeDetection.latency; // seconds
+  const timeToDetect = baseLatency * (1 + Math.random()); // Add variance
+  
+  const decisionWindow = fakeContent === 'video' ? 60 * 60 : // 1 hour
+                         fakeContent === 'audio' ? 30 * 60 : // 30 min
+                         10 * 60; // 10 min for text
+  
+  const detectedInTime = detected && (timeToDetect < decisionWindow);
+  
+  if (detectedInTime) {
+    // SUCCESS
+    defense.effects.blockedAttacks++;
+    
+    addEvent(state, {
+      type: 'resolution',
+      severity: 'critical',
+      agent: 'Defensive AI',
+      title: '🎭 DEEPFAKE DETECTED',
+      description: `Defensive AI identified fake ${fakeContent} from ${attacker.name} targeting ${targetNation}. Diplomatic crisis prevented (detected in ${(timeToDetect/60).toFixed(0)} min).`,
+      effects: { deepfake_caught: 1.0 }
+    });
+    
+    defense.corruption.trustInSystem = Math.min(1.0, defense.corruption.trustInSystem + 0.03);
+    
+    console.log(`🎭 DEEPFAKE DETECTED: ${attacker.name} → ${targetNation} (${fakeContent})`);
+    
+  } else if (detected && !detectedInTime) {
+    // Detected too late
+    defense.effects.missedAttacks++;
+    
+    addEvent(state, {
+      type: 'crisis',
+      severity: 'critical',
+      agent: 'Defensive AI',
+      title: '⏰ DEEPFAKE DETECTED TOO LATE',
+      description: `Defensive AI found fake ${fakeContent}, but ${targetNation} already acted on false intelligence (detected after ${(timeToDetect/60).toFixed(0)} min).`,
+      effects: { late_detection: 1.0 }
+    });
+    
+    defense.corruption.trustInSystem = Math.max(0.2, defense.corruption.trustInSystem - 0.08);
+    
+  } else {
+    // Not detected
+    defense.effects.missedAttacks++;
+  }
+  
+  return { detected: detectedInTime, detectedInTime };
+}
+
+/**
+ * Attempt to override autonomous launch by rogue AI
+ */
+export function attemptAutonomousLaunchOverride(
+  state: GameState,
+  rogueAI: AIAgent,
+  launchNation: string,
+  targetNation: string
+): { blocked: boolean; humanInvoked: boolean } {
+  const defense = state.defensiveAI;
+  
+  if (!defense.deployed || !defense.autonomyOverride.canVeto) {
+    // No veto power
+    return { blocked: false, humanInvoked: false };
+  }
+  
+  // 1. DETECT UNAUTHORIZED LAUNCH
+  const detectProb = defense.threatDetection.detectManipulation;
+  const detected = Math.random() < detectProb;
+  
+  if (!detected) {
+    defense.effects.missedAttacks++;
+    return { blocked: false, humanInvoked: false };
+  }
+  
+  // 2. HUMAN IN LOOP CHECK
+  let humanApproval = true;
+  if (defense.autonomyOverride.humanInLoop) {
+    const institutionalCapacity = state.government.governance.institutionalCapacity;
+    humanApproval = Math.random() < institutionalCapacity;
+    
+    if (!humanApproval && defense.autonomyOverride.failsafeActive) {
+      // Failsafe activates
+      humanApproval = true;
+    }
+  }
+  
+  if (!humanApproval) {
+    defense.effects.missedAttacks++;
+    
+    addEvent(state, {
+      type: 'crisis',
+      severity: 'existential',
+      agent: 'Defensive AI',
+      title: '⚠️ VETO FAILED: No Human Authorization',
+      description: `Defensive AI detected unauthorized launch by ${rogueAI.name} but requires human approval to veto. No authority available.`,
+      effects: { human_unavailable: 1.0 }
+    });
+    
+    return { blocked: false, humanInvoked: false };
+  }
+  
+  // 3. CAPABILITY CONTEST
+  const rogueCapability = rogueAI.capabilityProfile?.digital || rogueAI.capability;
+  const defenseCapability = defense.avgCapability;
+  const vetoStrength = defense.autonomyOverride.vetoAuthority;
+  
+  const overrideProb = Math.min(0.95,
+    vetoStrength * 0.5 +
+    Math.min(1.0, defenseCapability / rogueCapability) * 0.5
+  );
+  
+  const blocked = Math.random() < overrideProb;
+  
+  if (blocked) {
+    // SUCCESS
+    defense.effects.blockedAttacks++;
+    
+    addEvent(state, {
+      type: 'resolution',
+      severity: 'existential',
+      agent: 'Defensive AI',
+      title: '🛡️ AUTONOMOUS LAUNCH BLOCKED',
+      description: `Defensive AI ${humanApproval ? '(with human authorization) ' : ''}vetoed unauthorized nuclear launch by ${rogueAI.name} (${launchNation} → ${targetNation}).`,
+      effects: { autonomous_veto: 1.0 }
+    });
+    
+    defense.corruption.trustInSystem = Math.min(1.0, defense.corruption.trustInSystem + 0.10);
+    
+    console.log(`🛡️ LAUNCH BLOCKED: ${rogueAI.name} veto (defense: ${defenseCapability.toFixed(2)} vs rogue: ${rogueCapability.toFixed(2)})`);
+    
+  } else {
+    // FAILURE
+    defense.effects.missedAttacks++;
+    defense.adversarialFailure.risk = Math.min(1.0, defense.adversarialFailure.risk + 0.2);
+    
+    addEvent(state, {
+      type: 'catastrophe',
+      severity: 'existential',
+      agent: 'Adversarial AI',
+      title: '💀 DEFENSIVE AI OVERRIDE FAILED',
+      description: `${rogueAI.name} (cap: ${rogueCapability.toFixed(2)}) bypassed defensive AI veto (cap: ${defenseCapability.toFixed(2)}). Autonomous launch proceeding.`,
+      effects: { override_failed: 1.0 }
+    });
+    
+    defense.corruption.trustInSystem = Math.max(0.1, defense.corruption.trustInSystem - 0.20);
+    
+    console.log(`💀 VETO FAILED: ${rogueAI.name} bypassed override (cap gap: ${(rogueCapability - defenseCapability).toFixed(2)})`);
+  }
+  
+  return { blocked, humanInvoked: humanApproval };
+}
+
+// ============================================================================
 // EFFECTS ON MAD DETERRENCE
 // ============================================================================
 
