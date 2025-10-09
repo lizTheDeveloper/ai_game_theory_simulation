@@ -350,6 +350,27 @@ export function hasSocialCrisis(social: SocialAccumulation): boolean {
 }
 
 /**
+ * Get trust in AI derived from paranoia level
+ * 
+ * Phase 2F+ Paranoia System: Trust is now calculated from paranoia, not stored directly.
+ * This ensures trust can recover as paranoia decays, enabling Cognitive Spiral activation.
+ * 
+ * Formula: trust = 1.0 - (paranoia * 0.75)
+ * Bounds: [0.20, 0.95] - Even max paranoia leaves 20% trust, even zero paranoia caps at 95%
+ * 
+ * @param society - Human society agent with paranoia level
+ * @returns Trust level [0.20, 0.95]
+ */
+export function getTrustInAI(society: HumanSocietyAgent): number {
+  const paranoia = society.paranoiaLevel ?? 0.15; // Default to 15% baseline paranoia
+  const trustFromParanoia = 1.0 - paranoia * 0.75;
+  
+  // Floor: Even 100% paranoia leaves 20% trust (some people always believe)
+  // Ceiling: Even 0% paranoia caps at 95% trust (healthy skepticism remains)
+  return Math.max(0.20, Math.min(0.95, trustFromParanoia));
+}
+
+/**
  * Calculate cascading failure multiplier - shared across all systems
  */
 function calculateCascadingFailureMultiplier(state: GameState): number {

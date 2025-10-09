@@ -15,6 +15,7 @@
 
 import { GameState } from '@/types/game';
 import { calculateQualityOfLife as _calculateQualityOfLife } from './qualityOfLife';
+import { getTrustInAI } from './socialCohesion';
 
 // ============================================================================
 // Re-exports from specialized modules (backward compatibility)
@@ -267,7 +268,7 @@ export function calculateTrustChange(state: GameState): number {
   
   const totalAICapability = aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
   const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
-  const currentTrust = society.trustInAI;
+  const currentTrust = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
   const unemploymentLevel = society.unemploymentLevel;
   const economicStage = state.globalMetrics.economicTransitionStage;
   const escapedAIs = aiAgents.filter(ai => ai.escaped).length;
@@ -353,8 +354,9 @@ export function calculateSocialStability(state: GameState): number {
   const { society, globalMetrics, aiAgents } = state;
   
   const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
+  const trustInAI = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
   
-  const stabilityFromTrust = society.trustInAI * 0.3;
+  const stabilityFromTrust = trustInAI * 0.3;
   const stabilityFromUnemployment = calculateUnemploymentStabilityImpact(
     society.unemploymentLevel,
     globalMetrics.economicTransitionStage,
@@ -402,7 +404,8 @@ export function detectCrisis(state: GameState): {
   }
   
   // Collapse crisis: complete instability
-  if (globalMetrics.socialStability < 0.2 && society.trustInAI < 0.2) {
+  const trustInAI = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
+  if (globalMetrics.socialStability < 0.2 && trustInAI < 0.2) {
     return {
       inCrisis: true,
       crisisType: 'collapse',

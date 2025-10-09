@@ -19,6 +19,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { getTrustInAI } from './socialCohesion';
 
 export interface UpwardSpiral {
   active: boolean;           // Is this spiral currently active?
@@ -148,7 +149,8 @@ function updateCognitiveSpiral(spiral: UpwardSpiral, state: GameState, month: nu
   // Cognitive enhancement: AI augmentation available
   const avgAICapability = state.aiAgents.length > 0 ?
     state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-  const cognitiveEnhanced = avgAICapability > 1.5 && state.society.trustInAI > 0.6;
+  const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
+  const cognitiveEnhanced = avgAICapability > 1.5 && trustInAI > 0.6;
   
   const wasActive = spiral.active;
   spiral.active = mentalHealthy && purposeful && cognitiveEnhanced;
@@ -572,12 +574,13 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const avgAI = state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
   const mentalHealthy = qol.diseasesBurden < 0.3 && qol.healthcareQuality > 0.8;
   const purposeful = social.meaningCrisisLevel < 0.3;
-  const cognitiveEnhanced = avgAI > 1.5 && state.society.trustInAI > 0.6;
+  const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
+  const cognitiveEnhanced = avgAI > 1.5 && trustInAI > 0.6;
   
   console.log(`\n🧠 COGNITIVE SPIRAL: ${spirals.cognitive.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   console.log(`   Mental Health: disease ${(qol.diseasesBurden * 100).toFixed(0)}%, healthcare ${(qol.healthcareQuality * 100).toFixed(0)}% ${mentalHealthy ? '✅' : '❌'} (need <30% disease, >80% healthcare)`);
   console.log(`   Purpose: meaning crisis ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${purposeful ? '✅' : '❌'} (need <30%)`);
-  console.log(`   AI Augmentation: avg capability ${avgAI.toFixed(2)}, trust ${(state.society.trustInAI * 100).toFixed(0)}% ${cognitiveEnhanced ? '✅' : '❌'} (need >1.5 capability, >60% trust)`);
+  console.log(`   AI Augmentation: avg capability ${avgAI.toFixed(2)}, trust ${(trustInAI * 100).toFixed(0)}% ${cognitiveEnhanced ? '✅' : '❌'} (need >1.5 capability, >60% trust)`);
   
   // DEMOCRATIC SPIRAL
   const qualityGovernance = gov.decisionQuality > 0.7 && gov.institutionalCapacity > 0.7;
