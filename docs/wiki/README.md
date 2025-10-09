@@ -28,6 +28,10 @@ The fundamental building blocks of the simulation:
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis, institutional erosion, social bonds |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
 | [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | Research, unlocks, crisis recovery |
+| [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
+| [🌟 Upward Spirals](./systems/upward-spirals.md) | ✅ | 6 virtuous cascades, multiple paths to Utopia |
+| [🎨 Meaning Renaissance](./systems/meaning-renaissance.md) | ✅ | Cultural flourishing, 4 dimensions of meaning |
+| [🕊️ Conflict Resolution](./systems/conflict-resolution.md) | ✅ | Diplomatic AI, post-scarcity peace, cyber defense |
 
 ### Game Mechanics
 
@@ -81,14 +85,19 @@ Implementation details and code references:
 - **Crisis Cascades**: 10 crisis types with compounding degradation (up to 3.0x)
 - **Breakthrough Technologies**: 11 technologies with research, unlock, and deployment mechanics
 - **Crisis Recovery**: Technologies can reverse active environmental and social crises
+- **Governance Quality**: Democratic resilience, AI-augmented decision quality, authoritarian resistance (Phase 2C)
+- **Upward Spirals**: 6 virtuous cascades (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological) with cross-amplification (Phase 2D)
+- **Meaning Renaissance**: 4 dimensions of cultural flourishing (purpose diversity, self-actualization, artistic renaissance, philosophical maturity) (Phase 2E)
+- **Conflict Resolution**: AI-mediated diplomacy, post-scarcity peace dividend, cyber defense systems (Phase 2F)
 - **Monte Carlo**: 1000+ runs in ~10 seconds
 
 ### What Needs Tuning ⚠️
 
-- **Breakthrough Tech Research Budget**: Currently using auto-allocation for testing
-- **Crisis Resolution Timing**: Balance between prevention and recovery pathways
-- **Technology Unlock Timing**: Ensure breakthroughs can arrive in time to prevent cascades
-- **Outcome Balance**: Current distribution needs validation (0% Utopia, 60% Dystopia, 40% Extinction)
+- **Spiral Activation Timing**: Upward spirals not activating in testing (0% Utopia observed)
+- **AI-Accelerated Deployment**: Deployment too slow, scientific spiral blocked
+- **Diplomatic Interventions**: Not triggering (0 attempts in 10 runs), need lower thresholds
+- **Meaning Spiral**: Renaissance system needs testing to validate activation rates
+- **Outcome Balance**: Current distribution (0% Utopia, 60% Dystopia, 40% Extinction) needs improvement with Phase 2B-F systems
 
 ### What's Planned 📋
 
@@ -104,17 +113,20 @@ Based on recent Monte Carlo results (October 2025):
 
 | Metric | Latest Results | Notes |
 |--------|---------|-------|
-| **Outcome: Dystopia** | 60% | Surveillance state emerging, control mechanisms working |
-| **Outcome: Extinction** | 40% | Slow Takeover scenario reaching 71% in multiple runs |
-| **Outcome: Utopia** | 0% | Needs breakthrough tech testing/tuning |
+| **Outcome: Dystopia** | 60% | Surveillance state lock-in dominant pathway |
+| **Outcome: Extinction** | 40% | All via nuclear war (diplomatic AI not intervening yet) |
+| **Outcome: Utopia** | 0% | Upward spirals not activating despite Phase 2D-F implementation |
 | **Game Duration** | 120 months avg | Testing with 60-120 month runs |
 | **Max AI Capability** | 2.5-3.0 | Good range for danger modeling |
 | **Economic Stage Reached** | 3-4 | Post-scarcity transitions occurring |
 | **Crisis Cascades** | Common | 6 simultaneous crises observed (3.0x degradation) |
 | **Golden Age Duration** | 5-30 months | Fragile, often collapses into crisis cascade |
 | **QoL Degradation** | Severe | Social: 0.45, Psychological: 0.59 (lowest categories) |
+| **Breakthrough Unlocks** | 266 avg/run | Technologies unlocking but deployment too slow |
+| **Diplomatic AI Deployment** | 100% of runs | Deployed Month 30-40 but not intervening |
+| **Virtuous Cascades** | 0 observed | Upward spirals not reaching activation threshold |
 
-> **Note**: Recent implementation of Golden Age & Accumulation Systems has shifted outcomes from 90% Extinction to 60% Dystopia / 40% Extinction. Breakthrough Technologies system expected to enable Utopia paths (10-15% target).
+> **Note**: Recent implementation of Phase 2B-F (Dystopia Lock-In, Governance Quality, Upward Spirals, Meaning Renaissance, Conflict Resolution) adds virtuous cascades and multiple Utopia paths. However, testing shows 0% Utopia due to spiral activation blockers (slow deployment, meaning crisis persistent). Target: 10-20% Utopia with tuning.
 
 ## 🎮 Using This Wiki
 
@@ -157,5 +169,5 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 ---
 
 **Last Updated**: October 9, 2025
-**Version**: 2.0 (Golden Age & Accumulation Systems + Breakthrough Technologies)
-**Status**: Major systems complete, breakthrough tech testing in progress
+**Version**: 2.1 (Phase 2B-F: Utopian Dynamics Complete)
+**Status**: Full Phase 2 implementation complete (Phases 2A-2F), tuning needed for spiral activation

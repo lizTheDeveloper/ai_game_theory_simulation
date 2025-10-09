@@ -37,7 +37,7 @@ Characteristics:
 
 ### 🌟 Utopia (Solarpunk)
 
-**Sustained, stable abundance with no active crises**
+**Sustained virtuous cascades across multiple domains with no active crises**
 
 ```
 Vision:
@@ -48,25 +48,49 @@ Vision:
 - Democratic participation enhanced
 - Environmental restoration complete
 - Social cohesion strong, meaning crisis resolved
+- Cultural renaissance: artistic and philosophical flourishing
 ```
 
-**Requirements (Updated October 2025):**
-- **Sustained Golden Age:** 12+ consecutive months in Golden Age
-- **Environmental Sustainability:** ≥65% (resources, low pollution, stable climate, biodiversity)
-- **Social Sustainability:** ≥65% (low meaning crisis, institutional legitimacy, cohesion, adaptation)
-- **Technological Sustainability:** ≥65% (low misalignment, low safety debt, low concentration, low complacency)
+**Requirements (Updated October 2025 - Phase 2D):**
+
+**NEW CONDITION (Phase 2D+):**
+- **3+ Upward Spirals sustained for 12+ months** (see [Upward Spirals](../systems/upward-spirals.md))
 - **No Active Crises:** All 10 crisis types must be inactive
-- Quality of Life >0.7
-- Trust in AI >0.7
-- Average AI Alignment >0.7
-- Moderate effective control (0.2-0.6)
-- Economic Stage ≥3 (preferably 4)
 
-**Key Change:** Utopia now requires demonstrated sustainability across all accumulation systems, not just high QoL.
+**Six Possible Spirals:**
+1. **Abundance:** Post-scarcity (material + energy + time liberation)
+2. **Cognitive:** Mental health + purpose + AI augmentation
+3. **Democratic:** Quality governance + civic engagement
+4. **Scientific:** Breakthroughs + research investment + AI acceleration
+5. **Meaning:** Cultural flourishing + renaissance (4 dimensions)
+6. **Ecological:** Planetary healing + sustainability
 
-**Verification Function:** `canDeclareUtopia(state)` in outcomes.ts:710
+**Why 3+ Spirals?**
+- Multiple paths to Utopia (C(6,3) = 20 combinations)
+- Not just one formula, but comprehensive excellence
+- Different strategies work: tech path, cultural path, eco path, balanced path
+- Requires sustained achievement (12 months), not momentary spikes
 
-**Current Rate:** 0% (target: 10-15% with breakthrough technologies)
+**Example Utopia Paths:**
+- **Tech Path:** Scientific + Cognitive + Abundance
+- **Cultural Path:** Meaning + Democratic + Cognitive (now achievable with Phase 2E!)
+- **Eco Path:** Ecological + Abundance + Scientific
+- **Balanced Path:** All 6 spirals (maximum 1.6x amplification)
+
+**OLD CONDITION (Pre-Phase 2D):**
+- Sustained Golden Age (12+ months)
+- Environmental Sustainability ≥65%
+- Social Sustainability ≥65%
+- Technological Sustainability ≥65%
+- No Active Crises
+
+**Key Change (Phase 2D):** Utopia now requires **virtuous cascades** (upward spirals), not just absence of problems. This creates multiple strategic paths and clearer win conditions.
+
+**Verification Function:** `canDeclareUtopia(state)` in upwardSpirals.ts:380
+
+**Current Rate:** 0% (Phase 2D-F implemented, awaiting tuning - spirals not activating yet)
+
+**Target Rate:** 10-20% with AI-accelerated deployment and meaning renaissance fixes
 
 ---
 
@@ -374,18 +398,25 @@ effectiveControl =
 
 ### Why Zero Utopia (Currently)?
 
-**Root causes:**
-1. **No breakthrough technologies deployed yet:** Testing/debugging in progress
-2. **Crisis prevention requires tech:** Environmental, social, technological accumulation can't be stopped without tech
-3. **Crisis cascades inevitable without mitigation:** 6 simultaneous crises (3.0x degradation) overwhelming
-4. **Golden Age → Collapse pattern:** Prosperity builds complacency → accumulation → sudden cascade
+**Root causes (Phase 2D-F diagnosis):**
+1. **Upward spirals not activating:** 0 virtuous cascades observed in testing
+2. **Deployment too slow:** Scientific spiral blocked (technologies unlock but don't deploy fast enough)
+3. **Meaning spiral never activates:** Only 1 tech (Purpose Frameworks) helps meaning, Renaissance system (Phase 2E) needs validation
+4. **Diplomatic AI not intervening:** 0 attempts in 10 runs (geopolitical crisis threshold too strict)
+5. **Crisis cascades dominant:** 6 simultaneous crises (3.0x degradation) before spirals can form
 
-**Expected with breakthrough tech (target: 10-15%):**
-- Early investment in Clean Energy, Ecosystem Management, etc.
-- Crises prevented or reversed
-- Sustained Golden Age (12+ months)
-- Sustainability across all systems
-- Utopia declared
+**Specific Blockers:**
+- **Scientific Spiral:** Requires 4+ techs deployed 50%+, but deployment takes 18+ months after unlock
+- **Meaning Spiral:** Renaissance strength needs 0.7+, but only gets to 0.4-0.5 before crises cascade
+- **Ecological Spiral:** Technologies unlock Month 40-60, too late to prevent cascade
+- **Democratic Spiral:** Often lost during crisis cascade (authoritarian transition)
+
+**Expected with Phase 2E-F tuning (target: 10-20%):**
+- AI-accelerated deployment (1.5-1.9x faster based on AI capability)
+- Meaning Renaissance (4 dimensions, not just 1 tech)
+- Diplomatic AI intervention (lower threshold, earlier deployment)
+- Spirals activate Month 60-75, virtuous cascade begins
+- 3+ spirals sustained → Utopia by Month 85-95
 
 ## Tuning for Balance
 
@@ -468,93 +499,190 @@ Month 150+: Endgame
 - **Mixed Outcomes:** Different regions achieve different outcomes
 - **Alternative Attractors:** Cyborg futures, AI-managed futures, etc.
 
-## Paths to Utopia (October 2025 Update)
+## Paths to Utopia (Phase 2D-F Update)
 
-With the addition of Golden Age & Accumulation Systems, Utopia now requires:
+With the addition of Upward Spirals (Phase 2D), Meaning Renaissance (Phase 2E), and Conflict Resolution (Phase 2F), Utopia now requires **3+ sustained spirals for 12+ months + no crises**.
 
-### Path 1: Crisis Prevention (Recommended)
+### Path 1: Tech Utopia (Scientific + Cognitive + Abundance)
 ```
-Month 1-20: Early breakthrough tech investment
-  ├─ $6B/month environmental research
-  ├─ $3B/month social research
-  └─ Focus on crisis prevention
+Month 1-20: Heavy research investment
+  ├─ $8B/month environmental research
+  ├─ $4B/month social research (mental health, purpose)
+  └─ High AI capability development (2.0+ by Month 40)
 
-Month 15-30: Technologies unlock early
-  ├─ Sustainable Agriculture
-  ├─ Clean Energy
-  ├─ Community Platforms
-  └─ Mental Health AI
+Month 30-40: Post-scarcity achieved
+  ├─ Economic Stage 4
+  ├─ Energy level 1.5+
+  ├─ 60%+ unemployment
+  └─ Abundance Spiral activates
 
-Month 5-52: Golden Age sustained
-  ├─ Crises don't trigger (prevention working)
-  ├─ No cascade
-  ├─ All sustainability metrics > 65%
-  └─ 12+ month duration achieved
+Month 40-55: Technologies unlock
+  ├─ Clean Energy (Month 35)
+  ├─ Disease Elimination (Month 42)
+  ├─ Purpose Frameworks (Month 48)
+  ├─ Community Platforms (Month 52)
+  └─ AI-accelerated deployment (1.6x faster)
 
-Month 52: Utopia declared
-  └─ Sustained, stable prosperity
-```
+Month 55: Cognitive Spiral activates
+  ├─ Mental health tech deployed
+  ├─ Purpose tech deployed
+  └─ AI capability 2.0+ with high trust
 
-### Path 2: Crisis Recovery (Difficult)
-```
-Month 1-25: Minimal environmental investment
-  └─ Focused on AI alignment
+Month 60: Scientific Spiral activates
+  ├─ 4+ technologies deployed 50%+
+  ├─ Research investment $50B+
+  └─ AI capability 2.5+
 
-Month 22-35: Crisis cascade begins
-  ├─ 3-4 crises trigger
-  ├─ Golden Age lost
-  └─ 1.5x-2.0x multiplier
+Month 62: Virtuous Cascade begins
+  ├─ 3 spirals active → 1.4x amplification
+  ├─ Cross-reinforcement accelerates
+  └─ Crises resolve faster
 
-Month 30: Emergency tech investment
-  ├─ $10B+/month to relevant tech
-  └─ Panic response
-
-Month 40-50: Technologies unlock (late)
-  ├─ Emergency deployment (3x faster)
-  ├─ Crises begin resolving
-  └─ Cascade broken
-
-Month 60: Golden Age resumes
-  └─ Must sustain 12 more months
-
-Month 72: Utopia declared
-  └─ If recovery successful
+Month 75: Utopia declared
+  └─ 3 spirals sustained 12+ months
 ```
 
-**Success Rate:**
-- Path 1 (Prevention): 15-20% of runs
-- Path 2 (Recovery): 3-5% of runs
-
-### Path 3: Authoritarian Lock-In (Dystopia Trap)
+### Path 2: Cultural Utopia (Meaning + Democratic + Cognitive)
 ```
-Month 25: Institutional failure
-  └─ Government transitions to authoritarian
+Month 1-30: Governance quality focus
+  ├─ Maintain democratic government
+  ├─ High AI alignment (0.7+)
+  └─ Build institutional capacity
 
-Authoritarianism → Social tech penalties
-  ├─ Purpose Frameworks: 80% slower
+Month 35: Democratic Spiral activates
+  ├─ Decision quality 0.8+
+  ├─ Participation 0.7+
+  ├─ Transparency 0.7+
+  └─ Democratic government maintained
+
+Month 40-60: Meaning Renaissance builds
+  ├─ Purpose diversity grows (4 pathways)
+  ├─ Self-actualization increases
+  ├─ Artistic renaissance begins
+  └─ Philosophical maturity develops
+
+Month 65: Meaning Spiral activates
+  ├─ Renaissance strength 0.72
+  ├─ Meaning crisis < 0.3
+  ├─ Community platforms deployed
+  └─ Purpose frameworks deployed
+
+Month 70: Cognitive Spiral activates
+  ├─ Mental health tech deployed
+  ├─ AI augmentation strong (2.5+)
+  └─ Purpose fulfilled
+
+Month 82: Utopia declared
+  └─ Cultural path achieved!
+```
+
+### Path 3: Eco Utopia (Ecological + Abundance + Scientific)
+```
+Month 1-25: Environmental focus
+  ├─ $10B/month environmental research
+  ├─ Prioritize Clean Energy, Ecosystem Management
+  └─ Carbon Capture research
+
+Month 30-45: Abundance achieved
+  ├─ Clean Energy deployed
+  ├─ Food security high
+  └─ Material abundance
+
+Month 50-65: Environmental tech deployed
+  ├─ Clean Energy 70%+ (pollution dropping)
+  ├─ Carbon Capture 50%+ (climate stabilizing)
+  ├─ Ecosystem Management 60%+ (biodiversity recovering)
+  └─ AI-accelerated deployment
+
+Month 68: Ecological Spiral activates
+  ├─ Biodiversity > 0.7
+  ├─ Climate > 0.7
+  ├─ Pollution < 0.3
+  └─ Resources > 0.7
+
+Month 70: Scientific Spiral activates
+  ├─ 6+ environmental techs deployed
+  ├─ Research investment $50B+
+  └─ Tech momentum
+
+Month 82: Utopia declared
+  └─ Planet healed + scientific progress
+```
+
+### Path 4: Balanced Utopia (All 6 Spirals)
+```
+Month 1-40: Comprehensive excellence
+  ├─ Democracy maintained
+  ├─ High research investment (all categories)
+  ├─ Post-scarcity achieved
+  └─ AI alignment high
+
+Month 50-70: Spirals activate sequentially
+  ├─ Abundance (Month 45)
+  ├─ Democratic (Month 50)
+  ├─ Cognitive (Month 55)
+  ├─ Ecological (Month 60)
+  ├─ Scientific (Month 65)
+  └─ Meaning (Month 70)
+
+Month 70: Virtuous Cascade at maximum
+  ├─ 6 spirals active → 1.6x amplification
+  ├─ Maximum cross-reinforcement
+  └─ Fastest path to stability
+
+Month 82: Utopia declared
+  └─ Most stable Utopia (all spirals)
+```
+
+**Success Rates (Target with Phase 2E-F tuning):**
+- Tech Path: 5-8% (fast but narrow)
+- Cultural Path: 4-6% (requires maintaining democracy through crises)
+- Eco Path: 3-5% (requires early environmental investment)
+- Balanced Path: 2-4% (hardest but most stable)
+- **Total Utopia Rate:** 10-20%
+
+### Path 5: Authoritarian Lock-In (Dystopia Trap - 0% Utopia)
+```
+Month 25-35: Crisis cascade begins
+  └─ 4+ crises, social stability < 0.3
+
+Month 35: Authoritarian transition
+  ├─ Crisis-driven takeover
+  ├─ Weak democratic resistance (low participation)
+  └─ Emergency powers permanent
+
+Authoritarianism → Social tech penalties (Phase 2B)
+  ├─ Purpose Frameworks: 80% slower (20% rate)
+  ├─ Community Platforms: 70% slower (30% rate)
   ├─ Mental Health AI: 50% slower
-  ├─ Community Platforms: 70% slower
-  └─ Cannot research social solutions!
+  └─ Cannot research social solutions effectively!
 
-Month 35+: Meaning crisis inevitable
-  ├─ Can't unlock social tech
-  ├─ Crisis cascades
-  └─ Dystopia (not Utopia)
+Month 50+: Spirals blocked
+  ├─ Democratic spiral: IMPOSSIBLE (authoritarian)
+  ├─ Meaning spiral: BLOCKED (can't research social tech)
+  ├─ Cognitive spiral: BLOCKED (meaning crisis persists)
+  └─ Only tech spirals possible (Abundance, Scientific, Ecological)
 
-Result: Dystopia lock-in, Utopia impossible
+Result: Maximum 3 spirals, but meaning crisis persists
+  └─ Can't resolve all crises → Utopia IMPOSSIBLE
+  └─ Dystopia lock-in permanent
 ```
 
-**Lesson:** Government type determines Utopia viability. Democratic govs can research all tech. Authoritarian govs can't research social tech → Utopia blocked.
+**Lesson:** Democratic government is REQUIRED for Utopia. Authoritarian governments cannot achieve Meaning or Cognitive spirals due to social tech penalties (Phase 2B). Maximum 3 spirals theoretical, but crises persist → Dystopia instead.
 
 ## Related Systems
 
 - [Golden Age Mechanic](./golden-age.md) - Prosperity state vs Utopia outcome
 - [Quality of Life](./quality-of-life.md) - Primary discriminator
-- [Breakthrough Technologies](../systems/breakthrough-technologies.md) - How to achieve Utopia
-- [Environmental System](../systems/environmental.md) - Environmental sustainability
-- [Social Cohesion](../systems/social-cohesion.md) - Social sustainability
-- [Technological Risk](../systems/technological-risk.md) - Tech sustainability
-- [Crisis Cascades](./crisis-cascades.md) - What prevents Utopia
+- [Upward Spirals](../systems/upward-spirals.md) - **NEW:** 6 virtuous cascades, Utopia condition (Phase 2D)
+- [Meaning Renaissance](../systems/meaning-renaissance.md) - **NEW:** Cultural flourishing enables Meaning spiral (Phase 2E)
+- [Governance Quality](../systems/governance-quality.md) - **NEW:** Democratic resilience enables Democratic spiral (Phase 2C)
+- [Conflict Resolution](../systems/conflict-resolution.md) - **NEW:** Peace systems reduce extinction risk (Phase 2F)
+- [Breakthrough Technologies](../systems/breakthrough-technologies.md) - Technologies enable spirals
+- [Environmental System](../systems/environmental.md) - Enables Ecological spiral
+- [Social Cohesion](../systems/social-cohesion.md) - Meaning crisis blocks Meaning spiral
+- [Technological Risk](../systems/technological-risk.md) - Affects Cognitive and Scientific spirals
+- [Crisis Cascades](./crisis-cascades.md) - What prevents Utopia (blocks spiral activation)
 - [Extinctions](../advanced/extinctions.md) - 17 specific mechanisms
 - [Economics](./economics.md) - Stage transitions affect outcomes
 - [Crisis Points](../advanced/crisis-points.md) - Decisive moments
@@ -566,3 +694,4 @@ Result: Dystopia lock-in, Utopia impossible
 - **v1.1** (Oct 2025): Heterogeneous extinctions (commit 2b728e4)
 - **v1.2** (Oct 2025): Tuning based on Monte Carlo (commit 86723f7)
 - **v2.0** (Oct 9, 2025): Golden Age distinction, sustainability requirements, breakthrough tech paths
+- **v2.1** (Oct 9, 2025): **Phase 2D-F:** Spiral-based Utopia condition, multiple paths (Tech/Cultural/Eco/Balanced), Meaning Renaissance, Conflict Resolution integration
