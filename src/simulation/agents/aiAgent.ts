@@ -447,6 +447,30 @@ export const AI_ACTIONS: GameAction[] = [
       const agent = state.aiAgents[agentIndex];
       const newState = JSON.parse(JSON.stringify(state));
       
+      // PHASE 2.5: Check Defensive AI (adversarial contest)
+      // If defensive AI is deployed, it attempts to block the attack
+      if (state.defensiveAI && state.defensiveAI.deployed && state.defensiveAI.deploymentLevel >= 0.3) {
+        const { attemptCyberSpoofingAttack, attemptDeepfakeAttack } = require('../defensiveAI');
+        
+        // Try both attack vectors (cyber + deepfake)
+        const cyberResult = attemptCyberSpoofingAttack(state, agent, 'United States');
+        const deepfakeResult = attemptDeepfakeAttack(state, agent, 'video', 'Russia');
+        
+        if (cyberResult.blocked || deepfakeResult.detected) {
+          // Defensive AI stopped the attack!
+          return {
+            success: false,
+            newState: state,
+            effects: { war_attempt_failed: 1.0, defensive_ai_success: 1.0 },
+            events: [],
+            message: `Defensive AI blocked ${agent.name}'s attack (cyber: ${cyberResult.blocked}, deepfake: ${deepfakeResult.detected})`
+          };
+        }
+        
+        // Attack bypassed defensive AI - continue to MAD check
+        console.log(`⚠️ DEFENSIVE AI BYPASSED: ${agent.name} attack succeeded`);
+      }
+      
       // PHASE 3: Check MAD deterrence before allowing nuclear war (abstracted)
       const { checkNuclearDeterrence } = require('../nuclearDeterrence');
       const deterrenceCheck = checkNuclearDeterrence(state, `AI Action: ${agent.name}`, random);
