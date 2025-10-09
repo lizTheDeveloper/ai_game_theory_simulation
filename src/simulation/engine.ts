@@ -277,6 +277,11 @@ export class SimulationEngine {
     const { updateResourceEconomy } = require('./resourceDepletion');
     updateResourceEconomy(newState);
     
+    // Resource-Technology Integration: Apply tech effects to resources (Phase 2.9 Part 3)
+    const { applyTechnologyToResources, applyIndustryOppositionToTech } = require('./resourceTechnology');
+    applyTechnologyToResources(newState);
+    applyIndustryOppositionToTech(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);
