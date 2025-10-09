@@ -267,6 +267,14 @@ export function updateMADDeterrence(state: GameState): void {
     mad.usChinaDeterrence * 0.3 + 
     mad.indiaPakistanDeterrence * 0.1;
   
+  // GLOBAL PEACE BONUS (Phase 2F integration fix)
+  // If conflict resolution systems have achieved high peace, boost MAD
+  const conflictRes = state.conflictResolution;
+  if (conflictRes && conflictRes.globalPeaceLevel > 0.7) {
+    const peaceBonus = (conflictRes.globalPeaceLevel - 0.7) * 0.5; // Up to +15% at 100% peace
+    mad.madStrength = Math.min(1.0, mad.madStrength + peaceBonus);
+  }
+  
   // AI EROSION FACTOR
   mad.aiErosionFactor = Math.min(0.9, 
     aiRaceIntensity * 0.4 + 
@@ -346,6 +354,20 @@ export function updateBilateralTensions(state: GameState): void {
     const economicStage = state.globalMetrics.economicTransitionStage || 0;
     if (economicStage >= 3 && tension.escalationLadder < 4) {
       tension.tensionLevel = Math.max(0.2, tension.tensionLevel - 0.01);
+    }
+    
+    // Global peace system integration (Phase 2F fix)
+    const conflictRes = state.conflictResolution;
+    if (conflictRes && conflictRes.globalPeaceLevel > 0.7) {
+      // High peace actively reduces tensions
+      const peaceDeeescalation = (conflictRes.globalPeaceLevel - 0.7) * 0.1; // Up to -3% at 100% peace
+      tension.tensionLevel = Math.max(0.2, tension.tensionLevel - peaceDeeescalation);
+      
+      // And de-escalates conflicts
+      if (tension.escalationLadder > 1 && Math.random() < conflictRes.globalPeaceLevel * 0.2) {
+        tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
+        console.log(`🕊️ GLOBAL PEACE: De-escalated ${tension.nationA}-${tension.nationB} from ladder step ${tension.escalationLadder + 1}`);
+      }
     }
     
     // Crisis stability improves with peace
