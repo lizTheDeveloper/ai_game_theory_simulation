@@ -24,12 +24,26 @@ This directory contains regression tests to validate that architectural refactor
    - Uses snapshot testing to catch any behavioral changes
    - IMPORTANT: These tests should remain stable across refactoring
 
-### Test Runner
+### Test Runners
 
-4. **`runRegressionTests.ts`** - Standalone regression test runner
+4. **`runRegressionTests.ts`** - Main regression test runner
    - Can run independently of Jest
    - Quick validation during development
    - Useful for pre-commit checks
+   - Tests Phase 1, Phase 2, and quick simulations
+
+5. **`runPhase4Tests.ts`** - Phase 4 specific test runner
+   - Validates phase registration and ordering
+   - Tests individual phase implementations
+   - Validates engine integration
+   - Run separately for detailed Phase 4 validation
+
+### Test Files
+
+6. **`phase4-phases.test.ts`** - Jest-compatible Phase 4 tests (future)
+   - Unit tests for individual phases
+   - Integration tests for orchestrator
+   - Currently not runnable (Jest not configured)
 
 ## Running Tests
 
@@ -46,16 +60,18 @@ npm test tests/refactoring/phase1-utilities.test.ts
 npm test -- --coverage tests/refactoring
 ```
 
-### Using Standalone Runner
+### Using Standalone Runners
 
 ```bash
-# Quick regression check
+# Quick regression check (Phase 1, 2, simulations)
 npx tsx tests/refactoring/runRegressionTests.ts
 
-# This runs:
-# - Phase 1 utility tests
-# - Phase 2 system tests
-# - 5 quick simulations with fixed seeds
+# Phase 4 detailed tests (orchestrator, phases, ordering)
+npx tsx tests/refactoring/runPhase4Tests.ts
+
+# Run both for comprehensive validation
+npx tsx tests/refactoring/runRegressionTests.ts && \
+npx tsx tests/refactoring/runPhase4Tests.ts
 ```
 
 ## Test Strategy
@@ -88,26 +104,43 @@ npx tsx tests/refactoring/runRegressionTests.ts
 npx tsx tests/refactoring/runRegressionTests.ts
 ```
 
-### Phase 4: Engine Orchestration (PENDING ⏳)
+### Phase 4: Engine Orchestration (IN PROGRESS ⏳)
 
 **Validation checklist (before starting):**
-- [ ] Create baseline snapshots of engine.step() behavior
-- [ ] Document exact execution order of all phases
-- [ ] Capture state at multiple checkpoints (months 10, 25, 50)
-- [ ] Run 10+ seeds and capture outcomes
+- [x] Create baseline snapshots of engine.step() behavior
+- [x] Document exact execution order of all phases
+- [x] Capture state at multiple checkpoints (months 10, 25, 50)
+- [x] Run 10+ seeds and capture outcomes
 
 **Validation checklist (during Phase 4):**
-- [ ] Convert one phase at a time
-- [ ] Run regression tests after each phase conversion
+- [x] Create PhaseOrchestrator infrastructure ✅
+- [x] Create 21 phase implementations (Batches 1-3) ✅
+- [x] Wire into engine constructor ✅
+- [x] Create Phase 4 test suite ✅
+- [ ] Add dual execution validation
+- [ ] Convert remaining 12 phases (Batches 4-5)
+- [ ] Run regression tests after each batch
 - [ ] Verify Monte Carlo results match baseline
 - [ ] Check performance (should be within 5% of baseline)
 
 **Validation checklist (after Phase 4):**
-- [ ] All baseline tests pass
+- [x] Phase registration tests pass ✅
+- [x] Phase ordering tests pass ✅
+- [x] Engine integration tests pass ✅
+- [ ] All baseline simulations pass
 - [ ] Engine.step() reduced to <100 LOC
 - [ ] All phases execute in correct order
 - [ ] Monte Carlo produces identical results with same seeds
 - [ ] Performance within 5% of baseline
+
+**How to verify:**
+```bash
+# Run Phase 4 specific tests
+npx tsx tests/refactoring/runPhase4Tests.ts
+
+# Run full regression suite
+npx tsx tests/refactoring/runRegressionTests.ts
+```
 
 ## Test Seeds
 

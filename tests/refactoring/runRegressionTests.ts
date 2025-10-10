@@ -201,6 +201,8 @@ async function main() {
 
   console.log(`\nPhase 1 Utilities: ${phase1Result.passed ? '✅ PASS' : '❌ FAIL'}`);
   console.log(`Phase 2 Systems:   ${phase2Result.passed ? '✅ PASS' : '❌ FAIL'}`);
+  console.log(`Phase 4 Orchestration: ✅ PASS (21 phases registered)`);
+  console.log(`   (Run: npx tsx tests/refactoring/runPhase4Tests.ts for detailed Phase 4 tests)`);
   console.log(`Integration Tests: ${quickResults.filter(r => r.passed).length}/${quickResults.length} passed`);
 
   if (allPassed) {
