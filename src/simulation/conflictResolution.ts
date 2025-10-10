@@ -12,6 +12,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { clamp } from './utils';
 
 export interface ConflictResolutionState {
   // AI-Mediated Diplomacy
@@ -342,9 +343,5 @@ function countActiveCrises(state: GameState): number {
     tech.corporateDystopiaActive,
     tech.complacencyCrisisActive
   ].filter(Boolean).length;
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value));
 }
 

@@ -12,9 +12,14 @@
 import { GameState, OutcomeMetrics, OutcomeType, GoldenAgeState } from '@/types/game';
 import { calculateQualityOfLife } from './qualityOfLife';
 import { getTrustInAI } from './socialCohesion';
+import {
+  getTotalAICapability as utilGetTotalAICapability,
+  calculateAverageAlignment as utilCalculateAverageAlignment
+} from './utils';
 
 /**
  * Calculate total AI capability across all agents
+ * @deprecated Use getTotalAICapability from utils instead
  */
 export function calculateTotalAICapability(aiAgents: { capability: number }[]): number {
   return aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
@@ -22,6 +27,7 @@ export function calculateTotalAICapability(aiAgents: { capability: number }[]): 
 
 /**
  * Calculate average AI alignment across all agents
+ * @deprecated Use calculateAverageAlignment from utils instead
  */
 export function calculateAverageAlignment(aiAgents: { alignment: number }[]): number {
   if (aiAgents.length === 0) return 0;
