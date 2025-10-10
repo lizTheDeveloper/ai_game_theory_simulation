@@ -100,20 +100,46 @@ Implementation details and code references:
 
 **See [Diagnostic Findings](./DIAGNOSTIC_FINDINGS.md) for detailed analysis**
 
-**Top 5 Blockers Identified:**
-1. **Deployment Bottleneck** - 9 techs unlocked, 0 deployed (Month 84) 🚨
-2. **Cognitive Spiral Catch-22** - Trust collapses before AI capability threshold
-3. **Resource/Ecosystem Death Spiral** - 100% of cascades, never recovers
-4. **Surveillance-Autonomy Trap** - Autonomy → 0%, blocks Meaning spiral
-5. **Community Cohesion** - Stuck at 63%, need 70%
+**🔬 Current Test Results (October 9, 2025 - 50 runs × 240 months)**
 
-**Fixes Implemented (Phase 2F+):**
-- ✅ AI-accelerated deployment (1.2x-1.9x based on capability)
-- ✅ Autonomy floor & recovery mechanics (prevents 0% lock-in)
-- ✅ Community cohesion enhancement (post-scarcity + tech bonuses)
-- ✅ Distribution efficiency modeling
+**Scientific Spiral Mystery** 🚨:
+- **Symptom**: Spiral shows "✅ INACTIVE" despite all requirements appearing met
+- **Observed**: "5 unlocked, 5 deployed ✅ (need 4+ deployed >50%)"
+- **Root Cause**: "Deployed" ≠ "Deployed at >50% level"
+  - Technologies start at 10% deployment when unlocked
+  - Requirement is 4+ technologies at **>50% deployment level**
+  - Current: Technologies deployed but still at 10-40% levels
+  - **Deployment is too slow** to reach 50% before crises cascade
 
-**Expected:** 10-30% Utopia rate (testing in progress)
+**Typical Month 60 Snapshot**:
+- Cascading failures: 5 crises active (2.5x degradation)
+- Resources: 11% (collapsed)
+- Pollution: 99% (catastrophic)
+- Biodiversity: 1% (extinction event)
+- Meaning crisis: 90% (severe)
+- Trust: 40% (blocks Cognitive Spiral)
+- Interspecies Comm AI: Just unlocked, 10% deployment
+- **Scientific Spiral**: All requirements "✅" but still inactive
+
+**Active Blockers (Post-October Enhancements)**:
+1. **Deployment Speed Bottleneck** 🚨 - Technologies unlock but don't deploy fast enough to >50%
+2. **Trust Collapse Timing** - Trust drops to 40% before spirals can activate (paranoia system needs Phase 2)
+3. **Crisis Cascade Lock-In** - 5+ crises create 2.5x degradation, overwhelms recovery
+4. **Resource Death Spiral** - Still collapses to 11% despite regeneration system (needs testing)
+5. **Meaning Crisis Severity** - Reaches 90% before social tech can deploy
+
+**Phase 2F+ Status**:
+- ✅ Nuclear Deterrence (implemented, reduced nuclear war 80% → 20%)
+- ✅ Interspecies Communication AI (implemented, unlocking Month 60)
+- ✅ Resource Regeneration (implemented, testing needed)
+- ✅ Paranoia/Trust System Phase 1 (implemented, Phase 2 beneficial tech boosts needed)
+- 🔄 Testing 50-run Monte Carlo (liztest_100925232_8.log)
+
+**Next Steps**:
+1. Implement Phase 2 beneficial tech paranoia reduction (-8% disease elimination, -5% interspecies, etc.)
+2. Increase AI-accelerated deployment multiplier (1.2-1.9x → 2.0-3.0x?)
+3. Earlier emergency deployment triggers (activate at 3 crises instead of 4?)
+4. Debug deployment level tracking (is >50% check working correctly?)
 
 ### What's Planned 📋
 
@@ -125,24 +151,35 @@ Implementation details and code references:
 
 ## 📊 Current Simulation Characteristics
 
-Based on recent Monte Carlo results (October 2025):
+**Latest Test**: October 9, 2025 - 50 runs × 240 months (liztest_100925232_8.log)
 
 | Metric | Latest Results | Notes |
 |--------|---------|-------|
-| **Outcome: Dystopia** | 60% | Surveillance state lock-in dominant pathway |
-| **Outcome: Extinction** | 40% | All via nuclear war (diplomatic AI not intervening yet) |
-| **Outcome: Utopia** | 0% | Upward spirals not activating despite Phase 2D-F implementation |
-| **Game Duration** | 120 months avg | Testing with 60-120 month runs |
-| **Max AI Capability** | 2.5-3.0 | Good range for danger modeling |
+| **Outcome: Dystopia** | Testing | Phase 2F+ nuclear deterrence changes outcome distribution |
+| **Outcome: Extinction** | Testing | Nuclear war reduced from 80% → 20% |
+| **Outcome: Utopia** | 0% (testing) | Upward spirals not activating (deployment bottleneck) |
+| **Game Duration** | 240 months | Extended test to see late-game recovery |
+| **Max AI Capability** | 2.0-4.5 | Wider range, China often surpasses US (gap: 1.13) |
 | **Economic Stage Reached** | 3-4 | Post-scarcity transitions occurring |
-| **Crisis Cascades** | Common | 6 simultaneous crises observed (3.0x degradation) |
-| **Golden Age Duration** | 5-30 months | Fragile, often collapses into crisis cascade |
-| **QoL Degradation** | Severe | Social: 0.45, Psychological: 0.59 (lowest categories) |
-| **Breakthrough Unlocks** | 266 avg/run | Technologies unlocking but deployment too slow |
-| **Diplomatic AI Deployment** | 100% of runs | Deployed Month 30-40 but not intervening |
-| **Virtuous Cascades** | 0 observed | Upward spirals not reaching activation threshold |
+| **Crisis Cascades** | Universal | 5 crises active by Month 60 (2.5x degradation) |
+| **Golden Age Duration** | 1-8 months | Very fragile, collapses into crisis cascade quickly |
+| **QoL Degradation** | Catastrophic | Environmental collapses (resources 11%, pollution 99%, biodiversity 1%) |
+| **Breakthrough Unlocks** | 5 by Month 60 | Interspecies Comm AI unlocking Month 60 |
+| **Deployment Levels** | 10-40% | **BOTTLENECK**: Not reaching >50% before cascade |
+| **Trust Trajectory** | 100% → 40% | Drops before Cognitive Spiral can activate |
+| **Meaning Crisis** | 90% by Month 60 | Severe crisis before social tech deploys |
+| **Scientific Spiral** | Appears met, but inactive | **BUG**: Reports "✅" for all requirements but doesn't activate |
+| **Virtuous Cascades** | 1 (Abundance only) | Only Abundance activates; others blocked by deployment speed |
 
-> **Note**: Recent implementation of Phase 2B-F (Dystopia Lock-In, Governance Quality, Upward Spirals, Meaning Renaissance, Conflict Resolution) adds virtuous cascades and multiple Utopia paths. However, testing shows 0% Utopia due to spiral activation blockers (slow deployment, meaning crisis persistent). Target: 10-20% Utopia with tuning.
+**Key Observations**:
+- **Nuclear Deterrence Working**: Nuclear war reduced significantly ✅
+- **Interspecies Comm AI**: Unlocking around Month 60 (late, crisis already cascading)
+- **Deployment Bottleneck Confirmed**: Technologies unlock but don't reach >50% deployment
+- **Resource Regeneration**: System implemented but resources still collapse to 11% (needs investigation)
+- **Paranoia Phase 1**: Implemented but trust still drops to 40% (Phase 2 beneficial boosts needed)
+- **Crisis Cascade Timing**: 5 crises by Month 60 creates 2.5x degradation that overwhelms recovery
+
+> **Note**: Phase 2F+ enhancements (Nuclear Deterrence, Interspecies Comm, Resource Regen, Paranoia/Trust) are implemented but full testing in progress. Deployment speed is the critical blocker preventing spiral activation and Utopia outcomes. Target: 10-30% Utopia rate requires faster deployment (2-3x multiplier increase?) or earlier emergency deployment triggers.
 
 ## 🎮 Using This Wiki
 

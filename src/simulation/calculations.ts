@@ -194,8 +194,8 @@ export function updateParanoia(state: GameState): void {
   const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
   const totalAICapability = aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
   const control = state.government.controlCapability;
-  
-  let paranoiaLevel = society.paranoiaLevel;
+
+  let paranoiaLevel = society.paranoiaLevel ?? 0.15;
   
   // === 1. PARANOIA DECAYS NATURALLY (0.5%/month) ===
   // Without reinforcement, fear fades (availability heuristic decay)

@@ -377,7 +377,7 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Pollution crisis resolution - easier with clean energy deployed
   if (env.pollutionCrisisActive) {
-    const cleanEnergyHelp = tech.cleanEnergy.unlocked && tech.cleanEnergy.deploymentLevel > 0.3;
+    const cleanEnergyHelp = tech.cleanEnergy.unlocked && (tech.cleanEnergy?.deploymentLevel ?? 0) > 0.3;
     const threshold = cleanEnergyHelp ? 0.6 : 0.5; // Higher threshold with tech help
     
     if (env.pollutionLevel < threshold) {
@@ -396,15 +396,15 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Climate catastrophe resolution - requires sustained effort
   if (env.climateCatastropheActive) {
-    const carbonCaptureHelp = tech.carbonCapture.unlocked && tech.carbonCapture.deploymentLevel > 0.5;
-    const cleanEnergyHelp = tech.cleanEnergy.unlocked && tech.cleanEnergy.deploymentLevel > 0.7;
+    const carbonCaptureHelp = tech.carbonCapture.unlocked && (tech.carbonCapture?.deploymentLevel ?? 0) > 0.5;
+    const cleanEnergyHelp = tech.cleanEnergy.unlocked && (tech.cleanEnergy?.deploymentLevel ?? 0) > 0.7;
     const threshold = (carbonCaptureHelp && cleanEnergyHelp) ? 0.6 : 0.7;
-    
+
     if (env.climateStability > threshold) {
       env.climateCatastropheActive = false;
       console.log(`\n✅✅✅ CLIMATE CATASTROPHE AVERTED (Month ${month})`);
       console.log(`    Massive technology deployment stabilized climate!`);
-      console.log(`    Clean Energy: ${(tech.cleanEnergy.deploymentLevel * 100).toFixed(0)}%, Carbon Capture: ${(tech.carbonCapture.deploymentLevel * 100).toFixed(0)}%`);
+      console.log(`    Clean Energy: ${((tech.cleanEnergy?.deploymentLevel ?? 0) * 100).toFixed(0)}%, Carbon Capture: ${((tech.carbonCapture?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
       
       state.eventLog.push({
         month,
@@ -417,7 +417,7 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Ecosystem collapse resolution - requires ecosystem management AI
   if (env.ecosystemCollapseActive) {
-    const ecosystemAIHelp = tech.ecosystemManagement.unlocked && tech.ecosystemManagement.deploymentLevel > 0.4;
+    const ecosystemAIHelp = tech.ecosystemManagement.unlocked && (tech.ecosystemManagement?.deploymentLevel ?? 0) > 0.4;
     const threshold = ecosystemAIHelp ? 0.5 : 0.6;
     
     if (env.biodiversityIndex > threshold) {
@@ -436,16 +436,16 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Meaning crisis resolution - requires social tech
   if (social.meaningCollapseActive) {
-    const mentalHealthHelp = tech.mentalHealthAI.unlocked && tech.mentalHealthAI.deploymentLevel > 0.3;
-    const purposeHelp = tech.purposeFrameworks.unlocked && tech.purposeFrameworks.deploymentLevel > 0.3;
+    const mentalHealthHelp = tech.mentalHealthAI.unlocked && (tech.mentalHealthAI?.deploymentLevel ?? 0) > 0.3;
+    const purposeHelp = tech.purposeFrameworks.unlocked && (tech.purposeFrameworks?.deploymentLevel ?? 0) > 0.3;
     const threshold = (mentalHealthHelp && purposeHelp) ? 0.6 : 0.5;
-    
+
     if (social.meaningCrisisLevel < threshold) {
       social.meaningCollapseActive = false;
       console.log(`\n✅✅✅ MEANING CRISIS RESOLVED (Month ${month})`);
       console.log(`    Society adapted to post-work world!`);
       if (mentalHealthHelp || purposeHelp) {
-        console.log(`    Tech assist: Mental Health AI: ${(tech.mentalHealthAI.deploymentLevel * 100).toFixed(0)}%, Purpose Frameworks: ${(tech.purposeFrameworks.deploymentLevel * 100).toFixed(0)}%`);
+        console.log(`    Tech assist: Mental Health AI: ${((tech.mentalHealthAI?.deploymentLevel ?? 0) * 100).toFixed(0)}%, Purpose Frameworks: ${((tech.purposeFrameworks?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
       }
       
       state.eventLog.push({
@@ -459,7 +459,7 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Resource crisis resolution - easier with recycling/efficiency
   if (env.resourceCrisisActive) {
-    const recyclingHelp = tech.advancedRecycling.unlocked && tech.advancedRecycling.deploymentLevel > 0.5;
+    const recyclingHelp = tech.advancedRecycling.unlocked && (tech.advancedRecycling?.deploymentLevel ?? 0) > 0.5;
     const threshold = recyclingHelp ? 0.35 : 0.30;
     
     if (env.resourceReserves > threshold) {
@@ -493,26 +493,26 @@ export function getTechnologyQoLBoosts(state: GameState): {
   
   // Mental health techs
   if (tech.mentalHealthAI.unlocked) {
-    mentalHealth += (tech.mentalHealthAI.effects.mentalHealthBoost || 0) * tech.mentalHealthAI.deploymentLevel;
+    mentalHealth += (tech.mentalHealthAI.effects.mentalHealthBoost || 0) * (tech.mentalHealthAI?.deploymentLevel ?? 0);
   }
   if (tech.purposeFrameworks.unlocked) {
-    mentalHealth += (tech.purposeFrameworks.effects.mentalHealthBoost || 0) * tech.purposeFrameworks.deploymentLevel;
+    mentalHealth += (tech.purposeFrameworks.effects.mentalHealthBoost || 0) * (tech.purposeFrameworks?.deploymentLevel ?? 0);
   }
-  
+
   // Healthcare techs
   if (tech.diseaseElimination.unlocked) {
-    healthcare += (tech.diseaseElimination.effects.healthcareBoost || 0) * tech.diseaseElimination.deploymentLevel;
+    healthcare += (tech.diseaseElimination.effects.healthcareBoost || 0) * (tech.diseaseElimination?.deploymentLevel ?? 0);
   }
   if (tech.longevityTherapies.unlocked) {
-    healthcare += (tech.longevityTherapies.effects.healthcareBoost || 0) * tech.longevityTherapies.deploymentLevel;
+    healthcare += (tech.longevityTherapies.effects.healthcareBoost || 0) * (tech.longevityTherapies?.deploymentLevel ?? 0);
   }
-  
+
   // Environmental techs improve environmental QoL
   if (tech.ecosystemManagement.unlocked) {
-    environmental += 0.1 * tech.ecosystemManagement.deploymentLevel;
+    environmental += 0.1 * (tech.ecosystemManagement?.deploymentLevel ?? 0);
   }
   if (tech.cleanEnergy.unlocked) {
-    environmental += 0.05 * tech.cleanEnergy.deploymentLevel;
+    environmental += 0.05 * (tech.cleanEnergy?.deploymentLevel ?? 0);
   }
   
   return { mentalHealth, healthcare, environmental };
@@ -526,12 +526,12 @@ export function getResourceEfficiencyMultiplier(state: GameState): number {
   let efficiency = 1.0;
   
   // Advanced recycling
-  if (tech.advancedRecycling.unlocked && tech.advancedRecycling.deploymentLevel > 0.5) {
+  if (tech.advancedRecycling.unlocked && (tech.advancedRecycling?.deploymentLevel ?? 0) > 0.5) {
     efficiency *= (tech.advancedRecycling.effects.resourceEfficiency || 1.0);
   }
-  
+
   // Sustainable agriculture
-  if (tech.sustainableAgriculture.unlocked && tech.sustainableAgriculture.deploymentLevel > 0.5) {
+  if (tech.sustainableAgriculture.unlocked && (tech.sustainableAgriculture?.deploymentLevel ?? 0) > 0.5) {
     efficiency *= 0.85; // 15% more efficient
   }
   

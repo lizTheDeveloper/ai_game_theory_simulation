@@ -33,6 +33,9 @@ export interface MADDeterrence {
   
   // Arms control
   treatiesActive: boolean;            // START, INF, etc.
+  treatyStrength: number;             // [0,1] Treaty effectiveness (1.0 = fully active, 0.0 = fully collapsed)
+  treatyNegotiationProgress: number;  // [0,1] Progress toward renewal (government efforts)
+  monthsSinceTreatyStrain: number;    // How long treaties have been under strain
   hotlinesOperational: boolean;       // Direct communication
   verificationInPlace: boolean;       // Can verify compliance
   

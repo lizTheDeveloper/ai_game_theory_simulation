@@ -408,7 +408,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           if (bilateralDeterrence > 0.7) continue;
           
           // Check human veto points
-          const states = state.nuclearStates;
+          const states = state.nuclearStates ?? [];
           const stateA = states.find(s => s.name === tension.nationA);
           const stateB = states.find(s => s.name === tension.nationB);
           

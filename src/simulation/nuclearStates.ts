@@ -107,6 +107,9 @@ export function initializeMADDeterrence(): MADDeterrence {
     crisisStability: 0.7,              // Reasonable
     earlyWarningReliability: 0.8,      // Pretty good
     treatiesActive: true,              // New START (expires 2026)
+    treatyStrength: 1.0,               // Full treaty effectiveness
+    treatyNegotiationProgress: 0.0,    // No renegotiation yet
+    monthsSinceTreatyStrain: 0,        // No strain yet
     hotlinesOperational: true,
     verificationInPlace: true,
     aiErosionFactor: 0.1,              // Minimal AI impact so far
@@ -157,10 +160,16 @@ export function initializeBilateralTensions(): BilateralTension[] {
  */
 export function updateMADDeterrence(state: GameState): void {
   const mad = state.madDeterrence;
-  const states = state.nuclearStates;
-  const usState = states.find(s => s.name === 'United States')!;
-  const chinaState = states.find(s => s.name === 'China')!;
-  const russiaState = states.find(s => s.name === 'Russia')!;
+  const states = state.nuclearStates ?? [];
+  const usState = states.find(s => s.name === 'United States');
+  const chinaState = states.find(s => s.name === 'China');
+  const russiaState = states.find(s => s.name === 'Russia');
+
+  // Early return if nuclear states not properly initialized
+  if (!usState || !chinaState || !russiaState) {
+    console.warn('Nuclear states not properly initialized, skipping MAD deterrence update');
+    return;
+  }
   
   // AI capability in player's nation (assume US)
   // AI RACE INTENSITY (from National AI system if available, fallback to simple calc)
@@ -187,26 +196,74 @@ export function updateMADDeterrence(state: GameState): void {
   mad.dangerousFactor = state.aiAgents.length > 0 ?
     dangerousAIs.length / state.aiAgents.length : 0;
   
-  // ARMS CONTROL: Racing erodes, peace + low danger restores
-  if (aiRaceIntensity > 0.6 && mad.dangerousFactor > 0.2 && mad.treatiesActive) {
-    mad.treatiesActive = false;
-    mad.verificationInPlace = false;
-    console.log(`📜 ARMS CONTROL COLLAPSE: AI race + ${mad.dangerousAICount} dangerous AIs prevent treaty renewal`);
+  // ============================================================================
+  // ARMS CONTROL: Gradual Treaty Decay with Government Renegotiation
+  // ============================================================================
+  
+  const underStrain = aiRaceIntensity > 0.6 && mad.dangerousFactor > 0.2;
+  const conflictRes = state.conflictResolution;
+  const isDemocratic = state.government.governmentType === 'democratic';
+  
+  if (underStrain && mad.treatiesActive) {
+    // Track strain duration
+    mad.monthsSinceTreatyStrain += 1;
+    
+    // Gradual decay: 5% per month under strain
+    const decayRate = 0.05;
+    mad.treatyStrength = Math.max(0, mad.treatyStrength - decayRate);
+    
+    // Government immediately begins renegotiation efforts when decay starts
+    if (mad.monthsSinceTreatyStrain === 1) {
+      console.log(`📜 TREATY STRAIN BEGINS: AI race ${(aiRaceIntensity * 100).toFixed(0)}%, ${mad.dangerousAICount} dangerous AIs`);
+      console.log(`   🏛️  Government begins treaty renegotiation efforts`);
+    }
+    
+    // Government renegotiation progress (faster for democracies, helped by peace)
+    const baseProgress = isDemocratic ? 0.08 : 0.04;  // 8%/month demo, 4%/month auth
+    const peaceBonus = conflictRes && conflictRes.globalPeaceLevel > 0.7 ? 
+      (conflictRes.globalPeaceLevel - 0.7) * 0.2 : 0;  // Up to +6% at 100% peace
+    
+    mad.treatyNegotiationProgress = Math.min(1.0, 
+      mad.treatyNegotiationProgress + baseProgress + peaceBonus);
+    
+    // Treaties fully collapse if strength reaches 0
+    if (mad.treatyStrength <= 0 && mad.treatiesActive) {
+      mad.treatiesActive = false;
+      mad.verificationInPlace = false;
+      mad.treatyStrength = 0;
+      console.log(`📜 ARMS CONTROL COLLAPSE: Treaties fully expired after ${mad.monthsSinceTreatyStrain} months`);
+      console.log(`   ⚠️  Renegotiation progress: ${(mad.treatyNegotiationProgress * 100).toFixed(0)}% (not completed in time)`);
+    }
+    // Log decay progress periodically
+    else if (mad.monthsSinceTreatyStrain % 6 === 0) {
+      console.log(`📜 Treaty Decay: ${(mad.treatyStrength * 100).toFixed(0)}% strength, renegotiation ${(mad.treatyNegotiationProgress * 100).toFixed(0)}%`);
+    }
   }
-  // TREATY RENEWAL: If race cools down + danger is low + global peace high
-  // Democratic governments MUCH more likely to negotiate (authoritarian regimes resist)
-  else if (!mad.treatiesActive && aiRaceIntensity < 0.4 && mad.dangerousFactor < 0.1) {
-    const conflictRes = state.conflictResolution;
-    const highPeace = conflictRes && conflictRes.globalPeaceLevel > 0.75;
-    const isDemocratic = state.government.governmentType === 'democratic';
+  // TREATY RENEWAL: Successful renegotiation or conditions improve
+  else if (!underStrain && mad.treatyStrength < 1.0) {
+    // Conditions improved - faster renegotiation progress
+    const recoveryRate = isDemocratic ? 0.12 : 0.06;  // 12%/month demo, 6%/month auth
+    const peaceBonus = conflictRes && conflictRes.globalPeaceLevel > 0.75 ?
+      (conflictRes.globalPeaceLevel - 0.75) * 0.3 : 0;  // Up to +7.5% at 100% peace
     
-    // Democratic: 75% peace threshold, Authoritarian: 85% peace threshold (harder)
-    const peaceThreshold = isDemocratic ? 0.75 : 0.85;
+    mad.treatyNegotiationProgress = Math.min(1.0,
+      mad.treatyNegotiationProgress + recoveryRate + peaceBonus);
     
-    if (highPeace && conflictRes.globalPeaceLevel >= peaceThreshold) {
+    // Complete renewal if progress reaches 100%
+    if (mad.treatyNegotiationProgress >= 1.0) {
       mad.treatiesActive = true;
       mad.verificationInPlace = true;
-      console.log(`📜 ARMS CONTROL RESTORED: Peace ${(conflictRes.globalPeaceLevel * 100).toFixed(0)}%, AI race cooled to ${(aiRaceIntensity * 100).toFixed(0)}% [${state.government.governmentType}]`);
+      mad.treatyStrength = 1.0;
+      mad.treatyNegotiationProgress = 0.0;
+      mad.monthsSinceTreatyStrain = 0;
+      console.log(`📜 ARMS CONTROL RESTORED: New treaty ratified after negotiations`);
+      console.log(`   Peace: ${conflictRes ? (conflictRes.globalPeaceLevel * 100).toFixed(0) : 'N/A'}%, AI race: ${(aiRaceIntensity * 100).toFixed(0)}% [${state.government.governmentType}]`);
+    }
+    // Still negotiating but conditions good
+    else if (mad.monthsSinceTreatyStrain > 0) {
+      console.log(`📜 Treaty Renegotiation: ${(mad.treatyNegotiationProgress * 100).toFixed(0)}% complete (conditions improved)`);
+      // Slowly restore strength even before full renewal
+      mad.treatyStrength = Math.min(1.0, mad.treatyStrength + 0.03);
     }
   }
   
@@ -270,15 +327,15 @@ export function updateMADDeterrence(state: GameState): void {
     autonomousPenalty
   );
   
-  // BILATERAL DETERRENCE
+  // BILATERAL DETERRENCE (now uses gradual treatyStrength 0.0-1.0)
   mad.usRussiaDeterrence = Math.max(0.2, 
-    (mad.treatiesActive ? 0.3 : 0) + 
+    mad.treatyStrength * 0.3 +     // Max +30% from full treaties
     mad.crisisStability * 0.4 + 
     (1 - aiRaceIntensity) * 0.3
   );
   
   mad.usChinaDeterrence = Math.max(0.2, 
-    (mad.treatiesActive ? 0.2 : 0) + 
+    mad.treatyStrength * 0.2 +     // Max +20% from full treaties
     mad.crisisStability * 0.3 + 
     (1 - aiRaceIntensity) * 0.5
   );
@@ -293,7 +350,7 @@ export function updateMADDeterrence(state: GameState): void {
   
   // GLOBAL PEACE BONUS (Phase 2F integration fix)
   // If conflict resolution systems have achieved high peace, boost MAD
-  const conflictRes = state.conflictResolution;
+  // conflictRes already declared at top of treaty decay section
   if (conflictRes && conflictRes.globalPeaceLevel > 0.7) {
     // Stronger bonus: Up to +30% at 100% peace (was +15%)
     // Rationale: Diplomatic AI + high peace should significantly stabilize deterrence
@@ -369,7 +426,7 @@ export function updateBilateralTensions(state: GameState): void {
     
     // Diplomatic AI can reduce tensions
     const dipAI = state.diplomaticAI;
-    if (dipAI.deploymentMonth !== -1 && dipAI.trustLevel > 0.6) {
+    if (dipAI.deploymentMonth !== -1 && dipAI.stakeholderTrust > 0.6) {
       const deEscalationProb = dipAI.successRate * 0.1;
       if (Math.random() < deEscalationProb && tension.escalationLadder > 1) {
         tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);

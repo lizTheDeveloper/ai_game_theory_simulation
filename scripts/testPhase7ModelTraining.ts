@@ -159,8 +159,8 @@ if (newAI.organizationId !== openai.id) {
   process.exit(1);
 }
 
-if (newAI.lifecycleState !== 'deployed') {
-  console.error('❌ FAIL: New AI should be deployed immediately');
+if (newAI.lifecycleState !== 'deployed_closed') {
+  console.error('❌ FAIL: New AI should be deployed_closed immediately');
   process.exit(1);
 }
 

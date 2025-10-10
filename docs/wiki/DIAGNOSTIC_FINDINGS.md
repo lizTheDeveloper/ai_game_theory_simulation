@@ -2,7 +2,144 @@
 
 **Date:** October 9, 2025
 **Source:** Monte Carlo analysis with spiral diagnostics
-**Status:** Blockers identified, fixes implemented (Phase 2F+)
+**Status:** Blockers identified, fixes implemented (Phase 2F+), extended testing in progress
+**Latest Update:** October 9, 2025 (Evening) - Phase 2F+ Testing Results
+
+---
+
+## 🆕 Latest Test Results (Phase 2F+ - October 9 Evening)
+
+**Test Configuration:**
+- Runs: 50
+- Duration: 240 months (20 years)
+- Seed Range: 42000-42049
+- Log: `liztest_100925232_8.log`
+
+### Critical Finding: Scientific Spiral Mystery 🚨
+
+**Observation at Month 60:**
+```
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 5 unlocked, 5 deployed ✅ (need 4+ deployed >50%)
+   Research Investment: $58.8B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 2.09 ✅ (need >1.2)
+```
+
+**All requirements appear met, but spiral still inactive!**
+
+**Root Cause Identified:**
+- "Deployed" ≠ "Deployed at >50% level"
+- Requirement: 4+ technologies at **>50% deployment level**
+- Reality: Technologies start at 10% when unlocked, climb slowly
+- Month 60: 5 technologies "deployed" but at 10-40% levels
+- **None have reached >50% threshold**
+
+### Environmental Snapshot (Month 60)
+
+**Crisis Cascade Active:**
+```
+⚠️⚠️⚠️ CASCADING FAILURES (Month 61): 5 crises active
+[Resource, Pollution, Ecosystem, Meaning, ControlLoss]
+Degradation accelerated 2.5x
+```
+
+**Metrics:**
+- **Resources**: 11% (collapsed despite regeneration system)
+- **Pollution**: 99% (catastrophic)
+- **Biodiversity**: 1% (mass extinction)
+- **Climate**: 80% (still okay)
+- **Meaning Crisis**: 90% (severe)
+- **Trust**: 40% (blocks Cognitive Spiral)
+
+**Technologies:**
+- Interspecies Communication AI: Just unlocked Month 60, 10% deployment
+- Emergency deployment active: Mental Health AI scaling 2.4x faster
+- 5 technologies deployed but not at >50%
+
+### Spiral Status (Month 60)
+
+```
+✅ Abundance:   ACTIVE (only 1/6)
+❌ Cognitive:   INACTIVE (trust 40% < need 60%)
+❌ Democratic:  INACTIVE (capacity 57% < need 70%)
+❌ Scientific:  INACTIVE (0 deployed >50%, despite showing "✅")
+❌ Meaning:     INACTIVE (autonomy 69% < need 70%, community 51% < need 70%)
+❌ Ecological:  INACTIVE (resources 11% < need 70%)
+```
+
+### Key Observations
+
+**What's Working:**
+1. ✅ Nuclear Deterrence: Peace stabilizing, +3.6% from peace level 74%
+2. ✅ Interspecies Communication AI: Unlocking on schedule (Month 60)
+3. ✅ Emergency Deployment: Scaling 2.4x faster during crises
+4. ✅ Abundance Spiral: Consistently activates
+
+**What's Still Broken:**
+1. 🚨 **Deployment Speed**: Technologies at 10-40%, need >50%
+2. 🚨 **Resource Regeneration**: Resources at 11% despite regeneration system (needs debugging)
+3. 🚨 **Trust Collapse**: Drops to 40% before Cognitive Spiral can activate
+4. 🚨 **Crisis Timing**: 5 crises by Month 60 overwhelms recovery (2.5x degradation)
+5. 🚨 **Scientific Spiral Check**: Reports "✅" but doesn't activate (bug in requirement checking)
+
+### Hypothesis: Why Regeneration Not Working
+
+**Resource Regeneration Implementation:**
+- System implemented: ✅
+- Formulae correct: ✅ (+4.8%/month at full deployment)
+- **Actual deployment levels**: ❌ Technologies at 10-40%, not 70-100%
+
+**Calculation:**
+```
+Expected regeneration at 70% avg deployment:
+  Sustainable Ag (0.01 × 0.7) = +0.7%
+  Circular Economy (0.02 × 0.7) = +1.4%
+  Clean Energy (0.015 × 0.7) = +1.05%
+  Ecosystem Mgmt (0.008 × 0.7) = +0.56%
+  Interspecies (0.005 × 0.7) = +0.35%
+  Total: +4.06%/month
+
+Actual regeneration at 20% avg deployment:
+  Total: ~1.2%/month
+
+Result: Regeneration too weak to counteract depletion
+```
+
+**Resources 11% because:**
+- Depletion: -3% per month (Stage 3-4 acceleration)
+- Regeneration: +1.2% per month (tech only 20% deployed)
+- Net: -1.8% per month → continues declining
+
+**Fix Needed:** Faster deployment OR earlier unlocks OR stronger regeneration effects
+
+### Updated Blocker List
+
+**Top 5 Active Blockers (Post-Phase 2F+):**
+
+1. **Deployment Speed Bottleneck** 🚨🚨🚨 (CRITICAL)
+   - Technologies unlock but don't reach >50% deployment before cascades
+   - Scientific Spiral check shows "✅" but actually blocked
+   - Regeneration systems ineffective at low deployment levels
+
+2. **Trust Collapse Timing**
+   - Trust drops to 40% by Month 60
+   - Paranoia system Phase 1 implemented
+   - Phase 2 (beneficial tech boosts) still needed
+
+3. **Crisis Cascade Lock-In**
+   - 5 crises by Month 60 creates 2.5x degradation
+   - Overwhelms recovery attempts
+   - Need earlier emergency response OR cascade dampening
+
+4. **Spiral Requirement Checking**
+   - Scientific Spiral reports "✅" but doesn't activate
+   - Possible bug in >50% deployment level checking
+   - Need to debug requirement validation
+
+5. **Community Cohesion Stagnation**
+   - Stuck at 51% at Month 60 (need 70%)
+   - Post-scarcity boost not enough
+   - Community tech deploying too late
 
 ## Executive Summary
 

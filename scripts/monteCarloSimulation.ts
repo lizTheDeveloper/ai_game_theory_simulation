@@ -234,10 +234,16 @@ interface RunResult {
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
 log('='.repeat(80));
+// accept --max-months and --runs
+const args = process.argv.slice(2);
+
+const maxMonths = args.find(arg => arg.split('=')[0] === '--max-months')?.split('=')[1];
+const runs = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
+
 
 // Configuration
-const NUM_RUNS = 10;
-const MAX_MONTHS = 120; // 10 years to allow slow catastrophic scenarios to develop
+const NUM_RUNS = runs ? parseInt(runs) : 10;
+const MAX_MONTHS = maxMonths ? parseInt(maxMonths) : 120; // 10 years to allow slow catastrophic scenarios to develop
 const SEED_START = 42000;
 
 log(`\n⚙️  CONFIGURATION:`);

@@ -729,17 +729,9 @@ export function applyNationalAIToMAD(state: GameState): void {
   // Update MAD bilateral deterrence with accurate race intensity
   // (This replaces the simple calculation in nuclearStates.ts)
   
-  // Racing erodes arms control
-  if (aiRaceIntensity > 0.6 && mad.dangerousFactor > 0.2 && mad.treatiesActive) {
-    mad.treatiesActive = false;
-    mad.verificationInPlace = false;
-    console.log(`📜 ARMS CONTROL COLLAPSE: AI race intensity ${(aiRaceIntensity * 100).toFixed(0)}% prevents treaty renewal`);
-  }
-  
-  if (aiRaceIntensity > 0.7 && mad.dangerousFactor > 0.3 && mad.hotlinesOperational) {
-    mad.hotlinesOperational = false;
-    console.log(`📞 HOTLINE FAILURE: High AI race disrupts US-Russia/China communication`);
-  }
+  // NOTE: Treaty decay and renegotiation is now handled in nuclearStates.ts
+  // with gradual decay mechanics. This used to have instant collapse logic
+  // but it was causing duplicate treaty collapse messages and conflicts.
 }
 
 // ============================================================================
