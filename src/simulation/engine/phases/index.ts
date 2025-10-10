@@ -4,6 +4,18 @@
  * Barrel export for all simulation phases
  */
 
+// Batch 4: Agent/Infrastructure phases (0.x, 4.x-6.x - high risk)
+export { AILifecyclePhase } from './AILifecyclePhase';
+export { CyberSecurityPhase } from './CyberSecurityPhase';
+export { SleeperWakePhase } from './SleeperWakePhase';
+export { AIAgentActionsPhase } from './AIAgentActionsPhase';
+export { TechnologyBreakthroughsPhase } from './TechnologyBreakthroughsPhase';
+export { GovernmentActionsPhase } from './GovernmentActionsPhase';
+export { SocietyActionsPhase } from './SocietyActionsPhase';
+export { ComputeAllocationPhase } from './ComputeAllocationPhase';
+export { ComputeGrowthPhase } from './ComputeGrowthPhase';
+export { OrganizationTurnsPhase } from './OrganizationTurnsPhase';
+
 // Batch 1: Simple calculation phases (converted first - lowest risk)
 export { UnemploymentPhase } from './UnemploymentPhase';
 export { EconomicTransitionPhase } from './EconomicTransitionPhase';

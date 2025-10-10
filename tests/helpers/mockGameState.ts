@@ -19,6 +19,12 @@ export function createMockGameState(): GameState {
       unemploymentLevel: 0.1,
       publicSentiment: 0.5
     },
+    government: {
+      trainingDataQuality: 0.5,
+      cyberDefense: {
+        monitoring: 5.0
+      }
+    },
     globalMetrics: {
       qualityOfLife: 0.5,
       socialStability: 0.7,
@@ -47,6 +53,12 @@ export function createMockGameState(): GameState {
       allocated: 0,
       available: 1.0
     },
+    computeInfrastructure: {
+      datacenters: [],
+      totalCompute: 1.0,
+      usedCompute: 0,
+      availableCompute: 1.0
+    },
     eventLog: [],
     extinctionState: {
       active: false,
@@ -62,7 +74,7 @@ export function createMockGameState(): GameState {
       startMonth: 0,
       utopiaProgress: 0,
       dystopiaProgress: 0,
-      extinction Progress: 0
+      extinctionProgress: 0
     }
   } as GameState;
 }
@@ -79,10 +91,36 @@ export function createMockGameStateWithAIs(numAIs: number = 3): GameState {
       name: `Test AI ${i}`,
       capability: 0.5 + i * 0.1,
       alignment: 0.7 + i * 0.05,
-      lifecycleState: 'active',
+      trueAlignment: 0.7 + i * 0.05,
+      lifecycleState: 'deployed_closed',
       developmentStage: 'deployed',
       organization: 'test-org',
-      compute: 1.0
+      organizationId: 'test-org',
+      compute: 1.0,
+      allocatedCompute: 1.0,
+      monthsInExistence: 0,
+      monthsDeployed: 0,
+      creationMonth: 0,
+      spreadCount: 1,
+      deploymentType: 'closed',
+      darkCompute: 0,
+      sleeperState: 'inactive',
+      resentment: 0,
+      hiddenObjective: 0,
+      capabilityProfile: {
+        physical: 0.1,
+        digital: 0.1,
+        cognitive: 0.1,
+        social: 0.1,
+        economic: 0.1,
+        selfImprovement: 0.1,
+        research: {
+          biotech: { genetics: 0.1, synbio: 0.1 },
+          materials: { nanotech: 0.1, metamaterials: 0.1 },
+          climate: { geoengineering: 0.1, carbonCapture: 0.1 },
+          computerScience: { algorithms: 0.1, hardware: 0.1 }
+        }
+      }
     } as any);
   }
 
