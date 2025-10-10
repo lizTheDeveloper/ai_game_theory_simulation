@@ -40,7 +40,7 @@ console.log(`Organizations: ${state.organizations.length}`);
 
 console.log('\nOrganizations:');
 state.organizations.forEach(org => {
-  const models = state.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id) && ai.lifecycleState === 'deployed').length;
+  const models = state.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id) && (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open')).length;
   const util = calculateComputeUtilization(org, state);
   console.log(`  ${org.name.padEnd(35)} Cap: $${org.capital.toFixed(0).padStart(4)}M  Rev: $${org.monthlyRevenue.toFixed(0).padStart(3)}M/mo  Exp: $${org.monthlyExpenses.toFixed(0).padStart(3)}M/mo  Models: ${models}  Util: ${(util*100).toFixed(0)}%`);
 });
@@ -193,7 +193,7 @@ console.log('\n4️⃣  ORGANIZATION BEHAVIORS');
 console.log('-'.repeat(40));
 currentState.organizations.forEach(org => {
   const models = currentState.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id)).length;
-  const deployedModels = currentState.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id) && ai.lifecycleState === 'deployed').length;
+  const deployedModels = currentState.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id) && (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open')).length;
   const status = org.capital > 0 ? 'ALIVE' : 'BANKRUPT';
   console.log(`${org.name.padEnd(35)} ${status.padEnd(10)} Models: ${deployedModels}/${models}  Cap: $${org.capital.toFixed(0)}M`);
 });

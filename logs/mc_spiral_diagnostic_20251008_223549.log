@@ -1,0 +1,71 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T05-35-50.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📍 [Run 1/10] [Month 5] Meta AI started building DC (206 PF, 50 months, $3420.7M)
+
+🌟 GOLDEN AGE BEGINS (Month 5)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 1/10] [Month 6] OpenAI started building DC (217 PF, 44 months, $3187.7M)
+📍 [Run 1/10] [Month 6] Google DeepMind started building DC (177 PF, 38 months, $4592.4M)
+
+⚠️  GOLDEN AGE ENDED (Month 6)
+   Duration: 1 months
+   Reason: Social instability too high
+
+
+🌟 GOLDEN AGE BEGINS (Month 7)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+
+🔍 SPIRAL DIAGNOSTICS (Month 12)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.76 ✅ (need >1.5)
+   Energy: 1.59 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 35% ❌ (need <30%)
+   AI Augmentation: avg capability 0.33, trust 100% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 56%, capacity 63% ❌ (need both >70%)
+   Democratic Engagement: participation 49%, transparency 69% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ unlocked)
+
+
+❌ UNCAUGHT EXCEPTION: (totalResearch || 0).toFixed is not a function
+TypeError: (totalResearch || 0).toFixed is not a function
+    at logSpiralDiagnostics (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/upwardSpirals.ts:591:64)
+    at updateUpwardSpirals (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/upwardSpirals.ts:93:5)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:256:5)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:473:31)
+    at avgModelsPerOrg (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:261:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1394:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)

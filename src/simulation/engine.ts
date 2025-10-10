@@ -13,6 +13,7 @@ import {
   calculateOutcomeProbabilities,
   calculateUnemployment,
   calculateTrustChange,
+  updateParanoia,
   calculateSocialStability,
   calculateTotalAICapability,
   calculateAverageAlignment,
@@ -29,7 +30,8 @@ import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
 import { checkExtinctionTriggers, progressExtinction } from './extinctions';
 import { 
-  checkEndGameTransition, 
+  checkEndGameTransition,
+  initializeEndGameState, 
   enterEndGame, 
   processEndGameMonth, 
   getEndGameOutcome,
@@ -250,6 +252,52 @@ export class SimulationEngine {
     const { updateGovernanceQuality } = require('./governanceQuality');
     updateGovernanceQuality(newState);
     
+    // Upward spirals: Check for virtuous cascades (Phase 2D)
+    const { updateUpwardSpirals } = require('./upwardSpirals');
+    updateUpwardSpirals(newState, newState.currentMonth);
+    
+    // Meaning renaissance: Cultural flourishing & purpose discovery (Phase 2E)
+    const { updateMeaningRenaissance } = require('./meaningRenaissance');
+    updateMeaningRenaissance(newState);
+    
+    // Conflict resolution: Peace systems & diplomatic AI (Phase 2F)
+    const { updateConflictResolution } = require('./conflictResolution');
+    updateConflictResolution(newState);
+    
+    // Diplomatic AI: Research-based mediation with dual-use risks (Phase 2F+)
+    const { updateDiplomaticAI } = require('./diplomaticAI');
+    updateDiplomaticAI(newState);
+    
+    // National AI Capabilities: Asymmetry & race dynamics (Phase 2.11)
+    // MUST run before MAD deterrence to calculate accurate race intensity
+    const { updateNationalAI, applyNationalAIToMAD } = require('./nationalAI');
+    updateNationalAI(newState);
+    
+    // Nuclear states & MAD deterrence: Track bilateral deterrence (Phase 3)
+    const { updateMADDeterrence, updateBilateralTensions } = require('./nuclearStates');
+    updateMADDeterrence(newState);
+    updateBilateralTensions(newState);
+    
+    // Apply national AI race intensity to MAD
+    applyNationalAIToMAD(newState);
+    
+    // Resource Economy: Depletion, CO2 coupling, ocean health, industry opposition (Phase 2.9)
+    const { updateResourceEconomy } = require('./resourceDepletion');
+    updateResourceEconomy(newState);
+    
+    // Resource-Technology Integration: Apply tech effects to resources (Phase 2.9 Part 3)
+    const { applyTechnologyToResources, applyIndustryOppositionToTech } = require('./resourceTechnology');
+    applyTechnologyToResources(newState);
+    applyIndustryOppositionToTech(newState);
+    
+    // Geoengineering: Ocean restoration with termination shock risk (Phase 2.9 Part 4)
+    const { updateGeoengineering } = require('./geoengineering');
+    updateGeoengineering(newState);
+    
+    // Defensive AI: Active cyber-defense against misaligned AI attacks (Phase 2.10)
+    const { updateDefensiveAI } = require('./defensiveAI');
+    updateDefensiveAI(newState);
+    
     // Dystopia progression: Government responds to AI threat with surveillance/control
     const { updateGovernmentControlResponse } = require('./dystopiaProgression');
     updateGovernmentControlResponse(newState);
@@ -287,12 +335,10 @@ export class SimulationEngine {
       ))
     };
     
-    // 3. Update trust dynamics
-    const trustChange = calculateTrustChange(newState);
-    newState.society = {
-      ...newState.society,
-      trustInAI: Math.max(0, Math.min(1, newState.society.trustInAI + trustChange))
-    };
+    // 3. Update trust dynamics (Phase 2.8: Paranoia System)
+    // NEW: Paranoia decays, trust recovers, harmful events refresh paranoia
+    // Trust is now calculated inside updateParanoia as inverse of paranoia
+    updateParanoia(newState);
     
     // 4. Update social stability
     const newStability = calculateSocialStability(newState);
@@ -475,6 +521,7 @@ export class SimulationEngine {
         const endGameOutcome = getEndGameOutcome(state);
         if (endGameOutcome.outcome) {
           actualOutcome = endGameOutcome.outcome;
+          actualOutcomeReason = endGameOutcome.reason;
           console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
           console.log(`   Reason: ${endGameOutcome.reason}`);
           console.log(`   Month: ${month}\n`);
@@ -485,6 +532,7 @@ export class SimulationEngine {
       // Check for extinction completion (Phase 2: Heterogeneous extinctions)
       if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {
         actualOutcome = 'extinction';
+        actualOutcomeReason = `${state.extinctionState.type} extinction via ${state.extinctionState.mechanism}`;
         console.log(`\n💀 EXTINCTION EVENT: ${state.extinctionState.type?.toUpperCase()}`);
         console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
         console.log(`   Duration: ${month - state.extinctionState.startMonth} months`);
@@ -534,6 +582,12 @@ export class SimulationEngine {
       }
     }
     
+    // Log if reached max months without definitive outcome
+    if (!actualOutcome) {
+      console.log(`\n⏱️  SIMULATION REACHED MAX DURATION: ${maxMonths} months (${(maxMonths/12).toFixed(1)} years)`);
+      console.log(`   No definitive outcome - determining based on final probabilities`);
+    }
+    
     // Determine final outcome
     const finalMetrics = history[history.length - 1].metrics;
     const outcomes = finalMetrics.outcomeProbs;
@@ -553,12 +607,18 @@ export class SimulationEngine {
         outcomes.utopiaProbability > outcomes.extinctionProbability) {
       finalOutcome = 'utopia';
       finalOutcomeProbability = outcomes.utopiaProbability;
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   🌟 UTOPIA trajectory dominant\n`);
     } else if (outcomes.dystopiaProbability > outcomes.extinctionProbability) {
       finalOutcome = 'dystopia';
       finalOutcomeProbability = outcomes.dystopiaProbability;
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   🏛️  DYSTOPIA trajectory dominant\n`);
     } else if (outcomes.extinctionProbability > 0.3) {
       finalOutcome = 'extinction';
       finalOutcomeProbability = outcomes.extinctionProbability;
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   ☠️  EXTINCTION trajectory dominant\n`);
     } else {
       finalOutcome = 'inconclusive';
       finalOutcomeProbability = Math.max(
@@ -566,6 +626,8 @@ export class SimulationEngine {
         outcomes.dystopiaProbability,
         outcomes.extinctionProbability
       );
+      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
+      console.log(`   ❓ INCONCLUSIVE - no clear trajectory\n`);
     }
     
     // Finalize log

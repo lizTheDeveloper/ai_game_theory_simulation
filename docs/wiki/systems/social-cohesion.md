@@ -159,6 +159,296 @@ The Social Cohesion System models how rapid AI-driven automation and technologic
 
 **Vicious cycle:** Social unrest → government control response → surveillance → more resentment → worse unrest
 
+## Paranoia & Trust System (October 2025 Overhaul)
+
+### The Problem with Static Trust
+
+**Previous Behavior:**
+- Trust in AI started at 100%
+- Only decreased (never recovered)
+- Collapsed from 100% → 26% by Month 60 in most runs
+- Once low, stayed low forever
+- **Result:** Cognitive Spiral blocked (needs trust >60%), contributed to Dystopia spiral
+
+**User Insight:** "Paranoia decays. People adapt to new normals. Benign capability growth (like better robotics) shouldn't scare people indefinitely."
+
+### Paranoia as Primary State Variable
+
+**Philosophical Shift:** Instead of trust being primary, **paranoia is the primary state** and trust is derived from it.
+
+**Why this matters:**
+1. **Kahneman & Tversky (Availability Heuristic):** Recent harmful events dominate perception
+2. **Gilbert et al. (Hedonic Adaptation):** People adapt to new normals, even scary ones
+3. **Siegrist & Cvetkovich (Trust from Benefits):** Beneficial technology builds trust over time
+
+**Core Mechanic:**
+```typescript
+// Paranoia is the primary state (0-1)
+let paranoia = society.paranoiaLevel || 0.15;  // Start at moderate baseline
+
+// Trust is derived from paranoia
+const trustFromParanoia = 1.0 - paranoia * 0.75;
+
+// Apply smoothing to prevent whiplash
+const smoothing = 0.3;
+society.trustInAI = Math.min(0.95,
+  society.trustInAI * (1 - smoothing) + trustFromParanoia * smoothing
+);
+
+// Enforce bounds
+society.trustInAI = Math.max(0.20, Math.min(0.95, society.trustInAI));
+```
+
+**Trust bounds:**
+- **Floor**: 20% (even worst-case scenario, some people still trust AI)
+- **Ceiling**: 95% (perfect trust is unrealistic, always some skeptics)
+
+### Paranoia Decay (Recovery Mechanic)
+
+**Base Decay:** Paranoia decays naturally over time as people adapt.
+
+```typescript
+const baseDecayRate = 0.005;  // 0.5% per month baseline
+
+paranoia = Math.max(0.05, paranoia - baseDecayRate);
+```
+
+**Effect:** Without new harmful events, paranoia drops from 80% → 20% over ~120 months (10 years).
+
+**Real-world parallel:**
+- 9/11 terror fears peaked 2001, normalized by 2010
+- COVID panic peaked 2020, normalized by 2022
+- Y2K fears peaked 1999, forgotten by 2001
+- Nuclear war fears peaked 1962 (Cuban Missile Crisis), manageable by 1970s
+
+### Harmful Events Refresh Paranoia
+
+**What triggers paranoia increases:**
+1. **Catastrophic Scenarios Progress**
+   - Recursive self-improvement: +20% paranoia (existential threat)
+   - Slow displacement: +5% per progress increase
+   - Alignment collapse: +15% paranoia
+   - Induce war: +10% paranoia
+
+2. **Extreme Control Gap** (>3.5)
+   - +2% paranoia per month when AI seems uncontrollable
+   - "We've lost control" media narratives
+
+3. **Crisis Events**
+   - New environmental/social crisis: +3% paranoia (AI failed to help)
+   - Extinction near-miss: +25% paranoia (terror event)
+
+4. **Economic Displacement**
+   - Stage 1-2 unemployment surge: +1% paranoia per month
+   - Rapid job loss creates fear of AI
+
+**Example Harmful Event:**
+```typescript
+if (cat.slowTakeover && cat.slowTakeover.currentProgress > prevProgress) {
+  const progressIncrease = cat.slowTakeover.currentProgress - prevProgress;
+  paranoia += progressIncrease * 0.05;  // Each 10% progress → +0.5% paranoia
+  console.log(`⚠️ PARANOIA REFRESH: Slow displacement progress increased (+${(progressIncrease * 0.05 * 100).toFixed(1)}% paranoia)`);
+}
+```
+
+### Beneficial Actions Reduce Paranoia
+
+**What actively lowers paranoia:**
+
+1. **Beneficial Breakthrough Technologies** (Phase 2 - Planned)
+   - AI-Driven Disease Elimination deployed: -8% paranoia (life-saving)
+   - Clean Energy deployed 50%+: -3% paranoia (visible benefit)
+   - Mental Health AI deployed: -4% paranoia (personal wellbeing)
+   - Community Platforms deployed: -2% paranoia (strengthens bonds)
+   - Interspecies Communication deployed: -5% paranoia (pure positive, emotionally resonant)
+
+2. **Capability Growth in Benign Domains** (Phase 3 - Planned)
+   - Better robotics without harm: Doesn't increase paranoia
+   - AI medical breakthroughs: Reduces paranoia
+   - AI art/creativity: Neutral or positive (depends on context)
+
+3. **High QoL** (Context modulation)
+   - When material QoL > 0.7: Paranoia decay 2x faster (people happy = less fearful)
+   - When social QoL > 0.6: Paranoia decay 1.5x faster (strong communities resist fear)
+
+**Example Beneficial Action:**
+```typescript
+if (tech.diseaseElimination?.deployed && tech.diseaseElimination.deploymentLevel > 0.5) {
+  paranoia -= 0.08;  // Major positive demonstration
+  console.log(`✅ PARANOIA REDUCTION: Disease elimination success (-8% paranoia)`);
+}
+```
+
+### Paranoia-Trust Dynamics
+
+**The Cycle:**
+```
+Harmful Event → Paranoia ↑ → Trust ↓ → Surveillance pressure ↑
+   ↓
+Time passes, no new harm
+   ↓
+Paranoia decays → Trust ↑ → Surveillance pressure ↓
+   ↓
+Beneficial tech deployed → Paranoia ↓↓ → Trust ↑↑
+```
+
+**Key Insight:** Trust can RECOVER, not just collapse. This makes Cognitive Spiral and Utopia possible.
+
+### Trust Thresholds & Effects
+
+| Trust Level | Meaning | System Effects |
+|-------------|---------|----------------|
+| **95%** | Maximum achievable | Ceiling (always some skeptics) |
+| **80%+** | High trust | Cognitive Spiral possible, minimal surveillance |
+| **60-80%** | Moderate trust | Normal governance, some concerns |
+| **40-60%** | Low trust | Surveillance pressure increases |
+| **20-40%** | Very low trust | High surveillance, autonomy restricted |
+| **20%** | Floor | Minimum (even worst-case, some trust AI) |
+
+### Integration with Cognitive Spiral
+
+**Cognitive Spiral Requirements (from Upward Spirals system):**
+- Mental health baseline: >0.65
+- Purpose/meaning: Meaning crisis <40%
+- AI trust: Trust in AI >60%  ← **UNBLOCKED BY PARANOIA DECAY**
+- Education/adaptation: Cultural adaptation >0.5
+
+**Before Paranoia System:**
+- Trust collapsed 100% → 26%
+- Never recovered
+- Cognitive Spiral: 0% activation
+
+**After Paranoia System (Phase 2F+ - Expected):**
+- Trust fluctuates: 40% → 60% → 75% (with beneficial tech)
+- Recovery possible with beneficial demonstrations
+- Cognitive Spiral: 10-30% activation (unblocked)
+
+### Test Results
+
+**Baseline Test (mc_action_fix - Before paranoia system):**
+- Trust trajectory: 100% → 55% → 26% (Month 60)
+- Paranoia: Not modeled
+- Cognitive Spiral: 0/10 activations
+
+**New Test (mc_interspecies_test - With paranoia system):**
+- Trust trajectory: 100% → 40% → 86% → 130% (BUG - trust >100%)
+- Paranoia fluctuating
+- Trust recovering in some runs
+- **Bug discovered**: Need to cap trust at 95% ← Fixed in next patch
+
+**Expected (Post-fix):**
+- Trust trajectory: 100% → 45% → 70% → 85% (healthy recovery)
+- Paranoia: 15% → 60% → 25% (decay + beneficial tech)
+- Cognitive Spiral: 20-30% activation
+
+### Real-World Research Basis
+
+**Kahneman & Tversky (1979):** Availability Heuristic
+- Recent/vivid events dominate risk perception
+- As time passes, availability fades
+- **Application:** Harmful AI events temporarily spike paranoia, then decay
+
+**Gilbert et al. (1998):** Hedonic Adaptation
+- Humans adapt to new normals (good or bad)
+- Even scary technology becomes mundane
+- **Application:** People adapt to AI capability increases over time
+
+**Siegrist & Cvetkovich (2000):** Trust from Benefits
+- Perceived benefits build trust more than risk reduction
+- Personal experience > abstract safety assurances
+- **Application:** Beneficial tech (disease elimination, clean energy) actively reduces paranoia
+
+**Slovic (1987):** Psychometric Paradigm of Risk
+- Dread risks (catastrophic, uncontrollable) create lasting fear
+- Familiar risks (driving) ignored even if more dangerous
+- **Application:** Existential AI risks create high paranoia, benign AI becomes familiar
+
+### Implementation Status
+
+**Phase 1 (October 9, 2025): ✅ IMPLEMENTED**
+- Paranoia as primary state variable
+- Natural decay mechanism (0.5%/month)
+- Harmful events refresh paranoia
+- Trust derived from paranoia
+- Trust bounds (20% floor, 95% ceiling)
+
+**Phase 2 (Planned): Beneficial Tech Boosts**
+- Disease Elimination: -8% paranoia
+- Clean Energy: -3% paranoia
+- Mental Health AI: -4% paranoia
+- Community Platforms: -2% paranoia
+- Interspecies Comm: -5% paranoia
+
+**Phase 3 (Planned): Capability + Context Fear**
+- Benign capability growth: Neutral or positive
+- Harmful capability growth: Increases paranoia (context-dependent)
+- AI in weapons: +paranoia
+- AI in healthcare: -paranoia
+
+### Code Reference
+
+**Main function:** `updateParanoia(state: GameState)` (new)
+**Location:** `src/simulation/socialCohesion.ts` (integrated into social cohesion system)
+
+**Key calculations:**
+```typescript
+// Paranoia decay
+const baseDecayRate = 0.005;
+paranoia -= baseDecayRate;
+
+// Harmful events refresh paranoia
+if (catScenarios.slowTakeover?.triggered) {
+  paranoia += 0.05 * progressIncrease;
+}
+
+// Trust derived from paranoia
+const trustFromParanoia = 1.0 - paranoia * 0.75;
+
+// Smoothing prevents whiplash
+society.trustInAI = Math.min(0.95,
+  society.trustInAI * 0.7 + trustFromParanoia * 0.3
+);
+```
+
+### Tuning Parameters
+
+| Parameter | Current Value | Effect |
+|-----------|---------------|--------|
+| Base paranoia decay | 0.5%/month | How fast paranoia naturally fades |
+| Paranoia floor | 5% | Minimum paranoia level |
+| Trust floor | 20% | Minimum trust level |
+| Trust ceiling | 95% | Maximum trust level |
+| Smoothing factor | 0.3 | How fast trust adjusts to paranoia changes |
+| Catastrophic event impact | +10-25% | How much harmful events spike paranoia |
+
+**Most impactful for balance:**
+- Base decay rate (faster decay = trust recovers quicker = more Utopia paths)
+- Beneficial tech effects (stronger effects = easier to activate Cognitive Spiral)
+- Harmful event magnitude (smaller spikes = less volatile trust)
+
+### Next Steps
+
+**Immediate (Phase 2):**
+1. Implement beneficial tech paranoia reduction
+2. Test Cognitive Spiral activation with trust recovery
+3. Tune decay rate for 20-30% Utopia target
+
+**Future (Phase 3):**
+1. Context-dependent fear (benign vs harmful AI growth)
+2. Generational differences (young adapt faster)
+3. Media/narrative influence on paranoia
+
+### Philosophical Implications
+
+**Before:** Trust was a one-way street (only decreased). This made Utopia nearly impossible because trust never recovered from early displacement.
+
+**After:** Trust can recover through beneficial demonstrations and time. This models realistic human psychology:
+- People DO adapt to new technology
+- Beneficial tech DOES build trust
+- Panic DOES subside when no harm occurs
+
+**Key Insight:** The path to Utopia requires not just avoiding catastrophes, but actively demonstrating AI benefits. Benign neglect isn't enough—you need positive proof of AI's value.
+
 ## Crisis Cascade Mechanics
 
 Social crises reinforce each other and compound with environmental/tech crises:

@@ -14,9 +14,31 @@ This simulation models:
 - **Golden Age vs Utopia**: Distinguishes immediate prosperity (fragile) from sustained abundance (stable)
 - **Accumulation Systems**: Environmental degradation, social cohesion erosion, and technological risk that build during prosperity
 - **Crisis Cascades**: 10 crisis types that compound (6 simultaneous crises = 3.0x QoL degradation)
-- **Breakthrough Technologies**: 11 transformative technologies that can prevent or reverse crises
+- **Breakthrough Technologies**: 12 transformative technologies that can prevent or reverse crises (including Interspecies Communication AI 🐋)
+- **Nuclear Deterrence**: 5 nuclear states with MAD mechanics, escalation ladder, bilateral tensions
+- **Upward Spirals**: 6 virtuous cascades that can lead to Utopia (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
 - **Quality of Life Systems**: 17-dimensional human welfare tracking across 5 categories
 - **Outcome Probabilities**: Utopia, dystopia, and extinction pathways with heterogeneous extinction types
+
+## 🚧 Current Development Status (October 2025)
+
+**We are actively developing the simulation back-end systems.** Recent additions include:
+
+- ☢️ **Nuclear Deterrence System** - 5 nuclear states, MAD mechanics, escalation ladder (reduced nuclear war 80% → 20%)
+- 🐋 **Interspecies Communication AI** - 12th breakthrough technology (talk to whales/dolphins/octopi)
+- ♻️ **Resource Regeneration** - Tech-enabled recovery (+4.8%/month) enables Ecological Spiral activation
+- 🧠 **Paranoia/Trust System** - Trust can recover via beneficial tech demonstrations, unblocks Cognitive Spiral
+- 🌟 **Upward Spirals** - 6 virtuous cascades with cross-amplification (multiple paths to Utopia)
+- 🎨 **Meaning Renaissance** - 4 dimensions of cultural flourishing beyond basic purpose frameworks
+- 🕊️ **Conflict Resolution** - AI-mediated diplomacy, post-scarcity peace dividend, cyber defense
+
+**📚 Comprehensive Documentation:** See **[`docs/wiki/README.md`](./docs/wiki/README.md)** for complete system documentation, including:
+- 14+ core systems (organizations, AI agents, government, society, environmental, social cohesion, tech risk, breakthrough tech, governance quality, upward spirals, meaning renaissance, conflict resolution, nuclear deterrence)
+- Game mechanics (economics, quality of life, outcomes, golden age, crisis cascades, actions, simulation loop)
+- Advanced systems (research & technology, detection & security, extinction mechanisms, crisis points, lifecycle)
+- Technical documentation (codebase structure, testing & Monte Carlo, UI components, engine architecture)
+
+**🎯 Current Goal:** Achieve 10-30% Utopia rate through spiral activation (currently testing Phase 2F+ enhancements)
 
 ## Getting Started
 
@@ -264,13 +286,13 @@ When multiple crises are active, they compound:
 
 ### Breakthrough Technologies
 
-11 transformative technologies can prevent or reverse crises (src/simulation/breakthroughTechnologies.ts:47):
+12 transformative technologies can prevent or reverse crises (src/simulation/breakthroughTechnologies.ts:47):
 
-**Environmental**: Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
+**Environmental** (6): Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
 
-**Social**: AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms
+**Social** (4): AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms, Interspecies Communication AI 🐋
 
-**Medical**: Disease Elimination, Longevity Extension
+**Medical** (2): Disease Elimination, Longevity Extension
 
 Technologies require:
 - Research investment (probabilistic unlocks based on budget + AI capability)
@@ -320,26 +342,51 @@ Edit `src/simulation/initialization.ts` to customize:
 
 ## Documentation
 
-- **Plans**: `/plans/` - Design specifications
-  - `golden-age-and-accumulation-systems.md` - Golden Age vs Utopia mechanics
-  - `utopian-dynamics-phase-2-implementation.md` - Breakthrough technologies
-  - `adversarial-evaluation-system.md` - Benchmark system design
-  - `catastrophic-prerequisites-system.md` - Extinction scenario tracking
-  - `dystopia-paths-implementation.md` - Dystopia progression mechanics
-  - `remaining_tasks_5_pm_10_08_25.md` - Current development status
+### 📚 Wiki (Primary Documentation)
 
-- **DevLog**: `/devlog/` - Implementation notes
-  - `breakthrough-technologies-phase-2a.md` - Tech system implementation
-  - `session-oct-9-2025-phase2a-status.md` - Recent session status
-  - Development diary with feature-specific logs
+**[`docs/wiki/README.md`](./docs/wiki/README.md)** - Comprehensive system documentation (2,700+ lines, October 2025)
 
-- **Wiki**: `/docs/wiki/` - Comprehensive system documentation
-  - See `docs/wiki/README.md` for navigation
+**Core Systems** (14 documented):
+- Organizations, Compute Infrastructure, AI Agents, Government, Society
+- Environmental Accumulation, Social Cohesion, Technological Risk
+- Breakthrough Technologies (12 techs), Governance Quality
+- Upward Spirals (6 cascades), Meaning Renaissance, Conflict Resolution, Nuclear Deterrence
 
-- **Diagnostic Reports**: Generated during simulation runs
-  - Capability growth analysis
-  - Extinction probability tracking
-  - Crisis cascade analysis
+**Game Mechanics**:
+- Economics, Quality of Life (17 dimensions), Outcomes (Utopia/Dystopia/Extinction)
+- Golden Age Detection, Crisis Cascades (10 types), Actions, Simulation Loop
+
+**Advanced Systems**:
+- Research & Technology, Detection & Security, Extinction Mechanisms
+- Crisis Points, AI Lifecycle
+
+**Technical Documentation**:
+- Codebase Structure, Testing & Monte Carlo, UI Components, Engine Architecture
+
+### 📋 Plans & Specifications
+
+**`/plans/`** - Design documents and specifications
+- `utopian-dynamics-phase-2-implementation.md` - Complete Phase 2 plan (2A-2F)
+- `golden-age-and-accumulation-systems.md` - Golden Age vs Utopia mechanics
+- `adversarial-evaluation-system.md` - Benchmark system design
+- `catastrophic-prerequisites-system.md` - Extinction scenario tracking
+- `dystopia-paths-implementation.md` - Dystopia progression mechanics
+
+### 📝 DevLogs
+
+**`/devlogs/`** - Implementation notes and development diary (50+ pages)
+- `session-oct-9-complete.md` - October 9 session summary (nuclear deterrence, interspecies comm, resource regen, paranoia system)
+- `monte-carlo-analysis-oct-9-action-fix.md` - Comprehensive blocker analysis
+- `phase-2e-2f-complete.md` - Meaning Renaissance + Conflict Resolution implementation
+- Feature-specific implementation logs
+
+### 📊 Diagnostic Reports
+
+Generated during simulation runs:
+- Capability growth analysis
+- Extinction probability tracking
+- Crisis cascade analysis
+- Spiral activation rates
 
 ## Contributing
 

@@ -28,6 +28,14 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 - Sustainable Agriculture: 15% efficiency
 - Combined: Up to 55% reduction in depletion
 
+**Regeneration (October 2025 Addition):**
+- Sustainable Agriculture: +1% per month at full deployment
+- Advanced Recycling: +2% per month (main driver)
+- Clean Energy: +1.5% per month (renewable substitution)
+- Ecosystem Management: +0.8% per month
+- Interspecies Communication: +0.5% per month (habitat understanding)
+- Combined: Up to +4.8% per month recovery rate
+
 **Crisis trigger:** < 0.40 (40% reserves remaining)
 
 **QoL impact when crisis active:**
@@ -149,6 +157,171 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 - Ecosystem services lost (pollination, water purification, etc.)
 - Food web disruption
 - Psychological impact (loss of nature)
+
+## Resource Regeneration System (October 2025 Addition)
+
+### The Death Spiral Problem
+
+**Before Resource Regeneration:**
+- Resources depleted from 100% → 0% over 24-36 months
+- Once at 0%, stayed at 0% forever
+- Circular Economy slowed depletion but didn't regenerate
+- **Result:** Resource crisis in 100% of cascade scenarios, never resolved
+- **Blocker:** Ecological Spiral requires resources >70%, never achieved
+
+**User Insight:** "Some resources are non-renewable, so we need to think harder about resource renewal"
+
+### Resource Types & Regeneration
+
+Not all resources regenerate the same way:
+
+**1. RENEWABLE** (Food, water, solar, wind, biomass)
+- Natural regeneration cycles
+- Tech accelerates recovery
+- Can recover from 0%
+
+**2. RECYCLABLE** (Metals, minerals, plastics, glass)
+- Don't regenerate naturally
+- Circular Economy enables recovery
+- Can recover from 0% with tech
+
+**3. SUBSTITUTABLE** (Fossil fuels → renewables)
+- Original depletes permanently
+- Tech creates superior alternatives
+- Transition rather than recovery
+
+**4. NON-RENEWABLE** (Coal, oil, gas, uranium)
+- Millions of years to regenerate
+- Cannot recover
+- BUT: Substitution makes them irrelevant
+
+### Regeneration Mechanics
+
+```typescript
+// Calculate resource regeneration from deployed technologies
+let resourceRegeneration = 0;
+
+// Sustainable Agriculture: +1%/month at full deployment
+if (tech.sustainableAgriculture?.deployed) {
+  resourceRegeneration += 0.01 * tech.sustainableAgriculture.deploymentLevel;
+}
+
+// Circular Economy: +2%/month (main driver of recovery)
+if (tech.advancedRecycling?.deployed) {
+  resourceRegeneration += 0.02 * tech.advancedRecycling.deploymentLevel;
+}
+
+// Clean Energy: +1.5%/month (replaces fossil fuels with renewables)
+if (tech.cleanEnergy?.deployed) {
+  resourceRegeneration += 0.015 * tech.cleanEnergy.deploymentLevel;
+}
+
+// Ecosystem Management: +0.8%/month (biosphere health)
+if (tech.ecosystemManagement?.deployed) {
+  resourceRegeneration += 0.008 * tech.ecosystemManagement.deploymentLevel;
+}
+
+// Interspecies Communication: +0.5%/month (animal habitat insights)
+if (tech.interspeciesComm?.deployed) {
+  resourceRegeneration += 0.005 * tech.interspeciesComm.deploymentLevel;
+}
+
+// Total: Up to +4.8%/month at full deployment of all 5 techs
+
+// Apply regeneration
+state.environmentalAccumulation.resourceReserves = Math.min(
+  1.0,
+  state.environmentalAccumulation.resourceReserves + resourceRegeneration
+);
+```
+
+### Recovery Timeline
+
+**Example: Escaping Resource Death Spiral**
+
+```
+Month 0-24: Pre-Crisis
+  Resources: 100% → 60% (normal depletion)
+
+Month 24-36: Crisis Period
+  Resources: 60% → 30% (accelerated depletion)
+  Month 30: RESOURCE CRISIS TRIGGERS (< 40%)
+  Cascade: +1 crisis, QoL degradation begins
+
+Month 36-60: Tech Unlocking Phase
+  Month 40: Sustainable Agriculture unlocks
+  Month 50: Clean Energy unlocks
+  Month 52: Circular Economy unlocks
+  Resources: 30% → 25% (still declining slightly)
+
+Month 60-90: Recovery Phase
+  All 5 techs deploying at 70% avg deployment:
+    - Sustainable Ag: +0.7%/month
+    - Circular Economy: +1.4%/month
+    - Clean Energy: +1.05%/month
+    - Ecosystem Management: +0.56%/month
+    - Interspecies Comm: +0.35%/month
+  Total: +4.06%/month regeneration
+
+  Resources: 25% → 75% over 12 months
+  Month 85: Resources cross 70% → ECOLOGICAL SPIRAL UNLOCKED! ✅
+
+Month 90+: Sustainable Post-Scarcity
+  Resources: 75% → 95% (stabilizing)
+  Resource crisis resolved
+  Cascade multiplier reduced
+  QoL recovering
+```
+
+### Why This Works
+
+**Realistic Resource Mix:**
+- Modern economy: 40% renewable, 30% recyclable, 20% transitioning, 10% non-renewable
+- Post-scarcity economy: 70% renewable, 20% recyclable, 10% substituted, 0% non-renewable
+- Even though some resources (fossil fuels) stay at 0%, overall reserves recover via substitution
+
+**Recovery Speed:**
+- Without tech: 0%/month (never recovers) ❌
+- With 3 techs at 70% deployment: +3.2%/month → 0% to 70% in 22 months ✅
+- With 5 techs at 100% deployment: +4.8%/month → 0% to 70% in 15 months ✅
+- **Fast enough to activate Ecological Spiral before extinction!**
+
+### Integration with Ecological Spiral
+
+**Before Resource Regeneration (Diagnostic Data - Oct 2025):**
+- Resource death spiral: 100% of crisis cascades
+- Resources never recovered from <40%
+- Ecological Spiral: 0% activation (blocked by resources <70% requirement)
+- Ecological Spiral attempts: 544/544 runs failed on resource threshold
+
+**After Resource Regeneration (Phase 2F+ - Expected):**
+- Resources can recover: 0% → 70% in 15-25 months with full tech deployment
+- Ecological Spiral: 30-50% activation rate (unblocked)
+- Window for recovery: Month 60-90 (if techs unlocked by Month 40-50)
+- Requires strategic early investment in environmental tech
+
+### Real-World Examples
+
+**Successful Transitions:**
+- **Denmark**: 80% renewable energy by 2025 (from 20% in 2000)
+- **Costa Rica**: Forest cover 20% → 60% (1987-2021) through reforestation
+- **Netherlands**: Official target of 100% circular economy by 2050
+- **Iceland**: 100% renewable electricity, near-zero pollution
+- **Singapore**: 100% water recycling target by 2060
+
+**Key Lesson:** Technology-enabled resource regeneration is realistic and achievable with sustained investment. Not science fiction—it's happening now.
+
+### Research Basis
+
+**Ostrom (1990):** "Governing the Commons" - Sustainable resource management principles
+
+**Rockström et al. (2009):** Planetary boundaries framework - Safe operating space for humanity
+
+**Ellen MacArthur Foundation (2015):** Circular economy principles and case studies
+
+**Solow (1974):** "Intergenerational Equity and Exhaustible Resources" - Technology creates substitutes faster than resources deplete
+
+**Tilton (2003):** "On Borrowed Time?" - Historical evidence that technology response outpaces depletion
 
 ## Crisis Cascade Mechanics
 

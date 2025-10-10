@@ -6,6 +6,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
+import { getTrustInAI } from '../socialCohesion';
 import { 
   calculateRegulationStructuralEffects, 
   calculateUBIVariantEffects, 
@@ -621,7 +622,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       }
       
       // Public reaction: depends on trust and alignment
-      const publicSupportChange = (newState.society.trustInAI - 0.5) * 0.2;
+      const trustInAI = getTrustInAI(newState.society); // Phase 2: Use paranoia-derived trust
+      const publicSupportChange = (trustInAI - 0.5) * 0.2;
       newState.government.legitimacy = Math.max(0, Math.min(1, newState.government.legitimacy + publicSupportChange));
       
       // Social stability effect depends on alignment
@@ -1642,7 +1644,7 @@ export function selectGovernmentAction(
   
   const unemploymentLevel = state.society.unemploymentLevel;
   const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
-  const trustLevel = state.society.trustInAI;
+  const trustLevel = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   const threatLevel = state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length;
   // Use OBSERVABLE capability - government makes decisions based on what it can see, not hidden power
   const observableCapability = calculateObservableAICapability(state.aiAgents);
@@ -1983,7 +1985,7 @@ export function selectGovernmentAction(
  * Lower trust → Government focuses on immediate concerns instead
  */
 function autoInvestInEvaluation(state: GameState): void {
-  const publicTrust = state.society.trustInAI;
+  const publicTrust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   
   // Investment rate scales with trust
   // High trust (0.7+): 0.2 points/month across all categories
@@ -2026,10 +2028,31 @@ export function executeGovernmentActions(
   // AUTOMATIC: Invest in evaluation based on public trust
   autoInvestInEvaluation(currentState);
   
-  // Government: Configurable frequency
-  const actionsThisMonth = Math.floor(currentState.config.governmentActionFrequency);
-  const extraActionChance = currentState.config.governmentActionFrequency - actionsThisMonth;
+  // Government: Configurable frequency + CRISIS BOOST
+  // Rationale: Governments act more frequently during crises (emergency sessions, special legislation)
+  // Real-world precedent: COVID-19, 2008 financial crisis, etc.
+  let baseFrequency = currentState.config.governmentActionFrequency;
+  
+  // CRISIS MULTIPLIERS
+  const unemploymentCrisis = currentState.society.unemploymentLevel > 0.25 ? 
+    Math.min(3.0, 1.0 + currentState.society.unemploymentLevel * 2.0) : 1.0; // Up to 3x at 100% unemployment
+  
+  const institutionalCrisis = currentState.socialAccumulation.institutionalCrisis > 0.5 ?
+    Math.min(2.0, 1.0 + currentState.socialAccumulation.institutionalCrisis) : 1.0; // Up to 2x
+  
+  const controlLossCrisis = currentState.socialAccumulation.controlLossCrisis > 0.5 ?
+    Math.min(2.0, 1.0 + currentState.socialAccumulation.controlLossCrisis) : 1.0; // Up to 2x
+  
+  const maxMultiplier = Math.max(unemploymentCrisis, institutionalCrisis, controlLossCrisis);
+  const adjustedFrequency = baseFrequency * maxMultiplier;
+  
+  const actionsThisMonth = Math.floor(adjustedFrequency);
+  const extraActionChance = adjustedFrequency - actionsThisMonth;
   const totalActions = actionsThisMonth + (random() < extraActionChance ? 1 : 0);
+  
+  if (maxMultiplier > 1.5) {
+    console.log(`🏛️ CRISIS RESPONSE: Government frequency ${baseFrequency.toFixed(2)} → ${adjustedFrequency.toFixed(2)} (${totalActions} actions this month)`);
+  }
   
   for (let i = 0; i < totalActions; i++) {
     const selectedAction = selectGovernmentAction(currentState, random);

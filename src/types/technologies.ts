@@ -39,14 +39,18 @@ export interface TechnologyNode {
 export interface TechnologyEffects {
   // Environmental
   biodiversityRecovery?: number; // +X per month
+  biodiversityBoost?: number; // Alternative name for biodiversityRecovery
   climateStabilization?: number; // +X per month
   pollutionReduction?: number; // -X per month
   resourceEfficiency?: number; // Multiplier on depletion rate
+  ecosystemHealthBoost?: number; // +X per month to ecosystem health
   
   // Social
   meaningCrisisReduction?: number; // -X per month
   culturalAdaptation?: number; // +X per month
   communityStrengthBoost?: number; // +X per month
+  purposeDiscovery?: number; // +X per month to purpose systems
+  creativityBoost?: number; // +X per month to creativity/cultural systems
   
   // QoL direct boosts
   mentalHealthBoost?: number;
@@ -69,6 +73,7 @@ export interface BreakthroughTechState {
   mentalHealthAI: TechnologyNode;
   purposeFrameworks: TechnologyNode;
   communityPlatforms: TechnologyNode;
+  interspeciesComm: TechnologyNode;
   
   // Medical Technologies
   diseaseElimination: TechnologyNode;

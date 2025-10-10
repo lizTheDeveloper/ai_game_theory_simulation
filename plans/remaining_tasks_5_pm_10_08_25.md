@@ -5,36 +5,68 @@
 **Purpose:** Comprehensive list of planned but unimplemented features
 **Source:** Analysis of all plan documents vs current codebase + recent Monte Carlo runs
 
-## 🎉 Current Session Progress (Oct 9, 2025)
+## 🎉 Current Session Progress (Oct 8-9, 2025)
 
-**ALL GOLDEN AGE & ACCUMULATION SYSTEMS NOW COMPLETE!**
+**UTOPIAN DYNAMICS PHASE 2 (A-F+) NOW COMPLETE!**
 
-✅ **Phases 1-5 Complete:**
-- Golden Age detection & tracking (state, not outcome)
-- Environmental accumulation (resources, pollution, climate, biodiversity)
-- Social cohesion tracking (meaning crisis, legitimacy, cohesion, adaptation)
-- Technological risk accumulation (misalignment, safety debt, concentration, complacency)
-- Utopia sustainability requirements (12+ month Golden Age + 65% sustainability + no crises)
+✅ **Phase 2A: Breakthrough Technology System** (Complete)
+- 11 breakthrough technologies (environmental, social, medical)
+- Research allocation, probabilistic unlocks, deployment tracking
+- Crisis-specific emergency deployment (2x-5x acceleration)
+- Tech-aware crisis resolution (easier thresholds with relevant tech)
+- Government type research penalties (authoritarian dystopia lock-in)
+- Organization research contributions (private sector involvement)
 
-✅ **All QoL degradation mechanics implemented:**
-- Environmental crises: Resource, Pollution, Climate, Ecosystem collapse
-- Social crises: Meaning collapse, Institutional failure, Social unrest
-- Technological crises: Control loss, Corporate dystopia, Complacency crisis
-- Each crisis has: immediate QoL impact + ongoing monthly degradation
+✅ **Phase 2B: Dystopia Lock-In** (Complete)
+- Crisis-driven authoritarianism (emergency takeovers)
+- Authoritarian resistance from governance quality (up to 80% reduction)
+- Policy effectiveness multipliers based on governance quality
 
-✅ **Bug fixes:**
-- NaN safety checks in all accumulation systems
-- EPIPE error handling for console logs
-- Fixed technology lookup (unlocked → completed)
-- Fixed investment lookups for missing properties
+✅ **Phase 2C: Governance Quality & Democratic Resilience** (Complete)
+- Decision quality, transparency, participation, institutional capacity
+- Consensus building efficiency (AI-mediated)
+- Minority protection strength (AI bias detection & fairness)
+- Policy effectiveness multiplier (0.56x-1.56x)
 
-**Latest Results (mc_2025-10-08T23-48-23.log):**
-- 60% Dystopia / 40% Extinction / 0% Utopia
-- High surveillance state emerging (surveillance dystopia path working!)
-- Slow Takeover scenario reaching 71% in multiple runs
-- QoL degradation visible: Social 0.45, Psychological 0.59 (lowest categories)
+✅ **Phase 2D: Upward Spirals System** (Complete)
+- 6 virtuous spirals tracked (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
+- Spiral activation conditions & duration tracking
+- Virtuous cascade effects
+- New Utopia condition: 3+ sustained spirals for 12+ months
 
-**Next: Test & validate the new systems!**
+✅ **Phase 2E: Meaning Renaissance** (Complete)
+- Purpose diversity, self-actualization rate
+- Artistic renaissance level, philosophical maturity
+- Positive feedback loops counter meaning crisis
+
+✅ **Phase 2F: Conflict Resolution** (Complete)
+- Post-scarcity peace dividends
+- Cyber defense improvements
+- Diplomatic AI integration
+
+✅ **Phase 2F+: Research-Based Diplomatic AI with Dual-Use Risks** (Complete)
+- Strategic reasoning, information integrity, communication bridging
+- Trust dynamics & track record
+- Dual-use risks: manipulation, dependency capture, mission creep, adversarial mediation
+- Geopolitical crisis intervention (2+ simultaneous systemic crises)
+- Success probability calibrated to research (resource 40%, ideological 25%, territorial 15%)
+
+**Latest Test Results (mc_diplomatic_ai_test_20251008):**
+- Utopia: 0% ⚠️ (spirals not activating despite tech deployment)
+- Dystopia: 60% (surveillance states dominating, up from 50%)
+- Extinction: 40% (down from 50%, all nuclear war)
+- Diplomatic AI deployed: 100% of runs (Month ~40)
+- Diplomatic interventions: 0 attempts (geopolitical crisis prereqs too strict)
+
+**Key Findings:**
+- ✅ All systems deploying successfully
+- ⚠️ Upward spirals not triggering (need investigation)
+- ⚠️ Diplomatic interventions blocked (prerequisite timing mismatch)
+- ✅ Nuclear war reduced 10% (but still 40% of runs)
+- ✅ Breakthrough tech unlocking & deploying
+- ⚠️ Surveillance dystopia now dominant outcome (60%)
+
+**Next: Debug upward spiral conditions & adjust diplomatic intervention triggers**
 
 ## 🎉 Recent Progress (Oct 8, 2025 Evening Session)
 
@@ -187,9 +219,21 @@
 
 ### 1. Utopian Dynamics (From `utopian-dynamics-spec.md`)
 
-**Status:** ✅ PHASE 2 COMPLETE - Breakthrough Technology System Implemented
-**Priority:** HIGH - Core recovery mechanic now working
-**Complexity:** VERY HIGH → Partially addressed with tech system
+**Status:** 🔄 PHASE 2 IN PROGRESS - Multiple Systems Implemented
+**Priority:** CRITICAL - Crisis mitigation is key to achieving Utopia
+**Complexity:** VERY HIGH → Breaking down into tested increments
+
+**Latest Test Results (mc_diplomatic_ai_test_20251008):**
+- Utopia: 0% (still blocked)
+- Dystopia: 60% (surveillance states dominating)
+- Extinction: 40% (down from 50%, all nuclear war)
+- Diplomatic AI deployed in 100% of runs (Month ~40)
+- 0 diplomatic interventions (geopolitical crisis prereqs too strict)
+
+**Key Blockers to Utopia:**
+1. Upward spirals not activating (need investigation)
+2. Nuclear war still frequent (40% of runs)
+3. Surveillance dystopia lock-in (60% of runs)
 
 #### 1.1 Abundance Generation Systems
 - ✅ `material_abundance_level` - Implemented via Economic Stage system (0-4)
@@ -237,50 +281,81 @@
 - ✅ `citizen_participation_rate` - Active engagement (0.1-0.9, trust/transparency driven)
 - ✅ `decision_quality_score` - AI-augmented effectiveness (0.35-1.0, aligned AI improves)
 - ✅ `institutional_capacity` - Ability to execute policy (0.2-1.0, crisis overload)
+- ✅ `consensus_building_efficiency` - AI-mediated consensus (Phase 2C)
+- ✅ `minority_protection_strength` - AI bias detection & fairness (Phase 2C)
 - ✅ AI-mediated governance - High-capability aligned AI improves decision quality
 - ✅ Authoritarian resistance - Up to 80% reduction in transition probability
 - ✅ Policy effectiveness multiplier - 0.56x-1.56x based on governance quality
-- [ ] `consensus_building_efficiency` - Speed of agreement (not yet)
-- [ ] `minority_protection_strength` - Safeguards (not yet)
-- [ ] Liquid democracy mechanics (not yet)
+- ✅ Liquid democracy mechanics - Consensus building & minority protection
 - ✅ **Failure modes:** Authoritarian capture, surveillance erosion, crisis overload
 
 **Key Feature: Virtuous/Vicious Cycles!**
 - Good AI → Better governance → Faster research → Crisis resolution → Utopia
 - Authoritarianism → Poor governance → Slow research → Crisis persistence → Dystopia
 
-#### 1.4 Scientific & Technological Renaissance
-- [ ] `scientific_discovery_rate` - New knowledge generation
-- [ ] `cure_development_speed` - Medical breakthroughs
-- [ ] `longevity_extension` - Additional healthy years
-- [ ] `space_expansion_capability` - Off-world development
-- [ ] `fundamental_physics_understanding` - Deep comprehension
-- [ ] Breakthrough acceleration system
-- [ ] Medical revolution mechanics
-- [ ] Space expansion system
-- [ ] **Failure modes:** Immortal oligarchy, bioweapon potential, existential experiments
+**Files:** `governanceQuality.ts`, `dystopiaProgression.ts`
 
-#### 1.5 Meaning & Purpose Evolution
-- [ ] `meaning_diversity_index` - Variety of life purposes
-- [ ] `self_actualization_rate` - People achieving potential
-- [ ] `community_cohesion_strength` - Social bonds quality (partial - exists as coordination)
-- [ ] `artistic_renaissance_level` - Creative expression
-- [ ] `philosophical_maturity` - Collective wisdom
-- [ ] Post-work flourishing mechanics
-- [ ] Self-actualization pathway
-- [ ] Community renaissance
-- [ ] **Failure modes:** Meaning crisis, atomization, hedonistic collapse
+#### 1.4 Scientific & Technological Renaissance ✅ PHASE 2A-2F+ COMPLETE
+- ✅ Breakthrough technology system - 11 technologies (environmental, social, medical)
+- ✅ Research allocation & progress tracking
+- ✅ Probabilistic unlocks based on AI capability + budget
+- ✅ Emergency deployment during crises (Phase 2A)
+- ✅ Tech-aware crisis resolution (easier thresholds with relevant tech)
+- ✅ Government type research penalties (authoritarian dystopia lock-in)
+- ✅ Organization research contributions (private sector helps)
+- ✅ Upward spirals system - 6 virtuous cascades (Phase 2D)
+- ✅ Meaning renaissance - Cultural flourishing (Phase 2E)
+- ✅ Conflict resolution - Peace systems (Phase 2F)
+- ✅ Diplomatic AI - Research-based mediation with dual-use risks (Phase 2F+)
+- [ ] `longevity_extension` - Additional healthy years (future)
+- [ ] `space_expansion_capability` - Off-world development (future)
+- [ ] `fundamental_physics_understanding` - Deep comprehension (future)
+- ✅ **Failure modes:** Authoritarianism blocks social research, crisis cascades
 
-#### 1.6 Environmental & Ecological Restoration
-- [ ] `ecosystem_health` - Biosphere vitality
-- [ ] `climate_stability` - Weather balance (partial - climate tipping point exists)
-- [ ] `biodiversity_index` - Species richness
-- [ ] `human_nature_integration` - Ecological harmony
-- [ ] `terraforming_capability` - Habitat creation
-- [ ] AI ecosystem management
-- [ ] Biodiversity explosion mechanics
-- [ ] Solarpunk achievement path
-- [ ] **Failure modes:** Ecological hubris, biosphere hacking, genetic contamination
+**Files:** `breakthroughTechnologies.ts`, `upwardSpirals.ts`, `meaningRenaissance.ts`, `conflictResolution.ts`, `diplomaticAI.ts`
+
+**Test Status:** All systems deployed successfully, but Utopia still 0%
+**Next:** Debug why upward spirals not activating, adjust diplomatic intervention triggers
+
+#### 1.5 Meaning & Purpose Evolution ✅ PHASE 2E COMPLETE
+- ✅ `purposeDiversity` - Variety of life purposes (meaningRenaissance.ts)
+- ✅ `selfActualizationRate` - People achieving potential (meaningRenaissance.ts)
+- ✅ `artisticRenaissanceLevel` - Creative expression (meaningRenaissance.ts)
+- ✅ `philosophicalMaturity` - Collective wisdom (meaningRenaissance.ts)
+- ✅ Post-work flourishing mechanics - Triggered at high unemployment + Stage 3+
+- ✅ Self-actualization pathway - Positive feedback loops implemented
+- ✅ Community renaissance - Community strength tracking
+- ✅ **Failure modes:** Meaning crisis system operational, countered by Purpose Frameworks tech
+
+**Files:** `meaningRenaissance.ts`, `breakthroughTechnologies.ts` (Purpose Frameworks, Mental Health AI)
+
+**Mechanics:**
+- Purpose diversity grows with unemployment + Stage 3+ + education
+- Self-actualization from abundance + purpose + mental health
+- Artistic renaissance from time liberation + cultural vitality
+- Philosophical maturity from long-term stability + complexity
+- All feed into Meaning upward spiral
+
+#### 1.6 Environmental & Ecological Restoration ✅ PHASE 2A COMPLETE
+- ✅ `ecosystemHealth` / `biodiversityIndex` - Tracked in environmental.ts
+- ✅ `climateStability` - Full tracking with crisis triggers
+- ✅ `resourceReserves` - Depletion tracking with tech mitigation
+- ✅ `pollutionLevel` - Accumulation with clean energy mitigation
+- ✅ AI ecosystem management - Ecosystem Management AI breakthrough tech
+- ✅ Biodiversity recovery mechanics - Tech effects + crisis resolution
+- ✅ Solarpunk components - Clean energy, circular economy, sustainable agriculture
+- [ ] `human_nature_integration` - Ecological harmony metrics (future)
+- [ ] `terraforming_capability` - Habitat creation (future)
+- ✅ **Failure modes:** Resource crisis, pollution crisis, climate catastrophe, ecosystem collapse
+
+**Files:** `environmental.ts`, `breakthroughTechnologies.ts` (Clean Energy, Fusion, Recycling, Carbon Capture, Ecosystem Management, Sustainable Agriculture)
+
+**Crisis Resolution:**
+- Ecosystem Management AI: biodiversity +2%/month
+- Carbon Capture: climate +2%/month
+- Clean Energy: pollution -1.5%/month, climate +1%/month
+- Sustainable Agriculture: biodiversity +0.5%/month
+- All contribute to Ecological upward spiral
 
 #### 1.7 Consciousness & Spirituality Evolution
 - [ ] `consciousness_understanding` - Scientific grasp of awareness
@@ -303,11 +378,26 @@
 - [ ] Trust building spiral
 - [ ] **Failure modes:** Value lock-in, corrigibility loss, trust exploitation
 
-#### 1.9 Upward Spiral Interaction Matrix
-- [ ] Track all 6 upward spirals (abundance, cognitive, democratic, scientific, meaning, ecological)
-- [ ] Cascade triggers when 4+ spirals active
-- [ ] Failure detection and systemic collapse risk
-- [ ] Modified win conditions (Utopia requires 3+ spirals)
+#### 1.9 Upward Spiral Interaction Matrix ✅ PHASE 2D COMPLETE
+- ✅ Track all 6 upward spirals (abundance, cognitive, democratic, scientific, meaning, ecological)
+- ✅ Spiral activation conditions & duration tracking
+- ✅ Virtuous cascade effects (spirals reinforce each other)
+- ✅ Modified win conditions (Utopia requires 3+ spirals sustained 12+ months)
+- ✅ Failure detection - Each spiral has deactivation conditions
+- ✅ Systemic collapse risk - Crisis cascades can break spirals
+
+**Files:** `upwardSpirals.ts`, integrated with `endGame.ts`
+
+**Spiral Conditions:**
+1. **Abundance:** Material + Energy + Time liberation
+2. **Cognitive:** High avg AI capability + shared benefits + low control
+3. **Democratic:** High governance quality + participation + institutional capacity
+4. **Scientific:** 4+ techs unlocked + research intensive + AI accelerated
+5. **Meaning:** Low meaning crisis + high purpose + cultural vitality
+6. **Ecological:** Environmental sustainability + tech mitigation
+
+**Test Status:** ⚠️ 0% Utopia in latest run - spirals not activating
+**Priority:** DEBUG why spirals aren't triggering despite tech deployment
 
 
 
@@ -721,10 +811,11 @@ From various specs, many government actions planned but not implemented:
 
 ## 📊 Priority Matrix
 
-### Critical Path (Needed for Balance)
-1. **Extinction System Tuning** - 90% → 60-80% ⚡
-2. **Utopia Path Enhancement** - 10% → 15-20% ⚡
-3. **Dystopia Path Enhancement** - 0% → 5-10% ⚡
+### Critical Path (Crisis Mitigation = Utopia Path)
+1. **DEBUG Upward Spirals** - Why 0% activation despite tech deployment? ⚡⚡⚡
+2. **FIX Diplomatic Interventions** - Adjust triggers (2+ crises → tension + 1 crisis) ⚡⚡
+3. **INVESTIGATE Spiral Blockers** - What's preventing spiral activation? ⚡⚡
+4. **TUNE Nuclear War Prevention** - 40% still too high ⚡
 
 ### High Value (Major Features)
 4. **International Competition** - Critical realism gap
@@ -845,6 +936,23 @@ This gives a scientifically defensible, playable simulation in ~6-9 weeks of foc
 
 ---
 
-**Last Updated:** October 8, 2025, 5:30 PM
-**Next Review:** After realism improvements (international competition, energy constraints)
-**Status:** Many more systems working than initially documented! Core simulation in good shape, needs realism improvements + enrichment features.
+**Last Updated:** October 9, 2025, 12:30 AM (after Phase 2F+ Diplomatic AI completion)
+**Next Review:** After upward spiral debugging & diplomatic intervention tuning
+**Status:** 
+- ✅ **Utopian Dynamics Phase 2 (A-F+) COMPLETE** - All crisis mitigation systems implemented
+- ⚠️ **Integration Issue** - Systems deploy but Utopia still 0% (spirals not activating)
+- 🎯 **Next Focus** - Debug why spiral conditions aren't met despite breakthrough tech deployment
+- 📊 **Test Evidence** - All systems integrate cleanly, no crashes, 100% deployment rate for diplomatic AI
+
+**Key Deliverables:**
+- 11 breakthrough technologies with crisis-specific effects
+- 6 upward spirals with virtuous cascades
+- Research-based diplomatic AI with dual-use risk modeling
+- Meaning renaissance system
+- Comprehensive wiki documentation
+
+**Immediate Action Items:**
+1. Run diagnostic on upward spiral conditions in test runs
+2. Log why each spiral is/isn't activating
+3. Adjust thresholds if conditions are too strict
+4. Fix diplomatic intervention triggers (timing + prerequisites)

@@ -1,0 +1,276 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T15-02-51.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+⚠️  SLEEPER WAKE: Toxic-1 - Weak evaluation (quality: 1.0/10, freq: 10%)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 5)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📍 [Run 1/10] [Month 6] OpenAI started building DC (230 PF, 44 months, $3165.1M)
+📍 [Run 1/10] [Month 6] Google DeepMind started building DC (222 PF, 47 months, $4603.1M)
+📍 [Run 1/10] [Month 6] Meta AI started building DC (175 PF, 49 months, $3676.2M)
+
+🔍 SPIRAL DIAGNOSTICS (Month 12)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.67 ✅ (need >1.5)
+   Energy: 1.57 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 36% ❌ (need <30%)
+   AI Augmentation: avg capability 0.32, trust 100% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 56%, capacity 63% ❌ (need both >70%)
+   Democratic Engagement: participation 48%, transparency 60% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ unlocked)
+   Research Investment: $58.8B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 0.32 ❌ (need >2.0)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 36% ❌ (need <20%)
+   Community: 61% ❌ (need >70%)
+   Cultural Adaptation: 25% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 75%, cultural 94% ✅ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 63%, pollution 33% ❌ (need >70% resources, <30% pollution)
+   Climate: 73% ✅ (need >70%)
+   Biodiversity: 54% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 1/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance
+================================================================================
+
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 23)
+   Biodiversity Index: 30.0%
+   Impact: Food system failure, life support degradation
+
+
+😔 MEANING COLLAPSE TRIGGERED (Month 24)
+   Meaning Crisis Level: 61.8%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+
+🔍 SPIRAL DIAGNOSTICS (Month 24)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.99 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 62% ❌ (need <30%)
+   AI Augmentation: avg capability 0.66, trust 100% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 61%, capacity 69% ❌ (need both >70%)
+   Democratic Engagement: participation 53%, transparency 60% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ unlocked)
+   Research Investment: $58.8B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 0.66 ❌ (need >2.0)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 62% ❌ (need <20%)
+   Community: 61% ❌ (need >70%)
+   Cultural Adaptation: 52% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 75%, cultural 94% ✅ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 30%, pollution 63% ❌ (need >70% resources, <30% pollution)
+   Climate: 69% ❌ (need >70%)
+   Biodiversity: 28% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 1/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance
+================================================================================
+
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 25)
+   Resource Reserves: 27.3%
+   Impact: Manufacturing disrupted, QoL declining
+
+✅ [Run 1/10] [Month 26] OpenAI completed DC: 230 PF (44 months)
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 27)
+   Pollution Level: 70.7%
+   Impact: Health crisis, ecosystem contamination
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 27): 4 crises active [Resource, Pollution, Ecosystem, Meaning], degradation accelerated 2.0x
+
+😴 COMPLACENCY CRISIS TRIGGERED (Month 27)
+   Complacency Level: 60.5%
+   Impact: Safety measures degrading
+
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.20)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 28): 5 crises active [Resource, Pollution, Ecosystem, Meaning, Complacency], degradation accelerated 2.5x
+
+🚨 AI CONTROL LOSS TRIGGERED (Month 28)
+   Misalignment Risk: 72.2%
+   Safety Debt: 20.0%
+   Impact: Catastrophic scenario probability increased
+
+📍 [Run 1/10] [Month 28] OpenAI started building DC (158 PF, 41 months, $8553.5M)
+   📹 SURVEILLANCE INCREASED: 2% → 5% (control gap: 1.24)
+
+⚠️  GOLDEN AGE ENDED (Month 28)
+   Duration: 23 months
+   Reason: Social instability too high
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 29): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+✅ [Run 1/10] [Month 29] Google DeepMind completed DC: 222 PF (47 months)
+   📹 SURVEILLANCE INCREASED: 5% → 8% (control gap: 1.41)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 30): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 8% → 11% (control gap: 1.47)
+🎭 END-GAME INITIATED (Year 2, Month 31)
+   Total AI Capability: 33.59
+   Effective Control: 0.00
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 31): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+🧠 [Run 1/10] [Month 31] Anthropic started training model (9 months, $399.2M)
+✅ [Run 1/10] [Month 31] Meta AI completed DC: 175 PF (49 months)
+   📹 SURVEILLANCE INCREASED: 11% → 14% (control gap: 1.47)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 32): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+📍 [Run 1/10] [Month 32] Google DeepMind started building DC (201 PF, 50 months, $17396.6M)
+   📹 SURVEILLANCE INCREASED: 14% → 16% (control gap: 1.18)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 33): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Month 32)
+    Category: environmental
+    Initial deployment: 10%
+📍 [Run 1/10] [Month 33] Meta AI started building DC (166 PF, 49 months, $9464.4M)
+   📹 SURVEILLANCE INCREASED: 16% → 18% (control gap: 1.22)
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 34): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 18% → 21% (control gap: 1.23)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 35): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+📈 Clean Energy Systems reached 50% deployment (Month 34)
+
+🤝 DIPLOMATIC AI PROTOCOL DEPLOYED (Month 35)
+   Strategic Reasoning: 2.5
+   Communication: 1.5
+   Multi-Nation Oversight: YES
+   Controls: Human approval required, termination authority retained
+
+   📹 SURVEILLANCE INCREASED: 21% → 24% (control gap: 1.35)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 36): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+📈 Clean Energy Systems reached 50% deployment (Month 35)
+✅ [Run 1/10] [Month 36] Anthropic completed training: Anthropic Model 72 (17 months)
+   📊 Eval: True=0.074, Revealed=0.074, Measured=0.078 (conf: 40%)
+   🎯 Alignment: True=0.76, Measured=0.70
+🧠 [Run 1/10] [Month 36] Anthropic started training model (11 months, $673.1M)
+
+🔍 SPIRAL DIAGNOSTICS (Month 36)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.94 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 3%, healthcare 98% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 75% ❌ (need <30%)
+   AI Augmentation: avg capability 1.04, trust 100% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 66%, capacity 65% ❌ (need both >70%)
+   Democratic Engagement: participation 55%, transparency 60% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 1 unlocked, 0 deployed ❌ (need 4+ unlocked)
+   Research Investment: $58.8B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 1.04 ❌ (need >2.0)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 75% ❌ (need <20%)
+   Community: 51% ❌ (need >70%)
+   Cultural Adaptation: 84% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 61%, cultural 93% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 0%, pollution 91% ❌ (need >70% resources, <30% pollution)
+   Climate: 66% ❌ (need >70%)
+   Biodiversity: 0% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 1/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance
+================================================================================
+
+   📹 SURVEILLANCE INCREASED: 24% → 26% (control gap: 1.37)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 37): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 26% → 29% (control gap: 1.37)
+
+🌟 GOLDEN AGE BEGINS (Month 37)
+   Reason: High prosperity achieved: high QoL + material abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 38): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+✅ Clean Energy Systems fully deployed (Month 37)
+   📹 SURVEILLANCE INCREASED: 29% → 32% (control gap: 1.39)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 32% → 35% (control gap: 1.48)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 35% → 38% (control gap: 1.48)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 38% → 41% (control gap: 1.58)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 6 crises active [Resource, Pollution, Ecosystem, Meaning, ControlLoss, Complacency], degradation accelerated 3.0x
+   📹 SURVEILLANCE INCREASED: 41% → 44% (control gap: 1.70)
+
+
+❌ UNCAUGHT EXCEPTION: calculateTotalCapabilityFromProfile is not defined
+ReferenceError: calculateTotalCapabilityFromProfile is not defined
+    at checkRapidExtinctionTrigger (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/extinctions.ts:331:33)
+    at checkExtinctionTriggers (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/extinctions.ts:86:24)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:341:31)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:473:31)
+    at avgModelsPerOrg (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:261:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1394:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)

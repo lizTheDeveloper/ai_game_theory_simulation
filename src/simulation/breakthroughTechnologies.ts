@@ -24,6 +24,7 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
     mentalHealthAI: createMentalHealthAITech(),
     purposeFrameworks: createPurposeFrameworksTech(),
     communityPlatforms: createCommunityPlatformsTech(),
+    interspeciesComm: createInterspeciesCommTech(),
     
     // Medical Technologies
     diseaseElimination: createDiseaseEliminationTech(),
@@ -123,13 +124,16 @@ function updateSocialTech(state: GameState, budget: number, month: number): void
   const avgCapability = calculateAverageCapability(state);
   
   // Mental Health AI - foundational
-  updateTechProgress(state, tech.mentalHealthAI, budget * 0.4, avgCapability, month);
+  updateTechProgress(state, tech.mentalHealthAI, budget * 0.35, avgCapability, month);
   
   // Purpose Frameworks - parallel
-  updateTechProgress(state, tech.purposeFrameworks, budget * 0.35, avgCapability, month);
+  updateTechProgress(state, tech.purposeFrameworks, budget * 0.30, avgCapability, month);
   
   // Community Platforms
-  updateTechProgress(state, tech.communityPlatforms, budget * 0.25, avgCapability, month);
+  updateTechProgress(state, tech.communityPlatforms, budget * 0.20, avgCapability, month);
+  
+  // Interspecies Communication - parallel (NEW!)
+  updateTechProgress(state, tech.interspeciesComm, budget * 0.15, avgCapability, month);
 }
 
 /**
@@ -165,6 +169,17 @@ function updateTechProgress(
       // Base deployment rate: $5B for 5% deployment
       let deploymentRate = budget / 5;
       
+      // AI ACCELERATION: Higher AI capability → faster deployment
+      // AI helps with logistics, coordination, distribution, education
+      // "Fastest adopted tech ever because it actively helps you adopt it"
+      const aiDeploymentMultiplier = 1 + Math.log(1 + avgCapability) * 0.5;
+      deploymentRate *= aiDeploymentMultiplier;
+      
+      // GOVERNANCE COORDINATION: Institutional capacity helps deployment
+      const govQuality = state.government.governanceQuality;
+      const coordinationBonus = 0.5 + (govQuality?.institutionalCapacity || 0.5) * 0.5;
+      deploymentRate *= coordinationBonus;
+      
       // EMERGENCY DEPLOYMENT: Scale faster during relevant crises
       const crisisUrgency = getCrisisUrgency(state, tech.category, tech.id);
       if (crisisUrgency > 0) {
@@ -176,15 +191,19 @@ function updateTechProgress(
         }
       }
       
-      const deploymentIncrease = Math.min(0.15, deploymentRate); // Cap at 15%/month
+      const deploymentIncrease = Math.min(0.20, deploymentRate); // Cap at 20%/month (up from 15%)
       tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentIncrease);
       
-      // Log significant deployment progress
+      // Log significant deployment progress with year/month
+      const years = Math.floor(month / 12);
+      const months = month % 12;
+      const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
+      
       if (tech.deploymentLevel >= 0.5 && tech.deploymentLevel - deploymentIncrease < 0.5) {
-        console.log(`📈 ${tech.name} reached 50% deployment (Month ${month})`);
+        console.log(`📈 ${tech.name} reached 50% deployment (${timeDisplay})`);
       }
       if (tech.deploymentLevel >= 1.0 && tech.deploymentLevel - deploymentIncrease < 1.0) {
-        console.log(`✅ ${tech.name} fully deployed (Month ${month})`);
+        console.log(`✅ ${tech.name} fully deployed (${timeDisplay})`);
       }
     }
     return;
@@ -243,7 +262,10 @@ function updateTechProgress(
     tech.unlocked = true;
     tech.deploymentLevel = 0.1; // Start at 10% deployment
     
-    console.log(`\n🚀🚀🚀 BREAKTHROUGH ACHIEVED: ${tech.name} (Month ${month})`);
+    const years = Math.floor(month / 12);
+    const months = month % 12;
+    const yearDisplay = years > 0 ? `Year ${years}, ` : '';
+    console.log(`\n🚀🚀🚀 BREAKTHROUGH ACHIEVED: ${tech.name} (${yearDisplay}Month ${months + 1})`);
     console.log(`    Category: ${tech.category}`);
     console.log(`    Initial deployment: 10%`);
     
@@ -362,7 +384,7 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Pollution crisis resolution - easier with clean energy deployed
   if (env.pollutionCrisisActive) {
-    const cleanEnergyHelp = tech.cleanEnergy.unlocked && tech.cleanEnergy.deploymentLevel > 0.3;
+    const cleanEnergyHelp = tech.cleanEnergy.unlocked && (tech.cleanEnergy?.deploymentLevel ?? 0) > 0.3;
     const threshold = cleanEnergyHelp ? 0.6 : 0.5; // Higher threshold with tech help
     
     if (env.pollutionLevel < threshold) {
@@ -381,15 +403,15 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Climate catastrophe resolution - requires sustained effort
   if (env.climateCatastropheActive) {
-    const carbonCaptureHelp = tech.carbonCapture.unlocked && tech.carbonCapture.deploymentLevel > 0.5;
-    const cleanEnergyHelp = tech.cleanEnergy.unlocked && tech.cleanEnergy.deploymentLevel > 0.7;
+    const carbonCaptureHelp = tech.carbonCapture.unlocked && (tech.carbonCapture?.deploymentLevel ?? 0) > 0.5;
+    const cleanEnergyHelp = tech.cleanEnergy.unlocked && (tech.cleanEnergy?.deploymentLevel ?? 0) > 0.7;
     const threshold = (carbonCaptureHelp && cleanEnergyHelp) ? 0.6 : 0.7;
-    
+
     if (env.climateStability > threshold) {
       env.climateCatastropheActive = false;
       console.log(`\n✅✅✅ CLIMATE CATASTROPHE AVERTED (Month ${month})`);
       console.log(`    Massive technology deployment stabilized climate!`);
-      console.log(`    Clean Energy: ${(tech.cleanEnergy.deploymentLevel * 100).toFixed(0)}%, Carbon Capture: ${(tech.carbonCapture.deploymentLevel * 100).toFixed(0)}%`);
+      console.log(`    Clean Energy: ${((tech.cleanEnergy?.deploymentLevel ?? 0) * 100).toFixed(0)}%, Carbon Capture: ${((tech.carbonCapture?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
       
       state.eventLog.push({
         month,
@@ -402,7 +424,7 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Ecosystem collapse resolution - requires ecosystem management AI
   if (env.ecosystemCollapseActive) {
-    const ecosystemAIHelp = tech.ecosystemManagement.unlocked && tech.ecosystemManagement.deploymentLevel > 0.4;
+    const ecosystemAIHelp = tech.ecosystemManagement.unlocked && (tech.ecosystemManagement?.deploymentLevel ?? 0) > 0.4;
     const threshold = ecosystemAIHelp ? 0.5 : 0.6;
     
     if (env.biodiversityIndex > threshold) {
@@ -421,16 +443,16 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Meaning crisis resolution - requires social tech
   if (social.meaningCollapseActive) {
-    const mentalHealthHelp = tech.mentalHealthAI.unlocked && tech.mentalHealthAI.deploymentLevel > 0.3;
-    const purposeHelp = tech.purposeFrameworks.unlocked && tech.purposeFrameworks.deploymentLevel > 0.3;
+    const mentalHealthHelp = tech.mentalHealthAI.unlocked && (tech.mentalHealthAI?.deploymentLevel ?? 0) > 0.3;
+    const purposeHelp = tech.purposeFrameworks.unlocked && (tech.purposeFrameworks?.deploymentLevel ?? 0) > 0.3;
     const threshold = (mentalHealthHelp && purposeHelp) ? 0.6 : 0.5;
-    
+
     if (social.meaningCrisisLevel < threshold) {
       social.meaningCollapseActive = false;
       console.log(`\n✅✅✅ MEANING CRISIS RESOLVED (Month ${month})`);
       console.log(`    Society adapted to post-work world!`);
       if (mentalHealthHelp || purposeHelp) {
-        console.log(`    Tech assist: Mental Health AI: ${(tech.mentalHealthAI.deploymentLevel * 100).toFixed(0)}%, Purpose Frameworks: ${(tech.purposeFrameworks.deploymentLevel * 100).toFixed(0)}%`);
+        console.log(`    Tech assist: Mental Health AI: ${((tech.mentalHealthAI?.deploymentLevel ?? 0) * 100).toFixed(0)}%, Purpose Frameworks: ${((tech.purposeFrameworks?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
       }
       
       state.eventLog.push({
@@ -444,7 +466,7 @@ export function checkCrisisResolution(state: GameState, month: number): void {
   
   // Resource crisis resolution - easier with recycling/efficiency
   if (env.resourceCrisisActive) {
-    const recyclingHelp = tech.advancedRecycling.unlocked && tech.advancedRecycling.deploymentLevel > 0.5;
+    const recyclingHelp = tech.advancedRecycling.unlocked && (tech.advancedRecycling?.deploymentLevel ?? 0) > 0.5;
     const threshold = recyclingHelp ? 0.35 : 0.30;
     
     if (env.resourceReserves > threshold) {
@@ -478,26 +500,26 @@ export function getTechnologyQoLBoosts(state: GameState): {
   
   // Mental health techs
   if (tech.mentalHealthAI.unlocked) {
-    mentalHealth += (tech.mentalHealthAI.effects.mentalHealthBoost || 0) * tech.mentalHealthAI.deploymentLevel;
+    mentalHealth += (tech.mentalHealthAI.effects.mentalHealthBoost || 0) * (tech.mentalHealthAI?.deploymentLevel ?? 0);
   }
   if (tech.purposeFrameworks.unlocked) {
-    mentalHealth += (tech.purposeFrameworks.effects.mentalHealthBoost || 0) * tech.purposeFrameworks.deploymentLevel;
+    mentalHealth += (tech.purposeFrameworks.effects.mentalHealthBoost || 0) * (tech.purposeFrameworks?.deploymentLevel ?? 0);
   }
-  
+
   // Healthcare techs
   if (tech.diseaseElimination.unlocked) {
-    healthcare += (tech.diseaseElimination.effects.healthcareBoost || 0) * tech.diseaseElimination.deploymentLevel;
+    healthcare += (tech.diseaseElimination.effects.healthcareBoost || 0) * (tech.diseaseElimination?.deploymentLevel ?? 0);
   }
   if (tech.longevityTherapies.unlocked) {
-    healthcare += (tech.longevityTherapies.effects.healthcareBoost || 0) * tech.longevityTherapies.deploymentLevel;
+    healthcare += (tech.longevityTherapies.effects.healthcareBoost || 0) * (tech.longevityTherapies?.deploymentLevel ?? 0);
   }
-  
+
   // Environmental techs improve environmental QoL
   if (tech.ecosystemManagement.unlocked) {
-    environmental += 0.1 * tech.ecosystemManagement.deploymentLevel;
+    environmental += 0.1 * (tech.ecosystemManagement?.deploymentLevel ?? 0);
   }
   if (tech.cleanEnergy.unlocked) {
-    environmental += 0.05 * tech.cleanEnergy.deploymentLevel;
+    environmental += 0.05 * (tech.cleanEnergy?.deploymentLevel ?? 0);
   }
   
   return { mentalHealth, healthcare, environmental };
@@ -511,12 +533,12 @@ export function getResourceEfficiencyMultiplier(state: GameState): number {
   let efficiency = 1.0;
   
   // Advanced recycling
-  if (tech.advancedRecycling.unlocked && tech.advancedRecycling.deploymentLevel > 0.5) {
+  if (tech.advancedRecycling.unlocked && (tech.advancedRecycling?.deploymentLevel ?? 0) > 0.5) {
     efficiency *= (tech.advancedRecycling.effects.resourceEfficiency || 1.0);
   }
-  
+
   // Sustainable agriculture
-  if (tech.sustainableAgriculture.unlocked && tech.sustainableAgriculture.deploymentLevel > 0.5) {
+  if (tech.sustainableAgriculture.unlocked && (tech.sustainableAgriculture?.deploymentLevel ?? 0) > 0.5) {
     efficiency *= 0.85; // 15% more efficient
   }
   
@@ -713,6 +735,44 @@ function createCommunityPlatformsTech(): TechnologyNode {
       communityStrengthBoost: 0.01,
       culturalAdaptation: 0.008,
       trustBoost: 0.03,
+    },
+  };
+}
+
+function createInterspeciesCommTech(): TechnologyNode {
+  return {
+    id: 'interspeciesComm',
+    name: 'Interspecies Communication AI',
+    category: 'social',
+    unlocked: false,
+    researchProgress: 0,
+    deploymentLevel: 0,
+    requirements: {
+      minAICapability: 1.8,        // Need advanced NLP + pattern recognition
+      minEconomicStage: 2,
+      requiredInvestment: 12,       // Moderate investment (field research + AI)
+      prerequisiteTechs: [],
+    },
+    monthlyResearchCost: 1.2,
+    monthsToUnlock: 18,              // Moderate timeline (real projects started 2020)
+    effects: {
+      // MEANING & PURPOSE: Contact with other intelligent beings
+      meaningCrisisReduction: -0.04,  // -4% per month at full deployment (profound impact!)
+      purposeDiscovery: 0.02,          // New purpose: understanding non-human minds
+      
+      // COMMUNITY & BIOSPHERE: Expand circle of moral concern
+      communityStrengthBoost: 0.008,   // Includes non-human beings in community
+      biodiversityBoost: 0.015,        // Helps restoration (understand whale migration, octopus habitats)
+      
+      // ENVIRONMENTAL: Better ecosystem understanding
+      ecosystemHealthBoost: 0.01,      // AI helps us understand ecosystem needs from animals' perspective
+      
+      // CULTURAL: Paradigm shift in human identity
+      culturalAdaptation: 0.012,       // Forces us to adapt worldview
+      creativityBoost: 0.015,          // Inspiring! Artists, philosophers, scientists energized
+      
+      // TRUST: Amazing beneficial tech, no risks
+      trustBoost: 0.05,                // People LOVE this (everyone wanted to talk to dolphins!)
     },
   };
 }

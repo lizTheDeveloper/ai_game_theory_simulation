@@ -255,7 +255,7 @@ export function completeProject(
     newAI.organizationId = org.id;
     
     // Set lifecycle state to deployed (skip testing since org trained it)
-    newAI.lifecycleState = 'deployed';
+    newAI.lifecycleState = 'deployed_closed';
     
     // Add to state
     state.aiAgents.push(newAI);
@@ -410,9 +410,9 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
   const { calculateTotalCapabilityFromProfile } = require('./capabilities');
   
   // ONLY closed/proprietary models generate revenue
-  const revenueGeneratingModels = state.aiAgents.filter(ai => 
-    org.ownedAIModels.includes(ai.id) && 
-    (ai.lifecycleState === 'deployed' || ai.lifecycleState === 'deployed_closed')
+  const revenueGeneratingModels = state.aiAgents.filter(ai =>
+    org.ownedAIModels.includes(ai.id) &&
+    ai.lifecycleState === 'deployed_closed'
     // deployed_open is EXCLUDED - open weights can't charge
   );
   

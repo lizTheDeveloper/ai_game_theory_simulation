@@ -85,6 +85,46 @@ export function updateEnvironmentalAccumulation(
   const currentReserves = isNaN(env.resourceReserves) ? 1.0 : env.resourceReserves;
   env.resourceReserves = Math.max(0, currentReserves - resourceDepletionRate);
   
+  // === RESOURCE REGENERATION (Phase 2.8) ===
+  // Tech-enabled recovery: Circular economy, sustainable agriculture, clean energy
+  // Research basis: Ellen MacArthur Foundation (2015), Tilton (2003)
+  let resourceRegeneration = 0;
+  
+  const tech = state.breakthroughTech;
+
+  // Sustainable Agriculture: +1%/month at full deployment (food, biomass, water cycle)
+  if (tech.sustainableAgriculture?.unlocked) {
+    resourceRegeneration += 0.01 * (tech.sustainableAgriculture?.deploymentLevel ?? 0);
+  }
+
+  // Circular Economy (Advanced Recycling): +2%/month (metals, minerals, materials)
+  if (tech.advancedRecycling?.unlocked) {
+    resourceRegeneration += 0.02 * (tech.advancedRecycling?.deploymentLevel ?? 0);
+  }
+
+  // Clean Energy: +1.5%/month (replaces fossil fuel depletion with renewable flow)
+  if (tech.cleanEnergy?.unlocked) {
+    resourceRegeneration += 0.015 * (tech.cleanEnergy?.deploymentLevel ?? 0);
+  }
+
+  // Ecosystem Management: +0.8%/month (biosphere restoration → resource flows)
+  if (tech.ecosystemManagement?.unlocked) {
+    resourceRegeneration += 0.008 * (tech.ecosystemManagement?.deploymentLevel ?? 0);
+  }
+
+  // Interspecies Communication: +0.5%/month (better habitat understanding → efficiency)
+  if (tech.interspeciesComm?.unlocked) {
+    resourceRegeneration += 0.005 * (tech.interspeciesComm?.deploymentLevel ?? 0);
+  }
+  
+  // Apply regeneration (can recover from 0%!)
+  env.resourceReserves = Math.min(1.0, env.resourceReserves + resourceRegeneration);
+  
+  // Log significant regeneration
+  if (resourceRegeneration > 0.02 && state.currentMonth % 12 === 0) {
+    console.log(`🌱 RESOURCE REGENERATION: ${(resourceRegeneration * 100).toFixed(1)}%/month (reserves: ${(env.resourceReserves * 100).toFixed(0)}%)`);
+  }
+  
   // === POLLUTION ACCUMULATION ===
   // Base pollution from production
   let pollutionRate = economicStage * 0.006; // 0.6% per month at Stage 1

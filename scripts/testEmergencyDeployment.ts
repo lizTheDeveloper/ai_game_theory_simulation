@@ -35,10 +35,10 @@ async function main() {
   const tech = result.finalState.breakthroughTech;
   
   console.log('🔬 Technology Status:');
-  console.log(`  Clean Energy: ${tech.cleanEnergy.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${(tech.cleanEnergy.deploymentLevel * 100).toFixed(0)}%`);
-  console.log(`  Ecosystem Mgmt: ${tech.ecosystemManagement.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${(tech.ecosystemManagement.deploymentLevel * 100).toFixed(0)}%`);
-  console.log(`  Mental Health AI: ${tech.mentalHealthAI.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${(tech.mentalHealthAI.deploymentLevel * 100).toFixed(0)}%`);
-  console.log(`  Disease Elim: ${tech.diseaseElimination.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${(tech.diseaseElimination.deploymentLevel * 100).toFixed(0)}%`);
+  console.log(`  Clean Energy: ${tech.cleanEnergy.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${((tech.cleanEnergy?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
+  console.log(`  Ecosystem Mgmt: ${tech.ecosystemManagement.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${((tech.ecosystemManagement?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
+  console.log(`  Mental Health AI: ${tech.mentalHealthAI.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${((tech.mentalHealthAI?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
+  console.log(`  Disease Elim: ${tech.diseaseElimination.unlocked ? '✅ Unlocked' : '❌ Locked'}, Deployment: ${((tech.diseaseElimination?.deploymentLevel ?? 0) * 100).toFixed(0)}%`);
   
   console.log('\n🚨 Crisis Status:');
   const env = result.finalState.environmentalAccumulation;

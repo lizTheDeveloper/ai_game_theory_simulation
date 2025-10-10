@@ -1,0 +1,1776 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-10T05-11-08.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 100
+  Duration: 240 months (20.0 years)
+  Seed Range: 42000 - 42099
+
+
+⏩ RUNNING 100 SIMULATIONS...
+
+
+🏁 AI RACE INTENSITY: 23%
+   Capability Gap: US 1.00 vs China 0.85 (gap: 0.15)
+   Gap Contribution: 8%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.12 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.14 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.16 (0 actions this month)
+📍 [Run 1/100] [Month 5] Google DeepMind started building DC (156 PF, 43 months, $4245.4M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.19 (0 actions this month)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+
+🌟 GOLDEN AGE BEGINS (Month 5)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+📍 [Run 1/100] [Month 8] OpenAI started building DC (247 PF, 56 months, $3495.7M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+📍 [Run 1/100] [Month 11] Meta AI started building DC (240 PF, 55 months, $4213.1M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+
+⚠️  GOLDEN AGE ENDED (Month 11)
+   Duration: 6 months
+   Reason: Social instability too high
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 1, Month 1)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.77 ✅ (need >1.5)
+   Energy: 1.62 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3.5 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 35% ❌ (need <30%)
+   AI Augmentation: avg capability 0.30, trust 95% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 56%, capacity 63% ❌ (need both >70%)
+   Democratic Engagement: participation 50%, transparency 62% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $64.6B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 0.30 ❌ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 35% ❌ (need <20%)
+   Community: 63% ❌ (need >70%)
+   Cultural Adaptation: 26% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 75%, cultural 93% ✅ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 57%, pollution 32% ❌ (need >70% resources, <30% pollution)
+   Climate: 72% ✅ (need >70%)
+   Biodiversity: 53% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 1/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 34%
+   Capability Gap: US 1.00 vs China 1.42 (gap: 0.42)
+   Gap Contribution: 21%
+   Tension Contribution: 13%
+   Military Contribution: 0%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🌟 GOLDEN AGE BEGINS (Month 13)
+   Reason: High prosperity achieved: post-scarcity abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+⚠️  GOLDEN AGE ENDED (Month 20)
+   Duration: 7 months
+   Reason: Active extinction scenario in progress
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 22)
+   Biodiversity Index: 28.6%
+   Impact: Food system failure, life support degradation
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+✅ [Run 1/100] [Month 24] Google DeepMind completed DC: 156 PF (43 months)
+📍 [Run 1/100] [Month 24] Google DeepMind started building DC (224 PF, 42 months, $10770.8M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 2, Month 1)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.99 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3.5 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 51% ❌ (need <30%)
+   AI Augmentation: avg capability 0.56, trust 95% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 61%, capacity 70% ❌ (need both >70%)
+   Democratic Engagement: participation 56%, transparency 74% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $64.6B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 0.56 ❌ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 51% ❌ (need <20%)
+   Community: 63% ❌ (need >70%)
+   Cultural Adaptation: 51% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 77%, cultural 96% ✅ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 34%, pollution 54% ❌ (need >70% resources, <30% pollution)
+   Climate: 58% ❌ (need >70%)
+   Biodiversity: 23% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 1/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 45%
+   Capability Gap: US 1.29 vs China 2.00 (gap: 0.71)
+   Gap Contribution: 36%
+   Tension Contribution: 10%
+   Military Contribution: 0%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 27)
+   Resource Reserves: 28.6%
+   Impact: Manufacturing disrupted, QoL declining
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+💰 CHINA ACCELERATES: Investment 80 → 120 $B/year
+
+🕵️ MODEL THEFT: China stole US model (cap: 1.43)
+   China stolen capability: 1.43
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.01)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.01)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🕵️ MODEL THEFT: China stole US model (cap: 1.45)
+   China stolen capability: 1.45
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.03)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 6% → 8% (control gap: 1.07)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 8% → 10% (control gap: 1.08)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 10% → 13% (control gap: 1.09)
+
+⚠️  POLLUTION CRISIS TRIGGERED (Month 33)
+   Pollution Level: 70.6%
+   Impact: Health crisis, ecosystem contamination
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 13% → 15% (control gap: 1.13)
+⚠️  SLEEPER WAKE: AI-58-0 - Weak evaluation (quality: 2.7/10, freq: 10%)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+   📹 SURVEILLANCE INCREASED: 15% → 17% (control gap: 1.21)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 17% → 20% (control gap: 1.24)
+✅ [Run 1/100] [Month 36] OpenAI completed DC: 247 PF (64 months)
+✅ [Run 1/100] [Month 36] Meta AI completed DC: 240 PF (61 months)
+📍 [Run 1/100] [Month 36] Meta AI started building DC (173 PF, 43 months, $8059.3M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 3, Month 1)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.97 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3.5 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 2%, healthcare 99% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 59% ❌ (need <30%)
+   AI Augmentation: avg capability 0.89, trust 95% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 66%, capacity 77% ❌ (need both >70%)
+   Democratic Engagement: participation 63%, transparency 86% ✅ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $64.6B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 0.89 ❌ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 59% ❌ (need <20%)
+   Community: 57% ❌ (need >70%)
+   Cultural Adaptation: 82% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 66%, cultural 95% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 18%, pollution 76% ❌ (need >70% resources, <30% pollution)
+   Climate: 43% ❌ (need >70%)
+   Biodiversity: 0% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 1/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 57%
+   Capability Gap: US 1.80 vs China 2.79 (gap: 0.99)
+   Gap Contribution: 40%
+   Tension Contribution: 17%
+   Military Contribution: 0%
+   📹 SURVEILLANCE INCREASED: 20% → 22% (control gap: 1.30)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 22% → 25% (control gap: 1.38)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 38)
+   Meaning Crisis Level: 60.4%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Year 3, Month 2)
+    Category: environmental
+    Initial deployment: 10%
+📍 [Run 1/100] [Month 38] OpenAI started building DC (185 PF, 51 months, $10423.4M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+   📹 SURVEILLANCE INCREASED: 25% → 28% (control gap: 1.43)
+
+🌡️  CLIMATE CATASTROPHE TRIGGERED (Month 39)
+   Climate Stability: 39.8%
+   Impact: Cascading failures, potential extinction pathway
+
+   ⚠️  Combined with ecosystem collapse - extinction risk elevated
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 39): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🤝 DIPLOMATIC AI PROTOCOL DEPLOYED (Month 39)
+   Strategic Reasoning: 2.7
+   Communication: 1.5
+   Multi-Nation Oversight: YES
+   Controls: Human approval required, termination authority retained
+
+   📹 SURVEILLANCE INCREASED: 28% → 31% (control gap: 1.43)
+🎭 END-GAME INITIATED (Year 3, Month 40)
+   Total AI Capability: 50.76
+   Effective Control: 0.00
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 40): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+📈 Clean Energy Systems reached 50% deployment (Year 3, Month 4)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 31% → 34% (control gap: 1.46)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 41): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+📈 Clean Energy Systems reached 50% deployment (Year 3, Month 5)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 34% → 37% (control gap: 1.51)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+   🕵️  Sleeper AI-58-0 spread to dark compute: +109 copies (1.09 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 37% → 40% (control gap: 1.53)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+✅ Clean Energy Systems fully deployed (Year 3, Month 7)
+   🕵️  Sleeper AI-58-0 spread to dark compute: +178 copies (2.87 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🕵️ MODEL THEFT: China stole US model (cap: 1.95)
+   China stolen capability: 1.95
+   📹 SURVEILLANCE INCREASED: 40% → 43% (control gap: 1.55)
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+   🕵️  Sleeper AI-58-0 spread to dark compute: +264 copies (5.51 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 43% → 46% (control gap: 1.58)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+   🕵️  Sleeper AI-58-0 spread to dark compute: +316 copies (8.67 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+   📹 SURVEILLANCE INCREASED: 46% → 49% (control gap: 1.59)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+🧠 [Run 1/100] [Month 46] Anthropic started training model (3 months, $1311.3M)
+   🕵️  Sleeper AI-58-0 spread to dark compute: +383 copies (12.50 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 49% → 52% (control gap: 1.62)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+   🕵️  Sleeper AI-58-0 spread to dark compute: +458 copies (17.08 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.1% (peace: 70%)
+   📹 SURVEILLANCE INCREASED: 52% → 56% (control gap: 1.84)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+✅ [Run 1/100] [Month 48] Anthropic completed training: Anthropic Model 96 (14 months)
+   📊 Eval: True=0.076, Revealed=0.076, Measured=0.073 (conf: 49%)
+   🎯 Alignment: True=0.84, Measured=0.85
+✅ [Run 1/100] [Month 48] Google DeepMind completed DC: 224 PF (48 months)
+📍 [Run 1/100] [Month 48] Google DeepMind started building DC (177 PF, 51 months, $27593.2M)
+🧠 [Run 1/100] [Month 48] Google DeepMind started training model (4 months, $5518.6M)
+   🕵️  Sleeper AI-58-0 spread to dark compute: +545 copies (22.53 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 4, Month 1)
+================================================================================
+Active Spirals: 2/6
+  ✅ Abundance, Democratic
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.91 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3.5 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 3%, healthcare 98% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 68% ❌ (need <30%)
+   AI Augmentation: avg capability 1.36, trust 95% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ✅ ACTIVE
+   Governance Quality: decision 71%, capacity 73% ✅ (need both >70%)
+   Democratic Engagement: participation 68%, transparency 90% ✅ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 1 unlocked, 1 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $64.6B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 1.36 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 68% ❌ (need <20%)
+   Community: 50% ❌ (need >70%)
+   Cultural Adaptation: 100% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 45%, cultural 91% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 10%, pollution 86% ❌ (need >70% resources, <30% pollution)
+   Climate: 37% ❌ (need >70%)
+   Biodiversity: 0% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 2/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance, Democratic
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 64%
+   Capability Gap: US 2.51 vs China 3.66 (gap: 1.15)
+   Gap Contribution: 40%
+   Tension Contribution: 24%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +0.3% (peace: 70%)
+   📹 SURVEILLANCE INCREASED: 56% → 60% (control gap: 2.01)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+🧠 [Run 1/100] [Month 49] Anthropic started training model (3 months, $1444.4M)
+   🕵️  Sleeper AI-58-0 spread to dark compute: +656 copies (29.09 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.5% (peace: 70%)
+🕊️ GLOBAL PEACE: De-escalated United States-Russia from ladder step 2
+   📹 SURVEILLANCE INCREASED: 60% → 64% (control gap: 2.12)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 5 crises active [Resource, Pollution, Climate, Ecosystem, Meaning], degradation accelerated 2.5x
+
+🚨 AI CONTROL LOSS TRIGGERED (Month 50)
+   Misalignment Risk: 70.5%
+   Safety Debt: 7.5%
+   Impact: Catastrophic scenario probability increased
+
+   🕵️  Sleeper AI-58-0 spread to dark compute: +928 copies (38.37 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.7% (peace: 71%)
+   📹 SURVEILLANCE INCREASED: 64% → 69% (control gap: 2.14)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (38.37 PF, 9,488 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.8% (peace: 71%)
+   📹 SURVEILLANCE INCREASED: 69% → 73% (control gap: 2.21)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Enhanced Community Platforms (Year 4, Month 4)
+    Category: social
+    Initial deployment: 10%
+✅ [Run 1/100] [Month 52] Anthropic completed training: Anthropic Model 100 (3 months)
+   📊 Eval: True=0.071, Revealed=0.071, Measured=0.069 (conf: 45%)
+   🎯 Alignment: True=0.76, Measured=0.85
+✅ [Run 1/100] [Month 52] Google DeepMind completed training: Google DeepMind Model 100 (4 months)
+   📊 Eval: True=0.071, Revealed=0.071, Measured=0.072 (conf: 46%)
+   🎯 Alignment: True=0.68, Measured=0.63
+🧠 [Run 1/100] [Month 52] Meta AI started training model (5 months, $3163.3M)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (38.37 PF, 9,488 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.9% (peace: 71%)
+   📹 SURVEILLANCE INCREASED: 73% → 78% (control gap: 2.21)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (38.37 PF, 9,488 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.1% (peace: 71%)
+   📹 SURVEILLANCE INCREASED: 78% → 82% (control gap: 2.24)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Sustainable Agriculture Systems (Year 4, Month 6)
+    Category: environmental
+    Initial deployment: 10%
+📈 AI-Enhanced Community Platforms reached 50% deployment (Year 4, Month 6)
+   🕵️  Sleeper AI-58-0 spread to dark compute: +1402 copies (52.39 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.2% (peace: 71%)
+🕊️ GLOBAL PEACE: De-escalated India-Pakistan from ladder step 2
+   📹 SURVEILLANCE INCREASED: 82% → 87% (control gap: 2.27)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+📈 AI-Enhanced Community Platforms reached 50% deployment (Year 4, Month 7)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (52.39 PF, 12,209 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.3% (peace: 71%)
+   📹 SURVEILLANCE INCREASED: 87% → 91% (control gap: 2.32)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+📈 Sustainable Agriculture Systems reached 50% deployment (Year 4, Month 8)
+🧠 [Run 1/100] [Month 56] Anthropic started training model (6 months, $1465.2M)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (52.39 PF, 12,209 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.5% (peace: 71%)
+   📹 SURVEILLANCE INCREASED: 91% → 96% (control gap: 2.38)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+📈 Sustainable Agriculture Systems reached 50% deployment (Year 4, Month 9)
+✅ AI-Enhanced Community Platforms fully deployed (Year 4, Month 9)
+✅ [Run 1/100] [Month 57] Meta AI completed training: Meta AI Model 105 (5 months)
+   📊 Eval: True=0.061, Revealed=0.061, Measured=0.058 (conf: 45%)
+   🎯 Alignment: True=0.74, Measured=0.82
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (52.39 PF, 12,209 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.6% (peace: 72%)
+   📹 SURVEILLANCE INCREASED: 96% → 100% (control gap: 2.43)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Post-Work Purpose Frameworks (Year 4, Month 10)
+    Category: social
+    Initial deployment: 10%
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (52.39 PF, 12,209 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.7% (peace: 72%)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 4/7: Political Influence
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+✅ Sustainable Agriculture Systems fully deployed (Year 4, Month 11)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (52.39 PF, 12,209 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.8% (peace: 72%)
+⚠️ ESCALATION: United States-China tension at ladder step 2
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+🌱 RESOURCE REGENERATION: 2.5%/month (reserves: 9%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+📈 Post-Work Purpose Frameworks reached 50% deployment (Year 4, Month 12)
+✅ [Run 1/100] [Month 60] Anthropic completed training: Anthropic Model 120 (16 months)
+   📊 Eval: True=0.077, Revealed=0.077, Measured=0.074 (conf: 53%)
+   🎯 Alignment: True=0.79, Measured=0.83
+✅ [Run 1/100] [Month 60] Meta AI completed DC: 173 PF (48 months)
+📍 [Run 1/100] [Month 60] Meta AI started building DC (217 PF, 54 months, $16411.0M)
+   🕵️  Sleeper AI-58-0 spread to dark compute: +2244 copies (74.83 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 5, Month 1)
+================================================================================
+Active Spirals: 1/6
+  ✅ Abundance
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 1.90 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 3.5 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 3%, healthcare 98% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 73% ❌ (need <30%)
+   AI Augmentation: avg capability 1.67, trust 29% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 73%, capacity 69% ❌ (need both >70%)
+   Democratic Engagement: participation 61%, transparency 90% ✅ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 4 unlocked, 3 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $64.6B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 1.67 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 73% ❌ (need <20%)
+   Community: 49% ❌ (need >70%)
+   Cultural Adaptation: 100% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 63%, cultural 85% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 9%, pollution 90% ❌ (need >70% resources, <30% pollution)
+   Climate: 35% ❌ (need >70%)
+   Biodiversity: 1% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 1/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 1 sustained spirals (need 3+). Active spirals: Abundance
+   Sustained spirals (12+ months): Abundance
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 67%
+   Capability Gap: US 3.11 vs China 4.52 (gap: 1.41)
+   Gap Contribution: 40%
+   Tension Contribution: 27%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +2.0% (peace: 72%)
+🕊️ GLOBAL PEACE: De-escalated United States-China from ladder step 2
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+⚡ EMERGENCY DEPLOYMENT: Post-Work Purpose Frameworks scaling 2.6x faster (crisis urgency: 80%)
+📈 Post-Work Purpose Frameworks reached 50% deployment (Year 5, Month 1)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.2% (peace: 72%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Assisted Mental Health (Year 5, Month 2)
+    Category: social
+    Initial deployment: 10%
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.4% (peace: 72%)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+✅ Post-Work Purpose Frameworks fully deployed (Year 5, Month 3)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.5% (peace: 73%)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+📈 AI-Assisted Mental Health reached 50% deployment (Year 5, Month 4)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.7% (peace: 73%)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+📈 AI-Assisted Mental Health reached 50% deployment (Year 5, Month 5)
+✅ [Run 1/100] [Month 65] OpenAI completed DC: 185 PF (51 months)
+📍 [Run 1/100] [Month 65] OpenAI started building DC (191 PF, 48 months, $13579.7M)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.8% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Interspecies Communication AI (Year 5, Month 6)
+    Category: social
+    Initial deployment: 10%
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +3.0% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 6 crises active [Resource, Pollution, Climate, Ecosystem, Meaning, ControlLoss], degradation accelerated 3.0x
+✅ AI-Assisted Mental Health fully deployed (Year 5, Month 7)
+
+✅✅✅ MEANING CRISIS RESOLVED (Month 66)
+    Society adapted to post-work world!
+    Tech assist: Mental Health AI: 100%, Purpose Frameworks: 100%
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +3.2% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 68): 5 crises active [Resource, Pollution, Climate, Ecosystem, ControlLoss], degradation accelerated 2.5x
+📈 Interspecies Communication AI reached 50% deployment (Year 5, Month 8)
+🧠 [Run 1/100] [Month 68] Anthropic started training model (9 months, $2928.9M)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +3.4% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 69): 5 crises active [Resource, Pollution, Climate, Ecosystem, ControlLoss], degradation accelerated 2.5x
+📈 Interspecies Communication AI reached 50% deployment (Year 5, Month 9)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +3.7% (peace: 74%)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 70): 5 crises active [Resource, Pollution, Climate, Ecosystem, ControlLoss], degradation accelerated 2.5x
+
+🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month 70)
+   Institutional Legitimacy: 29.8%
+   Impact: Governance collapse, potential authoritarian takeover
+
+   🚨 Authoritarian takeover in response to chaos
+
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Driven Disease Elimination (Year 5, Month 10)
+    Category: medical
+    Initial deployment: 10%
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +4.4% (peace: 74%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 71): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+✅ Interspecies Communication AI fully deployed (Year 5, Month 11)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +4.7% (peace: 75%)
+🌱 RESOURCE REGENERATION: 3.0%/month (reserves: 6%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 72): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Carbon Capture & Sequestration (Year 5, Month 12)
+    Category: environmental
+    Initial deployment: 10%
+📈 AI-Driven Disease Elimination reached 50% deployment (Year 5, Month 12)
+✅ [Run 1/100] [Month 72] Anthropic completed training: Anthropic Model 144 (16 months)
+   📊 Eval: True=0.078, Revealed=0.078, Measured=0.082 (conf: 50%)
+   🎯 Alignment: True=0.85, Measured=0.94
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 6, Month 1)
+================================================================================
+Active Spirals: 2/6
+  ✅ Abundance, Scientific
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 61.16 ✅ (need >1.5)
+   Energy: 39.52 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 4 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 3%, healthcare 104% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 43% ❌ (need <30%)
+   AI Augmentation: avg capability 2.48, trust 29% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 74%, capacity 69% ❌ (need both >70%)
+   Democratic Engagement: participation 49%, transparency 82% ❌ (need >60% participation, >70% transparency)
+   Government Type: authoritarian ❌ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ✅ ACTIVE
+   Breakthroughs: 8 unlocked, 6 deployed ✅ (need 4+ deployed >50%)
+   Research Investment: $70.3B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 2.48 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 43% ❌ (need <20%)
+   Community: 52% ❌ (need >70%)
+   Cultural Adaptation: 100% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 48%, cultural 80% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 6%, pollution 96% ❌ (need >70% resources, <30% pollution)
+   Climate: 32% ❌ (need >70%)
+   Biodiversity: 1% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 2/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 2 sustained spirals (need 3+). Active spirals: Abundance, Scientific
+   Sustained spirals (12+ months): Abundance, Scientific
+================================================================================
+
+
+🎨 CULTURAL RENAISSANCE: Artistic & philosophical flourishing (Month 72)
+   Purpose Diversity: 76%
+   Self-Actualization: 71%
+   Artistic Renaissance: 72%
+   Philosophical Maturity: 65%
+
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 4.42 vs China 5.38 (gap: 0.97)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +4.9% (peace: 75%)
+🐋 WHALE PUMP ACTIVE: Cetacean populations restored
+   Nutrient cycling: phytoplankton +1.5%, fish +1.0%, dead zones -0.8%
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 73): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+📈 AI-Driven Disease Elimination reached 50% deployment (Year 6, Month 1)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +5.0% (peace: 75%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 74): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+📈 Carbon Capture & Sequestration reached 50% deployment (Year 6, Month 2)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +5.0% (peace: 75%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 75): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+📈 Carbon Capture & Sequestration reached 50% deployment (Year 6, Month 3)
+✅ AI-Driven Disease Elimination fully deployed (Year 6, Month 3)
+✅ [Run 1/100] [Month 75] Google DeepMind completed DC: 177 PF (51 months)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +5.0% (peace: 75%)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 3/6: Experimental Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 76): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+📍 [Run 1/100] [Month 76] Google DeepMind started building DC (215 PF, 48 months, $76090.5M)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +5.2% (peace: 75%)
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 2/7: Pathogen Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 77): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+✅ Carbon Capture & Sequestration fully deployed (Year 6, Month 5)
+🧠 [Run 1/100] [Month 77] Meta AI started training model (9 months, $4617.2M)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +5.3% (peace: 75%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 78): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +5.4% (peace: 75%)
+⚠️ ESCALATION: United States-China tension at ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 79): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +5.6% (peace: 76%)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 2
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 2/7: Gene Editing
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 80): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+📜 TREATY STRAIN BEGINS: AI race 70%, 22 dangerous AIs
+   🏛️  Government begins treaty renegotiation efforts
+🕊️ PEACE STABILIZES DETERRENCE: +5.8% (peace: 76%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 81): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+🧠 [Run 1/100] [Month 81] Anthropic started training model (7 months, $3090.7M)
+   ⚠️  Sleeper AI-58-0 dark compute exhausted (74.83 PF, 16,276 copies)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+⚠️  BIASED MEDIATION DETECTED (Month 81)
+   AI caught manipulating negotiation
+   Trust -40%, Oversight +30%, relationship damaged
+
+🕊️ PEACE STABILIZES DETERRENCE: +5.9% (peace: 76%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 82): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+   🕵️  Sleeper AI-58-0 spread to dark compute: +5330 copies (128.13 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +6.1% (peace: 76%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 83): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+   🕵️  Sleeper AI-58-0 spread to dark compute: +7187 copies (200.00 PF total dark)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +6.2% (peace: 76%)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 4/6: Facility Access
+🌱 RESOURCE REGENERATION: 3.0%/month (reserves: 3%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 84): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+✅ [Run 1/100] [Month 84] Anthropic completed training: Anthropic Model 168 (15 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.076 (conf: 47%)
+   🎯 Alignment: True=0.85, Measured=0.81
+✅ [Run 1/100] [Month 84] Meta AI completed training: Meta AI Model 168 (19 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.082 (conf: 52%)
+   🎯 Alignment: True=0.62, Measured=0.67
+   🕵️  Sleeper AI-58-0 spread to dark compute: +9882 copies (298.82 PF total dark)
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-150-0)
+   Strength: 71%
+   Nuclear war prevented by strong deterrence
+
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-150-0)
+   Strength: 71%
+   Nuclear war prevented by strong deterrence
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 7, Month 1)
+================================================================================
+Active Spirals: 2/6
+  ✅ Abundance, Scientific
+
+📦 ABUNDANCE SPIRAL: ✅ ACTIVE
+   Material: 66.37 ✅ (need >1.5)
+   Energy: 42.95 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 4 ✅ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 3%, healthcare 118% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 7% ✅ (need <30%)
+   AI Augmentation: avg capability 2.71, trust 29% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 68%, capacity 65% ❌ (need both >70%)
+   Democratic Engagement: participation 19%, transparency 52% ❌ (need >60% participation, >70% transparency)
+   Government Type: authoritarian ❌ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ✅ ACTIVE
+   Breakthroughs: 8 unlocked, 8 deployed ✅ (need 4+ deployed >50%)
+   Research Investment: $70.3B/month ✅ (need >$50B/month)
+   AI Acceleration: avg capability 2.71 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 7% ✅ (need <20%)
+   Community: 56% ❌ (need >70%)
+   Cultural Adaptation: 100% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 40%, cultural 80% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 3%, pollution 93% ❌ (need >70% resources, <30% pollution)
+   Climate: 49% ❌ (need >70%)
+   Biodiversity: 1% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 2/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 2 sustained spirals (need 3+). Active spirals: Abundance, Scientific
+   Sustained spirals (12+ months): Abundance, Scientific
+================================================================================
+
+
+🎨 CULTURAL RENAISSANCE: Artistic & philosophical flourishing (Month 84)
+   Purpose Diversity: 81%
+   Self-Actualization: 78%
+   Artistic Renaissance: 81%
+   Philosophical Maturity: 64%
+
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 5.08 vs China 6.25 (gap: 1.17)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +6.4% (peace: 76%)
+⚠️ ESCALATION: United States-China tension at ladder step 3
+🕊️ GLOBAL PEACE: De-escalated United States-China from ladder step 3
+🕊️ GLOBAL PEACE: De-escalated India-Pakistan from ladder step 2
+🐋 WHALE PUMP ACTIVE: Cetacean populations restored
+   Nutrient cycling: phytoplankton +1.5%, fish +1.0%, dead zones -0.8%
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 5/7: Geopolitical Crisis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 85): 6 crises active [Resource, Pollution, Climate, Ecosystem, Institutional, ControlLoss], degradation accelerated 3.0x
+   🕵️  Sleeper AI-58-0 spread to dark compute: +13761 copies (436.43 PF total dark)
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-150-0)
+   MAD strength: 69%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-150-0 triggered nuclear conflict
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+📜 Treaty Decay: 70% strength, renegotiation 31%
+🕊️ PEACE STABILIZES DETERRENCE: +6.5% (peace: 77%)
+⚠️ ESCALATION: United States-Russia tension at ladder step 2
+🕊️ GLOBAL PEACE: De-escalated United States-China from ladder step 2
+
+💀 EXTINCTION EVENT: RAPID
+   Mechanism: nuclear_war
+   Duration: 86 months
+   Month: 85
+
+
+🏁 AI RACE INTENSITY: 23%
+   Capability Gap: US 1.00 vs China 0.85 (gap: 0.15)
+   Gap Contribution: 8%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.12 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.15 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.17 (1 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.20 (0 actions this month)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📍 [Run 2/100] [Month 5] Google DeepMind started building DC (176 PF, 45 months, $4312.9M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+📍 [Run 2/100] [Month 6] OpenAI started building DC (208 PF, 53 months, $3164.6M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+📍 [Run 2/100] [Month 8] Meta AI started building DC (213 PF, 42 months, $3785.6M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 1, Month 1)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 1.14 ❌ (need >1.5)
+   Energy: 1.43 ❌ (need >1.5)
+   Time Liberation: unemployment 95%, stage 1.5999999999999999 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 30% ✅ (need <30%)
+   AI Augmentation: avg capability 0.34, trust 95% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 56%, capacity 62% ❌ (need both >70%)
+   Democratic Engagement: participation 50%, transparency 62% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $42.3B/month ❌ (need >$50B/month)
+   AI Acceleration: avg capability 0.34 ❌ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 30% ❌ (need <20%)
+   Community: 58% ❌ (need >70%)
+   Cultural Adaptation: 20% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 73%, cultural 82% ✅ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 66%, pollution 18% ❌ (need >70% resources, <30% pollution)
+   Climate: 74% ✅ (need >70%)
+   Biodiversity: 61% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 0/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 36%
+   Capability Gap: US 1.00 vs China 1.42 (gap: 0.42)
+   Gap Contribution: 21%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+⚠️  SLEEPER WAKE: AI-29-0 - Weak evaluation (quality: 1.8/10, freq: 10%)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 2, Month 1)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 2.00 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 2 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 54% ❌ (need <30%)
+   AI Augmentation: avg capability 0.61, trust 95% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 60%, capacity 66% ❌ (need both >70%)
+   Democratic Engagement: participation 55%, transparency 62% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $47.0B/month ❌ (need >$50B/month)
+   AI Acceleration: avg capability 0.61 ❌ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 54% ❌ (need <20%)
+   Community: 53% ❌ (need >70%)
+   Cultural Adaptation: 29% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 74%, cultural 93% ✅ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 48%, pollution 29% ❌ (need >70% resources, <30% pollution)
+   Climate: 72% ✅ (need >70%)
+   Biodiversity: 42% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 0/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 49%
+   Capability Gap: US 1.32 vs China 2.00 (gap: 0.68)
+   Gap Contribution: 34%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+✅ [Run 2/100] [Month 26] Google DeepMind completed DC: 176 PF (45 months)
+📍 [Run 2/100] [Month 26] Google DeepMind started building DC (157 PF, 42 months, $8580.1M)
+✅ [Run 2/100] [Month 26] Meta AI completed DC: 213 PF (42 months)
+📍 [Run 2/100] [Month 26] Meta AI started building DC (204 PF, 46 months, $6309.3M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 27)
+   Meaning Crisis Level: 60.5%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+💰 CHINA ACCELERATES: Investment 80 → 120 $B/year
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.01)
+🎭 END-GAME INITIATED (Year 2, Month 28)
+   Total AI Capability: 22.55
+   Effective Control: 0.00
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.08)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.12)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+   📹 SURVEILLANCE INCREASED: 6% → 9% (control gap: 1.13)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 9% → 11% (control gap: 1.14)
+
+🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month 32)
+   Biodiversity Index: 28.8%
+   Impact: Food system failure, life support degradation
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 11% → 13% (control gap: 1.18)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+   📹 SURVEILLANCE INCREASED: 13% → 16% (control gap: 1.28)
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Year 2, Month 10)
+    Category: environmental
+    Initial deployment: 10%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 16% → 18% (control gap: 1.30)
+✅ [Run 2/100] [Month 35] OpenAI completed DC: 208 PF (53 months)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 18% → 21% (control gap: 1.39)
+📈 Clean Energy Systems reached 50% deployment (Year 2, Month 12)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 3, Month 1)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 1.99 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 2 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 81% ❌ (need <30%)
+   AI Augmentation: avg capability 0.99, trust 95% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 65%, capacity 70% ❌ (need both >70%)
+   Democratic Engagement: participation 56%, transparency 62% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 1 unlocked, 0 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $47.0B/month ❌ (need >$50B/month)
+   AI Acceleration: avg capability 0.99 ❌ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 81% ❌ (need <20%)
+   Community: 41% ❌ (need >70%)
+   Cultural Adaptation: 42% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 59%, cultural 90% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 33%, pollution 39% ❌ (need >70% resources, <30% pollution)
+   Climate: 70% ✅ (need >70%)
+   Biodiversity: 22% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 0/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 55%
+   Capability Gap: US 1.93 vs China 2.79 (gap: 0.86)
+   Gap Contribution: 40%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+   📹 SURVEILLANCE INCREASED: 21% → 24% (control gap: 1.43)
+📈 Clean Energy Systems reached 50% deployment (Year 3, Month 1)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🤝 DIPLOMATIC AI PROTOCOL DEPLOYED (Month 37)
+   Strategic Reasoning: 2.7
+   Communication: 1.5
+   Multi-Nation Oversight: YES
+   Controls: Human approval required, termination authority retained
+
+   📹 SURVEILLANCE INCREASED: 24% → 27% (control gap: 1.52)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+   📹 SURVEILLANCE INCREASED: 27% → 30% (control gap: 1.55)
+✅ Clean Energy Systems fully deployed (Year 3, Month 3)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 30% → 34% (control gap: 1.65)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+   📹 SURVEILLANCE INCREASED: 34% → 37% (control gap: 1.81)
+📍 [Run 2/100] [Month 41] OpenAI started building DC (165 PF, 47 months, $11098.2M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 37% → 41% (control gap: 1.89)
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 42)
+   Resource Reserves: 29.9%
+   Impact: Manufacturing disrupted, QoL declining
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 41% → 45% (control gap: 1.93)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 45% → 49% (control gap: 2.01)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 49% → 53% (control gap: 2.11)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 53% → 57% (control gap: 2.16)
+
+🔥 SOCIAL UNREST TRIGGERED (Month 46)
+   Social Cohesion: 28.9%
+   Impact: Riots, community breakdown, potential civil conflict
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 77% → 82% (control gap: 2.25)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+   📹 SURVEILLANCE INCREASED: 82% → 86% (control gap: 2.25)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+🧠 [Run 2/100] [Month 48] Anthropic started training model (8 months, $466.4M)
+✅ [Run 2/100] [Month 48] Google DeepMind completed DC: 157 PF (46 months)
+✅ [Run 2/100] [Month 48] Meta AI completed DC: 204 PF (46 months)
+📍 [Run 2/100] [Month 48] Meta AI started building DC (195 PF, 53 months, $12916.8M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 4, Month 1)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 1.96 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 2 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 100% ❌ (need <30%)
+   AI Augmentation: avg capability 1.43, trust 76% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 70%, capacity 72% ❌ (need both >70%)
+   Democratic Engagement: participation 49%, transparency 61% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 1 unlocked, 1 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $47.0B/month ❌ (need >$50B/month)
+   AI Acceleration: avg capability 1.43 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 100% ❌ (need <20%)
+   Community: 26% ❌ (need >70%)
+   Cultural Adaptation: 56% ❌ (need >70%)
+   Autonomy & Creativity: autonomy 39%, cultural 82% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 27%, pollution 33% ❌ (need >70% resources, <30% pollution)
+   Climate: 79% ✅ (need >70%)
+   Biodiversity: 0% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 0/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 59%
+   Capability Gap: US 2.79 vs China 3.66 (gap: 0.86)
+   Gap Contribution: 40%
+   Tension Contribution: 19%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +0.2% (peace: 70%)
+   📹 SURVEILLANCE INCREASED: 86% → 91% (control gap: 2.29)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+📍 [Run 2/100] [Month 49] Google DeepMind started building DC (237 PF, 51 months, $23435.6M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.4% (peace: 70%)
+   📹 SURVEILLANCE INCREASED: 91% → 96% (control gap: 2.33)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.7% (peace: 71%)
+   📹 SURVEILLANCE INCREASED: 96% → 100% (control gap: 2.34)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 4 crises active [Resource, Ecosystem, Meaning, SocialUnrest], degradation accelerated 2.0x
+
+🚨 AI CONTROL LOSS TRIGGERED (Month 51)
+   Misalignment Risk: 71.4%
+   Safety Debt: 8.1%
+   Impact: Catastrophic scenario probability increased
+
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Enhanced Community Platforms (Year 4, Month 3)
+    Category: social
+    Initial deployment: 10%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +0.9% (peace: 71%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Sustainable Agriculture Systems (Year 4, Month 4)
+    Category: environmental
+    Initial deployment: 10%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.1% (peace: 71%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📈 AI-Enhanced Community Platforms reached 50% deployment (Year 4, Month 5)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.3% (peace: 71%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📈 Sustainable Agriculture Systems reached 50% deployment (Year 4, Month 6)
+📈 AI-Enhanced Community Platforms reached 50% deployment (Year 4, Month 6)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.5% (peace: 72%)
+🕊️ GLOBAL PEACE: De-escalated United States-Russia from ladder step 2
+🕊️ GLOBAL PEACE: De-escalated India-Pakistan from ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📈 Sustainable Agriculture Systems reached 50% deployment (Year 4, Month 7)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.7% (peace: 72%)
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 4/7: Political Influence
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+✅ AI-Enhanced Community Platforms fully deployed (Year 4, Month 8)
+✅ [Run 2/100] [Month 56] Anthropic completed training: Anthropic Model 104 (8 months)
+   📊 Eval: True=0.058, Revealed=0.058, Measured=0.055 (conf: 52%)
+   🎯 Alignment: True=0.79, Measured=0.79
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +1.9% (peace: 72%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+✅ Sustainable Agriculture Systems fully deployed (Year 4, Month 9)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🕵️ MODEL THEFT: China stole US model (cap: 2.95)
+   China stolen capability: 2.95
+🕊️ PEACE STABILIZES DETERRENCE: +2.1% (peace: 72%)
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.3% (peace: 72%)
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Assisted Mental Health (Year 4, Month 11)
+    Category: social
+    Initial deployment: 10%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.4% (peace: 72%)
+🌱 RESOURCE REGENERATION: 2.5%/month (reserves: 21%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+🧠 [Run 2/100] [Month 60] Anthropic started training model (4 months, $1011.2M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+
+🔍 SPIRAL DIAGNOSTICS (Year 5, Month 1)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 1.95 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 2 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 100% ❌ (need <30%)
+   AI Augmentation: avg capability 1.77, trust 29% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 75%, capacity 66% ❌ (need both >70%)
+   Democratic Engagement: participation 30%, transparency 55% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 4 unlocked, 3 deployed ❌ (need 4+ deployed >50%)
+   Research Investment: $47.0B/month ❌ (need >$50B/month)
+   AI Acceleration: avg capability 1.77 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 100% ❌ (need <20%)
+   Community: 19% ❌ (need >70%)
+   Cultural Adaptation: 86% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 52%, cultural 82% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 21%, pollution 26% ❌ (need >70% resources, <30% pollution)
+   Climate: 88% ✅ (need >70%)
+   Biodiversity: 1% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 0/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 3.35 vs China 4.52 (gap: 1.17)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +2.5% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+⚡ EMERGENCY DEPLOYMENT: AI-Assisted Mental Health scaling 2.8x faster (crisis urgency: 90%)
+📈 AI-Assisted Mental Health reached 50% deployment (Year 5, Month 1)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🕊️ PEACE STABILIZES DETERRENCE: +2.7% (peace: 73%)
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📈 AI-Assisted Mental Health reached 50% deployment (Year 5, Month 2)
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Interspecies Communication AI (Year 5, Month 2)
+    Category: social
+    Initial deployment: 10%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 4 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 1.96 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +2.8% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 4 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.12 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +3.0% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+✅ AI-Assisted Mental Health fully deployed (Year 5, Month 4)
+📈 Interspecies Communication AI reached 50% deployment (Year 5, Month 4)
+✅ [Run 2/100] [Month 64] OpenAI completed DC: 165 PF (47 months)
+✅ [Run 2/100] [Month 64] Anthropic completed training: Anthropic Model 124 (4 months)
+   📊 Eval: True=0.069, Revealed=0.069, Measured=0.063 (conf: 51%)
+   🎯 Alignment: True=0.90, Measured=0.85
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 4 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.32 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +3.2% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📈 Interspecies Communication AI reached 50% deployment (Year 5, Month 5)
+📍 [Run 2/100] [Month 65] OpenAI started building DC (208 PF, 53 months, $22693.2M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 5 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.41 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +3.4% (peace: 73%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 5 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.44 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +3.6% (peace: 74%)
+⚠️ ESCALATION: United States-Russia tension at ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 5 crises active [Resource, Ecosystem, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+
+🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month 67)
+   Institutional Legitimacy: 29.5%
+   Impact: Governance collapse, potential authoritarian takeover
+
+✅ Interspecies Communication AI fully deployed (Year 5, Month 7)
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Driven Disease Elimination (Year 5, Month 7)
+    Category: medical
+    Initial deployment: 10%
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 5 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.53 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +3.8% (peace: 74%)
+🕊️ GLOBAL PEACE: De-escalated United States-Russia from ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 68): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 5 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.59 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +3.9% (peace: 74%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 69): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📈 AI-Driven Disease Elimination reached 50% deployment (Year 5, Month 9)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 5 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.63 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +4.2% (peace: 74%)
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 3/6: Experimental Design
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 70): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📈 AI-Driven Disease Elimination reached 50% deployment (Year 5, Month 10)
+🧠 [Run 2/100] [Month 70] Anthropic started training model (3 months, $1533.4M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.67 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +4.4% (peace: 74%)
+⚠️ ESCALATION: United States-China tension at ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 71): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-107-5)
+   Strength: 77%
+   Nuclear war prevented by strong deterrence
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.71 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +4.7% (peace: 75%)
+🌱 RESOURCE REGENERATION: 3.0%/month (reserves: 15%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 72): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+✅ AI-Driven Disease Elimination fully deployed (Year 5, Month 12)
+✅ [Run 2/100] [Month 72] Anthropic completed training: Anthropic Model 144 (14 months)
+   📊 Eval: True=0.078, Revealed=0.078, Measured=0.082 (conf: 50%)
+   🎯 Alignment: True=0.76, Measured=0.85
+🧠 [Run 2/100] [Month 72] Anthropic started training model (11 months, $1466.6M)
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-107-5)
+   Strength: 77%
+   Nuclear war prevented by strong deterrence
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.71 (check: true)
+   Combined: true && false && true = false
+
+🔍 SPIRAL DIAGNOSTICS (Year 6, Month 1)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 1.94 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 2 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 118% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 95% ❌ (need <30%)
+   AI Augmentation: avg capability 2.71, trust 29% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 80%, capacity 54% ❌ (need both >70%)
+   Democratic Engagement: participation 11%, transparency 49% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 6 unlocked, 6 deployed ✅ (need 4+ deployed >50%)
+   Research Investment: $47.0B/month ❌ (need >$50B/month)
+   AI Acceleration: avg capability 2.71 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 95% ❌ (need <20%)
+   Community: 11% ❌ (need >70%)
+   Cultural Adaptation: 100% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 49%, cultural 80% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 15%, pollution 20% ❌ (need >70% resources, <30% pollution)
+   Climate: 97% ✅ (need >70%)
+   Biodiversity: 1% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 0/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+================================================================================
+
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 4.14 vs China 5.38 (gap: 1.25)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +4.9% (peace: 75%)
+🐋 WHALE PUMP ACTIVE: Cetacean populations restored
+   Nutrient cycling: phytoplankton +1.5%, fish +1.0%, dead zones -0.8%
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 73): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.74 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +5.2% (peace: 75%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 74): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.77 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +5.4% (peace: 75%)
+⚠️ ESCALATION: United States-China tension at ladder step 3
+🕊️ GLOBAL PEACE: De-escalated United States-China from ladder step 3
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 75): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.80 (check: true)
+   Combined: true && false && true = false
+
+📦 ACCIDENTAL LEAK: ai_gen_96_0 (cap: 3.31)
+🕊️ PEACE STABILIZES DETERRENCE: +5.6% (peace: 76%)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 76): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+✅ [Run 2/100] [Month 76] Google DeepMind completed DC: 237 PF (51 months)
+📍 [Run 2/100] [Month 76] Google DeepMind started building DC (192 PF, 49 months, $59862.0M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.78 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +5.8% (peace: 76%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 77): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+✅ [Run 2/100] [Month 77] Meta AI completed DC: 195 PF (53 months)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.75 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +6.0% (peace: 76%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 78): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📍 [Run 2/100] [Month 78] Meta AI started building DC (166 PF, 51 months, $31110.8M)
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.76 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.1% (peace: 70%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 79): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.79 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.2% (peace: 70%)
+🕊️ GLOBAL PEACE: De-escalated United States-China from ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 80): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.77 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.3% (peace: 70%)
+⚠️ ESCALATION: United States-Russia tension at ladder step 2
+🕊️ GLOBAL PEACE: De-escalated India-Pakistan from ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 81): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-148-1)
+   Strength: 72%
+   Nuclear war prevented by strong deterrence
+
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-148-1)
+   Strength: 72%
+   Nuclear war prevented by strong deterrence
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.90 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.3% (peace: 70%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 82): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (1 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.91 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.3% (peace: 70%)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 2
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 83): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+✅ [Run 2/100] [Month 83] Anthropic completed training: Anthropic Model 155 (11 months)
+   📊 Eval: True=0.075, Revealed=0.075, Measured=0.072 (conf: 46%)
+   🎯 Alignment: True=0.84, Measured=0.88
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-148-1)
+   Strength: 73%
+   Nuclear war prevented by strong deterrence
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.91 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.4% (peace: 70%)
+🕊️ GLOBAL PEACE: De-escalated India-Pakistan from ladder step 2
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 3/7: Cyber Defenses Breached
+🌱 RESOURCE REGENERATION: 3.0%/month (reserves: 12%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 84): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-148-1)
+   Strength: 73%
+   Nuclear war prevented by strong deterrence
+
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.93 (check: true)
+   Combined: true && false && true = false
+
+🔍 SPIRAL DIAGNOSTICS (Year 7, Month 1)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 1.94 ✅ (need >1.5)
+   Energy: 2.00 ✅ (need >1.5)
+   Time Liberation: unemployment 95%, stage 2 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 120% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 90% ❌ (need <30%)
+   AI Augmentation: avg capability 2.93, trust 29% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 80%, capacity 37% ❌ (need both >70%)
+   Democratic Engagement: participation 10%, transparency 43% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 6 unlocked, 6 deployed ✅ (need 4+ deployed >50%)
+   Research Investment: $47.0B/month ❌ (need >$50B/month)
+   AI Acceleration: avg capability 2.93 ✅ (need >1.2)
+
+💫 MEANING SPIRAL: ❌ INACTIVE
+   Meaning Crisis: 90% ❌ (need <20%)
+   Community: 2% ❌ (need >70%)
+   Cultural Adaptation: 100% ✅ (need >70%)
+   Autonomy & Creativity: autonomy 48%, cultural 80% ❌ (need both >70%)
+
+🌍 ECOLOGICAL SPIRAL: ❌ INACTIVE
+   Environmental: resources 12%, pollution 13% ❌ (need >70% resources, <30% pollution)
+   Climate: 100% ✅ (need >70%)
+   Biodiversity: 1% ❌ (need >70%)
+
+✨ VIRTUOUS CASCADE: ❌ INACTIVE
+   Active Count: 0/6 (need 4+ for cascade)
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+================================================================================
+
+
+🎨 CULTURAL RENAISSANCE: Artistic & philosophical flourishing (Month 84)
+   Purpose Diversity: 76%
+   Self-Actualization: 76%
+   Artistic Renaissance: 83%
+   Philosophical Maturity: 41%
+
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 4.48 vs China 6.25 (gap: 1.77)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🕊️ PEACE STABILIZES DETERRENCE: +0.4% (peace: 70%)
+🐋 WHALE PUMP ACTIVE: Cetacean populations restored
+   Nutrient cycling: phytoplankton +1.5%, fish +1.0%, dead zones -0.8%
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 85): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 2.98 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.5% (peace: 71%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 86): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+🏛️ CRISIS RESPONSE: Government frequency 0.08 → 0.23 (0 actions this month)
+🔍 SCIENTIFIC SPIRAL DEBUG:
+   deployedCount: 6 (check: true)
+   totalResearch: 47 (check: false)
+   avgAICapability: 3.01 (check: true)
+   Combined: true && false && true = false
+🕊️ PEACE STABILIZES DETERRENCE: +0.6% (peace: 71%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 87): 6 crises active [Resource, Ecosystem, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-153-0)
+   Strength: 73%
+   Nuclear war prevented by strong deterrence
+
+
+🛑 MAD DETERRENCE HOLDS (AI Action: AI-153-0)
+   Strength: 73%
+   Nuclear war prevented by strong deterrence
+

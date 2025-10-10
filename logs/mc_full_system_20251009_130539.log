@@ -1,0 +1,34 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T20-05-41.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+
+🏁 AI RACE INTENSITY: 23%
+   Capability Gap: US 1.00 vs China 0.85 (gap: 0.15)
+   Gap Contribution: 8%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+
+
+❌ UNCAUGHT EXCEPTION: domesticAI is not defined
+ReferenceError: domesticAI is not defined
+    at updateMADDeterrence (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/nuclearStates.ts:212:47)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:278:5)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:502:31)
+    at avgModelsPerOrg (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:261:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1394:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)

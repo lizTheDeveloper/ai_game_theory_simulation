@@ -11,6 +11,7 @@
 
 import { GameState, OutcomeMetrics, OutcomeType, GoldenAgeState } from '@/types/game';
 import { calculateQualityOfLife } from './qualityOfLife';
+import { getTrustInAI } from './socialCohesion';
 
 /**
  * Calculate total AI capability across all agents
@@ -55,7 +56,7 @@ export function calculateOutcomeProbabilities(state: GameState): OutcomeMetrics 
   const qualityOfLife = calculateQualityOfLife(state.qualityOfLifeSystems);
   const totalAICapability = calculateTotalAICapability(state.aiAgents);
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
-  const { trustInAI } = state.society;
+  const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
 
   // Dystopia conditions: high control, low quality of life, low trust
   const dystopiaScore = Math.max(0, 
@@ -127,7 +128,7 @@ export function checkGoldenAgeConditions(state: GameState): {
   reason: string;
 } {
   const qol = calculateQualityOfLife(state.qualityOfLifeSystems);
-  const trust = state.society.trustInAI;
+  const trust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   const economicStage = state.globalMetrics.economicTransitionStage;
   const socialStability = state.globalMetrics.socialStability;
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
@@ -247,7 +248,7 @@ export function determineActualOutcome(
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
   const effectiveControl = calculateEffectiveControl(state);
   const qol = calculateQualityOfLife(state.qualityOfLifeSystems);
-  const trust = state.society.trustInAI;
+  const trust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   const economicStage = state.globalMetrics.economicTransitionStage;
   
   // NOTE: All extinction detection removed - handled by heterogeneous system

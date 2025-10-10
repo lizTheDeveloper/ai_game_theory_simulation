@@ -1,0 +1,54 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-09T05-35-25.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📍 [Run 1/10] [Month 5] Google DeepMind started building DC (171 PF, 42 months, $4292.7M)
+📍 [Run 1/10] [Month 6] OpenAI started building DC (213 PF, 45 months, $3084.4M)
+📍 [Run 1/10] [Month 7] Meta AI started building DC (220 PF, 48 months, $3680.4M)
+
+🔍 SPIRAL DIAGNOSTICS (Month 12)
+================================================================================
+Active Spirals: 0/6
+
+📦 ABUNDANCE SPIRAL: ❌ INACTIVE
+   Material: 1.15 ❌ (need >1.5)
+   Energy: 1.42 ❌ (need >1.5)
+   Time Liberation: unemployment 95%, stage 1.2 ❌ (need >60% + stage 3+)
+
+🧠 COGNITIVE SPIRAL: ❌ INACTIVE
+   Mental Health: disease 0%, healthcare 100% ✅ (need <30% disease, >80% healthcare)
+   Purpose: meaning crisis 34% ❌ (need <30%)
+   AI Augmentation: avg capability 0.35, trust 100% ❌ (need >1.5 capability, >60% trust)
+
+🗳️  DEMOCRATIC SPIRAL: ❌ INACTIVE
+   Governance Quality: decision 56%, capacity 61% ❌ (need both >70%)
+   Democratic Engagement: participation 49%, transparency 64% ❌ (need >60% participation, >70% transparency)
+   Government Type: democratic ✅ (cannot be authoritarian)
+
+🔬 SCIENTIFIC SPIRAL: ❌ INACTIVE
+   Breakthroughs: 0 unlocked, 0 deployed ❌ (need 4+ unlocked)
+
+
+❌ UNCAUGHT EXCEPTION: totalResearch.toFixed is not a function
+TypeError: totalResearch.toFixed is not a function
+    at logSpiralDiagnostics (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/upwardSpirals.ts:591:57)
+    at updateUpwardSpirals (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/upwardSpirals.ts:93:5)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:256:5)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:473:31)
+    at avgModelsPerOrg (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:261:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1394:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
