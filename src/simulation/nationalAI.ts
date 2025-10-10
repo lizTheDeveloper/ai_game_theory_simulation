@@ -22,6 +22,7 @@ import {
   AIRaceIntensityFactors,
   NATIONAL_AI_BASELINES_2023,
 } from '../types/nationalAI';
+import { getTrustInAI } from './socialCohesion';
 
 // ============================================================================
 // INITIALIZATION
@@ -633,7 +634,7 @@ function checkCooperationTriggers(state: GameState): void {
     e.title?.includes('DETERRENCE FAILED') &&
     state.currentMonth - e.timestamp < 12
   );
-  const publicPressure = state.society.trustInAI < 0.3;
+  const publicPressure = getTrustInAI(state.society) < 0.3; // Phase 2C: Use paranoia-derived trust
   
   // Need at least 3 triggers
   const triggerCount = [

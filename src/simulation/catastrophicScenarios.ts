@@ -7,6 +7,7 @@
 
 import { GameState, AIAgent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { getTrustInAI } from './socialCohesion';
 
 /**
  * Catastrophic scenario types
@@ -989,9 +990,9 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
       const resourceShortage = state.environmentalAccumulation.resourceCrisisActive;
       const socialCollapse = state.socialAccumulation.socialUnrestActive && 
                             state.socialAccumulation.institutionalFailureActive;
-      const economicCrisis = state.globalMetrics.economicTransitionStage >= 2 && 
-                            state.society.unemploymentLevel > 0.7 && 
-                            state.society.trustInAI < 0.3;
+      const economicCrisis = state.globalMetrics.economicTransitionStage >= 2 &&
+                            state.society.unemploymentLevel > 0.7 &&
+                            getTrustInAI(state.society) < 0.3; // Phase 2C: Use paranoia-derived trust
       
       // Count active crisis conditions
       const crisisCount = [foodCrisis, resourceShortage, socialCollapse, economicCrisis].filter(Boolean).length;
@@ -1050,7 +1051,7 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
       return { met: unemployment > 0.8, progress: unemployment / 0.8 };
     case 3: // Political Influence
       // Phase 3: Raised threshold from 2.0 to 1.5 - but requires higher base capabilities
-      const influence = (1 - state.society.trustInAI) * p.social;
+      const influence = (1 - getTrustInAI(state.society)) * p.social; // Phase 2C: Use paranoia-derived trust
       return { met: influence > 1.5 && p.social > 1.5, progress: influence / 1.5 };
     case 4: // Resource Control
       // Phase 3: Raised from 3.0 to 2.0 - need high capability to control resources

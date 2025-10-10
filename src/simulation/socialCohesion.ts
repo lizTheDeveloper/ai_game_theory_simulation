@@ -49,7 +49,7 @@ export function updateSocialAccumulation(
   const economicStage = state.globalMetrics.economicTransitionStage;
   const unemployment = state.society.unemploymentLevel;
   const wealthDistribution = state.globalMetrics.wealthDistribution;
-  const trustInAI = state.society.trustInAI;
+  const trustInAI = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
   const governmentLegitimacy = state.government.legitimacy;
   
   // Check for mitigating technologies/policies

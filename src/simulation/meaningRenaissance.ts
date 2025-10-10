@@ -16,6 +16,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { getTrustInAI } from './socialCohesion';
 
 export interface MeaningRenaissanceState {
   // Purpose Diversity: Multiple valid paths to fulfillment
@@ -247,7 +248,7 @@ function updatePhilosophicalMaturity(
   meaning.existentialUnderstanding += (timeInTransition * 0.005 + culturalAdaptation * 0.008);
   
   // Collective narrative: Shared story about AI/human future
-  const trustInAI = state.society.trustInAI;
+  const trustInAI = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
   const governanceQuality = state.government.governanceQuality.decisionQuality;
   const hasPositiveNarrative = trustInAI > 0.6 && governanceQuality > 0.6;
   meaning.collectiveNarrative += (hasPositiveNarrative ? 0.012 : -0.005);
