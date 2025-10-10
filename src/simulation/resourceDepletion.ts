@@ -452,6 +452,37 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   // Phytoplankton also affected by pollution
   ocean.phytoplanktonPopulation *= (1 - ocean.pollutionLoad * 0.005);
   
+  // === WHALE PUMP (Phase 2.9+) ===
+  // Research: Whales cycle nutrients (iron, nitrogen, phosphorus) from depth to surface
+  // This fertilizes phytoplankton, enhancing ocean productivity
+  // Source: "The Whale Pump" (Roman et al. 2010), WDC, NOAA, WWF
+  
+  const tech = state.breakthroughTech;
+  if (tech?.interspeciesComm?.deploymentLevel && tech.interspeciesComm.deploymentLevel > 0.5) {
+    // Understanding cetacean behavior → restore whale/dolphin populations → nutrient cycling
+    const deploymentLevel = tech.interspeciesComm.deploymentLevel;
+    
+    // WHALE PUMP EFFECT: Nutrient cycling boosts phytoplankton
+    // Research: Whales enhance primary productivity in regions where they occur in high densities
+    // Conservative estimate: 1-2% boost at full deployment (whales restore to ~50% of pre-whaling)
+    const whalePumpBoost = deploymentLevel * 0.015; // +1.5%/month at full deployment
+    ocean.phytoplanktonPopulation = Math.min(1.0, ocean.phytoplanktonPopulation + whalePumpBoost);
+    
+    // FISH ABUNDANCE: "Bigger fisheries where whales are dense" (research)
+    const fisheryBoost = deploymentLevel * 0.01; // +1%/month
+    ocean.fishStocks = Math.min(1.0, ocean.fishStocks + fisheryBoost);
+    
+    // DEAD ZONE REDUCTION: Nutrient distribution prevents anoxia
+    const deadZoneReduction = deploymentLevel * 0.008; // -0.8%/month
+    ocean.deadZoneExtent = Math.max(0, ocean.deadZoneExtent - deadZoneReduction);
+    
+    // Log annually
+    if (state.currentMonth % 12 === 0) {
+      console.log(`🐋 WHALE PUMP ACTIVE: Cetacean populations restored`);
+      console.log(`   Nutrient cycling: phytoplankton +${(whalePumpBoost * 100).toFixed(1)}%, fish +${(fisheryBoost * 100).toFixed(1)}%, dead zones -${(deadZoneReduction * 100).toFixed(1)}%`);
+    }
+  }
+  
   // === OXYGEN (from phytoplankton) ===
   
   // 70% of ocean oxygen from phytoplankton, 30% from atmospheric exchange
@@ -486,7 +517,22 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   
   // Overfishing (economic pressure)
   const economicStage = state.globalMetrics?.economicTransitionStage || 1;
-  const overfishing = economicStage * 0.003; // 0.3-0.9% per month
+  let overfishing = economicStage * 0.003; // 0.3-0.9% per month
+  
+  // PUBLIC SUPPORT FOR OCEAN PROTECTION (from interspecies communication)
+  // When people can talk to whales/dolphins, they LOVE them and support ocean-friendly policies
+  // This reduces overfishing, creates marine protected areas, reduces pollution
+  const tech = state.breakthroughTech;
+  if (tech?.interspeciesComm?.deploymentLevel && tech.interspeciesComm.deploymentLevel > 0.3) {
+    // Public support reduces overfishing by 30-90% (deployment-dependent)
+    const policyStrength = tech.interspeciesComm.deploymentLevel;
+    overfishing *= (1 - policyStrength * 0.9); // Up to 90% reduction
+    
+    // Also reduces pollution (public demands cleaner oceans)
+    const pollutionReduction = policyStrength * 0.005; // -0.5%/month at full deployment
+    ocean.pollutionLoad = Math.max(0, ocean.pollutionLoad - pollutionReduction);
+  }
+  
   ocean.fishStocks = Math.max(0, ocean.fishStocks - overfishing);
   
   // === ECOSYSTEM RESILIENCE ===
