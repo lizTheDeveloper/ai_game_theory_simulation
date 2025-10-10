@@ -29,14 +29,36 @@ import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
 import { checkExtinctionTriggers, progressExtinction } from './extinctions';
-import { 
+import {
   checkEndGameTransition,
-  initializeEndGameState, 
-  enterEndGame, 
-  processEndGameMonth, 
+  initializeEndGameState,
+  enterEndGame,
+  processEndGameMonth,
   getEndGameOutcome,
   initializeEndGameState
 } from './endGame';
+import { PhaseOrchestrator } from './engine/PhaseOrchestrator';
+import {
+  UnemploymentPhase,
+  EconomicTransitionPhase,
+  ParanoiaPhase,
+  SocialStabilityPhase,
+  QualityOfLifePhase,
+  OutcomeProbabilitiesPhase,
+  CrisisDetectionPhase,
+  GovernanceQualityPhase,
+  UpwardSpiralsPhase,
+  MeaningRenaissancePhase,
+  ConflictResolutionPhase,
+  DiplomaticAIPhase,
+  NationalAIPhase,
+  MADDeterrencePhase,
+  ResourceEconomyPhase,
+  ResourceTechnologyPhase,
+  GeoengineringPhase,
+  DefensiveAIPhase,
+  DystopiaProgressionPhase
+} from './engine/phases';
 
 /**
  * Seedable random number generator for reproducible simulations
@@ -139,7 +161,8 @@ export interface SimulationRunResult {
 export class SimulationEngine {
   private rng: SeededRandom;
   private config: SimulationConfig;
-  
+  private orchestrator: PhaseOrchestrator;
+
   constructor(config: SimulationConfig = {}) {
     this.config = {
       seed: config.seed ?? Date.now(),
@@ -149,8 +172,35 @@ export class SimulationEngine {
       aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,
       economicTransitionRate: config.economicTransitionRate ?? 1.0
     };
-    
+
     this.rng = new SeededRandom(this.config.seed!);
+
+    // Initialize Phase Orchestrator (Phase 4: Engine Orchestration)
+    this.orchestrator = new PhaseOrchestrator();
+
+    // Register all phase implementations
+    // Batch 1: Simple calculations (30.x)
+    this.orchestrator.registerPhase(new UnemploymentPhase());
+    this.orchestrator.registerPhase(new EconomicTransitionPhase());
+    this.orchestrator.registerPhase(new ParanoiaPhase());
+    this.orchestrator.registerPhase(new SocialStabilityPhase());
+    this.orchestrator.registerPhase(new QualityOfLifePhase());
+    this.orchestrator.registerPhase(new OutcomeProbabilitiesPhase());
+    this.orchestrator.registerPhase(new CrisisDetectionPhase());
+
+    // Batch 2: System updates (10.x - 21.x)
+    this.orchestrator.registerPhase(new GovernanceQualityPhase());
+    this.orchestrator.registerPhase(new UpwardSpiralsPhase());
+    this.orchestrator.registerPhase(new MeaningRenaissancePhase());
+    this.orchestrator.registerPhase(new ConflictResolutionPhase());
+    this.orchestrator.registerPhase(new DiplomaticAIPhase());
+    this.orchestrator.registerPhase(new NationalAIPhase());
+    this.orchestrator.registerPhase(new MADDeterrencePhase());
+    this.orchestrator.registerPhase(new ResourceEconomyPhase());
+    this.orchestrator.registerPhase(new ResourceTechnologyPhase());
+    this.orchestrator.registerPhase(new GeoengineringPhase());
+    this.orchestrator.registerPhase(new DefensiveAIPhase());
+    this.orchestrator.registerPhase(new DystopiaProgressionPhase());
   }
   
   /**
