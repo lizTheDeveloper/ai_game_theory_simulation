@@ -522,7 +522,6 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   // PUBLIC SUPPORT FOR OCEAN PROTECTION (from interspecies communication)
   // When people can talk to whales/dolphins, they LOVE them and support ocean-friendly policies
   // This reduces overfishing, creates marine protected areas, reduces pollution
-  const tech = state.breakthroughTech;
   if (tech?.interspeciesComm?.deploymentLevel && tech.interspeciesComm.deploymentLevel > 0.3) {
     // Public support reduces overfishing by 30-90% (deployment-dependent)
     const policyStrength = tech.interspeciesComm.deploymentLevel;
