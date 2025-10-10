@@ -8,12 +8,7 @@
  */
 
 import { GameState } from '@/types/game';
-
-// Calculate average alignment from AI agents
-function calculateAverageAlignment(agents: any[]): number {
-  if (agents.length === 0) return 0.5;
-  return agents.reduce((sum, ai) => sum + ai.alignment, 0) / agents.length;
-}
+import { calculateAverageAlignment } from './utils/ai';
 
 /**
  * Update government control response based on AI threat level

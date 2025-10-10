@@ -1075,7 +1075,7 @@ function calculateAverageCapability(state: GameState): number {
   // Use all agents, not just deployed (for broader applicability)
   const agents = state.aiAgents;
   if (agents.length === 0) return 0;
-  
+
   return agents.reduce((sum, agent) => {
     // Use agent.capability (single number) as fallback if capabilityProfile doesn't exist
     if (agent.capabilityProfile?.cognitive !== undefined) {

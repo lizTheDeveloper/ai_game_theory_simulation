@@ -17,6 +17,7 @@
 
 import type { GameState } from '../types/game';
 import { getTrustInAI } from './socialCohesion';
+import { clamp, getAverageAICapability, getAverageAlignment } from './utils';
 
 export interface MeaningRenaissanceState {
   // Purpose Diversity: Multiple valid paths to fulfillment
@@ -363,20 +364,5 @@ export function getMeaningRenaissanceStrength(state: GameState): number {
     meaning.artisticRenaissanceLevel * 0.2 +
     meaning.philosophicalMaturity * 0.2
   );
-}
-
-// Utility functions
-function getAverageAICapability(state: GameState): number {
-  if (state.aiAgents.length === 0) return 0;
-  return state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length;
-}
-
-function getAverageAlignment(state: GameState): number {
-  if (state.aiAgents.length === 0) return 0.5;
-  return state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value));
 }
 
