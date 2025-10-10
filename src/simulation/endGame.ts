@@ -12,7 +12,7 @@ import { calculateTotalAICapability, calculateAverageAlignment } from './calcula
 import { calculateEffectiveControl } from './outcomes';
 import { calculateQualityOfLife } from './qualityOfLife';
 import { getEnvironmentalSustainability, hasEnvironmentalCrisis } from './environmental';
-import { getSocialSustainability, hasSocialCrisis } from './socialCohesion';
+import { getSocialSustainability, hasSocialCrisis, getTrustInAI } from './socialCohesion';
 import { getTechnologicalSafety, hasTechnologicalCrisis } from './technologicalRisk';
 
 /**
@@ -231,7 +231,7 @@ function checkEndGameResolution(state: GameState): void {
   if (!endGame || endGame.locked) return;
   
   const qol = calculateQualityOfLife(state.qualityOfLifeSystems);
-  const trust = state.society.trustInAI;
+  const trust = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
   const totalPower = endGame.alignedAIPower + endGame.misalignedAIPower;
   
   // === EXTINCTION PATHS ===

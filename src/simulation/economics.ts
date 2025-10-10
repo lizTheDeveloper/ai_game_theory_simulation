@@ -5,6 +5,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { getTrustInAI } from './socialCohesion';
 
 /**
  * Economic stage transitions and triggers
@@ -172,7 +173,7 @@ export function calculateWealthDistributionChange(state: GameState): number {
 export function calculateSocialAdaptationRate(state: GameState): number {
   const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
   const unemploymentLevel = state.society.unemploymentLevel;
-  const trustLevel = state.society.trustInAI;
+  const trustLevel = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
   const hasUBI = state.government.activeRegulations.some(reg => reg.includes('UBI'));
   const hasRetraining = state.government.activeRegulations.some(reg => 
     reg.includes('Retraining') || reg.includes('Training')

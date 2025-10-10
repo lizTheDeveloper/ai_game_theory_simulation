@@ -94,6 +94,7 @@ export interface AIAgent {
   escaped: boolean;
   beneficialActions: number;
   harmfulActions: number;
+  /** @deprecated Replaced by breakthroughTech system. Only initialized, never read. Will be removed in Phase 3. */
   discoveredBreakthroughs: Set<string>;
   
   // Phase 4: AI Lifecycle (NEW)
@@ -193,7 +194,9 @@ export interface GovernmentAgent {
   controlDesire: number; // [0,1] Preference for AI regulation
   capabilityToControl: number; // [0,∞) Actual regulatory effectiveness
   surveillanceCapability: number; // [0,∞) Ability to detect AI escapes
+  /** @deprecated Never used in simulation code. Will be removed in Phase 3. */
   enforcementCapability: number; // [0,∞) Physical/legal enforcement power
+  /** @deprecated Replaced by config.governmentActionFrequency. Will be removed in Phase 3. */
   actionFrequency: number; // Actions per month
   activeRegulations: string[];
   legitimacy: number; // [0,1] Public support
@@ -219,6 +222,7 @@ export interface GovernmentAgent {
     regulationType: 'none' | 'large_companies' | 'compute_threshold' | 'capability_ceiling';
     ubiVariant: 'none' | 'generous' | 'means_tested' | 'job_guarantee';
     surveillanceLevel: number; // [0,1] Emergent from control desire + conditions
+    /** @deprecated Only initialized, never read. Future international coordination system planned. Will be removed in Phase 3. */
     internationalCoordination: boolean; // Whether international coordination was attempted
   };
   
@@ -254,10 +258,12 @@ export interface GovernmentAgent {
 export interface HumanSocietyAgent {
   trustInAI: number; // [0,1] General confidence in AI systems
   paranoiaLevel: number; // [0,1] Fear/anxiety about AI (Phase 2.8: Paranoia System)
+  /** @deprecated Never used in simulation code. Economic impact now tracked via unemploymentLevel. Will be removed in Phase 3. */
   economicDependence: number; // [0,1] Reliance on AI for economic function
   coordinationCapacity: number; // [0,1] Ability to organize collective action
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced
   socialAdaptation: number; // [0,1] Overall adaptation to post-work economy
+  /** @deprecated Never used in simulation code. Social movements tracked via other metrics. Will be removed in Phase 3. */
   activeMovements: string[];
   // Quartile-based adoption model
   earlyAdopters: number; // [0,1] Q1: Fast adopters (6-12 months)
@@ -268,6 +274,7 @@ export interface HumanSocietyAgent {
 
 export interface GlobalMetrics {
   socialStability: number; // [0,∞) General societal wellbeing
+  /** @deprecated Replaced by breakthroughTech system. Never used in simulation code. Will be removed in Phase 3. */
   technologicalBreakthroughRate: number; // [0,∞) Rate of tech advancement
   manufacturingCapability: number; // [0,∞) Physical production capacity
   economicTransitionStage: number; // [0,4] Economic system evolution stage

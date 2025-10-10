@@ -6,6 +6,7 @@
 
 import { GameState, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
+import { getTrustInAI } from '../socialCohesion';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -33,7 +34,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
       
       const economicStage = Math.floor(newState.globalMetrics.economicTransitionStage);
       const unemploymentLevel = newState.society.unemploymentLevel;
-      const trustLevel = newState.society.trustInAI;
+      const trustLevel = getTrustInAI(newState.society); // Phase 2C: Use paranoia-derived trust
       const hasUBI = newState.government.activeRegulations.some(reg => reg.includes('UBI'));
       const hasRetraining = newState.government.activeRegulations.some(reg => 
         reg.includes('Retraining') || reg.includes('Training')
