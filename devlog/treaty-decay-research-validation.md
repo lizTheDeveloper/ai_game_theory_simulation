@@ -231,20 +231,32 @@ const peaceBonus = (peace - 0.7) * 0.2; // Up to +6% at 100% peace
 
 
 
-## 🌊 Anoxic Ocean Extinctions - New Pathway
+## 📊 Extinction Pathway Analysis
 
-The gradual treaty decay implementation revealed a new extinction pathway we hadn't seen before: **anoxic ocean extinctions** (5/10 runs, 50%).
+**Results (10 runs):**
+- **Rapid Extinctions:** 5 runs (50%) - All via **nuclear_war**
+- **Slow Extinctions:** 5 runs (50%) - Reached max months (120) with extinction probability dominant
 
-This is scientifically grounded:
-- Nuclear war → nuclear winter → ocean disruption
-- Cooling + reduced sunlight → altered ocean chemistry
-- Deoxygenation + acidification → anoxic conditions
-- Historical precedent: End-Permian extinction (90%+ marine life lost)
+**Key Finding:** Nuclear war went from **100% → 50%** of runs. The other 50% of runs survived 10 years (120 months) but had high extinction probability due to:
+- Environmental degradation (resources, pollution, ecosystem collapse)
+- Cascading crises (6+ active crises)
+- High sleeper AI spread (exhausted dark compute)
+- QoL collapse (social, psychological dimensions)
 
-This diversification of extinction pathways is actually **progress** - it means:
-1. Nuclear war is no longer the ONLY outcome (was 100%)
-2. Environmental cascades are properly modeled
-3. Ocean health mechanics are working
+**Anoxic Ocean Extinctions:**
+- **NOT triggered** in this run (despite mechanics being in place)
+- Mechanic exists: pH <7.5 + oxygen <20% → phytoplankton collapse → atmospheric oxygen decline
+- This is scientifically grounded (End-Permian extinction analog)
+- **Implication:** Nuclear war (50%) is preventing longer-run environmental collapse pathways
 
-**Next:** Monitor longer runs to see if ocean health tech can prevent this pathway.
+**Progress:**
+- ✅ Nuclear war reduced from 100% → 50%
+- ✅ 50% of runs now survive to year 10 (previously: 0%)
+- ⚠️ Surviving runs still have high extinction risk from environmental/social collapse
+- ⏳ Need longer runs (>120 months) to see if anoxic ocean pathway activates
+
+**Next:** 
+1. Run longer simulations (200+ months) to see late-game environmental extinctions
+2. Monitor if ocean health tech can prevent anoxic pathway
+3. Check if surviving runs can reach Utopia with more time
 
