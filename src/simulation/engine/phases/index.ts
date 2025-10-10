@@ -27,4 +27,8 @@ export { GeoengineringPhase } from './GeoengineringPhase';
 export { DefensiveAIPhase } from './DefensiveAIPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 
+// Batch 3: Special phases (medium risk)
+export { BenchmarkEvaluationsPhase } from './BenchmarkEvaluationsPhase';
+export { CrisisPointsPhase } from './CrisisPointsPhase';
+
 // More phases will be added as they are converted...

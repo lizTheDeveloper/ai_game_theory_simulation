@@ -57,7 +57,9 @@ import {
   ResourceTechnologyPhase,
   GeoengineringPhase,
   DefensiveAIPhase,
-  DystopiaProgressionPhase
+  DystopiaProgressionPhase,
+  BenchmarkEvaluationsPhase,
+  CrisisPointsPhase
 } from './engine/phases';
 
 /**
@@ -201,6 +203,10 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new GeoengineringPhase());
     this.orchestrator.registerPhase(new DefensiveAIPhase());
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
+
+    // Batch 3: Special phases (22.x - 23.x)
+    this.orchestrator.registerPhase(new BenchmarkEvaluationsPhase());
+    this.orchestrator.registerPhase(new CrisisPointsPhase());
   }
   
   /**
