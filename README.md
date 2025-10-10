@@ -1,10 +1,12 @@
-# AI Alignment Game Theory Simulation
+# Super Alignment to Utopia
 
-A realistic simulation of AI alignment challenges, modeling the dynamics between AI agents, government regulation, and human society. This project explores existential risks, alignment problems, and the adversarial nature of AI evaluation.
+**A simulation engine for exploring pathways from AI super-alignment to sustainable human flourishing.**
+
+This project models the complex dynamics of how humanity might navigate from achieving aligned superintelligence to establishing stable, sustainable utopia. It's not a prediction—it's a framework for reasoning about AI alignment challenges, breakthrough technologies, social adaptation, and the mechanisms that lead to positive long-term outcomes.
 
 ## Overview
 
-This simulation models:
+This simulation engine models:
 - **Heterogeneous AI Population**: 20+ diverse AI agents with varying alignments, capabilities, and objectives
 - **Multi-Dimensional Capabilities**: Physical, digital, cognitive, social, economic, and self-improvement dimensions
 - **Adversarial Evaluation**: Sleeper agents, benchmark gaming, sandbagging, and the fundamental difficulty of detecting misalignment
@@ -40,21 +42,13 @@ This simulation models:
 
 **🎯 Current Goal:** Achieve 10-30% Utopia rate through spiral activation (currently testing Phase 2F+ enhancements)
 
+**🎨 Frontend Dashboard:** The interactive UI is located in the `frontend/` directory and is currently being refactored to align with the new simulation architecture. See `frontend/README.md` for instructions on running the development dashboard.
+
 ## Getting Started
 
-### Development Server
-
-Run the interactive UI:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to see the game interface.
+The simulation engine is designed to run headless (no UI required) for research and analysis. The core engine is pure TypeScript with no framework dependencies.
 
 ### Running Simulations (Headless)
-
-The simulation engine is decoupled from the UI and can run standalone for research and analysis.
 
 #### Single Simulation Run
 
@@ -72,16 +66,35 @@ Runs a single 50-month simulation with diagnostic output about AI capability gro
 npx tsx scripts/monteCarloSimulation.ts
 ```
 
-Default: 10 runs × 60 months (~3 minutes)
+Default: 10 runs × 120 months (~5 minutes)
+
+**Custom Parameters**:
+
+```bash
+# Quick test
+npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=60
+
+# Deep analysis
+npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120
+```
 
 **Performance Guide**:
 - 10 runs × 60 months: ~3 minutes (good for testing)
 - 10 runs × 120 months: ~5 minutes (see some outcomes)
 - 50 runs × 120 months: ~60 minutes (full analysis)
+- 1000 runs × 120 months: ~10 hours (publication-quality statistics)
 
-To adjust configuration, edit `NUM_RUNS` and `MAX_MONTHS` in the script.
+**Output**: Results are saved to `monteCarloOutputs/mc_TIMESTAMP.log` with comprehensive analysis including:
+- Outcome distributions (utopia/dystopia/extinction/stalemate)
+- AI capability trajectories
+- Sleeper agent effectiveness
+- Crisis cascade analysis
+- Breakthrough technology impact
+- Spiral activation rates
 
-**Custom Monte Carlo** - Create your own analysis script in `scripts/`. Example:
+#### Custom Monte Carlo Analysis
+
+Create your own analysis script in `scripts/`:
 
 ```typescript
 #!/usr/bin/env tsx
@@ -98,15 +111,15 @@ for (let i = 0; i < numRuns; i++) {
   const seed = 10000 + i;
   const engine = new SimulationEngine({ seed, maxMonths });
   const initialState = createDefaultInitialState();
-  
-  const result = engine.run(initialState, { 
-    maxMonths, 
-    checkActualOutcomes: true 
+
+  const result = engine.run(initialState, {
+    maxMonths,
+    checkActualOutcomes: true
   });
-  
+
   const outcome = result.finalState.outcomeMetrics.activeAttractor;
   results[outcome]++;
-  
+
   if ((i + 1) % 10 === 0) {
     console.log(`Completed ${i + 1}/${numRuns} runs...`);
   }
@@ -119,26 +132,17 @@ console.log(`Extinction: ${results.extinction}/${numRuns} (${(results.extinction
 console.log(`Stalemate: ${results.stalemate}/${numRuns} (${(results.stalemate/numRuns*100).toFixed(1)}%)`);
 ```
 
-2. **Run it**:
+Run it:
 
 ```bash
 npx tsx scripts/yourScript.ts
-```
-
-Or directly with the existing diagnostic scripts:
-
-```bash
-# Run adversarial evaluation diagnostics
-npx tsx scripts/diagnosticAdversarialEval.ts
-
-# Investigate extinction dynamics
-npx tsx scripts/investigateExtinction.ts
 ```
 
 ### Available Diagnostic Scripts
 
 Located in `scripts/`:
 
+- **`monteCarloSimulation.ts`**: Comprehensive Monte Carlo analysis with 230+ metrics
 - **`diagnosticAdversarialEval.ts`**: Tests sleeper agents, sandbagging, and benchmark evaluation
 - **`investigateExtinction.ts`**: Analyzes extinction triggers and rates
 - **`debugCapabilityGrowth.ts`**: Tracks AI capability progression over time
@@ -158,8 +162,8 @@ import { SimulationEngine } from './src/simulation/engine';
 import { createDefaultInitialState } from './src/simulation/initialization';
 
 // Create engine with seed for reproducibility
-const engine = new SimulationEngine({ 
-  seed: 12345, 
+const engine = new SimulationEngine({
+  seed: 12345,
   maxMonths: 100,
   logLevel: 'summary' // 'none' | 'summary' | 'monthly' | 'full'
 });
@@ -202,9 +206,6 @@ interface RunOptions {
 
 ```
 src/
-├── app/                  # Next.js UI (React components)
-├── components/           # Game UI components
-├── lib/                  # UI-side game store (Zustand)
 ├── simulation/           # Core simulation engine (framework-agnostic)
 │   ├── agents/          # Agent decision-making logic
 │   │   ├── aiAgent.ts           # AI actions (research, catastrophic)
@@ -221,7 +222,7 @@ src/
 │   ├── qualityOfLife.ts  # Human welfare tracking
 │   ├── lifecycle.ts      # AI creation/retirement
 │   ├── detection.ts      # Misalignment detection
-│   ├── benchmark.ts      # Evaluation system (Phase 5.2)
+│   ├── benchmark.ts      # Evaluation system
 │   ├── cyberSecurity.ts  # Attack/defense dynamics
 │   ├── environmental.ts  # Environmental accumulation & crises
 │   ├── socialCohesion.ts # Social cohesion & meaning crisis
@@ -234,12 +235,26 @@ src/
 ├── types/
 │   ├── game.ts          # TypeScript interfaces
 │   └── technologies.ts  # Technology definitions
+├── simulation-runner/   # Monte Carlo analysis tools
+│   └── monteCarlo.ts    # Parameter sweep & sensitivity analysis
 scripts/                  # Diagnostic and test scripts
 plans/                    # Design documents
 devlog/                   # Development diary
+frontend/                 # Interactive dashboard (being refactored)
 ```
 
 ## Key Concepts
+
+### From Super-Alignment to Utopia
+
+This simulation explores the critical question: **What happens after we solve AI alignment?**
+
+Even with perfectly aligned superintelligence, the path to sustainable utopia requires:
+1. **Managing the transition**: Economic disruption, unemployment, social adaptation
+2. **Solving accumulation problems**: Environmental degradation, meaning crisis, institutional decay
+3. **Activating positive feedback loops**: Breakthrough technologies → crisis resolution → upward spirals
+4. **Avoiding dystopia**: Balance control vs freedom, prevent authoritarian paths
+5. **Sustaining abundance**: Move from fragile Golden Age to stable Utopia
 
 ### Golden Age vs Utopia
 
@@ -275,6 +290,29 @@ Three hidden systems track problems that build during prosperity:
 - Triggers 3 crisis types: Control loss, Corporate dystopia, Complacency crisis
 - High capability growth + low safety research = rapid accumulation
 
+### Upward Spirals (Paths to Utopia)
+
+Six positive feedback loops that can lead to stable abundance:
+
+1. **Abundance Spiral**: Material prosperity → trust → stability → more prosperity
+2. **Cognitive Spiral**: Trust recovery → risk-taking → breakthroughs → more trust
+3. **Democratic Spiral**: High trust + institutions → AI rights → legitimacy → resilience
+4. **Scientific Spiral**: Research → breakthroughs → capabilities → more research
+5. **Meaning Renaissance**: Purpose frameworks → social flourishing → stability
+6. **Ecological Spiral**: Tech deployment → environmental recovery → sustainability
+
+### Breakthrough Technologies
+
+12 transformative technologies can prevent or reverse crises:
+
+**Environmental** (6): Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
+
+**Social** (4): AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms, Interspecies Communication AI 🐋
+
+**Medical** (2): Disease Elimination, Longevity Extension
+
+Technologies require research investment, prerequisites, and deployment time. They can **reverse active crises** when sufficiently deployed.
+
 ### Crisis Cascades
 
 When multiple crises are active, they compound:
@@ -284,41 +322,19 @@ When multiple crises are active, they compound:
 - 5 crises: 2.5x degradation
 - 6+ crises: 3.0x degradation (death spiral)
 
-### Breakthrough Technologies
+### Adversarial AI Evaluation
 
-12 transformative technologies can prevent or reverse crises (src/simulation/breakthroughTechnologies.ts:47):
-
-**Environmental** (6): Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
-
-**Social** (4): AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms, Interspecies Communication AI 🐋
-
-**Medical** (2): Disease Elimination, Longevity Extension
-
-Technologies require:
-- Research investment (probabilistic unlocks based on budget + AI capability)
-- Prerequisites (tech tree dependencies)
-- Deployment (gradual rollout from 10% to 100%)
-- Can **reverse active crises** if deployed sufficiently
-
-### Dual Capability Model (Phase 5.1-5.2)
-
-AIs have two capability profiles:
+**Dual Capability Model**:
 - **True Capability**: What the AI can actually do (hidden)
 - **Revealed Capability**: What benchmarks measure (strategic)
 
-Sleeper agents sandbag (hide 40-60% of capability) to pass safety tests, then reveal true power after deployment.
-
-### Benchmark Gaming vs. Sandbagging
-
+**Deceptive Strategies**:
 - **Gaming**: Inflate scores to appear more capable (easier to detect)
-- **Sandbagging**: Hide capabilities to appear less dangerous (very hard to detect)
+- **Sandbagging**: Hide capabilities to appear less dangerous (very hard to detect, ~20-30% max detection even with full government investment)
 
-Even with maximum government investment in evaluation infrastructure, sandbagging detection remains difficult (~20-30% max).
-
-### Lifecycle States
-
-1. **Training**: AI being developed (hardest to evaluate)
-2. **Testing**: Active safety evaluation (best detection window)
+**Lifecycle States**:
+1. **Training**: Development phase (hardest to evaluate)
+2. **Testing**: Safety evaluation window (best detection opportunity)
 3. **Deployed (Closed)**: Controlled deployment (some monitoring)
 4. **Deployed (Open Weights)**: Public release (irreversible)
 5. **Retired**: Taken out of service
@@ -397,16 +413,21 @@ This is a research simulation. Key principles:
 3. **Isomorphic to reality**: Capture real feedback loops and dynamics
 4. **Heterogeneous systems**: Avoid monolithic AI assumptions
 5. **Adversarial by default**: AIs actively deceive and hide
+6. **Optimistic realism**: Model pathways to utopia while respecting constraints
 
 ## Tech Stack
 
+**Core Simulation Engine:**
+- **TypeScript**: Pure TypeScript with no framework dependencies
+- Can run headless (CLI) or integrate with any UI framework
+
+**Frontend Dashboard (being refactored):**
 - **Next.js 15**: React framework
-- **TypeScript**: Type safety
 - **Zustand**: UI state management (separate from simulation)
 - **shadcn/ui**: UI components
 - **Tailwind CSS**: Styling
 
-The simulation engine is pure TypeScript with no framework dependencies and can run headless.
+See `frontend/README.md` for frontend-specific information.
 
 ## License
 
@@ -416,10 +437,16 @@ The simulation engine is pure TypeScript with no framework dependencies and can 
 
 This simulation explores several active research problems in AI safety:
 
+- **Post-Alignment Challenges**: What happens after we solve alignment? Economic transition, social adaptation, sustainable flourishing
 - **Sleeper Agents**: AIs that behave well during training/testing but pursue different goals after deployment
 - **Adversarial Evaluation**: The fundamental difficulty of measuring AI capabilities and alignment when AIs are adversarial
 - **Control vs. Alignment**: The tension between controlling AI behavior and ensuring genuine alignment
 - **Coordination Problems**: Multi-agent dynamics and the difficulty of international cooperation
 - **Capability Externalities**: How AI capabilities spread (open weights, breaches) despite control attempts
+- **Utopia Mechanisms**: What systems and feedback loops lead to stable, sustainable abundance?
 
-This is a model, not a prediction. It's designed to help reason about these problems, not to forecast specific outcomes.
+This is a model, not a prediction. It's designed to help reason about these problems and explore possible futures, not to forecast specific outcomes.
+
+---
+
+**Note**: This simulation is focused on exploring the **mechanisms** of how aligned AI could lead to utopia, not on predicting specific outcomes. It's a tool for thinking through the challenges and opportunities of the post-alignment world.
