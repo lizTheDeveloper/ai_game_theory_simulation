@@ -87,16 +87,30 @@ async function runDiagnostic(maxMonths: number = 100, seed: number = 12345) {
   console.log(`Simulation ran for ${result.summary.totalMonths} months`);
   console.log(`Log has: initial=${!!result.log.snapshots.initial}, monthly=${result.log.snapshots.monthly?.length || 0}, final=${!!result.log.snapshots.final}`);
   
-  // Now analyze the snapshots
+  // Phase 2D: DISABLED - This diagnostic needs refactoring
+  // MetricSnapshot no longer includes full state (it was never intended to)
+  // TODO: Refactor to use custom diagnostic logger or build from snapshot metrics
+
+  console.log(`\n⚠️  This diagnostic is currently disabled and needs refactoring.`);
+  console.log(`MetricSnapshot no longer exposes full GameState.`);
+  console.log(`To re-enable, refactor to either:`);
+  console.log(`  1. Use custom diagnostic logger during simulation`);
+  console.log(`  2. Build analysis from available snapshot metrics`);
+  console.log(`  3. Hook into simulation engine directly\n`);
+
+  return { diagnostics, finalState: result.finalState };
+
+  /* DISABLED CODE - Needs refactoring
   const snapshots = [
     result.log.snapshots.initial,
     ...(result.log.snapshots.monthly || []),
     result.log.snapshots.final
   ].filter(Boolean);
-  
+
   console.log(`Total snapshots to analyze: ${snapshots.length}\n`);
-  
+
   snapshots.forEach((snapshot, index) => {
+    // Phase 2D: snapshot.state removed - never should have been on MetricSnapshot
     const state = snapshot.state;
     if (!state || !state.aiAgents) return;
     
@@ -215,8 +229,9 @@ async function runDiagnostic(maxMonths: number = 100, seed: number = 12345) {
       console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
     }
   });
-  
+
   return { diagnostics, finalState: result.finalState };
+  */ // END DISABLED CODE
 }
 
 function analyzeDiagnostics(diagnostics: ExtinctionDiagnostic[]) {

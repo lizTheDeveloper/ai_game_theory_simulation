@@ -19,6 +19,7 @@ import {
   DeepfakeAttack,
   AutonomousLaunchAttempt,
 } from '../types/defensiveAI';
+import { getTrustInAI } from './socialCohesion';
 
 // ============================================================================
 // INITIALIZATION
@@ -181,7 +182,7 @@ export function checkDefensiveAITriggers(state: GameState): DefensiveAITriggers 
   
   // === POLITICAL CHECKS ===
   triggers.governmentInvestment = (state.government.researchInvestments.safety || 0) > 10;
-  triggers.publicPressure = state.society.trustInAI < 0.4 || 
+  triggers.publicPressure = getTrustInAI(state.society) < 0.4 || // Phase 2C: Use paranoia-derived trust
     state.socialAccumulation.controlLossCrisis > 0.7;
   triggers.militarySupport = state.madDeterrence.crisisStability < 0.5;
   

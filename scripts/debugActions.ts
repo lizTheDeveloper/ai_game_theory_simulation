@@ -17,13 +17,10 @@ async function debugActions() {
   const actionsByAgent: Record<string, Record<string, number>> = {};
   
   const result = engine.run(initialState, { maxMonths: 3 });
-  
+
   // Count actions from events
-  const allEvents = [
-    ...result.log.snapshots.initial?.events || [],
-    ...(result.log.snapshots.monthly?.flatMap(s => s.events) || []),
-    ...result.log.snapshots.final?.events || []
-  ];
+  // Phase 2D: Use log.events.criticalEvents instead of snapshot.events (removed property)
+  const allEvents = result.log.events.criticalEvents || [];
   
   allEvents.forEach(event => {
     if (event.agent && event.type === 'action') {
