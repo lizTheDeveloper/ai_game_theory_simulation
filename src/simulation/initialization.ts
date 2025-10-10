@@ -17,6 +17,14 @@ import { initializeEnvironmentalAccumulation } from './environmental';
 import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
 import { initializeBreakthroughTech } from './breakthroughTechnologies';
+import { initializeUpwardSpirals } from './upwardSpirals';
+import { initializeMeaningRenaissance } from './meaningRenaissance';
+import { initializeConflictResolution } from './conflictResolution';
+import { initializeDiplomaticAI } from './diplomaticAI';
+import { initializeNuclearStates, initializeMADDeterrence, initializeBilateralTensions } from './nuclearStates';
+import { initializeResourceEconomy } from './resourceEconomy';
+import { initializeDefensiveAI } from './defensiveAI';
+import { initializeNationalAI } from './nationalAI';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -217,12 +225,17 @@ export function createDefaultInitialState(): GameState {
         decisionQuality: 0.5,
         transparency: 0.6,
         participationRate: 0.4,
-        institutionalCapacity: 0.6
+        institutionalCapacity: 0.6,
+        consensusBuildingEfficiency: 0.5,
+        minorityProtectionStrength: 0.5,
       }
     },
     
     society: {
       trustInAI: 0.6,
+      paranoiaLevel: 0.1,  // Phase 2.8: Slight baseline caution about AI
+      communityStrength: 0.63,  // Phase 2E: Community bonds (medium-high baseline)
+      institutionalTrust: 0.70,  // Phase 2E: Trust in institutions (democratic baseline)
       economicDependence: 0.2,
       coordinationCapacity: 0.4,
       unemploymentLevel: 0.1,
@@ -278,6 +291,32 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 2A: Breakthrough Technologies
     breakthroughTech: initializeBreakthroughTech(),
+    
+    // Phase 2D: Upward Spirals (Utopia detection system)
+    upwardSpirals: initializeUpwardSpirals(),
+    
+    // Phase 2E: Meaning Renaissance (Cultural flourishing)
+    meaningRenaissance: initializeMeaningRenaissance(),
+    
+    // Phase 2F: Conflict Resolution (Peace systems)
+    conflictResolution: initializeConflictResolution(),
+    
+    // Phase 2F+: Diplomatic AI (Research-based, dual-use)
+    diplomaticAI: initializeDiplomaticAI(),
+    
+    // Nuclear states & MAD deterrence
+    nuclearStates: initializeNuclearStates(),
+    madDeterrence: initializeMADDeterrence(),
+    bilateralTensions: initializeBilateralTensions(),
+    
+    // Resource Economy (Phase 2.9)
+    resourceEconomy: initializeResourceEconomy(),
+    
+    // Defensive AI (Phase 2.10)
+    defensiveAI: initializeDefensiveAI(),
+    
+    // National AI Capabilities (Phase 2.11)
+    nationalAI: initializeNationalAI(),
     
     eventLog: [],
     technologyTree: [],

@@ -49,7 +49,7 @@ export function updateSocialAccumulation(
   const economicStage = state.globalMetrics.economicTransitionStage;
   const unemployment = state.society.unemploymentLevel;
   const wealthDistribution = state.globalMetrics.wealthDistribution;
-  const trustInAI = state.society.trustInAI;
+  const trustInAI = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
   const governmentLegitimacy = state.government.legitimacy;
   
   // Check for mitigating technologies/policies
@@ -347,6 +347,27 @@ export function hasSocialCrisis(social: SocialAccumulation): boolean {
   return social.meaningCollapseActive || 
          social.institutionalFailureActive || 
          social.socialUnrestActive;
+}
+
+/**
+ * Get trust in AI derived from paranoia level
+ * 
+ * Phase 2F+ Paranoia System: Trust is now calculated from paranoia, not stored directly.
+ * This ensures trust can recover as paranoia decays, enabling Cognitive Spiral activation.
+ * 
+ * Formula: trust = 1.0 - (paranoia * 0.75)
+ * Bounds: [0.20, 0.95] - Even max paranoia leaves 20% trust, even zero paranoia caps at 95%
+ * 
+ * @param society - Human society agent with paranoia level
+ * @returns Trust level [0.20, 0.95]
+ */
+export function getTrustInAI(society: HumanSocietyAgent): number {
+  const paranoia = society.paranoiaLevel ?? 0.15; // Default to 15% baseline paranoia
+  const trustFromParanoia = 1.0 - paranoia * 0.75;
+  
+  // Floor: Even 100% paranoia leaves 20% trust (some people always believe)
+  // Ceiling: Even 0% paranoia caps at 95% trust (healthy skepticism remains)
+  return Math.max(0.20, Math.min(0.95, trustFromParanoia));
 }
 
 /**

@@ -10,6 +10,7 @@
 │  - Utopia / Dystopia / Extinction Attractors           │
 │  - Golden Age Detection (prosperity state)              │
 │  - Quality of Life Discriminator                        │
+│  - Upward Spirals (6 virtuous cascades)                │
 └─────────────────────────────────────────────────────────┘
          ↑                    ↑                    ↑
          │                    │                    │
@@ -36,12 +37,15 @@
          │                                         │
          └────────────────────┬────────────────────┘
                               │
-                  ┌───────────────────────┐
-                  │   AI AGENTS           │
-                  │   - Capabilities      │
-                  │   - Alignment         │
-                  │   - Actions           │
-                  └───────────────────────┘
+         ┌────────────────────┴────────────────────┐
+         │                                         │
+┌───────────────────────┐              ┌──────────────────────┐
+│   AI AGENTS           │              │ DIPLOMATIC AI        │
+│   - Capabilities      │──────────────▶ - Strategic Mediation│
+│   - Alignment         │              │ - Trust Dynamics     │
+│   - Actions           │              │ - Conflict Prevention│
+└───────────────────────┘              │ - Dual-Use Risks     │
+                                       └──────────────────────┘
                               ↑
                               │
                   ┌───────────────────────┐
@@ -288,6 +292,128 @@ Golden Age Can Resume → Path to Utopia Opens
 - Mid investment (Month 15-35) → Crisis interruption
 - Late investment (Month 35+) → Often too late (cascade already 3.0x)
 
+### Virtuous Cascade (Upward Spirals - Phase 2D)
+
+```
+4+ Upward Spirals Active
+  ↓
+Cross-Amplification Begins (1.2x-1.6x multiplier)
+  ↓
+Spirals:
+  ├─ Abundance (post-scarcity, energy, time)
+  ├─ Cognitive (mental health, purpose, AI augmentation)
+  ├─ Democratic (quality governance, engagement)
+  ├─ Scientific (breakthroughs, research, AI acceleration)
+  ├─ Meaning (cultural flourishing, renaissance)
+  └─ Ecological (planetary healing, sustainability)
+  ↓
+Each Spiral Reinforces Others:
+  ├─ Abundance → Cognitive (time for learning)
+  ├─ Cognitive → Scientific (smarter research)
+  ├─ Democratic → All (better governance)
+  ├─ Scientific → Ecological (tech for planet)
+  ├─ Meaning → Democratic (civic engagement)
+  └─ Ecological → Abundance (sustainable resources)
+  ↓
+3+ Spirals Sustained 12+ Months = UTOPIA
+```
+
+**Utopia Paths (20 combinations of 3+ spirals):**
+- Tech Path: Scientific + Cognitive + Abundance
+- Cultural Path: Meaning + Democratic + Cognitive
+- Eco Path: Ecological + Abundance + Scientific
+- Balanced Path: All 6 spirals (maximum 1.6x amplification)
+
+### Meaning Renaissance Loop (Phase 2E)
+
+```
+Post-Work Reality (60%+ unemployment)
+  ↓
+Four Dimensions Grow:
+  ├─ Purpose Diversity (4 pathways: community, creative, knowledge, exploration)
+  ├─ Self-Actualization (education, time, mentoring)
+  ├─ Artistic Renaissance (AI-assisted creativity, participation, recognition)
+  └─ Philosophical Maturity (understanding, narrative, wisdom sharing)
+  ↓
+Renaissance Strength > 0.6
+  ↓
+Effects:
+  ├─ Meaning Crisis Recovery (-1%/month, reverses crisis!)
+  ├─ Cultural Adaptation Boost (+1%/month)
+  ├─ Meaning Spiral Activation (enables Utopia)
+  └─ QoL Boost (meaning +0.7%, vitality +1.0%)
+  ↓
+Stronger Meaning → Higher Participation → Better Democratic Governance
+  ↓
+(Positive feedback loop)
+```
+
+**Key Insight:** Technology alone (Purpose Frameworks) insufficient. Need 4 dimensions of cultural adaptation.
+
+### Peace Dividend Loop (Conflict Resolution - Phase 2F)
+
+```
+Post-Scarcity Achieved (Stage 4, abundant energy)
+  ↓
+Resource Conflicts Eliminated (no "oil wars")
+  ↓
+Aligned AI Deployed (0.7+ alignment)
+  ↓
+Three Peace Pillars:
+  ├─ Diplomatic AI (strategic mediation, crisis intervention)
+  ├─ Abundance Peace (food/energy/material security)
+  └─ Cyber Defense (defense > offense, military systems secure)
+  ↓
+Global Peace Level 0.8+
+  ↓
+Conflict Probability -50% (max reduction)
+  ↓
+Nuclear War Risk Drops
+  ↓
+Extinction via Conflict Becomes Rare
+  ↓
+Enables Other Spirals (stability → investment → progress)
+```
+
+**Diplomatic Intervention Success Rate:**
+- Base: 30%
+- +50% from AI capability (2.0 → 4.0+)
+- +20% from high alignment (0.9+)
+- +10% from prior successes (learning)
+- Max: 95%
+
+### Governance Quality Loop (Phase 2C)
+
+```
+High-Capability Aligned AI (2.0+, 0.7+)
+  ↓
+AI-Augmented Decision Quality (up to +30%)
+  ↓
+Better Policy Effectiveness (1.2-1.5x research speed)
+  ↓
+Faster Tech Unlocks & Deployment
+  ↓
+Crises Resolve Faster
+  ↓
+Higher Trust in AI (+0.02/month)
+  ↓
+Higher Civic Participation & Transparency
+  ↓
+Stronger Authoritarian Resistance (up to 80% reduction)
+  ↓
+Democracy Survives Crisis
+  ↓
+Democratic Spiral Activates
+  ↓
+(Reinforcing loop)
+```
+
+**Inverse (Dystopia Lock-In):**
+- Multiple crises → Authoritarian transition
+- Low participation = weak resistance
+- Authoritarian → Can't research social tech (20-50% rates)
+- Social crises persist → Surveillance state permanent
+
 ## Advanced Systems
 
 ### 🛡️ Detection & Evasion
@@ -408,7 +534,31 @@ Unintended (AI-driven, accidental)
    ├─ Meaning collapse: check if < 50%
    └─ Deactivate resolved crises
 
-10. Update Quality of Life
+10. Update Diplomatic AI (Phase 2F+)
+    ├─ Calculate capabilities (strategic reasoning, communication, information integrity)
+    ├─ Check deployment conditions (capability ≥2.0, alignment ≥0.7, democratic gov)
+    ├─ Update trust dynamics (success increases, failure/misalignment decreases)
+    ├─ Track dual-use risks (manipulation, dependency capture, mission creep)
+    ├─ Attempt interventions if geopolitical crisis active (2+ systemic crises)
+    └─ Calculate success probability (crisis type × capability × trust × alignment)
+
+11. Update Upward Spirals (Phase 2D)
+    ├─ Check 6 spiral conditions (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
+    ├─ Track spiral activation & duration
+    ├─ Apply virtuous cascade effects
+    └─ Update Utopia eligibility (requires 3+ sustained spirals for 12+ months)
+
+12. Update Meaning Renaissance (Phase 2E)
+    ├─ Track purpose diversity & self-actualization
+    ├─ Monitor artistic renaissance & philosophical maturity
+    └─ Apply positive feedback loops (counters meaning crisis)
+
+13. Update Conflict Resolution (Phase 2F)
+    ├─ Post-scarcity peace dividends (abundance reduces conflict)
+    ├─ Cyber defense improvements (protects critical infrastructure)
+    └─ Integrate with diplomatic AI interventions
+
+14. Update Quality of Life
     ├─ Calculate 17 dimensions
     ├─ Apply multipliers (post-scarcity, trust)
     ├─ Apply penalties (control)
@@ -417,7 +567,7 @@ Unintended (AI-driven, accidental)
     ├─ Apply technology boosts (from deployed tech)
     └─ Aggregate weighted score
 
-11. Check Outcome Conditions
+15. Check Outcome Conditions
     ├─ Check Golden Age conditions (QoL, trust, stage)
     ├─ Track Golden Age duration
     ├─ Calculate sustainability (environmental + social + tech)
@@ -567,10 +717,11 @@ Months 80-150:
 ## Related Documentation
 
 - **Core Systems:** [Organizations](./systems/organizations.md), [Compute](./systems/compute-infrastructure.md), [AI Agents](./systems/ai-agents.md)
+- **Utopian Systems:** [Breakthrough Technologies](./systems/breakthrough-technologies.md), [Upward Spirals](./systems/upward-spirals.md), [Governance Quality](./systems/governance-quality.md), [Meaning Renaissance](./systems/meaning-renaissance.md), [Conflict Resolution](./systems/conflict-resolution.md)
 - **Mechanics:** [Economics](./mechanics/economics.md), [Quality of Life](./mechanics/quality-of-life.md), [Outcomes](./mechanics/outcomes.md)
 - **Advanced:** [Extinctions](./advanced/extinctions.md), [Detection](./advanced/detection.md), [Research](./advanced/research.md)
 
 ---
 
 **Last Updated:** October 9, 2025
-**Version:** 2.0 (Golden Age & Accumulation Systems + Breakthrough Technologies)
+**Version:** 2.1 (Phase 2B-F Complete: Dystopia Lock-In, Governance Quality, Upward Spirals, Meaning Renaissance, Conflict Resolution)

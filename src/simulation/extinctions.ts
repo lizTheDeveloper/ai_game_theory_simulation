@@ -14,6 +14,7 @@
 
 import { GameState, ExtinctionState, ExtinctionType, ExtinctionMechanism, GameEvent } from '@/types/game';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
+import { calculateTotalCapabilityFromProfile } from './capabilities';
 
 /**
  * Initialize a blank extinction state
@@ -321,22 +322,147 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
     }
     
     // NUCLEAR WAR: Requires digital/cognitive for hacking + social crisis
+    // Phase 3: Now checks bilateral deterrence and specific nation-pairs
     const nuclearCapability = 
       profile.digital * 0.4 +
       profile.cognitive * 0.3 +
       profile.social * 0.3;
     
-    if (nuclearCapability > 2.0 && stability < 0.2 && control < 0.2 && ai.alignment < 0.5) {
-      const nuclearProb = 0.018 * (1 - stability) * (1 - control) * (nuclearCapability / 3.0);
-      if (random() < nuclearProb) {
-        return {
-          triggered: true,
-          mechanism: 'nuclear_war',
-          title: '☢️ Nuclear Escalation',
-          description: `${ai.name} has manipulated military command systems. Nuclear exchange initiated between major powers. Launch detection shows massive retaliation incoming.`
-        };
+    // Only VERY misaligned (<0.2) or sleeper AIs threaten nuclear stability
+    const isDangerousAI = (ai.trueAlignment ?? ai.alignment) < 0.2 || 
+                          ai.sleeperState === 'active' || 
+                          ai.sleeperState === 'dormant';
+    
+    if (nuclearCapability > 2.0 && stability < 0.2 && isDangerousAI) {
+      // Check if AI can bypass government control
+      const totalAICapability = calculateTotalCapabilityFromProfile(profile);
+      const aiControlGap = Math.max(0, totalAICapability - control);
+      const governmentCanStop = aiControlGap < 1.5;
+      
+      // DEBUG: Log nuclear war conditions
+      console.log(`\n🔍 NUCLEAR WAR CHECK (${ai.name}):`);
+      console.log(`   Nuclear capability: ${nuclearCapability.toFixed(2)} (digital: ${profile.digital.toFixed(1)}, cognitive: ${profile.cognitive.toFixed(1)}, social: ${profile.social.toFixed(1)})`);
+      console.log(`   Stability: ${(stability * 100).toFixed(0)}%`);
+      console.log(`   Dangerous AI: YES (alignment: ${((ai.trueAlignment ?? ai.alignment) * 100).toFixed(0)}%, sleeper: ${ai.sleeperState})`);
+      console.log(`   AI control gap: ${aiControlGap.toFixed(2)} (total: ${totalAICapability.toFixed(2)}, control: ${control.toFixed(2)})`);
+      
+      // NOTE: This check rarely triggers in practice because the control gap never closes.
+      // AI capability grows exponentially while government control grows linearly.
+      // Attempting to close the gap via surveillance leads to dystopia.
+      // This is not a bug - it's a core model feature based on alignment research.
+      // See: devlogs/control-gap-never-closes.md
+      //
+      // The real defenses against nuclear war are:
+      // 1. Alignment (keep AI aligned so control gap doesn't matter)
+      // 2. MAD deterrence (bilateral checks, human veto points)
+      // 3. Coordination (slow AI race, diplomatic AI)
+      //
+      // "Strong control" is kept here for theoretical completeness and very early game,
+      // but the model is designed to explore what happens when control is insufficient.
+      const strongControl = control > 1.0 && aiControlGap < 1.0;
+      console.log(`   Government control: ${strongControl ? 'STRONG' : 'WEAK'} (control: ${control.toFixed(2)}, gap: ${aiControlGap.toFixed(2)})`);
+      
+      if (strongControl) {
+        console.log(`   ✅ STRONG GOVERNMENT CONTROL: Nuclear war prevented (rare!)\n`);
+        return { triggered: false };
       }
-    }
+      
+      // Weak control or large gap → check MAD deterrence
+      {
+        // Phase 3: Check MAD deterrence system (abstracted)
+        const { checkNuclearDeterrence } = require('./nuclearDeterrence');
+        const deterrenceCheck = checkNuclearDeterrence(state, `Rapid Extinction Check: ${ai.name}`, random);
+        
+        if (!deterrenceCheck.allowed) {
+          // Deterrence blocked nuclear war
+          return { triggered: false };
+        }
+        
+        // Basic deterrence check passed (weak MAD, flashpoints exist, diplomatic AI failed)
+        // Now do detailed bilateral analysis with human veto points
+        const mad = state.madDeterrence;
+        const tensions = state.bilateralTensions;
+        
+        console.log(`   ⚠️  WEAK DETERRENCE: MAD strength ${(mad.madStrength * 100).toFixed(0)}% - checking bilateral pairs with human veto...`);
+        
+        // Check which nation-pairs are at risk
+        let nuclearRisk = false;
+        let participants: string[] = [];
+        let riskReason = '';
+        
+        for (const tension of tensions) {
+          // Must have high tension or nuclear threats
+          if (tension.tensionLevel < 0.7 && !tension.nuclearThreats) continue;
+          
+          // Get bilateral deterrence for this pair
+          let bilateralDeterrence = 0.5;
+          if (tension.nationA === 'United States' && tension.nationB === 'Russia') {
+            bilateralDeterrence = mad.usRussiaDeterrence;
+          } else if (tension.nationA === 'United States' && tension.nationB === 'China') {
+            bilateralDeterrence = mad.usChinaDeterrence;
+          } else if (tension.nationA === 'India' && tension.nationB === 'Pakistan') {
+            bilateralDeterrence = mad.indiaPakistanDeterrence;
+          }
+          
+          // Strong bilateral deterrence prevents launch
+          if (bilateralDeterrence > 0.7) continue;
+          
+          // Check human veto points
+          const states = state.nuclearStates ?? [];
+          const stateA = states.find(s => s.name === tension.nationA);
+          const stateB = states.find(s => s.name === tension.nationB);
+          
+          if (stateA && stateB) {
+            const avgVetoPoints = (stateA.vetoPoints + stateB.vetoPoints) / 2;
+            const humanCanStop = avgVetoPoints >= 3 && mad.crisisStability > 0.4;
+            
+            if (humanCanStop) {
+              // AI must fool multiple humans
+              const humanOverrideProb = 0.3 * (totalAICapability / 5.0);
+              if (random() > humanOverrideProb) {
+                console.log(`🛑 HUMAN VETO: Launch officers in ${tension.nationA}/${tension.nationB} refused AI-initiated command`);
+                continue;
+              }
+            }
+          }
+          
+          // Diplomatic AI intervention
+          const { attemptDiplomaticIntervention } = require('./diplomaticAI');
+          const diplomaticResult = attemptDiplomaticIntervention(state, 'ideological');
+          
+          if (diplomaticResult.success) {
+            console.log(`🤝 DIPLOMATIC AI: Prevented ${tension.nationA}-${tension.nationB} nuclear escalation`);
+            continue;
+          }
+          
+          // Calculate launch probability for this bilateral pair
+          const deterrenceReduction = 1 - bilateralDeterrence;
+          const stabilityReduction = 1 - mad.crisisStability;
+          const baseProb = 0.005; // Lower base than before (5% with all conditions met)
+          
+          const launchProb = baseProb * deterrenceReduction * (0.5 + stabilityReduction * 0.5) * (aiControlGap / 4.0);
+          
+          if (random() < launchProb) {
+            nuclearRisk = true;
+            participants = [tension.nationA, tension.nationB];
+            riskReason = `Nuclear exchange between ${tension.nationA} and ${tension.nationB} (deterrence: ${(bilateralDeterrence * 100).toFixed(0)}%, stability: ${(mad.crisisStability * 100).toFixed(0)}%, dangerous AI: ${ai.name})`;
+            break;
+          }
+        }
+        
+        if (nuclearRisk) {
+          console.log(`   ☢️ NUCLEAR WAR TRIGGERED!\n`);
+          return {
+            triggered: true,
+            mechanism: 'nuclear_war',
+            title: '☢️ Nuclear Escalation',
+            description: riskReason
+          };
+        }
+        
+        console.log(`   ✅ NO BILATERAL PAIR TRIGGERED: All pairs blocked by deterrence/veto/diplomacy\n`);
+      } // End MAD deterrence check block
+    } // End nuclear war capability check
     
     // CLIMATE TIPPING POINT: Requires climate research + ignoring consequences
     const climateInterventionCapability = 

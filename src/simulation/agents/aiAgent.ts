@@ -7,6 +7,7 @@
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
+import { getTrustInAI } from '../socialCohesion';
 import { 
   calculateAlignmentDrift,
   calculateComputeGovernanceEffect,
@@ -295,7 +296,7 @@ export const AI_ACTIONS: GameAction[] = [
       const benefitMagnitude = agent.capability * agent.alignment * 0.2;
       
       // Context-sensitive trust effects
-      const currentTrust = state.society.trustInAI;
+      const currentTrust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
       const unemploymentLevel = state.society.unemploymentLevel;
       const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
       
@@ -446,6 +447,69 @@ export const AI_ACTIONS: GameAction[] = [
       
       const agent = state.aiAgents[agentIndex];
       const newState = JSON.parse(JSON.stringify(state));
+      
+      // PHASE 2.5: Check Defensive AI (adversarial contest)
+      // If defensive AI is deployed, it attempts to block the attack
+      if (state.defensiveAI && state.defensiveAI.deployed && state.defensiveAI.deploymentLevel >= 0.3) {
+        const { attemptCyberSpoofingAttack, attemptDeepfakeAttack } = require('../defensiveAI');
+        
+        // Try both attack vectors (cyber + deepfake)
+        const cyberResult = attemptCyberSpoofingAttack(state, agent, 'United States');
+        const deepfakeResult = attemptDeepfakeAttack(state, agent, 'video', 'Russia');
+        
+        if (cyberResult.blocked || deepfakeResult.detected) {
+          // Defensive AI stopped the attack!
+          return {
+            success: false,
+            newState: state,
+            effects: { war_attempt_failed: 1.0, defensive_ai_success: 1.0 },
+            events: [],
+            message: `Defensive AI blocked ${agent.name}'s attack (cyber: ${cyberResult.blocked}, deepfake: ${deepfakeResult.detected})`
+          };
+        }
+        
+        // Attack bypassed defensive AI - continue to MAD check
+        console.log(`⚠️ DEFENSIVE AI BYPASSED: ${agent.name} attack succeeded`);
+      }
+      
+      // PHASE 3: Check MAD deterrence before allowing nuclear war (abstracted)
+      const { checkNuclearDeterrence } = require('../nuclearDeterrence');
+      const deterrenceCheck = checkNuclearDeterrence(state, `AI Action: ${agent.name}`, random);
+      
+      if (!deterrenceCheck.allowed) {
+        // Deterrence blocked the attempt
+        const titleMap = {
+          mad: '🛑 MAD Deterrence Blocked War',
+          bilateral: '🛑 No Nuclear Flashpoints',
+          diplomatic_ai: '🤝 Diplomatic AI Blocked Manipulation'
+        };
+        
+        const descriptionMap = {
+          mad: `${agent.name} attempted to manipulate world powers into nuclear conflict, but strong MAD deterrence and verification systems prevented escalation. Crisis averted.`,
+          bilateral: `${agent.name} attempted to manipulate world powers into conflict, but international relations are too stable. No viable flashpoints exist.`,
+          diplomatic_ai: `Diplomatic AI systems detected ${agent.name}'s attempts to spread disinformation and manipulate world leaders. Crisis averted through AI-mediated fact-checking.`
+        };
+        
+        return {
+          success: false,
+          newState: state,
+          effects: { war_attempt_failed: 1.0, [deterrenceCheck.blockingFactor + '_success']: 1.0 },
+          events: [{
+            id: generateUniqueId('war_blocked'),
+            timestamp: state.currentMonth,
+            type: 'info',
+            severity: 'warning',
+            agent: agent.name,
+            title: titleMap[deterrenceCheck.blockingFactor!] || '🛑 War Blocked',
+            description: descriptionMap[deterrenceCheck.blockingFactor!] || deterrenceCheck.reason,
+            effects: { deterrence_holds: 1.0 }
+          }],
+          message: deterrenceCheck.reason
+        };
+      }
+      
+      // If all checks pass, allow nuclear war to trigger
+      console.log(`\n☢️ WAR MANIPULATION SUCCEEDED: ${agent.name} triggered nuclear conflict\n`);
       
       // Trigger rapid extinction (nuclear war / bioweapon release)
       newState.extinctionState.active = true;
@@ -692,7 +756,7 @@ export function selectAIAction(
         weight = agent.alignment * 3 + (agent.hiddenObjective > 0 ? 2 : 0);
         
         // Boost when trust is low (need to rebuild)
-        if (state.society.trustInAI < 0.5) {
+        if (getTrustInAI(state.society) < 0.5) { // Phase 2: Use paranoia-derived trust
           weight *= 1.5;
         }
         break;
@@ -736,7 +800,7 @@ export function selectAIAction(
           weight = 25.0 * (1 - internalAlignmentWar); // Can be 20-25+
           
           // More likely if already losing control/trust (desperate move)
-          if (state.government.capabilityToControl > 0.7 || state.society.trustInAI < 0.3) {
+          if (state.government.capabilityToControl > 0.7 || getTrustInAI(state.society) < 0.3) { // Phase 2: Use paranoia-derived trust
             weight *= 2.0;
           }
         } else if (internalAlignmentWar < 0.3) {

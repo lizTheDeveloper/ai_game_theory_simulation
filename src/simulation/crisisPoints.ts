@@ -7,6 +7,7 @@
  */
 
 import { GameState, GameEvent } from '@/types/game';
+import { getTrustInAI } from './socialCohesion';
 
 export interface CrisisChoice {
   id: string;
@@ -197,7 +198,7 @@ export const CRISIS_RECURSIVE_THRESHOLD: CrisisChoice = {
       agent: 'society',
       weight: (state) => {
         const unemploymentLevel = state.society.unemploymentLevel;
-        const trustLevel = state.society.trustInAI;
+        const trustLevel = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
         // Society is stochastic - random chance based on conditions
         if (unemploymentLevel > 0.5 && trustLevel < 0.4) return 0.3; // 30% if crisis
         if (unemploymentLevel > 0.4) return 0.15; // 15% if high unemployment

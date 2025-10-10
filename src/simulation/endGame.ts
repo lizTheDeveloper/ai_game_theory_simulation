@@ -215,43 +215,12 @@ export function processEndGameMonth(state: GameState): void {
  * This ensures end-game system respects accumulation mechanics
  */
 function canDeclareUtopia(state: GameState): { can: boolean; reason: string } {
-  // If not in Golden Age yet, definitely can't be Utopia
-  if (!state.goldenAgeState.active) {
-    return { can: false, reason: 'Not in Golden Age state' };
-  }
+  // Phase 2D: Use upward spirals system for proper Utopia detection
+  // Utopia requires 3+ sustained spirals (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
+  const { canDeclareUtopia: spiralCheck } = require('./upwardSpirals');
+  const result = spiralCheck(state);
   
-  // Golden Age must be sustained for at least 12 months
-  if (state.goldenAgeState.duration < 12) {
-    return { can: false, reason: `Golden Age only ${state.goldenAgeState.duration} months old, needs 12+` };
-  }
-  
-  // Check accumulation systems
-  const envSustainability = getEnvironmentalSustainability(state.environmentalAccumulation);
-  const socialSustainability = getSocialSustainability(state.socialAccumulation);
-  const techSafety = getTechnologicalSafety(state.technologicalRisk);
-  
-  const hasEnvCrisis = hasEnvironmentalCrisis(state.environmentalAccumulation);
-  const hasSocCrisis = hasSocialCrisis(state.socialAccumulation);
-  const hasTechCrisis = hasTechnologicalCrisis(state.technologicalRisk);
-  
-  // Any active crisis prevents Utopia
-  if (hasEnvCrisis) {
-    return { can: false, reason: 'Environmental crisis active' };
-  }
-  if (hasSocCrisis) {
-    return { can: false, reason: 'Social crisis active' };
-  }
-  if (hasTechCrisis) {
-    return { can: false, reason: 'Technological crisis active' };
-  }
-  
-  // Overall sustainability must be high (same threshold as outcomes.ts)
-  const overallSustainability = (envSustainability * 0.35 + socialSustainability * 0.35 + techSafety * 0.30);
-  if (overallSustainability < 0.65) {
-    return { can: false, reason: `Sustainability too low: ${(overallSustainability * 100).toFixed(0)}% (need 65%+)` };
-  }
-  
-  return { can: true, reason: 'Golden Age sustained with high sustainability' };
+  return { can: result.can, reason: result.reason };
 }
 
 /**

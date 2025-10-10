@@ -253,6 +253,7 @@ export interface GovernmentAgent {
 
 export interface HumanSocietyAgent {
   trustInAI: number; // [0,1] General confidence in AI systems
+  paranoiaLevel: number; // [0,1] Fear/anxiety about AI (Phase 2.8: Paranoia System)
   economicDependence: number; // [0,1] Reliance on AI for economic function
   coordinationCapacity: number; // [0,1] Ability to organize collective action
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced
@@ -682,6 +683,24 @@ export interface GameState {
   socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
   breakthroughTech: import('../types/technologies').BreakthroughTechState; // Phase 2A: Breakthrough technologies
+  upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
+  meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance
+  conflictResolution: import('../simulation/conflictResolution').ConflictResolutionState; // Phase 2F: Peace systems
+  diplomaticAI: import('../simulation/diplomaticAI').DiplomaticAIState; // Phase 2F+: Research-based diplomatic AI (dual-use)
+  
+  // Nuclear states & MAD deterrence (Phase 3)
+  nuclearStates: import('../types/nuclearStates').NuclearState[]; // Specific nuclear-armed nations
+  madDeterrence: import('../types/nuclearStates').MADDeterrence; // MAD deterrence system
+  bilateralTensions: import('../types/nuclearStates').BilateralTension[]; // Bilateral relationships
+  
+  // Resource Economy (Phase 2.9)
+  resourceEconomy: import('../types/resources').ResourceEconomy; // Comprehensive resource modeling with CO2 coupling
+  
+  // Defensive AI (Phase 2.10)
+  defensiveAI: import('../types/defensiveAI').DefensiveAISystem; // Active cyber-defense against misaligned AI attacks
+  
+  // National AI Capabilities (Phase 2.11)
+  nationalAI: import('../types/nationalAI').NationalAISystem; // National capability asymmetry & AI race dynamics
   
   // Configuration
   config: ConfigurationSettings;

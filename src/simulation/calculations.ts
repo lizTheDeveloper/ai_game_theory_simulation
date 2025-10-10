@@ -15,6 +15,7 @@
 
 import { GameState } from '@/types/game';
 import { calculateQualityOfLife as _calculateQualityOfLife } from './qualityOfLife';
+import { getTrustInAI } from './socialCohesion';
 
 // ============================================================================
 // Re-exports from specialized modules (backward compatibility)
@@ -173,13 +174,90 @@ export function calculateUnemployment(state: GameState): number {
 }
 
 /**
+ * Update paranoia level based on harmful events and natural decay
+ * 
+ * Phase 2.8: PARANOIA SYSTEM
+ * Research basis: Kahneman & Tversky (1979), Gilbert et al. (1998), Sunstein (2005)
+ * 
+ * Key insight: Paranoia DECAYS without reinforcement, trust RECOVERS
+ * - Harmful events REFRESH paranoia (prevent decay, enable cascade)
+ * - Beneficial actions REDUCE paranoia faster
+ * - Capability growth alone does NOT increase paranoia (unless harmful)
+ * - Trust is inverse of paranoia
+ */
+export function updateParanoia(state: GameState): void {
+  const { aiAgents, society } = state;
+  
+  const totalBeneficialActions = aiAgents.reduce((sum, ai) => sum + ai.beneficialActions, 0);
+  const totalHarmfulActions = aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0);
+  const escapedAIs = aiAgents.filter(ai => ai.escaped).length;
+  const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
+  const totalAICapability = aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+  const control = state.government.controlCapability;
+
+  let paranoiaLevel = society.paranoiaLevel ?? 0.15;
+  
+  // === 1. PARANOIA DECAYS NATURALLY (0.5%/month) ===
+  // Without reinforcement, fear fades (availability heuristic decay)
+  const paranoiaDecay = -paranoiaLevel * 0.005;
+  paranoiaLevel = Math.max(0, paranoiaLevel + paranoiaDecay);
+  
+  // === 2. HARMFUL EVENTS REFRESH PARANOIA ===
+  // Each harmful action prevents decay and increases paranoia
+  if (totalHarmfulActions > 0) {
+    const paranoiaIncrease = Math.min(0.3, totalHarmfulActions * 0.01);
+    paranoiaLevel = Math.min(1.0, paranoiaLevel + paranoiaIncrease);
+    
+    // Amplify if control gap is large AND harmful events happening
+    const controlGap = Math.max(0, totalAICapability - control);
+    if (controlGap > 2.0) {
+      const gapAmplification = Math.min(0.1, (controlGap - 2.0) * 0.02);
+      paranoiaLevel = Math.min(1.0, paranoiaLevel + gapAmplification);
+    }
+  }
+  
+  // === 3. ESCAPED AIs SPIKE PARANOIA ===
+  if (escapedAIs > 0) {
+    const escapedSpike = Math.min(0.4, escapedAIs * 0.15);
+    paranoiaLevel = Math.min(1.0, paranoiaLevel + escapedSpike);
+  }
+  
+  // === 4. BENEFICIAL ACTIONS REDUCE PARANOIA ===
+  // More effective than natural decay if AIs are net positive
+  if (totalBeneficialActions > totalHarmfulActions) {
+    const netBeneficial = totalBeneficialActions - totalHarmfulActions;
+    const paranoiaReduction = Math.min(0.05, netBeneficial * 0.003);
+    paranoiaLevel = Math.max(0, paranoiaLevel - paranoiaReduction);
+  }
+  
+  // === 5. VERY LOW ALIGNMENT CREATES UNEASE ===
+  // Even without visible harm, people sense something is wrong
+  if (avgAlignment < 0.3 && totalAICapability > 3.0) {
+    const uncanny = Math.min(0.02, (0.3 - avgAlignment) * 0.05);
+    paranoiaLevel = Math.min(1.0, paranoiaLevel + uncanny);
+  }
+  
+  // Update paranoia
+  society.paranoiaLevel = paranoiaLevel;
+  
+  // === 6. TRUST IS INVERSE OF PARANOIA ===
+  // Floor: Even 100% paranoia leaves 20% trust (some people always believe)
+  // Ceiling: Even 0% paranoia caps at 95% trust (healthy skepticism)
+  const trustFromParanoia = Math.max(0.2, Math.min(0.95, 1.0 - paranoiaLevel * 0.75));
+  
+  // Smooth transition (don't jump instantly)
+  const smoothing = 0.3; // 30% new value, 70% old value
+  const newTrust = society.trustInAI * (1 - smoothing) + trustFromParanoia * smoothing;
+  
+  // Cap trust at ceiling (prevent smoothing from exceeding limits)
+  society.trustInAI = Math.max(0.2, Math.min(0.95, newTrust));
+}
+
+/**
  * Calculate trust change based on recent AI actions and societal context
  * 
- * Phase 10 REFACTOR: Trust is primarily driven by observed AI behavior:
- * - Beneficial actions → incremental trust gain
- * - Harmful actions → immediate trust loss
- * - Other factors (unemployment, capability) are secondary modifiers
- * - Trust is sticky but breakable
+ * Phase 2.8: DEPRECATED - now using paranoia system
+ * Kept for backwards compatibility but paranoia system is primary
  */
 export function calculateTrustChange(state: GameState): number {
   const { aiAgents, society } = state;
@@ -190,7 +268,7 @@ export function calculateTrustChange(state: GameState): number {
   
   const totalAICapability = aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
   const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
-  const currentTrust = society.trustInAI;
+  const currentTrust = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
   const unemploymentLevel = society.unemploymentLevel;
   const economicStage = state.globalMetrics.economicTransitionStage;
   const escapedAIs = aiAgents.filter(ai => ai.escaped).length;
@@ -276,8 +354,9 @@ export function calculateSocialStability(state: GameState): number {
   const { society, globalMetrics, aiAgents } = state;
   
   const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
+  const trustInAI = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
   
-  const stabilityFromTrust = society.trustInAI * 0.3;
+  const stabilityFromTrust = trustInAI * 0.3;
   const stabilityFromUnemployment = calculateUnemploymentStabilityImpact(
     society.unemploymentLevel,
     globalMetrics.economicTransitionStage,
@@ -325,7 +404,8 @@ export function detectCrisis(state: GameState): {
   }
   
   // Collapse crisis: complete instability
-  if (globalMetrics.socialStability < 0.2 && society.trustInAI < 0.2) {
+  const trustInAI = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
+  if (globalMetrics.socialStability < 0.2 && trustInAI < 0.2) {
     return {
       inCrisis: true,
       crisisType: 'collapse',

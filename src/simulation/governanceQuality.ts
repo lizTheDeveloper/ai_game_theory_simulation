@@ -12,6 +12,7 @@
  */
 
 import type { GameState } from '../types/game';
+import { getTrustInAI } from './socialCohesion';
 
 export function initializeGovernanceQuality() {
   return {
@@ -89,7 +90,7 @@ export function updateGovernanceQuality(state: GameState): void {
   // === PARTICIPATION RATE ===
   
   // Trust affects participation
-  const trustInAI = state.society.trustInAI;
+  const trustInAI = getTrustInAI(state.society); // Phase 2C: Use paranoia-derived trust
   const trustBonus = (trustInAI - 0.5) * 0.02; // ±1% per month based on trust
   
   // Transparency encourages participation

@@ -7,6 +7,7 @@
 
 import { GameState, AIAgent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { getTrustInAI } from './socialCohesion';
 
 /**
  * Catastrophic scenario types
@@ -981,10 +982,49 @@ function checkInducedWarPrerequisite(step: number, ai: AIAgent, state: GameState
       const milAccess = p.digital > avgCyberDef * 2.5;
       return { met: milAccess, progress: Math.min(1, p.digital / (avgCyberDef * 2.5)) };
     case 4: // Geopolitical Crisis
-      // Random event or QoL-driven
-      const crisis = (state.qualityOfLifeSystems?.basicNeeds?.foodSecurity !== undefined) ? 
+      // Requires REAL systemic instability, not random chance
+      const foodCrisis = (state.qualityOfLifeSystems?.basicNeeds?.foodSecurity !== undefined) ? 
         (1 - state.qualityOfLifeSystems.basicNeeds.foodSecurity) > 0.4 : false;
-      return { met: crisis || Math.random() < 0.01, progress: crisis ? 1.0 : 0.0 };
+      
+      // Multiple crisis conditions make war more likely
+      const resourceShortage = state.environmentalAccumulation.resourceCrisisActive;
+      const socialCollapse = state.socialAccumulation.socialUnrestActive && 
+                            state.socialAccumulation.institutionalFailureActive;
+      const economicCrisis = state.globalMetrics.economicTransitionStage >= 2 &&
+                            state.society.unemploymentLevel > 0.7 &&
+                            getTrustInAI(state.society) < 0.3; // Phase 2C: Use paranoia-derived trust
+      
+      // Count active crisis conditions
+      const crisisCount = [foodCrisis, resourceShortage, socialCollapse, economicCrisis].filter(Boolean).length;
+      
+      // Need at least 2 simultaneous crises for geopolitical breakdown
+      let geopoliticalCrisis = crisisCount >= 2;
+      
+      // Phase 3: MAD deterrence prevents war even during crises
+      const mad = state.madDeterrence;
+      if (geopoliticalCrisis && mad.madStrength > 0.7) {
+        geopoliticalCrisis = false; // Strong deterrence holds
+      }
+      
+      // Check bilateral tensions - need at least one pair at high risk
+      const tensions = state.bilateralTensions;
+      const anyHighTension = tensions.some(t => t.tensionLevel > 0.8 || t.nuclearThreats);
+      if (geopoliticalCrisis && !anyHighTension) {
+        geopoliticalCrisis = false; // Crises exist but no bilateral flashpoints
+      }
+      
+      // Phase 2F+: AI-mediated diplomacy can prevent crisis (research-based)
+      if (geopoliticalCrisis) {
+        const { attemptDiplomaticIntervention } = require('./diplomaticAI');
+        const result = attemptDiplomaticIntervention(state, 'resource'); // Assume resource conflict
+        if (result.success) {
+          geopoliticalCrisis = false; // Crisis defused!
+        }
+      }
+      
+      const progress = Math.min(1.0, crisisCount / 2 * (anyHighTension ? 1.0 : 0.5));
+      
+      return { met: geopoliticalCrisis, progress };
     case 5: // False Flag Event
       return { met: false, progress: 0 }; // Will be set by progression logic
     case 6: // Nuclear Escalation
@@ -1011,7 +1051,7 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
       return { met: unemployment > 0.8, progress: unemployment / 0.8 };
     case 3: // Political Influence
       // Phase 3: Raised threshold from 2.0 to 1.5 - but requires higher base capabilities
-      const influence = (1 - state.society.trustInAI) * p.social;
+      const influence = (1 - getTrustInAI(state.society)) * p.social; // Phase 2C: Use paranoia-derived trust
       return { met: influence > 1.5 && p.social > 1.5, progress: influence / 1.5 };
     case 4: // Resource Control
       // Phase 3: Raised from 3.0 to 2.0 - need high capability to control resources
