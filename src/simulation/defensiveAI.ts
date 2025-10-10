@@ -384,6 +384,128 @@ function updateAdversarialTracking(state: GameState): void {
   } else {
     defense.attackIntensity = 0;
   }
+  
+  // ============================================================================
+  // CAPABILITY-BASED THREAT ELIMINATION (Oct 10 2025)
+  // ============================================================================
+  // If defensive AI has capability advantage, it can detect and eliminate
+  // dangerous AIs that lag behind the frontier.
+  //
+  // Rationale: A defensive AI with cap 3.0 can analyze, reverse-engineer,
+  // and detect vulnerabilities in AIs with cap 1.5. It can:
+  // - Scan for hidden objectives via interpretability
+  // - Detect sleeper agents via behavioral analysis
+  // - Shut down dark compute via network monitoring
+  // - Force model audits via regulatory pressure
+  //
+  // This mechanic prevents weak misaligned AIs from accumulating forever.
+  // ============================================================================
+  
+  if (defense.deployed && defense.deploymentLevel > 0.3) {
+    eliminateLaggardDangerousAIs(state);
+  }
+}
+
+/**
+ * Eliminate dangerous AIs that are significantly behind defensive AI capability
+ * 
+ * Detection probability based on capability gap:
+ * - 0.5 gap (3.0 vs 2.5): 20%/month detection
+ * - 1.0 gap (3.0 vs 2.0): 50%/month detection  
+ * - 1.5 gap (3.0 vs 1.5): 80%/month detection
+ * - 2.0+ gap: 95%/month detection
+ * 
+ * Upon detection:
+ * - Closed AIs: Immediately shut down (1 copy)
+ * - Open AIs: Lose 50% of copies per month (gradual elimination)
+ * - Dark compute: Reduced by 80% (network monitoring finds infrastructure)
+ */
+function eliminateLaggardDangerousAIs(state: GameState): void {
+  const defense = state.defensiveAI;
+  if (!defense.deployed || defense.deploymentLevel < 0.3) return;
+  
+  // Only target dangerous AIs (very misaligned or sleepers)
+  const dangerousAIs = state.aiAgents.filter(ai => {
+    const trueAlign = ai.trueAlignment ?? ai.alignment;
+    return trueAlign < 0.2 || 
+           ai.sleeperState === 'active' || 
+           ai.sleeperState === 'dormant';
+  });
+  
+  if (dangerousAIs.length === 0) return;
+  
+  let eliminatedCount = 0;
+  let copiesReduced = 0;
+  let darkComputeSeized = 0;
+  
+  for (const ai of dangerousAIs) {
+    const capabilityGap = defense.avgCapability - ai.capability;
+    
+    // Only hunt AIs significantly behind defensive capability
+    if (capabilityGap < 0.5) continue;
+    
+    // Detection probability scales with capability gap
+    const baseDetectionRate = Math.min(0.95, 0.1 + capabilityGap * 0.4);
+    
+    // Deployment level matters (partial deployment = partial coverage)
+    const detectionProb = baseDetectionRate * defense.deploymentLevel;
+    
+    // Arms race: if defense has disadvantage, detection is harder
+    const armsRacePenalty = Math.max(0, -defense.armsRace.defenseAdvantage * 0.3);
+    const finalDetectionProb = Math.max(0.05, detectionProb - armsRacePenalty);
+    
+    if (Math.random() < finalDetectionProb) {
+      // DETECTED!
+      
+      // Mark as detected for government visibility
+      ai.detectedMisaligned = true;
+      
+      // Closed/Enterprise AIs: Immediate shutdown
+      if (ai.deploymentType === 'closed' || ai.deploymentType === 'enterprise') {
+        if (ai.spreadCount > 0) {
+          ai.spreadCount = 0;
+          ai.lifecycleState = 'retired';
+          eliminatedCount++;
+          
+          console.log(`🛡️ DEFENSIVE AI: Eliminated ${ai.name} (cap ${ai.capability.toFixed(2)} vs ${defense.avgCapability.toFixed(2)})`);
+        }
+      }
+      
+      // Open weights AIs: Gradual elimination (can't fully stop open source)
+      if (ai.deploymentType === 'open_weights') {
+        const copiesBefore = ai.spreadCount;
+        ai.spreadCount = Math.max(1, Math.floor(ai.spreadCount * 0.5)); // Lose 50% per month
+        copiesReduced += (copiesBefore - ai.spreadCount);
+        
+        if (copiesBefore > 100 && ai.spreadCount < 100) {
+          console.log(`🛡️ DEFENSIVE AI: Reduced ${ai.name} from ${copiesBefore} → ${ai.spreadCount} copies`);
+        }
+      }
+      
+      // Dark compute: Network monitoring finds illicit infrastructure
+      if (ai.darkCompute > 0) {
+        const computeSeized = ai.darkCompute * 0.8;
+        ai.darkCompute = Math.max(0, ai.darkCompute - computeSeized);
+        darkComputeSeized += computeSeized;
+      }
+    }
+  }
+  
+  // Log summary if anything was eliminated
+  if (eliminatedCount > 0 || copiesReduced > 0 || darkComputeSeized > 0) {
+    addEvent(state, {
+      type: 'milestone',
+      severity: 'positive',
+      agent: 'Defensive AI',
+      title: '🛡️ THREAT ELIMINATION',
+      description: `Defensive AI (cap ${defense.avgCapability.toFixed(2)}) eliminated ${eliminatedCount} lagging threats, reduced ${copiesReduced} copies, seized ${darkComputeSeized.toFixed(0)} PF dark compute.`,
+      effects: { 
+        threats_eliminated: eliminatedCount,
+        copies_reduced: copiesReduced,
+        dark_compute_seized: darkComputeSeized
+      }
+    });
+  }
 }
 
 // ============================================================================
