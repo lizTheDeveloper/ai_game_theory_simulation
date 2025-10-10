@@ -194,12 +194,16 @@ function updateTechProgress(
       const deploymentIncrease = Math.min(0.20, deploymentRate); // Cap at 20%/month (up from 15%)
       tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentIncrease);
       
-      // Log significant deployment progress
+      // Log significant deployment progress with year/month
+      const years = Math.floor(month / 12);
+      const months = month % 12;
+      const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
+      
       if (tech.deploymentLevel >= 0.5 && tech.deploymentLevel - deploymentIncrease < 0.5) {
-        console.log(`📈 ${tech.name} reached 50% deployment (Month ${month})`);
+        console.log(`📈 ${tech.name} reached 50% deployment (${timeDisplay})`);
       }
       if (tech.deploymentLevel >= 1.0 && tech.deploymentLevel - deploymentIncrease < 1.0) {
-        console.log(`✅ ${tech.name} fully deployed (Month ${month})`);
+        console.log(`✅ ${tech.name} fully deployed (${timeDisplay})`);
       }
     }
     return;
@@ -258,7 +262,10 @@ function updateTechProgress(
     tech.unlocked = true;
     tech.deploymentLevel = 0.1; // Start at 10% deployment
     
-    console.log(`\n🚀🚀🚀 BREAKTHROUGH ACHIEVED: ${tech.name} (Month ${month})`);
+    const years = Math.floor(month / 12);
+    const months = month % 12;
+    const yearDisplay = years > 0 ? `Year ${years}, ` : '';
+    console.log(`\n🚀🚀🚀 BREAKTHROUGH ACHIEVED: ${tech.name} (${yearDisplay}Month ${months + 1})`);
     console.log(`    Category: ${tech.category}`);
     console.log(`    Initial deployment: 10%`);
     

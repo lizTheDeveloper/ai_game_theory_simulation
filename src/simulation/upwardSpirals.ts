@@ -387,7 +387,10 @@ function updateVirtuousCascade(spirals: UpwardSpiralState, month: number): void 
     
     if (!wasInCascade) {
       spirals.cascadeMonths = 1;
-      console.log(`\n🌟✨ VIRTUOUS CASCADE BEGINS (Month ${month})`);
+      const years = Math.floor(month / 12);
+      const months = month % 12;
+      const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
+      console.log(`\n🌟✨ VIRTUOUS CASCADE BEGINS (${timeDisplay})`);
       console.log(`   ${activeCount} upward spirals active → ${spirals.cascadeStrength.toFixed(1)}x amplification`);
       console.log(`   Active spirals: ${getActiveSpiralNames(spirals).join(', ')}\n`);
     } else {
@@ -395,7 +398,10 @@ function updateVirtuousCascade(spirals: UpwardSpiralState, month: number): void 
     }
   } else {
     if (wasInCascade) {
-      console.log(`\n⚠️  VIRTUOUS CASCADE ENDED (Month ${month})`);
+      const years = Math.floor(month / 12);
+      const months = month % 12;
+      const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
+      console.log(`\n⚠️  VIRTUOUS CASCADE ENDED (${timeDisplay})`);
       console.log(`   Duration: ${spirals.cascadeMonths} months`);
       console.log(`   Only ${activeCount} spirals active (need 4+)\n`);
     }
@@ -548,7 +554,11 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const gov = state.government.governanceQuality;
   const breakthrough = state.breakthroughTech;
   
-  console.log(`\n🔍 SPIRAL DIAGNOSTICS (Month ${currentMonth})`);
+  const years = Math.floor(currentMonth / 12);
+  const months = currentMonth % 12;
+  const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
+  
+  console.log(`\n🔍 SPIRAL DIAGNOSTICS (${timeDisplay})`);
   console.log(`================================================================================`);
   
   // Count active spirals
