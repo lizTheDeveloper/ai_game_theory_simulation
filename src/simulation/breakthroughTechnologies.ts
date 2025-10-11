@@ -944,15 +944,22 @@ function updateDeExtinctionDeployment(state: GameState, budget: number): void {
   // Base deployment: $10B for 10% ($100B total - Colossal scale-up)
   let deploymentRate = (budget / 10) * 0.1;
   
-  // AI helps with genetic analysis and CRISPR optimization
+  // AI dramatically accelerates genetic analysis, CRISPR optimization, and species selection
+  // With AI: Protein folding (AlphaFold), genome assembly, ecological modeling all 10-100x faster
   const avgCapability = calculateAverageCapability(state);
-  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.4;
+  const aiBonus = 1 + Math.log(1 + avgCapability) * 1.2; // Stronger AI effect (was 0.4)
+  // At AI capability 2.0: 1 + log(3) * 1.2 = 2.3x faster
+  // At AI capability 4.0: 1 + log(5) * 1.2 = 2.9x faster
   deploymentRate *= aiBonus;
   
   tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentRate);
   
   // Apply biodiversity restoration (+2%/month at full deployment - research-backed)
-  const biodiversityBoost = tech.deploymentLevel * tech.biodiversityBoostPerMonth;
+  // BUT: Boost rate with AI coordination (7B humans + AI = massive parallel effort)
+  const baseBoost = tech.deploymentLevel * tech.biodiversityBoostPerMonth;
+  const aiCoordinationBonus = 1 + (avgCapability * 0.5); // Up to 3x at AGI (capability 4.0)
+  const biodiversityBoost = baseBoost * aiCoordinationBonus;
+  
   state.environmentalAccumulation.biodiversityIndex = Math.min(
     1.0,
     state.environmentalAccumulation.biodiversityIndex + biodiversityBoost
