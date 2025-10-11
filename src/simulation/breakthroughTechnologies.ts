@@ -948,20 +948,23 @@ function updateDeExtinctionDeployment(state: GameState, budget: number): void {
   // Base deployment: $10B for 10% ($100B total - Colossal scale-up)
   let deploymentRate = (budget / 10) * 0.1;
   
-  // AI dramatically accelerates genetic analysis, CRISPR optimization, and species selection
-  // With AI: Protein folding (AlphaFold), genome assembly, ecological modeling all 10-100x faster
+  // AI accelerates RESEARCH (genome sequencing, CRISPR design, species selection)
+  // AlphaFold precedent: Computational tasks 10-1000x faster
+  // BUT: Physical processes (breeding, release, ecosystem establishment) unchanged
+  // Net effect: ~30-50% faster overall (research bottleneck removed)
   const avgCapability = calculateAverageCapability(state);
-  const aiBonus = 1 + Math.log(1 + avgCapability) * 1.2; // Stronger AI effect (was 0.4)
-  // At AI capability 2.0: 1 + log(3) * 1.2 = 2.3x faster
-  // At AI capability 4.0: 1 + log(5) * 1.2 = 2.9x faster
+  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.4; // Modest boost: computational only
+  // At AI capability 2.0: 1 + log(3) * 0.4 = 1.4x faster (40% improvement)
+  // At AI capability 4.0: 1 + log(5) * 0.4 = 1.6x faster (60% improvement)
   deploymentRate *= aiBonus;
   
   tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentRate);
   
   // Apply biodiversity restoration (+2%/month at full deployment - research-backed)
-  // BUT: Boost rate with AI coordination (7B humans + AI = massive parallel effort)
+  // AI helps with: Site selection, species matching, monitoring
+  // McKinsey precedent: Supply chain optimization ~15-20% gains
   const baseBoost = tech.deploymentLevel * tech.biodiversityBoostPerMonth;
-  const aiCoordinationBonus = 1 + (avgCapability * 0.5); // Up to 3x at AGI (capability 4.0)
+  const aiCoordinationBonus = 1 + (avgCapability * 0.15); // Up to 1.6x at AGI (15% per capability point)
   const biodiversityBoost = baseBoost * aiCoordinationBonus;
   
   state.environmentalAccumulation.biodiversityIndex = Math.min(
