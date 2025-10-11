@@ -48,15 +48,37 @@
 - Upward spirals not activating (needs debugging)
 - Diplomatic interventions not triggering (prerequisite timing mismatch)
 
+### 🚨 **BASELINE PARAMETER VALIDATION (NEW - Oct 10, 2025)**
+**File:** `plans/initialization-parameters-validation.md` (700+ lines, 30+ sources)  
+**Status:** **READY FOR IMPLEMENTATION**  
+
+**Critical Finding:** Starting values are TOO OPTIMISTIC for 2025!
+
+| Parameter | Current | Research-Backed | Issue |
+|-----------|---------|-----------------|-------|
+| Biodiversity | 70% | 35% | **2x TOO HIGH** (IPBES 2024: 50-70% loss since 1970) |
+| Resources | 85% | 65% | **TOO HIGH** (1.7x overshoot, Earth Overshoot Day July 24) |
+| Pollution | 15% | 30% | **TOO LOW** (46-80% unhealthy air, 7/9 boundaries breached) |
+| Climate Rate | 4.8%/yr | 0.96%/yr | **5x TOO FAST** (IPCC: ~0.2°C/decade, not 1°C/decade) |
+| Meaning Crisis | 15% | 22% | **TOO LOW** (WHO 2025: 17-21% youth, 30-40% adults) |
+
+**Impact:** Making simulation **more realistic** will make Utopia **harder** and crises **faster**.  
+**Rationale:** Reflects actual 2025 crisis levels, not optimistic projections.  
+**Priority:** TIER 0 (implement before adding new features!)
+
 ### 📈 **Recent Progress (Oct 8-10, 2025)**
 - ✅ Treaty decay & renewal mechanics (nuclear war 100% → 40-70%)
 - ✅ Whale pump mechanic (ocean restoration)
 - ✅ Capability-based threat elimination (defensive AI cleans up)
 - ✅ Comprehensive research on 5 major areas (4,900+ lines, 90+ citations)
+- ✅ **NEW:** Baseline parameter validation (biodiversity, resources, pollution, climate, social)
 
 ---
 
 ## 🗺️ **ROADMAP STRUCTURE**
+
+### **TIER 0: BASELINE CORRECTIONS** 🔧
+Fix starting parameters to match real 2025 data (DO THIS FIRST!)
 
 ### **TIER 1: CRITICAL EXTINCTION RISKS** 🚨
 Research-backed existential threats missing from model
@@ -72,6 +94,77 @@ Add depth and strategic choices
 
 ### **TIER 5: ADVANCED FEATURES** 🌟
 Nice-to-have complexity and detail
+
+---
+
+# 🔧 **TIER 0: BASELINE CORRECTIONS** (Implement First!)
+
+## 0.1 **2025 Starting Parameter Corrections** 🎯
+**File:** `plans/initialization-parameters-validation.md` (700+ lines, 30+ sources)  
+**Priority:** **DO FIRST** (Foundation for all other work)  
+**Dev Time:** ~2 hours  
+**Complexity:** LOW (simple value changes)  
+
+**Why First:**
+- All future features depend on accurate baseline
+- Current baseline is 2025 OPTIMISTIC, not 2025 REALISTIC
+- Research shows we're in worse shape than model assumes
+- Making baseline realistic will change ALL outcomes
+
+**Key Changes:**
+1. **Biodiversity:** 0.70 → 0.35 (IPBES 2024: 50-70% loss since 1970)
+2. **Resources:** 0.85 → 0.65 (Global Footprint Network: 1.7x overshoot)
+3. **Pollution:** 0.15 → 0.30 (American Lung Assoc: 46% unhealthy air)
+4. **Climate Rate:** 0.004 → 0.0008 (IPCC: 5x too fast currently)
+5. **Meaning Crisis:** 0.15 → 0.22 (WHO 2025: 17-21% youth lonely)
+
+**Research Backing:**
+- 30+ peer-reviewed sources (2024-2025)
+- IPBES, IPCC, WHO, Global Footprint Network, UN, Stockholm Resilience
+- Earth Overshoot Day, Planetary Boundaries, Mental Health Surveys
+
+**Expected Impact:**
+- ❌ Utopia becomes HARDER (ecological spiral needs 70% biodiversity, starting at 35%)
+- ❌ Crises trigger FASTER (resource crisis at 0.4, starting at 0.65)
+- ✅ Model becomes MORE REALISTIC (reflects actual 2025 crisis levels)
+- ✅ Interventions become MORE MEANINGFUL (bigger gap to bridge)
+
+**Implementation:**
+```typescript
+// src/simulation/environmental.ts - initializeEnvironmentalAccumulation()
+return {
+  resourceReserves: 0.65,      // Was 0.85 - Research: 1.7x overshoot (GFN 2025)
+  pollutionLevel: 0.30,         // Was 0.15 - Research: 46% unhealthy air (ALA 2025)
+  climateStability: 0.75,       // KEEP - Validated (Copernicus 2024: +1.2°C)
+  biodiversityIndex: 0.35,      // Was 0.70 - Research: 50-70% loss (IPBES 2024)
+  // ... crisis flags
+};
+
+// Update climate degradation rate (too fast currently)
+let climateDegradationRate = economicStage * 0.0008; // Was 0.004 (5x too fast)
+// Research: IPCC AR6, ~0.2°C/decade, not 1°C/decade
+
+// src/simulation/socialCohesion.ts - initializeSocialAccumulation()
+return {
+  meaningCrisisLevel: 0.22,     // Was 0.15 - Research: WHO 2025 (17-21% youth)
+  institutionalLegitimacy: 0.65, // KEEP - Validated (Pew 2024)
+  socialCohesion: 0.60,          // KEEP - Validated (AAMCH 2024)
+  culturalAdaptation: 0.10,      // KEEP - Correct for 2025
+  // ... crisis flags
+};
+```
+
+**Validation Steps:**
+1. Run Monte Carlo (N=20) with OLD values → baseline outcomes
+2. Implement changes
+3. Run Monte Carlo (N=20) with NEW values → compare
+4. Document differences in devlog
+5. Update wiki with new baseline assumptions
+
+**Philosophy Alignment:**
+> "We are never going for specific outcomes, only trying to figure out the most realistic, defensible model we can"
+
+This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
