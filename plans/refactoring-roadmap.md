@@ -1,8 +1,27 @@
 # Refactoring Roadmap: AI Game Theory Simulation
 
-**Date:** October 9, 2025
-**Status:** Planning Phase
-**Related:** `architectural-review.md`
+**Date:** October 9, 2025 (Updated: October 10, 2025)
+**Status:** Phase 0 Complete (Architectural Cleanup) - Phase 1-6 Planned
+**Related:** `architectural-review.md`, `architectural-cleanup-plan-phase2.md`
+
+---
+
+## Completion Status
+
+### ✅ Phase 0: Architectural Cleanup (October 10, 2025) - COMPLETE
+
+**Before starting the major refactoring phases below, we completed critical architectural cleanup:**
+
+- **Phase 2A**: Property access safety (22 unsafe accesses → 0)
+- **Phase 2B**: Trust system consistency (verified paranoia-based trust)
+- **Phase 2C**: Trust migration (10 reads migrated to `getTrustInAI()`)
+- **Phase 2D**: MetricSnapshot cleanup (2 scripts fixed)
+- **Phase 2E**: Outcome API verification (already using modern `activeAttractor`)
+- **Phase 2F**: Legacy property deprecation (7 properties marked)
+
+**Results**: Zero runtime crashes, consistent trust semantics, clean type interfaces. See `architectural-cleanup-plan-phase2.md` for details.
+
+**Impact**: Codebase is now safer and more consistent before beginning the major refactoring phases below.
 
 ---
 
