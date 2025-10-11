@@ -647,6 +647,172 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
+## 2.8 **Colonial Extraction, Military Power & Resource Inequality** 🏭⚔️
+**File:** `plans/colonial-extraction-and-military-power-system.md` (1,900+ lines)
+**Priority:** **CRITICAL** (Foundational restructuring)
+**Dev Time:** ~50-65 hours (FULL PHASE)
+**Complexity:** VERY HIGH
+
+**Status:** DESIGN COMPLETE - Awaiting implementation
+
+**⚠️ NOTE:** This is NOT a mitigation like other TIER 2 items - this is a **fundamental restructuring** of how the simulation models power, resources, and geopolitics. It affects ALL other systems.
+
+**User Insight:**
+> "There are no poor countries, only exploited ones. Hegemons extract, it's in their nature. We're in uncharted territory on how to stop that."
+
+**Why Critical:**
+- Can't model realistic refugee flows without modeling the power structures that create displacement
+- Current "global resource pool" erases colonialism entirely
+- Missing the systemic dynamics that drive war, instability, and crisis
+- War linked to meaning crisis (nationalism as purpose-substitute)
+- Military emissions massive but invisible in current model
+
+**Key Design Decisions (User-Approved):**
+1. **5 Hegemonic Powers + Blocs:** US, China, EU, Russia, India (forming BRICS, etc.)
+2. **6 Resource Regions:** Sub-Saharan Africa, Middle East, South Asia, East Asia, Americas, Europe
+3. **3-Tier Power Structure:** Hegemons → Regions → Extraction flows
+4. **Hegemon-Level Agents:** NOT player control - hegemons make their own decisions about extraction, war, intervention
+5. **Climate Reparations:** Crucial mechanic (hegemons caused climate change, periphery suffers)
+
+**Core Systems:**
+
+**TIER 2.1: Power Hierarchy & Resource Extraction (15-20h)**
+- 5 hegemonic powers with military, economic, technological capabilities
+- 6 resource regions with endowments (minerals, oil, labor, water)
+- Extraction matrix: Who takes from whom (based on colonial history + military presence)
+- Wealth inequality emerges from extraction (10-20% stays local, 80-90% extracted)
+- Colonial legacy affects extraction patterns
+
+```typescript
+export interface HegemonicPower {
+  name: string;                          // US, China, EU, Russia, India
+  militaryCapability: number;            // [0, 1] Global force projection
+  economicPower: number;                 // GDP, trade dominance
+  technologicalLead: number;             // AI, weapons, innovation
+  domesticResources: ResourceEndowment;  // Own resources
+  extractedResources: ResourceEndowment; // Taken from other regions
+  resourceDependence: number;            // How much needs extraction
+  militaryBases: Map<RegionName, number>; // Bases per region (enables extraction)
+  historicalColonies: RegionName[];      // Which regions were colonized
+  meaningCrisis: number;                 // [0, 1] Existential purposelessness
+  nationalismStrength: number;           // [0, 1] War as substitute meaning
+}
+
+export interface ResourceRegion {
+  resourceEndowment: ResourceEndowment;       // What this region has
+  resourceSovereignty: number;                // [0, 1] Control over own resources
+  extractedBy: Map<string, ExtractionFlow>;  // Which powers extract
+  wealthRetained: number;                     // % kept locally (1 - extraction)
+  militarySovereignty: number;                // [0, 1] Can defend territory
+  colonialHistory: {...};                     // Who colonized, when, how long
+  historicalEmissions: number;                // Tons CO2 (mostly from hegemons)
+  currentEmissions: number;                   // Tons CO2 now
+}
+```
+
+**TIER 2.2: Military System & Interventions (12-15h)**
+- Military intervention types: Regime change, proxy war, occupation, coup support, resource securing
+- Military CO2 emissions (US military: 59M tons/year - more than 140 countries)
+- Military spending effects: Economy, AI R&D boost, meaning (nationalism)
+- Interventions → refugee crises (Iraq, Libya, Syria patterns)
+- Military R&D → AI acceleration (but less safe, DARPA-style)
+
+```typescript
+export interface MilitaryIntervention {
+  hegemon: string;
+  targetRegion: RegionName;
+  interventionType: 'regime_change' | 'proxy_war' | 'occupation' | 'coup_support' | 'resource_securing';
+  publicJustification: string;           // "Spreading democracy"
+  actualGoal: ActualGoal;                // Resource access, rival containment
+  regionalInstability: number;           // How much destabilization
+  refugeesCreated: number;               // Millions displaced
+  co2Emissions: number;                  // Tons per month
+  aiDevelopmentBoost: number;            // Military R&D → AI advancement
+}
+```
+
+**TIER 2.3: War-Meaning Feedback Loop (8-10h)**
+- Meaning crisis → nationalism appeal → war motivation
+- War → economic activity, unity, "defending freedom" (purpose substitute)
+- War trauma → moral injury, veteran meaning crisis (negative feedback)
+- **KEY MECHANIC:** Solve meaning crisis → reduce war motivation
+- Alternative purpose pathways (community, creativity, stewardship) compete with nationalism
+
+```typescript
+export interface WarMeaningFeedback {
+  meaningCrisisLevel: number;            // From meaning system
+  nationalismAppeal: number;             // How attractive is nationalism?
+  warAsUnifier: number;                  // War creates shared purpose
+  warMotivation: number;                 // Likelihood of intervention
+
+  // Key equation:
+  // warMotivation = meaningCrisisLevel * nationalismAppeal - moralInjury
+  // If meaningCrisisLevel → 0 (solved), warMotivation → 0
+}
+```
+
+**TIER 2.4: Environmental Debt & Climate Justice (6-8h)**
+- Historical emissions per hegemon/region (US/EU caused most)
+- Climate vulnerability vs emissions ratio (climate debt)
+  - Example: Sub-Saharan Africa suffers 28x more than they caused
+- Climate reparations as policy option (do hegemons pay?)
+- Military emissions tracked separately (usually invisible)
+
+**TIER 2.5: Integration & Testing (10-12h)**
+- Resource economy updated (regional endowments + extraction)
+- Refugee flows updated (military interventions as primary cause)
+- AI development updated (military R&D boost)
+- Meaning system updated (war as purpose substitute)
+- Monte Carlo testing (N=50), balance extraction rates
+
+**Philosophical Core:**
+This system models a profound question: **Can humanity transcend conquest as meaning-substitute?**
+
+Throughout history: Empire as purpose, nationalism as anchor, war as unifier.
+But this creates: Endless conflict, extraction, refugees, environmental destruction, AI arms race → extinction.
+
+**The alternative:** Solve meaning crisis → reduce nationalism → reduce war → fair resource distribution → cooperation.
+
+**Testable in model:**
+```
+IF meaningCrisis → 0 (solved) AND alternativePurpose → 1 (healthy)
+THEN warMotivation → 0 AND extraction → fairTrade AND utopia → possible
+
+BUT if meaning remains broken:
+IF meaningCrisis → 1 (high) AND alternativePurpose → 0 (none)
+THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
+```
+
+**Integration Points:**
+- **Resource Economy:** Per-region resources + extraction flows (replaces global pool)
+- **Refugee System:** Military interventions create displacement (Syria, Iraq, Libya patterns)
+- **Environmental System:** Historical emissions debt + military CO2 (59M tons/year US)
+- **AI Development:** Military R&D accelerates AI (but reduces safety)
+- **Meaning System:** War as purpose substitute vs alternative pathways
+- **Dystopia Paths:** Fortress world emerges from refugee crises + militarized borders
+
+**Expected Impact:**
+- **Realism:** Models how power actually works (extraction, intervention, inequality)
+- **Refugee dynamics:** Explains why regions destabilize (not just abstract "crisis")
+- **War mechanics:** Links meaning crisis → nationalism → intervention → refugees
+- **Climate justice:** Makes environmental debt explicit
+- **Extinction pathways:** Nuclear war from arms race, climate collapse from emissions debt
+- **Utopia difficulty:** Breaking extraction requires solving meaning crisis (uncharted territory)
+
+**Research Backing:**
+- **Hickel et al. (2022):** $152 trillion drained from Global South since 1960
+- **US military emissions:** 59M tons CO2/year (2017) - more than 140 countries combined
+- **DARPA AI spending:** $1.5B/year (2023), projected $3B by 2025
+- **Durkheim:** War creates "collective effervescence", shared purpose
+- **PTSD rates:** 11-20% of Iraq/Afghanistan vets
+- **Syrian crisis:** 13M displaced, 580K+ deaths, US intervention role
+
+**Total Estimated Time:** 50-65 hours (6-8 weeks full-time)
+**Complexity:** VERY HIGH (reshapes entire simulation)
+**Priority:** CRITICAL (foundational for realistic modeling)
+
+---
+
 # 🌍 **TIER 3: PLANETARY BOUNDARIES**
 
 ## 3.1 **Tipping Point Cascade System** 🌪️

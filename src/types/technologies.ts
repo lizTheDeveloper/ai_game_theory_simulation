@@ -172,6 +172,18 @@ export interface BreakthroughTechState {
     breakthroughYear: number;
   };
   
+  // Advanced Pollution Remediation Technologies (TIER 2.3)
+  advancedDirectAirCapture?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1]
+    breakthroughYear: number;
+  };
+  aiOptimizedPollutionRemediation?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1]
+    breakthroughYear: number;
+  };
+  
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation
