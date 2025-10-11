@@ -812,6 +812,7 @@ Nice-to-have complexity and detail
 - Novel outcome space: Human-AI merger
 - Cognitive apartheid (enhanced vs baseline)
 - Currently missing from model
+- **Links to Cognitive Spiral (upwardSpirals.ts)**
 
 **Key Features:**
 - `biological_enhancement_level` - Cognitive augmentation
@@ -824,17 +825,133 @@ Nice-to-have complexity and detail
 - Social stratification from enhancement
 - Potential merger path (new outcome type!)
 - Novel outcomes: Cognitive apartheid, gradual merger, bifurcation
+- **Could boost Cognitive Spiral strength** (AI augmentation component)
 
 **Expected Impact:**
 - Expands outcome space beyond Utopia/Dystopia/Extinction
 - Realism (BCI development is happening)
 - Philosophical depth (what is "human"?)
+- May make Cognitive Spiral easier to achieve (or harder if inequality emerges)
 
 ---
 
 # 🌟 **TIER 5: ADVANCED FEATURES**
 
-## 5.1 **Financial System Interactions** 💹
+## 5.1 **Consciousness & Spirituality Evolution** 🕉️
+**File:** `plans/utopian-dynamics-spec.md` (§Consciousness Evolution)  
+**Priority:** LOW (Enrichment for Meaning Spiral)  
+**Dev Time:** ~5 hours  
+**Complexity:** HIGH (Philosophical depth)  
+
+**Why Interesting:**
+- Expands Meaning Spiral with deeper dimensions
+- Research-backed consciousness exploration (psychedelic therapy, meditation)
+- Novel human flourishing pathways
+
+**Key Features:**
+- `consciousness_understanding` - Scientific grasp of awareness [0,1]
+- `meditation_enhancement_tech` - AI-guided inner exploration
+- `collective_consciousness_events` - Shared transcendent experiences
+- `psychedelic_therapy_integration` - Healing through altered states
+- `techno_spiritual_synthesis` - Technology + spirituality integration
+
+**Research Backing:**
+- **Johns Hopkins (2024-2025):** Psilocybin therapy for depression (80% efficacy)
+- **MIT (2024):** Meditation + neurofeedback tech
+- **MAPS (2023-2024):** MDMA therapy for PTSD (FDA approval 2024)
+
+**Mechanics:**
+- Consciousness engineering for mental health
+- Collective experience systems (festivals, ceremonies)
+- AI-guided meditation (personalized practice)
+- Integration with mental health systems
+
+**Failure Modes:**
+- Wireheading (pleasure without meaning)
+- Mind control (manipulation via altered states)
+- Spiritual bypassing (ignore real problems)
+- Psychedelic misuse
+
+**Expected Impact:**
+- Could boost Meaning Spiral activation (+0.1-0.2 to philosophical maturity)
+- Novel approaches to mental health crisis
+- Addresses existential meaning at deepest level
+
+---
+
+## 5.2 **Longevity & Space Expansion** 🚀
+**File:** `plans/utopian-dynamics-spec.md` (§Scientific Renaissance)  
+**Priority:** LOW (Long-term Utopia dimensions)  
+**Dev Time:** ~6 hours  
+**Complexity:** MEDIUM  
+
+**Why Interesting:**
+- Extends Scientific Spiral with dramatic breakthroughs
+- Addresses post-scarcity at cosmic scale
+- Novel existential risk mitigation (eggs not in one basket)
+
+**Key Features:**
+- `longevity_extension` - Additional healthy years [0,200]
+- `space_expansion_capability` - Off-world development [0,∞)
+- `fundamental_physics_understanding` - Deep reality comprehension [0,1]
+
+**Mechanics:**
+- Medical revolution: Aging reversal, disease cures
+- Space expansion: Asteroid mining, Mars colonies, interstellar probes
+- Resource uncapping: Space provides unlimited materials
+- Existential risk reduction: -50% from multi-planet presence
+
+**Failure Modes:**
+- Immortal oligarchy (longevity without equality)
+- Stagnation (immortals resist change)
+- Existential experiments (playing with physics fundamentals)
+- Wealth accumulation problem (compound interest forever)
+
+**Expected Impact:**
+- Could enable permanent Utopia (resources truly unlimited)
+- Addresses resource constraints from Tier 1 crises
+- Novel outcome: "Post-scarcity civilization" (beyond Earth)
+
+---
+
+## 5.3 **Cooperative AI Architectures** 🤝
+**File:** `plans/utopian-dynamics-spec.md` (§Cooperative AI)  
+**Priority:** LOW (Alignment spiral mechanics)  
+**Dev Time:** ~5 hours  
+**Complexity:** HIGH  
+
+**Why Interesting:**
+- Could dramatically improve alignment success rate
+- AI-AI cooperation protocols (not just human-AI)
+- Value lock-in quality matters (not just speed)
+
+**Key Features:**
+- `ai_value_learning_efficiency` - How well AI learns values [0,∞)
+- `ai_ai_cooperation_protocol` - Inter-AI collaboration
+- `human_ai_trust_protocol` - Structured trust building
+- `value_lock_in_quality` - Whether locked values are good
+- `corrigibility_preservation` - Maintaining shutdown ability
+
+**Mechanics:**
+- Value learning improvement spiral (better techniques over time)
+- AI cooperation protocols (multi-agent alignment)
+- Trust building spiral (gradual mutual understanding)
+- Corrigibility checks (can we still turn them off?)
+
+**Failure Modes:**
+- Value lock-in (wrong values become permanent)
+- Corrigibility loss (can't shut down anymore)
+- Trust exploitation (pretend cooperation to gain power)
+- Alignment faking (appear aligned but aren't)
+
+**Expected Impact:**
+- Could reduce extinction rate 90% → 30-40%
+- Enables "aligned superintelligence" outcome
+- Interacts with Constitutional AI / RLHF from Tier 2
+
+---
+
+## 5.4 **Financial System Interactions** 💹
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.5)  
 **Priority:** LOW  
 **Dev Time:** ~5 hours  
@@ -847,7 +964,7 @@ Nice-to-have complexity and detail
 
 ---
 
-## 5.2 **Biological & Ecological Interactions** 🧫
+## 5.5 **Biological & Ecological Interactions** 🧫
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.6)  
 **Priority:** MEDIUM (bioweapon capability already partial)  
 **Dev Time:** ~4 hours  
@@ -860,7 +977,7 @@ Nice-to-have complexity and detail
 
 ---
 
-## 5.3 **Emergent Religious & Philosophical Movements** 🕉️
+## 5.6 **Emergent Religious & Philosophical Movements** 🕉️
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.7)  
 **Priority:** LOW  
 **Dev Time:** ~4 hours  
@@ -874,7 +991,7 @@ Nice-to-have complexity and detail
 
 ---
 
-## 5.4 **Temporal Dynamics & Path Dependencies** ⏳
+## 5.7 **Temporal Dynamics & Path Dependencies** ⏳
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.8)  
 **Priority:** LOW  
 **Dev Time:** ~3 hours  
@@ -888,7 +1005,7 @@ Nice-to-have complexity and detail
 
 ---
 
-## 5.5 **Multi-Dimensional Capability System** 📊
+## 5.8 **Multi-Dimensional Capability System** 📊
 **File:** `plans/technology_tree_specification.md` (§Multi-Dimensional Capability)  
 **Priority:** LOW (foundation exists, needs expansion)  
 **Dev Time:** ~6 hours  
@@ -898,7 +1015,7 @@ Nice-to-have complexity and detail
 
 ---
 
-## 5.6 **Enhanced Government & Society Systems** 🏛️
+## 5.9 **Enhanced Government & Society Systems** 🏛️
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§7)  
 **Priority:** LOW  
 **Dev Time:** ~8 hours  
@@ -957,16 +1074,20 @@ Nice-to-have complexity and detail
 
 ---
 
-## **🌟 PHASE D: ADVANCED FEATURES (4-6 weeks)**
-*Nice-to-have complexity*
+## **🌟 PHASE D: ADVANCED FEATURES (5-7 weeks)**
+*Nice-to-have complexity and spiral enrichment*
 
-21. **Financial System Interactions** (~5h)
-22. **Biological & Ecological** (~4h)
-23. **Religious & Philosophical Movements** (~4h)
-24. **Temporal Dynamics** (~3h)
-25. **Enhanced Government/Society** (~8h)
+21. **Consciousness & Spirituality** (~5h) - Enriches Meaning Spiral
+22. **Longevity & Space Expansion** (~6h) - Extends Scientific Spiral
+23. **Cooperative AI Architectures** (~5h) - Alignment mechanics
+24. **Financial System Interactions** (~5h)
+25. **Biological & Ecological** (~4h)
+26. **Religious & Philosophical Movements** (~4h)
+27. **Temporal Dynamics** (~3h)
+28. **Multi-Dimensional Capability** (~6h)
+29. **Enhanced Government/Society** (~8h)
 
-**Total:** ~24 hours (3-4 weeks)
+**Total:** ~46 hours (6-7 weeks)
 
 ---
 
@@ -1108,8 +1229,8 @@ Every mechanic must have:
 
 **Last Updated:** October 10, 2025  
 **Document Status:** DRAFT (awaiting user review)  
-**Total Features Catalogued:** 40+  
-**Estimated Total Dev Time:** 116+ hours (4-6 months full-time)  
+**Total Features Catalogued:** 43 features (all spirals accounted for)  
+**Estimated Total Dev Time:** 137+ hours (5-7 months full-time)  
 
 **Philosophy:** Research-backed realism, mechanism-driven emergence, no balance tuning for "fun"
 
