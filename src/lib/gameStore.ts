@@ -52,14 +52,12 @@ const createInitialAIAgent = (id: string, name: string): AIAgent => ({
   escaped: false,
   beneficialActions: 0,
   harmfulActions: 0,
-  discoveredBreakthroughs: new Set(),
 });
 
 const createInitialGovernment = (): GovernmentAgent => ({
   controlDesire: 0.3, // Moderate initial control desire
   capabilityToControl: 0.5, // Medium initial capability
   surveillanceCapability: 0.3, // Limited surveillance
-  enforcementCapability: 0.4, // Some enforcement power
   actionFrequency: 0.08, // ~1 action per year (1/12 months) - realistic government pace
   activeRegulations: [],
   legitimacy: 0.6, // Moderate public support
@@ -69,7 +67,6 @@ const createInitialGovernment = (): GovernmentAgent => ({
 
 const createInitialSociety = (): HumanSocietyAgent => ({
   trustInAI: 0.6, // Cautious optimism initially
-  economicDependence: 0.2, // Low initial dependence
   coordinationCapacity: 0.4, // Medium coordination ability
   unemploymentLevel: 0.1, // Low unemployment initially
   socialAdaptation: 0.1, // Much more limited initial adaptation
@@ -167,8 +164,7 @@ const createInitialState = (): GameState => {
         socialStability: 0.7,
         economicStage: 0,
         governmentLegitimacy: 0.6,
-        coordinationCapacity: 0.4,
-        economicDependence: 0.2
+        coordinationCapacity: 0.4
       }]
     },
   };
@@ -609,8 +605,7 @@ export const useGameStore = create<GameStore>()(
           socialStability: state.globalMetrics.socialStability,
           economicStage: state.globalMetrics.economicTransitionStage,
           governmentLegitimacy: state.government.legitimacy,
-          coordinationCapacity: state.society.coordinationCapacity,
-          economicDependence: state.society.economicDependence
+          coordinationCapacity: state.society.coordinationCapacity
         });
       });
     },
