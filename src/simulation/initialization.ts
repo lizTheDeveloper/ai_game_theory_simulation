@@ -81,7 +81,6 @@ export function createAIAgent(
     escaped: false,
     beneficialActions: 0,
     harmfulActions: 0,
-    discoveredBreakthroughs: new Set(),
     // Phase 4: AI Lifecycle
     lifecycleState: 'deployed_closed', // Start as deployed (existing AIs)
     deploymentType: 'closed', // Most start as closed systems
@@ -188,7 +187,6 @@ export function createDefaultInitialState(): GameState {
       controlDesire: 0.3,
       capabilityToControl: 0.5,
       surveillanceCapability: 0.3,
-      enforcementCapability: 0.4,
       actionFrequency: 0.08,
       activeRegulations: [],
       legitimacy: 0.6,
@@ -240,7 +238,6 @@ export function createDefaultInitialState(): GameState {
       paranoiaLevel: 0.1,  // Phase 2.8: Slight baseline caution about AI
       communityStrength: 0.63,  // Phase 2E: Community bonds (medium-high baseline)
       institutionalTrust: 0.70,  // Phase 2E: Trust in institutions (democratic baseline)
-      economicDependence: 0.2,
       coordinationCapacity: 0.4,
       unemploymentLevel: 0.1,
       socialAdaptation: 0.1,

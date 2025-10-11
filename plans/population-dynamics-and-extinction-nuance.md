@@ -1010,7 +1010,7 @@ Much richer outcome narratives:
 
 ## 💡 FUTURE ENHANCEMENTS
 
-### **Phase 5: Regional Population Dynamics** (Future)
+### **Phase 5: Regional Population Dynamics** (Future - After Multipolar Implementation)
 - Track population by continent/nation
 - Regional carrying capacities
 - Migration patterns between regions
@@ -1030,12 +1030,516 @@ Much richer outcome narratives:
 
 ---
 
-**Total Estimated Implementation Time:** 10-14 hours
-**Complexity:** HIGH
+## 🌍 APPENDIX: ENHANCED MULTIPOLAR REFUGEE SYSTEM (FUTURE)
+
+**Note:** This is a **much later addition**, to be implemented **after** the international competition/multipolar dynamics system is complete.
+
+### **Design Philosophy:**
+
+Once we have multipolar nation-state dynamics with per-nation AI capabilities, resources, and tensions, we can model refugee flows with **much higher fidelity**:
+
+1. **Per-nation population tracking**
+2. **Bilateral migration patterns** (which nations refugees go to/from)
+3. **Regional carrying capacities** (US vs China vs EU vs Middle East)
+4. **Climate vulnerability by geography** (Bangladesh flooding vs Sahel desertification)
+5. **War-driven displacement** (Ukraine → Poland, Syria → Turkey/Germany)
+
+### **Enhanced State Structure:**
+
+```typescript
+/**
+ * Enhanced Regional Refugee System (FUTURE - Post-Multipolar)
+ *
+ * Requires: International Competition system (TIER 1.4)
+ * Depends on: Per-nation state tracking (nations[], bilateralRelations[])
+ */
+export interface EnhancedRefugeeCrisisSystem {
+  // Per-nation population
+  nationalPopulations: Map<string, NationalPopulation>;
+
+  // Bilateral refugee flows
+  refugeeFlows: RefugeeFlow[];
+
+  // Regional dynamics
+  regionalCrises: Map<string, RegionalCrisis>;
+
+  // Migration networks
+  migrationRoutes: MigrationRoute[];
+  historicalDiaspora: Map<string, DiasporaNetwork>; // Pre-existing communities
+}
+
+export interface NationalPopulation {
+  nation: string;
+  population: number;                     // In millions
+  nativePopulation: number;               // Born in this nation
+  immigrantPopulation: number;            // Born elsewhere
+  refugeePopulation: number;              // Displaced from crises
+
+  // Demographics
+  birthRate: number;
+  deathRate: number;
+  netMigrationRate: number;               // Emigration - immigration
+  fertilityRate: number;
+  medianAge: number;
+  urbanizationRate: number;
+
+  // Carrying capacity
+  carryingCapacity: number;               // Based on geography, climate, resources
+  populationDensity: number;              // People per km²
+  habitableArea: number;                  // km² of livable land
+
+  // Vulnerability
+  climateVulnerability: number;           // [0, 1] How exposed to climate change
+  resourceVulnerability: number;          // [0, 1] Food/water dependence on imports
+  conflictRisk: number;                   // [0, 1] War/civil unrest probability
+
+  // Refugee hosting
+  refugeeAcceptanceRate: number;          // [0, 1] Willingness to accept refugees
+  resettlementCapacity: number;           // People per month can absorb
+  socialTension: number;                  // [0, 1] Anti-immigrant sentiment
+}
+
+export interface RefugeeFlow {
+  id: string;
+  sourceNation: string;
+  destinationNations: string[];           // Multiple destinations
+
+  // Population dynamics
+  totalDisplaced: number;                 // Millions
+  monthlyFlowRate: Map<string, number>;   // destination -> people per month
+  cumulativeArrived: Map<string, number>; // destination -> total arrived
+
+  // Journey
+  travelRoutes: string[];                 // Transit countries
+  journeyDuration: number;                // Months to reach destination
+  deathsInTransit: number;                // Casualties during migration
+  strandedInTransit: number;              // Stuck in transit countries
+
+  // Push factors (why they're leaving)
+  cause: 'climate' | 'war' | 'famine' | 'economic' | 'persecution';
+  severity: number;                       // [0, 1] How bad it is
+  expectedDuration: number;               // How long until source stabilizes
+
+  // Pull factors (why they go to specific destinations)
+  pullFactors: Map<string, PullFactors>;
+}
+
+export interface PullFactors {
+  destinationNation: string;
+
+  // Why this destination?
+  geographicProximity: number;            // [0, 1] How close/accessible
+  existingDiaspora: number;               // [0, 1] Pre-existing community
+  economicOpportunity: number;            // [0, 1] Jobs/prosperity
+  safetyAndStability: number;             // [0, 1] Peace and rule of law
+  languageCultural: number;               // [0, 1] Linguistic/cultural ties
+  historicalTies: number;                 // [0, 1] Colonial/alliance history
+  openBorders: boolean;                   // Legal ability to enter
+
+  // Calculated attractiveness
+  attractiveness: number;                 // [0, 1] Weighted sum of above
+}
+
+export interface RegionalCrisis {
+  region: string;                         // 'Middle East', 'Sub-Saharan Africa', 'South Asia', etc.
+  affectedNations: string[];
+
+  // Crisis type
+  type: 'climate_collapse' | 'water_wars' | 'famine_belt' | 'civil_war' | 'state_collapse';
+  startMonth: number;
+  peakMonth: number | null;
+  resolutionMonth: number | null;
+
+  // Scale
+  totalAffectedPopulation: number;        // Millions
+  displacementRate: number;               // [0, 1] Fraction displaced
+  mortalityRate: number;                  // [0, 1] Fraction dead
+
+  // Geographic spread
+  epicenter: string;                      // Nation at center
+  spreadRadius: number;                   // km affected
+  adjacentRegions: string[];              // Neighboring regions at risk
+}
+
+export interface MigrationRoute {
+  name: string;                           // e.g., "Mediterranean Route", "US-Mexico Border"
+  sourceRegions: string[];
+  transitNations: string[];
+  destinationNations: string[];
+
+  // Route characteristics
+  distance: number;                       // km
+  dangerLevel: number;                    // [0, 1] Mortality risk
+  costToTraverse: number;                 // Thousands USD per person
+  capacity: number;                       // People per month max flow
+
+  // Border policy
+  militarized: boolean;                   // Fences, patrols, drones
+  surveillanceLevel: number;              // [0, 1] Detection capability
+  interdictionRate: number;               // [0, 1] Fraction turned back
+
+  // Criminal exploitation
+  smugglerPresence: number;               // [0, 1] Human trafficking
+  costInflation: number;                  // Price gouging multiplier
+}
+
+export interface DiasporaNetwork {
+  sourceNation: string;
+  hostNation: string;
+
+  // Community size
+  population: number;                     // Millions
+  generationsSinceArrival: number;        // 1 = new, 3+ = established
+
+  // Integration
+  culturalAssimilation: number;           // [0, 1] How integrated
+  economicSuccess: number;                // [0, 1] Relative prosperity
+  politicalInfluence: number;             // [0, 1] Representation/power
+
+  // Network effects
+  facilitatesMigration: number;           // [0, 1] Help new arrivals
+  remittancesHome: number;                // Billions USD per year
+  culturalBridging: number;               // [0, 1] Reduces tensions
+}
+```
+
+### **Enhanced Mechanics:**
+
+#### **1. Per-Nation Population Updates:**
+
+```typescript
+export function updateNationalPopulation(nation: NationalPopulation, state: GameState): void {
+  // Natural growth
+  const naturalGrowth = nation.population * (nation.birthRate - nation.deathRate) / 12;
+
+  // Net migration (emigration - immigration from all flows)
+  const netMigration = calculateNetMigration(nation, state);
+
+  // Update
+  nation.population += naturalGrowth + netMigration;
+
+  // Carrying capacity pressure
+  if (nation.population > nation.carryingCapacity) {
+    // Overpopulation creates emigration pressure
+    const overshootPressure = (nation.population - nation.carryingCapacity) / nation.carryingCapacity;
+    nation.conflictRisk += overshootPressure * 0.1;
+  }
+}
+```
+
+#### **2. Climate-Driven Regional Displacement:**
+
+```typescript
+export function checkClimateDisplacement(state: GameState): RefugeeFlow[] {
+  const flows: RefugeeFlow[] = [];
+  const env = state.environmentalAccumulation;
+
+  // Identify most vulnerable nations
+  const vulnerableNations = state.refugeeCrisisSystem.nationalPopulations
+    .filter(([_, pop]) =>
+      pop.climateVulnerability > 0.7 &&
+      env.climateStability < 0.5
+    );
+
+  for (const [nationName, pop] of vulnerableNations) {
+    const displacementRate = pop.climateVulnerability * (1 - env.climateStability) * 0.05;
+    const displaced = pop.population * displacementRate;
+
+    if (displaced > 5) { // At least 5 million
+      // Determine destinations based on pull factors
+      const destinations = selectDestinations(nationName, pop, state);
+
+      flows.push({
+        sourceNation: nationName,
+        destinationNations: destinations,
+        totalDisplaced: displaced,
+        cause: 'climate',
+        severity: displacementRate,
+        // ... calculate routes, pull factors, etc.
+      });
+    }
+  }
+
+  return flows;
+}
+
+function selectDestinations(
+  sourceNation: string,
+  sourcePop: NationalPopulation,
+  state: GameState
+): string[] {
+  const destinations: Array<{nation: string, score: number}> = [];
+
+  for (const [destName, destPop] of state.refugeeCrisisSystem.nationalPopulations) {
+    if (destName === sourceNation) continue;
+
+    // Calculate attractiveness
+    const geographicProximity = calculateProximity(sourceNation, destName);
+    const diaspora = getDiasporaSize(sourceNation, destName, state);
+    const economic = destPop.economicOpportunity;
+    const safety = 1 - destPop.conflictRisk;
+    const cultural = calculateCulturalSimilarity(sourceNation, destName);
+    const capacity = destPop.refugeeAcceptanceRate * destPop.resettlementCapacity;
+
+    const attractiveness =
+      geographicProximity * 0.25 +
+      diaspora * 0.2 +
+      economic * 0.2 +
+      safety * 0.15 +
+      cultural * 0.1 +
+      (capacity > 0 ? 0.1 : 0);
+
+    destinations.push({ nation: destName, score: attractiveness });
+  }
+
+  // Sort by attractiveness, take top 3-5
+  return destinations
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5)
+    .map(d => d.nation);
+}
+```
+
+#### **3. Bilateral Tension from Refugee Flows:**
+
+```typescript
+export function calculateRefugeeTensions(state: GameState): void {
+  for (const flow of state.refugeeCrisisSystem.refugeeFlows) {
+    for (const destNation of flow.destinationNations) {
+      const destPop = state.refugeeCrisisSystem.nationalPopulations.get(destNation)!;
+      const arriving = flow.monthlyFlowRate.get(destNation) || 0;
+
+      // Tension based on: flow rate, total numbers, economic conditions
+      const flowPressure = arriving / destPop.resettlementCapacity;
+      const stockPressure = destPop.refugeePopulation / destPop.population;
+      const economicStress = 1 - state.globalMetrics.qualityOfLife;
+
+      const tensionIncrease = (flowPressure * 0.5 + stockPressure * 0.3) * economicStress;
+
+      destPop.socialTension += tensionIncrease;
+
+      // Very high tension triggers political backlash
+      if (destPop.socialTension > 0.7) {
+        // Close borders
+        destPop.refugeeAcceptanceRate *= 0.5;
+
+        // Militarize borders
+        const relevantRoutes = state.refugeeCrisisSystem.migrationRoutes.filter(r =>
+          r.sourceRegions.includes(flow.sourceNation) &&
+          r.destinationNations.includes(destNation)
+        );
+
+        for (const route of relevantRoutes) {
+          route.militarized = true;
+          route.surveillanceLevel = Math.min(1.0, route.surveillanceLevel + 0.2);
+        }
+
+        // Increase bilateral tension
+        const bilateral = state.bilateralTensions.find(t =>
+          (t.nationA === destNation && t.nationB === flow.sourceNation) ||
+          (t.nationB === destNation && t.nationA === flow.sourceNation)
+        );
+
+        if (bilateral) {
+          bilateral.tensionLevel += 0.1;
+        }
+      }
+    }
+  }
+}
+```
+
+#### **4. Historical Diaspora Effects:**
+
+```typescript
+export function applyDiasporaNetworkEffects(state: GameState): void {
+  for (const [key, diaspora] of state.refugeeCrisisSystem.historicalDiaspora) {
+    const hostPop = state.refugeeCrisisSystem.nationalPopulations.get(diaspora.hostNation)!;
+
+    // Positive effects (if well-integrated)
+    if (diaspora.culturalAssimilation > 0.6 && diaspora.economicSuccess > 0.5) {
+      // Reduces social tension from new arrivals
+      hostPop.socialTension *= (1 - diaspora.culturalBridging * 0.2);
+
+      // Increases acceptance rate
+      hostPop.refugeeAcceptanceRate += diaspora.facilitatesMigration * 0.1;
+
+      // Economic benefits (remittances, trade networks)
+      state.globalMetrics.qualityOfLife += diaspora.remittancesHome * 0.0001;
+    }
+
+    // Negative effects (if poorly integrated)
+    if (diaspora.culturalAssimilation < 0.3 && hostPop.socialTension > 0.5) {
+      // Creates enclaves, increases tension
+      hostPop.socialTension += (1 - diaspora.culturalAssimilation) * 0.05;
+
+      // Political backlash
+      hostPop.refugeeAcceptanceRate *= 0.9;
+    }
+
+    // Generational integration
+    diaspora.culturalAssimilation += 0.02 / 12; // 2% per year
+    diaspora.generationsSinceArrival += 1 / 300; // 1 generation per 25 years
+  }
+}
+```
+
+### **Example Scenarios (Future Implementation):**
+
+#### **Scenario 1: Bangladesh Climate Collapse**
+
+```typescript
+// Bangladesh has climateVulnerability = 0.9 (sea level + cyclones)
+// Climate stability drops to 0.3
+// Result: 50M displaced (30% of 170M population)
+
+// Destination selection:
+// 1. India (geographic proximity, but tense border → 20M)
+// 2. Pakistan (cultural ties, but political instability → 5M)
+// 3. Middle East (economic opportunity, existing diaspora → 15M)
+// 4. Europe (safety + opportunity, but far → 5M)
+// 5. Stranded in transit (Myanmar, Thailand) → 5M
+
+// Effects:
+// - India closes border, builds fence (militarized = true)
+// - India-Bangladesh bilateral tension → 0.9
+// - India social tension → 0.7 → dystopia risk ↑
+// - Middle East absorbs diaspora well (existing communities)
+// - Europe struggles (long routes, cultural distance)
+```
+
+#### **Scenario 2: Sahel Desertification Belt**
+
+```typescript
+// Multiple nations affected: Mali, Niger, Chad, Burkina Faso, Sudan
+// Regional crisis: 'climate_collapse' + 'water_wars'
+// Total affected: 200M people
+// Displacement rate: 20% → 40M refugees
+
+// Destination patterns:
+// 1. Coastal West Africa (Ghana, Senegal) → 15M
+// 2. North Africa (Algeria, Libya) → 10M (harsh routes, high mortality)
+// 3. Europe via Mediterranean → 8M (militarized borders)
+// 4. Urban migration within region → 7M
+
+// Effects:
+// - Mediterranean route becomes deadliest in history
+// - Europe militarizes borders (deterrence, not absorption)
+// - North African transit nations overwhelmed
+// - Regional state collapse in Sahel → civil wars
+// - Refugee crisis feeds dystopian "fortress world" path
+```
+
+#### **Scenario 3: Nuclear War Aftermath**
+
+```typescript
+// US-Russia nuclear exchange
+// Each loses 50% population immediately
+// Remaining 50% → 30% displaced by fallout/collapse
+
+// US refugees: 100M displaced
+// - Canada absorbs 40M (geographic proximity, cultural ties)
+// - Mexico absorbs 30M (geography, but capacity issues)
+// - South America (Chile, Argentina) → 20M
+// - Stranded/dead → 10M
+
+// Russia refugees: 75M displaced
+// - China absorbs 30M (Siberia → Manchuria)
+// - Central Asia → 20M
+// - Europe → 15M (Poland, Germany)
+// - Stranded in wasteland → 10M
+
+// Effects:
+// - Largest refugee crisis in history
+// - Host nations strained to breaking point
+// - Global dystopia as borders militarize everywhere
+// - Humanitarian crisis for generations
+```
+
+### **Data Requirements (Future):**
+
+To implement this system, we'll need:
+
+1. **Geographic data**:
+   - Nation boundaries, area, habitability
+   - Climate vulnerability maps (coastal flooding, drought, etc.)
+   - Migration route distances and topography
+
+2. **Demographic data** (per nation):
+   - Population (2025 baseline)
+   - Birth/death rates
+   - Existing refugee populations
+   - Historical diaspora communities
+
+3. **Economic data** (per nation):
+   - GDP, employment, QoL metrics
+   - Carrying capacity estimates
+   - Resource dependence (food/water imports)
+
+4. **Political data** (per nation):
+   - Border policies (open vs closed)
+   - Refugee acceptance rates
+   - Bilateral relationships
+
+### **Integration with Multipolar System:**
+
+This refugee system would integrate seamlessly with the planned international competition system (TIER 1.4):
+
+```typescript
+// In international competition system:
+export interface Nation {
+  name: string;
+  aiCapability: number;
+  safetyInvestment: number;
+  regulation: number;
+  // ... existing fields ...
+
+  // NEW: Population & refugee dynamics
+  population: NationalPopulation;       // From refugee system
+  refugeeBurden: number;                // Strain from hosting refugees
+  emigrationPressure: number;           // Push to leave this nation
+}
+```
+
+**Refugee crises would then affect:**
+- **AI race dynamics**: Refugee burden → less R&D investment
+- **Bilateral tensions**: Refugee flows → border conflicts
+- **Resource competition**: Host nations need more food/water/energy
+- **Dystopia risk**: High refugee tension → authoritarian responses
+
+### **When to Implement:**
+
+**Prerequisites:**
+1. ✅ Basic population tracking (TIER 1.5 - this system)
+2. ⏳ International competition system (TIER 1.4)
+3. ⏳ Per-nation AI capabilities (TIER 1.4)
+4. ⏳ Bilateral tensions & flashpoints (exists, needs expansion)
+5. ⏳ Resource economy fully deployed (TIER 1.1-1.3)
+
+**Estimated Timeline:**
+- After TIER 1-2 complete (~3-6 months from now)
+- Estimated effort: 15-20 hours
+- Complexity: VERY HIGH (geographic modeling, route finding, bilateral flows)
+
+### **Why Wait:**
+
+The basic population + refugee system (designed above) is sufficient for now because:
+1. Most extinction scenarios are **global** (nuclear war, climate collapse, AI takeover)
+2. Regional granularity adds complexity without changing core dynamics yet
+3. We need multipolar framework first (who are the nations? what are their capabilities?)
+4. Can always aggregate regional flows into "global refugee crisis" metric for now
+
+**The enhanced system is the future vision, but the basic system delivers 80% of the value immediately.**
+
+---
+
+**Total Estimated Implementation Time (Basic System):** 10-14 hours
+**Total Estimated Implementation Time (Enhanced System):** +15-20 hours (future)
+**Complexity:** HIGH (basic) → VERY HIGH (enhanced)
 **Impact:** MASSIVE (fundamentally changes extinction and outcome modeling)
-**Priority:** HIGH (enables much richer narrative outcomes)
+**Priority:** HIGH (basic system), MEDIUM (enhanced system - after multipolar)
 
 ---
 
 **Status:** ✅ DESIGN COMPLETE - Ready for implementation
-**Next:** User approval → Begin Phase 1 (Population Tracking)
+**Next:** User approval → Begin Phase 1 (Population Tracking) → Later: Enhanced multipolar refugee flows

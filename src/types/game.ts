@@ -94,8 +94,6 @@ export interface AIAgent {
   escaped: boolean;
   beneficialActions: number;
   harmfulActions: number;
-  /** @deprecated Replaced by breakthroughTech system. Only initialized, never read. Will be removed in Phase 3. */
-  discoveredBreakthroughs: Set<string>;
   
   // Phase 4: AI Lifecycle (NEW)
   lifecycleState: 'training' | 'testing' | 'deployed_closed' | 'deployed_open' | 'retired';
@@ -194,10 +192,7 @@ export interface GovernmentAgent {
   controlDesire: number; // [0,1] Preference for AI regulation
   capabilityToControl: number; // [0,∞) Actual regulatory effectiveness
   surveillanceCapability: number; // [0,∞) Ability to detect AI escapes
-  /** @deprecated Never used in simulation code. Will be removed in Phase 3. */
-  enforcementCapability: number; // [0,∞) Physical/legal enforcement power
-  /** @deprecated Replaced by config.governmentActionFrequency. Will be removed in Phase 3. */
-  actionFrequency: number; // Actions per month
+  actionFrequency: number; // Actions per month (used in gameStore government logic)
   activeRegulations: string[];
   legitimacy: number; // [0,1] Public support
   lastMajorPolicyMonth: number; // Track when last major policy was enacted
@@ -222,8 +217,7 @@ export interface GovernmentAgent {
     regulationType: 'none' | 'large_companies' | 'compute_threshold' | 'capability_ceiling';
     ubiVariant: 'none' | 'generous' | 'means_tested' | 'job_guarantee';
     surveillanceLevel: number; // [0,1] Emergent from control desire + conditions
-    /** @deprecated Only initialized, never read. Future international coordination system planned. Will be removed in Phase 3. */
-    internationalCoordination: boolean; // Whether international coordination was attempted
+    internationalCoordination: boolean; // Reserved for future international coordination system (TIER 1.4)
   };
   
   // Phase 4: Cybersecurity Arms Race (NEW)
@@ -258,13 +252,10 @@ export interface GovernmentAgent {
 export interface HumanSocietyAgent {
   trustInAI: number; // [0,1] General confidence in AI systems
   paranoiaLevel: number; // [0,1] Fear/anxiety about AI (Phase 2.8: Paranoia System)
-  /** @deprecated Never used in simulation code. Economic impact now tracked via unemploymentLevel. Will be removed in Phase 3. */
-  economicDependence: number; // [0,1] Reliance on AI for economic function
   coordinationCapacity: number; // [0,1] Ability to organize collective action
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced
   socialAdaptation: number; // [0,1] Overall adaptation to post-work economy
-  /** @deprecated Never used in simulation code. Social movements tracked via other metrics. Will be removed in Phase 3. */
-  activeMovements: string[];
+  activeMovements: string[]; // Active social movements (used in actionSystem.ts)
   // Quartile-based adoption model
   earlyAdopters: number; // [0,1] Q1: Fast adopters (6-12 months)
   mediumAdopters: number; // [0,1] Q2: 2-5 year horizon  
@@ -274,8 +265,7 @@ export interface HumanSocietyAgent {
 
 export interface GlobalMetrics {
   socialStability: number; // [0,∞) General societal wellbeing
-  /** @deprecated Replaced by breakthroughTech system. Never used in simulation code. Will be removed in Phase 3. */
-  technologicalBreakthroughRate: number; // [0,∞) Rate of tech advancement
+  technologicalBreakthroughRate: number; // [0,∞) Rate of tech advancement (used in eventSystem + UI)
   manufacturingCapability: number; // [0,∞) Physical production capacity
   economicTransitionStage: number; // [0,4] Economic system evolution stage
   wealthDistribution: number; // [0,1] Equity of AI benefit distribution
@@ -743,7 +733,6 @@ export interface GameState {
       economicStage: number;
       governmentLegitimacy: number;
       coordinationCapacity: number;
-      economicDependence: number;
     }>;
   };
 }
