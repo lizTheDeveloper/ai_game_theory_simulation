@@ -56,7 +56,7 @@ export function initializeNationalAI(): NationalAISystem {
       investmentLevel: baseline.investmentLevel,
       
       // TIER 1.4: Safety & Regulation
-      regulationLevel: nation === 'European Union' ? 0.70 : nation === 'United States' ? 0.50 : nation === 'China' ? 0.30 : 0.40,
+      regulationLevel: nationName === 'European Union' ? 0.70 : nationName === 'United States' ? 0.50 : nationName === 'China' ? 0.30 : 0.40,
       safetyInvestment: 0.15, // 15% of budget initially
       deploymentThreshold: 0.70, // 70% safety threshold
       
