@@ -361,11 +361,8 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ## ~~1.6 Population Dynamics & Extinction Nuance~~ → **MOVED TO TIER 4.5**
 *Needs extensive design work before implementation - See TIER 4 below*
-- Historical diaspora networks
-- Pull factors (proximity, economic opportunity, cultural ties)
-- **Estimated:** +15-20 hours after International Competition (TIER 1.4) complete
 
-**Gameplay Implications:**
+---
 - Carrying capacity management becomes strategic
 - Tech choices matter (fusion, sustainable ag affect capacity)
 - Refugee response: Open borders vs militarization trade-off
@@ -911,7 +908,74 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 4.5 **Human Enhancement & Merger Pathways** 🧬
+## 4.5 **Population Dynamics & Extinction Nuance** 👥
+**File:** `plans/population-dynamics-and-extinction-nuance.md` (1,500+ lines)
+**Priority:** HIGH (but needs design work)
+**Dev Time:** ~10-14 hours
+**Complexity:** HIGH
+
+**Status:** DEFERRED - Requires extensive design work
+
+**User Vision:**
+> "I want to understand extinction not as an end state but as a number that dwindles to zero. Population crashes aren't extinction, but they are mass die-offs. Distinguish 'we almost died out' from 'we died out entirely'."
+
+**Why Critical:**
+- Extinction currently abstract (severity 0-1, not population count)
+- No distinction between population crash vs true extinction
+- No refugee crisis modeling or generational dynamics
+- Can't model "we almost died out" (bottleneck) vs "we died out entirely"
+- Missing major 21st century crisis dynamic (climate/war refugees)
+
+**Key Innovations:**
+
+1. **Population Tracking:**
+   - Raw human population count (billions, not abstract)
+   - Birth/death rates affected by QoL, resources, crises
+   - Carrying capacity based on climate, tech, resources
+   - Monthly population updates with realistic dynamics
+
+2. **Refugee Crisis System:**
+   - Climate/war/famine displacement (millions displaced)
+   - Generational resettlement (25 years to integrate)
+   - Social tension in host regions
+   - Border militarization and dystopia risk
+   - Multiple simultaneous crises compound
+
+3. **Population Status Thresholds:**
+   - **Thriving** (>7B): Normal civilization
+   - **Stable** (5-7B): Population stabilized
+   - **Declining** (2-5B): Crash, recoverable
+   - **Critical** (100M-2B): Infrastructure failing
+   - **Bottleneck** (10K-100M): Near-extinction, genetic bottleneck
+   - **Extinction** (<10K): Game over
+
+**Research Backing:**
+- UN World Population Prospects 2024 (8.0B current, 10.4B peak projection)
+- Historical bottlenecks (Toba eruption ~70K BCE: 3K-10K survivors)
+- Genetics studies (minimum 10K for long-term viability)
+- UNHCR 2024 (110M forcibly displaced)
+- Climate refugees projections (200M-1B by 2050, World Bank/IOM)
+- Syrian crisis (13.5M displaced, still ongoing after 14 years)
+- Earth Overshoot Day (1.7x carrying capacity exceeded)
+
+**Expected Impact:**
+- **Extinction becomes gradual:** Track 8B → 5B → 2B → 500M → 50M → 0
+- **New outcomes:** "Survived" (100M-5B), "Near-extinction" (10K-100M), "True extinction" (<10K)
+- **Refugee crises common** (60-80% of runs): Climate collapse, nuclear war, famine displacement
+- **Dystopia pathway:** High refugee tension → border militarization → surveillance states
+- **Recovery mechanics:** Population can rebound if above bottleneck + resources available
+- **Narrative depth:** "Humanity survived with only 50,000 people" vs "Humanity went extinct slowly over 80 years"
+
+**Why Deferred:**
+- Requires extensive design for multi-region refugee flows
+- Integration with existing extinction mechanics complex
+- Better to complete TIER 2-3 interventions first
+- Can assess if abstract extinction is sufficient before adding granular tracking
+- Regional refugee flows need multipolar system (TIER 3)
+
+---
+
+## 4.6 **Human Enhancement & Merger Pathways** 🧬
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.4)  
 **Priority:** MEDIUM  
 **Dev Time:** ~7 hours  
