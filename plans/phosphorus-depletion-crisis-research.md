@@ -554,3 +554,4 @@ function checkPhosphorusExtinction(state: GameState): void {
 
 **Your friend is spot on! This is a critical missing piece! 🎯**
 
+

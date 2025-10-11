@@ -362,3 +362,4 @@ Next steps:
 **Simulation Duration:** 240 months (20 years) each  
 **Total Months Simulated:** 96,000 months (~8,000 years of alt-history)
 
+

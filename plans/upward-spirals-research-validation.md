@@ -665,3 +665,4 @@ const democraticEngagement = gov.participationRate > 0.6 && gov.transparency > 0
 3. Test spiral activation with new thresholds (Monte Carlo)
 4. Document emergence (does Utopia become more/less likely?)
 
+

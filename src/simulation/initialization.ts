@@ -25,6 +25,8 @@ import { initializeNuclearStates, initializeMADDeterrence, initializeBilateralTe
 import { initializeResourceEconomy } from './resourceEconomy';
 import { initializeDefensiveAI } from './defensiveAI';
 import { initializeNationalAI } from './nationalAI';
+import { initializePhosphorusSystem } from './phosphorusDepletion';
+import { initializeFreshwaterSystem } from './freshwaterDepletion';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -317,6 +319,12 @@ export function createDefaultInitialState(): GameState {
     
     // National AI Capabilities (Phase 2.11)
     nationalAI: initializeNationalAI(),
+    
+    // Phosphorus Depletion Crisis (TIER 1.1)
+    phosphorusSystem: initializePhosphorusSystem(),
+    
+    // Freshwater Depletion Crisis (TIER 1.2)
+    freshwaterSystem: initializeFreshwaterSystem(),
     
     eventLog: [],
     technologyTree: [],

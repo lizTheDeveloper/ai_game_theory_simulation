@@ -709,6 +709,12 @@ export interface GameState {
   // National AI Capabilities (Phase 2.11)
   nationalAI: import('../types/nationalAI').NationalAISystem; // National capability asymmetry & AI race dynamics
   
+  // Phosphorus Depletion Crisis (TIER 1.1)
+  phosphorusSystem: import('../types/phosphorus').PhosphorusSystem; // Agricultural resource constraint & circular economy
+  
+  // Freshwater Depletion Crisis (TIER 1.2)
+  freshwaterSystem: import('../types/freshwater').FreshwaterSystem; // Water scarcity & Day Zero Drought
+  
   // Configuration
   config: ConfigurationSettings;
   
