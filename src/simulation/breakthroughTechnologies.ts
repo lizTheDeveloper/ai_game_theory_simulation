@@ -46,11 +46,14 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
       // Deep alignment requires mechanistic interpretability + new techniques
     },
     mechanisticInterpretability: {
-      unlocked: true, // Anthropic sparse autoencoders (April 2024), Apollo Research
+      unlocked: true, // Anthropic "Simple probes catch sleeper agents" (2024), sparse autoencoders
       deploymentLevel: 0.15, // 15% initial (active research, some deployment in evals)
       breakthroughYear: 0,
-      sleeperDetectionBonus: 0.40, // This is the real frontier for deep alignment
-      alignmentVerificationBonus: 0.30
+      sleeperDetectionBonus: 0.70, // Research: Simple linear probes work well! (but unclear on natural deception)
+      alignmentVerificationBonus: 0.50, // Probes can identify internal truth even when outputs deceive
+      // At 15% deployment: 0.15 × 0.70 = 10.5% detection
+      // At 50% deployment: 0.50 × 0.70 = 35% detection
+      // At 100% deployment: 1.00 × 0.70 = 70% detection (cap at 80% - some adversarial evasion)
     },
     deExtinctionRewilding: {
       unlocked: true, // Colossal Biosciences operational (April 2025)
@@ -844,16 +847,17 @@ function updateMechanisticInterpretabilityDeployment(state: GameState, budget: n
   
   // Apply to defensive AI sleeper detection if active
   if (state.defensiveAI?.active) {
-    // Calculate bonus: deployment × bonus rate
-    // At 15% deployment: 0.15 × 0.40 = 0.06 (6% detection rate)
-    // At 50% deployment: 0.50 × 0.40 = 0.20 (20% detection rate)
-    // At 100% deployment: 1.00 × 0.40 = 0.40 (40% detection rate)
+    // Calculate detection from deployment × bonus rate
+    // Research: Anthropic "Simple probes catch sleeper agents" - linear probes work!
+    // At 15% deployment: 0.15 × 0.70 = 0.105 (10.5% detection rate)
+    // At 50% deployment: 0.50 × 0.70 = 0.35 (35% detection rate)
+    // At 100% deployment: 1.00 × 0.70 = 0.70 (70% detection rate)
     const detectionBonus = tech.deploymentLevel * tech.sleeperDetectionBonus;
     
     // Set detection rate (not incremental - this is the current rate)
     state.defensiveAI.threatDetection.detectSleepers = Math.min(
-      0.8, // Cap at 80% (adversarial problem persists)
-      Math.max(0.05, detectionBonus) // Minimum 5% base detection
+      0.8, // Cap at 80% (some adversarial evasion always possible)
+      Math.max(0.08, detectionBonus) // Minimum 8% base detection (simple probes are accessible)
     );
     
     // Validate no NaN
