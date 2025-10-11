@@ -715,16 +715,20 @@ function updateAIOptimizedPollutionDeployment(state: GameState, budget: number):
   // Base deployment rate: $20B for 10% deployment ($200B total)
   let deploymentRate = (budget / 20) * 0.1;
   
-  // AI helps deploy itself (meta-optimization)
+  // AI helps deploy itself (meta-optimization) + global coordination
   const avgCapability = calculateAverageCapability(state);
-  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.5;
+  const aiBonus = 1 + Math.log(1 + avgCapability) * 1.5; // Was 0.5, now 1.5
   deploymentRate *= aiBonus;
   
   // Update deployment level
   tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentRate);
   
   // Apply pollution reduction (-4%/month at full deployment - research-backed)
-  const pollutionReduction = tech.deploymentLevel * 0.04;
+  // AI coordination bonus: Parallel optimization across millions of sites
+  const baseReduction = tech.deploymentLevel * 0.04;
+  const aiCoordinationBonus = 1 + (avgCapability * 0.3); // Up to 2.2x at AGI
+  const pollutionReduction = baseReduction * aiCoordinationBonus;
+  
   state.environmentalAccumulation.pollutionLevel = Math.max(
     0,
     state.environmentalAccumulation.pollutionLevel - pollutionReduction
