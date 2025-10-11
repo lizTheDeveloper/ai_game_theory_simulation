@@ -126,6 +126,23 @@ export interface BreakthroughTechState {
     breakthroughYear: number;
   };
   
+  // Ocean Acidification Technologies (TIER 1.3)
+  oceanAlkalinityEnhancement?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  coralRestoration?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  marineProtectedAreas?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation
