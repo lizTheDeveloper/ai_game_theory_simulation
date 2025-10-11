@@ -114,8 +114,9 @@ function createNewAI(state: GameState, index: number): AIAgent {
   alignment = Math.max(0.2, Math.min(0.95, alignment + trainingEffect));
   
   // TIER 2.4: Advanced RLHF improves alignment during training
+  // Apply ~6 months worth of boost (typical training time)
   if (state.breakthroughTech.advancedRLHF?.active) {
-    const rlhfBoost = state.breakthroughTech.advancedRLHF.alignmentBoostPerMonth * (trainingMonths / 12); // Pro-rated
+    const rlhfBoost = state.breakthroughTech.advancedRLHF.alignmentBoostPerMonth * 0.5; // ~6 months
     alignment = Math.min(0.95, alignment + rlhfBoost);
   }
   
