@@ -124,16 +124,22 @@ function updateSocialTech(state: GameState, budget: number, month: number): void
   const avgCapability = calculateAverageCapability(state);
   
   // Mental Health AI - foundational
-  updateTechProgress(state, tech.mentalHealthAI, budget * 0.35, avgCapability, month);
+  updateTechProgress(state, tech.mentalHealthAI, budget * 0.30, avgCapability, month);
   
   // Purpose Frameworks - parallel
-  updateTechProgress(state, tech.purposeFrameworks, budget * 0.30, avgCapability, month);
+  updateTechProgress(state, tech.purposeFrameworks, budget * 0.25, avgCapability, month);
   
   // Community Platforms
   updateTechProgress(state, tech.communityPlatforms, budget * 0.20, avgCapability, month);
   
+  // Collective Purpose Networks (TIER 2.1) - requires Purpose Frameworks
+  checkCollectivePurposeNetworksUnlock(state, avgCapability, month);
+  if (tech.collectivePurposeNetworks?.unlocked) {
+    updateCollectivePurposeNetworksDeployment(state, budget * 0.15);
+  }
+  
   // Interspecies Communication - parallel (NEW!)
-  updateTechProgress(state, tech.interspeciesComm, budget * 0.15, avgCapability, month);
+  updateTechProgress(state, tech.interspeciesComm, budget * 0.10, avgCapability, month);
 }
 
 /**
@@ -372,6 +378,88 @@ function applyTechEffects(state: GameState, tech: TechnologyNode): void {
   
   // QoL effects are applied in the QoL calculation
   // We just track that they're active here
+}
+
+/**
+ * Check if Collective Purpose Networks can be unlocked (TIER 2.1)
+ * Requirements: Purpose Frameworks deployed, high unemployment, economic stage 3+
+ */
+function checkCollectivePurposeNetworksUnlock(
+  state: GameState,
+  avgCapability: number,
+  month: number
+): void {
+  // Already unlocked?
+  if (state.breakthroughTech.collectivePurposeNetworks?.unlocked) return;
+  
+  // Prerequisites:
+  // 1. Purpose Frameworks deployed (>30%)
+  const purposeFrameworksDeployed = state.breakthroughTech.purposeFrameworks.deploymentLevel > 0.3;
+  
+  // 2. High unemployment driving need (>50%)
+  const highUnemployment = state.society.unemploymentLevel > 0.5;
+  
+  // 3. Economic stage 3+ (post-scarcity approaching)
+  const economicStageReady = state.globalMetrics.economicTransitionStage >= 3.0;
+  
+  // 4. Research investment >$100B in social domain
+  const research = state.government.researchInvestments;
+  const totalSocialResearch = research.social + (research.biotech.neuroscience * 0.5);
+  const researchReady = totalSocialResearch > 100;
+  
+  if (purposeFrameworksDeployed && highUnemployment && economicStageReady && researchReady) {
+    // Initialize the tech
+    state.breakthroughTech.collectivePurposeNetworks = {
+      unlocked: true,
+      deploymentLevel: 0,
+      breakthroughYear: Math.floor(month / 12)
+    };
+    
+    console.log(`\n🎯 BREAKTHROUGH: Collective Purpose Networks Unlocked (Month ${month})`);
+    console.log(`   Purpose infrastructure to address meaning crisis in post-work society`);
+    console.log(`   Prerequisites met: Purpose Frameworks (${(state.breakthroughTech.purposeFrameworks.deploymentLevel * 100).toFixed(0)}%), Unemployment (${(state.society.unemploymentLevel * 100).toFixed(0)}%), Economic Stage (${state.globalMetrics.economicTransitionStage.toFixed(1)})`);
+    
+    state.eventLog.push({
+      month,
+      type: 'breakthrough',
+      severity: 'constructive',
+      agent: 'Research Community',
+      title: 'Collective Purpose Networks Breakthrough',
+      description: 'Development of comprehensive purpose infrastructure: education access, creative spaces, volunteer programs, and social infrastructure to address meaning crisis in post-work society.',
+      effects: { tech: 'collective_purpose_networks', purpose_infrastructure: true }
+    });
+  }
+}
+
+/**
+ * Update Collective Purpose Networks deployment (TIER 2.1)
+ * Deployment invests in purpose infrastructure, reducing meaning crisis
+ */
+function updateCollectivePurposeNetworksDeployment(state: GameState, budget: number): void {
+  const tech = state.breakthroughTech.collectivePurposeNetworks;
+  if (!tech?.unlocked) return;
+  
+  // Base deployment rate: $10B for 10% deployment ($100B total cost)
+  let deploymentRate = (budget / 10) * 0.1;
+  
+  // AI helps coordinate deployment
+  const avgCapability = calculateAverageCapability(state);
+  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.3;
+  deploymentRate *= aiBonus;
+  
+  // UBI makes deployment easier (people have time to use infrastructure)
+  if (state.ubiSystem.active) {
+    deploymentRate *= 1.5;
+  }
+  
+  // Update deployment level
+  tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentRate);
+  
+  // Apply to UBI system purpose infrastructure
+  if (tech.deploymentLevel > 0) {
+    const { enhancePurposeInfrastructure } = require('./enhancedUBI');
+    enhancePurposeInfrastructure(state, tech.deploymentLevel * 0.1); // 10% boost per update at full deployment
+  }
 }
 
 /**

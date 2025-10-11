@@ -165,6 +165,13 @@ export interface BreakthroughTechState {
     breakthroughYear: number;
   };
   
+  // Purpose Infrastructure Technologies (TIER 2.1)
+  collectivePurposeNetworks?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1] Infrastructure investment level
+    breakthroughYear: number;
+  };
+  
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation

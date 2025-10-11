@@ -54,6 +54,7 @@ import {
   ConflictResolutionPhase,
   DiplomaticAIPhase,
   NationalAIPhase,
+  UBIPhase,
   MADDeterrencePhase,
   ResourceEconomyPhase,
   ResourceTechnologyPhase,
@@ -222,6 +223,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ConflictResolutionPhase());
     this.orchestrator.registerPhase(new DiplomaticAIPhase());
     this.orchestrator.registerPhase(new NationalAIPhase());
+    this.orchestrator.registerPhase(new UBIPhase());
     this.orchestrator.registerPhase(new MADDeterrencePhase());
     this.orchestrator.registerPhase(new ResourceEconomyPhase());
     this.orchestrator.registerPhase(new ResourceTechnologyPhase());

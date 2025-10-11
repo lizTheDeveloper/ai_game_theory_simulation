@@ -711,6 +711,9 @@ export interface GameState {
   // Novel Entities Crisis (TIER 1.5)
   novelEntitiesSystem: import('../types/novelEntities').NovelEntitiesSystem; // Chemical pollution & slow poisoning
   
+  // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
+  ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
+  
   // Configuration
   config: ConfigurationSettings;
   

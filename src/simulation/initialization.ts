@@ -29,6 +29,7 @@ import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
 import { initializeNovelEntitiesSystem } from './novelEntities';
+import { initializeUBISystem } from './enhancedUBI';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -330,6 +331,9 @@ export function createDefaultInitialState(): GameState {
     
     // Novel Entities Crisis (TIER 1.5)
     novelEntitiesSystem: initializeNovelEntitiesSystem(),
+    
+    // TIER 2: Major Mitigations
+    ubiSystem: initializeUBISystem(),
     
     eventLog: [],
     technologyTree: [],
