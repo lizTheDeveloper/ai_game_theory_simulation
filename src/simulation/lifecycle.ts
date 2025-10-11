@@ -113,11 +113,16 @@ function createNewAI(state: GameState, index: number): AIAgent {
   const trainingEffect = (trainingQuality - 0.5) * 0.15; // ±7.5% for training quality 0-1
   alignment = Math.max(0.2, Math.min(0.95, alignment + trainingEffect));
   
-  // TIER 2.4: Advanced RLHF improves alignment during training
+  // TIER 2.4: Advanced RLHF improves *surface* alignment during training
+  // RLHF is 100% deployed in 2025 (all major models use it)
+  // Effect: Reduces toxicity, improves helpfulness, prevents obvious misalignment
+  // Does NOT prevent: goal mispecification, instrumental convergence, power-seeking, alignment faking
   // Apply ~6 months worth of boost (typical training time)
   if (state.breakthroughTech.advancedRLHF?.active) {
     const rlhfBoost = state.breakthroughTech.advancedRLHF.alignmentBoostPerMonth * 0.5; // ~6 months
     alignment = Math.min(0.95, alignment + rlhfBoost);
+    // Note: This pushes low-alignment AIs (0.2-0.5) up to medium (0.5-0.7)
+    // But high-capability AIs with goal conflicts still emerge
   }
   
   // Create base agent
