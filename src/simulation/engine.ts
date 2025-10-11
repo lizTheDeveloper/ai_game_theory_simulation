@@ -62,6 +62,7 @@ import {
   PhosphorusPhase,
   FreshwaterPhase,
   OceanAcidificationPhase,
+  NovelEntitiesPhase,
   DystopiaProgressionPhase,
   // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
@@ -229,6 +230,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new PhosphorusPhase());
     this.orchestrator.registerPhase(new FreshwaterPhase());
     this.orchestrator.registerPhase(new OceanAcidificationPhase());
+    this.orchestrator.registerPhase(new NovelEntitiesPhase());
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
 
     // Batch 3: Special phases (22.x - 23.x)

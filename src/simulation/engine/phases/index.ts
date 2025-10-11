@@ -40,6 +40,7 @@ export { DefensiveAIPhase } from './DefensiveAIPhase';
 export { PhosphorusPhase } from './PhosphorusPhase';
 export { FreshwaterPhase } from './FreshwaterPhase';
 export { OceanAcidificationPhase } from './OceanAcidificationPhase';
+export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 
 // Batch 3: Special phases (medium risk)

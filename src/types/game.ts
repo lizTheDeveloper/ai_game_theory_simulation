@@ -718,6 +718,9 @@ export interface GameState {
   // Ocean Acidification Crisis (TIER 1.3)
   oceanAcidificationSystem: import('../types/oceanAcidification').OceanAcidificationSystem; // Marine food web collapse
   
+  // Novel Entities Crisis (TIER 1.5)
+  novelEntitiesSystem: import('../types/novelEntities').NovelEntitiesSystem; // Chemical pollution & slow poisoning
+  
   // Configuration
   config: ConfigurationSettings;
   

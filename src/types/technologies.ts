@@ -143,6 +143,28 @@ export interface BreakthroughTechState {
     breakthroughYear: number;
   };
   
+  // Novel Entities Technologies (TIER 1.5)
+  greenChemistry?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  advancedBioremediation?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  circularEconomySystems?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  chemicalSafetyRegulations?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation
