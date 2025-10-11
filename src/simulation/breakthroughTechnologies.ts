@@ -949,22 +949,24 @@ function updateDeExtinctionDeployment(state: GameState, budget: number): void {
   let deploymentRate = (budget / 10) * 0.1;
   
   // AI accelerates RESEARCH (genome sequencing, CRISPR design, species selection)
-  // AlphaFold precedent: Computational tasks 10-1000x faster
+  // AlphaFold precedent: Computational tasks dramatically faster (domain-specific)
   // BUT: Physical processes (breeding, release, ecosystem establishment) unchanged
-  // Net effect: ~30-50% faster overall (research bottleneck removed)
+  // HONEST ASSESSMENT: We don't have good data on overall acceleration
+  // Conservative estimate: ~20-40% faster (computational bottleneck removed)
   const avgCapability = calculateAverageCapability(state);
-  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.4; // Modest boost: computational only
-  // At AI capability 2.0: 1 + log(3) * 0.4 = 1.4x faster (40% improvement)
-  // At AI capability 4.0: 1 + log(5) * 0.4 = 1.6x faster (60% improvement)
+  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.3; // Conservative: we don't really know
+  // At AI capability 2.0: 1 + log(3) * 0.3 = 1.3x faster (30% improvement)
+  // At AI capability 4.0: 1 + log(5) * 0.3 = 1.5x faster (50% improvement)
   deploymentRate *= aiBonus;
   
   tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentRate);
   
   // Apply biodiversity restoration (+2%/month at full deployment - research-backed)
   // AI helps with: Site selection, species matching, monitoring
-  // McKinsey precedent: Supply chain optimization ~15-20% gains
+  // HONEST: No good empirical data on coordination gains. Estimate conservatively.
   const baseBoost = tech.deploymentLevel * tech.biodiversityBoostPerMonth;
-  const aiCoordinationBonus = 1 + (avgCapability * 0.15); // Up to 1.6x at AGI (15% per capability point)
+  const aiCoordinationBonus = 1 + (avgCapability * 0.1); // Up to 1.4x at AGI (10% per point)
+  // This is a guess. Mark for future validation when real-world data emerges.
   const biodiversityBoost = baseBoost * aiCoordinationBonus;
   
   state.environmentalAccumulation.biodiversityIndex = Math.min(
