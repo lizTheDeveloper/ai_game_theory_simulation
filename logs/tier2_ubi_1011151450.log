@@ -1,0 +1,28 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-11T22-14-52.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+
+
+❌ UNCAUGHT EXCEPTION: nation is not defined
+ReferenceError: nation is not defined
+    at initializeNationalAI (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/nationalAI.ts:59:24)
+    at createDefaultInitialState (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/initialization.ts:321:17)
+    at runs (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:262:24)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1400:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:219:24)
