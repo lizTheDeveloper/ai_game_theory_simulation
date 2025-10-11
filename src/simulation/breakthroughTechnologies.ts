@@ -151,11 +151,12 @@ function updateSocialTech(state: GameState, budget: number, month: number): void
   }
   
   // Advanced RLHF & Mechanistic Interpretability (TIER 2.4 & 2.5) - AI safety research
-  checkAdvancedRLHFUnlock(state, avgCapability, month);
-  checkMechanisticInterpretabilityUnlock(state, avgCapability, month);
-  if (tech.mechanisticInterpretability?.unlocked) {
-    updateMechanisticInterpretabilityDeployment(state, budget * 0.15);
-  }
+  // TODO: Implement in next commit
+  // checkAdvancedRLHFUnlock(state, avgCapability, month);
+  // checkMechanisticInterpretabilityUnlock(state, avgCapability, month);
+  // if (tech.mechanisticInterpretability?.unlocked) {
+  //   updateMechanisticInterpretabilityDeployment(state, budget * 0.15);
+  // }
   
   // Interspecies Communication - parallel (NEW!)
   updateTechProgress(state, tech.interspeciesComm, budget * 0.05, avgCapability, month);
