@@ -196,7 +196,7 @@ export class SimulationEngine {
     this.config = {
       seed: config.seed ?? Date.now(),
       maxMonths: config.maxMonths ?? 1000,
-      governmentActionFrequency: config.governmentActionFrequency ?? 0.08,
+      governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months
       socialAdaptationRate: config.socialAdaptationRate ?? 1.0,
       aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,
       economicTransitionRate: config.economicTransitionRate ?? 1.0
