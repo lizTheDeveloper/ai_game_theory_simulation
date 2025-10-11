@@ -99,10 +99,10 @@ Nice-to-have complexity and detail
 
 # 🔧 **TIER 0: BASELINE CORRECTIONS** (Implement First!)
 
-## 0.1 **2025 Starting Parameter Corrections** 🎯
+## 0.1 **2025 Starting Parameter Corrections** 🎯 ✅ COMPLETED
 **File:** `plans/initialization-parameters-validation.md` (700+ lines, 30+ sources)  
-**Priority:** **DO FIRST** (Foundation for all other work)  
-**Dev Time:** ~2 hours  
+**Status:** ✅ Implemented Oct 11, 2025  
+**Dev Time:** ~1 hour (actual)  
 **Complexity:** LOW (simple value changes)  
 
 **Why First:**
@@ -170,10 +170,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 # 🚨 **TIER 1: CRITICAL EXTINCTION RISKS**
 
-## 1.1 **Phosphorus Depletion Crisis** 🌾
+## 1.1 **Phosphorus Depletion Crisis** 🌾 ✅ COMPLETED
 **File:** `plans/phosphorus-depletion-crisis-research.md` (850+ lines, 32 sources)  
-**Priority:** **CRITICAL** (Top 5 missing crises)  
-**Dev Time:** ~4 hours  
+**Status:** ✅ Implemented Oct 11, 2025  
+**Dev Time:** ~2 hours (actual)  
 **Research Quality:** EXCELLENT (2024-2025 data)  
 
 **Why Critical:**
@@ -205,10 +205,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 1.2 **Freshwater Depletion Crisis** 💧
+## 1.2 **Freshwater Depletion Crisis** 💧 ✅ COMPLETED
 **File:** `plans/kate-raworth-planetary-boundaries-research.md` (§Freshwater Crisis)  
-**Priority:** **CRITICAL** (Top 3 missing systems)  
-**Dev Time:** ~6 hours  
+**Status:** ✅ Implemented Oct 11, 2025  
+**Dev Time:** ~3 hours (actual)  
 **Research Quality:** EXCELLENT (Nature 2023-2025, WWF, EPA)  
 
 **Why Critical:**
@@ -246,10 +246,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 1.3 **Ocean Acidification Crisis** 🌊
+## 1.3 **Ocean Acidification Crisis** 🌊 ✅ COMPLETED
 **File:** `plans/kate-raworth-planetary-boundaries-research.md` (§Ocean Acidification)  
-**Priority:** **HIGH** (Just breached in 2025!)  
-**Dev Time:** ~3 hours  
+**Status:** ✅ Implemented Oct 11, 2025  
+**Dev Time:** ~2 hours (actual)  
 **Research Quality:** EXCELLENT (PIK Potsdam Sept 2025)  
 
 **Why Critical:**
@@ -329,10 +329,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 1.5 **Novel Entities (Chemical Pollution)** ☣️
+## 1.5 **Novel Entities (Chemical Pollution)** ☣️ ✅ COMPLETED  
 **File:** `plans/kate-raworth-planetary-boundaries-research.md` (§Novel Entities)  
-**Priority:** MEDIUM-HIGH  
-**Dev Time:** ~4 hours  
+**Status:** ✅ Implemented Oct 11, 2025  
+**Dev Time:** ~2 hours (actual)  
 **Complexity:** MEDIUM  
 
 **Why Important:**
