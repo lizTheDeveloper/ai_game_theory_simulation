@@ -715,6 +715,9 @@ export interface GameState {
   // Freshwater Depletion Crisis (TIER 1.2)
   freshwaterSystem: import('../types/freshwater').FreshwaterSystem; // Water scarcity & Day Zero Drought
   
+  // Ocean Acidification Crisis (TIER 1.3)
+  oceanAcidificationSystem: import('../types/oceanAcidification').OceanAcidificationSystem; // Marine food web collapse
+  
   // Configuration
   config: ConfigurationSettings;
   
