@@ -88,18 +88,20 @@ export function updateEnvironmentalAccumulation(
   // === RESOURCE REGENERATION (Phase 2.8) ===
   // Tech-enabled recovery: Circular economy, sustainable agriculture, clean energy
   // Research basis: Ellen MacArthur Foundation (2015), Tilton (2003)
-  // AI coordination: McKinsey reports 15-20% supply chain optimization gains
   let resourceRegeneration = 0;
   
   const tech = state.breakthroughTech;
   
-  // AI coordination bonus (grounded in McKinsey research)
+  // AI coordination bonus
+  // HONEST: No solid empirical data on AI coordination gains. Consulting firms overstate.
+  // Conservative estimate: AI helps with logistics, waste reduction, monitoring
   const avgCapability = state.aiAgents.length > 0 
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length 
     : 0;
-  const aiCoordinationBonus = 1 + (avgCapability * 0.15); // Up to 1.6x at AGI (15% per point)
+  const aiCoordinationBonus = 1 + (avgCapability * 0.1); // Up to 1.4x at AGI (10% per point)
   // Rationale: AI optimizes routing, reduces waste, coordinates globally
   // NOT magic: Physical recycling/farming still takes time
+  // Mark for validation when real-world data emerges
 
   // Sustainable Agriculture: +1%/month at full deployment (food, biomass, water cycle)
   if (tech.sustainableAgriculture?.unlocked) {
