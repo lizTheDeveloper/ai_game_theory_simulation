@@ -88,33 +88,42 @@ export function updateEnvironmentalAccumulation(
   // === RESOURCE REGENERATION (Phase 2.8) ===
   // Tech-enabled recovery: Circular economy, sustainable agriculture, clean energy
   // Research basis: Ellen MacArthur Foundation (2015), Tilton (2003)
+  // AI coordination: McKinsey reports 15-20% supply chain optimization gains
   let resourceRegeneration = 0;
   
   const tech = state.breakthroughTech;
+  
+  // AI coordination bonus (grounded in McKinsey research)
+  const avgCapability = state.aiAgents.length > 0 
+    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length 
+    : 0;
+  const aiCoordinationBonus = 1 + (avgCapability * 0.15); // Up to 1.6x at AGI (15% per point)
+  // Rationale: AI optimizes routing, reduces waste, coordinates globally
+  // NOT magic: Physical recycling/farming still takes time
 
   // Sustainable Agriculture: +1%/month at full deployment (food, biomass, water cycle)
   if (tech.sustainableAgriculture?.unlocked) {
-    resourceRegeneration += 0.01 * (tech.sustainableAgriculture?.deploymentLevel ?? 0);
+    resourceRegeneration += 0.01 * (tech.sustainableAgriculture?.deploymentLevel ?? 0) * aiCoordinationBonus;
   }
 
   // Circular Economy (Advanced Recycling): +2%/month (metals, minerals, materials)
   if (tech.advancedRecycling?.unlocked) {
-    resourceRegeneration += 0.02 * (tech.advancedRecycling?.deploymentLevel ?? 0);
+    resourceRegeneration += 0.02 * (tech.advancedRecycling?.deploymentLevel ?? 0) * aiCoordinationBonus;
   }
 
   // Clean Energy: +1.5%/month (replaces fossil fuel depletion with renewable flow)
   if (tech.cleanEnergy?.unlocked) {
-    resourceRegeneration += 0.015 * (tech.cleanEnergy?.deploymentLevel ?? 0);
+    resourceRegeneration += 0.015 * (tech.cleanEnergy?.deploymentLevel ?? 0) * aiCoordinationBonus;
   }
 
   // Ecosystem Management: +0.8%/month (biosphere restoration → resource flows)
   if (tech.ecosystemManagement?.unlocked) {
-    resourceRegeneration += 0.008 * (tech.ecosystemManagement?.deploymentLevel ?? 0);
+    resourceRegeneration += 0.008 * (tech.ecosystemManagement?.deploymentLevel ?? 0) * aiCoordinationBonus;
   }
 
   // Interspecies Communication: +0.5%/month (better habitat understanding → efficiency)
   if (tech.interspeciesComm?.unlocked) {
-    resourceRegeneration += 0.005 * (tech.interspeciesComm?.deploymentLevel ?? 0);
+    resourceRegeneration += 0.005 * (tech.interspeciesComm?.deploymentLevel ?? 0) * aiCoordinationBonus;
   }
   
   // Apply regeneration (can recover from 0%!)
