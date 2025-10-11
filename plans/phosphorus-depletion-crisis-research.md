@@ -1,7 +1,7 @@
 # Phosphorus Depletion Crisis: Research & Implementation
 
 **Date:** October 10, 2025  
-**Context:** User request - "my friend reached out and said we should add Phosphorous depletion as a crisis"  
+**Context:** User request - "my friend  (@CJ Trowbridge) reached out and said we should add Phosphorous depletion as a crisis"  
 **Source:** Tavily advanced search, 2024-2025 research  
 
 ---
