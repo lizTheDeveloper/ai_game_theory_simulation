@@ -158,7 +158,7 @@ export function updateOceanAcidificationSystem(state: GameState): void {
     console.log(`   Oyster, clam, mussel fisheries failing`);
     
     // Food impact for coastal populations
-    state.qualityOfLifeSystems.food = Math.max(0, state.qualityOfLifeSystems.food - 0.04);
+    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - 0.04);
   }
   
   // === MARINE FOOD WEB COLLAPSE ===
@@ -196,21 +196,21 @@ export function updateOceanAcidificationSystem(state: GameState): void {
     
     // Food QoL impact
     const foodImpact = oa.fishDependentImpact * 0.375 * 0.005; // 37.5% of people, up to 0.5%/month
-    state.qualityOfLifeSystems.food = Math.max(0, state.qualityOfLifeSystems.food - foodImpact);
+    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
   }
   
   // === EXTINCTION PATHWAY ===
   // Slow collapse: Marine food web fails + no alternatives = famine for 3B people
   
   if (oa.marineFoodWebCollapseActive && oa.fishDependentImpact > 0.70) {
-    const foodQoL = state.qualityOfLifeSystems.food;
+    const materialAbundance = state.qualityOfLifeSystems.materialAbundance;
     
     // Check if alternative proteins developed
     const hasAlternatives = economicStage >= 3.5; // Post-scarcity has alternatives
     
-    if (foodQoL < 0.30 && !hasAlternatives) {
+    if (materialAbundance < 0.30 && !hasAlternatives) {
       console.log(`☠️ OCEAN ACIDIFICATION EXTINCTION: Marine food system collapse`);
-      console.log(`   Food QoL: ${(foodQoL * 100).toFixed(0)}%`);
+      console.log(`   Material Abundance: ${(materialAbundance * 100).toFixed(0)}%`);
       console.log(`   Marine food web: ${(oa.marineFoodWeb * 100).toFixed(0)}%`);
       console.log(`   Fish-dependent impact: ${(oa.fishDependentImpact * 100).toFixed(0)}%`);
       console.log(`   3 billion people depend on fish - famine spreading`);

@@ -184,7 +184,7 @@ export function updateFreshwaterSystem(state: GameState): void {
       console.log(`   Regional water: ${(regionValues[mostStressedIndex] * 100).toFixed(0)}%`);
       
       // Immediate impacts
-      state.qualityOfLifeSystems.food = Math.max(0.1, state.qualityOfLifeSystems.food - 0.08);
+      state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.08);
       state.qualityOfLifeSystems.health = Math.max(0.1, state.qualityOfLifeSystems.health - 0.05);
       state.society.trust -= 0.04;
       state.globalMetrics.economicGrowthRate -= 0.03;
@@ -199,22 +199,22 @@ export function updateFreshwaterSystem(state: GameState): void {
   } else {
     // Day Zero drought is active - ongoing impacts
     const monthlyFoodImpact = fw.dayZeroDrought.severity * 0.015; // Up to 1.5%/month
-    state.qualityOfLifeSystems.food = Math.max(0, state.qualityOfLifeSystems.food - monthlyFoodImpact);
+    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - monthlyFoodImpact);
     
     fw.dayZeroDrought.duration--;
     if (fw.dayZeroDrought.duration <= 0) {
       // Drought ends (but damage remains)
       console.log(`✅ DAY ZERO DROUGHT ENDED: ${fw.dayZeroDrought.region}`);
-      console.log(`   Food QoL: ${(state.qualityOfLifeSystems.food * 100).toFixed(0)}%`);
+      console.log(`   Material Abundance: ${(state.qualityOfLifeSystems.materialAbundance * 100).toFixed(0)}%`);
       fw.dayZeroDrought.active = false;
     }
   }
   
   // === FOOD SYSTEM IMPACT ===
-  // Agriculture uses 70% of water - stress directly impacts food
+  // Agriculture uses 70% of water - stress directly impacts food/material abundance
   if (fw.waterStress > 0.50) {
     const foodImpact = (fw.waterStress - 0.50) * 0.012; // Up to 0.6%/month at max stress
-    state.qualityOfLifeSystems.food = Math.max(0, state.qualityOfLifeSystems.food - foodImpact);
+    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
   }
   
   // === CRITICAL SCARCITY ===
@@ -230,14 +230,14 @@ export function updateFreshwaterSystem(state: GameState): void {
   // === EXTINCTION PATHWAY ===
   // Slow collapse: Groundwater depleted + no alternatives = agricultural failure
   if (fw.blueWater.groundwater < 0.15 && fw.waterStress > 0.70) {
-    const foodQoL = state.qualityOfLifeSystems.food;
+    const materialAbundance = state.qualityOfLifeSystems.materialAbundance;
     
     // Check if technology has provided alternatives
     const hasAlternatives = (fw.desalinationDeployment + fw.recyclingDeployment + fw.atmosphericWaterDeployment) > 0.50;
     
-    if (foodQoL < 0.25 && !hasAlternatives) {
+    if (materialAbundance < 0.25 && !hasAlternatives) {
       console.log(`☠️ FRESHWATER DEPLETION EXTINCTION: Agricultural collapse`);
-      console.log(`   Food QoL: ${(foodQoL * 100).toFixed(0)}%`);
+      console.log(`   Material Abundance: ${(materialAbundance * 100).toFixed(0)}%`);
       console.log(`   Groundwater: ${(fw.blueWater.groundwater * 100).toFixed(0)}%`);
       console.log(`   Water stress: ${(fw.waterStress * 100).toFixed(0)}%`);
       console.log(`   Alternative water tech: ${((fw.desalinationDeployment + fw.recyclingDeployment) * 50).toFixed(0)}%`);

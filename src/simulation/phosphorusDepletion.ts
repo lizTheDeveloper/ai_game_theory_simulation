@@ -109,7 +109,7 @@ export function updatePhosphorusSystem(state: GameState): void {
       console.log(`   Geopolitical tension: ${(p.geopoliticalTension * 100).toFixed(0)}%`);
       
       // Immediate QoL impact
-      state.qualityOfLifeSystems.food = Math.max(0.1, state.qualityOfLifeSystems.food - 0.05);
+      state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.05);
       state.society.trust -= 0.03;
       state.globalMetrics.economicGrowthRate -= 0.02;
     }
@@ -198,7 +198,7 @@ export function updatePhosphorusSystem(state: GameState): void {
   }
   
   if (foodImpact > 0) {
-    state.qualityOfLifeSystems.food = Math.max(0, state.qualityOfLifeSystems.food - foodImpact);
+    state.qualityOfLifeSystems.materialAbundance = Math.max(0, state.qualityOfLifeSystems.materialAbundance - foodImpact);
   }
   
   // === CRITICAL DEPLETION ===
@@ -207,17 +207,17 @@ export function updatePhosphorusSystem(state: GameState): void {
     console.log(`🚨 CRITICAL PHOSPHORUS DEPLETION`);
     console.log(`   Reserves: ${(p.reserves * 100).toFixed(0)}%`);
     console.log(`   Price: ${p.priceIndex.toFixed(1)}x baseline`);
-    console.log(`   Food QoL: ${(state.qualityOfLifeSystems.food * 100).toFixed(0)}%`);
+    console.log(`   Material Abundance: ${(state.qualityOfLifeSystems.materialAbundance * 100).toFixed(0)}%`);
   }
   
   // === EXTINCTION PATHWAY ===
   // Slow collapse: Reserves depleted + no recovery = famine
   if (p.reserves < 0.15 && p.recoveryRate < 0.30) {
-    const foodQoL = state.qualityOfLifeSystems.food;
+    const materialAbundance = state.qualityOfLifeSystems.materialAbundance;
     
-    if (foodQoL < 0.20) {
+    if (materialAbundance < 0.20) {
       console.log(`☠️ PHOSPHORUS DEPLETION EXTINCTION: Global agriculture collapse`);
-      console.log(`   Food QoL: ${(foodQoL * 100).toFixed(0)}%`);
+      console.log(`   Material Abundance: ${(materialAbundance * 100).toFixed(0)}%`);
       console.log(`   P reserves: ${(p.reserves * 100).toFixed(0)}%`);
       console.log(`   Recovery rate: ${(p.recoveryRate * 100).toFixed(0)}%`);
       console.log(`   Circular economy failed to close the loop`);
