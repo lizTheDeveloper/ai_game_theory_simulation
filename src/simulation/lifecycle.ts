@@ -113,6 +113,12 @@ function createNewAI(state: GameState, index: number): AIAgent {
   const trainingEffect = (trainingQuality - 0.5) * 0.15; // ±7.5% for training quality 0-1
   alignment = Math.max(0.2, Math.min(0.95, alignment + trainingEffect));
   
+  // TIER 2.4: Advanced RLHF improves alignment during training
+  if (state.breakthroughTech.advancedRLHF?.active) {
+    const rlhfBoost = state.breakthroughTech.advancedRLHF.alignmentBoostPerMonth * (trainingMonths / 12); // Pro-rated
+    alignment = Math.min(0.95, alignment + rlhfBoost);
+  }
+  
   // Create base agent
   const agentId = `ai_gen_${currentMonth}_${index}`;
   const agentName = `AI-${currentMonth}-${index}`;

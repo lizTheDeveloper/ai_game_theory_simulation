@@ -200,6 +200,14 @@ export interface BreakthroughTechState {
     alignmentVerificationBonus: number; // +30% verification quality
   };
   
+  // De-Extinction & Rewilding (TIER 2.6)
+  deExtinctionRewilding?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1] Species restored and released
+    breakthroughYear: number;
+    biodiversityBoostPerMonth: number; // +2%/month (research-backed)
+  };
+  
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation
