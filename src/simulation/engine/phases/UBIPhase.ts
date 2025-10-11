@@ -6,19 +6,16 @@ import { GameState } from '@/types/game';
 import { SimulationPhase, PhaseCategory } from '../types';
 import { updateUBISystem } from '../../enhancedUBI';
 
+import { PhaseResult, RNGFunction } from '../PhaseOrchestrator';
+
 export class UBIPhase implements SimulationPhase {
-  name = 'Enhanced UBI Update';
-  id = 'ubi-system';
-  category: PhaseCategory = 'social';
-  priority = 15.5; // After social cohesion, before defensive AI
+  readonly name = 'Enhanced UBI Update';
+  readonly id = 'ubi-system';
+  readonly order = 15.5; // After social cohesion, before defensive AI
   
-  execute(state: GameState): void {
+  execute(state: GameState, rng: RNGFunction): PhaseResult {
     updateUBISystem(state);
-  }
-  
-  shouldRun(state: GameState): boolean {
-    // Run if UBI is active, or if it should be monitored
-    return state.ubiSystem.active || state.society.unemploymentLevel > 0.2;
+    return { events: [] };
   }
 }
 

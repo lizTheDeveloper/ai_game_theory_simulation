@@ -652,6 +652,875 @@ export function progressExtinctionWithPopulation(state: GameState): void {
 
 ---
 
+## 🌍 REGIONAL REFUGEE FLOW SYSTEM (TIER 1.6 - RESEARCH-BACKED)
+
+**Based on comprehensive research from UNHCR, IOM, World Bank (2023-2025)**
+
+This section defines the **6-region minimum viable system** for refugee flow modeling, incorporating real-world mortality rates, displacement patterns, and regional vulnerabilities.
+
+### **REGIONAL POPULATION STRUCTURE**
+
+Track population and refugee dynamics across 6 major world regions:
+
+```typescript
+/**
+ * Regional Population System (TIER 1.6)
+ *
+ * Tracks population, carrying capacity, and refugee dynamics across 6 world regions.
+ * Based on World Bank Groundswell Report + IOM climate refugee projections.
+ */
+export interface RegionalPopulationSystem {
+  regions: Map<string, RegionalPopulation>;
+
+  // Global refugee metrics
+  totalGlobalRefugees: number;              // Millions currently displaced
+  totalResettled: number;                   // Millions in camps or integrated
+  totalStranded: number;                    // Millions without resettlement
+  totalDeathsInTransit: number;             // Cumulative transit deaths
+
+  // Flow tracking
+  activeRefugeeFlows: RegionalRefugeeFlow[];
+}
+
+export interface RegionalPopulation {
+  regionName: RegionName;
+
+  // Population (billions)
+  population: number;                       // Current population
+  baselinePopulation: number;               // 2025 starting population
+  peakPopulation: number;                   // Historical peak
+
+  // Demographics
+  birthRate: number;                        // [0, 0.03] Annual birth rate
+  deathRate: number;                        // [0, 0.02] Annual death rate
+  netGrowthRate: number;                    // Current net growth per year
+
+  // Carrying capacity
+  carryingCapacity: number;                 // Maximum sustainable (billions)
+  baselineCapacity: number;                 // With current tech/climate
+  capacityModifier: number;                 // Climate/tech/resource multiplier
+  habitableArea: number;                    // km² of livable land
+
+  // Climate vulnerability (0-1 scale)
+  climateVulnerability: number;             // From World Bank Groundswell data
+  waterStress: number;                      // Water scarcity risk
+  coastalExposure: number;                  // Sea level rise risk
+  heatStress: number;                       // Extreme heat risk
+
+  // Refugee hosting
+  refugeePopulation: number;                // Millions currently hosted
+  refugeeAcceptanceRate: number;            // [0, 1] Willingness to accept
+  resettlementCapacity: number;             // Millions per year can absorb
+  socialTensionFromRefugees: number;        // [0, 1] Anti-refugee sentiment
+
+  // Regional crises
+  activeInternalCrises: RegionalCrisis[];   // Crises affecting this region
+}
+
+export enum RegionName {
+  SUB_SAHARAN_AFRICA = 'Sub-Saharan Africa',
+  NORTH_AFRICA_MIDDLE_EAST = 'North Africa & Middle East',
+  SOUTH_ASIA = 'South Asia',
+  EAST_ASIA_PACIFIC = 'East Asia & Pacific',
+  EUROPE_CENTRAL_ASIA = 'Europe & Central Asia',
+  AMERICAS = 'Americas'
+}
+
+// Baseline data (2025)
+export const REGIONAL_BASELINES: Record<RegionName, {
+  population: number;                       // Billions
+  climateVulnerability: number;             // [0, 1]
+  projectedDisplacement2050: number;        // Millions (World Bank)
+}> = {
+  [RegionName.SUB_SAHARAN_AFRICA]: {
+    population: 1.2,
+    climateVulnerability: 0.85,
+    projectedDisplacement2050: 86
+  },
+  [RegionName.NORTH_AFRICA_MIDDLE_EAST]: {
+    population: 0.6,
+    climateVulnerability: 0.80,
+    projectedDisplacement2050: 19
+  },
+  [RegionName.SOUTH_ASIA]: {
+    population: 2.0,
+    climateVulnerability: 0.75,
+    projectedDisplacement2050: 40
+  },
+  [RegionName.EAST_ASIA_PACIFIC]: {
+    population: 2.3,
+    climateVulnerability: 0.70,
+    projectedDisplacement2050: 49
+  },
+  [RegionName.EUROPE_CENTRAL_ASIA]: {
+    population: 0.9,
+    climateVulnerability: 0.35,
+    projectedDisplacement2050: 5
+  },
+  [RegionName.AMERICAS]: {
+    population: 1.0,
+    climateVulnerability: 0.50,
+    projectedDisplacement2050: 17
+  }
+};
+```
+
+### **REFUGEE STATUS & MORTALITY RATES**
+
+Based on research from UNHCR (2022-2024), IOM, and WHO:
+
+```typescript
+/**
+ * Refugee Status Types
+ *
+ * Determines mortality rates and integration progress.
+ * Based on UNHCR camp mortality data, Mediterranean crossing data, and famine zone studies.
+ */
+export enum RefugeeStatus {
+  IN_TRANSIT_SAFE = 'in_transit_safe',           // Safe land route
+  IN_TRANSIT_DANGEROUS = 'in_transit_dangerous', // Mediterranean, desert, ocean
+  RESETTLED_CAMP = 'resettled_camp',             // UNHCR managed camps
+  RESETTLED_INTEGRATED = 'resettled_integrated', // Fully integrated after 25 years
+  STRANDED_MINIMAL = 'stranded_minimal',         // No camp, stable area
+  STRANDED_MODERATE = 'stranded_moderate',       // No services, deteriorating
+  STRANDED_SEVERE = 'stranded_severe',           // Active crisis, no help
+  CRISIS_ZONE_WAR = 'crisis_zone_war',           // Active conflict zone
+  CRISIS_ZONE_FAMINE = 'crisis_zone_famine',     // Famine conditions
+  CRISIS_ZONE_GENOCIDE = 'crisis_zone_genocide'  // Active killing
+}
+
+/**
+ * Research-Backed Mortality Rates
+ *
+ * Monthly mortality rates [0, 1] for each refugee status.
+ * Sources: UNHCR (2022), IOM (2024), WHO Somalia drought study, Sudan crisis data
+ */
+export const REFUGEE_MORTALITY_RATES: Record<RefugeeStatus, number> = {
+  // Transit mortality (fleeing)
+  [RefugeeStatus.IN_TRANSIT_SAFE]: 0.00006,       // 0.007% annual (global avg)
+  [RefugeeStatus.IN_TRANSIT_DANGEROUS]: 0.00069,  // 0.83% annual (Mediterranean 2024)
+
+  // Resettled (camps or integrated)
+  [RefugeeStatus.RESETTLED_CAMP]: 0.00024,        // 0.29% annual (UNHCR camps 2022)
+  [RefugeeStatus.RESETTLED_INTEGRATED]: 0.00058,  // 0.7% annual (developed country baseline)
+
+  // Stranded (no resettlement)
+  [RefugeeStatus.STRANDED_MINIMAL]: 0.00083,      // 1% annual (no camp, stable)
+  [RefugeeStatus.STRANDED_MODERATE]: 0.00208,     // 2.5% annual (no services)
+  [RefugeeStatus.STRANDED_SEVERE]: 0.00417,       // 5% annual (active deterioration)
+
+  // Crisis zones (if stayed or returned)
+  [RefugeeStatus.CRISIS_ZONE_WAR]: 0.00208,       // 2.5% annual (Sudan example)
+  [RefugeeStatus.CRISIS_ZONE_FAMINE]: 0.00417,    // 5% annual (Somalia drought)
+  [RefugeeStatus.CRISIS_ZONE_GENOCIDE]: 0.01667   // 20% annual (active killing)
+};
+
+/**
+ * Key Research Finding:
+ *
+ * Refugees DO die without resettlement, but it's a SLOW death (1-5% annual), not instant.
+ * The real killer is being stranded in active crisis zones (famine, war).
+ *
+ * - UNHCR managed camps: 0.29% annual (LOWER than developing country baseline of 1%)
+ * - Stranded without camps: 1-3% annual (die off over decades)
+ * - Famine zones: 2-5%+ annual (children die first - 50%+ of deaths)
+ * - Mediterranean route: 0.83% transit mortality (2,452 deaths / 294,240 attempts in 2024)
+ */
+```
+
+### **REGIONAL REFUGEE FLOWS**
+
+Model refugee movements between regions based on push/pull factors:
+
+```typescript
+/**
+ * Regional Refugee Flow
+ *
+ * Tracks displaced populations moving from source region(s) to destination region(s).
+ * Incorporates transit routes, danger levels, and resettlement capacity.
+ */
+export interface RegionalRefugeeFlow {
+  id: string;
+  cause: CrisisType;
+  startMonth: number;
+
+  // Source and destinations
+  sourceRegion: RegionName;
+  destinationRegions: RefugeeDestination[];
+
+  // Population in motion
+  totalDisplaced: number;                   // Millions originally displaced
+  currentlyInTransit: number;               // Millions still moving
+  currentlyResettled: number;               // Millions in camps or integrated
+  currentlyStranded: number;                // Millions without resettlement
+  cumulativeDeaths: number;                 // Total deaths (transit + stranded)
+
+  // Flow dynamics
+  monthlyDisplacementRate: number;          // New people displaced per month
+  monthlyResettlementRate: number;          // People resettled per month
+  peakDisplacement: number;                 // Highest monthly displacement
+
+  // Temporal tracking
+  monthsActive: number;
+  generationLength: number;                 // 300 months (25 years) until fully integrated
+  resolved: boolean;
+}
+
+export interface RefugeeDestination {
+  region: RegionName;
+
+  // Allocation
+  allocatedRefugees: number;                // Millions directed to this region
+  currentlyHosted: number;                  // Millions currently in this region
+  fullyIntegrated: number;                  // Millions integrated after 25 years
+
+  // Status breakdown
+  refugeesByStatus: Map<RefugeeStatus, number>; // How many in each status
+
+  // Route characteristics
+  routeDanger: number;                      // [0, 1] Transit mortality risk
+  routeDistance: number;                    // km (affects transit time)
+  transitDuration: number;                  // Months to reach destination
+
+  // Pull factors (why this destination?)
+  geographicProximity: number;              // [0, 1] How close
+  carryingCapacity: number;                 // [0, 1] Room to absorb
+  existingBurden: number;                   // [0, 1] Already hosting refugees
+  attractiveness: number;                   // [0, 1] Weighted score
+
+  // Host region impacts
+  socialTension: number;                    // [0, 1] Anti-refugee sentiment
+  economicStrain: number;                   // [0, 1] Cost burden
+  bordersOpen: boolean;                     // Can refugees enter?
+}
+
+export type CrisisType =
+  | 'climate_slow'      // Gradual desertification, sea level rise
+  | 'climate_rapid'     // Extreme weather, coastal flooding
+  | 'war_regional'      // Regional conflict (Syria-scale)
+  | 'war_nuclear'       // Nuclear war aftermath
+  | 'famine'            // Food/water scarcity
+  | 'ecosystem';        // Environmental collapse
+```
+
+### **CRISIS-SPECIFIC DISPLACEMENT & MORTALITY**
+
+How each crisis type affects population and drives refugees:
+
+```typescript
+/**
+ * Crisis Impact Parameters (RESEARCH-BACKED)
+ *
+ * Defines how each crisis type:
+ * 1. Decrements regional population (deaths in crisis zone)
+ * 2. Drives displacement (% who flee)
+ * 3. Mortality for those who stay vs flee
+ *
+ * Based on: Sudan crisis (12M displaced, 62K-150K deaths), Syria (13M displaced, 580K+ deaths),
+ * Somalia drought (71K deaths), World Bank climate projections (216M by 2050)
+ */
+export interface CrisisImpactProfile {
+  crisisType: CrisisType;
+
+  // Population decrements
+  directDeathRate: number;                  // [0, 0.5] Monthly death rate in crisis zone
+  directDeathRateIfStayed: number;          // [0, 0.5] If population chooses not to flee
+
+  // Displacement dynamics
+  displacementRate: number;                 // [0, 0.7] Fraction of region that flees
+  displacementAcceleration: number;         // Rate of increase per month
+  peakDisplacementMonth: number;            // When displacement peaks
+
+  // Mortality for displaced
+  transitMortalityMultiplier: number;       // [1, 5] Multiplier on baseline transit mortality
+  strandedMortalityRate: number;            // [0, 0.05] Monthly rate if no resettlement
+
+  // Duration
+  typicalDuration: number;                  // Months until crisis stabilizes
+  resolutionProbability: number;            // [0, 0.1] Chance per month of resolving
+}
+
+export const CRISIS_IMPACT_PROFILES: Record<CrisisType, CrisisImpactProfile> = {
+  // Climate (slow): Desertification, sea level rise, groundwater depletion
+  climate_slow: {
+    crisisType: 'climate_slow',
+    directDeathRate: 0.00083,               // 1% annual (slow starvation/displacement)
+    directDeathRateIfStayed: 0.00167,       // 2% annual (if didn't flee)
+    displacementRate: 0.10,                 // 5-10% displaced over years
+    displacementAcceleration: 0.001,        // Gradual acceleration
+    peakDisplacementMonth: 60,              // Peaks after 5 years
+    transitMortalityMultiplier: 1.0,        // Safe land routes
+    strandedMortalityRate: 0.00208,         // 2.5% annual if stranded
+    typicalDuration: 240,                   // 20 years (long-term crisis)
+    resolutionProbability: 0.001            // 0.1% per month (~10 years avg)
+  },
+
+  // Climate (rapid): Extreme flooding, coastal inundation, mega-cyclones
+  climate_rapid: {
+    crisisType: 'climate_rapid',
+    directDeathRate: 0.00417,               // 5% annual (immediate crisis)
+    directDeathRateIfStayed: 0.00833,       // 10% annual (if stayed in flood zone)
+    displacementRate: 0.40,                 // 30-50% displaced rapidly
+    displacementAcceleration: 0.05,         // Rapid surge
+    peakDisplacementMonth: 6,               // Peaks in first 6 months
+    transitMortalityMultiplier: 2.0,        // Dangerous routes (flooding, panic)
+    strandedMortalityRate: 0.00417,         // 5% annual if stranded
+    typicalDuration: 36,                    // 3 years to stabilize
+    resolutionProbability: 0.005            // 0.5% per month (~2-3 years avg)
+  },
+
+  // War (regional): Syria-scale conflict (13M displaced, 580K+ deaths over 13 years)
+  war_regional: {
+    crisisType: 'war_regional',
+    directDeathRate: 0.00208,               // 2.5% annual (Sudan: 62K/12M displaced)
+    directDeathRateIfStayed: 0.00417,       // 5% annual (war zone mortality)
+    displacementRate: 0.30,                 // 20-40% flee (Syria: 13M/22M pre-war pop)
+    displacementAcceleration: 0.02,         // Surges during fighting
+    peakDisplacementMonth: 24,              // Peaks in first 2 years
+    transitMortalityMultiplier: 1.5,        // Moderate danger (border crossings)
+    strandedMortalityRate: 0.00417,         // 5% annual (trapped in war zone)
+    typicalDuration: 120,                   // 10 years (Syria: 13+ years ongoing)
+    resolutionProbability: 0.002            // 0.2% per month (~5-10 years avg)
+  },
+
+  // Nuclear war: Massive immediate displacement + fallout
+  war_nuclear: {
+    crisisType: 'war_nuclear',
+    directDeathRate: 0.50,                  // 50% instant death (first month)
+    directDeathRateIfStayed: 0.08,          // 95%+ annual death rate (fallout)
+    displacementRate: 0.60,                 // 50-70% of survivors flee
+    displacementAcceleration: 0.0,          // Immediate displacement
+    peakDisplacementMonth: 1,               // Instant
+    transitMortalityMultiplier: 3.0,        // Extremely dangerous (fallout, chaos)
+    strandedMortalityRate: 0.00833,         // 10% annual (if stranded)
+    typicalDuration: 60,                    // 5 years to stabilize
+    resolutionProbability: 0.01             // 1% per month (~2-3 years avg)
+  },
+
+  // Famine: Somalia drought (71K deaths, 2.9M displaced = 2.45% mortality)
+  famine: {
+    crisisType: 'famine',
+    directDeathRate: 0.00417,               // 5% annual (Somalia: 71K/2.9M)
+    directDeathRateIfStayed: 0.01,          // 12% annual (if stayed in famine zone)
+    displacementRate: 0.20,                 // 10-30% flee (rest hope for aid)
+    displacementAcceleration: 0.015,        // Accelerates as famine worsens
+    peakDisplacementMonth: 12,              // Peaks after 1 year
+    transitMortalityMultiplier: 2.0,        // High danger (starvation during travel)
+    strandedMortalityRate: 0.00833,         // 10% annual (stranded = famine continues)
+    typicalDuration: 36,                    // 3 years (Somalia: 2 years)
+    resolutionProbability: 0.01             // 1% per month (~2-3 years avg)
+  },
+
+  // Ecosystem collapse: Slow poisoning, loss of ecosystem services
+  ecosystem: {
+    crisisType: 'ecosystem',
+    directDeathRate: 0.00167,               // 2% annual (slow toxicity)
+    directDeathRateIfStayed: 0.00417,       // 5% annual (if stayed in toxic zone)
+    displacementRate: 0.10,                 // 5-15% flee (slow crisis)
+    displacementAcceleration: 0.005,        // Gradual
+    peakDisplacementMonth: 120,             // Peaks after 10 years
+    transitMortalityMultiplier: 1.0,        // Safe routes
+    strandedMortalityRate: 0.00208,         // 2.5% annual
+    typicalDuration: 240,                   // 20+ years (long-term)
+    resolutionProbability: 0.0005           // 0.05% per month (~20+ years)
+  }
+};
+```
+
+### **REFUGEE FLOW ROUTING ALGORITHM**
+
+Determine where refugees go based on proximity, capacity, and existing burden:
+
+```typescript
+/**
+ * Refugee Destination Selection Algorithm
+ *
+ * When a crisis displaces population, determine which regions receive refugees.
+ * Based on: Geographic proximity (60%), capacity (30%), avoiding overload (10%)
+ */
+export function calculateRefugeeDestinations(
+  sourceRegion: RegionName,
+  displacedPopulation: number,
+  crisisType: CrisisType,
+  state: GameState
+): RefugeeDestination[] {
+  const destinations: RefugeeDestination[] = [];
+  const regionalSystem = state.regionalPopulationSystem;
+
+  // Calculate attractiveness score for each destination region
+  const attractivenessScores: Array<{
+    region: RegionName,
+    score: number,
+    proximity: number,
+    capacity: number,
+    burden: number
+  }> = [];
+
+  for (const [destName, destPop] of regionalSystem.regions) {
+    if (destName === sourceRegion) continue; // Can't flee to yourself
+
+    // 1. Geographic proximity [0, 1] (60% weight)
+    const proximity = calculateRegionalProximity(sourceRegion, destName);
+
+    // 2. Carrying capacity [0, 1] (30% weight)
+    // How much room does this region have?
+    const populationPressure = destPop.population / destPop.carryingCapacity;
+    const hasCapacity = Math.max(0, 1 - populationPressure);
+
+    // 3. Existing refugee burden [0, 1] (10% weight - AVOID overloaded regions)
+    const refugeeBurden = destPop.refugeePopulation / destPop.population;
+    const notOverloaded = Math.max(0, 1 - refugeeBurden * 5); // Penalize if >20% refugees
+
+    // 4. Border policy modifier
+    const borderModifier = destPop.refugeeAcceptanceRate; // [0, 1]
+
+    // Calculate weighted attractiveness
+    const attractiveness = (
+      proximity * 0.60 +
+      hasCapacity * 0.30 +
+      notOverloaded * 0.10
+    ) * borderModifier;
+
+    attractivenessScores.push({
+      region: destName,
+      score: attractiveness,
+      proximity,
+      capacity: hasCapacity,
+      burden: refugeeBurden
+    });
+  }
+
+  // Sort by attractiveness (most attractive first)
+  attractivenessScores.sort((a, b) => b.score - a.score);
+
+  // Allocate refugees to destinations proportionally
+  // Top 3-4 destinations get most refugees
+  const totalAttractiveness = attractivenessScores.reduce((sum, d) => sum + d.score, 0);
+
+  for (let i = 0; i < Math.min(4, attractivenessScores.length); i++) {
+    const dest = attractivenessScores[i];
+
+    if (dest.score < 0.1) break; // Don't send to very unattractive destinations
+
+    // Allocate proportional to attractiveness
+    const allocation = (dest.score / totalAttractiveness) * displacedPopulation;
+
+    // Calculate route danger
+    const routeDanger = calculateRouteDanger(sourceRegion, dest.region, crisisType);
+    const transitDuration = calculateTransitDuration(sourceRegion, dest.region);
+
+    destinations.push({
+      region: dest.region,
+      allocatedRefugees: allocation,
+      currentlyHosted: 0, // Will be updated monthly
+      fullyIntegrated: 0,
+      refugeesByStatus: new Map(),
+      routeDanger,
+      routeDistance: calculateRegionalDistance(sourceRegion, dest.region),
+      transitDuration,
+      geographicProximity: dest.proximity,
+      carryingCapacity: dest.capacity,
+      existingBurden: dest.burden,
+      attractiveness: dest.score,
+      socialTension: 0, // Will be calculated monthly
+      economicStrain: 0,
+      bordersOpen: dest.refugeeAcceptanceRate > 0.5
+    });
+  }
+
+  // Handle stranded refugees (those who can't reach any destination)
+  const allocatedTotal = destinations.reduce((sum, d) => sum + d.allocatedRefugees, 0);
+  const stranded = Math.max(0, displacedPopulation - allocatedTotal);
+
+  if (stranded > 0.1) { // At least 100K stranded
+    // Add "stranded in source region" destination
+    destinations.push({
+      region: sourceRegion,
+      allocatedRefugees: stranded,
+      currentlyHosted: stranded,
+      fullyIntegrated: 0,
+      refugeesByStatus: new Map([[RefugeeStatus.STRANDED_SEVERE, stranded]]),
+      routeDanger: 1.0, // Trapped in crisis zone
+      routeDistance: 0,
+      transitDuration: 0,
+      geographicProximity: 1.0,
+      carryingCapacity: 0,
+      existingBurden: 1.0,
+      attractiveness: 0,
+      socialTension: 0,
+      economicStrain: 0,
+      bordersOpen: false
+    });
+  }
+
+  return destinations;
+}
+
+/**
+ * Regional Proximity Matrix
+ *
+ * How geographically close are regions? [0, 1] where 1 = adjacent, 0 = opposite side of world
+ */
+const REGIONAL_PROXIMITY: Record<RegionName, Record<RegionName, number>> = {
+  [RegionName.SUB_SAHARAN_AFRICA]: {
+    [RegionName.SUB_SAHARAN_AFRICA]: 1.0,
+    [RegionName.NORTH_AFRICA_MIDDLE_EAST]: 0.8,  // Adjacent
+    [RegionName.SOUTH_ASIA]: 0.3,                 // Indian Ocean crossing
+    [RegionName.EAST_ASIA_PACIFIC]: 0.2,          // Far
+    [RegionName.EUROPE_CENTRAL_ASIA]: 0.5,        // Mediterranean crossing
+    [RegionName.AMERICAS]: 0.1                     // Atlantic crossing
+  },
+  [RegionName.NORTH_AFRICA_MIDDLE_EAST]: {
+    [RegionName.SUB_SAHARAN_AFRICA]: 0.8,
+    [RegionName.NORTH_AFRICA_MIDDLE_EAST]: 1.0,
+    [RegionName.SOUTH_ASIA]: 0.6,                 // Land routes
+    [RegionName.EAST_ASIA_PACIFIC]: 0.3,
+    [RegionName.EUROPE_CENTRAL_ASIA]: 0.7,        // Turkey/Balkans
+    [RegionName.AMERICAS]: 0.1
+  },
+  [RegionName.SOUTH_ASIA]: {
+    [RegionName.SUB_SAHARAN_AFRICA]: 0.3,
+    [RegionName.NORTH_AFRICA_MIDDLE_EAST]: 0.6,
+    [RegionName.SOUTH_ASIA]: 1.0,
+    [RegionName.EAST_ASIA_PACIFIC]: 0.7,          // Adjacent
+    [RegionName.EUROPE_CENTRAL_ASIA]: 0.4,
+    [RegionName.AMERICAS]: 0.1
+  },
+  [RegionName.EAST_ASIA_PACIFIC]: {
+    [RegionName.SUB_SAHARAN_AFRICA]: 0.2,
+    [RegionName.NORTH_AFRICA_MIDDLE_EAST]: 0.3,
+    [RegionName.SOUTH_ASIA]: 0.7,
+    [RegionName.EAST_ASIA_PACIFIC]: 1.0,
+    [RegionName.EUROPE_CENTRAL_ASIA]: 0.5,
+    [RegionName.AMERICAS]: 0.4                     // Pacific crossing (easier than Atlantic)
+  },
+  [RegionName.EUROPE_CENTRAL_ASIA]: {
+    [RegionName.SUB_SAHARAN_AFRICA]: 0.5,
+    [RegionName.NORTH_AFRICA_MIDDLE_EAST]: 0.7,
+    [RegionName.SOUTH_ASIA]: 0.4,
+    [RegionName.EAST_ASIA_PACIFIC]: 0.5,
+    [RegionName.EUROPE_CENTRAL_ASIA]: 1.0,
+    [RegionName.AMERICAS]: 0.3                     // Atlantic crossing
+  },
+  [RegionName.AMERICAS]: {
+    [RegionName.SUB_SAHARAN_AFRICA]: 0.1,
+    [RegionName.NORTH_AFRICA_MIDDLE_EAST]: 0.1,
+    [RegionName.SOUTH_ASIA]: 0.1,
+    [RegionName.EAST_ASIA_PACIFIC]: 0.4,
+    [RegionName.EUROPE_CENTRAL_ASIA]: 0.3,
+    [RegionName.AMERICAS]: 1.0
+  }
+};
+
+function calculateRegionalProximity(source: RegionName, dest: RegionName): number {
+  return REGIONAL_PROXIMITY[source][dest];
+}
+
+function calculateRouteDanger(
+  source: RegionName,
+  dest: RegionName,
+  crisisType: CrisisType
+): number {
+  const proximity = calculateRegionalProximity(source, dest);
+  const crisisProfile = CRISIS_IMPACT_PROFILES[crisisType];
+
+  // Danger increases with distance (harder routes) and crisis severity
+  const distanceDanger = 1 - proximity; // [0, 1] where 1 = very far
+  const crisisDanger = crisisProfile.transitMortalityMultiplier / 5; // Normalize to [0, 1]
+
+  // Mediterranean route (Africa → Europe) is especially dangerous
+  const isMediterranean = (
+    (source === RegionName.SUB_SAHARAN_AFRICA || source === RegionName.NORTH_AFRICA_MIDDLE_EAST) &&
+    dest === RegionName.EUROPE_CENTRAL_ASIA
+  );
+  const mediterraneanBonus = isMediterranean ? 0.3 : 0;
+
+  return Math.min(1.0, distanceDanger * 0.5 + crisisDanger * 0.5 + mediterraneanBonus);
+}
+
+function calculateTransitDuration(source: RegionName, dest: RegionName): number {
+  const proximity = calculateRegionalProximity(source, dest);
+
+  // Transit time: 3-12 months depending on distance
+  // Adjacent regions: 3 months, Opposite side: 12 months
+  return Math.round(3 + (1 - proximity) * 9);
+}
+
+function calculateRegionalDistance(source: RegionName, dest: RegionName): number {
+  // Approximate distances in km (for display/reference)
+  const proximity = calculateRegionalProximity(source, dest);
+  return Math.round(2000 + (1 - proximity) * 18000); // 2,000-20,000 km
+}
+```
+
+### **MONTHLY REFUGEE SYSTEM UPDATE**
+
+```typescript
+export function updateRegionalRefugeeFlows(state: GameState): void {
+  const system = state.regionalPopulationSystem;
+
+  // Reset monthly aggregates
+  system.totalGlobalRefugees = 0;
+  system.totalResettled = 0;
+  system.totalStranded = 0;
+
+  for (const flow of system.activeRefugeeFlows) {
+    if (flow.resolved) continue;
+
+    flow.monthsActive++;
+
+    // For each destination in this flow
+    for (const dest of flow.destinationRegions) {
+      const destRegion = system.regions.get(dest.region)!;
+
+      // 1. Transit phase: Refugees moving from source to destination
+      const transitRemaining = dest.allocatedRefugees - dest.currentlyHosted - dest.fullyIntegrated;
+      const monthlyArrival = Math.min(transitRemaining, dest.allocatedRefugees / dest.transitDuration);
+
+      if (monthlyArrival > 0) {
+        // Apply transit mortality
+        const transitStatus = dest.routeDanger > 0.5
+          ? RefugeeStatus.IN_TRANSIT_DANGEROUS
+          : RefugeeStatus.IN_TRANSIT_SAFE;
+        const transitMortality = REFUGEE_MORTALITY_RATES[transitStatus];
+        const transitDeaths = monthlyArrival * transitMortality;
+        const actualArrival = monthlyArrival - transitDeaths;
+
+        dest.currentlyHosted += actualArrival;
+        flow.cumulativeDeaths += transitDeaths;
+        system.totalDeathsInTransit += transitDeaths;
+      }
+
+      // 2. Determine refugee status upon arrival
+      const destCapacity = destRegion.carryingCapacity - destRegion.population;
+      const canResettleInCamps = destCapacity > 0 && dest.bordersOpen;
+
+      // Distribute refugees among statuses
+      let refugeesInCamps = 0;
+      let refugeesStranded = 0;
+
+      if (canResettleInCamps) {
+        const campCapacity = destCapacity * 0.1; // 10% of available capacity = camps
+        refugeesInCamps = Math.min(dest.currentlyHosted * 0.7, campCapacity);
+        refugeesStranded = dest.currentlyHosted - refugeesInCamps;
+      } else {
+        // Borders closed or no capacity → all stranded
+        refugeesStranded = dest.currentlyHosted;
+      }
+
+      // Update status distribution
+      dest.refugeesByStatus.set(RefugeeStatus.RESETTLED_CAMP, refugeesInCamps);
+
+      // Stranded refugees distributed by severity
+      const strandedSevere = refugeesStranded * 0.3;   // In crisis zones
+      const strandedModerate = refugeesStranded * 0.5; // Deteriorating areas
+      const strandedMinimal = refugeesStranded * 0.2;  // Stable but no camps
+
+      dest.refugeesByStatus.set(RefugeeStatus.STRANDED_SEVERE, strandedSevere);
+      dest.refugeesByStatus.set(RefugeeStatus.STRANDED_MODERATE, strandedModerate);
+      dest.refugeesByStatus.set(RefugeeStatus.STRANDED_MINIMAL, strandedMinimal);
+
+      // 3. Apply monthly mortality by status
+      let monthlyDeaths = 0;
+
+      for (const [status, count] of dest.refugeesByStatus) {
+        const mortalityRate = REFUGEE_MORTALITY_RATES[status];
+        const deaths = count * mortalityRate;
+        monthlyDeaths += deaths;
+
+        // Decrement count
+        dest.refugeesByStatus.set(status, count - deaths);
+      }
+
+      dest.currentlyHosted -= monthlyDeaths;
+      flow.cumulativeDeaths += monthlyDeaths;
+
+      // 4. Generational integration (25 years = 300 months)
+      const integrationRate = 1 / 300; // 1/300 per month
+      const monthlyIntegration = refugeesInCamps * integrationRate;
+
+      dest.fullyIntegrated += monthlyIntegration;
+      dest.currentlyHosted -= monthlyIntegration;
+
+      // Update status: Move from camps to integrated
+      const currentInCamps = dest.refugeesByStatus.get(RefugeeStatus.RESETTLED_CAMP) || 0;
+      dest.refugeesByStatus.set(RefugeeStatus.RESETTLED_CAMP, currentInCamps - monthlyIntegration);
+      dest.refugeesByStatus.set(
+        RefugeeStatus.RESETTLED_INTEGRATED,
+        (dest.refugeesByStatus.get(RefugeeStatus.RESETTLED_INTEGRATED) || 0) + monthlyIntegration
+      );
+
+      // 5. Calculate social tension in host region
+      const refugeeRatio = dest.currentlyHosted / destRegion.population;
+      const influxSpeed = flow.monthsActive < 24 ? 1.5 : 1.0; // Recent = more tension
+      const economicModifier = 1 + (1 - state.globalMetrics.qualityOfLife);
+
+      dest.socialTension = Math.min(1.0, refugeeRatio * 8 * influxSpeed * economicModifier);
+
+      // 6. Calculate economic strain
+      const costPerRefugeePerMonth = 166 / 1_000_000; // $166/month in millions
+      const totalCost = dest.currentlyHosted * costPerRefugeePerMonth;
+      dest.economicStrain = totalCost / (destRegion.population * 10); // Fraction of regional GDP
+
+      // 7. Update host region
+      destRegion.refugeePopulation = dest.currentlyHosted + dest.fullyIntegrated;
+      destRegion.socialTensionFromRefugees = Math.max(
+        destRegion.socialTensionFromRefugees,
+        dest.socialTension
+      );
+
+      // 8. Border closure if tension too high
+      if (dest.socialTension > 0.75) {
+        dest.bordersOpen = false;
+        destRegion.refugeeAcceptanceRate *= 0.7; // Reduce acceptance
+      }
+
+      // 9. Aggregate to global metrics
+      system.totalGlobalRefugees += dest.currentlyHosted;
+      system.totalResettled += refugeesInCamps;
+      system.totalStranded += refugeesStranded;
+    }
+
+    // 10. Check if flow is resolved
+    const allIntegrated = flow.destinationRegions.every(d => d.currentlyHosted < 0.1);
+    if (allIntegrated || flow.monthsActive >= flow.generationLength) {
+      flow.resolved = true;
+    }
+  }
+
+  // 11. Apply global effects from refugee crises
+  applyRefugeeCrisisEffects(state);
+}
+
+function applyRefugeeCrisisEffects(state: GameState): void {
+  const system = state.regionalPopulationSystem;
+
+  // High global refugee burden reduces social stability
+  const globalRefugeeBurden = system.totalGlobalRefugees / 8000; // Fraction of 8B population
+  state.globalMetrics.socialStability *= (1 - globalRefugeeBurden * 0.5);
+
+  // Very high refugee crises increase dystopia risk (fortress world)
+  if (system.totalGlobalRefugees > 500) { // >500M refugees globally
+    state.outcomeMetrics.dystopiaProbability += 0.05;
+
+    // Militarize borders globally
+    for (const [_, region] of system.regions) {
+      region.refugeeAcceptanceRate *= 0.8;
+    }
+  }
+
+  // Economic strain from resettlement costs
+  const globalResettlementCost = system.totalResettled * (166 / 1_000_000) * 12; // Annual cost
+  state.globalMetrics.qualityOfLife *= (1 - globalResettlementCost / 1000); // Fraction of global GDP
+}
+```
+
+### **INTEGRATION WITH CRISIS TRIGGERS**
+
+```typescript
+/**
+ * Trigger regional refugee crisis when game conditions meet thresholds
+ */
+export function checkRegionalRefugeeCrisisTriggers(state: GameState): void {
+  const env = state.environmentalAccumulation;
+  const resources = state.resourceEconomy;
+  const system = state.regionalPopulationSystem;
+
+  for (const [regionName, region] of system.regions) {
+    // CLIMATE CRISIS (slow)
+    if (env.climateStability < 0.6 && region.climateVulnerability > 0.6) {
+      const severity = (1 - env.climateStability) * region.climateVulnerability;
+      const displacementRate = CRISIS_IMPACT_PROFILES.climate_slow.displacementRate;
+      const displaced = region.population * 1000 * severity * displacementRate;
+
+      if (displaced > 5 && !hasActiveFlow(system, regionName, 'climate_slow')) {
+        createRefugeeFlow(state, regionName, displaced, 'climate_slow');
+      }
+    }
+
+    // CLIMATE CRISIS (rapid)
+    if (env.extremeWeatherEvents > 0.7 && region.climateVulnerability > 0.5) {
+      const severity = env.extremeWeatherEvents * region.climateVulnerability;
+      const displacementRate = CRISIS_IMPACT_PROFILES.climate_rapid.displacementRate;
+      const displaced = region.population * 1000 * severity * displacementRate;
+
+      if (displaced > 10 && !hasActiveFlow(system, regionName, 'climate_rapid')) {
+        createRefugeeFlow(state, regionName, displaced, 'climate_rapid');
+      }
+    }
+
+    // FAMINE CRISIS
+    const foodScarcity = Math.max(0, 1 - resources.food.currentStock / 100);
+    if (foodScarcity > 0.5) {
+      const severity = foodScarcity;
+      const displacementRate = CRISIS_IMPACT_PROFILES.famine.displacementRate;
+      const displaced = region.population * 1000 * severity * displacementRate;
+
+      if (displaced > 10 && !hasActiveFlow(system, regionName, 'famine')) {
+        createRefugeeFlow(state, regionName, displaced, 'famine');
+      }
+    }
+  }
+
+  // NUCLEAR WAR (global crisis)
+  if (state.extinctionState.active && state.extinctionState.mechanism === 'nuclear_war') {
+    for (const [regionName, region] of system.regions) {
+      const displacementRate = CRISIS_IMPACT_PROFILES.war_nuclear.displacementRate;
+      const survivors = region.population * 0.5; // 50% survive initial war
+      const displaced = survivors * 1000 * displacementRate;
+
+      if (displaced > 20) {
+        createRefugeeFlow(state, regionName, displaced, 'war_nuclear');
+      }
+    }
+  }
+}
+
+function hasActiveFlow(system: RegionalPopulationSystem, region: RegionName, crisisType: CrisisType): boolean {
+  return system.activeRefugeeFlows.some(f =>
+    f.sourceRegion === region &&
+    f.cause === crisisType &&
+    !f.resolved
+  );
+}
+
+function createRefugeeFlow(
+  state: GameState,
+  sourceRegion: RegionName,
+  displacedPopulation: number,
+  crisisType: CrisisType
+): void {
+  const destinations = calculateRefugeeDestinations(sourceRegion, displacedPopulation, crisisType, state);
+
+  const flow: RegionalRefugeeFlow = {
+    id: `${sourceRegion}_${crisisType}_${state.currentMonth}`,
+    cause: crisisType,
+    startMonth: state.currentMonth,
+    sourceRegion,
+    destinationRegions: destinations,
+    totalDisplaced: displacedPopulation,
+    currentlyInTransit: displacedPopulation,
+    currentlyResettled: 0,
+    currentlyStranded: 0,
+    cumulativeDeaths: 0,
+    monthlyDisplacementRate: 0,
+    monthlyResettlementRate: 0,
+    peakDisplacement: displacedPopulation,
+    monthsActive: 0,
+    generationLength: 300, // 25 years
+    resolved: false
+  };
+
+  state.regionalPopulationSystem.activeRefugeeFlows.push(flow);
+
+  // Decrement source region population
+  const sourceRegionData = state.regionalPopulationSystem.regions.get(sourceRegion)!;
+  sourceRegionData.population -= displacedPopulation / 1000; // Convert millions to billions
+}
+```
+
+---
+
 ## 📊 INTEGRATION WITH EXISTING SYSTEMS
 
 ### **1. Quality of Life Impacts**
