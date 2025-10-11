@@ -714,9 +714,30 @@ grep -rn "outcomeMetrics\.\(utopia\|dystopia\|extinction\)" scripts/ src/
 5. ✅ **Phase 2E: Outcome API (0 hours) → ALREADY COMPLETE** ✅
    - System already uses `activeAttractor` API (no boolean flags ever existed)
 
-**Week 3**: Optional cleanup
-6. Phase 2C (Scripts): Migrate script files (1 hour) - optional, diagnostics only
-7. Phase 2F: Remove legacy properties (1-2 hours) - optional
+**Week 3**: Optional cleanup ✅ **COMPLETE**
+6. ✅ **Phase 2F: Legacy Property Deprecation (1 hour) → COMPLETE** ✅
+   - Marked 7 unused properties with @deprecated tags
+
+---
+
+## 🔗 Broader Refactoring Context
+
+**This architectural cleanup (Phase 2A-2F) is designated as "Phase 0" in the broader refactoring roadmap.**
+
+### Next Steps: Major Refactoring (Phases 1-6)
+
+After completing this cleanup, the codebase is ready for the major refactoring phases:
+
+- **Phase 1**: Shared Utilities (4-6 hours) - Extract duplicate math/AI utilities
+- **Phase 2**: System Abstractions (12-16 hours) - Create `SimulationSystem` interfaces
+- **Phase 3**: Initialization Refactoring (8-12 hours) - StateBuilder pattern
+- **Phase 4**: Engine Orchestration (16-24 hours) - PhaseOrchestrator for engine.step()
+- **Phase 5**: State Management (20-30 hours) - Immer.js integration
+- **Phase 6**: Type Organization (6-8 hours) - Extract types to dedicated files
+
+**See**:
+- `/plans/refactoring-roadmap.md` - Detailed plans for Phases 1-6
+- `/docs/wiki/technical/refactoring-status.md` - Overall status and timeline
 
 ---
 
