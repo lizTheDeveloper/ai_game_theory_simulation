@@ -14,8 +14,9 @@ export class MADDeterrencePhase implements SimulationPhase {
   readonly order = 16.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updateMADDeterrence } = require('../../endGame');
+    const { updateMADDeterrence, updateBilateralTensions } = require('../../nuclearStates');
     updateMADDeterrence(state);
+    updateBilateralTensions(state);
 
     return { events: [] };
   }

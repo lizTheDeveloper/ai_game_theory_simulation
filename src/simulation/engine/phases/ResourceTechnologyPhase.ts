@@ -14,8 +14,9 @@ export class ResourceTechnologyPhase implements SimulationPhase {
   readonly order = 18.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updateResourceTechnology } = require('../../resourceTechnology');
-    updateResourceTechnology(state);
+    const { applyTechnologyToResources, applyIndustryOppositionToTech } = require('../../resourceTechnology');
+    applyTechnologyToResources(state);
+    applyIndustryOppositionToTech(state);
 
     return { events: [] };
   }

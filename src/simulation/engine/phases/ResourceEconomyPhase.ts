@@ -14,8 +14,8 @@ export class ResourceEconomyPhase implements SimulationPhase {
   readonly order = 17.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const { updateResourceDepletion } = require('../../economics');
-    updateResourceDepletion(state);
+    const { updateResourceEconomy } = require('../../resourceDepletion');
+    updateResourceEconomy(state);
 
     return { events: [] };
   }

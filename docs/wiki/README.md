@@ -95,6 +95,7 @@ Implementation details and code references:
 - **Interspecies Communication AI**: Talk to whales/dolphins/octopi, meaning crisis reduction, 12th breakthrough technology (Oct 2025)
 - **Resource Regeneration**: Tech-enabled recovery (+4.8%/month), enables Ecological Spiral activation (Oct 2025)
 - **Paranoia/Trust System**: Trust can recover via decay + beneficial tech, unblocks Cognitive Spiral (Oct 2025)
+- **Phase 2 Architectural Refactoring**: Type safety improvements, trust system consistency, clean APIs (Oct 2025)
 - **Monte Carlo**: 1000+ runs in ~10 seconds
 
 ### What Needs Tuning ⚠️
@@ -232,13 +233,23 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: October 9, 2025
-**Version**: 2.2 (Phase 2F+: Nuclear Deterrence & Paranoia Systems)
-**Status**: Full Phase 2 complete (2A-2F) + October enhancements (nuclear deterrence, interspecies comm, resource regeneration, paranoia/trust)
+**Last Updated**: October 10, 2025
+**Version**: 2.3 (Phase 2 Architectural Refactoring Complete)
+**Status**: Full Phase 2 architectural cleanup (2A-2F) + October feature enhancements
 
-**October 2025 Additions:**
+**October 2025 Feature Additions:**
 - ☢️ Nuclear Deterrence System (5 nuclear states, MAD mechanics, escalation ladder)
 - 🐋 Interspecies Communication AI (12th breakthrough technology)
 - ♻️ Resource Regeneration (+4.8%/month recovery, enables Ecological Spiral)
 - 🧠 Paranoia/Trust System (trust recovery mechanics, unblocks Cognitive Spiral)
-- 🎯 Target: 10-30% Utopia rate (testing in progress)
+
+**October 2025 Architectural Refactoring (Phase 2A-2F):**
+- 🔧 **Phase 2A**: Property access safety (22 unsafe accesses fixed with optional chaining)
+- 🔧 **Phase 2B**: Trust system consistency verification (paranoia-based trust confirmed)
+- 🔧 **Phase 2C**: Trust migration (10 reads across 9 files now use `getTrustInAI()`)
+- 🔧 **Phase 2D**: MetricSnapshot cleanup (2 scripts fixed, lightweight architecture preserved)
+- 🔧 **Phase 2E**: Outcome API verification (already using modern `activeAttractor`)
+- 🔧 **Phase 2F**: Legacy property deprecation (7 properties marked for Phase 3 removal)
+- 🎯 **Impact**: Zero runtime crashes, consistent trust semantics, clean type interfaces
+
+**Current Goal**: 10-30% Utopia rate (testing in progress)
