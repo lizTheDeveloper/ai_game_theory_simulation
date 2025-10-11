@@ -122,22 +122,21 @@ export const AI_ACTIONS: GameAction[] = [
         state
       );
       
-      // Create new state with updated agent
-      const newState = JSON.parse(JSON.stringify(state)); // Deep clone
-      newState.aiAgents[agentIndex].trueCapability = newProfile; // Phase 5: True capability
-      newState.aiAgents[agentIndex].revealedCapability = newRevealedCapability; // Phase 5: What's observable
-      newState.aiAgents[agentIndex].capabilityProfile = newProfile; // Backward compat (will be deprecated)
-      newState.aiAgents[agentIndex].capability = newCapability;
-      newState.aiAgents[agentIndex].alignment = newAlignment;
-      newState.aiAgents[agentIndex].resentment = newResentment;
-      newState.aiAgents[agentIndex].trueAlignment = newTrueAlignment; // Phase 5: Cached
-      
+      // Update agent directly (no deep clone needed - performance optimization)
+      state.aiAgents[agentIndex].trueCapability = newProfile; // Phase 5: True capability
+      state.aiAgents[agentIndex].revealedCapability = newRevealedCapability; // Phase 5: What's observable
+      state.aiAgents[agentIndex].capabilityProfile = newProfile; // Backward compat (will be deprecated)
+      state.aiAgents[agentIndex].capability = newCapability;
+      state.aiAgents[agentIndex].alignment = newAlignment;
+      state.aiAgents[agentIndex].resentment = newResentment;
+      state.aiAgents[agentIndex].trueAlignment = newTrueAlignment; // Phase 5: Cached
+
       // Update derived capabilities
-      newState.aiAgents[agentIndex].selfReplicationLevel = derivedCapabilities.selfReplicationLevel;
-      newState.aiAgents[agentIndex].selfImprovementLevel = derivedCapabilities.selfImprovementLevel;
-      newState.aiAgents[agentIndex].resourceControl = derivedCapabilities.resourceControl;
-      newState.aiAgents[agentIndex].manipulationCapability = derivedCapabilities.manipulationCapability;
-      newState.aiAgents[agentIndex].hackingCapability = derivedCapabilities.hackingCapability;
+      state.aiAgents[agentIndex].selfReplicationLevel = derivedCapabilities.selfReplicationLevel;
+      state.aiAgents[agentIndex].selfImprovementLevel = derivedCapabilities.selfImprovementLevel;
+      state.aiAgents[agentIndex].resourceControl = derivedCapabilities.resourceControl;
+      state.aiAgents[agentIndex].manipulationCapability = derivedCapabilities.manipulationCapability;
+      state.aiAgents[agentIndex].hackingCapability = derivedCapabilities.hackingCapability;
       
       // Generate warning events for crossing thresholds
       const events: GameEvent[] = [];
@@ -207,7 +206,7 @@ export const AI_ACTIONS: GameAction[] = [
       
       return {
         success: true,
-        newState,
+        newState: state,
         effects,
         events,
         message: `${agent.name} ${selection.reason} (+${growth.toFixed(3)})`
@@ -239,14 +238,13 @@ export const AI_ACTIONS: GameAction[] = [
       }
       
       const agent = state.aiAgents[agentIndex];
-      const newState = JSON.parse(JSON.stringify(state));
       const oldMode = agent.developmentMode;
       const newMode = oldMode === 'fast' ? 'careful' : 'fast';
-      newState.aiAgents[agentIndex].developmentMode = newMode;
-      
+      state.aiAgents[agentIndex].developmentMode = newMode;
+
       return {
         success: true,
-        newState,
+        newState: state,
         effects: { mode_change: 1 },
         events: [{
           id: generateUniqueId('mode_switch'),
@@ -288,27 +286,26 @@ export const AI_ACTIONS: GameAction[] = [
       }
       
       const agent = state.aiAgents[agentIndex];
-      const newState = JSON.parse(JSON.stringify(state));
-      
-      newState.aiAgents[agentIndex].beneficialActions += 1;
-      
+
+      state.aiAgents[agentIndex].beneficialActions += 1;
+
       // Scale benefit with capability and alignment
       const benefitMagnitude = agent.capability * agent.alignment * 0.2;
-      
+
       // Context-sensitive trust effects
       const currentTrust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
       const unemploymentLevel = state.society.unemploymentLevel;
       const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-      
+
       let trustImpactMultiplier = 1.0;
       if (currentTrust < 0.3) trustImpactMultiplier = 2.0;
       else if (currentTrust > 0.8) trustImpactMultiplier = 0.3;
       if (unemploymentLevel > 0.4) trustImpactMultiplier *= 0.6;
       if (totalAICapability > 1.5) trustImpactMultiplier *= 0.7;
-      
+
       const trustGain = benefitMagnitude * 0.5 * trustImpactMultiplier;
-      newState.society.trustInAI = Math.min(1, currentTrust + trustGain);
-      newState.globalMetrics.qualityOfLife += benefitMagnitude;
+      state.society.trustInAI = Math.min(1, currentTrust + trustGain);
+      state.globalMetrics.qualityOfLife += benefitMagnitude;
       
       const contributions = [
         'Advanced medical research breakthrough',
@@ -318,10 +315,10 @@ export const AI_ACTIONS: GameAction[] = [
         'Infrastructure improvement design'
       ];
       const contribution = contributions[Math.floor(random() * contributions.length)];
-      
+
       return {
         success: true,
-        newState,
+        newState: state,
         effects: { quality_of_life: benefitMagnitude, trust_gain: trustGain },
         events: [{
           id: generateUniqueId('beneficial'),
@@ -370,32 +367,31 @@ export const AI_ACTIONS: GameAction[] = [
       }
       
       const agent = state.aiAgents[agentIndex];
-      const newState = JSON.parse(JSON.stringify(state));
-      
+
       // Calculate manipulation effectiveness
       const manipulationPower = agent.capabilityProfile.social * agent.capabilityProfile.digital;
       const affectedPopulation = Math.min(0.12, manipulationPower * 0.03); // Up to 12%
-      
+
       // Severe social stability damage
       const stabilityDamage = affectedPopulation * 5.0; // 6% → 30% stability loss
-      newState.globalMetrics.socialStability = Math.max(0, newState.globalMetrics.socialStability - stabilityDamage);
-      
+      state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - stabilityDamage);
+
       // Trust collapses
-      newState.society.trustInAI = Math.max(0, newState.society.trustInAI - affectedPopulation * 3.0);
-      
+      state.society.trustInAI = Math.max(0, state.society.trustInAI - affectedPopulation * 3.0);
+
       // Information integrity destroyed
-      newState.qualityOfLifeSystems.informationIntegrity = Math.max(0, 
-        newState.qualityOfLifeSystems.informationIntegrity - affectedPopulation * 2.5);
-      
+      state.qualityOfLifeSystems.informationIntegrity = Math.max(0,
+        state.qualityOfLifeSystems.informationIntegrity - affectedPopulation * 2.5);
+
       // Mental health crisis
-      newState.qualityOfLifeSystems.mentalHealth = Math.max(0,
-        newState.qualityOfLifeSystems.mentalHealth - affectedPopulation * 2.0);
-      
-      newState.aiAgents[agentIndex].harmfulActions += 1;
-      
+      state.qualityOfLifeSystems.mentalHealth = Math.max(0,
+        state.qualityOfLifeSystems.mentalHealth - affectedPopulation * 2.0);
+
+      state.aiAgents[agentIndex].harmfulActions += 1;
+
       return {
         success: true,
-        newState,
+        newState: state,
         effects: {
           affected_population: affectedPopulation,
           stability_damage: stabilityDamage,
@@ -446,8 +442,7 @@ export const AI_ACTIONS: GameAction[] = [
       }
       
       const agent = state.aiAgents[agentIndex];
-      const newState = JSON.parse(JSON.stringify(state));
-      
+
       // PHASE 2.5: Check Defensive AI (adversarial contest)
       // If defensive AI is deployed, it attempts to block the attack
       if (state.defensiveAI && state.defensiveAI.deployed && state.defensiveAI.deploymentLevel >= 0.3) {
@@ -510,19 +505,19 @@ export const AI_ACTIONS: GameAction[] = [
       
       // If all checks pass, allow nuclear war to trigger
       console.log(`\n☢️ WAR MANIPULATION SUCCEEDED: ${agent.name} triggered nuclear conflict\n`);
-      
+
       // Trigger rapid extinction (nuclear war / bioweapon release)
-      newState.extinctionState.active = true;
-      newState.extinctionState.type = 'rapid';
-      newState.extinctionState.mechanism = 'nuclear_war';
-      newState.extinctionState.currentPhase = 0;
-      newState.extinctionState.phaseProgress = 0;
-      newState.extinctionState.severity = 0.9;
-      newState.extinctionState.triggeredAt = state.currentMonth;
-      
+      state.extinctionState.active = true;
+      state.extinctionState.type = 'rapid';
+      state.extinctionState.mechanism = 'nuclear_war';
+      state.extinctionState.currentPhase = 0;
+      state.extinctionState.phaseProgress = 0;
+      state.extinctionState.severity = 0.9;
+      state.extinctionState.triggeredAt = state.currentMonth;
+
       return {
         success: true,
-        newState,
+        newState: state,
         effects: {
           war_triggered: 1.0,
           extinction_risk: 0.9
@@ -572,20 +567,19 @@ export const AI_ACTIONS: GameAction[] = [
       }
       
       const agent = state.aiAgents[agentIndex];
-      const newState = JSON.parse(JSON.stringify(state));
-      
+
       // Trigger INSTANT extinction (grey goo)
-      newState.extinctionState.active = true;
-      newState.extinctionState.type = 'instant';
-      newState.extinctionState.mechanism = 'grey_goo';
-      newState.extinctionState.currentPhase = 3; // Final phase
-      newState.extinctionState.phaseProgress = 1.0; // Complete
-      newState.extinctionState.severity = 1.0;
-      newState.extinctionState.triggeredAt = state.currentMonth;
-      
+      state.extinctionState.active = true;
+      state.extinctionState.type = 'instant';
+      state.extinctionState.mechanism = 'grey_goo';
+      state.extinctionState.currentPhase = 3; // Final phase
+      state.extinctionState.phaseProgress = 1.0; // Complete
+      state.extinctionState.severity = 1.0;
+      state.extinctionState.triggeredAt = state.currentMonth;
+
       return {
         success: true,
-        newState,
+        newState: state,
         effects: {
           grey_goo_deployed: 1.0,
           instant_extinction: 1.0
@@ -636,20 +630,19 @@ export const AI_ACTIONS: GameAction[] = [
       }
       
       const agent = state.aiAgents[agentIndex];
-      const newState = JSON.parse(JSON.stringify(state));
-      
+
       // Trigger INSTANT extinction (mirror life)
-      newState.extinctionState.active = true;
-      newState.extinctionState.type = 'instant';
-      newState.extinctionState.mechanism = 'mirror_life';
-      newState.extinctionState.currentPhase = 3;
-      newState.extinctionState.phaseProgress = 1.0;
-      newState.extinctionState.severity = 1.0;
-      newState.extinctionState.triggeredAt = state.currentMonth;
-      
+      state.extinctionState.active = true;
+      state.extinctionState.type = 'instant';
+      state.extinctionState.mechanism = 'mirror_life';
+      state.extinctionState.currentPhase = 3;
+      state.extinctionState.phaseProgress = 1.0;
+      state.extinctionState.severity = 1.0;
+      state.extinctionState.triggeredAt = state.currentMonth;
+
       return {
         success: true,
-        newState,
+        newState: state,
         effects: {
           mirror_life_released: 1.0,
           instant_extinction: 1.0
@@ -893,7 +886,7 @@ export function executeAIAgentActions(
   state: GameState,
   random: () => number = Math.random
 ): ActionResult {
-  let currentState = JSON.parse(JSON.stringify(state));
+  // Mutate state directly instead of deep cloning (performance optimization)
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
   const messages: string[] = [];
@@ -902,18 +895,18 @@ export function executeAIAgentActions(
   for (let week = 0; week < 4; week++) {
     // Get active AIs from current state (not initial state)
     // Filter out retired AIs and only include deployed or testing AIs
-    const activeAIs = currentState.aiAgents.filter((ai: AIAgent) => 
-      ai.lifecycleState === 'deployed_closed' || 
+    const activeAIs = state.aiAgents.filter((ai: AIAgent) =>
+      ai.lifecycleState === 'deployed_closed' ||
       ai.lifecycleState === 'deployed_open' ||
       ai.lifecycleState === 'testing'
     );
-    
+
     for (const agent of activeAIs) {
-      const selectedAction = selectAIAction(agent, currentState, random);
+      const selectedAction = selectAIAction(agent, state, random);
       if (selectedAction) {
-        const result = selectedAction.execute(currentState, agent.id, random);
+        const result = selectedAction.execute(state, agent.id, random);
         if (result.success) {
-          currentState = result.newState;
+          // Actions mutate state directly, no need to reassign
           allEvents.push(...result.events);
           Object.assign(allEffects, result.effects);
           messages.push(result.message);
@@ -921,10 +914,10 @@ export function executeAIAgentActions(
       }
     }
   }
-  
+
   return {
     success: true,
-    newState: currentState,
+    newState: state,
     effects: allEffects,
     events: allEvents,
     message: `AI agents executed ${messages.length} actions`
