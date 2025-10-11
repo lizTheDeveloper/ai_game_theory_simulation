@@ -714,6 +714,9 @@ export interface GameState {
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
   
+  // Social Safety Nets & Community Infrastructure (TIER 2.2)
+  socialSafetyNets: import('../types/socialSafetyNets').SocialSafetyNetsSystem; // Physical/social infrastructure to combat loneliness
+  
   // Configuration
   config: ConfigurationSettings;
   
