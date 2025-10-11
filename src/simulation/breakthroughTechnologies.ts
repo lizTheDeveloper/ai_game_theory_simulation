@@ -844,17 +844,31 @@ function updateMechanisticInterpretabilityDeployment(state: GameState, budget: n
   
   // Apply to defensive AI sleeper detection if active
   if (state.defensiveAI?.active) {
-    const bonus = tech.deploymentLevel * tech.sleeperDetectionBonus;
+    // Calculate bonus: deployment × bonus rate
+    // At 15% deployment: 0.15 × 0.40 = 0.06 (6% detection rate)
+    // At 50% deployment: 0.50 × 0.40 = 0.20 (20% detection rate)
+    // At 100% deployment: 1.00 × 0.40 = 0.40 (40% detection rate)
+    const detectionBonus = tech.deploymentLevel * tech.sleeperDetectionBonus;
+    
+    // Set detection rate (not incremental - this is the current rate)
     state.defensiveAI.threatDetection.detectSleepers = Math.min(
       0.8, // Cap at 80% (adversarial problem persists)
-      state.defensiveAI.threatDetection.detectSleepers + bonus * 0.01 // Gradual improvement
+      Math.max(0.05, detectionBonus) // Minimum 5% base detection
     );
     
     // Validate no NaN
     if (isNaN(state.defensiveAI.threatDetection.detectSleepers)) {
       console.error(`❌ NaN in sleeper detection!`);
-      state.defensiveAI.threatDetection.detectSleepers = 0.4;
+      state.defensiveAI.threatDetection.detectSleepers = 0.05;
     }
+  } else {
+    // If defensive AI not active, mechanistic interpretability provides baseline detection
+    // This represents research community / evaluation orgs doing manual audits
+    const baselineDetection = tech.deploymentLevel * tech.sleeperDetectionBonus * 0.5; // Half effectiveness without AI
+    state.government.evaluationInvestment = Math.max(
+      state.government.evaluationInvestment || 0,
+      baselineDetection
+    );
   }
 }
 
