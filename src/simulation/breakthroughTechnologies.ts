@@ -880,15 +880,9 @@ function updateMechanisticInterpretabilityDeployment(state: GameState, budget: n
       console.error(`❌ NaN in sleeper detection!`);
       state.defensiveAI.threatDetection.detectSleepers = 0.05;
     }
-  } else {
-    // If defensive AI not active, mechanistic interpretability provides baseline detection
-    // This represents research community / evaluation orgs doing manual audits
-    const baselineDetection = tech.deploymentLevel * tech.sleeperDetectionBonus * 0.5; // Half effectiveness without AI
-    state.government.evaluationInvestment = Math.max(
-      state.government.evaluationInvestment || 0,
-      baselineDetection
-    );
   }
+  // Note: When defensive AI not active, no sleeper detection occurs
+  // Government must activate defensive AI to enable detection capabilities
 }
 
 /**
