@@ -349,7 +349,10 @@ export function createDefaultInitialState(): GameState {
     },
     
     config: {
-      governmentActionFrequency: 0.08,
+      governmentActionFrequency: 0.5, // 0.5 = avg 1 action every 2 months baseline
+      // Crisis boost (3x): 1.5 = ~1-2 actions/month during crisis
+      // Rationale: Governments need to act proactively, not just react
+      // Real-world: Monthly budget/policy decisions, not yearly
       socialAdaptationRate: 0.02,
       aiCoordinationMultiplier: 1.5,
       economicTransitionRate: 0.015
