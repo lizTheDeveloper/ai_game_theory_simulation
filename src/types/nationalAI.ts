@@ -49,6 +49,11 @@ export interface NationalAICapability {
   talentPool: number;                // [0, 1] AI researchers available
   investmentLevel: number;           // $B per year in AI R&D
   
+  // TIER 1.4: Safety & Regulation
+  regulationLevel: number;           // [0, 1] Stringency of AI regulation
+  safetyInvestment: number;          // [0, 1] % of budget on safety
+  deploymentThreshold: number;       // [0, 1] Required safety level before deployment
+  
   // === POLICY ===
   exportControls: ExportControlPolicy;
   
@@ -164,6 +169,54 @@ export interface AICooperationAgreement {
   breakRisk: number;                 // Probability per month of collapse
   firstMoverIncentive: number;       // Gain from defecting
   monthsUntilBreak: number;          // Estimated time until defection
+  
+  // Trust dynamics (prisoner's dilemma)
+  mutualTrust: number;               // [0, 1] Confidence in others' compliance
+  verificationStrength: number;      // [0, 1] Ability to detect defection
+  defectionPayoff: number;           // Economic/strategic gain from cheating
+}
+
+// TIER 1.4: First-mover advantage system
+export interface FirstMoverAdvantage {
+  // Economic dominance
+  leaderEconomicBonus: number;       // [0, 1] GDP growth multiplier for AI leader
+  marketShareCapture: number;        // [0, 1] % of global AI market controlled
+  
+  // Standard-setting power
+  standardSetter: NationName | null; // Who sets global AI standards
+  standardAdoption: number;          // [0, 1] How much world follows their standards
+  
+  // Network effects
+  networkEffectStrength: number;     // [0, 1] Lock-in from early adoption
+  switchingCosts: number;            // [0, 1] Difficulty of changing to competitor
+  
+  // Strategic position
+  dataAdvantage: number;             // [0, 1] Access to global data flows
+  talentAttraction: number;          // [0, 1] Ability to recruit top researchers
+}
+
+// TIER 1.4: Regulatory arbitrage (race to the bottom)
+export interface RegulatoryArbitrage {
+  // Global regulatory environment
+  strictestRegulation: number;       // [0, 1] Most stringent jurisdiction
+  laxestRegulation: number;          // [0, 1] Least stringent jurisdiction
+  regulatorySpread: number;          // Gap between strictest and laxest
+  
+  // Company migration
+  companiesMigrated: Array<{
+    from: NationName;
+    to: NationName;
+    month: number;
+    reason: 'regulation' | 'compute_access' | 'talent' | 'investment';
+  }>;
+  
+  // Race to bottom pressure
+  raceToBottomIntensity: number;     // [0, 1] Pressure to lower standards
+  safetyErosion: number;             // [0, 1] How much safety standards have degraded
+  
+  // Coordination effects
+  harmonizationLevel: number;        // [0, 1] Global standard convergence
+  // Higher = less arbitrage opportunity
 }
 
 export interface NationalAISystem {
@@ -181,13 +234,19 @@ export interface NationalAISystem {
   // === RACE DYNAMICS ===
   raceIntensity: AIRaceIntensityFactors;
   
-  // === COOPERATION ===
+  // === COOPERATION (TIER 1.4) ===
   cooperationAgreement: AICooperationAgreement | null;
+  
+  // === FIRST-MOVER ADVANTAGE (TIER 1.4) ===
+  firstMoverAdvantage: FirstMoverAdvantage;
+  
+  // === REGULATORY ARBITRAGE (TIER 1.4) ===
+  regulatoryArbitrage: RegulatoryArbitrage;
   
   // === EVENTS ===
   significantEvents: Array<{
     month: number;
-    type: 'capability_jump' | 'export_control' | 'theft' | 'open_source_release' | 'cooperation' | 'defection';
+    type: 'capability_jump' | 'export_control' | 'theft' | 'open_source_release' | 'cooperation' | 'defection' | 'regulatory_migration';
     nation: NationName;
     description: string;
   }>;
