@@ -33,6 +33,50 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
     // Infrastructure (advanced)
     fusionPower: createFusionPowerTech(),
     
+    // TIER 2: Start unlocked (already operational in 2025!)
+    // These begin at low deployment and scale up if funded
+    advancedRLHF: {
+      unlocked: true, // Claude 3.7, GPT-4o operational
+      active: true,
+      breakthroughYear: 0, // Pre-2025 (2022-2024 development)
+      alignmentBoostPerMonth: 0.05,
+      alignmentFakingRisk: 0.15
+    },
+    mechanisticInterpretability: {
+      unlocked: true, // Anthropic sparse autoencoders (April 2024)
+      deploymentLevel: 0.05, // 5% initial (research stage)
+      breakthroughYear: 0,
+      sleeperDetectionBonus: 0.40,
+      alignmentVerificationBonus: 0.30
+    },
+    deExtinctionRewilding: {
+      unlocked: true, // Colossal Biosciences operational (April 2025)
+      deploymentLevel: 0.02, // 2% initial (3 dire wolf pups)
+      breakthroughYear: 0,
+      biodiversityBoostPerMonth: 0.02
+    },
+    advancedDirectAirCapture: {
+      unlocked: true, // Climeworks Mammoth operational (2024)
+      deploymentLevel: 0.01, // 1% initial (pilot scale)
+      breakthroughYear: 0,
+      pollutionReductionPerMonth: 0.035,
+      carbonSequestrationBonus: 0.03
+    },
+    aiOptimizedPollutionRemediation: {
+      unlocked: true, // US DOE CCSI2 project (Jan 2025)
+      deploymentLevel: 0.03, // 3% initial (R&D phase)
+      breakthroughYear: 0,
+      pollutionReductionPerMonth: 0.04,
+      industrialEfficiencyBonus: 0.02
+    },
+    collectivePurposeNetworks: {
+      unlocked: true, // Harvard Making Caring Common research (Oct 2024)
+      deploymentLevel: 0.08, // 8% initial (community programs exist)
+      breakthroughYear: 0,
+      meaningCrisisReductionRate: 0.02,
+      communityStrengthBoost: 0.025
+    },
+    
     // Research priorities
     researchPriorities: {
       environmental: 0.4,
