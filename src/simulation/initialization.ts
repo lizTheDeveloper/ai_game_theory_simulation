@@ -28,6 +28,7 @@ import { initializeNationalAI } from './nationalAI';
 import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
+import { initializeNovelEntitiesSystem } from './novelEntities';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -329,6 +330,9 @@ export function createDefaultInitialState(): GameState {
     
     // Ocean Acidification Crisis (TIER 1.3)
     oceanAcidificationSystem: initializeOceanAcidificationSystem(),
+    
+    // Novel Entities Crisis (TIER 1.5)
+    novelEntitiesSystem: initializeNovelEntitiesSystem(),
     
     eventLog: [],
     technologyTree: [],
