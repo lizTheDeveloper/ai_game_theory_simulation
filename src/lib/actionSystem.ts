@@ -585,6 +585,62 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
   },
 
   {
+    id: 'build_social_infrastructure',
+    name: 'Build Social Safety Nets & Community Infrastructure',
+    description: 'Invest in parks, libraries, community centers, universal services to combat loneliness epidemic (TIER 2.2 - MAJOR POLICY)',
+    agentType: 'government',
+    energyCost: 3,
+    prerequisites: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10; // ~Once per year
+      
+      return state.society.communityStrength < 0.5 && // Low community strength
+             !state.socialSafetyNets.active && // Not already active
+             canTakeMajorPolicy;
+    },
+    execute: (state) => {
+      const { activateSocialSafetyNets } = require('../simulation/socialSafetyNets');
+      
+      // Track major policy usage
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+      
+      // Activate social safety nets (TIER 2.2)
+      activateSocialSafetyNets(state, 50); // $50B/month investment
+      
+      // Immediate effects
+      state.globalMetrics.socialStability += 0.3;
+      state.society.communityStrength = Math.min(1.0, state.society.communityStrength + 0.15);
+      
+      state.government.activeRegulations.push('National Social Infrastructure Program');
+      
+      return {
+        success: true,
+        effects: {
+          social_stability: 0.3,
+          community_strength: 0.15,
+          loneliness_reduction: true
+        },
+        events: [{
+          id: generateUniqueId('social_infrastructure'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'constructive',
+          agent: 'Government',
+          title: 'Social Infrastructure Program Launched',
+          description: 'Government begins nationwide investment in parks, libraries, community centers, and universal services to combat loneliness epidemic and strengthen social bonds.',
+          effects: {
+            social_infrastructure: true,
+            community_building: 'active',
+            loneliness_combat: 'initiated'
+          }
+        }],
+        message: `Social Infrastructure activated - Community strength: ${(state.society.communityStrength * 100).toFixed(0)}%, loneliness reduction program started`
+      };
+    }
+  },
+
+  {
     id: 'job_retraining_programs',
     name: 'Launch Job Retraining Programs',
     description: 'Establish comprehensive retraining for displaced workers',

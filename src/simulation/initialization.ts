@@ -30,6 +30,7 @@ import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
 import { initializeNovelEntitiesSystem } from './novelEntities';
 import { initializeUBISystem } from './enhancedUBI';
+import { initializeSocialSafetyNets } from './socialSafetyNets';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -334,6 +335,7 @@ export function createDefaultInitialState(): GameState {
     
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),
+    socialSafetyNets: initializeSocialSafetyNets(),
     
     eventLog: [],
     technologyTree: [],

@@ -33,6 +33,7 @@ export { ConflictResolutionPhase } from './ConflictResolutionPhase';
 export { DiplomaticAIPhase } from './DiplomaticAIPhase';
 export { NationalAIPhase } from './NationalAIPhase';
 export { UBIPhase } from './UBIPhase';
+export { SocialSafetyNetsPhase } from './SocialSafetyNetsPhase';
 export { MADDeterrencePhase } from './MADDeterrencePhase';
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';
 export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';
