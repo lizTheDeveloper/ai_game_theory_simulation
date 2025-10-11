@@ -136,22 +136,29 @@ function updateSocialTech(state: GameState, budget: number, month: number): void
   const avgCapability = calculateAverageCapability(state);
   
   // Mental Health AI - foundational
-  updateTechProgress(state, tech.mentalHealthAI, budget * 0.30, avgCapability, month);
+  updateTechProgress(state, tech.mentalHealthAI, budget * 0.25, avgCapability, month);
   
   // Purpose Frameworks - parallel
-  updateTechProgress(state, tech.purposeFrameworks, budget * 0.25, avgCapability, month);
+  updateTechProgress(state, tech.purposeFrameworks, budget * 0.20, avgCapability, month);
   
   // Community Platforms
-  updateTechProgress(state, tech.communityPlatforms, budget * 0.20, avgCapability, month);
+  updateTechProgress(state, tech.communityPlatforms, budget * 0.15, avgCapability, month);
   
   // Collective Purpose Networks (TIER 2.1) - requires Purpose Frameworks
   checkCollectivePurposeNetworksUnlock(state, avgCapability, month);
   if (tech.collectivePurposeNetworks?.unlocked) {
-    updateCollectivePurposeNetworksDeployment(state, budget * 0.15);
+    updateCollectivePurposeNetworksDeployment(state, budget * 0.10);
+  }
+  
+  // Advanced RLHF & Mechanistic Interpretability (TIER 2.4 & 2.5) - AI safety research
+  checkAdvancedRLHFUnlock(state, avgCapability, month);
+  checkMechanisticInterpretabilityUnlock(state, avgCapability, month);
+  if (tech.mechanisticInterpretability?.unlocked) {
+    updateMechanisticInterpretabilityDeployment(state, budget * 0.15);
   }
   
   // Interspecies Communication - parallel (NEW!)
-  updateTechProgress(state, tech.interspeciesComm, budget * 0.10, avgCapability, month);
+  updateTechProgress(state, tech.interspeciesComm, budget * 0.05, avgCapability, month);
 }
 
 /**
