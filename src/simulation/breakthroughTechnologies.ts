@@ -57,23 +57,34 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
     },
     deExtinctionRewilding: {
       unlocked: true, // Colossal Biosciences operational (April 2025)
-      deploymentLevel: 0.001, // 0.1% initial (3 dire wolf pups - proof of concept only)
+      deploymentLevel: 0.01, // 1% initial (3 dire wolf pups + red wolves, expanding operations)
       breakthroughYear: 0,
       biodiversityBoostPerMonth: 0.02
+      // At 1%: +0.02% biodiversity/month
+      // At 50%: +1% biodiversity/month  
+      // Timeline: 35% → 70% biodiversity in ~35 months at 50% deployment
     },
     advancedDirectAirCapture: {
-      unlocked: true, // Climeworks Mammoth operational (2024)
-      deploymentLevel: 0.001, // 0.1% initial (single pilot facility, not scaled)
+      unlocked: true, // Climeworks Mammoth operational (2024) + Orca, Stratos facilities
+      deploymentLevel: 0.02, // 2% initial (multiple pilot facilities globally)
       breakthroughYear: 0,
       pollutionReductionPerMonth: 0.035,
       carbonSequestrationBonus: 0.03
+      // At 2%: -0.07% pollution/month
+      // At 50%: -1.75% pollution/month
+      // At 100%: -3.5% pollution/month
+      // Timeline: 30% → 10% pollution in ~12 months at 50% deployment
     },
     aiOptimizedPollutionRemediation: {
-      unlocked: true, // US DOE CCSI2 project (Jan 2025)
-      deploymentLevel: 0.05, // 5% initial (R&D/simulation phase, not deployed)
+      unlocked: true, // US DOE CCSI2 project (Jan 2025) + ML optimization frameworks
+      deploymentLevel: 0.10, // 10% initial (simulation tools widely available, early industrial pilots)
       breakthroughYear: 0,
       pollutionReductionPerMonth: 0.04,
       industrialEfficiencyBonus: 0.02
+      // At 10%: -0.4% pollution/month
+      // At 50%: -2% pollution/month
+      // At 100%: -4% pollution/month + 2% industrial efficiency
+      // Combined with DAC at 50%: -3.75% pollution/month (aggressive cleanup!)
     },
     collectivePurposeNetworks: {
       unlocked: true, // Harvard Making Caring Common research (Oct 2024)
