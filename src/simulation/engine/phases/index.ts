@@ -43,4 +43,10 @@ export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 export { BenchmarkEvaluationsPhase } from './BenchmarkEvaluationsPhase';
 export { CrisisPointsPhase } from './CrisisPointsPhase';
 
-// More phases will be added as they are converted...
+// Batch 5: Final phases (37.x - 40.x, 98.x - 99.x)
+export { ExtinctionTriggersPhase } from './ExtinctionTriggersPhase';
+export { ExtinctionProgressPhase } from './ExtinctionProgressPhase';
+export { TechnologyDiffusionPhase } from './TechnologyDiffusionPhase';
+export { CatastrophicScenariosPhase } from './CatastrophicScenariosPhase';
+export { EventCollectionPhase } from './EventCollectionPhase';
+export { TimeAdvancementPhase } from './TimeAdvancementPhase';

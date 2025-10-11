@@ -70,6 +70,7 @@ Implementation details and code references:
 | [🧪 Testing & Monte Carlo](./technical/testing.md) | ✅ | Running simulations, analyzing results |
 | [🎮 UI Components](./technical/ui.md) | ✅ | React components, state management |
 | [⚙️ Engine Architecture](./technical/engine.md) | ✅ | Core simulation engine design |
+| [🔧 Phase 2 Refactoring](./technical/phase2-refactoring.md) | ✅ | Architectural cleanup (Oct 2025) |
 
 ## 🔧 System Status Overview
 

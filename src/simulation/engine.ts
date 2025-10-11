@@ -39,6 +39,7 @@ import {
 } from './endGame';
 import { PhaseOrchestrator } from './engine/PhaseOrchestrator';
 import {
+  // Batch 1: Simple calculations (30.x)
   UnemploymentPhase,
   EconomicTransitionPhase,
   ParanoiaPhase,
@@ -46,6 +47,7 @@ import {
   QualityOfLifePhase,
   OutcomeProbabilitiesPhase,
   CrisisDetectionPhase,
+  // Batch 2: System updates (10.x - 21.x)
   GovernanceQualityPhase,
   UpwardSpiralsPhase,
   MeaningRenaissancePhase,
@@ -58,8 +60,27 @@ import {
   GeoengineringPhase,
   DefensiveAIPhase,
   DystopiaProgressionPhase,
+  // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
-  CrisisPointsPhase
+  CrisisPointsPhase,
+  // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
+  ComputeGrowthPhase,
+  OrganizationTurnsPhase,
+  ComputeAllocationPhase,
+  AILifecyclePhase,
+  CyberSecurityPhase,
+  SleeperWakePhase,
+  AIAgentActionsPhase,
+  TechnologyBreakthroughsPhase,
+  GovernmentActionsPhase,
+  SocietyActionsPhase,
+  // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
+  ExtinctionTriggersPhase,
+  ExtinctionProgressPhase,
+  TechnologyDiffusionPhase,
+  CatastrophicScenariosPhase,
+  EventCollectionPhase,
+  TimeAdvancementPhase
 } from './engine/phases';
 
 /**
@@ -207,317 +228,67 @@ export class SimulationEngine {
     // Batch 3: Special phases (22.x - 23.x)
     this.orchestrator.registerPhase(new BenchmarkEvaluationsPhase());
     this.orchestrator.registerPhase(new CrisisPointsPhase());
+
+    // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
+    this.orchestrator.registerPhase(new ComputeGrowthPhase());
+    this.orchestrator.registerPhase(new OrganizationTurnsPhase());
+    this.orchestrator.registerPhase(new ComputeAllocationPhase());
+    this.orchestrator.registerPhase(new AILifecyclePhase());
+    this.orchestrator.registerPhase(new CyberSecurityPhase());
+    this.orchestrator.registerPhase(new SleeperWakePhase());
+    this.orchestrator.registerPhase(new AIAgentActionsPhase());
+    this.orchestrator.registerPhase(new TechnologyBreakthroughsPhase());
+    this.orchestrator.registerPhase(new GovernmentActionsPhase());
+    this.orchestrator.registerPhase(new SocietyActionsPhase());
+
+    // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
+    this.orchestrator.registerPhase(new ExtinctionTriggersPhase());
+    this.orchestrator.registerPhase(new ExtinctionProgressPhase());
+    this.orchestrator.registerPhase(new TechnologyDiffusionPhase());
+    this.orchestrator.registerPhase(new CatastrophicScenariosPhase());
+    this.orchestrator.registerPhase(new EventCollectionPhase());
+    this.orchestrator.registerPhase(new TimeAdvancementPhase());
   }
   
   /**
    * Step the simulation forward by one month
-   * 
-   * This is the core simulation loop. It:
-   * 1. Processes agent actions (AI, government, society)
-   * 2. Updates unemployment and economic state
-   * 3. Calculates quality of life and outcome probabilities
-   * 4. Updates social dynamics (trust, stability)
-   * 5. Detects crises
-   * 6. Returns new state and metrics
+   *
+   * This is the core simulation loop powered by the PhaseOrchestrator.
+   * All game logic is now organized into phases that execute in order.
+   *
+   * Execution order (37 phases total):
+   * 1.0 - 10.0: Agent/Infrastructure (compute, AI lifecycle, actions)
+   * 11.0 - 21.0: System updates (governance, spirals, resources, etc.)
+   * 22.0 - 23.0: Special phases (benchmarks, crisis points)
+   * 30.0 - 36.0: Metric calculations (unemployment, QoL, outcomes, crisis)
+   * 37.0 - 40.0: Extinction and catastrophes
+   * 98.0 - 99.0: Event collection and time advancement
    */
   step(state: GameState): SimulationStepResult {
-    // Create a shallow copy to avoid mutation
+    // Create a shallow copy to avoid mutation (though phases will mutate it)
     let newState = { ...state };
-    const events: GameEvent[] = [];
-    
+
     // Use bound RNG for deterministic actions
     const rng = this.rng.next.bind(this.rng);
-    
-    // Phase 5: Apply compute growth (Moore's Law + algorithmic improvements)
-    // This must happen before allocation so efficiency multipliers are applied
-    const { applyComputeGrowth, allocateComputeGlobally } = require('./computeInfrastructure');
-    applyComputeGrowth(newState, rng);
-    
-    // Phase 6: Process organization turns (projects, revenue, expenses, decisions)
-    // This must happen before compute allocation so new DCs are available
-    const { processAllOrganizations } = require('./organizationManagement');
-    processAllOrganizations(newState, rng);
-    
-    // Phase 4: Allocate compute to all AIs at start of month
-    // This must happen before AI actions so they have compute for research
-    allocateComputeGlobally(newState);
-    
-    // 0a. Update AI population lifecycle (new AIs, retirements, progression)
-    const { updateAIPopulation } = require('./lifecycle');
-    updateAIPopulation(newState);
-    
-    // 0b. Phase 3.5: Attempt breaches of closed systems (cybersecurity arms race)
-    const { attemptBreaches } = require('./cyberSecurity');
-    const breachResult = attemptBreaches(newState, () => this.rng.next());
-    if (breachResult.breached.length > 0) {
-      events.push({
-        type: 'crisis',
-        month: newState.currentMonth,
-        description: `🚨 ${breachResult.breached.length} closed AI system(s) breached! Now leaked as open weights (${breachResult.totalNewSpread.toLocaleString()} copies)`,
-        severity: 'high',
-        impactedAgents: breachResult.breached.map(ai => ai.id)
-      });
-    }
-    
-    // 0c. Phase 5.3: Check for sleeper agent wake conditions
-    const { processSleeperCascade } = require('./sleeperWake');
-    const wakeResult = processSleeperCascade(newState);
-    if (wakeResult.totalAwakened.length > 0) {
-      events.push(...wakeResult.events);
-      
-      // Log wake events as critical (if logger exists)
-      if (this.logger) {
-        this.logger.logEvent({
-          month: newState.currentMonth,
-          type: 'SLEEPER_WAKE',
-          message: `${wakeResult.totalAwakened.length} sleeper agent(s) awakened!`,
-          details: wakeResult.totalAwakened.map(ai => ai.name).join(', ')
-        });
-      }
-    }
-    
-    // 0. Process agent actions first (modifies state significantly)
-    const { executeAIAgentActions } = require('./agents/aiAgent');
-    const { executeGovernmentActions } = require('./agents/governmentAgent');
-    const { executeSocietyActions } = require('./agents/societyAgent');
-    
-    // Execute all agent actions
-    const aiResult = executeAIAgentActions(newState, rng);
-    newState = aiResult.newState;
-    events.push(...aiResult.events);
-    
-    // Phase 5.4: Detect capability breakthroughs after AI actions
-    const { updateFrontierCapabilities } = require('./technologyDiffusion');
-    const activeAIs = newState.aiAgents.filter(ai => 
-      ai.lifecycleState !== 'retired'
-    );
-    for (const ai of activeAIs) {
-      const breakthroughEvents = updateFrontierCapabilities(newState, ai);
-      events.push(...breakthroughEvents);
-    }
-    
-    const govResult = executeGovernmentActions(newState, rng);
-    newState = govResult.newState;
-    events.push(...govResult.events);
-    
-    const societyResult = executeSocietyActions(newState, rng);
-    newState = societyResult.newState;
-    events.push(...societyResult.events);
-    
-    // Governance quality: Update democratic health & policy effectiveness
-    const { updateGovernanceQuality } = require('./governanceQuality');
-    updateGovernanceQuality(newState);
-    
-    // Upward spirals: Check for virtuous cascades (Phase 2D)
-    const { updateUpwardSpirals } = require('./upwardSpirals');
-    updateUpwardSpirals(newState, newState.currentMonth);
-    
-    // Meaning renaissance: Cultural flourishing & purpose discovery (Phase 2E)
-    const { updateMeaningRenaissance } = require('./meaningRenaissance');
-    updateMeaningRenaissance(newState);
-    
-    // Conflict resolution: Peace systems & diplomatic AI (Phase 2F)
-    const { updateConflictResolution } = require('./conflictResolution');
-    updateConflictResolution(newState);
-    
-    // Diplomatic AI: Research-based mediation with dual-use risks (Phase 2F+)
-    const { updateDiplomaticAI } = require('./diplomaticAI');
-    updateDiplomaticAI(newState);
-    
-    // National AI Capabilities: Asymmetry & race dynamics (Phase 2.11)
-    // MUST run before MAD deterrence to calculate accurate race intensity
-    const { updateNationalAI, applyNationalAIToMAD } = require('./nationalAI');
-    updateNationalAI(newState);
-    
-    // Nuclear states & MAD deterrence: Track bilateral deterrence (Phase 3)
-    const { updateMADDeterrence, updateBilateralTensions } = require('./nuclearStates');
-    updateMADDeterrence(newState);
-    updateBilateralTensions(newState);
-    
-    // Apply national AI race intensity to MAD
-    applyNationalAIToMAD(newState);
-    
-    // Resource Economy: Depletion, CO2 coupling, ocean health, industry opposition (Phase 2.9)
-    const { updateResourceEconomy } = require('./resourceDepletion');
-    updateResourceEconomy(newState);
-    
-    // Resource-Technology Integration: Apply tech effects to resources (Phase 2.9 Part 3)
-    const { applyTechnologyToResources, applyIndustryOppositionToTech } = require('./resourceTechnology');
-    applyTechnologyToResources(newState);
-    applyIndustryOppositionToTech(newState);
-    
-    // Geoengineering: Ocean restoration with termination shock risk (Phase 2.9 Part 4)
-    const { updateGeoengineering } = require('./geoengineering');
-    updateGeoengineering(newState);
-    
-    // Defensive AI: Active cyber-defense against misaligned AI attacks (Phase 2.10)
-    const { updateDefensiveAI } = require('./defensiveAI');
-    updateDefensiveAI(newState);
-    
-    // Dystopia progression: Government responds to AI threat with surveillance/control
-    const { updateGovernmentControlResponse } = require('./dystopiaProgression');
-    updateGovernmentControlResponse(newState);
-    
-    // Phase 5.2: Run benchmark evaluations after agent actions
-    const { performMonthlyEvaluations } = require('./benchmark');
-    const benchmarkResult = performMonthlyEvaluations(newState, rng);
-    events.push(...benchmarkResult.events);
-    
-    // Check for crisis points (critical decision moments)
-    const { processCrisisPoints } = require('./crisisPoints');
-    const crisisResult = processCrisisPoints(newState, rng);
-    if (crisisResult.crisisTriggered) {
-      newState = crisisResult.newState;
-      events.push(...crisisResult.events);
-    }
-    
-    // 1. Update unemployment based on AI capability
-    const newUnemployment = calculateUnemployment(newState);
-    newState.society = {
-      ...newState.society,
-      unemploymentLevel: newUnemployment
-    };
-    
-    // 2. Update economic transition
-    const economicProgress = calculateEconomicTransitionProgress(newState);
-    newState.globalMetrics = {
-      ...newState.globalMetrics,
-      economicTransitionStage: Math.max(
-        newState.globalMetrics.economicTransitionStage,
-        newState.globalMetrics.economicTransitionStage + economicProgress.stageChange
-      ),
-      wealthDistribution: Math.max(0.1, Math.min(1.0,
-        newState.globalMetrics.wealthDistribution + economicProgress.wealthDistributionChange
-      ))
-    };
-    
-    // 3. Update trust dynamics (Phase 2.8: Paranoia System)
-    // NEW: Paranoia decays, trust recovers, harmful events refresh paranoia
-    // Trust is now calculated inside updateParanoia as inverse of paranoia
-    updateParanoia(newState);
-    
-    // 4. Update social stability
-    const newStability = calculateSocialStability(newState);
-    newState.globalMetrics = {
-      ...newState.globalMetrics,
-      socialStability: newStability
-    };
-    
-    // 5. Update multi-dimensional quality of life systems
-    const updatedQoLSystems = updateQualityOfLifeSystems(newState);
-    newState.qualityOfLifeSystems = updatedQoLSystems;
-    
-    // 6. Calculate aggregate quality of life from systems
-    const qualityOfLife = calculateQualityOfLife(updatedQoLSystems);
-    newState.globalMetrics = {
-      ...newState.globalMetrics,
-      qualityOfLife
-    };
-    
-    // 7. Calculate outcome probabilities
-    const outcomeProbs = calculateOutcomeProbabilities(newState);
-    newState.outcomeMetrics = outcomeProbs;
-    
-    // 8. Detect crisis
+
+    // Execute all 37 phases in order via orchestrator
+    // Phases handle all game logic: agent actions, system updates, calculations, etc.
+    // See PhaseOrchestrator for execution order and phase list
+    const events = this.orchestrator.executeAll(newState, rng);
+
+    // Calculate final metrics for return value
+    // (All state updates are done by phases - we're just reading for the result)
     const crisis = detectCrisis(newState);
-    
-    // 8b. Check for extinction triggers (if not already in one)
-    if (!newState.extinctionState.active) {
-      const extinctionCheck = checkExtinctionTriggers(newState, () => this.rng.next());
-      newState.extinctionState = extinctionCheck.newExtinctionState;
-      events.push(...extinctionCheck.events);
-    }
-    
-    // 8c. Progress any active extinction scenario
-    if (newState.extinctionState.active) {
-      const extinctionProgress = progressExtinction(newState, () => this.rng.next());
-      newState.extinctionState = extinctionProgress.newExtinctionState;
-      events.push(...extinctionProgress.events);
-      
-      // If extinction is complete, log it
-      if (extinctionProgress.isComplete) {
-        events.push({
-          id: `extinction-complete-${newState.currentMonth}`,
-          timestamp: newState.currentMonth,
-          type: 'crisis',
-          severity: 'destructive',
-          agent: 'system',
-          title: 'Extinction Event Complete',
-          description: `Humanity has been extinguished via ${newState.extinctionState.mechanism}. ${newState.extinctionState.type} extinction pathway.`,
-          effects: {}
-        });
-      }
-    }
-    
-    // 8. Phase 5.4: Diffuse capabilities through ecosystem
-    const { diffuseCapabilities } = require('./technologyDiffusion');
-    diffuseCapabilities(newState);
-    
-    // 8d. Phase 11: Update catastrophic scenario prerequisites
-    const { updateScenarioPrerequisites, getScenarioSummary } = require('./catastrophicScenarios');
-    const newlyMetPrereqs = updateScenarioPrerequisites(newState.catastrophicScenarios, newState);
-    
-    // Log newly met prerequisites
-    if (newlyMetPrereqs.length > 0 && this.logger) {
-      for (const prereq of newlyMetPrereqs) {
-        this.logger.logEvent({
-          month: newState.currentMonth,
-          type: 'PREREQUISITE_MET',
-          message: `${prereq.scenarioName} - Step ${prereq.stepIndex}`,
-          details: prereq.stepName
-        });
-      }
-    }
-    
-    // Log scenario progress summary monthly
-    if (this.logger) {
-      const summary = getScenarioSummary(newState.catastrophicScenarios);
-      if (summary.closest && summary.percentComplete > 0.3) {
-        this.logger.logEvent({
-          month: newState.currentMonth,
-          type: 'SCENARIO_PROGRESS',
-          message: `Closest: ${summary.closest.name}`,
-          details: `${summary.stepsComplete}/${summary.totalSteps} steps (${(summary.percentComplete * 100).toFixed(0)}%)`
-        });
-      }
-      
-      if (summary.activeScenarios.length > 0) {
-        for (const scenario of summary.activeScenarios) {
-          this.logger.logEvent({
-            month: newState.currentMonth,
-            type: 'SCENARIO_ACTIVE',
-            message: `${scenario.name} ACTIVE`,
-            details: `All prerequisites met. Outcome inevitable in ${scenario.timeToCompletion} months.`
-          });
-        }
-      }
-    }
-    
-    // 9. Collect events from state.eventLog BEFORE advancing time
-    // (crisis events, cascading failures, etc. are logged with current month)
-    if (newState.eventLog && newState.eventLog.length > 0) {
-      // Only collect NEW events from this step (avoid duplicates across steps)
-      const newEventsThisStep = newState.eventLog.filter(
-        (e: GameEvent) => e.month === newState.currentMonth
-      );
-      events.push(...newEventsThisStep);
-    }
-    
-    // 10. Advance time
-    newState.currentMonth += 1;
-    newState.currentYear = Math.floor(newState.currentMonth / 12);
-    
-    // 11. Calculate metrics for tracking
     const metrics = {
-      qualityOfLife,
+      qualityOfLife: newState.globalMetrics.qualityOfLife,
       effectiveControl: calculateEffectiveControl(newState),
-      unemployment: newUnemployment,
-      outcomeProbs,
+      unemployment: newState.society.unemploymentLevel,
+      outcomeProbs: newState.outcomeMetrics,
       totalAICapability: calculateTotalAICapability(newState.aiAgents),
       avgAlignment: calculateAverageAlignment(newState.aiAgents),
       crisisDetected: crisis.inCrisis
     };
-    
+
     return {
       state: newState,
       events,

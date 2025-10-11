@@ -75,6 +75,41 @@ export function createMockGameState(): GameState {
       utopiaProgress: 0,
       dystopiaProgress: 0,
       extinctionProgress: 0
+    },
+    ecosystem: {
+      capabilityFloor: {
+        physical: 0.1,
+        digital: 0.1,
+        cognitive: 0.1,
+        social: 0.1,
+        economic: 0.1,
+        selfImprovement: 0.1,
+        research: {
+          biotech: { genetics: 0.1, synbio: 0.1 },
+          materials: { nanotech: 0.1, metamaterials: 0.1 },
+          climate: { geoengineering: 0.1, carbonCapture: 0.1 },
+          computerScience: { algorithms: 0.1, hardware: 0.1 }
+        }
+      },
+      frontierCapabilities: {
+        physical: 0.1,
+        digital: 0.1,
+        cognitive: 0.1,
+        social: 0.1,
+        economic: 0.1,
+        selfImprovement: 0.1,
+        research: {
+          biotech: { genetics: 0.1, synbio: 0.1 },
+          materials: { nanotech: 0.1, metamaterials: 0.1 },
+          climate: { geoengineering: 0.1, carbonCapture: 0.1 },
+          computerScience: { algorithms: 0.1, hardware: 0.1 }
+        }
+      },
+      diffusionRate: 0.05,
+      breakthroughs: [],
+      openResearch: 0.6,
+      employeeMobility: 0.3,
+      reverseEngineering: 0.2
     }
   } as GameState;
 }
