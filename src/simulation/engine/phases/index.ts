@@ -32,6 +32,7 @@ export { MeaningRenaissancePhase } from './MeaningRenaissancePhase';
 export { ConflictResolutionPhase } from './ConflictResolutionPhase';
 export { DiplomaticAIPhase } from './DiplomaticAIPhase';
 export { NationalAIPhase } from './NationalAIPhase';
+export { UBIPhase } from './UBIPhase';
 export { MADDeterrencePhase } from './MADDeterrencePhase';
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';
 export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';

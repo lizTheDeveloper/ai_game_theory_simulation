@@ -517,23 +517,28 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
 
   {
     id: 'implement_ubi',
-    name: 'Implement Universal Basic Income',
-    description: 'Establish UBI to support displaced workers and enable economic transition (MAJOR POLICY - ~1 per year)',
+    name: 'Implement Enhanced UBI + Purpose Infrastructure',
+    description: 'Establish comprehensive UBI with purpose infrastructure to mitigate meaning crisis (TIER 2.1 - MAJOR POLICY)',
     agentType: 'government',
     energyCost: 3,
     prerequisites: (state) => {
       const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
       const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10; // ~Once per year with some flexibility
       
-      return state.society.unemploymentLevel > 0.4 && 
-             state.globalMetrics.economicTransitionStage < 3.5 &&
-             !state.government.activeRegulations.some(reg => reg.includes('UBI')) &&
+      return state.society.unemploymentLevel > 0.25 && // Earlier intervention (25% not 40%)
+             !state.ubiSystem.active && // Use new system
              canTakeMajorPolicy;
     },
     execute: (state) => {
+      // Import activation function
+      const { activateUBI } = require('../simulation/enhancedUBI');
+      
       // Track major policy usage
       state.government.lastMajorPolicyMonth = state.currentMonth;
       state.government.majorPoliciesThisYear += 1;
+      
+      // Activate enhanced UBI system (TIER 2.1)
+      activateUBI(state, 1500, 1.0, 'mixed'); // $1500/month, 100% coverage, mixed funding
       
       // Major economic transition advancement
       state.globalMetrics.economicTransitionStage = Math.max(3.0, state.globalMetrics.economicTransitionStage + 0.5);
@@ -550,7 +555,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       const trustImprovement = Math.min(0.3, state.society.unemploymentLevel * 0.4);
       state.society.trustInAI += trustImprovement;
       
-      state.government.activeRegulations.push('Universal Basic Income Program');
+      state.government.activeRegulations.push('Enhanced Universal Basic Income + Purpose Infrastructure');
       
       return {
         success: true,
