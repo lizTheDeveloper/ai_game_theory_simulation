@@ -408,3 +408,4 @@ export function getTrustInAI(society: HumanSocietyAgent): number {
 
 **Conclusion:** Major improvements to realism and diversity of outcomes. The model now better reflects real-world diplomatic dynamics, ocean restoration pathways, and the critical role of whales in ocean health. All changes are research-backed and defensible.
 
+

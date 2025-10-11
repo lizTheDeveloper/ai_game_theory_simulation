@@ -19,18 +19,18 @@ import { GameState, EnvironmentalAccumulation } from '@/types/game';
 /**
  * Initialize environmental accumulation state
  * 
- * Starting values represent relatively healthy Earth circa 2025:
- * - Resources abundant but finite
- * - Some pollution but manageable
- * - Climate stressed but stable
- * - Biodiversity declining but not collapsed
+ * Starting values represent 2025 REALISTIC baseline (research-backed):
+ * - Resources: 1.7x overshoot (Global Footprint Network 2025)
+ * - Pollution: 46% unhealthy air (American Lung Assoc 2025)
+ * - Climate: +1.2°C warming (Copernicus 2024)
+ * - Biodiversity: 50-70% loss since 1970 (IPBES 2024)
  */
 export function initializeEnvironmentalAccumulation(): EnvironmentalAccumulation {
   return {
-    resourceReserves: 0.85,      // Some depletion already occurred
-    pollutionLevel: 0.15,         // Baseline pollution from 2025
-    climateStability: 0.75,       // Already experiencing climate stress
-    biodiversityIndex: 0.70,      // Significant biodiversity loss already
+    resourceReserves: 0.65,      // Was 0.85 - Research: 1.7x overshoot (GFN 2025), Earth Overshoot Day July 24
+    pollutionLevel: 0.30,         // Was 0.15 - Research: 46% unhealthy air (ALA 2025), 7/9 boundaries breached
+    climateStability: 0.75,       // KEEP - Validated (Copernicus 2024: +1.2°C warming)
+    biodiversityIndex: 0.35,      // Was 0.70 - Research: 50-70% loss since 1970 (IPBES 2024)
     resourceCrisisActive: false,
     pollutionCrisisActive: false,
     climateCrisisActive: false,
@@ -158,11 +158,14 @@ export function updateEnvironmentalAccumulation(
   
   const energyUsage = (totalCompute / 10000) + manufacturingCap + (economicStage * 0.3);
   
-  let climateDegradationRate = energyUsage * 0.004; // Scales with energy use
+  // Research: IPCC AR6 - ~0.2°C/decade = 0.0167°C/year = 0.00139°C/month
+  // Was 0.004 (5x too fast) - Now 0.0008 for realistic warming rate
+  let climateDegradationRate = energyUsage * 0.0008; // Scales with energy use
   
   // Stage 3-4 transition (rapid growth) accelerates climate stress
+  // Was 0.008 - Now 0.0016 (adjusted for realistic rate)
   if (economicStage > 3.0) {
-    climateDegradationRate += 0.008;
+    climateDegradationRate += 0.0016;
   }
   
   // Mitigation from clean energy

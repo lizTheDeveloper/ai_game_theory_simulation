@@ -82,6 +82,50 @@ export interface BreakthroughTechState {
   // Infrastructure
   fusionPower: TechnologyNode;
   
+  // Phosphorus Recovery Technologies (TIER 1.1)
+  struviteRecovery?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  soilOptimization?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  efficientCrops?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  circularFoodSystems?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  
+  // Freshwater Technologies (TIER 1.2)
+  advancedDesalination?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  waterRecycling?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  precisionIrrigation?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  atmosphericWater?: {
+    unlocked: boolean;
+    deploymentLevel: number;
+    breakthroughYear: number;
+  };
+  
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation

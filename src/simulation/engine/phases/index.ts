@@ -37,6 +37,8 @@ export { ResourceEconomyPhase } from './ResourceEconomyPhase';
 export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';
 export { GeoengineringPhase } from './GeoengineringPhase';
 export { DefensiveAIPhase } from './DefensiveAIPhase';
+export { PhosphorusPhase } from './PhosphorusPhase';
+export { FreshwaterPhase } from './FreshwaterPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 
 // Batch 3: Special phases (medium risk)
