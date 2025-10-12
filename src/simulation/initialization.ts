@@ -31,6 +31,9 @@ import { initializeOceanAcidificationSystem } from './oceanAcidification';
 import { initializeNovelEntitiesSystem } from './novelEntities';
 import { initializeHumanPopulationSystem } from './populationDynamics';
 import { initializeRefugeeCrisisSystem } from './refugeeCrises';
+import { initializeUBISystem } from './enhancedUBI';
+import { initializeSocialSafetyNets } from './socialSafetyNets';
+import { initializeInformationWarfare } from './informationWarfare';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -337,6 +340,13 @@ export function createDefaultInitialState(): GameState {
     humanPopulationSystem: initializeHumanPopulationSystem(),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
 
+    // TIER 2: Major Mitigations
+    ubiSystem: initializeUBISystem(),
+    socialSafetyNets: initializeSocialSafetyNets(),
+
+    // TIER 4: Enrichment Systems
+    informationWarfare: initializeInformationWarfare(),
+
     eventLog: [],
     technologyTree: [],
     
@@ -349,7 +359,10 @@ export function createDefaultInitialState(): GameState {
     },
     
     config: {
-      governmentActionFrequency: 0.08,
+      governmentActionFrequency: 0.5, // 0.5 = avg 1 action every 2 months baseline
+      // Crisis boost (3x): 1.5 = ~1-2 actions/month during crisis
+      // Rationale: Governments need to act proactively, not just react
+      // Real-world: Monthly budget/policy decisions, not yearly
       socialAdaptationRate: 0.02,
       aiCoordinationMultiplier: 1.5,
       economicTransitionRate: 0.015

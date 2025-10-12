@@ -517,23 +517,28 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
 
   {
     id: 'implement_ubi',
-    name: 'Implement Universal Basic Income',
-    description: 'Establish UBI to support displaced workers and enable economic transition (MAJOR POLICY - ~1 per year)',
+    name: 'Implement Enhanced UBI + Purpose Infrastructure',
+    description: 'Establish comprehensive UBI with purpose infrastructure to mitigate meaning crisis (TIER 2.1 - MAJOR POLICY)',
     agentType: 'government',
     energyCost: 3,
     prerequisites: (state) => {
       const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
       const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10; // ~Once per year with some flexibility
       
-      return state.society.unemploymentLevel > 0.4 && 
-             state.globalMetrics.economicTransitionStage < 3.5 &&
-             !state.government.activeRegulations.some(reg => reg.includes('UBI')) &&
+      return state.society.unemploymentLevel > 0.25 && // Earlier intervention (25% not 40%)
+             !state.ubiSystem.active && // Use new system
              canTakeMajorPolicy;
     },
     execute: (state) => {
+      // Import activation function
+      const { activateUBI } = require('../simulation/enhancedUBI');
+      
       // Track major policy usage
       state.government.lastMajorPolicyMonth = state.currentMonth;
       state.government.majorPoliciesThisYear += 1;
+      
+      // Activate enhanced UBI system (TIER 2.1)
+      activateUBI(state, 1500, 1.0, 'mixed'); // $1500/month, 100% coverage, mixed funding
       
       // Major economic transition advancement
       state.globalMetrics.economicTransitionStage = Math.max(3.0, state.globalMetrics.economicTransitionStage + 0.5);
@@ -550,7 +555,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       const trustImprovement = Math.min(0.3, state.society.unemploymentLevel * 0.4);
       state.society.trustInAI += trustImprovement;
       
-      state.government.activeRegulations.push('Universal Basic Income Program');
+      state.government.activeRegulations.push('Enhanced Universal Basic Income + Purpose Infrastructure');
       
       return {
         success: true,
@@ -575,6 +580,62 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           }
         }],
         message: `UBI implemented - Economic stage advanced to ${state.globalMetrics.economicTransitionStage.toFixed(1)}, social adaptation accelerated`
+      };
+    }
+  },
+
+  {
+    id: 'build_social_infrastructure',
+    name: 'Build Social Safety Nets & Community Infrastructure',
+    description: 'Invest in parks, libraries, community centers, universal services to combat loneliness epidemic (TIER 2.2 - MAJOR POLICY)',
+    agentType: 'government',
+    energyCost: 3,
+    prerequisites: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10; // ~Once per year
+      
+      return state.society.communityStrength < 0.5 && // Low community strength
+             !state.socialSafetyNets.active && // Not already active
+             canTakeMajorPolicy;
+    },
+    execute: (state) => {
+      const { activateSocialSafetyNets } = require('../simulation/socialSafetyNets');
+      
+      // Track major policy usage
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+      
+      // Activate social safety nets (TIER 2.2)
+      activateSocialSafetyNets(state, 50); // $50B/month investment
+      
+      // Immediate effects
+      state.globalMetrics.socialStability += 0.3;
+      state.society.communityStrength = Math.min(1.0, state.society.communityStrength + 0.15);
+      
+      state.government.activeRegulations.push('National Social Infrastructure Program');
+      
+      return {
+        success: true,
+        effects: {
+          social_stability: 0.3,
+          community_strength: 0.15,
+          loneliness_reduction: true
+        },
+        events: [{
+          id: generateUniqueId('social_infrastructure'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'constructive',
+          agent: 'Government',
+          title: 'Social Infrastructure Program Launched',
+          description: 'Government begins nationwide investment in parks, libraries, community centers, and universal services to combat loneliness epidemic and strengthen social bonds.',
+          effects: {
+            social_infrastructure: true,
+            community_building: 'active',
+            loneliness_combat: 'initiated'
+          }
+        }],
+        message: `Social Infrastructure activated - Community strength: ${(state.society.communityStrength * 100).toFixed(0)}%, loneliness reduction program started`
       };
     }
   },

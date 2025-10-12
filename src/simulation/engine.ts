@@ -54,6 +54,9 @@ import {
   ConflictResolutionPhase,
   DiplomaticAIPhase,
   NationalAIPhase,
+  UBIPhase,
+  SocialSafetyNetsPhase,
+  InformationWarfarePhase,
   MADDeterrencePhase,
   ResourceEconomyPhase,
   ResourceTechnologyPhase,
@@ -196,7 +199,7 @@ export class SimulationEngine {
     this.config = {
       seed: config.seed ?? Date.now(),
       maxMonths: config.maxMonths ?? 1000,
-      governmentActionFrequency: config.governmentActionFrequency ?? 0.08,
+      governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months
       socialAdaptationRate: config.socialAdaptationRate ?? 1.0,
       aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,
       economicTransitionRate: config.economicTransitionRate ?? 1.0
@@ -224,6 +227,9 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ConflictResolutionPhase());
     this.orchestrator.registerPhase(new DiplomaticAIPhase());
     this.orchestrator.registerPhase(new NationalAIPhase());
+    this.orchestrator.registerPhase(new UBIPhase());
+    this.orchestrator.registerPhase(new SocialSafetyNetsPhase());
+    this.orchestrator.registerPhase(new InformationWarfarePhase());
     this.orchestrator.registerPhase(new MADDeterrencePhase());
     this.orchestrator.registerPhase(new ResourceEconomyPhase());
     this.orchestrator.registerPhase(new ResourceTechnologyPhase());
