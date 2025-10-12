@@ -398,6 +398,21 @@ export interface QualityOfLifeSystems {
   ecosystemHealth: number;        // [0,1] Nature access, biodiversity
   climateStability: number;       // [0,1] Weather extremes (inverted)
   pollutionLevel: number;         // [0,1] Air/water quality (inverted in calc)
+  
+  // Inequality Tracking (Oct 12, 2025)
+  // Global average hides massive suffering - track regional variance
+  basicNeeds?: {
+    foodSecurity?: number;        // [0,1] Access to adequate nutrition
+    waterSecurity?: number;       // [0,1] Access to clean water
+    shelterSecurity?: number;     // [0,1] Access to housing
+  };
+  regionalInequality?: {
+    giniCoefficient: number;      // [0,1] QoL inequality (0=equal, 1=extreme)
+    topRegionQoL: number;         // Best-off region's QoL
+    bottomRegionQoL: number;      // Worst-off region's QoL
+    qolGap: number;               // Difference (top - bottom)
+    crisisAffectedPopulation: number; // % of population in crisis regions
+  };
 }
 
 /**

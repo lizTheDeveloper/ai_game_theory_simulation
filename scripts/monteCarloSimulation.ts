@@ -230,6 +230,45 @@ interface RunResult {
   dataCentersSeized: number;                  // Times gov seized private DC
   organizationsSubsidized: number;            // Times gov subsidized orgs
   technologyBreakthroughs: number;
+  
+  // === POPULATION & MORTALITY (Oct 12, 2025 - CRITICAL MISSING DATA) ===
+  initialPopulation: number;          // Starting population (8.0B)
+  finalPopulation: number;            // Ending population
+  peakPopulation: number;             // Highest reached
+  populationDecline: number;          // % decline from baseline
+  totalDeaths: number;                // Total deaths (millions)
+  
+  // Death breakdown by cause
+  deathsNatural: number;              // Baseline mortality
+  deathsCrisis: number;               // Crisis deaths (famine, disease, etc.)
+  deathsNuclear: number;              // Nuclear war deaths
+  deathsCascade: number;              // Tipping point cascade deaths
+  deathsMeaning: number;              // Suicide epidemic deaths
+  
+  // Population outcome
+  populationOutcome: 'growth' | 'stable' | 'decline' | 'bottleneck' | 'extinction';
+  geneticBottleneck: boolean;         // < 50M people
+  
+  // === CRISIS IMPACT SUMMARY ===
+  totalCrisisMonths: number;          // Months with active crises
+  maxSimultaneousCrises: number;      // Peak crisis count
+  nuclearWarsCount: number;           // Number of nuclear exchanges
+  totalRefugees: number;              // Total displaced people (millions)
+  refugeeCrisisCount: number;         // Number of refugee crises
+  
+  // === ECOLOGICAL COLLAPSE ===
+  finalClimateStability: number;      // 0-1
+  finalBiodiversity: number;          // 0-1
+  finalResourceReserves: number;      // 0-1
+  tippingPointCascadeActive: boolean;
+  tippingPointCascadeMonths: number;
+  
+  // === REGIONAL INEQUALITY (Oct 12, 2025) ===
+  qolGiniCoefficient: number;         // QoL inequality (0=equal, 1=extreme)
+  qolTopRegion: number;               // Best-off region's QoL
+  qolBottomRegion: number;            // Worst-off region's QoL
+  qolGap: number;                     // Top - bottom QoL
+  crisisAffectedPopulation: number;   // % in crisis regions
 }
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
@@ -637,7 +676,79 @@ for (let i = 0; i < NUM_RUNS; i++) {
     nationalComputeBuilt = Math.max(0, govOrg.ownedDataCenters.length - 1); // Started with 1
   }
   
-  // (Could track from events, but this is a lower bound)
+  // === POPULATION & MORTALITY METRICS (Oct 12, 2025) ===
+  const pop = finalState.humanPopulationSystem;
+  const env = finalState.environmentalAccumulation;
+  const deaths = pop.deathTracking;
+  
+  const initialPopulation = pop.baselinePopulation;
+  const finalPopulation = pop.population;
+  const populationDecline = ((initialPopulation - finalPopulation) / initialPopulation) * 100;
+  const totalDeaths = (initialPopulation - finalPopulation) * 1000; // billions to millions
+  
+  // Death breakdown
+  const deathsNatural = deaths.baseline || 0;
+  const deathsCrisis = (deaths.acuteCrisis || 0) + (deaths.refugee || 0);
+  const deathsNuclear = deaths.nuclear || 0;
+  const deathsCascade = deaths.cascadeEvents || 0;
+  const deathsMeaning = deaths.meaningCollapse || 0;
+  
+  // Population outcome
+  let populationOutcome: 'growth' | 'stable' | 'decline' | 'bottleneck' | 'extinction';
+  if (finalPopulation < 0.00001) populationOutcome = 'extinction'; // < 10K
+  else if (finalPopulation < 0.05) populationOutcome = 'bottleneck'; // < 50M
+  else if (populationDecline > 30) populationOutcome = 'decline';
+  else if (populationDecline > 5) populationOutcome = 'stable';
+  else populationOutcome = 'growth';
+  
+  const geneticBottleneck = pop.geneticBottleneckActive || false;
+  
+  // Crisis impact metrics
+  const nuclearWarsCount = runResult.log.events.criticalEvents.filter((e: any) => 
+    e.description?.includes('Nuclear war') || e.description?.includes('nuclear') || 
+    e.description?.includes('☢️')).length;
+  
+  const refugeeCrisisCount = runResult.log.events.criticalEvents.filter((e: any) => 
+    e.description?.includes('refugee') || e.description?.includes('REFUGEE')).length;
+  
+  let totalRefugees = 0;
+  if (finalState.refugeeCrisisSystem && finalState.refugeeCrisisSystem.activeCrises) {
+    totalRefugees = Object.values(finalState.refugeeCrisisSystem.activeCrises)
+      .reduce((sum: number, crisis: any) => sum + (crisis.totalFled || 0), 0);
+  }
+  
+  // Count crisis months
+  let totalCrisisMonths = 0;
+  let maxSimultaneousCrises = 0;
+  // Approximate from crisis events
+  const crisisMonths = new Set(runResult.log.events.criticalEvents
+    .filter((e: any) => e.type === 'crisis')
+    .map((e: any) => e.month));
+  totalCrisisMonths = crisisMonths.size;
+  
+  // Planetary boundaries
+  const finalClimateStability = env.climateStability;
+  const finalBiodiversity = env.biodiversityIndex;
+  const finalResourceReserves = env.resourceReserves;
+  const tippingPointCascadeActive = finalState.planetaryBoundariesSystem?.cascadeActive || false;
+  const tippingPointCascadeMonths = tippingPointCascadeActive 
+    ? (finalState.currentMonth - (finalState.planetaryBoundariesSystem?.cascadeStartMonth || 0))
+    : 0;
+  
+  // Regional inequality metrics
+  const inequality = finalState.qualityOfLifeSystems.regionalInequality || {
+    giniCoefficient: 0,
+    topRegionQoL: 0,
+    bottomRegionQoL: 0,
+    qolGap: 0,
+    crisisAffectedPopulation: 0
+  };
+  
+  const qolGiniCoefficient = inequality.giniCoefficient;
+  const qolTopRegion = inequality.topRegionQoL;
+  const qolBottomRegion = inequality.bottomRegionQoL;
+  const qolGap = inequality.qolGap;
+  const crisisAffectedPopulation = inequality.crisisAffectedPopulation;
   
   results.push({
     seed,
@@ -792,7 +903,42 @@ for (let i = 0; i < NUM_RUNS; i++) {
     
     nationalComputeBuilt,
     dataCentersSeized,
-    organizationsSubsidized
+    organizationsSubsidized,
+    
+    // Population & Mortality
+    initialPopulation,
+    finalPopulation,
+    peakPopulation: pop.peakPopulation,
+    populationDecline,
+    totalDeaths,
+    deathsNatural,
+    deathsCrisis,
+    deathsNuclear,
+    deathsCascade,
+    deathsMeaning,
+    populationOutcome,
+    geneticBottleneck,
+    
+    // Crisis Impact
+    totalCrisisMonths,
+    maxSimultaneousCrises,
+    nuclearWarsCount,
+    totalRefugees,
+    refugeeCrisisCount,
+    
+    // Ecological Collapse
+    finalClimateStability,
+    finalBiodiversity,
+    finalResourceReserves,
+    tippingPointCascadeActive,
+    tippingPointCascadeMonths,
+    
+    // Regional Inequality
+    qolGiniCoefficient,
+    qolTopRegion,
+    qolBottomRegion,
+    qolGap,
+    crisisAffectedPopulation
   });
   
   // Progress indicator
