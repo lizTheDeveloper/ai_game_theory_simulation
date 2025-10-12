@@ -717,6 +717,9 @@ export interface GameState {
   // Social Safety Nets & Community Infrastructure (TIER 2.2)
   socialSafetyNets: import('../types/socialSafetyNets').SocialSafetyNetsSystem; // Physical/social infrastructure to combat loneliness
   
+  // Information Warfare & Epistemology (TIER 4.3)
+  informationWarfare: import('../types/informationWarfare').InformationWarfareSystem; // Truth decay, deepfakes, narrative control
+  
   // Configuration
   config: ConfigurationSettings;
   
