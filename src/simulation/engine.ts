@@ -57,6 +57,7 @@ import {
   UBIPhase,
   SocialSafetyNetsPhase,
   InformationWarfarePhase,
+  PowerGenerationPhase,
   MADDeterrencePhase,
   ResourceEconomyPhase,
   ResourceTechnologyPhase,
@@ -231,6 +232,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new UBIPhase());
     this.orchestrator.registerPhase(new SocialSafetyNetsPhase());
     this.orchestrator.registerPhase(new InformationWarfarePhase());
+    this.orchestrator.registerPhase(new PowerGenerationPhase());
     this.orchestrator.registerPhase(new MADDeterrencePhase());
     this.orchestrator.registerPhase(new ResourceEconomyPhase());
     this.orchestrator.registerPhase(new ResourceTechnologyPhase());
