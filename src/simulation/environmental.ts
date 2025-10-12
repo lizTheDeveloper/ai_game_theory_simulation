@@ -253,7 +253,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     // SEMI-GLOBAL: Affects food/water insecure regions (~25% of world)
     // 0.8% mortality rate in exposed regions
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.008, 'Resource crisis - famine/scarcity (vulnerable regions)', 0.25);
+    addAcuteCrisisDeaths(state, 0.008, 'Resource crisis - famine/scarcity (vulnerable regions)', 0.25, 'famine');
   }
   
   // POLLUTION CRISIS: Pollution exceeds 70%
@@ -282,7 +282,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     // SEMI-GLOBAL: Industrial nations + downwind regions (~60% of world)
     // 0.4% mortality rate from acute contamination/disease
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.004, 'Pollution crisis - toxic contamination (industrial regions)', 0.60);
+    addAcuteCrisisDeaths(state, 0.004, 'Pollution crisis - toxic contamination (industrial regions)', 0.60, 'pollution');
   }
   
   // CLIMATE CATASTROPHE: Stability below 40%
@@ -311,7 +311,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     // SEMI-GLOBAL: Coastal + climate-vulnerable regions (~30% of world)
     // 1.5% mortality rate from disasters/starvation
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.015, 'Climate catastrophe - extreme weather/famine (vulnerable regions)', 0.30);
+    addAcuteCrisisDeaths(state, 0.015, 'Climate catastrophe - extreme weather/famine (vulnerable regions)', 0.30, 'climate');
 
     // Check for extinction trigger
     // Climate catastrophe can lead to slow collapse
@@ -348,7 +348,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
     // 2% mortality rate from food system failure
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.020, 'Ecosystem collapse - global food system failure', 1.00);
+    addAcuteCrisisDeaths(state, 0.020, 'Ecosystem collapse - global food system failure', 1.00, 'ecosystem');
   }
   
   // === ONGOING CRISIS IMPACTS ===

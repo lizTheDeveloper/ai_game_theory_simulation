@@ -246,7 +246,7 @@ function checkSocialCrises(state: GameState): void {
     // SEMI-GLOBAL: Wealthy automated nations (US, EU, Japan, SK, etc.) = ~30% of world
     // 0.5% mortality rate in affected regions (severe suicide spike)
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.005, 'Meaning collapse - suicide epidemic (wealthy nations)', 0.30);
+    addAcuteCrisisDeaths(state, 0.005, 'Meaning collapse - suicide epidemic (wealthy nations)', 0.30, 'other');
   }
   
   // INSTITUTIONAL FAILURE: Government legitimacy below 30%
@@ -268,7 +268,7 @@ function checkSocialCrises(state: GameState): void {
     // REGIONAL: Specific failing state (Somalia, Venezuela, etc.) = ~5% of world
     // 4% mortality rate in collapsed state (severe chaos, riots, starvation)
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.04, 'Institutional failure - state collapse chaos (failing state)', 0.05);
+    addAcuteCrisisDeaths(state, 0.04, 'Institutional failure - state collapse chaos (failing state)', 0.05, 'other');
 
     // High risk of dystopia transition
     // Government may become authoritarian to restore order
@@ -305,7 +305,7 @@ function checkSocialCrises(state: GameState): void {
     // REGIONAL: Unstable regions (MENA, parts of Africa/Latin America) = ~10% of world
     // 3% mortality rate in unrest regions (riots, clashes are deadly)
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.03, 'Social unrest - riots/civil violence (unstable regions)', 0.10);
+    addAcuteCrisisDeaths(state, 0.03, 'Social unrest - riots/civil violence (unstable regions)', 0.10, 'other');
   }
   
   // === ONGOING CRISIS IMPACTS ===
