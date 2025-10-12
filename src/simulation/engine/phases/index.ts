@@ -47,6 +47,7 @@ export { OceanAcidificationPhase } from './OceanAcidificationPhase';
 export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
+export { CountryPopulationPhase } from './CountryPopulationPhase';
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 

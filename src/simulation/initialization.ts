@@ -32,6 +32,7 @@ import { initializeNovelEntitiesSystem } from './novelEntities';
 import { initializePlanetaryBoundariesSystem } from './planetaryBoundaries';
 import { initializeHumanPopulationSystem } from './populationDynamics';
 import { initializeRefugeeCrisisSystem } from './refugeeCrises';
+import { initializeCountryPopulations } from './countryPopulations';
 import { initializeUBISystem } from './enhancedUBI';
 import { initializeSocialSafetyNets } from './socialSafetyNets';
 import { initializeInformationWarfare } from './informationWarfare';
@@ -344,6 +345,7 @@ export function createDefaultInitialState(): GameState {
     // Population Dynamics & Refugee Crises (TIER 1.6)
     humanPopulationSystem: initializeHumanPopulationSystem(),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
+    countryPopulationSystem: initializeCountryPopulations(),
 
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),

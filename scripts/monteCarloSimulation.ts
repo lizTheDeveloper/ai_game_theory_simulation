@@ -269,6 +269,12 @@ interface RunResult {
   qolBottomRegion: number;            // Worst-off region's QoL
   qolGap: number;                     // Top - bottom QoL
   crisisAffectedPopulation: number;   // % in crisis regions
+  
+  // === PER-COUNTRY POPULATION (TIER 1.7.2) ===
+  countriesDepopulated: number;       // Number of countries that collapsed
+  nuclearPowersSurviving: number;     // Nuclear powers still functioning
+  aiHubsSurviving: number;            // AI development centers still functioning
+  depopulationEvents: string[];       // List of countries that depopulated
 }
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
@@ -758,6 +764,13 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const qolGap = inequality.qolGap;
   const crisisAffectedPopulation = inequality.crisisAffectedPopulation;
   
+  // Country population data (TIER 1.7.2)
+  const countrySys = finalState.countryPopulationSystem;
+  const countriesDepopulated = countrySys.depopulatedCountries.length;
+  const nuclearPowersSurviving = countrySys.nuclearPowersSurviving;
+  const aiHubsSurviving = countrySys.aiHubsSurviving;
+  const depopulationEvents = countrySys.depopulatedCountries.map(name => name);
+  
   results.push({
     seed,
     outcome: runResult.summary.finalOutcome, // Use engine's determined outcome, not probability-based
@@ -946,7 +959,13 @@ for (let i = 0; i < NUM_RUNS; i++) {
     qolTopRegion,
     qolBottomRegion,
     qolGap,
-    crisisAffectedPopulation
+    crisisAffectedPopulation,
+    
+    // Per-Country Population (TIER 1.7.2)
+    countriesDepopulated,
+    nuclearPowersSurviving,
+    aiHubsSurviving,
+    depopulationEvents
   });
   
   // Progress indicator
@@ -1115,6 +1134,41 @@ log(`    Crisis-Affected Population: ${(avgCrisisAffected * 100).toFixed(1)}%`);
 
 if (avgGini > 0.5) {
   log(`\n  ⚠️  EXTREME INEQUALITY: Global average hides massive suffering!`);
+}
+
+// Country Depopulation (TIER 1.7.2)
+log('\n\n' + '='.repeat(80));
+log('🗺️  COUNTRY DEPOPULATION');
+log('='.repeat(80));
+
+const avgCountriesDepopulated = results.reduce((sum, r) => sum + r.countriesDepopulated, 0) / results.length;
+const avgNuclearPowersSurviving = results.reduce((sum, r) => sum + r.nuclearPowersSurviving, 0) / results.length;
+const avgAIHubsSurviving = results.reduce((sum, r) => sum + r.aiHubsSurviving, 0) / results.length;
+
+// Count frequency of each country depopulating
+const countryDepopulationFrequency: Record<string, number> = {};
+results.forEach(r => {
+  r.depopulationEvents.forEach((country: string) => {
+    countryDepopulationFrequency[country] = (countryDepopulationFrequency[country] || 0) + 1;
+  });
+});
+
+log(`\n  DEPOPULATION SUMMARY:`);
+log(`    Countries Depopulated (avg): ${avgCountriesDepopulated.toFixed(1)} / 15`);
+log(`    Nuclear Powers Surviving (avg): ${avgNuclearPowersSurviving.toFixed(1)} / 8`);
+log(`    AI Hubs Surviving (avg): ${avgAIHubsSurviving.toFixed(1)} / 3`);
+
+if (Object.keys(countryDepopulationFrequency).length > 0) {
+  log(`\n  COUNTRIES THAT DEPOPULATED:`);
+  const sortedCountries = Object.entries(countryDepopulationFrequency)
+    .sort((a, b) => b[1] - a[1]);
+  sortedCountries.forEach(([country, count]) => {
+    const frequency = (count / results.length) * 100;
+    const frequencyStr = frequency.toFixed(0);
+    log(`    ${country}: ${count}/${results.length} runs (${frequencyStr}%)`);
+  });
+} else {
+  log(`\n  ✅ NO COUNTRIES DEPOPULATED across all runs`);
 }
 
 // Crisis summary by run
