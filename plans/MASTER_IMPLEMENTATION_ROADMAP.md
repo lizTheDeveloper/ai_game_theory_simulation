@@ -1217,11 +1217,11 @@ THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
 > "I want to understand extinction not as an end state but as a number that dwindles to zero. Population crashes aren't extinction, but they are mass die-offs. Distinguish 'we almost died out' from 'we died out entirely'."
 
 **Why Critical:**
-- Extinction currently abstract (severity 0-1, not population count)
-- No distinction between population crash vs true extinction
-- No refugee crisis modeling or generational dynamics
-- Can't model "we almost died out" (bottleneck) vs "we died out entirely"
-- Missing major 21st century crisis dynamic (climate/war refugees)
+- Extinction now concrete (8.0B → concrete decline, not abstract)
+- Distinction between population crash (2-5B) vs bottleneck (10K-100M) vs true extinction (<10K)
+- Refugee crisis modeling with generational dynamics (25 years resettlement)
+- Can model "we almost died out" (bottleneck events) vs "we died out entirely"
+- Major 21st century crisis dynamic implemented
 
 **Key Innovations:**
 
