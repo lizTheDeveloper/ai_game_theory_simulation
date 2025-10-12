@@ -103,10 +103,24 @@
 **Conclusion:** Foundation validated. TIER 2 mitigations now enable testing if interventions can enable Utopia pathways.
 
 ### 🚀 **What's Next**
-- **Status:** TIER 0, 1, 2 complete and merged to main! 🎉
-- **Current Focus:** TIER 3 (Planetary Boundaries framework)
-- **Next Implementation:** 3.1 Tipping Point Cascade System (6 hours estimated)
+- **Status:** TIER 0, 1, 2, 3.1 complete and merged to main! 🎉
+- **CRITICAL:** Internal consistency fixes discovered (extinction detection, org-population links, nuclear winter)
+- **Current Focus:** Fix critical bugs, then continue TIER 3
+- **Next Implementation:** Internal consistency fixes (10-12 hours) → TIER 3.2
 - **Philosophy Validated:** Research-backed realism, honest uncertainty, conservative estimates
+
+### 🚨 **CRITICAL BUGS DISCOVERED (Oct 12, 2025)**
+**File:** `devlogs/extinction-mechanics-audit-oct-12.md`  
+**Severity:** 🔴 HIGH - Simulation reporting false results
+
+**Issues Found:**
+1. ❌ "100% extinction" but 3-4B people survive (bug: using severity not population)
+2. ❌ Organizations 100% survival during "extinction" (no link to population health)
+3. ❌ No nuclear winter or long-term radiation (only immediate blast modeled)
+4. ❌ No per-country tracking (can't see when countries depopulate)
+5. ❌ No economic collapse during population crashes
+
+**Fix Plan:** `plans/internal-consistency-fixes.md` (10-12 hours total)
 
 ### 🚨 **BASELINE PARAMETER VALIDATION (NEW - Oct 10, 2025)**
 **File:** `plans/initialization-parameters-validation.md` (700+ lines, 30+ sources)  
@@ -419,11 +433,18 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 1.6 **Population Dynamics & Extinction Nuance** 👥 ✅ COMPLETED
+## 1.6 **Population Dynamics & Extinction Nuance** 👥 ✅ COMPLETED (BUGS FOUND)
 **File:** `plans/population-dynamics-and-extinction-nuance.md` (1,500+ lines)
-**Status:** ✅ Implemented October 12, 2025
+**Status:** ✅ Implemented October 12, 2025 (⚠️ Bugs discovered during testing)
 **Dev Time:** ~10 hours (actual)
 **Complexity:** HIGH
+
+**🚨 CRITICAL BUGS FOUND (Oct 12):**
+- Extinction declared at severity=1.0 instead of population=0
+- Organizations survive during population collapse
+- No per-country tracking
+- See: `devlogs/extinction-mechanics-audit-oct-12.md`
+- Fix plan: `plans/internal-consistency-fixes.md` (10-12 hours)
 
 **Why Critical:**
 - Extinction is now concrete population decline (8B → 0), not abstract severity
@@ -481,6 +502,153 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 - Phase 7: Pandemic modeling
 
 ---
+
+---
+
+# 🔧 **TIER 1.7: INTERNAL CONSISTENCY FIXES** 🚨
+
+**Status:** 🔴 **CRITICAL** - Discovered Oct 12, 2025 during TIER 3.1 testing  
+**File:** `plans/internal-consistency-fixes.md`  
+**Total Time:** 10-12 hours  
+**Priority:** IMMEDIATE (blocks accurate results)
+
+## 1.7.1 **Fix Extinction Detection** (1-2 hours) 🔴
+**Bug:** Simulation reports "100% extinction" but 3-4B people survive  
+**Cause:** Uses `severity >= 1.0` instead of `population < 10K`  
+**Impact:** ALL Monte Carlo results are misleading
+
+**Fix:**
+```typescript
+// Use actual population thresholds
+if (population < 0.00001) return 'true_extinction';      // <10K
+else if (population < 0.1) return 'genetic_bottleneck';  // <100M
+else if (population < 2.0) return 'severe_decline';      // <2B
+else return 'population_stress';
+```
+
+**Files:** `src/simulation/engine.ts`, `planetaryBoundaries.ts`, `extinctions.ts`
+
+---
+
+## 1.7.2 **Per-Country Population Tracking** (3-4 hours) 🔴
+**Missing:** Can't see when countries depopulate  
+**Need:** Track 10-15 key countries individually
+
+**Implementation:**
+- Add `CountryPopulation` interface (name, region, demographics)
+- Track nuclear powers (US, Russia, China, etc.)
+- Track major economies (Japan, Germany, Brazil)
+- Track AI hubs (US, UK, Canada, China)
+- Log when countries hit zero: `🚨 COUNTRY DEPOPULATION: United States`
+
+**Countries:** US (335M), China (1425M), Russia (144M), India (1425M), UK (67M), France (65M), Pakistan (235M), Israel (9M), Japan (125M), Germany (84M), Brazil (215M), Indonesia (275M), Canada (39M), Bangladesh (172M), Nigeria (223M)
+
+**Files:** Create `src/types/countryPopulations.ts`, `src/simulation/countryPopulations.ts`
+
+---
+
+## 1.7.3 **Link Organizations to Countries** (2-3 hours) 🔴
+**Bug:** Organizations 100% survival even when countries collapse  
+**Example:** Google survives even if US loses 90% population (unrealistic!)
+
+**Fix:**
+- Add `country` field to Organization (e.g., "United States")
+- Add `survivalThreshold` (e.g., 50% of peak population needed)
+- Bankruptcy when country below threshold or depopulated
+- Revenue/costs scale with population health
+- Log: `💀 ORGANIZATION COLLAPSE: Google DeepMind (United States depopulated)`
+
+**Organizations:**
+- Google DeepMind → United States
+- OpenAI → United States  
+- Anthropic → United States
+- Meta AI → United States
+- xAI → United States
+- DeepSeek → China
+- Baidu → China
+- Academic Consortium → Multi-national (survives longer)
+
+**Files:** Modify `src/types/game.ts`, `src/simulation/organizations.ts`
+
+---
+
+## 1.7.4 **Nuclear Winter & Long-Term Effects** (3-4 hours) 🔴
+**Missing:** Only immediate blast modeled, no winter/radiation/famine
+
+**Current:**
+- ✅ 60% mortality × 30% population (blast)
+- ❌ NO nuclear winter
+- ❌ NO long-term radiation
+- ❌ NO agricultural collapse
+
+**Research (Carl Sagan 1983, Robock & Toon 2012):**
+- Soot blocks sunlight for 1-3 years
+- Temperature drops 10-20°C
+- Crops fail globally
+- 90% Northern Hemisphere dies (starvation)
+- Recovery takes 5-10 years
+
+**Implementation:**
+```typescript
+interface NuclearWinterState {
+  active: boolean;
+  sootInStratosphere: number;           // Megatons
+  temperatureAnomaly: number;           // °C below baseline
+  cropYieldMultiplier: number;          // [0,1] vs normal
+  monthlyStarvationRate: number;        // 5% of survivors/month
+  radiationZones: RadiationZone[];     // Per-country radiation
+  durationMonths: number;               // 60-120 months
+}
+```
+
+**Expected Impact:**
+- Month 0: 1.4B die (blast), 6.6B survive
+- Month 1-24: 5% monthly starvation = 4.6B more die
+- Month 24: ~2B survivors (75% total mortality)
+- Month 25-120: Slow starvation + radiation = 1B more die
+- Month 120: ~1B survivors (87.5% total mortality)
+
+**Files:** Create `src/types/nuclearWinter.ts`, `src/simulation/nuclearWinter.ts`
+
+**Research:**
+- Sagan et al. (1983) - Nuclear Winter paper
+- Robock & Toon (2012) - 100-weapon scenario
+- Coupe et al. (2019) - Regional nuclear war
+
+---
+
+## 1.7.5 **Economic Collapse During Population Crash** (2 hours) 🟡
+**Bug:** Economy runs normally even when 50% of humanity is dead
+
+**Fix:**
+- GDP scales with population (50% pop loss → 60% GDP loss)
+- Organization revenue collapses (consumer base shrinks)
+- Operational costs spike (supply chain breakdown)
+- Infrastructure decay (0-30% integrity during collapse)
+- Data centers can go offline
+- Log economic milestones: `💥 ECONOMIC CRISIS: 25% population loss`
+
+**Files:** Modify `src/simulation/resourceEconomy.ts`, `organizations.ts`
+
+---
+
+## 📊 **Expected Outcomes After Fixes**
+
+### Before Fixes:
+- "100% extinction" (FALSE)
+- Final pop: 2.9B-4.5B
+- Organizations: 100% survival
+- No nuclear winter
+- No country tracking
+
+### After Fixes:
+- **~5-10% true extinction** (population < 10K)
+- **~30-40% bottleneck** (100M-1B survivors)
+- **~40-50% severe decline** (1B-4B survivors)
+- **~10-15% population stress** (4B-7B survivors)
+- **Nuclear winter:** 87% mortality over 10 years (1B final survivors)
+- **Organizations:** Die when countries collapse (realistic!)
+- **Per-country:** Log when US, China, etc. depopulate
 
 ---
 
