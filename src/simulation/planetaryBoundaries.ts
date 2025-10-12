@@ -530,10 +530,22 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   qol.mentalHealth = Math.max(0, qol.mentalHealth * 0.96);
 
   // === POPULATION DEATHS ===
-  // Tipping point cascade causes gradual population decline
-  // Cumulative effect over 48 months = 90%+ mortality
+  // TIER 1.7 FIX: Cascade accelerates over time until true extinction or intervention
+  // Month 0-48: Base 2% mortality
+  // Month 48+: Exponential acceleration (1.05x per month = 5% growth in death rate)
   if (state.humanPopulationSystem) {
-    const monthlyMortalityRate = 0.02 * system.cascadeSeverity; // 2% per month
+    let monthlyMortalityRate = 0.02 * system.cascadeSeverity; // Base 2% per month
+    
+    // After initial 48-month crisis, death rate accelerates exponentially
+    if (monthsSinceCascade > 48) {
+      const monthsPastInitialCrisis = monthsSinceCascade - 48;
+      const accelerationFactor = Math.pow(1.05, monthsPastInitialCrisis); // 5% compound growth
+      monthlyMortalityRate *= accelerationFactor;
+      
+      // Cap at 50% monthly mortality (prevents instant jumps)
+      monthlyMortalityRate = Math.min(0.50, monthlyMortalityRate);
+    }
+    
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
     addAcuteCrisisDeaths(
       state,
@@ -546,19 +558,34 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
 
   // === LOG PROGRESS ===
   if (monthsSinceCascade % 6 === 0) { // Log every 6 months
+    const population = state.humanPopulationSystem.population;
+    const mortalityRate = monthsSinceCascade > 48 
+      ? 0.02 * Math.pow(1.05, monthsSinceCascade - 48) 
+      : 0.02;
+    
     console.log(`\n🌪️ TIPPING POINT CASCADE - Month ${monthsSinceCascade}`);
     console.log(`   Climate: ${(env.climateStability * 100).toFixed(1)}%`);
     console.log(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(1)}%`);
-    console.log(`   Population: ${state.humanPopulationSystem.population.toFixed(2)}B`);
-    console.log(`   Timeline: ${48 - monthsSinceCascade} months until collapse`);
+    console.log(`   Population: ${population.toFixed(2)}B (${(population * 1_000_000_000).toFixed(0)} people)`);
+    console.log(`   Monthly mortality: ${(mortalityRate * 100).toFixed(1)}%`);
+    
+    if (monthsSinceCascade < 48) {
+      console.log(`   Status: Initial crisis (Month ${monthsSinceCascade}/48)`);
+    } else {
+      console.log(`   Status: ACCELERATING COLLAPSE (Month ${monthsSinceCascade - 48} past crisis)`);
+      console.log(`   Death rate: ${(mortalityRate / 0.02).toFixed(1)}x baseline`);
+    }
   }
 
-  // === EXTINCTION AT 48 MONTHS ===
-  if (monthsSinceCascade >= 48) {
-    console.log(`\n💀 TIPPING POINT COLLAPSE COMPLETE`);
-    console.log(`   Earth systems have collapsed beyond recovery`);
-    console.log(`   Extinction probability: 100%`);
-    state.outcomeMetrics.extinctionProbability = 1.0;
+  // === UPDATE SEVERITY ===
+  // Severity increases as population approaches extinction threshold
+  // This is for tracking only, NOT for declaring extinction (that uses population)
+  const population = state.humanPopulationSystem.population;
+  const extinctionThreshold = 0.00001; // 10K people = 0.00001B
+  if (population < 0.1) {  // < 100M people
+    // Severity ramps up as we approach true extinction
+    const proximityToExtinction = 1 - (Math.log10(population + extinctionThreshold) / Math.log10(0.1));
+    state.extinctionState.severity = Math.min(1.0, 0.7 + proximityToExtinction * 0.3);
   }
 }
 
