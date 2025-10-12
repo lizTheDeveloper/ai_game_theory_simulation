@@ -69,6 +69,7 @@ import {
   NovelEntitiesPhase,
   HumanPopulationPhase,
   RefugeeCrisisPhase,
+  CountryPopulationPhase,
   PlanetaryBoundariesPhase,
   DystopiaProgressionPhase,
   // Batch 3: Special phases (22.x - 23.x)
@@ -244,6 +245,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new NovelEntitiesPhase());
     this.orchestrator.registerPhase(new HumanPopulationPhase());
     this.orchestrator.registerPhase(new RefugeeCrisisPhase());
+    this.orchestrator.registerPhase(new CountryPopulationPhase());
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
 

@@ -507,15 +507,22 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 # 🔧 **TIER 1.7: INTERNAL CONSISTENCY FIXES** 🚨
 
-**Status:** 🔴 **CRITICAL** - Discovered Oct 12, 2025 during TIER 3.1 testing  
+**Status:** 🟡 **IN PROGRESS** - Discovered Oct 12, 2025 during TIER 3.1 testing  
 **File:** `plans/internal-consistency-fixes.md`  
 **Total Time:** 10-12 hours  
 **Priority:** IMMEDIATE (blocks accurate results)
 
-## 1.7.1 **Fix Extinction Detection** (1-2 hours) 🔴
+## 1.7.1 **Fix Extinction Detection** (1-2 hours) ✅ COMPLETE
 **Bug:** Simulation reports "100% extinction" but 3-4B people survive  
 **Cause:** Uses `severity >= 1.0` instead of `population < 10K`  
-**Impact:** ALL Monte Carlo results are misleading
+**Impact:** ALL Monte Carlo results are misleading  
+**Fixed:** Oct 12, 2025 - Now uses `population < 10K` threshold, fixed end-game reporting
+
+## 1.7.1b **Fix Death Categorization** (30 minutes) ✅ COMPLETE
+**Bug:** Death breakdown shows all zeros despite total deaths in billions  
+**Cause:** `addAcuteCrisisDeaths()` calls missing `category` parameter  
+**Impact:** Can't identify primary extinction drivers  
+**Fixed:** Oct 12, 2025 - All death events now categorized (war/famine/climate/disease/ecosystem/pollution/ai/other)
 
 **Fix:**
 ```typescript

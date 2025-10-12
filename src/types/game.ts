@@ -732,6 +732,9 @@ export interface GameState {
   // Population Dynamics & Refugee Crises (TIER 1.6)
   humanPopulationSystem: import('../types/population').HumanPopulationSystem; // Concrete population tracking (billions)
   refugeeCrisisSystem: import('../types/population').RefugeeCrisisSystem; // Climate/war/famine displacement
+  
+  // Per-Country Population Tracking (TIER 1.7.2)
+  countryPopulationSystem: import('../types/countryPopulations').CountryPopulationSystem; // Track 15 key countries individually
 
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
