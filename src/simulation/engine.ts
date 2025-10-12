@@ -378,23 +378,51 @@ export class SimulationEngine {
         }
       }
       
-      // Check for extinction completion (Phase 2: Heterogeneous extinctions)
-      if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {
+      // Check for extinction completion (TIER 1.7: Fixed to use population, not severity)
+      // TRUE EXTINCTION: Population < 10K people
+      // OLD BUG: Used severity >= 1.0, which declared extinction at 3-4B survivors!
+      const population = state.humanPopulationSystem.population;
+      const populationInPeople = population * 1_000_000_000; // Convert billions to actual count
+      
+      if (populationInPeople < 10_000) {
+        // TRUE EXTINCTION: Less than 10,000 people left
         actualOutcome = 'extinction';
-        actualOutcomeReason = `${state.extinctionState.type} extinction via ${state.extinctionState.mechanism}`;
-        console.log(`\n💀 EXTINCTION EVENT: ${state.extinctionState.type?.toUpperCase()}`);
-        console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
-        console.log(`   Duration: ${month - state.extinctionState.startMonth} months`);
+        actualOutcomeReason = `True extinction - population reached ${populationInPeople.toFixed(0)} people`;
+        
+        console.log(`\n💀 TRUE EXTINCTION: HUMANITY EXTINCT`);
+        console.log(`   Final Population: ${populationInPeople.toFixed(0)} people (<10K threshold)`);
+        console.log(`   Peak Population: ${state.humanPopulationSystem.peakPopulation.toFixed(2)}B`);
+        console.log(`   Mortality: ${((1 - population / state.humanPopulationSystem.peakPopulation) * 100).toFixed(1)}%`);
+        console.log(`   Primary Cause: ${state.extinctionState.mechanism || 'Cascading crises'}`);
         console.log(`   Month: ${month}`);
-
-        // Add population outcome narrative (TIER 1.5)
+        
         const { determinePopulationOutcome } = require('./populationDynamics');
         const popOutcome = determinePopulationOutcome(state);
-        console.log(`\n👥 POPULATION OUTCOME:`);
-        console.log(`   ${popOutcome.outcomeNarrative}`);
-        console.log(`   Genetic Bottleneck: ${popOutcome.geneticBottleneck ? 'YES' : 'NO'}`);
-        console.log(`   Civilization Intact: ${popOutcome.civilizationIntact ? 'YES' : 'NO'}\n`);
+        console.log(`\n   ${popOutcome.outcomeNarrative}\n`);
         break;
+      }
+      
+      // Check for extinction EVENT (severe crisis active, but NOT extinct yet)
+      // This logs major crises but doesn't end the simulation until pop < 10K
+      if (state.extinctionState.active && state.extinctionState.severity >= 1.0) {
+        // Major crisis complete, but check if humanity actually survived
+        if (population >= 0.1) {  // 100M+ survivors
+          // SURVIVED! Population crashed but humanity lives on
+          // Don't break, keep simulating
+          if (month - state.extinctionState.startMonth === 1) {  // Log once
+            console.log(`\n⚠️  MAJOR CRISIS COMPLETE: ${state.extinctionState.type?.toUpperCase()}`);
+            console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
+            console.log(`   Duration: ${month - state.extinctionState.startMonth} months`);
+            console.log(`   Population Remaining: ${population.toFixed(2)}B`);
+            console.log(`   Status: HUMANITY SURVIVES (not extinct)\n`);
+          }
+        } else if (population >= 0.00001) {  // 10K-100M = bottleneck
+          if (month - state.extinctionState.startMonth === 1) {
+            console.log(`\n🚨 GENETIC BOTTLENECK: ${state.extinctionState.type?.toUpperCase()}`);
+            console.log(`   Population: ${(population * 1_000_000_000).toFixed(0)} people`);
+            console.log(`   Status: Critical but not extinct\n`);
+          }
+        }
       }
       
       // Phase: Golden Age & Accumulation Systems
@@ -445,13 +473,16 @@ export class SimulationEngine {
       console.log(`   No definitive outcome - determining based on final probabilities`);
     }
     
-    // Determine final outcome
+    // Determine final outcome (TIER 1.7: Fixed to use actual population, not probability)
     const finalMetrics = history[history.length - 1].metrics;
     const outcomes = finalMetrics.outcomeProbs;
+    const finalPopulation = state.humanPopulationSystem.population;
+    const finalPopulationPeople = finalPopulation * 1_000_000_000;
+    
     let finalOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
     let finalOutcomeProbability: number;
     
-    // If we found an actual outcome, use that
+    // If we found an actual outcome during simulation, use that
     if (actualOutcome) {
       finalOutcome = actualOutcome;
       // Use the corresponding probability
@@ -459,32 +490,45 @@ export class SimulationEngine {
       else if (actualOutcome === 'dystopia') finalOutcomeProbability = outcomes.dystopiaProbability;
       else finalOutcomeProbability = outcomes.extinctionProbability;
     } 
-    // Otherwise, use probability-based outcome for max month reached
-    else if (outcomes.utopiaProbability > outcomes.dystopiaProbability && 
-        outcomes.utopiaProbability > outcomes.extinctionProbability) {
-      finalOutcome = 'utopia';
-      finalOutcomeProbability = outcomes.utopiaProbability;
+    // Otherwise, determine outcome based on ACTUAL STATE, not just probabilities
+    else {
       console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
-      console.log(`   🌟 UTOPIA trajectory dominant\n`);
-    } else if (outcomes.dystopiaProbability > outcomes.extinctionProbability) {
-      finalOutcome = 'dystopia';
-      finalOutcomeProbability = outcomes.dystopiaProbability;
-      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
-      console.log(`   🏛️  DYSTOPIA trajectory dominant\n`);
-    } else if (outcomes.extinctionProbability > 0.3) {
-      finalOutcome = 'extinction';
-      finalOutcomeProbability = outcomes.extinctionProbability;
-      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
-      console.log(`   ☠️  EXTINCTION trajectory dominant\n`);
-    } else {
-      finalOutcome = 'inconclusive';
-      finalOutcomeProbability = Math.max(
-        outcomes.utopiaProbability,
-        outcomes.dystopiaProbability,
-        outcomes.extinctionProbability
-      );
-      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
-      console.log(`   ❓ INCONCLUSIVE - no clear trajectory\n`);
+      console.log(`   👥 Final population: ${finalPopulation.toFixed(2)}B (${finalPopulationPeople.toFixed(0)} people)`);
+      
+      // CRITICAL FIX: Check actual population, not probability!
+      // OLD BUG: Used extinctionProbability > 0.3 to declare extinction
+      // This declared extinction with 500M+ survivors!
+      if (finalPopulationPeople < 10_000) {
+        // TRUE EXTINCTION: Less than 10K people
+        finalOutcome = 'extinction';
+        finalOutcomeProbability = 1.0;
+        console.log(`   💀 TRUE EXTINCTION: Humanity extinct (<10K people)\n`);
+      } else if (finalPopulationPeople < 100_000_000) {
+        // SEVERE BOTTLENECK: Less than 100M people
+        // This is "inconclusive" - could recover or continue declining
+        finalOutcome = 'inconclusive';
+        finalOutcomeProbability = outcomes.extinctionProbability;
+        console.log(`   🚨 SEVERE DECLINE: Genetic bottleneck, outcome uncertain\n`);
+      } else if (outcomes.utopiaProbability > 0.6 && outcomes.utopiaProbability > outcomes.dystopiaProbability * 1.5) {
+        // Clear Utopia trajectory
+        finalOutcome = 'utopia';
+        finalOutcomeProbability = outcomes.utopiaProbability;
+        console.log(`   🌟 UTOPIA trajectory dominant\n`);
+      } else if (outcomes.dystopiaProbability > 0.6 && outcomes.dystopiaProbability > outcomes.utopiaProbability * 1.5) {
+        // Clear Dystopia trajectory
+        finalOutcome = 'dystopia';
+        finalOutcomeProbability = outcomes.dystopiaProbability;
+        console.log(`   🏛️  DYSTOPIA trajectory dominant\n`);
+      } else {
+        // Mixed signals - inconclusive
+        finalOutcome = 'inconclusive';
+        finalOutcomeProbability = Math.max(
+          outcomes.utopiaProbability,
+          outcomes.dystopiaProbability,
+          outcomes.extinctionProbability
+        );
+        console.log(`   ❓ INCONCLUSIVE - no clear trajectory\n`);
+      }
     }
     
     // Log final population outcome (TIER 1.5)
