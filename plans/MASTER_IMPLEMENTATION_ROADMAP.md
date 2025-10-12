@@ -1050,10 +1050,10 @@ THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
 
 ---
 
-## 4.3 **Information Warfare & Epistemology** 📰
+## 4.3 **Information Warfare & Epistemology** 📰 ✅ COMPLETED
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.1)  
-**Priority:** MEDIUM  
-**Dev Time:** ~5 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 5:26pm
+**Dev Time:** ~1.5 hours (actual)
 **Complexity:** MEDIUM  
 
 **Why Valuable:**
@@ -1061,22 +1061,40 @@ THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
 - Deepfakes, misinformation, narrative control
 - Currently missing from model
 
+**Research Backing:**
+- **MIT Media Lab (2024):** AI detection arms race, generation always wins
+- **RAND (2024):** Truth Decay framework - facts lose currency in discourse
+- **Pew Research (2024):** 73% of Americans see "made-up news" online
+- **Knight Foundation (2024):** Trust in media declining sharply
+- **Oxford/Stanford (2024-2025):** Computational propaganda scales with AI
+
 **Key Features:**
-- `information_integrity` [0,1] - Truth vs noise ratio
-- `narrative_control[agent]` - Each agent's narrative power
-- `epistemological_crisis_level` - Can't distinguish truth
-- `deepfake_prevalence` - Synthetic content saturation
+- `information_integrity` [0,1] - Truth vs noise ratio (starts 55%)
+- `deepfake_prevalence` [0,1] - Synthetic content saturation (starts 10%)
+- `epistemological_crisis_level` [0,1] - Can't distinguish truth (starts 30%)
+- `narrative_control` - Govt (25%), Corps (40%), AI (5%), Grassroots (30%)
+- `detection_capability` [0,1] - Detection quality (starts 60%, degrades)
+- `media_literacy` [0,1] - Population critical thinking (starts 40%)
 
 **Mechanics:**
-- Information warfare effects
-- Truth decay function (AI accelerates)
-- Narrative competition between agents
-- Low info integrity → easier dystopia control
+- **Truth Decay:** Deepfakes grow exponentially with AI capability (0.5-4%/month)
+- **Arms Race:** Detection always lags generation (asymmetric warfare)
+- **Narrative Competition:** 4 actors compete for control (zero-sum)
+- **Coordination Penalty:** Low integrity impairs cooperation (0-50% penalty)
+- **Dystopia Enablement:** "Flood zone with shit" - confusion enables authoritarianism
+- **Trust Erosion:** 0.2-1.0%/month trust decay (compounds with crisis)
+
+**Crisis Events:**
+- Deepfake Saturation (50%): Photos/videos/audio untrustworthy
+- Epistemological Crisis (60%): Society can't agree on basic facts
+- Information Collapse (<20%): Post-truth, democracy cannot function
+- AI Narrative Dominance (60%): AI controls information landscape
 
 **Expected Impact:**
-- Adds strategic layer (control narrative = power)
-- Realism (AI is already doing this)
-- Interacts with governance, trust, dystopia
+- Makes coordination harder (can't solve problems if can't agree on facts)
+- Enables dystopia (authoritarians thrive in confusion)
+- Accelerates trust decay
+- Realism (AI already doing this - 2024 election deepfakes)
 
 ---
 
