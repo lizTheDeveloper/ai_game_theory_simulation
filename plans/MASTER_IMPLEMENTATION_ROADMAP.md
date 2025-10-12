@@ -537,20 +537,22 @@ else return 'population_stress';
 
 ---
 
-## 1.7.2 **Per-Country Population Tracking** (3-4 hours) 🔴
+## 1.7.2 **Per-Country Population Tracking** (3-4 hours) ✅ COMPLETE
 **Missing:** Can't see when countries depopulate  
-**Need:** Track 10-15 key countries individually
+**Need:** Track 10-15 key countries individually  
+**Fixed:** Oct 12, 2025 - Tracking 15 countries (8 nuclear powers, 3 AI hubs), depopulation detection at <100K people
 
 **Implementation:**
-- Add `CountryPopulation` interface (name, region, demographics)
-- Track nuclear powers (US, Russia, China, etc.)
-- Track major economies (Japan, Germany, Brazil)
-- Track AI hubs (US, UK, Canada, China)
-- Log when countries hit zero: `🚨 COUNTRY DEPOPULATION: United States`
+- ✅ Add `CountryPopulation` interface (name, region, demographics)
+- ✅ Track nuclear powers (US, Russia, China, UK, France, Pakistan, India, Israel)
+- ✅ Track major economies (Japan, Germany, Brazil, Indonesia, Canada, Bangladesh, Nigeria)
+- ✅ Track AI hubs (US, UK, Canada, China)
+- ✅ Log when countries hit zero: `🚨 COUNTRY DEPOPULATION: United States`
+- ✅ Monte Carlo reporting: countries depopulated, nuclear powers/AI hubs surviving, frequency analysis
 
 **Countries:** US (335M), China (1425M), Russia (144M), India (1425M), UK (67M), France (65M), Pakistan (235M), Israel (9M), Japan (125M), Germany (84M), Brazil (215M), Indonesia (275M), Canada (39M), Bangladesh (172M), Nigeria (223M)
 
-**Files:** Create `src/types/countryPopulations.ts`, `src/simulation/countryPopulations.ts`
+**Files:** `src/types/countryPopulations.ts`, `src/simulation/countryPopulations.ts`, `CountryPopulationPhase.ts`
 
 ---
 
