@@ -679,7 +679,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   // === POPULATION & MORTALITY METRICS (Oct 12, 2025) ===
   const pop = finalState.humanPopulationSystem;
   const env = finalState.environmentalAccumulation;
-  const deaths = pop.deathTracking;
+  const deaths = (pop as any).deathTracking || {};
   
   const initialPopulation = pop.baselinePopulation;
   const finalPopulation = pop.population;
@@ -712,8 +712,8 @@ for (let i = 0; i < NUM_RUNS; i++) {
     e.description?.includes('refugee') || e.description?.includes('REFUGEE')).length;
   
   let totalRefugees = 0;
-  if (finalState.refugeeCrisisSystem && finalState.refugeeCrisisSystem.activeCrises) {
-    totalRefugees = Object.values(finalState.refugeeCrisisSystem.activeCrises)
+  if (finalState.refugeeCrisisSystem && (finalState.refugeeCrisisSystem as any).activeCrises) {
+    totalRefugees = Object.values((finalState.refugeeCrisisSystem as any).activeCrises)
       .reduce((sum: number, crisis: any) => sum + (crisis.totalFled || 0), 0);
   }
   
@@ -996,10 +996,122 @@ results.forEach((r, i) => {
                 r.outcome === 'extinction' ? '☠️' : '❓';
   log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${r.outcome.toUpperCase()}`);
   log(`        ${r.outcomeReason}`);
+  log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B (${r.populationDecline.toFixed(1)}% decline)`);
 });
 
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('👥 POPULATION & MORTALITY');
+log('='.repeat(80));
+
+const avgInitialPop = results.reduce((sum, r) => sum + r.initialPopulation, 0) / results.length;
+const avgFinalPop = results.reduce((sum, r) => sum + r.finalPopulation, 0) / results.length;
+const avgDecline = results.reduce((sum, r) => sum + r.populationDecline, 0) / results.length;
+const avgTotalDeaths = results.reduce((sum, r) => sum + r.totalDeaths, 0) / results.length;
+
+log(`\n  POPULATION TRAJECTORY:`);
+log(`    Initial: ${avgInitialPop.toFixed(2)}B (start of simulation)`);
+log(`    Final: ${avgFinalPop.toFixed(2)}B (after ${MAX_MONTHS} months)`);
+log(`    Decline: ${avgDecline.toFixed(1)}% (${(avgInitialPop - avgFinalPop).toFixed(2)}B deaths)`);
+log(`    Peak: ${(results.reduce((sum, r) => sum + r.peakPopulation, 0) / results.length).toFixed(2)}B`);
+
+log(`\n  MORTALITY BREAKDOWN:`);
+log(`    Total Deaths: ${avgTotalDeaths.toFixed(0)}M people`);
+log(`    Natural: ${(results.reduce((sum, r) => sum + r.deathsNatural, 0) / results.length).toFixed(0)}M (baseline)`);
+log(`    Crisis: ${(results.reduce((sum, r) => sum + r.deathsCrisis, 0) / results.length).toFixed(0)}M (famine, disease, disasters)`);
+log(`    Nuclear: ${(results.reduce((sum, r) => sum + r.deathsNuclear, 0) / results.length).toFixed(0)}M (nuclear wars)`);
+log(`    Cascade: ${(results.reduce((sum, r) => sum + r.deathsCascade, 0) / results.length).toFixed(0)}M (tipping point cascades)`);
+log(`    Meaning: ${(results.reduce((sum, r) => sum + r.deathsMeaning, 0) / results.length).toFixed(0)}M (suicide epidemic)`);
+
+log(`\n  POPULATION OUTCOMES:`);
+const popOutcomes = {
+  growth: results.filter(r => r.populationOutcome === 'growth').length,
+  stable: results.filter(r => r.populationOutcome === 'stable').length,
+  decline: results.filter(r => r.populationOutcome === 'decline').length,
+  bottleneck: results.filter(r => r.populationOutcome === 'bottleneck').length,
+  extinction: results.filter(r => r.populationOutcome === 'extinction').length
+};
+log(`    Growth: ${popOutcomes.growth} runs (${(popOutcomes.growth/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Stable: ${popOutcomes.stable} runs (${(popOutcomes.stable/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Severe Decline (>30%): ${popOutcomes.decline} runs (${(popOutcomes.decline/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Genetic Bottleneck (<50M): ${popOutcomes.bottleneck} runs (${(popOutcomes.bottleneck/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    True Extinction (<10K): ${popOutcomes.extinction} runs (${(popOutcomes.extinction/NUM_RUNS*100).toFixed(1)}%)`);
+
+const geneticBottlenecks = results.filter(r => r.geneticBottleneck).length;
+if (geneticBottlenecks > 0) {
+  log(`\n  ⚠️  Genetic Bottleneck Risk: ${geneticBottlenecks} runs (${(geneticBottlenecks/NUM_RUNS*100).toFixed(1)}%)`);
+}
+
+// Nuclear & Catastrophic Events
+log('\n\n' + '='.repeat(80));
+log('☢️  NUCLEAR & CATASTROPHIC EVENTS');
+log('='.repeat(80));
+
+const avgNuclearWars = results.reduce((sum, r) => sum + r.nuclearWarsCount, 0) / results.length;
+const runsWithNuclear = results.filter(r => r.nuclearWarsCount > 0).length;
+
+log(`\n  NUCLEAR WARFARE:`);
+log(`    Runs with Nuclear War: ${runsWithNuclear} / ${NUM_RUNS} (${(runsWithNuclear/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Avg Nuclear Exchanges: ${avgNuclearWars.toFixed(1)} per run`);
+log(`    Avg Deaths (nuclear): ${(results.reduce((sum, r) => sum + r.deathsNuclear, 0) / results.length).toFixed(0)}M`);
+
+log(`\n  REFUGEE CRISES:`);
+const avgRefugees = results.reduce((sum, r) => sum + r.totalRefugees, 0) / results.length;
+const avgRefugeeCrises = results.reduce((sum, r) => sum + r.refugeeCrisisCount, 0) / results.length;
+log(`    Avg Refugee Crises: ${avgRefugeeCrises.toFixed(1)} per run`);
+log(`    Avg Total Refugees: ${avgRefugees.toFixed(0)}M displaced`);
+
+log(`\n  TIPPING POINT CASCADES:`);
+const cascadeRuns = results.filter(r => r.tippingPointCascadeActive).length;
+const avgCascadeMonths = results.reduce((sum, r) => sum + r.tippingPointCascadeMonths, 0) / results.length;
+log(`    Runs with Active Cascade: ${cascadeRuns} / ${NUM_RUNS} (${(cascadeRuns/NUM_RUNS*100).toFixed(1)}%)`);
+if (cascadeRuns > 0) {
+  log(`    Avg Cascade Duration: ${avgCascadeMonths.toFixed(0)} months`);
+}
+
+// Environmental Collapse
+log('\n\n' + '='.repeat(80));
+log('🌍 ENVIRONMENTAL COLLAPSE');
+log('='.repeat(80));
+
+const avgClimate = results.reduce((sum, r) => sum + r.finalClimateStability, 0) / results.length;
+const avgBiodiversity = results.reduce((sum, r) => sum + r.finalBiodiversity, 0) / results.length;
+const avgResources = results.reduce((sum, r) => sum + r.finalResourceReserves, 0) / results.length;
+
+log(`\n  PLANETARY BOUNDARIES (Final State):`);
+log(`    Climate Stability: ${(avgClimate * 100).toFixed(1)}% (baseline: 60%)`);
+log(`    Biodiversity: ${(avgBiodiversity * 100).toFixed(1)}% (baseline: 35%)`);
+log(`    Resource Reserves: ${(avgResources * 100).toFixed(1)}% (baseline: 65%)`);
+
+if (avgClimate < 0.4) log(`    ⚠️  Climate catastrophe threshold breached`);
+if (avgBiodiversity < 0.3) log(`    ⚠️  Ecosystem collapse threshold breached`);
+if (avgResources < 0.3) log(`    ⚠️  Resource crisis threshold breached`);
+
+// Regional Inequality
+log('\n\n' + '='.repeat(80));
+log('📊 REGIONAL QOL INEQUALITY');
+log('='.repeat(80));
+
+const avgGini = results.reduce((sum, r) => sum + r.qolGiniCoefficient, 0) / results.length;
+const avgTopQoL = results.reduce((sum, r) => sum + r.qolTopRegion, 0) / results.length;
+const avgBottomQoL = results.reduce((sum, r) => sum + r.qolBottomRegion, 0) / results.length;
+const avgQolGap = results.reduce((sum, r) => sum + r.qolGap, 0) / results.length;
+const avgCrisisAffected = results.reduce((sum, r) => sum + r.crisisAffectedPopulation, 0) / results.length;
+
+log(`\n  INEQUALITY METRICS:`);
+log(`    Gini Coefficient: ${(avgGini * 100).toFixed(1)}% (0=equal, 100=extreme)`);
+log(`    Top Region QoL: ${avgTopQoL.toFixed(3)} (best-off regions)`);
+log(`    Bottom Region QoL: ${avgBottomQoL.toFixed(3)} (crisis-affected)`);
+log(`    QoL Gap: ${avgQolGap.toFixed(3)} (top - bottom)`);
+log(`    Crisis-Affected Population: ${(avgCrisisAffected * 100).toFixed(1)}%`);
+
+if (avgGini > 0.5) {
+  log(`\n  ⚠️  EXTREME INEQUALITY: Global average hides massive suffering!`);
+}
+
 // Crisis summary by run
-log(`\n  🚨 CRISIS EVENTS BY RUN:`);
+log('\n\n' + '='.repeat(80));
+log(`🚨 CRISIS EVENTS BY RUN`);
 log(`     (See individual run_SEED_events.json files for full details)`);
 results.forEach((r, i) => {
   // Read the event log file we just saved
@@ -1354,6 +1466,23 @@ log(`    Environmental: ${avgQolEnviron.toFixed(3)} (climate, biodiversity, poll
 
 const avgOverallQol = (avgQolBasic + avgQolPsych + avgQolSocial + avgQolHealth + avgQolEnviron) / 5;
 log(`\n    OVERALL QOL: ${avgOverallQol.toFixed(3)}`);
+
+// === REALITY CHECK (Oct 12, 2025) ===
+const avgPopDeclineForCheck = results.reduce((sum, r) => sum + r.populationDecline, 0) / results.length;
+if (avgQolBasic > 1.5 && avgPopDeclineForCheck > 50) {
+  log(`\n  ⚠️  WARNING: High Basic Needs QoL (${avgQolBasic.toFixed(2)}) despite ${avgPopDeclineForCheck.toFixed(0)}% mortality`);
+  log(`      This suggests QoL calculation may not fully reflect human suffering.`);
+}
+
+if (avgQolBasic > 2.0) {
+  log(`\n  🚨 BUG DETECTED: Basic Needs QoL = ${avgQolBasic.toFixed(2)} (max should be 2.0)`);
+  log(`      Material abundance scaling is broken! Check qualityOfLife.ts line 166.`);
+}
+
+if (avgOverallQol > 1.0 && avgPopDeclineForCheck > 50) {
+  log(`\n  📊 NOTE: Overall QoL ${avgOverallQol.toFixed(2)} with ${avgPopDeclineForCheck.toFixed(0)}% population decline`);
+  log(`      Regional inequality (Gini: ${(avgGini * 100).toFixed(0)}%) shows ${(avgCrisisAffected * 100).toFixed(0)}% in crisis zones`);
+}
 
 // Identify weakest QoL categories
 const qolCategories = [
