@@ -96,10 +96,16 @@ function checkTechnologicalCrises(state: GameState): void {
       console.log(`   Safety Debt: ${(risk.safetyDebt * 100).toFixed(1)}%`);
       console.log(`   Impact: Catastrophic scenario probability increased\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     qol.physicalSafety *= 0.7;
     qol.autonomy *= 0.6;
     state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.4);
+
+    // Population impact: AI control loss causes accidents, infrastructure failures (0.5-1% casualties)
+    // SEMI-GLOBAL: Infrastructure-dependent regions (modern nations with AI systems) = ~70% of world
+    // 1.2% mortality rate from AI-caused disasters in dependent regions
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.012, 'AI control loss - infrastructure failures/accidents (AI-dependent regions)', 0.70);
   }
   
   // CORPORATE DYSTOPIA
@@ -107,7 +113,7 @@ function checkTechnologicalCrises(state: GameState): void {
     const corporatePower = state.organizations
       .filter(o => o.type === 'private')
       .reduce((sum, o) => sum + o.capital, 0) / 1000000;
-      
+
     if (corporatePower > 50) {
       risk.corporateDystopiaActive = true;
       try {
@@ -115,10 +121,16 @@ function checkTechnologicalCrises(state: GameState): void {
         console.log(`   Market Concentration: ${(risk.concentrationRisk * 100).toFixed(1)}%`);
         console.log(`   Impact: AI-powered feudalism emerging\n`);
       } catch (e) { /* Ignore EPIPE */ }
-      
+
       qol.politicalFreedom *= 0.5;
       qol.autonomy *= 0.6;
       qol.informationIntegrity *= 0.6;
+
+      // Population impact: Corporate dystopia causes resource hoarding, healthcare denial (0.2-0.4% casualties)
+      // SEMI-GLOBAL: Regions where corporations dominate (US, EU, parts of Asia) = ~40% of world
+      // 0.75% mortality rate from healthcare denial/resource hoarding
+      const { addAcuteCrisisDeaths } = require('./populationDynamics');
+      addAcuteCrisisDeaths(state, 0.0075, 'Corporate dystopia - resource hoarding/healthcare denial (corporate-controlled)', 0.40);
     }
   }
   

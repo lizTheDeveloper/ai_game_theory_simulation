@@ -710,7 +710,11 @@ export interface GameState {
   
   // Novel Entities Crisis (TIER 1.5)
   novelEntitiesSystem: import('../types/novelEntities').NovelEntitiesSystem; // Chemical pollution & slow poisoning
-  
+
+  // Population Dynamics & Refugee Crises (TIER 1.5)
+  humanPopulationSystem: import('../types/population').HumanPopulationSystem; // Concrete population tracking (billions)
+  refugeeCrisisSystem: import('../types/population').RefugeeCrisisSystem; // Climate/war/famine displacement
+
   // Configuration
   config: ConfigurationSettings;
   

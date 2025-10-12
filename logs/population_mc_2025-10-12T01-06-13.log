@@ -1,0 +1,18 @@
+Population Dynamics Monte Carlo Test
+Timestamp: 2025-10-12T01:06:13.064Z
+================================================================================
+
+
+🎲 POPULATION DYNAMICS MONTE CARLO TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 100
+  Duration: 240 months (20.0 years)
+  Seed Range: 50000 - 50099
+
+
+⏩ RUNNING 100 SIMULATIONS...
+
+  ✓ Completed 10/100 runs (47.2s elapsed, ~424.4s remaining)
+  ✓ Completed 20/100 runs (92.0s elapsed, ~367.8s remaining)

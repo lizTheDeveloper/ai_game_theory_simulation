@@ -29,6 +29,8 @@ import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
 import { initializeNovelEntitiesSystem } from './novelEntities';
+import { initializeHumanPopulationSystem } from './populationDynamics';
+import { initializeRefugeeCrisisSystem } from './refugeeCrises';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -330,7 +332,11 @@ export function createDefaultInitialState(): GameState {
     
     // Novel Entities Crisis (TIER 1.5)
     novelEntitiesSystem: initializeNovelEntitiesSystem(),
-    
+
+    // Population Dynamics & Refugee Crises (TIER 1.5)
+    humanPopulationSystem: initializeHumanPopulationSystem(),
+    refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
+
     eventLog: [],
     technologyTree: [],
     

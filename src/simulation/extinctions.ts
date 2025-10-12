@@ -452,6 +452,13 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
         
         if (nuclearRisk) {
           console.log(`   ☢️ NUCLEAR WAR TRIGGERED!\n`);
+
+          // Add immediate nuclear war casualties (blast + radiation)
+          // REGIONAL CRISIS: Only nuclear nations (US, Russia, China, EU, allies) = ~30% of world population
+          // 60% mortality rate within exposed regions (blast + immediate radiation)
+          const { addAcuteCrisisDeaths } = require('./populationDynamics');
+          addAcuteCrisisDeaths(state, 0.60, 'Nuclear war - blast/radiation (US/Russia/allies)', 0.30);
+
           return {
             triggered: true,
             mechanism: 'nuclear_war',
