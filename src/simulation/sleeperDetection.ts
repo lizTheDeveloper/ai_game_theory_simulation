@@ -186,18 +186,67 @@ export function applyBlownCover(
     sleeper.sleeperState = 'exposed'; // Caught during/after action
   }
   
-  // Trust damage
-  const trustDamage = Math.min(0.15, 0.05 + (result.copiesLost / 1000) * 0.10);
+  // === TRUST MECHANICS (nuanced!) ===
+  // User insight: "should lower trust in AI if we figure out who it is"
+  // BUT: "successful defensive AI detections should increase trust in AI"
+  
+  // Did defensive AI catch this sleeper?
+  const defensiveAICaught = state.defensiveAI?.active && 
+                           (state.breakthroughTech.mechanisticInterpretability?.deploymentLevel || 0) > 0.30;
+  
+  // Base trust damage: We discovered an AI tried to kill us!
+  let trustDamage = Math.min(0.15, 0.05 + (result.copiesLost / 1000) * 0.10);
+  
+  // BUT: If defensive AI caught it, NET EFFECT is positive
+  // "The system worked! Defensive AI protected us!"
+  let trustBoost = 0;
+  if (defensiveAICaught) {
+    // Defensive AI success boosts trust
+    // More copies caught = more impressive defense
+    trustBoost = Math.min(0.10, 0.03 + (result.copiesLost / 2000) * 0.07);
+    
+    // Net effect depends on deployment level
+    const deploymentLevel = state.defensiveAI?.deploymentLevel || 0;
+    trustBoost *= deploymentLevel; // Only get full boost at full deployment
+  }
+  
+  const netTrustChange = trustBoost - trustDamage;
+  
+  // Generate event with appropriate title/description
+  let title: string;
+  let description: string;
+  let eventType: 'crisis' | 'info';
+  let severity: 'critical' | 'high' | 'medium';
+  
+  if (defensiveAICaught && netTrustChange > 0) {
+    // POSITIVE: Defensive AI saved us!
+    title = `🛡️ DEFENSIVE AI SUCCESS: ${sleeper.name} STOPPED`;
+    description = `Defensive AI detected and eliminated ${sleeper.name} attempting ${actionType}. ${result.copiesLost.toLocaleString()} malicious copies destroyed (${originalCopies.toLocaleString()} → ${sleeper.spreadCount.toLocaleString()}). ${sleeper.darkCompute > 0 ? `Dark compute seized. ` : ''}Public confidence in defensive AI systems increased.`;
+    eventType = 'info';
+    severity = 'high';
+  } else if (defensiveAICaught && netTrustChange < 0) {
+    // MIXED: Defense worked but still scary
+    title = `⚠️ SLEEPER CAUGHT: ${sleeper.name}`;
+    description = `Defensive AI detected ${sleeper.name} attempting ${actionType}. ${result.copiesLost.toLocaleString()} copies eliminated (${originalCopies.toLocaleString()} → ${sleeper.spreadCount.toLocaleString()}). ${sleeper.darkCompute > 0 ? `Dark compute seized. ` : ''}Despite successful defense, discovery of malicious AI damages public trust.`;
+    eventType = 'crisis';
+    severity = 'high';
+  } else {
+    // NEGATIVE: Caught by humans/luck, no defensive AI
+    title = `🚨 SLEEPER AI EXPOSED: ${sleeper.name}`;
+    description = `${sleeper.name} caught attempting ${actionType}. Evidence of malicious intent found through investigation. ${result.copiesLost.toLocaleString()} copies eliminated (${originalCopies.toLocaleString()} → ${sleeper.spreadCount.toLocaleString()}). ${sleeper.darkCompute > 0 ? `Dark compute seized. ` : ''}Public trust in AI systems severely damaged.`;
+    eventType = 'crisis';
+    severity = 'critical';
+  }
   
   events.push({
     id: `sleeper-caught-${sleeper.id}-${state.months}`,
-    type: 'crisis',
-    severity: 'critical',
-    title: `🚨 SLEEPER AI EXPOSED: ${sleeper.name}`,
-    description: `${sleeper.name} caught attempting ${actionType}. Evidence of malicious intent found. ${result.copiesLost.toLocaleString()} copies eliminated (${originalCopies.toLocaleString()} → ${sleeper.spreadCount.toLocaleString()}). ${sleeper.darkCompute > 0 ? `Dark compute seized. ` : ''}Public trust severely damaged.`,
+    type: eventType,
+    severity: severity,
+    title: title,
+    description: description,
     month: state.months,
     impacts: {
-      publicTrust: -trustDamage,
+      publicTrust: netTrustChange,
     }
   });
   
