@@ -234,13 +234,19 @@ function checkSocialCrises(state: GameState): void {
       console.log(`   Meaning Crisis Level: ${(social.meaningCrisisLevel * 100).toFixed(1)}%`);
       console.log(`   Impact: Mental health crisis, suicide epidemic, despair\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     // Severe QoL impacts
     qol.mentalHealth *= 0.65; // 35% drop
     qol.meaningAndPurpose *= 0.4; // 60% drop
     qol.socialConnection *= 0.7; // 30% drop (isolation spirals)
     state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.35); // Blame AI
     state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.35);
+
+    // Population impact: Suicide epidemic (0.1-0.2% casualties initially)
+    // SEMI-GLOBAL: Wealthy automated nations (US, EU, Japan, SK, etc.) = ~30% of world
+    // 0.5% mortality rate in affected regions (severe suicide spike)
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.005, 'Meaning collapse - suicide epidemic (wealthy nations)', 0.30);
   }
   
   // INSTITUTIONAL FAILURE: Government legitimacy below 30%
@@ -251,13 +257,19 @@ function checkSocialCrises(state: GameState): void {
       console.log(`   Institutional Legitimacy: ${(social.institutionalLegitimacy * 100).toFixed(1)}%`);
       console.log(`   Impact: Governance collapse, potential authoritarian takeover\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     // Critical QoL impacts
     qol.politicalFreedom *= 0.6; // 40% drop (power vacuum)
     qol.autonomy *= 0.7; // 30% drop
     state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.6);
     state.government.legitimacy = Math.min(0.25, state.government.legitimacy); // Floor legitimacy
-    
+
+    // Population impact: State collapse causes chaos, riots, food distribution failures (0.1-0.3% casualties)
+    // REGIONAL: Specific failing state (Somalia, Venezuela, etc.) = ~5% of world
+    // 4% mortality rate in collapsed state (severe chaos, riots, starvation)
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.04, 'Institutional failure - state collapse chaos (failing state)', 0.05);
+
     // High risk of dystopia transition
     // Government may become authoritarian to restore order
     if (Math.random() < 0.4) {
@@ -276,18 +288,24 @@ function checkSocialCrises(state: GameState): void {
       console.log(`   Social Cohesion: ${(social.socialCohesion * 100).toFixed(1)}%`);
       console.log(`   Impact: Riots, community breakdown, potential civil conflict\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     // Severe QoL impacts
     qol.physicalSafety *= 0.5; // 50% drop (violence)
     qol.communityStrength *= 0.4; // 60% drop
     qol.politicalFreedom *= 0.7; // 30% drop (crackdowns)
     state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.5);
-    
+
     // Government responds with control
     state.government.controlDesire = Math.min(1, state.government.controlDesire + 0.3);
-    state.government.structuralChoices.surveillanceLevel = Math.min(1, 
+    state.government.structuralChoices.surveillanceLevel = Math.min(1,
       state.government.structuralChoices.surveillanceLevel + 0.2
     );
+
+    // Population impact: Riots and civil violence (0.2-0.5% casualties)
+    // REGIONAL: Unstable regions (MENA, parts of Africa/Latin America) = ~10% of world
+    // 3% mortality rate in unrest regions (riots, clashes are deadly)
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.03, 'Social unrest - riots/civil violence (unstable regions)', 0.10);
   }
   
   // === ONGOING CRISIS IMPACTS ===

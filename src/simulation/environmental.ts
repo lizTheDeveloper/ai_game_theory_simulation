@@ -224,7 +224,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       console.log(`   Resource Reserves: ${(env.resourceReserves * 100).toFixed(1)}%`);
       console.log(`   Impact: Manufacturing disrupted, QoL declining\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     // Log event
     state.eventLog.push({
       type: 'crisis',
@@ -232,11 +232,17 @@ function checkEnvironmentalCrises(state: GameState): void {
       description: `Resource Crisis: Reserves depleted to ${(env.resourceReserves * 100).toFixed(1)}%`,
       impact: 'Material abundance -30%, Energy -20%, Social stability -0.3'
     });
-    
+
     // Immediate QoL impacts
     qol.materialAbundance *= 0.7; // 30% drop in material goods
     qol.energyAvailability *= 0.8; // 20% drop in energy
     state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.3);
+
+    // Population impact: Initial famine/scarcity deaths (0.5-1% casualties)
+    // SEMI-GLOBAL: Affects food/water insecure regions (~25% of world)
+    // 0.8% mortality rate in exposed regions
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.008, 'Resource crisis - famine/scarcity (vulnerable regions)', 0.25);
   }
   
   // POLLUTION CRISIS: Pollution exceeds 70%
@@ -247,19 +253,25 @@ function checkEnvironmentalCrises(state: GameState): void {
       console.log(`   Pollution Level: ${(env.pollutionLevel * 100).toFixed(1)}%`);
       console.log(`   Impact: Health crisis, ecosystem contamination\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     state.eventLog.push({
       type: 'crisis',
       month: state.currentMonth,
       description: `Pollution Crisis: Pollution level ${(env.pollutionLevel * 100).toFixed(1)}%`,
       impact: 'Healthcare -25%, Diseases +0.3, Ecosystem -40%, QoL -0.25'
     });
-    
+
     // Immediate QoL impacts
     qol.healthcareQuality *= 0.75; // 25% drop (pollution-related diseases)
     qol.diseasesBurden = Math.min(1, qol.diseasesBurden + 0.3); // Disease burden increases
     qol.ecosystemHealth *= 0.6; // 40% drop in ecosystem health
     state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.25);
+
+    // Population impact: Pollution-related disease deaths (0.3-0.5% casualties)
+    // SEMI-GLOBAL: Industrial nations + downwind regions (~60% of world)
+    // 0.4% mortality rate from acute contamination/disease
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.004, 'Pollution crisis - toxic contamination (industrial regions)', 0.60);
   }
   
   // CLIMATE CATASTROPHE: Stability below 40%
@@ -270,20 +282,26 @@ function checkEnvironmentalCrises(state: GameState): void {
       console.log(`   Climate Stability: ${(env.climateStability * 100).toFixed(1)}%`);
       console.log(`   Impact: Cascading failures, potential extinction pathway\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     state.eventLog.push({
       type: 'crisis',
       month: state.currentMonth,
       description: `Climate Catastrophe: Stability ${(env.climateStability * 100).toFixed(1)}%`,
       impact: 'Physical safety -40%, Material -50%, Ecosystem -60%, Social stability -0.5'
     });
-    
+
     // Severe QoL impacts
     qol.physicalSafety *= 0.6; // 40% drop (extreme weather, disasters)
     qol.materialAbundance *= 0.5; // 50% drop (agricultural collapse)
     qol.ecosystemHealth *= 0.4; // 60% drop
     state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.5);
-    
+
+    // Population impact: Extreme weather + crop failure (1-2% casualties)
+    // SEMI-GLOBAL: Coastal + climate-vulnerable regions (~30% of world)
+    // 1.5% mortality rate from disasters/starvation
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.015, 'Climate catastrophe - extreme weather/famine (vulnerable regions)', 0.30);
+
     // Check for extinction trigger
     // Climate catastrophe can lead to slow collapse
     if (env.biodiversityIndex < 0.4) {
@@ -301,19 +319,25 @@ function checkEnvironmentalCrises(state: GameState): void {
       console.log(`   Biodiversity Index: ${(env.biodiversityIndex * 100).toFixed(1)}%`);
       console.log(`   Impact: Food system failure, life support degradation\n`);
     } catch (e) { /* Ignore EPIPE */ }
-    
+
     state.eventLog.push({
       type: 'crisis',
       month: state.currentMonth,
       description: `Ecosystem Collapse: Biodiversity ${(env.biodiversityIndex * 100).toFixed(1)}%`,
       impact: 'Material -40%, Healthcare -30%, Ecosystem floor 0.2, QoL -0.4'
     });
-    
+
     // Critical QoL impacts
     qol.materialAbundance *= 0.6; // 40% drop (food system collapse)
     qol.healthcareQuality *= 0.7; // 30% drop (ecosystem services lost)
     qol.ecosystemHealth = Math.min(0.2, qol.ecosystemHealth); // Floor ecosystem health
     state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.4);
+
+    // Population impact: Cascading food system collapse (1-3% casualties)
+    // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
+    // 2% mortality rate from food system failure
+    const { addAcuteCrisisDeaths } = require('./populationDynamics');
+    addAcuteCrisisDeaths(state, 0.020, 'Ecosystem collapse - global food system failure', 1.00);
   }
   
   // === ONGOING CRISIS IMPACTS ===

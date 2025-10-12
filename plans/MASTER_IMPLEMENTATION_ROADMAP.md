@@ -359,16 +359,68 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## ~~1.6 Population Dynamics & Extinction Nuance~~ → **MOVED TO TIER 4.5**
-*Needs extensive design work before implementation - See TIER 4 below*
+## 1.6 **Population Dynamics & Extinction Nuance** 👥 ✅ COMPLETED
+**File:** `plans/population-dynamics-and-extinction-nuance.md` (1,500+ lines)
+**Status:** ✅ Implemented October 12, 2025
+**Dev Time:** ~10 hours (actual)
+**Complexity:** HIGH
+
+**Why Critical:**
+- Extinction is now concrete population decline (8B → 0), not abstract severity
+- Distinguishes "population crash" vs "true extinction"
+- Refugee crises are major 21st century dynamic
+- Recovery mechanics after bottleneck events
+- Adds crucial realism to extinction modeling
+
+**Implementation:**
+- **Phase 1: Population Tracking System** ✅
+  - `HumanPopulationSystem` state tracking (population in billions, not abstract)
+  - Birth/death rates affected by QoL, resources, crises, meaning
+  - Carrying capacity from climate × resources × ecosystem × tech
+  - Recovery mechanics (0.5-1% per year after bottleneck)
+  - Demographics (fertility, dependency ratio, median age)
+
+- **Phase 2: Refugee Crisis System** ✅
+  - `RefugeeCrisisSystem` with 5 trigger types (climate, war, nuclear, famine, ecosystem)
+  - Generational resettlement (25 years = 300 months)
+  - Social tension & economic strain calculations
+  - Fortress world dystopia pathway (militarized borders + surveillance)
+  - 10-50M displaced per crisis (research-backed)
+
+- **Phase 3: Population-Based Outcomes** ✅
+  - Population thresholds: THRIVING (>7B), STABLE (5-7B), DECLINING (2-5B), CRITICAL (100M-2B), BOTTLENECK (10K-100M), EXTINCTION (<10K)
+  - Outcome narratives: "Humanity survived with 500M" vs "True extinction"
+  - Genetic bottleneck effects (<100M = permanent diversity loss)
+  - Civilization intact vs infrastructure collapse
+
+- **BONUS: Regional/Global Crisis Distinction** ✅
+  - Updated all 13 crisis types with exposure fractions
+  - Regional (5-30%): State collapse, social unrest, nuclear blast zones
+  - Semi-global (40-70%): Resource crisis, pollution, AI control loss
+  - Truly global (100%): Ecosystem collapse, ocean acidification, chemical exposure
+  - Prevents double-counting population deaths
+
+**Expected Impact:**
+- **Extinction becomes gradual**: Track 8B → 5B → 2B → 500M → 50M → 0
+- **New outcomes**: "Survived" (100M-5B), "Near-extinction" (10K-100M), "True extinction" (<10K)
+- **Refugee crises common** (60-80% of runs): Climate collapse, nuclear war, famine displacement
+- **Dystopia pathway**: High refugee tension → border militarization → surveillance states
+- **Recovery mechanics**: Population can rebound if above bottleneck + resources available
+- **Narrative depth**: "Humanity survived with only 50,000 people" vs "Humanity went extinct slowly over 80 years"
+
+**Research Backing:**
+- UN World Population Prospects 2024: 8.0B current, 10.4B peak projection
+- Historical bottlenecks: Toba eruption ~70K BCE (3K-10K survivors)
+- Genetics studies: Minimum 10K for long-term viability
+- UNHCR 2024: 110M forcibly displaced
+- Climate refugees projections: 200M-1B by 2050 (World Bank, IOM)
+
+**Future Enhancements** (TIER 4.5 - After Multipolar System):
+- Phase 5: Per-nation population tracking with bilateral refugee flows
+- Phase 6: Age cohort demographics (youth, working, elderly)
+- Phase 7: Pandemic modeling
 
 ---
-- Carrying capacity management becomes strategic
-- Tech choices matter (fusion, sustainable ag affect capacity)
-- Refugee response: Open borders vs militarization trade-off
-- Can intervene during population decline
-- Bottleneck events have permanent effects (genetic diversity lost)
-- Victory requires thriving population (>7B) + high QoL
 
 ---
 

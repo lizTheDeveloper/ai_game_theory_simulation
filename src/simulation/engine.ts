@@ -63,6 +63,8 @@ import {
   FreshwaterPhase,
   OceanAcidificationPhase,
   NovelEntitiesPhase,
+  HumanPopulationPhase,
+  RefugeeCrisisPhase,
   DystopiaProgressionPhase,
   // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
@@ -231,6 +233,8 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new FreshwaterPhase());
     this.orchestrator.registerPhase(new OceanAcidificationPhase());
     this.orchestrator.registerPhase(new NovelEntitiesPhase());
+    this.orchestrator.registerPhase(new HumanPopulationPhase());
+    this.orchestrator.registerPhase(new RefugeeCrisisPhase());
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
 
     // Batch 3: Special phases (22.x - 23.x)
@@ -371,7 +375,15 @@ export class SimulationEngine {
         console.log(`\n💀 EXTINCTION EVENT: ${state.extinctionState.type?.toUpperCase()}`);
         console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
         console.log(`   Duration: ${month - state.extinctionState.startMonth} months`);
-        console.log(`   Month: ${month}\n`);
+        console.log(`   Month: ${month}`);
+
+        // Add population outcome narrative (TIER 1.5)
+        const { determinePopulationOutcome } = require('./populationDynamics');
+        const popOutcome = determinePopulationOutcome(state);
+        console.log(`\n👥 POPULATION OUTCOME:`);
+        console.log(`   ${popOutcome.outcomeNarrative}`);
+        console.log(`   Genetic Bottleneck: ${popOutcome.geneticBottleneck ? 'YES' : 'NO'}`);
+        console.log(`   Civilization Intact: ${popOutcome.civilizationIntact ? 'YES' : 'NO'}\n`);
         break;
       }
       
@@ -465,10 +477,28 @@ export class SimulationEngine {
       console.log(`   ❓ INCONCLUSIVE - no clear trajectory\n`);
     }
     
+    // Log final population outcome (TIER 1.5)
+    const { determinePopulationOutcome, logDeathSummary } = require('./populationDynamics');
+    const { logRegionalPopulationSummary } = require('./regionalPopulations');
+
+    const finalPopOutcome = determinePopulationOutcome(state);
+    console.log(`\n👥 FINAL POPULATION STATUS:`);
+    console.log(`   Status: ${finalPopOutcome.status.toUpperCase()}`);
+    console.log(`   Final Population: ${finalPopOutcome.finalPopulation.toFixed(2)}B`);
+    console.log(`   Peak Population: ${finalPopOutcome.peakPopulation.toFixed(2)}B`);
+    console.log(`   Decline: ${finalPopOutcome.populationDecline.toFixed(1)}%`);
+    console.log(`   ${finalPopOutcome.outcomeNarrative}\n`);
+
+    // Log death summary statistics (TIER 1.5)
+    logDeathSummary(state);
+
+    // Log regional population breakdown (TIER 1.5 - Phase 5)
+    logRegionalPopulationSummary(state);
+
     // Finalize log
     const log = logger.finalize(state, finalOutcome);
     const diagnostics = diagnosticLogger.finalize(state, finalOutcome);
-    
+
     // Print diagnostic report if verbose
     if (process.env.VERBOSE_DIAGNOSTICS === 'true') {
       console.log(formatDiagnosticReport(diagnostics));

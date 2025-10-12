@@ -1,0 +1,148 @@
+Population Dynamics Monte Carlo Test
+Timestamp: 2025-10-12T01:12:40.197Z
+================================================================================
+
+
+🎲 POPULATION DYNAMICS MONTE CARLO TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 100
+  Duration: 240 months (20.0 years)
+  Seed Range: 50000 - 50099
+
+
+⏩ RUNNING 100 SIMULATIONS...
+
+  ✓ Completed 10/100 runs (50.5s elapsed, ~454.6s remaining)
+  ✓ Completed 20/100 runs (106.7s elapsed, ~427.0s remaining)
+  ✓ Completed 30/100 runs (146.7s elapsed, ~342.3s remaining)
+  ✓ Completed 40/100 runs (597.4s elapsed, ~896.1s remaining)
+  ✓ Completed 50/100 runs (4665.3s elapsed, ~4665.3s remaining)
+  ✓ Completed 60/100 runs (7464.6s elapsed, ~4976.4s remaining)
+  ✓ Completed 70/100 runs (9400.6s elapsed, ~4028.8s remaining)
+  ✓ Completed 80/100 runs (9435.2s elapsed, ~2358.8s remaining)
+  ✓ Completed 90/100 runs (9467.0s elapsed, ~1051.9s remaining)
+  ✓ Completed 100/100 runs (9498.8s elapsed, ~0.0s remaining)
+
+✅ All simulations complete! (9498.8s total, 94.99s per run)
+
+
+================================================================================
+📊 POPULATION STATUS DISTRIBUTION
+================================================================================
+
+  FINAL POPULATION STATUS:
+    Thriving (>7B):       0 / 100 (0.0%)
+    Stable (5-7B):        0 / 100 (0.0%)
+    Declining (2-5B):     0 / 100 (0.0%)
+    Critical (100M-2B):  83 / 100 (83.0%)
+    Bottleneck (<100M):  15 / 100 (15.0%)
+    Extinction (<10K):    2 / 100 (2.0%)
+
+================================================================================
+👥 POPULATION METRICS
+================================================================================
+
+  POPULATION AVERAGES:
+    Initial: 8.00B
+    Peak: 8.00B
+    Final: 0.46B
+    Decline: 94.3% from peak
+
+  CRISIS THRESHOLDS HIT:
+    Bottleneck (<100M): 17 runs (17.0%)
+    Critical (<2B): 100 runs (100.0%)
+    Extinction (<10K): 2 runs (2.0%)
+
+  GROWTH DYNAMICS:
+    Avg Birth Rate: 0.31% per year
+    Avg Death Rate: 5.29% per year
+    Avg Net Growth: -4.99% per year
+
+  CARRYING CAPACITY:
+    Avg Capacity: 1.00B
+    Avg Pressure: 0.46 (pop/capacity ratio)
+    Overshoot Runs: 0 (0.0%)
+
+================================================================================
+🚨 REFUGEE CRISIS ANALYSIS
+================================================================================
+
+  REFUGEE CRISIS FREQUENCY:
+    Runs with Crises: 100 / 100 (100.0%)
+    Avg Crises per Run: 102.5
+    Avg Total Displaced: 0M people
+
+  CRISIS CAUSES:
+    ecosystem: 100 occurrences (100.0% of runs)
+    nuclear: 76 occurrences (76.0% of runs)
+
+  REFUGEE IMPACTS:
+    Avg Max Social Tension: 0.0%
+    Avg Max Economic Strain: 0.0%
+    High Tension Runs (>70%): 0 (0.0%)
+
+================================================================================
+💀 EXTINCTION VS CRASH DISTINCTION
+================================================================================
+
+  OUTCOME CLASSIFICATION:
+    Population Crashes (>20% decline, survived): 98 (98.0%)
+    Near-Extinction (bottleneck): 15 (15.0%)
+    True Extinction (<10K): 2 (2.0%)
+
+  KEY INSIGHT:
+    ✓ System successfully distinguishes crashes from extinction!
+      98 runs had crashes but humanity survived.
+
+================================================================================
+🎯 OUTCOME CORRELATIONS
+================================================================================
+
+  OUTCOME DISTRIBUTION:
+    extinction: 100 (100.0%)
+
+  POPULATION STATUS → OUTCOME:
+    critical (83 runs):
+      Utopia: 0%
+      Dystopia: 0%
+      Extinction: 100%
+    bottleneck (15 runs):
+      Utopia: 0%
+      Dystopia: 0%
+      Extinction: 100%
+    extinction (2 runs):
+      Utopia: 0%
+      Dystopia: 0%
+      Extinction: 100%
+
+  HIGH REFUGEE CRISES (≥3) → OUTCOME:
+    Total Runs: 100
+    Utopia: 0%
+    Dystopia: 0% ⚠️  Fortress world risk
+    Extinction: 100%
+
+================================================================================
+💡 SUMMARY
+================================================================================
+
+  POPULATION SYSTEM VALIDATION:
+    ⚠️  Significant population decline observed (0.46B average)
+
+  REFUGEE SYSTEM VALIDATION:
+    ✓ Refugee crises are common (100% of runs)
+      Triggers: climate, war, famine working as designed
+
+  KEY FEATURES WORKING:
+    ✓ Concrete population tracking (8.0B → varying outcomes)
+    ✓ Crash vs extinction distinction
+    ✓ Carrying capacity mechanics
+    ✓ Refugee crisis triggers
+
+================================================================================
+
+✅ Population Dynamics Monte Carlo Test Complete!
+   100 runs, 240 months each
+   Total time: 9498.8s
+
