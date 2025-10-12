@@ -220,6 +220,7 @@ export function updateHumanPopulation(state: GameState): void {
     const overshootDeaths = overshoot * 0.05; // 5% of excess dies per month
     pop.population -= overshootDeaths;
     pop.monthlyExcessDeaths += overshootDeaths;
+    pop.deathsByCategory.famine += overshootDeaths; // Track overshoot deaths as famine
   }
 
   // === 8. TRACK CUMULATIVE DEATHS ===

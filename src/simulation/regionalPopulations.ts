@@ -381,6 +381,8 @@ export function updateRegionalPopulations(state: GameState): void {
       const overshootDeaths = overshoot * 0.05; // 5% of excess dies per month
       region.population -= overshootDeaths;
       region.monthlyExcessDeaths += overshootDeaths;
+      // Track overshoot deaths as famine in global categories (convert from millions to billions)
+      pop.deathsByCategory.famine += overshootDeaths / 1000;
     }
 
     // === 6. TRACK CRISIS DEATHS ===
