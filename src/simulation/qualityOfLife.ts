@@ -140,17 +140,30 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     materialAbundance = Math.max(materialAbundance, ubiFloor);
   }
   
-  // Phase 1.1: Post-scarcity QoL multipliers
+  // Phase 1.1: Post-scarcity QoL multipliers (FIXED: Scale with population)
   if (economicStage >= 4) {
-    // Full automation → material abundance explodes
-    materialAbundance += 0.8; // Increased from 0.5
-    // AI capability accelerates abundance
-    materialAbundance += totalAICapability * 0.15; // Additional scaling
-  }
-  
-  // Phase 1.1: Remove cap for Stage 4 (allow > 1.0 abundance)
-  if (economicStage >= 4) {
-    materialAbundance = Math.max(0, materialAbundance); // No upper limit!
+    // CRITICAL FIX: Scale abundance by population survival
+    // If 95% of people dead, infrastructure collapses even with super-AI
+    const pop = state.humanPopulationSystem;
+    const populationFraction = pop.population / pop.baselinePopulation;
+    
+    // Population scaling: 30% minimum (scattered survivors), 100% at full population
+    // Below 50% population: Severe infrastructure decay
+    // Below 10% population: Near-total collapse
+    const infrastructureScaling = populationFraction < 0.5 
+      ? 0.3 + (populationFraction * 0.7)  // 30-65% scaling (< 4B people)
+      : 0.65 + (populationFraction * 0.35); // 65-100% scaling (> 4B people)
+    
+    // Full automation → material abundance (scaled by who's alive to benefit)
+    materialAbundance += 0.8 * infrastructureScaling;
+    
+    // AI capability accelerates abundance (but only if infrastructure intact)
+    // Cap AI contribution to prevent infinite values
+    const aiContribution = Math.min(1.2, totalAICapability * 0.15);
+    materialAbundance += aiContribution * infrastructureScaling;
+    
+    // Cap at reasonable post-scarcity levels (no infinite abundance)
+    materialAbundance = Math.min(3.0, Math.max(0, materialAbundance));
   } else {
     materialAbundance = Math.max(0, Math.min(2, materialAbundance));
   }
@@ -158,17 +171,25 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   // Energy availability: AI helps, stage advances
   let energyAvailability = 0.9 + totalAICapability * 0.05 + economicStage * 0.1;
   
-  // Phase 1.1: Post-scarcity energy abundance
+  // Phase 1.1: Post-scarcity energy abundance (FIXED: Scale with population)
   if (economicStage >= 4) {
+    const pop = state.humanPopulationSystem;
+    const populationFraction = pop.population / pop.baselinePopulation;
+    
+    // Energy infrastructure requires maintenance crews
+    const gridScaling = populationFraction < 0.5 
+      ? 0.3 + (populationFraction * 0.7)
+      : 0.65 + (populationFraction * 0.35);
+    
     // Renewable/fusion breakthrough assumption at Stage 4
-    energyAvailability += 0.6;
-    // AI optimization of energy systems
-    energyAvailability += totalAICapability * 0.1;
-  }
-  
-  // Phase 1.1: Remove cap for Stage 4 (allow > 1.0 energy)
-  if (economicStage >= 4) {
-    energyAvailability = Math.max(0, energyAvailability); // No upper limit!
+    energyAvailability += 0.6 * gridScaling;
+    
+    // AI optimization of energy systems (capped to prevent infinite)
+    const aiEnergyBonus = Math.min(1.0, totalAICapability * 0.1);
+    energyAvailability += aiEnergyBonus * gridScaling;
+    
+    // Cap at reasonable post-scarcity levels
+    energyAvailability = Math.min(3.0, Math.max(0, energyAvailability));
   } else {
     energyAvailability = Math.max(0, Math.min(2, energyAvailability));
   }
@@ -359,6 +380,16 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     climateStability = Math.min(1.0, climateStability + techBoosts.environmental * 0.5);
   }
   
+  // === REGIONAL INEQUALITY TRACKING (Oct 12, 2025) ===
+  // Calculate QoL variance across crisis-affected vs. abundant regions
+  const regionalInequality = calculateRegionalInequality(state, {
+    materialAbundance,
+    energyAvailability,
+    physicalSafety,
+    mentalHealth,
+    healthcareQuality
+  });
+  
   return {
     materialAbundance,
     energyAvailability,
@@ -376,7 +407,99 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     diseasesBurden,
     ecosystemHealth,
     climateStability,
-    pollutionLevel
+    pollutionLevel,
+    regionalInequality
+  };
+}
+
+/**
+ * Calculate regional QoL inequality (Oct 12, 2025)
+ * 
+ * Global averages hide massive suffering - some regions in famine while others abundant.
+ * This tracks the variance in QoL across crisis-affected vs. non-affected regions.
+ */
+function calculateRegionalInequality(
+  state: GameState,
+  avgQoL: {
+    materialAbundance: number;
+    energyAvailability: number;
+    physicalSafety: number;
+    mentalHealth: number;
+    healthcareQuality: number;
+  }
+): {
+  giniCoefficient: number;
+  topRegionQoL: number;
+  bottomRegionQoL: number;
+  qolGap: number;
+  crisisAffectedPopulation: number;
+} {
+  const env = state.environmentalAccumulation;
+  const social = state.socialAccumulation;
+  const pop = state.humanPopulationSystem;
+  const refugees = state.refugeeCrisisSystem;
+  
+  // Estimate crisis-affected population
+  // Based on active crises, refugee counts, and population decline
+  let crisisAffectedPopulation = 0;
+  
+  // Environmental crises affect specific regions
+  if (env.resourceCrisisActive) crisisAffectedPopulation += 0.25; // Food/water insecure regions
+  if (env.climateCatastropheActive) crisisAffectedPopulation += 0.15; // Coastal & vulnerable
+  if (env.ecosystemCollapseActive) crisisAffectedPopulation += 0.10; // Ecosystem-dependent
+  
+  // Social crises affect specific demographics
+  if (social.meaningCollapseActive) crisisAffectedPopulation += 0.30; // Wealthy automated nations
+  if (social.socialUnrestActive) crisisAffectedPopulation += 0.20; // Urban centers
+  
+  // Refugees are definitely crisis-affected
+  if (refugees && refugees.activeCrises) {
+    const refugeePopulation = Object.values(refugees.activeCrises)
+      .reduce((sum, crisis) => sum + crisis.totalFled, 0);
+    crisisAffectedPopulation += (refugeePopulation / 1000) / pop.population; // millions to billions
+  }
+  
+  // Cap at 100%
+  crisisAffectedPopulation = Math.min(1.0, crisisAffectedPopulation);
+  
+  // Calculate bottom region QoL (crisis-affected)
+  // These regions experience the full brunt of crises
+  const crisisMultiplier = 0.3; // 70% reduction in crisis zones
+  const bottomRegionQoL = (
+    avgQoL.materialAbundance * crisisMultiplier * 0.3 +
+    avgQoL.energyAvailability * crisisMultiplier * 0.3 +
+    avgQoL.physicalSafety * crisisMultiplier * 0.2 +
+    avgQoL.mentalHealth * crisisMultiplier * 0.1 +
+    avgQoL.healthcareQuality * crisisMultiplier * 0.1
+  );
+  
+  // Calculate top region QoL (non-affected or benefiting)
+  // These regions may even benefit from AI abundance
+  const benefitMultiplier = crisisAffectedPopulation > 0.3 ? 1.3 : 1.1;
+  const topRegionQoL = (
+    avgQoL.materialAbundance * benefitMultiplier * 0.3 +
+    avgQoL.energyAvailability * benefitMultiplier * 0.3 +
+    avgQoL.physicalSafety * Math.min(1, avgQoL.physicalSafety * 1.2) * 0.2 +
+    avgQoL.mentalHealth * Math.min(1, avgQoL.mentalHealth * 1.1) * 0.1 +
+    avgQoL.healthcareQuality * Math.min(1, avgQoL.healthcareQuality * 1.2) * 0.1
+  );
+  
+  const qolGap = topRegionQoL - bottomRegionQoL;
+  
+  // Calculate Gini coefficient (0 = perfect equality, 1 = extreme inequality)
+  // Simple approximation: If crisis affects 30% at 0.3x QoL and 70% at 1.3x QoL
+  // Gini increases with both the gap and the population affected
+  const giniCoefficient = Math.min(1.0, 
+    qolGap * 0.5 + // Gap contribution
+    crisisAffectedPopulation * 0.3 // Population affected contribution
+  );
+  
+  return {
+    giniCoefficient,
+    topRegionQoL,
+    bottomRegionQoL,
+    qolGap,
+    crisisAffectedPopulation
   };
 }
 
