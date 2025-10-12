@@ -459,6 +459,28 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           const { addAcuteCrisisDeaths } = require('./populationDynamics');
           addAcuteCrisisDeaths(state, 0.60, 'Nuclear war - blast/radiation (US/Russia/allies)', 0.30, 'war');
 
+          // Apply regional biodiversity loss (TIER 1.7: Crisis Realism)
+          const { applyNuclearBiodiversityLoss, getRegionFromNation } = require('../types/regionalBiodiversity');
+          const { triggerRadiationExposure } = require('../types/radiation');
+
+          for (const nation of participants) {
+            const targetRegion = getRegionFromNation(nation);
+            console.log(`   ☢️ Applying biodiversity loss to ${targetRegion} (${nation})`);
+            applyNuclearBiodiversityLoss(state.biodiversitySystem, targetRegion, 1.0);
+
+            // Update extinction event timestamp
+            const lastEvent = state.biodiversitySystem.regionalExtinctions[state.biodiversitySystem.regionalExtinctions.length - 1];
+            if (lastEvent) {
+              lastEvent.month = state.currentMonth;
+            }
+
+            // Trigger radiation exposure (TIER 1.7: Crisis Realism)
+            // 30% of world population in nuclear regions, each participant represents ~15% exposure
+            const exposedPopulation = state.humanPopulationSystem.totalPopulation * 0.15;
+            console.log(`   ☢️ Triggering radiation exposure: ${targetRegion} (${(exposedPopulation * 1000).toFixed(0)}M exposed)`);
+            triggerRadiationExposure(state.radiationSystem, state.currentMonth, targetRegion, exposedPopulation, 1.0);
+          }
+
           return {
             triggered: true,
             mechanism: 'nuclear_war',

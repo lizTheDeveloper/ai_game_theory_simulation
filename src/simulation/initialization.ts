@@ -37,6 +37,9 @@ import { initializeUBISystem } from './enhancedUBI';
 import { initializeSocialSafetyNets } from './socialSafetyNets';
 import { initializeInformationWarfare } from './informationWarfare';
 import { initializePowerGenerationSystem } from '../types/powerGeneration';
+import { initializeRegionalBiodiversitySystem } from '../types/regionalBiodiversity';
+import { initializeFamineSystem } from '../types/famine';
+import { initializeRadiationSystem } from '../types/radiation';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -354,6 +357,15 @@ export function createDefaultInitialState(): GameState {
     // TIER 4: Enrichment Systems
     informationWarfare: initializeInformationWarfare(),
     powerGenerationSystem: initializePowerGenerationSystem(),
+
+    // TIER 1.7: Crisis Realism - Regional Biodiversity
+    biodiversitySystem: initializeRegionalBiodiversitySystem(),
+
+    // TIER 1.7: Crisis Realism - Famine Death Curves
+    famineSystem: initializeFamineSystem(),
+
+    // TIER 1.7: Crisis Realism - Nuclear Radiation Health Effects
+    radiationSystem: initializeRadiationSystem(),
 
     eventLog: [],
     technologyTree: [],

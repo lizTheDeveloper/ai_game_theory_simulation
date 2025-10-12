@@ -450,7 +450,7 @@ Instant (Unrecoverable)
 
 Rapid (3-12 month cascade)
   ├─ Bioweapon Release
-  ├─ Nuclear War
+  ├─ Nuclear War (NOW WITH REALISTIC CASCADE ✅)
   ├─ Climate Tipping Point
   └─ Food System Collapse
 
@@ -470,7 +470,7 @@ Unintended (AI-driven, accidental)
   └─ Wireheading
 ```
 
-**Status:** Only climate reliably triggers (⚠️ needs tuning)
+**Status:** Nuclear war now triggers realistic multi-decade cascade (TIER 1.7 complete)
 
 ## Data Flow
 
