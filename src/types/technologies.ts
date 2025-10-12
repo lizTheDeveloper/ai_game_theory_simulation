@@ -165,6 +165,49 @@ export interface BreakthroughTechState {
     breakthroughYear: number;
   };
   
+  // Purpose Infrastructure Technologies (TIER 2.1)
+  collectivePurposeNetworks?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1] Infrastructure investment level
+    breakthroughYear: number;
+  };
+  
+  // Advanced Pollution Remediation Technologies (TIER 2.3)
+  advancedDirectAirCapture?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1]
+    breakthroughYear: number;
+  };
+  aiOptimizedPollutionRemediation?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1]
+    breakthroughYear: number;
+  };
+  
+  // Advanced AI Alignment Technologies (TIER 2.4 & 2.5)
+  advancedRLHF?: {
+    unlocked: boolean;
+    active: boolean; // Applied to all training AIs
+    breakthroughYear: number;
+    alignmentBoostPerMonth: number; // +0.05 alignment/month (research-backed)
+    alignmentFakingRisk: number; // [0, 1] Risk of deceptive alignment
+  };
+  mechanisticInterpretability?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1] Integration into evaluation pipelines
+    breakthroughYear: number;
+    sleeperDetectionBonus: number; // +40% detection rate (research-backed)
+    alignmentVerificationBonus: number; // +30% verification quality
+  };
+  
+  // De-Extinction & Rewilding (TIER 2.6)
+  deExtinctionRewilding?: {
+    unlocked: boolean;
+    deploymentLevel: number; // [0, 1] Species restored and released
+    breakthroughYear: number;
+    biodiversityBoostPerMonth: number; // +2%/month (research-backed)
+  };
+  
   // Government research priorities
   researchPriorities: {
     environmental: number; // 0-1 allocation

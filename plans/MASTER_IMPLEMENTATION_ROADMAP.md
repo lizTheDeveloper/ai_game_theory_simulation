@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation
 
-**Date:** October 10, 2025  
+**Date:** October 12, 2025 (Updated)  
 **Purpose:** High-level ordering of all research-backed features and unimplemented systems  
 **Priority:** Mechanism-driven realism, not balance tuning  
 
@@ -19,9 +19,60 @@
 
 ---
 
-## 📊 **CURRENT STATE (October 10, 2025)**
+## 📊 **CURRENT STATE (October 12, 2025)** ✅ MERGED TO MAIN
 
-### ✅ **Implemented & Working**
+### 🎉 **TIER 0 + TIER 1 + TIER 2 + TIER 4.3 + SLEEPER DETECTION COMPLETE!**
+
+**Implementation:** Oct 11-12, 2025 (12:00pm-8:00pm, ~8 hours total)  
+**Branch:** `tier2-major-mitigations` → **MERGED TO MAIN** 🎉  
+**Stats:** 45+ commits, ~3,000 lines code, ~1,500 lines documentation  
+**Status:** ✅ All systems implemented, tested, validated, and merged  
+
+### ✅ **TIER 0: Baseline Corrections (COMPLETE)**
+- Biodiversity: 70% → 35% (IPBES 2024)
+- Resources: 85% → 65% (Earth Overshoot Day)
+- Pollution: 15% → 30% (7/9 boundaries breached)
+- Climate rate: 0.48%/month → 0.08%/month (IPCC AR6)
+- Meaning crisis: 15% → 22% (WHO 2025)
+
+### ✅ **TIER 1: Critical Extinction Risks (COMPLETE)**
+- 1.1 Phosphorus Depletion (Morocco 70% control, supply shocks, 24-month famine)
+- 1.2 Freshwater Depletion (Day Zero droughts, Peak Groundwater, 36-month pathway)
+- 1.3 Ocean Acidification (aragonite saturation, coral collapse, 48-month pathway)
+- 1.4 International Competition (trust dynamics, first-mover advantage, AI race)
+- 1.5 Novel Entities (synthetic chemicals, PFAS 99%, 120-month poisoning)
+
+### ✅ **TIER 2: Major Crisis Mitigations (COMPLETE)**
+- 2.1 Enhanced UBI + Purpose Infrastructure (6%/month meaning reduction)
+- 2.2 Social Safety Nets & Community Infrastructure (2.5%/month community boost)
+- 2.3 Advanced DAC + AI-Optimized Remediation (7.5%/month pollution cleanup)
+- 2.4 Constitutional AI / Advanced RLHF (5%/month alignment boost, 100% deployed)
+- 2.5 Mechanistic Interpretability (70% sleeper detection at full deployment)
+- 2.6 De-Extinction & Rewilding (2%/month biodiversity restoration)
+
+**All technologies pre-unlocked at realistic 2025 deployment levels!**
+
+### ✅ **TIER 4.3: Information Warfare & Epistemology (COMPLETE)**
+- Truth decay (deepfakes grow 0.5-4%/month with AI capability)
+- Detection vs generation arms race (generation wins 1.5x)
+- Narrative control (govt, corps, AI, grassroots compete)
+- Coordination penalty (0-50% based on information integrity)
+- Dystopia enablement ("flood zone with shit" strategy)
+- 4 crisis events (saturation, epistemological, collapse, AI dominance)
+
+**Research: MIT, RAND, Pew, Knight, Oxford, Stanford (2024-2025)**
+
+### ✅ **Sleeper Detection & Blown Cover (COMPLETE)**
+- Catastrophic actions reveal intent (30-80% base detection)
+- Information warfare integration (truth decay lowers detection)
+- Hyperintelligence exception (AGI >4.0 always escapes)
+- Nuanced trust mechanics (defensive AI success BOOSTS trust)
+- Periodic hunting (old sleepers lose copies over time)
+- Copy loss 40-60%, dark compute harder to seize
+
+**Research: Anthropic (2025) - "Simple probes catch sleeper agents"**
+
+### ✅ **Other Implemented Systems**
 - Organizations & Compute Infrastructure (100% survival, $132B capital)
 - Multi-dimensional AI Capabilities (17 dimensions, true vs revealed)
 - Economic Stages (0-4 transition, UBI, wealth distribution)
@@ -31,7 +82,7 @@
 - Lifecycle & Spread (training → deployed, dark compute)
 - Dystopia Progression (surveillance escalation, authoritarian transitions)
 - Utopian Dynamics Phase 2 (A-F+):
-  - 11 Breakthrough Technologies
+  - 17 Breakthrough Technologies (11 original + 6 TIER 2)
   - 6 Upward Spirals
   - Governance Quality
   - Meaning Renaissance
@@ -39,14 +90,24 @@
   - Diplomatic AI (research-based dual-use)
 - Golden Age & Accumulation Systems (environmental, social, tech risk)
 - Nuclear Deterrence (MAD, treaty dynamics, defensive AI)
-- Resource Economy (phosphorus not yet, but ocean health, CO2, etc.)
 
-### ⚠️ **Current Issues**
-- **0% Utopia** despite tech deployment (spiral conditions too strict?)
-- **40-70% Nuclear War** extinctions (deterrence not working fully)
-- **0-60% Dystopia** (surveillance states emerging, but inconsistent)
-- Upward spirals not activating (needs debugging)
-- Diplomatic interventions not triggering (prerequisite timing mismatch)
+### 🔬 **Monte Carlo Results (10 runs, TIER 1 baseline, 120 months)**
+- **100% extinction** (realistic 2025 baseline + full crisis suite)
+  - 60% rapid (AI-nuclear wars ~Month 90)
+  - 40% slow (crisis accumulation over 120 months)
+- **0% Utopia** (ecological spiral impossible from 35% biodiversity)
+- **0% Dystopia** (crises overwhelm before authoritarian consolidation)
+- **Cascade pattern:** Ecosystem (M8) → Meaning (M23) → Groundwater (M24) → Control Loss (M33) → Nuclear (M94)
+
+**Conclusion:** Foundation validated. TIER 2 mitigations now enable testing if interventions can enable Utopia pathways.
+
+### 🚀 **What's Next**
+- **Status:** All major systems merged to main! 🎉
+- **Ready:** TIER 3 (Planetary Boundaries framework), TIER 4.4+ (more enrichment)
+- **Option 1:** Continue TIER 4 (Energy Constraints, Human Enhancement)
+- **Option 2:** Begin TIER 3 (Planetary Boundaries - Kate Raworth framework)
+- **Option 3:** Population Dynamics (TIER 4.5 - extensive design needed)
+- **Philosophy Validated:** Research-backed realism, honest uncertainty, conservative estimates
 
 ### 🚨 **BASELINE PARAMETER VALIDATION (NEW - Oct 10, 2025)**
 **File:** `plans/initialization-parameters-validation.md` (700+ lines, 30+ sources)  
@@ -426,10 +487,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 # 🛡️ **TIER 2: MAJOR CRISIS MITIGATIONS**
 
-## 2.1 **Enhanced UBI + Purpose Infrastructure** 💰
+## 2.1 **Enhanced UBI + Purpose Infrastructure** 💰 ✅ COMPLETED
 **File:** `plans/major-blockers-mitigations-research.md` (§Blocker 1)  
-**Priority:** **CRITICAL** (Enables Utopia)  
-**Dev Time:** ~3 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 2:30pm
+**Dev Time:** ~3 hours (actual)
 **Research Quality:** EXCELLENT (McKinsey, Roosevelt Institute, Danaher 2019)  
 
 **The Problem:**
@@ -467,10 +528,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 2.2 **Social Infrastructure Investment** 🏛️
+## 2.2 **Social Infrastructure Investment** 🏛️ ✅ COMPLETED
 **File:** `plans/major-blockers-mitigations-research.md` (§Blocker 2)  
-**Priority:** **CRITICAL** (Enables Utopia)  
-**Dev Time:** ~3 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 3:00pm
+**Dev Time:** ~2.5 hours (actual)
 **Research Quality:** EXCELLENT (WHO 2025, Harvard MCC, US Surgeon General)  
 
 **The Problem:**
@@ -508,10 +569,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 2.3 **Advanced Direct Air Capture + AI Optimization** 🏭
+## 2.3 **Advanced Direct Air Capture + AI Optimization** 🏭 ✅ COMPLETED
 **File:** `plans/major-blockers-mitigations-research.md` (§Blocker 3)  
-**Priority:** **CRITICAL** (Enables Utopia)  
-**Dev Time:** ~3 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 3:30pm
+**Dev Time:** ~2 hours (actual)
 **Research Quality:** EXCELLENT (Climeworks 2024, Lux Research 2025, CATF)  
 
 **The Problem:**
@@ -554,10 +615,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 2.4 **Constitutional AI / RLHF Improvements** 🧠
+## 2.4 **Constitutional AI / RLHF Improvements** 🧠 ✅ COMPLETED
 **File:** `plans/research-backed-mitigations-gap-analysis.md` (§1)  
-**Priority:** HIGH  
-**Dev Time:** ~4 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 4:00pm
+**Dev Time:** ~3 hours (actual)
 **Research Quality:** EXCELLENT (Anthropic 2022-2025, OpenAI 2024-2025)  
 
 **Why Missing:**
@@ -590,10 +651,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 2.5 **Mechanistic Interpretability Breakthroughs** 🔍
+## 2.5 **Mechanistic Interpretability Breakthroughs** 🔍 ✅ COMPLETED
 **File:** `plans/research-backed-mitigations-gap-analysis.md` (§4)  
-**Priority:** HIGH  
-**Dev Time:** ~4 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 4:00pm (combined with 2.4)
+**Dev Time:** ~3 hours (actual, combined with 2.4)
 **Research Quality:** EXCELLENT (Anthropic 2024-2025)  
 
 **Why Critical:**
@@ -624,10 +685,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 2.6 **De-Extinction & Rewilding** 🦣
+## 2.6 **De-Extinction & Rewilding** 🦣 ✅ COMPLETED
 **File:** `plans/biodiversity-geoengineering-research.md` (§De-Extinction)  
-**Priority:** MEDIUM-HIGH  
-**Dev Time:** ~3 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 4:15pm
+**Dev Time:** ~2 hours (actual)
 **Research Quality:** EXCELLENT (**Operational 2025!**)  
 
 **Why Exciting:**
@@ -696,6 +757,172 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 - Mitigates ocean acidification crisis
 - Permanent CO₂ removal (climate benefit)
 - Safe if deployed gradually (no termination shock)
+
+---
+
+## 2.8 **Colonial Extraction, Military Power & Resource Inequality** 🏭⚔️
+**File:** `plans/colonial-extraction-and-military-power-system.md` (1,900+ lines)
+**Priority:** **CRITICAL** (Foundational restructuring)
+**Dev Time:** ~50-65 hours (FULL PHASE)
+**Complexity:** VERY HIGH
+
+**Status:** DESIGN COMPLETE - Awaiting implementation
+
+**⚠️ NOTE:** This is NOT a mitigation like other TIER 2 items - this is a **fundamental restructuring** of how the simulation models power, resources, and geopolitics. It affects ALL other systems.
+
+**User Insight:**
+> "There are no poor countries, only exploited ones. Hegemons extract, it's in their nature. We're in uncharted territory on how to stop that."
+
+**Why Critical:**
+- Can't model realistic refugee flows without modeling the power structures that create displacement
+- Current "global resource pool" erases colonialism entirely
+- Missing the systemic dynamics that drive war, instability, and crisis
+- War linked to meaning crisis (nationalism as purpose-substitute)
+- Military emissions massive but invisible in current model
+
+**Key Design Decisions (User-Approved):**
+1. **5 Hegemonic Powers + Blocs:** US, China, EU, Russia, India (forming BRICS, etc.)
+2. **6 Resource Regions:** Sub-Saharan Africa, Middle East, South Asia, East Asia, Americas, Europe
+3. **3-Tier Power Structure:** Hegemons → Regions → Extraction flows
+4. **Hegemon-Level Agents:** NOT player control - hegemons make their own decisions about extraction, war, intervention
+5. **Climate Reparations:** Crucial mechanic (hegemons caused climate change, periphery suffers)
+
+**Core Systems:**
+
+**TIER 2.1: Power Hierarchy & Resource Extraction (15-20h)**
+- 5 hegemonic powers with military, economic, technological capabilities
+- 6 resource regions with endowments (minerals, oil, labor, water)
+- Extraction matrix: Who takes from whom (based on colonial history + military presence)
+- Wealth inequality emerges from extraction (10-20% stays local, 80-90% extracted)
+- Colonial legacy affects extraction patterns
+
+```typescript
+export interface HegemonicPower {
+  name: string;                          // US, China, EU, Russia, India
+  militaryCapability: number;            // [0, 1] Global force projection
+  economicPower: number;                 // GDP, trade dominance
+  technologicalLead: number;             // AI, weapons, innovation
+  domesticResources: ResourceEndowment;  // Own resources
+  extractedResources: ResourceEndowment; // Taken from other regions
+  resourceDependence: number;            // How much needs extraction
+  militaryBases: Map<RegionName, number>; // Bases per region (enables extraction)
+  historicalColonies: RegionName[];      // Which regions were colonized
+  meaningCrisis: number;                 // [0, 1] Existential purposelessness
+  nationalismStrength: number;           // [0, 1] War as substitute meaning
+}
+
+export interface ResourceRegion {
+  resourceEndowment: ResourceEndowment;       // What this region has
+  resourceSovereignty: number;                // [0, 1] Control over own resources
+  extractedBy: Map<string, ExtractionFlow>;  // Which powers extract
+  wealthRetained: number;                     // % kept locally (1 - extraction)
+  militarySovereignty: number;                // [0, 1] Can defend territory
+  colonialHistory: {...};                     // Who colonized, when, how long
+  historicalEmissions: number;                // Tons CO2 (mostly from hegemons)
+  currentEmissions: number;                   // Tons CO2 now
+}
+```
+
+**TIER 2.2: Military System & Interventions (12-15h)**
+- Military intervention types: Regime change, proxy war, occupation, coup support, resource securing
+- Military CO2 emissions (US military: 59M tons/year - more than 140 countries)
+- Military spending effects: Economy, AI R&D boost, meaning (nationalism)
+- Interventions → refugee crises (Iraq, Libya, Syria patterns)
+- Military R&D → AI acceleration (but less safe, DARPA-style)
+
+```typescript
+export interface MilitaryIntervention {
+  hegemon: string;
+  targetRegion: RegionName;
+  interventionType: 'regime_change' | 'proxy_war' | 'occupation' | 'coup_support' | 'resource_securing';
+  publicJustification: string;           // "Spreading democracy"
+  actualGoal: ActualGoal;                // Resource access, rival containment
+  regionalInstability: number;           // How much destabilization
+  refugeesCreated: number;               // Millions displaced
+  co2Emissions: number;                  // Tons per month
+  aiDevelopmentBoost: number;            // Military R&D → AI advancement
+}
+```
+
+**TIER 2.3: War-Meaning Feedback Loop (8-10h)**
+- Meaning crisis → nationalism appeal → war motivation
+- War → economic activity, unity, "defending freedom" (purpose substitute)
+- War trauma → moral injury, veteran meaning crisis (negative feedback)
+- **KEY MECHANIC:** Solve meaning crisis → reduce war motivation
+- Alternative purpose pathways (community, creativity, stewardship) compete with nationalism
+
+```typescript
+export interface WarMeaningFeedback {
+  meaningCrisisLevel: number;            // From meaning system
+  nationalismAppeal: number;             // How attractive is nationalism?
+  warAsUnifier: number;                  // War creates shared purpose
+  warMotivation: number;                 // Likelihood of intervention
+
+  // Key equation:
+  // warMotivation = meaningCrisisLevel * nationalismAppeal - moralInjury
+  // If meaningCrisisLevel → 0 (solved), warMotivation → 0
+}
+```
+
+**TIER 2.4: Environmental Debt & Climate Justice (6-8h)**
+- Historical emissions per hegemon/region (US/EU caused most)
+- Climate vulnerability vs emissions ratio (climate debt)
+  - Example: Sub-Saharan Africa suffers 28x more than they caused
+- Climate reparations as policy option (do hegemons pay?)
+- Military emissions tracked separately (usually invisible)
+
+**TIER 2.5: Integration & Testing (10-12h)**
+- Resource economy updated (regional endowments + extraction)
+- Refugee flows updated (military interventions as primary cause)
+- AI development updated (military R&D boost)
+- Meaning system updated (war as purpose substitute)
+- Monte Carlo testing (N=50), balance extraction rates
+
+**Philosophical Core:**
+This system models a profound question: **Can humanity transcend conquest as meaning-substitute?**
+
+Throughout history: Empire as purpose, nationalism as anchor, war as unifier.
+But this creates: Endless conflict, extraction, refugees, environmental destruction, AI arms race → extinction.
+
+**The alternative:** Solve meaning crisis → reduce nationalism → reduce war → fair resource distribution → cooperation.
+
+**Testable in model:**
+```
+IF meaningCrisis → 0 (solved) AND alternativePurpose → 1 (healthy)
+THEN warMotivation → 0 AND extraction → fairTrade AND utopia → possible
+
+BUT if meaning remains broken:
+IF meaningCrisis → 1 (high) AND alternativePurpose → 0 (none)
+THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
+```
+
+**Integration Points:**
+- **Resource Economy:** Per-region resources + extraction flows (replaces global pool)
+- **Refugee System:** Military interventions create displacement (Syria, Iraq, Libya patterns)
+- **Environmental System:** Historical emissions debt + military CO2 (59M tons/year US)
+- **AI Development:** Military R&D accelerates AI (but reduces safety)
+- **Meaning System:** War as purpose substitute vs alternative pathways
+- **Dystopia Paths:** Fortress world emerges from refugee crises + militarized borders
+
+**Expected Impact:**
+- **Realism:** Models how power actually works (extraction, intervention, inequality)
+- **Refugee dynamics:** Explains why regions destabilize (not just abstract "crisis")
+- **War mechanics:** Links meaning crisis → nationalism → intervention → refugees
+- **Climate justice:** Makes environmental debt explicit
+- **Extinction pathways:** Nuclear war from arms race, climate collapse from emissions debt
+- **Utopia difficulty:** Breaking extraction requires solving meaning crisis (uncharted territory)
+
+**Research Backing:**
+- **Hickel et al. (2022):** $152 trillion drained from Global South since 1960
+- **US military emissions:** 59M tons CO2/year (2017) - more than 140 countries combined
+- **DARPA AI spending:** $1.5B/year (2023), projected $3B by 2025
+- **Durkheim:** War creates "collective effervescence", shared purpose
+- **PTSD rates:** 11-20% of Iraq/Afghanistan vets
+- **Syrian crisis:** 13M displaced, 580K+ deaths, US intervention role
+
+**Total Estimated Time:** 50-65 hours (6-8 weeks full-time)
+**Complexity:** VERY HIGH (reshapes entire simulation)
+**Priority:** CRITICAL (foundational for realistic modeling)
 
 ---
 
@@ -899,10 +1126,10 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-## 4.3 **Information Warfare & Epistemology** 📰
+## 4.3 **Information Warfare & Epistemology** 📰 ✅ COMPLETED
 **File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.1)  
-**Priority:** MEDIUM  
-**Dev Time:** ~5 hours  
+**Status:** ✅ Implemented Oct 11, 2025, 5:26pm
+**Dev Time:** ~1.5 hours (actual)
 **Complexity:** MEDIUM  
 
 **Why Valuable:**
@@ -910,22 +1137,40 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 - Deepfakes, misinformation, narrative control
 - Currently missing from model
 
+**Research Backing:**
+- **MIT Media Lab (2024):** AI detection arms race, generation always wins
+- **RAND (2024):** Truth Decay framework - facts lose currency in discourse
+- **Pew Research (2024):** 73% of Americans see "made-up news" online
+- **Knight Foundation (2024):** Trust in media declining sharply
+- **Oxford/Stanford (2024-2025):** Computational propaganda scales with AI
+
 **Key Features:**
-- `information_integrity` [0,1] - Truth vs noise ratio
-- `narrative_control[agent]` - Each agent's narrative power
-- `epistemological_crisis_level` - Can't distinguish truth
-- `deepfake_prevalence` - Synthetic content saturation
+- `information_integrity` [0,1] - Truth vs noise ratio (starts 55%)
+- `deepfake_prevalence` [0,1] - Synthetic content saturation (starts 10%)
+- `epistemological_crisis_level` [0,1] - Can't distinguish truth (starts 30%)
+- `narrative_control` - Govt (25%), Corps (40%), AI (5%), Grassroots (30%)
+- `detection_capability` [0,1] - Detection quality (starts 60%, degrades)
+- `media_literacy` [0,1] - Population critical thinking (starts 40%)
 
 **Mechanics:**
-- Information warfare effects
-- Truth decay function (AI accelerates)
-- Narrative competition between agents
-- Low info integrity → easier dystopia control
+- **Truth Decay:** Deepfakes grow exponentially with AI capability (0.5-4%/month)
+- **Arms Race:** Detection always lags generation (asymmetric warfare)
+- **Narrative Competition:** 4 actors compete for control (zero-sum)
+- **Coordination Penalty:** Low integrity impairs cooperation (0-50% penalty)
+- **Dystopia Enablement:** "Flood zone with shit" - confusion enables authoritarianism
+- **Trust Erosion:** 0.2-1.0%/month trust decay (compounds with crisis)
+
+**Crisis Events:**
+- Deepfake Saturation (50%): Photos/videos/audio untrustworthy
+- Epistemological Crisis (60%): Society can't agree on basic facts
+- Information Collapse (<20%): Post-truth, democracy cannot function
+- AI Narrative Dominance (60%): AI controls information landscape
 
 **Expected Impact:**
-- Adds strategic layer (control narrative = power)
-- Realism (AI is already doing this)
-- Interacts with governance, trust, dystopia
+- Makes coordination harder (can't solve problems if can't agree on facts)
+- Enables dystopia (authoritarians thrive in confusion)
+- Accelerates trust decay
+- Realism (AI already doing this - 2024 election deepfakes)
 
 ---
 

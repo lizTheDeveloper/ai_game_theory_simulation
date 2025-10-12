@@ -715,6 +715,15 @@ export interface GameState {
   humanPopulationSystem: import('../types/population').HumanPopulationSystem; // Concrete population tracking (billions)
   refugeeCrisisSystem: import('../types/population').RefugeeCrisisSystem; // Climate/war/famine displacement
 
+  // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
+  ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
+
+  // Social Safety Nets & Community Infrastructure (TIER 2.2)
+  socialSafetyNets: import('../types/socialSafetyNets').SocialSafetyNetsSystem; // Physical/social infrastructure to combat loneliness
+
+  // Information Warfare & Epistemology (TIER 4.3)
+  informationWarfare: import('../types/informationWarfare').InformationWarfareSystem; // Truth decay, deepfakes, narrative control
+
   // Configuration
   config: ConfigurationSettings;
   
