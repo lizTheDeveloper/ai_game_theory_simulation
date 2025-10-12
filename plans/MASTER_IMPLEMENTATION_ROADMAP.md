@@ -41,6 +41,7 @@
 - 1.3 Ocean Acidification (aragonite saturation, coral collapse, 48-month pathway)
 - 1.4 International Competition (trust dynamics, first-mover advantage, AI race)
 - 1.5 Novel Entities (synthetic chemicals, PFAS 99%, 120-month poisoning)
+- 1.6 Population Dynamics (8.0B tracking, refugee crises, regional populations, bottleneck mechanics)
 
 ### ✅ **TIER 2: Major Crisis Mitigations (COMPLETE)**
 - 2.1 Enhanced UBI + Purpose Infrastructure (6%/month meaning reduction)
@@ -102,11 +103,9 @@
 **Conclusion:** Foundation validated. TIER 2 mitigations now enable testing if interventions can enable Utopia pathways.
 
 ### 🚀 **What's Next**
-- **Status:** All major systems merged to main! 🎉
-- **Ready:** TIER 3 (Planetary Boundaries framework), TIER 4.4+ (more enrichment)
-- **Option 1:** Continue TIER 4 (Energy Constraints, Human Enhancement)
-- **Option 2:** Begin TIER 3 (Planetary Boundaries - Kate Raworth framework)
-- **Option 3:** Population Dynamics (TIER 4.5 - extensive design needed)
+- **Status:** TIER 0, 1, 2 complete and merged to main! 🎉
+- **Current Focus:** TIER 3 (Planetary Boundaries framework)
+- **Next Implementation:** 3.1 Tipping Point Cascade System (6 hours estimated)
 - **Philosophy Validated:** Research-backed realism, honest uncertainty, conservative estimates
 
 ### 🚨 **BASELINE PARAMETER VALIDATION (NEW - Oct 10, 2025)**
@@ -1205,23 +1204,19 @@ THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
 
 ---
 
-## 4.5 **Population Dynamics & Extinction Nuance** 👥
-**File:** `plans/population-dynamics-and-extinction-nuance.md` (1,500+ lines)
-**Priority:** HIGH (but needs design work)
-**Dev Time:** ~10-14 hours
-**Complexity:** HIGH
+## 4.5 **Population Dynamics & Extinction Nuance** 👥 ✅ MOVED TO TIER 1.6
+**Status:** ✅ FULLY IMPLEMENTED (See TIER 1.6 above)
 
-**Status:** DEFERRED - Requires extensive design work
+This feature was originally planned for TIER 4.5 but has been **completely implemented** as TIER 1.6.
 
-**User Vision:**
-> "I want to understand extinction not as an end state but as a number that dwindles to zero. Population crashes aren't extinction, but they are mass die-offs. Distinguish 'we almost died out' from 'we died out entirely'."
+**Implementation includes:**
+- Population tracking system (8.0B → concrete decline)
+- Refugee crisis system (5 trigger types, generational resettlement)
+- Regional populations (7 world regions with differential dynamics)
+- Population-based outcomes (THRIVING → EXTINCTION thresholds)
+- Death tracking by 8 categories
 
-**Why Critical:**
-- Extinction now concrete (8.0B → concrete decline, not abstract)
-- Distinction between population crash (2-5B) vs bottleneck (10K-100M) vs true extinction (<10K)
-- Refugee crisis modeling with generational dynamics (25 years resettlement)
-- Can model "we almost died out" (bottleneck events) vs "we died out entirely"
-- Major 21st century crisis dynamic implemented
+**See TIER 1.6 for full details.**
 
 **Key Innovations:**
 
