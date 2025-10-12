@@ -29,6 +29,7 @@ import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
 import { initializeNovelEntitiesSystem } from './novelEntities';
+import { initializePlanetaryBoundariesSystem } from './planetaryBoundaries';
 import { initializeHumanPopulationSystem } from './populationDynamics';
 import { initializeRefugeeCrisisSystem } from './refugeeCrises';
 import { initializeUBISystem } from './enhancedUBI';
@@ -336,7 +337,10 @@ export function createDefaultInitialState(): GameState {
     // Novel Entities Crisis (TIER 1.5)
     novelEntitiesSystem: initializeNovelEntitiesSystem(),
 
-    // Population Dynamics & Refugee Crises (TIER 1.5)
+    // Planetary Boundaries (TIER 3.1)
+    planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(),
+
+    // Population Dynamics & Refugee Crises (TIER 1.6)
     humanPopulationSystem: initializeHumanPopulationSystem(),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
 

@@ -711,7 +711,10 @@ export interface GameState {
   // Novel Entities Crisis (TIER 1.5)
   novelEntitiesSystem: import('../types/novelEntities').NovelEntitiesSystem; // Chemical pollution & slow poisoning
 
-  // Population Dynamics & Refugee Crises (TIER 1.5)
+  // Planetary Boundaries (TIER 3.1)
+  planetaryBoundariesSystem: import('../types/planetaryBoundaries').PlanetaryBoundariesSystem; // Kate Raworth's Doughnut Economics & tipping point cascades
+
+  // Population Dynamics & Refugee Crises (TIER 1.6)
   humanPopulationSystem: import('../types/population').HumanPopulationSystem; // Concrete population tracking (billions)
   refugeeCrisisSystem: import('../types/population').RefugeeCrisisSystem; // Climate/war/famine displacement
 

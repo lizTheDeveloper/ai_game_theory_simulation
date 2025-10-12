@@ -46,6 +46,7 @@ export { OceanAcidificationPhase } from './OceanAcidificationPhase';
 export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
+export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 
 // Batch 3: Special phases (medium risk)
