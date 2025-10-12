@@ -748,6 +748,15 @@ export interface GameState {
   // Power Generation & AI Energy Consumption (TIER 4.4)
   powerGenerationSystem: import('../types/powerGeneration').PowerGenerationSystem; // Electricity generation, AI efficiency, crypto mining, climate impact
 
+  // Regional Biodiversity System (TIER 1.7 - Crisis Realism)
+  biodiversitySystem: import('../types/regionalBiodiversity').BiodiversitySystem; // Regional biodiversity tracking, nuclear/pollution effects
+
+  // Famine Death Curve System (TIER 1.7 - Crisis Realism)
+  famineSystem: import('../types/famine').FamineSystem; // Gradual famine mortality (30-60 days), genocide detection, tech deployment
+
+  // Nuclear Radiation Health Effects (TIER 1.7 - Crisis Realism)
+  radiationSystem: import('../types/radiation').RadiationSystem; // Long-term cancer, birth defects, soil contamination (decades-centuries)
+
   // Configuration
   config: ConfigurationSettings;
   
