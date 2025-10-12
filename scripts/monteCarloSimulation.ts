@@ -679,19 +679,27 @@ for (let i = 0; i < NUM_RUNS; i++) {
   // === POPULATION & MORTALITY METRICS (Oct 12, 2025) ===
   const pop = finalState.humanPopulationSystem;
   const env = finalState.environmentalAccumulation;
-  const deaths = (pop as any).deathTracking || {};
+  const deathsByCategory = pop.deathsByCategory || {
+    war: 0, famine: 0, climate: 0, disease: 0, 
+    ecosystem: 0, pollution: 0, ai: 0, other: 0
+  };
   
   const initialPopulation = pop.baselinePopulation;
   const finalPopulation = pop.population;
   const populationDecline = ((initialPopulation - finalPopulation) / initialPopulation) * 100;
   const totalDeaths = (initialPopulation - finalPopulation) * 1000; // billions to millions
   
-  // Death breakdown
-  const deathsNatural = deaths.baseline || 0;
-  const deathsCrisis = (deaths.acuteCrisis || 0) + (deaths.refugee || 0);
-  const deathsNuclear = deaths.nuclear || 0;
-  const deathsCascade = deaths.cascadeEvents || 0;
-  const deathsMeaning = deaths.meaningCollapse || 0;
+  // Death breakdown (categorize by source)
+  // Natural deaths = baseline mortality rate over time
+  const monthsElapsed = MAX_MONTHS;
+  const avgPopulation = (initialPopulation + finalPopulation) / 2;
+  const deathsNatural = (avgPopulation * pop.baselineDeathRate * (monthsElapsed / 12)) * 1000; // Convert to millions
+  
+  // Crisis deaths by category (already in millions from deathsByCategory tracking)
+  const deathsNuclear = deathsByCategory.war; // War includes nuclear
+  const deathsCrisis = deathsByCategory.famine + deathsByCategory.disease + deathsByCategory.other;
+  const deathsCascade = deathsByCategory.climate + deathsByCategory.ecosystem;
+  const deathsMeaning = deathsByCategory.ai; // AI-related deaths (alignment failures, manipulation)
   
   // Population outcome
   let populationOutcome: 'growth' | 'stable' | 'decline' | 'bottleneck' | 'extinction';
