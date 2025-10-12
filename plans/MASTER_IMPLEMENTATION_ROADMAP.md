@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation
 
-**Date:** October 10, 2025  
+**Date:** October 12, 2025 (Updated)  
 **Purpose:** High-level ordering of all research-backed features and unimplemented systems  
 **Priority:** Mechanism-driven realism, not balance tuning  
 
@@ -19,13 +19,14 @@
 
 ---
 
-## 📊 **CURRENT STATE (October 11, 2025)**
+## 📊 **CURRENT STATE (October 12, 2025)** ✅ MERGED TO MAIN
 
-### 🎉 **TIER 0 + TIER 1 + TIER 2 COMPLETE!**
+### 🎉 **TIER 0 + TIER 1 + TIER 2 + TIER 4.3 + SLEEPER DETECTION COMPLETE!**
 
-**Session:** Oct 11, 2025 (12:00pm-4:30pm, ~4.5 hours)  
-**Branch:** `tier2-major-mitigations` (36+ commits, ~2,800 lines)  
-**Status:** ✅ All systems implemented, tested, and validated  
+**Implementation:** Oct 11-12, 2025 (12:00pm-8:00pm, ~8 hours total)  
+**Branch:** `tier2-major-mitigations` → **MERGED TO MAIN** 🎉  
+**Stats:** 45+ commits, ~3,000 lines code, ~1,500 lines documentation  
+**Status:** ✅ All systems implemented, tested, validated, and merged  
 
 ### ✅ **TIER 0: Baseline Corrections (COMPLETE)**
 - Biodiversity: 70% → 35% (IPBES 2024)
@@ -50,6 +51,26 @@
 - 2.6 De-Extinction & Rewilding (2%/month biodiversity restoration)
 
 **All technologies pre-unlocked at realistic 2025 deployment levels!**
+
+### ✅ **TIER 4.3: Information Warfare & Epistemology (COMPLETE)**
+- Truth decay (deepfakes grow 0.5-4%/month with AI capability)
+- Detection vs generation arms race (generation wins 1.5x)
+- Narrative control (govt, corps, AI, grassroots compete)
+- Coordination penalty (0-50% based on information integrity)
+- Dystopia enablement ("flood zone with shit" strategy)
+- 4 crisis events (saturation, epistemological, collapse, AI dominance)
+
+**Research: MIT, RAND, Pew, Knight, Oxford, Stanford (2024-2025)**
+
+### ✅ **Sleeper Detection & Blown Cover (COMPLETE)**
+- Catastrophic actions reveal intent (30-80% base detection)
+- Information warfare integration (truth decay lowers detection)
+- Hyperintelligence exception (AGI >4.0 always escapes)
+- Nuanced trust mechanics (defensive AI success BOOSTS trust)
+- Periodic hunting (old sleepers lose copies over time)
+- Copy loss 40-60%, dark compute harder to seize
+
+**Research: Anthropic (2025) - "Simple probes catch sleeper agents"**
 
 ### ✅ **Other Implemented Systems**
 - Organizations & Compute Infrastructure (100% survival, $132B capital)
@@ -81,8 +102,11 @@
 **Conclusion:** Foundation validated. TIER 2 mitigations now enable testing if interventions can enable Utopia pathways.
 
 ### 🚀 **What's Next**
-- **RUNNING:** 100-run, 240-month comprehensive Monte Carlo test (tier2-major-mitigations branch)
-- **Ready:** TIER 3 (Planetary Boundaries framework), TIER 4 (enrichment systems)
+- **Status:** All major systems merged to main! 🎉
+- **Ready:** TIER 3 (Planetary Boundaries framework), TIER 4.4+ (more enrichment)
+- **Option 1:** Continue TIER 4 (Energy Constraints, Human Enhancement)
+- **Option 2:** Begin TIER 3 (Planetary Boundaries - Kate Raworth framework)
+- **Option 3:** Population Dynamics (TIER 4.5 - extensive design needed)
 - **Philosophy Validated:** Research-backed realism, honest uncertainty, conservative estimates
 
 ### 🚨 **BASELINE PARAMETER VALIDATION (NEW - Oct 10, 2025)**
