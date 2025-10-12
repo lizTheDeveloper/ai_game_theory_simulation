@@ -1181,8 +1181,8 @@ export function applyRaceEffectsOnSafety(state: GameState): void {
   // Global effects
   if (raceIntensity > 0.70) {
     // High race pressure reduces alignment research globally
-    state.alignmentResearch.monthlyFunding = Math.max(0,
-      state.alignmentResearch.monthlyFunding - state.alignmentResearch.monthlyFunding * 0.01
+    state.government.alignmentResearchInvestment = Math.max(0,
+      state.government.alignmentResearchInvestment - state.government.alignmentResearchInvestment * 0.01
     );
   }
 }
