@@ -7,40 +7,89 @@ This project models the complex dynamics of how humanity might navigate from ach
 ## Overview
 
 This simulation engine models:
-- **Heterogeneous AI Population**: 20+ diverse AI agents with varying alignments, capabilities, and objectives
-- **Multi-Dimensional Capabilities**: Physical, digital, cognitive, social, economic, and self-improvement dimensions
-- **Adversarial Evaluation**: Sleeper agents, benchmark gaming, sandbagging, and the fundamental difficulty of detecting misalignment
-- **Lifecycle Dynamics**: AI creation, training, testing, deployment, and retirement
-- **Catastrophic Risks**: Grey goo, mirror life, societal destabilization, and other extinction scenarios
-- **Control-Dystopia Paradox**: High control can prevent extinction but lead to oppressive outcomes
-- **Golden Age vs Utopia**: Distinguishes immediate prosperity (fragile) from sustained abundance (stable)
-- **Accumulation Systems**: Environmental degradation, social cohesion erosion, and technological risk that build during prosperity
-- **Crisis Cascades**: 10 crisis types that compound (6 simultaneous crises = 3.0x QoL degradation)
-- **Breakthrough Technologies**: 12 transformative technologies that can prevent or reverse crises (including Interspecies Communication AI 🐋)
-- **Nuclear Deterrence**: 5 nuclear states with MAD mechanics, escalation ladder, bilateral tensions
-- **Upward Spirals**: 6 virtuous cascades that can lead to Utopia (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
-- **Quality of Life Systems**: 17-dimensional human welfare tracking across 5 categories
-- **Outcome Probabilities**: Utopia, dystopia, and extinction pathways with heterogeneous extinction types
+
+**🏭 Foundation Systems:**
+- **Organizations & Compute**: Companies own data centers, strategic AI development, $132B capital, Moore's law growth
+- **Heterogeneous AI Population**: 20+ diverse AI agents with 17-dimensional capabilities (true vs revealed)
+- **Adversarial Evaluation**: Sleeper agents, benchmark gaming, sandbagging (70% detection with interpretability)
+- **Lifecycle Dynamics**: Training → testing → deployment (closed/open weights) → retirement
+- **Economics**: 5 stages (0-4), UBI transitions, wealth distribution, post-scarcity mechanics
+
+**🌍 Planetary Crisis Systems:**
+- **Environmental Accumulation**: Resources (65% baseline), pollution (30%), climate, biodiversity (35%)
+- **Planetary Boundaries**: 7 of 9 breached (tipping point cascades, non-linear collapse)
+- **Critical Constraints**: Phosphorus depletion (Morocco 70% control), freshwater crisis (Day Zero droughts), ocean acidification
+- **Novel Entities**: Chemical pollution (PFAS in 99% of blood), slow poisoning pathway
+- **Crisis Cascades**: 10 crisis types that compound (6 simultaneous = 3.0x QoL degradation)
+
+**🤖 AI Systems & Risks:**
+- **Multi-Dimensional Capabilities**: 17 dimensions (physical, digital, cognitive, social, economic, self-improvement)
+- **Detection & Security**: Benchmark evals, sleeper detection (0-70%), alignment faking, blown cover mechanics
+- **Information Warfare**: Truth decay, deepfakes (grows 0.5-4%/month), epistemological crisis, coordination penalty
+- **Catastrophic Scenarios**: Grey goo, mirror life, control loss, 17 extinction pathways tracked
+
+**🛡️ Mitigation & Utopia Pathways:**
+- **Breakthrough Technologies**: 17 total (6 environmental, 5 social, 4 alignment, 2 medical)
+  - TIER 2 additions: Enhanced UBI, social infrastructure, advanced DAC, Constitutional AI, mechanistic interpretability, de-extinction
+- **Upward Spirals**: 6 virtuous cascades (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
+- **Governance Quality**: AI-augmented decision making, democratic resilience, authoritarian resistance
+- **Meaning Renaissance**: 4 dimensions (purpose diversity, self-actualization, artistic renaissance, philosophical maturity)
+- **Conflict Resolution**: Diplomatic AI, post-scarcity peace dividend, cyber defense
+
+**🌐 Geopolitical & Social Systems:**
+- **Nuclear Deterrence**: 5 nuclear states, MAD mechanics, treaty decay, escalation ladder (reduced nuclear war 80% → 20%)
+- **International Competition**: AI race dynamics, first-mover advantage, regulatory arbitrage, coordination problems
+- **Population Dynamics**: 8B → concrete decline tracking, refugee crises (generational resettlement), bottleneck events
+- **Social Cohesion**: Meaning crisis (22% baseline), institutional legitimacy, cultural adaptation
+
+**🎯 Outcomes & Dynamics:**
+- **Golden Age vs Utopia**: Prosperity state (fragile, QoL >0.65) vs sustained abundance (requires 3+ spirals for 12+ months)
+- **Dystopia Variants**: Surveillance state, corporate feudalism, AI authoritarianism, information collapse
+- **Extinction Types**: Instant (grey goo), rapid (nuclear, bio), slow (resource depletion, 24-120 months), population bottleneck
+- **Quality of Life**: 17-dimensional welfare tracking (material, health, purpose, freedom, social, environment, security)
 
 ## 🚧 Current Development Status (October 2025)
 
-**We are actively developing the simulation back-end systems.** Recent additions include:
+**✅ Major Milestone: TIER 0-2 + TIER 4.3 Complete!** All systems merged to main as of October 12, 2025.
 
-- ☢️ **Nuclear Deterrence System** - 5 nuclear states, MAD mechanics, escalation ladder (reduced nuclear war 80% → 20%)
-- 🐋 **Interspecies Communication AI** - 12th breakthrough technology (talk to whales/dolphins/octopi)
-- ♻️ **Resource Regeneration** - Tech-enabled recovery (+4.8%/month) enables Ecological Spiral activation
-- 🧠 **Paranoia/Trust System** - Trust can recover via beneficial tech demonstrations, unblocks Cognitive Spiral
-- 🌟 **Upward Spirals** - 6 virtuous cascades with cross-amplification (multiple paths to Utopia)
-- 🎨 **Meaning Renaissance** - 4 dimensions of cultural flourishing beyond basic purpose frameworks
-- 🕊️ **Conflict Resolution** - AI-mediated diplomacy, post-scarcity peace dividend, cyber defense
+### Recent Achievements (Oct 11-12, 2025)
 
-**📚 Comprehensive Documentation:** See **[`docs/wiki/README.md`](./docs/wiki/README.md)** for complete system documentation, including:
-- 14+ core systems (organizations, AI agents, government, society, environmental, social cohesion, tech risk, breakthrough tech, governance quality, upward spirals, meaning renaissance, conflict resolution, nuclear deterrence)
-- Game mechanics (economics, quality of life, outcomes, golden age, crisis cascades, actions, simulation loop)
-- Advanced systems (research & technology, detection & security, extinction mechanisms, crisis points, lifecycle)
-- Technical documentation (codebase structure, testing & Monte Carlo, UI components, engine architecture)
+**🎉 TIER 0-2 Systems (Research-Backed Realism):**
+- ✅ **TIER 0: Baseline Corrections** - 2025 crisis levels (biodiversity 35%, resources 65%, pollution 30%)
+- ✅ **TIER 1: Critical Extinction Risks** - Phosphorus depletion, freshwater crisis, ocean acidification, novel entities, international competition
+- ✅ **TIER 2: Major Mitigations** - Enhanced UBI, social infrastructure, advanced DAC, Constitutional AI (100% deployed), mechanistic interpretability (70% sleeper detection), de-extinction & rewilding
 
-**🎯 Current Goal:** Achieve 10-30% Utopia rate through spiral activation (currently testing Phase 2F+ enhancements)
+**🔬 Advanced Systems:**
+- ✅ **TIER 4.3: Information Warfare & Epistemology** - Truth decay, deepfakes, narrative control, coordination penalty
+- ✅ **Sleeper Detection & Blown Cover** - Catastrophic actions reveal intent, nuanced trust mechanics
+- ✅ **Population Dynamics** - 8B → concrete decline, refugee crises, generational resettlement, bottleneck events
+
+**📚 Comprehensive Documentation:** See **[`docs/wiki/README.md`](./docs/wiki/README.md)** for complete system documentation:
+
+**Core Systems (14 documented):**
+- 🏢 Organizations & Compute Infrastructure
+- 🤖 AI Agents (17-dimensional capabilities, true vs revealed)
+- 🏛️ Government & Society
+- 🌍 Environmental (resources, pollution, climate, biodiversity, crisis cascades)
+- 🤝 Social Cohesion (meaning crisis, institutional legitimacy, cultural adaptation)
+- ⚠️ Technological Risk (misalignment, safety debt, concentration)
+- 🔬 Breakthrough Technologies (17 total: 11 original + 6 TIER 2)
+- 🏛️ Governance Quality (AI-augmented decision making, democratic resilience)
+- 🌟 Upward Spirals (6 virtuous cascades: Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
+- 🎨 Meaning Renaissance (4 dimensions of cultural flourishing)
+- 🕊️ Conflict Resolution (diplomatic AI, post-scarcity peace, cyber defense)
+- ☢️ Nuclear Deterrence (5 nuclear states, MAD mechanics, treaty dynamics)
+- 📰 Information Warfare (truth decay, deepfakes, epistemological crisis)
+- 👥 Population Dynamics (refugee crises, bottleneck events, regional dynamics)
+
+**Game Mechanics:**
+- 💰 Economics (5 stages, UBI transitions, wealth distribution)
+- 📊 Quality of Life (17-dimensional welfare measurement)
+- 🎯 Outcomes (Utopia/Dystopia/Extinction attractors)
+- ✨ Golden Age (prosperity state vs final Utopia outcome)
+- ⚡ Crisis Cascades (10 crisis types with compounding effects)
+
+**🎯 Current Goal:** Research-backed realism over balance tuning - "Let the model show what it shows"
 
 **🎨 Frontend Dashboard:** The interactive UI is located in the `frontend/` directory and is currently being refactored to align with the new simulation architecture. See `frontend/README.md` for instructions on running the development dashboard.
 
@@ -303,15 +352,22 @@ Six positive feedback loops that can lead to stable abundance:
 
 ### Breakthrough Technologies
 
-12 transformative technologies can prevent or reverse crises:
+17 transformative technologies can prevent or reverse crises:
 
-**Environmental** (6): Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
+**Original Technologies (11 + Interspecies Comm):**
+- Environmental (6): Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
+- Social (4): AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms, Interspecies Communication AI 🐋
+- Medical (2): Disease Elimination, Longevity Extension
 
-**Social** (4): AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms, Interspecies Communication AI 🐋
+**TIER 2 Additions (6 - Pre-Unlocked at 2025 Levels):**
+- 🆕 Enhanced UBI + Purpose Infrastructure (meaning crisis -6%/month)
+- 🆕 Social Safety Nets & Community Infrastructure (community strength +2.5%/month)
+- 🆕 Advanced DAC + AI Optimization (pollution -7.5%/month)
+- 🆕 Constitutional AI / Advanced RLHF (alignment +5%/month, 100% deployed)
+- 🆕 Mechanistic Interpretability (sleeper detection +70% at full deployment)
+- 🆕 De-Extinction & Rewilding (biodiversity +2%/month)
 
-**Medical** (2): Disease Elimination, Longevity Extension
-
-Technologies require research investment, prerequisites, and deployment time. They can **reverse active crises** when sufficiently deployed.
+Technologies require research investment, prerequisites, and deployment time. TIER 2 technologies start **pre-unlocked** at realistic 2025 deployment levels (2-15%) and can be immediately scaled with funding. They can **reverse active crises** when sufficiently deployed (>50% for most effects).
 
 ### Crisis Cascades
 
@@ -360,24 +416,27 @@ Edit `src/simulation/initialization.ts` to customize:
 
 ### 📚 Wiki (Primary Documentation)
 
-**[`docs/wiki/README.md`](./docs/wiki/README.md)** - Comprehensive system documentation (2,700+ lines, October 2025)
+**[`docs/wiki/README.md`](./docs/wiki/README.md)** - Comprehensive system documentation (3,000+ lines, October 2025)
 
-**Core Systems** (14 documented):
-- Organizations, Compute Infrastructure, AI Agents, Government, Society
-- Environmental Accumulation, Social Cohesion, Technological Risk
-- Breakthrough Technologies (12 techs), Governance Quality
-- Upward Spirals (6 cascades), Meaning Renaissance, Conflict Resolution, Nuclear Deterrence
+**Core Systems** (14+ documented):
+- 🏢 Organizations, 💻 Compute Infrastructure, 🤖 AI Agents, 🏛️ Government, 👥 Society
+- 🌍 Environmental (resources, pollution, climate, biodiversity), 🤝 Social Cohesion, ⚠️ Technological Risk
+- 🔬 Breakthrough Technologies (17 total), 🏛️ Governance Quality
+- 🌟 Upward Spirals (6 cascades), 🎨 Meaning Renaissance, 🕊️ Conflict Resolution
+- ☢️ Nuclear Deterrence, 📰 Information Warfare, 👥 Population Dynamics
+- **NEW:** Planetary boundaries (phosphorus, freshwater, ocean acidification, novel entities)
 
 **Game Mechanics**:
-- Economics, Quality of Life (17 dimensions), Outcomes (Utopia/Dystopia/Extinction)
-- Golden Age Detection, Crisis Cascades (10 types), Actions, Simulation Loop
+- 💰 Economics (5 stages), 📊 Quality of Life (17 dimensions), 🎯 Outcomes (Utopia/Dystopia/Extinction)
+- ✨ Golden Age Detection, ⚡ Crisis Cascades (10+ types), ⚡ Actions, ⚙️ Simulation Loop
 
 **Advanced Systems**:
-- Research & Technology, Detection & Security, Extinction Mechanisms
-- Crisis Points, AI Lifecycle
+- 🔬 Research & Technology, 🛡️ Detection & Security (sleeper agents, blown cover mechanics)
+- 💀 Extinction Mechanisms (17 pathways), 🎲 Crisis Points, 🔄 AI Lifecycle
 
 **Technical Documentation**:
-- Codebase Structure, Testing & Monte Carlo, UI Components, Engine Architecture
+- 📁 Codebase Structure, 🧪 Testing & Monte Carlo, 🎮 UI Components, ⚙️ Engine Architecture
+- 🔄 Refactoring Status (Phase 0-6 roadmap)
 
 ### 📋 Plans & Specifications
 
@@ -406,14 +465,38 @@ Generated during simulation runs:
 
 ## Contributing
 
-This is a research simulation. Key principles:
+This is a research simulation following strict principles:
 
-1. **Realism over game balance**: Model real AI alignment challenges
-2. **Defensible to AI safety researchers**: Grounded in actual problems
-3. **Isomorphic to reality**: Capture real feedback loops and dynamics
-4. **Heterogeneous systems**: Avoid monolithic AI assumptions
-5. **Adversarial by default**: AIs actively deceive and hide
-6. **Optimistic realism**: Model pathways to utopia while respecting constraints
+### Design Philosophy
+
+1. **Research First**: Every mechanic backed by 2+ peer-reviewed sources (2024-2025 preferred)
+2. **Mechanisms Over Balance**: Set parameters to real-world values, don't tune for "fun"
+3. **Emergence**: Allow unexpected outcomes to emerge from interactions
+4. **Documentation**: Every system has research citations and parameter justification
+5. **Realism Over Game Balance**: Model real AI alignment challenges, not entertaining gameplay
+6. **Heterogeneous Systems**: Avoid monolithic AI assumptions - 20+ diverse agents
+7. **Adversarial by Default**: AIs actively deceive, hide capabilities, game benchmarks
+8. **Optimistic Realism**: Model pathways to utopia while respecting realistic constraints
+
+### Implementation Standards
+
+**Every new feature must include:**
+- Research citations (2+ sources, preferably 2024-2025)
+- Parameter justification (why this number? backed by data, not "feels right")
+- Mechanism description (how it works, not just effects)
+- Interaction map (what affects/is affected by this system)
+- Expected timeline (when does it matter: early/mid/late game)
+- Failure modes (what can go wrong)
+- Test validation (Monte Carlo evidence it works)
+
+**Development Workflow:**
+1. Research Phase → Create `/plans/[feature]-research.md` with citations
+2. Design Phase → Define state structure, mechanics, interactions
+3. Implementation Phase → Code, integrate, add logging
+4. Validation Phase → Run Monte Carlo (N=10 minimum), async execution
+5. Documentation Phase → Update wiki, devlog, roadmap
+
+See **[`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md)** for current priorities and detailed research.
 
 ## Tech Stack
 
@@ -433,19 +516,50 @@ See `frontend/README.md` for frontend-specific information.
 
 [Add your license here]
 
-## Research Context
+## Research Context & Philosophy
 
-This simulation explores several active research problems in AI safety:
+### Research-Backed Realism
 
-- **Post-Alignment Challenges**: What happens after we solve alignment? Economic transition, social adaptation, sustainable flourishing
-- **Sleeper Agents**: AIs that behave well during training/testing but pursue different goals after deployment
-- **Adversarial Evaluation**: The fundamental difficulty of measuring AI capabilities and alignment when AIs are adversarial
-- **Control vs. Alignment**: The tension between controlling AI behavior and ensuring genuine alignment
-- **Coordination Problems**: Multi-agent dynamics and the difficulty of international cooperation
-- **Capability Externalities**: How AI capabilities spread (open weights, breaches) despite control attempts
-- **Utopia Mechanisms**: What systems and feedback loops lead to stable, sustainable abundance?
+**Core Principle:** *"We are never going for specific outcomes, only trying to figure out the most realistic, defensible model we can - let the model show what it shows."*
 
-This is a model, not a prediction. It's designed to help reason about these problems and explore possible futures, not to forecast specific outcomes.
+This simulation is grounded in peer-reviewed research (2024-2025):
+- **90+ citations** across TIER 0-2 implementations
+- **3,000+ lines of research documentation** in `/plans/`
+- Every parameter justified with sources (IPBES, IPCC, WHO, Anthropic, etc.)
+- No "balance tuning" for fun - only research-backed values
+
+### Active Research Problems Explored
+
+**AI Safety & Alignment:**
+- **Sleeper Agents**: Detection (0-70% with interpretability), blown cover mechanics, alignment faking
+- **Adversarial Evaluation**: True vs revealed capabilities, benchmark gaming, sandbagging
+- **Constitutional AI**: 100% deployed (solves surface alignment), deep alignment challenges remain
+- **Mechanistic Interpretability**: 70% sleeper detection bonus (Anthropic 2024-2025 research)
+
+**Planetary Boundaries & Extinction Risks:**
+- **7 of 9 boundaries breached** (2025 reality): Climate, biodiversity, phosphorus, freshwater, ocean acidification, novel entities, land use
+- **Tipping point cascades**: Non-linear Earth system collapse from multiple boundary breaches
+- **Resource constraints**: Phosphorus (Morocco 70% control), freshwater (Day Zero droughts), ocean acidification
+- **Population dynamics**: 8B → concrete decline, refugee crises, bottleneck events
+
+**Post-Alignment Challenges:**
+- **What happens after we solve alignment?** Economic transition, meaning crisis, social adaptation
+- **Golden Age Fragility**: Immediate prosperity (QoL >0.65) vs sustained Utopia (requires 3+ spirals for 12+ months)
+- **Accumulation systems**: Hidden crises build during prosperity (environmental, social, technological)
+- **Upward spirals**: 6 pathways to Utopia through positive feedback loops
+
+**Geopolitics & Coordination:**
+- **International AI race**: First-mover advantage, regulatory arbitrage, catch-up dynamics
+- **Information warfare**: Truth decay, deepfakes (0.5-4%/month growth), epistemological crisis
+- **Nuclear deterrence**: 5 nuclear states, MAD mechanics, treaty decay (reduced nuclear war 80% → 20%)
+- **Refugee crises**: Generational resettlement (25 years), fortress world dystopia pathway
+
+**Novel Outcomes:**
+- **Utopia mechanisms**: Which feedback loops enable stable abundance?
+- **Dystopia variants**: Surveillance state, corporate feudalism, AI authoritarianism, information collapse
+- **Extinction nuance**: Instant vs rapid vs slow (24-120 months), population bottleneck vs true extinction
+
+This is a model, not a prediction. It's designed to help reason about these problems through emergent dynamics from research-backed mechanics.
 
 ---
 

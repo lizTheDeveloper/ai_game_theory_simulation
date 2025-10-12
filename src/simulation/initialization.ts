@@ -35,6 +35,7 @@ import { initializeRefugeeCrisisSystem } from './refugeeCrises';
 import { initializeUBISystem } from './enhancedUBI';
 import { initializeSocialSafetyNets } from './socialSafetyNets';
 import { initializeInformationWarfare } from './informationWarfare';
+import { initializePowerGenerationSystem } from '../types/powerGeneration';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -350,6 +351,7 @@ export function createDefaultInitialState(): GameState {
 
     // TIER 4: Enrichment Systems
     informationWarfare: initializeInformationWarfare(),
+    powerGenerationSystem: initializePowerGenerationSystem(),
 
     eventLog: [],
     technologyTree: [],

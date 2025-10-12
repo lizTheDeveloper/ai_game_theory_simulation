@@ -93,7 +93,14 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
       meaningCrisisReductionRate: 0.02,
       communityStrengthBoost: 0.025
     },
-    
+    aiPowerEfficiencyCommunication: {
+      unlocked: true, // Real data exists (IEA, Epoch AI, Stanford AI Index)
+      deploymentLevel: 0.05, // 5% initial (limited public awareness)
+      breakthroughYear: 0,
+      trustBoostPerMonth: 0.01, // +1% trust/month when demonstrating efficiency gains
+      publicAwarenessBonus: 0.02 // Increases public understanding of AI benefits
+    },
+
     // Research priorities
     researchPriorities: {
       environmental: 0.4,
@@ -223,7 +230,12 @@ function updateSocialTech(state: GameState, budget: number, month: number): void
   if (tech.mechanisticInterpretability?.unlocked) {
     updateMechanisticInterpretabilityDeployment(state, budget * 0.15);
   }
-  
+
+  // AI Power Efficiency Communication (TIER 4.4) - public trust building
+  if (tech.aiPowerEfficiencyCommunication?.unlocked) {
+    updateAIPowerEfficiencyCommunicationDeployment(state, budget * 0.05);
+  }
+
   // Interspecies Communication - parallel (NEW!)
   updateTechProgress(state, tech.interspeciesComm, budget * 0.05, avgCapability, month);
 }
@@ -972,6 +984,57 @@ function updateDeExtinctionDeployment(state: GameState, budget: number): void {
   if (isNaN(state.environmentalAccumulation.biodiversityIndex)) {
     console.error(`❌ NaN in biodiversity!`);
     state.environmentalAccumulation.biodiversityIndex = 0.35; // Reset to baseline
+  }
+}
+
+/**
+ * Update AI Power Efficiency Communication deployment (TIER 4.4)
+ *
+ * Research: Real-world efficiency gains exist but public awareness is low
+ * This tech represents: Transparent reporting, public education, media campaigns
+ */
+function updateAIPowerEfficiencyCommunicationDeployment(state: GameState, budget: number): void {
+  const tech = state.breakthroughTech.aiPowerEfficiencyCommunication;
+  if (!tech?.unlocked) return;
+
+  // Base deployment: $5B for 10% ($50B total - public education campaigns)
+  let deploymentRate = (budget / 5) * 0.1;
+
+  // AI capability helps (better visualization, personalized communication)
+  const avgCapability = calculateAverageCapability(state);
+  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.2;
+  deploymentRate *= aiBonus;
+
+  // Governance quality helps (credible institutions build trust)
+  const govQuality = state.government.governanceQuality;
+  if (govQuality) {
+    const credibilityBonus = 1 + (govQuality.decisionQuality * 0.3);
+    deploymentRate *= credibilityBonus;
+  }
+
+  // Update deployment level
+  tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentRate);
+
+  // Apply trust boost (scaled by deployment and actual efficiency improvements)
+  const power = state.powerGenerationSystem;
+  const initialEfficiency = 3333; // 2024 baseline
+  const efficiencyImprovement = power.inferenceEfficiency / initialEfficiency;
+
+  // Trust boost increases with both deployment AND demonstrated efficiency gains
+  // More impressive gains = more trust when communicated
+  const baseBoost = tech.trustBoostPerMonth * tech.deploymentLevel;
+  const efficiencyMultiplier = Math.min(3.0, Math.log10(efficiencyImprovement) / 2); // Cap at 3x
+  const trustBoost = baseBoost * efficiencyMultiplier;
+
+  state.globalMetrics.publicTrust = Math.min(
+    1.0,
+    state.globalMetrics.publicTrust + trustBoost
+  );
+
+  // Validate no NaN
+  if (isNaN(state.globalMetrics.publicTrust)) {
+    console.error(`❌ NaN in public trust!`);
+    state.globalMetrics.publicTrust = 0.5; // Reset to baseline
   }
 }
 

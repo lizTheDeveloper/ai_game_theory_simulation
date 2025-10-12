@@ -727,6 +727,9 @@ export interface GameState {
   // Information Warfare & Epistemology (TIER 4.3)
   informationWarfare: import('../types/informationWarfare').InformationWarfareSystem; // Truth decay, deepfakes, narrative control
 
+  // Power Generation & AI Energy Consumption (TIER 4.4)
+  powerGenerationSystem: import('../types/powerGeneration').PowerGenerationSystem; // Electricity generation, AI efficiency, crypto mining, climate impact
+
   // Configuration
   config: ConfigurationSettings;
   
