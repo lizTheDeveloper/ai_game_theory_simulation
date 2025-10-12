@@ -359,11 +359,9 @@ export function updateRegionalPopulations(state: GameState): void {
     // === 5. CARRYING CAPACITY CONSTRAINT ===
     // Calculate capacity modifier independently (don't rely on global)
     const env = state.environmentalAccumulation;
-    const resources = state.resourceEconomy;
 
+    // Reuse foodStock and waterStock already calculated above (lines 319-320)
     const climateModifier = isNaN(env.climateStability) ? 0.5 : env.climateStability;
-    const foodStock = isNaN(resources.food.currentStock) ? 100 : resources.food.currentStock;
-    const waterStock = isNaN(resources.water.currentStock) ? 100 : resources.water.currentStock;
     const foodAvailability = Math.min(1.0, foodStock / 100);
     const waterAvailability = Math.min(1.0, waterStock / 100);
     const resourceModifier = Math.min(foodAvailability, waterAvailability);
