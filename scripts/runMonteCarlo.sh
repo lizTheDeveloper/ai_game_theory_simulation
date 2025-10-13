@@ -37,12 +37,11 @@ echo "=========================================="
 echo ""
 
 # Run the simulation
-# Redirect stdout to log file, stderr to both log and terminal
 echo "Starting simulation at $(date)..."
-npx tsx scripts/monteCarloSimulation.ts \
-  --runs=$RUNS \
-  --max-months=$MONTHS \
-  2>&1 | tee "$LOG_FILE"
+echo ""
+
+# Redirect ALL output directly to log file (prevents broken pipes)
+npx tsx scripts/monteCarloSimulation.ts "$RUNS" "$MONTHS" "$NAME" >> "$LOG_FILE" 2>&1
 
 # Extract summary statistics
 echo ""
