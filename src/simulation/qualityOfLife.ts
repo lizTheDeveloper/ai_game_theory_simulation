@@ -53,7 +53,8 @@ export function calculateEnvironmentalMortality(state: GameState): Environmental
   
   // === FOOD SECURITY (Highest immediate impact) ===
   // Food < 0.4 = crisis, Food < 0.2 = catastrophic
-  const foodSecurity = env.foodSecurity || 0.7;
+  // FIX (Oct 13, 2025): foodSecurity is in survivalFundamentals, not environmentalAccumulation
+  const foodSecurity = state.survivalFundamentals?.foodSecurity ?? 0.7;
   if (foodSecurity < 0.4) {
     const foodSeverity = (0.4 - foodSecurity) / 0.4; // 0-1 scale
     famineMortality += 0.0001 * Math.pow(foodSeverity, 1.5); // 0.01%/month at threshold, scales up
@@ -282,7 +283,8 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   // FIX: Material abundance should reflect actual food availability
   // Can't have high "material abundance" if people are starving
   const env = state.environmentalAccumulation;
-  const foodSecurity = env.foodSecurity || 0.7;
+  // FIX (Oct 13, 2025): foodSecurity is in survivalFundamentals, not environmentalAccumulation
+  const foodSecurity = state.survivalFundamentals?.foodSecurity ?? 0.7;
   
   if (foodSecurity < 0.7) {
     // Food crisis directly reduces material abundance
@@ -866,21 +868,15 @@ function getRegionalPopulationProportion(regionName: string): number {
  * Ecosystem collapse → agricultural failure → famine
  */
 export function checkRegionalFamineRisk(state: GameState, month: number): void {
-  // DEBUG (Oct 13, 2025): Why aren't famines triggering?
   if (!state.famineSystem) {
     console.warn(`⚠️  [Month ${month}] checkRegionalFamineRisk: famineSystem is undefined!`);
     return;
   }
   
+  // FIX (Oct 13, 2025): foodSecurity is in survivalFundamentals, NOT environmentalAccumulation!
+  // BUG: Was checking env.foodSecurity (undefined) → always defaulted to 0.7 → never triggered!
   const env = state.environmentalAccumulation;
-  const globalFoodSecurity = env.foodSecurity || 0.7;
-  
-  // DEBUG: Log when food security drops
-  if (globalFoodSecurity < 0.4 && month % 12 === 0) {
-    console.log(`\n🌾 [DEBUG] Food security: ${(globalFoodSecurity * 100).toFixed(1)}% (< 40% threshold)`);
-    console.log(`   Famine system exists: ${!!state.famineSystem}`);
-    console.log(`   Active famines: ${state.famineSystem.activeFamines.length}`);
-  }
+  const globalFoodSecurity = state.survivalFundamentals?.foodSecurity ?? 0.7;
   
   // FIX (Oct 13, 2025): Simplified famine trigger based on global food security only
   // The regional biodiversity system isn't being maintained, so we can't rely on it
