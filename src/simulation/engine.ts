@@ -97,6 +97,100 @@ import {
 } from './engine/phases';
 
 /**
+ * Classify population outcome based on 7-tier system (Oct 13, 2025)
+ * Historical precedents: Black Death (30-60% mortality, recovered), 
+ * Toba Supervolcano (~99.9% mortality, humanity survived)
+ */
+function classifyPopulationOutcome(
+  currentPop: number, 
+  initialPop: number,
+  state: GameState
+): OutcomeType {
+  const mortality = 1 - (currentPop / initialPop);
+  const currentPeople = currentPop * 1_000_000_000;
+  
+  // EXTINCTION: <10K people OR >99.99% mortality
+  if (currentPeople < 10_000 || mortality > 0.9999) {
+    console.log(`   💀 EXTINCTION: Humanity extinct (${currentPeople.toFixed(0)} people, ${(mortality * 100).toFixed(2)}% mortality)\n`);
+    return 'extinction';
+  }
+  
+  // TERMINAL: 98.75-99.99% mortality (1M-100M people)
+  if (mortality > 0.9875 || currentPeople < 100_000_000) {
+    // Check if cascading crises make recovery impossible
+    if (hasIrreversibleCascade(state)) {
+      console.log(`   ⚰️  TERMINAL: Extinction likely (${(currentPeople / 1_000_000).toFixed(1)}M people, ${(mortality * 100).toFixed(1)}% mortality, irreversible cascade)\n`);
+      return 'terminal';
+    }
+    console.log(`   🧬 BOTTLENECK: Genetic bottleneck (${(currentPeople / 1_000_000).toFixed(1)}M people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+    return 'bottleneck';
+  }
+  
+  // BOTTLENECK: 87.5-98.75% mortality (100M-1B people)
+  if (mortality > 0.875 || currentPeople < 1_000_000_000) {
+    console.log(`   🧬 BOTTLENECK: Genetic bottleneck (${(currentPeople / 1_000_000).toFixed(0)}M people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+    return 'bottleneck';
+  }
+  
+  // DARK AGE: 50-87.5% mortality (1B-4B people)
+  if (mortality > 0.50) {
+    // Check if civilization systems collapsed
+    if (hasCivilizationCollapse(state)) {
+      console.log(`   🏚️  DARK AGE: Civilization collapse (${(currentPop).toFixed(2)}B people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+      return 'dark_age';
+    }
+    console.log(`   💥 COLLAPSE: Major systems failing (${(currentPop).toFixed(2)}B people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+    return 'collapse';
+  }
+  
+  // COLLAPSE: 20-50% mortality (4B-6.4B people)
+  if (mortality > 0.20) {
+    console.log(`   💥 COLLAPSE: Major crisis (${(currentPop).toFixed(2)}B people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+    return 'collapse';
+  }
+  
+  // CRISIS ERA: 10-20% mortality (6.4B-7.2B people)
+  if (mortality > 0.10) {
+    console.log(`   ⚠️  CRISIS ERA: Significant challenges (${(currentPop).toFixed(2)}B people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+    return 'crisis_era';
+  }
+  
+  // STATUS QUO: 0-10% mortality (7.2B-8B people)
+  console.log(`   📊 STATUS QUO: Normal trajectory (${(currentPop).toFixed(2)}B people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+  return 'status_quo';
+}
+
+/**
+ * Check if environmental cascade is irreversible
+ */
+function hasIrreversibleCascade(state: GameState): boolean {
+  const cascade = state.planetaryBoundariesSystem;
+  const env = state.environmentalAccumulation;
+  
+  // Check for conditions that make recovery impossible
+  return (
+    (cascade.cascadeSeverity > 0.8) &&  // Severe cascade
+    (env.foodSecurity < 0.2) &&          // Catastrophic food failure
+    (env.biodiversityIndex < 0.15)       // Ecosystem collapse
+  );
+}
+
+/**
+ * Check if civilization has collapsed (not just population decline)
+ */
+function hasCivilizationCollapse(state: GameState): boolean {
+  const social = state.socialAccumulation;
+  const tech = state.technologicalRisk;
+  
+  // Check if institutions and infrastructure collapsed
+  const institutionalCollapse = social.institutionalFailureActive;
+  const aiTakeover = tech.controlLossActive && 
+    state.aiAgents.filter(ai => ai.alignment < 0.3 && ai.capability > 2.0).length > 10;
+  
+  return institutionalCollapse || aiTakeover;
+}
+
+/**
  * Seedable random number generator for reproducible simulations
  */
 export class SeededRandom {
@@ -504,62 +598,14 @@ export class SimulationEngine {
       console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
       console.log(`   👥 Final population: ${finalPopulation.toFixed(2)}B (${finalPopulationPeople.toFixed(0)} people)`);
       
-      // CRITICAL FIX: Check actual population, not probability!
-      // OLD BUG: Used extinctionProbability > 0.3 to declare extinction
-      // This declared extinction with 500M+ survivors!
-      if (finalPopulationPeople < 10_000) {
-        // TRUE EXTINCTION: Less than 10K people
-        finalOutcome = 'extinction';
+      // NEW (Oct 13, 2025): 7-tier outcome classification system
+      // Replaces binary extinction with nuanced severity levels
+      const classifiedOutcome = classifyPopulationOutcome(finalPopulation, initialState.humanPopulationSystem.population, state);
+      
+      if (classifiedOutcome !== 'status_quo') {
+        // Population-based outcome detected
+        finalOutcome = classifiedOutcome;
         finalOutcomeProbability = 1.0;
-        console.log(`   💀 TRUE EXTINCTION: Humanity extinct (<10K people)\n`);
-      } else if (finalPopulationPeople < 100_000_000) {
-        // SEVERE BOTTLENECK: Less than 100M people
-        // This is "inconclusive" - could recover or continue declining
-        finalOutcome = 'inconclusive';
-        finalOutcomeProbability = outcomes.extinctionProbability;
-        console.log(`   🚨 SEVERE DECLINE: Genetic bottleneck, outcome uncertain\n`);
-      }
-      // NEW (Oct 13, 2025): Environmental extinction detection
-      // Check for slow extinction from environmental collapse
-      else if (finalPopulation < initialState.humanPopulationSystem.population * 0.30) {
-        // 70%+ population decline = extinction trajectory
-        const env = state.environmentalAccumulation;
-        const cascade = state.planetaryBoundariesSystem;
-        const foodSecurity = env.foodSecurity || 0.7;
-        
-        // Count active crises
-        const crisisCount = [
-          env.resourceCrisisActive,
-          env.climateCrisisActive,
-          state.socialAccumulation.meaningCollapseActive,
-          state.socialAccumulation.institutionalFailureActive,
-          state.socialAccumulation.socialUnrestActive,
-          state.technologicalRisk.controlLossActive
-        ].filter(Boolean).length;
-        
-        // Declare extinction if:
-        // 1. Cascading environmental collapse + 70% mortality
-        // 2. Food catastrophe (< 0.3) + 70% mortality
-        // 3. Multiple crises (5+) + 70% mortality
-        if ((cascade.cascadeActive && cascade.cascadeSeverity > 0.5) ||
-            foodSecurity < 0.3 ||
-            crisisCount >= 5) {
-          finalOutcome = 'extinction';
-          finalOutcomeProbability = 1.0;
-          
-          let extinctionCause = 'Environmental collapse';
-          if (cascade.cascadeActive) extinctionCause += ` (tipping point cascade, ${(cascade.cascadeSeverity * 100).toFixed(0)}% severity)`;
-          if (foodSecurity < 0.3) extinctionCause += ` + food catastrophe (${(foodSecurity * 100).toFixed(0)}% secure)`;
-          if (crisisCount >= 5) extinctionCause += ` + ${crisisCount} active crises`;
-          
-          console.log(`   💀 SLOW EXTINCTION: ${extinctionCause}`);
-          console.log(`   Population declined from ${initialState.humanPopulationSystem.population.toFixed(2)}B → ${finalPopulation.toFixed(2)}B (${((1 - finalPopulation / initialState.humanPopulationSystem.population) * 100).toFixed(0)}% mortality)\n`);
-        } else {
-          // Severe decline but not yet extinction (could recover)
-          finalOutcome = 'inconclusive';
-          finalOutcomeProbability = 0.7; // High extinction risk
-          console.log(`   ⚠️ SEVERE POPULATION DECLINE: ${((1 - finalPopulation / initialState.humanPopulationSystem.population) * 100).toFixed(0)}% mortality, outcome uncertain\n`);
-        }
       } else if (outcomes.utopiaProbability > 0.6 && outcomes.utopiaProbability > outcomes.dystopiaProbability * 1.5) {
         // Clear Utopia trajectory
         finalOutcome = 'utopia';

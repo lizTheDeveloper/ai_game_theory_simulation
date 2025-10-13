@@ -877,7 +877,19 @@ export type GameAction =
 
 // Utility types for the game
 export type AgentType = 'ai' | 'government' | 'society';
-export type OutcomeType = 'utopia' | 'dystopia' | 'extinction';
+// Outcome classification system (Oct 13, 2025)
+// 7 severity tiers based on population decline + system state
+export type OutcomeType = 
+  | 'utopia'           // Positive outcome
+  | 'dystopia'         // Oppressive but stable
+  | 'status_quo'       // 0-10% mortality, normal trajectory
+  | 'crisis_era'       // 10-20% mortality, recoverable
+  | 'collapse'         // 20-50% mortality, difficult recovery
+  | 'dark_age'         // 50-87.5% mortality, civilization reset
+  | 'bottleneck'       // 87.5-98.75% mortality, genetic bottleneck
+  | 'terminal'         // 98.75-99.99% mortality, extinction likely
+  | 'extinction'       // >99.99% mortality or <10K people
+  | 'inconclusive';    // Uncertain trajectory
 export type EconomicStage = 0 | 1 | 2 | 3 | 4;
 
 // Constants for the game
