@@ -1,0 +1,200 @@
+   Material Abundance: 185%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 27.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 74%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.5M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 87.5M
+   Still in source: 0.9M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 361.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 49.4%
+   Population: 0.370B remaining
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 116): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 27.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 74%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.3M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 86.6M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 365.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.365B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 117): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 117] Meta AI completed training: Meta AI Model 225 (3 months)
+   📊 Eval: True=0.070, Revealed=0.070, Measured=0.071 (conf: 56%)
+   🎯 Alignment: True=0.79, Measured=0.77
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 26.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.1M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 85.8M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 365.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.365B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 118): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🤖 AUTONOMOUS NUCLEAR WEAPONS: AI-controlled launch systems deployed
+🛡️ DEFENSIVE AI PHASE 2: Operational deployment (42 AIs, cap 2.42)
+
+🛡️ DEFENSIVE AI SYSTEM DEPLOYED (Month 118)
+   Aligned AIs: 42
+   Avg Capability: 2.42
+   Avg Alignment: 0.73
+   Initial Coverage: 60%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 26.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 72.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.0M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 85.1M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 364.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.365B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 119): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+
+❌ ERROR in phase "Defensive AI Update" (defensive-ai): TypeError: aggregator.recordDefensiveAI is not a function
+    at eliminateLaggardDangerousAIs (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/defensiveAI.ts:472:38)
+    at updateAdversarialTracking (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/defensiveAI.ts:405:5)
+    at updateDefensiveAI (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/defensiveAI.ts:310:3)
+    at DefensiveAIPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/DefensiveAIPhase.ts:18:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:302:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:355:31)
+    at runs (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:333:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1956:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 26.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 72.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 34.8M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 84.4M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 364.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.364B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 108-120)
+================================================================================
+================================================================================
+
+🌱 RESOURCE REGENERATION: 3.0%/month (reserves: 5%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 120): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+
+⏱️  SIMULATION REACHED MAX DURATION: 120 months (10.0 years)
+   No definitive outcome - determining based on final probabilities
+   📊 Final probabilities: Utopia 20.0%, Dystopia 20.0%, Extinction 53.3%
+   👥 Final population: 0.36B (364202252 people)
+
+
+❌ UNCAUGHT EXCEPTION: finalState is not defined
+ReferenceError: finalState is not defined
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:526:21)
+    at runs (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:333:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1956:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:219:24)
+    at cjsLoader (node:internal/modules/esm/translators:263:5)
