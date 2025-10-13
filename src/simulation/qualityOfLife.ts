@@ -871,7 +871,7 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
   const { regions } = state.biodiversitySystem;
   if (!regions || !(regions instanceof Map) || regions.size === 0) return; // Safety check
   
-  const totalPopulation = state.humanPopulationSystem.totalPopulation;
+  const totalPopulation = state.humanPopulationSystem.population;
   
   // === NEW (Oct 13, 2025): CHECK GLOBAL FOOD CRISIS FIRST ===
   // If global food security < 0.4, trigger famines in vulnerable regions
