@@ -866,175 +866,74 @@ function getRegionalPopulationProportion(regionName: string): number {
  * Ecosystem collapse → agricultural failure → famine
  */
 export function checkRegionalFamineRisk(state: GameState, month: number): void {
-  // DEBUG (Oct 13): Track why famines aren't triggering
-  const DEBUG = month % 12 === 0; // Log once per year
+  if (!state.famineSystem) return;
   
-  if (!state.biodiversitySystem || !state.famineSystem) {
-    if (DEBUG) console.log(`[DEBUG] checkRegionalFamineRisk: Missing systems (bio: ${!!state.biodiversitySystem}, famine: ${!!state.famineSystem})`);
-    return;
-  }
-  
-  let { regions } = state.biodiversitySystem;
-  
-  // FIX (Oct 13): Maps get serialized to objects during state updates, convert back
-  if (regions && !(regions instanceof Map)) {
-    // Convert plain object back to Map
-    const regionsMap = new Map();
-    for (const key in regions) {
-      if (Object.prototype.hasOwnProperty.call(regions, key)) {
-        regionsMap.set(key, (regions as any)[key]);
-      }
-    }
-    regions = regionsMap;
-    state.biodiversitySystem.regions = regionsMap; // Update state
-  }
-  
-  if (!regions || regions.size === 0) {
-    if (DEBUG) console.log(`[DEBUG] checkRegionalFamineRisk: No regions (size: ${regions?.size})`);
-    return;
-  }
-  
-  const totalPopulation = state.humanPopulationSystem.population;
-  if (DEBUG) console.log(`[DEBUG] checkRegionalFamineRisk: Population ${totalPopulation.toFixed(2)}B, Regions: ${regions.size}`);
-  
-  // === NEW (Oct 13, 2025): CHECK GLOBAL FOOD CRISIS FIRST ===
-  // If global food security < 0.4, trigger famines in vulnerable regions
-  // This catches the "food security 0.229 but no famines" bug
   const env = state.environmentalAccumulation;
   const globalFoodSecurity = env.foodSecurity || 0.7;
   
-  if (DEBUG) console.log(`[DEBUG] Food security: ${(globalFoodSecurity * 100).toFixed(1)}%, Threshold: 40%`);
+  // FIX (Oct 13, 2025): Simplified famine trigger based on global food security only
+  // The regional biodiversity system isn't being maintained, so we can't rely on it
+  // Research: FAO, IPBES - food security < 0.4 = famine risk
   
   if (globalFoodSecurity < 0.4) {
-    if (DEBUG) console.log(`[DEBUG] FOOD CRISIS DETECTED! Starting famine triggers...`);
-    // Global food crisis - trigger famines in most vulnerable regions
-    // Priority: regions with low biodiversity, high climate stress, or already stressed
-    const vulnerableRegions = Array.from(regions.entries())
-      .filter(([regionName, _]) => {
-        // Skip if famine already active
-        return !state.famineSystem.activeFamines.find(f => f.affectedRegion === regionName);
-      })
-      .sort((a, b) => {
-        // Sort by vulnerability (lower ecosystem health = more vulnerable)
-        const vulnA = a[1].biodiversityIndex * 0.5 + a[1].ecosystemIntegrity * 0.5;
-        const vulnB = b[1].biodiversityIndex * 0.5 + b[1].ecosystemIntegrity * 0.5;
-        return vulnA - vulnB;
-      });
+    const totalPopulation = state.humanPopulationSystem.population;
     
-    // Trigger famines in most vulnerable regions
-    // If food < 0.3: trigger in 6 regions (50% of world)
-    // If food < 0.2: trigger in 9 regions (75% of world)
-    // If food < 0.1: trigger in all regions (global famine)
-    const regionsToTrigger = globalFoodSecurity < 0.1 ? vulnerableRegions.length :
-                             globalFoodSecurity < 0.2 ? Math.min(9, vulnerableRegions.length) :
-                             globalFoodSecurity < 0.3 ? Math.min(6, vulnerableRegions.length) :
-                             Math.min(3, vulnerableRegions.length); // < 0.4: trigger in 3 regions
+    // Define 6 major world regions (simplified, not tied to biodiversity system)
+    const worldRegions = [
+      { name: 'Asia', popFraction: 0.60 },
+      { name: 'Africa', popFraction: 0.18 },
+      { name: 'Europe', popFraction: 0.09 },
+      { name: 'North America', popFraction: 0.07 },
+      { name: 'South America', popFraction: 0.05 },
+      { name: 'Oceania', popFraction: 0.01 }
+    ];
+    
+    // How many regions to trigger famine in, based on severity
+    // Research: Severe food crisis affects multiple regions simultaneously
+    const regionsToTrigger = globalFoodSecurity < 0.1 ? 6 :  // Global famine
+                             globalFoodSecurity < 0.2 ? 4 :  // Severe crisis (Asia, Africa, ...)
+                             globalFoodSecurity < 0.3 ? 2 :  // Major crisis (Asia, Africa)
+                             1;                              // Regional crisis (Asia)
     
     for (let i = 0; i < regionsToTrigger; i++) {
-      const [regionName, regionData] = vulnerableRegions[i];
+      const region = worldRegions[i];
       
-      // Population at risk based on global food security
-      const regionalPopProportion = getRegionalPopulationProportion(regionName);
+      // Skip if famine already active in this region
+      const existingFamine = state.famineSystem.activeFamines.find(
+        f => f.affectedRegion === region.name
+      );
+      if (existingFamine) continue;
+      
+      // Calculate population at risk
+      // Research: Severe food crisis puts 30-80% of regional population at risk
       const severityFactor = (0.4 - globalFoodSecurity) / 0.4; // 0-1 scale
       const atRiskFraction = 0.30 + (severityFactor * 0.50); // 30-80% at risk
-      const populationAtRisk = totalPopulation * regionalPopProportion * atRiskFraction;
+      const populationAtRisk = totalPopulation * region.popFraction * atRiskFraction;
       
-      // Determine cause based on regional conditions
+      // Determine cause
       let cause: import('../types/famine').FamineCause = 'crop_failure';
-      if (regionData.climateStress > 0.60) {
-        cause = 'drought';
-      } else if (regionData.contaminationLevel > 0.50) {
-        cause = 'nuclear_winter';
-      } else if (state.phosphorusDepletion?.globalSupplyShock > 3.0) {
+      if (state.phosphorusDepletion?.globalSupplyShock > 3.0) {
         cause = 'supply_chain_collapse';
+      } else if (env.climateStability < 0.4) {
+        cause = 'drought';
       }
       
-      // Trigger famine
+      // Trigger famine with realistic death curve (2% → 8% → 15% → 10% → 2% over months)
       const { triggerFamine } = require('../types/famine');
       triggerFamine(
         state.famineSystem,
         month,
-        regionName,
+        region.name,
         populationAtRisk,
         cause,
         globalFoodSecurity
       );
       
-      console.log(`\n🌾💀 GLOBAL FOOD CRISIS FAMINE: ${regionName}`);
+      console.log(`\n🌾💀 GLOBAL FOOD CRISIS FAMINE: ${region.name}`);
       console.log(`   Global food security: ${(globalFoodSecurity * 100).toFixed(1)}%`);
-      console.log(`   Regional ecosystem: ${(regionData.biodiversityIndex * 100).toFixed(1)}%`);
-      console.log(`   Population at risk: ${(populationAtRisk * 1000).toFixed(0)}M`);
-      console.log(`   At-risk fraction: ${(atRiskFraction * 100).toFixed(1)}%`);
-      console.log(`   Cause: ${cause}\n`);
-    }
-  }
-  
-  // === ORIGINAL: CHECK REGIONAL ECOSYSTEM COLLAPSE ===
-  for (const [regionName, regionData] of regions) {
-    // Skip if famine already active in this region
-    const existingFamine = state.famineSystem.activeFamines.find(
-      f => f.affectedRegion === regionName
-    );
-    if (existingFamine) continue;
-    
-    // ECOSYSTEM COLLAPSE THRESHOLD
-    // Biodiversity < 30% = ecosystem collapse (pollination fails, soil dead, pests rampant)
-    // OR ecosystem integrity < 20% (food webs broken)
-    const ecosystemCollapsed = 
-      regionData.biodiversityIndex < 0.30 || 
-      regionData.ecosystemIntegrity < 0.20;
-    
-    if (ecosystemCollapsed && !regionData.ecosystemCollapseActive) {
-      // Mark ecosystem as collapsed
-      regionData.ecosystemCollapseActive = true;
-      
-      // Trigger famine
-      // Population at risk = regional population proportion × severity factor
-      const regionalPopProportion = getRegionalPopulationProportion(regionName);
-      
-      // Severity: Worse collapse = more people at risk
-      const collapseSeverity = 1.0 - Math.max(
-        regionData.biodiversityIndex / 0.30,
-        regionData.ecosystemIntegrity / 0.20
-      );
-      const atRiskFraction = 0.20 + (collapseSeverity * 0.30); // 20-50% at risk
-      
-      const populationAtRisk = totalPopulation * regionalPopProportion * atRiskFraction;
-      
-      // Determine cause
-      let cause: import('../types/famine').FamineCause = 'crop_failure';
-      if (regionData.contaminationLevel > 0.50) {
-        cause = 'nuclear_winter'; // Radiation contamination
-      } else if (regionData.climateStress > 0.60) {
-        cause = 'drought'; // Climate-driven
-      } else if (regionData.habitatLoss > 0.70) {
-        cause = 'crop_failure'; // Land degradation
-      }
-      
-      // Calculate food security level (based on ecosystem health)
-      const foodSecurityLevel = Math.max(
-        0.05, // Minimum 5% (not total zero)
-        regionData.biodiversityIndex * 0.5 + regionData.ecosystemIntegrity * 0.5
-      );
-      
-      // Trigger famine
-      const { triggerFamine } = require('../types/famine');
-      triggerFamine(
-        state.famineSystem,
-        month,
-        regionName,
-        populationAtRisk,
-        cause,
-        foodSecurityLevel
-      );
-      
-      console.log(`\n🌾💀 ECOSYSTEM COLLAPSE FAMINE: ${regionName}`);
-      console.log(`   Biodiversity: ${(regionData.biodiversityIndex * 100).toFixed(1)}%`);
-      console.log(`   Ecosystem integrity: ${(regionData.ecosystemIntegrity * 100).toFixed(1)}%`);
-      console.log(`   Population at risk: ${(populationAtRisk * 1000).toFixed(0)}M`);
-      console.log(`   At-risk fraction: ${(atRiskFraction * 100).toFixed(1)}%`);
+      console.log(`   Population at risk: ${(populationAtRisk * 1000).toFixed(0)}M (${(atRiskFraction * 100).toFixed(0)}% of region)`);
       console.log(`   Cause: ${cause}`);
-      console.log(`   Food security level: ${(foodSecurityLevel * 100).toFixed(1)}%\n`);
+      console.log(`   Expected deaths: ~${(populationAtRisk * 0.37 * 1000).toFixed(0)}M over 6 months if no intervention\n`);
     }
   }
 }
