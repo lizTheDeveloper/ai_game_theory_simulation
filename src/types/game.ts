@@ -531,6 +531,10 @@ export interface Organization {
   name: string;
   type: 'private' | 'government' | 'academic' | 'nonprofit';
   
+  // TIER 1.7.3: Geographic location (links org survival to country health)
+  country: string;               // Country name (e.g., "United States", "Multi-national")
+  survivalThreshold: number;     // [0,1] Min population fraction needed (0.5 = needs 50% of peak)
+  
   // Ownership
   ownedDataCenters: string[];    // IDs of data centers this org owns
   ownedAIModels: string[];       // IDs of AI agents this org controls
@@ -560,6 +564,11 @@ export interface Organization {
   // History
   foundingMonth: number;         // When this org was created (negative = before game start)
   reputation: number;            // [0,1] Public perception
+  
+  // TIER 1.7.3: Bankruptcy tracking
+  bankrupt: boolean;             // True if org collapsed
+  bankruptcyMonth?: number;      // When org went bankrupt
+  bankruptcyReason?: string;     // Why org collapsed
 }
 
 /**

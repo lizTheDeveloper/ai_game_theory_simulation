@@ -71,6 +71,7 @@ import {
   HumanPopulationPhase,
   RefugeeCrisisPhase,
   CountryPopulationPhase,
+  OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
   PlanetaryBoundariesPhase,
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   DystopiaProgressionPhase,
@@ -342,6 +343,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new HumanPopulationPhase());
     this.orchestrator.registerPhase(new RefugeeCrisisPhase());
     this.orchestrator.registerPhase(new CountryPopulationPhase());
+    this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
