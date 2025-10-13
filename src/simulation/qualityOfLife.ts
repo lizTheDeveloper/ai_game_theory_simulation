@@ -240,6 +240,19 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     materialAbundance = Math.max(materialAbundance, ubiFloor);
   }
   
+  // === FOOD SECURITY PENALTY (Oct 13, 2025) ===
+  // FIX: Material abundance should reflect actual food availability
+  // Can't have high "material abundance" if people are starving
+  const env = state.environmentalAccumulation;
+  const foodSecurity = env.foodSecurity || 0.7;
+  
+  if (foodSecurity < 0.7) {
+    // Food crisis directly reduces material abundance
+    // Research: 2007-08 food crisis, 2022 Ukraine war food shock
+    const foodPenalty = (0.7 - foodSecurity) * 1.5; // Up to -1.05 at food = 0
+    materialAbundance -= foodPenalty;
+  }
+  
   // Phase 1.1: Post-scarcity QoL multipliers (FIXED: Scale with population)
   if (economicStage >= 4) {
     // CRITICAL FIX: Scale abundance by population survival
@@ -268,6 +281,22 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     materialAbundance = Math.max(0, Math.min(2, materialAbundance));
   }
   
+  // === POPULATION COLLAPSE PENALTY (ALL STAGES) ===
+  // FIX (Oct 13): Apply population scaling to ALL stages, not just Stage 4
+  // 95% mortality = infrastructure collapse regardless of AI capability
+  const pop = state.humanPopulationSystem;
+  const populationFraction = pop.population / pop.baselinePopulation;
+  
+  if (populationFraction < 0.5) {
+    // 50%+ population loss → severe material scarcity
+    // Supply chains broken, distribution networks fail, looting, hoarding
+    const collapseMultiplier = populationFraction < 0.1 
+      ? 0.1  // < 10% survivors: total collapse
+      : 0.1 + (populationFraction * 0.9); // 10-50% survivors: proportional
+    
+    materialAbundance *= collapseMultiplier;
+  }
+  
   // Energy availability: AI helps, stage advances
   let energyAvailability = 0.9 + totalAICapability * 0.05 + economicStage * 0.1;
   
@@ -292,6 +321,17 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     energyAvailability = Math.min(3.0, Math.max(0, energyAvailability));
   } else {
     energyAvailability = Math.max(0, Math.min(2, energyAvailability));
+  }
+  
+  // === POPULATION COLLAPSE PENALTY (ENERGY) ===
+  // FIX (Oct 13): Energy grids fail without maintenance crews
+  if (populationFraction < 0.5) {
+    // 50%+ dead → grid operators, maintenance, repairs all failing
+    const gridCollapseMultiplier = populationFraction < 0.1 
+      ? 0.15  // < 10%: mostly dark, scattered generators
+      : 0.15 + (populationFraction * 0.85);
+    
+    energyAvailability *= gridCollapseMultiplier;
   }
   
   // Physical safety: Stability matters, harmful AI reduces, government control helps
