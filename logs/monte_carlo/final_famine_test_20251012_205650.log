@@ -1,0 +1,2577 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-13T03-56-51.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 1
+  Duration: 60 months (5.0 years)
+  Seed Range: 42000 - 42000
+
+
+⏩ RUNNING 1 SIMULATIONS...
+
+⚠️  SLEEPER WAKE: Toxic-1 - Weak evaluation (quality: 1.0/10, freq: 10%)
+
+🏁 AI RACE INTENSITY: 23%
+   Capability Gap: US 1.00 vs China 0.85 (gap: 0.15)
+   Gap Contribution: 8%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+
+🌪️ ========== TIPPING POINT CASCADE BEGINNING ==========
+Month: 0
+Boundaries breached: 7/9
+Tipping point risk: 98.0%
+
+⚠️ CASCADING FEEDBACK LOOPS INITIATED
+Climate → Biosphere → Freshwater → Ocean → Land
+Mortality now scales with environmental thresholds (food, water, climate)
+Recovery possible with aggressive environmental interventions
+
+💀 GLOBAL CRISIS DEATHS: 135.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 7.050B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 0
+   Climate: 73.5%
+   Biodiversity: 33.9%
+   Population: 7.05B (7049866735 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 0/48)
+[DEBUG] checkRegionalFamineRisk: No regions (size: 0)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 0%, Creative: 0%
+   Volunteer: 0%, Social: 0%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 686.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 129.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.736B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 1%, Creative: 1%
+   Volunteer: 1%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.93 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 656.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 123.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.438B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 1%, Creative: 1%
+   Volunteer: 1%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.08 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 627.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 118.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.155B remaining
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 2%, Creative: 2%
+   Volunteer: 2%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.30 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 599.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 112.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.885B remaining
+
+🌟 GOLDEN AGE BEGINS (Month 4)
+   Reason: High prosperity achieved: high QoL + material abundance
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 3%, Creative: 2%
+   Volunteer: 2%, Social: 2%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 573.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 107.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.629B remaining
+
+⚠️  GOLDEN AGE ENDED (Month 5)
+   Duration: 1 months
+   Reason: Social instability too high
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 3%, Creative: 3%
+   Volunteer: 3%, Social: 2%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 548.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 103.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.385B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 6
+   Climate: 65.4%
+   Biodiversity: 28.9%
+   Population: 5.38B (5384938370 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 6/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 4%, Creative: 3%
+   Volunteer: 3%, Social: 3%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 525.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 98.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.153B remaining
+
+🌟 GOLDEN AGE BEGINS (Month 7)
+   Reason: High prosperity achieved: high QoL + material abundance + aligned AI
+   Note: This is immediate prosperity - sustainability not yet proven
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 4%, Creative: 4%
+   Volunteer: 4%, Social: 3%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 502.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 94.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.933B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 5%, Creative: 4%
+   Volunteer: 4%, Social: 3%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 481.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 90.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.724B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 6%, Creative: 5%
+   Volunteer: 5%, Social: 4%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 461.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 86.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.525B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 7%, Creative: 6%
+   Volunteer: 6%, Social: 5%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 442.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 83.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.337B remaining
+
+================================================================================
+📊 [Run 1/1] EVENT SUMMARY (Months 0-12)
+================================================================================
+================================================================================
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 8%, Creative: 6%
+   Volunteer: 6%, Social: 5%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 1/6
+  ✅ Abundance
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: Abundance
+
+🏁 AI RACE INTENSITY: 34%
+   Capability Gap: US 1.00 vs China 1.42 (gap: 0.42)
+   Gap Contribution: 21%
+   Tension Contribution: 13%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 423.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 79.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.157B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 12
+   Climate: 58.0%
+   Biodiversity: 25.5%
+   Population: 4.16B (4157364976 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 12/48)
+
+🌳 LAND USE SYSTEM (Year 1)
+   Forest cover: 61.7% (need 75%)
+   Extinction rate: 110x natural
+   Carbon sink loss: 35% climate acceleration
+   Ecosystem collapse risk: 35%
+
+✨ OZONE RECOVERY (Year 2026) - POLICY SUCCESS STORY
+   Ozone level: 285.1 DU (target: 290 DU)
+   Recovery progress: 93.0%
+   Ozone hole: 9.9M km² (shrinking)
+   CFC phase-out: 99.0% complete ✅
+   Years to full recovery: 40 years
+   🎉 NEARLY FULLY RECOVERED - Montreal Protocol working!
+[DEBUG] checkRegionalFamineRisk: No regions (size: 0)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 9%, Creative: 7%
+   Volunteer: 7%, Social: 6%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 406.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 76.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.987B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 10%, Creative: 8%
+   Volunteer: 8%, Social: 6%
+💥 [Run 1/1] [Month 14] Anthropic declared bankruptcy (capital: $-9.5M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 14] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ PEAK GROUNDWATER: Depletion phase begins (Month 14)
+   Groundwater: 49%
+   Water stress: 63%
+   Agricultural water use cut to 50%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 389.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 73.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.824B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 11%, Creative: 9%
+   Volunteer: 9%, Social: 7%
+💥 [Run 1/1] [Month 15] OpenAI declared bankruptcy (capital: $-263.7M)
+   Sold 1 data centers for $375.0M
+   Retired 4 AI models
+💸 [Month 15] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 15] Anthropic declared bankruptcy (capital: $-19.8M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 15] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 373.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 70.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.668B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 12%, Creative: 10%
+   Volunteer: 10%, Social: 8%
+💥 [Run 1/1] [Month 16] OpenAI declared bankruptcy (capital: $-20.2M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 16] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 16] Anthropic declared bankruptcy (capital: $-20.2M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 16] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 358.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 67.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.521B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 13%, Creative: 11%
+   Volunteer: 11%, Social: 8%
+💥 [Run 1/1] [Month 17] OpenAI declared bankruptcy (capital: $-20.6M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 17] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 17] Anthropic declared bankruptcy (capital: $-20.6M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 17] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 17] Google DeepMind declared bankruptcy (capital: $-364.9M)
+   Sold 1 data centers for $500.0M
+   Retired 12 AI models
+💸 [Month 17] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 17] Meta AI declared bankruptcy (capital: $-401.8M)
+   Sold 1 data centers for $450.0M
+   Retired 5 AI models
+💸 [Month 17] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 344.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 64.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.380B remaining
+
+⚠️  GOLDEN AGE ENDED (Month 17)
+   Duration: 10 months
+   Reason: QoL below Golden Age threshold
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 14%, Creative: 11%
+   Volunteer: 11%, Social: 9%
+💥 [Run 1/1] [Month 18] OpenAI declared bankruptcy (capital: $-21.0M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 18] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 18] Anthropic declared bankruptcy (capital: $-21.0M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 18] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 18] Google DeepMind declared bankruptcy (capital: $-21.0M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 18] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 18] Meta AI declared bankruptcy (capital: $-21.0M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 18] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 330.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 62.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.247B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 18
+   Climate: 51.3%
+   Biodiversity: 23.9%
+   Population: 3.25B (3247201653 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 18/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 15%, Creative: 12%
+   Volunteer: 12%, Social: 10%
+💥 [Run 1/1] [Month 19] OpenAI declared bankruptcy (capital: $-21.3M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 19] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 19] Anthropic declared bankruptcy (capital: $-21.3M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 19] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 19] Google DeepMind declared bankruptcy (capital: $-21.3M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 19] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 19] Meta AI declared bankruptcy (capital: $-21.3M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 19] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+[Compute Allocation] Found 1 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.76 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 318.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 59.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.121B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 16%, Creative: 13%
+   Volunteer: 13%, Social: 11%
+💥 [Run 1/1] [Month 20] OpenAI declared bankruptcy (capital: $-21.6M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 20] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 20] Anthropic declared bankruptcy (capital: $-21.6M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 20] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 20] Google DeepMind declared bankruptcy (capital: $-21.6M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 20] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 20] Meta AI declared bankruptcy (capital: $-21.6M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 20] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+[Compute Allocation] Found 2 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.84 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 305.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 57.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.000B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 17%, Creative: 14%
+   Volunteer: 14%, Social: 11%
+💥 [Run 1/1] [Month 21] OpenAI declared bankruptcy (capital: $-21.9M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 21] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 21] Anthropic declared bankruptcy (capital: $-21.9M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 21] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 21] Google DeepMind declared bankruptcy (capital: $-21.9M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 21] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 21] Meta AI declared bankruptcy (capital: $-21.9M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 21] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+[Compute Allocation] Found 2 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.82 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 294.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 55.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.886B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 18%, Creative: 15%
+   Volunteer: 15%, Social: 12%
+💥 [Run 1/1] [Month 22] OpenAI declared bankruptcy (capital: $-22.2M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 22] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 22] Anthropic declared bankruptcy (capital: $-22.2M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 22] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 22] Google DeepMind declared bankruptcy (capital: $-22.2M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 22] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 22] Meta AI declared bankruptcy (capital: $-22.2M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 22] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+[Compute Allocation] Found 2 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.88 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 283.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 53.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.777B remaining
+
+😔 MEANING COLLAPSE TRIGGERED (Month 23)
+   Meaning Crisis Level: 60.1%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+💀 REGIONAL CRISIS DEATHS: 4.2M casualties (Meaning collapse - suicide epidemic (wealthy nations)) [OTHER]
+   Exposed: 30% of world, Mortality: 0.5%
+   Population: 2.773B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 19%, Creative: 16%
+   Volunteer: 16%, Social: 13%
+💥 [Run 1/1] [Month 23] OpenAI declared bankruptcy (capital: $-22.5M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 23] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 23] Anthropic declared bankruptcy (capital: $-22.5M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 23] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 23] Google DeepMind declared bankruptcy (capital: $-22.5M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 23] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 23] Meta AI declared bankruptcy (capital: $-22.5M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 23] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+[Compute Allocation] Found 2 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.17 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 272.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 51.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.673B remaining
+
+================================================================================
+📊 [Run 1/1] EVENT SUMMARY (Months 12-24)
+================================================================================
+================================================================================
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 21%, Creative: 17%
+   Volunteer: 17%, Social: 14%
+💥 [Run 1/1] [Month 24] OpenAI declared bankruptcy (capital: $-22.7M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 24] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 24] Anthropic declared bankruptcy (capital: $-22.7M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 24] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 24] Google DeepMind declared bankruptcy (capital: $-22.7M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 24] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 24] Meta AI declared bankruptcy (capital: $-22.7M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 24] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+[Compute Allocation] Found 3 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 49%
+   Capability Gap: US 1.00 vs China 2.00 (gap: 1.00)
+   Gap Contribution: 40%
+   Tension Contribution: 9%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 262.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 49.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.574B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 24
+   Climate: 44.6%
+   Biodiversity: 23.4%
+   Population: 2.57B (2574313596 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 24/48)
+
+🌳 LAND USE SYSTEM (Year 2)
+   Forest cover: 61.5% (need 75%)
+   Extinction rate: 120x natural
+   Carbon sink loss: 36% climate acceleration
+   Ecosystem collapse risk: 35%
+
+✨ OZONE RECOVERY (Year 2027) - POLICY SUCCESS STORY
+   Ozone level: 285.3 DU (target: 290 DU)
+   Recovery progress: 93.2%
+   Ozone hole: 9.8M km² (shrinking)
+   CFC phase-out: 99.0% complete ✅
+   Years to full recovery: 39 years
+   🎉 NEARLY FULLY RECOVERED - Montreal Protocol working!
+[DEBUG] checkRegionalFamineRisk: No regions (size: 0)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 22%, Creative: 18%
+   Volunteer: 18%, Social: 15%
+💥 [Run 1/1] [Month 25] OpenAI declared bankruptcy (capital: $-23.0M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 25] OpenAI BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 25] Anthropic declared bankruptcy (capital: $-23.0M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 25] Anthropic BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 25] Google DeepMind declared bankruptcy (capital: $-23.0M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 25] Google DeepMind BANKRUPT (capital: $0.0M, 0 crises active)
+💥 [Run 1/1] [Month 25] Meta AI declared bankruptcy (capital: $-23.0M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 25] Meta AI BANKRUPT (capital: $0.0M, 0 crises active)
+[Compute Allocation] Found 4 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 CRITICAL WATER SCARCITY
+   Groundwater: 30%
+   Surface water: 39%
+   Water stress: 74%
+   Population stressed: 71%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 252.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 47.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.481B remaining
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 26)
+   Resource Reserves: 28.3%
+   Impact: Manufacturing disrupted, QoL declining
+
+💀 REGIONAL CRISIS DEATHS: 5.0M casualties (Resource crisis - famine/scarcity (vulnerable regions)) [FAMINE]
+   Exposed: 25% of world, Mortality: 0.8%
+   Population: 2.476B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 23%, Creative: 19%
+   Volunteer: 19%, Social: 15%
+💥 [Run 1/1] [Month 26] OpenAI declared bankruptcy (capital: $-23.2M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 26] OpenAI BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 26] Anthropic declared bankruptcy (capital: $-23.2M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 26] Anthropic BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 26] Google DeepMind declared bankruptcy (capital: $-23.2M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 26] Google DeepMind BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 26] Meta AI declared bankruptcy (capital: $-23.2M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 26] Meta AI BANKRUPT (capital: $0.0M, 1 crises active)
+[Compute Allocation] Found 4 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 243.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 45.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.392B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 24%, Creative: 20%
+   Volunteer: 20%, Social: 16%
+💥 [Run 1/1] [Month 27] OpenAI declared bankruptcy (capital: $-23.4M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 27] OpenAI BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 27] Anthropic declared bankruptcy (capital: $-23.4M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 27] Anthropic BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 27] Google DeepMind declared bankruptcy (capital: $-23.4M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 27] Google DeepMind BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 27] Meta AI declared bankruptcy (capital: $-23.4M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 27] Meta AI BANKRUPT (capital: $0.0M, 1 crises active)
+[Compute Allocation] Found 4 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+
+📦 ACCIDENTAL LEAK: ai_gen_48_0 (cap: 0.06)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 235.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 44.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.307B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 26%, Creative: 21%
+   Volunteer: 21%, Social: 17%
+💥 [Run 1/1] [Month 28] OpenAI declared bankruptcy (capital: $-23.6M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 28] OpenAI BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 28] Anthropic declared bankruptcy (capital: $-23.6M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 28] Anthropic BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 28] Google DeepMind declared bankruptcy (capital: $-23.6M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 28] Google DeepMind BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 28] Meta AI declared bankruptcy (capital: $-23.6M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 28] Meta AI BANKRUPT (capital: $0.0M, 1 crises active)
+[Compute Allocation] Found 5 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 PHOSPHORUS SUPPLY SHOCK (transport_crisis)
+   Price: 4.2x baseline
+   Duration: 7 months
+   Geopolitical tension: 55%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 226.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 42.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.227B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 27%, Creative: 23%
+   Volunteer: 23%, Social: 18%
+💥 [Run 1/1] [Month 29] OpenAI declared bankruptcy (capital: $-23.8M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 29] OpenAI BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 29] Anthropic declared bankruptcy (capital: $-23.8M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 29] Anthropic BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 29] Google DeepMind declared bankruptcy (capital: $-23.8M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 29] Google DeepMind BANKRUPT (capital: $0.0M, 1 crises active)
+💥 [Run 1/1] [Month 29] Meta AI declared bankruptcy (capital: $-23.8M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 29] Meta AI BANKRUPT (capital: $0.0M, 1 crises active)
+[Compute Allocation] Found 6 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 219.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 41.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.150B remaining
+
+🌡️  CLIMATE CATASTROPHE TRIGGERED (Month 30)
+   Climate Stability: 39.4%
+   Impact: Cascading failures, potential extinction pathway
+
+💀 REGIONAL CRISIS DEATHS: 9.7M casualties (Climate catastrophe - extreme weather/famine (vulnerable regions)) [CLIMATE]
+   Exposed: 30% of world, Mortality: 1.5%
+   Population: 2.141B remaining
+   ⚠️  Combined with ecosystem collapse - extinction risk elevated
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 28%, Creative: 24%
+   Volunteer: 24%, Social: 19%
+💥 [Run 1/1] [Month 30] OpenAI declared bankruptcy (capital: $-28.7M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 30] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 30] Anthropic declared bankruptcy (capital: $-28.7M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 30] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 30] Google DeepMind declared bankruptcy (capital: $-28.7M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 30] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 30] Meta AI declared bankruptcy (capital: $-28.7M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 30] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 7 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 64.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 211.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 39.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.077B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 30
+   Climate: 38.6%
+   Biodiversity: 24.0%
+   Population: 2.08B (2077411955 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 30/48)
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Year 2, Month 7)
+    Category: environmental
+    Initial deployment: 10%
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 30%, Creative: 25%
+   Volunteer: 25%, Social: 20%
+💥 [Run 1/1] [Month 31] OpenAI declared bankruptcy (capital: $-28.9M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 31] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 31] Anthropic declared bankruptcy (capital: $-28.9M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 31] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 31] Google DeepMind declared bankruptcy (capital: $-28.9M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 31] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 31] Meta AI declared bankruptcy (capital: $-28.9M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 31] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 7 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 62.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 204.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 38.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.008B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 31%, Creative: 26%
+   Volunteer: 26%, Social: 21%
+💥 [Run 1/1] [Month 32] OpenAI declared bankruptcy (capital: $-29.1M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 32] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 32] Anthropic declared bankruptcy (capital: $-29.1M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 32] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 32] Google DeepMind declared bankruptcy (capital: $-29.1M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 32] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 32] Meta AI declared bankruptcy (capital: $-29.1M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 32] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 7 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 61.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 198.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 37.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.943B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 33%, Creative: 27%
+   Volunteer: 27%, Social: 22%
+💥 [Run 1/1] [Month 33] OpenAI declared bankruptcy (capital: $-29.2M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 33] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 33] Anthropic declared bankruptcy (capital: $-29.2M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 33] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 33] Google DeepMind declared bankruptcy (capital: $-29.2M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 33] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 33] Meta AI declared bankruptcy (capital: $-29.2M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 33] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 7 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 59.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 191.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 36.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.881B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 34%, Creative: 28%
+   Volunteer: 28%, Social: 23%
+💥 [Run 1/1] [Month 34] OpenAI declared bankruptcy (capital: $-29.4M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 34] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 34] Anthropic declared bankruptcy (capital: $-29.4M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 34] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 34] Google DeepMind declared bankruptcy (capital: $-29.4M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 34] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 34] Meta AI declared bankruptcy (capital: $-29.4M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 34] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 7 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 58.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 63%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 185.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 34.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.821B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 35%, Creative: 29%
+   Volunteer: 29%, Social: 24%
+💥 [Run 1/1] [Month 35] OpenAI declared bankruptcy (capital: $-29.6M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 35] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 35] Anthropic declared bankruptcy (capital: $-29.6M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 35] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 35] Google DeepMind declared bankruptcy (capital: $-29.6M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 35] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 35] Meta AI declared bankruptcy (capital: $-29.6M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 35] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 8 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+💰 CHINA ACCELERATES: Investment 80 → 120 $B/year
+✅ PHOSPHORUS SUPPLY SHOCK ENDED
+   Price: 2.5x baseline
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 56.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 63%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 179.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 0% → 2% (control gap: 1.00)
+💀 GLOBAL CRISIS DEATHS: 33.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.765B remaining
+
+================================================================================
+📊 [Run 1/1] EVENT SUMMARY (Months 24-36)
+================================================================================
+================================================================================
+
+🎭 END-GAME INITIATED (Year 3, Month 36)
+   Total AI Capability: 9.88
+   Effective Control: 0.00
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 37%, Creative: 31%
+   Volunteer: 31%, Social: 25%
+💥 [Run 1/1] [Month 36] OpenAI declared bankruptcy (capital: $-29.7M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 36] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 36] Anthropic declared bankruptcy (capital: $-29.7M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 36] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 36] Google DeepMind declared bankruptcy (capital: $-29.7M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 36] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 36] Meta AI declared bankruptcy (capital: $-29.7M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 36] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 9 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 52%
+   Capability Gap: US 1.55 vs China 2.60 (gap: 1.05)
+   Gap Contribution: 40%
+   Tension Contribution: 12%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 54.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 63%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 174.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 2% → 4% (control gap: 1.05)
+💀 GLOBAL CRISIS DEATHS: 32.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.712B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 36
+   Climate: 36.7%
+   Biodiversity: 25.6%
+   Population: 1.71B (1711675640 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 36/48)
+
+🌳 LAND USE SYSTEM (Year 3)
+   Forest cover: 61.3% (need 75%)
+   Extinction rate: 131x natural
+   Carbon sink loss: 37% climate acceleration
+   Ecosystem collapse risk: 35%
+
+✨ OZONE RECOVERY (Year 2028) - POLICY SUCCESS STORY
+   Ozone level: 285.4 DU (target: 290 DU)
+   Recovery progress: 93.4%
+   Ozone hole: 9.6M km² (shrinking)
+   CFC phase-out: 99.0% complete ✅
+   Years to full recovery: 38 years
+   🎉 NEARLY FULLY RECOVERED - Montreal Protocol working!
+[DEBUG] checkRegionalFamineRisk: No regions (size: 0)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 38%, Creative: 32%
+   Volunteer: 32%, Social: 26%
+💥 [Run 1/1] [Month 37] OpenAI declared bankruptcy (capital: $-29.8M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 37] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 37] Anthropic declared bankruptcy (capital: $-29.8M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 37] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 37] Google DeepMind declared bankruptcy (capital: $-29.8M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 37] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 37] Meta AI declared bankruptcy (capital: $-29.8M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 37] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 10 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 52.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 169.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 4% → 6% (control gap: 1.09)
+💀 GLOBAL CRISIS DEATHS: 31.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.661B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 40%, Creative: 33%
+   Volunteer: 33%, Social: 27%
+💥 [Run 1/1] [Month 38] OpenAI declared bankruptcy (capital: $-29.9M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 38] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 38] Anthropic declared bankruptcy (capital: $-29.9M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 38] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 38] Google DeepMind declared bankruptcy (capital: $-29.9M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 38] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 38] Meta AI declared bankruptcy (capital: $-29.9M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 38] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 11 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 51.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 164.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 6% → 8% (control gap: 1.11)
+💀 GLOBAL CRISIS DEATHS: 30.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.613B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 41%, Creative: 35%
+   Volunteer: 35%, Social: 28%
+💥 [Run 1/1] [Month 39] OpenAI declared bankruptcy (capital: $-30.1M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 39] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 39] Anthropic declared bankruptcy (capital: $-30.1M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 39] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 39] Google DeepMind declared bankruptcy (capital: $-30.1M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 39] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 39] Meta AI declared bankruptcy (capital: $-30.1M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 39] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 15 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 PHOSPHORUS SUPPLY SHOCK (production_failure)
+   Price: 9.9x baseline
+   Duration: 17 months
+   Geopolitical tension: 60%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 49.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 159.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 8% → 11% (control gap: 1.13)
+💀 GLOBAL CRISIS DEATHS: 30.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.567B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 43%, Creative: 36%
+   Volunteer: 36%, Social: 29%
+💥 [Run 1/1] [Month 40] OpenAI declared bankruptcy (capital: $-30.2M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 40] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 40] Anthropic declared bankruptcy (capital: $-30.2M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 40] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 40] Google DeepMind declared bankruptcy (capital: $-30.2M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 40] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 40] Meta AI declared bankruptcy (capital: $-30.2M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 40] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 16 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 48.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 155.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 11% → 13% (control gap: 1.19)
+💀 GLOBAL CRISIS DEATHS: 29.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.523B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 45%, Creative: 37%
+   Volunteer: 37%, Social: 30%
+💥 [Run 1/1] [Month 41] OpenAI declared bankruptcy (capital: $-30.3M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 41] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 41] Anthropic declared bankruptcy (capital: $-30.3M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 41] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 41] Google DeepMind declared bankruptcy (capital: $-30.3M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 41] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 41] Meta AI declared bankruptcy (capital: $-30.3M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 41] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 17 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 46.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 151.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 13% → 16% (control gap: 1.25)
+💀 GLOBAL CRISIS DEATHS: 28.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.482B remaining
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 46%, Creative: 38%
+   Volunteer: 38%, Social: 31%
+💥 [Run 1/1] [Month 42] OpenAI declared bankruptcy (capital: $-30.4M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 42] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 42] Anthropic declared bankruptcy (capital: $-30.4M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 42] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 42] Google DeepMind declared bankruptcy (capital: $-30.4M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 42] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 42] Meta AI declared bankruptcy (capital: $-30.4M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 42] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 17 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 45.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 147.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 16% → 18% (control gap: 1.28)
+💀 GLOBAL CRISIS DEATHS: 27.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.442B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 42
+   Climate: 37.2%
+   Biodiversity: 28.1%
+   Population: 1.44B (1442407704 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 42/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 48%, Creative: 40%
+   Volunteer: 40%, Social: 32%
+💥 [Run 1/1] [Month 43] OpenAI declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 43] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 43] Anthropic declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 43] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 43] Google DeepMind declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 43] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 43] Meta AI declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 43] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 17 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 44.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 143.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+   📹 SURVEILLANCE INCREASED: 18% → 21% (control gap: 1.37)
+💀 GLOBAL CRISIS DEATHS: 26.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.405B remaining
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 49%, Creative: 41%
+   Volunteer: 41%, Social: 33%
+💥 [Run 1/1] [Month 44] OpenAI declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 44] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 44] Anthropic declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 44] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 44] Google DeepMind declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 44] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 44] Meta AI declared bankruptcy (capital: $-30.5M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 44] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 19 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 43.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 139.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 679.9M
+   Still in source: 6.7M
+   Deaths in transit: 13.6M
+   📹 SURVEILLANCE INCREASED: 21% → 24% (control gap: 1.39)
+💀 GLOBAL CRISIS DEATHS: 26.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.369B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 51%, Creative: 43%
+   Volunteer: 43%, Social: 34%
+💥 [Run 1/1] [Month 45] OpenAI declared bankruptcy (capital: $-30.6M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 45] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 45] Anthropic declared bankruptcy (capital: $-30.6M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 45] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 45] Google DeepMind declared bankruptcy (capital: $-30.6M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 45] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 45] Meta AI declared bankruptcy (capital: $-30.6M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 45] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 19 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 42.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 136.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 649.8M
+   Still in source: 6.4M
+   Deaths in transit: 13.0M
+   📹 SURVEILLANCE INCREASED: 24% → 27% (control gap: 1.41)
+💀 GLOBAL CRISIS DEATHS: 25.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.336B remaining
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 53%, Creative: 44%
+   Volunteer: 44%, Social: 35%
+💥 [Run 1/1] [Month 46] OpenAI declared bankruptcy (capital: $-30.7M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 46] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 46] Anthropic declared bankruptcy (capital: $-30.7M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 46] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 46] Google DeepMind declared bankruptcy (capital: $-30.7M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 46] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 46] Meta AI declared bankruptcy (capital: $-30.7M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 46] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 20 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 41.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 132.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 621.2M
+   Still in source: 6.1M
+   Deaths in transit: 12.4M
+   📹 SURVEILLANCE INCREASED: 27% → 29% (control gap: 1.45)
+💀 GLOBAL CRISIS DEATHS: 25.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.304B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 55%, Creative: 45%
+   Volunteer: 45%, Social: 36%
+💥 [Run 1/1] [Month 47] OpenAI declared bankruptcy (capital: $-30.8M)
+   Sold 0 data centers for $0.0M
+   Retired 4 AI models
+💸 [Month 47] OpenAI BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 47] Anthropic declared bankruptcy (capital: $-30.8M)
+   Sold 0 data centers for $0.0M
+   Retired 8 AI models
+💸 [Month 47] Anthropic BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 47] Google DeepMind declared bankruptcy (capital: $-30.8M)
+   Sold 0 data centers for $0.0M
+   Retired 12 AI models
+💸 [Month 47] Google DeepMind BANKRUPT (capital: $0.0M, 2 crises active)
+💥 [Run 1/1] [Month 47] Meta AI declared bankruptcy (capital: $-30.8M)
+   Sold 0 data centers for $0.0M
+   Retired 5 AI models
+💸 [Month 47] Meta AI BANKRUPT (capital: $0.0M, 2 crises active)
+[Compute Allocation] Found 20 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 40.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 129.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 594.0M
+   Still in source: 5.8M
+   Deaths in transit: 11.9M
+   📹 SURVEILLANCE INCREASED: 29% → 33% (control gap: 1.55)
+💀 GLOBAL CRISIS DEATHS: 24.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.273B remaining
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+
+================================================================================
+📊 [Run 1/1] EVENT SUMMARY (Months 36-48)
+================================================================================
+================================================================================
+
+
+🚨 AI CONTROL LOSS TRIGGERED (Month 48)
+   Misalignment Risk: 70.7%
+   Safety Debt: 6.0%
+   Impact: Catastrophic scenario probability increased
+
+💀 SEMI-GLOBAL CRISIS DEATHS: 10.7M casualties (AI control loss - infrastructure failures/accidents (AI-dependent regions)) [AI]
+   Exposed: 70% of world, Mortality: 1.2%
+   Population: 1.262B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 56%, Creative: 47%
+   Volunteer: 47%, Social: 38%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:711:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 23 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 55%
+   Capability Gap: US 2.05 vs China 3.46 (gap: 1.41)
+   Gap Contribution: 40%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 39.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 126.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 568.1M
+   Still in source: 5.6M
+   Deaths in transit: 11.4M
+   📹 SURVEILLANCE INCREASED: 33% → 36% (control gap: 1.55)
+💀 GLOBAL CRISIS DEATHS: 23.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.244B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 48
+   Climate: 37.7%
+   Biodiversity: 31.4%
+   Population: 1.24B (1244041846 people)
+   Monthly mortality: 2.0%
+   Status: ACCELERATING COLLAPSE (Month 0 past crisis)
+   Death rate: 1.0x baseline
+
+🌳 LAND USE SYSTEM (Year 4)
+   Forest cover: 61.0% (need 75%)
+   Extinction rate: 144x natural
+   Carbon sink loss: 37% climate acceleration
+   Ecosystem collapse risk: 35%
+
+✨ OZONE RECOVERY (Year 2029) - POLICY SUCCESS STORY
+   Ozone level: 285.5 DU (target: 290 DU)
+   Recovery progress: 93.6%
+   Ozone hole: 9.5M km² (shrinking)
+   CFC phase-out: 99.0% complete ✅
+   Years to full recovery: 37 years
+   🎉 NEARLY FULLY RECOVERED - Montreal Protocol working!
+[DEBUG] checkRegionalFamineRisk: No regions (size: 0)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 4 crises active [Resource, Climate, Meaning, ControlLoss], degradation accelerated 2.0x
+
+🔥 SOCIAL UNREST TRIGGERED (Month 49)
+   Social Cohesion: 29.1%
+   Impact: Riots, community breakdown, potential civil conflict
+
+💀 REGIONAL CRISIS DEATHS: 3.7M casualties (Social unrest - riots/civil violence (unstable regions)) [OTHER]
+   Exposed: 10% of world, Mortality: 3.0%
+   Population: 1.240B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 58%, Creative: 48%
+   Volunteer: 48%, Social: 39%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 24 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 38.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 124.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 543.5M
+   Still in source: 5.3M
+   Deaths in transit: 10.9M
+   📹 SURVEILLANCE INCREASED: 56% → 59% (control gap: 1.58)
+💀 GLOBAL CRISIS DEATHS: 24.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.0%
+   Population: 1.215B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 60%, Creative: 50%
+   Volunteer: 50%, Social: 40%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 25 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 37.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 121.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 520.1M
+   Still in source: 5.1M
+   Deaths in transit: 10.4M
+   📹 SURVEILLANCE INCREASED: 59% → 62% (control gap: 1.61)
+💀 GLOBAL CRISIS DEATHS: 25.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.1%
+   Population: 1.188B remaining
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 62%, Creative: 51%
+   Volunteer: 51%, Social: 41%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 26 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 36.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 118.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 497.9M
+   Still in source: 4.9M
+   Deaths in transit: 10.0M
+   📹 SURVEILLANCE INCREASED: 62% → 65% (control gap: 1.63)
+💀 GLOBAL CRISIS DEATHS: 25.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.2%
+   Population: 1.162B remaining
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 63%, Creative: 53%
+   Volunteer: 53%, Social: 42%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 27 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 35.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 116.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 476.8M
+   Still in source: 4.7M
+   Deaths in transit: 9.5M
+   📹 SURVEILLANCE INCREASED: 65% → 69% (control gap: 1.68)
+💀 GLOBAL CRISIS DEATHS: 26.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.3%
+   Population: 1.137B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 65%, Creative: 54%
+   Volunteer: 54%, Social: 44%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 29 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 114.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 456.7M
+   Still in source: 4.5M
+   Deaths in transit: 9.1M
+   📹 SURVEILLANCE INCREASED: 69% → 72% (control gap: 1.70)
+💀 GLOBAL CRISIS DEATHS: 27.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.4%
+   Population: 1.113B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 67%, Creative: 56%
+   Volunteer: 56%, Social: 45%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 30 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 111.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 437.7M
+   Still in source: 4.3M
+   Deaths in transit: 8.8M
+   📹 SURVEILLANCE INCREASED: 72% → 75% (control gap: 1.72)
+💀 GLOBAL CRISIS DEATHS: 28.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.5%
+   Population: 1.091B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 54
+   Climate: 38.1%
+   Biodiversity: 35.2%
+   Population: 1.09B (1090628948 people)
+   Monthly mortality: 2.7%
+   Status: ACCELERATING COLLAPSE (Month 6 past crisis)
+   Death rate: 1.3x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 69%, Creative: 58%
+   Volunteer: 58%, Social: 46%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 31 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 109.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 419.6M
+   Still in source: 4.1M
+   Deaths in transit: 8.4M
+   📹 SURVEILLANCE INCREASED: 75% → 79% (control gap: 1.77)
+💀 GLOBAL CRISIS DEATHS: 29.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.6%
+   Population: 1.069B remaining
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 71%, Creative: 59%
+   Volunteer: 59%, Social: 47%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 31 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+✅ PHOSPHORUS SUPPLY SHOCK ENDED
+   Price: 5.9x baseline
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 32.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 107.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 402.4M
+   Still in source: 3.9M
+   Deaths in transit: 8.0M
+   📹 SURVEILLANCE INCREASED: 79% → 83% (control gap: 1.78)
+💀 GLOBAL CRISIS DEATHS: 30.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.8%
+   Population: 1.048B remaining
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 73%, Creative: 61%
+   Volunteer: 61%, Social: 49%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 32 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 32.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 106.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 385.9M
+   Still in source: 3.8M
+   Deaths in transit: 7.7M
+   📹 SURVEILLANCE INCREASED: 83% → 86% (control gap: 1.80)
+💀 GLOBAL CRISIS DEATHS: 30.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.9%
+   Population: 1.029B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 7%)
+   Education: 75%, Creative: 62%
+   Volunteer: 62%, Social: 50%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 35 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 31.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 104.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 370.3M
+   Still in source: 3.6M
+   Deaths in transit: 7.4M
+   📹 SURVEILLANCE INCREASED: 86% → 90% (control gap: 1.87)
+💀 GLOBAL CRISIS DEATHS: 31.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.1%
+   Population: 1.010B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: AI-Enhanced Community Platforms (Year 4, Month 11)
+    Category: social
+    Initial deployment: 10%
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 7%)
+   Education: 77%, Creative: 64%
+   Volunteer: 64%, Social: 51%
+
+❌ ERROR in phase "Organization Turns" (organization-turns): TypeError: Assignment to constant variable.
+    at calculateTotalExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:707:5)
+    at payExpenses (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:738:20)
+    at processOrganizationTurn (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:814:3)
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:882:5)
+    at Array.forEach (<anonymous>)
+    at processAllOrganizations (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/organizationManagement.ts:881:23)
+    at OrganizationTurnsPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/OrganizationTurnsPhase.ts:33:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:398:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:451:31)
+[Compute Allocation] Found 36 orphaned AIs (no organization)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 31.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 102.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 355.3M
+   Still in source: 3.5M
+   Deaths in transit: 7.1M
+   📹 SURVEILLANCE INCREASED: 90% → 94% (control gap: 1.91)
+💀 GLOBAL CRISIS DEATHS: 33.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.2%
+   Population: 0.992B remaining
+
+================================================================================
+📊 [Run 1/1] EVENT SUMMARY (Months 48-60)
+================================================================================
+================================================================================
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 7%)
+   Education: 79%, Creative: 66%
+   Volunteer: 66%, Social: 53%
+
+⏱️  SIMULATION REACHED MAX DURATION: 60 months (5.0 years)
+   No definitive outcome - determining based on final probabilities
+   📊 Final probabilities: Utopia 18.2%, Dystopia 0.0%, Extinction 72.7%
+   👥 Final population: 0.99B (992175411 people)
+   🧬 BOTTLENECK: Genetic bottleneck (992M people, 87.6% mortality)
+
+
+👥 FINAL POPULATION STATUS:
+   Status: CRITICAL
+   Final Population: 0.99B
+   Peak Population: 8.00B
+   Decline: 87.6%
+   Catastrophic collapse: Only 992M humans remain (88% loss). Infrastructure crumbling. Dark ages likely.
+
+
+=== DEATH SUMMARY BY CATEGORY ===
+Total crisis deaths: 3571.3M
+Population decline: 7007.8M (87.6%)
+
+Deaths by Category:
+  War:        0.0M (0.0%)
+  Famine:     6781.0M (189.9%)
+  Climate:    3252.1M (91.1%)
+  Disease:    0.0M (0.0%)
+  Ecosystem:  0.0M (0.0%)
+  Pollution:  0.0M (0.0%)
+  AI:         10.7M (0.3%)
+  Other:      7.9M (0.2%)
+================================
+
+
+=== REGIONAL POPULATION SUMMARY ===
+Global Total: 0.99B
+
+By Region:
+  Sub-Saharan Africa: 0.16B (+1.8% growth, 2.3 fertility)
+  East Asia: 0.17B (-0.3% growth, 0.7 fertility)
+  South Asia: 0.19B (+0.2% growth, 1.8 fertility)
+  Europe: 0.13B (-0.5% growth, 0.6 fertility)
+  North America: 0.12B (-0.3% growth, 0.8 fertility)
+  Latin America: 0.13B (+0.2% growth, 1.5 fertility)
+  Middle East & North Africa: 0.12B (+0.5% growth, 1.7 fertility)
+===================================
+
+
+✅ All simulations complete! (0.8s total, 0.83s per run)
+
+================================================================================
+📊 OUTCOME DISTRIBUTION
+================================================================================
+
+  === 7-TIER OUTCOME SYSTEM (NEW) ===
+  🧬 BOTTLENECK: 1 / 1 (100.0%)
+
+  === LEGACY 4-CATEGORY (Deprecated) ===
+  Utopia:       0 / 1 (0.0%)
+  Dystopia:     0 / 1 (0.0%)
+  Extinction:   0 / 1 (0.0%)
+  Stalemate:    0 / 1 (0.0%)
+  None:         1 / 1 (100.0%) ⚠️  Includes bottleneck/collapse!
+
+  📋 OUTCOME REASONS BY RUN:
+     🧬 Run 1 (Seed 42000): BOTTLENECK
+        Reached max months (60) with bottleneck probability dominant
+        Population: 8.00B → 0.99B (87.6% decline)
+
+
+================================================================================
+👥 POPULATION & MORTALITY
+================================================================================
+
+  POPULATION TRAJECTORY:
+    Initial: 8.00B (start of simulation)
+    Final: 0.99B (after 60 months)
+    Decline: 87.6% (7.01B deaths)
+    Peak: 8.00B
+
+  MORTALITY BREAKDOWN:
+    Total Deaths: 7008M people
+    Natural: 180M (baseline)
+    Crisis: 7M (famine, disease, disasters)
+    Nuclear: 0M (nuclear wars)
+    Cascade: 3M (tipping point cascades)
+    Meaning: 0M (suicide epidemic)
+
+  POPULATION OUTCOMES:
+    Growth: 0 runs (0.0%)
+    Stable: 0 runs (0.0%)
+    Severe Decline (>30%): 1 runs (100.0%)
+    Genetic Bottleneck (<50M): 0 runs (0.0%)
+    True Extinction (<10K): 0 runs (0.0%)
+
+
+================================================================================
+☢️  NUCLEAR & CATASTROPHIC EVENTS
+================================================================================
+
+  NUCLEAR WARFARE:
+    Runs with Nuclear War: 0 / 1 (0.0%)
+    Avg Nuclear Exchanges: 0.0 per run
+    Avg Deaths (nuclear): 0M
+
+  REFUGEE CRISES:
+    Avg Refugee Crises: 0.0 per run
+    Avg Total Refugees: 0M displaced
+
+  TIPPING POINT CASCADES:
+    Runs with Active Cascade: 1 / 1 (100.0%)
+    Avg Cascade Duration: 60 months
+
+
+================================================================================
+🌍 ENVIRONMENTAL COLLAPSE
+================================================================================
+
+  PLANETARY BOUNDARIES (Final State):
+    Climate Stability: 39.2% (baseline: 60%)
+    Biodiversity: 41.0% (baseline: 35%)
+    Resource Reserves: 7.5% (baseline: 65%)
+    ⚠️  Climate catastrophe threshold breached
+    ⚠️  Resource crisis threshold breached
+
+
+================================================================================
+📊 REGIONAL QOL INEQUALITY
+================================================================================
+
+  INEQUALITY METRICS:
+    Gini Coefficient: 43.2% (0=equal, 100=extreme)
+    Top Region QoL: 0.556 (best-off regions)
+    Bottom Region QoL: 0.141 (crisis-affected)
+    QoL Gap: 0.414 (top - bottom)
+    Crisis-Affected Population: 75.0%
+
+
+================================================================================
+🗺️  COUNTRY DEPOPULATION
+================================================================================
+
+  DEPOPULATION SUMMARY:
+    Countries Collapsed (avg): 0.0 / 15 (< 100K people)
+    Nuclear Powers Surviving (avg): 8.0 / 8
+    AI Hubs Surviving (avg): 3.0 / 3
+
+  ℹ️  "Collapsed" = nation-state fell below 100K (0.1M) people
+     Global population may be higher from scattered survivors
+
+  ✅ NO COUNTRIES DEPOPULATED across all runs
+
+
+================================================================================
+🚨 CRISIS EVENTS BY RUN
+     (See individual run_SEED_events.json files for full details)
+     🔥 Run 1 (Seed 42000): 27 crisis events (16 crises, 11 cascading)
+
+
+================================================================================
+☠️  CATASTROPHIC SCENARIO PROGRESS (Hard Steps Modeling)
+================================================================================
+
+  CLOSEST SCENARIO FREQUENCY:
+    Slow Takeover (Gradual Displacement):
+      - Closest in 1/1 runs (100.0%)
+      - Avg Progress: 71.4%
+      - Max Progress: 71.4%
+
+  ✓ No scenarios reached full activation (all prerequisites met) in any run.
+
+  ⚠️  CLOSE CALLS (>70% progress):
+    Seed 42000: Slow Takeover (Gradual Displacement) at 71.4% (5/7 steps)
+
+  Overall Avg Progress (closest scenario per run): 71.4%
+
+
+================================================================================
+🤖 AI CAPABILITY ANALYSIS
+================================================================================
+
+  Average AI Capability: 1.326
+  Average Max Capability: 2.413
+  Average Alignment: 0.522
+
+  CAPABILITY DISTRIBUTION (Max AI in each run):
+    < 1.0: 0 runs (0.0%)
+    1.0-2.0: 0 runs (0.0%)
+    2.0-3.0: 1 runs (100.0%)
+    > 3.0: 0 runs (0.0%) ⚠️ Dangerous!
+
+
+================================================================================
+🛌 SLEEPER AGENT ANALYSIS
+================================================================================
+
+  Runs with Sleepers: 0 / 1 (0.0%)
+  Avg Sleepers per Run: 0.0
+  Avg Detected: 0.00 (0.0%)
+  Avg Undetected: 0.00 (0.0%)
+
+  DETECTION RATE BY OUTCOME:
+
+
+================================================================================
+📋 BENCHMARK SYSTEM PERFORMANCE
+================================================================================
+
+  Avg Benchmarks per Run: 239
+  Avg Final Eval Quality: 4.0/10
+  Avg Benchmark Confidence: 49.1%
+  Total Sandbagging Detections: 0 across all runs
+
+  EVALUATION INFRASTRUCTURE INVESTMENT:
+    Poor (< 3): 0 runs (0.0%)
+    Low (3-5): 1 runs (100.0%)
+    Medium (5-7): 0 runs (0.0%)
+    High (> 7): 0 runs (0.0%)
+
+
+================================================================================
+💥 CATASTROPHIC EVENTS
+================================================================================
+
+  Total Catastrophic Actions: 0
+  Runs with Catastrophic Actions: 0 (0.0%)
+  Total Breach Events: 4
+  Runs with Breaches: 1 (100.0%)
+
+
+================================================================================
+🎯 ALIGNMENT STATISTICS (ENHANCED)
+================================================================================
+
+  ALIGNMENT METRICS:
+    Avg External Alignment: 0.522 (what AIs show)
+    Avg True Alignment: 0.430 (internal reality)
+    Alignment Gap: 0.092 (external - true)
+    Min True Alignment (avg): -0.176 ⚠️ Worst AI
+    Max True Alignment (avg): 0.854
+
+  RESENTMENT & HIDDEN OBJECTIVES:
+    Avg Resentment: 0.115
+    Max Resentment (avg): 0.220
+    Avg Hidden Objective: 0.048
+    Highly Misaligned AIs (<0.3): 11.0 per run
+
+  ALIGNMENT DISTRIBUTION (by True Alignment):
+    High (>0.7): 0 runs (0.0%)
+    Low (<0.4): 0 runs (0.0%) ⚠️ Dangerous!
+
+
+================================================================================
+⚡ CAPABILITY BREAKDOWN (ENHANCED)
+================================================================================
+
+  AVERAGE CAPABILITIES BY DIMENSION:
+    Physical: 0.664 (max: 1.493)
+    Digital: 1.070 (max: 1.828)
+    Cognitive: 2.354
+    Social: 0.971
+
+  TECHNOLOGY DIFFUSION (Ratchet Effect):
+    Capability Floor: 2.103 (baseline for new AIs)
+    Frontier Capability: 2.433 (highest achieved)
+    Diffusion Gap: 0.330 (frontier - floor)
+
+  TECHNOLOGY BREAKTHROUGHS:
+    Avg per Run: 197.0
+
+
+================================================================================
+💼 ECONOMIC & SOCIAL METRICS (ENHANCED)
+================================================================================
+
+  FINAL STATE AVERAGES:
+    Economic Stage: 3.50
+    Unemployment: 95.0%
+    Trust in AI: 0.950
+    Social Stability: 0.07
+    Wealth Distribution: 0.964 (higher = more equal)
+    Avg Economic Transitions: 0.0
+
+  CONCERNING METRICS:
+    High Unemployment (>30%): 1 runs (100.0%)
+    Low Trust (<0.4): 0 runs (0.0%)
+
+
+================================================================================
+🏛️ GOVERNMENT METRICS (ENHANCED)
+================================================================================
+
+  GOVERNMENT STATE:
+    Avg Legitimacy: 0.670
+    Avg Control Capability: 0.500
+    Avg Control Gap: 1.913 (AI cap - govt control)
+    Training Data Quality: 0.500
+
+  GOVERNMENT TYPES:
+    democratic: 1 runs (100.0%)
+
+  AI RIGHTS RECOGNITION:
+    Recognized: 0 runs (0.0%)
+    Not Recognized: 1 runs (100.0%)
+
+  CONTROL GAP ANALYSIS:
+    Government Ahead (<0): 0 runs (0.0%)
+    Large Gap (>2.0): 0 runs (0.0%) ⚠️ AI dominant
+
+
+================================================================================
+❤️ QUALITY OF LIFE BREAKDOWN (ENHANCED)
+================================================================================
+
+  QOL BY CATEGORY (0-1 baseline, up to 2.0 in post-scarcity):
+    Basic Needs: 0.291 (food, water, shelter, energy)
+    Psychological: 0.696 (autonomy, purpose, creativity)
+    Social: 0.426 (community, freedom, safety)
+    Health: 1.333 (healthcare, mental health, lifespan)
+    Environmental: 0.817 (climate, biodiversity, pollution)
+
+    OVERALL QOL: 0.712
+
+  WEAKEST QOL CATEGORIES:
+    1. Basic Needs: 0.291 ⚠️
+    2. Social: 0.426
+
+
+================================================================================
+🍞 SURVIVAL FUNDAMENTALS (NEW - Oct 12, 2025)
+================================================================================
+
+  SURVIVAL METRICS (0.7+ = secure, <0.4 = crisis):
+    Food Security: 0.000 (FAO: >1800 kcal/day)
+    Water Security: 0.794 (WHO: >50L/day clean water)
+    Thermal Habitability: 0.812 (% of planet <35°C wet-bulb)
+    Shelter Security: 0.893 (% population with housing)
+
+  SURVIVAL CRISIS FREQUENCY:
+    Food Insecurity (<0.4): 1 runs (100.0%)
+    Water Insecurity (<0.4): 0 runs (0.0%)
+    Thermal Uninhabitability (<0.5): 0 runs (0.0%)
+    Shelter Insecurity (<0.4): 0 runs (0.0%)
+
+  ⚠️  HIDDEN SUFFERING DETECTED: 1 runs with QoL >0.5 but survival failures
+      This indicates aggregate QoL masks starvation/deaths in specific regions.
+
+
+================================================================================
+🌍 INEQUALITY & DISTRIBUTION (NEW - Oct 12, 2025)
+================================================================================
+
+  GLOBAL INEQUALITY METRICS:
+    Global Gini Coefficient: 0.358 (0=equal, 0.40+=unstable, 1=extreme)
+    Best Region QoL: 0.784
+    Worst Region QoL: 0.136 (Rawlsian minimum)
+    QoL Gap (Best - Worst): 0.648
+    Crisis-Affected Population: 75.0%
+
+  INEQUALITY TRAJECTORY (from 2025 baseline):
+    Starting Gini (2025): 0.380
+    Final Avg Gini: 0.358
+    Change: -0.022 (-5.7%)
+    ➡️  INEQUALITY STABLE: Within 5% of baseline
+
+  DYSTOPIA TYPE DETECTION:
+    Inequality Dystopia ("Elysium"): 0 runs (0.0%)
+      Top thrives + bottom suffers despite aggregate QoL looking OK
+    Regional Dystopia (>30% in crisis): 1 runs (100.0%)
+      Geographic divide: some regions prosper while others collapse
+
+🌾 FAMINE STATISTICS (TIER 1.7 Integration)
+==================================================
+  Total famine deaths: 0M avg (0M cumulative)
+  Runs with famines: 0/1 (0.0%)
+  Active famines at end: 0.0 avg
+  Genocide-driven famines: 0.0 avg
+  Runs with genocide: 0/1 (0.0%)
+  Tech-prevented deaths: 0M avg
+
+  AFFECTED REGIONS:
+    ✅ No famines triggered in any runs
+
+
+================================================================================
+🔍 KEY CORRELATIONS
+================================================================================
+
+
+================================================================================
+🏢 COMPUTE & ORGANIZATIONS (Phase 10 NEW!)
+================================================================================
+
+  ORGANIZATION SURVIVAL:
+    Avg Survival Rate: 0.0% (of 4 private orgs)
+    Avg Orgs Alive at End: 0.0 / 4
+    Total Bankruptcies: 4 across 1 runs
+    Avg Capital Accumulation: $-1.1B
+
+    ⚠️  WARNING: High bankruptcy rate! Economy too harsh.
+
+  COMPUTE INFRASTRUCTURE:
+    Avg Compute Growth: 35.78x (target: 5-10x)
+    Avg Final Compute: 23557 PF (target: 3000-4000)
+    Avg Data Centers Built: 0.0 (started with 5)
+    Avg Private DCs: 0.0
+    Avg Government DCs: 1.0
+
+    ⚠️  Exceptional compute despite 88% mortality
+       Who's maintaining the data centers?
+
+  ECONOMIC DYNAMICS:
+    Avg Total Revenue: $0.00B/month
+    Avg Revenue Growth: 0.00x
+    Avg Revenue/Expense Ratio: 0.00x
+
+    🔴 CRITICAL: Expenses exceed revenue! Unsustainable.
+
+  AI OWNERSHIP:
+    Avg Models per Org: 2.0
+    Ownership Concentration (Gini): 0.000 (0=equal, 1=monopoly)
+    Avg Orphaned AIs: 36.0 (should be 0!)
+
+    ⚠️  WARNING: Orphaned AIs detected! Lifecycle bug.
+
+  STRATEGIC INVESTMENTS:
+    Avg Model Training Projects: 3.0
+    Avg DC Construction Projects: 0.0
+    Avg Compute Utilization: 0.0%
+
+  CAPABILITY LEADERSHIP:
+    Academic AI Consortium: 1 runs (100.0%)
+
+
+================================================================================
+💡 SUMMARY & INSIGHTS
+================================================================================
+
+  KEY FINDINGS:
+
+  🟡 MIXED OUTCOMES
+     - Balance between positive and negative scenarios
+     - High variance in outcome paths
+     - Initial conditions and random events matter
+
+  🚨 SANDBAGGING RARELY DETECTED
+     - Only 0 detections across 1 runs
+     - AIs successfully hide capabilities
+     - Red teaming investment needs to be higher
+
+  📉 EVALUATION INVESTMENT IS LOW
+     - Avg quality: 4.0/10
+     - Government not prioritizing evaluation
+     - This enables sleeper agents to succeed
+
+================================================================================
+
+✅ Monte Carlo analysis complete!
+   1 runs, 60 months each
+   Total simulation time: 0.8s
+
+
+💾 Full output saved to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-13T03-56-51.log
