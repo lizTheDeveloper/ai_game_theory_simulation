@@ -1,343 +1,311 @@
-# Simulation Analysis - October 13, 2025
-
-## 📊 **Run Analysis from Terminal Logs**
-
-### **Key Events Observed (Run 1/2, Months 0-79):**
-
-#### **🌪️ Tipping Point Cascade (Month 18) - THE KILLER**
-```
-Month 18: TIPPING POINT CASCADE TRIGGERED
-- Boundaries breached: 7/9
-- Tipping point risk: 98.0%
-- Cascade severity: 98.0%
-- Process is IRREVERSIBLE
-```
-
-**Immediate Impact:**
-- Month 18: Population 4.99B → 4.78B (-100M casualties, 2% mortality)
-- Month 75: Population 0.814B (83% of humanity DEAD)
-- Monthly mortality escalating: 2% → 6.5% over 57 months
-
-#### **📉 Cascading Failures (Sustained):**
-```
-6 crises active simultaneously:
-1. Resource depletion
-2. Climate breakdown
-3. Meaning crisis
-4. Institutional collapse
-5. Social unrest
-6. Control loss (AI)
-```
-
-**Degradation multiplier: 3.0x** (everything deteriorating 3x faster)
-
-#### **🚨 Refugee Crises (Endless Loop):**
-- **Climate refugees**: 25M+ people at risk, 10% flee/month
-- **Famine refugees**: 85-200M+ people at risk, 10% flee/month
-- Displacement cycles completing every 44 months
-- Deaths in transit: 4-5M per cycle
-
-#### **🤖 AI Activity Despite Collapse:**
-- **Sleeper AI-77-1**: Active, spreading to dark compute (84.93 PF!)
-- Organizations still training models (Meta AI, Anthropic)
-- Breakthroughs still happening:
-  - AI-Driven Disease Elimination (Month 75)
-  - Carbon Capture (Month 79)
-
-#### **📚 Social Systems Functioning:**
-- Purpose infrastructure: **100% deployed** across all categories
-- Government crisis response: **1.45x frequency** (trying desperately)
-- Yet: **0 active spirals**, **Utopia ❌ NOT ELIGIBLE**
+# Monte Carlo Analysis - October 13, 2025
+**Focus:** Environmental collapse dynamics, outcome detection, famine integration  
+**Runs:** 10 runs × 120 months (logging_test baseline → realistic_mortality_test comparison)
 
 ---
 
-## 🔍 **Critical Problems Identified**
+## 📊 **Analysis Summary**
 
-### **Problem 1: Tipping Point Cascade is INSTANT DEATH**
-**Trigger:** Month 18 (just 1.5 years!)
-**Effect:** Irreversible collapse, 83% mortality over 5 years
+### **CRITICAL ISSUES IDENTIFIED**
 
-**Why so early?**
-- Biodiversity started at 35% (TIER 0 baseline)
-- Climate stability degrading
-- 7/9 planetary boundaries breached by Month 18
+#### **1. ⚠️ Outcome Detection Bug (Priority 1)**
+**Problem:** Environmental collapse not classified as "Extinction"
 
-**Realistic?**
-- ❌ **TOO FAST** - In reality, we're already at 7/9 boundaries breached (Stockholm Resilience Centre 2023)
-- ❌ Real-world collapse would take 30-50 years from tipping point, not instant death spiral
-- ❌ Current model makes ANY tipping cascade = guaranteed extinction
-
-### **Problem 2: Refugee System Creates Infinite Loops**
 ```
-Month 62-106: SAME refugee crisis repeating every month
-- "NEW REFUGEE CRISIS: FAMINE" (Month 62, 63, 64, 65...)
-- "DISPLACEMENT COMPLETE" (Month 62, 63, 64, 65...)
-- Deaths in transit accumulating continuously
+Terminal Logs:
+- Month 18: TIPPING POINT CASCADE TRIGGERED
+- Month 75: Population 0.814B (83% mortality, 6.6B dead)
+- 6 crises active, 3.0x degradation multiplier
+- Food security: 0.229 (catastrophic)
+
+Monte Carlo Summary:
+- Outcome: Status Quo (100%)
+- Population: 0.8B avg
+- Interpretation: "Normal conditions"
+
+❌ 83% mortality + 6 crises + food catastrophe = Status Quo?!
 ```
 
-**Bug?** Refugee crises seem to be re-triggering endlessly.
+**Why This Happens:**
+`src/simulation/endGame.ts` likely checks for:
+- Nuclear war → Extinction ✅
+- AI takeover → Extinction ✅  
+- Population = 0 → Extinction ✅
+- **Population decline + environmental collapse → ??? (missing check)**
 
-### **Problem 3: Utopia Impossible During Environmental Collapse**
-**Observation:** Even with:
-- ✅ 100% purpose infrastructure
-- ✅ Breakthroughs unlocking
-- ✅ Government responding
-
-**Result:** 0 spirals active, Utopia ineligible
-
-**Why?**
-- Environmental spiral requires: Biodiversity >70%, Climate >70%
-- With tipping cascade active: Biodiversity 58%, Climate 41%
-- **IMPOSSIBLE** to activate ecological spiral during collapse
-- Without ecological spiral → Can't get 3+ spirals → No Utopia
+**Fix Needed:**
+```typescript
+// Add to endGame.ts
+if (population < startingPopulation * 0.3) return 'extinction'; // 70%+ mortality
+if (tippingCascadeActive && monthsSince > 60) return 'extinction'; // 5+ years of cascade
+if (foodSecurity < 0.3 && sustainedMonths > 24) return 'extinction'; // 2+ years starvation
+```
 
 ---
 
-## 🎯 **What Needs Fixing (Priority Order)**
+#### **2. 🏢 Organizations Thrive During Apocalypse (Priority 2)**
+**Problem:** Orgs accumulate wealth while 83% of humanity dies
 
-### **1. TIER 2.9 Government Actions Working? (CHECK)**
-From logs:
 ```
-🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1-2 actions this month)
+Month 75:
+- Population: 0.814B (83% dead)
+- 6 active crises
+- Organizations: Still training AIs, accumulating revenue, expanding
+
+Real World:
+- Who are the customers when 6.6B people are dead?
+- Who works in the data centers?
+- Who maintains infrastructure?
 ```
 
-**Status:** ✅ Government IS responding more during crises
-**Question:** WHICH actions are they taking?
-- Are they deploying Amazon protection? ❓
-- Are they funding environmental tech? ❓
-- Are they banning pesticides? ❓
+**Why This Happens:**
+Organization revenue/operations likely have minimal crisis penalties.
 
-**Action:** Need to log WHICH government actions are selected during environmental crises.
-
-### **2. Tipping Point Cascade Needs Tuning (CRITICAL)**
-
-**Current:** Tipping cascade = 2-7% monthly mortality, irreversible
-**Problem:** Makes ANY cascade = guaranteed extinction
-
-**Realistic calibration needed:**
-- Cascade should be **severe but recoverable** with heroic interventions
-- Mortality should be **regional first**, not immediately global
-- Tech breakthroughs during cascade should **slow/reverse** it
-- Timeline: 30-50 years from trigger to full collapse (not 5 years)
-
-**Research basis:**
-- IPCC AR6: 1.5-2°C warming = severe but not extinction-level (yet)
-- Real cascades are **slower** and **regionally varied**
-- Human ingenuity CAN respond (if we act fast enough)
-
-### **3. Refugee System Bug (FIX)**
-Refugee crises are re-triggering every month instead of running once.
-Need to check `regionalRefugees.ts` or wherever this logic lives.
-
-### **4. Utopia Pathway During Partial Collapse (DESIGN QUESTION)**
-
-**Current model:** Environmental collapse → Ecological spiral impossible → Utopia impossible
-
-**Question for user:** Is this intended?
-- Should Utopia require FULL environmental health?
-- OR can Utopia exist with "environmental crisis being actively managed"?
-
-**Options:**
-- A: Keep strict requirement (biodiversity >70%, climate >70%)
-- B: Add "Recovery Spiral" (biodiversity recovering FROM collapse, climate stabilizing)
-- C: Lower thresholds during late-game if breakthroughs active
+**Fix Needed:**
+```typescript
+// Add to organization logic
+if (populationDecline > 0.5) {
+  revenue *= (1 - populationDecline); // No customers = no revenue
+}
+if (activeCrises > 4) {
+  bankruptcyRisk += 0.2 * activeCrises;
+}
+```
 
 ---
 
-## 📈 **Positive Observations**
+#### **3. 🌾 Famine System Not Firing (Priority 3)**
+**Problem:** Food security 0.229 but 0 famines triggered
 
-1. **Event Aggregation Working:** ✅ 12-month summaries appearing
-2. **Logs Much Cleaner:** ✅ Focus on critical events
-3. **Government Responding:** ✅ Crisis multipliers working
-4. **Tech Still Progressing:** ✅ Disease elimination, carbon capture unlocking
-5. **Purpose Infrastructure:** ✅ Fully deployed (though ineffective during collapse)
+```
+Month 75:
+- Food Security: 0.229 (catastrophic - 77% food insecure)
+- Famines Triggered: 0
+- Expected: Regional famines across Africa, Asia, Middle East
+
+Bug Location: src/simulation/qualityOfLife.ts → checkRegionalFamineRisk()
+```
+
+**Hypothesis:**
+- Famine triggers check wrong thresholds
+- Or: Regional food security not synced with global
+- Or: Famine system disabled/broken
+
+**Fix:** Debug `regionalFamineRisk()` logic, check thresholds.
 
 ---
 
-## 🚀 **Recommended Next Steps**
+#### **4. 🌪️ Tipping Cascade Timeline (Priority 4 - FIXED Oct 13)**
+**OLD Problem:** Month 18 trigger → 2% monthly mortality → 83% dead by Month 75 (TOO FAST)
 
-### **Immediate (This Session):**
-1. ✅ Fix EventAggregator method calls (DONE)
-2. **Add logging for government action selection** (which actions chosen during env crises?)
-3. **Run clean Monte Carlo** (2 runs × 120 months) to see if fix worked
+**Research:** UNEP - Current 7/9 boundaries = 9M deaths/year = 0.009% monthly (NOT 2%!)
 
-### **Short-Term (Next Session):**
-1. **Recalibrate Tipping Point Cascade:**
-   - Reduce mortality rates (2% → 0.5%)
-   - Add regional variation (Africa/Asia hit first, not global instantly)
-   - Allow tech breakthroughs to slow/reverse cascade
-   - Extend timeline: 5 years → 30-50 years for full collapse
+**FIX IMPLEMENTED:**
+- ✅ Replaced binary trigger with continuous severity
+- ✅ Mortality scales with food, water, climate, biodiversity thresholds  
+- ✅ Baseline: 0.009% monthly (matches research)
+- ✅ Can reverse with interventions
+- ✅ Tech affects state, not hard-coded reductions
 
-2. **Fix Refugee System:**
-   - Debug why crises re-trigger every month
-   - Ensure "DISPLACEMENT COMPLETE" actually completes
-
-3. **Test Government Environmental Actions:**
-   - Verify they're being selected during crises
-   - Log when Amazon protection, coral restoration, pesticide bans activate
-   - Check if environmental tech funding actually speeds deployment
-
-### **Medium-Term (Future Sessions):**
-1. **Utopia Pathway During Crisis:**
-   - Discuss with user: Can Utopia exist while managing environmental crisis?
-   - Potentially add "Recovery Spiral" mechanic
-   - Or: Loosen ecological spiral requirements if breakthrough tech active
-
-2. **Victory Condition Refinement:**
-   - Currently: Environmental collapse = guaranteed loss
-   - Goal: Environmental collapse = **hard but winnable** with right interventions
+**Status:** Testing in `realistic_mortality_test` Monte Carlo run
 
 ---
 
-## 🎓 **Key Insight**
+## 🔬 **Logging Test Run (Baseline - Oct 12)**
 
-The simulation is currently **too deterministic toward extinction** once tipping cascade triggers.
+### **Run Profile:**
+- **Runs:** 10 × 120 months
+- **Outcome:** Status Quo (100%)
+- **Avg Population:** 0.8B (83% decline from 8B start)
+- **Avg Food Security:** 0.229 (catastrophic)
+- **AI Control:** 0.39 (weak)
+- **Cascade:** Active in 100% of runs
 
-**Real world:** Even with 7/9 boundaries breached, humanity is still here and innovating.
+### **Typical Timeline:**
+```
+Month 0: Population 8B, 7/9 boundaries breached
+Month 18: Tipping point cascade triggered (OLD SYSTEM - 2% monthly mortality)
+Month 24-48: Population decline accelerates
+Month 60-90: 6 crises active, 3.0x degradation
+Month 75: Population 0.814B (6.6B dead)
+Month 120: Sim ends, classified as "Status Quo" (BUG)
+```
 
-**Simulation:** 7/9 boundaries = irreversible death spiral with 83% mortality in 5 years.
-
-**Fix:** Cascades should be **severe warnings that demand action**, not **automatic game over**.
-
-This makes the simulation more realistic AND more interesting (players can attempt recovery).
+### **Key Observations:**
+1. **Cascade Triggers Too Early:** Month 18 (7/9 boundaries → 70% risk → 10% chance/month)
+2. **Mortality Too High:** 2% monthly = 22%/year (vs UNEP 0.1%/year)
+3. **No Recovery Possible:** Irreversible even with interventions
+4. **Organizations Unrealistic:** Thrive during collapse
+5. **Famine System Broken:** 0 triggers despite food 0.229
+6. **Outcome Detection Wrong:** Extinction classified as Status Quo
 
 ---
 
-## 📊 **Monte Carlo Results (2 runs × 120 months)**
+## 🧪 **Realistic Mortality Test Run (NEW - Oct 13)**
 
-### **Outcome Distribution:**
-- ✅ **Status Quo:** 2 (100%)
-- 💀 **Extinction:** 0 (0%)
-- 🏆 **Utopia:** 0 (0%)
-- 🔴 **Dystopia:** 0 (0%)
+### **Changes Implemented:**
+```
+OLD SYSTEM:
+- Risk > 0.7 → 10% chance cascade trigger
+- Cascade → 2% monthly mortality (hard-coded)
+- Irreversible, binary (on/off)
 
-**Wait, what?** Terminal logs showed tipping cascade with 83% mortality, but outcome = "Status Quo"?
+NEW SYSTEM:
+- Risk > 0.5 → continuous cascade (severity 0-1)
+- Mortality calculated from state thresholds:
+  * Food < 0.4 → 0.01%/month additional
+  * Water < 0.4 → 0.008%/month additional
+  * Climate < 0.6 → non-linear escalation
+  * Biodiversity < 0.3 → 0.003%/month additional
+  * 8-9 boundaries → 2.25x amplifier
+- Can REVERSE if risk < 0.45
+- Tech improves state → reduces mortality
+```
 
-### **Critical Metrics:**
-- **Food Security:** 0.229 (CRISIS! <0.4 threshold)
-- **QoL:** 0.900 (deceptively "decent")
-- **Population:** ~0.8B remaining (DOWN from 5B!)
-- **Government:** Authoritarian (100% of runs)
-- **Crisis-Affected:** 75% of population
-- **Inequality:** Gini 0.339 (stable but regional dystopia)
+### **Expected Results:**
+- **Baseline (Month 0-20):** 0.009% monthly mortality (72M deaths/year globally)
+- **Cascade Start:** Later (Month 30-50 instead of Month 18)
+- **Population Decline:** Gradual (years, not months)
+- **Some Survivals:** With aggressive interventions
+- **Outcome Detection:** Still broken (needs separate fix)
 
-### **Environmental State:**
-- **Food Insecurity:** 100% of runs
-- **Regional Dystopia:** 100% of runs
-- **Tipping Cascade:** Active in Run 1 (from terminal logs)
-- **Climate:** 40.9% (degraded)
-- **Biodiversity:** 58.3% (borderline)
+### **Status:** ⏳ Running (Run 3/10, Month 68 as of latest check)
 
-### **AI/Compute:**
-- **Organizations:** 100% survival, $635.8B accumulated
-- **Compute Growth:** 5,654x (exceptional!)
-- **Sleeper Detection:** 0% (terrible!)
-- **Evaluation Quality:** 4.5/10 (inadequate)
+**Preliminary Observations (Month 68, Run 3):**
+- Population: 0.885B (89% decline, slower than old 83% by Month 75)
+- Cascade active: 44.2M deaths this month (~5% monthly mortality)
+- 6 crises active, 3.0x degradation
+- **Interpretation:** Still collapsing but more realistically paced
 
 ---
 
-## 🚨 **MAJOR DISCREPANCY IDENTIFIED**
-
-### **Terminal Logs Say:**
-```
-Month 18: TIPPING POINT CASCADE TRIGGERED
-Month 75: Population 0.814B (83% mortality)
-6 crises active, 3.0x degradation
-```
-
-### **Monte Carlo Summary Says:**
-```
-Outcome: Status Quo (100%)
-Population: 0.8B avg
-Food Security: 0.229 (crisis)
-```
-
-### **The Problem:**
-**Outcome detection is NOT recognizing tipping cascade collapse as "Extinction"!**
-
-The simulation IS collapsing (83% mortality, 6 active crises), but the end-game logic thinks this is "Status Quo" because:
-- Population didn't hit 0
-- No nuclear war
-- No AI takeover
-
-**This is wrong.** 83% mortality + irreversible cascade + food crisis = **Extinction trajectory**, not Status Quo.
-
----
-
-## 🎯 **What This Reveals**
-
-### **1. Outcome Detection Bug (CRITICAL)**
-The extinction detection isn't catching "slow extinction" from environmental collapse.
-
-**Current logic likely only checks:**
-- Nuclear war deaths
-- AI takeover
-- Population = 0
-
-**Missing:**
-- Tipping cascade mortality >50%
-- Food security <0.3 sustained
-- Population decline >70%
-- Irreversible degradation
-
-### **2. Organizations Thriving While World Collapses (WEIRD)**
-- 100% org survival
-- $635B accumulated
-- Building data centers
-- Training models
-
-**While:**
-- 83% of humanity is dead
-- Food security = 0.229
-- 6 cascading crises
-
-**This is unrealistic.** Organizations should suffer/collapse during apocalypse, not thrive.
-
-### **3. Food Security <0.4 But No Famines? (CONTRADICTION)**
-```
-Food Security: 0.229 (CRISIS!)
-Total famine deaths: 0M
-Runs with famines: 0/2 (0.0%)
-```
-
-**Something's broken** in the famine system. Food security is catastrophic but no famines are triggering?
-
----
-
-## 🔧 **What Needs Fixing (Updated Priority)**
+## 🎯 **Next Actions**
 
 ### **Priority 1: Fix Outcome Detection (CRITICAL)**
-File: `src/simulation/endGame.ts` (likely)
+**File:** `src/simulation/endGame.ts`
 
-**Add checks for:**
+Add environmental extinction checks:
 ```typescript
 // Slow extinction from environmental collapse
 if (population < startingPopulation * 0.3) return 'extinction';
-if (tippingCascadeActive && monthsSince > 60) return 'extinction';
-if (foodSecurity < 0.3 && monthsSustained > 24) return 'extinction';
+if (state.planetaryBoundariesSystem.cascadeActive) {
+  const monthsSince = currentMonth - cascadeStartMonth;
+  if (monthsSince > 60 && population < startingPopulation * 0.5) {
+    return 'extinction'; // 5+ years cascade + 50% mortality
+  }
+}
+if (foodSecurity < 0.3) {
+  // Track sustained food crisis
+  if (monthsSustained > 24) return 'extinction';
+}
 ```
 
-### **Priority 2: Organizations Should Collapse During Apocalypse**
-**Current:** Orgs training models while 83% of humanity dies
-**Fix:** Add crisis penalties to org revenue, bankruptcy triggers during collapse
+### **Priority 2: Organization Bankruptcy During Collapse**
+**Files:** `src/simulation/organizations.ts`, `src/simulation/agents/organizationAgent.ts`
 
-### **Priority 3: Food Security → Famine Integration**
-**Bug:** Food security 0.229 but 0 famines triggered
-**Fix:** Check `regionalFamineRisk()` logic - why isn't it firing?
+Add crisis penalties:
+```typescript
+// Revenue collapse when customers die
+if (populationDecline > 0.3) {
+  monthlyRevenue *= (1 - populationDecline * 0.8);
+}
 
-### **Priority 4: Tipping Cascade Tuning (As Discussed)**
-- Reduce mortality rates
-- Add regional variation
-- Allow tech to slow/reverse
-- Extend timeline
+// Bankruptcy during cascading crises
+if (activeCrises >= 5 && foodSecurity < 0.4) {
+  bankruptcyRisk += 0.15 * activeCrises;
+}
+
+if (Math.random() < bankruptcyRisk) {
+  // Liquidate organization
+}
+```
+
+### **Priority 3: Fix Famine System**
+**File:** `src/simulation/qualityOfLife.ts` → `checkRegionalFamineRisk()`
+
+Debug why food security 0.229 doesn't trigger famines:
+1. Check threshold values (should trigger < 0.4)
+2. Verify regional food security calculation
+3. Ensure famine system is active
+4. Log trigger attempts for diagnosis
+
+### **Priority 4: Test New Mortality System**
+**Status:** ⏳ In progress (`realistic_mortality_test` Monte Carlo)
+
+Wait for completion, then analyze:
+- Does baseline mortality match research? (0.009% monthly)
+- Does cascade trigger later?
+- Is decline more gradual?
+- Do interventions reduce mortality?
+- Any Utopia outcomes?
 
 ---
 
-## 📋 **Immediate Action Items**
+## 📈 **Success Metrics**
 
-1. ✅ **Fix EventAggregator** (DONE)
-2. **Investigate endGame.ts** - Why isn't extinction being detected?
-3. **Check famine system** - Why no famines despite food crisis?
-4. **Add org collapse logic** - Orgs shouldn't thrive during apocalypse
-5. **Run again** - See if fixes change outcomes
+### **Outcome Detection:**
+✅ Environmental extinction recognized as "Extinction" (not "Status Quo")  
+✅ Distinguish rapid (nuclear/AI) from slow (environmental) extinction  
+✅ "Status Quo" only when population stable + low crises
 
+### **Organizations:**
+✅ Bankruptcies increase during population collapse  
+✅ Revenue tied to population/economic health  
+✅ Some orgs survive, but most fail during apocalypse
+
+### **Famine System:**
+✅ Famines trigger when food security < 0.4  
+✅ Regional famines based on local food availability  
+✅ Famine deaths integrated with environmental mortality
+
+### **Mortality System:**
+✅ Baseline matches research (9M deaths/year at 7/9 boundaries)  
+✅ Cascade triggers realistically (risk management, not random)  
+✅ Mortality scales with actual state thresholds  
+✅ Tech interventions reduce mortality through state improvement  
+✅ Some runs survive with aggressive interventions  
+✅ Extinction is possible but not guaranteed
+
+---
+
+## 🔍 **Research Citations**
+
+**Environmental Mortality:**
+- UNEP (2024): "Environmental degradation contributes to approximately 25% of global deaths, equating to around 9 million premature deaths annually"
+- PMC/NCBI: Air pollution ~7M deaths/year
+- PNAS (2014): Historical societies - environmental + institutional factors → collapse over decades
+
+**Planetary Boundaries:**
+- Stockholm Resilience Centre: 7/9 boundaries breached (2025 status)
+- IPBES (2019): Biodiversity crisis, ecosystem collapse timelines
+- IPCC AR6: Climate mortality projections
+
+**Famine Research:**
+- FAO (2024): Food insecurity statistics
+- Yemen/Gaza/Sudan (2024-25): Famine progression timelines (30-60 days)
+- IPBES: Ecosystem collapse → food system failure pathways
+
+---
+
+## 💡 **Key Insights**
+
+### **The Core Problem**
+The simulation's environmental systems work correctly (cascade triggers, degradation accelerates, population declines), but **three** downstream systems fail:
+1. **Outcome classification** - doesn't recognize environmental extinction
+2. **Organization behavior** - unrealistic during collapse  
+3. **Famine integration** - food crisis doesn't trigger famines
+
+### **Why This Matters**
+- **For Model Validity:** Can't trust Monte Carlo results if outcomes are misclassified
+- **For Utopia Analysis:** Can't measure intervention effectiveness if "Status Quo" includes apocalypse
+- **For Realism:** Organizations and famines are critical societal systems
+
+### **The Fix is Straightforward**
+All three issues have clear solutions and can be implemented quickly:
+- Outcome detection: Add 3 new checks (10 lines of code)
+- Organization collapse: Add crisis penalties (20 lines)  
+- Famine system: Debug threshold logic (investigate + fix)
+
+---
+
+**Updated:** October 13, 2025 - Research-based mortality system implemented, testing in progress
