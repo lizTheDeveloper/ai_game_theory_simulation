@@ -162,40 +162,35 @@ export function updateHumanPopulation(state: GameState): void {
     stabilityModifier *
     pressureModifier;
 
-  // === 3. CALCULATE DEATH RATE ===
-  // Affected by: healthcare, food/water, climate, pollution, war
-
+  // === 3. CALCULATE DEATH RATE (NEW: Research-Based) ===
+  // NEW (Oct 13, 2025): Environmental mortality now calculated from actual thresholds
+  // Uses calculateEnvironmentalMortality() from qualityOfLife.ts
+  // Research: UNEP (2024), PNAS (2014)
+  
+  const { calculateEnvironmentalMortality } = require('./qualityOfLife');
+  const environmentalMortalityRate = calculateEnvironmentalMortality(state); // Monthly mortality (0-0.10)
+  
   // Healthcare reduction: good healthcare reduces deaths significantly
   const healthcareReduction = Math.max(0.3, 1 - (qol.healthcareQuality * 0.7));
-
-  // Food/water stress: scarcity increases deaths
-  const foodWaterStress = Math.max(0,
-    (1 - foodAvailability) * 0.3 +
-    (1 - waterAvailability) * 0.3
-  );
-
-  // Climate stress: extreme weather kills
-  const climateStress = (1 - env.climateStability) * 0.4;
-
-  // Pollution stress: toxic environment increases disease
-  const pollutionStress = env.pollutionLevel * 0.3;
 
   // War multiplier: active conflicts dramatically increase deaths
   const activeConflicts = state.conflictResolution?.activeConflicts || 0;
   const warMultiplier = activeConflicts > 0 ? 1.5 + (activeConflicts * 0.2) : 1.0;
 
-  const crisisMultiplier = 1 + foodWaterStress + climateStress + pollutionStress;
-
-  pop.adjustedDeathRate = pop.baselineDeathRate *
-    healthcareReduction *
-    crisisMultiplier *
-    warMultiplier;
-
-  // === 4. APPLY EXTINCTION SCENARIO IMPACTS ===
-  if (state.extinctionState.active) {
+  // Base death rate (old baseline) - still applies for non-environmental factors
+  const baselineDeaths = pop.baselineDeathRate * healthcareReduction * warMultiplier;
+  
+  // NEW: Environmental mortality ADDS to baseline (not multiplies)
+  // This is because environmental deaths are additional excess mortality
+  pop.adjustedDeathRate = baselineDeaths + (environmentalMortalityRate * 12); // Convert monthly to annual
+  
+  // === 4. APPLY EXTINCTION SCENARIO IMPACTS (Non-Environmental) ===
+  // Nuclear war, AI takeover, etc. - still use old extinction logic
+  if (state.extinctionState.active && state.extinctionState.mechanism !== 'climate_tipping_point') {
     const extinctionDeathRate = calculateExtinctionDeathRate(state);
     pop.adjustedDeathRate += extinctionDeathRate;
   }
+  // Note: Environmental extinction is now handled by calculateEnvironmentalMortality()
 
   // === 5. CALCULATE NET GROWTH ===
   pop.netGrowthRate = pop.adjustedBirthRate - pop.adjustedDeathRate;
