@@ -21,7 +21,9 @@ import {
   BoundaryStatus,
   BoundaryTrend,
   TippingPointCascade,
-  PlanetaryBoundaryEvent
+  PlanetaryBoundaryEvent,
+  LandUseSystem,
+  OzoneRecoverySystem
 } from '@/types/planetaryBoundaries';
 
 /**
@@ -255,6 +257,52 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
     boundariesBreachedHistory: [boundariesBreached],
     tippingPointRiskHistory: [initialRisk],
     significantEvents: [],
+    // TIER 3.2: Land Use & Biodiversity Crisis
+    landUse: initializeLandUseSystem(),
+    // TIER 3.3: Ozone Recovery
+    ozoneRecovery: initializeOzoneRecoverySystem(),
+  };
+}
+
+/**
+ * TIER 3.2: Initialize Land Use & Biodiversity Crisis System
+ */
+function initializeLandUseSystem(): LandUseSystem {
+  return {
+    forestCoverPercent: 62.0,
+    forestCoverSafe: 75.0,
+    deforestationRate: 0.03,
+    reforestationRate: 0.01,
+    currentExtinctionRate: 100,
+    naturalExtinctionRate: 1.0,
+    extinctionAcceleration: 0.5,
+    habitatLossPercent: 38.0,
+    criticalEcosystemsLost: 0,
+    carbonSinkLossMultiplier: 1.17,
+    ecosystemCollapseRisk: 0.35,
+  };
+}
+
+/**
+ * TIER 3.3: Initialize Ozone Recovery System
+ */
+function initializeOzoneRecoverySystem(): OzoneRecoverySystem {
+  return {
+    stratosphericO3DobsonUnits: 285,
+    ozoneHoleSize: 10.0,
+    recoveryProgress: 0.65,
+    cfcPhaseOutPercent: 99.0,
+    halonPhaseOutPercent: 95.0,
+    complianceRate: 0.98,
+    policyEffectiveness: 0.95,
+    targetRecoveryYear: 2066,
+    yearsToRecovery: 41,
+    isRecovering: true,
+    rocketLaunchImpact: 0.0,
+    solidRocketMotorChlorine: 0.0,
+    blackCarbonImpact: 0.0,
+    demonstratesInternationalCooperation: true,
+    reversibilityExample: true,
   };
 }
 
@@ -434,6 +482,10 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   if (system.cascadeActive) {
     applyTippingPointCascadeEffects(state);
   }
+
+  // === 6. UPDATE TIER 3.2 & 3.3 SYSTEMS ===
+  updateLandUseSystem(state);
+  updateOzoneRecoverySystem(state);
 }
 
 /**
@@ -577,6 +629,168 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
     // Severity ramps up as we approach true extinction
     const proximityToExtinction = 1 - (Math.log10(population + extinctionThreshold) / Math.log10(0.1));
     state.extinctionState.severity = Math.min(1.0, 0.7 + proximityToExtinction * 0.3);
+  }
+}
+
+/**
+ * TIER 3.2: Update Land Use System
+ *
+ * Models feedback loops:
+ * - Deforestation → carbon sink loss → climate acceleration
+ * - Habitat loss → biodiversity crisis → ecosystem collapse
+ * - Extinction → food web breakdown → more extinctions
+ */
+function updateLandUseSystem(state: GameState): void {
+  const system = state.planetaryBoundariesSystem;
+  if (!system || !system.landUse) return;
+
+  const landUse = system.landUse;
+  const env = state.environmentalAccumulation;
+
+  // === 1. UPDATE FOREST COVER ===
+  // Net change = reforestation - deforestation
+  const netForestChange = landUse.reforestationRate - landUse.deforestationRate;
+  landUse.forestCoverPercent = Math.max(0, Math.min(100,
+    landUse.forestCoverPercent + netForestChange
+  ));
+
+  // Habitat loss = inverse of forest cover
+  landUse.habitatLossPercent = 100 - landUse.forestCoverPercent;
+
+  // === 2. FEEDBACK LOOP: DEFORESTATION → CLIMATE ACCELERATION ===
+  // Loss of carbon sinks amplifies climate change
+  const forestDeficit = (landUse.forestCoverSafe - landUse.forestCoverPercent) / landUse.forestCoverSafe;
+  landUse.carbonSinkLossMultiplier = 1.0 + Math.max(0, forestDeficit * 2.0); // Up to 3x multiplier
+
+  // Apply to climate boundary
+  if (system.boundaries.climate_change) {
+    const climateAcceleration = (landUse.carbonSinkLossMultiplier - 1.0) * 0.001; // +0.1% per 10% forest loss
+    system.boundaries.climate_change.currentValue += climateAcceleration;
+  }
+
+  // === 3. FEEDBACK LOOP: HABITAT LOSS → BIODIVERSITY CRISIS ===
+  // Habitat destruction drives extinctions
+  if (landUse.habitatLossPercent > 30) {
+    const habitatSeverity = (landUse.habitatLossPercent - 30) / 70; // 0-1 scale
+    landUse.extinctionAcceleration = 0.5 + (habitatSeverity * 2.0); // 0.5x → 2.5x acceleration
+  }
+
+  // Update extinction rate
+  landUse.currentExtinctionRate = Math.min(1000,
+    landUse.currentExtinctionRate * (1 + landUse.extinctionAcceleration / 100)
+  );
+
+  // === 4. FEEDBACK LOOP: EXTINCTION → ECOSYSTEM COLLAPSE ===
+  // High extinction rates → food web breakdown
+  if (landUse.currentExtinctionRate > 200) {
+    landUse.ecosystemCollapseRisk = Math.min(1.0, landUse.ecosystemCollapseRisk + 0.01); // +1% per month
+
+    // Check for critical ecosystem collapse
+    if (landUse.ecosystemCollapseRisk > 0.80 && Math.random() < 0.05) {
+      landUse.criticalEcosystemsLost++;
+      console.log(`\n🌳💀 CRITICAL ECOSYSTEM COLLAPSED (Total: ${landUse.criticalEcosystemsLost})`);
+      console.log(`   Extinction rate: ${landUse.currentExtinctionRate.toFixed(0)}x baseline`);
+      console.log(`   Habitat loss: ${landUse.habitatLossPercent.toFixed(1)}%`);
+      console.log(`   Forest cover: ${landUse.forestCoverPercent.toFixed(1)}% (need ${landUse.forestCoverSafe}%)\n`);
+
+      // Apply collapse effects
+      env.biodiversityIndex = Math.max(0, env.biodiversityIndex * 0.90); // -10% immediate
+      env.resourceReserves = Math.max(0, env.resourceReserves * 0.95); // -5% resources
+    }
+  }
+
+  // === 5. UPDATE LAND SYSTEM CHANGE BOUNDARY ===
+  // Boundary value scales with forest cover deficit
+  if (system.boundaries.land_system_change) {
+    const boundaryValue = 1.0 + (landUse.forestCoverSafe - landUse.forestCoverPercent) / landUse.forestCoverSafe;
+    system.boundaries.land_system_change.currentValue = boundaryValue;
+  }
+
+  // === 6. LOGGING (Every 12 months) ===
+  if (state.currentMonth % 12 === 0 && state.currentMonth > 0) {
+    console.log(`\n🌳 LAND USE SYSTEM (Year ${Math.floor(state.currentMonth / 12)})`);
+    console.log(`   Forest cover: ${landUse.forestCoverPercent.toFixed(1)}% (need ${landUse.forestCoverSafe}%)`);
+    console.log(`   Extinction rate: ${landUse.currentExtinctionRate.toFixed(0)}x natural`);
+    console.log(`   Carbon sink loss: ${((landUse.carbonSinkLossMultiplier - 1.0) * 100).toFixed(0)}% climate acceleration`);
+    console.log(`   Ecosystem collapse risk: ${(landUse.ecosystemCollapseRisk * 100).toFixed(0)}%`);
+
+    if (landUse.criticalEcosystemsLost > 0) {
+      console.log(`   Critical ecosystems lost: ${landUse.criticalEcosystemsLost} 💀`);
+    }
+  }
+}
+
+/**
+ * TIER 3.3: Update Ozone Recovery System
+ *
+ * Models Montreal Protocol success and new threats from rockets.
+ */
+function updateOzoneRecoverySystem(state: GameState): void {
+  const system = state.planetaryBoundariesSystem;
+  if (!system || !system.ozoneRecovery) return;
+
+  const ozone = system.ozoneRecovery;
+
+  // === 1. OZONE RECOVERY (Linear recovery to 2066) ===
+  // Target: 290 DU by 2066, currently 285 DU (2025)
+  const baseRecoveryRate = (290 - 285) / ((2066 - 2025) * 12); // DU per month
+
+  // === 2. NEW THREAT: ROCKET LAUNCHES ===
+  // Nature (2025): Near-future launches could slow recovery
+  // Assume 0.01% increase per year in rocket impact as SpaceX/others scale
+  const rocketGrowthRate = 0.01 / 12; // 0.01% per year = ~0.0008% per month
+  ozone.rocketLaunchImpact = Math.min(0.29, ozone.rocketLaunchImpact + rocketGrowthRate);
+
+  // Rocket impact slows recovery rate (not ozone level directly)
+  const recoverySlowdown = 1 - (ozone.rocketLaunchImpact * 0.3); // Up to 30% slowdown at max impact
+  const effectiveRecoveryRate = baseRecoveryRate * recoverySlowdown;
+
+  // Apply recovery
+  ozone.stratosphericO3DobsonUnits = Math.min(290,
+    ozone.stratosphericO3DobsonUnits + effectiveRecoveryRate
+  );
+
+  // Ozone hole shrinking
+  ozone.ozoneHoleSize = Math.max(0, ozone.ozoneHoleSize * 0.999); // -0.1% per month
+
+  // === 3. RECOVERY PROGRESS ===
+  // 0 = 1980s worst (220 DU), 1 = fully recovered (290 DU)
+  ozone.recoveryProgress = (ozone.stratosphericO3DobsonUnits - 220) / (290 - 220);
+
+  // === 4. UPDATE OZONE BOUNDARY ===
+  // Boundary value = 1.0 - (current / target)
+  // Safe when < 1.0, breached when > 1.0
+  if (system.boundaries.stratospheric_ozone) {
+    system.boundaries.stratospheric_ozone.currentValue =
+      Math.max(0, 1.0 - (ozone.stratosphericO3DobsonUnits / 290));
+  }
+
+  // === 5. POLICY INSPIRATION EFFECT ===
+  // Montreal Protocol success boosts confidence in other treaties
+  // This could enable AI safety treaties, climate agreements, etc.
+  if (ozone.demonstratesInternationalCooperation && state.globalMetrics) {
+    // Small boost to international cooperation
+    // (Would need to implement cooperation metric in global state)
+    // For now, just track that it's working
+  }
+
+  // === 6. LOGGING (Every 12 months) ===
+  if (state.currentMonth % 12 === 0 && state.currentMonth > 0) {
+    const year = 2025 + Math.floor(state.currentMonth / 12);
+    console.log(`\n✨ OZONE RECOVERY (Year ${year}) - POLICY SUCCESS STORY`);
+    console.log(`   Ozone level: ${ozone.stratosphericO3DobsonUnits.toFixed(1)} DU (target: 290 DU)`);
+    console.log(`   Recovery progress: ${(ozone.recoveryProgress * 100).toFixed(1)}%`);
+    console.log(`   Ozone hole: ${ozone.ozoneHoleSize.toFixed(1)}M km² (shrinking)`);
+    console.log(`   CFC phase-out: ${ozone.cfcPhaseOutPercent.toFixed(1)}% complete ✅`);
+    console.log(`   Years to full recovery: ${(2066 - year)} years`);
+
+    if (ozone.rocketLaunchImpact > 0.05) {
+      console.log(`   ⚠️  Rocket launch impact: ${(ozone.rocketLaunchImpact * 100).toFixed(2)}% (slowing recovery)`);
+    }
+
+    if (ozone.recoveryProgress > 0.90) {
+      console.log(`   🎉 NEARLY FULLY RECOVERED - Montreal Protocol working!`);
+    }
   }
 }
 

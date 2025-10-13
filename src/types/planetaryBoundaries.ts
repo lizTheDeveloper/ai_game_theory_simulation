@@ -116,6 +116,12 @@ export interface PlanetaryBoundariesSystem {
 
   // === EVENTS ===
   significantEvents: PlanetaryBoundaryEvent[];
+
+  // === TIER 3.2: LAND USE & BIODIVERSITY (Oct 13, 2025) ===
+  landUse: LandUseSystem;
+
+  // === TIER 3.3: OZONE RECOVERY (Oct 13, 2025) ===
+  ozoneRecovery: OzoneRecoverySystem;
 }
 
 /**
@@ -181,5 +187,77 @@ export interface PlanetaryBoundariesBaseline2025 {
   // === SAFE BOUNDARIES (2/9) ===
   stratosphericOzone: { value: number; recovering: boolean };     // 0.85 (improving!)
   atmosphericAerosols: { value: number; regional: boolean };      // 0.70 (mostly safe)
+}
+
+/**
+ * TIER 3.2: Land Use & Biodiversity Crisis (Oct 13, 2025)
+ *
+ * Tracks deforestation, extinction rate, and feedback loops.
+ *
+ * Research backing:
+ * - FAO (2025): 62% global forest cover vs 75% safe boundary
+ * - IPBES (2024): 100-1000x natural extinction rate
+ * - Nature (2024): Deforestation → carbon sink loss → climate acceleration
+ * - Science (2023): Habitat loss → biodiversity crisis → ecosystem collapse
+ */
+export interface LandUseSystem {
+  // === FOREST COVER ===
+  forestCoverPercent: number;       // [0, 100] % of land area forested
+  forestCoverSafe: number;          // 75% safe boundary
+  deforestationRate: number;        // % per month lost
+  reforestationRate: number;        // % per month gained
+
+  // === EXTINCTION RATE ===
+  currentExtinctionRate: number;    // [1, 1000] x baseline (natural = 1.0)
+  naturalExtinctionRate: number;    // 1.0 baseline (10 extinctions per million species-years)
+  extinctionAcceleration: number;   // Rate of change
+
+  // === HABITAT LOSS ===
+  habitatLossPercent: number;       // [0, 100] % habitat destroyed
+  criticalEcosystemsLost: number;   // Count of collapsed ecosystems
+
+  // === FEEDBACK AMPLIFIERS ===
+  carbonSinkLossMultiplier: number; // [1.0, 3.0] Climate acceleration from deforestation
+  ecosystemCollapseRisk: number;    // [0, 1] Risk of cascading food web breakdown
+}
+
+/**
+ * TIER 3.3: Ozone Recovery System (Oct 13, 2025)
+ *
+ * Tracks stratospheric ozone recovery from Montreal Protocol.
+ * This is the ONLY planetary boundary that's improving - a policy success story!
+ *
+ * Research backing:
+ * - WMO (Sept 2025): Ozone recovery confirmed
+ * - NOAA/NASA (Oct 2024): Full recovery by 2066
+ * - MIT (March 2025): Healing is direct result of Montreal Protocol
+ * - Copernicus (March 2025): Ozone hole may disappear by 2066
+ * - Nature (2025): Near-future rocket launches could slow recovery
+ */
+export interface OzoneRecoverySystem {
+  // === OZONE LEVELS ===
+  stratosphericO3DobsonUnits: number;  // [220, 320] Dobson Units (baseline: 290)
+  ozoneHoleSize: number;               // [0, 30] million km² (2024: 7th smallest since 1992)
+  recoveryProgress: number;            // [0, 1] 0 = worst (1980s), 1 = fully recovered
+
+  // === MONTREAL PROTOCOL SUCCESS ===
+  cfcPhaseOutPercent: number;          // [0, 100] % CFCs eliminated
+  halonPhaseOutPercent: number;        // [0, 100] % halons eliminated
+  complianceRate: number;              // [0, 1] International compliance
+  policyEffectiveness: number;         // [0, 1] How well it's working
+
+  // === RECOVERY TIMELINE ===
+  targetRecoveryYear: number;          // 2066 (NOAA/NASA estimate)
+  yearsToRecovery: number;             // Remaining years
+  isRecovering: boolean;               // True = improving trend
+
+  // === NEW THREATS ===
+  rocketLaunchImpact: number;          // [0, 0.3] % ozone loss from rockets
+  solidRocketMotorChlorine: number;    // [0, 1] Chlorine emissions from launches
+  blackCarbonImpact: number;           // [0, 1] Warming effect from rocket exhaust
+
+  // === POLICY INSPIRATION ===
+  demonstratesInternationalCooperation: boolean; // True = proof treaties can work!
+  reversibilityExample: boolean;                 // True = shows recovery is possible
 }
 
