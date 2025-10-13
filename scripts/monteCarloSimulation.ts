@@ -303,13 +303,27 @@ log('='.repeat(80));
 // accept --max-months and --runs
 const args = process.argv.slice(2);
 
-const maxMonths = args.find(arg => arg.split('=')[0] === '--max-months')?.split('=')[1];
-const runs = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
+// Support both positional args (runs, months, name) and flag args (--runs=X --max-months=Y)
+let numRuns: number;
+let maxMonthsValue: number;
+let runName: string | undefined;
 
+if (args[0] && !args[0].startsWith('--')) {
+  // Positional arguments format: runs months [name]
+  numRuns = parseInt(args[0]) || 10;
+  maxMonthsValue = parseInt(args[1]) || 600;
+  runName = args[2];
+} else {
+  // Flag arguments format: --runs=X --max-months=Y
+  const maxMonthsArg = args.find(arg => arg.split('=')[0] === '--max-months')?.split('=')[1];
+  const runsArg = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
+  numRuns = runsArg ? parseInt(runsArg) : 10;
+  maxMonthsValue = maxMonthsArg ? parseInt(maxMonthsArg) : 600;
+}
 
 // Configuration
-const NUM_RUNS = runs ? parseInt(runs) : 10;
-const MAX_MONTHS = maxMonths ? parseInt(maxMonths) : 600; // 50 years to show realistic timeline for ecosystem collapse (Realistic Timeline Recalibration)
+const NUM_RUNS = numRuns;
+const MAX_MONTHS = maxMonthsValue;
 const SEED_START = 42000;
 
 log(`\n⚙️  CONFIGURATION:`);
