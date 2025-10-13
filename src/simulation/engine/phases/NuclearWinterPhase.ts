@@ -11,19 +11,16 @@
  * Research: Robock & Toon (2012), Coupe et al. (2019)
  */
 
-import { GameState } from '@/types/game';
-import { SimulationPhase } from '../simulationPhase';
+import { GameState } from '../../../types/game';
 import { updateNuclearWinter } from '../../nuclearWinter';
 
-export class NuclearWinterPhase implements SimulationPhase {
-  public getPhaseName(): string {
-    return 'NuclearWinterPhase';
-  }
+export class NuclearWinterPhase {
+  name = 'NuclearWinter';
+  order = 252; // After organization viability (251)
 
-  public execute(state: GameState): GameState {
+  async execute(state: GameState): Promise<void> {
     // TIER 1.7.4: Update nuclear winter effects (if active)
     updateNuclearWinter(state);
-    return state;
   }
 }
 

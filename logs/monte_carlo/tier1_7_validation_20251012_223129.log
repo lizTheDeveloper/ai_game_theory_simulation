@@ -1,0 +1,28 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-13T05-31-30.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 20
+  Duration: 240 months (20.0 years)
+  Seed Range: 42000 - 42019
+
+
+⏩ RUNNING 20 SIMULATIONS...
+
+
+
+❌ UNCAUGHT EXCEPTION: Cannot read properties of undefined (reading 'localeCompare')
+TypeError: Cannot read properties of undefined (reading 'localeCompare')
+    at <anonymous> (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:202:21)
+    at Array.sort (<anonymous>)
+    at PhaseOrchestrator.sortPhases (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:196:17)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:120:12)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:402:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:455:31)
+    at avgModelsPerOrg (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:356:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:2145:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)

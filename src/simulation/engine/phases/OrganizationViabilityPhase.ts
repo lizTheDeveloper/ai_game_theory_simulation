@@ -11,19 +11,16 @@
  * Research: Google is ~1% of US economy, can't function if US loses 70% of population
  */
 
-import { GameState } from '@/types/game';
-import { SimulationPhase } from '../simulationPhase';
+import { GameState } from '../../../types/game';
 import { updateOrganizationViability } from '../../organizations';
 
-export class OrganizationViabilityPhase implements SimulationPhase {
-  public getPhaseName(): string {
-    return 'OrganizationViabilityPhase';
-  }
+export class OrganizationViabilityPhase {
+  name = 'OrganizationViability';
+  order = 251; // After country population (250)
 
-  public execute(state: GameState): GameState {
+  async execute(state: GameState): Promise<void> {
     // TIER 1.7.3: Check if organizations can survive based on country health
     updateOrganizationViability(state);
-    return state;
   }
 }
 
