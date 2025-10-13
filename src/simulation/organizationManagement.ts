@@ -675,7 +675,7 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // - Shareholder returns: 5-10% (dividends, buybacks if profitable)
   
   // === DATA CENTER OPERATIONAL COSTS (additional) ===
-  const dcOperational = state.computeInfrastructure.dataCenters
+  let dcOperational = state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.operationalCost, 0);
   
