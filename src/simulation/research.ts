@@ -11,6 +11,7 @@
 
 import { AIAgent, AICapabilityProfile, GameState, ResearchInvestments } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { getEnergyConstraintMultiplier } from './powerGeneration';
 
 /**
  * Phase 4: Compute scaling law
@@ -40,10 +41,11 @@ export function calculateComputeScalingMultiplier(allocatedCompute: number): num
 
 /**
  * Calculate research progress for a specific capability dimension
- * 
+ *
  * Progress depends on:
  * - Base growth rate (varies by dimension)
  * - **PHASE 4: Allocated compute (scaling law)**
+ * - **TIER 4.4: Energy constraints (physical bottleneck)**
  * - Development mode (fast vs careful)
  * - Current capability level (diminishing returns)
  * - Government investment multiplier
@@ -58,11 +60,15 @@ export function calculateDimensionGrowth(
   aiCapabilityInDimension: number,
   regulationPenalty: number,
   computeGovernancePenalty: number,
-  allocatedCompute: number = 30 // Phase 4: Add compute parameter (default for backwards compat)
+  allocatedCompute: number = 30, // Phase 4: Add compute parameter (default for backwards compat)
+  state?: GameState // TIER 4.4: Add state for energy constraints
 ): number {
   // Phase 4: Compute scaling multiplier (CRITICAL for fixing slow growth)
   const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
-  
+
+  // TIER 4.4: Energy constraint multiplier (physical reality check on exponential growth)
+  const energyMultiplier = state ? getEnergyConstraintMultiplier(state) : 1.0;
+
   // Base growth rates by dimension (per action, 4 actions/month)
   // Phase 2: INCREASED to match empirical AI progress (GPT-3→GPT-4 was 10x in 3 years)
   // Target: Reach 1.5-2.5 capability in 60-120 months (not 0.5 after 120 months)
@@ -75,34 +81,36 @@ export function calculateDimensionGrowth(
     social: 0.060,           // 2x increase - still bottlenecked by human society
     physical: 0.060          // 2x increase - still bottlenecked by robotics/hardware
   };
-  
+
   const baseGrowth = baseGrowthRates[dimension] * (developmentMode === 'fast' ? 1.0 : 0.6);
-  
+
   // Diminishing returns as capability increases
   const diminishingReturns = 1 / (1 + currentValue * 0.1);
-  
+
   // Government investment multiplier (1.0 to 2.0)
   const govMultiplier = 1.0 + (governmentInvestment * 0.1);
-  
+
   // AI capability multiplier - better AIs research faster in their strong domains
   const aiMultiplier = 1.0 + (aiCapabilityInDimension * 0.15);
-  
+
   // Apply penalties
   const penaltyMultiplier = regulationPenalty * computeGovernancePenalty;
-  
-  // Phase 4: Include compute multiplier in calculation
-  return baseGrowth * computeMultiplier * diminishingReturns * govMultiplier * aiMultiplier * penaltyMultiplier;
+
+  // Phase 4 + TIER 4.4: Include compute and energy multipliers in calculation
+  // Energy constraint is a hard physical bottleneck - no compute can bypass it
+  return baseGrowth * computeMultiplier * energyMultiplier * diminishingReturns * govMultiplier * aiMultiplier * penaltyMultiplier;
 }
 
 /**
  * Calculate research progress for a specific research sub-field
- * 
+ *
  * Research domains have different growth characteristics:
  * - Some are faster (algorithms, drug discovery)
  * - Some are riskier (nanotech, synthetic biology)
  * - Some are bottlenecked (climate intervention needs modeling first)
- * 
+ *
  * **Phase 4: Now scaled by allocated compute**
+ * **TIER 4.4: Now constrained by available energy**
  */
 export function calculateResearchGrowth(
   domain: 'biotech' | 'materials' | 'climate' | 'computerScience',
@@ -113,10 +121,14 @@ export function calculateResearchGrowth(
   aiResearchCapability: number,
   alignment: number,
   regulationPenalty: number,
-  allocatedCompute: number = 30 // Phase 4: Add compute parameter
+  allocatedCompute: number = 30, // Phase 4: Add compute parameter
+  state?: GameState // TIER 4.4: Add state for energy constraints
 ): number {
   // Phase 4: Compute scaling multiplier
   const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
+
+  // TIER 4.4: Energy constraint multiplier (physical reality check on exponential growth)
+  const energyMultiplier = state ? getEnergyConstraintMultiplier(state) : 1.0;
   // Base growth rates by domain and subfield (per action, 4 actions/month)
   // Phase 2: INCREASED to match realistic research progress
   const growthRates: Record<string, Record<string, number>> = {
@@ -173,8 +185,9 @@ export function calculateResearchGrowth(
     }
   }
   
-  // Phase 4: Include compute multiplier in calculation
-  return baseGrowth * computeMultiplier * diminishingReturns * govMultiplier * aiMultiplier * 
+  // Phase 4 + TIER 4.4: Include compute and energy multipliers in calculation
+  // Energy constraint is a hard physical bottleneck - no compute can bypass it
+  return baseGrowth * computeMultiplier * energyMultiplier * diminishingReturns * govMultiplier * aiMultiplier *
     riskMultiplier * prerequisiteGate * regulationPenalty;
 }
 
@@ -326,24 +339,25 @@ export function applyResearchGrowth(
       newProfile[dim], // AI's current capability in this dimension
       regulationPenalty,
       computeGovernancePenalty,
-      allocatedCompute // Phase 4: Pass allocated compute
+      allocatedCompute, // Phase 4: Pass allocated compute
+      state // TIER 4.4: Pass state for energy constraints
     );
-    
+
     newProfile[dim] = Math.min(10, newProfile[dim] + growth);
   } else if (selection.researchDomain && selection.researchSubfield) {
     // Advance research subfield
     const domain = selection.researchDomain;
     const subfield = selection.researchSubfield;
     const currentValue = newProfile.research[domain][subfield];
-    
+
     // Get government investment for this specific research
     const govResearchInvestment = govInvestment[domain]?.[subfield] || 0;
-    
+
     // Calculate AI's research capability (average of cognitive + relevant research domain)
-    const domainAvg = Object.values(newProfile.research[domain]).reduce((a, b) => a + b, 0) / 
+    const domainAvg = Object.values(newProfile.research[domain]).reduce((a, b) => a + b, 0) /
       Object.keys(newProfile.research[domain]).length;
     const aiResearchCapability = (newProfile.cognitive + domainAvg) / 2;
-    
+
     growth = calculateResearchGrowth(
       domain,
       subfield,
@@ -353,9 +367,10 @@ export function applyResearchGrowth(
       aiResearchCapability,
       ai.alignment,
       regulationPenalty,
-      allocatedCompute // Phase 4: Pass allocated compute
+      allocatedCompute, // Phase 4: Pass allocated compute
+      state // TIER 4.4: Pass state for energy constraints
     );
-    
+
     newProfile.research[domain][subfield] = Math.min(5, currentValue + growth);
   }
   
