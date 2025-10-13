@@ -72,6 +72,7 @@ import {
   RefugeeCrisisPhase,
   CountryPopulationPhase,
   PlanetaryBoundariesPhase,
+  FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   DystopiaProgressionPhase,
   // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
@@ -342,6 +343,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new RefugeeCrisisPhase());
     this.orchestrator.registerPhase(new CountryPopulationPhase());
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
+    this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
 
     // Batch 3: Special phases (22.x - 23.x)
