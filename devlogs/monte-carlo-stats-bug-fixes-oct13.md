@@ -136,16 +136,27 @@ From actual log analysis:
 ## 🔧 **Fixes Completed**
 
 1. ✅ **DONE:** Argument parsing (positional vs flags)
-2. ✅ **DONE:** Nuclear war count (use EventAggregator instead of criticalEvents)
+2. ✅ **DONE:** Nuclear war count (use EventAggregator instead of criticalEvents) 
+   - Before: 0 / 10 (0%)
+   - After: 10 / 10 (100%) with 7,183 avg exchanges
 3. ✅ **DONE:** Outcome emoji mapping (support 7-tier system)
+   - Before: ❓ (unknown)
+   - After: 🧬 (bottleneck), 💥 (collapse), etc.
 4. ✅ **DONE:** Store rawOutcome in results for detailed reporting
-5. ✅ **DONE:** Organization bankruptcies (added to tracking)
+5. ✅ **DONE:** AI Hubs Surviving negative value
+   - Added Math.max(0, ...) guards in both MonteCarloSimulation and countryPopulations
+6. ✅ **DONE:** Organization bankruptcy tracking
+   - Added recordOrganizationBankruptcy() call to EventAggregator
 
 ## 🔧 **Fixes Still Needed**
 
-1. 🔄 **TODO:** AI Hubs Surviving: -1.0 / 3 (negative value bug)
-2. 🔄 **TODO:** Famine detection/triggering (0 famines but food < 0.4)
-3. 🔄 **TODO:** Organization bankruptcies not triggering during bottleneck
+1. 🔄 **TODO:** Famine detection/triggering (0 famines but food < 0.4)
+   - Famine system not triggering despite conditions met
+2. 🔄 **TODO:** Organization bankruptcies not actually happening
+   - 0 bankruptcies despite 95% collapse and $1.3T accumulated
+   - Need to investigate why bankruptcy logic isn't triggering
+3. ⚠️ **TODO:** Basic Needs QoL: 1.78 (too high for 95% mortality)
+   - QoL calculations don't reflect severity of collapse
 4. 🔄 **TODO:** Per-run population breakdown at end of summary
 
 ---
