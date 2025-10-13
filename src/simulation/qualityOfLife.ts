@@ -71,6 +71,15 @@ export function calculateQualityOfLife(systems: QualityOfLifeSystems): number {
  */
 export function initializeQualityOfLifeSystems(): QualityOfLifeSystems {
   return {
+    // NEW: Survival Fundamentals (Oct 12, 2025)
+    // Baseline 2025: Most people have food/water/shelter, but stressed
+    survivalFundamentals: {
+      foodSecurity: 0.85,           // 85% food secure (FAO: ~10% undernourished globally)
+      waterSecurity: 0.80,           // 80% water secure (WHO: ~25% lack safely managed water)
+      thermalHabitability: 1.0,      // 100% habitable (at current +1.1°C)
+      shelterSecurity: 0.75,         // 75% adequate housing (UN: ~1.6B inadequate housing)
+    },
+    
     // Basic Needs - moderate in developed world
     materialAbundance: 0.8,
     energyAvailability: 0.9,
@@ -96,7 +105,20 @@ export function initializeQualityOfLifeSystems(): QualityOfLifeSystems {
     // Environmental - declining
     ecosystemHealth: 0.4,
     climateStability: 0.6,
-    pollutionLevel: 0.5
+    pollutionLevel: 0.5,
+    
+    // NEW: Distribution Metrics (Oct 12, 2025)
+    // Baseline 2025: Moderate inequality, some regional crises
+    distribution: {
+      globalGini: 0.38,              // Current global Gini ~0.38 (World Bank)
+      regionalVariance: 0.08,        // Moderate variance
+      crisisAffectedFraction: 0.15,  // ~15% in acute crisis zones (conflicts, droughts)
+      worstRegionQoL: 0.35,          // Worst regions (conflict zones, extreme poverty)
+      bestRegionQoL: 0.95,           // Best regions (Nordic countries, high HDI)
+      medianRegionQoL: 0.65,         // Median region
+      isDystopicInequality: false,   // Not yet dystopian
+      isRegionalDystopia: false,     // Not yet regional dystopia
+    }
   };
 }
 
@@ -380,8 +402,36 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     climateStability = Math.min(1.0, climateStability + techBoosts.environmental * 0.5);
   }
   
-  // === REGIONAL INEQUALITY TRACKING (Oct 12, 2025) ===
-  // Calculate QoL variance across crisis-affected vs. abundant regions
+  // === SURVIVAL FUNDAMENTALS (Oct 12, 2025) ===
+  // Calculate core survival metrics separately from aggregate QoL
+  const rawFoodSecurity = calculateFoodSecurity(state);
+  const rawWaterSecurity = calculateWaterSecurity(state);
+  const rawThermalHabitability = calculateThermalHabitability(state);
+  const rawShelterSecurity = calculateShelterSecurity(state);
+  
+  // NaN guards for survival fundamentals
+  const survivalFundamentals = {
+    foodSecurity: isNaN(rawFoodSecurity) ? 0.85 : rawFoodSecurity,
+    waterSecurity: isNaN(rawWaterSecurity) ? 0.80 : rawWaterSecurity,
+    thermalHabitability: isNaN(rawThermalHabitability) ? 1.0 : rawThermalHabitability,
+    shelterSecurity: isNaN(rawShelterSecurity) ? 0.75 : rawShelterSecurity,
+  };
+  
+  // === DISTRIBUTION METRICS (Oct 12, 2025) ===
+  // Calculate regional inequality to detect dystopian outcomes
+  const distribution = calculateDistributionMetrics(
+    state,
+    survivalFundamentals,
+    {
+      materialAbundance,
+      energyAvailability,
+      physicalSafety,
+      mentalHealth,
+      healthcareQuality
+    }
+  );
+  
+  // === REGIONAL INEQUALITY TRACKING (DEPRECATED - kept for backward compatibility) ===
   const regionalInequality = calculateRegionalInequality(state, {
     materialAbundance,
     energyAvailability,
@@ -391,23 +441,40 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   });
   
   return {
+    // NEW: Survival fundamentals (required)
+    survivalFundamentals,
+    
+    // Basic needs
     materialAbundance,
     energyAvailability,
     physicalSafety,
+    
+    // Psychological
     mentalHealth,
     meaningAndPurpose,
     socialConnection,
     autonomy,
+    
+    // Social
     politicalFreedom,
     informationIntegrity,
     communityStrength,
     culturalVitality,
+    
+    // Health
     healthcareQuality,
     longevityGains,
     diseasesBurden,
+    
+    // Environmental
     ecosystemHealth,
     climateStability,
     pollutionLevel,
+    
+    // NEW: Distribution metrics (required)
+    distribution,
+    
+    // DEPRECATED (backward compatibility)
     regionalInequality
   };
 }
@@ -565,6 +632,42 @@ export function calculateFoodSecurity(state: GameState): number {
     foodSecurity -= climatePenalty;
   }
   
+  // === BIODIVERSITY LOSS ===
+  // Research: IPBES (2016), Bardgett & van der Putten (2014), FAO soil reports
+  // Biodiversity loss affects food security through multiple pathways:
+  // 1. Pollinator decline (35% of crops depend on animal pollinators)
+  // 2. Soil health degradation (95% of food comes from soil)
+  // 3. Loss of natural pest control
+  if (state.biodiversitySystem) {
+    const globalBio = state.biodiversitySystem.globalBiodiversityIndex;
+    
+    // Pollination crisis
+    // IPBES: 35% of global food crops depend on pollinators
+    // Threshold at 80% biodiversity (pollinators decline faster than general biodiversity)
+    if (globalBio < 0.80) {
+      const pollinatorLoss = 0.80 - globalBio;
+      const pollinationPenalty = pollinatorLoss * 0.35; // Up to 35% loss at bio=45%
+      foodSecurity -= pollinationPenalty;
+    }
+    
+    // Soil health degradation
+    // Microbiomes, decomposers, nutrient cycling
+    // 95% of food comes from soil
+    if (globalBio < 0.60) {
+      const soilHealthLoss = 0.60 - globalBio;
+      const soilPenalty = soilHealthLoss * 0.25; // Up to 25% loss at bio=35%
+      foodSecurity -= soilPenalty;
+    }
+    
+    // Natural pest control loss
+    // Without predators: 20-30% higher crop losses
+    if (globalBio < 0.50) {
+      const pestControlLoss = 0.50 - globalBio;
+      const pestPenalty = pestControlLoss * 0.20; // Up to 20% loss at bio=30%
+      foodSecurity -= pestPenalty;
+    }
+  }
+  
   // === AI ENHANCEMENT ===
   // Aligned superintelligent AI can help food production
   // Precision agriculture, vertical farms, synthetic biology
@@ -581,6 +684,106 @@ export function calculateFoodSecurity(state: GameState): number {
   foodSecurity += sustainableAg * 0.3; // Up to +30% food security
   
   return Math.max(0, Math.min(1.5, foodSecurity));
+}
+
+/**
+ * Get regional population proportion
+ * Used for calculating population at risk in regional famines
+ */
+function getRegionalPopulationProportion(regionName: string): number {
+  const proportions: Record<string, number> = {
+    'Asia': 0.60,         // 4.7B / 8B
+    'Africa': 0.18,       // 1.4B / 8B
+    'South America': 0.05, // 0.43B / 8B
+    'North America': 0.07, // 0.58B / 8B
+    'Europe': 0.09,       // 0.75B / 8B
+    'Oceania': 0.01,      // 0.044B / 8B
+  };
+  return proportions[regionName] || 0.10; // Default to 10%
+}
+
+/**
+ * Check regional biodiversity for famine risk
+ * Triggers famines when regional ecosystems collapse
+ * 
+ * Research: IPBES (2019), FAO State of Food Security (2024)
+ * Ecosystem collapse → agricultural failure → famine
+ */
+export function checkRegionalFamineRisk(state: GameState, month: number): void {
+  if (!state.biodiversitySystem || !state.famineSystem) return;
+  
+  const { regions } = state.biodiversitySystem;
+  if (!regions || !(regions instanceof Map) || regions.size === 0) return; // Safety check
+  
+  const totalPopulation = state.humanPopulationSystem.totalPopulation;
+  
+  for (const [regionName, regionData] of regions) {
+    // Skip if famine already active in this region
+    const existingFamine = state.famineSystem.activeFamines.find(
+      f => f.affectedRegion === regionName
+    );
+    if (existingFamine) continue;
+    
+    // ECOSYSTEM COLLAPSE THRESHOLD
+    // Biodiversity < 30% = ecosystem collapse (pollination fails, soil dead, pests rampant)
+    // OR ecosystem integrity < 20% (food webs broken)
+    const ecosystemCollapsed = 
+      regionData.biodiversityIndex < 0.30 || 
+      regionData.ecosystemIntegrity < 0.20;
+    
+    if (ecosystemCollapsed && !regionData.ecosystemCollapseActive) {
+      // Mark ecosystem as collapsed
+      regionData.ecosystemCollapseActive = true;
+      
+      // Trigger famine
+      // Population at risk = regional population proportion × severity factor
+      const regionalPopProportion = getRegionalPopulationProportion(regionName);
+      
+      // Severity: Worse collapse = more people at risk
+      const collapseSeverity = 1.0 - Math.max(
+        regionData.biodiversityIndex / 0.30,
+        regionData.ecosystemIntegrity / 0.20
+      );
+      const atRiskFraction = 0.20 + (collapseSeverity * 0.30); // 20-50% at risk
+      
+      const populationAtRisk = totalPopulation * regionalPopProportion * atRiskFraction;
+      
+      // Determine cause
+      let cause: import('../types/famine').FamineCause = 'crop_failure';
+      if (regionData.contaminationLevel > 0.50) {
+        cause = 'nuclear_winter'; // Radiation contamination
+      } else if (regionData.climateStress > 0.60) {
+        cause = 'drought'; // Climate-driven
+      } else if (regionData.habitatLoss > 0.70) {
+        cause = 'crop_failure'; // Land degradation
+      }
+      
+      // Calculate food security level (based on ecosystem health)
+      const foodSecurityLevel = Math.max(
+        0.05, // Minimum 5% (not total zero)
+        regionData.biodiversityIndex * 0.5 + regionData.ecosystemIntegrity * 0.5
+      );
+      
+      // Trigger famine
+      const { triggerFamine } = require('../types/famine');
+      triggerFamine(
+        state.famineSystem,
+        month,
+        regionName,
+        populationAtRisk,
+        cause,
+        foodSecurityLevel
+      );
+      
+      console.log(`\n🌾💀 ECOSYSTEM COLLAPSE FAMINE: ${regionName}`);
+      console.log(`   Biodiversity: ${(regionData.biodiversityIndex * 100).toFixed(1)}%`);
+      console.log(`   Ecosystem integrity: ${(regionData.ecosystemIntegrity * 100).toFixed(1)}%`);
+      console.log(`   Population at risk: ${(populationAtRisk * 1000).toFixed(0)}M`);
+      console.log(`   At-risk fraction: ${(atRiskFraction * 100).toFixed(1)}%`);
+      console.log(`   Cause: ${cause}`);
+      console.log(`   Food security level: ${(foodSecurityLevel * 100).toFixed(1)}%\n`);
+    }
+  }
 }
 
 /**
@@ -782,5 +985,298 @@ export function calculateShelterSecurity(state: GameState): number {
   }
   
   return Math.max(0, Math.min(1.0, shelterSecurity));
+}
+
+/**
+ * ENHANCED DISTRIBUTION METRICS (Oct 12, 2025)
+ * 
+ * Calculate QoL inequality across regions to detect dystopian scenarios where
+ * aggregate metrics look fine but specific populations suffer.
+ * 
+ * Research basis:
+ * - Wilkinson & Pickett (2009): Gini >0.45 = social instability
+ * - Rawls: Justice requires maximizing the welfare of the worst-off
+ * - "Two worlds" dystopia: Some thrive while others suffer
+ */
+export function calculateDistributionMetrics(
+  state: GameState,
+  survivalFundamentals: {
+    foodSecurity: number;
+    waterSecurity: number;
+    thermalHabitability: number;
+    shelterSecurity: number;
+  },
+  basicQoL: {
+    materialAbundance: number;
+    energyAvailability: number;
+    physicalSafety: number;
+    mentalHealth: number;
+    healthcareQuality: number;
+  }
+): {
+  globalGini: number;
+  regionalVariance: number;
+  crisisAffectedFraction: number;
+  worstRegionQoL: number;
+  bestRegionQoL: number;
+  medianRegionQoL: number;
+  isDystopicInequality: boolean;
+  isRegionalDystopia: boolean;
+} {
+  const regions = state.regionalPopulations;
+  const env = state.environmentalAccumulation;
+  const social = state.socialAccumulation;
+  const refugees = state.refugeeCrisisSystem;
+  const pop = state.humanPopulationSystem;
+  
+  // Calculate QoL for each region
+  const regionalQoLs: number[] = [];
+  let totalCrisisAffected = 0;
+  
+  if (regions && regions.regions) {
+    for (const region of regions.regions) {
+      // Region-specific modifiers based on crisis exposure
+      let regionQoL = 0;
+      
+      // === SURVIVAL FUNDAMENTALS (weighted heavily) ===
+      // These are most affected by regional crises
+      let regionFoodSecurity = survivalFundamentals.foodSecurity;
+      let regionWaterSecurity = survivalFundamentals.waterSecurity;
+      let regionShelter = survivalFundamentals.shelterSecurity;
+      
+      // Water stress affects specific regions more
+      if (region.freshwaterStress > 0.7) {
+        regionWaterSecurity *= (1 - region.freshwaterStress * 0.5);
+        regionFoodSecurity *= (1 - region.freshwaterStress * 0.3); // Agriculture needs water
+      }
+      
+      // Drought-affected regions
+      if (region.droughtAffected) {
+        regionWaterSecurity *= 0.4; // 60% reduction in drought zones
+        regionFoodSecurity *= 0.5; // 50% reduction
+      }
+      
+      // Resource vulnerability (food import dependency)
+      if (region.resourceVulnerability > 0.7) {
+        regionFoodSecurity *= (1 - region.resourceVulnerability * 0.4);
+      }
+      
+      // Refugee hosting strains infrastructure
+      if (region.refugeesHosted > 0) {
+        const refugeeStrain = Math.min(0.4, region.refugeesHosted / region.population);
+        regionShelter -= refugeeStrain;
+      }
+      
+      // Thermal habitability varies by latitude
+      // Tropical regions hit harder by temperature rise
+      const isTropical = region.name.includes('Africa') || 
+                         region.name.includes('South Asia') || 
+                         region.name.includes('Southeast Asia') ||
+                         region.name.includes('Middle East');
+      let regionHabitability = survivalFundamentals.thermalHabitability;
+      if (isTropical) {
+        const tempAnomaly = state.resourceEconomy.co2.temperatureAnomaly;
+        if (tempAnomaly > 1.5) {
+          // Tropical regions become uninhabitable faster
+          regionHabitability *= Math.max(0.3, 1 - (tempAnomaly - 1.5) * 0.25);
+        }
+      }
+      
+      // Survival fundamentals contribution (40% weight)
+      const survivalScore = (
+        regionFoodSecurity * 0.30 +
+        regionWaterSecurity * 0.30 +
+        regionHabitability * 0.25 +
+        regionShelter * 0.15
+      );
+      
+      // === BASIC NEEDS (30% weight) ===
+      // Modified by economic access and infrastructure
+      let regionMaterial = basicQoL.materialAbundance;
+      let regionEnergy = basicQoL.energyAvailability;
+      let regionSafety = basicQoL.physicalSafety;
+      
+      // Conflict-affected regions have low safety
+      if (region.conflictRisk > 0.5) {
+        regionSafety *= (1 - region.conflictRisk * 0.6);
+      }
+      
+      // Population stress reduces material abundance
+      if (region.populationStress > 0.7) {
+        regionMaterial *= (1 - region.populationStress * 0.3);
+        regionEnergy *= (1 - region.populationStress * 0.2);
+      }
+      
+      const basicNeedsScore = (
+        regionMaterial * 0.4 +
+        regionEnergy * 0.3 +
+        regionSafety * 0.3
+      );
+      
+      // === HEALTH & WELLBEING (30% weight) ===
+      // Modified by regional capacity and crisis impacts
+      let regionHealth = basicQoL.healthcareQuality;
+      let regionMentalHealth = basicQoL.mentalHealth;
+      
+      // Crisis zones have worse mental health
+      const inCrisisZone = region.droughtAffected || 
+                          region.conflictRisk > 0.5 || 
+                          region.populationStress > 0.7;
+      if (inCrisisZone) {
+        regionMentalHealth *= 0.6; // 40% reduction
+        totalCrisisAffected += region.population;
+      }
+      
+      // Healthcare capacity varies by development
+      // Assume wealthier regions have 1.3x capacity, poorer 0.7x
+      const isWealthy = region.name.includes('North America') || 
+                       region.name.includes('Europe') || 
+                       region.name.includes('East Asia');
+      regionHealth *= isWealthy ? 1.2 : 0.8;
+      
+      const healthScore = (
+        regionHealth * 0.6 +
+        regionMentalHealth * 0.4
+      );
+      
+      // === AGGREGATE REGION QOL ===
+      regionQoL = (
+        survivalScore * 0.40 +
+        basicNeedsScore * 0.30 +
+        healthScore * 0.30
+      );
+      
+      regionalQoLs.push(Math.max(0, Math.min(2, regionQoL)));
+    }
+  } else {
+    // Fallback: Use simple crisis-based approximation
+    // This handles cases where regional system isn't fully initialized
+    const avgQoL = (
+      survivalFundamentals.foodSecurity * 0.15 +
+      survivalFundamentals.waterSecurity * 0.15 +
+      survivalFundamentals.thermalHabitability * 0.10 +
+      basicQoL.materialAbundance * 0.15 +
+      basicQoL.energyAvailability * 0.10 +
+      basicQoL.physicalSafety * 0.10 +
+      basicQoL.mentalHealth * 0.10 +
+      basicQoL.healthcareQuality * 0.15
+    );
+    
+    // Estimate crisis-affected vs non-affected populations
+    let crisisAffected = 0;
+    if (env.resourceCrisisActive) crisisAffected += 0.25;
+    if (env.climateCatastropheActive) crisisAffected += 0.15;
+    if (env.ecosystemCollapseActive) crisisAffected += 0.10;
+    if (social.meaningCollapseActive) crisisAffected += 0.30;
+    if (social.socialUnrestActive) crisisAffected += 0.20;
+    crisisAffected = Math.min(1.0, crisisAffected);
+    
+    totalCrisisAffected = crisisAffected * pop.population;
+    
+    // Create simplified distribution: crisis zones vs safe zones
+    const crisisQoL = avgQoL * 0.3; // 70% reduction in crisis zones
+    const safeQoL = avgQoL * 1.2; // 20% boost in safe zones
+    
+    // Add regions proportional to population split
+    const numCrisisRegions = Math.ceil(crisisAffected * 10);
+    const numSafeRegions = 10 - numCrisisRegions;
+    
+    for (let i = 0; i < numCrisisRegions; i++) {
+      regionalQoLs.push(crisisQoL * (0.8 + Math.random() * 0.4)); // Some variation
+    }
+    for (let i = 0; i < numSafeRegions; i++) {
+      regionalQoLs.push(safeQoL * (0.8 + Math.random() * 0.4));
+    }
+  }
+  
+  // === STATISTICAL ANALYSIS ===
+  regionalQoLs.sort((a, b) => a - b);
+  
+  const worstRegion = regionalQoLs[0] || 0;
+  const bestRegion = regionalQoLs[regionalQoLs.length - 1] || 0;
+  const medianRegion = regionalQoLs[Math.floor(regionalQoLs.length / 2)] || 0;
+  
+  // Calculate Gini coefficient (measure of inequality)
+  const gini = calculateGiniCoefficient(regionalQoLs);
+  
+  // Calculate variance (guard against empty arrays)
+  const mean = regionalQoLs.length > 0 
+    ? regionalQoLs.reduce((a, b) => a + b, 0) / regionalQoLs.length 
+    : 0;
+  const variance = regionalQoLs.length > 0
+    ? regionalQoLs.reduce((sum, qol) => sum + Math.pow(qol - mean, 2), 0) / regionalQoLs.length 
+    : 0;
+  
+  // Crisis-affected fraction (guard against division by zero in extinction scenarios)
+  const crisisAffectedFraction = pop.population > 0 
+    ? Math.min(1.0, totalCrisisAffected / pop.population)
+    : 0;
+  
+  // === DYSTOPIA FLAGS ===
+  
+  // Inequality dystopia: Top regions thriving while bottom suffering
+  // Research: This is "Elysium" scenario - rich paradise + poor hell
+  const isDystopicInequality = (
+    gini > 0.45 &&                    // High inequality (Wilkinson threshold)
+    bestRegion > 0.7 &&               // Top regions doing great
+    worstRegion < 0.3 &&              // Bottom regions suffering
+    bestRegion - worstRegion > 0.5    // Large gap
+  );
+  
+  // Regional dystopia: Significant population in crisis while others fine
+  // Research: >30% in crisis = systemic failure even if averages OK
+  const isRegionalDystopia = (
+    crisisAffectedFraction > 0.30 &&  // >30% in crisis
+    bestRegion - worstRegion > 0.4 &&  // Significant gap
+    bestRegion > 0.6                   // Some regions doing well
+  );
+  
+  // Final NaN guards (safety check)
+  const safeGini = isNaN(gini) ? 0.38 : gini;
+  const safeVariance = isNaN(variance) ? 0.08 : variance;
+  const safeCrisisAffected = isNaN(crisisAffectedFraction) ? 0 : crisisAffectedFraction;
+  const safeWorstRegion = isNaN(worstRegion) ? 0.35 : worstRegion;
+  const safeBestRegion = isNaN(bestRegion) ? 0.95 : bestRegion;
+  const safeMedianRegion = isNaN(medianRegion) ? 0.65 : medianRegion;
+  
+  return {
+    globalGini: safeGini,
+    regionalVariance: safeVariance,
+    crisisAffectedFraction: safeCrisisAffected,
+    worstRegionQoL: safeWorstRegion,
+    bestRegionQoL: safeBestRegion,
+    medianRegionQoL: safeMedianRegion,
+    isDystopicInequality,
+    isRegionalDystopia
+  };
+}
+
+/**
+ * Calculate Gini coefficient for inequality measurement
+ * 
+ * Research basis:
+ * - Gini = 0: Perfect equality (everyone has same QoL)
+ * - Gini = 1: Perfect inequality (one person has all QoL)
+ * - Gini >0.40: High inequality (problematic in democracies)
+ * - Gini >0.50: Extreme inequality (typically authoritarian states)
+ */
+function calculateGiniCoefficient(values: number[]): number {
+  if (values.length === 0) return 0;
+  
+  const sortedValues = [...values].sort((a, b) => a - b);
+  const n = sortedValues.length;
+  const mean = sortedValues.reduce((a, b) => a + b, 0) / n;
+  
+  if (mean === 0) return 0; // Avoid division by zero
+  
+  let sumOfDifferences = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      sumOfDifferences += Math.abs(sortedValues[i] - sortedValues[j]);
+    }
+  }
+  
+  const gini = sumOfDifferences / (2 * n * n * mean);
+  return Math.min(1.0, Math.max(0, gini));
 }
 

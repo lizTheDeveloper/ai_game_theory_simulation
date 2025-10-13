@@ -40,3 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 monteCarloOutputs/
+
+# Log files
+logs/*.log
+
+# Heap profiles
+profiles/

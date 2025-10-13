@@ -95,6 +95,27 @@ interface RunResult {
   minAICapability: number;
   avgAlignment: number;
   
+  // NEW (Oct 12, 2025): Survival Fundamentals
+  foodSecurity: number;
+  waterSecurity: number;
+  thermalHabitability: number;
+  shelterSecurity: number;
+  
+  // NEW (Oct 12, 2025): Distribution Metrics
+  globalGini: number;
+  worstRegionQoL: number;
+  bestRegionQoL: number;
+  crisisAffectedFraction: number;
+  isDystopicInequality: boolean;
+  isRegionalDystopia: boolean;
+  
+  // NEW (Oct 12, 2025): Famine Statistics
+  totalFamineDeaths: number;        // Total deaths from famines (billions)
+  activeFamines: number;             // Number of active famines at end
+  genocideFamines: number;           // Count of genocide-driven famines
+  techPreventedDeaths: number;       // Deaths prevented by tech (billions)
+  famineAffectedRegions: string[];   // Regions that experienced famines
+  
   // Alignment statistics (ENHANCED)
   avgTrueAlignment: number;
   minTrueAlignment: number;
@@ -288,7 +309,7 @@ const runs = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
 
 // Configuration
 const NUM_RUNS = runs ? parseInt(runs) : 10;
-const MAX_MONTHS = maxMonths ? parseInt(maxMonths) : 120; // 10 years to allow slow catastrophic scenarios to develop
+const MAX_MONTHS = maxMonths ? parseInt(maxMonths) : 600; // 50 years to show realistic timeline for ecosystem collapse (Realistic Timeline Recalibration)
 const SEED_START = 42000;
 
 log(`\n⚙️  CONFIGURATION:`);
@@ -771,9 +792,14 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const aiHubsSurviving = countrySys.aiHubsSurviving;
   const depopulationEvents = countrySys.depopulatedCountries.map(name => name);
   
+  // Map engine's 'inconclusive' to 'stalemate' for reporting
+  const mappedOutcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none' = 
+    runResult.summary.finalOutcome === 'inconclusive' ? 'stalemate' : 
+    runResult.summary.finalOutcome as any;
+  
   results.push({
     seed,
-    outcome: runResult.summary.finalOutcome, // Use engine's determined outcome, not probability-based
+    outcome: mappedOutcome,
     outcomeReason: runResult.summary.finalOutcomeReason,
     months: MAX_MONTHS,
     
@@ -784,6 +810,32 @@ for (let i = 0; i < NUM_RUNS; i++) {
     maxAICapability: maxCapability,
     minAICapability: minCapability,
     avgAlignment,
+    
+    // NEW (Oct 12, 2025): Survival Fundamentals
+    foodSecurity: finalState.qualityOfLifeSystems.survivalFundamentals?.foodSecurity ?? 0,
+    waterSecurity: finalState.qualityOfLifeSystems.survivalFundamentals?.waterSecurity ?? 0,
+    thermalHabitability: finalState.qualityOfLifeSystems.survivalFundamentals?.thermalHabitability ?? 0,
+    shelterSecurity: finalState.qualityOfLifeSystems.survivalFundamentals?.shelterSecurity ?? 0,
+    
+    // NEW (Oct 12, 2025): Distribution Metrics
+    globalGini: finalState.qualityOfLifeSystems.distribution?.globalGini ?? 0,
+    worstRegionQoL: finalState.qualityOfLifeSystems.distribution?.worstRegionQoL ?? 0,
+    bestRegionQoL: finalState.qualityOfLifeSystems.distribution?.bestRegionQoL ?? 0,
+    crisisAffectedFraction: finalState.qualityOfLifeSystems.distribution?.crisisAffectedFraction ?? 0,
+    isDystopicInequality: finalState.qualityOfLifeSystems.distribution?.isDystopicInequality ?? false,
+    isRegionalDystopia: finalState.qualityOfLifeSystems.distribution?.isRegionalDystopia ?? false,
+    
+    // NEW (Oct 12, 2025): Famine Statistics
+    totalFamineDeaths: finalState.famineSystem?.totalDeaths ?? 0,
+    activeFamines: finalState.famineSystem?.activeFamines?.length ?? 0,
+    genocideFamines: finalState.famineSystem?.genocideFamines ?? 0,
+    techPreventedDeaths: finalState.famineSystem?.techPreventedDeaths ?? 0,
+    famineAffectedRegions: [
+      ...new Set([
+        ...(finalState.famineSystem?.activeFamines?.map(f => f.affectedRegion) ?? []),
+        ...(finalState.famineSystem?.historicalFamines?.map(f => f.affectedRegion) ?? [])
+      ])
+    ],
     
     // Alignment statistics (ENHANCED)
     avgTrueAlignment,
@@ -1559,6 +1611,173 @@ qolCategories.sort((a, b) => a.value - b.value);
 log(`\n  WEAKEST QOL CATEGORIES:`);
 log(`    1. ${qolCategories[0].name}: ${qolCategories[0].value.toFixed(3)} ⚠️`);
 log(`    2. ${qolCategories[1].name}: ${qolCategories[1].value.toFixed(3)}`);
+
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('🍞 SURVIVAL FUNDAMENTALS (NEW - Oct 12, 2025)');
+log('='.repeat(80));
+
+const avgFoodSecurity = results.reduce((sum, r) => sum + r.foodSecurity, 0) / results.length;
+const avgWaterSecurity = results.reduce((sum, r) => sum + r.waterSecurity, 0) / results.length;
+const avgThermalHabitability = results.reduce((sum, r) => sum + r.thermalHabitability, 0) / results.length;
+const avgShelterSecurity = results.reduce((sum, r) => sum + r.shelterSecurity, 0) / results.length;
+
+log(`\n  SURVIVAL METRICS (0.7+ = secure, <0.4 = crisis):`);
+log(`    Food Security: ${avgFoodSecurity.toFixed(3)} (FAO: >1800 kcal/day)`);
+log(`    Water Security: ${avgWaterSecurity.toFixed(3)} (WHO: >50L/day clean water)`);
+log(`    Thermal Habitability: ${avgThermalHabitability.toFixed(3)} (% of planet <35°C wet-bulb)`);
+log(`    Shelter Security: ${avgShelterSecurity.toFixed(3)} (% population with housing)`);
+
+// Count runs with survival crises
+const foodCrisisRuns = results.filter(r => r.foodSecurity < 0.4).length;
+const waterCrisisRuns = results.filter(r => r.waterSecurity < 0.4).length;
+const thermalCrisisRuns = results.filter(r => r.thermalHabitability < 0.5).length;
+const shelterCrisisRuns = results.filter(r => r.shelterSecurity < 0.4).length;
+
+log(`\n  SURVIVAL CRISIS FREQUENCY:`);
+log(`    Food Insecurity (<0.4): ${foodCrisisRuns} runs (${(foodCrisisRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Water Insecurity (<0.4): ${waterCrisisRuns} runs (${(waterCrisisRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Thermal Uninhabitability (<0.5): ${thermalCrisisRuns} runs (${(thermalCrisisRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    Shelter Insecurity (<0.4): ${shelterCrisisRuns} runs (${(shelterCrisisRuns/NUM_RUNS*100).toFixed(1)}%)`);
+
+// Reality check: High QoL despite survival failures?
+const survivalFailures = results.filter(r => 
+  r.foodSecurity < 0.4 || r.waterSecurity < 0.4 || r.thermalHabitability < 0.5
+);
+const survivalFailuresWithHighQoL = survivalFailures.filter(r => r.finalQoL > 0.5);
+if (survivalFailuresWithHighQoL.length > 0) {
+  log(`\n  ⚠️  HIDDEN SUFFERING DETECTED: ${survivalFailuresWithHighQoL.length} runs with QoL >0.5 but survival failures`);
+  log(`      This indicates aggregate QoL masks starvation/deaths in specific regions.`);
+}
+
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('🌍 INEQUALITY & DISTRIBUTION (NEW - Oct 12, 2025)');
+log('='.repeat(80));
+
+const avgGlobalGini = results.reduce((sum, r) => sum + r.globalGini, 0) / results.length;
+const avgWorstRegionQoL = results.reduce((sum, r) => sum + r.worstRegionQoL, 0) / results.length;
+const avgBestRegionQoL = results.reduce((sum, r) => sum + r.bestRegionQoL, 0) / results.length;
+const avgCrisisAffectedFraction = results.reduce((sum, r) => sum + r.crisisAffectedFraction, 0) / results.length;
+
+log(`\n  GLOBAL INEQUALITY METRICS:`);
+log(`    Global Gini Coefficient: ${avgGlobalGini.toFixed(3)} (0=equal, 0.40+=unstable, 1=extreme)`);
+log(`    Best Region QoL: ${avgBestRegionQoL.toFixed(3)}`);
+log(`    Worst Region QoL: ${avgWorstRegionQoL.toFixed(3)} (Rawlsian minimum)`);
+log(`    QoL Gap (Best - Worst): ${(avgBestRegionQoL - avgWorstRegionQoL).toFixed(3)}`);
+log(`    Crisis-Affected Population: ${(avgCrisisAffectedFraction * 100).toFixed(1)}%`);
+
+// Inequality trajectory analysis (Oct 12, 2025)
+const baselineGini = 0.38; // 2025 World Bank baseline
+const giniChange = avgGlobalGini - baselineGini;
+const giniChangePercent = (giniChange / baselineGini) * 100;
+
+log(`\n  INEQUALITY TRAJECTORY (from 2025 baseline):`);
+log(`    Starting Gini (2025): 0.380`);
+log(`    Final Avg Gini: ${avgGlobalGini.toFixed(3)}`);
+log(`    Change: ${giniChange >= 0 ? '+' : ''}${giniChange.toFixed(3)} (${giniChangePercent >= 0 ? '+' : ''}${giniChangePercent.toFixed(1)}%)`);
+
+if (giniChange < -0.05) {
+  log(`    ✅ INEQUALITY IMPROVED: ${Math.abs(giniChangePercent).toFixed(0)}% reduction (AI helping distribution)`);
+} else if (giniChange > 0.05) {
+  log(`    ⚠️  INEQUALITY WORSENED: ${giniChangePercent.toFixed(0)}% increase (AI benefits captured by elites)`);
+} else {
+  log(`    ➡️  INEQUALITY STABLE: Within 5% of baseline`);
+}
+
+// Count dystopia types
+const inequalityDystopiaRuns = results.filter(r => r.isDystopicInequality).length;
+const regionalDystopiaRuns = results.filter(r => r.isRegionalDystopia).length;
+
+log(`\n  DYSTOPIA TYPE DETECTION:`);
+log(`    Inequality Dystopia ("Elysium"): ${inequalityDystopiaRuns} runs (${(inequalityDystopiaRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`      Top thrives + bottom suffers despite aggregate QoL looking OK`);
+log(`    Regional Dystopia (>30% in crisis): ${regionalDystopiaRuns} runs (${(regionalDystopiaRuns/NUM_RUNS*100).toFixed(1)}%)`);
+log(`      Geographic divide: some regions prosper while others collapse`);
+
+// Correlation: High inequality vs outcomes
+const highGiniRuns = results.filter(r => r.globalGini > 0.45);
+if (highGiniRuns.length > 0) {
+  const highGiniExtinction = highGiniRuns.filter(r => r.outcome === 'extinction').length;
+  const highGiniDystopia = highGiniRuns.filter(r => r.outcome === 'dystopia').length;
+  const highGiniUtopia = highGiniRuns.filter(r => r.outcome === 'utopia').length;
+  
+  log(`\n  HIGH INEQUALITY (Gini >0.45) → OUTCOMES:`);
+  log(`    Total Runs: ${highGiniRuns.length} (${(highGiniRuns.length/NUM_RUNS*100).toFixed(1)}%)`);
+  log(`    Extinction: ${highGiniExtinction} (${(highGiniExtinction/highGiniRuns.length*100).toFixed(1)}%)`);
+  log(`    Dystopia: ${highGiniDystopia} (${(highGiniDystopia/highGiniRuns.length*100).toFixed(1)}%)`);
+  log(`    Utopia: ${highGiniUtopia} (${(highGiniUtopia/highGiniRuns.length*100).toFixed(1)}%)`);
+  
+  if (highGiniUtopia > 0) {
+    log(`\n    ⚠️  WARNING: ${highGiniUtopia} Utopia runs with high inequality (Gini >0.45)`);
+    log(`        Utopia should require reasonable equality. Check outcome logic!`);
+  }
+}
+
+// 🌾 FAMINE STATISTICS (Oct 12, 2025)
+const avgTotalFamineDeaths = results.reduce((sum, r) => sum + r.totalFamineDeaths, 0) / NUM_RUNS;
+const avgActiveFamines = results.reduce((sum, r) => sum + r.activeFamines, 0) / NUM_RUNS;
+const avgGenocideFamines = results.reduce((sum, r) => sum + r.genocideFamines, 0) / NUM_RUNS;
+const avgTechPreventedDeaths = results.reduce((sum, r) => sum + r.techPreventedDeaths, 0) / NUM_RUNS;
+
+const runsWithFamines = results.filter(r => r.totalFamineDeaths > 0).length;
+const runsWithGenocide = results.filter(r => r.genocideFamines > 0).length;
+
+// Collect all affected regions
+const allAffectedRegions = new Set<string>();
+results.forEach(r => r.famineAffectedRegions.forEach(region => allAffectedRegions.add(region)));
+
+log(`\n🌾 FAMINE STATISTICS (TIER 1.7 Integration)`);
+log(`${'='.repeat(50)}`);
+log(`  Total famine deaths: ${(avgTotalFamineDeaths * 1000).toFixed(0)}M avg (${(avgTotalFamineDeaths * 1000 * NUM_RUNS).toFixed(0)}M cumulative)`);
+log(`  Runs with famines: ${runsWithFamines}/${NUM_RUNS} (${(runsWithFamines/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Active famines at end: ${avgActiveFamines.toFixed(1)} avg`);
+log(`  Genocide-driven famines: ${avgGenocideFamines.toFixed(1)} avg`);
+log(`  Runs with genocide: ${runsWithGenocide}/${NUM_RUNS} (${(runsWithGenocide/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Tech-prevented deaths: ${(avgTechPreventedDeaths * 1000).toFixed(0)}M avg`);
+
+if (avgTechPreventedDeaths > 0 && avgTotalFamineDeaths > 0) {
+  const techEffectiveness = (avgTechPreventedDeaths / (avgTotalFamineDeaths + avgTechPreventedDeaths)) * 100;
+  log(`  Tech effectiveness: ${techEffectiveness.toFixed(1)}% mortality reduction`);
+}
+
+log(`\n  AFFECTED REGIONS:`);
+if (allAffectedRegions.size > 0) {
+  allAffectedRegions.forEach(region => {
+    const regionCount = results.filter(r => r.famineAffectedRegions.includes(region)).length;
+    log(`    ${region}: ${regionCount}/${NUM_RUNS} runs (${(regionCount/NUM_RUNS*100).toFixed(1)}%)`);
+  });
+} else {
+  log(`    ✅ No famines triggered in any runs`);
+}
+
+// Famine context warnings
+if (avgGenocideFamines > 0) {
+  log(`\n  ⚠️  GENOCIDE CONTEXT DETECTED:`);
+  log(`    Tech deployment blocked in ${avgGenocideFamines.toFixed(1)} avg famines`);
+  log(`    These are aid blockade or resource extraction scenarios where tech cannot help`);
+}
+
+if (avgTotalFamineDeaths > 0.5) {
+  log(`\n  ⚠️  HIGH FAMINE MORTALITY:`);
+  log(`    ${(avgTotalFamineDeaths * 1000).toFixed(0)}M deaths avg indicates major ecosystem or climate collapse`);
+  log(`    This is likely from biodiversity loss (< 30%) or nuclear winter scenarios`);
+}
+
+// Reality check: Does Utopia have low inequality?
+const utopiaRuns = results.filter(r => r.outcome === 'utopia');
+if (utopiaRuns.length > 0) {
+  const utopiaAvgGini = utopiaRuns.reduce((sum, r) => sum + r.globalGini, 0) / utopiaRuns.length;
+  const utopiaAvgWorstQoL = utopiaRuns.reduce((sum, r) => sum + r.worstRegionQoL, 0) / utopiaRuns.length;
+  
+  log(`\n  UTOPIA INEQUALITY CHECK:`);
+  log(`    Avg Gini in Utopia runs: ${utopiaAvgGini.toFixed(3)} (should be <0.40)`);
+  log(`    Avg Worst Region QoL: ${utopiaAvgWorstQoL.toFixed(3)} (should be >0.50)`);
+  
+  if (utopiaAvgGini > 0.40) {
+    log(`\n    🚨 BUG: Utopia runs have high inequality! Outcome criteria too lenient.`);
+  }
+}
 
 // ============================================================================
 log('\n\n' + '='.repeat(80));

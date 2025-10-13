@@ -192,15 +192,17 @@ export function updateEnvironmentalAccumulation(
   
   // === BIODIVERSITY LOSS ===
   // Habitat disruption from expansion
-  let biodiversityLossRate = economicStage * 0.005; // 0.5% per month at Stage 1
+  // REALISTIC TIMELINE: -0.5%/year = -0.04%/month (10x slower than before)
+  // Research: IPBES 2019 - 1M species at risk, but collapse takes decades, not months
+  let biodiversityLossRate = economicStage * 0.0004; // 0.04% per month at Stage 1
   
   // Manufacturing and resource extraction destroy habitats
-  biodiversityLossRate += manufacturingCap * 0.003;
-  biodiversityLossRate += (1 - env.resourceReserves) * 0.008; // More extraction = more habitat loss
+  biodiversityLossRate += manufacturingCap * 0.0003;
+  biodiversityLossRate += (1 - env.resourceReserves) * 0.0008; // More extraction = more habitat loss
   
   // Pollution and climate degrade ecosystems
-  biodiversityLossRate += env.pollutionLevel * 0.004;
-  biodiversityLossRate += (1 - env.climateStability) * 0.006;
+  biodiversityLossRate += env.pollutionLevel * 0.0004;
+  biodiversityLossRate += (1 - env.climateStability) * 0.0006;
   
   // Mitigation from ecosystem management
   if (hasEcosystemManagement) {
@@ -322,33 +324,112 @@ function checkEnvironmentalCrises(state: GameState): void {
     }
   }
   
-  // ECOSYSTEM COLLAPSE: Biodiversity below 30%
-  if (env.biodiversityIndex < 0.3 && !env.ecosystemCrisisActive) {
+  // ECOSYSTEM TIPPING POINT: Biodiversity below 20%
+  // REALISTIC TIMELINE: Threshold triggers collapse PROCESS, not instant apocalypse
+  // Research: Collapse takes 20-40 years after tipping point (2040-2070)
+  if (env.biodiversityIndex < 0.2 && !env.ecosystemCrisisActive) {
     env.ecosystemCrisisActive = true;
+    // Initialize collapse tracking
+    if (!state.ecosystemCollapse) {
+      state.ecosystemCollapse = {
+        triggered: true,
+        triggeredAt: state.currentMonth,
+        monthsSinceTrigger: 0,
+        phase: 'declining' as const,
+      };
+    }
+    
     try {
-      console.log(`\n🦋 ECOSYSTEM COLLAPSE TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`\n🦋 ECOSYSTEM TIPPING POINT CROSSED (Month ${state.currentMonth})`);
       console.log(`   Biodiversity Index: ${(env.biodiversityIndex * 100).toFixed(1)}%`);
-      console.log(`   Impact: Food system failure, life support degradation\n`);
+      console.log(`   Impact: Entering collapse process (20-40 year timeline)`);
+      console.log(`   Phase 1: DECLINING (0-2 years) - initial stress, low mortality`);
+      console.log(`   Phase 2: CRISIS (2-5 years) - accelerating failures, moderate mortality`);
+      console.log(`   Phase 3: COLLAPSE (5+ years) - severe failures, high mortality\n`);
     } catch (e) { /* Ignore EPIPE */ }
 
     state.eventLog.push({
       type: 'crisis',
       month: state.currentMonth,
-      description: `Ecosystem Collapse: Biodiversity ${(env.biodiversityIndex * 100).toFixed(1)}%`,
-      impact: 'Material -40%, Healthcare -30%, Ecosystem floor 0.2, QoL -0.4'
+      description: `Ecosystem Tipping Point: Biodiversity ${(env.biodiversityIndex * 100).toFixed(1)}%`,
+      impact: 'Collapse process begins - impacts escalate over decades'
     });
 
-    // Critical QoL impacts
-    qol.materialAbundance *= 0.6; // 40% drop (food system collapse)
-    qol.healthcareQuality *= 0.7; // 30% drop (ecosystem services lost)
-    qol.ecosystemHealth = Math.min(0.2, qol.ecosystemHealth); // Floor ecosystem health
-    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.4);
+    // Initial QoL impacts (minor at first)
+    qol.materialAbundance *= 0.95; // 5% initial drop
+    qol.healthcareQuality *= 0.97; // 3% initial drop
+    qol.ecosystemHealth *= 0.90; // 10% initial drop
+    state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.05);
 
-    // Population impact: Cascading food system collapse (1-3% casualties)
-    // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
-    // 2% mortality rate from food system failure
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.020, 'Ecosystem collapse - global food system failure', 1.00, 'ecosystem');
+    // NO immediate deaths - that comes gradually over years
+  }
+  
+  // ONGOING ECOSYSTEM COLLAPSE: Escalating impacts over time
+  if (env.ecosystemCrisisActive && state.ecosystemCollapse) {
+    state.ecosystemCollapse.monthsSinceTrigger = state.currentMonth - state.ecosystemCollapse.triggeredAt;
+    const monthsSince = state.ecosystemCollapse.monthsSinceTrigger;
+    
+    // Phase transitions (realistic timeline)
+    if (monthsSince < 24) {
+      // Phase 1: DECLINING (0-2 years) - Initial stress
+      state.ecosystemCollapse.phase = 'declining';
+      
+      // Very low mortality: 0.01% per month (vulnerable regions first)
+      // Affects tropical regions, small island states (~5% of world)
+      const { addAcuteCrisisDeaths } = require('./populationDynamics');
+      addAcuteCrisisDeaths(state, 0.0001, 'Ecosystem decline - regional food stress (tropical/island)', 0.05, 'ecosystem');
+      
+      // Gradual QoL degradation
+      qol.materialAbundance = Math.max(0.3, qol.materialAbundance - 0.002); // -0.2%/month
+      qol.ecosystemHealth = Math.max(0.2, qol.ecosystemHealth - 0.003); // -0.3%/month
+      
+    } else if (monthsSince < 60) {
+      // Phase 2: CRISIS (2-5 years) - Accelerating failures
+      state.ecosystemCollapse.phase = 'crisis';
+      
+      // Moderate mortality: 0.1% per month
+      // Spreads to agricultural regions globally (~40% of world)
+      const { addAcuteCrisisDeaths } = require('./populationDynamics');
+      addAcuteCrisisDeaths(state, 0.001, 'Ecosystem crisis - agricultural disruption (vulnerable regions)', 0.40, 'ecosystem');
+      
+      // Accelerating QoL degradation
+      qol.materialAbundance = Math.max(0.2, qol.materialAbundance - 0.005); // -0.5%/month
+      qol.healthcareQuality = Math.max(0.3, qol.healthcareQuality - 0.003); // -0.3%/month
+      qol.ecosystemHealth = Math.max(0.1, qol.ecosystemHealth - 0.005); // -0.5%/month
+      
+      // Log phase transition (once)
+      if (monthsSince === 24) {
+        try {
+          console.log(`\n🦋 ECOSYSTEM COLLAPSE: Entering CRISIS PHASE (Month ${state.currentMonth})`);
+          console.log(`   2 years since tipping point - failures accelerating`);
+          console.log(`   Mortality rising, agricultural disruption spreading\n`);
+        } catch (e) { /* Ignore EPIPE */ }
+      }
+      
+    } else {
+      // Phase 3: COLLAPSE (5+ years) - Severe failures
+      state.ecosystemCollapse.phase = 'collapse';
+      
+      // High mortality: 1-2% per month
+      // Global food system failure (100% of world affected)
+      const { addAcuteCrisisDeaths } = require('./populationDynamics');
+      addAcuteCrisisDeaths(state, 0.015, 'Ecosystem collapse - global food system failure', 1.00, 'ecosystem');
+      
+      // Severe ongoing degradation
+      qol.materialAbundance = Math.max(0.1, qol.materialAbundance - 0.01); // -1%/month
+      qol.healthcareQuality = Math.max(0.2, qol.healthcareQuality - 0.005); // -0.5%/month
+      qol.ecosystemHealth = Math.max(0.05, qol.ecosystemHealth - 0.008); // -0.8%/month
+      state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.01);
+      
+      // Log phase transition (once)
+      if (monthsSince === 60) {
+        try {
+          console.log(`\n🦋 ECOSYSTEM COLLAPSE: Entering COLLAPSE PHASE (Month ${state.currentMonth})`);
+          console.log(`   5 years since tipping point - systemic failure`);
+          console.log(`   Global food system failure, mass mortality\n`);
+        } catch (e) { /* Ignore EPIPE */ }
+      }
+    }
   }
   
   // === ONGOING CRISIS IMPACTS ===

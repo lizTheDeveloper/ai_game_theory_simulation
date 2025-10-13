@@ -1102,6 +1102,194 @@ THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
 
 ---
 
+## 2.9 **Government Environmental Actions** 🌍🏛️
+**File:** NEW - `plans/government-environmental-actions.md`
+**Priority:** **HIGH** (Critical gap discovered Oct 12, 2025)
+**Dev Time:** ~4-6 hours
+**Complexity:** MEDIUM
+
+**Why Critical:**
+- **Government has 26 actions, ZERO are environmental**
+- All actions focused on: AI regulation (10), AI safety (7), Economic policy (3), AI infrastructure (6)
+- Governments CAN SEE ecosystem collapse happening but have NO ACTIONS to respond
+- Realistic timeline recalibration shows tipping points 2030-2035, governments need tools to intervene
+
+**What's Missing:**
+Current breakthrough technologies (De-Extinction, Ocean Alkalinity, Advanced DAC) exist but:
+- ❌ No government action to FUND deployment
+- ❌ No priority logic for environmental crises (like unemployment crisis multiplier)
+- ❌ No emergency response to Amazon/coral/pollinator collapse
+- ❌ Governments watch passively as biodiversity → 20% → collapse
+
+**Discovery Context:**
+After implementing realistic timeline recalibration (Phase 1-2 complete):
+```
+🌲 AMAZON TIPPING POINT CROSSED (Month 54)
+🪸 CORAL REEF TIPPING POINT CROSSED (Month 90)
+💀 GLOBAL CRISIS DEATHS: 350.7M casualties (Ecosystem collapse)
+```
+Government took ZERO environmental actions during this crisis. Only AI/economic responses.
+
+**Implementation Plan:**
+
+**PART 1: Environmental Emergency Actions (2-3 hours)**
+Add to `src/simulation/agents/governmentAgent.ts`:
+
+```typescript
+{
+  id: 'emergency_amazon_protection',
+  name: '🚨 Emergency Amazon Rainforest Protection',
+  description: 'Deploy immediate deforestation halt, restoration funding',
+  canExecute: (state) => {
+    return state.specificTippingPoints?.amazon?.deforestation > 23 && // Near threshold
+           !state.specificTippingPoints?.amazon?.triggered;
+  },
+  cost: { funding: 50 }, // $50B
+  effects: {
+    amazonDeforestation: { rate: -0.5 }, // Slow/halt deforestation
+    governmentLegitimacy: { delta: 0.05 }, // Popular action
+  },
+  priority: 'deforestation_level * 30', // Urgent as threshold approaches
+},
+
+{
+  id: 'fund_coral_restoration',
+  name: '🪸 Fund Coral Reef Restoration Programs',
+  description: 'Large-scale coral nurseries, ocean alkalinity enhancement',
+  canExecute: (state) => {
+    return state.specificTippingPoints?.coral?.healthPercentage < 50;
+  },
+  cost: { funding: 30 }, // $30B
+  effects: {
+    coralHealth: { rate: 0.3 }, // Boost restoration
+    oceanHealth: { rate: 0.2 },
+  },
+  priority: '(50 - coral_health) * 2',
+},
+
+{
+  id: 'ban_harmful_pesticides',
+  name: '🦋 Ban Neonicotinoid Pesticides',
+  description: 'Emergency ban on pollinator-killing chemicals',
+  canExecute: (state) => {
+    return state.specificTippingPoints?.pollinators?.populationPercentage < 50;
+  },
+  cost: { funding: 5 }, // $5B (low cost, high impact)
+  effects: {
+    pollinatorPopulation: { rate: 0.5 }, // Major recovery
+    biodiversity: { rate: 0.2 },
+  },
+  priority: '(60 - pollinator_population) * 3',
+},
+
+{
+  id: 'deploy_breakthrough_tech',
+  name: '🚀 Deploy Breakthrough Environmental Tech',
+  description: 'Government funding to accelerate tech deployment',
+  canExecute: (state) => {
+    // Check if any environmental tech is unlocked but <50% deployed
+    const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
+    return envTechs.some(tech => 
+      state.breakthroughTech[tech]?.unlocked && 
+      state.breakthroughTech[tech]?.deploymentLevel < 0.5
+    );
+  },
+  cost: { funding: 100 }, // $100B
+  effects: {
+    techDeploymentSpeed: { multiplier: 2.0 }, // 2x deployment for 12 months
+  },
+  priority: 'ecosystem_crisis_severity * 50',
+},
+```
+
+**PART 2: Environmental Crisis Priority Logic (1-2 hours)**
+Add to priority calculation in `selectGovernmentAction()`:
+
+```typescript
+// Get environmental crisis severity
+const ecosystemCrisis = state.environmentalAccumulation.ecosystemCrisisActive;
+const biodiversityLevel = state.environmentalAccumulation.biodiversityIndex;
+const amazonThreat = state.specificTippingPoints?.amazon?.deforestation > 23;
+const coralThreat = state.specificTippingPoints?.coral?.healthPercentage < 40;
+const pollinatorThreat = state.specificTippingPoints?.pollinators?.populationPercentage < 45;
+
+// Environmental actions get CRISIS BOOST
+if (action.id.includes('amazon') || action.id.includes('coral') || 
+    action.id.includes('pesticide') || action.id.includes('breakthrough_tech')) {
+  
+  let envPriority = 5; // Base
+  
+  if (ecosystemCrisis) envPriority *= 5.0; // 25 priority during collapse
+  if (amazonThreat) envPriority *= 2.0; // Amazon near tipping
+  if (coralThreat) envPriority *= 1.5; // Coral declining
+  if (pollinatorThreat) envPriority *= 1.5; // Pollinators critical
+  
+  // Scale with biodiversity loss
+  envPriority *= (1 - biodiversityLevel) * 3; // More urgent as biodiversity drops
+  
+  priority = envPriority;
+}
+```
+
+**PART 3: Crisis Response Frequency Boost (30 min)**
+Extend existing crisis multiplier to include environmental:
+
+```typescript
+// CURRENT: Only unemployment, institutional, control loss
+// ADD: Environmental crisis multiplier
+const environmentalCrisis = 
+  (state.environmentalAccumulation.ecosystemCrisisActive ? 2.0 : 1.0) *
+  (state.specificTippingPoints?.amazon?.triggered ? 1.5 : 1.0) *
+  (state.specificTippingPoints?.coral?.triggered ? 1.3 : 1.0);
+
+const maxMultiplier = Math.max(
+  unemploymentCrisis, 
+  institutionalCrisis, 
+  controlLossCrisis,
+  environmentalCrisis // NEW
+);
+```
+
+**PART 4: Integration with Breakthrough Tech (1 hour)**
+Link government deployment funding to tech speed:
+
+```typescript
+// In breakthroughTechnologies.ts
+export function updateBreakthroughTechnologies(state: GameState) {
+  // Check if government is actively funding deployment
+  const govDeploymentBoost = state.government.activeDeploymentFunding || 1.0;
+  
+  // Apply to deployment rate
+  for (const tech of environmentalTechs) {
+    if (tech.unlocked && tech.deploymentLevel < 1.0) {
+      tech.deploymentLevel += tech.deploymentRate * govDeploymentBoost;
+    }
+  }
+}
+```
+
+**Expected Impact:**
+- Governments actively respond to environmental crises (not just AI/economic)
+- Can prevent tipping points through emergency action
+- Realistic policy interventions (bans, funding, protection)
+- Links government utility AI to planetary boundary system
+- Makes Utopia more achievable (governments have tools to help)
+
+**Research Backing:**
+- **Real-world precedent:** Montreal Protocol (ozone), Paris Agreement (climate)
+- **Amazon protection:** Brazil moratorium (2004-2012) reduced deforestation 80%
+- **Pesticide bans:** EU neonicotinoid ban (2018), pollinator populations stabilizing
+- **Coral restoration:** Great Barrier Reef $3B program, Caribbean restoration projects
+- **Government funding:** US Inflation Reduction Act $369B for climate
+
+**Validation:**
+- Run Monte Carlo with environmental actions enabled
+- Check if governments deploy actions when tipping points approach
+- Verify actions have measurable impact on outcomes
+- Compare Utopia % before/after (expect +10-20% Utopia if governments can respond)
+
+---
+
 # 🌍 **TIER 3: PLANETARY BOUNDARIES**
 
 ## 3.1 **Tipping Point Cascade System** 🌪️

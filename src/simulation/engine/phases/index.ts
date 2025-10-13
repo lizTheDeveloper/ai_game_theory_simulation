@@ -49,6 +49,7 @@ export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { CountryPopulationPhase } from './CountryPopulationPhase';
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
+export { FamineSystemPhase } from './FamineSystemPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 
 // Batch 3: Special phases (medium risk)

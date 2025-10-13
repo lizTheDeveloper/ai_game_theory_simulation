@@ -16,6 +16,7 @@ import { initializeCatastrophicScenarios } from './catastrophicScenarios';
 import { initializeEnvironmentalAccumulation } from './environmental';
 import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
+import { initializeSpecificTippingPoints } from './specificTippingPoints';
 import { initializeBreakthroughTech } from './breakthroughTechnologies';
 import { initializeUpwardSpirals } from './upwardSpirals';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
@@ -266,7 +267,8 @@ export function createDefaultInitialState(): GameState {
       wealthDistribution: 0.5,
       technologicalBreakthroughRate: 0.15,
       manufacturingCapability: 0.1,
-      informationIntegrity: 0.6
+      informationIntegrity: 0.6,
+      publicTrust: 0.5 // Moderate baseline trust in technology (2025)
     },
     
     // Initialize multi-dimensional QoL system
@@ -294,6 +296,9 @@ export function createDefaultInitialState(): GameState {
     
     // Phase 2: Environmental Accumulation
     environmentalAccumulation: initializeEnvironmentalAccumulation(),
+    
+    // Realistic Timeline Recalibration: Specific Tipping Points
+    specificTippingPoints: initializeSpecificTippingPoints(),
     
     // Phase 3: Social Cohesion & Meaning Crisis
     socialAccumulation: initializeSocialAccumulation(),
