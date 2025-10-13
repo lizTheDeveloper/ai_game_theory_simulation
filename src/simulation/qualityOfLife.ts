@@ -866,10 +866,21 @@ function getRegionalPopulationProportion(regionName: string): number {
  * Ecosystem collapse → agricultural failure → famine
  */
 export function checkRegionalFamineRisk(state: GameState, month: number): void {
-  if (!state.famineSystem) return;
+  // DEBUG (Oct 13, 2025): Why aren't famines triggering?
+  if (!state.famineSystem) {
+    console.warn(`⚠️  [Month ${month}] checkRegionalFamineRisk: famineSystem is undefined!`);
+    return;
+  }
   
   const env = state.environmentalAccumulation;
   const globalFoodSecurity = env.foodSecurity || 0.7;
+  
+  // DEBUG: Log when food security drops
+  if (globalFoodSecurity < 0.4 && month % 12 === 0) {
+    console.log(`\n🌾 [DEBUG] Food security: ${(globalFoodSecurity * 100).toFixed(1)}% (< 40% threshold)`);
+    console.log(`   Famine system exists: ${!!state.famineSystem}`);
+    console.log(`   Active famines: ${state.famineSystem.activeFamines.length}`);
+  }
   
   // FIX (Oct 13, 2025): Simplified famine trigger based on global food security only
   // The regional biodiversity system isn't being maintained, so we can't rely on it
