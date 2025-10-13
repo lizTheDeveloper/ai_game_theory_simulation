@@ -866,12 +866,36 @@ function getRegionalPopulationProportion(regionName: string): number {
  * Ecosystem collapse → agricultural failure → famine
  */
 export function checkRegionalFamineRisk(state: GameState, month: number): void {
-  if (!state.biodiversitySystem || !state.famineSystem) return;
+  // DEBUG (Oct 13): Track why famines aren't triggering
+  const DEBUG = month % 12 === 0; // Log once per year
   
-  const { regions } = state.biodiversitySystem;
-  if (!regions || !(regions instanceof Map) || regions.size === 0) return; // Safety check
+  if (!state.biodiversitySystem || !state.famineSystem) {
+    if (DEBUG) console.log(`[DEBUG] checkRegionalFamineRisk: Missing systems (bio: ${!!state.biodiversitySystem}, famine: ${!!state.famineSystem})`);
+    return;
+  }
+  
+  let { regions } = state.biodiversitySystem;
+  
+  // FIX (Oct 13): Maps get serialized to objects during state updates, convert back
+  if (regions && !(regions instanceof Map)) {
+    // Convert plain object back to Map
+    const regionsMap = new Map();
+    for (const key in regions) {
+      if (Object.prototype.hasOwnProperty.call(regions, key)) {
+        regionsMap.set(key, (regions as any)[key]);
+      }
+    }
+    regions = regionsMap;
+    state.biodiversitySystem.regions = regionsMap; // Update state
+  }
+  
+  if (!regions || regions.size === 0) {
+    if (DEBUG) console.log(`[DEBUG] checkRegionalFamineRisk: No regions (size: ${regions?.size})`);
+    return;
+  }
   
   const totalPopulation = state.humanPopulationSystem.population;
+  if (DEBUG) console.log(`[DEBUG] checkRegionalFamineRisk: Population ${totalPopulation.toFixed(2)}B, Regions: ${regions.size}`);
   
   // === NEW (Oct 13, 2025): CHECK GLOBAL FOOD CRISIS FIRST ===
   // If global food security < 0.4, trigger famines in vulnerable regions
@@ -879,7 +903,10 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
   const env = state.environmentalAccumulation;
   const globalFoodSecurity = env.foodSecurity || 0.7;
   
+  if (DEBUG) console.log(`[DEBUG] Food security: ${(globalFoodSecurity * 100).toFixed(1)}%, Threshold: 40%`);
+  
   if (globalFoodSecurity < 0.4) {
+    if (DEBUG) console.log(`[DEBUG] FOOD CRISIS DETECTED! Starting famine triggers...`);
     // Global food crisis - trigger famines in most vulnerable regions
     // Priority: regions with low biodiversity, high climate stress, or already stressed
     const vulnerableRegions = Array.from(regions.entries())
