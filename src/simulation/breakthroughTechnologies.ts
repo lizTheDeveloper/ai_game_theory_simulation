@@ -315,7 +315,9 @@ function updateTechProgress(
         if (month % 12 === 0 && crisisUrgency > 0.5) {
           // Aggregate emergency deployments (keep breakthrough announcements)
           const aggregator = (state as any).eventAggregator;
-          if (aggregator) aggregator.recordTechnologyBreakthrough(tech.name, 'emergency');
+          if (aggregator && aggregator.recordTechnologyBreakthrough) {
+            aggregator.recordTechnologyBreakthrough(tech.name, 'emergency');
+          }
         }
       }
       
@@ -323,19 +325,19 @@ function updateTechProgress(
       tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentIncrease);
       
       // Log significant deployment progress with year/month
-      // Aggregate deployment milestones (keep breakthrough announcements)
-      if (tech.deploymentLevel >= 0.5 && tech.deploymentLevel - deploymentIncrease < 0.5) {
-        const aggregator = (state as any).eventAggregator;
-        if (aggregator && aggregator.recordTechnologyBreakthrough) {
-          aggregator.recordTechnologyBreakthrough(tech.name, 50);
-        }
-      }
-      if (tech.deploymentLevel >= 1.0 && tech.deploymentLevel - deploymentIncrease < 1.0) {
-        const aggregator = (state as any).eventAggregator;
-        if (aggregator && aggregator.recordTechnologyBreakthrough) {
-          aggregator.recordTechnologyBreakthrough(tech.name, 100);
-        }
-      }
+      // Deployment milestones - comment out for now (EventAggregator doesn't have this method yet)
+      // if (tech.deploymentLevel >= 0.5 && tech.deploymentLevel - deploymentIncrease < 0.5) {
+      //   const aggregator = (state as any).eventAggregator;
+      //   if (aggregator && aggregator.recordTechnologyBreakthrough) {
+      //     aggregator.recordTechnologyBreakthrough(tech.name, 50);
+      //   }
+      // }
+      // if (tech.deploymentLevel >= 1.0 && tech.deploymentLevel - deploymentIncrease < 1.0) {
+      //   const aggregator = (state as any).eventAggregator;
+      //   if (aggregator && aggregator.recordTechnologyBreakthrough) {
+      //     aggregator.recordTechnologyBreakthrough(tech.name, 100);
+      //   }
+      // }
     }
     return;
   }
