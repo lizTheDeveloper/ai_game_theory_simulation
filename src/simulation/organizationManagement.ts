@@ -648,15 +648,34 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   projectCosts: number;
   total: number;
 } {
-  // Base operational expenses
-  const baseExpenses = org.monthlyExpenses;
+  // FIX (Oct 13, 2025): Make expenses scale with business size
+  // Problem: Revenue scaled with AI capability but expenses stayed fixed at $8M
+  // Result: 163x revenue/expense ratio, orgs never went bankrupt
   
-  // Data center operational costs
+  // 1. BASE OPERATIONAL EXPENSES (staff, R&D, admin)
+  // Scale with number of AI models owned (more models = more engineers/researchers)
+  const modelCount = org.ownedAIModels.length;
+  const staffExpenses = org.monthlyExpenses * (1 + modelCount * 0.3); // 30% more per model
+  
+  // 2. DATA CENTER OPERATIONAL COSTS
   const dcOperational = state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.operationalCost, 0);
   
-  // Project monthly costs (already paid in updateProjects, but track for reporting)
+  // 3. AI MODEL OPERATIONAL COSTS (compute, inference, safety monitoring)
+  // Active deployed models cost money to run
+  const activeModels = state.aiAgents.filter(ai =>
+    org.ownedAIModels.includes(ai.id) &&
+    (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open')
+  );
+  const modelOperationalCosts = activeModels.reduce((sum, ai) => {
+    const { calculateTotalCapabilityFromProfile } = require('./capabilities');
+    const capability = calculateTotalCapabilityFromProfile(ai.trueCapability);
+    // $10M/month per capability point for inference compute + monitoring
+    return sum + (capability * 10);
+  }, 0);
+  
+  // 4. PROJECT MONTHLY COSTS (already paid in updateProjects, but track for reporting)
   const projectCosts = org.currentProjects.reduce((sum, project) => {
     const duration = project.completionMonth - project.startMonth;
     if (project.type === 'datacenter_construction') {
@@ -666,6 +685,34 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
     }
     return sum;
   }, 0);
+  
+  let baseExpenses = staffExpenses + modelOperationalCosts;
+  
+  // === NEW: CRISIS EXPENSE INCREASES (Oct 13, 2025) ===
+  // During collapse, infrastructure costs MORE (emergency repairs, logistics, safety)
+  const env = state.environmentalAccumulation;
+  const crisisCount = [
+    env.resourceCrisisActive,
+    env.climateCrisisActive,
+    state.socialAccumulation.institutionalFailureActive,
+    state.socialAccumulation.socialUnrestActive,
+    state.technologicalRisk.controlLossActive
+  ].filter(Boolean).length;
+  
+  if (crisisCount >= 4) {
+    // 4+ crises: +50% expenses (emergency mode, supply chain disruptions)
+    baseExpenses *= 1.5;
+  } else if (crisisCount >= 3) {
+    // 3 crises: +30% expenses
+    baseExpenses *= 1.3;
+  }
+  
+  // Population collapse increases operational costs (harder to maintain infrastructure)
+  const regionalPopulationDecline = calculateRegionalPopulationDecline(org, state);
+  if (regionalPopulationDecline > 0.50) {
+    // 50%+ workforce dead → remaining staff must work overtime, emergency hiring
+    baseExpenses *= (1 + regionalPopulationDecline * 0.5); // Up to +50% at 100% decline
+  }
   
   return {
     baseExpenses,

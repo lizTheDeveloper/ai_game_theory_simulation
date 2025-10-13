@@ -1845,6 +1845,180 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Environmental tech deployment funded (${benefitingTechs.length} techs accelerated)`
       };
     }
+  },
+  
+  // TIER 2.9: Emergency Amazon Protection
+  {
+    id: 'emergency_amazon_protection',
+    name: '🚨 Emergency Amazon Rainforest Protection',
+    description: 'Deploy immediate deforestation halt, restoration funding ($50B)',
+    agentType: 'government',
+    energyCost: 5,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.amazon || state.government.resources < 5) return false;
+      const amazon = state.specificTippingPoints.amazon;
+      // Near threshold (25%) but not yet triggered
+      return amazon.deforestation > 23 && !amazon.triggered;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      if (!newState.government.environmentalInterventions) {
+        newState.government.environmentalInterventions = {};
+      }
+      
+      // Set Amazon protection active
+      newState.government.environmentalInterventions.amazonProtection = {
+        active: true,
+        activatedMonth: newState.currentMonth,
+        deforestationReductionRate: 0.5, // Slow/halt deforestation by 50%
+      };
+      
+      // Apply immediate effect to Amazon deforestation rate
+      if (newState.specificTippingPoints?.amazon) {
+        const currentRate = 0.05; // Baseline 0.05% per month from specificTippingPoints
+        newState.specificTippingPoints.amazon.deforestation -= currentRate * 0.5; // Undo half this month's damage
+      }
+      
+      // Cost and legitimacy
+      newState.government.resources -= 5;
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.05);
+      
+      return {
+        success: true,
+        newState,
+        effects: { amazonProtection: 0.5 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: '🚨 Emergency Amazon Protection',
+          description: 'Government deployed $50B for Amazon rainforest protection. Deforestation rate reduced by 50%. Tipping point averted.',
+          effects: { deforestation: -0.5 }
+        }],
+        message: 'Emergency Amazon protection deployed'
+      };
+    }
+  },
+  
+  // TIER 2.9: Coral Reef Restoration
+  {
+    id: 'fund_coral_restoration',
+    name: '🪸 Fund Coral Reef Restoration Programs',
+    description: 'Large-scale coral nurseries, ocean alkalinity enhancement ($30B)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.coral || state.government.resources < 3) return false;
+      const coral = state.specificTippingPoints.coral;
+      // Health declining below 50%
+      return coral.healthPercentage < 50 && !coral.triggered;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      if (!newState.government.environmentalInterventions) {
+        newState.government.environmentalInterventions = {};
+      }
+      
+      // Set coral restoration active
+      newState.government.environmentalInterventions.coralRestoration = {
+        active: true,
+        activatedMonth: newState.currentMonth,
+        healthRecoveryRate: 0.3, // +0.3% health per month
+      };
+      
+      // Apply immediate effect to coral health
+      if (newState.specificTippingPoints?.coral) {
+        newState.specificTippingPoints.coral.healthPercentage = Math.min(100,
+          newState.specificTippingPoints.coral.healthPercentage + 1.0 // +1% immediate boost
+        );
+      }
+      
+      // Cost and legitimacy
+      newState.government.resources -= 3;
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.04);
+      
+      return {
+        success: true,
+        newState,
+        effects: { coralRestoration: 0.3 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: '🪸 Coral Reef Restoration',
+          description: 'Government funded $30B for coral reef restoration programs. Ocean alkalinity enhancement deployed.',
+          effects: { coralHealth: 0.3 }
+        }],
+        message: 'Coral reef restoration programs funded'
+      };
+    }
+  },
+  
+  // TIER 2.9: Ban Harmful Pesticides
+  {
+    id: 'ban_harmful_pesticides',
+    name: '🦋 Ban Neonicotinoid Pesticides',
+    description: 'Emergency ban on pollinator-killing chemicals ($5B)',
+    agentType: 'government',
+    energyCost: 1,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.pollinators || state.government.resources < 1) return false;
+      const pollinators = state.specificTippingPoints.pollinators;
+      // Population declining below 50%
+      return pollinators.populationPercentage < 50 && !pollinators.triggered;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      if (!newState.government.environmentalInterventions) {
+        newState.government.environmentalInterventions = {};
+      }
+      
+      // Set pesticide ban active
+      newState.government.environmentalInterventions.pesticideBan = {
+        active: true,
+        activatedMonth: newState.currentMonth,
+        pollinatorRecoveryRate: 0.5, // +0.5% population per month
+      };
+      
+      // Apply immediate effect to pollinator population
+      if (newState.specificTippingPoints?.pollinators) {
+        newState.specificTippingPoints.pollinators.populationPercentage = Math.min(100,
+          newState.specificTippingPoints.pollinators.populationPercentage + 2.0 // +2% immediate recovery
+        );
+      }
+      
+      // Also boost biodiversity slightly
+      if (newState.environmentalAccumulation) {
+        newState.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
+          newState.environmentalAccumulation.biodiversityIndex + 0.01
+        );
+      }
+      
+      // Low cost, popular action
+      newState.government.resources -= 1;
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.06);
+      
+      return {
+        success: true,
+        newState,
+        effects: { pollinatorRecovery: 0.5, biodiversity: 0.01 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: '🦋 Pesticide Ban',
+          description: 'Government banned neonicotinoid pesticides. Pollinator populations expected to recover. Low-cost, high-impact intervention.',
+          effects: { pollinatorPopulation: 0.5 }
+        }],
+        message: 'Harmful pesticides banned'
+      };
+    }
   }
 ];
 
