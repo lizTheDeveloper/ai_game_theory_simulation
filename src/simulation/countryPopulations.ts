@@ -336,9 +336,10 @@ export function updateCountryPopulations(state: GameState): void {
         finalPopulation: country.population
       });
       
-      // Update strategic counts
-      if (country.isNuclearPower) sys.nuclearPowersSurviving--;
-      if (country.isAIHub) sys.aiHubsSurviving--;
+      // Update strategic counts (guard against going negative)
+      // FIX (Oct 13, 2025): Prevent negative counts if logic error or double-decrement
+      if (country.isNuclearPower && sys.nuclearPowersSurviving > 0) sys.nuclearPowersSurviving--;
+      if (country.isAIHub && sys.aiHubsSurviving > 0) sys.aiHubsSurviving--;
       
       // Log event
       const populationStr = (country.population * 1000).toFixed(0);

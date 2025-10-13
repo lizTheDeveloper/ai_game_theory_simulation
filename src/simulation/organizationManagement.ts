@@ -802,6 +802,13 @@ export function processOrganizationTurn(
   
   if (org.capital < bankruptcyThreshold && org.type === 'private') {
     handleBankruptcy(org, state);
+    
+    // FIX (Oct 13, 2025): Record bankruptcy in EventAggregator
+    const aggregator = (state as any).eventAggregator;
+    if (aggregator && aggregator.recordOrganizationBankruptcy) {
+      aggregator.recordOrganizationBankruptcy();
+    }
+    
     console.log(`💸 [Month ${state.currentMonth}] ${org.name} BANKRUPT (capital: $${org.capital.toFixed(1)}M, ${crisisCount} crises active)`);
   } else if (org.capital < distressThreshold && org.type === 'private') {
     console.warn(`⚠️  [Month ${state.currentMonth}] ${org.name} is in financial distress (capital: $${org.capital.toFixed(1)}M)`);
