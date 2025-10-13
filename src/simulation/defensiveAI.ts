@@ -467,7 +467,9 @@ function eliminateLaggardDangerousAIs(state: GameState): void {
           ai.lifecycleState = 'retired';
           eliminatedCount++;
           
-          console.log(`🛡️ DEFENSIVE AI: Eliminated ${ai.name} (cap ${ai.capability.toFixed(2)} vs ${defense.avgCapability.toFixed(2)})`);
+          // Aggregate elimination events
+          const aggregator = (state as any).eventAggregator;
+          if (aggregator) aggregator.recordDefensiveAI('blocked');
         }
       }
       
@@ -478,7 +480,9 @@ function eliminateLaggardDangerousAIs(state: GameState): void {
         copiesReduced += (copiesBefore - ai.spreadCount);
         
         if (copiesBefore > 100 && ai.spreadCount < 100) {
-          console.log(`🛡️ DEFENSIVE AI: Reduced ${ai.name} from ${copiesBefore} → ${ai.spreadCount} copies`);
+          // Aggregate reduction events for significant drops
+          const aggregator = (state as any).eventAggregator;
+          if (aggregator) aggregator.recordDefensiveAI('blocked');
         }
       }
       
@@ -724,7 +728,9 @@ export function attemptCyberSpoofingAttack(
     // Boost trust
     defense.corruption.trustInSystem = Math.min(1.0, defense.corruption.trustInSystem + 0.05);
     
-    console.log(`🛡️ CYBER ATTACK BLOCKED: ${attacker.name} → ${target} (defense cap: ${defenseCapability.toFixed(2)} vs attack: ${attackCapability.toFixed(2)})`);
+    // Aggregate instead of logging every successful block
+    const aggregator = (state as any).eventAggregator;
+    if (aggregator) aggregator.recordCyberAttack(true);
     
   } else {
     // FAILURE: Attack got through
@@ -743,7 +749,12 @@ export function attemptCyberSpoofingAttack(
     // Lose trust
     defense.corruption.trustInSystem = Math.max(0.2, defense.corruption.trustInSystem - 0.15);
     
+    // KEEP this log - failures are critical
     console.log(`💀 DEFENSE FAILED: ${attacker.name} bypassed defensive AI (cap gap: ${(attackCapability - defenseCapability).toFixed(2)})`);
+    
+    // Also aggregate for stats
+    const aggregator = (state as any).eventAggregator;
+    if (aggregator) aggregator.recordCyberAttack(false);
   }
   
   return { blocked, detected: true };
@@ -808,11 +819,15 @@ export function attemptDeepfakeAttack(
     
     defense.corruption.trustInSystem = Math.min(1.0, defense.corruption.trustInSystem + 0.03);
     
-    console.log(`🎭 DEEPFAKE DETECTED: ${attacker.name} → ${targetNation} (${fakeContent})`);
+    // Aggregate instead of logging every detection
+    const aggregator1 = (state as any).eventAggregator;
+    if (aggregator1) aggregator1.recordDeepfake(true);
     
   } else if (detected && !detectedInTime) {
     // Detected too late
     defense.effects.missedAttacks++;
+    const aggregator2 = (state as any).eventAggregator;
+    if (aggregator2) aggregator2.recordDeepfake(false);
     
     addEvent(state, {
       type: 'crisis',
@@ -828,6 +843,8 @@ export function attemptDeepfakeAttack(
   } else {
     // Not detected
     defense.effects.missedAttacks++;
+    const aggregator3 = (state as any).eventAggregator;
+    if (aggregator3) aggregator3.recordDeepfake(false);
   }
   
   return { detected: detectedInTime, detectedInTime };
