@@ -324,7 +324,7 @@ const startTime = Date.now();
 
 for (let i = 0; i < NUM_RUNS; i++) {
   const seed = SEED_START + i;
-  const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' }); // Changed from 'none' to 'summary'
+  const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'none' }); // 'none' for Monte Carlo (687 console.logs = massive slowdown)
   const initialState = createDefaultInitialState();
   
   // Set run label for logging
