@@ -392,11 +392,12 @@ export function allocateComputeEqually(state: GameState): void {
 export function applyComputeGrowth(state: GameState, random: () => number = Math.random): void {
   const infra = state.computeInfrastructure;
   
-  // Moore's Law: 5% monthly hardware improvement
+  // Moore's Law: 2.7% monthly hardware improvement
   // This represents: faster chips, better cooling, denser racks, etc.
-  // Empirical: AI compute has been doubling every 6-10 months (GPT-3 to GPT-4 was 50-100x in 2.75 years)
-  // 5% per month = doubles in 14 months, 100x in ~66 months, 1000x in ~99 months
-  const MOORES_LAW_RATE = 0.05; // 5% per month
+  // Target: 627 PF → 3000-4000 PF over 60 months (5x in 5 years)
+  // 2.7% per month = 5x in 60 months, 256x in 240 months (20 years)
+  // FIX (Oct 13, 2025): Was 5% (20,959x in 20yr!) → Now 2.7% (256x in 20yr, realistic)
+  const MOORES_LAW_RATE = 0.027; // 2.7% per month
   infra.hardwareEfficiency *= (1 + MOORES_LAW_RATE);
   
   // Algorithmic improvements: More frequent breakthroughs in AI era
