@@ -741,9 +741,10 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const deathsNatural = (avgPopulation * pop.baselineDeathRate * (monthsElapsed / 12)) * 1000; // Convert to millions
   
   // Crisis deaths by category (already in millions from deathsByCategory tracking)
+  // FIX (Oct 13, 2025): Include pollution deaths in breakdown
   const deathsNuclear = deathsByCategory.war; // War includes nuclear
   const deathsCrisis = deathsByCategory.famine + deathsByCategory.disease + deathsByCategory.other;
-  const deathsCascade = deathsByCategory.climate + deathsByCategory.ecosystem;
+  const deathsCascade = deathsByCategory.climate + deathsByCategory.ecosystem + deathsByCategory.pollution;
   const deathsMeaning = deathsByCategory.ai; // AI-related deaths (alignment failures, manipulation)
   
   // Population outcome
