@@ -31,6 +31,16 @@ export class EventCollectionPhase implements SimulationPhase {
         (e: GameEvent) => e.month === state.currentMonth
       );
       events.push(...newEventsThisStep);
+      
+      // MEMORY LEAK FIX (Oct 13, 2025): Clear old events to prevent OOM
+      // Keep only last 24 months for potential lookback (debugging)
+      // In 600-month runs, this prevents 44K+ events from accumulating
+      if (state.eventLog.length > 5000) { // ~24 months of events
+        const cutoffMonth = state.currentMonth - 24;
+        state.eventLog = state.eventLog.filter(
+          (e: GameEvent) => e.month > cutoffMonth
+        );
+      }
     }
 
     return { events };

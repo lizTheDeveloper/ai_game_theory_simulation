@@ -450,6 +450,7 @@ function applyVirtuousCascadeEffects(state: GameState, strength: number): void {
  */
 export function canDeclareUtopia(state: GameState): { can: boolean; reason: string; spiralCount: number } {
   const spirals = state.upwardSpirals;
+  const qolSystems = state.qualityOfLifeSystems;
   
   // Count sustained spirals (active for 12+ months)
   const sustainedSpirals = [
@@ -470,6 +471,76 @@ export function canDeclareUtopia(state: GameState): { can: boolean; reason: stri
       reason: `Only ${sustainedCount} sustained spirals (need 3+). Active spirals: ${getActiveSpiralNames(spirals).join(', ')}`,
       spiralCount: sustainedCount
     };
+  }
+  
+  // NEW (Oct 12, 2025): Check survival fundamentals
+  // Utopia requires ALL survival needs met globally
+  // Research: Can't have utopia if people are starving/dying regardless of other metrics
+  const survival = qolSystems.survivalFundamentals;
+  if (survival) {
+    if (survival.foodSecurity < 0.7) {
+      return {
+        can: false,
+        reason: `Food insecurity (${(survival.foodSecurity * 100).toFixed(0)}% < 70% threshold)`,
+        spiralCount: sustainedCount
+      };
+    }
+    if (survival.waterSecurity < 0.7) {
+      return {
+        can: false,
+        reason: `Water insecurity (${(survival.waterSecurity * 100).toFixed(0)}% < 70% threshold)`,
+        spiralCount: sustainedCount
+      };
+    }
+    if (survival.thermalHabitability < 0.7) {
+      return {
+        can: false,
+        reason: `Thermal uninhabitability (${(survival.thermalHabitability * 100).toFixed(0)}% habitable < 70% threshold)`,
+        spiralCount: sustainedCount
+      };
+    }
+    if (survival.shelterSecurity < 0.7) {
+      return {
+        can: false,
+        reason: `Shelter insecurity (${(survival.shelterSecurity * 100).toFixed(0)}% < 70% threshold)`,
+        spiralCount: sustainedCount
+      };
+    }
+  }
+  
+  // NEW (Oct 12, 2025): Check distribution metrics
+  // Utopia requires reasonable equality - can't have "Elysium" scenario
+  // Research: Gini >0.40 = problematic inequality (Wilkinson & Pickett)
+  const distribution = qolSystems.distribution;
+  if (distribution) {
+    if (distribution.globalGini > 0.40) {
+      return {
+        can: false,
+        reason: `High inequality (Gini ${(distribution.globalGini).toFixed(2)} > 0.40 threshold)`,
+        spiralCount: sustainedCount
+      };
+    }
+    if (distribution.worstRegionQoL < 0.50) {
+      return {
+        can: false,
+        reason: `Worst region suffering (QoL ${(distribution.worstRegionQoL).toFixed(2)} < 0.50 Rawlsian minimum)`,
+        spiralCount: sustainedCount
+      };
+    }
+    if (distribution.isDystopicInequality) {
+      return {
+        can: false,
+        reason: `Dystopic inequality detected (some regions thriving while others suffer)`,
+        spiralCount: sustainedCount
+      };
+    }
+    if (distribution.isRegionalDystopia) {
+      return {
+        can: false,
+        reason: `Regional dystopia (>30% in crisis while others prosper)`,
+        spiralCount: sustainedCount
+      };
+    }
   }
   
   // Check for active crises (can't have utopia with crises)

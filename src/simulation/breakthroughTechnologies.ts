@@ -111,6 +111,28 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
 }
 
 /**
+ * TIER 2.9: Get government deployment funding boost
+ * Returns multiplier for environmental tech deployment speed
+ */
+function getGovernmentDeploymentBoost(state: GameState): number {
+  // Check if government has active tech deployment funding
+  const funding = state.government?.environmentalInterventions?.techDeploymentFunding;
+  
+  if (!funding || !funding.active) return 1.0; // No boost
+  
+  // Check if funding is still active (12-month duration)
+  const monthsSinceActivation = state.currentMonth - funding.activatedMonth;
+  if (monthsSinceActivation > funding.durationMonths) {
+    // Funding expired, deactivate it
+    if (funding) funding.active = false;
+    return 1.0;
+  }
+  
+  // Apply boost
+  return funding.deploymentMultiplier; // 2.0x
+}
+
+/**
  * Update technology research and check for breakthroughs
  */
 export function updateBreakthroughTechnologies(state: GameState, month: number): void {
@@ -387,9 +409,9 @@ function updateTechProgress(
     
     // Trust boost from breakthrough
     if (tech.effects.trustBoost) {
-      state.globalMetrics.publicTrust = Math.min(1.0, 
-        state.globalMetrics.publicTrust + tech.effects.trustBoost
-      );
+      const currentTrust = isNaN(state.globalMetrics.publicTrust) ? 0.5 : state.globalMetrics.publicTrust;
+      const trustBoost = isNaN(tech.effects.trustBoost) ? 0 : tech.effects.trustBoost;
+      state.globalMetrics.publicTrust = Math.min(1.0, currentTrust + trustBoost);
     }
   }
 }
@@ -628,6 +650,10 @@ function updateAdvancedDACDeployment(state: GameState, budget: number): void {
   // Base deployment rate: $40B for 10% deployment ($400B total from research)
   let deploymentRate = (budget / 40) * 0.1;
   
+  // TIER 2.9: Government tech deployment funding boost
+  const govBoost = getGovernmentDeploymentBoost(state);
+  deploymentRate *= govBoost;
+  
   // AI helps coordinate deployment (optimization)
   const avgCapability = calculateAverageCapability(state);
   const aiBonus = 1 + Math.log(1 + avgCapability) * 0.4; // Stronger effect for DAC
@@ -726,6 +752,9 @@ function updateAIOptimizedPollutionDeployment(state: GameState, budget: number):
   
   // Base deployment rate: $20B for 10% deployment ($200B total)
   let deploymentRate = (budget / 20) * 0.1;
+  
+  // TIER 2.9: Government tech deployment funding boost
+  deploymentRate *= getGovernmentDeploymentBoost(state);
   
   // AI helps deploy itself (meta-optimization) + global coordination
   const avgCapability = calculateAverageCapability(state);
@@ -954,6 +983,9 @@ function updateDeExtinctionDeployment(state: GameState, budget: number): void {
   // Base deployment: $10B for 10% ($100B total - Colossal scale-up)
   let deploymentRate = (budget / 10) * 0.1;
   
+  // TIER 2.9: Government tech deployment funding boost
+  deploymentRate *= getGovernmentDeploymentBoost(state);
+  
   // AI accelerates RESEARCH (genome sequencing, CRISPR design, species selection)
   // AlphaFold precedent: Computational tasks dramatically faster (domain-specific)
   // BUT: Physical processes (breeding, release, ecosystem establishment) unchanged
@@ -1023,17 +1055,26 @@ function updateAIPowerEfficiencyCommunicationDeployment(state: GameState, budget
   // Trust boost increases with both deployment AND demonstrated efficiency gains
   // More impressive gains = more trust when communicated
   const baseBoost = tech.trustBoostPerMonth * tech.deploymentLevel;
-  const efficiencyMultiplier = Math.min(3.0, Math.log10(efficiencyImprovement) / 2); // Cap at 3x
+  
+  // Guard against log of 0 or negative (NaN protection)
+  let efficiencyMultiplier = 1.0; // Default: no multiplier effect
+  if (efficiencyImprovement > 0 && !isNaN(efficiencyImprovement)) {
+    efficiencyMultiplier = Math.min(3.0, Math.log10(efficiencyImprovement) / 2); // Cap at 3x
+  }
+  
   const trustBoost = baseBoost * efficiencyMultiplier;
 
-  state.globalMetrics.publicTrust = Math.min(
-    1.0,
-    state.globalMetrics.publicTrust + trustBoost
-  );
+  // Guard against NaN in inputs
+  const safeTrustBoost = isNaN(trustBoost) ? 0 : trustBoost;
+  const currentTrust = isNaN(state.globalMetrics.publicTrust) ? 0.5 : state.globalMetrics.publicTrust;
+  
+  state.globalMetrics.publicTrust = Math.min(1.0, currentTrust + safeTrustBoost);
 
-  // Validate no NaN
+  // Final validation (should never trigger now, but kept as safety net)
   if (isNaN(state.globalMetrics.publicTrust)) {
-    console.error(`❌ NaN in public trust!`);
+    console.error(`❌ NaN in public trust! (Should not happen - debug needed)`);
+    console.error(`  trustBoost: ${trustBoost}, baseBoost: ${baseBoost}, efficiencyMultiplier: ${efficiencyMultiplier}`);
+    console.error(`  efficiencyImprovement: ${efficiencyImprovement}, inferenceEfficiency: ${power.inferenceEfficiency}`);
     state.globalMetrics.publicTrust = 0.5; // Reset to baseline
   }
 }

@@ -286,6 +286,7 @@ function checkEndGameResolution(state: GameState): void {
   
   // === DYSTOPIA PATHS ===
   // Dystopia requires STABLE oppressive control, not just low QoL
+  // NEW (Oct 12, 2025): Added inequality and survival dystopia paths
   
   // Aligned AI wins but created surveillance state in the process
   if (endGame.alignedAIPower > endGame.misalignedAIPower * 3.0 && 
@@ -305,6 +306,51 @@ function checkEndGameResolution(state: GameState): void {
       state.government.structuralChoices.surveillanceLevel > 0.7) {
     lockOutcome(endGame, 'dystopia', 'Permanent stalemate with constant low-level AI conflict and surveillance');
     return;
+  }
+  
+  // NEW: Inequality dystopia ("Elysium" scenario)
+  // Some regions thrive with AI abundance while others suffer
+  // Research: This is the "two worlds" outcome user is concerned about
+  if (endGame.monthsInEndGame > 12 && 
+      state.qualityOfLifeSystems.distribution?.isDystopicInequality) {
+    const dist = state.qualityOfLifeSystems.distribution;
+    lockOutcome(endGame, 'dystopia', 
+      `Inequality dystopia: Best region QoL ${dist.bestRegionQoL.toFixed(2)}, worst ${dist.worstRegionQoL.toFixed(2)} (Gini ${dist.globalGini.toFixed(2)})`);
+    return;
+  }
+  
+  // NEW: Regional dystopia
+  // Significant population in crisis while others prosper
+  if (endGame.monthsInEndGame > 12 && 
+      state.qualityOfLifeSystems.distribution?.isRegionalDystopia) {
+    const dist = state.qualityOfLifeSystems.distribution;
+    lockOutcome(endGame, 'dystopia', 
+      `Regional dystopia: ${(dist.crisisAffectedFraction * 100).toFixed(0)}% of population in crisis zones while others prosper`);
+    return;
+  }
+  
+  // NEW: Survival dystopia
+  // Aggregate QoL looks OK but people are actually starving/dying
+  // This catches the "hidden suffering" scenario
+  if (endGame.monthsInEndGame > 12 && qol > 0.4) {
+    const survival = state.qualityOfLifeSystems.survivalFundamentals;
+    if (survival) {
+      if (survival.foodSecurity < 0.4) {
+        lockOutcome(endGame, 'dystopia', 
+          `Food security collapse: Only ${(survival.foodSecurity * 100).toFixed(0)}% food secure despite aggregate QoL ${qol.toFixed(2)}`);
+        return;
+      }
+      if (survival.waterSecurity < 0.4) {
+        lockOutcome(endGame, 'dystopia', 
+          `Water security collapse: Only ${(survival.waterSecurity * 100).toFixed(0)}% water secure despite aggregate QoL ${qol.toFixed(2)}`);
+        return;
+      }
+      if (survival.thermalHabitability < 0.5) {
+        lockOutcome(endGame, 'dystopia', 
+          `Thermal uninhabitability: Only ${(survival.thermalHabitability * 100).toFixed(0)}% of planet habitable due to extreme heat`);
+        return;
+      }
+    }
   }
   
   // === UTOPIA PATHS ===

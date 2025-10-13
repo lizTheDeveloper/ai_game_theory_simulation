@@ -271,6 +271,7 @@ export interface GlobalMetrics {
   wealthDistribution: number; // [0,1] Equity of AI benefit distribution
   qualityOfLife: number; // [0,∞) Key discriminator between outcomes
   informationIntegrity: number; // [0,1] Truth vs noise ratio
+  publicTrust: number; // [0,1] Public trust in technology/AI (used by breakthrough technologies)
 }
 
 export interface TechnologyNode {
@@ -372,46 +373,70 @@ export interface ConfigurationSettings {
  * Enables "dark valley" dynamics where some dimensions drop while others rise
  */
 export interface QualityOfLifeSystems {
-  // Basic Needs (weight: 0.3)
-  materialAbundance: number;      // [0,2] Food, shelter, goods access
+  // NEW: Tier 0 - Survival Fundamentals (Oct 12, 2025)
+  // These CANNOT be averaged away - track minimums, not means
+  // Required for Utopia determination
+  survivalFundamentals: {
+    foodSecurity: number;         // [0,1.5] % population with >1800 kcal/day (FAO standard)
+    waterSecurity: number;        // [0,1.5] % population with >50L/day clean water (WHO standard)
+    thermalHabitability: number;  // [0,1] % land area habitable (<35°C wet-bulb, Sherwood & Huber 2010)
+    shelterSecurity: number;      // [0,1] % population with adequate housing
+  };
+  
+  // Tier 1: Basic Needs (weight: 0.3)
+  // Note: materialAbundance now excludes food/water/shelter (tracked separately above)
+  materialAbundance: number;      // [0,2] Consumer goods, luxuries (NOT survival items)
   energyAvailability: number;     // [0,2] Access to energy
   physicalSafety: number;         // [0,1] Violence, accidents, threats
   
-  // Psychological Needs (weight: 0.25)
+  // Tier 2: Psychological Needs (weight: 0.25)
   mentalHealth: number;           // [0,1] Depression, anxiety levels (inverted)
   meaningAndPurpose: number;      // [0,1] Life satisfaction, fulfillment
   socialConnection: number;       // [0,1] Community, relationships quality
   autonomy: number;               // [0,1] Control over own life
   
-  // Social Needs (weight: 0.2)
+  // Tier 3: Social Needs (weight: 0.2)
   politicalFreedom: number;       // [0,1] Democracy, rights, liberty
   informationIntegrity: number;   // [0,1] Truth vs manipulation/propaganda
   communityStrength: number;      // [0,1] Local cohesion, mutual aid
   culturalVitality: number;       // [0,1] Art, creativity, expression
   
-  // Health and Longevity (weight: 0.15)
+  // Tier 4: Health and Longevity (weight: 0.15)
   healthcareQuality: number;      // [0,1] Medical outcomes, access
   longevityGains: number;         // [0,2] Lifespan increases above baseline
   diseasesBurden: number;         // [0,1] Illness prevalence (inverted in calc)
   
-  // Environmental (weight: 0.1)
+  // Tier 5: Environmental (weight: 0.1)
   ecosystemHealth: number;        // [0,1] Nature access, biodiversity
   climateStability: number;       // [0,1] Weather extremes (inverted)
   pollutionLevel: number;         // [0,1] Air/water quality (inverted in calc)
   
-  // Inequality Tracking (Oct 12, 2025)
-  // Global average hides massive suffering - track regional variance
+  // NEW: Tier 6 - Distribution & Inequality Metrics (Oct 12, 2025)
+  // Detect "Elysium" scenarios: some thrive while others suffer
+  // Required for Dystopia determination
+  distribution: {
+    globalGini: number;                 // [0,1] Gini coefficient (Wilkinson: >0.45 = unstable)
+    regionalVariance: number;           // [0,∞] Variance in regional QoL
+    crisisAffectedFraction: number;     // [0,1] % population in crisis zones
+    worstRegionQoL: number;             // [0,2] Worst-off region (Rawlsian minimum)
+    bestRegionQoL: number;              // [0,2] Best-off region
+    medianRegionQoL: number;            // [0,2] Median region
+    isDystopicInequality: boolean;      // True if top thriving + bottom suffering
+    isRegionalDystopia: boolean;        // True if >30% in crisis while others fine
+  };
+  
+  // DEPRECATED (backward compatibility, will be removed)
   basicNeeds?: {
-    foodSecurity?: number;        // [0,1] Access to adequate nutrition
-    waterSecurity?: number;       // [0,1] Access to clean water
-    shelterSecurity?: number;     // [0,1] Access to housing
+    foodSecurity?: number;        
+    waterSecurity?: number;       
+    shelterSecurity?: number;     
   };
   regionalInequality?: {
-    giniCoefficient: number;      // [0,1] QoL inequality (0=equal, 1=extreme)
-    topRegionQoL: number;         // Best-off region's QoL
-    bottomRegionQoL: number;      // Worst-off region's QoL
-    qolGap: number;               // Difference (top - bottom)
-    crisisAffectedPopulation: number; // % of population in crisis regions
+    giniCoefficient: number;      
+    topRegionQoL: number;         
+    bottomRegionQoL: number;      
+    qolGap: number;               
+    crisisAffectedPopulation: number;
   };
 }
 
@@ -728,6 +753,59 @@ export interface GameState {
 
   // Planetary Boundaries (TIER 3.1)
   planetaryBoundariesSystem: import('../types/planetaryBoundaries').PlanetaryBoundariesSystem; // Kate Raworth's Doughnut Economics & tipping point cascades
+
+  // Ecosystem Collapse Tracking (Realistic Timeline Recalibration)
+  ecosystemCollapse?: {
+    triggered: boolean;
+    triggeredAt: number;
+    monthsSinceTrigger: number;
+    phase: 'declining' | 'crisis' | 'collapse';
+  };
+
+  // Specific Tipping Points (Realistic Timeline Recalibration)
+  specificTippingPoints?: {
+    amazon: {
+      deforestation: number;
+      tippingThreshold: number;
+      triggered: boolean;
+      triggeredAt: number;
+      transitionProgress: number;
+      carbonReleased: number;
+      regionallyAffected: string[];
+    };
+    coral: {
+      healthPercentage: number;
+      tippingThreshold: number;
+      triggered: boolean;
+      triggeredAt: number;
+      collapseProgress: number;
+      fisheryCollapseLevel: number;
+      regionallyAffected: string[];
+    };
+    pollinators: {
+      populationPercentage: number;
+      criticalThreshold: number;
+      triggered: boolean;
+      triggeredAt: number;
+      foodProductionLoss: number;
+      regionallyAffected: string[];
+    };
+    permafrost: {
+      carbonStored: number;
+      carbonReleased: number;
+      thawRate: number;
+      triggered: boolean;
+      triggeredAt: number;
+      regionallyAffected: string[];
+    };
+    amoc: {
+      strength: number;
+      collapseThreshold: number;
+      triggered: boolean;
+      triggeredAt: number;
+      regionallyAffected: string[];
+    };
+  };
 
   // Population Dynamics & Refugee Crises (TIER 1.6)
   humanPopulationSystem: import('../types/population').HumanPopulationSystem; // Concrete population tracking (billions)

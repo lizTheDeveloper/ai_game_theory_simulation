@@ -102,7 +102,8 @@ export function updateInformationWarfare(state: GameState): Event[] {
   ));
   
   // Corporate power stable but erodes with low trust
-  const corpNarrativeChange = (state.publicTrustInAI - 0.5) * 0.001;
+  const publicTrust = state.globalMetrics.publicTrust || 0.5;
+  const corpNarrativeChange = (publicTrust - 0.5) * 0.001;
   sys.narrativeControl.corporations = Math.max(0.05, Math.min(0.95,
     sys.narrativeControl.corporations + corpNarrativeChange
   ));
@@ -129,8 +130,9 @@ export function updateInformationWarfare(state: GameState): Event[] {
                          (sys.epistemologicalCrisisLevel * 0.003); // Crisis compounds
   
   // Apply trust erosion to public trust in AI
-  state.publicTrustInAI = Math.max(0.0,
-    state.publicTrustInAI - sys.trustErosionRate
+  const currentTrust = state.globalMetrics.publicTrust || 0.5;
+  state.globalMetrics.publicTrust = Math.max(0.0,
+    currentTrust - sys.trustErosionRate
   );
   
   // === DYSTOPIA ENABLEMENT (Phase 8) ===

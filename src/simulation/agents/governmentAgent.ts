@@ -1625,6 +1625,226 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: `Subsidized ${targetOrg.name} with $20M`
       };
     }
+  },
+  
+  // ===== ENVIRONMENTAL EMERGENCY ACTIONS (TIER 2.9) =====
+  
+  {
+    id: 'emergency_amazon_protection',
+    name: '🚨 Emergency Amazon Rainforest Protection',
+    description: 'Deploy immediate deforestation halt, restoration funding',
+    agentType: 'government',
+    energyCost: 5,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.amazon) return false;
+      const amazon = state.specificTippingPoints.amazon;
+      // Trigger when near threshold (23%) but not yet crossed (25%)
+      return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      const amazon = newState.specificTippingPoints.amazon;
+      
+      // Reduce deforestation rate significantly
+      // This will be applied in updateAmazonRainforest()
+      // Store government intervention flag
+      if (!newState.government.environmentalInterventions) {
+        newState.government.environmentalInterventions = {};
+      }
+      newState.government.environmentalInterventions.amazonProtection = {
+        active: true,
+        activatedMonth: newState.currentMonth,
+        deforestationReduction: 0.5, // 50% reduction in deforestation rate
+      };
+      
+      // Cost
+      newState.government.resources -= 5;
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.05);
+      
+      return {
+        success: true,
+        newState,
+        effects: { amazonProtection: 0.5 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Emergency Amazon Protection',
+          description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
+          effects: { deforestation: -0.5 }
+        }],
+        message: `Emergency Amazon protection deployed (deforestation: ${amazon.deforestation.toFixed(1)}%)`
+      };
+    }
+  },
+  
+  {
+    id: 'fund_coral_restoration',
+    name: '🪸 Fund Coral Reef Restoration Programs',
+    description: 'Large-scale coral nurseries, ocean alkalinity enhancement',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.coral) return false;
+      const coral = state.specificTippingPoints.coral;
+      // Trigger when coral health drops below 50%
+      return coral.healthPercentage < 50 && state.government.resources > 3;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      const coral = newState.specificTippingPoints.coral;
+      
+      // Fund coral restoration
+      if (!newState.government.environmentalInterventions) {
+        newState.government.environmentalInterventions = {};
+      }
+      newState.government.environmentalInterventions.coralRestoration = {
+        active: true,
+        activatedMonth: newState.currentMonth,
+        restorationBoost: 0.3, // 0.3%/month boost to coral health
+      };
+      
+      // Cost
+      newState.government.resources -= 3;
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.03);
+      
+      return {
+        success: true,
+        newState,
+        effects: { coralRestoration: 0.3 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Coral Reef Restoration Funding',
+          description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
+          effects: { coralHealth: 0.3 }
+        }],
+        message: `Coral restoration funded (health: ${coral.healthPercentage.toFixed(1)}%)`
+      };
+    }
+  },
+  
+  {
+    id: 'ban_harmful_pesticides',
+    name: '🦋 Ban Neonicotinoid Pesticides',
+    description: 'Emergency ban on pollinator-killing chemicals',
+    agentType: 'government',
+    energyCost: 1,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.pollinators) return false;
+      const pollinators = state.specificTippingPoints.pollinators;
+      // Trigger when pollinators drop below 50%
+      // Check we haven't already banned
+      return pollinators.populationPercentage < 50 && 
+             state.government.resources > 1 &&
+             !state.government.environmentalInterventions?.pesticideBan;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      const pollinators = newState.specificTippingPoints.pollinators;
+      
+      // Ban harmful pesticides
+      if (!newState.government.environmentalInterventions) {
+        newState.government.environmentalInterventions = {};
+      }
+      newState.government.environmentalInterventions.pesticideBan = {
+        active: true,
+        activatedMonth: newState.currentMonth,
+        pollinatorRecoveryBoost: 0.5, // 0.5%/month boost to pollinator recovery
+      };
+      
+      // Boost biodiversity too
+      newState.environmentalAccumulation.biodiversityIndex = Math.min(1.0, 
+        newState.environmentalAccumulation.biodiversityIndex + 0.02
+      );
+      
+      // Cost (low - this is a ban, not a spending program)
+      newState.government.resources -= 1;
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.04);
+      
+      return {
+        success: true,
+        newState,
+        effects: { pesticideBan: 0.5, biodiversity: 0.02 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Neonicotinoid Pesticides Banned',
+          description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
+          effects: { pollinators: 0.5 }
+        }],
+        message: `Pesticides banned (pollinators: ${pollinators.populationPercentage.toFixed(1)}%)`
+      };
+    }
+  },
+  
+  {
+    id: 'deploy_environmental_tech',
+    name: '🚀 Deploy Environmental Breakthrough Tech',
+    description: 'Government funding to accelerate environmental tech deployment',
+    agentType: 'government',
+    energyCost: 10,
+    
+    canExecute: (state) => {
+      if (!state.breakthroughTech || state.government.resources < 10) return false;
+      
+      // Check if any environmental tech is unlocked but <50% deployed
+      const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
+      const needsDeployment = envTechs.some(techKey => {
+        const tech = state.breakthroughTech[techKey];
+        return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+      });
+      
+      // Also check if ecosystem crisis is active
+      const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive;
+      
+      return needsDeployment && ecosystemCrisis;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      const newState = JSON.parse(JSON.stringify(state));
+      
+      // Set deployment funding boost
+      if (!newState.government.environmentalInterventions) {
+        newState.government.environmentalInterventions = {};
+      }
+      newState.government.environmentalInterventions.techDeploymentFunding = {
+        active: true,
+        activatedMonth: newState.currentMonth,
+        durationMonths: 12, // 1 year of boosted funding
+        deploymentMultiplier: 2.0, // 2x deployment speed
+      };
+      
+      // Count how many techs will benefit
+      const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
+      const benefitingTechs = envTechs.filter(techKey => {
+        const tech = newState.breakthroughTech[techKey];
+        return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+      });
+      
+      // Cost
+      newState.government.resources -= 10;
+      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.06);
+      
+      return {
+        success: true,
+        newState,
+        effects: { techDeployment: 2.0 },
+        events: [{
+          type: 'policy',
+          month: newState.currentMonth,
+          title: 'Environmental Tech Deployment Funding',
+          description: `Government allocated $100B to accelerate environmental tech deployment. Boosting ${benefitingTechs.length} technologies for 12 months.`,
+          effects: { deploymentSpeed: 2.0 }
+        }],
+        message: `Environmental tech deployment funded (${benefitingTechs.length} techs accelerated)`
+      };
+    }
   }
 ];
 
@@ -1963,6 +2183,59 @@ export function selectGovernmentAction(
           priority *= 0.4;
         }
         break;
+      
+      // ===== TIER 2.9: ENVIRONMENTAL EMERGENCY ACTIONS =====
+      
+      case 'emergency_amazon_protection':
+      case 'fund_coral_restoration':
+      case 'ban_harmful_pesticides':
+      case 'deploy_environmental_tech':
+        // Environmental actions with crisis-driven priority
+        priority = 5; // Base priority
+        
+        // Get environmental crisis severity
+        const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive || false;
+        const biodiversityLevel = state.environmentalAccumulation?.biodiversityIndex || 1.0;
+        const amazonThreat = state.specificTippingPoints?.amazon?.deforestation > 23;
+        const coralThreat = state.specificTippingPoints?.coral?.healthPercentage < 40;
+        const pollinatorThreat = state.specificTippingPoints?.pollinators?.populationPercentage < 45;
+        
+        // MASSIVE boost during ecosystem crisis (25x priority)
+        if (ecosystemCrisis) {
+          priority *= 5.0;
+        }
+        
+        // Specific tipping point threats
+        if (action.id === 'emergency_amazon_protection' && amazonThreat) {
+          priority *= 3.0; // Amazon near tipping point - urgent!
+        }
+        
+        if (action.id === 'fund_coral_restoration' && coralThreat) {
+          priority *= 2.0; // Coral reefs critical
+        }
+        
+        if (action.id === 'ban_harmful_pesticides' && pollinatorThreat) {
+          priority *= 2.5; // Pollinators essential for food
+        }
+        
+        if (action.id === 'deploy_environmental_tech' && ecosystemCrisis) {
+          priority *= 4.0; // Tech deployment critical during crisis
+        }
+        
+        // Scale with biodiversity loss (more urgent as biodiversity drops)
+        priority *= (1.5 - biodiversityLevel); // 0.5x at 100% bio, 1.5x at 0% bio
+        
+        // Reduce during extreme unemployment (but not as much as AI actions)
+        if (unemploymentLevel > 0.7) {
+          priority *= 0.7; // Still prioritize environment even during economic crisis
+        }
+        
+        // Boost if government has high legitimacy (can afford action)
+        if (state.government.legitimacy > 0.6) {
+          priority *= 1.3;
+        }
+        
+        break;
     }
     
     if (priority > highestPriority) {
@@ -2043,7 +2316,32 @@ export function executeGovernmentActions(
   const controlLossCrisis = currentState.socialAccumulation.controlLossCrisis > 0.5 ?
     Math.min(2.0, 1.0 + currentState.socialAccumulation.controlLossCrisis) : 1.0; // Up to 2x
   
-  const maxMultiplier = Math.max(unemploymentCrisis, institutionalCrisis, controlLossCrisis);
+  // TIER 2.9: Environmental crisis multiplier
+  // Ecosystem collapse, tipping points → emergency government sessions
+  const environmentalCrisis = (() => {
+    let multiplier = 1.0;
+    
+    // Ecosystem crisis active
+    if (currentState.environmentalAccumulation?.ecosystemCrisisActive) {
+      multiplier *= 2.0; // Double frequency during ecosystem collapse
+    }
+    
+    // Specific tipping points triggered
+    if (currentState.specificTippingPoints?.amazon?.triggered) {
+      multiplier *= 1.5; // Amazon collapse is major crisis
+    }
+    if (currentState.specificTippingPoints?.coral?.triggered) {
+      multiplier *= 1.3; // Coral collapse affects 3B people
+    }
+    if (currentState.specificTippingPoints?.pollinators?.triggered) {
+      multiplier *= 1.4; // Pollinator collapse threatens food
+    }
+    
+    // Cap at 3x
+    return Math.min(3.0, multiplier);
+  })();
+  
+  const maxMultiplier = Math.max(unemploymentCrisis, institutionalCrisis, controlLossCrisis, environmentalCrisis);
   const adjustedFrequency = baseFrequency * maxMultiplier;
   
   const actionsThisMonth = Math.floor(adjustedFrequency);
