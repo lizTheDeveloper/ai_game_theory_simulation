@@ -9,6 +9,18 @@ import { QualityOfLifeSystems, GameState } from '@/types/game';
 import { getTrustInAI } from './socialCohesion';
 
 /**
+ * Environmental mortality breakdown by cause
+ */
+export interface EnvironmentalMortalityBreakdown {
+  total: number;           // Total monthly mortality rate
+  famine: number;          // Deaths from food insecurity
+  disease: number;         // Deaths from water/sanitation
+  climate: number;         // Deaths from heat/disasters
+  ecosystem: number;       // Deaths from biodiversity loss
+  pollution: number;       // Deaths from pollution (baseline)
+}
+
+/**
  * Calculate environmental mortality rate based on threshold crossings
  * 
  * Research-based (UNEP 2024, PNAS 2014):
@@ -16,19 +28,27 @@ import { getTrustInAI } from './socialCohesion';
  * - Mortality scales with food, water, climate, biodiversity thresholds
  * - Non-linear escalation when multiple systems fail
  * 
+ * FIX (Oct 13, 2025): Now returns breakdown by cause to properly track deaths
  * Returns monthly mortality rate (0-1, where 0.01 = 1% die per month)
  */
-export function calculateEnvironmentalMortality(state: GameState): number {
+export function calculateEnvironmentalMortality(state: GameState): EnvironmentalMortalityBreakdown {
   const env = state.environmentalAccumulation;
   const boundaries = state.planetaryBoundariesSystem;
-  if (!env || !boundaries) return 0;
+  if (!env || !boundaries) {
+    return { total: 0, famine: 0, disease: 0, climate: 0, ecosystem: 0, pollution: 0 };
+  }
   
-  let mortalityRate = 0; // Monthly mortality rate
+  let famineMortality = 0;
+  let diseaseMortality = 0;
+  let climateMortality = 0;
+  let ecosystemMortality = 0;
+  let pollutionMortality = 0;
   
   // === BASELINE (Current 2025 conditions) ===
   // 7/9 boundaries breached = 0.009% monthly (UNEP: 9M deaths/year globally)
+  // Pollution is the main driver of current baseline mortality
   if (boundaries.boundariesBreached >= 7) {
-    mortalityRate = 0.00009; // 0.009% baseline
+    pollutionMortality = 0.00009; // 0.009% baseline
   }
   
   // === FOOD SECURITY (Highest immediate impact) ===
@@ -36,21 +56,21 @@ export function calculateEnvironmentalMortality(state: GameState): number {
   const foodSecurity = env.foodSecurity || 0.7;
   if (foodSecurity < 0.4) {
     const foodSeverity = (0.4 - foodSecurity) / 0.4; // 0-1 scale
-    mortalityRate += 0.0001 * Math.pow(foodSeverity, 1.5); // 0.01%/month at threshold, scales up
+    famineMortality += 0.0001 * Math.pow(foodSeverity, 1.5); // 0.01%/month at threshold, scales up
     
     if (foodSecurity < 0.2) {
       // Catastrophic food crisis: additional mortality
       const catSeverity = (0.2 - foodSecurity) / 0.2;
-      mortalityRate += 0.0005 * catSeverity; // Up to 0.05%/month additional
+      famineMortality += 0.0005 * catSeverity; // Up to 0.05%/month additional
     }
   }
   
   // === WATER SECURITY ===
-  // Water < 0.4 = crisis, Water < 0.2 = catastrophic
+  // Water < 0.4 = crisis (leads to cholera, dysentery, other waterborne disease)
   const waterSecurity = env.waterSecurity || 0.7;
   if (waterSecurity < 0.4) {
     const waterSeverity = (0.4 - waterSecurity) / 0.4;
-    mortalityRate += 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food
+    diseaseMortality += 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food
   }
   
   // === CLIMATE STABILITY (Heat stress, disasters) ===
@@ -58,15 +78,16 @@ export function calculateEnvironmentalMortality(state: GameState): number {
   const climateStability = env.climateStability || 0.75;
   if (climateStability < 0.6) {
     const climateSeverity = (0.6 - climateStability) / 0.6;
-    mortalityRate += 0.00005 * Math.pow(climateSeverity, 2); // Non-linear escalation
+    climateMortality += 0.00005 * Math.pow(climateSeverity, 2); // Non-linear escalation
   }
   
   // === BIODIVERSITY LOSS (Ecosystem services collapse) ===
   // Biodiversity < 0.3 = critical, < 0.2 = collapse
+  // Loss of pollination, disease regulation, etc.
   const biodiversity = env.biodiversityIndex || 0.35;
   if (biodiversity < 0.3) {
     const bioSeverity = (0.3 - biodiversity) / 0.3;
-    mortalityRate += 0.00003 * Math.pow(bioSeverity, 1.5); // Pollination, disease regulation lost
+    ecosystemMortality += 0.00003 * Math.pow(bioSeverity, 1.5); // Pollination, disease regulation lost
   }
   
   // === CASCADE AMPLIFICATION (Non-Linear Feedback) ===
@@ -74,16 +95,33 @@ export function calculateEnvironmentalMortality(state: GameState): number {
   const breachedCount = boundaries.boundariesBreached;
   if (breachedCount >= 8) {
     const cascadeAmplifier = 1.0 + Math.pow((breachedCount - 7) / 2, 2); // 1.0x → 2.25x at 9/9
-    mortalityRate *= cascadeAmplifier;
+    famineMortality *= cascadeAmplifier;
+    diseaseMortality *= cascadeAmplifier;
+    climateMortality *= cascadeAmplifier;
+    ecosystemMortality *= cascadeAmplifier;
   }
   
   // === REGIONAL VARIATION MULTIPLIER ===
   // Some regions hit harder (handled by regional crisis system)
   // This is the global average; specific regions can be 2-5x worse
   
+  const total = famineMortality + diseaseMortality + climateMortality + ecosystemMortality + pollutionMortality;
+  
   // Cap at 10%/month (horrific but not instant extinction)
   // Even worst-case scenarios take years to play out
-  return Math.min(mortalityRate, 0.10);
+  const cappedTotal = Math.min(total, 0.10);
+  
+  // Scale down individual categories if we hit the cap
+  const scaleFactor = total > 0.10 ? 0.10 / total : 1.0;
+  
+  return {
+    total: cappedTotal,
+    famine: famineMortality * scaleFactor,
+    disease: diseaseMortality * scaleFactor,
+    climate: climateMortality * scaleFactor,
+    ecosystem: ecosystemMortality * scaleFactor,
+    pollution: pollutionMortality * scaleFactor
+  };
 }
 
 /**

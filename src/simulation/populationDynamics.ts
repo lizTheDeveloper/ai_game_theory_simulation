@@ -164,11 +164,12 @@ export function updateHumanPopulation(state: GameState): void {
 
   // === 3. CALCULATE DEATH RATE (NEW: Research-Based) ===
   // NEW (Oct 13, 2025): Environmental mortality now calculated from actual thresholds
+  // FIX (Oct 13, 2025): Now tracks deaths by category to fix missing 90% in reports
   // Uses calculateEnvironmentalMortality() from qualityOfLife.ts
   // Research: UNEP (2024), PNAS (2014)
   
   const { calculateEnvironmentalMortality } = require('./qualityOfLife');
-  const environmentalMortalityRate = calculateEnvironmentalMortality(state); // Monthly mortality (0-0.10)
+  const envMortality = calculateEnvironmentalMortality(state); // Returns breakdown by cause
   
   // Healthcare reduction: good healthcare reduces deaths significantly
   const healthcareReduction = Math.max(0.3, 1 - (qol.healthcareQuality * 0.7));
@@ -182,7 +183,7 @@ export function updateHumanPopulation(state: GameState): void {
   
   // NEW: Environmental mortality ADDS to baseline (not multiplies)
   // This is because environmental deaths are additional excess mortality
-  pop.adjustedDeathRate = baselineDeaths + (environmentalMortalityRate * 12); // Convert monthly to annual
+  pop.adjustedDeathRate = baselineDeaths + (envMortality.total * 12); // Convert monthly to annual
   
   // === 4. APPLY EXTINCTION SCENARIO IMPACTS (Non-Environmental) ===
   // Nuclear war, AI takeover, etc. - still use old extinction logic
@@ -223,6 +224,16 @@ export function updateHumanPopulation(state: GameState): void {
   const actualDeaths = previousPopulation - pop.population;
   pop.monthlyExcessDeaths = Math.max(0, actualDeaths - naturalDeaths);
   pop.cumulativeCrisisDeaths += pop.monthlyExcessDeaths;
+  
+  // FIX (Oct 13, 2025): Track environmental deaths by category
+  // This fixes the "90% of deaths missing" bug in Monte Carlo reports
+  // Environmental mortality is a rate (0-0.10), applied to current population
+  const currentPopBillions = previousPopulation; // Use pop at START of month
+  pop.deathsByCategory.famine += (envMortality.famine * currentPopBillions * 1000); // Convert to millions
+  pop.deathsByCategory.disease += (envMortality.disease * currentPopBillions * 1000);
+  pop.deathsByCategory.climate += (envMortality.climate * currentPopBillions * 1000);
+  pop.deathsByCategory.ecosystem += (envMortality.ecosystem * currentPopBillions * 1000);
+  pop.deathsByCategory.pollution += (envMortality.pollution * currentPopBillions * 1000);
 
   // === 9. CHECK THRESHOLDS ===
   pop.geneticBottleneckActive = pop.population < (pop.bottleneckThreshold / 1000000000); // Convert to billions
