@@ -631,11 +631,11 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // Count active spirals
   const activeSpiralNames = getActiveSpiralNames(spirals);
   
-  // Aggregate spiral status via eventAggregator
-  const aggregator = (state as any).eventAggregator;
-  if (aggregator && aggregator.recordSpiralStatus) {
-    aggregator.recordSpiralStatus('all', activeSpiralNames.length);
-  }
+  // Aggregate spiral status via eventAggregator (method doesn't exist yet)
+  // const aggregator = (state as any).eventAggregator;
+  // if (aggregator && aggregator.recordSpiralStatus) {
+  //   aggregator.recordSpiralStatus('all', activeSpiralNames.length);
+  // }
   
   // KEEP only summary - remove detailed breakdowns
   console.log(`Active Spirals: ${activeSpiralNames.length}/6`);
