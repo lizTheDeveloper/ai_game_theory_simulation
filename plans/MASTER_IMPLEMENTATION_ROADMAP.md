@@ -42,13 +42,13 @@
 - 1.4 International Competition (trust dynamics, first-mover advantage, AI race)
 - 1.5 Novel Entities (synthetic chemicals, PFAS 99%, 120-month poisoning)
 - 1.6 Population Dynamics (8.0B tracking, refugee crises, regional populations, bottleneck mechanics)
-- 1.7 Internal Consistency Fixes (PARTIAL - 4 of 5 complete):
+- 1.7 Internal Consistency Fixes (COMPLETE - Oct 13, 2025):
   - ✅ 1.7.1: Extinction detection (population thresholds, not severity)
-  - ✅ 1.7.1b: Death categorization (famine, pollution, climate, war, etc.)
-  - ✅ 1.7.2: Per-country population tracking (15 countries, depopulation events)
-  - ⏳ 1.7.3: Link organizations to countries (TODO)
-  - ⏳ 1.7.4: Nuclear winter & long-term effects (TODO)
-  - ⏳ 1.7.5: Economic collapse during population crash (TODO)
+  - ✅ 1.7.1b: Death categorization (war/famine/climate/disease/ecosystem/pollution/ai)
+  - ✅ 1.7.2: Per-country tracking (15 countries, depopulation events)
+  - ✅ 1.7.3: Organizations linked to countries (bankruptcy when country collapses)
+  - ✅ 1.7.4: Nuclear winter (soot, temperature, crops, 5-10 year starvation)
+  - ✅ 1.7.5: Economic collapse (GDP scales with population^1.2, costs spike 2x)
 
 ### ✅ **TIER 2: Major Crisis Mitigations (COMPLETE)**
 - 2.1 Enhanced UBI + Purpose Infrastructure (6%/month meaning reduction)
@@ -114,11 +114,13 @@
 **Conclusion:** Foundation validated. TIER 2 mitigations now enable testing if interventions can enable Utopia pathways.
 
 ### 🚀 **What's Next**
-- **Status:** TIER 0, 1, 2, 2.9, 3.1 complete and merged to main! 🎉
-- **Latest:** Government Environmental Actions (TIER 2.9) - Oct 12, 2025 ✅
-- **Partial TIER 1.7:** Internal consistency fixes (extinction detection ✅, death tracking ✅, per-country ✅, reporting ✅)
-- **Next Priority:** Complete remaining TIER 1.7 fixes (org-population links, nuclear winter, economic collapse)
-- **Then:** Continue TIER 3 (Planetary Boundaries 3.2-3.9)
+- **Status:** TIER 0, 1 (including 1.7!), 2, 2.9, 3.1 complete and merged to main! 🎉
+- **Latest:** TIER 1.7 Internal Consistency Fixes - Oct 13, 2025 ✅
+  - ✅ Organizations linked to countries (bankruptcy mechanics)
+  - ✅ Nuclear winter (5-10 year starvation, soot/temperature/crops)
+  - ✅ Economic collapse (GDP^1.2 scaling, expense spikes)
+- **Next Priority:** Continue TIER 3 (Planetary Boundaries 3.2-3.9)
+- **Then:** TIER 4 enrichment systems or TIER 2 remaining mitigations
 - **Philosophy Validated:** Research-backed realism, honest uncertainty, conservative estimates
 
 ### 🚨 **CRITICAL BUGS DISCOVERED (Oct 12, 2025)**
@@ -517,23 +519,21 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 ---
 
-# 🔧 **TIER 1.7: INTERNAL CONSISTENCY FIXES** 🚨
+# 🔧 **TIER 1.7: INTERNAL CONSISTENCY FIXES** 🚨 ✅ COMPLETE
 
-**Status:** 🟡 **IN PROGRESS** (4 of 5 complete) - Discovered Oct 12, 2025 during TIER 3.1 testing  
+**Status:** ✅ **COMPLETE** - Discovered Oct 12, 2025, completed Oct 13, 2025
 **File:** `plans/internal-consistency-fixes.md`  
-**Total Time:** 10-12 hours (6-7 hours completed)  
+**Total Time:** ~11 hours (actual)
 **Priority:** IMMEDIATE (blocks accurate results)
 
-**Completed:** Oct 12, 2025
-- ✅ 1.7.1: Extinction Detection (~1 hour)
-- ✅ 1.7.1b: Death Categorization (~30 min)
-- ✅ 1.7.2: Per-Country Population Tracking (~3 hours)
-- ✅ Monte Carlo Reporting Enhancement (~1.5 hours)
-
-**Remaining:**
-- 🔴 1.7.3: Link Organizations to Countries (~2-3 hours)
-- 🔴 1.7.4: Nuclear Winter & Long-Term Effects (~3-4 hours)
-- 🔴 1.7.5: Economic Collapse During Population Crash (~2 hours)
+**Completed:** Oct 12-13, 2025
+- ✅ 1.7.1: Extinction Detection (~1 hour) - Oct 12
+- ✅ 1.7.1b: Death Categorization (~30 min) - Oct 12
+- ✅ 1.7.2: Per-Country Population Tracking (~3 hours) - Oct 12
+- ✅ Monte Carlo Reporting Enhancement (~1.5 hours) - Oct 12
+- ✅ 1.7.3: Link Organizations to Countries (~2 hours) - Oct 13
+- ✅ 1.7.4: Nuclear Winter & Long-Term Effects (~3 hours) - Oct 13
+- ✅ 1.7.5: Economic Collapse During Population Crash (~1 hour) - Oct 13
 
 ## 1.7.1 **Fix Extinction Detection** (1-2 hours) ✅ COMPLETE
 **Bug:** Simulation reports "100% extinction" but 3-4B people survive  
