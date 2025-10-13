@@ -34,6 +34,7 @@ import { initializePlanetaryBoundariesSystem } from './planetaryBoundaries';
 import { initializeHumanPopulationSystem } from './populationDynamics';
 import { initializeRefugeeCrisisSystem } from './refugeeCrises';
 import { initializeCountryPopulations } from './countryPopulations';
+import { initializeNuclearWinterState } from './nuclearWinter';
 import { initializeUBISystem } from './enhancedUBI';
 import { initializeSocialSafetyNets } from './socialSafetyNets';
 import { initializeInformationWarfare } from './informationWarfare';
@@ -354,6 +355,7 @@ export function createDefaultInitialState(): GameState {
     humanPopulationSystem: initializeHumanPopulationSystem(),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
     countryPopulationSystem: initializeCountryPopulations(),
+    nuclearWinterState: initializeNuclearWinterState(),  // TIER 1.7.4: Long-term nuclear war effects
 
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),
