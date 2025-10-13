@@ -84,6 +84,7 @@ process.on('uncaughtException', (err) => {
 interface RunResult {
   seed: number;
   outcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
+  rawOutcome?: string; // FIX (Oct 13, 2025): Store actual 7-tier outcome
   outcomeReason: string;
   months: number;
   
@@ -115,6 +116,9 @@ interface RunResult {
   genocideFamines: number;           // Count of genocide-driven famines
   techPreventedDeaths: number;       // Deaths prevented by tech (billions)
   famineAffectedRegions: string[];   // Regions that experienced famines
+  
+  // FIX (Oct 13, 2025): Add missing statistics
+  organizationBankruptcies: number;  // Number of org bankruptcies during run
   
   // Alignment statistics (ENHANCED)
   avgTrueAlignment: number;
@@ -753,12 +757,15 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const geneticBottleneck = pop.geneticBottleneckActive || false;
   
   // Crisis impact metrics
-  const nuclearWarsCount = runResult.log.events.criticalEvents.filter((e: any) => 
-    e.description?.includes('Nuclear war') || e.description?.includes('nuclear') || 
-    e.description?.includes('☢️')).length;
+  // FIX (Oct 13, 2025): Use EventAggregator stats instead of criticalEvents (which isn't populated)
+  const aggregator = (finalState as any).eventAggregator;
+  const nuclearWarsCount = aggregator ? 
+    (aggregator.stats.nuclearWarsTriggered || 0) + (aggregator.stats.nuclearDeterrenceFailed || 0) :
+    0;
   
-  const refugeeCrisisCount = runResult.log.events.criticalEvents.filter((e: any) => 
-    e.description?.includes('refugee') || e.description?.includes('REFUGEE')).length;
+  const refugeeCrisisCount = aggregator ? 
+    (aggregator.stats.crisisEventsTriggered || 0) :
+    0;
   
   let totalRefugees = 0;
   if (finalState.refugeeCrisisSystem && (finalState.refugeeCrisisSystem as any).activeCrises) {
@@ -806,14 +813,30 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const aiHubsSurviving = countrySys.aiHubsSurviving;
   const depopulationEvents = countrySys.depopulatedCountries.map(name => name);
   
-  // Map engine's 'inconclusive' to 'stalemate' for reporting
-  const mappedOutcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none' = 
-    runResult.summary.finalOutcome === 'inconclusive' ? 'stalemate' : 
-    runResult.summary.finalOutcome as any;
+  // Map engine's outcome to reporting categories
+  // FIX (Oct 13, 2025): Support new 7-tier system (status_quo, crisis_era, collapse, dark_age, bottleneck, terminal, extinction)
+  const rawOutcome = runResult.summary.finalOutcome;
+  let mappedOutcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
+  
+  if (rawOutcome === 'utopia') {
+    mappedOutcome = 'utopia';
+  } else if (rawOutcome === 'dystopia') {
+    mappedOutcome = 'dystopia';
+  } else if (rawOutcome === 'extinction' || rawOutcome === 'terminal') {
+    mappedOutcome = 'extinction'; // Terminal = extinction trajectory
+  } else if (rawOutcome === 'bottleneck' || rawOutcome === 'dark_age' || 
+             rawOutcome === 'collapse' || rawOutcome === 'crisis_era') {
+    mappedOutcome = 'none'; // Survival but not utopia/dystopia
+  } else if (rawOutcome === 'inconclusive' || rawOutcome === 'status_quo') {
+    mappedOutcome = 'stalemate';
+  } else {
+    mappedOutcome = 'none';
+  }
   
   results.push({
     seed,
     outcome: mappedOutcome,
+    rawOutcome, // Store the actual 7-tier outcome
     outcomeReason: runResult.summary.finalOutcomeReason,
     months: MAX_MONTHS,
     
@@ -850,6 +873,9 @@ for (let i = 0; i < NUM_RUNS; i++) {
         ...(finalState.famineSystem?.historicalFamines?.map(f => f.affectedRegion) ?? [])
       ])
     ],
+    
+    // FIX (Oct 13, 2025): Add missing statistics from EventAggregator
+    organizationBankruptcies: aggregator?.stats.organizationsBankrupt ?? 0,
     
     // Alignment statistics (ENHANCED)
     avgTrueAlignment,
@@ -1084,10 +1110,18 @@ if (outcomeCounts.extinction > 0) {
 // Individual run outcome reasons
 log(`\n  📋 OUTCOME REASONS BY RUN:`);
 results.forEach((r, i) => {
-  const emoji = r.outcome === 'utopia' ? '🌟' : 
-                r.outcome === 'dystopia' ? '🏛️' : 
-                r.outcome === 'extinction' ? '☠️' : '❓';
-  log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${r.outcome.toUpperCase()}`);
+  // FIX (Oct 13, 2025): Show actual 7-tier outcome, not just mapped category
+  const detailedOutcome = (r as any).rawOutcome || r.outcome;
+  const emoji = detailedOutcome === 'utopia' ? '🌟' : 
+                detailedOutcome === 'dystopia' ? '🏛️' : 
+                detailedOutcome === 'extinction' ? '💀' :
+                detailedOutcome === 'terminal' ? '⚰️' :
+                detailedOutcome === 'bottleneck' ? '🧬' :
+                detailedOutcome === 'dark_age' ? '🏚️' :
+                detailedOutcome === 'collapse' ? '💥' :
+                detailedOutcome === 'crisis_era' ? '⚠️' :
+                detailedOutcome === 'status_quo' ? '📊' : '❓';
+  log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${detailedOutcome.toUpperCase()}`);
   log(`        ${r.outcomeReason}`);
   log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B (${r.populationDecline.toFixed(1)}% decline)`);
 });

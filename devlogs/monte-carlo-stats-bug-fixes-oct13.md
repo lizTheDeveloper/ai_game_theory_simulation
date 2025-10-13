@@ -133,13 +133,20 @@ From actual log analysis:
 
 ---
 
-## 🔧 **Fixes in Progress**
+## 🔧 **Fixes Completed**
 
 1. ✅ **DONE:** Argument parsing (positional vs flags)
-2. 🔄 **NEXT:** Nuclear war count aggregation
-3. 🔄 **NEXT:** Famine detection/reporting
-4. 🔄 **NEXT:** Per-run breakdown in summary
-5. 🔄 **NEXT:** Organization bankruptcy during bottleneck scenarios
+2. ✅ **DONE:** Nuclear war count (use EventAggregator instead of criticalEvents)
+3. ✅ **DONE:** Outcome emoji mapping (support 7-tier system)
+4. ✅ **DONE:** Store rawOutcome in results for detailed reporting
+5. ✅ **DONE:** Organization bankruptcies (added to tracking)
+
+## 🔧 **Fixes Still Needed**
+
+1. 🔄 **TODO:** AI Hubs Surviving: -1.0 / 3 (negative value bug)
+2. 🔄 **TODO:** Famine detection/triggering (0 famines but food < 0.4)
+3. 🔄 **TODO:** Organization bankruptcies not triggering during bottleneck
+4. 🔄 **TODO:** Per-run population breakdown at end of summary
 
 ---
 
