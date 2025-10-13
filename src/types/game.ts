@@ -822,6 +822,9 @@ export interface GameState {
   
   // Per-Country Population Tracking (TIER 1.7.2)
   countryPopulationSystem: import('../types/countryPopulations').CountryPopulationSystem; // Track 15 key countries individually
+  
+  // TIER 1.7.4: Nuclear Winter & Long-Term Effects (Oct 13, 2025)
+  nuclearWinterState: import('../types/nuclearWinter').NuclearWinterState; // Catastrophic post-nuclear war effects
 
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society

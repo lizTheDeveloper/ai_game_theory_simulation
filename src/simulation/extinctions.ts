@@ -481,6 +481,14 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
             triggerRadiationExposure(state.radiationSystem, state.currentMonth, targetRegion, exposedPopulation, 1.0);
           }
 
+          // TIER 1.7.4: Trigger nuclear winter (long-term effects)
+          // Estimate war scale based on participants
+          // US-Russia full exchange: ~5000 warheads
+          // Regional (e.g., India-Pakistan): ~100-200 warheads
+          const { triggerNuclearWinter } = require('./nuclearWinter');
+          const warScale = participants.length >= 2 ? 5000 : 100;  // Full-scale if major powers, regional otherwise
+          triggerNuclearWinter(state, warScale, participants);
+
           return {
             triggered: true,
             mechanism: 'nuclear_war',
