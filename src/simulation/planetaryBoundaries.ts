@@ -400,12 +400,34 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   system.boundariesBreachedHistory.push(system.boundariesBreached);
   system.tippingPointRiskHistory.push(system.tippingPointRisk);
 
-  // === 4. CHECK FOR CASCADE TRIGGER ===
-  if (!system.cascadeActive && system.tippingPointRisk > 0.70) {
-    // 10% chance per month when risk > 70%
-    if (Math.random() < 0.10) {
-      triggerTippingPointCascade(state);
+  // === 4. UPDATE CASCADE SEVERITY (Continuous, not binary) ===
+  // NEW: Cascade is always active when risk > 0.5, severity scales continuously
+  // This replaces the old binary trigger (was: 10% chance at risk > 0.7)
+  if (system.tippingPointRisk > 0.5) {
+    // Cascade severity scales with risk
+    system.cascadeSeverity = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 1.5); // 0-1 scale
+    system.cascadeMultiplier = 1.0 + system.cascadeSeverity; // 1.0x → 2.0x
+    
+    // Only log when cascade STARTS (first time over threshold)
+    if (!system.cascadeActive) {
+      system.cascadeActive = true;
+      system.cascadeStartMonth = state.currentMonth;
+      console.log(`\n🌪️ ========== TIPPING POINT CASCADE BEGINNING ==========`);
+      console.log(`Month: ${state.currentMonth}`);
+      console.log(`Boundaries breached: ${system.boundariesBreached}/9`);
+      console.log(`Tipping point risk: ${(system.tippingPointRisk * 100).toFixed(1)}%`);
+      console.log(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
+      console.log(`Climate → Biosphere → Freshwater → Ocean → Land`);
+      console.log(`Mortality now scales with environmental thresholds (food, water, climate)`);
+      console.log(`Recovery possible with aggressive environmental interventions\n`);
     }
+  } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
+    // Cascade can REVERSE if risk drops significantly
+    system.cascadeActive = false;
+    system.cascadeSeverity = 0;
+    system.cascadeMultiplier = 1.0;
+    console.log(`\n✅ TIPPING POINT CASCADE REVERSED (Month ${state.currentMonth})`);
+    console.log(`Environmental interventions successful! Risk reduced below threshold.\n`);
   }
 
   // === 5. APPLY CASCADE EFFECTS ===
@@ -443,48 +465,17 @@ function updateBoundaryStatus(boundary: PlanetaryBoundary): void {
 }
 
 /**
- * Trigger tipping point cascade (irreversible)
- *
- * When too many boundaries are breached, cascading feedback loops begin.
- * This is a non-linear, irreversible process leading to extinction in ~48 months.
+ * OLD: triggerTippingPointCascade (REPLACED by continuous severity system)
+ * 
+ * The cascade is no longer a binary trigger. Instead, severity scales continuously
+ * with tippingPointRisk, and mortality is calculated from actual environmental
+ * thresholds (food, water, climate, biodiversity).
+ * 
+ * This function is kept for compatibility but no longer called.
  */
 export function triggerTippingPointCascade(state: GameState): void {
-  const system = state.planetaryBoundariesSystem;
-  if (!system) return;
-
-  system.cascadeActive = true;
-  system.cascadeStartMonth = state.currentMonth;
-  system.cascadeSeverity = system.tippingPointRisk;
-  system.cascadeMultiplier = 1.0 + system.tippingPointRisk * 2.0; // 1.0-3.0x
-
-  console.log(`\n🌪️ ========== TIPPING POINT CASCADE TRIGGERED ==========`);
-  console.log(`Month: ${state.currentMonth}`);
-  console.log(`Boundaries breached: ${system.boundariesBreached}/9`);
-  console.log(`Tipping point risk: ${(system.tippingPointRisk * 100).toFixed(1)}%`);
-  console.log(`Cascade severity: ${(system.cascadeSeverity * 100).toFixed(1)}%`);
-  console.log(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
-  console.log(`Climate → Biosphere → Freshwater → Ocean → Land`);
-  console.log(`Expected timeline to collapse: 48 months`);
-  console.log(`Process is IRREVERSIBLE\n`);
-
-  // Record event
-  system.significantEvents.push({
-    month: state.currentMonth,
-    type: 'cascade_triggered',
-    boundary: null,
-    description: `Tipping point cascade triggered with ${system.boundariesBreached}/9 boundaries breached`,
-    impact: 'Irreversible Earth system breakdown begins',
-    severity: system.cascadeSeverity,
-  });
-
-  // Activate extinction state
-  if (!state.extinctionState.active) {
-    state.extinctionState.active = true;
-    state.extinctionState.type = 'rapid';
-    state.extinctionState.mechanism = 'climate_tipping_point';
-    state.extinctionState.startMonth = state.currentMonth;
-    state.extinctionState.severity = system.cascadeSeverity;
-  }
+  // This function is deprecated - cascade now handled in updatePlanetaryBoundaries
+  console.log('⚠️  Old cascade trigger called - system now uses continuous severity');
 }
 
 /**

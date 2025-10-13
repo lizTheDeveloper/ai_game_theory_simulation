@@ -9,6 +9,84 @@ import { QualityOfLifeSystems, GameState } from '@/types/game';
 import { getTrustInAI } from './socialCohesion';
 
 /**
+ * Calculate environmental mortality rate based on threshold crossings
+ * 
+ * Research-based (UNEP 2024, PNAS 2014):
+ * - Current (2025): 7/9 boundaries, 9M deaths/8B people = 0.009% monthly
+ * - Mortality scales with food, water, climate, biodiversity thresholds
+ * - Non-linear escalation when multiple systems fail
+ * 
+ * Returns monthly mortality rate (0-1, where 0.01 = 1% die per month)
+ */
+export function calculateEnvironmentalMortality(state: GameState): number {
+  const env = state.environmentalAccumulation;
+  const boundaries = state.planetaryBoundariesSystem;
+  if (!env || !boundaries) return 0;
+  
+  let mortalityRate = 0; // Monthly mortality rate
+  
+  // === BASELINE (Current 2025 conditions) ===
+  // 7/9 boundaries breached = 0.009% monthly (UNEP: 9M deaths/year globally)
+  if (boundaries.boundariesBreached >= 7) {
+    mortalityRate = 0.00009; // 0.009% baseline
+  }
+  
+  // === FOOD SECURITY (Highest immediate impact) ===
+  // Food < 0.4 = crisis, Food < 0.2 = catastrophic
+  const foodSecurity = env.foodSecurity || 0.7;
+  if (foodSecurity < 0.4) {
+    const foodSeverity = (0.4 - foodSecurity) / 0.4; // 0-1 scale
+    mortalityRate += 0.0001 * Math.pow(foodSeverity, 1.5); // 0.01%/month at threshold, scales up
+    
+    if (foodSecurity < 0.2) {
+      // Catastrophic food crisis: additional mortality
+      const catSeverity = (0.2 - foodSecurity) / 0.2;
+      mortalityRate += 0.0005 * catSeverity; // Up to 0.05%/month additional
+    }
+  }
+  
+  // === WATER SECURITY ===
+  // Water < 0.4 = crisis, Water < 0.2 = catastrophic
+  const waterSecurity = env.waterSecurity || 0.7;
+  if (waterSecurity < 0.4) {
+    const waterSeverity = (0.4 - waterSecurity) / 0.4;
+    mortalityRate += 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food
+  }
+  
+  // === CLIMATE STABILITY (Heat stress, disasters) ===
+  // Climate < 0.5 = severe, Climate < 0.3 = catastrophic
+  const climateStability = env.climateStability || 0.75;
+  if (climateStability < 0.6) {
+    const climateSeverity = (0.6 - climateStability) / 0.6;
+    mortalityRate += 0.00005 * Math.pow(climateSeverity, 2); // Non-linear escalation
+  }
+  
+  // === BIODIVERSITY LOSS (Ecosystem services collapse) ===
+  // Biodiversity < 0.3 = critical, < 0.2 = collapse
+  const biodiversity = env.biodiversityIndex || 0.35;
+  if (biodiversity < 0.3) {
+    const bioSeverity = (0.3 - biodiversity) / 0.3;
+    mortalityRate += 0.00003 * Math.pow(bioSeverity, 1.5); // Pollination, disease regulation lost
+  }
+  
+  // === CASCADE AMPLIFICATION (Non-Linear Feedback) ===
+  // When multiple systems fail simultaneously, effects compound
+  const breachedCount = boundaries.boundariesBreached;
+  if (breachedCount >= 8) {
+    const cascadeAmplifier = 1.0 + Math.pow((breachedCount - 7) / 2, 2); // 1.0x → 2.25x at 9/9
+    mortalityRate *= cascadeAmplifier;
+  }
+  
+  // === REGIONAL VARIATION MULTIPLIER ===
+  // Some regions hit harder (handled by regional crisis system)
+  // This is the global average; specific regions can be 2-5x worse
+  
+  // Cap at 10%/month (horrific but not instant extinction)
+  // Even worst-case scenarios take years to play out
+  return Math.min(mortalityRate, 0.10);
+}
+
+/**
  * Calculate multi-dimensional quality of life from all component systems
  * 
  * This replaces the simple QoL calculation with a nuanced system that tracks:
