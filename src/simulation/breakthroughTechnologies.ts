@@ -506,7 +506,41 @@ function applyTechEffects(state: GameState, tech: TechnologyNode): void {
       social.socialCohesion + effects.communityStrengthBoost * scale
     );
   }
-  
+
+  // TIER 4.4: Power generation effects (energy abundance)
+  if (effects.energyAbundanceBoost && state.powerGenerationSystem) {
+    const power = state.powerGenerationSystem;
+    const baselineGeneration = 2500 / 12; // 208 TWh/month baseline (2024 global)
+
+    // Energy abundance increases total electricity generation
+    // Full deployment: Clean Energy +20%, Fusion Power +50%
+    // This automatically relaxes energy constraints since utilization = DC / total
+    const generationBoost = baselineGeneration * effects.energyAbundanceBoost * scale;
+    power.totalElectricityGeneration = Math.max(
+      baselineGeneration, // Never go below baseline
+      baselineGeneration + generationBoost
+    );
+
+    // Also accelerates renewable transition (these are clean technologies)
+    const renewableBoost = 0.005 * scale; // +0.5% per month at full deployment
+    power.renewablePercentage = Math.min(1.0, power.renewablePercentage + renewableBoost);
+
+    // Reduce fossil as renewable increases
+    power.fossilPercentage = Math.max(0, power.fossilPercentage - renewableBoost);
+
+    // Update carbon intensity based on new mix
+    const renewableCI = 50;   // gCO2e/kWh (lifecycle emissions)
+    const nuclearCI = 12;     // gCO2e/kWh
+    const fossilCI = 900;     // gCO2e/kWh
+
+    power.carbonIntensity =
+      (power.renewablePercentage * renewableCI) +
+      (power.nuclearPercentage * nuclearCI) +
+      (power.fossilPercentage * fossilCI);
+
+    power.dataCenterCarbonIntensity = power.carbonIntensity * 1.5;
+  }
+
   // QoL effects are applied in the QoL calculation
   // We just track that they're active here
 }
