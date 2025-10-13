@@ -295,6 +295,10 @@ function updateTechProgress(
       // Base deployment rate: $5B for 5% deployment
       let deploymentRate = budget / 5;
       
+      // TIER 2.9: Government tech deployment funding boost
+      const govBoost = getGovernmentDeploymentBoost(state);
+      deploymentRate *= govBoost;
+      
       // AI ACCELERATION: Higher AI capability → faster deployment
       // AI helps with logistics, coordination, distribution, education
       // "Fastest adopted tech ever because it actively helps you adopt it"
