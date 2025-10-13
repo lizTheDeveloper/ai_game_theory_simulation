@@ -1538,34 +1538,64 @@ export function updateBreakthroughTechnologies(state: GameState) {
 
 ---
 
-## 4.4 **Energy & Resource Constraints** ⚡
-**File:** `plans/remaining_tasks_5_pm_10_08_25.md` (§2.3)  
-**Priority:** MEDIUM-HIGH  
-**Dev Time:** ~6 hours  
-**Complexity:** MEDIUM  
+## 4.4 **Energy & Resource Constraints** ⚡ ✅ MOSTLY COMPLETE
+**File:** `src/simulation/powerGeneration.ts`, `src/types/powerGeneration.ts`
+**Status:** ✅ MOSTLY IMPLEMENTED (Oct 12, 2025 - discovered existing implementation)
+**Priority:** MEDIUM-HIGH
+**Dev Time:** ~6 hours (already spent)
+**Complexity:** MEDIUM
 
 **Why Important:**
 - **Physical reality check on exponential growth**
 - Currently: AI can grow unbounded
 - Reality: Energy is the hard constraint
 
-**Key Features:**
-- `global_energy_capacity` - Available power for computation
-- `datacenter_concentration` - Geographic clustering
-- `critical_mineral_access` - Chip materials availability
-- `supply_chain_resilience` - Infrastructure robustness
+**Implemented Features:** ✅
+- ✅ `PowerGenerationSystem` - Comprehensive energy tracking
+- ✅ Global electricity generation tracking (TWh/month)
+- ✅ Data center power consumption (AI inference, training, crypto, traditional cloud)
+- ✅ AI efficiency improvements (200x/year inference, 10x/year training)
+- ✅ Cryptocurrency mining power consumption (15% annual growth)
+- ✅ Data center buildout with 4-year construction lag
+- ✅ Grid mix evolution (renewable/nuclear/fossil transition rates)
+- ✅ Climate feedbacks (warming increases cooling demand)
+- ✅ Emissions tracking (monthly + cumulative CO2)
+- ✅ Training events (episodic power spikes for major models)
+- ✅ Integration with environmental system (CO2 accumulation)
 
-**Mechanics:**
-- Exponential energy requirements for AI training
-- Hard constraint when energy maxed (can't train bigger models)
-- Resource competition (nations, companies)
-- Breakthrough interactions (fusion unlocks, quantum efficiency)
+**Missing Features:** ❌
+- ❌ **Hard constraints on AI growth** when energy maxed (critical!)
+- ❌ Resource competition mechanics (nations, companies)
+- ❌ Critical mineral access tracking (chip materials)
+- ❌ Supply chain resilience mechanics
+- ❌ Breakthrough interactions (fusion unlocks, quantum efficiency)
+
+**Research Backing:**
+- IEA Global Data Centre Energy Report 2024
+- Stanford AI Index 2024
+- Epoch AI: Trends in Machine Learning Hardware (2024)
+- NVIDIA efficiency improvements (2016-2025)
+
+**Current Mechanics:**
+- AI inference efficiency: 200x per year improvement (with diminishing returns after year 5)
+- Query volume: 50% annual growth with saturation at 5T queries/month
+- Power consumption: Efficiency vs demand trade-off (inference power can decrease!)
+- Crypto: 15% annual growth (policy-dependent)
+- Grid transition: Slow (2% renewable, 0.5% nuclear, 2.5% fossil phase-out per year)
+- Climate feedback: 5% increased cooling per 1°C warming
 
 **Expected Impact:**
-- Slows AI growth realistically
-- Creates strategic bottlenecks
+- Currently: Energy tracked but doesn't limit AI growth
+- Future: Would slow AI growth realistically, create strategic bottlenecks
 - Motivates energy tech (fusion, renewables)
 - Geographic dynamics (energy-rich nations lead)
+
+**Next Steps to Complete:**
+1. Add energy capacity limits that constrain AI training
+2. Implement resource competition between nations/orgs
+3. Add critical mineral bottlenecks (rare earths, etc.)
+4. Connect breakthrough techs (fusion → energy abundance → faster AI)
+5. Add supply chain disruption mechanics
 
 ---
 
