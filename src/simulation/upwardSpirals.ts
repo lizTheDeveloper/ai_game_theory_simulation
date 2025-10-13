@@ -695,32 +695,33 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const culturallyAdapted = social.culturalAdaptation > 0.7;
   const autonomous = qol.autonomy > 0.7 && qol.culturalVitality > 0.7;
   
-  console.log(`\n💫 MEANING SPIRAL: ${spirals.meaning.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Meaning Crisis: ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${meaningFulfilled ? '✅' : '❌'} (need <20%)`);
-  console.log(`   Community: ${(social.socialCohesion * 100).toFixed(0)}% ${strongCommunity ? '✅' : '❌'} (need >70%)`);
-  console.log(`   Cultural Adaptation: ${(social.culturalAdaptation * 100).toFixed(0)}% ${culturallyAdapted ? '✅' : '❌'} (need >70%)`);
-  console.log(`   Autonomy & Creativity: autonomy ${(qol.autonomy * 100).toFixed(0)}%, cultural ${(qol.culturalVitality * 100).toFixed(0)}% ${autonomous ? '✅' : '❌'} (need both >70%)`);
+  // console.log(`\n💫 MEANING SPIRAL: ${spirals.meaning.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.log(`   Meaning Crisis: ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${meaningFulfilled ? '✅' : '❌'} (need <20%)`);
+  // console.log(`   Community: ${(social.socialCohesion * 100).toFixed(0)}% ${strongCommunity ? '✅' : '❌'} (need >70%)`);
+  // console.log(`   Cultural Adaptation: ${(social.culturalAdaptation * 100).toFixed(0)}% ${culturallyAdapted ? '✅' : '❌'} (need >70%)`);
+  // console.log(`   Autonomy & Creativity: autonomy ${(qol.autonomy * 100).toFixed(0)}%, cultural ${(qol.culturalVitality * 100).toFixed(0)}% ${autonomous ? '✅' : '❌'} (need both >70%)`);
   
   // ECOLOGICAL SPIRAL
   const envSustainable = env.resourceReserves > 0.7 && env.pollutionLevel < 0.3;
   const climateSafe = env.climateStability > 0.7;
   const bioHealthy = env.biodiversityIndex > 0.7;
   
-  console.log(`\n🌍 ECOLOGICAL SPIRAL: ${spirals.ecological.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Environmental: resources ${(env.resourceReserves * 100).toFixed(0)}%, pollution ${(env.pollutionLevel * 100).toFixed(0)}% ${envSustainable ? '✅' : '❌'} (need >70% resources, <30% pollution)`);
-  console.log(`   Climate: ${(env.climateStability * 100).toFixed(0)}% ${climateSafe ? '✅' : '❌'} (need >70%)`);
-  console.log(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(0)}% ${bioHealthy ? '✅' : '❌'} (need >70%)`);
+  // console.log(`\n🌍 ECOLOGICAL SPIRAL: ${spirals.ecological.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.log(`   Environmental: resources ${(env.resourceReserves * 100).toFixed(0)}%, pollution ${(env.pollutionLevel * 100).toFixed(0)}% ${envSustainable ? '✅' : '❌'} (need >70% resources, <30% pollution)`);
+  // console.log(`   Climate: ${(env.climateStability * 100).toFixed(0)}% ${climateSafe ? '✅' : '❌'} (need >70%)`);
+  // console.log(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(0)}% ${bioHealthy ? '✅' : '❌'} (need >70%)`);
   
   // VIRTUOUS CASCADE
-  console.log(`\n✨ VIRTUOUS CASCADE: ${spirals.cascadeActive ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Active Count: ${activeSpiralNames.length}/6 (need 4+ for cascade)`);
-  if (spirals.cascadeActive) {
-    console.log(`   Cascade Strength: ${spirals.cascadeStrength.toFixed(2)}x`);
-    console.log(`   Cascade Duration: ${spirals.cascadeMonths} months (need 6+ for Utopia)`);
-  }
+  // console.log(`\n✨ VIRTUOUS CASCADE: ${spirals.cascadeActive ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.log(`   Active Count: ${activeSpialNames.length}/6 (need 4+ for cascade)`);
+  // if (spirals.cascadeActive) {
+  //   console.log(`   Cascade Strength: ${spirals.cascadeStrength.toFixed(2)}x`);
+  //   console.log(`   Cascade Duration: ${spirals.cascadeMonths} months (need 6+ for Utopia)`);
+  // }
   
   // UTOPIA CHECK
   const utopiaResult = canDeclareUtopia(state);
+  // KEEP Utopia eligibility - this is critical
   console.log(`\n🌟 UTOPIA ELIGIBILITY: ${utopiaResult.can ? '✅ ELIGIBLE' : '❌ NOT YET'}`);
   console.log(`   ${utopiaResult.reason}`);
   if (utopiaResult.spiralCount < 3) {
@@ -729,6 +730,6 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
       console.log(`   Sustained spirals (12+ months): ${sustainedNames.join(', ')}`);
     }
   }
-  console.log(`================================================================================\n`);
+  // console.log(`================================================================================\n`);
 }
 
