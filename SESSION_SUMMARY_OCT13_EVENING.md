@@ -51,7 +51,7 @@ WHY NO FAMINES?!
 
 ---
 
-## 📊 **Bugs Fixed (Total: 10)**
+## 📊 **Bugs Fixed (Total: 11)**
 
 ### **Monte Carlo Reporting Bugs (7)**
 
@@ -93,17 +93,24 @@ WHY NO FAMINES?!
 
 ### **Famine System Bugs (3)**
 
-#### 🔴 **Bug #8: Wrong Field Name**
+#### 🔴 **Bug #8: Organization Expense Const Assignment**
+- **Problem:** `dcOperational` declared as `const` but modified with `*=` during crisis
+- **Error:** `TypeError: Assignment to constant variable` at line 707
+- **Fix:** Changed `const dcOperational` to `let dcOperational`
+- **Files:** `src/simulation/organizationManagement.ts`
+- **Impact:** Monte Carlo runs crashed during crisis conditions (4+ crises active)
+
+#### 🔴 **Bug #9: Wrong Field Name**
 - **Problem:** `totalPopulation` field doesn't exist
 - **Fix:** Changed to `population`
 - **Files:** `src/simulation/qualityOfLife.ts`
 
-#### 🔴 **Bug #9: Map Serialization**
+#### 🔴 **Bug #10: Map Serialization**
 - **Problem:** Regions Map → empty object during state updates
 - **Fix:** Attempted reconstruction, but regions were empty
 - **Files:** `src/simulation/qualityOfLife.ts`
 
-#### 🔴 **Bug #10: No Biodiversity Update Phase**
+#### 🔴 **Bug #11: No Biodiversity Update Phase**
 - **Problem:** System initialized but never maintained
 - **Fix:** Simplified to use global food security only
 - **Files:** `src/simulation/qualityOfLife.ts`
@@ -293,7 +300,7 @@ Reporting: Accurate warnings ✅
 
 ---
 
-## 💾 **Commits (Total: 11)**
+## 💾 **Commits (Total: 12)**
 
 ### **Reporting Fixes (6 commits)**
 1. `248e35e` - Environmental deaths now categorized (Bug #1)
@@ -307,10 +314,11 @@ Reporting: Accurate warnings ✅
 7. `7e1b86e` - Basic Needs QoL reflects collapse (Bug #3)
 8. `552bb9a` - Expenses scale with revenue (user feedback)
 
-### **Famine Fixes (3 commits)**
-9. `94f598c` - Famine system triggers (Bug #8 - totalPopulation fix)
-10. `536bf57` - Convert regions to Map (Bug #9 - attempted fix)
-11. `17390d1` - Simplified to global food security (Bug #10 - final fix)
+### **Famine Fixes (4 commits)**
+9. `94f598c` - Famine system triggers (Bug #9 - totalPopulation fix)
+10. `536bf57` - Convert regions to Map (Bug #10 - attempted fix)
+11. `17390d1` - Simplified to global food security (Bug #11 - final fix)
+12. `f258cbe` - Organization expense const fix (Bug #8 - CRITICAL)
 
 ---
 
@@ -441,9 +449,11 @@ Reporting: Accurate warnings ✅
 **20:00** - Fixed Monte Carlo reporting bugs (#2-7)  
 **20:30** - User feedback on famine conditions  
 **21:00** - Discovered famine system completely broken  
-**22:00** - Fixed famine triggers (Bugs #8-10)  
+**22:00** - Fixed famine triggers (Bugs #9-11)  
 **23:00** - Comprehensive testing and documentation  
 **23:30** - Final verification run started  
+**23:45** - Discovered const assignment bug (Bug #8) in organization expenses  
+**23:50** - Fixed and re-running verification  
 
 ---
 
