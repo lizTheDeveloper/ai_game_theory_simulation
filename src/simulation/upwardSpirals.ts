@@ -233,14 +233,7 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   const deployedCheck = deployedCount >= 4;
   spiral.active = deployedCheck && researchIntensive && aiAccelerated;
   
-  // Debug: Log actual values when close to activating
-  if (deployedCount >= 4 && !spiral.active) {
-    console.log(`🔍 SCIENTIFIC SPIRAL DEBUG:`);
-    console.log(`   deployedCount: ${deployedCount} (check: ${deployedCheck})`);
-    console.log(`   totalResearch: ${totalResearch} (check: ${researchIntensive})`);
-    console.log(`   avgAICapability: ${avgAICapability.toFixed(2)} (check: ${aiAccelerated})`);
-    console.log(`   Combined: ${deployedCheck} && ${researchIntensive} && ${aiAccelerated} = ${spiral.active}`);
-  }
+  // Aggregate spiral diagnostics (removed verbose debug logs)
   
   if (spiral.active) {
     spiral.strength = (
@@ -390,6 +383,7 @@ function updateVirtuousCascade(spirals: UpwardSpiralState, month: number): void 
       const years = Math.floor(month / 12);
       const months = month % 12;
       const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
+      // KEEP this log - virtuous cascades are major milestones!
       console.log(`\n🌟✨ VIRTUOUS CASCADE BEGINS (${timeDisplay})`);
       console.log(`   ${activeCount} upward spirals active → ${spirals.cascadeStrength.toFixed(1)}x amplification`);
       console.log(`   Active spirals: ${getActiveSpiralNames(spirals).join(', ')}\n`);
@@ -401,6 +395,7 @@ function updateVirtuousCascade(spirals: UpwardSpiralState, month: number): void 
       const years = Math.floor(month / 12);
       const months = month % 12;
       const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
+      // KEEP this log - cascade ending is important
       console.log(`\n⚠️  VIRTUOUS CASCADE ENDED (${timeDisplay})`);
       console.log(`   Duration: ${spirals.cascadeMonths} months`);
       console.log(`   Only ${activeCount} spirals active (need 4+)\n`);
@@ -629,12 +624,20 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const months = currentMonth % 12;
   const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
   
-  console.log(`\n🔍 SPIRAL DIAGNOSTICS (${timeDisplay})`);
-  console.log(`================================================================================`);
+  // DIAGNOSTIC LOGS - Comment out for production, aggregate with eventAggregator instead
+  // console.log(`\n🔍 SPIRAL DIAGNOSTICS (${timeDisplay})`);
+  // console.log(`================================================================================`);
   
   // Count active spirals
   const activeSpiralNames = getActiveSpiralNames(spirals);
   
+  // Aggregate spiral status via eventAggregator
+  const aggregator = (state as any).eventAggregator;
+  if (aggregator && aggregator.recordSpiralStatus) {
+    aggregator.recordSpiralStatus('all', activeSpiralNames.length);
+  }
+  
+  // KEEP only summary - remove detailed breakdowns
   console.log(`Active Spirals: ${activeSpiralNames.length}/6`);
   if (activeSpiralNames.length > 0) {
     console.log(`  ✅ ${activeSpiralNames.join(', ')}`);
@@ -646,10 +649,11 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const timeLiberated = state.society.unemploymentLevel > 0.6 && 
                        state.globalMetrics.economicTransitionStage >= 3;
   
-  console.log(`\n📦 ABUNDANCE SPIRAL: ${spirals.abundance.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Material: ${qol.materialAbundance.toFixed(2)} ${materialAbundant ? '✅' : '❌'} (need >1.5)`);
-  console.log(`   Energy: ${qol.energyAvailability.toFixed(2)} ${energyAbundant ? '✅' : '❌'} (need >1.5)`);
-  console.log(`   Time Liberation: unemployment ${(state.society.unemploymentLevel * 100).toFixed(0)}%, stage ${state.globalMetrics.economicTransitionStage} ${timeLiberated ? '✅' : '❌'} (need >60% + stage 3+)`);
+  // Spiral details - comment out for production (verbose)
+  // console.log(`\n📦 ABUNDANCE SPIRAL: ${spirals.abundance.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.log(`   Material: ${qol.materialAbundance.toFixed(2)} ${materialAbundant ? '✅' : '❌'} (need >1.5)`);
+  // console.log(`   Energy: ${qol.energyAvailability.toFixed(2)} ${energyAbundant ? '✅' : '❌'} (need >1.5)`);
+  // console.log(`   Time Liberation: unemployment ${(state.society.unemploymentLevel * 100).toFixed(0)}%, stage ${state.globalMetrics.economicTransitionStage} ${timeLiberated ? '✅' : '❌'} (need >60% + stage 3+)`);
   
   // COGNITIVE SPIRAL
   const avgAI = state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
@@ -658,20 +662,20 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
   const cognitiveEnhanced = avgAI > 1.5 && trustInAI > 0.6;
   
-  console.log(`\n🧠 COGNITIVE SPIRAL: ${spirals.cognitive.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Mental Health: disease ${(qol.diseasesBurden * 100).toFixed(0)}%, healthcare ${(qol.healthcareQuality * 100).toFixed(0)}% ${mentalHealthy ? '✅' : '❌'} (need <30% disease, >80% healthcare)`);
-  console.log(`   Purpose: meaning crisis ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${purposeful ? '✅' : '❌'} (need <30%)`);
-  console.log(`   AI Augmentation: avg capability ${avgAI.toFixed(2)}, trust ${(trustInAI * 100).toFixed(0)}% ${cognitiveEnhanced ? '✅' : '❌'} (need >1.5 capability, >60% trust)`);
+  // console.log(`\n🧠 COGNITIVE SPIRAL: ${spirals.cognitive.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.log(`   Mental Health: disease ${(qol.diseasesBurden * 100).toFixed(0)}%, healthcare ${(qol.healthcareQuality * 100).toFixed(0)}% ${mentalHealthy ? '✅' : '❌'} (need <30% disease, >80% healthcare)`);
+  // console.log(`   Purpose: meaning crisis ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${purposeful ? '✅' : '❌'} (need <30%)`);
+  // console.log(`   AI Augmentation: avg capability ${avgAI.toFixed(2)}, trust ${(trustInAI * 100).toFixed(0)}% ${cognitiveEnhanced ? '✅' : '❌'} (need >1.5 capability, >60% trust)`);
   
   // DEMOCRATIC SPIRAL
   const qualityGovernance = gov.decisionQuality > 0.7 && gov.institutionalCapacity > 0.7;
   const democraticEngagement = gov.participationRate > 0.6 && gov.transparency > 0.7;
   const notAuth = state.government.governmentType !== 'authoritarian';
   
-  console.log(`\n🗳️  DEMOCRATIC SPIRAL: ${spirals.democratic.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Governance Quality: decision ${(gov.decisionQuality * 100).toFixed(0)}%, capacity ${(gov.institutionalCapacity * 100).toFixed(0)}% ${qualityGovernance ? '✅' : '❌'} (need both >70%)`);
-  console.log(`   Democratic Engagement: participation ${(gov.participationRate * 100).toFixed(0)}%, transparency ${(gov.transparency * 100).toFixed(0)}% ${democraticEngagement ? '✅' : '❌'} (need >60% participation, >70% transparency)`);
-  console.log(`   Government Type: ${state.government.governmentType} ${notAuth ? '✅' : '❌'} (cannot be authoritarian)`);
+  // console.log(`\n🗳️  DEMOCRATIC SPIRAL: ${spirals.democratic.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.log(`   Governance Quality: decision ${(gov.decisionQuality * 100).toFixed(0)}%, capacity ${(gov.institutionalCapacity * 100).toFixed(0)}% ${qualityGovernance ? '✅' : '❌'} (need both >70%)`);
+  // console.log(`   Democratic Engagement: participation ${(gov.participationRate * 100).toFixed(0)}%, transparency ${(gov.transparency * 100).toFixed(0)}% ${democraticEngagement ? '✅' : '❌'} (need >60% participation, >70% transparency)`);
+  // console.log(`   Government Type: ${state.government.governmentType} ${notAuth ? '✅' : '❌'} (cannot be authoritarian)`);
   
   // SCIENTIFIC SPIRAL
   const unlockedCount = Object.values(breakthrough).filter((t: any) => t?.unlocked).length;
@@ -680,10 +684,10 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const researchIntensive = totalResearch > 50;
   const aiAccelerated = avgAI > 1.2; // Lowered from 2.0 - AI already accelerating science at GPT-4 level
   
-  console.log(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
-  console.log(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${deployedCount >= 4 ? '✅' : '❌'} (need 4+ deployed >50%)`);
-  console.log(`   Research Investment: $${Number(totalResearch || 0).toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
-  console.log(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >1.2)`);
+  // console.log(`\n🔬 SCIENTIFIC SPIRAL: ${spirals.scientific.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
+  // console.log(`   Breakthroughs: ${unlockedCount} unlocked, ${deployedCount} deployed ${deployedCount >= 4 ? '✅' : '❌'} (need 4+ deployed >50%)`);
+  // console.log(`   Research Investment: $${Number(totalResearch || 0).toFixed(1)}B/month ${researchIntensive ? '✅' : '❌'} (need >$50B/month)`);
+  // console.log(`   AI Acceleration: avg capability ${avgAI.toFixed(2)} ${aiAccelerated ? '✅' : '❌'} (need >1.2)`);
   
   // MEANING SPIRAL
   const meaningFulfilled = social.meaningCrisisLevel < 0.2;

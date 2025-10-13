@@ -313,7 +313,9 @@ function updateTechProgress(
         
         // Log emergency deployment
         if (month % 12 === 0 && crisisUrgency > 0.5) {
-          console.log(`⚡ EMERGENCY DEPLOYMENT: ${tech.name} scaling ${(crisisUrgency * 2 + 1).toFixed(1)}x faster (crisis urgency: ${(crisisUrgency * 100).toFixed(0)}%)`);
+          // Aggregate emergency deployments (keep breakthrough announcements)
+          const aggregator = (state as any).eventAggregator;
+          if (aggregator) aggregator.recordTechnologyBreakthrough(tech.name, 'emergency');
         }
       }
       
@@ -321,15 +323,18 @@ function updateTechProgress(
       tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentIncrease);
       
       // Log significant deployment progress with year/month
-      const years = Math.floor(month / 12);
-      const months = month % 12;
-      const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
-      
+      // Aggregate deployment milestones (keep breakthrough announcements)
       if (tech.deploymentLevel >= 0.5 && tech.deploymentLevel - deploymentIncrease < 0.5) {
-        console.log(`📈 ${tech.name} reached 50% deployment (${timeDisplay})`);
+        const aggregator = (state as any).eventAggregator;
+        if (aggregator && aggregator.recordTechnologyBreakthrough) {
+          aggregator.recordTechnologyBreakthrough(tech.name, 50);
+        }
       }
       if (tech.deploymentLevel >= 1.0 && tech.deploymentLevel - deploymentIncrease < 1.0) {
-        console.log(`✅ ${tech.name} fully deployed (${timeDisplay})`);
+        const aggregator = (state as any).eventAggregator;
+        if (aggregator && aggregator.recordTechnologyBreakthrough) {
+          aggregator.recordTechnologyBreakthrough(tech.name, 100);
+        }
       }
     }
     return;
