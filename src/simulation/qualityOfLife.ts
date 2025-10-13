@@ -575,6 +575,10 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
     shelterSecurity: isNaN(rawShelterSecurity) ? 0.75 : rawShelterSecurity,
   };
   
+  // FIX (Oct 13, 2025): Assign survivalFundamentals to state!
+  // BUG: Was calculated but never assigned → state.survivalFundamentals always undefined → famines never trigger!
+  state.survivalFundamentals = survivalFundamentals;
+  
   // === DISTRIBUTION METRICS (Oct 12, 2025) ===
   // Calculate regional inequality to detect dystopian outcomes
   const distribution = calculateDistributionMetrics(
