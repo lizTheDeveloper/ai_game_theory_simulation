@@ -405,6 +405,10 @@ export function startModelTraining(
  * 
  * IMPORTANT: Open-weight models generate NO revenue (can't charge for free weights)
  * Instead, organizations earn from selling unused compute capacity
+ * 
+ * NEW (Oct 13, 2025): Revenue penalized during population collapse
+ * - No customers when people are dying
+ * - Infrastructure fails during cascading crises
  */
 export function calculateAIRevenue(org: Organization, state: GameState): number {
   const { calculateTotalCapabilityFromProfile } = require('./capabilities');
@@ -433,7 +437,57 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
   // Economies of scale bonus (more models = better market presence)
   const scaleBonus = 1.0 + Math.log(1 + revenueGeneratingModels.length) * 0.2;
   
-  return totalModelRevenue * scaleBonus;
+  let baseRevenue = totalModelRevenue * scaleBonus;
+  
+  // === NEW: CRISIS REVENUE PENALTIES (Oct 13, 2025) ===
+  // Organizations can't make money when customers are dying and infrastructure is failing
+  
+  // 1. POPULATION COLLAPSE PENALTY
+  // When people die, there are fewer customers
+  const currentPop = state.humanPopulationSystem.population;
+  const initialPop = state.humanPopulationSystem.population || 8.0; // Fallback to 8B
+  const populationDecline = 1 - (currentPop / initialPop);
+  
+  if (populationDecline > 0.30) {
+    // 30%+ population decline → revenue drops proportionally
+    // If 80% of customers died, revenue drops 80%
+    const revenueLoss = Math.min(0.95, populationDecline * 0.8); // Cap at 95% loss
+    baseRevenue *= (1 - revenueLoss);
+  }
+  
+  // 2. FOOD CRISIS PENALTY
+  // Starving people don't buy AI services
+  const foodSecurity = state.environmentalAccumulation.foodSecurity || 0.7;
+  if (foodSecurity < 0.4) {
+    const foodCrisisSeverity = (0.4 - foodSecurity) / 0.4; // 0-1 scale
+    baseRevenue *= (1 - foodCrisisSeverity * 0.5); // Up to 50% revenue loss
+  }
+  
+  // 3. INFRASTRUCTURE COLLAPSE PENALTY
+  // Cascading crises disrupt supply chains, power grids, internet
+  const env = state.environmentalAccumulation;
+  const crisisCount = [
+    env.resourceCrisisActive,
+    env.climateCrisisActive,
+    state.socialAccumulation.institutionalFailureActive,
+    state.socialAccumulation.socialUnrestActive,
+    state.technologicalRisk.controlLossActive
+  ].filter(Boolean).length;
+  
+  if (crisisCount >= 4) {
+    // 4+ active crises → infrastructure failing
+    const infrastructurePenalty = Math.min(0.70, (crisisCount - 3) * 0.20); // 20-70% loss
+    baseRevenue *= (1 - infrastructurePenalty);
+  }
+  
+  // 4. CASCADE COLLAPSE PENALTY
+  // During tipping point cascade, everything breaks down
+  if (state.planetaryBoundariesSystem.cascadeActive) {
+    const cascadeSeverity = state.planetaryBoundariesSystem.cascadeSeverity || 0;
+    baseRevenue *= (1 - cascadeSeverity * 0.40); // Up to 40% additional loss
+  }
+  
+  return Math.max(0, baseRevenue);
 }
 
 /**
@@ -617,9 +671,39 @@ export function processOrganizationTurn(
   }
   
   // 5. Check bankruptcy
-  if (org.capital < -50 && org.type === 'private') {
+  // NEW (Oct 13, 2025): Bankruptcy threshold lowered during global crises
+  // Organizations fail faster when the world is collapsing
+  let bankruptcyThreshold = -50; // Default: -$50M
+  let distressThreshold = -20; // Default: -$20M
+  
+  const env = state.environmentalAccumulation;
+  const crisisCount = [
+    env.resourceCrisisActive,
+    env.climateCrisisActive,
+    state.socialAccumulation.institutionalFailureActive,
+    state.socialAccumulation.socialUnrestActive
+  ].filter(Boolean).length;
+  
+  // During cascading crises, bankruptcy happens faster (no bailouts, no credit)
+  if (crisisCount >= 4) {
+    bankruptcyThreshold = -20; // Fail at -$20M instead of -$50M
+    distressThreshold = -10; // Distress at -$10M
+  } else if (crisisCount >= 3) {
+    bankruptcyThreshold = -30;
+    distressThreshold = -15;
+  }
+  
+  // Population collapse also increases bankruptcy risk (no customers = no recovery)
+  const populationDecline = 1 - (state.humanPopulationSystem.population / 8.0);
+  if (populationDecline > 0.50 && org.capital < 0) {
+    // 50%+ population dead → bankrupt if any negative capital
+    bankruptcyThreshold = 0;
+  }
+  
+  if (org.capital < bankruptcyThreshold && org.type === 'private') {
     handleBankruptcy(org, state);
-  } else if (org.capital < -20 && org.type === 'private') {
+    console.log(`💸 [Month ${state.currentMonth}] ${org.name} BANKRUPT (capital: $${org.capital.toFixed(1)}M, ${crisisCount} crises active)`);
+  } else if (org.capital < distressThreshold && org.type === 'private') {
     console.warn(`⚠️  [Month ${state.currentMonth}] ${org.name} is in financial distress (capital: $${org.capital.toFixed(1)}M)`);
   }
 }
