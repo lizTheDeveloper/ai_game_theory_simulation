@@ -401,6 +401,104 @@ export function startModelTraining(
  */
 
 /**
+ * Calculate regional population decline for an organization
+ * 
+ * Organizations care about their LOCAL market, not global population.
+ * - US-based orgs (OpenAI, Google, Meta): Care about North America population
+ * - EU-based orgs: Care about Europe population  
+ * - China-based orgs (Alibaba, Baidu): Care about East Asia population
+ * 
+ * Determines market region from data center locations.
+ */
+function calculateRegionalPopulationDecline(org: Organization, state: GameState): number {
+  // Determine org's primary market from data center locations
+  const orgDataCenters = state.computeInfrastructure.dataCenters.filter(dc =>
+    org.ownedDataCenters.includes(dc.id)
+  );
+  
+  // Count data centers by region
+  const regionCounts = new Map<string, number>();
+  for (const dc of orgDataCenters) {
+    const region = dc.region || 'US'; // Default to US if not specified
+    regionCounts.set(region, (regionCounts.get(region) || 0) + 1);
+  }
+  
+  // Find primary region (most data centers)
+  let primaryRegion = 'US'; // Default
+  let maxCount = 0;
+  for (const [region, count] of regionCounts) {
+    if (count > maxCount) {
+      primaryRegion = region;
+      maxCount = count;
+    }
+  }
+  
+  // Map region to relevant countries
+  const relevantCountries = getCountriesInRegion(primaryRegion);
+  
+  // Calculate population decline in those countries
+  if (!state.countryPopulationSystem) {
+    // Fallback to global if country tracking not available
+    const currentPop = state.humanPopulationSystem.population;
+    const initialPop = 8.0;
+    return 1 - (currentPop / initialPop);
+  }
+  
+  let totalBaseline = 0;
+  let totalCurrent = 0;
+  
+  for (const countryName of relevantCountries) {
+    const country = state.countryPopulationSystem.countries[countryName];
+    if (country) {
+      totalBaseline += country.baselinePopulation;
+      totalCurrent += country.population;
+    }
+  }
+  
+  if (totalBaseline === 0) {
+    // Fallback to global
+    const currentPop = state.humanPopulationSystem.population;
+    const initialPop = 8.0;
+    return 1 - (currentPop / initialPop);
+  }
+  
+  return 1 - (totalCurrent / totalBaseline);
+}
+
+/**
+ * Get countries in a region for market analysis
+ */
+function getCountriesInRegion(region: string): import('@/types/countryPopulations').CountryName[] {
+  switch (region.toLowerCase()) {
+    case 'us':
+    case 'united states':
+    case 'north america':
+      return ['United States', 'Canada'];
+    
+    case 'eu':
+    case 'europe':
+      return ['United Kingdom', 'France', 'Germany'];
+    
+    case 'china':
+    case 'east asia':
+      return ['China', 'Japan'];
+    
+    case 'india':
+    case 'south asia':
+      return ['India', 'Bangladesh', 'Pakistan'];
+    
+    case 'distributed':
+    case 'global':
+      // Distributed orgs care about top 5 economies
+      return ['United States', 'China', 'India', 'Japan', 'Germany'];
+    
+    default:
+      // Unknown region, assume US
+      return ['United States', 'Canada'];
+  }
+}
+
+/**
  * Calculate revenue from deployed AI models
  * 
  * IMPORTANT: Open-weight models generate NO revenue (can't charge for free weights)
@@ -444,14 +542,14 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
   
   // 1. POPULATION COLLAPSE PENALTY
   // When people die, there are fewer customers
-  const currentPop = state.humanPopulationSystem.population;
-  const initialPop = state.humanPopulationSystem.population || 8.0; // Fallback to 8B
-  const populationDecline = 1 - (currentPop / initialPop);
+  // NEW (Oct 13, 2025): Use REGIONAL population, not global!
+  // Google cares about US/EU population, Alibaba cares about Asia
+  const regionalPopulationDecline = calculateRegionalPopulationDecline(org, state);
   
-  if (populationDecline > 0.30) {
-    // 30%+ population decline → revenue drops proportionally
-    // If 80% of customers died, revenue drops 80%
-    const revenueLoss = Math.min(0.95, populationDecline * 0.8); // Cap at 95% loss
+  if (regionalPopulationDecline > 0.30) {
+    // 30%+ REGIONAL population decline → revenue drops proportionally
+    // If 80% of local customers died, revenue drops 80%
+    const revenueLoss = Math.min(0.95, regionalPopulationDecline * 0.8); // Cap at 95% loss
     baseRevenue *= (1 - revenueLoss);
   }
   
@@ -694,9 +792,11 @@ export function processOrganizationTurn(
   }
   
   // Population collapse also increases bankruptcy risk (no customers = no recovery)
-  const populationDecline = 1 - (state.humanPopulationSystem.population / 8.0);
-  if (populationDecline > 0.50 && org.capital < 0) {
-    // 50%+ population dead → bankrupt if any negative capital
+  // NEW (Oct 13, 2025): Use REGIONAL population, not global!
+  // Google survives if US survives, even if all of Asia died
+  const regionalPopulationDecline = calculateRegionalPopulationDecline(org, state);
+  if (regionalPopulationDecline > 0.50 && org.capital < 0) {
+    // 50%+ of LOCAL market dead → bankrupt if any negative capital
     bankruptcyThreshold = 0;
   }
   
