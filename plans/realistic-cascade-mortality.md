@@ -8,12 +8,19 @@
 - **Biodiversity:** ~35% of pre-industrial levels
 - **Population:** 8B people
 
-### Current Mortality:
-- **Climate-related deaths:** ~250,000/year (WHO estimates for 2030-2050)
-- **Food insecurity deaths:** ~9M/year (severe malnutrition/starvation)
-- **Combined:** ~9.25M/year = **0.12% annual mortality**
+### Current Mortality (Academic Sources):
+- **Environmental degradation deaths:** **9M/year** (UNEP - 25% of all deaths)
+  - Air pollution: **7M/year** (UNEP)
+  - Climate, pollution, other environmental: **2M/year**
+- **Current global population:** 8B
+- **Current mortality rate:** 9M / 8B = **0.1125% annual** = **0.0094% monthly**
 
-**Baseline:** 7/9 boundaries breached = 0.12% annual mortality (0.01% monthly)
+**Baseline (2025):** 7/9 boundaries breached = 0.11% annual mortality (0.009% monthly)
+
+**Sources:**
+- UNEP (2024): "Environmental degradation contributes to approximately 25% of global deaths, equating to around 9 million premature deaths annually"
+- PNAS (2014): Historical societies - environmental degradation combined with institutional/social factors
+- PMC/NCBI: Air pollution responsible for ~7M deaths annually
 
 ---
 
