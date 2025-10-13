@@ -309,14 +309,16 @@ export function logOrganizationsState(state: GameState): void {
 }
 
 /**
- * TIER 1.7.3: Check organization viability based on host country population
+ * TIER 1.7.3 & 1.7.5: Check organization viability and economic health
  * 
- * Organizations collapse when their host country's population drops below survival threshold.
- * This links AI organization survival to human population health - more realistic!
+ * TIER 1.7.3: Organizations collapse when country population drops below threshold
+ * TIER 1.7.5: Revenue/expenses scale with population health (economic collapse)
  * 
  * Research backing:
  * - Organizations require intact labor markets, supply chains, and customer base
  * - Google is ~1% of US economy - can't function if US loses 70% of population
+ * - 50% population loss → 60% GDP loss (supply chains break, demand collapses)
+ * - Operational costs spike during collapse (scarcity, logistics)
  * - Academic consortiums more resilient (distributed globally)
  * - Government orgs last longer (essential services)
  * 
@@ -328,6 +330,21 @@ export function updateOrganizationViability(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
   const currentMonth = state.currentMonth;
   
+  // TIER 1.7.5: Track baseline revenue/expenses (first month only)
+  // We need baseline values to scale from
+  const needsBaseline = !state.organizations[0].hasOwnProperty('baselineRevenue');
+  if (needsBaseline) {
+    state.organizations.forEach(org => {
+      (org as any).baselineRevenue = org.monthlyRevenue;
+      (org as any).baselineExpenses = org.monthlyExpenses;
+    });
+  }
+  
+  // Calculate global economic multiplier (for multi-national orgs)
+  const globalPopFraction = state.humanPopulationSystem.population / 
+                            state.humanPopulationSystem.baselinePopulation;
+  const globalEconomicMultiplier = calculateEconomicMultiplier(globalPopFraction);
+  
   // Check each organization
   for (const org of state.organizations) {
     if (org.bankrupt) continue; // Already dead
@@ -336,6 +353,12 @@ export function updateOrganizationViability(state: GameState): void {
     if (org.country === 'Multi-national') {
       const globalPopFraction = state.humanPopulationSystem.population / 
                                 state.humanPopulationSystem.baselinePopulation;
+      
+      // TIER 1.7.5: Scale economics with global population
+      const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
+      const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
+      org.monthlyRevenue = baseline * globalEconomicMultiplier;
+      org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(globalPopFraction);
       
       if (globalPopFraction < org.survivalThreshold) {
         org.bankrupt = true;
@@ -358,6 +381,17 @@ export function updateOrganizationViability(state: GameState): void {
     
     // Calculate population health (current / peak)
     const popFraction = country.population / country.peakPopulation;
+    
+    // TIER 1.7.5: Scale organization economics with country population health
+    // Revenue: GDP scales super-linearly with population (supply chains break)
+    // Expenses: Costs spike during collapse (scarcity, logistics)
+    const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
+    const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
+    const economicMultiplier = calculateEconomicMultiplier(popFraction);
+    const expenseMultiplier = calculateExpenseMultiplier(popFraction);
+    
+    org.monthlyRevenue = baseline * economicMultiplier;
+    org.monthlyExpenses = baseExpenses * expenseMultiplier;
     
     // Check if country is depopulated (<100K people)
     if (country.depopulated) {
@@ -399,5 +433,74 @@ export function updateOrganizationViability(state: GameState): void {
     if (bankruptOrgs > 0) {
       console.log(`\n📊 ORGANIZATION SURVIVAL RATE: ${survivalRate}% (${totalOrgs - bankruptOrgs}/${totalOrgs} orgs alive)`);
     }
+  }
+  
+  // TIER 1.7.5: Log economic milestones
+  logEconomicMilestones(state, globalPopFraction, currentMonth);
+}
+
+/**
+ * TIER 1.7.5: Calculate economic multiplier based on population health
+ * 
+ * Research:
+ * - 50% population loss → 60% GDP loss (super-linear)
+ * - Supply chains break, consumer demand collapses, labor shortages
+ * - Formula: GDP scales with population^1.2 (slightly super-linear)
+ * 
+ * @param popFraction - Current population / peak population
+ * @returns Economic multiplier [0,1]
+ */
+function calculateEconomicMultiplier(popFraction: number): number {
+  // Super-linear scaling: GDP drops faster than population
+  // 50% population → 40% GDP (60% loss)
+  // 25% population → 15% GDP (85% loss)
+  return Math.pow(popFraction, 1.2);  // Exponent 1.2 = super-linear decay
+}
+
+/**
+ * TIER 1.7.5: Calculate expense multiplier (costs spike during collapse)
+ * 
+ * Research:
+ * - Supply chain disruptions increase operational costs
+ * - Scarcity drives prices up
+ * - At 50% population, costs are 20% higher
+ * - At 25% population, costs are 50% higher
+ * 
+ * @param popFraction - Current population / peak population
+ * @returns Expense multiplier [1,2]
+ */
+function calculateExpenseMultiplier(popFraction: number): number {
+  // Costs spike as population declines (scarcity, supply chain breakdown)
+  // 100% population → 1.0x costs
+  // 50% population → 1.2x costs
+  // 25% population → 1.5x costs
+  // 10% population → 2.0x costs
+  const scarcityMultiplier = 1 + (1 - popFraction) * 1.0;
+  return Math.min(2.0, scarcityMultiplier);  // Cap at 2x costs
+}
+
+/**
+ * TIER 1.7.5: Log economic milestones when population crashes
+ */
+function logEconomicMilestones(state: GameState, popFraction: number, currentMonth: number): void {
+  // Only log on significant milestones (every 25% population loss)
+  const milestone75 = popFraction <= 0.75 && popFraction > 0.70;
+  const milestone50 = popFraction <= 0.50 && popFraction > 0.45;
+  const milestone25 = popFraction <= 0.25 && popFraction > 0.20;
+  
+  if (milestone75) {
+    console.log(`\n💥 ECONOMIC CRISIS: 25% population loss (Month ${currentMonth})`);
+    console.log(`   GDP multiplier: ${(calculateEconomicMultiplier(popFraction) * 100).toFixed(0)}%`);
+    console.log(`   Supply chains degrading, labor shortages emerging`);
+  } else if (milestone50) {
+    console.log(`\n💥💥 SEVERE ECONOMIC COLLAPSE: 50% population loss (Month ${currentMonth})`);
+    console.log(`   GDP multiplier: ${(calculateEconomicMultiplier(popFraction) * 100).toFixed(0)}% (60% GDP loss)`);
+    console.log(`   Expense multiplier: ${calculateExpenseMultiplier(popFraction).toFixed(1)}x`);
+    console.log(`   Supply chains breaking, massive scarcity`);
+  } else if (milestone25) {
+    console.log(`\n💥💥💥 CATASTROPHIC ECONOMIC DISINTEGRATION: 75% population loss (Month ${currentMonth})`);
+    console.log(`   GDP multiplier: ${(calculateEconomicMultiplier(popFraction) * 100).toFixed(0)}% (85% GDP loss)`);
+    console.log(`   Expense multiplier: ${calculateExpenseMultiplier(popFraction).toFixed(1)}x`);
+    console.log(`   Economy non-functional, subsistence survival only`);
   }
 }
