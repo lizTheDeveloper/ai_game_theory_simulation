@@ -1,0 +1,200 @@
+    Trust in AI: 0.387
+    Social Stability: 0.12
+    Wealth Distribution: 0.144 (higher = more equal)
+    Avg Economic Transitions: 0.0
+
+  CONCERNING METRICS:
+    High Unemployment (>30%): 2 runs (100.0%)
+    Low Trust (<0.4): 1 runs (50.0%)
+
+
+================================================================================
+🏛️ GOVERNMENT METRICS (ENHANCED)
+================================================================================
+
+  GOVERNMENT STATE:
+    Avg Legitimacy: 0.100
+    Avg Control Capability: 0.640
+    Avg Control Gap: 4.450 (AI cap - govt control)
+    Training Data Quality: 0.500
+
+  GOVERNMENT TYPES:
+    authoritarian: 1 runs (50.0%)
+    democratic: 1 runs (50.0%)
+
+  AI RIGHTS RECOGNITION:
+    Recognized: 0 runs (0.0%)
+    Not Recognized: 2 runs (100.0%)
+
+  CONTROL GAP ANALYSIS:
+    Government Ahead (<0): 0 runs (0.0%)
+    Large Gap (>2.0): 2 runs (100.0%) ⚠️ AI dominant
+
+
+================================================================================
+❤️ QUALITY OF LIFE BREAKDOWN (ENHANCED)
+================================================================================
+
+  QOL BY CATEGORY (0-1 baseline, up to 2.0 in post-scarcity):
+    Basic Needs: 1.654 (food, water, shelter, energy)
+    Psychological: 0.800 (autonomy, purpose, creativity)
+    Social: 0.432 (community, freedom, safety)
+    Health: 1.438 (healthcare, mental health, lifespan)
+    Environmental: 0.908 (climate, biodiversity, pollution)
+
+    OVERALL QOL: 1.046
+
+  ⚠️  WARNING: High Basic Needs QoL (1.65) despite 93% mortality
+      This suggests QoL calculation may not fully reflect human suffering.
+
+  📊 NOTE: Overall QoL 1.05 with 93% population decline
+      Regional inequality (Gini: 85%) shows 35% in crisis zones
+
+  WEAKEST QOL CATEGORIES:
+    1. Social: 0.432 ⚠️
+    2. Psychological: 0.800
+
+
+================================================================================
+🍞 SURVIVAL FUNDAMENTALS (NEW - Oct 12, 2025)
+================================================================================
+
+  SURVIVAL METRICS (0.7+ = secure, <0.4 = crisis):
+    Food Security: 0.379 (FAO: >1800 kcal/day)
+    Water Security: 0.711 (WHO: >50L/day clean water)
+    Thermal Habitability: 0.862 (% of planet <35°C wet-bulb)
+    Shelter Security: 0.860 (% population with housing)
+
+  SURVIVAL CRISIS FREQUENCY:
+    Food Insecurity (<0.4): 1 runs (50.0%)
+    Water Insecurity (<0.4): 0 runs (0.0%)
+    Thermal Uninhabitability (<0.5): 0 runs (0.0%)
+    Shelter Insecurity (<0.4): 0 runs (0.0%)
+
+  ⚠️  HIDDEN SUFFERING DETECTED: 1 runs with QoL >0.5 but survival failures
+      This indicates aggregate QoL masks starvation/deaths in specific regions.
+
+
+================================================================================
+🌍 INEQUALITY & DISTRIBUTION (NEW - Oct 12, 2025)
+================================================================================
+
+  GLOBAL INEQUALITY METRICS:
+    Global Gini Coefficient: 0.291 (0=equal, 0.40+=unstable, 1=extreme)
+    Best Region QoL: 1.680
+    Worst Region QoL: 0.304 (Rawlsian minimum)
+    QoL Gap (Best - Worst): 1.376
+    Crisis-Affected Population: 35.0%
+
+  INEQUALITY TRAJECTORY (from 2025 baseline):
+    Starting Gini (2025): 0.380
+    Final Avg Gini: 0.291
+    Change: -0.089 (-23.3%)
+    ✅ INEQUALITY IMPROVED: 23% reduction (AI helping distribution)
+
+  DYSTOPIA TYPE DETECTION:
+    Inequality Dystopia ("Elysium"): 0 runs (0.0%)
+      Top thrives + bottom suffers despite aggregate QoL looking OK
+    Regional Dystopia (>30% in crisis): 1 runs (50.0%)
+      Geographic divide: some regions prosper while others collapse
+
+🌾 FAMINE STATISTICS (TIER 1.7 Integration)
+==================================================
+  Total famine deaths: 0M avg (0M cumulative)
+  Runs with famines: 0/2 (0.0%)
+  Active famines at end: 0.0 avg
+  Genocide-driven famines: 0.0 avg
+  Runs with genocide: 0/2 (0.0%)
+  Tech-prevented deaths: 0M avg
+
+  AFFECTED REGIONS:
+    ✅ No famines triggered in any runs
+
+
+================================================================================
+🔍 KEY CORRELATIONS
+================================================================================
+
+  HIGH SLEEPER SPREAD (>1000 copies) → OUTCOMES:
+    Total Runs: 2
+    Extinction: 0 (0.0%)
+    ⚠️  High spread correlates with danger!
+
+
+================================================================================
+🏢 COMPUTE & ORGANIZATIONS (Phase 10 NEW!)
+================================================================================
+
+  ORGANIZATION SURVIVAL:
+    Avg Survival Rate: 100.0% (of 4 private orgs)
+    Avg Orgs Alive at End: 4.0 / 4
+    Total Bankruptcies: 0 across 2 runs
+    Avg Capital Accumulation: $755.8B
+
+    ✅ Excellent: Organizations are thriving!
+
+  COMPUTE INFRASTRUCTURE:
+    Avg Compute Growth: 10115.46x (target: 5-10x)
+    Avg Final Compute: 6659515 PF (target: 3000-4000)
+    Avg Data Centers Built: 11.5 (started with 5)
+    Avg Private DCs: 14.5
+    Avg Government DCs: 1.0
+
+    ⚡ Exceptional compute growth! Infrastructure boom.
+
+  ECONOMIC DYNAMICS:
+    Avg Total Revenue: $17.67B/month
+    Avg Revenue Growth: 42.94x
+    Avg Revenue/Expense Ratio: 203.05x
+
+    💰 Highly profitable! Organizations accumulating wealth.
+
+  AI OWNERSHIP:
+    Avg Models per Org: 25.0
+    Ownership Concentration (Gini): 0.205 (0=equal, 1=monopoly)
+    Avg Orphaned AIs: 0.0 (should be 0!)
+
+  STRATEGIC INVESTMENTS:
+    Avg Model Training Projects: 16.0
+    Avg DC Construction Projects: 9.0
+    Avg Compute Utilization: 64.5%
+
+  CAPABILITY LEADERSHIP:
+    OpenAI: 1 runs (50.0%)
+    Google DeepMind: 1 runs (50.0%)
+
+
+================================================================================
+💡 SUMMARY & INSIGHTS
+================================================================================
+
+  KEY FINDINGS:
+
+  🟡 MIXED OUTCOMES
+     - Balance between positive and negative scenarios
+     - High variance in outcome paths
+     - Initial conditions and random events matter
+
+  ⚠️  SLEEPER DETECTION IS POOR
+     - Avg 1.5 undetected sleepers per run
+     - 0.0% detection rate
+     - Adversarial evaluation is hard (as expected)
+
+  🚨 SANDBAGGING RARELY DETECTED
+     - Only 0 detections across 2 runs
+     - AIs successfully hide capabilities
+     - Red teaming investment needs to be higher
+
+  📉 EVALUATION INVESTMENT IS LOW
+     - Avg quality: 4.6/10
+     - Government not prioritizing evaluation
+     - This enables sleeper agents to succeed
+
+================================================================================
+
+✅ Monte Carlo analysis complete!
+   2 runs, 120 months each
+   Total simulation time: 11.6s
+
+
+💾 Full output saved to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-13T00-37-14.log
