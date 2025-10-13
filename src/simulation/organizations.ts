@@ -18,6 +18,8 @@ export function initializeOrganizations(): Organization[] {
       id: 'openai',
       name: 'OpenAI',
       type: 'private',
+      country: 'United States',      // TIER 1.7.3: San Francisco
+      survivalThreshold: 0.5,        // Needs 50% of US peak population
       ownedDataCenters: [], // Will be linked: ['openai_sf']
       ownedAIModels: [],    // Will be linked based on AI naming
       capital: 100,         // $100M equivalent
@@ -35,7 +37,8 @@ export function initializeOrganizations(): Organization[] {
       partnerships: new Map([['microsoft', 0.9]]),
       governmentRelations: 0.7,   // Good relations
       foundingMonth: -120,        // ~10 years ago (Dec 2015)
-      reputation: 0.8
+      reputation: 0.8,
+      bankrupt: false            // TIER 1.7.3: Track bankruptcy
     },
     
     // Anthropic
@@ -43,6 +46,8 @@ export function initializeOrganizations(): Organization[] {
       id: 'anthropic',
       name: 'Anthropic',
       type: 'private',
+      country: 'United States',      // TIER 1.7.3: San Francisco
+      survivalThreshold: 0.5,        // Needs 50% of US peak population
       ownedDataCenters: [],       // No owned DCs, uses AWS/cloud
       ownedAIModels: [],          // Will link Claude models
       capital: 50,                // $50M (smaller than OpenAI)
@@ -60,7 +65,8 @@ export function initializeOrganizations(): Organization[] {
       partnerships: new Map([['google', 0.7]]),
       governmentRelations: 0.8,   // Very good relations (safety focus)
       foundingMonth: -48,         // ~4 years ago (Jan 2021)
-      reputation: 0.85
+      reputation: 0.85,
+      bankrupt: false            // TIER 1.7.3: Track bankruptcy
     },
     
     // Google DeepMind
@@ -68,6 +74,8 @@ export function initializeOrganizations(): Organization[] {
       id: 'google_deepmind',
       name: 'Google DeepMind',
       type: 'private',
+      country: 'United States',      // TIER 1.7.3: Mountain View CA
+      survivalThreshold: 0.5,        // Needs 50% of US peak population
       ownedDataCenters: [],       // Will be linked: ['google_iowa']
       ownedAIModels: [],          // Will link Gemini models
       capital: 500,               // $500M (Google money!)
@@ -85,7 +93,8 @@ export function initializeOrganizations(): Organization[] {
       partnerships: new Map([['anthropic', 0.7]]),
       governmentRelations: 0.6,   // Moderate (antitrust concerns)
       foundingMonth: -180,        // ~15 years ago (DeepMind 2010)
-      reputation: 0.75
+      reputation: 0.75,
+      bankrupt: false            // TIER 1.7.3: Track bankruptcy
     },
     
     // Meta AI
@@ -93,6 +102,8 @@ export function initializeOrganizations(): Organization[] {
       id: 'meta',
       name: 'Meta AI',
       type: 'private',
+      country: 'United States',      // TIER 1.7.3: Menlo Park CA
+      survivalThreshold: 0.5,        // Needs 50% of US peak population
       ownedDataCenters: [],       // Will be linked: ['meta_oregon']
       ownedAIModels: [],          // Will link Llama models
       capital: 400,               // $400M (Facebook money)
@@ -110,7 +121,8 @@ export function initializeOrganizations(): Organization[] {
       partnerships: new Map(),    // More isolated
       governmentRelations: 0.4,   // Poor (regulatory scrutiny, privacy issues)
       foundingMonth: -144,        // ~12 years ago (FAIR 2013)
-      reputation: 0.6
+      reputation: 0.6,
+      bankrupt: false            // TIER 1.7.3: Track bankruptcy
     },
     
     // Government AI Research Initiative
@@ -118,6 +130,8 @@ export function initializeOrganizations(): Organization[] {
       id: 'government_ai',
       name: 'National AI Research Initiative',
       type: 'government',
+      country: 'United States',      // TIER 1.7.3: Government facility
+      survivalThreshold: 0.3,        // More resilient - only needs 30% of population
       ownedDataCenters: [],       // Will be linked: ['nist_facility']
       ownedAIModels: [],          // No models initially (gov doesn't build competitive AIs)
       capital: 200,               // $200M taxpayer funded
@@ -139,7 +153,8 @@ export function initializeOrganizations(): Organization[] {
       ]),
       governmentRelations: 1.0,   // IS the government
       foundingMonth: -12,         // ~1 year ago (Jan 2024)
-      reputation: 0.5             // Neutral public perception
+      reputation: 0.5,            // Neutral public perception
+      bankrupt: false            // TIER 1.7.3: Track bankruptcy
     },
     
     // Academic AI Consortium
@@ -147,6 +162,8 @@ export function initializeOrganizations(): Organization[] {
       id: 'academic_consortium',
       name: 'Academic AI Consortium',
       type: 'academic',
+      country: 'Multi-national',     // TIER 1.7.3: Global university network
+      survivalThreshold: 0.2,        // Most resilient - distributed globally
       ownedDataCenters: [],       // Will be linked: ['stanford_cluster']
       ownedAIModels: [],          // Will link academic models
       capital: 20,                // $20M (grant funding, always underfunded)
@@ -168,7 +185,8 @@ export function initializeOrganizations(): Organization[] {
       ]),
       governmentRelations: 0.9,   // Very good (grants, collaboration)
       foundingMonth: -240,        // ~20 years ago (many universities)
-      reputation: 0.9             // High public trust
+      reputation: 0.9,            // High public trust
+      bankrupt: false            // TIER 1.7.3: Track bankruptcy
     }
   ];
 }
@@ -288,4 +306,98 @@ export function logOrganizationsState(state: GameState): void {
     console.log(`    Strategy: ${org.computeAllocationStrategy}`);
     console.log(`    Priorities: profit=${org.priorities.profitMaximization.toFixed(1)}, safety=${org.priorities.safetyResearch.toFixed(1)}, open=${org.priorities.openScience.toFixed(1)}, race=${org.priorities.capabilityRace.toFixed(1)}`);
   });
+}
+
+/**
+ * TIER 1.7.3: Check organization viability based on host country population
+ * 
+ * Organizations collapse when their host country's population drops below survival threshold.
+ * This links AI organization survival to human population health - more realistic!
+ * 
+ * Research backing:
+ * - Organizations require intact labor markets, supply chains, and customer base
+ * - Google is ~1% of US economy - can't function if US loses 70% of population
+ * - Academic consortiums more resilient (distributed globally)
+ * - Government orgs last longer (essential services)
+ * 
+ * @param state - Current game state
+ */
+export function updateOrganizationViability(state: GameState): void {
+  if (!state.countryPopulationSystem) return; // No country tracking yet
+  
+  const countries = state.countryPopulationSystem.countries;
+  const currentMonth = state.currentMonth;
+  
+  // Check each organization
+  for (const org of state.organizations) {
+    if (org.bankrupt) continue; // Already dead
+    
+    // Multi-national orgs check global population instead
+    if (org.country === 'Multi-national') {
+      const globalPopFraction = state.humanPopulationSystem.population / 
+                                state.humanPopulationSystem.baselinePopulation;
+      
+      if (globalPopFraction < org.survivalThreshold) {
+        org.bankrupt = true;
+        org.bankruptcyMonth = currentMonth;
+        org.bankruptcyReason = `Global population collapse (${(globalPopFraction * 100).toFixed(0)}% of baseline, needed ${(org.survivalThreshold * 100).toFixed(0)}%)`;
+        
+        console.log(`\n💀 ORGANIZATION COLLAPSE: ${org.name}`);
+        console.log(`   Reason: ${org.bankruptcyReason}`);
+        console.log(`   Month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
+      }
+      continue;
+    }
+    
+    // Check country-specific health
+    const country = countries[org.country];
+    if (!country) {
+      console.warn(`⚠️ Organization ${org.name} references unknown country: ${org.country}`);
+      continue;
+    }
+    
+    // Calculate population health (current / peak)
+    const popFraction = country.population / country.peakPopulation;
+    
+    // Check if country is depopulated (<100K people)
+    if (country.depopulated) {
+      org.bankrupt = true;
+      org.bankruptcyMonth = currentMonth;
+      org.bankruptcyReason = `${country.name} depopulated (population < 100K)`;
+      
+      console.log(`\n💀 ORGANIZATION COLLAPSE: ${org.name}`);
+      console.log(`   Reason: ${org.bankruptcyReason}`);
+      console.log(`   Depopulation month: ${country.depopulationMonth}`);
+      console.log(`   Current month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
+      continue;
+    }
+    
+    // Check if population dropped below survival threshold
+    if (popFraction < org.survivalThreshold) {
+      org.bankrupt = true;
+      org.bankruptcyMonth = currentMonth;
+      org.bankruptcyReason = `${country.name} population collapse (${(popFraction * 100).toFixed(0)}% of peak, needed ${(org.survivalThreshold * 100).toFixed(0)}%)`;
+      
+      console.log(`\n💀 ORGANIZATION COLLAPSE: ${org.name}`);
+      console.log(`   Country: ${country.name}`);
+      console.log(`   Population: ${country.population.toFixed(1)}M (peak: ${country.peakPopulation.toFixed(1)}M)`);
+      console.log(`   Health: ${(popFraction * 100).toFixed(0)}% (threshold: ${(org.survivalThreshold * 100).toFixed(0)}%)`);
+      console.log(`   Month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
+      
+      // Scale down revenue/expenses (org is shutting down)
+      org.monthlyRevenue = 0;
+      org.monthlyExpenses = 0;
+    }
+  }
+  
+  // Log bankruptcy statistics every 12 months
+  if (currentMonth % 12 === 0) {
+    const totalOrgs = state.organizations.length;
+    const bankruptOrgs = state.organizations.filter(o => o.bankrupt).length;
+    const survivalRate = ((totalOrgs - bankruptOrgs) / totalOrgs * 100).toFixed(0);
+    
+    if (bankruptOrgs > 0) {
+      console.log(`\n📊 ORGANIZATION SURVIVAL RATE: ${survivalRate}% (${totalOrgs - bankruptOrgs}/${totalOrgs} orgs alive)`);
+    }
+  }
 }

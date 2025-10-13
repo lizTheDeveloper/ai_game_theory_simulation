@@ -48,6 +48,7 @@ export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { CountryPopulationPhase } from './CountryPopulationPhase';
+export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { FamineSystemPhase } from './FamineSystemPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';

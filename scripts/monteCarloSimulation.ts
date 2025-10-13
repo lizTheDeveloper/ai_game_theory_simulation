@@ -300,6 +300,11 @@ interface RunResult {
   nuclearPowersSurviving: number;     // Nuclear powers still functioning
   aiHubsSurviving: number;            // AI development centers still functioning
   depopulationEvents: string[];       // List of countries that depopulated
+  
+  // === ORGANIZATION SURVIVAL (TIER 1.7.3) ===
+  organizationsBankrupt: number;      // Number of organizations that collapsed
+  organizationSurvivalRate: number;   // % of organizations still functioning
+  bankruptcyEvents: string[];         // List of orgs that went bankrupt (with reasons)
 }
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
@@ -590,8 +595,9 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const computeGrowthRate = initialCompute > 0 ? finalCompute / initialCompute : 1;
   
   // Organization metrics
+  // TIER 1.7.3: Updated to use bankrupt field instead of capital
   const privateOrgs = finalState.organizations.filter((o: any) => o.type === 'private');
-  const aliveOrgs = privateOrgs.filter((o: any) => o.capital > 0);
+  const aliveOrgs = privateOrgs.filter((o: any) => !o.bankrupt);  // Use bankrupt field
   const orgSurvivalRate = privateOrgs.length > 0 ? aliveOrgs.length / privateOrgs.length : 0;
   const orgBankruptcies = privateOrgs.length - aliveOrgs.length;
   const finalOrgsAlive = aliveOrgs.length;
@@ -813,6 +819,15 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const nuclearPowersSurviving = Math.max(0, countrySys.nuclearPowersSurviving); // FIX (Oct 13): Guard against negative
   const aiHubsSurviving = Math.max(0, countrySys.aiHubsSurviving); // FIX (Oct 13): Guard against negative
   const depopulationEvents = countrySys.depopulatedCountries.map(name => name);
+  
+  // Organization bankruptcy data (TIER 1.7.3)
+  const allOrgs = finalState.organizations;
+  const bankruptOrgs = allOrgs.filter((o: any) => o.bankrupt);
+  const organizationsBankrupt = bankruptOrgs.length;
+  const organizationSurvivalRate = allOrgs.length > 0 ? (allOrgs.length - organizationsBankrupt) / allOrgs.length : 1.0;
+  const bankruptcyEvents = bankruptOrgs.map((o: any) => 
+    `${o.name} (${o.country}, Month ${o.bankruptcyMonth}: ${o.bankruptcyReason})`
+  );
   
   // Map engine's outcome to reporting categories
   // FIX (Oct 13, 2025): Support new 7-tier system (status_quo, crisis_era, collapse, dark_age, bottleneck, terminal, extinction)
@@ -1058,7 +1073,12 @@ for (let i = 0; i < NUM_RUNS; i++) {
     countriesDepopulated,
     nuclearPowersSurviving,
     aiHubsSurviving,
-    depopulationEvents
+    depopulationEvents,
+    
+    // Organization Survival (TIER 1.7.3)
+    organizationsBankrupt,
+    organizationSurvivalRate,
+    bankruptcyEvents
   });
   
   // Progress indicator
@@ -1297,6 +1317,64 @@ if (Object.keys(countryDepopulationFrequency).length > 0) {
   });
 } else {
   log(`\n  ✅ NO COUNTRIES DEPOPULATED across all runs`);
+}
+
+// Organization Bankruptcy (TIER 1.7.3)
+log('\n\n' + '='.repeat(80));
+log('🏢 ORGANIZATION SURVIVAL');
+log('='.repeat(80));
+
+const avgOrgsBankrupt = results.reduce((sum, r) => sum + r.organizationsBankrupt, 0) / results.length;
+const avgOrgSurvivalRate = results.reduce((sum, r) => sum + r.organizationSurvivalRate, 0) / results.length;
+
+// Count frequency of each organization going bankrupt
+const orgBankruptcyFrequency: Record<string, { count: number; reasons: string[] }> = {};
+results.forEach(r => {
+  if (!r.bankruptcyEvents) return; // Guard against missing data
+  r.bankruptcyEvents.forEach((event: string) => {
+    // Parse event string: "OpenAI (United States, Month 42: United States population collapse...)"
+    const orgName = event.split(' (')[0];
+    if (orgName && orgName.trim().length > 0) { // Guard against empty string
+      if (!orgBankruptcyFrequency[orgName]) {
+        orgBankruptcyFrequency[orgName] = { count: 0, reasons: [] };
+      }
+      orgBankruptcyFrequency[orgName].count++;
+      
+      // Extract reason (after the colon)
+      const reason = event.split(': ')[1]?.split(')')[0] || 'Unknown';
+      if (reason && !orgBankruptcyFrequency[orgName].reasons.includes(reason)) {
+        orgBankruptcyFrequency[orgName].reasons.push(reason);
+      }
+    }
+  });
+});
+
+log(`\n  SURVIVAL SUMMARY:`);
+log(`    Organizations Bankrupt (avg): ${avgOrgsBankrupt.toFixed(1)} / 6`);
+log(`    Survival Rate (avg): ${(avgOrgSurvivalRate * 100).toFixed(0)}%`);
+
+if (avgOrgSurvivalRate < 1.0) {
+  log(`\n  ⚠️  Organizations now collapse when host countries depopulate`);
+  log(`     This links AI capability to human population health`);
+} else {
+  log(`\n  ✅ ALL ORGANIZATIONS SURVIVED across all runs`);
+}
+
+if (Object.keys(orgBankruptcyFrequency).length > 0) {
+  log(`\n  ORGANIZATIONS THAT WENT BANKRUPT:`);
+  const sortedOrgs = Object.entries(orgBankruptcyFrequency)
+    .sort((a, b) => b[1].count - a[1].count);
+  sortedOrgs.forEach(([org, data]) => {
+    const frequency = (data.count / results.length) * 100;
+    const frequencyStr = frequency.toFixed(0);
+    log(`    ${org}: ${data.count}/${results.length} runs (${frequencyStr}%)`);
+    // Show most common reason
+    if (data.reasons.length > 0) {
+      log(`      Reason: ${data.reasons[0]}`);
+    }
+  });
+} else {
+  log(`\n  ✅ NO ORGANIZATIONS WENT BANKRUPT across all runs`);
 }
 
 // Crisis summary by run
@@ -1927,7 +2005,7 @@ if (avgOrgSurvival < 0.5) {
     log(`\n    ⚠️  Organizations thriving despite ${avgDecline.toFixed(0)}% human mortality!`);
     log(`       Check revenue penalties and bankruptcy logic.`);
   } else {
-    log(`\n    ✅ Excellent: Organizations are thriving!`);
+  log(`\n    ✅ Excellent: Organizations are thriving!`);
   }
 }
 
@@ -1953,7 +2031,7 @@ if (avgFinalCompute < 3000) {
     log(`\n    ⚠️  Exceptional compute despite ${avgDecline.toFixed(0)}% mortality`);
     log(`       Who's maintaining the data centers?`);
   } else {
-    log(`\n    ⚡ Exceptional compute growth! Infrastructure boom.`);
+  log(`\n    ⚡ Exceptional compute growth! Infrastructure boom.`);
   }
 }
 
@@ -1974,7 +2052,7 @@ if (avgRevExpRatio < 1.0) {
     log(`\n    ⚠️  ${avgRevExpRatio.toFixed(0)}x profit margin while ${avgDecline.toFixed(0)}% of customers died!`);
     log(`       Revenue should drop proportionally to population.`);
   } else {
-    log(`\n    💰 Highly profitable! Organizations accumulating wealth.`);
+  log(`\n    💰 Highly profitable! Organizations accumulating wealth.`);
   }
 }
 
