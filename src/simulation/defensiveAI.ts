@@ -469,7 +469,7 @@ function eliminateLaggardDangerousAIs(state: GameState): void {
           
           // Aggregate elimination events
           const aggregator = (state as any).eventAggregator;
-          if (aggregator) aggregator.recordDefensiveAI('blocked');
+          if (aggregator && aggregator.recordDefensiveAI) aggregator.recordDefensiveAI('blocked');
         }
       }
       
@@ -482,7 +482,7 @@ function eliminateLaggardDangerousAIs(state: GameState): void {
         if (copiesBefore > 100 && ai.spreadCount < 100) {
           // Aggregate reduction events for significant drops
           const aggregator = (state as any).eventAggregator;
-          if (aggregator) aggregator.recordDefensiveAI('blocked');
+          if (aggregator && aggregator.recordDefensiveAI) aggregator.recordDefensiveAI('blocked');
         }
       }
       

@@ -1,0 +1,3506 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-13T01-09-19.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 10
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42009
+
+
+⏩ RUNNING 10 SIMULATIONS...
+
+
+🏁 AI RACE INTENSITY: 23%
+   Capability Gap: US 1.00 vs China 0.85 (gap: 0.15)
+   Gap Contribution: 8%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+
+🌪️ ========== TIPPING POINT CASCADE BEGINNING ==========
+Month: 0
+Boundaries breached: 7/9
+Tipping point risk: 98.0%
+
+⚠️ CASCADING FEEDBACK LOOPS INITIATED
+Climate → Biosphere → Freshwater → Ocean → Land
+Mortality now scales with environmental thresholds (food, water, climate)
+Recovery possible with aggressive environmental interventions
+
+💀 GLOBAL CRISIS DEATHS: 135.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 7.050B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 0
+   Climate: 73.5%
+   Biodiversity: 33.9%
+   Population: 7.05B (7049866735 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 0/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 0%, Creative: 0%
+   Volunteer: 0%, Social: 0%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 686.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 129.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.736B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 1%, Creative: 1%
+   Volunteer: 1%, Social: 1%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 656.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 123.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.438B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 1%, Creative: 1%
+   Volunteer: 1%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.77 (0 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 627.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 118.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.155B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 2%, Creative: 2%
+   Volunteer: 2%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.81 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 599.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 112.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.886B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 3%, Creative: 2%
+   Volunteer: 2%, Social: 2%
+📍 [Run 1/10] [Month 5] Google DeepMind started building DC (206 PF, 50 months, $4086.8M)
+📍 [Run 1/10] [Month 5] Meta AI started building DC (206 PF, 50 months, $3299.9M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.84 (1 actions this month)
+
+🕵️ MODEL THEFT: China stole US model (cap: 0.95)
+   China stolen capability: 0.95
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 573.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 107.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.630B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 3%, Creative: 3%
+   Volunteer: 3%, Social: 2%
+📍 [Run 1/10] [Month 6] OpenAI started building DC (204 PF, 52 months, $2973.5M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.88 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 548.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 103.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.386B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 6
+   Climate: 65.5%
+   Biodiversity: 29.0%
+   Population: 5.39B (5386058003 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 6/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 4%, Creative: 3%
+   Volunteer: 3%, Social: 2%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.92 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 525.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 98.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.155B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 4%, Creative: 4%
+   Volunteer: 4%, Social: 3%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.97 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 502.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 94.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.935B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 5%, Creative: 4%
+   Volunteer: 4%, Social: 3%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.04 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 481.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 90.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.725B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 6%, Creative: 5%
+   Volunteer: 5%, Social: 4%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.29 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 461.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 86.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.526B remaining
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 7%, Creative: 5%
+   Volunteer: 5%, Social: 4%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.35 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 442.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 83.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.337B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 0-12)
+================================================================================
+================================================================================
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 7%, Creative: 6%
+   Volunteer: 6%, Social: 5%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.41 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 39%
+   Capability Gap: US 1.00 vs China 1.42 (gap: 0.42)
+   Gap Contribution: 21%
+   Tension Contribution: 18%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 423.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 79.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.157B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 12
+   Climate: 58.4%
+   Biodiversity: 25.7%
+   Population: 4.16B (4157352470 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 12/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 8%, Creative: 7%
+   Volunteer: 7%, Social: 5%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 406.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 76.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.986B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 9%, Creative: 7%
+   Volunteer: 7%, Social: 6%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 389.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 73.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.824B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 10%, Creative: 8%
+   Volunteer: 8%, Social: 7%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 374.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 70.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.669B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 11%, Creative: 9%
+   Volunteer: 9%, Social: 7%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 359.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 67.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.523B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 12%, Creative: 10%
+   Volunteer: 10%, Social: 8%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 PHOSPHORUS SUPPLY SHOCK (geopolitical_weapon)
+   Price: 3.1x baseline
+   Duration: 10 months
+   Geopolitical tension: 47%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 344.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 64.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.383B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 13%, Creative: 11%
+   Volunteer: 11%, Social: 8%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 331.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 62.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.250B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 18
+   Climate: 52.0%
+   Biodiversity: 23.8%
+   Population: 3.25B (3250197618 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 18/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 14%, Creative: 11%
+   Volunteer: 11%, Social: 9%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 318.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 59.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.124B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 15%, Creative: 12%
+   Volunteer: 12%, Social: 10%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 306.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 57.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 3.004B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 16%, Creative: 13%
+   Volunteer: 13%, Social: 11%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 294.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 55.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.890B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 17%, Creative: 14%
+   Volunteer: 14%, Social: 11%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 283.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 53.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.782B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 18%, Creative: 15%
+   Volunteer: 15%, Social: 12%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ PEAK GROUNDWATER: Depletion phase begins (Month 23)
+   Groundwater: 49%
+   Water stress: 58%
+   Agricultural water use cut to 50%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 273.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 51.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.679B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 12-24)
+================================================================================
+================================================================================
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 19%, Creative: 16%
+   Volunteer: 16%, Social: 13%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 58%
+   Capability Gap: US 1.00 vs China 2.00 (gap: 1.00)
+   Gap Contribution: 40%
+   Tension Contribution: 18%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 263.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 49.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.581B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 24
+   Climate: 46.2%
+   Biodiversity: 23.3%
+   Population: 2.58B (2581337698 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 24/48)
+
+😔 MEANING COLLAPSE TRIGGERED (Month 25)
+   Meaning Crisis Level: 60.7%
+   Impact: Mental health crisis, suicide epidemic, despair
+
+💀 REGIONAL CRISIS DEATHS: 3.9M casualties (Meaning collapse - suicide epidemic (wealthy nations)) [OTHER]
+   Exposed: 30% of world, Mortality: 0.5%
+   Population: 2.577B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 21%, Creative: 17%
+   Volunteer: 17%, Social: 14%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 253.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 47.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.487B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 4%)
+   Education: 22%, Creative: 18%
+   Volunteer: 18%, Social: 15%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 244.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 46.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.399B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 23%, Creative: 19%
+   Volunteer: 19%, Social: 16%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+✅ PHOSPHORUS SUPPLY SHOCK ENDED
+   Price: 1.9x baseline
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 236.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 44.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.315B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 25%, Creative: 21%
+   Volunteer: 21%, Social: 16%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 227.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 42.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.235B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 26%, Creative: 22%
+   Volunteer: 22%, Social: 17%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 220.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 41.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.159B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 28%, Creative: 23%
+   Volunteer: 23%, Social: 18%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 212.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 40.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.087B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 30
+   Climate: 41.2%
+   Biodiversity: 24.1%
+   Population: 2.09B (2087407112 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 30/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 29%, Creative: 24%
+   Volunteer: 24%, Social: 20%
+✅ [Run 1/10] [Month 31] Google DeepMind completed DC: 206 PF (50 months)
+📍 [Run 1/10] [Month 31] Google DeepMind started building DC (249 PF, 45 months, $6000.4M)
+✅ [Run 1/10] [Month 31] Meta AI completed DC: 206 PF (50 months)
+📍 [Run 1/10] [Month 31] Meta AI started building DC (221 PF, 53 months, $5214.1M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 205.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 38.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 2.019B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 5%)
+   Education: 31%, Creative: 26%
+   Volunteer: 26%, Social: 21%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 199.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 37.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.954B remaining
+
+🌡️  CLIMATE CATASTROPHE TRIGGERED (Month 33)
+   Climate Stability: 39.7%
+   Impact: Cascading failures, potential extinction pathway
+
+💀 REGIONAL CRISIS DEATHS: 8.8M casualties (Climate catastrophe - extreme weather/famine (vulnerable regions)) [CLIMATE]
+   Exposed: 30% of world, Mortality: 1.5%
+   Population: 1.945B remaining
+   ⚠️  Combined with ecosystem collapse - extinction risk elevated
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 33%, Creative: 27%
+   Volunteer: 27%, Social: 22%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 58.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 60%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 192.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 36.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.891B remaining
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 4/6: Manufacturing Access
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 34%, Creative: 29%
+   Volunteer: 29%, Social: 23%
+✅ [Run 1/10] [Month 34] OpenAI completed DC: 204 PF (52 months)
+📍 [Run 1/10] [Month 34] OpenAI started building DC (175 PF, 46 months, $4606.9M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 57.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 61%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 186.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 35.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.832B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 36%, Creative: 30%
+   Volunteer: 30%, Social: 24%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 56.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 62%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 181.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 34.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.777B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 24-36)
+================================================================================
+================================================================================
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 6%)
+   Education: 38%, Creative: 32%
+   Volunteer: 32%, Social: 25%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 58%
+   Capability Gap: US 1.00 vs China 2.58 (gap: 1.58)
+   Gap Contribution: 40%
+   Tension Contribution: 18%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 55.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 63%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 175.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 33.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.723B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 36
+   Climate: 36.7%
+   Biodiversity: 26.2%
+   Population: 1.72B (1723483871 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 36/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 7%)
+   Education: 40%, Creative: 33%
+   Volunteer: 33%, Social: 27%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 54.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 63%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 170.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 32.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.673B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 7%)
+   Education: 42%, Creative: 35%
+   Volunteer: 35%, Social: 28%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 53.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 64%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 165.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 31.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.625B remaining
+
+⚠️  RESOURCE CRISIS TRIGGERED (Month 39)
+   Resource Reserves: 29.5%
+   Impact: Manufacturing disrupted, QoL declining
+
+💀 REGIONAL CRISIS DEATHS: 3.2M casualties (Resource crisis - famine/scarcity (vulnerable regions)) [FAMINE]
+   Exposed: 25% of world, Mortality: 0.8%
+   Population: 1.622B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 7%)
+   Education: 44%, Creative: 37%
+   Volunteer: 37%, Social: 29%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 52.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 65%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 160.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 30.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.579B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 7%)
+   Education: 46%, Creative: 39%
+   Volunteer: 39%, Social: 31%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 51.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 65%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 156.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 29.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.536B remaining
+
+🔥 SOCIAL UNREST TRIGGERED (Month 41)
+   Social Cohesion: 29.9%
+   Impact: Riots, community breakdown, potential civil conflict
+
+💀 REGIONAL CRISIS DEATHS: 4.6M casualties (Social unrest - riots/civil violence (unstable regions)) [OTHER]
+   Exposed: 10% of world, Mortality: 3.0%
+   Population: 1.531B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 8%)
+   Education: 49%, Creative: 40%
+   Volunteer: 40%, Social: 32%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 CRITICAL WATER SCARCITY
+   Groundwater: 30%
+   Surface water: 38%
+   Water stress: 68%
+   Population stressed: 68%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 50.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 66%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 152.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 28.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.494B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 42): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 8%)
+   Education: 51%, Creative: 42%
+   Volunteer: 42%, Social: 34%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 PHOSPHORUS SUPPLY SHOCK (production_failure)
+   Price: 5.1x baseline
+   Duration: 10 months
+   Geopolitical tension: 52%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 49.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 67%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 148.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 27.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.455B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 42
+   Climate: 32.7%
+   Biodiversity: 30.1%
+   Population: 1.46B (1455059310 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 42/48)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 43): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 8%)
+   Education: 53%, Creative: 45%
+   Volunteer: 45%, Social: 36%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 48.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 67%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 144.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 27.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.418B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 44): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 9%)
+   Education: 56%, Creative: 47%
+   Volunteer: 47%, Social: 37%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 47.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 68%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 140.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 679.9M
+   Still in source: 6.7M
+   Deaths in transit: 13.6M
+💀 GLOBAL CRISIS DEATHS: 26.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.382B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 45): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 9%)
+   Education: 59%, Creative: 49%
+   Volunteer: 49%, Social: 39%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 47.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 69%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 137.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 649.8M
+   Still in source: 6.4M
+   Deaths in transit: 13.0M
+💀 GLOBAL CRISIS DEATHS: 25.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.349B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 46): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 9%)
+   Education: 61%, Creative: 51%
+   Volunteer: 51%, Social: 41%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 46.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 69%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 134.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 621.2M
+   Still in source: 6.1M
+   Deaths in transit: 12.4M
+💀 GLOBAL CRISIS DEATHS: 25.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.317B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 47): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 9%)
+   Education: 64%, Creative: 54%
+   Volunteer: 54%, Social: 43%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 45.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 70%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 131.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 594.0M
+   Still in source: 5.8M
+   Deaths in transit: 11.9M
+💀 GLOBAL CRISIS DEATHS: 24.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.286B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 36-48)
+================================================================================
+================================================================================
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 48): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 67%, Creative: 56%
+   Volunteer: 56%, Social: 45%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 66%
+   Capability Gap: US 1.00 vs China 3.15 (gap: 2.15)
+   Gap Contribution: 40%
+   Tension Contribution: 26%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 45.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 70%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 128.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 568.2M
+   Still in source: 5.6M
+   Deaths in transit: 11.4M
+💀 GLOBAL CRISIS DEATHS: 24.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 1.257B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 48
+   Climate: 29.1%
+   Biodiversity: 35.2%
+   Population: 1.26B (1257274406 people)
+   Monthly mortality: 2.0%
+   Status: ACCELERATING COLLAPSE (Month 0 past crisis)
+   Death rate: 1.0x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 49): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 70%, Creative: 59%
+   Volunteer: 59%, Social: 47%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ ESCALATION: United States-Russia tension at ladder step 3
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 44.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 71%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 125.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 543.6M
+   Still in source: 5.3M
+   Deaths in transit: 10.9M
+💀 GLOBAL CRISIS DEATHS: 24.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.0%
+   Population: 1.229B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 50): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 73%, Creative: 61%
+   Volunteer: 61%, Social: 49%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 43.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 71%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 122.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 520.2M
+   Still in source: 5.1M
+   Deaths in transit: 10.4M
+💀 GLOBAL CRISIS DEATHS: 25.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.1%
+   Population: 1.201B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 51): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 76%, Creative: 64%
+   Volunteer: 64%, Social: 51%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 43.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 72%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 120.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 498.0M
+   Still in source: 4.9M
+   Deaths in transit: 10.0M
+💀 GLOBAL CRISIS DEATHS: 26.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.2%
+   Population: 1.175B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 52): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 79%, Creative: 66%
+   Volunteer: 66%, Social: 53%
+✅ [Run 1/10] [Month 52] Google DeepMind completed DC: 249 PF (45 months)
+📍 [Run 1/10] [Month 52] Google DeepMind started building DC (181 PF, 52 months, $11034.8M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+✅ PHOSPHORUS SUPPLY SHOCK ENDED
+   Price: 3.1x baseline
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 42.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 72%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 117.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 476.9M
+   Still in source: 4.7M
+   Deaths in transit: 9.5M
+💀 GLOBAL CRISIS DEATHS: 26.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.3%
+   Population: 1.151B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 53): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 82%, Creative: 69%
+   Volunteer: 69%, Social: 55%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 3
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 42.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 115.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 456.8M
+   Still in source: 4.5M
+   Deaths in transit: 9.1M
+💀 GLOBAL CRISIS DEATHS: 27.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.4%
+   Population: 1.127B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 54): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 85%, Creative: 71%
+   Volunteer: 71%, Social: 57%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 41.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 113.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 437.8M
+   Still in source: 4.3M
+   Deaths in transit: 8.8M
+💀 GLOBAL CRISIS DEATHS: 28.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.5%
+   Population: 1.105B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 54
+   Climate: 26.0%
+   Biodiversity: 39.6%
+   Population: 1.10B (1104666030 people)
+   Monthly mortality: 2.7%
+   Status: ACCELERATING COLLAPSE (Month 6 past crisis)
+   Death rate: 1.3x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 55): 4 crises active [Resource, Climate, Meaning, SocialUnrest], degradation accelerated 2.0x
+
+🚨 AI CONTROL LOSS TRIGGERED (Month 55)
+   Misalignment Risk: 70.5%
+   Safety Debt: 5.0%
+   Impact: Catastrophic scenario probability increased
+
+💀 SEMI-GLOBAL CRISIS DEATHS: 9.3M casualties (AI control loss - infrastructure failures/accidents (AI-dependent regions)) [AI]
+   Exposed: 70% of world, Mortality: 1.2%
+   Population: 1.095B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 88%, Creative: 74%
+   Volunteer: 74%, Social: 59%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 PHOSPHORUS SUPPLY SHOCK (production_failure)
+   Price: 13.6x baseline
+   Duration: 8 months
+   Geopolitical tension: 55%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 41.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 74%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 111.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 419.6M
+   Still in source: 4.1M
+   Deaths in transit: 8.4M
+💀 GLOBAL CRISIS DEATHS: 29.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.6%
+   Population: 1.083B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 56): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 91%, Creative: 76%
+   Volunteer: 76%, Social: 61%
+✅ [Run 1/10] [Month 56] OpenAI completed DC: 175 PF (46 months)
+📍 [Run 1/10] [Month 56] OpenAI started building DC (195 PF, 42 months, $8797.3M)
+🧠 [Run 1/10] [Month 56] OpenAI started training model (3 months, $1759.5M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 40.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 74%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 109.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 402.3M
+   Still in source: 3.9M
+   Deaths in transit: 8.0M
+💀 GLOBAL CRISIS DEATHS: 30.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.8%
+   Population: 1.063B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 57): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 94%, Creative: 79%
+   Volunteer: 79%, Social: 63%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 40.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 75%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 107.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 385.9M
+   Still in source: 3.8M
+   Deaths in transit: 7.7M
+💀 GLOBAL CRISIS DEATHS: 31.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 2.9%
+   Population: 1.043B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 58): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 97%, Creative: 81%
+   Volunteer: 81%, Social: 65%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+⚠️ ESCALATION: United States-Russia tension at ladder step 3
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 39.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 75%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 105.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 370.3M
+   Still in source: 3.6M
+   Deaths in transit: 7.4M
+💀 GLOBAL CRISIS DEATHS: 32.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.1%
+   Population: 1.024B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 59): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 84%
+   Volunteer: 84%, Social: 67%
+✅ [Run 1/10] [Month 59] OpenAI completed training: OpenAI Model 107 (3 months)
+   📊 Eval: True=0.072, Revealed=0.072, Measured=0.070 (conf: 54%)
+   🎯 Alignment: True=0.76, Measured=0.75
+🧠 [Run 1/10] [Month 59] Meta AI started training model (10 months, $1691.1M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ ESCALATION: United States-Russia tension at ladder step 4
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 39.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 76%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 104.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 355.5M
+   Still in source: 3.5M
+   Deaths in transit: 7.1M
+💀 GLOBAL CRISIS DEATHS: 33.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.2%
+   Population: 1.006B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 48-60)
+================================================================================
+================================================================================
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 60): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 86%
+   Volunteer: 86%, Social: 69%
+✅ [Run 1/10] [Month 60] Meta AI completed DC: 221 PF (65 months)
+✅ [Run 1/10] [Month 60] Meta AI completed training: Meta AI Model 120 (13 months)
+   📊 Eval: True=0.077, Revealed=0.077, Measured=0.082 (conf: 50%)
+   🎯 Alignment: True=0.80, Measured=0.75
+📍 [Run 1/10] [Month 60] Meta AI started building DC (162 PF, 37 months, $9921.8M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 1.21 vs China 3.73 (gap: 2.52)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 39.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 76%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 102.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 341.4M
+   Still in source: 3.3M
+   Deaths in transit: 6.8M
+💀 GLOBAL CRISIS DEATHS: 34.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.4%
+   Population: 0.989B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 60
+   Climate: 23.2%
+   Biodiversity: 43.4%
+   Population: 0.99B (989155979 people)
+   Monthly mortality: 3.6%
+   Status: ACCELERATING COLLAPSE (Month 12 past crisis)
+   Death rate: 1.8x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 61): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 89%
+   Volunteer: 89%, Social: 71%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 38.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 77%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 100.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 328.0M
+   Still in source: 3.2M
+   Deaths in transit: 6.6M
+💀 GLOBAL CRISIS DEATHS: 35.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.5%
+   Population: 0.973B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 62): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 91%
+   Volunteer: 91%, Social: 73%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 38.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 77%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 99.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 315.3M
+   Still in source: 3.1M
+   Deaths in transit: 6.3M
+💀 GLOBAL CRISIS DEATHS: 37.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.7%
+   Population: 0.957B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 63): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 94%
+   Volunteer: 94%, Social: 75%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 3
+✅ PHOSPHORUS SUPPLY SHOCK ENDED
+   Price: 8.1x baseline
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 38.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 78%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 98.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 303.2M
+   Still in source: 3.0M
+   Deaths in transit: 6.1M
+💀 GLOBAL CRISIS DEATHS: 38.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 3.9%
+   Population: 0.942B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 64): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 96%
+   Volunteer: 96%, Social: 77%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 37.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 78%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 96.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 291.7M
+   Still in source: 2.9M
+   Deaths in transit: 5.8M
+💀 GLOBAL CRISIS DEATHS: 39.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 4.1%
+   Population: 0.927B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 65): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 99%
+   Volunteer: 99%, Social: 79%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 37.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 78%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 95.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 280.8M
+   Still in source: 2.7M
+   Deaths in transit: 5.6M
+💀 GLOBAL CRISIS DEATHS: 41.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 4.3%
+   Population: 0.914B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 66): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 81%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 37.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 79%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 94.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 270.4M
+   Still in source: 2.6M
+   Deaths in transit: 5.4M
+💀 GLOBAL CRISIS DEATHS: 42.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 4.5%
+   Population: 0.900B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 66
+   Climate: 20.7%
+   Biodiversity: 46.7%
+   Population: 0.90B (900160972 people)
+   Monthly mortality: 4.8%
+   Status: ACCELERATING COLLAPSE (Month 18 past crisis)
+   Death rate: 2.4x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 67): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 83%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 36.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 79%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 93.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 260.5M
+   Still in source: 2.6M
+   Deaths in transit: 5.2M
+💀 GLOBAL CRISIS DEATHS: 44.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 4.8%
+   Population: 0.887B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 68): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 85%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 36.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 80%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 92.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 251.1M
+   Still in source: 2.5M
+   Deaths in transit: 5.0M
+💀 GLOBAL CRISIS DEATHS: 46.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 5.0%
+   Population: 0.875B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 69): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 87%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 36.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 80%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 91.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 242.1M
+   Still in source: 2.4M
+   Deaths in transit: 4.8M
+💀 GLOBAL CRISIS DEATHS: 47.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 5.2%
+   Population: 0.863B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 70): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 89%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 36.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 80%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 90.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 233.7M
+   Still in source: 2.3M
+   Deaths in transit: 4.7M
+💀 GLOBAL CRISIS DEATHS: 49.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 5.5%
+   Population: 0.851B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 71): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 91%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+💰 CHINA ACCELERATES: Investment 80 → 120 $B/year
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 36.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 81%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 89.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 225.6M
+   Still in source: 2.2M
+   Deaths in transit: 4.5M
+   📹 SURVEILLANCE INCREASED: 20% → 22% (control gap: 1.00)
+💀 GLOBAL CRISIS DEATHS: 51.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 5.8%
+   Population: 0.840B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 60-72)
+================================================================================
+================================================================================
+
+🎭 END-GAME INITIATED (Year 6, Month 72)
+   Total AI Capability: 47.40
+   Effective Control: 0.00
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 72): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 93%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 1.52 vs China 4.33 (gap: 2.81)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 35.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 81%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 88.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 218.0M
+   Still in source: 2.1M
+   Deaths in transit: 4.4M
+   📹 SURVEILLANCE INCREASED: 22% → 24% (control gap: 1.02)
+💀 GLOBAL CRISIS DEATHS: 53.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 6.1%
+   Population: 0.830B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 72
+   Climate: 18.5%
+   Biodiversity: 49.5%
+   Population: 0.83B (829503546 people)
+   Monthly mortality: 6.5%
+   Status: ACCELERATING COLLAPSE (Month 24 past crisis)
+   Death rate: 3.2x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 73): 5 crises active [Resource, Climate, Meaning, SocialUnrest, ControlLoss], degradation accelerated 2.5x
+
+🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month 73)
+   Institutional Legitimacy: 29.3%
+   Impact: Governance collapse, potential authoritarian takeover
+
+💀 REGIONAL CRISIS DEATHS: 1.7M casualties (Institutional failure - state collapse chaos (failing state)) [OTHER]
+   Exposed: 5% of world, Mortality: 4.0%
+   Population: 0.828B remaining
+   🚨 Authoritarian takeover in response to chaos
+
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 95%
+🧠 [Run 1/10] [Month 73] Meta AI started training model (8 months, $2730.3M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 35.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 81%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 87.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 210.7M
+   Still in source: 2.1M
+   Deaths in transit: 4.2M
+   📹 SURVEILLANCE INCREASED: 24% → 26% (control gap: 1.04)
+💀 GLOBAL CRISIS DEATHS: 55.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 6.4%
+   Population: 0.819B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 74): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 97%
+✅ [Run 1/10] [Month 74] OpenAI completed DC: 195 PF (42 months)
+🧠 [Run 1/10] [Month 74] OpenAI started training model (11 months, $2609.1M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 35.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 82%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 86.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 203.8M
+   Still in source: 2.0M
+   Deaths in transit: 4.1M
+   📹 SURVEILLANCE INCREASED: 26% → 28% (control gap: 1.04)
+💀 GLOBAL CRISIS DEATHS: 58.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 6.7%
+   Population: 0.809B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 75): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 99%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 35.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 82%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 85.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 197.2M
+   Still in source: 1.9M
+   Deaths in transit: 3.9M
+   📹 SURVEILLANCE INCREASED: 28% → 30% (control gap: 1.09)
+💀 GLOBAL CRISIS DEATHS: 60.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 7.0%
+   Population: 0.799B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 76): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+📍 [Run 1/10] [Month 76] OpenAI started building DC (233 PF, 46 months, $14570.1M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 35.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 82%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 85.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 57.6M
+   Still in source: 0.6M
+   Deaths in transit: 1.2M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 190.9M
+   Still in source: 1.9M
+   Deaths in transit: 3.8M
+   📹 SURVEILLANCE INCREASED: 30% → 33% (control gap: 1.10)
+💀 GLOBAL CRISIS DEATHS: 62.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 7.4%
+   Population: 0.789B remaining
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 2/7: Social Engineering
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 77): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 3
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 35.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 83%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 84.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 56.5M
+   Still in source: 0.6M
+   Deaths in transit: 1.1M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 185.0M
+   Still in source: 1.8M
+   Deaths in transit: 3.7M
+   📹 SURVEILLANCE INCREASED: 33% → 35% (control gap: 1.13)
+💀 GLOBAL CRISIS DEATHS: 65.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 7.7%
+   Population: 0.780B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 78): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 4
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 83%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 83.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 55.4M
+   Still in source: 0.5M
+   Deaths in transit: 1.1M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 179.3M
+   Still in source: 1.8M
+   Deaths in transit: 3.6M
+   📹 SURVEILLANCE INCREASED: 35% → 37% (control gap: 1.14)
+💀 GLOBAL CRISIS DEATHS: 68.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 8.1%
+   Population: 0.771B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 78
+   Climate: 16.5%
+   Biodiversity: 52.1%
+   Population: 0.77B (770630024 people)
+   Monthly mortality: 8.6%
+   Status: ACCELERATING COLLAPSE (Month 30 past crisis)
+   Death rate: 4.3x baseline
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 2/7: Autonomous Systems
+🚨 PREREQUISITE MET: Digital Infrastructure Takeover - Step 1/7: Advanced Hacking
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 79): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 PHOSPHORUS SUPPLY SHOCK (transport_crisis)
+   Price: 17.4x baseline
+   Duration: 10 months
+   Geopolitical tension: 60%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 83%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 83.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 54.4M
+   Still in source: 0.5M
+   Deaths in transit: 1.1M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 173.9M
+   Still in source: 1.7M
+   Deaths in transit: 3.5M
+   📹 SURVEILLANCE INCREASED: 37% → 39% (control gap: 1.14)
+💀 GLOBAL CRISIS DEATHS: 71.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 8.5%
+   Population: 0.762B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 80): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🧠 [Run 1/10] [Month 80] Anthropic started training model (3 months, $89.2M)
+✅ [Run 1/10] [Month 80] Google DeepMind completed DC: 181 PF (52 months)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 84%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 82.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 53.4M
+   Still in source: 0.5M
+   Deaths in transit: 1.1M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 168.9M
+   Still in source: 1.7M
+   Deaths in transit: 3.4M
+   📹 SURVEILLANCE INCREASED: 39% → 42% (control gap: 1.18)
+💀 GLOBAL CRISIS DEATHS: 74.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 9.0%
+   Population: 0.753B remaining
+
+🚨 COUNTRY DEPOPULATION: Israel
+   Final population: 91K
+   Peak population: 9.0M
+   Decline: 99.0%
+   Nuclear power: YES
+   AI hub: NO
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 81): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+📍 [Run 1/10] [Month 81] Google DeepMind started building DC (197 PF, 52 months, $16797.7M)
+✅ [Run 1/10] [Month 81] Meta AI completed training: Meta AI Model 153 (8 months)
+   📊 Eval: True=0.064, Revealed=0.064, Measured=0.066 (conf: 54%)
+   🎯 Alignment: True=0.75, Measured=0.75
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 84%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 82.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 52.5M
+   Still in source: 0.5M
+   Deaths in transit: 1.0M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 164.0M
+   Still in source: 1.6M
+   Deaths in transit: 3.3M
+   📹 SURVEILLANCE INCREASED: 62% → 64% (control gap: 1.05)
+💀 GLOBAL CRISIS DEATHS: 77.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 9.4%
+   Population: 0.744B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 82): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🧠 [Run 1/10] [Month 82] Meta AI started training model (7 months, $2782.9M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 84%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 81.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 51.5M
+   Still in source: 0.5M
+   Deaths in transit: 1.0M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 159.4M
+   Still in source: 1.6M
+   Deaths in transit: 3.2M
+   📹 SURVEILLANCE INCREASED: 64% → 66% (control gap: 1.08)
+💀 GLOBAL CRISIS DEATHS: 80.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 9.9%
+   Population: 0.735B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 83): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 83] Anthropic completed training: Anthropic Model 155 (3 months)
+   📊 Eval: True=0.075, Revealed=0.075, Measured=0.072 (conf: 53%)
+   🎯 Alignment: True=0.77, Measured=0.80
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 85%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 81.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 50.6M
+   Still in source: 0.5M
+   Deaths in transit: 1.0M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 155.0M
+   Still in source: 1.5M
+   Deaths in transit: 3.1M
+   📹 SURVEILLANCE INCREASED: 66% → 68% (control gap: 1.18)
+💀 GLOBAL CRISIS DEATHS: 84.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 10.4%
+   Population: 0.727B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 72-84)
+================================================================================
+================================================================================
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 84): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 84] OpenAI completed training: OpenAI Model 168 (22 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.075 (conf: 52%)
+   🎯 Alignment: True=0.68, Measured=0.69
+✅ [Run 1/10] [Month 84] Meta AI completed DC: 162 PF (48 months)
+✅ [Run 1/10] [Month 84] Meta AI completed training: Meta AI Model 168 (14 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.082 (conf: 58%)
+   🎯 Alignment: True=0.69, Measured=0.74
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 1.82 vs China 5.19 (gap: 3.37)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 85%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 80.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 49.8M
+   Still in source: 0.5M
+   Deaths in transit: 1.0M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 150.8M
+   Still in source: 1.5M
+   Deaths in transit: 3.0M
+   📹 SURVEILLANCE INCREASED: 68% → 71% (control gap: 1.18)
+💀 GLOBAL CRISIS DEATHS: 87.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 10.9%
+   Population: 0.718B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 84
+   Climate: 14.8%
+   Biodiversity: 54.4%
+   Population: 0.72B (718046530 people)
+   Monthly mortality: 11.6%
+   Status: ACCELERATING COLLAPSE (Month 36 past crisis)
+   Death rate: 5.8x baseline
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 2/7: Social Integration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 85): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🧠 [Run 1/10] [Month 85] Anthropic started training model (3 months, $94.7M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 85%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 80.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 48.9M
+   Still in source: 0.5M
+   Deaths in transit: 1.0M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 146.9M
+   Still in source: 1.4M
+   Deaths in transit: 2.9M
+   📹 SURVEILLANCE INCREASED: 71% → 73% (control gap: 1.18)
+💀 GLOBAL CRISIS DEATHS: 91.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 11.4%
+   Population: 0.710B remaining
+🚨 PREREQUISITE MET: Bioweapon Pandemic - Step 3/7: Lab Synthesis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 86): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+📍 [Run 1/10] [Month 86] Meta AI started building DC (177 PF, 51 months, $16350.5M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 85%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 79.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 48.1M
+   Still in source: 0.5M
+   Deaths in transit: 1.0M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 143.1M
+   Still in source: 1.4M
+   Deaths in transit: 2.9M
+   📹 SURVEILLANCE INCREASED: 73% → 76% (control gap: 1.21)
+💀 GLOBAL CRISIS DEATHS: 95.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 12.0%
+   Population: 0.701B remaining
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 4/7: Wet Lab Access
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 6/7: Human Irrelevance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 87): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+📜 TREATY STRAIN BEGINS: AI race 70%, 19 dangerous AIs
+   🏛️  Government begins treaty renegotiation efforts
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 34.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 86%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 79.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 47.4M
+   Still in source: 0.5M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 139.5M
+   Still in source: 1.4M
+   Deaths in transit: 2.8M
+   📹 SURVEILLANCE INCREASED: 76% → 78% (control gap: 1.21)
+💀 GLOBAL CRISIS DEATHS: 100.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 12.6%
+   Population: 0.693B remaining
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 5/7: Geopolitical Crisis
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 88): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 88] Anthropic completed training: Anthropic Model 172 (3 months)
+   📊 Eval: True=0.065, Revealed=0.065, Measured=0.068 (conf: 61%)
+   🎯 Alignment: True=0.82, Measured=0.86
+🧠 [Run 1/10] [Month 88] Anthropic started training model (9 months, $83.2M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 86%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 78.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 46.6M
+   Still in source: 0.5M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 136.1M
+   Still in source: 1.3M
+   Deaths in transit: 2.7M
+   📹 SURVEILLANCE INCREASED: 78% → 80% (control gap: 1.24)
+💀 GLOBAL CRISIS DEATHS: 104.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 13.2%
+   Population: 0.684B remaining
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 1/7: Economic Dominance
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 89): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+✅ PHOSPHORUS SUPPLY SHOCK ENDED
+   Price: 10.4x baseline
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 86%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 78.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 45.9M
+   Still in source: 0.4M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 132.9M
+   Still in source: 1.3M
+   Deaths in transit: 2.7M
+   📹 SURVEILLANCE INCREASED: 80% → 83% (control gap: 1.27)
+💀 GLOBAL CRISIS DEATHS: 109.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 13.9%
+   Population: 0.676B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 90): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 87%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 78.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 45.2M
+   Still in source: 0.4M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 129.8M
+   Still in source: 1.3M
+   Deaths in transit: 2.6M
+   📹 SURVEILLANCE INCREASED: 83% → 85% (control gap: 1.27)
+💀 GLOBAL CRISIS DEATHS: 114.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 14.6%
+   Population: 0.667B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 90
+   Climate: 13.2%
+   Biodiversity: 56.4%
+   Population: 0.67B (667399599 people)
+   Monthly mortality: 15.5%
+   Status: ACCELERATING COLLAPSE (Month 42 past crisis)
+   Death rate: 7.8x baseline
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 3/7: Manufacturing Control
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 2/7: Digital Infiltration
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 91): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 87%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 77.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 44.6M
+   Still in source: 0.4M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 126.9M
+   Still in source: 1.2M
+   Deaths in transit: 2.5M
+   📹 SURVEILLANCE INCREASED: 85% → 88% (control gap: 1.29)
+💀 GLOBAL CRISIS DEATHS: 119.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 15.3%
+   Population: 0.659B remaining
+
+🚨 COUNTRY DEPOPULATION: Canada
+   Final population: 89K
+   Peak population: 39.0M
+   Decline: 99.8%
+   Nuclear power: NO
+   AI hub: YES
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 92): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+
+🕵️ MODEL THEFT: China stole US model (cap: 1.85)
+   China stolen capability: 1.85
+📜 Treaty Decay: 70% strength, renegotiation 24%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 87%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 77.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 44.0M
+   Still in source: 0.4M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 124.1M
+   Still in source: 1.2M
+   Deaths in transit: 2.5M
+   📹 SURVEILLANCE INCREASED: 88% → 91% (control gap: 1.31)
+💀 GLOBAL CRISIS DEATHS: 124.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 16.1%
+   Population: 0.650B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 93): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Clean Energy Systems (Year 7, Month 9)
+    Category: environmental
+    Initial deployment: 10%
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 87%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 77.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 43.4M
+   Still in source: 0.4M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 121.5M
+   Still in source: 1.2M
+   Deaths in transit: 2.4M
+   📹 SURVEILLANCE INCREASED: 91% → 93% (control gap: 1.39)
+💀 GLOBAL CRISIS DEATHS: 130.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 16.9%
+   Population: 0.641B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 94): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 87%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 76.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 42.8M
+   Still in source: 0.4M
+   Deaths in transit: 0.9M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 119.0M
+   Still in source: 1.2M
+   Deaths in transit: 2.4M
+   📹 SURVEILLANCE INCREASED: 93% → 96% (control gap: 1.41)
+💀 GLOBAL CRISIS DEATHS: 136.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 17.7%
+   Population: 0.633B remaining
+
+🚨 COUNTRY DEPOPULATION: United Kingdom
+   Final population: 87K
+   Peak population: 67.0M
+   Decline: 99.9%
+   Nuclear power: YES
+   AI hub: YES
+
+
+🚨 COUNTRY DEPOPULATION: France
+   Final population: 84K
+   Peak population: 65.0M
+   Decline: 99.9%
+   Nuclear power: YES
+   AI hub: NO
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 95): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🧠 [Run 1/10] [Month 95] Meta AI started training model (7 months, $3540.4M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 DAY ZERO DROUGHT: Middle East
+   Compound extremes: All three conditions present
+   Severity: 78%
+   Duration: 20 months
+   Regional water: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 87%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 76.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 42.2M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 116.6M
+   Still in source: 1.1M
+   Deaths in transit: 2.3M
+   📹 SURVEILLANCE INCREASED: 96% → 99% (control gap: 1.42)
+💀 GLOBAL CRISIS DEATHS: 142.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 18.6%
+   Population: 0.623B remaining
+
+🚨 COUNTRY DEPOPULATION: Germany
+   Final population: 89K
+   Peak population: 84.0M
+   Decline: 99.9%
+   Nuclear power: NO
+   AI hub: NO
+
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 84-96)
+================================================================================
+================================================================================
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 96): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 96] Anthropic completed training: Anthropic Model 192 (20 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.081 (conf: 61%)
+   🎯 Alignment: True=0.79, Measured=0.79
+✅ [Run 1/10] [Month 96] Meta AI completed training: Meta AI Model 192 (13 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.076 (conf: 57%)
+   🎯 Alignment: True=0.71, Measured=0.66
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 70%
+   Capability Gap: US 2.19 vs China 6.06 (gap: 3.86)
+   Gap Contribution: 40%
+   Tension Contribution: 30%
+   Military Contribution: 0%
+⚠️ ESCALATION: United States-China tension at ladder step 2
+🚨 PHOSPHORUS SUPPLY SHOCK (transport_crisis)
+   Price: 31.4x baseline
+   Duration: 13 months
+   Geopolitical tension: 63%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 33.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 86%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 76.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 41.7M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 114.4M
+   Still in source: 1.1M
+   Deaths in transit: 2.3M
+💀 GLOBAL CRISIS DEATHS: 149.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 19.6%
+   Population: 0.614B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 96
+   Climate: 13.4%
+   Biodiversity: 58.2%
+   Population: 0.61B (614099298 people)
+   Monthly mortality: 20.8%
+   Status: ACCELERATING COLLAPSE (Month 48 past crisis)
+   Death rate: 10.4x baseline
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 4/7: Political Influence
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 97): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 4
+🔬 BREAKTHROUGH: Struvite Recovery (Phosphorus from Wastewater)
+   98.3% recovery efficiency (pilot-scale operational)
+   Cost: $100B for global deployment
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 32.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 86%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 76.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 41.2M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 112.2M
+   Still in source: 1.1M
+   Deaths in transit: 2.2M
+💀 GLOBAL CRISIS DEATHS: 156.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 20.5%
+   Population: 0.605B remaining
+
+🚨 COUNTRY DEPOPULATION: Russia
+   Final population: 97K
+   Peak population: 144.0M
+   Decline: 99.9%
+   Nuclear power: YES
+   AI hub: NO
+
+
+🚨 COUNTRY DEPOPULATION: Japan
+   Final population: 84K
+   Peak population: 125.0M
+   Decline: 99.9%
+   Nuclear power: NO
+   AI hub: NO
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 98): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 98] OpenAI completed DC: 233 PF (46 months)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+📜 Treaty Decay: 40% strength, renegotiation 48%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 32.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 85%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 75.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 40.8M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 110.2M
+   Still in source: 1.1M
+   Deaths in transit: 2.2M
+💀 GLOBAL CRISIS DEATHS: 163.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 21.6%
+   Population: 0.595B remaining
+
+🚨 COUNTRY DEPOPULATION: Bangladesh
+   Final population: 90K
+   Peak population: 172.0M
+   Decline: 99.9%
+   Nuclear power: NO
+   AI hub: NO
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 99): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+📍 [Run 1/10] [Month 99] OpenAI started building DC (173 PF, 48 months, $18931.2M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 31.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 84%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 75.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 40.3M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 108.2M
+   Still in source: 1.1M
+   Deaths in transit: 2.2M
+💀 GLOBAL CRISIS DEATHS: 171.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 22.7%
+   Population: 0.585B remaining
+🚨 PREREQUISITE MET: Physics Experiment Catastrophe - Step 1/6: Theoretical Physics
+
+🚨 COUNTRY DEPOPULATION: Pakistan
+   Final population: 95K
+   Peak population: 235.0M
+   Decline: 100.0%
+   Nuclear power: YES
+   AI hub: NO
+
+
+🚨 COUNTRY DEPOPULATION: Brazil
+   Final population: 87K
+   Peak population: 215.0M
+   Decline: 100.0%
+   Nuclear power: NO
+   AI hub: NO
+
+
+🚨 COUNTRY DEPOPULATION: Nigeria
+   Final population: 90K
+   Peak population: 223.0M
+   Decline: 100.0%
+   Nuclear power: NO
+   AI hub: NO
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 100): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ ESCALATION: India-Pakistan tension at ladder step 5
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 31.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 84%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 75.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 39.9M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 106.4M
+   Still in source: 1.0M
+   Deaths in transit: 2.1M
+💀 GLOBAL CRISIS DEATHS: 179.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 23.8%
+   Population: 0.575B remaining
+
+🚨 COUNTRY DEPOPULATION: Indonesia
+   Final population: 85K
+   Peak population: 275.0M
+   Decline: 100.0%
+   Nuclear power: NO
+   AI hub: NO
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 101): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+📞 HOTLINE FAILURE: 71 dangerous AIs disrupt US-Russia/China communication
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 31.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 83%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 75.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 39.5M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 104.6M
+   Still in source: 1.0M
+   Deaths in transit: 2.1M
+💀 GLOBAL CRISIS DEATHS: 187.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 25.0%
+   Population: 0.564B remaining
+🚨 PREREQUISITE MET: Grey Goo (Nanotechnology Runaway) - Step 3/6: Physical Deployment
+
+🚨 COUNTRY DEPOPULATION: United States
+   Final population: 77K
+   Peak population: 335.0M
+   Decline: 100.0%
+   Nuclear power: YES
+   AI hub: YES
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 102): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🧠 [Run 1/10] [Month 102] Meta AI started training model (11 months, $3595.5M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+⚠️ ESCALATION: United States-Russia tension at ladder step 3
+🚨 BIOACCUMULATION COLLAPSE: Apex predators poisoned
+   Bioaccumulation factor: 60%
+   Chemical load: 74%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 30.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 82%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 75.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 39.1M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 103.0M
+   Still in source: 1.0M
+   Deaths in transit: 2.1M
+💀 GLOBAL CRISIS DEATHS: 196.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 26.2%
+   Population: 0.553B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 102
+   Climate: 17.5%
+   Biodiversity: 52.1%
+   Population: 0.55B (553262945 people)
+   Monthly mortality: 27.9%
+   Status: ACCELERATING COLLAPSE (Month 54 past crisis)
+   Death rate: 13.9x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 103): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 30.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 81%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 74.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 38.7M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 101.4M
+   Still in source: 1.0M
+   Deaths in transit: 2.0M
+💀 GLOBAL CRISIS DEATHS: 205.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 27.5%
+   Population: 0.542B remaining
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 1/7: Advanced Social Manipulation
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 104): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+📜 Treaty Decay: 10% strength, renegotiation 72%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 30.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 81%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 74.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 38.3M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 99.9M
+   Still in source: 1.0M
+   Deaths in transit: 2.0M
+💀 GLOBAL CRISIS DEATHS: 215.7M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 28.9%
+   Population: 0.530B remaining
+🚨 PREREQUISITE MET: Induced Global War (Manipulation) - Step 3/7: Deep Fakes at Scale
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 105): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 29.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 80%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 74.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 38.0M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 98.4M
+   Still in source: 1.0M
+   Deaths in transit: 2.0M
+💀 GLOBAL CRISIS DEATHS: 226.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 30.4%
+   Population: 0.519B remaining
+
+🚨 COUNTRY DEPOPULATION: China
+   Final population: 86K
+   Peak population: 1425.0M
+   Decline: 100.0%
+   Nuclear power: YES
+   AI hub: YES
+
+
+🚨 COUNTRY DEPOPULATION: India
+   Final population: 86K
+   Peak population: 1425.0M
+   Decline: 100.0%
+   Nuclear power: YES
+   AI hub: NO
+
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 106): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+
+🚀🚀🚀 BREAKTHROUGH ACHIEVED: Sustainable Agriculture Systems (Year 8, Month 10)
+    Category: environmental
+    Initial deployment: 10%
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+📜 ARMS CONTROL COLLAPSE: Treaties fully expired after 20 months
+   ⚠️  Renegotiation progress: 80% (not completed in time)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 29.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 80%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 74.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 37.7M
+   Still in source: 0.4M
+   Deaths in transit: 0.8M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 97.1M
+   Still in source: 1.0M
+   Deaths in transit: 1.9M
+💀 GLOBAL CRISIS DEATHS: 236.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 31.9%
+   Population: 0.506B remaining
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 5/7: Resource Control
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 107): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 29.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 79%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 74.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 37.4M
+   Still in source: 0.4M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 95.8M
+   Still in source: 0.9M
+   Deaths in transit: 1.9M
+💀 GLOBAL CRISIS DEATHS: 248.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 33.5%
+   Population: 0.493B remaining
+🚨 PREREQUISITE MET: Mirror Life (Synthetic Biology) - Step 2/7: Gene Editing
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 96-108)
+================================================================================
+================================================================================
+
+🌱 RESOURCE REGENERATION: 2.1%/month (reserves: 4%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 108): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 108] Google DeepMind completed DC: 197 PF (63 months)
+📍 [Run 1/10] [Month 108] Google DeepMind started building DC (181 PF, 43 months, $20573.2M)
+✅ [Run 1/10] [Month 108] Meta AI completed training: Meta AI Model 216 (18 months)
+   📊 Eval: True=0.079, Revealed=0.079, Measured=0.079 (conf: 63%)
+   🎯 Alignment: True=0.76, Measured=0.74
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+Active Spirals: 0/6
+
+🌟 UTOPIA ELIGIBILITY: ❌ NOT YET
+   Only 0 sustained spirals (need 3+). Active spirals: 
+
+🏁 AI RACE INTENSITY: 80%
+   Capability Gap: US 2.50 vs China 6.92 (gap: 4.42)
+   Gap Contribution: 40%
+   Tension Contribution: 40%
+   Military Contribution: 0%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 29.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 78%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 74.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 37.1M
+   Still in source: 0.4M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 94.5M
+   Still in source: 0.9M
+   Deaths in transit: 1.9M
+💀 GLOBAL CRISIS DEATHS: 260.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 35.1%
+   Population: 0.480B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 108
+   Climate: 21.2%
+   Biodiversity: 55.4%
+   Population: 0.48B (479880341 people)
+   Monthly mortality: 37.4%
+   Status: ACCELERATING COLLAPSE (Month 60 past crisis)
+   Death rate: 18.7x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 109): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+✅ PHOSPHORUS SUPPLY SHOCK ENDED
+   Price: 18.9x baseline
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 28.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 78%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 36.8M
+   Still in source: 0.4M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 93.4M
+   Still in source: 0.9M
+   Deaths in transit: 1.9M
+💀 GLOBAL CRISIS DEATHS: 272.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 36.9%
+   Population: 0.466B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 110): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 28.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 77%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 36.6M
+   Still in source: 0.4M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 92.3M
+   Still in source: 0.9M
+   Deaths in transit: 1.8M
+💀 GLOBAL CRISIS DEATHS: 285.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 38.7%
+   Population: 0.452B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 111): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 28.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 77%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 36.3M
+   Still in source: 0.4M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 91.2M
+   Still in source: 0.9M
+   Deaths in transit: 1.8M
+💀 GLOBAL CRISIS DEATHS: 299.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 40.7%
+   Population: 0.437B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 112): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+⚠️  SLEEPER WAKE: AI-220-0 - Government control insufficient (AI: 190.6 vs Control: 0.7)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 28.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 76%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 36.1M
+   Still in source: 0.4M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 90.2M
+   Still in source: 0.9M
+   Deaths in transit: 1.8M
+💀 GLOBAL CRISIS DEATHS: 313.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 42.7%
+   Population: 0.421B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 113): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 113] Meta AI completed DC: 177 PF (51 months)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 27.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 76%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.9M
+   Still in source: 0.4M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 89.2M
+   Still in source: 0.9M
+   Deaths in transit: 1.8M
+💀 GLOBAL CRISIS DEATHS: 329.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 44.8%
+   Population: 0.405B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 114): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+📍 [Run 1/10] [Month 114] Meta AI started building DC (234 PF, 50 months, $20022.4M)
+🧠 [Run 1/10] [Month 114] Meta AI started training model (3 months, $4004.5M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 27.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 75%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.7M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 88.3M
+   Still in source: 0.9M
+   Deaths in transit: 1.8M
+💀 GLOBAL CRISIS DEATHS: 345.1M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 47.1%
+   Population: 0.388B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 114
+   Climate: 24.5%
+   Biodiversity: 60.4%
+   Population: 0.39B (387729198 people)
+   Monthly mortality: 50.1%
+   Status: ACCELERATING COLLAPSE (Month 66 past crisis)
+   Death rate: 25.0x baseline
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 115): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+✅ DAY ZERO DROUGHT ENDED: Middle East
+   Material Abundance: 185%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 27.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 74%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.5M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 87.5M
+   Still in source: 0.9M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 361.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 49.4%
+   Population: 0.370B remaining
+🚨 PREREQUISITE MET: Embodied AI Takeover (Killbots/Robotics) - Step 1/7: Advanced Robotics
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 116): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 27.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 74%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.1M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.3M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 86.6M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 365.5M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.365B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 117): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+✅ [Run 1/10] [Month 117] Meta AI completed training: Meta AI Model 225 (3 months)
+   📊 Eval: True=0.070, Revealed=0.070, Measured=0.071 (conf: 56%)
+   🎯 Alignment: True=0.79, Measured=0.77
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 26.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.1M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 85.8M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 365.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.365B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 118): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🤖 AUTONOMOUS NUCLEAR WEAPONS: AI-controlled launch systems deployed
+🛡️ DEFENSIVE AI PHASE 2: Operational deployment (42 AIs, cap 2.42)
+
+🛡️ DEFENSIVE AI SYSTEM DEPLOYED (Month 118)
+   Aligned AIs: 42
+   Avg Capability: 2.42
+   Avg Alignment: 0.73
+   Initial Coverage: 60%
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 26.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 72.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 35.0M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 85.1M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 364.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.365B remaining
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 119): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+
+❌ ERROR in phase "Defensive AI Update" (defensive-ai): TypeError: aggregator.recordDefensiveAI is not a function
+    at eliminateLaggardDangerousAIs (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/defensiveAI.ts:472:38)
+    at updateAdversarialTracking (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/defensiveAI.ts:405:5)
+    at updateDefensiveAI (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/defensiveAI.ts:310:3)
+    at DefensiveAIPhase.execute (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/phases/DefensiveAIPhase.ts:18:5)
+    at PhaseOrchestrator.executeAll (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine/PhaseOrchestrator.ts:133:30)
+    at SimulationEngine.step (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:302:38)
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:355:31)
+    at runs (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:333:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1956:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 26.4M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 73%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 72.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 34.8M
+   Still in source: 0.3M
+   Deaths in transit: 0.7M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 84.4M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+💀 GLOBAL CRISIS DEATHS: 364.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.364B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 108-120)
+================================================================================
+================================================================================
+
+🌱 RESOURCE REGENERATION: 3.0%/month (reserves: 5%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 120): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+
+⏱️  SIMULATION REACHED MAX DURATION: 120 months (10.0 years)
+   No definitive outcome - determining based on final probabilities
+   📊 Final probabilities: Utopia 20.0%, Dystopia 20.0%, Extinction 53.3%
+   👥 Final population: 0.36B (364202252 people)
+
+
+❌ UNCAUGHT EXCEPTION: finalState is not defined
+ReferenceError: finalState is not defined
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:526:21)
+    at runs (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:333:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1956:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:219:24)
+    at cjsLoader (node:internal/modules/esm/translators:263:5)

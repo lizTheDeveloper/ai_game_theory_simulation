@@ -1,0 +1,200 @@
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-219-0 triggered nuclear conflict
+
+💀 REGIONAL CRISIS DEATHS: 3.4M casualties (Nuclear war - blast/radiation (US/Russia/allies)) [WAR]
+   Exposed: 30% of world, Mortality: 60.0%
+   Population: 0.015B remaining
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-100-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-100-0 triggered nuclear conflict
+
+💀 REGIONAL CRISIS DEATHS: 2.7M casualties (Nuclear war - blast/radiation (US/Russia/allies)) [WAR]
+   Exposed: 30% of world, Mortality: 60.0%
+   Population: 0.013B remaining
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-152-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-152-0 triggered nuclear conflict
+
+💀 REGIONAL CRISIS DEATHS: 2.3M casualties (Nuclear war - blast/radiation (US/Russia/allies)) [WAR]
+   Exposed: 30% of world, Mortality: 60.0%
+   Population: 0.010B remaining
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-152-2)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-152-2 triggered nuclear conflict
+
+💀 REGIONAL CRISIS DEATHS: 1.8M casualties (Nuclear war - blast/radiation (US/Russia/allies)) [WAR]
+   Exposed: 30% of world, Mortality: 60.0%
+   Population: 0.008B remaining
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-193-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-193-0 triggered nuclear conflict
+
+💀 REGIONAL CRISIS DEATHS: 1.5M casualties (Nuclear war - blast/radiation (US/Russia/allies)) [WAR]
+   Exposed: 30% of world, Mortality: 60.0%
+   Population: 0.007B remaining
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-199-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-199-0 triggered nuclear conflict
+
+💀 REGIONAL CRISIS DEATHS: 1.2M casualties (Nuclear war - blast/radiation (US/Russia/allies)) [WAR]
+   Exposed: 30% of world, Mortality: 60.0%
+   Population: 0.006B remaining
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-100-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-100-0 triggered nuclear conflict
+
+💀 REGIONAL CRISIS DEATHS: 1.0M casualties (Nuclear war - blast/radiation (US/Russia/allies)) [WAR]
+   Exposed: 30% of world, Mortality: 60.0%
+   Population: 0.005B remaining
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-152-3)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-152-3 triggered nuclear conflict
+
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-193-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-193-0 triggered nuclear conflict
+
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-203-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-203-0 triggered nuclear conflict
+
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-219-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-219-0 triggered nuclear conflict
+
+
+☢️ NUCLEAR DETERRENCE FAILED (AI Action: AI-222-0)
+   MAD strength: 40%
+   Flashpoint pairs: 3
+   Diplomatic AI: Failed to prevent
+
+
+☢️ WAR MANIPULATION SUCCEEDED: AI-222-0 triggered nuclear conflict
+
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+⚠️ EARLY WARNING UNRELIABLE: 82 dangerous AIs spoofing attacks
+🕊️ PEACE STABILIZES DETERRENCE: +3.4% (peace: 73%)
+🚨 NEW REFUGEE CRISIS: CLIMATE
+   Source: Coastal & Low-lying Regions
+   At risk: 18.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 51%
+🚨 NEW REFUGEE CRISIS: NUCLEAR
+   Source: Global (Nuclear Fallout Zones)
+   At risk: 109.5M people
+   Displacement: Gradual over 12 months (1.0 years)
+   Rate: 10% flee per month
+   Severity: 90%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 73.0M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+📊 DISPLACEMENT COMPLETE: climate (Coastal & Low-lying Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 23.1M
+   Still in source: 0.2M
+   Deaths in transit: 0.5M
+📊 DISPLACEMENT COMPLETE: famine (Food/Water Insecure Regions)
+   Duration: 44 months (3.7 years)
+   Total fled: 84.7M
+   Still in source: 0.8M
+   Deaths in transit: 1.7M
+📊 DISPLACEMENT COMPLETE: nuclear (Global (Nuclear Fallout Zones))
+   Duration: 12 months (1.0 years)
+   Total fled: 79.9M
+   Still in source: 31.4M
+   Deaths in transit: 1.6M
+💀 GLOBAL CRISIS DEATHS: 364.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 50.0%
+   Population: 0.365B remaining
+
+================================================================================
+📊 [Run 1/10] EVENT SUMMARY (Months 108-120)
+================================================================================
+
+☢️  NUCLEAR DETERRENCE:
+   Deterrence checks: 338 (0 succeeded, 338 failed)
+   Nuclear wars: 338
+   Success rate: 0.0%
+================================================================================
+
+🌱 RESOURCE REGENERATION: 4.1%/month (reserves: 10%)
+   ⚠️⚠️⚠️  CASCADING FAILURES (Month 120): 6 crises active [Resource, Climate, Meaning, Institutional, SocialUnrest, ControlLoss], degradation accelerated 3.0x
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 10%)
+   Education: 100%, Creative: 100%
+   Volunteer: 100%, Social: 100%
+
+⏱️  SIMULATION REACHED MAX DURATION: 120 months (10.0 years)
+   No definitive outcome - determining based on final probabilities
+   📊 Final probabilities: Utopia 20.0%, Dystopia 20.0%, Extinction 53.3%
+   👥 Final population: 0.36B (364943985 people)
+
+
+❌ UNCAUGHT EXCEPTION: finalState is not defined
+ReferenceError: finalState is not defined
+    at SimulationEngine.run (/Users/annhoward/src/ai_game_theory_simulation/src/simulation/engine.ts:526:21)
+    at runs (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:333:28)
+    at Object.<anonymous> (/Users/annhoward/src/ai_game_theory_simulation/scripts/monteCarloSimulation.ts:1956:55)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object.transformer (/Users/annhoward/.npm/_npx/fd45a72a545557e9/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:219:24)
+    at cjsLoader (node:internal/modules/esm/translators:263:5)

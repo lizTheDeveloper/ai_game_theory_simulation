@@ -523,18 +523,18 @@ export class SimulationEngine {
       // Check for slow extinction from environmental collapse
       else if (finalPopulation < initialState.humanPopulationSystem.population * 0.30) {
         // 70%+ population decline = extinction trajectory
-        const env = finalState.environmentalAccumulation;
-        const cascade = finalState.planetaryBoundariesSystem;
+        const env = state.environmentalAccumulation;
+        const cascade = state.planetaryBoundariesSystem;
         const foodSecurity = env.foodSecurity || 0.7;
         
         // Count active crises
         const crisisCount = [
           env.resourceCrisisActive,
           env.climateCrisisActive,
-          finalState.socialAccumulation.meaningCollapseActive,
-          finalState.socialAccumulation.institutionalFailureActive,
-          finalState.socialAccumulation.socialUnrestActive,
-          finalState.technologicalRisk.controlLossActive
+          state.socialAccumulation.meaningCollapseActive,
+          state.socialAccumulation.institutionalFailureActive,
+          state.socialAccumulation.socialUnrestActive,
+          state.technologicalRisk.controlLossActive
         ].filter(Boolean).length;
         
         // Declare extinction if:
