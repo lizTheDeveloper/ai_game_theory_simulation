@@ -28,6 +28,7 @@ import { updateBreakthroughTechnologies, checkCrisisResolution } from './breakth
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
+import { EventAggregator } from './eventAggregator';
 import { checkExtinctionTriggers, progressExtinction } from './extinctions';
 import {
   checkEndGameTransition,
@@ -338,6 +339,7 @@ export class SimulationEngine {
     // Initialize logger with estimated duration
     const logger = new SimulationLogger(this.config.seed!, logLevel, maxMonths);
     const diagnosticLogger = new DiagnosticLogger();
+    const eventAggregator = new EventAggregator(12); // Report every 12 months
     
     let state = initialState;
     const history: SimulationStepResult[] = [];
@@ -354,10 +356,15 @@ export class SimulationEngine {
       history.push(stepResult);
       state = stepResult.state;
       
+      // Attach aggregator to state for phases to use
+      (state as any).eventAggregator = eventAggregator;
       
       // Log this step
       logger.logStep(state, stepResult.events);
       diagnosticLogger.logStep(state, stepResult.events);
+      
+      // Periodic event summary (every 12 months)
+      eventAggregator.reportSummary(state.currentMonth, state.config.runLabel);
       
       // Phase 3: Check for end-game transition
       if (!state.endGameState.active && checkEndGameTransition(state)) {
