@@ -809,8 +809,8 @@ for (let i = 0; i < NUM_RUNS; i++) {
   // Country population data (TIER 1.7.2)
   const countrySys = finalState.countryPopulationSystem;
   const countriesDepopulated = countrySys.depopulatedCountries.length;
-  const nuclearPowersSurviving = countrySys.nuclearPowersSurviving;
-  const aiHubsSurviving = countrySys.aiHubsSurviving;
+  const nuclearPowersSurviving = Math.max(0, countrySys.nuclearPowersSurviving); // FIX (Oct 13): Guard against negative
+  const aiHubsSurviving = Math.max(0, countrySys.aiHubsSurviving); // FIX (Oct 13): Guard against negative
   const depopulationEvents = countrySys.depopulatedCountries.map(name => name);
   
   // Map engine's outcome to reporting categories
