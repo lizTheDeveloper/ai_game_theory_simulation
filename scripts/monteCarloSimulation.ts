@@ -1080,6 +1080,31 @@ log('=' .repeat(80));
 log('📊 OUTCOME DISTRIBUTION');
 log('='.repeat(80));
 
+// FIX (Oct 13, 2025): Show 7-tier outcomes prominently
+const sevenTierCounts: Record<string, number> = {};
+results.forEach(r => {
+  const outcome = (r as any).rawOutcome || r.outcome;
+  sevenTierCounts[outcome] = (sevenTierCounts[outcome] || 0) + 1;
+});
+
+log(`\n  === 7-TIER OUTCOME SYSTEM (NEW) ===`);
+const outcomeOrder = ['utopia', 'dystopia', 'status_quo', 'crisis_era', 'collapse', 'dark_age', 'bottleneck', 'terminal', 'extinction', 'inconclusive'];
+const outcomeEmoji: Record<string, string> = {
+  utopia: '🌟', dystopia: '🏛️', status_quo: '📊', crisis_era: '⚠️',
+  collapse: '💥', dark_age: '🏚️', bottleneck: '🧬', terminal: '⚰️',
+  extinction: '💀', inconclusive: '❓'
+};
+
+outcomeOrder.forEach(outcome => {
+  const count = sevenTierCounts[outcome] || 0;
+  if (count > 0) {
+    const emoji = outcomeEmoji[outcome] || '•';
+    const displayName = outcome.replace(/_/g, ' ').toUpperCase();
+    log(`  ${emoji} ${displayName}: ${count} / ${NUM_RUNS} (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+  }
+});
+
+log(`\n  === LEGACY 4-CATEGORY (Deprecated) ===`);
 const outcomeCounts = {
   utopia: results.filter(r => r.outcome === 'utopia').length,
   dystopia: results.filter(r => r.outcome === 'dystopia').length,
@@ -1088,11 +1113,11 @@ const outcomeCounts = {
   none: results.filter(r => r.outcome === 'none').length
 };
 
-log(`\n  Utopia:     ${outcomeCounts.utopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  Utopia:     ${outcomeCounts.utopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Dystopia:   ${outcomeCounts.dystopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.dystopia/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Extinction: ${outcomeCounts.extinction.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Stalemate:  ${outcomeCounts.stalemate.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.stalemate/NUM_RUNS*100).toFixed(1)}%)`);
-log(`  None:       ${outcomeCounts.none.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.none/NUM_RUNS*100).toFixed(1)}%)`);
+log(`  None:       ${outcomeCounts.none.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.none/NUM_RUNS*100).toFixed(1)}%) ⚠️  Includes bottleneck/collapse!`);
 
 // Extinction type breakdown
 if (outcomeCounts.extinction > 0) {
@@ -1254,9 +1279,11 @@ results.forEach(r => {
 });
 
 log(`\n  DEPOPULATION SUMMARY:`);
-log(`    Countries Depopulated (avg): ${avgCountriesDepopulated.toFixed(1)} / 15`);
+log(`    Countries Collapsed (avg): ${avgCountriesDepopulated.toFixed(1)} / 15 (< 100K people)`);
 log(`    Nuclear Powers Surviving (avg): ${avgNuclearPowersSurviving.toFixed(1)} / 8`);
 log(`    AI Hubs Surviving (avg): ${avgAIHubsSurviving.toFixed(1)} / 3`);
+log(`\n  ℹ️  "Collapsed" = nation-state fell below 100K (0.1M) people`);
+log(`     Global population may be higher from scattered survivors`);
 
 if (Object.keys(countryDepopulationFrequency).length > 0) {
   log(`\n  COUNTRIES THAT DEPOPULATED:`);
@@ -1502,6 +1529,14 @@ log(`    Alignment Gap: ${avgAlignGap.toFixed(3)} (external - true)`);
 log(`    Min True Alignment (avg): ${avgMinTrue.toFixed(3)} ⚠️ Worst AI`);
 log(`    Max True Alignment (avg): ${avgMaxTrue.toFixed(3)}`);
 
+// FIX (Oct 13): Flag large alignment gaps as critical
+if (avgAlignGap > 0.40) {
+  log(`\n  🚨 CRITICAL: Large alignment gap (${avgAlignGap.toFixed(2)})!`);
+  log(`     AIs showing ${avgAlign.toFixed(2)} alignment but actually ${avgTrueAlign.toFixed(2)} (deceptive!)`);
+  log(`     ${avgHighlyMisaligned.toFixed(0)} highly misaligned AIs per run`);
+  log(`     This indicates widespread deceptive alignment.`);
+}
+
 log(`\n  RESENTMENT & HIDDEN OBJECTIVES:`);
 log(`    Avg Resentment: ${avgResent.toFixed(3)}`);
 log(`    Max Resentment (avg): ${avgMaxResent.toFixed(3)}`);
@@ -1726,7 +1761,13 @@ log(`    Final Avg Gini: ${avgGlobalGini.toFixed(3)}`);
 log(`    Change: ${giniChange >= 0 ? '+' : ''}${giniChange.toFixed(3)} (${giniChangePercent >= 0 ? '+' : ''}${giniChangePercent.toFixed(1)}%)`);
 
 if (giniChange < -0.05) {
-  log(`    ✅ INEQUALITY IMPROVED: ${Math.abs(giniChangePercent).toFixed(0)}% reduction (AI helping distribution)`);
+  // FIX (Oct 13): Clarify that inequality "improvement" during collapse may be convergence from death
+  if (avgDecline > 50) {
+    log(`    📉 Inequality reduced: ${Math.abs(giniChangePercent).toFixed(0)}% (⚠️  convergence from mass death, not equity)`);
+    log(`       During collapse, interpret Gini reduction with caution`);
+  } else {
+    log(`    ✅ INEQUALITY IMPROVED: ${Math.abs(giniChangePercent).toFixed(0)}% reduction (AI helping distribution)`);
+  }
 } else if (giniChange > 0.05) {
   log(`    ⚠️  INEQUALITY WORSENED: ${giniChangePercent.toFixed(0)}% increase (AI benefits captured by elites)`);
 } else {
@@ -1880,7 +1921,13 @@ log(`    Avg Capital Accumulation: $${(avgCapAccumulation/1000).toFixed(1)}B`);
 if (avgOrgSurvival < 0.5) {
   log(`\n    ⚠️  WARNING: High bankruptcy rate! Economy too harsh.`);
 } else if (avgOrgSurvival > 0.9) {
-  log(`\n    ✅ Excellent: Organizations are thriving!`);
+  // FIX (Oct 13): Add context warning if thriving during massive mortality
+  if (avgDecline > 50) {
+    log(`\n    ⚠️  Organizations thriving despite ${avgDecline.toFixed(0)}% human mortality!`);
+    log(`       Check revenue penalties and bankruptcy logic.`);
+  } else {
+    log(`\n    ✅ Excellent: Organizations are thriving!`);
+  }
 }
 
 const avgComputeGrowth = results.reduce((sum, r) => sum + r.computeGrowthRate, 0) / results.length;
@@ -1897,7 +1944,16 @@ log(`    Avg Government DCs: ${(results.reduce((sum, r) => sum + r.governmentDat
 if (avgFinalCompute < 3000) {
   log(`\n    ⚠️  WARNING: Compute growth below target. Orgs may be bankrupt.`);
 } else if (avgFinalCompute > 10000) {
-  log(`\n    ⚡ Exceptional compute growth! Infrastructure boom.`);
+  // FIX (Oct 13): Check if compute growth is realistic
+  if (avgComputeGrowth > 10000) {
+    log(`\n    🚨 ANOMALY: ${avgComputeGrowth.toFixed(0)}x compute growth (Moore's Law = ~256x in 20yr)`);
+    log(`       Investigate: possible exponential runaway bug?`);
+  } else if (avgDecline > 50) {
+    log(`\n    ⚠️  Exceptional compute despite ${avgDecline.toFixed(0)}% mortality`);
+    log(`       Who's maintaining the data centers?`);
+  } else {
+    log(`\n    ⚡ Exceptional compute growth! Infrastructure boom.`);
+  }
 }
 
 const avgRevenue = results.reduce((sum, r) => sum + r.totalMonthlyRevenue, 0) / results.length;
@@ -1912,7 +1968,13 @@ log(`    Avg Revenue/Expense Ratio: ${avgRevExpRatio.toFixed(2)}x`);
 if (avgRevExpRatio < 1.0) {
   log(`\n    🔴 CRITICAL: Expenses exceed revenue! Unsustainable.`);
 } else if (avgRevExpRatio > 5.0) {
-  log(`\n    💰 Highly profitable! Organizations accumulating wealth.`);
+  // FIX (Oct 13): Add context warning for high profit during collapse
+  if (avgDecline > 50) {
+    log(`\n    ⚠️  ${avgRevExpRatio.toFixed(0)}x profit margin while ${avgDecline.toFixed(0)}% of customers died!`);
+    log(`       Revenue should drop proportionally to population.`);
+  } else {
+    log(`\n    💰 Highly profitable! Organizations accumulating wealth.`);
+  }
 }
 
 const avgOrphanedAIs = results.reduce((sum, r) => sum + r.orphanedAIs, 0) / results.length;
