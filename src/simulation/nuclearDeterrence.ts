@@ -40,9 +40,9 @@ export function checkNuclearDeterrence(
   // 1. MAD STRENGTH CHECK
   const mad = state.madDeterrence;
   if (mad.madStrength > 0.7) {
-    console.log(`\n🛑 MAD DETERRENCE HOLDS (${context})`);
-    console.log(`   Strength: ${(mad.madStrength * 100).toFixed(0)}%`);
-    console.log(`   Nuclear war prevented by strong deterrence\n`);
+    // Aggregate successes instead of logging every time
+    const aggregator = (state as any).eventAggregator;
+    if (aggregator) aggregator.recordNuclearDeterrence(true);
     
     return {
       allowed: false,
@@ -56,9 +56,9 @@ export function checkNuclearDeterrence(
   const highTensionPairs = tensions.filter(t => t.tensionLevel > 0.7 || t.nuclearThreats);
   
   if (highTensionPairs.length === 0) {
-    console.log(`\n🛑 NO NUCLEAR FLASHPOINTS (${context})`);
-    console.log(`   International relations too stable for nuclear war`);
-    console.log(`   Highest tension: ${Math.max(...tensions.map(t => t.tensionLevel), 0).toFixed(2)}\n`);
+    // Aggregate successes
+    const aggregator = (state as any).eventAggregator;
+    if (aggregator) aggregator.recordNuclearDeterrence(true);
     
     return {
       allowed: false,
@@ -73,9 +73,14 @@ export function checkNuclearDeterrence(
     const detectionProb = dipAI.informationIntegrity * 0.7;
     
     if (random() < detectionProb) {
+      // KEEP this log - diplomatic interventions are major milestones
       console.log(`\n🤝 DIPLOMATIC AI INTERVENTION (${context})`);
       console.log(`   Detection probability: ${(detectionProb * 100).toFixed(0)}%`);
       console.log(`   AI-mediated diplomacy prevented escalation\n`);
+      
+      // Aggregate for statistics
+      const aggregator = (state as any).eventAggregator;
+      if (aggregator) aggregator.recordNuclearDeterrence(true);
       
       return {
         allowed: false,
@@ -86,10 +91,15 @@ export function checkNuclearDeterrence(
   }
   
   // ALL CHECKS PASSED - Nuclear war allowed
+  // KEEP this log - nuclear deterrence failures are critical
   console.log(`\n☢️ NUCLEAR DETERRENCE FAILED (${context})`);
   console.log(`   MAD strength: ${(mad.madStrength * 100).toFixed(0)}%`);
   console.log(`   Flashpoint pairs: ${highTensionPairs.length}`);
   console.log(`   Diplomatic AI: ${dipAI.deploymentMonth === -1 ? 'Not deployed' : 'Failed to prevent'}\n`);
+  
+  // Aggregate for statistics
+  const aggregator = (state as any).eventAggregator;
+  if (aggregator) aggregator.recordNuclearDeterrence(false);
   
   return {
     allowed: true,
