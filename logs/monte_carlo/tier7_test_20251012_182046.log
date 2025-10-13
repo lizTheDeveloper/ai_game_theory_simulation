@@ -1,0 +1,189 @@
+📝 Writing output to: /Users/annhoward/src/ai_game_theory_simulation/monteCarloOutputs/mc_2025-10-13T01-20-48.log
+
+
+🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST
+================================================================================
+
+⚙️  CONFIGURATION:
+  Runs: 5
+  Duration: 120 months (10.0 years)
+  Seed Range: 42000 - 42004
+
+
+⏩ RUNNING 5 SIMULATIONS...
+
+
+🏁 AI RACE INTENSITY: 23%
+   Capability Gap: US 1.00 vs China 0.85 (gap: 0.15)
+   Gap Contribution: 8%
+   Tension Contribution: 15%
+   Military Contribution: 0%
+
+🌪️ ========== TIPPING POINT CASCADE BEGINNING ==========
+Month: 0
+Boundaries breached: 7/9
+Tipping point risk: 98.0%
+
+⚠️ CASCADING FEEDBACK LOOPS INITIATED
+Climate → Biosphere → Freshwater → Ocean → Land
+Mortality now scales with environmental thresholds (food, water, climate)
+Recovery possible with aggressive environmental interventions
+
+💀 GLOBAL CRISIS DEATHS: 135.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 7.050B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 0
+   Climate: 73.5%
+   Biodiversity: 33.9%
+   Population: 7.05B (7049866735 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 0/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 0%, Creative: 0%
+   Volunteer: 0%, Social: 0%
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 686.6M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 129.2M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.736B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 1%, Creative: 1%
+   Volunteer: 1%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.82 (0 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 656.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 123.4M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.438B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 1%, Creative: 1%
+   Volunteer: 1%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 0.94 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 627.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 118.0M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 6.155B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 2%, Creative: 2%
+   Volunteer: 2%, Social: 1%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.09 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 599.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 112.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.885B remaining
+🚨 PREREQUISITE MET: Slow Takeover (Gradual Displacement) - Step 3/7: Human Dependency
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 3%, Creative: 2%
+   Volunteer: 2%, Social: 2%
+📍 [Run 1/5] [Month 5] Meta AI started building DC (214 PF, 53 months, $3327.3M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 573.7M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 107.9M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.629B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 3%, Creative: 3%
+   Volunteer: 3%, Social: 2%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 548.9M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 103.3M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.385B remaining
+
+🌪️ TIPPING POINT CASCADE - Month 6
+   Climate: 65.5%
+   Biodiversity: 28.9%
+   Population: 5.39B (5385361391 people)
+   Monthly mortality: 2.0%
+   Status: Initial crisis (Month 6/48)
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 4%, Creative: 3%
+   Volunteer: 3%, Social: 3%
+📍 [Run 1/5] [Month 7] Google DeepMind started building DC (167 PF, 37 months, $4583.8M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+
+🕵️ MODEL THEFT: China stole US model (cap: 0.95)
+   China stolen capability: 0.95
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 525.3M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 98.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 5.154B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 4%, Creative: 4%
+   Volunteer: 4%, Social: 3%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 502.8M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 94.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.934B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 2%)
+   Education: 5%, Creative: 4%
+   Volunteer: 4%, Social: 3%
+📍 [Run 1/5] [Month 9] OpenAI started building DC (182 PF, 52 months, $3350.1M)
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 481.5M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 90.6M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.724B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 6%, Creative: 5%
+   Volunteer: 5%, Social: 4%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (1 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
+   Source: Food/Water Insecure Regions
+   At risk: 461.2M people
+   Displacement: Gradual over 60 months (5.0 years)
+   Rate: 10% flee per month
+   Severity: 100%
+💀 GLOBAL CRISIS DEATHS: 86.8M casualties (Tipping Point Cascade) [CLIMATE]
+   Exposed: 100% of world, Mortality: 1.9%
+   Population: 4.526B remaining
+📚 PURPOSE INFRASTRUCTURE ENHANCED (investment: 3%)
+   Education: 7%, Creative: 6%
+   Volunteer: 6%, Social: 4%
+🏛️ CRISIS RESPONSE: Government frequency 0.50 → 1.45 (2 actions this month)
+🚨 NEW REFUGEE CRISIS: FAMINE
