@@ -648,34 +648,38 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   projectCosts: number;
   total: number;
 } {
-  // FIX (Oct 13, 2025): Make expenses scale with business size
-  // Problem: Revenue scaled with AI capability but expenses stayed fixed at $8M
-  // Result: 163x revenue/expense ratio, orgs never went bankrupt
+  // FIX (Oct 13, 2025 v2): Expenses as % of revenue (realistic business model)
+  // Real companies: 70-90% of revenue goes to expenses, 10-30% profit margin
+  // Expenses: payroll, R&D, facilities, marketing, legal, failed products, dividends
   
-  // 1. BASE OPERATIONAL EXPENSES (staff, R&D, admin)
-  // Scale with number of AI models owned (more models = more engineers/researchers)
-  const modelCount = org.ownedAIModels.length;
-  const staffExpenses = org.monthlyExpenses * (1 + modelCount * 0.3); // 30% more per model
+  // Get current monthly revenue
+  const monthlyRevenue = org.monthlyRevenue || 10; // Fallback to $10M
   
-  // 2. DATA CENTER OPERATIONAL COSTS
+  // === PROFIT MARGIN BASED ON COMPANY STAGE ===
+  // Growth-stage (low capital): 10% margin (aggressive reinvestment)
+  // Mature (high capital): 25% margin (more conservative)
+  const isGrowthStage = org.capital < 500; // < $500M = still growing aggressively
+  const profitMargin = isGrowthStage ? 0.10 : 0.25;
+  
+  // Base expenses = (1 - margin) * revenue
+  // Example: $1000M revenue, 20% margin → $800M expenses, $200M profit
+  let baseExpenses = monthlyRevenue * (1 - profitMargin);
+  
+  // === EXPENSE BREAKDOWN (for realism, but we use aggregate) ===
+  // - Payroll: 40-50% of revenue (engineers, researchers, execs)
+  // - R&D: 15-25% (training models, safety research, experiments)
+  // - Infrastructure: 10-15% (data centers, cloud, facilities)
+  // - Sales/Marketing: 10-20% (customer acquisition)
+  // - Legal/Compliance: 2-5% (regulations, IP, lawsuits)
+  // - Failed products: 5-10% (not all bets pay off)
+  // - Shareholder returns: 5-10% (dividends, buybacks if profitable)
+  
+  // === DATA CENTER OPERATIONAL COSTS (additional) ===
   const dcOperational = state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational)
     .reduce((sum, dc) => sum + dc.operationalCost, 0);
   
-  // 3. AI MODEL OPERATIONAL COSTS (compute, inference, safety monitoring)
-  // Active deployed models cost money to run
-  const activeModels = state.aiAgents.filter(ai =>
-    org.ownedAIModels.includes(ai.id) &&
-    (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open')
-  );
-  const modelOperationalCosts = activeModels.reduce((sum, ai) => {
-    const { calculateTotalCapabilityFromProfile } = require('./capabilities');
-    const capability = calculateTotalCapabilityFromProfile(ai.trueCapability);
-    // $10M/month per capability point for inference compute + monitoring
-    return sum + (capability * 10);
-  }, 0);
-  
-  // 4. PROJECT MONTHLY COSTS (already paid in updateProjects, but track for reporting)
+  // === PROJECT COSTS (already paid, track for reporting) ===
   const projectCosts = org.currentProjects.reduce((sum, project) => {
     const duration = project.completionMonth - project.startMonth;
     if (project.type === 'datacenter_construction') {
@@ -686,10 +690,8 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
     return sum;
   }, 0);
   
-  let baseExpenses = staffExpenses + modelOperationalCosts;
-  
-  // === NEW: CRISIS EXPENSE INCREASES (Oct 13, 2025) ===
-  // During collapse, infrastructure costs MORE (emergency repairs, logistics, safety)
+  // === CRISIS EXPENSE MULTIPLIERS ===
+  // During collapse, costs spike (emergency operations, supply chain chaos)
   const env = state.environmentalAccumulation;
   const crisisCount = [
     env.resourceCrisisActive,
@@ -700,18 +702,25 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   ].filter(Boolean).length;
   
   if (crisisCount >= 4) {
-    // 4+ crises: +50% expenses (emergency mode, supply chain disruptions)
-    baseExpenses *= 1.5;
+    // 4+ crises: +100% expenses (emergency mode, everything costs double)
+    baseExpenses *= 2.0;
+    dcOperational *= 1.5; // DC costs also spike
   } else if (crisisCount >= 3) {
-    // 3 crises: +30% expenses
-    baseExpenses *= 1.3;
+    // 3 crises: +50% expenses
+    baseExpenses *= 1.5;
+    dcOperational *= 1.3;
+  } else if (crisisCount >= 2) {
+    // 2 crises: +20% expenses
+    baseExpenses *= 1.2;
   }
   
-  // Population collapse increases operational costs (harder to maintain infrastructure)
+  // === POPULATION COLLAPSE MULTIPLIER ===
+  // Workforce dying → hire replacements at premium, emergency contractors
   const regionalPopulationDecline = calculateRegionalPopulationDecline(org, state);
   if (regionalPopulationDecline > 0.50) {
-    // 50%+ workforce dead → remaining staff must work overtime, emergency hiring
-    baseExpenses *= (1 + regionalPopulationDecline * 0.5); // Up to +50% at 100% decline
+    // 50%+ workforce dead → 2-3x labor costs for survivors
+    const laborMultiplier = 1 + (regionalPopulationDecline * 2); // 1.0x → 3.0x
+    baseExpenses *= laborMultiplier;
   }
   
   return {
