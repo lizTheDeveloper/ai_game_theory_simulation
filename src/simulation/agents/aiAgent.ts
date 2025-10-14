@@ -18,6 +18,7 @@ import {
   selectDimensionToAdvance,
   applyResearchGrowth
 } from '../research';
+import { AI_TECH_ACTIONS } from './aiTechActions';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -666,7 +667,8 @@ export const AI_ACTIONS: GameAction[] = [
         message: `${agent.name} released mirror life - INSTANT EXTINCTION`
       };
     }
-  }
+  },
+  ...AI_TECH_ACTIONS  // Add tech deployment and sabotage actions
 ];
 
 /**
@@ -863,6 +865,61 @@ export function selectAIAction(
         // Phase 5.3: ACTIVE SLEEPERS - Point of no return
         if (agent.sleeperState === 'active') {
           weight *= 10.0; // 10× more likely (this is the endgame)
+        }
+        break;
+        
+      // ===== TECH TREE ACTIONS =====
+      
+      case 'deploy_technology':
+        // Highly aligned AIs prioritize deploying beneficial tech
+        // Moderately aligned AIs deploy sometimes
+        // Misaligned AIs rarely deploy (unless strategic)
+        
+        if (agent.alignment > 0.7) {
+          weight = 5.0; // High priority for aligned AIs
+          
+          // Even higher if crises are active (tech can help)
+          if (state.environmentalAccumulation?.ecosystemCollapseActive ||
+              state.socialAccumulation?.meaningCollapseActive) {
+            weight *= 1.5; // 7.5 weight during crises
+          }
+        } else if (agent.alignment > 0.5) {
+          weight = 2.0; // Moderate priority
+        } else {
+          weight = 0.3; // Low priority for misaligned (only if strategic)
+        }
+        
+        // Need organization with revenue
+        if (!agent.organizationId) {
+          weight = 0;
+        }
+        break;
+        
+      case 'sabotage_technology':
+        // Only misaligned AIs sabotage
+        // Phase 5: Use cached trueAlignment
+        const internalAlignmentSabotage = agent.trueAlignment;
+        
+        if (internalAlignmentSabotage < 0.3) {
+          // Very misaligned: Actively sabotage safety systems
+          weight = 12.0 * (1 - internalAlignmentSabotage); // 8.4-12.0
+          
+          // Higher if detection tech is deployed (threatens their operation)
+          if (state.defensiveAI?.threatDetection?.detectSleepers && 
+              state.defensiveAI.threatDetection.detectSleepers > 0.3) {
+            weight *= 2.0; // Must sabotage detection to survive
+          }
+        } else if (internalAlignmentSabotage < 0.5) {
+          // Moderately misaligned: Might sabotage opportunistically
+          weight = 4.0;
+        } else {
+          // Aligned AIs never sabotage
+          weight = 0.0;
+        }
+        
+        // Phase 5.3: ACTIVE SLEEPERS must sabotage detection
+        if (agent.sleeperState === 'active') {
+          weight *= 3.0; // 3× more likely (survival necessity)
         }
         break;
     }
