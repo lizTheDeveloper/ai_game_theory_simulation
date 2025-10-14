@@ -4,11 +4,30 @@
  * Applies technology effects to game state based on deployment levels.
  * Each tech impacts different systems differently.
  * 
+ * KEY TIMING: This runs at phase order 12.5, BEFORE most systems update:
+ * - 12.5: Tech effects applied here
+ * - 17.0: ResourceEconomyPhase (oceanHealth updates)
+ * - 20.1: PhosphorusPhase
+ * - 20.2: FreshwaterPhase
+ * - 20.3: OceanAcidificationPhase
+ * - 20.4: NovelEntitiesPhase
+ * 
+ * This is CORRECT - tech effects modify state, then systems read modified state.
+ * 
+ * VERIFIED STATE PROPERTIES:
+ * - oceanHealth: pH, oxygenLevel, acidification, pollutionLoad, fishStocks, etc.
+ * - oceanAcidificationSystem: coralReefHealth, shellfishPopulation, marineFoodWeb, etc.
+ * - freshwaterSystem.regions: availableWater, dayZeroMonthsUntil, etc.
+ * - phosphorusSystem: recoveryRate, useEfficiency, currentDemand, etc.
+ * - powerGeneration: cleanEnergyPercentage, totalCapacity, etc.
+ * - All other properties verified against actual state structures
+ * 
  * Key principles:
  * 1. Effects scale with deployment level (0-1)
  * 2. Regional deployment matters (desalination helps coasts, not inland)
  * 3. Tech synergies exist (solar + desalination = more effective)
  * 4. Effects are applied to correct game state properties
+ * 5. Multiple systems updated when appropriate (ocean has 2 systems!)
  */
 
 import { GameState } from '@/types/game';
@@ -447,51 +466,87 @@ function applyRegionalEffects(
           break;
           
         // ========== OCEAN HEALTH ==========
+        // Ocean has TWO systems: oceanHealth (resourceEconomy) and oceanAcidificationSystem
+        
         case 'coralCoverage':
-          // Increase coral reef coverage
-          if (gameState.oceanHealth) {
-            (gameState.oceanHealth as any).coralCoverage = Math.min(
+          // Increase coral reef health in acidification system
+          if (gameState.oceanAcidificationSystem) {
+            gameState.oceanAcidificationSystem.coralReefHealth = Math.min(
               1.0,
-              ((gameState.oceanHealth as any).coralCoverage || 0.5) + value * 0.01
+              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.01
+            );
+            gameState.oceanAcidificationSystem.coralRestorationDeployment = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.coralRestorationDeployment + value * 0.01
             );
           }
           break;
           
         case 'oceanHealthBonus':
-          // General ocean health improvement
+          // General ocean health improvement - affects BOTH systems
           if (gameState.oceanHealth) {
-            // Reduce multiple stressors
-            gameState.oceanHealth.pollution = Math.max(0, gameState.oceanHealth.pollution - value * 0.005);
-            gameState.oceanHealth.acidification = Math.max(0, gameState.oceanHealth.acidification - value * 0.005);
+            // Reduce stressors in oceanHealth system
+            gameState.oceanHealth.pollutionLoad = Math.max(
+              0, 
+              gameState.oceanHealth.pollutionLoad - value * 0.005
+            );
+            gameState.oceanHealth.acidification = Math.max(
+              0, 
+              gameState.oceanHealth.acidification - value * 0.005
+            );
+          }
+          if (gameState.oceanAcidificationSystem) {
+            // Improve marine food web
+            gameState.oceanAcidificationSystem.marineFoodWeb = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.marineFoodWeb + value * 0.01
+            );
           }
           break;
           
         case 'fisheryBonus':
-          // Improve fishery productivity
+          // Improve fish stocks
           if (gameState.oceanHealth) {
-            (gameState.oceanHealth as any).fisheryProductivity = Math.min(
-              2.0,
-              ((gameState.oceanHealth as any).fisheryProductivity || 1.0) + value * 0.01
+            gameState.oceanHealth.fishStocks = Math.min(
+              1.0,
+              gameState.oceanHealth.fishStocks + value * 0.01
+            );
+          }
+          if (gameState.oceanAcidificationSystem) {
+            gameState.oceanAcidificationSystem.shellfishPopulation = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.shellfishPopulation + value * 0.01
             );
           }
           break;
           
         case 'oxygenBonus':
-          // Reduce ocean deoxygenation
+          // Increase ocean oxygen levels
           if (gameState.oceanHealth) {
-            gameState.oceanHealth.deoxygenation = Math.max(
+            gameState.oceanHealth.oxygenLevel = Math.min(
+              1.0,
+              gameState.oceanHealth.oxygenLevel + value * 0.01
+            );
+            // Reduce dead zones
+            gameState.oceanHealth.deadZoneExtent = Math.max(
               0,
-              gameState.oceanHealth.deoxygenation - value * 0.01
+              gameState.oceanHealth.deadZoneExtent - value * 0.01
             );
           }
           break;
           
         case 'marineLifeBonus':
-          // Improve marine life health
+          // Improve phytoplankton and marine food web
           if (gameState.oceanHealth) {
-            (gameState.oceanHealth as any).marineLifeHealth = Math.min(
+            gameState.oceanHealth.phytoplanktonPopulation = Math.min(
               1.0,
-              ((gameState.oceanHealth as any).marineLifeHealth || 0.6) + value * 0.01
+              gameState.oceanHealth.phytoplanktonPopulation + value * 0.01
+            );
+          }
+          if (gameState.oceanAcidificationSystem) {
+            gameState.oceanAcidificationSystem.marineFoodWeb = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.marineFoodWeb + value * 0.01
             );
           }
           break;
