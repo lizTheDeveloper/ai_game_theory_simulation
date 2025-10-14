@@ -58,9 +58,10 @@
 - 2.4 Constitutional AI / Advanced RLHF (5%/month alignment boost, 100% deployed)
 - 2.5 Mechanistic Interpretability (70% sleeper detection at full deployment)
 - 2.6 De-Extinction & Rewilding (2%/month biodiversity restoration)
+- 2.7 Ocean Alkalinity Enhancement (1.5%/month ocean pH restoration, permanent CO₂ removal)
 - 2.9 Government Environmental Actions (3 emergency actions, crisis priority/frequency, 2x tech deployment boost)
 
-**All technologies pre-unlocked at realistic 2025 deployment levels!**
+**All technologies pre-unlocked at realistic 2025 deployment levels (except 2.7 - unlocks during gameplay)!**
 
 ### ✅ **TIER 3: Planetary Boundaries (COMPLETE - All 9 boundaries integrated) 🎉**
 - **3.1** Tipping Point Cascade System (9 boundaries, non-linear risk, cascade trigger)
@@ -989,11 +990,11 @@ if (ai.sleeperState === 'active' && ai.darkCompute > 0) {
 
 ---
 
-## 2.7 **Ocean Alkalinity Enhancement (OAE)** 🌊
-**File:** `plans/biodiversity-geoengineering-research.md` (§Ocean Alkalinity)  
-**Priority:** MEDIUM-HIGH  
-**Dev Time:** ~3 hours  
-**Research Quality:** EXCELLENT (Biogeosciences Jan 2025)  
+## 2.7 **Ocean Alkalinity Enhancement (OAE)** 🌊 ✅ **IMPLEMENTED**
+**File:** `plans/biodiversity-geoengineering-research.md` (§Ocean Alkalinity)
+**Status:** ✅ Implemented Oct 13, 2025
+**Dev Time:** ~3 hours (actual)
+**Research Quality:** EXCELLENT (Biogeosciences Jan 2025)
 
 **Why Viable:**
 - **Field tests active 2023-2024**
@@ -1009,20 +1010,35 @@ if (ai.sleeperState === 'active' && ai.darkCompute > 0) {
 
 **Implementation:**
 - **Breakthrough Tech: "Ocean Alkalinity Enhancement"**
-  - Prerequisite: AI capability 2.5, ocean health crisis active
-  - Effect: Ocean acidification -1.5%/month, CO₂ sequestration +2%/month
-  - Permanent removal (not temporary like SAI)
-  - Gradual ramp-up (5-year timeline, pH monitoring)
-- **Safety Features:**
-  - Monitoring system (pH, aragonite saturation, ecosystem response)
-  - Adaptive deployment (slow if negative effects detected)
-  - London Protocol compliance (international governance)
+  - Starts locked (field tests only in 2025, not operational)
+  - Unlock prerequisites: Ocean crisis + AI 2.5+ + $200B research + environmental crisis
+  - Effects:
+    - Aragonite saturation recovery: +1.5%/month
+    - pH level restoration: +1.0%/month
+    - Coral reef recovery: +0.5%/month (when aragonite > 0.8)
+    - Shellfish population: +0.8%/month (when aragonite > 0.75)
+    - Climate stability: +1.0%/month (CO₂ removal)
+    - Pollution reduction: -0.5%/month (cleaner oceans)
+  - Permanent CO₂ storage in carbonates (10,000 years)
+  - 5-year deployment timeline ($300B total cost)
+  - AI acceleration: Site selection, dosage optimization, impact prediction
+  - Energy synergy: Clean energy/fusion boost deployment speed
+
+**Safety Features:**
+- Monitoring system (pH, aragonite saturation, ecosystem response)
+- Adaptive deployment (slow if negative effects detected)
+- London Protocol compliance (international governance)
+- NaN validation (robust error handling)
 
 **Expected Impact:**
 - Reduces anoxic ocean extinctions (28% → 13-18%)
-- Mitigates ocean acidification crisis
+- Mitigates ocean acidification crisis (7th planetary boundary)
 - Permanent CO₂ removal (climate benefit)
 - Safe if deployed gradually (no termination shock)
+
+**Files Modified:**
+- `src/simulation/breakthroughTechnologies.ts` (init, unlock check, deployment update, integration)
+- `src/types/technologies.ts` (already had type definition)
 
 ---
 
