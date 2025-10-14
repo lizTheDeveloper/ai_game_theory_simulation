@@ -31,8 +31,22 @@
  */
 
 import { GameState } from '@/types/game';
-import { TechTreeState, RegionalTechDeployment } from './engine';
+import { TechTreeState } from './engine';
 import { getTechById } from './comprehensiveTechTree';
+
+/**
+ * Type-safe helper to set dynamic properties on objects
+ */
+function setDynamicProperty<T extends object>(obj: T, key: string, value: number | boolean): void {
+  Object.assign(obj, { [key]: value });
+}
+
+/**
+ * Type-safe helper to get dynamic property with default
+ */
+function getDynamicProperty(obj: object, key: string, defaultValue: number): number {
+  return (obj as Record<string, number>)[key] ?? defaultValue;
+}
 
 /**
  * Apply all technology effects to game state
@@ -190,7 +204,7 @@ function applyGlobalEffects(
       case 'energyAbundance':
         // Flag for fusion/abundant energy unlocked
         if (gameState.powerGeneration) {
-          (gameState.powerGeneration as any).abundantEnergy = true;
+          Object.assign(gameState.powerGeneration, { abundantEnergy: true });
         }
         break;
         
@@ -307,16 +321,16 @@ function applyGlobalEffects(
       case 'infectiousDisease':
         // Reduce infectious disease burden (negative value)
         if (gameState.population) {
-          (gameState.population as any).infectiousDiseaseReduction = 
-            ((gameState.population as any).infectiousDiseaseReduction || 0) + Math.abs(value);
+          const current = getDynamicProperty(gameState.population, 'infectiousDiseaseReduction', 0);
+          setDynamicProperty(gameState.population, 'infectiousDiseaseReduction', current + Math.abs(value));
         }
         break;
         
       case 'pandemicResponse':
         // Improve pandemic response capability
         if (gameState.globalMetrics) {
-          (gameState.globalMetrics as any).pandemicPreparedness = 
-            Math.min(1.0, ((gameState.globalMetrics as any).pandemicPreparedness || 0) + value);
+          const current = getDynamicProperty(gameState.globalMetrics, 'pandemicPreparedness', 0);
+          setDynamicProperty(gameState.globalMetrics, 'pandemicPreparedness', Math.min(1.0, current + value));
         }
         break;
     }

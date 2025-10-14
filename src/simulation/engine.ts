@@ -553,14 +553,20 @@ export class SimulationEngine {
       updateTechnologicalRisk(state);
       
       // Phase 2A: Breakthrough Technologies
-      // Research, unlock, and deploy transformative technologies
-      try {
-        updateBreakthroughTechnologies(state, month);
-        checkCrisisResolution(state, month);
-      } catch (error) {
-        console.error(`\n❌ BREAKTHROUGH TECH ERROR: ${error}`);
-        console.error(error);
-      }
+      // DISABLED: Now handled by TechTreePhase (Phase 12.5) in orchestrator
+      // The old breakthroughTechnologies system was DOUBLE-APPLYING effects!
+      // - Phase 12.5: TechTreePhase → applyAllTechEffects() [NEW SYSTEM]
+      // - Line 558: updateBreakthroughTechnologies() → applyTechnologyEffects() [OLD SYSTEM]
+      // Both modified same properties (biodiversity, climate, pollution, meaning, etc.)
+      // Keeping the NEW system only, which has 70 tech with proper prereqs, costs, regional deployment
+      
+      // try {
+      //   updateBreakthroughTechnologies(state, month);
+      //   checkCrisisResolution(state, month);
+      // } catch (error) {
+      //   console.error(`\n❌ BREAKTHROUGH TECH ERROR: ${error}`);
+      //   console.error(error);
+      // }
       
       // Check for ACTUAL outcomes (not probabilities)
       if (checkActualOutcomes) {
