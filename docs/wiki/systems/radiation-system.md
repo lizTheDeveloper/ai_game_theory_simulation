@@ -839,100 +839,79 @@ triggerRadiationExposure(state.radiationSystem, state.currentMonth, targetRegion
 
 ---
 
-## Known Issues
+## Integration Complete (October 14, 2025)
 
-### CRITICAL: No Monthly Update Phase
+### ✅ FIXED: Monthly Update Phase Integrated
 
-**Status:** 🔴 **MAJOR BUG**
+**Status:** ✅ **COMPLETE**
 
-**Issue:** Radiation system has complete implementation but is **never updated after initial trigger**.
+**Fix Implemented:** Created `RadiationSystemPhase` and integrated with population/food/QoL systems.
 
-**Evidence:**
-```bash
-$ grep -r "updateRadiationSystem" src/simulation
-# No results (function only defined, never called)
+**Files Created/Modified:**
+1. **`src/simulation/engine/phases/RadiationSystemPhase.ts`** (NEW - 135 lines)
+   - Monthly updates for all active radiation exposures
+   - Cancer death accrual (years 5-40, peak at year 25)
+   - Birth defect tracking (3 generations)
+   - Contamination decay (exponential half-life formula)
+   - Integration with food security and QoL
 
-$ grep -r "RadiationPhase" src/simulation
-# No results (no phase exists)
-```
+2. **`src/simulation/engine/phases/index.ts`** (MODIFIED)
+   - Added `RadiationSystemPhase` export
 
-**Impact:**
-- ✅ Acute deaths counted (immediate)
-- ❌ Cancer deaths never accrue (stuck at 0)
-- ❌ Birth defects never accumulate
-- ❌ Contamination never decays (stays at 100% forever)
-- ❌ Regions never decontaminate (agriculture impossible forever)
+3. **`src/simulation/engine.ts`** (MODIFIED)
+   - Imported `RadiationSystemPhase`
+   - Registered phase in orchestrator (order: 252.5, after NuclearWinterPhase)
 
-**Expected Behavior:**
+4. **`src/types/population.ts`** (MODIFIED)
+   - Added `birthDefectsCount` field to `HumanPopulationSystem` interface
+
+**Functionality Now Working:**
+- ✅ Acute deaths counted immediately
+- ✅ **Cancer deaths accrue monthly** (years 5-40)
+- ✅ **Birth defects accumulate** (3 generations, 75 years)
+- ✅ **Contamination decays** exponentially (Cs-137 half-life: 30 years)
+- ✅ **Contaminated regions reduce food security** (agriculture impossible > 20% contamination)
+- ✅ **Cancer epidemic reduces QoL** (healthcare burden, psychological trauma)
+- ✅ **Population deaths tracked** (war category, since radiation is consequence of nuclear war)
+
+**Integration Example:**
 ```typescript
-// Month 0: Nuclear strike
-triggerRadiationExposure(...);  // ✅ WORKS
-system.totalRadiationDeaths = 80M; // Acute deaths
+// Month 0: Nuclear strike triggers radiation exposure
+triggerRadiationExposure(system, 0, 'Asia', 0.1, 1.0); // 100M exposed
 
-// Months 1-60: Acute phase
-updateRadiationSystem(...);  // ❌ NEVER CALLED
-// Should add more ARS deaths
+// Months 1-60: RadiationSystemPhase updates monthly
+// → Contamination decays
+// → Birth defects accumulate
+// → No cancer yet (latency period)
 
-// Months 60-480: Cancer latency
-updateRadiationSystem(...);  // ❌ NEVER CALLED
-// Should be tracking exposure, not adding deaths yet
-
-// Months 480+: Cancer deaths
-updateRadiationSystem(...);  // ❌ NEVER CALLED
-// Should add 50K-900K deaths/month (peak at year 25)
+// Months 60-480 (Years 5-40): Cancer deaths
+// → 50K-900K deaths/month (peak at year 25)
+// → Population reduced
+// → QoL impacted
+// → Food security reduced (contaminated farmland)
 ```
-
-**Fix Required:**
-
-1. Create `RadiationSystemPhase`:
-```typescript
-export class RadiationSystemPhase {
-  name = 'RadiationSystem';
-  order = 252.5; // After NuclearWinterPhase (252)
-
-  async execute(state: GameState): Promise<void> {
-    if (state.radiationSystem.activeExposures.length === 0) return;
-
-    const { deaths, birthDefects } = updateRadiationSystem(
-      state.radiationSystem,
-      state.currentMonth,
-      state.humanPopulationSystem.population
-    );
-
-    if (deaths > 0) {
-      state.humanPopulationSystem.population -= deaths;
-      state.humanPopulationSystem.deathsByCategory.war += deaths; // Or 'radiation' category
-    }
-
-    if (birthDefects > 0) {
-      state.humanPopulationSystem.birthDefectCount += birthDefects;
-      // Reduce birth rate or increase infant mortality
-    }
-  }
-}
-```
-
-2. Register phase in `src/simulation/engine.ts`
-3. Add death category tracking
-4. Integrate contamination with food security
-
-**Severity:** High (system 50% complete—design done, integration missing)
 
 ---
 
-### Medium Priority Issues
+### Remaining Enhancements (Medium Priority)
 
-**1. No Contamination → Food Security Link**
-- Contaminated regions should have reduced food production
-- Currently no penalty for farming in radioactive zones
+**1. Healthcare System Dependency**
+- Cancer survival depends on functional hospitals
+- ARS treatment requires medical resources
+- Collapsed healthcare → higher mortality
+- **Status:** Not implemented (current: no healthcare modifier)
 
-**2. No Population Migration**
+**2. Population Migration from Contamination**
 - Contaminated regions should trigger refugee crises
-- Currently population stays in irradiated areas
+- 10-30% of population attempts evacuation
+- Neighboring regions face overcrowding
+- **Status:** Not implemented (current: population stays in irradiated zones)
 
-**3. No Healthcare System Dependency**
-- Cancer treatment requires functional hospitals
-- Currently no modifier based on healthcare collapse
+**3. Psychological Effects Refinement**
+- Radiation fear reduces QoL even at safe levels
+- Social trauma from cancer epidemic
+- Generational trauma from birth defects
+- **Status:** Partially implemented (QoL reduction exists, but not fear-based)
 
 ---
 
@@ -1064,7 +1043,7 @@ export class RadiationSystemPhase {
 
 ---
 
-**Last Updated:** October 13, 2025
-**Documentation Status:** ✅ Complete (System Design) / ⚠️ Not Integrated (Monthly Updates)
+**Last Updated:** October 14, 2025
+**Documentation Status:** ✅ Complete and Integrated
 **Maintained by:** AI Assistant + User
 **Repository:** [ai_game_theory_simulation](https://github.com/anthropics/ai_game_theory_simulation)
