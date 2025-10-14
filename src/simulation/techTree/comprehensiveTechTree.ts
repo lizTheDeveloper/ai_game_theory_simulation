@@ -708,6 +708,30 @@ const ALL_TECH: TechDefinition[] = [
     },
   },
   {
+    id: 'ai_power_efficiency_communication',
+    name: 'AI Power Efficiency Communication',
+    description: 'Transparent reporting of AI energy efficiency gains, public education on compute benefits',
+    category: 'social',
+    status: 'unlocked', // Already available in 2025 (IEA, Epoch AI, Stanford AI Index data exists)
+    prerequisites: [],
+    minAICapability: 1.0,
+    researchMonthsRequired: 0, // Already researched
+    researchCost: 0,
+    deploymentCost: 10000, // Low cost - mostly communication and reporting
+    deploymentMonthsRequired: 12,
+    deploymentLevel: 0.05, // 5% initial deployment in 2025 (limited public awareness)
+    effects: {
+      trustBonus: 0.01, // +1% trust/month when demonstrating efficiency gains
+      publicAwarenessBonus: 0.02, // Increases public understanding of AI benefits
+      paranoiaReduction: 0.02, // Transparency reduces fear
+    },
+    citations: [
+      'IEA Energy Efficiency 2024',
+      'Epoch AI Compute Trends',
+      'Stanford AI Index 2024',
+    ],
+  },
+  {
     id: 'education_personalization',
     name: 'Personalized Education',
     description: 'AI tutors, adaptive curricula, lifelong learning',
