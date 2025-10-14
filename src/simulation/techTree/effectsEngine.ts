@@ -109,6 +109,7 @@ function isGlobalEffect(effectName: string): boolean {
     'socialConnectionBonus',
     'trustBonus',
     'paranoiaReduction',
+    'publicAwarenessBonus',
     'biodiversityBonus',
     'extinctionRateReduction',
     'oceanPHBonus',
@@ -286,6 +287,17 @@ function applyGlobalEffects(
           gameState.society.paranoia = Math.max(
             0,
             gameState.society.paranoia - value * 0.01
+          );
+        }
+        break;
+        
+      case 'publicAwarenessBonus':
+        // Increase public awareness/understanding of AI benefits
+        // This could map to education or trust
+        if (gameState.globalMetrics) {
+          gameState.globalMetrics.publicTrust = Math.min(
+            1.0,
+            (gameState.globalMetrics.publicTrust || 0.5) + value * 0.005
           );
         }
         break;

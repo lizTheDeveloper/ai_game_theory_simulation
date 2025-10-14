@@ -88,7 +88,7 @@ export interface HegemonicPower {
   // === ENVIRONMENTAL DEBT ===
   historicalEmissions: number;           // Cumulative tons CO2 since 1850
   currentEmissions: number;              // Current tons CO2 per year
-  climateDe bt: number;                   // [0, 1] Responsibility vs vulnerability ratio
+  climateDebt: number;                   // [0, 1] Responsibility vs vulnerability ratio
   climateReparationsPaid: number;        // $B paid to vulnerable regions
 
   // === WEALTH & INEQUALITY ===
@@ -221,7 +221,7 @@ export interface ColonialHistory {
   colonialStartYear: number;                  // When colonization began
   colonialEndYear: number;                    // When independence occurred
   extractionDuration: number;                 // Years of colonial extraction
-  cumulativeWealth Extracted: number;          // Total $B extracted during colonialism
+  cumulativeWealthExtracted: number;          // Total $B extracted during colonialism
   institutionalDamage: number;                // [0, 1] Lasting institutional weakness
   culturalTrauma: number;                     // [0, 1] Psychological/cultural impact
 }
