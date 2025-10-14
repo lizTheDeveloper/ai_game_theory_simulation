@@ -24,16 +24,41 @@ import { getEnergyConstraintMultiplier } from './powerGeneration';
  * 
  * Reference compute: 30 PF (baseline for 1.0x multiplier)
  */
-export function calculateComputeScalingMultiplier(allocatedCompute: number): number {
+export function calculateComputeScalingMultiplier(
+  allocatedCompute: number,
+  state?: GameState
+): number {
   const REFERENCE_COMPUTE = 30; // PetaFLOPs baseline
   const SCALING_EXPONENT = 0.34; // Chinchilla scaling law exponent
   
-  if (allocatedCompute <= 0) {
+  // ENHANCED: Include volunteer research "virtual compute"
+  let totalEffectiveCompute = allocatedCompute;
+  
+  if (state) {
+    const { calculateVolunteerResearchContribution } = require('./volunteerResearch');
+    const volunteerCompute = calculateVolunteerResearchContribution(state);
+    
+    if (volunteerCompute > 10) {
+      // Volunteers are less efficient than AI compute (10:1 ratio)
+      // But they provide diverse perspectives, creativity, and intuition
+      // Good for certain types of problems (classification, pattern recognition, creativity)
+      totalEffectiveCompute += volunteerCompute * 0.1;
+      
+      // Log significant contributions (probabilistic to avoid spam)
+      if (Math.random() < 0.05 && volunteerCompute > 100) {
+        const { logVolunteerContribution, applyVolunteerResearchBenefits } = require('./volunteerResearch');
+        logVolunteerContribution(state, volunteerCompute, allocatedCompute);
+        applyVolunteerResearchBenefits(state, volunteerCompute);
+      }
+    }
+  }
+  
+  if (totalEffectiveCompute <= 0) {
     return 0.1; // Minimal compute → minimal progress
   }
   
   // Scaling law: (compute / reference)^α
-  const multiplier = Math.pow(allocatedCompute / REFERENCE_COMPUTE, SCALING_EXPONENT);
+  const multiplier = Math.pow(totalEffectiveCompute / REFERENCE_COMPUTE, SCALING_EXPONENT);
   
   // Cap at 10x to avoid runaway (even 1000 PF shouldn't give infinite speed)
   return Math.min(multiplier, 10.0);
@@ -63,8 +88,8 @@ export function calculateDimensionGrowth(
   allocatedCompute: number = 30, // Phase 4: Add compute parameter (default for backwards compat)
   state?: GameState // TIER 4.4: Add state for energy constraints
 ): number {
-  // Phase 4: Compute scaling multiplier (CRITICAL for fixing slow growth)
-  const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
+  // Phase 4: Compute scaling multiplier (CRITICAL for fixing slow growth + volunteer research)
+  const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute, state);
 
   // TIER 4.4: Energy constraint multiplier (physical reality check on exponential growth)
   const energyMultiplier = state ? getEnergyConstraintMultiplier(state) : 1.0;
@@ -124,8 +149,8 @@ export function calculateResearchGrowth(
   allocatedCompute: number = 30, // Phase 4: Add compute parameter
   state?: GameState // TIER 4.4: Add state for energy constraints
 ): number {
-  // Phase 4: Compute scaling multiplier
-  const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute);
+  // Phase 4: Compute scaling multiplier (includes volunteer research)
+  const computeMultiplier = calculateComputeScalingMultiplier(allocatedCompute, state);
 
   // TIER 4.4: Energy constraint multiplier (physical reality check on exponential growth)
   const energyMultiplier = state ? getEnergyConstraintMultiplier(state) : 1.0;
