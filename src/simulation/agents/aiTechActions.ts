@@ -8,7 +8,8 @@
 
 import { GameState, GameAction, ActionResult, AIAgent } from '@/types/game';
 import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
-import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
+import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
+import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
 
 /**
  * Deploy Technology Action
@@ -28,6 +29,9 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     // Need tech tree state
     const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
     if (!techTreeState) return false;
+    
+    // Ensure proper types after serialization
+    ensureTechTreeTypes(techTreeState);
     
     // Need to have an organization with revenue
     if (!agent.organizationId) return false;
@@ -151,6 +155,9 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     
     const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
     if (!techTreeState) return false;
+    
+    // Ensure proper types after serialization
+    ensureTechTreeTypes(techTreeState);
     
     // Look for deployed safety/detection tech to sabotage
     const threateningTech = getAllTech().filter(t => 
@@ -354,7 +361,7 @@ function selectTechToDeploy(
  */
 function selectDeploymentRegion(
   agent: AIAgent,
-  tech: any,
+  tech: TechDefinition,
   state: GameState
 ): string {
   // Highly aligned AIs deploy globally
@@ -362,10 +369,36 @@ function selectDeploymentRegion(
     return 'global';
   }
   
-  // Misaligned AIs deploy in specific regions to maximize their influence
-  // TODO: Add regional selection logic based on org location
+  // Get optimal deployment regions for this tech
+  const optimalRegions = getOptimalDeploymentRegions(tech, state);
   
-  return 'global'; // Default for now
+  if (optimalRegions.length === 0) {
+    return 'global'; // Fallback to global
+  }
+  
+  // Calculate priority for each optimal region
+  const regionPriorities = optimalRegions.map(region => ({
+    region,
+    priority: getDeploymentPriority(tech, region, state)
+  }));
+  
+  // Sort by priority (highest first)
+  regionPriorities.sort((a, b) => b.priority - a.priority);
+  
+  // Select region based on AI alignment and strategy
+  if (agent.alignment > 0.5) {
+    // Aligned AIs choose highest priority region (most beneficial)
+    return regionPriorities[0].region;
+  } else if (agent.alignment > 0.3) {
+    // Neutral AIs choose randomly from top 3 regions
+    const topRegions = regionPriorities.slice(0, 3);
+    const randomIndex = Math.floor(Math.random() * topRegions.length);
+    return topRegions[randomIndex].region;
+  } else {
+    // Misaligned AIs choose strategically (regions where they can cause most harm)
+    // For now, choose the region with highest priority (they want to control important regions)
+    return regionPriorities[0].region;
+  }
 }
 
 /**

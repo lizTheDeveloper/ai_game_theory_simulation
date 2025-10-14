@@ -51,6 +51,7 @@ export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { CountryPopulationPhase } from './CountryPopulationPhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
 export { NuclearWinterPhase } from './NuclearWinterPhase';
+export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { FamineSystemPhase } from './FamineSystemPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';

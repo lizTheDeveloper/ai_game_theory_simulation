@@ -183,15 +183,18 @@ function varyInitialState(
   
   // Vary AI agent properties
   if (variation.aiCapability || variation.aiAlignment) {
-    variedState.aiAgents = variedState.aiAgents.map((ai: any) => ({
-      ...ai,
-      capability: variation.aiCapability 
-        ? gaussianRandom(variation.aiCapability.mean, variation.aiCapability.stdDev)
-        : ai.capability,
-      alignment: variation.aiAlignment
-        ? Math.max(0, Math.min(1, gaussianRandom(variation.aiAlignment.mean, variation.aiAlignment.stdDev)))
-        : ai.alignment
-    }));
+    variedState.aiAgents = variedState.aiAgents.map((ai: unknown) => {
+      const agent = ai as { capability: number; alignment: number };
+      return {
+        ...agent,
+        capability: variation.aiCapability 
+          ? gaussianRandom(variation.aiCapability.mean, variation.aiCapability.stdDev)
+          : agent.capability,
+        alignment: variation.aiAlignment
+          ? Math.max(0, Math.min(1, gaussianRandom(variation.aiAlignment.mean, variation.aiAlignment.stdDev)))
+          : agent.alignment
+      };
+    });
   }
   
   // Vary society properties

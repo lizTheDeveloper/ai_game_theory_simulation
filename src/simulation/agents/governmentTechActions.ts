@@ -12,7 +12,8 @@
 
 import { GameState, GameAction, ActionResult } from '@/types/game';
 import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
-import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
+import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
+import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
 
 /**
  * National tech deployment priorities
@@ -99,6 +100,9 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
     const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
     if (!techTreeState) return false;
     
+    // Ensure proper types after serialization
+    ensureTechTreeTypes(techTreeState);
+    
     // Need unlocked tech
     const unlockedTech = getAllTech().filter(t => 
       techTreeState.unlockedTech.has(t.id) &&
@@ -144,12 +148,15 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
     const crisisMultiplier = getCrisisUrgencyMultiplier(selectedTech, state);
     const investment = priorities.monthlyBudget * 1000 * crisisMultiplier; // Convert $B to $M
     
+    // Determine target region based on nation and tech optimality
+    const targetRegion = selectGovernmentDeploymentRegion(nation, selectedTech, state);
+    
     // Create deployment action
     const deploymentAction: TechDeploymentAction = {
       techId: selectedTech.id,
       deployedBy: nation,
       investment,
-      targetRegion: nation,  // Nations deploy primarily in their own region
+      targetRegion,
       month: state.currentMonth,
     };
     
@@ -323,6 +330,127 @@ function isCrisisActiveForCategory(category: string, state: GameState): boolean 
     default:
       return false;
   }
+}
+
+/**
+ * Select which region a government should deploy tech in
+ */
+function selectGovernmentDeploymentRegion(
+  nation: string,
+  tech: any,
+  state: GameState
+): string {
+  // Map nations to their primary regions
+  const nationToRegion: Record<string, string> = {
+    'United States': 'North America',
+    'China': 'Asia',
+    'European Union': 'Europe',
+    'Saudi Arabia': 'Asia', // Middle East is part of Asia in our regional system
+    'India': 'Asia',
+    'Brazil': 'South America',
+    'Russia': 'Europe',
+    'Japan': 'Asia',
+    'Germany': 'Europe',
+    'United Kingdom': 'Europe',
+    'France': 'Europe',
+    'Canada': 'North America',
+    'Australia': 'Oceania',
+    'South Korea': 'Asia',
+    'Italy': 'Europe',
+    'Spain': 'Europe',
+    'Netherlands': 'Europe',
+    'Sweden': 'Europe',
+    'Norway': 'Europe',
+    'Denmark': 'Europe',
+    'Finland': 'Europe',
+    'Switzerland': 'Europe',
+    'Austria': 'Europe',
+    'Belgium': 'Europe',
+    'Poland': 'Europe',
+    'Czech Republic': 'Europe',
+    'Hungary': 'Europe',
+    'Portugal': 'Europe',
+    'Greece': 'Europe',
+    'Ireland': 'Europe',
+    'New Zealand': 'Oceania',
+    'Israel': 'Asia',
+    'Turkey': 'Europe',
+    'South Africa': 'Africa',
+    'Nigeria': 'Africa',
+    'Egypt': 'Africa',
+    'Kenya': 'Africa',
+    'Morocco': 'Africa',
+    'Ethiopia': 'Africa',
+    'Ghana': 'Africa',
+    'Tanzania': 'Africa',
+    'Uganda': 'Africa',
+    'Algeria': 'Africa',
+    'Sudan': 'Africa',
+    'Angola': 'Africa',
+    'Mozambique': 'Africa',
+    'Madagascar': 'Africa',
+    'Cameroon': 'Africa',
+    'Côte d\'Ivoire': 'Africa',
+    'Niger': 'Africa',
+    'Burkina Faso': 'Africa',
+    'Mali': 'Africa',
+    'Malawi': 'Africa',
+    'Zambia': 'Africa',
+    'Somalia': 'Africa',
+    'Senegal': 'Africa',
+    'Chad': 'Africa',
+    'Zimbabwe': 'Africa',
+    'Guinea': 'Africa',
+    'Rwanda': 'Africa',
+    'Benin': 'Africa',
+    'Burundi': 'Africa',
+    'Tunisia': 'Africa',
+    'South Sudan': 'Africa',
+    'Togo': 'Africa',
+    'Sierra Leone': 'Africa',
+    'Libya': 'Africa',
+    'Liberia': 'Africa',
+    'Central African Republic': 'Africa',
+    'Mauritania': 'Africa',
+    'Eritrea': 'Africa',
+    'Gambia': 'Africa',
+    'Botswana': 'Africa',
+    'Gabon': 'Africa',
+    'Lesotho': 'Africa',
+    'Guinea-Bissau': 'Africa',
+    'Equatorial Guinea': 'Africa',
+    'Mauritius': 'Africa',
+    'Eswatini': 'Africa',
+    'Djibouti': 'Africa',
+    'Comoros': 'Africa',
+    'Cape Verde': 'Africa',
+    'São Tomé and Príncipe': 'Africa',
+    'Seychelles': 'Africa',
+  };
+  
+  const primaryRegion = nationToRegion[nation] || 'global';
+  
+  // Get optimal deployment regions for this tech
+  const optimalRegions = getOptimalDeploymentRegions(tech, state);
+  
+  // If the nation's primary region is optimal, deploy there
+  if (optimalRegions.includes(primaryRegion)) {
+    return primaryRegion;
+  }
+  
+  // If primary region is not optimal, choose the best optimal region
+  if (optimalRegions.length > 0) {
+    const regionPriorities = optimalRegions.map(region => ({
+      region,
+      priority: getDeploymentPriority(tech, region, state)
+    }));
+    
+    regionPriorities.sort((a, b) => b.priority - a.priority);
+    return regionPriorities[0].region;
+  }
+  
+  // Fallback to primary region or global
+  return primaryRegion === 'global' ? 'global' : primaryRegion;
 }
 
 /**

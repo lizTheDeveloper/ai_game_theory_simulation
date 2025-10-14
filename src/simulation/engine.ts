@@ -74,6 +74,7 @@ import {
   CountryPopulationPhase,
   OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
   NuclearWinterPhase,  // TIER 1.7.4 (Oct 13, 2025): Long-term nuclear war effects
+  RadiationSystemPhase,  // TIER 1.7 (Oct 14, 2025): Radiation health effects (cancer, birth defects, contamination)
   PlanetaryBoundariesPhase,
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   DystopiaProgressionPhase,
@@ -348,6 +349,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new CountryPopulationPhase());
     this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
     this.orchestrator.registerPhase(new NuclearWinterPhase());  // TIER 1.7.4: Update nuclear winter effects
+    this.orchestrator.registerPhase(new RadiationSystemPhase());  // TIER 1.7: Radiation health effects (cancer, birth defects, contamination)
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
@@ -553,14 +555,20 @@ export class SimulationEngine {
       updateTechnologicalRisk(state);
       
       // Phase 2A: Breakthrough Technologies
-      // Research, unlock, and deploy transformative technologies
-      try {
-        updateBreakthroughTechnologies(state, month);
-        checkCrisisResolution(state, month);
-      } catch (error) {
-        console.error(`\n❌ BREAKTHROUGH TECH ERROR: ${error}`);
-        console.error(error);
-      }
+      // DISABLED: Now handled by TechTreePhase (Phase 12.5) in orchestrator
+      // The old breakthroughTechnologies system was DOUBLE-APPLYING effects!
+      // - Phase 12.5: TechTreePhase → applyAllTechEffects() [NEW SYSTEM]
+      // - Line 558: updateBreakthroughTechnologies() → applyTechnologyEffects() [OLD SYSTEM]
+      // Both modified same properties (biodiversity, climate, pollution, meaning, etc.)
+      // Keeping the NEW system only, which has 70 tech with proper prereqs, costs, regional deployment
+      
+      // try {
+      //   updateBreakthroughTechnologies(state, month);
+      //   checkCrisisResolution(state, month);
+      // } catch (error) {
+      //   console.error(`\n❌ BREAKTHROUGH TECH ERROR: ${error}`);
+      //   console.error(error);
+      // }
       
       // Check for ACTUAL outcomes (not probabilities)
       if (checkActualOutcomes) {
