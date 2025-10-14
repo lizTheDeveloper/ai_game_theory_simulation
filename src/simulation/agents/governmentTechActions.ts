@@ -12,7 +12,7 @@
 
 import { GameState, GameAction, ActionResult } from '@/types/game';
 import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
-import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
+import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
 
 /**
  * National tech deployment priorities
@@ -98,6 +98,9 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
   canExecute: (state) => {
     const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
     if (!techTreeState) return false;
+    
+    // Ensure proper types after serialization
+    ensureTechTreeTypes(techTreeState);
     
     // Need unlocked tech
     const unlockedTech = getAllTech().filter(t => 

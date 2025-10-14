@@ -100,6 +100,22 @@ export function initializeTechTreeState(): TechTreeState {
 }
 
 /**
+ * Ensure tech tree state has proper types after serialization
+ * Sets and Maps become plain objects when serialized, need to reconstruct
+ */
+export function ensureTechTreeTypes(techTreeState: TechTreeState): void {
+  if (!(techTreeState.unlockedTech instanceof Set)) {
+    techTreeState.unlockedTech = new Set(techTreeState.unlockedTech as any);
+  }
+  if (!(techTreeState.researchProgress instanceof Map)) {
+    techTreeState.researchProgress = new Map(Object.entries(techTreeState.researchProgress as any));
+  }
+  if (!(techTreeState.regionalDeployment instanceof Map)) {
+    techTreeState.regionalDeployment = new Map(Object.entries(techTreeState.regionalDeployment as any));
+  }
+}
+
+/**
  * Update tech tree each month
  * 
  * 1. Check for new tech unlocks
@@ -114,15 +130,7 @@ export function updateTechTree(
   const unlockEvents: TechUnlockEvent[] = [];
   
   // Ensure unlockedTech is a Set (can become plain object after serialization)
-  if (!(techTreeState.unlockedTech instanceof Set)) {
-    techTreeState.unlockedTech = new Set(techTreeState.unlockedTech as any);
-  }
-  if (!(techTreeState.researchProgress instanceof Map)) {
-    techTreeState.researchProgress = new Map(Object.entries(techTreeState.researchProgress as any));
-  }
-  if (!(techTreeState.regionalDeployment instanceof Map)) {
-    techTreeState.regionalDeployment = new Map(Object.entries(techTreeState.regionalDeployment as any));
-  }
+  ensureTechTreeTypes(techTreeState);
   
   // 1. Check for tech unlocks
   const lockedTech = getAllTech().filter(t => !techTreeState.unlockedTech.has(t.id));
