@@ -62,8 +62,10 @@
 
 **All technologies pre-unlocked at realistic 2025 deployment levels!**
 
-### ✅ **TIER 3: Planetary Boundaries (PARTIAL - 1 of 9 complete)**
+### ✅ **TIER 3: Planetary Boundaries (PARTIAL - 3 complete, 6 remaining)**
 - 3.1 Tipping Point Cascade System (9 boundaries, interconnected feedback, tipping point activation, 48-month mortality ramp)
+- 3.2 Land Use & Biodiversity Crisis (forest cover 62%→75%, extinction 100x→1000x, 3 feedback loops)
+- 3.3 Ozone Recovery (Montreal Protocol success, 285→290 DU by 2066, rocket launch threats)
 
 ### ✅ **TIER 4.3: Information Warfare & Epistemology (COMPLETE)**
 - Truth decay (deepfakes grow 0.5-4%/month with AI capability)
@@ -1328,68 +1330,87 @@ Updated `breakthroughTechnologies.ts` (line 299):
 
 ---
 
-## 3.2 **Land Use & Biodiversity Crisis** 🌳
-**File:** `plans/kate-raworth-planetary-boundaries-research.md` (§Land System Change, Biosphere Integrity)  
-**Priority:** MEDIUM-HIGH  
-**Dev Time:** ~4 hours  
+## 3.2 **Land Use & Biodiversity Crisis** 🌳 ✅ COMPLETE
+**File:** `src/simulation/planetaryBoundaries.ts`, `src/types/planetaryBoundaries.ts`
+**Status:** ✅ FULLY IMPLEMENTED (Oct 12, 2025)
+**Dev Time:** ~4 hours (actual)
 
-**Current Status:**
-- **Land Use:** 62% forest remaining (need 75%)
-- **Biosphere:** 100-1000x natural extinction rate
+**2025 Baseline:**
+- **Forest Cover:** 62% (need 75% safe boundary)
+- **Extinction Rate:** 100x natural (will grow to 1000x)
+- **Habitat Loss:** 38%
+- **Carbon Sink Loss:** 1.17x climate acceleration
 
-**Implementation:**
-- `landUse.forestCover` [0,1]
-  - Deforestation → carbon sink loss → climate acceleration
-  - Habitat loss → biodiversity crisis
-- `biosphere.extinctionRate` [extinctions per million species-years]
-  - Baseline: 10 (natural rate)
-  - Current: 100-1000x baseline
-- **Feedback loops:**
-  - Deforestation → climate change → more fires → more deforestation
-  - Extinction → ecosystem collapse → food web breakdown → more extinctions
+**Implemented Features:** ✅
+- ✅ `LandUseSystem` state tracking
+- ✅ Forest cover tracking (deforestation vs reforestation rates)
+- ✅ Extinction rate tracking (100x→1000x natural baseline)
+- ✅ Habitat loss percentage calculation
+- ✅ **Feedback Loop 1:** Deforestation → carbon sink loss → climate acceleration (up to 3x multiplier)
+- ✅ **Feedback Loop 2:** Habitat loss → biodiversity crisis → extinction acceleration (0.5x→2.5x)
+- ✅ **Feedback Loop 3:** Extinction → ecosystem collapse → more extinctions (food web breakdown)
+- ✅ Critical ecosystem collapse events (5% chance when risk > 80%)
+- ✅ Updates `land_system_change` planetary boundary automatically
+- ✅ Annual logging with full metrics
 
-**Expected Impact:**
-- Adds realism to environmental system
-- Interacts with climate, agriculture, resource use
-- Motivates rewilding, protected areas, de-extinction
+**Actual Impact:**
+- Models interconnected deforestation-climate-extinction feedbacks
+- Extinction rate compounds realistically (will hit 1000x if unchecked)
+- Carbon sink loss amplifies climate change (realistic mechanism)
+- Critical ecosystem collapses cause -10% biodiversity, -5% resources
+- Motivates rewilding and de-extinction breakthrough technologies
 
 ---
 
-## 3.3 **Ozone Recovery (Policy Success Story)** ✨
-**File:** `plans/kate-raworth-planetary-boundaries-research.md` (§Ozone Layer)  
-**Priority:** LOW (Working well, add as success story)  
-**Dev Time:** ~2 hours  
+## 3.3 **Ozone Recovery (Policy Success Story)** ✨ ✅ COMPLETE
+**File:** `src/simulation/planetaryBoundaries.ts`, `src/types/planetaryBoundaries.ts`
+**Status:** ✅ FULLY IMPLEMENTED (Oct 12, 2025)
+**Dev Time:** ~2 hours (actual)
 
 **Why Important:**
 - **PROOF THAT POLICY WORKS!**
-- Montreal Protocol = Biggest environmental success
+- Montreal Protocol = Biggest environmental success in history
 - 2024 ozone hole: 7th smallest since recovery began (1992)
 - On track for full recovery by 2066
+- Inspiration for AI treaties, climate agreements
 
 **Research Backing:**
 - **WMO (Sept 2025):** Ozone recovery confirmed
-- **NOAA/NASA (Oct 2024):** Project full recovery by 2066
+- **NOAA/NASA (Oct 2024):** Full recovery by 2066
 - **MIT (March 2025):** Healing is direct result of global efforts
 - **Copernicus (March 2025):** Ozone hole may disappear by 2066
+- **Nature (2025):** Rocket launches could slow recovery
 
-**Implementation:**
-- `ozone.stratosphericO3` [Dobson Units]
-  - Baseline: 290 DU
-  - Boundary: 275 DU (5% reduction)
-  - Current: 285 DU (improving!)
-- **Montreal Protocol policy:**
-  - Phased out nearly 100 ozone-depleting substances
-  - CFCs (refrigeration, aerosols), Halons (fire suppression)
-- **⚠️ New threat: Rocket launches**
-  - Nature (2025): Near-future launches could slow recovery
-  - Solid rocket motors produce chlorine, black carbon
-  - "Ambitious growth" scenario: 0.29% loss
+**2025 Baseline:**
+- **Ozone Level:** 285 DU (target: 290 DU by 2066)
+- **Ozone Hole:** 10M km² (shrinking at 0.1%/month)
+- **Recovery Progress:** 65% complete
+- **CFC Phase-Out:** 99% complete
+- **Halon Phase-Out:** 95% complete
+- **Compliance:** 98% international compliance
 
-**Expected Impact:**
-- Demonstrates international cooperation can work
-- Inspiration for AI treaties, climate action
-- Shows reversibility is possible (rare!)
-- But also shows new threats emerge (rockets)
+**Implemented Features:** ✅
+- ✅ `OzoneRecoverySystem` state tracking
+- ✅ Stratospheric ozone tracking (Dobson Units)
+- ✅ Linear recovery to 290 DU by 2066
+- ✅ Montreal Protocol modeling (CFC/halon phase-out)
+- ✅ Ozone hole size tracking (shrinking)
+- ✅ Recovery progress percentage
+- ✅ **NEW THREAT:** Rocket launch impact modeling
+  - Chlorine emissions from solid rocket motors
+  - Black carbon warming effects
+  - 0.01%/year growth in impact (SpaceX scaling)
+  - Up to 30% slowdown in recovery rate
+- ✅ Policy inspiration effect (demonstrates cooperation works)
+- ✅ Updates `stratospheric_ozone` planetary boundary
+- ✅ Annual logging with full metrics
+
+**Actual Impact:**
+- Demonstrates international cooperation CAN WORK
+- Provides template for AI safety treaties
+- Shows environmental recovery is possible (rare!)
+- But also models new emerging threats (rocket industry)
+- Boosts confidence in policy solutions
 
 ---
 
