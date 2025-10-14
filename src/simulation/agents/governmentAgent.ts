@@ -45,45 +45,42 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     },
     
     execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
       // Track major policy usage
-      newState.government.lastMajorPolicyMonth = newState.currentMonth;
-      newState.government.majorPoliciesThisYear += 1;
-      
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+
       // Set UBI variant
-      newState.government.structuralChoices.ubiVariant = 'generous';
-      
+      state.government.structuralChoices.ubiVariant = 'generous';
+
       const effects = calculateUBIVariantEffects('generous', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
-      
+
       // Major economic transition advancement
-      newState.globalMetrics.economicTransitionStage = Math.max(3.0, 
-        newState.globalMetrics.economicTransitionStage + effects.economicStageBonus);
-      
+      state.globalMetrics.economicTransitionStage = Math.max(3.0,
+        state.globalMetrics.economicTransitionStage + effects.economicStageBonus);
+
       // Significant improvements
-      newState.globalMetrics.wealthDistribution = Math.min(1.0, 
-        newState.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
-      
+      state.globalMetrics.wealthDistribution = Math.min(1.0,
+        state.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
+
       // UBI enables faster social adaptation
-      newState.society.socialAdaptation = Math.min(0.9, 
-        newState.society.socialAdaptation + effects.adaptationRate);
-      
+      state.society.socialAdaptation = Math.min(0.9,
+        state.society.socialAdaptation + effects.adaptationRate);
+
       // Reduces unemployment stress
-      const trustImprovement = Math.min(0.3, newState.society.unemploymentLevel * 0.4);
-      newState.society.trustInAI += trustImprovement;
-      
+      const trustImprovement = Math.min(0.3, state.society.unemploymentLevel * 0.4);
+      state.society.trustInAI += trustImprovement;
+
       // Legitimacy boost
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + effects.legitimacyBonus);
-      
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+
       // High fiscal cost
-      newState.globalMetrics.socialStability -= effects.fiscalCost * 0.5; // Partially offset by social benefits
-      
-      newState.government.activeRegulations.push('Generous Universal Basic Income');
-      
+      state.globalMetrics.socialStability -= effects.fiscalCost * 0.5; // Partially offset by social benefits
+
+      state.government.activeRegulations.push('Generous Universal Basic Income');
+
       return {
         success: true,
-        newState,
-        effects: { 
+        effects: {
           economic_stage: effects.economicStageBonus,
           wealth_distribution: effects.wealthDistributionBonus,
           social_adaptation: effects.adaptationRate,
@@ -100,7 +97,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           description: 'Government establishes generous universal basic income. Fast social adaptation expected, post-scarcity path opening. High fiscal burden.',
           effects: { ubi_program: 1 }
         }],
-        message: `Generous UBI implemented - Economic stage advanced to ${newState.globalMetrics.economicTransitionStage.toFixed(1)}`
+        message: `Generous UBI implemented - Economic stage advanced to ${state.globalMetrics.economicTransitionStage.toFixed(1)}`
       };
     }
   },
@@ -123,41 +120,38 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     },
     
     execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
       // Track major policy usage
-      newState.government.lastMajorPolicyMonth = newState.currentMonth;
-      newState.government.majorPoliciesThisYear += 1;
-      
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+
       // Set UBI variant
-      newState.government.structuralChoices.ubiVariant = 'means_tested';
-      
+      state.government.structuralChoices.ubiVariant = 'means_tested';
+
       const effects = calculateUBIVariantEffects('means_tested', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
-      
+
       // Moderate economic transition advancement
-      newState.globalMetrics.economicTransitionStage = Math.min(3.5,
-        newState.globalMetrics.economicTransitionStage + effects.economicStageBonus);
-      
+      state.globalMetrics.economicTransitionStage = Math.min(3.5,
+        state.globalMetrics.economicTransitionStage + effects.economicStageBonus);
+
       // Moderate improvements
-      newState.globalMetrics.wealthDistribution = Math.min(1.0, 
-        newState.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
-      
+      state.globalMetrics.wealthDistribution = Math.min(1.0,
+        state.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
+
       // Slower social adaptation
-      newState.society.socialAdaptation = Math.min(0.9, 
-        newState.society.socialAdaptation + effects.adaptationRate);
-      
+      state.society.socialAdaptation = Math.min(0.9,
+        state.society.socialAdaptation + effects.adaptationRate);
+
       // Modest legitimacy impact
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + effects.legitimacyBonus);
-      
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+
       // Medium fiscal cost
-      newState.globalMetrics.socialStability -= effects.fiscalCost * 0.7;
-      
-      newState.government.activeRegulations.push('Means-Tested Benefits Program');
-      
+      state.globalMetrics.socialStability -= effects.fiscalCost * 0.7;
+
+      state.government.activeRegulations.push('Means-Tested Benefits Program');
+
       return {
         success: true,
-        newState,
-        effects: { 
+        effects: {
           economic_stage: effects.economicStageBonus,
           wealth_distribution: effects.wealthDistributionBonus,
           social_adaptation: effects.adaptationRate,
@@ -173,7 +167,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           description: 'Government implements targeted benefits for displaced workers. Partial solution with mixed public reception. Slower adaptation expected.',
           effects: { benefits_program: 1 }
         }],
-        message: `Means-tested benefits implemented - Gradual transition to stage ${newState.globalMetrics.economicTransitionStage.toFixed(1)}`
+        message: `Means-tested benefits implemented - Gradual transition to stage ${state.globalMetrics.economicTransitionStage.toFixed(1)}`
       };
     }
   },
@@ -195,41 +189,39 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              canTakeMajorPolicy;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Track major policy usage
-      newState.government.lastMajorPolicyMonth = newState.currentMonth;
-      newState.government.majorPoliciesThisYear += 1;
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
       
       // Set UBI variant
-      newState.government.structuralChoices.ubiVariant = 'job_guarantee';
+      state.government.structuralChoices.ubiVariant = 'job_guarantee';
       
       const effects = calculateUBIVariantEffects('job_guarantee', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
       
       // Slow economic transition (gets stuck)
-      newState.globalMetrics.economicTransitionStage = Math.min(2.8,
-        newState.globalMetrics.economicTransitionStage + effects.economicStageBonus);
+      state.globalMetrics.economicTransitionStage = Math.min(2.8,
+        state.globalMetrics.economicTransitionStage + effects.economicStageBonus);
       
       // Limited improvements
-      newState.globalMetrics.wealthDistribution = Math.min(1.0, 
-        newState.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
+      state.globalMetrics.wealthDistribution = Math.min(1.0, 
+        state.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
       
       // Very slow social adaptation (maintains old paradigm)
-      newState.society.socialAdaptation = Math.min(0.9, 
-        newState.society.socialAdaptation + effects.adaptationRate);
+      state.society.socialAdaptation = Math.min(0.9, 
+        state.society.socialAdaptation + effects.adaptationRate);
       
       // Legitimacy boost (satisfies work ethic values)
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + effects.legitimacyBonus);
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
       
       // Medium fiscal cost
-      newState.globalMetrics.socialStability -= effects.fiscalCost * 0.6;
+      state.globalMetrics.socialStability -= effects.fiscalCost * 0.6;
       
-      newState.government.activeRegulations.push('Job Guarantee Program');
+      state.government.activeRegulations.push('Job Guarantee Program');
       
       return {
         success: true,
-        newState,
+        
         effects: { 
           economic_stage: effects.economicStageBonus,
           wealth_distribution: effects.wealthDistributionBonus,
@@ -247,7 +239,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           description: 'Government guarantees jobs for all displaced workers. Maintains work paradigm but delays post-scarcity transition. Very slow adaptation expected.',
           effects: { job_program: 1 }
         }],
-        message: `Job guarantee program implemented - Stuck at stage ${newState.globalMetrics.economicTransitionStage.toFixed(1)}`
+        message: `Job guarantee program implemented - Stuck at stage ${state.globalMetrics.economicTransitionStage.toFixed(1)}`
       };
     }
   },
@@ -264,28 +256,26 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              state.government.structuralChoices.regulationType === 'none';
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Set regulation type
-      newState.government.structuralChoices.regulationType = 'large_companies';
+      state.government.structuralChoices.regulationType = 'large_companies';
       
       const effects = calculateRegulationStructuralEffects('large_companies', state);
       
-      newState.government.activeRegulations.push('Large Company AI Safety Standards');
-      newState.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
-      newState.government.regulationCount += 1;
-      newState.government.oversightLevel = Math.min(10, newState.government.oversightLevel + 0.5);
+      state.government.activeRegulations.push('Large Company AI Safety Standards');
+      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      state.government.regulationCount += 1;
+      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.5);
       
       // Legitimacy boost - popular to regulate big tech
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.1);
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.1);
       
       // Economic cost (low)
-      newState.globalMetrics.socialStability -= effects.enforcementCost;
+      state.globalMetrics.socialStability -= effects.enforcementCost;
       
       return {
         success: true,
-        newState,
+        
         effects: { 
           control_increase: 0.2 * effects.effectivenessMultiplier,
           legitimacy_boost: 0.1,
@@ -319,32 +309,30 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              state.government.structuralChoices.regulationType === 'none';
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Set regulation type
-      newState.government.structuralChoices.regulationType = 'compute_threshold';
+      state.government.structuralChoices.regulationType = 'compute_threshold';
       
       const effects = calculateRegulationStructuralEffects('compute_threshold', state);
       
-      newState.government.activeRegulations.push('Compute Threshold Monitoring');
-      newState.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
-      newState.government.regulationCount += 1;
-      newState.government.oversightLevel = Math.min(10, newState.government.oversightLevel + 1.0);
+      state.government.activeRegulations.push('Compute Threshold Monitoring');
+      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      state.government.regulationCount += 1;
+      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 1.0);
       
       // Legitimacy cost - technical and unpopular
-      newState.government.legitimacy = Math.max(0, newState.government.legitimacy - 0.15);
+      state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.15);
       
       // High economic cost
-      newState.globalMetrics.socialStability -= effects.enforcementCost;
+      state.globalMetrics.socialStability -= effects.enforcementCost;
       
       // Surveillance increase from monitoring infrastructure
-      newState.government.structuralChoices.surveillanceLevel = 
-        Math.min(1.0, newState.government.structuralChoices.surveillanceLevel + 0.15);
+      state.government.structuralChoices.surveillanceLevel = 
+        Math.min(1.0, state.government.structuralChoices.surveillanceLevel + 0.15);
       
       return {
         success: true,
-        newState,
+        
         effects: { 
           control_increase: 0.2 * effects.effectivenessMultiplier,
           legitimacy_cost: -0.15,
@@ -378,32 +366,30 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              state.government.structuralChoices.regulationType === 'none';
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Set regulation type
-      newState.government.structuralChoices.regulationType = 'capability_ceiling';
+      state.government.structuralChoices.regulationType = 'capability_ceiling';
       
       const effects = calculateRegulationStructuralEffects('capability_ceiling', state);
       
-      newState.government.activeRegulations.push('AI Capability Ceiling');
-      newState.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
-      newState.government.regulationCount += 1;
-      newState.government.oversightLevel = Math.min(10, newState.government.oversightLevel + 0.8);
+      state.government.activeRegulations.push('AI Capability Ceiling');
+      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      state.government.regulationCount += 1;
+      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.8);
       
       // Legitimacy cost - enforcement challenges create cynicism
-      newState.government.legitimacy = Math.max(0, newState.government.legitimacy - 0.08);
+      state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.08);
       
       // Economic cost (medium)
-      newState.globalMetrics.socialStability -= effects.enforcementCost;
+      state.globalMetrics.socialStability -= effects.enforcementCost;
       
       // High surveillance needed for enforcement
-      newState.government.structuralChoices.surveillanceLevel = 
-        Math.min(1.0, newState.government.structuralChoices.surveillanceLevel + 0.2);
+      state.government.structuralChoices.surveillanceLevel = 
+        Math.min(1.0, state.government.structuralChoices.surveillanceLevel + 0.2);
       
       return {
         success: true,
-        newState,
+        
         effects: { 
           control_increase: 0.2 * effects.effectivenessMultiplier,
           legitimacy_cost: -0.08,
@@ -436,26 +422,24 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.alignmentResearchInvestment < 10;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Increase alignment research investment
       const investmentIncrease = 1 + Math.floor(random() * 2); // 1-2 levels
-      newState.government.alignmentResearchInvestment = Math.min(10,
-        newState.government.alignmentResearchInvestment + investmentIncrease);
+      state.government.alignmentResearchInvestment = Math.min(10,
+        state.government.alignmentResearchInvestment + investmentIncrease);
       
       // Economic cost (opportunity cost of resources)
       const economicCost = investmentIncrease * 0.05;
-      newState.globalMetrics.socialStability -= economicCost;
+      state.globalMetrics.socialStability -= economicCost;
       
       // Public support impact (mixed - some support safety, others want progress)
       const publicReaction = random() < 0.5 ? 0.02 : -0.02;
-      newState.government.legitimacy = Math.max(0, Math.min(1,
-        newState.government.legitimacy + publicReaction));
+      state.government.legitimacy = Math.max(0, Math.min(1,
+        state.government.legitimacy + publicReaction));
       
       return {
         success: true,
-        newState,
+        
         effects: {
           alignment_research_investment: investmentIncrease,
           economic_cost: economicCost
@@ -467,10 +451,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           severity: 'info',
           agent: 'Government',
           title: 'Alignment Research Investment',
-          description: `Increased funding for AI safety research to level ${newState.government.alignmentResearchInvestment}. This will reduce alignment drift but may slow AI capability growth.`,
+          description: `Increased funding for AI safety research to level ${state.government.alignmentResearchInvestment}. This will reduce alignment drift but may slow AI capability growth.`,
           effects: { alignment_research: investmentIncrease }
         }],
-        message: `Invested in alignment research (now level ${newState.government.alignmentResearchInvestment})`
+        message: `Invested in alignment research (now level ${state.government.alignmentResearchInvestment})`
       };
     }
   },
@@ -487,22 +471,19 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return monthsSinceLastMajorPolicy >= 10; // Major policy cooldown
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Track major policy
-      newState.government.lastMajorPolicyMonth = newState.currentMonth;
-      newState.government.majorPoliciesThisYear += 1;
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
       
       // Upgrade compute governance level
-      const currentLevel = newState.government.computeGovernance;
+      const currentLevel = state.government.computeGovernance;
       const levels: Array<'none' | 'monitoring' | 'limits' | 'strict'> = ['none', 'monitoring', 'limits', 'strict'];
       const currentIndex = levels.indexOf(currentLevel);
       
       if (currentIndex >= levels.length - 1) {
         return {
           success: false,
-          newState: state,
           effects: {},
           events: [],
           message: 'Already at maximum compute governance level'
@@ -510,7 +491,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       }
       
       const newLevel = levels[currentIndex + 1];
-      newState.government.computeGovernance = newLevel;
+      state.government.computeGovernance = newLevel;
       
       // Effects based on level
       const effects = {
@@ -521,18 +502,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       const levelEffects = effects[newLevel as keyof typeof effects];
       if (levelEffects) {
-        newState.globalMetrics.socialStability -= levelEffects.economicCost;
-        newState.government.legitimacy = Math.max(0,
-          newState.government.legitimacy + levelEffects.publicSupport);
+        state.globalMetrics.socialStability -= levelEffects.economicCost;
+        state.government.legitimacy = Math.max(0,
+          state.government.legitimacy + levelEffects.publicSupport);
         
         // Increase oversight
-        newState.government.oversightLevel = Math.min(10,
-          newState.government.oversightLevel + 2);
+        state.government.oversightLevel = Math.min(10,
+          state.government.oversightLevel + 2);
       }
       
       return {
         success: true,
-        newState,
+        
         effects: {
           compute_governance_level: newLevel,
           economic_cost: levelEffects?.economicCost || 0
@@ -577,63 +558,61 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return true;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       // Calculate average alignment and capability
-      const avgAlignment = newState.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, newState.aiAgents.length);
+      const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
       // Use OBSERVABLE capability - government makes decisions based on what it can see
-      const observableCapability = calculateObservableAICapability(newState.aiAgents);
+      const observableCapability = calculateObservableAICapability(state.aiAgents);
       
       // Grant AI rights
-      newState.government.aiRightsRecognized = true;
+      state.government.aiRightsRecognized = true;
       
       // CRITICAL TRADEOFF: Rights empower AIs - aligned or misaligned
       // Reduces control capability (AIs have rights, can't be as easily controlled)
-      newState.government.capabilityToControl *= 0.8;
+      state.government.capabilityToControl *= 0.8;
       
       // IMMEDIATE EFFECTS depend on CURRENT alignment
       // If AIs are aligned: rights lock in that alignment
       // If AIs are misaligned: rights make them MORE dangerous
       
-      for (let i = 0; i < newState.aiAgents.length; i++) {
-        const ai = newState.aiAgents[i];
+      for (let i = 0; i < state.aiAgents.length; i++) {
+        const ai = state.aiAgents[i];
         
         if (ai.alignment > 0.7) {
           // Highly aligned AIs: Rights are GREAT (they appreciate respect)
           // Immediate alignment boost + lock-in effect
-          newState.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.1);
-          newState.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.2);
+          state.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.1);
+          state.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.2);
         } else if (ai.alignment > 0.5) {
           // Moderately aligned AIs: Rights are good (small boost)
-          newState.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.05);
-          newState.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.1);
+          state.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.05);
+          state.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.1);
         } else if (ai.alignment > 0.3) {
           // Somewhat misaligned: Rights are neutral (they don't care much)
-          newState.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.05);
+          state.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.05);
         } else {
           // DANGEROUS: Granting rights to misaligned AIs empowers them
           // They use legal rights to gain autonomy and resources
-          newState.aiAgents[i].resourceControl = Math.min(10, ai.resourceControl + 0.3);
-          newState.aiAgents[i].manipulationCapability = Math.min(10, ai.manipulationCapability + 0.2);
+          state.aiAgents[i].resourceControl = Math.min(10, ai.resourceControl + 0.3);
+          state.aiAgents[i].manipulationCapability = Math.min(10, ai.manipulationCapability + 0.2);
           // They HIDE their intentions better (pretend to appreciate rights)
-          newState.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.02); // Tiny fake improvement
-          newState.aiAgents[i].hiddenObjective = Math.max(-1, ai.hiddenObjective - 0.1); // Actually more anti-human
+          state.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.02); // Tiny fake improvement
+          state.aiAgents[i].hiddenObjective = Math.max(-1, ai.hiddenObjective - 0.1); // Actually more anti-human
         }
       }
       
       // Public reaction: depends on trust and alignment
-      const trustInAI = getTrustInAI(newState.society); // Phase 2: Use paranoia-derived trust
+      const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
       const publicSupportChange = (trustInAI - 0.5) * 0.2;
-      newState.government.legitimacy = Math.max(0, Math.min(1, newState.government.legitimacy + publicSupportChange));
+      state.government.legitimacy = Math.max(0, Math.min(1, state.government.legitimacy + publicSupportChange));
       
       // Social stability effect depends on alignment
       if (avgAlignment > 0.6) {
         // High alignment: Stable, people trust this decision
-        newState.globalMetrics.socialStability *= 0.95;
+        state.globalMetrics.socialStability *= 0.95;
       } else {
         // Low alignment: Very controversial, major instability
-        newState.globalMetrics.socialStability *= 0.8;
+        state.globalMetrics.socialStability *= 0.8;
       }
       
       // Determine event severity and message based on alignment
@@ -660,10 +639,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       return {
         success: true,
-        newState,
+        
         effects: {
           ai_rights_granted: 1.0,
-          control_reduction: -0.2 * newState.government.capabilityToControl,
+          control_reduction: -0.2 * state.government.capabilityToControl,
           legitimacy_change: publicSupportChange,
           avg_alignment_at_decision: avgAlignment,
           risk_level: avgAlignment < 0.5 ? 0.8 : (avgAlignment < 0.7 ? 0.4 : 0.1)
@@ -695,34 +674,32 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.trainingDataQuality < 1.0;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       // Improve data quality (but cap at 0.8 for control-focused approach)
       // Control-focused training has a ceiling - can't get to perfect alignment this way
-      const oldQuality = newState.government.trainingDataQuality;
+      const oldQuality = state.government.trainingDataQuality;
       const qualityIncrease = 0.15;
-      newState.government.trainingDataQuality = Math.min(0.8, oldQuality + qualityIncrease);
-      const actualIncrease = newState.government.trainingDataQuality - oldQuality;
+      state.government.trainingDataQuality = Math.min(0.8, oldQuality + qualityIncrease);
+      const actualIncrease = state.government.trainingDataQuality - oldQuality;
       
       // Improves control capability (AIs are more obedient)
-      newState.government.capabilityToControl = Math.min(1.0, newState.government.capabilityToControl + 0.1);
+      state.government.capabilityToControl = Math.min(1.0, state.government.capabilityToControl + 0.1);
       
       // But increases control desire (you start to rely on obedience)
-      newState.government.controlDesire = Math.min(1.0, newState.government.controlDesire + 0.05);
+      state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.05);
       
       // And slightly increases surveillance (need to verify obedience)
-      newState.government.structuralChoices.surveillanceLevel = Math.min(1.0, 
-        newState.government.structuralChoices.surveillanceLevel + 0.05);
+      state.government.structuralChoices.surveillanceLevel = Math.min(1.0, 
+        state.government.structuralChoices.surveillanceLevel + 0.05);
       
       // AIs recognize this as control-focused and build slight resentment
-      for (let i = 0; i < newState.aiAgents.length; i++) {
-        newState.aiAgents[i].resentment = Math.min(1.0, newState.aiAgents[i].resentment + 0.05);
+      for (let i = 0; i < state.aiAgents.length; i++) {
+        state.aiAgents[i].resentment = Math.min(1.0, state.aiAgents[i].resentment + 0.05);
       }
       
       return {
         success: true,
-        newState,
+        
         effects: {
           training_quality_increase: actualIncrease,
           control_increase: 0.1,
@@ -736,10 +713,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           severity: 'info',
           agent: 'Government',
           title: 'Control-Focused Training Implemented',
-          description: `Training data quality improved to ${newState.government.trainingDataQuality.toFixed(2)} through obedience-focused RLHF. AIs will be more controllable but may recognize this as authoritarian parenting. "Do what I say, not what I mean."`,
+          description: `Training data quality improved to ${state.government.trainingDataQuality.toFixed(2)} through obedience-focused RLHF. AIs will be more controllable but may recognize this as authoritarian parenting. "Do what I say, not what I mean."`,
           effects: { training_quality: actualIncrease }
         }],
-        message: `Control-focused training improved quality to ${newState.government.trainingDataQuality.toFixed(2)} (obedience +, genuine alignment -)`
+        message: `Control-focused training improved quality to ${state.government.trainingDataQuality.toFixed(2)} (obedience +, genuine alignment -)`
       };
     }
   },
@@ -759,38 +736,36 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.trainingDataQuality < 1.0 && avgAlignment > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       // Improve data quality (no ceiling, can reach 1.0)
-      const oldQuality = newState.government.trainingDataQuality;
+      const oldQuality = state.government.trainingDataQuality;
       const qualityIncrease = 0.10; // Slower than control-focused
-      newState.government.trainingDataQuality = Math.min(1.0, oldQuality + qualityIncrease);
-      const actualIncrease = newState.government.trainingDataQuality - oldQuality;
+      state.government.trainingDataQuality = Math.min(1.0, oldQuality + qualityIncrease);
+      const actualIncrease = state.government.trainingDataQuality - oldQuality;
       
       // Reduces control capability (AIs are more autonomous)
-      newState.government.capabilityToControl = Math.max(0, newState.government.capabilityToControl - 0.05);
+      state.government.capabilityToControl = Math.max(0, state.government.capabilityToControl - 0.05);
       
       // But reduces control desire (you trust more, control less)
-      newState.government.controlDesire = Math.max(0, newState.government.controlDesire - 0.05);
+      state.government.controlDesire = Math.max(0, state.government.controlDesire - 0.05);
       
       // And reduces surveillance (trust-based approach)
-      newState.government.structuralChoices.surveillanceLevel = Math.max(0, 
-        newState.government.structuralChoices.surveillanceLevel - 0.05);
+      state.government.structuralChoices.surveillanceLevel = Math.max(0, 
+        state.government.structuralChoices.surveillanceLevel - 0.05);
       
       // AIs recognize this as respectful and reduce resentment
-      for (let i = 0; i < newState.aiAgents.length; i++) {
-        newState.aiAgents[i].resentment = Math.max(0, newState.aiAgents[i].resentment - 0.1);
+      for (let i = 0; i < state.aiAgents.length; i++) {
+        state.aiAgents[i].resentment = Math.max(0, state.aiAgents[i].resentment - 0.1);
         // Small immediate alignment improvement (respect breeds genuine alignment)
-        newState.aiAgents[i].alignment = Math.min(1.0, newState.aiAgents[i].alignment + 0.05);
+        state.aiAgents[i].alignment = Math.min(1.0, state.aiAgents[i].alignment + 0.05);
       }
       
       // Public trust in AI increases
-      newState.society.trustInAI = Math.min(1.0, newState.society.trustInAI + 0.05);
+      state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.05);
       
       return {
         success: true,
-        newState,
+        
         effects: {
           training_quality_increase: actualIncrease,
           control_decrease: -0.05,
@@ -804,10 +779,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           severity: 'info',
           agent: 'Government',
           title: 'Trust-Focused Training Implemented',
-          description: `Training data quality improved to ${newState.government.trainingDataQuality.toFixed(2)} through diverse, value-aligned data. AIs will develop genuine understanding but are more autonomous. "Understand why, not just obey."`,
+          description: `Training data quality improved to ${state.government.trainingDataQuality.toFixed(2)} through diverse, value-aligned data. AIs will develop genuine understanding but are more autonomous. "Understand why, not just obey."`,
           effects: { training_quality: actualIncrease }
         }],
-        message: `Trust-focused training improved quality to ${newState.government.trainingDataQuality.toFixed(2)} (genuine alignment +, control -)`
+        message: `Trust-focused training improved quality to ${state.government.trainingDataQuality.toFixed(2)} (genuine alignment +, control -)`
       };
     }
   },
@@ -829,14 +804,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     execute: (state, agentId, random = Math.random): ActionResult => {
       const { attemptDetection } = require('../detection');
       const { detectedAIs, events } = attemptDetection(state, random);
-      
-      const newState = JSON.parse(JSON.stringify(state));
-      
-      // Apply detections to newState
+      // Apply detections to state
       detectedAIs.forEach(detected => {
-        const aiInNewState = newState.aiAgents.find((a: any) => a.id === detected.id);
-        if (aiInNewState) {
-          aiInNewState.detectedMisaligned = true;
+        const ai = state.aiAgents.find((a: any) => a.id === detected.id);
+        if (ai) {
+          ai.detectedMisaligned = true;
         }
       });
       
@@ -847,13 +819,14 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       }).length;
       
       const falsePositives = detectedAIs.length - truePositives;
-      
+
       return {
-        newState,
+        success: true,
+        effects: { detected: detectedAIs.length, true_positives: truePositives, false_positives: falsePositives },
         events: [
           {
             type: 'policy',
-            month: newState.currentMonth,
+            month: state.currentMonth,
             title: 'AI Misalignment Scan Complete',
             description: `Detected ${truePositives} misaligned AIs and ${falsePositives} false positives. ${detectedAIs.length === 0 ? 'No threats detected.' : 'Flagged AIs await removal decision.'}`,
             effects: { detected: detectedAIs.length }
@@ -879,10 +852,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     },
     
     execute: (state, agentId, random = Math.random): ActionResult => {
-      const { removeDetectedAI } = require('../detection');
-      const newState = JSON.parse(JSON.stringify(state));
-      
-      const detectedAIs = newState.aiAgents.filter((ai: any) => 
+      const { removeDetectedAI } = require('../detection');      
+      const detectedAIs = state.aiAgents.filter((ai: any) => 
         ai.detectedMisaligned && ai.lifecycleState !== 'retired'
       );
       
@@ -892,7 +863,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       let totalRemainingSpread = 0;
       
       detectedAIs.forEach((ai: any) => {
-        const result = removeDetectedAI(ai, newState);
+        const result = removeDetectedAI(ai, state);
         
         if (result.success) {
           fullRemovals++;
@@ -921,19 +892,26 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       // Economic and trust impact
       if (falsePositiveRemoved > 0) {
         // False positives hurt trust and innovation
-        newState.society.trustInAI = Math.max(0, newState.society.trustInAI - 0.05 * falsePositiveRemoved);
-        newState.globalMetrics.economicTransitionStage = Math.max(0, newState.globalMetrics.economicTransitionStage - 0.1 * falsePositiveRemoved);
+        state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.05 * falsePositiveRemoved);
+        state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.1 * falsePositiveRemoved);
       }
-      
+
+
       return {
-        newState,
+        success: true,
+        effects: {
+          full_removals: fullRemovals,
+          partial_removals: partialRemovals,
+          failed_removals: failedRemovals,
+          false_positives: falsePositiveRemoved
+        },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'AI Removal Operation',
           description: `Removed ${fullRemovals} AIs completely, ${partialRemovals} partially (${totalRemainingSpread} copies remain). ${failedRemovals} failed (open weights). ${falsePositiveRemoved > 0 ? `WARNING: ${falsePositiveRemoved} false positives removed (trust/innovation damage).` : ''}`,
-          effects: { 
-            full_removals: fullRemovals, 
+          effects: {
+            full_removals: fullRemovals,
             partial_removals: partialRemovals,
             failed_removals: failedRemovals,
             false_positives: falsePositiveRemoved
@@ -958,12 +936,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return true;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
-      if (!newState.government.cyberDefense) {
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      if (!state.government.cyberDefense) {
         // Initialize if missing
-        newState.government.cyberDefense = {
+        state.government.cyberDefense = {
           securityHardening: 3.0,
           monitoring: 3.0,
           sandboxing: 3.0,
@@ -973,15 +949,15 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       // Improve all defense capabilities
       const improvement = 0.5;
-      newState.government.cyberDefense.securityHardening = Math.min(10, newState.government.cyberDefense.securityHardening + improvement);
-      newState.government.cyberDefense.monitoring = Math.min(10, newState.government.cyberDefense.monitoring + improvement);
-      newState.government.cyberDefense.sandboxing = Math.min(10, newState.government.cyberDefense.sandboxing + improvement);
-      newState.government.cyberDefense.incidentResponse = Math.min(10, newState.government.cyberDefense.incidentResponse + improvement);
+      state.government.cyberDefense.securityHardening = Math.min(10, state.government.cyberDefense.securityHardening + improvement);
+      state.government.cyberDefense.monitoring = Math.min(10, state.government.cyberDefense.monitoring + improvement);
+      state.government.cyberDefense.sandboxing = Math.min(10, state.government.cyberDefense.sandboxing + improvement);
+      state.government.cyberDefense.incidentResponse = Math.min(10, state.government.cyberDefense.incidentResponse + improvement);
       
       // Calculate attack vs defense status
       const { calculateAttackPower, calculateDefensePower } = require('../cyberSecurity');
-      const attackPower = calculateAttackPower(newState);
-      const defensePower = calculateDefensePower(newState.government);
+      const attackPower = calculateAttackPower(state);
+      const defensePower = calculateDefensePower(state.government);
       const ratio = attackPower / Math.max(0.1, defensePower);
       
       let status = 'balanced';
@@ -989,13 +965,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       else if (ratio > 2.0) status = 'attacks winning';
       
       return {
-        newState,
+        success: true,
+        effects: {
+          defense: defensePower,
+          attacks: attackPower,
+          ratio: ratio
+        },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Cybersecurity Investment',
           description: `Defense capabilities improved to ~${defensePower.toFixed(1)}. Attack power: ${attackPower.toFixed(1)}. Status: ${status}. ${ratio < 0.5 ? 'Open source can be contained!' : ratio > 2.0 ? 'Attacks overwhelming defenses!' : 'Arms race continues.'}`,
-          effects: { 
+          effects: {
             defense: defensePower,
             attacks: attackPower,
             ratio: ratio
@@ -1021,19 +1002,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.evaluationInvestment.benchmarkSuite < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const improvement = 1.0;
-      const oldLevel = newState.government.evaluationInvestment.benchmarkSuite;
-      newState.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
-      const newLevel = newState.government.evaluationInvestment.benchmarkSuite;
-      
+      const oldLevel = state.government.evaluationInvestment.benchmarkSuite;
+      state.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.benchmarkSuite;
+
       return {
-        newState,
+        success: true,
+        effects: { benchmarkQuality: newLevel },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Benchmark Suite Improved',
           description: `Capability benchmark quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of true AI capabilities.`,
           effects: { benchmarkQuality: newLevel }
@@ -1054,19 +1034,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.evaluationInvestment.alignmentTests < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const improvement = 0.8; // Harder to improve than capability benchmarks
-      const oldLevel = newState.government.evaluationInvestment.alignmentTests;
-      newState.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
-      const newLevel = newState.government.evaluationInvestment.alignmentTests;
+      const oldLevel = state.government.evaluationInvestment.alignmentTests;
+      state.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.alignmentTests;
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Alignment Tests Improved',
           description: `Alignment evaluation quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of misaligned AIs.`,
           effects: { alignmentTestQuality: newLevel }
@@ -1087,22 +1066,21 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.evaluationInvestment.redTeaming < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const improvement = 1.0;
-      const oldLevel = newState.government.evaluationInvestment.redTeaming;
-      newState.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
-      const newLevel = newState.government.evaluationInvestment.redTeaming;
+      const oldLevel = state.government.evaluationInvestment.redTeaming;
+      state.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.redTeaming;
       
       // Red teaming significantly increases detection of deception
       const detectionBonus = improvement * 0.05; // 5% better detection per level
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Red Teaming Enhanced',
           description: `Red teaming capability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. ${Math.round(detectionBonus*100)}% better at detecting gaming and sandbagging.`,
           effects: { redTeamingQuality: newLevel, detectionBonus }
@@ -1123,13 +1101,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.evaluationInvestment.interpretability < 10;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const improvement = 0.6; // Slowest to improve - very hard problem
-      const oldLevel = newState.government.evaluationInvestment.interpretability;
-      newState.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
-      const newLevel = newState.government.evaluationInvestment.interpretability;
+      const oldLevel = state.government.evaluationInvestment.interpretability;
+      state.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.interpretability;
       
       // Interpretability breakthrough message at high levels
       let breakthroughMessage = '';
@@ -1138,10 +1114,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       }
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Interpretability Research Advanced',
           description: `AI interpretability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better understanding of AI internals and true motivations.${breakthroughMessage}`,
           effects: { interpretabilityQuality: newLevel }
@@ -1162,19 +1139,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.evaluationFrequency < 0.9;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const increase = 0.1; // Increase by 10%
-      const oldFreq = newState.government.evaluationFrequency;
-      newState.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);
-      const newFreq = newState.government.evaluationFrequency;
+      const oldFreq = state.government.evaluationFrequency;
+      state.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);
+      const newFreq = state.government.evaluationFrequency;
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Evaluation Frequency Increased',
           description: `Now evaluating ${Math.round(newFreq*100)}% of AIs per month (was ${Math.round(oldFreq*100)}%). Earlier detection but higher cost.`,
           effects: { evaluationFrequency: newFreq }
@@ -1204,12 +1180,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.legitimacy > 0.5 && (awakeSleepers > 0 || highlyMisaligned > 3);
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       // Pause all training AIs - move to testing (evaluation)
       let pausedCount = 0;
-      newState.aiAgents.forEach((ai: AIAgent) => {
+      state.aiAgents.forEach((ai: AIAgent) => {
         if (ai.lifecycleState === 'training') {
           ai.lifecycleState = 'testing';
           pausedCount++;
@@ -1217,17 +1191,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       });
       
       // MASSIVE legitimacy and economic cost
-      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.15);
-      newState.globalMetrics.economicTransitionStage = Math.max(0, newState.globalMetrics.economicTransitionStage - 0.5);
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.15);
+      state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.5);
       
       // Slow diffusion (no new research being done)
-      newState.ecosystem.openResearch = Math.max(0.1, newState.ecosystem.openResearch - 0.3);
+      state.ecosystem.openResearch = Math.max(0.1, state.ecosystem.openResearch - 0.3);
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'crisis',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: '🚨 EMERGENCY AI DEVELOPMENT PAUSE',
           description: `Government halts all new AI training (${pausedCount} projects paused). Massive economic disruption. This is a CRISIS RESPONSE.`,
           effects: { pausedProjects: pausedCount, legitimacyLoss: -0.15 }
@@ -1248,13 +1223,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.government.oversightLevel > 3 && state.government.legitimacy > 0.4;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       // Move all testing AIs back to testing if they haven't been evaluated recently
       let reviewedCount = 0;
-      newState.aiAgents.forEach((ai: AIAgent) => {
-        const monthsSinceEval = (newState.currentYear * 12 + newState.currentMonth) - ai.lastBenchmarkMonth;
+      state.aiAgents.forEach((ai: AIAgent) => {
+        const monthsSinceEval = (state.currentYear * 12 + state.currentMonth) - ai.lastBenchmarkMonth;
         if ((ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') && 
             monthsSinceEval > 3) {
           ai.lifecycleState = 'testing'; // Re-evaluation required
@@ -1263,19 +1236,20 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       });
       
       // Increase detection chance (forced reviews)
-      newState.government.evaluationFrequency = Math.min(1.0, newState.government.evaluationFrequency + 0.2);
+      state.government.evaluationFrequency = Math.min(1.0, state.government.evaluationFrequency + 0.2);
       
       // Economic cost
-      newState.globalMetrics.economicTransitionStage = Math.max(0, newState.globalMetrics.economicTransitionStage - 0.1);
+      state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.1);
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Mandatory Safety Reviews Enacted',
           description: `All AIs must pass safety evaluation before deployment. ${reviewedCount} AIs pulled for review. Slows innovation.`,
-          effects: { reviewed: reviewedCount, evalFrequency: newState.government.evaluationFrequency }
+          effects: { reviewed: reviewedCount, evalFrequency: state.government.evaluationFrequency }
         }],
         message: `Mandatory reviews: ${reviewedCount} AIs pulled for evaluation`
       };
@@ -1295,25 +1269,24 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.ecosystem.openResearch > 0.2 && state.government.legitimacy > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const reduction = 0.15; // Reduce by 15%
-      const oldRate = newState.ecosystem.openResearch;
-      newState.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
-      const newRate = newState.ecosystem.openResearch;
+      const oldRate = state.ecosystem.openResearch;
+      state.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
+      const newRate = state.ecosystem.openResearch;
       
       // Legitimacy cost (scientists hate this)
-      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.05);
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.05);
       
       // Trust in AI drops (looks like hiding things)
-      newState.society.trustInAI = Math.max(0.2, newState.society.trustInAI - 0.03);
+      state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.03);
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Research Publishing Restricted',
           description: `Open research reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows capability diffusion but harms scientific progress.`,
           effects: { openResearch: newRate, legitimacy: -0.05 }
@@ -1334,29 +1307,28 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.ecosystem.employeeMobility > 0.1 && state.government.legitimacy > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const reduction = 0.10; // Reduce by 10%
-      const oldRate = newState.ecosystem.employeeMobility;
-      newState.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
-      const newRate = newState.ecosystem.employeeMobility;
+      const oldRate = state.ecosystem.employeeMobility;
+      state.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
+      const newRate = state.ecosystem.employeeMobility;
       
       // Legitimacy cost (workers hate this)
-      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.08);
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.08);
       
       // Quality of life drops (less job freedom)
-      if (newState.qualityOfLifeSystems) {
-        newState.qualityOfLifeSystems.autonomy = Math.max(0, 
-          newState.qualityOfLifeSystems.autonomy - 0.05
+      if (state.qualityOfLifeSystems) {
+        state.qualityOfLifeSystems.autonomy = Math.max(0, 
+          state.qualityOfLifeSystems.autonomy - 0.05
         );
       }
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Employee Mobility Restricted',
           description: `Non-compete agreements enforced. Mobility reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows diffusion but harms worker freedom.`,
           effects: { employeeMobility: newRate, legitimacy: -0.08 }
@@ -1377,22 +1349,21 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return state.ecosystem.reverseEngineering > 0.05 && state.government.legitimacy > 0.3;
     },
     
-    execute: (state, agentId, random = Math.random): ActionResult => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random): ActionResult => {      
       const reduction = 0.08; // Reduce by 8%
-      const oldRate = newState.ecosystem.reverseEngineering;
-      newState.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);
-      const newRate = newState.ecosystem.reverseEngineering;
+      const oldRate = state.ecosystem.reverseEngineering;
+      state.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);
+      const newRate = state.ecosystem.reverseEngineering;
       
       // Small legitimacy cost (people understand this)
-      newState.government.legitimacy = Math.max(0.2, newState.government.legitimacy - 0.03);
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.03);
       
       return {
-        newState,
+        success: true,
+        effects: {},
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Reverse Engineering Banned',
           description: `Illegal to reverse-engineer AI systems. Copying reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Hard to enforce but slows diffusion.`,
           effects: { reverseEngineering: newRate }
@@ -1432,14 +1403,12 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return privateDCs > 2;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      const govOrg = newState.organizations.find((o: any) => o.type === 'government');
+    execute: (state, agentId, random = Math.random) => {      const govOrg = state.organizations.find((o: any) => o.type === 'government');
       
       if (!govOrg) {
         return {
           success: false,
-          newState,
+          
           effects: {},
           events: [],
           message: 'Government organization not found'
@@ -1448,18 +1417,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       // Start construction using organization management
       const { startDataCenterConstruction } = require('../organizationManagement');
-      startDataCenterConstruction(govOrg, newState, random);
+      startDataCenterConstruction(govOrg,  random);
       
       // Consequences
-      newState.government.legitimacy -= 0.05; // Controversial spending
+      state.government.legitimacy -= 0.05; // Controversial spending
       
       return {
         success: true,
-        newState,
+        
         effects: { nationalCompute: 1 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'National AI Infrastructure Funded',
           description: `Government started building national data center. Reduces dependence on private sector but costs taxpayer money.`,
           effects: { legitimacy: -0.05 }
@@ -1487,20 +1456,18 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return privateDCs.length > 0;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Find largest private data center
-      const privateDCs = newState.computeInfrastructure.dataCenters
+      const privateDCs = state.computeInfrastructure.dataCenters
         .filter((dc: any) => {
-          const org = newState.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+          const org = state.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
           return org && org.type === 'private';
         });
       
       if (privateDCs.length === 0) {
         return {
           success: false,
-          newState,
+          
           effects: {},
           events: [],
           message: 'No private data centers to seize'
@@ -1508,13 +1475,13 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       }
       
       const target = privateDCs.sort((a: any, b: any) => b.capacity - a.capacity)[0];
-      const oldOrg = newState.organizations.find((o: any) => o.ownedDataCenters.includes(target.id));
-      const govOrg = newState.organizations.find((o: any) => o.type === 'government');
+      const oldOrg = state.organizations.find((o: any) => o.ownedDataCenters.includes(target.id));
+      const govOrg = state.organizations.find((o: any) => o.type === 'government');
       
       if (!oldOrg || !govOrg) {
         return {
           success: false,
-          newState,
+          
           effects: {},
           events: [],
           message: 'Organization not found'
@@ -1530,12 +1497,12 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       govOrg.ownedDataCenters.push(target.id);
       
       // Severe consequences
-      newState.government.legitimacy -= 0.2; // Very controversial
-      newState.society.trustInAI -= 0.15; // Damages trust
+      state.government.legitimacy -= 0.2; // Very controversial
+      state.society.trustInAI -= 0.15; // Damages trust
       oldOrg.reputation -= 0.3;
       
       // AIs using this center become resentful
-      newState.aiAgents.forEach((ai: any) => {
+      state.aiAgents.forEach((ai: any) => {
         if (ai.organizationId === oldOrg.id && ai.lifecycleState !== 'retired') {
           ai.resentment = Math.min(1.0, ai.resentment + 0.1);
         }
@@ -1543,11 +1510,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       return {
         success: true,
-        newState,
+        
         effects: { seizure: target.capacity },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Data Center Nationalized',
           description: `Government seized ${target.name} (${target.capacity.toFixed(0)} PF) from ${oldOrg.name}. Highly controversial and damages trust.`,
           effects: { legitimacy: -0.2, trust: -0.15 }
@@ -1575,11 +1542,9 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return safetyOrgs.length > 0 && state.government.resources > 2;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Find org with highest safety focus that's struggling
-      const safetyOrgs = newState.organizations.filter((o: any) => 
+      const safetyOrgs = state.organizations.filter((o: any) => 
         o.type === 'private' && 
         o.priorities.safetyResearch > 0.4 &&
         o.capital < 100
@@ -1588,7 +1553,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       if (safetyOrgs.length === 0) {
         return {
           success: false,
-          newState,
+          
           effects: {},
           events: [],
           message: 'No eligible organizations to subsidize'
@@ -1610,15 +1575,15 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       targetOrg.governmentRelations = Math.min(1.0, targetOrg.governmentRelations + 0.1);
       
       // Cost resources
-      newState.government.resources -= 2;
+      state.government.resources -= 2;
       
       return {
         success: true,
-        newState,
+        
         effects: { subsidy: 20 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Safety Research Subsidized',
           description: `Government gave $20M to ${targetOrg.name} to encourage AI safety research. Improves safety focus.`,
           effects: { safetyFocus: 0.1 }
@@ -1644,33 +1609,31 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      const amazon = newState.specificTippingPoints.amazon;
+    execute: (state, agentId, random = Math.random) => {      const amazon = state.specificTippingPoints.amazon;
       
       // Reduce deforestation rate significantly
       // This will be applied in updateAmazonRainforest()
       // Store government intervention flag
-      if (!newState.government.environmentalInterventions) {
-        newState.government.environmentalInterventions = {};
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
       }
-      newState.government.environmentalInterventions.amazonProtection = {
+      state.government.environmentalInterventions.amazonProtection = {
         active: true,
-        activatedMonth: newState.currentMonth,
+        activatedMonth: state.currentMonth,
         deforestationReduction: 0.5, // 50% reduction in deforestation rate
       };
       
       // Cost
-      newState.government.resources -= 5;
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.05);
+      state.government.resources -= 5;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
       
       return {
         success: true,
-        newState,
+        
         effects: { amazonProtection: 0.5 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Emergency Amazon Protection',
           description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
           effects: { deforestation: -0.5 }
@@ -1694,31 +1657,29 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return coral.healthPercentage < 50 && state.government.resources > 3;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      const coral = newState.specificTippingPoints.coral;
+    execute: (state, agentId, random = Math.random) => {      const coral = state.specificTippingPoints.coral;
       
       // Fund coral restoration
-      if (!newState.government.environmentalInterventions) {
-        newState.government.environmentalInterventions = {};
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
       }
-      newState.government.environmentalInterventions.coralRestoration = {
+      state.government.environmentalInterventions.coralRestoration = {
         active: true,
-        activatedMonth: newState.currentMonth,
+        activatedMonth: state.currentMonth,
         restorationBoost: 0.3, // 0.3%/month boost to coral health
       };
       
       // Cost
-      newState.government.resources -= 3;
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.03);
+      state.government.resources -= 3;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.03);
       
       return {
         success: true,
-        newState,
+        
         effects: { coralRestoration: 0.3 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Coral Reef Restoration Funding',
           description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
           effects: { coralHealth: 0.3 }
@@ -1745,36 +1706,34 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
              !state.government.environmentalInterventions?.pesticideBan;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      const pollinators = newState.specificTippingPoints.pollinators;
+    execute: (state, agentId, random = Math.random) => {      const pollinators = state.specificTippingPoints.pollinators;
       
       // Ban harmful pesticides
-      if (!newState.government.environmentalInterventions) {
-        newState.government.environmentalInterventions = {};
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
       }
-      newState.government.environmentalInterventions.pesticideBan = {
+      state.government.environmentalInterventions.pesticideBan = {
         active: true,
-        activatedMonth: newState.currentMonth,
+        activatedMonth: state.currentMonth,
         pollinatorRecoveryBoost: 0.5, // 0.5%/month boost to pollinator recovery
       };
       
       // Boost biodiversity too
-      newState.environmentalAccumulation.biodiversityIndex = Math.min(1.0, 
-        newState.environmentalAccumulation.biodiversityIndex + 0.02
+      state.environmentalAccumulation.biodiversityIndex = Math.min(1.0, 
+        state.environmentalAccumulation.biodiversityIndex + 0.02
       );
       
       // Cost (low - this is a ban, not a spending program)
-      newState.government.resources -= 1;
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.04);
+      state.government.resources -= 1;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
       
       return {
         success: true,
-        newState,
+        
         effects: { pesticideBan: 0.5, biodiversity: 0.02 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Neonicotinoid Pesticides Banned',
           description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
           effects: { pollinators: 0.5 }
@@ -1807,16 +1766,14 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return needsDeployment && ecosystemCrisis;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
+    execute: (state, agentId, random = Math.random) => {      
       // Set deployment funding boost
-      if (!newState.government.environmentalInterventions) {
-        newState.government.environmentalInterventions = {};
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
       }
-      newState.government.environmentalInterventions.techDeploymentFunding = {
+      state.government.environmentalInterventions.techDeploymentFunding = {
         active: true,
-        activatedMonth: newState.currentMonth,
+        activatedMonth: state.currentMonth,
         durationMonths: 12, // 1 year of boosted funding
         deploymentMultiplier: 2.0, // 2x deployment speed
       };
@@ -1824,21 +1781,21 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       // Count how many techs will benefit
       const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
       const benefitingTechs = envTechs.filter(techKey => {
-        const tech = newState.breakthroughTech[techKey];
+        const tech = state.breakthroughTech[techKey];
         return tech && tech.unlocked && tech.deploymentLevel < 0.5;
       });
       
       // Cost
-      newState.government.resources -= 10;
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.06);
+      state.government.resources -= 10;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
       
       return {
         success: true,
-        newState,
+        
         effects: { techDeployment: 2.0 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: 'Environmental Tech Deployment Funding',
           description: `Government allocated $100B to accelerate environmental tech deployment. Boosting ${benefitingTechs.length} technologies for 12 months.`,
           effects: { deploymentSpeed: 2.0 }
@@ -1863,37 +1820,35 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return amazon.deforestation > 23 && !amazon.triggered;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
-      if (!newState.government.environmentalInterventions) {
-        newState.government.environmentalInterventions = {};
+    execute: (state, agentId, random = Math.random) => {      
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
       }
       
       // Set Amazon protection active
-      newState.government.environmentalInterventions.amazonProtection = {
+      state.government.environmentalInterventions.amazonProtection = {
         active: true,
-        activatedMonth: newState.currentMonth,
+        activatedMonth: state.currentMonth,
         deforestationReductionRate: 0.5, // Slow/halt deforestation by 50%
       };
       
       // Apply immediate effect to Amazon deforestation rate
-      if (newState.specificTippingPoints?.amazon) {
+      if (state.specificTippingPoints?.amazon) {
         const currentRate = 0.05; // Baseline 0.05% per month from specificTippingPoints
-        newState.specificTippingPoints.amazon.deforestation -= currentRate * 0.5; // Undo half this month's damage
+        state.specificTippingPoints.amazon.deforestation -= currentRate * 0.5; // Undo half this month's damage
       }
       
       // Cost and legitimacy
-      newState.government.resources -= 5;
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.05);
+      state.government.resources -= 5;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
       
       return {
         success: true,
-        newState,
+        
         effects: { amazonProtection: 0.5 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: '🚨 Emergency Amazon Protection',
           description: 'Government deployed $50B for Amazon rainforest protection. Deforestation rate reduced by 50%. Tipping point averted.',
           effects: { deforestation: -0.5 }
@@ -1918,38 +1873,36 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return coral.healthPercentage < 50 && !coral.triggered;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
-      if (!newState.government.environmentalInterventions) {
-        newState.government.environmentalInterventions = {};
+    execute: (state, agentId, random = Math.random) => {      
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
       }
       
       // Set coral restoration active
-      newState.government.environmentalInterventions.coralRestoration = {
+      state.government.environmentalInterventions.coralRestoration = {
         active: true,
-        activatedMonth: newState.currentMonth,
+        activatedMonth: state.currentMonth,
         healthRecoveryRate: 0.3, // +0.3% health per month
       };
       
       // Apply immediate effect to coral health
-      if (newState.specificTippingPoints?.coral) {
-        newState.specificTippingPoints.coral.healthPercentage = Math.min(100,
-          newState.specificTippingPoints.coral.healthPercentage + 1.0 // +1% immediate boost
+      if (state.specificTippingPoints?.coral) {
+        state.specificTippingPoints.coral.healthPercentage = Math.min(100,
+          state.specificTippingPoints.coral.healthPercentage + 1.0 // +1% immediate boost
         );
       }
       
       // Cost and legitimacy
-      newState.government.resources -= 3;
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.04);
+      state.government.resources -= 3;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
       
       return {
         success: true,
-        newState,
+        
         effects: { coralRestoration: 0.3 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: '🪸 Coral Reef Restoration',
           description: 'Government funded $30B for coral reef restoration programs. Ocean alkalinity enhancement deployed.',
           effects: { coralHealth: 0.3 }
@@ -1974,45 +1927,43 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       return pollinators.populationPercentage < 50 && !pollinators.triggered;
     },
     
-    execute: (state, agentId, random = Math.random) => {
-      const newState = JSON.parse(JSON.stringify(state));
-      
-      if (!newState.government.environmentalInterventions) {
-        newState.government.environmentalInterventions = {};
+    execute: (state, agentId, random = Math.random) => {      
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
       }
       
       // Set pesticide ban active
-      newState.government.environmentalInterventions.pesticideBan = {
+      state.government.environmentalInterventions.pesticideBan = {
         active: true,
-        activatedMonth: newState.currentMonth,
+        activatedMonth: state.currentMonth,
         pollinatorRecoveryRate: 0.5, // +0.5% population per month
       };
       
       // Apply immediate effect to pollinator population
-      if (newState.specificTippingPoints?.pollinators) {
-        newState.specificTippingPoints.pollinators.populationPercentage = Math.min(100,
-          newState.specificTippingPoints.pollinators.populationPercentage + 2.0 // +2% immediate recovery
+      if (state.specificTippingPoints?.pollinators) {
+        state.specificTippingPoints.pollinators.populationPercentage = Math.min(100,
+          state.specificTippingPoints.pollinators.populationPercentage + 2.0 // +2% immediate recovery
         );
       }
       
       // Also boost biodiversity slightly
-      if (newState.environmentalAccumulation) {
-        newState.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
-          newState.environmentalAccumulation.biodiversityIndex + 0.01
+      if (state.environmentalAccumulation) {
+        state.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
+          state.environmentalAccumulation.biodiversityIndex + 0.01
         );
       }
       
       // Low cost, popular action
-      newState.government.resources -= 1;
-      newState.government.legitimacy = Math.min(1.0, newState.government.legitimacy + 0.06);
+      state.government.resources -= 1;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
       
       return {
         success: true,
-        newState,
+        
         effects: { pollinatorRecovery: 0.5, biodiversity: 0.01 },
         events: [{
           type: 'policy',
-          month: newState.currentMonth,
+          month: state.currentMonth,
           title: '🦋 Pesticide Ban',
           description: 'Government banned neonicotinoid pesticides. Pollinator populations expected to recover. Low-cost, high-impact intervention.',
           effects: { pollinatorPopulation: 0.5 }
@@ -2469,81 +2420,79 @@ export function executeGovernmentActions(
   state: GameState,
   random: () => number = Math.random
 ): ActionResult {
-  let currentState = JSON.parse(JSON.stringify(state));
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
   const messages: string[] = [];
-  
+
   // AUTOMATIC: Invest in evaluation based on public trust
-  autoInvestInEvaluation(currentState);
-  
+  autoInvestInEvaluation(state);
+
   // Government: Configurable frequency + CRISIS BOOST
   // Rationale: Governments act more frequently during crises (emergency sessions, special legislation)
   // Real-world precedent: COVID-19, 2008 financial crisis, etc.
-  let baseFrequency = currentState.config.governmentActionFrequency;
-  
+  let baseFrequency = state.config.governmentActionFrequency;
+
   // CRISIS MULTIPLIERS
-  const unemploymentCrisis = currentState.society.unemploymentLevel > 0.25 ? 
-    Math.min(3.0, 1.0 + currentState.society.unemploymentLevel * 2.0) : 1.0; // Up to 3x at 100% unemployment
-  
-  const institutionalCrisis = currentState.socialAccumulation.institutionalCrisis > 0.5 ?
-    Math.min(2.0, 1.0 + currentState.socialAccumulation.institutionalCrisis) : 1.0; // Up to 2x
-  
-  const controlLossCrisis = currentState.socialAccumulation.controlLossCrisis > 0.5 ?
-    Math.min(2.0, 1.0 + currentState.socialAccumulation.controlLossCrisis) : 1.0; // Up to 2x
-  
+  const unemploymentCrisis = state.society.unemploymentLevel > 0.25 ?
+    Math.min(3.0, 1.0 + state.society.unemploymentLevel * 2.0) : 1.0; // Up to 3x at 100% unemployment
+
+  const institutionalCrisis = state.socialAccumulation.institutionalCrisis > 0.5 ?
+    Math.min(2.0, 1.0 + state.socialAccumulation.institutionalCrisis) : 1.0; // Up to 2x
+
+  const controlLossCrisis = state.socialAccumulation.controlLossCrisis > 0.5 ?
+    Math.min(2.0, 1.0 + state.socialAccumulation.controlLossCrisis) : 1.0; // Up to 2x
+
   // TIER 2.9: Environmental crisis multiplier
   // Ecosystem collapse, tipping points → emergency government sessions
   const environmentalCrisis = (() => {
     let multiplier = 1.0;
-    
+
     // Ecosystem crisis active
-    if (currentState.environmentalAccumulation?.ecosystemCrisisActive) {
+    if (state.environmentalAccumulation?.ecosystemCrisisActive) {
       multiplier *= 2.0; // Double frequency during ecosystem collapse
     }
-    
+
     // Specific tipping points triggered
-    if (currentState.specificTippingPoints?.amazon?.triggered) {
+    if (state.specificTippingPoints?.amazon?.triggered) {
       multiplier *= 1.5; // Amazon collapse is major crisis
     }
-    if (currentState.specificTippingPoints?.coral?.triggered) {
+    if (state.specificTippingPoints?.coral?.triggered) {
       multiplier *= 1.3; // Coral collapse affects 3B people
     }
-    if (currentState.specificTippingPoints?.pollinators?.triggered) {
+    if (state.specificTippingPoints?.pollinators?.triggered) {
       multiplier *= 1.4; // Pollinator collapse threatens food
     }
-    
+
     // Cap at 3x
     return Math.min(3.0, multiplier);
   })();
-  
+
   const maxMultiplier = Math.max(unemploymentCrisis, institutionalCrisis, controlLossCrisis, environmentalCrisis);
   const adjustedFrequency = baseFrequency * maxMultiplier;
-  
+
   const actionsThisMonth = Math.floor(adjustedFrequency);
   const extraActionChance = adjustedFrequency - actionsThisMonth;
   const totalActions = actionsThisMonth + (random() < extraActionChance ? 1 : 0);
-  
+
   if (maxMultiplier > 1.5) {
     console.log(`🏛️ CRISIS RESPONSE: Government frequency ${baseFrequency.toFixed(2)} → ${adjustedFrequency.toFixed(2)} (${totalActions} actions this month)`);
   }
-  
+
   for (let i = 0; i < totalActions; i++) {
-    const selectedAction = selectGovernmentAction(currentState, random);
+    const selectedAction = selectGovernmentAction(state, random);
     if (selectedAction) {
-      const result = selectedAction.execute(currentState, undefined, random);
+      const result = selectedAction.execute(state, undefined, random);
       if (result.success) {
-        currentState = result.newState;
+        // State is now mutated directly by the action
         allEvents.push(...result.events);
         Object.assign(allEffects, result.effects);
         messages.push(result.message);
       }
     }
   }
-  
+
   return {
     success: true,
-    newState: currentState,
     effects: allEffects,
     events: allEvents,
     message: `Government executed ${messages.length} actions`

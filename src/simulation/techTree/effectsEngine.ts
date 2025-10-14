@@ -61,7 +61,7 @@ export function applyAllTechEffects(
   const regionalEffects: Map<string, Map<string, number>> = new Map();
   
   // Collect effects from all deployed tech
-  for (const [region, deployments] of techTreeState.regionalDeployment) {
+  for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
     for (const deployment of deployments) {
       const tech = getTechById(deployment.techId);
       if (!tech) continue;
@@ -1010,7 +1010,7 @@ export function logTechEffects(
     if (!tech) continue;
     
     // Check if deployed
-    const hasDeployment = Array.from(techTreeState.regionalDeployment.values())
+    const hasDeployment = Object.values(techTreeState.regionalDeployment)
       .some(deployments => deployments.some(d => d.techId === techId && d.deploymentLevel > 0));
     
     if (!hasDeployment) continue;

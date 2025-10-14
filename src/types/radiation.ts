@@ -164,7 +164,7 @@ function calculateRadioactiveDecay(
 export function progressRadiationExposure(
   exposure: RadiationExposureEvent,
   currentMonth: number,
-  globalPopulation: number
+  _globalPopulation: number
 ): { deaths: number; birthDefects: number } {
   const monthsSinceExposure = currentMonth - exposure.startMonth;
   const yearsSinceExposure = monthsSinceExposure / 12;
@@ -279,6 +279,7 @@ export function updateRadiationSystem(
   // Progress each active exposure
   for (let i = system.activeExposures.length - 1; i >= 0; i--) {
     const exposure = system.activeExposures[i];
+    if (!exposure) continue; // TypeScript guard (should never happen)
 
     const { deaths, birthDefects } = progressRadiationExposure(exposure, currentMonth, globalPopulation);
     totalDeathsThisMonth += deaths;

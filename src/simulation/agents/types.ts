@@ -9,7 +9,7 @@ import { GameState, GameEvent } from '@/types/game';
  */
 export interface ActionResult {
   success: boolean;
-  newState: GameState; // Returns new state instead of mutating
+  newState?: GameState; // Optional - state is now mutated directly
   effects: Record<string, number>;
   events: GameEvent[];
   message: string;

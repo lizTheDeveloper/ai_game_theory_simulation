@@ -248,6 +248,7 @@ export interface SimulationConfig {
   aiCoordinationMultiplier?: number;
   economicTransitionRate?: number;
   logLevel?: LogLevel; // 'full' | 'monthly' | 'quartile' | 'summary'
+  snapshotInterval?: number;  // How often to snapshot state (default: 12 months)
 }
 
 /**
@@ -306,7 +307,8 @@ export class SimulationEngine {
       governmentActionFrequency: config.governmentActionFrequency ?? 0.5, // Default: 1 action per 2 months
       socialAdaptationRate: config.socialAdaptationRate ?? 1.0,
       aiCoordinationMultiplier: config.aiCoordinationMultiplier ?? 1.0,
-      economicTransitionRate: config.economicTransitionRate ?? 1.0
+      economicTransitionRate: config.economicTransitionRate ?? 1.0,
+      snapshotInterval: config.snapshotInterval ?? 12  // Default to quarterly snapshots
     };
 
     this.rng = new SeededRandom(this.config.seed!);
@@ -396,8 +398,9 @@ export class SimulationEngine {
    * 98.0 - 99.0: Event collection and time advancement
    */
   step(state: GameState): SimulationStepResult {
-    // Create a shallow copy to avoid mutation (though phases will mutate it)
-    let newState = { ...state };
+    // Use state directly - phases are designed to mutate it
+    // Shallow copy breaks Set/Map objects in tech tree state
+    let newState = state;
 
     // Use bound RNG for deterministic actions
     const rng = this.rng.next.bind(this.rng);
@@ -426,7 +429,56 @@ export class SimulationEngine {
       metrics
     };
   }
-  
+
+  /**
+   * Create a deep snapshot of game state, preserving Map and Set objects
+   * Uses structuredClone (modern API) which handles complex objects correctly
+   */
+  private snapshotState(state: GameState): GameState {
+    try {
+      // structuredClone is available in Node 17+ and modern browsers
+      // It correctly handles Map, Set, Date, RegExp, etc.
+      return structuredClone(state);
+    } catch (error) {
+      // Fallback for older Node versions: manual reconstruction
+      console.warn('structuredClone not available, using manual snapshot');
+
+      // Create shallow copy
+      const snapshot = { ...state };
+
+      // Deep clone arrays
+      snapshot.aiAgents = state.aiAgents.map(ai => ({ ...ai }));
+      snapshot.organizations = state.organizations.map(org => ({ ...org }));
+      snapshot.eventLog = [...state.eventLog];
+
+      // Preserve Map objects
+      if (state.computeInfrastructure?.computeAllocations) {
+        snapshot.computeInfrastructure = {
+          ...state.computeInfrastructure,
+          computeAllocations: new Map(state.computeInfrastructure.computeAllocations)
+        };
+      }
+
+      // Preserve Set objects
+      if (state.radiationSystem?.contaminatedRegions) {
+        snapshot.radiationSystem = {
+          ...state.radiationSystem,
+          contaminatedRegions: new Set(state.radiationSystem.contaminatedRegions)
+        };
+      }
+
+      if (state.biodiversitySystem?.regions) {
+        snapshot.biodiversitySystem = {
+          ...state.biodiversitySystem,
+          regions: new Map(state.biodiversitySystem.regions),
+          regionalWeights: new Map(state.biodiversitySystem.regionalWeights)
+        };
+      }
+
+      return snapshot;
+    }
+  }
+
   /**
    * Run simulation until a stop condition is met
    */
@@ -457,9 +509,20 @@ export class SimulationEngine {
       state.endGameState = initializeEndGameState();
     }
     
+    const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months
+
     for (let month = 0; month < maxMonths; month++) {
       const stepResult = this.step(state);
-      history.push(stepResult);
+
+      // Snapshot state at configured intervals to preserve history
+      // This is expensive, so we do it sparingly (default: every 12 months)
+      if (month % snapshotInterval === 0 || month === maxMonths - 1) {
+        history.push({
+          ...stepResult,
+          state: this.snapshotState(state)
+        });
+      }
+
       state = stepResult.state;
       
       // Attach aggregator to state for phases to use
