@@ -58,6 +58,7 @@ export interface HumanPopulationSystem {
   monthlyExcessDeaths: number;           // Deaths beyond baseline (from war, famine, disease)
   cumulativeCrisisDeaths: number;        // Total deaths from all crises
   geneticBottleneckActive: boolean;      // Population below 100M (genetic diversity lost)
+  birthDefectsCount?: number;            // Cumulative non-fatal birth defects from radiation (billions)
 
   // Death tracking by category (TIER 1.5 - Summary Statistics)
   deathsByCategory: {

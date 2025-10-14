@@ -74,6 +74,7 @@ import {
   CountryPopulationPhase,
   OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
   NuclearWinterPhase,  // TIER 1.7.4 (Oct 13, 2025): Long-term nuclear war effects
+  RadiationSystemPhase,  // TIER 1.7 (Oct 14, 2025): Radiation health effects (cancer, birth defects, contamination)
   PlanetaryBoundariesPhase,
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   DystopiaProgressionPhase,
@@ -348,6 +349,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new CountryPopulationPhase());
     this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
     this.orchestrator.registerPhase(new NuclearWinterPhase());  // TIER 1.7.4: Update nuclear winter effects
+    this.orchestrator.registerPhase(new RadiationSystemPhase());  // TIER 1.7: Radiation health effects (cancer, birth defects, contamination)
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
