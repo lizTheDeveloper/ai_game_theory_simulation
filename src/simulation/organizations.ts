@@ -6,6 +6,7 @@
  */
 
 import { Organization, GameState } from '../types/game';
+import { handleBankruptcy } from './organizationManagement';
 
 /**
  * Initialize 6 organizations for January 2025
@@ -347,7 +348,26 @@ export function updateOrganizationViability(state: GameState): void {
   
   // Check each organization
   for (const org of state.organizations) {
-    if (org.bankrupt) continue; // Already dead
+    // Skip if already bankrupt and processed
+    if (org.bankrupt) {
+      // Still update economic scaling for zombie orgs
+      if (org.country === 'Multi-national') {
+        const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
+        const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
+        org.monthlyRevenue = baseline * globalEconomicMultiplier;
+        org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(globalPopFraction);
+      } else {
+        const country = countries[org.country];
+        if (country) {
+          const popFraction = country.population / country.peakPopulation;
+          const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
+          const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
+          org.monthlyRevenue = baseline * calculateEconomicMultiplier(popFraction);
+          org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(popFraction);
+        }
+      }
+      continue; // Don't re-process bankruptcy
+    }
     
     // Multi-national orgs check global population instead
     if (org.country === 'Multi-national') {
@@ -368,6 +388,9 @@ export function updateOrganizationViability(state: GameState): void {
         console.log(`\n💀 ORGANIZATION COLLAPSE: ${org.name}`);
         console.log(`   Reason: ${org.bankruptcyReason}`);
         console.log(`   Month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
+        
+        // TIER 1.7.3 FIX: Retire AIs to prevent orphans
+        handleBankruptcy(org, state);
       }
       continue;
     }
@@ -403,6 +426,9 @@ export function updateOrganizationViability(state: GameState): void {
       console.log(`   Reason: ${org.bankruptcyReason}`);
       console.log(`   Depopulation month: ${country.depopulationMonth}`);
       console.log(`   Current month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
+      
+      // TIER 1.7.3 FIX: Retire AIs to prevent orphans
+      handleBankruptcy(org, state);
       continue;
     }
     
@@ -418,9 +444,10 @@ export function updateOrganizationViability(state: GameState): void {
       console.log(`   Health: ${(popFraction * 100).toFixed(0)}% (threshold: ${(org.survivalThreshold * 100).toFixed(0)}%)`);
       console.log(`   Month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
       
-      // Scale down revenue/expenses (org is shutting down)
-      org.monthlyRevenue = 0;
-      org.monthlyExpenses = 0;
+      // TIER 1.7.3 FIX: Retire AIs to prevent orphans
+      handleBankruptcy(org, state);
+      
+      // Revenue/expenses already set to 0 by handleBankruptcy
     }
   }
   
