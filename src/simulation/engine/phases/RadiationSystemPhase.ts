@@ -22,7 +22,7 @@ export class RadiationSystemPhase implements SimulationPhase {
   readonly name = 'Radiation Health Effects';
   readonly order = 252.5;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, _rng: RNGFunction): PhaseResult {
     const system = state.radiationSystem;
 
     // Only run if there are active radiation exposures
@@ -113,17 +113,17 @@ function applyContaminationToFoodSecurity(state: GameState): void {
   const agriculturePenalty = contaminatedFarmlandFraction * Math.min(1.0, avgContamination / 0.2);
 
   // Apply to food security (if exists)
-  if (state.survivalFundamentals && state.survivalFundamentals.foodSecurity) {
-    state.survivalFundamentals.foodSecurity = Math.max(0,
-      state.survivalFundamentals.foodSecurity * (1 - agriculturePenalty * 0.5)
+  if (state.qualityOfLifeSystems && state.qualityOfLifeSystems.survivalFundamentals) {
+    state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = Math.max(0,
+      state.qualityOfLifeSystems.survivalFundamentals.foodSecurity * (1 - agriculturePenalty * 0.5)
     );
   }
 
-  // Reduce resource economy food production
+  // Reduce resource economy food production (monthlyHarvest = production)
   if (state.resourceEconomy && state.resourceEconomy.food) {
     const productionPenalty = agriculturePenalty * 0.3; // 30% production loss per contaminated region
-    state.resourceEconomy.food.productionRate = Math.max(0,
-      state.resourceEconomy.food.productionRate * (1 - productionPenalty)
+    state.resourceEconomy.food.monthlyHarvest = Math.max(0,
+      state.resourceEconomy.food.monthlyHarvest * (1 - productionPenalty)
     );
   }
 }
@@ -160,9 +160,9 @@ function applyContaminationToQoL(state: GameState): void {
   }
 
   // Reduce healthcare quality due to cancer epidemic
-  if (state.survivalFundamentals && state.survivalFundamentals.healthcareQuality) {
-    state.survivalFundamentals.healthcareQuality = Math.max(0,
-      state.survivalFundamentals.healthcareQuality * (1 - healthcareBurden * 0.5)
+  if (state.qualityOfLifeSystems && state.qualityOfLifeSystems.healthcareQuality !== undefined) {
+    state.qualityOfLifeSystems.healthcareQuality = Math.max(0,
+      state.qualityOfLifeSystems.healthcareQuality * (1 - healthcareBurden * 0.5)
     );
   }
 }
