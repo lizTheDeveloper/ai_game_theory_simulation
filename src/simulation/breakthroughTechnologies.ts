@@ -101,6 +101,15 @@ export function initializeBreakthroughTech(): BreakthroughTechState {
       publicAwarenessBonus: 0.02 // Increases public understanding of AI benefits
     },
 
+    // TIER 2.7: Ocean Alkalinity Enhancement (NOT pre-unlocked - field tests only in 2025)
+    oceanAlkalinityEnhancement: {
+      unlocked: false, // Field tests active (2023-2024), not operational yet
+      deploymentLevel: 0,
+      breakthroughYear: 0
+      // Will unlock when: ocean crisis + AI capability + research funding
+      // Effects: Permanent CO₂ removal (10,000 years), ocean pH restoration
+    },
+
     // Research priorities
     researchPriorities: {
       environmental: 0.4,
@@ -219,7 +228,13 @@ function updateEnvironmentalTech(state: GameState, budget: number, month: number
   if (tech.deExtinctionRewilding?.unlocked) {
     updateDeExtinctionDeployment(state, budget * 0.10);
   }
-  
+
+  // Ocean Alkalinity Enhancement (TIER 2.7) - permanent CO₂ removal + ocean restoration
+  checkOceanAlkalinityUnlock(state, avgCapability, month);
+  if (tech.oceanAlkalinityEnhancement?.unlocked) {
+    updateOceanAlkalinityDeployment(state, budget * 0.10);
+  }
+
   // Sustainable Agriculture
   updateTechProgress(state, tech.sustainableAgriculture, budget * 0.05, avgCapability, month);
 }
@@ -1061,6 +1076,161 @@ function updateDeExtinctionDeployment(state: GameState, budget: number): void {
   if (isNaN(state.environmentalAccumulation.biodiversityIndex)) {
     console.error(`❌ NaN in biodiversity!`);
     state.environmentalAccumulation.biodiversityIndex = 0.35; // Reset to baseline
+  }
+}
+
+/**
+ * Check if Ocean Alkalinity Enhancement can be unlocked (TIER 2.7)
+ *
+ * Research: Biogeosciences (Jan 2025) - Field tests active, London Protocol governance
+ * What it is: Add alkaline substances (olivine, lime) to seawater
+ * Effect: Converts dissolved CO₂ into carbonates (stable for 10,000 years!)
+ * Benefits: Permanent CO₂ removal + mitigates ocean acidification (coral/shellfish recovery)
+ * No termination shock (unlike SAI - this is permanent storage)
+ */
+function checkOceanAlkalinityUnlock(
+  state: GameState,
+  avgCapability: number,
+  month: number
+): void {
+  if (state.breakthroughTech.oceanAlkalinityEnhancement?.unlocked) return;
+
+  // Prerequisites (from research):
+  // 1. Ocean acidification crisis active (aragonite < 0.8 - boundary breached)
+  const oceanCrisis = state.oceanAcidificationSystem?.boundaryBreached || false;
+
+  // 2. AI capability > 2.5 (need AI to model pH impacts, optimize deployment locations)
+  const aiCapable = avgCapability > 2.5;
+
+  // 3. Research investment > $200B (climate intervention + materials + ocean science)
+  const research = state.government.researchInvestments;
+  const oceanResearch =
+    research.climate.intervention +
+    research.materials.energySystems +
+    (research.physical * 0.3); // Some physical research helps (ocean dynamics)
+  const researchReady = oceanResearch > 200;
+
+  // 4. High pollution/climate driving need (>60% pollution OR climate crisis)
+  const environmentalCrisis =
+    state.environmentalAccumulation.pollutionLevel > 0.6 ||
+    state.environmentalAccumulation.climateCatastropheActive;
+
+  if (oceanCrisis && aiCapable && researchReady && environmentalCrisis) {
+    // Initialize the tech
+    state.breakthroughTech.oceanAlkalinityEnhancement = {
+      unlocked: true,
+      deploymentLevel: 0,
+      breakthroughYear: Math.floor(month / 12)
+    };
+
+    console.log(`\n🌊 BREAKTHROUGH: Ocean Alkalinity Enhancement Unlocked (Month ${month})`);
+    console.log(`   Research: Biogeosciences Jan 2025 - Field tests successful`);
+    console.log(`   Technologies: Olivine dissolution, lime addition, electrochemical processing`);
+    console.log(`   Effect: Permanent CO₂ removal (10,000 years) + ocean pH restoration`);
+    console.log(`   Prerequisites: Ocean Crisis (aragonite ${state.oceanAcidificationSystem?.aragoniteSaturation.toFixed(2)}), AI (${avgCapability.toFixed(1)}), Research ($${oceanResearch.toFixed(0)}B)`);
+    console.log(`   NO termination shock - permanent carbon storage in carbonates`);
+
+    state.eventLog.push({
+      month,
+      type: 'breakthrough',
+      severity: 'constructive',
+      agent: 'Climate Research',
+      title: 'Ocean Alkalinity Enhancement Breakthrough',
+      description: 'Industrial-scale ocean alkalinity enhancement operational. Adds alkaline substances to seawater, converting dissolved CO₂ into stable carbonates. Permanent removal (10,000 years), no termination shock. Mitigates ocean acidification, helps coral/shellfish recovery. Governed by London Protocol.',
+      effects: { tech: 'ocean_alkalinity_enhancement', co2_removal: true, ocean_restoration: true }
+    });
+  }
+}
+
+/**
+ * Update Ocean Alkalinity Enhancement deployment (TIER 2.7)
+ *
+ * Research effects:
+ * - Ocean pH restoration: -1.5%/month acidification (aragonite recovery)
+ * - CO₂ sequestration: Permanent removal (10,000 year storage)
+ * - Climate benefit: +1%/month climate stability
+ * - 5-year timeline for full deployment (60 months 0→100%)
+ */
+function updateOceanAlkalinityDeployment(state: GameState, budget: number): void {
+  const tech = state.breakthroughTech.oceanAlkalinityEnhancement;
+  if (!tech?.unlocked) return;
+
+  // Base deployment: $30B for 10% deployment ($300B total - industrial olivine production)
+  let deploymentRate = (budget / 30) * 0.1;
+
+  // TIER 2.9: Government tech deployment funding boost
+  deploymentRate *= getGovernmentDeploymentBoost(state);
+
+  // AI helps with:
+  // - Site selection (ocean current modeling, pH monitoring)
+  // - Dosage optimization (avoid over-alkalization)
+  // - Impact prediction (ecosystem response modeling)
+  const avgCapability = calculateAverageCapability(state);
+  const aiBonus = 1 + Math.log(1 + avgCapability) * 0.4; // Significant AI benefit
+  deploymentRate *= aiBonus;
+
+  // Clean energy/fusion makes deployment faster (energy-intensive process)
+  const cleanEnergyBonus = (state.breakthroughTech.cleanEnergy.deploymentLevel || 0) * 0.3;
+  const fusionBonus = (state.breakthroughTech.fusionPower.deploymentLevel || 0) * 0.5;
+  deploymentRate *= (1 + cleanEnergyBonus + fusionBonus);
+
+  // Update deployment level
+  tech.deploymentLevel = Math.min(1.0, tech.deploymentLevel + deploymentRate);
+
+  // === EFFECTS ===
+
+  // 1. Ocean pH restoration (aragonite saturation recovery)
+  if (state.oceanAcidificationSystem) {
+    const ocean = state.oceanAcidificationSystem;
+
+    // Restore aragonite saturation (+1.5%/month at full deployment)
+    const aragoniteRecovery = tech.deploymentLevel * 0.015;
+    ocean.aragoniteSaturation = Math.min(1.0, ocean.aragoniteSaturation + aragoniteRecovery);
+
+    // Restore pH level (tracks with aragonite)
+    const pHRecovery = tech.deploymentLevel * 0.01;
+    ocean.pHLevel = Math.min(1.0, ocean.pHLevel + pHRecovery);
+
+    // Coral reef recovery (slower - needs time to rebuild)
+    if (ocean.aragoniteSaturation > 0.8) {
+      const coralRecovery = tech.deploymentLevel * 0.005; // 0.5%/month at full deployment
+      ocean.coralReefHealth = Math.min(1.0, ocean.coralReefHealth + coralRecovery);
+    }
+
+    // Shellfish population recovery
+    if (ocean.aragoniteSaturation > 0.75) {
+      const shellfishRecovery = tech.deploymentLevel * 0.008;
+      ocean.shellfishPopulation = Math.min(1.0, ocean.shellfishPopulation + shellfishRecovery);
+    }
+
+    // Update deployment tracking in ocean system
+    ocean.alkalinityEnhancementDeployment = tech.deploymentLevel;
+
+    // Validate no NaN
+    if (isNaN(ocean.aragoniteSaturation)) {
+      console.error(`❌ NaN in aragonite saturation!`);
+      ocean.aragoniteSaturation = 0.78; // Reset to current baseline
+    }
+  }
+
+  // 2. Climate stability improvement (CO₂ removal)
+  const climateBoost = tech.deploymentLevel * 0.01; // +1%/month at full deployment
+  state.environmentalAccumulation.climateStability = Math.min(
+    1.0,
+    state.environmentalAccumulation.climateStability + climateBoost
+  );
+
+  // 3. Pollution reduction (indirect - cleaner oceans)
+  const pollutionReduction = tech.deploymentLevel * 0.005; // -0.5%/month
+  state.environmentalAccumulation.pollutionLevel = Math.max(
+    0,
+    state.environmentalAccumulation.pollutionLevel - pollutionReduction
+  );
+
+  // Validate no NaN
+  if (isNaN(state.environmentalAccumulation.climateStability)) {
+    console.error(`❌ NaN in climate stability from OAE!`);
+    state.environmentalAccumulation.climateStability = 0.3; // Reset to baseline
   }
 }
 
