@@ -131,6 +131,10 @@ export interface AIAgent {
   allocatedCompute: number;     // Current compute allocation in PetaFLOPs
   computeEfficiency: number;    // [0.8-1.2] How efficiently this AI uses compute
   organizationId?: string;      // Which organization owns this AI (Phase 2)
+  
+  // Phase 2: Sleeper Resource Acquisition (NEW)
+  sleeperProgression?: import('../simulation/sleeperProgression').SleeperProgression;
+  sleeperEconomy?: import('../simulation/sleeperEconomy').SleeperEconomy;
 }
 
 /**

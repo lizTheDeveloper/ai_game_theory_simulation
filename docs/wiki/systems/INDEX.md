@@ -1,6 +1,6 @@
 # Simulation Systems Index
 
-**Last Updated:** October 13, 2025
+**Last Updated:** October 14, 2025
 
 This index lists all major systems in the AI Game Theory Simulation, organized by TIER.
 
@@ -54,29 +54,29 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 **Phase:** HumanPopulationPhase (28.0)
 **Summary:** Concrete population tracking (billions). Birth/death rates, carrying capacity, demographic structure. Population crash vs extinction distinction.
 
-### TIER 1.6: Refugee Crisis
-**File:** *Partially documented in population-dynamics.md*
-**Status:** Implemented but needs standalone doc
-**Phase:** RefugeeCrisisPhase
-**Summary:** Displacement from climate/war/famine. Generational resettlement (25 years). Social tension, economic strain.
+### TIER 1.6: ✅ Refugee Crisis
+**File:** [refugee-crises.md](refugee-crises.md)
+**Status:** Complete
+**Phase:** RefugeeCrisisPhase (20.6)
+**Summary:** Displacement from climate/war/famine. Gradual displacement (10% monthly). Generational resettlement (25 years). Transit mortality (2%). Social tension, economic strain.
 
-### TIER 1.7: Nuclear Winter
-**File:** *Not yet documented*
-**Status:** Implemented
-**Phase:** NuclearWinterPhase
-**Summary:** Long-term effects of nuclear war. Temperature drop, crop failure, ozone depletion. Recovery timeline: 5-10 years.
+### TIER 1.7: ✅ Nuclear Winter
+**File:** [nuclear-winter.md](nuclear-winter.md)
+**Status:** Complete
+**Phase:** NuclearWinterPhase (252)
+**Summary:** Long-term effects of nuclear war. Soot injection → temperature drop (-15 to -20°C) → crop failure (90%) → starvation (5% monthly). Recovery timeline: 5-10 years.
 
-### TIER 1.7: Famine System
-**File:** *Not yet documented*
-**Status:** Implemented
-**Phase:** FamineSystemPhase
-**Summary:** Research-based famine mortality curves. Food insecurity → hunger → starvation. Regional vulnerabilities.
+### TIER 1.7: ✅ Famine System
+**File:** [famine-system.md](famine-system.md)
+**Status:** Complete (Updated Oct 14 - comprehensive documentation)
+**Phase:** FamineSystemPhase (21.5)
+**Summary:** Realistic 30-60 day death curves (2% → 15% peak → 2%). Genocide detection (tech blocked). Food security < 0.4 triggers. Regional distribution. Tech mitigation (50-90% reduction).
 
-### TIER 1.7: Radiation System
-**File:** *Not yet documented*
-**Status:** Implemented
-**Phase:** (Integrated with nuclear systems)
-**Summary:** Nuclear fallout health effects. Radiation sickness, cancer, genetic damage. Geographic dispersion.
+### TIER 1.7: ✅ Radiation System
+**File:** [radiation-system.md](radiation-system.md)
+**Status:** Complete (Updated Oct 14 - comprehensive documentation + integration fix)
+**Phase:** RadiationSystemPhase (252.5)
+**Summary:** Acute radiation syndrome (50-80% mortality). Long-term cancer (40 years, +10-30% risk). Birth defects (3 generations). Environmental contamination (30-300 years). Monthly updates for cancer deaths, birth defects, and contamination decay. Integrated with food security and QoL.
 
 ---
 
@@ -98,11 +98,11 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 
 ## TIER 3: Planetary Boundaries
 
-### Planetary Boundaries System
-**File:** *Not yet documented*
-**Status:** Implemented
-**Phase:** PlanetaryBoundariesPhase
-**Summary:** Tracks all 9 planetary boundaries. Integrates phosphorus, freshwater, ocean acidification, novel entities with climate, biodiversity, land use, nitrogen, atmospheric aerosols.
+### ✅ Planetary Boundaries System
+**File:** [planetary-boundaries.md](planetary-boundaries.md)
+**Status:** Complete
+**Phase:** PlanetaryBoundariesPhase (21.0)
+**Summary:** Tracks all 9 planetary boundaries (7/9 breached in 2025). Integrates phosphorus, freshwater, ocean acidification, novel entities with climate, biodiversity, land use, nitrogen, atmospheric aerosols. Tipping point cascade mechanics (70% risk → 10% monthly cascade trigger → 48-month extinction).
 
 ---
 
@@ -168,36 +168,36 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 
 ## Organization by Completeness
 
-### ✅ Fully Documented (6 systems)
+### ✅ Fully Documented (11 systems)
 1. Baseline Corrections (TIER 0)
 2. Phosphorus Depletion (TIER 1.1)
 3. Freshwater Depletion (TIER 1.2)
 4. Ocean Acidification (TIER 1.3)
 5. Novel Entities (TIER 1.5)
 6. Population Dynamics (TIER 1.6)
+7. Refugee Crisis (TIER 1.6)
+8. Nuclear Winter (TIER 1.7)
+9. Famine System (TIER 1.7)
+10. Radiation System (TIER 1.7) - **✅ Integration complete (Oct 14)**
+11. Planetary Boundaries (TIER 3)
 
-### 🟡 Partially Documented (3 systems)
+### 🟡 Partially Documented (2 systems)
 1. Environmental Accumulation (covered in baseline-corrections.md)
 2. Social Accumulation (covered in baseline-corrections.md)
-3. Refugee Crisis (covered in population-dynamics.md)
 
-### ⏳ Implemented But Undocumented (15+ systems)
+### ⏳ Implemented But Undocumented (12+ systems)
 1. Multipolar System (TIER 1.4)
-2. Nuclear Winter (TIER 1.7)
-3. Famine System (TIER 1.7)
-4. Radiation System (TIER 1.7)
-5. Enhanced UBI (TIER 2)
-6. Social Safety Nets (TIER 2)
-7. Planetary Boundaries (TIER 3)
-8. Information Warfare (TIER 4)
-9. Power Generation (TIER 4)
-10. Quality of Life
-11. Technological Risk
-12. Breakthrough Technologies
-13. Upward Spirals
-14. Resource Economy
-15. Extinction System
-16. And more...
+2. Enhanced UBI (TIER 2)
+3. Social Safety Nets (TIER 2)
+4. Information Warfare (TIER 4)
+5. Power Generation (TIER 4)
+6. Quality of Life
+7. Technological Risk
+8. Breakthrough Technologies
+9. Upward Spirals
+10. Resource Economy
+11. Extinction System
+12. And more...
 
 ---
 
@@ -206,16 +206,17 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 Based on integration with documented systems and user needs:
 
 **HIGH PRIORITY:**
-1. **Nuclear Winter** - Frequently referenced, major extinction pathway
-2. **Famine System** - Integrates with freshwater, phosphorus, population
-3. **Planetary Boundaries** - Major integrating framework for TIER 1 systems
-4. **Refugee Crisis** - Standalone from population dynamics
+1. ~~**Nuclear Winter**~~ ✅ COMPLETE (Oct 14)
+2. ~~**Famine System**~~ ✅ COMPLETE (Oct 14)
+3. ~~**Planetary Boundaries**~~ ✅ COMPLETE (existing doc)
+4. ~~**Refugee Crisis**~~ ✅ COMPLETE (existing doc)
+5. ~~**Radiation System - Fix Integration**~~ ✅ COMPLETE (Oct 14 - RadiationSystemPhase implemented and integrated)
 
 **MEDIUM PRIORITY:**
-5. Quality of Life - Core QoL mechanics
-6. Resource Economy - Food/water production
-7. Technological Risk - AI safety framework
-8. Breakthrough Technologies - Tech tree
+6. Quality of Life - Core QoL mechanics
+7. Resource Economy - Food/water production
+8. Technological Risk - AI safety framework
+9. Breakthrough Technologies - Tech tree
 
 **LOWER PRIORITY:**
 9. UBI - Important but less critical for understanding model
