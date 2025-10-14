@@ -14,6 +14,7 @@ import {
   calculateObservableAICapability,
   calculateTotalCapabilityFromProfile
 } from '../calculations';
+import { GOVERNMENT_TECH_ACTIONS } from './governmentTechActions';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -2019,7 +2020,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         message: 'Harmful pesticides banned'
       };
     }
-  }
+  },
+  ...GOVERNMENT_TECH_ACTIONS  // Add national tech deployment actions
 ];
 
 /**
