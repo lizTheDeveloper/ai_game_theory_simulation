@@ -320,6 +320,8 @@ export function shouldInitiateIntervention(
   }
 
   // Check various triggers (probabilistic, influenced by multiple factors)
+  // PHASE 3 INTEGRATION: War motivation multiplies all intervention probabilities
+  const warMotivationMultiplier = Math.max(0.1, hegemon.warMotivation); // Minimum 10% (always some baseline risk)
 
   // TRIGGER 1: Resource Access
   // Look for resource-rich countries with low sovereignty
@@ -331,9 +333,10 @@ export function shouldInitiateIntervention(
       c.resourceValue.totalValue > 1.0 // Valuable resources
     );
 
-  if (resourceTargets.length > 0 && Math.random() < hegemon.militaryCapability * 0.1) {
-    // 10% chance per month for highest capability hegemons (US)
-    // Lower for others
+  if (resourceTargets.length > 0 && Math.random() < hegemon.militaryCapability * 0.1 * warMotivationMultiplier) {
+    // Base: 10% chance per month for highest capability hegemons (US)
+    // Multiplied by war motivation (0.1 to 1.0)
+    // Example: US with 0.5 war motivation = 5% chance/month
     const target = resourceTargets[Math.floor(Math.random() * resourceTargets.length)];
     return {
       should: true,
@@ -345,8 +348,9 @@ export function shouldInitiateIntervention(
   // TRIGGER 2: Meaning Crisis → Nationalism → War
   // High meaning crisis + high nationalism = seek external conflict
   const warMotivationThreshold = 0.7;
-  if (hegemon.warMotivation > warMotivationThreshold && Math.random() < 0.05) {
-    // 5% chance per month when war motivation is high
+  if (hegemon.warMotivation > warMotivationThreshold && Math.random() < 0.05 * warMotivationMultiplier) {
+    // 5% base chance, multiplied by war motivation
+    // High war motivation (>0.7) required to even check this trigger
     // Find any non-hegemon target
     const possibleTargets = Object.values(state.countryPopulationSystem.countries)
       .filter(c => c.name !== hegemon.name && !c.isHegemon);
@@ -367,8 +371,8 @@ export function shouldInitiateIntervention(
   const economicCrisisThreshold = 0.4; // GDP significantly down
   const economicCrisis = state.economy.gdp < state.economy.gdp * economicCrisisThreshold;
 
-  if (economicCrisis && Math.random() < 0.08) {
-    // 8% chance during economic crisis
+  if (economicCrisis && Math.random() < 0.08 * warMotivationMultiplier) {
+    // 8% base chance during economic crisis, multiplied by war motivation
     const possibleTargets = Object.values(state.countryPopulationSystem.countries)
       .filter(c => c.name !== hegemon.name && !c.isHegemon);
 
