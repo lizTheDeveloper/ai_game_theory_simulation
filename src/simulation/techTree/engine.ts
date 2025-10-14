@@ -113,6 +113,17 @@ export function updateTechTree(
 ): TechUnlockEvent[] {
   const unlockEvents: TechUnlockEvent[] = [];
   
+  // Ensure unlockedTech is a Set (can become plain object after serialization)
+  if (!(techTreeState.unlockedTech instanceof Set)) {
+    techTreeState.unlockedTech = new Set(techTreeState.unlockedTech as any);
+  }
+  if (!(techTreeState.researchProgress instanceof Map)) {
+    techTreeState.researchProgress = new Map(Object.entries(techTreeState.researchProgress as any));
+  }
+  if (!(techTreeState.regionalDeployment instanceof Map)) {
+    techTreeState.regionalDeployment = new Map(Object.entries(techTreeState.regionalDeployment as any));
+  }
+  
   // 1. Check for tech unlocks
   const lockedTech = getAllTech().filter(t => !techTreeState.unlockedTech.has(t.id));
   
