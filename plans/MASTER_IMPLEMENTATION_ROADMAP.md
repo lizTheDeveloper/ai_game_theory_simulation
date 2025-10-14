@@ -1472,17 +1472,18 @@ Updated `breakthroughTechnologies.ts` (line 299):
 
 ---
 
-## 4.4 **Energy & Resource Constraints** ⚡ ✅ MOSTLY COMPLETE
-**File:** `src/simulation/powerGeneration.ts`, `src/types/powerGeneration.ts`
-**Status:** ✅ MOSTLY IMPLEMENTED (Oct 12, 2025 - discovered existing implementation)
+## 4.4 **Energy & Resource Constraints** ⚡ ✅ COMPLETE
+**File:** `src/simulation/powerGeneration.ts`, `src/types/powerGeneration.ts`, `src/simulation/research.ts`
+**Status:** ✅ FULLY IMPLEMENTED (Oct 12, 2025 - completed energy constraints + breakthrough integration)
 **Priority:** MEDIUM-HIGH
-**Dev Time:** ~6 hours (already spent)
+**Dev Time:** ~8 hours (total spent)
 **Complexity:** MEDIUM
 
 **Why Important:**
 - **Physical reality check on exponential growth**
-- Currently: AI can grow unbounded
-- Reality: Energy is the hard constraint
+- Energy constraints now limit AI growth realistically
+- Breakthrough technologies can relax constraints
+- Creates strategic tension and motivates energy tech investment
 
 **Implemented Features:** ✅
 - ✅ `PowerGenerationSystem` - Comprehensive energy tracking
@@ -1496,13 +1497,15 @@ Updated `breakthroughTechnologies.ts` (line 299):
 - ✅ Emissions tracking (monthly + cumulative CO2)
 - ✅ Training events (episodic power spikes for major models)
 - ✅ Integration with environmental system (CO2 accumulation)
+- ✅ **Hard constraints on AI growth** based on data center power utilization (NEW Oct 12)
+- ✅ **Energy constraint multiplier** applied to all AI capability growth (NEW Oct 12)
+- ✅ **Breakthrough tech integration** (fusion/clean energy → energy abundance) (NEW Oct 12)
+- ✅ **Training affordability checks** prevent overloading grid (NEW Oct 12)
 
-**Missing Features:** ❌
-- ❌ **Hard constraints on AI growth** when energy maxed (critical!)
-- ❌ Resource competition mechanics (nations, companies)
-- ❌ Critical mineral access tracking (chip materials)
-- ❌ Supply chain resilience mechanics
-- ❌ Breakthrough interactions (fusion unlocks, quantum efficiency)
+**Future Enhancement Ideas:** 💡
+- Resource competition mechanics (nations, companies)
+- Critical mineral access tracking (chip materials)
+- Supply chain resilience mechanics
 
 **Research Backing:**
 - IEA Global Data Centre Energy Report 2024
@@ -1517,19 +1520,18 @@ Updated `breakthroughTechnologies.ts` (line 299):
 - Crypto: 15% annual growth (policy-dependent)
 - Grid transition: Slow (2% renewable, 0.5% nuclear, 2.5% fossil phase-out per year)
 - Climate feedback: 5% increased cooling per 1°C warming
+- **Energy constraints:** Soft threshold at 20%, hard threshold at 30% DC power utilization
+- **Constraint severity:** Linear ramp 0 → 0.5 (20-30%), then 0.5 → 1.0 (30%+)
+- **AI growth penalty:** Multiplied by (1.0 - constraint severity)
+- **Breakthrough boost:** Clean Energy +20%, Fusion Power +50% global generation
 
-**Expected Impact:**
-- Currently: Energy tracked but doesn't limit AI growth
-- Future: Would slow AI growth realistically, create strategic bottlenecks
-- Motivates energy tech (fusion, renewables)
-- Geographic dynamics (energy-rich nations lead)
-
-**Next Steps to Complete:**
-1. Add energy capacity limits that constrain AI training
-2. Implement resource competition between nations/orgs
-3. Add critical mineral bottlenecks (rare earths, etc.)
-4. Connect breakthrough techs (fusion → energy abundance → faster AI)
-5. Add supply chain disruption mechanics
+**Actual Impact:**
+- ✅ Energy constraints now limit AI growth realistically
+- ✅ Creates strategic bottlenecks when DC power exceeds 20-30% of global grid
+- ✅ Motivates energy tech investment (fusion, renewables unlock faster AI growth)
+- ✅ Realistic thresholds (2024 baseline: 17% utilization already)
+- ✅ Training events can be blocked by energy constraints
+- ✅ Breakthrough technologies can relax constraints (positive feedback loop)
 
 ---
 

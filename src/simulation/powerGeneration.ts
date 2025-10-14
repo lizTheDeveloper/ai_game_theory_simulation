@@ -79,6 +79,9 @@ export function updatePowerGeneration(state: GameState): void {
   if (power.dataCenterPower > power.peakDataCenterPower) {
     power.peakDataCenterPower = power.dataCenterPower;
   }
+
+  // 14. Calculate energy constraints (NEW - Oct 12, 2025)
+  calculateEnergyConstraints(power);
 }
 
 /**
@@ -425,4 +428,139 @@ export function getAIEfficiencyTrend(state: GameState): string {
   }
 
   return trend;
+}
+
+/**
+ * Calculate energy constraints on AI growth (NEW - Oct 12, 2025)
+ *
+ * Determines if data center power consumption is approaching limits,
+ * and calculates constraint severity to slow AI capability growth.
+ *
+ * Reality check: Data centers already consume ~17% of global power in 2024
+ * (415 TWh/year DC / 2500 TWh/year total). Constraints reflect political
+ * resistance, grid stability concerns, and energy price impacts.
+ *
+ * Key Thresholds:
+ * - <20% of global power: No constraint (current trajectory)
+ * - 20-30% of global power: Warning zone (soft constraint - rising friction)
+ * - >30% of global power: Hard constraint (grid stability, political pushback)
+ */
+function calculateEnergyConstraints(power: PowerGenerationSystem): void {
+  // Calculate utilization rate (what % of global power is data centers using?)
+  const utilizationRate = power.dataCenterPower / power.totalElectricityGeneration;
+
+  // Soft constraint threshold (warning zone - energy prices rising, political friction)
+  const softThreshold = 0.20; // 20% of global power
+  const hardThreshold = power.maxDataCenterPowerFraction; // 30% by default
+
+  // Calculate constraint severity [0, 1]
+  if (utilizationRate < softThreshold) {
+    // No constraint - plenty of power available
+    power.energyConstraintActive = false;
+    power.constraintSeverity = 0;
+    power.monthsConstrained = 0;
+  } else if (utilizationRate < hardThreshold) {
+    // Soft constraint - warning zone (linear ramp from 0 to 0.5)
+    power.energyConstraintActive = true;
+    const softProgress = (utilizationRate - softThreshold) / (hardThreshold - softThreshold);
+    power.constraintSeverity = softProgress * 0.5; // 0 to 0.5
+    power.monthsConstrained++;
+
+    // Log warning when first entering soft constraint
+    if (power.monthsConstrained === 1) {
+      console.log(`\n⚠️ ENERGY CONSTRAINT ACTIVATED (SOFT)`);
+      console.log(`   Data centers using ${(utilizationRate * 100).toFixed(1)}% of global power`);
+      console.log(`   Threshold: ${(hardThreshold * 100).toFixed(0)}% max`);
+      console.log(`   AI growth will slow as power becomes scarce\n`);
+    }
+  } else {
+    // Hard constraint - beyond safe limits
+    power.energyConstraintActive = true;
+    // Severity ramps from 0.5 to 1.0 as we go further beyond threshold
+    const overshoot = (utilizationRate - hardThreshold) / hardThreshold;
+    power.constraintSeverity = Math.min(1.0, 0.5 + overshoot * 2); // 0.5 to 1.0
+    power.monthsConstrained++;
+
+    // Log crisis when first hitting hard constraint
+    if (power.constraintSeverity > 0.5 && power.monthsConstrained === 1) {
+      console.log(`\n🚨 ENERGY CONSTRAINT CRISIS (HARD)`);
+      console.log(`   Data centers using ${(utilizationRate * 100).toFixed(1)}% of global power!`);
+      console.log(`   Exceeded safe threshold of ${(hardThreshold * 100).toFixed(0)}%`);
+      console.log(`   AI capability growth severely constrained\n`);
+    }
+  }
+
+  // Log periodic updates when constrained
+  if (power.energyConstraintActive && power.monthsConstrained % 12 === 0) {
+    console.log(`\n⚡ ENERGY CONSTRAINT UPDATE (Month ${power.monthsConstrained})`);
+    console.log(`   Utilization: ${(utilizationRate * 100).toFixed(1)}% of global power`);
+    console.log(`   Severity: ${(power.constraintSeverity * 100).toFixed(0)}%`);
+    console.log(`   AI growth penalty: ${(power.constraintSeverity * 100).toFixed(0)}% slowdown\n`);
+  }
+}
+
+/**
+ * Get energy constraint multiplier for AI capability growth
+ *
+ * Returns a multiplier [0, 1] where:
+ * - 1.0 = no constraint (full growth)
+ * - 0.5 = moderate constraint (50% growth)
+ * - 0.0 = hard constraint (no growth possible)
+ *
+ * Use this in AI capability calculations to apply energy bottleneck.
+ */
+export function getEnergyConstraintMultiplier(state: GameState): number {
+  const power = state.powerGenerationSystem;
+
+  if (!power || !power.energyConstraintActive) {
+    return 1.0; // No constraint
+  }
+
+  // Return inverse of severity (higher severity = lower multiplier)
+  return 1.0 - power.constraintSeverity;
+}
+
+/**
+ * Check if there's sufficient energy for a new AI training run
+ *
+ * Returns true if energy is available, false if constrained.
+ * Use this before starting major training projects.
+ */
+export function canAffordTraining(
+  modelSize: number,
+  state: GameState
+): { canTrain: boolean; reason?: string } {
+  const power = state.powerGenerationSystem;
+
+  // Estimate power needed for this training run
+  // Rough heuristic: larger models need more power
+  const basePower = 0.05; // 50 GWh for 100B model
+  const scalingFactor = Math.pow(modelSize / 100, 0.7); // Sublinear
+  const estimatedPower = (basePower * scalingFactor) / 6; // Spread over 6 months, monthly cost
+
+  // Check if adding this would exceed limits
+  const newAIPower = power.aiInferencePower + power.aiTrainingPower + estimatedPower;
+  const newUtilization = (newAIPower + power.cryptoPower + power.traditionalCloudPower) /
+                         power.totalElectricityGeneration;
+
+  // Hard block if it would push us significantly over threshold
+  if (newUtilization > power.maxDataCenterPowerFraction * 1.2) {
+    return {
+      canTrain: false,
+      reason: `Insufficient energy capacity (would exceed ${(power.maxDataCenterPowerFraction * 100).toFixed(0)}% threshold)`
+    };
+  }
+
+  // Probabilistic block in soft constraint zone
+  if (newUtilization > power.maxDataCenterPowerFraction * 0.8) {
+    const blockProbability = power.constraintSeverity * 0.7; // Up to 70% chance to block
+    if (Math.random() < blockProbability) {
+      return {
+        canTrain: false,
+        reason: `Energy constraint: ${(power.constraintSeverity * 100).toFixed(0)}% chance of blocking new training`
+      };
+    }
+  }
+
+  return { canTrain: true };
 }
