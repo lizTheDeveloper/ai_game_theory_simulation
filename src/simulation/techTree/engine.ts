@@ -175,7 +175,9 @@ export function updateTechTree(
   updateResearchProgress(gameState, techTreeState);
   
   // 4. Calculate and apply tech effects
-  applyTechEffects(gameState, techTreeState);
+  const { applyAllTechEffects, logTechEffects } = require('./effectsEngine');
+  applyAllTechEffects(gameState, techTreeState);
+  logTechEffects(gameState, techTreeState);
   
   return unlockEvents;
 }
@@ -385,63 +387,7 @@ function updateResearchProgress(
   }
 }
 
-/**
- * Apply tech effects to game state
- * Effects scale with deployment level
- */
-function applyTechEffects(
-  gameState: GameState,
-  techTreeState: TechTreeState
-): void {
-  // Aggregate effects across all regions
-  const globalEffects: Map<string, number> = new Map();
-  
-  for (const [region, deployments] of techTreeState.regionalDeployment) {
-    for (const deployment of deployments) {
-      for (const [effect, value] of Object.entries(deployment.effects)) {
-        const scaledValue = value * deployment.deploymentLevel;
-        globalEffects.set(effect, (globalEffects.get(effect) || 0) + scaledValue);
-      }
-    }
-  }
-  
-  // Apply global effects to game state
-  // This is where tech actually impacts the simulation
-  
-  for (const [effect, value] of globalEffects) {
-    applyEffectToGameState(effect, value, gameState);
-  }
-}
-
-/**
- * Apply a specific effect to game state
- */
-function applyEffectToGameState(
-  effect: string,
-  value: number,
-  gameState: GameState
-): void {
-  // Map effect names to game state properties
-  switch (effect) {
-    case 'cleanEnergyPercentage':
-      // Handled in energy system
-      break;
-    case 'fossilDependenceReduction':
-      // Handled in resource economy
-      break;
-    case 'phosphorusRecovery':
-      if (gameState.phosphorusSystem) {
-        gameState.phosphorusSystem.recoveryRate += value;
-      }
-      break;
-    case 'sleeperDetectionBonus':
-      if (gameState.defensiveAI) {
-        gameState.defensiveAI.threatDetection.detectSleepers += value;
-      }
-      break;
-    // Add more effect mappings as needed
-  }
-}
+// Effect application moved to effectsEngine.ts for better organization
 
 // ============================================================================
 // Helper Functions
