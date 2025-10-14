@@ -51,17 +51,18 @@
   - ✅ 1.7.5: Economic collapse (GDP scales with population^1.2, costs spike 2x)
   - ✅ 1.7.6: Orphaned AIs & capability floor (retire AIs on bankruptcy, exclude sleepers)
 
-### ✅ **TIER 2: Major Crisis Mitigations (COMPLETE)**
-- 2.1 Enhanced UBI + Purpose Infrastructure (6%/month meaning reduction)
-- 2.2 Social Safety Nets & Community Infrastructure (2.5%/month community boost)
-- 2.3 Advanced DAC + AI-Optimized Remediation (7.5%/month pollution cleanup)
-- 2.4 Constitutional AI / Advanced RLHF (5%/month alignment boost, 100% deployed)
-- 2.5 Mechanistic Interpretability (70% sleeper detection at full deployment)
-- 2.6 De-Extinction & Rewilding (2%/month biodiversity restoration)
-- 2.7 Ocean Alkalinity Enhancement (1.5%/month ocean pH restoration, permanent CO₂ removal)
-- 2.9 Government Environmental Actions (3 emergency actions, crisis priority/frequency, 2x tech deployment boost)
+### ✅ **TIER 2: Major Crisis Mitigations (8/9 COMPLETE, 2.8 PENDING)**
+- 2.1 Enhanced UBI + Purpose Infrastructure (6%/month meaning reduction) ✅
+- 2.2 Social Safety Nets & Community Infrastructure (2.5%/month community boost) ✅
+- 2.3 Advanced DAC + AI-Optimized Remediation (7.5%/month pollution cleanup) ✅
+- 2.4 Constitutional AI / Advanced RLHF (5%/month alignment boost, 100% deployed) ✅
+- 2.5 Mechanistic Interpretability (70% sleeper detection at full deployment) ✅
+- 2.6 De-Extinction & Rewilding (2%/month biodiversity restoration) ✅
+- 2.7 Ocean Alkalinity Enhancement (1.5%/month ocean pH restoration, permanent CO₂ removal) ✅
+- 2.8 Hegemonic Powers & Colonial Extraction **📋 DETAILED PLAN READY** (33-42h implementation)
+- 2.9 Government Environmental Actions (3 emergency actions, crisis priority/frequency, 2x tech deployment boost) ✅
 
-**All technologies pre-unlocked at realistic 2025 deployment levels (except 2.7 - unlocks during gameplay)!**
+**All implemented technologies pre-unlocked at realistic 2025 deployment levels (except 2.7 - unlocks during gameplay)!**
 
 ### ✅ **TIER 3: Planetary Boundaries (COMPLETE - All 9 boundaries integrated) 🎉**
 - **3.1** Tipping Point Cascade System (9 boundaries, non-linear risk, cascade trigger)
@@ -1043,12 +1044,21 @@ if (ai.sleeperState === 'active' && ai.darkCompute > 0) {
 ---
 
 ## 2.8 **Colonial Extraction, Military Power & Resource Inequality** 🏭⚔️
-**File:** `plans/colonial-extraction-and-military-power-system.md` (1,900+ lines)
+**Implementation Plan:** `plans/tier2-8-hegemonic-powers-IMPLEMENTATION-PLAN.md` (1000+ lines, comprehensive)
+**Design Document:** `plans/colonial-extraction-and-military-power-system.md` (1,900+ lines, research/philosophy)
 **Priority:** **CRITICAL** (Foundational restructuring)
-**Dev Time:** ~50-65 hours (FULL PHASE)
+**Dev Time:** ~33-42 hours (REVISED - country system already exists!)
+**Original Estimate:** ~~50-65 hours~~ (saved 18-23 hours by reusing TIER 1.7.2 country population system)
 **Complexity:** VERY HIGH
 
-**Status:** DESIGN COMPLETE - Awaiting implementation
+**Status:** ✅ DETAILED IMPLEMENTATION PLAN COMPLETE - Ready to implement
+
+**💡 MAJOR DISCOVERY (Oct 13, 2025):**
+- TIER 1.7.2 already implements country population tracking for 15 countries
+- Countries have strategic importance flags (isNuclearPower, isAIHub, isMajorEconomy)
+- Can EXTEND existing countries instead of creating separate hegemonic power entities
+- **Time saved:** 18-23 hours by reusing existing infrastructure
+- **New strategy:** Add resource endowments, extraction flows, and military systems to existing countries
 
 **⚠️ NOTE:** This is NOT a mitigation like other TIER 2 items - this is a **fundamental restructuring** of how the simulation models power, resources, and geopolitics. It affects ALL other systems.
 
@@ -1069,14 +1079,15 @@ if (ai.sleeperState === 'active' && ai.darkCompute > 0) {
 4. **Hegemon-Level Agents:** NOT player control - hegemons make their own decisions about extraction, war, intervention
 5. **Climate Reparations:** Crucial mechanic (hegemons caused climate change, periphery suffers)
 
-**Core Systems:**
+**Core Systems (Revised with Country System Discovery):**
 
-**TIER 2.1: Power Hierarchy & Resource Extraction (15-20h)**
-- 5 hegemonic powers with military, economic, technological capabilities
-- 6 resource regions with endowments (minerals, oil, labor, water)
-- Extraction matrix: Who takes from whom (based on colonial history + military presence)
-- Wealth inequality emerges from extraction (10-20% stays local, 80-90% extracted)
-- Colonial legacy affects extraction patterns
+**PHASE 1: Resource Endowments & Sovereignty (8-10h)**
+*Extends existing 15-country system*
+- Add resource endowments to existing countries (minerals, oil, labor, water, agriculture)
+- Flag 5 countries as hegemons (US, China, Russia, India, UK)
+- Define extraction flow types (colonial, corporate, debt, military)
+- Initialize resource data for all 15 countries based on research
+- Resource sovereignty tracking (how much control countries have over their own resources)
 
 ```typescript
 export interface HegemonicPower {
@@ -1105,12 +1116,14 @@ export interface ResourceRegion {
 }
 ```
 
-**TIER 2.2: Military System & Interventions (12-15h)**
+**PHASE 2: Military System & Interventions (8-10h)**
+*Builds on existing country military capabilities*
 - Military intervention types: Regime change, proxy war, occupation, coup support, resource securing
-- Military CO2 emissions (US military: 59M tons/year - more than 140 countries)
-- Military spending effects: Economy, AI R&D boost, meaning (nationalism)
+- Military CO2 emissions tracking (US military: 59M tons/year - more than 140 countries)
+- Military spending effects: Economy stimulus, AI R&D boost, nationalism/meaning
+- Intervention triggers: Resource access, meaning crisis → nationalism, rival containment
 - Interventions → refugee crises (Iraq, Libya, Syria patterns)
-- Military R&D → AI acceleration (but less safe, DARPA-style)
+- Military R&D → AI acceleration (DARPA-style, less safety-focused)
 
 ```typescript
 export interface MilitaryIntervention {
@@ -1126,11 +1139,13 @@ export interface MilitaryIntervention {
 }
 ```
 
-**TIER 2.3: War-Meaning Feedback Loop (8-10h)**
-- Meaning crisis → nationalism appeal → war motivation
+**PHASE 3: War-Meaning Feedback Loop (6-8h)**
+*Integrates with existing meaning crisis system*
+- Meaning crisis → nationalism appeal → war motivation calculation
 - War → economic activity, unity, "defending freedom" (purpose substitute)
 - War trauma → moral injury, veteran meaning crisis (negative feedback)
 - **KEY MECHANIC:** Solve meaning crisis → reduce war motivation
+- **Parental Fulfillment Hypothesis:** Nurturing AI/ecosystems/space reduces conquest drive
 - Alternative purpose pathways (community, creativity, stewardship) compete with nationalism
 
 ```typescript
@@ -1146,19 +1161,24 @@ export interface WarMeaningFeedback {
 }
 ```
 
-**TIER 2.4: Environmental Debt & Climate Justice (6-8h)**
-- Historical emissions per hegemon/region (US/EU caused most)
-- Climate vulnerability vs emissions ratio (climate debt)
+**PHASE 4: Environmental Debt & Climate Justice (5-6h)**
+*Builds on existing environmental and planetary boundaries systems*
+- Historical emissions per country (US/EU/China caused most)
+- Climate vulnerability vs emissions ratio (climate debt/suffering ratio)
   - Example: Sub-Saharan Africa suffers 28x more than they caused
-- Climate reparations as policy option (do hegemons pay?)
-- Military emissions tracked separately (usually invisible)
+- Climate reparations as government policy option (do hegemons pay vulnerable countries?)
+- Military emissions tracked separately and added to total (usually invisible in climate accounting)
+- Integration with existing environmental accumulation system
 
-**TIER 2.5: Integration & Testing (10-12h)**
-- Resource economy updated (regional endowments + extraction)
-- Refugee flows updated (military interventions as primary cause)
-- AI development updated (military R&D boost)
-- Meaning system updated (war as purpose substitute)
-- Monte Carlo testing (N=50), balance extraction rates
+**PHASE 5: Integration & Testing (6-8h)**
+*Connects to all existing simulation systems*
+- Resource economy updated (per-country endowments + extraction flows replace global pool)
+- Refugee flows updated (military interventions as primary cause, not just abstract crisis)
+- AI development updated (military R&D boost from interventions)
+- Meaning system updated (war as purpose substitute, nationalism calculation)
+- Environmental system updated (military CO2 emissions)
+- Unit tests for extraction calculations and war motivation
+- Monte Carlo testing (N=20-50 runs), balance extraction rates for realism
 
 **Philosophical Core:**
 This system models a profound question: **Can humanity transcend conquest as meaning-substitute?**
@@ -1202,9 +1222,16 @@ THEN warMotivation → 1 AND extraction → maximal AND dystopia → inevitable
 - **PTSD rates:** 11-20% of Iraq/Afghanistan vets
 - **Syrian crisis:** 13M displaced, 580K+ deaths, US intervention role
 
-**Total Estimated Time:** 50-65 hours (6-8 weeks full-time)
+**Total Estimated Time:** 33-42 hours (4-5 weeks full-time) - REVISED DOWN from 50-65 hours
+**Time Saved:** 18-23 hours by reusing existing TIER 1.7.2 country population system
 **Complexity:** VERY HIGH (reshapes entire simulation)
 **Priority:** CRITICAL (foundational for realistic modeling)
+
+**📋 See detailed implementation plan:** `plans/tier2-8-hegemonic-powers-IMPLEMENTATION-PLAN.md`
+- Full task breakdown with code snippets for each phase
+- Integration points with all existing systems
+- Testing strategy and success criteria
+- Research backing for all mechanics
 
 ---
 
