@@ -574,7 +574,7 @@ export function updateInterventions(
 
     // Moral injury accumulates as veterans return
     // Iraq/Afghanistan: 11-20% of veterans have PTSD
-    const veteranReturn Rate = 0.001; // Small % of population are veterans returning
+    const veteranReturnRate = 0.001; // Small % of population are veterans returning
     intervention.costs.moralInjury = Math.min(
       0.2, // Max 20% of population with moral injury (veterans + families)
       intervention.costs.moralInjury + veteranReturnRate
