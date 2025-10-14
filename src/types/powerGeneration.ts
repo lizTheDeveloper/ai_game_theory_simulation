@@ -96,6 +96,14 @@ export interface PowerGenerationSystem {
   // === TRACKING & HISTORY ===
   peakDataCenterPower: number;             // Highest monthly power
   monthsSinceStart: number;                // Simulation time
+
+  // === ENERGY CONSTRAINTS (NEW - Oct 12, 2025) ===
+  // Note: 2024 baseline is already ~17% (415 TWh/year DC / 2500 TWh/year total)
+  // Constraint represents political/grid limits, not arbitrary cap
+  maxDataCenterPowerFraction: number;      // Max % of global power for data centers (default: 0.30 = 30%)
+  energyConstraintActive: boolean;         // Is growth being constrained by energy?
+  constraintSeverity: number;              // [0, 1] How much is growth slowed
+  monthsConstrained: number;               // How long has constraint been active
 }
 
 /**
@@ -203,5 +211,12 @@ export function initializePowerGenerationSystem(): PowerGenerationSystem {
     // Tracking
     peakDataCenterPower: monthlyDataCenterPower,
     monthsSinceStart: 0,
+
+    // Energy constraints (NEW - Oct 12, 2025)
+    // Starting at 17% in 2024, constraint kicks in around 20-30%
+    maxDataCenterPowerFraction: 0.30,    // 30% of global power (political/grid limit)
+    energyConstraintActive: false,        // Not constrained initially
+    constraintSeverity: 0,                // No constraint
+    monthsConstrained: 0,                 // Not constrained yet
   };
 }
