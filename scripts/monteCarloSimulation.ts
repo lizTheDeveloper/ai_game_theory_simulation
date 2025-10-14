@@ -320,14 +320,14 @@ let runName: string | undefined;
 if (args[0] && !args[0].startsWith('--')) {
   // Positional arguments format: runs months [name]
   numRuns = parseInt(args[0]) || 10;
-  maxMonthsValue = parseInt(args[1]) || 600;
+  maxMonthsValue = parseInt(args[1]) || 240;
   runName = args[2];
 } else {
   // Flag arguments format: --runs=X --max-months=Y
   const maxMonthsArg = args.find(arg => arg.split('=')[0] === '--max-months')?.split('=')[1];
   const runsArg = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
   numRuns = runsArg ? parseInt(runsArg) : 10;
-  maxMonthsValue = maxMonthsArg ? parseInt(maxMonthsArg) : 600;
+  maxMonthsValue = maxMonthsArg ? parseInt(maxMonthsArg) : 240;
 }
 
 // Configuration
