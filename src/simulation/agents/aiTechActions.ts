@@ -8,7 +8,7 @@
 
 import { GameState, GameAction, ActionResult, AIAgent } from '@/types/game';
 import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
-import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
+import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
 
 /**
  * Deploy Technology Action
@@ -28,6 +28,9 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     // Need tech tree state
     const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
     if (!techTreeState) return false;
+    
+    // Ensure proper types after serialization
+    ensureTechTreeTypes(techTreeState);
     
     // Need to have an organization with revenue
     if (!agent.organizationId) return false;
@@ -151,6 +154,9 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     
     const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
     if (!techTreeState) return false;
+    
+    // Ensure proper types after serialization
+    ensureTechTreeTypes(techTreeState);
     
     // Look for deployed safety/detection tech to sabotage
     const threateningTech = getAllTech().filter(t => 
