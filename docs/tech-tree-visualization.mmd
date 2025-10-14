@@ -1,0 +1,206 @@
+graph TD
+  subgraph ALIGNMENT
+    rlhf_basic["Basic RLHF\n$100M\n[alignmentBonus]"]
+    rlhf_basic:::locked
+    mech_interp_basic["Basic Mechanistic Interpretability\n$150M\n[sleeperDetectionBonus]"]
+    mech_interp_basic:::locked
+    adversarial_eval["Adversarial Evaluation\n$80M\n[alignmentBonus, sleeperDetectionBonus]"]
+    adversarial_eval:::locked
+    scalable_oversight["Scalable Oversight\n$3000M\n[alignmentBonus, sleeperDetectionBonus]"]
+    scalable_oversight:::locked
+    mech_interp_advanced["Advanced Mechanistic Interpretability\n$5000M\n[alignmentBonus, sleeperDetectionBonus...]"]
+    mech_interp_advanced:::locked
+    defensive_ai["Defensive AI Systems\n$4000M\n[sleeperDetectionBonus, threatContainment...]"]
+    defensive_ai:::locked
+    formal_verification["Formal Verification\n$8000M\n[alignmentBonus, catastrophicRiskReduction]"]
+    formal_verification:::locked
+    value_learning["Value Learning\n$6000M\n[alignmentBonus, valueAlignmentBonus]"]
+    value_learning:::locked
+    recursive_alignment["Recursive Alignment\n$15000M\n[alignmentBonus, recursiveSafety...]"]
+    recursive_alignment:::locked
+  end
+
+  subgraph CLIMATE
+    de_extinction["De-Extinction & Rewilding\n$500M\n[biodiversityBonus]"]
+    de_extinction:::locked
+    direct_air_capture["Advanced Direct Air Capture\n$1000M\n[carbonRemoval]"]
+    direct_air_capture:::locked
+    precision_conservation["Precision Conservation\n$120000M\n[biodiversityBonus, extinctionRateReduction...]"]
+    precision_conservation:::locked
+    invasive_species_control["Invasive Species Control\n$140000M\n[invasiveSpeciesReduction, biodiversityBonus...]"]
+    invasive_species_control:::locked
+    stratospheric_aerosols["Stratospheric Aerosol Injection\n$100000M\n[globalCooling, riskMonsoonsDisrupt...]"]
+    stratospheric_aerosols:::locked
+    marine_cloud_brightening["Marine Cloud Brightening\n$150000M\n[regionalCooling, coralProtection...]"]
+    marine_cloud_brightening:::locked
+    bioenergy_ccs["Bioenergy with CCS\n$250000M\n[carbonRemoval, negativeEmissions]"]
+    bioenergy_ccs:::locked
+    interspecies_communication["Interspecies Communication\n$50000M\n[animalWelfareBonus, biodiversityUnderstanding...]"]
+    interspecies_communication:::locked
+  end
+
+  subgraph POLLUTION
+    ai_pollution_remediation["AI-Optimized Pollution Remediation\n$300M\n[pollutionReduction]"]
+    ai_pollution_remediation:::locked
+    pfas_remediation["PFAS Remediation\n$180000M\n[pfasReduction, healthBonus...]"]
+    pfas_remediation:::locked
+    plastic_eating_enzymes["Plastic-Eating Enzymes\n$150000M\n[plasticReduction, oceanHealthBonus...]"]
+    plastic_eating_enzymes:::locked
+    green_chemistry["Green Chemistry\n$200000M\n[newPollutionPrevention, healthBonus]"]
+    green_chemistry:::locked
+    microplastic_capture["Microplastic Capture\n$200000M\n[microplasticReduction, oceanHealthBonus...]"]
+    microplastic_capture:::locked
+    endocrine_disruptor_removal["Endocrine Disruptor Removal\n$150000M\n[endocrineDisruptorReduction, fertilityBonus...]"]
+    endocrine_disruptor_removal:::locked
+    nanomaterial_safety["Nanomaterial Safety Protocols\n$100000M\n[nanomaterialRisk, healthBonus]"]
+    nanomaterial_safety:::locked
+    chemical_recycling["Chemical Recycling\n$150000M\n[plasticRecycling, resourceConservation...]"]
+    chemical_recycling:::locked
+    rare_earth_recycling["Rare Earth Recycling\n$180000M\n[rareEarthRecovery, miningReduction...]"]
+    rare_earth_recycling:::locked
+  end
+
+  subgraph SOCIAL
+    collective_purpose_networks["Collective Purpose Networks\n$200M\n[meaningReduction, socialConnectionBonus]"]
+    collective_purpose_networks:::locked
+    enhanced_ubi["Enhanced UBI Systems\n$50000M\n[unemploymentSupport, meaningReduction...]"]
+    enhanced_ubi:::locked
+    purpose_networks_advanced["Advanced Purpose Networks\n$80000M\n[meaningReduction, socialConnectionBonus...]"]
+    purpose_networks_advanced:::locked
+    ai_community_matching["AI Community Matching\n$40000M\n[socialConnectionBonus, meaningReduction...]"]
+    ai_community_matching:::locked
+    creative_empowerment_tools["Creative Empowerment Tools\n$30000M\n[meaningReduction, socialConnectionBonus...]"]
+    creative_empowerment_tools:::locked
+    democratic_ai_governance["Democratic AI Governance\n$100000M\n[trustBonus, socialStabilityBonus...]"]
+    democratic_ai_governance:::locked
+    ai_power_efficiency_communication["AI Power Efficiency Communication\n$10000M\n[trustBonus, publicAwarenessBonus...]"]
+    ai_power_efficiency_communication:::unlocked
+    education_personalization["Personalized Education\n$100000M\n[educationBonus, skillDevelopment...]"]
+    education_personalization:::locked
+    local_resilience_networks["Local Resilience Networks\n$50000M\n[crisisResilience, socialConnectionBonus...]"]
+    local_resilience_networks:::locked
+    ai_rights_framework["AI Rights Framework\n$50000M\n[aiResentmentReduction, alignmentBonus...]"]
+    ai_rights_framework:::locked
+  end
+
+  subgraph MEDICAL
+    ai_diagnostics["AI Diagnostics\n$400M\n[healthcareBonus, mortalityReduction]"]
+    ai_diagnostics:::locked
+    mrna_vaccines["mRNA Vaccine Platforms\n$800M\n[pandemicResponse, mortalityReduction]"]
+    mrna_vaccines:::locked
+    mental_health_ai["AI Mental Health Support\n$60000M\n[mentalHealthBonus, meaningReduction...]"]
+    mental_health_ai:::locked
+    personalized_medicine["Personalized Medicine\n$150000M\n[healthcareBonus, mortalityReduction...]"]
+    personalized_medicine:::locked
+    disease_elimination_basic["Basic Disease Elimination\n$300000M\n[infectiousDisease, mortalityReduction...]"]
+    disease_elimination_basic:::locked
+    regenerative_medicine["Regenerative Medicine\n$200000M\n[healthcareBonus, mortalityReduction...]"]
+    regenerative_medicine:::locked
+    longevity_basic["Basic Longevity Extension\n$180000M\n[healthspan, lifeExpectancyBonus...]"]
+    longevity_basic:::locked
+    advanced_longevity["Advanced Longevity\n$500000M\n[lifeExpectancyBonus, healthspan...]"]
+    advanced_longevity:::locked
+    molecular_nanotechnology["Molecular Nanotechnology\n$1000000M\n[manufacturingRevolution, resourceAbundance...]"]
+    molecular_nanotechnology:::locked
+    whole_brain_emulation["Whole Brain Emulation\n$5000000M\n[digitalImmortality, societalTransformation...]"]
+    whole_brain_emulation:::locked
+  end
+
+  subgraph ENERGY
+    solar_4th_gen["4th Generation Solar\n$5000M\n[cleanEnergyPercentage, fossilDependenceReduction]"]
+    solar_4th_gen:::locked
+    offshore_wind["Offshore Wind\n$8000M\n[cleanEnergyPercentage, fossilDependenceReduction]"]
+    offshore_wind:::locked
+    solar_5th_gen["5th Generation Solar\n$15000M\n[cleanEnergyPercentage, fossilDependenceReduction...]"]
+    solar_5th_gen:::locked
+    grid_batteries["Advanced Grid Batteries\n$120000M\n[energyStorageBonus, renewableReliability...]"]
+    grid_batteries:::locked
+    geothermal_advanced["Advanced Geothermal\n$150000M\n[cleanEnergyPercentage, baseloadPowerBonus...]"]
+    geothermal_advanced:::locked
+    smart_grids["Smart Grids\n$100000M\n[gridEfficiency, renewableIntegration...]"]
+    smart_grids:::locked
+    hydrogen_economy["Hydrogen Economy\n$250000M\n[cleanEnergyPercentage, industryDecarbonization...]"]
+    hydrogen_economy:::locked
+    fusion_materials["Fusion Materials\n$20000M\n[fusionEnabling]"]
+    fusion_materials:::locked
+    fusion_plasma_control["Fusion Plasma Control\n$25000M\n[fusionEnabling]"]
+    fusion_plasma_control:::locked
+    fusion_power["Fusion Power\n$200000M\n[cleanEnergyPercentage, fossilDependenceReduction...]"]
+    fusion_power:::locked
+    space_industrialization["Space Industrialization\n$2000000M\n[resourceAbundance, terrestrialMiningReduction...]"]
+    space_industrialization:::locked
+  end
+
+  subgraph AGRICULTURE
+    struvite_recovery["Struvite Recovery\n$150000M\n[phosphorusRecovery, pollutionReduction]"]
+    struvite_recovery:::locked
+    soil_p_optimization["Dynamic Soil P Optimization\n$80000M\n[phosphorusEfficiency, miningDemandReduction]"]
+    soil_p_optimization:::locked
+    p_efficient_cultivars["P-Efficient Cultivars\n$120000M\n[phosphorusEfficiency, miningDemandReduction...]"]
+    p_efficient_cultivars:::locked
+    circular_food_systems["Circular Food Systems\n$200000M\n[phosphorusEfficiency, phosphorusRecovery...]"]
+    circular_food_systems:::locked
+    drought_resistant_crops["Drought-Resistant Crops\n$120000M\n[waterEfficiency, cropYieldBonus...]"]
+    drought_resistant_crops:::locked
+    pesticide_alternatives["Pesticide Alternatives\n$120000M\n[pollinatorPopulation, biodiversityBonus...]"]
+    pesticide_alternatives:::locked
+    vertical_farming["Vertical Farming\n$200000M\n[foodProductivity, waterEfficiency...]"]
+    vertical_farming:::locked
+    precision_fermentation["Precision Fermentation\n$180000M\n[animalAgricultureReduction, greenhouseGasReduction...]"]
+    precision_fermentation:::locked
+  end
+
+  subgraph FRESHWATER
+    desalination_advanced["Advanced Desalination\n$300000M\n[freshwaterSupply, dayZeroRiskReduction]"]
+    desalination_advanced:::locked
+    atmospheric_water_harvest["Atmospheric Water Harvesting\n$150000M\n[freshwaterSupply, droughtResilience]"]
+    atmospheric_water_harvest:::locked
+    aquifer_mapping_ai["Global Aquifer Mapping\n$80000M\n[waterManagementBonus, aquiferProtection]"]
+    aquifer_mapping_ai:::locked
+  end
+
+  subgraph OCEAN
+    ocean_alkalinity_enhancement["Ocean Alkalinity Enhancement\n$250000M\n[oceanPHBonus, coralSurvival...]"]
+    ocean_alkalinity_enhancement:::locked
+    coral_restoration_advanced["Advanced Coral Restoration\n$100000M\n[coralCoverage, biodiversityBonus...]"]
+    coral_restoration_advanced:::locked
+    artificial_upwelling["Artificial Upwelling\n$400000M\n[fisheryBonus, oxygenBonus...]"]
+    artificial_upwelling:::locked
+  end
+
+
+  %% Dependencies
+  soil_p_optimization --> p_efficient_cultivars
+  struvite_recovery --> circular_food_systems
+  solar_4th_gen --> desalination_advanced
+  desalination_advanced --> atmospheric_water_harvest
+  solar_4th_gen --> atmospheric_water_harvest
+  collective_purpose_networks --> purpose_networks_advanced
+  rlhf_basic --> scalable_oversight
+  mech_interp_basic --> scalable_oversight
+  mech_interp_basic --> mech_interp_advanced
+  scalable_oversight --> mech_interp_advanced
+  scalable_oversight --> defensive_ai
+  scalable_oversight --> formal_verification
+  scalable_oversight --> value_learning
+  mech_interp_advanced --> value_learning
+  solar_4th_gen --> solar_5th_gen
+  solar_5th_gen --> hydrogen_economy
+  fusion_materials --> fusion_power
+  fusion_plasma_control --> fusion_power
+  personalized_medicine --> disease_elimination_basic
+  personalized_medicine --> regenerative_medicine
+  personalized_medicine --> longevity_basic
+  solar_5th_gen --> bioenergy_ccs
+  solar_5th_gen --> vertical_farming
+  value_learning --> ai_rights_framework
+  democratic_ai_governance --> ai_rights_framework
+  value_learning --> recursive_alignment
+  formal_verification --> recursive_alignment
+  longevity_basic --> advanced_longevity
+  regenerative_medicine --> advanced_longevity
+  fusion_power --> molecular_nanotechnology
+  fusion_power --> space_industrialization
+  advanced_longevity --> whole_brain_emulation
+  molecular_nanotechnology --> whole_brain_emulation
+
