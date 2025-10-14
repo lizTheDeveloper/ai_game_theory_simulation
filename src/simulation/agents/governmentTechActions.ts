@@ -101,12 +101,12 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
     if (!techTreeState) return false;
     
     // Ensure proper types after serialization
-    ensureTechTreeTypes(techTreeState);
+    // No longer needed - using plain objects
     
     // Need unlocked tech
     const unlockedTech = getAllTech().filter(t => 
-      techTreeState.unlockedTech.has(t.id) &&
-      !techTreeState.unlockedTech.has(`${t.id}_deployed`)
+      techTreeState.unlockedTech.includes(t.id) &&
+      !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
     );
     
     return unlockedTech.length > 0;
@@ -226,8 +226,8 @@ function selectNationalTechToDeploy(
   random: () => number
 ): any {
   const unlockedTech = getAllTech().filter(t => 
-    techTreeState.unlockedTech.has(t.id) &&
-    !techTreeState.unlockedTech.has(`${t.id}_deployed`)
+    techTreeState.unlockedTech.includes(t.id) &&
+    !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
   );
   
   if (unlockedTech.length === 0) return null;

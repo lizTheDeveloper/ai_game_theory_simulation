@@ -243,12 +243,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 1.5,
-    minEconomicStage: 2.5,
-    researchMonthsRequired: 24,
-    researchCost: 500,
-    deploymentCost: 150000,
-    deploymentMonthsRequired: 48,
+    minAICapability: 0.5,  // Realistic: Very low AI requirement for existing tech
+    minEconomicStage: 1.5,  // Realistic: Early post-industrial
+    minMonth: 3,  // Realistic: 3 months to deploy existing tech
+    researchMonthsRequired: 3,  // Realistic: Tech already exists, just needs deployment
+    researchCost: 50,  // Realistic: Very low cost for existing tech
+    deploymentCost: 25000,  // Realistic: Lower deployment cost
+    deploymentMonthsRequired: 12,  // Realistic: Faster deployment
     deploymentLevel: 0,
     effects: {
       phosphorusRecovery: 0.35,
@@ -262,11 +263,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.0,
-    researchMonthsRequired: 18,
-    researchCost: 800,
-    deploymentCost: 80000,
-    deploymentMonthsRequired: 36,
+    minAICapability: 0.8,  // Realistic: Current AI can do field optimization
+    minEconomicStage: 1.8,  // Realistic: Early post-industrial
+    minMonth: 6,  // Realistic: 6 months to develop and deploy
+    researchMonthsRequired: 6,  // Realistic: AI optimization is achievable
+    researchCost: 150,  // Realistic: Lower cost for AI optimization
+    deploymentCost: 20000,  // Realistic: Software deployment
+    deploymentMonthsRequired: 18,  // Realistic: Faster software deployment
     deploymentLevel: 0,
     effects: {
       phosphorusEfficiency: 0.30,
@@ -280,11 +283,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: ['soil_p_optimization'],
-    minAICapability: 2.5,
-    researchMonthsRequired: 36,
-    researchCost: 1200,
-    deploymentCost: 120000,
-    deploymentMonthsRequired: 60,
+    minAICapability: 1.5,  // Realistic: CRISPR and breeding optimization
+    minEconomicStage: 2.2,  // Realistic: Advanced post-industrial
+    minMonth: 24,  // Realistic: 2 years for breeding programs
+    researchMonthsRequired: 24,  // Realistic: Breeding and CRISPR work
+    researchCost: 600,  // Realistic: Moderate biotech cost
+    deploymentCost: 80000,  // Realistic: Seed distribution
+    deploymentMonthsRequired: 48,  // Realistic: Agricultural deployment
     deploymentLevel: 0,
     effects: {
       phosphorusEfficiency: 0.25,
@@ -396,13 +401,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'ocean',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.5,
-    minEconomicStage: 3.0,
-    minMonth: 24,
-    researchMonthsRequired: 36,
-    researchCost: 3000,
-    deploymentCost: 250000,
-    deploymentMonthsRequired: 60,
+    minAICapability: 1.8,  // Realistic: Current AI can model ocean chemistry
+    minEconomicStage: 2.5,  // Realistic: Advanced post-industrial
+    minMonth: 18,  // Realistic: 1.5 years for pilot deployment
+    researchMonthsRequired: 18,  // Realistic: Ocean chemistry modeling
+    researchCost: 1500,  // Realistic: Moderate research cost
+    deploymentCost: 150000,  // Realistic: Ocean deployment
+    deploymentMonthsRequired: 36,  // Realistic: Ocean deployment timeline
     deploymentLevel: 0,
     effects: {
       oceanPHBonus: 0.30,
@@ -417,11 +422,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'ocean',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.0,
-    researchMonthsRequired: 24,
-    researchCost: 800,
-    deploymentCost: 100000,
-    deploymentMonthsRequired: 48,
+    minAICapability: 1.5,  // Realistic: Current biotech and 3D printing
+    minEconomicStage: 2.0,  // Realistic: Mid post-industrial
+    minMonth: 12,  // Realistic: 1 year for coral breeding
+    researchMonthsRequired: 18,  // Realistic: Coral breeding and 3D printing
+    researchCost: 400,  // Realistic: Moderate biotech cost
+    deploymentCost: 60000,  // Realistic: Coral deployment
+    deploymentMonthsRequired: 36,  // Realistic: Coral restoration timeline
     deploymentLevel: 0,
     effects: {
       coralCoverage: 0.25,
@@ -459,11 +466,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'pollution',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.0,
-    researchMonthsRequired: 24,
-    researchCost: 1500,
-    deploymentCost: 180000,
-    deploymentMonthsRequired: 48,
+    minAICapability: 1.3,  // Realistic: Current chemical engineering
+    minEconomicStage: 2.0,  // Realistic: Mid post-industrial
+    minMonth: 9,  // Realistic: 9 months for chemical engineering
+    researchMonthsRequired: 15,  // Realistic: Chemical process development
+    researchCost: 800,  // Realistic: Moderate chemical engineering cost
+    deploymentCost: 120000,  // Realistic: Chemical plant deployment
+    deploymentMonthsRequired: 36,  // Realistic: Chemical plant timeline
     deploymentLevel: 0,
     effects: {
       pfasReduction: 0.70,

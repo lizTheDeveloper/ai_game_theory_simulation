@@ -38,14 +38,16 @@ export interface RegionalTechDeployment {
 /**
  * Tech Tree State
  * Tracks which tech is unlocked and deployed where
+ * 
+ * Uses plain objects instead of Maps/Sets for reliable JSON serialization
  */
 export interface TechTreeState {
   // Global tech status
-  unlockedTech: Set<string>;
-  researchProgress: Map<string, number>;  // techId -> progress (0-1)
+  unlockedTech: string[];  // Array of unlocked tech IDs
+  researchProgress: Record<string, number>;  // techId -> progress (0-1)
   
   // Regional deployment
-  regionalDeployment: Map<string, RegionalTechDeployment[]>;  // region -> deployments
+  regionalDeployment: Record<string, RegionalTechDeployment[]>;  // region -> deployments
   
   // Deployment actions queue
   pendingActions: TechDeploymentAction[];
@@ -64,9 +66,9 @@ export interface TechTreeState {
  */
 export function initializeTechTreeState(): TechTreeState {
   const state: TechTreeState = {
-    unlockedTech: new Set(),
-    researchProgress: new Map(),
-    regionalDeployment: new Map(),
+    unlockedTech: [],
+    researchProgress: {},
+    regionalDeployment: {},
     pendingActions: [],
     unlockHistory: [],
     totalInvestment: 0,
@@ -77,15 +79,15 @@ export function initializeTechTreeState(): TechTreeState {
   // Unlock all DEPLOYED_2025 tech
   const deployedTech = getAllTech().filter(t => t.status === 'deployed_2025');
   for (const tech of deployedTech) {
-    state.unlockedTech.add(tech.id);
+    state.unlockedTech.push(tech.id);
     state.techUnlockedCount++;
     
     // Initialize global deployment
-    if (!state.regionalDeployment.has('global')) {
-      state.regionalDeployment.set('global', []);
+    if (!state.regionalDeployment['global']) {
+      state.regionalDeployment['global'] = [];
     }
     
-    state.regionalDeployment.get('global')!.push({
+    state.regionalDeployment['global'].push({
       techId: tech.id,
       region: 'global',
       deploymentLevel: tech.deploymentLevel,
@@ -99,32 +101,7 @@ export function initializeTechTreeState(): TechTreeState {
   return state;
 }
 
-/**
- * Ensure tech tree state has proper types after serialization
- * Sets and Maps become plain objects when serialized, need to reconstruct
- */
-export function ensureTechTreeTypes(techTreeState: TechTreeState): void {
-  if (!(techTreeState.unlockedTech instanceof Set)) {
-    // Set serializes to object with numeric keys, need to convert to array first
-    const unlocked = techTreeState.unlockedTech as unknown;
-    if (Array.isArray(unlocked)) {
-      techTreeState.unlockedTech = new Set(unlocked);
-    } else if (unlocked && typeof unlocked === 'object') {
-      // Object with numeric keys - get the values
-      techTreeState.unlockedTech = new Set(Object.values(unlocked as Record<string, string>));
-    } else {
-      techTreeState.unlockedTech = new Set();
-    }
-  }
-  if (!(techTreeState.researchProgress instanceof Map)) {
-    const progress = techTreeState.researchProgress as unknown as Record<string, number> | undefined;
-    techTreeState.researchProgress = new Map(Object.entries(progress || {}));
-  }
-  if (!(techTreeState.regionalDeployment instanceof Map)) {
-    const regional = (techTreeState.regionalDeployment as unknown as Record<string, unknown>) || {};
-    techTreeState.regionalDeployment = new Map(Object.entries(regional));
-  }
-}
+// No longer needed - using plain objects instead of Maps/Sets for serialization
 
 /**
  * Update tech tree each month
@@ -140,11 +117,32 @@ export function updateTechTree(
 ): TechUnlockEvent[] {
   const unlockEvents: TechUnlockEvent[] = [];
   
-  // Ensure unlockedTech is a Set (can become plain object after serialization)
-  ensureTechTreeTypes(techTreeState);
-  
   // 1. Check for tech unlocks
-  const lockedTech = getAllTech().filter(t => !techTreeState.unlockedTech.has(t.id));
+  const lockedTech = getAllTech().filter(t => 
+    !techTreeState.unlockedTech.includes(t.id) && 
+    (t.status === 'unlockable' || t.status === 'future')
+  );
+  
+  // Debug logging (probabilistic to avoid spam)
+  if (Math.random() < 0.01 && lockedTech.length > 0) {
+    const avgCapability = getAverageAICapability(gameState);
+    const economicStage = gameState.globalMetrics?.economicTransitionStage || 0;
+    
+    console.log(`\n🔍 TECH TREE DEBUG (Month ${gameState.currentMonth}):`);
+    console.log(`   Checking ${lockedTech.length} locked technologies`);
+    console.log(`   Unlocked: ${techTreeState.unlockedTech.length} technologies`);
+    console.log(`   AI Capability: ${avgCapability.toFixed(2)} (need 1.5+ for most techs)`);
+    console.log(`   Economic Stage: ${economicStage.toFixed(1)} (need 2.5+ for most techs)`);
+    console.log(`   First 3 unlocked: ${techTreeState.unlockedTech.slice(0, 3).join(', ')}`);
+    
+    // Show research progress for first few technologies
+    const firstTech = lockedTech[0];
+    if (firstTech) {
+      const progress = techTreeState.researchProgress[firstTech.id] || 0;
+      console.log(`   Sample tech "${firstTech.name}": ${(progress * 100).toFixed(1)}% research complete`);
+      console.log(`   Requirements: AI ${firstTech.minAICapability || 'none'}, Econ ${firstTech.minEconomicStage || 'none'}, Month ${firstTech.minMonth || 'none'}`);
+    }
+  }
   
   for (const tech of lockedTech) {
     const unlockCheck = checkUnlockConditions(tech, gameState, techTreeState);
@@ -199,13 +197,13 @@ export function checkUnlockConditions(
   const blockers: string[] = [];
   
   // Already unlocked?
-  if (techTreeState.unlockedTech.has(tech.id)) {
+  if (techTreeState.unlockedTech.includes(tech.id)) {
     return { canUnlock: false, reason: 'Already unlocked', unlockedBy: 'combination', blockers };
   }
   
   // 1. Check prerequisites
   for (const prereqId of tech.prerequisites) {
-    if (!techTreeState.unlockedTech.has(prereqId)) {
+    if (!techTreeState.unlockedTech.includes(prereqId)) {
       const prereqTech = getTechById(prereqId);
       blockers.push(`Prerequisite not unlocked: ${prereqTech?.name || prereqId}`);
     }
@@ -233,7 +231,7 @@ export function checkUnlockConditions(
   }
   
   // 5. Check research progress
-  const progress = techTreeState.researchProgress.get(tech.id) || 0;
+  const progress = techTreeState.researchProgress[tech.id] || 0;
   if (progress < 1.0) {
     blockers.push(`Research incomplete: ${(progress * 100).toFixed(0)}% complete`);
   }
@@ -251,7 +249,7 @@ export function checkUnlockConditions(
   if (blockers.length > 0) {
     return {
       canUnlock: false,
-      reason: blockers[0],
+      reason: blockers[0] || 'Unknown blocker',
       unlockedBy,
       blockers,
     };
@@ -272,9 +270,9 @@ function unlockTech(
   tech: TechDefinition,
   gameState: GameState,
   techTreeState: TechTreeState,
-  reason: string
+  _reason: string
 ): void {
-  techTreeState.unlockedTech.add(tech.id);
+  techTreeState.unlockedTech.push(tech.id);
   techTreeState.techUnlockedCount++;
   
   // Initialize at 0% deployment in all regions
@@ -282,21 +280,20 @@ function unlockTech(
   
   // Add to event log
   gameState.eventLog.push({
-    month: gameState.currentMonth,
     type: 'breakthrough',
-    severity: 'constructive',
+    severity: 'info',
     agent: 'Research Community',
     title: `${tech.name} Breakthrough`,
     description: `${tech.description}. Research complete, ready for deployment.`,
-    effects: { tech: tech.id, category: tech.category },
-  });
+    effects: {},
+  } as any);
 }
 
 /**
  * Apply pending deployment actions
  */
 function applyDeploymentActions(
-  gameState: GameState,
+  _gameState: GameState,
   techTreeState: TechTreeState
 ): void {
   for (const action of techTreeState.pendingActions) {
@@ -304,11 +301,11 @@ function applyDeploymentActions(
     if (!tech) continue;
     
     // Get or create regional deployment
-    if (!techTreeState.regionalDeployment.has(action.targetRegion)) {
-      techTreeState.regionalDeployment.set(action.targetRegion, []);
+    if (!(action.targetRegion in techTreeState.regionalDeployment)) {
+      techTreeState.regionalDeployment[action.targetRegion] = [];
     }
     
-    const regional = techTreeState.regionalDeployment.get(action.targetRegion)!;
+    const regional = techTreeState.regionalDeployment[action.targetRegion]!;
     let deployment = regional.find(d => d.techId === action.techId);
     
     if (!deployment) {
@@ -339,9 +336,9 @@ function applyDeploymentActions(
     const deploymentIncrease = action.investment / tech.deploymentCost;
     deployment.deploymentLevel = Math.min(1.0, deployment.deploymentLevel + deploymentIncrease);
     
-    if (deployment.deploymentLevel >= 1.0 && !techTreeState.unlockedTech.has(`${tech.id}_deployed`)) {
+    if (deployment.deploymentLevel >= 1.0 && !techTreeState.unlockedTech.includes(`${tech.id}_deployed`)) {
       techTreeState.techDeployedCount++;
-      techTreeState.unlockedTech.add(`${tech.id}_deployed`);
+      techTreeState.unlockedTech.push(`${tech.id}_deployed`);
       
       console.log(`✅ TECH FULLY DEPLOYED: ${tech.name} in ${action.targetRegion}`);
     }
@@ -359,11 +356,34 @@ function updateResearchProgress(
   gameState: GameState,
   techTreeState: TechTreeState
 ): void {
-  const lockedTech = getAllTech().filter(t => !techTreeState.unlockedTech.has(t.id));
+  const lockedTech = getAllTech().filter(t => 
+    !techTreeState.unlockedTech.includes(t.id) && 
+    (t.status === 'unlockable' || t.status === 'future')
+  );
   
   for (const tech of lockedTech) {
-    // Get current progress
-    let progress = techTreeState.researchProgress.get(tech.id) || 0;
+    // Get current progress - if not found, initialize to 0
+    let progress = techTreeState.researchProgress[tech.id];
+    
+    // Debug: Check if progress is being retrieved correctly
+    if (Math.random() < 0.01 && tech.id === 'struvite_recovery') {
+      console.log(`\n🔍 PROGRESS RETRIEVAL DEBUG (Month ${gameState.currentMonth}):`);
+      console.log(`   Tech: ${tech.name}`);
+      console.log(`   Map has key: ${(tech.id in techTreeState.researchProgress)}`);
+      console.log(`   Map.get() returned: ${progress}`);
+      console.log(`   Progress is undefined: ${progress === undefined}`);
+      console.log(`   Map size: ${Object.keys(techTreeState.researchProgress).length}`);
+      console.log(`   Map is instanceof Map: ${techTreeState.researchProgress instanceof Map}`);
+    }
+    
+    if (progress === undefined) {
+      progress = 0;
+    }
+    
+    // Ensure the tech is in the research progress map
+    if (!(tech.id in techTreeState.researchProgress)) {
+      techTreeState.researchProgress[tech.id] = 0;
+    }
     
     // Calculate progress this month
     // Base: 1 / researchMonthsRequired per month
@@ -384,7 +404,24 @@ function updateResearchProgress(
     const progressThisMonth = baseProgress * aiBonus * researchBonus * energyMultiplier;
     
     progress = Math.min(1.0, progress + progressThisMonth);
-    techTreeState.researchProgress.set(tech.id, progress);
+    techTreeState.researchProgress[tech.id] = progress;
+    
+    // Debug logging for first tech (probabilistic)
+    if (Math.random() < 0.1 && tech.id === 'struvite_recovery') {
+      console.log(`\n🔬 RESEARCH DEBUG (Month ${gameState.currentMonth}):`);
+      console.log(`   Tech: ${tech.name}`);
+      console.log(`   Research months required: ${tech.researchMonthsRequired}`);
+      console.log(`   Base progress: ${baseProgress.toFixed(4)}`);
+      console.log(`   AI bonus: ${aiBonus.toFixed(2)}x`);
+      console.log(`   Research bonus: ${researchBonus.toFixed(2)}x`);
+      console.log(`   Energy multiplier: ${energyMultiplier.toFixed(2)}x`);
+      console.log(`   Progress this month: ${progressThisMonth.toFixed(4)}`);
+      console.log(`   Old progress: ${((progress - progressThisMonth) * 100).toFixed(1)}%`);
+      console.log(`   New progress: ${(progress * 100).toFixed(1)}%`);
+      console.log(`   Map size: ${Object.keys(techTreeState.researchProgress).length}`);
+      console.log(`   Map has tech: ${(tech.id in techTreeState.researchProgress)}`);
+      console.log(`   Map get tech: ${techTreeState.researchProgress[tech.id]}`);
+    }
   }
 }
 
@@ -423,14 +460,12 @@ function getTotalResearchInvestment(gameState: GameState): number {
   return gov + privateResearch;
 }
 
-function getEnergyMultiplier(gameState: GameState): number {
-  if (!gameState.powerGeneration) return 1.0;
-  
-  const { severity, growthPenalty } = gameState.powerGeneration.constraints;
-  return Math.max(0, 1.0 - severity * growthPenalty);
+function getEnergyMultiplier(_gameState: GameState): number {
+  // TODO: Implement energy constraints when power generation system is connected
+  return 1.0;
 }
 
-function generateUnlockReason(tech: TechDefinition, gameState: GameState): string {
+function generateUnlockReason(_tech: TechDefinition, gameState: GameState): string {
   const avgCapability = getAverageAICapability(gameState);
   const economicStage = gameState.globalMetrics?.economicTransitionStage || 0;
   

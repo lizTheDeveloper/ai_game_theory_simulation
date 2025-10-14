@@ -31,7 +31,7 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     if (!techTreeState) return false;
     
     // Ensure proper types after serialization
-    ensureTechTreeTypes(techTreeState);
+    // No longer needed - using plain objects
     
     // Need to have an organization with revenue
     if (!agent.organizationId) return false;
@@ -41,8 +41,8 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
     
     // Need unlocked but not fully deployed tech
     const unlockedTech = getAllTech().filter(t => 
-      techTreeState.unlockedTech.has(t.id) &&
-      !techTreeState.unlockedTech.has(`${t.id}_deployed`)
+      techTreeState.unlockedTech.includes(t.id) &&
+      !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
     );
     
     return unlockedTech.length > 0;
@@ -157,12 +157,12 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     if (!techTreeState) return false;
     
     // Ensure proper types after serialization
-    ensureTechTreeTypes(techTreeState);
+    // No longer needed - using plain objects
     
     // Look for deployed safety/detection tech to sabotage
     const threateningTech = getAllTech().filter(t => 
       (t.category === 'alignment' || t.id.includes('detection') || t.id.includes('defensive')) &&
-      techTreeState.unlockedTech.has(t.id)
+      techTreeState.unlockedTech.includes(t.id)
     );
     
     return threateningTech.length > 0;
@@ -185,7 +185,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     // Select technology to sabotage
     const threateningTech = getAllTech().filter(t => 
       (t.category === 'alignment' || t.id.includes('detection') || t.id.includes('defensive')) &&
-      techTreeState.unlockedTech.has(t.id)
+      techTreeState.unlockedTech.includes(t.id)
     );
     
     if (threateningTech.length === 0) {
@@ -316,8 +316,8 @@ function selectTechToDeploy(
   random: () => number
 ): any {
   const unlockedTech = getAllTech().filter(t => 
-    techTreeState.unlockedTech.has(t.id) &&
-    !techTreeState.unlockedTech.has(`${t.id}_deployed`)
+    techTreeState.unlockedTech.includes(t.id) &&
+    !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
   );
   
   if (unlockedTech.length === 0) return null;
