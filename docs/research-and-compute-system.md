@@ -80,6 +80,32 @@ Each month, AI agents can:
 - Use their allocated compute to make progress
 - Progress modified by energy constraints
 
+### 4. Citizen Science / Volunteer Research
+**Location:** Unemployed people with UBI contribute to research
+
+When people have:
+- ✅ **Time:** High unemployment (30%+)
+- ✅ **Resources:** UBI active (basic needs met)
+- ✅ **Skills:** Purpose infrastructure (education systems)
+- ✅ **Motivation:** Low meaning crisis (want to contribute)
+
+They become volunteer researchers!
+
+**Examples:**
+- Folding@home: 1.5 exaFLOPS from volunteers (COVID-19)
+- Galaxy Zoo: 150,000+ volunteers classifying galaxies
+- Wikipedia, OpenStreetMap: Massive volunteer contributions
+- Open source software: Linux kernel, Python, etc.
+
+**Virtual Compute Contribution:**
+```typescript
+// Distributed human intelligence acts as "virtual compute"
+const volunteerCompute = calculateVolunteerResearchContribution(state);
+
+// Acts as additional compute for research multiplier
+const totalEffectiveCompute = aiComputeAllocated + volunteerCompute;
+```
+
 ## Research Growth Formula
 
 ```typescript
@@ -116,6 +142,37 @@ function calculateResearchGrowth(
   return baseGrowth * computeMultiplier * energyMultiplier * diminishingReturns *
          govMultiplier * aiMultiplier * riskMultiplier * regulationPenalty;
 }
+```
+
+## Volunteer Research Benefits (Beyond Compute)
+
+Research shows volunteers gain multiple benefits:
+
+1. **Purpose & Meaning** (-0.5% to -2%/month meaning crisis)
+   - People find fulfillment in contributing
+   - Sense of progress and impact
+   
+2. **Skills & Education** (+1% to +2%/month education access)
+   - Learning by doing
+   - Peer teaching and mentorship
+   
+3. **Social Connection** (+0.75% to +1.5%/month social connection)
+   - Working together builds community
+   - Reduces loneliness and isolation
+   
+4. **Trust in Institutions** (+0.5% to +1%/month public trust)
+   - Seeing tangible progress builds confidence
+   - Participatory governance
+
+**Virtuous Cycle:**
+```
+High Unemployment → UBI → Free Time
+    ↓
+Purpose Infrastructure → Skills & Tools
+    ↓
+Volunteer Research → Meaning & Connection
+    ↓
+Reduced Meaning Crisis → More Volunteers → More Research
 ```
 
 ## Key Dependencies
