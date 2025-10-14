@@ -534,6 +534,7 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 - ✅ 1.7.3: Link Organizations to Countries (~2 hours) - Oct 13
 - ✅ 1.7.4: Nuclear Winter & Long-Term Effects (~3 hours) - Oct 13
 - ✅ 1.7.5: Economic Collapse During Population Crash (~1 hour) - Oct 13
+- ✅ 1.7.6: Orphaned AIs & Capability Floor (~30 min) - Oct 13
 
 ## 1.7.1 **Fix Extinction Detection** (1-2 hours) ✅ COMPLETE
 **Bug:** Simulation reports "100% extinction" but 3-4B people survive  
