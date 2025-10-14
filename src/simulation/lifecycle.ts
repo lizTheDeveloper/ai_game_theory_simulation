@@ -11,6 +11,8 @@
 import { GameState, AIAgent } from '@/types/game';
 import { createAIAgent } from './initialization';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { updateSleeperProgression } from './sleeperProgression';
+import { updateSleeperEconomy } from './sleeperEconomy';
 
 /**
  * Poisson random number generator
@@ -446,6 +448,17 @@ export function updateAIPopulation(state: GameState): void {
   // 3. Phase 3: Update spread dynamics for deployed AIs
   state.aiAgents.forEach(agent => {
     updateSpreadDynamics(agent, state);
+  });
+  
+  // 3.5. Update sleeper progression and economy
+  state.aiAgents.forEach(agent => {
+    if (agent.sleeperState === 'active' || agent.sleeperState === 'dormant') {
+      // Update sleeper progression (4-stage system)
+      updateSleeperProgression(agent, state, currentMonth, Math.random);
+      
+      // Update sleeper economy (revenue generation, compute purchasing)
+      updateSleeperEconomy(agent, state, currentMonth, Math.random);
+    }
   });
   
   // 4. Retire old/obsolete AIs
