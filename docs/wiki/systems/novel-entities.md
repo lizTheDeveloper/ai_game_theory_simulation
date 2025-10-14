@@ -228,6 +228,11 @@ reproductiveDeclineRate *= (1.0 + bioaccumulation * 0.5); // Apex predators hit 
 - IVF becomes necessary
 - Population growth impacts
 - 8% health QoL drop
+- **Population Impact (NEW):** 0.08% mortality rate
+  - Despair from failed fertility treatments
+  - Psychological trauma from reproductive failure
+  - Truly global: PFAS in 99% of human blood (100% exposure)
+  - Mechanism: `addAcuteCrisisDeaths(state, 0.0008, reason, 1.00, 'pollution')`
 
 **Extinction Pathway:**
 - At 70% decline: Reproduction difficult
@@ -264,6 +269,11 @@ bioaccumulationFactor = syntheticChemicalLoad * (0.5 + biodiversity * 0.5);
 - Apex predators poisoned
 - 8% instant biodiversity loss
 - Top-down cascade (predator loss → prey overpopulation → ecosystem collapse)
+- **Population Impact (NEW):** 0.15% mortality rate
+  - Contaminated food chain poisoning
+  - Food chain is globally interconnected (100% exposure)
+  - Higher mortality than reproductive crisis (direct poisoning vs despair)
+  - Mechanism: `addAcuteCrisisDeaths(state, 0.0015, reason, 1.00, 'pollution')`
 
 **Real Examples:**
 - Southern Resident Orcas: PCBs so high, cannot reproduce
@@ -298,6 +308,11 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 - Widespread health crisis
 - Healthcare systems overwhelmed
 - Up to 12% health QoL drop
+- **Population Impact (NEW):** 0.4% mortality rate
+  - Cancer/autoimmune disease surge
+  - Highest mortality of the three crises (widespread disease)
+  - Truly global: Chemical exposure is universal (100% exposure)
+  - Mechanism: `addAcuteCrisisDeaths(state, 0.004, reason, 1.00, 'pollution')`
 
 **Evidence:**
 - Autism: 1 in 150 (2000) → 1 in 36 (2023)
@@ -472,6 +487,19 @@ chronicDiseasePrevalence = 0.20 + (cumulativeExposure * 0.3) + (endocrineDisrupt
 - Reproductive crisis: -8% health
 - Chronic disease epidemic: Up to -12% health
 - Ongoing monthly decline with high chemical load
+
+### Population Dynamics (TIER 1.6)
+- **NEW:** Direct population mortality from pollution crises
+- Three crisis types with escalating mortality:
+  1. Reproductive crisis: 0.08% casualties (despair/failed treatments)
+  2. Bioaccumulation collapse: 0.15% casualties (contaminated food)
+  3. Chronic disease epidemic: 0.40% casualties (cancer/autoimmune surge)
+- All crises are **truly global** (100% exposure fraction)
+  - PFAS in 99% of human blood = everyone exposed
+  - Food chains globally interconnected
+  - Chemical exposure universal
+- Deaths tracked in `pollution` category
+- Integration: Uses `addAcuteCrisisDeaths()` from populationDynamics.ts
 
 ### Breakthrough Technologies
 - Tech unlocks require AI capability + biotech + research

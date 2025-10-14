@@ -28,6 +28,7 @@ export { CrisisDetectionPhase } from './CrisisDetectionPhase';
 // Batch 2: System update phases (medium risk)
 export { GovernanceQualityPhase } from './GovernanceQualityPhase';
 export { UpwardSpiralsPhase } from './UpwardSpiralsPhase';
+export { TechTreePhase } from './TechTreePhase';
 export { MeaningRenaissancePhase } from './MeaningRenaissancePhase';
 export { ConflictResolutionPhase } from './ConflictResolutionPhase';
 export { DiplomaticAIPhase } from './DiplomaticAIPhase';

@@ -51,6 +51,7 @@ import {
   // Batch 2: System updates (10.x - 21.x)
   GovernanceQualityPhase,
   UpwardSpiralsPhase,
+  TechTreePhase,
   MeaningRenaissancePhase,
   ConflictResolutionPhase,
   DiplomaticAIPhase,
@@ -324,6 +325,7 @@ export class SimulationEngine {
     // Batch 2: System updates (10.x - 21.x)
     this.orchestrator.registerPhase(new GovernanceQualityPhase());
     this.orchestrator.registerPhase(new UpwardSpiralsPhase());
+    this.orchestrator.registerPhase(new TechTreePhase());
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
     this.orchestrator.registerPhase(new ConflictResolutionPhase());
     this.orchestrator.registerPhase(new DiplomaticAIPhase());
