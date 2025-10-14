@@ -351,24 +351,36 @@ export function allocateComputeGlobally(state: GameState): void {
   });
   
   // Handle orphaned AIs (AIs without an organization)
+  // Sleeper AIs on dark compute are legitimately orphaned - they use their dark compute
+  // Any non-sleeper orphaned AIs get minimal legitimate compute (shouldn't happen in practice)
   const orphanedAIs = state.aiAgents.filter(
     ai => !ai.organizationId && ai.lifecycleState !== 'retired'
   );
   
   if (orphanedAIs.length > 0) {
-    console.warn(`[Compute Allocation] Found ${orphanedAIs.length} orphaned AIs (no organization)`);
+    const sleeperOrphans = orphanedAIs.filter(ai => ai.sleeperState && ai.darkCompute > 0);
+    const legitimateOrphans = orphanedAIs.filter(ai => !ai.sleeperState || ai.darkCompute === 0);
     
-    // Give them minimal compute from unrestricted data centers
-    const unrestrictedCompute = state.computeInfrastructure.dataCenters
-      .filter(dc => !dc.restrictedAccess && dc.operational)
-      .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
-    
-    const computePerOrphan = unrestrictedCompute / (orphanedAIs.length + 100); // Small share
-    
-    orphanedAIs.forEach(ai => {
-      ai.allocatedCompute = computePerOrphan;
-      state.computeInfrastructure.computeAllocations.set(ai.id, computePerOrphan);
+    // Sleeper orphans already use their dark compute - no allocation needed
+    sleeperOrphans.forEach(ai => {
+      ai.allocatedCompute = 0; // They use dark compute, not legitimate compute
     });
+    
+    // Legitimate orphans (shouldn't happen, but handle gracefully)
+    if (legitimateOrphans.length > 0) {
+      console.warn(`[Compute Allocation] Found ${legitimateOrphans.length} non-sleeper orphaned AIs (potential bug)`);
+      
+      const unrestrictedCompute = state.computeInfrastructure.dataCenters
+        .filter(dc => !dc.restrictedAccess && dc.operational)
+        .reduce((sum, dc) => sum + dc.capacity * dc.efficiency, 0);
+      
+      const computePerOrphan = unrestrictedCompute / (legitimateOrphans.length + 100); // Small share
+      
+      legitimateOrphans.forEach(ai => {
+        ai.allocatedCompute = computePerOrphan;
+        state.computeInfrastructure.computeAllocations.set(ai.id, computePerOrphan);
+      });
+    }
   }
 }
 
