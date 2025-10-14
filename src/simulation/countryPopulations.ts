@@ -280,6 +280,10 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }
   };
 
+  // Initialize TIER 2.8 extensions (resources, military, war-meaning)
+  // This is done separately to keep the base initialization clean
+  initializeTier28Extensions(countries);
+
   return {
     countries,
     depopulatedCountries: [],
@@ -287,6 +291,146 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     aiHubsSurviving: 3,
     depopulationEvents: []
   };
+}
+
+/**
+ * Initialize TIER 2.8 extensions for all countries
+ * Adds resources, military capabilities, and war-meaning feedback fields
+ */
+function initializeTier28Extensions(countries: Record<CountryName, CountryPopulation>): void {
+  // Import here to avoid circular dependencies
+  const { initializeAllCountryResources } = require('./resourceInitialization');
+  const { initializeMilitaryCapabilities } = require('./militarySystem');
+  const { initializeWarMeaningFeedback } = require('./warMeaningFeedback');
+
+  // 1. Initialize resource endowments and sovereignty
+  const resourceData = initializeAllCountryResources();
+  for (const [name, data] of resourceData.entries()) {
+    const country = countries[name];
+    if (country) {
+      country.isHegemon = data.isHegemon;
+      country.domesticResources = data.resources;
+      country.extractedResources = data.extractedResources;
+      country.sovereignty = data.sovereignty;
+      country.resourceValue = data.resourceValue;
+      country.extractionTargets = data.extractionTargets;
+      country.extractedBy = data.extractedBy;
+    }
+  }
+
+  // 2. Initialize military capabilities
+  const militaryData = initializeMilitaryCapabilities();
+  for (const [name, data] of militaryData.entries()) {
+    const country = countries[name];
+    if (country) {
+      country.militaryCapability = data.militaryCapability;
+      country.militarySpendingPercent = data.militarySpendingPercent;
+      country.militarySpendingAbsolute = data.militarySpendingAbsolute;
+      country.militaryCO2Emissions = data.militaryCO2Emissions;
+      country.militaryBases = data.militaryBases;
+      country.activeInterventions = data.activeInterventions;
+      country.militaryRnDPercent = data.militaryRnDPercent;
+    }
+  }
+
+  // 3. Initialize war-meaning feedback fields
+  initializeWarMeaningFeedback(countries);
+
+  // 4. Initialize environmental debt fields
+  for (const country of Object.values(countries)) {
+    // Historical emissions (will be refined with actual data later)
+    // For now, rough estimates based on industrialization and GDP
+    country.historicalEmissions = getHistoricalEmissions(country.name);
+    country.currentEmissions = getCurrentEmissions(country.name);
+    country.climateSufferingRatio = getClimateSufferingRatio(country.name);
+    country.climateReparationsOwed = 0.0; // Calculated dynamically
+    country.climateReparationsReceived = 0.0;
+    country.militaryEmissionsPercent = country.militaryCO2Emissions / (country.currentEmissions * 1000); // Convert Gt to Mt
+  }
+}
+
+/**
+ * Get historical CO2 emissions (cumulative since 1850, in gigatons)
+ * Source: Our World in Data, Global Carbon Project
+ */
+function getHistoricalEmissions(country: CountryName): number {
+  switch (country) {
+    case 'United States': return 400; // 25% of all emissions ever
+    case 'China': return 220; // Mostly post-1980
+    case 'Russia': return 100; // USSR legacy
+    case 'India': return 50;
+    case 'United Kingdom': return 80; // Industrial revolution
+    case 'France': return 40;
+    case 'Germany': return 90; // Industrial powerhouse
+    case 'Japan': return 60;
+    case 'Canada': return 30;
+    case 'Brazil': return 15;
+    case 'Indonesia': return 10;
+    case 'Pakistan': return 5;
+    case 'Israel': return 2;
+    case 'Bangladesh': return 1;
+    case 'Nigeria': return 2;
+    default: return 5;
+  }
+}
+
+/**
+ * Get current annual CO2 emissions (gigatons/year)
+ * Source: Global Carbon Project 2024
+ */
+function getCurrentEmissions(country: CountryName): number {
+  switch (country) {
+    case 'United States': return 5.0;
+    case 'China': return 11.5;
+    case 'Russia': return 1.8;
+    case 'India': return 3.0;
+    case 'United Kingdom': return 0.4;
+    case 'France': return 0.3;
+    case 'Germany': return 0.7;
+    case 'Japan': return 1.1;
+    case 'Canada': return 0.6;
+    case 'Brazil': return 0.5;
+    case 'Indonesia': return 0.7;
+    case 'Pakistan': return 0.3;
+    case 'Israel': return 0.07;
+    case 'Bangladesh': return 0.1;
+    case 'Nigeria': return 0.15;
+    default: return 0.5;
+  }
+}
+
+/**
+ * Get climate suffering ratio (how much country suffers vs what they caused)
+ * Higher = suffers more than they caused
+ * Lower = caused more than they suffer
+ */
+function getClimateSufferingRatio(country: CountryName): number {
+  switch (country) {
+    // Hegemons: Caused most, suffer least (buffered by wealth)
+    case 'United States': return 0.05; // Caused 400 Gt, suffers minimally
+    case 'United Kingdom': return 0.10;
+    case 'France': return 0.12;
+    case 'Germany': return 0.15;
+    case 'Canada': return 0.08;
+    case 'Russia': return 0.20; // Some climate suffering (permafrost, fires)
+    case 'China': return 0.30; // Recent emissions, some suffering
+    case 'Japan': return 0.25;
+
+    // Developing: Minimal emissions, moderate suffering
+    case 'India': return 5.0; // Low emissions, high population vulnerability
+    case 'Indonesia': return 8.0; // Low emissions, island flooding
+    case 'Brazil': return 2.0; // Amazon helps, but deforestation hurts
+
+    // Most vulnerable: Zero/minimal emissions, extreme suffering
+    case 'Bangladesh': return 50.0; // Climate ground zero (sea level, cyclones)
+    case 'Pakistan': return 20.0; // Floods, heat waves
+    case 'Nigeria': return 15.0; // Desertification, conflict
+
+    // Regional conflicts complicate
+    case 'Israel': return 1.0; // Mid emissions, geopolitical buffer
+
+    default: return 1.0;
+  }
 }
 
 /**

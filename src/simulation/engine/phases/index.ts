@@ -49,6 +49,7 @@ export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { CountryPopulationPhase } from './CountryPopulationPhase';
+export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
 export { NuclearWinterPhase } from './NuclearWinterPhase';
 export { RadiationSystemPhase } from './RadiationSystemPhase';
