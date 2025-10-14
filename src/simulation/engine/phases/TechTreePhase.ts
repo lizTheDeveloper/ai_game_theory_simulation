@@ -38,6 +38,7 @@ export class TechTreePhase implements SimulationPhase {
       console.log('\n🌳 INITIALIZING TECH TREE STATE');
       (state as any).techTreeState = initializeTechTreeState();
       console.log(`   ${(state as any).techTreeState.techUnlockedCount} technologies unlocked (deployed_2025)`);
+      console.log(`   Unlocked tech IDs: ${Array.from((state as any).techTreeState.unlockedTech).slice(0, 5).join(', ')}...`);
     }
 
     const techTreeState: TechTreeState = (state as any).techTreeState;
