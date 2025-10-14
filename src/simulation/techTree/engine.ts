@@ -105,13 +105,23 @@ export function initializeTechTreeState(): TechTreeState {
  */
 export function ensureTechTreeTypes(techTreeState: TechTreeState): void {
   if (!(techTreeState.unlockedTech instanceof Set)) {
-    techTreeState.unlockedTech = new Set(techTreeState.unlockedTech as any);
+    // Set serializes to object with numeric keys, need to convert to array first
+    const unlocked = techTreeState.unlockedTech as any;
+    if (Array.isArray(unlocked)) {
+      techTreeState.unlockedTech = new Set(unlocked);
+    } else if (unlocked && typeof unlocked === 'object') {
+      // Object with numeric keys - get the values
+      techTreeState.unlockedTech = new Set(Object.values(unlocked));
+    } else {
+      techTreeState.unlockedTech = new Set();
+    }
   }
   if (!(techTreeState.researchProgress instanceof Map)) {
-    techTreeState.researchProgress = new Map(Object.entries(techTreeState.researchProgress as any));
+    techTreeState.researchProgress = new Map(Object.entries(techTreeState.researchProgress as any || {}));
   }
   if (!(techTreeState.regionalDeployment instanceof Map)) {
-    techTreeState.regionalDeployment = new Map(Object.entries(techTreeState.regionalDeployment as any));
+    const regional = techTreeState.regionalDeployment as any || {};
+    techTreeState.regionalDeployment = new Map(Object.entries(regional));
   }
 }
 
