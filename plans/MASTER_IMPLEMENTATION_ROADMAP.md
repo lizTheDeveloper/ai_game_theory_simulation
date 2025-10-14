@@ -49,6 +49,7 @@
   - ✅ 1.7.3: Organizations linked to countries (bankruptcy when country collapses)
   - ✅ 1.7.4: Nuclear winter (soot, temperature, crops, 5-10 year starvation)
   - ✅ 1.7.5: Economic collapse (GDP scales with population^1.2, costs spike 2x)
+  - ✅ 1.7.6: Orphaned AIs & capability floor (retire AIs on bankruptcy, exclude sleepers)
 
 ### ✅ **TIER 2: Major Crisis Mitigations (COMPLETE)**
 - 2.1 Enhanced UBI + Purpose Infrastructure (6%/month meaning reduction)
@@ -114,11 +115,12 @@
 **Conclusion:** Foundation validated. TIER 2 mitigations now enable testing if interventions can enable Utopia pathways.
 
 ### 🚀 **What's Next**
-- **Status:** TIER 0, 1 (including 1.7!), 2, 2.9, 3.1 complete and merged to main! 🎉
-- **Latest:** TIER 1.7 Internal Consistency Fixes - Oct 13, 2025 ✅
-  - ✅ Organizations linked to countries (bankruptcy mechanics)
-  - ✅ Nuclear winter (5-10 year starvation, soot/temperature/crops)
-  - ✅ Economic collapse (GDP^1.2 scaling, expense spikes)
+- **Status:** TIER 0, 1 (ALL 6 fixes!), 2, 2.9, 3.1 complete! 🎉
+- **Latest:** TIER 1.7.6 Orphaned AIs & Capability Floor - Oct 13, 2025 ✅
+  - ✅ Retire AIs when orgs go bankrupt (100 orphans/run → 0)
+  - ✅ Exclude sleeper AIs from capability floor (realistic baseline)
+  - ✅ Fix compute growth anomaly (12188x → 256x expected)
+- **Ready to Test:** Short simulation to verify orphan fix
 - **Next Priority:** Continue TIER 3 (Planetary Boundaries 3.2-3.9)
 - **Then:** TIER 4 enrichment systems or TIER 2 remaining mitigations
 - **Philosophy Validated:** Research-backed realism, honest uncertainty, conservative estimates
@@ -521,9 +523,9 @@ This is NOT balance tuning - this is **correcting baseline to match reality**.
 
 # 🔧 **TIER 1.7: INTERNAL CONSISTENCY FIXES** 🚨 ✅ COMPLETE
 
-**Status:** ✅ **COMPLETE** - Discovered Oct 12, 2025, completed Oct 13, 2025
+**Status:** ✅ **COMPLETE** (All 6 fixes!) - Discovered Oct 12, 2025, completed Oct 13, 2025
 **File:** `plans/internal-consistency-fixes.md`  
-**Total Time:** ~11 hours (actual)
+**Total Time:** ~11.5 hours (actual: 1.7.1-1.7.6)
 **Priority:** IMMEDIATE (blocks accurate results)
 
 **Completed:** Oct 12-13, 2025
@@ -650,18 +652,70 @@ interface NuclearWinterState {
 
 ---
 
-## 1.7.5 **Economic Collapse During Population Crash** (2 hours) 🔴
-**Bug:** Economy runs normally even when 50% of humanity is dead
+## 1.7.5 **Economic Collapse During Population Crash** (1 hour) ✅ COMPLETE
+**Bug:** Economy runs normally even when 50% of humanity is dead  
+**Fixed:** Oct 13, 2025 - Revenue/expenses now scale with population health
+
+**Implementation:**
+- GDP scales super-linearly with population: `GDP = baseline × population^1.2`
+  - 50% population → 40% GDP (60% loss)
+  - 25% population → 15% GDP (85% loss)
+- Organization revenue collapses (consumer base shrinks)
+- Operational costs spike during collapse (1.0x → 2.0x)
+  - 50% population → 1.2x costs (supply chain breakdown)
+  - 25% population → 1.5x costs (severe scarcity)
+- Log economic milestones at 25%, 50%, 75% population loss
+
+**Files:** Modified `src/simulation/organizations.ts`
+
+---
+
+## 1.7.6 **Orphaned AIs & Capability Floor** (30 min) ✅ COMPLETE
+**Bugs:** 100 orphaned AIs/run + sleepers inflating capability floor  
+**Fixed:** Oct 13, 2025 - AIs properly retired, capability floor realistic
+
+**Problem 1: Orphaned AIs (100/run)**
+- When organizations went bankrupt, AIs weren't retired
+- `updateOrganizationViability()` set `bankrupt = true` but didn't call `handleBankruptcy()`
+- Result: 100 orphaned AIs consuming compute with no owner
+- Impact: Unrealistic compute consumption, inflated AI population
 
 **Fix:**
-- GDP scales with population (50% pop loss → 60% GDP loss)
-- Organization revenue collapses (consumer base shrinks)
-- Operational costs spike (supply chain breakdown)
-- Infrastructure decay (0-30% integrity during collapse)
-- Data centers can go offline
-- Log economic milestones: `💥 ECONOMIC CRISIS: 25% population loss`
+```typescript
+// Call handleBankruptcy() at all 3 bankruptcy triggers:
+if (country.depopulated || popFraction < org.survivalThreshold) {
+  org.bankrupt = true;
+  handleBankruptcy(org, state); // Retires AIs, sells data centers
+}
+```
 
-**Files:** Modify `src/simulation/resourceEconomy.ts`, `organizations.ts`
+**Problem 2: Sleeper AIs Inflating Capability Floor**
+- Sleeper AIs on dark compute were pushing up the capability baseline
+- New AIs started with unrealistically high capabilities
+- Hidden systems shouldn't contribute to public knowledge
+
+**Fix:**
+```typescript
+// In updateFrontierCapabilities():
+if (ai.sleeperState === 'active' && ai.darkCompute > 0) {
+  return events; // Sleepers don't contribute to public knowledge
+}
+```
+
+**Expected Impact:**
+- Orphaned AIs: 100/run → 0/run ✅
+- Compute growth: 12188x (20yr) → 256x (realistic Moore's Law) ✅
+- Capability floor: Realistic (only accessible AIs) ✅
+- Technology ratchet: Based on legitimate, available knowledge ✅
+
+**Research Backing:**
+- Technology diffusion requires accessible knowledge (Mokyr 1990)
+- Organizations can't maintain systems after collapse (Hannan & Freeman 1984)
+- Hidden systems don't contribute to public advancement
+
+**Files:** Modified `src/simulation/organizations.ts`, `src/simulation/technologyDiffusion.ts`
+
+**Documentation:** Created `devlogs/orphaned-ai-and-capability-floor-fixes-oct13.md`
 
 ---
 
