@@ -110,6 +110,8 @@ function isGlobalEffect(effectName: string): boolean {
     'trustBonus',
     'paranoiaReduction',
     'publicAwarenessBonus',
+    'healthcareBonus',
+    'mortalityReduction',
     'biodiversityBonus',
     'extinctionRateReduction',
     'oceanPHBonus',
@@ -302,7 +304,6 @@ function applyGlobalEffects(
         }
         break;
         
-      // ========== MEDICAL ==========
       case 'healthcareBonus':
         // Improve healthcare quality
         if (gameState.qualityOfLifeSystems) {
@@ -312,6 +313,18 @@ function applyGlobalEffects(
           );
         }
         break;
+        
+      case 'mortalityReduction':
+        // Reduce mortality rates
+        if (gameState.population) {
+          gameState.population.mortalityMultiplier = Math.max(
+            0.1,
+            gameState.population.mortalityMultiplier - value * 0.01
+          );
+        }
+        break;
+        
+      // ========== MEDICAL ==========
         
       case 'mortalityReduction':
         // Reduce mortality rate
