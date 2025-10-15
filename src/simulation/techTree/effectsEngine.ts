@@ -83,6 +83,11 @@ export function applyAllTechEffects(
           regionMap.set(effectName, (regionMap.get(effectName) || 0) + scaledValue);
         }
       }
+      
+      // NEW: Apply capability dimension boosts from this tech
+      if (tech.capabilityEffects && deployment.deploymentLevel > 0) {
+        applyCapabilityBoosts(gameState, tech.capabilityEffects, deployment.deploymentLevel);
+      }
     }
   }
   
@@ -125,6 +130,69 @@ function isGlobalEffect(effectName: string): boolean {
   ];
   
   return globalEffects.includes(effectName);
+}
+
+/**
+ * Apply capability dimension boosts to all active AIs
+ * Technologies can advance AI capabilities in specific dimensions
+ */
+function applyCapabilityBoosts(
+  gameState: GameState,
+  capabilityEffects: {
+    dimensions?: Partial<Record<'physical' | 'digital' | 'cognitive' | 'social' | 'economic' | 'selfImprovement', number>>;
+    research?: {
+      domain: 'biotech' | 'materials' | 'climate' | 'computerScience';
+      subdomain?: string;
+      boost: number;
+    }[];
+  },
+  deploymentLevel: number
+): void {
+  // Apply to all active AIs
+  const activeAIs = gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
+  
+  for (const ai of activeAIs) {
+    // Apply dimensional boosts
+    if (capabilityEffects.dimensions) {
+      for (const [dimension, boost] of Object.entries(capabilityEffects.dimensions)) {
+        const dimKey = dimension as keyof typeof ai.capabilityProfile;
+        if (dimKey === 'research') continue; // Handle research separately
+        
+        // Scale boost by deployment level and apply (monthly increment)
+        const scaledBoost = boost * deploymentLevel * 0.01; // 1% per month at full deployment
+        ai.capabilityProfile[dimKey] = Math.min(
+          10.0, // Cap at 10.0
+          ai.capabilityProfile[dimKey] + scaledBoost
+        );
+      }
+    }
+    
+    // Apply research capability boosts
+    if (capabilityEffects.research) {
+      for (const researchBoost of capabilityEffects.research) {
+        const { domain, subdomain, boost } = researchBoost;
+        const scaledBoost = boost * deploymentLevel * 0.01;
+        
+        const domainCap = ai.capabilityProfile.research[domain];
+        
+        if (subdomain && typeof domainCap === 'object') {
+          // Boost specific subdomain
+          const currentValue = (domainCap as any)[subdomain] || 0;
+          (domainCap as any)[subdomain] = Math.min(5.0, currentValue + scaledBoost);
+        } else if (!subdomain && typeof domainCap === 'object') {
+          // Boost all subdomains equally
+          for (const key of Object.keys(domainCap)) {
+            const currentValue = (domainCap as any)[key] || 0;
+            (domainCap as any)[key] = Math.min(5.0, currentValue + scaledBoost);
+          }
+        }
+      }
+    }
+    
+    // Recalculate total capability
+    const { calculateTotalCapabilityFromProfile } = require('../capabilities');
+    ai.capability = calculateTotalCapabilityFromProfile(ai.capabilityProfile);
+  }
 }
 
 /**
