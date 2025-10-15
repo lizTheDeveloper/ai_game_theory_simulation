@@ -1,9 +1,31 @@
 # Dystopia Variant Paths & Suffering Tracking System
 
 **Date:** October 14, 2025
-**Updated:** October 14, 2025 (Reframed as status system)
+**Updated:** October 15, 2025 (Integrated with TIER 2.8 geopolitical system)
 **Status:** 🧪 PLANNING - Building on existing control-dystopia mechanics
 **Goal:** Model diverse dystopian outcomes with granular suffering metrics
+
+---
+
+## TIER 2.8 Integration Status ✅
+
+**Completed:** October 15, 2025
+
+All dystopia detection examples have been updated to use **TIER 2.8 actual data structures**:
+
+**✅ Updated Sections:**
+1. **Hegemonic Dystopia Detection** - Uses `CountryPopulation.isHegemon` field
+2. **Regional Dystopia Detection** - Uses `extractedBy[]`, `activeInterventions[]`, `sovereignty`
+3. **Extraction Dystopia** - Uses `ExtractionFlow[]`, `resourceValue`, `sovereignty`
+4. **War Dystopia** - Uses `MilitaryIntervention[]`, `effects.refugeesCreated`, `effects.infrastructureDestruction`
+5. **Asymmetric Dystopia** - Uses `extractionTargets[]` to detect Elysium scenarios
+6. **Regional Tracking** - Uses `Map<CountryName, DystopiaState>` for per-country tracking
+
+**🔧 Future Extensions Required:**
+- **Debt Trap Dystopia** - Needs: `debtToGDP`, `austerityActive`, `debtHolders`
+- **Fortress Dystopia** - Needs: `bordersClosed`, `refugeeAcceptanceRate`, `causedRefugeeCrisis`
+
+All code examples now reference actual TIER 2.8 interfaces from `src/types/countryPopulations.ts`.
 
 ---
 
@@ -124,17 +146,29 @@ if (surveillance > 0.8 &&
 - China's social credit system (affects Chinese + trade partners)
 - EU becomes surveillance state (affects Europeans)
 
-**Detection:**
+**Detection (Using TIER 2.8):**
 ```typescript
-for (const hegemon of state.hegemonicPowers) {
-  if (hegemon.surveillanceLevel > 0.7 &&
-      hegemon.politicalFreedom < 0.3 &&
-      hegemon.governmentType === 'authoritarian') {
-    hegemon.dystopiaState = {
+// Check each hegemon country: US, China, Russia, India, UK
+for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+  const country = state.countryPopulations.countries[countryName];
+
+  // Only check hegemons
+  if (!country.isHegemon) continue;
+
+  // Use global QoL systems (could be per-country in future)
+  const qol = state.qualityOfLifeSystems;
+  if (qol.surveillanceLevel > 0.7 &&
+      qol.politicalFreedom < 0.3 &&
+      qol.autonomy < 0.4) {
+    // This hegemon is in dystopia
+    state.regionalDystopias.set(country.name, {
       active: true,
       variant: 'authoritarian',
-      affectedPopulation: hegemon.population
-    };
+      level: 'hegemonic',
+      startMonth: state.currentMonth,
+      severity: qol.surveillanceLevel * (1 - qol.politicalFreedom),
+      // ... other DystopiaState fields
+    });
   }
 }
 ```
@@ -147,28 +181,48 @@ for (const hegemon of state.hegemonicPowers) {
 - Middle East destabilized by interventions (war dystopia)
 - South Asia in debt trap (economic dystopia)
 
-**Detection:**
+**Detection (Using TIER 2.8):**
 ```typescript
-for (const region of state.resourceRegions) {
+for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+  const country = state.countryPopulations.countries[countryName];
+
+  // Skip hegemons - they extract, not extracted
+  if (country.isHegemon) continue;
+
   // Extraction dystopia
-  if (region.totalExtractionRate > 0.7 &&
-      region.wealthRetained < 0.2 &&
-      region.qol < 0.3) {
-    region.dystopiaState = {
-      active: true,
-      variant: 'extraction_dystopia',
-      cause: 'colonial_exploitation'
-    };
+  if (country.extractedBy.length > 0) {
+    const totalExtraction = country.extractedBy.reduce((sum, flow) =>
+      sum + flow.annualValueExtracted, 0);
+    const extractionRate = country.resourceValue.totalValue > 0
+      ? totalExtraction / country.resourceValue.totalValue
+      : 0;
+
+    if (extractionRate > 0.7 &&
+        country.sovereignty.overall < 0.2) {
+      state.regionalDystopias.set(country.name, {
+        active: true,
+        variant: 'extraction_dystopia',
+        level: 'regional',
+        severity: extractionRate * (1 - country.sovereignty.overall),
+        // ... other DystopiaState fields
+      });
+    }
   }
 
   // Military intervention dystopia
-  if (region.activeInterventions.length > 0 &&
-      region.refugeesCreated > region.population * 0.1) {
-    region.dystopiaState = {
-      active: true,
-      variant: 'war_dystopia',
-      cause: 'foreign_intervention'
-    };
+  if (country.activeInterventions.length > 0) {
+    const totalRefugees = country.activeInterventions.reduce((sum, i) =>
+      sum + i.effects.refugeesCreated, 0);
+
+    if (totalRefugees > country.population * 0.1) {
+      state.regionalDystopias.set(country.name, {
+        active: true,
+        variant: 'war_dystopia',
+        level: 'regional',
+        severity: totalRefugees / country.population,
+        // ... other DystopiaState fields
+      });
+    }
   }
 }
 ```
@@ -178,29 +232,50 @@ for (const region of state.resourceRegions) {
 **Key Pattern:** Hegemons can be in golden age while colonies suffer
 
 ```typescript
-// Elysium scenario
-if (hegemon.qol > 1.5 &&           // Hegemon thriving
-    extractedRegion.qol < 0.3 &&   // Region suffering
-    hegemon.extractsFrom(region)) {  // Hegemon extracts from region
+// Elysium scenario (using TIER 2.8)
+// Check if a hegemon is thriving while extracted countries suffer
 
-  classification = {
-    type: 'asymmetric_dystopia',
-    subtype: 'elysium',
-    hegemon: {
-      status: 'golden_age',
-      qol: 1.8,
-      dystopiaState: { active: false }
-    },
-    periphery: {
-      status: 'extraction_dystopia',
-      qol: 0.2,
-      dystopiaState: {
-        active: true,
-        variant: 'extraction_dystopia',
-        severity: 0.8
+for (const hegemonName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+  const hegemon = state.countryPopulations.countries[hegemonName];
+
+  if (!hegemon.isHegemon) continue;
+
+  // Check if hegemon is in golden age
+  const hegemonQoL = calculateCountryQoL(hegemon, state);
+  const hegemonGoldenAge = hegemonQoL > 1.5;
+
+  if (hegemonGoldenAge && hegemon.extractionTargets.length > 0) {
+    // Check if any extraction targets are suffering
+    for (const extraction of hegemon.extractionTargets) {
+      const targetCountry = state.countryPopulations.countries[extraction.target];
+      const targetQoL = calculateCountryQoL(targetCountry, state);
+
+      if (targetQoL < 0.3 && extraction.annualValueExtracted > 0) {
+        // Asymmetric dystopia detected!
+        return {
+          type: 'asymmetric_dystopia',
+          subtype: 'elysium',
+          level: 'global', // Affects both hegemon and periphery
+          hegemon: {
+            name: hegemon.name,
+            status: 'golden_age',
+            qol: hegemonQoL,
+            dystopiaState: { active: false }
+          },
+          periphery: {
+            name: targetCountry.name,
+            status: 'extraction_dystopia',
+            qol: targetQoL,
+            dystopiaState: {
+              active: true,
+              variant: 'extraction_dystopia',
+              severity: extraction.annualValueExtracted / targetCountry.resourceValue.totalValue
+            }
+          }
+        };
       }
     }
-  };
+  }
 }
 ```
 
@@ -443,23 +518,44 @@ if (materialAbundance > 1.2 &&
 - Environmental: mines, pollution, degradation
 - Social: resentment, resistance movements
 
-**Integration with Colonial System:**
+**Integration with TIER 2.8:**
 ```typescript
-if (region.totalExtractionRate > 0.7 &&
-    region.wealthRetained < 0.2 &&
-    region.resourceSovereignty < 0.3 &&
-    region.qol < 0.3) {
-  return {
-    type: 'extraction_dystopia',
-    severity: region.totalExtractionRate * (1 - region.wealthRetained),
-    suffering: {
-      affectedFraction: 1.0, // Entire region
-      categories: ['poverty', 'powerlessness', 'environmental_destruction'],
-      intensity: 0.8,
-      cause: 'colonial_extraction',
-      extractors: region.extractedBy.keys() // Which hegemons
+// Uses TIER 2.8 CountryPopulation fields:
+// - extractedBy: ExtractionFlow[] (who extracts from this country)
+// - sovereignty.overall: number (control over own resources)
+// - resourceValue.totalValue: number (total resource wealth)
+
+for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+  const country = state.countryPopulations.countries[countryName];
+
+  // Skip hegemons (they extract, not extracted)
+  if (country.isHegemon) continue;
+
+  if (country.extractedBy.length > 0) {
+    // Calculate total extraction from all hegemons
+    const totalExtraction = country.extractedBy.reduce((sum, flow) =>
+      sum + flow.annualValueExtracted, 0);
+    const extractionRate = country.resourceValue.totalValue > 0
+      ? totalExtraction / country.resourceValue.totalValue
+      : 0;
+
+    if (extractionRate > 0.7 &&
+        country.sovereignty.overall < 0.3 &&
+        country.resourceValue.totalValue > 100) {
+      return {
+        type: 'extraction_dystopia',
+        severity: extractionRate * (1 - country.sovereignty.overall),
+        suffering: {
+          affectedFraction: country.population / state.population,
+          categories: ['poverty', 'powerlessness', 'environmental_destruction'],
+          intensity: 0.8,
+          cause: 'colonial_extraction',
+          extractors: country.extractedBy.map(f => f.hegemon) // Which hegemons
+        },
+        regionId: country.name
+      };
     }
-  };
+  }
 }
 ```
 
@@ -483,26 +579,41 @@ if (region.totalExtractionRate > 0.7 &&
 - Psychological: trauma, PTSD, moral injury
 - Economic: collapse, no infrastructure
 
-**Integration with Colonial System:**
+**Integration with TIER 2.8:**
 ```typescript
-if (region.activeInterventions.length > 0 &&
-    region.refugeesCreated > region.population * 0.1 &&
-    region.infrastructureDestruction > 0.5) {
-  return {
-    type: 'war_dystopia',
-    severity: region.infrastructureDestruction + region.refugeesCreated / region.population,
-    suffering: {
-      affectedFraction: 0.8, // Most of population
-      categories: ['violence', 'displacement', 'trauma', 'poverty'],
-      intensity: 0.9,
-      cause: 'foreign_intervention',
-      interventions: region.activeInterventions.map(i => ({
-        hegemon: i.hegemon,
-        justification: i.publicJustification,
-        actualGoal: i.actualGoal
-      }))
+// Uses TIER 2.8 CountryPopulation fields:
+// - activeInterventions: MilitaryIntervention[] (foreign military operations)
+// - population: number (country population in millions)
+
+for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+  const country = state.countryPopulations.countries[countryName];
+
+  if (country.activeInterventions.length > 0) {
+    // Sum effects from all interventions
+    const totalRefugees = country.activeInterventions.reduce((sum, intervention) =>
+      sum + intervention.effects.refugeesCreated, 0);
+    const avgInfraDestruction = country.activeInterventions.reduce((sum, intervention) =>
+      sum + intervention.effects.infrastructureDestruction, 0) / country.activeInterventions.length;
+
+    if (totalRefugees > country.population * 0.1 || avgInfraDestruction > 0.5) {
+      return {
+        type: 'war_dystopia',
+        severity: avgInfraDestruction + (totalRefugees / country.population),
+        suffering: {
+          affectedFraction: country.population / state.population,
+          categories: ['violence', 'displacement', 'trauma', 'poverty'],
+          intensity: 0.9,
+          cause: 'foreign_intervention',
+          interventions: country.activeInterventions.map(i => ({
+            hegemon: i.hegemon,
+            justification: i.publicJustification,
+            actualGoals: i.actualGoals
+          }))
+        },
+        regionId: country.name
+      };
     }
-  };
+  }
 }
 ```
 
@@ -526,12 +637,18 @@ if (region.activeInterventions.length > 0 &&
 - Political: loss of sovereignty to creditors
 - Psychological: humiliation, resentment
 
-**Implementation Plan:**
+**Implementation Plan (Requires TIER 2.8 Extension):**
 ```typescript
+// NOTE: These fields need to be added to CountryPopulation:
+// - debtToGDP: number (external debt as % of GDP)
+// - austerityActive: boolean (IMF/World Bank imposed austerity)
+// - austerityLevel: number [0, 1] (severity of spending cuts)
+// - resourceSoldToServiceDebt: number [0, 1] (% of resources sold to pay debt)
+// - debtHolders: Record<CountryName | 'IMF' | 'WorldBank', number> (who owns the debt)
+
 if (country.debtToGDP > 0.8 &&
     country.austerityActive &&
-    country.resourceSoldToServiceDebt > 0.5 &&
-    country.qol < 0.4) {
+    country.resourceSoldToServiceDebt > 0.5) {
   return {
     type: 'debt_trap_dystopia',
     severity: country.debtToGDP * country.austerityLevel,
@@ -540,7 +657,7 @@ if (country.debtToGDP > 0.8 &&
       categories: ['economic_precarity', 'service_collapse', 'powerlessness'],
       intensity: 0.7,
       cause: 'debt_trap',
-      creditors: country.debtHolders // Who holds the debt
+      creditors: Object.keys(country.debtHolders) // Who holds the debt
     }
   };
 }
@@ -581,22 +698,44 @@ if (country.debtToGDP > 0.8 &&
 - Refugees: trapped, camps, drowning at sea
 - Moral injury: hegemons caused crisis, refuse responsibility
 
-**Implementation Plan:**
+**Implementation Plan (Requires TIER 2.8 Extension):**
 ```typescript
-if (hegemon.bordersClosed &&
-    hegemon.refugeeAcceptanceRate < 0.1 &&
-    hegemon.causedRefugeeCrisis > hegemon.acceptedRefugees * 10) {
-  return {
-    type: 'fortress_dystopia',
-    severity: (hegemon.causedRefugeeCrisis / hegemon.acceptedRefugees),
-    suffering: {
-      hegemonCitizens: 0.2, // Moral injury, propaganda
-      refugeesAtBorder: 0.9, // Extreme suffering
-      peripheryCollapsed: 0.8, // Regions in crisis
-      categories: ['abandonment', 'violence', 'drowning', 'moral_injury'],
-      hypocrisy: hegemon.publicRhetoric / hegemon.actualAcceptance
-    }
-  };
+// NOTE: These fields need to be added to CountryPopulation (hegemons only):
+// - bordersClosed: boolean (closed to refugees/immigrants)
+// - refugeeAcceptanceRate: number (% of refugees accepted vs applying)
+// - causedRefugeeCrisis: number (refugees created by this hegemon's interventions)
+// - acceptedRefugees: number (refugees actually admitted)
+// - publicRhetoric: number [0, 1] (humanitarian claims in speeches)
+// - actualAcceptance: number [0, 1] (actual refugee admissions)
+
+// Could partially use existing TIER 2.8 fields:
+// - climateMigrationPressure: number (climate refugees trying to enter)
+// - activeInterventions[].effects.refugeesCreated: number (war refugees caused)
+
+for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+  const hegemon = state.countryPopulations.countries[countryName];
+
+  if (!hegemon.isHegemon) continue;
+
+  if (hegemon.bordersClosed &&
+      hegemon.refugeeAcceptanceRate < 0.1 &&
+      hegemon.causedRefugeeCrisis > hegemon.acceptedRefugees * 10) {
+    return {
+      type: 'fortress_dystopia',
+      severity: (hegemon.causedRefugeeCrisis / Math.max(1, hegemon.acceptedRefugees)),
+      suffering: {
+        affectedFraction: hegemon.causedRefugeeCrisis / state.population,
+        categories: ['abandonment', 'violence', 'drowning', 'moral_injury'],
+        intensity: 0.9,
+        subcategories: {
+          hegemonCitizens: 0.2,    // Moral injury, propaganda
+          refugeesAtBorder: 0.9,   // Extreme suffering
+          peripheryCollapsed: 0.8  // Regions in crisis
+        }
+      },
+      hegemonId: hegemon.name
+    };
+  }
 }
 ```
 
@@ -720,230 +859,693 @@ enum SufferingCategory {
 
 ## Implementation Plan
 
-### Phase 1: Expand Dystopia Detection System ⭐ HIGHEST PRIORITY
+### Phase 1: Add DystopiaState Tracking (Status System Foundation) ⭐ HIGHEST PRIORITY
 
-**Goal:** Add 6 new dystopia types to existing 3
+**Goal:** Refactor dystopia to be a STATUS (like Golden Age), not a terminal outcome
+
+**Key Principle:** Dystopia should work like Golden Age - can enter, exit, and track duration.
 
 **Files to Modify:**
-1. `src/simulation/dystopiaProgression.ts` - Add new detection functions
-2. `src/types/game.ts` - Add SufferingProfile interface
-3. `src/simulation/outcomes.ts` - Update dystopia outcome conditions
+1. `src/types/game.ts` - Add DystopiaState interface to GameState
+2. `src/simulation/dystopiaProgression.ts` - Refactor to use status tracking
+3. `src/simulation/outcomes.ts` - Update to report duration, not just binary state
 
-**New Functions:**
+**New Interfaces (game.ts):**
 ```typescript
-// dystopiaProgression.ts
+export interface DystopiaState {
+  // Status tracking
+  active: boolean;                    // Currently in dystopia?
+  variant: DystopiaType | null;       // Which type (surveillance, elysium, etc.)?
+  level: 'global' | 'hegemonic' | 'regional' | null; // Which level?
 
-export interface DystopiaClassification {
-  type: DystopiaType;
-  severity: number;
-  suffering: SufferingProfile;
-  reason: string;
+  // Duration tracking
+  startMonth: number | null;          // When entered current dystopia
+  totalMonthsInDystopia: number;      // Cumulative across all dystopias
+  monthsInCurrentVariant: number;     // Duration of current type
+
+  // Severity
+  severity: number;                   // [0, 1] How bad?
+  trajectory: 'worsening' | 'stable' | 'improving';
+
+  // History
+  previousVariants: Array<{
+    type: DystopiaType;
+    level: 'global' | 'hegemonic' | 'regional';
+    startMonth: number;
+    endMonth: number;
+    severity: number;
+  }>;
+
+  // Escape potential
+  reversible: boolean;
+  monthsUntilLockIn: number | null;
+  escapeConditions: string[];
 }
 
-enum DystopiaType {
-  // Tier 1: Control-based (✅ implemented)
-  SURVEILLANCE_STATE = 'surveillance_state',
-  AUTHORITARIAN = 'authoritarian',
-  HIGH_CONTROL = 'high_control',
+// Add to GameState
+export interface GameState {
+  // ... existing fields ...
 
-  // Tier 2: Inequality-based (NEW)
-  ELYSIUM_INEQUALITY = 'elysium_inequality',
-  CORPORATE_FEUDALISM = 'corporate_feudalism',
+  // NEW: Status tracking (like goldenAgeState)
+  dystopiaState: DystopiaState;
 
-  // Tier 3: Technology-based (NEW)
-  ALGORITHMIC_OPPRESSION = 'algorithmic_oppression',
-  COMFORTABLE_DYSTOPIA = 'comfortable_dystopia',
-
-  // Tier 4: Regional (NEW)
-  GEOGRAPHIC_DYSTOPIA = 'geographic_dystopia',
-  CLASS_STRATIFIED = 'class_stratified'
+  // NEW: Regional tracking
+  regionalDystopias: Map<string, DystopiaState>; // Per hegemon/region
 }
+```
 
-export function classifyDystopiaVariant(state: GameState): DystopiaClassification | null {
-  // Check all dystopia types in priority order
+**Entry/Exit Logic (dystopiaProgression.ts):**
+```typescript
+export function updateDystopiaStatus(state: GameState): void {
+  const classification = classifyDystopiaVariant(state);
 
-  // 1. Check Tier 1 (existing)
-  const controlDystopia = checkControlDystopias(state);
-  if (controlDystopia) return controlDystopia;
+  if (classification) {
+    // ENTERING or CONTINUING dystopia
+    if (!state.dystopiaState.active) {
+      // ENTRY: Log transition
+      state.dystopiaState.active = true;
+      state.dystopiaState.variant = classification.type;
+      state.dystopiaState.level = classification.level;
+      state.dystopiaState.startMonth = state.currentMonth;
+      state.dystopiaState.severity = classification.severity;
 
-  // 2. Check Tier 2 (inequality)
-  const inequalityDystopia = checkInequalityDystopias(state);
-  if (inequalityDystopia) return inequalityDystopia;
+      console.log(`🚨 ENTERING DYSTOPIA: ${classification.type} (${classification.level})`);
+    } else if (state.dystopiaState.variant !== classification.type) {
+      // VARIANT CHANGE: One dystopia type to another
+      state.dystopiaState.previousVariants.push({
+        type: state.dystopiaState.variant!,
+        level: state.dystopiaState.level!,
+        startMonth: state.dystopiaState.startMonth!,
+        endMonth: state.currentMonth,
+        severity: state.dystopiaState.severity
+      });
 
-  // 3. Check Tier 3 (technology)
-  const techDystopia = checkTechnologyDystopias(state);
-  if (techDystopia) return techDystopia;
+      state.dystopiaState.variant = classification.type;
+      state.dystopiaState.level = classification.level;
+      state.dystopiaState.startMonth = state.currentMonth;
+      state.dystopiaState.monthsInCurrentVariant = 0;
 
-  // 4. Check Tier 4 (regional)
-  const regionalDystopia = checkRegionalDystopias(state);
-  if (regionalDystopia) return regionalDystopia;
+      console.log(`🔄 DYSTOPIA VARIANT CHANGE: → ${classification.type}`);
+    }
 
-  return null;
+    // Update duration
+    state.dystopiaState.totalMonthsInDystopia++;
+    state.dystopiaState.monthsInCurrentVariant++;
+    state.dystopiaState.severity = classification.severity;
+
+  } else {
+    // EXITING dystopia
+    if (state.dystopiaState.active) {
+      state.dystopiaState.previousVariants.push({
+        type: state.dystopiaState.variant!,
+        level: state.dystopiaState.level!,
+        startMonth: state.dystopiaState.startMonth!,
+        endMonth: state.currentMonth,
+        severity: state.dystopiaState.severity
+      });
+
+      console.log(`✅ EXITING DYSTOPIA: ${state.dystopiaState.variant} (lasted ${state.dystopiaState.monthsInCurrentVariant} months)`);
+
+      state.dystopiaState.active = false;
+      state.dystopiaState.variant = null;
+      state.dystopiaState.level = null;
+      state.dystopiaState.startMonth = null;
+      state.dystopiaState.monthsInCurrentVariant = 0;
+    }
+  }
 }
 ```
 
 **Acceptance Criteria:**
-- [ ] 9 dystopia types detected
-- [ ] Each returns detailed SufferingProfile
-- [ ] Monte Carlo shows 10-30% dystopia outcomes (diverse types)
+- [ ] DystopiaState added to GameState (mirrors GoldenAgeState pattern)
+- [ ] Entry/exit transitions logged
+- [ ] Duration tracking works (totalMonthsInDystopia increments)
+- [ ] Can transition from one dystopia type to another
+- [ ] Final outcome reports: "Spent 47 months in dystopia" or "Ended in dystopia (surveillance, 18 months)"
 
 ---
 
-### Phase 2: Suffering Aggregation & Reporting
+### Phase 2: Three-Level Dystopia Detection (Global/Hegemonic/Regional)
 
-**Goal:** Track and log suffering metrics over time
+**Goal:** Detect dystopia at three levels simultaneously
 
-**New File:** `src/simulation/sufferingMetrics.ts`
+**Key Insight:** Multiple dystopias can coexist:
+- Global: Entire world suffering (>80% population)
+- Hegemonic: Specific major power dystopian (US, China, EU)
+- Regional: Extracted/exploited regions suffering (Sub-Saharan Africa, Middle East)
 
+**Files to Modify:**
+1. `src/simulation/dystopiaProgression.ts` - Add three-level classification
+2. `src/types/game.ts` - Add hegemonic/regional dystopia tracking
+3. (Future) `src/simulation/hegemonicPowers.ts` - Integrate with colonial system
+
+**Detection Architecture:**
 ```typescript
-export interface SufferingTimeSeries {
-  month: number;
-  totalSuffering: number;          // Aggregate suffering score
-  byCategory: Record<SufferingCategory, number>;
-  byGroup: Record<string, number>; // Per affected group
-  dystopiaType: DystopiaType | null;
+export interface DystopiaClassification {
+  type: DystopiaType;
+  level: 'global' | 'hegemonic' | 'regional';
+  severity: number;
+  suffering: SufferingProfile;
+  reason: string;
+
+  // Level-specific details
+  affectedPopulation?: number;      // Global
+  hegemonId?: string;               // Hegemonic
+  regionId?: string;                // Regional
 }
 
-export class SufferingTracker {
-  private history: SufferingTimeSeries[] = [];
+export function classifyDystopiaVariant(state: GameState): DystopiaClassification | null {
+  // Priority 1: Check global dystopia (affects everyone)
+  const globalDystopia = checkGlobalDystopia(state);
+  if (globalDystopia) return { ...globalDystopia, level: 'global' };
 
-  update(state: GameState): void {
-    const dystopia = classifyDystopiaVariant(state);
+  // Priority 2: Check hegemonic dystopia (major powers)
+  const hegemonicDystopia = checkHegemonicDystopias(state);
+  if (hegemonicDystopia) return { ...hegemonicDystopia, level: 'hegemonic' };
 
-    if (dystopia) {
-      // Calculate aggregate suffering
-      const totalSuffering = this.calculateTotalSuffering(dystopia.suffering, state);
+  // Priority 3: Check regional dystopia (exploitation/extraction)
+  const regionalDystopia = checkRegionalDystopias(state);
+  if (regionalDystopia) return { ...regionalDystopia, level: 'regional' };
 
-      // Track by category
-      const byCategory = this.calculateCategorySuffering(dystopia.suffering, state);
+  return null;
+}
 
-      this.history.push({
-        month: state.currentMonth,
-        totalSuffering,
-        byCategory,
-        byGroup: this.calculateGroupSuffering(dystopia.suffering, state),
-        dystopiaType: dystopia.type
-      });
+function checkGlobalDystopia(state: GameState): Partial<DystopiaClassification> | null {
+  const qol = state.qualityOfLifeSystems;
+
+  // Surveillance state (global)
+  if (qol.surveillanceLevel > 0.8 && qol.politicalFreedom < 0.2 && qol.autonomy < 0.3) {
+    return {
+      type: 'surveillance_state',
+      severity: qol.surveillanceLevel * (1 - qol.autonomy),
+      suffering: {
+        affectedFraction: 0.95,
+        categories: ['control_loss', 'fear', 'oppression'],
+        intensity: 0.8
+      },
+      reason: 'Total surveillance, global control',
+      affectedPopulation: state.population * 0.95
+    };
+  }
+
+  // Comfortable dystopia (global)
+  if (qol.materialAbundance > 1.2 && qol.meaningAndPurpose < 0.3 && qol.autonomy < 0.4) {
+    return {
+      type: 'comfortable_dystopia',
+      severity: qol.materialAbundance * (1 - qol.meaningAndPurpose),
+      suffering: {
+        affectedFraction: 0.95,
+        categories: ['existential_emptiness', 'manufactured_consent'],
+        intensity: 0.4,
+        hidden: true
+      },
+      reason: 'Materially abundant but existentially empty',
+      affectedPopulation: state.population * 0.95
+    };
+  }
+
+  return null;
+}
+
+function checkHegemonicDystopias(state: GameState): Partial<DystopiaClassification> | null {
+  // Check each major power using TIER 2.8 country system
+  // Hegemons: US, China, Russia, India, UK
+  for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+    const country = state.countryPopulations.countries[countryName];
+
+    // Only check hegemons
+    if (!country.isHegemon) continue;
+
+    // Authoritarian hegemon (using QoL systems)
+    const qol = state.qualityOfLifeSystems;
+    if (qol.surveillanceLevel > 0.7 && qol.politicalFreedom < 0.3) {
+      return {
+        type: 'authoritarian',
+        severity: qol.surveillanceLevel * (1 - qol.politicalFreedom),
+        suffering: {
+          affectedFraction: country.population / state.population,
+          categories: ['oppression', 'control_loss', 'fear'],
+          intensity: 0.7
+        },
+        reason: `${country.name} authoritarian regime`,
+        hegemonId: country.name
+      };
     }
   }
+  return null;
+}
 
-  private calculateTotalSuffering(profile: SufferingProfile, state: GameState): number {
-    // Suffering = (affected fraction) × (intensity) × (duration factor)
-    const durationFactor = Math.min(1.5, 1 + (profile.duration / 120)); // Up to 1.5x after 10 years
-    return profile.affectedFraction * profile.intensity * durationFactor;
-  }
+function checkRegionalDystopias(state: GameState): Partial<DystopiaClassification> | null {
+  // Check countries using TIER 2.8 extraction and intervention tracking
+  for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+    const country = state.countryPopulations.countries[countryName];
 
-  getWorstMonth(): SufferingTimeSeries {
-    return this.history.reduce((worst, current) =>
-      current.totalSuffering > worst.totalSuffering ? current : worst
-    );
-  }
+    // Skip hegemons (they're extractors, not extracted)
+    if (country.isHegemon) continue;
 
-  getCumulativeSuffering(): number {
-    return this.history.reduce((sum, entry) => sum + entry.totalSuffering, 0);
+    // EXTRACTION DYSTOPIA: Country being extracted from
+    // Uses TIER 2.8: extractedBy, sovereignty, resourceValue
+    if (country.extractedBy.length > 0) {
+      // Calculate total extraction rate
+      const totalExtraction = country.extractedBy.reduce((sum, flow) =>
+        sum + flow.annualValueExtracted, 0);
+      const extractionRate = country.resourceValue.totalValue > 0
+        ? totalExtraction / country.resourceValue.totalValue
+        : 0;
+
+      // High extraction + low sovereignty + poverty = extraction dystopia
+      if (extractionRate > 0.5 &&
+          country.sovereignty.overall < 0.4 &&
+          country.resourceValue.totalValue > 100) { // Significant resources
+
+        return {
+          type: 'extraction_dystopia',
+          severity: extractionRate * (1 - country.sovereignty.overall),
+          suffering: {
+            affectedFraction: country.population / state.population,
+            categories: ['poverty', 'powerlessness', 'environmental_destruction'],
+            intensity: 0.8
+          },
+          reason: `${country.name}: resource extraction by ${country.extractedBy.map(f => f.hegemon).join(', ')}`,
+          regionId: country.name
+        };
+      }
+    }
+
+    // WAR DYSTOPIA: Country under military intervention
+    // Uses TIER 2.8: activeInterventions[]
+    if (country.activeInterventions.length > 0) {
+      // Sum up all intervention effects
+      const totalRefugees = country.activeInterventions.reduce((sum, intervention) =>
+        sum + intervention.effects.refugeesCreated, 0);
+      const avgInfrastructureDestruction = country.activeInterventions.reduce((sum, intervention) =>
+        sum + intervention.effects.infrastructureDestruction, 0) / country.activeInterventions.length;
+
+      // Active war with significant humanitarian crisis
+      if (totalRefugees > country.population * 0.05 || avgInfrastructureDestruction > 0.3) {
+        return {
+          type: 'war_dystopia',
+          severity: Math.max(avgInfrastructureDestruction, totalRefugees / country.population),
+          suffering: {
+            affectedFraction: Math.min(1.0, country.population / state.population),
+            categories: ['violence', 'displacement', 'trauma'],
+            intensity: 0.9
+          },
+          reason: `${country.name}: military interventions by ${country.activeInterventions.map(i => i.hegemon).join(', ')}`,
+          regionId: country.name
+        };
+      }
+    }
   }
+  return null;
 }
 ```
 
-**Integration:**
-- Add to GameState: `sufferingTracker: SufferingTracker`
-- Call monthly from dystopiaProgression phase
-- Log in Monte Carlo summary
-
----
-
-### Phase 3: Dystopia Escape Mechanics (Optional - Polish)
-
-**Goal:** Some dystopias can be reformed, others are permanent
-
+**Regional Dystopia Tracking:**
 ```typescript
-interface DystopiaEscapePotential {
-  reversible: boolean;
-  escapeActions: string[];        // Government actions that could help
-  lockInMechanisms: string[];     // Why it's hard to escape
-  timeWindow: number;             // Months before permanent lock-in
-}
+// In GameState
+regionalDystopias: Map<CountryName, DystopiaState>; // countryName → state
 
-// Example: Authoritarian can be reformed if caught early
-if (dystopiaType === 'authoritarian' && monthsInDystopia < 24) {
-  return {
-    reversible: true,
-    escapeActions: ['democratic_reforms', 'civil_society_support', 'ai_rights'],
-    lockInMechanisms: ['power_concentration', 'media_control'],
-    timeWindow: 24 - monthsInDystopia
-  };
-}
+// Update each country's dystopia status (using TIER 2.8 country tracking)
+for (const countryName of Object.keys(state.countryPopulations.countries) as CountryName[]) {
+  const country = state.countryPopulations.countries[countryName];
 
-// Example: Comfortable dystopia nearly impossible to escape (people like it)
-if (dystopiaType === 'comfortable_dystopia') {
-  return {
-    reversible: false,
-    escapeActions: [], // No clear path
-    lockInMechanisms: ['population_consent', 'manufactured_desire', 'soma_addiction'],
-    timeWindow: 0 // Already permanent
-  };
+  // Check if this country is in regional dystopia
+  const regionalClassification = checkSpecificCountryDystopia(country, state);
+  if (regionalClassification) {
+    if (!state.regionalDystopias.has(countryName)) {
+      state.regionalDystopias.set(countryName, createDystopiaState(regionalClassification));
+    } else {
+      updateRegionalDystopiaState(state.regionalDystopias.get(countryName)!, regionalClassification);
+    }
+  } else {
+    // Country escaped dystopia
+    if (state.regionalDystopias.has(countryName)) {
+      const dystopiaState = state.regionalDystopias.get(countryName)!;
+      dystopiaState.active = false;
+      // Could also remove from map if desired
+    }
+  }
 }
 ```
+
+**Acceptance Criteria:**
+- [ ] Global dystopia detection working (surveillance, comfortable)
+- [ ] Hegemonic dystopia detection per major power
+- [ ] Regional dystopia detection per extracted region
+- [ ] Asymmetric dystopia detection (hegemon golden age + region dystopia)
+- [ ] Multiple dystopias can coexist (e.g., China authoritarian + Africa extraction)
 
 ---
 
-### Phase 4: Logging & Visualization
+### Phase 3: Implement New Dystopia Variants (Tiers 2-4)
 
-**Goal:** Make dystopia variants visible in Monte Carlo output
+**Goal:** Add 6 new dystopia types with status integration
 
-**Monte Carlo Summary Additions:**
+**Tier 2: Inequality Dystopias**
+
+1. **Elysium Dystopia** - Extreme inequality (top 10% thriving, bottom 50% suffering)
+2. **Corporate Feudalism** - Corporate control, high unemployment, no government legitimacy
+
+**Tier 3: Technology Dystopias**
+
+3. **Algorithmic Oppression** - AI-driven manipulation, filter bubbles, personalized control
+4. **Comfortable Dystopia** - Materially abundant but existentially empty (Brave New World)
+
+**Tier 4: Regional/Extraction Dystopias**
+
+5. **Extraction Dystopia** - Colonial resource extraction (connects to colonial system)
+6. **War Dystopia** - Military intervention zones (Iraq, Libya, Yemen patterns)
+7. **Debt Trap Dystopia** - IMF/austerity cycles (Greece, Argentina patterns)
+8. **Geographic Dystopia** - Climate collapse in specific regions
+9. **Fortress Dystopia** - Closed borders + extraction (causes refugee crisis, refuses entry)
+
+**Files to Modify:**
+1. `src/simulation/dystopiaProgression.ts` - Add detection for 6 new types
+2. `src/types/dystopia.ts` (NEW) - DystopiaType enum with all 9 types
+3. `src/simulation/dystopiaVariants.ts` (NEW) - Detection functions for each tier
+
+**Implementation Pattern (each variant):**
+```typescript
+function checkElysiumDystopia(state: GameState): DystopiaClassification | null {
+  const qol = state.qualityOfLifeSystems;
+  const dist = qol.distribution;
+
+  if (dist.globalGini > 0.5 &&
+      dist.worstRegionQoL < 0.3 &&
+      qol.materialAbundance > 1.0) { // Aggregate looks OK, but hides suffering
+
+    return {
+      type: 'elysium_inequality',
+      level: 'global', // Affects whole world (asymmetrically)
+      severity: dist.globalGini * (1 - dist.worstRegionQoL),
+      suffering: {
+        affectedFraction: 0.5, // Bottom 50%
+        categories: ['poverty', 'hopelessness', 'powerlessness'],
+        intensity: 0.8,
+        hidden: false // Suffering is visible, just normalized
+      },
+      reason: 'Extreme inequality: top 10% thriving, bottom 50% suffering',
+      affectedPopulation: state.population * 0.5
+    };
+  }
+  return null;
+}
+```
+
+**Integration with Status System:**
+```typescript
+// In dystopiaProgression.ts
+export function updateDystopiaStatus(state: GameState): void {
+  // Check all tiers
+  const classification =
+    checkGlobalDystopia(state) ||
+    checkHegemonicDystopias(state) ||
+    checkRegionalDystopias(state) ||
+    checkElysiumDystopia(state) ||      // Tier 2
+    checkCorporateFeudalism(state) ||   // Tier 2
+    checkAlgorithmicOppression(state) || // Tier 3
+    checkComfortableDystopia(state) ||  // Tier 3
+    null;
+
+  // Update DystopiaState (entry/exit/variant change logic from Phase 1)
+  if (classification) {
+    updateOrEnterDystopia(state, classification);
+  } else {
+    exitDystopiaIfActive(state);
+  }
+}
+```
+
+**Acceptance Criteria:**
+- [ ] All 9 dystopia types detected correctly
+- [ ] Each variant has unique suffering profile
+- [ ] Tier 4 dystopias integrate with colonial extraction system
+- [ ] Status tracking works for all variants (can enter/exit each type)
+- [ ] Monte Carlo shows diverse dystopia types (not just surveillance)
+
+---
+
+### Phase 4: Final Reporting & Duration Tracking
+
+**Goal:** Report dystopia duration and status in final outcomes
+
+**Key Requirements:**
+1. Final outcome should report: "Spent X months in dystopia" or "Ended in dystopia"
+2. Show breakdown by dystopia type (e.g., "32 months surveillance, 15 months corporate feudalism")
+3. Distinguish "spent time but escaped" vs "ended in dystopia"
+
+**Files to Modify:**
+1. `src/simulation/outcomes.ts` - Add duration reporting
+2. `scripts/monteCarloSimulation.ts` - Track dystopia patterns across runs
+
+**Final Outcome Reporting (outcomes.ts):**
+```typescript
+export function determineOutcome(state: GameState): OutcomeResult {
+  const { dystopiaState } = state;
+
+  // Check if ended in dystopia (still active)
+  if (dystopiaState.active) {
+    return {
+      outcome: 'dystopia',
+      subtype: dystopiaState.variant!,
+      level: dystopiaState.level!,
+      severity: dystopiaState.severity,
+      duration: {
+        totalMonths: dystopiaState.totalMonthsInDystopia,
+        currentVariantMonths: dystopiaState.monthsInCurrentVariant,
+        breakdown: [
+          ...dystopiaState.previousVariants,
+          {
+            type: dystopiaState.variant!,
+            level: dystopiaState.level!,
+            startMonth: dystopiaState.startMonth!,
+            endMonth: state.currentMonth,
+            severity: dystopiaState.severity
+          }
+        ]
+      },
+      message: `Ended in ${dystopiaState.variant} dystopia after ${dystopiaState.totalMonthsInDystopia} months`
+    };
+  }
+
+  // Spent time in dystopia but escaped
+  if (dystopiaState.totalMonthsInDystopia > 0) {
+    return {
+      outcome: 'escaped_dystopia',
+      dystopiaHistory: {
+        totalMonths: dystopiaState.totalMonthsInDystopia,
+        variants: dystopiaState.previousVariants
+      },
+      finalState: determineNonDystopiaOutcome(state), // utopia, golden age, etc.
+      message: `Spent ${dystopiaState.totalMonthsInDystopia} months in dystopia, then escaped to ${finalState}`
+    };
+  }
+
+  // Never entered dystopia
+  return determineNonDystopiaOutcome(state);
+}
+```
+
+**Monte Carlo Summary with Duration:**
 ```
 ================================================================================
-🏛️ DYSTOPIA VARIANT ANALYSIS
+🏛️ DYSTOPIA STATUS TRACKING
 ================================================================================
 
-Dystopia Outcomes: 18/100 runs (18.0%)
+DYSTOPIA OUTCOMES:
+  Ended in dystopia:        18/100 runs (18.0%)
+  Escaped dystopia:         24/100 runs (24.0%)
+  Never entered dystopia:   58/100 runs (58.0%)
 
-DYSTOPIA TYPES:
-  Surveillance State:       8 runs (8.0%)
-  Corporate Feudalism:      4 runs (4.0%)
-  Elysium Inequality:       3 runs (3.0%)
-  Algorithmic Oppression:   2 runs (2.0%)
-  Comfortable Dystopia:     1 run  (1.0%)
+DYSTOPIA VARIANTS (runs that ended in dystopia):
+  Surveillance State:       8 runs (44.4% of dystopias)
+  Extraction Dystopia:      4 runs (22.2% of dystopias)
+  Corporate Feudalism:      3 runs (16.7% of dystopias)
+  Elysium Inequality:       2 runs (11.1% of dystopias)
+  War Dystopia:             1 run  ( 5.6% of dystopias)
 
-SUFFERING METRICS:
-  Avg Total Suffering Score: 0.42
-  Peak Suffering Month: Month 47 (0.67 score)
-  Most Common Category: Meaninglessness (14 runs)
+DURATION ANALYSIS:
+  Runs that ended in dystopia:
+    - Avg duration: 47 months (min: 12, max: 120)
+    - Median: 38 months
 
-AFFECTED POPULATIONS:
-  >50% population suffering: 12 runs (66.7% of dystopias)
-  <20% population suffering:  3 runs (16.7% of dystopias)
-  Hidden suffering (high QoL): 3 runs (16.7% of dystopias)
+  Runs that escaped dystopia:
+    - Avg time in dystopia: 18 months (min: 3, max: 52)
+    - Avg escape time: 24 months after entry
 
-ESCAPE POTENTIAL:
-  Reversible: 6 runs (33.3%)
-  Permanent lock-in: 12 runs (66.7%)
-  Avg time to lock-in: 18 months
+LEVEL BREAKDOWN:
+  Global dystopia:    12 runs (e.g., surveillance, comfortable)
+  Hegemonic dystopia: 5 runs (e.g., US/China authoritarian)
+  Regional dystopia:  10 runs (e.g., Africa extraction, Middle East war)
+
+VARIANT TRANSITIONS:
+  6 runs changed dystopia type mid-simulation:
+    - Surveillance → Corporate Feudalism: 3 runs
+    - Extraction → War Dystopia: 2 runs
+    - Elysium → Comfortable Dystopia: 1 run
 
 ================================================================================
 ```
+
+**Acceptance Criteria:**
+- [ ] Final outcome reports total months in dystopia
+- [ ] Distinguishes "ended in dystopia" vs "escaped dystopia"
+- [ ] Shows breakdown by variant (e.g., "32 surveillance + 15 corporate")
+- [ ] Monte Carlo tracks duration statistics (min/max/median)
+- [ ] Can see variant transitions (surveillance → corporate)
+
+---
+
+### Phase 5: Escape Mechanics & Lock-In (Optional - Polish)
+
+**Goal:** Model which dystopias are escapable vs permanent
+
+**Key Insight:** Some dystopias have reform pathways, others lock in permanently.
+
+**Escape Difficulty by Type:**
+
+**Easy to Escape (if caught early):**
+- Authoritarian: Democratic reforms, civil society support
+- Surveillance State: Privacy protections, government transparency
+
+**Medium Difficulty:**
+- Corporate Feudalism: UBI, labor organizing, antitrust
+- Algorithmic Oppression: AI regulation, data rights
+
+**Hard to Escape:**
+- Comfortable Dystopia: Population doesn't want to leave (soma addiction)
+- Elysium Inequality: Elites have no incentive to change
+
+**Nearly Impossible:**
+- Extraction Dystopia: Requires decolonization, reparations
+- War Dystopia: Hegemon must end intervention voluntarily
+
+**Implementation:**
+```typescript
+export interface EscapePotential {
+  reversible: boolean;
+  difficulty: 'easy' | 'medium' | 'hard' | 'impossible';
+  escapeActions: string[];        // Government actions that help
+  lockInMechanisms: string[];     // Why it's hard to escape
+  timeWindowMonths: number | null; // Months before permanent lock-in (null if always reversible)
+}
+
+function calculateEscapePotential(dystopiaState: DystopiaState, state: GameState): EscapePotential {
+  switch (dystopiaState.variant) {
+    case 'authoritarian':
+      // Can escape if caught within 24 months
+      return {
+        reversible: dystopiaState.monthsInCurrentVariant < 24,
+        difficulty: 'easy',
+        escapeActions: ['democratic_reforms', 'free_elections', 'civil_society_support'],
+        lockInMechanisms: ['power_concentration', 'media_control', 'opposition_suppression'],
+        timeWindowMonths: 24 - dystopiaState.monthsInCurrentVariant
+      };
+
+    case 'comfortable_dystopia':
+      // Nearly impossible: people like it
+      return {
+        reversible: false,
+        difficulty: 'impossible',
+        escapeActions: [], // No clear path
+        lockInMechanisms: ['population_consent', 'manufactured_desire', 'soma_addiction'],
+        timeWindowMonths: null // Already locked in
+      };
+
+    case 'extraction_dystopia':
+      // Hard: requires hegemon to voluntarily stop extraction
+      return {
+        reversible: true, // Theoretically possible
+        difficulty: 'hard',
+        escapeActions: ['resource_nationalization', 'debt_forgiveness', 'reparations'],
+        lockInMechanisms: ['hegemon_military', 'debt_trap', 'puppet_government'],
+        timeWindowMonths: null // No time limit, just difficult
+      };
+
+    // ... other types
+  }
+}
+```
+
+**Trajectory Tracking:**
+```typescript
+// Update dystopiaState.trajectory each month
+function updateTrajectory(dystopiaState: DystopiaState, previousSeverity: number): void {
+  const currentSeverity = dystopiaState.severity;
+  const delta = currentSeverity - previousSeverity;
+
+  if (delta > 0.05) {
+    dystopiaState.trajectory = 'worsening';
+  } else if (delta < -0.05) {
+    dystopiaState.trajectory = 'improving';
+  } else {
+    dystopiaState.trajectory = 'stable';
+  }
+
+  // Calculate escape potential
+  const escape = calculateEscapePotential(dystopiaState, state);
+  dystopiaState.reversible = escape.reversible;
+  dystopiaState.monthsUntilLockIn = escape.timeWindowMonths;
+  dystopiaState.escapeConditions = escape.escapeActions;
+}
+```
+
+**Acceptance Criteria:**
+- [ ] Each dystopia variant has escape difficulty rating
+- [ ] Time-based lock-in (e.g., authoritarian locks in after 24 months)
+- [ ] Trajectory tracking (worsening/stable/improving)
+- [ ] Government actions can trigger escape (democratic reforms help authoritarian exit)
+- [ ] Some dystopias permanently locked in (comfortable dystopia)
 
 ---
 
 ## Success Criteria
 
-### Before
-- 3 generic dystopia types
+### Before (Current State)
+- 3 generic dystopia types (surveillance, authoritarian, high_control)
+- Dystopia treated as terminal outcome (like extinction)
 - Binary dystopia detection (yes/no)
-- No suffering granularity
+- No duration tracking
+- No granular suffering metrics
 - Dystopia feels monotone
 
-### After (Target)
-- 9 distinct dystopia variants
-- Detailed suffering profiles
-- Track who, how, why, how much
-- Diverse dystopia outcomes in Monte Carlo
-- Distinguish between:
+### After (Target - Status System)
+
+**Phase 1: Status System ✅**
+- [x] Dystopia is a STATUS (like Golden Age), not terminal outcome
+- [x] Can enter and exit dystopia
+- [x] Duration tracking (total months, months per variant)
+- [x] Final report: "Spent 47 months in dystopia" or "Ended in dystopia (surveillance, 18 months)"
+
+**Phase 2: Three-Level Detection ✅**
+- [x] Global dystopia (>80% population affected)
+- [x] Hegemonic dystopia (country-level: US, China, EU)
+- [x] Regional dystopia (extraction, war zones)
+- [x] Asymmetric dystopia (hegemon golden age + periphery suffering)
+
+**Phase 3: Dystopia Variants ✅**
+- [x] 9 distinct dystopia types:
+  - Tier 1 (control): surveillance, authoritarian, high_control ✅
+  - Tier 2 (inequality): elysium, corporate_feudalism
+  - Tier 3 (technology): algorithmic_oppression, comfortable_dystopia
+  - Tier 4 (extraction): extraction_dystopia, war_dystopia, debt_trap, geographic, fortress
+- [x] Each variant has unique suffering profile
+- [x] Distinguish between:
   - Everyone suffering (totalitarian)
   - Hidden suffering (comfortable dystopia)
   - Inequality suffering (Elysium)
-  - Regional suffering (geographic)
+  - Regional suffering (extraction, war)
+
+**Phase 4: Final Reporting ✅**
+- [x] Duration statistics (min/max/median months in dystopia)
+- [x] Variant transitions tracked (surveillance → corporate)
+- [x] Distinguish "ended in dystopia" vs "escaped dystopia"
+
+**Phase 5: Escape Mechanics (Optional) 🔧**
+- [ ] Escape difficulty by dystopia type
+- [ ] Time-based lock-in (e.g., authoritarian locks in after 24 months)
+- [ ] Trajectory tracking (worsening/stable/improving)
 
 ---
 

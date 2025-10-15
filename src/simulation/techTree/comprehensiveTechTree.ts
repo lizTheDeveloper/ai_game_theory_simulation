@@ -403,7 +403,12 @@ const ALL_TECH: TechDefinition[] = [
     category: 'freshwater',
     status: 'unlockable',
     prerequisites: ['desalination_advanced', 'solar_4th_gen'],
-    minAICapability: 2.5,
+    minResearchCapabilities: [
+      { domain: 'materials', subdomain: 'nanotechnology', threshold: 0.9 },  // Advanced zeolites
+    ],
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 1.6 },  // Optimization algorithms
+    ],
     researchMonthsRequired: 24,
     researchCost: 1500,
     deploymentCost: 150000,
@@ -412,6 +417,14 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       freshwaterSupply: 0.20,
       droughtResilience: 0.30,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'materials', subdomain: 'nanotechnology', boost: 0.10 }
+      ],
+      dimensions: {
+        cognitive: 0.06,
+      },
     },
   },
   {
@@ -447,7 +460,12 @@ const ALL_TECH: TechDefinition[] = [
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.5,
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 1.0 },  // CRISPR gene editing
+    ],
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 1.7 },  // Complex genetic pathways
+    ],
     researchMonthsRequired: 36,
     researchCost: 1000,
     deploymentCost: 120000,
@@ -457,6 +475,11 @@ const ALL_TECH: TechDefinition[] = [
       waterEfficiency: 0.40,
       cropYieldBonus: 0.15,
       droughtResilience: 0.30,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.12 }
+      ],
     },
   },
   
@@ -501,18 +524,32 @@ const ALL_TECH: TechDefinition[] = [
     category: 'ocean',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 1.5,  // Realistic: Current biotech and 3D printing
-    minEconomicStage: 2.0,  // Realistic: Mid post-industrial
-    minMonth: 12,  // Realistic: 1 year for coral breeding
-    researchMonthsRequired: 18,  // Realistic: Coral breeding and 3D printing
-    researchCost: 400,  // Realistic: Moderate biotech cost
-    deploymentCost: 60000,  // Realistic: Coral deployment
-    deploymentMonthsRequired: 36,  // Realistic: Coral restoration timeline
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.7 },  // Heat-tolerant strains
+    ],
+    minCapabilityDimensions: [
+      { dimension: 'physical', threshold: 0.8 },  // 3D printing + ocean deployment
+      { dimension: 'cognitive', threshold: 1.0 },  // Optimization
+    ],
+    minEconomicStage: 2.0,
+    minMonth: 12,
+    researchMonthsRequired: 18,
+    researchCost: 400,
+    deploymentCost: 60000,
+    deploymentMonthsRequired: 36,
     deploymentLevel: 0,
     effects: {
       coralCoverage: 0.25,
       biodiversityBonus: 0.05,
       fisheryBonus: 0.10,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.08 }
+      ],
+      dimensions: {
+        physical: 0.05,
+      },
     },
   },
   {
@@ -545,18 +582,27 @@ const ALL_TECH: TechDefinition[] = [
     category: 'pollution',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 1.3,  // Realistic: Current chemical engineering
-    minEconomicStage: 2.0,  // Realistic: Mid post-industrial
-    minMonth: 9,  // Realistic: 9 months for chemical engineering
-    researchMonthsRequired: 15,  // Realistic: Chemical process development
-    researchCost: 800,  // Realistic: Moderate chemical engineering cost
-    deploymentCost: 120000,  // Realistic: Chemical plant deployment
-    deploymentMonthsRequired: 36,  // Realistic: Chemical plant timeline
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 0.9 },  // Chemical process optimization
+      { dimension: 'physical', threshold: 0.7 },  // Industrial deployment
+    ],
+    minEconomicStage: 2.0,
+    minMonth: 9,
+    researchMonthsRequired: 15,
+    researchCost: 800,
+    deploymentCost: 120000,
+    deploymentMonthsRequired: 36,
     deploymentLevel: 0,
     effects: {
       pfasReduction: 0.70,
       healthBonus: 0.05,
       pollutionReduction: 0.10,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.06,
+        physical: 0.04,
+      },
     },
   },
   {
@@ -566,7 +612,12 @@ const ALL_TECH: TechDefinition[] = [
     category: 'pollution',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.5,
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'syntheticBiology', threshold: 1.0 },  // Enzyme engineering
+    ],
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 1.8 },  // Complex protein folding
+    ],
     researchMonthsRequired: 30,
     researchCost: 1200,
     deploymentCost: 150000,
@@ -576,6 +627,14 @@ const ALL_TECH: TechDefinition[] = [
       plasticReduction: 0.50,
       oceanHealthBonus: 0.10,
       pollutionReduction: 0.15,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'syntheticBiology', boost: 0.15 }
+      ],
+      dimensions: {
+        cognitive: 0.08,
+      },
     },
   },
   {
@@ -725,7 +784,10 @@ const ALL_TECH: TechDefinition[] = [
     category: 'social',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.5,
+    minCapabilityDimensions: [
+      { dimension: 'social', threshold: 1.5 },  // Understanding human values
+      { dimension: 'cognitive', threshold: 1.8 },  // Complex matching algorithms
+    ],
     researchMonthsRequired: 18,
     researchCost: 400,
     deploymentCost: 40000,
@@ -735,6 +797,12 @@ const ALL_TECH: TechDefinition[] = [
       socialConnectionBonus: 0.25,
       meaningReduction: 0.08,
       mentalHealthBonus: 0.10,
+    },
+    capabilityEffects: {
+      dimensions: {
+        social: 0.10,
+        cognitive: 0.06,
+      },
     },
   },
   {
@@ -777,7 +845,10 @@ const ALL_TECH: TechDefinition[] = [
     category: 'social',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.5,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 1.9 },  // Advanced generative models
+      { dimension: 'social', threshold: 1.3 },  // Understanding creativity/aesthetics
+    ],
     researchMonthsRequired: 18,
     researchCost: 300,
     deploymentCost: 30000,
@@ -787,6 +858,12 @@ const ALL_TECH: TechDefinition[] = [
       meaningReduction: 0.12,
       socialConnectionBonus: 0.08,
       mentalHealthBonus: 0.05,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.09,
+        social: 0.06,
+      },
     },
   },
   {
@@ -879,7 +956,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'alignment',
     status: 'unlockable',
     prerequisites: ['rlhf_basic', 'mech_interp_basic'],
-    minAICapability: 2.5,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.0 },  // Reasoning about reasoning
+      { dimension: 'selfImprovement', threshold: 1.5 },  // Understanding AI systems
+    ],
+    minResearchCapabilities: [
+      { domain: 'computerScience', subdomain: 'algorithms', threshold: 1.0 },
+    ],
     researchMonthsRequired: 36,
     researchCost: 5000,
     deploymentCost: 3000,
@@ -888,6 +971,15 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       alignmentBonus: 0.15,
       sleeperDetectionBonus: 0.10,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.12,
+        selfImprovement: 0.10,
+      },
+      research: [
+        { domain: 'computerScience', subdomain: 'algorithms', boost: 0.12 }
+      ],
     },
   },
   {
@@ -964,7 +1056,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'alignment',
     status: 'unlockable',
     prerequisites: ['scalable_oversight'],
-    minAICapability: 3.5,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.8 },  // Advanced mathematical reasoning
+      { dimension: 'selfImprovement', threshold: 2.2 },  // Deep AI architecture understanding
+    ],
+    minResearchCapabilities: [
+      { domain: 'computerScience', subdomain: 'algorithms', threshold: 1.8 },
+    ],
     researchMonthsRequired: 60,
     researchCost: 10000,
     deploymentCost: 8000,
@@ -973,6 +1071,15 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       alignmentBonus: 0.25,
       catastrophicRiskReduction: 0.40,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.18,
+        selfImprovement: 0.14,
+      },
+      research: [
+        { domain: 'computerScience', subdomain: 'algorithms', boost: 0.25 }
+      ],
     },
   },
   {
