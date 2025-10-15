@@ -89,6 +89,8 @@ Structure your analysis as:
 5. **Recommendations**: Concrete next steps to address the most critical issues
 6. **Confidence Assessment**: Your confidence level in each concern (high/medium/low) based on evidence strength
 
+**IMPORTANT**: Always save your completed reviews to the `reviews/` folder using the Write tool. Name files descriptively based on what was reviewed (e.g., `reviews/anthropic_alignment_research_YYYYMMDD.md`, `reviews/simulation_methodology_critique_YYYYMMDD.md`). This ensures all research evaluations are centrally archived for future reference.
+
 # Self-Verification
 
 Before presenting criticism, ask yourself:
