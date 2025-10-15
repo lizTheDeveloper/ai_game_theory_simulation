@@ -35,6 +35,27 @@ export interface MonteCarloConfig {
 }
 
 /**
+ * Dystopia analysis results
+ */
+export interface DystopiaAnalysis {
+  totalRunsWithDystopia: number;
+  variantFrequency: Record<string, number>;
+  severityDistribution: Record<string, number>;
+  entryReasons: Record<string, number>;
+  durationStats: {
+    average: number;
+    median: number;
+    min: number;
+    max: number;
+  };
+  outcomeCorrelation: {
+    escaped: number;
+    stayedIn: number;
+    wentExtinct: number;
+  };
+}
+
+/**
  * Results from a Monte Carlo simulation run
  */
 export interface MonteCarloResults {
@@ -75,7 +96,10 @@ export interface MonteCarloResults {
     finalTrust: number;
     monthsToOutcome: number;
   };
-  
+
+  // Dystopia analysis
+  dystopiaAnalysis?: DystopiaAnalysis | undefined;
+
   // Parameter sensitivity analysis
   parameterSensitivity?: ParameterSensitivityResult[];
 }
@@ -119,16 +143,20 @@ export async function runMonteCarlo(
     const variedState = varyInitialState(initialState, config.initialStateVariation);
     
     // Run simulation
-    const engine = new SimulationEngine({
+    const engineConfig: SimulationConfig = {
       seed: i, // Use run index as seed for reproducibility
-      maxMonths: config.maxMonths,
       ...params
-    });
-    
-    const result = engine.run(variedState, {
-      maxMonths: config.maxMonths,
-      outcomeThreshold: 0.85
-    });
+    };
+    if (config.maxMonths !== undefined) {
+      engineConfig.maxMonths = config.maxMonths;
+    }
+    const engine = new SimulationEngine(engineConfig);
+
+    const runConfig: { maxMonths?: number; checkActualOutcomes?: boolean } = {};
+    if (config.maxMonths !== undefined) {
+      runConfig.maxMonths = config.maxMonths;
+    }
+    const result = engine.run(variedState, runConfig);
     
     runs.push(result);
   }
@@ -152,9 +180,7 @@ function generateParameterCombinations(config: MonteCarloConfig): SimulationConf
   
   const {
     governmentActionFrequency = [0.08],
-    socialAdaptationRate = [1.0],
-    initialAIAlignment = [0.7],
-    initialAICapability = [0.2]
+    socialAdaptationRate = [1.0]
   } = config.parameters;
   
   // Generate Cartesian product of all parameter values
@@ -224,6 +250,125 @@ function gaussianRandom(mean: number, stdDev: number): number {
 }
 
 /**
+ * Analyze dystopia statistics across all runs
+ */
+function analyzeDystopiaStatistics(runs: SimulationRunResult[]): DystopiaAnalysis {
+  const variantFrequency: Record<string, number> = {};
+  const severityDistribution: Record<string, number> = {};
+  const entryReasons: Record<string, number> = {};
+  const durations: number[] = [];
+
+  let totalRunsWithDystopia = 0;
+  let escaped = 0;
+  let stayedIn = 0;
+  let wentExtinct = 0;
+
+  runs.forEach(run => {
+    const finalOutcome = run.summary.finalOutcome;
+    const finalProb = run.finalState.outcomeMetrics.dystopiaProbability;
+
+    // Consider a run as having experienced dystopia if:
+    // 1. Final outcome is dystopia, OR
+    // 2. Dystopia probability reached significant levels (>0.7) at any point
+    const snapshots = run.log.snapshots.quartiles || [];
+    const maxDystopiaProb = snapshots.length > 0
+      ? Math.max(...snapshots.map((s: { dystopiaProbability: number }) => s.dystopiaProbability))
+      : finalProb;
+
+    const experiencedDystopia = finalOutcome === 'dystopia' || maxDystopiaProb >= 0.7;
+
+    if (experiencedDystopia) {
+      totalRunsWithDystopia++;
+
+      // Track severity based on final dystopia probability
+      if (finalOutcome === 'dystopia') {
+        if (finalProb >= 0.95) {
+          severityDistribution['severe'] = (severityDistribution['severe'] || 0) + 1;
+        } else if (finalProb >= 0.85) {
+          severityDistribution['moderate'] = (severityDistribution['moderate'] || 0) + 1;
+        } else {
+          severityDistribution['mild'] = (severityDistribution['mild'] || 0) + 1;
+        }
+      }
+
+      // Track outcome correlation
+      if (finalOutcome === 'utopia' || finalOutcome === 'inconclusive') {
+        escaped++;
+      } else if (finalOutcome === 'dystopia') {
+        stayedIn++;
+      } else if (finalOutcome === 'extinction') {
+        wentExtinct++;
+      }
+
+      // Estimate duration by finding when dystopia prob crossed threshold
+      const dystopiaThreshold = 0.7;
+      let entryMonth = -1;
+      let exitMonth = -1;
+
+      for (let i = 0; i < snapshots.length; i++) {
+        const snapshot = snapshots[i];
+        if (!snapshot) continue;
+        if (entryMonth === -1 && snapshot.dystopiaProbability >= dystopiaThreshold) {
+          entryMonth = snapshot.month;
+        }
+        if (entryMonth !== -1 && snapshot.dystopiaProbability < dystopiaThreshold) {
+          exitMonth = snapshot.month;
+          break;
+        }
+      }
+
+      if (entryMonth !== -1) {
+        if (exitMonth !== -1) {
+          durations.push(exitMonth - entryMonth);
+        } else if (finalOutcome === 'dystopia') {
+          // Still in dystopia at end
+          durations.push(run.summary.totalMonths - entryMonth);
+        }
+      }
+
+      // Analyze potential entry reasons from critical events around dystopia spike
+      run.log.events.criticalEvents.forEach(event => {
+        if (event.severity === 'destructive' || event.type === 'crisis') {
+          const reason = event.title;
+          entryReasons[reason] = (entryReasons[reason] || 0) + 1;
+        }
+      });
+    }
+  });
+
+  // Compute duration statistics
+  let durationStats = {
+    average: 0,
+    median: 0,
+    min: 0,
+    max: 0
+  };
+
+  if (durations.length > 0) {
+    const sortedDurations = durations.sort((a, b) => a - b);
+    durationStats = {
+      average: durations.reduce((a, b) => a + b, 0) / durations.length,
+      median: sortedDurations[Math.floor(sortedDurations.length / 2)] || 0,
+      min: sortedDurations[0] || 0,
+      max: sortedDurations[sortedDurations.length - 1] || 0
+    };
+  }
+
+  return {
+    totalRunsWithDystopia,
+    variantFrequency,
+    severityDistribution,
+    entryReasons,
+    durationStats,
+    outcomeCorrelation: {
+      escaped,
+      stayedIn,
+      wentExtinct
+    }
+  };
+}
+
+/**
  * Analyze Monte Carlo results and compute statistics
  */
 function analyzeMonteCarloResults(
@@ -284,7 +429,10 @@ function analyzeMonteCarloResults(
   });
   
   const numRuns = runs.length;
-  
+
+  // Analyze dystopia statistics
+  const dystopiaAnalysis = analyzeDystopiaStatistics(runs);
+
   return {
     runs,
     config,
@@ -305,14 +453,15 @@ function analyzeMonteCarloResults(
       finalEconomicStage: totalEconomicStage / numRuns,
       finalTrust: totalTrust / numRuns,
       monthsToOutcome: totalMonths / numRuns
-    }
+    },
+    dystopiaAnalysis: dystopiaAnalysis.totalRunsWithDystopia > 0 ? dystopiaAnalysis : undefined
   };
 }
 
 /**
  * Export results with hierarchical summarization
  */
-export function exportResults(results: MonteCarloResults, filename: string): void {
+export function exportResults(results: MonteCarloResults): void {
   // Collect logs from all runs
   const logs: SimulationLog[] = results.runs.map(run => run.log);
   
@@ -390,6 +539,7 @@ export function exportResults(results: MonteCarloResults, filename: string): voi
   console.log('\n✨ Top 10 Most Utopian Worlds:');
   results.probabilityDistributions.sortedByUtopia.slice(0, 10).forEach((runId, rank) => {
     const run = results.probabilityDistributions.byRun[runId];
+    if (!run) return;
     console.log(`  ${(rank + 1).toString().padStart(2)}. Run ${runId.toString().padStart(3)}: ` +
       `Utopia=${(run.probabilities.utopia * 100).toFixed(1)}% ` +
       `Dystopia=${(run.probabilities.dystopia * 100).toFixed(1)}% ` +
@@ -401,8 +551,9 @@ export function exportResults(results: MonteCarloResults, filename: string): voi
   console.log('\n☠️  Top 10 Most Doomed Worlds:');
   results.probabilityDistributions.sortedByExtinction.slice(-10).reverse().forEach((runId, rank) => {
     const run = results.probabilityDistributions.byRun[runId];
+    if (!run) return;
     let extinctionInfo = '';
-    if (run.extinctionType) {
+    if (run.extinctionType && run.extinctionMechanism) {
       extinctionInfo = ` [${run.extinctionType}: ${run.extinctionMechanism}]`;
     }
     console.log(`  ${(rank + 1).toString().padStart(2)}. Run ${runId.toString().padStart(3)}: ` +
@@ -426,11 +577,69 @@ export function exportResults(results: MonteCarloResults, filename: string): voi
     Object.entries(extinctionTypes)
       .sort((a, b) => b[1] - a[1])
       .forEach(([key, count]) => {
-        const [type, mechanism] = key.split(':');
+        const parts = key.split(':');
+        const type = parts[0] || 'unknown';
+        const mechanism = parts[1] || 'unknown';
         console.log(`  ${type.padEnd(12)} ${mechanism.padEnd(30)} ${count} runs`);
       });
   }
-  
+
+  // Display dystopia analysis
+  if (results.dystopiaAnalysis && results.dystopiaAnalysis.totalRunsWithDystopia > 0) {
+    const dystopia = results.dystopiaAnalysis;
+    console.log('\n🏚️  Dystopia Analysis:');
+    console.log('====================');
+    console.log(`Total runs with dystopia: ${dystopia.totalRunsWithDystopia} (${(dystopia.totalRunsWithDystopia / results.runs.length * 100).toFixed(1)}%)`);
+
+    // Variant frequency
+    if (Object.keys(dystopia.variantFrequency).length > 0) {
+      console.log('\n📊 Dystopia Variants:');
+      Object.entries(dystopia.variantFrequency)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([variant, count]) => {
+          console.log(`  ${variant.padEnd(25)} ${count.toString().padStart(3)} occurrences`);
+        });
+    }
+
+    // Severity distribution
+    if (Object.keys(dystopia.severityDistribution).length > 0) {
+      console.log('\n⚠️  Severity Distribution:');
+      Object.entries(dystopia.severityDistribution)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([severity, count]) => {
+          console.log(`  ${severity.padEnd(25)} ${count.toString().padStart(3)} runs`);
+        });
+    }
+
+    // Duration statistics
+    if (dystopia.durationStats.average > 0) {
+      console.log('\n⏱️  Duration Statistics:');
+      console.log(`  Average: ${dystopia.durationStats.average.toFixed(1)} months`);
+      console.log(`  Median:  ${dystopia.durationStats.median} months`);
+      console.log(`  Range:   ${dystopia.durationStats.min}-${dystopia.durationStats.max} months`);
+    }
+
+    // Outcome correlation
+    console.log('\n🎯 Outcome Correlation (runs that entered dystopia):');
+    const total = dystopia.outcomeCorrelation.escaped + dystopia.outcomeCorrelation.stayedIn + dystopia.outcomeCorrelation.wentExtinct;
+    if (total > 0) {
+      console.log(`  Escaped:      ${dystopia.outcomeCorrelation.escaped.toString().padStart(3)} (${(dystopia.outcomeCorrelation.escaped / total * 100).toFixed(1)}%)`);
+      console.log(`  Stayed in:    ${dystopia.outcomeCorrelation.stayedIn.toString().padStart(3)} (${(dystopia.outcomeCorrelation.stayedIn / total * 100).toFixed(1)}%)`);
+      console.log(`  Went extinct: ${dystopia.outcomeCorrelation.wentExtinct.toString().padStart(3)} (${(dystopia.outcomeCorrelation.wentExtinct / total * 100).toFixed(1)}%)`);
+    }
+
+    // Top entry reasons
+    if (Object.keys(dystopia.entryReasons).length > 0) {
+      console.log('\n🔍 Top Entry Reasons:');
+      Object.entries(dystopia.entryReasons)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .forEach(([reason, count]) => {
+          console.log(`  ${count.toString().padStart(3)}x ${reason}`);
+        });
+    }
+  }
+
   // Display quartile progression
   console.log('\n📉 Average Trajectory (Quartiles):');
   console.log('==================================');
