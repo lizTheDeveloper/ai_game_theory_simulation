@@ -350,7 +350,7 @@ export class DiagnosticLogger {
     
     // Count interventions by agent
     const interventionCount = {
-      ai: this.interventions.filter(i => i.agent.includes('AI')).length,
+      ai: this.interventions.filter(i => i.agent && i.agent.includes('AI')).length,
       government: this.interventions.filter(i => i.agent === 'Government').length,
       society: this.interventions.filter(i => i.agent === 'Society').length
     };
