@@ -729,6 +729,8 @@ export interface GameState {
   endGameState?: import('../simulation/endGame').EndGameState; // Phase 3: End-game forcing system
   catastrophicScenarios: import('../simulation/catastrophicScenarios').CatastrophicScenario[]; // Phase 11: Hard steps modeling
   goldenAgeState: GoldenAgeState; // Phase: Golden Age detection (immediate prosperity tracking)
+  dystopiaState: import('../types/dystopia').DystopiaState; // Dystopia status tracking (can enter/exit, duration tracking)
+  regionalDystopias: Map<import('../types/countryPopulations').CountryName, import('../types/dystopia').DystopiaState>; // Per-country dystopia tracking
   environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
   socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking

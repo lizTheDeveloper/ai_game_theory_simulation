@@ -42,6 +42,7 @@ import { initializePowerGenerationSystem } from '../types/powerGeneration';
 import { initializeRegionalBiodiversitySystem } from '../types/regionalBiodiversity';
 import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
+import { createInitialDystopiaState } from '../types/dystopia';
 
 /**
  * Create a baseline AI agent with capability profile
@@ -294,7 +295,11 @@ export function createDefaultInitialState(): GameState {
       duration: 0,
       entryReason: ''
     },
-    
+
+    // Dystopia Status Tracking System
+    dystopiaState: createInitialDystopiaState(),
+    regionalDystopias: new Map(),
+
     // Phase 2: Environmental Accumulation
     environmentalAccumulation: initializeEnvironmentalAccumulation(),
     

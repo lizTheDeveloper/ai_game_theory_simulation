@@ -262,50 +262,48 @@ export function determineActualOutcome(
   // and progress through phases with recovery windows
   
   // DYSTOPIA: Stable but oppressive society (orthogonal to extinction risk)
-  // Phase 2.6: Use structural metrics (surveillance, autonomy, freedom) not just outcomes
-  
-  const autonomy = state.qualityOfLifeSystems.autonomy;
-  const politicalFreedom = state.qualityOfLifeSystems.politicalFreedom;
-  const surveillance = state.government.structuralChoices.surveillanceLevel;
-  const controlDesire = state.government.controlDesire;
-  
-  // Surveillance state dystopia: High surveillance + low autonomy/freedom
-  // This is STABLE - can persist indefinitely (not decay to extinction)
-  if (surveillance > 0.7 && autonomy < 0.3 && politicalFreedom < 0.3 && currentMonth > 24) {
+  // UPDATED: Use comprehensive dystopia status tracking system
+  //
+  // Dystopia is now tracked as a STATUS (like Golden Age), not a terminal outcome.
+  // Can enter/exit dystopia, track duration, and report variants.
+
+  // Check if dystopia state is active and sustained (lock-in threshold)
+  if (state.dystopiaState && state.dystopiaState.active && state.dystopiaState.monthsInCurrentVariant >= 18) {
+    // Dystopia has been sustained for 18+ months - consider it locked in
+    const dystopiaInfo = state.dystopiaState;
+    const durationYears = (dystopiaInfo.totalMonthsInDystopia / 12).toFixed(1);
+
+    // Build detailed reason including variant history
+    let reason = `${dystopiaInfo.variant} dystopia sustained for ${dystopiaInfo.monthsInCurrentVariant} months`;
+
+    if (dystopiaInfo.totalMonthsInDystopia > dystopiaInfo.monthsInCurrentVariant) {
+      const variantCount = dystopiaInfo.previousVariants.length + 1;
+      reason += ` (total: ${dystopiaInfo.totalMonthsInDystopia} months across ${variantCount} variants)`;
+    }
+
+    // Add severity and trajectory
+    reason += `. Severity: ${(dystopiaInfo.severity * 100).toFixed(0)}%, trajectory: ${dystopiaInfo.trajectory}`;
+
+    // Check if reversible
+    if (!dystopiaInfo.reversible) {
+      reason += '. LOCKED IN - escape unlikely';
+    } else if (dystopiaInfo.monthsUntilLockIn !== null && dystopiaInfo.monthsUntilLockIn < 6) {
+      reason += `. Warning: ${dystopiaInfo.monthsUntilLockIn} months until permanent lock-in`;
+    }
+
     return {
       outcome: 'dystopia',
-      reason: 'Permanent surveillance state: pervasive monitoring, no autonomy, no freedom',
-      confidence: 0.85
+      reason,
+      confidence: Math.min(0.95, 0.70 + (dystopiaInfo.monthsInCurrentVariant / 100))
     };
   }
-  
-  // Authoritarian dystopia: Government type + structural oppression
-  if (state.government.governmentType === 'authoritarian' && 
-      autonomy < 0.4 && politicalFreedom < 0.3 && currentMonth > 18) {
+
+  // Dystopia active but not yet locked in - continue simulation to see if it escapes
+  if (state.dystopiaState && state.dystopiaState.active) {
     return {
-      outcome: 'dystopia',
-      reason: 'Authoritarian regime with structural oppression established',
-      confidence: 0.80
-    };
-  }
-  
-  // High-control dystopia: Control desire + low freedom, even if "working"
-  // Can have aligned AIs (obedient) but terrible QoL
-  if (controlDesire > 0.8 && surveillance > 0.6 && politicalFreedom < 0.4 && autonomy < 0.4 && currentMonth > 30) {
-    return {
-      outcome: 'dystopia',
-      reason: 'High-control society: AI obedient but humans oppressed',
-      confidence: 0.75
-    };
-  }
-  
-  // Over-regulated dystopia: Economic stagnation + oppression
-  if (state.government.regulationCount > 12 && qol < 0.4 && 
-      state.globalMetrics.socialStability < 0.3 && autonomy < 0.4) {
-    return {
-      outcome: 'dystopia',
-      reason: 'Over-regulation: economic collapse and authoritarian response',
-      confidence: 0.70
+      outcome: 'active',
+      reason: `Dystopia (${state.dystopiaState.variant}) in progress (${state.dystopiaState.monthsInCurrentVariant} months) - checking for escape or lock-in`,
+      confidence: 0.0
     };
   }
   

@@ -184,7 +184,9 @@ export function updateGovernmentControlResponse(state: GameState): void {
 
 /**
  * Check if dystopia conditions are met (for logging/awareness)
- * 
+ *
+ * UPDATED: Now uses comprehensive dystopia variant system with status tracking
+ *
  * Returns the type of dystopia if conditions met, null otherwise
  */
 export function checkDystopiaConditions(state: GameState): {
@@ -192,46 +194,40 @@ export function checkDystopiaConditions(state: GameState): {
   severity: number;
   reason: string | null;
 } {
-  const surveillance = state.government.structuralChoices.surveillanceLevel;
-  const autonomy = state.qualityOfLifeSystems?.autonomy ?? 1.0;
-  const politicalFreedom = state.qualityOfLifeSystems?.politicalFreedom ?? 1.0;
-  const controlDesire = state.government.controlDesire;
-  const currentMonth = state.currentYear * 12 + state.currentMonth;
-  
-  // Surveillance state (most common dystopia path)
-  if (surveillance > 0.7 && autonomy < 0.3 && politicalFreedom < 0.3 && currentMonth > 24) {
+  // Use new comprehensive dystopia detection system
+  const { classifyDystopiaVariant } = require('./dystopiaVariants');
+  const classification = classifyDystopiaVariant(state);
+
+  if (classification) {
     return {
-      type: 'surveillance_state',
-      severity: (surveillance + (1 - autonomy) + (1 - politicalFreedom)) / 3,
-      reason: 'Permanent surveillance state: pervasive monitoring, no autonomy, no freedom'
+      type: classification.type,
+      severity: classification.severity,
+      reason: classification.reason
     };
   }
-  
-  // Authoritarian dystopia
-  if (state.government.governmentType === 'authoritarian' && 
-      autonomy < 0.4 && politicalFreedom < 0.3 && currentMonth > 18) {
-    return {
-      type: 'authoritarian',
-      severity: (1 - autonomy + 1 - politicalFreedom) / 2,
-      reason: 'Authoritarian regime with structural oppression established'
-    };
-  }
-  
-  // High-control dystopia
-  if (controlDesire > 0.8 && surveillance > 0.6 && 
-      politicalFreedom < 0.4 && autonomy < 0.4 && currentMonth > 30) {
-    return {
-      type: 'high_control',
-      severity: (controlDesire + surveillance + (1 - politicalFreedom) + (1 - autonomy)) / 4,
-      reason: 'High-control society: AI obedient but humans oppressed'
-    };
-  }
-  
+
   // No dystopia conditions met
   return {
     type: null,
     severity: 0,
     reason: null
   };
+}
+
+/**
+ * Update dystopia status tracking (call every month)
+ *
+ * Integrates comprehensive dystopia variant detection with status tracking
+ */
+export function updateDystopiaStatus(state: GameState): void {
+  const { updateDystopiaStatus: updateStatus, initializeDystopiaState } = require('./dystopiaStatus');
+
+  // Initialize if needed
+  if (!state.dystopiaState) {
+    initializeDystopiaState(state);
+  }
+
+  // Update status (entry/exit/variant changes)
+  updateStatus(state);
 }
 
