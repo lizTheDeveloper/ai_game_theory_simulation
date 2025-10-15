@@ -35,6 +35,27 @@ export interface MonteCarloConfig {
 }
 
 /**
+ * Dystopia analysis results
+ */
+export interface DystopiaAnalysis {
+  totalRunsWithDystopia: number;
+  variantFrequency: Record<string, number>; // DystopiaVariant -> count
+  severityDistribution: Record<string, number>; // DystopiaSeverity -> count
+  entryReasons: Record<string, number>; // reason -> count (top 10)
+  durationStats: {
+    average: number;
+    median: number;
+    min: number;
+    max: number;
+  };
+  outcomeCorrelation: {
+    escaped: number; // runs that entered dystopia but ended in utopia/survived
+    stayedIn: number; // runs that entered dystopia and ended in dystopia
+    wentExtinct: number; // runs that entered dystopia and went extinct
+  };
+}
+
+/**
  * Results from a Monte Carlo simulation run
  */
 export interface MonteCarloResults {
