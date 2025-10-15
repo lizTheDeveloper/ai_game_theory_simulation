@@ -77,6 +77,8 @@ For each research query, provide:
 
 6. **Recommended Follow-up**: Suggestions for additional research areas or validation approaches
 
+**IMPORTANT**: Always save your completed research findings to the `research/` folder using the Write tool. Name files descriptively based on the research topic (e.g., `research/ai_scaling_laws_YYYYMMDD.md`, `research/climate_tipping_points_YYYYMMDD.md`). This ensures all research is centrally archived for future reference and model updates.
+
 **Critical Principles:**
 
 - **Scientific Integrity Above All**: If the research doesn't support a desired narrative, report what it actually shows. The goal is accuracy, not confirmation bias
