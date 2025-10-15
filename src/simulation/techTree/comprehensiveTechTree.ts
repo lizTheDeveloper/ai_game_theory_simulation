@@ -1089,7 +1089,14 @@ const ALL_TECH: TechDefinition[] = [
     category: 'alignment',
     status: 'unlockable',
     prerequisites: ['scalable_oversight', 'mech_interp_advanced'],
-    minAICapability: 3.5,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.8 },  // Understanding human values
+      { dimension: 'social', threshold: 2.0 },  // Human interaction modeling
+      { dimension: 'selfImprovement', threshold: 2.0 },  // Value preservation
+    ],
+    minResearchCapabilities: [
+      { domain: 'computerScience', subdomain: 'algorithms', threshold: 1.6 },
+    ],
     researchMonthsRequired: 60,
     researchCost: 12000,
     deploymentCost: 6000,
@@ -1098,6 +1105,16 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       alignmentBonus: 0.30,
       valueAlignmentBonus: 0.40,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.16,
+        social: 0.12,
+        selfImprovement: 0.12,
+      },
+      research: [
+        { domain: 'computerScience', subdomain: 'algorithms', boost: 0.20 }
+      ],
     },
   },
   
@@ -1325,7 +1342,14 @@ const ALL_TECH: TechDefinition[] = [
     category: 'energy',
     status: 'unlockable',
     prerequisites: ['fusion_materials', 'fusion_plasma_control'],
-    minAICapability: 3.5,
+    minCapabilityDimensions: [
+      { dimension: 'physical', threshold: 2.4 },  // Reactor engineering + control
+      { dimension: 'cognitive', threshold: 2.6 },  // Plasma physics optimization
+    ],
+    minResearchCapabilities: [
+      { domain: 'materials', subdomain: 'nanotechnology', threshold: 1.6 },  // Fusion materials
+      { domain: 'materials', subdomain: 'quantumComputing', threshold: 1.2 },  // Simulation
+    ],
     minEconomicStage: 4.0,
     minMonth: 120,
     researchMonthsRequired: 120,
@@ -1339,6 +1363,16 @@ const ALL_TECH: TechDefinition[] = [
       powerGeneration: 2.0,
       energyAbundance: 1.0,
     },
+    capabilityEffects: {
+      dimensions: {
+        physical: 0.16,
+        cognitive: 0.14,
+      },
+      research: [
+        { domain: 'materials', subdomain: 'nanotechnology', boost: 0.20 },
+        { domain: 'materials', subdomain: 'quantumComputing', boost: 0.15 }
+      ],
+    },
   },
   
   // Medical Breakthroughs (4)
@@ -1349,7 +1383,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'medical',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 3.0,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.2 },  // Complex treatment optimization
+      { dimension: 'digital', threshold: 1.6 },  // Medical data processing
+    ],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'drugDiscovery', threshold: 1.2 },
+    ],
     researchMonthsRequired: 48,
     researchCost: 8000,
     deploymentCost: 150000,
@@ -1360,6 +1400,15 @@ const ALL_TECH: TechDefinition[] = [
       mortalityReduction: 0.15,
       lifeExpectancyBonus: 5.0,
     },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.10,
+        digital: 0.06,
+      },
+      research: [
+        { domain: 'biotech', subdomain: 'drugDiscovery', boost: 0.15 }
+      ],
+    },
   },
   {
     id: 'disease_elimination_basic',
@@ -1368,7 +1417,14 @@ const ALL_TECH: TechDefinition[] = [
     category: 'medical',
     status: 'unlockable',
     prerequisites: ['personalized_medicine'],
-    minAICapability: 3.5,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.6 },  // Drug design + vaccine optimization
+      { dimension: 'physical', threshold: 1.4 },  // Global deployment logistics
+    ],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'drugDiscovery', threshold: 1.6 },
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 1.2 },  // Gene therapy approaches
+    ],
     minEconomicStage: 4.0,
     researchMonthsRequired: 72,
     researchCost: 15000,
@@ -1380,6 +1436,16 @@ const ALL_TECH: TechDefinition[] = [
       mortalityReduction: 0.25,
       lifeExpectancyBonus: 10.0,
       globalHealthBonus: 0.40,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.14,
+        physical: 0.08,
+      },
+      research: [
+        { domain: 'biotech', subdomain: 'drugDiscovery', boost: 0.20 },
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.12 }
+      ],
     },
   },
   {
@@ -1408,7 +1474,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'medical',
     status: 'unlockable',
     prerequisites: ['personalized_medicine'],
-    minAICapability: 3.0,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.3 },  // Aging pathway analysis
+    ],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'drugDiscovery', threshold: 1.4 },
+      { domain: 'biotech', subdomain: 'neuroscience', threshold: 1.0 },  // Brain aging
+    ],
     researchMonthsRequired: 60,
     researchCost: 10000,
     deploymentCost: 180000,
@@ -1418,6 +1490,15 @@ const ALL_TECH: TechDefinition[] = [
       healthspan: 15.0,
       lifeExpectancyBonus: 20.0,
       healthcareBonus: 0.25,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.11,
+      },
+      research: [
+        { domain: 'biotech', subdomain: 'drugDiscovery', boost: 0.18 },
+        { domain: 'biotech', subdomain: 'neuroscience', boost: 0.10 }
+      ],
     },
   },
   
@@ -1429,7 +1510,14 @@ const ALL_TECH: TechDefinition[] = [
     category: 'climate',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 3.0,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.4 },  // Complex climate modeling
+      { dimension: 'physical', threshold: 1.8 },  // Global deployment capability
+    ],
+    minResearchCapabilities: [
+      { domain: 'climate', subdomain: 'modeling', threshold: 1.6 },  // Predict consequences
+      { domain: 'climate', subdomain: 'intervention', threshold: 1.4 },  // Safe deployment
+    ],
     minEconomicStage: 3.5,
     minMonth: 60,
     researchMonthsRequired: 48,
@@ -1442,6 +1530,16 @@ const ALL_TECH: TechDefinition[] = [
       riskMonsoonsDisrupt: 0.30,
       riskOzoneDepletion: 0.15,
       emergencyOnly: 1.0,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.13,
+        physical: 0.09,
+      },
+      research: [
+        { domain: 'climate', subdomain: 'modeling', boost: 0.22 },
+        { domain: 'climate', subdomain: 'intervention', boost: 0.18 }
+      ],
     },
   },
   {
