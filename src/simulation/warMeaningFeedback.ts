@@ -308,22 +308,22 @@ function updateParentalFulfillment(country: CountryPopulation, state: GameState)
   const techTreeState = (state as any).techTreeState;
   if (techTreeState && techTreeState.unlockedTech) {
     // De-extinction tech provides nurturing opportunities
-    if (techTreeState.unlockedTech.has('de_extinction_basic')) {
+    if (techTreeState.unlockedTech.includes('de_extinction_basic')) {
       delta += 0.01; // Caring for resurrected species
     }
 
     // Ecosystem restoration provides stewardship purpose
-    if (techTreeState.unlockedTech.has('ecosystem_restoration')) {
+    if (techTreeState.unlockedTech.includes('ecosystem_restoration')) {
       delta += 0.01; // Healing the planet
     }
 
     // AI companions provide caregiving relationships
-    if (techTreeState.unlockedTech.has('mental_health_ai')) {
+    if (techTreeState.unlockedTech.includes('mental_health_ai')) {
       delta += 0.01; // Nurturing AI relationships
     }
 
     // Space colonization provides frontier-building purpose
-    if (techTreeState.unlockedTech.has('space_colonization')) {
+    if (techTreeState.unlockedTech.includes('space_colonization')) {
       delta += 0.02; // Building new worlds
     }
   }
