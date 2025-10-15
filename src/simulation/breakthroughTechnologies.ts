@@ -1,6 +1,30 @@
 /**
+ * ⚠️ DEPRECATED - DO NOT USE THIS FILE ⚠️
+ *
+ * This file is being deprecated in favor of the new comprehensive tech tree system.
+ *
+ * **CRITICAL BUG**: This system was double-applying effects (effects applied twice per month),
+ * making technology 2× too powerful and causing unrealistic simulation outcomes.
+ *
+ * **Migration Complete**: All technologies have been migrated to the new system with proper
+ * prerequisites, regional deployment, and single-application effects.
+ *
+ * **Use Instead**:
+ * - `src/simulation/techTree/comprehensiveTechTree.ts` - 71 technologies with full definitions
+ * - `src/simulation/techTree/effectsEngine.ts` - Centralized effects application
+ * - `src/simulation/techTree/engine.ts` - Core tech tree logic
+ *
+ * **Status**: Disabled in `src/simulation/engine.ts` (lines 556-569)
+ *
+ * **DO NOT re-enable this system without fixing the double-application bug.**
+ *
+ * See: devlogs/tech-tree-migration-success.md for migration details
+ *
+ * ---
+ *
+ * OLD DESCRIPTION (for reference only):
  * Breakthrough Technology System
- * 
+ *
  * Manages research, unlocking, and deployment of transformative technologies
  * that can prevent or reverse crises and enable sustainable abundance.
  */
