@@ -448,26 +448,36 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   system.boundariesBreachedHistory.push(system.boundariesBreached);
   system.tippingPointRiskHistory.push(system.tippingPointRisk);
 
-  // === 4. UPDATE CASCADE SEVERITY (Continuous, not binary) ===
-  // NEW: Cascade is always active when risk > 0.5, severity scales continuously
-  // This replaces the old binary trigger (was: 10% chance at risk > 0.7)
+  // === 4. UPDATE CASCADE TRIGGER (P0.3 FIX: STOCHASTIC) ===
+  // PROBLEM: Deterministic trigger caused 100% identical outcomes in Monte Carlo
+  // FIX: Stochastic trigger with quadratic probability curve
+  // - Risk 50-100% maps to 0-10% monthly trigger chance
+  // - Higher risk = higher probability, but never guaranteed
+  // - Adds essential variance to Monte Carlo simulations
   if (system.tippingPointRisk > 0.5) {
-    // Cascade severity scales with risk
-    system.cascadeSeverity = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 1.5); // 0-1 scale
-    system.cascadeMultiplier = 1.0 + system.cascadeSeverity; // 1.0x → 2.0x
-    
-    // Only log when cascade STARTS (first time over threshold)
-    if (!system.cascadeActive) {
+    // Cascade probability scales quadratically with risk (more sensitive near extremes)
+    const cascadeProbability = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 2.0); // 0-1 scale
+    const monthlyTriggerChance = cascadeProbability * 0.10; // Max 10% per month at risk=1.0
+
+    // Stochastic trigger: cascade can START randomly based on risk
+    if (!system.cascadeActive && Math.random() < monthlyTriggerChance) {
       system.cascadeActive = true;
       system.cascadeStartMonth = state.currentMonth;
-      console.log(`\n🌪️ ========== TIPPING POINT CASCADE BEGINNING ==========`);
+      console.log(`\n🌪️ ========== TIPPING POINT CASCADE TRIGGERED ==========`);
       console.log(`Month: ${state.currentMonth}`);
       console.log(`Boundaries breached: ${system.boundariesBreached}/9`);
       console.log(`Tipping point risk: ${(system.tippingPointRisk * 100).toFixed(1)}%`);
+      console.log(`Trigger chance: ${(monthlyTriggerChance * 100).toFixed(2)}% per month`);
       console.log(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
       console.log(`Climate → Biosphere → Freshwater → Ocean → Land`);
       console.log(`Mortality now scales with environmental thresholds (food, water, climate)`);
       console.log(`Recovery possible with aggressive environmental interventions\n`);
+    }
+
+    // Once active, severity scales continuously with risk
+    if (system.cascadeActive) {
+      system.cascadeSeverity = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 1.5); // 0-1 scale
+      system.cascadeMultiplier = 1.0 + system.cascadeSeverity; // 1.0x → 2.0x
     }
   } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
     // Cascade can REVERSE if risk drops significantly
