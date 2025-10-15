@@ -5,6 +5,23 @@
  * Based on allBreakthroughTech.md catalog (October 2025)
  */
 
+/**
+ * Dimensional capability requirement for tech unlock
+ */
+export interface DimensionalRequirement {
+  dimension: 'physical' | 'digital' | 'cognitive' | 'social' | 'economic' | 'selfImprovement';
+  threshold: number;  // Minimum value in that dimension
+}
+
+/**
+ * Research capability requirement (for advanced tech)
+ */
+export interface ResearchRequirement {
+  domain: 'biotech' | 'materials' | 'climate' | 'computerScience';
+  subdomain?: string;  // Optional: specific subdomain (e.g., 'drugDiscovery', 'geneEditing')
+  threshold: number;
+}
+
 export interface TechDefinition {
   id: string;
   name: string;
@@ -14,7 +31,14 @@ export interface TechDefinition {
   
   // Unlock conditions
   prerequisites: string[];
-  minAICapability?: number;
+  
+  // DEPRECATED: Use minCapabilityDimensions instead for new tech
+  minAICapability?: number;  // Backward compatibility - general capability threshold
+  
+  // NEW: Multi-dimensional capability requirements
+  minCapabilityDimensions?: DimensionalRequirement[];  // All dimensions must meet threshold
+  minResearchCapabilities?: ResearchRequirement[];     // Research-specific requirements
+  
   minEconomicStage?: number;
   minMonth?: number;
   
@@ -29,6 +53,16 @@ export interface TechDefinition {
   
   // Effects (when fully deployed)
   effects: Record<string, number>;
+  
+  // NEW: Capability dimension effects (how this tech advances AI capabilities)
+  capabilityEffects?: {
+    dimensions?: Partial<Record<'physical' | 'digital' | 'cognitive' | 'social' | 'economic' | 'selfImprovement', number>>;
+    research?: {
+      domain: 'biotech' | 'materials' | 'climate' | 'computerScience';
+      subdomain?: string;
+      boost: number;
+    }[];
+  };
 }
 
 /**
@@ -263,7 +297,10 @@ const ALL_TECH: TechDefinition[] = [
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 0.8,  // Realistic: Current AI can do field optimization
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 0.6 },  // AI reasoning for optimization
+      { dimension: 'digital', threshold: 0.4 }     // Data systems integration
+    ],
     minEconomicStage: 1.8,  // Realistic: Early post-industrial
     minMonth: 6,  // Realistic: 6 months to develop and deploy
     researchMonthsRequired: 6,  // Realistic: AI optimization is achievable
@@ -275,6 +312,11 @@ const ALL_TECH: TechDefinition[] = [
       phosphorusEfficiency: 0.30,
       miningDemandReduction: 0.35,
     },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.05,  // Improves AI reasoning
+      },
+    },
   },
   {
     id: 'p_efficient_cultivars',
@@ -283,7 +325,9 @@ const ALL_TECH: TechDefinition[] = [
     category: 'agriculture',
     status: 'unlockable',
     prerequisites: ['soil_p_optimization'],
-    minAICapability: 1.5,  // Realistic: CRISPR and breeding optimization
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'geneEditing', threshold: 0.8 }  // CRISPR gene editing
+    ],
     minEconomicStage: 2.2,  // Realistic: Advanced post-industrial
     minMonth: 24,  // Realistic: 2 years for breeding programs
     researchMonthsRequired: 24,  // Realistic: Breeding and CRISPR work
@@ -295,6 +339,11 @@ const ALL_TECH: TechDefinition[] = [
       phosphorusEfficiency: 0.25,
       miningDemandReduction: 0.20,
       biodiversityBonus: 0.01,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'biotech', subdomain: 'geneEditing', boost: 0.1 }
+      ],
     },
   },
   {
@@ -325,7 +374,12 @@ const ALL_TECH: TechDefinition[] = [
     category: 'freshwater',
     status: 'unlockable',
     prerequisites: ['solar_4th_gen'],
-    minAICapability: 1.8,
+    minResearchCapabilities: [
+      { domain: 'materials', subdomain: 'nanotechnology', threshold: 0.7 }  // Graphene membranes
+    ],
+    minCapabilityDimensions: [
+      { dimension: 'physical', threshold: 0.9 }  // Physical deployment capability
+    ],
     minEconomicStage: 2.5,
     researchMonthsRequired: 12,
     researchCost: 2000,
@@ -335,6 +389,11 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       freshwaterSupply: 0.40,
       dayZeroRiskReduction: 0.60,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'materials', subdomain: 'nanotechnology', boost: 0.08 }
+      ],
     },
   },
   {
@@ -362,7 +421,10 @@ const ALL_TECH: TechDefinition[] = [
     category: 'freshwater',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.0,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 1.3 },  // ML modeling
+      { dimension: 'digital', threshold: 0.8 }  // Satellite data processing
+    ],
     researchMonthsRequired: 18,
     researchCost: 800,
     deploymentCost: 80000,
@@ -371,6 +433,11 @@ const ALL_TECH: TechDefinition[] = [
     effects: {
       waterManagementBonus: 0.25,
       aquiferProtection: 0.15,
+    },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.08,
+      },
     },
   },
   {
@@ -401,7 +468,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'ocean',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 1.8,  // Realistic: Current AI can model ocean chemistry
+    minResearchCapabilities: [
+      { domain: 'climate', subdomain: 'modeling', threshold: 1.0 },  // Ocean chemistry
+      { domain: 'climate', subdomain: 'intervention', threshold: 0.8 }
+    ],
+    minCapabilityDimensions: [
+      { dimension: 'physical', threshold: 1.1 }  // Large-scale deployment
+    ],
     minEconomicStage: 2.5,  // Realistic: Advanced post-industrial
     minMonth: 18,  // Realistic: 1.5 years for pilot deployment
     researchMonthsRequired: 18,  // Realistic: Ocean chemistry modeling
@@ -413,6 +486,12 @@ const ALL_TECH: TechDefinition[] = [
       oceanPHBonus: 0.30,
       coralSurvival: 0.40,
       carbonRemoval: 0.10,
+    },
+    capabilityEffects: {
+      research: [
+        { domain: 'climate', subdomain: 'intervention', boost: 0.12 },
+        { domain: 'climate', subdomain: 'modeling', boost: 0.08 }
+      ],
     },
   },
   {
@@ -665,7 +744,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'medical',
     status: 'unlockable',
     prerequisites: [],
-    minAICapability: 2.0,
+    minCapabilityDimensions: [
+      { dimension: 'social', threshold: 1.2 },  // Understanding human emotions
+      { dimension: 'cognitive', threshold: 1.4 }  // Therapeutic reasoning
+    ],
+    minResearchCapabilities: [
+      { domain: 'biotech', subdomain: 'neuroscience', threshold: 0.6 }
+    ],
     researchMonthsRequired: 24,
     researchCost: 600,
     deploymentCost: 60000,
@@ -675,6 +760,14 @@ const ALL_TECH: TechDefinition[] = [
       mentalHealthBonus: 0.30,
       meaningReduction: 0.10,
       suicideReduction: 0.40,
+    },
+    capabilityEffects: {
+      dimensions: {
+        social: 0.10,
+      },
+      research: [
+        { domain: 'biotech', subdomain: 'neuroscience', boost: 0.08 }
+      ],
     },
   },
   {
@@ -721,9 +814,8 @@ const ALL_TECH: TechDefinition[] = [
     name: 'AI Power Efficiency Communication',
     description: 'Transparent reporting of AI energy efficiency gains, public education on compute benefits',
     category: 'social',
-    status: 'unlocked', // Already available in 2025 (IEA, Epoch AI, Stanford AI Index data exists)
+    status: 'deployed_2025', // Already available in 2025 (IEA, Epoch AI, Stanford AI Index data exists)
     prerequisites: [],
-    minAICapability: 1.0,
     researchMonthsRequired: 0, // Already researched
     researchCost: 0,
     deploymentCost: 10000, // Low cost - mostly communication and reporting
@@ -805,7 +897,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'alignment',
     status: 'unlockable',
     prerequisites: ['mech_interp_basic', 'scalable_oversight'],
-    minAICapability: 3.0,
+    minCapabilityDimensions: [
+      { dimension: 'cognitive', threshold: 2.5 },  // Deep AI understanding
+      { dimension: 'selfImprovement', threshold: 1.8 }  // Understanding AI architecture
+    ],
+    minResearchCapabilities: [
+      { domain: 'computerScience', subdomain: 'architectures', threshold: 1.5 }
+    ],
     researchMonthsRequired: 48,
     researchCost: 8000,
     deploymentCost: 5000,
@@ -816,6 +914,15 @@ const ALL_TECH: TechDefinition[] = [
       sleeperDetectionBonus: 0.25,
       deceptionDetection: 0.30,
     },
+    capabilityEffects: {
+      dimensions: {
+        cognitive: 0.15,  // Better AI reasoning
+        selfImprovement: 0.10  // AI architecture understanding
+      },
+      research: [
+        { domain: 'computerScience', subdomain: 'architectures', boost: 0.20 }
+      ],
+    },
   },
   {
     id: 'defensive_ai',
@@ -824,7 +931,13 @@ const ALL_TECH: TechDefinition[] = [
     category: 'alignment',
     status: 'unlockable',
     prerequisites: ['scalable_oversight'],
-    minAICapability: 3.0,
+    minCapabilityDimensions: [
+      { dimension: 'digital', threshold: 2.2 },  // Cyber defense
+      { dimension: 'cognitive', threshold: 2.0 }  // Threat detection reasoning
+    ],
+    minResearchCapabilities: [
+      { domain: 'computerScience', subdomain: 'security', threshold: 1.2 }
+    ],
     researchMonthsRequired: 36,
     researchCost: 6000,
     deploymentCost: 4000,
@@ -834,6 +947,14 @@ const ALL_TECH: TechDefinition[] = [
       sleeperDetectionBonus: 0.30,
       threatContainment: 0.40,
       cyberDefenseBonus: 0.25,
+    },
+    capabilityEffects: {
+      dimensions: {
+        digital: 0.12,  // Cyber defense capability
+      },
+      research: [
+        { domain: 'computerScience', subdomain: 'security', boost: 0.15 }
+      ],
     },
   },
   {

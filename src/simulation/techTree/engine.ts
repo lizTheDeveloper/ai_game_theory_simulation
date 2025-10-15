@@ -209,11 +209,32 @@ export function checkUnlockConditions(
     }
   }
   
-  // 2. Check AI capability
+  // 2. Check AI capability (DEPRECATED - use dimensional instead)
   if (tech.minAICapability) {
     const avgCapability = getAverageAICapability(gameState);
     if (avgCapability < tech.minAICapability) {
       blockers.push(`AI capability ${avgCapability.toFixed(2)} < ${tech.minAICapability}`);
+    }
+  }
+  
+  // 2b. Check dimensional capability requirements (NEW)
+  if (tech.minCapabilityDimensions) {
+    for (const req of tech.minCapabilityDimensions) {
+      const avgDimensionalCap = getAverageDimensionalCapability(gameState, req.dimension);
+      if (avgDimensionalCap < req.threshold) {
+        blockers.push(`${req.dimension} capability ${avgDimensionalCap.toFixed(2)} < ${req.threshold}`);
+      }
+    }
+  }
+  
+  // 2c. Check research capability requirements (NEW)
+  if (tech.minResearchCapabilities) {
+    for (const req of tech.minResearchCapabilities) {
+      const avgResearchCap = getAverageResearchCapability(gameState, req.domain, req.subdomain);
+      const reqName = req.subdomain ? `${req.domain}.${req.subdomain}` : req.domain;
+      if (avgResearchCap < req.threshold) {
+        blockers.push(`Research capability ${reqName} ${avgResearchCap.toFixed(2)} < ${req.threshold}`);
+      }
     }
   }
   
@@ -440,6 +461,46 @@ function getAverageAICapability(gameState: GameState): number {
     .reduce((sum, ai) => sum + calculateTotalCapabilityFromProfile(ai.capabilityProfile), 0);
   
   return totalCapability / gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length;
+}
+
+/**
+ * Get average dimensional capability across all active AIs
+ */
+function getAverageDimensionalCapability(
+  gameState: GameState,
+  dimension: 'physical' | 'digital' | 'cognitive' | 'social' | 'economic' | 'selfImprovement'
+): number {
+  const activeAIs = gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
+  if (activeAIs.length === 0) return 0;
+  
+  const total = activeAIs.reduce((sum, ai) => sum + ai.capabilityProfile[dimension], 0);
+  return total / activeAIs.length;
+}
+
+/**
+ * Get average research capability for a specific domain
+ */
+function getAverageResearchCapability(
+  gameState: GameState,
+  domain: 'biotech' | 'materials' | 'climate' | 'computerScience',
+  subdomain?: string
+): number {
+  const activeAIs = gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
+  if (activeAIs.length === 0) return 0;
+  
+  const total = activeAIs.reduce((sum, ai) => {
+    const domainCap = ai.capabilityProfile.research[domain];
+    if (subdomain && typeof domainCap === 'object') {
+      return sum + (domainCap[subdomain as keyof typeof domainCap] || 0);
+    }
+    // If no subdomain specified or domain is a number, return the domain value
+    if (typeof domainCap === 'number') return sum + domainCap;
+    // If it's an object, return the average of all subdomains
+    const subdomainValues = Object.values(domainCap as any).filter(v => typeof v === 'number') as number[];
+    return sum + (subdomainValues.length > 0 ? subdomainValues.reduce((a, b) => a + b, 0) / subdomainValues.length : 0);
+  }, 0);
+  
+  return total / activeAIs.length;
 }
 
 function getTotalResearchInvestment(gameState: GameState): number {
