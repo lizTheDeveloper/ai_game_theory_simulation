@@ -45,7 +45,7 @@ function generateMermaidDiagram(
   // Filter tech based on options
   let filteredTech = allTech;
   if (showUnlockedOnly) {
-    filteredTech = allTech.filter(tech => unlockedTech.has(tech.id));
+    filteredTech = allTech.filter(tech => unlockedTech.includes(tech.id));
   }
 
   let mermaid = 'graph TD\n';
@@ -100,7 +100,7 @@ function generateMermaidDiagram(
       const prereqNodeId = prereqId.replace(/[^a-zA-Z0-9]/g, '_');
       const prereqTech = getTechById(prereqId);
       
-      if (prereqTech && (!showUnlockedOnly || unlockedTech.has(prereqId))) {
+      if (prereqTech && (!showUnlockedOnly || unlockedTech.includes(prereqId))) {
         mermaid += `  ${prereqNodeId} --> ${nodeId}\n`;
       }
     });
@@ -145,7 +145,7 @@ function generateNodeLabel(
  * Get node style based on tech status
  */
 function getNodeStyle(tech: any, techTreeState: TechTreeState, options: VisualizationOptions): string {
-  const isUnlocked = techTreeState.unlockedTech.has(tech.id);
+  const isUnlocked = techTreeState.unlockedTech.includes(tech.id);
   const deployment = getDeploymentLevel(tech.id, techTreeState);
   
   if (tech.status === 'unlocked') {
@@ -164,16 +164,16 @@ function getNodeStyle(tech: any, techTreeState: TechTreeState, options: Visualiz
  */
 function getDeploymentLevel(techId: string, techTreeState: TechTreeState): number {
   // Check global deployment
-  const globalDeployments = techTreeState.regionalDeployment.get('global') || [];
-  const globalDeployment = globalDeployments.find(d => d.techId === techId);
+  const globalDeployments = techTreeState.regionalDeployment['global'] || [];
+  const globalDeployment = globalDeployments.find((d: any) => d.techId === techId);
   
   if (globalDeployment) {
     return globalDeployment.deploymentLevel;
   }
   
   // Check regional deployments
-  for (const [region, deployments] of techTreeState.regionalDeployment) {
-    const deployment = deployments.find(d => d.techId === techId);
+  for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
+    const deployment = deployments.find((d: any) => d.techId === techId);
     if (deployment && deployment.deploymentLevel > 0) {
       return deployment.deploymentLevel;
     }
@@ -196,7 +196,7 @@ function generateJsonOutput(
   const output = {
     metadata: {
       totalTech: allTech.length,
-      unlockedTech: unlockedTech.size,
+      unlockedTech: unlockedTech.length,
       timestamp: new Date().toISOString(),
       options
     },
@@ -205,7 +205,7 @@ function generateJsonOutput(
       name: tech.name,
       category: tech.category,
       status: tech.status,
-      unlocked: unlockedTech.has(tech.id),
+      unlocked: unlockedTech.includes(tech.id),
       deploymentLevel: getDeploymentLevel(tech.id, techTreeState),
       prerequisites: tech.prerequisites,
       deploymentCost: tech.deploymentCost,
@@ -231,7 +231,7 @@ function generateTextOutput(
   let output = `Tech Tree Status Report\n`;
   output += `=====================\n\n`;
   output += `Total Technologies: ${allTech.length}\n`;
-  output += `Unlocked Technologies: ${unlockedTech.size}\n`;
+  output += `Unlocked Technologies: ${unlockedTech.length}\n`;
   output += `Timestamp: ${new Date().toISOString()}\n\n`;
   
   // Group by category
@@ -248,7 +248,7 @@ function generateTextOutput(
     output += `${'='.repeat(category.length)}\n`;
     
     techs.forEach(tech => {
-      const isUnlocked = unlockedTech.has(tech.id);
+      const isUnlocked = unlockedTech.includes(tech.id);
       const deployment = getDeploymentLevel(tech.id, techTreeState);
       const status = isUnlocked ? 'UNLOCKED' : 'LOCKED';
       const deploymentStr = deployment > 0 ? ` (${(deployment * 100).toFixed(0)}% deployed)` : '';
