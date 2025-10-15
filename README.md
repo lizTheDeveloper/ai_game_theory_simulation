@@ -29,8 +29,12 @@ This simulation engine models:
 - **Catastrophic Scenarios**: Grey goo, mirror life, control loss, 17 extinction pathways tracked
 
 **🛡️ Mitigation & Utopia Pathways:**
-- **Breakthrough Technologies**: 17 total (6 environmental, 5 social, 4 alignment, 2 medical)
-  - TIER 2 additions: Enhanced UBI, social infrastructure, advanced DAC, Constitutional AI, mechanistic interpretability, de-extinction
+- **Breakthrough Technologies**: **71 total technologies** organized in comprehensive tech tree
+  - TIER 0 (11): Deployed 2025 (RLHF, basic interpretability, de-extinction, DAC, solar, wind, etc.)
+  - TIER 1 (18): Planetary boundary crisis tech (phosphorus recovery, desalination, ocean alkalinity, PFAS remediation)
+  - TIER 2 (22): Major mitigations (enhanced UBI, AI mental health, scalable oversight, grid batteries, recycling)
+  - TIER 3 (15): Transformative (fusion power, disease elimination, longevity, vertical farming, AI rights)
+  - TIER 4 (5): Clarketech future (molecular nanotech, brain emulation, space industrialization)
 - **Upward Spirals**: 6 virtuous cascades (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
 - **Governance Quality**: AI-augmented decision making, democratic resilience, authoritarian resistance
 - **Meaning Renaissance**: 4 dimensions (purpose diversity, self-actualization, artistic renaissance, philosophical maturity)
@@ -350,24 +354,41 @@ Six positive feedback loops that can lead to stable abundance:
 5. **Meaning Renaissance**: Purpose frameworks → social flourishing → stability
 6. **Ecological Spiral**: Tech deployment → environmental recovery → sustainability
 
-### Breakthrough Technologies
+### Comprehensive Technology Tree (71 Total)
 
-17 transformative technologies can prevent or reverse crises:
+**TIER 0: Deployed 2025 (11 technologies)**
+- Already operational with realistic deployment levels
+- Alignment (3): Basic RLHF (95%), mechanistic interpretability (15%), adversarial eval (40%)
+- Climate (3): De-extinction (1% - Colossal Biosciences), direct air capture (2% - Climeworks), AI pollution remediation (10%)
+- Social (1): Collective purpose networks (15% - Harvard MCC)
+- Medical (2): AI diagnostics (25%), mRNA vaccines (40%)
+- Energy (2): 4th gen solar (8%), offshore wind (12%)
 
-**Original Technologies (11 + Interspecies Comm):**
-- Environmental (6): Clean Energy, Advanced Recycling, Carbon Capture, Ecosystem Management AI, Sustainable Agriculture, Fusion Power
-- Social (4): AI-Assisted Mental Health, Post-Work Purpose Frameworks, Community Platforms, Interspecies Communication AI 🐋
-- Medical (2): Disease Elimination, Longevity Extension
+**TIER 1: Planetary Boundary Crisis Tech (18 technologies)**
+- Phosphorus (4): Struvite recovery, soil P optimization, P-efficient cultivars, circular food systems
+- Freshwater (4): Advanced desalination, atmospheric water harvest, aquifer mapping, drought-resistant crops
+- Ocean (3): Ocean alkalinity enhancement, coral restoration, artificial upwelling
+- Pollution (4): PFAS remediation, plastic-eating enzymes, green chemistry, pesticide alternatives
+- Novel Entities (3): Microplastic capture, endocrine disruptor removal, nanomaterial safety
 
-**TIER 2 Additions (6 - Pre-Unlocked at 2025 Levels):**
-- 🆕 Enhanced UBI + Purpose Infrastructure (meaning crisis -6%/month)
-- 🆕 Social Safety Nets & Community Infrastructure (community strength +2.5%/month)
-- 🆕 Advanced DAC + AI Optimization (pollution -7.5%/month)
-- 🆕 Constitutional AI / Advanced RLHF (alignment +5%/month, 100% deployed)
-- 🆕 Mechanistic Interpretability (sleeper detection +70% at full deployment)
-- 🆕 De-Extinction & Rewilding (biodiversity +2%/month)
+**TIER 2: Major Mitigations (22 technologies)**
+- Social (9): Enhanced UBI, advanced purpose networks, AI community matching, mental health AI, creative tools, democratic governance, education, resilience networks
+- Alignment (5): Scalable oversight, advanced interpretability, defensive AI, formal verification, value learning
+- Energy (5): 5th gen solar, grid batteries, advanced geothermal, smart grids, hydrogen economy
+- Recycling (2): Chemical recycling, rare earth recycling
+- Ecosystem (2): Precision conservation, invasive species control
 
-Technologies require research investment, prerequisites, and deployment time. TIER 2 technologies start **pre-unlocked** at realistic 2025 deployment levels (2-15%) and can be immediately scaled with funding. They can **reverse active crises** when sufficiently deployed (>50% for most effects).
+**TIER 3: Transformative (15 technologies)**
+- Fusion Power (3): Materials, plasma control, fusion reactors → energy abundance
+- Medical (4): Personalized medicine, disease elimination, regenerative medicine, basic longevity
+- Climate Engineering (3): Stratospheric aerosols (risky), marine cloud brightening, bioenergy CCS
+- Agriculture (2): Vertical farming, precision fermentation
+- AI Safety Capstone (3): AI rights framework, recursive alignment, interspecies communication
+
+**TIER 4: Clarketech (5 technologies)**
+- Advanced longevity (150+ years), molecular nanotechnology, space industrialization, whole brain emulation
+
+Technologies have prerequisites, research requirements, deployment costs, and regional effects. Full tech tree enables multiple pathways to Utopia through different technology combinations.
 
 ### Crisis Cascades
 

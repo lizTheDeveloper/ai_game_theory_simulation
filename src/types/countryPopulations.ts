@@ -210,6 +210,28 @@ export interface CountryPopulation {
   // US: 59M / 5,000M = 1.2%
   // Important because military emissions often invisible in climate accounting
   militaryEmissionsPercent: number;
+
+  // ========== TIER 2.8 PHASE 4: CLIMATE JUSTICE ==========
+
+  // Political willingness to pay climate reparations [0, 1]
+  // Higher for progressive countries (Germany, UK, France)
+  // Lower for nationalist/conservative countries (US, Russia)
+  // Zero for climate victims (they receive, not pay)
+  climateReparationsWillingness: number;
+
+  // Climate migration pressure (cumulative)
+  // People fleeing due to: sea level rise, droughts, extreme weather, food insecurity
+  // Bangladesh, Indonesia, Nigeria most affected
+  climateMigrationPressure: number;
+
+  // Green technology received (from rich countries)
+  // Solar, wind, carbon capture, climate adaptation
+  // Accelerates emissions reduction in Global South
+  greenTechReceived: number;
+
+  // Green technology shared (rich countries only)
+  // How much tech has this country transferred?
+  greenTechShared: number;
 }
 
 /**

@@ -50,6 +50,7 @@ export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { CountryPopulationPhase } from './CountryPopulationPhase';
 export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
+export { ClimateJusticePhase } from './ClimateJusticePhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
 export { NuclearWinterPhase } from './NuclearWinterPhase';
 export { RadiationSystemPhase } from './RadiationSystemPhase';

@@ -347,6 +347,10 @@ function initializeTier28Extensions(countries: Record<CountryName, CountryPopula
     country.climateReparationsReceived = 0.0;
     country.militaryEmissionsPercent = country.militaryCO2Emissions / (country.currentEmissions * 1000); // Convert Gt to Mt
   }
+
+  // 5. Initialize climate justice fields (Phase 4)
+  const { initializeClimateJustice } = require('./climateJustice');
+  initializeClimateJustice(countries);
 }
 
 /**
