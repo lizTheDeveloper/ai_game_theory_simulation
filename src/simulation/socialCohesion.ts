@@ -379,6 +379,10 @@ export function hasSocialCrisis(social: SocialAccumulation): boolean {
  * @param society - Human society agent with paranoia level
  * @returns Trust level [0.20, 0.95]
  */
+/**
+ * Get trust in AI for general social dynamics (population-weighted)
+ * Used for: social cohesion, protests, public sentiment
+ */
 export function getTrustInAI(society: HumanSocietyAgent): number {
   const paranoia = society.paranoiaLevel ?? 0.15; // Default to 15% baseline paranoia
   const trustFromParanoia = 1.0 - paranoia * 0.75;
@@ -386,6 +390,33 @@ export function getTrustInAI(society: HumanSocietyAgent): number {
   // Floor: Even 100% paranoia leaves 20% trust (some people always believe)
   // Ceiling: Even 0% paranoia caps at 95% trust (healthy skepticism remains)
   return Math.max(0.20, Math.min(0.95, trustFromParanoia));
+}
+
+/**
+ * Get trust in AI for policy decisions (power-weighted)
+ * P2.3 UPDATE (Oct 16, 2025): Uses power-weighted trust when segments active
+ * 
+ * Used for: Government policy decisions, regulatory actions
+ * Reflects reality: Elites have disproportionate influence over policy
+ * 
+ * Research:
+ * - Gilens & Page (2014, Perspectives on Politics): Economic elites dominate US policy
+ * - Bartels (2008, Unequal Democracy): Income disparity in political influence 3:1 ratio
+ * - Winters & Page (2009): Oligarchic political influence in democracies
+ * 
+ * @param society Society agent with trust data
+ * @param usePowerWeighted If true, use power-weighted trust (for policy). Default: true
+ */
+export function getTrustInAIForPolicy(society: HumanSocietyAgent, usePowerWeighted: boolean = true): number {
+  // P2.3: If segments are active and power-weighted trust exists, use it for policy
+  if (usePowerWeighted && society.powerWeightedTrustInAI !== undefined) {
+    // Power-weighted trust reflects elite preferences
+    // Elite have 25% of political power despite being 5% of population
+    return Math.max(0.20, Math.min(0.95, society.powerWeightedTrustInAI));
+  }
+  
+  // Fall back to paranoia-based trust (legacy behavior)
+  return getTrustInAI(society);
 }
 
 /**
