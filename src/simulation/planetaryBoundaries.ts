@@ -596,38 +596,33 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   qol.mentalHealth = Math.max(0, qol.mentalHealth * 0.96);
 
   // === POPULATION DEATHS ===
-  // TIER 1.7 FIX: Cascade accelerates over time until true extinction or intervention
-  // P0.7 (Oct 16, 2025): Scenario-specific mortality rates
-  // Historical: 0.5% monthly (Black Death: 30-60% over 6 years)
-  // Unprecedented: 1.5% monthly (hyperconnected systemic failures)
-  // Month 0-48: Base mortality from scenario
-  // Month 48+: Exponential acceleration (P2 BUG FIX: Reduced from 5% to 2% growth)
-  // P2 FIX: Cap at 10% not 50% - even worst cascades take months to escalate
-  if (state.humanPopulationSystem) {
-    // P0.7: Get scenario-specific mortality rate (default to historical 0.5% if not set)
-    const baseMortalityRate = state.config.scenarioParameters?.cascadeMortalityRate ?? 0.005;
-    let monthlyMortalityRate = baseMortalityRate * system.cascadeSeverity;
-    
-    // After initial 48-month crisis, death rate accelerates exponentially
-    if (monthsSinceCascade > 48) {
-      const monthsPastInitialCrisis = monthsSinceCascade - 48;
-      const accelerationFactor = Math.pow(1.02, monthsPastInitialCrisis); // P2 FIX: 2% not 5% growth
-      monthlyMortalityRate *= accelerationFactor;
-      
-      // P2 BUG FIX: Cap at 10% monthly mortality (was 50% - too extreme)
-      // 10% monthly = 72% annual mortality (still catastrophic but physically plausible)
-      monthlyMortalityRate = Math.min(0.10, monthlyMortalityRate);
-    }
-    
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      monthlyMortalityRate,
-      'Tipping Point Cascade',
-      1.0,  // Global
-      'cascade'  // Oct 16, 2025: Dedicated category to fix death reporting
-    );
-  }
+  // BUG FIX (Oct 16, 2025): REMOVED direct cascade death application
+  // 
+  // Previous approach: Apply cascade deaths separately via addAcuteCrisisDeaths()
+  // Problem: This DOUBLE-COUNTED deaths! The cascade degrades the environment
+  //          (lines 566-579), which then causes environmental mortality 
+  //          (climate/ecosystem/pollution deaths) via calculateEnvironmentalMortality()
+  //          in updateHumanPopulation(). So the same deaths were counted twice:
+  //          - Once as "cascade" deaths
+  //          - Again as "climate/ecosystem/pollution" deaths
+  // 
+  // Result: Cascade deaths (8,480M) > Total deaths (7,242M) - physically impossible!
+  // 
+  // New approach: Let the cascade degrade the environment (lines 566-589), and let
+  //               the normal environmental mortality system (calculateEnvironmentalMortality)
+  //               handle the deaths. The cascade's impact is already captured in the
+  //               accelerated environmental degradation rates.
+  // 
+  // Research validation:
+  // - Black Death: 30-60% over 6 years = 0.5% monthly (historical cascades)
+  // - This mortality is captured via famine + disease + ecosystem collapse
+  // - No separate "cascade" category needed - it's the SUM of environmental deaths
+  //
+  // Note: The cascade still matters! It:
+  // 1. Accelerates environmental degradation (2-4% monthly vs 0.1% baseline)
+  // 2. Depletes resources faster (food -4%, water -3% monthly)
+  // 3. Collapses QoL (food security, healthcare, safety all decline)
+  // 4. These feed into calculateEnvironmentalMortality() → deaths tracked correctly
 
   // === LOG PROGRESS ===
   if (monthsSinceCascade % 6 === 0) { // Log every 6 months
