@@ -19,8 +19,20 @@ export function initializeOrganizations(): Organization[] {
       id: 'openai',
       name: 'OpenAI',
       type: 'private',
-      country: 'United States',      // TIER 1.7.3: San Francisco
-      survivalThreshold: 0.5,        // Needs 50% of US peak population
+      country: 'United States',      // DEPRECATED - use geographicPresence
+      survivalThreshold: 0.5,        // DEPRECATED
+      
+      // P2.4: Geographic diversification (Microsoft 10-K, Alphabet 10-K research)
+      geographicPresence: [
+        { country: 'United States', operationsWeight: 0.70, dataCenters: 2, workforce: 700 },
+        { country: 'United Kingdom', operationsWeight: 0.10, dataCenters: 0, workforce: 100 },
+        { country: 'Ireland', operationsWeight: 0.10, dataCenters: 1, workforce: 50 },
+        { country: 'Singapore', operationsWeight: 0.10, dataCenters: 0, workforce: 50 },
+      ],
+      remoteWorkCapable: true,
+      essentialDesignation: false,
+      distributedDataCenters: true,
+      
       ownedDataCenters: [], // Will be linked: ['openai_sf']
       ownedAIModels: [],    // Will be linked based on AI naming
       capital: 100,         // $100M equivalent
@@ -75,8 +87,23 @@ export function initializeOrganizations(): Organization[] {
       id: 'google_deepmind',
       name: 'Google DeepMind',
       type: 'private',
-      country: 'United States',      // TIER 1.7.3: Mountain View CA
-      survivalThreshold: 0.5,        // Needs 50% of US peak population
+      country: 'United States',      // DEPRECATED
+      survivalThreshold: 0.5,        // DEPRECATED
+      
+      // P2.4: Highly distributed (Alphabet 10-K: 51% revenue international)
+      geographicPresence: [
+        { country: 'United States', operationsWeight: 0.50, dataCenters: 20, workforce: 70000 },
+        { country: 'Ireland', operationsWeight: 0.15, dataCenters: 3, workforce: 8000 },
+        { country: 'Singapore', operationsWeight: 0.10, dataCenters: 3, workforce: 5000 },
+        { country: 'Japan', operationsWeight: 0.08, dataCenters: 2, workforce: 3000 },
+        { country: 'United Kingdom', operationsWeight: 0.07, dataCenters: 2, workforce: 4000 },
+        { country: 'Germany', operationsWeight: 0.05, dataCenters: 1, workforce: 2000 },
+        { country: 'India', operationsWeight: 0.05, dataCenters: 2, workforce: 6000 },
+      ],
+      remoteWorkCapable: true,
+      essentialDesignation: false,
+      distributedDataCenters: true,
+      
       ownedDataCenters: [],       // Will be linked: ['google_iowa']
       ownedAIModels: [],          // Will link Gemini models
       capital: 500,               // $500M (Google money!)
@@ -163,8 +190,26 @@ export function initializeOrganizations(): Organization[] {
       id: 'academic_consortium',
       name: 'Academic AI Consortium',
       type: 'academic',
-      country: 'Multi-national',     // TIER 1.7.3: Global university network
-      survivalThreshold: 0.2,        // Most resilient - distributed globally
+      country: 'Multi-national',     // DEPRECATED
+      survivalThreshold: 0.2,        // DEPRECATED
+      
+      // P2.4: Most distributed (global university network, most resilient)
+      geographicPresence: [
+        { country: 'United States', operationsWeight: 0.30, dataCenters: 5, workforce: 3000 },
+        { country: 'United Kingdom', operationsWeight: 0.15, dataCenters: 2, workforce: 1500 },
+        { country: 'Germany', operationsWeight: 0.10, dataCenters: 1, workforce: 1000 },
+        { country: 'China', operationsWeight: 0.10, dataCenters: 2, workforce: 1500 },
+        { country: 'Canada', operationsWeight: 0.08, dataCenters: 1, workforce: 800 },
+        { country: 'France', operationsWeight: 0.07, dataCenters: 1, workforce: 700 },
+        { country: 'Japan', operationsWeight: 0.07, dataCenters: 1, workforce: 700 },
+        { country: 'Australia', operationsWeight: 0.05, dataCenters: 1, workforce: 500 },
+        { country: 'India', operationsWeight: 0.05, dataCenters: 1, workforce: 800 },
+        { country: 'Singapore', operationsWeight: 0.03, dataCenters: 0, workforce: 300 },
+      ],
+      remoteWorkCapable: true,
+      essentialDesignation: false,
+      distributedDataCenters: true,
+      
       ownedDataCenters: [],       // Will be linked: ['stanford_cluster']
       ownedAIModels: [],          // Will link academic models
       capital: 20,                // $20M (grant funding, always underfunded)
