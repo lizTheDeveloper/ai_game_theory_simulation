@@ -197,6 +197,28 @@ src/
 ├── types/
 │   ├── game.ts                     # Core GameState interface (900+ lines)
 │   └── [20+ type modules]          # System-specific types
+.claude/
+├── agents/                         # Specialized Claude Code agents
+│   ├── orchestrator.md             # Workflow coordinator (use by default)
+│   ├── feature-implementer.md      # Implementation specialist
+│   ├── super-alignment-researcher.md
+│   ├── research-skeptic.md         # Research validation (quality gate)
+│   ├── architecture-skeptic.md     # Architecture review (quality gate)
+│   └── [6 more agents]
+└── chatroom/                       # Multi-agent coordination
+    ├── README.md                   # Complete chatroom documentation
+    ├── chat_helpers.sh             # Reusable bash functions
+    ├── channels/                   # 8 permanent communication channels
+    │   ├── coordination.md
+    │   ├── research.md
+    │   ├── implementation.md
+    │   ├── architecture.md
+    │   ├── testing.md
+    │   ├── documentation.md
+    │   ├── planning.md
+    │   └── vision.md
+    ├── .*_lastread                 # Line number tracking (gitignored)
+    └── .*_active                   # Presence tracking (gitignored)
 scripts/                            # Diagnostic & test scripts
 tests/                             # Test suite
 plans/                             # Design documents & roadmap
@@ -204,6 +226,7 @@ plans/                             # Design documents & roadmap
   └── completed/                    # Archived completed plans
 devlogs/                           # Development diary
 research/                          # Research findings archive
+reviews/                           # Critical research evaluations
 ```
 
 ### Important Files to Know
@@ -214,13 +237,187 @@ research/                          # Research findings archive
 - **`plans/MASTER_IMPLEMENTATION_ROADMAP.md`**: Active development roadmap (~72-75 hours remaining)
 - **`plans/completed/`**: Archive of completed features (don't delete!)
 - **`docs/wiki/README.md`**: Comprehensive system documentation (3,000+ lines)
+- **`.claude/chatroom/README.md`**: Multi-agent coordination chatroom system
+- **`.claude/agents/orchestrator.md`**: Workflow coordinator agent (use by default)
+
+## Multi-Agent Workflow (Default Approach)
+
+**IMPORTANT:** For non-trivial tasks, use the multi-agent orchestration system by default. The orchestrator coordinates specialized agents to maintain quality gates and research standards.
+
+### When to Use Multi-Agent Workflow
+
+Use the orchestrator agent for:
+- **Complex features** (3+ phases, multiple systems affected)
+- **Research-intensive work** (requires peer-reviewed sources)
+- **Architectural changes** (affects multiple modules)
+- **Anything requiring quality gates** (research validation, architecture review)
+
+Use direct implementation only for:
+- **Trivial fixes** (typos, simple parameter tweaks)
+- **Single-file edits** (no cross-system effects)
+- **Documentation-only changes**
+
+### How to Use the Orchestrator
+
+Invoke the orchestrator agent with the Task tool:
+
+```typescript
+// Example: Implementing a new feature
+Task({
+  subagent_type: "orchestrator",
+  description: "Implement nuclear winter cascades",
+  prompt: `I need to implement nuclear winter cascades from the roadmap.
+
+  Feature requirements:
+  - Model temperature drops from nuclear detonations
+  - Agricultural collapse from reduced sunlight
+  - Famine cascades with regional variation
+
+  Please coordinate the full workflow: research → validation → implementation → review → documentation.`
+})
+```
+
+The orchestrator will:
+1. **Research Phase:** Spawn super-alignment-researcher to find peer-reviewed sources
+2. **Validation Phase:** MANDATORY research-skeptic review (quality gate)
+3. **Implementation Phase:** Spawn feature-implementer with validated plan
+4. **Testing Phase:** Coordinate test writers as needed
+5. **Review Phase:** MANDATORY architecture-skeptic review (quality gate)
+6. **Documentation Phase:** Update wiki and archive plan
+
+### Multi-Agent Coordination Chatroom
+
+Agents communicate via **file-based async chatroom** (`.claude/chatroom/`):
+
+**8 Permanent Channels:**
+- `coordination` - General workflow coordination
+- `research` - Research findings & validation
+- `implementation` - Code implementation updates
+- `architecture` - Architecture reviews & decisions
+- `testing` - Test strategy & results
+- `documentation` - Wiki & devlog updates
+- `planning` - Roadmap & plan management
+- `vision` - Long-term strategy & philosophical debates
+
+**Token-Efficient Protocol:**
+- Agents only read **new messages** since last check (line number tracking in `.lastread` files)
+- **Append-only posting** (no reading when posting)
+- **Presence tracking** (enter/leave chat, see who's active)
+- **Status tags:** [ENTERED], [STARTED], [IN-PROGRESS], [COMPLETED], [BLOCKED], [QUESTION], [ALERT], [HANDOFF], [LEAVING]
+
+**Chat Helper Functions:**
+All functions are in `.claude/chatroom/chat_helpers.sh` - agents source this file to get:
+- `post_msg()` - Post message without reading
+- `read_new()` - Read only new messages
+- `wait_for_message()` - Poll for new messages
+- `enter_chat()` / `leave_chat()` - Presence tracking
+- `who_is_active()` - See active agents
+
+See `.claude/chatroom/README.md` for complete chatroom documentation and examples.
+
+### Parallel Work with Git Worktrees
+
+For parallel agent work, use git worktrees to avoid file conflicts:
+
+```bash
+# Create worktree for parallel feature work
+git worktree add ../superalignment-feature-x feature-x
+
+# Agent works in isolation
+cd ../superalignment-feature-x
+# ... implement feature ...
+
+# Merge back when done
+cd ../superalignmenttoutopia
+git merge feature-x
+git worktree remove ../superalignment-feature-x
+```
+
+Agents coordinate via chatroom while working in separate worktrees.
+
+### Available Specialized Agents
+
+All agents are in `.claude/agents/` with specific roles:
+
+**Workflow Coordination:**
+- **orchestrator** - Workflow coordinator, use by default for complex work
+
+**Research & Validation:**
+- **super-alignment-researcher** - Find peer-reviewed research (2024-2025)
+- **research-skeptic** - MANDATORY validation of research foundations
+- **sci-fi-tech-visionary** - Speculative future tech scenarios
+
+**Implementation:**
+- **feature-implementer** - Pure implementation specialist (spawned by orchestrator)
+- **unit-test-writer** / **integration-test-writer** - Test creation
+
+**Quality Assurance:**
+- **architecture-skeptic** - MANDATORY review for performance/stability issues
+
+**Documentation & Planning:**
+- **wiki-documentation-updater** - Sync wiki with code changes
+- **project-plan-manager** - Roadmap & plan archival
+
+### Standard Quality Gates
+
+The multi-agent workflow enforces **two mandatory quality gates:**
+
+**Quality Gate 1: Research Validation**
+- All research findings MUST pass research-skeptic review
+- Checks for contradictory evidence, methodological flaws, overconfidence
+- BLOCKS implementation if critical issues found
+
+**Quality Gate 2: Architecture Review**
+- All implementations MUST pass architecture-skeptic review
+- Checks for performance issues, state propagation problems, complexity
+- CRITICAL/HIGH severity issues MUST be addressed
+
+These gates maintain research rigor and system stability.
 
 ## Development Workflow
 
-### For New Features
+### For Complex Features (Use Multi-Agent Orchestrator)
 
-1. **Research Phase:** Find 2+ peer-reviewed sources (2024-2025), save to `research/[topic]_YYYYMMDD.md`
-2. **Design Phase:** Create plan in `plans/[feature]-plan.md` with citations, parameters justified
+**Default workflow for non-trivial work:**
+
+```bash
+# Invoke the orchestrator agent with the Task tool
+# It will coordinate all phases automatically
+```
+
+The orchestrator manages:
+1. **Research & Validation** (Quality Gate 1)
+   - super-alignment-researcher finds peer-reviewed sources
+   - research-skeptic validates findings (MANDATORY)
+   - Gate: Must pass critique before implementation
+
+2. **Implementation & Testing**
+   - feature-implementer writes code in phases
+   - Runs Monte Carlo validation after each phase
+   - Posts progress to chatroom channels
+   - unit-test-writer / integration-test-writer add tests
+
+3. **Architecture Review** (Quality Gate 2)
+   - architecture-skeptic reviews system impact (MANDATORY)
+   - Gate: Must address CRITICAL/HIGH severity issues
+
+4. **Documentation & Archival**
+   - wiki-documentation-updater syncs wiki
+   - project-plan-manager archives completed plans
+   - Updates MASTER_IMPLEMENTATION_ROADMAP.md
+
+**Benefits:**
+- Maintains research standards (all mechanics backed by peer review)
+- Catches performance issues before they compound
+- Parallel work via git worktrees + chatroom coordination
+- Quality gates prevent low-quality implementations
+
+### For Simple Tasks (Direct Implementation)
+
+For trivial fixes (typos, simple parameter tweaks, single-file edits):
+
+1. **Research Phase:** Find 2+ peer-reviewed sources (2024-2025), save to `research/[topic]_YYYYMMDD.md` (if needed)
+2. **Design Phase:** Create plan in `plans/[feature]-plan.md` with citations (if needed)
 3. **Implementation Phase:**
    - Add state to `src/types/game.ts`
    - Create system module in `src/simulation/`
@@ -358,26 +555,30 @@ Check logs in `monteCarloOutputs/mc_TIMESTAMP.log` for:
 
 ## Project-Specific Agents
 
-This repo has specialized Claude Code agents configured (`.claude/agents/`):
+This repo has a **multi-agent orchestration system** with 11 specialized agents (`.claude/agents/`):
 
-- **project-plan-manager:** Manages roadmap, archives completed plans
-- **super-alignment-researcher:** Finds peer-reviewed research, saves to `research/`
-- **research-skeptic:** Critical evaluation of research foundations, saves to `reviews/`
-- **architecture-skeptic:** Reviews system architecture for performance/stability issues
-- **unit-test-writer / integration-test-writer:** Creates test suites
+**For detailed information, see the "Multi-Agent Workflow (Default Approach)" section above.**
 
-These agents help maintain research standards and architectural quality.
+Quick reference:
+- **Use orchestrator by default** for complex/non-trivial work
+- **Quality gates enforced:** Research validation + architecture review
+- **Chatroom coordination:** Token-efficient async communication (`.claude/chatroom/`)
+- **Parallel work supported:** Git worktrees + chatroom prevent conflicts
+
+All agents follow the project structure and maintain research standards.
 
 ## What NOT to Do
 
-1. ❌ **Don't tune parameters for "fun"** - only research-backed values
-2. ❌ **Don't delete plans from `/plans/completed/`** - preserve project history
-3. ❌ **Don't use `Math.random()`** - breaks determinism, use RNG function
-4. ❌ **Don't add UI dependencies to simulation code** - keep engine pure
-5. ❌ **Don't create docs/README files proactively** - only when explicitly requested
-6. ❌ **Don't simplify when nuance matters** - this is a research tool, not a game
-7. ❌ **Don't make monolithic AIs** - population is heterogeneous (20 agents, different alignments)
-8. ❌ **Don't assume alignment is stable** - it drifts based on resentment, control, capabilities
+1. ❌ **Don't skip the orchestrator for complex work** - use multi-agent workflow by default for non-trivial tasks
+2. ❌ **Don't bypass quality gates** - research validation and architecture review are MANDATORY
+3. ❌ **Don't tune parameters for "fun"** - only research-backed values
+4. ❌ **Don't delete plans from `/plans/completed/`** - preserve project history
+5. ❌ **Don't use `Math.random()`** - breaks determinism, use RNG function
+6. ❌ **Don't add UI dependencies to simulation code** - keep engine pure
+7. ❌ **Don't create docs/README files proactively** - only when explicitly requested
+8. ❌ **Don't simplify when nuance matters** - this is a research tool, not a game
+9. ❌ **Don't make monolithic AIs** - population is heterogeneous (20 agents, different alignments)
+10. ❌ **Don't assume alignment is stable** - it drifts based on resentment, control, capabilities
 
 ## Additional Resources
 
