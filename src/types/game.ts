@@ -957,6 +957,22 @@ export interface GameState {
   // P2.5: Triggered Events System (Oct 16, 2025) - External event triggers for validation testing
   triggeredEvents?: import('../simulation/triggeredEvents').TriggeredEventsState;
 
+  // P2.4: Recovery Tracking System (Oct 16, 2025) - Economic stage transitions & time-to-recovery
+  economicStageHistory?: Array<{
+    month: number;
+    stage: 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';
+    gdpLevel: number;        // For measuring recovery progress
+    qolLevel: number;        // Quality of Life level
+    baselineGDP: number;     // Pre-crisis level (for recovery target)
+    baselineQoL: number;     // Pre-crisis QoL
+  }>;
+  currentEconomicStage?: 'expansion' | 'peak' | 'contraction' | 'trough' | 'recovery';
+  recoveryBaseline?: {      // Set when crisis begins, used to measure recovery
+    gdp: number;
+    qol: number;
+    month: number;
+  };
+
   // Information Warfare & Epistemology (TIER 4.3)
   informationWarfare: import('../types/informationWarfare').InformationWarfareSystem; // Truth decay, deepfakes, narrative control
 
