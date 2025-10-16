@@ -59,6 +59,10 @@ export interface HumanPopulationSystem {
   cumulativeCrisisDeaths: number;        // Total deaths from all crises
   geneticBottleneckActive: boolean;      // Population below 100M (genetic diversity lost)
   birthDefectsCount?: number;            // Cumulative non-fatal birth defects from radiation (billions)
+  
+  // P2 Bug Fix: Monthly death cap (Oct 16, 2025)
+  monthlyDeathsApplied?: number;         // Deaths applied this month (reset each month)
+  monthlyDeathCapReached?: boolean;      // Flag if cap was hit (for logging)
 
   // Death tracking by category (TIER 1.5 - Summary Statistics)
   deathsByCategory: {
@@ -69,6 +73,7 @@ export interface HumanPopulationSystem {
     ecosystem: number;                   // Ecosystem collapse, biodiversity loss
     pollution: number;                   // Toxic environment
     ai: number;                          // AI-caused deaths (alignment failure)
+    cascade: number;                     // Tipping point cascade (Oct 16, 2025)
     other: number;                       // Other catastrophes
   };
 

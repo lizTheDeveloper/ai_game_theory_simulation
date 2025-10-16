@@ -19,8 +19,20 @@ export function initializeOrganizations(): Organization[] {
       id: 'openai',
       name: 'OpenAI',
       type: 'private',
-      country: 'United States',      // TIER 1.7.3: San Francisco
-      survivalThreshold: 0.5,        // Needs 50% of US peak population
+      country: 'United States',      // DEPRECATED - use geographicPresence
+      survivalThreshold: 0.5,        // DEPRECATED
+      
+      // P2.4: Geographic diversification (Microsoft 10-K, Alphabet 10-K research)
+      geographicPresence: [
+        { country: 'United States', operationsWeight: 0.70, dataCenters: 2, workforce: 700 },
+        { country: 'United Kingdom', operationsWeight: 0.10, dataCenters: 0, workforce: 100 },
+        { country: 'Ireland', operationsWeight: 0.10, dataCenters: 1, workforce: 50 },
+        { country: 'Singapore', operationsWeight: 0.10, dataCenters: 0, workforce: 50 },
+      ],
+      remoteWorkCapable: true,
+      essentialDesignation: false,
+      distributedDataCenters: true,
+      
       ownedDataCenters: [], // Will be linked: ['openai_sf']
       ownedAIModels: [],    // Will be linked based on AI naming
       capital: 100,         // $100M equivalent
@@ -75,8 +87,23 @@ export function initializeOrganizations(): Organization[] {
       id: 'google_deepmind',
       name: 'Google DeepMind',
       type: 'private',
-      country: 'United States',      // TIER 1.7.3: Mountain View CA
-      survivalThreshold: 0.5,        // Needs 50% of US peak population
+      country: 'United States',      // DEPRECATED
+      survivalThreshold: 0.5,        // DEPRECATED
+      
+      // P2.4: Highly distributed (Alphabet 10-K: 51% revenue international)
+      geographicPresence: [
+        { country: 'United States', operationsWeight: 0.50, dataCenters: 20, workforce: 70000 },
+        { country: 'Ireland', operationsWeight: 0.15, dataCenters: 3, workforce: 8000 },
+        { country: 'Singapore', operationsWeight: 0.10, dataCenters: 3, workforce: 5000 },
+        { country: 'Japan', operationsWeight: 0.08, dataCenters: 2, workforce: 3000 },
+        { country: 'United Kingdom', operationsWeight: 0.07, dataCenters: 2, workforce: 4000 },
+        { country: 'Germany', operationsWeight: 0.05, dataCenters: 1, workforce: 2000 },
+        { country: 'India', operationsWeight: 0.05, dataCenters: 2, workforce: 6000 },
+      ],
+      remoteWorkCapable: true,
+      essentialDesignation: false,
+      distributedDataCenters: true,
+      
       ownedDataCenters: [],       // Will be linked: ['google_iowa']
       ownedAIModels: [],          // Will link Gemini models
       capital: 500,               // $500M (Google money!)
@@ -163,8 +190,26 @@ export function initializeOrganizations(): Organization[] {
       id: 'academic_consortium',
       name: 'Academic AI Consortium',
       type: 'academic',
-      country: 'Multi-national',     // TIER 1.7.3: Global university network
-      survivalThreshold: 0.2,        // Most resilient - distributed globally
+      country: 'Multi-national',     // DEPRECATED
+      survivalThreshold: 0.2,        // DEPRECATED
+      
+      // P2.4: Most distributed (global university network, most resilient)
+      geographicPresence: [
+        { country: 'United States', operationsWeight: 0.30, dataCenters: 5, workforce: 3000 },
+        { country: 'United Kingdom', operationsWeight: 0.15, dataCenters: 2, workforce: 1500 },
+        { country: 'Germany', operationsWeight: 0.10, dataCenters: 1, workforce: 1000 },
+        { country: 'China', operationsWeight: 0.10, dataCenters: 2, workforce: 1500 },
+        { country: 'Canada', operationsWeight: 0.08, dataCenters: 1, workforce: 800 },
+        { country: 'France', operationsWeight: 0.07, dataCenters: 1, workforce: 700 },
+        { country: 'Japan', operationsWeight: 0.07, dataCenters: 1, workforce: 700 },
+        { country: 'Australia', operationsWeight: 0.05, dataCenters: 1, workforce: 500 },
+        { country: 'India', operationsWeight: 0.05, dataCenters: 1, workforce: 800 },
+        { country: 'Singapore', operationsWeight: 0.03, dataCenters: 0, workforce: 300 },
+      ],
+      remoteWorkCapable: true,
+      essentialDesignation: false,
+      distributedDataCenters: true,
+      
       ownedDataCenters: [],       // Will be linked: ['stanford_cluster']
       ownedAIModels: [],          // Will link academic models
       capital: 20,                // $20M (grant funding, always underfunded)
@@ -325,14 +370,187 @@ export function logOrganizationsState(state: GameState): void {
  * 
  * @param state - Current game state
  */
+/**
+ * P2.4: Update organization economics based on geographic presence
+ * Scales revenue/expenses based on weighted population health
+ */
+function updateOrganizationEconomics(
+  org: any,
+  state: GameState,
+  countries: Record<string, any>
+): void {
+  const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
+  const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
+  
+  if (org.geographicPresence && org.geographicPresence.length > 0) {
+    // Calculate weighted population health
+    let weightedPopFraction = 0;
+    let totalWeight = 0;
+    
+    for (const presence of org.geographicPresence) {
+      const country = countries[presence.country];
+      if (country) {
+        const popFraction = country.population / country.peakPopulation;
+        weightedPopFraction += popFraction * presence.operationsWeight;
+        totalWeight += presence.operationsWeight;
+      }
+    }
+    
+    if (totalWeight > 0) {
+      weightedPopFraction /= totalWeight;
+    } else {
+      weightedPopFraction = 1.0; // Default if no valid countries
+    }
+    
+    const economicMultiplier = calculateEconomicMultiplier(weightedPopFraction);
+    const expenseMultiplier = calculateExpenseMultiplier(weightedPopFraction);
+    
+    org.monthlyRevenue = baseline * economicMultiplier;
+    org.monthlyExpenses = baseExpenses * expenseMultiplier;
+  } else {
+    // Fall back to old single-country logic
+    if (org.country === 'Multi-national') {
+      const globalPopFraction = state.humanPopulationSystem.population / 
+                                state.humanPopulationSystem.baselinePopulation;
+      org.monthlyRevenue = baseline * calculateEconomicMultiplier(globalPopFraction);
+      org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(globalPopFraction);
+    } else {
+      const country = countries[org.country];
+      if (country) {
+        const popFraction = country.population / country.peakPopulation;
+        org.monthlyRevenue = baseline * calculateEconomicMultiplier(popFraction);
+        org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(popFraction);
+      }
+    }
+  }
+}
+
+/**
+ * P2.4: Calculate organization bankruptcy risk based on geographic presence
+ * 
+ * Research: Microsoft 10-K (45% international), Alphabet 10-K (51% international)
+ * COVID-19: Tech sector 95% survival vs 60-70% other sectors
+ * 
+ * Bankruptcy risk = f(weighted population decline, resilience modifiers)
+ */
+function calculateOrganizationBankruptcyRisk(
+  org: any,
+  state: GameState
+): number {
+  if (!state.countryPopulationSystem) return 0;
+  
+  const countries = state.countryPopulationSystem.countries;
+  
+  // === 1. CALCULATE WEIGHTED POPULATION DECLINE ===
+  
+  // P2.4: Use geographicPresence if available, else fall back to single country
+  if (org.geographicPresence && org.geographicPresence.length > 0) {
+    let weightedPopDecline = 0;
+    let totalWeight = 0;
+    
+    for (const presence of org.geographicPresence) {
+      const country = countries[presence.country];
+      if (!country) {
+        console.warn(`Organization ${org.name} references unknown country: ${presence.country}`);
+        continue;
+      }
+      
+      const popDecline = 1 - (country.population / country.peakPopulation);
+      weightedPopDecline += popDecline * presence.operationsWeight;
+      totalWeight += presence.operationsWeight;
+    }
+    
+    // Normalize (in case weights don't sum to exactly 1.0)
+    if (totalWeight > 0) {
+      weightedPopDecline /= totalWeight;
+    }
+    
+    // === 2. BASE BANKRUPTCY RISK (SIGMOID CURVE) ===
+    // Sigmoid: Risk increases sharply around 60% weighted decline
+    // - 0% decline → 0% risk
+    // - 40% decline → 2% risk
+    // - 60% decline → 50% risk
+    // - 80% decline → 98% risk
+    let baseRisk = 1 / (1 + Math.exp(-10 * (weightedPopDecline - 0.6)));
+    
+    // === 3. APPLY RESILIENCE MODIFIERS ===
+    
+    let adjustedRisk = baseRisk;
+    
+    // Remote work capability: Can relocate workforce, reduce office dependency
+    if (org.remoteWorkCapable) {
+      adjustedRisk *= 0.50; // 50% risk reduction
+    }
+    
+    // Essential designation: Government bailout likely (TARP-style)
+    if (org.essentialDesignation) {
+      adjustedRisk *= 0.20; // 80% risk reduction
+    }
+    
+    // Distributed data centers: Multi-region redundancy
+    if (org.distributedDataCenters) {
+      adjustedRisk *= 0.60; // 40% risk reduction
+    }
+    
+    // Organization type modifiers
+    if (org.type === 'government') {
+      adjustedRisk *= 0.30; // Governments more resilient (tax base, essential services)
+    } else if (org.type === 'academic') {
+      adjustedRisk *= 0.40; // Universities resilient (endowments, distributed campuses)
+    }
+    
+    // === 4. STOCHASTIC VARIANCE ===
+    // Add ±20% random variance to prevent determinism
+    const variance = 0.8 + Math.random() * 0.4; // 80% to 120%
+    adjustedRisk *= variance;
+    
+    return Math.min(1.0, adjustedRisk);
+    
+  } else {
+    // Fall back to old single-country logic
+    const country = org.country === 'Multi-national' 
+      ? null 
+      : countries[org.country];
+    
+    if (!country) {
+      // Multi-national: use global population
+      const globalPopFraction = state.humanPopulationSystem.population / 
+                                state.humanPopulationSystem.baselinePopulation;
+      const popDecline = 1 - globalPopFraction;
+      const baseRisk = 1 / (1 + Math.exp(-10 * (popDecline - 0.6)));
+      return Math.min(1.0, baseRisk * 0.8); // Multi-national bonus (20% reduction)
+    }
+    
+    const popFraction = country.population / country.peakPopulation;
+    const popDecline = 1 - popFraction;
+    
+    // Check depopulation (absolute threshold)
+    if (country.depopulated) {
+      return 1.0; // 100% bankruptcy if country depopulated
+    }
+    
+    // Old threshold logic converted to risk
+    if (popFraction < org.survivalThreshold) {
+      return 0.90 + Math.random() * 0.10; // 90-100% risk
+    }
+    
+    // Gradual risk increase as population declines
+    const baseRisk = 1 / (1 + Math.exp(-10 * (popDecline - 0.6)));
+    return Math.min(1.0, baseRisk);
+  }
+}
+
 export function updateOrganizationViability(state: GameState): void {
   if (!state.countryPopulationSystem) return; // No country tracking yet
   
   const countries = state.countryPopulationSystem.countries;
   const currentMonth = state.currentMonth;
   
+  // Calculate global population fraction (needed for logging)
+  const globalPopFraction = state.humanPopulationSystem.population / 
+                            state.humanPopulationSystem.baselinePopulation;
+  
   // TIER 1.7.5: Track baseline revenue/expenses (first month only)
-  // We need baseline values to scale from
   const needsBaseline = !state.organizations[0].hasOwnProperty('baselineRevenue');
   if (needsBaseline) {
     state.organizations.forEach(org => {
@@ -341,113 +559,61 @@ export function updateOrganizationViability(state: GameState): void {
     });
   }
   
-  // Calculate global economic multiplier (for multi-national orgs)
-  const globalPopFraction = state.humanPopulationSystem.population / 
-                            state.humanPopulationSystem.baselinePopulation;
-  const globalEconomicMultiplier = calculateEconomicMultiplier(globalPopFraction);
-  
   // Check each organization
   for (const org of state.organizations) {
-    // Skip if already bankrupt and processed
+    // P2.4: Calculate bankruptcy risk (even for bankrupt orgs, for monitoring)
+    const bankruptcyRisk = calculateOrganizationBankruptcyRisk(org, state);
+    org.bankruptcyRisk = bankruptcyRisk;
+    
+    // Skip bankruptcy check if already bankrupt
     if (org.bankrupt) {
-      // Still update economic scaling for zombie orgs
-      if (org.country === 'Multi-national') {
-        const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
-        const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
-        org.monthlyRevenue = baseline * globalEconomicMultiplier;
-        org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(globalPopFraction);
-      } else {
-        const country = countries[org.country];
-        if (country) {
-          const popFraction = country.population / country.peakPopulation;
-          const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
-          const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
-          org.monthlyRevenue = baseline * calculateEconomicMultiplier(popFraction);
-          org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(popFraction);
+      // Still update economic scaling
+      updateOrganizationEconomics(org, state, countries);
+      continue;
+    }
+    
+    // Update economics based on population health
+    updateOrganizationEconomics(org, state, countries);
+    
+    // P2.4: Stochastic bankruptcy check (not deterministic!)
+    if (Math.random() < bankruptcyRisk) {
+      org.bankrupt = true;
+      org.bankruptcyMonth = currentMonth;
+      
+      // Determine primary cause
+      let bankruptcyReason = '';
+      if (org.geographicPresence && org.geographicPresence.length > 0) {
+        // Find country with largest weighted decline
+        let maxWeightedDecline = 0;
+        let primaryCountry = '';
+        
+        for (const presence of org.geographicPresence) {
+          const country = countries[presence.country];
+          if (country) {
+            const decline = 1 - (country.population / country.peakPopulation);
+            const weightedDecline = decline * presence.operationsWeight;
+            if (weightedDecline > maxWeightedDecline) {
+              maxWeightedDecline = weightedDecline;
+              primaryCountry = presence.country;
+            }
+          }
         }
-      }
-      continue; // Don't re-process bankruptcy
-    }
-    
-    // Multi-national orgs check global population instead
-    if (org.country === 'Multi-national') {
-      const globalPopFraction = state.humanPopulationSystem.population / 
-                                state.humanPopulationSystem.baselinePopulation;
-      
-      // TIER 1.7.5: Scale economics with global population
-      const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
-      const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
-      org.monthlyRevenue = baseline * globalEconomicMultiplier;
-      org.monthlyExpenses = baseExpenses * calculateExpenseMultiplier(globalPopFraction);
-      
-      if (globalPopFraction < org.survivalThreshold) {
-        org.bankrupt = true;
-        org.bankruptcyMonth = currentMonth;
-        org.bankruptcyReason = `Global population collapse (${(globalPopFraction * 100).toFixed(0)}% of baseline, needed ${(org.survivalThreshold * 100).toFixed(0)}%)`;
         
-        console.log(`\n💀 ORGANIZATION COLLAPSE: ${org.name}`);
-        console.log(`   Reason: ${org.bankruptcyReason}`);
-        console.log(`   Month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
-        
-        // TIER 1.7.3 FIX: Retire AIs to prevent orphans
-        handleBankruptcy(org, state);
+        bankruptcyReason = `Multi-country collapse (primary: ${primaryCountry}, weighted decline: ${(maxWeightedDecline * 100).toFixed(0)}%, risk: ${(bankruptcyRisk * 100).toFixed(1)}%)`;
+      } else {
+        // Single country
+        const country = org.country === 'Multi-national' ? 'Global' : org.country;
+        bankruptcyReason = `${country} population collapse (risk: ${(bankruptcyRisk * 100).toFixed(1)}%)`;
       }
-      continue;
-    }
-    
-    // Check country-specific health
-    const country = countries[org.country];
-    if (!country) {
-      console.warn(`⚠️ Organization ${org.name} references unknown country: ${org.country}`);
-      continue;
-    }
-    
-    // Calculate population health (current / peak)
-    const popFraction = country.population / country.peakPopulation;
-    
-    // TIER 1.7.5: Scale organization economics with country population health
-    // Revenue: GDP scales super-linearly with population (supply chains break)
-    // Expenses: Costs spike during collapse (scarcity, logistics)
-    const baseline = (org as any).baselineRevenue || org.monthlyRevenue;
-    const baseExpenses = (org as any).baselineExpenses || org.monthlyExpenses;
-    const economicMultiplier = calculateEconomicMultiplier(popFraction);
-    const expenseMultiplier = calculateExpenseMultiplier(popFraction);
-    
-    org.monthlyRevenue = baseline * economicMultiplier;
-    org.monthlyExpenses = baseExpenses * expenseMultiplier;
-    
-    // Check if country is depopulated (<100K people)
-    if (country.depopulated) {
-      org.bankrupt = true;
-      org.bankruptcyMonth = currentMonth;
-      org.bankruptcyReason = `${country.name} depopulated (population < 100K)`;
       
-      console.log(`\n💀 ORGANIZATION COLLAPSE: ${org.name}`);
-      console.log(`   Reason: ${org.bankruptcyReason}`);
-      console.log(`   Depopulation month: ${country.depopulationMonth}`);
-      console.log(`   Current month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
+      org.bankruptcyReason = bankruptcyReason;
       
-      // TIER 1.7.3 FIX: Retire AIs to prevent orphans
-      handleBankruptcy(org, state);
-      continue;
-    }
-    
-    // Check if population dropped below survival threshold
-    if (popFraction < org.survivalThreshold) {
-      org.bankrupt = true;
-      org.bankruptcyMonth = currentMonth;
-      org.bankruptcyReason = `${country.name} population collapse (${(popFraction * 100).toFixed(0)}% of peak, needed ${(org.survivalThreshold * 100).toFixed(0)}%)`;
-      
-      console.log(`\n💀 ORGANIZATION COLLAPSE: ${org.name}`);
-      console.log(`   Country: ${country.name}`);
-      console.log(`   Population: ${country.population.toFixed(1)}M (peak: ${country.peakPopulation.toFixed(1)}M)`);
-      console.log(`   Health: ${(popFraction * 100).toFixed(0)}% (threshold: ${(org.survivalThreshold * 100).toFixed(0)}%)`);
+      console.log(`\n💀 ORGANIZATION BANKRUPTCY: ${org.name}`);
+      console.log(`   Reason: ${bankruptcyReason}`);
       console.log(`   Month: ${currentMonth} (Year ${Math.floor(currentMonth / 12)} Month ${currentMonth % 12 + 1})`);
       
-      // TIER 1.7.3 FIX: Retire AIs to prevent orphans
+      // Handle bankruptcy (retire AIs, halt operations)
       handleBankruptcy(org, state);
-      
-      // Revenue/expenses already set to 0 by handleBankruptcy
     }
   }
   
