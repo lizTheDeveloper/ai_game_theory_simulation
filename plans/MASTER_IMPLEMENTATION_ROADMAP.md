@@ -169,6 +169,41 @@
 
 ---
 
+### Black Mirror Integration (~37-49 weeks, phased)
+
+**Based on:** Dialectic review process (researcher + skeptic consensus)
+**Status:** ~40% strongly validated, ~25% conditionally approved, ~35% rejected
+**Full Report:** `reviews/BLACK_MIRROR_INTEGRATION_PLAN.md`
+
+**Phase 1: Immediate Integration (9-12 weeks) - HIGH PRIORITY**
+
+- [ ] **Black Mirror Phase 1: Immediate Integration** (9-12 weeks)
+  5 strongly validated systems with robust peer-reviewed research
+  → See: `plans/black-mirror-phase1-immediate.md`
+  → Systems: Attention Economy, Surveillance Normalization, Notification Addiction, Reality Erosion, Social Rating
+  → Research: Gloria Mark (attention), Stoycheff (surveillance), deepfake studies, China Social Credit data
+  → Impact: Critical modeling of technology pressure on human behavior
+
+**Phase 2: Near-Term Development (12-16 weeks) - MEDIUM PRIORITY**
+
+- [ ] **Black Mirror Phase 2: Near-Term Development** (12-16 weeks)
+  4 conditionally approved systems needing development work
+  → See: `plans/black-mirror-phase2-near-term.md`
+  → Systems: Enhanced Social Credit, Parasocial AI Relationships, Memetic Contagion, Algorithmic Amplification
+  → Note: Requires bidirectional modeling (positive AND negative effects)
+  → Risk Mitigation: Avoid deterministic doom narratives, model interventions
+
+**Phase 3: Long-Term Research (6-12+ months) - LOW PRIORITY**
+
+- [ ] **Black Mirror Phase 3: Long-Term Research** (6-12+ months, research-dependent)
+  3 systems requiring substantial external research
+  → See: `plans/black-mirror-phase3-longterm.md`
+  → Systems: Digital Consciousness Governance Preparedness, Performative Behavior Modeling, Autonomous Weapon Degradation
+  → Prerequisites: Published peer-reviewed research, operational definitions, expert review
+  → Status: Deferred pending research maturity
+
+---
+
 ## Development Standards
 
 **Every mechanic requires:**
@@ -194,8 +229,8 @@
 ## Progress Summary
 
 **Completed:** P0 (7/7), P1 (5/5), P2 (4/5)
-**Active:** 15 urgent bug fixes + 1 critical fix + 2 medium features + 14 low-priority enhancements
-**Total Remaining Effort:** ~119-141 hours
+**Active:** 15 urgent bug fixes + 1 critical fix + 2 medium features + 14 low-priority enhancements + 3 Black Mirror phases
+**Total Remaining Effort:** ~156-190 hours (includes 37-49 weeks Black Mirror phased integration)
 
 **Recent Completions (Oct 16, 2025):**
 - ✅ P2.3: Heterogeneous Population Segments - 5 social segments with differential crisis vulnerability
@@ -209,6 +244,13 @@
 - Added P2.6: Memetic Evolution & Polarization Dynamics (12-15h) - High-value, TRL 6-7
 - Added P3.6: Ensemble AI Alignment Verification (8-10h) - Research prototype
 - Rejected: Quantum capability prediction, liquid software, retroactive temporal modeling (see `/plans/completed/visionary-ideas-reviewed.md`)
+
+**New from Black Mirror Integration Review (Oct 16, 2025):**
+- ✅ **3 implementation phases created** - Dialectic review process (researcher + skeptic)
+- Phase 1 (HIGH): 5 strongly validated systems (9-12 weeks) - Attention Economy, Surveillance, Notification Addiction
+- Phase 2 (MEDIUM): 4 conditionally approved systems (12-16 weeks) - Social Credit, Parasocial AI, Memetic Contagion
+- Phase 3 (LOW): 3 research-dependent systems (6-12+ months) - Governance preparedness, Performative behavior
+- Approval: ~40% strongly validated, ~25% conditional, ~35% rejected
 
 **Publication Readiness:** ~70-80% complete (reduced due to bug discovery)
 **Next Milestone:** Fix critical Monte Carlo bugs, then complete P2.5 (Empirical Validation)
