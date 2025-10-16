@@ -59,6 +59,7 @@ export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { FamineSystemPhase } from './FamineSystemPhase';
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
+export { TriggeredEventsPhase } from './TriggeredEventsPhase';
 
 // Batch 3: Special phases (medium risk)
 export { BenchmarkEvaluationsPhase } from './BenchmarkEvaluationsPhase';
