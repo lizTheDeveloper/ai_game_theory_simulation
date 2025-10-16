@@ -253,8 +253,53 @@ export interface GovernmentAgent {
   };
 }
 
+/**
+ * P2.3: Heterogeneous Population Segment (Oct 16, 2025)
+ * Models distinct social groups with different attitudes, vulnerabilities, and power
+ * Research: Pew Research Political Typology (2021-2024)
+ */
+export interface SocietySegment {
+  id: string;
+  name: string;
+
+  // Population and power
+  populationFraction: number;  // % of total population (0-1, sums to 1.0)
+  politicalPower: number;      // % of political influence (0-1, sums to 1.0)
+  economicPower: number;       // % of economic resources (0-1, sums to 1.0)
+
+  // Attitudes (segment-specific)
+  trustInAI: number;           // 0-1
+  trustInGovernment: number;   // 0-1
+  trustInScience: number;      // 0-1
+  openness: number;            // 0-1 (to change/innovation)
+
+  // Demographics
+  geographic: ('urban' | 'suburban' | 'rural')[];
+  economicStatus: 'elite' | 'middle' | 'working' | 'precariat';
+  education: 'high' | 'medium' | 'low';
+
+  // Crisis response
+  crisisVulnerability: number; // 0-1 (0 = insulated, 1 = highly exposed)
+  adaptability: number;        // 0-1 (ability to cope with change)
+  survivalRate: number;        // Multiplier on mortality (0.5 = half the death rate, 2.0 = double)
+}
+
 export interface HumanSocietyAgent {
+  // === P2.3: HETEROGENEOUS POPULATION (Oct 16, 2025) ===
+  segments?: SocietySegment[];  // Optional: Distinct social groups
+
+  // Aggregate values (backward compatibility + population-weighted average)
   trustInAI: number; // [0,1] General confidence in AI systems
+  
+  // Power-weighted aggregates (for policy decisions)
+  powerWeightedTrustInAI?: number;        // Trust weighted by political power
+  powerWeightedTrustInGovernment?: number;
+  
+  // Polarization metrics
+  polarizationIndex?: number;  // 0-1 (variance in segment attitudes)
+  eliteMassGap?: number;       // Difference between elite and mass trust
+  
+  // === EXISTING FIELDS ===
   paranoiaLevel: number; // [0,1] Fear/anxiety about AI (Phase 2.8: Paranoia System)
   coordinationCapacity: number; // [0,1] Ability to organize collective action
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced

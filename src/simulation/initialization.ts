@@ -43,6 +43,142 @@ import { initializePowerGenerationSystem } from '../types/powerGeneration';
 import { initializeRegionalBiodiversitySystem } from '../types/regionalBiodiversity';
 import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
+import { SocietySegment } from '@/types/game';
+
+/**
+ * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
+ * 
+ * Creates 5 distinct social segments based on Pew Research typology (2021-2024):
+ * - Techno-Optimist Elite: 5% population, 25% political power
+ * - Middle Class Pragmatists: 40% population, 35% political power  
+ * - Working Class Skeptics: 35% population, 25% political power
+ * - Rural Traditionalists: 15% population, 10% political power
+ * - Precariat (Vulnerable): 5% population, 5% political power
+ * 
+ * Research:
+ * - Pew Political Typology (2021-2024)
+ * - Elite-mass gap: 30-40% variance in AI trust
+ * - Crisis vulnerability: Elites 4x less exposed than masses
+ * - Survival rates: Elites 1.5x, precariat 0.5x baseline
+ */
+export function initializeSocietySegments(): SocietySegment[] {
+  return [
+    // === TECHNO-OPTIMIST ELITE (5% / 25%) ===
+    {
+      id: 'techno_optimist_elite',
+      name: 'Techno-Optimist Elite',
+      
+      populationFraction: 0.05,  // 5% of population
+      politicalPower: 0.25,      // 25% of political power (5x overrepresented)
+      economicPower: 0.40,       // 40% of economic resources (8x overrepresented)
+      
+      trustInAI: 0.85,           // Very high AI trust (Pew: Tech elites 80-90%)
+      trustInGovernment: 0.60,   // Moderate government trust
+      trustInScience: 0.90,      // Very high science trust
+      openness: 0.95,            // Highly open to change
+      
+      geographic: ['urban'],
+      economicStatus: 'elite',
+      education: 'high',
+      
+      crisisVulnerability: 0.20, // Highly insulated (can relocate, access resources)
+      adaptability: 0.90,        // High adaptability (resources, connections, mobility)
+      survivalRate: 1.50,        // 50% better survival (private healthcare, bunkers, mobility)
+    },
+    
+    // === MIDDLE CLASS PRAGMATISTS (40% / 35%) ===
+    {
+      id: 'middle_class_pragmatists',
+      name: 'Middle Class Pragmatists',
+      
+      populationFraction: 0.40,  // 40% of population (largest segment)
+      politicalPower: 0.35,      // 35% of political power (slight underrepresentation)
+      economicPower: 0.40,       // 40% of economic resources
+      
+      trustInAI: 0.60,           // Moderate AI trust (Pew: General public 55-65%)
+      trustInGovernment: 0.55,   // Moderate government trust
+      trustInScience: 0.70,      // Decent science trust
+      openness: 0.60,            // Moderately open to change
+      
+      geographic: ['urban', 'suburban'],
+      economicStatus: 'middle',
+      education: 'medium',
+      
+      crisisVulnerability: 0.50, // Average vulnerability
+      adaptability: 0.60,        // Moderate adaptability (some savings, education)
+      survivalRate: 1.00,        // Baseline survival rate
+    },
+    
+    // === WORKING CLASS SKEPTICS (35% / 25%) ===
+    {
+      id: 'working_class_skeptics',
+      name: 'Working Class Skeptics',
+      
+      populationFraction: 0.35,  // 35% of population
+      politicalPower: 0.25,      // 25% of political power (underrepresented)
+      economicPower: 0.15,       // 15% of economic resources (2.3x underrepresented)
+      
+      trustInAI: 0.40,           // Low AI trust (Pew: Skeptical groups 35-45%)
+      trustInGovernment: 0.45,   // Low government trust
+      trustInScience: 0.55,      // Moderate science trust
+      openness: 0.40,            // Resistant to change (job displacement fears)
+      
+      geographic: ['suburban', 'urban', 'rural'],
+      economicStatus: 'working',
+      education: 'medium',
+      
+      crisisVulnerability: 0.70, // High vulnerability (paycheck-to-paycheck, limited mobility)
+      adaptability: 0.40,        // Low adaptability (limited resources)
+      survivalRate: 0.85,        // 15% worse survival (limited healthcare, immobility)
+    },
+    
+    // === RURAL TRADITIONALISTS (15% / 10%) ===
+    {
+      id: 'rural_traditionalists',
+      name: 'Rural Traditionalists',
+      
+      populationFraction: 0.15,  // 15% of population
+      politicalPower: 0.10,      // 10% of political power (underrepresented)
+      economicPower: 0.04,       // 4% of economic resources (3.75x underrepresented)
+      
+      trustInAI: 0.30,           // Very low AI trust (Pew: Rural 30-40% vs Urban 70%)
+      trustInGovernment: 0.40,   // Low government trust
+      trustInScience: 0.45,      // Low science trust
+      openness: 0.25,            // Highly resistant to change
+      
+      geographic: ['rural'],
+      economicStatus: 'working',
+      education: 'low',
+      
+      crisisVulnerability: 0.80, // Very high vulnerability (isolated, aging infrastructure)
+      adaptability: 0.30,        // Very low adaptability (community ties limit mobility)
+      survivalRate: 0.70,        // 30% worse survival (healthcare deserts, isolation)
+    },
+    
+    // === PRECARIAT (VULNERABLE) (5% / 5%) ===
+    {
+      id: 'precariat',
+      name: 'Precariat (Vulnerable)',
+      
+      populationFraction: 0.05,  // 5% of population (homeless, refugees, marginalized)
+      politicalPower: 0.05,      // 5% of political power (proportional but powerless)
+      economicPower: 0.01,       // 1% of economic resources (5x underrepresented)
+      
+      trustInAI: 0.25,           // Lowest AI trust (disenfranchised)
+      trustInGovernment: 0.30,   // Very low government trust (failed by system)
+      trustInScience: 0.50,      // Neutral science trust (varied backgrounds)
+      openness: 0.50,            // Varies (desperate for change vs resigned)
+      
+      geographic: ['urban', 'rural'],  // Concentrated in cities and remote areas
+      economicStatus: 'precariat',
+      education: 'low',
+      
+      crisisVulnerability: 0.95, // Extreme vulnerability (no safety net, homeless)
+      adaptability: 0.20,        // Minimal adaptability (survival mode)
+      survivalRate: 0.50,        // 50% worse survival (no healthcare, exposure, malnutrition)
+    },
+  ];
+}
 
 /**
  * Create a baseline AI agent with capability profile
@@ -253,7 +389,17 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     },
     
     society: {
+      // P2.3: Initialize heterogeneous population segments
+      segments: initializeSocietySegments(),
+      
+      // Aggregate values (calculated from segments if present, else defaults)
       trustInAI: 0.6,
+      powerWeightedTrustInAI: 0.65,  // Elites have slightly higher trust
+      powerWeightedTrustInGovernment: 0.70,
+      polarizationIndex: 0.15,  // Moderate baseline polarization (2025)
+      eliteMassGap: 0.20,  // 20-point gap between elite and mass attitudes
+      
+      // Existing fields
       paranoiaLevel: 0.1,  // Phase 2.8: Slight baseline caution about AI
       communityStrength: 0.63,  // Phase 2E: Community bonds (medium-high baseline)
       institutionalTrust: 0.70,  // Phase 2E: Trust in institutions (democratic baseline)
