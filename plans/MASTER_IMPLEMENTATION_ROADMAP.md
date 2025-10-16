@@ -35,7 +35,7 @@
 
 ---
 
-### Critical Fixes (~6-8 hours)
+### Critical Fixes (~8-12 hours)
 
 **Priority 2 Remaining:**
 
@@ -43,6 +43,24 @@
   5 social segments with differential mortality, political power, and crisis vulnerability
   → See: `plans/p2-3-heterogeneous-population.md`
   → Tests: `tests/p2-3-heterogeneous-population.test.ts`
+
+- [ ] **P2.4: Simulation Features for Validation** (2-4h) **BLOCKS P2.5**
+  **Status:** Required to unblock P2.5 empirical validation framework
+  → Plan: `plans/simulation-features-for-validation.md`
+  → **Feature 1: Event Trigger System** (1-1.5h)
+    - Add optional event triggers (pandemic, economic crisis, environmental shock)
+    - Enable historical scenario testing (COVID-19, 2008 crisis, Black Death)
+    - Files: New phase `processEventTriggers.ts`, update `initialization.ts`
+  → **Feature 2: Fix Organizational Bankruptcy** (0.5-1h)
+    - Calibrate bankruptcy rates to historical data (currently 100%, should be 8-30%)
+    - Add government bailout mechanics, recovery pathways
+    - Validate: Normal ~8-10%, 2008 ~15-20%, COVID ~25-30%
+  → **Feature 3: Recovery Tracking** (0.5-1h)
+    - Add economic stage tracking (expansion, peak, contraction, trough, recovery)
+    - Calculate time-to-recovery metrics for validation tests
+    - Files: New phase `updateEconomicStage.ts`, new utils `recoveryCalculations.ts`
+  → **Research:** TRL 9 (NBER business cycle dating, historical crisis data)
+  → **Impact:** Enables empirical validation against COVID-19, 2008 crisis, Black Death
 
 - [x] **P2.5: Empirical Validation** ✅ FRAMEWORK COMPLETE (Oct 16, 2025) ⏸️ BLOCKED
   **Status:** Framework complete (4h), awaiting simulation features (2-4h remaining)
@@ -278,9 +296,9 @@
 
 ## Progress Summary
 
-**Completed:** P0 (7/7), P1 (5/5), P2 (4/5), Monte Carlo Bug Fixes (15/15)
-**Active:** 1 critical fix + 2 medium features + 6 AI skills phases + 14 low-priority enhancements + 3 Black Mirror phases
-**Total Remaining Effort:** ~218-248 hours (includes 78h AI skills + 37-49 weeks Black Mirror phased integration)
+**Completed:** P0 (7/7), P1 (5/5), P2 (3/6), Monte Carlo Bug Fixes (15/15)
+**Active:** 2 critical fixes (P2.4, P2.5) + 2 medium features + 6 AI skills phases + 14 low-priority enhancements + 3 Black Mirror phases
+**Total Remaining Effort:** ~220-252 hours (includes 2-4h validation features + 78h AI skills + 37-49 weeks Black Mirror phased integration)
 
 **Recent Completions (Oct 16, 2025):**
 - ✅ P2.3: Heterogeneous Population Segments - 5 social segments with differential crisis vulnerability
@@ -313,7 +331,7 @@
 - Documentation: 3 detailed phase plans + comprehensive research report
 
 **Publication Readiness:** ~80-85% complete (Monte Carlo bugs fixed)
-**Next Milestone:** Complete P2.5 (Empirical Validation), then AI skills phases
+**Next Milestone:** Complete P2.4 (Simulation Features) to unblock P2.5 (Empirical Validation), then AI skills phases
 
 ---
 
