@@ -81,6 +81,11 @@ export function calculateEconomicStageTransition(state: GameState): {
   const wealthDistribution = state.globalMetrics.wealthDistribution;
   const effectiveControl = state.government.controlDesire * state.government.capabilityToControl;
   
+  // P2.3: Bionic skills boost economic productivity
+  // Higher productivity → faster economic growth → faster stage transitions
+  const { calculateProductivityMultiplierFromSkills } = require('./bionicSkills');
+  const productivityMultiplier = calculateProductivityMultiplierFromSkills(state);
+  
   let newStage = currentStage;
   let transitioned = false;
   let transitionType: 'natural' | 'crisis' | 'policy' | undefined;
@@ -88,7 +93,9 @@ export function calculateEconomicStageTransition(state: GameState): {
   // Stage 0→1: AI displacement begins
   if (currentStage < 1.0) {
     if (totalAICapability > 1.2 || unemploymentLevel > 0.12) {
-      newStage = Math.min(1.0, currentStage + 0.1);
+      // P2.3: Productivity boost accelerates economic growth
+      const baseIncrement = 0.1 * productivityMultiplier;
+      newStage = Math.min(1.0, currentStage + baseIncrement);
       transitioned = true;
       transitionType = 'natural';
     }
@@ -97,7 +104,10 @@ export function calculateEconomicStageTransition(state: GameState): {
   // Stage 1→2: Mass unemployment crisis (CRITICAL THRESHOLD)
   if (currentStage >= 1.0 && currentStage < 2.0) {
     if (unemploymentLevel > 0.25) {
-      newStage = Math.min(2.0, currentStage + 0.2);
+      // P2.3: Crisis driven by unemployment, not productivity
+      // But higher productivity can soften the crisis
+      const crisisModifier = Math.max(0.5, 2.0 - productivityMultiplier);
+      newStage = Math.min(2.0, currentStage + 0.2 * crisisModifier);
       transitioned = true;
       transitionType = 'crisis';
     }
@@ -106,7 +116,9 @@ export function calculateEconomicStageTransition(state: GameState): {
   // Stage 2→3: UBI/Transition policies (requires policy action)
   if (currentStage >= 2.0 && currentStage < 3.0) {
     if (hasUBI && socialAdaptation > 0.2) {
-      newStage = Math.min(3.0, currentStage + 0.15);
+      // P2.3: Productivity makes transition smoother
+      const policyIncrement = 0.15 * productivityMultiplier;
+      newStage = Math.min(3.0, currentStage + policyIncrement);
       transitioned = true;
       transitionType = 'policy';
     }
@@ -126,7 +138,9 @@ export function calculateEconomicStageTransition(state: GameState): {
       state.government.surveillanceCapability > 0.7;
     
     if (utopianConditions || dystopianConditions) {
-      newStage = Math.min(4.0, currentStage + 0.08);
+      // P2.3: Productivity critical for reaching post-scarcity
+      const scarcityIncrement = 0.08 * (utopianConditions ? productivityMultiplier : 1.0);
+      newStage = Math.min(4.0, currentStage + scarcityIncrement);
       transitioned = true;
       transitionType = utopianConditions ? 'natural' : 'policy';
     }
