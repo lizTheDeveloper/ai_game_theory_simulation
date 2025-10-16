@@ -45,6 +45,7 @@ import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
 import { SocietySegment } from '@/types/game';
 import { initializeHumanEnhancementSystem } from './humanEnhancement';
+import { initializeAIAssistedSkillsMetrics } from './bionicSkills'; // Research-validated AI skill enhancement
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 
@@ -554,7 +555,13 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     // TIER 4: Enrichment Systems
     informationWarfare: initializeInformationWarfare(),
     powerGenerationSystem: initializePowerGenerationSystem(),
-    humanEnhancementSystem: initializeHumanEnhancementSystem(), // TIER 4.6: Human Enhancement & Merger Pathways
+
+    // TIER 4.6: AI-Assisted Skills Enhancement (Research-validated, TRL 8-9)
+    aiAssistedSkillsMetrics: initializeAIAssistedSkillsMetrics(), // Digital AI augmentation (GitHub Copilot, ChatGPT, AI tutors)
+
+    // TIER 4.6: Human Enhancement (DEPRECATED - contains sci-fi BCI/merger code)
+    humanEnhancementSystem: initializeHumanEnhancementSystem(), // DEPRECATED: Being phased out, use aiAssistedSkillsMetrics
+
     memeticSystem: initializeMemeticSystem(), // P2.6: Memetic Evolution & Polarization Dynamics
 
     // TIER 1.7: Crisis Realism - Regional Biodiversity

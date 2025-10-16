@@ -979,8 +979,11 @@ export interface GameState {
   // Power Generation & AI Energy Consumption (TIER 4.4)
   powerGenerationSystem: import('../types/powerGeneration').PowerGenerationSystem; // Electricity generation, AI efficiency, crypto mining, climate impact
 
-  // Human Enhancement & AI-Human Merger (TIER 4.6)
-  humanEnhancementSystem: import('../types/humanEnhancement').HumanEnhancementSystem; // AI-assisted cognition, BCI adoption, cognitive stratification, merger pathways
+  // AI-Assisted Skills Enhancement (TIER 4.6) - Research-validated digital augmentation
+  aiAssistedSkillsMetrics?: import('../simulation/bionicSkills').AIAssistedSkillsMetrics; // Population-level metrics for AI tool adoption (GitHub Copilot, ChatGPT, AI tutors)
+
+  // Human Enhancement & AI-Human Merger (TIER 4.6) - DEPRECATED (contains sci-fi BCI/merger code, being phased out)
+  humanEnhancementSystem: import('../types/humanEnhancement').HumanEnhancementSystem; // DEPRECATED: Use aiAssistedSkillsMetrics instead. Contains sci-fi elements (BCIs, consciousness upload) that are TRL 0-2.
 
   // Memetic Evolution & Polarization Dynamics (P2.6, Oct 16 2025)
   memeticSystem: import('../types/memetics').MemeticSystem; // Belief evolution, meme transmission, societal fragmentation
