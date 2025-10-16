@@ -43,21 +43,21 @@
 
 **TIER 4.6: Human Enhancement & Merger Pathways** (7h)
 - Novel outcome space: Human-AI merger, cognitive apartheid
-- See: `plans/completed/tier4-6-human-enhancement.md`
+- See: `plans/tier4-6-human-enhancement.md`
 
 ### Low Priority - Enrichment Features (~46 hours)
 
 **TIER 5.1: Consciousness & Spirituality** (5h)
 - Psychedelic therapy, meditation tech, meaning spiral expansion
-- See: `plans/completed/tier5-1-consciousness-spirituality.md`
+- See: `plans/tier5-1-consciousness-spirituality.md`
 
 **TIER 5.2: Longevity & Space Expansion** (6h)
 - Life extension, space industrialization, resource uncapping
-- See: `plans/completed/tier5-2-longevity-space.md`
+- See: `plans/tier5-2-longevity-space.md`
 
 **TIER 5.3: Cooperative AI Architectures** (5h)
 - AI-AI cooperation, value learning, corrigibility preservation
-- See: `plans/completed/tier5-3-cooperative-ai.md`
+- See: `plans/tier5-3-cooperative-ai.md`
 
 **TIER 5.4: Financial System Interactions** (5h)
 - Algorithmic trading, CBDC, flash crashes, AI-driven command economy
