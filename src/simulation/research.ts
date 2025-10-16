@@ -65,12 +65,79 @@ export function calculateComputeScalingMultiplier(
 }
 
 /**
+ * TIER 0C: Calculate infrastructure multiplier based on civilization health
+ *
+ * When population collapses, data centers close, and organizations fail,
+ * AI capability growth must slow or reverse - physical constraints matter.
+ *
+ * Constraints:
+ * - Population: Fewer ML engineers to maintain/train models
+ * - Data centers: Less compute capacity available
+ * - Organizations: Bankruptcy means no R&D investment
+ *
+ * @param state Current game state
+ * @returns Multiplier [0.1, 1.0] where 1.0 = normal, 0.1 = severe constraint
+ */
+export function calculateInfrastructureMultiplier(state: GameState): number {
+  // 1. Population constraint (ML expertise)
+  const initialPopulation = 8000000000; // 8B baseline
+  const currentPopulation = state.population?.current || initialPopulation;
+  const populationRatio = currentPopulation / initialPopulation;
+
+  // Population decline reduces ML expertise available
+  // 50% population loss → 30-40% reduction in expertise (nonlinear, core expertise most robust)
+  const expertiseMultiplier = 0.6 + (populationRatio * 0.4); // [0.6, 1.0]
+
+  // 2. Data center constraint
+  const dataCenters = state.computeInfrastructure?.dataCenters || [];
+  const functionalDCs = dataCenters.filter(dc => !dc.destroyed && dc.constructionProgress >= 1.0).length;
+  const initialDCs = 5; // Starting data centers
+
+  // Data center capacity multiplier
+  // Losing data centers directly reduces compute available for training
+  const dcRatio = functionalDCs / Math.max(1, initialDCs);
+  const dcMultiplier = Math.max(0.3, Math.min(1.0, dcRatio)); // [0.3, 1.0]
+
+  // 3. Organization health constraint
+  const orgs = state.organizations || [];
+  const activeOrgs = orgs.filter(o => o.capital > -1000); // Not deeply bankrupt
+  const totalOrgs = Math.max(1, orgs.length);
+  const orgHealthRatio = activeOrgs.length / totalOrgs;
+
+  // Organization bankruptcy reduces R&D capacity
+  const orgMultiplier = 0.4 + (orgHealthRatio * 0.6); // [0.4, 1.0]
+
+  // 4. Crisis degradation (supply chain, power grid)
+  let crisisMultiplier = 1.0;
+
+  // Check for active crises that disrupt infrastructure
+  if (state.extinctionState?.active || state.environmentalAccumulation?.ecosystemCollapseActive) {
+    crisisMultiplier *= 0.7; // 30% reduction during active extinction/collapse
+  }
+
+  // Tipping point cascade severely disrupts infrastructure
+  if (state.planetaryBoundaries?.tippingPointCascade?.active) {
+    const months = state.planetaryBoundaries.tippingPointCascade.monthsActive || 0;
+    // Degradation increases over time during cascade
+    const cascadePenalty = Math.max(0.5, 1.0 - (months * 0.02)); // 2% per month, floor at 50%
+    crisisMultiplier *= cascadePenalty;
+  }
+
+  // Combine all constraints (multiplicative - all must be healthy)
+  const finalMultiplier = expertiseMultiplier * dcMultiplier * orgMultiplier * crisisMultiplier;
+
+  // Floor at 0.1 (even in total collapse, some research possible with surviving infrastructure)
+  return Math.max(0.1, finalMultiplier);
+}
+
+/**
  * Calculate research progress for a specific capability dimension
  *
  * Progress depends on:
  * - Base growth rate (varies by dimension)
  * - **PHASE 4: Allocated compute (scaling law)**
  * - **TIER 4.4: Energy constraints (physical bottleneck)**
+ * - **TIER 0C: Infrastructure constraints (population, data centers, orgs)**
  * - Development mode (fast vs careful)
  * - Current capability level (diminishing returns)
  * - Government investment multiplier
@@ -93,6 +160,9 @@ export function calculateDimensionGrowth(
 
   // TIER 4.4: Energy constraint multiplier (physical reality check on exponential growth)
   const energyMultiplier = state ? getEnergyConstraintMultiplier(state) : 1.0;
+
+  // TIER 0C: Infrastructure constraint multiplier (population, data centers, org health)
+  const infrastructureMultiplier = state ? calculateInfrastructureMultiplier(state) : 1.0;
 
   // Base growth rates by dimension (per action, 4 actions/month)
   // Phase 2: INCREASED to match empirical AI progress (GPT-3→GPT-4 was 10x in 3 years)
@@ -137,9 +207,9 @@ export function calculateDimensionGrowth(
   // Apply penalties
   const penaltyMultiplier = regulationPenalty * computeGovernancePenalty;
 
-  // Phase 4 + TIER 4.4 + P0.1: Include compute, energy, and recursive improvement multipliers
-  // Energy constraint is a hard physical bottleneck - no compute can bypass it
-  return baseGrowth * computeMultiplier * energyMultiplier * diminishingReturns * govMultiplier * aiMultiplier * recursiveMultiplier * penaltyMultiplier;
+  // Phase 4 + TIER 4.4 + TIER 0C + P0.1: Include compute, energy, infrastructure, and recursive improvement multipliers
+  // Physical bottlenecks (energy, infrastructure) are hard constraints - no compute can bypass them
+  return baseGrowth * computeMultiplier * energyMultiplier * infrastructureMultiplier * diminishingReturns * govMultiplier * aiMultiplier * recursiveMultiplier * penaltyMultiplier;
 }
 
 /**
@@ -170,6 +240,10 @@ export function calculateResearchGrowth(
 
   // TIER 4.4: Energy constraint multiplier (physical reality check on exponential growth)
   const energyMultiplier = state ? getEnergyConstraintMultiplier(state) : 1.0;
+
+  // TIER 0C: Infrastructure constraint multiplier (population, data centers, org health)
+  const infrastructureMultiplier = state ? calculateInfrastructureMultiplier(state) : 1.0;
+
   // Base growth rates by domain and subfield (per action, 4 actions/month)
   // Phase 2: INCREASED to match realistic research progress
   const growthRates: Record<string, Record<string, number>> = {
@@ -226,9 +300,9 @@ export function calculateResearchGrowth(
     }
   }
   
-  // Phase 4 + TIER 4.4: Include compute and energy multipliers in calculation
-  // Energy constraint is a hard physical bottleneck - no compute can bypass it
-  return baseGrowth * computeMultiplier * energyMultiplier * diminishingReturns * govMultiplier * aiMultiplier *
+  // Phase 4 + TIER 4.4 + TIER 0C: Include compute, energy, and infrastructure multipliers
+  // Physical bottlenecks (energy, infrastructure) are hard constraints - no compute can bypass them
+  return baseGrowth * computeMultiplier * energyMultiplier * infrastructureMultiplier * diminishingReturns * govMultiplier * aiMultiplier *
     riskMultiplier * prerequisiteGate * regulationPenalty;
 }
 
