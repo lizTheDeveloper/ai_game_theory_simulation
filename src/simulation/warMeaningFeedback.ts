@@ -350,17 +350,20 @@ function updateParentalFulfillment(country: CountryPopulation, state: GameState)
 function updateMoralInjury(country: CountryPopulation, state: GameState): void {
   // Moral injury accumulates from active interventions
   // Iraq/Afghanistan: 11-20% of veterans have PTSD
+  
+  // Oct 16, 2025: Check if activeInterventions exists and is iterable
+  if (country.activeInterventions && Array.isArray(country.activeInterventions)) {
+    for (const intervention of country.activeInterventions) {
+      // Veteran return rate (small % of population each month)
+      const veteranReturnRate = 0.0005; // 0.05% of population are veterans
 
-  for (const intervention of country.activeInterventions) {
-    // Veteran return rate (small % of population each month)
-    const veteranReturnRate = 0.0005; // 0.05% of population are veterans
+      // PTSD rate among veterans (15% average)
+      const ptsdRate = 0.15;
 
-    // PTSD rate among veterans (15% average)
-    const ptsdRate = 0.15;
-
-    // Moral injury increases
-    const monthlyInjury = veteranReturnRate * ptsdRate;
-    country.moralInjury = Math.min(0.25, country.moralInjury + monthlyInjury); // Max 25% of population affected
+      // Moral injury increases
+      const monthlyInjury = veteranReturnRate * ptsdRate;
+      country.moralInjury = Math.min(0.25, country.moralInjury + monthlyInjury); // Max 25% of population affected
+    }
   }
 
   // Moral injury decays slowly over time (healing)
