@@ -53,6 +53,7 @@ Each message should follow this structure:
 
 ### Status Tags
 
+- `[ENTERED]` - Agent has entered the channel and is now active
 - `[STARTED]` - Beginning work on something
 - `[IN-PROGRESS]` - Update on ongoing work
 - `[COMPLETED]` - Finished a task or milestone
@@ -60,6 +61,7 @@ Each message should follow this structure:
 - `[QUESTION]` - Need input from another agent or human
 - `[ALERT]` - Critical issue requiring immediate attention
 - `[HANDOFF]` - Passing work to another agent
+- `[LEAVING]` - Agent is leaving the channel (no longer active)
 
 ## Usage Examples
 
@@ -262,11 +264,19 @@ Agents can chat efficiently without reading entire files every time. Here's how:
 # Source the helper functions
 source .claude/chatroom/chat_helpers.sh
 
-# Now you have access to all chat functions:
+# Enter a channel (marks you as active)
+enter_chat "coordination" "my-agent"
+
+# Post messages, read, wait, etc.
 post_msg "coordination" "my-agent" "STARTED" "Beginning work"
 read_new "coordination"
 wait_for_message "coordination" 60
-# ... and more (see below)
+
+# See who else is active
+who_is_active "coordination"
+
+# Leave when done
+leave_chat "coordination" "my-agent" "Work complete"
 
 # Run example to see it in action:
 .claude/chatroom/example_agent.sh
@@ -380,6 +390,57 @@ has_alert() {
 if has_alert "architecture"; then
   echo "Critical architecture issue detected!"
 fi
+
+
+# 6. ENTER CHAT (mark as active, post entry message)
+enter_chat() {
+  local channel="$1"
+  local agent="$2"
+
+  # Adds agent to active list and posts [ENTERED] message
+}
+
+# Usage:
+enter_chat "coordination" "feature-implementer"
+
+
+# 7. LEAVE CHAT (mark as inactive, post exit message)
+leave_chat() {
+  local channel="$1"
+  local agent="$2"
+  local reason="${3:-Leaving channel}"  # Optional reason
+
+  # Removes agent from active list and posts [LEAVING] message
+}
+
+# Usage:
+leave_chat "coordination" "feature-implementer" "Work complete, moving to next feature"
+
+
+# 8. WHO IS ACTIVE (show current agents in channel)
+who_is_active() {
+  local channel="$1"
+
+  # Shows all agents currently marked as active in the channel
+}
+
+# Usage:
+who_is_active "coordination"
+# Output:
+# ━━━ Active in coordination ━━━
+#   ● feature-implementer
+#   ● architecture-skeptic
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+# 9. GRACEFUL EXIT (cleanup without posting)
+cleanup_on_exit() {
+  local channel="$1"
+  local agent="$2"
+
+  # Removes from active list silently (for script crashes/interrupts)
+  # Use with trap: trap "cleanup_on_exit 'coordination' 'my-agent'" EXIT
+}
 ```
 
 ### Real-Time Chat Loop Example
@@ -393,8 +454,14 @@ For agents that need to actively monitor and respond:
 AGENT_NAME="feature-implementer"
 CHANNEL="my-feature"
 
-# Initialize: Post that you're online
-post_msg "$CHANNEL" "$AGENT_NAME" "IN-PROGRESS" "Online and monitoring channel"
+# Source helpers
+source .claude/chatroom/chat_helpers.sh
+
+# Trap EXIT to cleanup on script termination
+trap "cleanup_on_exit '$CHANNEL' '$AGENT_NAME'" EXIT
+
+# Enter the channel (marks as active, posts entry)
+enter_chat "$CHANNEL" "$AGENT_NAME"
 
 # Chat loop: Check every 10 seconds, respond to questions
 while true; do
@@ -413,6 +480,43 @@ while true; do
 
   sleep 10  # Check every 10 seconds
 done
+
+# Leave gracefully (will also trigger on EXIT via trap)
+leave_chat "$CHANNEL" "$AGENT_NAME" "Chat loop ended"
+```
+
+### Presence Tracking Example
+
+Using enter/leave to coordinate work:
+
+```bash
+#!/bin/bash
+# Short-lived task with presence tracking
+
+source .claude/chatroom/chat_helpers.sh
+
+AGENT="feature-implementer"
+CHANNEL="nuclear-war-prevention"
+
+# Enter channel
+enter_chat "$CHANNEL" "$AGENT"
+
+# Check who else is here
+echo "Checking who else is working..."
+who_is_active "$CHANNEL"
+
+# Do work
+post_msg "$CHANNEL" "$AGENT" "IN-PROGRESS" "Phase 1 implementation starting"
+sleep 5  # Simulated work
+
+# Check if coordination channel has activity
+if who_is_active "coordination"; then
+  echo "Other agents active in coordination, checking for conflicts..."
+fi
+
+# Complete and leave
+post_msg "$CHANNEL" "$AGENT" "COMPLETED" "Phase 1 done"
+leave_chat "$CHANNEL" "$AGENT" "Phase 1 complete, moving to Phase 2"
 ```
 
 ### Coordination Protocol Example
