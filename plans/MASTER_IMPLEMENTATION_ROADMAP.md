@@ -27,7 +27,7 @@
 **TIER 4.1-4.5:** Tech tree (70 techs), dystopia paths, info warfare, energy/resources, population
 **Priority 0 (P0):** 7 critical fixes - AI growth, bankruptcy, determinism, stochasticity (✅ 7/7 complete)
 **Priority 1 (P1):** 5 high-priority fixes - death accounting, mortality rates, recovery mechanics (✅ 5/5 complete)
-**Priority 2 (P2):** 4 medium improvements - environmental calibration, breakthroughs, org diversification, heterogeneous populations (✅ 4/5 complete)
+**Priority 2 (P2):** 6 medium improvements - environmental calibration, breakthroughs, org diversification, heterogeneous populations, simulation features, memetic evolution (✅ 6/6 complete)
 
 **All details:** See `/plans/completed/` directory
 
@@ -35,50 +35,22 @@
 
 ---
 
-### Critical Fixes (~8-12 hours)
+### ✅ Priority 2 Complete (6/6)
 
-**Priority 2 Remaining:**
+All Priority 2 improvements are now complete and archived to `/plans/completed/`:
 
-- [x] **P2.3: Heterogeneous Population Segments** ✅ (8-10h) **COMPLETE**
-  5 social segments with differential mortality, political power, and crisis vulnerability
-  → See: `plans/p2-3-heterogeneous-population.md`
-  → Tests: `tests/p2-3-heterogeneous-population.test.ts`
+- [x] **P2.3: Heterogeneous Population Segments** ✅ COMPLETE (8-10h actual)
+  → Plan: `plans/completed/p2-3-heterogeneous-population.md`
 
-- [x] **P2.4: Simulation Features for Validation** ✅ COMPLETE (Oct 16, 2025) (3h actual)
-  **Status:** All 3 features complete
-  → Plan: `plans/simulation-features-for-validation.md`
-  → ✅ **Feature 1: Event Trigger System** (1.5h) **COMPLETE**
-    - Full pandemic + economic crisis system (`triggeredEvents.ts`, 594 lines)
-    - Pandemic phases: outbreak, peak, decline, recovery (vaccine timelines)
-    - Economic crisis phases: shock, crisis, stabilization, recovery
-    - Sector-specific bankruptcy (tech 5%, finance 30%, general 15%)
-    - Phase: `TriggeredEventsPhase.ts` (order 27.0, registered in engine)
-  → ✅ **Feature 2: Fix Organizational Bankruptcy Determinism** (1h) **COMPLETE**
-    - Fixed 3 Math.random() calls to use deterministic RNG
-    - Updated `calculateOrganizationBankruptcyRisk` to accept RNG parameter
-    - Updated `OrganizationViabilityPhase` to implement SimulationPhase interface
-    - Bankruptcy logic validated (weighted decline, resilience, sigmoid curve)
-    - **Note:** triggeredEvents.ts bankruptcy still uses Math.random() (validation-only, low priority)
-  → ✅ **Feature 3: Recovery Tracking** (0.5h) **COMPLETE**
-    - Added EconomicStageHistory types to game.ts (month, stage, GDP/QoL levels, baselines)
-    - Created recoveryCalculations.ts utility (NBER methodology, 5 stages, time-to-recovery)
-    - Implemented UpdateEconomicStagePhase (order 31, tracks transitions, updates baseline)
-    - Updated initialization.ts to initialize recovery tracking
-    - Registered phase in engine.ts and phases/index.ts
-    - Tested and validated (expansion → peak transition logged successfully)
-  → **Research:** TRL 9 (SEIR models, Basel III stress testing, BLS/BEA/OECD data, NBER business cycle dating)
-  → **Impact:** ✅ Can trigger historical events, ✅ Deterministic bankruptcy, ✅ Recovery metrics available
+- [x] **P2.4: Simulation Features for Validation** ✅ COMPLETE (3h actual, Oct 16, 2025)
+  → Plan: `plans/completed/p2-4-simulation-features-COMPLETE.md`
+  → Detail: `plans/completed/event-trigger-system-design.md`
 
-- [x] **P2.5: Empirical Validation** ✅ FRAMEWORK COMPLETE (Oct 16, 2025) ✅ FULLY UNBLOCKED
-  **Status:** Framework complete (4h), all 3 blocking features resolved
-  → Framework: `tests/validation/` (historicalStates.ts + 20 tests)
-  → Documentation: `tests/validation/README.md`
-  → Blocking Issues:
-    ✅ 1. Event trigger system (pandemic, economic crisis) - **RESOLVED (P2.4)**
-    ✅ 2. Fix organizational bankruptcy determinism - **RESOLVED (P2.4)**
-    ✅ 3. Add recovery tracking (economic stage history, time-to-recovery) - **RESOLVED (P2.4)**
-  → **Note:** Ready for full validation testing - all prerequisites complete
+- [x] **P2.5: Empirical Validation** ✅ FRAMEWORK COMPLETE (4h actual, Oct 16, 2025)
   → Plan: `plans/completed/p2-5-empirical-validation-FRAMEWORK-COMPLETE.md`
+
+- [x] **P2.6: Memetic Evolution & Polarization Dynamics** ✅ COMPLETE (10.5h actual, Oct 16, 2025)
+  → Plan: `plans/completed/p2-6-memetic-polarization-dynamics-COMPLETE.md`
 
 ---
 
@@ -94,14 +66,6 @@
   → Next: Merge humanEnhancement.ts segment tracking into bionicSkills.ts, remove BCI/merger
 
 **Research-Backed Enhancements:**
-
-- [x] **P2.6: Memetic Evolution & Polarization Dynamics** ✅ COMPLETE (10.5h actual, Oct 16 2025)
-  Agent-based belief systems, meme transmission, societal fragmentation
-  → See: `plans/p2-6-memetic-polarization-dynamics.md`
-  → Research: TRL 6-7, validated against 2024-2025 peer-reviewed studies
-  → **Implemented:** 5 belief clusters, meme lifecycle (creation/mutation/selection), AI amplification (Sora 2 deepfakes, bots, algorithms)
-  → **Files:** `memetics/initialization.ts`, `beliefEvolution.ts`, `memeTransmission.ts`, `aiAmplification.ts`
-  → **Impact:** Critical for modeling societal response to AI development - now operational
 
 - [ ] **Digital Consciousness Governance Preparedness** (12-16h) **[Black Mirror Phase 3]**
   Multi-scenario rights timeline modeling (15-200 years), regional governance variation (EU/US/China/Global South), rights reversal mechanics (Poland/Hungary model), precautionary principle costs
@@ -397,32 +361,23 @@
 
 ## Progress Summary
 
-**Completed:** P0 (7/7), P1 (5/5), P2 (6/6 - P2.4 complete, P2.6 complete), Monte Carlo Bug Fixes (15/15), Crisis Accumulation Fixes (2 fixes), Black Mirror Phase 3 Decomposition (1 approved, 1 deferred, 1 rejected)
-**Active:** P2.5 testing + 1 reconciliation (TIER 4.6) + 2 medium features (Digital Consciousness + AI skills phases) + 14 low-priority enhancements + 2 Black Mirror phases (Phase 1 + Phase 2)
+**Completed:** P0 (7/7), P1 (5/5), P2 (6/6 ✅ ALL COMPLETE), Monte Carlo Bug Fixes (15/15), Crisis Accumulation Fixes (2 fixes), Black Mirror Phase 3 Decomposition (1 approved, 1 deferred, 1 rejected)
+**Active:** 1 reconciliation (TIER 4.6) + 2 medium features (Digital Consciousness + AI skills phases) + 14 low-priority enhancements + 2 Black Mirror phases (Phase 1 + Phase 2)
 **Total Remaining Effort:** ~219-251 hours (includes 12-16h digital consciousness + 78h AI skills + 37-49 weeks Black Mirror Phase 1-2)
 
 **Recent Completions (Oct 16, 2025):**
+- ✅ **Priority 2 Complete (6/6)** - All P2 tasks finished, plans archived to `/plans/completed/`
+  - P2.3: Heterogeneous Population Segments (8-10h)
+  - P2.4: Simulation Features for Validation (3h) - Event triggers, bankruptcy fixes, recovery tracking
+  - P2.5: Empirical Validation Framework (4h) - Test suite ready for historical validation
+  - P2.6: Memetic Evolution & Polarization Dynamics (10.5h) - Belief systems, meme lifecycle, AI amplification
 - ✅ **Black Mirror Phase 3 Decomposition** - Research-critique dialectic (1 approved, 1 deferred, 1 rejected)
-  - Digital Consciousness Governance: CONDITIONAL GO (12-16h, multi-scenario + regional variation + rights reversals + precautionary costs)
-  - Performative Behavior: DEFERRED 18-24 months (effect sizes too small 0.17-0.25 SD, WEIRD bias 97%, one-sided harm model, net-zero for moderate users)
-  - Autonomous Weapons: REJECTED (research 2-4 years obsolete, AI improves reliability 4-7x not degrades, swarms enable 1:100+ ratios not 1:1, core assumptions contradicted)
-  - Research: 31K words amended research (40+ new sources), skeptical critique, honest go/no-go assessment
-  - Plans created: 3 detailed implementation/deferral/rejection documents with cross-references
-  - Net impact: +12-16 hours (digital consciousness added to medium priority)
-- ✅ **P2.4: Simulation Features (3/3)** ✅ COMPLETE - Event triggers + bankruptcy + recovery tracking (3h)
-  - Feature 1: Full event trigger system (pandemic + economic crisis, 594 lines)
-  - Feature 2: Fixed Math.random() in bankruptcy (3 places, now deterministic)
-  - Feature 3: Recovery tracking complete (NBER methodology, 5 stages, time-to-recovery metrics)
-- ✅ **Crisis Accumulation Fixes (2/3)** - Fixed biodiversity-carrying capacity bug (295M deaths/month → 135M), slowed meaning crisis + AI misalignment accumulation by 3-5x to match 2-5 year research timelines (see `devlogs/crisis_accumulation_fixes_oct16_2025.md`)
-- ✅ **P2.6: Memetic Evolution & Polarization Dynamics (10.5h)** - Agent-based belief systems, meme lifecycle (creation/mutation/selection), AI amplification (Sora 2 deepfakes, bots, algorithms), polarization metrics (see `plans/p2-6-memetic-polarization-dynamics.md`)
-- ⚠️ TIER 4.6: Human Enhancement - Implemented but needs reconciliation with existing bionicSkills.ts (BCI/merger = TRL 0-2, should remove)
-- ✅ P2.3: Heterogeneous Population Segments - 5 social segments with differential crisis vulnerability
+  - Digital Consciousness Governance: CONDITIONAL GO (12-16h, now active plan)
+  - Performative Behavior: DEFERRED 18-24 months (active deferral tracking)
+  - Autonomous Weapons: REJECTED (archived to `/plans/completed/rejected/`)
 - ✅ **Monte Carlo Bug Fixes (15/15)** - All critical, significant, and minor bugs fixed
-  - Critical: Fixed crashes, undefined variables, data corruption (7 bugs)
-  - Significant: Fixed statistical accuracy, division errors, scenario splits (5 bugs)
-  - Minor: Optimized performance, documented memory management (3 bugs)
-  - Files: `monteCarloSimulation.ts`, `engine.ts`, verified `population.ts`
-  - Report archived: `plans/completed/monte_carlo_reporting_bugs_FIXED_20251016.md`
+- ✅ **Crisis Accumulation Fixes (2/3)** - Biodiversity bug fixed, meaning crisis + AI misalignment slowed 3-5x
+- ⚠️ TIER 4.6: Human Enhancement - Implemented but needs reconciliation with existing bionicSkills.ts (BCI/merger = TRL 0-2, should remove)
 
 **New from Visionary Ideas Review (Oct 16, 2025):**
 - Added P2.6: Memetic Evolution & Polarization Dynamics (12-15h) - High-value, TRL 6-7
