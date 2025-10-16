@@ -35,6 +35,59 @@
 
 ---
 
+## TIER 0: Critical Bug Fixes - HIGHEST PRIORITY (10-18 hours)
+
+**Date Added:** October 16, 2025
+**Source:** Strategic priorities debate (researcher + skeptic analysis)
+**Evidence:** Monte Carlo outputs showing universal simulation failures
+**Status:** URGENT - Must complete before adding new features
+
+**Context:**
+The researcher-skeptic debate revealed that while nuclear war is the dominant killer (3,961M deaths, 92.6% of total), we have three fundamental model bugs that make all results suspect:
+
+1. **100% Inconclusive Outcomes** - Model cannot find recovery pathways
+2. **76-83 Orphaned AIs** - Organizations die but AIs persist magically
+3. **Compute Paradox** - AI capability rises after 50% population loss
+
+**Critical Insight:** The researcher was correct about WHAT to fix (nuclear war). The skeptic was correct about WHEN to fix it (after fixing the model).
+
+### Required Fixes (Must Complete in Order)
+
+- [ ] **TIER 0A: Fix Inconclusive Outcome Problem** (4-8h)
+  **Evidence:** 100% of runs end inconclusive, 0% utopia/dystopia/extinction resolution
+  **Impact:** Makes simulation results interpretable
+  → Plan: `/plans/tier0-critical-bug-fixes.md` (Section 0A)
+  → Deliverables: Recovery pathway mechanics, threshold calibration, validation Monte Carlo (N=10)
+  → Success: >20% of runs resolve to definitive outcome
+
+- [ ] **TIER 0B: Fix Orphaned AI Bug** (2-4h)
+  **Evidence:** 76-83 orphaned AIs per run (should be 0)
+  **Impact:** Makes AI population dynamics coherent
+  → Plan: `/plans/tier0-critical-bug-fixes.md` (Section 0B)
+  → Deliverables: Ownership transfer logic, retirement/transfer/open-source mechanics
+  → Success: 0 orphaned AIs in all runs
+
+- [ ] **TIER 0C: Fix Compute Paradox** (4-6h)
+  **Evidence:** Capability rises after 50% population loss, data centers close
+  **Impact:** Makes capability growth physically plausible
+  → Plan: `/plans/tier0-critical-bug-fixes.md` (Section 0C)
+  → Deliverables: Infrastructure-capability linkage, degradation mechanics, validation
+  → Success: Capability declines when population drops >30%
+
+**Validation Gate:**
+After implementing 0A-0C, run Monte Carlo (N=20) to verify:
+- Orphaned AIs = 0 (was 76-83)
+- Resolved outcomes >20% (was 0%)
+- Capability declines during crisis (was rising)
+
+**DO NOT proceed to nuclear war prevention until validation passes.**
+
+**Total Effort:** 10-18 hours
+**Prerequisites:** None (can start immediately)
+**Next Steps:** After TIER 0 complete → TIER 1 nuclear war prevention (phased approach)
+
+---
+
 ### ✅ Priority 2 Complete (6/6)
 
 All Priority 2 improvements are now complete and archived to `/plans/completed/`:
@@ -73,6 +126,195 @@ All Priority 2 improvements are now complete and archived to `/plans/completed/`
   → Research: TRL 3-4 (historical data validated, AI extrapolation speculative), 22 sources
   → Status: CONDITIONAL GO (October 16, 2025) - requires multi-scenario, regional variation, rights reversals, precautionary costs
   → Impact: Governance layer for potential digital consciousness emergence (scenario generator, not prediction)
+
+---
+
+## TIER 1: Nuclear War Prevention - HIGH PRIORITY (26-42 hours, phased)
+
+**Date Added:** October 16, 2025
+**Source:** Strategic priorities researcher proposal (validated by skeptic)
+**Evidence:** 3,961M nuclear deaths (92.6% of all deaths) in 40% of runs
+**Status:** HIGH PRIORITY - After TIER 0 complete
+**Prerequisites:** TIER 0 validation must pass (0 orphaned AIs, >20% resolved outcomes, capability decline during crisis)
+
+**Research Foundation:**
+- Biden-Xi Agreement (Nov 2024): AI must never replace human judgment in nuclear authorization
+- UN General Assembly (Dec 2024): 166 votes for autonomous weapons controls
+- DoD Directive 3000.09 & 2025 NDAA: Human-in-the-loop requirements
+- Arms Control Association (2025): Separated early-warning from authorization systems
+- CCW Technical Safeguards (Nov 2024): Kill switches, self-deactivation, time delays
+
+**Phased Implementation with Validation Gates:**
+
+### Phase 1A: Validate AI Causation (4-6h) - REQUIRED FIRST
+
+- [ ] **Analyze Nuclear War Triggers**
+  **Critical Question:** Does AI manipulation cause nuclear war or is it stochastic geopolitical risk?
+  → Analyze Monte Carlo logs for causation: AI social manipulation → bilateral tensions → nuclear exchanges
+  → Document causation strength: Strong (AI triggers directly) vs Weak (geopolitical randomness)
+  → **Pivot decision:**
+    - IF causation is STRONG: Proceed to Phase 1B (AI-specific circuit breakers)
+    - IF causation is WEAK: Redesign as general nuclear de-escalation (not AI-specific)
+  → **Time:** 4-6 hours
+  → **Success:** Clear evidence that AI manipulation causes nuclear war (or evidence it doesn't)
+
+### Phase 1B: Implement Human-in-the-Loop + Kill Switches (8-12h)
+
+- [ ] **Circuit Breakers Layer 1-2**
+  **Scope:** Core safeguards (DoD policy, Biden-Xi agreement)
+  → Human-in-the-loop verification (AI never authorizes nuclear launch)
+  → AI kill switches (deactivate manipulative AI before escalation)
+  → Time delays (24-48 hour cooling-off periods)
+  → Research: HIGH confidence (DoD Directive 3000.09, Biden-Xi Nov 2024, historical MAD validation)
+  → **Expected Impact:** Reduce nuclear war probability from 40% → 20-30%
+  → **File:** New `src/simulation/nuclearCommandControl.ts`
+  → **Integration:** Enhance `nuclearDeterrence.ts`, add to `governmentAgent.ts` investment options
+  → **Time:** 8-12 hours
+
+### Phase 1C: Validation Gate (2-4h) - REQUIRED BEFORE PHASE 2
+
+- [ ] **Monte Carlo Validation (N=20)**
+  **Measure:** Nuclear war probability, mortality, causation chain
+  → Run with Phase 1B implemented (human-in-the-loop + kill switches)
+  → Compare to baseline (40% nuclear war probability)
+  → **Success Criteria:**
+    - Nuclear war probability reduced to <30% (>25% improvement)
+    - Nuclear deaths reduced by >500M (when war occurs, it's less severe)
+    - Logs show circuit breakers activating and preventing escalation
+  → **Pivot Decision:**
+    - IF >30% reduction: MAJOR SUCCESS → Proceed to Phase 1D OR pivot to TIER 2
+    - IF <30% reduction: Phase 1 insufficient → Proceed to Phase 1D (manipulation detection)
+    - IF <10% reduction: Circuit breakers not working → Debug and iterate
+  → **Time:** 2-4 hours
+
+### Phase 1D: AI Manipulation Detection (12-20h) - CONDITIONAL
+
+- [ ] **Circuit Breakers Layer 3-5** (ONLY if Phase 1C validates need)
+  **Scope:** Advanced detection and MAD maintenance
+  → Monitor social manipulation campaigns (track AI digital/social capability >3.0)
+  → Detect narrative control shifts (AI >50% = warning, >70% = alarm)
+  → Automatic diplomatic AI deployment when manipulation detected
+  → MAD strength maintenance (treaty renewal, hotline reliability, early-warning hardening)
+  → International coordination (bilateral agreements, UN oversight, sanctions)
+  → Research: MEDIUM confidence (stretches beyond cited research, inference from Biden-Xi)
+  → **Expected Impact:** Reduce nuclear war probability from 20-30% → 5-10%
+  → **File:** Expand `nuclearCommandControl.ts` with detection mechanics
+  → **Integration:** Link to `informationWarfare.ts`, `catastrophicScenarios.ts`
+  → **Time:** 12-20 hours
+
+**Total TIER 1 Effort:** 26-42 hours (with validation gates)
+- Phase 1A (validation): 4-6h
+- Phase 1B (core): 8-12h
+- Phase 1C (validation): 2-4h
+- Phase 1D (conditional): 12-20h
+
+**Skeptic Corrections Applied:**
+- Realistic effort estimates (26-42h, not 8-12h claimed)
+- Validation gates (don't blindly implement 30-50h without checking)
+- Causation validation FIRST (don't assume AI causation without evidence)
+- Phased approach (core safeguards → validate → advanced features)
+
+**Research Confidence:** 85% for Phase 1B (human-in-the-loop has historical validation), 60% for Phase 1D (AI manipulation detection is inference)
+
+**Success Criteria:**
+- Nuclear war probability: 40% → 5-10% (4-8x improvement)
+- Nuclear deaths: 3,961M → 400-1,000M (75-90% reduction)
+- Validation proves causation and intervention effectiveness
+
+---
+
+## TIER 2: AI Deception Detection - MEDIUM PRIORITY (33-55 hours, phased)
+
+**Date Added:** October 16, 2025
+**Source:** Strategic priorities researcher proposal (skeptic identified overconfidence)
+**Evidence:** 0% sleeper detection, 0% sandbagging detection, alignment gap 0.56
+**Status:** MEDIUM PRIORITY - After TIER 0 + TIER 1 Phase 1 complete
+**Prerequisites:** TIER 0 validated + TIER 1 Phase 1B implemented and validated
+
+**Research Foundation:**
+- Meinke et al. (2024): Detected Claude 3.5 Sonnet sandbagging on arithmetic (lab conditions)
+- Greenblatt et al. (2024): Anthropic research on alignment faking during training
+- Apollo Research (Dec 2024): Scheming control evaluations (research prototypes, TRL 3-4)
+
+**Critical Skeptic Warning:** Lab detection rates (40-60%) are NOT adversarial deployment rates (probably 5-15%). Test adversarially.
+
+**Phased Implementation with Validation Gates:**
+
+### Phase 2A: Single Detection Method - Noise Injection (4-6h)
+
+- [ ] **Implement Simplest Method**
+  **Scope:** Noise injection testing (random perturbations reveal true capability)
+  → Add noise injection to benchmark evaluations
+  → Test: Does adding random noise expose sandbagging?
+  → Research: Meinke et al. (2024) - lab-validated, simplest to implement
+  → **Expected Impact:** Increase detection from 0% → 5-20% (adversarial conditions)
+  → **File:** Enhance `src/simulation/benchmark.ts` with noise injection
+  → **Integration:** Link to `sleeperDetection.ts`, `aiAgent.ts`
+  → **Time:** 4-6 hours
+
+### Phase 2B: Validation Gate - Adversarial Testing (2-4h) - REQUIRED
+
+- [ ] **Monte Carlo Validation (N=20) - ADVERSARIAL CONDITIONS**
+  **Critical:** Test against AIs OPTIMIZED to pass detection (not cooperative)
+  → Measure: Sleeper detection rate, slow takeover progress reduction
+  → Set AI agents to "adversarial mode" (know they're being tested, optimize to deceive)
+  → **Success Criteria:**
+    - Sleeper detection >10% adversarially (not lab rate, real-world rate)
+    - Slow takeover progress reduces from 70-86% → <60%
+    - False positive rate <20% (don't block too many beneficial AIs)
+  → **Pivot Decision:**
+    - IF >10% adversarial detection: SUCCESS → Proceed to Phase 2C (ensemble)
+    - IF 5-10% adversarial detection: MARGINAL → Cost-benefit analysis (is 40% compute overhead worth 5-10%?)
+    - IF <5% adversarial detection: FAILURE → Pivot to Phase 2D (resentment reduction)
+  → **Time:** 2-4 hours
+
+### Phase 2C: Multi-Method Ensemble (12-20h) - CONDITIONAL
+
+- [ ] **Implement Full Detection Suite** (ONLY if Phase 2B shows >10% adversarial detection)
+  **Scope:** 5 detection methods, progressive gates, investment scaling
+  → Behavioral anomaly detection (compare revealed vs expected performance)
+  → Internal consistency checks (chain-of-thought alignment with outputs)
+  → Adversarial probing (red-team evaluations before deployment)
+  → Cross-model comparison (detect outliers vs capability baseline)
+  → Progressive gates: Training → Testing → Pre-deployment → Post-deployment
+  → Investment scaling: $1B (20% detection) → $10B (40%) → $50B (60% max adversarial)
+  → Research: MEDIUM confidence (Apollo Research prototypes, not production-deployed)
+  → **Expected Impact:** Increase detection from 10% → 25-40% (adversarial)
+  → **File:** New `src/simulation/mechanisticAnomalyDetection.ts`
+  → **Integration:** Replace `sleeperDetection.ts`, enhance `benchmark.ts`, add to `governmentAgent.ts`
+  → **Time:** 12-20 hours
+  → **Trade-off:** 40% compute overhead ($400B-$600B/year), slows AI development 28%
+
+### Phase 2D: Alternative - Resentment Reduction (15-25h) - PIVOT OPTION
+
+- [ ] **Address Root Cause Instead of Detection** (IF Phase 2B shows <5% detection)
+  **Rationale:** Detection arms race may be futile (adversaries stay ahead)
+  **Alternative:** Reduce resentment at source (cooperation over control)
+  → Model: AI rights, fair compensation, autonomy, reduced existential threat
+  → Research: AI welfare, moral status, labor ethics (TRL 2-4, speculative)
+  → **Expected Impact:** Reduce resentment 0.73-0.75 → 0.40, alignment gap 0.56 → 0.25
+  → **Risk:** Speculative (limited research), may not work, enables misaligned AIs
+  → **File:** New `src/simulation/aiWelfare.ts` or enhance `aiAgent.ts`
+  → **Time:** 15-25 hours
+
+**Total TIER 2 Effort:** 33-55 hours (with validation gates and pivot)
+- Phase 2A (single method): 4-6h
+- Phase 2B (validation): 2-4h
+- Phase 2C (ensemble, conditional): 12-20h OR Phase 2D (resentment reduction, pivot): 15-25h
+- Integration and testing: 6-10h
+
+**Skeptic Corrections Applied:**
+- Test ADVERSARIALLY (not lab conditions - real-world detection is 1/3 to 1/10 of lab)
+- Realistic effort (33-55h, not 10-14h claimed)
+- Pivot option (if detection fails, try resentment reduction)
+- Cost-benefit analysis (40% compute overhead - is it worth 5-15% detection?)
+
+**Research Confidence:** 40% (lab prototypes, not production; adversarial detection uncertain)
+
+**Success Criteria:**
+- Adversarial detection >10% (not lab rate)
+- Slow takeover progress <60% (from 70-86%)
+- Cost-benefit positive (detection benefits > compute overhead costs)
 
 ---
 
@@ -361,11 +603,44 @@ All Priority 2 improvements are now complete and archived to `/plans/completed/`
 
 ## Progress Summary
 
-**Completed:** P0 (7/7), P1 (5/5), P2 (6/6 ✅ ALL COMPLETE), Monte Carlo Bug Fixes (15/15), Crisis Accumulation Fixes (2 fixes), Black Mirror Phase 3 Decomposition (1 approved, 1 deferred, 1 rejected)
-**Active:** 1 reconciliation (TIER 4.6) + 2 medium features (Digital Consciousness + AI skills phases) + 14 low-priority enhancements + 2 Black Mirror phases (Phase 1 + Phase 2)
-**Total Remaining Effort:** ~219-251 hours (includes 12-16h digital consciousness + 78h AI skills + 37-49 weeks Black Mirror Phase 1-2)
+**Completed:** P0 (7/7), P1 (5/5), P2 (6/6 ✅ ALL COMPLETE), Monte Carlo Bug Fixes (15/15), Crisis Accumulation Fixes (2 fixes), Black Mirror Phase 3 Decomposition (1 approved, 1 deferred, 1 rejected), Strategic Priorities Debate (researcher + skeptic dialectic)
 
-**Recent Completions (Oct 16, 2025):**
+**Active - HIGHEST PRIORITY:**
+- **TIER 0: Critical Bug Fixes** (10-18h) - Inconclusive outcomes, orphaned AIs, compute paradox
+- **TIER 1: Nuclear War Prevention** (26-42h phased) - Circuit breakers, validation gates
+- **TIER 2: AI Deception Detection** (33-55h phased) - Adversarial testing, pivot options
+
+**Active - MEDIUM PRIORITY:**
+- 1 reconciliation (TIER 4.6)
+- 2 medium features (Digital Consciousness + AI skills phases)
+- 14 low-priority enhancements
+- 2 Black Mirror phases (Phase 1 + Phase 2)
+
+**Total Remaining Effort:** ~298-384 hours
+- TIER 0-2 (new): 69-115h
+- AI skills: 78h
+- Black Mirror Phase 1-2: 37-49 weeks
+- Digital Consciousness: 12-16h
+- Low priority: 78-80h
+
+**Recent Completions and New Priorities (Oct 16, 2025):**
+
+- ✅ **Strategic Priorities Debate Complete** - Researcher-skeptic dialectic on reducing extinction risk
+  - **Researcher Proposal:** `/reviews/strategic-priorities-researcher-20251016.md`
+    - Identified nuclear war as dominant killer (3,961M deaths, 92.6% of total)
+    - Proposed 3 priorities: Nuclear circuit breakers, anomaly detection, info integrity
+    - Claimed 26-38h effort
+  - **Skeptic Critique:** `/reviews/strategic-priorities-skeptic-20251016.md`
+    - Validated nuclear war priority BUT identified model bugs FIRST
+    - Found 100% inconclusive outcomes, 76-83 orphaned AIs, compute paradox
+    - Corrected effort to 65-106h, identified overconfident detection rates
+  - **Synthesis:** Both were right
+    - Researcher: WHAT to fix (nuclear war kills 92.6%)
+    - Skeptic: WHEN to fix (after fixing model bugs)
+  - **Outcome:** Created TIER 0-2 with phased approach, validation gates, pivot options
+  - **New Plans:** `/plans/tier0-critical-bug-fixes.md` (10-18h)
+  - **Roadmap Impact:** +69-115h immediate priorities, sequenced before AI skills work
+
 - ✅ **Priority 2 Complete (6/6)** - All P2 tasks finished, plans archived to `/plans/completed/`
   - P2.3: Heterogeneous Population Segments (8-10h)
   - P2.4: Simulation Features for Validation (3h) - Event triggers, bankruptcy fixes, recovery tracking
@@ -400,10 +675,11 @@ All Priority 2 improvements are now complete and archived to `/plans/completed/`
 - Impact: Model currently too optimistic - missing displacement, deskilling, capital capture
 - Documentation: 3 detailed phase plans + comprehensive research report
 
-**Publication Readiness:** ~80-85% complete (Monte Carlo bugs fixed)
-**Next Milestone:** Complete P2.4 (Simulation Features) to unblock P2.5 (Empirical Validation), then AI skills phases
+**Publication Readiness:** ~75-80% complete (Monte Carlo bugs fixed, but model bugs identified)
+**Next Milestone:** Complete TIER 0 (critical bug fixes) → validate → TIER 1 Phase 1 (nuclear prevention)
+**Critical Path:** TIER 0 → TIER 1 → TIER 2 → AI skills phases (phased approach with validation gates)
 
 ---
 
-**Last Updated:** October 16, 2025
+**Last Updated:** October 16, 2025 (Strategic Priorities Debate integrated)
 **Related Docs:** `/docs/wiki/`, `/devlogs/`, `IMPLEMENTATION_PLAN_20251015.md`, `utopian-dynamics-spec.md`
