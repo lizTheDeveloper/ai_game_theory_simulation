@@ -46,6 +46,7 @@ import {
   SocialStabilityPhase,
   QualityOfLifePhase,
   OutcomeProbabilitiesPhase,
+  UpdateEconomicStagePhase,  // P2.4 Feature 3 (Oct 16, 2025): Recovery tracking
   CrisisDetectionPhase,
   // Batch 2: System updates (10.x - 21.x)
   GovernanceQualityPhase,
@@ -327,6 +328,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SocialStabilityPhase());
     this.orchestrator.registerPhase(new QualityOfLifePhase());
     this.orchestrator.registerPhase(new OutcomeProbabilitiesPhase());
+    this.orchestrator.registerPhase(new UpdateEconomicStagePhase());  // P2.4 Feature 3: Recovery tracking
     this.orchestrator.registerPhase(new CrisisDetectionPhase());
 
     // Batch 2: System updates (10.x - 21.x)

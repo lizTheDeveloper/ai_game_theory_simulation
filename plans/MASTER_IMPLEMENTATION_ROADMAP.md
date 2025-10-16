@@ -44,8 +44,8 @@
   → See: `plans/p2-3-heterogeneous-population.md`
   → Tests: `tests/p2-3-heterogeneous-population.test.ts`
 
-- [x] **P2.4: Simulation Features for Validation** ⚠️ 2/3 COMPLETE (Oct 16, 2025) (2.5h actual)
-  **Status:** Features 1 & 2 complete, Feature 3 deferred (0.5-1h remaining)
+- [x] **P2.4: Simulation Features for Validation** ✅ COMPLETE (Oct 16, 2025) (3h actual)
+  **Status:** All 3 features complete
   → Plan: `plans/simulation-features-for-validation.md`
   → ✅ **Feature 1: Event Trigger System** (1.5h) **COMPLETE**
     - Full pandemic + economic crisis system (`triggeredEvents.ts`, 594 lines)
@@ -59,27 +59,30 @@
     - Updated `OrganizationViabilityPhase` to implement SimulationPhase interface
     - Bankruptcy logic validated (weighted decline, resilience, sigmoid curve)
     - **Note:** triggeredEvents.ts bankruptcy still uses Math.random() (validation-only, low priority)
-  → ❌ **Feature 3: Recovery Tracking** (0.5-1h) **NOT IMPLEMENTED**
-    - Would add: EconomicStageHistory types, UpdateEconomicStagePhase, recovery utils
-    - Enables time-to-recovery measurements for validation tests
-    - Deferred to separate task (not blocking P2.5 immediately)
-  → **Research:** TRL 9 (SEIR models, Basel III stress testing, BLS/BEA/OECD data)
-  → **Impact:** ✅ Can trigger historical events, ✅ Deterministic bankruptcy, ⚠️ No recovery metrics yet
+  → ✅ **Feature 3: Recovery Tracking** (0.5h) **COMPLETE**
+    - Added EconomicStageHistory types to game.ts (month, stage, GDP/QoL levels, baselines)
+    - Created recoveryCalculations.ts utility (NBER methodology, 5 stages, time-to-recovery)
+    - Implemented UpdateEconomicStagePhase (order 31, tracks transitions, updates baseline)
+    - Updated initialization.ts to initialize recovery tracking
+    - Registered phase in engine.ts and phases/index.ts
+    - Tested and validated (expansion → peak transition logged successfully)
+  → **Research:** TRL 9 (SEIR models, Basel III stress testing, BLS/BEA/OECD data, NBER business cycle dating)
+  → **Impact:** ✅ Can trigger historical events, ✅ Deterministic bankruptcy, ✅ Recovery metrics available
 
-- [x] **P2.5: Empirical Validation** ✅ FRAMEWORK COMPLETE (Oct 16, 2025) ⚠️ MOSTLY UNBLOCKED
-  **Status:** Framework complete (4h), 2/3 blocking features resolved (0.5-1h remaining)
+- [x] **P2.5: Empirical Validation** ✅ FRAMEWORK COMPLETE (Oct 16, 2025) ✅ FULLY UNBLOCKED
+  **Status:** Framework complete (4h), all 3 blocking features resolved
   → Framework: `tests/validation/` (historicalStates.ts + 20 tests)
   → Documentation: `tests/validation/README.md`
   → Blocking Issues:
     ✅ 1. Event trigger system (pandemic, economic crisis) - **RESOLVED (P2.4)**
     ✅ 2. Fix organizational bankruptcy determinism - **RESOLVED (P2.4)**
-    ⚠️ 3. Add recovery tracking (economic stage history, time-to-recovery) - **DEFERRED (0.5-1h)**
-  → **Note:** Can begin validation testing now, recovery tracking nice-to-have for time metrics
+    ✅ 3. Add recovery tracking (economic stage history, time-to-recovery) - **RESOLVED (P2.4)**
+  → **Note:** Ready for full validation testing - all prerequisites complete
   → Plan: `plans/completed/p2-5-empirical-validation-FRAMEWORK-COMPLETE.md`
 
 ---
 
-### Medium Priority Features (~19-22 hours)
+### Medium Priority Features (~31-38 hours)
 
 **New Outcome Spaces:**
 
@@ -97,6 +100,13 @@
   → See: `plans/p2-6-memetic-polarization-dynamics.md`
   → Research: TRL 6-7, validated against 2024-2025 peer-reviewed studies
   → Impact: Critical for modeling societal response to AI development
+
+- [ ] **Digital Consciousness Governance Preparedness** (12-16h) **[Black Mirror Phase 3]**
+  Multi-scenario rights timeline modeling (15-200 years), regional governance variation (EU/US/China/Global South), rights reversal mechanics (Poland/Hungary model), precautionary principle costs
+  → See: `plans/digital-consciousness-governance-preparedness.md`
+  → Research: TRL 3-4 (historical data validated, AI extrapolation speculative), 22 sources
+  → Status: CONDITIONAL GO (October 16, 2025) - requires multi-scenario, regional variation, rights reversals, precautionary costs
+  → Impact: Governance layer for potential digital consciousness emergence (scenario generator, not prediction)
 
 ---
 
@@ -267,14 +277,97 @@
   → Note: Requires bidirectional modeling (positive AND negative effects)
   → Risk Mitigation: Avoid deterministic doom narratives, model interventions
 
-**Phase 3: Long-Term Research (6-12+ months) - LOW PRIORITY**
+**Phase 3: Long-Term Research (Decomposed October 16, 2025)**
 
-- [ ] **Black Mirror Phase 3: Long-Term Research** (6-12+ months, research-dependent)
-  3 systems requiring substantial external research
-  → See: `plans/black-mirror-phase3-longterm.md`
-  → Systems: Digital Consciousness Governance Preparedness, Performative Behavior Modeling, Autonomous Weapon Degradation
-  → Prerequisites: Published peer-reviewed research, operational definitions, expert review
-  → Status: Deferred pending research maturity
+**Status:** Research-critique dialectic completed, go/no-go decisions made (1 approved, 1 deferred, 1 rejected)
+
+- [ ] **Black Mirror Phase 3 Integration** (decomposed into 3 specific plans)
+  → **Original Plan:** `plans/completed/black-mirror-phase3-longterm-decomposed.md`
+  → **Research:** `/research/black-mirror-phase3-research-AMENDED_20251016.md` (31K words, 40+ new sources)
+  → **Critique:** `/reviews/black-mirror-phase3-research-critique_20251016.md` (skeptical analysis)
+  → **Outcome:** 1 approved (CONDITIONAL GO), 1 deferred (18-24 months), 1 rejected
+
+---
+
+## Black Mirror Phase 3: Decomposition Details
+
+### ✅ APPROVED FOR IMPLEMENTATION (1 system)
+
+**[Priority: MEDIUM] Digital Consciousness Governance Preparedness** (3-4 months, 12-16 hours)
+- **Plan:** `/plans/digital-consciousness-governance-preparedness.md`
+- **Research:** `/research/black-mirror-phase3-research-AMENDED_20251016.md` (Section 1, pp. 1-24)
+- **Critique:** `/reviews/black-mirror-phase3-research-critique_20251016.md` (Section 1.9, pp. 1-13)
+- **Status:** CONDITIONAL GO with substantial revisions
+- **Requirements:**
+  - ✓ Multi-scenario framework (fast track 15-30 years, baseline 50-100 years, slow track 100-150 years, indefinite stall)
+  - ✓ Regional variation (EU/US/China/India/Global South—separate trajectories, not global parameter)
+  - ✓ Rights reversals (Poland/Hungary model 2020-2024: 10-30% probability over 20 years)
+  - ✓ Precautionary costs (2-50% of AI R&D budget, innovation delay, false positives, opportunity costs)
+  - ✓ Philosophical disagreement (eliminativism 10-20% as governance barrier)
+- **Research Confidence:**
+  - High: Rights movements vary 15-200 years (validated historical data)
+  - High: Reversals occur (Poland/Hungary 2020-2024 documented)
+  - Medium: Precautionary costs significant (ITIF 2019 logical arguments)
+  - Low: AI consciousness ≈ historical rights movements (weak analogy, extrapolation beyond scope)
+- **Estimated Hours:** 12-16 hours
+- **Prerequisites:** None (can start immediately)
+- **Timeline:** Months 1-4 (after P2.5 validation complete)
+- **Note:** Speculative scenario generator for "what if AI consciousness emerges?" NOT prediction
+- **Integration:** Added to Medium Priority Features section above
+
+### ⏸️ DEFERRED (1 system)
+
+**[Priority: LOW] Performative Behavior Modeling** (18-24 months)
+- **Plan:** `/plans/performative-behavior-research-deferral.md`
+- **Research:** `/research/black-mirror-phase3-research-AMENDED_20251016.md` (Section 2, pp. 24-42)
+- **Critique:** `/reviews/black-mirror-phase3-research-critique_20251016.md` (Section 2.9, pp. 14-26)
+- **Why Deferred:**
+  - Effect sizes too small (0.17-0.25 SD—may be below simulation noise floor)
+  - WEIRD bias 97% (Norway, US, Korea, Singapore—Global South absent: Africa, South America, Middle East)
+  - One-sided harm model (ignores identity development benefits, self-esteem enhancement, social skills training)
+  - Net effect near-zero for moderate users (benefits ≈ harms, only 10-20% problematic users show net negative)
+  - Longitudinal gaps (max 2 years, need 5-10 year studies to distinguish transient vs. persistent effects)
+  - Cultural validity questionable ("authenticity" is Western value, not universal)
+- **Research Gaps (5 critical, must fill before implementation):**
+  1. Bi-directional effects meta-analysis (benefits AND harms)
+  2. Cross-cultural replication (3+ Global South countries: Nigeria, Kenya, Brazil, Mexico, India rural, Indonesia, Philippines)
+  3. Threshold model (when does self-presentation flip from beneficial to harmful? <2h active vs. >4h passive?)
+  4. 5-10 year longitudinal study (preliminary results in 3-5 years: do effects persist or adapt?)
+  5. Clinical validation of digital burnout scale (what DBS-24 score predicts dysfunction? 80/120 cutoff speculative)
+- **Review Schedule:** Annual (October 2026, October 2027)
+- **Decision Gates:**
+  - October 2026: If 3+ critical gaps filled → Move to CONDITIONAL GO
+  - October 2027: If <3 gaps filled → REJECT INDEFINITELY
+- **No Hours Allocated** (monitoring only: ~1 hour/quarter literature review, passive Google Scholar alerts)
+- **Alternative Focus:** Black Mirror Phase 1 (attention economy, notification addiction, surveillance normalization have larger effects 0.3-0.8 SD, stronger foundations)
+
+### ❌ REJECTED (1 system)
+
+**Autonomous Weapon Degradation Curves** (NO-GO / REJECT)
+- **Plan:** `/plans/completed/rejected/autonomous-weapons-rejection-rationale.md`
+- **Research:** `/research/black-mirror-phase3-research-AMENDED_20251016.md` (Section 3, pp. 42-58)
+- **Critique:** `/reviews/black-mirror-phase3-research-critique_20251016.md` (Section 3.9: FATAL CONTRADICTIONS, pp. 27-38)
+- **Why Rejected:**
+  - **Research 2-4 years obsolete:** 2018-2022 studies pre-date 2023-2024 AI autonomy surge (Ukraine war, swarm technology)
+  - **Fatal Contradiction #1 (Reliability):** Research claims degradation; reality shows AI improves success rates 70-80% vs. 10-20% human-controlled (4-7x improvement)
+  - **Fatal Contradiction #2 (Operator Ratios):** Research assumes 1:1; reality achieves 1:100+ with swarm technology (Sweden/Saab March 2025, Pentagon Replicator Aug 2025)
+  - **Fatal Contradiction #3 (Energy):** Research uses static 1.5-2 hours; reality shows 10%/year incremental improvement + solid-state batteries 2027 (40-100% capacity increase)
+  - **Fatal Contradiction #4 (Human Oversight):** Research assumes human-in-the-loop required; reality shows military pushing to human-on-the-loop (NORAD 2020, time-critical exemptions in DoD Directive 3000.09)
+- **Core Problem:** Research foundation is **180-DEGREE OPPOSITE** of 2023-2024 reality (AI improves reliability, not degrades)
+- **Alternative Considered:** Reconceptualize as "swarm logistics" (production, deployment tempo, replacement) NOT individual degradation
+  - Timeline: 6-9 months (major redesign from scratch)
+  - Prerequisites: Commission 2023-2025 military autonomy research review (20-40 hours)
+  - Recommendation: **ONLY pursue if stakeholder insists AND resources available**
+- **Final Disposition:** REJECT from current roadmap
+- **Revisit Timeline:** 2028-2030 (3-5 years, if field stabilizes or new research commissioned)
+- **Archived:** `/plans/completed/rejected/autonomous-weapons-rejection-rationale.md`
+- **Lesson Learned:** Fast-moving fields (AI, military tech) require recent research (2023-2025), not 2018-2022. 2-4 year gap is FATAL when field changes faster than publication cycle.
+
+**Net Impact on Roadmap:**
+- **+12-16 hours:** Digital Consciousness Governance (new medium-priority feature)
+- **-0 hours:** Performative Behavior (deferred, no current work—monitoring only ~4h/year)
+- **-0 hours:** Autonomous Weapons (rejected, never allocated)
+- **Total Phase 3 commitment:** 12-16 hours over 3-4 months
 
 ---
 
@@ -302,15 +395,22 @@
 
 ## Progress Summary
 
-**Completed:** P0 (7/7), P1 (5/5), P2 (4.67/6 - P2.4 2/3 done), Monte Carlo Bug Fixes (15/15), Crisis Accumulation Fixes (2 fixes)
-**Active:** P2.4 Feature 3 (0.5-1h) + P2.5 testing + 1 reconciliation (TIER 4.6) + 1 medium feature + 6 AI skills phases + 14 low-priority enhancements + 3 Black Mirror phases
-**Total Remaining Effort:** ~219-251 hours (includes 0.5-1h recovery tracking + 78h AI skills + 37-49 weeks Black Mirror)
+**Completed:** P0 (7/7), P1 (5/5), P2 (5/6 - P2.4 complete, P2.6 pending), Monte Carlo Bug Fixes (15/15), Crisis Accumulation Fixes (2 fixes), Black Mirror Phase 3 Decomposition (1 approved, 1 deferred, 1 rejected)
+**Active:** P2.5 testing + 1 reconciliation (TIER 4.6) + 2 medium features (P2.6 + Digital Consciousness) + 6 AI skills phases + 14 low-priority enhancements + 2 Black Mirror phases (Phase 1 + Phase 2)
+**Total Remaining Effort:** ~230-266 hours (includes 12-16h digital consciousness + 78h AI skills + 37-49 weeks Black Mirror Phase 1-2)
 
 **Recent Completions (Oct 16, 2025):**
-- ✅ **P2.4: Simulation Features (2/3)** - Event triggers + bankruptcy determinism (2.5h)
+- ✅ **Black Mirror Phase 3 Decomposition** - Research-critique dialectic (1 approved, 1 deferred, 1 rejected)
+  - Digital Consciousness Governance: CONDITIONAL GO (12-16h, multi-scenario + regional variation + rights reversals + precautionary costs)
+  - Performative Behavior: DEFERRED 18-24 months (effect sizes too small 0.17-0.25 SD, WEIRD bias 97%, one-sided harm model, net-zero for moderate users)
+  - Autonomous Weapons: REJECTED (research 2-4 years obsolete, AI improves reliability 4-7x not degrades, swarms enable 1:100+ ratios not 1:1, core assumptions contradicted)
+  - Research: 31K words amended research (40+ new sources), skeptical critique, honest go/no-go assessment
+  - Plans created: 3 detailed implementation/deferral/rejection documents with cross-references
+  - Net impact: +12-16 hours (digital consciousness added to medium priority)
+- ✅ **P2.4: Simulation Features (3/3)** ✅ COMPLETE - Event triggers + bankruptcy + recovery tracking (3h)
   - Feature 1: Full event trigger system (pandemic + economic crisis, 594 lines)
   - Feature 2: Fixed Math.random() in bankruptcy (3 places, now deterministic)
-  - Feature 3: Recovery tracking deferred (0.5-1h remaining)
+  - Feature 3: Recovery tracking complete (NBER methodology, 5 stages, time-to-recovery metrics)
 - ✅ **Crisis Accumulation Fixes (2/3)** - Fixed biodiversity-carrying capacity bug (295M deaths/month → 135M), slowed meaning crisis + AI misalignment accumulation by 3-5x to match 2-5 year research timelines (see `devlogs/crisis_accumulation_fixes_oct16_2025.md`)
 - ⚠️ TIER 4.6: Human Enhancement - Implemented but needs reconciliation with existing bionicSkills.ts (BCI/merger = TRL 0-2, should remove)
 - ✅ P2.3: Heterogeneous Population Segments - 5 social segments with differential crisis vulnerability
@@ -330,7 +430,7 @@
 - ✅ **3 implementation phases created** - Dialectic review process (researcher + skeptic)
 - Phase 1 (HIGH): 5 strongly validated systems (9-12 weeks) - Attention Economy, Surveillance, Notification Addiction
 - Phase 2 (MEDIUM): 4 conditionally approved systems (12-16 weeks) - Social Credit, Parasocial AI, Memetic Contagion
-- Phase 3 (LOW): 3 research-dependent systems (6-12+ months) - Governance preparedness, Performative behavior
+- Phase 3 (DECOMPOSED): 1 approved (CONDITIONAL GO), 1 deferred (18-24 months), 1 rejected
 - Approval: ~40% strongly validated, ~25% conditional, ~35% rejected
 
 **New from AI-Assisted Skills Review (Oct 16, 2025):**

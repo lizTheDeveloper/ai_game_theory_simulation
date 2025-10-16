@@ -45,6 +45,7 @@ import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
 import { SocietySegment } from '@/types/game';
 import { initializeHumanEnhancementSystem } from './humanEnhancement';
+import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -599,7 +600,10 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
   state.organizations = initializeOrganizations();
   linkDataCentersToOrganizations(state);
   linkAIModelsToOrganizations(state);
-  
+
+  // P2.4 Feature 3: Initialize recovery tracking (Oct 16, 2025)
+  initializeRecoveryTracking(state);
+
   return state;
 }
 

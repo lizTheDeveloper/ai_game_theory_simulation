@@ -24,6 +24,7 @@ export { ParanoiaPhase } from './ParanoiaPhase';
 export { SocialStabilityPhase } from './SocialStabilityPhase';
 export { QualityOfLifePhase } from './QualityOfLifePhase';
 export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
+export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // P2.4 Feature 3
 export { CrisisDetectionPhase } from './CrisisDetectionPhase';
 
 // Batch 2: System update phases (medium risk)
