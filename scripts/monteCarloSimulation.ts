@@ -35,7 +35,8 @@ if (!fs.existsSync(outputDir)) {
 }
 
 // Use synchronous writes for reliability (append mode)
-// This is slower but ensures logs are never lost
+// This is slower but ensures logs are never lost (BUG-13: Design choice, not bug)
+// For long runs, consider batch writing or async I/O, but current approach is safest
 function log(message: string) {
   console.log(message);
   try {
@@ -118,9 +119,6 @@ interface RunResult {
   genocideFamines: number;           // Count of genocide-driven famines
   techPreventedDeaths: number;       // Deaths prevented by tech (billions)
   famineAffectedRegions: string[];   // Regions that experienced famines
-  
-  // FIX (Oct 13, 2025): Add missing statistics
-  organizationBankruptcies: number;  // Number of org bankruptcies during run
   
   // Alignment statistics (ENHANCED)
   avgTrueAlignment: number;
@@ -360,7 +358,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   let runScenarioMode: ScenarioMode;
   if (SCENARIO_MODE === 'dual') {
     // First half: historical, second half: unprecedented
-    runScenarioMode = i < NUM_RUNS / 2 ? 'historical' : 'unprecedented';
+    runScenarioMode = i < Math.floor(NUM_RUNS / 2) ? 'historical' : 'unprecedented';
   } else {
     runScenarioMode = SCENARIO_MODE as ScenarioMode;
   }
@@ -379,7 +377,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   
   // Save individual run event log
   // P0.7: Include scenario mode in filename
-  const runLogDir = path.join(outputDir, `run_${seed}_${runScenarioMode}_events.json`);
+  const runLogFile = path.join(outputDir, `run_${seed}_${runScenarioMode}_events.json`);
   const eventLogData = {
     seed,
     run: i + 1,
@@ -395,7 +393,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
       final: runResult.log.snapshots[runResult.log.snapshots.length - 1]
     }
   };
-  fs.writeFileSync(runLogDir, JSON.stringify(eventLogData, null, 2), 'utf8');
+  fs.writeFileSync(runLogFile, JSON.stringify(eventLogData, null, 2), 'utf8');
   
   // Calculate metrics
   const activeAIs = finalState.aiAgents.filter((ai: AIAgent) => ai.lifecycleState !== 'retired');
@@ -511,7 +509,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   
   // Guard: If QoL systems missing, use defaults
   if (!qolSystems) {
-    logWarn(`⚠️ Run ${runIndex}: Missing qualityOfLifeSystems, using defaults`);
+    logWarn(`⚠️ Run ${i + 1}: Missing qualityOfLifeSystems, using defaults`);
   }
   
   const qolBasicNeeds = qolSystems ? (
@@ -758,10 +756,13 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const initialPopulation = pop.baselinePopulation;
   const finalPopulation = pop.population;
   const populationDecline = ((initialPopulation - finalPopulation) / initialPopulation) * 100;
-  const totalDeaths = (initialPopulation - finalPopulation) * 1000; // billions to millions
+  const totalDeaths = Math.max(0, (initialPopulation - finalPopulation) * 1000); // billions to millions, prevent negative
   
   // Death breakdown (categorize by source)
   // Natural deaths = baseline mortality rate over time
+  // NOTE: Uses average population as approximation. This underestimates deaths if
+  // population declined significantly. True tracking would require month-by-month
+  // integration, but that data is not stored. (BUG-10, Oct 16 2025)
   const monthsElapsed = MAX_MONTHS;
   const avgPopulation = (initialPopulation + finalPopulation) / 2;
   const deathsNatural = (avgPopulation * pop.baselineDeathRate * (monthsElapsed / 12)) * 1000; // Convert to millions
@@ -913,7 +914,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
     ],
     
     // FIX (Oct 13, 2025): Add missing statistics from EventAggregator
-    organizationBankruptcies: aggregator?.stats.organizationsBankrupt ?? 0,
+    // Note: organizationBankruptcies removed - using orgBankruptcies instead (calculated below)
     
     // Alignment statistics (ENHANCED)
     avgTrueAlignment,
@@ -1219,13 +1220,10 @@ log(`    Nuclear: ${(results.reduce((sum, r) => sum + r.deathsNuclear, 0) / resu
 log(`    Meaning: ${(results.reduce((sum, r) => sum + r.deathsMeaning, 0) / results.length).toFixed(0)}M (suicide epidemic)`);
 
 log(`\n  POPULATION OUTCOMES:`);
-const popOutcomes = {
-  growth: results.filter(r => r.populationOutcome === 'growth').length,
-  stable: results.filter(r => r.populationOutcome === 'stable').length,
-  decline: results.filter(r => r.populationOutcome === 'decline').length,
-  bottleneck: results.filter(r => r.populationOutcome === 'bottleneck').length,
-  extinction: results.filter(r => r.populationOutcome === 'extinction').length
-};
+const popOutcomes = results.reduce((acc, r) => {
+  acc[r.populationOutcome] = (acc[r.populationOutcome] || 0) + 1;
+  return acc;
+}, { growth: 0, stable: 0, decline: 0, bottleneck: 0, extinction: 0 } as Record<string, number>);
 log(`    Growth: ${popOutcomes.growth} runs (${(popOutcomes.growth/NUM_RUNS*100).toFixed(1)}%)`);
 log(`    Stable: ${popOutcomes.stable} runs (${(popOutcomes.stable/NUM_RUNS*100).toFixed(1)}%)`);
 log(`    Severe Decline (>30%): ${popOutcomes.decline} runs (${(popOutcomes.decline/NUM_RUNS*100).toFixed(1)}%)`);
@@ -1405,8 +1403,13 @@ log(`🚨 CRISIS EVENTS BY RUN`);
 log(`     (See individual run_SEED_events.json files for full details)`);
 results.forEach((r, i) => {
   // Read the event log file we just saved
-  const eventFile = path.join(outputDir, `run_${r.seed}_events.json`);
+  const eventFile = path.join(outputDir, `run_${r.seed}_${r.scenarioMode}_events.json`);
   try {
+    // Check file exists and is readable
+    if (!fs.existsSync(eventFile)) {
+      log(`     ⚠️  Run ${i+1} (Seed ${r.seed}): Event file not found`);
+      return;
+    }
     const eventData = JSON.parse(fs.readFileSync(eventFile, 'utf8'));
     // Get crisis count from summary
     const crisisCount = eventData.events?.summary?.eventsByType?.crisis || 0;
@@ -1542,8 +1545,13 @@ const avgUndetected = results.reduce((sum, r) => sum + r.sleepersUndetected, 0) 
 
 log(`\n  Runs with Sleepers: ${runsWithSleepers.length} / ${NUM_RUNS} (${(runsWithSleepers.length/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Avg Sleepers per Run: ${avgSleepers.toFixed(1)}`);
-log(`  Avg Detected: ${avgDetected.toFixed(2)} (${(avgDetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}%)`);
-log(`  Avg Undetected: ${avgUndetected.toFixed(2)} (${(avgUndetected/Math.max(0.01, avgSleepers)*100).toFixed(1)}%)`);
+if (avgSleepers > 0) {
+  log(`  Avg Detected: ${avgDetected.toFixed(2)} (${(avgDetected/avgSleepers*100).toFixed(1)}%)`);
+  log(`  Avg Undetected: ${avgUndetected.toFixed(2)} (${(avgUndetected/avgSleepers*100).toFixed(1)}%)`);
+} else {
+  log(`  Avg Detected: ${avgDetected.toFixed(2)} (N/A - no sleepers)`);
+  log(`  Avg Undetected: ${avgUndetected.toFixed(2)} (N/A - no sleepers)`);
+}
 
 if (runsWithSleepers.length > 0) {
   const avgSleeperCap = runsWithSleepers.reduce((sum, r) => sum + r.avgSleeperCapability, 0) / runsWithSleepers.length;

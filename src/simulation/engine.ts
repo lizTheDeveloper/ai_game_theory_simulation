@@ -35,8 +35,7 @@ import {
   initializeEndGameState,
   enterEndGame,
   processEndGameMonth,
-  getEndGameOutcome,
-  initializeEndGameState
+  getEndGameOutcome
 } from './endGame';
 import { PhaseOrchestrator } from './engine/PhaseOrchestrator';
 import {
@@ -513,7 +512,14 @@ export class SimulationEngine {
       state.endGameState = initializeEndGameState();
     }
     
+    // BUG FIX (Oct 16, 2025): Attach EventAggregator before loop starts
+    // Ensures it's always available even if simulation breaks early
+    (state as any).eventAggregator = eventAggregator;
+    
     const snapshotInterval = this.config.snapshotInterval ?? 12; // Default: snapshot every 12 months
+    // NOTE: For very long simulations (1000+ months), history array can consume gigabytes.
+    // Consider reducing snapshot frequency or implementing max history size (BUG-14, Oct 16 2025)
+    // Current: 12-month interval = ~100 snapshots per 1200 months (~1-2GB RAM)
 
     for (let month = 0; month < maxMonths; month++) {
       const stepResult = this.step(state);
