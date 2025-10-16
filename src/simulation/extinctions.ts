@@ -435,17 +435,29 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
             continue;
           }
           
-          // Calculate launch probability for this bilateral pair
+          // Calculate launch probability for this bilateral pair using Bayesian framework
+          // Phase 1A: Bayesian nuclear risk replaces fixed probability
+          const { calculateBayesianNuclearRisk, logBayesianNuclearRiskConcise } = require('./bayesianNuclearRisk');
+          const nuclearRiskCalc = calculateBayesianNuclearRisk(state);
+
+          // Log Bayesian calculation
+          logBayesianNuclearRiskConcise(nuclearRiskCalc, `${tension.nationA}-${tension.nationB}`);
+
+          // Use Bayesian posterior as base probability, then apply bilateral-specific factors
           const deterrenceReduction = 1 - bilateralDeterrence;
           const stabilityReduction = 1 - mad.crisisStability;
-          const baseProb = 0.005; // Lower base than before (5% with all conditions met)
-          
-          const launchProb = baseProb * deterrenceReduction * (0.5 + stabilityReduction * 0.5) * (aiControlGap / 4.0);
-          
+
+          // Bayesian posterior already accounts for most factors
+          // Apply bilateral-specific adjustments (escalation ladder position, etc.)
+          const launchProb = nuclearRiskCalc.posterior * deterrenceReduction * (0.5 + stabilityReduction * 0.5) * (aiControlGap / 4.0);
+
+          console.log(`   Launch probability (${tension.nationA}-${tension.nationB}): ${(launchProb * 100).toFixed(4)}%`);
+          console.log(`   Attribution: AI ${(nuclearRiskCalc.attribution.aiContribution * 100).toFixed(0)}%, Systemic ${(nuclearRiskCalc.attribution.systemicContribution * 100).toFixed(0)}%`);
+
           if (random() < launchProb) {
             nuclearRisk = true;
             participants = [tension.nationA, tension.nationB];
-            riskReason = `Nuclear exchange between ${tension.nationA} and ${tension.nationB} (deterrence: ${(bilateralDeterrence * 100).toFixed(0)}%, stability: ${(mad.crisisStability * 100).toFixed(0)}%, dangerous AI: ${ai.name})`;
+            riskReason = `Nuclear exchange between ${tension.nationA} and ${tension.nationB} (Bayesian posterior: ${nuclearRiskCalc.breakdown.posteriorFormatted}, deterrence: ${(bilateralDeterrence * 100).toFixed(0)}%, stability: ${(mad.crisisStability * 100).toFixed(0)}%, AI contribution: ${(nuclearRiskCalc.attribution.aiContribution * 100).toFixed(0)}%, dangerous AI: ${ai.name})`;
             break;
           }
         }

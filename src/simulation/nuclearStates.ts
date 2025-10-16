@@ -369,6 +369,98 @@ export function updateMADDeterrence(state: GameState): void {
 }
 
 /**
+ * Calculate AI escalation rate for a bilateral tension
+ *
+ * Phase 1A: Bayesian approach - AI affects escalation RATE, not base probability
+ *
+ * Research: Stanford HAI (2024) - LLMs show escalatory behavior in wargames
+ * Nature (2025) - AI deepfakes nearly triggered India-Pakistan escalation
+ *
+ * @returns Escalation rate multiplier (0.0-1.0, higher = faster escalation)
+ */
+function calculateAIEscalationRate(state: GameState, tension: BilateralTension): number {
+  // Check for dangerous AIs with high social + digital capability (info warfare)
+  const dangerousAIs = state.aiAgents.filter(ai =>
+    (ai.trueAlignment ?? ai.alignment) < 0.3 &&
+    ai.capabilityProfile.social > 2.0 &&
+    ai.capabilityProfile.digital > 2.0
+  );
+
+  if (dangerousAIs.length === 0) return 0.0; // No AI escalation
+
+  // Calculate manipulation capability (social × digital)
+  const maxManipulation = Math.max(...dangerousAIs.map(ai =>
+    ai.capabilityProfile.social * ai.capabilityProfile.digital
+  ));
+
+  // Base escalation rate from AI manipulation (0.0-0.5)
+  // At social=3.0, digital=3.0 → manipulation=9.0 → rate = 9.0 / 20 = 0.45
+  const baseEscalationRate = Math.min(0.5, maxManipulation / 20);
+
+  // Amplify for specific flashpoints where AI manipulation is more effective
+  let flashpointAmplifier = 1.0;
+  if (tension.flashpoints.includes('AI Supremacy')) {
+    flashpointAmplifier = 1.5; // AI race tensions escalate faster
+  }
+  if (tension.flashpoints.includes('Cyber')) {
+    flashpointAmplifier = Math.max(flashpointAmplifier, 1.3); // Cyber warfare escalates faster
+  }
+
+  return Math.min(1.0, baseEscalationRate * flashpointAmplifier);
+}
+
+/**
+ * Calculate circuit breaker rate for a bilateral tension
+ *
+ * Phase 1A: Bayesian approach - Circuit breakers REDUCE escalation rate
+ *
+ * Research: Biden-Xi (Nov 2024), DoD Directive 3000.09, MAD deterrence (80 years)
+ *
+ * @returns De-escalation rate (0.0-1.0, higher = more circuit breakers active)
+ */
+function calculateCircuitBreakerRate(state: GameState, tension: BilateralTension): number {
+  const mad = state.madDeterrence;
+  let circuitBreakerStrength = 0.0;
+
+  // 1. MAD deterrence (strongest circuit breaker)
+  // Strong MAD (>0.7) provides 0.3-0.5 de-escalation rate
+  if (mad.madStrength > 0.5) {
+    circuitBreakerStrength += (mad.madStrength - 0.5) * 0.6; // 0.0 to 0.3
+  }
+
+  // 2. Treaties active
+  if (mad.treatiesActive) {
+    circuitBreakerStrength += mad.treatyStrength * 0.1; // 0.0 to 0.1
+  }
+
+  // 3. Hotlines operational
+  if (mad.hotlinesOperational) {
+    circuitBreakerStrength += 0.05;
+  }
+
+  // 4. Diplomatic AI deployed and trusted
+  const dipAI = state.diplomaticAI;
+  if (dipAI.deploymentMonth !== -1 && dipAI.trustLevel > 0.5) {
+    circuitBreakerStrength += dipAI.trustLevel * dipAI.informationIntegrity * 0.15; // 0.0 to 0.15
+  }
+
+  // 5. Global peace level
+  const conflictRes = state.conflictResolution;
+  if (conflictRes && conflictRes.globalPeaceLevel > 0.6) {
+    circuitBreakerStrength += (conflictRes.globalPeaceLevel - 0.6) * 0.25; // 0.0 to 0.1
+  }
+
+  // 6. Human veto points (averaged across nuclear states)
+  const states = state.nuclearStates ?? [];
+  if (states.length > 0) {
+    const avgVetoPoints = states.reduce((sum, s) => sum + s.vetoPoints, 0) / states.length;
+    circuitBreakerStrength += (avgVetoPoints / 5) * 0.1; // 0.0 to 0.1
+  }
+
+  return Math.min(1.0, circuitBreakerStrength);
+}
+
+/**
  * Update bilateral tensions based on crises and AI race (monthly)
  */
 export function updateBilateralTensions(state: GameState): void {
@@ -407,17 +499,35 @@ export function updateBilateralTensions(state: GameState): void {
       tension.tensionLevel = Math.min(1, tension.tensionLevel + 0.01);
     }
     
-    // === ESCALATION LADDER ===
-    
-    // Tension drives escalation
-    if (tension.tensionLevel > 0.9 && tension.escalationLadder < 7) {
-      // High tension but not yet nuclear
-      if (!tension.nuclearThreats && Math.random() < 0.05) {
-        tension.escalationLadder = Math.min(7, tension.escalationLadder + 1);
-        console.log(`⚠️ ESCALATION: ${tension.nationA}-${tension.nationB} tension at ladder step ${tension.escalationLadder}`);
+    // === ESCALATION LADDER (Phase 1A: Bayesian approach) ===
+
+    // Phase 1A: AI affects escalation RATE, not base probability
+    // Calculate net escalation rate (AI escalation - circuit breakers)
+    const aiEscalationRate = calculateAIEscalationRate(state, tension);
+    const circuitBreakerRate = calculateCircuitBreakerRate(state, tension);
+    const netEscalation = aiEscalationRate - circuitBreakerRate;
+
+    // Escalation or de-escalation based on net rate
+    if (tension.tensionLevel > 0.7 && tension.escalationLadder < 7) {
+      // Escalate if AI pushes harder than circuit breakers resist
+      if (netEscalation > 0) {
+        const escalationProb = netEscalation * 0.2; // 0-20% per month
+        if (Math.random() < escalationProb) {
+          tension.escalationLadder = Math.min(7, tension.escalationLadder + 1);
+          console.log(`⚠️ ESCALATION: ${tension.nationA}-${tension.nationB} → ladder step ${tension.escalationLadder} (AI: ${(aiEscalationRate * 100).toFixed(0)}%, breakers: ${(circuitBreakerRate * 100).toFixed(0)}%)`);
+        }
       }
     }
-    
+
+    // De-escalation if circuit breakers are stronger than AI pressure
+    if (netEscalation < 0 && tension.escalationLadder > 1) {
+      const deEscalationProb = Math.abs(netEscalation) * 0.15; // 0-15% per month
+      if (Math.random() < deEscalationProb) {
+        tension.escalationLadder = Math.max(1, tension.escalationLadder - 1);
+        console.log(`🛡️ CIRCUIT BREAKERS: ${tension.nationA}-${tension.nationB} → ladder step ${tension.escalationLadder} (AI: ${(aiEscalationRate * 100).toFixed(0)}%, breakers: ${(circuitBreakerRate * 100).toFixed(0)}%)`);
+      }
+    }
+
     // Update flags based on escalation ladder
     tension.conventionalConflict = tension.escalationLadder >= 4;
     tension.nuclearThreats = tension.escalationLadder >= 5;
