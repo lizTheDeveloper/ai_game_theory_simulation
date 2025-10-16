@@ -546,6 +546,10 @@ export function updateOrganizationViability(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
   const currentMonth = state.currentMonth;
   
+  // Calculate global population fraction (needed for logging)
+  const globalPopFraction = state.humanPopulationSystem.population / 
+                            state.humanPopulationSystem.baselinePopulation;
+  
   // TIER 1.7.5: Track baseline revenue/expenses (first month only)
   const needsBaseline = !state.organizations[0].hasOwnProperty('baselineRevenue');
   if (needsBaseline) {
