@@ -157,12 +157,18 @@ function applyCapabilityBoosts(
       for (const [dimension, boost] of Object.entries(capabilityEffects.dimensions)) {
         const dimKey = dimension as keyof typeof ai.capabilityProfile;
         if (dimKey === 'research') continue; // Handle research separately
-        
+
         // Scale boost by deployment level and apply (monthly increment)
         const scaledBoost = boost * deploymentLevel * 0.01; // 1% per month at full deployment
+
+        // Defensive: Handle NaN or undefined capability values (root cause fix)
+        const currentValue = isNaN(ai.capabilityProfile[dimKey]) || ai.capabilityProfile[dimKey] === undefined
+          ? 0
+          : ai.capabilityProfile[dimKey];
+
         ai.capabilityProfile[dimKey] = Math.min(
           10.0, // Cap at 10.0
-          ai.capabilityProfile[dimKey] + scaledBoost
+          currentValue + scaledBoost
         );
       }
     }
@@ -172,26 +178,30 @@ function applyCapabilityBoosts(
       for (const researchBoost of capabilityEffects.research) {
         const { domain, subdomain, boost } = researchBoost;
         const scaledBoost = boost * deploymentLevel * 0.01;
-        
+
         const domainCap = ai.capabilityProfile.research[domain];
-        
+
         if (subdomain && typeof domainCap === 'object') {
           // Boost specific subdomain
           const currentValue = (domainCap as any)[subdomain] || 0;
-          (domainCap as any)[subdomain] = Math.min(5.0, currentValue + scaledBoost);
+          const safeValue = isNaN(currentValue) ? 0 : currentValue;
+          (domainCap as any)[subdomain] = Math.min(5.0, safeValue + scaledBoost);
         } else if (!subdomain && typeof domainCap === 'object') {
           // Boost all subdomains equally
           for (const key of Object.keys(domainCap)) {
             const currentValue = (domainCap as any)[key] || 0;
-            (domainCap as any)[key] = Math.min(5.0, currentValue + scaledBoost);
+            const safeValue = isNaN(currentValue) ? 0 : currentValue;
+            (domainCap as any)[key] = Math.min(5.0, safeValue + scaledBoost);
           }
         }
       }
     }
-    
+
     // Recalculate total capability
     const { calculateTotalCapabilityFromProfile } = require('../capabilities');
-    ai.capability = calculateTotalCapabilityFromProfile(ai.capabilityProfile);
+    const newCapability = calculateTotalCapabilityFromProfile(ai.capabilityProfile);
+    // Defensive: Ensure capability is never NaN
+    ai.capability = isNaN(newCapability) ? 0 : newCapability;
   }
 }
 
