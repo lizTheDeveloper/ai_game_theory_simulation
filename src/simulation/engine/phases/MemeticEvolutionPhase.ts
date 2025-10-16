@@ -10,6 +10,7 @@
 import { SimulationPhase, PhaseResult, RNGFunction } from '../PhaseOrchestrator';
 import { GameState } from '../../../types/game';
 import { updateBeliefs } from '../../memetics/beliefEvolution';
+import { updateMemeTransmission } from '../../memetics/memeTransmission';
 
 export class MemeticEvolutionPhase implements SimulationPhase {
   readonly id = 'memetic-evolution';
@@ -17,11 +18,13 @@ export class MemeticEvolutionPhase implements SimulationPhase {
   readonly order = 18.5; // After human enhancement (17.0), before social QoL calculation (19.0)
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    // Update beliefs through social influence and external events
+    // Phase 1: Update beliefs through social influence and external events
     updateBeliefs(state);
     
-    // TODO (Phase 2): Add meme transmission logic
-    // TODO (Phase 4): Add AI amplification effects
+    // Phase 2: Create, spread, and mutate memes through network
+    updateMemeTransmission(state);
+    
+    // TODO (Phase 4): Add AI amplification effects (deepfakes, bots, algorithms)
     
     return { events: [] };
   }
