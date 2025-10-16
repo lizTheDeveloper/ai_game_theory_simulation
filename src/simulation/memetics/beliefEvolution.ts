@@ -52,7 +52,7 @@ export function updateBeliefs(state: GameState): void {
       let influenceWeight = 0;
       
       // Gather influences from connected segments
-      for (const [otherId, connectionStrength] of segment.connections) {
+      for (const [otherId, connectionStrength] of Array.from(segment.connections)) {
         const otherSegment = memetic.segments.find(s => s.id === otherId);
         if (!otherSegment) continue;
         
@@ -182,7 +182,7 @@ function updatePolarizationMetrics(state: GameState): void {
   let totalInternalStrength = 0;
   let totalExternalStrength = 0;
   for (const segment of segments) {
-    for (const [otherId, strength] of segment.connections) {
+    for (const [otherId, strength] of Array.from(segment.connections)) {
       // Check if connection is internal (similar beliefs) or external (different beliefs)
       const other = segments.find(s => s.id === otherId);
       if (!other) continue;
@@ -333,7 +333,7 @@ function calculateAverageConnectionStrength(segments: MemeticSegment[]): number 
   let totalConnections = 0;
   
   for (const segment of segments) {
-    for (const strength of segment.connections.values()) {
+    for (const strength of Array.from(segment.connections.values())) {
       totalStrength += strength;
       totalConnections++;
     }
