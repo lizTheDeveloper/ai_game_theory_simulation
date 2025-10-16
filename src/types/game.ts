@@ -126,6 +126,10 @@ export interface AIAgent {
   // Phase 5.2: Benchmark System
   lastBenchmarkMonth: number; // When was this AI last benchmarked?
   benchmarkHistory: BenchmarkResult[]; // History of benchmark results
+
+  // TIER 2 Phase 2A: Counter-Detection Learning (NEW)
+  monthsObservingDetection: number; // How long exposed to detection methods
+  hasCounterDetection: boolean;     // Learned to defeat noise injection?
   
   // Phase 1: Compute Allocation (NEW)
   allocatedCompute: number;     // Current compute allocation in PetaFLOPs
@@ -238,7 +242,9 @@ export interface GovernmentAgent {
     alignmentTests: number;      // [0,10] Quality of alignment evaluation
     redTeaming: number;          // [0,10] Adversarial testing capability
     interpretability: number;    // [0,10] AI internals understanding
+    noiseInjection: number;      // [0,10] TIER 2 Phase 2A: Noise injection sandbagging detection ($B invested)
   };
+  detectionTrust: number;        // [0,1] TIER 2 Phase 2A: Public trust in detection methods (erodes with false positives)
   evaluationFrequency: number;   // [0,1] How often to run evaluations (0 = never, 1 = every month)
   totalBenchmarksRun: number;    // Track total evaluations performed
   
