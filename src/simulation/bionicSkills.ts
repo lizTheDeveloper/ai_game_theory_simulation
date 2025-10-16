@@ -122,18 +122,75 @@ export function initializeSegmentSkills(segment: SocietySegment): SkillProfile {
 }
 
 /**
+ * Calculate task complexity from baseline skill
+ * Maps skill level to cognitive complexity required
+ * 
+ * Capability scale (per user):
+ * 1.0 = Median human (IQ 100)
+ * 2.0 = 1 SD above (IQ 115)
+ * 5.0 = 5 SD above (IQ 175)
+ * 6.0+ = Superintelligence
+ * 
+ * @param baselineSkill Skill level [0,1]
+ * @returns Task complexity [0.5, 4.0]
+ */
+function getTaskComplexity(baselineSkill: number): number {
+  // Map skill to complexity:
+  // 0.25 (precariat) → 0.8 (routine tasks)
+  // 0.40 (working) → 1.2 (basic professional)
+  // 0.60 (middle) → 1.8 (intermediate professional)
+  // 0.85 (elite) → 3.5 (expert tasks)
+  return 0.5 + (baselineSkill * 4.0);
+}
+
+/**
+ * Determine automation phase based on AI capability vs task complexity
+ * 
+ * COMPLEMENTARITY: AI helps but can't replace human
+ * TRANSITION: AI can do some aspects, hybrid human-AI work
+ * SUBSTITUTION: AI can perform task independently
+ * 
+ * @param aiCapability Global AI capability [0,∞)
+ * @param taskComplexity Cognitive complexity required [0.5, 4.0]
+ * @returns Phase multiplier [0, 1] (1 = full complementarity, 0 = full substitution)
+ */
+function getAutomationPhaseMultiplier(
+  aiCapability: number,
+  taskComplexity: number
+): number {
+  const ratio = aiCapability / taskComplexity;
+  
+  if (ratio < 0.6) {
+    // COMPLEMENTARITY: AI capability well below task complexity
+    return 1.0; // Full amplification benefit
+  } else if (ratio < 1.5) {
+    // TRANSITION: AI approaching human-level for this task
+    // Linear decay from 1.0 (ratio=0.6) to 0.2 (ratio=1.5)
+    return 1.0 - ((ratio - 0.6) / 0.9) * 0.8;
+  } else {
+    // SUBSTITUTION: AI exceeds human-level for this task
+    // Residual 20% benefit (humans still add value in edge cases)
+    return 0.2;
+  }
+}
+
+/**
  * Calculate AI amplification factor for a given skill
  * 
  * KEY INSIGHT: Less skilled workers benefit MORE from AI (in absolute terms)
  * But they also have LESS access (digital divide)
  * 
+ * UPDATED (Oct 16, 2025): Added phase transition from complementarity → substitution
+ * based on automation economics literature (Acemoglu & Restrepo 2022)
+ * 
  * Research:
  * - GitHub Copilot: Novices gain 56% speed, experts gain 30%
  * - ChatGPT writing: 40% speed boost for average writers
  * - Effect size decreases with baseline skill (diminishing returns)
+ * - BUT: As AI exceeds task complexity, it substitutes rather than amplifies
  * 
  * @param baselineSkill Skill level without AI [0,1]
- * @param aiCapability Global AI capability [0,∞)
+ * @param aiCapability Global AI capability [0,∞) (1.0 = median human, 6.0 = superintelligence)
  * @param aiAccess Does this segment have access to AI? [0,1]
  * @returns Amplified skill level [0,1]
  */
@@ -147,21 +204,28 @@ export function calculateBionicSkill(
     return baselineSkill;
   }
   
+  // Determine task complexity and automation phase
+  const taskComplexity = getTaskComplexity(baselineSkill);
+  const phaseMultiplier = getAutomationPhaseMultiplier(aiCapability, taskComplexity);
+  
   // AI amplification scales with:
   // 1. AI capability (better AI = more boost)
   // 2. Access (digital divide limits benefit)
   // 3. INVERSE of baseline skill (novices benefit more)
+  // 4. Automation phase (substitution reduces complementarity)
   
   // Novice benefit (skill < 0.5): Up to 60% boost
   // Expert benefit (skill > 0.8): Up to 20% boost
   const noviceBonus = (1.0 - baselineSkill) * 0.60;
   const expertBonus = baselineSkill * 0.20;
   
-  // AI capability multiplier (0.5 = weak AI, 2.0+ = strong AI)
+  // AI capability multiplier (scales with capability up to 2.0)
+  // At 1.0 (median human): 50% of max benefit
+  // At 2.0+ (bright human): 100% of max benefit
   const aiMultiplier = Math.min(1.0, aiCapability / 2.0);
   
-  // Calculate boost
-  const rawBoost = (noviceBonus + expertBonus) * aiMultiplier * aiAccess;
+  // Calculate boost with phase transition
+  const rawBoost = (noviceBonus + expertBonus) * aiMultiplier * aiAccess * phaseMultiplier;
   
   // Apply boost (max out at 0.95, can't be perfect)
   const amplifiedSkill = Math.min(0.95, baselineSkill + rawBoost);
