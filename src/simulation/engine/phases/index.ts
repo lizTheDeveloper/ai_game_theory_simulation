@@ -40,6 +40,7 @@ export { SocialSafetyNetsPhase } from './SocialSafetyNetsPhase';
 export { InformationWarfarePhase } from './InformationWarfarePhase';
 export { PowerGenerationPhase } from './PowerGenerationPhase';
 export { HumanEnhancementPhase } from './HumanEnhancementPhase';
+export { MemeticEvolutionPhase } from './MemeticEvolutionPhase';  // P2.6 (Oct 16, 2025)
 export { MADDeterrencePhase } from './MADDeterrencePhase';
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';
 export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';

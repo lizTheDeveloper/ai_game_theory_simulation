@@ -1,7 +1,7 @@
 ---
 alwaysApply: true
 ---
-
+Be as brief as possible, don't write excessive reviews after writing devlogs, only bring questions to the user.
 This is a research simulation. We are never going for specific outcomes, only trying to figure out the most realistic, defensible model we can- let the model show what it shows.
 cd /Users/annhoward/src/ai_game_theory_simulation && npx tsx scripts/monteCarloSimulation.ts to run the monte carlo sim
 Always redirect stdout to a file in a logs folder with a timestamp and background the process. Use sleep to check it async as it appends logs to the file. Remember it takes time to run.

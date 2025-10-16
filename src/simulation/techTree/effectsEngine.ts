@@ -985,9 +985,9 @@ function applyRegionalEffects(
         case 'cyberDefenseBonus':
           // Improve cybersecurity defenses
           if (gameState.defensiveAI) {
-            (gameState.defensiveAI as any).cyberDefense = Math.min(
+            gameState.defensiveAI.cyberDefense.strength = Math.min(
               1.0,
-              ((gameState.defensiveAI as any).cyberDefense || 0.5) + value
+              (gameState.defensiveAI.cyberDefense.strength || 0.5) + value
             );
           }
           break;
