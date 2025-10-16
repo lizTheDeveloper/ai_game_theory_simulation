@@ -2,8 +2,13 @@
 
 **Plan:** Phase 4 of Bionic Skills Research Grounding
 **Effort:** 6 hours over Weeks 7-8
-**Priority:** High (Critical for inequality modeling)
-**Research TRL:** 9 (Extensively documented historical pattern)
+**Priority:** CRITICAL (Model assumes productivity→wages linearly - misses capital capture)
+**Research TRL:** 9 (Extensively documented historical pattern, 50+ years US data)
+**Master Plan:** `plans/bionic-skills-research-grounding.md` §Phase 4
+**Master Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` §AI-Assisted Skills Enhancement →Phase 4
+**Related Plans:**
+- Phase 2: `plans/bionic-skills-phase-transition.md` (displacement reduces bargaining power)
+- Phase 3: `plans/bionic-skills-competence-tracking.md` (competence gaps affect wages)
 
 ---
 

@@ -2,8 +2,13 @@
 
 **Plan:** Phase 2 of Bionic Skills Research Grounding
 **Effort:** 12 hours over Weeks 2-4
-**Priority:** High (Critical gap in current model)
+**Priority:** CRITICAL (Model currently assumes permanent amplification - misses displacement)
 **Research TRL:** 9 (Historical pattern, extensively documented)
+**Master Plan:** `plans/bionic-skills-research-grounding.md` §Phase 2
+**Master Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` §AI-Assisted Skills Enhancement →Phase 2
+**Related Plans:**
+- Phase 3: `plans/bionic-skills-competence-tracking.md` (low competence → higher displacement)
+- Phase 4: `plans/bionic-skills-economic-distribution.md` (displacement → wage pressure)
 
 ---
 
