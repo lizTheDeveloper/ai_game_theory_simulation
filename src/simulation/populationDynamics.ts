@@ -598,35 +598,127 @@ export function determinePopulationOutcome(state: GameState): PopulationOutcome 
  * @param exposedFraction Fraction of world population exposed [0-1] (default 1.0 = global)
  * @param category Death category for tracking (default 'other')
  */
-export function addAcuteCrisisDeaths(
+/**
+ * Apply crisis deaths with differential impact by population segment (P2.3)
+ * More vulnerable segments (precariat, rural) suffer higher mortality
+ * 
+ * @param state Game state
+ * @param baseMortalityRate Base mortality rate (will be modified by segment vulnerability)
+ * @param reason Description of crisis
+ * @param exposedFraction Fraction of population exposed (0-1)
+ * @param category Death category for tracking
+ */
+function addSegmentSpecificCrisisDeaths(
+  state: GameState,
+  baseMortalityRate: number,
+  reason: string,
+  exposedFraction: number,
+  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other'
+): void {
+  const pop = state.humanPopulationSystem;
+  const segments = state.society.segments;
+  
+  if (!segments || segments.length === 0) {
+    // Fallback to uniform mortality if segments not initialized
+    return addUniformCrisisDeaths(state, baseMortalityRate, reason, exposedFraction, category);
+  }
+  
+  let totalDeathsRequested = 0;
+  let totalDeathsApplied = 0;
+  const segmentDeaths: Array<{ segment: string; deaths: number; mortality: number }> = [];
+  
+  // Calculate deaths for each segment
+  for (const segment of segments) {
+    // Segment-specific mortality = base × vulnerability × survival rate inverse
+    // crisisVulnerability: 0.2 (elite) to 2.0 (precariat)
+    // survivalRate: 1.5 (elite) to 0.6 (precariat)
+    const vulnerabilityMultiplier = segment.crisisVulnerability;
+    const survivalMultiplier = 2.0 - segment.survivalRate; // Inverse: elite 0.5x, precariat 1.4x
+    
+    const segmentMortality = baseMortalityRate * vulnerabilityMultiplier * survivalMultiplier;
+    
+    // Calculate segment population (fraction of total)
+    const segmentPopulation = pop.population * segment.populationFraction;
+    const segmentExposed = segmentPopulation * exposedFraction;
+    const segmentDeathsRequested = segmentExposed * segmentMortality;
+    
+    totalDeathsRequested += segmentDeathsRequested;
+    segmentDeaths.push({
+      segment: segment.name,
+      deaths: segmentDeathsRequested,
+      mortality: segmentMortality
+    });
+  }
+  
+  // Apply death cap (20% monthly max)
+  const monthlyDeathCap = pop.population * 0.20;
+  const remainingCapacity = Math.max(0, monthlyDeathCap - (pop.monthlyDeathsApplied || 0));
+  const totalDeathsAllowed = Math.min(totalDeathsRequested, remainingCapacity);
+  
+  // If capped, scale down all segment deaths proportionally
+  const scaleFactor = totalDeathsRequested > 0 
+    ? Math.min(1.0, totalDeathsAllowed / totalDeathsRequested)
+    : 0;
+  
+  // Apply deaths
+  for (const sd of segmentDeaths) {
+    const actualDeaths = sd.deaths * scaleFactor;
+    totalDeathsApplied += actualDeaths;
+  }
+  
+  // Update population
+  pop.population = Math.max(0, pop.population - totalDeathsApplied);
+  pop.monthlyExcessDeaths += totalDeathsApplied;
+  pop.cumulativeCrisisDeaths += totalDeathsApplied;
+  pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + totalDeathsApplied;
+  
+  // Track by category (convert to millions)
+  pop.deathsByCategory[category] += totalDeathsApplied * 1000;
+  
+  // Log significant events
+  if (totalDeathsApplied > 0.001) {
+    const deathsInMillions = (totalDeathsApplied * 1000).toFixed(1);
+    const exposedPct = (exposedFraction * 100).toFixed(0);
+    const scope = exposedFraction >= 0.9 ? 'GLOBAL' : exposedFraction >= 0.4 ? 'SEMI-GLOBAL' : 'REGIONAL';
+    const cappedNote = scaleFactor < 1.0 ? ' [CAPPED]' : '';
+    
+    console.log(`💀 ${scope} CRISIS DEATHS (Segment-Specific): ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
+    console.log(`   Exposed: ${exposedPct}% of world, Base Mortality: ${(baseMortalityRate * 100).toFixed(1)}%`);
+    
+    // Show differential impact by segment
+    const maxImpact = segmentDeaths.reduce((max, sd) => Math.max(max, sd.mortality), 0);
+    if (maxImpact > baseMortalityRate * 1.5) {
+      const mostVulnerable = segmentDeaths.reduce((max, sd) => 
+        sd.mortality > max.mortality ? sd : max
+      );
+      const leastVulnerable = segmentDeaths.reduce((min, sd) => 
+        sd.mortality < min.mortality ? sd : min
+      );
+      console.log(`   Differential Impact: ${mostVulnerable.segment} ${(mostVulnerable.mortality * 100).toFixed(1)}% vs ${leastVulnerable.segment} ${(leastVulnerable.mortality * 100).toFixed(1)}%`);
+    }
+    
+    console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
+  }
+  
+  // Track if cap was reached
+  if (scaleFactor < 1.0 && !pop.monthlyDeathCapReached) {
+    pop.monthlyDeathCapReached = true;
+    console.warn(`⚠️  MONTHLY DEATH CAP REACHED (20% of population)`);
+    console.warn(`   Requested: ${(totalDeathsRequested * 1000).toFixed(1)}M, Applied: ${(totalDeathsApplied * 1000).toFixed(1)}M`);
+  }
+}
+
+/**
+ * Apply uniform crisis deaths (legacy behavior, used when segments not active)
+ */
+function addUniformCrisisDeaths(
   state: GameState,
   mortalityRate: number,
   reason: string,
-  exposedFraction: number = 1.0,
-  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other' = 'other'
+  exposedFraction: number,
+  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other'
 ): void {
   const pop = state.humanPopulationSystem;
-
-  // Guard against NaN/invalid inputs
-  if (isNaN(mortalityRate) || mortalityRate < 0 || mortalityRate > 1) {
-    console.warn(`⚠️  Invalid mortality rate: ${mortalityRate} for ${reason}`);
-    return;
-  }
-
-  if (isNaN(exposedFraction) || exposedFraction < 0 || exposedFraction > 1) {
-    console.warn(`⚠️  Invalid exposure fraction: ${exposedFraction} for ${reason}`);
-    return;
-  }
-
-  if (isNaN(pop.population)) {
-    console.warn(`⚠️  Population is NaN before crisis deaths (${reason}), resetting to 0.1B`);
-    pop.population = 0.1; // Small survival population as fallback
-  }
-
-  // P2 BUG FIX (Oct 16, 2025): Cap monthly deaths at 20% of population
-  // Research: Black Death was ~30% mortality over 6 years (0.5%/month avg)
-  // Even worst-case scenarios shouldn't exceed 20% monthly mortality
-  // This prevents overlapping systems from killing >100% of population
   
   // Initialize monthly tracking if not present
   if (pop.monthlyDeathsApplied === undefined) {
@@ -672,6 +764,52 @@ export function addAcuteCrisisDeaths(
     console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
     console.log(`   Exposed: ${exposedPct}% of world, Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
     console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
+  }
+}
+
+/**
+ * Add acute crisis deaths (public API)
+ * 
+ * P2.3 UPDATE (Oct 16, 2025): Now supports segment-specific mortality
+ * - If heterogeneous population segments are active, applies differential impact
+ * - Vulnerable segments (precariat, rural) suffer 2-3x higher mortality
+ * - Protected segments (elite, urban) suffer 0.3-0.5x lower mortality
+ * - Falls back to uniform mortality if segments not initialized
+ */
+export function addAcuteCrisisDeaths(
+  state: GameState,
+  mortalityRate: number,
+  reason: string,
+  exposedFraction: number = 1.0,
+  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other' = 'other'
+): void {
+  const pop = state.humanPopulationSystem;
+
+  // Guard against NaN/invalid inputs
+  if (isNaN(mortalityRate) || mortalityRate < 0 || mortalityRate > 1) {
+    console.warn(`⚠️  Invalid mortality rate: ${mortalityRate} for ${reason}`);
+    return;
+  }
+
+  if (isNaN(exposedFraction) || exposedFraction < 0 || exposedFraction > 1) {
+    console.warn(`⚠️  Invalid exposure fraction: ${exposedFraction} for ${reason}`);
+    return;
+  }
+
+  if (isNaN(pop.population)) {
+    console.warn(`⚠️  Population is NaN before crisis deaths (${reason}), resetting to 0.1B`);
+    pop.population = 0.1; // Small survival population as fallback
+  }
+
+  
+  // P2.3 UPDATE (Oct 16, 2025): Route to segment-specific or uniform mortality
+  // If heterogeneous population segments are active, apply differential mortality
+  // Otherwise, fall back to uniform mortality (legacy behavior)
+  
+  if (state.society.segments && state.society.segments.length > 0) {
+    addSegmentSpecificCrisisDeaths(state, mortalityRate, reason, exposedFraction, category);
+  } else {
+    addUniformCrisisDeaths(state, mortalityRate, reason, exposedFraction, category);
   }
 }
 
