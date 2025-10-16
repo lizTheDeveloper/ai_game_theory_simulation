@@ -593,7 +593,7 @@ export function addAcuteCrisisDeaths(
   mortalityRate: number,
   reason: string,
   exposedFraction: number = 1.0,
-  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'other' = 'other'
+  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other' = 'other'
 ): void {
   const pop = state.humanPopulationSystem;
 
