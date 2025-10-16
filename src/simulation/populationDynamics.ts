@@ -62,6 +62,7 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
       ecosystem: 0,
       pollution: 0,
       ai: 0,
+      cascade: 0,      // Tipping point cascade (Oct 16, 2025)
       other: 0,
     },
 

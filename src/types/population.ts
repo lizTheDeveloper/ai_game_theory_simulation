@@ -73,6 +73,7 @@ export interface HumanPopulationSystem {
     ecosystem: number;                   // Ecosystem collapse, biodiversity loss
     pollution: number;                   // Toxic environment
     ai: number;                          // AI-caused deaths (alignment failure)
+    cascade: number;                     // Tipping point cascade (Oct 16, 2025)
     other: number;                       // Other catastrophes
   };
 
