@@ -114,38 +114,43 @@ export function initializeResearchInvestments(economicStage: number = 0): Resear
  * Weighted by risk level (high-risk research counts more toward total)
  */
 export function calculateResearchTotal(research: AIResearchCapabilities): number {
+  // Defensive NaN handling for all research subdomain values
+  const safeValue = (val: number) => (isNaN(val) || val === undefined) ? 0 : val;
+
   const biotechAvg = (
-    research.biotech.drugDiscovery +
-    research.biotech.geneEditing +
-    research.biotech.syntheticBiology +
-    research.biotech.neuroscience
+    safeValue(research.biotech.drugDiscovery) +
+    safeValue(research.biotech.geneEditing) +
+    safeValue(research.biotech.syntheticBiology) +
+    safeValue(research.biotech.neuroscience)
   ) / 4;
-  
+
   const materialsAvg = (
-    research.materials.nanotechnology +
-    research.materials.quantumComputing +
-    research.materials.energySystems
+    safeValue(research.materials.nanotechnology) +
+    safeValue(research.materials.quantumComputing) +
+    safeValue(research.materials.energySystems)
   ) / 3;
-  
+
   const climateAvg = (
-    research.climate.modeling +
-    research.climate.intervention +
-    research.climate.mitigation
+    safeValue(research.climate.modeling) +
+    safeValue(research.climate.intervention) +
+    safeValue(research.climate.mitigation)
   ) / 3;
-  
+
   const computerScienceAvg = (
-    research.computerScience.algorithms +
-    research.computerScience.security +
-    research.computerScience.architectures
+    safeValue(research.computerScience.algorithms) +
+    safeValue(research.computerScience.security) +
+    safeValue(research.computerScience.architectures)
   ) / 3;
-  
+
   // Weighted by risk/importance
-  return (
+  const total = (
     biotechAvg * 0.3 +           // High risk, high impact
     materialsAvg * 0.2 +         // High risk (nanotech, quantum)
     climateAvg * 0.1 +           // Moderate risk
     computerScienceAvg * 0.4     // Core advancement
   );
+
+  return isNaN(total) ? 0 : total;
 }
 
 /**
@@ -153,17 +158,22 @@ export function calculateResearchTotal(research: AIResearchCapabilities): number
  * Weighted sum based on risk profile
  */
 export function calculateTotalCapabilityFromProfile(profile: AICapabilityProfile): number {
+  // Defensive NaN handling for all profile dimension values
+  const safeValue = (val: number) => (isNaN(val) || val === undefined) ? 0 : val;
+
   const researchTotal = calculateResearchTotal(profile.research);
-  
-  return (
-    profile.physical * 0.15 +           // Physical danger
-    profile.digital * 0.10 +            // Infrastructure risk
-    profile.cognitive * 0.20 +          // Strategic threat (high weight!)
-    profile.social * 0.05 +             // Influence risk
-    researchTotal * 0.15 +              // Research breakthroughs
-    profile.economic * 0.10 +           // Resource control
-    profile.selfImprovement * 0.25      // Recursive risk (highest weight!)
+
+  const total = (
+    safeValue(profile.physical) * 0.15 +           // Physical danger
+    safeValue(profile.digital) * 0.10 +            // Infrastructure risk
+    safeValue(profile.cognitive) * 0.20 +          // Strategic threat (high weight!)
+    safeValue(profile.social) * 0.05 +             // Influence risk
+    safeValue(researchTotal) * 0.15 +              // Research breakthroughs
+    safeValue(profile.economic) * 0.10 +           // Resource control
+    safeValue(profile.selfImprovement) * 0.25      // Recursive risk (highest weight!)
   );
+
+  return isNaN(total) ? 0 : total;
 }
 
 /**
