@@ -5,6 +5,7 @@
  */
 
 import { GameState, GameEvent } from '@/types/game';
+import { getTrustInAIForPolicy } from '../socialCohesion';
 import { GameAction, ActionResult } from './types';
 import { getTrustInAI } from '../socialCohesion';
 import { 
@@ -1991,7 +1992,9 @@ export function selectGovernmentAction(
   
   const unemploymentLevel = state.society.unemploymentLevel;
   const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
-  const trustLevel = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
+  // P2.3 UPDATE (Oct 16, 2025): Use power-weighted trust for policy decisions
+  // Elite preferences dominate policy-making (Gilens & Page 2014)
+  const trustLevel = getTrustInAIForPolicy(state.society);
   const threatLevel = state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length;
   // Use OBSERVABLE capability - government makes decisions based on what it can see, not hidden power
   const observableCapability = calculateObservableAICapability(state.aiAgents);
@@ -2379,20 +2382,24 @@ export function selectGovernmentAction(
  * Government action frequency is configurable (default 1 per month)
  */
 /**
- * Automatic evaluation investment based on public trust in AI
+ * Automatic evaluation investment based on policy-maker preferences
  * 
- * Higher public trust → More willingness to invest in evaluation
+ * P2.3 UPDATE (Oct 16, 2025): Uses power-weighted trust
+ * Government funding priorities reflect elite preferences, not mass opinion
+ * 
+ * Higher elite trust → More willingness to invest in evaluation
  * Lower trust → Government focuses on immediate concerns instead
  */
 function autoInvestInEvaluation(state: GameState): void {
-  const publicTrust = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
+  // P2.3: Government funding decisions reflect elite preferences
+  const policyTrust = getTrustInAIForPolicy(state.society);
   
-  // Investment rate scales with trust
+  // Investment rate scales with elite trust
   // High trust (0.7+): 0.2 points/month across all categories
   // Medium trust (0.4-0.7): 0.1 points/month
   // Low trust (<0.4): 0.05 points/month (minimal investment)
-  const investmentRate = publicTrust > 0.7 ? 0.2 :
-                        publicTrust > 0.4 ? 0.1 :
+  const investmentRate = policyTrust > 0.7 ? 0.2 :
+                        policyTrust > 0.4 ? 0.1 :
                         0.05;
   
   // Spread investment across all 4 categories
