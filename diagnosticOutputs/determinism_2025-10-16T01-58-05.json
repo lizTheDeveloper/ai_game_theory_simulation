@@ -1,0 +1,52 @@
+{
+  "config": {
+    "runs": 5,
+    "months": 30,
+    "timestamp": "2025-10-16T01:58:05.096Z"
+  },
+  "results": [
+    {
+      "seed": 42001,
+      "outcome": "inconclusive",
+      "finalPopulation": 3.155824731404256,
+      "months": 4
+    },
+    {
+      "seed": 42002,
+      "outcome": "inconclusive",
+      "finalPopulation": 3.025011897949862,
+      "months": 4
+    },
+    {
+      "seed": 42003,
+      "outcome": "inconclusive",
+      "finalPopulation": 4.69280107975285,
+      "months": 4
+    },
+    {
+      "seed": 42004,
+      "outcome": "inconclusive",
+      "finalPopulation": 3.3224272602166476,
+      "months": 4
+    },
+    {
+      "seed": 42005,
+      "outcome": "inconclusive",
+      "finalPopulation": 3.0637645616518667,
+      "months": 4
+    }
+  ],
+  "determinismAnalysis": {
+    "summary": "\n═══════════════════════════════════════════════════════\n   DETERMINISM ANALYSIS - 5 Monte Carlo Runs\n═══════════════════════════════════════════════════════\n\n🔴 DETERMINISTIC SYSTEMS: 0/0 metrics (NaN%)\n\n\n\nMetrics with CV < 1% are considered deterministic.\nHealthy stochastic systems should have CV > 5%.\n\nAnalyzed at months: 60, 120, 180, 240\n",
+    "deterministicSystems": [],
+    "totalMetrics": 0,
+    "deterministicCount": 0
+  },
+  "populationStats": {
+    "mean": 3.4519659061950967,
+    "stdDev": 0.6288309459955629,
+    "cv": 0.1821660361323461,
+    "min": 3.025011897949862,
+    "max": 4.69280107975285
+  }
+}

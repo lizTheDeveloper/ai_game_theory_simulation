@@ -476,7 +476,11 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
     // Once active, severity scales continuously with risk
     if (system.cascadeActive) {
-      system.cascadeSeverity = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 1.5); // 0-1 scale
+      // P0.5 (Oct 15, 2025): Add stochastic variation to cascade severity
+      const baseSeverity = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 1.5); // 0-1 scale
+      // Add ±20% variation for monthly shocks (extreme weather, local resilience, random events)
+      const stochasticMultiplier = 0.8 + Math.random() * 0.4; // 80% to 120%
+      system.cascadeSeverity = baseSeverity * stochasticMultiplier;
       system.cascadeMultiplier = 1.0 + system.cascadeSeverity; // 1.0x → 2.0x
     }
   } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
@@ -554,25 +558,34 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   const resources = state.resourceEconomy;
   const monthsSinceCascade = state.currentMonth - (system.cascadeStartMonth || 0);
 
-  // === ENVIRONMENTAL COLLAPSE ===
-  // Climate stability drops rapidly
-  env.climateStability = Math.max(0, env.climateStability * 0.98); // -2% per month
+  // === P0.5 (Oct 15, 2025): STOCHASTIC ENVIRONMENTAL COLLAPSE ===
+  // Add ±25% random variation to degradation rates (weather, local conditions, random events)
+  const envStochasticFactor = () => 0.75 + Math.random() * 0.5; // 75% to 125%
 
-  // Biodiversity crashes
-  env.biodiversityIndex = Math.max(0, env.biodiversityIndex * 0.97); // -3% per month
+  // Climate stability drops rapidly (with variation)
+  const climateDecay = 0.02 * envStochasticFactor(); // Base 2% ± variation
+  env.climateStability = Math.max(0, env.climateStability * (1 - climateDecay));
 
-  // Resources depleted faster
-  env.resourceReserves = Math.max(0, env.resourceReserves * 0.985); // -1.5% per month
+  // Biodiversity crashes (with variation)
+  const bioDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation
+  env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1 - bioDecay));
 
-  // Pollution increases as systems break down
-  env.pollutionLevel = Math.min(1, env.pollutionLevel * 1.01); // +1% per month
+  // Resources depleted faster (with variation)
+  const resourceDecay = 0.015 * envStochasticFactor(); // Base 1.5% ± variation
+  env.resourceReserves = Math.max(0, env.resourceReserves * (1 - resourceDecay));
 
-  // === RESOURCE CASCADES ===
+  // Pollution increases as systems break down (with variation)
+  const pollutionIncrease = 0.01 * envStochasticFactor(); // Base 1% ± variation
+  env.pollutionLevel = Math.min(1, env.pollutionLevel * (1 + pollutionIncrease));
+
+  // === RESOURCE CASCADES (with stochastic depletion) ===
   if (resources.food) {
-    resources.food.currentStock = Math.max(0, resources.food.currentStock * 0.96); // -4% per month
+    const foodDecay = 0.04 * envStochasticFactor(); // Base 4% ± variation (harvest failures, droughts)
+    resources.food.currentStock = Math.max(0, resources.food.currentStock * (1 - foodDecay));
   }
   if (resources.water) {
-    resources.water.currentStock = Math.max(0, resources.water.currentStock * 0.97); // -3% per month
+    const waterDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation (droughts, contamination)
+    resources.water.currentStock = Math.max(0, resources.water.currentStock * (1 - waterDecay));
   }
 
   // === QOL COLLAPSE ===

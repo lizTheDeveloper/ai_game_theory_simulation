@@ -1,0 +1,63 @@
+{
+  "config": {
+    "runs": 5,
+    "months": 60,
+    "timestamp": "2025-10-16T01:57:43.161Z"
+  },
+  "results": [
+    {
+      "seed": 42001,
+      "outcome": "inconclusive",
+      "finalPopulation": 1.7865329291041245,
+      "months": 6
+    },
+    {
+      "seed": 42002,
+      "outcome": "inconclusive",
+      "finalPopulation": 1.6155502310380134,
+      "months": 6
+    },
+    {
+      "seed": 42003,
+      "outcome": "inconclusive",
+      "finalPopulation": 1.5671636862242901,
+      "months": 6
+    },
+    {
+      "seed": 42004,
+      "outcome": "inconclusive",
+      "finalPopulation": 1.4763097091618076,
+      "months": 6
+    },
+    {
+      "seed": 42005,
+      "outcome": "inconclusive",
+      "finalPopulation": 1.5354148080891599,
+      "months": 6
+    }
+  ],
+  "determinismAnalysis": {
+    "summary": "\n═══════════════════════════════════════════════════════\n   DETERMINISM ANALYSIS - 5 Monte Carlo Runs\n═══════════════════════════════════════════════════════\n\n🔴 DETERMINISTIC SYSTEMS: 10/14 metrics (71.4%)\n\n   - Population.Birth Rate\n   - Population.Death Rate\n   - Population.Environmental Mortality\n   - Population.Famine Mortality\n   - Environmental.Tipping Point Risk\n   - Resource.Food Security\n   - Resource.Food Stock\n   - Resource.Water Stock\n   - Cascade.Active Crises\n   - Cascade.Cumulative Deaths\n\nMetrics with CV < 1% are considered deterministic.\nHealthy stochastic systems should have CV > 5%.\n\nAnalyzed at months: 60, 120, 180, 240\n",
+    "deterministicSystems": [
+      "Population.Birth Rate",
+      "Population.Death Rate",
+      "Population.Environmental Mortality",
+      "Population.Famine Mortality",
+      "Environmental.Tipping Point Risk",
+      "Resource.Food Security",
+      "Resource.Food Stock",
+      "Resource.Water Stock",
+      "Cascade.Active Crises",
+      "Cascade.Cumulative Deaths"
+    ],
+    "totalMetrics": 14,
+    "deterministicCount": 10
+  },
+  "populationStats": {
+    "mean": 1.5961942727234788,
+    "stdDev": 0.10536857604538195,
+    "cv": 0.06601237571514315,
+    "min": 1.4763097091618076,
+    "max": 1.7865329291041245
+  }
+}
