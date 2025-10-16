@@ -277,6 +277,58 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
       depopulated: false,
       carryingCapacity: 300,
       populationPressure: 0.74
+    },
+    // P2.4: Additional countries for organization geographic diversification
+    'Ireland': {
+      name: 'Ireland',
+      region: 'Western Europe',
+      population: 5.1,
+      baselinePopulation: 5.1,
+      peakPopulation: 5.1,
+      birthRate: 11.5,
+      deathRate: 6.8,
+      isNuclearPower: false,
+      isAIHub: true, // Major tech hub (Google, Microsoft, Meta EU HQ)
+      isMajorEconomy: false,
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      depopulated: false,
+      carryingCapacity: 8,
+      populationPressure: 0.64
+    },
+    'Singapore': {
+      name: 'Singapore',
+      region: 'Southeast Asia',
+      population: 5.9,
+      baselinePopulation: 5.9,
+      peakPopulation: 5.9,
+      birthRate: 8.5,
+      deathRate: 5.0,
+      isNuclearPower: false,
+      isAIHub: true, // AI research hub (Google, Meta, OpenAI offices)
+      isMajorEconomy: false,
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      depopulated: false,
+      carryingCapacity: 7,
+      populationPressure: 0.84
+    },
+    'Australia': {
+      name: 'Australia',
+      region: 'Oceania',
+      population: 26.4,
+      baselinePopulation: 26.4,
+      peakPopulation: 26.4,
+      birthRate: 12.0,
+      deathRate: 6.7,
+      isNuclearPower: false,
+      isAIHub: false,
+      isMajorEconomy: true,
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      depopulated: false,
+      carryingCapacity: 50,
+      populationPressure: 0.53
     }
   };
 

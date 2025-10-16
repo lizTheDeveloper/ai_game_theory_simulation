@@ -129,7 +129,9 @@ export function updateFreshwaterSystem(state: GameState): void {
   fw.waterStress = Math.max(0, Math.min(1.0, 1.0 - (totalSupply / totalDemand)));
   
   // Population under stress increases with water stress
-  fw.populationStressed = 0.41 + (fw.waterStress * 0.4); // 41% baseline → 81% at max stress
+  // Oct 16, 2025: Cap at 60% per WRI Aqueduct/IPCC research
+  // Even in worst-case scenarios, water-rich regions (Canada, Nordic, etc.) remain stable
+  fw.populationStressed = Math.min(0.60, 0.41 + (fw.waterStress * 0.4)); // 41% baseline → 60% max (was 81%)
   
   // === REGIONAL DYNAMICS ===
   // Different regions collapse at different rates

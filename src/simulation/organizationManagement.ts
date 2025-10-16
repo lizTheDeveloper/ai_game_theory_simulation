@@ -788,14 +788,16 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
   
   org.ownedDataCenters = [];
   
-  // Retire all AI models
+  // Retire all AI models (P2 BUG FIX: Clear organizationId to prevent orphans)
   state.aiAgents
     .filter(ai => org.ownedAIModels.includes(ai.id))
     .forEach(ai => {
       ai.lifecycleState = 'retired';
+      ai.organizationId = undefined; // Clear org reference to prevent orphan tracking
     });
   
   console.log(`   Retired ${org.ownedAIModels.length} AI models`);
+  org.ownedAIModels = []; // Clear ownership list
   
   // Mark organization as bankrupt (keep in list but inactive)
   org.capital = 0;

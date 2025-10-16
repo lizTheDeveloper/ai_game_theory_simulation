@@ -10,6 +10,7 @@ export { CyberSecurityPhase } from './CyberSecurityPhase';
 export { SleeperWakePhase } from './SleeperWakePhase';
 export { AIAgentActionsPhase } from './AIAgentActionsPhase';
 export { TechnologyBreakthroughsPhase } from './TechnologyBreakthroughsPhase';
+export { StochasticInnovationPhase } from './StochasticInnovationPhase';
 export { GovernmentActionsPhase } from './GovernmentActionsPhase';
 export { SocietyActionsPhase } from './SocietyActionsPhase';
 export { ComputeAllocationPhase } from './ComputeAllocationPhase';

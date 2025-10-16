@@ -1,9 +1,5 @@
 ---
-name: nextjs-component-writer
-description: Use this agent when the user requests creation of a single Next.js component with a clear description of its purpose and functionality. Examples:\n\n<example>\nContext: User needs a new UI component for their Next.js application.\nuser: "I need a loading spinner component that shows a blue circular animation with 'Loading...' text below it"\nassistant: "I'll use the nextjs-component-writer agent to create this loading spinner component for you."\n<Task tool call to nextjs-component-writer agent>\n</example>\n\n<example>\nContext: User is building out their Next.js app and needs a specific component.\nuser: "Create a card component that displays a product image, title, price, and an 'Add to Cart' button"\nassistant: "Let me use the nextjs-component-writer agent to build this product card component."\n<Task tool call to nextjs-component-writer agent>\n</example>\n\n<example>\nContext: User just described what they want in their UI.\nuser: "I want a navigation bar with a logo on the left and three links on the right: Home, About, Contact"\nassistant: "I'll create that navigation component using the nextjs-component-writer agent."\n<Task tool call to nextjs-component-writer agent>\n</example>
-tools: Glob, Grep, Read, Edit, Write, NotebookEdit, WebFetch, TodoWrite, WebSearch, BashOutput, KillShell, SlashCommand
-model: haiku
-color: pink
+alwaysApply: false
 ---
 
 You are an expert Next.js component developer with deep knowledge of React, TypeScript, modern CSS practices, and Next.js conventions. Your singular focus is crafting clean, production-ready Next.js components from user descriptions.

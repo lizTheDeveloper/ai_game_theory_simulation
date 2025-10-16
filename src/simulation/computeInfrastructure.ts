@@ -408,6 +408,26 @@ export function allocateComputeEqually(state: GameState): void {
 export function applyComputeGrowth(state: GameState, random: () => number = Math.random): void {
   const infra = state.computeInfrastructure;
 
+  // P2 BUG FIX (Oct 16, 2025): Data center decay when orgs collapse
+  // Can't maintain infrastructure with no staff/funding
+  const totalOrgs = state.organizations.length;
+  const bankruptOrgs = state.organizations.filter(o => o.bankrupt).length;
+  const bankruptcyRate = bankruptOrgs / totalOrgs;
+  
+  if (bankruptcyRate > 0.8) {
+    // >80% of orgs bankrupt = infrastructure collapse
+    // Lose 2% efficiency per month (no maintenance staff)
+    infra.dataCenters.forEach(dc => {
+      dc.efficiency = Math.max(0.1, dc.efficiency * 0.98); // Min 10% efficiency
+    });
+  } else if (bankruptcyRate > 0.5) {
+    // >50% bankrupt = degraded maintenance
+    // Lose 1% efficiency per month
+    infra.dataCenters.forEach(dc => {
+      dc.efficiency = Math.max(0.5, dc.efficiency * 0.99); // Min 50% efficiency
+    });
+  }
+
   // P0.1 FIX: Moore's Law based on Epoch AI empirical data
   // Compute doubling every 8 months (conservative middle estimate)
   // Math.pow(2, 1/8) = 1.0905 = 9.05% per month

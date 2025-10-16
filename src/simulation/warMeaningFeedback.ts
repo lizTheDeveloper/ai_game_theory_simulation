@@ -225,14 +225,14 @@ function updateNationalism(country: CountryPopulation, state: GameState): void {
   // Check if other hegemons are aggressive
   let rivalThreat = 0.0;
   for (const other of Object.values(state.countryPopulationSystem.countries)) {
-    if (other.isHegemon && other.name !== country.name) {
+    if (other.isHegemon && other.name !== country.name && other.activeInterventions) {
       rivalThreat += other.activeInterventions.length * 0.1;
     }
   }
   delta += rivalThreat * 0.001;
 
   // Active interventions boost nationalism (rally around flag effect)
-  if (country.activeInterventions.length > 0) {
+  if (country.activeInterventions && country.activeInterventions.length > 0) {
     delta += 0.002 * country.activeInterventions.length;
   }
 
@@ -334,7 +334,8 @@ function updateParentalFulfillment(country: CountryPopulation, state: GameState)
   }
 
   // Active interventions reduce fulfillment (destruction vs creation)
-  if (country.activeInterventions.length > 0) {
+  // Oct 16, 2025: Check if activeInterventions exists before accessing length
+  if (country.activeInterventions && country.activeInterventions.length > 0) {
     delta -= 0.005 * country.activeInterventions.length;
   }
 
@@ -349,22 +350,26 @@ function updateParentalFulfillment(country: CountryPopulation, state: GameState)
 function updateMoralInjury(country: CountryPopulation, state: GameState): void {
   // Moral injury accumulates from active interventions
   // Iraq/Afghanistan: 11-20% of veterans have PTSD
+  
+  // Oct 16, 2025: Check if activeInterventions exists and is iterable
+  if (country.activeInterventions && Array.isArray(country.activeInterventions)) {
+    for (const intervention of country.activeInterventions) {
+      // Veteran return rate (small % of population each month)
+      const veteranReturnRate = 0.0005; // 0.05% of population are veterans
 
-  for (const intervention of country.activeInterventions) {
-    // Veteran return rate (small % of population each month)
-    const veteranReturnRate = 0.0005; // 0.05% of population are veterans
+      // PTSD rate among veterans (15% average)
+      const ptsdRate = 0.15;
 
-    // PTSD rate among veterans (15% average)
-    const ptsdRate = 0.15;
-
-    // Moral injury increases
-    const monthlyInjury = veteranReturnRate * ptsdRate;
-    country.moralInjury = Math.min(0.25, country.moralInjury + monthlyInjury); // Max 25% of population affected
+      // Moral injury increases
+      const monthlyInjury = veteranReturnRate * ptsdRate;
+      country.moralInjury = Math.min(0.25, country.moralInjury + monthlyInjury); // Max 25% of population affected
+    }
   }
 
   // Moral injury decays slowly over time (healing)
   // But never fully heals (generational trauma)
-  if (country.activeInterventions.length === 0 && country.moralInjury > 0) {
+  // Oct 16, 2025: Check if activeInterventions exists before accessing length
+  if ((!country.activeInterventions || country.activeInterventions.length === 0) && country.moralInjury > 0) {
     country.moralInjury *= 0.99; // 1% decay per month when no active wars
   }
 }

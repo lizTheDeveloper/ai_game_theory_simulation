@@ -1,6 +1,16 @@
 ---
 alwaysApply: true
 ---
+
+This is a research simulation. We are never going for specific outcomes, only trying to figure out the most realistic, defensible model we can- let the model show what it shows.
+cd /Users/annhoward/src/ai_game_theory_simulation && npx tsx scripts/monteCarloSimulation.ts to run the monte carlo sim
+Always redirect stdout to a file in a logs folder with a timestamp and background the process. Use sleep to check it async as it appends logs to the file. Remember it takes time to run.
+Run sims in tmux so you can work on things in-between runs, which take awhile.
+prefer to review logs over re-running the sim as it takes awhile to do
+plans go in /plans and update them as you complete portions of it
+session summaries go in /devlogs
+update the docs in /docs/wiki when you add major features or change calculations
+
 This is a research simulation. We are never going for specific outcomes, only trying to figure out the most realistic, defensible model we can- let the model show what it shows.
 cd /Users/annhoward/src/ai_game_theory_simulation && npx tsx scripts/monteCarloSimulation.ts to run the monte carlo sim
 Always redirect stdout to a file in a logs folder with a timestamp and background the process. Use sleep to check it async as it appends logs to the file. Remember it takes time to run.
