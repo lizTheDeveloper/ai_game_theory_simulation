@@ -598,19 +598,21 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   // === POPULATION DEATHS ===
   // TIER 1.7 FIX: Cascade accelerates over time until true extinction or intervention
   // Month 0-48: Base mortality (P1.2 FIX: Reduced from 2% to 0.5% monthly)
-  // Month 48+: Exponential acceleration (1.05x per month = 5% growth in death rate)
-  // Research: Black Death was 5-10% annually; this is 6% annually (comparable severity)
+  // Month 48+: Exponential acceleration (P2 BUG FIX Oct 16: Reduced from 5% to 2% growth)
+  // Research: Black Death was 5-10% annually; base is 6% annually (comparable severity)
+  // P2 FIX: Cap at 10% not 50% - even worst cascades take months to escalate
   if (state.humanPopulationSystem) {
     let monthlyMortalityRate = 0.005 * system.cascadeSeverity; // Base 0.5% per month (6% annually)
     
     // After initial 48-month crisis, death rate accelerates exponentially
     if (monthsSinceCascade > 48) {
       const monthsPastInitialCrisis = monthsSinceCascade - 48;
-      const accelerationFactor = Math.pow(1.05, monthsPastInitialCrisis); // 5% compound growth
+      const accelerationFactor = Math.pow(1.02, monthsPastInitialCrisis); // P2 FIX: 2% not 5% growth
       monthlyMortalityRate *= accelerationFactor;
       
-      // Cap at 50% monthly mortality (prevents instant jumps)
-      monthlyMortalityRate = Math.min(0.50, monthlyMortalityRate);
+      // P2 BUG FIX: Cap at 10% monthly mortality (was 50% - too extreme)
+      // 10% monthly = 72% annual mortality (still catastrophic but physically plausible)
+      monthlyMortalityRate = Math.min(0.10, monthlyMortalityRate);
     }
     
     const { addAcuteCrisisDeaths } = require('./populationDynamics');

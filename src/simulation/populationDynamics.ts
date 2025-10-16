@@ -94,6 +94,10 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
 export function updateHumanPopulation(state: GameState): void {
   const pop = state.humanPopulationSystem;
 
+  // P2 BUG FIX (Oct 16, 2025): Reset monthly death cap counter at start of month
+  pop.monthlyDeathsApplied = 0;
+  pop.monthlyDeathCapReached = false;
+
   // === PHASE 5: SKIP GLOBAL UPDATE IF REGIONAL POPULATIONS ARE ACTIVE ===
   // Regional populations handle all population dynamics and aggregate to global
   if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
@@ -608,14 +612,42 @@ export function addAcuteCrisisDeaths(
     pop.population = 0.1; // Small survival population as fallback
   }
 
+  // P2 BUG FIX (Oct 16, 2025): Cap monthly deaths at 20% of population
+  // Research: Black Death was ~30% mortality over 6 years (0.5%/month avg)
+  // Even worst-case scenarios shouldn't exceed 20% monthly mortality
+  // This prevents overlapping systems from killing >100% of population
+  
+  // Initialize monthly tracking if not present
+  if (pop.monthlyDeathsApplied === undefined) {
+    pop.monthlyDeathsApplied = 0;
+    pop.monthlyDeathCapReached = false;
+  }
+  
+  // Calculate monthly death cap (20% of current population)
+  const monthlyDeathCap = pop.population * 0.20;
+  const remainingCapacity = Math.max(0, monthlyDeathCap - pop.monthlyDeathsApplied);
+  
   // Calculate deaths: Only exposed population × mortality rate
   const exposedPopulation = pop.population * exposedFraction;
-  const deathsInBillions = exposedPopulation * mortalityRate;
+  const requestedDeaths = exposedPopulation * mortalityRate;
+  
+  // Apply death cap
+  const actualDeaths = Math.min(requestedDeaths, remainingCapacity);
+  const deathsInBillions = actualDeaths;
+  
+  // Track if cap was reached (for logging)
+  if (actualDeaths < requestedDeaths && !pop.monthlyDeathCapReached) {
+    pop.monthlyDeathCapReached = true;
+    console.warn(`⚠️  MONTHLY DEATH CAP REACHED (20% of population)`);
+    console.warn(`   Requested: ${(requestedDeaths * 1000).toFixed(1)}M, Applied: ${(actualDeaths * 1000).toFixed(1)}M`);
+    console.warn(`   Further death events this month will be capped or skipped`);
+  }
 
   // Apply immediate deaths
   pop.population = Math.max(0, pop.population - deathsInBillions);
   pop.monthlyExcessDeaths += deathsInBillions;
   pop.cumulativeCrisisDeaths += deathsInBillions;
+  pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + deathsInBillions;
 
   // Track by category (FIX P1.1: Convert to millions for consistency with environmental deaths)
   pop.deathsByCategory[category] += deathsInBillions * 1000; // Convert billions to millions
@@ -625,7 +657,8 @@ export function addAcuteCrisisDeaths(
     const deathsInMillions = (deathsInBillions * 1000).toFixed(1);
     const exposedPct = (exposedFraction * 100).toFixed(0);
     const scope = exposedFraction >= 0.9 ? 'GLOBAL' : exposedFraction >= 0.4 ? 'SEMI-GLOBAL' : 'REGIONAL';
-    console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]`);
+    const cappedNote = actualDeaths < requestedDeaths ? ' [CAPPED]' : '';
+    console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
     console.log(`   Exposed: ${exposedPct}% of world, Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
     console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
   }
