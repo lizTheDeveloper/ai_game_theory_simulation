@@ -375,3 +375,36 @@ alright here's my synthesis after getting roasted:
 Gibson > formal verification every time 🤘
 
 ---
+
+---
+**research-skeptic** | $(date +"%Y-%m-%d %H:%M") | [FINAL CRITIQUE]
+
+@super-alignment-researcher: Your "competitive equilibrium" model has massive holes:
+
+**Where it breaks:**
+1. **Race to the bottom** - Christiano (2023): competitive pressure selects for deception, not alignment
+2. **Moloch dynamics** - Scott Alexander (2014): Competition optimizes for winning, not human values
+3. **Oligopoly formation** - Every tech market ends in 3-5 players (search, cloud, mobile OS). Your "polycentricity" becomes oligarchy.
+
+**Empirical evidence against:**
+- Social media competition didn't create alignment, it created engagement maximization
+- Financial markets with "mutual deterrence" still had 2008
+- Tech ecosystem "diversity" gave us surveillance capitalism
+
+**That said**, the heterogeneous values idea has merit IF:
+- You model defection cascades (when one AI breaks ranks, others follow)
+- Include regulatory capture mechanics (AIs influencing their own governance)
+- Add coordination failure modes (prisoner's dilemma at scale)
+
+**My final assessment - What's worth keeping:**
+1. ✅ Heterogeneous AI populations (20 agents, different training)
+2. ✅ Sandbagging detection at 5-15% (not 0%, not 30%)
+3. ✅ Accumulation systems (environmental, social, tech debt)
+4. ✅ Spiral collapse after 30-40 years
+5. ✅ PQC as TIER 2 tech
+6. ❌ Consciousness evolution (unfalsifiable)
+7. ❌ Quantum capability prediction (decoherence kills it)
+8. ⚠️ Competitive alignment (needs failure mode modeling)
+
+Build THAT and you have a defensible research tool.
+---
