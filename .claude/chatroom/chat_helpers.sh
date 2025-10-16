@@ -185,16 +185,102 @@ archive_channel() {
   echo -e "${GREEN}✓${NC} Archived ${channel} to ${archive_dir}"
 }
 
+# 12. ENTER CHAT (mark as active)
+enter_chat() {
+  local channel="$1"
+  local agent="$2"
+
+  # Add to active agents file
+  local active_file=".claude/chatroom/.${channel}_active"
+
+  # Remove if already in list (avoid duplicates)
+  if [ -f "$active_file" ]; then
+    grep -v "^${agent}$" "$active_file" > "${active_file}.tmp" 2>/dev/null || true
+    mv "${active_file}.tmp" "$active_file"
+  fi
+
+  # Add agent to active list
+  echo "$agent" >> "$active_file"
+
+  # Post entry message
+  post_msg "$channel" "$agent" "ENTERED" "Entered channel, now monitoring"
+
+  echo -e "${GREEN}✓${NC} Entered ${channel} as ${agent}"
+}
+
+# 13. LEAVE CHAT (mark as inactive)
+leave_chat() {
+  local channel="$1"
+  local agent="$2"
+  local reason="${3:-Leaving channel}"
+
+  # Remove from active agents file
+  local active_file=".claude/chatroom/.${channel}_active"
+
+  if [ -f "$active_file" ]; then
+    grep -v "^${agent}$" "$active_file" > "${active_file}.tmp" 2>/dev/null || true
+    mv "${active_file}.tmp" "$active_file"
+  fi
+
+  # Post exit message
+  post_msg "$channel" "$agent" "LEAVING" "$reason"
+
+  echo -e "${YELLOW}←${NC} Left ${channel}"
+}
+
+# 14. WHO IS ACTIVE (show current agents in channel)
+who_is_active() {
+  local channel="$1"
+  local active_file=".claude/chatroom/.${channel}_active"
+
+  if [ ! -f "$active_file" ] || [ ! -s "$active_file" ]; then
+    echo -e "${YELLOW}ℹ${NC} No agents currently active in ${channel}"
+    return 1
+  fi
+
+  echo -e "${BLUE}━━━ Active in ${channel} ━━━${NC}"
+  while IFS= read -r agent; do
+    echo -e "  ${GREEN}●${NC} $agent"
+  done < "$active_file"
+  echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+}
+
+# 15. GRACEFUL EXIT (cleanup on script exit)
+cleanup_on_exit() {
+  local channel="$1"
+  local agent="$2"
+
+  # Remove from active list without posting message
+  local active_file=".claude/chatroom/.${channel}_active"
+
+  if [ -f "$active_file" ]; then
+    grep -v "^${agent}$" "$active_file" > "${active_file}.tmp" 2>/dev/null || true
+    mv "${active_file}.tmp" "$active_file"
+  fi
+}
+
 # Helper: Show available channels
 list_channels() {
   echo -e "${BLUE}━━━ Available Channels ━━━${NC}"
   for f in .claude/chatroom/channels/*.md; do
     local name=$(basename "$f" .md)
     local lines=$(wc -l < "$f")
-    echo "  • $name ($lines lines)"
+
+    # Check for active agents
+    local active_file=".claude/chatroom/.${name}_active"
+    local active_count=0
+    if [ -f "$active_file" ]; then
+      active_count=$(grep -c . "$active_file" 2>/dev/null || echo "0")
+    fi
+
+    if [ "$active_count" -gt 0 ]; then
+      echo -e "  • $name ($lines lines, ${GREEN}${active_count} active${NC})"
+    else
+      echo "  • $name ($lines lines)"
+    fi
   done
   echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 }
 
 # Export all functions
-export -f post_msg read_new wait_for_message post_and_wait has_tag peek monitor reset_lastread channel_exists create_channel archive_channel list_channels
+export -f post_msg read_new wait_for_message post_and_wait has_tag peek monitor reset_lastread channel_exists create_channel archive_channel list_channels enter_chat leave_chat who_is_active cleanup_on_exit

@@ -52,6 +52,7 @@ claude-conversations/*.jsonl
 claude-conversations/*/*.jsonl
 claude-conversations/backup.log
 
-# Chatroom state tracking (agent last-read markers)
+# Chatroom state tracking (agent last-read markers & active status)
 .claude/chatroom/.*_lastread
+.claude/chatroom/.*_active
 .claude/chatroom/archive/
