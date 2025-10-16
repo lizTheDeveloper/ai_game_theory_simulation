@@ -5,9 +5,10 @@
  * properly initialized capability profiles, research investments, etc.
  */
 
-import { GameState, AIAgent } from '@/types/game';
+import { GameState, AIAgent, ScenarioMode } from '@/types/game';
 import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities } from './capabilities';
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
+import { getScenarioParameters } from './scenarioParameters';
 import { initializeExtinctionState } from './extinctions';
 import { initializeEcosystem } from './technologyDiffusion';
 import { initializeComputeInfrastructure, initializeAIComputeFields } from './computeInfrastructure';
@@ -135,12 +136,17 @@ export function createAIAgent(
 
 /**
  * Create a default initial game state for simulations
- * 
+ *
  * This provides a consistent starting point for all test scripts and simulations.
+ *
+ * @param scenarioMode Optional scenario mode ('historical' or 'unprecedented'). Defaults to 'historical'.
  */
-export function createDefaultInitialState(): GameState {
+export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historical'): GameState {
   const initialYear = 2025;
   const initialMonth = 0;
+
+  // P0.7 (Oct 16, 2025): Get scenario-specific parameters
+  const scenarioParameters = getScenarioParameters(scenarioMode);
   
   // Create heterogeneous AI population (20 agents)
   // NOT A MONOLITH - different creators, alignments, goals
@@ -392,7 +398,10 @@ export function createDefaultInitialState(): GameState {
       // Real-world: Monthly budget/policy decisions, not yearly
       socialAdaptationRate: 0.02,
       aiCoordinationMultiplier: 1.5,
-      economicTransitionRate: 0.015
+      economicTransitionRate: 0.015,
+      // P0.7 (Oct 16, 2025): Scenario mode system
+      scenarioMode,
+      scenarioParameters
     },
     
     history: {
@@ -413,14 +422,17 @@ export function createDefaultInitialState(): GameState {
 
 /**
  * Create a test state with custom parameters
- * 
+ *
  * Useful for testing specific scenarios.
+ *
+ * @param overrides Optional partial state to override defaults
+ * @param scenarioMode Optional scenario mode ('historical' or 'unprecedented'). Defaults to 'historical'.
  */
-export function createTestState(overrides?: Partial<GameState>): GameState {
-  const baseState = createDefaultInitialState();
-  
+export function createTestState(overrides?: Partial<GameState>, scenarioMode: ScenarioMode = 'historical'): GameState {
+  const baseState = createDefaultInitialState(scenarioMode);
+
   if (!overrides) return baseState;
-  
+
   // Deep merge overrides
   return {
     ...baseState,

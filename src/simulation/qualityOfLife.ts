@@ -145,13 +145,21 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   });
 
   // === GENERATE NEW SHOCKS (episodic events) ===
+  // P0.7 (Oct 16, 2025): Scenario-specific shock parameters
+  // Historical: 2% base + scaling = 2-15% event probability, 150-300% spikes
+  // Unprecedented: 5% base + scaling = 5-25% event probability, 250-450% spikes
+  const scenarioParams = state.config.scenarioParameters;
+  const baseProb = scenarioParams?.environmentalShockProbability ?? 0.02;
+  const maxProb = baseProb + 0.13; // Scale to 13% above base
+  const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;
+
   // Event probability scales with environmental stress
-  const eventProbability = Math.min(0.15, 0.02 + (breachedCount / 9) * 0.08); // 2-15% based on boundaries breached
+  const eventProbability = Math.min(maxProb, baseProb + (breachedCount / 9) * (maxProb - baseProb));
 
   if (Math.random() < eventProbability) {
     // New shock triggered!
     const shockType = Math.random();
-    const shockMagnitude = 1.5 + Math.random() * 1.5; // 150-300% spike
+    const shockMagnitude = baseMag + Math.random() * (baseMag * 0.75); // baseMag to (baseMag * 1.75)
     const shockDuration = 3 + Math.floor(Math.random() * 10); // 3-12 months
 
     // Determine shock type (which mortality category)

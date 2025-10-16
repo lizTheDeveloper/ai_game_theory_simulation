@@ -49,6 +49,7 @@ How the simulation operates and what determines outcomes:
 | [🎯 Outcomes](./mechanics/outcomes.md) | ✅ | Utopia, Dystopia, Extinction attractors |
 | [✨ Golden Age](./mechanics/golden-age.md) | ✅ | Prosperity state vs Utopia outcome |
 | [⚡ Crisis Cascades](./mechanics/crisis-cascades.md) | ✅ | How multiple crises compound |
+| [🎲 Scenario Parameters](./mechanics/scenario-parameters.md) | ✅ | Historical vs unprecedented parameter sets (P0.7) |
 | [⚡ Actions](./mechanics/actions.md) | ✅ | What each agent type can do |
 | [⚙️ Simulation Loop](./mechanics/simulation-loop.md) | ✅ | Monthly processing order |
 
@@ -154,6 +155,14 @@ Implementation details and code references:
 - **Nuclear Deterrence**: 5 nuclear states, MAD mechanics, treaty dynamics (reduced war 80% → 20%)
 - **Phase 2 Architectural Refactoring**: Type safety, trust system consistency, clean APIs
 - **Monte Carlo**: 1000+ runs in ~10 seconds
+
+**P0.7: Scenario Parameter System (Oct 16, 2025)**
+- ✅ **Two Parameter Sets**: Historical (defensible) vs Unprecedented (honest tail risk)
+- ✅ **Historical Mode**: Black Death calibration (0.5% monthly mortality, 1.8x multiplier, 10% recovery)
+- ✅ **Unprecedented Mode**: 3x mortality (1.5%), 3.5x multiplier, 1% recovery (climate hysteresis)
+- ✅ **Monte Carlo Ready**: Run 50% historical, 50% unprecedented to show outcome range
+- ✅ **Research Validated**: 25+ peer-reviewed sources, skeptical critique integrated
+- See: [Scenario Parameters Documentation](./mechanics/scenario-parameters.md)
 
 ### What's Next 🚀
 
@@ -279,9 +288,9 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: October 12, 2025
-**Version**: 3.0 (TIER 0-2 + TIER 4.3 Complete - Research-Backed Realism)
-**Status**: ✅ All baseline corrections, critical risks, mitigations, and information warfare merged to main
+**Last Updated**: October 16, 2025
+**Version**: 3.1 (TIER 0-2 + TIER 4.3 + P0.7 Scenario Parameters)
+**Status**: ✅ All baseline corrections, critical risks, mitigations, information warfare, and dual parameter sets complete
 
 **Major Implementation (Oct 11-12, 2025):**
 

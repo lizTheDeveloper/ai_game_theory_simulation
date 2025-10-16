@@ -474,6 +474,24 @@ Unintended (AI-driven, accidental)
 
 ## Data Flow
 
+### Scenario Parameter System (P0.7)
+
+The simulation supports two parameter sets for Monte Carlo analysis:
+
+**Historical Mode** (defensible for publication):
+- Cascade mortality: 0.5%/month (Black Death calibration)
+- Cascade multiplier: 1.8x for 6 crises
+- Recovery probability: 10%/month
+- Baby boom: 1.6x (60% fertility boost)
+
+**Unprecedented Mode** (honest tail risk assessment):
+- Cascade mortality: 1.5%/month (3x historical)
+- Cascade multiplier: 3.5x for 6 crises
+- Recovery probability: 1%/month (climate hysteresis)
+- Baby boom: 1.2x (fertility crashes during existential crisis)
+
+See: [Scenario Parameters Documentation](./mechanics/scenario-parameters.md)
+
 ### Monthly Processing Order
 
 ```
@@ -723,5 +741,5 @@ Months 80-150:
 
 ---
 
-**Last Updated:** October 9, 2025
-**Version:** 2.1 (Phase 2B-F Complete: Dystopia Lock-In, Governance Quality, Upward Spirals, Meaning Renaissance, Conflict Resolution)
+**Last Updated:** October 16, 2025
+**Version:** 2.2 (Phase 2B-F + P0.7 Scenario Parameters Complete)

@@ -16,7 +16,8 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { calculateTotalCapabilityFromProfile } from '../src/simulation/capabilities';
-import { AIAgent } from '../src/types/game';
+import { AIAgent, ScenarioMode } from '../src/types/game';
+import { getScenarioDescription } from '../src/simulation/scenarioParameters';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -83,11 +84,12 @@ process.on('uncaughtException', (err) => {
 
 interface RunResult {
   seed: number;
+  scenarioMode: ScenarioMode; // P0.7 (Oct 16, 2025): Scenario parameter mode used for this run
   outcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
   rawOutcome?: string; // FIX (Oct 13, 2025): Store actual 7-tier outcome
   outcomeReason: string;
   months: number;
-  
+
   // Final metrics
   finalQoL: number;
   finalAICount: number;
@@ -309,13 +311,14 @@ interface RunResult {
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
 log('='.repeat(80));
-// accept --max-months and --runs
+// accept --max-months, --runs, and --scenario
 const args = process.argv.slice(2);
 
-// Support both positional args (runs, months, name) and flag args (--runs=X --max-months=Y)
+// Support both positional args (runs, months, name) and flag args (--runs=X --max-months=Y --scenario=Z)
 let numRuns: number;
 let maxMonthsValue: number;
 let runName: string | undefined;
+let scenarioMode: ScenarioMode | 'dual' = 'dual'; // P0.7: Default to dual-mode (50/50 split)
 
 if (args[0] && !args[0].startsWith('--')) {
   // Positional arguments format: runs months [name]
@@ -323,22 +326,26 @@ if (args[0] && !args[0].startsWith('--')) {
   maxMonthsValue = parseInt(args[1]) || 240;
   runName = args[2];
 } else {
-  // Flag arguments format: --runs=X --max-months=Y
+  // Flag arguments format: --runs=X --max-months=Y --scenario=Z
   const maxMonthsArg = args.find(arg => arg.split('=')[0] === '--max-months')?.split('=')[1];
   const runsArg = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
+  const scenarioArg = args.find(arg => arg.split('=')[0] === '--scenario')?.split('=')[1] as ScenarioMode | 'dual' | undefined;
   numRuns = runsArg ? parseInt(runsArg) : 10;
   maxMonthsValue = maxMonthsArg ? parseInt(maxMonthsArg) : 240;
+  scenarioMode = scenarioArg || 'dual';
 }
 
 // Configuration
 const NUM_RUNS = numRuns;
 const MAX_MONTHS = maxMonthsValue;
 const SEED_START = 42000;
+const SCENARIO_MODE = scenarioMode; // P0.7: 'historical', 'unprecedented', or 'dual' (50/50 split)
 
 log(`\n⚙️  CONFIGURATION:`);
 log(`  Runs: ${NUM_RUNS}`);
 log(`  Duration: ${MAX_MONTHS} months (${(MAX_MONTHS/12).toFixed(1)} years)`);
 log(`  Seed Range: ${SEED_START} - ${SEED_START + NUM_RUNS - 1}`);
+log(`  Scenario Mode: ${SCENARIO_MODE}${SCENARIO_MODE === 'dual' ? ' (50% historical, 50% unprecedented)' : ''}`);
 
 log(`\n\n⏩ RUNNING ${NUM_RUNS} SIMULATIONS...\n`);
 
@@ -348,23 +355,36 @@ const startTime = Date.now();
 for (let i = 0; i < NUM_RUNS; i++) {
   const seed = SEED_START + i;
   const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' }); // Keep logs - stdout is fast, use runner script for management
-  const initialState = createDefaultInitialState();
-  
+
+  // P0.7: Determine scenario mode for this run
+  let runScenarioMode: ScenarioMode;
+  if (SCENARIO_MODE === 'dual') {
+    // First half: historical, second half: unprecedented
+    runScenarioMode = i < NUM_RUNS / 2 ? 'historical' : 'unprecedented';
+  } else {
+    runScenarioMode = SCENARIO_MODE as ScenarioMode;
+  }
+
+  const initialState = createDefaultInitialState(runScenarioMode);
+
   // Set run label for logging
-  initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS}`;
-  
-  const runResult = engine.run(initialState, { 
-    maxMonths: MAX_MONTHS, 
-    checkActualOutcomes: true 
+  initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;
+
+  const runResult = engine.run(initialState, {
+    maxMonths: MAX_MONTHS,
+    checkActualOutcomes: true
   });
   
   const finalState = runResult.finalState;
   
   // Save individual run event log
-  const runLogDir = path.join(outputDir, `run_${seed}_events.json`);
+  // P0.7: Include scenario mode in filename
+  const runLogDir = path.join(outputDir, `run_${seed}_${runScenarioMode}_events.json`);
   const eventLogData = {
     seed,
     run: i + 1,
+    scenarioMode: runScenarioMode, // P0.7: Add scenario metadata
+    scenarioDescription: getScenarioDescription(runScenarioMode), // P0.7: Add human-readable description
     outcome: runResult.summary.finalOutcome,
     outcomeReason: runResult.summary.finalOutcomeReason,
     totalMonths: runResult.summary.totalMonths,
@@ -851,11 +871,12 @@ for (let i = 0; i < NUM_RUNS; i++) {
   
   results.push({
     seed,
+    scenarioMode: runScenarioMode, // P0.7: Add scenario mode to results
     outcome: mappedOutcome,
     rawOutcome, // Store the actual 7-tier outcome
     outcomeReason: runResult.summary.finalOutcomeReason,
     months: MAX_MONTHS,
-    
+
     // Final metrics
     finalQoL: finalState.globalMetrics.qualityOfLife,
     finalAICount: activeAIs.length,
