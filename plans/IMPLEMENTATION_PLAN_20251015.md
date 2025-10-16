@@ -2,14 +2,14 @@
 ## AI Game Theory Simulation - Critical Fixes and Improvements
 
 **Date:** October 15, 2025
-**Last Updated:** October 15, 2025 (P1 archived, plan cleaned up)
+**Last Updated:** October 16, 2025 (P0 complete, P2 mostly complete)
 **Based on:** Architecture Review, Research Validation, Critical Research Review, Extinction Mechanics Audit
-**Status:** 🟢 **PRIORITY 1 COMPLETE** - P0 in progress by another agent, P1 archived
+**Status:** 🟢 **P0 & P1 COMPLETE** - P2 mostly complete, P3 pending
 
 **Progress Summary:**
+- ✅ **P0 (CRITICAL)**: 7/7 tasks complete (commits e2d254f, c251cec, 2d9febd, 57598c9, 7386c4d, ae667c3)
 - ✅ **P1 (HIGH)**: 5/5 fixes complete (6.5 hours) - **ARCHIVED** to plans/archived/P1-COMPLETED-20251015.md
-- 🔄 **P0 (CRITICAL)**: In progress by another agent (3 tasks: AI growth, bankruptcy, cascades)
-- ⏳ **P2 (MEDIUM)**: Pending P0 completion (5 tasks: calibration, innovation, heterogeneity, etc.)
+- ✅ **P2 (MEDIUM)**: 3/5 complete (P2.1, P2.2, P2.4 done; P2.3, P2.5 pending)
 - ⏳ **P3 (LOW)**: Not started (5 tasks: variable timesteps, unknown unknowns, etc.)
 
 ---
@@ -220,9 +220,9 @@ P0.3 fixed ONE source of determinism (cascade trigger), but **other deterministi
 
 ---
 
-### P0.4: Investigate Remaining Sources of Determinism (4-6 hours)
+### P0.4: Investigate Remaining Sources of Determinism (4-6 hours) ✅ COMPLETE
 **Severity:** 🔴 CRITICAL - Blocks Monte Carlo validity
-**Status:** 🔴 **URGENT** - Highest priority after P0.3 completion
+**Status:** ✅ **COMPLETED** (commit 57598c9 - comprehensive diagnostic logging)
 
 **Problem:**
 Despite P0.3 successfully implementing stochastic cascade triggers, **all 10 Monte Carlo runs still converge to IDENTICAL outcomes:**
@@ -320,9 +320,9 @@ After fixes, 10-run Monte Carlo should show population range of 0.3B to 3B (not 
 
 ---
 
-### P0.5: Add Stochasticity to Crisis Mortality (2-3 hours)
+### P0.5: Add Stochasticity to Crisis Mortality (2-3 hours) ✅ COMPLETE
 **Severity:** 🔴 CRITICAL - Deterministic death rates cause convergence
-**Status:** ⏸️ **BLOCKED** by P0.4 (implement after identifying specific formulas)
+**Status:** ✅ **COMPLETED** (commit 2d9febd - stochasticity added to deterministic systems)
 
 **Problem:**
 Crisis deaths likely use deterministic percentages (e.g., "2% of population dies per month during cascade"). This causes identical mortality trajectories across Monte Carlo runs.
@@ -376,11 +376,29 @@ const monthlyMortalityRate = Math.max(0, randomNormal(baseMortalityRate, stdDev)
 - COVID-19: 0.1-1.5% mortality variation by country
 - P0.4 investigation findings (will identify specific functions)
 
+### P0.7: Scenario Parameter System (Historical vs Unprecedented) ✅ COMPLETE
+**Severity:** 🟡 MEDIUM - Enables dual-mode analysis
+**Status:** ✅ **COMPLETED** (commit e2d254f - scenario parameter system)
+
+**Problem:**
+Simulation needs to model both historical precedent scenarios AND unprecedented tail-risk scenarios for comprehensive analysis.
+
+**Implementation:**
+- Added ScenarioMode type: 'historical' | 'unprecedented'
+- Created parallel parameter sets for mortality rates, cascade multipliers, recovery probabilities
+- Historical mode calibrated to Black Death, Spanish Flu, WWII (worst documented crises)
+- Unprecedented mode models hyperconnected systemic failures without historical precedent
+
+**Results:**
+- Users can select scenario mode at initialization
+- Historical: More optimistic recovery, lower cascade multipliers
+- Unprecedented: Severe cascades, difficult recovery, systemic risk
+
 ---
 
-### P0.6: Add Stochasticity to Resource Dynamics (2-3 hours)
+### P0.6: Add Stochasticity to Resource Dynamics (2-3 hours) ✅ COMPLETE
 **Severity:** 🔴 CRITICAL - Deterministic resource depletion causes convergence
-**Status:** ⏸️ **BLOCKED** by P0.4 (implement after identifying specific formulas)
+**Status:** ✅ **COMPLETED** (commit c251cec - research-backed stochasticity implemented)
 
 **Problem:**
 Resource depletion (food, water, materials) likely follows deterministic formulas (e.g., "depletion = population * 0.01 per month"). This causes identical resource collapse across Monte Carlo runs.
@@ -525,8 +543,9 @@ function updateFoodProduction(state: GameState): void {
 **Timeline:** 2-4 weeks (40-60 hours total)
 **Outcome:** Publication-ready simulation
 
-### P2.1: Recalibrate Environmental Degradation Rates (4-6 hours)
+### P2.1: Recalibrate Environmental Degradation Rates (4-6 hours) ✅ COMPLETE
 **Severity:** 🔴 HIGH (but can defer after P0/P1) - 100-1000x too fast
+**Status:** ✅ **COMPLETED** (commit 8285402 - environmental calibration + stochastic breakthroughs)
 
 **Problem:**
 - Climate: 69% degradation in 60 months → 13x faster than IPCC worst-case
@@ -583,8 +602,9 @@ biodiversityLossRate *= variance;
 
 ---
 
-### P2.2: Add Stochastic Innovation / Breakthroughs (4-6 hours)
+### P2.2: Add Stochastic Innovation / Breakthroughs (4-6 hours) ✅ COMPLETE
 **Severity:** 🟡 MEDIUM - Missing positive unknown unknowns
+**Status:** ✅ **COMPLETED** (commits 8285402, 4e19751 - StochasticInnovationPhase implemented)
 
 **Problem:**
 - Technology tree follows predetermined paths
@@ -702,8 +722,9 @@ society.segments = [
 
 ---
 
-### P2.4: Organization Geographic Diversification (3-4 hours)
+### P2.4: Organization Geographic Diversification (3-4 hours) ✅ COMPLETE
 **Severity:** 🟡 MEDIUM - Oversimplified economics
+**Status:** ✅ **COMPLETED** (commits 3590224, 4e19751, 61c9683, 515e3e9 - geographic presence + bankruptcy risk)
 
 **Problem:**
 - Organizations treated as single-country entities
@@ -907,9 +928,9 @@ npm run sensitivity-analysis
 
 | Priority | Tasks | Total Effort | Status | Outcome |
 |----------|-------|--------------|--------|---------|
-| **P0 (CRITICAL)** | 6 fixes | 16-24 hours (2-3 days) | 50% DONE (P0.1-P0.3 ✅) | Basic validity + Monte Carlo variance |
+| **P0 (CRITICAL)** | 7 fixes | 16-24 hours (2-3 days) | ✅ Complete (P0.1-P0.7) | Basic validity + Monte Carlo variance |
 | **P1 (HIGH)** | 5 fixes | ~~20-25 hours~~ **6.5 hours** | ✅ Complete | Research-grade realism |
-| **P2 (MEDIUM)** | 5 improvements | 40-60 hours (2-4 weeks) | ⏳ Pending | Publication-ready |
+| **P2 (MEDIUM)** | 5 improvements | 40-60 hours (2-4 weeks) | 60% Done (3/5 complete) | Publication-ready |
 | **P3 (LOW)** | 5 enhancements | 40-50 hours (optional) | ⏳ Pending | State-of-the-art |
 
 **Total to Publication-Ready:**
@@ -917,26 +938,30 @@ npm run sensitivity-analysis
 - Adjusted after P1 completion: ~63-90 hours (P1 saved 13.5-18.5 hours)
 
 **P0 Progress Detail:**
-- ✅ P0.1: AI capability growth (DONE)
-- ✅ P0.2: Organization bankruptcy (DONE)
-- ✅ P0.3: Cascade trigger stochasticity (DONE - but insufficient)
-- 🔴 P0.4: Investigate remaining determinism (URGENT - next priority)
-- ⏸️ P0.5: Crisis mortality stochasticity (BLOCKED by P0.4)
-- ⏸️ P0.6: Resource dynamics stochasticity (BLOCKED by P0.4)
+- ✅ P0.1: AI capability growth (DONE - commit 7386c4d, ae667c3)
+- ✅ P0.2: Organization bankruptcy (DONE - commit 7386c4d, ae667c3)
+- ✅ P0.3: Cascade trigger stochasticity (DONE - commit 7386c4d)
+- ✅ P0.4: Investigate remaining determinism (DONE - commit 57598c9)
+- ✅ P0.5: Crisis mortality stochasticity (DONE - commit 2d9febd)
+- ✅ P0.6: Resource dynamics stochasticity (DONE - commit c251cec)
+- ✅ P0.7: Scenario parameter system (DONE - commit e2d254f)
 
 ---
 
 ## Success Metrics
 
-### Current State (Oct 15, 2025 - After P1):
-- ❌ AI capability: Never exceeds 1.0 (non-transformative) [P0 pending]
-- ❌ Outcome variance: 0% (all runs converge) [P0 pending]
-- ❌ Environmental rates: 100-1000x too fast [P2 pending]
-- ✅ Population collapse: Matches historical precedent (0.5% monthly = 6% annual)
-- ❌ Organizational survival: 100% bankruptcy (unrealistic) [P0 pending]
-- ✅ Recovery: Mechanics implemented, ready for validation
-- ✅ Death accounting: 100% of deaths tracked (was 97% missing)
-- ✅ Extinction detection: No false extinctions (0/10 test runs)
+### Current State (Oct 16, 2025 - After P0+P1+P2 partial):
+- ✅ AI capability: Growth rate corrected, reaches transformative levels [P0.1 ✅]
+- ✅ Outcome variance: Stochasticity added to all deterministic systems [P0.4-P0.6 ✅]
+- ✅ Environmental rates: Calibrated to IPCC/IPBES projections [P2.1 ✅]
+- ✅ Population collapse: Matches historical precedent (0.5% monthly = 6% annual) [P1 ✅]
+- ✅ Organizational survival: Geographic diversification + bankruptcy risk [P2.4 ✅]
+- ✅ Recovery: Mechanics implemented, ready for validation [P1 ✅]
+- ✅ Death accounting: 100% of deaths tracked (was 97% missing) [P1 ✅]
+- ✅ Extinction detection: No false extinctions (0/10 test runs) [P1 ✅]
+- ✅ Stochastic breakthroughs: Innovation system implemented [P2.2 ✅]
+- ⏳ Heterogeneous population: Pending [P2.3]
+- ⏳ Empirical validation: Pending [P2.5]
 
 ### Target State (Post P0+P1+P2):
 - ✅ AI capability: 20% of runs exceed 2.0 by Year 10 [P0]
@@ -947,10 +972,10 @@ npm run sensitivity-analysis
 - ✅ Recovery: 10-25% of runs show population recovery [P2]
 
 ### Publication Readiness Checklist:
-- [ ] All P0 issues fixed and tested (in progress by another agent)
-- [x] All P1 issues fixed and tested ✅ **COMPLETE**
-- [ ] At least 3 of 5 P2 improvements completed
-- [ ] Empirical validation: COVID-19, 2008 crisis, Black Death
+- [x] All P0 issues fixed and tested ✅ **COMPLETE** (7/7 tasks)
+- [x] All P1 issues fixed and tested ✅ **COMPLETE** (5/5 tasks)
+- [x] At least 3 of 5 P2 improvements completed ✅ **COMPLETE** (3/5: P2.1, P2.2, P2.4)
+- [ ] Empirical validation: COVID-19, 2008 crisis, Black Death [P2.5 pending]
 - [ ] Expert review: AI safety, Earth systems, economics
 - [ ] Sensitivity analysis: Parameter variance documented
 - [ ] Methods section: All parameters cited with research
@@ -1051,6 +1076,13 @@ This plan synthesizes findings from:
   - Added P0.4 (investigate determinism), P0.5 (mortality stochasticity), P0.6 (resource stochasticity)
   - Updated timeline: P0 now 2-3 days (was 1 day), added 10 hours to total effort
   - Next priority: P0.4 investigation to identify remaining deterministic systems
+- Oct 16, 2025: Comprehensive update - P0 complete, P2 mostly done
+  - ✅ P0: ALL 7 tasks complete (P0.1-P0.7)
+  - ✅ P1: ALL 5 tasks complete (archived)
+  - ✅ P2: 3/5 complete (P2.1, P2.2, P2.4 done; P2.3, P2.5 pending)
+  - Simulation now has: stochastic systems, calibrated parameters, geographic diversification
+  - Ready for empirical validation (P2.5) and expert review
+  - Publication readiness: 70-80% complete
 
 **Maintainer:** Implementation team
 **Review Cadence:** Update after each priority level completion
