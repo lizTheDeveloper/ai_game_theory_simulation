@@ -19,68 +19,92 @@
 
 ---
 
-## Current State (October 2025)
+## Current State Summary
 
-### Completed & Archived
+### ✅ Completed & Archived
 
-**TIER 0:** Baseline Corrections (2025 parameters)
-**TIER 1:** Critical Extinction Risks (7 systems including 1.7.3, 1.7.4)
-**TIER 2:** Major Crisis Mitigations (9/9 complete)
-**TIER 3:** Planetary Boundaries (all 9 boundaries)
-**TIER 4.1:** Technology Tree System (70 technologies)
-**TIER 4.2:** Dystopia Variant Paths
-**TIER 4.3:** Information Warfare & Epistemology
-**TIER 4.4:** Energy & Resource Constraints
-**TIER 4.5:** Population Dynamics
+**TIER 0-3:** Baseline corrections, extinction risks, crisis mitigations, planetary boundaries
+**TIER 4.1-4.5:** Tech tree (70 techs), dystopia paths, info warfare, energy/resources, population
+**Priority 0 (P0):** 7 critical fixes - AI growth, bankruptcy, determinism, stochasticity (✅ 7/7 complete)
+**Priority 1 (P1):** 5 high-priority fixes - death accounting, mortality rates, recovery mechanics (✅ 5/5 complete)
+**Priority 2 (P2):** 3 medium improvements - environmental calibration, breakthroughs, org diversification (✅ 3/5 complete)
 
 **All details:** See `/plans/completed/` directory
 
 ---
 
-## Active Work Items (53 hours remaining)
+## 🔥 Active Work Items
 
-### Medium Priority (~7 hours)
+### Critical Fixes (~14-18 hours)
 
-**TIER 4.6: Human Enhancement & Merger Pathways** (7h)
-- Novel outcome space: Human-AI merger, cognitive apartheid
-- See: `plans/tier4-6-human-enhancement.md`
+**Priority 2 Remaining:**
 
-### Low Priority - Enrichment Features (~46 hours)
+- [ ] **P2.3: Heterogeneous Population Segments** (8-10h)
+  Replace monolithic society with segments (elites, moderates, skeptics)
+  → See: `plans/p2-3-heterogeneous-population.md`
 
-**TIER 5.1: Consciousness & Spirituality** (5h)
-- Psychedelic therapy, meditation tech, meaning spiral expansion
-- See: `plans/tier5-1-consciousness-spirituality.md`
+- [ ] **P2.5: Empirical Validation** (6-8h)
+  Validate against COVID-19, 2008 crisis, Black Death
+  → See: `plans/p2-5-empirical-validation.md`
 
-**TIER 5.2: Longevity & Space Expansion** (6h)
-- Life extension, space industrialization, resource uncapping
-- See: `plans/tier5-2-longevity-space.md`
+---
 
-**TIER 5.3: Cooperative AI Architectures** (5h)
-- AI-AI cooperation, value learning, corrigibility preservation
-- See: `plans/tier5-3-cooperative-ai.md`
+### Medium Priority Features (~7 hours)
 
-**TIER 5.4: Financial System Interactions** (5h)
-- Algorithmic trading, CBDC, flash crashes, AI-driven command economy
-- See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.5)
+**New Outcome Spaces:**
 
-**TIER 5.5: Biological & Ecological Interactions** (4h)
-- Dual-use research, ecological management, pandemic preparedness
-- See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.6)
+- [ ] **TIER 4.6: Human Enhancement & Merger Pathways** (7h)
+  BCI adoption, human-AI hybrids, cognitive apartheid outcomes
+  → See: `plans/tier4-6-human-enhancement.md`
 
-**TIER 5.6: Religious & Philosophical Movements** (4h)
-- AI worship, neo-luddites, techno-optimism, culture wars
-- See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.7)
+---
 
-**TIER 5.7: Temporal Dynamics & Path Dependencies** (3h)
-- Institutional inertia, infrastructure lock-in, regulatory ratchet
-- See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.8)
+### Low Priority - Enrichment (~70 hours)
 
-**TIER 5.8: Multi-Dimensional Capability Expansion** (6h)
-- Additional capability interactions (foundation: 17 dimensions implemented)
+**Priority 3 Enhancements (25-33h):**
 
-**TIER 5.9: Enhanced Government & Society Systems** (8h)
-- Multi-actor government, elections, public opinion, social movements
-- See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 7)
+- [ ] **P3.1: Variable Timesteps** (10-12h) - Event-driven architecture, 3-5x performance gain
+  → See: `plans/p3-1-variable-timesteps.md`
+
+- [ ] **P3.2: Unknown Unknowns** (4-6h) - Black swan events, true uncertainty
+  → See: `plans/p3-2-unknown-unknowns.md`
+
+- [ ] **P3.3: Alignment Specificity** (2-3h) - RLHF, Constitutional AI, mech interp as distinct techniques
+  → See: `plans/p3-3-alignment-model-specificity.md`
+
+- [ ] **P3.4: Government Realism** (3-4h) - Implementation delays, partial effectiveness, bureaucratic failure
+  → See: `plans/p3-4-government-implementation-realism.md`
+
+- [ ] **P3.5: Parameter Uncertainty** (6-8h) - Continuous uncertainty quantification, sensitivity analysis
+  → See: `plans/p3-5-parameter-uncertainty.md`
+
+**TIER 5 Features (46h):**
+
+- [ ] **TIER 5.1: Consciousness & Spirituality** (5h) - Psychedelic therapy, meditation tech, meaning spiral
+  → See: `plans/tier5-1-consciousness-spirituality.md`
+
+- [ ] **TIER 5.2: Longevity & Space Expansion** (6h) - Life extension, asteroid mining, Mars colonies
+  → See: `plans/tier5-2-longevity-space.md`
+
+- [ ] **TIER 5.3: Cooperative AI Architectures** (5h) - AI-AI cooperation, value learning, corrigibility
+  → See: `plans/tier5-3-cooperative-ai.md`
+
+- [ ] **TIER 5.4: Financial System Interactions** (5h) - Algorithmic trading, CBDC, flash crashes
+  → See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.5)
+
+- [ ] **TIER 5.5: Biological & Ecological** (4h) - Dual-use research, pandemic preparedness
+  → See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.6)
+
+- [ ] **TIER 5.6: Religious & Philosophical** (4h) - AI worship, neo-luddites, culture wars
+  → See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.7)
+
+- [ ] **TIER 5.7: Temporal Dynamics** (3h) - Institutional inertia, infrastructure lock-in
+  → See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.8)
+
+- [ ] **TIER 5.8: Multi-Dimensional Capabilities** (6h) - Additional capability interactions (17 dimensions implemented)
+
+- [ ] **TIER 5.9: Enhanced Government & Society** (8h) - Multi-actor government, elections, social movements
+  → See: `plans/remaining_tasks_5_pm_10_08_25.md` (Section 7)
 
 ---
 
@@ -106,7 +130,16 @@
 
 ---
 
+## Progress Summary
+
+**Completed:** P0 (7/7), P1 (5/5), P2 (3/5)
+**Active:** 2 critical fixes + 1 medium feature + 13 low-priority enhancements
+**Total Remaining Effort:** ~91-109 hours
+
+**Publication Readiness:** ~70-80% complete
+**Next Milestone:** Complete P2.3 and P2.5 for empirical validation
+
+---
+
 **Last Updated:** October 16, 2025
-**Active Items:** 8 features (~53 hours)
-**Completed Work:** `/plans/completed/` directory
-**Related Docs:** `/docs/wiki/`, `/devlogs/`, `/plans/remaining_tasks_5_pm_10_08_25.md`, `/plans/utopian-dynamics-spec.md`
+**Related Docs:** `/docs/wiki/`, `/devlogs/`, `IMPLEMENTATION_PLAN_20251015.md`, `utopian-dynamics-spec.md`
