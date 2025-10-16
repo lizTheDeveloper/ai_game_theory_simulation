@@ -81,6 +81,7 @@ export interface HumanPopulationSystem {
   canRecover: boolean;                   // Population > bottleneck + resources available
   recoveryRate: number;                  // [0, 0.02] Growth rate during recovery
   monthsSinceLastCrisis: number;         // Time since major population shock
+  previousActiveCrises?: number;         // Number of active crises last month (for baby boom detection)
 
   // Regional populations (TIER 1.5 - Phase 5)
   regionalPopulations?: RegionalPopulation[]; // Optional for backward compatibility

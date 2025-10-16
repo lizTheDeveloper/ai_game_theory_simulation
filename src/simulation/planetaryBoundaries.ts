@@ -574,10 +574,11 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
 
   // === POPULATION DEATHS ===
   // TIER 1.7 FIX: Cascade accelerates over time until true extinction or intervention
-  // Month 0-48: Base 2% mortality
+  // Month 0-48: Base mortality (P1.2 FIX: Reduced from 2% to 0.5% monthly)
   // Month 48+: Exponential acceleration (1.05x per month = 5% growth in death rate)
+  // Research: Black Death was 5-10% annually; this is 6% annually (comparable severity)
   if (state.humanPopulationSystem) {
-    let monthlyMortalityRate = 0.02 * system.cascadeSeverity; // Base 2% per month
+    let monthlyMortalityRate = 0.005 * system.cascadeSeverity; // Base 0.5% per month (6% annually)
     
     // After initial 48-month crisis, death rate accelerates exponentially
     if (monthsSinceCascade > 48) {
