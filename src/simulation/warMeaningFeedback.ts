@@ -334,7 +334,8 @@ function updateParentalFulfillment(country: CountryPopulation, state: GameState)
   }
 
   // Active interventions reduce fulfillment (destruction vs creation)
-  if (country.activeInterventions.length > 0) {
+  // Oct 16, 2025: Check if activeInterventions exists before accessing length
+  if (country.activeInterventions && country.activeInterventions.length > 0) {
     delta -= 0.005 * country.activeInterventions.length;
   }
 
@@ -364,7 +365,8 @@ function updateMoralInjury(country: CountryPopulation, state: GameState): void {
 
   // Moral injury decays slowly over time (healing)
   // But never fully heals (generational trauma)
-  if (country.activeInterventions.length === 0 && country.moralInjury > 0) {
+  // Oct 16, 2025: Check if activeInterventions exists before accessing length
+  if ((!country.activeInterventions || country.activeInterventions.length === 0) && country.moralInjury > 0) {
     country.moralInjury *= 0.99; // 1% decay per month when no active wars
   }
 }
