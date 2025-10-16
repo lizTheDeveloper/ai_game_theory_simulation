@@ -101,9 +101,11 @@
 
 **New Outcome Spaces:**
 
-- [ ] **TIER 4.6: Human Enhancement & Merger Pathways** (7h)
-  BCI adoption, human-AI hybrids, cognitive apartheid outcomes
-  → See: `plans/tier4-6-human-enhancement.md`
+- [ ] **TIER 4.6: Human Enhancement & Merger Pathways** ⚠️ NEEDS RECONCEPTUALIZATION (7h)
+  ~~BCI adoption, human-AI hybrids, cognitive apartheid outcomes~~ ← Rejected by research skeptic (TRL 0-2, science fiction)
+  → Existing `bionicSkills.ts` already models realistic AI-assisted cognition (TRL 8-9)
+  → See: `plans/tier4-6-human-enhancement.md` (needs rewrite)
+  → Research critique: `reviews/` (skeptic identified BCI/merger as ungrounded)
 
 **Research-Backed Enhancements:**
 
@@ -112,6 +114,57 @@
   → See: `plans/p2-6-memetic-polarization-dynamics.md`
   → Research: TRL 6-7, validated against 2024-2025 peer-reviewed studies
   → Impact: Critical for modeling societal response to AI development
+
+---
+
+### AI-Assisted Skills Enhancement (~78 hours, 3 months)
+
+**Based on:** Super-alignment researcher findings + research skeptic validation
+**Status:** Core system validated (TRL 8-9), critical gaps identified
+**Research Foundation:** 22 peer-reviewed studies (Science, Nature, ACM, OECD)
+**Full Research:** `reviews/bionic-skills-hopeful-research-foundation-20251016.md`
+
+**What's Correct (Keep):**
+- ✅ AI amplification via digital tools (Copilot, ChatGPT) - NOT BCIs
+- ✅ Differential benefits by skill level (novices gain MORE)
+- ✅ Digital divide & access inequality
+- ✅ Task-specific effects
+
+**Critical Gaps (Must Add):**
+
+- [ ] **Phase 1: Terminology & Documentation** (Week 1, 8h)
+  Remove BCI/science fiction framing, add research citations, TRL assessments
+  → See: `plans/bionic-skills-research-grounding.md` (Section: Phase 1)
+
+- [ ] **Phase 2: Phase Transition Mechanics** (Weeks 2-4, 12h)
+  Model complementarity → substitution (5-10 years), employment displacement tracking
+  → See: `plans/bionic-skills-phase-transition.md`
+  → Research: Acemoglu & Restrepo (2022), historical automation patterns (ATMs, Excel)
+  → Impact: CRITICAL - model currently assumes permanent amplification, ignores displacement
+
+- [ ] **Phase 3: Performance vs Competence Tracking** (Weeks 5-6, 8h)
+  Separate AI-assisted performance from true skill retention, scaffolding effects
+  → See: `plans/bionic-skills-competence-tracking.md`
+  → Research: Cognitive Research (2024) "illusion of understanding", MDPI (2023) deskilling
+  → Impact: CRITICAL - model doesn't capture skill erosion from over-reliance
+
+- [ ] **Phase 4: Economic Distribution & Wage Decoupling** (Weeks 7-8, 6h)
+  Model productivity-wage gap, labor vs capital capture, policy interventions
+  → See: `plans/bionic-skills-economic-distribution.md`
+  → Research: Brookings (2024), EPI (productivity +77%, wages +12% since 1973)
+  → Impact: CRITICAL - model overly optimistic about worker benefits
+
+- [ ] **Phase 5: Validation & Testing** (Month 2, 16h)
+  Historical comparisons (ATMs, Excel), sensitivity analysis, literature validation
+  → See: `plans/bionic-skills-research-grounding.md` (Section: Phase 5)
+
+- [ ] **Phase 6: Policy Testing** (Month 3, 16h)
+  Implement policy levers (retraining, UBI, worker ownership), scenario comparisons
+  → See: `plans/bionic-skills-research-grounding.md` (Section: Phase 6)
+
+**Total:** 78 hours over 3 months
+**Priority:** Medium (after bugs and empirical validation, before enrichment)
+**Research TRL:** 8-9 (extensively validated, deployed at scale)
 
 ---
 
@@ -229,8 +282,8 @@
 ## Progress Summary
 
 **Completed:** P0 (7/7), P1 (5/5), P2 (4/5)
-**Active:** 15 urgent bug fixes + 1 critical fix + 2 medium features + 14 low-priority enhancements + 3 Black Mirror phases
-**Total Remaining Effort:** ~156-190 hours (includes 37-49 weeks Black Mirror phased integration)
+**Active:** 15 urgent bug fixes + 1 critical fix + 2 medium features + 6 AI skills phases + 14 low-priority enhancements + 3 Black Mirror phases
+**Total Remaining Effort:** ~234-268 hours (includes 78h AI skills + 37-49 weeks Black Mirror phased integration)
 
 **Recent Completions (Oct 16, 2025):**
 - ✅ P2.3: Heterogeneous Population Segments - 5 social segments with differential crisis vulnerability
@@ -251,6 +304,15 @@
 - Phase 2 (MEDIUM): 4 conditionally approved systems (12-16 weeks) - Social Credit, Parasocial AI, Memetic Contagion
 - Phase 3 (LOW): 3 research-dependent systems (6-12+ months) - Governance preparedness, Performative behavior
 - Approval: ~40% strongly validated, ~25% conditional, ~35% rejected
+
+**New from AI-Assisted Skills Review (Oct 16, 2025):**
+- ✅ **Dialectic review completed** - Skeptic critique + researcher rebuttal
+- Verdict: Core system VALIDATED (TRL 8-9, 22 peer-reviewed studies)
+- Skeptic correct: BCI/merger is science fiction (TRL 0-2, should be cut)
+- Researcher correct: Digital tools (Copilot, ChatGPT) are real and validated
+- Critical gaps identified: Phase transition, skill retention, wage decoupling (78h plan created)
+- Impact: Model currently too optimistic - missing displacement, deskilling, capital capture
+- Documentation: 3 detailed phase plans + comprehensive research report
 
 **Publication Readiness:** ~70-80% complete (reduced due to bug discovery)
 **Next Milestone:** Fix critical Monte Carlo bugs, then complete P2.5 (Empirical Validation)
