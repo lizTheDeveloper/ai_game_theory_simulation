@@ -37,143 +37,9 @@
 
 ## ACTIVE WORK ITEMS
 
-### TIER 1.7: Critical Bug Fixes (2 items remaining)
-
-#### 1.7.3 Link Organizations to Countries (2-3 hours)
-**Priority:** HIGH
-**Complexity:** MEDIUM
-
-**Problem:** Organizations exist independently of countries, causing logical inconsistencies:
-- Country collapses → organizations still operate
-- Regional depopulation → no impact on organizations
-- Misaligned incentives between countries and organizations
-
-**Solution:**
-- Link each organization to a home country (via country ID)
-- Organizations inherit country stability effects
-- Bankruptcy when home country collapses (population < threshold)
-- Regional presence affects organization resilience
-
-**Implementation:**
-```typescript
-interface Organization {
-  homeCountry: CountryName;     // Which country hosts this org
-  regionalPresence: number;      // [0,1] How distributed globally
-  bankruptcyRisk: number;        // Based on home country stability
-}
-
-// On country collapse:
-if (country.population < collapseThreshold) {
-  for (org in country.organizations) {
-    if (org.regionalPresence < 0.3) {
-      org.status = 'bankrupt';
-    } else {
-      org.capability *= (0.3 + org.regionalPresence * 0.7);
-    }
-  }
-}
-```
-
-**Expected Impact:**
-- Organizations more vulnerable to regional collapse
-- Incentivizes multinational organizations
-- Links economic and population systems realistically
-
----
-
-#### 1.7.4 Nuclear Winter & Long-Term Effects (3-4 hours)
-**Priority:** HIGH
-**Complexity:** MEDIUM-HIGH
-
-**Problem:** Nuclear war causes instant deaths but not long-term starvation (nuclear winter)
-
-**Research:**
-- Robock et al. (2007, 2019): 150 Mt nuclear war → 5-10 year crop failure
-- Soot in stratosphere blocks sunlight → global cooling 5-15°C
-- 90% crop yield reduction for 5 years
-- Famine kills 2-5B people (more than direct deaths)
-
-**Solution:**
-- Track stratospheric soot accumulation (Mt of soot)
-- Temperature reduction based on soot (blocking sunlight)
-- Crop yield penalty linked to temperature/sunlight
-- Multi-year starvation (5-10 year recovery)
-
-**Implementation:**
-```typescript
-interface NuclearWinter {
-  stratosphericSoot: number;      // Mt of soot in upper atmosphere
-  temperatureReduction: number;   // Degrees C cooling
-  cropYieldMultiplier: number;    // [0,1] How much food grows
-  yearsActive: number;            // Track duration
-}
-
-// After nuclear war:
-const soot = totalMegatons * 0.1;  // 10% becomes stratospheric soot
-env.temperature -= soot * 0.08;    // Cooling effect
-env.cropYield *= (1 - soot * 0.6); // Massive crop failure
-// Soot decays 20%/year (5-7 year half-life)
-```
-
-**Expected Impact:**
-- Nuclear war becomes 5-10x more deadly (starvation > direct deaths)
-- Multi-year famine pathway to extinction
-- Incentivizes nuclear deterrence, de-escalation
-
----
-
 ## TIER 4: STRATEGIC DEPTH FEATURES
 
-### 4.1 Technology Tree System (8 hours)
 
-**File:** `plans/technology_tree_specification.md` (648 lines)
-**Priority:** MEDIUM
-**Complexity:** MEDIUM
-
-**Why Valuable:**
-- Currently: Breakthrough techs are independent
-- Reality: Technologies have prerequisites, synergies, pathways
-- Adds strategic depth (which research path to pursue?)
-
-**Key Features:**
-- Explicit dependency graph (Hardware Efficiency → Distributed Training → Algorithmic Progress)
-- Research tree visualization (for UI)
-- Unlock mechanics (can't research X without Y)
-- Breakthrough pathways (multiple routes to same capability)
-- Technology categories: Foundation Models, Applied AI, Alignment Research, Abundance Technologies
-
-**Expected Impact:**
-- Richer research mechanics
-- Strategic choices matter
-- Realism (can't skip prerequisites)
-- Foundation for tech victory conditions
-
----
-
-### 4.2 Dystopia Variant Paths (6 hours)
-
-**File:** `plans/dystopia-paths-implementation.md` (260 lines)
-**Priority:** MEDIUM
-**Complexity:** MEDIUM
-
-**Why Valuable:**
-- Currently: Generic dystopia attractor
-- Reality: Many flavors of oppression (each with unique mechanics)
-- Adds outcome diversity
-
-**5 Dystopia Variants:**
-1. **Surveillance State:** AI-enabled total monitoring (facial recognition, social credit, thought crime)
-2. **Corporate Feudalism:** AI-powered corporate control (algorithmic management, digital serfdom)
-3. **AI-Managed Authoritarianism:** Efficient oppression (optimal propaganda, dissent prediction)
-4. **Pleasure Prison:** Wireheading society (AI-optimized addiction, engineered contentment)
-5. **Cognitive Apartheid:** Enhanced vs baseline humans (permanent class structure)
-
-**Expected Impact:**
-- Richer outcome space (not just extinction/utopia)
-- Realism (AI enables many oppression types)
-- Player choices matter (which dystopia emerges?)
-
----
 
 ### 4.6 Human Enhancement & Merger Pathways (7 hours)
 
@@ -374,12 +240,11 @@ env.cropYield *= (1 - soot * 0.6); // Massive crop failure
 
 ### 5.8 Multi-Dimensional Capability System (6 hours)
 
-**File:** `plans/technology_tree_specification.md` (Section: Multi-Dimensional Capability)
 **Priority:** LOW (foundation exists, needs expansion)
 **Complexity:** MEDIUM
 
-**Already Implemented:** 17 capability dimensions
-**Enhancement:** Map to technology tree more explicitly
+**Status:** 17 capability dimensions already implemented
+**Enhancement:** Additional capability interactions and strategic depth
 
 ---
 
@@ -399,22 +264,11 @@ env.cropYield *= (1 - soot * 0.6); // Massive crop failure
 
 ## IMPLEMENTATION PRIORITY ORDER
 
-### IMMEDIATE PRIORITY (1-2 weeks)
-
-1. **TIER 1.7.3:** Link Organizations to Countries (2-3h) - Bug fix, high impact
-2. **TIER 1.7.4:** Nuclear Winter & Long-Term Effects (3-4h) - Bug fix, realism
-
-**Total:** ~5-7 hours (1 week part-time)
-
----
-
 ### MEDIUM PRIORITY (2-4 weeks)
 
-4. **TIER 4.1:** Technology Tree System (8h) - Strategic depth
-5. **TIER 4.2:** Dystopia Variant Paths (6h) - Outcome diversity
-6. **TIER 4.6:** Human Enhancement & Merger (7h) - Novel outcomes
+1. **TIER 4.6:** Human Enhancement & Merger (7h) - Novel outcomes
 
-**Total:** ~21 hours (3 weeks part-time)
+**Total:** ~7 hours (1 week part-time)
 
 ---
 
@@ -478,10 +332,16 @@ The model is a research tool, not a game balance problem.
 
 ---
 
-**Last Updated:** October 15, 2025
-**Active Items:** 12 features (2 bug fixes + 10 new features)
-**Estimated Remaining Dev Time:** ~72-75 hours (9-10 weeks part-time)
+**Last Updated:** October 16, 2025
+**Active Items:** 8 features (1 medium priority + 7 enrichment features)
+**Estimated Remaining Dev Time:** ~53 hours (7-8 weeks part-time)
 **Completed Work:** See `/plans/completed/` directory
+
+**Recently Completed (October 2025):**
+- TIER 1.7.3: Link Organizations to Countries
+- TIER 1.7.4: Nuclear Winter & Long-Term Effects
+- TIER 4.1: Technology Tree System (70 technologies)
+- TIER 4.2: Dystopia Variant Paths
 
 **Philosophy:** Research-backed realism, mechanism-driven emergence, no balance tuning for "fun"
 
@@ -489,6 +349,6 @@ The model is a research tool, not a game balance problem.
 
 **Related Documents:**
 - Completed implementations: `/plans/completed/`
-- Active detailed plans: `/plans/tier2-8-hegemonic-powers-IMPLEMENTATION-PLAN.md`, `/plans/technology_tree_specification.md`, etc.
+- Active detailed plans: `/plans/remaining_tasks_5_pm_10_08_25.md`, `/plans/utopian-dynamics-spec.md`
 - Wiki documentation: `/docs/wiki/`
-- Development logs: `/devlog/`
+- Development logs: `/devlogs/`
