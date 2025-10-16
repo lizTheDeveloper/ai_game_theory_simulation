@@ -11,6 +11,7 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { analyzeDeterminism, formatDeterminismReport, DiagnosticLog } from '../src/simulation/diagnostics';
+import { ScenarioMode } from '../src/types/game';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -18,20 +19,24 @@ import * as path from 'path';
 const args = process.argv.slice(2);
 const runsIndex = args.indexOf('--runs');
 const monthsIndex = args.indexOf('--months');
+const scenarioIndex = args.indexOf('--scenario');
 
 const numRuns = runsIndex >= 0 ? parseInt(args[runsIndex + 1]) : 20;
 const numMonths = monthsIndex >= 0 ? parseInt(args[monthsIndex + 1]) : 240;
+const scenarioMode: ScenarioMode | 'dual' = scenarioIndex >= 0 ? args[scenarioIndex + 1] as ScenarioMode : 'dual'; // P0.7
 
 console.log(`\n🔬 P0.4 DIAGNOSTIC MONTE CARLO`);
 console.log(`═══════════════════════════════════════════════════════`);
 console.log(`Runs: ${numRuns}`);
 console.log(`Duration: ${numMonths} months (${(numMonths/12).toFixed(1)} years)`);
+console.log(`Scenario Mode: ${scenarioMode}${scenarioMode === 'dual' ? ' (50% historical, 50% unprecedented)' : ''}`); // P0.7
 console.log(`Goal: Identify deterministic systems causing convergence\n`);
 
 // Storage for diagnostics from all runs
 const allDiagnostics: DiagnosticLog[] = [];
 const allResults: Array<{
   seed: number;
+  scenarioMode: ScenarioMode; // P0.7
   outcome: string;
   finalPopulation: number;
   months: number;
@@ -41,7 +46,16 @@ const allResults: Array<{
 for (let run = 1; run <= numRuns; run++) {
   const seed = 42000 + run; // Fixed seed base for reproducibility
 
-  console.log(`\n[Run ${run}/${numRuns}] Seed: ${seed}`);
+  // P0.7: Determine scenario mode for this run
+  let runScenarioMode: ScenarioMode;
+  if (scenarioMode === 'dual') {
+    // First half: historical, second half: unprecedented
+    runScenarioMode = run <= numRuns / 2 ? 'historical' : 'unprecedented';
+  } else {
+    runScenarioMode = scenarioMode as ScenarioMode;
+  }
+
+  console.log(`\n[Run ${run}/${numRuns}] Seed: ${seed} [${runScenarioMode}]`);
 
   try {
     const engine = new SimulationEngine({
@@ -50,7 +64,7 @@ for (let run = 1; run <= numRuns; run++) {
       logLevel: 'summary' // Minimal logging to reduce noise
     });
 
-    const initialState = createDefaultInitialState();
+    const initialState = createDefaultInitialState(runScenarioMode);
     const result = engine.run(initialState, {
       maxMonths: numMonths,
       checkActualOutcomes: true
@@ -63,6 +77,7 @@ for (let run = 1; run <= numRuns; run++) {
     const finalPop = result.finalState.humanPopulationSystem.population;
     allResults.push({
       seed,
+      scenarioMode: runScenarioMode, // P0.7
       outcome: result.summary.finalOutcome,
       finalPopulation: finalPop,
       months: result.summary.totalMonths
@@ -136,6 +151,7 @@ const fullOutput = {
   config: {
     runs: numRuns,
     months: numMonths,
+    scenarioMode, // P0.7: Include scenario mode in config
     timestamp: new Date().toISOString()
   },
   results: allResults,

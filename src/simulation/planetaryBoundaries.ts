@@ -597,11 +597,15 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
 
   // === POPULATION DEATHS ===
   // TIER 1.7 FIX: Cascade accelerates over time until true extinction or intervention
-  // Month 0-48: Base mortality (P1.2 FIX: Reduced from 2% to 0.5% monthly)
+  // P0.7 (Oct 16, 2025): Scenario-specific mortality rates
+  // Historical: 0.5% monthly (Black Death: 30-60% over 6 years)
+  // Unprecedented: 1.5% monthly (hyperconnected systemic failures)
+  // Month 0-48: Base mortality from scenario
   // Month 48+: Exponential acceleration (1.05x per month = 5% growth in death rate)
-  // Research: Black Death was 5-10% annually; this is 6% annually (comparable severity)
   if (state.humanPopulationSystem) {
-    let monthlyMortalityRate = 0.005 * system.cascadeSeverity; // Base 0.5% per month (6% annually)
+    // P0.7: Get scenario-specific mortality rate (default to historical 0.5% if not set)
+    const baseMortalityRate = state.config.scenarioParameters?.cascadeMortalityRate ?? 0.005;
+    let monthlyMortalityRate = baseMortalityRate * system.cascadeSeverity;
     
     // After initial 48-month crisis, death rate accelerates exponentially
     if (monthsSinceCascade > 48) {
@@ -626,9 +630,10 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   // === LOG PROGRESS ===
   if (monthsSinceCascade % 6 === 0) { // Log every 6 months
     const population = state.humanPopulationSystem.population;
-    const mortalityRate = monthsSinceCascade > 48 
-      ? 0.02 * Math.pow(1.05, monthsSinceCascade - 48) 
-      : 0.02;
+    const baseMortalityRate = state.config.scenarioParameters?.cascadeMortalityRate ?? 0.005;
+    const mortalityRate = monthsSinceCascade > 48
+      ? baseMortalityRate * Math.pow(1.05, monthsSinceCascade - 48)
+      : baseMortalityRate;
     
     console.log(`\n🌪️ TIPPING POINT CASCADE - Month ${monthsSinceCascade}`);
     console.log(`   Climate: ${(env.climateStability * 100).toFixed(1)}%`);
@@ -640,7 +645,7 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
       console.log(`   Status: Initial crisis (Month ${monthsSinceCascade}/48)`);
     } else {
       console.log(`   Status: ACCELERATING COLLAPSE (Month ${monthsSinceCascade - 48} past crisis)`);
-      console.log(`   Death rate: ${(mortalityRate / 0.02).toFixed(1)}x baseline`);
+      console.log(`   Death rate: ${(mortalityRate / baseMortalityRate).toFixed(1)}x baseline`);
     }
   }
 
