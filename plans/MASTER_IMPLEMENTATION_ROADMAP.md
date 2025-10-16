@@ -35,7 +35,7 @@
 
 ---
 
-### Critical Fixes (~6-8 hours)
+### Critical Fixes (~8-12 hours)
 
 **Priority 2 Remaining:**
 
@@ -44,9 +44,33 @@
   → See: `plans/p2-3-heterogeneous-population.md`
   → Tests: `tests/p2-3-heterogeneous-population.test.ts`
 
-- [ ] **P2.5: Empirical Validation** (6-8h)
-  Validate against COVID-19, 2008 crisis, Black Death
-  → See: `plans/p2-5-empirical-validation.md`
+- [ ] **P2.4: Simulation Features for Validation** (2-4h) **BLOCKS P2.5**
+  **Status:** Required to unblock P2.5 empirical validation framework
+  → Plan: `plans/simulation-features-for-validation.md`
+  → **Feature 1: Event Trigger System** (1-1.5h)
+    - Add optional event triggers (pandemic, economic crisis, environmental shock)
+    - Enable historical scenario testing (COVID-19, 2008 crisis, Black Death)
+    - Files: New phase `processEventTriggers.ts`, update `initialization.ts`
+  → **Feature 2: Fix Organizational Bankruptcy** (0.5-1h)
+    - Calibrate bankruptcy rates to historical data (currently 100%, should be 8-30%)
+    - Add government bailout mechanics, recovery pathways
+    - Validate: Normal ~8-10%, 2008 ~15-20%, COVID ~25-30%
+  → **Feature 3: Recovery Tracking** (0.5-1h)
+    - Add economic stage tracking (expansion, peak, contraction, trough, recovery)
+    - Calculate time-to-recovery metrics for validation tests
+    - Files: New phase `updateEconomicStage.ts`, new utils `recoveryCalculations.ts`
+  → **Research:** TRL 9 (NBER business cycle dating, historical crisis data)
+  → **Impact:** Enables empirical validation against COVID-19, 2008 crisis, Black Death
+
+- [x] **P2.5: Empirical Validation** ✅ FRAMEWORK COMPLETE (Oct 16, 2025) ⏸️ BLOCKED
+  **Status:** Framework complete (4h), awaiting simulation features (2-4h remaining)
+  → Framework: `tests/validation/` (historicalStates.ts + 20 tests)
+  → Documentation: `tests/validation/README.md`
+  → Blocking Issues:
+    1. Need event trigger system (pandemic, economic crisis)
+    2. Fix organizational bankruptcy (currently 100%, should be 10-30%)
+    3. Add recovery tracking (economic stage history, time-to-recovery)
+  → Plan: `plans/completed/p2-5-empirical-validation-FRAMEWORK-COMPLETE.md`
 
 ---
 
@@ -54,9 +78,12 @@
 
 **New Outcome Spaces:**
 
-- [x] **TIER 4.6: Human Enhancement & Merger Pathways** ✅ (8h) **COMPLETE**
-  AI-assisted cognition, BCI adoption, cognitive stratification, merger pathways
-  → See: `plans/tier4-6-human-enhancement.md` (research-backed, integrated with P2.3 segments)
+- [x] **TIER 4.6: Human Enhancement & Merger Pathways** ⚠️ IMPLEMENTED BUT NEEDS RECONCILIATION (8h actual)
+  **Status:** Added humanEnhancement.ts system with segment-level tracking, BUT overlaps with existing bionicSkills.ts
+  → BCI/merger pathways: Research skeptic correct (TRL 0-2, science fiction) - should be removed
+  → AI-assisted cognition: Already exists in `bionicSkills.ts` (TRL 8-9) - need to reconcile duplication
+  → See: `plans/tier4-6-human-enhancement.md` + `devlogs/crisis_accumulation_fixes_oct16_2025.md`
+  → Next: Merge humanEnhancement.ts segment tracking into bionicSkills.ts, remove BCI/merger
 
 **Research-Backed Enhancements:**
 
@@ -65,6 +92,95 @@
   → See: `plans/p2-6-memetic-polarization-dynamics.md`
   → Research: TRL 6-7, validated against 2024-2025 peer-reviewed studies
   → Impact: Critical for modeling societal response to AI development
+
+---
+
+### AI-Assisted Skills Enhancement (~78 hours, 3 months)
+
+**Based on:** Super-alignment researcher findings + research skeptic validation
+**Status:** Core system validated (TRL 8-9), critical gaps identified
+**Research Foundation:** 22 peer-reviewed studies (Science, Nature, ACM, OECD)
+
+**Planning Documents:**
+- **Master Plan:** `plans/bionic-skills-research-grounding.md` - 6 phases, effort breakdown, integration points
+- **Phase 2 Detail:** `plans/bionic-skills-phase-transition.md` - Complementarity → substitution mechanics
+- **Phase 3 Detail:** `plans/bionic-skills-competence-tracking.md` - Performance vs competence gap
+- **Phase 4 Detail:** `plans/bionic-skills-economic-distribution.md` - Productivity-wage decoupling
+
+**Research Documentation:**
+- **Literature Foundation:** `reviews/bionic-skills-hopeful-research-foundation-20251016.md` - 22 studies, full citations
+- **Executive Summary:** `reviews/bionic-skills-research-summary-20251016.md` - Literature synthesis
+- **Action Plan:** `reviews/bionic-skills-action-plan-20251016.md` - Implementation roadmap
+
+**Current System (bionicSkills.ts) - Keep As-Is:**
+- ✅ AI amplification via digital tools (Copilot, ChatGPT, AI tutors) - NOT BCIs (TRL 8-9)
+- ✅ Differential benefits by skill level (novices +60%, experts +20%) - validated by RCTs
+- ✅ Digital divide & access inequality (elite +30%, precariat -30%) - empirical data
+- ✅ Task-specific effects (programming, writing, communication) - meta-analysis confirmed
+
+**Critical Gaps Identified by Research Skeptic:**
+
+- [ ] **Phase 1: Terminology & Documentation** (Week 1, 8h)
+  - Remove "bionic" terminology (too sci-fi), use "AI-assisted skills"
+  - Add research citations (JSDoc comments with study references)
+  - Document TRL levels for each mechanic
+  - Update TIER 4.6 plan to remove BCI language
+  → **Plan:** `plans/bionic-skills-research-grounding.md` §Phase 1
+  → **Impact:** Reframe existing validated system with proper research grounding
+
+- [ ] **Phase 2: Phase Transition Mechanics** (Weeks 2-4, 12h) **CRITICAL**
+  - Model complementarity → transition → substitution timeline (5-10 year phases)
+  - Add displacement tracking by population segment (routinizability × AI capability)
+  - Implement policy interventions (retraining, job guarantee, UBI)
+  - Validate against historical automation patterns (ATMs 1970-2000, Excel 1985-2005)
+  → **Plan:** `plans/bionic-skills-phase-transition.md` (12h detailed breakdown)
+  → **Research:** Acemoglu & Restrepo (2022) - 50-70% wage inequality from automation
+  → **Impact:** Model currently assumes permanent amplification - MISSES DISPLACEMENT PHASE
+  → **Connects to:** Unemployment calculations, heterogeneous segments, policy system
+
+- [ ] **Phase 3: Performance vs Competence Tracking** (Weeks 5-6, 8h) **CRITICAL**
+  - Separate AI-assisted performance from true skill retention
+  - Add scaffolding quality tracking (education, mentorship support by segment)
+  - Model retention mechanics (scaffolding × reliance → retention rate)
+  - Add competence crisis events (30% gap = warning, 50% gap = crisis)
+  - Implement AI outage scenario testing (reveals true competence gaps)
+  → **Plan:** `plans/bionic-skills-competence-tracking.md` (8h detailed breakdown)
+  → **Research:** Cognitive Research (2024) - "illusion of understanding", scores plummet on retention
+  → **Research:** MDPI (2023) - AI inhibits on-the-job learning, automation complacency
+  → **Impact:** Model treats performance as competence - MISSES SKILL EROSION
+  → **Connects to:** Phase 2 (low competence → higher displacement risk), QoL calculations
+
+- [ ] **Phase 4: Economic Distribution & Wage Decoupling** (Weeks 7-8, 6h) **CRITICAL**
+  - Add labor share tracking (currently 0.62, declining with AI productivity)
+  - Model capital vs labor capture of productivity gains (70/30 default, adjustable by policy)
+  - Implement policy levers (union strength, minimum wage, worker ownership, UBI redistribution)
+  - Validate against historical 1973-2024 US data (productivity +77%, wages +12%)
+  → **Plan:** `plans/bionic-skills-economic-distribution.md` (6h detailed breakdown)
+  → **Research:** Brookings (2024), EPI - 65pp productivity-wage gap since 1973
+  → **Impact:** Model assumes productivity → wages linearly - MISSES CAPITAL CAPTURE
+  → **Connects to:** Phase 2 (displacement reduces wage bargaining), inequality tracking
+
+- [ ] **Phase 5: Validation & Testing** (Month 2, 16h)
+  - Historical comparison testing (ATMs, Excel, self-checkout timelines)
+  - Sensitivity analysis (parameter ranges, policy interventions)
+  - Literature comparison (run scenarios matching published studies)
+  - Edge case testing (extreme AI capability, zero/max policy)
+  → **Plan:** `plans/bionic-skills-research-grounding.md` §Phase 5
+  → **Deliverables:** Test suite, validation report, sensitivity docs, edge case results
+
+- [ ] **Phase 6: Policy Testing** (Month 3, 16h)
+  - Implement policy levers (retraining, UBI, worker ownership, teaching support, job guarantee)
+  - Run scenario comparisons (baseline vs single vs combined interventions)
+  - Document effectiveness (which policies reduce inequality? preserve employment?)
+  - Create cost-benefit analysis and recommendations
+  → **Plan:** `plans/bionic-skills-research-grounding.md` §Phase 6
+  → **Deliverables:** Policy mechanics, scenario results, effectiveness documentation
+
+**Total Effort:** 78 hours over 3 months (8h + 12h + 8h + 6h + 16h + 16h + 12h integration/testing)
+**Priority:** Medium (after P2.5 empirical validation, before enrichment features)
+**Research TRL:** Phases 2-4 are TRL 8-9 (extensively validated, 50+ years historical data)
+**Integration Points:** Unemployment, heterogeneous segments, policy system, QoL, inequality, crisis detection
+**Files Modified:** `bionicSkills.ts` (terminology), new files: `phaseTransition.ts`, `skillRetention.ts`, `economicDistribution.ts`
 
 ---
 
@@ -181,12 +297,13 @@
 
 ## Progress Summary
 
-**Completed:** P0 (7/7), P1 (5/5), P2 (4/5), Monte Carlo Bug Fixes (15/15)
-**Active:** 1 critical fix + 1 medium feature + 14 low-priority enhancements + 3 Black Mirror phases
-**Total Remaining Effort:** ~132-162 hours (includes 37-49 weeks Black Mirror phased integration)
+**Completed:** P0 (7/7), P1 (5/5), P2 (4/6), Monte Carlo Bug Fixes (15/15), Crisis Accumulation Fixes (2 fixes)
+**Active:** 2 critical fixes (P2.4, P2.5) + 1 reconciliation (TIER 4.6) + 1 medium feature + 6 AI skills phases + 14 low-priority enhancements + 3 Black Mirror phases
+**Total Remaining Effort:** ~220-252 hours (includes 2-4h validation features + 78h AI skills + 37-49 weeks Black Mirror phased integration)
 
 **Recent Completions (Oct 16, 2025):**
-- ✅ TIER 4.6: Human Enhancement & Merger Pathways - AI-assisted cognition, BCI adoption, cognitive stratification
+- ✅ **Crisis Accumulation Fixes (2/3)** - Fixed biodiversity-carrying capacity bug (295M deaths/month → 135M), slowed meaning crisis + AI misalignment accumulation by 3-5x to match 2-5 year research timelines (see `devlogs/crisis_accumulation_fixes_oct16_2025.md`)
+- ⚠️ TIER 4.6: Human Enhancement - Implemented but needs reconciliation with existing bionicSkills.ts (BCI/merger = TRL 0-2, should remove)
 - ✅ P2.3: Heterogeneous Population Segments - 5 social segments with differential crisis vulnerability
 - ✅ **Monte Carlo Bug Fixes (15/15)** - All critical, significant, and minor bugs fixed
   - Critical: Fixed crashes, undefined variables, data corruption (7 bugs)
@@ -207,8 +324,17 @@
 - Phase 3 (LOW): 3 research-dependent systems (6-12+ months) - Governance preparedness, Performative behavior
 - Approval: ~40% strongly validated, ~25% conditional, ~35% rejected
 
+**New from AI-Assisted Skills Review (Oct 16, 2025):**
+- ✅ **Dialectic review completed** - Skeptic critique + researcher rebuttal
+- Verdict: Core system VALIDATED (TRL 8-9, 22 peer-reviewed studies)
+- Skeptic correct: BCI/merger is science fiction (TRL 0-2, should be cut)
+- Researcher correct: Digital tools (Copilot, ChatGPT) are real and validated
+- Critical gaps identified: Phase transition, skill retention, wage decoupling (78h plan created)
+- Impact: Model currently too optimistic - missing displacement, deskilling, capital capture
+- Documentation: 3 detailed phase plans + comprehensive research report
+
 **Publication Readiness:** ~80-85% complete (Monte Carlo bugs fixed)
-**Next Milestone:** Complete P2.5 (Empirical Validation)
+**Next Milestone:** Complete P2.4 (Simulation Features) to unblock P2.5 (Empirical Validation), then AI skills phases
 
 ---
 
