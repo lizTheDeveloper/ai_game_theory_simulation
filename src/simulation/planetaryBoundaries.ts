@@ -621,7 +621,7 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
       monthlyMortalityRate,
       'Tipping Point Cascade',
       1.0,  // Global
-      'climate'
+      'cascade'  // Oct 16, 2025: Dedicated category to fix death reporting
     );
   }
 

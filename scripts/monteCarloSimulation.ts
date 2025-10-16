@@ -266,6 +266,7 @@ interface RunResult {
   // Death breakdown by cause
   deathsNatural: number;              // Baseline mortality
   deathsCrisis: number;               // Crisis deaths (famine, disease, etc.)
+  deathsClimateEcoPollution: number;  // Environmental crises (climate, ecosystem, pollution)
   deathsNuclear: number;              // Nuclear war deaths
   deathsCascade: number;              // Tipping point cascade deaths
   deathsMeaning: number;              // Suicide epidemic deaths
@@ -747,10 +748,11 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const deathsNatural = (avgPopulation * pop.baselineDeathRate * (monthsElapsed / 12)) * 1000; // Convert to millions
   
   // Crisis deaths by category (already in millions from deathsByCategory tracking)
-  // FIX (Oct 13, 2025): Include pollution deaths in breakdown
+  // FIX (Oct 16, 2025): Separate cascade from specific climate/ecosystem/pollution crises
   const deathsNuclear = deathsByCategory.war; // War includes nuclear
   const deathsCrisis = deathsByCategory.famine + deathsByCategory.disease + deathsByCategory.other;
-  const deathsCascade = deathsByCategory.climate + deathsByCategory.ecosystem + deathsByCategory.pollution;
+  const deathsCascade = deathsByCategory.cascade; // Tipping point cascade only
+  const deathsClimateEcoPollution = deathsByCategory.climate + deathsByCategory.ecosystem + deathsByCategory.pollution;
   const deathsMeaning = deathsByCategory.ai; // AI-related deaths (alignment failures, manipulation)
   
   // Population outcome
@@ -1042,6 +1044,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
     totalDeaths,
     deathsNatural,
     deathsCrisis,
+    deathsClimateEcoPollution,  // Oct 16, 2025: Separate from cascade
     deathsNuclear,
     deathsCascade,
     deathsMeaning,
@@ -1192,6 +1195,7 @@ log(`\n  MORTALITY BREAKDOWN:`);
 log(`    Total Deaths: ${avgTotalDeaths.toFixed(0)}M people`);
 log(`    Natural: ${(results.reduce((sum, r) => sum + r.deathsNatural, 0) / results.length).toFixed(0)}M (baseline)`);
 log(`    Crisis: ${(results.reduce((sum, r) => sum + r.deathsCrisis, 0) / results.length).toFixed(0)}M (famine, disease, disasters)`);
+log(`    Climate/Eco/Pollution: ${(results.reduce((sum, r) => sum + r.deathsClimateEcoPollution, 0) / results.length).toFixed(0)}M (environmental crises)`);
 log(`    Nuclear: ${(results.reduce((sum, r) => sum + r.deathsNuclear, 0) / results.length).toFixed(0)}M (nuclear wars)`);
 log(`    Cascade: ${(results.reduce((sum, r) => sum + r.deathsCascade, 0) / results.length).toFixed(0)}M (tipping point cascades)`);
 log(`    Meaning: ${(results.reduce((sum, r) => sum + r.deathsMeaning, 0) / results.length).toFixed(0)}M (suicide epidemic)`);
