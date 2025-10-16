@@ -56,12 +56,73 @@ export interface LifecycleSnapshot {
   retiredThisMonth: number;
 }
 
+/**
+ * P0.4 (Oct 15, 2025): Track systems suspected of deterministic convergence
+ */
+export interface PopulationSnapshot {
+  month: number;
+  population: number;
+  birthRate: number;
+  deathRate: number;
+  mortalityByEnvironment: number;
+  mortalityByFamine: number;
+  mortalityByDisease: number;
+  mortalityByConflict: number;
+  netGrowthRate: number;
+}
+
+export interface ResourceSnapshot {
+  month: number;
+  foodStock: number;
+  waterStock: number;
+  energyStock: number;
+  foodDepletion: number;
+  waterDepletion: number;
+  energyDepletion: number;
+  foodSecurity: number;
+}
+
+export interface EnvironmentalSnapshot {
+  month: number;
+  climateStability: number;
+  biodiversityIndex: number;
+  oceanHealth: number;
+  pollutionLevel: number;
+  tippingPointRisk: number;
+}
+
+export interface EconomicSnapshot {
+  month: number;
+  globalGDP: number;
+  unemploymentLevel: number;
+  economicStage: number;
+  organizationsBankrupt: number;
+  totalOrganizations: number;
+}
+
+export interface CascadeSnapshot {
+  month: number;
+  cascadeActive: boolean;
+  cascadeSeverity: number;
+  activeCrises: number;
+  monthsSinceTrigger: number;
+  cumulativeDeaths: number;
+}
+
 export interface DiagnosticLog {
   thresholdCrossings: ThresholdCrossing[];
   growthRates: GrowthRate[];
   interventions: InterventionImpact[];
   decisions: DecisionLog[];
   lifecycleSnapshots: LifecycleSnapshot[]; // Phase 4: Track AI population dynamics
+
+  // P0.4 (Oct 15, 2025): Track deterministic systems
+  populationSnapshots: PopulationSnapshot[];
+  resourceSnapshots: ResourceSnapshot[];
+  environmentalSnapshots: EnvironmentalSnapshot[];
+  economicSnapshots: EconomicSnapshot[];
+  cascadeSnapshots: CascadeSnapshot[];
+
   correlations: Record<string, number>;
   summary: {
     extinctionReason?: string;
@@ -96,6 +157,14 @@ export class DiagnosticLogger {
   private interventions: InterventionImpact[] = [];
   private decisions: DecisionLog[] = [];
   private lifecycleSnapshots: LifecycleSnapshot[] = []; // Phase 4: Track AI population
+
+  // P0.4 (Oct 15, 2025): Track deterministic systems
+  private populationSnapshots: PopulationSnapshot[] = [];
+  private resourceSnapshots: ResourceSnapshot[] = [];
+  private environmentalSnapshots: EnvironmentalSnapshot[] = [];
+  private economicSnapshots: EconomicSnapshot[] = [];
+  private cascadeSnapshots: CascadeSnapshot[] = [];
+
   private previousState: GameState | null = null;
   
   // Track when critical events happen
@@ -167,8 +236,79 @@ export class DiagnosticLogger {
       newThisMonth,
       retiredThisMonth
     });
-    
+
+    // P0.4 (Oct 15, 2025): Track deterministic systems
+    this.captureSystemSnapshots(state, month);
+
     this.previousState = JSON.parse(JSON.stringify(state));
+  }
+
+  /**
+   * P0.4: Capture snapshots of key systems to identify determinism
+   */
+  private captureSystemSnapshots(state: GameState, month: number): void {
+    // Population dynamics
+    const pop = state.humanPopulationSystem;
+    const deaths = state.deathTracking || {};
+    this.populationSnapshots.push({
+      month,
+      population: pop.population,
+      birthRate: pop.adjustedBirthRate || 0,
+      deathRate: pop.adjustedDeathRate || 0,
+      mortalityByEnvironment: deaths.environmental || 0,
+      mortalityByFamine: deaths.famine || 0,
+      mortalityByDisease: deaths.disease || 0,
+      mortalityByConflict: deaths.conflict || 0,
+      netGrowthRate: (pop.adjustedBirthRate || 0) - (pop.adjustedDeathRate || 0)
+    });
+
+    // Resource systems
+    const env = state.environmentalAccumulation || {};
+    const boundaries = state.planetaryBoundariesSystem || {};
+    const foodBoundary = boundaries.boundaries?.freshwater || {};
+    this.resourceSnapshots.push({
+      month,
+      foodStock: foodBoundary.currentStock || 0,
+      waterStock: boundaries.boundaries?.freshwater?.currentStock || 0,
+      energyStock: 0, // TODO: Add if available
+      foodDepletion: foodBoundary.monthlyDepletion || 0,
+      waterDepletion: boundaries.boundaries?.freshwater?.monthlyDepletion || 0,
+      energyDepletion: 0,
+      foodSecurity: env.foodSecurity || 0
+    });
+
+    // Environmental systems
+    this.environmentalSnapshots.push({
+      month,
+      climateStability: env.climateStability || 0,
+      biodiversityIndex: env.biodiversityIndex || 0,
+      oceanHealth: env.oceanHealth || 0,
+      pollutionLevel: env.pollutionLevel || 0,
+      tippingPointRisk: boundaries.tippingPointRisk || 0
+    });
+
+    // Economic systems
+    const orgs = state.organizations || [];
+    const bankruptCount = orgs.filter(o => o.bankrupt).length;
+    this.economicSnapshots.push({
+      month,
+      globalGDP: state.globalMetrics?.globalGDP || 0,
+      unemploymentLevel: state.society?.unemploymentLevel || 0,
+      economicStage: state.globalMetrics?.economicTransitionStage || 0,
+      organizationsBankrupt: bankruptCount,
+      totalOrganizations: orgs.length
+    });
+
+    // Cascade/Crisis systems
+    const cascade = boundaries;
+    this.cascadeSnapshots.push({
+      month,
+      cascadeActive: cascade.cascadeActive || false,
+      cascadeSeverity: cascade.cascadeSeverity || 0,
+      activeCrises: cascade.activeCrises || 0,
+      monthsSinceTrigger: cascade.cascadeActive ? month - (cascade.cascadeStartMonth || month) : 0,
+      cumulativeDeaths: deaths.total || 0
+    });
   }
   
   /**
@@ -378,6 +518,14 @@ export class DiagnosticLogger {
       interventions: this.interventions,
       decisions: this.decisions,
       lifecycleSnapshots: this.lifecycleSnapshots,
+
+      // P0.4 (Oct 15, 2025): Include system snapshots
+      populationSnapshots: this.populationSnapshots,
+      resourceSnapshots: this.resourceSnapshots,
+      environmentalSnapshots: this.environmentalSnapshots,
+      economicSnapshots: this.economicSnapshots,
+      cascadeSnapshots: this.cascadeSnapshots,
+
       correlations,
       summary: {
         extinctionReason: outcome === 'extinction' ? 'Simulation ended in extinction' : undefined,
@@ -577,6 +725,221 @@ export function formatDiagnosticReport(log: DiagnosticLog): string {
   
   lines.push('═══════════════════════════════════════════════════════\n');
   
+  return lines.join('\n');
+}
+
+/**
+ * P0.4 (Oct 15, 2025): Compare diagnostics across multiple Monte Carlo runs
+ * Identifies systems with suspiciously low variance (deterministic behavior)
+ */
+export interface DeterminismAnalysis {
+  month: number;
+  system: string;
+  metric: string;
+  values: number[];
+  mean: number;
+  stdDev: number;
+  coefficientOfVariation: number; // std/mean - should be >5% for stochastic systems
+  isDeterministic: boolean; // CV < 0.01 (1%)
+}
+
+export function analyzeDeterminism(logs: DiagnosticLog[]): {
+  summary: string;
+  analyses: DeterminismAnalysis[];
+  deterministicSystems: string[];
+} {
+  const analyses: DeterminismAnalysis[] = [];
+  const deterministicSystems = new Set<string>();
+
+  // Helper to calculate stats
+  const calculateStats = (values: number[]) => {
+    const mean = values.reduce((sum, v) => sum + v, 0) / values.length;
+    const variance = values.reduce((sum, v) => sum + Math.pow(v - mean, 2), 0) / values.length;
+    const stdDev = Math.sqrt(variance);
+    const cv = mean !== 0 ? Math.abs(stdDev / mean) : 0;
+    return { mean, stdDev, cv };
+  };
+
+  // Analyze at key time points (month 60, 120, 180, 240)
+  const checkMonths = [60, 120, 180, 240];
+
+  for (const month of checkMonths) {
+    // Population metrics
+    const popData = logs.map(log =>
+      log.populationSnapshots.find(s => s.month === month)
+    ).filter(s => s !== undefined);
+
+    if (popData.length > 0) {
+      const metrics: Array<[string, number[]]> = [
+        ['Population', popData.map(s => s!.population)],
+        ['Birth Rate', popData.map(s => s!.birthRate)],
+        ['Death Rate', popData.map(s => s!.deathRate)],
+        ['Environmental Mortality', popData.map(s => s!.mortalityByEnvironment)],
+        ['Famine Mortality', popData.map(s => s!.mortalityByFamine)]
+      ];
+
+      for (const [metric, values] of metrics) {
+        const stats = calculateStats(values);
+        const isDeterministic = stats.cv < 0.01; // Less than 1% variation
+        analyses.push({
+          month,
+          system: 'Population',
+          metric,
+          values,
+          mean: stats.mean,
+          stdDev: stats.stdDev,
+          coefficientOfVariation: stats.cv,
+          isDeterministic
+        });
+        if (isDeterministic) deterministicSystems.add(`Population.${metric}`);
+      }
+    }
+
+    // Environmental metrics
+    const envData = logs.map(log =>
+      log.environmentalSnapshots.find(s => s.month === month)
+    ).filter(s => s !== undefined);
+
+    if (envData.length > 0) {
+      const metrics: Array<[string, number[]]> = [
+        ['Climate Stability', envData.map(s => s!.climateStability)],
+        ['Biodiversity Index', envData.map(s => s!.biodiversityIndex)],
+        ['Tipping Point Risk', envData.map(s => s!.tippingPointRisk)]
+      ];
+
+      for (const [metric, values] of metrics) {
+        const stats = calculateStats(values);
+        const isDeterministic = stats.cv < 0.01;
+        analyses.push({
+          month,
+          system: 'Environmental',
+          metric,
+          values,
+          mean: stats.mean,
+          stdDev: stats.stdDev,
+          coefficientOfVariation: stats.cv,
+          isDeterministic
+        });
+        if (isDeterministic) deterministicSystems.add(`Environmental.${metric}`);
+      }
+    }
+
+    // Resource metrics
+    const resData = logs.map(log =>
+      log.resourceSnapshots.find(s => s.month === month)
+    ).filter(s => s !== undefined);
+
+    if (resData.length > 0) {
+      const metrics: Array<[string, number[]]> = [
+        ['Food Security', resData.map(s => s!.foodSecurity)],
+        ['Food Stock', resData.map(s => s!.foodStock)],
+        ['Water Stock', resData.map(s => s!.waterStock)]
+      ];
+
+      for (const [metric, values] of metrics) {
+        const stats = calculateStats(values);
+        const isDeterministic = stats.cv < 0.01;
+        analyses.push({
+          month,
+          system: 'Resource',
+          metric,
+          values,
+          mean: stats.mean,
+          stdDev: stats.stdDev,
+          coefficientOfVariation: stats.cv,
+          isDeterministic
+        });
+        if (isDeterministic) deterministicSystems.add(`Resource.${metric}`);
+      }
+    }
+
+    // Cascade metrics
+    const cascadeData = logs.map(log =>
+      log.cascadeSnapshots.find(s => s.month === month)
+    ).filter(s => s !== undefined);
+
+    if (cascadeData.length > 0) {
+      const metrics: Array<[string, number[]]> = [
+        ['Cascade Severity', cascadeData.map(s => s!.cascadeSeverity)],
+        ['Active Crises', cascadeData.map(s => s!.activeCrises)],
+        ['Cumulative Deaths', cascadeData.map(s => s!.cumulativeDeaths)]
+      ];
+
+      for (const [metric, values] of metrics) {
+        const stats = calculateStats(values);
+        const isDeterministic = stats.cv < 0.01;
+        analyses.push({
+          month,
+          system: 'Cascade',
+          metric,
+          values,
+          mean: stats.mean,
+          stdDev: stats.stdDev,
+          coefficientOfVariation: stats.cv,
+          isDeterministic
+        });
+        if (isDeterministic) deterministicSystems.add(`Cascade.${metric}`);
+      }
+    }
+  }
+
+  // Generate summary
+  const deterministicCount = deterministicSystems.size;
+  const totalMetrics = analyses.length;
+  const deterministicPct = (deterministicCount / totalMetrics * 100).toFixed(1);
+
+  const summary = `
+═══════════════════════════════════════════════════════
+   DETERMINISM ANALYSIS - ${logs.length} Monte Carlo Runs
+═══════════════════════════════════════════════════════
+
+🔴 DETERMINISTIC SYSTEMS: ${deterministicCount}/${totalMetrics} metrics (${deterministicPct}%)
+
+${Array.from(deterministicSystems).map(sys => `   - ${sys}`).join('\n')}
+
+Metrics with CV < 1% are considered deterministic.
+Healthy stochastic systems should have CV > 5%.
+
+Analyzed at months: ${checkMonths.join(', ')}
+`;
+
+  return {
+    summary,
+    analyses,
+    deterministicSystems: Array.from(deterministicSystems)
+  };
+}
+
+/**
+ * P0.4: Format determinism analysis for readable output
+ */
+export function formatDeterminismReport(analysis: ReturnType<typeof analyzeDeterminism>): string {
+  const lines: string[] = [];
+
+  lines.push(analysis.summary);
+
+  // Group by system and month
+  const bySystem = new Map<string, DeterminismAnalysis[]>();
+  for (const a of analysis.analyses) {
+    const key = a.system;
+    if (!bySystem.has(key)) bySystem.set(key, []);
+    bySystem.get(key)!.push(a);
+  }
+
+  for (const [system, analyses] of bySystem) {
+    const deterministic = analyses.filter(a => a.isDeterministic);
+    if (deterministic.length > 0) {
+      lines.push(`\n🔴 ${system} System (${deterministic.length} deterministic metrics):`);
+      for (const a of deterministic) {
+        lines.push(`   Month ${a.month}: ${a.metric}`);
+        lines.push(`      Mean: ${a.mean.toFixed(4)}, StdDev: ${a.stdDev.toFixed(6)}, CV: ${(a.cv * 100).toFixed(2)}%`);
+        lines.push(`      Values: ${a.values.slice(0, 5).map(v => v.toFixed(4)).join(', ')}${a.values.length > 5 ? '...' : ''}`);
+      }
+    }
+  }
+
+  lines.push('\n═══════════════════════════════════════════════════════\n');
+
   return lines.join('\n');
 }
 
