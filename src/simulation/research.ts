@@ -118,12 +118,28 @@ export function calculateDimensionGrowth(
   // AI capability multiplier - better AIs research faster in their strong domains
   const aiMultiplier = 1.0 + (aiCapabilityInDimension * 0.15);
 
+  // P0.1 FIX: Recursive self-improvement acceleration
+  // When AI capability exceeds 2.0 (superhuman), growth accelerates exponentially
+  // This models the "intelligence explosion" scenario from AI safety literature
+  let recursiveMultiplier = 1.0;
+  if (state && dimension === 'selfImprovement') {
+    // Get total AI capability to determine if we're in recursive improvement territory
+    const totalCapability = state.aiAgents.reduce((max, ai) =>
+      Math.max(max, ai.capability || 0), 0);
+
+    if (totalCapability > 2.0) {
+      // Exponential takeoff: capability above 2.0 accelerates self-improvement
+      // Cap at 3x multiplier to avoid infinite runaway (regulations/physics still constrain)
+      recursiveMultiplier = Math.min(1.0 + (totalCapability - 2.0) * 0.5, 3.0);
+    }
+  }
+
   // Apply penalties
   const penaltyMultiplier = regulationPenalty * computeGovernancePenalty;
 
-  // Phase 4 + TIER 4.4: Include compute and energy multipliers in calculation
+  // Phase 4 + TIER 4.4 + P0.1: Include compute, energy, and recursive improvement multipliers
   // Energy constraint is a hard physical bottleneck - no compute can bypass it
-  return baseGrowth * computeMultiplier * energyMultiplier * diminishingReturns * govMultiplier * aiMultiplier * penaltyMultiplier;
+  return baseGrowth * computeMultiplier * energyMultiplier * diminishingReturns * govMultiplier * aiMultiplier * recursiveMultiplier * penaltyMultiplier;
 }
 
 /**
