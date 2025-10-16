@@ -33,6 +33,10 @@ export class AIAgentActionsPhase implements SimulationPhase {
     // Update state (aiResult returns { newState, events })
     Object.assign(state, aiResult.newState);
 
+    // TIER 2 Phase 2A: Counter-Detection Learning (arms race dynamics)
+    const { updateCounterDetectionLearning } = require('../../counterDetectionLearning');
+    updateCounterDetectionLearning(state, rng);
+
     return { events: aiResult.events || [] };
   }
 }
