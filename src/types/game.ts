@@ -966,6 +966,9 @@ export interface GameState {
   // Human Enhancement & AI-Human Merger (TIER 4.6)
   humanEnhancementSystem: import('../types/humanEnhancement').HumanEnhancementSystem; // AI-assisted cognition, BCI adoption, cognitive stratification, merger pathways
 
+  // Memetic Evolution & Polarization Dynamics (P2.6, Oct 16 2025)
+  memeticSystem: import('../types/memetics').MemeticSystem; // Belief evolution, meme transmission, societal fragmentation
+
   // Regional Biodiversity System (TIER 1.7 - Crisis Realism)
   biodiversitySystem: import('../types/regionalBiodiversity').BiodiversitySystem; // Regional biodiversity tracking, nuclear/pollution effects
 

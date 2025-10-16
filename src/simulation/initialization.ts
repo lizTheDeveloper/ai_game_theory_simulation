@@ -45,6 +45,7 @@ import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
 import { SocietySegment } from '@/types/game';
 import { initializeHumanEnhancementSystem } from './humanEnhancement';
+import { initializeMemeticSystem } from './memetics/initialization';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -553,6 +554,7 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     informationWarfare: initializeInformationWarfare(),
     powerGenerationSystem: initializePowerGenerationSystem(),
     humanEnhancementSystem: initializeHumanEnhancementSystem(), // TIER 4.6: Human Enhancement & Merger Pathways
+    memeticSystem: initializeMemeticSystem(), // P2.6: Memetic Evolution & Polarization Dynamics
 
     // TIER 1.7: Crisis Realism - Regional Biodiversity
     biodiversitySystem: initializeRegionalBiodiversitySystem(),
