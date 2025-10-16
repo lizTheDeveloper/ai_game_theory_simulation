@@ -45,7 +45,10 @@ export type CountryName =
   | 'Indonesia'
   | 'Canada'
   | 'Bangladesh'
-  | 'Nigeria';
+  | 'Nigeria'
+  | 'Ireland'      // P2.4: Tech hub (Google, Microsoft EU HQ)
+  | 'Singapore'    // P2.4: AI research hub (OpenAI, Google Asia)
+  | 'Australia';   // P2.4: Major economy, academic AI presence
 
 export interface CountryPopulation {
   name: CountryName;
