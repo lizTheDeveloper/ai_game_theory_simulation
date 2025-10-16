@@ -155,12 +155,18 @@ export function updateHumanPopulation(state: GameState): void {
   // Pressure modifier: high population pressure reduces births
   const pressureModifier = Math.max(0.2, 1 - pop.populationPressure * 0.5);
 
+  // P0.5 (Oct 15, 2025): Add stochastic variation to birth rate
+  // Research: Birth rates vary ±10-20% due to cultural shifts, policy changes, random events
+  // Unseeded Math.random() provides essential variance across Monte Carlo runs
+  const birthStochasticity = 0.85 + Math.random() * 0.3; // 85% to 115% variation
+
   pop.adjustedBirthRate = pop.baselineBirthRate *
     meaningModifier *
     economicModifier *
     healthcareModifier *
     stabilityModifier *
-    pressureModifier;
+    pressureModifier *
+    birthStochasticity;
 
   // P1.5: POST-CRISIS BABY BOOM EFFECT
   // Historical evidence: Population rebounds after EVERY major crisis
@@ -216,22 +222,29 @@ export function updateHumanPopulation(state: GameState): void {
   // === 3. CALCULATE DEATH RATE (NEW: Research-Based) ===
   // NEW (Oct 13, 2025): Environmental mortality now calculated from actual thresholds
   // FIX (Oct 13, 2025): Now tracks deaths by category to fix missing 90% in reports
+  // P0.5 (Oct 15, 2025): Add stochastic variation via RNG parameter
   // Uses calculateEnvironmentalMortality() from qualityOfLife.ts
   // Research: UNEP (2024), PNAS (2014)
-  
+
   const { calculateEnvironmentalMortality } = require('./qualityOfLife');
-  const envMortality = calculateEnvironmentalMortality(state); // Returns breakdown by cause
-  
+  // P0.5: Pass unseeded random function for stochastic variation
+  const envMortality = calculateEnvironmentalMortality(state, Math.random); // Returns breakdown by cause
+
   // Healthcare reduction: good healthcare reduces deaths significantly
-  const healthcareReduction = Math.max(0.3, 1 - (qol.healthcareQuality * 0.7));
+  // P0.5: Add stochastic variation (healthcare effectiveness varies monthly)
+  const healthcareBase = Math.max(0.3, 1 - (qol.healthcareQuality * 0.7));
+  const healthcareStochasticity = 0.9 + Math.random() * 0.2; // 90% to 110% variation
+  const healthcareReduction = healthcareBase * healthcareStochasticity;
 
   // War multiplier: active conflicts dramatically increase deaths
   const activeConflicts = state.conflictResolution?.activeConflicts || 0;
   const warMultiplier = activeConflicts > 0 ? 1.5 + (activeConflicts * 0.2) : 1.0;
 
   // Base death rate (old baseline) - still applies for non-environmental factors
-  const baselineDeaths = pop.baselineDeathRate * healthcareReduction * warMultiplier;
-  
+  // P0.5: Add stochastic variation to baseline deaths
+  const baselineStochasticity = 0.9 + Math.random() * 0.2; // 90% to 110% variation
+  const baselineDeaths = pop.baselineDeathRate * healthcareReduction * warMultiplier * baselineStochasticity;
+
   // NEW: Environmental mortality ADDS to baseline (not multiplies)
   // This is because environmental deaths are additional excess mortality
   pop.adjustedDeathRate = baselineDeaths + (envMortality.total * 12); // Convert monthly to annual

@@ -22,16 +22,17 @@ export interface EnvironmentalMortalityBreakdown {
 
 /**
  * Calculate environmental mortality rate based on threshold crossings
- * 
+ *
  * Research-based (UNEP 2024, PNAS 2014):
  * - Current (2025): 7/9 boundaries, 9M deaths/8B people = 0.009% monthly
  * - Mortality scales with food, water, climate, biodiversity thresholds
  * - Non-linear escalation when multiple systems fail
- * 
+ *
  * FIX (Oct 13, 2025): Now returns breakdown by cause to properly track deaths
+ * P0.5 (Oct 15, 2025): Added stochastic variation to prevent deterministic convergence
  * Returns monthly mortality rate (0-1, where 0.01 = 1% die per month)
  */
-export function calculateEnvironmentalMortality(state: GameState): EnvironmentalMortalityBreakdown {
+export function calculateEnvironmentalMortality(state: GameState, rng?: () => number): EnvironmentalMortalityBreakdown {
   const env = state.environmentalAccumulation;
   const boundaries = state.planetaryBoundariesSystem;
   if (!env || !boundaries) {
@@ -100,6 +101,18 @@ export function calculateEnvironmentalMortality(state: GameState): Environmental
     diseaseMortality *= cascadeAmplifier;
     climateMortality *= cascadeAmplifier;
     ecosystemMortality *= cascadeAmplifier;
+  }
+
+  // === P0.5 (Oct 15, 2025): STOCHASTIC VARIATION ===
+  // Add ±30% random variation to prevent deterministic convergence
+  // Research: Real mortality varies due to weather, local conditions, response effectiveness
+  if (rng) {
+    const stochasticMultiplier = () => 0.7 + rng() * 0.6; // 70% to 130%
+    famineMortality *= stochasticMultiplier();
+    diseaseMortality *= stochasticMultiplier();
+    climateMortality *= stochasticMultiplier();
+    ecosystemMortality *= stochasticMultiplier();
+    pollutionMortality *= stochasticMultiplier();
   }
   
   // === REGIONAL VARIATION MULTIPLIER ===

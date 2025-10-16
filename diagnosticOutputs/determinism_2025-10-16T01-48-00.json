@@ -1,0 +1,155 @@
+{
+  "config": {
+    "runs": 20,
+    "months": 240,
+    "timestamp": "2025-10-16T01:48:00.140Z"
+  },
+  "results": [
+    {
+      "seed": 42001,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3443548844998342,
+      "months": 21
+    },
+    {
+      "seed": 42002,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3450225061939769,
+      "months": 21
+    },
+    {
+      "seed": 42003,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3443714201657484,
+      "months": 21
+    },
+    {
+      "seed": 42004,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34866737174255275,
+      "months": 21
+    },
+    {
+      "seed": 42005,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3440527887933036,
+      "months": 21
+    },
+    {
+      "seed": 42006,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34388642304138506,
+      "months": 21
+    },
+    {
+      "seed": 42007,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3437437235912645,
+      "months": 21
+    },
+    {
+      "seed": 42008,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34422980121491353,
+      "months": 21
+    },
+    {
+      "seed": 42009,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34383679492450325,
+      "months": 21
+    },
+    {
+      "seed": 42010,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3444303688005078,
+      "months": 21
+    },
+    {
+      "seed": 42011,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34774717913282627,
+      "months": 21
+    },
+    {
+      "seed": 42012,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3436881224449224,
+      "months": 21
+    },
+    {
+      "seed": 42013,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3438565827367124,
+      "months": 21
+    },
+    {
+      "seed": 42014,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3471972309546802,
+      "months": 21
+    },
+    {
+      "seed": 42015,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34683739539615666,
+      "months": 21
+    },
+    {
+      "seed": 42016,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3441586007660324,
+      "months": 21
+    },
+    {
+      "seed": 42017,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34381983606942357,
+      "months": 21
+    },
+    {
+      "seed": 42018,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3446858009417588,
+      "months": 21
+    },
+    {
+      "seed": 42019,
+      "outcome": "dystopia",
+      "finalPopulation": 0.3465427750669964,
+      "months": 21
+    },
+    {
+      "seed": 42020,
+      "outcome": "dystopia",
+      "finalPopulation": 0.34593827331310134,
+      "months": 21
+    }
+  ],
+  "determinismAnalysis": {
+    "summary": "\n═══════════════════════════════════════════════════════\n   DETERMINISM ANALYSIS - 20 Monte Carlo Runs\n═══════════════════════════════════════════════════════\n\n🔴 DETERMINISTIC SYSTEMS: 12/56 metrics (21.4%)\n\n   - Population.Birth Rate\n   - Population.Death Rate\n   - Population.Environmental Mortality\n   - Population.Famine Mortality\n   - Environmental.Tipping Point Risk\n   - Resource.Food Security\n   - Resource.Food Stock\n   - Resource.Water Stock\n   - Cascade.Cascade Severity\n   - Cascade.Active Crises\n   - Cascade.Cumulative Deaths\n   - Population.Population\n\nMetrics with CV < 1% are considered deterministic.\nHealthy stochastic systems should have CV > 5%.\n\nAnalyzed at months: 60, 120, 180, 240\n",
+    "deterministicSystems": [
+      "Population.Birth Rate",
+      "Population.Death Rate",
+      "Population.Environmental Mortality",
+      "Population.Famine Mortality",
+      "Environmental.Tipping Point Risk",
+      "Resource.Food Security",
+      "Resource.Food Stock",
+      "Resource.Water Stock",
+      "Cascade.Cascade Severity",
+      "Cascade.Active Crises",
+      "Cascade.Cumulative Deaths",
+      "Population.Population"
+    ],
+    "totalMetrics": 56,
+    "deterministicCount": 12
+  },
+  "populationStats": {
+    "mean": 0.34505339398953006,
+    "stdDev": 0.0014904672476046261,
+    "cv": 0.004319526408280602,
+    "min": 0.3436881224449224,
+    "max": 0.34866737174255275
+  }
+}
