@@ -44,9 +44,15 @@
   → See: `plans/p2-3-heterogeneous-population.md`
   → Tests: `tests/p2-3-heterogeneous-population.test.ts`
 
-- [ ] **P2.5: Empirical Validation** (6-8h)
-  Validate against COVID-19, 2008 crisis, Black Death
-  → See: `plans/p2-5-empirical-validation.md`
+- [x] **P2.5: Empirical Validation** ✅ FRAMEWORK COMPLETE (Oct 16, 2025) ⏸️ BLOCKED
+  **Status:** Framework complete (4h), awaiting simulation features (2-4h remaining)
+  → Framework: `tests/validation/` (historicalStates.ts + 20 tests)
+  → Documentation: `tests/validation/README.md`
+  → Blocking Issues:
+    1. Need event trigger system (pandemic, economic crisis)
+    2. Fix organizational bankruptcy (currently 100%, should be 10-30%)
+    3. Add recovery tracking (economic stage history, time-to-recovery)
+  → Plan: `plans/completed/p2-5-empirical-validation-FRAMEWORK-COMPLETE.md`
 
 ---
 
@@ -75,49 +81,87 @@
 **Based on:** Super-alignment researcher findings + research skeptic validation
 **Status:** Core system validated (TRL 8-9), critical gaps identified
 **Research Foundation:** 22 peer-reviewed studies (Science, Nature, ACM, OECD)
-**Full Research:** `reviews/bionic-skills-hopeful-research-foundation-20251016.md`
 
-**What's Correct (Keep):**
-- ✅ AI amplification via digital tools (Copilot, ChatGPT) - NOT BCIs
-- ✅ Differential benefits by skill level (novices gain MORE)
-- ✅ Digital divide & access inequality
-- ✅ Task-specific effects
+**Planning Documents:**
+- **Master Plan:** `plans/bionic-skills-research-grounding.md` - 6 phases, effort breakdown, integration points
+- **Phase 2 Detail:** `plans/bionic-skills-phase-transition.md` - Complementarity → substitution mechanics
+- **Phase 3 Detail:** `plans/bionic-skills-competence-tracking.md` - Performance vs competence gap
+- **Phase 4 Detail:** `plans/bionic-skills-economic-distribution.md` - Productivity-wage decoupling
 
-**Critical Gaps (Must Add):**
+**Research Documentation:**
+- **Literature Foundation:** `reviews/bionic-skills-hopeful-research-foundation-20251016.md` - 22 studies, full citations
+- **Executive Summary:** `reviews/bionic-skills-research-summary-20251016.md` - Literature synthesis
+- **Action Plan:** `reviews/bionic-skills-action-plan-20251016.md` - Implementation roadmap
+
+**Current System (bionicSkills.ts) - Keep As-Is:**
+- ✅ AI amplification via digital tools (Copilot, ChatGPT, AI tutors) - NOT BCIs (TRL 8-9)
+- ✅ Differential benefits by skill level (novices +60%, experts +20%) - validated by RCTs
+- ✅ Digital divide & access inequality (elite +30%, precariat -30%) - empirical data
+- ✅ Task-specific effects (programming, writing, communication) - meta-analysis confirmed
+
+**Critical Gaps Identified by Research Skeptic:**
 
 - [ ] **Phase 1: Terminology & Documentation** (Week 1, 8h)
-  Remove BCI/science fiction framing, add research citations, TRL assessments
-  → See: `plans/bionic-skills-research-grounding.md` (Section: Phase 1)
+  - Remove "bionic" terminology (too sci-fi), use "AI-assisted skills"
+  - Add research citations (JSDoc comments with study references)
+  - Document TRL levels for each mechanic
+  - Update TIER 4.6 plan to remove BCI language
+  → **Plan:** `plans/bionic-skills-research-grounding.md` §Phase 1
+  → **Impact:** Reframe existing validated system with proper research grounding
 
-- [ ] **Phase 2: Phase Transition Mechanics** (Weeks 2-4, 12h)
-  Model complementarity → substitution (5-10 years), employment displacement tracking
-  → See: `plans/bionic-skills-phase-transition.md`
-  → Research: Acemoglu & Restrepo (2022), historical automation patterns (ATMs, Excel)
-  → Impact: CRITICAL - model currently assumes permanent amplification, ignores displacement
+- [ ] **Phase 2: Phase Transition Mechanics** (Weeks 2-4, 12h) **CRITICAL**
+  - Model complementarity → transition → substitution timeline (5-10 year phases)
+  - Add displacement tracking by population segment (routinizability × AI capability)
+  - Implement policy interventions (retraining, job guarantee, UBI)
+  - Validate against historical automation patterns (ATMs 1970-2000, Excel 1985-2005)
+  → **Plan:** `plans/bionic-skills-phase-transition.md` (12h detailed breakdown)
+  → **Research:** Acemoglu & Restrepo (2022) - 50-70% wage inequality from automation
+  → **Impact:** Model currently assumes permanent amplification - MISSES DISPLACEMENT PHASE
+  → **Connects to:** Unemployment calculations, heterogeneous segments, policy system
 
-- [ ] **Phase 3: Performance vs Competence Tracking** (Weeks 5-6, 8h)
-  Separate AI-assisted performance from true skill retention, scaffolding effects
-  → See: `plans/bionic-skills-competence-tracking.md`
-  → Research: Cognitive Research (2024) "illusion of understanding", MDPI (2023) deskilling
-  → Impact: CRITICAL - model doesn't capture skill erosion from over-reliance
+- [ ] **Phase 3: Performance vs Competence Tracking** (Weeks 5-6, 8h) **CRITICAL**
+  - Separate AI-assisted performance from true skill retention
+  - Add scaffolding quality tracking (education, mentorship support by segment)
+  - Model retention mechanics (scaffolding × reliance → retention rate)
+  - Add competence crisis events (30% gap = warning, 50% gap = crisis)
+  - Implement AI outage scenario testing (reveals true competence gaps)
+  → **Plan:** `plans/bionic-skills-competence-tracking.md` (8h detailed breakdown)
+  → **Research:** Cognitive Research (2024) - "illusion of understanding", scores plummet on retention
+  → **Research:** MDPI (2023) - AI inhibits on-the-job learning, automation complacency
+  → **Impact:** Model treats performance as competence - MISSES SKILL EROSION
+  → **Connects to:** Phase 2 (low competence → higher displacement risk), QoL calculations
 
-- [ ] **Phase 4: Economic Distribution & Wage Decoupling** (Weeks 7-8, 6h)
-  Model productivity-wage gap, labor vs capital capture, policy interventions
-  → See: `plans/bionic-skills-economic-distribution.md`
-  → Research: Brookings (2024), EPI (productivity +77%, wages +12% since 1973)
-  → Impact: CRITICAL - model overly optimistic about worker benefits
+- [ ] **Phase 4: Economic Distribution & Wage Decoupling** (Weeks 7-8, 6h) **CRITICAL**
+  - Add labor share tracking (currently 0.62, declining with AI productivity)
+  - Model capital vs labor capture of productivity gains (70/30 default, adjustable by policy)
+  - Implement policy levers (union strength, minimum wage, worker ownership, UBI redistribution)
+  - Validate against historical 1973-2024 US data (productivity +77%, wages +12%)
+  → **Plan:** `plans/bionic-skills-economic-distribution.md` (6h detailed breakdown)
+  → **Research:** Brookings (2024), EPI - 65pp productivity-wage gap since 1973
+  → **Impact:** Model assumes productivity → wages linearly - MISSES CAPITAL CAPTURE
+  → **Connects to:** Phase 2 (displacement reduces wage bargaining), inequality tracking
 
 - [ ] **Phase 5: Validation & Testing** (Month 2, 16h)
-  Historical comparisons (ATMs, Excel), sensitivity analysis, literature validation
-  → See: `plans/bionic-skills-research-grounding.md` (Section: Phase 5)
+  - Historical comparison testing (ATMs, Excel, self-checkout timelines)
+  - Sensitivity analysis (parameter ranges, policy interventions)
+  - Literature comparison (run scenarios matching published studies)
+  - Edge case testing (extreme AI capability, zero/max policy)
+  → **Plan:** `plans/bionic-skills-research-grounding.md` §Phase 5
+  → **Deliverables:** Test suite, validation report, sensitivity docs, edge case results
 
 - [ ] **Phase 6: Policy Testing** (Month 3, 16h)
-  Implement policy levers (retraining, UBI, worker ownership), scenario comparisons
-  → See: `plans/bionic-skills-research-grounding.md` (Section: Phase 6)
+  - Implement policy levers (retraining, UBI, worker ownership, teaching support, job guarantee)
+  - Run scenario comparisons (baseline vs single vs combined interventions)
+  - Document effectiveness (which policies reduce inequality? preserve employment?)
+  - Create cost-benefit analysis and recommendations
+  → **Plan:** `plans/bionic-skills-research-grounding.md` §Phase 6
+  → **Deliverables:** Policy mechanics, scenario results, effectiveness documentation
 
-**Total:** 78 hours over 3 months
-**Priority:** Medium (after bugs and empirical validation, before enrichment)
-**Research TRL:** 8-9 (extensively validated, deployed at scale)
+**Total Effort:** 78 hours over 3 months (8h + 12h + 8h + 6h + 16h + 16h + 12h integration/testing)
+**Priority:** Medium (after P2.5 empirical validation, before enrichment features)
+**Research TRL:** Phases 2-4 are TRL 8-9 (extensively validated, 50+ years historical data)
+**Integration Points:** Unemployment, heterogeneous segments, policy system, QoL, inequality, crisis detection
+**Files Modified:** `bionicSkills.ts` (terminology), new files: `phaseTransition.ts`, `skillRetention.ts`, `economicDistribution.ts`
 
 ---
 

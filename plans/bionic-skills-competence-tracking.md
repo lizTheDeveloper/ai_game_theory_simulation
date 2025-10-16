@@ -2,8 +2,13 @@
 
 **Plan:** Phase 3 of Bionic Skills Research Grounding
 **Effort:** 8 hours over Weeks 5-6
-**Priority:** High (Critical for skill development realism)
+**Priority:** CRITICAL (Model treats performance as competence - misses skill erosion)
 **Research TRL:** 8 (Well-documented in educational research)
+**Master Plan:** `plans/bionic-skills-research-grounding.md` §Phase 3
+**Master Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` §AI-Assisted Skills Enhancement →Phase 3
+**Related Plans:**
+- Phase 2: `plans/bionic-skills-phase-transition.md` (low competence → displacement risk)
+- Phase 4: `plans/bionic-skills-economic-distribution.md` (competence gaps → wage bargaining)
 
 ---
 

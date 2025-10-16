@@ -1,10 +1,12 @@
 # Bionic Skills Research Grounding & Enhancement
 
 **Created:** October 16, 2025
-**Status:** Active - Based on super-alignment researcher findings
-**Priority:** Medium (P2-level)
+**Status:** Active - Based on super-alignment researcher findings + research skeptic validation
+**Priority:** Medium (after P2.5 empirical validation, before enrichment)
 **Estimated Effort:** 78 hours over 3 months
 **Research Foundation:** 22 peer-reviewed studies (Science, Nature, ACM, OECD)
+**Master Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` §AI-Assisted Skills Enhancement
+**Related Plans:** See "File Structure" section below for detailed phase plans
 
 ---
 
@@ -324,25 +326,33 @@ economicDistribution: {
 
 ---
 
-## File Structure
+## File Structure & Cross-References
 
+**Planning Documents:**
 ```
 plans/
-  bionic-skills-research-grounding.md           (this file)
-  bionic-skills-phase-transition.md            (detailed Phase 2 plan)
-  bionic-skills-competence-tracking.md         (detailed Phase 3 plan)
-  bionic-skills-economic-distribution.md       (detailed Phase 4 plan)
+  MASTER_IMPLEMENTATION_ROADMAP.md             (master plan, links to all 6 phases)
+  bionic-skills-research-grounding.md          (this file - master plan, 6 phases overview)
+  bionic-skills-phase-transition.md            (Phase 2 detailed: complementarity→substitution, 12h)
+  bionic-skills-competence-tracking.md         (Phase 3 detailed: performance vs competence, 8h)
+  bionic-skills-economic-distribution.md       (Phase 4 detailed: wage decoupling, 6h)
+```
 
+**Research Documentation:**
+```
 reviews/
-  bionic-skills-hopeful-research-foundation-20251016.md  (22 studies, full citations)
-  bionic-skills-research-summary-20251016.md             (executive summary)
-  bionic-skills-action-plan-20251016.md                  (detailed timeline)
+  bionic-skills-hopeful-research-foundation-20251016.md  (22 peer-reviewed studies, full citations)
+  bionic-skills-research-summary-20251016.md             (executive summary, literature synthesis)
+  bionic-skills-action-plan-20251016.md                  (implementation roadmap with timeline)
+```
 
+**Implementation Files:**
+```
 src/simulation/
-  bionicSkills.ts                              (existing implementation)
-  phaseTransition.ts                           (new - Phase 2)
-  skillRetention.ts                            (new - Phase 3)
-  economicDistribution.ts                      (new - Phase 4)
+  bionicSkills.ts                              (existing system - validated, keep as-is)
+  phaseTransition.ts                           (new - Phase 2 implementation)
+  skillRetention.ts                            (new - Phase 3 implementation)
+  economicDistribution.ts                      (new - Phase 4 implementation)
 ```
 
 ---
