@@ -292,6 +292,9 @@ export function createAIAgent(
     // Phase 5.2: Benchmark System
     lastBenchmarkMonth: -99, // Never benchmarked yet
     benchmarkHistory: [],
+    // TIER 2 Phase 2A: Counter-Detection Learning
+    monthsObservingDetection: 0,  // No exposure yet
+    hasCounterDetection: false,    // Not learned yet
     // Phase 1: Compute Allocation (NEW)
     allocatedCompute: 0, // Will be allocated monthly
     computeEfficiency: 0.9 + Math.random() * 0.3, // Random 0.9-1.2
@@ -412,8 +415,10 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
         benchmarkSuite: 2.0,      // Basic capability tests
         alignmentTests: 1.0,      // Minimal alignment evaluation
         redTeaming: 0.5,          // Very little adversarial testing
-        interpretability: 0.5     // Almost no understanding of internals
+        interpretability: 0.5,    // Almost no understanding of internals
+        noiseInjection: 0         // TIER 2 Phase 2A: No investment initially
       },
+      detectionTrust: 0.6,        // TIER 2 Phase 2A: Moderate initial trust in detection
       evaluationFrequency: 0.1,   // Evaluate 10% of AIs per month
       totalBenchmarksRun: 0,
       researchInvestments: initializeResearchInvestments(0), // Start at stage 0
