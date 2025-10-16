@@ -136,6 +136,11 @@ export function calculateUnemploymentStabilityImpact(
  * - Has steeper curve
  * - Includes stage multipliers
  * - Considers policy mitigation
+ * 
+ * UPDATED (Oct 16, 2025): Integrated with bionic skills system
+ * - Bionic skills increase individual productivity → labor displacement
+ * - But also lower costs → potential job creation
+ * - Net effect depends on economic elasticity and stage
  */
 export function calculateUnemployment(state: GameState): number {
   const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
@@ -144,8 +149,73 @@ export function calculateUnemployment(state: GameState): number {
   // Base unemployment rate (natural unemployment)
   const baseUnemployment = 0.05; // 5% natural rate
   
+  // === TRADITIONAL AI UNEMPLOYMENT (Direct AI replacement) ===
   // AI-driven unemployment (steeper exponential curve)
   const aiUnemploymentFactor = Math.pow(Math.max(0, totalAICapability - 0.8), 1.8) * 0.12;
+  
+  // === BIONIC SKILLS LABOR DISPLACEMENT ===
+  // P2.3: One AI-skilled worker replaces multiple non-AI workers
+  // Calculate average productivity multiplier across segments
+  let bionicDisplacementFactor = 0;
+  
+  if (state.society.segments && state.society.segments.length > 0) {
+    // Get average skill amplification across population
+    let weightedProductivityBoost = 0;
+    let totalWeight = 0;
+    
+    for (const segment of state.society.segments) {
+      const skills = (segment as any).skills;
+      if (skills && skills.overallEffectiveness) {
+        // Get baseline effectiveness
+        const { initializeSegmentSkills } = require('./bionicSkills');
+        const baselineSkills = initializeSegmentSkills(segment);
+        
+        // Productivity boost = amplified / baseline
+        const productivityMultiplier = skills.overallEffectiveness / baselineSkills.overallEffectiveness;
+        
+        // Weight by population fraction
+        weightedProductivityBoost += productivityMultiplier * segment.populationFraction;
+        totalWeight += segment.populationFraction;
+      }
+    }
+    
+    const avgProductivityMultiplier = totalWeight > 0 
+      ? weightedProductivityBoost / totalWeight 
+      : 1.0;
+    
+    // If productivity is 1.4x, then 1 worker = 1.4 workers → 28.6% can be displaced
+    // Displacement = (multiplier - 1.0) / multiplier
+    const displacementRate = Math.max(0, (avgProductivityMultiplier - 1.0) / avgProductivityMultiplier);
+    
+    // Scale by adoption rate (only affects segments with AI access)
+    const avgAIAccess = state.society.segments.reduce((sum, seg) => {
+      const { calculateAIAccess } = require('./bionicSkills');
+      return sum + calculateAIAccess(seg) * seg.populationFraction;
+    }, 0);
+    
+    // Bionic displacement: 0-40% unemployment potential
+    bionicDisplacementFactor = displacementRate * avgAIAccess * 0.40;
+  }
+  
+  // === JOB CREATION FROM COST REDUCTION ===
+  // P2.3: Lower costs → more economic activity → new jobs
+  // Effect depends on economic elasticity and stage
+  const economicElasticity: Record<number, number> = {
+    0: 0.3,   // Pre-disruption: Moderate elasticity
+    1: 0.4,   // Early disruption: High elasticity (new industries)
+    2: 0.2,   // Crisis: Low elasticity (demand constrained)
+    3: 0.5,   // Transition: High elasticity (UBI frees demand)
+    4: 0.7    // Post-scarcity: Very high elasticity (abundance economy)
+  };
+  const elasticity = economicElasticity[economicStage] || 0.3;
+  
+  // Cost reduction from bionic skills → new job creation
+  // If costs drop 20%, and elasticity is 0.5, then 10% new jobs
+  const costReductionFromSkills = bionicDisplacementFactor * 0.5; // Productivity boost = cost reduction
+  const jobCreationFactor = costReductionFromSkills * elasticity;
+  
+  // Net bionic effect (displacement - creation)
+  const netBionicUnemployment = bionicDisplacementFactor - jobCreationFactor;
   
   // Stage multipliers - crisis stages accelerate unemployment
   const stageMultipliers: Record<number, number> = {
@@ -166,8 +236,10 @@ export function calculateUnemployment(state: GameState): number {
   const retrainingEffect = hasRetraining ? 0.92 : 1.0;
   
   // Calculate final unemployment level
+  // Traditional AI unemployment + Bionic skills displacement
   const unemployment = baseUnemployment + 
-    (aiUnemploymentFactor * stageMultiplier * policyMitigation * retrainingEffect);
+    (aiUnemploymentFactor * stageMultiplier * policyMitigation * retrainingEffect) +
+    (netBionicUnemployment * stageMultiplier * retrainingEffect); // UBI doesn't affect bionic displacement as much
   
   // Cap at 95% (more realistic than 80%)
   return Math.min(0.95, unemployment);
