@@ -525,8 +525,19 @@ export interface ComputeInfrastructure {
 }
 
 /**
+ * P2.4: Geographic Presence (October 15, 2025)
+ *
+ * Organizations operate across multiple countries/regions with different levels of presence.
+ * This affects bankruptcy risk - distributed organizations survive better than single-country ones.
+ */
+export interface GeographicPresence {
+  region: string;         // Country or region name (e.g., "United States", "Europe", "Asia")
+  revenueShare: number;   // [0,1] Fraction of total revenue from this region (must sum to 1.0)
+}
+
+/**
  * Phase 2: Organization Structure
- * 
+ *
  * Organizations (companies, government, academic) that own infrastructure and AI models.
  * They make strategic decisions about compute allocation, data center construction, and model training.
  */
@@ -536,8 +547,13 @@ export interface Organization {
   type: 'private' | 'government' | 'academic' | 'nonprofit';
   
   // TIER 1.7.3: Geographic location (links org survival to country health)
-  country: string;               // Country name (e.g., "United States", "Multi-national")
-  survivalThreshold: number;     // [0,1] Min population fraction needed (0.5 = needs 50% of peak)
+  country: string;               // Country name (e.g., "United States", "Multi-national") - DEPRECATED, use geographicPresence
+  survivalThreshold: number;     // [0,1] Min population fraction needed (0.5 = needs 50% of peak) - DEPRECATED
+
+  // P2.4: Geographic diversification (realistic multi-country operations)
+  geographicPresence?: GeographicPresence[]; // Distribution of operations across regions
+  remoteWorkCapable?: boolean;   // Can operate with distributed workforce (tech companies)
+  essentialDesignation?: boolean; // Government will bail out (critical infrastructure)
   
   // Ownership
   ownedDataCenters: string[];    // IDs of data centers this org owns
@@ -850,6 +866,10 @@ export interface GameState {
 
   // Nuclear Radiation Health Effects (TIER 1.7 - Crisis Realism)
   radiationSystem: import('../types/radiation').RadiationSystem; // Long-term cancer, birth defects, soil contamination (decades-centuries)
+
+  // Stochastic Innovation Breakthroughs (P2.2)
+  achievedBreakthroughs?: string[]; // IDs of breakthroughs achieved (prevents duplicates)
+  breakthroughsThisRun?: number;    // Count of breakthroughs for statistics
 
   // Configuration
   config: ConfigurationSettings;
