@@ -628,14 +628,21 @@ export function calculateComputeRevenue(org: Organization, state: GameState): nu
  * Phase 8: Collect revenue from AI services + compute sales
  */
 export function collectRevenue(org: Organization, state: GameState): void {
+  // P0.2 FIX: Bankrupt organizations cannot generate revenue
+  // Check if organization is bankrupt (capital = 0, revenue = 0, no data centers)
+  if (org.capital === 0 && org.monthlyRevenue === 0 && org.ownedDataCenters.length === 0) {
+    // Organization is bankrupt - no revenue generation possible
+    return;
+  }
+
   const aiRevenue = calculateAIRevenue(org, state);
   const computeRevenue = calculateComputeRevenue(org, state);
-  
+
   const totalRevenue = aiRevenue + computeRevenue;
-  
+
   // Update monthly revenue (smoothly transition, don't jump suddenly)
   org.monthlyRevenue = org.monthlyRevenue * 0.7 + totalRevenue * 0.3;
-  
+
   org.capital += org.monthlyRevenue;
 }
 

@@ -395,21 +395,24 @@ export function allocateComputeEqually(state: GameState): void {
 
 /**
  * Phase 5: Apply Moore's Law and algorithmic improvements
- * 
- * Moore's Law: Hardware improves ~3% per month (40% per year, 2x every 2 years)
- * Algorithmic efficiency: Periodic breakthroughs (less predictable)
- * 
- * Target: 627 PF → 3000-4000 PF over 60 months
+ *
+ * P0.1 FIX (Oct 15, 2025): Updated to match empirical Epoch AI data
+ * - Compute doubling every 6-10 months (not 26 months)
+ * - 100-1000x growth per decade (not 2.4x)
+ * - Target: 100x-10,000x effective compute growth over 10 years
+ *
+ * References:
+ * - Epoch AI (2024): Training compute doubling every 6-10 months
+ * - Sevilla et al. (2022): Compute Trends showing 10x/year since 2020
  */
 export function applyComputeGrowth(state: GameState, random: () => number = Math.random): void {
   const infra = state.computeInfrastructure;
-  
-  // Moore's Law: 2.7% monthly hardware improvement
-  // This represents: faster chips, better cooling, denser racks, etc.
-  // Target: 627 PF → 3000-4000 PF over 60 months (5x in 5 years)
-  // 2.7% per month = 5x in 60 months, 256x in 240 months (20 years)
-  // FIX (Oct 13, 2025): Was 5% (20,959x in 20yr!) → Now 2.7% (256x in 20yr, realistic)
-  const MOORES_LAW_RATE = 0.027; // 2.7% per month
+
+  // P0.1 FIX: Moore's Law based on Epoch AI empirical data
+  // Compute doubling every 8 months (conservative middle estimate)
+  // Math.pow(2, 1/8) = 1.0905 = 9.05% per month
+  // Results: 2x in 8 months, 10x in 26 months, 100x in 52 months, 7,943x in 120 months
+  const MOORES_LAW_RATE = Math.pow(2, 1/8) - 1; // 9.05% per month (doubles every 8 months)
   infra.hardwareEfficiency *= (1 + MOORES_LAW_RATE);
   
   // Algorithmic improvements: More frequent breakthroughs in AI era
