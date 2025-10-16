@@ -7,6 +7,7 @@
 
 import { Organization, GameState } from '../types/game';
 import { handleBankruptcy } from './organizationManagement';
+import type { RNGFunction } from './engine/PhaseOrchestrator';
 
 /**
  * Initialize 6 organizations for January 2025
@@ -427,15 +428,18 @@ function updateOrganizationEconomics(
 
 /**
  * P2.4: Calculate organization bankruptcy risk based on geographic presence
- * 
+ *
  * Research: Microsoft 10-K (45% international), Alphabet 10-K (51% international)
  * COVID-19: Tech sector 95% survival vs 60-70% other sectors
- * 
+ *
  * Bankruptcy risk = f(weighted population decline, resilience modifiers)
+ *
+ * P2.4 FIX: Now uses deterministic RNG instead of Math.random()
  */
 function calculateOrganizationBankruptcyRisk(
   org: any,
-  state: GameState
+  state: GameState,
+  rng: RNGFunction
 ): number {
   if (!state.countryPopulationSystem) return 0;
   
@@ -500,8 +504,9 @@ function calculateOrganizationBankruptcyRisk(
     }
     
     // === 4. STOCHASTIC VARIANCE ===
-    // Add ±20% random variance to prevent determinism
-    const variance = 0.8 + Math.random() * 0.4; // 80% to 120%
+    // Add ±20% random variance for realistic stochasticity
+    // P2.4 FIX: Use deterministic RNG
+    const variance = 0.8 + rng() * 0.4; // 80% to 120%
     adjustedRisk *= variance;
     
     return Math.min(1.0, adjustedRisk);
@@ -531,7 +536,8 @@ function calculateOrganizationBankruptcyRisk(
     
     // Old threshold logic converted to risk
     if (popFraction < org.survivalThreshold) {
-      return 0.90 + Math.random() * 0.10; // 90-100% risk
+      // P2.4 FIX: Use deterministic RNG
+      return 0.90 + rng() * 0.10; // 90-100% risk
     }
     
     // Gradual risk increase as population declines
@@ -540,7 +546,10 @@ function calculateOrganizationBankruptcyRisk(
   }
 }
 
-export function updateOrganizationViability(state: GameState): void {
+/**
+ * P2.4 FIX: Now accepts RNG for deterministic bankruptcy checks
+ */
+export function updateOrganizationViability(state: GameState, rng: RNGFunction): void {
   if (!state.countryPopulationSystem) return; // No country tracking yet
   
   const countries = state.countryPopulationSystem.countries;
@@ -562,7 +571,7 @@ export function updateOrganizationViability(state: GameState): void {
   // Check each organization
   for (const org of state.organizations) {
     // P2.4: Calculate bankruptcy risk (even for bankrupt orgs, for monitoring)
-    const bankruptcyRisk = calculateOrganizationBankruptcyRisk(org, state);
+    const bankruptcyRisk = calculateOrganizationBankruptcyRisk(org, state, rng);
     org.bankruptcyRisk = bankruptcyRisk;
     
     // Skip bankruptcy check if already bankrupt
@@ -575,8 +584,9 @@ export function updateOrganizationViability(state: GameState): void {
     // Update economics based on population health
     updateOrganizationEconomics(org, state, countries);
     
-    // P2.4: Stochastic bankruptcy check (not deterministic!)
-    if (Math.random() < bankruptcyRisk) {
+    // P2.4: Stochastic bankruptcy check
+    // P2.4 FIX: Use deterministic RNG
+    if (rng() < bankruptcyRisk) {
       org.bankrupt = true;
       org.bankruptcyMonth = currentMonth;
       

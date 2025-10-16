@@ -80,6 +80,7 @@ import {
   PlanetaryBoundariesPhase,
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   DystopiaProgressionPhase,
+  TriggeredEventsPhase,  // P2.5 (Oct 16, 2025): External event triggers for validation testing
   // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
   CrisisPointsPhase,
@@ -361,6 +362,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
+    this.orchestrator.registerPhase(new TriggeredEventsPhase());  // P2.5 (Oct 16, 2025): External event triggers
 
     // Batch 3: Special phases (22.x - 23.x)
     this.orchestrator.registerPhase(new BenchmarkEvaluationsPhase());
