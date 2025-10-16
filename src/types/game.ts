@@ -629,21 +629,31 @@ export interface GoldenAgeState {
 export interface EnvironmentalAccumulation {
   // Resource depletion (starts at 1.0, depletes toward 0)
   resourceReserves: number;     // [0, 1] Rare materials, minerals, etc.
-  
+
   // Pollution accumulation (starts at 0, accumulates toward 1)
   pollutionLevel: number;       // [0, 1] Toxic waste, contamination
-  
+
   // Climate degradation (starts at 1.0, degrades toward 0)
   climateStability: number;     // [0, 1] Weather patterns, temperature stability
-  
+
   // Biodiversity loss (starts at 1.0, degrades toward 0)
   biodiversityIndex: number;    // [0, 1] Ecosystem health, species diversity
-  
+
   // Crisis tracking
   resourceCrisisActive: boolean;    // Has resource crisis been triggered?
   pollutionCrisisActive: boolean;   // Has pollution crisis been triggered?
   climateCrisisActive: boolean;     // Has climate crisis been triggered?
   ecosystemCrisisActive: boolean;   // Has ecosystem crisis been triggered?
+
+  // P0.6 (Oct 15, 2025): Active environmental shocks with persistence (AR1 autocorrelation)
+  // Real disasters persist for 3-12 months (2003 heatwave, Somalia famine 2010-12)
+  activeShocks?: Array<{
+    type: 'climate' | 'famine' | 'disease' | 'ecosystem';  // Which mortality type affected
+    magnitude: number;                                      // [1.5, 3.0] 150-300% mortality spike
+    startMonth: number;                                     // When shock began
+    duration: number;                                       // Total duration (3-12 months)
+    remainingMonths: number;                                // Months left until shock ends
+  }>;
 }
 
 /**

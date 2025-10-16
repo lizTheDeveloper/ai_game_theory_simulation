@@ -29,10 +29,14 @@ export interface EnvironmentalMortalityBreakdown {
  * - Non-linear escalation when multiple systems fail
  *
  * FIX (Oct 13, 2025): Now returns breakdown by cause to properly track deaths
- * P0.5 (Oct 15, 2025): Added stochastic variation to prevent deterministic convergence
+ * P0.6 (Oct 15, 2025): Episodic environmental shocks instead of continuous noise
+ * Research: Real environmental disasters are episodic (heatwaves, droughts, famines)
+ *   - Events occur with ~5% monthly probability based on environmental stress
+ *   - Events cause 50-200% mortality spikes for 3-12 months
+ *   - Between events: minimal variation (baseline + small noise)
  * Returns monthly mortality rate (0-1, where 0.01 = 1% die per month)
  */
-export function calculateEnvironmentalMortality(state: GameState, rng?: () => number): EnvironmentalMortalityBreakdown {
+export function calculateEnvironmentalMortality(state: GameState, month: number): EnvironmentalMortalityBreakdown {
   const env = state.environmentalAccumulation;
   const boundaries = state.planetaryBoundariesSystem;
   if (!env || !boundaries) {
@@ -103,17 +107,89 @@ export function calculateEnvironmentalMortality(state: GameState, rng?: () => nu
     ecosystemMortality *= cascadeAmplifier;
   }
 
-  // === P0.5 (Oct 15, 2025): STOCHASTIC VARIATION ===
-  // Add ±30% random variation to prevent deterministic convergence
-  // Research: Real mortality varies due to weather, local conditions, response effectiveness
-  if (rng) {
-    const stochasticMultiplier = () => 0.7 + rng() * 0.6; // 70% to 130%
-    famineMortality *= stochasticMultiplier();
-    diseaseMortality *= stochasticMultiplier();
-    climateMortality *= stochasticMultiplier();
-    ecosystemMortality *= stochasticMultiplier();
-    pollutionMortality *= stochasticMultiplier();
+  // === P0.6 (Oct 15, 2025): PERSISTENT ENVIRONMENTAL SHOCKS (AR1 autocorrelation) ===
+  // Research: Real disasters persist for 3-12 months (not single-month events)
+  // - 2003 European heatwave: Sustained for 3 months, 40,000 deaths
+  // - Somalia famine 2010-12: 24 months, 256,000 deaths
+  // - Agricultural shocks: 3-6 month recovery periods
+
+  // Initialize activeShocks array if missing
+  if (!env.activeShocks) {
+    env.activeShocks = [];
   }
+
+  // === APPLY ACTIVE SHOCKS (persistent mortality spikes) ===
+  for (const shock of env.activeShocks) {
+    // Apply shock magnitude to appropriate mortality type
+    switch (shock.type) {
+      case 'climate':
+        climateMortality *= shock.magnitude;
+        break;
+      case 'famine':
+        famineMortality *= shock.magnitude;
+        break;
+      case 'disease':
+        diseaseMortality *= shock.magnitude;
+        break;
+      case 'ecosystem':
+        ecosystemMortality *= shock.magnitude;
+        break;
+    }
+  }
+
+  // === DECAY ACTIVE SHOCKS (AR1 persistence) ===
+  // Remove expired shocks and decrement remaining months
+  env.activeShocks = env.activeShocks.filter(shock => {
+    shock.remainingMonths--;
+    return shock.remainingMonths > 0;
+  });
+
+  // === GENERATE NEW SHOCKS (episodic events) ===
+  // Event probability scales with environmental stress
+  const eventProbability = Math.min(0.15, 0.02 + (breachedCount / 9) * 0.08); // 2-15% based on boundaries breached
+
+  if (Math.random() < eventProbability) {
+    // New shock triggered!
+    const shockType = Math.random();
+    const shockMagnitude = 1.5 + Math.random() * 1.5; // 150-300% spike
+    const shockDuration = 3 + Math.floor(Math.random() * 10); // 3-12 months
+
+    // Determine shock type (which mortality category)
+    let type: 'climate' | 'famine' | 'disease' | 'ecosystem';
+    if (shockType < 0.3) {
+      type = 'climate'; // Heatwave / extreme weather
+    } else if (shockType < 0.6) {
+      type = 'famine'; // Drought / crop failure
+    } else if (shockType < 0.85) {
+      type = 'disease'; // Disease outbreak / waterborne disease
+    } else {
+      type = 'ecosystem'; // Ecosystem collapse event
+    }
+
+    // Add to active shocks
+    env.activeShocks.push({
+      type,
+      magnitude: shockMagnitude,
+      startMonth: month,
+      duration: shockDuration,
+      remainingMonths: shockDuration
+    });
+
+    // Log shock event
+    console.log(`\n🌍💥 ENVIRONMENTAL SHOCK: ${type.toUpperCase()}`);
+    console.log(`   Magnitude: ${(shockMagnitude * 100 - 100).toFixed(0)}% mortality spike`);
+    console.log(`   Duration: ${shockDuration} months`);
+    console.log(`   Month: ${month}\n`);
+  }
+
+  // === BASELINE NOISE (±5%) ===
+  // Small variation between events (not continuous dice-rolling)
+  const baselineNoise = () => 0.95 + Math.random() * 0.1; // 95-105%
+  famineMortality *= baselineNoise();
+  diseaseMortality *= baselineNoise();
+  climateMortality *= baselineNoise();
+  ecosystemMortality *= baselineNoise();
+  pollutionMortality *= baselineNoise();
   
   // === REGIONAL VARIATION MULTIPLIER ===
   // Some regions hit harder (handled by regional crisis system)
