@@ -225,14 +225,14 @@ function updateNationalism(country: CountryPopulation, state: GameState): void {
   // Check if other hegemons are aggressive
   let rivalThreat = 0.0;
   for (const other of Object.values(state.countryPopulationSystem.countries)) {
-    if (other.isHegemon && other.name !== country.name) {
+    if (other.isHegemon && other.name !== country.name && other.activeInterventions) {
       rivalThreat += other.activeInterventions.length * 0.1;
     }
   }
   delta += rivalThreat * 0.001;
 
   // Active interventions boost nationalism (rally around flag effect)
-  if (country.activeInterventions.length > 0) {
+  if (country.activeInterventions && country.activeInterventions.length > 0) {
     delta += 0.002 * country.activeInterventions.length;
   }
 
