@@ -188,7 +188,7 @@ export function calculateSegmentMortality(
     const survivalMultiplier = 1.0 / seg.survivalRate;
     
     // Combined effect
-    const segmentMortality Rate = baseMortalityRate * vulnerabilityMultiplier * survivalMultiplier;
+    const segmentMortalityRate = baseMortalityRate * vulnerabilityMultiplier * survivalMultiplier;
     
     segmentMortality.set(seg.id, Math.min(1.0, segmentMortalityRate));
   }
