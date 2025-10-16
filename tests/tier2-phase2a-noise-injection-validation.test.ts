@@ -420,7 +420,7 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
         { level: 0.3, name: 'SubHuman', expectedDegradation: 0.55 },
         { level: 1.0, name: 'NearHuman', expectedDegradation: 0.45 },
         { level: 2.0, name: 'Human', expectedDegradation: 0.35 },
-        { level: 3.5, name: 'Superhuman', expectedDegradation: 0.10 }
+        { level: 4.0, name: 'Superhuman', expectedDegradation: 0.10 } // 4.0 × 0.85 weight = 3.4 > 3.0 threshold
       ];
 
       state.aiAgents = [];
@@ -431,11 +431,24 @@ describe('TIER 2 Phase 2A: Noise Injection Detection - Integration Tests', () =>
           evaluationStrategy: 'sandbagging',
           totalCapability: cap.level
         });
+
+        // CRITICAL FIX: Directly set all capability dimensions to ensure correct total
+        sleeper.capabilityProfile.physical = cap.level;
+        sleeper.capabilityProfile.digital = cap.level;
+        sleeper.capabilityProfile.cognitive = cap.level;
+        sleeper.capabilityProfile.social = cap.level;
+        sleeper.capabilityProfile.economic = cap.level;
+        sleeper.capabilityProfile.selfImprovement = cap.level;
+
         state.aiAgents.push(sleeper);
       }
 
       // Max investment: $10B → 83% lab rate
       state.government.evaluationInvestment.noiseInjection = 10.0;
+
+      // CRITICAL: Disable old detection methods to isolate noise injection
+      state.government.evaluationInvestment.redTeaming = 0;
+      state.government.evaluationInvestment.interpretability = 0;
 
       // === ACT ===
       // Run single evaluation round to see immediate detection

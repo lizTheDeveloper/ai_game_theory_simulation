@@ -292,6 +292,8 @@ function detectSandbaggerNoiseInjection(
   else if (totalCapability < 3.0) degradationFactor = 0.25; // Superhuman: 25%
   else degradationFactor = 0.10; // Superintelligent: 10% (futility threshold)
 
+  // Removed debug logging after fix
+
   // Check if AI has learned counter-detection
   let effectiveRate = labRate * degradationFactor;
   if (ai.hasCounterDetection) {
