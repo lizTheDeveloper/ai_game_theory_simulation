@@ -64,23 +64,26 @@ export function updateSocialAccumulation(
   
   // === MEANING CRISIS ACCUMULATION ===
   // Automation destroys work-based identity
-  let meaningCrisisRate = unemployment * 0.010; // 1% per month at full unemployment
+  // FIX (Oct 16, 2025): Slowed from 1-4%/month to 0.3-1.2%/month
+  // Research justification: Meaning crises develop over 2-5 YEARS, not months
+  // WHO loneliness epidemic (17-21%) is chronic baseline, not acute spike
+  let meaningCrisisRate = unemployment * 0.003; // Was 0.010 (3x slower)
   
   // Rapid job loss spikes meaning crisis
   const previousUnemployment = Math.max(0.1, unemployment - 0.05); // Approximate
   const jobLossRate = unemployment - previousUnemployment;
-  meaningCrisisRate += Math.max(0, jobLossRate) * 0.15; // Rapid transitions hurt
+  meaningCrisisRate += Math.max(0, jobLossRate) * 0.05; // Was 0.15 (3x slower)
   
   // Stage 2 (Mass Unemployment) is peak meaning crisis
   if (economicStage >= 2.0 && economicStage < 3.5) {
-    meaningCrisisRate += 0.012; // Crisis period
+    meaningCrisisRate += 0.004; // Was 0.012 (3x slower)
   }
   
   // AI replacing cognitive work hits harder (identity threat)
   const avgAICapability = state.aiAgents.length > 0
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
     : 0;
-  meaningCrisisRate += avgAICapability * 0.004;
+  meaningCrisisRate += avgAICapability * 0.0013; // Was 0.004 (3x slower)
   
   // Mitigation from policies
   if (hasUBI) {

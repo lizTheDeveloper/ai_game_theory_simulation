@@ -38,6 +38,7 @@ export { UBIPhase } from './UBIPhase';
 export { SocialSafetyNetsPhase } from './SocialSafetyNetsPhase';
 export { InformationWarfarePhase } from './InformationWarfarePhase';
 export { PowerGenerationPhase } from './PowerGenerationPhase';
+export { HumanEnhancementPhase } from './HumanEnhancementPhase';
 export { MADDeterrencePhase } from './MADDeterrencePhase';
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';
 export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';

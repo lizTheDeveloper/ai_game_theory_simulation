@@ -44,6 +44,7 @@ import { initializeRegionalBiodiversitySystem } from '../types/regionalBiodivers
 import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
 import { SocietySegment } from '@/types/game';
+import { initializeHumanEnhancementSystem } from './humanEnhancement';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -84,6 +85,13 @@ export function initializeSocietySegments(): SocietySegment[] {
       crisisVulnerability: 0.20, // Highly insulated (can relocate, access resources)
       adaptability: 0.90,        // High adaptability (resources, connections, mobility)
       survivalRate: 1.50,        // 50% better survival (private healthcare, bunkers, mobility)
+      
+      // TIER 4.6: Human Enhancement (Oct 16, 2025)
+      aiAugmentationAccess: 0.90,        // 90% access (early adopters, can afford tools)
+      aiAugmentationAdoption: 0.70,      // 70% adoption (high usage among those with access)
+      productivityMultiplier: 1.15,      // 15% productivity boost (AI + already skilled)
+      bciAdoption: 0,                    // No BCI yet (will be first adopters)
+      enhancementLevel: 0.15,            // 15% enhanced (AI tools only, 2025 baseline)
     },
     
     // === MIDDLE CLASS PRAGMATISTS (40% / 35%) ===
@@ -107,6 +115,13 @@ export function initializeSocietySegments(): SocietySegment[] {
       crisisVulnerability: 0.50, // Average vulnerability
       adaptability: 0.60,        // Moderate adaptability (some savings, education)
       survivalRate: 1.00,        // Baseline survival rate
+      
+      // TIER 4.6: Human Enhancement (Oct 16, 2025)
+      aiAugmentationAccess: 0.60,        // 60% access (moderate affordability)
+      aiAugmentationAdoption: 0.40,      // 40% adoption (some hesitancy)
+      productivityMultiplier: 1.10,      // 10% productivity boost (mid-skill benefits more from AI)
+      bciAdoption: 0,                    // No BCI yet
+      enhancementLevel: 0.10,            // 10% enhanced
     },
     
     // === WORKING CLASS SKEPTICS (35% / 25%) ===
@@ -130,6 +145,13 @@ export function initializeSocietySegments(): SocietySegment[] {
       crisisVulnerability: 0.70, // High vulnerability (paycheck-to-paycheck, limited mobility)
       adaptability: 0.40,        // Low adaptability (limited resources)
       survivalRate: 0.85,        // 15% worse survival (limited healthcare, immobility)
+      
+      // TIER 4.6: Human Enhancement (Oct 16, 2025)
+      aiAugmentationAccess: 0.40,        // 40% access (cost barriers)
+      aiAugmentationAdoption: 0.20,      // 20% adoption (low digital literacy, skepticism)
+      productivityMultiplier: 1.05,      // 5% productivity boost (low-skill would benefit most, but low access)
+      bciAdoption: 0,                    // No BCI yet
+      enhancementLevel: 0.05,            // 5% enhanced
     },
     
     // === RURAL TRADITIONALISTS (15% / 10%) ===
@@ -153,6 +175,13 @@ export function initializeSocietySegments(): SocietySegment[] {
       crisisVulnerability: 0.80, // Very high vulnerability (isolated, aging infrastructure)
       adaptability: 0.30,        // Very low adaptability (community ties limit mobility)
       survivalRate: 0.70,        // 30% worse survival (healthcare deserts, isolation)
+      
+      // TIER 4.6: Human Enhancement (Oct 16, 2025)
+      aiAugmentationAccess: 0.20,        // 20% access (rural broadband gap - IMF: 29% excluded)
+      aiAugmentationAdoption: 0.10,      // 10% adoption (infrastructure + cultural barriers)
+      productivityMultiplier: 1.02,      // 2% productivity boost (would benefit most from AI, but minimal access)
+      bciAdoption: 0,                    // No BCI yet
+      enhancementLevel: 0.02,            // 2% enhanced
     },
     
     // === PRECARIAT (VULNERABLE) (5% / 5%) ===
@@ -176,6 +205,13 @@ export function initializeSocietySegments(): SocietySegment[] {
       crisisVulnerability: 0.95, // Extreme vulnerability (no safety net, homeless)
       adaptability: 0.20,        // Minimal adaptability (survival mode)
       survivalRate: 0.50,        // 50% worse survival (no healthcare, exposure, malnutrition)
+      
+      // TIER 4.6: Human Enhancement (Oct 16, 2025)
+      aiAugmentationAccess: 0.10,        // 10% access (structural lockout - cost, literacy, infrastructure)
+      aiAugmentationAdoption: 0.05,      // 5% adoption (survival takes priority over AI tools)
+      productivityMultiplier: 0.95,      // -5% productivity (falling behind, locked out of opportunities)
+      bciAdoption: 0,                    // No BCI yet (will be permanently excluded)
+      enhancementLevel: 0.01,            // 1% enhanced (effectively locked out)
     },
   ];
 }
@@ -516,6 +552,7 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     // TIER 4: Enrichment Systems
     informationWarfare: initializeInformationWarfare(),
     powerGenerationSystem: initializePowerGenerationSystem(),
+    humanEnhancementSystem: initializeHumanEnhancementSystem(), // TIER 4.6: Human Enhancement & Merger Pathways
 
     // TIER 1.7: Crisis Realism - Regional Biodiversity
     biodiversitySystem: initializeRegionalBiodiversitySystem(),
