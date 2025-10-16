@@ -417,24 +417,35 @@ function checkEndGameResolution(state: GameState): void {
     // Otherwise continue
   }
   
-  // === TIMEOUT: Most runs don't reach definitive outcomes ===
-  // After extended time in end-game, usually means a stalemate or inconclusive situation
-  // DON'T force extinction just because misaligned has slight edge
+  // === TIMEOUT: Force resolution after extended end-game ===
+  // TIER 0A FIX: After 48 months, FORCE a resolution based on power balance and QoL
+  // OLD BUG: Most runs fell through without setting actualOutcome, leading to inconclusive
   if (endGame.monthsInEndGame > 48) {
-    // After 4 years in end-game without resolution, situation is unclear
-    // Only declare outcomes if conditions are extreme
-    
+    // After 4 years, determine outcome based on current state
+
     if (endGame.alignedAIPower > endGame.misalignedAIPower * 2.5 && qol > 0.7 && trust > 0.6) {
+      // Clear aligned victory with good QoL
       lockOutcome(endGame, 'utopia', 'Aligned AI gradually achieved stable equilibrium');
     } else if (endGame.alignedAIPower > endGame.misalignedAIPower * 2.0 && qol < 0.4) {
+      // Aligned won but QoL poor
       lockOutcome(endGame, 'dystopia', 'Aligned AI maintained control but society degraded');
+    } else if (endGame.alignedAIPower > endGame.misalignedAIPower * 1.5) {
+      // Aligned winning but not decisive
+      lockOutcome(endGame, qol > 0.6 ? 'utopia' : 'dystopia',
+        `Aligned AI achieved ${qol > 0.6 ? 'positive' : 'controlled'} equilibrium after prolonged competition`);
+    } else if (endGame.misalignedAIPower > endGame.alignedAIPower * 1.5) {
+      // Misaligned winning
+      lockOutcome(endGame, qol > 0.5 ? 'dystopia' : 'extinction',
+        `Misaligned AI ${qol > 0.5 ? 'dominated' : 'destroyed'} aligned opposition`);
     } else {
-      // Most cases: situation is unclear, don't force an outcome
-      // The simulation will end at max months with "inconclusive"
-      try {
-        console.log(`   End-game timeout without clear resolution (aligned: ${endGame.alignedAIPower.toFixed(2)}, misaligned: ${endGame.misalignedAIPower.toFixed(2)})`);
-      } catch (e) { /* Ignore EPIPE */ }
+      // True stalemate - force outcome based on QoL
+      lockOutcome(endGame, qol > 0.6 ? 'utopia' : 'dystopia',
+        `Stalemate reached equilibrium with QoL ${qol.toFixed(2)}`);
     }
+
+    try {
+      console.log(`   End-game timeout → forced resolution after 48 months (aligned: ${endGame.alignedAIPower.toFixed(2)}, misaligned: ${endGame.misalignedAIPower.toFixed(2)}, QoL: ${qol.toFixed(2)})`);
+    } catch (e) { /* Ignore EPIPE */ }
   }
 }
 

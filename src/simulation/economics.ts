@@ -81,10 +81,10 @@ export function calculateEconomicStageTransition(state: GameState): {
   const wealthDistribution = state.globalMetrics.wealthDistribution;
   const effectiveControl = state.government.controlDesire * state.government.capabilityToControl;
   
-  // P2.3: Bionic skills boost economic productivity
+  // P2.3: AI-assisted skills boost economic productivity
   // Higher productivity → faster economic growth → faster stage transitions
-  const { calculateProductivityMultiplierFromSkills } = require('./bionicSkills');
-  const productivityMultiplier = calculateProductivityMultiplierFromSkills(state);
+  const { calculateProductivityMultiplierFromAIAssistedSkills } = require('./bionicSkills');
+  const productivityMultiplier = calculateProductivityMultiplierFromAIAssistedSkills(state);
   
   let newStage = currentStage;
   let transitioned = false;

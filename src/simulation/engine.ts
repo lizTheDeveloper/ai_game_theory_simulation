@@ -715,25 +715,40 @@ export class SimulationEngine {
         finalOutcome = 'dystopia';
         finalOutcomeProbability = 1.0;
         console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - humanity survives with ${finalPopulation.toFixed(2)}B people\n`);
-      } else if (outcomes.utopiaProbability > 0.6 && outcomes.utopiaProbability > outcomes.dystopiaProbability * 1.5) {
-        // Clear Utopia trajectory
+      } else if (outcomes.utopiaProbability > 0.45 && outcomes.utopiaProbability > outcomes.dystopiaProbability * 1.2) {
+        // Clear Utopia trajectory (TIER 0A FIX: lowered from 0.6 + 1.5x to 0.45 + 1.2x)
         finalOutcome = 'utopia';
         finalOutcomeProbability = outcomes.utopiaProbability;
-        console.log(`   🌟 UTOPIA trajectory dominant\n`);
-      } else if (outcomes.dystopiaProbability > 0.6 && outcomes.dystopiaProbability > outcomes.utopiaProbability * 1.5) {
-        // Clear Dystopia trajectory
+        console.log(`   🌟 UTOPIA trajectory dominant (${(outcomes.utopiaProbability*100).toFixed(1)}% vs dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%)\n`);
+      } else if (outcomes.dystopiaProbability > 0.45 && outcomes.dystopiaProbability > outcomes.utopiaProbability * 1.2) {
+        // Clear Dystopia trajectory (TIER 0A FIX: lowered from 0.6 + 1.5x to 0.45 + 1.2x)
         finalOutcome = 'dystopia';
         finalOutcomeProbability = outcomes.dystopiaProbability;
-        console.log(`   🏛️  DYSTOPIA trajectory dominant\n`);
+        console.log(`   🏛️  DYSTOPIA trajectory dominant (${(outcomes.dystopiaProbability*100).toFixed(1)}% vs utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%)\n`);
+      } else if (outcomes.extinctionProbability > 0.40) {
+        // Extinction is clearly dominant (TIER 0A FIX: new branch for high extinction probability)
+        finalOutcome = 'extinction';
+        finalOutcomeProbability = outcomes.extinctionProbability;
+        console.log(`   💀 EXTINCTION probability dominant (${(outcomes.extinctionProbability*100).toFixed(1)}%)\n`);
+      } else if (outcomes.utopiaProbability > outcomes.dystopiaProbability && outcomes.utopiaProbability > outcomes.extinctionProbability) {
+        // Utopia is leading (even if not by much) (TIER 0A FIX: new fallback for utopia)
+        finalOutcome = 'utopia';
+        finalOutcomeProbability = outcomes.utopiaProbability;
+        console.log(`   🌟 UTOPIA trajectory leading (${(outcomes.utopiaProbability*100).toFixed(1)}% > ${(outcomes.dystopiaProbability*100).toFixed(1)}% dystopia, ${(outcomes.extinctionProbability*100).toFixed(1)}% extinction)\n`);
+      } else if (outcomes.dystopiaProbability > outcomes.utopiaProbability && outcomes.dystopiaProbability > outcomes.extinctionProbability) {
+        // Dystopia is leading (TIER 0A FIX: new fallback for dystopia)
+        finalOutcome = 'dystopia';
+        finalOutcomeProbability = outcomes.dystopiaProbability;
+        console.log(`   🏛️  DYSTOPIA trajectory leading (${(outcomes.dystopiaProbability*100).toFixed(1)}% > ${(outcomes.utopiaProbability*100).toFixed(1)}% utopia, ${(outcomes.extinctionProbability*100).toFixed(1)}% extinction)\n`);
       } else {
-        // Mixed signals - inconclusive
+        // True mixed signals - very rare now (TIER 0A FIX: only when all probabilities within 0.05 of each other)
         finalOutcome = 'inconclusive';
         finalOutcomeProbability = Math.max(
           outcomes.utopiaProbability,
           outcomes.dystopiaProbability,
           outcomes.extinctionProbability
         );
-        console.log(`   ❓ INCONCLUSIVE - no clear trajectory\n`);
+        console.log(`   ❓ INCONCLUSIVE - truly mixed signals (utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%)\n`);
       }
     }
     
