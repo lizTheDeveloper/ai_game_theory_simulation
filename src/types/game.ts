@@ -530,9 +530,16 @@ export interface ComputeInfrastructure {
  * Organizations operate across multiple countries/regions with different levels of presence.
  * This affects bankruptcy risk - distributed organizations survive better than single-country ones.
  */
+/**
+ * P2.4: Geographic Presence for Organizations
+ * Research: Microsoft 10-K (45% international), Alphabet 10-K (51% international)
+ * Enables realistic survival modeling during regional crises
+ */
 export interface GeographicPresence {
-  region: string;         // Country or region name (e.g., "United States", "Europe", "Asia")
-  revenueShare: number;   // [0,1] Fraction of total revenue from this region (must sum to 1.0)
+  country: string;            // Country name (e.g., "United States", "Ireland")
+  operationsWeight: number;   // [0,1] Fraction of operations in this country (must sum to 1.0)
+  dataCenters: number;        // Number of data centers in this country
+  workforce: number;          // Number of employees in this country
 }
 
 /**
@@ -554,6 +561,8 @@ export interface Organization {
   geographicPresence?: GeographicPresence[]; // Distribution of operations across regions
   remoteWorkCapable?: boolean;   // Can operate with distributed workforce (tech companies)
   essentialDesignation?: boolean; // Government will bail out (critical infrastructure)
+  distributedDataCenters?: boolean; // Multi-region data center operations (redundancy)
+  bankruptcyRisk?: number;       // [0,1] Current bankruptcy probability (calculated monthly)
   
   // Ownership
   ownedDataCenters: string[];    // IDs of data centers this org owns
