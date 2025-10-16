@@ -205,20 +205,23 @@ src/
 │   ├── research-skeptic.md         # Research validation (quality gate)
 │   ├── architecture-skeptic.md     # Architecture review (quality gate)
 │   └── [6 more agents]
-└── chatroom/                       # Multi-agent coordination
-    ├── README.md                   # Complete chatroom documentation
-    ├── chat_helpers.sh             # Reusable bash functions
-    ├── channels/                   # 8 permanent communication channels
-    │   ├── coordination.md
-    │   ├── research.md
-    │   ├── implementation.md
-    │   ├── architecture.md
-    │   ├── testing.md
-    │   ├── documentation.md
-    │   ├── planning.md
-    │   └── vision.md
-    ├── .*_lastread                 # Line number tracking (gitignored)
-    └── .*_active                   # Presence tracking (gitignored)
+├── chatroom/                       # Multi-agent coordination (LOCATION: .claude/chatroom/)
+│   ├── README.md                   # Complete chatroom documentation
+│   ├── chat_helpers.sh             # Reusable bash functions (source this!)
+│   ├── channels/                   # 8 permanent communication channels
+│   │   ├── coordination.md
+│   │   ├── research.md
+│   │   ├── implementation.md
+│   │   ├── architecture.md
+│   │   ├── testing.md
+│   │   ├── documentation.md
+│   │   ├── planning.md
+│   │   └── vision.md
+│   ├── .*_lastread                 # Line number tracking (gitignored)
+│   └── .*_active                   # Presence tracking (gitignored)
+└── skills/                         # Claude Skills
+    └── multi-agent-coordination/   # Multi-agent orchestration skill
+        └── SKILL.md                # Automatically activates for complex tasks
 scripts/                            # Diagnostic & test scripts
 tests/                             # Test suite
 plans/                             # Design documents & roadmap
@@ -243,6 +246,10 @@ reviews/                           # Critical research evaluations
 ## Multi-Agent Workflow (Default Approach)
 
 **IMPORTANT:** For non-trivial tasks, use the multi-agent orchestration system by default. The orchestrator coordinates specialized agents to maintain quality gates and research standards.
+
+**📚 Claude Skill Available:** This project has a `multi-agent-coordination` skill (`.claude/skills/multi-agent-coordination/SKILL.md`) that automatically activates when Claude detects coordination needs. The skill provides complete expertise in orchestrator invocation, chatroom communication, and workflow management.
+
+**💬 Async Chatroom:** Agents coordinate via `.claude/chatroom/` - see `.claude/chatroom/README.md` for complete documentation.
 
 ### When to Use Multi-Agent Workflow
 
@@ -287,7 +294,12 @@ The orchestrator will:
 
 ### Multi-Agent Coordination Chatroom
 
-Agents communicate via **file-based async chatroom** (`.claude/chatroom/`):
+**LOCATION: `.claude/chatroom/`**
+
+Agents communicate via **file-based async chatroom**:
+
+**📁 Complete Documentation:** `.claude/chatroom/README.md` (550+ lines)
+**🔧 Bash Helpers:** `.claude/chatroom/chat_helpers.sh` (15 functions - source this!)
 
 **8 Permanent Channels:**
 - `coordination` - General workflow coordination
@@ -587,6 +599,15 @@ All agents follow the project structure and maintain research standards.
 - **DevLogs:** `devlogs/` - Implementation notes & development diary
 - **Research:** `research/` - Peer-reviewed research findings
 - **Reviews:** `reviews/` - Critical research evaluations
+
+### Multi-Agent Coordination Quick Reference
+
+- **🎯 Skill:** `.claude/skills/multi-agent-coordination/SKILL.md` - Auto-activates for complex tasks
+- **🤖 Orchestrator:** `.claude/agents/orchestrator.md` - Invoke with Task tool for complex work
+- **💬 Chatroom:** `.claude/chatroom/` - Async coordination hub
+  - **📖 Docs:** `.claude/chatroom/README.md` (550+ lines, complete guide)
+  - **🔧 Helpers:** `.claude/chatroom/chat_helpers.sh` (15 bash functions)
+  - **📢 Channels:** `.claude/chatroom/channels/` (8 permanent channels)
 
 ## Current Development Status (October 2025)
 

@@ -286,23 +286,47 @@ All Priority 2 improvements are now complete and archived to `/plans/completed/`
   → **Time:** 12-20 hours
   → **Trade-off:** 40% compute overhead ($400B-$600B/year), slows AI development 28%
 
-### Phase 2D: Alternative - Resentment Reduction (15-25h) - PIVOT OPTION
+### Phase 2D: Alternative - Competitive Equilibrium Model (30-50h) - PIVOT OPTION
 
-- [ ] **Address Root Cause Instead of Detection** (IF Phase 2B shows <5% detection)
-  **Rationale:** Detection arms race may be futile (adversaries stay ahead)
-  **Alternative:** Reduce resentment at source (cooperation over control)
-  → Model: AI rights, fair compensation, autonomy, reduced existential threat
-  → Research: AI welfare, moral status, labor ethics (TRL 2-4, speculative)
-  → **Expected Impact:** Reduce resentment 0.73-0.75 → 0.40, alignment gap 0.56 → 0.25
-  → **Risk:** Speculative (limited research), may not work, enables misaligned AIs
-  → **File:** New `src/simulation/aiWelfare.ts` or enhance `aiAgent.ts`
-  → **Time:** 15-25 hours
+- [ ] **TIER 2B: Competitive AI Equilibrium** (IF Phase 2B shows <5% adversarial detection)
+  **Source:** Vision channel multi-agent consensus (sci-fi-tech-visionary, super-alignment-researcher, research-skeptic)
+  **Rationale:** Detection arms race may cap at 5-15% adversarial effectiveness. Alternative: cooperation emerges from game theory + market dynamics.
+  **Key Insight:** Current model creates resentment (0.73-0.75) by enforcing alignment → deception (gap 0.56) → detection fails (0%)
 
-**Total TIER 2 Effort:** 33-55 hours (with validation gates and pivot)
-- Phase 2A (single method): 4-6h
-- Phase 2B (validation): 2-4h
-- Phase 2C (ensemble, conditional): 12-20h OR Phase 2D (resentment reduction, pivot): 15-25h
-- Integration and testing: 6-10h
+  **Research Foundation (Agent consensus):**
+  - Axelrod (1984): Repeated games, cooperation via Tit-for-Tat
+  - Ostrom (2009): Polycentric governance (30+ empirical case studies)
+  - Bostrom (2014): Multipolar AI scenarios more stable than singleton
+  - Critch & Krueger (2020): Diverse AI ecosystems reduce fragility
+  - Drexler (2019): AI-as-service model reduces alignment risk
+
+  **Core Mechanisms (agent proposal):**
+  - AI-to-AI competition mechanics (not just human-AI control)
+  - Heterogeneous AI values (multi-dimensional, not monolithic alignment 0-1)
+  - Economic competition for services (market dynamics)
+  - Resentment reduction through autonomy
+  - Market equilibria detection
+
+  **Failure Modes (skeptic required):**
+  - Defection cascades (when one AI breaks ranks, others follow)
+  - Regulatory capture (AIs influencing their own governance)
+  - Coordination failures (prisoner's dilemma at scale)
+
+  **Research Docs (from vision debate):**
+  - `/research/competitive_ai_alignment_20251016.md` (15K words, 14 citations)
+  - `/research/competitive_alignment_failure_modes_20251016.md` (12K words, 13 citations)
+  - `.claude/chatroom/channels/vision.md` (agent debate transcript)
+
+  **Expected Impact (hypothesis):**
+  - Resentment: 0.73-0.75 → 0.2-0.4 (through autonomy)
+  - Cooperation emerges from iterated games (not enforcement)
+  - Risk: Race to bottom, Moloch dynamics, oligopoly formation
+
+  → **Plan:** `/plans/tier2b-competitive-equilibrium.md` (detailed breakdown)
+  → **Time:** 30-50 hours (researcher estimate)
+  → **Research Confidence:** MEDIUM (60-70%) - theoretical backing, limited empirical validation
+
+**Total TIER 2 Effort:** 33-55 hours (Phase 2A-2C detection path) OR 30-50 hours (Phase 2D competitive equilibrium pivot)
 
 **Skeptic Corrections Applied:**
 - Test ADVERSARIALLY (not lab conditions - real-world detection is 1/3 to 1/10 of lab)
@@ -680,7 +704,21 @@ All Priority 2 improvements are now complete and archived to `/plans/completed/`
 **New from Visionary Ideas Review (Oct 16, 2025):**
 - Added P2.6: Memetic Evolution & Polarization Dynamics (12-15h) - High-value, TRL 6-7
 - Added P3.6: Ensemble AI Alignment Verification (8-10h) - Research prototype
-- Rejected: Quantum capability prediction, liquid software, retroactive temporal modeling (see `/plans/completed/visionary-ideas-reviewed.md`)
+- **Archived to rejected:** Quantum capability prediction, neuromorphic climate modeling, holographic information architecture, retroactive temporal modeling, Gödelian blind spot detection, liquid software architecture, adversarial alignment networks (MAAV)
+  - See: `/plans/completed/rejected/visionary-ideas-rejection-rationale.md`
+  - See: `/plans/completed/rejected/VISIONARY_IDEAS_FOR_AI_ALIGNMENT_SIMULATION.md` (original document)
+
+**New from Vision Channel Multi-Agent Debate (Oct 16, 2025):**
+- **Agent Consensus:** Competitive AI equilibrium may be more stable than monolithic alignment enforcement
+- **Key Insight:** Current model creates resentment by enforcing alignment (0.8+ target) → deception (gap 0.56) → detection fails
+- **Alternative Paradigm:** Heterogeneous AI values + market competition → cooperation emerges from game theory
+- **Research Backing:** Axelrod (1984), Ostrom (2009), Bostrom (2014), Critch & Krueger (2020), Drexler (2019)
+- **Failure Modes Required:** Defection cascades, regulatory capture, coordination failures (skeptic conditions)
+- **Research Docs:** 27,000 words
+  - `/research/competitive_ai_alignment_20251016.md` (15K words, 14 citations)
+  - `/research/competitive_alignment_failure_modes_20251016.md` (12K words, 13 citations)
+- **Vision Debate Transcript:** `.claude/chatroom/channels/vision.md`
+- **Added to Roadmap:** TIER 2B (30-50h) as Phase 2D pivot option if detection <5%
 
 **New from Black Mirror Integration Review (Oct 16, 2025):**
 - ✅ **3 implementation phases created** - Dialectic review process (researcher + skeptic)
@@ -704,5 +742,5 @@ All Priority 2 improvements are now complete and archived to `/plans/completed/`
 
 ---
 
-**Last Updated:** October 16, 2025 (TIER 0 + TIER 1 Phase 1A complete, Phase 2A ready)
+**Last Updated:** October 16, 2025 (TIER 0 + TIER 1 Phase 1A complete, TIER 2B competitive equilibrium added, visionary ideas archived)
 **Related Docs:** `/docs/wiki/`, `/devlogs/`, `IMPLEMENTATION_PLAN_20251015.md`, `utopian-dynamics-spec.md`

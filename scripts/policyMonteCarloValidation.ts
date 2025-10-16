@@ -157,27 +157,30 @@ function extractMetrics(state: GameState, scenario: PolicyScenario, seed: number
   };
 }
 
-function runScenario(scenario: PolicyScenario, seed: number, maxMonths: number, verbose: boolean = false): ScenarioMetrics {
-  if (verbose) {
-    console.log(`\n  [Seed ${seed}] Running ${scenario.name}...`);
+function runScenario(scenario: PolicyScenario, seed: number, maxMonths: number, showProgress: boolean = false): ScenarioMetrics {
+  if (showProgress) {
+    process.stdout.write('.');
   }
 
   // Create initial state and apply policy scenario
   const initialState = createDefaultInitialState();
   applyPolicyScenario(initialState, scenario);
 
-  // Run simulation (suppress output)
-  const engine = new SimulationEngine({ seed, maxMonths });
-  const result = engine.run(initialState, { maxMonths, checkActualOutcomes: false });
+  // Run simulation (suppress all output)
+  const originalLog = console.log;
+  console.log = () => {}; // Suppress all console output during simulation
 
-  // Extract metrics
-  const metrics = extractMetrics(result.finalState, scenario, seed);
+  try {
+    const engine = new SimulationEngine({ seed, maxMonths });
+    const result = engine.run(initialState, { maxMonths, checkActualOutcomes: false });
 
-  if (verbose) {
-    console.log(`    → QoL: ${(metrics.avgQoL * 100).toFixed(1)}%, Unemployment: ${(metrics.unemployment * 100).toFixed(1)}%, Outcome: ${metrics.outcome}`);
+    // Extract metrics
+    const metrics = extractMetrics(result.finalState, scenario, seed);
+
+    return metrics;
+  } finally {
+    console.log = originalLog; // Restore console.log
   }
-
-  return metrics;
 }
 
 function calculateStatistics(values: number[]): { mean: number; std: number; min: number; max: number } {
@@ -341,17 +344,15 @@ async function main() {
   const allResults: ScenarioMetrics[] = [];
 
   for (const scenario of SCENARIOS) {
-    console.log(`\n${'='.repeat(60)}`);
-    console.log(`🔬 SCENARIO: ${scenario.name}`);
-    console.log(`${'='.repeat(60)}`);
-    console.log(`Description: ${scenario.description}`);
-    console.log(`Running ${runsPerScenario} simulations...`);
+    console.log(`\n🔬 ${scenario.name}:`);
+    process.stdout.write(`   Running ${runsPerScenario} simulations: `);
 
     for (let i = 0; i < runsPerScenario; i++) {
       const seed = baseSeed + (SCENARIOS.indexOf(scenario) * runsPerScenario) + i;
       const metrics = runScenario(scenario, seed, maxMonths, true);
       allResults.push(metrics);
     }
+    console.log(` ✓`);
   }
 
   generateReport(allResults);
