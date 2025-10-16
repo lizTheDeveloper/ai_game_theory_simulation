@@ -60,6 +60,7 @@ import {
   InformationWarfarePhase,
   PowerGenerationPhase,
   HumanEnhancementPhase,  // TIER 4.6 (Oct 16, 2025): Human Enhancement & Merger Pathways
+  MemeticEvolutionPhase,  // P2.6 (Oct 16, 2025): Memetic Evolution & Polarization Dynamics
   MADDeterrencePhase,
   ResourceEconomyPhase,
   ResourceTechnologyPhase,
@@ -342,6 +343,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new InformationWarfarePhase());
     this.orchestrator.registerPhase(new PowerGenerationPhase());
     this.orchestrator.registerPhase(new HumanEnhancementPhase());  // TIER 4.6: Human Enhancement & Merger Pathways
+    this.orchestrator.registerPhase(new MemeticEvolutionPhase());  // P2.6: Memetic Evolution & Polarization Dynamics
     this.orchestrator.registerPhase(new MADDeterrencePhase());
     this.orchestrator.registerPhase(new ResourceEconomyPhase());
     this.orchestrator.registerPhase(new ResourceTechnologyPhase());
