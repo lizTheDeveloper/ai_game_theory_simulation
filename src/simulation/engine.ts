@@ -92,6 +92,7 @@ import {
   SleeperWakePhase,
   AIAgentActionsPhase,
   TechnologyBreakthroughsPhase,
+  StochasticInnovationPhase,
   GovernmentActionsPhase,
   SocietyActionsPhase,
   // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
@@ -373,6 +374,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SleeperWakePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
     this.orchestrator.registerPhase(new TechnologyBreakthroughsPhase());
+    this.orchestrator.registerPhase(new StochasticInnovationPhase());
     this.orchestrator.registerPhase(new GovernmentActionsPhase());
     this.orchestrator.registerPhase(new SocietyActionsPhase());
 

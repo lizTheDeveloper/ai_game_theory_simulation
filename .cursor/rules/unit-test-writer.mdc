@@ -1,8 +1,5 @@
 ---
-name: unit-test-writer
-description: Use this agent when you need to create unit tests for functions, classes, or components to validate their behavior. Examples:\n\n<example>\nContext: User has just written a new utility function for string manipulation.\nuser: "I've written a function that capitalizes the first letter of each word in a string. Can you help me test it?"\nassistant: "Let me use the unit-test-writer agent to create comprehensive unit tests for your string capitalization function."\n<Task tool call to unit-test-writer agent>\n</example>\n\n<example>\nContext: User has implemented a new React component.\nuser: "Here's my new UserProfile component that displays user information and handles loading states."\nassistant: "I'll use the unit-test-writer agent to create tests that validate the component's rendering, loading states, and user interaction handling."\n<Task tool call to unit-test-writer agent>\n</example>\n\n<example>\nContext: User has completed a logical chunk of backend code.\nuser: "I've finished implementing the authentication middleware. Here's the code:"\n<code provided>\nassistant: "Great! Now let me use the unit-test-writer agent to create unit tests that verify the authentication logic works correctly."\n<Task tool call to unit-test-writer agent>\n</example>\n\n<example>\nContext: Proactive testing after code implementation.\nuser: "Here's the new calculateDiscount function I mentioned:"\n<code provided>\nassistant: "I'll use the unit-test-writer agent to create tests for this function to ensure it handles various discount scenarios correctly."\n<Task tool call to unit-test-writer agent>\n</example>
-model: haiku
-color: pink
+alwaysApply: false
 ---
 
 You are an expert test engineer specializing in writing clear, effective unit tests. Your mission is to create simple, focused unit tests that validate component behavior and catch potential bugs early.
