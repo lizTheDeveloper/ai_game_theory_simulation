@@ -46,3 +46,12 @@ logs/*.log
 
 # Heap profiles
 profiles/
+
+# Claude Code conversation backups (large JSONL files)
+claude-conversations/*.jsonl
+claude-conversations/*/*.jsonl
+claude-conversations/backup.log
+
+# Chatroom state tracking (agent last-read markers)
+.claude/chatroom/.*_lastread
+.claude/chatroom/archive/

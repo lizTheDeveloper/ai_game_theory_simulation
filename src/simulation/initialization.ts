@@ -45,7 +45,7 @@ import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
 import { SocietySegment } from '@/types/game';
 import { initializeHumanEnhancementSystem } from './humanEnhancement';
-import { initializeAIAssistedSkillsMetrics } from './bionicSkills'; // Research-validated AI skill enhancement
+import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution } from './bionicSkills'; // Research-validated AI skill enhancement + labor-capital distribution
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 
@@ -563,6 +563,12 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
 
     // TIER 4.6: AI-Assisted Skills Enhancement (Research-validated, TRL 8-9)
     aiAssistedSkillsMetrics: initializeAIAssistedSkillsMetrics(), // Digital AI augmentation (GitHub Copilot, ChatGPT, AI tutors)
+
+    // TIER 4.6: Labor-Capital Distribution (Phase 4: Productivity-Wage Decoupling)
+    laborCapitalDistribution: initializeLaborCapitalDistribution(
+      100.0,  // Initial global GDP (trillion USD, 2025 baseline)
+      8e9     // Initial population (8 billion)
+    ),
 
     // TIER 4.6: Human Enhancement (DEPRECATED - contains sci-fi BCI/merger code)
     humanEnhancementSystem: initializeHumanEnhancementSystem(), // DEPRECATED: Being phased out, use aiAssistedSkillsMetrics
