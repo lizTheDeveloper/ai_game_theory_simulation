@@ -988,6 +988,16 @@ export interface GameState {
   // AI-Assisted Skills Enhancement (TIER 4.6) - Research-validated digital augmentation
   aiAssistedSkillsMetrics?: import('../simulation/bionicSkills').AIAssistedSkillsMetrics; // Population-level metrics for AI tool adoption (GitHub Copilot, ChatGPT, AI tutors)
 
+  // Labor-Capital Distribution & Productivity-Wage Decoupling (TIER 4.6 - Phase 4)
+  laborCapitalDistribution?: import('../simulation/bionicSkills').LaborCapitalDistribution; // Tracks productivity-wage gap (1973-2024: 77.5% productivity, 12.4% wages)
+
+  // Policy Interventions (TIER 4.6 - Phase 6) - Mitigations for AI automation impacts
+  policyInterventions?: {
+    retrainingLevel?: number;        // [0,1] Retraining program investment (0 = none, 1 = universal)
+    teachingSupportLevel?: number;   // [0,1] AI-human teaching support (0 = none, 1 = universal)
+    jobGuaranteeLevel?: number;      // [0,1] Federal job guarantee (0 = none, 1 = universal)
+  };
+
   // Human Enhancement & AI-Human Merger (TIER 4.6) - DEPRECATED (contains sci-fi BCI/merger code, being phased out)
   humanEnhancementSystem: import('../types/humanEnhancement').HumanEnhancementSystem; // DEPRECATED: Use aiAssistedSkillsMetrics instead. Contains sci-fi elements (BCIs, consciousness upload) that are TRL 0-2.
 

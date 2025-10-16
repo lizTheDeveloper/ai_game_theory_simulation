@@ -253,26 +253,55 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
  * SPIRAL 5: Meaning & Purpose
  * Purpose diversity + Community + Cultural renaissance
  * "People have meaningful lives, not just material comfort"
+ *
+ * **POLICY SYNERGY: Teaching Investment Creates Meaningful Work**
+ * AI productivity windfall + teaching support investment → fulfilling teaching jobs
+ * → addresses meaning crisis + improves education quality (virtuous cycle)
  */
 function updateMeaningSpiral(spiral: UpwardSpiral, state: GameState, month: number): void {
   const social = state.socialAccumulation;
   const qol = state.qualityOfLifeSystems;
-  
+
   // Low meaning crisis
   const meaningFulfilled = social.meaningCrisisLevel < 0.2;
-  
+
   // High social cohesion (community bonds)
   const strongCommunity = social.socialCohesion > 0.7;
-  
+
   // Cultural adaptation (people adapted to post-work life)
   const culturallyAdapted = social.culturalAdaptation > 0.7;
-  
+
   // Autonomy & creativity (freedom to pursue purpose)
   const autonomous = qol.autonomy > 0.7 && qol.culturalVitality > 0.7;
-  
+
+  // POLICY SYNERGY: AI Windfall → Education Investment → Meaningful Work
+  // If AI is creating productivity surplus AND we're investing in teaching support,
+  // this creates fulfilling teaching jobs that address the meaning crisis
+  let teachingMeaningSynergy = 0;
+  if (state.policyInterventions?.teachingSupportLevel && state.laborCapitalDistribution) {
+    const teachingInvestment = state.policyInterventions.teachingSupportLevel;
+    const productivitySurplus = state.laborCapitalDistribution.productivityGrowth; // AI-driven gains
+
+    // Synergy: High AI productivity + education investment → meaningful teaching jobs
+    // Research: Teachers cite meaningful work when conditions are decent (OECD 2023)
+    // Small classes, decent pay, support → teaching becomes desirable career
+    if (teachingInvestment > 0.5 && productivitySurplus > 0.3) {
+      // Synergy bonus: Using AI windfall for education creates purpose-driven employment
+      // 1.0 teaching investment + 0.5 productivity surplus = 0.5 synergy boost
+      teachingMeaningSynergy = Math.min(0.5, teachingInvestment * productivitySurplus);
+
+      // This synergy reduces meaning crisis by creating fulfilling work
+      // Effect: -5% to -25% meaning crisis reduction from teaching employment
+      const meaningReduction = teachingMeaningSynergy * 0.5; // Up to 25% reduction
+      social.meaningCrisisLevel = Math.max(0, social.meaningCrisisLevel - meaningReduction);
+    }
+  }
+
   const wasActive = spiral.active;
-  spiral.active = meaningFulfilled && strongCommunity && culturallyAdapted && autonomous;
-  
+  // Synergy can help activate spiral by reducing meaning crisis
+  const meaningThreshold = social.meaningCrisisLevel < 0.2;
+  spiral.active = meaningThreshold && strongCommunity && culturallyAdapted && autonomous;
+
   if (spiral.active) {
     spiral.strength = (
       (1 - social.meaningCrisisLevel) * 0.3 +
@@ -280,10 +309,13 @@ function updateMeaningSpiral(spiral: UpwardSpiral, state: GameState, month: numb
       social.culturalAdaptation * 0.25 +
       (qol.autonomy + qol.culturalVitality) / 2 * 0.2
     );
+
+    // Add synergy bonus to strength
+    spiral.strength = Math.min(1.0, spiral.strength + teachingMeaningSynergy * 0.3);
   } else {
     spiral.strength = 0;
   }
-  
+
   updateSpiralTracking(spiral, wasActive, month);
 }
 

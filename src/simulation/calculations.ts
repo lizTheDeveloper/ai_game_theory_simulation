@@ -209,13 +209,51 @@ export function calculateUnemployment(state: GameState): number {
   };
   const elasticity = economicElasticity[economicStage] || 0.3;
   
+  // PHASE 6 FIX: Apply retraining to reduce displacement
+  // SYSTEMIC EFFECT: Program effectiveness varies by segment (elite get better programs)
+  let retrainingReduction = 0;
+  if (state.policyInterventions?.retrainingLevel && state.policyInterventions.retrainingLevel > 0 && state.society.segments) {
+    const { calculateRetrainingEffect } = require('./bionicSkills');
+
+    // Calculate segment-specific retraining effects (weighted by displacement)
+    let totalDisplacement = 0;
+    let totalReduction = 0;
+
+    for (const segment of state.society.segments) {
+      const skills = (segment as any).skills;
+      if (skills && skills.overallEffectiveness) {
+        const { initializeSegmentSkills } = require('./bionicSkills');
+        const baselineSkills = initializeSegmentSkills(segment);
+        const productivityMultiplier = skills.overallEffectiveness / baselineSkills.overallEffectiveness;
+        const segmentDisplacement = Math.max(0, (productivityMultiplier - 1.0) / productivityMultiplier);
+
+        // Apply segment-specific retraining effect
+        const segmentRetrainingEffect = calculateRetrainingEffect(
+          state.policyInterventions.retrainingLevel,
+          segment.economicStatus  // Elite get better programs, precariat get worst
+        );
+
+        const segmentReduction = segmentDisplacement * segmentRetrainingEffect * segment.populationFraction;
+        totalReduction += segmentReduction;
+        totalDisplacement += segmentDisplacement * segment.populationFraction;
+      }
+    }
+
+    // Apply weighted retraining reduction
+    // Reality: Elite benefit most from retraining, precariat benefit least
+    retrainingReduction = bionicDisplacementFactor * (totalDisplacement > 0 ? totalReduction / totalDisplacement : 0);
+  }
+
+  // Apply retraining reduction to displacement
+  const effectiveBionicDisplacement = Math.max(0, bionicDisplacementFactor - retrainingReduction);
+
   // Cost reduction from bionic skills → new job creation
   // If costs drop 20%, and elasticity is 0.5, then 10% new jobs
-  const costReductionFromSkills = bionicDisplacementFactor * 0.5; // Productivity boost = cost reduction
+  const costReductionFromSkills = effectiveBionicDisplacement * 0.5; // Productivity boost = cost reduction
   const jobCreationFactor = costReductionFromSkills * elasticity;
-  
+
   // Net bionic effect (displacement - creation)
-  const netBionicUnemployment = bionicDisplacementFactor - jobCreationFactor;
+  const netBionicUnemployment = effectiveBionicDisplacement - jobCreationFactor;
   
   // Stage multipliers - crisis stages accelerate unemployment
   const stageMultipliers: Record<number, number> = {
@@ -237,10 +275,35 @@ export function calculateUnemployment(state: GameState): number {
   
   // Calculate final unemployment level
   // Traditional AI unemployment + Bionic skills displacement
-  const unemployment = baseUnemployment + 
+  let unemployment = baseUnemployment +
     (aiUnemploymentFactor * stageMultiplier * policyMitigation * retrainingEffect) +
-    (netBionicUnemployment * stageMultiplier * retrainingEffect); // UBI doesn't affect bionic displacement as much
-  
+    (netBionicUnemployment * stageMultiplier); // Retraining already applied above, don't double-count
+
+  // PHASE 6 FIX: Apply job guarantee floor
+  // SYSTEMIC EFFECT: Job quality varies by segment (elite get admin roles, precariat get workfare)
+  if (state.policyInterventions?.jobGuaranteeLevel && state.policyInterventions.jobGuaranteeLevel > 0 && state.society.segments) {
+    const { calculateUnemploymentFloor } = require('./bionicSkills');
+
+    // Calculate population-weighted floor (accounts for job quality stratification)
+    let weightedFloor = 0;
+    let totalWeight = 0;
+
+    for (const segment of state.society.segments) {
+      const segmentFloor = calculateUnemploymentFloor(
+        state.policyInterventions.jobGuaranteeLevel,
+        segment.economicStatus  // Elite get professional roles (5% floor), precariat get workfare (15% floor)
+      );
+      weightedFloor += segmentFloor * segment.populationFraction;
+      totalWeight += segment.populationFraction;
+    }
+
+    const floor = totalWeight > 0 ? weightedFloor / totalWeight : 0.10;
+
+    // Job guarantee creates unemployment floor (Brookings 2021)
+    // BUT: Floor is higher for precariat due to poor job quality (Harvey 2005, MGNREGA 2020)
+    unemployment = Math.max(floor, unemployment);
+  }
+
   // Cap at 95% (more realistic than 80%)
   return Math.min(0.95, unemployment);
 }

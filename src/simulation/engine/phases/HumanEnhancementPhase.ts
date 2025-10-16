@@ -23,7 +23,7 @@
 
 import { SimulationPhase, PhaseResult, RNGFunction } from '../PhaseOrchestrator';
 import { GameState } from '../../../types/game';
-import { calculateAIAssistedSkillsAggregateMetrics } from '../../bionicSkills';
+import { calculateAIAssistedSkillsAggregateMetrics, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, checkCompetenceCrisis, checkWageInequality, applyPolicyInterventions } from '../../bionicSkills';
 
 export class HumanEnhancementPhase implements SimulationPhase {
   readonly id = 'ai-assisted-skills-metrics';
@@ -31,6 +31,8 @@ export class HumanEnhancementPhase implements SimulationPhase {
   readonly order = 17.0; // After social systems (UBI, safety nets), before QoL calculation
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    const events: Array<{ type: string; severity: string; description: string; month: number }> = [];
+
     // Calculate aggregate metrics if we have segments and metrics tracking
     if (state.society.segments && state.society.segments.length > 0) {
       // Get or initialize metrics
@@ -53,9 +55,65 @@ export class HumanEnhancementPhase implements SimulationPhase {
         avgAICapability,
         state.currentMonth
       );
+
+      // Phase 3: Check for competence crisis (AI dependency)
+      const competenceEvent = checkCompetenceCrisis(state.society.segments, state.currentMonth);
+      if (competenceEvent) {
+        events.push(competenceEvent);
+        console.log(`\n⚠️  ${competenceEvent.type} [Month ${state.currentMonth}]`);
+        console.log(`  ${competenceEvent.description}`);
+      }
+
+      // Phase 4: Update labor-capital distribution based on AI-driven productivity gains
+      if (state.laborCapitalDistribution) {
+        const productivityMultiplier = calculateProductivityMultiplierFromAIAssistedSkills(state);
+        const ubiLevel = state.ubiSystem?.currentAmount || 0;
+
+        // Phase 6: Apply policy interventions if configured
+        if (state.policyInterventions && (
+          (state.policyInterventions.retrainingLevel && state.policyInterventions.retrainingLevel > 0) ||
+          (state.policyInterventions.teachingSupportLevel && state.policyInterventions.teachingSupportLevel > 0) ||
+          (state.policyInterventions.jobGuaranteeLevel && state.policyInterventions.jobGuaranteeLevel > 0)
+        )) {
+          applyPolicyInterventions(
+            state.laborCapitalDistribution,
+            productivityMultiplier,
+            {
+              ubiLevel,
+              retrainingLevel: state.policyInterventions.retrainingLevel,
+              teachingSupportLevel: state.policyInterventions.teachingSupportLevel,
+              jobGuaranteeLevel: state.policyInterventions.jobGuaranteeLevel,
+            }
+          );
+        } else {
+          // No policy interventions, use baseline distribution
+          updateLaborCapitalDistribution(
+            state.laborCapitalDistribution,
+            productivityMultiplier,
+            ubiLevel
+          );
+        }
+
+        // Check for wage inequality crisis
+        const wageEvent = checkWageInequality(state.laborCapitalDistribution, state.currentMonth);
+        if (wageEvent) {
+          events.push(wageEvent);
+          console.log(`\n⚠️  ${wageEvent.type} [Month ${state.currentMonth}]`);
+          console.log(`  ${wageEvent.description}`);
+        }
+
+        // Log productivity-wage decoupling when gap becomes significant
+        if (state.laborCapitalDistribution.productivityWageGap > 0.20) {
+          console.log(`\n⚠️  Productivity-Wage Gap: ${(state.laborCapitalDistribution.productivityWageGap * 100).toFixed(1)}%`);
+          console.log(`  Productivity Growth: +${(state.laborCapitalDistribution.productivityGrowth * 100).toFixed(1)}%`);
+          console.log(`  Wage Growth: +${(state.laborCapitalDistribution.wageGrowth * 100).toFixed(1)}%`);
+          console.log(`  Gains to Capital: ${(state.laborCapitalDistribution.gainsToCapital * 100).toFixed(0)}%`);
+          console.log(`  Labor Share: ${(state.laborCapitalDistribution.laborShare * 100).toFixed(1)}%`);
+        }
+      }
     }
 
-    return { events: [] };
+    return { events };
   }
 }
 
