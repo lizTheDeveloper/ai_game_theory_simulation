@@ -156,9 +156,7 @@ export class StochasticInnovationPhase implements SimulationPhase {
     const activeCrises = [
       state.environmentalAccumulation.resourceCrisisActive,
       state.environmentalAccumulation.pollutionCrisisActive,
-      state.environmentalAccumulation.climateC
-
-risisActive,
+      state.environmentalAccumulation.climateCrisisActive,
       state.environmentalAccumulation.ecosystemCrisisActive,
       state.socialAccumulation?.meaningCollapseActive,
       state.socialAccumulation?.institutionalFailureActive,
