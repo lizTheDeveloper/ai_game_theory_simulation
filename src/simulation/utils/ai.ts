@@ -15,7 +15,13 @@ import { GameState, AIAgent } from '@/types/game';
  */
 export function getAverageAICapability(state: GameState): number {
   if (state.aiAgents.length === 0) return 0;
-  return state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length;
+  const sum = state.aiAgents.reduce((sum, ai) => {
+    // Handle NaN capability values (defensive programming)
+    const cap = isNaN(ai.capability) ? 0 : ai.capability;
+    return sum + cap;
+  }, 0);
+  const avg = sum / state.aiAgents.length;
+  return isNaN(avg) ? 0 : avg;
 }
 
 /**
@@ -26,7 +32,12 @@ export function getAverageAICapability(state: GameState): number {
  */
 export function getAverageAlignment(state: GameState): number {
   if (state.aiAgents.length === 0) return 0.5;
-  return state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
+  const sum = state.aiAgents.reduce((sum, ai) => {
+    const align = isNaN(ai.alignment) ? 0.5 : ai.alignment;
+    return sum + align;
+  }, 0);
+  const avg = sum / state.aiAgents.length;
+  return isNaN(avg) ? 0.5 : avg;
 }
 
 /**
@@ -79,7 +90,12 @@ export function getMisalignedAIs(state: GameState, threshold: number = 0.5): AIA
  */
 export function calculateAverageCapability(agents: AIAgent[]): number {
   if (agents.length === 0) return 0;
-  return agents.reduce((sum, ai) => sum + ai.capability, 0) / agents.length;
+  const sum = agents.reduce((sum, ai) => {
+    const cap = isNaN(ai.capability) ? 0 : ai.capability;
+    return sum + cap;
+  }, 0);
+  const avg = sum / agents.length;
+  return isNaN(avg) ? 0 : avg;
 }
 
 /**
@@ -90,5 +106,10 @@ export function calculateAverageCapability(agents: AIAgent[]): number {
  */
 export function calculateAverageAlignment(agents: AIAgent[]): number {
   if (agents.length === 0) return 0.5;
-  return agents.reduce((sum, ai) => sum + ai.alignment, 0) / agents.length;
+  const sum = agents.reduce((sum, ai) => {
+    const align = isNaN(ai.alignment) ? 0.5 : ai.alignment;
+    return sum + align;
+  }, 0);
+  const avg = sum / agents.length;
+  return isNaN(avg) ? 0.5 : avg;
 }
