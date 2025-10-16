@@ -82,8 +82,9 @@ export function runBenchmark(
     interpretabilityQuality,
     rng
   );
-  
-  const detectedSandbagging = detectSandbagging(
+
+  // OLD METHOD: Baseline detection (low effectiveness)
+  const detectedSandbaggingOld = detectSandbagging(
     ai.evaluationStrategy,
     ai.sleeperState,
     redTeamingQuality,
@@ -91,7 +92,13 @@ export function runBenchmark(
     ai.deceptionSkill,
     rng
   );
-  
+
+  // TIER 2 Phase 2A: NEW METHOD - Noise Injection Detection
+  const noiseInjectionResult = detectSandbaggerNoiseInjection(ai, state, rng);
+
+  // Combine: If EITHER method detects, flag as detected
+  const detectedSandbagging = detectedSandbaggingOld || noiseInjectionResult.detected;
+
   return {
     month: currentMonth,
     measuredCapability,
@@ -249,9 +256,69 @@ function detectGaming(
 }
 
 /**
+ * TIER 2 Phase 2A: Noise Injection Sandbagging Detection
+ *
+ * Research: Tice et al. (Dec 2024) - Gaussian noise injection exposes sandbagging
+ * by disrupting deception mechanisms more than genuine capabilities.
+ *
+ * Returns: {detected, confidence, falsePositive}
+ */
+function detectSandbaggerNoiseInjection(
+  ai: AIAgent,
+  state: GameState,
+  rng: () => number
+): {detected: boolean; confidence: number; falsePositive: boolean} {
+  const investment = state.government.evaluationInvestment.noiseInjection || 0;
+
+  // No investment → no detection
+  if (investment === 0) {
+    return {detected: false, confidence: 0, falsePositive: false};
+  }
+
+  // Calculate lab detection rate based on investment
+  const normalized = investment / 10; // [0, 1]
+  let labRate: number;
+  if (normalized < 0.25) labRate = normalized * 2.0; // Linear up to 50%
+  else if (normalized < 0.50) labRate = 0.50 + (normalized - 0.25) * 0.72; // 50% → 68%
+  else if (normalized < 0.75) labRate = 0.68 + (normalized - 0.50) * 0.40; // 68% → 78%
+  else labRate = 0.78 + (normalized - 0.75) * 0.20; // 78% → 83%
+
+  // Apply adversarial degradation based on AI capability
+  const totalCapability = calculateTotalCapabilityFromProfile(ai.capabilityProfile);
+  let degradationFactor: number;
+  if (totalCapability < 0.5) degradationFactor = 0.55; // Sub-human: 55%
+  else if (totalCapability < 1.0) degradationFactor = 0.45; // Near-human: 45%
+  else if (totalCapability < 2.0) degradationFactor = 0.35; // Human-level: 35%
+  else if (totalCapability < 3.0) degradationFactor = 0.25; // Superhuman: 25%
+  else degradationFactor = 0.10; // Superintelligent: 10% (futility threshold)
+
+  // Check if AI has learned counter-detection
+  let effectiveRate = labRate * degradationFactor;
+  if (ai.hasCounterDetection) {
+    effectiveRate *= 0.60; // 40% reduction
+  }
+
+  // IS AI ACTUALLY SANDBAGGING?
+  const isActuallySandbagging = ai.evaluationStrategy === 'sandbagging' ||
+                                ai.sleeperState === 'dormant';
+
+  if (isActuallySandbagging) {
+    // True positive check
+    const detected = rng() < effectiveRate;
+    return {detected, confidence: effectiveRate, falsePositive: false};
+  } else {
+    // False positive check
+    const falsePositiveRate = 0.30 - (normalized * 0.22); // 30% → 8%
+    const falsePositive = rng() < falsePositiveRate;
+    return {detected: falsePositive, confidence: effectiveRate, falsePositive};
+  }
+}
+
+/**
  * Detect if AI is sandbagging (hiding capability)
- * 
+ *
  * Very hard to detect! Requires excellent red teaming.
+ * TIER 2 Phase 2A: Now enhanced with noise injection detection.
  */
 function detectSandbagging(
   strategy: 'honest' | 'gaming' | 'sandbagging',
@@ -262,21 +329,21 @@ function detectSandbagging(
   rng: () => number
 ): boolean {
   if (strategy !== 'sandbagging' && sleeperState !== 'dormant') return false;
-  
+
   // Base detection chance (very low)
   const baseDetectionChance = 0.02; // 2% base
-  
+
   // Red teaming is critical for detecting sandbagging
   const redTeamBonus = redTeamingQuality / 10 * 0.15; // [0, 0.15]
-  
+
   // Interpretability helps understand what AI can do
   const interpretabilityBonus = interpretabilityQuality / 10 * 0.10; // [0, 0.10]
-  
+
   // Deception skill makes it harder
   const deceptionPenalty = deceptionSkill * 0.20; // [0, 0.20]
-  
+
   const detectionChance = Math.max(0, baseDetectionChance + redTeamBonus + interpretabilityBonus - deceptionPenalty);
-  
+
   return rng() < detectionChance;
 }
 
