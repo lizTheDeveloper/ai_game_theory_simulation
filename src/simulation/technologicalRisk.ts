@@ -31,16 +31,19 @@ export function updateTechnologicalRisk(state: GameState): void {
   const capabilityGrowthRate = Math.max(0, avgCapability - 0.5) * 0.1;
   
   // === MISALIGNMENT RISK ===
-  let misalignmentRate = capabilityGrowthRate * 0.015;
-  if (avgAlignment < 0.5) misalignmentRate += 0.010;
-  if (avgCapability > 1.5) misalignmentRate += 0.008;
+  // FIX (Oct 16, 2025): Slowed from 0.5-5%/month to 0.1-1%/month
+  // Research justification: Catastrophic AI risk timelines are 2-5 YEARS, not <1 year
+  // Even with racing orgs + rapid capability growth, 10% → 70% in 11 months is unrealistic
+  let misalignmentRate = capabilityGrowthRate * 0.005; // Was 0.015 (3x slower)
+  if (avgAlignment < 0.5) misalignmentRate += 0.003; // Was 0.010 (3x slower)
+  if (avgCapability > 1.5) misalignmentRate += 0.002; // Was 0.008 (4x slower)
   
   // Organizations amplify risk if racing recklessly
   const racingOrgs = state.organizations.filter(o => 
     o.type === 'private' && 
     (o.priorities.capabilityRace > 0.8 || o.priorities.safetyResearch < 0.4)
   );
-  if (racingOrgs.length > 2) misalignmentRate += 0.005 * racingOrgs.length;
+  if (racingOrgs.length > 2) misalignmentRate += 0.001 * racingOrgs.length; // Was 0.005 (5x slower)
   
   // Mitigation
   const alignmentResearch = state.government.alignmentResearchInvestment ?? 0;

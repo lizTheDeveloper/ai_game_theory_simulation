@@ -215,10 +215,12 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     
     if (sabotageSuccess) {
       // Reduce deployment level of tech in all regions
-      for (const [region, deployments] of techTreeState.regionalDeployment) {
-        const deployment = deployments.find(d => d.techId === targetTech.id);
-        if (deployment) {
-          deployment.deploymentLevel = Math.max(0, deployment.deploymentLevel - 0.15);
+      if (techTreeState.regionalDeployment instanceof Map) {
+        for (const [region, deployments] of techTreeState.regionalDeployment) {
+          const deployment = deployments.find(d => d.techId === targetTech.id);
+          if (deployment) {
+            deployment.deploymentLevel = Math.max(0, deployment.deploymentLevel - 0.15);
+          }
         }
       }
       

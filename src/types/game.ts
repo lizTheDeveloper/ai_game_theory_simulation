@@ -282,6 +282,14 @@ export interface SocietySegment {
   crisisVulnerability: number; // 0-1 (0 = insulated, 1 = highly exposed)
   adaptability: number;        // 0-1 (ability to cope with change)
   survivalRate: number;        // Multiplier on mortality (0.5 = half the death rate, 2.0 = double)
+  
+  // === TIER 4.6: HUMAN ENHANCEMENT (Oct 16, 2025) ===
+  // AI-assisted cognitive amplification and future BCI adoption
+  aiAugmentationAccess: number;     // 0-1 (access to AI tools - e.g., elite 0.90, precariat 0.10)
+  aiAugmentationAdoption: number;   // 0-1 (actual usage of AI tools)
+  productivityMultiplier: number;   // 0.3-2.0 (AI-enhanced productivity vs baseline)
+  bciAdoption: number;              // 0-1 (future: neural interface adoption)
+  enhancementLevel: number;         // 0-1 (overall cognitive enhancement: AI + BCI)
 }
 
 export interface HumanSocietyAgent {
@@ -951,6 +959,9 @@ export interface GameState {
 
   // Power Generation & AI Energy Consumption (TIER 4.4)
   powerGenerationSystem: import('../types/powerGeneration').PowerGenerationSystem; // Electricity generation, AI efficiency, crypto mining, climate impact
+
+  // Human Enhancement & AI-Human Merger (TIER 4.6)
+  humanEnhancementSystem: import('../types/humanEnhancement').HumanEnhancementSystem; // AI-assisted cognition, BCI adoption, cognitive stratification, merger pathways
 
   // Regional Biodiversity System (TIER 1.7 - Crisis Realism)
   biodiversitySystem: import('../types/regionalBiodiversity').BiodiversitySystem; // Regional biodiversity tracking, nuclear/pollution effects

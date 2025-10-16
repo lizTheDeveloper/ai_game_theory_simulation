@@ -365,7 +365,11 @@ export function updateRegionalPopulations(state: GameState): void {
     const foodAvailability = Math.min(1.0, foodStock / 100);
     const waterAvailability = Math.min(1.0, waterStock / 100);
     const resourceModifier = Math.min(foodAvailability, waterAvailability);
-    const ecosystemModifier = isNaN(env.biodiversityIndex) ? 0.5 : env.biodiversityIndex;
+    // FIX (Oct 16, 2025): Same biodiversity decoupling as global population
+    const biodiversity = isNaN(env.biodiversityIndex) ? 0.35 : env.biodiversityIndex;
+    const ecosystemModifier = biodiversity < 0.20 
+      ? biodiversity * 2.5 
+      : Math.max(0.8, 0.8 + (biodiversity - 0.2) * 0.5);
     const economicStage = isNaN(state.globalMetrics.economicTransitionStage) ? 0 : state.globalMetrics.economicTransitionStage;
     const techModifier = 1.0 +
       (economicStage * 0.2) +

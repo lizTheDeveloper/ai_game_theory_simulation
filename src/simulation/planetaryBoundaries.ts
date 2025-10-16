@@ -448,46 +448,98 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   system.boundariesBreachedHistory.push(system.boundariesBreached);
   system.tippingPointRiskHistory.push(system.tippingPointRisk);
 
-  // === 4. UPDATE CASCADE TRIGGER (P0.3 FIX: STOCHASTIC) ===
-  // PROBLEM: Deterministic trigger caused 100% identical outcomes in Monte Carlo
-  // FIX: Stochastic trigger with quadratic probability curve
-  // - Risk 50-100% maps to 0-10% monthly trigger chance
-  // - Higher risk = higher probability, but never guaranteed
-  // - Adds essential variance to Monte Carlo simulations
+  // === 4. BAYESIAN CASCADE TRIGGER (Oct 16, 2025) ===
+  // Blended model with 3 elements:
+  // 1. Time-dependent hazard functions (different threats kill at different speeds)
+  // 2. Survival-based adjustment (learning to cope reduces risk)
+  // 3. Bayesian belief updating (interventions update posterior risk)
+  
   if (system.tippingPointRisk > 0.5) {
-    // Cascade probability scales quadratically with risk (more sensitive near extremes)
-    const cascadeProbability = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 2.0); // 0-1 scale
-    const monthlyTriggerChance = cascadeProbability * 0.10; // Max 10% per month at risk=1.0
+    // Track when we first entered high-risk zone
+    if (!(system as any).firstHighRiskMonth) {
+      (system as any).firstHighRiskMonth = state.currentMonth;
+    }
+    
+    // === ELEMENT 1: TIME-DEPENDENT HAZARD BY BOUNDARY TYPE ===
+    // Fast killers (1-6 months): Water, food
+    const fastBoundaries = ['freshwater_change', 'biogeochemical_flows'];
+    const fastRisk = fastBoundaries.reduce((sum, name) => {
+      const boundary = system.boundaries[name as BoundaryName];
+      return sum + (boundary?.status !== 'safe' ? 1 : 0);
+    }, 0) / fastBoundaries.length;
+    
+    // Medium killers (6-36 months): Climate, ocean, pollution
+    const mediumBoundaries = ['climate_change', 'ocean_acidification', 'novel_entities'];
+    const mediumRisk = mediumBoundaries.reduce((sum, name) => {
+      const boundary = system.boundaries[name as BoundaryName];
+      return sum + (boundary?.status !== 'safe' ? 1 : 0);
+    }, 0) / mediumBoundaries.length;
+    
+    // Slow killers (36-120 months): Biodiversity, land use
+    const slowBoundaries = ['biosphere_integrity', 'land_system_change'];
+    const slowRisk = slowBoundaries.reduce((sum, name) => {
+      const boundary = system.boundaries[name as BoundaryName];
+      return sum + (boundary?.status !== 'safe' ? 1 : 0);
+    }, 0) / slowBoundaries.length;
+    
+    // Weighted by kill speed (fast = 3x, medium = 1x, slow = 0.3x)
+    const weightedRisk = (fastRisk * 3.0 + mediumRisk * 1.0 + slowRisk * 0.3) / 4.3;
+    
+    // === ELEMENT 2: SURVIVAL-BASED ADJUSTMENT (BAYESIAN INFERENCE) ===
+    // If we've survived high risk for N months, actual risk is probably lower than estimated
+    const monthsSurvivedAtHighRisk = state.currentMonth - ((system as any).firstHighRiskMonth || state.currentMonth);
+    // Decay: 30 years (360 months) to fully adjust belief
+    const survivalAdjustment = Math.max(0.3, 1.0 - (monthsSurvivedAtHighRisk / 360));
+    
+    // === ELEMENT 3: TRAJECTORY-BASED BELIEF UPDATE ===
+    // Are boundaries improving or worsening?
+    const recentImprovement = system.boundariesImproving / Math.max(1, system.boundariesBreached);
+    const trajectoryMultiplier = system.boundariesWorsening > system.boundariesImproving ? 1.3 : 0.7;
+    
+    // === COMBINED POSTERIOR RISK ===
+    const priorRisk = system.tippingPointRisk; // Original calculation
+    const posteriorRisk = weightedRisk * survivalAdjustment * trajectoryMultiplier;
+    const blendedRisk = (priorRisk + posteriorRisk) / 2; // Blend frequentist + Bayesian
+    
+    // Research-backed trigger rate: 40-70% over 30 years = 0.5-2% per year = 0.05-0.2% per month
+    const cascadeProbability = Math.pow(Math.max(0, blendedRisk - 0.5) / 0.5, 2.0);
+    const monthlyTriggerChance = cascadeProbability * 0.02; // Max 2% per month (not 10%)
+    
+    // Grace period: No trigger in first 24 months (cascades take 2-5 years to manifest)
+    const gracePeriod = state.currentMonth < 24;
 
-    // Stochastic trigger: cascade can START randomly based on risk
-    if (!system.cascadeActive && Math.random() < monthlyTriggerChance) {
+    // Stochastic trigger with Bayesian adjustment
+    if (!system.cascadeActive && !gracePeriod && Math.random() < monthlyTriggerChance) {
       system.cascadeActive = true;
       system.cascadeStartMonth = state.currentMonth;
       console.log(`\n🌪️ ========== TIPPING POINT CASCADE TRIGGERED ==========`);
       console.log(`Month: ${state.currentMonth}`);
       console.log(`Boundaries breached: ${system.boundariesBreached}/9`);
-      console.log(`Tipping point risk: ${(system.tippingPointRisk * 100).toFixed(1)}%`);
-      console.log(`Trigger chance: ${(monthlyTriggerChance * 100).toFixed(2)}% per month`);
+      console.log(`Prior risk: ${(priorRisk * 100).toFixed(1)}%`);
+      console.log(`Posterior risk (Bayesian): ${(posteriorRisk * 100).toFixed(1)}%`);
+      console.log(`Survival adjustment: ${(survivalAdjustment * 100).toFixed(0)}% (${monthsSurvivedAtHighRisk} months)`);
+      console.log(`Trigger chance: ${(monthlyTriggerChance * 100).toFixed(3)}% per month`);
       console.log(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
-      console.log(`Climate → Biosphere → Freshwater → Ocean → Land`);
-      console.log(`Mortality now scales with environmental thresholds (food, water, climate)`);
-      console.log(`Recovery possible with aggressive environmental interventions\n`);
+      console.log(`Fast killers (water/food): ${(fastRisk * 100).toFixed(0)}%`);
+      console.log(`Medium killers (climate/ocean): ${(mediumRisk * 100).toFixed(0)}%`);
+      console.log(`Slow killers (biodiversity/land): ${(slowRisk * 100).toFixed(0)}%`);
+      console.log(`Mortality now scales with environmental thresholds`);
+      console.log(`Recovery possible with aggressive interventions\n`);
     }
 
-    // Once active, severity scales continuously with risk
+    // Once active, severity scales with blended risk
     if (system.cascadeActive) {
-      // P0.5 (Oct 15, 2025): Add stochastic variation to cascade severity
-      const baseSeverity = Math.pow((system.tippingPointRisk - 0.5) / 0.5, 1.5); // 0-1 scale
-      // Add ±20% variation for monthly shocks (extreme weather, local resilience, random events)
-      const stochasticMultiplier = 0.8 + Math.random() * 0.4; // 80% to 120%
+      const baseSeverity = Math.pow(Math.max(0, blendedRisk - 0.5) / 0.5, 1.5);
+      const stochasticMultiplier = 0.8 + Math.random() * 0.4;
       system.cascadeSeverity = baseSeverity * stochasticMultiplier;
-      system.cascadeMultiplier = 1.0 + system.cascadeSeverity; // 1.0x → 2.0x
+      system.cascadeMultiplier = 1.0 + system.cascadeSeverity;
     }
   } else if (system.cascadeActive && system.tippingPointRisk < 0.45) {
     // Cascade can REVERSE if risk drops significantly
     system.cascadeActive = false;
     system.cascadeSeverity = 0;
     system.cascadeMultiplier = 1.0;
+    delete (system as any).firstHighRiskMonth; // Reset survival tracking
     console.log(`\n✅ TIPPING POINT CASCADE REVERSED (Month ${state.currentMonth})`);
     console.log(`Environmental interventions successful! Risk reduced below threshold.\n`);
   }

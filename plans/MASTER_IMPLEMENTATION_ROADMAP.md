@@ -54,9 +54,9 @@
 
 **New Outcome Spaces:**
 
-- [ ] **TIER 4.6: Human Enhancement & Merger Pathways** (7h)
-  BCI adoption, human-AI hybrids, cognitive apartheid outcomes
-  → See: `plans/tier4-6-human-enhancement.md`
+- [x] **TIER 4.6: Human Enhancement & Merger Pathways** ✅ (8h) **COMPLETE**
+  AI-assisted cognition, BCI adoption, cognitive stratification, merger pathways
+  → See: `plans/tier4-6-human-enhancement.md` (research-backed, integrated with P2.3 segments)
 
 **Research-Backed Enhancements:**
 
@@ -182,10 +182,11 @@
 ## Progress Summary
 
 **Completed:** P0 (7/7), P1 (5/5), P2 (4/5), Monte Carlo Bug Fixes (15/15)
-**Active:** 1 critical fix + 2 medium features + 14 low-priority enhancements + 3 Black Mirror phases
-**Total Remaining Effort:** ~140-170 hours (includes 37-49 weeks Black Mirror phased integration)
+**Active:** 1 critical fix + 1 medium feature + 14 low-priority enhancements + 3 Black Mirror phases
+**Total Remaining Effort:** ~132-162 hours (includes 37-49 weeks Black Mirror phased integration)
 
 **Recent Completions (Oct 16, 2025):**
+- ✅ TIER 4.6: Human Enhancement & Merger Pathways - AI-assisted cognition, BCI adoption, cognitive stratification
 - ✅ P2.3: Heterogeneous Population Segments - 5 social segments with differential crisis vulnerability
 - ✅ **Monte Carlo Bug Fixes (15/15)** - All critical, significant, and minor bugs fixed
   - Critical: Fixed crashes, undefined variables, data corruption (7 bugs)

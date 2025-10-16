@@ -126,7 +126,14 @@ export function updateHumanPopulation(state: GameState): void {
   const resourceModifier = Math.min(foodAvailability, waterAvailability);
 
   // Ecosystem modifier: ecosystem services support humans
-  const ecosystemModifier = isNaN(env.biodiversityIndex) ? 0.5 : env.biodiversityIndex; // 0 = ecosystem collapse
+  // FIX (Oct 16, 2025): Biodiversity loss affects LONG-TERM resilience (pollination, climate regulation)
+  // NOT immediate carrying capacity. Industrial agriculture feeds 8B despite 65% biodiversity loss.
+  // Research: No evidence that 35% biodiversity = 35% capacity in 2025.
+  // Only catastrophic collapse (<20%) immediately constrains food production.
+  const biodiversity = isNaN(env.biodiversityIndex) ? 0.35 : env.biodiversityIndex;
+  const ecosystemModifier = biodiversity < 0.20 
+    ? biodiversity * 2.5  // Catastrophic: 20% biodiv → 50% capacity, 10% → 25%, 0% → 0%
+    : Math.max(0.8, 0.8 + (biodiversity - 0.2) * 0.5); // 20-100% biodiv → 80-120% capacity
 
   // Tech modifier: advancement increases capacity
   const economicStage = isNaN(state.globalMetrics.economicTransitionStage) ? 0 : state.globalMetrics.economicTransitionStage;
