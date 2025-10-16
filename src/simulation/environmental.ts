@@ -215,7 +215,35 @@ export function updateEnvironmentalAccumulation(
   // Apply biodiversity loss
   const currentBiodiversity = isNaN(env.biodiversityIndex) ? 1.0 : env.biodiversityIndex;
   env.biodiversityIndex = Math.max(0, Math.min(1, currentBiodiversity - biodiversityLossRate + naturalRecovery));
-  
+
+  // === P1.5: ECOSYSTEM REGENERATION FROM POPULATION DECLINE ===
+  // Historical evidence: Nature rebounds when human pressure reduces
+  // - Chernobyl Exclusion Zone: Wildlife thrives with humans gone (1986-present)
+  // - COVID-19 lockdowns: Air quality improved 30-60% in 2 months (2020)
+  // - Post-Black Death: Forest regrowth in Europe (1350-1400)
+  // - Mayan collapse: Jungle reclaimed cities in decades (800-900 CE)
+  // Research: Ecological succession takes 20-50 years, but initial recovery is fast
+  const currentPressure = state.humanPopulationSystem.population / state.humanPopulationSystem.carryingCapacity;
+
+  if (currentPressure < 0.5) { // Population below half of carrying capacity
+    // Regeneration rate scales with reduced pressure: 0-1% monthly
+    // At 50% pressure: 0%/month (no bonus)
+    // At 25% pressure: 0.5%/month
+    // At 0% pressure: 1%/month (maximum recovery)
+    const pressureReduction = 0.5 - currentPressure; // 0 to 0.5
+    const regenerationRate = pressureReduction * 0.02; // Up to 1% monthly
+
+    // Nature recovers when humans aren't actively destroying it
+    env.biodiversityIndex = Math.min(1.0, env.biodiversityIndex + regenerationRate);
+    env.resourceReserves = Math.min(1.0, env.resourceReserves + regenerationRate * 0.5); // 50% as fast
+    env.climateStability = Math.min(1.0, env.climateStability + regenerationRate * 0.3); // 30% as fast (carbon sinks recovering)
+
+    if (state.currentMonth % 24 === 0 && regenerationRate > 0.003) { // Log every 2 years if significant
+      console.log(`🌱 NATURAL REGENERATION: Low human pressure (${(currentPressure * 100).toFixed(0)}%), ecosystems recovering at +${(regenerationRate * 100).toFixed(2)}%/month`);
+      console.log(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(1)}%, Resources: ${(env.resourceReserves * 100).toFixed(1)}%, Climate: ${(env.climateStability * 100).toFixed(1)}%`);
+    }
+  }
+
   // === CRISIS TRIGGERS ===
   checkEnvironmentalCrises(state);
 }
@@ -526,14 +554,16 @@ export function hasEnvironmentalCrisis(env: EnvironmentalAccumulation): boolean 
 
 /**
  * Calculate cascading failure multiplier based on total active crises
- * 
+ *
  * When multiple crises are active across all systems, they amplify each other.
+ * P1.3 FIX: Reduced compounding from 0.5 to 0.2 (was too aggressive)
  * 2 crises: 1.0x (baseline)
- * 3 crises: 1.5x degradation
- * 4 crises: 2.0x degradation
- * 5+ crises: 2.5x+ degradation (catastrophic)
- * 
+ * 3 crises: 1.2x degradation (was 1.5x)
+ * 4 crises: 1.4x degradation (was 2.0x)
+ * 6 crises: 1.8x degradation (was 3.0x)
+ *
  * This represents systemic collapse where failures compound.
+ * Research: Historical crises rarely amplify more than 2x (COVID + economic crisis)
  */
 function calculateCascadingFailureMultiplier(state: GameState): number {
   const activeCrises = [
@@ -551,12 +581,12 @@ function calculateCascadingFailureMultiplier(state: GameState): number {
     state.technologicalRisk.corporateDystopiaActive,
     state.technologicalRisk.complacencyCrisisActive
   ].filter(Boolean).length;
-  
+
   if (activeCrises <= 2) {
     return 1.0; // No amplification for 1-2 crises
   }
-  
-  // Each crisis beyond 2 adds 50% more degradation
-  return 1.0 + (activeCrises - 2) * 0.5;
+
+  // P1.3 FIX: Each crisis beyond 2 adds 20% more degradation (was 50%)
+  return 1.0 + (activeCrises - 2) * 0.2;
 }
 

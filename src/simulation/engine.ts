@@ -684,11 +684,21 @@ export class SimulationEngine {
       // NEW (Oct 13, 2025): 7-tier outcome classification system
       // Replaces binary extinction with nuanced severity levels
       const classifiedOutcome = classifyPopulationOutcome(finalPopulation, initialState.humanPopulationSystem.population, state);
-      
-      if (classifiedOutcome !== 'status_quo') {
-        // Population-based outcome detected
-        finalOutcome = classifiedOutcome;
+
+      // P1.4 FIX: Map 7-tier classification to 4 final outcomes
+      // Only TRUE extinction (<10K people) should report as 'extinction'
+      // All other severe outcomes (terminal, bottleneck, collapse, etc.) are 'dystopia'
+      if (classifiedOutcome === 'extinction') {
+        // TRUE EXTINCTION: <10K people (not 1B-4B survivors!)
+        finalOutcome = 'extinction';
         finalOutcomeProbability = 1.0;
+        console.log(`   💀 TRUE EXTINCTION confirmed (<10K people)\n`);
+      } else if (classifiedOutcome !== 'status_quo') {
+        // Population-based DYSTOPIA (terminal, bottleneck, dark_age, collapse, crisis_era)
+        // These are severe outcomes but humanity survives (100M-7B people)
+        finalOutcome = 'dystopia';
+        finalOutcomeProbability = 1.0;
+        console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - humanity survives with ${finalPopulation.toFixed(2)}B people\n`);
       } else if (outcomes.utopiaProbability > 0.6 && outcomes.utopiaProbability > outcomes.dystopiaProbability * 1.5) {
         // Clear Utopia trajectory
         finalOutcome = 'utopia';

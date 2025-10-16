@@ -162,6 +162,57 @@ export function updateHumanPopulation(state: GameState): void {
     stabilityModifier *
     pressureModifier;
 
+  // P1.5: POST-CRISIS BABY BOOM EFFECT
+  // Historical evidence: Population rebounds after EVERY major crisis
+  // - Post-WWII baby boom: +30-50% birth rates (1946-1964)
+  // - Post-Black Death: +50-80% fertility recovery (1350-1400)
+  // - Post-1918 flu: +20-40% birth spike (1919-1925)
+  // Research: Demographic transition theory shows recovery within 1-5 years
+  const activeCrises = [
+    state.environmentalAccumulation.resourceCrisisActive,
+    state.environmentalAccumulation.pollutionCrisisActive,
+    state.environmentalAccumulation.climateCrisisActive,
+    state.environmentalAccumulation.ecosystemCrisisActive,
+    state.socialAccumulation.meaningCollapseActive,
+    state.socialAccumulation.institutionalFailureActive,
+    state.socialAccumulation.socialUnrestActive,
+    state.technologicalRisk.controlLossActive,
+    state.technologicalRisk.corporateDystopiaActive,
+    state.technologicalRisk.complacencyCrisisActive
+  ].filter(Boolean).length;
+
+  // Initialize crisis tracking if not present
+  if (!pop.previousActiveCrises) {
+    pop.previousActiveCrises = activeCrises;
+  }
+
+  // Detect crisis resolution (crisis count dropped)
+  if (pop.previousActiveCrises > 0 && activeCrises < pop.previousActiveCrises) {
+    pop.monthsSinceLastCrisis = 0; // Reset timer
+    if (state.currentMonth % 12 === 0) {
+      console.log(`🕊️  CRISIS RESOLUTION: ${pop.previousActiveCrises - activeCrises} crisis(es) resolved`);
+    }
+  }
+
+  // Apply baby boom effect (decays over 60 months)
+  if (pop.monthsSinceLastCrisis < 60 && pop.monthsSinceLastCrisis >= 0) {
+    // Recovery boost: 30% → 80% over first 60 months, then decays
+    // Formula: 1.3 + (progress * 0.5) = 1.3x to 1.8x boost
+    const recoveryProgress = Math.min(1.0, pop.monthsSinceLastCrisis / 60);
+    const recoveryBoost = 1.3 + (recoveryProgress * 0.5);
+    const finalBoost = Math.min(1.8, recoveryBoost);
+
+    pop.adjustedBirthRate *= finalBoost;
+
+    if (state.currentMonth % 24 === 0 && finalBoost > 1.35) { // Log every 2 years
+      console.log(`👶 BABY BOOM: Birth rate +${((finalBoost - 1.0) * 100).toFixed(0)}% (${pop.monthsSinceLastCrisis} months post-crisis)`);
+    }
+  }
+
+  // Update crisis tracking
+  pop.previousActiveCrises = activeCrises;
+  pop.monthsSinceLastCrisis++;
+
   // === 3. CALCULATE DEATH RATE (NEW: Research-Based) ===
   // NEW (Oct 13, 2025): Environmental mortality now calculated from actual thresholds
   // FIX (Oct 13, 2025): Now tracks deaths by category to fix missing 90% in reports
@@ -216,7 +267,8 @@ export function updateHumanPopulation(state: GameState): void {
     const overshootDeaths = overshoot * 0.05; // 5% of excess dies per month
     pop.population -= overshootDeaths;
     pop.monthlyExcessDeaths += overshootDeaths;
-    pop.deathsByCategory.famine += overshootDeaths; // Track overshoot deaths as famine
+    // FIX P1.1: Convert overshoot deaths from billions to millions for consistency
+    pop.deathsByCategory.famine += overshootDeaths * 1000; // Track overshoot deaths as famine (in millions)
   }
 
   // === 8. TRACK CUMULATIVE DEATHS ===
@@ -224,7 +276,7 @@ export function updateHumanPopulation(state: GameState): void {
   const actualDeaths = previousPopulation - pop.population;
   pop.monthlyExcessDeaths = Math.max(0, actualDeaths - naturalDeaths);
   pop.cumulativeCrisisDeaths += pop.monthlyExcessDeaths;
-  
+
   // FIX (Oct 13, 2025): Track environmental deaths by category
   // This fixes the "90% of deaths missing" bug in Monte Carlo reports
   // Environmental mortality is a rate (0-0.10), applied to current population
@@ -234,6 +286,19 @@ export function updateHumanPopulation(state: GameState): void {
   pop.deathsByCategory.climate += (envMortality.climate * currentPopBillions * 1000);
   pop.deathsByCategory.ecosystem += (envMortality.ecosystem * currentPopBillions * 1000);
   pop.deathsByCategory.pollution += (envMortality.pollution * currentPopBillions * 1000);
+
+  // DEBUG (P1.1 - Death Accounting): Log death tracking mismatch
+  if (state.currentMonth % 12 === 0 && actualDeaths > 0.1) { // Log annually when deaths >100M
+    const trackedDeaths = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0) / 1000; // Convert millions to billions
+    const discrepancy = Math.abs(actualDeaths - trackedDeaths);
+    if (discrepancy > 0.5) { // >500M discrepancy
+      console.log(`⚠️  DEATH ACCOUNTING MISMATCH (Month ${state.currentMonth}):`);
+      console.log(`   Actual population deaths: ${actualDeaths.toFixed(3)}B (${(actualDeaths * 1000).toFixed(0)}M)`);
+      console.log(`   Tracked by category: ${trackedDeaths.toFixed(3)}B (${(trackedDeaths * 1000).toFixed(0)}M)`);
+      console.log(`   Discrepancy: ${discrepancy.toFixed(3)}B (${(discrepancy * 1000).toFixed(0)}M) - ${(discrepancy / actualDeaths * 100).toFixed(0)}%`);
+      console.log(`   Categories: war=${(pop.deathsByCategory.war).toFixed(0)}M, famine=${(pop.deathsByCategory.famine).toFixed(0)}M, climate=${(pop.deathsByCategory.climate).toFixed(0)}M`);
+    }
+  }
 
   // === 9. CHECK THRESHOLDS ===
   pop.geneticBottleneckActive = pop.population < (pop.bottleneckThreshold / 1000000000); // Convert to billions
@@ -539,8 +604,8 @@ export function addAcuteCrisisDeaths(
   pop.monthlyExcessDeaths += deathsInBillions;
   pop.cumulativeCrisisDeaths += deathsInBillions;
 
-  // Track by category
-  pop.deathsByCategory[category] += deathsInBillions;
+  // Track by category (FIX P1.1: Convert to millions for consistency with environmental deaths)
+  pop.deathsByCategory[category] += deathsInBillions * 1000; // Convert billions to millions
 
   // Log significant events
   if (deathsInBillions > 0.001) { // > 1M deaths
