@@ -87,6 +87,7 @@ import {
   // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
   CrisisPointsPhase,
+  ExogenousShockPhase,  // Contingency & Agency Phase 2 (Oct 17, 2025)
   // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
   ComputeGrowthPhase,
   OrganizationTurnsPhase,
@@ -373,6 +374,7 @@ export class SimulationEngine {
     // Batch 3: Special phases (22.x - 23.x)
     this.orchestrator.registerPhase(new BenchmarkEvaluationsPhase());
     this.orchestrator.registerPhase(new CrisisPointsPhase());
+    this.orchestrator.registerPhase(new ExogenousShockPhase());  // Contingency & Agency Phase 2 (Oct 17, 2025)
 
     // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
     this.orchestrator.registerPhase(new ComputeGrowthPhase());
