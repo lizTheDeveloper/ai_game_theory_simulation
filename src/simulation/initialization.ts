@@ -48,6 +48,7 @@ import { initializeHumanEnhancementSystem } from './humanEnhancement';
 import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution } from './bionicSkills'; // Research-validated AI skill enhancement + labor-capital distribution
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
+import { initializeNuclearCommandControl } from './nuclearCommandControl';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -552,6 +553,7 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
     countryPopulationSystem: initializeCountryPopulations(),
     nuclearWinterState: initializeNuclearWinterState(),  // TIER 1.7.4: Long-term nuclear war effects
+    nuclearCommandControlState: initializeNuclearCommandControl(),  // TIER 1 Phase 1B: Circuit breakers
 
     // TIER 2: Major Mitigations
     ubiSystem: initializeUBISystem(),

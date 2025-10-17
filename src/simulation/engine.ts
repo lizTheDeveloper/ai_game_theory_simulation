@@ -63,6 +63,7 @@ import {
   HumanEnhancementPhase,  // TIER 4.6 (Oct 16, 2025): Human Enhancement & Merger Pathways
   MemeticEvolutionPhase,  // P2.6 (Oct 16, 2025): Memetic Evolution & Polarization Dynamics
   MADDeterrencePhase,
+  NuclearCommandControlPhase,  // TIER 1 Phase 1B (Oct 16, 2025): Circuit breakers (human-in-the-loop, kill switches, time delays)
   ResourceEconomyPhase,
   ResourceTechnologyPhase,
   GeoengineringPhase,
@@ -347,6 +348,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new HumanEnhancementPhase());  // TIER 4.6: Human Enhancement & Merger Pathways
     this.orchestrator.registerPhase(new MemeticEvolutionPhase());  // P2.6: Memetic Evolution & Polarization Dynamics
     this.orchestrator.registerPhase(new MADDeterrencePhase());
+    this.orchestrator.registerPhase(new NuclearCommandControlPhase());  // TIER 1 Phase 1B: Circuit breakers
     this.orchestrator.registerPhase(new ResourceEconomyPhase());
     this.orchestrator.registerPhase(new ResourceTechnologyPhase());
     this.orchestrator.registerPhase(new GeoengineringPhase());

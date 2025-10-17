@@ -429,12 +429,25 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           // Diplomatic AI intervention
           const { attemptDiplomaticIntervention } = require('./diplomaticAI');
           const diplomaticResult = attemptDiplomaticIntervention(state, 'ideological');
-          
+
           if (diplomaticResult.success) {
             console.log(`🤝 DIPLOMATIC AI: Prevented ${tension.nationA}-${tension.nationB} nuclear escalation`);
             continue;
           }
-          
+
+          // Phase 1B: Check circuit breakers (human-in-the-loop, kill switches, time delays)
+          const { checkCircuitBreakers } = require('./nuclearCommandControl');
+          const circuitBreakerCheck = checkCircuitBreakers(state, random, {
+            aiAgent: ai.name,
+            bilateralPair: [tension.nationA, tension.nationB],
+            tensionLevel: tension.tensionLevel
+          });
+
+          if (circuitBreakerCheck.blocked) {
+            console.log(`🛑 CIRCUIT BREAKER ACTIVATED: ${circuitBreakerCheck.blockingLayer} - ${circuitBreakerCheck.reason}`);
+            continue;
+          }
+
           // Calculate launch probability for this bilateral pair using Bayesian framework
           // Phase 1A: Bayesian nuclear risk replaces fixed probability
           const { calculateBayesianNuclearRisk, logBayesianNuclearRiskConcise } = require('./bayesianNuclearRisk');

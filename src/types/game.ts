@@ -954,6 +954,9 @@ export interface GameState {
   // TIER 1.7.4: Nuclear Winter & Long-Term Effects (Oct 13, 2025)
   nuclearWinterState: import('../types/nuclearWinter').NuclearWinterState; // Catastrophic post-nuclear war effects
 
+  // TIER 1 Phase 1B: Nuclear Command & Control - Circuit Breakers (Oct 16, 2025)
+  nuclearCommandControlState: import('../simulation/nuclearCommandControl').NuclearCommandControlState; // Human-in-the-loop, kill switches, time delays
+
   // Universal Basic Income + Purpose Infrastructure (TIER 2.1)
   ubiSystem: import('../types/ubi').UBISystem; // Enhanced UBI with purpose infrastructure for post-work society
 

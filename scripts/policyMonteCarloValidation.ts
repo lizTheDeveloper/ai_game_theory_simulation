@@ -13,6 +13,7 @@
 import { SimulationEngine } from '../src/simulation/engine';
 import { createDefaultInitialState } from '../src/simulation/initialization';
 import { GameState } from '../src/types/game';
+import { generateDistributionReport } from './utils/statisticalAnalysis';
 
 interface PolicyScenario {
   name: string;
@@ -326,6 +327,46 @@ function generateReport(allResults: ScenarioMetrics[]): void {
       console.log(`     - Policy interaction failures`);
     }
   }
+
+  // DISTRIBUTION ANALYSIS - Variance investigation (TIER 0D Bug #2)
+  console.log(`\n\n${'='.repeat(80)}`);
+  console.log(`📊 VARIANCE & DISTRIBUTION ANALYSIS (TIER 0D Investigation)`);
+  console.log(`${'='.repeat(80)}`);
+  console.log(`\nAnalyzing unemployment variance to determine if high variance is due to:`);
+  console.log(`  1. Bimodal distribution (crisis cascades - survivors vs collapsed)`);
+  console.log(`  2. Uniform distribution (chaotic dynamics - butterfly effects)`);
+  console.log(`  3. Realistic historical contingency (policy-dependent variation)\n`);
+
+  // Generate distribution reports for each scenario
+  for (const [scenario, results] of byScenario.entries()) {
+    const unemployments = results.map(r => r.unemployment);
+    console.log(generateDistributionReport(unemployments, `Unemployment - ${scenario}`, '%'));
+  }
+
+  // Cross-scenario comparison
+  console.log(`\n\n${'='.repeat(80)}`);
+  console.log(`📊 CROSS-SCENARIO VARIANCE COMPARISON`);
+  console.log(`${'='.repeat(80)}\n`);
+
+  console.log(`Coefficient of Variation (CV) by Scenario:`);
+  console.log(`(CV > 100% = more variance than mean, CV > 50% = extreme variance)\n`);
+
+  for (const [scenario, stats] of scenarioStats.entries()) {
+    const unemployCV = (stats.unemployment.std / stats.unemployment.mean) * 100;
+    const wageCV = (stats.wageGap.std / stats.wageGap.mean) * 100;
+    const qolCV = (stats.qol.std / stats.qol.mean) * 100;
+
+    const statusIcon = unemployCV > 100 ? '❌' : unemployCV > 50 ? '⚠️' : unemployCV > 30 ? 'ℹ️' : '✅';
+
+    console.log(`${statusIcon} ${scenario.padEnd(25)} Unemployment CV: ${unemployCV.toFixed(1)}%  Wage Gap CV: ${wageCV.toFixed(1)}%  QoL CV: ${qolCV.toFixed(1)}%`);
+  }
+
+  console.log(`\n\n💡 INTERPRETATION SUMMARY:`);
+  console.log(`See distribution histograms above for each scenario to determine:`);
+  console.log(`  - If histograms show TWO PEAKS with valley between → Bimodal (crisis cascades)`);
+  console.log(`  - If histograms show UNIFORM spread → Chaotic (missing stabilization)`);
+  console.log(`  - If histograms show SINGLE PEAK with moderate tail → Realistic variance`);
+  console.log(`\nThis analysis addresses TIER 0D Bug #2: Extreme Unemployment Variance`);
 }
 
 // Main execution
@@ -348,7 +389,8 @@ async function main() {
     process.stdout.write(`   Running ${runsPerScenario} simulations: `);
 
     for (let i = 0; i < runsPerScenario; i++) {
-      const seed = baseSeed + (SCENARIOS.indexOf(scenario) * runsPerScenario) + i;
+      // Use random seeds to avoid seed range correlation artifacts
+      const seed = Math.floor(Math.random() * 1000000);
       const metrics = runScenario(scenario, seed, maxMonths, true);
       allResults.push(metrics);
     }

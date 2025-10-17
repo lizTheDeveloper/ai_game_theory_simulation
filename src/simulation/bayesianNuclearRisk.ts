@@ -40,6 +40,7 @@ export interface BayesianNuclearRisk {
     madDeterrence: number;            // 0.1-1.0x (MAD strength REDUCES risk)
     humanVetoPoints: number;          // 0.3-1.0x (multiple authorization steps REDUCE risk)
     diplomaticAI: number;             // 0.5-1.0x (AI-mediated diplomacy REDUCES risk)
+    circuitBreakers: number;          // 0.05-1.0x (Phase 1B: human-in-the-loop, kill switches, time delays REDUCE risk)
   };
 
   // Final posterior (updated belief)
@@ -310,6 +311,26 @@ function calculateDiplomaticAIMultiplier(state: GameState): number {
 }
 
 /**
+ * Calculate circuit breakers multiplier (REDUCER)
+ *
+ * Phase 1B: Human-in-the-loop, kill switches, time delays
+ * Research: Biden-Xi agreement, DoD Directive 3000.09, CCW safeguards
+ *
+ * @returns 0.05-1.0x (strong circuit breakers, 95% reduction) to 1.0 (no circuit breakers, no reduction)
+ */
+function calculateCircuitBreakersMultiplier(state: GameState): number {
+  const ncc = state.nuclearCommandControlState;
+
+  if (!ncc) {
+    return 1.0; // No circuit breakers deployed = no reduction
+  }
+
+  // Import circuit breaker calculator
+  const { calculateCircuitBreakerMultiplier } = require('./nuclearCommandControl');
+  return calculateCircuitBreakerMultiplier(state);
+}
+
+/**
  * Calculate Bayesian nuclear risk
  *
  * Uses Bayes' theorem to update beliefs about nuclear war probability
@@ -333,6 +354,7 @@ export function calculateBayesianNuclearRisk(state: GameState): BayesianNuclearR
     madDeterrence: calculateMADDeterrenceMultiplier(state),
     humanVetoPoints: calculateHumanVetoPointsMultiplier(state),
     diplomaticAI: calculateDiplomaticAIMultiplier(state),
+    circuitBreakers: calculateCircuitBreakersMultiplier(state), // Phase 1B
   };
 
   // Multiply all multipliers together
@@ -391,6 +413,7 @@ export function logBayesianNuclearRisk(risk: BayesianNuclearRisk, prefix: string
   console.log(`${prefix}      MAD Deterrence: ${risk.evidenceMultipliers.madDeterrence.toFixed(2)}x`);
   console.log(`${prefix}      Human Veto Points: ${risk.evidenceMultipliers.humanVetoPoints.toFixed(2)}x`);
   console.log(`${prefix}      Diplomatic AI: ${risk.evidenceMultipliers.diplomaticAI.toFixed(2)}x`);
+  console.log(`${prefix}      Phase 1B Circuit Breakers: ${risk.evidenceMultipliers.circuitBreakers.toFixed(2)}x`);
 
   console.log(`${prefix}\n   TOTAL MULTIPLIER: ${risk.breakdown.totalMultiplier.toFixed(2)}x`);
   console.log(`${prefix}   POSTERIOR: ${risk.breakdown.posteriorFormatted} per month`);
