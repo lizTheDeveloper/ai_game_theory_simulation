@@ -42,6 +42,7 @@ export { PowerGenerationPhase } from './PowerGenerationPhase';
 export { HumanEnhancementPhase } from './HumanEnhancementPhase';
 export { MemeticEvolutionPhase } from './MemeticEvolutionPhase';  // P2.6 (Oct 16, 2025)
 export { MADDeterrencePhase } from './MADDeterrencePhase';
+export { NuclearCommandControlPhase } from './NuclearCommandControlPhase';  // TIER 1 Phase 1B (Oct 16, 2025)
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';
 export { ResourceTechnologyPhase } from './ResourceTechnologyPhase';
 export { GeoengineringPhase } from './GeoengineringPhase';

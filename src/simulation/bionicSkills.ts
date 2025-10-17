@@ -1740,15 +1740,19 @@ export function applyTeachingSupport(
  * **TRL: 8** (Pilot programs in US, India, Argentina 2010-2024)
  *
  * Job guarantees provide:
- * - Employment floor (government as employer of last resort)
+ * - Employment ceiling (government as employer of last resort)
  * - Social stability (reduces displacement anxiety)
  * - Skill maintenance (keeps workers in labor force)
  *
+ * **TERMINOLOGY NOTE:** Despite the function name "floor", this actually returns
+ * the MAXIMUM (ceiling) unemployment rate possible with a job guarantee.
+ * The term "floor" is kept for historical reasons but represents an unemployment CAP.
+ *
  * **Effect Magnitude (IDEAL CONDITIONS - Quality Public Jobs):**
- * - No program (0): Unemployment can rise without limit
- * - Weak program (0.3): Floor at ~15% unemployment
- * - Strong program (0.6): Floor at ~10% unemployment
- * - Universal program (1.0): Floor at ~5% unemployment
+ * - No program (0): Unemployment can rise without limit (20% baseline)
+ * - Weak program (0.3): Caps at ~15% unemployment
+ * - Strong program (0.6): Caps at ~10% unemployment
+ * - Universal program (1.0): Caps at ~5-15% (segment-specific)
  *
  * **CRITICAL REALITY: Job Quality Stratification**
  * Job guarantee programs create two-tier systems where job quality varies by worker status:
@@ -1779,16 +1783,17 @@ export function applyTeachingSupport(
  *      TRL: 9 (analysis of world's largest jobs program, 50M+ workers)
  *
  * @param jobGuaranteeLevel Program strength [0,1]
- * @param segmentStatus Economic status of worker (affects job quality and floor)
- * @returns Unemployment floor [0.20, 0.05]
+ * @param segmentStatus Economic status of worker (affects job quality and cap)
+ * @returns Unemployment ceiling (maximum unemployment) [0.05, 0.20]
+ *          NOTE: Despite name "floor", this is actually a CEILING (max unemployment)
  */
 export function calculateUnemploymentFloor(jobGuaranteeLevel: number, segmentStatus?: string): number {
-  // Base floor (assumes ideal conditions - quality public jobs)
-  const idealFloor = 0.05;  // 5% with universal quality program
+  // Base ceiling (assumes ideal conditions - quality public jobs)
+  const idealFloor = 0.05;  // 5% max unemployment with universal quality program
 
-  // Floor varies by segment due to job quality stratification
-  // Better jobs → lower floor (can hold out for quality)
-  // Worse jobs → higher floor (forced to take anything)
+  // Ceiling varies by segment due to job quality stratification
+  // Better jobs → lower ceiling (elite can hold out, get 5% jobs)
+  // Worse jobs → higher ceiling (precariat forced to take workfare, get 15%)
   const floorByStatus: Record<string, number> = {
     'elite': 0.05,      // Professional admin roles, can be selective (5% floor)
     'middle': 0.08,     // Skilled trades, clerical (8% floor)

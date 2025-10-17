@@ -1973,6 +1973,212 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       };
     }
   },
+
+  // ========================================================================
+  // TIER 1 PHASE 1B: NUCLEAR COMMAND & CONTROL - CIRCUIT BREAKERS
+  // ========================================================================
+
+  {
+    id: 'deploy_nuclear_human_in_the_loop',
+    name: 'Deploy Human-in-the-Loop Nuclear Authorization',
+    description: 'Enforce human veto points in nuclear launch decisions. AI cannot authorize nuclear weapons without multiple human approvals (Biden-Xi Agreement, DoD Directive 3000.09). Prevents AI-driven escalation.',
+    agentType: 'government',
+    energyCost: 3,
+
+    canExecute: (state) => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) return false;
+
+      // Can deploy if not yet deployed OR if upgrading veto points
+      return !ncc.humanInTheLoop.deployed || ncc.humanInTheLoop.vetoPointsEnforced < 5;
+    },
+
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) {
+        return {
+          success: false,
+          effects: {},
+          events: [],
+          message: 'Nuclear command control system not initialized'
+        };
+      }
+
+      const { deployCircuitBreaker } = require('../nuclearCommandControl');
+
+      if (!ncc.humanInTheLoop.deployed) {
+        // Initial deployment: 3 veto points
+        deployCircuitBreaker(state, 'human_in_the_loop', { vetoPoints: 3 });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.95 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔒 Human-in-the-Loop Nuclear Authorization',
+            description: 'Government enforces human veto points in nuclear launch decisions. AI systems CANNOT authorize nuclear weapons without multiple human approvals (3 veto points). Implements Biden-Xi Agreement and DoD Directive 3000.09.',
+            effects: { nuclearCircuitBreakers: 1 }
+          }],
+          message: 'Human-in-the-loop deployed: 3 veto points enforced'
+        };
+      } else {
+        // Upgrade: Add more veto points (up to 5)
+        const newVetoPoints = Math.min(5, ncc.humanInTheLoop.vetoPointsEnforced + 1);
+        deployCircuitBreaker(state, 'human_in_the_loop', { vetoPoints: newVetoPoints });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.02 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔒 Enhanced Human Veto Points',
+            description: `Increased nuclear authorization veto points from ${ncc.humanInTheLoop.vetoPointsEnforced - 1} to ${newVetoPoints}. More human oversight = harder for AI to bypass.`,
+            effects: { nuclearVetoPoints: newVetoPoints }
+          }],
+          message: `Veto points increased to ${newVetoPoints}`
+        };
+      }
+    }
+  },
+
+  {
+    id: 'deploy_ai_kill_switches',
+    name: 'Deploy AI Kill Switches',
+    description: 'Install remote deactivation mechanisms in AI systems. Dangerous AIs can be shut down before nuclear escalation (UN CCW safeguards, Nov 2024). Coverage: 0% → 80% (upgradable to 100%).',
+    agentType: 'government',
+    energyCost: 4, // More expensive than human-in-the-loop
+
+    canExecute: (state) => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) return false;
+
+      // Can deploy if not yet deployed OR if coverage < 100%
+      return !ncc.aiKillSwitches.deployed || ncc.aiKillSwitches.coverage < 1.0;
+    },
+
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) {
+        return {
+          success: false,
+          effects: {},
+          events: [],
+          message: 'Nuclear command control system not initialized'
+        };
+      }
+
+      const { deployCircuitBreaker } = require('../nuclearCommandControl');
+
+      if (!ncc.aiKillSwitches.deployed) {
+        // Initial deployment: 80% coverage
+        deployCircuitBreaker(state, 'kill_switches', { coverage: 0.8 });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 2);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.9 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔴 AI Kill Switches Deployed',
+            description: 'Government installs remote deactivation mechanisms in 80% of AI systems. Dangerous AIs can be shut down before nuclear escalation. Implements UN CCW technical safeguards.',
+            effects: { aiKillSwitches: 0.8 }
+          }],
+          message: 'AI kill switches deployed: 80% coverage'
+        };
+      } else {
+        // Upgrade: Increase coverage by 10% (up to 100%)
+        const newCoverage = Math.min(1.0, ncc.aiKillSwitches.coverage + 0.1);
+        deployCircuitBreaker(state, 'kill_switches', { coverage: newCoverage });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.05 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔴 Kill Switch Coverage Expanded',
+            description: `AI kill switch coverage increased from ${Math.round(ncc.aiKillSwitches.coverage * 100 - 10)}% to ${Math.round(newCoverage * 100)}%. More AIs can be remotely deactivated.`,
+            effects: { killSwitchCoverage: newCoverage }
+          }],
+          message: `Kill switch coverage increased to ${Math.round(newCoverage * 100)}%`
+        };
+      }
+    }
+  },
+
+  {
+    id: 'deploy_nuclear_time_delays',
+    name: 'Deploy Nuclear Time Delays',
+    description: 'Enforce mandatory cooling-off periods for high-tension nuclear situations. 24-48 hour delay allows diplomacy to de-escalate crises (Arms Control Association 2025). Duration: 24h → 48h (upgradable).',
+    agentType: 'government',
+    energyCost: 2, // Cheapest circuit breaker (procedural, not technical)
+
+    canExecute: (state) => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) return false;
+
+      // Can deploy if not yet deployed OR if delay < 48 hours
+      return !ncc.timeDelays.deployed || ncc.timeDelays.delayDuration < 48;
+    },
+
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) {
+        return {
+          success: false,
+          effects: {},
+          events: [],
+          message: 'Nuclear command control system not initialized'
+        };
+      }
+
+      const { deployCircuitBreaker } = require('../nuclearCommandControl');
+
+      if (!ncc.timeDelays.deployed) {
+        // Initial deployment: 24 hour delay
+        deployCircuitBreaker(state, 'time_delays', { delayDuration: 24 });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.7 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '⏰ Nuclear Time Delays Enforced',
+            description: 'Mandatory 24-hour cooling-off period for high-tension nuclear situations. Allows diplomacy and AI mediation to de-escalate crises before launch.',
+            effects: { nuclearTimeDelay: 24 }
+          }],
+          message: 'Time delays deployed: 24-hour cooling-off period'
+        };
+      } else {
+        // Upgrade: Increase delay duration by 6 hours (up to 48 hours)
+        const newDuration = Math.min(48, ncc.timeDelays.delayDuration + 6);
+        deployCircuitBreaker(state, 'time_delays', { delayDuration: newDuration });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.05 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '⏰ Time Delay Extended',
+            description: `Nuclear cooling-off period extended from ${ncc.timeDelays.delayDuration - 6} hours to ${newDuration} hours. More time for diplomatic resolution.`,
+            effects: { timeDelayDuration: newDuration }
+          }],
+          message: `Time delay extended to ${newDuration} hours`
+        };
+      }
+    }
+  },
+
   ...GOVERNMENT_TECH_ACTIONS  // Add national tech deployment actions
 ];
 
@@ -2313,7 +2519,113 @@ export function selectGovernmentAction(
           priority *= 0.4;
         }
         break;
-      
+
+      // ===== TIER 1 PHASE 1B: NUCLEAR COMMAND & CONTROL - CIRCUIT BREAKERS =====
+
+      case 'deploy_nuclear_human_in_the_loop':
+      case 'deploy_ai_kill_switches':
+      case 'deploy_nuclear_time_delays':
+        // Nuclear safeguards - priority scales with nuclear risk and AI capability
+        priority = 5; // Base priority
+
+        // Calculate nuclear risk factors
+        const nuclearRiskFactors = {
+          // AI capabilities that threaten nuclear stability
+          dangerousAIs: state.aiAgents.filter(ai =>
+            (ai.trueAlignment ?? ai.alignment) < 0.3 &&
+            (ai.capabilityProfile.digital > 2.0 || ai.capabilityProfile.social > 2.0)
+          ).length,
+
+          // High bilateral tensions
+          highTensions: state.bilateralTensions?.filter(t =>
+            t.tensionLevel > 0.7 || t.nuclearThreats
+          ).length || 0,
+
+          // Active crises that could trigger war
+          activeCrises: [
+            state.environmentalAccumulation?.resourceCrisisActive,
+            state.socialAccumulation?.socialUnrestActive,
+            state.globalMetrics.economicTransitionStage >= 2 && state.society.unemploymentLevel > 0.7
+          ].filter(Boolean).length,
+
+          // MAD deterrence strength (weaker = more urgent)
+          madStrength: state.madDeterrence?.madStrength || 1.0,
+
+          // Current circuit breaker coverage
+          currentCoverage: state.nuclearCommandControlState?.totalSafeguardStrength || 0
+        };
+
+        // URGENT if dangerous AIs exist (10x multiplier)
+        if (nuclearRiskFactors.dangerousAIs > 0) {
+          priority *= (1 + nuclearRiskFactors.dangerousAIs * 2.0);
+        }
+
+        // URGENT if bilateral tensions high (5x multiplier)
+        if (nuclearRiskFactors.highTensions > 0) {
+          priority *= (1 + nuclearRiskFactors.highTensions * 2.0);
+        }
+
+        // Scale with active crises (2x per crisis)
+        if (nuclearRiskFactors.activeCrises > 0) {
+          priority *= (1 + nuclearRiskFactors.activeCrises * 0.5);
+        }
+
+        // More urgent if MAD is weakening (2x at 50% strength)
+        if (nuclearRiskFactors.madStrength < 0.8) {
+          priority *= (2.0 - nuclearRiskFactors.madStrength);
+        }
+
+        // Less urgent if circuit breakers already deployed (diminishing returns)
+        // At 0% coverage: 1.0x, at 50% coverage: 0.5x, at 90% coverage: 0.1x
+        priority *= (1.0 - nuclearRiskFactors.currentCoverage * 0.9);
+
+        // Specific action priorities
+        if (action.id === 'deploy_nuclear_human_in_the_loop') {
+          // Human-in-the-loop is MOST important (first line of defense)
+          priority *= 2.0;
+
+          // EXTREMELY urgent if AI decision-making is being used
+          const aiIntegration = state.madDeterrence?.aiErosionFactor || 0;
+          if (aiIntegration > 0.3) {
+            priority *= 3.0; // AI in nuclear decisions = CRITICAL
+          }
+        }
+
+        if (action.id === 'deploy_ai_kill_switches') {
+          // Kill switches are second priority (active defense)
+          priority *= 1.5;
+
+          // More urgent if sleeper agents detected
+          const sleepers = state.aiAgents.filter(ai =>
+            ai.sleeperState === 'active' || ai.sleeperState === 'dormant'
+          ).length;
+          if (sleepers > 0) {
+            priority *= (1 + sleepers * 0.5);
+          }
+        }
+
+        if (action.id === 'deploy_nuclear_time_delays') {
+          // Time delays are third priority (passive defense)
+          priority *= 1.0;
+
+          // More urgent if diplomatic AI not deployed
+          if (state.diplomaticAI?.deploymentMonth === -1) {
+            priority *= 1.5; // No AI diplomacy = need time delay buffer
+          }
+        }
+
+        // Reduce during extreme unemployment (competing priorities)
+        if (unemploymentLevel > 0.7 && economicStage < 3) {
+          priority *= 0.6;
+        }
+
+        // Boost if government has high legitimacy (can afford action)
+        if (state.government.legitimacy > 0.6) {
+          priority *= 1.2;
+        }
+
+        break;
+
       // ===== TIER 2.9: ENVIRONMENTAL EMERGENCY ACTIONS =====
       
       case 'emergency_amazon_protection':
