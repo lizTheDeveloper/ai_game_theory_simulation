@@ -751,10 +751,18 @@ export function payExpenses(org: Organization, state: GameState): void {
 
 /**
  * Phase 8: Handle bankruptcy
+ *
+ * TIER 0D BUG FIX #4: Enhanced to support government AI acquisition
+ * - Government may purchase high-quality AI models from bankrupt orgs
+ * - Depends on government type (socialist govs more likely to nationalize)
+ * - Safety-critical AIs prioritized for government acquisition
+ *
+ * NOTE: This function should use deterministic RNG passed from calling context
+ * Currently uses Math.random() - TODO: refactor to accept RNG parameter
  */
 export function handleBankruptcy(org: Organization, state: GameState): void {
   console.log(`${logPrefix(state, "💥", `[Month ${state.currentMonth}]`)} ${org.name} declared bankruptcy (capital: $${org.capital.toFixed(1)}M)`);
-  
+
   // Cancel all ongoing projects
   org.currentProjects.forEach(project => {
     if (project.canBeCanceled) {
@@ -764,41 +772,88 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
     }
   });
   org.currentProjects = [];
-  
+
   // Sell data centers to government or other orgs
   const dcValue = state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id))
     .reduce((sum, dc) => sum + dc.capacity * 5, 0); // $5M per PF
-  
+
   org.capital += dcValue * 0.5; // Firesale: 50% value
   console.log(`   Sold ${org.ownedDataCenters.length} data centers for $${(dcValue * 0.5).toFixed(1)}M`);
-  
+
   // Transfer data centers to government
   state.computeInfrastructure.dataCenters
     .filter(dc => org.ownedDataCenters.includes(dc.id))
     .forEach(dc => {
-      dc.organizationId = 'government';
+      dc.organizationId = 'government_ai';
       dc.restrictedAccess = true;
     });
-  
-  const govOrg = state.organizations.find(o => o.id === 'government');
+
+  const govOrg = state.organizations.find(o => o.id === 'government_ai');
   if (govOrg) {
     govOrg.ownedDataCenters.push(...org.ownedDataCenters);
   }
-  
+
   org.ownedDataCenters = [];
-  
-  // Retire all AI models (P2 BUG FIX: Clear organizationId to prevent orphans)
-  state.aiAgents
-    .filter(ai => org.ownedAIModels.includes(ai.id))
-    .forEach(ai => {
+
+  // ENHANCEMENT: Government may purchase high-capability AI models
+  // (User suggestion: "some AI models might wanna be purchased by the government")
+  const bankruptAIs = state.aiAgents.filter(ai => org.ownedAIModels.includes(ai.id));
+  let governmentAcquired = 0;
+  let retiredCount = 0;
+
+  const { calculateTotalCapabilityFromProfile } = require('./capabilities');
+
+  bankruptAIs.forEach(ai => {
+    // Government acquisition criteria:
+    // 1. High capability (>0.7)
+    // 2. Well-aligned (trueAlignment > 0.6)
+    // 3. Safety-critical or research-focused models
+    // 4. Government has capital to purchase
+
+    const capability = calculateTotalCapabilityFromProfile(ai.trueCapability);
+    const isHighCapability = capability > 0.7;
+    const isWellAligned = ai.trueAlignment > 0.6;
+
+    // Government purchase decision (socialist/interventionist govs more likely)
+    const governmentInterventionism = state.government?.policyStance?.economicIntervention || 0.5;
+    const purchaseProbability = governmentInterventionism * 0.5; // 0-50% chance
+
+    const shouldPurchase = isHighCapability &&
+                          isWellAligned &&
+                          Math.random() < purchaseProbability &&
+                          govOrg &&
+                          govOrg.capital > 50; // Government has funds
+
+    if (shouldPurchase) {
+      // Transfer to government ownership
+      ai.organizationId = 'government_ai';
+      ai.lifecycleState = 'deployed_closed'; // Keep deployed under government
+
+      if (govOrg) {
+        govOrg.ownedAIModels.push(ai.id);
+        // Government pays 30% of market value (distressed asset purchase)
+        const purchasePrice = 50 * capability; // $50M per capability point
+        govOrg.capital -= purchasePrice * 0.3;
+        org.capital += purchasePrice * 0.3; // Creditors get some recovery
+      }
+
+      governmentAcquired++;
+    } else {
+      // Retire the AI model
       ai.lifecycleState = 'retired';
       ai.organizationId = undefined; // Clear org reference to prevent orphan tracking
-    });
-  
-  console.log(`   Retired ${org.ownedAIModels.length} AI models`);
+      retiredCount++;
+    }
+  });
+
+  if (governmentAcquired > 0) {
+    console.log(`   🏛️  Government acquired ${governmentAcquired} AI models (nationalization)`);
+  }
+  console.log(`   Retired ${retiredCount} AI models`);
+
   org.ownedAIModels = []; // Clear ownership list
-  
+
   // Mark organization as bankrupt (keep in list but inactive)
   org.capital = 0;
   org.monthlyRevenue = 0;
@@ -809,10 +864,16 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
  * Task 6.5 & 7.5: Process organization turn (called monthly)
  */
 export function processOrganizationTurn(
-  org: Organization, 
+  org: Organization,
   state: GameState,
   random: () => number = Math.random
 ): void {
+  // TIER 0D BUG FIX #4: Skip processing for bankrupt organizations
+  // Prevents "orphan AI" bug where bankrupt orgs complete training projects
+  if (org.bankrupt) {
+    return;
+  }
+
   // 1. Update existing projects
   updateProjects(org, state);
   
