@@ -52,14 +52,19 @@ export function createEmptyCapabilityProfile(): AICapabilityProfile {
 export function initializeCapabilityProfile(seed: number = Math.random()): AICapabilityProfile {
   // Create variation using seed
   const variation = (offset: number) => 0.3 + (Math.sin(seed * 100 + offset) * 0.2);
-  
+
+  // AI Capability Baseline Recalibration (Oct 17, 2025)
+  // Research skeptic 2025 reality check: Raise baselines to match frontier models (Claude 4, GPT-4, o1)
+  // Old baseline: cognitive 0.5 → ~0.15-0.25 (underestimated 2025 capabilities)
+  // New baseline: cognitive 3.0 → ~1.5 (matches empirical 2025 frontier models)
+  // Meta-evidence: Claude built this simulation → demonstrates planning/research/coordination NOW
   return {
-    physical: 0.1 * variation(1),
-    digital: 0.2 * variation(2),
-    cognitive: 0.5 * variation(3),  // Start with some cognitive capability
-    social: 0.3 * variation(4),
-    economic: 0.1 * variation(5),
-    selfImprovement: 0.2 * variation(6),
+    physical: 0.3 * variation(1),           // Raised 3x: 2025 robotics better than modeled
+    digital: 0.6 * variation(2),            // Raised 3x: Software capabilities near-superhuman 2025
+    cognitive: 3.0 * variation(3),          // Raised 6x: CRITICAL - matches 2025 frontier models (Claude, GPT-4)
+    social: 0.9 * variation(4),             // Raised 3x: Social reasoning improved significantly 2020-2025
+    economic: 0.3 * variation(5),           // Raised 3x: Economic integration accelerating
+    selfImprovement: 0.6 * variation(6),    // Raised 3x: Recursive improvement visible (AI coding AI)
     research: {
       biotech: {
         drugDiscovery: 0.1 * variation(7),

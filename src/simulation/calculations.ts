@@ -210,7 +210,7 @@ export function calculateUnemployment(state: GameState): number {
       const skills = (segment as any).skills;
       if (skills && skills.overallEffectiveness) {
         // Get baseline effectiveness
-        const { initializeSegmentSkills } = require('./bionicSkills');
+        const { initializeSegmentSkills } = require('./aiAssistedSkills');
         const baselineSkills = initializeSegmentSkills(segment);
         
         // Productivity boost = amplified / baseline
@@ -232,7 +232,7 @@ export function calculateUnemployment(state: GameState): number {
     
     // Scale by adoption rate (only affects segments with AI access)
     const avgAIAccess = state.society.segments.reduce((sum, seg) => {
-      const { calculateAIAccess } = require('./bionicSkills');
+      const { calculateAIAccess } = require('./aiAssistedSkills');
       return sum + calculateAIAccess(seg) * seg.populationFraction;
     }, 0);
     
@@ -256,7 +256,7 @@ export function calculateUnemployment(state: GameState): number {
   // SYSTEMIC EFFECT: Program effectiveness varies by segment (elite get better programs)
   let retrainingReduction = 0;
   if (state.policyInterventions?.retrainingLevel && state.policyInterventions.retrainingLevel > 0 && state.society.segments) {
-    const { calculateRetrainingEffect } = require('./bionicSkills');
+    const { calculateRetrainingEffect } = require('./aiAssistedSkills');
 
     // Calculate segment-specific retraining effects (weighted by displacement)
     let totalDisplacement = 0;
@@ -265,7 +265,7 @@ export function calculateUnemployment(state: GameState): number {
     for (const segment of state.society.segments) {
       const skills = (segment as any).skills;
       if (skills && skills.overallEffectiveness) {
-        const { initializeSegmentSkills } = require('./bionicSkills');
+        const { initializeSegmentSkills } = require('./aiAssistedSkills');
         const baselineSkills = initializeSegmentSkills(segment);
         const productivityMultiplier = skills.overallEffectiveness / baselineSkills.overallEffectiveness;
         const segmentDisplacement = Math.max(0, (productivityMultiplier - 1.0) / productivityMultiplier);
@@ -326,7 +326,7 @@ export function calculateUnemployment(state: GameState): number {
   // PHASE 6 FIX: Apply job guarantee floor
   // SYSTEMIC EFFECT: Job quality varies by segment (elite get admin roles, precariat get workfare)
   if (state.policyInterventions?.jobGuaranteeLevel && state.policyInterventions.jobGuaranteeLevel > 0 && state.society.segments) {
-    const { calculateUnemploymentFloor } = require('./bionicSkills');
+    const { calculateUnemploymentFloor } = require('./aiAssistedSkills');
 
     // Calculate population-weighted floor (accounts for job quality stratification)
     let weightedFloor = 0;
@@ -566,40 +566,71 @@ export function detectCrisis(state: GameState): {
   severity: number; // 0-1
 } {
   const { society, globalMetrics } = state;
-  
+
   // Stage 1→2 Crisis: Mass Displacement (25% unemployment threshold)
   if (society.unemploymentLevel >= 0.25 && globalMetrics.economicTransitionStage < 2.0) {
+    updateCatastropheTracking(state, 'displacement', Math.min(1.0, (society.unemploymentLevel - 0.25) * 2));
     return {
       inCrisis: true,
       crisisType: 'displacement',
       severity: Math.min(1.0, (society.unemploymentLevel - 0.25) * 2)
     };
   }
-  
+
   // Transition crisis: policies failing
-  if (globalMetrics.economicTransitionStage >= 2.0 && 
+  if (globalMetrics.economicTransitionStage >= 2.0 &&
       globalMetrics.economicTransitionStage < 3.0 &&
       globalMetrics.socialStability < 0.3) {
+    updateCatastropheTracking(state, 'transition', 1.0 - globalMetrics.socialStability);
     return {
       inCrisis: true,
       crisisType: 'transition',
       severity: 1.0 - globalMetrics.socialStability
     };
   }
-  
+
   // Collapse crisis: complete instability
   const trustInAI = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
   if (globalMetrics.socialStability < 0.2 && trustInAI < 0.2) {
+    updateCatastropheTracking(state, 'collapse', 1.0);
     return {
       inCrisis: true,
       crisisType: 'collapse',
       severity: 1.0
     };
   }
-  
+
   return {
     inCrisis: false,
     crisisType: null,
     severity: 0
   };
+}
+
+/**
+ * Update catastrophe tracking for disaster cooperation boost
+ * Evidence-Based Recovery (Oct 17, 2025)
+ * Research: Wei et al. (2025), Drury et al. (2019), Zaki & Cikara (2020)
+ */
+export function updateCatastropheTracking(state: GameState, crisisType: string, severity: number): void {
+  // Initialize crises object if it doesn't exist
+  if (!state.crises) {
+    state.crises = {};
+  }
+
+  // Initialize or update catastrophe tracking
+  if (!state.crises.catastrophe || !state.crises.catastrophe.active) {
+    // New catastrophe detected
+    state.crises.catastrophe = {
+      active: true,
+      startMonth: state.currentMonth,
+      monthsSinceOnset: 0,
+      type: crisisType,
+      severity: severity
+    };
+  } else {
+    // Update existing catastrophe
+    state.crises.catastrophe.monthsSinceOnset = state.currentMonth - state.crises.catastrophe.startMonth;
+    state.crises.catastrophe.severity = Math.max(state.crises.catastrophe.severity, severity);
+  }
 }

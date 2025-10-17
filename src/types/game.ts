@@ -321,9 +321,17 @@ export interface HumanSocietyAgent {
   activeMovements: string[]; // Active social movements (used in actionSystem.ts)
   // Quartile-based adoption model
   earlyAdopters: number; // [0,1] Q1: Fast adopters (6-12 months)
-  mediumAdopters: number; // [0,1] Q2: 2-5 year horizon  
+  mediumAdopters: number; // [0,1] Q2: 2-5 year horizon
   slowAdopters: number; // [0,1] Q3: Decade horizon
   resistantAdopters: number; // [0,1] Q4: Resist until extreme pressure
+
+  // === CONTINGENCY & AGENCY PHASE 3: CRITICAL JUNCTURE AGENCY (Oct 17, 2025) ===
+  // Tracks organized opposition and latent grievances for agency potential calculations
+  // Research: Kuran (1991) preference falsification, Leipzig 1989 cascade mechanism
+  socialMovements?: {
+    strength: number;    // [0,1] Organized opposition capacity
+    grievances: number;  // [0,1] Latent opposition (hidden preferences)
+  };
 }
 
 export interface GlobalMetrics {
@@ -1068,6 +1076,16 @@ export interface GameState {
       monthlyMortality: number;
       socialDisruption: number;
     };
+    // Evidence-Based Recovery: Disaster Cooperation Tracking (Oct 17, 2025)
+    // Research: Wei et al. (2025), Drury et al. (2019), Zaki & Cikara (2020)
+    // Tracks acute disaster phase (0-24 months) for cooperation boost
+    catastrophe?: {
+      active: boolean;              // Is there an active catastrophe?
+      startMonth: number;            // When did the catastrophe begin?
+      monthsSinceOnset: number;      // Months since catastrophe started
+      type: string;                  // Type of catastrophe (environmental, social, tech, etc.)
+      severity: number;              // [0,1] Severity of the catastrophe
+    };
   };
 
   // History for visualization
@@ -1095,6 +1113,15 @@ export interface GameState {
       month: number;
       type: string;
       severity: 'civilization-altering' | 'major-recoverable';
+    }>;
+    // Contingency & Agency Phase 3: Critical juncture escapes (Oct 17, 2025)
+    // Tracks moments when individual/collective agency altered deterministic trajectories
+    // Research: Svolik (2012), Kuran (1991), Sen (1999), Arkhipov case study
+    criticalJunctureEscapes?: Array<{
+      month: number;
+      type: 'prevent_war' | 'enable_cooperation' | 'recover_from_crisis' | 'unlock_breakthrough';
+      agencyPotential: number;
+      crisisSeverity: number;
     }>;
   };
 }

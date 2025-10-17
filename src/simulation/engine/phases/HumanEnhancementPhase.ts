@@ -23,7 +23,7 @@
 
 import { SimulationPhase, PhaseResult, RNGFunction } from '../PhaseOrchestrator';
 import { GameState } from '../../../types/game';
-import { calculateAIAssistedSkillsAggregateMetrics, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, checkCompetenceCrisis, checkWageInequality, applyPolicyInterventions } from '../../bionicSkills';
+import { calculateAIAssistedSkillsAggregateMetrics, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, checkCompetenceCrisis, checkWageInequality, applyPolicyInterventions } from '../../aiAssistedSkills';
 
 export class HumanEnhancementPhase implements SimulationPhase {
   readonly id = 'ai-assisted-skills-metrics';

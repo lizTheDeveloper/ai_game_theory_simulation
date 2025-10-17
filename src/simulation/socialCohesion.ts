@@ -178,7 +178,38 @@ export function updateSocialAccumulation(
   social.socialCohesion = Math.max(0, Math.min(1,
     currentCohesion - cohesionLossRate + cohesionRecoveryRate
   ));
-  
+
+  // === DISASTER COOPERATION BOOST (Evidence-Based Recovery, Oct 17, 2025) ===
+  // Research: Wei et al. (2025), Drury et al. (2019), Zaki & Cikara (2020)
+  // Empirical finding: Cooperation INCREASES during acute catastrophe phase (0-24 months)
+  // Magnitude: 15-30% boost in social cohesion, government effectiveness
+  // Duration: 12-24 months post-catastrophe onset, exponential decay over 5 years
+  if (state.crises?.catastrophe?.active && state.crises.catastrophe.monthsSinceOnset <= 24) {
+    const monthsSince = state.crises.catastrophe.monthsSinceOnset;
+    const boostMagnitude = 0.20; // 20% boost (mid-range of 15-30% research-backed range)
+    const boost = boostMagnitude * Math.exp(-monthsSince / 12); // Exponential decay
+
+    // Apply cooperation boost to social cohesion
+    social.socialCohesion = Math.min(1, social.socialCohesion + boost);
+
+    // Apply emergency mobilization boost to government effectiveness
+    state.government.legitimacy = Math.min(1, state.government.legitimacy + boost * 1.5);
+
+    // Boost collective action willingness (creates window for breakthrough deployment)
+    state.society.coordinationCapacity = Math.min(1, state.society.coordinationCapacity + boost * 2.0);
+
+    // Log cooperation boost (only during first month for clarity)
+    if (monthsSince === 0) {
+      try {
+        console.log(`\n  🤝 DISASTER COOPERATION BOOST ACTIVATED (Month ${state.currentMonth})`);
+        console.log(`     Catastrophe type: ${state.crises.catastrophe.type}`);
+        console.log(`     Boost magnitude: +${(boost * 100).toFixed(1)}% social cohesion`);
+        console.log(`     Window: 0-24 months (acute phase)`);
+        console.log(`     Research: Wei et al. (2025), Drury et al. (2019), Zaki & Cikara (2020)\n`);
+      } catch (e) { /* Ignore EPIPE */ }
+    }
+  }
+
   // === CULTURAL ADAPTATION (SLOW IMPROVEMENT) ===
   // Base adaptation rate (very slow - generational change)
   let adaptationRate = 0.002; // 0.2% per month (years to shift culture)

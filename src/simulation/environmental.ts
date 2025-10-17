@@ -16,6 +16,7 @@
 
 import { GameState, EnvironmentalAccumulation } from '@/types/game';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
+import { updateCatastropheTracking } from './calculations';
 
 /**
  * Initialize environmental accumulation state
@@ -348,6 +349,7 @@ function checkEnvironmentalCrises(state: GameState): void {
   // RESOURCE CRISIS: Reserves depleted below 30%
   if (env.resourceReserves < 0.3 && !env.resourceCrisisActive) {
     env.resourceCrisisActive = true;
+    updateCatastropheTracking(state, 'resource_crisis', 1.0 - env.resourceReserves);
     try {
       console.log(`\n⚠️  RESOURCE CRISIS TRIGGERED (Month ${state.currentMonth})`);
       console.log(`   Resource Reserves: ${(env.resourceReserves * 100).toFixed(1)}%`);
@@ -377,6 +379,7 @@ function checkEnvironmentalCrises(state: GameState): void {
   // POLLUTION CRISIS: Pollution exceeds 70%
   if (env.pollutionLevel > 0.7 && !env.pollutionCrisisActive) {
     env.pollutionCrisisActive = true;
+    updateCatastropheTracking(state, 'pollution_crisis', env.pollutionLevel);
     try {
       console.log(`\n⚠️  POLLUTION CRISIS TRIGGERED (Month ${state.currentMonth})`);
       console.log(`   Pollution Level: ${(env.pollutionLevel * 100).toFixed(1)}%`);
@@ -406,6 +409,7 @@ function checkEnvironmentalCrises(state: GameState): void {
   // CLIMATE CATASTROPHE: Stability below 40%
   if (env.climateStability < 0.4 && !env.climateCrisisActive) {
     env.climateCrisisActive = true;
+    updateCatastropheTracking(state, 'climate_catastrophe', 1.0 - env.climateStability);
     try {
       console.log(`\n🌡️  CLIMATE CATASTROPHE TRIGGERED (Month ${state.currentMonth})`);
       console.log(`   Climate Stability: ${(env.climateStability * 100).toFixed(1)}%`);
@@ -445,6 +449,7 @@ function checkEnvironmentalCrises(state: GameState): void {
   // Research: Collapse takes 20-40 years after tipping point (2040-2070)
   if (env.biodiversityIndex < 0.2 && !env.ecosystemCrisisActive) {
     env.ecosystemCrisisActive = true;
+    updateCatastropheTracking(state, 'ecosystem_collapse', 1.0 - env.biodiversityIndex);
     // Initialize collapse tracking
     if (!state.ecosystemCollapse) {
       state.ecosystemCollapse = {
