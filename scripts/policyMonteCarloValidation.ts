@@ -40,6 +40,24 @@ interface ScenarioMetrics {
 const SCENARIOS: PolicyScenario[] = [
   {
     name: 'Baseline',
+    // POLICY CALIBRATION (Oct 17, 2025): "Baseline" = Status quo 2025 continuation
+    //
+    // WHAT'S INCLUDED (default in createDefaultInitialState()):
+    // - Social safety nets at existing levels (healthcare: 50%, education: 70%, mental health: 20%)
+    // - Physical infrastructure (parks: 30%, libraries: 40%, community centers: 20%)
+    // - Baseline unemployment insurance (minimal coverage, already modeled via unemployment penalty)
+    // - SNAP/food assistance (implicit in material abundance calculation)
+    // - Medicaid/Medicare (implicit in healthcare: 50% baseline)
+    //
+    // WHAT'S NOT INCLUDED (intervention scenarios add these):
+    // - Enhanced UBI (ubiLevel: 0 → no guaranteed income beyond existing welfare)
+    // - Universal retraining programs (retrainingLevel: 0 → no government-funded reskilling)
+    // - AI-human teaching support (teachingSupportLevel: 0 → no AI tutors)
+    // - Federal job guarantee (jobGuaranteeLevel: 0 → no guaranteed employment)
+    //
+    // This is NOT "no policies" - it's "status quo 2025 policies continue unchanged"
+    // @see /src/simulation/initialization.ts lines 559-560 (UBI + social safety nets initialization)
+    // @see /src/simulation/socialSafetyNets.ts lines 21-68 (baseline infrastructure levels)
     description: 'No policy intervention (market forces only)',
     ubiLevel: 0,
     retrainingLevel: 0,
