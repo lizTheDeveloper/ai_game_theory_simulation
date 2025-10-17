@@ -75,6 +75,7 @@ import {
   HumanPopulationPhase,
   RefugeeCrisisPhase,
   CountryPopulationPhase,
+  PsychologicalTraumaPhase,  // Phase 1B Refinement (Oct 17, 2025): Psychological trauma modeling
   WarMeaningFeedbackPhase,  // TIER 2.8 (Oct 14, 2025): War-Meaning Feedback Loop
   ClimateJusticePhase,  // TIER 2.8 (Oct 14, 2025): Climate Justice & Environmental Debt
   OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
@@ -82,6 +83,7 @@ import {
   RadiationSystemPhase,  // TIER 1.7 (Oct 14, 2025): Radiation health effects (cancer, birth defects, contamination)
   PlanetaryBoundariesPhase,
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
+  FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
   DystopiaProgressionPhase,
   TriggeredEventsPhase,  // P2.5 (Oct 16, 2025): External event triggers for validation testing
   // Batch 3: Special phases (22.x - 23.x)
@@ -194,13 +196,85 @@ function hasIrreversibleCascade(state: GameState): boolean {
 function hasCivilizationCollapse(state: GameState): boolean {
   const social = state.socialAccumulation;
   const tech = state.technologicalRisk;
-  
+
   // Check if institutions and infrastructure collapsed
   const institutionalCollapse = social.institutionalFailureActive;
-  const aiTakeover = tech.controlLossActive && 
+  const aiTakeover = tech.controlLossActive &&
     state.aiAgents.filter(ai => ai.alignment < 0.3 && ai.capability > 2.0).length > 10;
-  
+
   return institutionalCollapse || aiTakeover;
+}
+
+/**
+ * Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
+ *
+ * Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe) outcomes
+ *
+ * Research:
+ * - Wilkinson & Pickett (2009): Extreme disruption (>20% mortality) causes decades of trauma
+ * - Rawls (1971): Distributive justice requires examining worst-off groups
+ * - Historical precedents: Black Death (30-60%), Spanish Flu (3-5%), WWII (3%)
+ *
+ * @param state - Current game state
+ * @param baseOutcome - The base outcome classification (utopia/dystopia/extinction/inconclusive)
+ * @param initialPopulation - Starting population (8.0B)
+ */
+function classifyStratifiedOutcome(
+  state: GameState,
+  baseOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive',
+  initialPopulation: number
+): { stratifiedOutcome: import('@/types/game').StratifiedOutcomeType; mortalityBand: import('@/types/game').MortalityBand } {
+  const finalPopulation = state.humanPopulationSystem.population; // in billions
+  const mortalityRate = 1 - (finalPopulation / initialPopulation);
+  const finalPopulationPeople = finalPopulation * 1_000_000_000;
+
+  // Determine mortality band
+  let mortalityBand: import('@/types/game').MortalityBand;
+  if (mortalityRate < 0.20) {
+    mortalityBand = 'low';
+  } else if (mortalityRate < 0.50) {
+    mortalityBand = 'moderate';
+  } else if (mortalityRate < 0.75) {
+    mortalityBand = 'high';
+  } else if (mortalityRate < 0.90) {
+    mortalityBand = 'extreme';
+  } else {
+    mortalityBand = 'bottleneck';
+  }
+
+  // Determine stratified outcome
+  let stratifiedOutcome: import('@/types/game').StratifiedOutcomeType;
+
+  // TRUE EXTINCTION (<10K people)
+  if (finalPopulationPeople < 10_000 || baseOutcome === 'extinction') {
+    stratifiedOutcome = 'extinction';
+  }
+  // BOTTLENECK (<500M people, even if labeled utopia/dystopia)
+  else if (finalPopulation < 0.5) { // <500M
+    stratifiedOutcome = 'bottleneck';
+  }
+  // UTOPIA outcomes (distinguish humane vs pyrrhic)
+  else if (baseOutcome === 'utopia') {
+    if (mortalityRate < 0.20) {
+      stratifiedOutcome = 'humane-utopia'; // <20% mortality = prosperity without mass death
+    } else {
+      stratifiedOutcome = 'pyrrhic-utopia'; // ≥20% mortality = recovery after catastrophe
+    }
+  }
+  // DYSTOPIA outcomes (distinguish humane vs pyrrhic)
+  else if (baseOutcome === 'dystopia') {
+    if (mortalityRate < 0.20) {
+      stratifiedOutcome = 'humane-dystopia'; // <20% mortality = oppression without mass death
+    } else {
+      stratifiedOutcome = 'pyrrhic-dystopia'; // ≥20% mortality = oppression after catastrophe
+    }
+  }
+  // INCONCLUSIVE
+  else {
+    stratifiedOutcome = 'inconclusive';
+  }
+
+  return { stratifiedOutcome, mortalityBand };
 }
 
 /**
@@ -361,6 +435,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new HumanPopulationPhase());
     this.orchestrator.registerPhase(new RefugeeCrisisPhase());
     this.orchestrator.registerPhase(new CountryPopulationPhase());
+    this.orchestrator.registerPhase(new PsychologicalTraumaPhase());  // Phase 1B Refinement: Psychological trauma
     this.orchestrator.registerPhase(new WarMeaningFeedbackPhase());  // TIER 2.8: War-Meaning Feedback Loop
     this.orchestrator.registerPhase(new ClimateJusticePhase());  // TIER 2.8: Climate Justice & Environmental Debt
     this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
@@ -368,6 +443,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new RadiationSystemPhase());  // TIER 1.7: Radiation health effects (cancer, birth defects, contamination)
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
+    this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
     this.orchestrator.registerPhase(new TriggeredEventsPhase());  // P2.5 (Oct 16, 2025): External event triggers
 
@@ -504,16 +580,20 @@ export class SimulationEngine {
     const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;
     const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;
     const logLevel = this.config.logLevel ?? 'quartile';
-    
+
+    // Phase 1B (Oct 17, 2025): Capture initial population BEFORE any mutations
+    // This is critical because state = initialState (same reference), so mutations affect both
+    const savedInitialPopulation = initialState.humanPopulationSystem.population;
+
     // Reset crisis points for this run
     const { resetCrisisPoints } = require('./crisisPoints');
     resetCrisisPoints();
-    
+
     // Initialize logger with estimated duration
     const logger = new SimulationLogger(this.config.seed!, logLevel, maxMonths);
     const diagnosticLogger = new DiagnosticLogger();
     const eventAggregator = new EventAggregator(12); // Report every 12 months
-    
+
     let state = initialState;
     const history: SimulationStepResult[] = [];
     let actualOutcome: 'utopia' | 'dystopia' | 'extinction' | null = null;
@@ -703,7 +783,7 @@ export class SimulationEngine {
       
       // NEW (Oct 13, 2025): 7-tier outcome classification system
       // Replaces binary extinction with nuanced severity levels
-      const classifiedOutcome = classifyPopulationOutcome(finalPopulation, initialState.humanPopulationSystem.population, state);
+      const classifiedOutcome = classifyPopulationOutcome(finalPopulation, savedInitialPopulation, state);
 
       // P1.4 FIX: Map 7-tier classification to 4 final outcomes
       // Only TRUE extinction (<10K people) should report as 'extinction'
@@ -755,7 +835,39 @@ export class SimulationEngine {
         console.log(`   ❓ INCONCLUSIVE - truly mixed signals (utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%)\n`);
       }
     }
-    
+
+    // Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
+    // Distinguish humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe) outcomes
+    const initialPopulation = savedInitialPopulation || 8.0; // Use saved value from simulation start
+    const stratificationResult = classifyStratifiedOutcome(state, finalOutcome, initialPopulation);
+
+    // Store in state for analysis
+    state.stratifiedOutcome = stratificationResult.stratifiedOutcome;
+    state.mortalityBand = stratificationResult.mortalityBand;
+    state.initialPopulation = initialPopulation;
+
+    // Log stratified classification
+    const mortalityRate = 1 - (finalPopulation / initialPopulation);
+    console.log(`\n📊 STRATIFIED OUTCOME CLASSIFICATION:`);
+    console.log(`   Base Outcome: ${finalOutcome.toUpperCase()}`);
+    console.log(`   Stratified Outcome: ${stratificationResult.stratifiedOutcome.toUpperCase()}`);
+    console.log(`   Mortality Band: ${stratificationResult.mortalityBand.toUpperCase()} (${(mortalityRate * 100).toFixed(1)}% mortality)`);
+    console.log(`   Population: ${initialPopulation.toFixed(2)}B → ${finalPopulation.toFixed(2)}B`);
+
+    // Log interpretation
+    if (stratificationResult.stratifiedOutcome === 'humane-utopia') {
+      console.log(`   ✅ HUMANE UTOPIA: Prosperity achieved WITHOUT mass death`);
+    } else if (stratificationResult.stratifiedOutcome === 'pyrrhic-utopia') {
+      console.log(`   ⚔️  PYRRHIC UTOPIA: Recovery AFTER catastrophe (${(mortalityRate * 100).toFixed(1)}% mortality = ${((initialPopulation - finalPopulation) * 1000).toFixed(0)}M deaths)`);
+    } else if (stratificationResult.stratifiedOutcome === 'humane-dystopia') {
+      console.log(`   🏛️  HUMANE DYSTOPIA: Oppression WITHOUT mass death`);
+    } else if (stratificationResult.stratifiedOutcome === 'pyrrhic-dystopia') {
+      console.log(`   ⚰️  PYRRHIC DYSTOPIA: Oppression AFTER catastrophe (${(mortalityRate * 100).toFixed(1)}% mortality = ${((initialPopulation - finalPopulation) * 1000).toFixed(0)}M deaths)`);
+    } else if (stratificationResult.stratifiedOutcome === 'bottleneck') {
+      console.log(`   🧬 BOTTLENECK: Near-extinction recovery (<500M population)`);
+    }
+    console.log(``);
+
     // Log final population outcome (TIER 1.5)
     const { determinePopulationOutcome, logDeathSummary } = require('./populationDynamics');
     const { logRegionalPopulationSummary } = require('./regionalPopulations');

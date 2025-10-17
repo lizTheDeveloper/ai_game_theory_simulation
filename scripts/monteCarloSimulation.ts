@@ -305,6 +305,11 @@ interface RunResult {
   organizationsBankrupt: number;      // Number of organizations that collapsed
   organizationSurvivalRate: number;   // % of organizations still functioning
   bankruptcyEvents: string[];         // List of orgs that went bankrupt (with reasons)
+
+  // === STRATIFIED OUTCOME CLASSIFICATION (Phase 1B, Oct 17 2025) ===
+  stratifiedOutcome?: string;         // Refined outcome (humane-utopia, pyrrhic-utopia, etc.)
+  mortalityBand?: string;             // Mortality severity (low, moderate, high, extreme, bottleneck)
+  mortalityRate?: number;             // Actual mortality rate (0.0 to 1.0)
 }
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
@@ -1101,7 +1106,14 @@ for (let i = 0; i < NUM_RUNS; i++) {
     // Organization Survival (TIER 1.7.3)
     organizationsBankrupt,
     organizationSurvivalRate,
-    bankruptcyEvents
+    bankruptcyEvents,
+
+    // Stratified Outcome Classification (Phase 1B, Oct 17 2025)
+    stratifiedOutcome: finalState.stratifiedOutcome,
+    mortalityBand: finalState.mortalityBand,
+    mortalityRate: finalState.initialPopulation
+      ? 1 - (finalState.humanPopulationSystem.population / finalState.initialPopulation)
+      : undefined
   });
   
   // Progress indicator
@@ -1148,6 +1160,112 @@ outcomeOrder.forEach(outcome => {
   }
 });
 
+// ============================================================================
+// STRATIFIED OUTCOME CLASSIFICATION (Phase 1B, Oct 17 2025)
+// ============================================================================
+log(`\n  === STRATIFIED OUTCOME CLASSIFICATION (Phase 1B) ===`);
+log(`  Distinguishes "humane" (<20% mortality) from "pyrrhic" (≥20% mortality) outcomes`);
+
+// Count stratified outcomes
+const stratifiedCounts: Record<string, number> = {};
+results.forEach(r => {
+  if (r.stratifiedOutcome) {
+    stratifiedCounts[r.stratifiedOutcome] = (stratifiedCounts[r.stratifiedOutcome] || 0) + 1;
+  }
+});
+
+const stratifiedEmoji: Record<string, string> = {
+  'humane-utopia': '✅',
+  'pyrrhic-utopia': '⚔️',
+  'humane-dystopia': '🔒',
+  'pyrrhic-dystopia': '⛓️',
+  'bottleneck': '🧬',
+  'extinction': '💀',
+  'inconclusive': '❓'
+};
+
+const stratifiedOrder = [
+  'humane-utopia',
+  'pyrrhic-utopia',
+  'humane-dystopia',
+  'pyrrhic-dystopia',
+  'bottleneck',
+  'extinction',
+  'inconclusive'
+];
+
+stratifiedOrder.forEach(outcome => {
+  const count = stratifiedCounts[outcome] || 0;
+  if (count > 0) {
+    const emoji = stratifiedEmoji[outcome] || '•';
+    const displayName = outcome.replace(/-/g, ' ').toUpperCase();
+    log(`  ${emoji} ${displayName}: ${count} / ${NUM_RUNS} (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+  }
+});
+
+// Show breakdown by mortality band
+log(`\n  MORTALITY BAND DISTRIBUTION:`);
+const mortalityBandCounts: Record<string, number> = {};
+results.forEach(r => {
+  if (r.mortalityBand) {
+    mortalityBandCounts[r.mortalityBand] = (mortalityBandCounts[r.mortalityBand] || 0) + 1;
+  }
+});
+
+const mortalityBandOrder = ['low', 'moderate', 'high', 'extreme', 'bottleneck'];
+const mortalityBandLabels: Record<string, string> = {
+  'low': 'Low (<20% mortality)',
+  'moderate': 'Moderate (20-50%)',
+  'high': 'High (50-75%)',
+  'extreme': 'Extreme (75-90%)',
+  'bottleneck': 'Bottleneck (>90%)'
+};
+
+mortalityBandOrder.forEach(band => {
+  const count = mortalityBandCounts[band] || 0;
+  if (count > 0) {
+    log(`    ${mortalityBandLabels[band]}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+  }
+});
+
+// Compare utopia/dystopia breakdown
+const humaneUtopia = stratifiedCounts['humane-utopia'] || 0;
+const pyrrhicUtopia = stratifiedCounts['pyrrhic-utopia'] || 0;
+const totalUtopia = humaneUtopia + pyrrhicUtopia;
+
+if (totalUtopia > 0) {
+  log(`\n  UTOPIA BREAKDOWN:`);
+  log(`    Humane (no mass death): ${humaneUtopia} / ${totalUtopia} (${(humaneUtopia/totalUtopia*100).toFixed(1)}%)`);
+  log(`    Pyrrhic (after catastrophe): ${pyrrhicUtopia} / ${totalUtopia} (${(pyrrhicUtopia/totalUtopia*100).toFixed(1)}%)`);
+
+  if (pyrrhicUtopia > humaneUtopia) {
+    log(`    ⚠️  Most "utopias" came after catastrophe, not clean prosperity!`);
+  } else if (humaneUtopia > 0) {
+    log(`    ✅ Clean utopia is possible without mass death!`);
+  }
+}
+
+const humaneDystopia = stratifiedCounts['humane-dystopia'] || 0;
+const pyrrhicDystopia = stratifiedCounts['pyrrhic-dystopia'] || 0;
+const totalDystopia = humaneDystopia + pyrrhicDystopia;
+
+if (totalDystopia > 0) {
+  log(`\n  DYSTOPIA BREAKDOWN:`);
+  log(`    Humane (oppression only): ${humaneDystopia} / ${totalDystopia} (${(humaneDystopia/totalDystopia*100).toFixed(1)}%)`);
+  log(`    Pyrrhic (oppression + death): ${pyrrhicDystopia} / ${totalDystopia} (${(pyrrhicDystopia/totalDystopia*100).toFixed(1)}%)`);
+}
+
+// Show average mortality rates by outcome
+log(`\n  AVERAGE MORTALITY BY STRATIFIED OUTCOME:`);
+stratifiedOrder.forEach(outcome => {
+  const runs = results.filter(r => r.stratifiedOutcome === outcome && r.mortalityRate !== undefined);
+  if (runs.length > 0) {
+    const avgMortality = runs.reduce((sum, r) => sum + (r.mortalityRate || 0), 0) / runs.length;
+    const totalDeaths = avgMortality * 8.0; // Assuming 8B baseline
+    log(`    ${outcome}: ${(avgMortality * 100).toFixed(1)}% (${totalDeaths.toFixed(1)}B deaths)`);
+  }
+});
+
 log(`\n  === LEGACY 4-CATEGORY (Deprecated) ===`);
 const outcomeCounts = {
   utopia: results.filter(r => r.outcome === 'utopia').length,
@@ -1181,8 +1299,8 @@ log(`\n  📋 OUTCOME REASONS BY RUN:`);
 results.forEach((r, i) => {
   // FIX (Oct 13, 2025): Show actual 7-tier outcome, not just mapped category
   const detailedOutcome = (r as any).rawOutcome || r.outcome;
-  const emoji = detailedOutcome === 'utopia' ? '🌟' : 
-                detailedOutcome === 'dystopia' ? '🏛️' : 
+  const emoji = detailedOutcome === 'utopia' ? '🌟' :
+                detailedOutcome === 'dystopia' ? '🏛️' :
                 detailedOutcome === 'extinction' ? '💀' :
                 detailedOutcome === 'terminal' ? '⚰️' :
                 detailedOutcome === 'bottleneck' ? '🧬' :
@@ -1190,9 +1308,21 @@ results.forEach((r, i) => {
                 detailedOutcome === 'collapse' ? '💥' :
                 detailedOutcome === 'crisis_era' ? '⚠️' :
                 detailedOutcome === 'status_quo' ? '📊' : '❓';
-  log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${detailedOutcome.toUpperCase()}`);
+
+  // Phase 1B: Show stratified outcome if available
+  const stratifiedDisplay = r.stratifiedOutcome
+    ? ` [${r.stratifiedOutcome.toUpperCase()}]`
+    : '';
+
+  log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${detailedOutcome.toUpperCase()}${stratifiedDisplay}`);
   log(`        ${r.outcomeReason}`);
-  log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B (${r.populationDecline.toFixed(1)}% decline)`);
+
+  // Phase 1B: Show mortality information
+  const mortalityDisplay = r.mortalityRate !== undefined && r.mortalityBand
+    ? ` | Mortality: ${(r.mortalityRate * 100).toFixed(1)}% (${r.mortalityBand})`
+    : '';
+
+  log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B (${r.populationDecline.toFixed(1)}% decline)${mortalityDisplay}`);
 });
 
 // ============================================================================
