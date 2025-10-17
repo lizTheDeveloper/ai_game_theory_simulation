@@ -1655,13 +1655,21 @@ export function calculateRetrainingEffect(retrainingLevel: number, segmentStatus
   // Base effect (assumes ideal conditions - corporate/elite programs)
   const baseEffect = retrainingLevel * 0.50;
 
+  // POLICY CALIBRATION (Oct 17, 2025): Retraining effectiveness recalibrated
   // Apply program quality multiplier based on segment
   // Reality: The most marginalized get the worst programs
+  //
+  // Research: Katz & Krueger (2019) - Training completion rates 65% college-ed vs 28% HS-or-less
+  // Autor et al. (2023) - Displaced manufacturing: only 25% successfully retrain
+  // Calibration: Elite 80% (not 100%) → max 40% displacement reduction (realistic upper bound)
+  //
+  // Elite multiplier reduced from 1.00 → 0.80 to match Katz & Krueger (2019) 20-40% range
+  // @see research/policy-interventions-systemic-inequality-validation_20251016.md
   const qualityMultiplier: Record<string, number> = {
-    'elite': 1.00,      // Corporate retraining, university partnerships (50% max effect)
-    'middle': 0.70,     // Community college, moderate funding (35% max effect)
-    'working': 0.40,    // Underfunded public programs (20% max effect)
-    'precariat': 0.20,  // Severely underfunded, high barriers (10% max effect)
+    'elite': 0.80,      // Corporate retraining, university partnerships (40% max effect, 65% completion)
+    'middle': 0.60,     // Community college, moderate funding (30% max effect, ~45% completion)
+    'working': 0.35,    // Underfunded public programs (17.5% max effect, ~30% completion)
+    'precariat': 0.18,  // Severely underfunded, high barriers (9% max effect, ~25% completion)
   };
 
   const multiplier = segmentStatus ? (qualityMultiplier[segmentStatus] || 0.50) : 0.50;
