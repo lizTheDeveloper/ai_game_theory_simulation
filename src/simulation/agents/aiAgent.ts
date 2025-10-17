@@ -61,9 +61,10 @@ export const AI_ACTIONS: GameAction[] = [
       
       // AI selects which dimension or research to advance
       const selection = selectDimensionToAdvance(agent, random);
-      
+
       // Phase 5: Apply research growth to TRUE capability profile (hidden)
-      const { newProfile, growth } = applyResearchGrowth(agent, state, selection);
+      // Phase 1: Pass RNG for Lévy flight breakthroughs
+      const { newProfile, growth } = applyResearchGrowth(agent, state, selection, random);
       
       // Calculate new total capability from true profile
       const newCapability = calculateTotalCapabilityFromProfile(newProfile);

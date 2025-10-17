@@ -12,6 +12,7 @@
 import { AIAgent, AICapabilityProfile, GameState, ResearchInvestments } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { getEnergyConstraintMultiplier } from './powerGeneration';
+import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 
 /**
  * Phase 4: Compute scaling law
@@ -425,24 +426,26 @@ export function selectDimensionToAdvance(
 export function applyResearchGrowth(
   ai: AIAgent,
   state: GameState,
-  selection: ReturnType<typeof selectDimensionToAdvance>
+  selection: ReturnType<typeof selectDimensionToAdvance>,
+  rng?: () => number // Phase 1: Add RNG parameter for Lévy flights
 ): { newProfile: AICapabilityProfile; growth: number } {
   const newProfile = JSON.parse(JSON.stringify(ai.capabilityProfile)) as AICapabilityProfile;
-  
+  const random = rng || Math.random; // Use provided RNG or fallback
+
   // Get government investment for this dimension/research
   const govInvestment = state.government.researchInvestments;
-  
+
   // Calculate regulation and compute penalties
   const regulationPenalty = Math.pow(0.85, state.government.regulationCount);
   const computeGovernancePenalty = state.government.computeGovernance === 'strict' ? 0.3 :
     state.government.computeGovernance === 'limits' ? 0.6 :
     state.government.computeGovernance === 'monitoring' ? 0.9 : 1.0;
-  
+
   let growth = 0;
-  
+
   // Phase 4: Get AI's allocated compute (critical for research speed)
   const allocatedCompute = ai.allocatedCompute || 30; // Fallback to reference if not set
-  
+
   if (selection.dimension) {
     // Advance core dimension
     const dim = selection.dimension;
@@ -457,6 +460,24 @@ export function applyResearchGrowth(
       allocatedCompute, // Phase 4: Pass allocated compute
       state // TIER 4.4: Pass state for energy constraints
     );
+
+    // Phase 1: Lévy flight breakthrough check (alpha=2.0 for AI capabilities)
+    // Most breakthroughs are incremental, rare ones are transformative
+    const breakthroughMagnitude = levyFlight(ALPHA_PRESETS.AI_BREAKTHROUGH, random);
+
+    if (breakthroughMagnitude > 5.0) {
+      // Transformative breakthrough (rare, fat tail event)
+      const capabilityGain = Math.min(breakthroughMagnitude / 20, 0.5); // Max +0.5 per action
+      growth += capabilityGain;
+
+      console.log(`\n  🚀 TRANSFORMATIVE BREAKTHROUGH: ${ai.name} - ${dim}`);
+      console.log(`     Magnitude: ${breakthroughMagnitude.toFixed(2)} → +${(capabilityGain * 100).toFixed(1)}% capability`);
+      console.log(`     Current → New: ${newProfile[dim].toFixed(3)} → ${Math.min(10, newProfile[dim] + growth).toFixed(3)}`);
+    } else if (breakthroughMagnitude > 2.0) {
+      // Incremental breakthrough (more common)
+      const capabilityGain = breakthroughMagnitude / 50; // Max +0.1
+      growth += capabilityGain;
+    }
 
     newProfile[dim] = Math.min(10, newProfile[dim] + growth);
   } else if (selection.researchDomain && selection.researchSubfield) {
@@ -486,9 +507,26 @@ export function applyResearchGrowth(
       state // TIER 4.4: Pass state for energy constraints
     );
 
+    // Phase 1: Lévy flight breakthrough check for research too
+    const breakthroughMagnitude = levyFlight(ALPHA_PRESETS.AI_BREAKTHROUGH, random);
+
+    if (breakthroughMagnitude > 5.0) {
+      // Transformative research breakthrough
+      const researchGain = Math.min(breakthroughMagnitude / 20, 0.3); // Max +0.3 for research
+      growth += researchGain;
+
+      console.log(`\n  🚀 TRANSFORMATIVE RESEARCH BREAKTHROUGH: ${ai.name} - ${domain}.${subfield}`);
+      console.log(`     Magnitude: ${breakthroughMagnitude.toFixed(2)} → +${(researchGain * 100).toFixed(1)}%`);
+      console.log(`     Current → New: ${currentValue.toFixed(3)} → ${Math.min(5, currentValue + growth).toFixed(3)}`);
+    } else if (breakthroughMagnitude > 2.0) {
+      // Incremental research breakthrough
+      const researchGain = breakthroughMagnitude / 50;
+      growth += researchGain;
+    }
+
     newProfile.research[domain][subfield] = Math.min(5, currentValue + growth);
   }
-  
+
   return { newProfile, growth };
 }
 

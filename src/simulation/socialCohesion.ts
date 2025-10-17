@@ -15,6 +15,7 @@
  */
 
 import { GameState, SocialAccumulation } from '@/types/game';
+import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 
 /**
  * Initialize social accumulation state
@@ -216,6 +217,39 @@ export function updateSocialAccumulation(
     currentAdaptation + adaptationRate
   ));
   
+  // === PHASE 1: LÉVY FLIGHT CASCADE CHECKS (Preference Falsification Cascades) ===
+  // Research: Kuran (1991) - "Now out of Never" - preference falsification hides dissent
+  // Most of the time: gradual change. Rarely: Leipzig 1989 / Arab Spring cascades
+  // When latent opposition + info suppression high → cascade potential
+
+  const qualityOfLife = state.globalMetrics.qualityOfLife;
+  const latentOpposition = Math.max(0, 0.6 - qualityOfLife); // High QoL = low opposition
+  const informationIntegrity = state.qualityOfLifeSystems.informationIntegrity;
+  const pluralisticIgnorance = 1 - informationIntegrity; // Low integrity = people don't know others share their views
+
+  // Critical juncture detection (high grievance + low info integrity)
+  if (latentOpposition > 0.3 && pluralisticIgnorance > 0.5) {
+    // Alpha = 1.8: Fat tails (rare cascades like Arab Spring, Leipzig 1989)
+    const cascadePotential = levyFlight(ALPHA_PRESETS.SOCIAL_MOVEMENT, Math.random);
+
+    if (cascadePotential > 15.0) {
+      // Information cascade triggered (one defector reveals hidden opposition)
+      const cascadeSize = Math.min(cascadePotential / 100, 0.4); // Max 40% mobilization
+
+      // Rapid social cohesion increase (people discover they're not alone)
+      social.socialCohesion = Math.min(1.0, social.socialCohesion + cascadeSize);
+
+      // Institutional legitimacy shifts based on government response
+      const governmentResponse = state.government.governmentType === 'authoritarian' ? -cascadeSize * 0.5 : cascadeSize * 0.3;
+      social.institutionalLegitimacy = Math.max(0, Math.min(1.0, social.institutionalLegitimacy + governmentResponse));
+
+      console.log(`\n  📢 PREFERENCE FALSIFICATION CASCADE: Kuran mechanism triggered`);
+      console.log(`     Latent opposition: ${(latentOpposition * 100).toFixed(1)}%, Pluralistic ignorance: ${(pluralisticIgnorance * 100).toFixed(1)}%`);
+      console.log(`     Magnitude: ${cascadePotential.toFixed(2)} → +${(cascadeSize * 100).toFixed(1)}% mobilization`);
+      console.log(`     Cascade type: Leipzig 1989 / Arab Spring mechanism (hidden dissent revealed)`);
+    }
+  }
+
   // === CRISIS TRIGGERS ===
   checkSocialCrises(state);
 }
