@@ -463,7 +463,7 @@ export function applyResearchGrowth(
 
     // Phase 1: Lévy flight breakthrough check (alpha=2.0 for AI capabilities)
     // Most breakthroughs are incremental, rare ones are transformative
-    const breakthroughMagnitude = levyFlight(ALPHA_PRESETS.AI_BREAKTHROUGH, random);
+    const breakthroughMagnitude = levyFlight(ALPHA_PRESETS.AI, random);
 
     if (breakthroughMagnitude > 5.0) {
       // Transformative breakthrough (rare, fat tail event)
@@ -508,7 +508,7 @@ export function applyResearchGrowth(
     );
 
     // Phase 1: Lévy flight breakthrough check for research too
-    const breakthroughMagnitude = levyFlight(ALPHA_PRESETS.AI_BREAKTHROUGH, random);
+    const breakthroughMagnitude = levyFlight(ALPHA_PRESETS.AI, random);
 
     if (breakthroughMagnitude > 5.0) {
       // Transformative research breakthrough

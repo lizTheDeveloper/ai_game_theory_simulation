@@ -206,7 +206,7 @@ export function diffuseCapabilities(state: GameState): void {
   // Research: Mantegna & Stanley (1994) - most tech adoption follows S-curves
   // BUT: Rare technologies diffuse explosively (ChatGPT: 100M users in 2 months)
   // Base S-curve already calculated, Lévy adds stochastic fat-tail variation
-  const levyModifiedRate = levyAdoptionCurve(clampedRate, ALPHA_PRESETS.TECH_ADOPTION, Math.random);
+  const levyModifiedRate = levyAdoptionCurve(clampedRate, ALPHA_PRESETS.TECHNOLOGY, Math.random);
 
   // Core dimensions: floor moves toward frontier
   floor.physical += (frontier.physical - floor.physical) * levyModifiedRate;

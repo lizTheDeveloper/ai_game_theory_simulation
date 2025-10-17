@@ -171,8 +171,17 @@ export class StochasticInnovationPhase implements SimulationPhase {
       : 0;
     const aiBoost = Math.min(avgAICapability * 0.005, 0.05); // Up to +5% at superhuman AI
 
-    // Total breakthrough probability
-    const totalBreakthroughProb = baseBreakthroughProb + crisisPressure + aiBoost;
+    // Phase 1B Fix 3: Breakthrough compounding multiplier (Oct 17, 2025)
+    // Each breakthrough makes the next 5% easier (virtuous cycle of innovation)
+    // Research: Historical technology clusters - printing → books → education → science
+    // Max 2.0x multiplier (prevents runaway, models diminishing returns)
+    if (!state.breakthroughMultiplier) {
+      state.breakthroughMultiplier = 1.0; // Initialize on first use
+    }
+
+    // Total breakthrough probability (with compounding multiplier)
+    const baseProb = baseBreakthroughProb + crisisPressure + aiBoost;
+    const totalBreakthroughProb = baseProb * state.breakthroughMultiplier;
 
     // === 2. CHECK FOR BREAKTHROUGH ===
 
@@ -236,6 +245,12 @@ export class StochasticInnovationPhase implements SimulationPhase {
             state.breakthroughsThisRun = 0;
           }
           state.breakthroughsThisRun++;
+
+          // Phase 1B Fix 3: Increment compounding multiplier (Oct 17, 2025)
+          // Each breakthrough makes next 5% easier (virtuous cycle)
+          state.breakthroughMultiplier = Math.min(2.0, state.breakthroughMultiplier + 0.05);
+
+          console.log(`   📈 Breakthrough compounding: multiplier now ${state.breakthroughMultiplier.toFixed(2)}× (max 2.0)`);
 
           break; // Only one breakthrough per month
         }
