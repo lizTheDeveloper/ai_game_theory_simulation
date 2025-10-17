@@ -494,8 +494,8 @@ export function updateAIPopulation(state: GameState): void {
     const newAI = createNewAI(state, i);
 
     // Phase 10 FIX: Assign new AIs to organizations
-    // TIER 0B FIX: Remove capital > 0 requirement (bankrupt orgs can still train using loans/govt support)
-    const privateOrgs = state.organizations.filter(o => o.type === 'private');
+    // TIER 0D BUG FIX #4: Exclude bankrupt organizations from receiving new AIs
+    const privateOrgs = state.organizations.filter(o => o.type === 'private' && !o.bankrupt);
     if (privateOrgs.length > 0) {
       // Weight by number of existing models (big orgs train more)
       const weights = privateOrgs.map(org => Math.max(1, org.ownedAIModels.length));
