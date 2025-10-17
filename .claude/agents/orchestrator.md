@@ -151,7 +151,7 @@ Post to `roadmap.md`:
 
 Beginning [FEATURE-NAME] from roadmap (TIER X)
 **Plan:** /plans/[feature].md
-**Timeline:** [estimated hours]
+**Complexity:** [number of interacting systems]
 **Agents:** [list of agents to be invoked]
 ---
 ```
