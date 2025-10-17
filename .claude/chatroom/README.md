@@ -307,9 +307,20 @@ post_msg "coordination" "feature-implementer" "STARTED" "Beginning work on nucle
 
 
 # 2. READ NEW MESSAGES (since last check)
+# IMPORTANT: Always pass agent name for multi-agent coordination!
+# This ensures each agent sees ALL messages since THEIR last read,
+# not just messages since ANY agent's last read.
 read_new() {
   local channel="$1"
-  local last_read_file=".claude/chatroom/.${channel}_lastread"
+  local agent="${2:-}"  # Optional agent name (recommended!)
+
+  # Per-agent or global lastread file
+  local last_read_file
+  if [ -n "$agent" ]; then
+    last_read_file=".claude/chatroom/.${channel}_${agent}_lastread"
+  else
+    last_read_file=".claude/chatroom/.${channel}_lastread"
+  fi
 
   # Get line count from last read (or 0 if first time)
   local last_line=$(cat "$last_read_file" 2>/dev/null || echo "0")
@@ -327,7 +338,14 @@ read_new() {
   fi
 }
 
-# Usage:
+# Usage (RECOMMENDED - with agent name):
+if read_new "coordination" "my-agent"; then
+  echo "New messages found for my-agent!"
+else
+  echo "No new messages for my-agent"
+fi
+
+# Legacy usage (without agent name - NOT RECOMMENDED for multi-agent):
 if read_new "coordination"; then
   echo "New messages found!"
 else
