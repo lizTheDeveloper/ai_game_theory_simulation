@@ -1019,10 +1019,22 @@ export interface GameState {
   // Stochastic Innovation Breakthroughs (P2.2)
   achievedBreakthroughs?: string[]; // IDs of breakthroughs achieved (prevents duplicates)
   breakthroughsThisRun?: number;    // Count of breakthroughs for statistics
+  breakthroughMultiplier?: number;  // Phase 1B Fix 3: Positive compounding (1.0 baseline, max 2.0)
 
   // Configuration
   config: ConfigurationSettings;
   
+  // Contingency & Agency Phase 2: Exogenous Shock System (Oct 17, 2025)
+  crises?: {
+    megaPandemic?: {
+      active: boolean;
+      startMonth: number;
+      totalMortality: number;
+      monthlyMortality: number;
+      socialDisruption: number;
+    };
+  };
+
   // History for visualization
   history: {
     qualityOfLife: Array<{month: number, value: number}>;
@@ -1042,6 +1054,12 @@ export interface GameState {
       economicStage: number;
       governmentLegitimacy: number;
       coordinationCapacity: number;
+    }>;
+    // Contingency & Agency Phase 2: Exogenous shock history (Oct 17, 2025)
+    exogenousShocks?: Array<{
+      month: number;
+      type: string;
+      severity: 'civilization-altering' | 'major-recoverable';
     }>;
   };
 }
