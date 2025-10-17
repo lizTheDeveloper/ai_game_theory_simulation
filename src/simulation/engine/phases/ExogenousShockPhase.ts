@@ -409,6 +409,12 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
   // Refugee crisis
   if (state.refugeeCrisisSystem) {
     const refugees = (state.humanPopulationSystem?.currentPopulation || 8000000000) * mortalityRate * 2; // 2x mortality in displacement
+
+    // Initialize activeDisplacements if it doesn't exist
+    if (!state.refugeeCrisisSystem.activeDisplacements) {
+      state.refugeeCrisisSystem.activeDisplacements = [];
+    }
+
     state.refugeeCrisisSystem.activeDisplacements.push({
       cause: 'conflict',
       startMonth: state.currentMonth,

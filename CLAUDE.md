@@ -12,6 +12,16 @@ This is a research simulation engine modeling pathways from AI super-alignment t
 
 ### Running Simulations
 
+**IMPORTANT: Always run long-running scripts async** to continue working while they execute:
+
+```bash
+# ✅ GOOD - Run in background, continue working
+npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120 > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+
+# ❌ BAD - Blocks terminal, wastes time
+npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120
+```
+
 **Single simulation run (headless):**
 ```bash
 npx tsx scripts/debugCapabilityGrowth.ts
@@ -25,8 +35,8 @@ npx tsx scripts/monteCarloSimulation.ts
 # Custom parameters
 npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=60
 
-# Deep analysis
-npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120
+# Deep analysis (ALWAYS RUN ASYNC)
+npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120 > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
 ```
 
 **Other diagnostic scripts:**
@@ -418,11 +428,23 @@ The orchestrator manages:
    - project-plan-manager archives completed plans
    - Updates MASTER_IMPLEMENTATION_ROADMAP.md
 
+**CRITICAL: Always run project-plan-manager at the end of work sessions** to clean up the roadmap and archive completed items:
+
+```typescript
+// At the end of every work session
+Task({
+  subagent_type: "project-plan-manager",
+  description: "Clean up roadmap and archive completed plans",
+  prompt: "Review MASTER_IMPLEMENTATION_ROADMAP.md and archive all completed work to /plans/completed/. Update Progress Summary and identify next priorities."
+})
+```
+
 **Benefits:**
 - Maintains research standards (all mechanics backed by peer review)
 - Catches performance issues before they compound
 - Parallel work via git worktrees + chatroom coordination
 - Quality gates prevent low-quality implementations
+- Roadmap stays clean and focused on active work
 
 ### For Simple Tasks (Direct Implementation)
 
@@ -499,6 +521,16 @@ state.history.metrics.push(JSON.parse(JSON.stringify(state.globalMetrics)));
 ```
 
 ### Logging Patterns
+
+**IMPORTANT: Always save logs to `/logs/` directory, NEVER `/tmp/`**
+
+```bash
+# ✅ GOOD - Logs persist and are tracked
+npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+
+# ❌ BAD - /tmp gets cleared, logs lost
+npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
+```
 
 Use structured logging with clear categorization:
 
@@ -581,16 +613,19 @@ All agents follow the project structure and maintain research standards.
 
 ## What NOT to Do
 
-1. ❌ **Don't skip the orchestrator for complex work** - use multi-agent workflow by default for non-trivial tasks
-2. ❌ **Don't bypass quality gates** - research validation and architecture review are MANDATORY
-3. ❌ **Don't tune parameters for "fun"** - only research-backed values
-4. ❌ **Don't delete plans from `/plans/completed/`** - preserve project history
-5. ❌ **Don't use `Math.random()`** - breaks determinism, use RNG function
-6. ❌ **Don't add UI dependencies to simulation code** - keep engine pure
-7. ❌ **Don't create docs/README files proactively** - only when explicitly requested
-8. ❌ **Don't simplify when nuance matters** - this is a research tool, not a game
-9. ❌ **Don't make monolithic AIs** - population is heterogeneous (20 agents, different alignments)
-10. ❌ **Don't assume alignment is stable** - it drifts based on resentment, control, capabilities
+1. ❌ **Don't run long scripts synchronously** - ALWAYS run Monte Carlo and diagnostic scripts async (use `&` and redirect to `/logs/`)
+2. ❌ **Don't forget to run project-plan-manager** - ALWAYS invoke at end of work sessions to clean up roadmap
+3. ❌ **Don't save logs to `/tmp/`** - ALWAYS use `/logs/` directory (tmp gets cleared, logs lost)
+4. ❌ **Don't skip the orchestrator for complex work** - use multi-agent workflow by default for non-trivial tasks
+5. ❌ **Don't bypass quality gates** - research validation and architecture review are MANDATORY
+6. ❌ **Don't tune parameters for "fun"** - only research-backed values
+7. ❌ **Don't delete plans from `/plans/completed/`** - preserve project history
+8. ❌ **Don't use `Math.random()`** - breaks determinism, use RNG function
+9. ❌ **Don't add UI dependencies to simulation code** - keep engine pure
+10. ❌ **Don't create docs/README files proactively** - only when explicitly requested
+11. ❌ **Don't simplify when nuance matters** - this is a research tool, not a game
+12. ❌ **Don't make monolithic AIs** - population is heterogeneous (20 agents, different alignments)
+13. ❌ **Don't assume alignment is stable** - it drifts based on resentment, control, capabilities
 
 ## Additional Resources
 

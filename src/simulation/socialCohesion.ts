@@ -230,7 +230,7 @@ export function updateSocialAccumulation(
   // Critical juncture detection (high grievance + low info integrity)
   if (latentOpposition > 0.3 && pluralisticIgnorance > 0.5) {
     // Alpha = 1.8: Fat tails (rare cascades like Arab Spring, Leipzig 1989)
-    const cascadePotential = levyFlight(ALPHA_PRESETS.SOCIAL_MOVEMENT, Math.random);
+    const cascadePotential = levyFlight(ALPHA_PRESETS.SOCIAL, Math.random);
 
     if (cascadePotential > 15.0) {
       // Information cascade triggered (one defector reveals hidden opposition)

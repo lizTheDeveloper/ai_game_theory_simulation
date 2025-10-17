@@ -509,7 +509,7 @@ function calculateOrganizationBankruptcyRisk(
     // Most bankruptcies gradual (Gaussian), but rare mega-crashes (2008, COVID-19)
     // Alpha = 1.5: Very fat tails (extreme events like Lehman Brothers)
 
-    const crashMagnitude = levyFlight(ALPHA_PRESETS.FINANCIAL_CRASH, rng);
+    const crashMagnitude = levyFlight(ALPHA_PRESETS.FINANCE, rng);
 
     if (crashMagnitude > 20.0) {
       // Mega-crash event (rare, devastating - 2008 financial crisis, COVID-19 shock)

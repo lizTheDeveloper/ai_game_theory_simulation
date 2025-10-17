@@ -289,7 +289,7 @@ export function updateEnvironmentalAccumulation(
 
   // Resource cascade (alpha=1.8 - fatter tails for financial-like shocks)
   if (env.resourceReserves < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENTAL_CASCADE, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (rare but devastating - supply chain collapse, hoarding)
@@ -304,7 +304,7 @@ export function updateEnvironmentalAccumulation(
 
   // Climate cascade (positive feedbacks - methane release, ice-albedo)
   if (env.climateStability < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENTAL_CASCADE, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (tipping point triggers positive feedbacks)
@@ -319,7 +319,7 @@ export function updateEnvironmentalAccumulation(
 
   // Biodiversity cascade (ecosystem collapse cascades)
   if (env.biodiversityIndex < criticalThreshold) {
-    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENTAL_CASCADE, Math.random);
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENT, Math.random);
 
     if (cascadeMagnitude > 10.0) {
       // Mega-cascade (keystone species loss triggers avalanche)

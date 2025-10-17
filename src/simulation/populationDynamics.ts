@@ -269,15 +269,45 @@ export function updateHumanPopulation(state: GameState): void {
 
   // NEW: Environmental mortality ADDS to baseline (not multiplies)
   // This is because environmental deaths are additional excess mortality
-  pop.adjustedDeathRate = baselineDeaths + (envMortality.total * 12); // Convert monthly to annual
-  
+  const environmentalDeathRate = envMortality.total * 12; // Convert monthly to annual
+
   // === 4. APPLY EXTINCTION SCENARIO IMPACTS (Non-Environmental) ===
   // Nuclear war, AI takeover, etc. - still use old extinction logic
+  let extinctionDeathRate = 0;
   if (state.extinctionState.active && state.extinctionState.mechanism !== 'climate_tipping_point') {
-    const extinctionDeathRate = calculateExtinctionDeathRate(state);
-    pop.adjustedDeathRate += extinctionDeathRate;
+    extinctionDeathRate = calculateExtinctionDeathRate(state);
   }
   // Note: Environmental extinction is now handled by calculateEnvironmentalMortality()
+
+  // === PHASE 1B FIX 4: Mortality Resilience Floor (Oct 17, 2025) ===
+  // Research: Historical resilience after Black Death (1347-1353) - population rebounded
+  // despite losing 30-60% of Europe. Human systems adapt and become more resistant to
+  // further shocks as mortality increases.
+  //
+  // Mechanism: At 50% cumulative mortality, resilience floor reduces NEW mortality by 25%
+  //            At 75% cumulative mortality, resilience floor reduces NEW mortality by 37.5%
+  //            Prevents death spiral from compounding indefinitely
+  //
+  // Research basis:
+  // - Black Death → Renaissance: Surviving populations more resilient
+  // - Toba bottleneck (70K BCE): 3-10K survivors, yet humans recovered
+  // - Selection effects: Vulnerable populations die first, survivors more robust
+  const cumulativeMortalityRate = 1 - (pop.population / pop.peakPopulation);
+  const resilienceFloor = Math.max(0, 1 - (cumulativeMortalityRate * 0.5)); // 50% mortality → 75% floor
+
+  // Apply resilience floor to NEW mortality (not baseline)
+  const proposedAdditionalMortality = environmentalDeathRate + extinctionDeathRate;
+  const adjustedAdditionalMortality = proposedAdditionalMortality * resilienceFloor;
+
+  // Combine baseline + resilience-adjusted additional mortality
+  pop.adjustedDeathRate = baselineDeaths + adjustedAdditionalMortality;
+
+  // Log resilience floor activation (when significant)
+  if (resilienceFloor < 0.9 && state.currentMonth % 12 === 0 && adjustedAdditionalMortality > 0.01) {
+    const reduction = ((1 - resilienceFloor) * 100).toFixed(1);
+    console.log(`🛡️  RESILIENCE FLOOR ACTIVE: Reducing new mortality by ${reduction}% (cumulative mortality: ${(cumulativeMortalityRate * 100).toFixed(1)}%)`);
+    console.log(`   Proposed: ${(proposedAdditionalMortality * 100).toFixed(2)}%/year → Actual: ${(adjustedAdditionalMortality * 100).toFixed(2)}%/year`);
+  }
 
   // === 5. CALCULATE NET GROWTH ===
   pop.netGrowthRate = pop.adjustedBirthRate - pop.adjustedDeathRate;
