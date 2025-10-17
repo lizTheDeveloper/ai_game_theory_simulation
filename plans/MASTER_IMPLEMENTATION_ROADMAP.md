@@ -5,6 +5,8 @@
 **Purpose:** Active work items only - completed work in `/plans/completed/`
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
+**⚠️ NOTE ON ESTIMATES:** Hour estimates in this document are historical records of AI agent completion times. For new work, use **complexity** instead (number of interacting systems). AI agents complete work in minutes, not hours - e.g., "Complexity: 5 systems" (environmental, social, AI, economy, governance).
+
 ---
 
 ## Research-Backed Realism
