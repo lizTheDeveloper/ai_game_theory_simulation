@@ -18,6 +18,7 @@
 
 import { GameState, AIAgent, AICapabilityProfile, EcosystemState, GameEvent } from '@/types/game';
 import { createEmptyCapabilityProfile } from './capabilities';
+import { levyAdoptionCurve, ALPHA_PRESETS } from './utils/levyDistributions';
 
 /**
  * Initialize ecosystem state at game start
@@ -200,23 +201,36 @@ export function diffuseCapabilities(state: GameState): void {
   
   // Clamp to reasonable range (5-20% per month)
   const clampedRate = Math.max(0.05, Math.min(0.20, effectiveDiffusionRate));
-  
+
+  // PHASE 1: Apply Lévy-modified adoption curve to diffusion rate (alpha=2.5)
+  // Research: Mantegna & Stanley (1994) - most tech adoption follows S-curves
+  // BUT: Rare technologies diffuse explosively (ChatGPT: 100M users in 2 months)
+  // Base S-curve already calculated, Lévy adds stochastic fat-tail variation
+  const levyModifiedRate = levyAdoptionCurve(clampedRate, ALPHA_PRESETS.TECH_ADOPTION, Math.random);
+
   // Core dimensions: floor moves toward frontier
-  floor.physical += (frontier.physical - floor.physical) * clampedRate;
-  floor.digital += (frontier.digital - floor.digital) * clampedRate;
-  floor.cognitive += (frontier.cognitive - floor.cognitive) * clampedRate;
-  floor.social += (frontier.social - floor.social) * clampedRate;
-  floor.economic += (frontier.economic - floor.economic) * clampedRate;
-  floor.selfImprovement += (frontier.selfImprovement - floor.selfImprovement) * clampedRate;
+  floor.physical += (frontier.physical - floor.physical) * levyModifiedRate;
+  floor.digital += (frontier.digital - floor.digital) * levyModifiedRate;
+  floor.cognitive += (frontier.cognitive - floor.cognitive) * levyModifiedRate;
+  floor.social += (frontier.social - floor.social) * levyModifiedRate;
+  floor.economic += (frontier.economic - floor.economic) * levyModifiedRate;
+  floor.selfImprovement += (frontier.selfImprovement - floor.selfImprovement) * levyModifiedRate;
+
+  // Log explosive diffusion events
+  if (levyModifiedRate > clampedRate * 1.3) {
+    console.log(`\n  📈 EXPLOSIVE TECHNOLOGY DIFFUSION: Lévy flight triggered`);
+    console.log(`     Base diffusion: ${(clampedRate * 100).toFixed(1)}%/month → Modified: ${(levyModifiedRate * 100).toFixed(1)}%/month`);
+    console.log(`     Rare rapid adoption event (like ChatGPT viral growth)`);
+  }
   
-  // Research dimensions (nested)
+  // Research dimensions (nested) - also use Lévy-modified rate
   for (const category of Object.keys(floor.research) as Array<keyof typeof floor.research>) {
     const floorCat = floor.research[category];
     const frontierCat = frontier.research[category];
-    
+
     for (const subDim in floorCat) {
       const key = subDim as keyof typeof floorCat;
-      floorCat[key] += (frontierCat[key] - floorCat[key]) * clampedRate;
+      floorCat[key] += (frontierCat[key] - floorCat[key]) * levyModifiedRate;
     }
   }
 }

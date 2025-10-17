@@ -15,6 +15,7 @@
  */
 
 import { GameState, EnvironmentalAccumulation } from '@/types/game';
+import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 
 /**
  * Initialize environmental accumulation state
@@ -276,6 +277,58 @@ export function updateEnvironmentalAccumulation(
     if (state.currentMonth % 24 === 0 && regenerationRate > 0.003) { // Log every 2 years if significant
       console.log(`🌱 NATURAL REGENERATION: Low human pressure (${(currentPressure * 100).toFixed(0)}%), ecosystems recovering at +${(regenerationRate * 100).toFixed(2)}%/month`);
       console.log(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(1)}%, Resources: ${(env.resourceReserves * 100).toFixed(1)}%, Climate: ${(env.climateStability * 100).toFixed(1)}%`);
+    }
+  }
+
+  // === PHASE 1: LÉVY FLIGHT CASCADE CHECKS (Self-Organized Criticality) ===
+  // Research: Bak et al. (1987) - systems organize to critical states
+  // When environmental debt is high, minor events can trigger avalanches
+  // Most of the time: linear accumulation. Rarely: mega-cascade (power-law tails)
+
+  const criticalThreshold = 0.6; // System at edge of chaos
+
+  // Resource cascade (alpha=1.8 - fatter tails for financial-like shocks)
+  if (env.resourceReserves < criticalThreshold) {
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENTAL_CASCADE, Math.random);
+
+    if (cascadeMagnitude > 10.0) {
+      // Mega-cascade (rare but devastating - supply chain collapse, hoarding)
+      const cascadeSize = Math.min(cascadeMagnitude / 100, 0.3); // Max 30% drop
+      env.resourceReserves = Math.max(0, env.resourceReserves - cascadeSize);
+
+      console.log(`\n  ⚠️ RESOURCE MEGA-CASCADE: Lévy flight triggered`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% reserves`);
+      console.log(`     Triggered at ${(env.resourceReserves * 100).toFixed(1)}% (critical threshold)`);
+    }
+  }
+
+  // Climate cascade (positive feedbacks - methane release, ice-albedo)
+  if (env.climateStability < criticalThreshold) {
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENTAL_CASCADE, Math.random);
+
+    if (cascadeMagnitude > 10.0) {
+      // Mega-cascade (tipping point triggers positive feedbacks)
+      const cascadeSize = Math.min(cascadeMagnitude / 150, 0.25); // Max 25% drop
+      env.climateStability = Math.max(0, env.climateStability - cascadeSize);
+
+      console.log(`\n  ⚠️ CLIMATE MEGA-CASCADE: Tipping point cascade`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% stability`);
+      console.log(`     Feedback loop: permafrost methane / ice-albedo effect activated`);
+    }
+  }
+
+  // Biodiversity cascade (ecosystem collapse cascades)
+  if (env.biodiversityIndex < criticalThreshold) {
+    const cascadeMagnitude = levyFlight(ALPHA_PRESETS.ENVIRONMENTAL_CASCADE, Math.random);
+
+    if (cascadeMagnitude > 10.0) {
+      // Mega-cascade (keystone species loss triggers avalanche)
+      const cascadeSize = Math.min(cascadeMagnitude / 100, 0.35); // Max 35% drop
+      env.biodiversityIndex = Math.max(0, env.biodiversityIndex - cascadeSize);
+
+      console.log(`\n  ⚠️ BIODIVERSITY MEGA-CASCADE: Keystone species collapse`);
+      console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% biodiversity`);
+      console.log(`     Trophic cascade: keystone predator/pollinator loss → ecosystem avalanche`);
     }
   }
 

@@ -8,6 +8,7 @@
 import { Organization, GameState } from '../types/game';
 import { handleBankruptcy } from './organizationManagement';
 import type { RNGFunction } from './engine/PhaseOrchestrator';
+import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 
 /**
  * Initialize 6 organizations for January 2025
@@ -503,12 +504,29 @@ function calculateOrganizationBankruptcyRisk(
       adjustedRisk *= 0.40; // Universities resilient (endowments, distributed campuses)
     }
     
-    // === 4. STOCHASTIC VARIANCE ===
-    // Add ±20% random variance for realistic stochasticity
-    // P2.4 FIX: Use deterministic RNG
-    const variance = 0.8 + rng() * 0.4; // 80% to 120%
-    adjustedRisk *= variance;
-    
+    // === 4. PHASE 1: LÉVY FLIGHT FINANCIAL CRASH MULTIPLIER ===
+    // Research: Mandelbrot (1963), Mantegna & Stanley (1994)
+    // Most bankruptcies gradual (Gaussian), but rare mega-crashes (2008, COVID-19)
+    // Alpha = 1.5: Very fat tails (extreme events like Lehman Brothers)
+
+    const crashMagnitude = levyFlight(ALPHA_PRESETS.FINANCIAL_CRASH, rng);
+
+    if (crashMagnitude > 20.0) {
+      // Mega-crash event (rare, devastating - 2008 financial crisis, COVID-19 shock)
+      const crashMultiplier = Math.min(crashMagnitude / 20, 5.0); // Max 5x risk increase
+      adjustedRisk *= crashMultiplier;
+
+      // Log extreme financial events
+      console.log(`\n  💸 FINANCIAL MEGA-CRASH: ${org.name}`);
+      console.log(`     Magnitude: ${crashMagnitude.toFixed(2)} → ${crashMultiplier.toFixed(1)}x bankruptcy risk`);
+      console.log(`     Type: Black Swan event (2008 crisis / COVID-19 shock mechanism)`);
+      console.log(`     Adjusted risk: ${(Math.min(1.0, adjustedRisk) * 100).toFixed(1)}%`);
+    } else if (crashMagnitude > 5.0) {
+      // Moderate financial shock (more common)
+      const shockMultiplier = 1.0 + (crashMagnitude / 20);
+      adjustedRisk *= shockMultiplier;
+    }
+
     return Math.min(1.0, adjustedRisk);
     
   } else {
