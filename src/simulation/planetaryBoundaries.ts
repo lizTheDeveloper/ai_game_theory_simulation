@@ -641,7 +641,8 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   }
 
   // === QOL COLLAPSE ===
-  qol.foodSecurity = Math.max(0, qol.foodSecurity * 0.96);
+  // NOTE: Food security degradation moved to FoodSecurityDegradationPhase (Oct 17, 2025)
+  // This ensures degradation happens every month during crises, not just during cascades
   qol.healthcareQuality = Math.max(0, qol.healthcareQuality * 0.98);
   qol.physicalSafety = Math.max(0, qol.physicalSafety * 0.97);
   qol.socialConnection = Math.max(0, qol.socialConnection * 0.97);

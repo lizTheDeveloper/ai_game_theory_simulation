@@ -54,6 +54,7 @@ export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { CountryPopulationPhase } from './CountryPopulationPhase';
+export { PsychologicalTraumaPhase } from './PsychologicalTraumaPhase';  // Phase 1B Refinement (Oct 17, 2025)
 export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
 export { ClimateJusticePhase } from './ClimateJusticePhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
@@ -61,6 +62,7 @@ export { NuclearWinterPhase } from './NuclearWinterPhase';
 export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { FamineSystemPhase } from './FamineSystemPhase';
+export { FoodSecurityDegradationPhase } from './FoodSecurityDegradationPhase';  // Phase 1B Refinement (Oct 17, 2025)
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 export { TriggeredEventsPhase } from './TriggeredEventsPhase';
 

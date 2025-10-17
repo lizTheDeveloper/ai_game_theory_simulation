@@ -684,16 +684,56 @@ export function updateQualityOfLifeSystems(state: GameState): QualityOfLifeSyste
   if (state.breakthroughTech) {
     const { getTechnologyQoLBoosts } = require('./breakthroughTechnologies');
     const techBoosts = getTechnologyQoLBoosts(state);
-    
+
     // Apply mental health boosts from mental health tech + purpose frameworks
     mentalHealth = Math.min(1.5, mentalHealth + techBoosts.mentalHealth);
-    
+
     // Apply healthcare boosts from medical breakthroughs
     healthcareQuality = Math.min(1.5, healthcareQuality + techBoosts.healthcare);
-    
+
     // Apply environmental boosts from clean energy + ecosystem management
     ecosystemHealth = Math.min(1.0, ecosystemHealth + techBoosts.environmental);
     climateStability = Math.min(1.0, climateStability + techBoosts.environmental * 0.5);
+  }
+
+  // === PSYCHOLOGICAL TRAUMA EFFECTS (Phase 1B Refinement, Oct 17, 2025) ===
+  // Mass death events leave lasting psychological scars on survivors
+  // Research: Wilkinson & Pickett (2009), PTSD literature, Diamond (2005)
+  if (state.psychologicalTrauma && state.psychologicalTrauma.traumaLevel > 0) {
+    const traumaLevel = state.psychologicalTrauma.traumaLevel;
+    const traumaPenalty = Math.pow(traumaLevel, 1.5); // Non-linear penalty (diminishing at low levels)
+
+    // Reduce psychological wellbeing dimension
+    // PTSD, survivor's guilt, grief, anxiety, depression
+    // Research: 40-60% PTSD rates in mass casualty survivors
+    mentalHealth *= (1 - traumaPenalty);
+
+    // Reduce social QoL (trauma erodes social connections)
+    // Research: Trauma survivors withdraw, community bonds weaken
+    socialConnection *= (1 - traumaPenalty * 0.5);
+    communityStrength *= (1 - traumaPenalty * 0.4);
+
+    // Log significant trauma impact
+    if (traumaPenalty > 0.25) {
+      console.log(`\n  💔 Psychological trauma impact: -${(traumaPenalty * 100).toFixed(0)}% mental health, -${(traumaPenalty * 50).toFixed(0)}% social connection`);
+    }
+  }
+
+  // === INSTITUTIONAL TRUST EROSION FROM TRAUMA ===
+  // Mass death events erode trust in institutions (government failed to protect)
+  // Research: Diamond (2005) - institutional breakdown after >50% mortality
+  if (state.psychologicalTrauma && state.psychologicalTrauma.traumaLevel > 0.3) {
+    const traumaErosion = state.psychologicalTrauma.traumaLevel * 0.3;
+
+    // Only apply if government exists (prevent NaN)
+    if (state.government && state.government.legitimacy !== undefined) {
+      state.government.legitimacy *= (1 - traumaErosion);
+    }
+
+    // Social cohesion also erodes
+    if (state.socialAccumulation && state.socialAccumulation.socialCohesion !== undefined) {
+      state.socialAccumulation.socialCohesion *= (1 - traumaErosion * 0.5);
+    }
   }
   
   // === SURVIVAL FUNDAMENTALS (Oct 12, 2025) ===
@@ -891,7 +931,19 @@ export function calculateFoodSecurity(state: GameState): number {
   
   // Base food availability from resource stocks
   let foodSecurity = Math.min(1.0, resources.food.currentStock / 100);
-  
+
+  // Phase 1B Refinement (Oct 17, 2025): Food production requires human infrastructure
+  // Research: Tainter (1988) - complexity requires minimum population to maintain
+  const populationRatio = state.humanPopulationSystem.population / 8.0; // 8B baseline
+  const infrastructurePenalty = Math.max(0.3, populationRatio); // Minimum 30% capacity with knowledge preservation
+
+  foodSecurity *= infrastructurePenalty;
+
+  // Log when infrastructure collapses significantly
+  if (infrastructurePenalty < 0.5) {
+    console.log(`  🏭 Agricultural infrastructure collapse: ${(populationRatio * 100).toFixed(0)}% capacity remaining`);
+  }
+
   // === PHOSPHORUS DEPLETION ===
   // Low reserves = reduced agricultural yields
   if (phosphorus && phosphorus.reserves < 0.50) {
@@ -1020,9 +1072,12 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
   
   // FIX (Oct 13, 2025): Simplified famine trigger based on global food security only
   // The regional biodiversity system isn't being maintained, so we can't rely on it
-  // Research: FAO, IPBES - food security < 0.4 = famine risk
-  
-  if (globalFoodSecurity < 0.4) {
+  //
+  // Phase 1B Refinement (Oct 17, 2025): Lowered famine threshold from 0.4 to 0.6
+  // Historical validation: Ukraine Holodomor (0.5-0.6), Bengal Famine (0.6), Somalia (0.5-0.6)
+  // Research: FAO severe food insecurity threshold is 0.7, famines trigger 0.5-0.7
+
+  if (globalFoodSecurity < 0.6) {  // Lowered from 0.4 (Oct 17, 2025)
     const totalPopulation = state.humanPopulationSystem.population;
     
     // Define 6 major world regions (simplified, not tied to biodiversity system)

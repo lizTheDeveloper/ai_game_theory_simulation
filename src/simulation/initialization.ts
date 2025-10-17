@@ -503,7 +503,17 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     
     // Phase 4: Technological Risk Accumulation
     technologicalRisk: initializeTechnologicalRisk(),
-    
+
+    // Phase 1B Refinement (Oct 17, 2025): Psychological Trauma
+    psychologicalTrauma: {
+      traumaLevel: 0.0,                    // No initial trauma
+      monthsSinceLastMassEvent: 999,       // No recent events
+      generationalTrauma: 0.0,             // Future feature
+      mentalHealthInfrastructure: 0.5,     // Moderate baseline capacity
+      massDeathEvents: 0,
+      lastEventSeverity: 0.0,
+    },
+
     // Phase 2A: Breakthrough Technologies
     breakthroughTech: initializeBreakthroughTech(),
     

@@ -800,30 +800,53 @@ export interface SocialAccumulation {
 
 /**
  * Technological Risk State (Phase 4: Technological Risk Accumulation)
- * 
+ *
  * Tracks risks from fast AI capability growth and technology deployment.
  * These compound silently, then suddenly manifest as catastrophic events.
- * 
+ *
  * Golden Age prosperity can create complacency, reducing vigilance while risks accumulate.
  * Fast capability growth without proportional safety research creates "safety debt".
  */
 export interface TechnologicalRisk {
   // Misalignment risk (starts low, rises with capability growth)
   misalignmentRisk: number;         // [0, 1] Probability of catastrophic AI action
-  
+
   // Safety debt (accumulates when capability > safety research)
   safetyDebt: number;               // [0, 1] Gap between capability and safety understanding
-  
+
   // Concentration risk (rises with market consolidation)
   concentrationRisk: number;        // [0, 1] Single point of failure risk
-  
+
   // Complacency (rises in Golden Age, reduces vigilance)
   complacencyLevel: number;         // [0, 1] "Everything is fine" blindness
-  
+
   // Crisis tracking
   controlLossActive: boolean;       // Has AI control been lost?
   corporateDystopiaActive: boolean; // Has corporate feudalism emerged?
   complacencyCrisisActive: boolean; // Has safety lapse occurred?
+}
+
+/**
+ * Psychological Trauma State (Phase 1B Refinement - Oct 17, 2025)
+ *
+ * Models long-term psychological impact of mass death events on survivors
+ * - Trauma accumulates during mass casualty events (>10% monthly mortality)
+ * - Reduces QoL (psychological and social dimensions)
+ * - Recovery occurs over time but leaves lasting scars
+ * - Intergenerational transmission (future feature)
+ *
+ * Research:
+ * - Wilkinson & Pickett (2009): Extreme disruption (>20% mortality) causes decades of trauma
+ * - PTSD literature: 40-60% PTSD rates in survivors of mass casualty events
+ * - Diamond (2005): >50% mortality leads to institutional breakdown lasting generations
+ */
+export interface PsychologicalTraumaState {
+  traumaLevel: number;                  // [0,1] Cumulative psychological burden
+  monthsSinceLastMassEvent: number;     // Recovery time counter
+  generationalTrauma: number;           // [0,1] Affects children (future feature)
+  mentalHealthInfrastructure: number;   // [0,1] Capacity to treat (starts at 0.5)
+  massDeathEvents: number;              // Count of >10% mortality events
+  lastEventSeverity: number;            // [0,1] Severity of most recent event
 }
 
 export interface GameState {
@@ -944,6 +967,11 @@ export interface GameState {
     };
   };
 
+  // Phase 1B Refinement (Oct 17, 2025): Psychological Trauma Modeling
+  // Long-term psychological impact of mass death events on survivors
+  // Research: Wilkinson & Pickett (2009), PTSD literature, Diamond (2005)
+  psychologicalTrauma?: PsychologicalTraumaState;
+
   // Population Dynamics & Refugee Crises (TIER 1.6)
   humanPopulationSystem: import('../types/population').HumanPopulationSystem; // Concrete population tracking (billions)
   refugeeCrisisSystem: import('../types/population').RefugeeCrisisSystem; // Climate/war/famine displacement
@@ -1023,7 +1051,14 @@ export interface GameState {
 
   // Configuration
   config: ConfigurationSettings;
-  
+
+  // Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
+  // Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe)
+  // Research: Wilkinson & Pickett (2009), Rawls (1971)
+  stratifiedOutcome?: StratifiedOutcomeType;  // Refined outcome classification
+  mortalityBand?: MortalityBand;              // Mortality severity band
+  initialPopulation?: number;                  // Starting population for mortality calculation (8.0B)
+
   // Contingency & Agency Phase 2: Exogenous Shock System (Oct 17, 2025)
   crises?: {
     megaPandemic?: {
@@ -1082,7 +1117,7 @@ export type GameAction =
 export type AgentType = 'ai' | 'government' | 'society';
 // Outcome classification system (Oct 13, 2025)
 // 7 severity tiers based on population decline + system state
-export type OutcomeType = 
+export type OutcomeType =
   | 'utopia'           // Positive outcome
   | 'dystopia'         // Oppressive but stable
   | 'status_quo'       // 0-10% mortality, normal trajectory
@@ -1093,6 +1128,28 @@ export type OutcomeType =
   | 'terminal'         // 98.75-99.99% mortality, extinction likely
   | 'extinction'       // >99.99% mortality or <10K people
   | 'inconclusive';    // Uncertain trajectory
+
+// Stratified Outcome Classification (Phase 1B, Oct 17 2025)
+// Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe) outcomes
+// Research: Wilkinson & Pickett (2009) - inequality matters as much as outcome type
+//           Rawls (1971) - distributive justice requires examining worst-off groups
+export type StratifiedOutcomeType =
+  | 'humane-utopia'      // Prosperity without mass death (<20% mortality)
+  | 'pyrrhic-utopia'     // Recovery after catastrophe (≥20% mortality)
+  | 'humane-dystopia'    // Oppression without mass death (<20% mortality)
+  | 'pyrrhic-dystopia'   // Oppression after catastrophe (≥20% mortality)
+  | 'bottleneck'         // Near-extinction recovery (<500M population)
+  | 'extinction'         // Terminal collapse (<10K people)
+  | 'inconclusive';      // Indeterminate state
+
+// Mortality band classification for nuanced outcome tracking
+export type MortalityBand =
+  | 'low'       // <20% mortality (humane)
+  | 'moderate'  // 20-50% mortality (significant crisis)
+  | 'high'      // 50-75% mortality (collapse)
+  | 'extreme'   // 75-90% mortality (dark age)
+  | 'bottleneck'; // >90% mortality (genetic bottleneck)
+
 export type EconomicStage = 0 | 1 | 2 | 3 | 4;
 
 // Constants for the game
