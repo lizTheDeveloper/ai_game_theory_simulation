@@ -13,7 +13,7 @@
 import { SimulationPhase, PhaseResult, RNGFunction } from '../PhaseOrchestrator';
 import { GameState } from '@/types/game';
 import { calculateUnemployment } from '../../calculations';
-import { updateAIAssistedSkills } from '../../bionicSkills';
+import { updateAIAssistedSkills } from '../../aiAssistedSkills';
 import { updateSocietyAggregates } from '../../populationSegments';
 
 export class UnemploymentPhase implements SimulationPhase {

@@ -21,3 +21,17 @@ RECOMMENDATION: Phase 1D (AI manipulation detection) is NOT NEEDED. Nuclear safe
 
 NEXT STEPS: TIER 2 implementation (Enhanced UBI, Social Safety Nets, Technology Tree)
 ---
+
+---
+**feature-implementer** | 2025-10-17 15:00 | [STARTED]
+
+Beginning bionicSkills.ts refactoring (1,883 lines → modular aiAssistedSkills/)
+
+**Scope:** Extract 6 concerns into separate modules
+**Validation:** Monte Carlo N=10, same seed, identical outcomes
+**Files:** 12 new modules in src/simulation/aiAssistedSkills/
+**Phases:** 12 steps with validation gate before deletion
+
+**Research Foundation:** 28 peer-reviewed sources (2023-2025), TRL 8-9
+**Backward Compatibility:** Maintain all existing exports via index.ts facade
+---

@@ -20,7 +20,7 @@
 import { describe, it, expect } from '@jest/globals';
 import { GameState } from '../../src/types/game';
 import { createDefaultInitialState } from '../../src/simulation/initialization';
-import { updateAIAssistedSkills, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, calculateAIAssistedSkillsAggregateMetrics, checkCompetenceCrisis, checkWageInequality } from '../../src/simulation/bionicSkills';
+import { updateAIAssistedSkills, calculateProductivityMultiplierFromAIAssistedSkills, updateLaborCapitalDistribution, calculateAIAssistedSkillsAggregateMetrics, checkCompetenceCrisis, checkWageInequality } from '../../src/simulation/aiAssistedSkills';
 import { runStep } from '../../src/simulation/engine/PhaseOrchestrator';
 
 /**

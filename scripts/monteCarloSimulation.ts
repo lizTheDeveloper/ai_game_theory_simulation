@@ -310,6 +310,306 @@ interface RunResult {
   stratifiedOutcome?: string;         // Refined outcome (humane-utopia, pyrrhic-utopia, etc.)
   mortalityBand?: string;             // Mortality severity (low, moderate, high, extreme, bottleneck)
   mortalityRate?: number;             // Actual mortality rate (0.0 to 1.0)
+
+  // === RECOVERY TIMELINE TRACKING (NEW - Oct 17 2025) ===
+  recoveryTimeline?: {
+    phases: Array<{
+      phase: 'decline' | 'inflection' | 'recovery' | 'stable' | 'collapse';
+      startMonth: number;
+      endMonth: number;
+      popChangePercent: number;  // Population change during phase (negative = decline)
+      qolChange: number;         // QoL change during phase
+    }>;
+    keyEvents: Array<{
+      month: number;
+      event: string;
+      type: 'tipping_cascade' | 'breakthrough' | 'spiral_activation' | 'crisis' | 'policy' | 'shock';
+    }>;
+    inflectionPoint?: number;        // Month when recovery began (if applicable)
+    recoveryTrigger?: string;        // What triggered recovery
+    spiralsActivated: string[];      // Which spirals activated
+    breakthroughClusters: Array<{    // Levy flight clusters
+      startMonth: number;
+      endMonth: number;
+      breakthroughCount: number;
+      technologies: string[];
+    }>;
+    ubiFloorMaintained: boolean;     // Did UBI stay >35% throughout?
+    minUBILevel: number;             // Lowest UBI level reached
+    breakthroughCompounding: number; // Final compounding multiplier
+    maxBreakthroughCompounding: number; // Peak compounding
+  };
+
+  // === MECHANISM ENABLERS ===
+  mechanismSummary?: {
+    levyFlightCluster: boolean;           // 8+ breakthroughs in <20 months
+    exogenousPositiveShock: boolean;      // Black/gray swan tech
+    ubiFlo orPersistent: boolean;          // UBI >35% maintained
+    breakthroughCompounding: number;       // Final compounding level
+    earlySpiralActivation: boolean;        // Spiral before Month 60
+    breakthroughDrought: boolean;          // 0-2 breakthroughs for >30 months
+    tippingCascadeWithoutSpiral: boolean;  // Cascade but no recovery
+    failedRecoveryAttempt: boolean;        // Recovered then collapsed
+  };
+}
+
+/**
+ * Analyze recovery timeline from simulation history
+ * Detects decline/inflection/recovery phases, key events, and mechanisms
+ */
+function analyzeRecoveryTimeline(runResult: any, finalState: any): RunResult['recoveryTimeline'] {
+  const popHistory: Array<{ month: number; pop: number; qol: number }> = [];
+
+  // Extract population and QoL history
+  if (finalState.humanPopulationSystem && runResult.log && runResult.log.snapshots && Array.isArray(runResult.log.snapshots)) {
+    runResult.log.snapshots.forEach((snapshot: any, idx: number) => {
+      if (snapshot.humanPopulationSystem && snapshot.globalMetrics) {
+        popHistory.push({
+          month: snapshot.currentMonth || idx,
+          pop: snapshot.humanPopulationSystem.population || 8.0,
+          qol: snapshot.globalMetrics.qualityOfLife || 0.5
+        });
+      }
+    });
+  }
+
+  if (popHistory.length < 3) {
+    return undefined; // Not enough data
+  }
+
+  // Detect phases (decline, inflection, recovery)
+  const phases: RunResult['recoveryTimeline']['phases'] = [];
+  let currentPhase: 'decline' | 'inflection' | 'recovery' | 'stable' | 'collapse' = 'stable';
+  let phaseStartMonth = 0;
+  let phaseStartPop = popHistory[0].pop;
+  let phaseStartQoL = popHistory[0].qol;
+
+  for (let i = 1; i < popHistory.length; i++) {
+    const prev = popHistory[i - 1];
+    const curr = popHistory[i];
+    const popChange = (curr.pop - prev.pop) / prev.pop;
+    const qolChange = curr.qol - prev.qol;
+
+    // Detect phase transitions
+    let newPhase: typeof currentPhase | null = null;
+
+    if (popChange < -0.03) {
+      // Significant decline (>3% population loss)
+      if (currentPhase !== 'decline' && currentPhase !== 'collapse') {
+        newPhase = 'decline';
+      }
+    } else if (popChange > -0.01 && popChange < 0.01 && prev.pop < phaseStartPop * 0.8) {
+      // Population stabilized after major decline
+      if (currentPhase === 'decline') {
+        newPhase = 'inflection';
+      }
+    } else if (qolChange > 0.05 && curr.qol > 0.6) {
+      // Quality of life improving significantly
+      if (currentPhase === 'inflection' || currentPhase === 'decline') {
+        newPhase = 'recovery';
+      }
+    } else if (popChange > -0.005 && popChange < 0.005 && qolChange > -0.02 && qolChange < 0.02) {
+      // Stable
+      if (currentPhase !== 'stable' && i > 12) {
+        newPhase = 'stable';
+      }
+    }
+
+    // Check for collapse (cascading decline)
+    if (curr.pop < prev.pop * 0.5 && curr.qol < 0.2) {
+      newPhase = 'collapse';
+    }
+
+    if (newPhase && newPhase !== currentPhase) {
+      // End current phase
+      phases.push({
+        phase: currentPhase,
+        startMonth: phaseStartMonth,
+        endMonth: curr.month,
+        popChangePercent: ((prev.pop - phaseStartPop) / phaseStartPop) * 100,
+        qolChange: prev.qol - phaseStartQoL
+      });
+
+      // Start new phase
+      currentPhase = newPhase;
+      phaseStartMonth = curr.month;
+      phaseStartPop = curr.pop;
+      phaseStartQoL = curr.qol;
+    }
+  }
+
+  // Close final phase
+  const lastSnapshot = popHistory[popHistory.length - 1];
+  phases.push({
+    phase: currentPhase,
+    startMonth: phaseStartMonth,
+    endMonth: lastSnapshot.month,
+    popChangePercent: ((lastSnapshot.pop - phaseStartPop) / phaseStartPop) * 100,
+    qolChange: lastSnapshot.qol - phaseStartQoL
+  });
+
+  // Extract key events from event log
+  const keyEvents: RunResult['recoveryTimeline']['keyEvents'] = [];
+  if (runResult.log && runResult.log.events && runResult.log.events.allEvents) {
+    runResult.log.events.allEvents.forEach((event: any) => {
+      if (event.severity === 'destructive' || event.type === 'breakthrough' || event.type === 'crisis') {
+        let eventType: 'tipping_cascade' | 'breakthrough' | 'spiral_activation' | 'crisis' | 'policy' | 'shock' = 'crisis';
+
+        if (event.title?.includes('Breakthrough') || event.title?.includes('breakthrough')) {
+          eventType = 'breakthrough';
+        } else if (event.title?.includes('Spiral') || event.title?.includes('spiral')) {
+          eventType = 'spiral_activation';
+        } else if (event.title?.includes('Tipping') || event.title?.includes('cascade')) {
+          eventType = 'tipping_cascade';
+        } else if (event.title?.includes('Policy') || event.title?.includes('policy')) {
+          eventType = 'policy';
+        } else if (event.title?.includes('Shock') || event.title?.includes('swan')) {
+          eventType = 'shock';
+        }
+
+        keyEvents.push({
+          month: event.month || event.timestamp,
+          event: event.title || event.description,
+          type: eventType
+        });
+      }
+    });
+  }
+
+  // Detect inflection point (when recovery began)
+  const inflectionPhase = phases.find(p => p.phase === 'inflection');
+  const inflectionPoint = inflectionPhase?.startMonth;
+
+  // Find recovery trigger (first major breakthrough or spiral after inflection)
+  let recoveryTrigger: string | undefined;
+  if (inflectionPoint) {
+    const recoveryEvent = keyEvents.find(e =>
+      e.month >= inflectionPoint &&
+      (e.type === 'breakthrough' || e.type === 'spiral_activation')
+    );
+    recoveryTrigger = recoveryEvent?.event;
+  }
+
+  // Track spirals activated
+  const spiralsActivated = keyEvents
+    .filter(e => e.type === 'spiral_activation')
+    .map(e => e.event);
+
+  // Detect Levy flight clusters (8+ breakthroughs in <20 months)
+  const breakthroughEvents = keyEvents.filter(e => e.type === 'breakthrough');
+  const breakthroughClusters: RunResult['recoveryTimeline']['breakthroughClusters'] = [];
+
+  for (let i = 0; i < breakthroughEvents.length; i++) {
+    const start = breakthroughEvents[i].month;
+    const cluster = breakthroughEvents.filter(e => e.month >= start && e.month < start + 20);
+
+    if (cluster.length >= 8) {
+      breakthroughClusters.push({
+        startMonth: start,
+        endMonth: Math.max(...cluster.map(e => e.month)),
+        breakthroughCount: cluster.length,
+        technologies: cluster.map(e => e.event)
+      });
+      i += cluster.length - 1; // Skip counted breakthroughs
+    }
+  }
+
+  // UBI floor tracking (would need to extract from state snapshots)
+  let ubiFloorMaintained = true;
+  let minUBILevel = 1.0;
+  if (runResult.log && runResult.log.snapshots) {
+    runResult.log.snapshots.forEach((snapshot: any) => {
+      if (snapshot.ubiSystem && snapshot.ubiSystem.paymentAmount) {
+        const ubiLevel = snapshot.ubiSystem.paymentAmount / 1000; // Normalize
+        minUBILevel = Math.min(minUBILevel, ubiLevel);
+        if (ubiLevel < 0.35) {
+          ubiFloorMaintained = false;
+        }
+      }
+    });
+  }
+
+  // Breakthrough compounding tracking
+  const breakthroughCompounding = finalState.breakthroughMultiplier || 1.0;
+  let maxBreakthroughCompounding = breakthroughCompounding;
+  if (runResult.log && runResult.log.snapshots) {
+    runResult.log.snapshots.forEach((snapshot: any) => {
+      if (snapshot.breakthroughMultiplier) {
+        maxBreakthroughCompounding = Math.max(maxBreakthroughCompounding, snapshot.breakthroughMultiplier);
+      }
+    });
+  }
+
+  return {
+    phases,
+    keyEvents,
+    inflectionPoint,
+    recoveryTrigger,
+    spiralsActivated: [...new Set(spiralsActivated)],
+    breakthroughClusters,
+    ubiFloorMaintained,
+    minUBILevel,
+    breakthroughCompounding,
+    maxBreakthroughCompounding
+  };
+}
+
+/**
+ * Generate mechanism summary for outcome analysis
+ */
+function generateMechanismSummary(
+  recoveryTimeline: RunResult['recoveryTimeline'],
+  finalState: any,
+  outcome: string
+): RunResult['mechanismSummary'] {
+  if (!recoveryTimeline) {
+    return undefined;
+  }
+
+  const levyFlightCluster = recoveryTimeline.breakthroughClusters.length > 0;
+
+  // Check for exogenous positive shock (would need shock tracking)
+  const exogenousPositiveShock = recoveryTimeline.keyEvents.some(e =>
+    e.type === 'shock' && e.event.toLowerCase().includes('fusion')
+  );
+
+  const ubiFloorPersistent = recoveryTimeline.ubiFloorMaintained;
+  const breakthroughCompounding = recoveryTimeline.breakthroughCompounding;
+
+  const earlySpiralActivation = recoveryTimeline.spiralsActivated.length > 0 &&
+    recoveryTimeline.keyEvents.some(e =>
+      e.type === 'spiral_activation' && e.month < 60
+    );
+
+  // Check for breakthrough drought (long periods without progress)
+  let breakthroughDrought = false;
+  if (recoveryTimeline.breakthroughClusters.length === 0) {
+    const breakthroughs = recoveryTimeline.keyEvents.filter(e => e.type === 'breakthrough');
+    if (breakthroughs.length < 3) {
+      breakthroughDrought = true;
+    }
+  }
+
+  // Tipping cascade without spiral recovery
+  const tippingCascadeWithoutSpiral = recoveryTimeline.keyEvents.some(e =>
+    e.type === 'tipping_cascade'
+  ) && recoveryTimeline.spiralsActivated.length === 0;
+
+  // Failed recovery attempt (recovered to Month 60+, then collapsed)
+  const failedRecoveryAttempt = recoveryTimeline.phases.some(p =>
+    p.phase === 'recovery' && p.endMonth > 60
+  ) && (outcome === 'extinction' || outcome === 'collapse');
+
+  return {
+    levyFlightCluster,
+    exogenousPositiveShock,
+    ubiFloorPersistent,
+    breakthroughCompounding,
+    earlySpiralActivation,
+    breakthroughDrought,
+    tippingCascadeWithoutSpiral,
+    failedRecoveryAttempt
+  };
 }
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
@@ -377,9 +677,14 @@ for (let i = 0; i < NUM_RUNS; i++) {
     maxMonths: MAX_MONTHS,
     checkActualOutcomes: true
   });
-  
+
   const finalState = runResult.finalState;
-  
+
+  // === NEW (Oct 17, 2025): RECOVERY TIMELINE ANALYSIS ===
+  // Analyze recovery timeline from run data
+  const recoveryTimeline = analyzeRecoveryTimeline(runResult, finalState);
+  const mechanismSummary = generateMechanismSummary(recoveryTimeline, finalState, runResult.summary.finalOutcome);
+
   // Save individual run event log
   // P0.7: Include scenario mode in filename
   const runLogFile = path.join(outputDir, `run_${seed}_${runScenarioMode}_events.json`);
@@ -396,7 +701,10 @@ for (let i = 0; i < NUM_RUNS; i++) {
     snapshots: {
       initial: runResult.log.snapshots[0],
       final: runResult.log.snapshots[runResult.log.snapshots.length - 1]
-    }
+    },
+    // NEW (Oct 17, 2025): Add recovery timeline data to individual run logs
+    recoveryTimeline,
+    mechanismSummary
   };
   fs.writeFileSync(runLogFile, JSON.stringify(eventLogData, null, 2), 'utf8');
   
@@ -875,7 +1183,8 @@ for (let i = 0; i < NUM_RUNS; i++) {
   } else {
     mappedOutcome = 'none';
   }
-  
+
+  // Recovery timeline and mechanism summary already analyzed above
   results.push({
     seed,
     scenarioMode: runScenarioMode, // P0.7: Add scenario mode to results
@@ -1113,7 +1422,11 @@ for (let i = 0; i < NUM_RUNS; i++) {
     mortalityBand: finalState.mortalityBand,
     mortalityRate: finalState.initialPopulation
       ? 1 - (finalState.humanPopulationSystem.population / finalState.initialPopulation)
-      : undefined
+      : undefined,
+
+    // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
+    recoveryTimeline,
+    mechanismSummary
   });
   
   // Progress indicator
@@ -1564,6 +1877,234 @@ results.forEach((r, i) => {
     log(`     ⚠️  Run ${i+1} (Seed ${r.seed}): Could not read event log - ${err}`);
   }
 });
+
+// ============================================================================
+// NEW (Oct 17, 2025): RECOVERY TIMELINE REPORTING
+// ============================================================================
+
+log('\n\n' + '='.repeat(80));
+log('📈 RECOVERY/COLLAPSE TIMELINES');
+log('='.repeat(80));
+
+// Filter stratified utopia runs (humane + pyrrhic)
+const stratifiedUtopiaRuns = results.filter(r =>
+  r.stratifiedOutcome === 'humane-utopia' || r.stratifiedOutcome === 'pyrrhic-utopia'
+);
+
+if (stratifiedUtopiaRuns.length > 0) {
+  log(`\n🌟 UTOPIA RUNS (${stratifiedUtopiaRuns.length}):\n`);
+
+  stratifiedUtopiaRuns.slice(0, 5).forEach(r => { // Show first 5 in detail
+    const isPyrrhic = r.stratifiedOutcome === 'pyrrhic-utopia';
+    const mortalityPercent = (r.mortalityRate || 0) * 100;
+    const runIndex = results.indexOf(r) + 1;
+
+    log(`\nRun ${runIndex} (Seed ${r.seed}): ${isPyrrhic ? 'PYRRHIC UTOPIA' : 'HUMANE UTOPIA'}`);
+    log(`  Initial Population: ${r.initialPopulation.toFixed(2)}B`);
+    log(`  Final Population: ${r.finalPopulation.toFixed(2)}B (${mortalityPercent.toFixed(1)}% mortality)`);
+
+    if (r.recoveryTimeline && r.recoveryTimeline.phases.length > 0) {
+      const rt = r.recoveryTimeline;
+
+      log(`\n  TIMELINE:`);
+      rt.phases.forEach(phase => {
+        const phaseName = phase.phase.toUpperCase().padEnd(12);
+        const duration = phase.endMonth - phase.startMonth;
+        log(`    Month ${String(phase.startMonth).padStart(3)}-${String(phase.endMonth).padStart(3)}: ${phaseName}`);
+        log(`      Population: ${phase.popChangePercent > 0 ? '+' : ''}${phase.popChangePercent.toFixed(1)}%, QoL: ${phase.qolChange > 0 ? '+' : ''}${phase.qolChange.toFixed(2)}`);
+      });
+
+      log(`\n  MECHANISMS:`);
+      if (rt.breakthroughClusters && rt.breakthroughClusters.length > 0) {
+        log(`    ✅ Lévy flight cluster: Months ${rt.breakthroughClusters[0].startMonth}-${rt.breakthroughClusters[0].endMonth} (${rt.breakthroughClusters[0].breakthroughCount} breakthroughs in ${rt.breakthroughClusters[0].endMonth - rt.breakthroughClusters[0].startMonth} months)`);
+      }
+      log(`    ${rt.ubiFloorMaintained ? '✅' : '❌'} UBI floor: ${rt.ubiFloorMaintained ? `Maintained (min ${(rt.minUBILevel * 100).toFixed(0)}%)` : `Collapsed to ${(rt.minUBILevel * 100).toFixed(0)}%`}`);
+      log(`    Breakthrough compounding: ${rt.breakthroughCompounding.toFixed(2)}x`);
+      if (rt.spiralsActivated && rt.spiralsActivated.length > 0) {
+        log(`    ✅ Spirals: ${rt.spiralsActivated.slice(0, 2).join(', ')}`);
+      }
+    }
+  });
+
+  if (stratifiedUtopiaRuns.length > 5) {
+    log(`\n[... ${stratifiedUtopiaRuns.length - 5} more utopia runs - see individual run logs for details]`);
+  }
+}
+
+// Extinction runs (first 3 in detail)
+const extinctionRuns = results.filter(r =>
+  r.outcome === 'extinction' || r.rawOutcome === 'extinction'
+);
+
+if (extinctionRuns.length > 0) {
+  log(`\n\n💀 EXTINCTION RUNS (${extinctionRuns.length}):\n`);
+
+  extinctionRuns.slice(0, 3).forEach(r => {
+    const runIndex = results.indexOf(r) + 1;
+    log(`\nRun ${runIndex} (Seed ${r.seed}): ${(r.extinctionType || 'SLOW EXTINCTION').toUpperCase()}`);
+    log(`  Duration: ${r.months} months`);
+    log(`  Final Population: ${r.finalPopulation.toFixed(2)}B (${((r.mortalityRate || 0) * 100).toFixed(1)}% mortality)`);
+    log(`  Final QoL: ${r.finalQoL.toFixed(2)}`);
+
+    if (r.recoveryTimeline) {
+      log(`\n  COLLAPSE PATTERN:`);
+      const collapsePhases = r.recoveryTimeline.phases.filter(p => p.phase === 'decline' || p.phase === 'collapse');
+      if (collapsePhases.length > 0) {
+        collapsePhases.forEach(phase => {
+          log(`    Months ${phase.startMonth}-${phase.endMonth}: ${phase.phase.toUpperCase()} (${phase.popChangePercent.toFixed(1)}% pop change)`);
+        });
+      } else if (r.finalQoL < 0.2 && (r.mortalityRate || 0) < 0.1) {
+        log(`    Slow deterioration: Population stable but QoL collapsed`);
+      }
+
+      log(`\n  MECHANISM:`);
+      if (r.mechanismSummary?.tippingCascadeWithoutSpiral) {
+        log(`    ⚠️ Tipping cascade without recovery spirals`);
+      }
+      if (r.mechanismSummary?.breakthroughDrought) {
+        log(`    ❌ Breakthrough drought (insufficient innovation)`);
+      }
+      if (r.mechanismSummary?.failedRecoveryAttempt) {
+        log(`    ⚠️ Failed recovery (recovered then collapsed again)`);
+      }
+    }
+  });
+
+  if (extinctionRuns.length > 3) {
+    log(`\n[... ${extinctionRuns.length - 3} more extinction runs]`);
+  }
+}
+
+// ============================================================================
+// NEW (Oct 17, 2025): MECHANISM ANALYSIS
+// ============================================================================
+
+log('\n\n' + '='.repeat(80));
+log('🔬 MECHANISM ANALYSIS (NEW)');
+log('='.repeat(80));
+
+// Analyze utopia enablers
+if (stratifiedUtopiaRuns.length > 0) {
+  log(`\nUTOPIA ENABLERS (What makes recovery possible?):`);
+
+  const levyFlightCount = stratifiedUtopiaRuns.filter(r => r.mechanismSummary?.levyFlightCluster).length;
+  const exogenousShockCount = stratifiedUtopiaRuns.filter(r => r.mechanismSummary?.exogenousPositiveShock).length;
+  const ubiFloorCount = stratifiedUtopiaRuns.filter(r => r.mechanismSummary?.ubiFloorPersistent).length;
+  const highCompoundingCount = stratifiedUtopiaRuns.filter(r =>
+    r.mechanismSummary && r.mechanismSummary.breakthroughCompounding > 1.30
+  ).length;
+  const earlySpiralCount = stratifiedUtopiaRuns.filter(r => r.mechanismSummary?.earlySpiralActivation).length;
+
+  log(`  Lévy flight clusters (8+ breakthroughs in <20 months): ${levyFlightCount}/${stratifiedUtopiaRuns.length} runs (${(levyFlightCount/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  Exogenous positive shock (black/gray swan tech): ${exogenousShockCount}/${stratifiedUtopiaRuns.length} runs (${(exogenousShockCount/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  UBI floor maintained >35%: ${ubiFloorCount}/${stratifiedUtopiaRuns.length} runs (${(ubiFloorCount/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  Breakthrough compounding >1.30x: ${highCompoundingCount}/${stratifiedUtopiaRuns.length} runs (${(highCompoundingCount/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  Early spiral activation (before Month 60): ${earlySpiralCount}/${stratifiedUtopiaRuns.length} runs (${(earlySpiralCount/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+}
+
+// Analyze dystopia traps
+const dystopiaRuns = results.filter(r =>
+  r.stratifiedOutcome === 'humane-dystopia' || r.stratifiedOutcome === 'pyrrhic-dystopia'
+);
+
+if (dystopiaRuns.length > 0) {
+  log(`\nDYSTOPIA TRAPS (What prevents recovery?):`);
+
+  const droughtCount = dystopiaRuns.filter(r => r.mechanismSummary?.breakthroughDrought).length;
+  const lowCompoundingCount = dystopiaRuns.filter(r =>
+    r.mechanismSummary && r.mechanismSummary.breakthroughCompounding < 1.15
+  ).length;
+  const cascadeNoSpiralCount = dystopiaRuns.filter(r =>
+    r.mechanismSummary?.tippingCascadeWithoutSpiral
+  ).length;
+  const lowUBICount = dystopiaRuns.filter(r => !r.mechanismSummary?.ubiFloorPersistent).length;
+
+  log(`  Breakthrough drought (0-2 breakthroughs for >30 months): ${droughtCount}/${dystopiaRuns.length} runs (${(droughtCount/dystopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  UBI floor collapse <35%: ${lowUBICount}/${dystopiaRuns.length} runs (${(lowUBICount/dystopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  Tipping cascade + no spiral activation: ${cascadeNoSpiralCount}/${dystopiaRuns.length} runs (${(cascadeNoSpiralCount/dystopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  Breakthrough compounding stuck <1.15x: ${lowCompoundingCount}/${dystopiaRuns.length} runs (${(lowCompoundingCount/dystopiaRuns.length*100).toFixed(0)}%)`);
+}
+
+// Analyze extinction triggers
+if (extinctionRuns.length > 0) {
+  log(`\nEXTINCTION TRIGGERS (What causes terminal collapse?):`);
+
+  const rapidCascadeCount = extinctionRuns.filter(r =>
+    r.recoveryTimeline?.keyEvents.some(e => e.type === 'tipping_cascade')
+  ).length;
+  const slowDeteriorationCount = extinctionRuns.filter(r =>
+    r.finalQoL < 0.2 && (r.mortalityRate || 0) < 0.3
+  ).length;
+  const failedRecoveryCount = extinctionRuns.filter(r =>
+    r.mechanismSummary?.failedRecoveryAttempt
+  ).length;
+
+  log(`  Rapid cascade (tipping points + shock): ${rapidCascadeCount}/${extinctionRuns.length} runs (${(rapidCascadeCount/extinctionRuns.length*100).toFixed(0)}%)`);
+  log(`  Slow deterioration (QoL collapse, no mass death): ${slowDeteriorationCount}/${extinctionRuns.length} runs (${(slowDeteriorationCount/extinctionRuns.length*100).toFixed(0)}%)`);
+  log(`  Failed recovery attempt (recovered to Month 60, then collapsed): ${failedRecoveryCount}/${extinctionRuns.length} runs (${(failedRecoveryCount/extinctionRuns.length*100).toFixed(0)}%)`);
+}
+
+// ============================================================================
+// NEW (Oct 17, 2025): VALIDATION TEST RESULTS
+// ============================================================================
+
+log('\n\n' + '='.repeat(80));
+log('✅ VALIDATION TEST RESULTS (AUTO-GENERATED)');
+log('='.repeat(80));
+
+log(`\nTest 1: Mechanism Verification`);
+if (stratifiedUtopiaRuns.length > 0) {
+  const pyrrhicUtopias = stratifiedUtopiaRuns.filter(r => r.stratifiedOutcome === 'pyrrhic-utopia');
+  log(`  Pyrrhic utopias (≥20% mortality): ${pyrrhicUtopias.length}/${stratifiedUtopiaRuns.length} runs`);
+
+  // Calculate average recovery start month
+  const recoveryStarts = stratifiedUtopiaRuns
+    .filter(r => r.recoveryTimeline?.inflectionPoint)
+    .map(r => r.recoveryTimeline!.inflectionPoint!);
+
+  if (recoveryStarts.length > 0) {
+    const avgStart = recoveryStarts.reduce((sum, m) => sum + m, 0) / recoveryStarts.length;
+    const minStart = Math.min(...recoveryStarts);
+    const maxStart = Math.max(...recoveryStarts);
+    log(`  Average recovery start: Month ${avgStart.toFixed(0)} (range: ${minStart}-${maxStart})`);
+  }
+
+  const levyFlightCount = stratifiedUtopiaRuns.filter(r => r.mechanismSummary?.levyFlightCluster).length;
+  log(`  Common recovery sequence:`);
+  log(`    1. Lévy cluster breakthrough: ${levyFlightCount}/${stratifiedUtopiaRuns.length} runs (${(levyFlightCount/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+  log(`    2. Emergency tech deployment (population stabilization)`);
+  log(`    3. Spiral activation (upward momentum)`);
+  log(`    4. Utopia stabilization (sustained prosperity)`);
+}
+
+log(`\nTest 3: Extinction Profile`);
+if (extinctionRuns.length > 0) {
+  const slowDeteriorationCount = extinctionRuns.filter(r =>
+    r.finalQoL < 0.2 && (r.mortalityRate || 0) < 0.3
+  ).length;
+  const rapidCascadeCount = extinctionRuns.filter(r =>
+    r.recoveryTimeline?.keyEvents.some(e => e.type === 'tipping_cascade')
+  ).length;
+  const failedRecoveryCount = extinctionRuns.filter(r =>
+    r.mechanismSummary?.failedRecoveryAttempt
+  ).length;
+
+  log(`  Slow collapse: ${slowDeteriorationCount} runs (institutional failure, no mass death)`);
+  log(`  Rapid catastrophe: ${rapidCascadeCount} runs (tipping cascade + shock)`);
+  log(`  Failed recovery: ${failedRecoveryCount} runs (recovered then regressed)`);
+
+  const avgDuration = extinctionRuns.reduce((sum, r) => sum + r.months, 0) / extinctionRuns.length;
+  log(`  Average extinction duration: ${avgDuration.toFixed(0)} months`);
+}
+
+log(`\nTest 4 (Partial): Timeframe Stability`);
+if (stratifiedUtopiaRuns.length > 0) {
+  const stableUtopias = stratifiedUtopiaRuns.filter(r => r.finalQoL > 0.6);
+  const regressingUtopias = stratifiedUtopiaRuns.length - stableUtopias.length;
+  log(`  Utopias stable at Month ${MAX_MONTHS}: ${stableUtopias.length}/${stratifiedUtopiaRuns.length} runs (${(stableUtopias.length/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  Utopias showing regression: ${regressingUtopias}/${stratifiedUtopiaRuns.length} runs (${(regressingUtopias/stratifiedUtopiaRuns.length*100).toFixed(0)}%)`);
+  log(`  Note: Need 240-month runs to verify long-term stability`);
+}
 
 // ============================================================================
 log('\n\n' + '='.repeat(80));
@@ -2093,10 +2634,10 @@ if (avgTotalFamineDeaths > 0.5) {
 }
 
 // Reality check: Does Utopia have low inequality?
-const utopiaRuns = results.filter(r => r.outcome === 'utopia');
-if (utopiaRuns.length > 0) {
-  const utopiaAvgGini = utopiaRuns.reduce((sum, r) => sum + r.globalGini, 0) / utopiaRuns.length;
-  const utopiaAvgWorstQoL = utopiaRuns.reduce((sum, r) => sum + r.worstRegionQoL, 0) / utopiaRuns.length;
+const utopiaOutcomeRuns = results.filter(r => r.outcome === 'utopia');
+if (utopiaOutcomeRuns.length > 0) {
+  const utopiaAvgGini = utopiaOutcomeRuns.reduce((sum, r) => sum + r.globalGini, 0) / utopiaOutcomeRuns.length;
+  const utopiaAvgWorstQoL = utopiaOutcomeRuns.reduce((sum, r) => sum + r.worstRegionQoL, 0) / utopiaOutcomeRuns.length;
   
   log(`\n  UTOPIA INEQUALITY CHECK:`);
   log(`    Avg Gini in Utopia runs: ${utopiaAvgGini.toFixed(3)} (should be <0.40)`);

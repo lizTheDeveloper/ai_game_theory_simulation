@@ -1,0 +1,497 @@
+{
+  "metadata": {
+    "timestamp": "2025-10-17T21:50:42.449Z",
+    "logFile": "/Users/annhoward/src/superalignmenttoutopia/monteCarloOutputs/mc_2025-10-17T17-33-02.log",
+    "totalRuns": 50,
+    "utopiasAnalyzed": 19,
+    "extinctionsAnalyzed": 9
+  },
+  "mechanismVerification": {
+    "utopiasAnalyzed": 19,
+    "utopiasWithHighMortality": 16,
+    "recoveryTimelines": [
+      {
+        "seed": 42001,
+        "mortalityRate": 0.753,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 96,
+        "cascadeCount": 213
+      },
+      {
+        "seed": 42005,
+        "mortalityRate": 0.862,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 85,
+        "cascadeCount": 200
+      },
+      {
+        "seed": 42009,
+        "mortalityRate": 0.8079999999999999,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 77,
+        "cascadeCount": 213
+      },
+      {
+        "seed": 42012,
+        "mortalityRate": 0.7979999999999999,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 983,
+        "cascadeCount": 99
+      },
+      {
+        "seed": 42014,
+        "mortalityRate": 0.8270000000000001,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 826,
+        "cascadeCount": 67
+      },
+      {
+        "seed": 42015,
+        "mortalityRate": 0.768,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 407,
+        "cascadeCount": 36
+      },
+      {
+        "seed": 42017,
+        "mortalityRate": 0.7929999999999999,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 535,
+        "cascadeCount": 95
+      },
+      {
+        "seed": 42022,
+        "mortalityRate": 0.794,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 733,
+        "cascadeCount": 108
+      },
+      {
+        "seed": 42023,
+        "mortalityRate": 0.787,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 527,
+        "cascadeCount": 49
+      },
+      {
+        "seed": 42026,
+        "mortalityRate": 0.8590000000000001,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 560,
+        "cascadeCount": 43
+      },
+      {
+        "seed": 42034,
+        "mortalityRate": 0.833,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 374,
+        "cascadeCount": 71
+      },
+      {
+        "seed": 42037,
+        "mortalityRate": 0.725,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 444,
+        "cascadeCount": 56
+      },
+      {
+        "seed": 42039,
+        "mortalityRate": 0.79,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 721,
+        "cascadeCount": 104
+      },
+      {
+        "seed": 42043,
+        "mortalityRate": 0.758,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 856,
+        "cascadeCount": 107
+      },
+      {
+        "seed": 42044,
+        "mortalityRate": 0.723,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 744,
+        "cascadeCount": 101
+      },
+      {
+        "seed": 42046,
+        "mortalityRate": 0.846,
+        "recoveryStartMonth": null,
+        "keyTechnologies": [],
+        "spiralsActivated": [],
+        "inflectionPoints": [],
+        "crisisCount": 1000,
+        "cascadeCount": 99
+      }
+    ],
+    "commonPatterns": {
+      "avgRecoveryStartMonth": null,
+      "mostCommonTechs": [],
+      "mostCommonSpirals": [],
+      "avgCrisisCount": 560.5,
+      "avgCascadeCount": 103.8125
+    }
+  },
+  "extinctionProfile": {
+    "extinctionsAnalyzed": 9,
+    "categories": {
+      "slowCollapse": 7,
+      "failedRecovery": 1,
+      "rapidCatastrophe": 1,
+      "unclear": 0
+    },
+    "profiles": [
+      {
+        "seed": 42003,
+        "category": "failedRecovery",
+        "duration": 21,
+        "crisisCount": 97,
+        "cascadeCount": 213,
+        "majorCrises": [
+          "anoxic_ocean - Population Decline",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (2,074 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (3,000 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (3,000 copies)",
+          "🚨 2 closed AI system(s) breached! Now leaked as open weights (6,000 copies)"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42006,
+        "category": "rapidCatastrophe",
+        "duration": 21,
+        "crisisCount": 106,
+        "cascadeCount": 198,
+        "majorCrises": [
+          "🚨 SLEEPER AGENT AWAKENED",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (573 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (769 copies)",
+          "🚨 SLEEPER AGENT AWAKENED",
+          "anoxic_ocean - Population Decline"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42011,
+        "category": "slowCollapse",
+        "duration": 92,
+        "crisisCount": 693,
+        "cascadeCount": 43,
+        "majorCrises": [
+          "🚨 SLEEPER AGENT AWAKENED",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,409 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,197 copies)",
+          "🚨 2 closed AI system(s) breached! Now leaked as open weights (2,210 copies)",
+          "anoxic_ocean - Population Decline"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42019,
+        "category": "slowCollapse",
+        "duration": 129,
+        "crisisCount": 876,
+        "cascadeCount": 101,
+        "majorCrises": [
+          "🚨 SLEEPER AGENT AWAKENED",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (315 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,515 copies)",
+          "anoxic_ocean - Population Decline",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,511 copies)"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42020,
+        "category": "slowCollapse",
+        "duration": 136,
+        "crisisCount": 1473,
+        "cascadeCount": 108,
+        "majorCrises": [
+          "🚨 SLEEPER AGENT AWAKENED",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (441 copies)",
+          "🚨 SLEEPER AGENT AWAKENED",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (731 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (716 copies)"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42031,
+        "category": "slowCollapse",
+        "duration": 78,
+        "crisisCount": 784,
+        "cascadeCount": 50,
+        "majorCrises": [
+          "🚨 SLEEPER AGENT AWAKENED",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (442 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,746 copies)",
+          "anoxic_ocean - Population Decline",
+          "🚨 2 closed AI system(s) breached! Now leaked as open weights (3,368 copies)"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42036,
+        "category": "slowCollapse",
+        "duration": 83,
+        "crisisCount": 345,
+        "cascadeCount": 55,
+        "majorCrises": [
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (775 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (771 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (563 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (961 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (727 copies)"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42038,
+        "category": "slowCollapse",
+        "duration": 97,
+        "crisisCount": 777,
+        "cascadeCount": 69,
+        "majorCrises": [
+          "🚨 SLEEPER AGENT AWAKENED",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (583 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (813 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (790 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (554 copies)"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      },
+      {
+        "seed": 42045,
+        "category": "slowCollapse",
+        "duration": 95,
+        "crisisCount": 727,
+        "cascadeCount": 59,
+        "majorCrises": [
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (328 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (557 copies)",
+          "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,916 copies)",
+          "🚨 2 closed AI system(s) breached! Now leaked as open weights (3,832 copies)",
+          "anoxic_ocean - Population Decline"
+        ],
+        "extinctionTrigger": "anoxic_ocean - Population Decline"
+      }
+    ],
+    "averageDuration": 83.55555555555556,
+    "commonCauses": [
+      "🚨 SLEEPER AGENT AWAKENED",
+      "anoxic_ocean - Population Decline",
+      "🚨 1 closed AI system(s) breached! Now leaked as open weights (3,000 copies)",
+      "🚨 1 closed AI system(s) breached! Now leaked as open weights (2,074 copies)",
+      "🚨 2 closed AI system(s) breached! Now leaked as open weights (6,000 copies)",
+      "🚨 1 closed AI system(s) breached! Now leaked as open weights (573 copies)",
+      "🚨 1 closed AI system(s) breached! Now leaked as open weights (769 copies)",
+      "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,409 copies)",
+      "🚨 1 closed AI system(s) breached! Now leaked as open weights (1,197 copies)",
+      "🚨 2 closed AI system(s) breached! Now leaked as open weights (2,210 copies)"
+    ]
+  },
+  "timeframeStability": {
+    "utopiasStableAtEnd": 16,
+    "utopiasRegressing": 3,
+    "stabilityMetrics": [
+      {
+        "seed": 42001,
+        "finalMonth": 21,
+        "assessment": "stable",
+        "evidence": []
+      },
+      {
+        "seed": 42002,
+        "finalMonth": 21,
+        "assessment": "regressing",
+        "evidence": [
+          "8 crises in final 20% of simulation"
+        ]
+      },
+      {
+        "seed": 42005,
+        "finalMonth": 21,
+        "assessment": "regressing",
+        "evidence": [
+          "8 crises in final 20% of simulation"
+        ]
+      },
+      {
+        "seed": 42009,
+        "finalMonth": 21,
+        "assessment": "regressing",
+        "evidence": [
+          "8 crises in final 20% of simulation"
+        ]
+      },
+      {
+        "seed": 42012,
+        "finalMonth": 136,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42014,
+        "finalMonth": 95,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42015,
+        "finalMonth": 85,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42017,
+        "finalMonth": 136,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42022,
+        "finalMonth": 136,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42023,
+        "finalMonth": 83,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42025,
+        "finalMonth": 134,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42026,
+        "finalMonth": 80,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42034,
+        "finalMonth": 99,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42037,
+        "finalMonth": 93,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42039,
+        "finalMonth": 131,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42043,
+        "finalMonth": 136,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42044,
+        "finalMonth": 136,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42046,
+        "finalMonth": 136,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      },
+      {
+        "seed": 42047,
+        "finalMonth": 136,
+        "assessment": "stable",
+        "evidence": [
+          "Minimal crisis activity in final phase"
+        ]
+      }
+    ]
+  }
+}

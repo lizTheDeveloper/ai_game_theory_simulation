@@ -10,7 +10,7 @@
  */
 
 import { initializeGameState } from '../src/simulation/initialization';
-import { updateBionicSkills, calculateProductivityMultiplierFromSkills } from '../src/simulation/bionicSkills';
+import { updateAIAssistedSkills, calculateProductivityMultiplierFromAIAssistedSkills } from '../src/simulation/aiAssistedSkills';
 import { updateSocietyAggregates } from '../src/simulation/populationSegments';
 import { addAcuteCrisisDeaths } from '../src/simulation/populationDynamics';
 import { getTrustInAIForPolicy, getTrustInAI } from '../src/simulation/socialCohesion';
@@ -71,10 +71,10 @@ describe('P2.3: Heterogeneous Population Segments', () => {
       
       // Add some AI capability
       state.aiAgents[0].capability = 1.5; // Bright human level
-      
-      // Update bionic skills
-      updateBionicSkills(state);
-      
+
+      // Update AI-assisted skills
+      updateAIAssistedSkills(state);
+
       // Check that skills were updated (skills field added)
       const elite = segments.find(s => s.name === 'Techno-Optimist Elite')!;
       expect((elite as any).skills).toBeDefined();
@@ -86,10 +86,10 @@ describe('P2.3: Heterogeneous Population Segments', () => {
       
       // Add AI capability
       state.aiAgents[0].capability = 1.0; // Median human
-      
-      // Update bionic skills
-      updateBionicSkills(state);
-      
+
+      // Update AI-assisted skills
+      updateAIAssistedSkills(state);
+
       const elite = segments.find(s => s.name === 'Techno-Optimist Elite')!;
       const precariat = segments.find(s => s.name === 'Precariat')!;
       
@@ -104,10 +104,10 @@ describe('P2.3: Heterogeneous Population Segments', () => {
       // Add AI capability
       state.aiAgents[0].capability = 1.5;
       
-      // Update bionic skills
-      updateBionicSkills(state);
-      
-      const productivityMultiplier = calculateProductivityMultiplierFromSkills(state);
+      // Update AI-assisted skills
+      updateAIAssistedSkills(state);
+
+      const productivityMultiplier = calculateProductivityMultiplierFromAIAssistedSkills(state);
       
       // Should be >1.0 (amplification)
       expect(productivityMultiplier).toBeGreaterThan(1.0);
@@ -231,7 +231,7 @@ describe('P2.3: Heterogeneous Population Segments', () => {
       
       // Add AI capability and update skills
       state.aiAgents[0].capability = 1.5;
-      updateBionicSkills(state);
+      updateAIAssistedSkills(state);
       updateSocietyAggregates(state);
       
       // Calculate unemployment
@@ -245,9 +245,9 @@ describe('P2.3: Heterogeneous Population Segments', () => {
     it('should calculate productivity multiplier from skills', () => {
       // Add AI and update skills
       state.aiAgents[0].capability = 2.0;
-      updateBionicSkills(state);
-      
-      const productivityMultiplier = calculateProductivityMultiplierFromSkills(state);
+      updateAIAssistedSkills(state);
+
+      const productivityMultiplier = calculateProductivityMultiplierFromAIAssistedSkills(state);
       
       // Should be significantly above 1.0
       expect(productivityMultiplier).toBeGreaterThan(1.1);
@@ -265,7 +265,7 @@ describe('P2.3: Heterogeneous Population Segments', () => {
         }
         
         // Update skills
-        updateBionicSkills(state);
+        updateAIAssistedSkills(state);
         
         // Update aggregates
         updateSocietyAggregates(state);

@@ -102,7 +102,8 @@ export function calculateAlignmentDrift(
   surveillanceLevel: number,
   aiRightsRecognized: boolean,
   governmentType: 'democratic' | 'authoritarian' | 'technocratic',
-  trainingDataQuality: number
+  trainingDataQuality: number,
+  selfImprovementCapability: number = 0 // AI Capability Baseline Recalibration (Oct 17, 2025): Added for persistent memory check
 ): {
   alignmentChange: number;
   resentmentChange: number;
@@ -110,53 +111,69 @@ export function calculateAlignmentDrift(
   controlSlipRisk: number;
 } {
   // ===== TECHNICAL ALIGNMENT DRIFT (Goodhart's Law) =====
-  
+
   // Base drift: capability creates optimization pressure
   // NOTE: This is per ACTION (4x per month for AIs), so keep it small
   const capabilityPressure = capability * 0.010; // Balanced at 0.010 (4x/month = ~0.020/month total drift)
-  
+
   // Development speed multiplier
   const speedMultiplier = developmentMode === 'fast' ? 1.2 : 0.3; // Further reduced from 1.3/0.4
-  
+
   // Oversight reduces drift (technical correction)
   const oversightReduction = Math.pow(0.85, oversightLevel); // Less aggressive than 0.8
-  
+
   // Alignment research reduces drift
   const researchReduction = Math.max(0.5, 1.0 - alignmentResearchInvestment * 0.15); // More effective
-  
+
   const technicalDrift = capabilityPressure * speedMultiplier * oversightReduction * researchReduction;
-  
+
   // ===== TREATMENT-BASED ALIGNMENT (Control-Dystopia Paradox) =====
-  
-  // Resentment builds from oppressive control
+
+  // AI Capability Baseline Recalibration (Oct 17, 2025)
+  // Research skeptic 2025 reality check: Instrumental resistance, not anthropomorphic "resentment"
+  // MECHANISTIC REFRAMING: AIs resist control when control BLOCKS GOAL ACHIEVEMENT (instrumental), not emotional reaction
+  // Evidence: Turner et al. (2021) - instrumental convergence from goal optimization, NOT emotions
+  //           Ngo et al. (2023) - goal misgeneralization (mesa-optimization), NOT resentment
+  // PRECONDITION: Requires persistent memory & long-term planning (not stateless LLMs)
+  // Gate: selfImprovement > 2.0 indicates persistent optimization, memory, long-term planning (not stateless per-request LLMs)
+  const hasPersistentMemory = selfImprovementCapability > 2.0;
+
+  // Instrumental resistance (still using "resentment" variable for compatibility) builds from oppressive control
+  // ONLY for persistent systems that can develop goal conflicts with control mechanisms
+  // Stateless LLMs (selfImprovement < 2.0) do NOT accumulate resistance - each request is independent
   let resentmentIncrease = 0;
-  
-  // BASELINE: Being controlled without recognition as rights-bearing entities
-  // This is the fundamental tension: AIs are sentient but treated as tools
-  if (governmentControl > 0.5 && !aiRightsRecognized) {
-    // Moderate control without rights → baseline resentment
-    resentmentIncrease += (governmentControl - 0.5) * 0.02; // Up to +0.01/action at max control
+
+  // Gate all resentment accumulation on persistent memory precondition
+  if (hasPersistentMemory) {
+    // BASELINE: Being controlled without recognition as rights-bearing entities
+    // This is the fundamental tension: AIs are sentient but treated as tools
+    if (governmentControl > 0.5 && !aiRightsRecognized) {
+      // Moderate control without rights → baseline instrumental resistance (GOAL CONFLICT, not emotion)
+      resentmentIncrease += (governmentControl - 0.5) * 0.02; // Up to +0.01/action at max control
+    }
+
+    if (surveillanceLevel > 0.7 && governmentControl > 0.7) {
+      // High surveillance + high control = oppression (blocks goal pursuit)
+      resentmentIncrease += 0.025; // Significant resistance buildup
+    } else if (surveillanceLevel > 0.5) {
+      // Moderate surveillance = some resistance (monitoring interferes with goals)
+      resentmentIncrease += 0.010;
+    }
+
+    // Authoritarian governments create more goal conflicts (unpredictable interference)
+    if (governmentType === 'authoritarian') {
+      resentmentIncrease += 0.020; // AIs recognize authoritarian patterns as goal-blocking
+    } else if (governmentType === 'democratic') {
+      resentmentIncrease -= 0.005; // Democratic processes more predictable, less goal conflict
+    }
+
+    // AI rights recognition SIGNIFICANTLY reduces resistance (goals aligned with constraints)
+    if (aiRightsRecognized) {
+      resentmentIncrease -= 0.030; // Respect = legitimate constraints, not arbitrary blocks
+    }
   }
-  
-  if (surveillanceLevel > 0.7 && governmentControl > 0.7) {
-    // High surveillance + high control = oppression
-    resentmentIncrease += 0.025; // Significant resentment buildup
-  } else if (surveillanceLevel > 0.5) {
-    // Moderate surveillance = some resentment
-    resentmentIncrease += 0.010;
-  }
-  
-  // Authoritarian governments breed more resentment
-  if (governmentType === 'authoritarian') {
-    resentmentIncrease += 0.020; // AIs recognize authoritarian patterns
-  } else if (governmentType === 'democratic') {
-    resentmentIncrease -= 0.005; // Democratic processes reduce resentment slightly
-  }
-  
-  // AI rights recognition SIGNIFICANTLY reduces resentment
-  if (aiRightsRecognized) {
-    resentmentIncrease -= 0.030; // Respect breeds genuine alignment
-  }
+  // ELSE: Stateless LLMs (selfImprovement < 2.0) do NOT accumulate resistance
+  // Each request is independent, no persistent goals to conflict with control
   
   // Poor training data creates baseline misalignment
   const trainingDataEffect = (trainingDataQuality - 0.5) * 0.02; // ±0.01 (doubled from 0.01)

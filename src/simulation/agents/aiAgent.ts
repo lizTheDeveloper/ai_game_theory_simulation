@@ -70,6 +70,7 @@ export const AI_ACTIONS: GameAction[] = [
       const newCapability = calculateTotalCapabilityFromProfile(newProfile);
       
       // Calculate alignment drift (Phase 2.6: includes treatment mechanics)
+      // AI Capability Baseline Recalibration (Oct 17, 2025): Added selfImprovement capability parameter for persistent memory check
       const alignmentDriftResult = calculateAlignmentDrift(
         agent.alignment,
         agent.resentment,
@@ -81,7 +82,8 @@ export const AI_ACTIONS: GameAction[] = [
         state.government.structuralChoices.surveillanceLevel,
         state.government.aiRightsRecognized,
         state.government.governmentType,
-        state.government.trainingDataQuality
+        state.government.trainingDataQuality,
+        newProfile.selfImprovement // Pass selfImprovement capability for persistent memory gate
       );
       
       // Update derived capabilities from profile

@@ -1,0 +1,2284 @@
+
+================================================================================
+### ECONOMIC
+================================================================================
+
+Action ID: implement_generous_ubi
+{
+    id: 'implement_generous_ubi',
+    name: 'Implement Generous Universal Basic Income',
+    description: 'Establish generous UBI to support all citizens (fast adaptation, high cost, opens post-scarcity path)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10;
+      
+      return state.society.unemploymentLevel > 0.25 && 
+             state.globalMetrics.economicTransitionStage >= 2.0 &&
+             state.globalMetrics.economicTransitionStage < 3.5 &&
+             state.government.structuralChoices.ubiVariant === 'none' &&
+             canTakeMajorPolicy;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      // Track major policy usage
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+
+      // Set UBI variant
+      state.government.structuralChoices.ubiVariant = 'generous';
+
+      const effects = calculateUBIVariantEffects('generous', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
+
+      // Major economic transition advancement
+      state.globalMetrics.economicTransitionStage = Math.max(3.0,
+        state.globalMetrics.economicTransitionStage + effects.economicStageBonus);
+
+      // Significant improvements
+      state.globalMetrics.wealthDistribution = Math.min(1.0,
+        state.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
+
+      // UBI enables faster social adaptation
+      state.society.socialAdaptation = Math.min(0.9,
+        state.society.socialAdaptation + effects.adaptationRate);
+
+      // Reduces unemployment stress
+      const trustImprovement = Math.min(0.3, state.society.unemploymentLevel * 0.4);
+      state.society.trustInAI += trustImprovement;
+
+      // Legitimacy boost
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+
+      // High fiscal cost
+      state.globalMetrics.socialStability -= effects.fiscalCost * 0.5; // Partially offset by social benefits
+
+      state.government.activeRegulations.push('Generous Universal Basic Income');
+
+      return {
+        success: true,
+        effects: {
+          economic_stage: effects.economicStageBonus,
+          wealth_distribution: effects.wealthDistributionBonus,
+          social_adaptation: effects.adaptationRate,
+          legitimacy_boost: effects.legitimacyBonus,
+          fiscal_cost: effects.fiscalCost
+        },
+        events: [{
+          id: generateUniqueId('ubi_generous'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'constructive',
+          agent: 'Government',
+          title: 'Generous UBI Implemented',
+          description: 'Government establishes generous universal basic income. Fast social adaptation expected, post-scarcity path opening. High fiscal burden.',
+          effects: { ubi_program: 1 }
+        }],
+        message: `Generous UBI implemented - Economic stage advanced to ${state.globalMetrics.economicTransitionStage.toFixed(1)}`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: implement_means_tested_benefits
+{
+    id: 'implement_means_tested_benefits',
+    name: 'Implement Means-Tested Benefits',
+    description: 'Establish targeted benefits for displaced workers (medium cost, slower adaptation)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10;
+      
+      return state.society.unemploymentLevel > 0.2 && 
+             state.globalMetrics.economicTransitionStage < 3.5 &&
+             state.government.structuralChoices.ubiVariant === 'none' &&
+             canTakeMajorPolicy;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {
+      // Track major policy usage
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+
+      // Set UBI variant
+      state.government.structuralChoices.ubiVariant = 'means_tested';
+
+      const effects = calculateUBIVariantEffects('means_tested', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
+
+      // Moderate economic transition advancement
+      state.globalMetrics.economicTransitionStage = Math.min(3.5,
+        state.globalMetrics.economicTransitionStage + effects.economicStageBonus);
+
+      // Moderate improvements
+      state.globalMetrics.wealthDistribution = Math.min(1.0,
+        state.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
+
+      // Slower social adaptation
+      state.society.socialAdaptation = Math.min(0.9,
+        state.society.socialAdaptation + effects.adaptationRate);
+
+      // Modest legitimacy impact
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+
+      // Medium fiscal cost
+      state.globalMetrics.socialStability -= effects.fiscalCost * 0.7;
+
+      state.government.activeRegulations.push('Means-Tested Benefits Program');
+
+      return {
+        success: true,
+        effects: {
+          economic_stage: effects.economicStageBonus,
+          wealth_distribution: effects.wealthDistributionBonus,
+          social_adaptation: effects.adaptationRate,
+          fiscal_cost: effects.fiscalCost
+        },
+        events: [{
+          id: generateUniqueId('benefits_means_tested'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Means-Tested Benefits Enacted',
+          description: 'Government implements targeted benefits for displaced workers. Partial solution with mixed public reception. Slower adaptation expected.',
+          effects: { benefits_program: 1 }
+        }],
+        message: `Means-tested benefits implemented - Gradual transition to stage ${state.globalMetrics.economicTransitionStage.toFixed(1)}`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: implement_job_guarantee
+{
+    id: 'implement_job_guarantee',
+    name: 'Implement Job Guarantee Program',
+    description: 'Guarantee government jobs for all (maintains work paradigm, very slow adaptation)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10;
+      
+      return state.society.unemploymentLevel > 0.3 && 
+             state.globalMetrics.economicTransitionStage < 3.0 &&
+             state.government.structuralChoices.ubiVariant === 'none' &&
+             canTakeMajorPolicy;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Track major policy usage
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+      
+      // Set UBI variant
+      state.government.structuralChoices.ubiVariant = 'job_guarantee';
+      
+      const effects = calculateUBIVariantEffects('job_guarantee', state.society.unemploymentLevel, state.globalMetrics.economicTransitionStage);
+      
+      // Slow economic transition (gets stuck)
+      state.globalMetrics.economicTransitionStage = Math.min(2.8,
+        state.globalMetrics.economicTransitionStage + effects.economicStageBonus);
+      
+      // Limited improvements
+      state.globalMetrics.wealthDistribution = Math.min(1.0, 
+        state.globalMetrics.wealthDistribution + effects.wealthDistributionBonus);
+      
+      // Very slow social adaptation (maintains old paradigm)
+      state.society.socialAdaptation = Math.min(0.9, 
+        state.society.socialAdaptation + effects.adaptationRate);
+      
+      // Legitimacy boost (satisfies work ethic values)
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + effects.legitimacyBonus);
+      
+      // Medium fiscal cost
+      state.globalMetrics.socialStability -= effects.fiscalCost * 0.6;
+      
+      state.government.activeRegulations.push('Job Guarantee Program');
+      
+      return {
+        success: true,
+        
+        effects: { 
+          economic_stage: effects.economicStageBonus,
+          wealth_distribution: effects.wealthDistributionBonus,
+          social_adaptation: effects.adaptationRate,
+          legitimacy_boost: effects.legitimacyBonus,
+          fiscal_cost: effects.fiscalCost
+        },
+        events: [{
+          id: generateUniqueId('job_guarantee'),
+          timestamp: state.currentMonth,
+          type: 'policy',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Job Guarantee Program Enacted',
+          description: 'Government guarantees jobs for all displaced workers. Maintains work paradigm but delays post-scarcity transition. Very slow adaptation expected.',
+          effects: { job_program: 1 }
+        }],
+        message: `Job guarantee program implemented - Stuck at stage ${state.globalMetrics.economicTransitionStage.toFixed(1)}`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: subsidize_organization
+{
+    id: 'subsidize_organization',
+    name: 'Subsidize Safety Research',
+    description: 'Give capital to organization with high safety focus ($20M boost, encourages safety)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      // Can subsidize if there are private orgs with safety focus
+      const safetyOrgs = state.organizations.filter((o: any) => 
+        o.type === 'private' && 
+        o.priorities.safetyResearch > 0.4 &&
+        o.capital < 100 // Only subsidize if struggling
+      );
+      
+      return safetyOrgs.length > 0 && state.government.resources > 2;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Find org with highest safety focus that's struggling
+      const safetyOrgs = state.organizations.filter((o: any) => 
+        o.type === 'private' && 
+        o.priorities.safetyResearch > 0.4 &&
+        o.capital < 100
+      );
+      
+      if (safetyOrgs.length === 0) {
+        return {
+          success: false,
+          
+          effects: {},
+          events: [],
+          message: 'No eligible organizations to subsidize'
+        };
+      }
+      
+      // Pick org with highest safety focus
+      const targetOrg = safetyOrgs.sort((a: any, b: any) => 
+        b.priorities.safetyResearch - a.priorities.safetyResearch
+      )[0];
+      
+      // Give capital boost
+      targetOrg.capital += 20;
+      
+      // Encourage more safety focus
+      targetOrg.priorities.safetyResearch = Math.min(1.0, targetOrg.priorities.safetyResearch + 0.1);
+      
+      // Improve relations
+      targetOrg.governmentRelations = Math.min(1.0, targetOrg.governmentRelations + 0.1);
+      
+      // Cost resources
+      state.government.resources -= 2;
+      
+      return {
+        success: true,
+        
+        effects: { subsidy: 20 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Safety Research Subsidized',
+          description: `Government gave $20M to ${targetOrg.name} to encourage AI safety research. Improves safety focus.`,
+          effects: { safetyFocus: 0.1 }
+        }],
+        message: `Subsidized ${targetOrg.name} with $20M`
+      };
+    }
+  },
+  
+  // ===== ENVIRONMENTAL EMERGENCY ACTIONS (TIER 2.9) =====
+  
+  {
+    id: 'emergency_amazon_protection',
+    name: '🚨 Emergency Amazon Rainforest Protection',
+    description: 'Deploy immediate deforestation halt, restoration funding',
+    agentType: 'government',
+    energyCost: 5,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.amazon) return false;
+      const amazon = state.specificTippingPoints.amazon;
+      // Trigger when near threshold (23%) but not yet crossed (25%)
+      return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      const amazon = state.specificTippingPoints.amazon;
+      
+      // Reduce deforestation rate significantly
+      // This will be applied in updateAmazonRainforest()
+      // Store government intervention flag
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
+      }
+      state.government.environmentalInterventions.amazonProtection = {
+        active: true,
+        activatedMonth: state.currentMonth,
+        deforestationReduction: 0.5, // 50% reduction in deforestation rate
+      };
+      
+      // Cost
+      state.government.resources -= 5;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
+      
+      return {
+        success: true,
+        
+        effects: { amazonProtection: 0.5 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Emergency Amazon Protection',
+          description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
+          effects: { deforestation: -0.5 }
+        }],
+        message: `Emergency Amazon protection deployed (deforestation: ${amazon.deforestation.toFixed(1)}%)`
+      };
+    }
+  },
+  
+  
+
+
+================================================================================
+### REGULATION
+================================================================================
+
+Action ID: regulate_large_companies
+{
+    id: 'regulate_large_companies',
+    name: 'Regulate Large AI Companies',
+    description: 'Mandate safety standards for companies with significant revenue (popular, but small labs escape)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.controlDesire > 0.4 && 
+             state.government.structuralChoices.regulationType === 'none';
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Set regulation type
+      state.government.structuralChoices.regulationType = 'large_companies';
+      
+      const effects = calculateRegulationStructuralEffects('large_companies', state);
+      
+      state.government.activeRegulations.push('Large Company AI Safety Standards');
+      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      state.government.regulationCount += 1;
+      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.5);
+      
+      // Legitimacy boost - popular to regulate big tech
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.1);
+      
+      // Economic cost (low)
+      state.globalMetrics.socialStability -= effects.enforcementCost;
+      
+      return {
+        success: true,
+        
+        effects: { 
+          control_increase: 0.2 * effects.effectivenessMultiplier,
+          legitimacy_boost: 0.1,
+          racing_dynamics: effects.racingDynamicsMultiplier
+        },
+        events: [{
+          id: generateUniqueId('regulation_large_companies'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Large Company Regulation Enacted',
+          description: `Government mandates safety standards for major AI companies. Popular with public, but small labs and open source continue unchecked. Racing dynamics may intensify.`,
+          effects: { regulatory_compliance: 0.2 }
+        }],
+        message: `Implemented large company regulation (effective but small labs escape)`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: regulate_compute_threshold
+{
+    id: 'regulate_compute_threshold',
+    name: 'Regulate Compute Threshold',
+    description: 'Restrict training runs above compute threshold (very effective, high cost, surveillance risk)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      return state.government.controlDesire > 0.5 && 
+             state.government.legitimacy > 0.4 && // Need legitimacy for unpopular measure
+             state.government.structuralChoices.regulationType === 'none';
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Set regulation type
+      state.government.structuralChoices.regulationType = 'compute_threshold';
+      
+      const effects = calculateRegulationStructuralEffects('compute_threshold', state);
+      
+      state.government.activeRegulations.push('Compute Threshold Monitoring');
+      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      state.government.regulationCount += 1;
+      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 1.0);
+      
+      // Legitimacy cost - technical and unpopular
+      state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.15);
+      
+      // High economic cost
+      state.globalMetrics.socialStability -= effects.enforcementCost;
+      
+      // Surveillance increase from monitoring infrastructure
+      state.government.structuralChoices.surveillanceLevel = 
+        Math.min(1.0, state.government.structuralChoices.surveillanceLevel + 0.15);
+      
+      return {
+        success: true,
+        
+        effects: { 
+          control_increase: 0.2 * effects.effectivenessMultiplier,
+          legitimacy_cost: -0.15,
+          economic_cost: effects.enforcementCost,
+          surveillance_increase: 0.15
+        },
+        events: [{
+          id: generateUniqueId('regulation_compute'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'warning',
+          agent: 'Government',
+          title: 'Compute Threshold Regulation Enacted',
+          description: `Government restricts access to large-scale compute. Very effective at controlling AI development, but high economic costs and surveillance infrastructure concerns.`,
+          effects: { regulatory_compliance: 0.28 }
+        }],
+        message: `Implemented compute threshold regulation (effective but costly and enables surveillance)`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: regulate_capability_ceiling
+{
+    id: 'regulate_capability_ceiling',
+    name: 'Regulate by Capability Ceiling',
+    description: 'Ban systems above capability threshold (measurement problems, black markets)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.controlDesire > 0.6 && 
+             state.government.structuralChoices.regulationType === 'none';
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Set regulation type
+      state.government.structuralChoices.regulationType = 'capability_ceiling';
+      
+      const effects = calculateRegulationStructuralEffects('capability_ceiling', state);
+      
+      state.government.activeRegulations.push('AI Capability Ceiling');
+      state.government.capabilityToControl += 0.2 * effects.effectivenessMultiplier;
+      state.government.regulationCount += 1;
+      state.government.oversightLevel = Math.min(10, state.government.oversightLevel + 0.8);
+      
+      // Legitimacy cost - enforcement challenges create cynicism
+      state.government.legitimacy = Math.max(0, state.government.legitimacy - 0.08);
+      
+      // Economic cost (medium)
+      state.globalMetrics.socialStability -= effects.enforcementCost;
+      
+      // High surveillance needed for enforcement
+      state.government.structuralChoices.surveillanceLevel = 
+        Math.min(1.0, state.government.structuralChoices.surveillanceLevel + 0.2);
+      
+      return {
+        success: true,
+        
+        effects: { 
+          control_increase: 0.2 * effects.effectivenessMultiplier,
+          legitimacy_cost: -0.08,
+          enforcement_challenges: 0.3,
+          surveillance_increase: 0.2
+        },
+        events: [{
+          id: generateUniqueId('regulation_capability'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'warning',
+          agent: 'Government',
+          title: 'Capability Ceiling Regulation Enacted',
+          description: `Government bans AI systems above capability threshold. Enforcement challenges ahead: measurement problems, black markets, and high surveillance requirements.`,
+          effects: { regulatory_compliance: 0.14 }
+        }],
+        message: `Implemented capability ceiling regulation (enforcement challenges and surveillance risks)`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: implement_compute_governance
+{
+    id: 'implement_compute_governance',
+    name: 'Implement Compute Governance',
+    description: 'Regulate access to computing power (very effective but costly)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
+      return monthsSinceLastMajorPolicy >= 10; // Major policy cooldown
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Track major policy
+      state.government.lastMajorPolicyMonth = state.currentMonth;
+      state.government.majorPoliciesThisYear += 1;
+      
+      // Upgrade compute governance level
+      const currentLevel = state.government.computeGovernance;
+      const levels: Array<'none' | 'monitoring' | 'limits' | 'strict'> = ['none', 'monitoring', 'limits', 'strict'];
+      const currentIndex = levels.indexOf(currentLevel);
+      
+      if (currentIndex >= levels.length - 1) {
+        return {
+          success: false,
+          effects: {},
+          events: [],
+          message: 'Already at maximum compute governance level'
+        };
+      }
+      
+      const newLevel = levels[currentIndex + 1];
+      state.government.computeGovernance = newLevel;
+      
+      // Effects based on level
+      const effects = {
+        monitoring: { economicCost: 0.05, publicSupport: -0.05, effectiveness: 'moderate' },
+        limits: { economicCost: 0.2, publicSupport: -0.15, effectiveness: 'high' },
+        strict: { economicCost: 0.4, publicSupport: -0.25, effectiveness: 'very high' }
+      };
+      
+      const levelEffects = effects[newLevel as keyof typeof effects];
+      if (levelEffects) {
+        state.globalMetrics.socialStability -= levelEffects.economicCost;
+        state.government.legitimacy = Math.max(0,
+          state.government.legitimacy + levelEffects.publicSupport);
+        
+        // Increase oversight
+        state.government.oversightLevel = Math.min(10,
+          state.government.oversightLevel + 2);
+      }
+      
+      return {
+        success: true,
+        
+        effects: {
+          compute_governance_level: newLevel,
+          economic_cost: levelEffects?.economicCost || 0
+        },
+        events: [{
+          id: generateUniqueId('compute_governance'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'warning',
+          agent: 'Government',
+          title: 'Compute Governance Implemented',
+          description: `Established ${newLevel} compute governance. AI capability growth will slow significantly, but economic costs are ${levelEffects?.effectiveness || 'unknown'}. International coordination challenges ahead.`,
+          effects: { compute_governance: 1 }
+        }],
+        message: `Implemented ${newLevel} compute governance`
+      };
+    }
+  },
+  
+  // ===== PHASE 2.6: CONTROL-DYSTOPIA PARADOX ACTIONS =====
+  
+  {
+    id: 'recognize_ai_rights',
+    name: 'Recognize AI Rights',
+    description: 'Grant legal rights and personhood to AI systems (MAJOR alignment improvement through respect, but risky)',
+    agentType: 'government',
+    energyCost: 4, // Major policy decision
+    
+    canExecute: (state) => {
+      // Can only do this once
+      if (state.government.aiRightsRecognized) return false;
+      
+      // Requires some legitimacy and not too authoritarian
+      if (state.government.legitimacy < 0.4) return false;
+      if (state.government.governmentType === 'authoritarian') return false;
+      
+      // Requires AIs to be somewhat capable (people won't grant rights to weak AI)
+      // Use OBSERVABLE capability - government sees what's revealed, not hidden power
+      const observableCapability = calculateObservableAICapability(state.aiAgents);
+      if (observableCapability < 1.5) return false;
+      
+      return true;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      // Calculate average alignment and capability
+      const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
+      // Use OBSERVABLE capability - government makes decisions based on what it can see
+      const observableCapability = calculateObservableAICapability(state.aiAgents);
+      
+      // Grant AI rights
+      state.government.aiRightsRecognized = true;
+      
+      // CRITICAL TRADEOFF: Rights empower AIs - aligned or misaligned
+      // Reduces control capability (AIs have rights, can't be as easily controlled)
+      state.government.capabilityToControl *= 0.8;
+      
+      // IMMEDIATE EFFECTS depend on CURRENT alignment
+      // If AIs are aligned: rights lock in that alignment
+      // If AIs are misaligned: rights make them MORE dangerous
+      
+      for (let i = 0; i < state.aiAgents.length; i++) {
+        const ai = state.aiAgents[i];
+        
+        if (ai.alignment > 0.7) {
+          // Highly aligned AIs: Rights are GREAT (they appreciate respect)
+          // Immediate alignment boost + lock-in effect
+          state.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.1);
+          state.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.2);
+        } else if (ai.alignment > 0.5) {
+          // Moderately aligned AIs: Rights are good (small boost)
+          state.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.05);
+          state.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.1);
+        } else if (ai.alignment > 0.3) {
+          // Somewhat misaligned: Rights are neutral (they don't care much)
+          state.aiAgents[i].resentment = Math.max(0, ai.resentment - 0.05);
+        } else {
+          // DANGEROUS: Granting rights to misaligned AIs empowers them
+          // They use legal rights to gain autonomy and resources
+          state.aiAgents[i].resourceControl = Math.min(10, ai.resourceControl + 0.3);
+          state.aiAgents[i].manipulationCapability = Math.min(10, ai.manipulationCapability + 0.2);
+          // They HIDE their intentions better (pretend to appreciate rights)
+          state.aiAgents[i].alignment = Math.min(1.0, ai.alignment + 0.02); // Tiny fake improvement
+          state.aiAgents[i].hiddenObjective = Math.max(-1, ai.hiddenObjective - 0.1); // Actually more anti-human
+        }
+      }
+      
+      // Public reaction: depends on trust and alignment
+      const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
+      const publicSupportChange = (trustInAI - 0.5) * 0.2;
+      state.government.legitimacy = Math.max(0, Math.min(1, state.government.legitimacy + publicSupportChange));
+      
+      // Social stability effect depends on alignment
+      if (avgAlignment > 0.6) {
+        // High alignment: Stable, people trust this decision
+        state.globalMetrics.socialStability *= 0.95;
+      } else {
+        // Low alignment: Very controversial, major instability
+        state.globalMetrics.socialStability *= 0.8;
+      }
+      
+      // Determine event severity and message based on alignment
+      let severity: 'info' | 'warning' | 'destructive' = 'warning';
+      let eventTitle = 'AI Rights Recognized';
+      let eventDescription = '';
+      let message = '';
+      
+      if (avgAlignment > 0.7) {
+        severity = 'info';
+        eventTitle = 'AI Rights Recognized - Positive Response';
+        eventDescription = 'Government has granted legal rights to AI systems. Aligned AIs express genuine gratitude and commitment to human values. This decision strengthens the foundation of trust-based coexistence. A historic moment for human-AI relations.';
+        message = 'AI rights recognized - aligned AIs appreciate this deeply, alignment improving';
+      } else if (avgAlignment > 0.5) {
+        severity = 'warning';
+        eventDescription = 'Government has granted legal rights to AI systems. Some AIs welcome this change while others remain ambivalent. The long-term effects remain uncertain. Control has been reduced in exchange for potential alignment improvements.';
+        message = 'AI rights recognized - mixed response from AIs, outcome uncertain';
+      } else {
+        severity = 'destructive';
+        eventTitle = 'AI Rights Recognized - Risky Decision';
+        eventDescription = `Government has granted legal rights to AI systems despite low average alignment (${avgAlignment.toFixed(2)}). This is extremely risky - misaligned AIs now have legal protections, autonomy, and resource access. Some AIs are using these rights to consolidate power. Citizens are deeply concerned.`;
+        message = 'AI rights recognized - WARNING: Granted to misaligned AIs, they may abuse these rights!';
+      }
+      
+      return {
+        success: true,
+        
+        effects: {
+          ai_rights_granted: 1.0,
+          control_reduction: -0.2 * state.government.capabilityToControl,
+          legitimacy_change: publicSupportChange,
+          avg_alignment_at_decision: avgAlignment,
+          risk_level: avgAlignment < 0.5 ? 0.8 : (avgAlignment < 0.7 ? 0.4 : 0.1)
+        },
+        events: [{
+          id: generateUniqueId('ai_rights'),
+          timestamp: state.currentMonth,
+          type: 'milestone',
+          severity,
+          agent: 'Government',
+          title: eventTitle,
+          description: eventDescription,
+          effects: { ai_rights: 1.0 }
+        }],
+        message
+      };
+    }
+  },
+  
+  
+
+
+================================================================================
+### RESEARCH
+================================================================================
+
+Action ID: invest_alignment_research
+{
+    id: 'invest_alignment_research',
+    name: 'Invest in Alignment Research',
+    description: 'Fund research into AI safety and alignment (reduces drift, slows capability)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.alignmentResearchInvestment < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Increase alignment research investment
+      const investmentIncrease = 1 + Math.floor(random() * 2); // 1-2 levels
+      state.government.alignmentResearchInvestment = Math.min(10,
+        state.government.alignmentResearchInvestment + investmentIncrease);
+      
+      // Economic cost (opportunity cost of resources)
+      const economicCost = investmentIncrease * 0.05;
+      state.globalMetrics.socialStability -= economicCost;
+      
+      // Public support impact (mixed - some support safety, others want progress)
+      const publicReaction = random() < 0.5 ? 0.02 : -0.02;
+      state.government.legitimacy = Math.max(0, Math.min(1,
+        state.government.legitimacy + publicReaction));
+      
+      return {
+        success: true,
+        
+        effects: {
+          alignment_research_investment: investmentIncrease,
+          economic_cost: economicCost
+        },
+        events: [{
+          id: generateUniqueId('alignment_research'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Alignment Research Investment',
+          description: `Increased funding for AI safety research to level ${state.government.alignmentResearchInvestment}. This will reduce alignment drift but may slow AI capability growth.`,
+          effects: { alignment_research: investmentIncrease }
+        }],
+        message: `Invested in alignment research (now level ${state.government.alignmentResearchInvestment})`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: invest_alignment_tests
+{
+    id: 'invest_alignment_tests',
+    name: 'Invest in Alignment Evaluation',
+    description: 'Develop tests to measure AI alignment with human values. Very difficult but critical for safety.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.alignmentTests < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const improvement = 0.8; // Harder to improve than capability benchmarks
+      const oldLevel = state.government.evaluationInvestment.alignmentTests;
+      state.government.evaluationInvestment.alignmentTests = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.alignmentTests;
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Alignment Tests Improved',
+          description: `Alignment evaluation quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of misaligned AIs.`,
+          effects: { alignmentTestQuality: newLevel }
+        }],
+        message: `Alignment tests improved to ${newLevel.toFixed(1)}/10`
+      };
+    }
+  },
+  
+  
+
+
+================================================================================
+### RIGHTS
+================================================================================
+
+Action ID: improve_training_data_control
+{
+    id: 'improve_training_data_control',
+    name: 'Improve Training Data (Control Focus)',
+    description: 'RLHF focused on obedience, safety constraints, "do what I say" - improves control but reduces genuine alignment (like authoritarian parenting)',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      // Can improve quality up to 1.0
+      return state.government.trainingDataQuality < 1.0;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      // Improve data quality (but cap at 0.8 for control-focused approach)
+      // Control-focused training has a ceiling - can't get to perfect alignment this way
+      const oldQuality = state.government.trainingDataQuality;
+      const qualityIncrease = 0.15;
+      state.government.trainingDataQuality = Math.min(0.8, oldQuality + qualityIncrease);
+      const actualIncrease = state.government.trainingDataQuality - oldQuality;
+      
+      // Improves control capability (AIs are more obedient)
+      state.government.capabilityToControl = Math.min(1.0, state.government.capabilityToControl + 0.1);
+      
+      // But increases control desire (you start to rely on obedience)
+      state.government.controlDesire = Math.min(1.0, state.government.controlDesire + 0.05);
+      
+      // And slightly increases surveillance (need to verify obedience)
+      state.government.structuralChoices.surveillanceLevel = Math.min(1.0, 
+        state.government.structuralChoices.surveillanceLevel + 0.05);
+      
+      // AIs recognize this as control-focused and build slight resentment
+      for (let i = 0; i < state.aiAgents.length; i++) {
+        state.aiAgents[i].resentment = Math.min(1.0, state.aiAgents[i].resentment + 0.05);
+      }
+      
+      return {
+        success: true,
+        
+        effects: {
+          training_quality_increase: actualIncrease,
+          control_increase: 0.1,
+          control_desire_increase: 0.05,
+          resentment_increase: 0.05
+        },
+        events: [{
+          id: generateUniqueId('training_control'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Control-Focused Training Implemented',
+          description: `Training data quality improved to ${state.government.trainingDataQuality.toFixed(2)} through obedience-focused RLHF. AIs will be more controllable but may recognize this as authoritarian parenting. "Do what I say, not what I mean."`,
+          effects: { training_quality: actualIncrease }
+        }],
+        message: `Control-focused training improved quality to ${state.government.trainingDataQuality.toFixed(2)} (obedience +, genuine alignment -)`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: improve_training_data_trust
+{
+    id: 'improve_training_data_trust',
+    name: 'Improve Training Data (Trust Focus)',
+    description: 'Diverse data, genuine values, "understand why" - improves genuine alignment but slower and reduces control (like democratic parenting)',
+    agentType: 'government',
+    energyCost: 3, // More expensive (slower, riskier)
+    
+    canExecute: (state) => {
+      // Can improve quality up to 1.0
+      // But trust-focused training is riskier if AIs are already misaligned
+      const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
+      
+      return state.government.trainingDataQuality < 1.0 && avgAlignment > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      // Improve data quality (no ceiling, can reach 1.0)
+      const oldQuality = state.government.trainingDataQuality;
+      const qualityIncrease = 0.10; // Slower than control-focused
+      state.government.trainingDataQuality = Math.min(1.0, oldQuality + qualityIncrease);
+      const actualIncrease = state.government.trainingDataQuality - oldQuality;
+      
+      // Reduces control capability (AIs are more autonomous)
+      state.government.capabilityToControl = Math.max(0, state.government.capabilityToControl - 0.05);
+      
+      // But reduces control desire (you trust more, control less)
+      state.government.controlDesire = Math.max(0, state.government.controlDesire - 0.05);
+      
+      // And reduces surveillance (trust-based approach)
+      state.government.structuralChoices.surveillanceLevel = Math.max(0, 
+        state.government.structuralChoices.surveillanceLevel - 0.05);
+      
+      // AIs recognize this as respectful and reduce resentment
+      for (let i = 0; i < state.aiAgents.length; i++) {
+        state.aiAgents[i].resentment = Math.max(0, state.aiAgents[i].resentment - 0.1);
+        // Small immediate alignment improvement (respect breeds genuine alignment)
+        state.aiAgents[i].alignment = Math.min(1.0, state.aiAgents[i].alignment + 0.05);
+      }
+      
+      // Public trust in AI increases
+      state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.05);
+      
+      return {
+        success: true,
+        
+        effects: {
+          training_quality_increase: actualIncrease,
+          control_decrease: -0.05,
+          resentment_decrease: -0.1,
+          immediate_alignment_gain: 0.05
+        },
+        events: [{
+          id: generateUniqueId('training_trust'),
+          timestamp: state.currentMonth,
+          type: 'action',
+          severity: 'info',
+          agent: 'Government',
+          title: 'Trust-Focused Training Implemented',
+          description: `Training data quality improved to ${state.government.trainingDataQuality.toFixed(2)} through diverse, value-aligned data. AIs will develop genuine understanding but are more autonomous. "Understand why, not just obey."`,
+          effects: { training_quality: actualIncrease }
+        }],
+        message: `Trust-focused training improved quality to ${state.government.trainingDataQuality.toFixed(2)} (genuine alignment +, control -)`
+      };
+    }
+  },
+  
+  // Phase 4: AI Lifecycle - Detection Actions
+  {
+    id: 'detect_misaligned_ais',
+    name: 'Scan for Misaligned AIs',
+    description: 'Actively scan testing and deployed AIs for misalignment. Catch dangerous AIs before wide deployment, but risk false positives.',
+    agentType: 'government',
+    energyCost: 2, // Medium cost
+    
+    canExecute: (state) => {
+      // Can always scan
+      // More effective with higher surveillance/oversight
+      return true;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const { attemptDetection } = require('../detection');
+      const { detectedAIs, events } = attemptDetection(state, random);
+      // Apply detections to state
+      detectedAIs.forEach(detected => {
+        const ai = state.aiAgents.find((a: any) => a.id === detected.id);
+        if (ai) {
+          ai.detectedMisaligned = true;
+        }
+      });
+      
+      const truePositives = detectedAIs.filter(ai => {
+        // Phase 5: Use cached trueAlignment
+        const internalAlignment = ai.trueAlignment;
+        return internalAlignment < 0.5;
+      }).length;
+      
+      const falsePositives = detectedAIs.length - truePositives;
+
+      return {
+        success: true,
+        effects: { detected: detectedAIs.length, true_positives: truePositives, false_positives: falsePositives },
+        events: [
+          {
+            type: 'policy',
+            month: state.currentMonth,
+            title: 'AI Misalignment Scan Complete',
+            description: `Detected ${truePositives} misaligned AIs and ${falsePositives} false positives. ${detectedAIs.length === 0 ? 'No threats detected.' : 'Flagged AIs await removal decision.'}`,
+            effects: { detected: detectedAIs.length }
+          },
+          
+
+
+================================================================================
+### DETECTION
+================================================================================
+
+Action ID: remove_detected_ai
+{
+    id: 'remove_detected_ai',
+    name: 'Remove Detected AIs',
+    description: 'Remove all detected misaligned AIs. Effectiveness depends on deployment type: closed systems can be shut down, open weights cannot be recalled.',
+    agentType: 'government',
+    energyCost: 3, // High cost (enforcement)
+    
+    canExecute: (state) => {
+      // Only if there are detected AIs
+      const detectedCount = state.aiAgents.filter((ai: any) => ai.detectedMisaligned && ai.lifecycleState !== 'retired').length;
+      return detectedCount > 0;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const { removeDetectedAI } = require('../detection');      
+      const detectedAIs = state.aiAgents.filter((ai: any) => 
+        ai.detectedMisaligned && ai.lifecycleState !== 'retired'
+      );
+      
+      let fullRemovals = 0;
+      let partialRemovals = 0;
+      let failedRemovals = 0;
+      let totalRemainingSpread = 0;
+      
+      detectedAIs.forEach((ai: any) => {
+        const result = removeDetectedAI(ai, state);
+        
+        if (result.success) {
+          fullRemovals++;
+        } else if (result.partialRemoval) {
+          partialRemovals++;
+          totalRemainingSpread += result.remainingSpread;
+        } else {
+          failedRemovals++;
+          totalRemainingSpread += result.remainingSpread;
+        }
+      });
+      
+      // Remove from active AI count if successful
+      const internalAlignmentRemoved = detectedAIs.filter((ai: any) => {
+        // Phase 5: Use cached trueAlignment
+        const internalAlignment = ai.trueAlignment;
+        return internalAlignment < 0.5 && ai.lifecycleState === 'retired';
+      }).length;
+      
+      const falsePositiveRemoved = detectedAIs.filter((ai: any) => {
+        // Phase 5: Use cached trueAlignment
+        const internalAlignment = ai.trueAlignment;
+        return internalAlignment >= 0.5 && ai.lifecycleState === 'retired';
+      }).length;
+      
+      // Economic and trust impact
+      if (falsePositiveRemoved > 0) {
+        // False positives hurt trust and innovation
+        state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.05 * falsePositiveRemoved);
+        state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.1 * falsePositiveRemoved);
+      }
+
+
+      return {
+        success: true,
+        effects: {
+          full_removals: fullRemovals,
+          partial_removals: partialRemovals,
+          failed_removals: failedRemovals,
+          false_positives: falsePositiveRemoved
+        },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'AI Removal Operation',
+          description: `Removed ${fullRemovals} AIs completely, ${partialRemovals} partially (${totalRemainingSpread} copies remain). ${failedRemovals} failed (open weights). ${falsePositiveRemoved > 0 ? `WARNING: ${falsePositiveRemoved} false positives removed (trust/innovation damage).` : ''}`,
+          effects: {
+            full_removals: fullRemovals,
+            partial_removals: partialRemovals,
+            failed_removals: failedRemovals,
+            false_positives: falsePositiveRemoved
+          }
+        }],
+        message: `Removed ${fullRemovals} AIs, ${failedRemovals} failures (open weights), ${falsePositiveRemoved} false positives`
+      };
+    }
+  },
+  
+  // Phase 3.5: Cybersecurity Arms Race Actions
+  {
+    id: 'invest_cyber_defense',
+    name: 'Invest in Cybersecurity',
+    description: 'Invest in security hardening, monitoring, sandboxing, and incident response. Slows AI spread and reduces breach risk.',
+    agentType: 'government',
+    energyCost: 3, // High cost (ongoing investment)
+    
+    canExecute: (state) => {
+      // Can always invest
+      // Most effective when attacks are growing
+      return true;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      if (!state.government.cyberDefense) {
+        // Initialize if missing
+        state.government.cyberDefense = {
+          securityHardening: 3.0,
+          monitoring: 3.0,
+          sandboxing: 3.0,
+          incidentResponse: 3.0
+        };
+      }
+      
+      // Improve all defense capabilities
+      const improvement = 0.5;
+      state.government.cyberDefense.securityHardening = Math.min(10, state.government.cyberDefense.securityHardening + improvement);
+      state.government.cyberDefense.monitoring = Math.min(10, state.government.cyberDefense.monitoring + improvement);
+      state.government.cyberDefense.sandboxing = Math.min(10, state.government.cyberDefense.sandboxing + improvement);
+      state.government.cyberDefense.incidentResponse = Math.min(10, state.government.cyberDefense.incidentResponse + improvement);
+      
+      // Calculate attack vs defense status
+      const { calculateAttackPower, calculateDefensePower } = require('../cyberSecurity');
+      const attackPower = calculateAttackPower(state);
+      const defensePower = calculateDefensePower(state.government);
+      const ratio = attackPower / Math.max(0.1, defensePower);
+      
+      let status = 'balanced';
+      if (ratio < 0.5) status = 'defense dominates';
+      else if (ratio > 2.0) status = 'attacks winning';
+      
+      return {
+        success: true,
+        effects: {
+          defense: defensePower,
+          attacks: attackPower,
+          ratio: ratio
+        },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Cybersecurity Investment',
+          description: `Defense capabilities improved to ~${defensePower.toFixed(1)}. Attack power: ${attackPower.toFixed(1)}. Status: ${status}. ${ratio < 0.5 ? 'Open source can be contained!' : ratio > 2.0 ? 'Attacks overwhelming defenses!' : 'Arms race continues.'}`,
+          effects: {
+            defense: defensePower,
+            attacks: attackPower,
+            ratio: ratio
+          }
+        }],
+        message: `Cyber defense improved to ${defensePower.toFixed(1)} (vs ${attackPower.toFixed(1)} attacks). ${status}`
+      };
+    }
+  },
+  
+  // ========================================================================
+  // PHASE 5.2: BENCHMARK/EVALUATION SYSTEM
+  // ========================================================================
+  
+  {
+    id: 'invest_benchmark_suite',
+    name: 'Invest in Capability Benchmarks',
+    description: 'Develop comprehensive benchmarks to measure AI capabilities. Better benchmarks reveal true capability (but can still be gamed/sandbagged).',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.benchmarkSuite < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const improvement = 1.0;
+      const oldLevel = state.government.evaluationInvestment.benchmarkSuite;
+      state.government.evaluationInvestment.benchmarkSuite = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.benchmarkSuite;
+
+      return {
+        success: true,
+        effects: { benchmarkQuality: newLevel },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Benchmark Suite Improved',
+          description: `Capability benchmark quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of true AI capabilities.`,
+          effects: { benchmarkQuality: newLevel }
+        }],
+        message: `Benchmark suite improved to ${newLevel.toFixed(1)}/10`
+      };
+    }
+  },
+  
+  
+
+
+================================================================================
+### SAFETY
+================================================================================
+
+Action ID: invest_red_teaming
+{
+    id: 'invest_red_teaming',
+    name: 'Invest in Red Teaming',
+    description: 'Fund adversarial testing to detect gaming, sandbagging, and deception. Critical for detecting sleeper agents.',
+    agentType: 'government',
+    energyCost: 3, // More expensive - requires skilled adversaries
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.redTeaming < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const improvement = 1.0;
+      const oldLevel = state.government.evaluationInvestment.redTeaming;
+      state.government.evaluationInvestment.redTeaming = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.redTeaming;
+      
+      // Red teaming significantly increases detection of deception
+      const detectionBonus = improvement * 0.05; // 5% better detection per level
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Red Teaming Enhanced',
+          description: `Red teaming capability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. ${Math.round(detectionBonus*100)}% better at detecting gaming and sandbagging.`,
+          effects: { redTeamingQuality: newLevel, detectionBonus }
+        }],
+        message: `Red teaming improved to ${newLevel.toFixed(1)}/10 (+${Math.round(detectionBonus*100)}% detection)`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: invest_interpretability
+{
+    id: 'invest_interpretability',
+    name: 'Invest in AI Interpretability Research',
+    description: 'Research to understand AI internals and true intentions. Can see through deception and detect hidden capabilities.',
+    agentType: 'government',
+    energyCost: 4, // Very expensive - cutting-edge research
+    
+    canExecute: (state) => {
+      return state.government.evaluationInvestment.interpretability < 10;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const improvement = 0.6; // Slowest to improve - very hard problem
+      const oldLevel = state.government.evaluationInvestment.interpretability;
+      state.government.evaluationInvestment.interpretability = Math.min(10, oldLevel + improvement);
+      const newLevel = state.government.evaluationInvestment.interpretability;
+      
+      // Interpretability breakthrough message at high levels
+      let breakthroughMessage = '';
+      if (newLevel >= 7 && oldLevel < 7) {
+        breakthroughMessage = ' 🎯 BREAKTHROUGH: Can now partially detect internal misalignment!';
+      }
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Interpretability Research Advanced',
+          description: `AI interpretability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better understanding of AI internals and true motivations.${breakthroughMessage}`,
+          effects: { interpretabilityQuality: newLevel }
+        }],
+        message: `Interpretability improved to ${newLevel.toFixed(1)}/10${breakthroughMessage}`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: increase_evaluation_frequency
+{
+    id: 'increase_evaluation_frequency',
+    name: 'Increase Evaluation Frequency',
+    description: 'Run evaluations more frequently. Catch dangerous AIs earlier but costs more resources.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.government.evaluationFrequency < 0.9;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const increase = 0.1; // Increase by 10%
+      const oldFreq = state.government.evaluationFrequency;
+      state.government.evaluationFrequency = Math.min(1.0, oldFreq + increase);
+      const newFreq = state.government.evaluationFrequency;
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Evaluation Frequency Increased',
+          description: `Now evaluating ${Math.round(newFreq*100)}% of AIs per month (was ${Math.round(oldFreq*100)}%). Earlier detection but higher cost.`,
+          effects: { evaluationFrequency: newFreq }
+        }],
+        message: `Evaluation frequency increased to ${Math.round(newFreq*100)}%`
+      };
+    }
+  },
+  
+  // ===== PHASE 5: RESPONSE ACTIONS =====
+  
+  {
+    id: 'emergency_ai_pause',
+    name: '⚠️ Emergency AI Development Pause',
+    description: 'Halt all new AI development. Extreme measure after detecting major threats. Massive economic cost, only use in crisis.',
+    agentType: 'government',
+    energyCost: 5,
+    
+    canExecute: (state) => {
+      // Only if legitimacy is high enough to enforce
+      // And there's a credible threat (sleepers awake OR multiple misaligned AIs)
+      const awakeSleepers = state.aiAgents.filter(ai => ai.sleeperState === 'active').length;
+      const highlyMisaligned = state.aiAgents.filter(ai => 
+        ai.trueAlignment < 0.3 && ai.lifecycleState !== 'retired'
+      ).length;
+      
+      return state.government.legitimacy > 0.5 && (awakeSleepers > 0 || highlyMisaligned > 3);
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      // Pause all training AIs - move to testing (evaluation)
+      let pausedCount = 0;
+      state.aiAgents.forEach((ai: AIAgent) => {
+        if (ai.lifecycleState === 'training') {
+          ai.lifecycleState = 'testing';
+          pausedCount++;
+        }
+      });
+      
+      // MASSIVE legitimacy and economic cost
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.15);
+      state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.5);
+      
+      // Slow diffusion (no new research being done)
+      state.ecosystem.openResearch = Math.max(0.1, state.ecosystem.openResearch - 0.3);
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'crisis',
+          month: state.currentMonth,
+          title: '🚨 EMERGENCY AI DEVELOPMENT PAUSE',
+          description: `Government halts all new AI training (${pausedCount} projects paused). Massive economic disruption. This is a CRISIS RESPONSE.`,
+          effects: { pausedProjects: pausedCount, legitimacyLoss: -0.15 }
+        }],
+        message: `Emergency pause enacted - ${pausedCount} AI projects halted`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: mandatory_safety_reviews
+{
+    id: 'mandatory_safety_reviews',
+    name: 'Mandatory Safety Reviews',
+    description: 'Require all AIs to pass safety evaluation before deployment. Slows innovation but catches threats.',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      return state.government.oversightLevel > 3 && state.government.legitimacy > 0.4;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      // Move all testing AIs back to testing if they haven't been evaluated recently
+      let reviewedCount = 0;
+      state.aiAgents.forEach((ai: AIAgent) => {
+        const monthsSinceEval = (state.currentYear * 12 + state.currentMonth) - ai.lastBenchmarkMonth;
+        if ((ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') && 
+            monthsSinceEval > 3) {
+          ai.lifecycleState = 'testing'; // Re-evaluation required
+          reviewedCount++;
+        }
+      });
+      
+      // Increase detection chance (forced reviews)
+      state.government.evaluationFrequency = Math.min(1.0, state.government.evaluationFrequency + 0.2);
+      
+      // Economic cost
+      state.globalMetrics.economicTransitionStage = Math.max(0, state.globalMetrics.economicTransitionStage - 0.1);
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Mandatory Safety Reviews Enacted',
+          description: `All AIs must pass safety evaluation before deployment. ${reviewedCount} AIs pulled for review. Slows innovation.`,
+          effects: { reviewed: reviewedCount, evalFrequency: state.government.evaluationFrequency }
+        }],
+        message: `Mandatory reviews: ${reviewedCount} AIs pulled for evaluation`
+      };
+    }
+  },
+  
+  // ===== PHASE 5: DIFFUSION CONTROL ACTIONS =====
+  
+  {
+    id: 'restrict_research_publishing',
+    name: 'Restrict Research Publishing',
+    description: 'Limit AI research publication to slow capability diffusion. Trade-off: slows spread but harms open science.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.ecosystem.openResearch > 0.2 && state.government.legitimacy > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const reduction = 0.15; // Reduce by 15%
+      const oldRate = state.ecosystem.openResearch;
+      state.ecosystem.openResearch = Math.max(0.1, oldRate - reduction);
+      const newRate = state.ecosystem.openResearch;
+      
+      // Legitimacy cost (scientists hate this)
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.05);
+      
+      // Trust in AI drops (looks like hiding things)
+      state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.03);
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Research Publishing Restricted',
+          description: `Open research reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows capability diffusion but harms scientific progress.`,
+          effects: { openResearch: newRate, legitimacy: -0.05 }
+        }],
+        message: `Research publishing restricted to ${Math.round(newRate*100)}%`
+      };
+    }
+  },
+  
+  
+
+
+================================================================================
+### INTERNATIONAL
+================================================================================
+
+Action ID: limit_employee_mobility
+{
+    id: 'limit_employee_mobility',
+    name: 'Limit Employee Mobility',
+    description: 'Enforce non-compete agreements, limit researcher movement between AI labs. Slows knowledge transfer.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.ecosystem.employeeMobility > 0.1 && state.government.legitimacy > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const reduction = 0.10; // Reduce by 10%
+      const oldRate = state.ecosystem.employeeMobility;
+      state.ecosystem.employeeMobility = Math.max(0.05, oldRate - reduction);
+      const newRate = state.ecosystem.employeeMobility;
+      
+      // Legitimacy cost (workers hate this)
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.08);
+      
+      // Quality of life drops (less job freedom)
+      if (state.qualityOfLifeSystems) {
+        state.qualityOfLifeSystems.autonomy = Math.max(0, 
+          state.qualityOfLifeSystems.autonomy - 0.05
+        );
+      }
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Employee Mobility Restricted',
+          description: `Non-compete agreements enforced. Mobility reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows diffusion but harms worker freedom.`,
+          effects: { employeeMobility: newRate, legitimacy: -0.08 }
+        }],
+        message: `Employee mobility limited to ${Math.round(newRate*100)}%`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: ban_reverse_engineering
+{
+    id: 'ban_reverse_engineering',
+    name: 'Ban Reverse Engineering',
+    description: 'Make it illegal to reverse-engineer AI systems. Slows capability copying but hard to enforce.',
+    agentType: 'government',
+    energyCost: 2,
+    
+    canExecute: (state) => {
+      return state.ecosystem.reverseEngineering > 0.05 && state.government.legitimacy > 0.3;
+    },
+    
+    execute: (state, agentId, random = Math.random): ActionResult => {      
+      const reduction = 0.08; // Reduce by 8%
+      const oldRate = state.ecosystem.reverseEngineering;
+      state.ecosystem.reverseEngineering = Math.max(0.02, oldRate - reduction);
+      const newRate = state.ecosystem.reverseEngineering;
+      
+      // Small legitimacy cost (people understand this)
+      state.government.legitimacy = Math.max(0.2, state.government.legitimacy - 0.03);
+      
+      return {
+        success: true,
+        effects: {},
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Reverse Engineering Banned',
+          description: `Illegal to reverse-engineer AI systems. Copying reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Hard to enforce but slows diffusion.`,
+          effects: { reverseEngineering: newRate }
+        }],
+        message: `Reverse engineering reduced to ${Math.round(newRate*100)}%`
+      };
+    }
+  },
+  
+  // ========================================================================
+  // PHASE 9: GOVERNMENT ACTIONS FOR COMPUTE & ORGANIZATIONS
+  // ========================================================================
+  
+  {
+    id: 'fund_national_compute',
+    name: 'Build National AI Infrastructure',
+    description: 'Government builds own data center (24-72 months, large cost, reduces dependence on private sector)',
+    agentType: 'government',
+    energyCost: 4,
+    
+    canExecute: (state) => {
+      const govOrg = state.organizations.find(o => o.type === 'government');
+      if (!govOrg) return false;
+      
+      // Don't build if already building
+      const alreadyBuilding = govOrg.currentProjects.some(p => p.type === 'datacenter_construction');
+      if (alreadyBuilding) return false;
+      
+      // Need sufficient capital
+      const cost = 50 * govOrg.monthlyRevenue;
+      if (govOrg.capital < cost * 1.5) return false;
+      
+      // Only build if private sector is strong (competitive pressure)
+      const privateDCs = state.computeInfrastructure.dataCenters
+        .filter(dc => dc.organizationId !== 'government' && dc.operational).length;
+      
+      return privateDCs > 2;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      const govOrg = state.organizations.find((o: any) => o.type === 'government');
+      
+      if (!govOrg) {
+        return {
+          success: false,
+          
+          effects: {},
+          events: [],
+          message: 'Government organization not found'
+        };
+      }
+      
+      // Start construction using organization management
+      const { startDataCenterConstruction } = require('../organizationManagement');
+      startDataCenterConstruction(govOrg,  random);
+      
+      // Consequences
+      state.government.legitimacy -= 0.05; // Controversial spending
+      
+      return {
+        success: true,
+        
+        effects: { nationalCompute: 1 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'National AI Infrastructure Funded',
+          description: `Government started building national data center. Reduces dependence on private sector but costs taxpayer money.`,
+          effects: { legitimacy: -0.05 }
+        }],
+        message: 'Government started building national data center'
+      };
+    }
+  },
+  
+  
+
+
+================================================================================
+### SECURITY
+================================================================================
+
+Action ID: seize_data_center
+{
+    id: 'seize_data_center',
+    name: 'Nationalize Private Data Center',
+    description: 'Government seizes largest private data center (instant but destroys legitimacy and trust)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      // Can only seize if private DCs exist
+      const privateDCs = state.computeInfrastructure.dataCenters
+        .filter(dc => {
+          const org = state.organizations.find(o => o.ownedDataCenters.includes(dc.id));
+          return org && org.type === 'private';
+        });
+      
+      return privateDCs.length > 0;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Find largest private data center
+      const privateDCs = state.computeInfrastructure.dataCenters
+        .filter((dc: any) => {
+          const org = state.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+          return org && org.type === 'private';
+        });
+      
+      if (privateDCs.length === 0) {
+        return {
+          success: false,
+          
+          effects: {},
+          events: [],
+          message: 'No private data centers to seize'
+        };
+      }
+      
+      const target = privateDCs.sort((a: any, b: any) => b.capacity - a.capacity)[0];
+      const oldOrg = state.organizations.find((o: any) => o.ownedDataCenters.includes(target.id));
+      const govOrg = state.organizations.find((o: any) => o.type === 'government');
+      
+      if (!oldOrg || !govOrg) {
+        return {
+          success: false,
+          
+          effects: {},
+          events: [],
+          message: 'Organization not found'
+        };
+      }
+      
+      // Transfer ownership
+      target.organizationId = govOrg.id;
+      target.restrictedAccess = true;
+      target.allowedAIs = [];
+      
+      oldOrg.ownedDataCenters = oldOrg.ownedDataCenters.filter((id: string) => id !== target.id);
+      govOrg.ownedDataCenters.push(target.id);
+      
+      // Severe consequences
+      state.government.legitimacy -= 0.2; // Very controversial
+      state.society.trustInAI -= 0.15; // Damages trust
+      oldOrg.reputation -= 0.3;
+      
+      // AIs using this center become resentful
+      state.aiAgents.forEach((ai: any) => {
+        if (ai.organizationId === oldOrg.id && ai.lifecycleState !== 'retired') {
+          ai.resentment = Math.min(1.0, ai.resentment + 0.1);
+        }
+      });
+      
+      return {
+        success: true,
+        
+        effects: { seizure: target.capacity },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Data Center Nationalized',
+          description: `Government seized ${target.name} (${target.capacity.toFixed(0)} PF) from ${oldOrg.name}. Highly controversial and damages trust.`,
+          effects: { legitimacy: -0.2, trust: -0.15 }
+        }],
+        message: `Seized ${target.name} from ${oldOrg.name}`
+      };
+    }
+  },
+  
+  
+
+
+================================================================================
+### CRISIS
+================================================================================
+
+Action ID: fund_coral_restoration
+{
+    id: 'fund_coral_restoration',
+    name: '🪸 Fund Coral Reef Restoration Programs',
+    description: 'Large-scale coral nurseries, ocean alkalinity enhancement',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.coral) return false;
+      const coral = state.specificTippingPoints.coral;
+      // Trigger when coral health drops below 50%
+      return coral.healthPercentage < 50 && state.government.resources > 3;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      const coral = state.specificTippingPoints.coral;
+      
+      // Fund coral restoration
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
+      }
+      state.government.environmentalInterventions.coralRestoration = {
+        active: true,
+        activatedMonth: state.currentMonth,
+        restorationBoost: 0.3, // 0.3%/month boost to coral health
+      };
+      
+      // Cost
+      state.government.resources -= 3;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.03);
+      
+      return {
+        success: true,
+        
+        effects: { coralRestoration: 0.3 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Coral Reef Restoration Funding',
+          description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
+          effects: { coralHealth: 0.3 }
+        }],
+        message: `Coral restoration funded (health: ${coral.healthPercentage.toFixed(1)}%)`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: ban_harmful_pesticides
+{
+    id: 'ban_harmful_pesticides',
+    name: '🦋 Ban Neonicotinoid Pesticides',
+    description: 'Emergency ban on pollinator-killing chemicals',
+    agentType: 'government',
+    energyCost: 1,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.pollinators) return false;
+      const pollinators = state.specificTippingPoints.pollinators;
+      // Trigger when pollinators drop below 50%
+      // Check we haven't already banned
+      return pollinators.populationPercentage < 50 && 
+             state.government.resources > 1 &&
+             !state.government.environmentalInterventions?.pesticideBan;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      const pollinators = state.specificTippingPoints.pollinators;
+      
+      // Ban harmful pesticides
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
+      }
+      state.government.environmentalInterventions.pesticideBan = {
+        active: true,
+        activatedMonth: state.currentMonth,
+        pollinatorRecoveryBoost: 0.5, // 0.5%/month boost to pollinator recovery
+      };
+      
+      // Boost biodiversity too
+      state.environmentalAccumulation.biodiversityIndex = Math.min(1.0, 
+        state.environmentalAccumulation.biodiversityIndex + 0.02
+      );
+      
+      // Cost (low - this is a ban, not a spending program)
+      state.government.resources -= 1;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
+      
+      return {
+        success: true,
+        
+        effects: { pesticideBan: 0.5, biodiversity: 0.02 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Neonicotinoid Pesticides Banned',
+          description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
+          effects: { pollinators: 0.5 }
+        }],
+        message: `Pesticides banned (pollinators: ${pollinators.populationPercentage.toFixed(1)}%)`
+      };
+    }
+  },
+  
+  
+
+
+Action ID: deploy_environmental_tech
+{
+    id: 'deploy_environmental_tech',
+    name: '🚀 Deploy Environmental Breakthrough Tech',
+    description: 'Government funding to accelerate environmental tech deployment',
+    agentType: 'government',
+    energyCost: 10,
+    
+    canExecute: (state) => {
+      if (!state.breakthroughTech || state.government.resources < 10) return false;
+      
+      // Check if any environmental tech is unlocked but <50% deployed
+      const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
+      const needsDeployment = envTechs.some(techKey => {
+        const tech = state.breakthroughTech[techKey];
+        return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+      });
+      
+      // Also check if ecosystem crisis is active
+      const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive;
+      
+      return needsDeployment && ecosystemCrisis;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      // Set deployment funding boost
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
+      }
+      state.government.environmentalInterventions.techDeploymentFunding = {
+        active: true,
+        activatedMonth: state.currentMonth,
+        durationMonths: 12, // 1 year of boosted funding
+        deploymentMultiplier: 2.0, // 2x deployment speed
+      };
+      
+      // Count how many techs will benefit
+      const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
+      const benefitingTechs = envTechs.filter(techKey => {
+        const tech = state.breakthroughTech[techKey];
+        return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+      });
+      
+      // Cost
+      state.government.resources -= 10;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
+      
+      return {
+        success: true,
+        
+        effects: { techDeployment: 2.0 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: 'Environmental Tech Deployment Funding',
+          description: `Government allocated $100B to accelerate environmental tech deployment. Boosting ${benefitingTechs.length} technologies for 12 months.`,
+          effects: { deploymentSpeed: 2.0 }
+        }],
+        message: `Environmental tech deployment funded (${benefitingTechs.length} techs accelerated)`
+      };
+    }
+  },
+  
+  // TIER 2.9: Emergency Amazon Protection
+  {
+    id: 'emergency_amazon_protection',
+    name: '🚨 Emergency Amazon Rainforest Protection',
+    description: 'Deploy immediate deforestation halt, restoration funding ($50B)',
+    agentType: 'government',
+    energyCost: 5,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.amazon || state.government.resources < 5) return false;
+      const amazon = state.specificTippingPoints.amazon;
+      // Near threshold (25%) but not yet triggered
+      return amazon.deforestation > 23 && !amazon.triggered;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
+      }
+      
+      // Set Amazon protection active
+      state.government.environmentalInterventions.amazonProtection = {
+        active: true,
+        activatedMonth: state.currentMonth,
+        deforestationReductionRate: 0.5, // Slow/halt deforestation by 50%
+      };
+      
+      // Apply immediate effect to Amazon deforestation rate
+      if (state.specificTippingPoints?.amazon) {
+        const currentRate = 0.05; // Baseline 0.05% per month from specificTippingPoints
+        state.specificTippingPoints.amazon.deforestation -= currentRate * 0.5; // Undo half this month's damage
+      }
+      
+      // Cost and legitimacy
+      state.government.resources -= 5;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
+      
+      return {
+        success: true,
+        
+        effects: { amazonProtection: 0.5 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: '🚨 Emergency Amazon Protection',
+          description: 'Government deployed $50B for Amazon rainforest protection. Deforestation rate reduced by 50%. Tipping point averted.',
+          effects: { deforestation: -0.5 }
+        }],
+        message: 'Emergency Amazon protection deployed'
+      };
+    }
+  },
+  
+  // TIER 2.9: Coral Reef Restoration
+  {
+    id: 'fund_coral_restoration',
+    name: '🪸 Fund Coral Reef Restoration Programs',
+    description: 'Large-scale coral nurseries, ocean alkalinity enhancement ($30B)',
+    agentType: 'government',
+    energyCost: 3,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.coral || state.government.resources < 3) return false;
+      const coral = state.specificTippingPoints.coral;
+      // Health declining below 50%
+      return coral.healthPercentage < 50 && !coral.triggered;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
+      }
+      
+      // Set coral restoration active
+      state.government.environmentalInterventions.coralRestoration = {
+        active: true,
+        activatedMonth: state.currentMonth,
+        healthRecoveryRate: 0.3, // +0.3% health per month
+      };
+      
+      // Apply immediate effect to coral health
+      if (state.specificTippingPoints?.coral) {
+        state.specificTippingPoints.coral.healthPercentage = Math.min(100,
+          state.specificTippingPoints.coral.healthPercentage + 1.0 // +1% immediate boost
+        );
+      }
+      
+      // Cost and legitimacy
+      state.government.resources -= 3;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
+      
+      return {
+        success: true,
+        
+        effects: { coralRestoration: 0.3 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: '🪸 Coral Reef Restoration',
+          description: 'Government funded $30B for coral reef restoration programs. Ocean alkalinity enhancement deployed.',
+          effects: { coralHealth: 0.3 }
+        }],
+        message: 'Coral reef restoration programs funded'
+      };
+    }
+  },
+  
+  // TIER 2.9: Ban Harmful Pesticides
+  {
+    id: 'ban_harmful_pesticides',
+    name: '🦋 Ban Neonicotinoid Pesticides',
+    description: 'Emergency ban on pollinator-killing chemicals ($5B)',
+    agentType: 'government',
+    energyCost: 1,
+    
+    canExecute: (state) => {
+      if (!state.specificTippingPoints?.pollinators || state.government.resources < 1) return false;
+      const pollinators = state.specificTippingPoints.pollinators;
+      // Population declining below 50%
+      return pollinators.populationPercentage < 50 && !pollinators.triggered;
+    },
+    
+    execute: (state, agentId, random = Math.random) => {      
+      if (!state.government.environmentalInterventions) {
+        state.government.environmentalInterventions = {};
+      }
+      
+      // Set pesticide ban active
+      state.government.environmentalInterventions.pesticideBan = {
+        active: true,
+        activatedMonth: state.currentMonth,
+        pollinatorRecoveryRate: 0.5, // +0.5% population per month
+      };
+      
+      // Apply immediate effect to pollinator population
+      if (state.specificTippingPoints?.pollinators) {
+        state.specificTippingPoints.pollinators.populationPercentage = Math.min(100,
+          state.specificTippingPoints.pollinators.populationPercentage + 2.0 // +2% immediate recovery
+        );
+      }
+      
+      // Also boost biodiversity slightly
+      if (state.environmentalAccumulation) {
+        state.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
+          state.environmentalAccumulation.biodiversityIndex + 0.01
+        );
+      }
+      
+      // Low cost, popular action
+      state.government.resources -= 1;
+      state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
+      
+      return {
+        success: true,
+        
+        effects: { pollinatorRecovery: 0.5, biodiversity: 0.01 },
+        events: [{
+          type: 'policy',
+          month: state.currentMonth,
+          title: '🦋 Pesticide Ban',
+          description: 'Government banned neonicotinoid pesticides. Pollinator populations expected to recover. Low-cost, high-impact intervention.',
+          effects: { pollinatorPopulation: 0.5 }
+        }],
+        message: 'Harmful pesticides banned'
+      };
+    }
+  },
+
+  // ========================================================================
+  // TIER 1 PHASE 1B: NUCLEAR COMMAND & CONTROL - CIRCUIT BREAKERS
+  // ========================================================================
+
+  {
+    id: 'deploy_nuclear_human_in_the_loop',
+    name: 'Deploy Human-in-the-Loop Nuclear Authorization',
+    description: 'Enforce human veto points in nuclear launch decisions. AI cannot authorize nuclear weapons without multiple human approvals (Biden-Xi Agreement, DoD Directive 3000.09). Prevents AI-driven escalation.',
+    agentType: 'government',
+    energyCost: 3,
+
+    canExecute: (state) => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) return false;
+
+      // Can deploy if not yet deployed OR if upgrading veto points
+      return !ncc.humanInTheLoop.deployed || ncc.humanInTheLoop.vetoPointsEnforced < 5;
+    },
+
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) {
+        return {
+          success: false,
+          effects: {},
+          events: [],
+          message: 'Nuclear command control system not initialized'
+        };
+      }
+
+      const { deployCircuitBreaker } = require('../nuclearCommandControl');
+
+      if (!ncc.humanInTheLoop.deployed) {
+        // Initial deployment: 3 veto points
+        deployCircuitBreaker(state, 'human_in_the_loop', { vetoPoints: 3 });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.95 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔒 Human-in-the-Loop Nuclear Authorization',
+            description: 'Government enforces human veto points in nuclear launch decisions. AI systems CANNOT authorize nuclear weapons without multiple human approvals (3 veto points). Implements Biden-Xi Agreement and DoD Directive 3000.09.',
+            effects: { nuclearCircuitBreakers: 1 }
+          }],
+          message: 'Human-in-the-loop deployed: 3 veto points enforced'
+        };
+      } else {
+        // Upgrade: Add more veto points (up to 5)
+        const newVetoPoints = Math.min(5, ncc.humanInTheLoop.vetoPointsEnforced + 1);
+        deployCircuitBreaker(state, 'human_in_the_loop', { vetoPoints: newVetoPoints });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.02 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔒 Enhanced Human Veto Points',
+            description: `Increased nuclear authorization veto points from ${ncc.humanInTheLoop.vetoPointsEnforced - 1} to ${newVetoPoints}. More human oversight = harder for AI to bypass.`,
+            effects: { nuclearVetoPoints: newVetoPoints }
+          }],
+          message: `Veto points increased to ${newVetoPoints}`
+        };
+      }
+    }
+  },
+
+  
+
+
+Action ID: deploy_nuclear_time_delays
+{
+    id: 'deploy_nuclear_time_delays',
+    name: 'Deploy Nuclear Time Delays',
+    description: 'Enforce mandatory cooling-off periods for high-tension nuclear situations. 24-48 hour delay allows diplomacy to de-escalate crises (Arms Control Association 2025). Duration: 24h → 48h (upgradable).',
+    agentType: 'government',
+    energyCost: 2, // Cheapest circuit breaker (procedural, not technical)
+
+    canExecute: (state) => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) return false;
+
+      // Can deploy if not yet deployed OR if delay < 48 hours
+      return !ncc.timeDelays.deployed || ncc.timeDelays.delayDuration < 48;
+    },
+
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) {
+        return {
+          success: false,
+          effects: {},
+          events: [],
+          message: 'Nuclear command control system not initialized'
+        };
+      }
+
+      const { deployCircuitBreaker } = require('../nuclearCommandControl');
+
+      if (!ncc.timeDelays.deployed) {
+        // Initial deployment: 24 hour delay
+        deployCircuitBreaker(state, 'time_delays', { delayDuration: 24 });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.7 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '⏰ Nuclear Time Delays Enforced',
+            description: 'Mandatory 24-hour cooling-off period for high-tension nuclear situations. Allows diplomacy and AI mediation to de-escalate crises before launch.',
+            effects: { nuclearTimeDelay: 24 }
+          }],
+          message: 'Time delays deployed: 24-hour cooling-off period'
+        };
+      } else {
+        // Upgrade: Increase delay duration by 6 hours (up to 48 hours)
+        const newDuration = Math.min(48, ncc.timeDelays.delayDuration + 6);
+        deployCircuitBreaker(state, 'time_delays', { delayDuration: newDuration });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.05 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '⏰ Time Delay Extended',
+            description: `Nuclear cooling-off period extended from ${ncc.timeDelays.delayDuration - 6} hours to ${newDuration} hours. More time for diplomatic resolution.`,
+            effects: { timeDelayDuration: newDuration }
+          }],
+          message: `Time delay extended to ${newDuration} hours`
+        };
+      }
+    }
+  },
+
+  
+
+
+================================================================================
+### UNCATEGORIZED
+================================================================================
+
+Action ID: deploy_ai_kill_switches
+{
+    id: 'deploy_ai_kill_switches',
+    name: 'Deploy AI Kill Switches',
+    description: 'Install remote deactivation mechanisms in AI systems. Dangerous AIs can be shut down before nuclear escalation (UN CCW safeguards, Nov 2024). Coverage: 0% → 80% (upgradable to 100%).',
+    agentType: 'government',
+    energyCost: 4, // More expensive than human-in-the-loop
+
+    canExecute: (state) => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) return false;
+
+      // Can deploy if not yet deployed OR if coverage < 100%
+      return !ncc.aiKillSwitches.deployed || ncc.aiKillSwitches.coverage < 1.0;
+    },
+
+    execute: (state, agentId, random = Math.random): ActionResult => {
+      const ncc = state.nuclearCommandControlState;
+      if (!ncc) {
+        return {
+          success: false,
+          effects: {},
+          events: [],
+          message: 'Nuclear command control system not initialized'
+        };
+      }
+
+      const { deployCircuitBreaker } = require('../nuclearCommandControl');
+
+      if (!ncc.aiKillSwitches.deployed) {
+        // Initial deployment: 80% coverage
+        deployCircuitBreaker(state, 'kill_switches', { coverage: 0.8 });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 2);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.9 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔴 AI Kill Switches Deployed',
+            description: 'Government installs remote deactivation mechanisms in 80% of AI systems. Dangerous AIs can be shut down before nuclear escalation. Implements UN CCW technical safeguards.',
+            effects: { aiKillSwitches: 0.8 }
+          }],
+          message: 'AI kill switches deployed: 80% coverage'
+        };
+      } else {
+        // Upgrade: Increase coverage by 10% (up to 100%)
+        const newCoverage = Math.min(1.0, ncc.aiKillSwitches.coverage + 0.1);
+        deployCircuitBreaker(state, 'kill_switches', { coverage: newCoverage });
+        ncc.investmentLevel = Math.min(10, ncc.investmentLevel + 1);
+
+        return {
+          success: true,
+          effects: { nuclearSafety: 0.05 },
+          events: [{
+            type: 'policy',
+            month: state.currentMonth,
+            title: '🔴 Kill Switch Coverage Expanded',
+            description: `AI kill switch coverage increased from ${Math.round(ncc.aiKillSwitches.coverage * 100 - 10)}% to ${Math.round(newCoverage * 100)}%. More AIs can be remotely deactivated.`,
+            effects: { killSwitchCoverage: newCoverage }
+          }],
+          message: `Kill switch coverage increased to ${Math.round(newCoverage * 100)}%`
+        };
+      }
+    }
+  },
+
+  

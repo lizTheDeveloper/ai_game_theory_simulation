@@ -434,17 +434,25 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   // Results: 2x in 8 months, 10x in 26 months, 100x in 52 months, 7,943x in 120 months
   const MOORES_LAW_RATE = Math.pow(2, 1/8) - 1; // 9.05% per month (doubles every 8 months)
   infra.hardwareEfficiency *= (1 + MOORES_LAW_RATE);
-  
-  // Algorithmic improvements: More frequent breakthroughs in AI era
-  // Examples: Chinchilla scaling, FlashAttention, quantization, mixture-of-experts, etc.
-  // Real world: Multiple major algorithmic improvements per year (2020-2025)
+
+  // AI Capability Baseline Recalibration (Oct 17, 2025)
+  // Research skeptic 2025 reality check: Add CONTINUOUS algorithmic improvement (not just random breakthroughs)
+  // Evidence: Transformers (10-100x gain), Flash Attention (2-3x), MoE (2-4x) - all on SAME hardware
+  // Historical: 2017-2025 saw major algorithmic breakthroughs every 2-3 years
+  // Conservative estimate: 10% annual continuous improvement (separate from compute scaling)
+  // Math.pow(1.10, 1/12) = 1.00797 = 0.797% per month
+  const CONTINUOUS_ALGO_RATE = Math.pow(1.10, 1/12) - 1; // 10% annual → 0.797% monthly
+  infra.algorithmsEfficiency *= (1 + CONTINUOUS_ALGO_RATE);
+
+  // PLUS occasional breakthroughs (FlashAttention, new architectures, etc.)
+  // These are BONUS improvements on top of continuous progress
   // 8% chance per month = ~2.5 breakthroughs per year
   const ALGO_BREAKTHROUGH_CHANCE = 0.08;
   const ALGO_BREAKTHROUGH_SIZE = 0.15; // 15% improvement when it happens
-  
+
   if (random() < ALGO_BREAKTHROUGH_CHANCE) {
     infra.algorithmsEfficiency *= (1 + ALGO_BREAKTHROUGH_SIZE);
-    
+
     // Don't log during normal simulation (too noisy), only in tests
     // Log the breakthrough
     // console.log(`🚀 [Month ${state.currentMonth}] Algorithmic breakthrough! Efficiency: ${infra.algorithmsEfficiency.toFixed(2)}x`);

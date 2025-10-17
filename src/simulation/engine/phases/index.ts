@@ -70,6 +70,7 @@ export { TriggeredEventsPhase } from './TriggeredEventsPhase';
 export { BenchmarkEvaluationsPhase } from './BenchmarkEvaluationsPhase';
 export { CrisisPointsPhase } from './CrisisPointsPhase';
 export { ExogenousShockPhase } from './ExogenousShockPhase';  // Contingency & Agency Phase 2 (Oct 17, 2025)
+export { CriticalJuncturePhase } from './CriticalJuncturePhase';  // Contingency & Agency Phase 3 (Oct 17, 2025)
 
 // Batch 5: Final phases (37.x - 40.x, 98.x - 99.x)
 export { ExtinctionTriggersPhase } from './ExtinctionTriggersPhase';

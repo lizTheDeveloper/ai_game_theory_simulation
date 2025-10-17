@@ -208,9 +208,25 @@ export function calculateDimensionGrowth(
   // Apply penalties
   const penaltyMultiplier = regulationPenalty * computeGovernancePenalty;
 
-  // Phase 4 + TIER 4.4 + TIER 0C + P0.1: Include compute, energy, infrastructure, and recursive improvement multipliers
-  // Physical bottlenecks (energy, infrastructure) are hard constraints - no compute can bypass them
-  return baseGrowth * computeMultiplier * energyMultiplier * infrastructureMultiplier * diminishingReturns * govMultiplier * aiMultiplier * recursiveMultiplier * penaltyMultiplier;
+  // AI Capability Baseline Recalibration (Oct 17, 2025)
+  // Research skeptic 2025 reality check: Add embodiment lag (digital advancing 10-100x faster than physical)
+  // Evidence: GPT-4/Claude (digital) superhuman, Boston Dynamics (physical) still struggling with stairs
+  // Moravec's Paradox: "Hard problems are easy (abstract reasoning), easy problems are hard (dexterous manipulation)"
+  // Empirical gap: 5-10 year lag between digital capability and physical deployment
+  const embodimentLagMultipliers = {
+    physical: 0.3,           // Robotics hardware-limited (actuators, sensors, power)
+    digital: 1.0,            // Software baseline (no physical constraints)
+    cognitive: 1.2,          // Abstract reasoning accelerating fastest (AI reasoning improving)
+    social: 0.8,             // Cultural adoption slower (human interaction barriers)
+    economic: 1.0,           // Market integration (baseline)
+    selfImprovement: 0.9     // Recursive improvement (conservative - safety research lags)
+  };
+
+  const embodimentMultiplier = embodimentLagMultipliers[dimension];
+
+  // Phase 4 + TIER 4.4 + TIER 0C + P0.1 + Embodiment Lag: Include all multipliers
+  // Physical bottlenecks (energy, infrastructure, embodiment) are hard constraints - no compute can bypass them
+  return baseGrowth * computeMultiplier * energyMultiplier * infrastructureMultiplier * diminishingReturns * govMultiplier * aiMultiplier * recursiveMultiplier * penaltyMultiplier * embodimentMultiplier;
 }
 
 /**

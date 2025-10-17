@@ -26,7 +26,7 @@ import { initializeDiplomaticAI } from './diplomaticAI';
 import { initializeNuclearStates, initializeMADDeterrence, initializeBilateralTensions } from './nuclearStates';
 import { initializeResourceEconomy } from './resourceEconomy';
 import { initializeDefensiveAI } from './defensiveAI';
-import { initializeNationalAI } from './nationalAI';
+import { initializeNationalAI } from './nationalAI/index';
 import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
@@ -45,7 +45,7 @@ import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
 import { SocietySegment } from '@/types/game';
 import { initializeHumanEnhancementSystem } from './humanEnhancement';
-import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution } from './bionicSkills'; // Research-validated AI skill enhancement + labor-capital distribution
+import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution } from './aiAssistedSkills'; // Research-validated AI skill enhancement + labor-capital distribution
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 import { initializeNuclearCommandControl } from './nuclearCommandControl';
@@ -455,7 +455,14 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       earlyAdopters: 0.0,
       mediumAdopters: 0.0,
       slowAdopters: 0.0,
-      resistantAdopters: 1.0
+      resistantAdopters: 1.0,
+
+      // Contingency & Agency Phase 3 (Oct 17, 2025): Critical Juncture Agency
+      // Track organized opposition and latent grievances for agency potential calculations
+      socialMovements: {
+        strength: 0.0,      // No organized opposition initially
+        grievances: 0.2,    // Moderate baseline grievances (2025 democratic society)
+      }
     },
     
     globalMetrics: {
