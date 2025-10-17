@@ -65,16 +65,43 @@
 
 ---
 
-### Medium Priority Features (~31-38 hours)
+### Medium Priority Features (~55-68 hours)
 
 **New Outcome Spaces:**
 
-- [x] **TIER 4.6: Human Enhancement & Merger Pathways** ⚠️ IMPLEMENTED BUT NEEDS RECONCILIATION (8h actual)
-  **Status:** Added humanEnhancement.ts system with segment-level tracking, BUT overlaps with existing bionicSkills.ts
-  → BCI/merger pathways: Research skeptic correct (TRL 0-2, science fiction) - should be removed
-  → AI-assisted cognition: Already exists in `bionicSkills.ts` (TRL 8-9) - need to reconcile duplication
-  → See: `plans/tier4-6-human-enhancement.md` + `devlogs/crisis_accumulation_fixes_oct16_2025.md`
-  → Next: Merge humanEnhancement.ts segment tracking into bionicSkills.ts, remove BCI/merger
+- [ ] **TIER 4.6: Human Augmentation Spectrum (TRL 3-9)** (MEDIUM, 24-36h) **[Three-Agent Consensus Oct 17]**
+  **Status:** Implemented humanEnhancement.ts (8h), but needs reconciliation based on multi-agent debate
+  **Consensus:** Tiered Augmentation Spectrum replacing binary BCI vs AI-tools framing
+  **Research:** Three-agent debate (super-alignment-researcher, research-skeptic, sci-fi-tech-visionary)
+  **Consensus Doc:** `research/human-enhancement-consensus_20251017.md`
+
+  **Phase 1: Selective Merge + TRL 7-8 Expansion (12-16h)**
+  - Consolidate AI-assisted skills (bionicSkills.ts) as TRL 7-8 (pilot deployment, not TRL 8-9)
+  - Port segment-level tracking from humanEnhancement.ts
+  - Remove TRL 0-2 speculation (BCIs, consciousness uploading, human-AI merger)
+  - Address research-skeptic revisions (TRL downgrade, add contradictory evidence, quantify uncertainty)
+  - Expand skill erosion mechanics (METR deprioritization, Aalto 2024 findings)
+  - Add regional variation (digital divide by country/income)
+
+  **Phase 2: TRL 3-7 Middle Ground (12-20h)**
+  - AR/VR workplace integration (Apple Vision Pro $3,499 vs Meta Quest $299 vs smartphone AR $0)
+  - Wearable sensors (Meta EMG wristbands, smartwatches, fitness trackers)
+  - Neuromodulation (consumer EEG headbands like Neurable/Muse, transcranial stimulation)
+  - Exoskeletons (industrial Sarcos/Ekso, medical ReWalk)
+  - Model augmentation divide scenarios (elite full stack vs middle class partial vs underserved none)
+  - Productivity gains research-backed (+10-30% AR/VR, +20-50% exoskeletons, +5-15% neuromodulation)
+
+  **Key Insight:** Augmentation divide is happening NOW (2025), not future. Model present inequality, not singularity.
+  **Rationale for MEDIUM Priority:** Vision Pro at $3,499 creates inequality TODAY, critical for realistic 2025-2045 simulation
+  **Related Plans:**
+  - `plans/tier4-6-human-enhancement.md` (original implementation, archive after completion)
+  - `plans/bionic-skills-*.md` (AI-assisted skills detailed plans - keep active for Phase 1)
+
+  **Research Citations:**
+  - Phase 1: Peng et al. 2023, Noy & Zhang 2023, METR 2025, Acemoglu et al. 2024
+  - Phase 2: Billinghurst et al. 2015 (AR), De Looze et al. 2016 (exoskeletons), Coffman et al. 2014 (neuromodulation)
+
+  **Integration Points:** Economics, social cohesion, quality of life, inequality tracking, heterogeneous segments
 
 **Research-Backed Enhancements:**
 
@@ -679,12 +706,13 @@
 - 14 low-priority enhancements
 - 2 Black Mirror phases (Phase 1 + Phase 2)
 
-**Total Remaining Effort:** ~296-375 hours (down from ~316-405h)
+**Total Remaining Effort:** ~312-391 hours (up from ~296-375h, +16h for TIER 4.6 scope increase)
 - TIER 0: ✅ COMPLETE (all bugs fixed, Bug #3 seed hypersensitivity deferred)
 - TIER 1: ✅ COMPLETE (Phase 1A-1C done, Phase 1D deferred - not needed)
 - TIER 2 (active): 33-55h (AI Deception Detection phased)
 - **Contingency & Agency Modeling (HIGH PRIORITY): 20-30h remaining** (Phase 1: ✅ COMPLETE, Phase 2: ✅ COMPLETE, Phase 1B Hybrid: ✅ COMPLETE, Phase 3: 20-30h)
 - **Policy Calibration Improvements: ✅ COMPLETE (6-10h)**
+- TIER 4.6 Human Augmentation: 24-36h (was 4-6h, upgraded to MEDIUM priority)
 - AI skills: 78h
 - Black Mirror Phase 1-2: 37-49 weeks
 - Digital Consciousness: 12-16h (IN PROGRESS)

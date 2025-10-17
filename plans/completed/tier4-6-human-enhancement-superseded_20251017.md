@@ -1,5 +1,20 @@
 # TIER 4.6: Human Enhancement & Merger Pathways
 
+**⚠️ SUPERSEDED:** October 17, 2025 - Three-Agent Debate Consensus
+**Replacement:** Human Augmentation Spectrum (TRL 3-9) - See MASTER_IMPLEMENTATION_ROADMAP.md
+**Consensus Document:** `research/human-enhancement-consensus_20251017.md`
+
+**Why Superseded:**
+- Three specialized agents (super-alignment-researcher, research-skeptic, sci-fi-tech-visionary) completed multi-agent debate
+- Consensus: Remove TRL 0-2 speculation (BCIs, consciousness uploading, merger) as too speculative for 2025-2045 timeframe
+- Add TRL 3-7 "middle ground" (AR/VR, wearables, exoskeletons) where augmentation divide is happening NOW (2025)
+- Downgrade TRL classification: 8-9 → 7-8 (AI tools are pilot deployment, not fully operational)
+- Expand from 4-6h to 24-36h to include near-term augmentation technologies creating present-day inequality
+
+**Key Decision:** Focus on Gibson Zone (near-term AR/VR inequality) not Egan Zone (distant singularity speculation)
+
+---
+
 **Status:** ✅ COMPLETED (Oct 16, 2025)
 **Actual Time:** 8 hours
 **Priority:** MEDIUM
