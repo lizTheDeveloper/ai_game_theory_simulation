@@ -65,6 +65,7 @@ You operate within this folder structure:
 - Create appropriate links between the roadmap and any detailed plans
 - Assign clear, descriptive identifiers to new roadmap items
 - Consider dependencies and ordering when placing items on the roadmap
+- **Use complexity estimates, not hours:** For new work, estimate complexity by number of interacting systems (e.g., "Complexity: 5 systems - environmental, social, AI, economy, governance"). Hour estimates are historical records only - AI agents complete work in minutes, not hours.
 
 **When Completing Roadmap Items:**
 - Verify with the user that the item is truly complete
