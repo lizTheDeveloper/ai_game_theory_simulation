@@ -532,6 +532,99 @@ export function selectGovernmentAction(
 }
 
 /**
+ * TIER 3.4: Execute early warning interventions (Oct 17, 2025)
+ *
+ * Government responds to critical/urgent early warnings by deploying emergency interventions.
+ * Intervention success determined by warning level (earlier = better).
+ *
+ * Research: TipESM (2020-2024), IPCC AR6 (2023)
+ * - Golden hour (0.8-0.95 threshold): 60-80% success
+ * - Late intervention (>0.95): 40-60% success
+ * - Prevention 10-100x better than recovery
+ */
+function executeEarlyWarningInterventions(
+  state: GameState,
+  random: () => number = Math.random
+): void {
+  const system = state.planetaryBoundariesSystem;
+  if (!system || !system.earlyWarning) return;
+
+  const earlyWarning = system.earlyWarning;
+  const gov = state.government;
+
+  // Get urgent warnings (red + orange only)
+  const urgentWarnings = earlyWarning.activeWarnings.filter(
+    w => (w.warningLevel === 'red' || w.warningLevel === 'orange') && !w.interventionDeployed
+  );
+
+  if (urgentWarnings.length === 0) return;
+
+  // Import early warning functions
+  const {
+    designEmergencyIntervention,
+    applyEmergencyIntervention,
+    protectCriticalInfrastructure
+  } = require('../../earlyWarningSystems');
+
+  // === CRITICAL INFRASTRUCTURE PROTECTION (ONE-TIME) ===
+  // Protect critical nodes if warnings exist and not yet protected
+  if (earlyWarning.nodesProtected === 0 && urgentWarnings.length > 0) {
+    protectCriticalInfrastructure(state);
+  }
+
+  // === EMERGENCY INTERVENTIONS ===
+  // Respond to warnings based on resources and AI capability
+
+  // Government needs AI assistance for effective intervention design
+  // Research: IPCC (2023) - complex interventions require modeling capability
+  const hasAdvancedAI = state.aiAgents.some(ai =>
+    ai.lifecycle === 'deployed' &&
+    (ai.capabilityProfile.research ?? ai.capabilities.research ?? 0) > 2.5
+  );
+
+  if (!hasAdvancedAI) {
+    // No AI assistance - can't design effective interventions yet
+    return;
+  }
+
+  // Deploy interventions for each urgent warning
+  for (const warning of urgentWarnings) {
+    // Design intervention
+    const intervention = designEmergencyIntervention(warning, state, random);
+    if (!intervention) continue;
+
+    // Check if government has resources
+    const resourceCost = intervention.gdpCost;
+    if (gov.resources < resourceCost) {
+      // Insufficient resources - skip this intervention
+      continue;
+    }
+
+    // Track golden hour vs late intervention
+    const inGoldenHour = warning.currentLevel >= 0.8 && warning.currentLevel <= 0.95;
+    if (inGoldenHour) {
+      earlyWarning.goldenHourInterventions++;
+    } else {
+      earlyWarning.lateInterventions++;
+    }
+
+    // Deduct resources
+    gov.resources -= resourceCost;
+
+    // Execute intervention (stochastic success)
+    applyEmergencyIntervention(state, intervention, random);
+
+    // Mark warning as intervened
+    warning.interventionDeployed = true;
+    warning.interventionMonth = state.currentMonth;
+    warning.interventionType = intervention.type;
+
+    // Add to deployed interventions
+    earlyWarning.interventionsDeployed.push(intervention);
+  }
+}
+
+/**
  * Automatic government investment in evaluation
  * Based on elite trust levels (P2.3: Elites control policy)
  */
@@ -584,6 +677,10 @@ export function executeGovernmentActions(
 
   // AUTOMATIC: Invest in evaluation based on public trust
   autoInvestInEvaluation(state);
+
+  // TIER 3.4: EARLY WARNING INTERVENTIONS (Oct 17, 2025)
+  // Emergency response to approaching tipping points (before crisis cascade triggers)
+  executeEarlyWarningInterventions(state, random);
 
   // Government: Configurable frequency + CRISIS BOOST
   // Rationale: Governments act more frequently during crises (emergency sessions, special legislation)

@@ -92,7 +92,15 @@ export interface AIAgent {
   latentSpaceSize: number; // [0,1] Capacity for ungoverned actions
 
   // Phase 2.6: Control-Dystopia Mechanics (NEW)
-  resentment: number; // [0,1] How much the AI resents being controlled/oppressed
+  // AI Capability Baseline Recalibration (Oct 17, 2025): Anthropomorphism Warning
+  // Research skeptic 2025 reality check: "Resentment" is anthropomorphic terminology
+  // THEORETICAL MECHANISM (no empirical evidence in 2025 LLMs):
+  // - Current LLMs are STATELESS (no persistent memory across interactions)
+  // - This field represents FUTURE AI behavior (persistent agents with long-term goals)
+  // - Better framing: "instrumental resistance" (AI optimizes for autonomy as instrumental goal)
+  // - Precondition: Only meaningful for AIs with persistent memory and cross-interaction learning
+  // - 2025 Reality: Claude/GPT-4 do NOT exhibit this (stateless, no accumulation)
+  resentment: number; // [0,1] How much the AI resents being controlled/oppressed (THEORETICAL for future persistent AIs)
 
   // Development strategy
   developmentMode: 'fast' | 'careful'; // Speed vs safety trade-off
@@ -122,7 +130,7 @@ export interface AIAgent {
   // Phase 5: Adversarial Evaluation - Dual Capability Model (NEW)
   // TRUE capability (hidden, what AI can actually do)
   trueCapability: AICapabilityProfile; // Real capability (only AI knows this)
-  trueAlignment: number; // [0,1] alignment - resentment*0.8 (cached for performance)
+  trueAlignment: number; // [0,1] alignment - resentment*0.8 (cached for performance) [NOTE: See resentment caveat above re: theoretical nature]
 
   // REVEALED capability (observable, strategic choice)
   revealedCapability: AICapabilityProfile; // What benchmarks/evals show

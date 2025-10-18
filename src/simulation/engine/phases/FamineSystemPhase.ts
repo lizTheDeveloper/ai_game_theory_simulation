@@ -42,9 +42,49 @@ export class FamineSystemPhase implements SimulationPhase {
     // 3. Apply famine deaths to population
     if (famineDeaths > 0) {
       state.humanPopulationSystem.population -= famineDeaths;
-      
-      // Track cumulative deaths by category
+
+      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
+      // PROXIMATE: Famine (starvation, malnutrition)
       state.humanPopulationSystem.deathsByCategory.famine += famineDeaths;
+
+      // ROOT CAUSE: Attribute based on active famine causes
+      // TODO: Proper attribution requires iterating through activeFamines
+      // For now, aggregate all famine deaths and attribute proportionally
+      const famines = state.famineSystem.activeFamines;
+      if (famines.length > 0) {
+        // Attribute deaths based on famine causes
+        let conflictFamines = 0;
+        let climateFamines = 0;
+        let governanceFamines = 0;
+        let naturalFamines = 0;
+
+        for (const famine of famines) {
+          if (famine.cause === 'war_displacement' || famine.cause === 'aid_blockade' || famine.cause === 'nuclear_winter') {
+            conflictFamines++;
+          } else if (famine.cause === 'crop_failure') {
+            climateFamines++;
+          } else if (famine.cause === 'drought') {
+            naturalFamines++; // Natural drought (may be climate-driven)
+          } else {
+            governanceFamines++; // economic_collapse, resource_extraction
+          }
+        }
+
+        const total = conflictFamines + climateFamines + governanceFamines + naturalFamines;
+        if (total > 0) {
+          state.humanPopulationSystem.deathsByRootCause.conflict += famineDeaths * (conflictFamines / total);
+          state.humanPopulationSystem.deathsByRootCause.climateChange += famineDeaths * (climateFamines / total);
+          state.humanPopulationSystem.deathsByRootCause.governance += famineDeaths * (governanceFamines / total);
+          state.humanPopulationSystem.deathsByRootCause.natural += famineDeaths * (naturalFamines / total);
+        } else {
+          // Fallback: default to governance (policy/distribution failures)
+          state.humanPopulationSystem.deathsByRootCause.governance += famineDeaths;
+        }
+      } else {
+        // No active famines (shouldn't happen) - default to governance
+        state.humanPopulationSystem.deathsByRootCause.governance += famineDeaths;
+      }
+
       state.humanPopulationSystem.cumulativeCrisisDeaths += famineDeaths;
       state.humanPopulationSystem.monthlyExcessDeaths += famineDeaths;
       

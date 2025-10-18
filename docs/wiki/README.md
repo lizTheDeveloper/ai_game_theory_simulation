@@ -1041,6 +1041,37 @@ Models how beliefs, narratives, and ideologies spread through society in respons
 
 ---
 
+### Multi-Dimensional Death Tracking (October 18, 2025)
+
+**Status**: ✅ Complete and Validated (N=100 Monte Carlo, 335.7s runtime)
+
+Implemented **two-dimensional death attribution** separating proximate causes (what killed them) from root causes (why it happened).
+
+**Key Insight**: "It was humans the whole time" - Climate change creates disasters (0.3% direct deaths) BUT governance failures (97%) amplify them into mass death.
+
+**Proximate Causes** (What killed them - medical/physical):
+- War, Famine, **Disasters** (renamed from "climate"), Disease, Ecosystem, Pollution, AI, Cascade, Other
+
+**Root Causes** (Why it happened - systemic drivers):
+- **Climate Change**, Conflict, **Governance**, Alignment, Natural, Poverty, Other
+
+**Research Foundation**:
+- Sen's entitlement theory: Famines are distribution failures, not production failures
+- WHO social determinants framework: Root causes vs immediate causes
+- ICD-10 classification: Medical cause of death (proximate)
+
+**Validation Results (N=100, 120 months)**:
+- **Proximate**: Famine 97.3%, Disease 1.4%, Ecosystem 0.5%, Disasters 0.3%
+- **Root**: Governance 97.0%, Climate Change 0.3%
+
+**Files Modified**: 9 locations (population types, environmental deaths, heat waves, radiation, famines, overshoot, regional populations, reporting, Monte Carlo)
+
+**Impact**: Makes diagnosis "infinity easier" - instantly see whether deaths are climate, governance, conflict, or alignment-driven.
+
+See: `devlogs/multidimensional-death-tracking_20251018.md` for complete implementation details.
+
+---
+
 ### What's Next 🚀
 
 **✅ TIER 0-2 Complete!** All baseline corrections, critical risks, and major mitigations merged to main.

@@ -79,6 +79,19 @@ export type {
   GlobalMetrics
 } from './metrics';
 
+export type {
+  PositiveTippingPointsState
+} from './positiveTippingPoints';
+
+export type {
+  ConsciousnessGovernanceReadiness,
+  RegionalGovernance,
+  ScenarioTrajectory,
+  GovernanceStage,
+  PoliticalRegimeType,
+  PrecautionaryModel
+} from './consciousness';
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -143,6 +156,11 @@ export interface GameState {
 
   // Planetary Boundaries (TIER 3.1)
   planetaryBoundariesSystem: import('../types/planetaryBoundaries').PlanetaryBoundariesSystem; // Kate Raworth's Doughnut Economics & tipping point cascades
+
+  // Positive Tipping Point Cascades (Oct 17, 2025) - Acceleration of beneficial technology adoption
+  // Research: OECD (2025), Earth System Dynamics (2024), Nature Sustainability (2023) (TRL 6-8)
+  // Expected impact: +5-15% humane utopia rate via accelerated clean tech adoption
+  positiveTippingPoints: PositiveTippingPointsState; // Solar PV, EV, wind, heat pump cascades
 
   // Ecosystem Collapse Tracking (Realistic Timeline Recalibration)
   ecosystemCollapse?: {
@@ -288,6 +306,12 @@ export interface GameState {
   // Memetic Evolution & Polarization Dynamics (P2.6, Oct 16 2025)
   memeticSystem: import('../types/memetics').MemeticSystem; // Belief evolution, meme transmission, societal fragmentation
 
+  // Digital Consciousness Governance Preparedness (TIER 2C, Oct 17 2025)
+  // Multi-scenario governance readiness for potential digital consciousness emergence (NOT consciousness itself)
+  // Research: Long & Sebo (2024), Shulman & Bostrom (2021), Ord (2020), Poland/Hungary rights reversals (2020-2024) (TRL 3-4)
+  // Expected impact: +0-5% humane utopia (preparedness reduces dystopia lock-in), +10-20% pyrrhic utopia (consciousness governance as pyrrhic feature)
+  consciousnessGovernanceReadiness: import('../types/consciousness').ConsciousnessGovernanceReadiness; // Regional heterogeneity, rights reversals, precautionary costs, eliminativism barrier
+
   // Regional Biodiversity System (TIER 1.7 - Crisis Realism)
   biodiversitySystem: import('../types/regionalBiodiversity').BiodiversitySystem; // Regional biodiversity tracking, nuclear/pollution effects
 
@@ -296,6 +320,29 @@ export interface GameState {
 
   // Nuclear Radiation Health Effects (TIER 1.7 - Crisis Realism)
   radiationSystem: import('../types/radiation').RadiationSystem; // Long-term cancer, birth defects, soil contamination (decades-centuries)
+
+  // Wet Bulb Temperature Events (TIER: Medium Priority - Oct 17, 2025)
+  // Extreme heat mortality when combined heat + humidity exceed human thermoregulatory capacity
+  // Research: Raymond et al. (2020) 35°C TW = 6h death, Vecellio et al. (2022) vulnerable thresholds, Mora et al. (2017) exponential increase (TRL 8-9)
+  wetBulbTemperatureSystem: import('../types/wetBulbTemperature').WetBulbTemperatureSystem; // Deadly heat events, regional vulnerability, climate-linked mortality
+
+  // Antimicrobial Resistance Crisis (TIER 1.8 - Oct 17, 2025)
+  // Progressive loss of antibiotic effectiveness over time
+  // Research: WHO (2024) 10M deaths/year by 2050, O'Neill Review (2016) $100T damage
+  antimicrobialResistanceSystem: import('../types/antimicrobialResistance').AntimicrobialResistanceSystem; // Medical effectiveness decline, baseline mortality increase
+
+  // TIER 2 Phase 3: Benchmark Gaming Detection (Oct 17, 2025)
+  // Research: gaming-sleeper-detection_20251017.md + critique (research-skeptic validated)
+  // Detection: 55% baseline (optimistic 75%, pessimistic 35%), declining -10%/year
+  // Expected impact: Reduces trust damage from undetected gaming, but high false positive cost
+  gamingDetection?: import('../simulation/gamingDetection').GamingDetectionState;
+
+  // TIER 2 Phase 4: Proactive Sleeper Agent Detection (Oct 17, 2025)
+  // Research: gaming-sleeper-detection_20251017.md + critique (research-skeptic validated)
+  // Detection: 50% baseline 2024, declining -10 to -15%/year (CoT fragility, adversarial evasion)
+  // Methods: Neural probes (35% natural deception) + CoT monitoring (30%, decaying) + human review
+  // Expected impact: Critical safety layer, but effectiveness window closes by 2027
+  proactiveSleeperDetection?: import('../simulation/proactiveSleeperDetection').ProactiveSleeperDetectionState;
 
   // Stochastic Innovation Breakthroughs (P2.2)
   achievedBreakthroughs?: string[]; // IDs of breakthroughs achieved (prevents duplicates)
@@ -367,6 +414,15 @@ export interface GameState {
       type: 'prevent_war' | 'enable_cooperation' | 'recover_from_crisis' | 'unlock_breakthrough';
       agencyPotential: number;
       crisisSeverity: number;
+    }>;
+    // Cooperative Spirals: Alignment success → trust cascades (Oct 17, 2025)
+    // Research: Acemoglu & Robinson (2001), Ostrom (2009), Putnam (2000)
+    cooperativeSpirals?: Array<{
+      month: number;
+      type: 'alignment-success' | 'critical-juncture-reform';
+      trustBoost: number;
+      institutionBoost?: number;
+      trigger: string;
     }>;
   };
 }

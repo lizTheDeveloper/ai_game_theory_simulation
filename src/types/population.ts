@@ -64,17 +64,29 @@ export interface HumanPopulationSystem {
   monthlyDeathsApplied?: number;         // Deaths applied this month (reset each month)
   monthlyDeathCapReached?: boolean;      // Flag if cap was hit (for logging)
 
-  // Death tracking by category (TIER 1.5 - Summary Statistics)
+  // Multi-dimensional death tracking (TIER 1.5 - Summary Statistics)
+  // PROXIMATE CAUSE: What killed them (medical/physical cause of death)
   deathsByCategory: {
-    war: number;                         // War, nuclear conflict
-    famine: number;                      // Food/water scarcity
-    climate: number;                     // Climate disasters, extreme weather
-    disease: number;                     // Pandemics, healthcare collapse
-    ecosystem: number;                   // Ecosystem collapse, biodiversity loss
-    pollution: number;                   // Toxic environment
+    war: number;                         // Direct combat, weapons
+    famine: number;                      // Starvation, malnutrition
+    disasters: number;                   // Heat waves, floods, storms, earthquakes
+    disease: number;                     // Pandemics, infections, healthcare collapse
+    ecosystem: number;                   // Ecosystem collapse, pollinator loss
+    pollution: number;                   // Toxic environment, chemical exposure
     ai: number;                          // AI-caused deaths (alignment failure)
     cascade: number;                     // Tipping point cascade (Oct 16, 2025)
     other: number;                       // Other catastrophes
+  };
+
+  // ROOT CAUSE: Why it happened (underlying driver of death)
+  deathsByRootCause: {
+    climateChange: number;               // Climate change (drives disasters, famine, disease, ecosystem)
+    conflict: number;                    // War, geopolitical tensions
+    governance: number;                  // Policy failures, institutional collapse
+    alignment: number;                   // AI alignment failure
+    natural: number;                     // Natural disasters (non-climate)
+    poverty: number;                     // Economic deprivation
+    other: number;                       // Other root causes
   };
 
   // Thresholds (for outcomes)

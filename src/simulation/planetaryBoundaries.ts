@@ -261,7 +261,20 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
     landUse: initializeLandUseSystem(),
     // TIER 3.3: Ozone Recovery
     ozoneRecovery: initializeOzoneRecoverySystem(),
+    // TIER 3.4: Early Warning Systems (Oct 17, 2025)
+    earlyWarning: initializeEarlyWarningSystemInternal(),
   };
+}
+
+/**
+ * TIER 3.4: Initialize Early Warning System (internal)
+ *
+ * Called from initialization - sets up detection infrastructure.
+ */
+function initializeEarlyWarningSystemInternal() {
+  // Import here to avoid circular dependency
+  const { initializeEarlyWarningSystem } = require('./earlyWarningSystems');
+  return initializeEarlyWarningSystem();
 }
 
 /**

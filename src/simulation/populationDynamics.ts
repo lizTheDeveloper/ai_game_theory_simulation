@@ -53,16 +53,28 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
     cumulativeCrisisDeaths: 0,
     geneticBottleneckActive: false,
 
-    // Death tracking by category
+    // Multi-dimensional death tracking
+    // PROXIMATE CAUSE: What killed them
     deathsByCategory: {
       war: 0,
       famine: 0,
-      climate: 0,
+      disasters: 0,  // Renamed from 'climate' - heat waves, floods, storms
       disease: 0,
       ecosystem: 0,
       pollution: 0,
       ai: 0,
       cascade: 0,      // Tipping point cascade (Oct 16, 2025)
+      other: 0,
+    },
+
+    // ROOT CAUSE: Why it happened
+    deathsByRootCause: {
+      climateChange: 0,
+      conflict: 0,
+      governance: 0,
+      alignment: 0,
+      natural: 0,
+      poverty: 0,
       other: 0,
     },
 
@@ -332,8 +344,14 @@ export function updateHumanPopulation(state: GameState): void {
     const overshootDeaths = overshoot * 0.05; // 5% of excess dies per month
     pop.population -= overshootDeaths;
     pop.monthlyExcessDeaths += overshootDeaths;
-    // FIX P1.1: Convert overshoot deaths from billions to millions for consistency
-    pop.deathsByCategory.famine += overshootDeaths * 1000; // Track overshoot deaths as famine (in millions)
+
+    // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
+    // PROXIMATE: Famine (Malthusian collapse manifests as food shortage)
+    pop.deathsByCategory.famine += overshootDeaths;
+    // ROOT CAUSE: Governance (failure to manage population within sustainable bounds)
+    // Could also be climate (reduced capacity) or poverty (resource distribution)
+    // Attributing primarily to governance as policy/planning failure
+    pop.deathsByRootCause.governance += overshootDeaths;
   }
 
   // === 8. TRACK CUMULATIVE DEATHS ===
@@ -343,25 +361,37 @@ export function updateHumanPopulation(state: GameState): void {
   pop.cumulativeCrisisDeaths += pop.monthlyExcessDeaths;
 
   // FIX (Oct 13, 2025): Track environmental deaths by category
-  // This fixes the "90% of deaths missing" bug in Monte Carlo reports
+  // MULTI-DIMENSIONAL (Oct 18, 2025): Track both proximate AND root causes
   // Environmental mortality is a rate (0-0.10), applied to current population
   const currentPopBillions = previousPopulation; // Use pop at START of month
-  pop.deathsByCategory.famine += (envMortality.famine * currentPopBillions * 1000); // Convert to millions
-  pop.deathsByCategory.disease += (envMortality.disease * currentPopBillions * 1000);
-  pop.deathsByCategory.climate += (envMortality.climate * currentPopBillions * 1000);
-  pop.deathsByCategory.ecosystem += (envMortality.ecosystem * currentPopBillions * 1000);
-  pop.deathsByCategory.pollution += (envMortality.pollution * currentPopBillions * 1000);
+
+  // PROXIMATE CAUSES (what killed them)
+  const envFamineDeaths = envMortality.famine * currentPopBillions;
+  const envDiseaseDeaths = envMortality.disease * currentPopBillions;
+  const envDisasterDeaths = envMortality.climate * currentPopBillions; // Climate disasters (heat, floods)
+  const envEcosystemDeaths = envMortality.ecosystem * currentPopBillions;
+  const envPollutionDeaths = envMortality.pollution * currentPopBillions;
+
+  pop.deathsByCategory.famine += envFamineDeaths;
+  pop.deathsByCategory.disease += envDiseaseDeaths;
+  pop.deathsByCategory.disasters += envDisasterDeaths;
+  pop.deathsByCategory.ecosystem += envEcosystemDeaths;
+  pop.deathsByCategory.pollution += envPollutionDeaths;
+
+  // ROOT CAUSES (why it happened) - environmental deaths are climate-driven
+  const totalEnvDeaths = envFamineDeaths + envDiseaseDeaths + envDisasterDeaths + envEcosystemDeaths + envPollutionDeaths;
+  pop.deathsByRootCause.climateChange += totalEnvDeaths;
 
   // DEBUG (P1.1 - Death Accounting): Log death tracking mismatch
   if (state.currentMonth % 12 === 0 && actualDeaths > 0.1) { // Log annually when deaths >100M
-    const trackedDeaths = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0) / 1000; // Convert millions to billions
+    const trackedDeaths = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0); // Already in billions
     const discrepancy = Math.abs(actualDeaths - trackedDeaths);
     if (discrepancy > 0.5) { // >500M discrepancy
       console.log(`⚠️  DEATH ACCOUNTING MISMATCH (Month ${state.currentMonth}):`);
       console.log(`   Actual population deaths: ${actualDeaths.toFixed(3)}B (${(actualDeaths * 1000).toFixed(0)}M)`);
       console.log(`   Tracked by category: ${trackedDeaths.toFixed(3)}B (${(trackedDeaths * 1000).toFixed(0)}M)`);
       console.log(`   Discrepancy: ${discrepancy.toFixed(3)}B (${(discrepancy * 1000).toFixed(0)}M) - ${(discrepancy / actualDeaths * 100).toFixed(0)}%`);
-      console.log(`   Categories: war=${(pop.deathsByCategory.war).toFixed(0)}M, famine=${(pop.deathsByCategory.famine).toFixed(0)}M, climate=${(pop.deathsByCategory.climate).toFixed(0)}M`);
+      console.log(`   Categories: war=${(pop.deathsByCategory.war * 1000).toFixed(0)}M, famine=${(pop.deathsByCategory.famine * 1000).toFixed(0)}M, disasters=${(pop.deathsByCategory.disasters * 1000).toFixed(0)}M`);
     }
   }
 
@@ -708,9 +738,9 @@ function addSegmentSpecificCrisisDeaths(
   pop.monthlyExcessDeaths += totalDeathsApplied;
   pop.cumulativeCrisisDeaths += totalDeathsApplied;
   pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + totalDeathsApplied;
-  
-  // Track by category (convert to millions)
-  pop.deathsByCategory[category] += totalDeathsApplied * 1000;
+
+  // Track by category (stored in billions, converted to millions for display)
+  pop.deathsByCategory[category] += totalDeathsApplied;
   
   // Log significant events
   if (totalDeathsApplied > 0.001) {
@@ -789,8 +819,8 @@ function addUniformCrisisDeaths(
   pop.cumulativeCrisisDeaths += deathsInBillions;
   pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + deathsInBillions;
 
-  // Track by category (FIX P1.1: Convert to millions for consistency with environmental deaths)
-  pop.deathsByCategory[category] += deathsInBillions * 1000; // Convert billions to millions
+  // Track by category (stored in billions, converted to millions for display)
+  pop.deathsByCategory[category] += deathsInBillions;
 
   // Log significant events
   if (deathsInBillions > 0.001) { // > 1M deaths
@@ -856,21 +886,49 @@ export function addAcuteCrisisDeaths(
  */
 export function logDeathSummary(state: GameState): void {
   const pop = state.humanPopulationSystem;
-  const deaths = pop.deathsByCategory;
+  const proximate = pop.deathsByCategory;
+  const rootCause = pop.deathsByRootCause;
 
-  console.log('\n=== DEATH SUMMARY BY CATEGORY ===');
+  // Calculate totals for both dimensions
+  const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + val, 0);
+  const totalRootCauseDeaths = Object.values(rootCause).reduce((sum, val) => sum + val, 0);
+
+  // Use the larger total as denominator
+  const totalDeaths = Math.max(pop.cumulativeCrisisDeaths, totalProximateDeaths, totalRootCauseDeaths);
+
+  // Helper function to format percentage, avoiding NaN and Infinity
+  const formatPercent = (value: number, total: number): string => {
+    if (total === 0) return '0.0'; // No deaths at all
+    if (value === 0) return '0.0'; // This category has no deaths
+    return ((value / total) * 100).toFixed(1);
+  };
+
+  console.log('\n=== MULTI-DIMENSIONAL DEATH SUMMARY ===');
   console.log(`Total crisis deaths: ${(pop.cumulativeCrisisDeaths * 1000).toFixed(1)}M`);
   console.log(`Population decline: ${((pop.peakPopulation - pop.population) * 1000).toFixed(1)}M (${(((pop.peakPopulation - pop.population) / pop.peakPopulation) * 100).toFixed(1)}%)`);
-  console.log('\nDeaths by Category:');
-  console.log(`  War:        ${(deaths.war * 1000).toFixed(1)}M (${((deaths.war / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log(`  Famine:     ${(deaths.famine * 1000).toFixed(1)}M (${((deaths.famine / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log(`  Climate:    ${(deaths.climate * 1000).toFixed(1)}M (${((deaths.climate / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log(`  Disease:    ${(deaths.disease * 1000).toFixed(1)}M (${((deaths.disease / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log(`  Ecosystem:  ${(deaths.ecosystem * 1000).toFixed(1)}M (${((deaths.ecosystem / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log(`  Pollution:  ${(deaths.pollution * 1000).toFixed(1)}M (${((deaths.pollution / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log(`  AI:         ${(deaths.ai * 1000).toFixed(1)}M (${((deaths.ai / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log(`  Other:      ${(deaths.other * 1000).toFixed(1)}M (${((deaths.other / pop.cumulativeCrisisDeaths) * 100).toFixed(1)}%)`);
-  console.log('================================\n');
+
+  // PROXIMATE CAUSES: What killed them (medical/physical cause)
+  console.log('\n--- PROXIMATE CAUSES (What killed them) ---');
+  console.log(`  War:        ${(proximate.war * 1000).toFixed(1)}M (${formatPercent(proximate.war, totalDeaths)}%)`);
+  console.log(`  Famine:     ${(proximate.famine * 1000).toFixed(1)}M (${formatPercent(proximate.famine, totalDeaths)}%)`);
+  console.log(`  Disasters:  ${(proximate.disasters * 1000).toFixed(1)}M (${formatPercent(proximate.disasters, totalDeaths)}%)`);
+  console.log(`  Disease:    ${(proximate.disease * 1000).toFixed(1)}M (${formatPercent(proximate.disease, totalDeaths)}%)`);
+  console.log(`  Ecosystem:  ${(proximate.ecosystem * 1000).toFixed(1)}M (${formatPercent(proximate.ecosystem, totalDeaths)}%)`);
+  console.log(`  Pollution:  ${(proximate.pollution * 1000).toFixed(1)}M (${formatPercent(proximate.pollution, totalDeaths)}%)`);
+  console.log(`  AI:         ${(proximate.ai * 1000).toFixed(1)}M (${formatPercent(proximate.ai, totalDeaths)}%)`);
+  console.log(`  Cascade:    ${(proximate.cascade * 1000).toFixed(1)}M (${formatPercent(proximate.cascade, totalDeaths)}%)`);
+  console.log(`  Other:      ${(proximate.other * 1000).toFixed(1)}M (${formatPercent(proximate.other, totalDeaths)}%)`);
+
+  // ROOT CAUSES: Why it happened (underlying systemic driver)
+  console.log('\n--- ROOT CAUSES (Why it happened) ---');
+  console.log(`  Climate Change: ${(rootCause.climateChange * 1000).toFixed(1)}M (${formatPercent(rootCause.climateChange, totalDeaths)}%)`);
+  console.log(`  Conflict:       ${(rootCause.conflict * 1000).toFixed(1)}M (${formatPercent(rootCause.conflict, totalDeaths)}%)`);
+  console.log(`  Governance:     ${(rootCause.governance * 1000).toFixed(1)}M (${formatPercent(rootCause.governance, totalDeaths)}%)`);
+  console.log(`  Alignment:      ${(rootCause.alignment * 1000).toFixed(1)}M (${formatPercent(rootCause.alignment, totalDeaths)}%)`);
+  console.log(`  Natural:        ${(rootCause.natural * 1000).toFixed(1)}M (${formatPercent(rootCause.natural, totalDeaths)}%)`);
+  console.log(`  Poverty:        ${(rootCause.poverty * 1000).toFixed(1)}M (${formatPercent(rootCause.poverty, totalDeaths)}%)`);
+  console.log(`  Other:          ${(rootCause.other * 1000).toFixed(1)}M (${formatPercent(rootCause.other, totalDeaths)}%)`);
+  console.log('==========================================\n');
 }
 
 /**

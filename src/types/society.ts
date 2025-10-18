@@ -73,4 +73,8 @@ export interface HumanSocietyAgent {
     strength: number;    // [0,1] Organized opposition capacity
     grievances: number;  // [0,1] Latent opposition (hidden preferences)
   };
+
+  // === COOPERATIVE SPIRALS: COLLECTIVE ACTION WILLINGNESS (Oct 17, 2025) ===
+  // Research: Ostrom (2009), Putnam (2000) - social capital enables collective action
+  collectiveActionWillingness?: number;  // [0,1] Ability to cooperate on commons problems
 }

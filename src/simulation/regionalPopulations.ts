@@ -385,8 +385,13 @@ export function updateRegionalPopulations(state: GameState): void {
       const overshootDeaths = overshoot * 0.05; // 5% of excess dies per month
       region.population -= overshootDeaths;
       region.monthlyExcessDeaths += overshootDeaths;
-      // Track overshoot deaths as famine in global categories (convert from millions to billions)
+
+      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
+      // Track overshoot deaths in global categories (convert from millions to billions)
+      // PROXIMATE: Famine (Malthusian collapse manifests as food shortage)
       pop.deathsByCategory.famine += overshootDeaths / 1000;
+      // ROOT CAUSE: Governance (failure to manage population within sustainable bounds)
+      pop.deathsByRootCause.governance += overshootDeaths / 1000;
     }
 
     // === 6. TRACK CRISIS DEATHS ===

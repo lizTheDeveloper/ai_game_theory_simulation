@@ -41,8 +41,12 @@ export class RadiationSystemPhase implements SimulationPhase {
     if (deaths > 0) {
       state.humanPopulationSystem.population -= deaths;
 
-      // Track deaths in 'war' category (radiation is consequence of nuclear war)
+      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
+      // PROXIMATE: War (radiation is direct consequence of nuclear war)
       state.humanPopulationSystem.deathsByCategory.war += deaths;
+      // ROOT CAUSE: Conflict (nuclear war stems from geopolitical conflict)
+      state.humanPopulationSystem.deathsByRootCause.conflict += deaths;
+
       state.humanPopulationSystem.cumulativeCrisisDeaths += deaths;
       state.humanPopulationSystem.monthlyExcessDeaths += deaths;
 
@@ -60,7 +64,12 @@ export class RadiationSystemPhase implements SimulationPhase {
       // Convert birth defects to mortality (billions)
       const birthDefectMortality = birthDefects * 0.3; // 30% of birth defects are fatal
       state.humanPopulationSystem.population -= birthDefectMortality;
+
+      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
+      // PROXIMATE: Other (indirect deaths from radiation)
       state.humanPopulationSystem.deathsByCategory.other += birthDefectMortality;
+      // ROOT CAUSE: Conflict (birth defects caused by nuclear war)
+      state.humanPopulationSystem.deathsByRootCause.conflict += birthDefectMortality;
 
       // Track non-fatal birth defects for QoL impact
       const survivingWithDefects = birthDefects * 0.7; // 70% survive but with defects

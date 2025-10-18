@@ -59,7 +59,7 @@ const investCyberDefense: CategorizedGovernmentAction = {
     state.government.cyberDefense.incidentResponse = Math.min(10, state.government.cyberDefense.incidentResponse + improvement);
 
     // Calculate attack vs defense status
-    const { calculateAttackPower, calculateDefensePower } = require('../../../cyberSecurity');
+    const { calculateAttackPower, calculateDefensePower } = require('../../cyberSecurity');
     const attackPower = calculateAttackPower(state);
     const defensePower = calculateDefensePower(state.government);
     const ratio = attackPower / Math.max(0.1, defensePower);
@@ -122,7 +122,7 @@ const deployNuclearHumanInTheLoop: CategorizedGovernmentAction = {
       };
     }
 
-    const { deployCircuitBreaker } = require('../../../nuclearCommandControl');
+    const { deployCircuitBreaker } = require('../../nuclearCommandControl');
 
     if (!ncc.humanInTheLoop.deployed) {
       // Initial deployment: 3 veto points
@@ -194,7 +194,7 @@ const deployAIKillSwitches: CategorizedGovernmentAction = {
       };
     }
 
-    const { deployCircuitBreaker } = require('../../../nuclearCommandControl');
+    const { deployCircuitBreaker } = require('../../nuclearCommandControl');
 
     if (!ncc.aiKillSwitches.deployed) {
       // Initial deployment: 80% coverage
@@ -266,7 +266,7 @@ const deployNuclearTimeDelays: CategorizedGovernmentAction = {
       };
     }
 
-    const { deployCircuitBreaker } = require('../../../nuclearCommandControl');
+    const { deployCircuitBreaker } = require('../../nuclearCommandControl');
 
     if (!ncc.timeDelays.deployed) {
       // Initial deployment: 24 hour delay

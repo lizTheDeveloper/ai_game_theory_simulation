@@ -43,12 +43,18 @@ import { initializePowerGenerationSystem } from '../types/powerGeneration';
 import { initializeRegionalBiodiversitySystem } from '../types/regionalBiodiversity';
 import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
+import { initializeAMRSystem } from './antimicrobialResistance';
+import { initializeWetBulbTemperatureSystem } from './wetBulbEvents';
 import { SocietySegment } from '@/types/game';
 import { initializeHumanEnhancementSystem } from './humanEnhancement';
 import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution } from './aiAssistedSkills'; // Research-validated AI skill enhancement + labor-capital distribution
 import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 import { initializeNuclearCommandControl } from './nuclearCommandControl';
+import { initializePositiveTippingPoints } from './positiveTippingPoints';
+import { initializeConsciousnessGovernance } from './consciousnessGovernance';
+import { initializeGamingDetection } from './gamingDetection';
+import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -430,7 +436,10 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
         institutionalCapacity: 0.6,
         consensusBuildingEfficiency: 0.5,
         minorityProtectionStrength: 0.5,
-      }
+      },
+      // Cooperative Spirals (Oct 17, 2025)
+      institutionalResilience: 0.5,  // Moderate baseline institutional resilience
+      policyEffectivenessMultiplier: 1.0  // Baseline (no boost from cooperative spirals yet)
     },
     
     society: {
@@ -462,7 +471,9 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       socialMovements: {
         strength: 0.0,      // No organized opposition initially
         grievances: 0.2,    // Moderate baseline grievances (2025 democratic society)
-      }
+      },
+      // Cooperative Spirals (Oct 17, 2025)
+      collectiveActionWillingness: 0.5  // Moderate baseline willingness to cooperate on commons problems
     },
     
     globalMetrics: {
@@ -565,6 +576,9 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     // Planetary Boundaries (TIER 3.1)
     planetaryBoundariesSystem: initializePlanetaryBoundariesSystem(),
 
+    // Positive Tipping Point Cascades (Oct 17, 2025)
+    positiveTippingPoints: initializePositiveTippingPoints(),
+
     // Population Dynamics & Refugee Crises (TIER 1.6)
     humanPopulationSystem: initializeHumanPopulationSystem(),
     refugeeCrisisSystem: initializeRefugeeCrisisSystem(),
@@ -594,6 +608,9 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
 
     memeticSystem: initializeMemeticSystem(), // P2.6: Memetic Evolution & Polarization Dynamics
 
+    // TIER 2C: Digital Consciousness Governance Preparedness (Oct 17, 2025)
+    consciousnessGovernanceReadiness: initializeConsciousnessGovernance(), // Multi-scenario governance readiness for potential digital consciousness
+
     // TIER 1.7: Crisis Realism - Regional Biodiversity
     biodiversitySystem: initializeRegionalBiodiversitySystem(),
 
@@ -602,6 +619,16 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
 
     // TIER 1.7: Crisis Realism - Nuclear Radiation Health Effects
     radiationSystem: initializeRadiationSystem(),
+
+    // Wet Bulb Temperature Events (Oct 17, 2025)
+    wetBulbTemperatureSystem: initializeWetBulbTemperatureSystem(),
+
+    // TIER 1.8: Antimicrobial Resistance Crisis (Oct 17, 2025)
+    antimicrobialResistanceSystem: initializeAMRSystem(),
+
+    // TIER 2 Phase 3-4: AI Deception Detection (Oct 17, 2025)
+    gamingDetection: initializeGamingDetection('baseline'),
+    proactiveSleeperDetection: initializeProactiveSleeperDetection('baseline'),
 
     eventLog: [],
     technologyTree: [],

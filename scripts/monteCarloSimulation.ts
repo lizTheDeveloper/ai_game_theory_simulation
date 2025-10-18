@@ -1082,10 +1082,11 @@ for (let i = 0; i < NUM_RUNS; i++) {
   
   // Crisis deaths by category (already in millions from deathsByCategory tracking)
   // BUG FIX (Oct 16, 2025): Removed cascade as separate category (was double-counting)
-  // Cascade deaths are now included in climate/ecosystem/pollution (environmental degradation)
+  // Cascade deaths are now included in disasters/ecosystem/pollution (environmental degradation)
+  // MULTI-DIMENSIONAL UPDATE (Oct 18, 2025): Renamed climate → disasters
   const deathsNuclear = deathsByCategory.war; // War includes nuclear
   const deathsCrisis = deathsByCategory.famine + deathsByCategory.disease + deathsByCategory.other;
-  const deathsClimateEcoPollution = deathsByCategory.climate + deathsByCategory.ecosystem + deathsByCategory.pollution + (deathsByCategory.cascade || 0);
+  const deathsClimateEcoPollution = deathsByCategory.disasters + deathsByCategory.ecosystem + deathsByCategory.pollution + (deathsByCategory.cascade || 0);
   const deathsMeaning = deathsByCategory.ai; // AI-related deaths (alignment failures, manipulation)
   
   // Population outcome

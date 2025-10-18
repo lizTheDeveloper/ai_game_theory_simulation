@@ -102,7 +102,7 @@ const fundNationalCompute: CategorizedGovernmentAction = {
     }
 
     // Start construction using organization management
-    const { startDataCenterConstruction } = require('../../../organizationManagement');
+    const { startDataCenterConstruction } = require('../../organizationManagement');
     startDataCenterConstruction(govOrg, random);
 
     // Consequences

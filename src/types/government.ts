@@ -102,4 +102,9 @@ export interface GovernmentAgent {
     consensusBuildingEfficiency: number; // [0,1] Speed of democratic agreement (liquid democracy)
     minorityProtectionStrength: number;  // [0,1] Safeguards for vulnerable groups (AI bias detection)
   };
+
+  // Cooperative Spirals: Institutional resilience (Oct 17, 2025)
+  // Research: Acemoglu & Robinson (2001) - reforms can lock in during critical junctures
+  institutionalResilience?: number;  // [0,1] Ability to maintain reforms during crises
+  policyEffectivenessMultiplier?: number;  // [1.0-2.0] Multiplier from cooperative spirals
 }
