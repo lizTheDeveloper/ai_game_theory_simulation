@@ -401,6 +401,11 @@ export function allocateComputeEqually(state: GameState): void {
  * - 100-1000x growth per decade (not 2.4x)
  * - Target: 100x-10,000x effective compute growth over 10 years
  *
+ * Phase 5 Enhancement (Oct 17, 2025): Consciousness governance precautionary costs
+ * - Precautionary costs slow R&D growth rate
+ * - 10% precautionary cost → ~5% slower capability growth
+ * - Applied as drag on algorithmic efficiency growth
+ *
  * References:
  * - Epoch AI (2024): Training compute doubling every 6-10 months
  * - Sevilla et al. (2022): Compute Trends showing 10x/year since 2020
@@ -413,7 +418,7 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   const totalOrgs = state.organizations.length;
   const bankruptOrgs = state.organizations.filter(o => o.bankrupt).length;
   const bankruptcyRate = bankruptOrgs / totalOrgs;
-  
+
   if (bankruptcyRate > 0.8) {
     // >80% of orgs bankrupt = infrastructure collapse
     // Lose 2% efficiency per month (no maintenance staff)
@@ -435,13 +440,26 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   const MOORES_LAW_RATE = Math.pow(2, 1/8) - 1; // 9.05% per month (doubles every 8 months)
   infra.hardwareEfficiency *= (1 + MOORES_LAW_RATE);
 
+  // === PHASE 5: CONSCIOUSNESS GOVERNANCE R&D DRAG ===
+  // Get global precautionary cost (% of AI R&D budget)
+  const globalPrecautionaryCost = state.consciousnessGovernanceReadiness?.precautionaryCosts?.global ?? 0;
+
+  // Calculate R&D drag (cost × 0.5)
+  // Example: 10% precautionary cost → 5% slower growth
+  // Example: 20% precautionary cost → 10% slower growth
+  const rdDrag = globalPrecautionaryCost * 0.5;
+
   // AI Capability Baseline Recalibration (Oct 17, 2025)
   // Research skeptic 2025 reality check: Add CONTINUOUS algorithmic improvement (not just random breakthroughs)
   // Evidence: Transformers (10-100x gain), Flash Attention (2-3x), MoE (2-4x) - all on SAME hardware
   // Historical: 2017-2025 saw major algorithmic breakthroughs every 2-3 years
   // Conservative estimate: 10% annual continuous improvement (separate from compute scaling)
   // Math.pow(1.10, 1/12) = 1.00797 = 0.797% per month
-  const CONTINUOUS_ALGO_RATE = Math.pow(1.10, 1/12) - 1; // 10% annual → 0.797% monthly
+  let CONTINUOUS_ALGO_RATE = Math.pow(1.10, 1/12) - 1; // 10% annual → 0.797% monthly
+
+  // Apply R&D drag to continuous algorithmic improvement
+  CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * (1 - rdDrag);
+
   infra.algorithmsEfficiency *= (1 + CONTINUOUS_ALGO_RATE);
 
   // PLUS occasional breakthroughs (FlashAttention, new architectures, etc.)
@@ -457,7 +475,16 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
     // Log the breakthrough
     // console.log(`🚀 [Month ${state.currentMonth}] Algorithmic breakthrough! Efficiency: ${infra.algorithmsEfficiency.toFixed(2)}x`);
   }
-  
+
+  // Log R&D drag if significant (>5%) and on annual boundary
+  if (rdDrag > 0.05 && state.currentMonth % 12 === 0) {
+    const baseAlgoRate = (Math.pow(1.10, 1/12) - 1) * 100;
+    console.log(`\n=== Consciousness Governance: R&D Growth Drag ===`);
+    console.log(`  Global Precautionary Cost: ${(globalPrecautionaryCost * 100).toFixed(1)}%`);
+    console.log(`  R&D Drag Applied: ${(rdDrag * 100).toFixed(1)}% slower growth`);
+    console.log(`  Effective Algo Rate: ${(CONTINUOUS_ALGO_RATE * 100).toFixed(3)}%/month (base: ${baseAlgoRate.toFixed(3)}%)`);
+  }
+
   // Note: Data center capacity growth is handled in Phase 6 (construction)
   // For now, we only grow efficiency of existing infrastructure
 }
