@@ -25,11 +25,13 @@ export { SocialStabilityPhase } from './SocialStabilityPhase';
 export { QualityOfLifePhase } from './QualityOfLifePhase';
 export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
 export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // P2.4 Feature 3
+export { EarlyWarningPhase } from './EarlyWarningPhase';  // TIER 3.4 (Oct 17, 2025)
 export { CrisisDetectionPhase } from './CrisisDetectionPhase';
 
 // Batch 2: System update phases (medium risk)
 export { GovernanceQualityPhase } from './GovernanceQualityPhase';
 export { UpwardSpiralsPhase } from './UpwardSpiralsPhase';
+export { CooperativeSpiralsPhase } from './CooperativeSpiralsPhase';  // Oct 17, 2025
 export { TechTreePhase } from './TechTreePhase';
 export { MeaningRenaissancePhase } from './MeaningRenaissancePhase';
 export { ConflictResolutionPhase } from './ConflictResolutionPhase';
@@ -41,6 +43,7 @@ export { InformationWarfarePhase } from './InformationWarfarePhase';
 export { PowerGenerationPhase } from './PowerGenerationPhase';
 export { HumanEnhancementPhase } from './HumanEnhancementPhase';
 export { MemeticEvolutionPhase } from './MemeticEvolutionPhase';  // P2.6 (Oct 16, 2025)
+export { ConsciousnessGovernancePhase } from './ConsciousnessGovernancePhase';  // TIER 2C (Oct 17, 2025)
 export { MADDeterrencePhase } from './MADDeterrencePhase';
 export { NuclearCommandControlPhase } from './NuclearCommandControlPhase';  // TIER 1 Phase 1B (Oct 16, 2025)
 export { ResourceEconomyPhase } from './ResourceEconomyPhase';
@@ -60,14 +63,19 @@ export { ClimateJusticePhase } from './ClimateJusticePhase';
 export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
 export { NuclearWinterPhase } from './NuclearWinterPhase';
 export { RadiationSystemPhase } from './RadiationSystemPhase';
+export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
+export { PositiveTippingPointsPhase } from './PositiveTippingPointsPhase';  // Oct 17, 2025
 export { FamineSystemPhase } from './FamineSystemPhase';
 export { FoodSecurityDegradationPhase } from './FoodSecurityDegradationPhase';  // Phase 1B Refinement (Oct 17, 2025)
+export { AntimicrobialResistancePhase } from './AntimicrobialResistancePhase';  // TIER 1.8 (Oct 17, 2025)
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 export { TriggeredEventsPhase } from './TriggeredEventsPhase';
 
 // Batch 3: Special phases (medium risk)
 export { BenchmarkEvaluationsPhase } from './BenchmarkEvaluationsPhase';
+export { GamingDetectionPhase } from './GamingDetectionPhase';  // TIER 2 Phase 3 (Oct 17, 2025)
+export { ProactiveSleeperDetectionPhase } from './ProactiveSleeperDetectionPhase';  // TIER 2 Phase 4 (Oct 17, 2025)
 export { CrisisPointsPhase } from './CrisisPointsPhase';
 export { ExogenousShockPhase } from './ExogenousShockPhase';  // Contingency & Agency Phase 2 (Oct 17, 2025)
 export { CriticalJuncturePhase } from './CriticalJuncturePhase';  // Contingency & Agency Phase 3 (Oct 17, 2025)

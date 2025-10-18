@@ -40,7 +40,7 @@ const detectMisalignedAIs: CategorizedGovernmentAction = {
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const { attemptDetection } = require('../../../detection');
+    const { attemptDetection } = require('../../detection');
     const { detectedAIs, events } = attemptDetection(state, random);
 
     // Apply detections to state
@@ -96,7 +96,7 @@ const removeDetectedAI: CategorizedGovernmentAction = {
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const { removeDetectedAI } = require('../../../detection');
+    const { removeDetectedAI } = require('../../detection');
     const detectedAIs = state.aiAgents.filter((ai: any) =>
       ai.detectedMisaligned && ai.lifecycleState !== 'retired'
     );

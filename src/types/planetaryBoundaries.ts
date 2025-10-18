@@ -122,6 +122,12 @@ export interface PlanetaryBoundariesSystem {
 
   // === TIER 3.3: OZONE RECOVERY (Oct 13, 2025) ===
   ozoneRecovery: OzoneRecoverySystem;
+
+  // === TIER 3.4: EARLY WARNING SYSTEMS (Oct 17, 2025) ===
+  // Research: TipESM (2020-2024), IPCC AR6 WG1 (2023), Nature Climate Change (2024)
+  // Detection window: 0.8-0.95 of critical threshold (6-24 months warning)
+  // Intervention effectiveness: 60-80% success rate during "golden hour"
+  earlyWarning?: EarlyWarningSystem;
 }
 
 /**
@@ -259,5 +265,120 @@ export interface OzoneRecoverySystem {
   // === POLICY INSPIRATION ===
   demonstratesInternationalCooperation: boolean; // True = proof treaties can work!
   reversibilityExample: boolean;                 // True = shows recovery is possible
+}
+
+/**
+ * TIER 3.4: Early Warning System for Tipping Points (Oct 17, 2025)
+ *
+ * Detects approaching tipping points using critical slowing down indicators,
+ * enabling emergency interventions during "golden hour" window (0.8-0.95 threshold).
+ *
+ * Research backing:
+ * - TipESM Project (2020-2024): Early warning indicators for tipping points, TRL 7
+ * - IPCC AR6 WG1 (2023): Tipping point detection methodologies, TRL 8
+ * - Nature Climate Change (2024): Critical infrastructure cascades detectable 1-5 years in advance
+ * - REFIT (2024): Graph coloring framework identifies vulnerable nodes
+ *
+ * Detection window: 6-24 months before threshold
+ * Intervention effectiveness: 60-80% during golden hour (0.8-0.95)
+ * Prevention effectiveness: 10-100x better than post-crisis recovery
+ */
+export interface EarlyWarningSystem {
+  // === ACTIVE WARNINGS ===
+  activeWarnings: TippingPointEarlyWarning[];
+
+  // === DETECTION QUALITY ===
+  // Scales with government investment in monitoring systems (0.3-0.9)
+  detectionQuality: number;              // [0.3, 0.9] Based on monitoring infrastructure investment
+  falsePositiveRate: number;             // [0, 0.4] Rate of false alarms (TipESM: <30% acceptable)
+  falseNegativeRate: number;             // [0, 0.3] Rate of missed warnings (more dangerous!)
+
+  // === INTERVENTION TRACKING ===
+  interventionsDeployed: EmergencyIntervention[];
+  interventionsSuccessful: number;       // Count of successful interventions
+  interventionsFailed: number;           // Count of failed interventions
+
+  // === GOLDEN HOUR METRICS ===
+  goldenHourInterventions: number;       // Interventions deployed during 0.8-0.95 window
+  lateInterventions: number;             // Interventions deployed after 0.95 (less effective)
+
+  // === CRITICAL INFRASTRUCTURE ===
+  criticalNodes: CriticalInfrastructureNode[];
+  nodesProtected: number;                // Count of hardened nodes
+  cascadeRiskReduction: number;          // [0, 1] Reduction in cascade probability
+}
+
+/**
+ * Tipping Point Early Warning
+ *
+ * Tracks a specific boundary approaching critical threshold.
+ * Uses TipESM critical slowing down indicators + IPCC methodologies.
+ */
+export interface TippingPointEarlyWarning {
+  boundaryName: BoundaryName;            // Which boundary is at risk
+  currentLevel: number;                  // [0, 2] Current boundary value
+  detectionThreshold: number;            // [0.8, 0.95] When warning triggers
+
+  // === CRITICAL SLOWING DOWN INDICATORS (TipESM) ===
+  autocorrelation: number;               // [0, 1] Recovery time increases near tipping point
+  variance: number;                      // [0, 1] Fluctuations increase
+  flickering: number;                    // [0, 1] Oscillations between states
+
+  // === IPCC INDICATORS ===
+  modelDisagreement: number;             // [0, 1] Ensemble model spread
+  rateOfChange: number;                  // [0, 1] Acceleration metric
+
+  // === WARNING CLASSIFICATION ===
+  warningLevel: 'yellow' | 'orange' | 'red';
+  monthsUntilCritical: number;           // Estimated time to irreversibility (6-24 months)
+
+  // === INTERVENTION STATUS ===
+  interventionDeployed: boolean;
+  interventionMonth: number | null;
+  interventionType: string | null;
+}
+
+/**
+ * Emergency Intervention
+ *
+ * Government response to early warning signal.
+ * Maps tipping points to specific interventions.
+ */
+export interface EmergencyIntervention {
+  tippingPoint: BoundaryName;
+  type: string;                          // e.g., 'rapid-decarbonization', 'ocean-alkalinity-enhancement'
+  deployedMonth: number;
+  warningLevel: 'yellow' | 'orange' | 'red';
+
+  // === RESOURCE COSTS ===
+  gdpCost: number;                       // % of GDP (0.02-0.05 typical)
+  deploymentTime: number;                // Months to full deployment (6-12 typical)
+
+  // === EFFECTIVENESS ===
+  effectiveness: number;                 // [0.5, 0.8] Probability of preventing crossing
+  actualSuccess: boolean | null;         // null = in progress, true/false = outcome known
+
+  // === ACTIONS ===
+  actions: string[];                     // Specific interventions deployed
+}
+
+/**
+ * Critical Infrastructure Node
+ *
+ * Uses graph coloring framework (REFIT 2024) to identify critical nodes.
+ * 5-15% of nodes control 80% of cascades.
+ */
+export interface CriticalInfrastructureNode {
+  id: string;
+  type: 'water' | 'energy' | 'food' | 'climate' | 'biodiversity';
+  betweennessCentrality: number;         // [0, 1] Network importance (graph theory metric)
+
+  // === PROTECTION STATUS ===
+  protected: boolean;
+  resilience: number;                    // [0, 1] Failure threshold (increases with protection)
+  redundancy: number;                    // [0, 1] Backup capacity
+
+  // === CASCADE PREVENTION ===
+  cascadeMultiplier: number;             // [0.7, 1.0] How much this node reduces cascade risk
 }
 

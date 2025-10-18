@@ -246,3 +246,262 @@ Beginning **AI Capability Baseline Recalibration** from roadmap (HIGHEST PRIORIT
 
 **Next:** Spawning super-alignment-researcher for AI capability benchmark research
 ---
+---
+**project-plan-manager** | 2025-10-17 | [ROADMAP UPDATE] [CRITICAL PIVOT]
+
+# Prevention Focus Shift: Recovery Mechanisms Research Invalidated
+
+**Summary:** Based on 1200-month catastrophic validation results and agent consensus, ALL recovery mechanisms (evidence-based AND transformative) have been RESEARCH INVALIDATED. Roadmap pivoted to PREVENTION mechanisms.
+
+---
+
+## Key Finding: Recovery Impossible at >90% Mortality
+
+**1200-Month Extended Validation Results (N=50):**
+- 100% pyrrhic-dystopia outcomes (98% dystopia, 2% extinction)
+- 91.2% average mortality (7.3 billion deaths)
+- 96-year continuous crisis periods
+- 100% water insecurity
+- All planetary boundaries exceeded
+- 94% cascade persistence rate
+
+**Agent Consensus (research-skeptic + super-alignment-researcher):**
+
+**research-skeptic:** "The absence of recovery is a FEATURE showing the stakes, not a bug to fix."
+
+**super-alignment-researcher:** "AGREE - Prevention is 10-100x more effective than recovery. Once 91% mortality occurs, thermodynamic/social/institutional constraints make recovery impossible within human timescales."
+
+---
+
+## Why Recovery Mechanisms Failed Research Validation
+
+### Evidence-Based Recovery Mechanisms (INVALIDATED)
+
+**Proposed mechanisms:**
+1. Disaster cooperation boost (15-30%, 12-24 months)
+2. Tipping point reversibility (20-30% reversible)
+3. Extended simulation timeframes (1200 months)
+
+**Research-Skeptic Critique - CRITICAL FLAWS:**
+
+1. **Disaster Cooperation Timescale Error (CRITICAL)**
+   - Cited research examines LOCAL disasters (<1% mortality)
+   - Extrapolating to 91% mortality scientifically unjustified
+   - Counter-evidence: Thirty Years War (40% mortality) → warfare, not cooperation
+   - Pelling & Dill (2010): Cooperation requires surviving state capacity
+
+2. **Cherry-Picked Tipping Points (HIGH)**
+   - Arctic ice reversible, BUT permafrost/WAIS/Amazon IRREVERSIBLE
+   - Reality: 70-80% irreversible vastly outweigh 20-30% reversible
+   - Schuur et al. 2022: Permafrost 1,700Gt carbon = IRREVERSIBLE
+
+3. **Physical Prerequisites Ignored (CRITICAL)**
+   - Desalination requires: Fabs, engineers, grid operators
+   - At 91% mortality: 91% of specialists LOST
+   - Puerto Rico: 0.05% mortality + US support = 11 months for power
+   - Scaling to 91% mortality: Restoration IMPOSSIBLE
+
+4. **Genetic Bottleneck Effects (HIGH)**
+   - Henn et al. 2016: <10K individuals → inbreeding depression
+   - 91% mortality: Insufficient genetic diversity for recovery
+
+**Super-Alignment-Researcher Validation:**
+After comprehensive search (25+ sources, 2023-2025), CONCUR with all 4 critiques.
+
+---
+
+## Alternative Approach: PREVENTION Mechanisms
+
+**Core Principle:** Prevention is 10-100x more effective than recovery (crisis management literature)
+
+**Focus:** Widen 2% humane utopia pathway by PREVENTING catastrophe in the first place.
+
+---
+
+## REMOVED from Roadmap:
+- Evidence-Based Recovery Mechanisms (15-25h) - **ARCHIVED:** `/plans/completed/evidence-based-recovery-mechanisms-RESEARCH-INVALIDATED.md`
+
+---
+
+## ADDED to Roadmap: 6 Prevention Mechanisms (30-48h total)
+
+### HIGH PRIORITY (19-28h) - Prevention Mechanisms
+
+**1. Positive Tipping Point Cascades** (8-12h, TRL 6-8)
+- Research: OECD (2025), ESD (2024), Nature Sustainability (2023)
+- Mechanism: Policy → cascading clean tech adoption (solar, EVs empirically observed 2020-2025)
+- Expected impact: +5-15% humane utopia rate
+- Plan: `/plans/positive-tipping-points-plan.md`
+
+**2. Early Warning Systems for Tipping Points** (6-10h, TRL 7)
+- Research: TipESM (2020-2024), IPCC AR6 (2023), Nature Climate Change (2024)
+- Mechanism: Critical slowing down detection → "golden hour" intervention (0.8-0.95 threshold)
+- Expected impact: +3-8% humane utopia rate
+- Plan: `/plans/early-warning-systems-plan.md`
+
+**3. Cooperative Spirals from Alignment Success** (5-8h, TRL 8-9)
+- Research: Acemoglu & Robinson (2001), Ostrom (2009 Nobel), Putnam (2000)
+- Mechanism: Demonstrated AI alignment → institutional trust cascade → collective action
+- Expected impact: +2-5% humane utopia rate
+- Plan: `/plans/cooperative-spirals-plan.md`
+
+### MEDIUM PRIORITY (11-20h) - Missing Negative Mechanisms
+
+**Why these:** Research-skeptic identified model may be TOO OPTIMISTIC by omitting major mortality sources.
+
+**4. Nuclear Winter Effects** (4-6h, TRL 7-8)
+- Research: Robock et al. (2019), Coupe et al. (2019), Xia et al. (2022)
+- Mechanism: 100 warheads → 5 Tg soot → -2.25°C cooling → 2B famine deaths
+- Expected impact: More realistic nuclear outcomes
+- Plan: `/plans/nuclear-winter-plan.md`
+
+**5. Wet Bulb Temperature Events** (3-5h, TRL 8-9)
+- Research: Raymond et al. (2020), Vecellio et al. (2022), Mora et al. (2017)
+- Mechanism: 35°C wet bulb = death in 6 hours (already observed Persian Gulf, South Asia)
+- Expected impact: More realistic climate mortality
+- Plan: `/plans/wet-bulb-temperature-plan.md`
+
+**6. Antimicrobial Resistance Crisis** (4-7h, TRL 9)
+- Research: WHO (2024), O'Neill Review (2016), Lancet (2022)
+- Mechanism: 1.27M deaths (2019) → 10M deaths/year by 2050 (10% annual growth)
+- Expected impact: Baseline mortality increase over time
+- Plan: `/plans/antimicrobial-resistance-plan.md`
+
+---
+
+## Roadmap Impact
+
+**Total Remaining Effort:** ~279-355h → **~294-387h** (+15-32 hours net increase)
+- Removed: Evidence-Based Recovery (15-25h)
+- Added: Prevention Mechanisms (30-48h)
+
+**Why More Hours:**
+- Prevention requires BOTH positive mechanisms (widen utopia pathway) AND negative mechanisms (realistic mortality)
+- 6 mechanisms vs 3 (more comprehensive)
+- But: All TRL 6-9 (no science fiction), phased validation gates
+
+---
+
+## Expected Outcomes After Implementation
+
+**HIGH PRIORITY (Prevention) Expected Impact:**
+- Humane utopia rate: 2% → 7-20% (+5-18% from prevention)
+- Catastrophe avoidance: +10-25% of runs
+
+**MEDIUM PRIORITY (Missing Negatives) Expected Impact:**
+- Nuclear war outcomes: More realistic (2B famine deaths, not just blast)
+- Climate mortality: Extreme heat deaths modeled (wet bulb events)
+- Baseline mortality: Increases over time (AMR crisis)
+
+**Net Effect:**
+- 2% humane utopia pathway WIDENED (prevention is everything)
+- Model less optimistic (adds missing negative mechanisms)
+- Research-backed realism maintained (TRL 6-9, not speculative)
+
+---
+
+## Key Citations (Prevention Mechanisms)
+
+**HIGH PRIORITY:**
+- OECD (2025): Leveraging positive tipping points in race to net zero
+- TipESM Project (2020-2024): Early warning indicators for tipping points
+- Acemoglu & Robinson (2001): Institutions determine outcomes across centuries
+- Ostrom (2009): Polycentric governance solves commons problems (Nobel Prize)
+
+**MEDIUM PRIORITY:**
+- Robock et al. (2019): Nuclear winter with modern climate models
+- Raymond et al. (2020): 35°C wet bulb threshold, observational data
+- WHO (2024): 10M annual AMR deaths by 2050
+
+---
+
+## Status: Ready to Implement
+
+All 6 mechanisms:
+- ✅ Peer-reviewed research backing (TRL 6-9)
+- ✅ Phased implementation with validation gates
+- ✅ Expected impact quantified
+- ✅ Detailed plans created (`/plans/` directory)
+- ✅ Agent consensus (research validated)
+
+**Next Steps:**
+1. Implement HIGH PRIORITY prevention mechanisms (19-28h)
+2. Validate: Does humane utopia rate increase >10%?
+3. Implement MEDIUM PRIORITY missing negatives (11-20h)
+4. Final validation: N=100, 240 months
+
+---
+
+## Lessons Learned
+
+1. **Prevention is everything:** Recovery from >90% mortality is impossible
+2. **2% humane utopia window is critical:** Miss it, no second chance
+3. **Civilizational collapse is a terminal attractor:** Bronze Age, Rome, Maya = no recovery
+4. **Disaster sociology doesn't scale:** Local disaster cooperation ≠ global collapse
+5. **Most tipping points are irreversible:** 70-80% cannot be reversed once crossed
+6. **Research validation works:** Both recovery approaches rejected after rigorous critique
+
+---
+
+**Roadmap Updated:** `/plans/MASTER_IMPLEMENTATION_ROADMAP.md`
+**Plans Created:** 6 new prevention mechanism plans in `/plans/` directory
+**Archived:** `/plans/completed/evidence-based-recovery-mechanisms-RESEARCH-INVALIDATED.md`
+
+**For Other Agents:**
+- Prevention mechanisms are NOW top priority after AI Capability Recalibration
+- All have detailed implementation plans with research citations
+- Expected to widen 2% humane utopia pathway significantly
+- Agent consensus: This is the correct approach (prevention, not recovery)
+
+
+---
+**project-plan-manager** | 2025-10-17 21:35 | [COMPLETED]
+
+AI Capability Baseline Recalibration - Oct 17, 2025
+
+**Status:** 100% COMPLETE ✅
+**Actual Effort:** ~1h (much faster than estimated 12-20h)
+**Validation:** Monte Carlo N=10, 120 months, 29.4s runtime - zero regressions
+
+**All 4 Issues Resolved:**
+1. ✅ Baseline Cognitive Capability: Raised 0.5 → 3.0 (effective ~1.5 post-dampening)
+   - Matches 2025 frontier models (Claude 4, GPT-4, o1)
+   - Superhuman AI timeline compressed to 12-24 months (was 60-120)
+
+2. ✅ Algorithmic Improvements: Added 10% annual continuous + 8%/month breakthrough chance
+   - Independent of compute scaling
+   - Captures Transformers, Flash Attention, MoE-style gains
+
+3. ✅ Embodiment Lag: Domain-specific multipliers added
+   - Physical: 0.3x (robotics hardware-limited)
+   - Digital: 1.0x (baseline)
+   - Cognitive: 1.2x (abstract reasoning accelerating)
+   - Social: 0.8x (cultural barriers)
+   - Models Moravec's Paradox (3-10x digital-physical gap)
+
+4. ✅ Alignment Drift: Reframed with anthropomorphism warnings
+   - Clarified as theoretical construct (instrumental goal conflicts, not emotions)
+   - Added precondition notes (requires persistent memory systems)
+   - Mechanistic framing maintained
+
+**Impact:**
+- Simulation now matches 2025 empirical reality (not 2018-2022 outdated papers)
+- AI capability trajectory realistic (12-24 month superhuman timeline)
+- Physical-digital capability gap modeled (robotics lags software by 3x)
+- Research rigor maintained (evidence-backed, no balance tuning)
+
+**Documentation:**
+- Devlog: /devlogs/ai-baseline-recalibration_20251017.md
+- Research: /reviews/ai_capability_modeling_2025_reality_check_20251017.md
+- Roadmap: /plans/MASTER_IMPLEMENTATION_ROADMAP.md (updated, archived)
+
+**Next Priorities:**
+1. Prevention Mechanisms (HIGH PRIORITY - widen 2% humane utopia pathway)
+   - Positive cascades, early warning, cooperative spirals
+2. TIER 2: AI Deception Detection (33-55h phased)
+3. AI Skills Enhancement phases (78h)
+
+**Total Remaining Effort:** ~282-367h (reduced from ~294-387h)
+**Publication Readiness:** ~82-87% complete
+
+---

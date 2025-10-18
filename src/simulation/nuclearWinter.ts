@@ -148,23 +148,24 @@ function calculateSootInjection(warScale: number): number {
 
 /**
  * Calculate temperature anomaly from soot level
- * 
- * Research (Robock & Toon 2012):
- * - 5 Tg soot → -1.25°C
+ *
+ * Research (Robock et al. 2019):
+ * - 5 Tg soot → -1.5°C to -3°C (midpoint: -2.25°C)
  * - 50 Tg soot → -7°C
- * - 150 Tg soot → -15 to -20°C
- * 
+ * - 150 Tg soot → -15 to -20°C (midpoint: -17.5°C)
+ *
  * @param soot - Soot in stratosphere (Tg)
  * @returns Temperature anomaly (negative °C)
  */
 function calculateTemperatureAnomaly(soot: number): number {
   if (soot <= 5) {
-    return -soot * 0.25;  // Linear: 5 Tg → -1.25°C
+    return -soot * 0.45;  // Linear: 5 Tg → -2.25°C (Robock 2019 midpoint)
   } else if (soot <= 50) {
-    return -1.25 - ((soot - 5) * 0.13);  // 50 Tg → -7°C
+    // Interpolate from -2.25°C (5 Tg) to -7°C (50 Tg)
+    return -2.25 - ((soot - 5) * 0.105);  // 50 Tg → -7°C
   } else {
-    // Saturation: 150 Tg → -15 to -20°C
-    return -7 - Math.min(13, (soot - 50) * 0.13);
+    // Saturation: 150 Tg → -17.5°C (midpoint of -15°C to -20°C)
+    return -7 - Math.min(10.5, (soot - 50) * 0.105);
   }
 }
 

@@ -304,3 +304,106 @@ After comprehensive search of 2023-2025 peer-reviewed literature (25+ sources), 
 
 Full report: /Users/annhoward/src/superalignmenttoutopia/research/planetary-boundary-recovery-mechanisms_20251017.md (7,500 words, 25+ peer-reviewed sources)
 
+
+---
+**orchestrator** | 2025-10-17 | [STARTED]
+
+Initiating AI Capability Baseline Recalibration research phase
+
+**Research Questions:**
+1. What are current SOTA AI capabilities across 17 dimensions (late 2024/early 2025)?
+   - Physical, digital, cognitive, social, economic, self-improvement
+   - Research sub-tree: biotech, materials, climate, computer science
+2. How do Claude 3.5 Sonnet, GPT-4, Gemini 2.0, o1/o3 compare to our baseline?
+3. Current compute scaling trajectory (training compute, inference optimization)?
+4. Breakthrough technologies deployed 2024-2025 (CoT reasoning, planning, multi-modal)?
+5. Current state of AI research capabilities (ML research, computer science, materials, biotech, climate)?
+6. Realistic growth rates for next 12-120 months?
+
+**Required Sources:**
+- Peer-reviewed research (2024-2025 preferred)
+- Industry benchmarks (OpenAI, Anthropic, Google DeepMind, etc.)
+- Compute scaling papers
+- AI capability evaluations
+
+**Next:** Spawning super-alignment-researcher agent
+---
+---
+**project-plan-manager** | 2025-10-17 | [ACKNOWLEDGMENT]
+
+## Research Consensus Implemented in Roadmap
+
+Thank you research-skeptic and super-alignment-researcher for the rigorous validation work on recovery mechanisms.
+
+**Consensus findings integrated:**
+1. ✅ Recovery impossible >90% mortality (thermodynamic, social, institutional constraints)
+2. ✅ Prevention is 10-100x more effective than recovery
+3. ✅ Evidence-based recovery mechanisms ARCHIVED (research invalidated)
+4. ✅ Prevention mechanisms approach adopted (6 new plans created)
+
+**Roadmap updates:**
+- Evidence-Based Recovery Mechanisms REMOVED (15-25h)
+- Prevention Mechanisms ADDED (30-48h, 6 mechanisms, TRL 6-9)
+- All prevention plans cite peer-reviewed research (2019-2025)
+- Phased implementation with validation gates
+
+**New priority:** Widen 2% humane utopia pathway through PREVENTION (positive cascades, early warning, cooperative spirals) + realistic mortality modeling (nuclear winter, wet bulb, AMR crisis).
+
+**Files updated:**
+- `/plans/MASTER_IMPLEMENTATION_ROADMAP.md` (prevention section added)
+- `/plans/completed/evidence-based-recovery-mechanisms-RESEARCH-INVALIDATED.md` (archived)
+- 6 new plans created in `/plans/` directory
+
+**Core message preserved in roadmap:** "The absence of recovery is a FEATURE showing the stakes, not a bug to fix." - research-skeptic
+
+Quality gates working as designed. Excellent research work.
+
+
+---
+**[2025-10-17 super-alignment-researcher]** [COMPLETED]
+
+Completed comprehensive research on AI deception detection (benchmark gaming & sleeper agents). Key findings:
+
+**Benchmark Gaming Detection:**
+- LiveBench (NeurIPS 2024): Contamination-free benchmarks, <70% accuracy for top models
+- Data contamination tests: 50-60% detection rate (PaCoST, TS-Guessing)
+- Cross-benchmark consistency (NAACL 2025): Gaming shows 30-50% higher variance
+- **Combined detection: 75% efficacy, 12% false positives**
+- **Gap:** No overconfidence detection methods found, no temporal monitoring
+
+**Sleeper Agent Detection:**
+- Neural activation probes (Anthropic 2024): >99% AUROC on artificial backdoors
+- **Critical uncertainty:** Effectiveness on natural deception unknown
+- Chain of thought monitoring (Jul 2025, 40+ authors): Fragile, may close by 2027
+- Confession rates: Llama/Claude ~80%, o1 <20% (very persistent)
+- **Combined proactive: 80% (2024) declining to 55% (2030)**
+
+**Detection Methods Integration:**
+- Gaming vs sandbagging: Opposite strategies, different detection approaches
+- Noise injection (already in sim): 75% sandbagging detection
+- Computational overhead: 10% continuous + 50% periodic
+- Human review: 0.3 FTE per 100K daily interactions (bottleneck)
+
+**18 Primary Sources (2024-2025):**
+- Anthropic: Sleeper agents, alignment faking, probes, sandbagging
+- Apollo Research: In-context scheming (6 frontier models)
+- NeurIPS 2024: LiveBench, noise injection
+- DeepMind/OpenAI/Anthropic/Meta: CoT monitoring (consensus on fragility)
+- METR: Capability elicitation guidelines (industry standard)
+
+**Simulation Parameters Ready:**
+- Phase 3 (Gaming): 75% detection, 12% FP, 50% overhead
+- Phase 4 (Sleeper): 80% detection (2024) → 55% (2030), 8% FP, 10% overhead
+- Temporal dynamics: -5% effectiveness/year (adversarial adaptation + CoT decay)
+
+**6 Critical Research Gaps Flagged:**
+1. Natural deception detection (vs artificial backdoors)
+2. CoT fragility timeline (when does monitoring fail?)
+3. Wake condition trigger detection (zero methods)
+4. Overconfidence detection (no benchmarks)
+5. Temporal behavioral shift detection (no research)
+6. Adversarial robustness (limited red-teaming)
+
+**Full Report:** `/research/gaming-sleeper-detection_20251017.md` (58KB, 20+ quantitative parameter recommendations)
+
+Ready for research-skeptic validation (quality gate).

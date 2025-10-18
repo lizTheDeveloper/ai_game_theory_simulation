@@ -47,10 +47,12 @@ import {
   QualityOfLifePhase,
   OutcomeProbabilitiesPhase,
   UpdateEconomicStagePhase,  // P2.4 Feature 3 (Oct 16, 2025): Recovery tracking
+  EarlyWarningPhase,  // TIER 3.4 (Oct 17, 2025): Early warning systems for tipping points
   CrisisDetectionPhase,
   // Batch 2: System updates (10.x - 21.x)
   GovernanceQualityPhase,
   UpwardSpiralsPhase,
+  CooperativeSpiralsPhase,
   TechTreePhase,
   MeaningRenaissancePhase,
   ConflictResolutionPhase,
@@ -62,6 +64,7 @@ import {
   PowerGenerationPhase,
   HumanEnhancementPhase,  // TIER 4.6 (Oct 16, 2025): Human Enhancement & Merger Pathways
   MemeticEvolutionPhase,  // P2.6 (Oct 16, 2025): Memetic Evolution & Polarization Dynamics
+  ConsciousnessGovernancePhase,  // TIER 2C (Oct 17, 2025): Digital Consciousness Governance Preparedness
   MADDeterrencePhase,
   NuclearCommandControlPhase,  // TIER 1 Phase 1B (Oct 16, 2025): Circuit breakers (human-in-the-loop, kill switches, time delays)
   ResourceEconomyPhase,
@@ -81,13 +84,18 @@ import {
   OrganizationViabilityPhase,  // TIER 1.7.3 (Oct 13, 2025): Link orgs to country health
   NuclearWinterPhase,  // TIER 1.7.4 (Oct 13, 2025): Long-term nuclear war effects
   RadiationSystemPhase,  // TIER 1.7 (Oct 14, 2025): Radiation health effects (cancer, birth defects, contamination)
+  WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
   PlanetaryBoundariesPhase,
+  PositiveTippingPointsPhase,  // Oct 17, 2025: Positive technology adoption cascades
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
+  AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
   DystopiaProgressionPhase,
   TriggeredEventsPhase,  // P2.5 (Oct 16, 2025): External event triggers for validation testing
   // Batch 3: Special phases (22.x - 23.x)
   BenchmarkEvaluationsPhase,
+  GamingDetectionPhase,  // TIER 2 Phase 3 (Oct 17, 2025)
+  ProactiveSleeperDetectionPhase,  // TIER 2 Phase 4 (Oct 17, 2025)
   CrisisPointsPhase,
   ExogenousShockPhase,  // Contingency & Agency Phase 2 (Oct 17, 2025)
   CriticalJuncturePhase,  // Contingency & Agency Phase 3 (Oct 17, 2025)
@@ -407,11 +415,13 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new QualityOfLifePhase());
     this.orchestrator.registerPhase(new OutcomeProbabilitiesPhase());
     this.orchestrator.registerPhase(new UpdateEconomicStagePhase());  // P2.4 Feature 3: Recovery tracking
+    this.orchestrator.registerPhase(new EarlyWarningPhase());  // TIER 3.4: Early warning systems for tipping points
     this.orchestrator.registerPhase(new CrisisDetectionPhase());
 
     // Batch 2: System updates (10.x - 21.x)
     this.orchestrator.registerPhase(new GovernanceQualityPhase());
     this.orchestrator.registerPhase(new UpwardSpiralsPhase());
+    this.orchestrator.registerPhase(new CooperativeSpiralsPhase());  // Oct 17, 2025: Alignment success → trust cascades
     this.orchestrator.registerPhase(new TechTreePhase());
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
     this.orchestrator.registerPhase(new ConflictResolutionPhase());
@@ -423,6 +433,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new PowerGenerationPhase());
     this.orchestrator.registerPhase(new HumanEnhancementPhase());  // TIER 4.6: Human Enhancement & Merger Pathways
     this.orchestrator.registerPhase(new MemeticEvolutionPhase());  // P2.6: Memetic Evolution & Polarization Dynamics
+    this.orchestrator.registerPhase(new ConsciousnessGovernancePhase());  // TIER 2C: Digital Consciousness Governance Preparedness
     this.orchestrator.registerPhase(new MADDeterrencePhase());
     this.orchestrator.registerPhase(new NuclearCommandControlPhase());  // TIER 1 Phase 1B: Circuit breakers
     this.orchestrator.registerPhase(new ResourceEconomyPhase());
@@ -442,14 +453,19 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new OrganizationViabilityPhase());  // TIER 1.7.3: Check org survival vs country health
     this.orchestrator.registerPhase(new NuclearWinterPhase());  // TIER 1.7.4: Update nuclear winter effects
     this.orchestrator.registerPhase(new RadiationSystemPhase());  // TIER 1.7: Radiation health effects (cancer, birth defects, contamination)
+    this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
+    this.orchestrator.registerPhase(new PositiveTippingPointsPhase());  // Oct 17, 2025: Positive cascades (solar, EV, wind)
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
+    this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
     this.orchestrator.registerPhase(new TriggeredEventsPhase());  // P2.5 (Oct 16, 2025): External event triggers
 
     // Batch 3: Special phases (22.x - 23.x)
     this.orchestrator.registerPhase(new BenchmarkEvaluationsPhase());
+    this.orchestrator.registerPhase(new GamingDetectionPhase());  // TIER 2 Phase 3 (Oct 17, 2025)
+    this.orchestrator.registerPhase(new ProactiveSleeperDetectionPhase());  // TIER 2 Phase 4 (Oct 17, 2025)
     this.orchestrator.registerPhase(new CrisisPointsPhase());
     this.orchestrator.registerPhase(new ExogenousShockPhase());  // Contingency & Agency Phase 2 (Oct 17, 2025)
     this.orchestrator.registerPhase(new CriticalJuncturePhase());  // Contingency & Agency Phase 3 (Oct 17, 2025)
