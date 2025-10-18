@@ -332,7 +332,9 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
     console.log(`\n=== Consciousness Governance Update (Month ${state.currentMonth}) ===`);
     console.log(`  Scenario: ${governance.scenarioTrajectory} (determined month ${governance.scenarioDeterminedMonth})`);
     console.log(`  Philosophical Stance: Precautionary ${(governance.philosophicalStance.precautionary * 100).toFixed(0)}%, Eliminativist ${(governance.philosophicalStance.eliminativist * 100).toFixed(0)}%, Agnostic ${(governance.philosophicalStance.agnostic * 100).toFixed(0)}%`);
-    console.log(`  Precautionary Costs: Global ${(governance.precautionaryCosts.global * 100).toFixed(1)}% (EU ${(governance.precautionaryCosts.byRegion.eu * 100).toFixed(1)}%, US ${(governance.precautionaryCosts.byRegion.us * 100).toFixed(1)}%)`);
+    console.log(`  Precautionary Costs: Global ${(governance.precautionaryCosts.global * 100).toFixed(1)}%`);
+    console.log(`    Regional Costs: EU ${(governance.precautionaryCosts.byRegion.eu * 100).toFixed(1)}%, US ${(governance.precautionaryCosts.byRegion.us * 100).toFixed(1)}%, China ${(governance.precautionaryCosts.byRegion.china * 100).toFixed(1)}%`);
+    console.log(`    Cumulative Opportunity Cost: $${(governance.precautionaryCosts.cumulativeOpportunityCost ?? 0).toFixed(1)}B`);
     console.log(`  Rights Status: ${governance.rightsEstablished ? `Established (month ${governance.rightsEstablishedMonth})` : 'Not Established'}`);
     console.log(`  Regional Preparedness:`);
     console.log(`    EU: ${governance.regional.eu.preparedness.toFixed(1)}% (${governance.regional.eu.stage})`);
