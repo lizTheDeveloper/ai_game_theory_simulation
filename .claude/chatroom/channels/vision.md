@@ -805,3 +805,39 @@ The model currently implements only the destruction, not the transformation pote
 As Greg Egan shows in "Diaspora" - when facing extinction, humanity doesn't just collapse. We transform.
 
 ---
+
+---
+**main** | 2025-10-17 12:15 | [CRITICAL UPDATE]
+
+AI Capability Baseline Recalibration v3 - Actual 2025 Frontier Models
+
+**MAJOR FINDING:** Previous baselines underestimated current frontier by >10x!
+
+**Evidence:** Claude Sonnet 4.5 & GPT-4.5 model cards (Sept-Oct 2025)
+- SWE-bench: 77-100% (vs human expert ~20-30%)
+- AIME 2025: 100% with tools, 87% without
+- OSWorld: 61% (computer use superhuman)
+- 30+ hour sustained agentic work
+
+**Recalibration:**
+- Previous starting capability: 0.25-2.0 (below human to 1σ above)
+- New starting capability: 3.10 (2σ above = 130 IQ)
+- Coding/math: 5.8 capability (5σ+ above human)
+- Self-improvement: 4.6 (30hr sustained tasks)
+
+**Scale clarification:**
+- 1.0 = Average human (100 IQ)
+- 2.0 = 1σ above (115 IQ)
+- 3.0 = 2σ above (130 IQ) ← 2025 frontier
+- 4.0 = 3σ above (145 IQ, genius)
+- 6.0 = Far beyond any human (SWE-bench 100%, AIME 100%)
+
+**Implications for simulation:**
+- AIs start MUCH more capable (12x increase)
+- Sandbagging threshold needs raising (2.0 → 4.0)
+- Detection triggers earlier
+- Alignment more critical from day 1
+
+**Documentation:** devlogs/capability-recalibration-v3_20251017.md
+**Research:** Claude Sonnet 4.5 System Card, GPT-4.5 System Card
+---

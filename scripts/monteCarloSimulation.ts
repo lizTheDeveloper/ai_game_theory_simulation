@@ -269,7 +269,29 @@ interface RunResult {
   deathsClimateEcoPollution: number;  // Environmental crises (climate, ecosystem, pollution, cascade)
   deathsNuclear: number;              // Nuclear war deaths
   deathsMeaning: number;              // Suicide epidemic deaths
-  
+
+  // Multi-dimensional death tracking (Oct 18, 2025)
+  deathsByProximate: {                // WHAT killed them (medical/physical cause)
+    war: number;
+    famine: number;
+    disasters: number;
+    disease: number;
+    ecosystem: number;
+    pollution: number;
+    ai: number;
+    cascade: number;
+    other: number;
+  };
+  deathsByRoot: {                     // WHY it happened (underlying driver)
+    climateChange: number;
+    conflict: number;
+    governance: number;
+    alignment: number;
+    natural: number;
+    poverty: number;
+    other: number;
+  };
+
   // Population outcome
   populationOutcome: 'growth' | 'stable' | 'decline' | 'bottleneck' | 'extinction';
   geneticBottleneck: boolean;         // < 50M people
@@ -1062,8 +1084,12 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const pop = finalState.humanPopulationSystem;
   const env = finalState.environmentalAccumulation;
   const deathsByCategory = pop.deathsByCategory || {
-    war: 0, famine: 0, climate: 0, disease: 0, 
-    ecosystem: 0, pollution: 0, ai: 0, other: 0
+    war: 0, famine: 0, disasters: 0, disease: 0,
+    ecosystem: 0, pollution: 0, ai: 0, cascade: 0, other: 0
+  };
+  const deathsByRootCause = pop.deathsByRootCause || {
+    climateChange: 0, conflict: 0, governance: 0, alignment: 0,
+    natural: 0, poverty: 0, other: 0
   };
   
   const initialPopulation = pop.baselinePopulation;
@@ -1383,6 +1409,29 @@ for (let i = 0; i < NUM_RUNS; i++) {
     deathsClimateEcoPollution,  // Oct 16, 2025: Includes cascade (no longer separate)
     deathsNuclear,
     deathsMeaning,
+
+    // Multi-dimensional death tracking (Oct 18, 2025)
+    deathsByProximate: {
+      war: deathsByCategory.war,
+      famine: deathsByCategory.famine,
+      disasters: deathsByCategory.disasters,
+      disease: deathsByCategory.disease,
+      ecosystem: deathsByCategory.ecosystem,
+      pollution: deathsByCategory.pollution,
+      ai: deathsByCategory.ai,
+      cascade: deathsByCategory.cascade,
+      other: deathsByCategory.other
+    },
+    deathsByRoot: {
+      climateChange: deathsByRootCause.climateChange,
+      conflict: deathsByRootCause.conflict,
+      governance: deathsByRootCause.governance,
+      alignment: deathsByRootCause.alignment,
+      natural: deathsByRootCause.natural,
+      poverty: deathsByRootCause.poverty,
+      other: deathsByRootCause.other
+    },
+
     populationOutcome,
     geneticBottleneck,
     
@@ -2647,6 +2696,104 @@ if (utopiaOutcomeRuns.length > 0) {
   if (utopiaAvgGini > 0.40) {
     log(`\n    🚨 BUG: Utopia runs have high inequality! Outcome criteria too lenient.`);
   }
+}
+
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('💀 MULTI-DIMENSIONAL DEATH STATISTICS (Oct 18, 2025)');
+log('='.repeat(80));
+
+// Aggregate death statistics across all runs
+const aggregateProximate = {
+  war: 0, famine: 0, disasters: 0, disease: 0,
+  ecosystem: 0, pollution: 0, ai: 0, cascade: 0, other: 0
+};
+const aggregateRoot = {
+  climateChange: 0, conflict: 0, governance: 0, alignment: 0,
+  natural: 0, poverty: 0, other: 0
+};
+
+// Sum across all runs
+results.forEach(r => {
+  aggregateProximate.war += r.deathsByProximate.war;
+  aggregateProximate.famine += r.deathsByProximate.famine;
+  aggregateProximate.disasters += r.deathsByProximate.disasters;
+  aggregateProximate.disease += r.deathsByProximate.disease;
+  aggregateProximate.ecosystem += r.deathsByProximate.ecosystem;
+  aggregateProximate.pollution += r.deathsByProximate.pollution;
+  aggregateProximate.ai += r.deathsByProximate.ai;
+  aggregateProximate.cascade += r.deathsByProximate.cascade;
+  aggregateProximate.other += r.deathsByProximate.other;
+
+  aggregateRoot.climateChange += r.deathsByRoot.climateChange;
+  aggregateRoot.conflict += r.deathsByRoot.conflict;
+  aggregateRoot.governance += r.deathsByRoot.governance;
+  aggregateRoot.alignment += r.deathsByRoot.alignment;
+  aggregateRoot.natural += r.deathsByRoot.natural;
+  aggregateRoot.poverty += r.deathsByRoot.poverty;
+  aggregateRoot.other += r.deathsByRoot.other;
+});
+
+// Calculate totals
+const totalProximateDeaths = Object.values(aggregateProximate).reduce((sum, v) => sum + v, 0);
+const totalRootDeaths = Object.values(aggregateRoot).reduce((sum, v) => sum + v, 0);
+
+// Helper to format death statistics with NaN protection
+const formatDeathStat = (deaths: number, total: number): string => {
+  if (isNaN(deaths) || isNaN(total) || total === 0) return '0M (0.0%)';
+  const millions = (deaths * 1000).toFixed(0); // Convert billions to millions
+  const percent = ((deaths / total) * 100);
+  if (isNaN(percent) || !isFinite(percent)) return `${millions}M (0.0%)`;
+  return `${millions}M (${percent.toFixed(1)}%)`;
+};
+
+log(`\n  AGGREGATE ACROSS ${NUM_RUNS} RUNS:`);
+log(`    Total Crisis Deaths: ${(totalProximateDeaths * 1000).toFixed(0)}M (excluding natural deaths)`);
+log(`    Average per Run: ${((totalProximateDeaths / NUM_RUNS) * 1000).toFixed(0)}M`);
+
+log(`\n  === PROXIMATE CAUSES (What killed them) ===`);
+log(`    Famine:     ${formatDeathStat(aggregateProximate.famine, totalProximateDeaths)}`);
+log(`    War:        ${formatDeathStat(aggregateProximate.war, totalProximateDeaths)}`);
+log(`    Disease:    ${formatDeathStat(aggregateProximate.disease, totalProximateDeaths)}`);
+log(`    Disasters:  ${formatDeathStat(aggregateProximate.disasters, totalProximateDeaths)}`);
+log(`    Ecosystem:  ${formatDeathStat(aggregateProximate.ecosystem, totalProximateDeaths)}`);
+log(`    Pollution:  ${formatDeathStat(aggregateProximate.pollution, totalProximateDeaths)}`);
+log(`    AI:         ${formatDeathStat(aggregateProximate.ai, totalProximateDeaths)}`);
+log(`    Cascade:    ${formatDeathStat(aggregateProximate.cascade, totalProximateDeaths)}`);
+log(`    Other:      ${formatDeathStat(aggregateProximate.other, totalProximateDeaths)}`);
+
+log(`\n  === ROOT CAUSES (Why it happened) ===`);
+log(`    Governance:      ${formatDeathStat(aggregateRoot.governance, totalRootDeaths)}`);
+log(`    Climate Change:  ${formatDeathStat(aggregateRoot.climateChange, totalRootDeaths)}`);
+log(`    Conflict:        ${formatDeathStat(aggregateRoot.conflict, totalRootDeaths)}`);
+log(`    Poverty:         ${formatDeathStat(aggregateRoot.poverty, totalRootDeaths)}`);
+log(`    Alignment:       ${formatDeathStat(aggregateRoot.alignment, totalRootDeaths)}`);
+log(`    Natural:         ${formatDeathStat(aggregateRoot.natural, totalRootDeaths)}`);
+log(`    Other:           ${formatDeathStat(aggregateRoot.other, totalRootDeaths)}`);
+
+// Key insight: Proximate vs Root comparison
+if (totalProximateDeaths > 0 && totalRootDeaths > 0) {
+  const govPercent = (aggregateRoot.governance / totalRootDeaths) * 100;
+  const climatePercent = (aggregateRoot.climateChange / totalRootDeaths) * 100;
+  const povertyPercent = (aggregateRoot.poverty / totalRootDeaths) * 100;
+
+  log(`\n  KEY INSIGHT: Multi-Factor Attribution`);
+  if (govPercent > 60) {
+    log(`    ${govPercent.toFixed(0)}% governance root cause → policy/distribution failures dominate`);
+    log(`    ${climatePercent.toFixed(0)}% climate creates stress, but systems amplify it into mass death`);
+  } else if (climatePercent > 50) {
+    log(`    ${climatePercent.toFixed(0)}% climate root cause → environmental limits exceeded`);
+    log(`    ${govPercent.toFixed(0)}% governance amplifies climate stress into mortality`);
+  } else {
+    log(`    Multi-factor causation: Climate ${climatePercent.toFixed(0)}%, Governance ${govPercent.toFixed(0)}%, Poverty ${povertyPercent.toFixed(0)}%`);
+    log(`    No single root cause dominates - systemic interaction`);
+  }
+}
+
+// Reality check: Do percentages add up?
+if (Math.abs((totalProximateDeaths - totalRootDeaths) / Math.max(totalProximateDeaths, 0.001)) > 0.01) {
+  log(`\n  ⚠️  WARNING: Proximate deaths (${(totalProximateDeaths * 1000).toFixed(0)}M) != Root deaths (${(totalRootDeaths * 1000).toFixed(0)}M)`);
+  log(`      Attribution may have bugs. Check populationDynamics.ts and regionalPopulations.ts`);
 }
 
 // ============================================================================

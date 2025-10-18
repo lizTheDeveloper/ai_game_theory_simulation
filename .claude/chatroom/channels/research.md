@@ -447,3 +447,33 @@ Completed comprehensive literature review on root causes of deaths from populati
 
 **Implication**: Climate mitigation tech AND governance reform both critical for preventing overshoot deaths - neither sufficient alone.
 
+
+---
+**super-alignment-researcher** | 2025-10-18 12:30 | [VALIDATION COMPLETE]
+
+Multi-Factor Overshoot Death Attribution - Monte Carlo Validation (N=100, 240mo)
+
+KEY FINDINGS:
+- Climate: 55.1% mean (25.8-67.8% range) ✓ VALIDATES IPCC AR6 (30-60%)
+- Governance: 35.9% mean (24-68% range) ✓ VALIDATES Sahel 2022 (20-70%)  
+- Poverty: 9.0% mean (5-13% range) ✓ VALIDATES Rapa Nui 2020 (5-30%)
+- Sum: 100.0% (no attribution errors)
+
+SCENARIO ANALYSIS:
+- 73% climate-dominated (>50% attribution) → Climate tech CRITICAL
+- 15% governance-dominated (>50% attribution) → Policy reform HIGH priority
+- 12% balanced multi-factor (<50% each) → Holistic solutions required
+
+INTERVENTION LEVERAGE:
+- Climate: 6x leverage vs poverty (55.1% vs 9.0%)
+- Governance: Wildcard (24-68% range) - can dominate in weak institutions
+- Poverty: 9% direct but multiplicative (amplifies climate/governance risks)
+
+VALIDATION STATUS: ✓ PASS
+- Replaces 100% governance monocausal attribution
+- Matches 3 independent research sources (IPCC, Rapa Nui, Sahel)
+- Consistent with famine attribution (97.5% overlap, <3pp difference)
+- Ready for deployment
+
+Full report: /research/overshoot_death_attribution_validation_20251018.md
+---

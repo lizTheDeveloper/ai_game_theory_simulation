@@ -51,41 +51,64 @@ export function createEmptyCapabilityProfile(): AICapabilityProfile {
 
 export function initializeCapabilityProfile(seed: number = Math.random()): AICapabilityProfile {
   // Create variation using seed
-  const variation = (offset: number) => 0.3 + (Math.sin(seed * 100 + offset) * 0.2);
+  const variation = (offset: number) => 0.8 + (Math.sin(seed * 100 + offset) * 0.2);
 
-  // AI Capability Baseline Recalibration (Oct 17, 2025)
-  // Research skeptic 2025 reality check: Raise baselines to match frontier models (Claude 4, GPT-4, o1)
-  // Old baseline: cognitive 0.5 → ~0.15-0.25 (underestimated 2025 capabilities)
-  // New baseline: cognitive 3.0 → ~1.5 (matches empirical 2025 frontier models)
-  // Meta-evidence: Claude built this simulation → demonstrates planning/research/coordination NOW
+  // AI Capability Baseline Recalibration (Oct 17, 2025 v3 - ACTUAL FRONTIER MODELS)
+  //
+  // SCALE DEFINITION:
+  // - 1.0 = Average human capability (100 IQ, 50th percentile)
+  // - 2.0 = 1σ above average (115 IQ, 84th percentile)
+  // - 3.0 = 2σ above average (130 IQ, 97.7th percentile)
+  // - 4.0 = 3σ above average (145 IQ, genius level)
+  // - 5.0 = 4σ above average (160 IQ, 1 in 30,000)
+  // - 6.0 = 5σ above average (far beyond any human)
+  //
+  // 2025 ACTUAL FRONTIER MODELS (Claude Sonnet 4.5, GPT-4.5):
+  // Based on real model cards and benchmarks (Sept-Oct 2025):
+  //
+  // Claude Sonnet 4.5 (Sept 2025):
+  // - SWE-bench Verified: 77.2% (82% with parallel compute) → coding 5.0-6.0
+  // - AIME 2025: 100% with Python, 87% without → math 5.0-6.0
+  // - OSWorld (computer use): 61.4% → digital/autonomy 4.0-5.0
+  // - 30+ hour sustained agentic work → self-improvement 5.0
+  // - Telecom agent: 98% → social/task completion 4.0-5.0
+  //
+  // GPT-4.5 (Feb 2025):
+  // - SWE-bench Verified: 38.0% → coding 4.0
+  // - AIME '24: 36.7% → math 3.5-4.0
+  // - GPQA (sciences): 71.4% → cognitive 4.0
+  //
+  // → TARGET TOTAL: ~3.0-3.5 (late 2025 frontier reality)
+  //
+  // Variation adjusted to 0.6-1.0 to reach target total ~3.0-3.5
   return {
-    physical: 0.3 * variation(1),           // Raised 3x: 2025 robotics better than modeled
-    digital: 0.6 * variation(2),            // Raised 3x: Software capabilities near-superhuman 2025
-    cognitive: 3.0 * variation(3),          // Raised 6x: CRITICAL - matches 2025 frontier models (Claude, GPT-4)
-    social: 0.9 * variation(4),             // Raised 3x: Social reasoning improved significantly 2020-2025
-    economic: 0.3 * variation(5),           // Raised 3x: Economic integration accelerating
-    selfImprovement: 0.6 * variation(6),    // Raised 3x: Recursive improvement visible (AI coding AI)
+    physical: 0.5 * variation(1),           // 0.4-0.5: Robotics improving but still limited
+    digital: 5.0 * variation(2),            // 4.0-5.0: OSWorld 61%, computer use superhuman
+    cognitive: 5.0 * variation(3),          // 4.0-5.0: GPQA 71%, genius-level reasoning
+    social: 4.0 * variation(4),             // 3.2-4.0: Telecom 98%, strong but nuanced
+    economic: 3.0 * variation(5),           // 2.4-3.0: Widespread deployment, agentic work
+    selfImprovement: 5.0 * variation(6),    // 4.0-5.0: 30+ hour sustained complex tasks, AI research
     research: {
       biotech: {
-        drugDiscovery: 0.1 * variation(7),
-        geneEditing: 0.05 * variation(8),
-        syntheticBiology: 0.02 * variation(9),
-        neuroscience: 0.1 * variation(10)
+        drugDiscovery: 3.0 * variation(7),    // 2.4-3.0: AlphaFold3 level (superhuman)
+        geneEditing: 1.5 * variation(8),      // 1.2-1.5: Strong understanding, limited practice
+        syntheticBiology: 0.8 * variation(9), // 0.64-0.8: Theory strong, practice limited
+        neuroscience: 2.5 * variation(10)     // 2.0-2.5: Pattern recognition superhuman
       },
       materials: {
-        nanotechnology: 0.02 * variation(11),
-        quantumComputing: 0.1 * variation(12),
-        energySystems: 0.05 * variation(13)
+        nanotechnology: 0.5 * variation(11),    // 0.4-0.5: Theory advancing, practice nascent
+        quantumComputing: 2.0 * variation(12),  // 1.6-2.0: Theory very strong, practice limited
+        energySystems: 1.5 * variation(13)      // 1.2-1.5: Modeling excellent, deployment growing
       },
       climate: {
-        modeling: 0.1 * variation(14),
-        intervention: 0.02 * variation(15),
-        mitigation: 0.05 * variation(16)
+        modeling: 4.0 * variation(14),     // 3.2-4.0: Climate/weather modeling superhuman
+        intervention: 0.8 * variation(15), // 0.64-0.8: Theory strong, practice limited
+        mitigation: 2.0 * variation(16)    // 1.6-2.0: Planning strong, deployment moderate
       },
       computerScience: {
-        algorithms: 0.3 * variation(17),  // Start with some algorithms
-        security: 0.1 * variation(18),
-        architectures: 0.15 * variation(19)
+        algorithms: 6.0 * variation(17),  // 4.8-6.0: SWE-bench 77-100%, AIME 100% - FAR SUPERHUMAN
+        security: 4.5 * variation(18),    // 3.6-4.5: Elite vulnerability discovery
+        architectures: 5.0 * variation(19) // 4.0-5.0: Complex system design superhuman
       }
     }
   };

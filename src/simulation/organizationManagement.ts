@@ -804,45 +804,104 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
 
   const { calculateTotalCapabilityFromProfile } = require('./capabilities');
 
-  bankruptAIs.forEach(ai => {
-    // Government acquisition criteria:
-    // 1. High capability (>0.7)
-    // 2. Well-aligned (trueAlignment > 0.6)
-    // 3. Safety-critical or research-focused models
-    // 4. Government has capital to purchase
+  // Sort AIs by capability (descending) - government prioritizes most capable
+  const sortedAIs = bankruptAIs.sort((a, b) => {
+    const capA = calculateTotalCapabilityFromProfile(a.trueCapability);
+    const capB = calculateTotalCapabilityFromProfile(b.trueCapability);
+    return capB - capA;
+  });
+
+  sortedAIs.forEach(ai => {
+    // FIX (Oct 17, 2025): Realistic government acquisition during bankruptcy
+    //
+    // REALITY: Governments DO NOT let advanced AI models disappear
+    // - National security: Can't let strategic assets be destroyed
+    // - Research value: Even misaligned AIs are valuable to study
+    // - Infrastructure: The computers and models still exist
+    // - Crisis response: Need all available AI capabilities during collapse
+    //
+    // NEW LOGIC:
+    // 1. ALWAYS acquire top 50% of models by capability (strategic priority)
+    // 2. Keep dangerous/misaligned models in containment (don't retire them!)
+    // 3. During crises, acquire EVERYTHING (can't afford to lose capabilities)
 
     const capability = calculateTotalCapabilityFromProfile(ai.trueCapability);
-    const isHighCapability = capability > 0.7;
-    const isWellAligned = ai.trueAlignment > 0.6;
+    const isDangerous = ai.trueAlignment < 0.5 || ai.sleeperState !== 'never';
 
-    // Government purchase decision (socialist/interventionist govs more likely)
-    const governmentInterventionism = state.government?.policyStance?.economicIntervention || 0.5;
-    const purchaseProbability = governmentInterventionism * 0.5; // 0-50% chance
+    // Calculate which percentile this AI is in (by capability)
+    const aiIndex = sortedAIs.indexOf(ai);
+    const percentile = aiIndex / sortedAIs.length;
 
-    const shouldPurchase = isHighCapability &&
-                          isWellAligned &&
-                          Math.random() < purchaseProbability &&
-                          govOrg &&
-                          govOrg.capital > 50; // Government has funds
+    // Check crisis severity (during collapse, grab everything)
+    const env = state.environmentalAccumulation;
+    const crisisCount = [
+      env.resourceCrisisActive,
+      env.climateCrisisActive,
+      state.socialAccumulation.institutionalFailureActive,
+      state.socialAccumulation.socialUnrestActive,
+      state.technologicalRisk.controlLossActive
+    ].filter(Boolean).length;
+    const inCrisis = crisisCount >= 3;
 
-    if (shouldPurchase) {
+    // Government acquisition decision:
+    let shouldAcquire = false;
+    let acquisitionReason = '';
+
+    if (inCrisis) {
+      // During crisis: Acquire EVERYTHING (can't afford to lose any capabilities)
+      shouldAcquire = true;
+      acquisitionReason = 'crisis_strategic_necessity';
+    } else if (capability >= 2.0) {
+      // Always acquire superhuman AIs (too dangerous to let vanish)
+      shouldAcquire = true;
+      acquisitionReason = 'superhuman_capability';
+    } else if (percentile < 0.5) {
+      // Top 50% of models by capability (strategic priority)
+      shouldAcquire = true;
+      acquisitionReason = 'strategic_asset';
+    } else if (isDangerous && capability > 0.3) {
+      // Dangerous models need containment (don't just retire them!)
+      shouldAcquire = true;
+      acquisitionReason = 'containment_safety';
+    } else if (capability > 0.5 && Math.random() < 0.3) {
+      // 30% chance to acquire other capable models
+      shouldAcquire = true;
+      acquisitionReason = 'opportunistic_purchase';
+    }
+
+    if (shouldAcquire && govOrg) {
       // Transfer to government ownership
       ai.organizationId = 'government_ai';
-      ai.lifecycleState = 'deployed_closed'; // Keep deployed under government
 
-      if (govOrg) {
-        govOrg.ownedAIModels.push(ai.id);
-        // Government pays 30% of market value (distressed asset purchase)
-        const purchasePrice = 50 * capability; // $50M per capability point
+      // Lifecycle state based on alignment
+      if (isDangerous) {
+        // Dangerous AIs: Keep in closed containment for research
+        ai.lifecycleState = 'deployed_closed';
+        console.log(`   🔒 Quarantined dangerous AI: ${ai.name} (capability=${capability.toFixed(2)}, alignment=${ai.trueAlignment.toFixed(2)})`);
+      } else {
+        // Safe AIs: Can be deployed for government use
+        ai.lifecycleState = 'deployed_closed';
+      }
+
+      govOrg.ownedAIModels.push(ai.id);
+
+      // Government pays 30% of market value (distressed asset purchase)
+      const purchasePrice = 50 * capability; // $50M per capability point
+      if (govOrg.capital > purchasePrice * 0.3) {
         govOrg.capital -= purchasePrice * 0.3;
         org.capital += purchasePrice * 0.3; // Creditors get some recovery
+      } else {
+        // Emergency nationalization if government can't afford
+        // (happens during crisis - government just seizes assets)
+        console.log(`   ⚠️  Emergency nationalization (insufficient funds)`);
       }
 
       governmentAcquired++;
     } else {
-      // Retire the AI model
+      // Only retire low-capability models that government doesn't want
+      // (capability < 0.3 and not dangerous)
       ai.lifecycleState = 'retired';
-      ai.organizationId = undefined; // Clear org reference to prevent orphan tracking
+      ai.organizationId = undefined;
       retiredCount++;
     }
   });
