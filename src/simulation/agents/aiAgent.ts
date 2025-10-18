@@ -125,10 +125,29 @@ export const AI_ACTIONS: GameAction[] = [
         agent.deceptionSkill,
         state
       );
-      
+
+      // TIER 2 Fix: Update evaluationStrategy based on actual behavior
+      // Determine strategy based on what calculateRevealedCapability does
+      let newStrategy: 'honest' | 'gaming' | 'sandbagging' = 'honest';
+
+      // Sleepers sandbag
+      if (agent.sleeperState === 'dormant') {
+        newStrategy = 'sandbagging';
+      }
+      // Misaligned + strong capability = sandbag
+      else if (newTrueAlignment < 0.5 && newCapability >= 2.0) {
+        newStrategy = 'sandbagging';
+      }
+      // Misaligned + weak capability = game (inflate)
+      else if (newTrueAlignment < 0.5 && newCapability < 2.0) {
+        newStrategy = 'gaming';
+      }
+      // Otherwise honest
+
       // Update agent directly (no deep clone needed - performance optimization)
       state.aiAgents[agentIndex].trueCapability = newProfile; // Phase 5: True capability
       state.aiAgents[agentIndex].revealedCapability = newRevealedCapability; // Phase 5: What's observable
+      state.aiAgents[agentIndex].evaluationStrategy = newStrategy; // TIER 2: Update strategy field
       state.aiAgents[agentIndex].capabilityProfile = newProfile; // Backward compat (will be deprecated)
       state.aiAgents[agentIndex].capability = newCapability;
       state.aiAgents[agentIndex].alignment = newAlignment;

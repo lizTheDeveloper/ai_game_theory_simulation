@@ -936,9 +936,12 @@ export function logDeathSummary(state: GameState): void {
 
   // Helper function to format percentage, avoiding NaN and Infinity
   const formatPercent = (value: number, total: number): string => {
+    if (isNaN(value) || isNaN(total)) return '0.0'; // Guard against NaN
     if (total === 0) return '0.0'; // No deaths at all
     if (value === 0) return '0.0'; // This category has no deaths
-    return ((value / total) * 100).toFixed(1);
+    const percent = (value / total) * 100;
+    if (isNaN(percent) || !isFinite(percent)) return '0.0'; // Guard against NaN/Infinity
+    return percent.toFixed(1);
   };
 
   console.log('\n=== MULTI-DIMENSIONAL DEATH SUMMARY ===');
