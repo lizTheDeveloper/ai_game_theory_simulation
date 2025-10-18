@@ -345,13 +345,51 @@ export function updateHumanPopulation(state: GameState): void {
     pop.population -= overshootDeaths;
     pop.monthlyExcessDeaths += overshootDeaths;
 
-    // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
+    // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025 - UPDATED)
     // PROXIMATE: Famine (Malthusian collapse manifests as food shortage)
     pop.deathsByCategory.famine += overshootDeaths;
-    // ROOT CAUSE: Governance (failure to manage population within sustainable bounds)
-    // Could also be climate (reduced capacity) or poverty (resource distribution)
-    // Attributing primarily to governance as policy/planning failure
-    pop.deathsByRootCause.governance += overshootDeaths;
+
+    // ROOT CAUSE: Multi-factor attribution (research-backed)
+    // Research: IPCC AR6 (2022), Rapa Nui study (2020), Sahel 2022 analysis
+    // Overshoot deaths result from INTERACTION of climate, poverty, and governance
+    // Not monocausal - climate degrades capacity, poverty limits adaptation, governance fails response
+
+    // Calculate proportional contributions to capacity reduction
+    // Default baseline: 40% climate/environment, 50% governance, 10% poverty
+
+    // Climate contribution: How much did climate degrade capacity?
+    const climateContribution = Math.min(0.6, Math.max(0.2, 1.0 - climateModifier)); // 20-60%
+
+    // Resource/ecosystem contribution (also climate-driven but indirect)
+    const resourceContribution = Math.min(0.3, Math.max(0, 1.0 - resourceModifier) * 0.5);
+    const ecosystemContribution = biodiversity < 0.20 ? 0.2 : Math.min(0.2, (1.0 - ecosystemModifier) * 0.3);
+
+    // Total environmental impact (climate + resources + ecosystem)
+    const environmentalImpact = Math.min(0.7, climateContribution + resourceContribution + ecosystemContribution);
+
+    // Poverty constraint: Poor regions can't afford adaptation (contraception, agricultural tech)
+    const povertyConstraint = Math.max(0.05, Math.min(0.3, (1 - qol.materialAbundance) * 0.4));
+
+    // Governance responsibility: Remainder (minimum 20% floor - policy ALWAYS matters)
+    const governanceShare = Math.max(0.2, 1.0 - environmentalImpact - povertyConstraint);
+
+    // Normalize to ensure total = 1.0
+    const totalShares = environmentalImpact + povertyConstraint + governanceShare;
+    const climateShare = environmentalImpact / totalShares;
+    const povertyShare = povertyConstraint / totalShares;
+    const govShare = governanceShare / totalShares;
+
+    // Apply proportional attribution
+    pop.deathsByRootCause.climateChange += overshootDeaths * climateShare;
+    pop.deathsByRootCause.poverty += overshootDeaths * povertyShare;
+    pop.deathsByRootCause.governance += overshootDeaths * govShare;
+
+    // Log significant overshoot events with attribution breakdown
+    if (overshootDeaths > 0.001 && state.currentMonth % 12 === 0) { // >1M deaths, log annually
+      const deathsM = (overshootDeaths * 1000).toFixed(1);
+      console.log(`💀 OVERSHOOT DEATHS: ${deathsM}M (population ${pop.population.toFixed(2)}B exceeds capacity ${pop.carryingCapacity.toFixed(2)}B)`);
+      console.log(`   Root cause attribution: Climate ${(climateShare * 100).toFixed(0)}%, Poverty ${(povertyShare * 100).toFixed(0)}%, Governance ${(govShare * 100).toFixed(0)}%`);
+    }
   }
 
   // === 8. TRACK CUMULATIVE DEATHS ===

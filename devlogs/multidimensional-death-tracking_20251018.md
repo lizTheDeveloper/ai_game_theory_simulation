@@ -102,6 +102,59 @@ This tracking reveals:
 3. **Most deaths are preventable** with better governance (resource distribution, crisis response)
 4. **Diagnosis is now trivial** - can instantly see if problem is climate, governance, conflict, or alignment
 
+## Overshoot Death Attribution Refinement (UPDATED Oct 18)
+
+**Problem identified:** Initial implementation attributed ALL overshoot deaths to "governance" (100%). This was identified as an oversimplification after debate between super-alignment-researcher and research-skeptic agents.
+
+**Research consensus:** IPCC AR6 (2022), Rapa Nui study (2020), Sahel 2022 analysis all show overshoot deaths result from **multi-factor interactions** between climate, poverty, and governance - NOT monocausal.
+
+**Solution implemented:** Multi-factor proportional attribution
+
+### Attribution Algorithm
+
+```typescript
+// Climate contribution: Capacity degradation from climate (20-60%)
+climateContribution = 1.0 - climateModifier
+
+// Resource/ecosystem contribution (climate-driven but indirect)
+resourceContribution = (1.0 - resourceModifier) × 0.5
+ecosystemContribution = (1.0 - ecosystemModifier) × 0.3
+
+// Total environmental impact (capped at 70%)
+environmentalImpact = min(0.7, sum of above)
+
+// Poverty constraint: Can't afford adaptation (5-30%)
+povertyConstraint = (1 - materialAbundance) × 0.4
+
+// Governance: Remainder (minimum 20% floor - policy ALWAYS matters)
+governanceShare = max(0.2, 1.0 - environmentalImpact - povertyConstraint)
+```
+
+### Example Scenarios
+
+1. **Severe drought** (climateStability=0.4, abundance=0.7):
+   - Climate: 50%, Poverty: 12%, Governance: 38%
+
+2. **Policy failure with good climate** (climateStability=0.9, abundance=0.3):
+   - Climate: 20%, Poverty: 28%, Governance: 52%
+
+3. **Mixed conditions** (climateStability=0.6, abundance=0.5):
+   - Climate: 40%, Poverty: 20%, Governance: 40%
+
+### Consistency with Famine System
+
+This matches the existing famine attribution logic (`FamineSystemPhase.ts:46-86`):
+- Both use proportional multi-factor attribution
+- Both recognize climate, governance, AND poverty contribute
+- Both avoid monocausal oversimplification
+
+### Research Citations
+
+- IPCC AR6 (2022): Climate reduces African agricultural productivity 33% since 1961
+- Rapa Nui study (2020, *Proceedings of the Royal Society B*): 40% climate, 60% land management
+- Sahel 2022 (World Weather Attribution): <20% climate, 60-70% governance/infrastructure
+- Sen's entitlement theory: Capacity is socially determined, but climate sets hard limits
+
 ## Future Work
 
 Still need to add root cause tracking for:
@@ -109,7 +162,7 @@ Still need to add root cause tracking for:
 - War deaths (→ conflict root cause)
 - Tipping point cascade deaths (→ climateChange or natural)
 
-Most death sources now tracked multi-dimensionally.
+Most death sources now tracked multi-dimensionally with proportional attribution.
 
 ---
 

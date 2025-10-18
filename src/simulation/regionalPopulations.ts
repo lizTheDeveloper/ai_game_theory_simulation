@@ -386,12 +386,42 @@ export function updateRegionalPopulations(state: GameState): void {
       region.population -= overshootDeaths;
       region.monthlyExcessDeaths += overshootDeaths;
 
-      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
+      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025 - UPDATED)
       // Track overshoot deaths in global categories (convert from millions to billions)
       // PROXIMATE: Famine (Malthusian collapse manifests as food shortage)
       pop.deathsByCategory.famine += overshootDeaths / 1000;
-      // ROOT CAUSE: Governance (failure to manage population within sustainable bounds)
-      pop.deathsByRootCause.governance += overshootDeaths / 1000;
+
+      // ROOT CAUSE: Multi-factor attribution (research-backed)
+      // Same logic as global population but using regional data where available
+      // Research: IPCC AR6 (2022), Rapa Nui study (2020), Sahel 2022 analysis
+
+      // Climate contribution (using climateModifier from capacity calculation)
+      const climateContribution = Math.min(0.6, Math.max(0.2, 1.0 - climateModifier)); // 20-60%
+
+      // Resource/ecosystem contribution
+      const resourceContribution = Math.min(0.3, Math.max(0, 1.0 - resourceModifier) * 0.5);
+      const ecosystemContribution = biodiversity < 0.20 ? 0.2 : Math.min(0.2, (1.0 - ecosystemModifier) * 0.3);
+
+      // Total environmental impact
+      const environmentalImpact = Math.min(0.7, climateContribution + resourceContribution + ecosystemContribution);
+
+      // Poverty constraint (using global QoL as proxy - could be regionalized later)
+      const povertyConstraint = Math.max(0.05, Math.min(0.3, (1 - state.qualityOfLifeSystems.materialAbundance) * 0.4));
+
+      // Governance responsibility (minimum 20% floor)
+      const governanceShare = Math.max(0.2, 1.0 - environmentalImpact - povertyConstraint);
+
+      // Normalize
+      const totalShares = environmentalImpact + povertyConstraint + governanceShare;
+      const climateShare = environmentalImpact / totalShares;
+      const povertyShare = povertyConstraint / totalShares;
+      const govShare = governanceShare / totalShares;
+
+      // Apply proportional attribution (convert millions to billions)
+      const deathsInBillions = overshootDeaths / 1000;
+      pop.deathsByRootCause.climateChange += deathsInBillions * climateShare;
+      pop.deathsByRootCause.poverty += deathsInBillions * povertyShare;
+      pop.deathsByRootCause.governance += deathsInBillions * govShare;
     }
 
     // === 6. TRACK CRISIS DEATHS ===
