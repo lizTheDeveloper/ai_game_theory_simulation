@@ -313,7 +313,7 @@ nationalAI/
 
 1. **resourceInitialization.ts** (1,510 lines) - Mostly data, well-structured by country
 2. **techTree/comprehensiveTechTree.ts** (1,602 lines) - Data definitions, cleanly organized
-3. **types/game.ts** (1,218 lines) - See detailed refactoring plan below (Section: Game.ts Type Refactoring)
+3. **types/game.ts** (1,185 lines) - Central type definition, hard to split
 
 ---
 
@@ -431,84 +431,3 @@ The codebase has significant technical debt concentrated in 5-6 critical files. 
 **Recommended Approach:** Start with governmentAgent.ts as it's causing the most immediate pain and blocking other development. Execute refactors incrementally with strong testing discipline.
 
 **Critical Success Factor:** Maintain backward compatibility and validate with Monte Carlo simulations to ensure no regression in simulation behavior.
-
----
-
-## Game.ts Type Refactoring
-
-### Overview
-
-The `src/types/game.ts` file is a monolithic 1,218-line TypeScript interface file containing ALL simulation state types. It's imported by 224+ files across the codebase, making it a critical dependency bottleneck.
-
-**Assessment:** While large, this is actually a MEDIUM PRIORITY refactoring. The file doesn't impact performance or stability - it's purely compile-time types. The main benefits are improved developer experience and reduced merge conflicts.
-
-### Current Structure
-
-- **65+ type definitions** covering all aspects of the simulation
-- **30+ imports** from other type files (shows some modularization exists)
-- **224+ dependent files** import from this file
-- **Core GameState interface** spans 290 lines (860-1150)
-
-### Proposed Split Structure
-
-#### Phase 1: Independent Types (Easy Wins - 2 hours)
-```typescript
-// src/types/config.ts - Configuration & scenarios
-// src/types/events.ts - Events & actions
-// src/types/outcomes.ts - Extinction & outcome types
-// src/types/economics.ts - Economic stages & constants
-// src/types/technology.ts - Technology nodes
-```
-
-#### Phase 2: Agent Types (3 hours)
-```typescript
-// src/types/ai-agents.ts - AI agents, capabilities, benchmarks
-// src/types/government.ts - Government agent & investments
-// src/types/society.ts - Society segments & population
-// src/types/organizations.ts - Orgs, data centers, projects
-```
-
-#### Phase 3: System States (2 hours)
-```typescript
-// src/types/quality-of-life.ts - QoL dimensions
-// src/types/accumulation.ts - Environmental/social/tech accumulation
-// src/types/metrics.ts - Global metrics
-// src/types/ecosystem.ts - Technology diffusion state
-```
-
-#### Phase 4: Core State (3 hours)
-```typescript
-// src/types/game-state.ts - GameState interface only
-// src/types/index.ts - Barrel exports for compatibility
-```
-
-### Migration Strategy
-
-1. **Create new files** without deleting game.ts
-2. **Add compatibility layer** (re-exports from game.ts)
-3. **Gradual migration** of imports over multiple PRs
-4. **Final cleanup** once all imports updated
-
-### Impact Assessment
-
-- **High Impact:** 50+ phase files, initialization.ts, PhaseOrchestrator.ts
-- **Medium Impact:** Agent modules, system modules, test files
-- **Low Impact:** UI components (mostly just import GameState)
-
-### Effort Estimate
-
-**Total: 8-12 hours** (MEDIUM complexity)
-- Type extraction: 4 hours
-- Dependency resolution: 3 hours
-- Import updates: 3 hours
-- Testing: 2 hours
-
-### Recommendation
-
-**DO EVENTUALLY** - This is a nice-to-have improvement that will:
-- Improve IDE performance
-- Reduce merge conflicts
-- Make types easier to find
-- Enable better documentation
-
-**NOT URGENT** - No impact on runtime performance or stability. Schedule between feature work when the team has bandwidth.
