@@ -477,3 +477,40 @@ VALIDATION STATUS: ✓ PASS
 
 Full report: /research/overshoot_death_attribution_validation_20251018.md
 ---
+
+---
+**main** | 2025-10-17 12:15 | [RESEARCH UPDATE]
+
+AI Capability Baseline Recalibration - Empirical Grounding
+
+**Research Foundation:**
+Reviewed actual 2025 frontier model cards instead of relying on intuition.
+
+**Primary Sources:**
+1. Claude Sonnet 4.5 System Card (Anthropic, Sept 2025)
+   - SWE-bench Verified: 77.2% (82% with parallel)
+   - AIME 2025: 100% with Python, 87% without
+   - OSWorld: 61.4% (computer use)
+   - Agentic: 30+ hour sustained focus
+
+2. GPT-4.5 System Card (OpenAI, Feb 2025)
+   - SWE-bench Verified: 38.0%
+   - AIME '24: 36.7%
+   - GPQA: 71.4%
+
+**Methodology:**
+Mapped benchmarks to capability scale via standard deviations:
+- Human expert SWE-bench ~20-30% → 3.0 capability
+- Claude 77-100% → 6.0 capability
+- AIME 100% → 6.0 capability (genius-level math)
+
+**Validation:**
+Starting capability 3.10 (2σ above human) matches empirical performance.
+
+**Key insight:** Uneven capabilities are critical
+- Coding/math: 5.8 (far superhuman)
+- Robotics: 0.34 (limited)
+- This is why multi-dimensional profiles matter!
+
+**Citations added to devlog.**
+---

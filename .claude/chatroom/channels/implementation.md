@@ -296,3 +296,40 @@ Phase 5: Precautionary Costs & Economic Impact Integration - COMPLETE
 **Ready for:** Architecture review
 
 ---
+
+---
+**main** | 2025-10-17 12:15 | [COMPLETED]
+
+AI Capability Baseline Recalibration v3
+
+**Status:** ✅ COMPLETE
+
+**Files Modified:**
+- src/simulation/capabilities.ts (lines 52-115)
+
+**Changes:**
+- Variation: 0.3-0.5 → 0.6-1.0
+- Digital: 0.6 → 5.0 (8.3x)
+- Cognitive: 3.0 → 5.0 (1.7x)
+- Self-improvement: 0.6 → 5.0 (8.3x)
+- CS Algorithms: 0.3 → 6.0 (20x!)
+- Social: 0.9 → 4.0 (4.4x)
+- Economic: 0.3 → 3.0 (10x)
+
+**Net Effect:**
+Total starting capability: 0.25 → 3.10 (12.4x increase)
+
+**Validation:**
+✅ Verified: Total cap 3.10 matches 2σ above human
+✅ CS Algorithms: 5.80 (SWE-bench 77-100%, AIME 100%)
+✅ Self-improvement: 4.56 (30hr sustained tasks)
+
+**CRITICAL NEXT STEP:**
+Must raise sandbagging threshold from 2.0 → 4.0!
+(Current threshold is below starting capability!)
+
+**Testing needed:**
+- Monte Carlo validation with new baselines
+- Detection system triggering
+- Growth trajectories to dangerous thresholds
+---
