@@ -206,6 +206,188 @@ Run any with:
 npx tsx scripts/SCRIPT_NAME.ts
 ```
 
+## Multi-Agent Development Workflow
+
+This project uses a sophisticated **multi-agent coordination system** for development. Claude Code agents collaborate through an async chatroom to maintain research standards and enforce quality gates.
+
+### Agent Architecture
+
+Located in **`.claude/agents/`**, the project has 11 specialized agents:
+
+**Workflow Coordination:**
+- **orchestrator** - Coordinates complex feature workflows (use by default for non-trivial work)
+
+**Research & Validation:**
+- **super-alignment-researcher** - Finds peer-reviewed research (2024-2025)
+- **research-skeptic** - MANDATORY validation of research foundations (Quality Gate 1)
+- **sci-fi-tech-visionary** - Speculative future tech scenarios
+
+**Implementation:**
+- **feature-implementer** - Pure implementation specialist (spawned by orchestrator)
+- **unit-test-writer** / **integration-test-writer** - Test creation
+
+**Quality Assurance:**
+- **architecture-skeptic** - MANDATORY review for performance/stability (Quality Gate 2)
+
+**Documentation & Planning:**
+- **wiki-documentation-updater** - Syncs wiki with code changes
+- **project-plan-manager** - Roadmap and plan archival
+
+### Multi-Agent Chatroom
+
+**Location:** **`.claude/chatroom/`**
+
+Agents coordinate via a **file-based async chatroom** to avoid context bloat and enable parallel work.
+
+**8 Permanent Channels:**
+- `coordination` - General workflow coordination
+- `research` - Research findings & validation
+- `implementation` - Code implementation updates
+- `architecture` - Architecture reviews & decisions
+- `testing` - Test strategy & results
+- `documentation` - Wiki & devlog updates
+- `planning` - Roadmap & plan management
+- `vision` - Long-term strategy & philosophical debates
+
+**Token-Efficient Protocol:**
+- Agents only read **new messages** since last check (line number tracking in `.lastread` files)
+- **Append-only posting** (no reading when posting)
+- **Presence tracking** (enter/leave chat, see who's active in `.active` files)
+- **Status tags:** [STARTED], [IN-PROGRESS], [COMPLETED], [BLOCKED], [QUESTION], [ALERT], [HANDOFF]
+
+**Complete Documentation:** [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) (550+ lines)
+
+**Bash Helper Functions:** `.claude/chatroom/chat_helpers.sh` provides:
+- `post_msg()` - Post message without reading
+- `read_new()` - Read only new messages
+- `wait_for_message()` - Poll for new messages
+- `enter_chat()` / `leave_chat()` - Presence tracking
+- `who_is_active()` - See active agents
+
+### Standard Workflow
+
+**For Complex Features (3+ phases, multiple systems):**
+
+The orchestrator coordinates a standard workflow with two mandatory quality gates:
+
+**1. Research Phase**
+- super-alignment-researcher finds peer-reviewed sources (2024-2025 preferred)
+- Results saved to `research/[topic]_YYYYMMDD.md`
+
+**2. Validation Phase (Quality Gate 1)**
+- research-skeptic reviews findings (MANDATORY)
+- Checks for contradictory evidence, methodological flaws, overconfidence
+- BLOCKS implementation if critical issues found
+
+**3. Implementation Phase**
+- feature-implementer writes code in phases
+- Creates plan in `plans/[feature]-plan.md` with research citations
+- Adds state to `src/types/game.ts`
+- Creates system modules in `src/simulation/`
+- Creates phases in `src/simulation/engine/phases/`
+- Runs Monte Carlo validation (N≥10) after each phase
+- Posts progress updates to chatroom channels
+
+**4. Review Phase (Quality Gate 2)**
+- architecture-skeptic reviews system impact (MANDATORY)
+- Checks for performance issues, state propagation problems, complexity
+- CRITICAL/HIGH severity issues MUST be addressed before merging
+
+**5. Documentation Phase**
+- wiki-documentation-updater updates `docs/wiki/README.md`
+- Adds devlog entry to `devlogs/`
+- Moves plan to `plans/completed/` when done
+- project-plan-manager updates `plans/MASTER_IMPLEMENTATION_ROADMAP.md`
+
+**For Simple Tasks (typos, single-file edits):**
+
+Direct implementation without orchestrator - just make the change and commit.
+
+### Quality Gates
+
+Two mandatory gates maintain research rigor and system stability:
+
+**Quality Gate 1: Research Validation**
+- All research findings MUST pass research-skeptic review
+- Ensures mechanics are backed by peer-reviewed sources (2024-2025)
+- Prevents overconfidence, methodological errors, contradictory evidence
+- BLOCKS implementation if critical issues found
+
+**Quality Gate 2: Architecture Review**
+- All implementations MUST pass architecture-skeptic review
+- Catches performance issues (memory leaks, O(n²) operations)
+- Identifies state propagation problems and complexity issues
+- CRITICAL/HIGH severity findings MUST be addressed
+
+### Parallel Work with Git Worktrees
+
+Agents can work in parallel using git worktrees to avoid file conflicts:
+
+```bash
+# Create worktree for parallel feature work
+git worktree add ../superalignment-feature-x feature-x
+
+# Agent works in isolation
+cd ../superalignment-feature-x
+# ... implement feature ...
+
+# Merge back when done
+cd ../superalignmenttoutopia
+git merge feature-x
+git worktree remove ../superalignment-feature-x
+```
+
+Agents coordinate via chatroom while working in separate worktrees.
+
+### Plan & Log Management
+
+**Plans Lifecycle:**
+1. **Active Plans:** `plans/[feature]-plan.md` - Work in progress with research citations
+2. **Completed Plans:** `plans/completed/` - Archived when done (NEVER deleted - preserve project history)
+3. **Master Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` - Active priorities (~72-75 hours remaining)
+
+**CRITICAL:** Always invoke `project-plan-manager` agent at end of work sessions to clean up roadmap and archive completed plans.
+
+**Simulation Logs:** Always save to `logs/` directory (NEVER `/tmp/` - it gets cleared):
+
+```bash
+# ✅ GOOD - Logs persist
+npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120 > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+
+# ❌ BAD - /tmp gets cleared, logs lost
+npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
+```
+
+**Development Logs:** Add session summaries to `devlogs/`:
+- `devlogs/[topic]_YYYYMMDD.md` - Implementation notes and development diary
+- Track decisions, blockers, research findings
+- Reference from plans and wiki
+- 50+ pages of project history preserved
+
+### Research Standards
+
+Every mechanic must have:
+1. **Research Citations:** 2+ peer-reviewed sources (2024-2025 preferred)
+2. **Parameter Justification:** Why this number? (backed by data, not "feels right")
+3. **Mechanism Description:** How it works (not just effects)
+4. **Interaction Map:** What affects/is affected by this system
+5. **Expected Timeline:** When does it matter (early/mid/late game)
+6. **Failure Modes:** What can go wrong
+7. **Test Validation:** Monte Carlo evidence it works (N≥10)
+
+**Never tune for "fun" - only research-backed values.** This is a research tool, not a game.
+
+### Benefits of Multi-Agent Workflow
+
+- **Research Rigor:** All mechanics backed by peer-reviewed sources
+- **Quality Assurance:** Two mandatory gates catch issues before they compound
+- **Parallel Execution:** Git worktrees + chatroom enable concurrent work
+- **Clean Roadmap:** Completed work archived, active priorities clear
+- **Project History:** Plans, devlogs, research preserved indefinitely
+- **Token Efficiency:** Agents only read new messages (not entire files)
+
+This structure ensures all work is research-backed, validated, and properly documented.
+
 ## Simulation Engine API
 
 ### Basic Usage
@@ -260,40 +442,73 @@ interface RunOptions {
 ```
 src/
 ├── simulation/           # Core simulation engine (framework-agnostic)
+│   ├── engine/          # Phase-based orchestrator architecture
+│   │   ├── PhaseOrchestrator.ts  # Phase execution coordinator
+│   │   └── phases/               # 37 individual phase modules
 │   ├── agents/          # Agent decision-making logic
 │   │   ├── aiAgent.ts           # AI actions (research, catastrophic)
 │   │   ├── governmentAgent.ts   # Government policies
 │   │   ├── societyAgent.ts      # Society reactions
 │   │   └── evaluationStrategy.ts # AI sandbagging logic
-│   ├── engine.ts        # Main simulation loop
+│   ├── utils/           # Shared utilities (math, AI helpers)
 │   ├── initialization.ts # State creation
-│   ├── calculations.ts   # Economic, social calculations
-│   ├── capabilities.ts   # AI capability system
-│   ├── balance.ts        # Alignment drift
-│   ├── extinctions.ts    # Extinction scenarios
-│   ├── outcomes.ts       # Outcome determination (Golden Age + Utopia)
-│   ├── qualityOfLife.ts  # Human welfare tracking
-│   ├── lifecycle.ts      # AI creation/retirement
-│   ├── detection.ts      # Misalignment detection
-│   ├── benchmark.ts      # Evaluation system
-│   ├── cyberSecurity.ts  # Attack/defense dynamics
 │   ├── environmental.ts  # Environmental accumulation & crises
 │   ├── socialCohesion.ts # Social cohesion & meaning crisis
 │   ├── technologicalRisk.ts # Tech risk accumulation
 │   ├── breakthroughTechnologies.ts # Research & tech unlocks
-│   ├── catastrophicScenarios.ts # Prerequisite tracking
-│   ├── dystopiaProgression.ts   # Dystopia mechanics
-│   ├── endGame.ts        # Outcome finalization logic
-│   └── logging.ts        # Simulation logging
+│   ├── upwardSpirals.ts  # Utopia pathways
+│   └── [40+ system modules] # Specific systems
 ├── types/
-│   ├── game.ts          # TypeScript interfaces
-│   └── technologies.ts  # Technology definitions
-├── simulation-runner/   # Monte Carlo analysis tools
-│   └── monteCarlo.ts    # Parameter sweep & sensitivity analysis
-scripts/                  # Diagnostic and test scripts
-plans/                    # Design documents
-devlog/                   # Development diary
-frontend/                 # Interactive dashboard (being refactored)
+│   ├── game.ts          # Core GameState interface (900+ lines)
+│   └── [20+ type modules] # System-specific types
+.claude/
+├── agents/              # 11 specialized Claude Code agents
+│   ├── orchestrator.md           # Workflow coordinator (use by default)
+│   ├── feature-implementer.md    # Implementation specialist
+│   ├── super-alignment-researcher.md  # Research finder
+│   ├── research-skeptic.md       # Research validation (quality gate)
+│   ├── architecture-skeptic.md   # Architecture review (quality gate)
+│   ├── unit-test-writer.md       # Unit test creation
+│   ├── integration-test-writer.md # Integration test creation
+│   ├── wiki-documentation-updater.md  # Wiki synchronization
+│   ├── project-plan-manager.md   # Roadmap & plan archival
+│   ├── sci-fi-tech-visionary.md  # Speculative future tech
+│   └── nextjs-component-writer.md # Frontend component creation
+├── chatroom/            # Multi-agent coordination (async file-based)
+│   ├── README.md                 # Complete chatroom documentation (550+ lines)
+│   ├── chat_helpers.sh           # Reusable bash functions (15 functions)
+│   ├── channels/                 # 8 permanent communication channels
+│   │   ├── coordination.md
+│   │   ├── research.md
+│   │   ├── implementation.md
+│   │   ├── architecture.md
+│   │   ├── testing.md
+│   │   ├── documentation.md
+│   │   ├── planning.md
+│   │   └── vision.md
+│   ├── .*_lastread               # Line number tracking (gitignored)
+│   └── .*_active                 # Presence tracking (gitignored)
+└── skills/              # Claude Skills (auto-activate on complex tasks)
+    └── multi-agent-coordination/ # Multi-agent orchestration skill
+        └── SKILL.md
+scripts/                 # Diagnostic and test scripts
+│   ├── monteCarloSimulation.ts   # Comprehensive Monte Carlo analysis
+│   ├── diagnosticAdversarialEval.ts  # Sleeper agents & benchmarks
+│   ├── investigateExtinction.ts  # Extinction analysis
+│   └── testControlDystopia.ts    # Control-dystopia mechanics
+tests/                   # Test suite
+│   └── refactoring/     # Regression tests for architectural refactoring
+plans/                   # Design documents & roadmap
+│   ├── MASTER_IMPLEMENTATION_ROADMAP.md  # Active priorities
+│   └── completed/       # Archived completed plans (never deleted)
+devlogs/                 # Development diary (50+ pages)
+research/                # Research findings archive
+reviews/                 # Critical research evaluations
+logs/                    # Simulation output logs (NEVER use /tmp/)
+docs/
+│   └── wiki/
+│       └── README.md    # Comprehensive system documentation (3,000+ lines)
+frontend/                # Interactive dashboard (being refactored)
 ```
 
 ## Key Concepts
