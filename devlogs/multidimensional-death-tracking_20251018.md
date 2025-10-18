@@ -166,6 +166,79 @@ Most death sources now tracked multi-dimensionally with proportional attribution
 
 ---
 
+## Aggregate Death Statistics Feature (ADDED Oct 18, Evening)
+
+**Problem:** Monte Carlo runs tracked individual run death statistics, but didn't aggregate across all runs. Hard to see overall patterns across 100+ simulations.
+
+**Solution:** Added aggregate death statistics to Monte Carlo script:
+
+### Implementation (`scripts/monteCarloSimulation.ts`)
+
+1. **Added to RunResult interface:**
+   - `deathsByProximate` object (9 categories)
+   - `deathsByRoot` object (7 categories)
+
+2. **Extraction logic** (lines 1086-1093):
+   - Extract `deathsByCategory` from final state
+   - Extract `deathsByRootCause` from final state
+
+3. **Storage in results** (lines 1413-1433):
+   - Store detailed death breakdown for each run
+
+4. **Aggregation logic** (lines 2707-2735):
+   - Sum deaths across all runs
+   - Calculate totals for proximate and root causes
+
+5. **Display section** (lines 2750-2797):
+   - Show aggregate statistics with percentages
+   - Compare proximate vs root causes
+   - Key insights interpretation
+   - Reality check warning for discrepancies
+
+### Example Output (N=2 test, 24 months)
+
+```
+💀 MULTI-DIMENSIONAL DEATH STATISTICS (Oct 18, 2025)
+================================================================================
+
+  AGGREGATE ACROSS 2 RUNS:
+    Total Crisis Deaths: 967M (excluding natural deaths)
+    Average per Run: 484M
+
+  === PROXIMATE CAUSES (What killed them) ===
+    Famine:     899M (93.0%)
+    Disasters:  38M (4.0%)
+    Disease:    9M (0.9%)
+    Other:      21M (2.1%)
+
+  === ROOT CAUSES (Why it happened) ===
+    Governance:      602M (64.2%)
+    Climate Change:  286M (30.5%)
+    Poverty:         49M (5.2%)
+
+  KEY INSIGHT: Multi-Factor Attribution
+    64% governance root cause → policy/distribution failures dominate
+    31% climate creates stress, but systems amplify it into mass death
+
+  ⚠️  WARNING: Proximate deaths (967M) != Root deaths (938M)
+      Attribution may have bugs. Check populationDynamics.ts and regionalPopulations.ts
+```
+
+### Benefits
+
+1. **Instant diagnosis:** See dominant death causes across entire Monte Carlo suite
+2. **Pattern detection:** Identify if climate, governance, or poverty drives mortality
+3. **Validation:** Reality check warns if proximate/root totals diverge
+4. **Research clarity:** Multi-factor attribution visible at aggregate level
+
+### Known Issues
+
+- Small discrepancy (3%) between proximate and root totals in test run
+- Some death sources may not have complete multi-factor attribution yet
+- Will validate with full N=100, 240-month run
+
+---
+
 **User reaction:** "omg this is great it will make everything infinity easier to diagnose!"
 
 Mission accomplished. 🎯
