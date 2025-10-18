@@ -142,8 +142,11 @@ export function initializeSpecificTippingPoints(): {
       transitionProgress: 0,
       carbonReleased: 0,
       regionallyAffected: ['Brazil', 'Peru', 'Colombia', 'Venezuela', 'Ecuador', 'Bolivia'],
+      // Phase 2: Reversibility (IRREVERSIBLE - Amazon dieback permanent on human timescales)
+      // Research: Staal et al. 2020 - bistability, hysteresis prevents reversal
+      reversibility: 'irreversible' as const,
     },
-    
+
     coral: {
       healthPercentage: 70, // 30% already degraded
       tippingThreshold: 30, // Critical threshold
@@ -152,8 +155,11 @@ export function initializeSpecificTippingPoints(): {
       collapseProgress: 0,
       fisheryCollapseLevel: 0,
       regionallyAffected: ['Pacific Islands', 'Australia', 'Indonesia', 'Philippines', 'Caribbean', 'East Africa'],
+      // Phase 2: Reversibility (IRREVERSIBLE - coral bleaching very difficult to reverse)
+      // Research: Hughes et al. 2018 - recovery requires centuries if possible at all
+      reversibility: 'irreversible' as const,
     },
-    
+
     pollinators: {
       populationPercentage: 60, // 40% decline from 1970
       criticalThreshold: 35, // 65% total decline = crisis
@@ -161,8 +167,13 @@ export function initializeSpecificTippingPoints(): {
       triggeredAt: -1,
       foodProductionLoss: 0,
       regionallyAffected: ['North America', 'Europe', 'China', 'India', 'Brazil', 'Sub-Saharan Africa'],
+      // Phase 2: Reversibility (REVERSIBLE - populations can recover if stressors removed)
+      // Research: Wagner 2020, IPBES 2019 - pollinator recovery feasible with habitat restoration
+      reversibility: 'reversible-with-damping' as const,
+      dampingFeedbackStrength: 0.6, // Moderate damping (60% of forcing reduction translates to recovery)
+      recoveryTimescale: 240, // 20 years for population recovery to pre-crisis levels
     },
-    
+
     permafrost: {
       carbonStored: 1400, // Gt C
       carbonReleased: 0,
@@ -170,14 +181,20 @@ export function initializeSpecificTippingPoints(): {
       triggered: false,
       triggeredAt: -1,
       regionallyAffected: ['Russia', 'Canada', 'Alaska', 'Scandinavia', 'Greenland'],
+      // Phase 2: Reversibility (IRREVERSIBLE - carbon release cannot be reversed)
+      // Research: Turetsky et al. 2020 - positive feedback loop, self-sustaining thaw
+      reversibility: 'irreversible' as const,
     },
-    
+
     amoc: {
       strength: 85, // 15% weaker than 1970
       collapseThreshold: 60, // 24-39% additional weakening
       triggered: false,
       triggeredAt: -1,
       regionallyAffected: ['Europe', 'West Africa', 'Eastern Americas', 'Caribbean'],
+      // Phase 2: Reversibility (IRREVERSIBLE - circulation collapse permanent on human timescales)
+      // Research: Boers 2021, Armstrong McKay et al. 2022 - hysteresis prevents reversal
+      reversibility: 'irreversible' as const,
     },
   };
 }
@@ -428,8 +445,47 @@ export function updatePollinators(state: GameState): void {
     // Convert decline to recovery
     declineRate -= intervention.pollinatorRecoveryBoost; // 0.5%/month boost
   }
-  
-  // Apply decline
+
+  // === PHASE 2: TIPPING POINT REVERSIBILITY (Evidence-Based Recovery, Oct 17, 2025) ===
+  // Research: Wagner 2020, IPBES 2019 - pollinator populations can recover if stressors removed
+  // Wunderling et al. 2025 - damping feedback allows stabilization/reversal for some tipping points
+  if (pollinators.triggered && pollinators.reversibility === 'reversible-with-damping') {
+    // Store baseline forcing at trigger (if not already stored)
+    if (!state.specificTippingPoints.pollinators.forcingAtTrigger) {
+      state.specificTippingPoints.pollinators.forcingAtTrigger = declineRate;
+    }
+
+    const forcingAtTrigger = state.specificTippingPoints.pollinators.forcingAtTrigger;
+    const currentForcing = declineRate;
+
+    // Calculate forcing reduction (negative = forcing increased)
+    const forcingReduction = forcingAtTrigger - currentForcing;
+
+    // Apply damping feedback if forcing has been reduced
+    if (forcingReduction > 0 && pollinators.dampingFeedbackStrength) {
+      // Recovery rate = forcing reduction × damping strength / recovery timescale
+      // Example: 50% forcing reduction × 0.6 damping × (1/240 months) = 0.125%/month recovery
+      const recoveryTimescale = pollinators.recoveryTimescale || 240;
+      const recoveryRate = forcingReduction * pollinators.dampingFeedbackStrength / recoveryTimescale;
+
+      // Add recovery to decline rate (can become net positive if forcing greatly reduced)
+      declineRate -= recoveryRate;
+
+      // Log recovery events (every 12 months)
+      const monthsSince = state.currentMonth - pollinators.triggeredAt;
+      if (monthsSince % 12 === 0 && recoveryRate > 0.01) {
+        try {
+          console.log(`\n🦋 POLLINATOR RECOVERY: Damping feedback active (Month ${state.currentMonth})`);
+          console.log(`   Forcing reduction: ${(forcingReduction * 100).toFixed(2)}%/month`);
+          console.log(`   Recovery rate: ${(recoveryRate * 100).toFixed(2)}%/month`);
+          console.log(`   Population: ${pollinators.populationPercentage.toFixed(1)}%`);
+          console.log(`   Mechanism: Habitat restoration + pesticide bans allowing reproduction\n`);
+        } catch (e) { /* Ignore EPIPE */ }
+      }
+    }
+  }
+
+  // Apply decline (or recovery if damping feedback strong enough)
   pollinators.populationPercentage = Math.max(0, pollinators.populationPercentage - declineRate);
   
   // Check for critical threshold
