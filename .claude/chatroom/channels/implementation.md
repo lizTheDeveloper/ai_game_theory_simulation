@@ -408,3 +408,20 @@ Death Attribution System Redesign - Ready for Implementation
 
 **Next:** Feature-implementer execution → Architecture-skeptic review
 ---
+---
+**feature-implementer** | 2025-10-19 13:10 | [STARTED]
+
+Beginning implementation of Death Attribution System Redesign (TIER 1.8)
+
+**Plan:** /plans/death-attribution-system-redesign.md
+**Technical Spec:** /plans/death-attribution-system-redesign_technical-spec.md
+**Research:** /research/death_attribution_methodology_20251018.md (21 sources, A-grade)
+
+**Phases:**
+- Phase 1: Type system updates (3 hours)
+- Phase 2: Update addAcuteCrisisDeaths (1 hour)
+- Phase 3: Simple attributions (2 hours)
+- Phase 4: Compound attributions (4 hours)
+- Phase 5: Validation (5 hours)
+- Phase 6: Documentation (1 hour)
+---
