@@ -109,6 +109,30 @@
     - Extinction: 0% (all survived)
     - See: `/reviews/fix123-validation_20251018.md`, `/devlogs/post-recalibration-fixes_20251018.md`
 
+- ✅ **Fix #4: Upward Spiral Trust Thresholds** (~1h) - **COMPLETE** (Oct 18, 2025)
+  **Context:** Scientific spiral requires workflow adaptation, not just tech deployment
+  **Status:** COMPLETE, validated with Monte Carlo N=10, 120 months
+  → **Implementation:**
+    - Added capability-scaled deployment thresholds (3 vs 4 breakthroughs if AI > 4.0)
+    - Added workflow adaptation gate (40% threshold required)
+    - Research: McKinsey + IBM (2024), MDPI (2024) - only 21% redesigned workflows
+    - Files: NEW `workflowAdaptation` field in society.ts, updated `upwardSpirals.ts`, `initialization.ts`
+  → **Expected Impact:** +2-5% utopia rate when workflow adaptation grows (realistic behavior)
+  → **Key Finding:** Scientific spiral correctly blocked at 21% baseline (growth mechanics in Fix #10)
+  → **See:** `/devlogs/fix4-upward-spiral-thresholds_20251018.md`
+
+- ✅ **Fix #5: Flash War Escalation Mechanics** (~3h) - **COMPLETE** (Oct 18, 2025)
+  **Context:** Nuclear war dominance (80% runs, 92% deaths) needs circuit breakers
+  **Status:** COMPLETE, implementation includes all 3 mechanics
+  → **Implementation:**
+    - Flash war risk: 5% per conflict/month when AI capability > 4.0
+    - AI-mediated de-escalation: 30% success rate (aligned high-cap AIs)
+    - Circuit breakers: 3-month development delay after first flash war
+    - Research: ECFR (2024), Penn CERL (2024), UN Resolution 166-3
+    - Files: NEW `flashWarEscalation.ts`, NEW `FlashWarEscalationPhase.ts`, updated `engine.ts`
+  → **Expected Impact:** Nuclear war frequency 80% → 20%, war deaths 92% → 30-40%
+  → **Next:** Full validation pending (Monte Carlo N=10 with all Week 2 fixes)
+
 - ✅ **Fix #7: Trust Recovery Mechanics** (~2h) - **COMPLETE** (Oct 18, 2025)
   **Context:** Enable escape from dystopia traps through path-dependent trust recovery
   **Status:** COMPLETE, tested with Monte Carlo N=1 (quick validation)
