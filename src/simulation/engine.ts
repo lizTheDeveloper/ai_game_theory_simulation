@@ -57,6 +57,7 @@ import {
   TechTreePhase,
   MeaningRenaissancePhase,
   ConflictResolutionPhase,
+  FlashWarEscalationPhase,  // FIX #5 (Oct 18, 2025)
   DiplomaticAIPhase,
   NationalAIPhase,
   UBIPhase,
@@ -427,6 +428,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TechTreePhase());
     this.orchestrator.registerPhase(new MeaningRenaissancePhase());
     this.orchestrator.registerPhase(new ConflictResolutionPhase());
+    this.orchestrator.registerPhase(new FlashWarEscalationPhase());  // FIX #5 (Oct 18, 2025): Flash war escalation mechanics
     this.orchestrator.registerPhase(new DiplomaticAIPhase());
     this.orchestrator.registerPhase(new NationalAIPhase());
     this.orchestrator.registerPhase(new UBIPhase());

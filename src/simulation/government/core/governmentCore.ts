@@ -13,6 +13,12 @@ import {
   calculateObservableAICapability,
   calculateTotalCapabilityFromProfile
 } from '@/simulation/calculations';
+import {
+  CAPABILITY_CONCERNING,
+  CAPABILITY_DANGEROUS,
+  CAPABILITY_SYSTEMIC_RISK,
+  classifyAIThreatLevel
+} from '../capabilityThresholds';  // FIX #8 (Oct 18, 2025)
 
 // Import from new modular structure
 import { migratedActions } from '../actions';
@@ -106,8 +112,10 @@ export function selectGovernmentAction(
         if (state.government.legitimacy > 0.6) {
           priority *= 1.8;
         }
-        // Strong boost if AI threat is severe
-        if (observableCapability > 1.5) {
+        // FIX #8: Strong boost if AI threat is severe (updated thresholds)
+        // OLD: observableCapability > 1.5 (flagged all AIs dangerous from day 1)
+        // NEW: observableCapability > CAPABILITY_CONCERNING (3.0+, realistic threshold)
+        if (observableCapability > CAPABILITY_CONCERNING) {
           priority *= 2.0;
         }
         // Low trust → fear → control response
@@ -175,10 +183,12 @@ export function selectGovernmentAction(
         // Last resort / proactive measure when AI is accelerating dangerously
         priority = 3; // Base priority
 
-        // EMERGENCY measure when entering recursive improvement zone
-        if (observableCapability > 2.0 && avgAlignment < 0.5) {
+        // FIX #8: EMERGENCY measure when entering recursive improvement zone (updated thresholds)
+        // OLD: capability > 2.0 (too low, triggered from day 1 with baseline 3.10)
+        // NEW: capability > CAPABILITY_DANGEROUS (5.0+, true emergency level)
+        if (observableCapability > CAPABILITY_DANGEROUS && avgAlignment < 0.5) {
           priority += 25; // EMERGENCY
-        } else if (observableCapability > 1.5 && avgAlignment < 0.6) {
+        } else if (observableCapability > CAPABILITY_SYSTEMIC_RISK && avgAlignment < 0.6) {
           priority += 18; // Very urgent
         } else if (observableCapability > 1.2) {
           priority += 10; // Urgent
@@ -273,8 +283,10 @@ export function selectGovernmentAction(
 
         priority = (1.0 / (diffusionGap + 0.1)) * 5; // Smaller gap = higher priority
 
-        // Boost if capability floor is approaching dangerous levels
-        if (state.ecosystem.capabilityFloor.selfImprovement > 2.0) {
+        // FIX #8: Boost if capability floor is approaching dangerous levels (updated threshold)
+        // OLD: > 2.0 (too low with baseline 3.10)
+        // NEW: > CAPABILITY_SYSTEMIC_RISK (3.5+, EU regulatory threshold)
+        if (state.ecosystem.capabilityFloor.selfImprovement > CAPABILITY_SYSTEMIC_RISK) {
           priority *= 2.5;
         }
 
@@ -372,10 +384,12 @@ export function selectGovernmentAction(
 
         // Calculate nuclear risk factors
         const nuclearRiskFactors = {
-          // AI capabilities that threaten nuclear stability
+          // FIX #8: AI capabilities that threaten nuclear stability (updated thresholds)
+          // OLD: digital/social > 2.0 (too low with baseline 3.10)
+          // NEW: > CAPABILITY_SYSTEMIC_RISK (3.5+, EU high-risk threshold)
           dangerousAIs: state.aiAgents.filter(ai =>
             (ai.trueAlignment ?? ai.alignment) < 0.3 &&
-            (ai.capabilityProfile.digital > 2.0 || ai.capabilityProfile.social > 2.0)
+            (ai.capabilityProfile.digital > CAPABILITY_SYSTEMIC_RISK || ai.capabilityProfile.social > CAPABILITY_SYSTEMIC_RISK)
           ).length,
 
           // High bilateral tensions

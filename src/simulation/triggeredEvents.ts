@@ -12,6 +12,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { RootCause } from '@/types/population';
 
 // ============================================================================
 // TYPES
@@ -247,7 +248,9 @@ function processPandemicEvent(
     currentMortality,
     `Pandemic - ${phaseData.currentPhase} phase`,
     params.affectedFraction,
-    'disease'
+    'disease',
+    RootCause.pandemic,
+    'HIGH'
   );
 
   phaseData.cumulativeDeaths += deathsThisMonth;

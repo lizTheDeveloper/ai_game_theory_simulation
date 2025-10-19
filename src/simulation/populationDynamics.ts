@@ -17,7 +17,8 @@
  */
 
 import { GameState } from '@/types/game';
-import { HumanPopulationSystem, PopulationStatus, PopulationOutcome } from '@/types/population';
+import { HumanPopulationSystem, PopulationStatus, PopulationOutcome, RootCause, CompoundCause, isCompoundCause } from '@/types/population';
+import { validateCompoundCause, getCompoundConfidence } from './utils/deathAttribution';
 
 /**
  * Initialize population system (2025 baseline)
@@ -67,15 +68,36 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
       other: 0,
     },
 
-    // ROOT CAUSE: Why it happened
+    // ROOT CAUSE: Why it happened (research-backed taxonomy)
     deathsByRootCause: {
-      climateChange: 0,
-      conflict: 0,
-      governance: 0,
+      // Environmental drivers (4)
+      climate: 0,
+      resource: 0,
+      pollution: 0,
+      ecosystem: 0,
+
+      // Social drivers (3)
+      inequality: 0,
+      demographic: 0,
+      social: 0,
+
+      // Technology drivers (2)
       alignment: 0,
-      natural: 0,
-      poverty: 0,
-      other: 0,
+      disruption: 0,
+
+      // External shocks (2)
+      conflict: 0,
+      pandemic: 0,
+
+      // Compound tracking
+      compound: 0,
+
+      // Confidence distribution
+      confidenceDistribution: {
+        HIGH: 0,
+        MEDIUM: 0,
+        LOW: 0,
+      },
     },
 
     // Thresholds
@@ -728,14 +750,16 @@ function addSegmentSpecificCrisisDeaths(
   baseMortalityRate: number,
   reason: string,
   exposedFraction: number,
-  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other'
+  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other',
+  rootCause: RootCause | CompoundCause,
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW'
 ): void {
   const pop = state.humanPopulationSystem;
   const segments = state.society.segments;
-  
+
   if (!segments || segments.length === 0) {
     // Fallback to uniform mortality if segments not initialized
-    return addUniformCrisisDeaths(state, baseMortalityRate, reason, exposedFraction, category);
+    return addUniformCrisisDeaths(state, baseMortalityRate, reason, exposedFraction, category, rootCause, confidence);
   }
   
   let totalDeathsRequested = 0;
@@ -789,6 +813,29 @@ function addSegmentSpecificCrisisDeaths(
 
   // Track by category (stored in billions, converted to millions for display)
   pop.deathsByCategory[category] += totalDeathsApplied;
+
+  // Track by root cause (TIER 1.8: Death Attribution System Redesign)
+  if (isCompoundCause(rootCause)) {
+    // Validate compound cause
+    validateCompoundCause(rootCause);
+
+    // Distribute deaths across root causes by weight
+    for (const causeAttr of rootCause.causes) {
+      const weightedDeaths = totalDeathsApplied * causeAttr.weight;
+      pop.deathsByRootCause[causeAttr.cause] += weightedDeaths;
+    }
+
+    // Track as compound
+    pop.deathsByRootCause.compound += totalDeathsApplied;
+
+    // Use lowest confidence of components
+    const overallConfidence = getCompoundConfidence(rootCause);
+    pop.deathsByRootCause.confidenceDistribution[overallConfidence] += totalDeathsApplied;
+  } else {
+    // Single root cause
+    pop.deathsByRootCause[rootCause] += totalDeathsApplied;
+    pop.deathsByRootCause.confidenceDistribution[confidence] += totalDeathsApplied;
+  }
   
   // Log significant events
   if (totalDeathsApplied > 0.001) {
@@ -831,28 +878,30 @@ function addUniformCrisisDeaths(
   mortalityRate: number,
   reason: string,
   exposedFraction: number,
-  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other'
+  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other',
+  rootCause: RootCause | CompoundCause,
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW'
 ): void {
   const pop = state.humanPopulationSystem;
-  
+
   // Initialize monthly tracking if not present
   if (pop.monthlyDeathsApplied === undefined) {
     pop.monthlyDeathsApplied = 0;
     pop.monthlyDeathCapReached = false;
   }
-  
+
   // Calculate monthly death cap (20% of current population)
   const monthlyDeathCap = pop.population * 0.20;
   const remainingCapacity = Math.max(0, monthlyDeathCap - pop.monthlyDeathsApplied);
-  
+
   // Calculate deaths: Only exposed population × mortality rate
   const exposedPopulation = pop.population * exposedFraction;
   const requestedDeaths = exposedPopulation * mortalityRate;
-  
+
   // Apply death cap
   const actualDeaths = Math.min(requestedDeaths, remainingCapacity);
   const deathsInBillions = actualDeaths;
-  
+
   // Track if cap was reached (for logging)
   if (actualDeaths < requestedDeaths && !pop.monthlyDeathCapReached) {
     pop.monthlyDeathCapReached = true;
@@ -870,33 +919,95 @@ function addUniformCrisisDeaths(
   // Track by category (stored in billions, converted to millions for display)
   pop.deathsByCategory[category] += deathsInBillions;
 
+  // Track by root cause (TIER 1.8: Death Attribution System Redesign)
+  if (isCompoundCause(rootCause)) {
+    // Validate compound cause
+    validateCompoundCause(rootCause);
+
+    // Distribute deaths across root causes by weight
+    for (const causeAttr of rootCause.causes) {
+      const weightedDeaths = deathsInBillions * causeAttr.weight;
+      pop.deathsByRootCause[causeAttr.cause] += weightedDeaths;
+    }
+
+    // Track as compound
+    pop.deathsByRootCause.compound += deathsInBillions;
+
+    // Use lowest confidence of components
+    const overallConfidence = getCompoundConfidence(rootCause);
+    pop.deathsByRootCause.confidenceDistribution[overallConfidence] += deathsInBillions;
+  } else {
+    // Single root cause
+    pop.deathsByRootCause[rootCause] += deathsInBillions;
+    pop.deathsByRootCause.confidenceDistribution[confidence] += deathsInBillions;
+  }
+
   // Log significant events
   if (deathsInBillions > 0.001) { // > 1M deaths
     const deathsInMillions = (deathsInBillions * 1000).toFixed(1);
     const exposedPct = (exposedFraction * 100).toFixed(0);
     const scope = exposedFraction >= 0.9 ? 'GLOBAL' : exposedFraction >= 0.4 ? 'SEMI-GLOBAL' : 'REGIONAL';
     const cappedNote = actualDeaths < requestedDeaths ? ' [CAPPED]' : '';
+
+    // Format root cause for logging
+    let rootCauseStr: string;
+    if (isCompoundCause(rootCause)) {
+      const causes = rootCause.causes.map(c => `${c.cause}=${(c.weight * 100).toFixed(0)}%`).join('+');
+      rootCauseStr = `compound(${causes})`;
+    } else {
+      rootCauseStr = rootCause;
+    }
+
     console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
     console.log(`   Exposed: ${exposedPct}% of world, Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
+    console.log(`   Root cause: ${rootCauseStr}, Confidence: ${confidence}`);
     console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);
   }
 }
 
 /**
  * Add acute crisis deaths (public API)
- * 
+ *
  * P2.3 UPDATE (Oct 16, 2025): Now supports segment-specific mortality
- * - If heterogeneous population segments are active, applies differential impact
- * - Vulnerable segments (precariat, rural) suffer 2-3x higher mortality
- * - Protected segments (elite, urban) suffer 0.3-0.5x lower mortality
- * - Falls back to uniform mortality if segments not initialized
+ * TIER 1.8 UPDATE (Oct 19, 2025): Required root cause attribution with research backing
+ *
+ * @param state - Game state to modify
+ * @param mortalityRate - Mortality rate (0-1, fraction of exposed population)
+ * @param reason - Human-readable description
+ * @param exposedFraction - Fraction of total population exposed (0-1)
+ * @param category - Proximate cause (HOW they died)
+ * @param rootCause - Root cause (WHY it happened) - single or compound (REQUIRED)
+ * @param confidence - Confidence level in attribution (default: MEDIUM)
+ *
+ * @example Single cause
+ * addAcuteCrisisDeaths(
+ *   state, 0.60, 'Nuclear war - blast/radiation', 0.30, 'war',
+ *   RootCause.conflict, 'HIGH'
+ * );
+ *
+ * @example Compound cause
+ * addAcuteCrisisDeaths(
+ *   state, 0.015, 'Climate catastrophe - famine', 0.30, 'climate',
+ *   {
+ *     causes: [
+ *       { cause: RootCause.climate, weight: 0.50, confidence: 'MEDIUM' },
+ *       { cause: RootCause.inequality, weight: 0.35, confidence: 'MEDIUM' },
+ *       { cause: RootCause.ecosystem, weight: 0.15, confidence: 'MEDIUM' }
+ *     ],
+ *     evidence: 'Burke et al. (2020) + IPCC AR6',
+ *     mechanism: 'Drought × poverty × degraded land → famine'
+ *   },
+ *   'MEDIUM'
+ * );
  */
 export function addAcuteCrisisDeaths(
   state: GameState,
   mortalityRate: number,
   reason: string,
   exposedFraction: number = 1.0,
-  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other' = 'other'
+  category: 'war' | 'famine' | 'climate' | 'disease' | 'ecosystem' | 'pollution' | 'ai' | 'cascade' | 'other' = 'other',
+  rootCause: RootCause | CompoundCause,  // NOW REQUIRED (was optional)
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW' = 'MEDIUM'  // NEW parameter
 ): void {
   const pop = state.humanPopulationSystem;
 
@@ -916,15 +1027,15 @@ export function addAcuteCrisisDeaths(
     pop.population = 0.1; // Small survival population as fallback
   }
 
-  
+
   // P2.3 UPDATE (Oct 16, 2025): Route to segment-specific or uniform mortality
   // If heterogeneous population segments are active, apply differential mortality
   // Otherwise, fall back to uniform mortality (legacy behavior)
-  
+
   if (state.society.segments && state.society.segments.length > 0) {
-    addSegmentSpecificCrisisDeaths(state, mortalityRate, reason, exposedFraction, category);
+    addSegmentSpecificCrisisDeaths(state, mortalityRate, reason, exposedFraction, category, rootCause, confidence);
   } else {
-    addUniformCrisisDeaths(state, mortalityRate, reason, exposedFraction, category);
+    addUniformCrisisDeaths(state, mortalityRate, reason, exposedFraction, category, rootCause, confidence);
   }
 }
 
@@ -970,15 +1081,29 @@ export function logDeathSummary(state: GameState): void {
   console.log(`  Cascade:    ${(proximate.cascade * 1000).toFixed(1)}M (${formatPercent(proximate.cascade, totalDeaths)}%)`);
   console.log(`  Other:      ${(proximate.other * 1000).toFixed(1)}M (${formatPercent(proximate.other, totalDeaths)}%)`);
 
-  // ROOT CAUSES: Why it happened (underlying systemic driver)
+  // ROOT CAUSES: Why it happened (underlying systemic driver) - TIER 1.8 updated taxonomy
   console.log('\n--- ROOT CAUSES (Why it happened) ---');
-  console.log(`  Climate Change: ${(rootCause.climateChange * 1000).toFixed(1)}M (${formatPercent(rootCause.climateChange, totalDeaths)}%)`);
-  console.log(`  Conflict:       ${(rootCause.conflict * 1000).toFixed(1)}M (${formatPercent(rootCause.conflict, totalDeaths)}%)`);
-  console.log(`  Governance:     ${(rootCause.governance * 1000).toFixed(1)}M (${formatPercent(rootCause.governance, totalDeaths)}%)`);
-  console.log(`  Alignment:      ${(rootCause.alignment * 1000).toFixed(1)}M (${formatPercent(rootCause.alignment, totalDeaths)}%)`);
-  console.log(`  Natural:        ${(rootCause.natural * 1000).toFixed(1)}M (${formatPercent(rootCause.natural, totalDeaths)}%)`);
-  console.log(`  Poverty:        ${(rootCause.poverty * 1000).toFixed(1)}M (${formatPercent(rootCause.poverty, totalDeaths)}%)`);
-  console.log(`  Other:          ${(rootCause.other * 1000).toFixed(1)}M (${formatPercent(rootCause.other, totalDeaths)}%)`);
+  console.log('  Environmental drivers:');
+  console.log(`    Climate:     ${(rootCause.climate * 1000).toFixed(1)}M (${formatPercent(rootCause.climate, totalDeaths)}%)`);
+  console.log(`    Resource:    ${(rootCause.resource * 1000).toFixed(1)}M (${formatPercent(rootCause.resource, totalDeaths)}%)`);
+  console.log(`    Pollution:   ${(rootCause.pollution * 1000).toFixed(1)}M (${formatPercent(rootCause.pollution, totalDeaths)}%)`);
+  console.log(`    Ecosystem:   ${(rootCause.ecosystem * 1000).toFixed(1)}M (${formatPercent(rootCause.ecosystem, totalDeaths)}%)`);
+  console.log('  Social drivers:');
+  console.log(`    Inequality:  ${(rootCause.inequality * 1000).toFixed(1)}M (${formatPercent(rootCause.inequality, totalDeaths)}%)`);
+  console.log(`    Demographic: ${(rootCause.demographic * 1000).toFixed(1)}M (${formatPercent(rootCause.demographic, totalDeaths)}%)`);
+  console.log(`    Social:      ${(rootCause.social * 1000).toFixed(1)}M (${formatPercent(rootCause.social, totalDeaths)}%)`);
+  console.log('  Technology drivers:');
+  console.log(`    Alignment:   ${(rootCause.alignment * 1000).toFixed(1)}M (${formatPercent(rootCause.alignment, totalDeaths)}%)`);
+  console.log(`    Disruption:  ${(rootCause.disruption * 1000).toFixed(1)}M (${formatPercent(rootCause.disruption, totalDeaths)}%)`);
+  console.log('  External shocks:');
+  console.log(`    Conflict:    ${(rootCause.conflict * 1000).toFixed(1)}M (${formatPercent(rootCause.conflict, totalDeaths)}%)`);
+  console.log(`    Pandemic:    ${(rootCause.pandemic * 1000).toFixed(1)}M (${formatPercent(rootCause.pandemic, totalDeaths)}%)`);
+  console.log('  Compound attribution:');
+  console.log(`    Compound:    ${(rootCause.compound * 1000).toFixed(1)}M (${formatPercent(rootCause.compound, totalDeaths)}%)`);
+  console.log('  Confidence distribution:');
+  console.log(`    HIGH:        ${(rootCause.confidenceDistribution.HIGH * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.HIGH, totalDeaths)}%)`);
+  console.log(`    MEDIUM:      ${(rootCause.confidenceDistribution.MEDIUM * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.MEDIUM, totalDeaths)}%)`);
+  console.log(`    LOW:         ${(rootCause.confidenceDistribution.LOW * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.LOW, totalDeaths)}%)`);
   console.log('==========================================\n');
 }
 

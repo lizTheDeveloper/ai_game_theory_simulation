@@ -79,14 +79,36 @@ export interface HumanPopulationSystem {
   };
 
   // ROOT CAUSE: Why it happened (underlying driver of death)
+  // Research-backed taxonomy (Diamond 2005, IPBES 2019, Acemoglu & Robinson 2012)
   deathsByRootCause: {
-    climateChange: number;               // Climate change (drives disasters, famine, disease, ecosystem)
-    conflict: number;                    // War, geopolitical tensions
-    governance: number;                  // Policy failures, institutional collapse
-    alignment: number;                   // AI alignment failure
-    natural: number;                     // Natural disasters (non-climate)
-    poverty: number;                     // Economic deprivation
-    other: number;                       // Other root causes
+    // Environmental drivers (4 categories)
+    climate: number;                     // Climate change (14% IPBES biodiversity driver)
+    resource: number;                    // Resource depletion (phosphorus, water)
+    pollution: number;                   // Toxic contamination (14% IPBES, novel entities)
+    ecosystem: number;                   // Biodiversity/land use (30% land use + 23% exploitation IPBES)
+
+    // Social drivers (3 categories)
+    inequality: number;                  // Wealth/power concentration (Piketty, elite capture)
+    demographic: number;                 // Population/resource imbalance (Malthusian pressure)
+    social: number;                      // Cultural breakdown/anomie (Durkheim, loss of meaning)
+
+    // Technology drivers (2 categories)
+    alignment: number;                   // AI misalignment/control loss
+    disruption: number;                  // Technology displacement (unemployment, obsolescence)
+
+    // External shocks (2 categories)
+    conflict: number;                    // War/violence (geopolitical, civil, terrorism)
+    pandemic: number;                    // Disease outbreak (natural or engineered)
+
+    // Compound attribution tracking
+    compound: number;                    // Deaths with multiple root causes (WHO PAF methodology)
+
+    // Confidence distribution
+    confidenceDistribution: {
+      HIGH: number;                      // Deaths with HIGH confidence attribution
+      MEDIUM: number;                    // Deaths with MEDIUM confidence attribution
+      LOW: number;                       // Deaths with LOW confidence attribution
+    };
   };
 
   // Thresholds (for outcomes)
@@ -251,4 +273,113 @@ export interface PopulationOutcome {
   geneticBottleneck: boolean;        // Did we go below 100M?
   civilizationIntact: boolean;       // Can we rebuild?
   outcomeNarrative: string;          // Human-readable outcome
+}
+
+/**
+ * Root Cause Categories (11 categories, research-backed)
+ *
+ * Based on collapse literature taxonomy:
+ * - Diamond (2005): Environmental, climate, conflict drivers (NOT governance)
+ * - IPBES (2019): Direct drivers (land use, exploitation, climate, pollution)
+ * - Acemoglu & Robinson (2012): Institutions are endogenous (result, not cause)
+ * - Tainter (1988): Complexity/resource exhaustion (governance failure is symptom)
+ */
+export enum RootCause {
+  // ENVIRONMENTAL DRIVERS (Diamond #1-2, IPBES direct drivers)
+  climate = 'climate',           // Anthropogenic climate change (14% IPBES biodiversity driver)
+  resource = 'resource',         // Resource depletion/planetary boundaries (phosphorus, water)
+  pollution = 'pollution',       // Toxic contamination (14% IPBES, novel entities)
+  ecosystem = 'ecosystem',       // Biodiversity/land use (30% IPBES land use + 23% exploitation)
+
+  // SOCIAL DRIVERS (Turchin, Acemoglu & Robinson underlying causes)
+  inequality = 'inequality',     // Wealth/power concentration (Piketty, elite capture)
+  demographic = 'demographic',   // Population/resource imbalance (Malthusian pressure)
+  social = 'social',             // Cultural breakdown/anomie (Durkheim, loss of meaning)
+
+  // TECHNOLOGY DRIVERS (modern AI-era additions)
+  alignment = 'alignment',       // AI misalignment/control loss
+  disruption = 'disruption',     // Technology displacement (unemployment, obsolescence)
+
+  // EXTERNAL SHOCKS (Diamond #3-4, Turchin crisis triggers)
+  conflict = 'conflict',         // War/violence (geopolitical, civil, terrorism)
+  pandemic = 'pandemic',         // Disease outbreak (natural or engineered)
+}
+
+/**
+ * Individual root cause attribution with weight and confidence
+ */
+export interface RootCauseAttribution {
+  /**
+   * Root cause category
+   */
+  cause: RootCause;
+
+  /**
+   * Weight (0-1, sum of all weights in CompoundCause must = 1.0)
+   * Represents normalized Population Attributable Fraction (PAF)
+   */
+  weight: number;
+
+  /**
+   * Confidence level in this attribution
+   * - HIGH: RCT/natural experiment/strong observational (nuclear war → deaths)
+   * - MEDIUM: Multi-study observational (climate → ecosystem → famine)
+   * - LOW: Theoretical/model-based (AI dystopia → governance → deaths)
+   */
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW';
+
+  /**
+   * Optional research citation for this specific cause
+   */
+  citation?: string;
+}
+
+/**
+ * Compound Cause Attribution (WHO PAF Methodology)
+ *
+ * Used when multiple root causes interact with comparable effect sizes (PAF ≥ 25% each).
+ * Weights must sum to 1.0 and represent normalized Population Attributable Fractions.
+ *
+ * Research:
+ * - WHO (2024): PAF methodology for multi-cause attribution
+ * - Burke et al. (2020): Climate × poverty interaction (23x multiplier)
+ * - IPCC AR6: Cascading risks require compound attribution
+ *
+ * @example
+ * // Climate famine in poor region
+ * {
+ *   causes: [
+ *     { cause: RootCause.climate, weight: 0.40, confidence: 'MEDIUM' },
+ *     { cause: RootCause.inequality, weight: 0.40, confidence: 'MEDIUM' },
+ *     { cause: RootCause.ecosystem, weight: 0.20, confidence: 'MEDIUM' }
+ *   ],
+ *   evidence: 'Burke et al. (2020) climate-poverty interaction + IPCC AR6 cascades',
+ *   mechanism: 'Drought (climate) × poverty (no irrigation) × degraded land (ecosystem) → famine'
+ * }
+ */
+export interface CompoundCause {
+  /**
+   * Array of root causes with weights (must sum to 1.0)
+   * At least 2 causes required, each with PAF ≥ 0.10
+   */
+  causes: RootCauseAttribution[];
+
+  /**
+   * Research citation justifying weight allocation
+   */
+  evidence: string;
+
+  /**
+   * Causal mechanism description (A → B → C → death)
+   */
+  mechanism?: string;
+}
+
+/**
+ * Type guard to check if attribution is compound
+ */
+export function isCompoundCause(
+  cause: RootCause | CompoundCause
+): cause is CompoundCause {
+  return typeof cause === 'object' && 'causes' in cause;
 }
