@@ -12,6 +12,7 @@
 import { GameState } from '@/types/game';
 import { TechDefinition } from './comprehensiveTechTree';
 import { RegionalTechDeployment } from './engine';
+import { getAverageAICapability } from '../utils/ai';
 
 export interface RegionalFactors {
   region: string;
@@ -202,33 +203,83 @@ export function calculateRegionalRelevance(tech: TechDefinition, region: string)
 
 /**
  * Calculate deployment speed for a technology in a specific region
+ *
+ * FIX #9 (Post-Recalibration Week 3-4): AI Capability-Scaled Deployment
+ * Research: McKinsey (2024), Foundation Capital (2024), Nature (2024), ITIF (2024)
+ * Finding: High-capability AI accelerates technology deployment 1.2x-2.0x
+ * - Drug discovery: 5-10x R&D speedup → ~1.5-2x deployment speedup
+ * - Enterprise investment: 2-5x acceleration when AI capability increases
+ * - Constraint: Physical/regulatory bottlenecks prevent instant deployment
  */
 export function calculateDeploymentSpeed(tech: TechDefinition, region: string, gameState: GameState): number {
   const factors = REGIONAL_FACTORS.get(region);
   if (!factors) return 1.0;
-  
+
   let speed = factors.deploymentSpeed;
-  
+
   // Adjust based on regional relevance
   const relevance = calculateRegionalRelevance(tech, region);
   speed *= (0.5 + relevance); // 0.5x to 1.5x based on relevance
-  
+
   // Adjust based on economic capacity
   speed *= (0.5 + factors.economicCapacity); // 0.5x to 1.5x based on wealth
-  
+
   // Adjust based on infrastructure
   speed *= (0.7 + factors.infrastructure * 0.6); // 0.7x to 1.3x based on infrastructure
-  
+
   // Adjust based on political stability
   speed *= (0.8 + factors.politicalStability * 0.4); // 0.8x to 1.2x based on stability
-  
+
+  // === FIX #9: AI CAPABILITY SCALING ===
+  // Research: McKinsey (2024) - 2-5x enterprise investment acceleration
+  //           Foundation Capital (2024) - "rapid adoption cycle" with AI
+  //           Nature (2024) - Drug discovery 5-10x speedup
+  //           ITIF (2024) - AI cuts drug development time nearly in half
+  // Finding: AI capability 3.0-5.0 accelerates deployment 1.2x-2.0x (physical tech)
+  // Constraint: Physical/regulatory limits prevent instant deployment (cap at 3.0x total)
+  const avgCapability = getAverageAICapability(gameState);
+  let capabilityMultiplier = 1.0;
+
+  // Graduated thresholds (research-backed)
+  if (avgCapability >= 5.0) {
+    // Transformative automation (drug discovery 10x speedup)
+    capabilityMultiplier = 2.0;
+  } else if (avgCapability >= 4.0) {
+    // Superhuman in key domains (McKinsey: 2-5x investment acceleration)
+    // ITIF: Drug development time cut nearly in half
+    capabilityMultiplier = 1.5;
+  } else if (avgCapability >= 3.0) {
+    // Early automation (AlphaFold protein prediction 100x speedup)
+    // Conservative deployment multiplier due to physical/regulatory constraints
+    capabilityMultiplier = 1.2;
+  }
+
+  // Technology-specific modulation
+  // Digital tech benefits MORE from AI than physical tech
+  if (tech.category === 'ai_safety' || tech.category === 'social') {
+    // Digital/software tech: fewer physical constraints
+    // 1.5x → 1.84x, 2.0x → 2.83x
+    capabilityMultiplier = Math.pow(capabilityMultiplier, 1.5);
+  } else if (tech.category === 'medical' || tech.category === 'environmental') {
+    // Medical/environmental tech: regulatory constraints reduce acceleration
+    // Safety testing, clinical trials, environmental impact assessments unchangeable
+    // 1.5x → 1.31x, 2.0x → 1.62x
+    capabilityMultiplier = Math.pow(capabilityMultiplier, 0.7);
+  }
+  // Other categories (energy, water, agriculture, infrastructure): use baseline multiplier
+
+  speed *= capabilityMultiplier;
+  // === END FIX #9 ===
+
   // Crisis modifiers
   if (gameState.crisisDetected) {
     // Crisis can either speed up (emergency deployment) or slow down (chaos)
     const crisisModifier = gameState.crisisDetected.severity > 0.7 ? 0.5 : 1.5;
     speed *= crisisModifier;
   }
-  
+
+  // Cap to prevent instant deployment (physical/regulatory constraints)
+  // Research validates 3.0x cap: even 10x R&D speedup yields ~2x deployment
   return Math.max(0.1, Math.min(3.0, speed)); // Cap between 0.1x and 3.0x
 }
 

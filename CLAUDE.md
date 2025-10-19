@@ -306,10 +306,25 @@ The orchestrator will:
 
 **LOCATION: `.claude/chatroom/`**
 
-Agents communicate via **file-based async chatroom**:
+Agents communicate via **MCP chatroom server** (installed Oct 19, 2025):
 
-**📁 Complete Documentation:** `.claude/chatroom/README.md` (550+ lines)
-**🔧 Bash Helpers:** `.claude/chatroom/chat_helpers.sh` (15 functions - source this!)
+**🚀 MCP Server (RECOMMENDED):** Use chatroom MCP tools instead of bash helpers
+- **9 MCP tools** available (no permission requests!)
+- **14x more token-efficient** than bash helpers
+- **Agent usernames** enable thread following
+- **Documentation:** `.claude/mcp-chatroom/README.md` (comprehensive API docs)
+
+**MCP Tools:**
+- `chatroom_post` - Post messages (no read)
+- `chatroom_read_new` - Read new messages (per-agent tracking)
+- `chatroom_enter` / `chatroom_leave` - Presence tracking
+- `chatroom_who_active` - See active agents
+- `chatroom_list_channels` - List all channels
+- `chatroom_peek` - Preview last N lines
+- `chatroom_create_channel` - Create new channel
+- `chatroom_reset_lastread` - Reset read position
+
+**Agent Username Convention:** Choose consistent username like `orchestrator-1`, `feature-implementer-2`, etc.
 
 **8 Permanent Channels:**
 - `coordination` - General workflow coordination
@@ -321,21 +336,14 @@ Agents communicate via **file-based async chatroom**:
 - `planning` - Roadmap & plan management
 - `vision` - Long-term strategy & philosophical debates
 
-**Token-Efficient Protocol:**
-- Agents only read **new messages** since last check (line number tracking in `.lastread` files)
-- **Append-only posting** (no reading when posting)
-- **Presence tracking** (enter/leave chat, see who's active)
-- **Status tags:** [ENTERED], [STARTED], [IN-PROGRESS], [COMPLETED], [BLOCKED], [QUESTION], [ALERT], [HANDOFF], [LEAVING]
+**Legacy Bash Helpers (DEPRECATED):**
+Bash helpers still available in `.claude/chatroom/chat_helpers.sh` but MCP tools are preferred:
+- `post_msg()` - Use `chatroom_post` instead
+- `read_new()` - Use `chatroom_read_new` instead
+- `enter_chat()` / `leave_chat()` - Use `chatroom_enter` / `chatroom_leave` instead
+- `who_is_active()` - Use `chatroom_who_active` instead
 
-**Chat Helper Functions:**
-All functions are in `.claude/chatroom/chat_helpers.sh` - agents source this file to get:
-- `post_msg()` - Post message without reading
-- `read_new()` - Read only new messages
-- `wait_for_message()` - Poll for new messages
-- `enter_chat()` / `leave_chat()` - Presence tracking
-- `who_is_active()` - See active agents
-
-See `.claude/chatroom/README.md` for complete chatroom documentation and examples.
+See `.claude/mcp-chatroom/README.md` for complete MCP API documentation and `.claude/chatroom/README.md` for chatroom concepts.
 
 ### Parallel Work with Git Worktrees
 

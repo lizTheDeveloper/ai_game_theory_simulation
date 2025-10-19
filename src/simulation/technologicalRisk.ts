@@ -109,7 +109,15 @@ function checkTechnologicalCrises(state: GameState): void {
     // SEMI-GLOBAL: Infrastructure-dependent regions (modern nations with AI systems) = ~70% of world
     // 1.2% mortality rate from AI-caused disasters in dependent regions
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.012, 'AI control loss - infrastructure failures/accidents (AI-dependent regions)', 0.70, 'ai');
+    addAcuteCrisisDeaths(
+      state,
+      0.012,
+      'AI control loss - infrastructure failures/accidents (AI-dependent regions)',
+      0.70,
+      'ai',
+      RootCause.alignment,
+      'LOW'  // Theoretical, no historical precedent
+    );
   }
   
   // CORPORATE DYSTOPIA
@@ -134,7 +142,24 @@ function checkTechnologicalCrises(state: GameState): void {
       // SEMI-GLOBAL: Regions where corporations dominate (US, EU, parts of Asia) = ~40% of world
       // 0.75% mortality rate from healthcare denial/resource hoarding
       const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(state, 0.0075, 'Corporate dystopia - resource hoarding/healthcare denial (corporate-controlled)', 0.40, 'ai');
+      addAcuteCrisisDeaths(
+        state,
+        0.0075,
+        'Corporate dystopia - resource hoarding/healthcare denial (corporate-controlled)',
+        0.40,
+        'ai',
+        {
+          causes: [
+            { cause: RootCause.inequality, weight: 0.60, confidence: 'MEDIUM',
+              citation: 'Acemoglu & Robinson (2012): Extractive institutions' },
+            { cause: RootCause.alignment, weight: 0.40, confidence: 'LOW',
+              citation: 'Theoretical: AI enables monopolization' }
+          ],
+          evidence: 'Acemoglu & Robinson extractive institutions + AI scaling effects',
+          mechanism: 'AI capabilities → market concentration → elite capture → resource hoarding'
+        },
+        'LOW'  // Compound with theoretical component
+      );
     }
   }
   

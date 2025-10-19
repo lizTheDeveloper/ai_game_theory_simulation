@@ -16,13 +16,14 @@
 
 import { GameState, SocialAccumulation } from '@/types/game';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
+import { RootCause } from '@/types/population';
 import {
   TRUST_THRESHOLD_ACCEPTANCE,
   TRUST_THRESHOLD_EMBRACE,
   TRUST_RECOVERY_FROM_EDUCATION,
   TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS,
   TRUST_RECOVERY_FROM_SAFETY_RECORD,
-  TRUST_RECOVERY_FROM_EXPLAINABILITY,
+  TRUST_RECOVERY_FROM_PERFORMANCE,  // FIX #2A/7A: Replaced explainability with performance
   TRUST_RECOVERY_CAP,
   TRUST_DECAY_FROM_INCIDENT,
   TRUST_DECAY_FROM_MISALIGNMENT,
@@ -328,7 +329,24 @@ function checkSocialCrises(state: GameState): void {
     // SEMI-GLOBAL: Wealthy automated nations (US, EU, Japan, SK, etc.) = ~30% of world
     // 0.5% mortality rate in affected regions (severe suicide spike)
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.005, 'Meaning collapse - suicide epidemic (wealthy nations)', 0.30, 'other');
+    addAcuteCrisisDeaths(
+      state,
+      0.005,
+      'Meaning collapse - suicide epidemic (wealthy nations)',
+      0.30,
+      'other',
+      {
+        causes: [
+          { cause: RootCause.social, weight: 0.50, confidence: 'MEDIUM',
+            citation: 'Durkheim (1897): Anomie from loss of purpose' },
+          { cause: RootCause.disruption, weight: 0.50, confidence: 'MEDIUM',
+            citation: 'Case & Deaton (2015): Deaths of despair from economic displacement' }
+        ],
+        evidence: 'Durkheim anomie + Case & Deaton deaths of despair from AI unemployment',
+        mechanism: 'AI-driven unemployment → loss of purpose/meaning → anomie → suicide'
+      },
+      'MEDIUM'
+    );
   }
   
   // INSTITUTIONAL FAILURE: Government legitimacy below 30%
@@ -349,8 +367,53 @@ function checkSocialCrises(state: GameState): void {
     // Population impact: State collapse causes chaos, riots, food distribution failures (0.1-0.3% casualties)
     // REGIONAL: Specific failing state (Somalia, Venezuela, etc.) = ~5% of world
     // 4% mortality rate in collapsed state (severe chaos, riots, starvation)
+    // CRITICAL: Governance failure is SYMPTOM, not root cause - trace back to what CAUSED institutional failure
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.04, 'Institutional failure - state collapse chaos (failing state)', 0.05, 'other');
+
+    let institutionFailureAttribution: any; // RootCause | CompoundCause
+    let institutionFailureConfidence: 'HIGH' | 'MEDIUM' | 'LOW';
+
+    if (state.environmentalAccumulation.resourceCrisisActive) {
+      // Resource scarcity → fiscal stress → state collapse
+      institutionFailureAttribution = {
+        causes: [
+          { cause: RootCause.resource, weight: 0.70, confidence: 'MEDIUM' },
+          { cause: RootCause.demographic, weight: 0.30, confidence: 'MEDIUM' }
+        ],
+        evidence: 'Tainter (1988): Resource exhaustion → diminishing returns → collapse',
+        mechanism: 'Resource scarcity + population pressure → fiscal stress → state capacity collapse'
+      };
+      institutionFailureConfidence = 'MEDIUM';
+    } else if (state.nuclearWinterState && state.nuclearWinterState.active) {
+      // War destroyed state capacity
+      institutionFailureAttribution = RootCause.conflict;
+      institutionFailureConfidence = 'HIGH';
+    } else if (state.society.socialCohesion < 0.3) {
+      // Extreme inequality → legitimacy collapse
+      institutionFailureAttribution = {
+        causes: [
+          { cause: RootCause.inequality, weight: 0.60, confidence: 'MEDIUM' },
+          { cause: RootCause.social, weight: 0.40, confidence: 'MEDIUM' }
+        ],
+        evidence: 'Turchin (2016): Elite overproduction + popular immiseration → state breakdown',
+        mechanism: 'Extreme inequality + social fragmentation → legitimacy crisis → state collapse'
+      };
+      institutionFailureConfidence = 'MEDIUM';
+    } else {
+      // Unknown trigger (shouldn't happen, but fallback)
+      institutionFailureAttribution = RootCause.social; // Best guess
+      institutionFailureConfidence = 'LOW';
+    }
+
+    addAcuteCrisisDeaths(
+      state,
+      0.04,
+      'Institutional failure - state collapse chaos (failing state)',
+      0.05,
+      'cascade',
+      institutionFailureAttribution,
+      institutionFailureConfidence
+    );
 
     // High risk of dystopia transition
     // Government may become authoritarian to restore order
@@ -387,7 +450,23 @@ function checkSocialCrises(state: GameState): void {
     // REGIONAL: Unstable regions (MENA, parts of Africa/Latin America) = ~10% of world
     // 3% mortality rate in unrest regions (riots, clashes are deadly)
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.03, 'Social unrest - riots/civil violence (unstable regions)', 0.10, 'other');
+    addAcuteCrisisDeaths(
+      state,
+      0.03,
+      'Social unrest - riots/civil violence (unstable regions)',
+      0.10,
+      'other',
+      {
+        causes: [
+          { cause: RootCause.inequality, weight: 0.60, confidence: 'MEDIUM' },
+          { cause: RootCause.disruption, weight: 0.30, confidence: 'MEDIUM' },
+          { cause: RootCause.climate, weight: 0.10, confidence: 'LOW' }
+        ],
+        evidence: 'Turchin (2016) secular cycles + Burke et al. climate-conflict link',
+        mechanism: 'Elite competition + unemployment + resource stress → riots'
+      },
+      'MEDIUM'
+    );
   }
   
   // === ONGOING CRISIS IMPACTS ===
@@ -455,35 +534,44 @@ export function hasSocialCrisis(social: SocialAccumulation): boolean {
  * Research Foundation:
  * - University of Melbourne + KPMG (2025): 46% trust AI, trust based on benefits NOT capability
  * - Edelman (2024): High-trust companies 2.6x more likely successful AI adoption
- * - DORA (2024): Trust correlates with productivity benefits, explainability, safety
+ * - DORA (2024): Trust correlates with productivity benefits, PERFORMANCE (not explainability)
+ *   → +49% output quality perception from performance feedback, NOT process explanations
+ *   → +52% privacy understanding from outcome transparency
+ * - Scientific Reports (2024): "Interpretability does not significantly improve trust,
+ *   while outcome feedback has a more reliable and positive impact"
+ * - McKinsey (2024): 40% identify explainability as a RISK (reveals concerning logic)
  *
- * Key Insight: Trust depends on OUTCOMES (alignment, benefits, safety, explainability),
- * NOT on absolute capability level. High-capability aligned AI can be highly trusted.
+ * FIX #2A (Oct 19, 2025): Evidence-Based Trust Model
+ * REMOVED explainability (contradicts research), ADDED performance (empirically most important)
  *
- * Trust Components:
- * 1. Alignment Quality (40%) - Low misalignment rate = high trust
- * 2. Demonstrated Benefits (20%) - Has AI improved quality of life?
- * 3. Explainability (20%) - Can people understand AI decisions?
- * 4. Safety Record (20%) - No incidents = higher trust
+ * Key Insight: Trust depends on PERFORMANCE (how well AI works) and OUTCOMES (benefits, safety),
+ * NOT on explainability or absolute capability level. People prefer "it works" over "here's why."
+ *
+ * Trust Components (Research-Backed):
+ * 1. Alignment Perception (25%) - Observable AI behavior (not true alignment - unobservable)
+ * 2. Performance (35%) - How well AI works in practice (MOST IMPORTANT)
+ * 3. Demonstrated Benefits (25%) - Has AI improved quality of life tangibly?
+ * 4. Safety Record (15%) - Track record of no major incidents
  * 5. Capability Fear (penalty) - Only rapid changes cause fear, not absolute levels
  */
 export function calculateComprehensiveTrustInAI(state: GameState): number {
-  // 1. ALIGNMENT QUALITY (40% weight)
-  const alignmentQuality = calculateAlignmentQuality(state);
+  // 1. ALIGNMENT PERCEPTION (25% weight)
+  // Observable behavior, NOT true alignment (which is unobservable)
+  const alignmentPerception = calculateAlignmentPerception(state);
 
-  // 2. DEMONSTRATED BENEFITS (20% weight)
+  // 2. PERFORMANCE (35% weight) - MOST IMPORTANT
+  // How well AI actually works in practice
+  const performance = calculateAIPerformance(state);
+
+  // 3. DEMONSTRATED BENEFITS (25% weight)
   const qol = state.globalMetrics.qualityOfLife;
-  const demonstratedBenefits = qol > 0.5 ? 0.2 : qol * 0.4; // Scales with QoL
+  const demonstratedBenefits = qol > 0.5 ? 0.25 : qol * 0.5; // Scales with QoL
 
-  // 3. EXPLAINABILITY (20% weight)
-  // Use existing transparency systems or default to moderate
-  const explainability = (state.aiTransparency?.level || 0.5) * 0.2;
-
-  // 4. SAFETY RECORD (20% weight)
+  // 4. SAFETY RECORD (15% weight)
   const safetyRecord = calculateSafetyRecord(state);
 
   // Base trust from positive factors
-  const baseTrust = alignmentQuality + demonstratedBenefits + explainability + safetyRecord;
+  const baseTrust = alignmentPerception + performance + demonstratedBenefits + safetyRecord;
 
   // 5. CAPABILITY FEAR (penalty only on rapid changes)
   const capabilityFear = calculateCapabilityFear(state);
@@ -495,23 +583,65 @@ export function calculateComprehensiveTrustInAI(state: GameState): number {
 }
 
 /**
- * Calculate alignment quality component of trust (0-0.4 scale)
- * Research: Trust highest when misalignment rate is low
+ * Calculate alignment perception component of trust (0-0.25 scale)
+ * FIX #2A (Oct 19, 2025): Renamed from "alignment quality"
+ * People observe BEHAVIOR, not true alignment (which is internal and often hidden)
+ * Research: McKinsey (2024) - trust based on observed outcomes, not internal states
  */
-function calculateAlignmentQuality(state: GameState): number {
+function calculateAlignmentPerception(state: GameState): number {
   const totalAIs = state.aiAgents.length;
-  if (totalAIs === 0) return 0.3; // Moderate default
+  if (totalAIs === 0) return 0.2; // Moderate default
 
-  // Count aligned AIs (alignment > 0.7)
-  const alignedAIs = state.aiAgents.filter(ai => ai.alignment > 0.7).length;
-  const alignmentRate = alignedAIs / totalAIs;
+  // Public perception based on detected issues
+  // Only count detected misalignments (revealed === true) - people can't see hidden issues
+  const detectedMisalignments = state.aiAgents.filter(ai =>
+    ai.alignment < 0.5 && ai.revealed === true
+  ).length;
 
-  // Scale to 0-0.4 (40% of total trust)
-  return alignmentRate * 0.4;
+  const perceptionRate = 1 - (detectedMisalignments / totalAIs);
+
+  // Scale to 0-0.25 (25% of total trust)
+  return perceptionRate * 0.25;
 }
 
 /**
- * Calculate safety record component of trust (0-0.2 scale)
+ * Calculate AI performance component of trust (0-0.35 scale)
+ * FIX #2A (Oct 19, 2025): NEW FUNCTION - most important trust driver per research
+ *
+ * Research:
+ * - DORA (2024): Performance = task completion * reliability
+ * - McKinsey (2024): Performance matters more than explanations
+ * - Edelman (2024): Consistency and demonstrated value drive trust
+ *
+ * Performance = how well AI works (results) + how reliably (no failures)
+ */
+function calculateAIPerformance(state: GameState): number {
+  const qol = state.globalMetrics.qualityOfLife;
+  const previousQoL = state.globalMetrics.previousQoL || 0.5;
+  const qolTrend = qol - previousQoL;
+
+  // Performance baseline from QoL (is AI making life better?)
+  // If QoL > 0.5, AI is working well
+  const performanceFromResults = Math.min(0.20, qol * 0.3);
+
+  // Positive trend bonus (AI improving over time)
+  const trendBonus = qolTrend > 0 ? Math.min(0.05, qolTrend * 0.5) : 0;
+
+  // Reliability: no major failures in last 12 months
+  const recentFailures = (state.significantEvents || []).filter(
+    event => (event.type === 'AIFailure' || event.type === 'AISafetyIncident') &&
+             state.currentMonth - (event.month || event.timestamp || 0) < 12
+  ).length;
+
+  const reliabilityBonus = Math.max(0, 0.10 - (recentFailures * 0.02));
+
+  // Performance = results + trend + reliability, capped at 35%
+  return Math.min(0.35, performanceFromResults + trendBonus + reliabilityBonus);
+}
+
+/**
+ * Calculate safety record component of trust (0-0.15 scale)
+ * FIX #2A (Oct 19, 2025): Reduced from 20% to 15% (safety less important than performance)
  * Research: Incident-free operation builds trust over time
  */
 function calculateSafetyRecord(state: GameState): number {
@@ -521,9 +651,9 @@ function calculateSafetyRecord(state: GameState): number {
              state.currentMonth - (event.month || 0) < 12
   ).length;
 
-  // No incidents in last 12 months = full trust (0.2)
+  // No incidents in last 12 months = full trust (0.15)
   // Each incident reduces trust
-  const safetyScore = Math.max(0, 0.2 - (recentIncidents * 0.05));
+  const safetyScore = Math.max(0, 0.15 - (recentIncidents * 0.05));
 
   return safetyScore;
 }
@@ -644,9 +774,12 @@ export function updateTrustRecovery(state: GameState): void {
     trustChange += TRUST_RECOVERY_FROM_SAFETY_RECORD;
   }
 
-  // 4. Explainability (+1%/month with high transparency)
-  if ((state.aiTransparency?.level || 0) > 0.7) {
-    trustChange += TRUST_RECOVERY_FROM_EXPLAINABILITY;
+  // 4. Performance improvement (FIX #2A/7A: Replaced explainability with performance)
+  // Research: DORA (2024) - performance feedback most impactful
+  // Check if AI performance is improving (QoL trend positive)
+  const performanceImproving = qolTrend > 0;
+  if (performanceImproving) {
+    trustChange += TRUST_RECOVERY_FROM_PERFORMANCE;
   }
 
   // === DECAY FACTORS ===
@@ -692,7 +825,7 @@ export function updateTrustRecovery(state: GameState): void {
     console.log(`   Trust level: ${(state.society.trustInAI * 100).toFixed(1)}%`);
     console.log(`   Monthly change: ${trustChange > 0 ? '+' : ''}${(trustChange * 100).toFixed(2)}%`);
     if (trustChange > 0) {
-      console.log(`   Recovery factors: Education=${state.policies?.aiEducationCampaigns?.active ? 'YES' : 'NO'}, Benefits=${qolTrend > 0 ? 'YES' : 'NO'}, Safety=${recentIncidents === 0 ? 'YES' : 'NO'}`);
+      console.log(`   Recovery factors: Education=${state.policies?.aiEducationCampaigns?.active ? 'YES' : 'NO'}, Benefits=${qolTrend > 0 ? 'YES' : 'NO'}, Safety=${recentIncidents === 0 ? 'YES' : 'NO'}, Performance=${performanceImproving ? 'YES' : 'NO'}`);
     } else {
       console.log(`   Decay factors: Incidents=${currentMonthIncidents}, New misalignments=${newMisalignments}, Errors=${errorRate ? 'YES' : 'NO'}`);
     }
