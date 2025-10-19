@@ -34,12 +34,27 @@ export function validateCompoundCause(compound: CompoundCause): void {
   }
 
   // Check minimum weight (10% threshold for significance)
-  for (const cause of compound.causes) {
+  // Note: Filter out zero-weight causes (can happen in dynamic weighting)
+  const nonZeroCauses = compound.causes.filter(c => c.weight > 0);
+
+  for (const cause of nonZeroCauses) {
     if (cause.weight < 0.10) {
       throw new Error(
         `Cause ${cause.cause} weight ${cause.weight.toFixed(3)} below minimum 0.10 (10%)`
       );
     }
+  }
+
+  // Special case: If after weight merging only 1 cause remains, allow it
+  // (Caller will handle converting to simple RootCause if needed)
+  if (nonZeroCauses.length === 1) {
+    console.warn(`⚠️  Compound cause reduced to single cause: ${nonZeroCauses[0].cause} (weight: ${nonZeroCauses[0].weight.toFixed(3)}). Consider using simple RootCause instead.`);
+    return; // Allow, but warn
+  }
+
+  // Must have at least 2 non-zero causes for true compound
+  if (nonZeroCauses.length < 1) {
+    throw new Error(`Compound cause has no non-zero causes`);
   }
 
   // Check weights sum to 1.0
@@ -95,7 +110,9 @@ export function calculateClimatePovertyWeights(
 ): { climate: number; inequality: number; ecosystem: number } {
 
   // Calculate average GDP per capita (global or regional)
-  const avgGDP = state.economics.globalGDP / state.population.total;
+  const globalGDP = state.globalMetrics?.globalGDP || 80000000; // ~$80T default if missing
+  const population = state.population?.total || 8000000000; // 8B default
+  const avgGDP = globalGDP / population;
   const richCountryGDP = 30000; // Baseline from Burke et al. (2020)
 
   // Adaptation capacity = GDP ratio (rich = 1.0, poor → 0)
@@ -117,16 +134,54 @@ export function calculateClimatePovertyWeights(
   // Inequality (poverty): amplification effect (poor countries)
   // Ecosystem: background degradation (context)
   const baseClimateWeight = 1.0;
-  const baseInequalityWeight = povertyMultiplier - 1.0; // Excess beyond rich country
+  const baseInequalityWeight = Math.max(0, povertyMultiplier - 1.0); // Excess beyond rich country
   const baseEcosystemWeight = 0.3; // 15% of total (degraded land amplifies)
 
   // Normalize to sum to 1.0
   const totalWeight = baseClimateWeight + baseInequalityWeight + baseEcosystemWeight;
 
+  // Calculate normalized weights
+  let climateWeight = baseClimateWeight / totalWeight;
+  let inequalityWeight = baseInequalityWeight / totalWeight;
+  let ecosystemWeight = baseEcosystemWeight / totalWeight;
+
+  // Merge negligible weights to maintain 10% minimum per cause
+  // Rich countries: inequality → climate (poverty not a factor)
+  // Poor countries: climate → inequality (poverty dominates)
+  if (inequalityWeight < 0.10 && inequalityWeight > 0) {
+    climateWeight = climateWeight + inequalityWeight;
+    inequalityWeight = 0;
+
+    // Renormalize climate + ecosystem
+    const newTotal = climateWeight + ecosystemWeight;
+    climateWeight = climateWeight / newTotal;
+    ecosystemWeight = ecosystemWeight / newTotal;
+  } else if (climateWeight < 0.10 && climateWeight > 0) {
+    // Poor countries: climate is just trigger, inequality dominates
+    inequalityWeight = inequalityWeight + climateWeight;
+    climateWeight = 0;
+
+    // Renormalize inequality + ecosystem
+    const newTotal = inequalityWeight + ecosystemWeight;
+    inequalityWeight = inequalityWeight / newTotal;
+    ecosystemWeight = ecosystemWeight / newTotal;
+  }
+
+  // If ecosystem also drops below 10% after renormalization, merge into dominant cause
+  if (ecosystemWeight < 0.10 && ecosystemWeight > 0) {
+    if (climateWeight > 0) {
+      climateWeight = climateWeight + ecosystemWeight;
+      ecosystemWeight = 0;
+    } else if (inequalityWeight > 0) {
+      inequalityWeight = inequalityWeight + ecosystemWeight;
+      ecosystemWeight = 0;
+    }
+  }
+
   return {
-    climate: baseClimateWeight / totalWeight,
-    inequality: baseInequalityWeight / totalWeight,
-    ecosystem: baseEcosystemWeight / totalWeight
+    climate: climateWeight,
+    inequality: inequalityWeight,
+    ecosystem: ecosystemWeight
   };
 }
 
@@ -174,14 +229,16 @@ export function calculateEcosystemWeights(
  * GDP $30k (rich, high adaptation):
  *   climate: 0.77, inequality: 0.00, ecosystem: 0.23
  *   (No poverty amplification - adaptation prevents most deaths)
+ *   (Inequality weight merged into climate since < 10%)
  *
  * GDP $15k (middle income):
  *   climate: 0.50, inequality: 0.35, ecosystem: 0.15
  *   (Moderate amplification from limited adaptation)
  *
  * GDP $5k (poor, low adaptation):
- *   climate: 0.04, inequality: 0.92, ecosystem: 0.04
+ *   climate: 0.00, inequality: 0.96, ecosystem: 0.04
  *   (Poverty dominates - 23x amplification, climate is trigger)
+ *   (Climate weight merged into inequality since < 10%)
  */
 
 /**

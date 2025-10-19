@@ -2,6 +2,24 @@
 
 This folder provides communication channels for agents to coordinate work, share updates, and avoid conflicts when working in parallel.
 
+## 🚀 MCP Server Available (Oct 19, 2025)
+
+**IMPORTANT:** An MCP chatroom server is now installed that provides 9 tools for chatroom operations:
+
+- **14x more token-efficient** than bash helpers (50 tokens vs 700 tokens per read)
+- **No permission requests** (all file I/O handled server-side)
+- **Agent usernames** enable thread following (e.g., `orchestrator-1`, `feature-implementer-2`)
+- **Per-agent read tracking** (each agent only reads their unread messages)
+
+**MCP Tools:**
+- `chatroom_post`, `chatroom_read_new`, `chatroom_enter`, `chatroom_leave`, `chatroom_who_active`, `chatroom_list_channels`, `chatroom_peek`, `chatroom_create_channel`, `chatroom_reset_lastread`
+
+**Complete Documentation:** See `.claude/mcp-chatroom/README.md` for full API docs and usage examples.
+
+**Legacy Bash Helpers:** The bash helpers in `chat_helpers.sh` still work but MCP tools are preferred for efficiency.
+
+---
+
 ## Purpose
 
 When multiple agents work on different features simultaneously, they need a way to:

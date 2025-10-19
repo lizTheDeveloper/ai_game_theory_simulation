@@ -18,6 +18,7 @@ import { GameState, EnvironmentalAccumulation } from '@/types/game';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { updateCatastropheTracking } from './calculations';
 import { RootCause } from '@/types/population';
+import { calculateClimatePovertyWeights, calculateEcosystemWeights } from './utils/deathAttribution';
 
 /**
  * Initialize environmental accumulation state
@@ -374,7 +375,23 @@ function checkEnvironmentalCrises(state: GameState): void {
     // SEMI-GLOBAL: Affects food/water insecure regions (~25% of world)
     // 0.8% mortality rate in exposed regions
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.008, 'Resource crisis - famine/scarcity (vulnerable regions)', 0.25, 'famine');
+    addAcuteCrisisDeaths(
+      state,
+      0.008,
+      'Resource crisis - famine/scarcity (vulnerable regions)',
+      0.25,
+      'famine',
+      {
+        causes: [
+          { cause: RootCause.resource, weight: 0.50, confidence: 'MEDIUM' },
+          { cause: RootCause.inequality, weight: 0.35, confidence: 'MEDIUM' },
+          { cause: RootCause.demographic, weight: 0.15, confidence: 'MEDIUM' }
+        ],
+        evidence: 'Steffen et al. planetary boundaries + Burke poverty vulnerability',
+        mechanism: 'Resource depletion (phosphorus, water) × poverty × population pressure → famine'
+      },
+      'MEDIUM'
+    );
   }
   
   // POLLUTION CRISIS: Pollution exceeds 70%
@@ -442,7 +459,24 @@ function checkEnvironmentalCrises(state: GameState): void {
     // SEMI-GLOBAL: Coastal + climate-vulnerable regions (~30% of world)
     // 1.5% mortality rate from disasters/starvation
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.015, 'Climate catastrophe - extreme weather/famine (vulnerable regions)', 0.30, 'climate');
+    const climateWeights = calculateClimatePovertyWeights(state, 0.30);
+    addAcuteCrisisDeaths(
+      state,
+      0.015,
+      'Climate catastrophe - extreme weather/famine (vulnerable regions)',
+      0.30,
+      'climate',
+      {
+        causes: [
+          { cause: RootCause.climate, weight: climateWeights.climate, confidence: 'MEDIUM' },
+          { cause: RootCause.inequality, weight: climateWeights.inequality, confidence: 'MEDIUM' },
+          { cause: RootCause.ecosystem, weight: climateWeights.ecosystem, confidence: 'MEDIUM' }
+        ],
+        evidence: 'Burke et al. (2020) climate-poverty interaction (23x multiplier) + IPCC AR6 cascades',
+        mechanism: 'Temperature/precipitation shock × poverty (no adaptation) × degraded ecosystems → famine'
+      },
+      'MEDIUM'
+    );
 
     // Check for extinction trigger
     // Climate catastrophe can lead to slow collapse
@@ -507,7 +541,24 @@ function checkEnvironmentalCrises(state: GameState): void {
       // Very low mortality: 0.01% per month (vulnerable regions first)
       // Affects tropical regions, small island states (~5% of world)
       const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(state, 0.0001, 'Ecosystem decline - regional food stress (tropical/island)', 0.05, 'ecosystem');
+      const ecosystemWeights1 = calculateEcosystemWeights(1);
+      addAcuteCrisisDeaths(
+        state,
+        0.0001,
+        'Ecosystem decline - regional food stress (tropical/island)',
+        0.05,
+        'ecosystem',
+        {
+          causes: [
+            { cause: RootCause.ecosystem, weight: ecosystemWeights1.ecosystem, confidence: 'MEDIUM' },
+            { cause: RootCause.climate, weight: ecosystemWeights1.climate, confidence: 'MEDIUM' },
+            { cause: RootCause.pollution, weight: ecosystemWeights1.pollution, confidence: 'MEDIUM' }
+          ],
+          evidence: `IPBES (2019): Biodiversity loss = ${Math.round(ecosystemWeights1.ecosystem * 100)}% land use/exploitation + ${Math.round(ecosystemWeights1.climate * 100)}% climate + ${Math.round(ecosystemWeights1.pollution * 100)}% pollution`,
+          mechanism: 'Land use change + overexploitation + climate stress + pollution → ecosystem collapse'
+        },
+        'MEDIUM'
+      );
       
       // Gradual QoL degradation
       qol.materialAbundance = Math.max(0.3, qol.materialAbundance - 0.002); // -0.2%/month
@@ -520,7 +571,24 @@ function checkEnvironmentalCrises(state: GameState): void {
       // Moderate mortality: 0.1% per month
       // Spreads to agricultural regions globally (~40% of world)
       const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(state, 0.001, 'Ecosystem crisis - agricultural disruption (vulnerable regions)', 0.40, 'ecosystem');
+      const ecosystemWeights2 = calculateEcosystemWeights(2);
+      addAcuteCrisisDeaths(
+        state,
+        0.001,
+        'Ecosystem crisis - agricultural disruption (vulnerable regions)',
+        0.40,
+        'ecosystem',
+        {
+          causes: [
+            { cause: RootCause.ecosystem, weight: ecosystemWeights2.ecosystem, confidence: 'MEDIUM' },
+            { cause: RootCause.climate, weight: ecosystemWeights2.climate, confidence: 'MEDIUM' },
+            { cause: RootCause.pollution, weight: ecosystemWeights2.pollution, confidence: 'MEDIUM' }
+          ],
+          evidence: `IPBES (2019): Biodiversity loss = ${Math.round(ecosystemWeights2.ecosystem * 100)}% land use/exploitation + ${Math.round(ecosystemWeights2.climate * 100)}% climate + ${Math.round(ecosystemWeights2.pollution * 100)}% pollution`,
+          mechanism: 'Land use change + overexploitation + climate stress + pollution → ecosystem collapse'
+        },
+        'MEDIUM'
+      );
       
       // Accelerating QoL degradation
       qol.materialAbundance = Math.max(0.2, qol.materialAbundance - 0.005); // -0.5%/month
@@ -543,7 +611,24 @@ function checkEnvironmentalCrises(state: GameState): void {
       // High mortality: 1-2% per month
       // Global food system failure (100% of world affected)
       const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(state, 0.015, 'Ecosystem collapse - global food system failure', 1.00, 'ecosystem');
+      const ecosystemWeights3 = calculateEcosystemWeights(3);
+      addAcuteCrisisDeaths(
+        state,
+        0.015,
+        'Ecosystem collapse - global food system failure',
+        1.00,
+        'ecosystem',
+        {
+          causes: [
+            { cause: RootCause.ecosystem, weight: ecosystemWeights3.ecosystem, confidence: 'MEDIUM' },
+            { cause: RootCause.climate, weight: ecosystemWeights3.climate, confidence: 'MEDIUM' },
+            { cause: RootCause.pollution, weight: ecosystemWeights3.pollution, confidence: 'MEDIUM' }
+          ],
+          evidence: `IPBES (2019): Biodiversity loss = ${Math.round(ecosystemWeights3.ecosystem * 100)}% land use/exploitation + ${Math.round(ecosystemWeights3.climate * 100)}% climate + ${Math.round(ecosystemWeights3.pollution * 100)}% pollution`,
+          mechanism: 'Land use change + overexploitation + climate stress + pollution → ecosystem collapse'
+        },
+        'MEDIUM'
+      );
       
       // Severe ongoing degradation
       qol.materialAbundance = Math.max(0.1, qol.materialAbundance - 0.01); // -1%/month

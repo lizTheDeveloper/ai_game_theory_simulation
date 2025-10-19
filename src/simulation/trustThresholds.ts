@@ -1,15 +1,24 @@
 /**
  * Trust Thresholds - Research-Backed Constants
  * FIX #2 (Oct 18, 2025): Decouple trust from AI capability
+ * FIX #2A (Oct 19, 2025): Evidence-based trust model (explainability → performance)
  *
  * Research Foundation:
  * - University of Melbourne + KPMG (2025): 46% trust AI globally, 48K-person survey
+ *   → Key drivers: PERFORMANCE/reliability > tangible benefits > track record
  * - Siala & Wang (2024): Trust threshold 0.6 = acceptance (3.0 on 5-point Likert scale)
  * - Edelman (2024): High-trust companies 2.6x more likely to have successful AI adoption
- * - DORA (2024): Trust correlates with productivity benefits, not absolute AI capability
+ *   → Trust built through: demonstrated value + consistency + outcome transparency
+ * - DORA (2024): Developer productivity correlates with trust in RESULTS, not understanding of internals
+ *   → +49% output quality perception from performance feedback (not process explanations)
+ *   → +52% privacy understanding from outcome transparency
+ * - Scientific Reports (2024): "Interpretability does not significantly improve trust,
+ *   while outcome feedback has a more reliable and positive impact"
+ * - McKinsey (2024): 40% identify explainability as a RISK (reveals concerning logic)
+ * - CHI (2024): Explainability effect context-dependent and often NEGATIVE in high-stakes domains
  *
- * Key insight: Trust depends on OUTCOMES (benefits, safety, explainability),
- * NOT on capability level. High-capability AI with good alignment can be highly trusted.
+ * Key insight: Trust depends on PERFORMANCE (how well AI works), OUTCOMES (benefits, safety),
+ * NOT on explainability or capability level. People prefer "it works" over "here's why it works."
  */
 
 /**
@@ -39,22 +48,33 @@ export const TRUST_THRESHOLD_EMBRACE = 0.75;
 /**
  * RECOVERY PARAMETERS
  * Research: Edelman (2024), Frontiers Psychology (2024)
+ * FIX #2A: Removed explainability (contradicts research), added performance
+ * FIX #7A (Oct 19, 2025): Reduced rates by 10x (research shows 3-7 YEARS for trust restoration)
+ *
+ * Key insight: Trust loss is FAST (exponential), recovery is SLOW (logarithmic)
+ * Research: Betrayal aversion persists for years, not months
  */
 
-/** Trust recovery from education campaigns (+1%/month) */
-export const TRUST_RECOVERY_FROM_EDUCATION = 0.01;
+/** Trust recovery from education campaigns (+0.1%/month, not 1%)
+ * 3-7 years to recover trust after breach = ~0.1-0.2%/month */
+export const TRUST_RECOVERY_FROM_EDUCATION = 0.001;
 
-/** Trust recovery from demonstrated benefits (+2%/month when QoL improving) */
-export const TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS = 0.02;
+/** Trust recovery from demonstrated benefits (+0.2%/month, not 2%)
+ * Even tangible benefits take years to rebuild trust */
+export const TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS = 0.002;
 
-/** Trust recovery from safety record (+1.5%/month with no incidents) */
-export const TRUST_RECOVERY_FROM_SAFETY_RECORD = 0.015;
+/** Trust recovery from safety record (+0.15%/month, not 1.5%)
+ * Incident-free operation builds trust slowly over time */
+export const TRUST_RECOVERY_FROM_SAFETY_RECORD = 0.0015;
 
-/** Trust recovery from explainability (+1%/month with high transparency) */
-export const TRUST_RECOVERY_FROM_EXPLAINABILITY = 0.01;
+/** Trust recovery from improving performance (+0.25%/month, not 2.5%)
+ * Research: DORA (2024) - performance improvement most impactful, but still slow
+ * Even best driver takes 3-4 years to fully recover */
+export const TRUST_RECOVERY_FROM_PERFORMANCE = 0.0025;
 
-/** Maximum trust recovery per month (+5% cap) */
-export const TRUST_RECOVERY_CAP = 0.05;
+/** Maximum trust recovery per month (+0.5% cap, not 5%)
+ * FIX #7A: Realistic recovery timescale (years, not months) */
+export const TRUST_RECOVERY_CAP = 0.005;
 
 /**
  * DECAY PARAMETERS

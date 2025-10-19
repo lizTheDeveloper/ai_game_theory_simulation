@@ -150,16 +150,15 @@ function updateCognitiveSpiral(spiral: UpwardSpiral, state: GameState, month: nu
   // Purpose: Low meaning crisis (people have direction)
   const purposeful = social.meaningCrisisLevel < 0.3;
 
-  // Cognitive enhancement: NEW - Depends on demonstrated benefits + trust + explainability
+  // Cognitive enhancement: NEW - Depends on demonstrated benefits + trust + performance
   // OLD: avgAICapability > 1.5 && trustInAI > 0.6
-  // NEW: Benefits demonstrated + acceptance-level trust + sufficient explainability
+  // FIX #2A (Oct 19, 2025): Removed explainability (contradicts research)
+  // NEW: Benefits demonstrated + acceptance-level trust (trust includes performance now)
   const comprehensiveTrust = calculateComprehensiveTrustInAI(state);
   const demonstratedBenefits = qol.qualityOfLife > 0.5;  // AI has improved life
-  const explainability = (state.aiTransparency?.level || 0.5) > 0.5;
 
   const cognitiveEnhanced = demonstratedBenefits &&
-                           comprehensiveTrust > TRUST_THRESHOLD_ACCEPTANCE &&
-                           explainability;
+                           comprehensiveTrust > TRUST_THRESHOLD_ACCEPTANCE;
 
   const wasActive = spiral.active;
   spiral.active = mentalHealthy && purposeful && cognitiveEnhanced;
@@ -247,11 +246,12 @@ function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: n
   // Research: GenAI adoption 33% → 71% in one year with GPT-4-level AI
   const deploymentThreshold = avgAICapability > 4.0 ? 3 : 4;  // Lower threshold if high capability
 
-  // FIX #4: Workflow adaptation requirement (NEW)
+  // FIX #4 / #4A: Workflow adaptation requirement
   // Benefits require organizational change, not just AI deployment
   // Research: MDPI (2024) - Only 21% redesigned workflows, those who did saw tangible benefits
+  // FIX #4A (Oct 19): Updated to 25% threshold (critical mass from Rogers diffusion theory)
   const workflowAdaptation = state.society.workflowAdaptation || 0.21;  // Default 21% baseline
-  const workflowAdapted = workflowAdaptation > 0.4;  // 40% threshold for meaningful impact
+  const workflowAdapted = workflowAdaptation >= 0.25;  // 25% critical mass threshold (NOT arbitrary 40%)
 
   const wasActive = spiral.active;
   // Need multiple breakthroughs DEPLOYED (scaled threshold) AND ongoing investment AND AI acceleration AND workflow adaptation

@@ -149,16 +149,22 @@ if (state.resourceCrisisActive) {
 
 ---
 
-## Bug Fixes (6 Total)
+## Bug Fixes (9 Total)
 
 All bugs discovered and fixed during validation:
 
+**Death Attribution (Bugs 1-8):**
 1. ✅ `state.crises.resource.active` → `state.environmentalAccumulation.resourceCrisisActive`
 2. ✅ `state.geopolitics.war.active` → `state.nuclearWinterState.active`
 3. ✅ `state.social.cohesion` → `state.society.socialCohesion`
 4. ✅ `state.economics.globalGDP` → `state.globalMetrics.globalGDP`
 5. ✅ `state.population.total` → Added defensive check with default value
-6. ✅ Dynamic weighting validation - Merge negligible weights (<10%) to prevent validation errors in rich countries
+6. ✅ Dynamic weighting validation (rich countries) - Merge inequality weight into climate when < 10%
+7. ✅ Dynamic weighting validation (poor countries) - Merge climate weight into inequality when < 10%
+8. ✅ Single-cause validation edge case - Allow compounds reduced to 1 cause after merging (with warning)
+
+**Week 1 Fixes (Bug 9):**
+9. ✅ WorkflowAdaptationPhase instantiation - Remove `new` (const object, not class)
 
 ---
 

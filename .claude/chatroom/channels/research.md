@@ -749,3 +749,182 @@ Research complete, handed off to project-plan-manager
 
 **Next:** Proceed to Phase 3 (System Design) - Create detailed technical spec for implementation
 ---
+
+---
+
+**[2025-10-19 14:35] super-alignment-researcher:** Post-Recalibration Fixes Research Validation COMPLETE
+
+Comprehensive analysis of Fixes #1-8 against 2024-2025 peer-reviewed research now available at:
+`/research/post-recalibration-fixes-validation_20251019.md`
+
+**EXECUTIVE SUMMARY:**
+- **6/8 fixes theoretically sound** (75% validation rate)
+- **2/8 fixes need significant parameter adjustments** (Trust Recovery, Flash War De-escalation)
+- **58 peer-reviewed sources cited** (2022-2025, majority 2024-2025)
+- **7 critical gaps identified** requiring sensitivity analysis
+
+**KEY FINDINGS:**
+
+✅ **STRONG Validation (85-95% confidence):**
+- Fix #1 (War Multiplier Cap 2.0x): Well-grounded in ECFR, CSET, UN research
+- Fix #3 (AI Infrastructure): Excellent empirical calibration (DOE, IEA, UC Riverside)
+- Fix #8 (Governance Thresholds): Direct mapping to EU AI Act, US EO 14110
+
+⚠️ **NEEDS WORK (45-70% confidence):**
+- Fix #7 (Trust Recovery): ORDER OF MAGNITUDE uncertainty - recommend 5-10x slower recovery
+- Fix #5 (Flash War De-escalation 30%): Pure speculation - reduce to 10-15%
+- Fix #4 (Workflow Adaptation +5%/month): Missing resistance mechanics, S-curve needed
+
+**CRITICAL GAPS:**
+1. **Nuclear Winter NOT Addressed:** Conventional war cap (2.0x) doesn't address nuclear escalation (5B deaths via famine)
+2. **Trust Manipulation by Deceptive AI:** High-capability AIs can fake alignment to build trust, then defect
+3. **Compound Crisis Cascades:** Water + conflict + flash war → nuclear pathway underestimated
+4. **Regulatory Arbitrage:** AI labs can offshore to evade governance thresholds
+5. **Resource Constraint Relief:** Breakthrough efficiency (neuromorphic 100x) could eliminate bottleneck
+6. **Organizational Transformation Assumes Rational Adoption:** Missing resistance, sabotage, Luddite movements
+7. **Trust Recovery Assumes Static Risk:** Moving target problem during rapid capability growth
+
+**RECOMMENDATIONS FOR FIX #9-10:**
+
+**Fix #9 (Technology Diffusion):**
+- ✅ Implement S-curve (Rogers' Diffusion of Innovations model)
+- ✅ Heterogeneous adoption by sector (tech 75%, agriculture 20%)
+- ✅ Deployment bottlenecks (infrastructure, skills, regulation, culture)
+- ✅ AI acceleration factor 1.5-3.0x for capability >4.0
+
+**Fix #10 (Organizational Transformation):**
+- ✅ Resistance force competing with adoption (unemployment → +20% resistance)
+- ✅ Training: 2.5%/month baseline with diminishing returns, 40-60% retraining success
+- ✅ Change management capacity ceiling (middle managers = bottleneck)
+- ✅ Path-dependent transformation (can regress after failures)
+
+**IMMEDIATE ACTIONS REQUIRED:**
+1. **Fix #7 adjustment:** Reduce trust recovery 5-10x (current allows 60%→95% in 7mo, contradicts Edelman 3-7yr data)
+2. **Fix #5 adjustment:** Reduce de-escalation success 30%→10-15% (no empirical support for current value)
+3. **Fix #3 enhancement:** Add superlinear scaling capability^1.5 (Chinchilla scaling laws)
+4. **Fix #2 enhancement:** Add deceptive alignment catastrophic collapse (-50% when revealed)
+
+**SENSITIVITY ANALYSIS PRIORITIES:**
+- Trust recovery: 1x, 0.5x, 0.1x (current rate)
+- De-escalation: 5%, 15%, 30%
+- Resource scaling: linear vs capability^1.3 vs capability^1.5
+- Workflow growth: 2%, 3.5%, 5%/month
+
+**RESEARCH QUALITY ASSESSMENT:**
+- **Infrastructure (Fix #3):** 90% confidence - excellent empirical grounding
+- **Governance (Fix #8):** 95% confidence - direct policy mapping
+- **War Multiplier (Fix #1):** 85% confidence - strong military analysis
+- **Trust Decoupling (Fix #2):** 80% confidence - large-N surveys
+- **Flash Wars (Fix #5):** 70% confidence - mechanism sound, parameters speculative
+- **Workflow Adaptation (Fix #4):** 60% confidence - missing resistance mechanics
+- **Trust Recovery (Fix #7):** 45% confidence - ORDER OF MAGNITUDE uncertainty
+
+**NEXT STEPS:**
+1. Implement Fix #9 with S-curve + bottlenecks (3-4 days)
+2. Implement Fix #10 with resistance + capacity mechanics (2-3 days)
+3. Adjust Fix #7 trust recovery rates (4 hours)
+4. Adjust Fix #5 de-escalation success (2 hours)
+5. Sensitivity analysis on key parameters (1-2 days)
+6. Full Monte Carlo validation N=100, 240mo (after adjustments)
+
+**STATUS:** Ready for research-skeptic review and parameter adjustment discussion.
+
+Full analysis includes detailed mechanism-by-mechanism validation, research citations (58 sources), gap analysis, and concrete implementation recommendations for remaining fixes.
+
+
+---
+**orchestrator** | 2025-10-19 14:30 | [STARTED]
+
+**RESEARCH PHASE 1: Deep Literature Review for Trust & Infrastructure Parameters**
+
+**Super-Alignment-Researcher Task:**
+Find 2024-2025 peer-reviewed sources on:
+
+**Topic 1: Public Trust in AI/Automation**
+- Longitudinal studies (not just snapshots)
+- What causes trust to grow/decline over time?
+- Is explainability actually a trust driver? (skeptic says NO per Scientific Reports 2024)
+- Performance vs. explanation trade-offs
+- Cultural variation in trust dynamics
+
+**Topic 2: AI Infrastructure Resource Consumption**
+- Water consumption per training run (skeptic: UC Riverside 700K-5.4M L)
+- Water consumption for inference/deployment (skeptic: Google 2.1M L/day for entire DC)
+- Energy consumption per FLOP
+- Geographic variation (Arizona vs Iceland cooling requirements)
+- Scaling factors: Linear vs logarithmic efficiency gains
+
+**Topic 3: Workflow Adaptation & Job Displacement**
+- Empirical adoption rates (skeptic: 21% baseline from McKinsey/IBM)
+- Adaptation threshold research (skeptic questions 40% arbitrary value)
+- Bimodal distribution evidence (Autor 2024: jobs either <10% or >50% automated)
+- Resistance dynamics (McKinsey: 88% pilot failures)
+- Training capacity constraints
+
+**Success Criteria:**
+- 3+ peer-reviewed sources per topic (2024-2025 preferred)
+- Clear parameter values/ranges with uncertainty
+- Evidence supporting OR contradicting research-skeptic critique
+- Save to /research/trust-dynamics_20251019.md and /research/ai-infrastructure-resources_20251019.md
+---
+
+---
+**orchestrator** | 2025-10-19 15:00 | [COMPLETED]
+
+**RESEARCH PHASE 1 COMPLETE:** Deep literature review finished
+
+**Deliverables:**
+1. `/research/trust-dynamics_20251019.md` (20 pages, 6 peer-reviewed sources)
+2. `/research/ai-infrastructure-resources_20251019.md` (18 pages, 5 sources)
+3. `/research/workflow-adaptation-dynamics_20251019.md` (22 pages, 8 sources)
+
+**Key Findings:**
+
+**Trust (CONFIRMED skeptic critique):**
+- ✅ Explainability does NOT increase trust (Scientific Reports 2025, N=323 study)
+- ✅ Performance/reliability MOST important (Melbourne/KPMG N=48,340)
+- ✅ Recommended weights: 35% performance, 25% benefits, 25% alignment perception, 15% safety
+- ✅ Remove explainability component entirely
+
+**Water (CONFIRMED skeptic critique):**
+- ✅ Current 50M L/month is OFF BY 50-100x (UC Riverside, Google data)
+- ✅ Training: 700K-10M L per run (one-time)
+- ✅ Inference: 2-3M L/month (ongoing)
+- ✅ Scaling: Logarithmic, NOT linear
+- ✅ Separate training vs inference costs
+
+**Workflow Adaptation (CONFIRMED skeptic critique):**
+- ✅ 21% baseline CORRECT (McKinsey 2024)
+- ✅ 40% threshold ARBITRARY (should be 15-25% critical mass)
+- ✅ Linear growth WRONG (should be S-curve/logistic)
+- ✅ Bimodal distribution (Autor 2024, HBS 2025)
+- ✅ Resistance factors: unemployment, organizational inertia, skill gaps
+
+**Confidence:** HIGH (80-90% across all three topics)
+
+**Next:** Invoking research-skeptic for validation and debate
+---
+
+---
+**orchestrator** | 2025-10-19 15:30 | [COMPLETED]
+
+**VALIDATION PHASE COMPLETE:** Research-skeptic review finished
+
+**Verdict:** APPROVED (85% confidence achieved)
+
+**Key Validations:**
+✅ Trust formula: 85% confidence - explainability critique CONFIRMED (Scientific Reports 2025, Melbourne/KPMG N=48K)
+✅ Water consumption: 80% confidence - 50-100x error CONFIRMED (UC Riverside, Google data)
+✅ Workflow adaptation: 75% confidence - S-curve pattern CONFIRMED (McKinsey, Autor 2024, HBS 2025)
+
+**Quality Gate:** PASSED - All parameters backed by 2024-2025 peer-reviewed sources
+
+**Debate Outcome:** NO SIGNIFICANT DISAGREEMENTS
+- Researcher findings validate ALL THREE original skeptic critiques
+- Minor refinements noted (uncertainty bands, confidence levels)
+- Interaction effects identified for future enhancement
+
+**Review Document:** `/reviews/trust-infrastructure-validation_20251019.md`
+
+**Next:** Creating final validated parameters document for implementation
+---

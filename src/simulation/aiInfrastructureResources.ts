@@ -1,5 +1,7 @@
 /**
- * AI Infrastructure Resource Consumption (Fix #3, Oct 18, 2025)
+ * AI Infrastructure Resource Consumption
+ * FIX #3 (Oct 18, 2025): Initial model
+ * FIX #3A (Oct 19, 2025): Corrected water consumption (was off by 100-1000x)
  *
  * Models water and energy consumption by AI data centers and training infrastructure.
  *
@@ -8,25 +10,33 @@
  * - US DOE (2024): H100 GPU = 700W (10.2 kW per 8-GPU server)
  * - RAND (2024): AI data centers 200 MW average (vs 30 MW traditional)
  * - Microsoft (2024): WUE improving 5%/year (0.49 → 0.30 in 3 years)
+ * - Google Data Centers (2024): Hyperscale = 2.1M liters/day for ENTIRE facility
+ * - Medium data center (15MW): 25.5M liters/year (2.1M/month, not 50M!)
+ * - GPT-3 inference: 519ml per 100-word prompt (~500K liters/year for continuous operation)
  *
- * Key Insight: Missing from pre-recalibration model - AI capability 3.10+ requires MASSIVE
- * water/energy infrastructure. This creates resource constraints and water crises.
+ * FIX #3A Key Corrections:
+ * 1. Separated training (one-time) from inference (ongoing)
+ * 2. Added logarithmic efficiency scaling (not linear - economies of scale)
+ * 3. Reduced consumption by 10-25x to match research (50M → 2-5M L/month)
  */
 
 import { GameState } from '@/types/game';
 
 /**
- * Water consumption parameters (based on empirical data)
+ * Water consumption parameters (FIX #3A: Research-corrected values)
  */
 
-/** Base water consumption for all AI infrastructure (million liters/month) */
-const WATER_BASE_CONSUMPTION = 100;
+/** Base inference water for all AI operations (million liters/month)
+ * Research: Medium data center (15MW) = 2.1M L/month */
+const WATER_INFERENCE_BASE = 2.0;
 
-/** Additional water per aggregate capability point (million liters/month) */
-const WATER_PER_CAPABILITY_POINT = 50;
+/** Additional inference water per capability point (million liters/month)
+ * Scales logarithmically, not linearly (efficiency gains with scale) */
+const WATER_INFERENCE_PER_CAPABILITY = 0.5;
 
-/** Water spike for frontier model training (5 billion liters, ~GPT-4 scale) */
-const WATER_TRAINING_SPIKE = 5000;
+/** Training water per capability increase (million liters, one-time)
+ * Research: GPT-3 training = 700K L, GPT-4 = 5.4M L */
+const WATER_TRAINING_PER_CAPABILITY = 10.0;
 
 /**
  * Energy consumption parameters (based on US DOE 2024 data)
@@ -55,6 +65,7 @@ const WUE_FLOOR = 0.3;
 
 /**
  * Calculate AI resource consumption for current month
+ * FIX #3A (Oct 19, 2025): Corrected water model - separate training/inference, logarithmic scaling
  *
  * @param state Current game state
  * @returns Water consumption (million liters/month) and energy consumption (MW)
@@ -69,12 +80,14 @@ export function calculateAIResourceConsumption(state: GameState): {
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0)
     : 0;
 
-  // Training water spike (triggered when new frontier model is trained)
-  // Assume frontier model training happens when capability jumps significantly
-  const trainingWater = detectFrontierModelTraining(state) ? WATER_TRAINING_SPIKE : 0;
+  // FIX #3A: Training water (one-time spike when capability increases)
+  const trainingWater = detectCapabilityIncrease(state);
 
-  // Inference water (continuous based on total capability)
-  const inferenceWater = WATER_BASE_CONSUMPTION + (totalCapability * WATER_PER_CAPABILITY_POINT);
+  // FIX #3A: Inference water (ongoing operational cost)
+  // Logarithmic scaling: log2(capability + 1) captures economies of scale
+  // Research: Larger data centers are more efficient per unit of compute
+  const inferenceWater = WATER_INFERENCE_BASE +
+                        (WATER_INFERENCE_PER_CAPABILITY * Math.log2(totalCapability + 1));
 
   const totalWater = trainingWater + inferenceWater;
 
@@ -92,28 +105,30 @@ export function calculateAIResourceConsumption(state: GameState): {
 }
 
 /**
- * Detect if a frontier model was trained this month
- * Heuristic: Significant capability jump (>0.3) or explicit training flag
+ * Detect capability increase this month (for training water spike)
+ * FIX #3A (Oct 19, 2025): Returns water cost instead of boolean
+ * Scales with magnitude of capability increase (not flat 5B liters)
+ *
+ * Heuristic: Capability jump suggests new model training
+ * Research: GPT-3 = 700K L, GPT-4 = 5.4M L → scales with capability
  */
-function detectFrontierModelTraining(state: GameState): boolean {
-  // Check if state tracks new frontier model training
-  if ((state as any).newFrontierModelThisMonth) {
-    return true;
-  }
-
-  // Heuristic: Large capability jump suggests frontier training
+function detectCapabilityIncrease(state: GameState): number {
+  // Calculate total capability this month
   const currentCapability = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
+    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0)
     : 0;
 
-  const previousCapability = (state as any).previousAverageCapability || 0;
-  const capabilityJump = currentCapability - previousCapability;
+  const previousCapability = (state as any).previousTotalCapability || 0;
+  const capabilityIncrease = Math.max(0, currentCapability - previousCapability);
 
   // Store for next check
-  (state as any).previousAverageCapability = currentCapability;
+  (state as any).previousTotalCapability = currentCapability;
 
-  // Training detected if jump > 0.3 (e.g., GPT-3 → GPT-4 scale leap)
-  return capabilityJump > 0.3;
+  // Training water scales with capability increase (10M L per capability point)
+  // Represents one-time training cost, not monthly
+  const trainingWater = capabilityIncrease * WATER_TRAINING_PER_CAPABILITY;
+
+  return trainingWater;
 }
 
 /**

@@ -16,6 +16,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { RootCause } from '@/types/population';
 
 /**
  * Amazon Rainforest Tipping Point
@@ -269,7 +270,22 @@ export function updateAmazonRainforest(state: GameState): void {
     if (monthsSince % 12 === 0 && monthsSince < 120) { // First 10 years
       // Regional droughts, agricultural disruption
       const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(state, 0.0002, 'Amazon collapse - regional drought/agriculture (South America)', 0.02, 'climate');
+      addAcuteCrisisDeaths(
+        state,
+        0.0002,
+        'Amazon collapse - regional drought/agriculture (South America)',
+        0.02,
+        'climate',
+        {
+          causes: [
+            { cause: RootCause.climate, weight: 0.50, confidence: 'MEDIUM' },
+            { cause: RootCause.ecosystem, weight: 0.50, confidence: 'MEDIUM' }
+          ],
+          evidence: 'IPCC AR6: Amazon tipping point from climate × deforestation interaction',
+          mechanism: 'Climate change + deforestation → self-reinforcing dieback → regional drought'
+        },
+        'MEDIUM'
+      );
     }
     
     // Global climate feedback
@@ -376,7 +392,22 @@ export function updateCoralReefs(state: GameState): void {
       // Food security crisis in marine-dependent regions
       const mortalityRate = 0.0001 * (coral.collapseProgress / 100); // Escalates with collapse
       const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(state, mortalityRate, 'Coral collapse - fishery failure (Pacific/islands)', 0.10, 'famine');
+      addAcuteCrisisDeaths(
+        state,
+        mortalityRate,
+        'Coral collapse - fishery failure (Pacific/islands)',
+        0.10,
+        'famine',
+        {
+          causes: [
+            { cause: RootCause.climate, weight: 0.70, confidence: 'HIGH' },
+            { cause: RootCause.ecosystem, weight: 0.30, confidence: 'MEDIUM' }
+          ],
+          evidence: 'IPCC AR6 ocean chapter: Coral bleaching primarily climate-driven (warming + acidification)',
+          mechanism: 'Ocean warming + acidification → coral death → fishery collapse → famine'
+        },
+        'MEDIUM'
+      );
     }
     
     // Global biodiversity impact (25-30% of marine species)
@@ -522,7 +553,26 @@ export function updatePollinators(state: GameState): void {
     if (monthsSince % 3 === 0) { // Every 3 months
       const mortalityRate = pollinators.foodProductionLoss * 0.01; // Up to 0.35% per quarter
       const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(state, mortalityRate, 'Pollinator collapse - crop failure (agricultural regions)', 0.60, 'famine');
+      addAcuteCrisisDeaths(
+        state,
+        mortalityRate,
+        'Pollinator collapse - crop failure (agricultural regions)',
+        0.60,
+        'famine',
+        {
+          causes: [
+            { cause: RootCause.pollution, weight: 0.50, confidence: 'HIGH',
+              citation: 'EFSA (2018): Neonicotinoid pesticides primary driver' },
+            { cause: RootCause.ecosystem, weight: 0.35, confidence: 'MEDIUM',
+              citation: 'IPBES pollinator assessment: Habitat loss' },
+            { cause: RootCause.climate, weight: 0.15, confidence: 'MEDIUM',
+              citation: 'Climate stress on pollinators' }
+          ],
+          evidence: 'EFSA (2018) neonicotinoid ban + IPBES pollinator assessment',
+          mechanism: 'Pesticides + habitat loss + climate stress → pollinator decline → crop failure'
+        },
+        'MEDIUM'
+      );
     }
     
     // Material abundance impact (food scarcity)
