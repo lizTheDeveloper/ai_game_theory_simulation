@@ -15,6 +15,7 @@
 
 import { GameState } from '@/types/game';
 import { NovelEntitiesSystem } from '@/types/novelEntities';
+import { RootCause } from '@/types/population';
 
 /**
  * Initialize novel entities system state (2025 baseline - ALREADY BREACHED)
@@ -116,7 +117,15 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: PFAS in 99% of human blood = everyone exposed (100% of world)
     // 0.08% mortality rate from despair/failed fertility treatments
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.0008, 'Reproductive crisis - despair/failed treatments (global exposure)', 1.00, 'pollution');
+    addAcuteCrisisDeaths(
+      state,
+      0.0008,
+      'Reproductive crisis - despair/failed treatments (global exposure)',
+      1.00,
+      'pollution',
+      RootCause.pollution,
+      'HIGH'
+    );
   }
   
   // === BIOACCUMULATION ===
@@ -143,7 +152,15 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
     // 0.15% mortality rate from contaminated food poisoning
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.0015, 'Bioaccumulation collapse - contaminated food chain (global)', 1.00, 'pollution');
+    addAcuteCrisisDeaths(
+      state,
+      0.0015,
+      'Bioaccumulation collapse - contaminated food chain (global)',
+      1.00,
+      'pollution',
+      RootCause.pollution,
+      'HIGH'
+    );
   }
   
   // === CHRONIC DISEASE EPIDEMIC ===
@@ -171,7 +188,15 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // TRULY GLOBAL: Chemical exposure is global (100% of world affected)
     // 0.4% mortality rate from cancer/autoimmune surge
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.004, 'Chronic disease epidemic - cancer/autoimmune surge (global exposure)', 1.00, 'pollution');
+    addAcuteCrisisDeaths(
+      state,
+      0.004,
+      'Chronic disease epidemic - cancer/autoimmune surge (global exposure)',
+      1.00,
+      'pollution',
+      RootCause.pollution,
+      'HIGH'
+    );
   }
   
   // === ONGOING HEALTH IMPACTS ===

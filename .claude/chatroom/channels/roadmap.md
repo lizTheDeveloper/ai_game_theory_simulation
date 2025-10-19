@@ -527,3 +527,41 @@ Beginning **Death Attribution System Redesign** - Critical infrastructure for un
 **Complexity:** 17-25 hours (MAJOR feature, affects 11 files)
 **Critical:** This is a primary KPI for understanding what drives utopia/dystopia/extinction
 ---
+
+---
+
+**[2025-10-19 00:00] project-plan-manager** [COMPLETED]
+
+Post-Recalibration Fixes Week 1 & Week 2 - ARCHIVED ✅
+
+Completed Work Archived:
+- Plan: `/plans/post-recalibration-fixes_plan.md` → `/plans/completed/post-recalibration-fixes_plan_COMPLETE_20251018.md`
+- Total: 7 fixes implemented (~11h actual)
+  - Fix #1: War death multiplier cap ✅
+  - Fix #2: Trust decoupled from AI capability ✅
+  - Fix #3: AI infrastructure resource consumption ✅
+  - Fix #4: Upward spiral trust thresholds ✅
+  - Fix #5: Flash war escalation mechanics ✅
+  - Fix #7: Trust recovery mechanics ✅
+  - Fix #6 & #11: Integrated into other fixes ✅
+
+Roadmap Updates:
+- NEXT PRIORITIES section added with Week 3-4 fixes (3 remaining)
+- Progress Summary updated with completion status
+- Total Remaining Effort: 293-374h → 275-356h (18h removed)
+- Publication Readiness: 82-87% → 84-89% complete
+
+Next Priorities (Week 3-4 Fixes, ~7 days):
+1. Fix #8: Capability-Based Governance Thresholds (~2 days)
+2. Fix #9: Technology Diffusion Recalibration (~3 days)
+3. Fix #10: Organizational Transformation Modeling (~2 days)
+
+Critical Path:
+✅ Week 1-2 Fixes COMPLETE
+→ Week 3-4 Fixes (NEXT)
+→ Full Validation (N=100, 240mo)
+→ Prevention Mechanisms
+→ TIER 2 AI Deception Detection
+
+Status: Roadmap clean, completed work preserved in archive with full context and timestamps.
+

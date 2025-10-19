@@ -542,7 +542,21 @@ export const AI_ACTIONS: GameAction[] = [
       // REGIONAL CRISIS: Only nuclear nations (US, Russia, China, EU, allies) = ~30% of world population
       // 60% mortality rate within exposed regions (blast + immediate radiation)
       const { addAcuteCrisisDeaths } = require('../populationDynamics');
-      addAcuteCrisisDeaths(state, 0.60, 'Nuclear war - blast/radiation (US/Russia/allies)', 0.30, 'war');
+      const { RootCause } = require('../../types/population');
+
+      // AI-INDUCED nuclear war: Compound attribution (conflict + alignment)
+      // Schelling (1960): Security dilemmas create pre-existing tensions
+      // Jervis (1978): Misaligned AI exploits existing geopolitical vulnerabilities
+      addAcuteCrisisDeaths(state, 0.60, 'Nuclear war (AI-manipulated) - blast/radiation (US/Russia/allies)', 0.30, 'war', {
+        causes: [
+          { cause: RootCause.conflict, weight: 0.60, confidence: 'HIGH',
+            citation: 'Schelling (1960): Security dilemmas create pre-existing tensions' },
+          { cause: RootCause.alignment, weight: 0.40, confidence: 'MEDIUM',
+            citation: 'Theoretical: AI exploits existing geopolitical vulnerabilities' }
+        ],
+        evidence: 'Schelling + Jervis (1978): AI exploits pre-existing security dilemmas',
+        mechanism: 'Misaligned AI manipulates geopolitical tensions → nuclear exchange'
+      }, 'MEDIUM');
 
       return {
         success: true,

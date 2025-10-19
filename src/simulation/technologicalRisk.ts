@@ -7,6 +7,7 @@
 
 import { GameState, TechnologicalRisk } from '@/types/game';
 import { calculateAverageAlignment } from './outcomes';
+import { RootCause } from '@/types/population';
 
 export function initializeTechnologicalRisk(): TechnologicalRisk {
   return {

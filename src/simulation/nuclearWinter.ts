@@ -25,6 +25,7 @@
 import { GameState } from '../types/game';
 import { NuclearWinterState, RadiationZone } from '../types/nuclearWinter';
 import { addAcuteCrisisDeaths } from './populationDynamics';
+import { RootCause } from '../types/population';
 
 /**
  * Initialize nuclear winter state (inactive by default)
@@ -283,7 +284,15 @@ export function updateNuclearWinter(state: GameState): void {
     const starvationDeaths = population * winter.monthlyStarvationRate;
     
     if (starvationDeaths > 0.001) {  // Only log if > 1 million deaths
-      addAcuteCrisisDeaths(state, starvationDeaths, 'famine');
+      addAcuteCrisisDeaths(
+        state,
+        starvationDeaths,
+        'Nuclear winter famine - agricultural collapse (global)',
+        1.00,
+        'famine',
+        RootCause.conflict,  // Root: Nuclear war caused nuclear winter
+        'HIGH'
+      );
       winter.totalWinterDeaths += starvationDeaths;
       
       // Log significant events
@@ -343,7 +352,15 @@ function updateRadiationZones(state: GameState, winter: NuclearWinterState): voi
   });
   
   if (totalRadiationDeaths > 0) {
-    addAcuteCrisisDeaths(state, totalRadiationDeaths, 'war');  // Radiation deaths counted as war casualties
+    addAcuteCrisisDeaths(
+      state,
+      totalRadiationDeaths,
+      'Radiation poisoning (nuclear zones)',
+      0.30,
+      'war',
+      RootCause.conflict,
+      'HIGH'
+    );
     winter.totalRadiationDeaths += totalRadiationDeaths;
   }
   

@@ -17,6 +17,7 @@
 import { GameState, EnvironmentalAccumulation } from '@/types/game';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { updateCatastropheTracking } from './calculations';
+import { RootCause } from '@/types/population';
 
 /**
  * Initialize environmental accumulation state
@@ -403,7 +404,15 @@ function checkEnvironmentalCrises(state: GameState): void {
     // SEMI-GLOBAL: Industrial nations + downwind regions (~60% of world)
     // 0.4% mortality rate from acute contamination/disease
     const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(state, 0.004, 'Pollution crisis - toxic contamination (industrial regions)', 0.60, 'pollution');
+    addAcuteCrisisDeaths(
+      state,
+      0.004,
+      'Pollution crisis - toxic contamination (industrial regions)',
+      0.60,
+      'pollution',
+      RootCause.pollution,
+      'HIGH'
+    );
   }
   
   // CLIMATE CATASTROPHE: Stability below 40%

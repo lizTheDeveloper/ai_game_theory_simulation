@@ -17,6 +17,7 @@ import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
 import { calculateObservableAICapability } from '@/simulation/capabilities';
 import { getTrustInAI } from '@/simulation/socialCohesion';
+import { CAPABILITY_CONCERNING } from '../capabilityThresholds';  // FIX #8 (Oct 18, 2025)
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -44,10 +45,12 @@ const recognizeAIRights: CategorizedGovernmentAction = {
     if (state.government.legitimacy < 0.4) return false;
     if (state.government.governmentType === 'authoritarian') return false;
 
-    // Requires AIs to be somewhat capable (people won't grant rights to weak AI)
+    // FIX #8: Requires AIs to be somewhat capable (people won't grant rights to weak AI)
+    // OLD: observableCapability < 1.5 (too low with baseline 3.10, never allowed rights)
+    // NEW: observableCapability < CAPABILITY_CONCERNING (3.0+, government monitoring threshold)
     // Use OBSERVABLE capability - government sees what's revealed, not hidden power
     const observableCapability = calculateObservableAICapability(state.aiAgents);
-    if (observableCapability < 1.5) return false;
+    if (observableCapability < CAPABILITY_CONCERNING) return false;
 
     return true;
   },

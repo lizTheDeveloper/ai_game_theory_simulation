@@ -19,22 +19,30 @@ export interface ConflictResolutionState {
   diplomaticAICapability: number;     // [0,5] AI capability for negotiation & conflict resolution
   diplomaticSuccessRate: number;      // [0,1] Historical success at preventing conflicts
   activeDiplomaticInterventions: number; // Count of ongoing AI-mediated negotiations
-  
+
   // Post-Scarcity Peace
   resourceConflictRisk: number;       // [0,1] Risk of war over resources (inverse of abundance)
   foodSecurityPeace: number;          // [0,1] Food abundance reduces conflict
   energySecurityPeace: number;        // [0,1] Energy abundance reduces conflict
   materialSecurityPeace: number;      // [0,1] Material abundance reduces conflict
-  
+
   // Cyber Defense
   cyberDefenseStrength: number;       // [0,5] Capability to defend against AI attacks
   offenseDefenseBalance: number;      // [-1,1] -1=offense dominates, +1=defense dominates
   militarySystemSecurity: number;     // [0,1] Protection of nuclear/weapons systems
   criticalInfraSecurity: number;      // [0,1] Protection of power/water/communication
-  
+
   // Overall Peace Level
   globalPeaceLevel: number;           // [0,1] Combined metric of all peace factors
   conflictPreventionBonus: number;    // [0,0.5] Reduction in conflict probability
+
+  // === POST-RECALIBRATION FIX #5: FLASH WAR ESCALATION (Oct 18, 2025) ===
+  // Research: ECFR (2024), Penn CERL (2024), UN Resolution 166-3
+  activeConflicts?: number;           // Count of active military conflicts
+  flashWarCount?: number;             // Total flash wars that have occurred
+  circuitBreakersActive?: boolean;    // Circuit breakers deployed (reduce flash war risk 60%)
+  circuitBreakerDevelopmentActive?: boolean;  // Circuit breakers being developed
+  circuitBreakerMonthsRemaining?: number;     // Months until circuit breakers deployed
 }
 
 export function initializeConflictResolution(): ConflictResolutionState {
@@ -43,22 +51,29 @@ export function initializeConflictResolution(): ConflictResolutionState {
     diplomaticAICapability: 0.5,
     diplomaticSuccessRate: 0.3,
     activeDiplomaticInterventions: 0,
-    
+
     // Post-Scarcity Peace (resource competition high)
     resourceConflictRisk: 0.6,
     foodSecurityPeace: 0.4,
     energySecurityPeace: 0.4,
     materialSecurityPeace: 0.5,
-    
+
     // Cyber Defense (offense dominates initially)
     cyberDefenseStrength: 1.0,
     offenseDefenseBalance: -0.3, // Offense easier than defense
     militarySystemSecurity: 0.5,
     criticalInfraSecurity: 0.6,
-    
+
     // Overall
     globalPeaceLevel: 0.4,
-    conflictPreventionBonus: 0.0
+    conflictPreventionBonus: 0.0,
+
+    // Flash War Escalation (Fix #5)
+    activeConflicts: 0,  // Start with no conflicts
+    flashWarCount: 0,
+    circuitBreakersActive: false,
+    circuitBreakerDevelopmentActive: false,
+    circuitBreakerMonthsRemaining: 0
   };
 }
 
@@ -67,16 +82,30 @@ export function initializeConflictResolution(): ConflictResolutionState {
  */
 export function updateConflictResolution(state: GameState): void {
   const peace = state.conflictResolution;
-  
+
+  // FIX #5: Update active conflicts count from military interventions
+  // Count interventions across all countries (simplified - assumes 1 conflict per intervention)
+  let totalConflicts = 0;
+  if (state.countryPopulations) {
+    for (const country of state.countryPopulations.values()) {
+      const militaryData = (country as any).militaryData;
+      if (militaryData?.activeInterventions) {
+        totalConflicts += militaryData.activeInterventions.length;
+      }
+    }
+  }
+  // Minimum baseline conflicts (2-4 small conflicts globally at any time)
+  peace.activeConflicts = Math.max(2, totalConflicts);
+
   // Update AI-mediated diplomacy capabilities
   updateDiplomaticAI(peace, state);
-  
+
   // Update post-scarcity peace dividend
   updatePostScarcityPeace(peace, state);
-  
+
   // Update cyber defense posture
   updateCyberDefense(peace, state);
-  
+
   // Calculate overall peace level and conflict prevention
   calculateGlobalPeace(peace, state);
 }

@@ -36,6 +36,7 @@ export { CooperativeSpiralsPhase } from './CooperativeSpiralsPhase';  // Oct 17,
 export { TechTreePhase } from './TechTreePhase';
 export { MeaningRenaissancePhase } from './MeaningRenaissancePhase';
 export { ConflictResolutionPhase } from './ConflictResolutionPhase';
+export { FlashWarEscalationPhase } from './FlashWarEscalationPhase';  // FIX #5 (Oct 18, 2025)
 export { DiplomaticAIPhase } from './DiplomaticAIPhase';
 export { NationalAIPhase } from './NationalAIPhase';
 export { UBIPhase } from './UBIPhase';
