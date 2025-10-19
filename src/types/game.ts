@@ -300,6 +300,15 @@ export interface GameState {
     jobGuaranteeLevel?: number;      // [0,1] Federal job guarantee (0 = none, 1 = universal)
   };
 
+  // FIX #7 (Oct 18, 2025): Trust Recovery Policies
+  policies?: {
+    aiEducationCampaigns?: {
+      active: boolean;          // Is the campaign currently running?
+      monthsActive: number;     // How long has it been active?
+      effectiveness: number;    // [0,1] Campaign quality (0 = poor, 1 = excellent)
+    };
+  };
+
   // Human Enhancement & AI-Human Merger (TIER 4.6) - DEPRECATED (contains sci-fi BCI/merger code, being phased out)
   humanEnhancementSystem: import('../types/humanEnhancement').HumanEnhancementSystem; // DEPRECATED: Use aiAssistedSkillsMetrics instead. Contains sci-fi elements (BCIs, consciousness upload) that are TRL 0-2.
 

@@ -43,6 +43,7 @@ import {
   UnemploymentPhase,
   EconomicTransitionPhase,
   ParanoiaPhase,
+  TrustRecoveryPhase,  // FIX #7 (Oct 18, 2025): Trust recovery mechanics
   SocialStabilityPhase,
   QualityOfLifePhase,
   OutcomeProbabilitiesPhase,
@@ -411,6 +412,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new UnemploymentPhase());
     this.orchestrator.registerPhase(new EconomicTransitionPhase());
     this.orchestrator.registerPhase(new ParanoiaPhase());
+    this.orchestrator.registerPhase(new TrustRecoveryPhase());  // FIX #7 (Oct 18, 2025): Trust recovery & decay
     this.orchestrator.registerPhase(new SocialStabilityPhase());
     this.orchestrator.registerPhase(new QualityOfLifePhase());
     this.orchestrator.registerPhase(new OutcomeProbabilitiesPhase());

@@ -109,6 +109,19 @@
     - Extinction: 0% (all survived)
     - See: `/reviews/fix123-validation_20251018.md`, `/devlogs/post-recalibration-fixes_20251018.md`
 
+- ✅ **Fix #7: Trust Recovery Mechanics** (~2h) - **COMPLETE** (Oct 18, 2025)
+  **Context:** Enable escape from dystopia traps through path-dependent trust recovery
+  **Status:** COMPLETE, tested with Monte Carlo N=1 (quick validation)
+  → **Implementation:**
+    - Created `updateTrustRecovery()` in `socialCohesion.ts`
+    - Recovery factors: Education (+1%), benefits (+2%), safety (+1.5%), explainability (+1%)
+    - Decay factors: Incidents (-10%), misalignment (-5%), mistakes (-1%)
+    - Research: Edelman (2024), Frontiers Psychology (2024), DORA (2024)
+    - Files: NEW `TrustRecoveryPhase.ts`, updated `socialCohesion.ts`, `game.ts`, `engine.ts`
+  → **Expected Impact:** +2-5% humane utopia rate (enables recovery from trust <0.3 → >0.6)
+  → **Next:** Full validation pending (Monte Carlo N=10 with Fix #5)
+  → **See:** `/devlogs/fix7-trust-recovery_20251018.md`
+
 - [ ] **TIER 1.8: Death Attribution System Redesign** (~18h) - **DEFERRED** (Nuclear war priority)
   **Status:** Phases 1-4 COMPLETE (Research, Validation, Design, Planning), Implementation DEFERRED until after Week 2 fixes
   → **Phase 1-2: Research & Validation** ✅ COMPLETE

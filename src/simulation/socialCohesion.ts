@@ -606,6 +606,100 @@ export function getTrustInAIForPolicy(society: HumanSocietyAgent, usePowerWeight
 }
 
 /**
+ * FIX #7 (Oct 18, 2025): Trust Recovery Mechanics
+ *
+ * Research Foundation:
+ * - Edelman (2024): Recovery via education, demonstrated benefits, visible impact
+ * - Frontiers Psychology (2024): +49% output quality, +52% privacy with feedback loops
+ * - DORA (2024): Continuous feedback critical for sustained trust
+ *
+ * Key Insight: Trust can recover if AI systems demonstrate benefits, safety, and explainability.
+ * This enables escape from dystopia traps and path-dependent recovery.
+ */
+export function updateTrustRecovery(state: GameState): void {
+  let trustChange = 0;
+
+  // === RECOVERY FACTORS ===
+
+  // 1. Education campaigns (+1%/month)
+  if (state.policies?.aiEducationCampaigns?.active) {
+    trustChange += TRUST_RECOVERY_FROM_EDUCATION;
+  }
+
+  // 2. Demonstrated benefits (+2%/month when QoL improving)
+  const qolTrend = state.globalMetrics.qualityOfLife - (state.globalMetrics.previousQoL || 0.5);
+  if (qolTrend > 0) {
+    trustChange += TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS;
+  }
+  // Store for next comparison
+  state.globalMetrics.previousQoL = state.globalMetrics.qualityOfLife;
+
+  // 3. Safety record (+1.5%/month with no incidents for 6+ months)
+  const recentIncidents = (state.significantEvents || []).filter(
+    event => (event.type === 'AISafetyIncident' || event.type === 'AIAlignment') &&
+             state.currentMonth - (event.month || 0) < 6
+  ).length;
+
+  if (recentIncidents === 0) {
+    trustChange += TRUST_RECOVERY_FROM_SAFETY_RECORD;
+  }
+
+  // 4. Explainability (+1%/month with high transparency)
+  if ((state.aiTransparency?.level || 0) > 0.7) {
+    trustChange += TRUST_RECOVERY_FROM_EXPLAINABILITY;
+  }
+
+  // === DECAY FACTORS ===
+
+  // 1. Safety incidents (-10% per incident)
+  const currentMonthIncidents = (state.significantEvents || []).filter(
+    event => (event.type === 'AISafetyIncident' || event.type === 'AIAlignment') &&
+             event.month === state.currentMonth
+  ).length;
+  trustChange -= currentMonthIncidents * TRUST_DECAY_FROM_INCIDENT;
+
+  // 2. Detected misalignment (-5% per detection)
+  const misalignedAIs = state.aiAgents.filter(ai => ai.alignment < 0.5).length;
+  const previousMisaligned = (state as any).previousMisalignedCount || 0;
+  const newMisalignments = Math.max(0, misalignedAIs - previousMisaligned);
+  trustChange -= newMisalignments * TRUST_DECAY_FROM_MISALIGNMENT;
+  (state as any).previousMisalignedCount = misalignedAIs;
+
+  // 3. Common mistakes (-1%/month if high error rate)
+  // Proxy: Low QoL despite high AI capability suggests mistakes
+  const avgCapability = state.aiAgents.length > 0
+    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
+    : 0;
+  const qol = state.globalMetrics.qualityOfLife;
+  const errorRate = avgCapability > 2.0 && qol < 0.5;
+  if (errorRate) {
+    trustChange -= TRUST_DECAY_FROM_MISTAKES;
+  }
+
+  // === APPLY CAPPED CHANGE ===
+  trustChange = Math.max(-0.1, Math.min(TRUST_RECOVERY_CAP, trustChange));
+
+  // Update society trust (stored separately for recovery mechanics)
+  if (!state.society.trustInAI) {
+    // Initialize if not present
+    state.society.trustInAI = calculateComprehensiveTrustInAI(state);
+  }
+  state.society.trustInAI = Math.max(0, Math.min(1, state.society.trustInAI + trustChange));
+
+  // Log recovery/decay (only on significant changes)
+  if (Math.abs(trustChange) > 0.02 && state.currentMonth % 6 === 0) {
+    console.log(`\n🔄 TRUST DYNAMICS (Month ${state.currentMonth})`);
+    console.log(`   Trust level: ${(state.society.trustInAI * 100).toFixed(1)}%`);
+    console.log(`   Monthly change: ${trustChange > 0 ? '+' : ''}${(trustChange * 100).toFixed(2)}%`);
+    if (trustChange > 0) {
+      console.log(`   Recovery factors: Education=${state.policies?.aiEducationCampaigns?.active ? 'YES' : 'NO'}, Benefits=${qolTrend > 0 ? 'YES' : 'NO'}, Safety=${recentIncidents === 0 ? 'YES' : 'NO'}`);
+    } else {
+      console.log(`   Decay factors: Incidents=${currentMonthIncidents}, New misalignments=${newMisalignments}, Errors=${errorRate ? 'YES' : 'NO'}`);
+    }
+  }
+}
+
+/**
  * Calculate cascading failure multiplier - shared across all systems
  */
 function calculateCascadingFailureMultiplier(state: GameState): number {
@@ -624,11 +718,11 @@ function calculateCascadingFailureMultiplier(state: GameState): number {
     state.technologicalRisk.corporateDystopiaActive,
     state.technologicalRisk.complacencyCrisisActive
   ].filter(Boolean).length;
-  
+
   if (activeCrises <= 2) {
     return 1.0; // No amplification for 1-2 crises
   }
-  
+
   // Each crisis beyond 2 adds 50% more degradation
   return 1.0 + (activeCrises - 2) * 0.5;
 }

@@ -21,6 +21,7 @@ export { OrganizationTurnsPhase } from './OrganizationTurnsPhase';
 export { UnemploymentPhase } from './UnemploymentPhase';
 export { EconomicTransitionPhase } from './EconomicTransitionPhase';
 export { ParanoiaPhase } from './ParanoiaPhase';
+export { TrustRecoveryPhase } from './TrustRecoveryPhase';  // FIX #7 (Oct 18, 2025)
 export { SocialStabilityPhase } from './SocialStabilityPhase';
 export { QualityOfLifePhase } from './QualityOfLifePhase';
 export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
