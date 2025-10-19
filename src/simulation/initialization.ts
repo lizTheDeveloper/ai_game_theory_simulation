@@ -473,7 +473,10 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
         grievances: 0.2,    // Moderate baseline grievances (2025 democratic society)
       },
       // Cooperative Spirals (Oct 17, 2025)
-      collectiveActionWillingness: 0.5  // Moderate baseline willingness to cooperate on commons problems
+      collectiveActionWillingness: 0.5,  // Moderate baseline willingness to cooperate on commons problems
+      // Post-Recalibration Fix #4: Workflow Adaptation (Oct 18, 2025)
+      // Research: MDPI (2024) - Only 21% fundamentally redesigned workflows in 2024
+      workflowAdaptation: 0.21  // 21% baseline (2024 empirical data)
     },
     
     globalMetrics: {

@@ -16,6 +16,20 @@
 
 import { GameState, SocialAccumulation } from '@/types/game';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
+import {
+  TRUST_THRESHOLD_ACCEPTANCE,
+  TRUST_THRESHOLD_EMBRACE,
+  TRUST_RECOVERY_FROM_EDUCATION,
+  TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS,
+  TRUST_RECOVERY_FROM_SAFETY_RECORD,
+  TRUST_RECOVERY_FROM_EXPLAINABILITY,
+  TRUST_RECOVERY_CAP,
+  TRUST_DECAY_FROM_INCIDENT,
+  TRUST_DECAY_FROM_MISALIGNMENT,
+  TRUST_DECAY_FROM_MISTAKES,
+  CAPABILITY_CHANGE_FEAR_THRESHOLD,
+  MAX_CAPABILITY_FEAR_PENALTY
+} from './trustThresholds';
 
 /**
  * Initialize social accumulation state
@@ -436,25 +450,129 @@ export function hasSocialCrisis(social: SocialAccumulation): boolean {
 }
 
 /**
- * Get trust in AI derived from paranoia level
- * 
+ * FIX #2 (Oct 18, 2025): NEW Trust Calculation - Decoupled from AI Capability
+ *
+ * Research Foundation:
+ * - University of Melbourne + KPMG (2025): 46% trust AI, trust based on benefits NOT capability
+ * - Edelman (2024): High-trust companies 2.6x more likely successful AI adoption
+ * - DORA (2024): Trust correlates with productivity benefits, explainability, safety
+ *
+ * Key Insight: Trust depends on OUTCOMES (alignment, benefits, safety, explainability),
+ * NOT on absolute capability level. High-capability aligned AI can be highly trusted.
+ *
+ * Trust Components:
+ * 1. Alignment Quality (40%) - Low misalignment rate = high trust
+ * 2. Demonstrated Benefits (20%) - Has AI improved quality of life?
+ * 3. Explainability (20%) - Can people understand AI decisions?
+ * 4. Safety Record (20%) - No incidents = higher trust
+ * 5. Capability Fear (penalty) - Only rapid changes cause fear, not absolute levels
+ */
+export function calculateComprehensiveTrustInAI(state: GameState): number {
+  // 1. ALIGNMENT QUALITY (40% weight)
+  const alignmentQuality = calculateAlignmentQuality(state);
+
+  // 2. DEMONSTRATED BENEFITS (20% weight)
+  const qol = state.globalMetrics.qualityOfLife;
+  const demonstratedBenefits = qol > 0.5 ? 0.2 : qol * 0.4; // Scales with QoL
+
+  // 3. EXPLAINABILITY (20% weight)
+  // Use existing transparency systems or default to moderate
+  const explainability = (state.aiTransparency?.level || 0.5) * 0.2;
+
+  // 4. SAFETY RECORD (20% weight)
+  const safetyRecord = calculateSafetyRecord(state);
+
+  // Base trust from positive factors
+  const baseTrust = alignmentQuality + demonstratedBenefits + explainability + safetyRecord;
+
+  // 5. CAPABILITY FEAR (penalty only on rapid changes)
+  const capabilityFear = calculateCapabilityFear(state);
+
+  // Final trust with bounds
+  const finalTrust = Math.max(0, Math.min(1, baseTrust - capabilityFear));
+
+  return finalTrust;
+}
+
+/**
+ * Calculate alignment quality component of trust (0-0.4 scale)
+ * Research: Trust highest when misalignment rate is low
+ */
+function calculateAlignmentQuality(state: GameState): number {
+  const totalAIs = state.aiAgents.length;
+  if (totalAIs === 0) return 0.3; // Moderate default
+
+  // Count aligned AIs (alignment > 0.7)
+  const alignedAIs = state.aiAgents.filter(ai => ai.alignment > 0.7).length;
+  const alignmentRate = alignedAIs / totalAIs;
+
+  // Scale to 0-0.4 (40% of total trust)
+  return alignmentRate * 0.4;
+}
+
+/**
+ * Calculate safety record component of trust (0-0.2 scale)
+ * Research: Incident-free operation builds trust over time
+ */
+function calculateSafetyRecord(state: GameState): number {
+  // Check for recent safety incidents in event log
+  const recentIncidents = (state.significantEvents || []).filter(
+    event => event.type === 'AISafetyIncident' &&
+             state.currentMonth - (event.month || 0) < 12
+  ).length;
+
+  // No incidents in last 12 months = full trust (0.2)
+  // Each incident reduces trust
+  const safetyScore = Math.max(0, 0.2 - (recentIncidents * 0.05));
+
+  return safetyScore;
+}
+
+/**
+ * Calculate capability fear (penalty, 0-0.3 scale)
+ * Research: Only RAPID capability changes cause fear, not absolute levels
+ */
+function calculateCapabilityFear(state: GameState): number {
+  // Track capability change rate (requires state to store previous capability)
+  const currentCapability = state.aiAgents.length > 0
+    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
+    : 0;
+
+  // Estimate change rate (actual implementation would track history)
+  // For now, assume rapid growth if capability > 3.0 and increasing
+  const previousCapability = (state as any).previousAICapability || 0;
+  const capabilityChange = currentCapability - previousCapability;
+
+  // Store for next iteration
+  (state as any).previousAICapability = currentCapability;
+
+  // Fear only triggers on rapid changes (>0.5/month)
+  if (capabilityChange > CAPABILITY_CHANGE_FEAR_THRESHOLD) {
+    // Scale fear with change rate, max 30% penalty
+    return Math.min(MAX_CAPABILITY_FEAR_PENALTY, capabilityChange * 0.2);
+  }
+
+  return 0;
+}
+
+/**
+ * Get trust in AI derived from paranoia level (LEGACY - Phase 2F)
+ *
  * Phase 2F+ Paranoia System: Trust is now calculated from paranoia, not stored directly.
  * This ensures trust can recover as paranoia decays, enabling Cognitive Spiral activation.
- * 
+ *
  * Formula: trust = 1.0 - (paranoia * 0.75)
  * Bounds: [0.20, 0.95] - Even max paranoia leaves 20% trust, even zero paranoia caps at 95%
- * 
+ *
  * @param society - Human society agent with paranoia level
  * @returns Trust level [0.20, 0.95]
- */
-/**
- * Get trust in AI for general social dynamics (population-weighted)
- * Used for: social cohesion, protests, public sentiment
+ *
+ * DEPRECATED: Use calculateComprehensiveTrustInAI() for post-recalibration runs
  */
 export function getTrustInAI(society: HumanSocietyAgent): number {
   const paranoia = society.paranoiaLevel ?? 0.15; // Default to 15% baseline paranoia
   const trustFromParanoia = 1.0 - paranoia * 0.75;
-  
+
   // Floor: Even 100% paranoia leaves 20% trust (some people always believe)
   // Ceiling: Even 0% paranoia caps at 95% trust (healthy skepticism remains)
   return Math.max(0.20, Math.min(0.95, trustFromParanoia));

@@ -77,4 +77,10 @@ export interface HumanSocietyAgent {
   // === COOPERATIVE SPIRALS: COLLECTIVE ACTION WILLINGNESS (Oct 17, 2025) ===
   // Research: Ostrom (2009), Putnam (2000) - social capital enables collective action
   collectiveActionWillingness?: number;  // [0,1] Ability to cooperate on commons problems
+
+  // === POST-RECALIBRATION FIX #4: WORKFLOW ADAPTATION (Oct 18, 2025) ===
+  // Research: MDPI (2024) - Only 21% fundamentally redesigned workflows in 2024
+  //           Those who did: strongly correlated with realizing tangible benefits
+  //           McKinsey + IBM (2024) - Workflow redesign essential for AI value capture
+  workflowAdaptation?: number;  // [0,1] Depth of organizational change for AI integration (starts 0.21)
 }

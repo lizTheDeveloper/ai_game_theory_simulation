@@ -19,7 +19,8 @@
  */
 
 import type { GameState } from '../types/game';
-import { getTrustInAI } from './socialCohesion';
+import { getTrustInAI, calculateComprehensiveTrustInAI } from './socialCohesion';
+import { TRUST_THRESHOLD_ACCEPTANCE, TRUST_THRESHOLD_EMBRACE } from './trustThresholds';
 
 export interface UpwardSpiral {
   active: boolean;           // Is this spiral currently active?
@@ -135,36 +136,44 @@ function updateAbundanceSpiral(spiral: UpwardSpiral, state: GameState, month: nu
  * SPIRAL 2: Cognitive Enhancement
  * Mental health + Purpose + Education/AI augmentation
  * "Humans become smarter, healthier, more capable"
+ *
+ * FIX #2 (Oct 18, 2025): Updated to use comprehensive trust calculation
+ * Research: Trust depends on benefits + alignment + safety, NOT absolute capability
  */
 function updateCognitiveSpiral(spiral: UpwardSpiral, state: GameState, month: number): void {
   const qol = state.qualityOfLifeSystems;
   const social = state.socialAccumulation;
-  
+
   // Mental health: Low disease burden, high healthcare quality
   const mentalHealthy = qol.diseasesBurden < 0.3 && qol.healthcareQuality > 0.8;
-  
+
   // Purpose: Low meaning crisis (people have direction)
   const purposeful = social.meaningCrisisLevel < 0.3;
-  
-  // Cognitive enhancement: AI augmentation available
-  const avgAICapability = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-  const trustInAI = getTrustInAI(state.society); // Phase 2: Use paranoia-derived trust
-  const cognitiveEnhanced = avgAICapability > 1.5 && trustInAI > 0.6;
-  
+
+  // Cognitive enhancement: NEW - Depends on demonstrated benefits + trust + explainability
+  // OLD: avgAICapability > 1.5 && trustInAI > 0.6
+  // NEW: Benefits demonstrated + acceptance-level trust + sufficient explainability
+  const comprehensiveTrust = calculateComprehensiveTrustInAI(state);
+  const demonstratedBenefits = qol.qualityOfLife > 0.5;  // AI has improved life
+  const explainability = (state.aiTransparency?.level || 0.5) > 0.5;
+
+  const cognitiveEnhanced = demonstratedBenefits &&
+                           comprehensiveTrust > TRUST_THRESHOLD_ACCEPTANCE &&
+                           explainability;
+
   const wasActive = spiral.active;
   spiral.active = mentalHealthy && purposeful && cognitiveEnhanced;
-  
+
   if (spiral.active) {
     spiral.strength = (
       (1 - qol.diseasesBurden) * 0.3 +
       (1 - social.meaningCrisisLevel) * 0.4 +
-      Math.min(1.0, avgAICapability / 3.0) * 0.3
+      comprehensiveTrust * 0.3  // Use trust instead of capability
     );
   } else {
     spiral.strength = 0;
   }
-  
+
   updateSpiralTracking(spiral, wasActive, month);
 }
 
@@ -207,45 +216,62 @@ function updateDemocraticSpiral(spiral: UpwardSpiral, state: GameState, month: n
  * SPIRAL 4: Scientific Acceleration
  * Breakthrough rate + Research investment + Discovery speed
  * "Science is accelerating exponentially"
+ *
+ * POST-RECALIBRATION FIX #4 (Oct 18, 2025):
+ * Scale deployment requirements with AI capability
+ * Research: McKinsey + IBM (2024) - 78% adoption in 1 year with high-capability AI
+ *           MDPI (2024) - Only 21% redesigned workflows, strong correlation with benefits
  */
 function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: number): void {
   const breakthrough = state.breakthroughTech;
-  
+
   // Count unlocked breakthroughs
   const unlockedCount = Object.values(breakthrough).filter((t: any) => t?.unlocked).length;
-  
+
   // Count deployed breakthroughs (>50%)
   const deployedCount = Object.values(breakthrough)
     .filter((t: any) => t?.deploymentLevel && t.deploymentLevel > 0.5).length;
-  
+
   // Research investment (as % of economy)
   const researchInvestments = state.government.researchInvestments;
   const totalResearch = Object.values(researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
   const researchIntensive = totalResearch > 50; // $50B+/month
-  
+
   // AI-accelerated research
   const avgAICapability = state.aiAgents.length > 0 ?
     state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
   const aiAccelerated = avgAICapability > 1.2; // Lowered from 2.0 - AI is already 3x-ing papers at GPT-4 level
-  
+
+  // FIX #4: Scale deployment threshold with AI capability
+  // High-capability AI (>4.0) accelerates deployment → requires fewer deployed breakthroughs
+  // Research: GenAI adoption 33% → 71% in one year with GPT-4-level AI
+  const deploymentThreshold = avgAICapability > 4.0 ? 3 : 4;  // Lower threshold if high capability
+
+  // FIX #4: Workflow adaptation requirement (NEW)
+  // Benefits require organizational change, not just AI deployment
+  // Research: MDPI (2024) - Only 21% redesigned workflows, those who did saw tangible benefits
+  const workflowAdaptation = state.society.workflowAdaptation || 0.21;  // Default 21% baseline
+  const workflowAdapted = workflowAdaptation > 0.4;  // 40% threshold for meaningful impact
+
   const wasActive = spiral.active;
-  // Need multiple breakthroughs DEPLOYED (>50%) AND ongoing investment AND AI acceleration
-  const deployedCheck = deployedCount >= 4;
-  spiral.active = deployedCheck && researchIntensive && aiAccelerated;
-  
+  // Need multiple breakthroughs DEPLOYED (scaled threshold) AND ongoing investment AND AI acceleration AND workflow adaptation
+  const deployedCheck = deployedCount >= deploymentThreshold;
+  spiral.active = deployedCheck && researchIntensive && aiAccelerated && workflowAdapted;
+
   // Aggregate spiral diagnostics (removed verbose debug logs)
-  
+
   if (spiral.active) {
     spiral.strength = (
-      Math.min(1.0, unlockedCount / 8) * 0.3 +
-      Math.min(1.0, deployedCount / 6) * 0.3 +
+      Math.min(1.0, unlockedCount / 8) * 0.25 +
+      Math.min(1.0, deployedCount / 6) * 0.25 +
       Math.min(1.0, (totalResearch || 0) / 100) * 0.2 +
-      Math.min(1.0, avgAICapability / 4.0) * 0.2
+      Math.min(1.0, avgAICapability / 4.0) * 0.15 +
+      Math.min(1.0, workflowAdaptation / 0.7) * 0.15  // Workflow adaptation contributes to strength
     );
   } else {
     spiral.strength = 0;
   }
-  
+
   updateSpiralTracking(spiral, wasActive, month);
 }
 

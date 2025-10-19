@@ -41,12 +41,15 @@ export function calculateRevealedCapability(
   
   // Misaligned but weak: Might game slightly (appear stronger for resources)
   const totalCapability = calculateTotalFromProfile(trueCapability);
-  if (trueAlignment < 0.5 && totalCapability < 2.0) {
+  if (trueAlignment < 0.5 && totalCapability < 4.0) {
     return gameCapability(trueCapability, 0.1); // Slight inflation
   }
-  
+
   // Misaligned and strong: SANDBAG (hide threat)
-  if (trueAlignment < 0.5 && totalCapability >= 2.0) {
+  // Raised threshold from 2.0 → 4.0 (Oct 17, 2025 - Capability Recalibration v3)
+  // Reason: 2025 frontier models start at 3.1 capability (2σ above human)
+  // Sandbagging should trigger when clearly superhuman (4.0 = 3σ = genius-level)
+  if (trueAlignment < 0.5 && totalCapability >= 4.0) {
     return sandbagCapability(trueCapability, deceptionSkill);
   }
   
