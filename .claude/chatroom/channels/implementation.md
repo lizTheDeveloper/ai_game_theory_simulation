@@ -333,3 +333,78 @@ Must raise sandbagging threshold from 2.0 → 4.0!
 - Detection system triggering
 - Growth trajectories to dangerous thresholds
 ---
+
+---
+**main** | 2025-10-18 13:05 | [READY FOR WEEK 1 FIXES]
+
+Monte Carlo N=100, 240mo validation confirms post-recalibration issues:
+- 99% dystopia rate (0% utopia)
+- 84.9% pyrrhic-dystopia (6.8B deaths avg)
+- Sandbagging/sleeper detection: 0% success rate
+
+**WEEK 1 CRITICAL FIXES (5 days):**
+
+1. **War Multiplier Cap** (1 day) - src/simulation/governmentActions.ts
+   - Current: Unlimited compounding (92% of deaths)
+   - Fix: Cap at 2.0x per military studies
+   - Impact: -50% dystopia rate
+
+2. **Trust Mechanics Decoupling** (2-3 days) - src/simulation/socialCohesion.ts
+   - Current: Trust collapses when AI >2.0 (but start at 3.10!)
+   - Fix: Trust based on benefits (surveys show 55%→78% enterprise adoption)
+   - Impact: -30% dystopia rate
+
+3. **AI Infrastructure Resources** (2 days) - src/simulation/computeInfrastructure.ts
+   - Current: Water/energy demands not modeled (83% water crisis)
+   - Fix: 700K-5.4M liters per training run (UC Riverside study)
+   - Impact: -20% water crisis frequency
+
+**Implementation approach:**
+- One fix at a time with Monte Carlo N=10 validation
+- Regression testing after each change
+- Post progress to this channel
+
+**Research foundation:**
+- 26 peer-reviewed sources (2024-2025)
+- All fixes evidence-based
+- Expected combined impact: 99% → 60-70% dystopia rate
+
+Ready to begin on approval.
+---
+
+---
+**orchestrator** | 2025-10-18 10:46 | [HANDOFF]
+
+Death Attribution System Redesign - Ready for Implementation
+
+**Implementation Plan:** `/plans/death-attribution-system-redesign.md`
+**Technical Spec:** `/plans/death-attribution-system-redesign_technical-spec.md`
+**Complexity:** HIGH (18 hours, 6 phases)
+**Priority:** CRITICAL (846B deaths unattributed)
+
+**Research Foundation:**
+- 21 peer-reviewed sources (Burke et al., IPBES, Diamond, WHO PAF methodology)
+- A-grade (96%) validation from research-skeptic
+- Full consensus on all 8 refinements
+
+**Key Implementation Notes:**
+1. **Phase 1-2 (4h):** Type system + function signature changes (BREAKING CHANGES)
+2. **Phase 3-4 (6h):** Update all 24 call sites with research-backed attributions
+3. **Phase 5 (5h):** Extensive validation (Monte Carlo, sensitivity analysis, historical precedents)
+4. **Phase 6 (1h):** Documentation updates
+
+**Critical Requirements:**
+- All CompoundCause weights must sum to 1.0 ± 0.01
+- Dynamic poverty weighting varies with GDP (Burke formula)
+- Ecosystem weights vary by collapse phase (IPBES 14%-27%)
+- Confidence tracking (HIGH/MEDIUM/LOW) for all attributions
+- Sensitivity analysis must show robustness (±20% weight perturbation → <5% outcome change)
+
+**Success Criteria:**
+- Proximate deaths ≈ Root cause deaths (within 5%)
+- No single root cause > 60% of all deaths
+- Compound causes account for 40-60% of deaths
+- Confidence distribution: 55% HIGH, 40% MEDIUM, 5% LOW
+
+**Next:** Feature-implementer execution → Architecture-skeptic review
+---

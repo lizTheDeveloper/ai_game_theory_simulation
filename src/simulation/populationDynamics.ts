@@ -273,8 +273,18 @@ export function updateHumanPopulation(state: GameState): void {
   const healthcareBase = Math.max(0.3, 1 - (qol.healthcareQuality * 0.7));
 
   // War multiplier: active conflicts dramatically increase deaths
+  // FIX #1 (Oct 18, 2025): Cap multiplier to prevent 92% war death dominance
+  // Research: ECFR (2024), CSET Georgetown (2024) - force multiplication plateaus, not unlimited
+  // UN resolution 166-3: Flash war risk from speed, not simple lethality scaling
   const activeConflicts = state.conflictResolution?.activeConflicts || 0;
-  const warMultiplier = activeConflicts > 0 ? 1.5 + (activeConflicts * 0.2) : 1.0;
+  const BASE_WAR_MULTIPLIER = 1.5;
+  const WAR_MULTIPLIER_PER_CONFLICT = 0.15;  // Reduced from 0.2 (more realistic)
+  const MAX_WAR_MULTIPLIER = 2.0;  // HARD CAP (force multiplication plateaus)
+
+  const uncappedMultiplier = activeConflicts > 0
+    ? BASE_WAR_MULTIPLIER + (activeConflicts * WAR_MULTIPLIER_PER_CONFLICT)
+    : 1.0;
+  const warMultiplier = Math.min(uncappedMultiplier, MAX_WAR_MULTIPLIER);
 
   // Base death rate applies seasonal pattern and monthly noise
   const baselineDeaths = pop.baselineDeathRate * healthcareBase * warMultiplier * seasonalDeathCycle * monthlyDeathNoise;

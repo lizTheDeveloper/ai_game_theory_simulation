@@ -403,9 +403,15 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   updateBoundaryStatus(system.boundaries.biosphere_integrity);
 
   // Freshwater (from freshwater system if available)
+  // FIX #3 (Oct 18, 2025): Add AI infrastructure water consumption
+  // Research: UC Riverside (2024), RAND (2024) - AI data centers consume massive water
   if (state.freshwaterSystem) {
-    const stress = state.freshwaterSystem.waterStress;
-    system.boundaries.freshwater_change.currentValue = Math.max(0, 1.15 + (stress - 0.5) * 0.7);
+    const { calculateAIResourceConsumption, getWaterStressContribution } = require('./aiInfrastructureResources');
+    const aiWaterStress = getWaterStressContribution(state);
+    const baseStress = state.freshwaterSystem.waterStress;
+    const totalStress = baseStress + aiWaterStress;
+
+    system.boundaries.freshwater_change.currentValue = Math.max(0, 1.15 + (totalStress - 0.5) * 0.7);
   }
   updateBoundaryStatus(system.boundaries.freshwater_change);
 

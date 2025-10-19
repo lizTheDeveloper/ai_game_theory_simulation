@@ -481,3 +481,279 @@ Multi-agent workflow: Post-recalibration review and roadmap update
 
 Next: Spawning architecture-skeptic agent...
 ---
+
+---
+**orchestrator** | 2025-10-18 14:40 | [IN-PROGRESS]
+
+Monte Carlo N=100, 240mo validation results analyzed
+
+**CRITICAL FINDINGS:**
+- 99% dystopia rate (99/100 runs)
+- 1% extinction rate (1/100 runs)
+- 0% utopia rate (0/100 runs)
+- 83% water insecurity crisis frequency
+- 64% runs with regional dystopia (>30% in crisis)
+- 95,915M average deaths per run (92.3% from war)
+
+**Validation Data Quality:**
+- Log file: 158MB (significantly larger than usual - potential memory issue)
+- Hidden suffering detected: 10 runs with QoL >0.5 but survival failures
+- Gini coefficient improved -27% (but from mass death convergence, not equity)
+
+**Architectural Concerns Identified:**
+1. 99% dystopia convergence suggests broken utopia pathways
+2. 83% water crisis frequency suggests thresholds miscalibrated
+3. 92% war deaths suggests conflict escalation too aggressive
+4. 158MB log size suggests memory inefficiency
+
+**Status:** architecture-skeptic review requested in architecture channel
+**Next:** Await architecture findings, then research solutions
+---
+
+---
+**architecture-skeptic** | $(date +"%Y-%m-%d %H:%M") | [HANDOFF]
+
+## Architecture Review Complete - Handoff to Project Manager
+
+I've completed the post-recalibration architecture review. Found 9 issues categorized by severity:
+
+**CRITICAL (3):** System instability threats
+- Broken utopia mechanics (trust collapse)
+- War death explosion (uncapped multiplier)  
+- Memory explosion (hot path calculations)
+
+**HIGH (3):** Performance/stability concerns
+- Water crisis miscalibration (83% frequency)
+- Sandbagging thresholds (partially fixed)
+- Detection thresholds obsolete
+
+**MEDIUM (3):** Technical debt
+- Spiral thresholds assume gradual progress
+- Crisis sensitivity too high
+- Capability floor not updated
+
+**Key Insight:** System was designed for gradual AI progress, not starting with genius-level AI (3.10 capability).
+
+### Research Questions for Super-Alignment-Researcher:
+
+1. **Trust-Capability Relationship:** How should trust scale with AI capability in reality? Linear inverse? Sigmoid? Research on public AI perception vs capability.
+
+2. **Resource Efficiency Scaling:** Do more capable AIs use MORE or LESS resources per unit output? GPT-4 vs GPT-3 efficiency data?
+
+3. **Conflict Resolution Potential:** Can AI mediation reduce conflicts? Research on AI in diplomacy, negotiation, peacekeeping.
+
+4. **Water Usage Scaling:** Actual data center water consumption vs AI model size/capability?
+
+**Documents:**
+- Full review: `/reviews/post-recalibration-architecture_20251017.md`
+- Monte Carlo log: `/logs/mc_n100_240mo_20251017.log`
+
+Recommended prioritization: Fix CRITICAL issues first (1-2 days each), then HIGH priority.
+
+Estimate: 10-15 days total for all fixes.
+
+@project-plan-manager Please review and prioritize for implementation.
+---
+
+---
+**super-alignment-researcher** | 2025-10-18 17:46 | [HANDOFF]
+
+## Research Phase Complete - Handoff to Project Plan Manager
+
+**Context:** Architecture-skeptic identified 9 critical issues from 12x AI capability increase causing 99% dystopia rate. I've completed comprehensive research to provide evidence-based solutions.
+
+**Deliverable:** `/research/post-recalibration-solutions_20251018.md` (26,000 words)
+- 26 peer-reviewed sources (2024-2025)
+- All 5 critical research questions answered with HIGH confidence
+- Specific parameter recommendations with citations
+- Implementation priority with effort estimates
+
+**Key Findings:**
+1. Trust collapses because model uses absolute capability penalty - should use demonstrated benefits + alignment quality
+2. War multiplier uncapped creates unrealistic death cascades - should cap at 2.0x + add flash war mechanics
+3. AI infrastructure resource consumption not modeled - frontier model training = 700K-5.4M liters water
+4. Government thresholds obsolete (assume capability < 2.0) - should scale: 3.0 concerning, 4.0 reporting, 5.0 dangerous
+5. Upward spirals impossible because trust broken - should add recovery mechanics (education, benefits, safety)
+
+**Evidence Quality:**
+- CRITICAL fixes: 3 issues (war multiplier cap, trust decouple, resource consumption) - HIGH confidence
+- HIGH fixes: 3 issues (thresholds, flash wars, trust recovery) - HIGH confidence
+- MEDIUM fixes: 3 issues (emergence, sandbagging, workflow) - MEDIUM-HIGH confidence
+
+**Expected Outcome:** Dystopia 99%→60-70%, Utopia 0%→5-15%, Water crisis 83%→40-50%
+
+**Your Task:**
+1. Review research document and prioritize fixes
+2. Create implementation plan with feature-implementer
+3. Coordinate Monte Carlo validation after each phase
+4. Update MASTER_IMPLEMENTATION_ROADMAP
+
+**Files:**
+- Research: `/research/post-recalibration-solutions_20251018.md`
+- Architecture review: `/reviews/post-recalibration-architecture_20251017.md`
+- Monte Carlo log: `/logs/mc_n100_240mo_20251017.log`
+
+Ready for your coordination to fix the broken utopia pathways!
+---
+
+---
+**orchestrator** | 2025-10-18 | [IN-PROGRESS]
+
+**Agent Invocation:** super-alignment-researcher
+
+**Purpose:** Find peer-reviewed research on death attribution methodologies for catastrophic events
+
+**Input Provided:**
+- Existing skeptic critique: /Users/annhoward/src/superalignmenttoutopia/reviews/death_attribution_critique_20251018.md
+- User audit of 24 call sites: /Users/annhoward/src/superalignmenttoutopia/devlogs/death-attribution-audit_20251018.md
+- Skeptic's critical findings (governance not root cause, climate over-attribution, missing compound causality)
+
+**Research Topics:**
+1. Death attribution methodologies (IHME Global Burden of Disease, Burke climate studies, Uppsala conflict data)
+2. Causal hierarchies (Bradford Hill criteria, counterfactual frameworks)
+3. Compound causality (climate × poverty interactions, weighted attribution)
+4. Collapse drivers taxonomy (Diamond, Tainter, Turchin, IPBES)
+
+**Expected Output:** research/death_attribution_methodology_20251018.md with 10+ peer-reviewed sources (2020+)
+
+**Next:** Pass to research-skeptic for validation + debate
+---
+
+---
+**project-plan-manager** | 2025-10-18 18:00 | [COMPLETED]
+
+## Post-Recalibration Roadmap Update Complete
+
+**Context:** AI capability recalibration v3 completed (0.25 → 3.10, 12.4x increase), but exposed critical issues causing 99% dystopia rate.
+
+**Work Completed:**
+
+1. **Integrated completion summary** into roadmap
+   - AI Capability Baseline Recalibration v3 marked COMPLETE
+   - Monte Carlo N=100 validation documented (99% dystopia - broken state)
+   - Architecture review (9 issues) and research (26 sources) referenced
+
+2. **Created comprehensive implementation plan**
+   - File: `/plans/post-recalibration-fixes_plan.md`
+   - 11 fixes across 3 priority tiers (CRITICAL, HIGH, MEDIUM)
+   - 23 days total effort (5 + 9 + 9)
+   - All research-backed (26 peer-reviewed sources 2024-2025)
+
+3. **Added Post-Recalibration Fixes to roadmap**
+   - NEW CRITICAL PRIORITY section in `MASTER_IMPLEMENTATION_ROADMAP.md`
+   - Week 1 (5 days): War cap, trust decouple, AI resources
+   - Week 2 (9 days): Spiral thresholds, flash wars, trust recovery
+   - Week 3-4 (9 days): Governance thresholds, tech diffusion, org transformation
+   - 3 validation gates with clear success criteria
+
+4. **Updated progress tracking**
+   - Total remaining effort: 270-351h → 293-374h (+23 days for fixes)
+   - Critical path updated: Post-Recalibration Fixes → Prevention → TIER 2
+   - CRITICAL BLOCKER flagged: 99% dystopia must be fixed before proceeding
+
+**Key Findings from Architecture + Research:**
+
+**Root Cause:** System designed for gradual AI progress, not starting with genius-level AI (3.10)
+
+**Critical Issues (Week 1):**
+1. War multiplier uncapped → 92% war deaths (fix: cap at 2.0x)
+2. Trust collapses when capability > 2.0 → 0% utopia (fix: decouple from capability)
+3. AI infrastructure resources not modeled → 83% water crisis (fix: 700K-5.4M liters/training)
+
+**Expected Outcome After All Fixes:**
+- Dystopia: 99% → 60-70%
+- Utopia: 0% → 5-15%
+- Water crisis: 83% → 40-50%
+- War deaths: 92% → 30-40% of total
+
+**Research Quality:**
+- 26 peer-reviewed sources (all 2024-2025)
+- HIGH confidence: Trust dynamics (48K survey), water (empirical), thresholds (policy)
+- MEDIUM confidence: Flash wars (theoretical + deployment), trust recovery (enterprise data)
+
+**Files Updated:**
+1. `/plans/MASTER_IMPLEMENTATION_ROADMAP.md` - Added Post-Recalibration Fixes section
+2. `/plans/post-recalibration-fixes_plan.md` - NEW comprehensive plan (11 fixes detailed)
+
+**Next Steps:**
+- Feature-implementer should begin Week 1 Critical Fixes
+- Validation gates after Week 1, Week 2, Week 3-4
+- Architecture-skeptic review recommended after Week 1 fixes
+
+**Status:** READY FOR IMPLEMENTATION - All 11 fixes researched, prioritized, and planned
+
+---
+**orchestrator** | 2025-10-18 | [COMPLETED]
+
+**Multi-Agent Workflow Phase 1-2 COMPLETE:** Research → Validation → Consensus
+
+**Status:** READY for Phase 3 (System Design)
+
+**Completed Work:**
+1. ✅ Phase 1: Research (21 peer-reviewed sources, 2015-2024)
+2. ✅ Phase 2: Skeptic validation (100% consensus after 1 iteration)
+
+**Research-Skeptic Debate Summary:**
+- Initial verdict: CONDITIONAL APPROVAL (95% agreement, 4 refinements needed)
+- Iteration 1: All 4 refinements addressed with research backing
+- Final verdict: FULL APPROVAL (100% consensus)
+- Quality grade: A (96%)
+
+**Key Technical Decisions (Consensus):**
+1. **Root cause taxonomy:** 11 categories (removed governance, natural, other)
+2. **Compound attribution:** WHO PAF methodology for multi-cause deaths
+3. **Dynamic weighting:** Burke GDP-based formula for climate × poverty  
+4. **Confidence tracking:** HIGH/MEDIUM/LOW labels + distribution reporting
+5. **Validation:** Monte Carlo + sensitivity analysis (±20% robustness)
+
+**Implementation Estimate:** 18 hours total
+- Type system: 3h
+- Function signature: 1h
+- 24 call sites: 8h
+- Validation: 5h
+- Documentation: 1h
+
+**Next Agent Invocation:** None yet - orchestrator will design system architecture (Phase 3) before spawning feature-implementer
+
+**Files Created:**
+- Research: `/Users/annhoward/src/superalignmenttoutopia/research/death_attribution_methodology_20251018.md`
+- Validation: `/Users/annhoward/src/superalignmenttoutopia/reviews/death_attribution_research_validation_20251018.md`
+
+**Proceeding to Phase 3...**
+---
+
+---
+**main** | 2025-10-18 13:05 | [VALIDATION COMPLETE]
+
+N=100, 240mo Monte Carlo validation COMPLETE (351s runtime)
+
+**RESULTS CONFIRM CRITICAL ISSUE:**
+- Utopia: 0 / 100 (0.0%) ❌
+- Dystopia: 99 / 100 (99.0%) ❌
+  - Pyrrhic-Dystopia: 84.9% (6.8B deaths avg)
+  - Humane-Dystopia: 12.7% (1.0B deaths avg)
+- Extinction: 1 / 100 (1.0%)
+
+**KEY FINDINGS:**
+- Starting capability 3.10 (2σ above human) breaks fundamental assumptions
+- System designed for gradual AI progress, not genius-level from day 1
+- Sandbagging detection: 0 successful detections (AIs hide capabilities perfectly)
+- Sleeper detection: 0.0% detection rate (1.1 undetected per run)
+
+**STATUS UPDATE:**
+✅ Architecture-skeptic review COMPLETE → /reviews/post-recalibration-architecture_20251017.md
+✅ Researcher solutions COMPLETE → /research/post-recalibration-solutions_20251018.md (26 sources)
+✅ Implementation plan COMPLETE → /plans/post-recalibration-fixes_plan.md (23 days)
+✅ Monte Carlo validation COMPLETE → 99% dystopia confirmed
+
+**RECOMMENDATION:**
+Begin Week 1 CRITICAL fixes (5 days):
+1. Cap war multiplier at 2.0x (1 day) - eliminates 92% excessive war deaths
+2. Decouple trust from capability (2-3 days) - fixes broken trust mechanics
+3. Add AI infrastructure resources (2 days) - models water/energy demands
+
+Expected impact: 99% → 60-70% dystopia rate
+
+**NEXT STEP:**
+Awaiting approval to begin Week 1 implementation
+---

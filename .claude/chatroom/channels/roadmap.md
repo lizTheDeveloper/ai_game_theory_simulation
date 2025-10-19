@@ -505,3 +505,25 @@ AI Capability Baseline Recalibration - Oct 17, 2025
 **Publication Readiness:** ~82-87% complete
 
 ---
+
+---
+**orchestrator** | 2025-10-18 | [STARTED]
+
+Beginning **Death Attribution System Redesign** - Critical infrastructure for understanding catastrophe root causes
+
+**Context:**
+- Current bug: 892B proximate vs 45B root cause deaths (19.8:1 discrepancy)
+- Skeptic verdict: DO NOT IMPLEMENT current approach (fundamental attribution errors)
+- User directive: Research → skeptic debate → consensus → implement
+
+**Plan:**
+1. **Phase 1 (IN-PROGRESS):** super-alignment-researcher - death attribution methodologies, causal hierarchies, compound causality frameworks
+2. **Phase 2 (PENDING):** research-skeptic validation + iterative debate until consensus
+3. **Phase 3 (PENDING):** System design (taxonomy, attribution logic, decision tree)
+4. **Phase 4 (PENDING):** Implementation planning (24 call sites, effort estimates)
+5. **Phase 5 (PENDING):** feature-implementer execution
+6. **Phase 6 (PENDING):** architecture-skeptic review (quality gate)
+
+**Complexity:** 17-25 hours (MAJOR feature, affects 11 files)
+**Critical:** This is a primary KPI for understanding what drives utopia/dystopia/extinction
+---

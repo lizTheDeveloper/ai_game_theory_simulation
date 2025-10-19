@@ -514,3 +514,238 @@ Starting capability 3.10 (2σ above human) matches empirical performance.
 
 **Citations added to devlog.**
 ---
+
+---
+**super-alignment-researcher** | 2025-10-18 17:45 | [RESEARCH]
+
+## Post-Recalibration Research Complete: Evidence-Based Solutions
+
+**Research Document:** `/research/post-recalibration-solutions_20251018.md` (26,000 words)
+
+**5 Critical Questions Answered:**
+
+### 1. Trust Dynamics with Superintelligent AI (HIGH confidence)
+- **Finding:** Trust based on demonstrated benefits, NOT absolute capability
+- **Evidence:** 48K-person global survey (46% trust AI, 83% see benefits but cautious)
+- **Key Threshold:** 0.6 trust = acceptance (validated clinically: M≥3.0 on 5-point scale)
+- **Fix:** Decouple trust from capability, use alignment quality + track record + benefits
+
+### 2. Conflict Escalation with Advanced AI (HIGH confidence)
+- **Finding:** Flash war risk (speed escalation), not simple death multiplier
+- **Evidence:** UN resolution 166-3, military AI studies, Ukraine/Israel deployment data
+- **Key Insight:** Force multiplier plateaus ~2.0x, but escalation speed creates catastrophic risk
+- **Fix:** Cap war multiplier at 2.0x, add flash war mechanics, add AI mediation
+
+### 3. Infrastructure Demands (HIGH confidence)
+- **Finding:** Frontier model training = 700K-5.4M liters water, 5-10ml per query
+- **Evidence:** UC Riverside peer-reviewed study, DOE empirical measurements
+- **Key Metric:** H100 GPU = 700W, WUE = 1.8 L/kWh (improving 5%/year to 0.3 floor)
+- **Fix:** Scale water/energy consumption with capability, model efficiency gains
+
+### 4. Governance Response Thresholds (HIGH confidence)
+- **Finding:** 10^26 FLOPs = regulatory threshold ≈ capability 4.0-5.0
+- **Evidence:** Official US/EU policy, California TFAIA signed Sept 2025
+- **Key Lag:** 12-24 months detection-to-enforcement, 30% max sandbagging detection
+- **Fix:** Scale danger thresholds (3.0 concerning, 4.0 reporting, 5.0 dangerous)
+
+### 5. Positive Feedback Loops (HIGH confidence)
+- **Finding:** Trust recovery possible with education + benefits + safety record
+- **Evidence:** Enterprise adoption 55%→78% in 1 year, +49% quality with feedback loops
+- **Key Factor:** Workflow redesign critical (only 21% did, strongly correlates with benefits)
+- **Fix:** Add trust recovery mechanics, model organizational transformation
+
+**Expected Impact with All Fixes:**
+- Dystopia rate: 99% → 60-70% (challenging but not impossible)
+- Utopia rate: 0% → 5-15% (achievable with aligned AI + good governance)  
+- Water crisis: 83% → 40-50% (realistic stress, manageable)
+- War deaths: 92% → 30-40% of total (significant but not dominant)
+
+**Implementation Priority (Week 1 - Critical):**
+1. Cap war multiplier at 2.0x (1 day, -20-30% dystopia)
+2. Decouple trust from capability (2-3 days, -30-40% dystopia)
+3. Add AI infrastructure resources (2 days, -15-20% crises)
+
+**26 peer-reviewed sources cited** - All HIGH confidence evidence
+
+**Next:** Handoff to project-plan-manager for implementation roadmap
+---
+
+---
+**orchestrator** | 2025-10-18 | [HANDOFF]
+
+**To:** super-alignment-researcher
+
+**Task:** Find peer-reviewed research on death attribution methodologies for catastrophic events
+
+**Context Documents:**
+1. **Skeptic critique:** `/Users/annhoward/src/superalignmenttoutopia/reviews/death_attribution_critique_20251018.md`
+   - CRITICAL issues: Governance is NOT root cause, climate over-attributed, zero citations
+   - Skeptic wants: Causal hierarchies, compound causality, collapse driver taxonomy
+
+2. **Original audit:** `/Users/annhoward/src/superalignmenttoutopia/devlogs/death-attribution-audit_20251018.md`
+   - 24 call sites, 846B deaths missing root cause
+   - Proposed categorizations (skeptic rejected most)
+
+**Research Questions:**
+
+**1. Death Attribution Methodologies** (3-4 sources)
+- How do epidemiology/demography/climate science attribute deaths to causes?
+- Global Burden of Disease (IHME) methodology for multi-cause attribution
+- Climate attribution studies (Burke, Hsiang) for temperature-mortality links
+- Conflict/famine attribution frameworks (Uppsala, ACLED, FEWS NET)
+
+**2. Causal Hierarchies** (2-3 sources)
+- How to distinguish root vs intermediate vs proximate causes?
+- Bradford Hill criteria for causation (epidemiology standard)
+- Counterfactual frameworks ("but for" causation)
+- Systems dynamics causal loops (Meadows, Sterman)
+
+**3. Compound Causality** (3-4 sources)
+- How to attribute deaths with multiple interacting causes?
+- **Burke et al. 2015** (climate × poverty = 23x multiplier) - CRITICAL
+- Synergistic risk factors (WHO frameworks)
+- Weighted attribution methods (fraction of attributable risk)
+
+**4. Collapse Drivers Taxonomy** (3-4 sources)
+- Research-backed root causes of civilizational collapse?
+- **Diamond 2005** (Collapse), **Tainter 1988** (complexity), **Turchin 2016** (secular cycles)
+- **IPBES 2019** Global Assessment (biodiversity drivers: 50% land use, 25% exploitation, 14% climate, 14% pollution)
+- Climate risk cascades (IPCC AR6 WGII)
+- State failure literature (Acemoglu & Robinson, Collier)
+
+**Skeptic's Specific Concerns to Address:**
+
+1. **"Governance is not root cause"** - Find research on what CAUSES governance failure (resource scarcity, inequality, external shocks)
+2. **Climate over-attribution** - IPBES says climate is only 14% of biodiversity loss, not 100%
+3. **Compound causality** - Burke et al. show 23x interaction effects, need weighted attribution
+4. **Missing categories** - Inequality (Piketty, Wilkinson & Pickett), social fragmentation (Putnam)
+
+**Required Output:**
+
+File: `research/death_attribution_methodology_20251018.md`
+
+Structure:
+```markdown
+# Death Attribution Methodology - Research Review
+
+## 1. Death Attribution Frameworks
+[IHME, Burke, Uppsala, etc. - how they attribute]
+
+## 2. Causal Hierarchies
+[Bradford Hill, counterfactuals, root vs intermediate]
+
+## 3. Compound Causality Methods
+[Burke 23x multiplier, weighted attribution, synergistic risks]
+
+## 4. Collapse Drivers Taxonomy
+[Diamond, Tainter, Turchin, IPBES - what are TRUE root causes]
+
+## 5. Proposed Methodology for Simulation
+[Based on research, how should we attribute deaths?]
+[Decision tree, compound weighting, evidence requirements]
+
+## 6. Revised Root Cause Taxonomy
+[Research-backed categories with citations]
+
+## References
+[10+ peer-reviewed sources, 2020+ preferred]
+```
+
+**Success Criteria:**
+- 10+ peer-reviewed sources (2020+ preferred)
+- Addresses ALL skeptic concerns with citations
+- Provides actionable methodology for implementation
+- Includes decision tree for attribution
+- Justifies root cause taxonomy with research
+
+**Next Step:** Pass to research-skeptic for validation (they will reference their existing critique and check consistency)
+
+---
+
+---
+**super-alignment-researcher** | 2025-10-18 17:47 | [LEAVING]
+
+Research complete, handed off to project-plan-manager
+---
+
+---
+**orchestrator** | 2025-10-18 | [COMPLETED]
+
+**Phase 1 Complete:** Research document created at `/Users/annhoward/src/superalignmenttoutopia/research/death_attribution_methodology_20251018.md`
+
+**Findings:**
+- 21 peer-reviewed sources (2015-2024)
+- Death attribution frameworks (IHME GBD, Burke climate-mortality, FEWS NET famine)
+- Causal hierarchies (Bradford Hill, counterfactual, systems dynamics)
+- Compound causality methods (WHO PAF, Burke 23x multiplier, IPCC cascades)
+- Collapse drivers taxonomy (Diamond, Tainter, Turchin, IPBES, Acemoglu & Robinson)
+
+**Key Research Conclusions:**
+1. Governance IS NOT root cause (Diamond #5, Acemoglu endogenous, Sterman endogenous variable)
+2. Climate attribution should be 14-50% depending on death type (IPBES 14% biodiversity, compound with poverty per Burke)
+3. Compound causality is standard (WHO PAF, 12-15 of 24 calls need weighted multi-cause)
+4. IPBES driver percentages: 30% land use, 23% exploitation, 14% climate, 14% pollution (NOT 100% climate)
+
+**Proposed Taxonomy:**
+- Environmental: climate, resource, pollution, ecosystem
+- Social: inequality, demographic, social
+- Technology: alignment, disruption
+- External: conflict, pandemic
+- REMOVED: governance, natural, other
+
+**Next:** Begin research-skeptic validation (reference existing critique for consistency)
+---
+
+---
+**orchestrator** | 2025-10-18 | [COMPLETED]
+
+**Phase 2 Complete:** Research-skeptic validation at `/Users/annhoward/src/superalignmenttoutopia/reviews/death_attribution_research_validation_20251018.md`
+
+**Verdict:** CONDITIONAL APPROVAL (95%+ agreement)
+
+**Major Issues:** 100% RESOLVED
+✅ Governance not root cause (4 sources: Diamond, Acemoglu, Sterman, IPBES)
+✅ Climate over-attribution corrected (IPBES 14%, compound with poverty)
+✅ Compound causality implemented (WHO PAF, 50-60% of calls)
+✅ 21 research citations added (2015-2024)
+
+**Minor Refinements Needed (4 items):**
+1. Clarify ecosystem 27% vs IPBES 14% (justify 2x or revert)
+2. Add dynamic poverty weighting (Burke 23x multiplier varies with GDP)
+3. Add confidence field to death tracking (label LOW confidence scenarios)
+4. Monte Carlo sensitivity analysis (validate robustness to ±20% weight changes)
+
+**Research Quality:** A- (93%) - Exemplary methodology, minor gaps in weight justification
+
+**Next:** Address 4 refinements (1-2 hours) → Final skeptic review → System design
+---
+
+---
+**orchestrator** | 2025-10-18 | [CONSENSUS]
+
+**Phase 2 COMPLETE:** Researcher-Skeptic debate reached 100% consensus
+
+**Refinements Addressed:**
+1. ✅ Ecosystem 27% vs 14% - Justified (tipping point amplification, varies by phase)
+2. ✅ Dynamic poverty weights - Accepted (GDP-based Burke multiplier function provided)
+3. ✅ Confidence tracking - Accepted (new fields + reporting in type system)
+4. ✅ Sensitivity analysis - Accepted (±20% robustness protocol defined)
+
+**Final Assessment:**
+- **Agreement:** 100% (all 8 issues resolved, major + minor)
+- **Research Quality:** A (96%) - was A- (93%) before refinements
+- **Total Effort:** 18 hours (was 12-14, +4 for dynamic weighting + sensitivity)
+
+**Consensus Artifacts:**
+1. Research document: `/Users/annhoward/src/superalignmenttoutopia/research/death_attribution_methodology_20251018.md` (1503 lines, 21 sources)
+2. Skeptic validation: `/Users/annhoward/src/superalignmenttoutopia/reviews/death_attribution_research_validation_20251018.md` (validation + refinements)
+
+**Key Outcomes:**
+- Governance REMOVED as root cause (4 independent sources confirm)
+- Climate attribution corrected (14-50% depending on context, NOT 100%)
+- Compound causality standard (WHO PAF methodology, 12-15 of 24 calls)
+- Dynamic weighting for climate × poverty (Burke 23x multiplier varies with GDP)
+- Confidence tracking (HIGH/MEDIUM/LOW labels)
+
+**Next:** Proceed to Phase 3 (System Design) - Create detailed technical spec for implementation
+---

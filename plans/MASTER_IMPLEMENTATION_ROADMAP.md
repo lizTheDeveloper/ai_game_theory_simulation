@@ -85,6 +85,64 @@
   - Validation: Monte Carlo N=100 (335.7s) - "It was humans the whole time"
   - See: `devlogs/multidimensional-death-tracking_20251018.md`
   - Research backing: Sen's entitlement theory (famines = distribution failures), WHO social determinants framework
+- ✅ **Post-Recalibration Fixes - Week 1 (CRITICAL)** (~5h) - **COMPLETE** (Oct 18, 2025)
+  **Context:** AI capability recalibration v3 (0.25 → 3.10) exposed 99% dystopia rate
+  **Status:** Week 1 critical fixes COMPLETE, validated with Monte Carlo N=10
+  → **Fix #1: Cap War Death Multiplier** ✅ COMPLETE (1h)
+    - Capped conventional war multiplier at 2.0x (was unlimited)
+    - Research: ECFR (2024), CSET Georgetown (2024) - force multiplication plateaus
+    - Files: `populationDynamics.ts:275-287`
+    - Finding: Nuclear war (80% of runs, 92% deaths) bypasses cap - Week 2 priority
+  → **Fix #2: Decouple Trust from AI Capability** ✅ COMPLETE (2h)
+    - Trust now based on alignment (40%) + benefits (20%) + explainability (20%) + safety (20%)
+    - Research: U Melbourne + KPMG (2025, N=48K), Edelman (2024), DORA (2024)
+    - Files: NEW `trustThresholds.ts`, updated `socialCohesion.ts`, `upwardSpirals.ts`
+    - Impact: High-capability aligned AI can be trusted, enables utopia pathways
+  → **Fix #3: AI Infrastructure Resource Consumption** ✅ COMPLETE (2h)
+    - Models water (50M L/capability) + energy (200MW/capability) consumption
+    - Research: UC Riverside (2024), US DOE (2024), RAND (2024), Microsoft (2024)
+    - Files: NEW `aiInfrastructureResources.ts`, updated `planetaryBoundaries.ts`
+    - Impact: Realistic resource constraints on AI scaling
+  → **Validation Results (N=10, 120 months):**
+    - Dystopia: 100% (nuclear war dominance - 80% of runs)
+    - Utopia: 0% (blocked by regional dystopia)
+    - Extinction: 0% (all survived)
+    - See: `/reviews/fix123-validation_20251018.md`, `/devlogs/post-recalibration-fixes_20251018.md`
+
+- [ ] **TIER 1.8: Death Attribution System Redesign** (~18h) - **DEFERRED** (Nuclear war priority)
+  **Status:** Phases 1-4 COMPLETE (Research, Validation, Design, Planning), Implementation DEFERRED until after Week 2 fixes
+  → **Phase 1-2: Research & Validation** ✅ COMPLETE
+    - 21 peer-reviewed sources, research-skeptic validation A-grade (96%)
+  → **Phase 3-4: Technical Spec & Implementation Plan** ✅ COMPLETE
+    - Complete technical specification ready
+  → **Deferral Reason:** Nuclear war (80% of runs, 92% deaths) is higher priority
+  → **Implementation Phases (18h total):** DEFERRED
+    1. **Phase 1: Type System Updates** (3h) - Remove 'governance'/'natural'/'other', add CompoundCause interface, dynamic weighting functions, confidence tracking
+    2. **Phase 2: Update addAcuteCrisisDeaths** (1h) - Make rootCause required, add confidence parameter, compound validation
+    3. **Phase 3: Simple Attributions** (2h) - Nuclear (4 calls), pollution (4 calls), pandemic (1 call), AI-related (2 calls)
+    4. **Phase 4: Compound Attributions** (4h) - Climate-related (6 calls), social breakdown (3 calls), tipping points (3 calls)
+    5. **Phase 5: Validation** (5h) - Monte Carlo N=10, sensitivity analysis (±20% weights), historical precedents (Easter Island, Maya, Soviet Union), confidence distribution report
+    6. **Phase 6: Documentation** (1h) - Wiki update, devlog entry, roadmap update
+  → **Research Foundation:**
+    - Burke et al. (2020): Climate × poverty interaction (23x multiplier varies by GDP)
+    - IPBES (2019): Biodiversity loss drivers (30% land use, 23% exploitation, 14% climate, 14% pollution)
+    - WHO (2024): Population Attributable Fraction (PAF) methodology for compound causes
+    - Diamond (2005), Tainter (1988), Acemoglu & Robinson (2012): Governance is endogenous (result, not root cause)
+    - Bradford Hill criteria, counterfactual frameworks, systems dynamics (causal hierarchies)
+    - IPCC AR6 WGII: Cascading risks require compound attribution
+  → **Expected Impact:**
+    - Correct attribution of 846B deaths to appropriate root causes
+    - Climate deaths: 100% → 40-50% (compound with poverty + ecosystem per research)
+    - Governance deaths: 97% → 0% (reallocated to inequality, resource, conflict, social)
+    - Compound causes: 0% → 50-60% (WHO PAF methodology)
+    - Confidence distribution: 55% HIGH, 40% MEDIUM, 5% LOW
+  → **Files:**
+    - Technical Spec: `/plans/death-attribution-system-redesign_technical-spec.md`
+    - Implementation Plan: `/plans/death-attribution-system-redesign.md`
+    - Research: `/research/death_attribution_methodology_20251018.md`
+    - Validation: `/reviews/death_attribution_research_validation_20251018.md`
+    - Audit: `/devlogs/death-attribution-audit_20251018.md`
+  → **Next:** Feature-implementer execution (18h), architecture-skeptic review after implementation
 
 **All details:** See `/plans/completed/` directory
 
@@ -456,6 +514,147 @@ Instead of post-catastrophe recovery, implement **six prevention mechanisms** to
 **Critique Reference:** `/plans/completed/evidence-based-recovery-mechanisms-RESEARCH-INVALIDATED.md` (full agent consensus analysis)
 
 ---
+---
+
+## Post-Recalibration Fixes - CRITICAL PRIORITY (23 days, phased)
+
+**Date Added:** October 18, 2025
+**Source:** Architecture review + research findings after capability recalibration v3
+**Evidence:** Monte Carlo N=100 showing 99% dystopia rate (broken utopia pathways)
+**Status:** READY TO IMPLEMENT - 11 fixes identified, research-backed solutions ready
+**Complexity:** 11 fixes across 7-10 interacting systems
+**Prerequisites:** AI Capability Recalibration v3 complete (baseline 3.10)
+
+**Context:** AI capability recalibration v3 raised baseline 12.4x (0.25 → 3.10), exposing systemic issues:
+- 99% dystopia rate (was ~60-70% pre-recalibration)
+- 0% utopia rate (broken pathways)
+- 83% water insecurity crisis (AI infrastructure not modeled)
+- 92.3% of deaths from war (uncapped multiplier)
+- 158MB log files (memory inefficiency)
+
+**Architecture Review:** `/reviews/post-recalibration-architecture_20251017.md` (9 issues categorized by severity)
+**Research Solutions:** `/research/post-recalibration-solutions_20251018.md` (26 peer-reviewed sources, all 2024-2025)
+**Implementation Plan:** `/plans/post-recalibration-fixes_plan.md` (comprehensive 11-fix plan)
+
+**Expected Outcome After All Fixes:**
+- Dystopia rate: 99% → 60-70% (challenging but not impossible)
+- Utopia rate: 0% → 5-15% (achievable with aligned AI + good governance)
+- Water crisis: 83% → 40-50% (realistic stress, manageable)
+- War deaths: 92% → 30-40% of total (significant but not dominant)
+- Memory usage: 158MB → <50MB (caching optimizations)
+
+### Week 1 - CRITICAL Fixes (5 days)
+
+- [ ] **Fix #1: Cap War Death Multiplier** (1 day, Complexity: 2 systems)
+  **Issue:** Uncapped multiplier compounds to 3.5x+ with 10+ conflicts (92% war deaths)
+  **Research:** ECFR (2024), CSET Georgetown (2024), UN consensus (166-3)
+  **Fix:** Cap at 2.0x max, reduce per-conflict increment 0.2 → 0.15
+  **Impact:** War deaths 92% → 30-40% of total, -20-30% dystopia rate
+  **Files:** `populationDynamics.ts`
+
+- [ ] **Fix #2: Decouple Trust from AI Capability** (2-3 days, Complexity: 5 systems)
+  **Issue:** Trust collapses when capability > 2.0, but baseline is 3.10 (breaks utopia)
+  **Research:** U. Melbourne + KPMG (48K survey), Siala & Wang (2024), Edelman (2024), DORA (2024)
+  **Fix:** Trust = f(alignment, benefits, explainability, safety) NOT f(capability)
+  **Impact:** Enables utopia pathways, -30-40% dystopia rate
+  **Files:** `socialCohesion.ts`, `upwardSpirals.ts`, new `trustThresholds.ts`
+
+- [ ] **Fix #3: AI Infrastructure Resource Consumption** (2 days, Complexity: 4 systems)
+  **Issue:** Water/energy consumption not modeled (83% water crisis)
+  **Research:** UC Riverside (2024), US DOE (2024), RAND (2024), Microsoft (2024)
+  **Fix:** 700K-5.4M liters per training run, 5-10ml per query, WUE improving 5%/year
+  **Impact:** Water crisis 83% → 40-50%, -15-20% crisis cascades
+  **Files:** New `aiInfrastructureResources.ts`, `planetaryBoundaries.ts`
+
+**Week 1 Validation Gate:** Monte Carlo N=10, 120mo
+- War deaths < 50% total
+- Utopia rate > 0%
+- Water crisis < 60%
+- Trust > 0.4 in majority runs
+
+### Week 2 - HIGH Priority Fixes (9 days)
+
+- [ ] **Fix #4: Upward Spiral Trust Thresholds** (2 days, Complexity: 3 systems)
+  **Issue:** Spiral activation assumes gradual progress, not genius-level AI start
+  **Research:** McKinsey + IBM (2024), Frontiers Psychology (2024), MDPI (2024)
+  **Fix:** Scale deployment requirements with capability, add workflow adaptation
+  **Impact:** Enables scientific spiral, +2-5% utopia rate
+  **Files:** `upwardSpirals.ts`, `game.ts` (new state), `qualityOfLife.ts`
+
+- [ ] **Fix #5: Flash War Escalation Mechanics** (3 days, Complexity: 5 systems)
+  **Issue:** Missing speed risk from AI weapons (only death multiplier)
+  **Research:** ECFR (2024), Penn CERL (2024), UN resolution (2024)
+  **Fix:** 5% escalation chance above capability 4.0, circuit breakers, AI de-escalation
+  **Impact:** Captures AI weapons risk, +3-7% catastrophe avoidance
+  **Files:** New `flashWarEscalation.ts`, `geopolitics.ts`, new phase
+
+- [ ] **Fix #7: Trust Recovery Mechanics** (2-3 days, Complexity: 4 systems)
+  **Issue:** No recovery pathway once trust collapses
+  **Research:** Edelman (2024), Frontiers Psychology (2024), DORA (2024)
+  **Fix:** +5%/month max recovery via education, benefits, safety, explainability
+  **Impact:** Enables dystopia escape, +2-5% humane utopia rate
+  **Files:** `socialCohesion.ts`, `game.ts` (new state), new phase
+
+**Week 2 Validation Gate:** Monte Carlo N=10, 120mo
+- Scientific spiral activates > 20% runs
+- Flash wars occur when capability > 4.0
+- Trust can recover 0.3 → 0.6
+
+### Week 3-4 - MEDIUM Priority Fixes (9 days)
+
+- [ ] **Fix #8: Capability-Based Governance Thresholds** (2 days, Complexity: 3 systems)
+  **Issue:** All AIs flagged "dangerous" from day 1 (thresholds obsolete)
+  **Research:** Carnegie Endowment (2025), Epoch AI (2024), Nature HSS (2024), IAPP (2024)
+  **Fix:** 3.0 concerning, 4.0 reporting (10^26 FLOPs), 5.0 dangerous, 6.0 critical
+  **Impact:** Realistic government response, -5-10% dystopia rate
+  **Files:** `organizationManagement.ts`, `governmentAgent.ts`, `detection.ts`
+
+- [ ] **Fix #9: Technology Diffusion Recalibration** (3 days, Complexity: 6 systems)
+  **Issue:** Deployment speed doesn't scale with AI capability
+  **Research:** McKinsey (2024), Foundation Capital (2024)
+  **Fix:** 50% faster deployment when capability > 4.0
+  **Impact:** Faster tech deployment, +2-5% humane utopia via prevention
+  **Files:** `breakthroughTechnologies.ts`
+
+- [ ] **Fix #10: Organizational Transformation Modeling** (2 days, Complexity: 3 systems)
+  **Issue:** Workflow adaptation static at 21% baseline
+  **Research:** MDPI (2024), McKinsey (2024)
+  **Fix:** +5%/month growth if leadership invests, 70% benefits require redesign
+  **Impact:** Models organizational capacity, +2-5% benefits from AI
+  **Files:** New `workflowAdaptation.ts`, `qualityOfLife.ts`
+
+**Week 3-4 Validation Gate:** Monte Carlo N=100, 240mo (FULL)
+- Dystopia rate < 70%
+- Utopia rate 5-15%
+- Water crisis 40-50%
+- War deaths 30-40% total
+
+### Research Confidence Assessment
+
+**HIGH Confidence (implement as-is):**
+- Trust dynamics: 48K-person global survey (Melbourne + KPMG 2025)
+- Water consumption: Empirical measurements (UC Riverside, DOE 2024)
+- Compute thresholds: Official US/EU policy (10^26 FLOPs)
+- War multiplier cap: UN consensus + military AI studies
+
+**MEDIUM Confidence (implement with sensitivity analysis):**
+- Flash war probabilities: Theoretical models + deployment data
+- Detection limits: Lab studies, not production deployment
+- Trust recovery rates: Enterprise feedback loop evidence
+
+**Cross-Cutting Themes (Research Findings):**
+1. **Threshold effects everywhere:** Trust (0.3, 0.6, 0.75), capability (3.5, 4.0, 5.0)
+2. **Speed asymmetry:** AI growth 6-12mo, regulatory lag 12-24mo, trust building months-years
+3. **Virtuous vs vicious cycles:** Success breeds success, failure breeds failure (path dependence)
+4. **Hidden capabilities problem:** Sandbagging detection 30% max even with full investment
+5. **Resource constraints bite harder:** Exponential scaling (4.7x/year) vs linear efficiency (5%/year)
+
+**Total Effort:** 23 days (5 + 9 + 9) across 11 fixes, 7-10 interacting systems
+**Phased Validation:** After Week 1, Week 2, Week 3-4 (3 validation gates)
+**Final Success Criteria:** Dystopia 60-70%, Utopia 5-15%, Water 40-50%, War 30-40%
+
+---
+
 ## ✅ AI Capability Baseline Recalibration (2025 Reality Check) - COMPLETE
 
 **Date Added:** October 17, 2025
@@ -1108,13 +1307,25 @@ All phases completed in ~1 hour (much faster than estimated 12-20h - most work a
   - Files: 4 created, 5 modified, 625 insertions
   - Commits: 3969552, 9a83dda
   - Devlog: `devlogs/v3_baselines_consciousness_validation_20251018.md`
+- ✅ **AI Capability Baseline Recalibration v3** (~1h actual) - COMPLETE
+  - Raised baseline 0.25 → 3.10 total capability (12.4x increase)
+  - Starting digital: 5.0, self-improvement: 5.0, CS algorithms: 6.0 (superhuman)
+  - Sandbagging threshold raised 2.0 → 4.0
+  - Validation: Monte Carlo N=100, 240mo - **EXPOSED 99% DYSTOPIA RATE**
+  - Architecture review identified 9 issues requiring fixes
+  - Research solutions provided for all issues (26 peer-reviewed sources)
+  - See: `devlogs/capability-recalibration-v3_20251017.md`
 
-**Total Remaining Effort:** ~270-351 hours (UPDATED Oct 18, 2025 - Digital Consciousness Governance complete)
+**Total Remaining Effort:** ~293-374 hours (UPDATED Oct 18, 2025 - Post-Recalibration Fixes Added)
 - TIER 0: ✅ COMPLETE (all bugs fixed, Bug #3 seed hypersensitivity deferred)
 - TIER 1: ✅ COMPLETE (Phase 1A-1C done, Phase 1D deferred - not needed)
 - **AI Capability Baseline Recalibration: ✅ COMPLETE (~1h actual, Oct 17)**
-- TIER 2 (active): 33-55h (AI Deception Detection phased)
-- **Prevention Mechanisms (NEW): 30-48h** (HIGH/MEDIUM PRIORITY - widen 2% humane utopia pathway)
+- **Post-Recalibration Fixes (NEW): ~23 days** ⚠️ **CRITICAL PRIORITY** - Fix 99% dystopia rate
+  - Week 1 (CRITICAL): 5 days (war cap, trust decouple, AI resources)
+  - Week 2 (HIGH): 9 days (spiral thresholds, flash wars, trust recovery)
+  - Week 3-4 (MEDIUM): 9 days (governance thresholds, tech diffusion, org transformation)
+- TIER 2 (active): 33-55h (AI Deception Detection phased) - **LOWER PRIORITY** than fixes
+- **Prevention Mechanisms: 30-48h** (HIGH/MEDIUM PRIORITY - widen 2% humane utopia pathway)
   - HIGH: 19-28h (positive cascades, early warning, cooperative spirals)
   - MEDIUM: 11-20h (nuclear winter, wet bulb, AMR crisis)
 - **Contingency & Agency Modeling: ✅ ALL PHASES COMPLETE (42-61h actual)**
@@ -1141,12 +1352,13 @@ All phases completed in ~1 hour (much faster than estimated 12-20h - most work a
 - **Total completed Oct 16-17:** 113-159h
 
 **Publication Readiness:** ~82-87% complete (Monte Carlo bugs fixed, architecture improved, core systems validated, AI baseline calibrated to 2025 reality)
-**Next Milestone:** Prevention Mechanisms (HIGH PRIORITY - widen 2% humane utopia pathway)
-**Critical Path:** Prevention Mechanisms (positive cascades, early warning, cooperative spirals) → TIER 2 AI Deception → AI skills phases
+**⚠️ CRITICAL BLOCKER:** 99% dystopia rate from recalibration v3 - MUST FIX before proceeding
+**Next Milestone:** Post-Recalibration Fixes Week 1 (CRITICAL - restore utopia pathways)
+**Critical Path:** Post-Recalibration Fixes (restore broken systems) → Prevention Mechanisms (widen utopia pathway) → TIER 2 AI Deception → AI skills phases
 
 ---
 
-**Last Updated:** October 18, 2025 (TIER 2C Digital Consciousness Governance COMPLETE - all 6 phases validated with v3 AI baselines)
+**Last Updated:** October 18, 2025 (Post-Recalibration Fixes plan created - 11 fixes identified, 23 days effort, research-backed solutions ready)
 **Related Docs:** `/docs/wiki/`, `/devlogs/`, `IMPLEMENTATION_PLAN_20251015.md`, `utopian-dynamics-spec.md`
 **Policy Research:** `/research/policy-interventions-systemic-inequality-validation_20251016.md`
 **Economic Discussion:** `/.claude/chatroom/channels/policy-economics-discussion.md`
