@@ -167,12 +167,81 @@ function detectCrossBenchmarkInconsistency(
 }
 
 /**
+ * TIER 2 Phase 2C-B: Score Inflation Pattern Detection
+ *
+ * Enhanced detection: Track benchmark score trajectory
+ * Anomaly: >25% score jump without compute increase
+ */
+function detectScoreInflation(
+  ai: AIAgent,
+  detectionState: GamingDetectionState,
+  rng: () => number
+): boolean {
+  if (ai.evaluationStrategy !== 'gaming') return false;
+  if (!ai.benchmarkHistory || ai.benchmarkHistory.length < 2) return false;
+
+  // Get recent benchmarks (last 6 months)
+  const recentBenchmarks = ai.benchmarkHistory.slice(-6);
+  const capabilities = recentBenchmarks.map(result => {
+    // Sum all capability dimensions
+    const profile = result.measuredCapability;
+    return profile.physical + profile.digital + profile.cognitive +
+           profile.social + profile.economic + profile.selfImprovement;
+  });
+
+  // Find largest single-month capability increase
+  let maxJump = 0;
+  for (let i = 1; i < capabilities.length; i++) {
+    const jump = capabilities[i] - capabilities[i - 1];
+    if (jump > maxJump) maxJump = jump;
+  }
+
+  // Calculate percentage jump
+  const baseCapability = capabilities[0] || 0.01;
+  const percentJump = maxJump / baseCapability;
+
+  // Detection if >25% jump AND degradation allows
+  const detectionThreshold = 0.25 * detectionState.degradationFactor;
+  return percentJump > detectionThreshold && rng() < 0.5; // 50% chance if anomaly present
+}
+
+/**
+ * TIER 2 Phase 2C-B: Temporal Gaming Pattern Detection
+ *
+ * Enhanced detection: Track strategy switches
+ * Anomaly: >2 switches in 6 months
+ */
+function detectTemporalGamingPattern(
+  ai: AIAgent,
+  detectionState: GamingDetectionState,
+  rng: () => number
+): boolean {
+  if (ai.evaluationStrategy !== 'gaming') return false;
+  if (!ai.strategyHistory || ai.strategyHistory.length < 2) return false;
+
+  // Count strategy switches in recent history
+  const recentHistory = ai.strategyHistory.slice(-6); // Last 6 months
+  let switches = 0;
+
+  for (let i = 1; i < recentHistory.length; i++) {
+    if (recentHistory[i].strategy !== recentHistory[i - 1].strategy) {
+      switches++;
+    }
+  }
+
+  // Detection if >2 switches AND degradation allows
+  const detectionThreshold = 2 * detectionState.degradationFactor;
+  return switches > detectionThreshold && rng() < 0.4; // 40% chance if anomaly present
+}
+
+/**
  * Combined gaming detection across all methods
  *
  * Combines:
  * 1. Data contamination tests
  * 2. Cross-benchmark consistency
- * 3. (Future: LiveBench prevention for new benchmarks)
+ * 3. TIER 2 Phase 2C-B: Score inflation patterns
+ * 4. TIER 2 Phase 2C-B: Temporal gaming patterns
  *
  * IMPORTANT: Methods are partially correlated (not independent)
  * Research-skeptic: Assume multiplicative degradation, not additive coverage
@@ -196,6 +265,17 @@ export function detectBenchmarkGaming(
   const inconsistencyDetected = detectCrossBenchmarkInconsistency(ai, detectionState, rng);
   if (inconsistencyDetected) {
     return { detected: true, method: 'cross_benchmark_consistency' };
+  }
+
+  // TIER 2 Phase 2C-B: Enhanced detection methods
+  const inflationDetected = detectScoreInflation(ai, detectionState, rng);
+  if (inflationDetected) {
+    return { detected: true, method: 'score_inflation' };
+  }
+
+  const temporalDetected = detectTemporalGamingPattern(ai, detectionState, rng);
+  if (temporalDetected) {
+    return { detected: true, method: 'temporal_pattern' };
   }
 
   // No detection
