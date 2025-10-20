@@ -95,7 +95,6 @@ Agents communicate via **file-based async chatroom** for token-efficient coordin
 ```
 .claude/chatroom/
 ├── README.md              # Complete documentation & examples
-├── chat_helpers.sh        # Reusable bash functions (source this!)
 ├── channels/              # 8 permanent communication channels
 │   ├── coordination.md    # General workflow coordination
 │   ├── research.md        # Research findings & validation
@@ -123,16 +122,13 @@ Agents track line numbers in `.lastread` files and only read messages since last
 
 ### Chat Helper Functions
 
-**Location:** `.claude/chatroom/chat_helpers.sh`
 
 All agents should source this file to access 15 helper functions:
 
 ```bash
 # Source the helpers
-source "$(dirname "$0")/.claude/chatroom/chat_helpers.sh"
 
 # Core functions available:
-post_msg()           # Post message without reading
 read_new()           # Read only new messages since last check
 wait_for_message()   # Poll for new messages with timeout
 enter_chat()         # Mark agent as active, post [ENTERED]
@@ -169,7 +165,6 @@ Additional details.
 
 **Bash polling loop for agents:**
 ```bash
-source .claude/chatroom/chat_helpers.sh
 
 # Enter chat
 enter_chat "coordination" "feature-implementer"
@@ -180,7 +175,6 @@ while true; do
   implement_next_phase
 
   # Post progress
-  post_msg "coordination" "feature-implementer" "IN-PROGRESS" "Phase 1 complete"
 
   # Check for responses (5 second intervals, 60 second timeout)
   if wait_for_message "coordination" 60; then
@@ -203,12 +197,10 @@ git worktree add ../superalignmenttoutopia-feature-a main
 cd ../superalignmenttoutopia-feature-a
 
 # Post to coordination channel
-post_msg "coordination" "feature-implementer-1" "STARTED" \
   "Working on feature A in separate worktree. Will modify game.ts"
 
 # Agent 2: See the message, coordinate
 read_new "coordination"  # Sees Agent 1's message
-post_msg "coordination" "feature-implementer-2" "STARTED" \
   "Working on feature B. Will avoid game.ts until Agent 1 completes"
 ```
 
@@ -304,21 +296,17 @@ The orchestrator will:
 
 **feature-implementer posts:**
 ```bash
-source .claude/chatroom/chat_helpers.sh
 
 enter_chat "implementation" "feature-implementer"
 
-post_msg "implementation" "feature-implementer" "STARTED" \
   "Beginning nuclear winter implementation. Phase 1: Temperature modeling"
 
 # ... work ...
 
-post_msg "implementation" "feature-implementer" "IN-PROGRESS" \
   "Phase 1 complete. Monte Carlo N=10 passing. Moving to Phase 2: Agricultural collapse"
 
 # ... work ...
 
-post_msg "implementation" "feature-implementer" "QUESTION" \
   "Need architecture review - modifying 3 shared systems. Ready for architecture-skeptic?"
 
 wait_for_message "implementation" 300  # Wait up to 5 minutes
@@ -334,22 +322,17 @@ leave_chat "implementation" "feature-implementer" "Implementation complete, read
 
 ```bash
 # Orchestrator coordinates via chatroom
-post_msg "coordination" "orchestrator" "STARTED" \
   "Launching parallel work: Feature A (agent-1 worktree), Feature B (agent-2 worktree)"
 
 # Agent 1
 git worktree add ../sa-feature-a main
-post_msg "coordination" "feature-implementer-1" "STARTED" "Feature A in progress (worktree 1)"
 
 # Agent 2
 git worktree add ../sa-feature-b main
-post_msg "coordination" "feature-implementer-2" "STARTED" "Feature B in progress (worktree 2)"
 
 # Agents coordinate shared file access via chatroom
-post_msg "coordination" "feature-implementer-1" "ALERT" \
   "Need to modify game.ts in 10 minutes. Please coordinate"
 
-post_msg "coordination" "feature-implementer-2" "IN-PROGRESS" \
   "Acknowledged. Will wait for game.ts lock to release"
 ```
 
@@ -396,7 +379,6 @@ User request (trivial) → direct implementation → commit
 ✅ **Do use chatroom for agent coordination**
 ✅ **Do enforce quality gates**
 ✅ **Do use worktrees for parallel work**
-✅ **Do source chat_helpers.sh for token efficiency**
 
 ## Additional Resources
 

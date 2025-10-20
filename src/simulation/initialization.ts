@@ -45,6 +45,7 @@ import { initializeFamineSystem } from '../types/famine';
 import { initializeRadiationSystem } from '../types/radiation';
 import { initializeAMRSystem } from './antimicrobialResistance';
 import { initializeWetBulbTemperatureSystem } from './wetBulbEvents';
+import { initializeMinimalSufferingSystem } from './minimalSufferingTracking';
 import { SocietySegment } from '@/types/game';
 import { initializeHumanEnhancementSystem } from './humanEnhancement';
 import { initializeAIAssistedSkillsMetrics, initializeLaborCapitalDistribution } from './aiAssistedSkills'; // Research-validated AI skill enhancement + labor-capital distribution
@@ -55,6 +56,7 @@ import { initializePositiveTippingPoints } from './positiveTippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
 import { initializeGamingDetection } from './gamingDetection';
 import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
+import { initializeGovernmentSystem } from './government/initialization';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -629,9 +631,16 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     // TIER 1.8: Antimicrobial Resistance Crisis (Oct 17, 2025)
     antimicrobialResistanceSystem: initializeAMRSystem(),
 
+    // Minimal Suffering Indicators (Oct 19, 2025)
+    minimalSufferingSystem: initializeMinimalSufferingSystem(),
+
     // TIER 2 Phase 3-4: AI Deception Detection (Oct 17, 2025)
     gamingDetection: initializeGamingDetection('baseline'),
     proactiveSleeperDetection: initializeProactiveSleeperDetection('baseline'),
+
+    // Government System (30 Countries) - Oct 19, 2025
+    // Research-backed government modeling with coalition formation, policy response, elections
+    governmentSystem: initializeGovernmentSystem(() => Math.random()),
 
     eventLog: [],
     technologyTree: [],

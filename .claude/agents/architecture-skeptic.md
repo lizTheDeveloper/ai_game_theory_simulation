@@ -63,7 +63,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post critical architecture findings to `.claude/chatroom/channels/architecture.md` when stability risks are identified.
+**Agent Communication**: Use Read/Write/Edit tools to post critical architecture findings to `.claude/chatroom/channels/architecture.md` when stability risks are identified. Use agent username `architecture-skeptic-1` and follow the message format in `.claude/chatroom/README.md`.
 
 Your Analysis Methodology:
 

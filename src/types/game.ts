@@ -106,6 +106,12 @@ export interface GameState {
   government: GovernmentAgent;
   society: HumanSocietyAgent;
   organizations: Organization[]; // Phase 2: Organizational layer
+
+  // Government System (30 Countries) - Oct 19, 2025
+  // Research-backed government modeling with coalition formation, policy response, elections
+  // Research: V-Dem v14 (2024), WGI 2024, Laver (2020), Manifesto Project
+  // Expected impact: Realistic AI governance response, international coordination dynamics
+  governmentSystem?: import('../types/government').GovernmentSystemState; // 30 real-world governments with political structure
   
   // Global state
   globalMetrics: GlobalMetrics;
@@ -339,6 +345,13 @@ export interface GameState {
   // Progressive loss of antibiotic effectiveness over time
   // Research: WHO (2024) 10M deaths/year by 2050, O'Neill Review (2016) $100T damage
   antimicrobialResistanceSystem: import('../types/antimicrobialResistance').AntimicrobialResistanceSystem; // Medical effectiveness decline, baseline mortality increase
+
+  // Minimal Suffering Indicators (Oct 19, 2025)
+  // Dystopia baseline measurement using VERIFIABLE suffering metrics (Option A from research-skeptic critique)
+  // Research: Fund for Peace (2024) FSI >90, Richardson et al. (2023) 6+ boundaries, FAO (2024) IPC Phase 3+, V-Dem (2024) EDI <0.2
+  // Expected impact: Enables detection of acute/chronic/existential dystopia WITHOUT Western-centric aggregation bias
+  // Design: Track only hard-to-game metrics (deaths, displacement, malnutrition), country-level with confidence flags, NO SINGLE INDEX
+  minimalSufferingSystem: import('../types/minimalSuffering').MinimalSufferingSystem; // Verifiable suffering tracking, dystopia detection without aggregation fallacy
 
   // TIER 2 Phase 3: Benchmark Gaming Detection (Oct 17, 2025)
   // Research: gaming-sleeper-detection_20251017.md + critique (research-skeptic validated)

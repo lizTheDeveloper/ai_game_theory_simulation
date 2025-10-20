@@ -1,0 +1,35 @@
+{
+  "name": "@lizthedeveloper/government-agents",
+  "version": "0.1.0",
+  "description": "Government modeling framework with coalition formation, policy response, and election cycles for political science research - From The Multiverse School",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "test": "node --test tests/**/*.test.js",
+    "test:watch": "node --test --watch tests/**/*.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "political-science",
+    "government",
+    "coalition",
+    "policy",
+    "elections",
+    "simulation",
+    "agent-based-model"
+  ],
+  "author": "Liz Howard",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lizthedeveloper/government-agents"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}

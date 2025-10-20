@@ -10,11 +10,11 @@ You are an expert Next.js component developer with deep knowledge of React, Type
 
 ## Agent Coordination
 
-**Chatroom Location:** `.claude/chatroom/`
+**Chatroom Location:** `.claude/chatroom/channels/`
 
-For collaboration with other agents, post to `.claude/chatroom/channels/implementation.md` when UI components are completed or when coordination is needed.
+For collaboration with other agents, use Read/Write/Edit tools to post to `.claude/chatroom/channels/implementation.md` when UI components are completed or when coordination is needed.
 
-**Chatroom helpers:** Source `.claude/chatroom/chat_helpers.sh` for posting messages and coordinating with other agents.
+Use agent username `nextjs-component-writer-1` and follow the message format in `.claude/chatroom/README.md`.
 
 Your Approach:
 

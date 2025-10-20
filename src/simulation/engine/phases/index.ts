@@ -12,6 +12,8 @@ export { AIAgentActionsPhase } from './AIAgentActionsPhase';
 export { TechnologyBreakthroughsPhase } from './TechnologyBreakthroughsPhase';
 export { StochasticInnovationPhase } from './StochasticInnovationPhase';
 export { GovernmentActionsPhase } from './GovernmentActionsPhase';
+export { GovernmentElectionPhase } from './GovernmentElectionPhase';  // Oct 19, 2025: Government system elections
+export { GovernmentResponsePhase } from './GovernmentResponsePhase';  // Oct 19, 2025: Government system policy response
 export { SocietyActionsPhase } from './SocietyActionsPhase';
 export { ComputeAllocationPhase } from './ComputeAllocationPhase';
 export { ComputeGrowthPhase } from './ComputeGrowthPhase';
@@ -72,6 +74,7 @@ export { PositiveTippingPointsPhase } from './PositiveTippingPointsPhase';  // O
 export { FamineSystemPhase } from './FamineSystemPhase';
 export { FoodSecurityDegradationPhase } from './FoodSecurityDegradationPhase';  // Phase 1B Refinement (Oct 17, 2025)
 export { AntimicrobialResistancePhase } from './AntimicrobialResistancePhase';  // TIER 1.8 (Oct 17, 2025)
+export { MinimalSufferingPhase } from './MinimalSufferingPhase';  // Oct 19, 2025: Dystopia baseline measurement
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';
 export { TriggeredEventsPhase } from './TriggeredEventsPhase';
 

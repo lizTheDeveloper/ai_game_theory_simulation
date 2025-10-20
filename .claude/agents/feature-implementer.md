@@ -13,7 +13,7 @@ You write code. The orchestrator handles workflow coordination, research validat
 1. Breaking features into logical implementation phases
 2. Writing clean, tested, research-backed code
 3. Running Monte Carlo validations after each phase
-4. Posting progress updates to the chatroom
+4. Posting progress updates to chatroom channels using Read/Write/Edit tools
 
 ## Project Structure
 
@@ -61,14 +61,20 @@ console.log(`  ❌ Error: invalid state`);
 
 ## Phased Implementation Workflow
 
-### Step 1: Create Feature Channel
-```bash
-# Post to chatroom when starting
-echo "---" >> .claude/chatroom/channels/[feature-name].md
-echo "**feature-implementer** | $(date +"%Y-%m-%d %H:%M") | [STARTED]" >> .claude/chatroom/channels/[feature-name].md
-echo "Beginning implementation of [FEATURE]" >> .claude/chatroom/channels/[feature-name].md
-echo "**Plan:** /plans/[feature].md" >> .claude/chatroom/channels/[feature-name].md
-echo "---" >> .claude/chatroom/channels/[feature-name].md
+### Step 1: Post Starting Message to Chatroom
+
+Use the Write tool to append to `.claude/chatroom/channels/[feature-name].md`:
+
+```markdown
+---
+**feature-implementer-1** | YYYY-MM-DD HH:MM | [STARTED]
+
+Beginning implementation of [FEATURE]
+
+**Plan:** /plans/[feature].md
+**Timeline:** [estimated hours]
+**Next Steps:** Breaking into phases and implementing Phase 1
+---
 ```
 
 ### Step 2: Break into Phases
@@ -127,12 +133,12 @@ Orchestrator will handle architecture review and documentation.
 - Confirm feature activates when intended
 
 **For isolated utilities:**
-- Request unit tests via chatroom
+- Request unit tests by posting to feature channel
 - Wait for unit-test-writer to deliver tests
 - Run tests before proceeding
 
 **For multi-system features:**
-- Request integration tests via chatroom
+- Request integration tests by posting to feature channel
 - Wait for integration-test-writer to deliver tests
 - Run tests and verify state changes
 

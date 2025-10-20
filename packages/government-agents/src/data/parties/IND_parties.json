@@ -1,0 +1,135 @@
+[
+  {
+    "id": "bjp",
+    "name": "Bharatiya Janata Party (BJP)",
+    "countryCode": "IND",
+    "policies": {
+      "economic": 0.3,
+      "environmental": -0.1,
+      "technology": 0.4,
+      "social": -0.5,
+      "civilLiberties": -0.3,
+      "international": 0.2
+    },
+    "seatShare": 0.562,
+    "voteShare": 0.377,
+    "coalitionPreferences": ["shiv_sena", "jdu", "tdp"],
+    "coalitionBlacklist": ["inc", "cpim"],
+    "inGovernment": true,
+    "year": 2019
+  },
+  {
+    "id": "inc",
+    "name": "Indian National Congress (INC)",
+    "countryCode": "IND",
+    "policies": {
+      "economic": -0.2,
+      "environmental": 0.2,
+      "technology": 0.1,
+      "social": 0.4,
+      "civilLiberties": 0.4,
+      "international": 0.4
+    },
+    "seatShare": 0.095,
+    "voteShare": 0.196,
+    "coalitionPreferences": ["tmc", "dmk", "cpim"],
+    "coalitionBlacklist": ["bjp"],
+    "inGovernment": false,
+    "year": 2019
+  },
+  {
+    "id": "shiv_sena",
+    "name": "Shiv Sena",
+    "countryCode": "IND",
+    "policies": {
+      "economic": 0.2,
+      "environmental": 0.0,
+      "technology": 0.2,
+      "social": -0.4,
+      "civilLiberties": -0.2,
+      "international": 0.1
+    },
+    "seatShare": 0.033,
+    "voteShare": 0.023,
+    "coalitionPreferences": ["bjp"],
+    "coalitionBlacklist": ["inc", "cpim"],
+    "inGovernment": true,
+    "year": 2019
+  },
+  {
+    "id": "tmc",
+    "name": "All India Trinamool Congress (TMC)",
+    "countryCode": "IND",
+    "policies": {
+      "economic": -0.1,
+      "environmental": 0.1,
+      "technology": 0.1,
+      "social": 0.3,
+      "civilLiberties": 0.2,
+      "international": 0.3
+    },
+    "seatShare": 0.041,
+    "voteShare": 0.043,
+    "coalitionPreferences": ["inc"],
+    "coalitionBlacklist": ["bjp", "cpim"],
+    "inGovernment": false,
+    "year": 2019
+  },
+  {
+    "id": "dmk",
+    "name": "Dravida Munnetra Kazhagam (DMK)",
+    "countryCode": "IND",
+    "policies": {
+      "economic": -0.2,
+      "environmental": 0.2,
+      "technology": 0.2,
+      "social": 0.5,
+      "civilLiberties": 0.3,
+      "international": 0.2
+    },
+    "seatShare": 0.043,
+    "voteShare": 0.023,
+    "coalitionPreferences": ["inc"],
+    "coalitionBlacklist": ["bjp"],
+    "inGovernment": false,
+    "year": 2019
+  },
+  {
+    "id": "cpim",
+    "name": "Communist Party of India (Marxist)",
+    "countryCode": "IND",
+    "policies": {
+      "economic": -0.7,
+      "environmental": 0.3,
+      "technology": 0.0,
+      "social": 0.6,
+      "civilLiberties": 0.4,
+      "international": 0.1
+    },
+    "seatShare": 0.006,
+    "voteShare": 0.032,
+    "coalitionPreferences": ["inc"],
+    "coalitionBlacklist": ["bjp"],
+    "inGovernment": false,
+    "year": 2019
+  },
+  {
+    "id": "others",
+    "name": "Other Parties & Independents",
+    "countryCode": "IND",
+    "policies": {
+      "economic": 0.0,
+      "environmental": 0.0,
+      "technology": 0.0,
+      "social": 0.0,
+      "civilLiberties": 0.0,
+      "international": 0.0
+    },
+    "seatShare": 0.220,
+    "voteShare": 0.312,
+    "coalitionPreferences": [],
+    "coalitionBlacklist": [],
+    "inGovernment": false,
+    "year": 2019
+  }
+]

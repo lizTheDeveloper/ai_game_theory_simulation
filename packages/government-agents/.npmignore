@@ -1,0 +1,27 @@
+# Source files (publish only dist/)
+src/
+tests/
+examples/
+
+# Build artifacts
+*.tsbuildinfo
+
+# Development files
+tsconfig.json
+.gitignore
+.git/
+.github/
+
+# Documentation (keep README.md, LICENSE)
+PHASE1_HANDOFF.md
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

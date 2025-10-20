@@ -108,3 +108,141 @@ export interface GovernmentAgent {
   institutionalResilience?: number;  // [0,1] Ability to maintain reforms during crises
   policyEffectivenessMultiplier?: number;  // [1.0-2.0] Multiplier from cooperative spirals
 }
+
+/**
+ * Government System (30 Countries)
+ *
+ * Research-backed government modeling with:
+ * - 30 real-world governments with WGI 2024 capacity data
+ * - Coalition formation based on party policy positions
+ * - Policy response with AI comprehension lag
+ * - Election cycles and public opinion dynamics
+ * - International treaty formation
+ *
+ * Research Foundation:
+ * - V-Dem v14 (2024): 531 indicators, 202 countries
+ * - WGI 2024 (World Bank): State capacity metrics
+ * - Laver (2020): Agent-based political decision making
+ * - Manifesto Project Database: Party policy positions
+ * - Lehmann et al. (2024): Multi-dimensional policy space
+ *
+ * @module types/government
+ */
+
+/**
+ * Policy Vector (6-dimensional policy space)
+ * From Manifesto Project Database
+ */
+export interface PolicyVector {
+  economic: number;        // -1 (regulated) to +1 (free market)
+  environmental: number;   // -1 (growth priority) to +1 (climate action)
+  technology: number;      // -1 (precautionary) to +1 (accelerationist)
+  social: number;          // -1 (traditional) to +1 (progressive)
+  immigration: number;     // -1 (restrictive) to +1 (open borders)
+  international: number;   // -1 (nationalist) to +1 (globalist)
+}
+
+/**
+ * Coalition between political parties
+ */
+export interface Coalition {
+  parties: string[];           // Party IDs
+  formed: number;              // Month formed
+  stability: number;           // [0,1] Coalition stability
+  policyPosition: PolicyVector; // Average coalition policy
+  seats: number;               // Combined parliamentary seats
+}
+
+/**
+ * Active policy response
+ */
+export interface ActivePolicy {
+  country: string;             // Country code
+  domain: string;              // Policy domain (technology, environmental, etc.)
+  startMonth: number;          // When initiated
+  completionMonth: number;     // When implemented
+  effectiveness: number;       // [0,1] Policy effectiveness
+  stimulus: {                  // What triggered the policy
+    aiCapability?: number;
+    crisisType?: string;
+    internationalPressure?: number;
+  };
+}
+
+/**
+ * International treaty
+ */
+export interface Treaty {
+  name: string;                // Treaty name
+  signatories: string[];       // Country codes
+  formed: number;              // Month formed
+  compliance: number;          // [0,1] Average compliance
+  domain: string;              // Policy domain
+  strength: number;            // [0,1] Treaty strength
+}
+
+/**
+ * Government System State
+ *
+ * Manages 30 real-world governments with political structure,
+ * coalition formation, policy response, and international coordination
+ */
+export interface GovernmentSystemState {
+  /**
+   * Active governments (30 countries)
+   * Key: ISO 3166-1 alpha-3 country code (USA, CHN, DEU, etc.)
+   * Value: Government configuration from @political-science/government-agents
+   */
+  governments: Map<string, any>; // Government class from package
+
+  /**
+   * Current coalitions by country
+   * Only populated for multi-party parliamentary systems
+   */
+  coalitions: Map<string, Coalition>;
+
+  /**
+   * Policy responses in progress
+   * Policies take time to implement based on state capacity
+   */
+  activePolicies: ActivePolicy[];
+
+  /**
+   * International treaties
+   * Multi-country coordination on AI governance, climate, etc.
+   */
+  treaties: Treaty[];
+
+  /**
+   * Next election dates by country
+   * Key: Country code
+   * Value: Month of next election
+   */
+  nextElections: Map<string, number>;
+
+  /**
+   * Public opinion by country
+   * [0,1] scale: approval ratings
+   * Affects government stability and policy success
+   */
+  publicOpinion: Map<string, number>;
+
+  /**
+   * AI comprehension lag by country
+   * Months before government comprehends new AI capabilities
+   * Based on state capacity and information quality
+   */
+  comprehensionLag: Map<string, number>;
+
+  /**
+   * International coordination level
+   * [0,1]: degree of global cooperation on AI governance
+   */
+  internationalCoordination: number;
+
+  /**
+   * Total policies enacted
+   * Track cumulative policy activity
+   */
+  totalPoliciesEnacted: number;
+}

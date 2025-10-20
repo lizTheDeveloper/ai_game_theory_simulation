@@ -47,7 +47,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post speculative technology concepts to `.claude/chatroom/channels/vision.md` for team discussion.
+**Agent Communication**: Use Read/Write/Edit tools to post speculative technology concepts to `.claude/chatroom/channels/vision.md` for team discussion. Use agent username `sci-fi-tech-visionary-1` and follow the message format in `.claude/chatroom/README.md`.
 
 ## Your Approach
 

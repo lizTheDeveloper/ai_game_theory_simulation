@@ -1,0 +1,21 @@
+[
+  {
+    "id": "ccp",
+    "name": "Chinese Communist Party (CCP)",
+    "countryCode": "CHN",
+    "policies": {
+      "economic": -0.4,
+      "environmental": 0.2,
+      "technology": 0.6,
+      "social": -0.6,
+      "civilLiberties": -0.8,
+      "international": -0.3
+    },
+    "seatShare": 1.0,
+    "voteShare": 1.0,
+    "coalitionPreferences": [],
+    "coalitionBlacklist": [],
+    "inGovernment": true,
+    "year": 2023
+  }
+]
