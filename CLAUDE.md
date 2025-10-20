@@ -39,6 +39,15 @@ npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=60
 npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120 > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
 ```
 
+**Multi-Paradigm DUI Visualizations (Oct 20, 2025):**
+```bash
+# Visualize single run trajectory (sparklines, heatmap, divergence timeline)
+npx tsx scripts/visualizeParadigmTrajectories.ts monteCarloOutputs/run_42000_historical_events.json
+
+# Compare multiple runs (side-by-side trajectories, aggregate statistics)
+npx tsx scripts/compareParadigmRuns.ts monteCarloOutputs/
+```
+
 **Other diagnostic scripts:**
 ```bash
 npx tsx scripts/diagnosticAdversarialEval.ts  # Sleeper agents & benchmarks
@@ -130,6 +139,16 @@ All phases are in `src/simulation/engine/phases/`. This architecture makes testi
 - Material needs, psychological needs, social needs
 - Health & longevity, environmental quality
 - **Distribution tracking:** Detect "Elysium" scenarios (elite utopia, masses suffer)
+
+**Multi-Paradigm DUI** (Phases 4-6, Oct 2025) - 4 simultaneous paradigm perspectives:
+- **Western Liberal** (democracy, civil liberties, rule of law, economic freedom)
+- **Development** (QoL, survival tier, life expectancy)
+- **Ecological** (planetary boundaries, climate, resources, pollution)
+- **Indigenous** (social trust, community bonds, meaning)
+- **Key insight:** Preserves value conflicts rather than forcing consensus
+- **Singapore pattern:** Development utopia + Western hybrid (high GDP, low democracy)
+- **Norway pattern:** Western/Development utopias + Ecological dystopia (high living standards, high emissions)
+- **Visualization:** `scripts/visualizeParadigmTrajectories.ts`, `scripts/compareParadigmRuns.ts`
 
 ### Adversarial AI Evaluation
 
