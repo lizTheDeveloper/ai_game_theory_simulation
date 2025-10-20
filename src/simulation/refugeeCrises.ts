@@ -26,6 +26,8 @@ import {
   GovernmentRelocationProgram,
   TrappedPopulationTracking
 } from '@/types/population';
+import { updateTrappedPopulations } from './trappedPopulations';
+import { updateGovernmentRelocation } from './governmentRelocation';
 
 /**
  * Initialize refugee crisis system (2025 baseline)
@@ -303,6 +305,12 @@ export function updateRefugeeCrises(state: GameState): void {
       );
     }
   }
+
+  // === 6. UPDATE TRAPPED POPULATIONS (Oct 20, 2025) ===
+  updateTrappedPopulations(state);
+
+  // === 7. UPDATE GOVERNMENT RELOCATION (Oct 20, 2025) ===
+  updateGovernmentRelocation(state);
 }
 
 /**
@@ -393,6 +401,55 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
         severity,
         state
       }));
+    }
+  }
+
+  // === 6. FRESHWATER DEPLETION (Oct 20, 2025) ===
+  // Critical fix: Water stress now triggers migration (wealth-bifurcated)
+  // Research: Lake Urmia (71.85% migration early), Arizona paradox (wealthy adapt, no migration)
+  const fw = state.freshwaterSystem;
+  if (fw) {
+    const waterStressed = fw.waterStress > 0.6;
+    const crisisActive = fw.dayZeroDrought?.active || fw.criticalScarcityActive;
+
+    if (waterStressed && crisisActive) {
+      const totalPopulation = state.humanPopulationSystem.population * 1000; // Convert to millions
+      const stressedPopulation = totalPopulation * fw.populationStressed; // People in water-stressed regions
+
+      // Wealth-bifurcated response (research-backed)
+      const wealthTiers = state.refugeeCrisisSystem.trappedPopulations?.wealthDistribution || {
+        canSelfRelocate: 0.30,  // Top 30% wealthy - adapt in place
+        needAssistance: 0.50,   // Middle 50% - need help
+        trapped: 0.20           // Bottom 20% - trapped by poverty
+      };
+
+      // Only middle-income tier creates refugee crisis (if no government assistance)
+      const middleClassStressed = stressedPopulation * wealthTiers.needAssistance;
+
+      // Check government relocation program coverage
+      const govProgram = state.refugeeCrisisSystem.governmentRelocation;
+      const governmentCoverage = govProgram?.enabled ? (govProgram.coverageRate * middleClassStressed) : 0;
+
+      // Refugee crisis = those who need help BUT don't get government assistance
+      const displaced = middleClassStressed - governmentCoverage;
+
+      if (displaced > 5) { // At least 5 million displaced
+        newCrises.push(createRefugeeCrisis({
+          cause: 'famine', // Water scarcity manifests as famine
+          sourceRegion: 'Water-Stressed Regions (Middle East, North Africa, South Asia)',
+          displacedPopulation: displaced,
+          severity: fw.waterStress,
+          state
+        }));
+
+        console.log(`💧 FRESHWATER-DRIVEN MIGRATION (Wealth-Bifurcated):`);
+        console.log(`   Total stressed: ${stressedPopulation.toFixed(1)}M people`);
+        console.log(`   Wealthy (30%): ${(stressedPopulation * wealthTiers.canSelfRelocate).toFixed(1)}M adapt in place`);
+        console.log(`   Middle (50%): ${middleClassStressed.toFixed(1)}M need help`);
+        console.log(`   - Gov assistance: ${governmentCoverage.toFixed(1)}M`);
+        console.log(`   - Refugee crisis: ${displaced.toFixed(1)}M`);
+        console.log(`   Poor (20%): ${(stressedPopulation * wealthTiers.trapped).toFixed(1)}M TRAPPED`);
+      }
     }
   }
 

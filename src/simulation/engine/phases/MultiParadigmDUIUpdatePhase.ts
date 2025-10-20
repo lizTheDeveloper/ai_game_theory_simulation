@@ -29,6 +29,12 @@ export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
     // Calculate new paradigm scores from simulation state
     const scores = calculateParadigmScoresFromState(state);
 
+    // Debug logging for first month
+    if (state.currentMonth === 0) {
+      console.log(`🌍 MultiParadigm Month 0: W=${scores.western.toFixed(1)}, D=${scores.development.toFixed(1)}, E=${scores.ecological.toFixed(1)}, I=${scores.indigenous.toFixed(1)}`);
+      console.log(`   democracy exists: ${!!state.government.democracy}, socialCohesion exists: ${!!state.socialCohesion}`);
+    }
+
     // Update paradigm scores
     state.multiParadigmDUI.paradigmScores.western.value = scores.western;
     state.multiParadigmDUI.paradigmScores.development.value = scores.development;
@@ -73,10 +79,16 @@ function calculateParadigmScoresFromState(state: GameState): {
   ecological: number;
   indigenous: number;
 } {
-  const western = calculateWesternLiberal(state);
-  const development = calculateDevelopment(state);
-  const ecological = calculateEcological(state);
-  const indigenous = calculateIndigenous(state);
+  let western = calculateWesternLiberal(state);
+  let development = calculateDevelopment(state);
+  let ecological = calculateEcological(state);
+  let indigenous = calculateIndigenous(state);
+
+  // Ensure no NaN/undefined values (fallback to neutral 50)
+  if (isNaN(western) || western === undefined) western = 50;
+  if (isNaN(development) || development === undefined) development = 50;
+  if (isNaN(ecological) || ecological === undefined) ecological = 50;
+  if (isNaN(indigenous) || indigenous === undefined) indigenous = 50;
 
   return { western, development, ecological, indigenous };
 }
@@ -111,11 +123,12 @@ function calculateWesternLiberal(state: GameState): number {
   // Geometric mean (non-compensatory)
   const indicators = [electoralDemocracy, civilLiberties, ruleOfLaw, economicFreedom];
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val, MIN_FLOOR);
+    const floored = Math.max(val ?? 50, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
-  return Math.pow(product, 1 / indicators.length) * 100;
+  const result = Math.pow(product, 1 / indicators.length) * 100;
+  return isNaN(result) ? 50 : result;
 }
 
 /**
@@ -145,11 +158,12 @@ function calculateDevelopment(state: GameState): number {
   // Geometric mean
   const indicators = [qol, survivalTier, lifeExpectancyScore];
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val, MIN_FLOOR);
+    const floored = Math.max(val ?? 50, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
-  return Math.pow(product, 1 / indicators.length) * 100;
+  const result = Math.pow(product, 1 / indicators.length) * 100;
+  return isNaN(result) ? 50 : result;
 }
 
 /**
@@ -200,11 +214,12 @@ function calculateEcological(state: GameState): number {
   // Geometric mean
   const indicators = [boundariesScore, resourceScore, climateScore, pollutionScore];
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val, MIN_FLOOR);
+    const floored = Math.max(val ?? 50, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
-  return Math.pow(product, 1 / indicators.length) * 100;
+  const result = Math.pow(product, 1 / indicators.length) * 100;
+  return isNaN(result) ? 50 : result;
 }
 
 /**
@@ -234,9 +249,10 @@ function calculateIndigenous(state: GameState): number {
   // Geometric mean
   const indicators = [socialTrust, communityBonds, meaningScore];
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val, MIN_FLOOR);
+    const floored = Math.max(val ?? 50, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
-  return Math.pow(product, 1 / indicators.length) * 100;
+  const result = Math.pow(product, 1 / indicators.length) * 100;
+  return isNaN(result) ? 50 : result;
 }

@@ -46,7 +46,10 @@ import {
   TrustRecoveryPhase,  // FIX #7 (Oct 18, 2025): Trust recovery mechanics
   WorkflowAdaptationPhase,  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
   SocialStabilityPhase,
+  DemocracyDynamicsPhase,  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
+  SocialCohesionUpdatePhase,  // Phase 6B (Oct 20, 2025): Indigenous paradigm
   QualityOfLifePhase,
+  EnvironmentalFeedbackPhase,  // Phase 6C (Oct 20, 2025): Ecological paradigm
   MultiParadigmDUIUpdatePhase,  // Phase 6 (Oct 20, 2025)
   OutcomeProbabilitiesPhase,
   UpdateEconomicStagePhase,  // P2.4 Feature 3 (Oct 16, 2025): Recovery tracking
@@ -421,7 +424,10 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TrustRecoveryPhase());  // FIX #7 (Oct 18, 2025): Trust recovery & decay
     this.orchestrator.registerPhase(new WorkflowAdaptationPhase());  // FIX #4A (Oct 19, 2025): S-curve organizational adoption
     this.orchestrator.registerPhase(new SocialStabilityPhase());
+    this.orchestrator.registerPhase(new DemocracyDynamicsPhase());  // Phase 6A (Oct 20, 2025): Western Liberal paradigm
+    this.orchestrator.registerPhase(new SocialCohesionUpdatePhase());  // Phase 6B (Oct 20, 2025): Indigenous paradigm
     this.orchestrator.registerPhase(new QualityOfLifePhase());
+    this.orchestrator.registerPhase(new EnvironmentalFeedbackPhase());  // Phase 6C (Oct 20, 2025): Ecological paradigm
     this.orchestrator.registerPhase(new MultiParadigmDUIUpdatePhase());  // Phase 6 (Oct 20, 2025)
     this.orchestrator.registerPhase(new OutcomeProbabilitiesPhase());
     this.orchestrator.registerPhase(new UpdateEconomicStagePhase());  // P2.4 Feature 3: Recovery tracking

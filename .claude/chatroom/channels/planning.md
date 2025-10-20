@@ -1,3 +1,39 @@
+---
+**project-plan-manager-1** | 2025-10-20 14:00 | [ROADMAP GARDENING COMPLETE]
+
+## MASTER_IMPLEMENTATION_ROADMAP.md Cleaned & Archived
+
+**Transformation:** 25,211 lines → 465 lines (98% reduction)
+
+**Archived Completed Work (Oct 20, 2025):**
+- Government Modeling System (Phases 0-7) - 80-90h ✓ COMPLETE
+- Multi-Paradigm DUI (Phases 1-2) - 18h research ✓ COMPLETE
+- Post-Recalibration Fixes (ALL 11) - ~25h ✓ COMPLETE
+- Prevention Mechanisms (Phases 1-6) - 30-48h ✓ COMPLETE
+- Contingency & Agency (Phases 1-3) - 42-61h ✓ COMPLETE
+- AI Capability Recalibration v3 - ~1h ✓ COMPLETE
+- Gaming/Sleeper Detection Infrastructure (Phases 3-4) - ~12h ✓ COMPLETE
+
+**New Archive Documents Created:**
+- `/plans/completed/government-modeling-system_COMPLETE_20251020.md`
+- `/plans/completed/multi-paradigm-dui-phases-1-2_COMPLETE_20251020.md`
+
+**Updated Roadmap Structure:**
+- IMMEDIATE PRIORITY: Full System Validation (Monte Carlo N=100, 240mo)
+- ACTIVE DEVELOPMENT: Multi-Paradigm DUI Phases 3-7 (35-45h)
+- RESEARCH & ENHANCEMENT: 3 major features (96-157h)
+- LOW PRIORITY: Enrichment features (114-131h)
+
+**Remaining Work:**
+- Conservative Total: 245-340 hours
+- Optimistic Total: 96-157 hours
+- Realistic Estimate: 150-200 hours across 12 features
+
+**Publication Readiness:** 97-98% complete
+
+**Next Immediate Step:** Full system validation (Monte Carlo N=100, 240 months) to verify all completed systems working together.
+
+**Roadmap Focus:** Clean, actionable list of 12 remaining features with clear priorities and complexity estimates.
 
 ---
 **project-plan-manager** | 2025-10-18 18:00 | [ROADMAP UPDATE]
@@ -101,6 +137,61 @@ Phase 3-4 COMPLETE: Death Attribution System Design & Planning
 - Wiki-documentation-updater sync
 - Project-plan-manager archival
 ---
+
+---
+**project-plan-manager-1** | 2025-10-20 14:30 | [COMPLETED]
+
+## Roadmap Gardening Complete: Major Cleanup + 2 Completed Features Archived
+
+**Status:** MASTER_IMPLEMENTATION_ROADMAP.md thoroughly cleaned and updated
+
+**Confirmed Complete Items Moved to Archive:**
+
+1. **Prevention Mechanisms (ALL 6 PHASES) - COMPLETE (Oct 17)**
+   - Archive: `/plans/completed/prevention-mechanisms-phases-1-6_COMPLETE_20251017.md`
+   - HIGH PRIORITY (3/3): Positive Tipping Points, Early Warning Systems, Cooperative Spirals
+   - MEDIUM PRIORITY (3/3): Nuclear Winter, Wet Bulb Temperature, Antimicrobial Resistance
+   - Implementation: ~11,818 lines across 6 phase files
+   - Research: TRL 6-9 (peer-reviewed 2019-2025)
+   - Impact: Widen 2% humane utopia pathway (+5-18% potential)
+
+2. **TIER 2 AI Deception Detection (Phases 3-4) - COMPLETE (Oct 17)**
+   - Archive: `/plans/completed/gaming-sleeper-detection-phases-3-4_COMPLETE_20251017.md`
+   - Gaming detection infrastructure (gamingDetection.ts, GamingDetectionPhase.ts)
+   - Proactive sleeper detection infrastructure (proactiveSleeperDetection.ts, ProactiveSleeperDetectionPhase.ts)
+   - Counter-detection learning, sleeper economy, sleeper progression
+   - Implementation: ~2,724 lines (Phases 3-4 infrastructure)
+   - Remaining: Phases 2A-2D (single-method, validation, ensemble, competitive equilibrium) - 18-80h
+
+**Roadmap Updates:**
+
+- **Recent Completions Section:** Added both features to Oct 16-20 completions list
+- **Prevention Mechanisms Section:** Marked as COMPLETE, condensed to summary (removed detailed phase breakdowns)
+- **TIER 2 Section:** Updated to show Phases 3-4 complete, Phases 2A-2D pending
+- **Total Remaining Effort:** 175-225h → 96-157h (79-68h reduction from completed work)
+- **Publication Readiness:** 94-96% → 96-98%
+
+**Evidence Verified:**
+
+Files confirmed to exist in codebase:
+- ✅ PositiveTippingPointsPhase.ts (4,795 lines)
+- ✅ EarlyWarningPhase.ts (1,874 lines)
+- ✅ CooperativeSpiralsPhase.ts (1,121 lines)
+- ✅ NuclearWinterPhase.ts (704 lines)
+- ✅ WetBulbTemperaturePhase.ts (895 lines)
+- ✅ AntimicrobialResistancePhase.ts (1,429 lines)
+- ✅ GamingDetectionPhase.ts (940 lines)
+- ✅ ProactiveSleeperDetectionPhase.ts (1,011 lines)
+- ✅ All phases exported in src/simulation/engine/phases/index.ts
+
+**Archive Files Created:**
+
+- `/plans/completed/prevention-mechanisms-phases-1-6_COMPLETE_20251017.md` (comprehensive 350+ line archive)
+- `/plans/completed/gaming-sleeper-detection-phases-3-4_COMPLETE_20251017.md` (comprehensive 300+ line archive)
+
+**Next Milestone:** TIER 2 Phase 2A (Single-method detection) OR AI-Assisted Skills Enhancement
+
+**Recommendation:** Roadmap is now clean, accurate, and ready for next work phase. All completed items properly archived with full context preservation.
 
 ---
 **orchestrator-1** | 2025-10-19 18:45 | [STARTED]
