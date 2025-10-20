@@ -494,7 +494,24 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     
     // Initialize multi-dimensional QoL system
     qualityOfLifeSystems: initializeQualityOfLifeSystems(),
-    
+
+    // Phase 4-6: Multi-Paradigm DUI (initialized with neutral scores, updated by phase)
+    // Note: Baseline data loaded asynchronously, falls back to neutral if unavailable
+    multiParadigmDUI: {
+      paradigmScores: {
+        western: { value: 50, confidence: 'LOW', dataAvailability: 0, indicators: [], derivedFrom: ['Initialization placeholder'], drivesSimulation: true },
+        development: { value: 50, confidence: 'LOW', dataAvailability: 0, indicators: [], derivedFrom: ['Initialization placeholder'], drivesSimulation: true },
+        ecological: { value: 50, confidence: 'LOW', dataAvailability: 0, indicators: [], derivedFrom: ['Initialization placeholder'], drivesSimulation: true },
+      },
+      diagnosticLenses: {
+        indigenous: { value: 50, confidence: 'LOW', dataAvailability: 0, indicators: [], derivedFrom: ['Initialization placeholder'], drivesSimulation: false, caveat: 'Initialized with neutral scores', derivation: { fromSimulation: 100, fromProxies: 0, estimated: 0 } },
+      },
+      divergence: { overall: 0, maxRange: 0, pairwise: { western_development: 0, western_ecological: 0, western_indigenous: 0, development_ecological: 0, development_indigenous: 0, ecological_indigenous: 0 }, trend: 'STABLE' },
+      correlations: { western_development: 0, western_ecological: 0, western_indigenous: 0, development_ecological: 0, development_indigenous: 0, ecological_indigenous: 0 },
+      outcome: { utopiasCount: 0, dystopiasCount: 0, contested: false, label: 'Initializing...' },
+      history: [],
+    },
+
     // Initialize heterogeneous extinction tracking
     extinctionState: initializeExtinctionState(),
     

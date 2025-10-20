@@ -27,6 +27,7 @@ export { TrustRecoveryPhase } from './TrustRecoveryPhase';  // FIX #7 (Oct 18, 2
 export { WorkflowAdaptationPhase } from './WorkflowAdaptationPhase';  // FIX #4A (Oct 19, 2025)
 export { SocialStabilityPhase } from './SocialStabilityPhase';
 export { QualityOfLifePhase } from './QualityOfLifePhase';
+export { MultiParadigmDUIUpdatePhase } from './MultiParadigmDUIUpdatePhase';  // Phase 6 (Oct 20, 2025)
 export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
 export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // P2.4 Feature 3
 export { EarlyWarningPhase } from './EarlyWarningPhase';  // TIER 3.4 (Oct 17, 2025)
