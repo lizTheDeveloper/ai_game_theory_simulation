@@ -707,6 +707,10 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const recoveryTimeline = analyzeRecoveryTimeline(runResult, finalState);
   const mechanismSummary = generateMechanismSummary(recoveryTimeline, finalState, runResult.summary.finalOutcome);
 
+  // NEW (Oct 20, 2025): Extract Multi-Paradigm DUI trajectory from state history
+  // Use the paradigm history tracked by MultiParadigmDUIUpdatePhase
+  const paradigmTrajectory = finalState.multiParadigmDUI?.history || [];
+
   // Save individual run event log
   // P0.7: Include scenario mode in filename
   const runLogFile = path.join(outputDir, `run_${seed}_${runScenarioMode}_events.json`);
@@ -726,7 +730,9 @@ for (let i = 0; i < NUM_RUNS; i++) {
     },
     // NEW (Oct 17, 2025): Add recovery timeline data to individual run logs
     recoveryTimeline,
-    mechanismSummary
+    mechanismSummary,
+    // NEW (Oct 20, 2025): Add Multi-Paradigm DUI trajectory (month-by-month)
+    paradigmTrajectory
   };
   fs.writeFileSync(runLogFile, JSON.stringify(eventLogData, null, 2), 'utf8');
   
@@ -1241,6 +1247,17 @@ for (let i = 0; i < NUM_RUNS; i++) {
     crisisAffectedFraction: finalState.qualityOfLifeSystems.distribution?.crisisAffectedFraction ?? 0,
     isDystopicInequality: finalState.qualityOfLifeSystems.distribution?.isDystopicInequality ?? false,
     isRegionalDystopia: finalState.qualityOfLifeSystems.distribution?.isRegionalDystopia ?? false,
+
+    // NEW (Oct 20, 2025): Multi-Paradigm DUI (Phase 6)
+    finalWestern: finalState.multiParadigmDUI.paradigmScores.western.value,
+    finalDevelopment: finalState.multiParadigmDUI.paradigmScores.development.value,
+    finalEcological: finalState.multiParadigmDUI.paradigmScores.ecological.value,
+    finalIndigenous: finalState.multiParadigmDUI.diagnosticLenses.indigenous.value,
+    paradigmDivergence: finalState.multiParadigmDUI.divergence.overall,
+    paradigmMaxRange: finalState.multiParadigmDUI.divergence.maxRange,
+    paradigmTrend: finalState.multiParadigmDUI.divergence.trend,
+    paradigmOutcome: finalState.multiParadigmDUI.outcome.label,
+    paradigmContested: finalState.multiParadigmDUI.outcome.contested,
     
     // NEW (Oct 12, 2025): Famine Statistics
     totalFamineDeaths: finalState.famineSystem?.totalDeaths ?? 0,
@@ -1686,6 +1703,92 @@ results.forEach((r, i) => {
     : '';
 
   log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B (${r.populationDecline.toFixed(1)}% decline)${mortalityDisplay}`);
+});
+
+// ============================================================================
+// MULTI-PARADIGM DUI (Phase 6, Oct 20, 2025)
+// ============================================================================
+log('\n\n' + '='.repeat(80));
+log('🌍 MULTI-PARADIGM DUI (4 Paradigm Perspectives)');
+log('='.repeat(80));
+
+// Calculate average final scores across all runs
+const avgWestern = results.reduce((sum, r) => sum + (r.finalWestern || 50), 0) / results.length;
+const avgDevelopment = results.reduce((sum, r) => sum + (r.finalDevelopment || 50), 0) / results.length;
+const avgEcological = results.reduce((sum, r) => sum + (r.finalEcological || 50), 0) / results.length;
+const avgIndigenous = results.reduce((sum, r) => sum + (r.finalIndigenous || 50), 0) / results.length;
+
+log(`\n  AVERAGE FINAL PARADIGM SCORES (across ${NUM_RUNS} runs):`);
+log(`    Western Liberal:  ${avgWestern.toFixed(1)} (democracy, liberties, rule of law, economic freedom)`);
+log(`    Development:      ${avgDevelopment.toFixed(1)} (QoL, survival tier, life expectancy)`);
+log(`    Ecological:       ${avgEcological.toFixed(1)} (planetary boundaries, climate, resources, pollution)`);
+log(`    Indigenous:       ${avgIndigenous.toFixed(1)} (social trust, community bonds, meaning)`);
+
+// Calculate divergence statistics
+const avgDivergence = results.reduce((sum, r) => sum + (r.paradigmDivergence || 0), 0) / results.length;
+const avgMaxRange = results.reduce((sum, r) => sum + (r.paradigmMaxRange || 0), 0) / results.length;
+
+log(`\n  PARADIGM DIVERGENCE:`);
+log(`    Average Divergence (std dev): ${avgDivergence.toFixed(1)} points`);
+log(`    Average Max Range: ${avgMaxRange.toFixed(1)} points (max - min of 4 scores)`);
+
+// Count trend directions
+const trendCounts = results.reduce((acc, r) => {
+  const trend = r.paradigmTrend || 'STABLE';
+  acc[trend] = (acc[trend] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+log(`\n  TREND DIRECTIONS (final 6 months):`);
+log(`    CONVERGING: ${trendCounts['CONVERGING'] || 0} runs (${((trendCounts['CONVERGING'] || 0)/NUM_RUNS*100).toFixed(1)}%) - paradigms moving together`);
+log(`    STABLE: ${trendCounts['STABLE'] || 0} runs (${((trendCounts['STABLE'] || 0)/NUM_RUNS*100).toFixed(1)}%) - paradigms unchanged`);
+log(`    DIVERGING: ${trendCounts['DIVERGING'] || 0} runs (${((trendCounts['DIVERGING'] || 0)/NUM_RUNS*100).toFixed(1)}%) - paradigms moving apart`);
+
+// Count contested outcomes
+const contestedCount = results.filter(r => r.paradigmContested).length;
+log(`\n  PARADIGM CONFLICTS:`);
+log(`    Contested Outcomes: ${contestedCount} runs (${(contestedCount/NUM_RUNS*100).toFixed(1)}%)`);
+log(`    (Contested = simultaneous utopias and dystopias across paradigms)`);
+
+// Show outcome distribution
+log(`\n  PARADIGM OUTCOME CLASSIFICATIONS:`);
+const outcomeLabelCounts = results.reduce((acc, r) => {
+  const label = r.paradigmOutcome || 'Unknown';
+  acc[label] = (acc[label] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const sortedOutcomes = Object.entries(outcomeLabelCounts).sort((a, b) => b[1] - a[1]);
+sortedOutcomes.forEach(([label, count]) => {
+  log(`    ${label}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+});
+
+// Show range distributions
+log(`\n  PARADIGM SCORE DISTRIBUTIONS:`);
+const scoreRanges = [
+  { label: 'Dystopia (<30)', min: 0, max: 30 },
+  { label: 'Struggling (30-50)', min: 30, max: 50 },
+  { label: 'Mixed (50-70)', min: 50, max: 70 },
+  { label: 'Thriving (70-80)', min: 70, max: 80 },
+  { label: 'Utopia (≥80)', min: 80, max: 100 }
+];
+
+['Western Liberal', 'Development', 'Ecological', 'Indigenous'].forEach((paradigm, idx) => {
+  const scoreKey = idx === 0 ? 'finalWestern' : idx === 1 ? 'finalDevelopment' : idx === 2 ? 'finalEcological' : 'finalIndigenous';
+  log(`\n    ${paradigm}:`);
+
+  scoreRanges.forEach(range => {
+    const count = results.filter(r => {
+      const score = (r as any)[scoreKey] || 50;
+      return score >= range.min && score < range.max;
+    }).length;
+
+    if (count > 0) {
+      const percentage = (count / NUM_RUNS * 100).toFixed(1);
+      const bar = '█'.repeat(Math.round(count / NUM_RUNS * 20));
+      log(`      ${range.label.padEnd(20)}: ${count.toString().padStart(3)} runs (${percentage.padStart(5)}%) ${bar}`);
+    }
+  });
 });
 
 // ============================================================================

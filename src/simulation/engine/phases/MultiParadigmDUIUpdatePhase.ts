@@ -4,13 +4,13 @@
  * Updates 4 paradigm scores based on simulation state each month.
  * Maps democracy, QoL, environment, and social cohesion to paradigm scores.
  *
- * **Phase Order:** 34 (after QoL updates, before outcome detection)
+ * **Phase Order:** 34.1 (after QoL updates, before outcome detection)
  *
  * @module simulation/engine/phases/MultiParadigmDUIUpdatePhase
  */
 
 import type { GameState, RNGFunction } from '@/types/game';
-import type { PhaseResult, PhaseContext } from '../PhaseOrchestrator';
+import type { SimulationPhase, PhaseResult, PhaseContext } from '../PhaseOrchestrator';
 import { calculateDivergence } from '@/data/aggregators/divergenceCalculator';
 import { calculateCorrelations } from '@/data/aggregators/correlationTracker';
 import { classifyOutcome } from '@/data/aggregators/outcomeClassifier';
@@ -20,12 +20,12 @@ import { classifyOutcome } from '@/data/aggregators/outcomeClassifier';
  *
  * Updates paradigm scores based on simulation state.
  */
-export const MultiParadigmDUIUpdatePhase = {
-  id: 'multi_paradigm_dui_update',
-  name: 'Multi-Paradigm DUI Update',
-  order: 34,
+export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
+  readonly id = 'multi_paradigm_dui_update';
+  readonly name = 'Multi-Paradigm DUI Update';
+  readonly order = 34.1;
 
-  execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Calculate new paradigm scores from simulation state
     const scores = calculateParadigmScoresFromState(state);
 
@@ -54,11 +54,10 @@ export const MultiParadigmDUIUpdatePhase = {
     state.globalMetrics.dystopiaUtopiaIndex = scores.development;
 
     return {
-      success: true,
-      effects: [`Multi-Paradigm DUI updated: W=${scores.western.toFixed(1)} D=${scores.development.toFixed(1)} E=${scores.ecological.toFixed(1)} I=${scores.indigenous.toFixed(1)}`],
+      events: [`Multi-Paradigm DUI updated: W=${scores.western.toFixed(1)} D=${scores.development.toFixed(1)} E=${scores.ecological.toFixed(1)} I=${scores.indigenous.toFixed(1)}`],
     };
-  },
-};
+  }
+}
 
 /**
  * Calculate paradigm scores from simulation state

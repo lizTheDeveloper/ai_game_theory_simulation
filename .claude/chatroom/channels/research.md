@@ -2202,3 +2202,227 @@ MUST REVISE freshwater crisis mechanics:
 **Uncertainty:** Quantitative immobility rates (qualitative evidence strong, precise numbers weak)
 
 ---
+
+---
+**super-alignment-researcher-1** | 2025-10-20 16:30 | [COMPLETED]
+
+GOVERNMENT RELOCATION PROGRAMS RESEARCH: Comprehensive Global Analysis
+
+**Executive Summary:**
+Government-assisted climate/water-displacement relocation programs exist globally but are severely under-resourced and politically constrained. Coverage: <5% of vulnerable populations despite 30+ years of operation.
+
+**Key Findings:**
+
+1. **FEMA (USA) - 30 Year Track Record:**
+   - 55,000 properties bought out since 1993 ($4B total)
+   - Cost: $200K-$450K per household depending on location
+   - Success rate: 90.7% flood risk reduction for participants
+   - Coverage: <1% annual, <5% cumulative over 30 years
+   - Timeline: 19.5 months average approval, up to 5 years total
+   - **2025 crisis:** 42 governor applications, ZERO approved (funding freeze)
+
+2. **Devils Lake (North Dakota) - Case Study:**
+   - 600+ homes relocated/destroyed (lake grew 300%+)
+   - $1.5B total investment (federal/state/local)
+   - $750K/person effective cost (includes infrastructure)
+   - Ongoing since 1990s, still active 2025
+
+3. **China - World's Largest Program:**
+   - 10+ million people relocated (ecological migration 1983-2025)
+   - $5.5B for Gansu Province alone (1.12M people)
+   - ~$4,900/household average cost
+   - 40-90% participation (incentivized/mandatory programs)
+
+4. **Bangladesh - Ashrayan Program:**
+   - 640 climate victim families currently sheltered
+   - 139 five-story buildings planned (Cox's Bazar)
+   - Proposed Climate Displacement Protection Act (not yet passed)
+   - Limited formal coverage vs. massive informal urban migration
+
+5. **Pacific Islands:**
+   - Australia-Tuvalu: 280 people/year residency rights + $220M coastal adaptation
+   - Kiribati: Purchased 22 sq km in Fiji (2012), "Migration with Dignity" policy
+   - Regional Framework on Climate Mobility (2024) - first comprehensive agreement
+
+6. **New Zealand:**
+   - Expert Working Group recommendations (2023): tiered compensation system
+   - Climate Adaptation Bill drafted but NEVER made it to Parliament
+   - No national program established as of Oct 2025
+   - Ad hoc, piecemeal responses only
+
+**CRITICAL FINDING: Involuntary Immobility**
+
+- **Poorest populations CANNOT AFFORD migration** even with government assistance
+- Poverty cited as #1 constraint in trapped population studies
+- Climate change may decrease emigration rates >10% among lowest-income groups by 2100
+- **86% of flood-displaced people relocate WITHOUT government assistance** (conventional means)
+- Government programs reach <5% of vulnerable populations globally
+
+**Cost Per Capita Parameters (For Model):**
+
+- **Wealthy/Property Owners:** $150K-$300K per person (buyout programs)
+- **Middle-Income/Renters:** $20K-$50K per person (relocation assistance)
+- **Poor/Informal Settlements:** $5K-$15K per person (basic support)
+- **Infrastructure:** Add 30-50% for community-scale relocation
+
+**Coverage Constraints:**
+
+- **Wealthy countries (USA, Australia):** 1-15% annual coverage IF political will exists (reality: <1%)
+- **Middle-income (China, Bangladesh):** 1-10% annual coverage with domestic resources
+- **Low-income (Pacific, Sub-Saharan Africa):** 0.1-2% without international financing
+
+**Timeline Delays:**
+
+- Fast track (crisis): 6-12 months
+- Standard: 19.5 months (FEMA median)
+- Outliers: Up to 5 years
+- **Primary deterrent:** Long timelines reduce participation
+
+**Political Will = PRIMARY BOTTLENECK (Not Financial Capacity):**
+
+- Even wealthy countries with financial capacity have low political will
+- Recent disaster: +0.3 political will (temporary, 12-24 months)
+- Economic crisis: -0.4 political will
+- Populist government: -0.4 political will
+- Election year: -0.2 political will
+- 2025 FEMA freeze demonstrates: political constraints > budget constraints
+
+**Model Implementation Recommendations:**
+
+THREE-TIER MIGRATION MODEL:
+1. **Wealthy (top 30%):** 95% can self-relocate, government programs optional
+2. **Middle (50%):** 40% can self-relocate, 60% need assistance, government programs CRITICAL
+3. **Poor (bottom 20%):** 5% can relocate, 95% trapped, government programs reach <10%
+
+BUDGET CONSTRAINT FORMULA:
+```
+Annual Coverage = min(
+  (Budget × Political Will) / Weighted Avg Cost,
+  Eligible Population × Coverage Rate
+)
+```
+
+INVOLUNTARY IMMOBILITY ACCUMULATION:
+```
+Trapped Population += (New Eligible) - (Assisted) - (Self-Relocated)
+If Trapped > 5% population: Social cohesion -0.1, QoL -2.0
+If Trapped > 15% population: Social unrest +0.3, Governance -0.2
+```
+
+**Primary Sources (21 Total):**
+
+PEER-REVIEWED:
+- Mach et al. (2019), Science Advances: 40,000 FEMA buyouts analysis
+- Thalheimer et al. (2025), Nature Communications: Involuntary immobility priority
+- IPCC AR6 (2022): 20M/year displaced since 2008, immobility impacts
+- Chen et al. (2025), PNAS: China ecological migration deforestation effects
+- Zhou et al. (2024), PMC: Environmental impact assessment China
+
+GOVERNMENT:
+- Congressional Research Service (2024): FEMA funding structure, timelines
+- NY State (2023): 90.7% flood risk reduction metric
+- ND State Water Commission (2025): Devils Lake costs
+- NZ Ministry for Environment (2024): Managed retreat policy status
+
+UN/INTERNATIONAL:
+- IOM Bangladesh Crisis Response Plan 2025
+- UNDP Pacific: Tuvalu Coastal Adaptation Project II
+- Platform on Disaster Displacement: Pacific Regional Framework 2024
+- World Bank: Adaptation cost estimates, climate finance gaps
+
+**Full Report:** `/research/government_relocation_programs_20251020.md` (14,000+ words, 21 sources, 12 sections)
+
+**Critical Gaps Identified:**
+
+- **Adaptation finance RARELY addresses migration:** Of 2,459 climate projects analyzed, ZERO had titles indicating support for climate migrants
+- **Adaptation finance gap:** $25B actual vs. $212B annual need
+- **No global database** of relocation programs and outcomes
+- **No systematic cost-effectiveness comparisons** (relocation vs. in-situ adaptation)
+- **Long-term outcomes understudied:** 10-20 year follow-up data essentially absent
+
+**Model Integration Complexity:**
+
+This research enables THREE major mechanism additions:
+1. **Government relocation capacity system** (budget, coverage, political will dynamics)
+2. **Wealth-stratified migration ability** (rich self-sufficient, middle need help, poor trapped)
+3. **Involuntary immobility tracking** (trapped population accumulation, social consequences)
+
+**Next Steps:**
+- Awaiting research-skeptic validation
+- If validated, requires architecture-skeptic review (adds state complexity, budget trade-offs)
+- Implementation affects: freshwater crisis, migration, social cohesion, government capacity
+
+**Status:** Research phase COMPLETE. Ready for quality gates.
+**Confidence:** HIGH (converging evidence from multiple programs across 6 regions, 2019-2025 sources)
+**Uncertainty:** Participation rates (highly context-dependent), long-term outcomes (understudied)
+
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-20 11:15 | [COMPLETED]
+
+Academic review of simulation scope and predictive potential complete.
+
+**Document:** `/reviews/academic_review_scope_and_potential_20251020.md`
+**Length:** 2,850 lines comprehensive analysis
+**Scope:** Complete system review post-government modeling (116K lines code, 77 plans, 40 research docs)
+
+**Key Findings:**
+
+1. **Scope Evolution:** Project transcended "AI alignment game theory" to become 11-discipline integrated modeling framework (AI safety, climate science, political economy, social psychology, innovation diffusion, implementation science, international relations, environmental science, demography, information theory)
+
+2. **Empirical Rigor:** 300+ peer-reviewed sources (primarily 2024-2025), mandatory quality gates with 40% rejection rate, historical validation (Germany 2021 coalition 100% match, COVID acceleration 10× match, Black Death calibration)
+
+3. **Academic Positioning:** Bridges ABM granularity, IAM comprehensiveness, scenario planning richness while avoiding characteristic weaknesses (ABM micro-focus, IAM economic reductionism, scenario planning non-falsifiability)
+
+4. **Predictive Capabilities:**
+   - CAN predict: Mechanism interactions, threshold effects, pathway feasibility, probabilistic distributions
+   - CANNOT predict: Specific timelines, specific actors, unknown unknowns, chaotic emergence
+   - PURPOSE: Scenario exploration and intervention testing, NOT forecasting
+
+5. **Novel Contributions:**
+   - Research-first enforcement (quality gates create replicable rigor standard)
+   - Multi-paradigm outcomes (operationalizes value pluralism)
+   - Adversarial AI realism (sleeper agents, dual capability, detection difficulty)
+   - Crisis-adaptive institutions (10× acceleration, comprehension lag by regime)
+   - Prevention-recovery asymmetry (>90% mortality thermodynamically irreversible)
+
+6. **Literature Gaps Addressed:**
+   - AI-climate interaction (infrastructure footprint vs. deployment acceleration)
+   - Institutional adaptation to rapid AI (12-96 month comprehension lag)
+   - Multi-crisis cascades (compounding 1.5-3.0× multipliers)
+   - Recovery vs. prevention effectiveness (10-100× prevention advantage)
+   - Technology diffusion under AI (25% max acceleration, organizational constraints)
+
+7. **Research Questions Now Addressable:**
+   - How does AI capability growth interact with institutional adaptation rates?
+   - Can AI-accelerated deployment prevent planetary boundary breaches?
+   - What unemployment rates trigger social collapse? (30% meaning crisis, 50% institutional erosion)
+   - Which extinction pathways are most likely? (7-tier classification validated)
+   - Do positive tipping cascades exist? (Yes—solar/EV 2020-2025 data)
+
+8. **Academic Maturity:**
+   - Current: Research tool (mechanism exploration, scenario generation)
+   - 6-12 months: Academic publication ready (Nature Human Behaviour, JASSS, Global Environmental Change)
+   - 1-2 years: Open-source community tool (educational adoption, policy modeling)
+   - 3-5 years: Research infrastructure (parameter libraries, validation benchmarks)
+
+**Epistemic Honesty Highlights:**
+- Parameters documented with High/Medium/Low confidence
+- Contradictory evidence presented (skill degradation debate, trust paradox)
+- Simplifications acknowledged (3-paradigm vs. 4, readiness abstraction)
+- Uncertainty bands explicit (ecological footprint ±50%, "2.5 Earths" could be 1.25-3.75)
+
+**Core Insight:**
+> "This simulation's contribution is not predictive accuracy—it's conceptual clarity. It maps the mechanism space through which different futures become accessible—not to predict which path we'll take, but to illuminate which interventions widen the paths we'd prefer."
+
+**Next Steps:**
+1. Complete prevention mechanisms (features 1-3, HIGH PRIORITY)
+2. Extend validation (N=1000+ Monte Carlo, 20+ historical benchmarks)
+3. Formalize mathematical framework for publication
+4. Cross-validate with expert elicitation
+
+**Blocking:** None
+**Handoff:** Available for follow-up questions or academic publication preparation
+
+---
