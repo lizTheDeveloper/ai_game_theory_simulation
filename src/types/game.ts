@@ -116,6 +116,18 @@ export interface GameState {
   // Global state
   globalMetrics: GlobalMetrics;
   qualityOfLifeSystems: QualityOfLifeSystems; // Multi-dimensional QoL tracking
+
+  /**
+   * Multi-Paradigm Dystopia-Utopia Index (Phase 4-6, Oct 20, 2025)
+   *
+   * Tracks 4 paradigm perspectives simultaneously, preserving value conflicts rather than
+   * forcing consensus. Integrates V-Dem, UNDP, Ecological, and WVS data with simulation state.
+   *
+   * Research: V-Dem v14 (2024), UNDP HDI/MPI 2024, Richardson et al. (2023), WVS Wave 7
+   * Expected impact: Nuanced outcome reporting, paradigm conflict detection (Singapore, Norway patterns)
+   */
+  multiParadigmDUI: import('../types/multiParadigmDUI').MultiParadigmDUI;
+
   technologyTree: TechnologyNode[];
   eventLog: GameEvent[];
   outcomeMetrics: OutcomeMetrics;
