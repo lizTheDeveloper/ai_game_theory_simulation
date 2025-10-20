@@ -5,20 +5,31 @@
  * Refugees create social tension and economic strain on host regions.
  * After 1 generation (~25 years), refugees are fully resettled.
  *
+ * Oct 20, 2025: Added wealth-bifurcated migration + involuntary immobility
  * Research backing:
  * - UNHCR 2024: 110M forcibly displaced worldwide
  * - Climate projections: 200M-1B by 2050 (World Bank, IOM)
  * - Generational integration: 20-30 years for full cultural integration
  * - Syrian crisis (2011-present): 13.5M displaced, 14 years ongoing
+ * - Lake Urmia, Iran (2024): 71.85% migration early, immobility late phase
+ * - FEMA buyouts: 55K properties, $4B, <5% coverage (1993-2025)
  *
  * @see plans/population-dynamics-and-extinction-nuance.md
+ * @see research/water_scarcity_migration_immobility_20251020.md
+ * @see research/government_relocation_programs_20251020.md
  */
 
 import { GameState } from '@/types/game';
-import { RefugeeCrisisSystem, RefugeeCrisis } from '@/types/population';
+import {
+  RefugeeCrisisSystem,
+  RefugeeCrisis,
+  GovernmentRelocationProgram,
+  TrappedPopulationTracking
+} from '@/types/population';
 
 /**
  * Initialize refugee crisis system (2025 baseline)
+ * Oct 20, 2025: Added government relocation + trapped population tracking
  */
 export function initializeRefugeeCrisisSystem(): RefugeeCrisisSystem {
   return {
@@ -33,6 +44,101 @@ export function initializeRefugeeCrisisSystem(): RefugeeCrisisSystem {
     refugeeAcceptanceRate: 0.5,              // Moderate baseline
     bordersOpen: true,                       // Open borders in 2025
     resettlementPrograms: 0,                 // No major programs yet
+
+    // Oct 20, 2025: Government-assisted relocation (disabled by default)
+    governmentRelocation: initializeGovernmentRelocation(),
+
+    // Oct 20, 2025: Trapped population tracking
+    trappedPopulations: initializeTrappedPopulations(),
+  };
+}
+
+/**
+ * Initialize government relocation program (Oct 20, 2025)
+ * Disabled by default - governments must actively enable
+ */
+export function initializeGovernmentRelocation(): GovernmentRelocationProgram {
+  return {
+    // Program status
+    enabled: false,
+    monthActivated: 0,
+
+    // Budget & capacity
+    annualBudget: 0,                         // No funding until activated
+    monthlyBudget: 0,
+    cumulativeSpending: 0,
+
+    // Coverage metrics
+    totalRelocated: 0,
+    monthlyRelocated: 0,
+    eligiblePopulation: 0,
+    coverageRate: 0,
+
+    // Cost parameters (research-backed averages)
+    costPerCapita: {
+      wealthy: 225000,                       // $225K average ($150K-$300K range)
+      middle: 35000,                         // $35K average ($20K-$50K range)
+      poor: 10000,                           // $10K average ($5K-$15K range)
+    },
+    weightedAverageCost: 44000,              // Weighted by population mix (30% wealthy, 50% middle, 20% poor)
+
+    // Political constraints
+    politicalWill: 0.3,                      // Low baseline (2025 political gridlock)
+    politicalWillModifiers: {
+      recentDisaster: 0,                     // No recent major disaster
+      economicCrisis: 0,                     // No crisis (yet)
+      electionYear: 0,                       // Not election year
+      publicSupport: 0,                      // Neutral
+    },
+
+    // Effectiveness (research-backed)
+    successRate: 0.90,                       // 90% successfully resettle (FEMA data)
+    participationRate: 0.60,                 // 60% accept offer (voluntary programs)
+
+    // Social impacts
+    trustBonus: 0,
+    resentmentPenalty: 0,
+  };
+}
+
+/**
+ * Initialize trapped population tracking (Oct 20, 2025)
+ */
+export function initializeTrappedPopulations(): TrappedPopulationTracking {
+  return {
+    // Total trapped populations by cause
+    totalTrapped: 0,
+    trappedByWater: 0,
+    trappedByClimate: 0,
+    trappedByEcosystem: 0,
+    trappedByConflict: 0,
+
+    // Wealth tiers (baseline 2025 global distribution)
+    wealthDistribution: {
+      canSelfRelocate: 0.30,                 // Top 30% can afford migration
+      needAssistance: 0.50,                  // Middle 50% need help
+      trapped: 0.20,                         // Bottom 20% trapped without assistance
+    },
+
+    // Regional breakdown
+    regionalTrapped: new Map(),
+
+    // Psychological impact categories (Aghajani-Shahrivar et al. 2024)
+    typeBreakdown: {
+      ambivalent: 0,                         // Want to leave AND stay
+      precarious: 0,                         // No aspirations at all
+      voluntary: 0,                          // Choose to stay
+    },
+
+    // Social & health impacts
+    mentalHealthImpact: 0,                   // No impact at baseline
+    socialCohesionImpact: 0,
+    mortalityMultiplier: 1.0,                // No excess mortality at baseline
+
+    // Migration aspirations vs ability
+    aspiringToMigrate: 0,
+    ableToMigrate: 0,
+    mobilityGap: 0,
   };
 }
 

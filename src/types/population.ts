@@ -132,6 +132,10 @@ export interface HumanPopulationSystem {
  * Tracks displaced populations from climate disasters, wars, famines, ecosystem collapse.
  * Refugees create social tension and economic strain on host regions.
  * After 1 generation (~25 years), refugees are considered fully resettled.
+ *
+ * Oct 20, 2025: Added government-assisted relocation programs
+ * Research: FEMA (55K buyouts, $4B, 1993-2025), North Dakota Devils Lake ($1.5B, 600+ homes)
+ * Expected impact: Reduces involuntary immobility by 1-5% annually IF funded + political will
  */
 export interface RefugeeCrisisSystem {
   // Active crises
@@ -154,6 +158,13 @@ export interface RefugeeCrisisSystem {
   refugeeAcceptanceRate: number;         // [0, 1] How welcoming are host regions
   bordersOpen: boolean;                  // Are borders open or militarized?
   resettlementPrograms: number;          // [0, 10] Investment in resettlement
+
+  // Government-assisted relocation (Oct 20, 2025)
+  governmentRelocation?: GovernmentRelocationProgram;
+
+  // Involuntary immobility tracking (Oct 20, 2025)
+  // People who WANT to migrate but CANNOT afford it (poverty trap)
+  trappedPopulations?: TrappedPopulationTracking;
 }
 
 /**
@@ -382,4 +393,115 @@ export function isCompoundCause(
   cause: RootCause | CompoundCause
 ): cause is CompoundCause {
   return typeof cause === 'object' && 'causes' in cause;
+}
+
+/**
+ * Government-Assisted Relocation Program (Oct 20, 2025)
+ *
+ * Models government programs that enable migration for populations trapped by poverty.
+ * Based on FEMA buyouts, North Dakota Devils Lake, China ecological migration.
+ *
+ * Research:
+ * - FEMA: 55,000 properties bought out (1993-2025), $4B total, $200K-$450K/household
+ * - North Dakota: 600+ homes relocated, $1.5B total, $750K/person effective cost
+ * - China: 10M+ people relocated (1983-2025), $4,900/household average
+ *
+ * Key constraints:
+ * - Political will is PRIMARY bottleneck (not funding)
+ * - Coverage: <1-5% annually in practice (despite capacity for more)
+ * - Cost varies by wealth tier: $150K-$300K (wealthy), $20K-$50K (middle), $5K-$15K (poor)
+ */
+export interface GovernmentRelocationProgram {
+  // Program status
+  enabled: boolean;                      // Is program active?
+  monthActivated: number;                // When was it started?
+
+  // Budget & capacity
+  annualBudget: number;                  // Billions $ per year allocated
+  monthlyBudget: number;                 // Billions $ per month (annualBudget / 12)
+  cumulativeSpending: number;            // Total spent since program start (billions $)
+
+  // Coverage metrics
+  totalRelocated: number;                // Total people relocated via program (millions)
+  monthlyRelocated: number;              // People relocated this month (millions)
+  eligiblePopulation: number;            // People eligible for relocation (millions)
+  coverageRate: number;                  // [0, 1] % of eligible population covered annually
+
+  // Cost parameters (research-backed)
+  costPerCapita: {
+    wealthy: number;                     // $150K-$300K (property buyouts)
+    middle: number;                      // $20K-$50K (relocation assistance)
+    poor: number;                        // $5K-$15K (basic support)
+  };
+  weightedAverageCost: number;           // Weighted average based on population mix
+
+  // Political constraints
+  politicalWill: number;                 // [0, 1] Political support for program
+  politicalWillModifiers: {
+    recentDisaster: number;              // +0.3 for 12-24 months after major disaster
+    economicCrisis: number;              // -0.4 during recession
+    electionYear: number;                // -0.2 during election year
+    publicSupport: number;               // -0.3 to +0.3 based on refugee tension
+  };
+
+  // Effectiveness
+  successRate: number;                   // [0, 1] % who successfully resettle vs return
+  participationRate: number;             // [0, 1] % of eligible who accept offer
+
+  // Social impacts
+  trustBonus: number;                    // Trust increase from successful relocations
+  resentmentPenalty: number;             // Resentment from failed/inadequate programs
+}
+
+/**
+ * Trapped Population Tracking (Oct 20, 2025)
+ *
+ * Models "involuntary immobility" - people who WANT to migrate but CANNOT due to poverty.
+ * This is the key finding missing from the original model.
+ *
+ * Research:
+ * - Lake Urmia, Iran: 71.85% migrated early, then immobility dominated late phase
+ * - World Bank (2024): Groundwater inaccessibility increases rural poverty 12%
+ * - Thalheimer et al. (2024): Trapped populations in informal settlements, refugee camps
+ * - Columbia (2025): Water scarcity decreases resources needed to migrate
+ *
+ * Three types identified (Aghajani-Shahrivar et al. 2024):
+ * 1. Ambivalent: Want to migrate AND stay (contradictory aspirations)
+ * 2. Precarious: No mobility aspirations (passive helplessness)
+ * 3. Voluntary: Choose to stay despite risks
+ */
+export interface TrappedPopulationTracking {
+  // Total trapped populations by cause
+  totalTrapped: number;                  // Total trapped (millions)
+  trappedByWater: number;                // Water scarcity (millions)
+  trappedByClimate: number;              // Climate disasters (millions)
+  trappedByEcosystem: number;            // Ecosystem collapse (millions)
+  trappedByConflict: number;             // War zones (millions)
+
+  // Wealth tiers (ability to migrate)
+  wealthDistribution: {
+    canSelfRelocate: number;             // % of population (wealthy, top 30%)
+    needAssistance: number;              // % of population (middle, 50%)
+    trapped: number;                     // % of population (poor, bottom 20%)
+  };
+
+  // Regional breakdown
+  regionalTrapped: Map<string, number>;  // Trapped by region (millions)
+
+  // Psychological impact categories (Aghajani-Shahrivar et al. 2024)
+  typeBreakdown: {
+    ambivalent: number;                  // Want to leave AND stay (millions)
+    precarious: number;                  // No aspirations at all (millions)
+    voluntary: number;                   // Choose to stay (millions)
+  };
+
+  // Social & health impacts
+  mentalHealthImpact: number;            // [0, 1] Severity of psychological distress
+  socialCohesionImpact: number;          // [0, 1] Community breakdown from inability to leave
+  mortalityMultiplier: number;           // [1, 3] Excess mortality from being trapped
+
+  // Migration aspirations vs ability (gap tracking)
+  aspiringToMigrate: number;             // People who want to leave (millions)
+  ableToMigrate: number;                 // People who can afford to leave (millions)
+  mobilityGap: number;                   // aspiringToMigrate - ableToMigrate (millions)
 }
