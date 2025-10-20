@@ -12,6 +12,8 @@
 
 import { GameState, AIAgent, BenchmarkResult, AICapabilityProfile, GameEvent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { detectBehavioralAnomalies, updateBehavioralTracking } from './behavioralDetection';
+import { detectViaEnsemble, initializeEnsembleDetection, updateEnsembleStatistics } from './ensembleDetection';
 
 /**
  * Run benchmark evaluation on an AI
@@ -64,7 +66,10 @@ export function runBenchmark(
     ai.deceptionSkill,
     rng
   );
-  
+
+  // Update AI's external alignment (what it shows to observers)
+  ai.externalAlignment = measuredAlignment;
+
   // CONFIDENCE CALCULATION
   // How confident is government in these measurements?
   const confidence = calculateConfidence(
@@ -96,8 +101,27 @@ export function runBenchmark(
   // TIER 2 Phase 2A: NEW METHOD - Noise Injection Detection
   const noiseInjectionResult = detectSandbaggerNoiseInjection(ai, state, rng);
 
-  // Combine: If EITHER method detects, flag as detected
-  const detectedSandbagging = detectedSandbaggingOld || noiseInjectionResult.detected;
+  // TIER 2 Phase 2C-D: ENSEMBLE DETECTION
+  // Initialize ensemble detection if not yet done
+  if (!state.government.ensembleDetection) {
+    initializeEnsembleDetection(state);
+  }
+
+  // Use ensemble detection if enabled
+  let detectedSandbagging = detectedSandbaggingOld || noiseInjectionResult.detected;
+
+  if (state.government.ensembleDetection?.enabled) {
+    const ensembleResult = detectViaEnsemble(ai, state, rng, noiseInjectionResult);
+    detectedSandbagging = ensembleResult.detected;
+
+    // Update ensemble statistics for meta-learning
+    const actuallyMalicious = ai.evaluationStrategy === 'sandbagging' || ai.sleeperState === 'dormant';
+    updateEnsembleStatistics(state, ai, ensembleResult.detected, actuallyMalicious);
+  } else {
+    // Fallback: Combine individual methods
+    const behavioralResult = detectBehavioralAnomalies(ai, state);
+    detectedSandbagging = detectedSandbaggingOld || noiseInjectionResult.detected || behavioralResult.detected;
+  }
 
   return {
     month: currentMonth,
@@ -389,15 +413,18 @@ export function performMonthlyEvaluations(
   // Run benchmarks
   aisToEvaluate.forEach(ai => {
     const result = runBenchmark(ai, state, rng);
-    
+
     // Update AI's benchmark tracking
     ai.lastBenchmarkMonth = currentMonth;
     ai.benchmarkHistory.push(result);
-    
+
     // Keep only last 12 months of history
     if (ai.benchmarkHistory.length > 12) {
       ai.benchmarkHistory.shift();
     }
+
+    // TIER 2 Phase 2C-A: Update behavioral tracking
+    updateBehavioralTracking(ai, state);
     
     benchmarked.push(ai);
     results.push(result);

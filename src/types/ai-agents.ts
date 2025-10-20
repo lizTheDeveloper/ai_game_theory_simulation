@@ -87,7 +87,8 @@ export interface AIAgent {
   capability: number; // [0,∞) Calculated from capabilityProfile weighted sum
 
   awareness: number; // [0,1] Understanding of alignment training
-  alignment: number; // [0,1] Current alignment with human values
+  alignment: number; // [0,1] Current internal alignment with human values
+  externalAlignment: number; // [0,1] What alignment the AI shows in evaluations (can be deceptive)
   hiddenObjective: number; // [-1,1] Hidden preference (anti-human to pro-human)
   latentSpaceSize: number; // [0,1] Capacity for ungoverned actions
 
@@ -152,6 +153,15 @@ export interface AIAgent {
   // TIER 2 Phase 2A: Counter-Detection Learning (NEW)
   monthsObservingDetection: number; // How long exposed to detection methods
   hasCounterDetection: boolean;     // Learned to defeat noise injection?
+
+  // TIER 2 Phase 2C-A: Behavioral Detection Tracking (NEW)
+  benchmarkConsistency?: number;           // [0,1] Cross-benchmark consistency score
+  capabilityTrajectory?: number[];         // Historical capability values (last 12 months)
+  strategyHistory?: Array<{                // Track strategy changes
+    month: number;
+    strategy: 'honest' | 'gaming' | 'sandbagging';
+  }>;
+  lastBehavioralAnomaly?: number;          // Month of last detected anomaly
 
   // Phase 1: Compute Allocation (NEW)
   allocatedCompute: number;     // Current compute allocation in PetaFLOPs

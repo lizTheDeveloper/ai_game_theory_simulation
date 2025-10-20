@@ -87,6 +87,7 @@ export { TriggeredEventsPhase } from './TriggeredEventsPhase';
 export { BenchmarkEvaluationsPhase } from './BenchmarkEvaluationsPhase';
 export { GamingDetectionPhase } from './GamingDetectionPhase';  // TIER 2 Phase 3 (Oct 17, 2025)
 export { ProactiveSleeperDetectionPhase } from './ProactiveSleeperDetectionPhase';  // TIER 2 Phase 4 (Oct 17, 2025)
+export { EnsembleMetaLearningPhase } from './EnsembleMetaLearningPhase';  // TIER 2 Phase 2C-E (Oct 20, 2025)
 export { CrisisPointsPhase } from './CrisisPointsPhase';
 export { ExogenousShockPhase } from './ExogenousShockPhase';  // Contingency & Agency Phase 2 (Oct 17, 2025)
 export { CriticalJuncturePhase } from './CriticalJuncturePhase';  // Contingency & Agency Phase 3 (Oct 17, 2025)

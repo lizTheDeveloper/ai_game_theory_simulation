@@ -93,6 +93,76 @@ export interface GovernmentAgent {
   evaluationFrequency: number;   // [0,1] How often to run evaluations (0 = never, 1 = every month)
   totalBenchmarksRun: number;    // Track total evaluations performed
 
+  // TIER 2 Phase 2C-D: Ensemble Detection State (NEW)
+  ensembleDetection?: {
+    enabled: boolean;            // Is ensemble detection active?
+    weights: {                   // Current ensemble weights
+      noiseInjection: number;
+      behavioral: number;
+      benchmarkManip: number;
+      deploymentRisk: number;
+      threshold: number;
+    };
+    metaLearning: {              // Meta-learning state
+      enabled: boolean;
+      updateFrequency: number;   // Months between updates
+      minSamples: number;
+      lastUpdateMonth: number;
+      totalEvaluations: number;
+      historicalAccuracy: {
+        noiseInjection: {
+          truePositives: number;
+          falsePositives: number;
+          trueNegatives: number;
+          falseNegatives: number;
+        };
+        behavioral: {
+          truePositives: number;
+          falsePositives: number;
+          trueNegatives: number;
+          falseNegatives: number;
+        };
+        benchmarkManip: {
+          truePositives: number;
+          falsePositives: number;
+          trueNegatives: number;
+          falseNegatives: number;
+        };
+        deploymentRisk: {
+          truePositives: number;
+          falsePositives: number;
+          trueNegatives: number;
+          falseNegatives: number;
+        };
+      };
+      adaptationHistory: Array<{
+        month: number;
+        oldWeights: {
+          noiseInjection: number;
+          behavioral: number;
+          benchmarkManip: number;
+          deploymentRisk: number;
+          threshold: number;
+        };
+        newWeights: {
+          noiseInjection: number;
+          behavioral: number;
+          benchmarkManip: number;
+          deploymentRisk: number;
+          threshold: number;
+        };
+        reason: string;
+      }>;
+    };
+    statistics: {                // Overall ensemble performance
+      totalDetections: number;
+      truePositives: number;
+      falsePositives: number;
+      trueNegatives: number;
+      falseNegatives: number;
+    };
+  };
+
   // Phase 2B+: Governance Quality & Democratic Resilience (NEW)
   governanceQuality: {
     decisionQuality: number;          // [0,1] Effectiveness of policy decisions (AI-augmented)

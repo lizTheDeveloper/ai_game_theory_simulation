@@ -104,6 +104,7 @@ import {
   BenchmarkEvaluationsPhase,
   GamingDetectionPhase,  // TIER 2 Phase 3 (Oct 17, 2025)
   ProactiveSleeperDetectionPhase,  // TIER 2 Phase 4 (Oct 17, 2025)
+  EnsembleMetaLearningPhase,  // TIER 2 Phase 2C-E (Oct 20, 2025)
   CrisisPointsPhase,
   ExogenousShockPhase,  // Contingency & Agency Phase 2 (Oct 17, 2025)
   CriticalJuncturePhase,  // Contingency & Agency Phase 3 (Oct 17, 2025)
@@ -484,6 +485,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new BenchmarkEvaluationsPhase());
     this.orchestrator.registerPhase(new GamingDetectionPhase());  // TIER 2 Phase 3 (Oct 17, 2025)
     this.orchestrator.registerPhase(new ProactiveSleeperDetectionPhase());  // TIER 2 Phase 4 (Oct 17, 2025)
+    this.orchestrator.registerPhase(EnsembleMetaLearningPhase);  // TIER 2 Phase 2C-E (Oct 20, 2025) - const object, not class
     this.orchestrator.registerPhase(new CrisisPointsPhase());
     this.orchestrator.registerPhase(new ExogenousShockPhase());  // Contingency & Agency Phase 2 (Oct 17, 2025)
     this.orchestrator.registerPhase(new CriticalJuncturePhase());  // Contingency & Agency Phase 3 (Oct 17, 2025)
