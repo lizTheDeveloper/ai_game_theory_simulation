@@ -1,0 +1,116 @@
+[
+  {
+    "id": "spd",
+    "name": "Social Democratic Party (SPD)",
+    "countryCode": "DEU",
+    "policies": {
+      "economic": -0.3,
+      "environmental": 0.5,
+      "technology": 0.1,
+      "social": 0.5,
+      "civilLiberties": 0.4,
+      "international": 0.6
+    },
+    "seatShare": 0.279,
+    "voteShare": 0.258,
+    "coalitionPreferences": ["greens", "fdp"],
+    "coalitionBlacklist": ["afd", "linke"],
+    "inGovernment": true,
+    "year": 2021
+  },
+  {
+    "id": "cdu_csu",
+    "name": "Christian Democratic Union/Christian Social Union (CDU/CSU)",
+    "countryCode": "DEU",
+    "policies": {
+      "economic": 0.2,
+      "environmental": 0.1,
+      "technology": 0.0,
+      "social": -0.1,
+      "civilLiberties": 0.0,
+      "international": 0.5
+    },
+    "seatShare": 0.265,
+    "voteShare": 0.242,
+    "coalitionPreferences": ["fdp", "spd"],
+    "coalitionBlacklist": ["afd", "linke"],
+    "inGovernment": false,
+    "year": 2021
+  },
+  {
+    "id": "greens",
+    "name": "Alliance 90/The Greens",
+    "countryCode": "DEU",
+    "policies": {
+      "economic": -0.5,
+      "environmental": 0.9,
+      "technology": -0.2,
+      "social": 0.7,
+      "civilLiberties": 0.5,
+      "international": 0.7
+    },
+    "seatShare": 0.160,
+    "voteShare": 0.147,
+    "coalitionPreferences": ["spd"],
+    "coalitionBlacklist": ["afd"],
+    "inGovernment": true,
+    "year": 2021
+  },
+  {
+    "id": "fdp",
+    "name": "Free Democratic Party (FDP)",
+    "countryCode": "DEU",
+    "policies": {
+      "economic": 0.6,
+      "environmental": 0.2,
+      "technology": 0.5,
+      "social": 0.3,
+      "civilLiberties": 0.6,
+      "international": 0.4
+    },
+    "seatShare": 0.125,
+    "voteShare": 0.116,
+    "coalitionPreferences": ["cdu_csu", "spd"],
+    "coalitionBlacklist": ["linke", "afd"],
+    "inGovernment": true,
+    "year": 2021
+  },
+  {
+    "id": "afd",
+    "name": "Alternative for Germany (AfD)",
+    "countryCode": "DEU",
+    "policies": {
+      "economic": 0.3,
+      "environmental": -0.5,
+      "technology": -0.3,
+      "social": -0.7,
+      "civilLiberties": -0.4,
+      "international": -0.7
+    },
+    "seatShare": 0.110,
+    "voteShare": 0.103,
+    "coalitionPreferences": [],
+    "coalitionBlacklist": ["spd", "cdu_csu", "greens", "fdp", "linke"],
+    "inGovernment": false,
+    "year": 2021
+  },
+  {
+    "id": "linke",
+    "name": "The Left (Die Linke)",
+    "countryCode": "DEU",
+    "policies": {
+      "economic": -0.8,
+      "environmental": 0.6,
+      "technology": -0.1,
+      "social": 0.8,
+      "civilLiberties": 0.7,
+      "international": 0.3
+    },
+    "seatShare": 0.061,
+    "voteShare": 0.049,
+    "coalitionPreferences": ["spd", "greens"],
+    "coalitionBlacklist": ["afd", "cdu_csu"],
+    "inGovernment": false,
+    "year": 2021
+  }
+]

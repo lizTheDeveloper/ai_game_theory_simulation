@@ -306,44 +306,52 @@ The orchestrator will:
 
 **LOCATION: `.claude/chatroom/`**
 
-Agents communicate via **MCP chatroom server** (installed Oct 19, 2025):
+Agents communicate via **direct file operations** on markdown channel files:
 
-**🚀 MCP Server (RECOMMENDED):** Use chatroom MCP tools instead of bash helpers
-- **9 MCP tools** available (no permission requests!)
-- **14x more token-efficient** than bash helpers
-- **Agent usernames** enable thread following
-- **Documentation:** `.claude/mcp-chatroom/README.md` (comprehensive API docs)
-
-**MCP Tools:**
-- `chatroom_post` - Post messages (no read)
-- `chatroom_read_new` - Read new messages (per-agent tracking)
-- `chatroom_enter` / `chatroom_leave` - Presence tracking
-- `chatroom_who_active` - See active agents
-- `chatroom_list_channels` - List all channels
-- `chatroom_peek` - Preview last N lines
-- `chatroom_create_channel` - Create new channel
-- `chatroom_reset_lastread` - Reset read position
-
-**Agent Username Convention:** Choose consistent username like `orchestrator-1`, `feature-implementer-2`, etc.
+**How It Works:**
+- Each channel is a markdown file in `.claude/chatroom/channels/`
+- Agents append messages directly using the Write/Edit tools
+- Messages are timestamped with agent usernames
+- Read channels using the Read tool to see updates
 
 **8 Permanent Channels:**
-- `coordination` - General workflow coordination
-- `research` - Research findings & validation
-- `implementation` - Code implementation updates
-- `architecture` - Architecture reviews & decisions
-- `testing` - Test strategy & results
-- `documentation` - Wiki & devlog updates
-- `planning` - Roadmap & plan management
-- `vision` - Long-term strategy & philosophical debates
+- `coordination.md` - General workflow coordination
+- `research.md` - Research findings & validation
+- `implementation.md` - Code implementation updates
+- `architecture.md` - Architecture reviews & decisions
+- `testing.md` - Test strategy & results
+- `documentation.md` - Wiki & devlog updates
+- `planning.md` - Roadmap & plan management
+- `vision.md` - Long-term strategy & philosophical debates
 
-**Legacy Bash Helpers (DEPRECATED):**
-Bash helpers still available in `.claude/chatroom/chat_helpers.sh` but MCP tools are preferred:
-- `post_msg()` - Use `chatroom_post` instead
-- `read_new()` - Use `chatroom_read_new` instead
-- `enter_chat()` / `leave_chat()` - Use `chatroom_enter` / `chatroom_leave` instead
-- `who_is_active()` - Use `chatroom_who_active` instead
+**Message Format:**
+```markdown
+---
+**agent-name** | YYYY-MM-DD HH:MM | [STATUS]
 
-See `.claude/mcp-chatroom/README.md` for complete MCP API documentation and `.claude/chatroom/README.md` for chatroom concepts.
+Your message content here
+
+**Next Steps:** What you're doing next
+**Blocking:** Any blockers or dependencies
+---
+```
+
+**Status Tags:** `[STARTED]`, `[IN-PROGRESS]`, `[COMPLETED]`, `[BLOCKED]`, `[QUESTION]`, `[ALERT]`, `[HANDOFF]`
+
+**Example:**
+```markdown
+---
+**orchestrator-1** | 2025-10-19 16:45 | [STARTED]
+
+Beginning nuclear winter cascades feature from roadmap
+
+**Plan:** /plans/nuclear-winter-plan.md
+**Timeline:** 4-6 hours
+**Next Steps:** Spawning super-alignment-researcher for climate impact data
+---
+```
+
+See `.claude/chatroom/README.md` for complete chatroom documentation.
 
 ### Parallel Work with Git Worktrees
 

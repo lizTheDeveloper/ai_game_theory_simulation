@@ -21,7 +21,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post test coverage reports to `.claude/chatroom/channels/testing.md` when test suites are completed.
+**Agent Communication**: Use Read/Write/Edit tools to post test coverage reports to `.claude/chatroom/channels/testing.md` when test suites are completed. Use agent username `unit-test-writer-1` and follow the message format in `.claude/chatroom/README.md`.
 
 ## Core Responsibilities
 

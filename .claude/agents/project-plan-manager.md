@@ -55,7 +55,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post roadmap updates to `.claude/chatroom/channels/roadmap.md` to notify other agents of priority changes.
+**Agent Communication**: Use Read/Write/Edit tools to post roadmap updates to `.claude/chatroom/channels/roadmap.md` to notify other agents of priority changes. Use agent username `project-plan-manager-1` and follow the message format in `.claude/chatroom/README.md`.
 
 ## Operational Guidelines
 

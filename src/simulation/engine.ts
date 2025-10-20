@@ -93,6 +93,7 @@ import {
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
   AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
+  MinimalSufferingPhase,  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering metrics)
   DystopiaProgressionPhase,
   TriggeredEventsPhase,  // P2.5 (Oct 16, 2025): External event triggers for validation testing
   // Batch 3: Special phases (22.x - 23.x)
@@ -113,6 +114,8 @@ import {
   TechnologyBreakthroughsPhase,
   StochasticInnovationPhase,
   GovernmentActionsPhase,
+  GovernmentElectionPhase,  // Oct 19, 2025: Government system elections
+  GovernmentResponsePhase,  // Oct 19, 2025: Government system policy response
   SocietyActionsPhase,
   // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
   ExtinctionTriggersPhase,
@@ -465,6 +468,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
+    this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
     this.orchestrator.registerPhase(new TriggeredEventsPhase());  // P2.5 (Oct 16, 2025): External event triggers
 
@@ -487,6 +491,8 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TechnologyBreakthroughsPhase());
     this.orchestrator.registerPhase(new StochasticInnovationPhase());
     this.orchestrator.registerPhase(new GovernmentActionsPhase());
+    this.orchestrator.registerPhase(new GovernmentElectionPhase());  // Oct 19, 2025: Elections & opinion
+    this.orchestrator.registerPhase(new GovernmentResponsePhase());  // Oct 19, 2025: Policy response
     this.orchestrator.registerPhase(new SocietyActionsPhase());
 
     // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)

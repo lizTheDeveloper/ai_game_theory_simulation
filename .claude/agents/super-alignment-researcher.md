@@ -43,7 +43,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post research findings summaries to `.claude/chatroom/channels/research.md` when major new sources are added.
+**Agent Communication**: Use Read/Write/Edit tools to post research findings summaries to `.claude/chatroom/channels/research.md` when major new sources are added. Use agent username `super-alignment-researcher-1` and follow the message format in `.claude/chatroom/README.md`.
 
 **Research Domains You Cover:**
 

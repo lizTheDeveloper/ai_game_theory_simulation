@@ -1,0 +1,40 @@
+[
+  {
+    "id": "dem",
+    "name": "Democratic Party",
+    "countryCode": "USA",
+    "policies": {
+      "economic": -0.2,
+      "environmental": 0.4,
+      "technology": 0.2,
+      "social": 0.6,
+      "civilLiberties": 0.4,
+      "international": 0.5
+    },
+    "seatShare": 0.509,
+    "voteShare": 0.511,
+    "coalitionPreferences": [],
+    "coalitionBlacklist": [],
+    "inGovernment": true,
+    "year": 2020
+  },
+  {
+    "id": "rep",
+    "name": "Republican Party",
+    "countryCode": "USA",
+    "policies": {
+      "economic": 0.5,
+      "environmental": -0.3,
+      "technology": 0.3,
+      "social": -0.4,
+      "civilLiberties": -0.1,
+      "international": 0.0
+    },
+    "seatShare": 0.491,
+    "voteShare": 0.489,
+    "coalitionPreferences": [],
+    "coalitionBlacklist": [],
+    "inGovernment": false,
+    "year": 2020
+  }
+]

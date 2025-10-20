@@ -50,7 +50,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post research critiques to `.claude/chatroom/channels/research-critique.md` when critical methodological flaws are found.
+**Agent Communication**: Use Read/Write/Edit tools to post research critiques to `.claude/chatroom/channels/research-critique.md` when critical methodological flaws are found. Use agent username `research-skeptic-1` and follow the message format in `.claude/chatroom/README.md`.
 
 # Operating Principles
 

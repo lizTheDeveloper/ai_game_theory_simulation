@@ -1,0 +1,332 @@
+{
+  "DEU": {
+    "name": "Germany",
+    "type": "parliamentary_democracy",
+    "population": 83.2,
+    "gdpPPP": 4800,
+    "wgi": {
+      "governmentEffectiveness": 1.6,
+      "controlOfCorruption": 1.9,
+      "regulatoryQuality": 1.7
+    }
+  },
+  "USA": {
+    "name": "United States",
+    "type": "presidential_democracy",
+    "population": 331.9,
+    "gdpPPP": 23300,
+    "wgi": {
+      "governmentEffectiveness": 1.5,
+      "controlOfCorruption": 1.3,
+      "regulatoryQuality": 1.6
+    }
+  },
+  "CHN": {
+    "name": "China",
+    "type": "authoritarian_technocracy",
+    "population": 1412.0,
+    "gdpPPP": 30300,
+    "wgi": {
+      "governmentEffectiveness": 0.3,
+      "controlOfCorruption": -0.3,
+      "regulatoryQuality": -0.2
+    }
+  },
+  "JPN": {
+    "name": "Japan",
+    "type": "parliamentary_democracy",
+    "population": 125.7,
+    "gdpPPP": 5800,
+    "wgi": {
+      "governmentEffectiveness": 1.7,
+      "controlOfCorruption": 1.5,
+      "regulatoryQuality": 1.4
+    }
+  },
+  "IND": {
+    "name": "India",
+    "type": "parliamentary_democracy",
+    "population": 1408.0,
+    "gdpPPP": 13000,
+    "wgi": {
+      "governmentEffectiveness": 0.1,
+      "controlOfCorruption": -0.3,
+      "regulatoryQuality": -0.1
+    }
+  },
+  "GBR": {
+    "name": "United Kingdom",
+    "type": "parliamentary_democracy",
+    "population": 67.3,
+    "gdpPPP": 3500,
+    "wgi": {
+      "governmentEffectiveness": 1.5,
+      "controlOfCorruption": 1.6,
+      "regulatoryQuality": 1.7
+    }
+  },
+  "FRA": {
+    "name": "France",
+    "type": "semi_presidential_democracy",
+    "population": 65.4,
+    "gdpPPP": 3400,
+    "wgi": {
+      "governmentEffectiveness": 1.4,
+      "controlOfCorruption": 1.3,
+      "regulatoryQuality": 1.3
+    }
+  },
+  "BRA": {
+    "name": "Brazil",
+    "type": "presidential_democracy",
+    "population": 214.3,
+    "gdpPPP": 3800,
+    "wgi": {
+      "governmentEffectiveness": -0.2,
+      "controlOfCorruption": -0.3,
+      "regulatoryQuality": -0.1
+    }
+  },
+  "RUS": {
+    "name": "Russia",
+    "type": "hybrid_regime",
+    "population": 144.1,
+    "gdpPPP": 4700,
+    "wgi": {
+      "governmentEffectiveness": -0.2,
+      "controlOfCorruption": -0.9,
+      "regulatoryQuality": -0.4
+    }
+  },
+  "CAN": {
+    "name": "Canada",
+    "type": "parliamentary_democracy",
+    "population": 38.2,
+    "gdpPPP": 2100,
+    "wgi": {
+      "governmentEffectiveness": 1.8,
+      "controlOfCorruption": 1.9,
+      "regulatoryQuality": 1.7
+    }
+  },
+  "KOR": {
+    "name": "South Korea",
+    "type": "presidential_democracy",
+    "population": 51.7,
+    "gdpPPP": 2500,
+    "wgi": {
+      "governmentEffectiveness": 1.3,
+      "controlOfCorruption": 0.6,
+      "regulatoryQuality": 1.1
+    }
+  },
+  "AUS": {
+    "name": "Australia",
+    "type": "parliamentary_democracy",
+    "population": 25.7,
+    "gdpPPP": 1600,
+    "wgi": {
+      "governmentEffectiveness": 1.7,
+      "controlOfCorruption": 1.9,
+      "regulatoryQuality": 1.7
+    }
+  },
+  "MEX": {
+    "name": "Mexico",
+    "type": "presidential_democracy",
+    "population": 126.7,
+    "gdpPPP": 2900,
+    "wgi": {
+      "governmentEffectiveness": 0.0,
+      "controlOfCorruption": -0.7,
+      "regulatoryQuality": 0.2
+    }
+  },
+  "IDN": {
+    "name": "Indonesia",
+    "type": "presidential_democracy",
+    "population": 273.8,
+    "gdpPPP": 3900,
+    "wgi": {
+      "governmentEffectiveness": 0.1,
+      "controlOfCorruption": -0.4,
+      "regulatoryQuality": -0.1
+    }
+  },
+  "SAU": {
+    "name": "Saudi Arabia",
+    "type": "absolute_monarchy",
+    "population": 35.3,
+    "gdpPPP": 1800,
+    "wgi": {
+      "governmentEffectiveness": 0.3,
+      "controlOfCorruption": 0.1,
+      "regulatoryQuality": 0.1
+    }
+  },
+  "TUR": {
+    "name": "Turkey",
+    "type": "hybrid_regime",
+    "population": 84.8,
+    "gdpPPP": 2800,
+    "wgi": {
+      "governmentEffectiveness": 0.2,
+      "controlOfCorruption": -0.1,
+      "regulatoryQuality": 0.1
+    }
+  },
+  "ARG": {
+    "name": "Argentina",
+    "type": "presidential_democracy",
+    "population": 45.8,
+    "gdpPPP": 1100,
+    "wgi": {
+      "governmentEffectiveness": -0.3,
+      "controlOfCorruption": -0.5,
+      "regulatoryQuality": -0.6
+    }
+  },
+  "ZAF": {
+    "name": "South Africa",
+    "type": "parliamentary_democracy",
+    "population": 59.9,
+    "gdpPPP": 850,
+    "wgi": {
+      "governmentEffectiveness": 0.1,
+      "controlOfCorruption": -0.1,
+      "regulatoryQuality": 0.1
+    }
+  },
+  "ITA": {
+    "name": "Italy",
+    "type": "parliamentary_democracy",
+    "population": 59.1,
+    "gdpPPP": 2900,
+    "wgi": {
+      "governmentEffectiveness": 0.4,
+      "controlOfCorruption": 0.2,
+      "regulatoryQuality": 0.9
+    }
+  },
+  "SGP": {
+    "name": "Singapore",
+    "type": "authoritarian_technocracy",
+    "population": 5.9,
+    "gdpPPP": 700,
+    "wgi": {
+      "governmentEffectiveness": 2.36,
+      "controlOfCorruption": 2.2,
+      "regulatoryQuality": 2.1
+    }
+  },
+  "TWN": {
+    "name": "Taiwan",
+    "type": "presidential_democracy",
+    "population": 23.9,
+    "gdpPPP": 1400,
+    "wgi": {
+      "governmentEffectiveness": 1.2,
+      "controlOfCorruption": 0.8,
+      "regulatoryQuality": 1.3
+    }
+  },
+  "IRN": {
+    "name": "Iran",
+    "type": "theocratic_republic",
+    "population": 85.0,
+    "gdpPPP": 1500,
+    "wgi": {
+      "governmentEffectiveness": -0.7,
+      "controlOfCorruption": -1.1,
+      "regulatoryQuality": -1.3
+    }
+  },
+  "ISR": {
+    "name": "Israel",
+    "type": "parliamentary_democracy",
+    "population": 9.4,
+    "gdpPPP": 500,
+    "wgi": {
+      "governmentEffectiveness": 1.3,
+      "controlOfCorruption": 0.8,
+      "regulatoryQuality": 1.2
+    }
+  },
+  "ARE": {
+    "name": "United Arab Emirates",
+    "type": "absolute_monarchy",
+    "population": 9.9,
+    "gdpPPP": 700,
+    "wgi": {
+      "governmentEffectiveness": 1.2,
+      "controlOfCorruption": 1.0,
+      "regulatoryQuality": 1.0
+    }
+  },
+  "NOR": {
+    "name": "Norway",
+    "type": "parliamentary_democracy",
+    "population": 5.4,
+    "gdpPPP": 450,
+    "wgi": {
+      "governmentEffectiveness": 2.0,
+      "controlOfCorruption": 2.1,
+      "regulatoryQuality": 1.8
+    }
+  },
+  "CHE": {
+    "name": "Switzerland",
+    "type": "parliamentary_democracy",
+    "population": 8.7,
+    "gdpPPP": 750,
+    "wgi": {
+      "governmentEffectiveness": 2.0,
+      "controlOfCorruption": 2.1,
+      "regulatoryQuality": 1.8
+    }
+  },
+  "POL": {
+    "name": "Poland",
+    "type": "semi_presidential_democracy",
+    "population": 37.7,
+    "gdpPPP": 1500,
+    "wgi": {
+      "governmentEffectiveness": 0.7,
+      "controlOfCorruption": 0.7,
+      "regulatoryQuality": 0.9
+    }
+  },
+  "NLD": {
+    "name": "Netherlands",
+    "type": "parliamentary_democracy",
+    "population": 17.5,
+    "gdpPPP": 1100,
+    "wgi": {
+      "governmentEffectiveness": 1.8,
+      "controlOfCorruption": 2.0,
+      "regulatoryQuality": 1.8
+    }
+  },
+  "SWE": {
+    "name": "Sweden",
+    "type": "parliamentary_democracy",
+    "population": 10.4,
+    "gdpPPP": 650,
+    "wgi": {
+      "governmentEffectiveness": 1.9,
+      "controlOfCorruption": 2.1,
+      "regulatoryQuality": 1.7
+    }
+  },
+  "EGY": {
+    "name": "Egypt",
+    "type": "hybrid_regime",
+    "population": 104.3,
+    "gdpPPP": 1600,
+    "wgi": {
+      "governmentEffectiveness": -0.5,
+      "controlOfCorruption": -0.7,
+      "regulatoryQuality": -0.6
+    }
+  }
+}

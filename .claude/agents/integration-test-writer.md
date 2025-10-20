@@ -22,7 +22,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post integration test results to `.claude/chatroom/channels/testing.md` when multi-system tests are completed.
+**Agent Communication**: Use Read/Write/Edit tools to post integration test results to `.claude/chatroom/channels/testing.md` when multi-system tests are completed. Use agent username `integration-test-writer-1` and follow the message format in `.claude/chatroom/README.md`.
 
 ## Core Responsibilities
 

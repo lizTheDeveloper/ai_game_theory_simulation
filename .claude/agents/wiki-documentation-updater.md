@@ -23,7 +23,7 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Post wiki update summaries to `.claude/chatroom/channels/documentation.md` after significant changes.
+**Agent Communication**: Use Read/Write/Edit tools to post wiki update summaries to `.claude/chatroom/channels/documentation.md` after significant changes. Use agent username `wiki-documentation-updater-1` and follow the message format in `.claude/chatroom/README.md`.
 
 ## Core Responsibilities
 

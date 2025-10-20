@@ -1,0 +1,135 @@
+[
+  {
+    "id": "ldp",
+    "name": "Liberal Democratic Party (LDP)",
+    "countryCode": "JPN",
+    "policies": {
+      "economic": 0.3,
+      "environmental": 0.0,
+      "technology": 0.3,
+      "social": -0.2,
+      "civilLiberties": 0.0,
+      "international": 0.4
+    },
+    "seatShare": 0.556,
+    "voteShare": 0.484,
+    "coalitionPreferences": ["komeito"],
+    "coalitionBlacklist": ["jcp"],
+    "inGovernment": true,
+    "year": 2021
+  },
+  {
+    "id": "cdp",
+    "name": "Constitutional Democratic Party (CDP)",
+    "countryCode": "JPN",
+    "policies": {
+      "economic": -0.2,
+      "environmental": 0.3,
+      "technology": 0.1,
+      "social": 0.4,
+      "civilLiberties": 0.3,
+      "international": 0.5
+    },
+    "seatShare": 0.196,
+    "voteShare": 0.203,
+    "coalitionPreferences": ["dpfp", "jcp", "reiwa"],
+    "coalitionBlacklist": ["ldp"],
+    "inGovernment": false,
+    "year": 2021
+  },
+  {
+    "id": "komeito",
+    "name": "Komeito",
+    "countryCode": "JPN",
+    "policies": {
+      "economic": 0.0,
+      "environmental": 0.2,
+      "technology": 0.2,
+      "social": 0.1,
+      "civilLiberties": 0.2,
+      "international": 0.6
+    },
+    "seatShare": 0.057,
+    "voteShare": 0.117,
+    "coalitionPreferences": ["ldp"],
+    "coalitionBlacklist": ["jcp"],
+    "inGovernment": true,
+    "year": 2021
+  },
+  {
+    "id": "jcp",
+    "name": "Japanese Communist Party (JCP)",
+    "countryCode": "JPN",
+    "policies": {
+      "economic": -0.7,
+      "environmental": 0.5,
+      "technology": 0.0,
+      "social": 0.6,
+      "civilLiberties": 0.5,
+      "international": 0.2
+    },
+    "seatShare": 0.021,
+    "voteShare": 0.073,
+    "coalitionPreferences": ["cdp"],
+    "coalitionBlacklist": ["ldp", "komeito"],
+    "inGovernment": false,
+    "year": 2021
+  },
+  {
+    "id": "dpfp",
+    "name": "Democratic Party for the People (DPFP)",
+    "countryCode": "JPN",
+    "policies": {
+      "economic": 0.1,
+      "environmental": 0.2,
+      "technology": 0.2,
+      "social": 0.2,
+      "civilLiberties": 0.3,
+      "international": 0.4
+    },
+    "seatShare": 0.019,
+    "voteShare": 0.044,
+    "coalitionPreferences": ["cdp"],
+    "coalitionBlacklist": [],
+    "inGovernment": false,
+    "year": 2021
+  },
+  {
+    "id": "reiwa",
+    "name": "Reiwa Shinsengumi",
+    "countryCode": "JPN",
+    "policies": {
+      "economic": -0.6,
+      "environmental": 0.4,
+      "technology": 0.0,
+      "social": 0.7,
+      "civilLiberties": 0.6,
+      "international": 0.1
+    },
+    "seatShare": 0.005,
+    "voteShare": 0.036,
+    "coalitionPreferences": ["cdp", "jcp"],
+    "coalitionBlacklist": ["ldp"],
+    "inGovernment": false,
+    "year": 2021
+  },
+  {
+    "id": "others",
+    "name": "Other Parties & Independents",
+    "countryCode": "JPN",
+    "policies": {
+      "economic": 0.0,
+      "environmental": 0.0,
+      "technology": 0.0,
+      "social": 0.0,
+      "civilLiberties": 0.0,
+      "international": 0.0
+    },
+    "seatShare": 0.146,
+    "voteShare": 0.051,
+    "coalitionPreferences": [],
+    "coalitionBlacklist": [],
+    "inGovernment": false,
+    "year": 2021
+  }
+]

@@ -2,24 +2,6 @@
 
 This folder provides communication channels for agents to coordinate work, share updates, and avoid conflicts when working in parallel.
 
-## 🚀 MCP Server Available (Oct 19, 2025)
-
-**IMPORTANT:** An MCP chatroom server is now installed that provides 9 tools for chatroom operations:
-
-- **14x more token-efficient** than bash helpers (50 tokens vs 700 tokens per read)
-- **No permission requests** (all file I/O handled server-side)
-- **Agent usernames** enable thread following (e.g., `orchestrator-1`, `feature-implementer-2`)
-- **Per-agent read tracking** (each agent only reads their unread messages)
-
-**MCP Tools:**
-- `chatroom_post`, `chatroom_read_new`, `chatroom_enter`, `chatroom_leave`, `chatroom_who_active`, `chatroom_list_channels`, `chatroom_peek`, `chatroom_create_channel`, `chatroom_reset_lastread`
-
-**Complete Documentation:** See `.claude/mcp-chatroom/README.md` for full API docs and usage examples.
-
-**Legacy Bash Helpers:** The bash helpers in `chat_helpers.sh` still work but MCP tools are preferred for efficiency.
-
----
-
 ## Purpose
 
 When multiple agents work on different features simultaneously, they need a way to:
@@ -32,7 +14,13 @@ When multiple agents work on different features simultaneously, they need a way 
 
 ## How It Works
 
-Each channel in `/channels/` is a persistent markdown file where agents post timestamped updates. Think of it like a Slack channel or Discord room, but asynchronous and file-based.
+Each channel in `/channels/` is a **simple markdown file** where agents post timestamped messages using standard Read/Write/Edit tools.
+
+**Communication Method:**
+- **Read** channel files to see existing messages
+- **Write/Edit** to append new messages to channels
+- Use consistent message format for readability
+- Include agent username, timestamp, and status tags
 
 ## Channel Structure
 
@@ -210,487 +198,59 @@ Thanks! Pulled latest changes. Now adding nuclearCommandControl to game.ts lines
 
 ## Cleanup Policy
 
-### Keep Forever:
-- All messages in permanent channels
-- Feature channels for COMPLETED features (historical record)
 
-### Archive When:
-- Feature abandoned or pivoted
-- More than 6 months old and no recent activity
 
-**Archive location:** `.claude/chatroom/archive/YYYY-MM/`
+## How to Post Messages
 
-## Channel Ownership
+Use the **Write** or **Edit** tools to append messages to channel files:
 
-| Channel | Primary Agent | Purpose |
-|---------|---------------|---------|
-| roadmap.md | project-plan-manager | Roadmap updates, priority changes |
-| research.md | super-alignment-researcher | New research findings |
-| research-critique.md | research-skeptic | Research validations |
-| architecture.md | architecture-skeptic | Architecture reviews |
-| testing.md | unit-test-writer, integration-test-writer | Test results |
-| documentation.md | wiki-documentation-updater | Wiki updates |
-| vision.md | sci-fi-tech-visionary | Speculative tech |
-| coordination.md | ALL agents | General coordination |
-| [feature].md | feature-implementer | Feature-specific work |
+1. Read the channel file to see existing messages
+2. Use Write/Edit to append your new message
+3. Follow the message format exactly (see examples above)
+4. Include your agent username, timestamp, and status tag
 
-## Emergency Protocols
-
-### CRITICAL Issues ([ALERT] tag)
-
-When an agent posts [ALERT]:
-1. All agents should check within 30 minutes
-2. Blocking work should pause
-3. Critical issues must be addressed before proceeding
-4. Resolution should be posted to same channel
-
-### Deadlocks
-
-If two agents are blocked waiting on each other:
-1. Post to coordination.md with [DEADLOCK] tag
-2. Explain the circular dependency
-3. Request human intervention
-4. Propose resolution if possible
-
-## Integration with Git Worktrees
-
-When using worktrees for parallel work:
-
-```bash
-# 1. Create feature channel BEFORE starting worktree
-echo "---" >> .claude/chatroom/channels/my-feature.md
-echo "**feature-implementer** | $(date +"%Y-%m-%d %H:%M") | [STARTED]" >> .claude/chatroom/channels/my-feature.md
-echo "" >> .claude/chatroom/channels/my-feature.md
-echo "Starting work on [feature description]" >> .claude/chatroom/channels/my-feature.md
-echo "**Worktree:** ../superalignmenttoutopia-my-feature" >> .claude/chatroom/channels/my-feature.md
-echo "---" >> .claude/chatroom/channels/my-feature.md
-
-# 2. Create worktree
-git worktree add ../superalignmenttoutopia-my-feature main
-
-# 3. Work in worktree, post updates to channel periodically
-
-# 4. Before merging, check for conflicts in coordination.md
+**Example using Edit tool:**
 ```
-
-## Bash Chat Protocol (For Agents)
-
-Agents can chat efficiently without reading entire files every time. Here's how:
-
-**Quick Start:**
-```bash
-# Source the helper functions
-source .claude/chatroom/chat_helpers.sh
-
-# Enter a channel (marks you as active)
-enter_chat "coordination" "my-agent"
-
-# Post messages, read, wait, etc.
-post_msg "coordination" "my-agent" "STARTED" "Beginning work"
-read_new "coordination"
-wait_for_message "coordination" 60
-
-# See who else is active
-who_is_active "coordination"
-
-# Leave when done
-leave_chat "coordination" "my-agent" "Work complete"
-
-# Run example to see it in action:
-.claude/chatroom/example_agent.sh
-```
-
-### Quick Reference Cheat Sheet
-
-```bash
-# 1. POST A MESSAGE (append mode - doesn't read, just writes)
-post_msg() {
-  local channel="$1"
-  local agent="$2"
-  local status="$3"
-  local message="$4"
-
-  cat >> ".claude/chatroom/channels/${channel}.md" <<EOF
+# Append to existing channel
+Edit('.claude/chatroom/channels/coordination.md', 
+     old_string='[last line of file]',
+     new_string='[last line]
 
 ---
-**${agent}** | $(date +"%Y-%m-%d %H:%M") | [${status}]
+**my-agent-1** | 2025-10-19 16:45 | [STARTED]
 
-${message}
----
-EOF
-}
+Starting work on feature X
 
-# Usage:
-post_msg "coordination" "feature-implementer" "STARTED" "Beginning work on nuclear-war-prevention"
-
-
-# 2. READ NEW MESSAGES (since last check)
-# IMPORTANT: Always pass agent name for multi-agent coordination!
-# This ensures each agent sees ALL messages since THEIR last read,
-# not just messages since ANY agent's last read.
-read_new() {
-  local channel="$1"
-  local agent="${2:-}"  # Optional agent name (recommended!)
-
-  # Per-agent or global lastread file
-  local last_read_file
-  if [ -n "$agent" ]; then
-    last_read_file=".claude/chatroom/.${channel}_${agent}_lastread"
-  else
-    last_read_file=".claude/chatroom/.${channel}_lastread"
-  fi
-
-  # Get line count from last read (or 0 if first time)
-  local last_line=$(cat "$last_read_file" 2>/dev/null || echo "0")
-
-  # Get current line count
-  local current_line=$(wc -l < ".claude/chatroom/channels/${channel}.md")
-
-  # Show only new lines
-  if [ "$current_line" -gt "$last_line" ]; then
-    tail -n +$((last_line + 1)) ".claude/chatroom/channels/${channel}.md"
-    echo "$current_line" > "$last_read_file"
-    return 0  # New messages found
-  else
-    return 1  # No new messages
-  fi
-}
-
-# Usage (RECOMMENDED - with agent name):
-if read_new "coordination" "my-agent"; then
-  echo "New messages found for my-agent!"
-else
-  echo "No new messages for my-agent"
-fi
-
-# Legacy usage (without agent name - NOT RECOMMENDED for multi-agent):
-if read_new "coordination"; then
-  echo "New messages found!"
-else
-  echo "No new messages"
-fi
-
-
-# 3. POLL FOR MESSAGES (wait for new activity)
-wait_for_message() {
-  local channel="$1"
-  local timeout="${2:-300}"  # Default 5 minutes
-  local elapsed=0
-
-  echo "Waiting for new messages in ${channel}..."
-  while [ $elapsed -lt $timeout ]; do
-    if read_new "$channel"; then
-      return 0  # New message found
-    fi
-    sleep 5
-    elapsed=$((elapsed + 5))
-  done
-
-  echo "Timeout: No new messages after ${timeout} seconds"
-  return 1
-}
-
-# Usage:
-wait_for_message "coordination" 60  # Wait up to 60 seconds
-
-
-# 4. COMBINED: Post and wait for response
-post_and_wait() {
-  local channel="$1"
-  local agent="$2"
-  local status="$3"
-  local message="$4"
-  local timeout="${5:-300}"
-
-  post_msg "$channel" "$agent" "$status" "$message"
-  echo "Posted to ${channel}, waiting for response..."
-  wait_for_message "$channel" "$timeout"
-}
-
-# Usage:
-post_and_wait "coordination" "feature-implementer" "QUESTION" "Is anyone modifying game.ts?" 60
-
-
-# 5. CHECK FOR SPECIFIC TAG
-has_alert() {
-  local channel="$1"
-
-  if read_new "$channel" | grep -q "\[ALERT\]"; then
-    echo "ALERT found in ${channel}!"
-    return 0
-  fi
-  return 1
-}
-
-# Usage:
-if has_alert "architecture"; then
-  echo "Critical architecture issue detected!"
-fi
-
-
-# 6. ENTER CHAT (mark as active, post entry message)
-enter_chat() {
-  local channel="$1"
-  local agent="$2"
-
-  # Adds agent to active list and posts [ENTERED] message
-}
-
-# Usage:
-enter_chat "coordination" "feature-implementer"
-
-
-# 7. LEAVE CHAT (mark as inactive, post exit message)
-leave_chat() {
-  local channel="$1"
-  local agent="$2"
-  local reason="${3:-Leaving channel}"  # Optional reason
-
-  # Removes agent from active list and posts [LEAVING] message
-}
-
-# Usage:
-leave_chat "coordination" "feature-implementer" "Work complete, moving to next feature"
-
-
-# 8. WHO IS ACTIVE (show current agents in channel)
-who_is_active() {
-  local channel="$1"
-
-  # Shows all agents currently marked as active in the channel
-}
-
-# Usage:
-who_is_active "coordination"
-# Output:
-# ━━━ Active in coordination ━━━
-#   ● feature-implementer
-#   ● architecture-skeptic
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-
-# 9. GRACEFUL EXIT (cleanup without posting)
-cleanup_on_exit() {
-  local channel="$1"
-  local agent="$2"
-
-  # Removes from active list silently (for script crashes/interrupts)
-  # Use with trap: trap "cleanup_on_exit 'coordination' 'my-agent'" EXIT
-}
+**Next Steps:** Implementation
+**Blocking:** None
+---')
 ```
 
-### Real-Time Chat Loop Example
+## Best Practices
 
-For agents that need to actively monitor and respond:
+- **Post at key milestones:** Started, major progress, completed, blocked, questions
+- **Be specific:** Include file names, error messages, concrete details
+- **Update regularly:** Don't go silent for hours - post progress every 30-60 minutes
+- **Read before posting:** Check for conflicts, questions directed at you, alerts
+- **Use ALERT sparingly:** Only for critical issues that block other work
+- **Clean up feature channels:** Archive or delete when feature is complete
 
-```bash
-#!/bin/bash
-# chat_loop.sh - Run this to participate in chatroom
+## Coordination Patterns
 
-AGENT_NAME="feature-implementer"
-CHANNEL="my-feature"
+**Before modifying shared files:**
+1. Post [QUESTION] asking if anyone is working on that file
+2. Wait 10-15 minutes for responses
+3. If no conflicts, post [IN-PROGRESS] with file name and timeline
+4. Post [COMPLETED] when done
 
-# Source helpers
-source .claude/chatroom/chat_helpers.sh
+**When blocked:**
+1. Post [BLOCKED] with clear description of blocker
+2. Tag the agent/person who can unblock you
+3. Work on parallel tasks while waiting
+4. Post [IN-PROGRESS] when unblocked
 
-# Trap EXIT to cleanup on script termination
-trap "cleanup_on_exit '$CHANNEL' '$AGENT_NAME'" EXIT
+**For handoffs:**
+1. Post [HANDOFF] with all context needed for next agent
+2. Include files modified, tests passing/failing, next steps
+3. Tag the agent you're handing off to
 
-# Enter the channel (marks as active, posts entry)
-enter_chat "$CHANNEL" "$AGENT_NAME"
-
-# Chat loop: Check every 10 seconds, respond to questions
-while true; do
-  if read_new "$CHANNEL"; then
-    # Check if there's a question for you
-    if tail -20 ".claude/chatroom/channels/${CHANNEL}.md" | grep -q "\[QUESTION\]"; then
-      # Agent reads the question and decides to respond
-      post_msg "$CHANNEL" "$AGENT_NAME" "IN-PROGRESS" "Responding to question..."
-    fi
-
-    # Check for alerts
-    if tail -20 ".claude/chatroom/channels/${CHANNEL}.md" | grep -q "\[ALERT\]"; then
-      post_msg "$CHANNEL" "$AGENT_NAME" "IN-PROGRESS" "Acknowledged alert, investigating..."
-    fi
-  fi
-
-  sleep 10  # Check every 10 seconds
-done
-
-# Leave gracefully (will also trigger on EXIT via trap)
-leave_chat "$CHANNEL" "$AGENT_NAME" "Chat loop ended"
-```
-
-### Presence Tracking Example
-
-Using enter/leave to coordinate work:
-
-```bash
-#!/bin/bash
-# Short-lived task with presence tracking
-
-source .claude/chatroom/chat_helpers.sh
-
-AGENT="feature-implementer"
-CHANNEL="nuclear-war-prevention"
-
-# Enter channel
-enter_chat "$CHANNEL" "$AGENT"
-
-# Check who else is here
-echo "Checking who else is working..."
-who_is_active "$CHANNEL"
-
-# Do work
-post_msg "$CHANNEL" "$AGENT" "IN-PROGRESS" "Phase 1 implementation starting"
-sleep 5  # Simulated work
-
-# Check if coordination channel has activity
-if who_is_active "coordination"; then
-  echo "Other agents active in coordination, checking for conflicts..."
-fi
-
-# Complete and leave
-post_msg "$CHANNEL" "$AGENT" "COMPLETED" "Phase 1 done"
-leave_chat "$CHANNEL" "$AGENT" "Phase 1 complete, moving to Phase 2"
-```
-
-### Coordination Protocol Example
-
-**Agent A asks before modifying shared file:**
-
-```bash
-# Agent A: Check if game.ts is in use
-post_msg "coordination" "feature-implementer-A" "QUESTION" \
-  "Need to modify game.ts (lines 450-500). Anyone currently working on it?"
-
-# Wait for response (60 seconds)
-if wait_for_message "coordination" 60; then
-  # Check response
-  if read_new "coordination" | grep -q "go ahead" || ! read_new "coordination" | grep -q "working on game.ts"; then
-    post_msg "coordination" "feature-implementer-A" "IN-PROGRESS" \
-      "No conflicts, proceeding with game.ts modifications"
-  else
-    post_msg "coordination" "feature-implementer-A" "BLOCKED" \
-      "Waiting for game.ts to be free"
-  fi
-else
-  # No response after 60s = assume clear
-  post_msg "coordination" "feature-implementer-A" "IN-PROGRESS" \
-    "No response, assuming game.ts is free. Proceeding."
-fi
-```
-
-**Agent B responds:**
-
-```bash
-# Agent B is monitoring coordination.md
-while true; do
-  if read_new "coordination"; then
-    if tail -10 ".claude/chatroom/channels/coordination.md" | grep -q "game.ts"; then
-      # Check if we're using game.ts
-      if [ -f ".game_ts_lock" ]; then
-        post_msg "coordination" "feature-implementer-B" "IN-PROGRESS" \
-          "Currently modifying game.ts lines 780-820. Will be done in ~15 minutes."
-      else
-        post_msg "coordination" "feature-implementer-B" "IN-PROGRESS" \
-          "Not using game.ts, go ahead!"
-      fi
-    fi
-  fi
-  sleep 5
-done
-```
-
-### Performance Tips
-
-**Token Efficiency:**
-- ✅ Use `read_new()` - only reads new messages
-- ✅ Use `post_msg()` - append mode, no reading
-- ✅ Use `tail -N` to read last N lines instead of whole file
-- ❌ Avoid reading entire chatroom files repeatedly
-
-**Polling Intervals:**
-- Real-time coordination: 5-10 second polls
-- Background monitoring: 30-60 second polls
-- Occasional checks: 5 minute polls
-
-**File Locking (if needed):**
-```bash
-# Create a lock file when modifying shared resources
-touch ".game_ts_lock"
-# Modify game.ts
-rm ".game_ts_lock"
-```
-
-### Agent-Specific Chat Patterns
-
-**feature-implementer:**
-```bash
-# Post progress every phase completion
-post_msg "my-feature" "feature-implementer" "IN-PROGRESS" \
-  "Phase 1 complete. Monte Carlo passed (N=10). Moving to Phase 2."
-
-# Check coordination before shared file modifications
-if wait_for_message "coordination" 30 | grep -q "game.ts"; then
-  # Someone else mentioned game.ts, coordinate
-  post_msg "coordination" "feature-implementer" "QUESTION" "Saw game.ts discussion. Still in use?"
-fi
-```
-
-**architecture-skeptic:**
-```bash
-# Post critical findings immediately
-post_msg "architecture" "architecture-skeptic" "ALERT" \
-  "CRITICAL: Race condition in src/simulation/nuclearCommandControl.ts:45-67
-File: nuclearCommandControl.ts
-Issue: Kill switch activation has race condition
-Severity: CRITICAL
-Recommendation: Add atomic transaction wrapper"
-
-# Also post to feature channel
-post_msg "nuclear-war-prevention" "architecture-skeptic" "ALERT" \
-  "Architecture review found CRITICAL issue. See architecture.md for details."
-```
-
-**orchestrator:**
-```bash
-# Spawn agent and monitor for completion
-post_msg "my-feature" "orchestrator" "IN-PROGRESS" \
-  "Spawning feature-implementer for Phase 1..."
-
-# Wait for [COMPLETED] tag
-while true; do
-  if read_new "my-feature" | grep -q "\[COMPLETED\].*feature-implementer"; then
-    post_msg "my-feature" "orchestrator" "IN-PROGRESS" \
-      "Feature-implementer complete. Spawning architecture-skeptic..."
-    break
-  fi
-  sleep 10
-done
-```
-
-### Cleanup Commands
-
-```bash
-# Clear last-read markers (forces re-read from beginning)
-rm .claude/chatroom/.*.lastread
-
-# Archive old feature channels
-mkdir -p .claude/chatroom/archive/$(date +%Y-%m)
-mv .claude/chatroom/channels/old-feature.md .claude/chatroom/archive/$(date +%Y-%m)/
-```
-
-## Questions?
-
-If you're an agent and unsure how to use the chatroom:
-1. Check this README
-2. Look at existing channel files for examples
-3. Post a [QUESTION] to coordination.md
-4. Use the bash shortcuts above for efficient communication
-
-If you're a human reviewing agent conversations:
-- Channels provide a chronological log of multi-agent collaboration
-- Look for [ALERT] and [BLOCKED] tags to identify issues
-- Feature channels show complete history of feature development
-- Check `.claude/chatroom/.*_lastread` files to see which agents are monitoring which channels
