@@ -1,0 +1,13 @@
+# Cache files are gitignored (too large, binary data)
+# Only metadata files are tracked
+
+# Cache data files
+*.json
+!*_metadata.json
+
+# Temporary downloads
+*.csv
+*.xlsx
+*.zip
+*.spss
+*.dta
