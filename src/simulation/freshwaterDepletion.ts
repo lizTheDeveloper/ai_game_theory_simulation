@@ -229,28 +229,33 @@ export function updateFreshwaterSystem(state: GameState): void {
     console.log(`   Population stressed: ${(fw.populationStressed * 100).toFixed(0)}%`);
   }
   
-  // === EXTINCTION PATHWAY ===
-  // Slow collapse: Groundwater depleted + no alternatives = agricultural failure
-  if (fw.blueWater.groundwater < 0.15 && fw.waterStress > 0.70) {
-    const materialAbundance = state.qualityOfLifeSystems.materialAbundance;
-    
-    // Check if technology has provided alternatives
+  // === GRADUAL COLLAPSE (Oct 20, 2025 - Replaced instant extinction) ===
+  // Water stress now causes: trapped populations → excess mortality → gradual decline
+  // NOT instant extinction trigger - that's handled via refugee/trapped population systems
+  // This keeps the pressure on material abundance and food systems
+
+  // Severe depletion increases trapped populations and mortality (handled in trappedPopulations.ts)
+  // Agricultural impact on material abundance (unchanged)
+  if (fw.blueWater.groundwater < 0.20 && fw.waterStress > 0.70) {
+    // Agricultural productivity decline
     const hasAlternatives = (fw.desalinationDeployment + fw.recyclingDeployment + fw.atmosphericWaterDeployment) > 0.50;
-    
-    if (materialAbundance < 0.25 && !hasAlternatives) {
-      console.log(`☠️ FRESHWATER DEPLETION EXTINCTION: Agricultural collapse`);
-      console.log(`   Material Abundance: ${(materialAbundance * 100).toFixed(0)}%`);
-      console.log(`   Groundwater: ${(fw.blueWater.groundwater * 100).toFixed(0)}%`);
-      console.log(`   Water stress: ${(fw.waterStress * 100).toFixed(0)}%`);
-      console.log(`   Alternative water tech: ${((fw.desalinationDeployment + fw.recyclingDeployment) * 50).toFixed(0)}%`);
-      console.log(`   No water alternatives deployed - agriculture failed`);
-      
-      if (!state.extinctionState.extinctionTriggered) {
-        state.extinctionState.extinctionTriggered = true;
-        state.extinctionState.extinctionType = 'resource_depletion';
-        state.extinctionState.extinctionMechanism = 'freshwater_famine';
-        state.extinctionState.monthsUntilExtinction = 36; // 3 years of slow collapse
-        state.extinctionState.description = 'Groundwater reserves depleted. No alternative water sources. Agricultural collapse. Global famine over 36 months.';
+
+    if (!hasAlternatives) {
+      // Gradual agricultural decline (not instant collapse)
+      const agriculturalStress = (0.70 - fw.blueWater.groundwater) / 0.70; // 0 at 70%, 1.0 at 0%
+      const monthlyProductivityLoss = agriculturalStress * 0.01; // Up to 1%/month at total depletion
+
+      state.qualityOfLifeSystems.materialAbundance = Math.max(0,
+        state.qualityOfLifeSystems.materialAbundance - monthlyProductivityLoss
+      );
+
+      // Log severe stress (but not extinction trigger)
+      if (fw.blueWater.groundwater < 0.10 && state.currentMonth % 12 === 0) {
+        console.log(`💧 SEVERE FRESHWATER STRESS:`);
+        console.log(`   Groundwater: ${(fw.blueWater.groundwater * 100).toFixed(0)}%`);
+        console.log(`   Agricultural productivity declining: -${(monthlyProductivityLoss * 100).toFixed(1)}%/month`);
+        console.log(`   Material abundance: ${(state.qualityOfLifeSystems.materialAbundance * 100).toFixed(0)}%`);
+        console.log(`   ⚠️ Trapped populations experiencing excess mortality`);
       }
     }
   }

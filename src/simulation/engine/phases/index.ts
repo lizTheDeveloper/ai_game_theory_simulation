@@ -26,7 +26,10 @@ export { ParanoiaPhase } from './ParanoiaPhase';
 export { TrustRecoveryPhase } from './TrustRecoveryPhase';  // FIX #7 (Oct 18, 2025)
 export { WorkflowAdaptationPhase } from './WorkflowAdaptationPhase';  // FIX #4A (Oct 19, 2025)
 export { SocialStabilityPhase } from './SocialStabilityPhase';
+export { DemocracyDynamicsPhase } from './DemocracyDynamicsPhase';  // Phase 6A (Oct 20, 2025) - Western Liberal paradigm
+export { SocialCohesionUpdatePhase } from './SocialCohesionUpdatePhase';  // Phase 6B (Oct 20, 2025) - Indigenous paradigm
 export { QualityOfLifePhase } from './QualityOfLifePhase';
+export { EnvironmentalFeedbackPhase } from './EnvironmentalFeedbackPhase';  // Phase 6C (Oct 20, 2025) - Ecological paradigm
 export { MultiParadigmDUIUpdatePhase } from './MultiParadigmDUIUpdatePhase';  // Phase 6 (Oct 20, 2025)
 export { OutcomeProbabilitiesPhase } from './OutcomeProbabilitiesPhase';
 export { UpdateEconomicStagePhase } from './UpdateEconomicStagePhase';  // P2.4 Feature 3
@@ -62,6 +65,7 @@ export { OceanAcidificationPhase } from './OceanAcidificationPhase';
 export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
+export { GovernmentRelocationPhase } from './GovernmentRelocationPhase';  // Oct 20, 2025: Government-assisted relocation programs
 export { CountryPopulationPhase } from './CountryPopulationPhase';
 export { PsychologicalTraumaPhase } from './PsychologicalTraumaPhase';  // Phase 1B Refinement (Oct 17, 2025)
 export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
