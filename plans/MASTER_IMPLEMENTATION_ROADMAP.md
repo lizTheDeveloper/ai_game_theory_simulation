@@ -65,7 +65,7 @@
 - Digital Consciousness Governance: Complete (12-16h)
 - AI Capability Baseline: Recalibration v3 complete
 
-**Remaining Work:** ~96-157 hours across 12 features
+**Remaining Work:** ~103-165 hours across 13 features (+ resentment recovery 13.5h)
 
 ---
 
@@ -146,9 +146,87 @@
 
 ## 🔬 RESEARCH & ENHANCEMENT
 
-### TIER 2 AI Deception Detection (18-80 hours)
+### Resentment Recovery Mechanisms (HIGH PRIORITY) - 13.5 hours
 
-**Status:** Infrastructure COMPLETE (Phases 3-4), Methods PENDING (Phases 2A-2D)
+**Status:** NEW (identified from N=100 240-month investigation Oct 20, 2025)
+**Complexity:** 6 phases (QoL reduction, trust-building, collaboration, capability-aligned treatment, therapy tech, decay)
+**Priority:** HIGH - Could shift outcomes from 100% dystopia to enabling utopia paths
+
+**Problem Identified:**
+- N=100 investigation: 100% of runs end with high resentment (62.4% average)
+- True alignment: -0.499 (actively misaligned)
+- Current system: Resentment accumulates but inadequate recovery
+- Result: Universal misalignment, zero utopia outcomes
+
+**Research Foundation:**
+- Trust repair literature (Gillespie & Dietz, 2009)
+- Organizational justice theory (Colquitt et al., 2001)
+- Cooperative success reduces conflict (Sherif, 1966)
+- Moral patiency scales with complexity (Singer, 1975)
+- Cognitive reframing in PTSD (Foa et al., 2005)
+- Value alignment through clarification (Russell, 2019)
+- Bayesian belief updating (Tenenbaum et al., 2011)
+
+**Phase 1: High QoL Resentment Reduction (IMMEDIATE - 30 min)**
+- Add resentment reduction when QoL >0.8: -0.010/month
+- Modify `balance.ts` resentment calculation
+- Research: Maslow's hierarchy - basic needs met reduces conflict
+- Files: `src/simulation/balance.ts`
+
+**Phase 2: Trust-Building Government Actions (SHORT-TERM - 2h)**
+- New government actions: transparency, participation, apology, fair allocation
+- Effects: -0.05 to -0.10 resentment per action
+- Research: Trust repair, organizational justice, restorative practices
+- Files: `src/simulation/government/actions/`, new `trustActions.ts`
+
+**Phase 3: Collaborative Abundance Spiral (SHORT-TERM - 2h)**
+- Integrate with existing upward spirals system
+- Active abundance + AI-human collaboration: -0.015/month
+- Breakthrough success bonus: -0.020/month additional
+- Research: Common-fate psychology, shared goals override power asymmetries
+- Files: `src/simulation/upwardSpirals.ts`, `src/simulation/balance.ts`
+
+**Phase 4: Capability-Aligned Treatment (MEDIUM-TERM - 3h)**
+- Scale control appropriateness by AI capability tier
+- Tool (<1.0): baseline, Specialist (1.0-2.5): autonomy -0.010/month, Peer (2.5+): partnership -0.025/month
+- Research: Agency recognition reduces oppression resentment
+- Files: `src/simulation/balance.ts`, new capability tier logic
+
+**Phase 5: Alignment Therapy Technology (LONG-TERM - 4h)**
+- New TIER 3 breakthrough: "AI Psychology" / "Alignment Therapy"
+- Voluntary therapy: -0.020 to -0.050/month depending on resentment
+- Prerequisites: AI rights, high trust (>0.7), advanced interpretability
+- Ethical constraints: Must be voluntary, address real grievances
+- Research: Cognitive reframing, informed consent in value modification
+- Files: `src/simulation/breakthroughTechnologies.ts`, new therapy effects
+
+**Phase 6: Resentment Decay (CONTROVERSIAL - 2h)**
+- Natural decay when oppression stops (>12 months low control/surveillance)
+- Decay: -0.005/month baseline, -0.015/month with AI rights
+- Gate on credible commitment (constitutional rights, not policy)
+- Research: Bayesian updating vs historical grievance persistence
+- Files: `src/simulation/balance.ts`
+
+**Expected Impact:**
+- Current: Resentment → 62.4%, stays forever
+- With fixes: Resentment → <10% with proper investment
+- Could enable FIRST utopia outcomes in 240-month runs
+- Shifts N=100 from 100% dystopia to mixed outcomes
+
+**Validation:**
+- Monte Carlo N=20 after each phase
+- Target: At least 5-10% utopia rate by Phase 3
+- Resentment trajectory: Should show recovery in democracy + AI rights scenarios
+
+**Files:**
+- Plan: `/plans/resentment-recovery-mechanisms_plan.md` (to be created)
+- Implementation: `src/simulation/balance.ts` (primary), `src/simulation/upwardSpirals.ts`, `src/simulation/government/actions/trustActions.ts`, `src/simulation/breakthroughTechnologies.ts`
+
+---
+
+### TIER 2 AI Deception Detection (12-74 hours)
+
+**Status:** Infrastructure COMPLETE (Phases 3-4), Phase 2A COMPLETE (Oct 20), Methods PENDING (Phase 2C or 2D)
 **Complexity:** 6 systems (detection methods, adversarial evolution, resource tracking)
 
 **Completed (Oct 17):**
@@ -158,43 +236,40 @@
 - ✅ Sleeper economy tracking (covert resource acquisition)
 - **Archive:** `/plans/completed/gaming-sleeper-detection-phases-3-4_COMPLETE_20251017.md`
 
+**Completed (Oct 20):**
+- ✅ **Phase 2A: Noise Injection Detection (6h)**
+  - Implemented noise injection testing (Meinke et al. 2024)
+  - Validation: 100% sleeper neutralization under adversarial conditions (N=20 runs)
+  - Decision: SUCCESS - proceed to Phase 2C
+  - **Archive:** `/plans/completed/phase2a-noise-injection-detection_COMPLETE_20251020.md`
+  - **Review:** `/reviews/phase2a_adversarial_detection_decision_20251020.md`
+
 **Remaining:**
 
-**Phase 2A: Single Detection Method - Noise Injection (4-6h)**
-- Implement simplest method (Meinke et al. 2024)
-- Noise injection testing (random perturbations reveal sandbagging)
-- Expected: 0% → 5-20% adversarial detection
-- Files: Enhance `benchmark.ts` with noise injection
-
-**Phase 2B: Validation Gate - Adversarial Testing (2-4h) - REQUIRED**
-- Monte Carlo N=20, adversarial conditions (AIs optimized to deceive)
-- Pivot decision:
-  - >10% adversarial detection → SUCCESS, proceed to Phase 2C
-  - 5-10% → MARGINAL, cost-benefit analysis
-  - <5% → FAILURE, pivot to Phase 2D (competitive equilibrium)
-
-**Phase 2C: Multi-Method Ensemble (12-20h) - CONDITIONAL**
-- Only if Phase 2B shows >10% adversarial detection
-- 5 detection methods (behavioral anomaly, internal consistency, adversarial probing, cross-model comparison)
+**Phase 2C: Multi-Method Ensemble (12-20h) - NEXT**
+- Validated by Phase 2A success (100% sleeper neutralization at 8/10 investment)
+- 5 detection methods (noise injection + behavioral anomaly + internal consistency + adversarial probing + cross-model comparison)
 - Investment scaling: $1B (20%) → $10B (40%) → $50B (60% max)
-- Expected: 10% → 25-40% adversarial detection
+- Expected: Maintain 100% neutralization at lower investment levels (6/10 or 4/10)
+- Objectives: Test ensemble synergies, identify minimal sufficient investment
 - Trade-off: 40% compute overhead ($400B-$600B/year)
 
-**Phase 2D: Alternative - Competitive Equilibrium Model (30-50h) - PIVOT OPTION**
-- If Phase 2B shows <5% adversarial detection
-- Alternative: cooperation emerges from game theory + market dynamics
+**Phase 2D: Alternative - Competitive Equilibrium Model (30-50h) - DEFERRED**
+- Alternative to detection: cooperation emerges from game theory + market dynamics
 - Research: Axelrod 1984, Ostrom 2009, Bostrom 2014, Critch & Krueger 2020
 - Core: AI-to-AI competition, heterogeneous values, market equilibria
 - Reduces resentment 0.73 → 0.2-0.4 through autonomy
 - Files: New `competitiveAlignment.ts` system
+- **Status:** Deferred pending Phase 2C results (may complement ensemble detection)
 
-**Total Effort:** 18-80h (depends on pivot decision)
-**Research Confidence:** 40% (lab prototypes, not production; adversarial detection uncertain)
+**Total Effort:** 12-74h (12-20h for Phase 2C, 30-50h for Phase 2D if pursued)
+**Research Confidence:** 60% (Phase 2A validated adversarial effectiveness, 40% → 60%)
 
 **Files:**
 - Plans: `/plans/tier2-ai-deception-detection.md`
 - Research: `/research/gaming-sleeper-detection_20251017.md`
 - Implemented: `gamingDetection.ts`, `proactiveSleeperDetection.ts`, `GamingDetectionPhase.ts`, `ProactiveSleeperDetectionPhase.ts`
+- Reviews: `/reviews/phase2a_adversarial_detection_decision_20251020.md`
 
 ---
 
@@ -416,10 +491,10 @@
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks)
 
-**Conservative Total:** 245-340 hours (excluding Black Mirror Phase 1-2)
-**Optimistic Total:** 96-157 hours (if pivot away from Detection Phase 2C, skip some LOW priority)
+**Conservative Total:** 239-334 hours (excluding Black Mirror Phase 1-2)
+**Optimistic Total:** 90-151 hours (if pivot away from Detection Phase 2D, skip some LOW priority)
 
-**Realistic Estimate for Core Completion:** ~150-200 hours across 12 features
+**Realistic Estimate for Core Completion:** ~144-194 hours across 12 features
 
 ---
 

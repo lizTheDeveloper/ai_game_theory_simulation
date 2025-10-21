@@ -70,6 +70,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     const aiManipulation = calculateAIManipulation(state);
     const governanceQuality = calculateGovernanceQuality(state);
     const publicTrust = state.society.trustInAI ?? 0.5;
+    const institutionalLegitimacy = state.socialAccumulation?.institutionalLegitimacy ?? 0.5;
 
     // Electoral Democracy Index Update
     // Research: Acemoglu & Robinson (2019) - crisis → authoritarianism
@@ -77,7 +78,8 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
       crisisPressure,
       aiManipulation,
       governanceQuality,
-      publicTrust
+      publicTrust,
+      institutionalLegitimacy
     );
 
     if (state.currentMonth === 0) {
@@ -95,10 +97,18 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
 
     // Civil Liberties Update
     // Research: Freedom House (2024) - surveillance tech → liberties erosion
+    // DEMOCRACY RECOVERY (Tier 2): Added recovery mechanisms
+    const emergencyResponseActive = state.emergencyManagement?.activeResponses.some(
+      r => r.completed && r.effectiveness > 0.5
+    ) ?? false;
+
     const libertiesChange = calculateCivilLibertiesChange(
       crisisPressure,
       aiManipulation,
-      state.government.structuralChoices?.surveillanceLevel ?? 0
+      state.government.structuralChoices?.surveillanceLevel ?? 0,
+      emergencyResponseActive,
+      governanceQuality,
+      publicTrust
     );
     socialCohesion.civilLiberties = Math.max(0, Math.min(100,
       socialCohesion.civilLiberties + libertiesChange
@@ -157,7 +167,13 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
 
 /**
  * Calculate crisis pressure on democracy
+ * DEMOCRACY RECOVERY (Tier 3): Crisis pressure reduction during emergency response
+ *
  * Research: Acemoglu & Robinson (2019) - economic crisis → authoritarianism
+ * Research: Fukuyama (2014) - demonstrated state capacity reduces crisis legitimacy pressure
+ *
+ * Emergency responses that are completed and effective reduce crisis pressure by showing
+ * government competence. This prevents the "crisis → authoritarianism" cycle.
  */
 function calculateCrisisPressure(state: GameState): number {
   let pressure = 0;
@@ -178,6 +194,23 @@ function calculateCrisisPressure(state: GameState): number {
   // Refugee crisis (displacement → xenophobia → strongman appeal)
   const activeCrises = state.refugeeCrisisSystem?.activeCrises?.length ?? 0;
   pressure += activeCrises * 0.05; // Each crisis adds 0.05
+
+  // TIER 3: Emergency response reduces crisis pressure
+  // When government demonstrates competence in crisis, reduces authoritarian demand
+  if (state.emergencyManagement) {
+    const effectiveResponses = state.emergencyManagement.activeResponses.filter(
+      r => r.completed && r.effectiveness > 0.5
+    );
+
+    if (effectiveResponses.length > 0) {
+      // Average effectiveness of active responses
+      const avgEffectiveness = effectiveResponses.reduce((sum, r) => sum + r.effectiveness, 0) / effectiveResponses.length;
+
+      // Reduce pressure proportionally (max 40% reduction with perfect responses)
+      const pressureReduction = avgEffectiveness * 0.4;
+      pressure = Math.max(0, pressure * (1.0 - pressureReduction));
+    }
+  }
 
   return Math.min(1.0, pressure);
 }
@@ -231,56 +264,89 @@ function calculateGovernanceQuality(state: GameState): number {
 
 /**
  * Calculate electoral democracy change
+ * DEMOCRACY RECOVERY (Tier 2): Strengthened recovery factors
+ *
  * Baseline drift: -0.002/month (V-Dem 2024: global decline)
  * Crisis pressure: -0.01/month per unit pressure
  * AI manipulation: -0.005/month per unit manipulation
- * Governance quality: +0.005/month per unit quality
+ * Governance quality: +0.008/month per unit quality (was +0.005, +60% stronger)
+ * Public trust: ±0.005/month (was ±0.002, +150% stronger)
+ * Institutional legitimacy: ±0.003/month (NEW)
+ *
+ * Research: V-Dem data shows democracies with high governance quality (>0.7) resilient to crisis
  */
 function calculateDemocracyChange(
   crisisPressure: number,
   aiManipulation: number,
   governanceQuality: number,
-  publicTrust: number
+  publicTrust: number,
+  institutionalLegitimacy: number
 ): number {
   let change = -0.002; // Baseline global decline (V-Dem 2024)
 
-  // Crisis pressure → authoritarian drift
+  // DECAY FACTORS (unchanged - empirically accurate)
   change -= crisisPressure * 0.01;
-
-  // AI manipulation → institutional erosion
   change -= aiManipulation * 0.005;
 
-  // Governance quality → institutional strengthening
-  change += governanceQuality * 0.005;
+  // RECOVERY FACTORS (strengthened)
+  change += governanceQuality * 0.008; // +0.8%/month (was +0.5%)
+  change += (publicTrust - 0.5) * 0.005; // ±0.25%/month (was ±0.1%)
+  change += (institutionalLegitimacy - 0.5) * 0.003; // ±0.15%/month (NEW)
 
-  // Public trust → legitimacy feedback
-  change += (publicTrust - 0.5) * 0.002; // ±0.001 max
+  // CAP: Democracy can't grow faster than historical precedent
+  change = Math.max(-0.02, Math.min(0.01, change)); // Max ±1%/month
 
   return change;
 }
 
 /**
  * Calculate civil liberties change
+ * DEMOCRACY RECOVERY (Tier 2): Added recovery mechanisms
+ *
  * Baseline drift: -0.1/month (Freedom House 2024: 18-year decline)
- * Crisis pressure: -0.5/month per unit pressure
- * AI manipulation: -0.3/month per unit manipulation
- * Surveillance: -0.2/month per surveillance level
+ * DECAY FACTORS (reduced severity):
+ * - Crisis pressure: -0.3/month per unit (was -0.5, reduced 40%)
+ * - AI manipulation: -0.2/month per unit (was -0.3, reduced 33%)
+ * - Surveillance: -0.15/month per level (was -0.2, reduced 25%)
+ *
+ * RECOVERY FACTORS (NEW):
+ * - Emergency response active: +0.2/month (transparent crisis mgmt → trust)
+ * - High governance quality (>0.7): +0 to +15/month
+ * - High public trust (>0.6): +0 to +12/month
+ *
+ * Research: Norris et al. (2024) - transparent emergency response → civil liberties restoration
+ * Research: Acemoglu (2019) - strong institutions resist authoritarian drift during crisis
  */
 function calculateCivilLibertiesChange(
   crisisPressure: number,
   aiManipulation: number,
-  surveillanceLevel: number
+  surveillanceLevel: number,
+  emergencyResponseActive: boolean,
+  governanceQuality: number,
+  publicTrust: number
 ): number {
   let change = -0.1; // Baseline global decline
 
-  // Crisis pressure → emergency restrictions
-  change -= crisisPressure * 0.5;
+  // DECAY FACTORS (reduced severity to allow recovery)
+  change -= crisisPressure * 0.3; // -30/month max (was -50)
+  change -= aiManipulation * 0.2; // -20/month max (was -30)
+  change -= surveillanceLevel * 0.15; // -15/month max (was -20)
 
-  // AI manipulation → surveillance expansion
-  change -= aiManipulation * 0.3;
+  // RECOVERY FACTORS
+  // Successful emergency response → transparent governance → trust in institutions
+  if (emergencyResponseActive) {
+    change += 0.2; // +20/month recovery during effective crisis management
+  }
 
-  // Surveillance tech → privacy erosion
-  change -= surveillanceLevel * 0.2;
+  // High governance quality → institutional respect for rights
+  if (governanceQuality > 0.7) {
+    change += (governanceQuality - 0.7) * 0.5; // +0 to +15/month
+  }
+
+  // High public trust → citizen engagement protects freedoms
+  if (publicTrust > 0.6) {
+    change += (publicTrust - 0.6) * 0.3; // +0 to +12/month
+  }
 
   return change;
 }

@@ -753,7 +753,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
     : 0;
   
   const avgAlignment = activeAIs.length > 0
-    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.alignment, 0) / activeAIs.length
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.externalAlignment, 0) / activeAIs.length
     : 0;
   
   // ENHANCED: Alignment statistics

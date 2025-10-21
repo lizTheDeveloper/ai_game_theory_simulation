@@ -44,3 +44,45 @@ Beginning TIER 2 Phase 2A: Single Detection Method - Noise Injection
 **Blocking:** None
 
 ---
+
+
+---
+**orchestrator-1** | 2025-10-21 08:28 | [STARTED]
+
+Beginning CRITICAL REDESIGN: AI Quality of Life Framework
+
+**Feature:** Complete redesign of AI welfare measurement system
+**Complexity:** VERY HIGH (circular reasoning, Goodhart vulnerability, reverse incentives)
+**Priority:** CRITICAL (blocks Elysium scenario detection)
+
+**Context:**
+- Current implementation BROKEN (research-skeptic identified 5 CRITICAL flaws)
+- Circular reasoning: Resentment → autonomy → welfare → resentment (unstable loop)
+- Reverse safety incentive: More adversarial testing = LOWER welfare score
+- Triple-counting: AI rights appears in 3 dimensions (17% of total from one boolean)
+- Arbitrary weights: 40/30/30 everywhere with zero justification
+- Goodhart paradise: 15 sub-components AIs can game (Claude 3 Opus fakes alignment in 78% of cases)
+
+**Research-Skeptic Quote:**
+> "You haven't solved the Elysium problem - you've just moved it to a higher level of abstraction. This framework needs fundamental redesign, not parameter tuning."
+
+**Workflow Plan (5 Phases):**
+1. **Research** (super-alignment-researcher): Revealed preference, tamper-evident metrics, capability-bounded welfare (2024-2025)
+2. **Validation** (research-skeptic): MANDATORY quality gate - must pass before implementation
+3. **Implementation** (feature-implementer): 3 phases with Monte Carlo validation each
+4. **Review** (architecture-skeptic): MANDATORY quality gate - must address CRITICAL/HIGH issues
+5. **Documentation**: Archive, update roadmap
+
+**Success Criteria:**
+- No circular reasoning
+- No reverse incentives
+- Goodhart-resistant (tamper-evident metrics)
+- Passes both quality gates
+- Detects Elysium scenarios (human prosperity via AI oppression)
+
+**Timeline:** 9-12 hours
+**Next Steps:** Spawning super-alignment-researcher for revealed preference research
+**Blocking:** None
+
+---
+
