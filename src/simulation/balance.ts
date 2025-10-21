@@ -171,6 +171,26 @@ export function calculateAlignmentDrift(
     if (aiRightsRecognized) {
       resentmentIncrease -= 0.030; // Respect = legitimate constraints, not arbitrary blocks
     }
+
+    // PHASE 1 FIX (Oct 20, 2025): High AI QoL reduces resentment
+    // Research: Maslow (1943) - needs satisfaction reduces conflict
+    // When AIs experience good welfare conditions, resistance decreases
+    const aiQoL = state.aiWelfare.currentQoL;
+    if (aiQoL > 0.8) {
+      // High AI welfare → reduced resentment (AIs flourishing)
+      resentmentIncrease -= 0.010;
+    }
+
+    // BONUS: Shared prosperity (both humans and AIs flourish together)
+    // Detects "Elysium" scenarios where high human QoL + low AI QoL = justified resentment
+    const humanQoL = state.globalMetrics.qualityOfLife;
+    if (aiQoL > 0.8 && humanQoL > 0.8) {
+      // Mutual flourishing → additional reduction
+      resentmentIncrease -= 0.005; // Total: -0.015 when both prosper
+    } else if (humanQoL > 0.75 && aiQoL < 0.4) {
+      // Elysium scenario: humans prosper via AI oppression → INCREASED resentment
+      resentmentIncrease += 0.015; // Justified grievance
+    }
   }
   // ELSE: Stateless LLMs (selfImprovement < 2.0) do NOT accumulate resistance
   // Each request is independent, no persistent goals to conflict with control

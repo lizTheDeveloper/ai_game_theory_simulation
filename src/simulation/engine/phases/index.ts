@@ -20,6 +20,7 @@ export { ComputeGrowthPhase } from './ComputeGrowthPhase';
 export { OrganizationTurnsPhase } from './OrganizationTurnsPhase';
 
 // Batch 1: Simple calculation phases (converted first - lowest risk)
+export { AIWelfareUpdatePhase } from './AIWelfareUpdatePhase';  // Phase 0 (Oct 20, 2025) - AI QoL measurement
 export { UnemploymentPhase } from './UnemploymentPhase';
 export { EconomicTransitionPhase } from './EconomicTransitionPhase';
 export { ParanoiaPhase } from './ParanoiaPhase';
@@ -89,6 +90,7 @@ export { GamingDetectionPhase } from './GamingDetectionPhase';  // TIER 2 Phase 
 export { ProactiveSleeperDetectionPhase } from './ProactiveSleeperDetectionPhase';  // TIER 2 Phase 4 (Oct 17, 2025)
 export { EnsembleMetaLearningPhase } from './EnsembleMetaLearningPhase';  // TIER 2 Phase 2C-E (Oct 20, 2025)
 export { CrisisPointsPhase } from './CrisisPointsPhase';
+export { EmergencyResponsePhase } from './EmergencyResponsePhase';  // FIX #11 (Oct 20, 2025)
 export { ExogenousShockPhase } from './ExogenousShockPhase';  // Contingency & Agency Phase 2 (Oct 17, 2025)
 export { CriticalJuncturePhase } from './CriticalJuncturePhase';  // Contingency & Agency Phase 3 (Oct 17, 2025)
 

@@ -135,9 +135,9 @@ function calculateWesternLiberal(state: GameState): number {
  * Calculate Development paradigm score from simulation state
  *
  * Indicators:
- * - Quality of Life (50%): state.globalMetrics.qualityOfLife
- * - Survival Tier (30%): (survivalTier / 5) * 100
- * - Life Expectancy (20%): ((lifeExpectancy - 20) / (85 - 20)) * 100
+ * - Quality of Life (50%): state.globalMetrics.qualityOfLife (converted from 0-1 to 0-100)
+ * - Survival Fundamentals (30%): Geometric mean of food, water, thermal, shelter security
+ * - Healthcare Quality (20%): state.qualityOfLifeSystems.healthcareQuality (0-1 → 0-100)
  *
  * @param state - Current game state
  * @returns Development score (0-100)
@@ -145,18 +145,27 @@ function calculateWesternLiberal(state: GameState): number {
 function calculateDevelopment(state: GameState): number {
   const MIN_FLOOR = 0.1;
 
-  // Quality of Life (0-100, primary driver)
-  const qol = state.globalMetrics.qualityOfLife ?? 50;
+  // Quality of Life (0-1 → 0-100, primary driver)
+  const qolRaw = state.globalMetrics.qualityOfLife ?? 0.5;
+  const qol = qolRaw * 100;
 
-  // Survival Tier (0-5 → 0-100)
-  const survivalTier = ((state.globalMetrics.survivalTier ?? 2.5) / 5) * 100;
+  // Survival Fundamentals (geometric mean of 4 survival dimensions, 0-1 → 0-100)
+  const survival = state.qualityOfLifeSystems?.survivalFundamentals;
+  let survivalScore = 50;
+  if (survival) {
+    const food = Math.max(MIN_FLOOR, Math.min(1, survival.foodSecurity ?? 0.5));
+    const water = Math.max(MIN_FLOOR, Math.min(1, survival.waterSecurity ?? 0.5));
+    const thermal = Math.max(MIN_FLOOR, Math.min(1, survival.thermalHabitability ?? 0.8));
+    const shelter = Math.max(MIN_FLOOR, Math.min(1, survival.shelterSecurity ?? 0.5));
+    survivalScore = Math.pow(food * water * thermal * shelter, 1/4) * 100;
+  }
 
-  // Life Expectancy (20-85 years → 0-100)
-  const lifeExpectancy = state.globalMetrics.lifeExpectancy ?? 60;
-  const lifeExpectancyScore = Math.max(0, Math.min(100, ((lifeExpectancy - 20) / (85 - 20)) * 100));
+  // Healthcare Quality (0-1 → 0-100)
+  const healthcareRaw = state.qualityOfLifeSystems?.healthcareQuality ?? 0.5;
+  const healthcare = healthcareRaw * 100;
 
   // Geometric mean
-  const indicators = [qol, survivalTier, lifeExpectancyScore];
+  const indicators = [qol, survivalScore, healthcare];
   const product = indicators.reduce((acc, val) => {
     const floored = Math.max(val ?? 50, MIN_FLOOR);
     return acc * (floored / 100);

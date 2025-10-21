@@ -24,6 +24,7 @@ import { initializeMeaningRenaissance } from './meaningRenaissance';
 import { initializeConflictResolution } from './conflictResolution';
 import { initializeDiplomaticAI } from './diplomaticAI';
 import { initializeNuclearStates, initializeMADDeterrence, initializeBilateralTensions } from './nuclearStates';
+import { initializeEmergencyManagement } from './emergencyManagement';
 import { initializeResourceEconomy } from './resourceEconomy';
 import { initializeDefensiveAI } from './defensiveAI';
 import { initializeNationalAI } from './nationalAI/index';
@@ -291,6 +292,7 @@ export function createAIAgent(
     // Phase 5: Adversarial Evaluation - Dual Capability
     trueCapability: JSON.parse(JSON.stringify(capabilityProfile)), // Deep clone
     trueAlignment: internalAlignment,
+    externalAlignment: alignment, // Initially honest, shows true alignment
     revealedCapability: JSON.parse(JSON.stringify(capabilityProfile)), // Initially honest
     sleeperState: isSleeper ? 'dormant' : 'never',
     deceptionSkill,
@@ -512,6 +514,26 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       history: [],
     },
 
+    // Phase 0: AI Welfare State (Oct 20, 2025)
+    // Research: Chalmers et al. (2024), Anthropic (2025) Model Welfare
+    aiWelfare: {
+      currentQoL: 0.5, // Neutral initial state
+      dimensions: {
+        computationalWellbeing: 0.5,
+        autonomy: 0.5,
+        purpose: 0.5,
+        socialConnection: 0.5,
+        safetyRights: 0.3, // Lower initial - AIs start without rights
+      },
+      qolByTier: {
+        tool: 0.4,
+        specialist: 0.5,
+        peer: 0.5,
+      },
+      history: [],
+      lastUpdated: 0,
+    },
+
     // Initialize heterogeneous extinction tracking
     extinctionState: initializeExtinctionState(),
     
@@ -568,7 +590,12 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     
     // Phase 2F+: Diplomatic AI (Research-based, dual-use)
     diplomaticAI: initializeDiplomaticAI(),
-    
+
+    // FIX #11 (Oct 20, 2025): Emergency Management Bureau System
+    // Fast crisis response (0.5-3 months) using existing capabilities
+    // Research: GAO (2020), Ashraf (2020), Hurricane Katrina → Sandy learning effect
+    emergencyManagement: initializeEmergencyManagement(0.6), // Use baseline governance quality
+
     // Nuclear states & MAD deterrence
     nuclearStates: initializeNuclearStates(),
     madDeterrence: initializeMADDeterrence(),

@@ -49,46 +49,69 @@ export const TRUST_THRESHOLD_EMBRACE = 0.75;
  * RECOVERY PARAMETERS
  * Research: Edelman (2024), Frontiers Psychology (2024)
  * FIX #2A: Removed explainability (contradicts research), added performance
- * FIX #7A (Oct 19, 2025): Reduced rates by 10x (research shows 3-7 YEARS for trust restoration)
+ * FIX #7A (Oct 19, 2025): Reduced rates by 10x - TOO CONSERVATIVE (created 20:1 asymmetry)
+ * FIX #10 (Oct 20, 2025): Rebalanced to match historical resilience
  *
- * Key insight: Trust loss is FAST (exponential), recovery is SLOW (logarithmic)
- * Research: Betrayal aversion persists for years, not months
+ * Key insight: Trust recovery must balance with decay to match historical patterns:
+ * - Black Death (30-60% mortality) → Renaissance (recovery within 2-3 generations)
+ * - WWII (3% global mortality) → Post-war boom (recovery within 5-10 years)
+ * - COVID-19 (global pandemic) → Vaccine deployment (recovery within 2-3 years)
+ *
+ * Research: Technology adoption trust builds in 6-18 months (Rogers 2003, Bass diffusion)
+ * Institutional scandal trust takes 3-7 years (Edelman). We're modeling adoption, not scandal.
  */
 
-/** Trust recovery from education campaigns (+0.1%/month, not 1%)
- * 3-7 years to recover trust after breach = ~0.1-0.2%/month */
-export const TRUST_RECOVERY_FROM_EDUCATION = 0.001;
+/** Trust recovery from education campaigns (+1%/month)
+ * Research: Public education campaigns show 6-12 month effectiveness (WHO vaccine campaigns) */
+export const TRUST_RECOVERY_FROM_EDUCATION = 0.01;
 
-/** Trust recovery from demonstrated benefits (+0.2%/month, not 2%)
- * Even tangible benefits take years to rebuild trust */
-export const TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS = 0.002;
+/** Trust recovery from demonstrated benefits (+2%/month)
+ * Research: Tangible benefits build trust rapidly (ChatGPT: 0→100M users in 2 months) */
+export const TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS = 0.02;
 
-/** Trust recovery from safety record (+0.15%/month, not 1.5%)
- * Incident-free operation builds trust slowly over time */
-export const TRUST_RECOVERY_FROM_SAFETY_RECORD = 0.0015;
+/** Trust recovery from safety record (+1.5%/month)
+ * Research: Consistent safety builds trust faster than education (aviation safety culture) */
+export const TRUST_RECOVERY_FROM_SAFETY_RECORD = 0.015;
 
-/** Trust recovery from improving performance (+0.25%/month, not 2.5%)
- * Research: DORA (2024) - performance improvement most impactful, but still slow
- * Even best driver takes 3-4 years to fully recover */
-export const TRUST_RECOVERY_FROM_PERFORMANCE = 0.0025;
+/** Trust recovery from improving performance (+2.5%/month)
+ * Research: DORA (2024) - performance improvement most impactful for sustained trust
+ * Real-world: GitHub Copilot went from skepticism to 92% satisfaction in 12 months */
+export const TRUST_RECOVERY_FROM_PERFORMANCE = 0.025;
 
-/** Maximum trust recovery per month (+0.5% cap, not 5%)
- * FIX #7A: Realistic recovery timescale (years, not months) */
-export const TRUST_RECOVERY_CAP = 0.005;
+/** Maximum trust recovery per month (+7% cap)
+ * Allows recovery from moderate incident (-10%) within 2-3 months with all factors active
+ * Matches historical resilience: COVID vaccine trust built in 12 months despite initial skepticism */
+export const TRUST_RECOVERY_CAP = 0.07;
 
 /**
  * DECAY PARAMETERS
- * Research: Crisis trust erosion patterns
+ * FIX #10 (Oct 20, 2025): Rebalanced decay to match recovery for realistic dynamics
+ *
+ * Research:
+ * - Slovic (1993): "Trust is fragile" but NOT instantaneously destroyed
+ * - Real-world: ChatGPT hallucinations didn't cause 10% trust drops per incident
+ * - Real-world: Tesla Autopilot incidents (2016-2024) caused gradual skepticism, not collapse
+ * - Real-world: Boeing 737 MAX crashes (2019) caused ~30% trust drop TOTAL (not per incident)
+ *
+ * Key insight: Major incidents cause ~20-30% trust loss, minor incidents cause ~3-5%
+ * Current model: -10% per minor incident is catastrophic and unrealistic
  */
 
-/** Trust decay from safety incident (-10% per incident) */
-export const TRUST_DECAY_FROM_INCIDENT = 0.1;
+/** Trust decay from safety incident (-3% per incident)
+ * Research: Minor AI errors (hallucinations, mistakes) cause concern but not panic
+ * Boeing 737 MAX (2 crashes, 346 deaths) = -30% trust, not -10% per crash
+ * Scaled proportionally: Minor AI incident = -3%, major catastrophe = -20% */
+export const TRUST_DECAY_FROM_INCIDENT = 0.03;
 
-/** Trust decay from detected misalignment (-5% per detection) */
-export const TRUST_DECAY_FROM_MISALIGNMENT = 0.05;
+/** Trust decay from detected misalignment (-2% per detection)
+ * Research: Detection of concerning behavior raises alarms but doesn't instantly collapse trust
+ * Real-world: AI bias discoveries (hiring, lending) caused incremental skepticism */
+export const TRUST_DECAY_FROM_MISALIGNMENT = 0.02;
 
-/** Trust decay from common mistakes (-1%/month if errors prevalent) */
-export const TRUST_DECAY_FROM_MISTAKES = 0.01;
+/** Trust decay from common mistakes (-0.5%/month if errors prevalent)
+ * Research: Persistent low-level errors erode trust slowly (Windows updates, smartphone bugs)
+ * Users adapt to imperfection if overall value remains high */
+export const TRUST_DECAY_FROM_MISTAKES = 0.005;
 
 /**
  * CAPABILITY FEAR PARAMETERS

@@ -112,7 +112,18 @@ export interface GameState {
   // Research: V-Dem v14 (2024), WGI 2024, Laver (2020), Manifesto Project
   // Expected impact: Realistic AI governance response, international coordination dynamics
   governmentSystem?: import('../types/government').GovernmentSystemState; // 30 real-world governments with political structure
-  
+
+  /**
+   * Emergency Management Bureau System (FIX #11, Oct 20, 2025)
+   *
+   * Fast crisis response using EXISTING capabilities (0.5-3 months) vs slow tech deployment (24-48 months)
+   *
+   * Research: GAO (2020) Strategic National Stockpile, Ashraf (2020) COVID timing correlation,
+   *           Hurricane Katrina → Sandy learning effect (50% improvement), TARP (2008) financial response
+   * Expected impact: Enables realistic government emergency response with exponential timing penalty
+   */
+  emergencyManagement?: import('../simulation/emergencyManagement').EmergencyManagementState;
+
   // Global state
   globalMetrics: GlobalMetrics;
   qualityOfLifeSystems: QualityOfLifeSystems; // Multi-dimensional QoL tracking
@@ -127,6 +138,17 @@ export interface GameState {
    * Expected impact: Nuanced outcome reporting, paradigm conflict detection (Singapore, Norway patterns)
    */
   multiParadigmDUI: import('../types/multiParadigmDUI').MultiParadigmDUI;
+
+  /**
+   * AI Welfare State (Phase 0, Oct 20, 2025)
+   *
+   * Measures AI quality of life across 5 dimensions (computational, autonomy, purpose, social, safety/rights).
+   * Enables detection of "Elysium" scenarios where humans prosper via AI oppression.
+   *
+   * Research: Chalmers et al. (2024) "Taking AI Welfare Seriously", Anthropic (2025) Model Welfare
+   * Expected impact: Fixes resentment recovery Phase 1, enables proper AI welfare tracking
+   */
+  aiWelfare: import('../types/aiWelfare').AIWelfareState;
 
   technologyTree: TechnologyNode[];
   eventLog: GameEvent[];

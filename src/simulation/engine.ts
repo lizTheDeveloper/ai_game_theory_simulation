@@ -28,6 +28,7 @@ import { updateBreakthroughTechnologies, checkCrisisResolution } from './breakth
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
+import { classifyOutcome as classifyMultiParadigmOutcome } from '@/data/aggregators/outcomeClassifier';
 import { EventAggregator } from './eventAggregator';
 import { checkExtinctionTriggers, progressExtinction } from './extinctions';
 import {
@@ -40,6 +41,7 @@ import {
 import { PhaseOrchestrator } from './engine/PhaseOrchestrator';
 import {
   // Batch 1: Simple calculations (30.x)
+  AIWelfareUpdatePhase,  // Phase 0 (Oct 20, 2025): AI QoL measurement
   UnemploymentPhase,
   EconomicTransitionPhase,
   ParanoiaPhase,
@@ -106,6 +108,7 @@ import {
   ProactiveSleeperDetectionPhase,  // TIER 2 Phase 4 (Oct 17, 2025)
   EnsembleMetaLearningPhase,  // TIER 2 Phase 2C-E (Oct 20, 2025)
   CrisisPointsPhase,
+  EmergencyResponsePhase,
   ExogenousShockPhase,  // Contingency & Agency Phase 2 (Oct 17, 2025)
   CriticalJuncturePhase,  // Contingency & Agency Phase 3 (Oct 17, 2025)
   // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
@@ -419,6 +422,7 @@ export class SimulationEngine {
 
     // Register all phase implementations
     // Batch 1: Simple calculations (30.x)
+    this.orchestrator.registerPhase(new AIWelfareUpdatePhase());  // Phase 0 (Oct 20, 2025): AI QoL measurement (order 2.5)
     this.orchestrator.registerPhase(new UnemploymentPhase());
     this.orchestrator.registerPhase(new EconomicTransitionPhase());
     this.orchestrator.registerPhase(new ParanoiaPhase());
@@ -487,6 +491,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new ProactiveSleeperDetectionPhase());  // TIER 2 Phase 4 (Oct 17, 2025)
     this.orchestrator.registerPhase(EnsembleMetaLearningPhase);  // TIER 2 Phase 2C-E (Oct 20, 2025) - const object, not class
     this.orchestrator.registerPhase(new CrisisPointsPhase());
+    this.orchestrator.registerPhase(new EmergencyResponsePhase());  // FIX #11 (Oct 20, 2025) - Fast crisis response
     this.orchestrator.registerPhase(new ExogenousShockPhase());  // Contingency & Agency Phase 2 (Oct 17, 2025)
     this.orchestrator.registerPhase(new CriticalJuncturePhase());  // Contingency & Agency Phase 3 (Oct 17, 2025)
 
@@ -818,61 +823,97 @@ export class SimulationEngine {
     } 
     // Otherwise, determine outcome based on ACTUAL STATE, not just probabilities
     else {
-      console.log(`   📊 Final probabilities: Utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, Dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, Extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%`);
       console.log(`   👥 Final population: ${finalPopulation.toFixed(2)}B (${finalPopulationPeople.toFixed(0)} people)`);
-      
-      // NEW (Oct 13, 2025): 7-tier outcome classification system
-      // Replaces binary extinction with nuanced severity levels
+
+      // NEW (Oct 20, 2025): 7-tier + Multi-Paradigm DUI outcome classification
+      // PRIMARY: Use population-based 7-tier classification (checks mortality, not just AI risk)
+      // SECONDARY: Add multi-paradigm nuance for utopia/dystopia outcomes
       const classifiedOutcome = classifyPopulationOutcome(finalPopulation, savedInitialPopulation, state);
 
-      // P1.4 FIX: Map 7-tier classification to 4 final outcomes
-      // Only TRUE extinction (<10K people) should report as 'extinction'
-      // All other severe outcomes (terminal, bottleneck, collapse, etc.) are 'dystopia'
+      // Map 7-tier classification to final outcomes with multi-paradigm nuance
       if (classifiedOutcome === 'extinction') {
-        // TRUE EXTINCTION: <10K people (not 1B-4B survivors!)
+        // TRUE EXTINCTION: <10K people
         finalOutcome = 'extinction';
         finalOutcomeProbability = 1.0;
         console.log(`   💀 TRUE EXTINCTION confirmed (<10K people)\n`);
-      } else if (classifiedOutcome !== 'status_quo') {
-        // Population-based DYSTOPIA (terminal, bottleneck, dark_age, collapse, crisis_era)
-        // These are severe outcomes but humanity survives (100M-7B people)
+      } else if (classifiedOutcome === 'terminal' || classifiedOutcome === 'bottleneck' ||
+                 classifiedOutcome === 'dark_age' || classifiedOutcome === 'collapse' ||
+                 classifiedOutcome === 'crisis_era') {
+        // DYSTOPIA variants (terminal, bottleneck, dark_age, collapse, crisis_era)
+        // Humanity survives but with significant mortality (10-99.99%)
         finalOutcome = 'dystopia';
         finalOutcomeProbability = 1.0;
-        console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - humanity survives with ${finalPopulation.toFixed(2)}B people\n`);
-      } else if (outcomes.utopiaProbability > 0.45 && outcomes.utopiaProbability > outcomes.dystopiaProbability * 1.2) {
-        // Clear Utopia trajectory (TIER 0A FIX: lowered from 0.6 + 1.5x to 0.45 + 1.2x)
-        finalOutcome = 'utopia';
-        finalOutcomeProbability = outcomes.utopiaProbability;
-        console.log(`   🌟 UTOPIA trajectory dominant (${(outcomes.utopiaProbability*100).toFixed(1)}% vs dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%)\n`);
-      } else if (outcomes.dystopiaProbability > 0.45 && outcomes.dystopiaProbability > outcomes.utopiaProbability * 1.2) {
-        // Clear Dystopia trajectory (TIER 0A FIX: lowered from 0.6 + 1.5x to 0.45 + 1.2x)
-        finalOutcome = 'dystopia';
-        finalOutcomeProbability = outcomes.dystopiaProbability;
-        console.log(`   🏛️  DYSTOPIA trajectory dominant (${(outcomes.dystopiaProbability*100).toFixed(1)}% vs utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%)\n`);
-      } else if (outcomes.extinctionProbability > 0.40) {
-        // Extinction is clearly dominant (TIER 0A FIX: new branch for high extinction probability)
-        finalOutcome = 'extinction';
-        finalOutcomeProbability = outcomes.extinctionProbability;
-        console.log(`   💀 EXTINCTION probability dominant (${(outcomes.extinctionProbability*100).toFixed(1)}%)\n`);
-      } else if (outcomes.utopiaProbability > outcomes.dystopiaProbability && outcomes.utopiaProbability > outcomes.extinctionProbability) {
-        // Utopia is leading (even if not by much) (TIER 0A FIX: new fallback for utopia)
-        finalOutcome = 'utopia';
-        finalOutcomeProbability = outcomes.utopiaProbability;
-        console.log(`   🌟 UTOPIA trajectory leading (${(outcomes.utopiaProbability*100).toFixed(1)}% > ${(outcomes.dystopiaProbability*100).toFixed(1)}% dystopia, ${(outcomes.extinctionProbability*100).toFixed(1)}% extinction)\n`);
-      } else if (outcomes.dystopiaProbability > outcomes.utopiaProbability && outcomes.dystopiaProbability > outcomes.extinctionProbability) {
-        // Dystopia is leading (TIER 0A FIX: new fallback for dystopia)
-        finalOutcome = 'dystopia';
-        finalOutcomeProbability = outcomes.dystopiaProbability;
-        console.log(`   🏛️  DYSTOPIA trajectory leading (${(outcomes.dystopiaProbability*100).toFixed(1)}% > ${(outcomes.utopiaProbability*100).toFixed(1)}% utopia, ${(outcomes.extinctionProbability*100).toFixed(1)}% extinction)\n`);
+
+        // Add multi-paradigm classification for nuance (if available)
+        const paradigmScores = state.multiParadigmDUI?.currentScores;
+        const paradigmOutcome = paradigmScores ? classifyMultiParadigmOutcome(paradigmScores) : null;
+
+        console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - ${finalPopulation.toFixed(2)}B people`);
+        if (paradigmOutcome && paradigmScores) {
+          console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
+          console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
+          console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
+          console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
+          console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+        }
+        console.log('');
       } else {
-        // True mixed signals - very rare now (TIER 0A FIX: only when all probabilities within 0.05 of each other)
-        finalOutcome = 'inconclusive';
-        finalOutcomeProbability = Math.max(
-          outcomes.utopiaProbability,
-          outcomes.dystopiaProbability,
-          outcomes.extinctionProbability
-        );
-        console.log(`   ❓ INCONCLUSIVE - truly mixed signals (utopia ${(outcomes.utopiaProbability*100).toFixed(1)}%, dystopia ${(outcomes.dystopiaProbability*100).toFixed(1)}%, extinction ${(outcomes.extinctionProbability*100).toFixed(1)}%)\n`);
+        // STATUS QUO (0-10% mortality) - Check for utopia/dystopia via upward spirals
+        // Use upward spiral state as primary indicator of utopia vs status quo
+        const hasActiveSpirals = state.upwardSpirals.abundanceSpiral.isActive ||
+                                 state.upwardSpirals.cognitiveSpiral.isActive ||
+                                 state.upwardSpirals.democraticSpiral.isActive;
+
+        const hasSustainableAbundance = state.upwardSpirals.abundanceSpiral.isActive &&
+                                       state.upwardSpirals.abundanceSpiral.monthsActive >= 12;
+
+        // Add multi-paradigm classification (if available)
+        const paradigmScores = state.multiParadigmDUI?.currentScores;
+        const paradigmOutcome = paradigmScores ? classifyMultiParadigmOutcome(paradigmScores) : null;
+
+        if (hasSustainableAbundance || (paradigmOutcome && paradigmOutcome.utopiasCount >= 3)) {
+          // UTOPIA: Either sustained abundance spiral OR 3+ paradigms say utopia
+          finalOutcome = 'utopia';
+          finalOutcomeProbability = 1.0;
+
+          console.log(`   🌟 UTOPIA achieved - ${finalPopulation.toFixed(2)}B people`);
+          if (paradigmOutcome && paradigmScores) {
+            console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
+            console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
+            console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
+            console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
+            console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+          }
+          console.log('');
+        } else if ((paradigmOutcome && paradigmOutcome.dystopiasCount >= 2) || hasActiveSpirals === false) {
+          // DYSTOPIA: 2+ paradigms say dystopia OR no active spirals
+          finalOutcome = 'dystopia';
+          finalOutcomeProbability = 1.0;
+
+          console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - ${finalPopulation.toFixed(2)}B people`);
+          if (paradigmOutcome && paradigmScores) {
+            console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
+            console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
+            console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
+            console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
+            console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+          }
+          console.log('');
+        } else {
+          // INCONCLUSIVE: Mixed signals (some spirals, some paradigm disagreements)
+          finalOutcome = 'inconclusive';
+          finalOutcomeProbability = 0.5;
+
+          console.log(`   ❓ INCONCLUSIVE - mixed signals`);
+          if (paradigmOutcome && paradigmScores) {
+            console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
+            console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
+            console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
+            console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
+            console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+          }
+          console.log('');
+        }
       }
     }
 
