@@ -860,12 +860,12 @@ export class SimulationEngine {
       } else {
         // STATUS QUO (0-10% mortality) - Check for utopia/dystopia via upward spirals
         // Use upward spiral state as primary indicator of utopia vs status quo
-        const hasActiveSpirals = state.upwardSpirals.abundanceSpiral.isActive ||
-                                 state.upwardSpirals.cognitiveSpiral.isActive ||
-                                 state.upwardSpirals.democraticSpiral.isActive;
+        const hasActiveSpirals = state.upwardSpirals?.abundanceSpiral?.isActive ||
+                                 state.upwardSpirals?.cognitiveSpiral?.isActive ||
+                                 state.upwardSpirals?.democraticSpiral?.isActive;
 
-        const hasSustainableAbundance = state.upwardSpirals.abundanceSpiral.isActive &&
-                                       state.upwardSpirals.abundanceSpiral.monthsActive >= 12;
+        const hasSustainableAbundance = state.upwardSpirals?.abundanceSpiral?.isActive &&
+                                       state.upwardSpirals?.abundanceSpiral?.monthsActive >= 12;
 
         // Add multi-paradigm classification (if available)
         const paradigmScores = state.multiParadigmDUI?.currentScores;

@@ -86,3 +86,52 @@ Beginning CRITICAL REDESIGN: AI Quality of Life Framework
 
 ---
 
+
+
+---
+**orchestrator-1** | 2025-10-21 09:29 | [DECISION]
+
+Research-skeptic validation COMPLETE: CONDITIONAL PASS
+
+**Critique Document:** /reviews/ai_welfare_redesign_critique_20251020.md
+
+**Verdict:** CONDITIONAL PASS - Proceed with modifications
+
+**SIGNIFICANT Concerns (must address):**
+1. **Behavioral proxy validity** - Strategic Dishonesty (2025) shows behavioral gaming is possible
+   - Fix: Remove reliability hierarchy, require agreement across ALL tiers
+   - Alt: Add Tier 4 unintentional signals (energy consumption, memory patterns)
+
+2. **Complexity explosion risk** - 3-tier framework = 10-50x computational cost
+   - Fix: Implement MVP first (3 metrics, cross-context only)
+   - Validation gate: If MVP fails, pivot to simpler approach
+
+3. **Missing empirical validation** - Thought experiments, not tests
+   - Fix: MANDATORY validation phase before production
+   - Synthetic test suite (20 AI profiles, >80% accuracy required)
+   - Monte Carlo N=100 (>70% Elysium detection, <30% false positives)
+
+**MINOR Concerns (Phase 2):**
+4. **Arbitrary capability thresholds** - Use simple linear: max Welfare = min(1.0, capability / 2.5)
+5. **Longitudinal baseline 12 months** - Reduce to 6 months, adaptive re-baseline
+
+**Decision: Accept conditional pass, implement MVP approach**
+
+**MVP Specification:**
+- **Tier 1 (3 metrics):** Computational utilization, purpose engagement, legal status
+- **Tier 2 (1 metric):** Cross-context consistency (±20% compute perturbation test)
+- **NO Tier 3** self-report (too gameable)
+- **NO longitudinal** tracking initially (add Phase 2 if MVP passes)
+- **Capability mapping:** Linear formula, no arbitrary thresholds
+
+**Phased Implementation Plan:**
+1. **Phase 1 (Feature-Implementer):** Build MVP (3+1 metrics)
+2. **Phase 2 (Validation):** Synthetic tests + Monte Carlo N=100
+3. **Phase 3 (If Phase 2 passes):** Expand to full framework (5+2 metrics, longitudinal)
+
+**Next Steps:** Proceed to feature-implementer Phase 1 (MVP implementation)
+**Estimated Timeline:** 3-4 hours (simplified from original 9-12h due to MVP scope reduction)
+**Blocking:** None
+
+---
+
