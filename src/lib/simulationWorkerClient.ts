@@ -1,0 +1,280 @@
+/**
+ * Simulation Worker Client
+ *
+ * Main thread interface for communicating with simulation Web Worker.
+ * Provides a clean API for starting/stopping simulation and receiving updates.
+ *
+ * Usage:
+ *   const client = new SimulationWorkerClient();
+ *   client.on('update', (delta, month) => console.log('Month:', month));
+ *   client.init(42000, 'historical');
+ *   client.start();
+ */
+
+import type { ScenarioMode } from '@/types/game';
+
+// Re-export types from worker
+export interface StateDelta {
+  // Core metrics
+  currentMonth?: number;
+  qualityOfLife?: number;
+  population?: number;
+  aiCount?: number;
+  outcome?: string;
+
+  // Additional metrics
+  dystopiaProgression?: number;
+  avgAICapability?: number;
+  activeCrises?: number;
+  deployedTechCount?: number;
+  socialCohesion?: number;
+  climateChange?: number;
+
+  // Events
+  events?: Array<{ type: string; description: string; severity?: 'low' | 'medium' | 'high' }>;
+}
+
+export interface InitialStateSnapshot {
+  currentMonth: number;
+  qualityOfLife: number;
+  population: number;
+  aiCount: number;
+  scenario: ScenarioMode;
+}
+
+type EventCallback = (...args: any[]) => void;
+
+export class SimulationWorkerClient {
+  private worker: Worker | null = null;
+  private callbacks: Map<string, Set<EventCallback>> = new Map();
+  private initialized = false;
+  private running = false;
+
+  constructor() {
+    // Only create worker in browser environment
+    if (typeof window !== 'undefined' && typeof Worker !== 'undefined') {
+      try {
+        // Create worker from TypeScript file (Vite/Next.js handles bundling)
+        this.worker = new Worker(
+          new URL('../workers/simulationWorker.ts', import.meta.url),
+          {
+            type: 'module',
+            name: 'simulation-worker'
+          }
+        );
+
+        this.worker.addEventListener('message', this.handleMessage.bind(this));
+        this.worker.addEventListener('error', this.handleError.bind(this));
+      } catch (error) {
+        console.error('Failed to create Web Worker:', error);
+        throw new Error('Web Worker not supported or failed to initialize');
+      }
+    } else {
+      throw new Error('Web Workers not available (running in Node.js or unsupported browser)');
+    }
+  }
+
+  private handleMessage(event: MessageEvent) {
+    const msg = event.data;
+
+    switch (msg.type) {
+      case 'initialized':
+        this.initialized = true;
+        this.emit('initialized', msg.initialState);
+        break;
+
+      case 'update':
+        this.emit('update', msg.delta, msg.month, msg.timestamp);
+        break;
+
+      case 'paused':
+        this.running = false;
+        this.emit('paused', msg.month);
+        break;
+
+      case 'resumed':
+        this.running = true;
+        this.emit('resumed', msg.month);
+        break;
+
+      case 'error':
+        this.emit('error', new Error(msg.error));
+        break;
+
+      default:
+        console.warn('Unknown message type from worker:', msg.type);
+    }
+  }
+
+  private handleError(event: ErrorEvent) {
+    console.error('Worker error:', event);
+    this.emit('error', event.error || new Error(event.message));
+  }
+
+  // Event emitter pattern
+  on(event: string, callback: EventCallback): void {
+    if (!this.callbacks.has(event)) {
+      this.callbacks.set(event, new Set());
+    }
+    this.callbacks.get(event)!.add(callback);
+  }
+
+  off(event: string, callback: EventCallback): void {
+    this.callbacks.get(event)?.delete(callback);
+  }
+
+  once(event: string, callback: EventCallback): void {
+    const wrappedCallback = (...args: any[]) => {
+      callback(...args);
+      this.off(event, wrappedCallback);
+    };
+    this.on(event, wrappedCallback);
+  }
+
+  private emit(event: string, ...args: any[]): void {
+    this.callbacks.get(event)?.forEach(cb => {
+      try {
+        cb(...args);
+      } catch (error) {
+        console.error(`Error in ${event} callback:`, error);
+      }
+    });
+  }
+
+  // Public API
+
+  /**
+   * Initialize simulation with seed and scenario
+   * @param seed - RNG seed for deterministic runs
+   * @param scenario - 'historical' or 'unprecedented'
+   * @param interval - Step interval in milliseconds (default: 1000 = 1 day/second)
+   */
+  init(seed: number, scenario: ScenarioMode = 'historical', interval = 1000): void {
+    if (this.initialized) {
+      throw new Error('Already initialized. Create a new client to reinitialize.');
+    }
+
+    if (!this.worker) {
+      throw new Error('Worker not available');
+    }
+
+    this.worker.postMessage({
+      type: 'init',
+      seed,
+      scenario,
+      interval
+    });
+  }
+
+  /**
+   * Start simulation (auto-steps at configured interval)
+   */
+  start(): void {
+    if (!this.initialized) {
+      throw new Error('Not initialized. Call init() first.');
+    }
+
+    if (this.running) {
+      console.warn('Simulation already running');
+      return;
+    }
+
+    this.worker?.postMessage({ type: 'start' });
+    this.running = true;
+  }
+
+  /**
+   * Pause simulation
+   */
+  pause(): void {
+    if (!this.running) {
+      console.warn('Simulation not running');
+      return;
+    }
+
+    this.worker?.postMessage({ type: 'pause' });
+  }
+
+  /**
+   * Resume simulation after pause
+   */
+  resume(): void {
+    if (this.running) {
+      console.warn('Simulation already running');
+      return;
+    }
+
+    if (!this.initialized) {
+      throw new Error('Not initialized. Call init() first.');
+    }
+
+    this.worker?.postMessage({ type: 'resume' });
+  }
+
+  /**
+   * Manually step simulation once (useful when paused)
+   */
+  step(): void {
+    if (!this.initialized) {
+      throw new Error('Not initialized. Call init() first.');
+    }
+
+    this.worker?.postMessage({ type: 'step' });
+  }
+
+  /**
+   * Change simulation speed
+   * @param interval - Step interval in milliseconds
+   */
+  setSpeed(interval: number): void {
+    if (!this.initialized) {
+      throw new Error('Not initialized. Call init() first.');
+    }
+
+    this.worker?.postMessage({ type: 'setSpeed', interval });
+  }
+
+  /**
+   * Inject player decision (Phase 3 - future work)
+   * @param decision - Player decision to inject
+   */
+  decision(decision: any): void {
+    if (!this.initialized) {
+      throw new Error('Not initialized. Call init() first.');
+    }
+
+    this.worker?.postMessage({ type: 'decision', decision });
+  }
+
+  /**
+   * Terminate worker and clean up
+   */
+  destroy(): void {
+    if (this.worker) {
+      this.worker.terminate();
+      this.worker = null;
+    }
+    this.callbacks.clear();
+    this.initialized = false;
+    this.running = false;
+  }
+
+  // Getters
+  isInitialized(): boolean {
+    return this.initialized;
+  }
+
+  isRunning(): boolean {
+    return this.running;
+  }
+}
+
+// Helper hook for React (optional)
+export function useSimulationWorker() {
+  if (typeof window === 'undefined') {
+    return null; // SSR guard
+  }
+
+  // Client-side only
+  return new SimulationWorkerClient();
+}
