@@ -425,21 +425,22 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const pollutionLevel = state.novelEntitiesSystem?.pollutionLevel || 0;
   const environmentalDebtLevel = state.environmentalAccumulation?.totalDebt || 0;
 
-  // Count planetary boundaries crossed
+  // Count planetary boundaries crossed (using correct boundary names from types)
   let planetaryBoundariesCrossed = 0;
   if (state.planetaryBoundariesSystem?.boundaries) {
     const boundaries = state.planetaryBoundariesSystem.boundaries;
     const isCrossed = (status: string) => status === 'beyond_boundary' || status === 'high_risk';
 
-    if (boundaries.climate && isCrossed(boundaries.climate.status)) planetaryBoundariesCrossed++;
-    if (boundaries.biodiversity && isCrossed(boundaries.biodiversity.status)) planetaryBoundariesCrossed++;
-    if (boundaries.nitrogen && isCrossed(boundaries.nitrogen.status)) planetaryBoundariesCrossed++;
-    if (boundaries.landUse && isCrossed(boundaries.landUse.status)) planetaryBoundariesCrossed++;
-    if (boundaries.freshwater && isCrossed(boundaries.freshwater.status)) planetaryBoundariesCrossed++;
-    if (boundaries.oceanAcidification && isCrossed(boundaries.oceanAcidification.status)) planetaryBoundariesCrossed++;
-    if (boundaries.ozone && isCrossed(boundaries.ozone.status)) planetaryBoundariesCrossed++;
-    if (boundaries.aerosols && isCrossed(boundaries.aerosols.status)) planetaryBoundariesCrossed++;
-    if (boundaries.chemicalPollution && isCrossed(boundaries.chemicalPollution.status)) planetaryBoundariesCrossed++;
+    // Correct boundary names from BoundaryName type definition
+    if (boundaries.climate_change && isCrossed(boundaries.climate_change.status)) planetaryBoundariesCrossed++;
+    if (boundaries.biosphere_integrity && isCrossed(boundaries.biosphere_integrity.status)) planetaryBoundariesCrossed++;
+    if (boundaries.land_system_change && isCrossed(boundaries.land_system_change.status)) planetaryBoundariesCrossed++;
+    if (boundaries.freshwater_change && isCrossed(boundaries.freshwater_change.status)) planetaryBoundariesCrossed++;
+    if (boundaries.biogeochemical_flows && isCrossed(boundaries.biogeochemical_flows.status)) planetaryBoundariesCrossed++;
+    if (boundaries.novel_entities && isCrossed(boundaries.novel_entities.status)) planetaryBoundariesCrossed++;
+    if (boundaries.ocean_acidification && isCrossed(boundaries.ocean_acidification.status)) planetaryBoundariesCrossed++;
+    if (boundaries.stratospheric_ozone && isCrossed(boundaries.stratospheric_ozone.status)) planetaryBoundariesCrossed++;
+    if (boundaries.atmospheric_aerosols && isCrossed(boundaries.atmospheric_aerosols.status)) planetaryBoundariesCrossed++;
   }
 
   // Social metrics
