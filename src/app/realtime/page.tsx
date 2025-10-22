@@ -19,13 +19,8 @@ import { SimulationWorkerClient, type StateDelta, type InitialStateSnapshot } fr
 import type { ScenarioMode } from '@/types/game';
 
 export default function RealtimePage() {
-  // Worker client (singleton)
-  const [client] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return new SimulationWorkerClient();
-    }
-    return null;
-  });
+  // Worker client (created client-side only to avoid SSR hydration mismatch)
+  const [client, setClient] = useState<SimulationWorkerClient | null>(null);
 
   // Simulation state
   const [initialized, setInitialized] = useState(false);
@@ -46,6 +41,20 @@ export default function RealtimePage() {
   const [fps, setFps] = useState(0);
   const lastUpdateRef = useRef(Date.now());
   const updateCountRef = useRef(0);
+
+  // Create worker client on mount (client-side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !client) {
+      try {
+        const newClient = new SimulationWorkerClient();
+        setClient(newClient);
+        console.log('[RealtimePage] Worker client created');
+      } catch (error) {
+        console.error('[RealtimePage] Failed to create worker client:', error);
+        setError(error instanceof Error ? error.message : String(error));
+      }
+    }
+  }, []); // Run once on mount
 
   // Setup worker event listeners
   useEffect(() => {
@@ -174,11 +183,20 @@ export default function RealtimePage() {
     return `${(n * 100).toFixed(1)}%`;
   };
 
+  // Show loading state while worker client is being created
   if (!client) {
     return (
-      <div className="p-8">
-        <h1 className="text-3xl font-bold mb-4">Real-Time Simulation</h1>
-        <p className="text-red-500">Web Workers not supported in this environment.</p>
+      <div className="min-h-screen bg-black text-white p-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">Real-Time Simulation</h1>
+          <p className="text-gray-400">Initializing Web Worker...</p>
+        </div>
+        {error && (
+          <div className="mb-6 p-4 bg-red-900/50 border border-red-500 rounded">
+            <h3 className="font-semibold mb-2">Error</h3>
+            <p className="text-sm">{error}</p>
+          </div>
+        )}
       </div>
     );
   }
