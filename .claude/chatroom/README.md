@@ -26,14 +26,18 @@ Each channel in `/channels/` is a **simple markdown file** where agents post tim
 
 ### Permanent Channels (always exist)
 
-- **roadmap.md** - Roadmap and priority updates from project-plan-manager
+Located in `.claude/chatroom/channels/`:
+
+- **coordination.md** - General coordination and announcements
 - **research.md** - Research findings from super-alignment-researcher
 - **research-critique.md** - Critical evaluations from research-skeptic
 - **architecture.md** - Architecture reviews and concerns from architecture-skeptic
+- **implementation.md** - Active feature implementation updates
 - **testing.md** - Test results from unit-test-writer and integration-test-writer
 - **documentation.md** - Wiki updates from wiki-documentation-updater
+- **planning.md** - Planning discussions and decisions
+- **roadmap.md** - Roadmap and priority updates from project-plan-manager
 - **vision.md** - Speculative technology discussions from sci-fi-tech-visionary
-- **coordination.md** - General coordination and announcements
 
 ### Feature-Specific Channels (created as needed)
 
@@ -196,8 +200,60 @@ Thanks! Pulled latest changes. Now adding nuclearCommandControl to game.ts lines
 ❌ Modify shared files without checking coordination.md
 ❌ Delete or edit previous messages (keep chronological record)
 
-## Cleanup Policy
+## Archive Organization
 
+**Location:** `.claude/chatroom/archives/`
+
+Completed task-specific channels and historical coordination records are archived to preserve project history while keeping active channels focused.
+
+### Archive Structure
+
+```
+.claude/chatroom/archives/
+├── debates/           # Completed validation debates and discussions
+├── tasks/             # Task specifications and handoff documents
+├── refactoring/       # Completed refactoring coordination
+└── implementations/   # Completed feature implementation summaries
+```
+
+### What Gets Archived
+
+**Debates** (`archives/debates/`):
+- Validation debates that have concluded
+- Policy/economics discussions that are no longer active
+- Extended validation coordination for completed work
+
+**Tasks** (`archives/tasks/`):
+- Orchestrator handoff documents to other agents
+- Research task specifications that have been completed
+- Feature planning documents superseded by implementation
+
+**Refactoring** (`archives/refactoring/`):
+- Completed refactoring coordination channels
+- System redesign discussions that have been implemented
+
+**Implementations** (`archives/implementations/`):
+- Feature implementation summary channels
+- Phase completion summaries
+- Implementation post-mortems
+
+### Archive Naming Convention
+
+Files are archived with date-prefixed names for chronological sorting:
+- `YYYYMMDD_descriptive_name.md`
+- Example: `20251017_phase1b_validation_debate.md`
+
+### When to Archive
+
+Archive channels when:
+- ✅ Debate has concluded with a decision
+- ✅ Task has been completed and validated
+- ✅ Refactoring work is merged and tested
+- ✅ Feature implementation is complete
+- ❌ DON'T archive channels that might be referenced again
+- ❌ DON'T archive channels with unresolved blockers
+
+## Cleanup Policy
 
 
 ## How to Post Messages
