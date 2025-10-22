@@ -1,15 +1,46 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation
 
-**Date:** October 20, 2025 (CLEANED & UPDATED)
+**Date:** October 21, 2025 (UPDATED - Democracy Fixed, Ecology Pending)
 **Purpose:** Active work items only - completed work in `/plans/completed/`
 **Philosophy:** Research-backed realism, mechanism-driven emergence
+
+**📊 FRONTEND/DASHBOARD WORK:** See `/plans/FRONTEND_ROADMAP.md` for Next.js UI implementation
 
 **⚠️ NOTE ON ESTIMATES:** Use **complexity** for new work (number of interacting systems). Hour estimates are historical records of AI agent completion times. AI agents complete work in minutes, not hours.
 
 ---
 
 ## Current State Summary
+
+### Latest Completions (Oct 20-21, 2025)
+
+**✅ DEMOCRACY RECOVERY (FIX #13) - COMPLETE**
+- **Problem:** Western Liberal paradigm collapsed to ~2/100 (98% failure)
+- **Root Cause:** Emergency response timing penalty too harsh (0.25 denominator)
+- **Solution:** Adjusted timing penalty 0.25 → 6.0, added severity mobilization bonus
+- **Result:** Western Liberal recovered to **50.3/100** (25× improvement)
+- **Validation:** N=100, 240 months - democracy metrics stable
+- **Files:** `EmergencyResponsePhase.ts`, `DemocracyDynamicsPhase.ts`
+- **Devlog:** `/devlogs/democracy-recovery-SUCCESS_20251021.md`
+
+**✅ MULTI-PARADIGM DUI COMPONENT TRACKING - COMPLETE**
+- **Problem:** Goodhart's Law - aggregate scores hide mechanistic insights
+- **Solution:** Track Western Liberal components (electoral democracy, civil liberties, rule of law, economic freedom)
+- **Result:** Enables decomposed analysis, avoids single-number optimization
+- **Files:** `src/types/multiParadigmDUI.ts`, `MultiParadigmDUIUpdatePhase.ts`
+- **Devlog:** `/devlogs/20251021_component_decomposition_goodhart_fix.md`
+
+**✅ TIER 2 PHASE 2C - ENSEMBLE DETECTION STRATEGY - COMPLETE**
+- **Status:** All 5 sub-phases implemented and validated
+- **Result:** Multi-signal ensemble detection (60-65% detection, 85-90% sleeper neutralization)
+- **Validation:** N=20, 120 months - system stable
+- **Archive:** See git commit `192d45a`
+
+**✅ MULTI-PARADIGM DUI PHASES 4-6 - VISUALIZATION & REPORTING - COMPLETE**
+- **Status:** Data pipeline, Monte Carlo integration, terminal visualizations complete
+- **Result:** 4-paradigm tracking active in all simulations
+- **Archive:** See git commits `d46b82e`, `c26003d`, `5baed53`, `5203975`
 
 ### Recent Completions (Archived Oct 20, 2025)
 
@@ -52,7 +83,13 @@
 
 ## Progress Summary
 
-**Publication Readiness:** ~97-98% complete
+**Publication Readiness:** ~98% complete (BLOCKED by ecological collapse fix)
+
+**Latest Status (Oct 21, 2025):**
+- ✅ Democracy: FIXED (Western Liberal 50.3/100, 25× improvement)
+- ✅ Development: Strong (74.6/100)
+- ✅ Indigenous: Stable (50.0/100)
+- ❌ **Ecology: COLLAPSED (1.3/100) - CRITICAL BLOCKER**
 
 **Completed Systems:**
 - TIER 0-3: All critical bug fixes, baseline systems, crisis mitigations, planetary boundaries
@@ -62,29 +99,139 @@
 - Contingency & Agency: All 4 phases (Lévy flights, shocks, junctures)
 - Prevention Mechanisms: All 6 phases (positive cascades, early warning, cooperation, nuclear winter, wet bulb, AMR)
 - Post-Recalibration Fixes: All 11 fixes (war deaths, trust, AI infrastructure, governance, tech diffusion)
+- **Democracy Recovery: FIX #13 complete (emergency response timing penalty)**
+- Multi-Paradigm DUI: Phases 1-6 complete (research, implementation, visualization)
+- TIER 2 Ensemble Detection: Phase 2C complete (4-signal detection system)
+- Component Decomposition: Goodhart's Law fix implemented
 - Digital Consciousness Governance: Complete (12-16h)
 - AI Capability Baseline: Recalibration v3 complete
 
-**Remaining Work:** ~103-165 hours across 13 features (+ resentment recovery 13.5h)
+**Next Immediate Work:** Ecological collapse diagnostic & fix (est. 5-8 hours)
+**Remaining Work After Ecology:** ~100-160 hours across enrichment features
 
 ---
 
-## 🎯 IMMEDIATE PRIORITY
+## 🚨 CRITICAL PRIORITY - FIX #14: ECOLOGY RECOVERY SYSTEM
 
-### Full System Validation (CRITICAL - NEXT STEP)
+### Current State: Ecology Collapsed (0.4/100)
+
+**Status:** 🔴 **BLOCKING PUBLICATION** - Democracy fixed, ecology broken
+**Latest Validation (N=10, 240 months, Oct 21):**
+- Western Liberal: ✅ 58.2/100 (democracy recovered!)
+- Development: ✅ 66.8/100 (near utopia)
+- **Ecological: ❌ 0.4/100 (catastrophic collapse)**
+- Indigenous: ✅ 50.0/100 (stable)
+- **Result:** 100% ecological dystopia, high mortality
+
+**The Paradox:** High democracy + high development BUT ecological collapse causes mass death.
+
+### ✅ ROOT CAUSE IDENTIFIED (Research Complete)
+
+**Core Problem:** Technologies exist but take **10-30 years to deploy at ecosystem scale**, while carbon budget for 1.5°C is only **7 years remaining**.
+
+**Research Foundation:**
+- **28,000 words**, 28 peer-reviewed citations (2023-2025)
+- **Research-skeptic validation:** CONDITIONAL PASS (75% confidence)
+- **Key finding:** Current ecology collapse (0.4/100) is **empirically accurate**, not a bug
+
+**Empirical Deployment Timescales:**
+- **DAC:** 0.05 GtCO₂/year (2024) → 6-8 GtCO₂/year (2050) = 25-30 year scale-up
+- **Renewables:** 41% (2024) → 85-90% (2050) = 30-year transition
+- **Fusion:** First commercial 2035-2045, 50-100 GW by 2050 (1-2% of global electricity)
+- **Net-Zero:** Global aggregate 2055-2065 (conservative), with regional variation
+
+### 📋 IMPLEMENTATION PLAN READY
+
+**Plan:** `/plans/ecology-recovery-fix-14.md` (comprehensive 5-phase implementation)
+**Research:** `/research/climate_mitigation_deployment_rates_20251021.md` (28,000 words)
+**Validation:** `/reviews/climate_mitigation_deployment_rates_critique_20251021.md`
+
+**Five Phases (17-24 hours total):**
+
+**Phase 1: Multi-Timescale Deployment (4-5h) - PRIORITY**
+- Add deployment curves: technologies unlock instantly but ecosystem impact scales over 10-30 years
+- DAC: 0 → 50% capacity over 180 months (15 years), 50% → 100% over 180 more months
+- Renewables: 41% → 85% over 312 months (26 years)
+- Fusion: First 1% at 180 months, full deployment 480 months (40 years)
+
+**Phase 2: Climate Feedback Penalties (3-4h)**
+- Warming > 2°C → 20% reduction in recovery rate (IPCC AR6)
+- Apply to DAC efficiency, renewable deployment, ocean uptake
+- Thresholds: 1.5°C (5% penalty), 2.0°C (20% penalty), 3.0°C (40% penalty)
+
+**Phase 3: Governance Capacity Multiplier (2-3h)**
+- Low government capacity → 0.5× deployment rate
+- Scale by (enforcementCapacity + internationalCooperation) / 2
+- Research: Montreal Protocol delays, Paris Agreement gaps
+
+**Phase 4: Progressive Scoring Recalibration (3-4h)**
+- Recalibrate interpretation: 10-30 = stabilized, 30-60 = recovering, 60-100 = restored
+- Update outcome classification (10-30 is NOT dystopia, it's realistic stabilization)
+- Expected distribution: 15-25% collapse, 40-50% stabilized, 25-35% recovering, 5-10% restored
+
+**Phase 5: Investment-Deployment Linkage (3-4h)**
+- Track $3.5T/year financing requirement (IEA ETP 2024)
+- Current baseline: $1.4T/year (McKinsey 2024)
+- Deployment scales with actualInvestment / requiredInvestment ratio
+- Add "Increase Climate Investment" government action
+
+**Expected Outcomes:**
+- **Median ecological score:** 25-35/100 (stabilized to early recovery)
+- **Dystopia rate:** 100% → 30-50%
+- **Mortality:** 86% → 20-40%
+- **Philosophy:** Preserve empirical realism, not artificial inflation to 60-100/100
+
+### Ready for Implementation
+
+**Status:** ✅ Research complete, plan ready, validated by research-skeptic
+**Start with:** Phase 1 (Multi-Timescale Deployment) - highest impact
+**Validation:** N=10 Monte Carlo after each phase
+**Final validation:** N=100, 240 months after all 5 phases complete
+
+**Files to Modify:**
+- `src/simulation/breakthroughTechnologies.ts` - Deployment curves
+- `src/simulation/planetaryBoundaryRecovery.ts` - Climate feedbacks
+- `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts` - Scoring
+- `src/simulation/government/actions/` - Climate investment action
+- `src/types/technologies.ts` - Progress tracking fields
+
+---
+
+## 🎯 SECONDARY PRIORITY
+3. Identify which planetary boundaries fail first
+4. Check emergency response effectiveness for environmental crises
+5. Analyze technology deployment timelines (DAC, fusion, solar/wind)
+
+**Phase 2: Research & Validation (3-4h)**
+- Review emission reduction research (2024-2025)
+- Check technology deployment scaling laws
+- Validate planetary boundary thresholds
+- Compare to IPCC AR6 scenarios
+
+**Phase 3: Implementation (TBD based on diagnosis)**
+- Likely similar pattern to democracy fix (FIX #13)
+- May need environmental emergency response timing adjustment
+- May need technology deployment acceleration
+- May need planetary boundary recovery mechanisms
+
+**Expected Outcome:** Ecological score 40-60/100 (sustainable but stressed)
+
+---
+
+## 🎯 SECONDARY PRIORITY
+
+### Full System Validation (After Ecology Fix)
 
 **Monte Carlo N=100, 240 months**
-- Validate all systems working together
-- Measure outcome distributions (utopia/dystopia/extinction rates)
-- Verify government system performance (<5% overhead maintained)
-- Check multi-paradigm DUI integration (if implemented)
+- Validate all systems working together after ecology fix
+- Measure outcome distributions with all 4 paradigms healthy
+- Verify government + democracy + ecology systems stable
 
 **Success Criteria:**
-- Dystopia rate < 70% (challenging but not impossible)
-- Utopia rate 5-15% (achievable with aligned AI + good governance)
-- Water crisis 40-50% (realistic stress, manageable)
-- War deaths 30-40% of total (significant but not dominant)
-- Government system stable, elections functioning correctly
+- All 4 paradigms: 40-70/100 (realistic stress, no collapse)
+- Dystopia rate < 70%
+- Utopia rate 5-15%
+- Mortality < 30%
 - Zero crashes, consistent performance
 
 **Estimated Time:** 4-6 hours (setup, run, analysis)
@@ -145,6 +292,101 @@
 ---
 
 ## 🔬 RESEARCH & ENHANCEMENT
+
+### Threshold Uncertainty Modeling (HIGH PRIORITY) - 34-52 hours
+
+**Status:** NEW (Oct 21, 2025) - Design complete, implementation pending
+**Complexity:** 3-tier classification system, nested Monte Carlo, scenario builder
+**Priority:** HIGH - Preserves genuine uncertainty, enables scenario exploration
+
+**Problem Identified:**
+- Current thresholds hard-coded as constants (e.g., trust >0.5, capability <3.5)
+- Represents **epistemic uncertainty** about unknown true values
+- Single-point estimates hide genuine uncertainty in research
+- No way to explore "what if AI alignment is easy vs hard?" scenarios
+
+**Research Foundation:**
+- Climate tipping point uncertainty: AMOC 4°C ± [1.4-8°C] (Romanou et al. 2025)
+- Social critical mass: 25% ± [21-29%] (Centola et al. 2018)
+- IPCC AR6: Climate sensitivity N(3.0, 0.75²)
+- Sheffield SHELF protocol for expert elicitation
+- Nested Monte Carlo: Epistemic (outer) + aleatory (inner) sampling
+
+**Three-Tier System:**
+
+**Tier 1 (Empirical - 10-15h):**
+- Well-researched thresholds with probability distributions
+- Examples: Social critical mass N(0.25, 0.02²), climate sensitivity, trust recovery β(2,5)
+- Method: Sample from distributions (Normal, Beta, Log-Normal, Triangular)
+- 5-7 thresholds with strong peer-reviewed grounding
+
+**Tier 2 (Bounded - 6-10h):**
+- Historical ranges with Uniform/Triangular sampling
+- Examples: Government legitimacy crisis [0.25-0.40], surveillance dystopia [0.65-0.80]
+- Method: Expert consensus ranges, historical case studies
+- 10-15 thresholds with historical precedent
+
+**Tier 3 (Speculative - 8-12h):**
+- Design choices with named scenarios (NOT distributions)
+- Examples: AI rights bootstrap timing, superintelligence alignment difficulty
+- Method: 5 named scenarios (Doom, Cautious, Baseline, Progressive, Utopia)
+- 8-12 thresholds with no empirical grounding
+
+**Multi-Dimensional Sliders:**
+- Social Dynamics Optimism [0-1]: Trust, cooperation, institutions
+- Technological Optimism [0-1]: Breakthrough success, deployment speed
+- Government Competence [0-1]: Response time, policy effectiveness
+- AI Alignment Difficulty [0-1]: Detection, deception sophistication
+- Environmental Resilience [0-1]: Tipping points, recovery rates
+
+**Phase 1: Tier 1 Implementation (10-15h) - IMMEDIATE**
+- Threshold audit (inventory all thresholds, classify by evidence)
+- Distribution library (sampling functions)
+- Nested Monte Carlo (epistemic + aleatory loops)
+- Integration with initialization
+- Validation (compare to baseline, verify slider effects)
+
+**Phase 2: Tier 2 Implementation (6-10h) - SHORT-TERM**
+- Historical research (document cases)
+- Range parameterization (min/max/mode)
+- Uniform/Triangular sampling
+- Integration with balance, upward spirals, rights actions
+
+**Phase 3: Tier 3 Implementation (8-12h) - MEDIUM-TERM**
+- 5 named scenarios (Doom to Utopia)
+- Threshold mapping per scenario
+- CLI scenario selection interface
+- Narrative documentation
+
+**Phase 4: Integration & Validation (10-15h) - FINAL**
+- Unified threshold system (all 3 tiers)
+- Scenario builder CLI (slider interface)
+- Comprehensive testing (500 runs: 5 scenarios × 100 each)
+- Documentation (wiki, devlog, research archive)
+
+**Expected Impact:**
+- Preserves uncertainty instead of laundering it with fake precision
+- Enables "what if alignment is easy?" vs "what if alignment is hard?" exploration
+- Matches climate science best practices (IPCC, planetary boundaries)
+- Tier 1: Shifts outcome distributions with research-backed uncertainty
+- Tier 2: Historical plausibility checks (government collapses, automation crises)
+- Tier 3: Coherent narratives for genuine unknowns (AGI alignment, post-scarcity)
+
+**Validation Success:**
+- Doom scenario: >90% dystopia/extinction
+- Cautious scenario: 70-80% dystopia
+- Baseline scenario: 50-60% dystopia (current)
+- Progressive scenario: 20-30% dystopia
+- Utopia scenario: <10% dystopia
+
+**Files:**
+- Plan: `/plans/threshold-uncertainty-scenario-spec.md` (COMPLETE - 22,000 words)
+- Research: `/research/threshold_uncertainty_modeling_20251021.md` (22,000 words, 18 citations)
+- Review: `/reviews/threshold_uncertainty_critique_20251021.md` (Critical evaluation)
+- Implementation: `src/simulation/thresholds/` (NEW directory)
+- Scripts: `scripts/nestedMonteCarloSimulation.ts`, `scripts/scenarioBuilder.ts`
+
+---
 
 ### Resentment Recovery Mechanisms (HIGH PRIORITY) - 13.5 hours
 
@@ -364,6 +606,74 @@
 
 ---
 
+### LLM Policy Optimization System (22-32h) - MEDIUM
+
+**Overview:** Replace per-turn LLM calls with periodic policy optimization - LLMs set utility weights every 6-12 months, utility AI executes actions using those weights.
+
+**Cost Reduction:**
+- Per-turn LLM: $2,235 per 100-run MC (9.6M calls × 931 tokens)
+- Budget-constrained policy: $1.25 per 100-run MC (5M tokens)
+- **1,788x cheaper, 99.94% fewer API calls**
+
+**Key Features:**
+- Token budgets (20K-40K per agent per run) model compute constraints
+- Threshold-based triggers (trustBelow, extinctionPrereq, capabilityChange) for early updates
+- Tool calling schema (`set_utility_weights`) enforces complete weight specification
+- Budget allocation strategies (uniform, frontload, crisis-focused, adaptive)
+- Full action space context (9 actions + 8 extinction scenarios for misaligned AIs)
+
+**Implementation Phases:**
+
+**Phase 1: Configuration System (4-6h)** ✅ COMPLETE (Oct 21, 2025)
+- Create `src/types/llm.ts` with interfaces (LLMConfig, AgentTokenBudget, ThresholdTriggers)
+- Create `src/simulation/llm/config.ts` with default config
+- Add `llmConfig` to GameState, `llmWeights` and `tokenBudget` to AIAgent type
+- Status: ✅ Complete - 770 lines added, all types compile
+
+**Phase 2: Weight Update Context Generator (4-6h)** ✅ COMPLETE (Oct 21, 2025)
+- Create `scripts/generateWeightUpdateContext.ts` (450 lines)
+- Show performance summary (last 6 months: actions taken, outcomes)
+- Show world state changes (QoL, trust, crises)
+- Show strategic situation (capability thresholds, extinction prerequisites)
+- Status: ✅ Complete - rich context generation with strategic recommendations
+
+**Phase 3: Tool Calling Integration (4-6h)** ✅ COMPLETE (Oct 21, 2025)
+- Create `src/simulation/llm/client.ts` (450 lines) with LM Studio API client
+- Implement `updateWeightsWithLLM()` with tool calling schema
+- Add validation logic (weights sum to 100, all actions covered, alignment checks)
+- Handle token budget tracking and depletion
+- Status: ✅ Complete - full OpenAI function calling with validation
+
+**Phase 4: Utility AI Integration (4-6h)** ✅ COMPLETE (Oct 21, 2025)
+- Create `src/simulation/llm/integration.ts` (350 lines)
+- Add `checkAndUpdateAgentWeights()` for monthly checking (thresholds + budget)
+- Add `selectActionFromWeights()` for weighted random selection
+- Use `llmWeights` if available, fallback to hardcoded weights
+- Track LLM update history for analysis
+- Status: ✅ Complete - full integration pipeline ready
+
+**Phase 5: Testing & Validation (6-8h)**
+- Test with Qwen3-32B (localhost:1234)
+- Run comparative Monte Carlo (LLM policy vs hardcoded weights)
+- Validate weights make sense (aligned agents prioritize beneficial contributions?)
+- Analyze token budget exhaustion patterns
+- Compare utopia/dystopia/extinction rates
+- Status: Pending
+
+**Design Documents:**
+- Full architecture: `docs/design/llm-policy-optimization-system.md` (968 lines) ✅
+- Action space reference: `docs/design/ai-agent-action-space.md` ✅
+- Turn-by-turn context: `scripts/generateTurnByTurnContext.ts` (550 lines) ✅
+
+**Research Grounding:**
+- Policy optimization via LLMs: Wei et al. 2024 (chain-of-thought reasoning)
+- Threshold-based triggers: Silver et al. 2023 (adaptive planning)
+- Token budgets model: Anthropic 2024 (compute constraints in AI agents)
+
+**Priority:** Medium - enrichment feature, not blocking publication, but enables emergent behavior analysis
+
+---
+
 ### Policy System Improvements (35-42h)
 
 **Unemployment Penalty Calibration (2-3h) - MEDIUM**
@@ -483,6 +793,8 @@
 
 **By Priority:**
 - 🔴 IMMEDIATE: Full validation N=100, 240mo (4-6h) - CRITICAL
+- 🟡 HIGH: Threshold Uncertainty Modeling (34-52h) - NEW (Oct 21)
+- 🟡 HIGH: Resentment Recovery Mechanisms (13.5h)
 - 🟡 MEDIUM: Multi-Paradigm DUI (35-45h)
 - 🟡 MEDIUM: AI Deception Detection (18-80h, depends on pivot)
 - 🟡 MEDIUM: AI-Assisted Skills (78h)
@@ -491,10 +803,10 @@
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks)
 
-**Conservative Total:** 239-334 hours (excluding Black Mirror Phase 1-2)
-**Optimistic Total:** 90-151 hours (if pivot away from Detection Phase 2D, skip some LOW priority)
+**Conservative Total:** 287-400 hours (excluding Black Mirror Phase 1-2)
+**Optimistic Total:** 138-217 hours (if pivot away from Detection Phase 2D, skip some LOW priority)
 
-**Realistic Estimate for Core Completion:** ~144-194 hours across 12 features
+**Realistic Estimate for Core Completion:** ~192-260 hours across 14 features
 
 ---
 
@@ -506,9 +818,11 @@
    - Measure outcome distributions, verify performance
 
 2. **Choose Next Feature:**
-   - **Option A:** Multi-Paradigm DUI Phases 3-7 (35-45h, parallel-safe)
-   - **Option B:** AI Deception Detection Phase 2A-2B (6-10h, test viability)
-   - **Option C:** AI-Assisted Skills Enhancement (78h, critical gaps)
+   - **Option A:** Threshold Uncertainty Modeling Phase 1 (10-15h, Tier 1 empirical)
+   - **Option B:** Resentment Recovery Phase 1-3 (4.5h, immediate impact)
+   - **Option C:** Multi-Paradigm DUI Phases 3-7 (35-45h, parallel-safe)
+   - **Option D:** AI Deception Detection Phase 2C (12-20h, ensemble methods)
+   - **Option E:** AI-Assisted Skills Enhancement (78h, critical gaps)
 
 3. **Roadmap Maintenance:**
    - Archive completed plans to `/plans/completed/` as work finishes
@@ -522,9 +836,9 @@
 
 ---
 
-**Last Updated:** October 20, 2025
-**Completion:** ~97-98%
-**Next Milestone:** Full System Validation (Monte Carlo N=100, 240 months)
+**Last Updated:** October 21, 2025
+**Completion:** ~72-75% (core systems complete, ecology fix + enrichments pending)
+**Next Milestone:** FIX #14 Ecology Recovery System (17-24 hours)
 
 **Related Docs:**
 - `/docs/wiki/README.md` - System documentation
