@@ -95,7 +95,9 @@
       "WebFetch(domain:besjournals.onlinelibrary.wiley.com)",
       "Bash(npx next build:*)",
       "WebFetch(domain:www.biorxiv.org)",
-      "Bash(git worktree add:*)"
+      "Bash(git worktree add:*)",
+      "Bash(git merge:*)",
+      "Bash(wait)"
     ],
     "deny": [],
     "ask": []

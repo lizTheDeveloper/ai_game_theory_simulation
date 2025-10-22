@@ -20,15 +20,11 @@ export interface StateDelta {
   qualityOfLife?: number;
   population?: number;
   aiCount?: number;
-  outcome?: string;
 
   // Additional metrics
   dystopiaProgression?: number;
   avgAICapability?: number;
-  activeCrises?: number;
   deployedTechCount?: number;
-  socialCohesion?: number;
-  climateChange?: number;
 
   // Events
   events?: Array<{ type: string; description: string; severity?: 'low' | 'medium' | 'high' }>;
