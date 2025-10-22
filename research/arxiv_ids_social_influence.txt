@@ -1,0 +1,24 @@
+# AI Persuasion & Social Influence Papers (2024-2025)
+#
+# Category: AI Persuasion
+2505.07775v1
+2504.14112v1
+2303.08721
+2503.01829v1
+2505.12248v1
+2411.06837v1
+2508.09614v1
+
+# Category: Deception & Manipulation
+2307.16513
+2412.14093
+2508.04196v1
+2506.04909v1
+2501.16513v2
+2405.04325v2
+2401.11335
+2505.18889v5
+
+# Category: Parasocial Relationships & Emotional Dependence
+2506.12605v2
+2508.15748v1
