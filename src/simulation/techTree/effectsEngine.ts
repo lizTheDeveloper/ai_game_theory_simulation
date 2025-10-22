@@ -127,6 +127,12 @@ function isGlobalEffect(effectName: string): boolean {
     'infectiousDisease',
     'pandemicResponse',
     'greenhouseGasReduction',
+    'habitatRestorationActive',
+    'rewildingActive',
+    'habitatRestorationBoost',
+    'rewildingBoost',
+    'carbonSequestration',
+    'ecosystemHealth',
   ];
   
   return globalEffects.includes(effectName);
@@ -319,7 +325,69 @@ function applyGlobalEffects(
           );
         }
         break;
-        
+
+      case 'habitatRestorationActive':
+        // Flag that habitat restoration is deployed
+        // Used by planetaryBoundaryRecovery.ts to unlock biosphere recovery beyond 25%
+        if (gameState.globalMetrics) {
+          setDynamicProperty(gameState.globalMetrics, 'habitatRestorationActive', value);
+        }
+        break;
+
+      case 'rewildingActive':
+        // Flag that ecological proxy rewilding is deployed
+        // Provides bonus to habitat restoration effectiveness
+        if (gameState.globalMetrics) {
+          setDynamicProperty(gameState.globalMetrics, 'rewildingActive', value);
+        }
+        break;
+
+      case 'habitatRestorationBoost':
+        // Ecosystem AI multiplier for habitat restoration effectiveness
+        if (gameState.globalMetrics) {
+          setDynamicProperty(gameState.globalMetrics, 'habitatRestorationBoost', value);
+        }
+        break;
+
+      case 'rewildingBoost':
+        // Ecosystem AI multiplier for rewilding effectiveness
+        if (gameState.globalMetrics) {
+          setDynamicProperty(gameState.globalMetrics, 'rewildingBoost', value);
+        }
+        break;
+
+      case 'carbonSequestration':
+        // Habitat restoration provides carbon sequestration
+        // Reduces atmospheric CO2 accumulation
+        if (gameState.environmentalAccumulation) {
+          gameState.environmentalAccumulation.carbonAccumulation = Math.max(
+            0,
+            gameState.environmentalAccumulation.carbonAccumulation - value * 0.001
+          );
+        }
+        break;
+
+      case 'ecosystemHealth':
+        // Improve general ecosystem health (habitat restoration, rewilding)
+        if (gameState.environmentalAccumulation) {
+          setDynamicProperty(
+            gameState.environmentalAccumulation,
+            'ecosystemHealth',
+            Math.min(1.0, getDynamicProperty(gameState.environmentalAccumulation, 'ecosystemHealth', 0.6) + value * 0.01)
+          );
+        }
+        break;
+
+      case 'extinctionRateReduction':
+        // Reduce species extinction rate (global biodiversity protection)
+        if (gameState.planetaryBoundaries) {
+          gameState.planetaryBoundaries.biodiversityLoss = Math.max(
+            0,
+            gameState.planetaryBoundaries.biodiversityLoss - value * 0.005
+          );
+        }
+        break;
+
       case 'oceanPHBonus':
         // Reduce ocean acidification
         if (gameState.oceanHealth) {

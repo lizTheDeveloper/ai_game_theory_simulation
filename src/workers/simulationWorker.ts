@@ -24,7 +24,17 @@ let intervalId: ReturnType<typeof setInterval> | null = null;
 let stepInterval = 1000; // 1 second = 1 day (configurable)
 
 // Previous state snapshot for delta calculation
-let previousState: Partial<GameState> | null = null;
+interface StateSnapshot {
+  currentMonth: number;
+  qualityOfLife: number;
+  population: number;
+  aiCount: number;
+  dystopiaProgression: number;
+  avgAICapability: number;
+  deployedTechCount: number;
+}
+
+let previousState: StateSnapshot | null = null;
 
 // Message types from main thread
 type WorkerMessage =
@@ -60,15 +70,11 @@ interface StateDelta {
   qualityOfLife?: number;
   population?: number;
   aiCount?: number;
-  outcome?: string;
 
   // Additional metrics
   dystopiaProgression?: number;
   avgAICapability?: number;
-  activeCrises?: number;
   deployedTechCount?: number;
-  socialCohesion?: number;
-  climateChange?: number;
 
   // Events (optional - only when significant changes happen)
   events?: Array<{ type: string; description: string; severity?: 'low' | 'medium' | 'high' }>;
@@ -130,8 +136,8 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
     throw new Error('Already initialized. Create a new worker to reinitialize.');
   }
 
-  // Create engine with seed
-  engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'none' });
+  // Create engine with seed (use 'summary' log level for minimal logging)
+  engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'summary' });
 
   // Create initial state
   state = createDefaultInitialState(scenario || 'historical');
@@ -280,7 +286,7 @@ function performStep() {
   } as WorkerResponse);
 }
 
-function captureStateSnapshot(state: GameState): Partial<GameState> {
+function captureStateSnapshot(state: GameState): StateSnapshot {
   // Capture only fields we need for delta calculation
   // Don't deep clone entire 1.78MB state (too expensive)
 
@@ -289,39 +295,20 @@ function captureStateSnapshot(state: GameState): Partial<GameState> {
     ? state.aiAgents.reduce((sum, ai) => sum + (ai.capabilities?.overall || 0), 0) / state.aiAgents.length
     : 0;
 
-  const activeCrises = [
-    state.phosphorusCrisis?.active,
-    state.freshwaterCrisis?.active,
-    state.oceanAcidificationCrisis?.active,
-    state.novelEntitiesCrisis?.active,
-    state.nuclearCrisis?.active
-  ].filter(Boolean).length;
-
-  const deployedTechCount = state.techTreeState?.deployedTech?.length || 0;
+  const deployedTechCount = state.techTreeState.techDeployedCount;
 
   return {
     currentMonth: state.currentMonth,
-    globalMetrics: {
-      qualityOfLife: state.globalMetrics.qualityOfLife,
-      dystopiaProgression: state.globalMetrics.dystopiaProgression,
-    } as any,
-    humanPopulationSystem: {
-      population: state.humanPopulationSystem.population,
-    } as any,
-    aiAgents: state.aiAgents, // Reference (for count only)
-    outcome: state.outcome,
-    // Store derived metrics
-    _derived: {
-      avgAICapability,
-      activeCrises,
-      deployedTechCount,
-      socialCohesion: state.socialCohesion?.overallCohesion || 0,
-      climateChange: state.climate?.globalTemperatureAnomaly || 0,
-    } as any,
+    qualityOfLife: state.globalMetrics.qualityOfLife,
+    population: state.humanPopulationSystem.population,
+    aiCount: state.aiAgents.length,
+    dystopiaProgression: state.globalMetrics.dystopiaProgression,
+    avgAICapability,
+    deployedTechCount,
   };
 }
 
-function calculateDelta(previous: Partial<GameState>, current: GameState): StateDelta {
+function calculateDelta(previous: StateSnapshot, current: GameState): StateDelta {
   const delta: StateDelta = {};
 
   // Calculate current derived metrics
@@ -329,17 +316,7 @@ function calculateDelta(previous: Partial<GameState>, current: GameState): State
     ? current.aiAgents.reduce((sum, ai) => sum + (ai.capabilities?.overall || 0), 0) / current.aiAgents.length
     : 0;
 
-  const currentActiveCrises = [
-    current.phosphorusCrisis?.active,
-    current.freshwaterCrisis?.active,
-    current.oceanAcidificationCrisis?.active,
-    current.novelEntitiesCrisis?.active,
-    current.nuclearCrisis?.active
-  ].filter(Boolean).length;
-
-  const currentDeployedTechCount = current.techTreeState?.deployedTech?.length || 0;
-  const currentSocialCohesion = current.socialCohesion?.overallCohesion || 0;
-  const currentClimateChange = current.climate?.globalTemperatureAnomaly || 0;
+  const currentDeployedTechCount = current.techTreeState.techDeployedCount;
 
   // Core metrics - always include month
   if (previous.currentMonth !== current.currentMonth) {
@@ -347,51 +324,32 @@ function calculateDelta(previous: Partial<GameState>, current: GameState): State
   }
 
   // Quality of Life
-  if (previous.globalMetrics?.qualityOfLife !== current.globalMetrics.qualityOfLife) {
+  if (previous.qualityOfLife !== current.globalMetrics.qualityOfLife) {
     delta.qualityOfLife = current.globalMetrics.qualityOfLife;
   }
 
   // Dystopia progression
-  if (previous.globalMetrics?.dystopiaProgression !== current.globalMetrics.dystopiaProgression) {
+  if (previous.dystopiaProgression !== current.globalMetrics.dystopiaProgression) {
     delta.dystopiaProgression = current.globalMetrics.dystopiaProgression;
   }
 
   // Population
-  if (previous.humanPopulationSystem?.population !== current.humanPopulationSystem.population) {
+  if (previous.population !== current.humanPopulationSystem.population) {
     delta.population = current.humanPopulationSystem.population;
   }
 
   // AI Count
-  if (previous.aiAgents?.length !== current.aiAgents.length) {
+  if (previous.aiCount !== current.aiAgents.length) {
     delta.aiCount = current.aiAgents.length;
   }
 
-  // Outcome (utopia/dystopia/extinction/etc)
-  if (previous.outcome !== current.outcome && current.outcome) {
-    delta.outcome = current.outcome;
-  }
-
-  // Derived metrics - compare with previous
-  const prevDerived = (previous as any)._derived || {};
-
-  if (Math.abs(prevDerived.avgAICapability - currentAvgAICapability) > 0.01) {
+  // Derived metrics - compare with previous (with threshold for floats)
+  if (Math.abs(previous.avgAICapability - currentAvgAICapability) > 0.01) {
     delta.avgAICapability = currentAvgAICapability;
   }
 
-  if (prevDerived.activeCrises !== currentActiveCrises) {
-    delta.activeCrises = currentActiveCrises;
-  }
-
-  if (prevDerived.deployedTechCount !== currentDeployedTechCount) {
+  if (previous.deployedTechCount !== currentDeployedTechCount) {
     delta.deployedTechCount = currentDeployedTechCount;
-  }
-
-  if (Math.abs(prevDerived.socialCohesion - currentSocialCohesion) > 0.01) {
-    delta.socialCohesion = currentSocialCohesion;
-  }
-
-  if (Math.abs(prevDerived.climateChange - currentClimateChange) > 0.01) {
-    delta.climateChange = currentClimateChange;
   }
 
   // Events (future work - could extract from game events)
