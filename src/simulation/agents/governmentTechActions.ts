@@ -26,30 +26,33 @@ const NATIONAL_TECH_PRIORITIES: Record<string, {
   'United States': {
     monthlyBudget: 50,  // $50B/month
     priorities: [
-      { category: 'alignment', weight: 0.35, reason: 'AI safety leadership' },
-      { category: 'energy', weight: 0.25, reason: 'Fusion for energy independence' },
+      { category: 'alignment', weight: 0.30, reason: 'AI safety leadership' },
+      { category: 'energy', weight: 0.20, reason: 'Fusion for energy independence' },
       { category: 'medical', weight: 0.20, reason: 'Disease elimination, longevity' },
+      { category: 'climate', weight: 0.15, reason: 'Climate mitigation & habitat restoration' },
       { category: 'social', weight: 0.10, reason: 'UBI, purpose infrastructure' },
-      { category: 'climate', weight: 0.10, reason: 'Climate mitigation' },
+      { category: 'ocean', weight: 0.05, reason: 'Ocean conservation' },
     ],
   },
   'China': {
     monthlyBudget: 40,  // $40B/month
     priorities: [
-      { category: 'energy', weight: 0.30, reason: 'Clean energy for growth' },
-      { category: 'medical', weight: 0.25, reason: 'Healthcare modernization' },
+      { category: 'energy', weight: 0.25, reason: 'Clean energy for growth' },
+      { category: 'medical', weight: 0.20, reason: 'Healthcare modernization' },
       { category: 'alignment', weight: 0.20, reason: 'AI control (authoritarian)' },
+      { category: 'climate', weight: 0.15, reason: 'Pollution remediation & reforestation' },
       { category: 'social', weight: 0.15, reason: 'Social stability systems' },
-      { category: 'climate', weight: 0.10, reason: 'Pollution remediation' },
+      { category: 'agriculture', weight: 0.05, reason: 'Food security' },
     ],
   },
   'European Union': {
     monthlyBudget: 35,  // $35B/month
     priorities: [
-      { category: 'energy', weight: 0.35, reason: 'Net-zero by 2050' },
-      { category: 'climate', weight: 0.25, reason: 'Environmental leadership' },
-      { category: 'alignment', weight: 0.20, reason: 'AI regulation, safety' },
+      { category: 'climate', weight: 0.35, reason: 'Environmental leadership & habitat restoration' },
+      { category: 'energy', weight: 0.25, reason: 'Net-zero by 2050' },
+      { category: 'alignment', weight: 0.15, reason: 'AI regulation, safety' },
       { category: 'social', weight: 0.15, reason: 'Social cohesion' },
+      { category: 'ocean', weight: 0.05, reason: 'Marine ecosystem restoration' },
       { category: 'medical', weight: 0.05, reason: 'Healthcare' },
     ],
   },
@@ -66,11 +69,12 @@ const NATIONAL_TECH_PRIORITIES: Record<string, {
   'India': {
     monthlyBudget: 15,  // $15B/month
     priorities: [
-      { category: 'agriculture', weight: 0.35, reason: 'Food security' },
-      { category: 'freshwater', weight: 0.25, reason: 'Aquifer depletion' },
-      { category: 'energy', weight: 0.20, reason: 'Clean energy for growth' },
+      { category: 'agriculture', weight: 0.30, reason: 'Food security' },
+      { category: 'freshwater', weight: 0.20, reason: 'Aquifer depletion' },
+      { category: 'climate', weight: 0.20, reason: 'Ecosystem services & monsoon stability' },
+      { category: 'energy', weight: 0.15, reason: 'Clean energy for growth' },
       { category: 'medical', weight: 0.10, reason: 'Disease burden' },
-      { category: 'social', weight: 0.10, reason: 'Poverty reduction' },
+      { category: 'social', weight: 0.05, reason: 'Poverty reduction' },
     ],
   },
   'Africa': {
@@ -97,24 +101,37 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
   energyCost: 0,
   
   canExecute: (state) => {
-    const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
+    const techTreeState: TechTreeState = state.techTreeState;
     if (!techTreeState) return false;
-    
+
     // Ensure proper types after serialization
     // No longer needed - using plain objects
-    
-    // Need unlocked tech
-    const unlockedTech = getAllTech().filter(t => 
-      techTreeState.unlockedTech.includes(t.id) &&
-      !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
-    );
-    
+
+    // FIX #15 (Oct 21, 2025): Check deployment level properly
+    // Old: Checked if unlockedTech contains '${techId}_deployed' (WRONG - never exists)
+    // New: Check actual deployment level in regionalDeployment
+    const unlockedTech = getAllTech().filter(t => {
+      if (!techTreeState.unlockedTech.includes(t.id)) return false;
+
+      // Check if tech is NOT fully deployed globally (< 95%)
+      const globalDeployment = techTreeState.regionalDeployment['global'];
+      if (!globalDeployment) return true; // No deployments yet - can deploy
+
+      const deployment = globalDeployment.find(d => d.techId === t.id);
+      if (!deployment) return true; // Not deployed yet
+
+      return deployment.deploymentLevel < 0.95; // Can deploy if less than 95%
+    });
+
     return unlockedTech.length > 0;
   },
   
   execute: (state, agentId, random = Math.random): ActionResult => {
-    const techTreeState: TechTreeState = (state as any).techTreeState;
-    
+    const techTreeState: TechTreeState = state.techTreeState;
+
+    // DEBUG: Log action execution
+    console.log(`\n🏛️ Government attempting national tech deployment (Month ${state.currentMonth})`);
+
     // Determine which nation is deploying (for now, use a weighted selection)
     // In future, this could be based on country-specific government actions
     const nation = selectNationToAct(state, random);
