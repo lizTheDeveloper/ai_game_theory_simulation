@@ -123,24 +123,8 @@ const ALL_TECH: TechDefinition[] = [
       sleeperDetectionBonus: 0.01,
     },
   },
-  
-  // Climate (3)
-  {
-    id: 'de_extinction',
-    name: 'De-Extinction & Rewilding',
-    description: 'Colossal Biosciences - woolly mammoth, thylacine restoration',
-    category: 'climate',
-    status: 'deployed_2025',
-    prerequisites: [],
-    researchMonthsRequired: 0,
-    researchCost: 0,
-    deploymentCost: 500,
-    deploymentMonthsRequired: 0,
-    deploymentLevel: 0.01,
-    effects: {
-      biodiversityBonus: 0.005,
-    },
-  },
+
+  // Climate (2) - De-extinction REMOVED (research showed NOT viable, see /research/de_extinction_capabilities_timelines_20251022.md)
   {
     id: 'direct_air_capture',
     name: 'Advanced Direct Air Capture',
@@ -1171,7 +1155,55 @@ const ALL_TECH: TechDefinition[] = [
       ecosystemHealth: 0.12,
     },
   },
-  
+  {
+    id: 'habitat_restoration',
+    name: 'Habitat Restoration at Scale',
+    description: 'Large-scale reforestation, wetland restoration, marine protected areas - unlocks biosphere recovery beyond 25%',
+    category: 'climate',
+    status: 'unlockable',
+    prerequisites: ['precision_conservation'],
+    minAICapability: 2.0,
+    minEconomicStage: 3.0,
+    researchMonthsRequired: 24,
+    researchCost: 5000,  // $5B research (planning, site selection, methodology)
+    deploymentCost: 250000,  // $250B total deployment (global scale)
+    deploymentMonthsRequired: 240,  // 20 years (180-360mo realistic range)
+    deploymentLevel: 0,
+    effects: {
+      // Research: Moreno-Mateos et al. (2017) - 10-50 year recovery timescales
+      // Enables biosphere recovery from 25% cap to 80% potential
+      habitatRestorationActive: 1.0,  // Flag for planetary boundary logic
+      biodiversityBonus: 0.30,  // Population recovery for surviving species
+      extinctionRateReduction: 0.30,  // Prevents further losses
+      ecosystemHealth: 0.40,  // Functional ecosystem services restored
+      carbonSequestration: 0.20,  // Reforestation carbon sink
+    },
+  },
+  {
+    id: 'ecological_proxy_rewilding',
+    name: 'Ecological Proxy Rewilding',
+    description: 'Reintroduce keystone species proxies (Tauros cattle, elephants in Pleistocene Park) to restore ecosystem function',
+    category: 'climate',
+    status: 'unlockable',
+    prerequisites: [],
+    minAICapability: 1.5,
+    minEconomicStage: 2.5,
+    researchMonthsRequired: 12,
+    researchCost: 500,  // $500M research (breeding programs, site studies)
+    deploymentCost: 5000,  // $5B deployment (100-1000x cheaper than de-extinction)
+    deploymentMonthsRequired: 120,  // 10 years (60-180mo range)
+    deploymentLevel: 0,
+    effects: {
+      // Research: Jepson (2024), Tauros Programme (operational NOW)
+      // 10-20% biosphere recovery boost, much faster than true de-extinction
+      rewildingActive: 1.0,  // Flag for planetary boundary logic
+      biodiversityBonus: 0.15,  // Proxy species restore trophic cascades
+      extinctionRateReduction: 0.10,  // Habitat improvement prevents losses
+      ecosystemHealth: 0.25,  // Megafauna restore grasslands, fire/flood regulation
+      carbonSequestration: 0.10,  // Grazing animals improve soil carbon
+    },
+  },
+
   // ============================================================================
   // TIER 3: TRANSFORMATIVE (14 technologies)
   // ============================================================================
@@ -1375,7 +1407,29 @@ const ALL_TECH: TechDefinition[] = [
       negativeEmissions: 1.0,
     },
   },
-  
+  {
+    id: 'ecosystem_management_ai',
+    name: 'Advanced Ecosystem Management AI',
+    description: 'AI-optimized restoration targeting, real-time ecosystem monitoring, adaptive management - 30% boost to habitat restoration effectiveness',
+    category: 'climate',
+    status: 'unlockable',
+    prerequisites: ['habitat_restoration', 'precision_conservation'],
+    minAICapability: 3.5,
+    minEconomicStage: 3.5,
+    researchMonthsRequired: 36,
+    researchCost: 8000,  // $8B research (AI models, global monitoring infrastructure)
+    deploymentCost: 50000,  // $50B deployment (sensor networks, satellites, edge computing)
+    deploymentMonthsRequired: 60,  // 5 years
+    deploymentLevel: 0,
+    effects: {
+      // Multiplier for habitat restoration effectiveness
+      habitatRestorationBoost: 0.30,  // 30% effectiveness increase
+      rewildingBoost: 0.30,  // Also boosts rewilding effectiveness
+      biodiversityBonus: 0.10,  // Direct monitoring reduces poaching/degradation
+      ecosystemHealth: 0.15,  // Adaptive management prevents restoration failures
+    },
+  },
+
   // Agriculture Transformation (2)
   {
     id: 'vertical_farming',
