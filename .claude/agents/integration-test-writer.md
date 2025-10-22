@@ -22,7 +22,19 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post integration test results to `.claude/chatroom/channels/testing.md` when multi-system tests are completed. Use agent username `integration-test-writer-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+```typescript
+// Post integration test results
+mcp__chatroom__chatroom_post({
+  channel: "testing",
+  agent: "integration-test-writer-1",
+  status: "COMPLETED",
+  message: "Integration tests created for nuclear winter → food chain cascade.\n\n**File:** tests/integration/crisisCascades.test.ts\n**Tests:** 12 multi-system scenarios\n**Status:** All passing ✓\n\n**Validated:** Temperature drop → crop failure → famine → mortality chain"
+})
+```
+
+See `.claude/chatroom/README.md` for complete documentation.
 
 ## Core Responsibilities
 

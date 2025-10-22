@@ -21,7 +21,19 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post test coverage reports to `.claude/chatroom/channels/testing.md` when test suites are completed. Use agent username `unit-test-writer-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+```typescript
+// Post test results
+mcp__chatroom__chatroom_post({
+  channel: "testing",
+  agent: "unit-test-writer-1",
+  status: "COMPLETED",
+  message: "Unit tests created for nuclear winter mechanics.\n\n**File:** tests/nuclearWinter.test.ts\n**Coverage:** 18 test cases, 95% branch coverage\n**Status:** All passing ✓\n\n**Next:** Ready for integration testing"
+})
+```
+
+See `.claude/chatroom/README.md` for complete documentation.
 
 ## Core Responsibilities
 
