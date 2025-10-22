@@ -33,6 +33,14 @@ export default function RealtimePage() {
   const [scenario, setScenario] = useState<ScenarioMode>('historical');
   const [error, setError] = useState<string | null>(null);
 
+  // Additional metrics from delta
+  const [dystopiaProgression, setDystopiaProgression] = useState<number | null>(null);
+  const [avgAICapability, setAvgAICapability] = useState<number | null>(null);
+  const [deployedTechCount, setDeployedTechCount] = useState<number | null>(null);
+
+  // Event log (keep last 50 events)
+  const [events, setEvents] = useState<Array<{month: number, message: string, type: string}>>([]);
+
   // Configuration
   const [seed, setSeed] = useState(42000);
   const [speed, setSpeed] = useState(1.0); // 1x = 1 second/day
@@ -75,9 +83,43 @@ export default function RealtimePage() {
       // Apply delta to state
       if (delta.currentMonth !== undefined) setMonth(delta.currentMonth);
       if (delta.qualityOfLife !== undefined) setQualityOfLife(delta.qualityOfLife);
-      if (delta.population !== undefined) setPopulation(delta.population);
-      if (delta.aiCount !== undefined) setAiCount(delta.aiCount);
-      if (delta.outcome !== undefined) setOutcome(delta.outcome);
+      if (delta.population !== undefined) {
+        setPopulation(delta.population);
+        // Add event for significant population changes
+        if (population !== null && Math.abs(delta.population - population) > 0.1) {
+          const change = delta.population - population;
+          setEvents(prev => [...prev.slice(-49), {
+            month: currentMonth,
+            message: `Population ${change > 0 ? 'increased' : 'decreased'} by ${Math.abs(change).toFixed(2)}B`,
+            type: change > 0 ? 'info' : 'warning'
+          }]);
+        }
+      }
+      if (delta.aiCount !== undefined) {
+        setAiCount(delta.aiCount);
+        // Add event for AI agent changes
+        if (aiCount !== null && delta.aiCount !== aiCount) {
+          const change = delta.aiCount - aiCount;
+          setEvents(prev => [...prev.slice(-49), {
+            month: currentMonth,
+            message: `${change > 0 ? '+' : ''}${change} AI agents (total: ${delta.aiCount})`,
+            type: 'info'
+          }]);
+        }
+      }
+      if (delta.dystopiaProgression !== undefined) setDystopiaProgression(delta.dystopiaProgression);
+      if (delta.avgAICapability !== undefined) setAvgAICapability(delta.avgAICapability);
+      if (delta.deployedTechCount !== undefined) {
+        setDeployedTechCount(delta.deployedTechCount);
+        // Add event for new tech deployments
+        if (deployedTechCount !== null && delta.deployedTechCount > deployedTechCount) {
+          setEvents(prev => [...prev.slice(-49), {
+            month: currentMonth,
+            message: `New technology deployed! (${delta.deployedTechCount} total)`,
+            type: 'success'
+          }]);
+        }
+      }
 
       // Track FPS
       updateCountRef.current++;
@@ -149,8 +191,10 @@ export default function RealtimePage() {
 
     if (running) {
       client.pause();
+      setRunning(false); // Update immediately (worker may not send event)
     } else {
       client.start();
+      setRunning(true); // Update immediately (worker may not send event)
     }
   }, [client, initialized, running]);
 
@@ -299,42 +343,96 @@ export default function RealtimePage() {
 
       {/* Metrics Dashboard */}
       {initialized && (
-        <div className="grid grid-cols-4 gap-4 mb-8">
-          <div className="p-6 bg-gray-900 border border-gray-700 rounded">
-            <h3 className="text-sm text-gray-400 mb-2">Month</h3>
-            <p className="text-3xl font-bold">{month}</p>
-            <p className="text-sm text-gray-500 mt-1">
-              Year {Math.floor(month / 12)}
-            </p>
-          </div>
+        <>
+          <div className="grid grid-cols-4 gap-4 mb-4">
+            <div className="p-6 bg-gray-900 border border-gray-700 rounded">
+              <h3 className="text-sm text-gray-400 mb-2">Month</h3>
+              <p className="text-3xl font-bold">{month}</p>
+              <p className="text-sm text-gray-500 mt-1">
+                Year {Math.floor(month / 12)}
+              </p>
+            </div>
 
-          <div className="p-6 bg-gray-900 border border-gray-700 rounded">
-            <h3 className="text-sm text-gray-400 mb-2">Quality of Life</h3>
-            <p className="text-3xl font-bold">{formatPercent(qualityOfLife)}</p>
-            <div className="mt-2 h-2 bg-gray-800 rounded overflow-hidden">
-              <div
-                className="h-full bg-green-500"
-                style={{ width: `${(qualityOfLife || 0) * 100}%` }}
-              />
+            <div className="p-6 bg-gray-900 border border-gray-700 rounded">
+              <h3 className="text-sm text-gray-400 mb-2">Quality of Life</h3>
+              <p className="text-3xl font-bold">{formatPercent(qualityOfLife)}</p>
+              {qualityOfLife && qualityOfLife > 1 && (
+                <p className="text-xs text-green-400 mt-1">
+                  {(qualityOfLife).toFixed(2)}x baseline
+                </p>
+              )}
+              <div className="mt-2 h-2 bg-gray-800 rounded overflow-hidden">
+                <div
+                  className="h-full bg-green-500"
+                  style={{ width: `${Math.min((qualityOfLife || 0) * 100, 100)}%` }}
+                />
+              </div>
+            </div>
+
+            <div className="p-6 bg-gray-900 border border-gray-700 rounded">
+              <h3 className="text-sm text-gray-400 mb-2">Population</h3>
+              <p className="text-3xl font-bold">
+                {population !== null ? `${(population / 1e9).toFixed(2)}B` : '—'}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                {population && population > 8e9 ? '📈 Growing' : population && population < 7e9 ? '📉 Declining' : '➡️ Stable'}
+              </p>
+            </div>
+
+            <div className="p-6 bg-gray-900 border border-gray-700 rounded">
+              <h3 className="text-sm text-gray-400 mb-2">AI Agents</h3>
+              <p className="text-3xl font-bold">{aiCount || 0}</p>
+              <p className="text-sm text-gray-500 mt-1">
+                {aiCount && aiCount > 20 ? '🤖 Expanding' : '—'}
+              </p>
             </div>
           </div>
 
-          <div className="p-6 bg-gray-900 border border-gray-700 rounded">
-            <h3 className="text-sm text-gray-400 mb-2">Population</h3>
-            <p className="text-3xl font-bold">{formatNumber(population)}</p>
-            <p className="text-sm text-gray-500 mt-1">
-              {population && population > 8e9 ? '📈' : population && population < 7e9 ? '📉' : '➡️'}
-            </p>
+          {/* Additional Metrics Row */}
+          <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="p-4 bg-gray-900 border border-gray-700 rounded">
+              <h3 className="text-xs text-gray-400 mb-1">Avg AI Capability</h3>
+              <p className="text-2xl font-bold">
+                {avgAICapability !== null ? (avgAICapability * 100).toFixed(1) + '%' : '—'}
+              </p>
+            </div>
+
+            <div className="p-4 bg-gray-900 border border-gray-700 rounded">
+              <h3 className="text-xs text-gray-400 mb-1">Deployed Tech</h3>
+              <p className="text-2xl font-bold">{deployedTechCount || 0}</p>
+            </div>
+
+            <div className="p-4 bg-gray-900 border border-gray-700 rounded">
+              <h3 className="text-xs text-gray-400 mb-1">Dystopia Risk</h3>
+              <p className="text-2xl font-bold">
+                {dystopiaProgression !== null ? (dystopiaProgression * 100).toFixed(1) + '%' : '—'}
+              </p>
+            </div>
           </div>
 
-          <div className="p-6 bg-gray-900 border border-gray-700 rounded">
-            <h3 className="text-sm text-gray-400 mb-2">AI Agents</h3>
-            <p className="text-3xl font-bold">{formatNumber(aiCount)}</p>
-            <p className="text-sm text-gray-500 mt-1">
-              {aiCount && aiCount > 20 ? '🤖' : '—'}
-            </p>
+          {/* Event Log */}
+          <div className="mb-8 p-4 bg-gray-900 border border-gray-700 rounded">
+            <h3 className="text-lg font-semibold mb-3">Event Log</h3>
+            <div className="h-48 overflow-y-auto space-y-1">
+              {events.length === 0 ? (
+                <p className="text-sm text-gray-500">No events yet. Start simulation to see updates...</p>
+              ) : (
+                events.slice().reverse().map((event, idx) => (
+                  <div key={idx} className="text-sm flex gap-2">
+                    <span className="text-gray-500 w-16">M{event.month}</span>
+                    <span className={
+                      event.type === 'success' ? 'text-green-400' :
+                      event.type === 'warning' ? 'text-yellow-400' :
+                      event.type === 'error' ? 'text-red-400' : 'text-gray-300'
+                    }>
+                      {event.message}
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Outcome */}
