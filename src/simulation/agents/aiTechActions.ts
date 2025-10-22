@@ -25,26 +25,36 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
   canExecute: (state, agentId) => {
     const agent = state.aiAgents.find(ai => ai.id === agentId);
     if (!agent) return false;
-    
+
     // Need tech tree state
-    const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
+    const techTreeState: TechTreeState = state.techTreeState;
     if (!techTreeState) return false;
-    
+
     // Ensure proper types after serialization
     // No longer needed - using plain objects
-    
+
     // Need to have an organization with revenue
     if (!agent.organizationId) return false;
-    
+
     const org = state.organizations.find(o => o.id === agent.organizationId);
     if (!org || org.monthlyRevenue < 10) return false; // Need at least $10M/month
-    
-    // Need unlocked but not fully deployed tech
-    const unlockedTech = getAllTech().filter(t => 
-      techTreeState.unlockedTech.includes(t.id) &&
-      !techTreeState.unlockedTech.includes(`${t.id}_deployed`)
-    );
-    
+
+    // FIX #15 (Oct 21, 2025): Check deployment level properly
+    // Old: Checked if unlockedTech contains '${techId}_deployed' (WRONG - never exists)
+    // New: Check actual deployment level in regionalDeployment
+    const unlockedTech = getAllTech().filter(t => {
+      if (!techTreeState.unlockedTech.includes(t.id)) return false;
+
+      // Check if tech is NOT fully deployed globally (< 95%)
+      const globalDeployment = techTreeState.regionalDeployment['global'];
+      if (!globalDeployment) return true; // No deployments yet - can deploy
+
+      const deployment = globalDeployment.find(d => d.techId === t.id);
+      if (!deployment) return true; // Not deployed yet
+
+      return deployment.deploymentLevel < 0.95; // Can deploy if less than 95%
+    });
+
     return unlockedTech.length > 0;
   },
   
@@ -59,10 +69,10 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
         message: 'Agent not found'
       };
     }
-    
-    const techTreeState: TechTreeState = (state as any).techTreeState;
+
+    const techTreeState: TechTreeState = state.techTreeState;
     const org = state.organizations.find(o => o.id === agent.organizationId);
-    
+
     if (!org) {
       return {
         success: false,
@@ -72,6 +82,9 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
         message: 'No organization'
       };
     }
+
+    // DEBUG: Log action execution
+    console.log(`\n🚀 AI ${agent.name} attempting tech deployment (revenue: $${org.monthlyRevenue.toFixed(0)}M, alignment: ${agent.alignment.toFixed(2)})`);
     
     // Select technology to deploy based on alignment and priorities
     const selectedTech = selectTechToDeploy(agent, state, techTreeState, random);
@@ -153,7 +166,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     // Need digital capability to hack/sabotage
     if (agent.capabilityProfile.digital < 2.0) return false;
     
-    const techTreeState: TechTreeState | undefined = (state as any).techTreeState;
+    const techTreeState: TechTreeState = state.techTreeState;
     if (!techTreeState) return false;
     
     // Ensure proper types after serialization
@@ -180,7 +193,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
       };
     }
     
-    const techTreeState: TechTreeState = (state as any).techTreeState;
+    const techTreeState: TechTreeState = state.techTreeState;
     
     // Select technology to sabotage
     const threateningTech = getAllTech().filter(t => 

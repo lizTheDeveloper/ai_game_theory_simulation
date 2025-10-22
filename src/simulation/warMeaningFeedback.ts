@@ -305,7 +305,7 @@ function updateParentalFulfillment(country: CountryPopulation, state: GameState)
 
   // Tech deployment increases fulfillment (AI companions, de-extinction, ecosystem restoration)
   // Check if relevant tech is deployed
-  const techTreeState = (state as any).techTreeState;
+  const techTreeState = state.techTreeState;
   if (techTreeState && techTreeState.unlockedTech) {
     // De-extinction tech provides nurturing opportunities
     if (techTreeState.unlockedTech.includes('de_extinction_basic')) {

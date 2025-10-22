@@ -13,6 +13,7 @@ import { createAIAgent } from './initialization';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { updateSleeperProgression } from './sleeperProgression';
 import { updateSleeperEconomy } from './sleeperEconomy';
+import { getTechDeploymentSafe } from './techTree/helpers';
 
 /**
  * Poisson random number generator
@@ -120,8 +121,9 @@ function createNewAI(state: GameState, index: number): AIAgent {
   // Effect: Reduces toxicity, improves helpfulness, prevents obvious misalignment
   // Does NOT prevent: goal mispecification, instrumental convergence, power-seeking, alignment faking
   // Apply ~6 months worth of boost (typical training time)
-  if (state.breakthroughTech.advancedRLHF?.active) {
-    const rlhfBoost = state.breakthroughTech.advancedRLHF.alignmentBoostPerMonth * 0.5; // ~6 months
+  if (getTechDeploymentSafe(state, 'advancedRLHF') > 0) {
+    // Safe fallback: RLHF boost is 0.05/month (from breakthroughTechnologies.ts)
+    const rlhfBoost = (state.breakthroughTech?.advancedRLHF?.alignmentBoostPerMonth ?? 0.05) * 0.5; // ~6 months
     alignment = Math.min(0.95, alignment + rlhfBoost);
     // Note: This pushes low-alignment AIs (0.2-0.5) up to medium (0.5-0.7)
     // But high-capability AIs with goal conflicts still emerge

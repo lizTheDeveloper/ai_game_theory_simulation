@@ -21,6 +21,7 @@
 import type { GameState } from '../types/game';
 import { getTrustInAI, calculateComprehensiveTrustInAI } from './socialCohesion';
 import { TRUST_THRESHOLD_ACCEPTANCE, TRUST_THRESHOLD_EMBRACE } from './trustThresholds';
+import { getUnlockedTechCount, getDeployedTechCount } from './techTree/helpers';
 
 export interface UpwardSpiral {
   active: boolean;           // Is this spiral currently active?
@@ -222,14 +223,11 @@ function updateDemocraticSpiral(spiral: UpwardSpiral, state: GameState, month: n
  *           MDPI (2024) - Only 21% redesigned workflows, strong correlation with benefits
  */
 function updateScientificSpiral(spiral: UpwardSpiral, state: GameState, month: number): void {
-  const breakthrough = state.breakthroughTech;
-
-  // Count unlocked breakthroughs
-  const unlockedCount = Object.values(breakthrough).filter((t: any) => t?.unlocked).length;
+  // Count unlocked breakthroughs (uses compatibility layer for old/new tech systems)
+  const unlockedCount = getUnlockedTechCount(state);
 
   // Count deployed breakthroughs (>50%)
-  const deployedCount = Object.values(breakthrough)
-    .filter((t: any) => t?.deploymentLevel && t.deploymentLevel > 0.5).length;
+  const deployedCount = getDeployedTechCount(state, 0.5);
 
   // Research investment (as % of economy)
   const researchInvestments = state.government.researchInvestments;
@@ -676,7 +674,6 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   const social = state.socialAccumulation;
   const env = state.environmentalAccumulation;
   const gov = state.government.governanceQuality;
-  const breakthrough = state.breakthroughTech;
   
   const years = Math.floor(currentMonth / 12);
   const months = currentMonth % 12;
@@ -736,8 +733,8 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // console.log(`   Government Type: ${state.government.governmentType} ${notAuth ? '✅' : '❌'} (cannot be authoritarian)`);
   
   // SCIENTIFIC SPIRAL
-  const unlockedCount = Object.values(breakthrough).filter((t: any) => t?.unlocked).length;
-  const deployedCount = Object.values(breakthrough).filter((t: any) => t?.deploymentLevel && t.deploymentLevel > 0.5).length;
+  const unlockedCount = getUnlockedTechCount(state);
+  const deployedCount = getDeployedTechCount(state, 0.5);
   const totalResearch = Object.values(state.government.researchInvestments).reduce((sum, val) => sum + (Number(val) || 0), 0);
   const researchIntensive = totalResearch > 50;
   const aiAccelerated = avgAI > 1.2; // Lowered from 2.0 - AI already accelerating science at GPT-4 level

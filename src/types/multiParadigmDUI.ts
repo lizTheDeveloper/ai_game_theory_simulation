@@ -308,6 +308,22 @@ export interface MultiParadigmDUI {
     ecological: number;
     indigenous: number;
   }>;
+
+  /**
+   * Western Liberal Component Scores (Oct 21, 2025 - Goodhart's Law Fix)
+   *
+   * Geometric mean headline number obscures nuance. Expose components for analysis.
+   *
+   * Real story: "Electoral democracy 45%, civil liberties 8%, rule of law 30%"
+   * NOT: "Western Liberal: 2/100" (compresses everything, invokes Goodhart)
+   */
+  westernLiberalComponents?: Array<{
+    month: number;
+    electoralDemocracy: number;  // 0-100
+    civilLiberties: number;      // 0-100
+    ruleOfLaw: number;           // 0-100
+    economicFreedom: number;     // 0-100
+  }>;
 }
 
 /**

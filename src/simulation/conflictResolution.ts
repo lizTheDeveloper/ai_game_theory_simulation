@@ -13,6 +13,7 @@
 
 import type { GameState } from '../types/game';
 import { clamp } from './utils';
+import { getTechDeploymentSafe } from './techTree/helpers';
 
 export interface ConflictResolutionState {
   // AI-Mediated Diplomacy
@@ -171,7 +172,7 @@ function updatePostScarcityPeace(peace: ConflictResolutionState, state: GameStat
   
   // Energy security: Abundant clean energy eliminates "oil wars"
   const energyAbundance = qol.energyAvailability;
-  const cleanEnergyDeployed = state.breakthroughTech.cleanEnergy?.deployed || 0;
+  const cleanEnergyDeployed = getTechDeploymentSafe(state, 'cleanEnergy');
   peace.energySecurityPeace = Math.min(1, (energyAbundance / 2.0) * 0.7 + cleanEnergyDeployed * 0.3);
   
   // Material security: Post-scarcity stage means no resource competition

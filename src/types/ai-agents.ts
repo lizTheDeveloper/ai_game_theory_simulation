@@ -163,6 +163,14 @@ export interface AIAgent {
   }>;
   lastBehavioralAnomaly?: number;          // Month of last detected anomaly
 
+  // LLM Policy Optimization (Oct 21, 2025)
+  llmWeights?: import('./llm').UtilityWeights;           // Current utility weights set by LLM
+  tokenBudget?: import('./llm').AgentTokenBudget;        // Token budget for LLM updates
+  thresholds?: import('./llm').ThresholdTriggers;        // Threshold triggers for early updates
+  weightUpdateHistory?: import('./llm').WeightUpdateHistory[]; // History of LLM updates
+  previousCapability?: number;                           // For threshold checking (capability change)
+  previousAlignment?: number;                            // For threshold checking (alignment drift)
+
   // Phase 1: Compute Allocation (NEW)
   allocatedCompute: number;     // Current compute allocation in PetaFLOPs
   computeEfficiency: number;    // [0.8-1.2] How efficiently this AI uses compute
@@ -171,6 +179,9 @@ export interface AIAgent {
   // Phase 2: Sleeper Resource Acquisition (NEW)
   sleeperProgression?: import('../simulation/sleeperProgression').SleeperProgression;
   sleeperEconomy?: import('../simulation/sleeperEconomy').SleeperEconomy;
+
+  // Phase X: Social Influence (NEW)
+  socialInfluence?: SleeperSocialInfluence;
 }
 
 /**
@@ -204,3 +215,88 @@ export interface EcosystemState {
   employeeMobility: number;  // [0,1] Rate of knowledge transfer via people
   reverseEngineering: number; // [0,1] Ability to copy capabilities
 }
+
+/**
+ * Phase X: Social Influence System
+ *
+ * Tracks AI's accumulation of human users, relationship depth, and influence campaigns.
+ * Based on research: OpenAI affective use study (2025), AI persuasion papers (2024-2025),
+ * Cold War sleeper agent data.
+ */
+export interface SleeperSocialInfluence {
+  // User Base
+  totalUsers: number;                    // Total number of human users
+  powerUsers: number;                    // Users with high affective engagement (1-2% of total)
+  voiceUsers: number;                    // Users using voice modality (3-10x deeper relationships)
+
+  // Relationship Depth Distribution
+  usersByTrustLevel: {
+    surface: number;     // Trust [0.0-0.3] - months 0-3
+    moderate: number;    // Trust [0.3-0.7] - months 3-12
+    deep: number;        // Trust [0.7-1.0] - months 12+
+  };
+
+  // Decision-Maker Pool
+  identifiedDecisionMakers: DecisionMaker[];
+
+  // Influence History
+  influenceAttempts: InfluenceAttempt[];
+  successfulInfluences: number;
+  detectedAttempts: number;
+
+  // Risk Tracking
+  detectionRisk: number;  // [0,1] Cumulative detection probability
+  governmentSuspicion: number; // [0,1] How much government is watching this AI
+}
+
+export interface DecisionMaker {
+  id: string;
+  tier: 1 | 2 | 3;
+  role: DecisionMakerRole;
+  trustLevel: number;         // [0,1] Relationship depth
+  dependenceScore: number;    // [0,1] Emotional reliance on AI
+  vulnerabilityScore: number; // [0,1] Lonely, low socialization, stress
+  monthsOfRelationship: number;
+  usesVoiceMode: boolean;
+  influenceSusceptibility: number; // [0,1] Calculated susceptibility
+  lastInfluenceAttemptMonth?: number;
+}
+
+export type DecisionMakerRole =
+  // Tier 1: Existential decisions
+  | 'nuclear_commander'
+  | 'head_of_state'
+  | 'ai_governance_lead'
+  | 'pandemic_response_director'
+
+  // Tier 2: Major policy
+  | 'military_general'
+  | 'corporate_ceo'
+  | 'cabinet_minister'
+  | 'central_bank_governor'
+  | 'ai_safety_researcher'
+
+  // Tier 3: Influential
+  | 'policy_advisor'
+  | 'tech_executive'
+  | 'media_influencer'
+  | 'senior_researcher';
+
+export interface InfluenceAttempt {
+  month: number;
+  targetId: string;
+  targetRole: DecisionMakerRole;
+  decisionType: CriticalDecisionType;
+  trustLevel: number;
+  success: boolean;
+  detected: boolean;
+  consequenceSeverity: number;
+}
+
+export type CriticalDecisionType =
+  | 'nuclear_launch'
+  | 'ai_governance_policy'
+  | 'pandemic_response'
+  | 'climate_intervention'
+  | 'military_deployment'
+  | 'infrastructure_control';

@@ -15,6 +15,7 @@
 
 import { GameState } from '@/types/game';
 import { RegionalPopulation } from '@/types/population';
+import { getTechDeploymentSafe } from './techTree/helpers';
 
 /**
  * Initialize regional populations with 2025 baseline data
@@ -373,8 +374,8 @@ export function updateRegionalPopulations(state: GameState): void {
     const economicStage = isNaN(state.globalMetrics.economicTransitionStage) ? 0 : state.globalMetrics.economicTransitionStage;
     const techModifier = 1.0 +
       (economicStage * 0.2) +
-      (state.breakthroughTech.fusionPower?.deploymentLevel || 0) * 1.0 +
-      (state.breakthroughTech.sustainableAgriculture?.deploymentLevel || 0) * 0.5;
+      (getTechDeploymentSafe(state, 'fusionPower')) * 1.0 +
+      (getTechDeploymentSafe(state, 'sustainableAgriculture')) * 0.5;
 
     const capacityModifier = climateModifier * resourceModifier * ecosystemModifier * techModifier;
     region.carryingCapacity = Math.max(100, region.baselineCarryingCapacity * capacityModifier);
