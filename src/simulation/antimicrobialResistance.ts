@@ -28,6 +28,7 @@ import type {
   RegionalAMRData,
 } from '../types/antimicrobialResistance';
 import { AMR_MITIGATION_TECHNOLOGIES } from '../types/antimicrobialResistance';
+import { getTechDeploymentSafe } from './techTree/helpers';
 
 /**
  * Initialize AMR system with 2025 baseline values

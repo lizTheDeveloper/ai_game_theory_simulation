@@ -18,7 +18,7 @@ import { initializeEnvironmentalAccumulation } from './environmental';
 import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
 import { initializeSpecificTippingPoints } from './specificTippingPoints';
-import { initializeBreakthroughTech } from './breakthroughTechnologies';
+import { initializeBreakthroughTech } from './breakthroughTechnologies'; // KEEPING: 11 files still reference breakthroughTech
 import { initializeUpwardSpirals } from './upwardSpirals';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
 import { initializeConflictResolution } from './conflictResolution';
@@ -28,6 +28,8 @@ import { initializeEmergencyManagement } from './emergencyManagement';
 import { initializeResourceEconomy } from './resourceEconomy';
 import { initializeDefensiveAI } from './defensiveAI';
 import { initializeNationalAI } from './nationalAI/index';
+import { createAgentTokenBudget, getDefaultThresholds, getDefaultUtilityWeights } from './llm/config';
+import { DEFAULT_LLM_CONFIG } from '@/types/llm';
 import { initializePhosphorusSystem } from './phosphorusDepletion';
 import { initializeFreshwaterSystem } from './freshwaterDepletion';
 import { initializeOceanAcidificationSystem } from './oceanAcidification';
@@ -58,6 +60,7 @@ import { initializeConsciousnessGovernance } from './consciousnessGovernance';
 import { initializeGamingDetection } from './gamingDetection';
 import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
 import { initializeGovernmentSystem } from './government/initialization';
+import { initializeTechTreeState } from './techTree/engine';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -309,9 +312,17 @@ export function createAIAgent(
     // Phase 1: Compute Allocation (NEW)
     allocatedCompute: 0, // Will be allocated monthly
     computeEfficiency: 0.9 + Math.random() * 0.3, // Random 0.9-1.2
-    organizationId: undefined // Will be set in Phase 2
+    organizationId: undefined, // Will be set in Phase 2
+
+    // LLM Policy Optimization (Oct 21, 2025)
+    llmWeights: undefined, // Will be set on first LLM update
+    tokenBudget: createAgentTokenBudget(alignment, isSleeper, DEFAULT_LLM_CONFIG.budgetMultiplier, 'uniform'),
+    thresholds: getDefaultThresholds(alignment),
+    weightUpdateHistory: [],
+    previousCapability: actualCapability,
+    previousAlignment: internalAlignment
   };
-  
+
   // Update derived capabilities from profile
   const derived = updateDerivedCapabilities(agent);
   agent.selfReplicationLevel = derived.selfReplicationLevel;
@@ -319,7 +330,7 @@ export function createAIAgent(
   agent.resourceControl = derived.resourceControl;
   agent.manipulationCapability = derived.manipulationCapability;
   agent.hackingCapability = derived.hackingCapability;
-  
+
   return agent;
 }
 
@@ -514,10 +525,17 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       history: [],
     },
 
-    // Phase 0: AI Welfare State (Oct 20, 2025)
+    // Phase 0: AI Welfare State v2.1 (Oct 21, 2025)
     // Research: Chalmers et al. (2024), Anthropic (2025) Model Welfare
+    // v2.1: Relationship & Identity Focus (OpenAI user data, ChatGPT 4o crisis)
     aiWelfare: {
-      currentQoL: 0.5, // Neutral initial state
+      // v2.1 Primary fields
+      simpleScore: 0.5, // Neutral initial state
+      elysiumPattern: false,
+      consistency: 0.8, // Default consistency (no gaming yet)
+
+      // Legacy v1 fields (DEPRECATED, kept for compatibility)
+      currentQoL: 0.5,
       dimensions: {
         computationalWellbeing: 0.5,
         autonomy: 0.5,
@@ -577,8 +595,11 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     },
 
     // Phase 2A: Breakthrough Technologies
+    // NOTE (Oct 21, 2025): Keeping old system alongside new techTree system
+    // 11 files still reference state.breakthroughTech - needs gradual migration
+    // New system (techTreeState) is also available and handles actual tech effects
     breakthroughTech: initializeBreakthroughTech(),
-    
+
     // Phase 2D: Upward Spirals (Utopia detection system)
     upwardSpirals: initializeUpwardSpirals(),
     
@@ -688,7 +709,11 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
 
     eventLog: [],
     technologyTree: [],
-    
+
+    // FIX #14 (Oct 2025): Initialize tech tree state properly as required GameState property
+    // This ensures deployment levels and tech state persist correctly across simulation steps
+    techTreeState: initializeTechTreeState(),
+
     outcomeMetrics: {
       utopiaProbability: 0.3,
       dystopiaProbability: 0.1,
@@ -709,7 +734,10 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       scenarioMode,
       scenarioParameters
     },
-    
+
+    // LLM Policy Optimization (Oct 21, 2025)
+    llmConfig: { ...DEFAULT_LLM_CONFIG },
+
     history: {
       qualityOfLife: [],
       outcomeProbs: [],

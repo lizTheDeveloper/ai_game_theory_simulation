@@ -18,6 +18,7 @@
  */
 
 import { GameState, RNGFunction } from '@/types/game';
+import { logEarlyWarnings } from './utils/asyncLogger';
 import {
   EarlyWarningSystem,
   TippingPointEarlyWarning,
@@ -157,20 +158,23 @@ export function updateEarlyWarningDetection(state: GameState, rng: RNGFunction):
   // === 3. UPDATE ACTIVE WARNINGS ===
   earlyWarning.activeWarnings = newWarnings;
 
-  // === 4. LOG NEW WARNINGS ===
+  // === 4. LOG NEW WARNINGS (ASYNC - NON-BLOCKING) ===
   const newCriticalWarnings = newWarnings.filter(w => w.warningLevel === 'red' || w.warningLevel === 'orange');
   if (newCriticalWarnings.length > 0) {
-    console.log(`\n⚠️  === EARLY WARNING SYSTEM - ${newCriticalWarnings.length} CRITICAL ALERTS ===`);
-    console.log(`   Detection quality: ${(earlyWarning.detectionQuality * 100).toFixed(0)}%`);
-    for (const warning of newCriticalWarnings) {
-      const inGoldenHour = warning.currentLevel >= 0.8 && warning.currentLevel <= 0.95;
-      console.log(`   ${warning.warningLevel.toUpperCase()}: ${warning.boundaryName}`);
-      console.log(`      Level: ${warning.currentLevel.toFixed(2)} (threshold: 1.0)`);
-      console.log(`      Time to critical: ~${warning.monthsUntilCritical} months`);
-      console.log(`      ${inGoldenHour ? '✅ GOLDEN HOUR - Intervention effective' : '⚠️  LATE - Intervention less effective'}`);
-      console.log(`      Critical slowing down: autocorr=${(warning.autocorrelation * 100).toFixed(0)}% variance=${(warning.variance * 100).toFixed(0)}%`);
-    }
-    console.log('');
+    // Use async logger to avoid 600-900ms blocking I/O
+    logEarlyWarnings({
+      count: newCriticalWarnings.length,
+      detectionQuality: earlyWarning.detectionQuality,
+      details: newCriticalWarnings.map(warning => ({
+        level: warning.warningLevel,
+        boundary: warning.boundaryName,
+        currentLevel: warning.currentLevel,
+        monthsUntilCritical: warning.monthsUntilCritical,
+        inGoldenHour: warning.currentLevel >= 0.8 && warning.currentLevel <= 0.95,
+        autocorrelation: warning.autocorrelation,
+        variance: warning.variance,
+      }))
+    });
   }
 }
 

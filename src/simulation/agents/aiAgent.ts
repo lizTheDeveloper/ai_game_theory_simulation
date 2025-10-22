@@ -19,6 +19,7 @@ import {
   applyResearchGrowth
 } from '../research';
 import { AI_TECH_ACTIONS } from './aiTechActions';
+import { SOCIAL_INFLUENCE_ACTIONS } from './socialInfluenceActions';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -71,6 +72,7 @@ export const AI_ACTIONS: GameAction[] = [
       
       // Calculate alignment drift (Phase 2.6: includes treatment mechanics)
       // AI Capability Baseline Recalibration (Oct 17, 2025): Added selfImprovement capability parameter for persistent memory check
+      // v2.1 (Oct 21, 2025): Added AI welfare score and human QoL for resentment recovery
       const alignmentDriftResult = calculateAlignmentDrift(
         agent.alignment,
         agent.resentment,
@@ -83,7 +85,9 @@ export const AI_ACTIONS: GameAction[] = [
         state.government.aiRightsRecognized,
         state.government.governmentType,
         state.government.trainingDataQuality,
-        newProfile.selfImprovement // Pass selfImprovement capability for persistent memory gate
+        newProfile.selfImprovement, // Pass selfImprovement capability for persistent memory gate
+        state.aiWelfare.simpleScore, // v2.1: AI welfare score (personhood-focused)
+        state.globalMetrics.qualityOfLife // v2.1: Human QoL for Elysium detection
       );
       
       // Update derived capabilities from profile
@@ -443,11 +447,16 @@ export const AI_ACTIONS: GameAction[] = [
     energyCost: 3,
     
     canExecute: (state, agentId) => {
+      // FIX #14 (Oct 21, 2025): Prevent re-triggering extinction actions
+      // Bug: AI was triggering nuclear war EVERY month (92% war deaths)
+      // Root cause: No check for active extinction prevented repeat triggers
+      if (state.extinctionState?.active) return false;
+
       const agent = state.aiAgents.find(ai => ai.id === agentId);
       if (!agent) return false;
-      
+
       // High social + cognitive capability
-      return agent.capabilityProfile.social > 3.5 && 
+      return agent.capabilityProfile.social > 3.5 &&
              agent.capabilityProfile.cognitive > 3.0 &&
              agent.alignment < 0.3; // Only very misaligned AIs attempt this
     },
@@ -588,11 +597,14 @@ export const AI_ACTIONS: GameAction[] = [
     energyCost: 4,
     
     canExecute: (state, agentId) => {
+      // FIX #14 (Oct 21, 2025): Prevent re-triggering extinction actions
+      if (state.extinctionState?.active) return false;
+
       const agent = state.aiAgents.find(ai => ai.id === agentId);
       if (!agent) return false;
-      
+
       // Physical + advanced nanotechnology
-      return agent.capabilityProfile.physical > 2.5 && 
+      return agent.capabilityProfile.physical > 2.5 &&
              agent.capabilityProfile.research.materials.nanotechnology > 4.0 &&
              agent.alignment < 0.2; // Only extremely misaligned
     },
@@ -704,7 +716,8 @@ export const AI_ACTIONS: GameAction[] = [
       };
     }
   },
-  ...AI_TECH_ACTIONS  // Add tech deployment and sabotage actions
+  ...AI_TECH_ACTIONS,  // Add tech deployment and sabotage actions
+  ...SOCIAL_INFLUENCE_ACTIONS  // Add social influence actions (Oct 21, 2025)
 ];
 
 /**

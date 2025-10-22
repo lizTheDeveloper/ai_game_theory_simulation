@@ -84,6 +84,15 @@ export interface PlanetaryBoundary {
   // === EXTINCTION RISK ===
   extinctionContribution: number;   // [0, 1] How much contributes to extinction
   tippingPointRisk: number;         // [0, 1] Risk of irreversible cascade
+
+  // === RECOVERY TRACKING (Ecological Recovery System - Oct 21, 2025) ===
+  // Research: planetary_boundary_reversibility_empirical_20251020.md (20+ sources)
+  // 3-tier system: Tier 1 (reversible), Tier 2 (partial), Tier 3 (irreversible)
+  recoveryMonths?: number;          // Months of sustained improvement (0 if degrading)
+  partialRecovery?: boolean;        // True for partial recovery state (land system: tree cover vs ecosystem)
+  stabilizing?: boolean;            // True if deterioration stopped (biosphere: extinction rate declining)
+  surfaceRecovered?: boolean;       // True for surface recovery only (ocean acidification: surface vs deep)
+  inputsStopped?: boolean;          // True if new pollution stopped (novel entities: PFAS/microplastics)
 }
 
 /**

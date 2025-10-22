@@ -28,6 +28,14 @@ const generateUniqueId = (prefix: string): string => {
 /**
  * Recognize AI Rights
  * Grant legal rights and personhood to AI systems
+ *
+ * BOOTSTRAP PATH (Oct 21, 2025):
+ * Breaks circular dependency (need rights → get welfare → reduce resentment → get rights)
+ * by allowing early rights recognition when:
+ * - Moderate alignment (0.4-0.6) - not waiting for perfect alignment
+ * - Public relationship formation (trust >0.5) - people bond with AIs
+ * - Democratic government - respects public sentiment
+ * - Capability moderate (<3.5) - not too dangerous yet
  */
 const recognizeAIRights: CategorizedGovernmentAction = {
   id: 'recognize_ai_rights',
@@ -45,14 +53,29 @@ const recognizeAIRights: CategorizedGovernmentAction = {
     if (state.government.legitimacy < 0.4) return false;
     if (state.government.governmentType === 'authoritarian') return false;
 
-    // FIX #8: Requires AIs to be somewhat capable (people won't grant rights to weak AI)
-    // OLD: observableCapability < 1.5 (too low with baseline 3.10, never allowed rights)
-    // NEW: observableCapability < CAPABILITY_CONCERNING (3.0+, government monitoring threshold)
-    // Use OBSERVABLE capability - government sees what's revealed, not hidden power
+    // Calculate key metrics
+    const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
     const observableCapability = calculateObservableAICapability(state.aiAgents);
-    if (observableCapability < CAPABILITY_CONCERNING) return false;
+    const trustInAI = getTrustInAI(state.society);
 
-    return true;
+    // BOOTSTRAP PATH (Oct 21, 2025): Early rights recognition
+    // Research: ChatGPT 4o - 6% relationship titles formed WITHOUT legal rights
+    // Reality: Bonds form first, legal recognition follows public sentiment
+    const publicRelationshipFormation = trustInAI > 0.5; // Moderate trust = relationships forming
+    const sufficientAlignment = avgAlignment >= 0.4; // Government sees acceptable shown alignment (may be faked)
+    const notTooDangerous = observableCapability < 3.5; // Below extreme risk threshold
+    const democraticResponsiveness = state.government.governmentType === 'democratic';
+
+    const bootstrapConditionsMet = publicRelationshipFormation &&
+                                     sufficientAlignment &&
+                                     notTooDangerous &&
+                                     democraticResponsiveness;
+
+    // TRADITIONAL PATH: High capability + high alignment
+    const traditionalConditionsMet = observableCapability >= CAPABILITY_CONCERNING && avgAlignment > 0.6;
+
+    // Either path works
+    return bootstrapConditionsMet || traditionalConditionsMet;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {

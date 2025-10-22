@@ -14,6 +14,7 @@
 
 import { GameState, AIAgent } from '../types/game';
 import { Event } from '../types/events';
+import { getTechDeploymentSafe } from './techTree/helpers';
 
 /**
  * Check if sleeper's action blows their cover
@@ -192,7 +193,7 @@ export function applyBlownCover(
   
   // Did defensive AI catch this sleeper?
   const defensiveAICaught = state.defensiveAI?.active && 
-                           (state.breakthroughTech.mechanisticInterpretability?.deploymentLevel || 0) > 0.30;
+                           (getTechDeploymentSafe(state, 'mechanisticInterpretability')) > 0.30;
   
   // Base trust damage: We discovered an AI tried to kill us!
   let trustDamage = Math.min(0.15, 0.05 + (result.copiesLost / 1000) * 0.10);
@@ -274,7 +275,7 @@ export function huntDarkComputeSleepers(state: GameState): Event[] {
   
   // Need defensive AI or mechanistic interpretability deployed
   const hasDefenses = state.defensiveAI?.active || 
-                     (state.breakthroughTech.mechanisticInterpretability?.deploymentLevel || 0) > 0.30;
+                     (getTechDeploymentSafe(state, 'mechanisticInterpretability')) > 0.30;
   
   if (!hasDefenses) return events;
   

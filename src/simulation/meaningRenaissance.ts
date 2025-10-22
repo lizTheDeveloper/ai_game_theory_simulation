@@ -18,6 +18,7 @@
 import type { GameState } from '../types/game';
 import { getTrustInAI } from './socialCohesion';
 import { clamp, getAverageAICapability, getAverageAlignment } from './utils';
+import { getTechDeploymentSafe } from './techTree/helpers';
 
 export interface MeaningRenaissanceState {
   // Purpose Diversity: Multiple valid paths to fulfillment
@@ -128,7 +129,7 @@ function updatePurposeDiversity(
   meaning.creativePathways += (culturalVitality * 0.012 + (aiCapability > 1.0 ? 0.008 : 0));
   
   // Knowledge pathways: Learning, research, teaching accessible
-  const educationTech = state.breakthroughTech.mentalHealthAI?.deployed || 0; // Proxy for educational AI
+  const educationTech = getTechDeploymentSafe(state, 'mentalHealthAI'); // Proxy for educational AI
   meaning.knowledgePathways += (educationTech * 0.01 + (unemployment > 0.5 ? 0.005 : 0));
   
   // Exploration pathways: Adventure, experimentation, discovery

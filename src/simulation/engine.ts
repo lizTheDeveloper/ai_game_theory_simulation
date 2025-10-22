@@ -24,7 +24,7 @@ import {
   updateSocialAccumulation,  // Phase 3: Social Cohesion
   updateTechnologicalRisk  // Phase 4: Technological Risk
 } from './calculations';
-import { updateBreakthroughTechnologies, checkCrisisResolution } from './breakthroughTechnologies';
+import { updateBreakthroughTechnologies, checkCrisisResolution } from './breakthroughTechnologies'; // KEEPING: Used for compatibility checks
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
@@ -112,12 +112,14 @@ import {
   ExogenousShockPhase,  // Contingency & Agency Phase 2 (Oct 17, 2025)
   CriticalJuncturePhase,  // Contingency & Agency Phase 3 (Oct 17, 2025)
   // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
+  LLMWeightUpdatePhase,  // Oct 21, 2025: LLM policy optimization
   ComputeGrowthPhase,
   OrganizationTurnsPhase,
   ComputeAllocationPhase,
   AILifecyclePhase,
   CyberSecurityPhase,
   SleeperWakePhase,
+  SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
   AIAgentActionsPhase,
   TechnologyBreakthroughsPhase,
   StochasticInnovationPhase,
@@ -496,12 +498,14 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new CriticalJuncturePhase());  // Contingency & Agency Phase 3 (Oct 17, 2025)
 
     // Batch 4: Agent/Infrastructure phases (1.0 - 10.0)
+    this.orchestrator.registerPhase(LLMWeightUpdatePhase);  // Oct 21, 2025: LLM policy optimization (order 2.5) - const object, not class
     this.orchestrator.registerPhase(new ComputeGrowthPhase());
     this.orchestrator.registerPhase(new OrganizationTurnsPhase());
     this.orchestrator.registerPhase(new ComputeAllocationPhase());
     this.orchestrator.registerPhase(new AILifecyclePhase());
     this.orchestrator.registerPhase(new CyberSecurityPhase());
     this.orchestrator.registerPhase(new SleeperWakePhase());
+    this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
     this.orchestrator.registerPhase(new TechnologyBreakthroughsPhase());
     this.orchestrator.registerPhase(new StochasticInnovationPhase());
@@ -574,7 +578,12 @@ export class SimulationEngine {
     try {
       // structuredClone is available in Node 17+ and modern browsers
       // It correctly handles Map, Set, Date, RegExp, etc.
-      return structuredClone(state);
+      const cloned = structuredClone(state);
+
+      // FIX #14 (Oct 2025): techTreeState is now a required property, no debug needed
+      // structuredClone properly deep-clones all GameState properties including techTreeState
+
+      return cloned;
     } catch (error) {
       // Fallback for older Node versions: manual reconstruction
       console.warn('structuredClone not available, using manual snapshot');

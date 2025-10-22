@@ -20,9 +20,13 @@ export class PlanetaryBoundariesPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updatePlanetaryBoundaries } = require('../../planetaryBoundaries');
+    const { updateBoundaryRecovery } = require('../../planetaryBoundaryRecovery');
 
-    // Update all planetary boundaries and check for tipping point cascades
+    // Update all planetary boundaries (degradation mechanics)
     updatePlanetaryBoundaries(state);
+
+    // Update boundary recovery mechanics (Oct 21, 2025 - Ecological Recovery System)
+    updateBoundaryRecovery(state, rng);
 
     return { events: [] };
   }

@@ -5,9 +5,11 @@
  */
 
 // Batch 4: Agent/Infrastructure phases (0.x, 4.x-6.x - high risk)
+export { LLMWeightUpdatePhase } from './LLMWeightUpdatePhase';  // Oct 21, 2025: LLM policy optimization
 export { AILifecyclePhase } from './AILifecyclePhase';
 export { CyberSecurityPhase } from './CyberSecurityPhase';
 export { SleeperWakePhase } from './SleeperWakePhase';
+export { SocialInfluenceUpdatePhase } from './SocialInfluenceUpdatePhase';  // Oct 21, 2025: Social influence accumulation
 export { AIAgentActionsPhase } from './AIAgentActionsPhase';
 export { TechnologyBreakthroughsPhase } from './TechnologyBreakthroughsPhase';
 export { StochasticInnovationPhase } from './StochasticInnovationPhase';

@@ -96,14 +96,19 @@ function calculateParadigmScoresFromState(state: GameState): {
 /**
  * Calculate Western Liberal paradigm score from simulation state
  *
- * Indicators:
- * - Electoral Democracy (40%): state.government.democracy.electoralDemocracyIndex
- * - Civil Liberties (30%): state.socialCohesion.civilLiberties
- * - Rule of Law (20%): state.government.democracy.ruleOfLaw
- * - Economic Freedom (10%): 100 - state.government.economicPolicy.marketRegulation
+ * **SCORING REDESIGN (Oct 21, 2025):** Expose component scores instead of compressing into geometric mean.
+ * Geometric mean invokes Goodhart's Law - when one component collapses, headline number obscures nuance.
+ *
+ * Indicators (now tracked separately):
+ * - Electoral Democracy (40%): state.government.democracy.electoralDemocracyIndex (0-100)
+ * - Civil Liberties (30%): state.socialCohesion.civilLiberties (0-100)
+ * - Rule of Law (20%): state.government.democracy.ruleOfLaw (0-100)
+ * - Economic Freedom (10%): 100 - state.government.economicPolicy.marketRegulation (0-100)
+ *
+ * Components stored in state.multiParadigmDUI.westernLiberalComponents for analysis.
  *
  * @param state - Current game state
- * @returns Western Liberal score (0-100)
+ * @returns Western Liberal score (0-100) - STILL geometric mean for backward compatibility, but components tracked
  */
 function calculateWesternLiberal(state: GameState): number {
   const MIN_FLOOR = 0.1;
@@ -120,7 +125,21 @@ function calculateWesternLiberal(state: GameState): number {
   // Economic Freedom (inverted market regulation)
   const economicFreedom = 100 - (state.government.economicPolicy?.marketRegulation ?? 50);
 
-  // Geometric mean (non-compensatory)
+  // STORE COMPONENTS for decomposed analysis (avoiding Goodhart's Law)
+  if (!state.multiParadigmDUI.westernLiberalComponents) {
+    state.multiParadigmDUI.westernLiberalComponents = [];
+  }
+
+  state.multiParadigmDUI.westernLiberalComponents.push({
+    month: state.currentMonth,
+    electoralDemocracy,
+    civilLiberties,
+    ruleOfLaw,
+    economicFreedom,
+  });
+
+  // Geometric mean (non-compensatory) - KEPT for backward compatibility
+  // BUT: Users should analyze components, not this headline number
   const indicators = [electoralDemocracy, civilLiberties, ruleOfLaw, economicFreedom];
   const product = indicators.reduce((acc, val) => {
     const floored = Math.max(val ?? 50, MIN_FLOOR);
@@ -178,11 +197,42 @@ function calculateDevelopment(state: GameState): number {
 /**
  * Calculate Ecological paradigm score from simulation state
  *
+ * UPDATED (Oct 21, 2025 - FIX #14): Uses progressive recovery scoring system
+ * - Replaces binary breach counting with impact-weighted recovery progress
+ * - Gives credit for partial recovery before full boundary un-breach
+ * - Research-backed weights based on mortality potential
+ *
  * Indicators:
- * - Planetary Boundaries (50%): (safe boundaries / 9) * 100
+ * - Planetary Boundaries (50%): Progressive recovery score (0-100)
  * - Resource Depletion (25%): 100 - resourceDepletion
  * - Climate Stability (15%): 100 - (temperatureAnomaly / 2.0) * 100
  * - Pollution (10%): 100 - pollutionLevel
+ *
+ * SCORE INTERPRETATION (Empirically Realistic, FIX #14):
+ * - **0-10 (Catastrophic Collapse):**
+ *     Most/all boundaries breached, cascades active, mass mortality
+ *     Expected frequency: 15-25% of runs
+ *
+ * - **10-30 (Stabilized):**
+ *     Boundaries still breached but not worsening, technologies deployed,
+ *     emissions declining but ecosystem damage persists
+ *     Expected frequency: 40-50% of runs (MOST REALISTIC OUTCOME)
+ *     This is NOT dystopia - represents sustainable development path
+ *
+ * - **30-60 (Recovering):**
+ *     Some boundaries un-breached, partial restoration underway,
+ *     sustained net-negative emissions, slow healing
+ *     Expected frequency: 25-35% of runs
+ *     Requires 10-30 years sustained action post-net-zero
+ *
+ * - **60-100 (Restored):**
+ *     Most boundaries safe, ecosystem resilience restored,
+ *     full environmental health achieved
+ *     Expected frequency: 5-10% of runs (HEROIC ACTION + 50-100 YEARS)
+ *     Requires 50-100 years sustained effort beyond simulation timeframe
+ *
+ * CRITICAL: 10-30/100 is NOT failure - it's empirically realistic stabilization.
+ * Full restoration (60-100) takes 50-100 years beyond most simulation runs.
  *
  * @param state - Current game state
  * @returns Ecological score (0-100)
@@ -190,23 +240,10 @@ function calculateDevelopment(state: GameState): number {
 function calculateEcological(state: GameState): number {
   const MIN_FLOOR = 0.1;
 
-  // Planetary Boundaries (count safe boundaries)
-  const boundaries = state.planetaryBoundariesSystem?.boundaries;
-  let safeBoundaries = 0;
-  if (boundaries) {
-    if (!boundaries.climateChange?.breached) safeBoundaries++;
-    if (!boundaries.biosphereIntegrity?.breached) safeBoundaries++;
-    if (!boundaries.landSystemChange?.breached) safeBoundaries++;
-    if (!boundaries.freshwaterUse?.breached) safeBoundaries++;
-    if (!boundaries.biochemicalFlows?.nitrogenBreached) safeBoundaries++;
-    if (!boundaries.biochemicalFlows?.phosphorusBreached) safeBoundaries++;
-    if (!boundaries.oceanAcidification?.breached) safeBoundaries++;
-    if (!boundaries.atmosphericAerosol?.breached) safeBoundaries++;
-    if (!boundaries.novelEntities?.breached) safeBoundaries++;
-  } else {
-    safeBoundaries = 3; // Default: assume 3/9 safe (current global state)
-  }
-  const boundariesScore = (safeBoundaries / 9) * 100;
+  // Planetary Boundaries: Use progressive recovery scoring (Oct 21, 2025)
+  // Replaces simple binary breach counting with impact-weighted recovery progress
+  const { calculateProgressiveEcologicalScore } = require('../../planetaryBoundaryRecovery');
+  const boundariesScore = calculateProgressiveEcologicalScore(state);
 
   // Resource Depletion (0-100, inverted)
   const resourceDepletion = state.environmentalAccumulation?.resourceDepletion ?? 30;

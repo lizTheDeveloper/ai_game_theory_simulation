@@ -15,6 +15,7 @@
 
 import type { GameState, QualityOfLifeSystems } from '@/types/game';
 import { getTrustInAI } from '../socialCohesion';
+import { getTechDeploymentSafe } from '../techTree/helpers';
 
 /**
  * Calculate Tier 0: Survival Fundamentals
@@ -152,7 +153,7 @@ export function calculateFoodSecurity(state: GameState): number {
 
   // === BREAKTHROUGH TECHNOLOGY ===
   // Sustainable agriculture: closed-loop systems, hydroponics, cellular agriculture
-  const sustainableAg = state.breakthroughTech.sustainableAgriculture?.deploymentLevel || 0;
+  const sustainableAg = getTechDeploymentSafe(state, 'sustainableAgriculture');
   foodSecurity += sustainableAg * 0.3; // Up to +30% food security
 
   return Math.max(0, Math.min(1.5, foodSecurity));
@@ -219,7 +220,7 @@ export function calculateWaterSecurity(state: GameState): number {
 
   // === BREAKTHROUGH TECHNOLOGY ===
   // Clean energy enables desalination at scale
-  const cleanEnergy = state.breakthroughTech.cleanEnergy?.deploymentLevel || 0;
+  const cleanEnergy = getTechDeploymentSafe(state, 'cleanEnergy');
   waterSecurity += cleanEnergy * 0.15; // Desalination powered by clean energy
 
   return Math.max(0, Math.min(1.5, waterSecurity));
@@ -275,7 +276,7 @@ export function calculateThermalHabitability(state: GameState): number {
   }
 
   // Climate engineering technology (risky but possible)
-  const geoengineering = state.breakthroughTech.climateEngineering?.deploymentLevel || 0;
+  const geoengineering = getTechDeploymentSafe(state, 'climateEngineering');
   if (geoengineering > 0.5) {
     // Can offset some warming, but risky and imperfect
     habitableFraction += geoengineering * 0.15;

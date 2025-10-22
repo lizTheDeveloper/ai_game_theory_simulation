@@ -19,6 +19,7 @@
 import { GameState } from '@/types/game';
 import { HumanPopulationSystem, PopulationStatus, PopulationOutcome, RootCause, CompoundCause, isCompoundCause } from '@/types/population';
 import { validateCompoundCause, getCompoundConfidence } from './utils/deathAttribution';
+import { getTechDeploymentSafe } from './techTree/helpers';
 
 /**
  * Initialize population system (2025 baseline)
@@ -173,8 +174,8 @@ export function updateHumanPopulation(state: GameState): void {
   const economicStage = isNaN(state.globalMetrics.economicTransitionStage) ? 0 : state.globalMetrics.economicTransitionStage;
   const techModifier = 1.0 +
     (economicStage * 0.2) + // Tech advancement
-    (state.breakthroughTech.fusionPower?.deploymentLevel || 0) * 1.0 + // Energy abundance
-    (state.breakthroughTech.sustainableAgriculture?.deploymentLevel || 0) * 0.5; // Food efficiency
+    (getTechDeploymentSafe(state, 'fusionPower')) * 1.0 + // Energy abundance
+    (getTechDeploymentSafe(state, 'sustainableAgriculture')) * 0.5; // Food efficiency
 
   pop.capacityModifier = climateModifier * resourceModifier * ecosystemModifier * techModifier;
   pop.carryingCapacity = Math.max(1.0, pop.baselineCarryingCapacity * pop.capacityModifier); // Ensure non-zero

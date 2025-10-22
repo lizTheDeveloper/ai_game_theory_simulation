@@ -19,6 +19,7 @@
 
 import { SimulationPhase, PhaseResult, RNGFunction, PhaseContext } from '../PhaseOrchestrator';
 import { GameState, GameEvent } from '@/types/game';
+import { getTechDeploymentSafe } from '../../techTree/helpers';
 
 /**
  * Exogenous Shock Types

@@ -95,6 +95,7 @@ export function initializeTechTreeState(): TechTreeState {
       totalInvested: tech.deploymentCost * tech.deploymentLevel,
       deployedBy: ['baseline_2025'],
       effects: tech.effects,
+      deploymentStartMonth: 0, // Already deployed at start (month 0)
     });
   }
   
@@ -169,7 +170,12 @@ export function updateTechTree(
   
   // 2. Apply deployment actions
   applyDeploymentActions(gameState, techTreeState);
-  
+
+  // 2.5. Update deployment progress (FIX #14 Phase 1: Multi-timescale deployment)
+  // Technologies deploy gradually over 10-30 years, not instantly
+  const { updateDeploymentProgress } = require('./deploymentTimescales');
+  updateDeploymentProgress(gameState, techTreeState);
+
   // 3. Update research progress for locked tech
   updateResearchProgress(gameState, techTreeState);
   
@@ -322,14 +328,53 @@ function applyDeploymentActions(
     if (!tech) continue;
     
     // Get or create regional deployment
-    if (!(action.targetRegion in techTreeState.regionalDeployment)) {
+    const regionExisted = action.targetRegion in techTreeState.regionalDeployment;
+    if (!regionExisted) {
+      console.log(`\n🚨 CREATING NEW REGIONAL ARRAY for ${action.targetRegion} (Month ${_gameState.currentMonth})`);
+      console.log(`   This WIPES all existing deployments in this region!`);
+      console.log(`   Action tech: ${action.techId}`);
+      console.log(`   All regions before: ${Object.keys(techTreeState.regionalDeployment).join(', ')}`);
       techTreeState.regionalDeployment[action.targetRegion] = [];
     }
-    
+
     const regional = techTreeState.regionalDeployment[action.targetRegion]!;
+
+    // DEBUG: Check array before find
+    if (action.techId === 'scalable_oversight' && _gameState.currentMonth % 24 === 0) {
+      console.log(`\n🔍 BEFORE FIND (Month ${_gameState.currentMonth})`);
+      console.log(`   Region: ${action.targetRegion}`);
+      console.log(`   Array length: ${regional.length}`);
+      const matches = regional.filter(d => d.techId === 'scalable_oversight');
+      console.log(`   Scalable Oversight deployments in array: ${matches.length}`);
+      if (matches.length > 0) {
+        matches.forEach((m, i) => {
+          console.log(`   [${i}] Level: ${(m.deploymentLevel * 100).toFixed(1)}%, Start: ${m.deploymentStartMonth}`);
+        });
+      }
+    }
+
     let deployment = regional.find(d => d.techId === action.techId);
-    
+
+    // DEBUG: Track deployment object creation vs finding
+    if (action.techId === 'scalable_oversight' && _gameState.currentMonth % 24 === 0) {
+      console.log(`\n🔍 DEPLOYMENT ACTION (Month ${_gameState.currentMonth})`);
+      console.log(`   Tech: ${action.techId}, Region: ${action.targetRegion}`);
+      console.log(`   Found existing: ${deployment ? 'YES' : 'NO'}`);
+      if (deployment) {
+        console.log(`   Existing level: ${(deployment.deploymentLevel * 100).toFixed(1)}%`);
+        console.log(`   Existing start: ${deployment.deploymentStartMonth}`);
+      }
+    }
+
     if (!deployment) {
+      // CRITICAL BUG CHECK: Verify this tech doesn't already exist in array
+      const existingCount = regional.filter(d => d.techId === action.techId).length;
+      if (existingCount > 0) {
+        console.log(`\n🚨 BUG: ${action.techId} already exists ${existingCount} times in ${action.targetRegion}, but find() returned null!`);
+        console.log(`   Array length: ${regional.length}`);
+        console.log(`   This means find() is broken or array was modified during iteration!`);
+      }
+
       deployment = {
         techId: action.techId,
         region: action.targetRegion,
@@ -340,29 +385,42 @@ function applyDeploymentActions(
         effects: tech.effects,
       };
       regional.push(deployment);
+
+      // DEBUG: Log new deployment creation
+      if (action.techId === 'scalable_oversight') {
+        console.log(`\n⚠️  CREATED NEW DEPLOYMENT (Month ${_gameState.currentMonth})`);
+        console.log(`   Tech: ${action.techId}, Region: ${action.targetRegion}`);
+        console.log(`   This should only happen ONCE per tech per region!`);
+      }
     }
     
     // Apply investment
     deployment.monthlyInvestment += action.investment;
     deployment.totalInvested += action.investment;
     techTreeState.totalInvestment += action.investment;
-    
+
     // Track deployer
     if (!deployment.deployedBy.includes(action.deployedBy)) {
       deployment.deployedBy.push(action.deployedBy);
     }
-    
-    // Calculate deployment progress
-    // $1B investment = +X% deployment (based on tech cost)
-    const deploymentIncrease = action.investment / tech.deploymentCost;
-    deployment.deploymentLevel = Math.min(1.0, deployment.deploymentLevel + deploymentIncrease);
-    
-    if (deployment.deploymentLevel >= 1.0 && !techTreeState.unlockedTech.includes(`${tech.id}_deployed`)) {
-      techTreeState.techDeployedCount++;
-      techTreeState.unlockedTech.push(`${tech.id}_deployed`);
-      
-      console.log(`✅ TECH FULLY DEPLOYED: ${tech.name} in ${action.targetRegion}`);
+
+    // FIX #14 Phase 1: Remove instant deployment
+    // Deployment now progresses gradually via deploymentTimescales.ts
+    // Investment signals intent to deploy, but actual deployment takes years
+
+    // Track deployment start month (if not already set)
+    if (!deployment.deploymentStartMonth && action.investment > 0) {
+      deployment.deploymentStartMonth = action.month;
+      console.log(`\n🚀 DEPLOYMENT STARTED: ${tech.name} in ${action.targetRegion}`);
+      console.log(`   Initial investment: $${action.investment}M`);
+      console.log(`   Deployed by: ${action.deployedBy}`);
     }
+
+    // OLD BEHAVIOR (instant deployment) - DISABLED for FIX #14
+    // const deploymentIncrease = action.investment / tech.deploymentCost;
+    // deployment.deploymentLevel = Math.min(1.0, deployment.deploymentLevel + deploymentIncrease);
+
+    // Deployment level now updated by updateDeploymentProgress() based on time elapsed
   }
   
   // Clear actions
@@ -453,14 +511,18 @@ function updateResearchProgress(
 // ============================================================================
 
 function getAverageAICapability(gameState: GameState): number {
-  if (gameState.aiAgents.length === 0) return 0;
-  
+  // FIX #19 (Oct 22, 2025): Check active agents, not total agents
+  // Bug: When all AIs retired, aiAgents.length > 0 but filtered length = 0 → division by zero → NaN
+  const activeAIs = gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
+  if (activeAIs.length === 0) return 0;
+
   const { calculateTotalCapabilityFromProfile } = require('../capabilities');
-  const totalCapability = gameState.aiAgents
-    .filter(ai => ai.lifecycleState !== 'retired')
-    .reduce((sum, ai) => sum + calculateTotalCapabilityFromProfile(ai.capabilityProfile), 0);
-  
-  return totalCapability / gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length;
+  const totalCapability = activeAIs.reduce(
+    (sum, ai) => sum + calculateTotalCapabilityFromProfile(ai.capabilityProfile),
+    0
+  );
+
+  return totalCapability / activeAIs.length;
 }
 
 /**

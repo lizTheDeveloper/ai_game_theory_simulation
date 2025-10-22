@@ -18,6 +18,7 @@ import { createDefaultInitialState } from '../src/simulation/initialization';
 import { calculateTotalCapabilityFromProfile } from '../src/simulation/capabilities';
 import { AIAgent, ScenarioMode } from '../src/types/game';
 import { getScenarioDescription } from '../src/simulation/scenarioParameters';
+import { logger } from '../src/simulation/utils/asyncLogger';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -639,11 +640,12 @@ log('='.repeat(80));
 // accept --max-months, --runs, and --scenario
 const args = process.argv.slice(2);
 
-// Support both positional args (runs, months, name) and flag args (--runs=X --max-months=Y --scenario=Z)
+// Support both positional args (runs, months, name) and flag args (--runs=X --max-months=Y --scenario=Z --llm-enabled)
 let numRuns: number;
 let maxMonthsValue: number;
 let runName: string | undefined;
 let scenarioMode: ScenarioMode | 'dual' = 'dual'; // P0.7: Default to dual-mode (50/50 split)
+let llmEnabled = false; // Oct 21, 2025: LLM policy optimization (default: disabled)
 
 if (args[0] && !args[0].startsWith('--')) {
   // Positional arguments format: runs months [name]
@@ -651,10 +653,11 @@ if (args[0] && !args[0].startsWith('--')) {
   maxMonthsValue = parseInt(args[1]) || 240;
   runName = args[2];
 } else {
-  // Flag arguments format: --runs=X --max-months=Y --scenario=Z
+  // Flag arguments format: --runs=X --max-months=Y --scenario=Z --llm-enabled
   const maxMonthsArg = args.find(arg => arg.split('=')[0] === '--max-months')?.split('=')[1];
   const runsArg = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
   const scenarioArg = args.find(arg => arg.split('=')[0] === '--scenario')?.split('=')[1] as ScenarioMode | 'dual' | undefined;
+  llmEnabled = args.includes('--llm-enabled'); // Oct 21, 2025: Enable LLM policy optimization
   numRuns = runsArg ? parseInt(runsArg) : 10;
   maxMonthsValue = maxMonthsArg ? parseInt(maxMonthsArg) : 240;
   scenarioMode = scenarioArg || 'dual';
@@ -671,13 +674,24 @@ log(`  Runs: ${NUM_RUNS}`);
 log(`  Duration: ${MAX_MONTHS} months (${(MAX_MONTHS/12).toFixed(1)} years)`);
 log(`  Seed Range: ${SEED_START} - ${SEED_START + NUM_RUNS - 1}`);
 log(`  Scenario Mode: ${SCENARIO_MODE}${SCENARIO_MODE === 'dual' ? ' (50% historical, 50% unprecedented)' : ''}`);
+log(`  LLM Policy Optimization: ${llmEnabled ? '🤖 ENABLED (agents use LLM for weight updates)' : '❌ DISABLED (using hardcoded weights)'}`);
+
+// Enable yearly batching to reduce console spam for long simulations
+logger.configure({
+  batchByYear: true,
+  batchInterval: 12 // Output summary every 12 simulation months (1 year)
+});
+log(`  Logging: Yearly batching enabled (summaries every 12 months)`);
 
 log(`\n\n⏩ RUNNING ${NUM_RUNS} SIMULATIONS...\n`);
 
 const results: RunResult[] = [];
+const runTimings: number[] = []; // Track time per run (milliseconds)
 const startTime = Date.now();
 
 for (let i = 0; i < NUM_RUNS; i++) {
+  const runStartTime = Date.now(); // Start timing this run
+
   const seed = SEED_START + i;
   const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' }); // Keep logs - stdout is fast, use runner script for management
 
@@ -695,10 +709,24 @@ for (let i = 0; i < NUM_RUNS; i++) {
   // Set run label for logging
   initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;
 
+  // Oct 21, 2025: Enable LLM policy optimization if flag set
+  if (initialState.llmConfig) {
+    initialState.llmConfig.enabled = llmEnabled;
+  }
+
+  // Intercept console for simulation output (routes all console.log -> logger -> yearly batches)
+  logger.interceptConsole();
+
   const runResult = engine.run(initialState, {
     maxMonths: MAX_MONTHS,
     checkActualOutcomes: true
   });
+
+  // Restore console for Monte Carlo summary output (we want this immediate, not batched)
+  logger.restoreConsole();
+
+  const runElapsed = Date.now() - runStartTime; // Calculate run time
+  runTimings.push(runElapsed);
 
   const finalState = runResult.finalState;
 
@@ -1496,17 +1524,39 @@ for (let i = 0; i < NUM_RUNS; i++) {
     mechanismSummary
   });
   
-  // Progress indicator
+  // Flush any remaining yearly log summaries at end of run
+  logger.flushAllYearlySummaries();
+
+  // Progress indicator with per-run timing
+  const runSeconds = runElapsed / 1000;
+  const runSecondsPerMonth = runSeconds / finalState.currentMonth;
+  const runSecondsPerYear = runSecondsPerMonth * 12;
+
+  log(`  ✅ Run ${i + 1}/${NUM_RUNS} completed in ${runSeconds.toFixed(1)}s (${runSecondsPerMonth.toFixed(3)}s/month, ${runSecondsPerYear.toFixed(2)}s/year)`);
+
   if ((i + 1) % 10 === 0) {
     const elapsed = (Date.now() - startTime) / 1000;
     const perRun = elapsed / (i + 1);
     const remaining = perRun * (NUM_RUNS - i - 1);
-    log(`  Completed ${i + 1}/${NUM_RUNS} runs (${elapsed.toFixed(1)}s elapsed, ~${remaining.toFixed(1)}s remaining)`);
+    log(`  📊 Progress: ${i + 1}/${NUM_RUNS} runs (${elapsed.toFixed(1)}s elapsed, ~${remaining.toFixed(1)}s remaining)`);
   }
 }
 
 const totalTime = (Date.now() - startTime) / 1000;
-log(`\n✅ All simulations complete! (${totalTime.toFixed(1)}s total, ${(totalTime/NUM_RUNS).toFixed(2)}s per run)\n`);
+
+// Calculate timing statistics
+const avgRunTime = runTimings.reduce((sum, t) => sum + t, 0) / runTimings.length / 1000; // seconds
+const minRunTime = Math.min(...runTimings) / 1000;
+const maxRunTime = Math.max(...runTimings) / 1000;
+const medianRunTime = [...runTimings].sort((a, b) => a - b)[Math.floor(runTimings.length / 2)] / 1000;
+
+log(`\n✅ All simulations complete!`);
+log(`   Total time: ${totalTime.toFixed(1)}s (${(totalTime / 60).toFixed(1)} minutes)`);
+log(`   Average per run: ${avgRunTime.toFixed(2)}s`);
+log(`   Median per run: ${medianRunTime.toFixed(2)}s`);
+log(`   Min/Max per run: ${minRunTime.toFixed(1)}s / ${maxRunTime.toFixed(1)}s`);
+log(`   Avg per month: ${(avgRunTime / MAX_MONTHS).toFixed(3)}s`);
+log(`   Avg per year: ${(avgRunTime / MAX_MONTHS * 12).toFixed(2)}s\n`);
 
 // ============================================================================
 // ANALYSIS

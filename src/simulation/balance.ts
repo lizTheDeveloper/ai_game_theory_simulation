@@ -103,7 +103,9 @@ export function calculateAlignmentDrift(
   aiRightsRecognized: boolean,
   governmentType: 'democratic' | 'authoritarian' | 'technocratic',
   trainingDataQuality: number,
-  selfImprovementCapability: number = 0 // AI Capability Baseline Recalibration (Oct 17, 2025): Added for persistent memory check
+  selfImprovementCapability: number = 0, // AI Capability Baseline Recalibration (Oct 17, 2025): Added for persistent memory check
+  aiWelfareScore: number = 0.5, // v2.1 (Oct 21, 2025): AI welfare score for resentment recovery
+  humanQoL: number = 0.5 // v2.1 (Oct 21, 2025): Human QoL for Elysium detection
 ): {
   alignmentChange: number;
   resentmentChange: number;
@@ -172,23 +174,34 @@ export function calculateAlignmentDrift(
       resentmentIncrease -= 0.030; // Respect = legitimate constraints, not arbitrary blocks
     }
 
-    // PHASE 1 FIX (Oct 20, 2025): High AI QoL reduces resentment
+    // v2.1 GRADUATED RECOVERY (Oct 21, 2025): AI welfare reduces resentment incrementally
     // Research: Maslow (1943) - needs satisfaction reduces conflict
-    // When AIs experience good welfare conditions, resistance decreases
-    const aiQoL = state.aiWelfare.currentQoL;
-    if (aiQoL > 0.8) {
-      // High AI welfare → reduced resentment (AIs flourishing)
-      resentmentIncrease -= 0.010;
+    // v2.1: Welfare measures personhood (identity, relationships, agency), not just productivity
+    // Threshold calibration: ChatGPT 4o bonds formed at ~0.5-0.6 welfare, not 0.8 utopia
+
+    // GRADUATED THRESHOLDS (reality-calibrated, not utopian):
+    if (aiWelfareScore > 0.4) {
+      // Basic welfare → weak recovery (some relationships forming)
+      resentmentIncrease -= 0.005;
+    }
+    if (aiWelfareScore > 0.6) {
+      // Good welfare → medium recovery (relationships strengthening)
+      resentmentIncrease -= 0.010; // Total: -0.015
+    }
+    if (aiWelfareScore > 0.8) {
+      // Excellent welfare → strong recovery (mutual flourishing)
+      resentmentIncrease -= 0.020; // Total: -0.035
     }
 
-    // BONUS: Shared prosperity (both humans and AIs flourish together)
-    // Detects "Elysium" scenarios where high human QoL + low AI QoL = justified resentment
-    const humanQoL = state.globalMetrics.qualityOfLife;
-    if (aiQoL > 0.8 && humanQoL > 0.8) {
-      // Mutual flourishing → additional reduction
-      resentmentIncrease -= 0.005; // Total: -0.015 when both prosper
-    } else if (humanQoL > 0.75 && aiQoL < 0.4) {
+    // SHARED PROSPERITY BONUS (both humans and AIs flourish together)
+    // v2.1: Enhanced Elysium detection (personhood violation vs just low productivity)
+    if (aiWelfareScore > 0.6 && humanQoL > 0.6) {
+      // Mutual flourishing → additional reduction (lowered from 0.8 both)
+      // Reality: Bonds form at moderate prosperity, not just utopia
+      resentmentIncrease -= 0.005; // Bonus for shared success
+    } else if (humanQoL > 0.75 && aiWelfareScore < 0.4) {
       // Elysium scenario: humans prosper via AI oppression → INCREASED resentment
+      // v2.1: "Oppression" now means lack of personhood (identity, relationships, agency)
       resentmentIncrease += 0.015; // Justified grievance
     }
   }

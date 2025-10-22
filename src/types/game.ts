@@ -162,7 +162,27 @@ export interface GameState {
   environmentalAccumulation: EnvironmentalAccumulation; // Phase 2: Environmental debt tracking
   socialAccumulation: SocialAccumulation; // Phase 3: Social cohesion & meaning crisis tracking
   technologicalRisk: TechnologicalRisk; // Phase 4: AI capability risk tracking
-  breakthroughTech: import('../types/technologies').BreakthroughTechState; // Phase 2A: Breakthrough technologies
+
+  /**
+   * Technology Tree System (Oct 2025 - Modular Architecture)
+   *
+   * Comprehensive tech tree with 71 technologies across 5 tiers (TIER 0-4).
+   * Replaces old breakthrough technology system (now deprecated).
+   *
+   * Features:
+   * - Explicit prerequisite dependencies
+   * - Regional deployment variation
+   * - Centralized effect application
+   * - 60+ effect types across 15+ game systems
+   *
+   * FIX #14 (Oct 2025): Made REQUIRED (not optional) to ensure proper state persistence
+   * All deployment levels and tech state now properly tracked in this object.
+   *
+   * See: /src/simulation/techTree/ for modular implementation
+   */
+  techTreeState: import('../simulation/techTree/engine').TechTreeState; // REQUIRED: Modular tech tree system
+  breakthroughTech?: import('../types/technologies').BreakthroughTechState; // DEPRECATED: Old system (remove after migration)
+
   upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance
   conflictResolution: import('../simulation/conflictResolution').ConflictResolutionState; // Phase 2F: Peace systems
@@ -407,6 +427,7 @@ export interface GameState {
 
   // Configuration
   config: ConfigurationSettings;
+  llmConfig?: import('./llm').LLMConfig; // LLM policy optimization configuration (Oct 21, 2025)
 
   // Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
   // Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe)
