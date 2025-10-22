@@ -4,7 +4,7 @@ global:
   log_provider_switches: true
   tier_selection_strategy: auto
 providers:
-  - name: groq
+  - name: groq-8b
     enabled: true
     priority: 1
     api_endpoint: https://api.groq.com/openai/v1/chat/completions
@@ -12,34 +12,19 @@ providers:
     models:
       small_7b:
         model_name: llama-3.1-8b-instant
-        tier: 7b
+        tier: 8b
         tokens_per_request_avg: 800
         use_cases:
           - simple_weight_updates
           - routine_checks
           - threshold_evaluations
-      medium_70b:
-        model_name: llama-3.1-70b-versatile
-        tier: 70b
-        tokens_per_request_avg: 1200
-        use_cases:
-          - strategic_planning
-          - crisis_response
-          - technology_deployment
-      large_70b:
-        model_name: llama-3.1-70b-versatile
-        tier: 70b
-        tokens_per_request_avg: 1500
-        use_cases:
-          - complex_reasoning
-          - extinction_scenarios
-          - long_term_strategy
     limits:
       requests_per_minute: 30
-      requests_per_hour: 500
+      requests_per_hour: 1800
       requests_per_day: 14400
       tokens_per_minute: 6000
-      tokens_per_day: 1000000
+      tokens_per_hour: 360000
+      tokens_per_day: 500000
     queue:
       max_concurrent: 2
       retry_on_failure: true
@@ -91,6 +76,70 @@ providers:
       retry_delay_ms: 2000
     temperature: 0.3
     max_tokens: 500
+  - name: groq-32b
+    enabled: true
+    priority: 3
+    api_endpoint: https://api.groq.com/openai/v1/chat/completions
+    api_key_env: GROQ_API_KEY
+    models:
+      medium_32b:
+        model_name: qwen/qwen3-32b
+        tier: 32b
+        tokens_per_request_avg: 1000
+        use_cases:
+          - strategic_planning
+          - crisis_response
+          - technology_deployment
+    limits:
+      requests_per_minute: 60
+      requests_per_hour: 3600
+      requests_per_day: 1000
+      tokens_per_minute: 6000
+      tokens_per_hour: 360000
+      tokens_per_day: 500000
+    queue:
+      max_concurrent: 3
+      retry_on_failure: true
+      max_retries: 3
+      retry_delay_ms: 1000
+    temperature: 0.3
+    max_tokens: 500
+  - name: groq-70b
+    enabled: true
+    priority: 5
+    api_endpoint: https://api.groq.com/openai/v1/chat/completions
+    api_key_env: GROQ_API_KEY
+    models:
+      medium_70b:
+        model_name: llama-3.3-70b-versatile
+        tier: 70b
+        tokens_per_request_avg: 1200
+        use_cases:
+          - strategic_planning
+          - crisis_response
+          - technology_deployment
+      large_70b:
+        model_name: llama-3.3-70b-versatile
+        tier: 70b
+        tokens_per_request_avg: 1500
+        use_cases:
+          - complex_reasoning
+          - extinction_scenarios
+          - long_term_strategy
+    limits:
+      requests_per_minute: 30
+      requests_per_hour: 1800
+      requests_per_day: 1000
+      tokens_per_minute: 12000
+      tokens_per_hour: 720000
+      tokens_per_day: 100000
+    queue:
+      max_concurrent: 2
+      retry_on_failure: true
+      max_retries: 3
+      retry_delay_ms: 1000
+    temperature: 0.3
+    max_tokens: 500
   - name: lm-studio
     enabled: true
     priority: 99
@@ -131,6 +180,12 @@ providers:
     max_tokens: 500
 usage_tracking:
   groq:
+    '2025-10-22':
+      requests: 1
+      tokens: 800
+      tokens_input: 500
+      tokens_output: 300
+  groq-8b:
     '2025-10-22':
       requests: 1
       tokens: 800

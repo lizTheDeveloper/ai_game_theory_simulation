@@ -372,4 +372,77 @@ With 755ms average execution time and 64% pass rate:
 
 ---
 
-**Status:** COMPLETE - Performance improved 21%, yearly batching implemented, real-time mode confirmed feasible.
+**Status:** COMPLETE - Performance improved 21%, yearly batching implemented (optional), real-time mode confirmed feasible.
+
+---
+
+## FINAL CONFIGURATION
+
+### Default Behavior: Full Logs ✅
+
+**By default, simulations output all detailed logs** (no batching):
+- Configuration message: `Logging: Full logs (yearly batching disabled)`
+- All console.log/warn/error calls output immediately
+- **No information loss** - all events preserved for visualization scripts
+- Output: ~8,000-9,000 lines for 24-month simulation
+
+### Optional: Yearly Batching Mode 📦
+
+**To enable yearly batching** (reduces output volume), uncomment in `scripts/monteCarloSimulation.ts`:
+
+```typescript
+// Line 681-682: Enable batching
+logger.configure({ batchByYear: true, batchInterval: 12 });
+logger.interceptConsole();
+
+// Line 718: Intercept console during simulation
+logger.interceptConsole();
+
+// Line 726: Restore console after simulation
+logger.restoreConsole();
+
+// Line 1528: Flush remaining summaries at end
+logger.flushAllYearlySummaries();
+```
+
+**Yearly batching output:**
+```
+╔═══════════════════════════════════════════════════════╗
+║  Year 0 Summary (Months 0-11)
+╚═══════════════════════════════════════════════════════╝
+  Total events: 2037
+  Info: 2013 | Warnings: 24 | Errors: 0
+
+📊 TECH EFFECTS ACTIVE (Month 0)
+💰 CHINA ACCELERATES
+🏁 AI RACE INTENSITY: 17%
+... all 2037 detailed messages from Year 0 ...
+
+╔═══════════════════════════════════════════════════════╗
+║  Year 1 Summary (Months 12-23)
+╚═══════════════════════════════════════════════════════╝
+  Total events: 1942
+  Info: 1920 | Warnings: 22 | Errors: 0
+
+... all 1942 detailed messages from Year 1 ...
+```
+
+**Benefits of yearly batching:**
+- Helpful summary headers for navigation
+- All detailed logs still preserved
+- Configurable interval (12 months default, can change to 1, 6, 24, etc.)
+- Clean log structure for long simulations
+
+### Use Cases
+
+**Full logs (default):**
+- Short simulations (24-120 months)
+- Event analysis and visualization scripts
+- Debugging specific issues
+- When you need every detail
+
+**Yearly batching (optional):**
+- Long simulations (240-360 months)
+- High-level monitoring
+- Reduced output volume
+- Easier log navigation

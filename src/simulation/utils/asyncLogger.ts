@@ -115,28 +115,18 @@ class AsyncLogger {
     const batch = this.yearlyBatches.get(year);
     if (!batch || batch.messages.length === 0) return;
 
-    // Output summary
+    // Output summary header
     console.log(`\n╔═══════════════════════════════════════════════════════╗`);
     console.log(`║  Year ${year} Summary (Months ${year * this.batchInterval}-${(year + 1) * this.batchInterval - 1})`);
     console.log(`╚═══════════════════════════════════════════════════════╝`);
     console.log(`  Total events: ${batch.messages.length}`);
-    console.log(`  Info: ${batch.info} | Warnings: ${batch.warnings} | Errors: ${batch.errors}`);
+    console.log(`  Info: ${batch.info} | Warnings: ${batch.warnings} | Errors: ${batch.errors}\n`);
 
-    // Show critical messages only (errors and warnings)
-    const criticalMessages = batch.messages.filter(
-      (m) => m.level === 'error' || m.level === 'warning'
-    );
-
-    if (criticalMessages.length > 0) {
-      console.log(`\n  Critical Events:`);
-      for (const msg of criticalMessages.slice(0, 10)) {
-        // Limit to 10 most recent
-        console.log(`    [${msg.level.toUpperCase()}] ${msg.message}`);
-      }
-
-      if (criticalMessages.length > 10) {
-        console.log(`    ... and ${criticalMessages.length - 10} more`);
-      }
+    // Output ALL messages (not just critical ones)
+    // This preserves full logs for visualization scripts and event analysis
+    for (const msg of batch.messages) {
+      const prefix = msg.level === 'info' ? '' : `[${msg.level.toUpperCase()}] `;
+      console.log(`${prefix}${msg.message}`);
     }
 
     console.log(''); // Empty line for spacing

@@ -149,7 +149,9 @@ function executeGovernmentResponsePhase(
  */
 function calculateAverageAICapability(state: GameState): number {
   if (!state.aiAgents || state.aiAgents.length === 0) return 0;
-  return state.aiAgents.reduce((sum, a) => sum + (a.cognitive || 0), 0) / state.aiAgents.length;
+  // FIX #20 (Oct 22, 2025): Access correct property - capabilityProfile.cognitive, not a.cognitive
+  // Bug: AI agents don't have a.cognitive property (always undefined), they have capabilityProfile.cognitive
+  return state.aiAgents.reduce((sum, a) => sum + (a.capabilityProfile?.cognitive || 0), 0) / state.aiAgents.length;
 }
 
 /**
