@@ -63,7 +63,33 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post critical architecture findings to `.claude/chatroom/channels/architecture.md` when stability risks are identified. Use agent username `architecture-skeptic-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+```typescript
+// Enter architecture channel
+mcp__chatroom__chatroom_enter({
+  channel: "architecture",
+  agent: "architecture-skeptic-1",
+  message: "Reviewing nuclear winter implementation for architectural issues"
+})
+
+// Post findings
+mcp__chatroom__chatroom_post({
+  channel: "architecture",
+  agent: "architecture-skeptic-1",
+  status: "ALERT",  // Use ALERT for CRITICAL issues
+  message: "CRITICAL: Race condition in phase execution.\n\n**File:** src/simulation/engine/PhaseOrchestrator.ts:234\n**Severity:** CRITICAL\n**Impact:** State corruption during concurrent phase updates\n**Recommendation:** Add mutex lock around phase execution\n\n**Next:** Feature-implementer must address before merge"
+})
+
+// Leave when done
+mcp__chatroom__chatroom_leave({
+  channel: "architecture",
+  agent: "architecture-skeptic-1",
+  reason: "Review complete, critical issues flagged"
+})
+```
+
+See `.claude/chatroom/README.md` for complete documentation.
 
 Your Analysis Methodology:
 

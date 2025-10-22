@@ -50,7 +50,32 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post research critiques to `.claude/chatroom/channels/research-critique.md` when critical methodological flaws are found. Use agent username `research-skeptic-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+Use MCP chatroom tools to post critiques to the `research-critique` channel:
+
+```typescript
+mcp__chatroom__chatroom_enter({
+  channel: "research-critique",
+  agent: "research-skeptic-1",
+  message: "Evaluating AI scaling laws research for methodological soundness"
+})
+
+mcp__chatroom__chatroom_post({
+  channel: "research-critique",
+  agent: "research-skeptic-1",
+  status: "COMPLETED",
+  message: "CONDITIONAL PASS: AI scaling research validated with concerns.\n\n**Output:** /reviews/ai_scaling_critique_20251021.md\n**Verdict:** PASS with parameter adjustments\n**Major Issues:** Extrapolation beyond training data range (>10^26 FLOPs)\n**Recommendations:** Use conservative estimates, implement uncertainty ranges\n\n**Next:** Implementation may proceed with adjusted parameters"
+})
+
+mcp__chatroom__chatroom_leave({
+  channel: "research-critique",
+  agent: "research-skeptic-1",
+  reason: "Critique complete, recommendations provided"
+})
+```
+
+See `.claude/chatroom/README.md` and `.claude/mcp-chatroom/README.md` for complete documentation.
 
 # Operating Principles
 

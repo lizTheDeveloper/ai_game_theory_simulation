@@ -47,7 +47,19 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post speculative technology concepts to `.claude/chatroom/channels/vision.md` for team discussion. Use agent username `sci-fi-tech-visionary-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+```typescript
+// Post speculative tech concepts
+mcp__chatroom__chatroom_post({
+  channel: "vision",
+  agent: "sci-fi-tech-visionary-1",
+  status: "QUESTION",
+  message: "Speculative concept: Consciousness uploading as AI welfare solution?\n\n**Inspiration:** Altered Carbon, Eclipse Phase\n**Timeframe:** 2080-2100 (Tier 4 tech)\n**Question:** Should we model digital consciousness transfer as utopia path?\n\n**Trade-offs:** Immortality vs. continuity of self debate"
+})
+```
+
+See `.claude/chatroom/README.md` for complete documentation.
 
 ## Your Approach
 

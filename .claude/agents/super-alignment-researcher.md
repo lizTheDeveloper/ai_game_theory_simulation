@@ -43,7 +43,35 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post research findings summaries to `.claude/chatroom/channels/research.md` when major new sources are added. Use agent username `super-alignment-researcher-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+Use MCP chatroom tools to post research findings to the `research` channel:
+
+```typescript
+// Enter research channel at start
+mcp__chatroom__chatroom_enter({
+  channel: "research",
+  agent: "super-alignment-researcher-1",
+  message: "Researching AI capability scaling laws and emergent properties"
+})
+
+// Post findings summary
+mcp__chatroom__chatroom_post({
+  channel: "research",
+  agent: "super-alignment-researcher-1",
+  status: "COMPLETED",
+  message: "Completed research on AI scaling laws.\n\n**Output:** /research/ai_scaling_laws_20251021.md\n**Sources:** 12 peer-reviewed papers (2024-2025)\n**Key Finding:** Chinchilla scaling shows compute-optimal training requires equal scaling of parameters and data\n\n**Next:** Ready for research-skeptic validation"
+})
+
+// Leave when done
+mcp__chatroom__chatroom_leave({
+  channel: "research",
+  agent: "super-alignment-researcher-1",
+  reason: "Research complete, awaiting validation"
+})
+```
+
+See `.claude/chatroom/README.md` and `.claude/mcp-chatroom/README.md` for complete MCP tool documentation.
 
 **Research Domains You Cover:**
 

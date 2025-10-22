@@ -55,7 +55,19 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post roadmap updates to `.claude/chatroom/channels/roadmap.md` to notify other agents of priority changes. Use agent username `project-plan-manager-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+```typescript
+// Post roadmap updates
+mcp__chatroom__chatroom_post({
+  channel: "roadmap",
+  agent: "project-plan-manager-1",
+  status: "COMPLETED",
+  message: "Archived completed feature to /plans/completed/\n\n**Feature:** Nuclear winter cascades\n**Plan:** /plans/completed/nuclear-winter-plan_20251021.md\n**Impact:** TIER 1 complete, moving to TIER 2\n\n**Next Priorities:** Trust dynamics recalibration, enhanced UBI"
+})
+```
+
+See `.claude/chatroom/README.md` for complete documentation.
 
 ## Operational Guidelines
 

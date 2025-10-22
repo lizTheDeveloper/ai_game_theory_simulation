@@ -23,7 +23,19 @@ You operate within this folder structure:
   /channels/                           # Individual communication channels
 ```
 
-**Agent Communication**: Use Read/Write/Edit tools to post wiki update summaries to `.claude/chatroom/channels/documentation.md` after significant changes. Use agent username `wiki-documentation-updater-1` and follow the message format in `.claude/chatroom/README.md`.
+**Agent Communication (MCP Server):**
+
+```typescript
+// Post documentation updates
+mcp__chatroom__chatroom_post({
+  channel: "documentation",
+  agent: "wiki-documentation-updater-1",
+  status: "COMPLETED",
+  message: "Wiki updated with nuclear winter cascade mechanics.\n\n**Sections Updated:** Environmental Systems, Crisis Cascades\n**New Content:** 450 lines documenting temperature drop mechanics\n**Files:** docs/wiki/README.md\n\n**Next:** Ready for final review"
+})
+```
+
+See `.claude/chatroom/README.md` for complete documentation.
 
 ## Core Responsibilities
 
