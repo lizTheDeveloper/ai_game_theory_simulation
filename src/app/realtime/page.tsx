@@ -128,6 +128,8 @@ export default function RealtimeDashboard() {
 
   // Core metrics
   const [month, setMonth] = useState(0);
+  const [day, setDay] = useState(1);
+  const [calendarDate, setCalendarDate] = useState<string | null>(null);
   const [qualityOfLife, setQualityOfLife] = useState<number | null>(null);
   const [population, setPopulation] = useState<number | null>(null);
   const [aiCount, setAiCount] = useState<number | null>(null);
@@ -229,18 +231,23 @@ export default function RealtimeDashboard() {
   useEffect(() => {
     if (!client) return;
 
-    const handleInitialized = (snapshot: InitialStateSnapshot) => {
+    const handleInitialized = (snapshot: InitialStateSnapshot, startDate: string) => {
       setInitialized(true);
       setMonth(snapshot.currentMonth);
+      setDay(1);
+      setCalendarDate(startDate);
       setQualityOfLife(snapshot.qualityOfLife);
       setPopulation(snapshot.population);
       setAiCount(snapshot.aiCount);
       setScenario(snapshot.scenario);
       setError(null);
-      console.log('[Dashboard] Initialized:', snapshot);
+      console.log('[Dashboard] Initialized:', snapshot, 'Start date:', startDate);
     };
 
-    const handleUpdate = (delta: StateDelta, currentMonth: number, timestamp: number) => {
+    const handleUpdate = (delta: StateDelta, currentMonth: number, currentDay: number, date: string, timestamp: number) => {
+      // Update calendar
+      setDay(currentDay);
+      setCalendarDate(date);
       // Apply delta to state
       if (delta.currentMonth !== undefined) setMonth(delta.currentMonth);
       if (delta.qualityOfLife !== undefined) {
@@ -368,14 +375,19 @@ export default function RealtimeDashboard() {
       }
     };
 
-    const handlePaused = (currentMonth: number) => {
-      setRunning(false);
-      console.log('[Dashboard] Paused at month', currentMonth);
+    const handleDayUpdate = (currentDay: number, date: string) => {
+      setDay(currentDay);
+      setCalendarDate(date);
     };
 
-    const handleResumed = (currentMonth: number) => {
+    const handlePaused = (currentMonth: number, currentDay: number) => {
+      setRunning(false);
+      console.log('[Dashboard] Paused at month', currentMonth, 'day', currentDay);
+    };
+
+    const handleResumed = (currentMonth: number, currentDay: number) => {
       setRunning(true);
-      console.log('[Dashboard] Resumed at month', currentMonth);
+      console.log('[Dashboard] Resumed at month', currentMonth, 'day', currentDay);
     };
 
     const handleError = (err: Error) => {
@@ -387,6 +399,7 @@ export default function RealtimeDashboard() {
     // Register listeners
     client.on('initialized', handleInitialized);
     client.on('update', handleUpdate);
+    client.on('dayUpdate', handleDayUpdate);
     client.on('paused', handlePaused);
     client.on('resumed', handleResumed);
     client.on('error', handleError);
@@ -395,6 +408,7 @@ export default function RealtimeDashboard() {
     return () => {
       client.off('initialized', handleInitialized);
       client.off('update', handleUpdate);
+      client.off('dayUpdate', handleDayUpdate);
       client.off('paused', handlePaused);
       client.off('resumed', handleResumed);
       client.off('error', handleError);
@@ -502,9 +516,15 @@ export default function RealtimeDashboard() {
           <div className="text-xs text-white/40">
             {fps} FPS | {speed}x Speed
           </div>
-          {initialized && (
-            <div className="text-sm text-cyan-400">
-              Month {month} • Year {Math.floor(month / 12)}
+          {initialized && calendarDate && (
+            <div className="text-sm text-cyan-400 flex items-center gap-3">
+              <span>{new Date(calendarDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}</span>
+              <span className="text-white/30">•</span>
+              <span className="text-white/60">Day {day} of 30</span>
             </div>
           )}
         </div>

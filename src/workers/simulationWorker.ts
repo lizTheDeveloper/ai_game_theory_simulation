@@ -32,8 +32,13 @@ import type { ScenarioMode } from '../types/game';
 let engine: SimulationEngine | null = null;
 let state: GameState | null = null;
 let running = false;
-let intervalId: ReturnType<typeof setInterval> | null = null;
-let stepInterval = 1000; // 1 second = 1 day (configurable)
+let simulationIntervalId: ReturnType<typeof setInterval> | null = null; // Monthly simulation steps
+let dayIntervalId: ReturnType<typeof setInterval> | null = null; // Daily UI updates
+let stepInterval = 30000; // 30 seconds = 1 month (each month takes 30 seconds)
+
+// Calendar tracking
+let currentDay = 1; // Current day of month (1-31)
+let startDate: Date | null = null; // Real calendar start date
 
 // Previous state snapshot for delta calculation (expanded)
 interface StateSnapshot {
@@ -107,10 +112,11 @@ type WorkerMessage =
 
 // Response types to main thread
 type WorkerResponse =
-  | { type: 'initialized'; initialState: InitialStateSnapshot }
-  | { type: 'update'; delta: StateDelta; month: number; timestamp: number }
-  | { type: 'paused'; month: number }
-  | { type: 'resumed'; month: number }
+  | { type: 'initialized'; initialState: InitialStateSnapshot; startDate: string }
+  | { type: 'update'; delta: StateDelta; month: number; day: number; calendarDate: string; timestamp: number }
+  | { type: 'dayUpdate'; day: number; calendarDate: string }  // Daily UI updates (no simulation step)
+  | { type: 'paused'; month: number; day: number }
+  | { type: 'resumed'; month: number; day: number }
   | { type: 'error'; error: string };
 
 // Minimal initial state snapshot (not full state)
@@ -259,6 +265,10 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
     stepInterval = interval;
   }
 
+  // Initialize calendar to today's date
+  startDate = new Date();
+  currentDay = 1;
+
   // Create initial snapshot
   const snapshot: InitialStateSnapshot = {
     currentMonth: state.currentMonth,
@@ -273,7 +283,8 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
 
   self.postMessage({
     type: 'initialized',
-    initialState: snapshot
+    initialState: snapshot,
+    startDate: startDate.toISOString()
   } as WorkerResponse);
 }
 
@@ -298,14 +309,20 @@ function handlePause() {
 
   running = false;
 
-  if (intervalId !== null) {
-    clearInterval(intervalId);
-    intervalId = null;
+  // Stop both simulation and day intervals
+  if (simulationIntervalId !== null) {
+    clearInterval(simulationIntervalId);
+    simulationIntervalId = null;
+  }
+  if (dayIntervalId !== null) {
+    clearInterval(dayIntervalId);
+    dayIntervalId = null;
   }
 
   self.postMessage({
     type: 'paused',
-    month: state?.currentMonth || 0
+    month: state?.currentMonth || 0,
+    day: currentDay
   } as WorkerResponse);
 }
 
@@ -323,7 +340,8 @@ function handleResume() {
 
   self.postMessage({
     type: 'resumed',
-    month: state.currentMonth
+    month: state.currentMonth,
+    day: currentDay
   } as WorkerResponse);
 }
 
@@ -339,8 +357,9 @@ function handleSetSpeed(interval: number) {
   stepInterval = interval;
 
   // If running, restart loop with new interval
-  if (running && intervalId !== null) {
-    clearInterval(intervalId);
+  if (running && simulationIntervalId !== null) {
+    clearInterval(simulationIntervalId);
+    clearInterval(dayIntervalId!);
     startSimulationLoop();
   }
 }
@@ -359,21 +378,66 @@ function handleDecision(decision: PlayerDecision) {
 }
 
 function startSimulationLoop() {
-  if (intervalId !== null) {
-    clearInterval(intervalId);
+  // Clear any existing intervals
+  if (simulationIntervalId !== null) {
+    clearInterval(simulationIntervalId);
+  }
+  if (dayIntervalId !== null) {
+    clearInterval(dayIntervalId);
   }
 
-  intervalId = setInterval(() => {
-    if (!running || !engine || !state) {
-      if (intervalId !== null) {
-        clearInterval(intervalId);
-        intervalId = null;
+  // Reset day counter to 1 at start of new month
+  currentDay = 1;
+
+  // Calculate days in current month (approximate to 30 for now)
+  const daysInMonth = 30;
+
+  // Start day counter (updates every second)
+  dayIntervalId = setInterval(() => {
+    if (!running || !startDate) {
+      if (dayIntervalId !== null) {
+        clearInterval(dayIntervalId);
+        dayIntervalId = null;
       }
       return;
     }
 
+    // Increment day
+    currentDay++;
+    if (currentDay > daysInMonth) {
+      currentDay = daysInMonth; // Cap at end of month
+    }
+
+    // Calculate actual calendar date
+    const monthsElapsed = state?.currentMonth || 0;
+    const calendarDate = new Date(startDate);
+    calendarDate.setMonth(calendarDate.getMonth() + monthsElapsed);
+    calendarDate.setDate(currentDay);
+
+    // Send day update to UI
+    self.postMessage({
+      type: 'dayUpdate',
+      day: currentDay,
+      calendarDate: calendarDate.toISOString()
+    } as WorkerResponse);
+  }, 1000); // Update every second
+
+  // Start simulation step interval (runs actual simulation)
+  simulationIntervalId = setInterval(() => {
+    if (!running || !engine || !state) {
+      if (simulationIntervalId !== null) {
+        clearInterval(simulationIntervalId);
+        simulationIntervalId = null;
+      }
+      return;
+    }
+
+    // Reset day to 1 for new month
+    currentDay = 1;
+
+    // Perform simulation step
     performStep();
-  }, stepInterval);
+  }, stepInterval); // Default 30 seconds = 1 month
 }
 
 function performStep() {
@@ -395,11 +459,19 @@ function performStep() {
   // Update previous state snapshot
   previousState = captureStateSnapshot(state);
 
+  // Calculate calendar date
+  const monthsElapsed = state.currentMonth;
+  const calendarDate = new Date(startDate!);
+  calendarDate.setMonth(calendarDate.getMonth() + monthsElapsed);
+  calendarDate.setDate(currentDay);
+
   // Send update to main thread
   self.postMessage({
     type: 'update',
     delta,
     month: state.currentMonth,
+    day: currentDay,
+    calendarDate: calendarDate.toISOString(),
     timestamp: Date.now()
   } as WorkerResponse);
 }

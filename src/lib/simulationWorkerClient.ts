@@ -13,7 +13,7 @@
 
 import type { ScenarioMode } from '@/types/game';
 
-// Re-export types from worker
+// Re-export types from worker (expanded for comprehensive dashboard)
 export interface StateDelta {
   // Core metrics
   currentMonth?: number;
@@ -21,13 +21,66 @@ export interface StateDelta {
   population?: number;
   aiCount?: number;
 
-  // Additional metrics
+  // AI System Metrics
   dystopiaProgression?: number;
   avgAICapability?: number;
   deployedTechCount?: number;
+  alignedAICount?: number;
+  misalignedAICount?: number;
+  sleeperAgentCount?: number;
+  aiDeploymentPhase?: 'training' | 'testing' | 'deployed' | 'open_source';
 
-  // Events
-  events?: Array<{ type: string; description: string; severity?: 'low' | 'medium' | 'high' }>;
+  // Environmental Metrics
+  climateChange?: number;
+  resourceDepletion?: number;
+  biodiversityLoss?: number;
+  pollutionLevel?: number;
+  planetaryBoundariesCrossed?: number;
+  environmentalDebtLevel?: number;
+
+  // Social Metrics
+  socialCohesion?: number;
+  institutionalTrust?: number;
+  meaningLevel?: number;
+  socialDebtLevel?: number;
+
+  // Crisis Indicators
+  activeCrises?: Array<{ type: string; severity: number; duration: number }>;
+  phosphorusDepletion?: number;
+  freshwaterStress?: number;
+  oceanAcidification?: number;
+  novelEntitiesLevel?: number;
+
+  // Government & Governance
+  governmentAIRegulation?: number;
+  governmentInvestment?: number;
+  governmentComprehension?: number;
+  internationalCooperation?: number;
+
+  // Technology & Research
+  activeResearch?: Array<{ tech: string; progress: number }>;
+  deployedTechs?: Array<{ name: string; tier: number; deployment: number }>;
+  techRiskLevel?: number;
+
+  // Upward Spirals & Outcomes
+  activeSpirals?: Array<{ type: string; strength: number; duration: number }>;
+  utopiaProgress?: number;
+  extinctionProbability?: number;
+  outcomeType?: string;
+
+  // Multi-Paradigm DUI (4 perspectives)
+  westernLiberalIndex?: number;
+  developmentIndex?: number;
+  ecologicalIndex?: number;
+  indigenousIndex?: number;
+
+  // Events (optional - only when significant changes happen)
+  events?: Array<{
+    type: string;
+    description: string;
+    severity?: 'low' | 'medium' | 'high' | 'critical';
+    category?: 'ai' | 'environment' | 'social' | 'crisis' | 'tech' | 'governance';
+  }>;
 }
 
 export interface InitialStateSnapshot {
@@ -81,21 +134,25 @@ export class SimulationWorkerClient {
     switch (msg.type) {
       case 'initialized':
         this.initialized = true;
-        this.emit('initialized', msg.initialState);
+        this.emit('initialized', msg.initialState, msg.startDate);
         break;
 
       case 'update':
-        this.emit('update', msg.delta, msg.month, msg.timestamp);
+        this.emit('update', msg.delta, msg.month, msg.day, msg.calendarDate, msg.timestamp);
+        break;
+
+      case 'dayUpdate':
+        this.emit('dayUpdate', msg.day, msg.calendarDate);
         break;
 
       case 'paused':
         this.running = false;
-        this.emit('paused', msg.month);
+        this.emit('paused', msg.month, msg.day);
         break;
 
       case 'resumed':
         this.running = true;
-        this.emit('resumed', msg.month);
+        this.emit('resumed', msg.month, msg.day);
         break;
 
       case 'error':
