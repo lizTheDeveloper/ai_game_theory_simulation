@@ -421,7 +421,7 @@ export async function generateExampleContexts() {
   console.log('Actual contexts will be generated during simulation runs');
 }
 
-// Run if called directly
-if (require.main === module) {
+// Run if called directly (Node.js only)
+if (typeof require !== 'undefined' && typeof module !== 'undefined' && require.main === module) {
   generateExampleContexts().catch(console.error);
 }
