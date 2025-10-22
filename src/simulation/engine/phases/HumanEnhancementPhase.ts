@@ -38,7 +38,7 @@ export class HumanEnhancementPhase implements SimulationPhase {
       // Get or initialize metrics
       if (!state.aiAssistedSkillsMetrics) {
         // Initialize if first time (backward compatibility)
-        const { initializeAIAssistedSkillsMetrics } = require('../../bionicSkills');
+        const { initializeAIAssistedSkillsMetrics } = require('../../aiAssistedSkills/aggregateMetrics');
         state.aiAssistedSkillsMetrics = initializeAIAssistedSkillsMetrics();
       }
 
