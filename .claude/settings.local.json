@@ -94,7 +94,8 @@
       "Bash(npm cache clean:*)",
       "WebFetch(domain:besjournals.onlinelibrary.wiley.com)",
       "Bash(npx next build:*)",
-      "WebFetch(domain:www.biorxiv.org)"
+      "WebFetch(domain:www.biorxiv.org)",
+      "Bash(git worktree add:*)"
     ],
     "deny": [],
     "ask": []

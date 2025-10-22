@@ -676,12 +676,11 @@ log(`  Seed Range: ${SEED_START} - ${SEED_START + NUM_RUNS - 1}`);
 log(`  Scenario Mode: ${SCENARIO_MODE}${SCENARIO_MODE === 'dual' ? ' (50% historical, 50% unprecedented)' : ''}`);
 log(`  LLM Policy Optimization: ${llmEnabled ? '🤖 ENABLED (agents use LLM for weight updates)' : '❌ DISABLED (using hardcoded weights)'}`);
 
-// Enable yearly batching to reduce console spam for long simulations
-logger.configure({
-  batchByYear: true,
-  batchInterval: 12 // Output summary every 12 simulation months (1 year)
-});
-log(`  Logging: Yearly batching enabled (summaries every 12 months)`);
+// Yearly batching: DISABLED BY DEFAULT for full logs
+// To enable batching (reduces output volume), uncomment the following:
+// logger.configure({ batchByYear: true, batchInterval: 12 });
+// logger.interceptConsole();
+log(`  Logging: Full logs (yearly batching disabled)`);
 
 log(`\n\n⏩ RUNNING ${NUM_RUNS} SIMULATIONS...\n`);
 
@@ -714,16 +713,17 @@ for (let i = 0; i < NUM_RUNS; i++) {
     initialState.llmConfig.enabled = llmEnabled;
   }
 
-  // Intercept console for simulation output (routes all console.log -> logger -> yearly batches)
-  logger.interceptConsole();
+  // Yearly batching disabled by default - console output is direct
+  // If batching enabled above, uncomment these:
+  // logger.interceptConsole();
 
   const runResult = engine.run(initialState, {
     maxMonths: MAX_MONTHS,
     checkActualOutcomes: true
   });
 
-  // Restore console for Monte Carlo summary output (we want this immediate, not batched)
-  logger.restoreConsole();
+  // If batching enabled, uncomment this:
+  // logger.restoreConsole();
 
   const runElapsed = Date.now() - runStartTime; // Calculate run time
   runTimings.push(runElapsed);
@@ -1523,9 +1523,9 @@ for (let i = 0; i < NUM_RUNS; i++) {
     recoveryTimeline,
     mechanismSummary
   });
-  
-  // Flush any remaining yearly log summaries at end of run
-  logger.flushAllYearlySummaries();
+
+  // If batching enabled, uncomment this to flush remaining summaries:
+  // logger.flushAllYearlySummaries();
 
   // Progress indicator with per-run timing
   const runSeconds = runElapsed / 1000;

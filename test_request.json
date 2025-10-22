@@ -1,0 +1,35 @@
+{
+  "model": "qwen/qwen3-32b",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant. Use the set_weight function when asked to set a weight."
+    },
+    {
+      "role": "user",
+      "content": "Please set the weight to 75"
+    }
+  ],
+  "max_tokens": 200,
+  "temperature": 0.3,
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "set_weight",
+        "description": "Set a numeric weight value",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number",
+              "description": "The weight value to set"
+            }
+          },
+          "required": ["value"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}
