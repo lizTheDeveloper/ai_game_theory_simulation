@@ -48,25 +48,30 @@ export class SimulationWorkerClient {
 
   constructor() {
     // Only create worker in browser environment
-    if (typeof window !== 'undefined' && typeof Worker !== 'undefined') {
-      try {
-        // Create worker from TypeScript file (Vite/Next.js handles bundling)
-        this.worker = new Worker(
-          new URL('../workers/simulationWorker.ts', import.meta.url),
-          {
-            type: 'module',
-            name: 'simulation-worker'
-          }
-        );
+    if (typeof window === 'undefined' || typeof Worker === 'undefined') {
+      console.warn('Web Workers not available (running in Node.js or unsupported browser)');
+      return; // Don't throw - allow SSR to work
+    }
 
-        this.worker.addEventListener('message', this.handleMessage.bind(this));
-        this.worker.addEventListener('error', this.handleError.bind(this));
-      } catch (error) {
-        console.error('Failed to create Web Worker:', error);
-        throw new Error('Web Worker not supported or failed to initialize');
-      }
-    } else {
-      throw new Error('Web Workers not available (running in Node.js or unsupported browser)');
+    try {
+      // Create worker from TypeScript file (Next.js handles bundling)
+      // Note: Using dynamic import to avoid SSR issues
+      this.worker = new Worker(
+        new URL('../workers/simulationWorker.ts', import.meta.url),
+        {
+          type: 'module',
+          name: 'simulation-worker'
+        }
+      );
+
+      this.worker.addEventListener('message', this.handleMessage.bind(this));
+      this.worker.addEventListener('error', this.handleError.bind(this));
+
+      console.log('[Client] Web Worker created successfully');
+    } catch (error) {
+      console.error('[Client] Failed to create Web Worker:', error);
+      this.worker = null;
+      // Don't throw - allow component to render with error message
     }
   }
 
@@ -151,8 +156,10 @@ export class SimulationWorkerClient {
     }
 
     if (!this.worker) {
-      throw new Error('Worker not available');
+      throw new Error('Worker not available. Check browser console for errors. Web Workers may not be supported in this environment.');
     }
+
+    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario);
 
     this.worker.postMessage({
       type: 'init',
