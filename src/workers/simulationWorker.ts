@@ -11,6 +11,18 @@
  * - Can inject player decisions (Phase 3 future work)
  */
 
+// Suppress verbose console logging in worker context to prevent memory overflow
+// Individual phases call console.log() directly, ignoring logLevel config
+// This prevents browser from accumulating hundreds of console messages per second
+const originalLog = console.log;
+const originalWarn = console.warn;
+console.log = () => {}; // Suppress simulation logs
+console.warn = () => {}; // Suppress warnings
+// Keep console.error for critical issues
+self.addEventListener('error', (e) => {
+  originalLog('[Worker Error]', e.message, e.filename, e.lineno);
+});
+
 import { SimulationEngine } from '../simulation/engine';
 import { createDefaultInitialState } from '../simulation/initialization';
 import type { GameState } from '../types/game';
@@ -81,6 +93,7 @@ interface StateSnapshot {
 }
 
 let previousState: StateSnapshot | null = null;
+let isFirstStep = false; // Force full delta on first step after start
 
 // Message types from main thread
 type WorkerMessage =
@@ -274,6 +287,7 @@ function handleStart() {
   }
 
   running = true;
+  isFirstStep = true; // Force full delta on first step
   startSimulationLoop();
 }
 
@@ -370,8 +384,13 @@ function performStep() {
   // Run one simulation step (mutates state in place)
   engine.step(state);
 
-  // Calculate delta (only changed fields)
+  // Calculate delta (only changed fields, or all fields on first step)
   const delta = calculateDelta(previousState, state);
+
+  // Reset first step flag after sending full delta
+  if (isFirstStep) {
+    isFirstStep = false;
+  }
 
   // Update previous state snapshot
   previousState = captureStateSnapshot(state);
@@ -391,7 +410,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
 
   // Calculate AI metrics
   const avgAICapability = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + (ai.capabilities?.overall || 0), 0) / state.aiAgents.length
+    ? state.aiAgents.reduce((sum, ai) => sum + (ai.capability || 0), 0) / state.aiAgents.length
     : 0;
 
   const alignedAICount = state.aiAgents.filter(ai => ai.alignment === 'aligned').length;
@@ -401,7 +420,8 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   // Environmental metrics
   const climateChange = state.globalMetrics.environmentalStress || 0;
   const resourceDepletion = state.resourceEconomy?.resourceStock || 1.0;
-  const biodiversityLoss = state.specificTippingPoints?.pollinators?.populationPercentage || 1.0;
+  // Note: populationPercentage is stored as 60 (meaning 60%), need to normalize to 0.6 for formatPercent() in UI
+  const biodiversityLoss = (state.specificTippingPoints?.pollinators?.populationPercentage || 100) / 100;
   const pollutionLevel = state.novelEntitiesSystem?.pollutionLevel || 0;
   const environmentalDebtLevel = state.environmentalAccumulation?.totalDebt || 0;
 
@@ -512,6 +532,11 @@ function calculateDelta(previous: StateSnapshot, current: GameState): StateDelta
   // Capture current state snapshot for comparison
   const currentSnapshot = captureStateSnapshot(current);
 
+  // On first step, force-send all metrics regardless of change
+  if (isFirstStep) {
+    return { ...currentSnapshot } as StateDelta;
+  }
+
   // Core metrics - always include month
   if (previous.currentMonth !== currentSnapshot.currentMonth) {
     delta.currentMonth = currentSnapshot.currentMonth;
@@ -522,8 +547,8 @@ function calculateDelta(previous: StateSnapshot, current: GameState): StateDelta
     delta.qualityOfLife = currentSnapshot.qualityOfLife;
   }
 
-  // Population
-  if (Math.abs(previous.population - currentSnapshot.population) > 1000000) { // Only report if changed by > 1M
+  // Population (stored in billions, so 0.001 = 1 million people)
+  if (Math.abs(previous.population - currentSnapshot.population) > 0.001) {
     delta.population = currentSnapshot.population;
   }
 
