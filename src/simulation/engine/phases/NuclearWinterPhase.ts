@@ -21,14 +21,9 @@ export class NuclearWinterPhase implements SimulationPhase {
   readonly order = 252; // After organization viability (251)
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
-    // CRITICAL FIX: Only update at end of month (day 30)
-    // This phase calculates MONTHLY rates (5% soot decay per month, 5% mortality per month)
-    // but was executing DAILY (30x per month), causing exponential effects:
-    // - 5% soot decay per month applied 30 times = (1-0.05)^30 ≈ 0.21 = 79% decay per month!
-    // - 5% starvation mortality per month applied 30 times = (1-0.05)^30 ≈ 0.21 = 79% death rate per month!
-    if (state.currentDay !== 30) {
-      return { events: [] }; // Skip nuclear winter updates on non-month-end days
-    }
+    // Nuclear winter updates run once per simulation step (once per month)
+    // Each engine.step() represents one month advancing
+    // Rates are monthly (5% soot decay, 5% mortality) - no need to gate on day
 
     // TIER 1.7.4: Update nuclear winter effects (if active)
     updateNuclearWinter(state);

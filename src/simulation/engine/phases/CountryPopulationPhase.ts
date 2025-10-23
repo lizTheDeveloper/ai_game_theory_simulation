@@ -13,13 +13,8 @@ export class CountryPopulationPhase implements SimulationPhase {
   readonly order = 250; // After population dynamics (200)
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
-    // CRITICAL FIX: Only update population at end of month (day 30)
-    // Country population tracking follows same monthly update pattern as global population
-    // Running 30x per month causes compounding errors in population changes
-    if (state.currentDay !== 30) {
-      return { events: [] }; // Skip population updates on non-month-end days
-    }
-
+    // Country population updates run once per simulation step (once per month)
+    // Each engine.step() represents one month advancing
     updateCountryPopulations(state);
     return { events: [] };
   }
