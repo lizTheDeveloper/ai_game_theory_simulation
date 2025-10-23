@@ -429,7 +429,9 @@ export default function RealtimeDashboard() {
     if (!client || initialized) return;
 
     try {
-      const interval = Math.floor(1000 / speed);
+      // Calculate interval: 30000ms base (30 seconds = 1 month at 1x speed)
+      // Speed multiplier: 0.5x = 60s/month, 1x = 30s/month, 2x = 15s/month, 4x = 7.5s/month
+      const interval = Math.floor(30000 / speed);
       client.init(seed, scenario, interval);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
