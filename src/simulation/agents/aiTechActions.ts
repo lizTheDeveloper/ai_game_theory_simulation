@@ -6,7 +6,8 @@
  * Misaligned AIs sabotage detection systems or deploy tech strategically.
  */
 
-import { GameState, GameAction, ActionResult, AIAgent } from '@/types/game';
+import { GameState, AIAgent } from '@/types/game';
+import { GameAction, ActionResult } from './types';
 import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
 import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';

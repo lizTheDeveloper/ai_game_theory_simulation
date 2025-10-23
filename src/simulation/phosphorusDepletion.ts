@@ -301,9 +301,9 @@ export function checkPhosphorusTechUnlocks(state: GameState): void {
   // === 4. CIRCULAR FOOD SYSTEMS ===
   // Integrated: Combines all P recovery pathways
   if (!tech.circularFoodSystems?.unlocked) {
-    const hasStruvite = tech.struviteRecovery?.deploymentLevel || 0 > 0.5;
-    const hasSoil = tech.soilOptimization?.deploymentLevel || 0 > 0.5;
-    const hasCrops = tech.efficientCrops?.deploymentLevel || 0 > 0.3;
+    const hasStruvite = (tech.struviteRecovery?.deploymentLevel || 0) > 0.5;
+    const hasSoil = (tech.soilOptimization?.deploymentLevel || 0) > 0.5;
+    const hasCrops = (tech.efficientCrops?.deploymentLevel || 0) > 0.3;
     
     if (hasStruvite && hasSoil && hasCrops && avgAICapability > 3.0) {
       tech.circularFoodSystems = {
