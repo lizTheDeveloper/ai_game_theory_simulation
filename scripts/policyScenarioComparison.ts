@@ -91,8 +91,8 @@ function applyPolicyScenario(state: GameState, scenario: PolicyScenario): void {
   // Apply UBI level
   if (scenario.ubiLevel !== undefined && state.ubiSystem) {
     const medianIncome = 60000; // US median income ~$60k/year
-    state.ubiSystem.currentAmount = medianIncome * scenario.ubiLevel;
-    state.ubiSystem.isActive = scenario.ubiLevel > 0;
+    state.ubiSystem.basicIncome.amount = medianIncome * scenario.ubiLevel;
+    state.ubiSystem.active = scenario.ubiLevel > 0;
   }
 
   // Store policy levels for use by applyPolicyInterventions()

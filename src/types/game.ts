@@ -181,7 +181,6 @@ export interface GameState {
    * See: /src/simulation/techTree/ for modular implementation
    */
   techTreeState: import('../simulation/techTree/engine').TechTreeState; // REQUIRED: Modular tech tree system
-  breakthroughTech?: import('../types/technologies').BreakthroughTechState; // DEPRECATED: Old system (remove after migration)
 
   upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance

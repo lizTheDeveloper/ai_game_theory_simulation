@@ -160,7 +160,7 @@ for (let run = 0; run < NUM_RUNS; run++) {
     totalEvaluations: finalState.government.totalBenchmarksRun
   });
 
-  log(`   Outcome: ${runResult.outcome} (${runResult.outcomeReason})`);
+  log(`   Outcome: ${runResult.summary.finalOutcome} (${runResult.summary.finalOutcomeReason})`);
 }
 
 // ============================================================================

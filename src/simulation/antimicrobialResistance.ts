@@ -493,18 +493,11 @@ export function applyAMRMitigation(
   // Check which mitigation technologies are deployed
   const deployedMitigationTechs: string[] = [];
 
-  // Safety check: ensure breakthroughTech.deployed exists
-  if (state.breakthroughTech?.deployed) {
-    for (const tech of AMR_MITIGATION_TECHNOLOGIES) {
-      // Check if technology is deployed in breakthrough tech system
-      const isDeployed = state.breakthroughTech.deployed.some(
-        (t) => t.id === tech.id
-      );
-
-      if (isDeployed) {
-        deployedMitigationTechs.push(tech.id);
-        totalMitigation += tech.growthRateReduction;
-      }
+  // Check AMR-specific mitigation technologies (tracked separately from main tech tree)
+  for (const tech of AMR_MITIGATION_TECHNOLOGIES) {
+    if (tech.deployed) {
+      deployedMitigationTechs.push(tech.id);
+      totalMitigation += tech.growthRateReduction;
     }
   }
 

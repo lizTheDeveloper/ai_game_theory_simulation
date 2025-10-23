@@ -51,13 +51,12 @@ for (const scenario of scenarios) {
     if (!initialState.policyInterventions) {
       initialState.policyInterventions = {};
     }
-    initialState.policyInterventions.ubiLevel = scenario.ubiLevel;
     initialState.policyInterventions.retrainingLevel = scenario.retrainingLevel;
     initialState.policyInterventions.jobGuaranteeLevel = scenario.jobGuaranteeLevel;
 
     if (scenario.ubiLevel > 0 && initialState.ubiSystem) {
-      initialState.ubiSystem.currentAmount = 60000 * scenario.ubiLevel;
-      initialState.ubiSystem.isActive = true;
+      initialState.ubiSystem.basicIncome.amount = 60000 * scenario.ubiLevel;
+      initialState.ubiSystem.active = true;
     }
 
     // Suppress logs

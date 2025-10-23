@@ -237,7 +237,10 @@ export function updatePhosphorusSystem(state: GameState): void {
  * Check if phosphorus breakthrough technologies should unlock
  */
 export function checkPhosphorusTechUnlocks(state: GameState): void {
-  if (!state.phosphorusSystem || !state.breakthroughTech) return;
+  // NOTE: Tech unlocking now handled by TechTreePhase
+  // This function is deprecated but kept for backward compatibility
+  if (!state.phosphorusSystem) return;
+  return; // Early return - tech tree handles all unlocking now
   
   const p = state.phosphorusSystem;
   const tech = state.breakthroughTech;

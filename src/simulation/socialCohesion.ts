@@ -643,7 +643,7 @@ function calculateAIPerformance(state: GameState): number {
   // Reliability: no major failures in last 12 months
   const recentFailures = state.eventLog.filter(
     event => event.type === 'crisis' &&
-             event.agent.startsWith('ai-') && // AI-caused crisis
+             event.agent?.startsWith('ai-') && // AI-caused crisis (optional chaining for safety)
              state.currentMonth - event.timestamp < 12
   ).length;
 
@@ -662,7 +662,7 @@ function calculateSafetyRecord(state: GameState): number {
   // Check for recent safety incidents in event log
   const recentIncidents = state.eventLog.filter(
     event => event.type === 'crisis' &&
-             event.agent.startsWith('ai-') && // AI-caused incident
+             event.agent?.startsWith('ai-') && // AI-caused incident (optional chaining for safety)
              state.currentMonth - event.timestamp < 12
   ).length;
 
@@ -787,7 +787,7 @@ export function updateTrustRecovery(state: GameState): void {
   // 3. Safety record (+1.5%/month with no incidents for 6+ months)
   const recentIncidents = state.eventLog.filter(
     event => event.type === 'crisis' &&
-             event.agent.startsWith('ai-') &&
+             event.agent?.startsWith('ai-') && // AI-caused crisis (optional chaining for safety)
              state.currentMonth - event.timestamp < 6
   ).length;
 
@@ -808,7 +808,7 @@ export function updateTrustRecovery(state: GameState): void {
   // 1. Safety incidents (-3% per incident)
   const currentMonthIncidents = state.eventLog.filter(
     event => event.type === 'crisis' &&
-             event.agent.startsWith('ai-') &&
+             event.agent?.startsWith('ai-') && // AI-caused crisis (optional chaining for safety)
              event.timestamp === state.currentMonth
   ).length;
   baseTrustChange -= currentMonthIncidents * TRUST_DECAY_FROM_INCIDENT;

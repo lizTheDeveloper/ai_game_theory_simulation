@@ -163,7 +163,7 @@ async function diagnose() {
   console.log(`  Alignment Research: ${result.finalState.government.alignmentResearchInvestment}`);
   console.log(`  Compute Governance: ${result.finalState.government.computeGovernance}`);
   console.log(`  Regulations: ${result.finalState.government.regulationCount}`);
-  console.log(`  Outcome: ${result.outcome}`);
+  console.log(`  Outcome: ${result.summary.finalOutcome}`);
 }
 
 diagnose().catch(console.error);

@@ -156,7 +156,7 @@ export function applyFlashWarEffects(state: GameState): void {
   const additionalDeaths = pop.deathsByCategory.war - originalWarDeaths;
 
   // Update total death tracking
-  pop.monthlyDeaths += additionalDeaths;
+  pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + additionalDeaths;
 
   // Trigger circuit breaker development
   if (!peace.circuitBreakersActive && !peace.circuitBreakerDevelopmentActive) {
@@ -228,7 +228,7 @@ export function attemptAIDeEscalation(state: GameState, rng: RNGFunction): boole
     const deathsAverted = originalWarDeaths - pop.deathsByCategory.war;
 
     // Update total death tracking
-    pop.monthlyDeaths -= deathsAverted;
+    pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) - deathsAverted;
 
     // Log success
     console.log(`\n🕊️  AI-MEDIATED DE-ESCALATION SUCCESS (Month ${state.currentMonth})`);

@@ -69,7 +69,7 @@ export function checkNuclearDeterrence(
   
   // 3. DIPLOMATIC AI INTERVENTION CHECK
   const dipAI = state.diplomaticAI;
-  if (dipAI.deploymentMonth !== -1 && dipAI.trustLevel > 0.6) {
+  if (dipAI.deploymentMonth !== -1 && dipAI.stakeholderTrust > 0.6) {
     const detectionProb = dipAI.informationIntegrity * 0.7;
     
     if (random() < detectionProb) {
@@ -168,7 +168,7 @@ export function logDeterrenceState(state: GameState, prefix: string = ''): void 
     console.log(`${prefix}      Status: NOT DEPLOYED`);
   } else {
     console.log(`${prefix}      Status: DEPLOYED (Month ${dipAI.deploymentMonth})`);
-    console.log(`${prefix}      Trust Level: ${(dipAI.trustLevel * 100).toFixed(0)}%`);
+    console.log(`${prefix}      Trust Level: ${(dipAI.stakeholderTrust * 100).toFixed(0)}%`);
     console.log(`${prefix}      Information Integrity: ${(dipAI.informationIntegrity * 100).toFixed(0)}%`);
     console.log(`${prefix}      Success Rate: ${(dipAI.successRate * 100).toFixed(0)}%`);
   }
