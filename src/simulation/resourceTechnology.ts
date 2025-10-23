@@ -20,11 +20,16 @@ import { BreakthroughTechState, TechnologyNode } from '../types/technologies';
 // ============================================================================
 
 export function applyTechnologyToResources(state: GameState): void {
-  const resources = state.resourceEconomy;
+  // NOTE: Tech effects now handled by TechTreePhase regional deployment
+  // This function is deprecated - old breakthrough tech system removed
+  // Resource economy effects are calculated directly from state.techTreeState.technologies
+  return;
+
+  /* const resources = state.resourceEconomy;
   const tech = state.breakthroughTech;
-  
+
   if (!resources || !tech) return;
-  
+
   // Apply each technology's effects
   applyCleanEnergy(state, resources, tech);
   applyCircularEconomy(state, resources, tech);
@@ -34,7 +39,7 @@ export function applyTechnologyToResources(state: GameState): void {
   applyAdvancedBatteries(state, resources, tech);
   applyRareEarthSubstitutes(state, resources, tech);
   applyEcosystemManagement(state, resources, tech);
-  applyCleanWater(state, resources, tech);
+  applyCleanWater(state, resources, tech); */
 }
 
 // ============================================================================
@@ -342,14 +347,18 @@ function applyCleanWater(state: GameState, resources: ResourceEconomy, tech: Bre
 // ============================================================================
 
 export function applyIndustryOppositionToTech(state: GameState): void {
-  const resources = state.resourceEconomy;
+  // NOTE: Industry opposition to tech now handled by TechTreePhase
+  // Old breakthrough tech system removed - opposition effects applied to techTree research progress
+  return;
+
+  /* const resources = state.resourceEconomy;
   const tech = state.breakthroughTech;
-  
+
   if (!resources || !tech) return;
-  
+
   const fossil = resources.fossilIndustry;
   const mining = resources.miningIndustry;
-  
+
   // Fossil industry slows clean tech research
   if (tech.cleanEnergy && tech.cleanEnergy.deploymentLevel < 1.0) {
     tech.cleanEnergy.researchProgress *= (1 - fossil.researchResistance);
@@ -362,6 +371,6 @@ export function applyIndustryOppositionToTech(state: GameState): void {
   // Mining industry slows circular economy
   if (tech.advancedRecycling && tech.advancedRecycling.deploymentLevel < 1.0) {
     tech.advancedRecycling.researchProgress *= (1 - mining.resistanceLevel);
-  }
+  } */
 }
 

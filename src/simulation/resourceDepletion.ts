@@ -473,11 +473,11 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   // Research: Whales cycle nutrients (iron, nitrogen, phosphorus) from depth to surface
   // This fertilizes phytoplankton, enhancing ocean productivity
   // Source: "The Whale Pump" (Roman et al. 2010), WDC, NOAA, WWF
-  
-  const tech = state.breakthroughTech;
-  if (tech?.interspeciesComm?.deploymentLevel && tech.interspeciesComm.deploymentLevel > 0.5) {
+
+  const interspeciesTech = state.technologyTree?.find(t => t.id === 'interspecies_communication');
+  if (interspeciesTech?.completed && (interspeciesTech.progress || 0) > 0.5) {
     // Understanding cetacean behavior → restore whale/dolphin populations → nutrient cycling
-    const deploymentLevel = tech.interspeciesComm.deploymentLevel;
+    const deploymentLevel = interspeciesTech.deploymentLevel || 0;
     
     // WHALE PUMP EFFECT: Nutrient cycling boosts phytoplankton
     // Research: Whales enhance primary productivity in regions where they occur in high densities
@@ -539,9 +539,10 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   // PUBLIC SUPPORT FOR OCEAN PROTECTION (from interspecies communication)
   // When people can talk to whales/dolphins, they LOVE them and support ocean-friendly policies
   // This reduces overfishing, creates marine protected areas, reduces pollution
-  if (tech?.interspeciesComm?.deploymentLevel && tech.interspeciesComm.deploymentLevel > 0.3) {
+  const interspeciesTech2 = state.technologyTree?.find(t => t.id === 'interspecies_communication');
+  if (interspeciesTech2?.completed && (interspeciesTech2.progress || 0) > 0.3) {
     // Public support reduces overfishing by 30-90% (deployment-dependent)
-    const policyStrength = tech.interspeciesComm.deploymentLevel;
+    const policyStrength = interspeciesTech2.deploymentLevel || 0;
     overfishing *= (1 - policyStrength * 0.9); // Up to 90% reduction
     
     // Also reduces pollution (public demands cleaner oceans)

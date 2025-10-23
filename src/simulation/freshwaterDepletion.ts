@@ -271,7 +271,7 @@ export function checkFreshwaterTechUnlocks(state: GameState): void {
   return; // Early return - tech tree handles all unlocking now
   
   const fw = state.freshwaterSystem;
-  const tech = state.breakthroughTech;
+  const tech: any = state.techTreeState; // NOTE: This code is unreachable due to early return above
   const avgAICapability = state.aiAgents.length > 0
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
     : 0;

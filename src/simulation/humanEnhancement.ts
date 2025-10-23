@@ -282,18 +282,14 @@ function checkBCIAvailability(
   }
   
   // Check tech tree for "Neural Interface" or similar BCI tech
-  const technologies = state.breakthroughTech?.technologies || [];
-  const bciTech = technologies.find(
-    tech => tech.name.toLowerCase().includes('neural interface') || 
-            tech.name.toLowerCase().includes('brain-computer') ||
-            tech.id === 'bci_interface' // Specific ID if exists
-  );
-  
-  // BCI available if tech deployed AND safety threshold met
-  if (bciTech && bciTech.deployed && system.bciAdoption.bciSafetyLevel >= 0.70) {
+  const bciTechId = 'bci_interface'; // TODO: Update with actual tech tree ID when BCI tech is added
+  const bciTech = state.technologyTree?.find(t => t.id === bciTechId);
+
+  // BCI available if tech completed AND safety threshold met
+  if (bciTech?.completed && system.bciAdoption.bciSafetyLevel >= 0.70) {
     system.bciAdoption.bciAvailableMonth = state.currentMonth;
     system.bciAdoption.monthsSinceBCIAvailable = 0;
-    
+
     console.log(`\n🧠 BRAIN-COMPUTER INTERFACES NOW AVAILABLE (Month ${state.currentMonth})`);
     console.log(`   Safety Level: ${(system.bciAdoption.bciSafetyLevel * 100).toFixed(0)}%`);
     console.log(`   Initial Cost: $${(system.bciAdoption.bciCostLevel / 1000).toFixed(0)}K`);

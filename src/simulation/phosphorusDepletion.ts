@@ -241,9 +241,9 @@ export function checkPhosphorusTechUnlocks(state: GameState): void {
   // This function is deprecated but kept for backward compatibility
   if (!state.phosphorusSystem) return;
   return; // Early return - tech tree handles all unlocking now
-  
+
   const p = state.phosphorusSystem;
-  const tech = state.breakthroughTech;
+  const tech: any = state.techTreeState; // NOTE: Unreachable code - cast to any
   const avgAICapability = state.aiAgents.length > 0
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
     : 0;

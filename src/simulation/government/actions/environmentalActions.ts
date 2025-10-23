@@ -205,7 +205,7 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
     // Check if any environmental tech from tech tree is unlocked but <50% deployed
     const envTechIds = ['direct_air_capture', 'ocean_alkalinity_enhancement', 'ai_pollution_remediation'];
     const needsDeployment = envTechIds.some(techId => {
-      const tech = state.techTreeState.technologies[techId];
+      const tech = state.techTreeState?.technologies?.[techId];
       return tech && tech.deployed && (tech.deploymentLevel || 0) < 0.5;
     });
 
@@ -230,7 +230,7 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
     // Count how many techs will benefit
     const envTechIds = ['direct_air_capture', 'ocean_alkalinity_enhancement', 'ai_pollution_remediation'];
     const benefitingTechs = envTechIds.filter(techId => {
-      const tech = state.techTreeState.technologies[techId];
+      const tech = state.techTreeState?.technologies?.[techId];
       return tech && tech.deployed && (tech.deploymentLevel || 0) < 0.5;
     });
 

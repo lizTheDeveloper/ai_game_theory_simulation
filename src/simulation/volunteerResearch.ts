@@ -95,7 +95,7 @@ function getTechCoordinationBonus(state: GameState): number {
   let bonus = 0;
 
   // Purpose infrastructure tech deployed
-  const purposeTech = state.techTreeState.technologies['collective_purpose_networks'];
+  const purposeTech = state.techTreeState?.technologies?.['collective_purpose_networks'];
   const purposeNetworks = purposeTech?.deploymentLevel || 0;
   bonus += purposeNetworks * 0.5;
 
