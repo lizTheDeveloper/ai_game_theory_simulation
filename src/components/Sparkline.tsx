@@ -51,8 +51,6 @@ export const Sparkline: React.FC<SparklineProps> = ({
     // Otherwise use data.length for normal auto-scaling behavior
     const totalPoints = maxDataPoints !== undefined ? maxDataPoints : data.length;
 
-    console.log(`[Sparkline] data.length=${data.length}, maxDataPoints=${maxDataPoints}, totalPoints=${totalPoints}`);
-
     // Generate SVG path
     const points = data.map((value, index) => {
       const x = padding + (index / (totalPoints - 1)) * effectiveWidth;

@@ -168,8 +168,6 @@ const ParadigmTimeSeries: React.FC<ParadigmTimeSeriesProps> = ({ name, value, co
   const currentValue = fullHistory[fullHistory.length - 1] || 50;
   const historyPercentages = Array(currentDay).fill(currentValue);
 
-  console.log(`[${name}] currentDay=${currentDay}, historyPercentages.length=${historyPercentages.length}, should extend to ${(currentDay/30*100).toFixed(1)}%`);
-
   // Calculate min/max for better visualization
   const minValue = Math.min(...(historyPercentages.length > 0 ? historyPercentages : [0]));
   const maxValue = Math.max(...(historyPercentages.length > 0 ? historyPercentages : [100]));
