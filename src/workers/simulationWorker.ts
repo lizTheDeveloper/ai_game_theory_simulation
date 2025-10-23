@@ -568,7 +568,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const extinctionProbability = state.outcomeMetrics?.extinctionProbability || 0;
 
   // Multi-Paradigm DUI - normalized to [0,1] from [0,100]
-  const westernLiberalIndex = (state.multiParadigmDUI?.paradigmScores?.westernLiberal?.value || 0) / 100;
+  const westernLiberalIndex = (state.multiParadigmDUI?.paradigmScores?.western?.value || 0) / 100;
   const developmentIndex = (state.multiParadigmDUI?.paradigmScores?.development?.value || 0) / 100;
   const ecologicalIndex = (state.multiParadigmDUI?.paradigmScores?.ecological?.value || 0) / 100;
   const indigenousIndex = (state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value || 0) / 100;
