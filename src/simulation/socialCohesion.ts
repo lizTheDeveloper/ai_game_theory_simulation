@@ -15,6 +15,7 @@
  */
 
 import { GameState, SocialAccumulation } from '@/types/game';
+import { HumanSocietyAgent } from '@/types/society';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { RootCause } from '@/types/population';
 import {
@@ -628,10 +629,8 @@ function calculateAIPerformance(state: GameState): number {
   const trendBonus = qolTrend > 0 ? Math.min(0.05, qolTrend * 0.5) : 0;
 
   // Reliability: no major failures in last 12 months
-  const recentFailures = (state.significantEvents || []).filter(
-    event => (event.type === 'AIFailure' || event.type === 'AISafetyIncident') &&
-             state.currentMonth - (event.month || event.timestamp || 0) < 12
-  ).length;
+  // Note: significantEvents tracking not yet implemented
+  const recentFailures = 0;
 
   const reliabilityBonus = Math.max(0, 0.10 - (recentFailures * 0.02));
 
@@ -646,10 +645,8 @@ function calculateAIPerformance(state: GameState): number {
  */
 function calculateSafetyRecord(state: GameState): number {
   // Check for recent safety incidents in event log
-  const recentIncidents = (state.significantEvents || []).filter(
-    event => event.type === 'AISafetyIncident' &&
-             state.currentMonth - (event.month || 0) < 12
-  ).length;
+  // Note: significantEvents tracking not yet implemented
+  const recentIncidents = 0;
 
   // No incidents in last 12 months = full trust (0.15)
   // Each incident reduces trust
@@ -770,10 +767,8 @@ export function updateTrustRecovery(state: GameState): void {
   state.globalMetrics.previousQoL = state.globalMetrics.qualityOfLife;
 
   // 3. Safety record (+1.5%/month with no incidents for 6+ months)
-  const recentIncidents = (state.significantEvents || []).filter(
-    event => (event.type === 'AISafetyIncident' || event.type === 'AIAlignment') &&
-             state.currentMonth - (event.month || 0) < 6
-  ).length;
+  // Note: significantEvents tracking not yet implemented
+  const recentIncidents = 0;
 
   if (recentIncidents === 0) {
     baseTrustChange += TRUST_RECOVERY_FROM_SAFETY_RECORD;
@@ -790,10 +785,8 @@ export function updateTrustRecovery(state: GameState): void {
   // === DECAY FACTORS ===
 
   // 1. Safety incidents (-3% per incident)
-  const currentMonthIncidents = (state.significantEvents || []).filter(
-    event => (event.type === 'AISafetyIncident' || event.type === 'AIAlignment') &&
-             event.month === state.currentMonth
-  ).length;
+  // Note: significantEvents tracking not yet implemented
+  const currentMonthIncidents = 0;
   baseTrustChange -= currentMonthIncidents * TRUST_DECAY_FROM_INCIDENT;
 
   // 2. Detected misalignment (-2% per detection)

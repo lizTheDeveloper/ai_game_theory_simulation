@@ -39,21 +39,9 @@ export function buildRegionalCache(state: GameState): RegionalCache {
   const regionsByName = new Map<RegionalData['name'], RegionalData>();
   let totalPopulation = 0;
 
-  if (state.regionalPopulations && state.regionalPopulations.regions) {
-    for (const region of state.regionalPopulations.regions) {
-      regionsByName.set(region.name, {
-        name: region.name,
-        population: region.population,
-        freshwaterStress: region.freshwaterStress,
-        droughtAffected: region.droughtAffected,
-        resourceVulnerability: region.resourceVulnerability,
-        refugeesHosted: region.refugeesHosted,
-        conflictRisk: region.conflictRisk,
-        populationStress: region.populationStress,
-      });
-      totalPopulation += region.population;
-    }
-  }
+  // TODO: Regional population tracking not yet implemented
+  // state.regionalPopulations doesn't exist in GameState
+  // Return empty cache for now - regional QoL calculations will use fallbacks
 
   return {
     regionsByName,

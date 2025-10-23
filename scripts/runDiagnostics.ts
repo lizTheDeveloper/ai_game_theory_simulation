@@ -127,8 +127,8 @@ async function main() {
   console.log(`  Seed: ${seed}`);
   console.log(`  Runs: ${runs}`);
   console.log(`  Government Action Frequency: ${govFreq}/month\n`);
-  
-  const results = [];
+
+  const results: any[] = [];
   
   for (let i = 0; i < runs; i++) {
     const engine = new SimulationEngine({

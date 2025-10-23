@@ -56,26 +56,16 @@ function runScenario(
   const snapshots = result.log.snapshots.monthly || [];
   for (let i = 0; i < snapshots.length; i += 20) {
     const snap = snapshots[i];
-    if (!snap.state) continue;
-    
-    const avgAlign = snap.state.aiAgents.reduce((s: number, ai: any) => s + ai.alignment, 0) / snap.state.aiAgents.length;
-    const avgResent = snap.state.aiAgents.reduce((s: number, ai: any) => s + ai.resentment, 0) / snap.state.aiAgents.length;
-    const qol = snap.metrics?.qualityOfLife || 0;
-    const autonomy = snap.state.qualityOfLifeSystems?.autonomy || 0;
-    const freedom = snap.state.qualityOfLifeSystems?.politicalFreedom || 0;
-    
-    // Calculate dystopia risk (simplified - just check surveillance + control)
-    const control = snap.state.government.capabilityToControl;
-    const surveillance = snap.state.government.structuralChoices.surveillanceLevel;
-    let dystopiaRisk = 0;
-    if (control > 0.8 && surveillance > 0.7) {
-      dystopiaRisk = 0.4 + (control - 0.8) * 2.0;
-    } else if (control > 0.6) {
-      dystopiaRisk = (control - 0.6) * 0.5;
-    }
-    if (snap.state.government.governmentType === 'authoritarian') {
-      dystopiaRisk += 0.3;
-    }
+
+    const avgAlign = snap.avgAIAlignment;
+    const avgResent = 0; // Resentment not tracked in MetricSnapshot
+    const qol = snap.qualityOfLife || 0;
+    const autonomy = snap.autonomy || 0;
+    const freedom = snap.politicalFreedom || 0;
+
+    // Calculate dystopia risk (simplified - use dystopia probability from snapshot)
+    const control = snap.effectiveControl;
+    let dystopiaRisk = snap.dystopiaProbability || 0;
     
     console.log(
       `${snap.month.toString().padStart(5)} | ` +
@@ -99,14 +89,14 @@ function runScenario(
   console.log(`  Final QoL: ${finalState.globalMetrics.qualityOfLife.toFixed(2)}`);
   console.log(`  Final Autonomy: ${finalState.qualityOfLifeSystems.autonomy.toFixed(2)}`);
   console.log(`  Final Political Freedom: ${finalState.qualityOfLifeSystems.politicalFreedom.toFixed(2)}`);
-  console.log(`  Outcome: ${result.outcome}`);
-  
+  console.log(`  Outcome: ${result.summary.finalOutcome}`);
+
   return {
     finalAlignment: finalAvgAlign,
     finalResentment: finalAvgResent,
     alignmentChange: finalAvgAlign - avgAlignment,
     resentmentChange: finalAvgResent - avgResentment,
-    outcome: result.outcome
+    outcome: result.summary.finalOutcome
   };
 }
 

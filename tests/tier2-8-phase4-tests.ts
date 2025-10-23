@@ -177,7 +177,7 @@ console.log('--- Test Group 3: Reparations Transfers ---\n');
 
   // Run multiple months to accumulate transfers
   for (let i = 0; i < 12; i++) {
-    state.month++;
+    state.currentMonth++;
     updateClimateJustice(state);
   }
 
@@ -190,7 +190,7 @@ console.log('--- Test Group 3: Reparations Transfers ---\n');
   // Test 13: Reparations received increases monotonically
   const received1 = countries['Bangladesh'].climateReparationsReceived!;
   for (let i = 0; i < 6; i++) {
-    state.month++;
+    state.currentMonth++;
     updateClimateJustice(state);
   }
   const received2 = countries['Bangladesh'].climateReparationsReceived!;
@@ -225,7 +225,7 @@ console.log('--- Test Group 4: Climate Migration Pressure ---\n');
 
   // Run updates to build migration pressure
   for (let i = 0; i < 24; i++) {
-    state.month++;
+    state.currentMonth++;
     updateClimateJustice(state);
   }
 
@@ -247,7 +247,7 @@ console.log('--- Test Group 4: Climate Migration Pressure ---\n');
   const initialPop = countries['Bangladesh'].population;
   state.environmentalAccumulation.climateChange = 0.9;
   for (let i = 0; i < 36; i++) {
-    state.month++;
+    state.currentMonth++;
     updateClimateJustice(state);
   }
   const finalPop = countries['Bangladesh'].population;
@@ -308,7 +308,7 @@ console.log('--- Test Group 5: Green Technology Transfer ---\n');
 
   // Run updates to accumulate tech transfer
   for (let i = 0; i < 24; i++) {
-    state.month++;
+    state.currentMonth++;
     updateClimateJustice(state);
   }
 
@@ -390,7 +390,7 @@ console.log('--- Test Group 6: Climate Justice Integration ---\n');
 
   // Run full simulation for 5 years
   for (let i = 0; i < 60; i++) {
-    state.month++;
+    state.currentMonth++;
     updateClimateJustice(state);
   }
 
@@ -418,7 +418,7 @@ console.log('--- Test Group 6: Climate Justice Integration ---\n');
   // Test 26: Climate justice score reflects multiple factors
   // (Implicit test - system runs without errors for 60 months)
   assert(
-    state.month === 60,
+    state.currentMonth === 60,
     'Climate justice system runs stably for 60 months (5 years)'
   );
 })();

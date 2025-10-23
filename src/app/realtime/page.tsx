@@ -18,7 +18,8 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { SimulationWorkerClient, type StateDelta, type InitialStateSnapshot } from '@/lib/simulationWorkerClient';
+import { useSimulationWorker } from '@/lib/contexts/SimulationWorkerContext';
+import { type StateDelta, type InitialStateSnapshot } from '@/lib/simulationWorkerClient';
 import { Sparkline } from '@/components/Sparkline';
 import type { ScenarioMode } from '@/types/game';
 
@@ -254,13 +255,10 @@ const ParadigmTimeSeries: React.FC<ParadigmTimeSeriesProps> = ({ name, value, co
 };
 
 export default function RealtimeDashboard() {
-  // Worker client
-  const [client, setClient] = useState<SimulationWorkerClient | null>(null);
+  // Get shared worker from context
+  const { client, initialized, running, scenario, month: contextMonth } = useSimulationWorker();
 
-  // Simulation state
-  const [initialized, setInitialized] = useState(false);
-  const [running, setRunning] = useState(false);
-  const [scenario, setScenario] = useState<ScenarioMode>('historical');
+  // Local state for error handling
   const [error, setError] = useState<string | null>(null);
 
   // Core metrics
@@ -338,9 +336,7 @@ export default function RealtimeDashboard() {
     category?: string;
   }>>([]);
 
-  // Configuration
-  const [seed, setSeed] = useState(42000);
-  const [speed, setSpeed] = useState(1.0);
+  // No local configuration state - managed globally by Navigation via context
 
   // Performance tracking
   const [fps, setFps] = useState(0);
@@ -367,35 +363,27 @@ export default function RealtimeDashboard() {
     inflation: []
   });
 
-  // Create worker client on mount
+  // Sync month from context
   useEffect(() => {
-    if (typeof window !== 'undefined' && !client) {
-      try {
-        const newClient = new SimulationWorkerClient();
-        setClient(newClient);
-        console.log('[Dashboard] Worker client created');
-      } catch (error) {
-        console.error('[Dashboard] Failed to create worker client:', error);
-        setError(error instanceof Error ? error.message : String(error));
-      }
-    }
-  }, []);
+    setMonth(contextMonth);
+  }, [contextMonth]);
 
-  // Setup worker event listeners
+  // Setup worker event listeners for detailed metrics
   useEffect(() => {
-    if (!client) return;
+    if (!client) {
+      console.log('[RealtimeDashboard] No worker client available yet');
+      return;
+    }
 
     const handleInitialized = (snapshot: InitialStateSnapshot, startDate: string) => {
-      setInitialized(true);
       setMonth(snapshot.currentMonth);
       setDay(1);
       setCalendarDate(startDate);
       setQualityOfLife(snapshot.qualityOfLife);
       setPopulation(snapshot.population);
       setAiCount(snapshot.aiCount);
-      setScenario(snapshot.scenario);
       setError(null);
-      console.log('[Dashboard] Initialized:', snapshot, 'Start date:', startDate);
+      console.log('[RealtimeDashboard] Initialized:', snapshot, 'Start date:', startDate);
     };
 
     const handleUpdate = (delta: StateDelta, currentMonth: number, currentDay: number, date: string, timestamp: number) => {
@@ -597,19 +585,16 @@ export default function RealtimeDashboard() {
     };
 
     const handlePaused = (currentMonth: number, currentDay: number) => {
-      setRunning(false);
-      console.log('[Dashboard] Paused at month', currentMonth, 'day', currentDay);
+      console.log('[RealtimeDashboard] Paused at month', currentMonth, 'day', currentDay);
     };
 
     const handleResumed = (currentMonth: number, currentDay: number) => {
-      setRunning(true);
-      console.log('[Dashboard] Resumed at month', currentMonth, 'day', currentDay);
+      console.log('[RealtimeDashboard] Resumed at month', currentMonth, 'day', currentDay);
     };
 
     const handleError = (err: Error) => {
       setError(err.message);
-      setRunning(false);
-      console.error('[Dashboard] Error:', err);
+      console.error('[RealtimeDashboard] Error:', err);
     };
 
     // Register listeners
@@ -640,49 +625,7 @@ export default function RealtimeDashboard() {
     };
   }, [client]);
 
-  // Initialize simulation
-  const handleInit = useCallback(() => {
-    if (!client || initialized) return;
-
-    try {
-      // Calculate interval: 30000ms base (30 seconds = 1 month at 1x speed)
-      // Speed multiplier: 0.5x = 60s/month, 1x = 30s/month, 2x = 15s/month, 4x = 7.5s/month
-      const interval = Math.floor(30000 / speed);
-      client.init(seed, scenario, interval);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
-    }
-  }, [client, initialized, seed, scenario, speed]);
-
-  // Start/pause toggle
-  const handleToggleRunning = useCallback(() => {
-    if (!client || !initialized) return;
-
-    if (running) {
-      client.pause();
-      setRunning(false);
-    } else {
-      client.start();
-      setRunning(true);
-    }
-  }, [client, initialized, running]);
-
-  // Manual step
-  const handleStep = useCallback(() => {
-    if (!client || !initialized) return;
-    client.step();
-  }, [client, initialized]);
-
-  // Change speed
-  const handleSpeedChange = useCallback((newSpeed: number) => {
-    if (!client || !initialized) return;
-
-    setSpeed(newSpeed);
-    // Calculate interval: 30000ms base (30 seconds = 1 month at 1x speed)
-    // Speed multiplier: 0.5x = 60s/month, 1x = 30s/month, 2x = 15s/month, 4x = 7.5s/month
-    const interval = Math.floor(30000 / newSpeed);
-    client.setSpeed(interval);
-  }, [client, initialized]);
+  // All simulation controls managed globally by Navigation via context
 
   // Format helpers
   const formatNumber = (n: number | null, decimals = 2): string => {
@@ -748,7 +691,7 @@ export default function RealtimeDashboard() {
 
         <div className="flex items-center gap-4">
           <div className="text-xs text-white/40">
-            {fps} FPS | {speed}x Speed
+            {fps} FPS
           </div>
           {initialized && calendarDate && (
             <div className="text-sm text-cyan-400 flex items-center gap-3">
@@ -772,80 +715,18 @@ export default function RealtimeDashboard() {
         </div>
       )}
 
-      {/* Initialization Panel */}
-      {!initialized && (
+      {/* Use Navigation sidebar to initialize and control simulation */}
+      {!initialized ? (
         <div className="flex items-center justify-center h-[calc(100vh-120px)]">
-          <Panel title="Initialize Simulation" className="w-96">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs text-white/40 mb-2">RNG SEED</label>
-                <input
-                  type="number"
-                  value={seed}
-                  onChange={(e) => setSeed(parseInt(e.target.value))}
-                  className="w-full bg-black border border-white/20 px-3 py-2 text-white"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-white/40 mb-2">SCENARIO</label>
-                <select
-                  value={scenario}
-                  onChange={(e) => setScenario(e.target.value as ScenarioMode)}
-                  className="w-full bg-black border border-white/20 px-3 py-2 text-white"
-                >
-                  <option value="historical">Historical</option>
-                  <option value="unprecedented">Unprecedented</option>
-                </select>
-              </div>
-              <button
-                onClick={handleInit}
-                className="w-full px-4 py-3 bg-cyan-500/20 border border-cyan-400 text-cyan-400 hover:bg-cyan-400/30 transition-all"
-              >
-                INITIALIZE
-              </button>
-            </div>
+          <Panel title="Simulation Not Initialized" className="w-96">
+            <p className="text-white/60 text-sm">
+              Use the "Configure & Start" button in the left sidebar to initialize the simulation.
+            </p>
           </Panel>
         </div>
-      )}
-
-      {/* Main Dashboard */}
-      {initialized && (
+      ) : (
         <div className="flex flex-col h-[calc(100vh-60px)]">
-          {/* Control Bar */}
-          <div className="px-6 py-3 border-b border-white/10 flex items-center gap-4 bg-black/50">
-            <button
-              onClick={handleToggleRunning}
-              className={`px-6 py-2 font-light tracking-wider transition-all ${
-                running
-                  ? 'bg-yellow-500/20 border border-yellow-400 text-yellow-400 hover:bg-yellow-400/30'
-                  : 'bg-green-500/20 border border-green-400 text-green-400 hover:bg-green-400/30'
-              }`}
-            >
-              {running ? 'PAUSE' : 'START'}
-            </button>
-
-            <button
-              onClick={handleStep}
-              disabled={running}
-              className="px-4 py-2 bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 disabled:opacity-30 font-light tracking-wider"
-            >
-              STEP
-            </button>
-
-            <div className="flex items-center gap-2">
-              <label className="text-xs text-white/40">SPEED:</label>
-              <select
-                value={speed.toFixed(1)}
-                onChange={(e) => handleSpeedChange(parseFloat(e.target.value))}
-                className="bg-black border border-white/20 px-3 py-1 text-sm text-white"
-              >
-                <option value="0.5">0.5x</option>
-                <option value="1.0">1.0x</option>
-                <option value="2.0">2.0x</option>
-                <option value="4.0">4.0x</option>
-              </select>
-            </div>
-          </div>
+          {/* Use Navigation sidebar for all simulation controls */}
 
           {/* Dashboard Grid */}
           <div className="flex-1 overflow-auto p-6">

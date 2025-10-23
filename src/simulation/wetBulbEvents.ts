@@ -503,22 +503,15 @@ function applyWetBulbMortality(state: GameState, event: WetBulbEvent): void {
   population.population = Math.max(0, population.population - deathsInBillions);
 
   // Add to monthly deaths tracking
-  if (!population.monthlyDeaths) {
-    population.monthlyDeaths = deathsInBillions;
+  if (!population.monthlyDeathsApplied) {
+    population.monthlyDeathsApplied = deathsInBillions;
   } else {
-    population.monthlyDeaths += deathsInBillions;
+    population.monthlyDeathsApplied += deathsInBillions;
   }
-
-  // Add to death cause tracking
-  if (!population.deathsByType) {
-    population.deathsByType = {} as any;
-  }
-  const heatDeaths = (population.deathsByType as any).heat || 0;
-  (population.deathsByType as any).heat = heatDeaths + deathsInBillions;
 
   // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
   // PROXIMATE CAUSE: Heat waves/floods are "disasters"
   population.deathsByCategory.disasters += deathsInBillions;
   // ROOT CAUSE: Heat waves are climate-driven
-  population.deathsByRootCause.climateChange += deathsInBillions;
+  population.deathsByRootCause.climate += deathsInBillions;
 }

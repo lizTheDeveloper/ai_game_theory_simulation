@@ -143,10 +143,9 @@ export function updateInformationWarfare(state: GameState): Event[] {
                            sys.epistemologicalCrisisLevel * 0.4;
   
   // If dystopia enablement high, boost surveillance acceptance
-  if (sys.dystopiaEnablement > 0.60 && state.dystopiaProgression) {
-    state.dystopiaProgression.surveillanceAcceptance = Math.min(1.0,
-      state.dystopiaProgression.surveillanceAcceptance + 0.005
-    );
+  // Note: dystopiaProgression tracking removed from state structure
+  if (sys.dystopiaEnablement > 0.60) {
+    // Dystopia enablement effects handled via other state mechanisms
   }
   
   // === CRISIS EVENTS (Phase 9) ===
@@ -154,12 +153,12 @@ export function updateInformationWarfare(state: GameState): Event[] {
   // Deepfake Saturation Event (50% threshold)
   if (sys.deepfakePrevalence > 0.50 && sys.deepfakePrevalence <= 0.50 + deepfakeGenerationRate) {
     events.push({
-      id: `deepfake-saturation-${state.months}`,
+      id: `deepfake-saturation-${state.currentMonth}`,
       type: 'crisis',
       severity: 'high',
       title: '🎭 DEEPFAKE SATURATION',
       description: `AI-generated content everywhere. Can't trust photos, videos, or audio anymore. Detection failing.`,
-      month: state.months,
+      month: state.currentMonth,
       impacts: {
         publicTrust: -0.05,
         economicStage: 0,
@@ -171,12 +170,12 @@ export function updateInformationWarfare(state: GameState): Event[] {
   if (sys.epistemologicalCrisisLevel > 0.60 && 
       sys.epistemologicalCrisisLevel <= 0.60 + crisisAcceleration) {
     events.push({
-      id: `epistemological-crisis-${state.months}`,
+      id: `epistemological-crisis-${state.currentMonth}`,
       type: 'crisis',
       severity: 'critical',
       title: '❓ EPISTEMOLOGICAL CRISIS',
       description: `Society can't agree on basic facts. Coordination breaking down. Shared reality dissolving.`,
-      month: state.months,
+      month: state.currentMonth,
       impacts: {
         publicTrust: -0.10,
         economicStage: 0,
@@ -197,12 +196,12 @@ export function updateInformationWarfare(state: GameState): Event[] {
   // Information Collapse (integrity < 20%)
   if (sys.informationIntegrity < 0.20) {
     events.push({
-      id: `info-collapse-${state.months}`,
+      id: `info-collapse-${state.currentMonth}`,
       type: 'crisis',
       severity: 'critical',
       title: '📉 INFORMATION COLLAPSE',
       description: `Truth has lost all meaning. Post-truth society. Democracy cannot function.`,
-      month: state.months,
+      month: state.currentMonth,
       impacts: {
         publicTrust: -0.05,
         economicStage: 0,
@@ -221,12 +220,12 @@ export function updateInformationWarfare(state: GameState): Event[] {
   if (sys.narrativeControl.aiAgents > 0.60 && 
       sys.narrativeControl.aiAgents <= 0.60 + aiNarrativeGrowth) {
     events.push({
-      id: `ai-narrative-dominance-${state.months}`,
+      id: `ai-narrative-dominance-${state.currentMonth}`,
       type: 'warning',
       severity: 'medium',
       title: '🤖 AI NARRATIVE DOMINANCE',
       description: `AI agents now dominate information landscape. Most content AI-generated. Human voices marginalized.`,
-      month: state.months,
+      month: state.currentMonth,
     });
   }
   

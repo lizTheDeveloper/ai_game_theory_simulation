@@ -274,16 +274,7 @@ export function determineActualOutcome(
   // Surveillance state dystopia: High surveillance + low autonomy/freedom
   // This is STABLE - can persist indefinitely (not decay to extinction)
   if (surveillance > 0.7 && autonomy < 0.3 && politicalFreedom < 0.3 && currentMonth > 24) {
-    // Record dystopia in state but don't stop simulation
-    if (!state.outcomeState || state.outcomeState.type !== 'dystopia') {
-      state.outcomeState = {
-        type: 'dystopia',
-        subtype: 'surveillance',
-        entryMonth: currentMonth,
-        reason: 'Permanent surveillance state: pervasive monitoring, no autonomy, no freedom',
-        confidence: 0.85
-      };
-    }
+    // Dystopia detected but simulation continues (no outcomeState tracking currently)
     // Continue simulation - return 'active'
     return {
       outcome: 'active',
@@ -295,16 +286,7 @@ export function determineActualOutcome(
   // Authoritarian dystopia: Government type + structural oppression
   if (state.government.governmentType === 'authoritarian' &&
       autonomy < 0.4 && politicalFreedom < 0.3 && currentMonth > 18) {
-    // Record dystopia in state but don't stop simulation
-    if (!state.outcomeState || state.outcomeState.type !== 'dystopia') {
-      state.outcomeState = {
-        type: 'dystopia',
-        subtype: 'authoritarian',
-        entryMonth: currentMonth,
-        reason: 'Authoritarian regime with structural oppression established',
-        confidence: 0.80
-      };
-    }
+    // Dystopia detected but simulation continues (no outcomeState tracking currently)
     // Continue simulation - return 'active'
     return {
       outcome: 'active',
@@ -316,16 +298,7 @@ export function determineActualOutcome(
   // High-control dystopia: Control desire + low freedom, even if "working"
   // Can have aligned AIs (obedient) but terrible QoL
   if (controlDesire > 0.8 && surveillance > 0.6 && politicalFreedom < 0.4 && autonomy < 0.4 && currentMonth > 30) {
-    // Record dystopia in state but don't stop simulation
-    if (!state.outcomeState || state.outcomeState.type !== 'dystopia') {
-      state.outcomeState = {
-        type: 'dystopia',
-        subtype: 'high_control',
-        entryMonth: currentMonth,
-        reason: 'High-control society: AI obedient but humans oppressed',
-        confidence: 0.75
-      };
-    }
+    // Dystopia detected but simulation continues (no outcomeState tracking currently)
     // Continue simulation - return 'active'
     return {
       outcome: 'active',
@@ -337,16 +310,7 @@ export function determineActualOutcome(
   // Over-regulated dystopia: Economic stagnation + oppression
   if (state.government.regulationCount > 12 && qol < 0.4 &&
       state.globalMetrics.socialStability < 0.3 && autonomy < 0.4) {
-    // Record dystopia in state but don't stop simulation
-    if (!state.outcomeState || state.outcomeState.type !== 'dystopia') {
-      state.outcomeState = {
-        type: 'dystopia',
-        subtype: 'over_regulated',
-        entryMonth: currentMonth,
-        reason: 'Over-regulation: economic collapse and authoritarian response',
-        confidence: 0.70
-      };
-    }
+    // Dystopia detected but simulation continues (no outcomeState tracking currently)
     // Continue simulation - return 'active'
     return {
       outcome: 'active',

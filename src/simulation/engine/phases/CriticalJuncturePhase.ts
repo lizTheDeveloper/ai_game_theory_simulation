@@ -50,21 +50,23 @@ function countActiveCrises(state: GameState): number {
   if (state.technologicalRisk.complacencyCrisisActive) count++;
 
   // Planetary boundaries crises
-  if (state.planetaryBoundariesSystem?.biodiversityStatus === 'crisis') count++;
-  if (state.planetaryBoundariesSystem?.nitrogenStatus === 'crisis') count++;
-  if (state.planetaryBoundariesSystem?.landUseStatus === 'crisis') count++;
+  if (state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.status === 'critical') count++;
+  if (state.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows?.status === 'critical') count++;
+  if (state.planetaryBoundariesSystem?.boundaries?.land_system_change?.status === 'critical') count++;
 
   // Specific system crises
-  if (state.phosphorusSystem?.crisisActive) count++;
-  if (state.freshwaterSystem?.dayZeroDroughtActive) count++;
-  if (state.oceanAcidificationSystem?.marineCollapseActive) count++;
-  if (state.novelEntitiesSystem?.toxificationActive) count++;
+  const phosphorusCrisis = state.phosphorusSystem?.supplyShockActive || state.phosphorusSystem?.criticalDepletionActive;
+  if (phosphorusCrisis) count++;
+  if (state.freshwaterSystem?.dayZeroDrought?.active) count++;
+  if (state.oceanAcidificationSystem?.marineFoodWebCollapseActive) count++;
+  const novelEntitiesCrisis = state.novelEntitiesSystem?.reproductiveCrisisActive || state.novelEntitiesSystem?.chronicDiseaseEpidemicActive;
+  if (novelEntitiesCrisis) count++;
 
   // Mega-pandemic (exogenous shock)
   if (state.crises?.megaPandemic?.active) count++;
 
-  // Nuclear tensions
-  const nuclearTensions = state.madDeterrence?.globalTensionLevel || 0;
+  // Nuclear tensions (use inverse of crisis stability as tension proxy)
+  const nuclearTensions = state.madDeterrence ? (1 - state.madDeterrence.crisisStability) : 0;
   if (nuclearTensions > 0.7) count++;
 
   return count;
@@ -133,7 +135,8 @@ export function calculateAgencyPotential(state: GameState, rng: () => number): n
   }
 
   // Base agency from democratic institutions (Sen 1999)
-  const democracyIndex = state.governance?.democracyIndex || 0.5;
+  const democracyIndex = state.government.governmentType === 'democratic' ? 0.8 :
+                         state.government.governmentType === 'technocratic' ? 0.5 : 0.2;
   const infoIntegrity = state.globalMetrics.informationIntegrity;
   const institutionStrength = state.government.governanceQuality?.institutionalCapacity || 0.5;
 
@@ -199,10 +202,12 @@ export function attemptEscape(
   }
 
   // Escape succeeded! Determine type based on current conditions
-  const nuclearTensions = state.madDeterrence?.globalTensionLevel || 0;
+  const nuclearTensions = state.madDeterrence ? (1 - state.madDeterrence.crisisStability) : 0;
   const activeCrises = countActiveCrises(state);
   const qol = state.globalMetrics.qualityOfLife;
-  const unlockedTech = state.breakthroughTech?.unlocked?.length || 0;
+  // Count deployed breakthrough technologies
+  const unlockedTech = state.breakthroughTech ?
+    Object.values(state.breakthroughTech).filter(tech => tech && typeof tech === 'object' && tech.deployed === true).length : 0;
 
   let escapeType: 'prevent_war' | 'enable_cooperation' | 'recover_from_crisis' | 'unlock_breakthrough';
 
@@ -210,9 +215,9 @@ export function attemptEscape(
   if (nuclearTensions > 0.7) {
     escapeType = 'prevent_war';
 
-    // Reduce nuclear tensions (Arkhipov-style intervention)
+    // Reduce nuclear tensions by improving crisis stability (Arkhipov-style intervention)
     if (state.madDeterrence) {
-      state.madDeterrence.globalTensionLevel = Math.max(0.3, state.madDeterrence.globalTensionLevel * 0.6);
+      state.madDeterrence.crisisStability = Math.min(0.9, state.madDeterrence.crisisStability + 0.3);
     }
 
     // Reduce bilateral tensions

@@ -136,19 +136,27 @@ export function calculateAIAccelerationFactor(avgCapability: number): number {
  */
 export function getCrisisSeverity(gameState: GameState): keyof typeof CRISIS_ACCELERATION {
   // Check for existential threats
+  const nuclearWinterSeverity = gameState.nuclearWinterState?.active
+    ? Math.abs(gameState.nuclearWinterState.temperatureAnomaly) / 20  // -20°C = 1.0 severity
+    : 0;
   const hasExtinctionRisk = (
-    (gameState.nuclearWar?.active && gameState.nuclearWar.severity > 0.8) ||
-    (gameState.climateState?.globalWarming > 3.5) ||  // Catastrophic climate change
-    (gameState.pandemic?.active && gameState.pandemic.severity > 0.9)
+    (gameState.nuclearWinterState?.active && nuclearWinterSeverity > 0.8) ||
+    (gameState.wetBulbTemperatureSystem?.globalWarmingEffect && gameState.wetBulbTemperatureSystem.globalWarmingEffect > 3.5) ||  // Catastrophic climate change
+    (gameState.crises?.megaPandemic?.active && (gameState.crises.megaPandemic.monthlyMortality / 1_000_000_000) > 0.01)  // >1% monthly mortality
   );
 
   if (hasExtinctionRisk) return 'existential';
 
   // Check for severe crises
+  const catastropheSeverity = gameState.crises?.catastrophe?.active
+    ? gameState.crises.catastrophe.severity
+    : 0;
+  const freshwaterBoundary = gameState.planetaryBoundariesSystem?.boundaries?.freshwater_change;
+  const phosphorusBoundary = gameState.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows;
   const hasSevereCrisis = (
-    gameState.crisisDetected?.severity > 0.7 ||
-    (gameState.planetaryBoundaries?.freshwater < 0.2) ||
-    (gameState.planetaryBoundaries?.phosphorus < 0.2) ||
+    catastropheSeverity > 0.7 ||
+    (freshwaterBoundary && freshwaterBoundary.currentValue < 0.2) ||
+    (phosphorusBoundary && phosphorusBoundary.currentValue < 0.2) ||
     (gameState.globalMetrics?.qualityOfLife < 0.3)
   );
 
@@ -156,7 +164,7 @@ export function getCrisisSeverity(gameState: GameState): keyof typeof CRISIS_ACC
 
   // Check for moderate crises
   const hasModerateCrisis = (
-    gameState.crisisDetected?.severity > 0.4 ||
+    catastropheSeverity > 0.4 ||
     (gameState.globalMetrics?.qualityOfLife < 0.5)
   );
 

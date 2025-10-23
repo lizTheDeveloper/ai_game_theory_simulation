@@ -27,8 +27,8 @@ export function TimelineDashboard() {
     const allEvents: any[] = []
 
     // Historical events from current state
-    if (currentState.historicalEvents) {
-      currentState.historicalEvents.forEach((event: any) => {
+    if (currentState.eventLog) {
+      currentState.eventLog.forEach((event: any) => {
         allEvents.push({
           month: event.month,
           type: event.type,
@@ -47,7 +47,7 @@ export function TimelineDashboard() {
         // Check for ecosystem collapse trigger
         if (state.ecosystemCollapse?.triggered && idx > 0 && !trajectory[idx - 1].ecosystemCollapse?.triggered) {
           allEvents.push({
-            month: state.month,
+            month: state.currentMonth,
             type: 'tipping_point',
             category: 'environmental',
             description: 'Ecosystem collapse triggered',
@@ -61,7 +61,7 @@ export function TimelineDashboard() {
           const tp = state.specificTippingPoints
           if (tp.amazon?.triggered && idx > 0 && !trajectory[idx - 1].specificTippingPoints?.amazon?.triggered) {
             allEvents.push({
-              month: state.month,
+              month: state.currentMonth,
               type: 'tipping_point',
               category: 'environmental',
               description: 'Amazon rainforest dieback initiated',
@@ -136,7 +136,7 @@ export function TimelineDashboard() {
         />
         <MetricCard
           label="Current Month"
-          value={currentState.month || 0}
+          value={currentState.currentMonth || 0}
           status="normal"
         />
       </div>
@@ -293,7 +293,7 @@ export function TimelineDashboard() {
             <div>
               <div className="font-semibold mb-1">Current State</div>
               <div className="text-xs" style={{ color: 'var(--white-40)' }}>
-                Month {currentState.month} - {stats.total} total events recorded
+                Month {currentState.currentMonth} - {stats.total} total events recorded
               </div>
             </div>
           </div>

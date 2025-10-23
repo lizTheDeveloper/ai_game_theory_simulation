@@ -317,11 +317,11 @@ export function updateRegionalPopulations(state: GameState): void {
 
     // === 2. CALCULATE DEATH RATE ===
     const healthcareReduction = Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
-    const foodStock = isNaN(state.resourceEconomy.food.currentStock) ? 100 : state.resourceEconomy.food.currentStock;
-    const waterStock = isNaN(state.resourceEconomy.water.currentStock) ? 100 : state.resourceEconomy.water.currentStock;
+    const foodStock = isNaN(state.resourceEconomy.food.reserves) ? 1.0 : state.resourceEconomy.food.reserves;
+    const waterStock = isNaN(state.resourceEconomy.water.reserves) ? 1.0 : state.resourceEconomy.water.reserves;
     const foodWaterStress = Math.max(0,
-      (1 - foodStock / 100) * 0.3 +
-      (1 - waterStock / 100) * 0.3
+      (1 - foodStock) * 0.3 +
+      (1 - waterStock) * 0.3
     );
     const climateStability = isNaN(state.environmentalAccumulation.climateStability) ? 0.5 : state.environmentalAccumulation.climateStability;
     const climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
@@ -420,9 +420,9 @@ export function updateRegionalPopulations(state: GameState): void {
 
       // Apply proportional attribution (convert millions to billions)
       const deathsInBillions = overshootDeaths / 1000;
-      pop.deathsByRootCause.climateChange += deathsInBillions * climateShare;
-      pop.deathsByRootCause.poverty += deathsInBillions * povertyShare;
-      pop.deathsByRootCause.governance += deathsInBillions * govShare;
+      pop.deathsByRootCause.climate += deathsInBillions * climateShare;
+      pop.deathsByRootCause.inequality += deathsInBillions * povertyShare;
+      pop.deathsByRootCause.social += deathsInBillions * govShare;
     }
 
     // === 6. TRACK CRISIS DEATHS ===

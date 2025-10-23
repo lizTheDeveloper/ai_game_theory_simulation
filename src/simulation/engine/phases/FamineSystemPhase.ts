@@ -31,7 +31,7 @@ export class FamineSystemPhase implements SimulationPhase {
     const { updateFamineSystem } = require('../../../types/famine');
     
     const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-    const resourcesAvailable = state.resourceEconomy.food.currentStock > 50;
+    const resourcesAvailable = state.resourceEconomy.food.reserves > 0.5;
     
     const famineDeaths = updateFamineSystem(
       state.famineSystem,
@@ -72,16 +72,16 @@ export class FamineSystemPhase implements SimulationPhase {
         const total = conflictFamines + climateFamines + governanceFamines + naturalFamines;
         if (total > 0) {
           state.humanPopulationSystem.deathsByRootCause.conflict += famineDeaths * (conflictFamines / total);
-          state.humanPopulationSystem.deathsByRootCause.climateChange += famineDeaths * (climateFamines / total);
-          state.humanPopulationSystem.deathsByRootCause.governance += famineDeaths * (governanceFamines / total);
-          state.humanPopulationSystem.deathsByRootCause.natural += famineDeaths * (naturalFamines / total);
+          state.humanPopulationSystem.deathsByRootCause.climate += famineDeaths * (climateFamines / total);
+          state.humanPopulationSystem.deathsByRootCause.social += famineDeaths * (governanceFamines / total);
+          state.humanPopulationSystem.deathsByRootCause.ecosystem += famineDeaths * (naturalFamines / total);
         } else {
-          // Fallback: default to governance (policy/distribution failures)
-          state.humanPopulationSystem.deathsByRootCause.governance += famineDeaths;
+          // Fallback: default to social (policy/distribution failures)
+          state.humanPopulationSystem.deathsByRootCause.social += famineDeaths;
         }
       } else {
-        // No active famines (shouldn't happen) - default to governance
-        state.humanPopulationSystem.deathsByRootCause.governance += famineDeaths;
+        // No active famines (shouldn't happen) - default to social
+        state.humanPopulationSystem.deathsByRootCause.social += famineDeaths;
       }
 
       state.humanPopulationSystem.cumulativeCrisisDeaths += famineDeaths;

@@ -513,7 +513,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
   // Biogeochemical flows (from phosphorus system if available)
   if (state.phosphorusSystem) {
-    const depletion = 1 - (state.phosphorusSystem.globalReserves / 100);
+    const depletion = 1 - state.phosphorusSystem.reserves; // reserves is already 0-1 scale
     system.boundaries.biogeochemical_flows.currentValue = Math.max(0, 2.94 + depletion * 0.5);
   }
   updateBoundaryStatus(system.boundaries.biogeochemical_flows);
@@ -748,11 +748,11 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   // === RESOURCE CASCADES (with stochastic depletion) ===
   if (resources.food) {
     const foodDecay = 0.04 * envStochasticFactor(); // Base 4% ± variation (harvest failures, droughts)
-    resources.food.currentStock = Math.max(0, resources.food.currentStock * (1 - foodDecay));
+    resources.food.reserves = Math.max(0, resources.food.reserves * (1 - foodDecay));
   }
   if (resources.water) {
     const waterDecay = 0.03 * envStochasticFactor(); // Base 3% ± variation (droughts, contamination)
-    resources.water.currentStock = Math.max(0, resources.water.currentStock * (1 - waterDecay));
+    resources.water.reserves = Math.max(0, resources.water.reserves * (1 - waterDecay));
   }
 
   // === QOL COLLAPSE ===

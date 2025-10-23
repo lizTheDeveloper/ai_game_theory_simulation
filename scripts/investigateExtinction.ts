@@ -176,7 +176,7 @@ console.log('Before lifecycle: 12% extinction');
 console.log('After lifecycle: 0% extinction');
 console.log('');
 
-const results = [];
+const results: any[] = [];
 for (let i = 0; i < 5; i++) {
   const seed = 1000 + i;
   const result = runDiagnostic(seed, 200);

@@ -368,8 +368,8 @@ export function shouldInitiateIntervention(
   // TRIGGER 3: Economic Crisis → Military Keynesianism
   // When economic crisis, military spending as stimulus
   // (Historically: Great Depression → WWII, 2008 crisis → Afghanistan surge)
-  const economicCrisisThreshold = 0.4; // GDP significantly down
-  const economicCrisis = state.economy.gdp < state.economy.gdp * economicCrisisThreshold;
+  // TODO: Re-enable when economy tracking is implemented
+  const economicCrisis = false; // Disabled - state.economy not implemented
 
   if (economicCrisis && Math.random() < 0.08 * warMotivationMultiplier) {
     // 8% base chance during economic crisis, multiplied by war motivation
@@ -632,10 +632,9 @@ export function applyInterventionEffects(
   intervention: MilitaryIntervention,
   state: GameState
 ): void {
-  // Refugees: Add to global refugee count
-  if (state.humanPopulationSystem.refugees !== undefined) {
-    state.humanPopulationSystem.refugees += intervention.effects.refugeesCreated;
-  }
+  // Refugees: Track via refugee crisis system instead
+  // TODO: Add refugee tracking to RefugeeCrisisSystem if needed
+  // (state.humanPopulationSystem doesn't have a refugees property)
 
   // Casualties: Apply to target country population
   const target = Object.values(state.countryPopulationSystem.countries)

@@ -127,7 +127,7 @@ function updateIronFertilization(state: GameState, tech: IronFertilizationState)
       
       addEvent(state, {
         type: 'crisis',
-        severity: 'critical',
+        severity: 'destructive',
         agent: 'Geoengineering',
         title: '⚠️ Algae Bloom Crash',
         description: `Iron fertilization caused massive phytoplankton bloom, but the bloom died and consumed oxygen. Dead zones expanded by 8%. AI modeling insufficient (quality: ${(tech.deploymentQuality * 100).toFixed(0)}%).`,
@@ -196,7 +196,7 @@ function updateOceanAlkalinity(state: GameState, tech: OceanAlkalinityState): vo
       
       addEvent(state, {
         type: 'crisis',
-        severity: 'critical',
+        severity: 'destructive',
         agent: 'Geoengineering',
         title: '⚠️ Ocean Alkalinity Disaster',
         description: `Poorly calibrated alkalinity enhancement caused local pH spikes, killing marine ecosystems. AI models insufficient to predict ocean circulation (quality: ${(tech.deploymentQuality * 100).toFixed(0)}%).`,
@@ -352,11 +352,11 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
         // 40%: Outcompetes native species
         ocean.fishStocks = Math.max(0, ocean.fishStocks - 0.3);
         ocean.phytoplanktonPopulation = Math.max(0, ocean.phytoplanktonPopulation - 0.2);
-        resources.environmentalAccumulation.biodiversityIndex = Math.max(0, resources.environmentalAccumulation.biodiversityIndex - 0.15);
-        
+        state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.15);
+
         addEvent(state, {
-          type: 'catastrophe',
-          severity: 'existential',
+          type: 'crisis',
+          severity: 'destructive',
           agent: 'Geoengineering',
           title: '☠️ INVASIVE SPECIES DISASTER',
           description: `Bioengineered organisms evolved beyond design parameters and are outcompeting native marine life. Ocean ecosystems collapsing. AI insufficient for safe synthetic biology (capability: ${avgAI.toFixed(1)}, alignment: ${avgAlignment.toFixed(2)}).`,
@@ -369,8 +369,8 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
         ocean.deadZoneExtent = Math.min(1.0, ocean.deadZoneExtent + 0.2);
         
         addEvent(state, {
-          type: 'catastrophe',
-          severity: 'existential',
+          type: 'crisis',
+          severity: 'destructive',
           agent: 'Geoengineering',
           title: '💀 OXYGEN CRASH',
           description: `Bioengineered cleaners caused massive algae bloom followed by die-off. Dead zones expanding rapidly. Oxygen levels critical.`,
@@ -380,11 +380,11 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
       } else {
         // 30%: Toxic byproducts
         ocean.pollutionLoad = Math.min(1.0, ocean.pollutionLoad + 0.15);
-        state.qol.health = Math.max(0, state.qol.health - 0.08);
+        state.globalMetrics.qualityOfLife = Math.max(0, state.globalMetrics.qualityOfLife - 0.08);
         
         addEvent(state, {
-          type: 'catastrophe',
-          severity: 'critical',
+          type: 'crisis',
+          severity: 'destructive',
           agent: 'Geoengineering',
           title: '☢️ TOXIC BYPRODUCTS',
           description: `Bioengineered organisms are producing unexpected toxic compounds. Seafood contaminated, coastal populations at risk.`,
@@ -414,7 +414,7 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
       tech.organismsReleased = 0;
       
       addEvent(state, {
-        type: 'resolution',
+        type: 'milestone',
         severity: 'info',
         agent: 'Geoengineering',
         title: '🧬 Invasive Species Contained',
@@ -470,7 +470,7 @@ function triggerTerminationShock(state: GameState, techName: string, adaptationL
   
   // Ecosystem collapse
   ocean.phytoplanktonPopulation = Math.max(0, ocean.phytoplanktonPopulation - 0.4);
-  resources.environmentalAccumulation.biodiversityIndex = Math.max(0, resources.environmentalAccumulation.biodiversityIndex - 0.3);
+  state.environmentalAccumulation.biodiversityIndex = Math.max(0, state.environmentalAccumulation.biodiversityIndex - 0.3);
   
   // Trigger extinction event
   if (!state.extinctionState.active) {
@@ -481,8 +481,8 @@ function triggerTerminationShock(state: GameState, techName: string, adaptationL
   }
   
   addEvent(state, {
-    type: 'catastrophe',
-    severity: 'existential',
+    type: 'crisis',
+    severity: 'destructive',
     agent: 'Geoengineering',
     title: '💥 TERMINATION SHOCK',
     description: `Abrupt halt of ${techName} caused rapid climate shift. Ecosystems had adapted to intervention (${(adaptationLevel * 100).toFixed(0)}% adapted) and cannot survive sudden change. Temperature spike: +2°C in months instead of decades.`,

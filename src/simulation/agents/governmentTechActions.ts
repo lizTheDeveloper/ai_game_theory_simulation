@@ -10,9 +10,10 @@
  * - Africa: Basic needs, disease elimination ($10B/month)
  */
 
-import { GameState, GameAction, ActionResult } from '@/types/game';
+import { GameState } from '@/types/game';
+import { ActionResult, GameAction } from './types';
 import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
-import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
+import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
 
 /**
@@ -191,9 +192,10 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
         investment: investment,
       },
       events: [{
-        month: state.currentMonth,
-        type: 'deployment',
-        severity: 'constructive',
+        id: `gov_deploy_${selectedTech.id}_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'action',
+        severity: 'info',
         agent: nation,
         title: `${nation} Deploys ${selectedTech.name}`,
         description: `${nation} investing $${(investment / 1000).toFixed(1)}B to deploy ${selectedTech.name}. ${
@@ -201,7 +203,7 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
           crisisMultiplier > 1.0 ? 'High priority deployment addressing national challenge.' :
           'Strategic technology investment.'
         }`,
-        effects: { tech: selectedTech.id, nation },
+        effects: { investment: investment / 1000 }, // Investment in billions
       }],
       message: `${nation} deployed ${selectedTech.name} ($${(investment / 1000).toFixed(1)}B)`
     };
@@ -291,18 +293,17 @@ function getCrisisUrgencyMultiplier(tech: any, state: GameState): number {
   
   // Freshwater crisis
   if (tech.category === 'freshwater' && state.freshwaterSystem) {
-    const dayZeroCount = Object.values(state.freshwaterSystem.regions).filter(
-      r => r.dayZeroMonthsUntil <= 12
-    ).length;
-    if (dayZeroCount > 0) {
+    // Check for active Day Zero drought or critical scarcity
+    if (state.freshwaterSystem.dayZeroDrought?.active ||
+        state.freshwaterSystem.criticalScarcityActive) {
       multiplier = 2.5; // EXISTENTIAL THREAT: 2.5× investment
     }
   }
-  
+
   // Phosphorus crisis (famine)
   if ((tech.category === 'agriculture' || tech.id.includes('phosphorus')) && state.phosphorusSystem) {
-    if (state.phosphorusSystem.crisisState === 'supply_shock' || 
-        state.phosphorusSystem.crisisState === 'weaponization') {
+    if (state.phosphorusSystem.supplyShockActive ||
+        state.phosphorusSystem.criticalDepletionActive) {
       multiplier = 2.0; // FAMINE THREAT: 2× investment
     }
   }
@@ -331,12 +332,13 @@ function getCrisisUrgencyMultiplier(tech: any, state: GameState): number {
 function isCrisisActiveForCategory(category: string, state: GameState): boolean {
   switch (category) {
     case 'freshwater':
-      return state.freshwaterSystem && 
-             Object.values(state.freshwaterSystem.regions).some(r => r.dayZeroMonthsUntil <= 24);
+      return state.freshwaterSystem &&
+             (state.freshwaterSystem.dayZeroDrought?.active ||
+              state.freshwaterSystem.criticalScarcityActive);
     case 'agriculture':
-      return state.phosphorusSystem && 
-             (state.phosphorusSystem.crisisState === 'supply_shock' || 
-              state.phosphorusSystem.crisisState === 'weaponization');
+      return state.phosphorusSystem &&
+             (state.phosphorusSystem.supplyShockActive ||
+              state.phosphorusSystem.criticalDepletionActive);
     case 'climate':
     case 'ocean':
       return state.environmentalAccumulation?.ecosystemCollapseActive || false;

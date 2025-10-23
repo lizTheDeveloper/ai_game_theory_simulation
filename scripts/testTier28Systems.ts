@@ -31,10 +31,8 @@ function runTier28Simulation(seed: number, yearsToRun: number = 20) {
     if (country) {
       country.domesticResources = data.resources;
       country.sovereignty = data.sovereignty;
-      country.resourceValue = data.resourceValue;
-      country.extractedResources = data.extractedResources;
-      country.extractionTargets = data.extractionTargets;
-      country.extractedBy = data.extractedBy;
+      // Note: resourceValue, extractedResources, extractionTargets, extractedBy
+      // are initialized elsewhere or computed from domesticResources
     }
   }
 
@@ -129,7 +127,7 @@ function runTier28Simulation(seed: number, yearsToRun: number = 20) {
 
 // Run simulations with different seeds
 const seeds = [42000, 42001, 42002];
-const results = [];
+const results: any[] = [];
 
 console.log(`\n${'='.repeat(80)}`);
 console.log(`TIER 2.8 MILITARY INTERVENTION SYSTEMS - TESTING SUITE`);

@@ -63,7 +63,7 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   // === FOOD SECURITY (Highest immediate impact) ===
   // Food < 0.4 = crisis, Food < 0.2 = catastrophic
   // FIX (Oct 13, 2025): foodSecurity is in survivalFundamentals, not environmentalAccumulation
-  const foodSecurity = state.survivalFundamentals?.foodSecurity ?? 0.7;
+  const foodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0.7;
   if (foodSecurity < 0.4) {
     const foodSeverity = (0.4 - foodSecurity) / 0.4; // 0-1 scale
     famineMortality += 0.0001 * Math.pow(foodSeverity, 1.5); // 0.01%/month at threshold, scales up
@@ -258,7 +258,7 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
   // FIX (Oct 13, 2025): foodSecurity is in survivalFundamentals, NOT environmentalAccumulation!
   // BUG: Was checking env.foodSecurity (undefined) → always defaulted to 0.7 → never triggered!
   const env = state.environmentalAccumulation;
-  const globalFoodSecurity = state.survivalFundamentals?.foodSecurity ?? 0.7;
+  const globalFoodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0.7;
 
   // FIX (Oct 13, 2025): Simplified famine trigger based on global food security only
   // The regional biodiversity system isn't being maintained, so we can't rely on it
@@ -304,8 +304,8 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
 
       // Determine cause
       let cause: import('@/types/famine').FamineCause = 'crop_failure';
-      if (state.phosphorusDepletion?.globalSupplyShock > 3.0) {
-        cause = 'supply_chain_collapse';
+      if (state.phosphorusSystem?.supplyShockActive) {
+        cause = 'economic_collapse'; // Phosphorus supply shock → economic collapse
       } else if (env.climateStability < 0.4) {
         cause = 'drought';
       }

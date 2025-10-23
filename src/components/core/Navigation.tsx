@@ -10,9 +10,9 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
-import { SimulationWorkerClient, type StateDelta, type InitialStateSnapshot } from '@/lib/simulationWorkerClient'
+import { useSimulationWorker } from '@/lib/contexts/SimulationWorkerContext'
 import type { ScenarioMode } from '@/types/game'
 
 const navItems = [
@@ -31,96 +31,43 @@ const navItems = [
 export function Navigation() {
   const pathname = usePathname()
 
-  // Simulation state
-  const [client, setClient] = useState<SimulationWorkerClient | null>(null)
-  const [initialized, setInitialized] = useState(false)
-  const [running, setRunning] = useState(false)
+  // Get shared worker state from context
+  const { initialized, running, month, day, scenario, seed, init, start, pause, step } = useSimulationWorker()
+
+  // Local UI state only
   const [showConfig, setShowConfig] = useState(false)
-  const [month, setMonth] = useState(0)
-  const [scenario, setScenario] = useState<ScenarioMode>('historical')
-  const [seed, setSeed] = useState(42000)
-  const [speed, setSpeed] = useState(1.0)
-
-  // Create worker client on mount
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !client) {
-      try {
-        const newClient = new SimulationWorkerClient()
-        setClient(newClient)
-      } catch (error) {
-        console.error('[Navigation] Failed to create worker client:', error)
-      }
-    }
-  }, [])
-
-  // Setup worker event listeners
-  useEffect(() => {
-    if (!client) return
-
-    const handleInitialized = (snapshot: InitialStateSnapshot) => {
-      setInitialized(true)
-      setMonth(snapshot.currentMonth)
-      setScenario(snapshot.scenario)
-    }
-
-    const handleUpdate = (delta: StateDelta) => {
-      if (delta.currentMonth !== undefined) setMonth(delta.currentMonth)
-    }
-
-    const handlePaused = () => setRunning(false)
-    const handleResumed = () => setRunning(true)
-
-    client.on('initialized', handleInitialized)
-    client.on('update', handleUpdate)
-    client.on('paused', handlePaused)
-    client.on('resumed', handleResumed)
-
-    return () => {
-      client.off('initialized', handleInitialized)
-      client.off('update', handleUpdate)
-      client.off('paused', handlePaused)
-      client.off('resumed', handleResumed)
-    }
-  }, [client])
-
-  // Cleanup worker on unmount
-  useEffect(() => {
-    return () => {
-      if (client) {
-        client.destroy()
-      }
-    }
-  }, [client])
+  const [configSeed, setConfigSeed] = useState(42000)
+  const [configScenario, setConfigScenario] = useState<ScenarioMode>('historical')
+  const [configSpeed, setConfigSpeed] = useState(1.0)
 
   // Initialize simulation
-  const handleInit = useCallback(() => {
-    if (!client || initialized) return
+  const handleInit = () => {
+    if (initialized) return
 
     try {
-      const interval = Math.floor(30000 / speed)
-      client.init(seed, scenario, interval)
+      init(configSeed, configScenario, configSpeed)
       setShowConfig(false)
     } catch (err) {
       console.error('[Navigation] Init error:', err)
     }
-  }, [client, initialized, seed, scenario, speed])
+  }
 
   // Start/pause toggle
-  const handleToggleRunning = useCallback(() => {
-    if (!client || !initialized) return
+  const handleToggleRunning = () => {
+    if (!initialized) return
 
     if (running) {
-      client.pause()
+      pause()
     } else {
-      client.start()
+      start()
     }
-  }, [client, initialized, running])
+  }
 
   // Manual step
-  const handleStep = useCallback(() => {
-    if (!client || !initialized) return
-    client.step()
-  }, [client, initialized])
+  const handleStep = () => {
+    if (!initialized) return
+    step()
+  }
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -183,6 +130,10 @@ export function Navigation() {
                 <div className="flex items-center justify-between text-xs">
                   <span style={{ color: 'var(--white-40)' }}>Month</span>
                   <span className="text-white">{month}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span style={{ color: 'var(--white-40)' }}>Day</span>
+                  <span className="text-white">{day}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span style={{ color: 'var(--white-40)' }}>Scenario</span>
@@ -275,8 +226,8 @@ export function Navigation() {
                 <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>RNG SEED</label>
                 <input
                   type="number"
-                  value={seed}
-                  onChange={(e) => setSeed(parseInt(e.target.value))}
+                  value={configSeed}
+                  onChange={(e) => setConfigSeed(parseInt(e.target.value))}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
                 />
               </div>
@@ -284,15 +235,15 @@ export function Navigation() {
               <div>
                 <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SCENARIO MODE</label>
                 <select
-                  value={scenario}
-                  onChange={(e) => setScenario(e.target.value as ScenarioMode)}
+                  value={configScenario}
+                  onChange={(e) => setConfigScenario(e.target.value as ScenarioMode)}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
                 >
                   <option value="historical">Historical (Known AI Timelines)</option>
                   <option value="unprecedented">Unprecedented (Novel Scenarios)</option>
                 </select>
                 <p className="text-xs mt-2" style={{ color: 'var(--white-30)' }}>
-                  {scenario === 'historical'
+                  {configScenario === 'historical'
                     ? 'Simulation follows known AI development patterns and historical data'
                     : 'Simulation explores novel scenarios beyond historical precedent'}
                 </p>
@@ -301,8 +252,8 @@ export function Navigation() {
               <div>
                 <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SIMULATION SPEED</label>
                 <select
-                  value={speed.toFixed(1)}
-                  onChange={(e) => setSpeed(parseFloat(e.target.value))}
+                  value={configSpeed.toFixed(1)}
+                  onChange={(e) => setConfigSpeed(parseFloat(e.target.value))}
                   className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
                 >
                   <option value="0.5">0.5x (Slow)</option>
