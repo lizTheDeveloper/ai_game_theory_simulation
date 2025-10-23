@@ -119,7 +119,7 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
 
   // Apply mortality to population system
   if (state.humanPopulationSystem) {
-    state.humanPopulationSystem.currentPopulation *= (1 - mortalityRate);
+    state.humanPopulationSystem.population *= (1 - mortalityRate);
   }
 
   // Apply mortality to country populations
@@ -130,9 +130,14 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
   }
 
   // Trigger nuclear winter (environmental collapse)
-  if (state.planetaryBoundariesSystem) {
-    state.planetaryBoundariesSystem.climateChange = Math.min(1.0, state.planetaryBoundariesSystem.climateChange + 0.5);
-    state.planetaryBoundariesSystem.biodiversityLoss = Math.min(1.0, state.planetaryBoundariesSystem.biodiversityLoss + 0.6);
+  if (state.planetaryBoundariesSystem?.boundaries) {
+    const boundaries = state.planetaryBoundariesSystem.boundaries;
+    if (boundaries.climate_change) {
+      boundaries.climate_change.currentValue = Math.min(1.0, boundaries.climate_change.currentValue + 0.5);
+    }
+    if (boundaries.biosphere_integrity) {
+      boundaries.biosphere_integrity.currentValue = Math.max(0.0, boundaries.biosphere_integrity.currentValue - 0.6);
+    }
   }
 
   // Infrastructure destruction
@@ -190,13 +195,14 @@ function applyAGIBreakthroughShock(state: GameState, rng: RNGFunction): GameEven
   let unlockedCount = 0;
 
   // Unlock all breakthrough technologies
-  if (state.breakthroughTech && state.breakthroughTech.technologies) {
-    state.breakthroughTech.technologies.forEach(tech => {
-      if (!tech.unlocked) {
+  if (state.breakthroughTech) {
+    // BreakthroughTechState has individual properties for each tech, not a technologies array
+    Object.values(state.breakthroughTech).forEach((tech: any) => {
+      if (tech && typeof tech === 'object' && 'unlocked' in tech && !tech.unlocked) {
         tech.unlocked = true;
         tech.deploymentLevel = 0.5; // 50% deployed instantly
         unlockedCount++;
-        console.log(`      ✓ ${tech.name} unlocked`);
+        console.log(`      ✓ ${tech.name || 'Technology'} unlocked`);
       }
     });
   }
@@ -237,7 +243,7 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
 
   // Apply mortality
   if (state.humanPopulationSystem) {
-    state.humanPopulationSystem.currentPopulation *= (1 - mortalityRate);
+    state.humanPopulationSystem.population *= (1 - mortalityRate);
   }
 
   if (state.countryPopulationSystem) {
@@ -247,9 +253,14 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
   }
 
   // Environmental effects (dust, climate disruption)
-  if (state.planetaryBoundariesSystem) {
-    state.planetaryBoundariesSystem.climateChange = Math.min(1.0, state.planetaryBoundariesSystem.climateChange + impactSize * 0.4);
-    state.planetaryBoundariesSystem.biodiversityLoss = Math.min(1.0, state.planetaryBoundariesSystem.biodiversityLoss + impactSize * 0.5);
+  if (state.planetaryBoundariesSystem?.boundaries) {
+    const boundaries = state.planetaryBoundariesSystem.boundaries;
+    if (boundaries.climate_change) {
+      boundaries.climate_change.currentValue = Math.min(1.0, boundaries.climate_change.currentValue + impactSize * 0.4);
+    }
+    if (boundaries.biosphere_integrity) {
+      boundaries.biosphere_integrity.currentValue = Math.max(0.0, boundaries.biosphere_integrity.currentValue - impactSize * 0.5);
+    }
   }
 
   // Infrastructure damage
@@ -390,7 +401,7 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
 
   // Apply mortality
   if (state.humanPopulationSystem) {
-    state.humanPopulationSystem.currentPopulation *= (1 - mortalityRate);
+    state.humanPopulationSystem.population *= (1 - mortalityRate);
   }
 
   if (state.countryPopulationSystem) {
@@ -409,26 +420,26 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
 
   // Refugee crisis
   if (state.refugeeCrisisSystem) {
-    const refugees = (state.humanPopulationSystem?.currentPopulation || 8000000000) * mortalityRate * 2; // 2x mortality in displacement
+    const refugees = (state.humanPopulationSystem?.population || 8000000000) * mortalityRate * 2; // 2x mortality in displacement
 
-    // Initialize activeDisplacements if it doesn't exist
-    if (!state.refugeeCrisisSystem.activeDisplacements) {
-      state.refugeeCrisisSystem.activeDisplacements = [];
-    }
-
-    state.refugeeCrisisSystem.activeDisplacements.push({
-      cause: 'conflict',
+    state.refugeeCrisisSystem.activeRefugeeCrises.push({
+      id: `war_${state.currentMonth}`,
+      cause: 'war',
       startMonth: state.currentMonth,
-      displacedPopulation: refugees,
-      destinationCountries: [],
-      integrationDifficulty: 0.7,
-      hostilityLevel: 0.6,
+      sourceRegion: 'conflict_zone',
+      displacedPopulation: refugees / 1000000, // Convert to millions
+      destinationRegions: [],
+      monthsActive: 0,
+      resolutionStatus: 'ongoing',
+      hostCountryStrain: 0.6,
+      integrationProgress: 0.0,
+      repatriationRate: 0.0
     });
   }
 
-  // Nuclear risk increase
+  // Nuclear risk increase (decrease crisis stability)
   if (state.madDeterrence) {
-    state.madDeterrence.tensionLevel = Math.min(1.0, state.madDeterrence.tensionLevel + 0.2);
+    state.madDeterrence.crisisStability = Math.max(0.0, state.madDeterrence.crisisStability - 0.2);
   }
 
   return [{
@@ -450,9 +461,13 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
  */
 function applyTechBreakthroughShock(state: GameState, rng: RNGFunction): GameEvent[] {
   // Find locked TIER 2-3 technologies
-  const candidateTechs = state.breakthroughTech?.technologies?.filter(
-    tech => !tech.unlocked && (tech.tier === 2 || tech.tier === 3)
-  ) || [];
+  const candidateTechs = state.breakthroughTech ?
+    Object.values(state.breakthroughTech).filter((tech: any) =>
+      tech && typeof tech === 'object' &&
+      'unlocked' in tech &&
+      !tech.unlocked &&
+      (tech.tier === 2 || tech.tier === 3)
+    ) : [];
 
   if (candidateTechs.length === 0) {
     console.log(`   ✗ No TIER 2-3 techs available to unlock`);

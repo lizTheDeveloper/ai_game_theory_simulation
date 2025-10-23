@@ -6,11 +6,11 @@ import { getGameState } from '@/lib/gameState';
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { countryId: string } }
+  { params }: { params: Promise<{ countryId: string }> }
 ) {
-  return monitor.measureAsync(`government-detail-${params.countryId}`, async () => {
+  const { countryId } = await params;
+  return monitor.measureAsync(`government-detail-${countryId}`, async () => {
     try {
-      const { countryId } = params;
       const cacheKey = `dashboard:government:${countryId}`;
       const cached = getCached(cacheKey);
       if (cached) {

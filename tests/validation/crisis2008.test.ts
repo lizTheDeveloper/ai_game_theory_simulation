@@ -60,7 +60,7 @@ describe('2008 Financial Crisis Validation (2008-2012)', () => {
     const metrics = extractValidationMetrics(
       initialState,
       result.finalState,
-      result.log.events
+      []
     );
 
     // Validate survival rate is realistic

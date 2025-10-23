@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Navigation } from "@/components/core/Navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,10 +28,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="flex">
+          <Navigation />
+          <div className="ml-64 flex-1">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
 }
-
-// Note: Navigation added to dashboard pages individually to avoid breaking demo page

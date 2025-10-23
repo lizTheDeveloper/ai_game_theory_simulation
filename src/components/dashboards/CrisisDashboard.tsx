@@ -13,6 +13,15 @@ import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulation } from "@/lib/hooks/useSimulation"
 import { useEffect, useMemo } from "react"
 
+interface CrisisItem {
+  id: string
+  name: string
+  type: string
+  active: boolean
+  severity: 'normal' | 'warning' | 'critical' | 'extinction'
+  metrics: Record<string, string | number>
+}
+
 export function CrisisDashboard() {
   const { currentState, loadCurrent } = useSimulation()
 
@@ -24,7 +33,7 @@ export function CrisisDashboard() {
   const crises = useMemo(() => {
     if (!currentState) return []
 
-    const crisisList = []
+    const crisisList: CrisisItem[] = []
 
     // Phosphorus Crisis
     if (currentState.phosphorusSystem) {
@@ -46,16 +55,17 @@ export function CrisisDashboard() {
     // Freshwater Crisis
     if (currentState.freshwaterSystem) {
       const fw = currentState.freshwaterSystem
+      const availableWater = (fw.blueWater.surfaceWater + fw.blueWater.groundwater) / 2
       crisisList.push({
         id: 'freshwater',
         name: 'Freshwater Depletion',
         type: 'Resource',
-        active: fw.dayZeroCrisisActive || false,
-        severity: fw.availableWater < 0.3 ? 'critical' : fw.availableWater < 0.5 ? 'warning' : 'normal',
+        active: fw.dayZeroDrought.active || fw.criticalScarcityActive || false,
+        severity: availableWater < 0.3 ? 'critical' : availableWater < 0.5 ? 'warning' : 'normal',
         metrics: {
-          'Available Water': `${((fw.availableWater || 0) * 100).toFixed(0)}%`,
-          'Aquifer Health': `${((fw.aquiferHealth || 1) * 100).toFixed(0)}%`,
-          'Day Zero': fw.dayZeroCrisisActive ? 'Active' : 'None',
+          'Available Water': `${((availableWater || 0) * 100).toFixed(0)}%`,
+          'Aquifer Health': `${((fw.blueWater.groundwater || 1) * 100).toFixed(0)}%`,
+          'Day Zero': fw.dayZeroDrought.active ? 'Active' : 'None',
         }
       })
     }
@@ -67,12 +77,12 @@ export function CrisisDashboard() {
         id: 'ocean',
         name: 'Ocean Acidification',
         type: 'Environmental',
-        active: oa.crisisActive || false,
-        severity: oa.pH < 7.9 ? 'critical' : oa.pH < 8.0 ? 'warning' : 'normal',
+        active: oa.coralExtinctionActive || oa.boundaryBreached || false,
+        severity: oa.pHLevel < 0.85 ? 'critical' : oa.pHLevel < 0.92 ? 'warning' : 'normal',
         metrics: {
-          'pH Level': (oa.pH || 8.1).toFixed(2),
-          'Coral Health': `${((oa.coralHealth || 1) * 100).toFixed(0)}%`,
-          'Fishery Loss': `${((oa.fisheryCollapse || 0) * 100).toFixed(0)}%`,
+          'pH Level': `${((oa.pHLevel || 1.0) * 100).toFixed(0)}%`,
+          'Coral Health': `${((oa.coralReefHealth || 1) * 100).toFixed(0)}%`,
+          'Fishery Impact': `${((oa.fishDependentImpact || 0) * 100).toFixed(0)}%`,
         }
       })
     }
@@ -84,12 +94,12 @@ export function CrisisDashboard() {
         id: 'novel_entities',
         name: 'Novel Entities Crisis',
         type: 'Environmental',
-        active: ne.crisisActive || false,
-        severity: ne.totalPollutionLoad > 0.7 ? 'critical' : ne.totalPollutionLoad > 0.5 ? 'warning' : 'normal',
+        active: ne.reproductiveCrisisActive || ne.boundaryBreached || false,
+        severity: ne.syntheticChemicalLoad > 0.7 ? 'critical' : ne.syntheticChemicalLoad > 0.5 ? 'warning' : 'normal',
         metrics: {
-          'Pollution Load': `${((ne.totalPollutionLoad || 0) * 100).toFixed(0)}%`,
-          'PFAS Exposure': `${((ne.pfasExposure || 0) * 100).toFixed(0)}%`,
-          'Health Impact': `${((ne.healthImpact || 0) * 100).toFixed(0)}%`,
+          'Pollution Load': `${((ne.syntheticChemicalLoad || 0) * 100).toFixed(0)}%`,
+          'PFAS Prevalence': `${((ne.pfasPrevalence || 0) * 100).toFixed(0)}%`,
+          'Chronic Disease': `${((ne.chronicDiseasePrevalence || 0) * 100).toFixed(0)}%`,
         }
       })
     }
@@ -134,35 +144,43 @@ export function CrisisDashboard() {
     }
 
     // Nuclear Tensions
-    if (currentState.nuclearSystem) {
-      const nuc = currentState.nuclearSystem
+    if (currentState.madDeterrence && currentState.bilateralTensions) {
+      const mad = currentState.madDeterrence
+      const activeConflicts = currentState.bilateralTensions.filter(t => t.conventionalConflict || t.nuclearThreats).length
+      const maxTension = currentState.bilateralTensions.length > 0
+        ? Math.max(...currentState.bilateralTensions.map(t => t.tensionLevel))
+        : 0
+      const totalStockpile = currentState.nuclearStates?.reduce((sum, state) => sum + state.arsenal, 0) || 0
+
       crisisList.push({
         id: 'nuclear',
         name: 'Nuclear Tensions',
         type: 'Geopolitical',
-        active: nuc.activeConflicts > 0 || false,
-        severity: nuc.activeConflicts > 0 ? 'critical' : nuc.tensionLevel > 0.7 ? 'warning' : 'normal',
+        active: activeConflicts > 0 || mad.crisisStability < 0.3,
+        severity: activeConflicts > 0 ? 'critical' : maxTension > 0.7 ? 'warning' : 'normal',
         metrics: {
-          'Tension Level': `${((nuc.tensionLevel || 0) * 100).toFixed(0)}%`,
-          'Active Conflicts': nuc.activeConflicts || 0,
-          'Stockpile': nuc.globalStockpile || 0,
+          'Max Tension': `${((maxTension || 0) * 100).toFixed(0)}%`,
+          'Active Conflicts': activeConflicts,
+          'Global Stockpile': totalStockpile.toLocaleString(),
         }
       })
     }
 
     // AMR (Antimicrobial Resistance)
-    if (currentState.amrSystem) {
-      const amr = currentState.amrSystem
+    if (currentState.antimicrobialResistanceSystem) {
+      const amr = currentState.antimicrobialResistanceSystem
+      // Crisis is active when medical effectiveness drops below 85% or deaths exceed 5M/year
+      const isCrisis = amr.currentMedicalEffectiveness < 0.85 || amr.annualDeaths > 5000000
       crisisList.push({
         id: 'amr',
         name: 'Antimicrobial Resistance',
         type: 'Health',
-        active: amr.crisisActive || false,
-        severity: amr.resistanceFraction > 0.7 ? 'critical' : amr.resistanceFraction > 0.5 ? 'warning' : 'normal',
+        active: isCrisis,
+        severity: amr.currentMedicalEffectiveness < 0.75 ? 'critical' : amr.currentMedicalEffectiveness < 0.85 ? 'warning' : 'normal',
         metrics: {
-          'Resistance': `${((amr.resistanceFraction || 0) * 100).toFixed(0)}%`,
+          'Medical Effectiveness': `${((amr.currentMedicalEffectiveness || 1) * 100).toFixed(0)}%`,
           'Annual Deaths': (amr.annualDeaths || 0).toLocaleString(),
-          'Development Rate': (amr.newDrugDevelopmentRate || 0).toFixed(1) + '/yr',
+          'Death Rate': `${amr.currentDeathRate.toFixed(1)}/100K`,
         }
       })
     }
@@ -368,8 +386,8 @@ export function CrisisDashboard() {
         <Panel title="Emergency Response Capacity">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Response Frequency</div>
-              <div className="text-lg font-semibold">{currentState.government.responseFrequency || 'N/A'}</div>
+              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Action Frequency</div>
+              <div className="text-lg font-semibold">{currentState.government.actionFrequency.toFixed(2) || 'N/A'}</div>
             </div>
             <div>
               <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Oversight Level</div>

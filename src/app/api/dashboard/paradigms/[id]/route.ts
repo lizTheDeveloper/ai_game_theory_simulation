@@ -7,11 +7,11 @@ import { getGameState } from '@/lib/gameState';
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  return monitor.measureAsync(`paradigm-detail-${params.id}`, async () => {
+  const { id } = await params;
+  return monitor.measureAsync(`paradigm-detail-${id}`, async () => {
     try {
-      const { id } = params;
 
       const validIds = ['westernLiberal', 'development', 'ecological', 'indigenous'];
       if (!validIds.includes(id)) {

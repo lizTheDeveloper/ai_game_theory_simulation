@@ -180,7 +180,8 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
   const boundary = state.planetaryBoundariesSystem?.boundaries.climate_change;
   if (!boundary) return;
 
-  const globalWarming = state.climateState?.globalWarming ?? 1.2;
+  // Calculate globalWarming from planetary boundary (currentValue * 2 = degrees C)
+  const globalWarming = boundary.currentValue * 2.0;
 
   // FIX #18.1 (Oct 22, 2025): Read emissions from correct state property
   // CRITICAL: Climate recovery was reading climateState.annualEmissions (never updated)
@@ -190,7 +191,8 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
   // FIX #18.2 (Oct 22, 2025): Add robust fallback handling for undefined/NaN
   const rawEmissions = state.resourceEconomy?.co2?.annualEmissions;
   const annualEmissions = (rawEmissions !== undefined && !isNaN(rawEmissions)) ? rawEmissions : 40; // GtCO₂
-  const annualCDR = state.climateState?.annualCDR ?? 0; // GtCO₂
+  // CDR tracking: No dedicated property yet, use natural sinks as proxy
+  const annualCDR = (state.resourceEconomy?.co2?.oceanAbsorption ?? 0) + (state.resourceEconomy?.co2?.landAbsorption ?? 0);
 
   const netEmissions = annualEmissions - annualCDR;
 
@@ -235,7 +237,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
     // - Climate feedback penalty: Half speed if warming ≥ 1.5°C (tipping points)
 
     const netNegative = netEmissions < 0;
-    const hasActiveCDR = state.climateState?.annualCDR && state.climateState.annualCDR > 5; // ≥ 5 GtCO₂/year CDR
+    const hasActiveCDR = annualCDR > 5; // ≥ 5 GtCO₂/year CDR
 
     // Recovery only happens with net-negative emissions
     if (netNegative) {
@@ -250,18 +252,11 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
       // Reduce it toward 0 (pre-industrial baseline)
       boundary.currentValue = Math.max(0, boundary.currentValue - recoveryRate);
 
-      // Also improve climate state if available
-      if (state.climateState) {
-        // Slowly reduce warming (very slow - decades)
-        const tempReduction = recoveryRate * 0.1; // 10% of boundary reduction = temp reduction
-        state.climateState.globalWarming = Math.max(0, state.climateState.globalWarming - tempReduction);
-      }
-
       // Log every 2 years if recovering
       if (state.currentMonth % 24 === 0) {
         console.log(`🌡️  CLIMATE RECOVERY: Boundary improving at -${(recoveryRate * 100).toFixed(4)}%/month`);
         console.log(`   Current value: ${boundary.currentValue.toFixed(3)} (1.0 = threshold, 0 = safe)`);
-        console.log(`   Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year, CDR: ${state.climateState?.annualCDR ?? 0} GtCO₂/year`);
+        console.log(`   Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year, CDR: ${annualCDR} GtCO₂/year`);
       }
 
       // Update boundary status based on actual value
@@ -273,7 +268,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
 
         console.log(`\n=== Climate Boundary RECOVERED ===`);
         console.log(`  Boundary value: ${boundary.currentValue.toFixed(3)} (below ${boundary.boundaryThreshold} threshold)`);
-        console.log(`  Temperature: ${state.climateState?.globalWarming.toFixed(2)}°C`);
+        console.log(`  Temperature: ${globalWarming.toFixed(2)}°C`);
         console.log(`  Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year`);
         console.log(`  Recovery time: ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years`);
       } else {
@@ -329,7 +324,8 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
   const governanceMultiplier = enforcementCapacity < 0.5 ? 0.5 : 1.0;
 
   // Climate feedback (warming makes recovery harder - Lake Erie empirical)
-  const globalWarming = state.climateState?.globalWarming ?? 1.2;
+  const climateBoundary = state.planetaryBoundariesSystem?.boundaries.climate_change;
+  const globalWarming = climateBoundary ? climateBoundary.currentValue * 2.0 : 1.2;
   const climateMultiplier = globalWarming >= 1.5 ? 1.5 : 1.0;
 
   if (isImproving && governanceMultiplier >= 0.3) {
@@ -484,7 +480,7 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
   const boundary = state.planetaryBoundariesSystem?.boundaries.biosphere_integrity;
   if (!boundary) return;
 
-  const extinctionRate = state.planetaryBoundariesSystem?.landUse?.currentExtinctionRate ?? 100;
+  const extinctionRate = state.planetaryBoundariesSystem?.landUse?.globalExtinctionRate ?? 100;
   const naturalRate = state.planetaryBoundariesSystem?.landUse?.naturalExtinctionRate ?? 1.0;
 
   // FIX (Oct 21, 2025): Stabilization activates when WORKING TOWARD recovery, not when already recovered
@@ -556,7 +552,9 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
   const boundary = state.planetaryBoundariesSystem?.boundaries.ocean_acidification;
   if (!boundary) return;
 
-  const globalWarming = state.climateState?.globalWarming ?? 1.2;
+  // Calculate globalWarming from climate boundary
+  const climateBoundary = state.planetaryBoundariesSystem?.boundaries.climate_change;
+  const globalWarming = climateBoundary ? climateBoundary.currentValue * 2.0 : 1.2;
 
   // FIX #18.1 (Oct 22, 2025): Read emissions from correct state property
   // CRITICAL: Ocean acidification recovery was reading climateState.annualEmissions (never updated)
@@ -565,7 +563,8 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
   // FIX #18.2 (Oct 22, 2025): Add robust fallback handling for undefined/NaN
   const rawEmissions = state.resourceEconomy?.co2?.annualEmissions;
   const annualEmissions = (rawEmissions !== undefined && !isNaN(rawEmissions)) ? rawEmissions : 40; // GtCO₂
-  const annualCDR = state.climateState?.annualCDR ?? 0; // GtCO₂
+  // CDR tracking: No dedicated property yet, use natural sinks as proxy
+  const annualCDR = (state.resourceEconomy?.co2?.oceanAbsorption ?? 0) + (state.resourceEconomy?.co2?.landAbsorption ?? 0);
 
   const netEmissions = annualEmissions - annualCDR;
   const surfaceRecoveryPossible = globalWarming < 1.5 && netEmissions < 0;

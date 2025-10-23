@@ -549,8 +549,8 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   // Note: populationPercentage is stored as 60 (meaning 60%), need to normalize to 0.6 for formatPercent() in UI
   const biodiversityLoss = (state.specificTippingPoints?.pollinators?.populationPercentage || 100) / 100;
   // Pollution from novel entities system (PFAS, microplastics, etc.)
-  const pollutionLevel = state.novelEntitiesSystem?.pollutionLevel || 0;
-  const environmentalDebtLevel = state.environmentalAccumulation?.totalDebt || 0;
+  const pollutionLevel = state.novelEntitiesSystem?.syntheticChemicalLoad || 0;
+  const environmentalDebtLevel = state.environmentalAccumulation?.pollutionLevel || 0;
 
   // Count planetary boundaries crossed (using correct boundary names from types)
   let planetaryBoundariesCrossed = 0;
@@ -578,17 +578,17 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const socialDebtLevel = state.socialAccumulation?.totalDebt || 0;
 
   // Crisis metrics
-  const phosphorusDepletion = state.phosphorusSystem?.depletionLevel || 0;
-  const freshwaterStress = state.freshwaterSystem?.stressLevel || 0;
-  const oceanAcidification = state.oceanAcidificationSystem?.phLevel || 8.2;
-  const novelEntitiesLevel = state.novelEntitiesSystem?.pollutionLevel || 0;
+  const phosphorusDepletion = 1 - (state.phosphorusSystem?.reserves || 1);
+  const freshwaterStress = state.freshwaterSystem?.waterStress || 0;
+  const oceanAcidification = 1 - (state.oceanAcidificationSystem?.pHLevel || 1);
+  const novelEntitiesLevel = state.novelEntitiesSystem?.syntheticChemicalLoad || 0;
 
   // Count active crises
   let activeCrisesCount = 0;
-  if (state.phosphorusSystem?.crisis) activeCrisesCount++;
-  if (state.freshwaterSystem?.crisis) activeCrisesCount++;
-  if (state.oceanAcidificationSystem?.crisis) activeCrisesCount++;
-  if (state.novelEntitiesSystem?.crisis) activeCrisesCount++;
+  if (state.phosphorusSystem?.criticalDepletionActive || state.phosphorusSystem?.supplyShockActive) activeCrisesCount++;
+  if (state.freshwaterSystem?.criticalScarcityActive || state.freshwaterSystem?.dayZeroDrought?.active) activeCrisesCount++;
+  if (state.oceanAcidificationSystem?.coralExtinctionActive || state.oceanAcidificationSystem?.boundaryBreached) activeCrisesCount++;
+  if (state.novelEntitiesSystem?.reproductiveCrisisActive || state.novelEntitiesSystem?.boundaryBreached) activeCrisesCount++;
 
   // Government metrics
   const governmentAIRegulation = state.government.capabilityToControl || 0; // [0,∞) Actual regulatory effectiveness
@@ -615,7 +615,10 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   // Upward spiral metrics
   const activeSpiralCount = state.upwardSpirals ?
     Object.values(state.upwardSpirals).filter((spiral: any) => spiral.active).length : 0;
-  const utopiaProgress = state.upwardSpirals?.overallProgress || 0;
+  // Calculate utopia progress from cascade mechanics (4+ spirals = cascade active)
+  const utopiaProgress = state.upwardSpirals?.cascadeActive ?
+    (state.upwardSpirals.cascadeStrength || 0) / 2 : // Normalize cascadeStrength (1-2+) to [0,1]
+    activeSpiralCount / 6; // Progress based on active spirals (6 total)
 
   // Outcome metrics
   const extinctionProbability = state.outcomeMetrics?.extinctionProbability || 0;
@@ -762,32 +765,32 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   // Build active crises array if count changed
   if (previous.activeCrisesCount !== currentSnapshot.activeCrisesCount) {
     const activeCrises = [];
-    if (current.phosphorusSystem?.crisis) {
+    if (current.phosphorusSystem?.criticalDepletionActive || current.phosphorusSystem?.supplyShockActive) {
       activeCrises.push({
         type: 'Phosphorus',
-        severity: current.phosphorusSystem.depletionLevel || 0,
-        duration: current.phosphorusSystem.crisisDuration || 0
+        severity: 1 - (current.phosphorusSystem.reserves || 1),
+        duration: current.phosphorusSystem.supplyShockDuration || 0
       });
     }
-    if (current.freshwaterSystem?.crisis) {
+    if (current.freshwaterSystem?.criticalScarcityActive || current.freshwaterSystem?.dayZeroDrought?.active) {
       activeCrises.push({
         type: 'Freshwater',
-        severity: current.freshwaterSystem.stressLevel || 0,
-        duration: current.freshwaterSystem.crisisDuration || 0
+        severity: current.freshwaterSystem.waterStress || 0,
+        duration: current.freshwaterSystem.dayZeroDrought?.duration || 0
       });
     }
-    if (current.oceanAcidificationSystem?.crisis) {
+    if (current.oceanAcidificationSystem?.coralExtinctionActive || current.oceanAcidificationSystem?.boundaryBreached) {
       activeCrises.push({
         type: 'Ocean Acidification',
-        severity: 8.2 - (current.oceanAcidificationSystem.phLevel || 8.2),
-        duration: current.oceanAcidificationSystem.crisisDuration || 0
+        severity: 1 - (current.oceanAcidificationSystem.pHLevel || 1),
+        duration: 0 // Duration not tracked in current structure
       });
     }
-    if (current.novelEntitiesSystem?.crisis) {
+    if (current.novelEntitiesSystem?.reproductiveCrisisActive || current.novelEntitiesSystem?.boundaryBreached) {
       activeCrises.push({
         type: 'Chemical Pollution',
-        severity: current.novelEntitiesSystem.pollutionLevel || 0,
-        duration: current.novelEntitiesSystem.crisisDuration || 0
+        severity: current.novelEntitiesSystem.syntheticChemicalLoad || 0,
+        duration: 0 // Duration not tracked in current structure
       });
     }
     delta.activeCrises = activeCrises;

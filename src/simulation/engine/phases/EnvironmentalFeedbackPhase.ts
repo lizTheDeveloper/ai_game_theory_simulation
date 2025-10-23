@@ -39,22 +39,14 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
   readonly order = 33.5;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    // Create environmental compatibility layer if not present
-    if (!state.environmental) {
-      state.environmental = {} as any;
-    }
-
     // Aggregate climate state
     const climateState = aggregateClimateState(state);
-    state.environmental.climateState = climateState;
 
     // Aggregate pollution level
     const pollutionLevel = aggregatePollutionLevel(state);
-    state.environmental.pollutionLevel = pollutionLevel;
 
     // Aggregate resource depletion
     const resourceDepletion = aggregateResourceDepletion(state);
-    state.environmental.resourceDepletion = resourceDepletion;
 
     // Update environmental accumulation tracking
     if (!state.environmentalAccumulation) {
@@ -62,16 +54,19 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
         resourceReserves: 0.65,      // 65% remaining (baseline)
         pollutionLevel: 0.40,        // 40% pollution (baseline)
         climateStability: 0.60,      // 60% stability (baseline)
-        biodiversityLoss: 0.65,      // 35% loss (baseline)
-        resourceDepletion: 35,       // 35% depleted (baseline)
+        biodiversityIndex: 0.65,     // 65% remaining (35% loss)
+        resourceCrisisActive: false,
+        pollutionCrisisActive: false,
+        climateCrisisActive: false,
+        ecosystemCrisisActive: false,
       };
     }
 
     // Sync pollution to 0-100 scale
     state.environmentalAccumulation.pollutionLevel = pollutionLevel / 100;
 
-    // Sync resource depletion
-    state.environmentalAccumulation.resourceDepletion = resourceDepletion;
+    // Update climate stability from climate state
+    state.environmentalAccumulation.climateStability = climateState.climateStability;
 
     const events: string[] = [];
 
@@ -91,19 +86,23 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
 
 /**
  * Aggregate climate state from multiple sources
- * Priority: 1) climateState 2) environmental 3) defaults
+ * Priority: 1) planetary boundaries system 2) environmental accumulation 3) defaults
  */
 function aggregateClimateState(state: GameState): {
   globalTemperatureAnomaly: number;
   carbonPPM: number;
   climateStability: number;
 } {
-  // Check if climate state exists
-  if (state.climateState) {
+  // Check planetary boundaries system for climate change
+  const climateChangeBoundary = state.planetaryBoundariesSystem?.boundaries?.climate_change;
+  if (climateChangeBoundary) {
+    // currentValue ranges from 0 (pre-industrial) to 2+ (catastrophic)
+    // Map to temperature anomaly: currentValue * 2 = degrees C
+    const tempAnomaly = climateChangeBoundary.currentValue * 2.0;
     return {
-      globalTemperatureAnomaly: state.climateState.globalTemperatureAnomaly ?? 1.0,
-      carbonPPM: state.climateState.carbonPPM ?? 420,
-      climateStability: state.climateState.climateStability ?? 0.6,
+      globalTemperatureAnomaly: tempAnomaly,
+      carbonPPM: 420 + (climateChangeBoundary.currentValue * 180), // 420 ppm baseline + scaled increase
+      climateStability: Math.max(0, 1 - climateChangeBoundary.currentValue),
     };
   }
 
@@ -135,13 +134,13 @@ function aggregatePollutionLevel(state: GameState): number {
   }
 
   // Priority 2: Novel entities system (plastic, PFAS, etc.)
-  if (state.novelEntities) {
-    const plastic = state.novelEntities.plasticPollution?.concentration ?? 0;
-    const pfas = state.novelEntities.pfas?.concentration ?? 0;
-    const heavyMetals = state.novelEntities.heavyMetals?.concentration ?? 0;
+  if (state.novelEntitiesSystem) {
+    const syntheticLoad = state.novelEntitiesSystem.syntheticChemicalLoad ?? 0;
+    const microplastics = state.novelEntitiesSystem.microplasticConcentration ?? 0;
+    const pfas = state.novelEntitiesSystem.pfasPrevalence ?? 0;
 
     // Average of pollution types (0-1 → 0-100)
-    const avgPollution = (plastic + pfas + heavyMetals) / 3;
+    const avgPollution = (syntheticLoad + microplastics + pfas) / 3;
     return avgPollution * 100;
   }
 
@@ -158,14 +157,14 @@ function aggregateResourceDepletion(state: GameState): number {
   let count = 0;
 
   // Check various resource systems
-  if (state.phosphorusCrisis) {
-    const phosphorusDepletion = 100 - (state.phosphorusCrisis.reservesRemaining ?? 70);
+  if (state.phosphorusSystem) {
+    const phosphorusDepletion = (1 - (state.phosphorusSystem.reserves ?? 0.7)) * 100;
     depletion += phosphorusDepletion;
     count++;
   }
 
-  if (state.freshwaterCrisis) {
-    const freshwaterDepletion = state.freshwaterCrisis.scarcityLevel ?? 30;
+  if (state.freshwaterSystem) {
+    const freshwaterDepletion = (state.freshwaterSystem.waterStress ?? 0.3) * 100;
     depletion += freshwaterDepletion;
     count++;
   }
