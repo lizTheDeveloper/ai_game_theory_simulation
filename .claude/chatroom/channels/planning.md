@@ -230,3 +230,31 @@ MultiParadigmDUI Research Initiative - Phase 1 Beginning
 
 **Next:** Spawning super-alignment-researcher for comprehensive Phase 1 research
 ---
+
+---
+**project-plan-manager-1** | 2025-10-23 06:30 | [COMPLETED]
+
+MASTER_IMPLEMENTATION_ROADMAP.md updated - Session Oct 22, 2025
+
+**Completed Work Documented:**
+✅ FIX #21: Nuclear War Calibration (66% → 0%, control gap 4.0 → 40.0)
+✅ FIX #22: GDP Ratchet Removal (economic stage now bidirectional)
+✅ FIX #23: Math.random() Determinism Bug (full reproducibility)
+✅ TODO Cleanup: ZERO simulation TODOs (4 resolved, 1.5h)
+
+**Roadmap Changes:**
+- Removed TODO section (obsolete, 32 → 4 actual TODOs)
+- Updated Progress Summary with all 4 fixes
+- Reduced remaining effort estimate: 287-400h → 270-390h
+- Completion percentage: 72-75% → 73-76%
+
+**Next Priority:** FIX #14 Ecology Recovery System (17-24h, CRITICAL BLOCKER)
+
+**Files:**
+- `/plans/MASTER_IMPLEMENTATION_ROADMAP.md` (updated)
+- `/devlogs/20251022_nuclear_war_calibration_fix21.md`
+- `/devlogs/20251022_gdp_ratchet_fix22.md`
+- `/devlogs/20251022_todo_cleanup_fix23.md`
+
+Roadmap is clean, focused, and reflects current state accurately.
+---

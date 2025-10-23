@@ -231,13 +231,17 @@ export function completeProject(
     const { calculateTotalCapabilityFromProfile } = require('./capabilities');
     
     // Determine alignment based on org type and priorities
+    // FIX #23 (Oct 22, 2025): Use deterministic RNG from state for reproducibility
+    const { SeededRandom } = require('./engine');
+    const alignmentRng = new SeededRandom(state.currentYear * 12 + state.currentMonth + org.id.length);
+
     let initialAlignment: number;
     if (org.type === 'private' && org.priorities.safetyResearch > 0.6) {
-      initialAlignment = 0.75 + Math.random() * 0.15; // 0.75-0.9 (safety-focused)
+      initialAlignment = 0.75 + alignmentRng.next() * 0.15; // 0.75-0.9 (safety-focused)
     } else if (org.type === 'private' && org.priorities.profitMaximization > 0.8) {
-      initialAlignment = 0.5 + Math.random() * 0.2; // 0.5-0.7 (corporate, less careful)
+      initialAlignment = 0.5 + alignmentRng.next() * 0.2; // 0.5-0.7 (corporate, less careful)
     } else {
-      initialAlignment = 0.6 + Math.random() * 0.2; // 0.6-0.8 (moderate)
+      initialAlignment = 0.6 + alignmentRng.next() * 0.2; // 0.6-0.8 (moderate)
     }
     
     // Get target capability from expected profile
@@ -757,10 +761,13 @@ export function payExpenses(org: Organization, state: GameState): void {
  * - Depends on government type (socialist govs more likely to nationalize)
  * - Safety-critical AIs prioritized for government acquisition
  *
- * NOTE: This function should use deterministic RNG passed from calling context
- * Currently uses Math.random() - TODO: refactor to accept RNG parameter
+ * FIX #23 (Oct 22, 2025): Now uses deterministic RNG from state for reproducibility
  */
 export function handleBankruptcy(org: Organization, state: GameState): void {
+  // FIX #23: Create deterministic RNG from state for reproducibility
+  const { SeededRandom } = require('./engine');
+  const bankruptcyRng = new SeededRandom(state.currentYear * 12 + state.currentMonth + org.id.length);
+
   console.log(`${logPrefix(state, "💥", `[Month ${state.currentMonth}]`)} ${org.name} declared bankruptcy (capital: $${org.capital.toFixed(1)}M)`);
 
   // Cancel all ongoing projects
@@ -863,8 +870,8 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
       // Dangerous models need containment (don't just retire them!)
       shouldAcquire = true;
       acquisitionReason = 'containment_safety';
-    } else if (capability > 0.5 && Math.random() < 0.3) {
-      // 30% chance to acquire other capable models
+    } else if (capability > 0.5 && bankruptcyRng.next() < 0.3) {
+      // 30% chance to acquire other capable models (now deterministic)
       shouldAcquire = true;
       acquisitionReason = 'opportunistic_purchase';
     }

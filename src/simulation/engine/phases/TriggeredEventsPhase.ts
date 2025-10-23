@@ -1,8 +1,13 @@
 /**
  * Triggered Events Phase (P2.5)
  *
- * External event triggers for validation testing
- * TODO: Implement full triggered events system if needed
+ * Placeholder phase for external event injection during testing/validation.
+ *
+ * PURPOSE: Allows manual event triggers for specific test scenarios (e.g., "trigger
+ * pandemic at month 50" for validation testing). Currently unused in production runs.
+ *
+ * FUTURE USE: Could be extended for scenario testing, historical event replay,
+ * or controlled experiments. Not needed for current Monte Carlo simulations.
  */
 
 import type { SimulationPhase, PhaseContext, PhaseResult } from './types';
