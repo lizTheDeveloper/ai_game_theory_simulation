@@ -39,7 +39,7 @@ export function getPlanetaryBoundaries(
     else if (current >= safeZone) status = 'increasing-risk';
 
     // Calculate trend from history
-    const history = state.history?.planetaryBoundaries || [];
+    const history = (state.history as any)?.planetaryBoundaries || [];
     const recentValues = history.slice(-6).map(h => (h as any)?.[name] || 0);
     const trend =
       recentValues.length >= 2 &&

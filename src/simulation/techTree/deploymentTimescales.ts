@@ -180,7 +180,7 @@ export function getGovernanceMultiplier(gameState: GameState): number {
  * - >3.0°C: 0.60× (40% penalty, severe feedbacks)
  */
 export function getClimateRecoveryMultiplier(gameState: GameState): number {
-  const globalWarming = gameState.climateState?.globalWarming ?? 1.2;
+  const globalWarming = gameState.planetaryBoundariesSystem?.boundaries?.['climateChange']?.currentValue ?? 1.2;
 
   if (globalWarming < 1.5) return 1.0;
   if (globalWarming < 2.0) return 0.95;

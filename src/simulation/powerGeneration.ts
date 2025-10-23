@@ -21,7 +21,7 @@ import { PowerGenerationSystem, DataCenterConstruction, TrainingEvent } from '..
  */
 export function updatePowerGeneration(state: GameState): void {
   const power = state.powerGenerationSystem;
-  const env = state.environmentalSystem;
+  const env = state.environmentalAccumulation;
 
   // Increment time
   power.monthsSinceStart += 1;

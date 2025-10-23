@@ -186,15 +186,15 @@ export function OverviewDashboard() {
               Climate Stability
             </div>
             <div className="text-2xl font-light">
-              {((currentState.planetaryBoundaries?.climateChange?.current || 0) * 100).toFixed(0)}%
+              {((currentState.environmentalAccumulation?.climateStability || 0) * 100).toFixed(0)}%
             </div>
           </div>
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>
-              Biodiversity
+              Biodiversity Index
             </div>
             <div className="text-2xl font-light">
-              {((currentState.planetaryBoundaries?.biosphereIntegrity?.current || 0) * 100).toFixed(0)}%
+              {((currentState.environmentalAccumulation?.biodiversityIndex || 0) * 100).toFixed(0)}%
             </div>
           </div>
           <div>
@@ -202,7 +202,7 @@ export function OverviewDashboard() {
               Social Cohesion
             </div>
             <div className="text-2xl font-light">
-              {(currentState.socialAccumulation?.socialCohesion || 0).toFixed(2)}
+              {((currentState.socialAccumulation?.socialCohesion || 0) * 100).toFixed(0)}%
             </div>
           </div>
         </div>

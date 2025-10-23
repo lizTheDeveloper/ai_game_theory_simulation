@@ -22,9 +22,7 @@ export async function GET(
         throw new ApiError(404, 'Game state not found');
       }
 
-      const country = state.countryPopulationSystem?.countries?.find(
-        c => c.id === countryId
-      );
+      const country = state.countryPopulationSystem?.countries?.[countryId as import('@/types/countryPopulations').CountryName];
       if (!country) {
         throw new ApiError(404, `Country not found: ${countryId}`);
       }

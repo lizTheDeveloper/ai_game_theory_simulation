@@ -83,8 +83,8 @@ export function checkBlownCover(
   
   // === MECHANISTIC INTERPRETABILITY BONUS ===
   // If mech interp deployed, helps prove intent
-  const mechInterpTech = state.techTreeState?.technologies?.['mech_interp_basic'];
-  if (mechInterpTech?.deployed) {
+  const mechInterpTech = state.technologyTree?.find(t => t.id === 'mech_interp_basic');
+  if (mechInterpTech?.completed) {
     const deployment = mechInterpTech.deploymentLevel || 0;
     const bonus = deployment * 0.15; // Up to +15%
     detectionRate = Math.min(0.95, detectionRate + bonus);

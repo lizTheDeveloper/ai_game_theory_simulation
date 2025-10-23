@@ -3,8 +3,33 @@
 export interface GameEvent {
   id: string;
   timestamp: number; // month
-  type: 'breakthrough' | 'crisis' | 'action' | 'milestone';
-  severity: 'info' | 'warning' | 'destructive';
+  type:
+    | 'breakthrough'
+    | 'crisis'
+    | 'action'
+    | 'milestone'
+    | 'policy'              // Government policy changes
+    | 'catastrophe'         // Major catastrophic events
+    | 'government'          // Government actions/decisions
+    | 'technology'          // Technology deployment/discovery
+    | 'environmental'       // Environmental events
+    | 'resolution'          // Crisis resolution events
+    | 'positive-milestone'  // Positive achievements
+    | 'positive-cascade-triggered' // Positive feedback loops starting
+    | 'info';               // Informational events
+  severity:
+    | 'info'           // Informational
+    | 'warning'        // Warning level
+    | 'destructive'    // Destructive/negative
+    | 'critical'       // Critical severity
+    | 'existential'    // Existential threat level
+    | 'high'           // High severity
+    | 'medium'         // Medium severity
+    | 'low'            // Low severity
+    | 'major'          // Major impact
+    | 'positive'       // Positive event
+    | 'constructive'   // Constructive/beneficial
+    | 'transformative';// Transformative impact
   agent: string; // Which agent caused this event
   title: string;
   description: string;

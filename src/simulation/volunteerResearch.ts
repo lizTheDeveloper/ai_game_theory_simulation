@@ -95,8 +95,8 @@ function getTechCoordinationBonus(state: GameState): number {
   let bonus = 0;
 
   // Purpose infrastructure tech deployed
-  const purposeTech = state.techTreeState?.technologies?.['collective_purpose_networks'];
-  const purposeNetworks = purposeTech?.deploymentLevel || 0;
+  const purposeTech = state.technologyTree?.find(t => t.id === 'collective_purpose_networks');
+  const purposeNetworks = purposeTech?.completed ? (purposeTech.progress || 0) : 0;
   bonus += purposeNetworks * 0.5;
 
   // Community platforms (no direct tech tree equivalent - using same tech)

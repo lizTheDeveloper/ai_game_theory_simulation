@@ -196,8 +196,8 @@ export function updateQualityOfLifeSystems(
   const participationFloor = (govQuality?.participationRate || 0.5) * 0.10;
 
   // Tech tree: collective purpose networks provide autonomy boost
-  const purposeTech = state.techTreeState?.technologies?.['collective_purpose_networks'];
-  const counterSurveillanceTech = (purposeTech?.deploymentLevel || 0) * 0.25; // Combined boost
+  const purposeTech = state.technologyTree?.find(t => t.id === 'collective_purpose_networks');
+  const counterSurveillanceTech = purposeTech?.completed ? ((purposeTech.progress || 0) * 0.25) : 0; // Combined boost
 
   const minimumAutonomy = democraticFloor + transparencyFloor + participationFloor + counterSurveillanceTech;
   autonomy = Math.max(minimumAutonomy, Math.min(1, autonomy));
@@ -229,8 +229,8 @@ export function updateQualityOfLifeSystems(
   let communityStrength = 0.5 + society.socialAdaptation * 0.3 + globalMetrics.socialStability * 0.2;
 
   // Tech tree: collective purpose networks boost community
-  const communityTech = state.techTreeState?.technologies?.['collective_purpose_networks'];
-  const communityTechBoost = (communityTech?.deploymentLevel || 0) * 0.15;
+  const communityTech = state.technologyTree?.find(t => t.id === 'collective_purpose_networks');
+  const communityTechBoost = communityTech?.completed ? ((communityTech.progress || 0) * 0.15) : 0;
   const postScarcityBoost = economicStage >= 3 ? 0.10 : 0;
   const ubiBoost = hasUBI ? 0.05 : 0;
 

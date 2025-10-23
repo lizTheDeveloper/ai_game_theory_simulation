@@ -22,90 +22,90 @@ export function EnvironmentalDashboard() {
 
   // Extract planetary boundaries
   const boundaries = useMemo(() => {
-    if (!currentState?.planetaryBoundaries) return []
+    if (!currentState?.planetaryBoundariesSystem) return []
 
-    const pb = currentState.planetaryBoundaries
+    const pb = currentState.planetaryBoundariesSystem.boundaries
     return [
       {
-        id: 'climate',
+        id: 'climate_change',
         name: 'Climate Change',
-        current: pb.climateChange?.current || 0,
-        threshold: pb.climateChange?.threshold || 1,
-        safe: pb.climateChange?.safe || 0.8,
-        unit: 'ppm CO2',
-        breached: (pb.climateChange?.current || 0) > (pb.climateChange?.threshold || 1),
+        current: pb.climate_change?.currentValue || 0,
+        threshold: pb.climate_change?.boundaryThreshold || 1,
+        safe: pb.climate_change?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.climate_change?.status === 'beyond_boundary' || pb.climate_change?.status === 'high_risk',
       },
       {
-        id: 'biodiversity',
+        id: 'biosphere_integrity',
         name: 'Biosphere Integrity',
-        current: pb.biosphereIntegrity?.current || 1,
-        threshold: pb.biosphereIntegrity?.threshold || 0.9,
-        safe: 1,
-        unit: 'Integrity',
-        breached: (pb.biosphereIntegrity?.current || 1) < (pb.biosphereIntegrity?.threshold || 0.9),
+        current: pb.biosphere_integrity?.currentValue || 0,
+        threshold: pb.biosphere_integrity?.boundaryThreshold || 1,
+        safe: pb.biosphere_integrity?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.biosphere_integrity?.status === 'beyond_boundary' || pb.biosphere_integrity?.status === 'high_risk',
       },
       {
-        id: 'land',
+        id: 'land_system_change',
         name: 'Land System Change',
-        current: pb.landSystemChange?.current || 0,
-        threshold: pb.landSystemChange?.threshold || 0.25,
-        safe: 0.15,
-        unit: '% Converted',
-        breached: (pb.landSystemChange?.current || 0) > (pb.landSystemChange?.threshold || 0.25),
+        current: pb.land_system_change?.currentValue || 0,
+        threshold: pb.land_system_change?.boundaryThreshold || 1,
+        safe: pb.land_system_change?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.land_system_change?.status === 'beyond_boundary' || pb.land_system_change?.status === 'high_risk',
       },
       {
-        id: 'freshwater',
-        name: 'Freshwater Use',
-        current: pb.freshwaterUse?.current || 0,
-        threshold: pb.freshwaterUse?.threshold || 0.65,
-        safe: 0.50,
-        unit: '% Consumed',
-        breached: (pb.freshwaterUse?.current || 0) > (pb.freshwaterUse?.threshold || 0.65),
+        id: 'freshwater_change',
+        name: 'Freshwater Change',
+        current: pb.freshwater_change?.currentValue || 0,
+        threshold: pb.freshwater_change?.boundaryThreshold || 1,
+        safe: pb.freshwater_change?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.freshwater_change?.status === 'beyond_boundary' || pb.freshwater_change?.status === 'high_risk',
       },
       {
-        id: 'nitrogen',
-        name: 'Nitrogen Cycles',
-        current: pb.nitrogenCycles?.current || 0,
-        threshold: pb.nitrogenCycles?.threshold || 0.62,
-        safe: 0.50,
-        unit: 'Tg N/yr',
-        breached: (pb.nitrogenCycles?.current || 0) > (pb.nitrogenCycles?.threshold || 0.62),
+        id: 'biogeochemical_flows',
+        name: 'Biogeochemical Flows',
+        current: pb.biogeochemical_flows?.currentValue || 0,
+        threshold: pb.biogeochemical_flows?.boundaryThreshold || 1,
+        safe: pb.biogeochemical_flows?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.biogeochemical_flows?.status === 'beyond_boundary' || pb.biogeochemical_flows?.status === 'high_risk',
       },
       {
-        id: 'phosphorus',
-        name: 'Phosphorus Cycles',
-        current: pb.phosphorusCycles?.current || 0,
-        threshold: pb.phosphorusCycles?.threshold || 0.11,
-        safe: 0.08,
-        unit: 'Tg P/yr',
-        breached: (pb.phosphorusCycles?.current || 0) > (pb.phosphorusCycles?.threshold || 0.11),
-      },
-      {
-        id: 'ocean',
-        name: 'Ocean Acidification',
-        current: pb.oceanAcidification?.current || 0,
-        threshold: pb.oceanAcidification?.threshold || 2.75,
-        safe: 2.50,
-        unit: 'Ω aragonite',
-        breached: (pb.oceanAcidification?.current || 0) < (pb.oceanAcidification?.threshold || 2.75),
-      },
-      {
-        id: 'aerosol',
-        name: 'Atmospheric Aerosols',
-        current: pb.atmosphericAerosols?.current || 0,
-        threshold: pb.atmosphericAerosols?.threshold || 0.4,
-        safe: 0.3,
-        unit: 'AOD',
-        breached: (pb.atmosphericAerosols?.current || 0) > (pb.atmosphericAerosols?.threshold || 0.4),
-      },
-      {
-        id: 'chemical',
+        id: 'novel_entities',
         name: 'Novel Entities',
-        current: pb.novelEntities?.current || 0,
-        threshold: pb.novelEntities?.threshold || 0.6,
-        safe: 0.4,
-        unit: 'Pollution Load',
-        breached: (pb.novelEntities?.current || 0) > (pb.novelEntities?.threshold || 0.6),
+        current: pb.novel_entities?.currentValue || 0,
+        threshold: pb.novel_entities?.boundaryThreshold || 1,
+        safe: pb.novel_entities?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.novel_entities?.status === 'beyond_boundary' || pb.novel_entities?.status === 'high_risk',
+      },
+      {
+        id: 'ocean_acidification',
+        name: 'Ocean Acidification',
+        current: pb.ocean_acidification?.currentValue || 0,
+        threshold: pb.ocean_acidification?.boundaryThreshold || 1,
+        safe: pb.ocean_acidification?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.ocean_acidification?.status === 'beyond_boundary' || pb.ocean_acidification?.status === 'high_risk',
+      },
+      {
+        id: 'stratospheric_ozone',
+        name: 'Stratospheric Ozone',
+        current: pb.stratospheric_ozone?.currentValue || 0,
+        threshold: pb.stratospheric_ozone?.boundaryThreshold || 1,
+        safe: pb.stratospheric_ozone?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.stratospheric_ozone?.status === 'beyond_boundary' || pb.stratospheric_ozone?.status === 'high_risk',
+      },
+      {
+        id: 'atmospheric_aerosols',
+        name: 'Atmospheric Aerosols',
+        current: pb.atmospheric_aerosols?.currentValue || 0,
+        threshold: pb.atmospheric_aerosols?.boundaryThreshold || 1,
+        safe: pb.atmospheric_aerosols?.preIndustrialValue || 0,
+        unit: 'Relative',
+        breached: pb.atmospheric_aerosols?.status === 'beyond_boundary' || pb.atmospheric_aerosols?.status === 'high_risk',
       },
     ]
   }, [currentState])
@@ -123,11 +123,15 @@ export function EnvironmentalDashboard() {
   const environmentalDebt = useMemo(() => {
     if (!currentState) return { resourceDepletion: 0, pollution: 0, climateDebt: 0, biodiversityLoss: 0 }
 
+    const phosphorusReserves = currentState.phosphorusSystem?.reserves ?? 1
+    const climate = currentState.planetaryBoundariesSystem?.boundaries?.climate_change
+    const biosphere = currentState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity
+
     return {
-      resourceDepletion: (currentState.phosphorusSystem?.reserves ? 1 - currentState.phosphorusSystem.reserves : 0) * 100,
-      pollution: (currentState.novelEntitiesSystem?.totalPollutionLoad || 0) * 100,
-      climateDebt: (currentState.planetaryBoundaries?.climateChange?.current || 0) * 100,
-      biodiversityLoss: (1 - (currentState.planetaryBoundaries?.biosphereIntegrity?.current || 1)) * 100,
+      resourceDepletion: (1 - phosphorusReserves) * 100,
+      pollution: (currentState.novelEntitiesSystem?.syntheticChemicalLoad || 0) * 100,
+      climateDebt: (climate?.currentValue || 0) * 100,
+      biodiversityLoss: (biosphere?.currentValue || 0) * 100,
     }
   }, [currentState])
 
@@ -135,16 +139,16 @@ export function EnvironmentalDashboard() {
   const getSparkline = (boundaryId: string) => {
     if (trajectory.length < 2) return []
     return trajectory.slice(-12).map(state => {
-      const pb = state.planetaryBoundaries
+      const pb = state.planetaryBoundariesSystem?.boundaries
       if (!pb) return 0
 
       switch (boundaryId) {
-        case 'climate':
-          return (pb.climateChange?.current || 0) * 100
-        case 'biodiversity':
-          return (pb.biosphereIntegrity?.current || 1) * 100
-        case 'ocean':
-          return (pb.oceanAcidification?.current || 0)
+        case 'climate_change':
+          return (pb.climate_change?.currentValue || 0) * 100
+        case 'biosphere_integrity':
+          return (pb.biosphere_integrity?.currentValue || 0) * 100
+        case 'ocean_acidification':
+          return (pb.ocean_acidification?.currentValue || 0) * 100
         default:
           return 0
       }
@@ -315,22 +319,22 @@ export function EnvironmentalDashboard() {
             <div className="text-3xl font-light" style={{ color: boundaries[0]?.breached ? 'var(--color-red)' : 'var(--color-cyan)' }}>
               {(boundaries[0]?.current || 0).toFixed(2)}
             </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>ppm CO2 equivalent</p>
+            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Relative to boundary</p>
           </div>
           {trajectory.length > 1 && (
-            <Sparkline data={getSparkline('climate')} color={boundaries[0]?.breached ? 'var(--color-red)' : 'var(--color-cyan)'} />
+            <Sparkline data={getSparkline('climate_change')} color={boundaries[0]?.breached ? 'var(--color-red)' : 'var(--color-cyan)'} />
           )}
         </Panel>
 
         <Panel title="Biodiversity Integrity">
           <div className="mb-3">
             <div className="text-3xl font-light" style={{ color: boundaries[1]?.breached ? 'var(--color-red)' : 'var(--color-green)' }}>
-              {((boundaries[1]?.current || 1) * 100).toFixed(0)}%
+              {(boundaries[1]?.current || 0).toFixed(2)}
             </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Ecosystem health</p>
+            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Relative to boundary</p>
           </div>
           {trajectory.length > 1 && (
-            <Sparkline data={getSparkline('biodiversity')} color={boundaries[1]?.breached ? 'var(--color-red)' : 'var(--color-green)'} />
+            <Sparkline data={getSparkline('biosphere_integrity')} color={boundaries[1]?.breached ? 'var(--color-red)' : 'var(--color-green)'} />
           )}
         </Panel>
 
@@ -339,10 +343,10 @@ export function EnvironmentalDashboard() {
             <div className="text-3xl font-light" style={{ color: boundaries[6]?.breached ? 'var(--color-red)' : 'var(--color-cyan)' }}>
               {(boundaries[6]?.current || 0).toFixed(2)}
             </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Ω aragonite saturation</p>
+            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Relative to boundary</p>
           </div>
           {trajectory.length > 1 && (
-            <Sparkline data={getSparkline('ocean')} color={boundaries[6]?.breached ? 'var(--color-red)' : 'var(--color-cyan)'} />
+            <Sparkline data={getSparkline('ocean_acidification')} color={boundaries[6]?.breached ? 'var(--color-red)' : 'var(--color-cyan)'} />
           )}
         </Panel>
       </div>

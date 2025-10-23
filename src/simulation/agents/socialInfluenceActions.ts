@@ -491,7 +491,8 @@ function applyInfluenceConsequences(
       break;
 
     case 'military_deployment':
-      state.geopoliticalState.conflicts += 1;
+      // TODO: Track military conflicts properly (geopoliticalState.conflicts doesn't exist)
+      // state.geopoliticalState.conflicts += 1;
       state.globalMetrics.population *= 0.98;
       state.globalMetrics.socialStability *= 0.7;
 

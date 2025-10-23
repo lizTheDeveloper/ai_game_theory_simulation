@@ -140,8 +140,22 @@ function updatePublicOpinion(state: GameState, rng: RNGFunction): void {
       opinion -= 0.025;
     }
 
-    // 3. Crisis penalty
-    const crisisCount = state.crisisDetected?.activeCrises || 0;
+    // 3. Crisis penalty - count active crises from accumulation systems
+    const env = state.environmentalAccumulation;
+    const social = state.socialAccumulation;
+    const tech = state.technologicalRisk;
+    const crisisCount = [
+      env.resourceCrisisActive,
+      env.pollutionCrisisActive,
+      env.climateCrisisActive,
+      env.ecosystemCrisisActive,
+      social.meaningCollapseActive,
+      social.socialUnrestActive,
+      social.institutionalFailureActive,
+      tech.controlLossActive,
+      tech.corporateDystopiaActive,
+    ].filter(Boolean).length;
+
     if (crisisCount > 2) {
       opinion -= 0.04 * crisisCount;
     }
