@@ -16,6 +16,10 @@ async function generateSnapshot() {
   const seed = Date.now()
   const initialState = createDefaultInitialState(seed, 'default')
 
+  // CRITICAL: Deep copy initial state BEFORE simulation mutates it
+  // The engine mutates state in place, so we need to preserve a snapshot
+  const initialSnapshot = structuredClone(initialState)
+
   // Run simulation for 60 months to generate some interesting state
   const maxMonths = 60
   console.log(`Running simulation for ${maxMonths} months...`)
@@ -31,14 +35,17 @@ async function generateSnapshot() {
     run: 99999, // Special run ID for dashboard snapshot
     seed,
     totalMonths: result.finalState.currentMonth,
-    outcome: result.outcome || 'running',
-    outcomeReason: result.outcomeReason || 'Still running',
+    outcome: result.summary?.finalOutcome || 'running',
+    outcomeReason: result.summary?.finalOutcomeReason || 'Still running',
     scenarioMode: 'default',
     scenarioDescription: 'Dashboard snapshot - 60 month simulation',
     events: [],
     criticalEvents: [],
     paradigmTrajectory: [],
-    snapshots: result.log.snapshots || [] // Include state snapshots
+    snapshots: [
+      initialSnapshot, // Initial state (preserved copy)
+      result.finalState // Final state
+    ]
   }
 
   // Save to monteCarloOutputs
