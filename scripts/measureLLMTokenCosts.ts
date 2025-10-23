@@ -404,7 +404,7 @@ async function runDryRun(maxMonths: number, seed: number): Promise<void> {
         utilityWeightsTokens: utilityTokens,
         aiAgentCount: state.aiAgents.length,
         crisisCount: Object.values(state.crises || {}).filter((c: any) => c.isActive).length,
-        techCount: state.breakthroughTechnologies.filter((t: any) => t.isDeployed).length,
+        techCount: state.techTreeState.unlockedTech?.length || 0,
       };
 
       measurements.push(measurement);

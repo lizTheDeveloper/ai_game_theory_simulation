@@ -47,7 +47,7 @@ for (let month = 1; month <= 120; month++) {
   // Log at checkpoints
   if (checkpointIndex < checkpoints.length && month === checkpoints[checkpointIndex]) {
     const population = state.humanPopulationSystem.population;
-    const deaths = state.humanPopulationSystem.totalDeaths;
+    const deaths = state.humanPopulationSystem.cumulativeCrisisDeaths;
     const winterDeaths = winter.totalWinterDeaths;
 
     console.log(`\nMonth ${month} (${(month / 12).toFixed(1)} years):`);

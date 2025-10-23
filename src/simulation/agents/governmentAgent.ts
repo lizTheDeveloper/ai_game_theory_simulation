@@ -1752,18 +1752,19 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     energyCost: 10,
     
     canExecute: (state) => {
-      if (!state.breakthroughTech || state.government.resources < 10) return false;
-      
-      // Check if any environmental tech is unlocked but <50% deployed
+      if (!state.techTreeState || state.government.resources < 10) return false;
+
+      // Check if any environmental tech is unlocked but not completed
       const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
-      const needsDeployment = envTechs.some(techKey => {
-        const tech = state.breakthroughTech[techKey];
-        return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+      const unlockedSet = new Set(state.techTreeState.unlockedTech || []);
+      const needsDeployment = envTechs.some(techId => {
+        const tech = state.technologyTree?.find(t => t.id === techId);
+        return tech && unlockedSet.has(techId) && !tech.completed;
       });
-      
+
       // Also check if ecosystem crisis is active
       const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive;
-      
+
       return needsDeployment && ecosystemCrisis;
     },
     
@@ -1781,9 +1782,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       // Count how many techs will benefit
       const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
-      const benefitingTechs = envTechs.filter(techKey => {
-        const tech = state.breakthroughTech[techKey];
-        return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+      const unlockedSet = new Set(state.techTreeState?.unlockedTech || []);
+      const benefitingTechs = envTechs.filter(techId => {
+        const tech = state.technologyTree?.find(t => t.id === techId);
+        return tech && unlockedSet.has(techId) && !tech.completed;
       });
       
       // Cost

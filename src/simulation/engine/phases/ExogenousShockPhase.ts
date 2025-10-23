@@ -195,12 +195,12 @@ function applyAGIBreakthroughShock(state: GameState, rng: RNGFunction): GameEven
   let unlockedCount = 0;
 
   // Unlock all breakthrough technologies
-  if (state.breakthroughTech) {
-    // BreakthroughTechState has individual properties for each tech, not a technologies array
-    Object.values(state.breakthroughTech).forEach((tech: any) => {
-      if (tech && typeof tech === 'object' && 'unlocked' in tech && !tech.unlocked) {
-        tech.unlocked = true;
-        tech.deploymentLevel = 0.5; // 50% deployed instantly
+  if (state.techTreeState && state.technologyTree) {
+    const unlockedSet = new Set(state.techTreeState.unlockedTech || []);
+    state.technologyTree.forEach(tech => {
+      if (!unlockedSet.has(tech.id)) {
+        state.techTreeState.unlockedTech.push(tech.id);
+        tech.completed = true; // Mark as completed/deployed
         unlockedCount++;
         console.log(`      ✓ ${tech.name || 'Technology'} unlocked`);
       }
@@ -460,13 +460,12 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
  * Historical: 4 transformative breakthroughs (transistor, IC, internet, transformers)
  */
 function applyTechBreakthroughShock(state: GameState, rng: RNGFunction): GameEvent[] {
-  // Find locked TIER 2-3 technologies
-  const candidateTechs = state.breakthroughTech ?
-    Object.values(state.breakthroughTech).filter((tech: any) =>
-      tech && typeof tech === 'object' &&
-      'unlocked' in tech &&
-      !tech.unlocked &&
-      (tech.tier === 2 || tech.tier === 3)
+  // Find locked high-difficulty technologies
+  const unlockedSet = new Set(state.techTreeState?.unlockedTech || []);
+  const candidateTechs = state.technologyTree ?
+    state.technologyTree.filter(tech =>
+      !unlockedSet.has(tech.id) &&
+      (tech.difficulty === 'high' || tech.difficulty === 'very_high')
     ) : [];
 
   if (candidateTechs.length === 0) {

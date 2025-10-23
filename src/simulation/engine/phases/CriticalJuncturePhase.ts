@@ -206,8 +206,7 @@ export function attemptEscape(
   const activeCrises = countActiveCrises(state);
   const qol = state.globalMetrics.qualityOfLife;
   // Count deployed breakthrough technologies
-  const unlockedTech = state.breakthroughTech ?
-    Object.values(state.breakthroughTech).filter(tech => tech && typeof tech === 'object' && tech.deployed === true).length : 0;
+  const unlockedTech = state.technologyTree ? state.technologyTree.filter(tech => tech.completed).length : 0;
 
   let escapeType: 'prevent_war' | 'enable_cooperation' | 'recover_from_crisis' | 'unlock_breakthrough';
 

@@ -277,15 +277,16 @@ function processGreenTechTransfer(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
 
   // Check if relevant breakthrough techs are unlocked
-  const breakthroughTech = state.breakthroughTech;
-  if (!breakthroughTech) return;
+  const techTreeState = state.techTreeState;
+  if (!techTreeState) return;
 
   // Count unlocked green technologies
+  const unlockedSet = new Set(techTreeState.unlockedTech || []);
   const greenTechUnlocked =
-    (breakthroughTech.cleanEnergy?.unlocked ? 1 : 0) +
-    (breakthroughTech.carbonCapture?.unlocked ? 1 : 0) +
-    (breakthroughTech.sustainableAgriculture?.unlocked ? 1 : 0) +
-    (breakthroughTech.ecosystemManagement?.unlocked ? 1 : 0);
+    (unlockedSet.has('cleanEnergy') ? 1 : 0) +
+    (unlockedSet.has('carbonCapture') ? 1 : 0) +
+    (unlockedSet.has('sustainableAgriculture') ? 1 : 0) +
+    (unlockedSet.has('ecosystemManagement') ? 1 : 0);
 
   if (greenTechUnlocked === 0) return;
 

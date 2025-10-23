@@ -39,15 +39,16 @@ export async function GET(_request: NextRequest) {
         throw new ApiError(404, 'Game state not found');
       }
 
-      // Get all 71 technologies from breakthrough tech system
+      // Get all technologies from tech tree
+      const unlockedTechs = new Set(state.techTreeState.unlockedTech || []);
       const technologies: TechnologySummary[] =
-        state.breakthroughTechnologies?.technologies?.map(tech => ({
+        state.technologyTree?.map(tech => ({
           id: tech.id,
           name: tech.name,
-          tier: tech.tier as any,
-          unlocked: tech.unlocked || false,
-          deployed: tech.deployed || false,
-          globalDeployment: tech.globalDeployment || 0,
+          tier: 0 as any, // Tech tree doesn't use tiers, using 0 as placeholder
+          unlocked: unlockedTechs.has(tech.id),
+          deployed: tech.completed || false,
+          globalDeployment: tech.completed ? 1.0 : 0,
           prerequisites: tech.prerequisites || [],
           effects: tech.effects || [],
         })) || [];

@@ -41,10 +41,12 @@ const BREAKTHROUGHS: Breakthrough[] = [
     prerequisites: ['cleanEnergy', 'advancedMaterials'],
     effects: (state) => {
       // Unlock fusion technology immediately
-      const fusionTech = state.breakthroughTech.fusionPower;
-      if (fusionTech) {
-        fusionTech.unlocked = true;
-        fusionTech.deploymentLevel = 0.05; // 5% immediate deployment
+      const fusionTech = state.technologyTree?.find(t => t.id === 'fusionPower');
+      if (fusionTech && state.techTreeState) {
+        if (!state.techTreeState.unlockedTech.includes('fusionPower')) {
+          state.techTreeState.unlockedTech.push('fusionPower');
+        }
+        fusionTech.progress = 0.05; // 5% immediate progress
       }
 
       // Climate benefit: Huge emissions reduction
@@ -204,10 +206,9 @@ export class StochasticInnovationPhase implements SimulationPhase {
 
         // Check prerequisites: If related tech unlocked, 5x more likely
         if (bt.prerequisites) {
+          const unlockedSet = new Set(state.techTreeState?.unlockedTech || []);
           const hasPrereqs = bt.prerequisites.some(prereq => {
-            // Check if prerequisite tech exists in breakthrough tech system
-            const techKey = prereq as keyof typeof state.breakthroughTech;
-            return state.breakthroughTech?.[techKey]?.unlocked;
+            return unlockedSet.has(prereq);
           });
 
           if (hasPrereqs) {

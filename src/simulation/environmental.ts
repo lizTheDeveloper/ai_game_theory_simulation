@@ -103,11 +103,8 @@ export function updateEnvironmentalAccumulation(
   if (hasNanotech) resourceDepletionRate *= 0.25; // Additional 75% reduction (molecular manufacturing)
   
   // Mitigation from breakthrough technologies (Phase 2A)
-  if (state.breakthroughTech) {
-    const { getResourceEfficiencyMultiplier } = require('./breakthroughTechnologies');
-    const efficiencyMultiplier = getResourceEfficiencyMultiplier(state);
-    resourceDepletionRate *= efficiencyMultiplier;
-  }
+  // NOTE: Resource efficiency now handled by TechTreePhase regional effects
+  // No additional multiplier needed here
   
   // Apply depletion
   const currentReserves = isNaN(env.resourceReserves) ? 1.0 : env.resourceReserves;
@@ -116,45 +113,11 @@ export function updateEnvironmentalAccumulation(
   // === RESOURCE REGENERATION (Phase 2.8) ===
   // Tech-enabled recovery: Circular economy, sustainable agriculture, clean energy
   // Research basis: Ellen MacArthur Foundation (2015), Tilton (2003)
+  // NOTE: Now handled by TechTreePhase regional effects
   let resourceRegeneration = 0;
   
-  const tech = state.breakthroughTech;
-  
-  // AI coordination bonus
-  // HONEST: No solid empirical data on AI coordination gains. Consulting firms overstate.
-  // Conservative estimate: AI helps with logistics, waste reduction, monitoring
-  const avgCapability = state.aiAgents.length > 0 
-    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length 
-    : 0;
-  const aiCoordinationBonus = 1 + (avgCapability * 0.1); // Up to 1.4x at AGI (10% per point)
-  // Rationale: AI optimizes routing, reduces waste, coordinates globally
-  // NOT magic: Physical recycling/farming still takes time
-  // Mark for validation when real-world data emerges
-
-  // Sustainable Agriculture: +1%/month at full deployment (food, biomass, water cycle)
-  if (tech.sustainableAgriculture?.unlocked) {
-    resourceRegeneration += 0.01 * (tech.sustainableAgriculture?.deploymentLevel ?? 0) * aiCoordinationBonus;
-  }
-
-  // Circular Economy (Advanced Recycling): +2%/month (metals, minerals, materials)
-  if (tech.advancedRecycling?.unlocked) {
-    resourceRegeneration += 0.02 * (tech.advancedRecycling?.deploymentLevel ?? 0) * aiCoordinationBonus;
-  }
-
-  // Clean Energy: +1.5%/month (replaces fossil fuel depletion with renewable flow)
-  if (tech.cleanEnergy?.unlocked) {
-    resourceRegeneration += 0.015 * (tech.cleanEnergy?.deploymentLevel ?? 0) * aiCoordinationBonus;
-  }
-
-  // Ecosystem Management: +0.8%/month (biosphere restoration → resource flows)
-  if (tech.ecosystemManagement?.unlocked) {
-    resourceRegeneration += 0.008 * (tech.ecosystemManagement?.deploymentLevel ?? 0) * aiCoordinationBonus;
-  }
-
-  // Interspecies Communication: +0.5%/month (better habitat understanding → efficiency)
-  if (tech.interspeciesComm?.unlocked) {
-    resourceRegeneration += 0.005 * (tech.interspeciesComm?.deploymentLevel ?? 0) * aiCoordinationBonus;
-  }
+  // NOTE: Tech-based regeneration now calculated by TechTreePhase
+  // Old breakthrough tech system removed - tech tree handles all resource effects
   
   // Apply regeneration (can recover from 0%!)
   env.resourceReserves = Math.min(1.0, env.resourceReserves + resourceRegeneration);

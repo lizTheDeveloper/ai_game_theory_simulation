@@ -255,7 +255,7 @@ export function checkMediaLiteracyTechUnlock(
   }
   
   // Need research investment (education system)
-  const researchInvestment = state.breakthroughTech?.researchPriorities?.social || 0;
+  const researchInvestment = state.government.researchInvestments.social / 100; // Normalized to 0-1
   if (researchInvestment < 0.25) {
     return { unlocked: false, reason: 'Insufficient social research investment' };
   }

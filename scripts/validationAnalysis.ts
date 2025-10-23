@@ -468,7 +468,7 @@ function analyzeExtinctionProfile(
       .slice(0, 5);
 
     // Find extinction trigger
-    const extinctionEvent = criticalEvents.find(e =>
+    const extinctionEvent = criticalEvents.find((e: any) =>
       e.id?.includes('extinction') || e.type === 'extinction'
     );
     const extinctionTrigger = extinctionEvent?.title || extinctionEvent?.description || null;

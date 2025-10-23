@@ -116,7 +116,7 @@ async function testPlayerDecisions() {
 
   // Verify events were created
   console.log('\n--- Events Created ---');
-  const playerEvents = result3.events.filter(e => e.agentInvolved === 'player');
+  const playerEvents = result3.events.filter(e => e.agent === 'player');
   console.log(`  Player-triggered events: ${playerEvents.length}`);
   playerEvents.forEach(event => {
     console.log(`    - [${event.type}] ${event.title}`);
