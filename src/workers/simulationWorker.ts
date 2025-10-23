@@ -538,13 +538,14 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   if (state.novelEntitiesSystem?.crisis) activeCrisesCount++;
 
   // Government metrics
-  const governmentAIRegulation = (state.government.capabilityToControl || 0) / 10; // Normalize [0,10] to [0,1]
+  const governmentAIRegulation = state.government.capabilityToControl || 0; // [0,∞) Actual regulatory effectiveness
   const governmentInvestment = state.government.alignmentResearchInvestment || 0; // [0,10]
   const governmentComprehension = (state.government.oversightLevel || 0) / 10; // Normalize [0,10] to [0,1]
   const internationalCooperation = state.government.structuralChoices?.internationalCoordination ? 1 : 0;
 
   // Technology metrics
-  const deployedTechCount = state.techTreeState?.techDeployedCount || 0;
+  // Count deployed techs across all tiers
+  const deployedTechCount = state.techTreeState?.deployed ? Object.keys(state.techTreeState.deployed).length : 0;
   const techRiskLevel = state.technologicalRisk?.totalRisk || 0;
 
   // Upward spiral metrics
@@ -555,11 +556,11 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   // Outcome metrics
   const extinctionProbability = state.outcomeMetrics?.extinctionProbability || 0;
 
-  // Multi-Paradigm DUI
-  const westernLiberalIndex = state.multiParadigmDUI?.westernLiberal?.index || 0;
-  const developmentIndex = state.multiParadigmDUI?.development?.index || 0;
-  const ecologicalIndex = state.multiParadigmDUI?.ecological?.index || 0;
-  const indigenousIndex = state.multiParadigmDUI?.indigenous?.index || 0;
+  // Multi-Paradigm DUI - normalized to [0,1] from [0,100]
+  const westernLiberalIndex = (state.multiParadigmDUI?.westernLiberal?.overallScore || 0) / 100;
+  const developmentIndex = (state.multiParadigmDUI?.development?.overallScore || 0) / 100;
+  const ecologicalIndex = (state.multiParadigmDUI?.ecological?.overallScore || 0) / 100;
+  const indigenousIndex = (state.multiParadigmDUI?.indigenous?.overallScore || 0) / 100;
 
   return {
     currentMonth: state.currentMonth,
