@@ -191,7 +191,7 @@ function updateMeaningCrisis(country: CountryPopulation, state: GameState): void
   }
 
   // Meaning Renaissance reduces crisis (new sources of purpose)
-  if (state.meaningRenaissance.culturalRenaissance > 0.6) {
+  if (state.meaningRenaissance.artisticRenaissanceLevel > 0.6) {
     delta -= 0.003; // Purpose frameworks, community, creativity
   }
 
@@ -329,7 +329,7 @@ function updateParentalFulfillment(country: CountryPopulation, state: GameState)
   }
 
   // Meaning Renaissance provides alternative purpose
-  if (state.meaningRenaissance.culturalRenaissance > 0.7) {
+  if (state.meaningRenaissance.artisticRenaissanceLevel > 0.7) {
     delta += 0.01; // Community building, creativity, education
   }
 

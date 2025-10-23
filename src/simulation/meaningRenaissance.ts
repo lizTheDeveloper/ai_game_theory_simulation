@@ -120,8 +120,9 @@ function updatePurposeDiversity(
 ): void {
   // Community pathways: Care work, volunteering, civic engagement
   const governanceEngagement = state.government.governanceQuality.participationRate;
-  const socialCohesion = state.socialAccumulation.socialCohesion;
-  meaning.communityPathways += (governanceEngagement * 0.01 + socialCohesion * 0.008) * 0.5;
+  // Use community bonds (most relevant to community pathways) on 0-1 scale
+  const communityBonds = state.socialAccumulation.socialCohesion.communityBonds / 100;
+  meaning.communityPathways += (governanceEngagement * 0.01 + communityBonds * 0.008) * 0.5;
   
   // Creative pathways: Art, music, writing valued (not just monetized)
   const culturalVitality = qol.culturalVitality || 0.5;
@@ -176,9 +177,10 @@ function updateSelfActualization(
   meaning.timeForGrowth += (freeTime ? 0.015 : -0.005);
   
   // Mentoring availability: AI + human guidance networks
-  const socialCohesion = state.socialAccumulation.socialCohesion;
+  // Use trust (most relevant to mentoring relationships) on 0-1 scale
+  const trust = state.socialAccumulation.socialCohesion.trust / 100;
   const aiMentoring = aiCapability > 2.0 ? 0.01 : 0;
-  meaning.mentoringAvailability += (socialCohesion * 0.008 + aiMentoring);
+  meaning.mentoringAvailability += (trust * 0.008 + aiMentoring);
   
   // Self-actualization rate: Combination of access, time, support
   meaning.selfActualizationRate = (

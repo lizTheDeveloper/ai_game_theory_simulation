@@ -399,10 +399,10 @@ export function calculateRegionalInequality(
   if (social.socialUnrestActive) crisisAffectedPopulation += 0.20;
 
   // Refugees are definitely crisis-affected
-  if (refugees && refugees.activeCrises) {
-    const refugeePopulation = Object.values(refugees.activeCrises)
-      .reduce((sum, crisis) => sum + crisis.totalFled, 0);
-    crisisAffectedPopulation += (refugeePopulation / 1000) / pop.population; // millions to billions
+  if (refugees && refugees.totalDisplaced > 0) {
+    // totalDisplaced is in millions, convert to billions for population fraction
+    const refugeePopulationBillions = refugees.totalDisplaced / 1000;
+    crisisAffectedPopulation += refugeePopulationBillions / pop.population;
   }
 
   // Cap at 100%

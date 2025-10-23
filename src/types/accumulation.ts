@@ -64,6 +64,20 @@ export interface EnvironmentalAccumulation {
  * High QoL can mask eroding social fabric and meaning crisis.
  * UBI provides material security but doesn't solve work-identity collapse or institutional lag.
  */
+/**
+ * Social Cohesion Components (Multi-Paradigm DUI Phase 4-6)
+ *
+ * Decomposed into three indicators used across paradigm calculations:
+ * - trust: Indigenous paradigm (40% weight)
+ * - communityBonds: Indigenous paradigm (40% weight)
+ * - civilLiberties: Western Liberal paradigm (30% weight)
+ */
+export interface SocialCohesionState {
+  trust: number;            // [0, 100] Social trust (Indigenous)
+  communityBonds: number;   // [0, 100] Community bonds, mutual aid (Indigenous)
+  civilLiberties: number;   // [0, 100] Civil liberties, freedoms (Western Liberal)
+}
+
 export interface SocialAccumulation {
   // Meaning crisis (starts low, rises with automation)
   meaningCrisisLevel: number;        // [0, 1] Work-identity collapse, existential despair
@@ -71,8 +85,8 @@ export interface SocialAccumulation {
   // Institutional legitimacy (starts high, erodes without adaptation)
   institutionalLegitimacy: number;   // [0, 1] Government effectiveness, public trust
 
-  // Social cohesion (starts moderate, depletes with inequality/isolation)
-  socialCohesion: number;            // [0, 1] Community bonds, mutual aid, solidarity
+  // Social cohesion (now object with three components for Multi-Paradigm DUI)
+  socialCohesion: SocialCohesionState;
 
   // Cultural adaptation (starts low, improves slowly)
   culturalAdaptation: number;        // [0, 1] New meaning frameworks, post-work culture

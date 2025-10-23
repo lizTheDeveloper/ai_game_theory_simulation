@@ -264,11 +264,20 @@ export function attemptEscape(
     escapeType = 'recover_from_crisis';
 
     // Leipzig 1989-style cascade: Hidden opposition becomes visible
-    // Increase social cohesion, reduce meaning crisis
+    // Increase social cohesion components, reduce meaning crisis
     if (state.socialAccumulation) {
-      state.socialAccumulation.socialCohesion = Math.min(
-        1.0,
-        state.socialAccumulation.socialCohesion + 0.2
+      // Boost all three social cohesion components (popular uprising builds solidarity)
+      state.socialAccumulation.socialCohesion.trust = Math.min(
+        100,
+        state.socialAccumulation.socialCohesion.trust + 20
+      );
+      state.socialAccumulation.socialCohesion.communityBonds = Math.min(
+        100,
+        state.socialAccumulation.socialCohesion.communityBonds + 20
+      );
+      state.socialAccumulation.socialCohesion.civilLiberties = Math.min(
+        100,
+        state.socialAccumulation.socialCohesion.civilLiberties + 20
       );
       state.socialAccumulation.meaningCrisisLevel = Math.max(
         0,

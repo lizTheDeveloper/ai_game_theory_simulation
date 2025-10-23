@@ -56,7 +56,16 @@
       "Bash(for dir in dashboard ai-agents paradigms crises environment tech-tree detection regions timeline)",
       "Bash(do if [ -d \"$dir\" ])",
       "Bash(then echo \"Moving $dir\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "mcp__playwright__browser_close",
+      "Bash(npm run dev:*)",
+      "Read(///**)",
+      "Bash(src/simulation/breakthroughTechnologies.ts )",
+      "Bash(src/simulation/engine/phases/TechnologyBreakthroughsPhase.ts )",
+      "Bash(scripts/testBreakthroughTech.ts )",
+      "Bash(scripts/testEmergencyDeployment.ts )",
+      "Bash(scripts/testTechnologyDiffusion.ts )",
+      "Bash(scripts/migrateTechTreeReferences.ts)"
     ],
     "deny": [],
     "ask": []

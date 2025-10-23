@@ -18,7 +18,7 @@ console.log('\n=== FOOD SECURITY DEBUG RUN ===\n');
 const initialState = createDefaultInitialState();
 const seed = 42000;
 console.log(`Seed: ${seed}`);
-console.log(`Starting food security: ${(initialState.survivalFundamentals?.foodSecurity ?? 0).toFixed(3)}`);
+console.log(`Starting food security: ${(initialState.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0).toFixed(3)}`);
 console.log(`Starting population: ${initialState.humanPopulationSystem.population.toFixed(3)}B\n`);
 
 const engine = new SimulationEngine({ seed, maxMonths: 120 });
@@ -67,6 +67,6 @@ const result = engine.run(initialState, { maxMonths: 120, checkActualOutcomes: f
 
 console.log('\n=== DEBUG RUN COMPLETE ===\n');
 console.log(`Final month: ${monthCounter}`);
-console.log(`Outcome: ${result.finalState.extinctionState.extinct ? 'EXTINCTION' : result.finalState.outcomeState?.type || 'IN PROGRESS'}`);
-console.log(`Final food security: ${(result.finalState.survivalFundamentals?.foodSecurity ?? 0).toFixed(3)}`);
+console.log(`Outcome: ${result.finalState.extinctionState.extinct ? 'EXTINCTION' : result.finalState.outcomeMetrics?.activeAttractor || 'IN PROGRESS'}`);
+console.log(`Final food security: ${(result.finalState.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0).toFixed(3)}`);
 console.log(`Final population: ${result.finalState.humanPopulationSystem.population.toFixed(3)}B`);

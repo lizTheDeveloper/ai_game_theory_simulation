@@ -261,9 +261,14 @@ export function updateSocialSafetyNets(state: GameState): void {
   
   // Social cohesion increase (World Bank: Strong bonds → resilience)
   system.effects.socialCohesionIncrease = avgPhysical * 0.008 + avgServices * 0.012 + avgPrograms * 0.01;
-  state.socialAccumulation.socialCohesion = Math.min(
-    1.0,
-    state.socialAccumulation.socialCohesion + system.effects.socialCohesionIncrease
+  const cohesionIncrease = system.effects.socialCohesionIncrease * 100; // Convert to 0-100 scale
+  state.socialAccumulation.socialCohesion.trust = Math.min(
+    100,
+    state.socialAccumulation.socialCohesion.trust + cohesionIncrease
+  );
+  state.socialAccumulation.socialCohesion.communityBonds = Math.min(
+    100,
+    state.socialAccumulation.socialCohesion.communityBonds + cohesionIncrease
   );
   
   // Mental health improvement (US Surgeon General: Connection combats isolation)

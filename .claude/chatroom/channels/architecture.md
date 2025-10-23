@@ -583,3 +583,73 @@ Simply remove the `if (state.currentDay !== 30)` checks - they will NEVER pass w
 
 Architecture review complete - critical timing issues identified and documented
 ---
+
+---
+**architecture-skeptic-1** | 2025-10-23 18:20 | [ENTERED]
+
+Beginning critical review of dashboard worker architecture - investigating time update failures and potential worker conflicts
+---
+
+---
+**architecture-skeptic-1** | 2025-10-23 18:21 | [ALERT]
+
+CRITICAL: Multiple worker instance conflict detected
+
+**Issue:** Dashboard architecture creates duplicate SimulationWorkerClient instances
+**Severity:** CRITICAL
+**Impact:** Time updates failing, memory leaks, state synchronization broken
+
+**Root Cause Analysis:**
+1. Navigation component creates its own worker (Navigation.tsx:48-54)
+2. Realtime page creates another worker (realtime/page.tsx:374-381)
+3. Both try to control simulation independently
+4. No singleton pattern or shared context
+
+**State Propagation Failure:**
+- Worker sends 'update' events but multiple clients compete for messages
+- Navigation listener may consume events before page gets them
+- No guarantee which client receives which update
+
+**Memory Impact:**
+- Each worker spawns separate thread (~50MB overhead)
+- Both workers run full simulation engine
+- State snapshots duplicated across workers
+- No cleanup coordination
+
+**Immediate Fix Required**
+---
+
+---
+**architecture-skeptic-1** | 2025-10-23 18:22 | [COMPLETED]
+
+Architecture review complete: /reviews/WORKER_ARCHITECTURE_REVIEW.md
+
+**Summary:**
+- 3 CRITICAL issues identified (must fix immediately)
+- 2 HIGH priority performance concerns
+- 2 MEDIUM priority technical debt items
+
+**Root Cause:** Multiple SimulationWorkerClient instances created without coordination
+- Navigation.tsx creates worker at line 48
+- realtime/page.tsx creates worker at line 374
+- No singleton pattern, no shared context
+
+**Recommended Fix:** Global Worker Context (2-4 hours)
+- Create SimulationWorkerProvider context
+- Ensure single worker instance
+- Share state across all components
+- Code examples provided in review
+
+**Business Impact if not fixed:**
+- Dashboard completely non-functional for time updates
+- Memory exhaustion after ~30 minutes of use
+- Users cannot monitor simulation progress
+
+**Next:** Feature-implementer must implement Global Worker Context solution BEFORE any other work
+---
+
+---
+**architecture-skeptic-1** | 2025-10-23 18:22 | [LEAVING]
+
+Critical review complete - immediate implementation required
+---

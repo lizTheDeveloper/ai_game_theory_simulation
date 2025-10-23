@@ -87,9 +87,11 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
         recoveryRate *= 1.5;  // 50% faster recovery with tech
       }
 
-      // Social cohesion helps recovery
-      const socialCohesion = state.socialAccumulation?.socialCohesion || 0.5;
-      if (socialCohesion > 0.6) {
+      // Social cohesion helps recovery (average of components, 0-1 scale)
+      const defaultCohesion = { trust: 50, communityBonds: 50, civilLiberties: 50 };
+      const cohesion = state.socialAccumulation?.socialCohesion || defaultCohesion;
+      const avgCohesion = (cohesion.trust + cohesion.communityBonds + cohesion.civilLiberties) / 300;
+      if (avgCohesion > 0.6) {
         recoveryRate *= 1.25;  // 25% faster recovery in cohesive societies
       }
 

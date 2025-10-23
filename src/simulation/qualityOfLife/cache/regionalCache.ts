@@ -39,9 +39,25 @@ export function buildRegionalCache(state: GameState): RegionalCache {
   const regionsByName = new Map<RegionalData['name'], RegionalData>();
   let totalPopulation = 0;
 
-  // TODO: Regional population tracking not yet implemented
-  // state.regionalPopulations doesn't exist in GameState
-  // Return empty cache for now - regional QoL calculations will use fallbacks
+  // Regional populations are on HumanPopulationSystem
+  const regionalPops = state.humanPopulationSystem.regionalPopulations;
+
+  if (regionalPops && regionalPops.length > 0) {
+    for (const region of regionalPops) {
+      // Map RegionalPopulation to RegionalData for cache
+      regionsByName.set(region.name, {
+        name: region.name,
+        population: region.population,
+        freshwaterStress: region.climateVulnerability, // Proxy: climate vulnerability correlates with water stress
+        droughtAffected: region.climateVulnerability > 0.6, // High climate vulnerability = drought risk
+        resourceVulnerability: region.resourceVulnerability,
+        refugeesHosted: region.refugeeBurden,
+        conflictRisk: region.conflictRisk,
+        populationStress: region.populationPressure,
+      });
+      totalPopulation += region.population;
+    }
+  }
 
   return {
     regionsByName,

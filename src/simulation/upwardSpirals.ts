@@ -485,11 +485,12 @@ function applyVirtuousCascadeEffects(state: GameState, strength: number): void {
     qol.materialAbundance = Math.min(2.0, qol.materialAbundance * (1 + boost * 0.1));
   }
   
-  // Boost social cohesion recovery
+  // Boost social cohesion recovery (all components)
   const social = state.socialAccumulation;
-  if (social.socialCohesion < 1.0) {
-    social.socialCohesion = Math.min(1.0, social.socialCohesion + boost * 0.01);
-  }
+  const cohesionBoost = boost * 1; // Convert to 0-100 scale (boost * 0.01 * 100)
+  social.socialCohesion.trust = Math.min(100, social.socialCohesion.trust + cohesionBoost);
+  social.socialCohesion.communityBonds = Math.min(100, social.socialCohesion.communityBonds + cohesionBoost);
+  social.socialCohesion.civilLiberties = Math.min(100, social.socialCohesion.civilLiberties + cohesionBoost);
   
   // Note: Main effects should be "spirals make each other easier to maintain"
   // rather than direct QoL boosts (that's already modeled in the spirals themselves)

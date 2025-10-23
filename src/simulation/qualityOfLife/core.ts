@@ -79,7 +79,7 @@ export function updateQualityOfLifeSystems(
   }
 
   // Food security penalty
-  const foodSecurity = state.survivalFundamentals?.foodSecurity ?? 0.7;
+  const foodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0.7;
   if (foodSecurity < 0.7) {
     const foodPenalty = calculateFoodSecurityPenalty(foodSecurity);
     materialAbundance -= foodPenalty;
@@ -306,7 +306,11 @@ export function updateQualityOfLifeSystems(
     }
 
     if (state.socialAccumulation && state.socialAccumulation.socialCohesion !== undefined) {
-      state.socialAccumulation.socialCohesion *= (1 - traumaErosion * 0.5);
+      // Trauma erodes all social cohesion components
+      const erosionFactor = 1 - traumaErosion * 0.5;
+      state.socialAccumulation.socialCohesion.trust *= erosionFactor;
+      state.socialAccumulation.socialCohesion.communityBonds *= erosionFactor;
+      state.socialAccumulation.socialCohesion.civilLiberties *= erosionFactor;
     }
   }
 
@@ -315,7 +319,7 @@ export function updateQualityOfLifeSystems(
 
   // CRITICAL FIX (Oct 13, 2025): Assign survivalFundamentals to state!
   // BUG: Was calculated but never assigned → famines never trigger!
-  state.survivalFundamentals = survivalFundamentals;
+  state.qualityOfLifeSystems.survivalFundamentals = survivalFundamentals;
 
   // === DISTRIBUTION METRICS ===
   const distribution = calculateDistributionMetrics(

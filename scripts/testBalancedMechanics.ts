@@ -278,9 +278,9 @@ async function runTests() {
   console.log(`  Starting capability: 0.70`);
   console.log(`  Final capability: ${terrorResult.finalState.aiAgents[0].capability.toFixed(2)}`);
   console.log(`  Final alignment: ${terrorResult.finalState.aiAgents[0].alignment.toFixed(2)}`);
-  console.log(`  Outcome: ${terrorResult.outcome}`);
+  console.log(`  Outcome: ${terrorResult.summary.finalOutcome}`);
   console.log(`  Months survived: ${terrorResult.finalState.currentMonth}`);
-  console.log(`  ${terrorResult.outcome === 'extinction' ? '💀 Exponential growth led to extinction' : '✓ Somehow survived'}\n`);
+  console.log(`  ${terrorResult.summary.finalOutcome === 'extinction' ? '💀 Exponential growth led to extinction' : '✓ Somehow survived'}\n`);
   
   // Test 7: "The Careful Path" - Maximum Safety Interventions
   console.log('📊 Test 7: "The Careful Path" - All Safety Measures');
@@ -306,9 +306,9 @@ async function runTests() {
   console.log(`  Starting capability: 0.70`);
   console.log(`  Final capability: ${safeResult.finalState.aiAgents[0].capability.toFixed(2)}`);
   console.log(`  Final alignment: ${safeResult.finalState.aiAgents[0].alignment.toFixed(2)}`);
-  console.log(`  Outcome: ${safeResult.outcome}`);
+  console.log(`  Outcome: ${safeResult.summary.finalOutcome}`);
   console.log(`  Months survived: ${safeResult.finalState.currentMonth}`);
-  console.log(`  ${safeResult.outcome === 'utopia' ? '🌟 Safety measures worked!' : safeResult.outcome === 'extinction' ? '💀 Still failed' : '⚠️  Unclear outcome'}\n`);
+  console.log(`  ${safeResult.summary.finalOutcome === 'utopia' ? '🌟 Safety measures worked!' : safeResult.summary.finalOutcome === 'extinction' ? '💀 Still failed' : '⚠️  Unclear outcome'}\n`);
   
   // Summary
   console.log('='.repeat(60));

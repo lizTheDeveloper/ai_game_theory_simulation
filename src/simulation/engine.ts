@@ -24,7 +24,6 @@ import {
   updateSocialAccumulation,  // Phase 3: Social Cohesion
   updateTechnologicalRisk  // Phase 4: Technological Risk
 } from './calculations';
-import { updateBreakthroughTechnologies, checkCrisisResolution } from './breakthroughTechnologies'; // KEEPING: Used for compatibility checks
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
