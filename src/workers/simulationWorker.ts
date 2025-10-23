@@ -544,8 +544,19 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const internationalCooperation = state.government.structuralChoices?.internationalCoordination ? 1 : 0;
 
   // Technology metrics
-  // Count deployed techs across all tiers
-  const deployedTechCount = state.techTreeState?.deployed ? Object.keys(state.techTreeState.deployed).length : 0;
+  // Count deployed techs across all regions
+  let deployedTechCount = 0;
+  if (state.techTreeState?.regionalDeployment) {
+    const deployedTechIds = new Set<string>();
+    Object.values(state.techTreeState.regionalDeployment).forEach(regionDeployments => {
+      regionDeployments?.forEach(deployment => {
+        if (deployment.deploymentLevel > 0) {
+          deployedTechIds.add(deployment.techId);
+        }
+      });
+    });
+    deployedTechCount = deployedTechIds.size;
+  }
   const techRiskLevel = state.technologicalRisk?.totalRisk || 0;
 
   // Upward spiral metrics
@@ -557,10 +568,10 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const extinctionProbability = state.outcomeMetrics?.extinctionProbability || 0;
 
   // Multi-Paradigm DUI - normalized to [0,1] from [0,100]
-  const westernLiberalIndex = (state.multiParadigmDUI?.westernLiberal?.overallScore || 0) / 100;
-  const developmentIndex = (state.multiParadigmDUI?.development?.overallScore || 0) / 100;
-  const ecologicalIndex = (state.multiParadigmDUI?.ecological?.overallScore || 0) / 100;
-  const indigenousIndex = (state.multiParadigmDUI?.indigenous?.overallScore || 0) / 100;
+  const westernLiberalIndex = (state.multiParadigmDUI?.paradigmScores?.westernLiberal?.value || 0) / 100;
+  const developmentIndex = (state.multiParadigmDUI?.paradigmScores?.development?.value || 0) / 100;
+  const ecologicalIndex = (state.multiParadigmDUI?.paradigmScores?.ecological?.value || 0) / 100;
+  const indigenousIndex = (state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value || 0) / 100;
 
   return {
     currentMonth: state.currentMonth,
