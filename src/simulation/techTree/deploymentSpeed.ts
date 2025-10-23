@@ -155,7 +155,7 @@ export function getCrisisSeverity(gameState: GameState): keyof typeof CRISIS_ACC
   if (hasSevereCrisis) return 'severe';
 
   // Check for moderate crises
-  const hasModerate Crisis = (
+  const hasModerateCrisis = (
     gameState.crisisDetected?.severity > 0.4 ||
     (gameState.globalMetrics?.qualityOfLife < 0.5)
   );

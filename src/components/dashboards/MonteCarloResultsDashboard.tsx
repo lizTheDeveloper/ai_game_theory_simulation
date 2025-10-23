@@ -194,7 +194,7 @@ export function MonteCarloResultsDashboard() {
           </div>
 
           <div>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Early Extinction (<50mo)</div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Early Extinction {'(<'}50mo)</div>
             <div className="text-3xl font-light" style={{ color: 'var(--color-red)' }}>
               {stats.earlyExtinctionRate?.toFixed(1) || 0}%
             </div>
@@ -204,7 +204,7 @@ export function MonteCarloResultsDashboard() {
           </div>
 
           <div>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Long-Term Stable (>200mo)</div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Long-Term Stable {`(>`}200mo)</div>
             <div className="text-3xl font-light" style={{ color: 'var(--color-green)' }}>
               {stats.longTermStableRate?.toFixed(1) || 0}%
             </div>

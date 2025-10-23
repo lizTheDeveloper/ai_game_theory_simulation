@@ -367,7 +367,7 @@ interface RunResult {
   mechanismSummary?: {
     levyFlightCluster: boolean;           // 8+ breakthroughs in <20 months
     exogenousPositiveShock: boolean;      // Black/gray swan tech
-    ubiFlo orPersistent: boolean;          // UBI >35% maintained
+    ubiFloorPersistent: boolean;          // UBI >35% maintained
     breakthroughCompounding: number;       // Final compounding level
     earlySpiralActivation: boolean;        // Spiral before Month 60
     breakthroughDrought: boolean;          // 0-2 breakthroughs for >30 months
