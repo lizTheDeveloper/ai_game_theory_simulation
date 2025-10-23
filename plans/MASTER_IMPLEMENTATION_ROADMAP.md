@@ -579,6 +579,68 @@
 
 ---
 
+## 🧹 CODE QUALITY & TODO CLEANUP
+
+### TODO Inventory & Completion (8-12 hours)
+
+**Status:** NEW (identified Oct 22, 2025)
+**Total TODOs:** ~32 across 16 files
+**Priority:** MEDIUM - Code quality, proper integration
+
+**Critical: GovernmentSystemAdapter.ts (15 TODOs) - 6-8 hours**
+- **File:** `src/simulation/government/GovernmentSystemAdapter.ts`
+- **Problem:** Adapter file is essentially a stub - interface exists but implementation deferred
+- **Note:** Actual government system (`src/simulation/government/core/`) is COMPLETE with 0 TODOs
+
+**TODOs to complete:**
+- Line 56-59: Load 30 governments from package data, initialize coalitions, election schedules, vote shares
+- Line 70: Implement `updateGovernments()` function (currently empty)
+- Line 113-115: AI event response logic (translate events to policy stimulus, government responses with comprehension lag)
+- Line 128-130: Environmental policy response (create stimulus, capacity-based responses, apply policies)
+- Line 143-146: International treaty negotiation (calculate support, form coalitions, threshold checks, apply effects)
+
+**Medium: AI Lifecycle Integration (2 TODOs) - 1-2 hours**
+- **File:** `src/simulation/lifecycle.ts`
+- Line 74: Factor government policy into deployment (ban_open_weights would shift distribution)
+- Line 205: Detection logic integration placeholder
+
+**Medium: Multi-Paradigm DUI Integration (2 TODOs) - 1-2 hours**
+- **File:** `src/data/aggregators/multiParadigmAggregator.ts`
+- Line 196: Link `hasGovernmentData` to government system (currently hardcoded false)
+- Line 435: Link social trust component to social cohesion system (currently 0)
+
+**Low: Single TODOs (13 files) - 2-4 hours**
+- `src/workers/simulationWorker.ts` - 1 TODO
+- `src/simulation/triggeredEvents.ts` - 1 TODO
+- `src/simulation/techTree/engine.ts` - 1 TODO
+- `src/simulation/organizationManagement.ts` - 1 TODO
+- `src/simulation/engine/phases/FamineSystemPhase.ts` - 1 TODO
+- `src/simulation/engine/phases/TriggeredEventsPhase.ts` - 1 TODO
+- `src/simulation/engine.ts` - 1 TODO
+- `src/simulation/diagnostics.ts` - 1 TODO
+- `src/simulation/catastrophicScenarios.ts` - 1 TODO
+- `src/simulation/breakthroughTechnologies.ts` - 1 TODO
+- `src/data/loaders/vdemLoader.ts` - 1 TODO
+- `src/components/tabs/TechnologyTab.tsx` - 1 TODO
+
+**Implementation Plan:**
+1. **Phase 1:** Review each TODO for current relevance (some may be obsolete)
+2. **Phase 2:** Implement GovernmentSystemAdapter completions OR remove adapter if not needed
+3. **Phase 3:** Complete lifecycle & multi-paradigm integrations
+4. **Phase 4:** Clean up single TODOs (implement or remove)
+5. **Phase 5:** Final codebase grep to verify all addressed
+
+**Expected Outcome:**
+- Zero TODO/FIXME/HACK/XXX/PLACEHOLDER/STUB comments (except intentional documentation)
+- All integration points properly connected
+- Government adapter either fully implemented or removed in favor of direct core usage
+
+**Files:**
+- All files listed above
+- Total effort: 10-16 hours (4-6h critical + 2-4h medium + 2-4h low + 2h review/cleanup)
+
+---
+
 ## 📊 LOW PRIORITY - ENRICHMENT FEATURES
 
 ### Priority 3 Enhancements (33-43h)

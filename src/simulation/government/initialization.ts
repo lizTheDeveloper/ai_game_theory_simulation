@@ -47,8 +47,9 @@ export function initializeGovernmentSystem(rng: RNGFunction): GovernmentSystemSt
   console.log(`  Loaded ${governments.size} governments`);
 
   // Initialize coalitions (only for multi-party parliamentary systems)
+  // NOTE: Coalition formation will be implemented when government-agents package Phase 5.4 is complete
+  // For now, coalitions form dynamically during elections via CoalitionFormation.ts
   const coalitions = new Map();
-  // TODO Phase 5.4: Initialize coalitions based on party data
 
   // Initialize election schedule
   const nextElections = new Map<string, number>();

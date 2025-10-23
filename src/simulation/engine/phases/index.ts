@@ -17,6 +17,7 @@ export { GovernmentActionsPhase } from './GovernmentActionsPhase';
 export { GovernmentElectionPhase } from './GovernmentElectionPhase';  // Oct 19, 2025: Government system elections
 export { GovernmentResponsePhase } from './GovernmentResponsePhase';  // Oct 19, 2025: Government system policy response
 export { SocietyActionsPhase } from './SocietyActionsPhase';
+export { PlayerDecisionPhase } from './PlayerDecisionPhase';  // Oct 22, 2025: Player decision injection
 export { ComputeAllocationPhase } from './ComputeAllocationPhase';
 export { ComputeGrowthPhase } from './ComputeGrowthPhase';
 export { OrganizationTurnsPhase } from './OrganizationTurnsPhase';

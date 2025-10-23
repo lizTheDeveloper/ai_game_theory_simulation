@@ -12,6 +12,9 @@ interface SparklineProps {
   showArea?: boolean;
   threshold?: number;
   thresholdColor?: string;
+  minValue?: number;  // Optional fixed min for Y-axis
+  maxValue?: number;  // Optional fixed max for Y-axis
+  maxDataPoints?: number;  // Max expected data points (for progressive reveal)
 }
 
 /**
@@ -27,7 +30,10 @@ export const Sparkline: React.FC<SparklineProps> = ({
   className = '',
   showArea = false,
   threshold,
-  thresholdColor = '#FF6B00'
+  thresholdColor = '#FF6B00',
+  minValue,
+  maxValue,
+  maxDataPoints
 }) => {
   const pathData = useMemo(() => {
     if (!data || data.length < 2) return '';
@@ -36,20 +42,26 @@ export const Sparkline: React.FC<SparklineProps> = ({
     const effectiveWidth = width - padding * 2;
     const effectiveHeight = height - padding * 2;
 
-    // Find min and max for scaling
-    const min = Math.min(...data);
-    const max = Math.max(...data);
+    // Use provided min/max or calculate from data
+    const min = minValue !== undefined ? minValue : Math.min(...data);
+    const max = maxValue !== undefined ? maxValue : Math.max(...data);
     const range = max - min || 1;
+
+    // Use maxDataPoints for X-axis if provided (for progressive reveal)
+    // Otherwise use data.length for normal auto-scaling behavior
+    const totalPoints = maxDataPoints !== undefined ? maxDataPoints : data.length;
+
+    console.log(`[Sparkline] data.length=${data.length}, maxDataPoints=${maxDataPoints}, totalPoints=${totalPoints}`);
 
     // Generate SVG path
     const points = data.map((value, index) => {
-      const x = padding + (index / (data.length - 1)) * effectiveWidth;
+      const x = padding + (index / (totalPoints - 1)) * effectiveWidth;
       const y = padding + effectiveHeight - ((value - min) / range) * effectiveHeight;
       return `${x},${y}`;
     });
 
     return `M ${points.join(' L ')}`;
-  }, [data, width, height]);
+  }, [data, width, height, minValue, maxValue, maxDataPoints]);
 
   const areaPath = useMemo(() => {
     if (!showArea || !data || data.length < 2) return '';
@@ -58,23 +70,27 @@ export const Sparkline: React.FC<SparklineProps> = ({
     const effectiveWidth = width - padding * 2;
     const effectiveHeight = height - padding * 2;
 
-    const min = Math.min(...data);
-    const max = Math.max(...data);
+    // Use provided min/max or calculate from data
+    const min = minValue !== undefined ? minValue : Math.min(...data);
+    const max = maxValue !== undefined ? maxValue : Math.max(...data);
     const range = max - min || 1;
 
+    // Use maxDataPoints for X-axis if provided
+    const totalPoints = maxDataPoints !== undefined ? maxDataPoints : data.length;
+
     const points = data.map((value, index) => {
-      const x = padding + (index / (data.length - 1)) * effectiveWidth;
+      const x = padding + (index / (totalPoints - 1)) * effectiveWidth;
       const y = padding + effectiveHeight - ((value - min) / range) * effectiveHeight;
       return `${x},${y}`;
     });
 
     // Close the path to create an area
     const firstX = padding;
-    const lastX = padding + effectiveWidth;
+    const lastX = points[points.length - 1].split(',')[0]; // Last point's X position
     const bottomY = padding + effectiveHeight;
 
     return `M ${firstX},${bottomY} L ${points.join(' L ')} L ${lastX},${bottomY} Z`;
-  }, [data, width, height, showArea]);
+  }, [data, width, height, showArea, minValue, maxValue, maxDataPoints]);
 
   const thresholdY = useMemo(() => {
     if (threshold === undefined || !data || data.length === 0) return null;
@@ -82,12 +98,13 @@ export const Sparkline: React.FC<SparklineProps> = ({
     const padding = 2;
     const effectiveHeight = height - padding * 2;
 
-    const min = Math.min(...data);
-    const max = Math.max(...data);
+    // Use provided min/max or calculate from data
+    const min = minValue !== undefined ? minValue : Math.min(...data);
+    const max = maxValue !== undefined ? maxValue : Math.max(...data);
     const range = max - min || 1;
 
     return padding + effectiveHeight - ((threshold - min) / range) * effectiveHeight;
-  }, [threshold, data, height]);
+  }, [threshold, data, height, minValue, maxValue]);
 
   if (!data || data.length < 2) {
     return (
@@ -141,22 +158,32 @@ export const Sparkline: React.FC<SparklineProps> = ({
       />
 
       {/* Current value indicator (last point) */}
-      {data.length > 0 && (
-        <circle
-          cx={width - 2}
-          cy={
-            2 + (height - 4) -
-            ((data[data.length - 1] - Math.min(...data)) /
-              (Math.max(...data) - Math.min(...data) || 1)) *
-              (height - 4)
-          }
-          r={2}
-          fill={color}
-          style={{
-            filter: `drop-shadow(0 0 4px ${color})`
-          }}
-        />
-      )}
+      {data.length > 0 && (() => {
+        const padding = 2;
+        const effectiveWidth = width - padding * 2;
+        const effectiveHeight = height - padding * 2;
+        const min = minValue !== undefined ? minValue : Math.min(...data);
+        const max = maxValue !== undefined ? maxValue : Math.max(...data);
+        const range = max - min || 1;
+        const totalPoints = maxDataPoints !== undefined ? maxDataPoints : data.length;
+        const lastIndex = data.length - 1;
+
+        // Calculate X position based on actual last index and maxDataPoints
+        const cx = padding + (lastIndex / (totalPoints - 1)) * effectiveWidth;
+        const cy = padding + effectiveHeight - ((data[lastIndex] - min) / range) * effectiveHeight;
+
+        return (
+          <circle
+            cx={cx}
+            cy={cy}
+            r={2}
+            fill={color}
+            style={{
+              filter: `drop-shadow(0 0 4px ${color})`
+            }}
+          />
+        );
+      })()}
     </svg>
   );
 };

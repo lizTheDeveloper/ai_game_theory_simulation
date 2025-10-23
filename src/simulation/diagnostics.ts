@@ -270,10 +270,10 @@ export class DiagnosticLogger {
       month,
       foodStock: foodBoundary.currentStock || 0,
       waterStock: boundaries.boundaries?.freshwater?.currentStock || 0,
-      energyStock: 0, // TODO: Add if available
+      energyStock: state.computeInfrastructure?.totalEnergyCapacity || 0,
       foodDepletion: foodBoundary.monthlyDepletion || 0,
       waterDepletion: boundaries.boundaries?.freshwater?.monthlyDepletion || 0,
-      energyDepletion: 0,
+      energyDepletion: state.computeInfrastructure?.energyConsumptionRate || 0,
       foodSecurity: env.foodSecurity || 0
     });
 

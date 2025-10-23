@@ -28,7 +28,8 @@ export class AILifecyclePhase implements SimulationPhase {
     // Import and execute existing lifecycle logic
     const { updateAIPopulation } = require('../../lifecycle');
 
-    updateAIPopulation(state);
+    // TIER 2 Phase 4: Pass RNG for deterministic detection during testing phase
+    updateAIPopulation(state, rng);
 
     // No events generated directly by lifecycle
     // (events come from breakthroughs detected later)

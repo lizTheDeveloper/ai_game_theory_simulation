@@ -583,9 +583,99 @@ function getTotalResearchInvestment(gameState: GameState): number {
   return gov + privateResearch;
 }
 
-function getEnergyMultiplier(_gameState: GameState): number {
-  // TODO: Implement energy constraints when power generation system is connected
-  return 1.0;
+/**
+ * Calculate energy multiplier based on available vs required power
+ *
+ * Research-backed: Energy bottlenecks delay tech deployment (IEA 2024, McKinsey 2024)
+ * - Available: Total grid capacity minus existing consumption
+ * - Required: Data center baseline + tech deployment energy needs
+ * - Multiplier: Fraction of available energy (capped 0.1-1.0)
+ *
+ * Low energy scenarios (< 0.3 multiplier) significantly slow tech progress,
+ * representing grid constraints, permitting delays, and infrastructure bottlenecks.
+ */
+function getEnergyMultiplier(gameState: GameState): number {
+  // Check if power generation system exists
+  if (!gameState.powerGenerationSystem) {
+    // Early game or test scenarios without power tracking
+    return 1.0;
+  }
+
+  const power = gameState.powerGenerationSystem;
+
+  // Available energy: Total grid capacity
+  const totalAvailable = power.totalElectricityGeneration; // TWh per month
+
+  // Current consumption: Data centers + traditional grid load
+  const dataCenterConsumption = power.dataCenterPower; // TWh per month
+
+  // Assume traditional grid load is ~80% of total capacity (leaves 20% headroom)
+  // This represents: residential, industrial, commercial, transport electrification
+  const traditionalLoad = totalAvailable * 0.80;
+
+  // Total current consumption
+  const currentConsumption = dataCenterConsumption + traditionalLoad;
+
+  // Available headroom for new tech deployment
+  const availableHeadroom = totalAvailable - currentConsumption;
+
+  // Estimate energy required for active tech deployment/research
+  // Tech deployment energy scales with:
+  // - Number of active deployments
+  // - Deployment speed (faster = more energy intensive)
+  const techTreeState = gameState.techTreeState;
+
+  // Count actively deploying technologies (not fully deployed)
+  let activeDeployments = 0;
+  for (const region in techTreeState.regionalDeployment) {
+    const deployments = techTreeState.regionalDeployment[region];
+    if (!deployments) continue;
+    for (const deployment of deployments) {
+      if (deployment.deploymentLevel < 1.0) {
+        activeDeployments++;
+      }
+    }
+  }
+
+  // Estimate energy requirement for tech deployment
+  // Baseline: Each active deployment requires ~5-10 TWh/month
+  // (Based on: Manufacturing, construction, AI compute for optimization, grid upgrades)
+  const energyPerDeployment = 7.5; // TWh per month per active tech
+  const requiredEnergy = activeDeployments * energyPerDeployment;
+
+  // If no active deployments, no constraint
+  if (requiredEnergy === 0) {
+    return 1.0;
+  }
+
+  // Calculate multiplier: fraction of required energy that's available
+  // If we have plenty of headroom, multiplier = 1.0 (no slowdown)
+  // If headroom is insufficient, multiplier < 1.0 (proportional slowdown)
+  const multiplier = availableHeadroom > 0
+    ? Math.min(1.0, availableHeadroom / requiredEnergy)
+    : 0.1; // Minimum 10% progress even with severe constraints
+
+  // Cap at minimum 0.1 (severe constraint) and maximum 1.0 (no constraint)
+  const finalMultiplier = Math.max(0.1, Math.min(1.0, multiplier));
+
+  // Log energy constraints when they're significant (< 0.8)
+  if (finalMultiplier < 0.8 && Math.random() < 0.05) {
+    console.log(`\n⚡ ENERGY CONSTRAINT (Month ${gameState.currentMonth}):`);
+    console.log(`   Total grid capacity: ${totalAvailable.toFixed(1)} TWh/month`);
+    console.log(`   Data center consumption: ${dataCenterConsumption.toFixed(1)} TWh/month`);
+    console.log(`   Traditional load (80%): ${traditionalLoad.toFixed(1)} TWh/month`);
+    console.log(`   Available headroom: ${availableHeadroom.toFixed(1)} TWh/month`);
+    console.log(`   Active tech deployments: ${activeDeployments}`);
+    console.log(`   Required for tech: ${requiredEnergy.toFixed(1)} TWh/month`);
+    console.log(`   Energy multiplier: ${finalMultiplier.toFixed(2)}x`);
+    if (finalMultiplier < 0.3) {
+      console.log(`   ⚠️  SEVERE CONSTRAINT - Tech deployment significantly slowed`);
+    } else if (finalMultiplier < 0.6) {
+      console.log(`   ⚠️  MODERATE CONSTRAINT - Tech deployment moderately slowed`);
+    }
+  }
+
+  return finalMultiplier;
 }
 
 function generateUnlockReason(_tech: TechDefinition, gameState: GameState): string {

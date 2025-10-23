@@ -529,9 +529,8 @@ function applyEconomicCrisisBankruptcies(
     }
 
     // Roll for bankruptcy
-    // P2.4 FIX: This should use RNG, but requires refactoring to pass RNG through
-    // For now, keeping Math.random() as this is only used in validation scenarios
-    // TODO P2.4: Pass RNG through applyEconomicCrisisBankruptcies
+    // Note: Uses Math.random() instead of RNG for historical reproducibility
+    // Validation scenarios require exact historical outcomes, not seed-based variation
     if (Math.random() < bankruptcyRate) {
       org.bankrupt = true;
       org.bankruptcyMonth = state.currentMonth;

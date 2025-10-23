@@ -67,6 +67,37 @@ See `.claude/chatroom/README.md` for complete documentation.
 
 ## Implementation Standards
 
+### NO PLACEHOLDERS - EVER
+
+**CRITICAL RULE: Never use placeholders or placeholder logic in code.**
+
+❌ **FORBIDDEN:**
+```typescript
+// TODO: Implement actual logic
+const result = 0; // placeholder
+
+// Placeholder calculation
+const impact = 1.0; // TODO: calculate properly
+
+// Stub function
+function calculateComplexMetric() {
+  return 0; // placeholder
+}
+```
+
+✅ **REQUIRED:**
+- If you don't have time/bandwidth to implement something properly, **add it to the roadmap**
+- If research is insufficient for a calculation, **stop and ask orchestrator for more research**
+- If a mechanic is too complex for current phase, **note it as a future phase**
+
+**If you need to leave something incomplete:**
+1. Stop implementation of that specific piece
+2. Post to chatroom with `[BLOCKED]` status
+3. Request orchestrator add it to MASTER_IMPLEMENTATION_ROADMAP.md
+4. Continue with what you CAN implement fully
+
+**Why this matters:** Placeholders are forgotten and become permanent "magic numbers" that undermine research integrity. If something isn't worth doing right, it should be on the roadmap, not in the code.
+
 ### Research-Backed Development
 - Plans come pre-validated by research-skeptic
 - Every parameter justified by peer-reviewed sources (2024-2025 preferred)

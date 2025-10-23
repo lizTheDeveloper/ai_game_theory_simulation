@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Superalignment → Utopia | Simulation Dashboard",
-  description: "Research simulation dashboard for AI alignment to human flourishing pathways",
+  title: "Superalignment to Utopia",
+  description: "Research simulation: AI alignment to human flourishing pathways",
 };
 
 export default function RootLayout({

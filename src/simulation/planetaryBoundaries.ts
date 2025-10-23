@@ -280,19 +280,105 @@ function initializeEarlyWarningSystemInternal() {
 /**
  * TIER 3.2: Initialize Land Use & Biodiversity Crisis System
  */
+/**
+ * Initialize Land Use System with Regional Biomes (Oct 22, 2025)
+ *
+ * Research-backed baseline conditions for each biome type.
+ */
 function initializeLandUseSystem(): LandUseSystem {
+  // TROPICAL: Amazon, Congo, SE Asia
+  // Highest biodiversity (50% of global species), fastest deforestation, hardest to restore
+  const tropical: RegionalBiome = {
+    habitatCoverPercent: 65.0,          // Down from 85% historical (rapid loss)
+    habitatCoverSafe: 80.0,             // Need high cover for tropical species
+    habitatLossRate: 0.05,              // 0.05%/month (60% higher than global average)
+    habitatRestorationRate: 0.005,      // Very slow natural recovery
+    extinctionRate: 200,                // 200x baseline (hotspot of extinction)
+    extinctionAcceleration: 1.0,        // Accelerating rapidly
+    biodiversityWeight: 0.50,           // 50% of global biodiversity impact
+    ecosystemsLost: 0,
+    ecosystemCollapseRisk: 0.50,        // High risk (50%)
+    restorationDifficulty: 2.0,         // 2× harder than baseline
+    climateVulnerability: 0.70,         // High vulnerability to warming
+  };
+
+  // TEMPERATE: N America, Europe, E Asia
+  // Moderate biodiversity, active reforestation programs, easiest to restore
+  const temperate: RegionalBiome = {
+    habitatCoverPercent: 45.0,          // Historical low, now recovering
+    habitatCoverSafe: 60.0,             // Lower requirement than tropical
+    habitatLossRate: 0.01,              // Slow loss (protection in place)
+    habitatRestorationRate: 0.02,       // Active reforestation (China, EU)
+    extinctionRate: 50,                 // 50x baseline (moderate pressure)
+    extinctionAcceleration: 0.3,        // Slowing down
+    biodiversityWeight: 0.20,           // 20% of global biodiversity
+    ecosystemsLost: 0,
+    ecosystemCollapseRisk: 0.20,        // Lower risk
+    restorationDifficulty: 1.0,         // Baseline difficulty
+    climateVulnerability: 0.40,         // Moderate vulnerability
+  };
+
+  // GRASSLANDS: Savanna, prairie, steppe
+  // Megafauna habitat, heavily converted to agriculture
+  const grasslands: RegionalBiome = {
+    habitatCoverPercent: 35.0,          // Heavily degraded (70% converted)
+    habitatCoverSafe: 50.0,             // Need contiguous habitat for megafauna
+    habitatLossRate: 0.03,              // Moderate conversion (agriculture expansion)
+    habitatRestorationRate: 0.015,      // Moderate recovery potential
+    extinctionRate: 120,                // 120x baseline (megafauna crisis)
+    extinctionAcceleration: 0.6,        // Moderate acceleration
+    biodiversityWeight: 0.20,           // 20% of global biodiversity (megafauna)
+    ecosystemsLost: 0,
+    ecosystemCollapseRisk: 0.35,        // Moderate risk
+    restorationDifficulty: 1.3,         // Harder than temperate (need large areas)
+    climateVulnerability: 0.60,         // High vulnerability (drought, fire)
+  };
+
+  // BOREAL/ARCTIC: Taiga, tundra
+  // Low biodiversity but mostly intact, climate-threatened
+  const borealArctic: RegionalBiome = {
+    habitatCoverPercent: 75.0,          // Mostly intact
+    habitatCoverSafe: 70.0,             // Already above safe boundary
+    habitatLossRate: 0.01,              // Slow loss (remote, protected)
+    habitatRestorationRate: 0.005,      // Very slow growth (short seasons)
+    extinctionRate: 30,                 // 30x baseline (low diversity, climate threat)
+    extinctionAcceleration: 0.4,        // Climate-driven acceleration
+    biodiversityWeight: 0.10,           // 10% of global biodiversity
+    ecosystemsLost: 0,
+    ecosystemCollapseRisk: 0.30,        // Climate-driven risk
+    restorationDifficulty: 1.5,         // Slow growth, permafrost issues
+    climateVulnerability: 0.90,         // Extreme vulnerability (fastest warming)
+  };
+
+  // Calculate global aggregates (weighted by biodiversity importance)
+  const globalExtinctionRate =
+    tropical.extinctionRate * tropical.biodiversityWeight +
+    temperate.extinctionRate * temperate.biodiversityWeight +
+    grasslands.extinctionRate * grasslands.biodiversityWeight +
+    borealArctic.extinctionRate * borealArctic.biodiversityWeight;
+  // = 200*0.5 + 50*0.2 + 120*0.2 + 30*0.1 = 100 + 10 + 24 + 3 = 137x baseline
+
+  const globalHabitatCover =
+    tropical.habitatCoverPercent * 0.17 +      // 17% of land area
+    temperate.habitatCoverPercent * 0.10 +     // 10% of land area
+    grasslands.habitatCoverPercent * 0.20 +    // 20% of land area
+    borealArctic.habitatCoverPercent * 0.23;   // 23% of land area
+  // = 65*0.17 + 45*0.10 + 35*0.20 + 75*0.23 = 11.05 + 4.5 + 7.0 + 17.25 = 39.8% (WEIGHTED BY LAND AREA)
+
   return {
-    forestCoverPercent: 62.0,
-    forestCoverSafe: 75.0,
-    deforestationRate: 0.03,
-    reforestationRate: 0.01,
-    currentExtinctionRate: 100,
+    regions: {
+      tropical,
+      temperate,
+      grasslands,
+      borealArctic,
+    },
+    globalHabitatCoverPercent: globalHabitatCover,
+    globalExtinctionRate,
+    globalExtinctionAcceleration: 0.6, // Weighted average
+    globalEcosystemsLost: 0,
+    globalEcosystemCollapseRisk: 0.50, // Maximum regional risk
     naturalExtinctionRate: 1.0,
-    extinctionAcceleration: 0.5,
-    habitatLossPercent: 38.0,
-    criticalEcosystemsLost: 0,
-    carbonSinkLossMultiplier: 1.17,
-    ecosystemCollapseRisk: 0.35,
+    carbonSinkLossMultiplier: 1.17,    // Deforestation climate feedback
   };
 }
 

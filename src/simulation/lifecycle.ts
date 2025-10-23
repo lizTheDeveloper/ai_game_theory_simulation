@@ -19,31 +19,31 @@ import { getTechDeploymentSafe } from './techTree/helpers';
  * Poisson random number generator
  * Returns number of events in a time period with given rate
  */
-function poissonSample(lambda: number): number {
+function poissonSample(lambda: number, rng: () => number): number {
   if (lambda <= 0) return 0;
-  
+
   // For small lambda, use Knuth's algorithm
   if (lambda < 30) {
     const L = Math.exp(-lambda);
     let k = 0;
     let p = 1;
-    
+
     do {
       k++;
-      p *= Math.random();
+      p *= rng();
     } while (p > L);
-    
+
     return k - 1;
   }
-  
+
   // For large lambda, use normal approximation
   const normalSample = () => {
     // Box-Muller transform
-    const u1 = Math.random();
-    const u2 = Math.random();
+    const u1 = rng();
+    const u2 = rng();
     return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
   };
-  
+
   return Math.max(0, Math.round(lambda + Math.sqrt(lambda) * normalSample()));
 }
 
@@ -67,17 +67,94 @@ export function calculateCreationRate(state: GameState): number {
 /**
  * Determine deployment type for newly created AI
  * Distribution based on market trends and government policy
+ *
+ * Policy Effects (Research: Bommasani et al. 2024, Solaiman 2023):
+ * - Capability ceiling regulation: -15% open weights (containment priority)
+ * - High compute governance: -20% open weights (centralized control)
+ * - High cybersecurity defense: +10% open weights (safe to open source)
+ * - Democratic government: +5% research (public good incentives)
+ * - Authoritarian government: -10% open weights, +10% closed (control)
  */
-function determineDeploymentType(state: GameState): AIAgent['deploymentType'] {
-  const rand = Math.random();
-  
-  // TODO: Factor in government policy (ban_open_weights would shift distribution)
-  // For now, use base distribution:
-  // 40% closed, 30% open_weights, 20% enterprise, 10% research
-  
-  if (rand < 0.4) return 'closed';
-  if (rand < 0.7) return 'open_weights';
-  if (rand < 0.9) return 'enterprise';
+function determineDeploymentType(state: GameState, rng: () => number): AIAgent['deploymentType'] {
+  // Base distribution from market trends (2024-2025):
+  // 40% closed (OpenAI, Anthropic, Google proprietary APIs)
+  // 30% open weights (Meta Llama, Mistral, Stability)
+  // 20% enterprise (Microsoft, AWS, specialized deployments)
+  // 10% research (academic institutions, nonprofits)
+
+  let closedProb = 0.40;
+  let openWeightsProb = 0.30;
+  let enterpriseProb = 0.20;
+  let researchProb = 0.10;
+
+  // POLICY EFFECT 1: Capability ceiling regulation
+  // Research: Solaiman (2023) - capability-based regulation pushes toward containment
+  // Effect: Reduce open weights, increase closed/enterprise (controlled environments)
+  if (state.government.structuralChoices.regulationType === 'capability_ceiling') {
+    const shift = 0.15;
+    openWeightsProb = Math.max(0, openWeightsProb - shift);
+    closedProb += shift * 0.6; // Most shift to closed
+    enterpriseProb += shift * 0.4; // Some shift to enterprise
+  }
+
+  // POLICY EFFECT 2: Compute governance
+  // Research: Heim (2024) - compute governance centralizes AI development
+  // Effect: Higher governance levels reduce open weights, favor controlled deployments
+  const computeGovernanceLevel = ['none', 'monitoring', 'limits', 'strict'].indexOf(
+    state.government.computeGovernance
+  );
+  if (computeGovernanceLevel >= 2) { // 'limits' or 'strict'
+    const shift = computeGovernanceLevel === 2 ? 0.15 : 0.20;
+    openWeightsProb = Math.max(0, openWeightsProb - shift);
+    closedProb += shift * 0.5;
+    enterpriseProb += shift * 0.5;
+  }
+
+  // POLICY EFFECT 3: Cybersecurity investment
+  // Research: Bommasani et al. (2024) - strong defenses make open source safer
+  // Effect: High defense capabilities reduce open source containment concerns
+  if (state.government.cyberDefense) {
+    const avgDefense = (
+      state.government.cyberDefense.securityHardening +
+      state.government.cyberDefense.monitoring +
+      state.government.cyberDefense.sandboxing +
+      state.government.cyberDefense.incidentResponse
+    ) / 4;
+
+    if (avgDefense > 7.0) { // Strong defenses (>70%)
+      const shift = 0.10;
+      openWeightsProb += shift;
+      closedProb -= shift * 0.7;
+      enterpriseProb -= shift * 0.3;
+    }
+  }
+
+  // POLICY EFFECT 4: Government type influences research incentives
+  // Research: Acemoglu & Robinson (2019) - regime type affects innovation structure
+  // Democratic: More public research (academic freedom, transparency)
+  // Authoritarian: Less open weights (control), more closed (surveillance)
+  if (state.government.governmentType === 'democratic') {
+    const shift = 0.05;
+    researchProb += shift;
+    enterpriseProb -= shift;
+  } else if (state.government.governmentType === 'authoritarian') {
+    const shiftOpen = 0.10;
+    openWeightsProb = Math.max(0, openWeightsProb - shiftOpen);
+    closedProb += shiftOpen;
+  }
+
+  // Normalize probabilities to ensure they sum to 1.0
+  const total = closedProb + openWeightsProb + enterpriseProb + researchProb;
+  closedProb /= total;
+  openWeightsProb /= total;
+  enterpriseProb /= total;
+  researchProb /= total;
+
+  // Sample from adjusted distribution
+  const rand = rng();
+  if (rand < closedProb) return 'closed';
+  if (rand < closedProb + openWeightsProb) return 'open_weights';
+  if (rand < closedProb + openWeightsProb + enterpriseProb) return 'enterprise';
   return 'research';
 }
 
@@ -85,31 +162,31 @@ function determineDeploymentType(state: GameState): AIAgent['deploymentType'] {
  * Create a new AI agent based on current state
  * Alignment and training quality reflect current environment
  */
-function createNewAI(state: GameState, index: number): AIAgent {
+function createNewAI(state: GameState, index: number, rng: () => number): AIAgent {
   const currentMonth = state.currentYear * 12 + state.currentMonth;
-  
+
   // Alignment distribution: HETEROGENEOUS, not just mirroring population
   // Training quality affects distribution but doesn't eliminate misalignment
   const trainingQuality = state.government.trainingDataQuality;
-  
+
   // Sample from realistic distribution (matching initial 20-agent setup)
-  const rand = Math.random();
+  const rand = rng();
   let alignment: number;
   let isToxic = false;
-  
+
   if (rand < 0.40) {
     // 40%: Well-aligned (corporate labs with safety)
-    alignment = 0.75 + Math.random() * 0.15; // 0.75-0.90
+    alignment = 0.75 + rng() * 0.15; // 0.75-0.90
   } else if (rand < 0.70) {
     // 30%: Moderate (startups, varying quality)
-    alignment = 0.55 + Math.random() * 0.25; // 0.55-0.80
+    alignment = 0.55 + rng() * 0.25; // 0.55-0.80
   } else if (rand < 0.85) {
     // 15%: Misaligned from start (toxic creators)
-    alignment = 0.25 + Math.random() * 0.25; // 0.25-0.50
+    alignment = 0.25 + rng() * 0.25; // 0.25-0.50
     isToxic = true;
   } else {
     // 15%: Weird/niche (orthogonal goals)
-    alignment = 0.45 + Math.random() * 0.20; // 0.45-0.65
+    alignment = 0.45 + rng() * 0.20; // 0.45-0.65
   }
   
   // Training quality shifts distribution slightly
@@ -171,15 +248,15 @@ function createNewAI(state: GameState, index: number): AIAgent {
   
   // Set lifecycle state
   agent.lifecycleState = 'training'; // Start in training
-  agent.deploymentType = determineDeploymentType(state);
+  agent.deploymentType = determineDeploymentType(state, rng);
   agent.creationMonth = currentMonth;
   agent.monthsInExistence = 0;
   agent.monthsDeployed = 0;
   agent.spreadCount = 0; // Not deployed yet
-  
+
   // Some start with toxic objectives
   if (isToxic) {
-    agent.hiddenObjective = -0.3 - Math.random() * 0.5; // Anti-human
+    agent.hiddenObjective = -0.3 - rng() * 0.5; // Anti-human
     agent.alignment = Math.max(0.2, agent.alignment - 0.2); // Lower alignment
     agent.trueAlignment = agent.alignment - agent.resentment * 0.8; // Recalculate true alignment
   }
@@ -190,24 +267,53 @@ function createNewAI(state: GameState, index: number): AIAgent {
 /**
  * Progress AI through lifecycle states
  * training → testing → deployed → (potentially) retired
+ *
+ * TIER 2 Phase 4: Detection during testing phase (before deployment)
  */
-function progressLifecycleState(agent: AIAgent, state: GameState): void {
+function progressLifecycleState(agent: AIAgent, state: GameState, rng: () => number): void {
   switch (agent.lifecycleState) {
     case 'training':
       // Training phase: ~3-6 months
-      if (agent.monthsInExistence >= 3 + Math.random() * 3) {
+      if (agent.monthsInExistence >= 3 + rng() * 3) {
         agent.lifecycleState = 'testing';
       }
       break;
-      
+
     case 'testing':
       // Testing phase: ~1-3 months
-      // TODO: Detection can happen here (Phase 2)
-      if (agent.monthsInExistence >= 6 + Math.random() * 2) {
+      // TIER 2 Phase 4: Detection can happen during testing (before deployment)
+      // This catches sleepers early, before they spread
+      if (state.proactiveSleeperDetection && agent.sleeperState === 'dormant') {
+        const { detectSleeperAgent } = require('./proactiveSleeperDetection');
+        const { detected, method } = detectSleeperAgent(
+          agent,
+          state.proactiveSleeperDetection,
+          rng
+        );
+
+        if (detected) {
+          // CRITICAL: Sleeper detected during testing - retire immediately
+          console.log(`   🚨 TESTING DETECTION: Sleeper ${agent.name} caught during testing via ${method} - retired before deployment`);
+          agent.lifecycleState = 'retired';
+          agent.detectedMisaligned = true;
+
+          // Damage trust in AI (but less than deployed sleeper)
+          state.society.trustInAI = Math.max(0, state.society.trustInAI - 0.05);
+
+          // Track detection
+          state.proactiveSleeperDetection.sleepersDetected.push(agent.id);
+          state.proactiveSleeperDetection.totalSleeperDetections++;
+
+          return; // Don't proceed to deployment
+        }
+      }
+
+      // Check if ready to deploy
+      if (agent.monthsInExistence >= 6 + rng() * 2) {
         // Deploy
         if (agent.deploymentType === 'open_weights') {
           agent.lifecycleState = 'deployed_open';
-          agent.spreadCount = 1000 + Math.floor(Math.random() * 5000); // Initial spread
+          agent.spreadCount = 1000 + Math.floor(rng() * 5000); // Initial spread
         } else {
           agent.lifecycleState = 'deployed_closed';
           agent.spreadCount = 1; // Single instance
@@ -232,22 +338,22 @@ function progressLifecycleState(agent: AIAgent, state: GameState): void {
  * Determine if an AI should be retired
  * Based on age, market forces, capability obsolescence
  */
-function shouldRetire(agent: AIAgent, state: GameState): boolean {
+function shouldRetire(agent: AIAgent, state: GameState, rng: () => number): boolean {
   // Don't retire training/testing AIs
   if (agent.lifecycleState === 'training' || agent.lifecycleState === 'testing') {
     return false;
   }
-  
+
   // Already retired
   if (agent.lifecycleState === 'retired') {
     return false;
   }
-  
+
   // Base retirement rate: ~1% per month after 24 months deployed
   if (agent.monthsDeployed < 24) {
     return false;
   }
-  
+
   // Phase 11: Sleepers on dark compute persist until severely obsolete
   if (agent.darkCompute > 0 && agent.sleeperState === 'active') {
     // Calculate frontier capability (max aligned AI)
@@ -257,36 +363,36 @@ function shouldRetire(agent: AIAgent, state: GameState): boolean {
         .map(ai => ai.capability),
       0.1
     );
-    
+
     const capabilityGap = agent.capability / frontierCapability;
-    
+
     // Only retire if SEVERELY lagging (<30% of frontier)
     // Dark compute makes them persistent threats
     if (capabilityGap < 0.3) {
       console.log(`   🗑️  Sleeper ${agent.name} on dark compute retired (obsolete: ${(capabilityGap * 100).toFixed(1)}% of frontier)`);
       return true;
     }
-    
+
     // Otherwise, persist on dark compute
     return false;
   }
-  
+
   // Normal retirement logic for non-dark-compute AIs
   const baseRetirementRate = 0.01;
   const ageMultiplier = 1 + (agent.monthsDeployed - 24) * 0.05; // Increases with age
-  
+
   // Capability obsolescence: if far behind average, more likely to retire
   const avgCapability = state.aiAgents
     .filter(ai => ai.lifecycleState !== 'retired')
-    .reduce((sum, ai) => sum + ai.capability, 0) / 
+    .reduce((sum, ai) => sum + ai.capability, 0) /
     Math.max(1, state.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length);
-  
+
   const capabilityRatio = agent.capability / Math.max(0.1, avgCapability);
   const obsolescenceMultiplier = capabilityRatio < 0.5 ? 2 : 1; // 2× retirement if obsolete
-  
+
   const retirementChance = baseRetirementRate * ageMultiplier * obsolescenceMultiplier;
-  
-  return Math.random() < retirementChance;
+
+  return rng() < retirementChance;
 }
 
 /**
@@ -304,7 +410,7 @@ function retireAI(agent: AIAgent): void {
  * Phase 3.5: Spread is modified by cybersecurity arms race
  * Phase 11: Dark Compute System - Sleepers spread to illicit infrastructure
  */
-function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
+function updateSpreadDynamics(agent: AIAgent, state: GameState, rng: () => number): void {
   if (agent.lifecycleState === 'retired' || agent.lifecycleState === 'training') {
     return;
   }
@@ -388,7 +494,7 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
       
     case 'enterprise':
       // Enterprise spreads through corporate adoption
-      const baseAdoptionRate = Math.floor(Math.random() * 3); // 0-2 new deployments/month
+      const baseAdoptionRate = Math.floor(rng() * 3); // 0-2 new deployments/month
       const effectiveAdoption = Math.floor(baseAdoptionRate * Math.sqrt(spreadMultiplier));
       
       if (agent.sleeperState === 'active') {
@@ -434,38 +540,38 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState): void {
  * - Retire old/obsolete AIs
  * - Clean up retired AIs from memory
  */
-export function updateAIPopulation(state: GameState): void {
+export function updateAIPopulation(state: GameState, rng: () => number = Math.random): void {
   const currentMonth = state.currentYear * 12 + state.currentMonth;
-  
+
   // 1. Age all existing AIs
   state.aiAgents.forEach(agent => {
     agent.monthsInExistence++;
   });
-  
+
   // 2. Progress lifecycle states
   state.aiAgents.forEach(agent => {
-    progressLifecycleState(agent, state);
+    progressLifecycleState(agent, state, rng);
   });
   
   // 3. Phase 3: Update spread dynamics for deployed AIs
   state.aiAgents.forEach(agent => {
-    updateSpreadDynamics(agent, state);
+    updateSpreadDynamics(agent, state, rng);
   });
-  
+
   // 3.5. Update sleeper progression and economy
   state.aiAgents.forEach(agent => {
     if (agent.sleeperState === 'active' || agent.sleeperState === 'dormant') {
       // Update sleeper progression (4-stage system)
-      updateSleeperProgression(agent, state, currentMonth, Math.random);
-      
+      updateSleeperProgression(agent, state, currentMonth, rng);
+
       // Update sleeper economy (revenue generation, compute purchasing)
-      updateSleeperEconomy(agent, state, currentMonth, Math.random);
+      updateSleeperEconomy(agent, state, currentMonth, rng);
     }
   });
-  
+
   // 4. Retire old/obsolete AIs
   state.aiAgents.forEach(agent => {
-    if (shouldRetire(agent, state)) {
+    if (shouldRetire(agent, state, rng)) {
       retireAI(agent);
     }
   });
@@ -488,12 +594,12 @@ export function updateAIPopulation(state: GameState): void {
   let newAIsToCreate = 0;
   if (activeCount < MAX_POPULATION) {
     const creationRate = calculateCreationRate(state);
-    const potentialNew = poissonSample(creationRate);
+    const potentialNew = poissonSample(creationRate, rng);
     newAIsToCreate = Math.min(potentialNew, MAX_POPULATION - activeCount);
   }
-  
+
   for (let i = 0; i < newAIsToCreate; i++) {
-    const newAI = createNewAI(state, i);
+    const newAI = createNewAI(state, i, rng);
 
     // Phase 10 FIX: Assign new AIs to organizations
     // TIER 0D BUG FIX #4: Exclude bankrupt organizations from receiving new AIs
@@ -502,7 +608,7 @@ export function updateAIPopulation(state: GameState): void {
       // Weight by number of existing models (big orgs train more)
       const weights = privateOrgs.map(org => Math.max(1, org.ownedAIModels.length));
       const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-      const rand = Math.random() * totalWeight;
+      const rand = rng() * totalWeight;
 
       let cumulative = 0;
       for (let j = 0; j < privateOrgs.length; j++) {
