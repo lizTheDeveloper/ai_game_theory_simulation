@@ -1,7 +1,8 @@
 /**
- * Navigation Component
+ * Navigation Component with Simulation Controls
  *
  * Main navigation for dashboard screens.
+ * Includes simulation controls accessible from any page.
  * Supports keyboard shortcuts (1-9 for quick navigation).
  */
 
@@ -9,8 +10,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { cn } from '@/lib/utils'
+import { SimulationWorkerClient, type StateDelta, type InitialStateSnapshot } from '@/lib/simulationWorkerClient'
+import type { ScenarioMode } from '@/types/game'
 
 const navItems = [
   { label: 'Overview', href: '/dashboard', shortcut: '1' },
@@ -28,6 +31,97 @@ const navItems = [
 export function Navigation() {
   const pathname = usePathname()
 
+  // Simulation state
+  const [client, setClient] = useState<SimulationWorkerClient | null>(null)
+  const [initialized, setInitialized] = useState(false)
+  const [running, setRunning] = useState(false)
+  const [showConfig, setShowConfig] = useState(false)
+  const [month, setMonth] = useState(0)
+  const [scenario, setScenario] = useState<ScenarioMode>('historical')
+  const [seed, setSeed] = useState(42000)
+  const [speed, setSpeed] = useState(1.0)
+
+  // Create worker client on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !client) {
+      try {
+        const newClient = new SimulationWorkerClient()
+        setClient(newClient)
+      } catch (error) {
+        console.error('[Navigation] Failed to create worker client:', error)
+      }
+    }
+  }, [])
+
+  // Setup worker event listeners
+  useEffect(() => {
+    if (!client) return
+
+    const handleInitialized = (snapshot: InitialStateSnapshot) => {
+      setInitialized(true)
+      setMonth(snapshot.currentMonth)
+      setScenario(snapshot.scenario)
+    }
+
+    const handleUpdate = (delta: StateDelta) => {
+      if (delta.currentMonth !== undefined) setMonth(delta.currentMonth)
+    }
+
+    const handlePaused = () => setRunning(false)
+    const handleResumed = () => setRunning(true)
+
+    client.on('initialized', handleInitialized)
+    client.on('update', handleUpdate)
+    client.on('paused', handlePaused)
+    client.on('resumed', handleResumed)
+
+    return () => {
+      client.off('initialized', handleInitialized)
+      client.off('update', handleUpdate)
+      client.off('paused', handlePaused)
+      client.off('resumed', handleResumed)
+    }
+  }, [client])
+
+  // Cleanup worker on unmount
+  useEffect(() => {
+    return () => {
+      if (client) {
+        client.destroy()
+      }
+    }
+  }, [client])
+
+  // Initialize simulation
+  const handleInit = useCallback(() => {
+    if (!client || initialized) return
+
+    try {
+      const interval = Math.floor(30000 / speed)
+      client.init(seed, scenario, interval)
+      setShowConfig(false)
+    } catch (err) {
+      console.error('[Navigation] Init error:', err)
+    }
+  }, [client, initialized, seed, scenario, speed])
+
+  // Start/pause toggle
+  const handleToggleRunning = useCallback(() => {
+    if (!client || !initialized) return
+
+    if (running) {
+      client.pause()
+    } else {
+      client.start()
+    }
+  }, [client, initialized, running])
+
+  // Manual step
+  const handleStep = useCallback(() => {
+    if (!client || !initialized) return
+    client.step()
+  }, [client, initialized])
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -37,8 +131,16 @@ export function Navigation() {
       }
 
       const key = e.key
+
+      // Space to pause/play
+      if (key === ' ') {
+        e.preventDefault()
+        handleToggleRunning()
+        return
+      }
+
+      // Number shortcuts for navigation
       if (key === '0') {
-        // Real-time view (last item)
         window.location.href = navItems[navItems.length - 1]?.href || '/realtime'
       } else {
         const num = parseInt(key)
@@ -53,53 +155,181 @@ export function Navigation() {
 
     window.addEventListener('keypress', handleKeyPress)
     return () => window.removeEventListener('keypress', handleKeyPress)
-  }, [])
+  }, [handleToggleRunning])
 
   return (
-    <nav className="fixed left-0 top-0 h-full w-64 border-r" style={{ borderColor: 'var(--white-10)', backgroundColor: 'var(--color-near-black)' }}>
-      {/* Header */}
-      <div className="p-6 border-b" style={{ borderColor: 'var(--white-10)' }}>
-        <h1 className="text-lg font-semibold mb-1">Simulation Dashboard</h1>
-        <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-          Research Tool
-        </p>
-      </div>
+    <>
+      <nav className="fixed left-0 top-0 h-full w-64 border-r flex flex-col" style={{ borderColor: 'var(--white-10)', backgroundColor: 'var(--color-near-black)' }}>
+        {/* Header */}
+        <div className="p-6 border-b" style={{ borderColor: 'var(--white-10)' }}>
+          <h1 className="text-lg font-semibold mb-1">Simulation Dashboard</h1>
+          <p className="text-xs" style={{ color: 'var(--white-40)' }}>
+            Research Tool
+          </p>
+        </div>
 
-      {/* Nav Items */}
-      <div className="p-4 space-y-1">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href
+        {/* Simulation Status */}
+        <div className="p-4 border-b space-y-3" style={{ borderColor: 'var(--white-10)' }}>
+          {initialized ? (
+            <>
+              {/* Status indicators */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span style={{ color: 'var(--white-40)' }}>Status</span>
+                  <span className={running ? 'text-green-400' : 'text-yellow-400'}>
+                    {running ? 'RUNNING' : 'PAUSED'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span style={{ color: 'var(--white-40)' }}>Month</span>
+                  <span className="text-white">{month}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span style={{ color: 'var(--white-40)' }}>Scenario</span>
+                  <span className="text-cyan-400">{scenario === 'historical' ? 'HIST' : 'UNPR'}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span style={{ color: 'var(--white-40)' }}>Seed</span>
+                  <span className="text-white font-mono">{seed}</span>
+                </div>
+              </div>
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center justify-between px-3 py-2 rounded transition-colors",
-                isActive
-                  ? "glow-cyan"
-                  : "hover:bg-white/5"
-              )}
+              {/* Control buttons */}
+              <div className="flex gap-2">
+                <button
+                  onClick={handleToggleRunning}
+                  className={cn(
+                    "flex-1 px-3 py-1.5 text-xs font-medium rounded transition-all",
+                    running
+                      ? "bg-yellow-500/20 border border-yellow-400 text-yellow-400 hover:bg-yellow-400/30"
+                      : "bg-green-500/20 border border-green-400 text-green-400 hover:bg-green-400/30"
+                  )}
+                >
+                  {running ? 'PAUSE' : 'START'}
+                </button>
+                <button
+                  onClick={handleStep}
+                  disabled={running}
+                  className="px-3 py-1.5 text-xs bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 disabled:opacity-30 rounded"
+                >
+                  STEP
+                </button>
+              </div>
+            </>
+          ) : (
+            <button
+              onClick={() => setShowConfig(true)}
+              className="w-full px-3 py-2 text-sm bg-cyan-500/20 border border-cyan-400 text-cyan-400 hover:bg-cyan-400/30 transition-all rounded"
             >
-              <span className={cn(
-                "text-sm",
-                isActive ? "text-white font-medium" : "text-white/60"
-              )}>
-                {item.label}
-              </span>
-              <span className="text-xs" style={{ color: 'var(--white-30)' }}>
-                {item.shortcut}
-              </span>
-            </Link>
-          )
-        })}
-      </div>
+              Configure & Start
+            </button>
+          )}
+        </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t text-xs" style={{ borderColor: 'var(--white-10)', color: 'var(--white-30)' }}>
-        <div className="mb-2">Keyboard: 0-9 for quick nav</div>
-        <div>Design: Elysium 2100s</div>
-      </div>
-    </nav>
+        {/* Nav Items */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-1">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center justify-between px-3 py-2 rounded transition-colors",
+                  isActive
+                    ? "glow-cyan"
+                    : "hover:bg-white/5"
+                )}
+              >
+                <span className={cn(
+                  "text-sm",
+                  isActive ? "text-white font-medium" : "text-white/60"
+                )}>
+                  {item.label}
+                </span>
+                <span className="text-xs" style={{ color: 'var(--white-30)' }}>
+                  {item.shortcut}
+                </span>
+              </Link>
+            )
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t text-xs space-y-1" style={{ borderColor: 'var(--white-10)', color: 'var(--white-30)' }}>
+          <div>Keyboard: 0-9 navigate</div>
+          <div>Spacebar: pause/play</div>
+          <div className="pt-2 border-t" style={{ borderColor: 'var(--white-10)' }}>Design: Elysium 2100s</div>
+        </div>
+      </nav>
+
+      {/* Configuration Modal */}
+      {showConfig && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center z-50" onClick={() => setShowConfig(false)}>
+          <div className="bg-black border border-white/20 p-8 max-w-md w-full shadow-[0_0_30px_rgba(0,240,255,0.3)]" onClick={(e) => e.stopPropagation()}>
+            <h2 className="text-2xl mb-6 text-cyan-400">Initialize Simulation</h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>RNG SEED</label>
+                <input
+                  type="number"
+                  value={seed}
+                  onChange={(e) => setSeed(parseInt(e.target.value))}
+                  className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SCENARIO MODE</label>
+                <select
+                  value={scenario}
+                  onChange={(e) => setScenario(e.target.value as ScenarioMode)}
+                  className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
+                >
+                  <option value="historical">Historical (Known AI Timelines)</option>
+                  <option value="unprecedented">Unprecedented (Novel Scenarios)</option>
+                </select>
+                <p className="text-xs mt-2" style={{ color: 'var(--white-30)' }}>
+                  {scenario === 'historical'
+                    ? 'Simulation follows known AI development patterns and historical data'
+                    : 'Simulation explores novel scenarios beyond historical precedent'}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>SIMULATION SPEED</label>
+                <select
+                  value={speed.toFixed(1)}
+                  onChange={(e) => setSpeed(parseFloat(e.target.value))}
+                  className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
+                >
+                  <option value="0.5">0.5x (Slow)</option>
+                  <option value="1.0">1.0x (Normal)</option>
+                  <option value="2.0">2.0x (Fast)</option>
+                  <option value="4.0">4.0x (Very Fast)</option>
+                </select>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() => setShowConfig(false)}
+                  className="flex-1 px-4 py-3 bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 transition-all rounded"
+                >
+                  CANCEL
+                </button>
+                <button
+                  onClick={handleInit}
+                  className="flex-1 px-4 py-3 bg-cyan-500/20 border border-cyan-400 text-cyan-400 hover:bg-cyan-400/30 transition-all rounded"
+                >
+                  INITIALIZE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
