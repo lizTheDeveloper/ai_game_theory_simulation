@@ -237,12 +237,16 @@ export function updateNovelEntitiesSystem(state: GameState): void {
 
 /**
  * Check if novel entities technologies should unlock
+ *
+ * NOTE: Tech unlocking now handled by TechTreePhase
+ * This function is deprecated but kept for backward compatibility
  */
 export function checkNovelEntitiesTechUnlocks(state: GameState): void {
-  if (!state.novelEntitiesSystem || !state.breakthroughTech) return;
-  
-  const ne = state.novelEntitiesSystem;
-  const tech = state.breakthroughTech;
+  if (!state.novelEntitiesSystem) return;
+  return; // Early return - tech tree handles all unlocking now
+
+  /* const ne = state.novelEntitiesSystem;
+  const tech: any = state.techTreeState; // Cast to any for legacy code compatibility
   const economicStage = state.globalMetrics.economicTransitionStage;
   const avgAICapability = state.aiAgents.length > 0
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
@@ -337,6 +341,6 @@ export function checkNovelEntitiesTechUnlocks(state: GameState): void {
     // Policy implementation
     const adoptionRate = 0.012; // 1.2%/month
     ne.chemicalBansDeployment = Math.min(1.0, ne.chemicalBansDeployment + adoptionRate);
-  }
+  } */
 }
 

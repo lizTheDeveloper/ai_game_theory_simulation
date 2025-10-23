@@ -228,12 +228,16 @@ export function updateOceanAcidificationSystem(state: GameState): void {
 
 /**
  * Check if ocean acidification technologies should unlock
+ *
+ * NOTE: Tech unlocking now handled by TechTreePhase
+ * This function is deprecated but kept for backward compatibility
  */
 export function checkOceanAcidificationTechUnlocks(state: GameState): void {
-  if (!state.oceanAcidificationSystem || !state.breakthroughTech) return;
-  
-  const oa = state.oceanAcidificationSystem;
-  const tech = state.breakthroughTech;
+  if (!state.oceanAcidificationSystem) return;
+  return; // Early return - tech tree handles all unlocking now
+
+  /* const oa = state.oceanAcidificationSystem;
+  const tech: any = state.techTreeState; // Cast to any for legacy code compatibility
   const avgAICapability = state.aiAgents.length > 0
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
     : 0;
@@ -307,6 +311,6 @@ export function checkOceanAcidificationTechUnlocks(state: GameState): void {
     // Policy rollout (slower)
     const adoptionRate = 0.008; // 0.8%/month (10+ years to 30%)
     oa.marineProtectedAreasDeployment = Math.min(0.30, oa.marineProtectedAreasDeployment + adoptionRate);
-  }
+  } */
 }
 
