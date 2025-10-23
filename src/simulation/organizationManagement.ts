@@ -267,9 +267,9 @@ export function completeProject(
     
     // Run evaluations on newly trained model
     const { runBenchmark } = require('./benchmark');
-    const { SeededRandom } = require('./engine');
+    // SeededRandom already imported above at line 235
     // calculateTotalCapabilityFromProfile already imported above
-    
+
     const rng = new SeededRandom(state.currentYear * 12 + state.currentMonth + newAI.id.length);
     const evalResult = runBenchmark(newAI, state, rng.next.bind(rng));
     newAI.lastBenchmark = evalResult;

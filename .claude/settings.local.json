@@ -22,7 +22,12 @@
       "mcp__playwright__browser_console_messages",
       "Bash(npx tsx:*)",
       "Bash(python3:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "mcp__chatroom__chatroom_leave",
+      "Bash(git push:*)",
+      "Bash(npm run build:*)",
+      "Bash(cat:*)",
+      "Bash(npm link:*)"
     ],
     "deny": [],
     "ask": []
