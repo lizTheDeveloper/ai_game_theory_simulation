@@ -73,6 +73,36 @@
 **Tasks:**
 - `GET /api/dashboard/agents` - AI agent data
 - `GET /api/dashboard/environment` - Planetary boundaries
+  - **NEW (Oct 22, 2025): Include regional biome data**
+  - Response schema:
+    ```typescript
+    {
+      boundaries: PlanetaryBoundary[];  // 9 boundaries
+      landUse: {
+        global: {
+          habitatCover: number;
+          extinctionRate: number;
+          ecosystemsLost: number;
+        };
+        regions: {
+          tropical: RegionalBiomeStats;
+          temperate: RegionalBiomeStats;
+          grasslands: RegionalBiomeStats;
+          borealArctic: RegionalBiomeStats;
+        };
+      };
+    }
+
+    interface RegionalBiomeStats {
+      habitatCoverPercent: number;
+      habitatCoverSafe: number;
+      extinctionRate: number;
+      ecosystemsLost: number;
+      ecosystemCollapseRisk: number;
+      biodiversityWeight: number;
+      restorationDifficulty: number;
+    }
+    ```
 - `GET /api/dashboard/government` - 30 countries
 - `GET /api/dashboard/crises` - Crisis cascade data
 - `GET /api/dashboard/technology` - Tech tree
@@ -274,6 +304,21 @@
 - Current value + threshold
 - Trend arrows (improving/worsening)
 - Click boundary → detail view with regional breakdown
+- **NEW (Oct 22, 2025): Regional biome breakdown for Land Use/Biosphere**
+  - Show 4 regional biomes: Tropical, Temperate, Grasslands, Boreal/Arctic
+  - Per-region metrics:
+    - Habitat cover % (with safe threshold)
+    - Extinction rate (×natural baseline)
+    - Ecosystem collapse risk (%)
+    - Ecosystems lost (count)
+  - Visual encoding:
+    - Small multiples: 4 mini bar charts for each region
+    - Color by severity (green <50x, amber 50-150x, red >150x extinction)
+    - Biodiversity weight badges (Tropical 50%, others 10-20%)
+  - Aggregation to global:
+    - Global habitat cover (weighted by land area)
+    - Global extinction rate (weighted by biodiversity importance)
+    - Total ecosystems lost across all regions
 
 ### Subplan 3B: Tipping Points Status (Agent 2)
 **File:** `plans/dashboard/tipping-points.md`
