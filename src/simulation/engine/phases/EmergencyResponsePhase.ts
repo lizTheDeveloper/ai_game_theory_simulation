@@ -139,10 +139,17 @@ export class EmergencyResponsePhase implements SimulationPhase {
     // SOCIAL CRISIS (unrest, riots, trust collapse)
     // FIX #11A: PROACTIVE detection - don't wait for socialUnrestActive flag
     // BUT don't trigger too early (trust 0.3 = severe crisis, not 0.4)
+    // Average social cohesion (0-1 scale) from components (0-100 scale)
+    const avgCohesion = (
+      state.socialAccumulation.socialCohesion.trust +
+      state.socialAccumulation.socialCohesion.communityBonds +
+      state.socialAccumulation.socialCohesion.civilLiberties
+    ) / 300;
+
     const socialCrisisDetected = (
       state.socialAccumulation.socialUnrestActive ||
       state.society.trustInAI < 0.30 ||  // Trust SEVERE collapse (was 0.4, too early)
-      state.socialAccumulation.socialCohesion < 0.35 ||  // Cohesion SEVERE degradation
+      avgCohesion < 0.35 ||  // Cohesion SEVERE degradation
       (state.socialAccumulation.institutionalLegitimacy < 0.30)  // Institutional severe failure
     );
 
@@ -153,7 +160,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
         const severity = Math.max(
           state.socialAccumulation.socialUnrestActive ? 0.7 : 0.0,
           1.0 - state.society.trustInAI,
-          1.0 - state.socialAccumulation.socialCohesion,
+          1.0 - avgCohesion,
           1.0 - state.socialAccumulation.institutionalLegitimacy
         );
 
@@ -168,7 +175,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
             type: 'emergency_response',
             month: state.currentMonth,
             title: '🚨 Emergency Social Response Deployed',
-            description: `Government mobilizes social stabilization measures (trust=${(state.society.trustInAI * 100).toFixed(0)}%, cohesion=${(state.socialAccumulation.socialCohesion * 100).toFixed(0)}%). Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
+            description: `Government mobilizes social stabilization measures (trust=${(state.society.trustInAI * 100).toFixed(0)}%, cohesion=${(avgCohesion * 100).toFixed(0)}%). Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
             effects: { crisisType: 'social', effectiveness: response.effectiveness },
           });
         }
@@ -316,10 +323,15 @@ export class EmergencyResponsePhase implements SimulationPhase {
             state.society.trustInAI + socialRecoveryBonus
           );
 
-          // Improve social cohesion
-          state.socialAccumulation.socialCohesion = Math.min(
-            0.8,
-            state.socialAccumulation.socialCohesion + socialRecoveryBonus
+          // Improve social cohesion components (transparency campaigns build trust & community)
+          const cohesionBonus = socialRecoveryBonus * 100; // Convert to 0-100 scale
+          state.socialAccumulation.socialCohesion.trust = Math.min(
+            80,
+            state.socialAccumulation.socialCohesion.trust + cohesionBonus
+          );
+          state.socialAccumulation.socialCohesion.communityBonds = Math.min(
+            80,
+            state.socialAccumulation.socialCohesion.communityBonds + cohesionBonus
           );
 
           // Improve institutional legitimacy
@@ -356,7 +368,12 @@ export class EmergencyResponsePhase implements SimulationPhase {
           }
 
           // Deactivate unrest if improved enough
-          if (state.socialAccumulation.socialUnrestActive && state.socialAccumulation.socialCohesion > 0.6) {
+          const currentCohesion = (
+            state.socialAccumulation.socialCohesion.trust +
+            state.socialAccumulation.socialCohesion.communityBonds +
+            state.socialAccumulation.socialCohesion.civilLiberties
+          ) / 300;
+          if (state.socialAccumulation.socialUnrestActive && currentCohesion > 0.6) {
             state.socialAccumulation.socialUnrestActive = false;
             updateCrisisExperience(state, 'social', true);
             events.push({

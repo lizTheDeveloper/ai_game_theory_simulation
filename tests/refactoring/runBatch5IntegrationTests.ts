@@ -259,8 +259,8 @@ function testEventCollectionPhase_WithEvents(): TestResult {
 
     // Should only include current month's events
     for (const event of result.events) {
-      if (event.month !== 10) {
-        throw new Error(`Expected all events to have month 10, but found month ${event.month}`);
+      if (event.timestamp !== 10) {
+        throw new Error(`Expected all events to have month 10, but found month ${event.timestamp}`);
       }
     }
 

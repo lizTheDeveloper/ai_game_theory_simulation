@@ -18,7 +18,6 @@ import { initializeEnvironmentalAccumulation } from './environmental';
 import { initializeSocialAccumulation } from './socialCohesion';
 import { initializeTechnologicalRisk } from './technologicalRisk';
 import { initializeSpecificTippingPoints } from './specificTippingPoints';
-import { initializeBreakthroughTech } from './breakthroughTechnologies'; // KEEPING: 11 files still reference breakthroughTech
 import { initializeUpwardSpirals } from './upwardSpirals';
 import { initializeMeaningRenaissance } from './meaningRenaissance';
 import { initializeConflictResolution } from './conflictResolution';
@@ -596,10 +595,6 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
 
     // Phase 2A: Breakthrough Technologies
     // NOTE (Oct 21, 2025): Keeping old system alongside new techTree system
-    // 11 files still reference state.breakthroughTech - needs gradual migration
-    // New system (techTreeState) is also available and handles actual tech effects
-    breakthroughTech: initializeBreakthroughTech(),
-
     // Phase 2D: Upward Spirals (Utopia detection system)
     upwardSpirals: initializeUpwardSpirals(),
     

@@ -427,7 +427,7 @@ function analyzeRecoveryTimeline(runResult: any, finalState: any): RunResult['re
   }
 
   // Detect phases (decline, inflection, recovery)
-  const phases: RunResult['recoveryTimeline']['phases'] = [];
+  const phases: NonNullable<RunResult['recoveryTimeline']>['phases'] = [];
   let currentPhase: 'decline' | 'inflection' | 'recovery' | 'stable' | 'collapse' = 'stable';
   let phaseStartMonth = 0;
   let phaseStartPop = popHistory[0].pop;
@@ -498,7 +498,7 @@ function analyzeRecoveryTimeline(runResult: any, finalState: any): RunResult['re
   });
 
   // Extract key events from event log
-  const keyEvents: RunResult['recoveryTimeline']['keyEvents'] = [];
+  const keyEvents: NonNullable<RunResult['recoveryTimeline']>['keyEvents'] = [];
   if (runResult.log && runResult.log.events && runResult.log.events.allEvents) {
     runResult.log.events.allEvents.forEach((event: any) => {
       if (event.severity === 'destructive' || event.type === 'breakthrough' || event.type === 'crisis') {
@@ -546,7 +546,7 @@ function analyzeRecoveryTimeline(runResult: any, finalState: any): RunResult['re
 
   // Detect Levy flight clusters (8+ breakthroughs in <20 months)
   const breakthroughEvents = keyEvents.filter(e => e.type === 'breakthrough');
-  const breakthroughClusters: RunResult['recoveryTimeline']['breakthroughClusters'] = [];
+  const breakthroughClusters: NonNullable<RunResult['recoveryTimeline']>['breakthroughClusters'] = [];
 
   for (let i = 0; i < breakthroughEvents.length; i++) {
     const start = breakthroughEvents[i].month;
@@ -780,7 +780,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
     criticalEvents: runResult.summary.criticalEvents,
     snapshots: {
       initial: runResult.log.snapshots[0],
-      final: runResult.log.snapshots[runResult.log.snapshots.length - 1]
+      final: runResult.log.snapshots[(runResult.log.snapshots as any[]).length - 1]
     },
     // NEW (Oct 17, 2025): Add recovery timeline data to individual run logs
     recoveryTimeline,

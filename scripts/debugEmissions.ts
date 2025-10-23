@@ -25,7 +25,7 @@ const oilCons = resources.oil.monthlyConsumption.toFixed(3);
 const coalCons = resources.coal.monthlyConsumption.toFixed(3);
 const gasCons = resources.naturalGas.monthlyConsumption.toFixed(3);
 const totalEmissions = resources.co2.annualEmissions.toFixed(1);
-const cdr = initialState.climateState?.annualCDR ?? 0;
+const cdr = 0; // CDR tracking not yet implemented in this version
 const netEmissions = (resources.co2.annualEmissions - cdr).toFixed(1);
 
 console.log(
@@ -46,9 +46,9 @@ const result = engine.run(initialState, {
 });
 
 // Print snapshots
-for (const snapshot of result.snapshots) {
-  const month = snapshot.currentMonth;
-  const resources = snapshot.resourceEconomy;
+for (const snapshot of result.history) {
+  const month = snapshot.state.currentMonth;
+  const resources = snapshot.state.resourceEconomy;
   const renewablePct = (resources.energy.renewablePercentage * 100).toFixed(1);
   const oilCons = resources.oil.monthlyConsumption.toFixed(3);
   const coalCons = resources.coal.monthlyConsumption.toFixed(3);
@@ -56,7 +56,7 @@ for (const snapshot of result.snapshots) {
   const totalEmissions = resources.co2.annualEmissions.toFixed(1);
 
   // Calculate net emissions (total - CDR)
-  const cdr = snapshot.climateState?.annualCDR ?? 0;
+  const cdr = 0; // CDR tracking not yet implemented
   const netEmissions = (resources.co2.annualEmissions - cdr).toFixed(1);
 
   console.log(
@@ -89,5 +89,5 @@ if (parseFloat(finalEmissions) < initialEmissions * 0.5) {
   console.log('\n❌ FAILURE: Emissions did not reduce');
 }
 
-console.log(`\nFinal outcome: ${finalState.outcome}`);
+console.log(`\nFinal outcome: ${finalState.outcomeMetrics?.activeAttractor || 'IN PROGRESS'}`);
 console.log(`Final mortality: ${(finalState.globalMetrics.totalMortality * 100).toFixed(1)}%`);

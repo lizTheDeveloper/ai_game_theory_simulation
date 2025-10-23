@@ -81,8 +81,8 @@ export function calculateComputeScalingMultiplier(
  */
 export function calculateInfrastructureMultiplier(state: GameState): number {
   // 1. Population constraint (ML expertise)
-  const initialPopulation = 8000000000; // 8B baseline
-  const currentPopulation = state.population?.current || initialPopulation;
+  const initialPopulation = 8000000000; // 8B baseline (8B)
+  const currentPopulation = state.humanPopulationSystem?.population || initialPopulation;
   const populationRatio = currentPopulation / initialPopulation;
 
   // Population decline reduces ML expertise available
@@ -374,9 +374,11 @@ export function selectDimensionToAdvance(
     for (const [dim, weight] of Object.entries(dimensionWeights)) {
       roll -= weight;
       if (roll <= 0) {
+        const currentValue = capabilityProfile[dim as keyof AICapabilityProfile];
+        const valueStr = typeof currentValue === 'number' ? currentValue.toFixed(2) : 'N/A';
         return {
           dimension: dim as any,
-          reason: `Advancing ${dim} capability (current: ${capabilityProfile[dim as keyof AICapabilityProfile]?.toFixed(2)})`
+          reason: `Advancing ${dim} capability (current: ${valueStr})`
         };
       }
     }

@@ -46,7 +46,11 @@ export function initializeSocialAccumulation(): SocialAccumulation {
   return {
     meaningCrisisLevel: 0.22,           // Was 0.15 - Research: WHO 2025 (17-21% youth lonely, 30-40% adults)
     institutionalLegitimacy: 0.65,      // KEEP - Validated (Pew Research 2024)
-    socialCohesion: 0.60,                // KEEP - Validated (AAMCH 2024)
+    socialCohesion: {                    // Multi-Paradigm DUI object structure (Phase 4-6)
+      trust: 60,                         // [0-100] AAMCH 2024 baseline
+      communityBonds: 60,                // [0-100] AAMCH 2024 baseline
+      civilLiberties: 50,                // [0-100] Freedom House 2024 global average
+    },
     culturalAdaptation: 0.10,            // KEEP - Correct for 2025 (minimal post-work culture)
     meaningCollapseActive: false,
     institutionalFailureActive: false,
@@ -189,10 +193,13 @@ export function updateSocialAccumulation(
     cohesionRecoveryRate += 0.005; // Abundance reduces zero-sum mindset
   }
   
-  // Apply cohesion change
-  const currentCohesion = isNaN(social.socialCohesion) ? 0.7 : social.socialCohesion;
-  social.socialCohesion = Math.max(0, Math.min(1,
-    currentCohesion - cohesionLossRate + cohesionRecoveryRate
+  // Apply cohesion change (to trust and community bonds, on 0-100 scale)
+  const cohesionChange = (cohesionRecoveryRate - cohesionLossRate) * 100; // Convert to 0-100 scale
+  social.socialCohesion.trust = Math.max(0, Math.min(100,
+    social.socialCohesion.trust + cohesionChange
+  ));
+  social.socialCohesion.communityBonds = Math.max(0, Math.min(100,
+    social.socialCohesion.communityBonds + cohesionChange
   ));
 
   // === DISASTER COOPERATION BOOST (Evidence-Based Recovery, Oct 17, 2025) ===
@@ -205,8 +212,10 @@ export function updateSocialAccumulation(
     const boostMagnitude = 0.20; // 20% boost (mid-range of 15-30% research-backed range)
     const boost = boostMagnitude * Math.exp(-monthsSince / 12); // Exponential decay
 
-    // Apply cooperation boost to social cohesion
-    social.socialCohesion = Math.min(1, social.socialCohesion + boost);
+    // Apply cooperation boost to social cohesion components (disasters build solidarity)
+    const cohesionBoost = boost * 100; // Convert to 0-100 scale
+    social.socialCohesion.trust = Math.min(100, social.socialCohesion.trust + cohesionBoost);
+    social.socialCohesion.communityBonds = Math.min(100, social.socialCohesion.communityBonds + cohesionBoost);
 
     // Apply emergency mobilization boost to government effectiveness
     state.government.legitimacy = Math.min(1, state.government.legitimacy + boost * 1.5);
@@ -284,7 +293,10 @@ export function updateSocialAccumulation(
       const cascadeSize = Math.min(cascadePotential / 100, 0.4); // Max 40% mobilization
 
       // Rapid social cohesion increase (people discover they're not alone)
-      social.socialCohesion = Math.min(1.0, social.socialCohesion + cascadeSize);
+      const cascadeBoost = cascadeSize * 100; // Convert to 0-100 scale
+      social.socialCohesion.trust = Math.min(100, social.socialCohesion.trust + cascadeBoost);
+      social.socialCohesion.communityBonds = Math.min(100, social.socialCohesion.communityBonds + cascadeBoost);
+      social.socialCohesion.civilLiberties = Math.min(100, social.socialCohesion.civilLiberties + cascadeBoost);
 
       // Institutional legitimacy shifts based on government response
       const governmentResponse = state.government.governmentType === 'authoritarian' ? -cascadeSize * 0.5 : cascadeSize * 0.3;
@@ -629,8 +641,11 @@ function calculateAIPerformance(state: GameState): number {
   const trendBonus = qolTrend > 0 ? Math.min(0.05, qolTrend * 0.5) : 0;
 
   // Reliability: no major failures in last 12 months
-  // Note: significantEvents tracking not yet implemented
-  const recentFailures = 0;
+  const recentFailures = state.eventLog.filter(
+    event => event.type === 'crisis' &&
+             event.agent.startsWith('ai-') && // AI-caused crisis
+             state.currentMonth - event.timestamp < 12
+  ).length;
 
   const reliabilityBonus = Math.max(0, 0.10 - (recentFailures * 0.02));
 
@@ -645,8 +660,11 @@ function calculateAIPerformance(state: GameState): number {
  */
 function calculateSafetyRecord(state: GameState): number {
   // Check for recent safety incidents in event log
-  // Note: significantEvents tracking not yet implemented
-  const recentIncidents = 0;
+  const recentIncidents = state.eventLog.filter(
+    event => event.type === 'crisis' &&
+             event.agent.startsWith('ai-') && // AI-caused incident
+             state.currentMonth - event.timestamp < 12
+  ).length;
 
   // No incidents in last 12 months = full trust (0.15)
   // Each incident reduces trust
@@ -767,8 +785,11 @@ export function updateTrustRecovery(state: GameState): void {
   state.globalMetrics.previousQoL = state.globalMetrics.qualityOfLife;
 
   // 3. Safety record (+1.5%/month with no incidents for 6+ months)
-  // Note: significantEvents tracking not yet implemented
-  const recentIncidents = 0;
+  const recentIncidents = state.eventLog.filter(
+    event => event.type === 'crisis' &&
+             event.agent.startsWith('ai-') &&
+             state.currentMonth - event.timestamp < 6
+  ).length;
 
   if (recentIncidents === 0) {
     baseTrustChange += TRUST_RECOVERY_FROM_SAFETY_RECORD;
@@ -785,8 +806,11 @@ export function updateTrustRecovery(state: GameState): void {
   // === DECAY FACTORS ===
 
   // 1. Safety incidents (-3% per incident)
-  // Note: significantEvents tracking not yet implemented
-  const currentMonthIncidents = 0;
+  const currentMonthIncidents = state.eventLog.filter(
+    event => event.type === 'crisis' &&
+             event.agent.startsWith('ai-') &&
+             event.timestamp === state.currentMonth
+  ).length;
   baseTrustChange -= currentMonthIncidents * TRUST_DECAY_FROM_INCIDENT;
 
   // 2. Detected misalignment (-2% per detection)

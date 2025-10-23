@@ -44,9 +44,24 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
     // Use existing socialAccumulation structure
     const accumulation = state.socialAccumulation;
 
-    // Track social cohesion components locally (will aggregate into state.socialAccumulation.socialCohesion)
-    let trust = accumulation.socialCohesion * 100; // Convert [0,1] to [0,100] for calculation
-    let communityBonds = accumulation.socialCohesion * 100;
+    // Initialize socialCohesion as object if not present
+    if (typeof accumulation.socialCohesion === 'number' || !accumulation.socialCohesion) {
+      const baseValue = typeof accumulation.socialCohesion === 'number'
+        ? accumulation.socialCohesion * 100
+        : 50;
+      accumulation.socialCohesion = {
+        trust: baseValue,
+        communityBonds: baseValue,
+        civilLiberties: baseValue,
+      };
+      if (state.currentMonth === 0) {
+        console.log('🤝 SocialCohesionUpdatePhase: Initialized socialCohesion object structure');
+      }
+    }
+
+    // Read current values from object
+    let trust = accumulation.socialCohesion.trust;
+    let communityBonds = accumulation.socialCohesion.communityBonds;
 
     // Calculate driving factors
     const inequality = calculateInequality(state);
@@ -88,10 +103,10 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
       accumulation.meaningCrisisLevel + (meaningChange / 100)
     ));
 
-    // Update aggregate social cohesion from trust and community bonds
-    accumulation.socialCohesion = Math.max(0, Math.min(1,
-      (trust + communityBonds) / 200 // Average of the two, normalized to [0,1]
-    ));
+    // Update individual social cohesion components (object structure for Multi-Paradigm DUI)
+    accumulation.socialCohesion.trust = trust;
+    accumulation.socialCohesion.communityBonds = communityBonds;
+    // Note: civilLiberties is updated by DemocracyDynamicsPhase
 
     const events: string[] = [];
 
