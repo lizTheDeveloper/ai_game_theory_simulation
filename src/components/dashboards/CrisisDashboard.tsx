@@ -105,39 +105,41 @@ export function CrisisDashboard() {
     }
 
     // Planetary Boundaries
-    if (currentState.planetaryBoundaries) {
-      const pb = currentState.planetaryBoundaries
+    if (currentState.planetaryBoundariesSystem) {
+      const pb = currentState.planetaryBoundariesSystem.boundaries
 
       // Climate
-      if (pb.climateChange) {
+      if (pb.climate_change) {
+        const isBreached = pb.climate_change.status === 'beyond_boundary' || pb.climate_change.status === 'high_risk'
         crisisList.push({
           id: 'climate',
           name: 'Climate Change',
           type: 'Planetary Boundary',
-          active: pb.climateChange.current > pb.climateChange.threshold,
-          severity: pb.climateChange.current > pb.climateChange.threshold * 1.5 ? 'critical' :
-                   pb.climateChange.current > pb.climateChange.threshold ? 'warning' : 'normal',
+          active: isBreached,
+          severity: pb.climate_change.status === 'high_risk' ? 'critical' :
+                   isBreached ? 'warning' : 'normal',
           metrics: {
-            'Current': (pb.climateChange.current * 100).toFixed(0) + '%',
-            'Threshold': (pb.climateChange.threshold * 100).toFixed(0) + '%',
-            'Status': pb.climateChange.current > pb.climateChange.threshold ? 'Breached' : 'Safe',
+            'Current': (pb.climate_change.currentValue * 100).toFixed(0) + '%',
+            'Threshold': (pb.climate_change.boundaryThreshold * 100).toFixed(0) + '%',
+            'Status': isBreached ? 'Breached' : 'Safe',
           }
         })
       }
 
       // Biodiversity
-      if (pb.biosphereIntegrity) {
+      if (pb.biosphere_integrity) {
+        const isBreached = pb.biosphere_integrity.status === 'beyond_boundary' || pb.biosphere_integrity.status === 'high_risk'
         crisisList.push({
           id: 'biodiversity',
           name: 'Biodiversity Loss',
           type: 'Planetary Boundary',
-          active: pb.biosphereIntegrity.current < pb.biosphereIntegrity.threshold,
-          severity: pb.biosphereIntegrity.current < pb.biosphereIntegrity.threshold * 0.5 ? 'critical' :
-                   pb.biosphereIntegrity.current < pb.biosphereIntegrity.threshold ? 'warning' : 'normal',
+          active: isBreached,
+          severity: pb.biosphere_integrity.status === 'high_risk' ? 'critical' :
+                   isBreached ? 'warning' : 'normal',
           metrics: {
-            'Integrity': (pb.biosphereIntegrity.current * 100).toFixed(0) + '%',
-            'Threshold': (pb.biosphereIntegrity.threshold * 100).toFixed(0) + '%',
-            'Status': pb.biosphereIntegrity.current < pb.biosphereIntegrity.threshold ? 'Breached' : 'Safe',
+            'Integrity': (pb.biosphere_integrity.currentValue * 100).toFixed(0) + '%',
+            'Threshold': (pb.biosphere_integrity.boundaryThreshold * 100).toFixed(0) + '%',
+            'Status': isBreached ? 'Breached' : 'Safe',
           }
         })
       }
