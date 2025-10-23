@@ -60,7 +60,7 @@ async function runTimedSimulation() {
   console.log(`   Total: ${(timings.total / 1000).toFixed(2)}s\n`);
 
   // Calculate per-month averages
-  const actualMonths = state.month ?? runResult.summary?.totalMonths ?? 0;
+  const actualMonths = state.currentMonth ?? runResult.summary?.totalMonths ?? 0;
   console.log('📊 Per-Month Statistics:');
   if (actualMonths > 0) {
     const avgMonth = timings.simulation / actualMonths;
@@ -68,7 +68,7 @@ async function runTimedSimulation() {
     console.log(`   Average: ${avgMonth.toFixed(2)}ms/month`);
     console.log(`   Throughput: ${(1000 / avgMonth).toFixed(1)} months/second\n`);
   } else {
-    console.log(`   ⚠️ No months completed (state.month=${state.month}, summary.totalMonths=${runResult.summary?.totalMonths})\n`);
+    console.log(`   ⚠️ No months completed (state.currentMonth=${state.currentMonth}, summary.totalMonths=${runResult.summary?.totalMonths})\n`);
   }
 
   // Extrapolation for N=100
@@ -86,9 +86,9 @@ async function runTimedSimulation() {
 
   // Final outcome
   console.log('🎯 Final Outcome:');
-  console.log(`   Month: ${state.month ?? runResult.summary.totalMonths}`);
+  console.log(`   Month: ${state.currentMonth ?? runResult.summary.totalMonths}`);
   const outcomeType = state.extinctionState?.extinct ? 'EXTINCTION' :
-                     (state.outcomeState?.type || runResult.summary.finalOutcome || 'IN_PROGRESS');
+                     (state.outcomeMetrics?.activeAttractor || runResult.summary.finalOutcome || 'IN_PROGRESS');
   console.log(`   Outcome: ${outcomeType}`);
   console.log(`   Outcome Reason: ${runResult.summary.finalOutcomeReason || 'N/A'}`);
 
@@ -101,9 +101,9 @@ async function runTimedSimulation() {
     console.log(`   Month triggered: ${state.extinctionState.monthTriggered || 'unknown'}`);
 
     // Death attribution
-    if (state.deathAttribution) {
+    if (state.humanPopulationSystem?.deathsByCategory) {
       console.log(`\n   Top proximate causes:`);
-      const proximate = state.deathAttribution.proximate;
+      const proximate = state.humanPopulationSystem.deathsByCategory;
       const topCauses = Object.entries(proximate)
         .sort(([,a], [,b]) => (b as number) - (a as number))
         .slice(0, 3);

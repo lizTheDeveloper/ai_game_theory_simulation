@@ -191,7 +191,7 @@ export class DiagnosticLogger {
     
     // Log interventions
     events.forEach(event => {
-      if (event.type === 'action' || event.type === 'policy') {
+      if (event.type === 'action') {
         this.logIntervention(state, event);
       }
     });
@@ -249,32 +249,32 @@ export class DiagnosticLogger {
   private captureSystemSnapshots(state: GameState, month: number): void {
     // Population dynamics
     const pop = state.humanPopulationSystem;
-    const deaths = state.deathTracking || {};
+    const deaths = pop.deathsByRootCause || {};
     this.populationSnapshots.push({
       month,
       population: pop.population,
       birthRate: pop.adjustedBirthRate || 0,
       deathRate: pop.adjustedDeathRate || 0,
-      mortalityByEnvironment: deaths.environmental || 0,
-      mortalityByFamine: deaths.famine || 0,
-      mortalityByDisease: deaths.disease || 0,
+      mortalityByEnvironment: (deaths.climate || 0) + (deaths.ecosystem || 0) + (deaths.pollution || 0),
+      mortalityByFamine: deaths.resource || 0,
+      mortalityByDisease: deaths.pandemic || 0,
       mortalityByConflict: deaths.conflict || 0,
       netGrowthRate: (pop.adjustedBirthRate || 0) - (pop.adjustedDeathRate || 0)
     });
 
     // Resource systems
     const env = state.environmentalAccumulation || {};
+    const resources = state.resourceEconomy;
     const boundaries = state.planetaryBoundariesSystem || {};
-    const foodBoundary = boundaries.boundaries?.freshwater || {};
     this.resourceSnapshots.push({
       month,
-      foodStock: foodBoundary.currentStock || 0,
-      waterStock: boundaries.boundaries?.freshwater?.currentStock || 0,
+      foodStock: resources.food.reserves || 0,
+      waterStock: resources.water.reserves || 0,
       energyStock: state.computeInfrastructure?.totalEnergyCapacity || 0,
-      foodDepletion: foodBoundary.monthlyDepletion || 0,
-      waterDepletion: boundaries.boundaries?.freshwater?.monthlyDepletion || 0,
+      foodDepletion: resources.food.monthlyHarvest || 0,
+      waterDepletion: resources.water.monthlyHarvest || 0,
       energyDepletion: state.computeInfrastructure?.energyConsumptionRate || 0,
-      foodSecurity: env.foodSecurity || 0
+      foodSecurity: state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity || 0
     });
 
     // Environmental systems
@@ -305,9 +305,9 @@ export class DiagnosticLogger {
       month,
       cascadeActive: cascade.cascadeActive || false,
       cascadeSeverity: cascade.cascadeSeverity || 0,
-      activeCrises: cascade.activeCrises || 0,
+      activeCrises: cascade.boundariesBreached || 0,
       monthsSinceTrigger: cascade.cascadeActive ? month - (cascade.cascadeStartMonth || month) : 0,
-      cumulativeDeaths: deaths.total || 0
+      cumulativeDeaths: pop.cumulativeCrisisDeaths || 0
     });
   }
   
@@ -932,7 +932,7 @@ export function formatDeterminismReport(analysis: ReturnType<typeof analyzeDeter
       lines.push(`\n🔴 ${system} System (${deterministic.length} deterministic metrics):`);
       for (const a of deterministic) {
         lines.push(`   Month ${a.month}: ${a.metric}`);
-        lines.push(`      Mean: ${a.mean.toFixed(4)}, StdDev: ${a.stdDev.toFixed(6)}, CV: ${(a.cv * 100).toFixed(2)}%`);
+        lines.push(`      Mean: ${a.mean.toFixed(4)}, StdDev: ${a.stdDev.toFixed(6)}, CV: ${(a.coefficientOfVariation * 100).toFixed(2)}%`);
         lines.push(`      Values: ${a.values.slice(0, 5).map(v => v.toFixed(4)).join(', ')}${a.values.length > 5 ? '...' : ''}`);
       }
     }

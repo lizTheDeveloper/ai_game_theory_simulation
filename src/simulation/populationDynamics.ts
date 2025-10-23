@@ -154,10 +154,10 @@ export function updateHumanPopulation(state: GameState): void {
   const climateModifier = isNaN(env.climateStability) ? 0.5 : env.climateStability; // 1.0 = normal, 0 = uninhabitable
 
   // Resource modifier: need food AND water
-  const foodStock = isNaN(resources.food.currentStock) ? 100 : resources.food.currentStock;
-  const waterStock = isNaN(resources.water.currentStock) ? 100 : resources.water.currentStock;
-  const foodAvailability = Math.min(1.0, foodStock / 100);
-  const waterAvailability = Math.min(1.0, waterStock / 100);
+  const foodStock = isNaN(resources.food.reserves) ? 1.0 : resources.food.reserves;
+  const waterStock = isNaN(resources.water.reserves) ? 1.0 : resources.water.reserves;
+  const foodAvailability = Math.min(1.0, foodStock);
+  const waterAvailability = Math.min(1.0, waterStock);
   const resourceModifier = Math.min(foodAvailability, waterAvailability);
 
   // Ecosystem modifier: ecosystem services support humans
@@ -413,9 +413,9 @@ export function updateHumanPopulation(state: GameState): void {
     const govShare = governanceShare / totalShares;
 
     // Apply proportional attribution
-    pop.deathsByRootCause.climateChange += overshootDeaths * climateShare;
-    pop.deathsByRootCause.poverty += overshootDeaths * povertyShare;
-    pop.deathsByRootCause.governance += overshootDeaths * govShare;
+    pop.deathsByRootCause.climate += overshootDeaths * climateShare;
+    pop.deathsByRootCause.inequality += overshootDeaths * povertyShare;
+    pop.deathsByRootCause.social += overshootDeaths * govShare;
 
     // Log significant overshoot events with attribution breakdown
     if (overshootDeaths > 0.001 && state.currentMonth % 12 === 0) { // >1M deaths, log annually
@@ -451,7 +451,7 @@ export function updateHumanPopulation(state: GameState): void {
 
   // ROOT CAUSES (why it happened) - environmental deaths are climate-driven
   const totalEnvDeaths = envFamineDeaths + envDiseaseDeaths + envDisasterDeaths + envEcosystemDeaths + envPollutionDeaths;
-  pop.deathsByRootCause.climateChange += totalEnvDeaths;
+  pop.deathsByRootCause.climate += totalEnvDeaths;
 
   // DEBUG (P1.1 - Death Accounting): Log death tracking mismatch
   if (state.currentMonth % 12 === 0 && actualDeaths > 0.1) { // Log annually when deaths >100M

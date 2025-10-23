@@ -856,30 +856,30 @@ export class SimulationEngine {
         finalOutcomeProbability = 1.0;
 
         // Add multi-paradigm classification for nuance (if available)
-        const paradigmScores = state.multiParadigmDUI?.currentScores;
+        const paradigmScores = state.multiParadigmDUI?.paradigmScores;
         const paradigmOutcome = paradigmScores ? classifyMultiParadigmOutcome(paradigmScores) : null;
 
         console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - ${finalPopulation.toFixed(2)}B people`);
         if (paradigmOutcome && paradigmScores) {
           console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
-          console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
-          console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
-          console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
-          console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+          console.log(`      Western Liberal: ${paradigmScores.western.value.toFixed(1)}/100`);
+          console.log(`      Development: ${paradigmScores.development.value.toFixed(1)}/100`);
+          console.log(`      Ecological: ${paradigmScores.ecological.value.toFixed(1)}/100`);
+          console.log(`      Indigenous: ${state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value?.toFixed(1) || 'N/A'}/100`);
         }
         console.log('');
       } else {
         // STATUS QUO (0-10% mortality) - Check for utopia/dystopia via upward spirals
         // Use upward spiral state as primary indicator of utopia vs status quo
-        const hasActiveSpirals = state.upwardSpirals?.abundanceSpiral?.isActive ||
-                                 state.upwardSpirals?.cognitiveSpiral?.isActive ||
-                                 state.upwardSpirals?.democraticSpiral?.isActive;
+        const hasActiveSpirals = state.upwardSpirals?.abundance?.active ||
+                                 state.upwardSpirals?.cognitive?.active ||
+                                 state.upwardSpirals?.democratic?.active;
 
-        const hasSustainableAbundance = state.upwardSpirals?.abundanceSpiral?.isActive &&
-                                       state.upwardSpirals?.abundanceSpiral?.monthsActive >= 12;
+        const hasSustainableAbundance = state.upwardSpirals?.abundance?.active &&
+                                       state.upwardSpirals?.abundance?.monthsActive >= 12;
 
         // Add multi-paradigm classification (if available)
-        const paradigmScores = state.multiParadigmDUI?.currentScores;
+        const paradigmScores = state.multiParadigmDUI?.paradigmScores;
         const paradigmOutcome = paradigmScores ? classifyMultiParadigmOutcome(paradigmScores) : null;
 
         if (hasSustainableAbundance || (paradigmOutcome && paradigmOutcome.utopiasCount >= 3)) {
@@ -890,10 +890,10 @@ export class SimulationEngine {
           console.log(`   🌟 UTOPIA achieved - ${finalPopulation.toFixed(2)}B people`);
           if (paradigmOutcome && paradigmScores) {
             console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
-            console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
-            console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
-            console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
-            console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+            console.log(`      Western Liberal: ${paradigmScores.western.value.toFixed(1)}/100`);
+            console.log(`      Development: ${paradigmScores.development.value.toFixed(1)}/100`);
+            console.log(`      Ecological: ${paradigmScores.ecological.value.toFixed(1)}/100`);
+            console.log(`      Indigenous: ${state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value?.toFixed(1) || 'N/A'}/100`);
           }
           console.log('');
         } else if ((paradigmOutcome && paradigmOutcome.dystopiasCount >= 2) || hasActiveSpirals === false) {
@@ -904,10 +904,10 @@ export class SimulationEngine {
           console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - ${finalPopulation.toFixed(2)}B people`);
           if (paradigmOutcome && paradigmScores) {
             console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
-            console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
-            console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
-            console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
-            console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+            console.log(`      Western Liberal: ${paradigmScores.western.value.toFixed(1)}/100`);
+            console.log(`      Development: ${paradigmScores.development.value.toFixed(1)}/100`);
+            console.log(`      Ecological: ${paradigmScores.ecological.value.toFixed(1)}/100`);
+            console.log(`      Indigenous: ${state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value?.toFixed(1) || 'N/A'}/100`);
           }
           console.log('');
         } else {
@@ -918,10 +918,10 @@ export class SimulationEngine {
           console.log(`   ❓ INCONCLUSIVE - mixed signals`);
           if (paradigmOutcome && paradigmScores) {
             console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
-            console.log(`      Western Liberal: ${paradigmScores.western.toFixed(1)}/100`);
-            console.log(`      Development: ${paradigmScores.development.toFixed(1)}/100`);
-            console.log(`      Ecological: ${paradigmScores.ecological.toFixed(1)}/100`);
-            console.log(`      Indigenous: ${paradigmScores.indigenous.toFixed(1)}/100`);
+            console.log(`      Western Liberal: ${paradigmScores.western.value.toFixed(1)}/100`);
+            console.log(`      Development: ${paradigmScores.development.value.toFixed(1)}/100`);
+            console.log(`      Ecological: ${paradigmScores.ecological.value.toFixed(1)}/100`);
+            console.log(`      Indigenous: ${state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value?.toFixed(1) || 'N/A'}/100`);
           }
           console.log('');
         }

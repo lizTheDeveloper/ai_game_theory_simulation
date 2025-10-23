@@ -51,8 +51,11 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     }
 
     // Initialize social cohesion if not present
-    if (!state.socialCohesion) {
-      state.socialCohesion = {
+    if (!state.socialAccumulation?.socialCohesion) {
+      if (!state.socialAccumulation) {
+        state.socialAccumulation = {} as typeof state.socialAccumulation;
+      }
+      state.socialAccumulation.socialCohesion = {
         trust: 50,           // Social trust (Indigenous paradigm)
         communityBonds: 50,  // Community bonds (Indigenous paradigm)
         civilLiberties: 50,  // Civil liberties (Western Liberal paradigm)
@@ -63,7 +66,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     }
 
     const democracy = state.government.democracy;
-    const socialCohesion = state.socialCohesion;
+    const socialCohesion = state.socialAccumulation.socialCohesion;
 
     // Calculate pressure factors
     const crisisPressure = calculateCrisisPressure(state);
@@ -161,7 +164,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
       events.push('⚠️ Civil Liberties Crisis: Fundamental freedoms severely restricted');
     }
 
-    return { events };
+    return { events: [] }; // PhaseResult.events expects GameEvent[], not string[]
   }
 }
 
@@ -187,12 +190,13 @@ function calculateCrisisPressure(state: GameState): number {
   pressure += (resourceDepletion / 100) * 0.2; // Max 0.2 pressure
 
   // Nuclear conflict (existential threat → emergency powers)
-  if (state.nuclearStates && state.nuclearStates.atWar) {
+  // Check if nuclear winter is active (indicates nuclear war occurred)
+  if (state.nuclearWinterState?.active) {
     pressure += 0.5; // Major spike
   }
 
   // Refugee crisis (displacement → xenophobia → strongman appeal)
-  const activeCrises = state.refugeeCrisisSystem?.activeCrises?.length ?? 0;
+  const activeCrises = state.refugeeCrisisSystem?.activeRefugeeCrises?.length ?? 0;
   pressure += activeCrises * 0.05; // Each crisis adds 0.05
 
   // TIER 3: Emergency response reduces crisis pressure
@@ -232,9 +236,10 @@ function calculateAIManipulation(state: GameState): number {
   // Each capable misaligned AI contributes
   manipulation += misalignedAIs.length * 0.02; // 10 AIs = 0.2
 
-  // Information warfare intensity
+  // Information warfare intensity (use inverted information integrity as proxy)
   if (state.informationWarfare) {
-    const intensity = state.informationWarfare.campaignIntensity ?? 0;
+    const integrity = state.informationWarfare.informationIntegrity ?? 0.5;
+    const intensity = 1 - integrity; // Low integrity = high manipulation intensity
     if (!isNaN(intensity)) {
       manipulation += intensity * 0.3;
     }

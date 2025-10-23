@@ -268,12 +268,12 @@ function updateTier1Metrics(state: GameState, metrics: CountrySufferingMetrics):
   tier1Metrics.conflictDeathsPer100K = (warDeaths / (metrics.population * 1_000_000_000)) * 100_000;
 
   // Acute malnutrition (from famine system)
-  const famineAffected = state.famineSystem?.populationAtRisk || 0;
+  const famineAffected = state.famineSystem?.activeFamines.reduce((sum, f) => sum + f.populationAtRisk, 0) || 0;
   tier1Metrics.ipcPhase3Plus = famineAffected;
   tier1Metrics.acuteMalnutritionPrevalence = famineAffected / (metrics.population * 1_000_000_000);
 
   // Check for catastrophic famine (IPC Phase 5)
-  const isFamineActive = state.famineSystem?.famineTriggers?.some(t => t.active) || false;
+  const isFamineActive = (state.famineSystem?.activeFamines.length || 0) > 0;
   tier1Metrics.ipcPhase5Catastrophic = isFamineActive ? famineAffected * 0.2 : 0; // ~20% in Phase 5 during famine
 
   // Forced displacement (from refugee crisis system)
@@ -312,9 +312,9 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
   tier2Indicators.environmentalCollapseActive = boundaries >= system.thresholds.planetaryBoundariesThreshold;
 
   // Food crisis (from famine system)
-  const famineAffected = state.famineSystem?.populationAtRisk || 0;
-  tier2Indicators.foodCrisisPopulation = famineAffected;
-  tier2Indicators.foodCrisisActive = (famineAffected / (metrics.population * 1_000_000_000)) >= system.thresholds.foodCrisisThreshold;
+  const famineAffectedTier2 = state.famineSystem?.activeFamines.reduce((sum, f) => sum + f.populationAtRisk, 0) || 0;
+  tier2Indicators.foodCrisisPopulation = famineAffectedTier2;
+  tier2Indicators.foodCrisisActive = (famineAffectedTier2 / (metrics.population * 1_000_000_000)) >= system.thresholds.foodCrisisThreshold;
 
   // Electoral democracy (estimate from government trust + freedom)
   // V-Dem EDI scale: 0 (autocracy) to 1 (democracy)

@@ -32,7 +32,7 @@ export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
     // Debug logging for first month
     if (state.currentMonth === 0) {
       console.log(`🌍 MultiParadigm Month 0: W=${scores.western.toFixed(1)}, D=${scores.development.toFixed(1)}, E=${scores.ecological.toFixed(1)}, I=${scores.indigenous.toFixed(1)}`);
-      console.log(`   democracy exists: ${!!state.government.democracy}, socialCohesion exists: ${!!state.socialCohesion}`);
+      console.log(`   democracy exists: ${!!state.government.democracy}, socialCohesion exists: ${!!state.socialAccumulation?.socialCohesion}`);
     }
 
     // Update paradigm scores
@@ -60,7 +60,7 @@ export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
     state.globalMetrics.dystopiaUtopiaIndex = scores.development;
 
     return {
-      events: [`Multi-Paradigm DUI updated: W=${scores.western.toFixed(1)} D=${scores.development.toFixed(1)} E=${scores.ecological.toFixed(1)} I=${scores.indigenous.toFixed(1)}`],
+      events: [], // PhaseResult.events expects GameEvent[], not string[]
     };
   }
 }
@@ -117,7 +117,7 @@ function calculateWesternLiberal(state: GameState): number {
   const electoralDemocracy = (state.government.democracy?.electoralDemocracyIndex ?? 0.5) * 100;
 
   // Civil Liberties (0-100)
-  const civilLiberties = state.socialCohesion?.civilLiberties ?? 50;
+  const civilLiberties = state.socialAccumulation?.socialCohesion?.civilLiberties ?? 50;
 
   // Rule of Law (0-100)
   const ruleOfLaw = state.government.democracy?.ruleOfLaw ?? 50;
@@ -250,11 +250,11 @@ function calculateEcological(state: GameState): number {
   const resourceScore = 100 - resourceDepletion;
 
   // Climate Stability (temperature anomaly, 0-2°C → 100-0)
-  const temperatureAnomaly = state.environmental?.climateState?.globalTemperatureAnomaly ?? 1.0;
+  const temperatureAnomaly = state.environmentalAccumulation?.climateState?.globalTemperatureAnomaly ?? 1.0;
   const climateScore = Math.max(0, 100 - (temperatureAnomaly / 2.0) * 100);
 
   // Pollution (0-100, inverted)
-  const pollutionLevel = state.environmental?.pollutionLevel ?? 40;
+  const pollutionLevel = state.environmentalAccumulation?.pollutionLevel ?? 40;
   const pollutionScore = 100 - pollutionLevel;
 
   // Geometric mean
@@ -283,10 +283,10 @@ function calculateIndigenous(state: GameState): number {
   const MIN_FLOOR = 0.1;
 
   // Social Trust (0-100)
-  const socialTrust = state.socialCohesion?.trust ?? 50;
+  const socialTrust = state.socialAccumulation?.socialCohesion?.trust ?? 50;
 
   // Community Bonds (0-100)
-  const communityBonds = state.socialCohesion?.communityBonds ?? 50;
+  const communityBonds = state.socialAccumulation?.socialCohesion?.communityBonds ?? 50;
 
   // Meaning Crisis (0-100, inverted)
   const meaningCrisis = state.socialAccumulation?.meaningCrisis ?? 50;

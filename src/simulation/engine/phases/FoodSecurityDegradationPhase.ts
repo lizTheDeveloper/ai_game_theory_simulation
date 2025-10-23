@@ -29,11 +29,11 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     // Degradation rates are monthly (1-15% per month) - no need to gate on day
 
     // Only degrade if survivalFundamentals exists
-    if (!state.survivalFundamentals) {
+    if (!state.qualityOfLifeSystems?.survivalFundamentals) {
       return { events: [] };
     }
 
-    const currentFoodSec = state.survivalFundamentals.foodSecurity;
+    const currentFoodSec = state.qualityOfLifeSystems.survivalFundamentals.foodSecurity;
 
     // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
     // This happens EVERY MONTH when crises are active, not just during cascades
@@ -43,9 +43,9 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
 
     // Count active crises (multiple systems can fail simultaneously)
     const activeCrises = [
-      state.crises?.phosphorusCrisis?.active ? 1 : 0,
-      state.crises?.freshwaterCrisis?.active ? 1 : 0,
-      state.crises?.biodiversityCrisis?.active ? 1 : 0,
+      (state.phosphorusSystem?.reserves ?? 1.0) < 0.3 ? 1 : 0,  // Phosphorus crisis when reserves < 30%
+      (state.freshwaterSystem?.blueWater?.groundwater ?? 1.0) < 0.3 ? 1 : 0,  // Freshwater crisis when groundwater < 30%
+      (state.biodiversitySystem?.globalBiodiversityIndex ?? 0.5) < 0.3 ? 1 : 0,  // Biodiversity crisis when BLI < 30%
       state.environmentalAccumulation?.tipSurpassed ? 1 : 0,
       state.planetaryBoundariesSystem?.cascadeActive ? 1 : 0,
     ].reduce((sum, c) => sum + c, 0);
@@ -60,7 +60,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     // Apply degradation (cap at 15% per month to prevent unrealistic spikes)
     degradationRate = Math.min(0.15, degradationRate);
     const newFoodSec = Math.max(0, currentFoodSec * (1 - degradationRate));
-    state.survivalFundamentals.foodSecurity = newFoodSec;
+    state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = newFoodSec;
 
     // DEBUG: Log every month to verify phase is running
     if (state.currentMonth % 12 === 0) {

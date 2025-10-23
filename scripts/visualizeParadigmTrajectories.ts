@@ -185,7 +185,7 @@ function visualizeHeatmap(trajectoryData: any[]) {
   // Sample at quartiles
   const numQuartiles = 8;
   const step = Math.max(1, Math.floor(trajectoryData.length / numQuartiles));
-  const samples = [];
+  const samples: any[] = [];
 
   for (let i = 0; i < trajectoryData.length; i += step) {
     samples.push(trajectoryData[i]);

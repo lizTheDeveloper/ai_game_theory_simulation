@@ -48,12 +48,12 @@ export function calculateSurvivalFundamentals(state: GameState): QualityOfLifeSy
  */
 export function calculateFoodSecurity(state: GameState): number {
   const resources = state.resourceEconomy;
-  const phosphorus = state.phosphorusDepletion;
-  const ocean = state.oceanAcidification;
-  const freshwater = state.freshwaterDepletion;
+  const phosphorus = state.phosphorusSystem;
+  const ocean = state.oceanAcidificationSystem;
+  const freshwater = state.freshwaterSystem;
 
   // Base food availability from resource stocks
-  let foodSecurity = Math.min(1.0, resources.food.currentStock / 100);
+  let foodSecurity = Math.min(1.0, resources.food.reserves);
 
   // Phase 1B Refinement (Oct 17, 2025): Food production requires human infrastructure
   // Research: Tainter (1988) - complexity requires minimum population to maintain
@@ -169,7 +169,7 @@ export function calculateFoodSecurity(state: GameState): number {
  */
 export function calculateWaterSecurity(state: GameState): number {
   const resources = state.resourceEconomy;
-  const freshwater = state.freshwaterDepletion;
+  const freshwater = state.freshwaterSystem;
 
   // Base water availability from resource stocks
   let waterSecurity = Math.min(1.0, resources.water.reserves);
@@ -182,8 +182,8 @@ export function calculateWaterSecurity(state: GameState): number {
   }
 
   // Peak Groundwater = declining availability
-  if (freshwater && freshwater.peakGroundwater.active) {
-    const depletionRate = freshwater.peakGroundwater.depletionRate;
+  if (freshwater && freshwater.peakGroundwaterReached) {
+    const depletionRate = freshwater.blueWater.depletionRate;
     waterSecurity -= depletionRate * 0.3;
   }
 
@@ -204,8 +204,8 @@ export function calculateWaterSecurity(state: GameState): number {
 
   // === POLLUTION ===
   // Novel entities (PFAS, microplastics) contaminate water supplies
-  if (state.novelEntities && state.novelEntities.pfasConcentration > 70) {
-    const contamination = (state.novelEntities.pfasConcentration - 70) / 30; // 70-100 scale
+  if (state.novelEntitiesSystem && state.novelEntitiesSystem.pfasPrevalence > 0.70) {
+    const contamination = (state.novelEntitiesSystem.pfasPrevalence - 0.70) / 0.30; // 0.70-1.0 scale
     waterSecurity -= contamination * 0.15; // Up to 15% reduction
   }
 
@@ -305,9 +305,9 @@ export function calculateShelterSecurity(state: GameState): number {
 
   // === REFUGEE CRISES ===
   // Displaced populations lose housing
-  if (refugees && refugees.activeCrises) {
-    const totalRefugees = Object.values(refugees.activeCrises)
-      .reduce((sum, crisis) => sum + crisis.totalFled, 0);
+  if (refugees && refugees.activeRefugeeCrises) {
+    const totalRefugees = refugees.activeRefugeeCrises
+      .reduce((sum, crisis) => sum + crisis.displacedPopulation, 0);
     const refugeeFraction = (totalRefugees / 1000) / state.humanPopulationSystem.population; // millions to billions
     shelterSecurity -= refugeeFraction * 0.5; // Refugees have poor shelter access
   }

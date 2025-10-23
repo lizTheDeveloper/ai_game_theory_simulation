@@ -37,31 +37,31 @@ export function calculateVolunteerResearchContribution(state: GameState): number
   
   // 2. RESOURCES: Need UBI (basic needs met, can afford to volunteer)
   if (!state.ubiSystem?.active) return 0;
-  
-  const ubiCoverage = state.ubiSystem.coverage || 0;
+
+  const ubiCoverage = state.ubiSystem.basicIncome?.coverage || 0;
   const resourceSecurity = ubiCoverage; // 0-1.0
-  
+
   // 3. SKILLS: Need purpose infrastructure (education, platforms, tools)
   const purposeInfra = state.ubiSystem.purposeInfrastructure || {
     educationAccess: 0,
     creativeSpaces: 0,
-    volunteerNetworks: 0,
-    socialConnection: 0,
+    volunteerPrograms: 0,
+    socialInfrastructure: 0,
   };
-  
+
   const skillLevel = (
     purposeInfra.educationAccess * 0.4 +      // Education most important
-    purposeInfra.volunteerNetworks * 0.3 +    // Networks enable coordination
+    purposeInfra.volunteerPrograms * 0.3 +    // Volunteer programs enable coordination
     purposeInfra.creativeSpaces * 0.2 +       // Spaces provide tools
-    purposeInfra.socialConnection * 0.1       // Social support helps
+    purposeInfra.socialInfrastructure * 0.1   // Social infrastructure helps
   );
-  
+
   // 4. MOTIVATION: Need low meaning crisis (high purpose, want to help)
-  const meaningCrisis = state.socialAccumulation?.meaningCrisis || 0.5;
+  const meaningCrisis = state.socialAccumulation?.meaningCrisisLevel || 0.5;
   const motivation = Math.max(0, 1.0 - meaningCrisis); // Higher when crisis is low
-  
+
   // 5. POPULATION: More people = more volunteers
-  const population = state.population?.total || 8_000_000_000;
+  const population = state.humanPopulationSystem?.population || 8_000_000_000;
   const populationFactor = population / 8_000_000_000; // Relative to 2025 baseline
   
   // COMBINE FACTORS
@@ -139,24 +139,24 @@ export function logVolunteerContribution(
 function calculateParticipationRate(state: GameState): number {
   const unemployment = state.society?.unemploymentLevel || 0;
   if (unemployment < 0.30) return 0;
-  
-  const ubiCoverage = state.ubiSystem?.coverage || 0;
+
+  const ubiCoverage = state.ubiSystem?.basicIncome?.coverage || 0;
   const purposeInfra = state.ubiSystem?.purposeInfrastructure;
-  
+
   if (!purposeInfra) return 0;
-  
+
   const skillLevel = (
     purposeInfra.educationAccess * 0.4 +
-    purposeInfra.volunteerNetworks * 0.3 +
+    purposeInfra.volunteerPrograms * 0.3 +
     purposeInfra.creativeSpaces * 0.2 +
-    purposeInfra.socialConnection * 0.1
+    purposeInfra.socialInfrastructure * 0.1
   );
-  
-  const meaningCrisis = state.socialAccumulation?.meaningCrisis || 0.5;
+
+  const meaningCrisis = state.socialAccumulation?.meaningCrisisLevel || 0.5;
   const motivation = Math.max(0, 1.0 - meaningCrisis);
-  
+
   const timeAvailable = (unemployment - 0.30) / 0.30;
-  
+
   return timeAvailable * ubiCoverage * skillLevel * motivation * 0.05;
 }
 
@@ -179,12 +179,12 @@ export function applyVolunteerResearchBenefits(state: GameState, volunteerComput
   // -0.5% to -2% meaning crisis per month based on participation
   const meaningReduction = participationRate * 0.04; // Up to -2% at 50% participation
   if (state.socialAccumulation) {
-    state.socialAccumulation.meaningCrisis = Math.max(
+    state.socialAccumulation.meaningCrisisLevel = Math.max(
       0,
-      state.socialAccumulation.meaningCrisis - meaningReduction
+      state.socialAccumulation.meaningCrisisLevel - meaningReduction
     );
   }
-  
+
   // 2. EDUCATION: Learning through contribution
   // People gain skills while doing research
   if (state.ubiSystem?.purposeInfrastructure) {
@@ -194,13 +194,13 @@ export function applyVolunteerResearchBenefits(state: GameState, volunteerComput
       state.ubiSystem.purposeInfrastructure.educationAccess + educationGain
     );
   }
-  
-  // 3. SOCIAL CONNECTION: Working together builds community
+
+  // 3. SOCIAL INFRASTRUCTURE: Working together builds community
   if (state.ubiSystem?.purposeInfrastructure) {
     const socialGain = participationRate * 0.015;
-    state.ubiSystem.purposeInfrastructure.socialConnection = Math.min(
+    state.ubiSystem.purposeInfrastructure.socialInfrastructure = Math.min(
       1.0,
-      state.ubiSystem.purposeInfrastructure.socialConnection + socialGain
+      state.ubiSystem.purposeInfrastructure.socialInfrastructure + socialGain
     );
   }
   

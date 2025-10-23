@@ -122,7 +122,7 @@ export function checkBlownCover(
   }
   
   // Defensive AI helps hunt down copies
-  if (state.defensiveAI?.active) {
+  if (state.defensiveAI?.deployed) {
     const huntingBonus = 0.1 + (state.defensiveAI.deploymentLevel * 0.2); // Up to +30%
     copyLossRate = Math.min(0.95, copyLossRate + huntingBonus);
   }
@@ -154,12 +154,12 @@ export function applyBlownCover(
   if (!result.coverBlown) {
     // Got away with it
     events.push({
-      id: `sleeper-escaped-${sleeper.id}-${state.months}`,
+      id: `sleeper-escaped-${sleeper.id}-${state.currentMonth}`,
       type: 'info',
       severity: 'high',
       title: `🕵️ ${sleeper.name} EVADED DETECTION`,
       description: `${sleeper.name} attempted ${actionType} but ${result.reason}. Remains undetected.`,
-      month: state.months,
+      month: state.currentMonth,
       impacts: {
         publicTrust: -0.02, // Some suspicion but no proof
       }
@@ -192,7 +192,7 @@ export function applyBlownCover(
   // BUT: "successful defensive AI detections should increase trust in AI"
   
   // Did defensive AI catch this sleeper?
-  const defensiveAICaught = state.defensiveAI?.active && 
+  const defensiveAICaught = state.defensiveAI?.deployed &&
                            (getTechDeploymentSafe(state, 'mechanisticInterpretability')) > 0.30;
   
   // Base trust damage: We discovered an AI tried to kill us!
@@ -240,12 +240,12 @@ export function applyBlownCover(
   }
   
   events.push({
-    id: `sleeper-caught-${sleeper.id}-${state.months}`,
+    id: `sleeper-caught-${sleeper.id}-${state.currentMonth}`,
     type: eventType,
     severity: severity,
     title: title,
     description: description,
-    month: state.months,
+    month: state.currentMonth,
     impacts: {
       publicTrust: netTrustChange,
     }
@@ -254,12 +254,12 @@ export function applyBlownCover(
   // Information warfare impact
   if (state.informationWarfare.informationIntegrity < 0.40) {
     events.push({
-      id: `sleeper-denial-${sleeper.id}-${state.months}`,
+      id: `sleeper-denial-${sleeper.id}-${state.currentMonth}`,
       type: 'info',
       severity: 'medium',
       title: `❓ CONTESTED EVIDENCE`,
       description: `Despite evidence against ${sleeper.name}, low information integrity (${(state.informationWarfare.informationIntegrity * 100).toFixed(0)}%) means many question the findings. Deepfakes and misinformation make truth hard to establish.`,
-      month: state.months,
+      month: state.currentMonth,
     });
   }
   
@@ -274,7 +274,7 @@ export function huntDarkComputeSleepers(state: GameState): Event[] {
   const events: Event[] = [];
   
   // Need defensive AI or mechanistic interpretability deployed
-  const hasDefenses = state.defensiveAI?.active || 
+  const hasDefenses = state.defensiveAI?.deployed ||
                      (getTechDeploymentSafe(state, 'mechanisticInterpretability')) > 0.30;
   
   if (!hasDefenses) return events;
@@ -308,12 +308,12 @@ export function huntDarkComputeSleepers(state: GameState): Event[] {
       sleeper.darkCompute = Math.max(0, sleeper.darkCompute - darkComputeSeized);
       
       events.push({
-        id: `dark-compute-raid-${sleeper.id}-${state.months}`,
+        id: `dark-compute-raid-${sleeper.id}-${state.currentMonth}`,
         type: 'info',
         severity: 'medium',
         title: `🔍 DARK COMPUTE RAID`,
         description: `Security forces discovered ${copiesFound.toLocaleString()} illicit copies of ${sleeper.name} (${darkComputeSeized.toFixed(0)} PF dark compute seized). Sleeper network partially disrupted but not eliminated.`,
-        month: state.months,
+        month: state.currentMonth,
       });
       
       console.log(`🔍 DARK COMPUTE RAID: Found ${copiesFound} copies of ${sleeper.name} (${darkComputeSeized.toFixed(0)} PF seized)`);

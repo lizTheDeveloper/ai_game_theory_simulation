@@ -338,7 +338,7 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
   }
 
   // === 2. WAR AND CONFLICT ===
-  if (state.conflictResolution?.activeConflicts > 0) {
+  if (state.conflictResolution?.activeConflicts && state.conflictResolution.activeConflicts > 0) {
     // Each active conflict displaces 1-5% of regional population
     const conflictSeverity = state.conflictResolution.activeConflicts * 0.02;
     const displaced = state.humanPopulationSystem.population * 1000 * conflictSeverity;
@@ -371,9 +371,9 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
 
   // === 4. FAMINE (RESOURCE CRISES) ===
   const resources = state.resourceEconomy;
-  if (resources.food.currentStock < 30 || resources.water.currentStock < 30) {
-    const foodScarcity = Math.max(0, 1 - resources.food.currentStock / 100);
-    const waterScarcity = Math.max(0, 1 - resources.water.currentStock / 100);
+  if (resources.food.reserves < 0.3 || resources.water.reserves < 0.3) {
+    const foodScarcity = Math.max(0, 1 - resources.food.reserves);
+    const waterScarcity = Math.max(0, 1 - resources.water.reserves);
     const severity = Math.max(foodScarcity, waterScarcity);
     const displaced = state.humanPopulationSystem.population * 1000 * severity * 0.1;
 
@@ -460,7 +460,6 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
     console.log(`   At risk: ${crisis.potentialDisplaced.toFixed(1)}M people`);
     console.log(`   Displacement: Gradual over ${crisis.displacementDuration} months (${(crisis.displacementDuration/12).toFixed(1)} years)`);
     console.log(`   Rate: 10% flee per month`);
-    console.log(`   Severity: ${(crisis.severity * 100).toFixed(0)}%`);
   }
 
   return newCrises;
@@ -528,8 +527,5 @@ function createRefugeeCrisis(params: CreateCrisisParams): RefugeeCrisis {
     // Historical tracking
     peakDisplacement: 0,                          // Will track as people flee
     duration: 0,
-
-    // Severity
-    severity,
   };
 }

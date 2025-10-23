@@ -41,28 +41,12 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
   readonly order = 26.1;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    // Initialize social cohesion if not present
-    if (!state.socialCohesion) {
-      state.socialCohesion = {
-        trust: 50,           // Global average trust
-        communityBonds: 50,  // Global average community bonds
-        civilLiberties: 50,  // Civil liberties (updated by DemocracyDynamicsPhase)
-      };
-    }
-
-    // Initialize social accumulation if not present (for meaning crisis)
-    if (!state.socialAccumulation) {
-      state.socialAccumulation = {
-        meaningCrisis: 30,              // Baseline meaning crisis (Hari 2018)
-        institutionalErosion: 20,       // Baseline institutional trust erosion
-        socialFragmentation: 25,        // Baseline social fragmentation
-        environmentalDisregard: 40,     // Baseline environmental neglect
-        technosolutionism: 50,          // Baseline over-reliance on tech
-      };
-    }
-
-    const cohesion = state.socialCohesion;
+    // Use existing socialAccumulation structure
     const accumulation = state.socialAccumulation;
+
+    // Track social cohesion components locally (will aggregate into state.socialAccumulation.socialCohesion)
+    let trust = accumulation.socialCohesion * 100; // Convert [0,1] to [0,100] for calculation
+    let communityBonds = accumulation.socialCohesion * 100;
 
     // Calculate driving factors
     const inequality = calculateInequality(state);
@@ -76,68 +60,70 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
     const trustChange = calculateTrustChange(
       inequality,
       aiDeception,
-      cohesion.trust,
+      trust,
       state
     );
-    cohesion.trust = Math.max(0, Math.min(100,
-      cohesion.trust + trustChange
-    ));
+    trust = Math.max(0, Math.min(100, trust + trustChange));
 
     // Community Bonds Update
     // Research: Putnam (2000) - community decline mechanisms
     const bondsChange = calculateCommunityBondsChange(
       displacement,
       unemployment,
-      cohesion.communityBonds,
+      communityBonds,
       state
     );
-    cohesion.communityBonds = Math.max(0, Math.min(100,
-      cohesion.communityBonds + bondsChange
-    ));
+    communityBonds = Math.max(0, Math.min(100, communityBonds + bondsChange));
 
     // Meaning Crisis Update
     // Research: Hari (2018) - unemployment + disconnection → meaning crisis
+    const meaningCrisisPercent = accumulation.meaningCrisisLevel * 100;
     const meaningChange = calculateMeaningCrisisChange(
       unemployment,
       purposeInfrastructure,
-      cohesion.communityBonds,
-      accumulation.meaningCrisis
+      communityBonds,
+      meaningCrisisPercent
     );
-    accumulation.meaningCrisis = Math.max(0, Math.min(100,
-      accumulation.meaningCrisis + meaningChange
+    accumulation.meaningCrisisLevel = Math.max(0, Math.min(1,
+      accumulation.meaningCrisisLevel + (meaningChange / 100)
+    ));
+
+    // Update aggregate social cohesion from trust and community bonds
+    accumulation.socialCohesion = Math.max(0, Math.min(1,
+      (trust + communityBonds) / 200 // Average of the two, normalized to [0,1]
     ));
 
     const events: string[] = [];
 
     if (Math.abs(trustChange) > 1.0) {
       events.push(
-        `Social Trust: ${cohesion.trust.toFixed(1)} ` +
+        `Social Trust: ${trust.toFixed(1)} ` +
         `(${trustChange > 0 ? '+' : ''}${trustChange.toFixed(1)})`
       );
     }
 
     if (Math.abs(bondsChange) > 1.0) {
       events.push(
-        `Community Bonds: ${cohesion.communityBonds.toFixed(1)} ` +
+        `Community Bonds: ${communityBonds.toFixed(1)} ` +
         `(${bondsChange > 0 ? '+' : ''}${bondsChange.toFixed(1)})`
       );
     }
 
     if (Math.abs(meaningChange) > 1.0) {
       events.push(
-        `Meaning Crisis: ${accumulation.meaningCrisis.toFixed(1)} ` +
+        `Meaning Crisis: ${(accumulation.meaningCrisisLevel * 100).toFixed(1)} ` +
         `(${meaningChange > 0 ? '+' : ''}${meaningChange.toFixed(1)})`
       );
     }
 
     // Warnings for critical thresholds
-    if (cohesion.trust < 20) {
+    if (trust < 20) {
       events.push('🚨 Social Trust Collapse: Approaching breakdown threshold');
     }
-    if (accumulation.meaningCrisis > 80) {
+    if (accumulation.meaningCrisisLevel > 0.80) {
       events.push('⚠️ Severe Meaning Crisis: Widespread purpose/identity loss');
     }
-    if (cohesion.communityBonds < 20) {
+    if (communityBonds < 20) {
       events.push('⚠️ Community Breakdown: Social fabric severely weakened');
     }
 
@@ -180,12 +166,11 @@ function calculateAIDeception(state: GameState): number {
 
   deception += manipulativeAIs.length * 0.03; // Each AI adds 3%
 
-  // Information warfare campaigns
+  // Information warfare - use deepfake prevalence and epistemological crisis as proxies for deception
   if (state.informationWarfare) {
-    const intensity = state.informationWarfare.campaignIntensity ?? 0;
-    if (!isNaN(intensity)) {
-      deception += intensity * 0.4;
-    }
+    const deepfakes = state.informationWarfare.deepfakePrevalence ?? 0;
+    const crisis = state.informationWarfare.epistemologicalCrisisLevel ?? 0;
+    deception += (deepfakes * 0.3) + (crisis * 0.1);
   }
 
   // Benchmark gaming/sandbagging (hidden deception)
@@ -204,11 +189,11 @@ function calculateAIDeception(state: GameState): number {
 function calculateDisplacement(state: GameState): number {
   if (!state.refugeeCrisisSystem) return 0;
 
-  const totalRefugees = state.refugeeCrisisSystem.totalRefugees ?? 0;
-  const population = state.humanPopulationSystem?.totalPopulation ?? 8e9;
+  const totalDisplaced = state.refugeeCrisisSystem.totalDisplaced ?? 0;
+  const population = state.humanPopulationSystem?.population ?? 8e9;
 
-  // Displacement as fraction of population
-  return Math.min(1.0, totalRefugees / (population * 0.1)); // 10% displacement = 1.0
+  // Displacement as fraction of population (in millions)
+  return Math.min(1.0, (totalDisplaced * 1e6) / (population * 0.1)); // 10% displacement = 1.0
 }
 
 /**
@@ -219,16 +204,20 @@ function calculatePurposeInfrastructure(state: GameState): number {
   let infrastructure = 0;
 
   // UBI with purpose infrastructure
-  if (state.ubiSystem) {
-    const coverage = state.ubiSystem.coverage ?? 0;
-    const adequacy = state.ubiSystem.adequacy ?? 0;
-    const purposePrograms = state.ubiSystem.purposeInfrastructure?.coverage ?? 0;
+  if (state.ubiSystem && state.ubiSystem.active) {
+    const coverage = state.ubiSystem.basicIncome?.coverage ?? 0;
+    const adequacy = state.ubiSystem.basicIncome?.adequacy ?? 0;
+    // Average of purpose infrastructure components (no single "coverage" property)
+    const educationAccess = state.ubiSystem.purposeInfrastructure?.educationAccess ?? 0;
+    const creativeSpaces = state.ubiSystem.purposeInfrastructure?.creativeSpaces ?? 0;
+    const volunteerPrograms = state.ubiSystem.purposeInfrastructure?.volunteerPrograms ?? 0;
+    const purposePrograms = (educationAccess + creativeSpaces + volunteerPrograms) / 3;
     infrastructure += (coverage * adequacy * purposePrograms) * 0.5;
   }
 
   // Social safety nets (community programs)
-  if (state.socialSafetyNets) {
-    const communityInfra = state.socialSafetyNets.physicalInfrastructure?.communitySpaces ?? 0;
+  if (state.socialSafetyNets && state.socialSafetyNets.active) {
+    const communityInfra = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0;
     infrastructure += communityInfra * 0.3;
   }
 
@@ -300,9 +289,9 @@ function calculateCommunityBondsChange(
   change -= unemployment * 0.4;
 
   // Social safety nets → community building
-  if (state.socialSafetyNets) {
-    const communitySpaces = state.socialSafetyNets.physicalInfrastructure?.communitySpaces ?? 0;
-    change += communitySpaces * 0.2;
+  if (state.socialSafetyNets && state.socialSafetyNets.active) {
+    const communityCenters = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0;
+    change += communityCenters * 0.2;
   }
 
   // Purpose infrastructure → social connection

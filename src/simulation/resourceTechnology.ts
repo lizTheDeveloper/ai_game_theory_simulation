@@ -220,8 +220,12 @@ function applyGreenHydrogen(state: GameState, resources: ResourceEconomy, tech: 
 function applyAdvancedBatteries(state: GameState, resources: ResourceEconomy, tech: BreakthroughTechState): void {
   // This would be a new tech type (sodium-ion, solid-state, flow batteries)
   // For now, we'll use nanotech as a proxy (enables better batteries)
-  
-  const nanotech = tech.nanotech;
+  // TODO: Add proper advanced battery technology to BreakthroughTechState
+
+  // Temporarily disabled - nanotech property doesn't exist in BreakthroughTechState
+  return;
+
+  /* const nanotech = tech.nanotech;
   if (!nanotech?.unlocked) return;
   
   const deployment = nanotech.deploymentLevel;
@@ -241,6 +245,7 @@ function applyAdvancedBatteries(state: GameState, resources: ResourceEconomy, te
   
   // Improve grid storage (enables more renewables)
   resources.energy.storageCapacity = Math.min(0.40, resources.energy.storageCapacity + deployment * 0.15);
+  */
 }
 
 // ============================================================================
@@ -250,8 +255,12 @@ function applyAdvancedBatteries(state: GameState, resources: ResourceEconomy, te
 function applyRareEarthSubstitutes(state: GameState, resources: ResourceEconomy, tech: BreakthroughTechState): void {
   // This would be a new tech (alternative magnet designs, synthetic rare earths)
   // For now, use advanced materials as proxy
-  
-  const materials = tech.advancedMaterials;
+  // TODO: Add proper advanced materials technology to BreakthroughTechState
+
+  // Temporarily disabled - advancedMaterials property doesn't exist in BreakthroughTechState
+  return;
+
+  /* const materials = tech.advancedMaterials;
   if (!materials?.unlocked) return;
   
   const deployment = materials.deploymentLevel;
@@ -270,6 +279,7 @@ function applyRareEarthSubstitutes(state: GameState, resources: ResourceEconomy,
     // Lower criticality dramatically
     resources.rareEarths.criticality = Math.max(0.1, 0.8 - deployment * 0.7);
   }
+  */
 }
 
 // ============================================================================
@@ -308,9 +318,9 @@ function applyEcosystemManagement(state: GameState, resources: ResourceEconomy, 
 // ============================================================================
 
 function applyCleanWater(state: GameState, resources: ResourceEconomy, tech: BreakthroughTechState): void {
-  const cleanWater = tech.cleanWater;
+  const cleanWater = tech.advancedDesalination;
   if (!cleanWater?.unlocked) return;
-  
+
   const deployment = cleanWater.deploymentLevel;
   
   // Increase water availability
@@ -341,16 +351,16 @@ export function applyIndustryOppositionToTech(state: GameState): void {
   const mining = resources.miningIndustry;
   
   // Fossil industry slows clean tech research
-  if (tech.cleanEnergy && !tech.cleanEnergy.fullyDeployed) {
+  if (tech.cleanEnergy && tech.cleanEnergy.deploymentLevel < 1.0) {
     tech.cleanEnergy.researchProgress *= (1 - fossil.researchResistance);
   }
-  
-  if (tech.fusionPower && !tech.fusionPower.fullyDeployed) {
+
+  if (tech.fusionPower && tech.fusionPower.deploymentLevel < 1.0) {
     tech.fusionPower.researchProgress *= (1 - fossil.researchResistance * 0.5); // Less able to oppose fusion
   }
-  
+
   // Mining industry slows circular economy
-  if (tech.advancedRecycling && !tech.advancedRecycling.fullyDeployed) {
+  if (tech.advancedRecycling && tech.advancedRecycling.deploymentLevel < 1.0) {
     tech.advancedRecycling.researchProgress *= (1 - mining.resistanceLevel);
   }
 }

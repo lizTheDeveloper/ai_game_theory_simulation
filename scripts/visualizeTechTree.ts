@@ -40,8 +40,8 @@ function generateMermaidDiagram(
   } = options;
 
   const allTech = getAllTech();
-  const unlockedTech = techTreeState.unlockedTech;
-  
+  const unlockedTech = new Set(techTreeState.unlockedTech);
+
   // Filter tech based on options
   let filteredTech = allTech;
   if (showUnlockedOnly) {
@@ -145,7 +145,7 @@ function generateNodeLabel(
  * Get node style based on tech status
  */
 function getNodeStyle(tech: any, techTreeState: TechTreeState, options: VisualizationOptions): string {
-  const isUnlocked = techTreeState.unlockedTech.has(tech.id);
+  const isUnlocked = techTreeState.unlockedTech.includes(tech.id);
   const deployment = getDeploymentLevel(tech.id, techTreeState);
   
   if (tech.status === 'unlocked') {
@@ -164,21 +164,21 @@ function getNodeStyle(tech: any, techTreeState: TechTreeState, options: Visualiz
  */
 function getDeploymentLevel(techId: string, techTreeState: TechTreeState): number {
   // Check global deployment
-  const globalDeployments = techTreeState.regionalDeployment.get('global') || [];
+  const globalDeployments = techTreeState.regionalDeployment['global'] || [];
   const globalDeployment = globalDeployments.find(d => d.techId === techId);
-  
+
   if (globalDeployment) {
     return globalDeployment.deploymentLevel;
   }
-  
+
   // Check regional deployments
-  for (const [region, deployments] of techTreeState.regionalDeployment) {
+  for (const [region, deployments] of Object.entries(techTreeState.regionalDeployment)) {
     const deployment = deployments.find(d => d.techId === techId);
     if (deployment && deployment.deploymentLevel > 0) {
       return deployment.deploymentLevel;
     }
   }
-  
+
   return 0;
 }
 
@@ -191,7 +191,7 @@ function generateJsonOutput(
   options: VisualizationOptions = {}
 ): string {
   const allTech = getAllTech();
-  const unlockedTech = techTreeState.unlockedTech;
+  const unlockedTech = new Set(techTreeState.unlockedTech);
   
   const output = {
     metadata: {
@@ -226,7 +226,7 @@ function generateTextOutput(
   options: VisualizationOptions = {}
 ): string {
   const allTech = getAllTech();
-  const unlockedTech = techTreeState.unlockedTech;
+  const unlockedTech = new Set(techTreeState.unlockedTech);
   
   let output = `Tech Tree Status Report\n`;
   output += `=====================\n\n`;
@@ -294,11 +294,14 @@ function main() {
   
   // Create mock tech tree state for visualization
   const mockTechTreeState: TechTreeState = {
-    unlockedTech: new Set(),
-    researchProgress: new Map(),
-    regionalDeployment: new Map(),
+    unlockedTech: [],
+    researchProgress: {},
+    regionalDeployment: {},
     pendingActions: [],
-    unlockHistory: []
+    unlockHistory: [],
+    totalInvestment: 0,
+    techUnlockedCount: 0,
+    techDeployedCount: 0
   };
   
   // Create mock game state
@@ -311,8 +314,8 @@ function main() {
   // Initialize with some unlocked tech for demo
   const allTech = getAllTech();
   allTech.forEach(tech => {
-    if (tech.status === 'unlocked') {
-      mockTechTreeState.unlockedTech.add(tech.id);
+    if (tech.status === 'deployed_2025') {
+      mockTechTreeState.unlockedTech.push(tech.id);
     }
   });
   
@@ -362,6 +365,9 @@ if (require.main === module) {
 export {
   generateMermaidDiagram,
   generateJsonOutput,
-  generateTextOutput,
+  generateTextOutput
+};
+
+export type {
   VisualizationOptions
 };
