@@ -21,6 +21,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { SimulationWorkerClient, type StateDelta, type InitialStateSnapshot } from '@/lib/simulationWorkerClient';
 import { Sparkline } from '@/components/Sparkline';
 import type { ScenarioMode } from '@/types/game';
+import Link from 'next/link';
 
 // History tracking for sparklines
 interface MetricHistory {
@@ -764,6 +765,12 @@ export default function RealtimeDashboard() {
           <div className="text-xs text-white/40">
             {scenario === 'historical' ? 'HISTORICAL MODE' : 'UNPRECEDENTED MODE'}
           </div>
+          <Link
+            href="/dashboard"
+            className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors border border-cyan-400/30 hover:border-cyan-400/60 px-4 py-1.5 rounded uppercase tracking-wider hover:shadow-[0_0_15px_rgba(0,240,255,0.3)]"
+          >
+            View Dashboard
+          </Link>
         </div>
 
         <div className="flex items-center gap-4">
