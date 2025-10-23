@@ -97,7 +97,18 @@
       "WebFetch(domain:www.biorxiv.org)",
       "Bash(git worktree add:*)",
       "Bash(git merge:*)",
-      "Bash(wait)"
+      "Bash(wait)",
+      "Bash(git worktree:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_wait_for",
+      "Bash(for f in monteCarloOutputs/run_4209{0..9}_*.json monteCarloOutputs/run_4208{0..9}_*.json)",
+      "Bash(find:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []

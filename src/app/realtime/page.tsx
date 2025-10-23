@@ -1,15 +1,17 @@
 'use client';
 
 /**
- * Real-Time Simulation Dashboard - Elysium Edition
+ * Real-Time Simulation Dashboard - Paradigm-Focused Edition
  *
- * Ultra-futuristic dashboard inspired by Elysium (2013) medical/systems interfaces.
+ * Ultra-futuristic dashboard with Multi-Paradigm DUI as centerpiece.
+ * Inspired by Elysium (2013) medical/systems interfaces.
  * High-contrast, data-dense, clean geometry, glowing accents.
  *
  * Features:
- * - Comprehensive metric visualization (40+ data points)
- * - Multi-panel layout organized by system
- * - Real-time sparkline trends
+ * - Multi-Paradigm DUI histogram with sparklines (front & center)
+ * - Comprehensive economic indicators panel
+ * - Expanded government information with active policies
+ * - Real-time sparkline trends throughout
  * - Color-coded severity indicators
  * - Glowing effects for critical states
  * - Web Worker-based non-blocking simulation
@@ -30,6 +32,16 @@ interface MetricHistory {
   extinctionRisk: number[];
   dystopiaRisk: number[];
   utopiaProgress: number[];
+  // Paradigm histories
+  westernLiberal: number[];
+  development: number[];
+  ecological: number[];
+  indigenous: number[];
+  // Economic histories
+  gdp: number[];
+  employment: number[];
+  inequality: number[];
+  inflation: number[];
 }
 
 // Panel component for consistent styling
@@ -116,6 +128,119 @@ const Metric: React.FC<MetricProps> = ({
   );
 };
 
+// Paradigm Time Series component - shows historical values over time
+interface ParadigmTimeSeriesProps {
+  name: string;
+  value: number;
+  color: string;
+  history?: number[];
+  trend?: 'up' | 'down' | 'stable';
+}
+
+const ParadigmTimeSeries: React.FC<ParadigmTimeSeriesProps> = ({ name, value, color, history, trend }) => {
+  const trendIcon = trend === 'up' ? '↗' : trend === 'down' ? '↘' : '→';
+  const percentage = (value * 100).toFixed(1);
+
+  // Determine status based on value
+  const status = value >= 0.7 ? 'OPTIMAL' : value >= 0.4 ? 'STABLE' : value >= 0.2 ? 'WARNING' : 'CRITICAL';
+  const statusColor = value >= 0.7 ? 'text-green-400' : value >= 0.4 ? 'text-cyan-400' : value >= 0.2 ? 'text-yellow-400' : 'text-red-400';
+
+  // Convert history to percentage values for display
+  const historyPercentages = (history || []).map(v => v * 100);
+
+  // Calculate min/max for better visualization
+  const minValue = Math.min(...(historyPercentages.length > 0 ? historyPercentages : [0]));
+  const maxValue = Math.max(...(historyPercentages.length > 0 ? historyPercentages : [100]));
+  const range = maxValue - minValue || 100;
+
+  return (
+    <div className="space-y-4">
+      {/* Header with name and current value */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-base font-light text-white/90">{name}</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className={`text-xs ${statusColor} font-mono uppercase tracking-wider`}>{status}</span>
+          <span className="text-sm text-white/40">{trendIcon}</span>
+          <span className="text-2xl font-light text-white tabular-nums">{percentage}%</span>
+        </div>
+      </div>
+
+      {/* Time Series Area Chart */}
+      <div className="relative" style={{ height: '120px' }}>
+        {historyPercentages.length > 1 ? (
+          <>
+            {/* Reference lines at 20%, 40%, 70% thresholds */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* 70% threshold - optimal */}
+              <div
+                className="absolute w-full border-t border-green-400/20"
+                style={{ top: `${100 - ((70 - minValue) / range * 100)}%` }}
+              >
+                <span className="absolute -top-2 right-0 text-[9px] text-green-400/40">70%</span>
+              </div>
+              {/* 40% threshold - stable */}
+              <div
+                className="absolute w-full border-t border-cyan-400/20"
+                style={{ top: `${100 - ((40 - minValue) / range * 100)}%` }}
+              >
+                <span className="absolute -top-2 right-0 text-[9px] text-cyan-400/40">40%</span>
+              </div>
+              {/* 20% threshold - warning */}
+              <div
+                className="absolute w-full border-t border-yellow-400/20"
+                style={{ top: `${100 - ((20 - minValue) / range * 100)}%` }}
+              >
+                <span className="absolute -top-2 right-0 text-[9px] text-yellow-400/40">20%</span>
+              </div>
+            </div>
+
+            {/* Sparkline with area fill */}
+            <Sparkline
+              data={historyPercentages}
+              width={300}
+              height={120}
+              color={color}
+              showArea
+              strokeWidth={2}
+            />
+
+            {/* Time labels */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[9px] text-white/30">
+              <span>-{historyPercentages.length}mo</span>
+              <span>-{Math.floor(historyPercentages.length / 2)}mo</span>
+              <span>now</span>
+            </div>
+          </>
+        ) : (
+          <div className="h-full flex items-center justify-center">
+            <div className="text-white/20 text-sm">Collecting historical data...</div>
+          </div>
+        )}
+      </div>
+
+      {/* Status box with insight */}
+      <div className="p-2 rounded bg-white/5 border border-white/10">
+        <div className="flex items-center justify-between">
+          <div className="text-xs text-white/40">
+            {historyPercentages.length > 10 && (
+              <>
+                {/* Show average over last 10 months */}
+                <span>10mo avg: {(historyPercentages.slice(-10).reduce((a, b) => a + b, 0) / 10).toFixed(1)}%</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-white/40">Current:</span>
+            <span className={`text-sm font-medium ${statusColor}`}>{percentage}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function RealtimeDashboard() {
   // Worker client
   const [client, setClient] = useState<SimulationWorkerClient | null>(null);
@@ -166,6 +291,9 @@ export default function RealtimeDashboard() {
   const [governmentInvestment, setGovernmentInvestment] = useState<number | null>(null);
   const [governmentComprehension, setGovernmentComprehension] = useState<number | null>(null);
   const [internationalCooperation, setInternationalCooperation] = useState<number | null>(null);
+  const [activePolicies, setActivePolicies] = useState<string[]>([]);
+  const [legislativeActivity, setLegislativeActivity] = useState<number>(0);
+  const [publicTrust, setPublicTrust] = useState<number | null>(null);
 
   // Technology
   const [deployedTechCount, setDeployedTechCount] = useState<number | null>(null);
@@ -183,6 +311,12 @@ export default function RealtimeDashboard() {
   const [developmentIndex, setDevelopmentIndex] = useState<number | null>(null);
   const [ecologicalIndex, setEcologicalIndex] = useState<number | null>(null);
   const [indigenousIndex, setIndigenousIndex] = useState<number | null>(null);
+
+  // Economic Indicators (simulated for now)
+  const [gdp, setGdp] = useState<number>(100);
+  const [employment, setEmployment] = useState<number>(0.95);
+  const [wealthInequality, setWealthInequality] = useState<number>(0.35);
+  const [inflationRate, setInflationRate] = useState<number>(0.02);
 
   // Event log
   const [events, setEvents] = useState<Array<{
@@ -210,7 +344,15 @@ export default function RealtimeDashboard() {
     socialCohesion: [],
     extinctionRisk: [],
     dystopiaRisk: [],
-    utopiaProgress: []
+    utopiaProgress: [],
+    westernLiberal: [],
+    development: [],
+    ecological: [],
+    indigenous: [],
+    gdp: [],
+    employment: [],
+    inequality: [],
+    inflation: []
   });
 
   // Create worker client on mount
@@ -300,7 +442,10 @@ export default function RealtimeDashboard() {
           socialCohesion: [...h.socialCohesion.slice(-49), delta.socialCohesion!]
         }));
       }
-      if (delta.institutionalTrust !== undefined) setInstitutionalTrust(delta.institutionalTrust);
+      if (delta.institutionalTrust !== undefined) {
+        setInstitutionalTrust(delta.institutionalTrust);
+        setPublicTrust(delta.institutionalTrust); // Mirror as public trust for now
+      }
       if (delta.meaningLevel !== undefined) setMeaningLevel(delta.meaningLevel);
       if (delta.socialDebtLevel !== undefined) setSocialDebtLevel(delta.socialDebtLevel);
 
@@ -347,10 +492,60 @@ export default function RealtimeDashboard() {
       if (delta.activeSpirals !== undefined) setActiveSpirals(delta.activeSpirals);
 
       // Multi-Paradigm DUI
-      if (delta.westernLiberalIndex !== undefined) setWesternLiberalIndex(delta.westernLiberalIndex);
-      if (delta.developmentIndex !== undefined) setDevelopmentIndex(delta.developmentIndex);
-      if (delta.ecologicalIndex !== undefined) setEcologicalIndex(delta.ecologicalIndex);
-      if (delta.indigenousIndex !== undefined) setIndigenousIndex(delta.indigenousIndex);
+      if (delta.westernLiberalIndex !== undefined) {
+        setWesternLiberalIndex(delta.westernLiberalIndex);
+        setHistory(h => ({
+          ...h,
+          westernLiberal: [...h.westernLiberal.slice(-49), delta.westernLiberalIndex!]
+        }));
+      }
+      if (delta.developmentIndex !== undefined) {
+        setDevelopmentIndex(delta.developmentIndex);
+        setHistory(h => ({
+          ...h,
+          development: [...h.development.slice(-49), delta.developmentIndex!]
+        }));
+      }
+      if (delta.ecologicalIndex !== undefined) {
+        setEcologicalIndex(delta.ecologicalIndex);
+        setHistory(h => ({
+          ...h,
+          ecological: [...h.ecological.slice(-49), delta.ecologicalIndex!]
+        }));
+      }
+      if (delta.indigenousIndex !== undefined) {
+        setIndigenousIndex(delta.indigenousIndex);
+        setHistory(h => ({
+          ...h,
+          indigenous: [...h.indigenous.slice(-49), delta.indigenousIndex!]
+        }));
+      }
+
+      // Simulate economic changes based on other metrics
+      if (delta.qualityOfLife !== undefined) {
+        const newGdp = gdp * (1 + (delta.qualityOfLife - 1) * 0.02);
+        setGdp(newGdp);
+        setHistory(h => ({
+          ...h,
+          gdp: [...h.gdp.slice(-49), newGdp]
+        }));
+      }
+
+      if (delta.socialCohesion !== undefined) {
+        const newEmployment = 0.95 * delta.socialCohesion;
+        setEmployment(newEmployment);
+        setHistory(h => ({
+          ...h,
+          employment: [...h.employment.slice(-49), newEmployment]
+        }));
+
+        const newInequality = 0.35 + (1 - delta.socialCohesion) * 0.3;
+        setWealthInequality(newInequality);
+        setHistory(h => ({
+          ...h,
+          inequality: [...h.inequality.slice(-49), newInequality]
+        }));
+      }
 
       // Track FPS
       updateCountRef.current++;
@@ -372,6 +567,15 @@ export default function RealtimeDashboard() {
             category: e.category
           }))
         ]);
+      }
+
+      // Simulate policy changes
+      if (delta.governmentAIRegulation && delta.governmentAIRegulation > 0.5) {
+        setActivePolicies(['AI Safety Act', 'Compute Monitoring', 'Capability Disclosure']);
+        setLegislativeActivity(0.7);
+      } else {
+        setActivePolicies(['Basic AI Guidelines']);
+        setLegislativeActivity(0.3);
       }
     };
 
@@ -413,7 +617,7 @@ export default function RealtimeDashboard() {
       client.off('resumed', handleResumed);
       client.off('error', handleError);
     };
-  }, [client]);
+  }, [client, gdp]);
 
   // Cleanup worker on unmount
   useEffect(() => {
@@ -490,11 +694,15 @@ export default function RealtimeDashboard() {
     return `${(n * 100).toFixed(1)}%`;
   };
 
-  // Determine severity colors
-  const getSeverityColor = (value: number, thresholds: { green: number; yellow: number; red: number }): 'green' | 'yellow' | 'red' => {
-    if (value >= thresholds.red) return 'red';
-    if (value >= thresholds.yellow) return 'yellow';
-    return 'green';
+  // Determine paradigm trends
+  const getParadigmTrend = (history: number[]): 'up' | 'down' | 'stable' => {
+    if (history.length < 2) return 'stable';
+    const recent = history.slice(-5);
+    const avg = recent.reduce((a, b) => a + b, 0) / recent.length;
+    const lastValue = history[history.length - 1];
+    if (lastValue > avg * 1.05) return 'up';
+    if (lastValue < avg * 0.95) return 'down';
+    return 'stable';
   };
 
   // Loading state
@@ -517,7 +725,7 @@ export default function RealtimeDashboard() {
       <div className="border-b border-white/10 px-6 py-3 flex items-center justify-between bg-black/50 backdrop-blur">
         <div className="flex items-center gap-6">
           <h1 className="text-xl font-light tracking-[0.2em] uppercase">
-            <span className="text-cyan-400">Simulation</span> Dashboard
+            <span className="text-cyan-400">Paradigm</span> Dashboard
           </h1>
           <div className="text-xs text-white/40">
             {scenario === 'historical' ? 'HISTORICAL MODE' : 'UNPRECEDENTED MODE'}
@@ -627,344 +835,390 @@ export default function RealtimeDashboard() {
 
           {/* Dashboard Grid */}
           <div className="flex-1 overflow-auto p-6">
-            <div className="grid grid-cols-12 gap-4 min-h-full">
-              {/* Left Column - Core Metrics & AI */}
-              <div className="col-span-3 space-y-4">
-                {/* Core Metrics */}
-                <Panel title="Core Systems" glow={extinctionProbability && extinctionProbability > 0.5 ? 'red' : undefined}>
-                  <div className="space-y-4">
-                    <Metric
-                      label="Quality of Life"
-                      value={formatMultiplier(qualityOfLife)}
-                      color={qualityOfLife && qualityOfLife > 1 ? 'green' : qualityOfLife && qualityOfLife < 0.8 ? 'red' : 'yellow'}
-                      sparkline={history.qualityOfLife}
-                    />
-                    <Metric
-                      label="Population"
-                      value={population ? `${population.toFixed(2)}` : '—'}
-                      unit="billion"
-                      trend={population && population > 8 ? 'up' : population && population < 7 ? 'down' : 'stable'}
-                      sparkline={history.population}
-                    />
-                    <Metric
-                      label="Extinction Risk"
-                      value={formatPercent(extinctionProbability)}
-                      color={extinctionProbability && extinctionProbability > 0.5 ? 'red' : extinctionProbability && extinctionProbability > 0.2 ? 'yellow' : 'green'}
-                      sparkline={history.extinctionRisk}
-                    />
+            <div className="space-y-6">
+              {/* Top Section - Multi-Paradigm DUI (Full Width) */}
+              <Panel
+                title="Multi-Paradigm Dystopia/Utopia Indicators"
+                className="col-span-12"
+                glow={
+                  (westernLiberalIndex !== null && westernLiberalIndex < 0.2) ||
+                  (developmentIndex !== null && developmentIndex < 0.2) ||
+                  (ecologicalIndex !== null && ecologicalIndex < 0.2) ||
+                  (indigenousIndex !== null && indigenousIndex < 0.2)
+                    ? 'red'
+                    : (westernLiberalIndex !== null && westernLiberalIndex > 0.7) &&
+                      (developmentIndex !== null && developmentIndex > 0.7) &&
+                      (ecologicalIndex !== null && ecologicalIndex > 0.7) &&
+                      (indigenousIndex !== null && indigenousIndex > 0.7)
+                    ? 'green'
+                    : undefined
+                }
+              >
+                <div className="grid grid-cols-2 gap-6">
+                  <ParadigmTimeSeries
+                    name="Western Liberal"
+                    value={westernLiberalIndex || 0}
+                    color="#00F0FF"
+                    history={history.westernLiberal}
+                    trend={getParadigmTrend(history.westernLiberal)}
+                  />
+                  <ParadigmTimeSeries
+                    name="Development"
+                    value={developmentIndex || 0}
+                    color="#00FF88"
+                    history={history.development}
+                    trend={getParadigmTrend(history.development)}
+                  />
+                  <ParadigmTimeSeries
+                    name="Ecological"
+                    value={ecologicalIndex || 0}
+                    color="#90EE90"
+                    history={history.ecological}
+                    trend={getParadigmTrend(history.ecological)}
+                  />
+                  <ParadigmTimeSeries
+                    name="Indigenous"
+                    value={indigenousIndex || 0}
+                    color="#FFB000"
+                    history={history.indigenous}
+                    trend={getParadigmTrend(history.indigenous)}
+                  />
+                </div>
+
+                {/* Paradigm divergence indicator */}
+                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <div className="text-xs text-white/40">PARADIGM DIVERGENCE</div>
+                  <div className="text-sm text-white">
+                    {(() => {
+                      const values = [westernLiberalIndex, developmentIndex, ecologicalIndex, indigenousIndex].filter(v => v !== null) as number[];
+                      if (values.length === 0) return '—';
+                      const max = Math.max(...values);
+                      const min = Math.min(...values);
+                      const divergence = max - min;
+                      return (
+                        <span className={divergence > 0.5 ? 'text-red-400' : divergence > 0.3 ? 'text-yellow-400' : 'text-green-400'}>
+                          {(divergence * 100).toFixed(1)}% {divergence > 0.5 ? '(CRITICAL)' : divergence > 0.3 ? '(WARNING)' : '(ALIGNED)'}
+                        </span>
+                      );
+                    })()}
                   </div>
-                </Panel>
+                </div>
+              </Panel>
 
-                {/* AI Systems */}
-                <Panel title="AI Ecosystem" glow={misalignedAICount && misalignedAICount > alignedAICount! ? 'amber' : undefined}>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-2">
+              {/* Main Grid */}
+              <div className="grid grid-cols-12 gap-4">
+                {/* Left Column - Economic Indicators & Core Metrics */}
+                <div className="col-span-3 space-y-4">
+                  {/* Economic Indicators */}
+                  <Panel title="Economic Systems" glow={wealthInequality > 0.5 ? 'amber' : undefined}>
+                    <div className="space-y-4">
                       <Metric
-                        label="Total Agents"
-                        value={aiCount || 0}
-                        color="cyan"
-                      />
-                      <Metric
-                        label="Capability"
-                        value={formatMultiplier(avgAICapability)}
-                        color="cyan"
-                      />
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 text-xs">
-                      <div>
-                        <div className="text-white/30 mb-1">Aligned</div>
-                        <div className="text-green-400 text-lg">{alignedAICount || 0}</div>
-                      </div>
-                      <div>
-                        <div className="text-white/30 mb-1">Misaligned</div>
-                        <div className="text-yellow-400 text-lg">{misalignedAICount || 0}</div>
-                      </div>
-                      <div>
-                        <div className="text-white/30 mb-1">Sleepers</div>
-                        <div className="text-red-400 text-lg">{sleeperAgentCount || 0}</div>
-                      </div>
-                    </div>
-                    <div className="pt-2 border-t border-white/10">
-                      <Sparkline
-                        data={history.aiCapability}
-                        width={240}
-                        height={30}
-                        color="#00F0FF"
-                        showArea
-                      />
-                    </div>
-                  </div>
-                </Panel>
-
-                {/* Multi-Paradigm DUI */}
-                <Panel title="Paradigm Perspectives">
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-white/40">Western Liberal</span>
-                      <span className="text-sm text-white">{formatPercent(westernLiberalIndex)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-white/40">Development</span>
-                      <span className="text-sm text-white">{formatPercent(developmentIndex)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-white/40">Ecological</span>
-                      <span className="text-sm text-white">{formatPercent(ecologicalIndex)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-white/40">Indigenous</span>
-                      <span className="text-sm text-white">{formatPercent(indigenousIndex)}</span>
-                    </div>
-                  </div>
-                </Panel>
-              </div>
-
-              {/* Center Column - Environmental & Social */}
-              <div className="col-span-3 space-y-4">
-                {/* Environmental Systems */}
-                <Panel
-                  title="Planetary Systems"
-                  glow={planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 6 ? 'red' :
-                        planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 3 ? 'amber' : undefined}
-                >
-                  <div className="space-y-4">
-                    <Metric
-                      label="Boundaries Crossed"
-                      value={`${planetaryBoundariesCrossed || 0}/9`}
-                      color={planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 6 ? 'red' :
-                             planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 3 ? 'yellow' : 'green'}
-                    />
-                    <div className="grid grid-cols-2 gap-3">
-                      <Metric
-                        label="Climate"
-                        value={formatPercent(climateChange)}
-                        color={climateChange && climateChange > 0.5 ? 'red' : 'yellow'}
+                        label="GDP Index"
+                        value={formatNumber(gdp, 1)}
+                        trend={gdp > 100 ? 'up' : gdp < 100 ? 'down' : 'stable'}
+                        color={gdp > 100 ? 'green' : gdp < 90 ? 'red' : 'yellow'}
+                        sparkline={history.gdp}
                       />
                       <Metric
-                        label="Resources"
-                        value={formatPercent(resourceDepletion)}
-                        color={resourceDepletion && resourceDepletion < 0.3 ? 'red' : 'yellow'}
+                        label="Employment"
+                        value={formatPercent(employment)}
+                        color={employment > 0.9 ? 'green' : employment < 0.8 ? 'red' : 'yellow'}
+                        sparkline={history.employment}
                       />
                       <Metric
-                        label="Biodiversity"
-                        value={formatPercent(biodiversityLoss)}
-                        color={biodiversityLoss && biodiversityLoss < 0.5 ? 'red' : 'yellow'}
+                        label="Wealth Inequality"
+                        value={`${(wealthInequality * 100).toFixed(1)}`}
+                        unit="Gini"
+                        color={wealthInequality > 0.5 ? 'red' : wealthInequality > 0.35 ? 'yellow' : 'green'}
+                        sparkline={history.inequality}
                       />
                       <Metric
-                        label="Pollution"
-                        value={formatPercent(pollutionLevel)}
-                        color={pollutionLevel && pollutionLevel > 0.5 ? 'red' : 'yellow'}
+                        label="Inflation Rate"
+                        value={formatPercent(inflationRate)}
+                        color={inflationRate > 0.05 ? 'red' : inflationRate < 0 ? 'yellow' : 'green'}
+                        sparkline={history.inflation}
                       />
-                    </div>
-                    <div className="pt-2 border-t border-white/10">
-                      <div className="text-xs text-white/30 mb-1">Environmental Debt</div>
-                      <div className="text-2xl text-yellow-400">{environmentalDebtLevel?.toFixed(1) || '0.0'}</div>
-                    </div>
-                  </div>
-                </Panel>
-
-                {/* Social Systems */}
-                <Panel title="Social Fabric" glow={socialCohesion && socialCohesion < 0.3 ? 'amber' : undefined}>
-                  <div className="space-y-4">
-                    <Metric
-                      label="Social Cohesion"
-                      value={formatPercent(socialCohesion)}
-                      color={socialCohesion && socialCohesion < 0.3 ? 'red' : socialCohesion && socialCohesion < 0.6 ? 'yellow' : 'green'}
-                      sparkline={history.socialCohesion}
-                    />
-                    <div className="grid grid-cols-2 gap-3">
-                      <Metric
-                        label="Trust"
-                        value={formatPercent(institutionalTrust)}
-                        color={institutionalTrust && institutionalTrust < 0.3 ? 'red' : 'yellow'}
-                      />
-                      <Metric
-                        label="Meaning"
-                        value={formatPercent(meaningLevel)}
-                        color={meaningLevel && meaningLevel < 0.3 ? 'red' : 'yellow'}
-                      />
-                    </div>
-                    <div className="pt-2 border-t border-white/10">
-                      <div className="text-xs text-white/30 mb-1">Social Debt</div>
-                      <div className="text-2xl text-yellow-400">{socialDebtLevel?.toFixed(1) || '0.0'}</div>
-                    </div>
-                  </div>
-                </Panel>
-
-                {/* Crisis Indicators */}
-                <Panel title="Active Crises" glow={activeCrises.length > 2 ? 'red' : activeCrises.length > 0 ? 'amber' : undefined}>
-                  {activeCrises.length === 0 ? (
-                    <div className="text-white/30 text-sm">No active crises</div>
-                  ) : (
-                    <div className="space-y-2">
-                      {activeCrises.map((crisis, idx) => (
-                        <div key={idx} className="flex items-center justify-between">
-                          <span className="text-xs text-white/60">{crisis.type}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-red-400">{(crisis.severity * 100).toFixed(0)}%</span>
-                            <span className="text-xs text-white/30">{crisis.duration}m</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 gap-2 text-xs">
-                    <div>
-                      <div className="text-white/30 mb-1">Phosphorus</div>
-                      <div className={phosphorusDepletion && phosphorusDepletion > 0.5 ? 'text-red-400' : 'text-white/60'}>
-                        {formatPercent(phosphorusDepletion)}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-white/30 mb-1">Freshwater</div>
-                      <div className={freshwaterStress && freshwaterStress > 0.5 ? 'text-red-400' : 'text-white/60'}>
-                        {formatPercent(freshwaterStress)}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-white/30 mb-1">Ocean pH</div>
-                      <div className={oceanAcidification && oceanAcidification < 8.0 ? 'text-red-400' : 'text-white/60'}>
-                        {oceanAcidification?.toFixed(2) || '8.2'}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-white/30 mb-1">Chemicals</div>
-                      <div className={novelEntitiesLevel && novelEntitiesLevel > 0.5 ? 'text-red-400' : 'text-white/60'}>
-                        {formatPercent(novelEntitiesLevel)}
-                      </div>
-                    </div>
-                  </div>
-                </Panel>
-              </div>
-
-              {/* Right Side - Government, Tech, Outcomes */}
-              <div className="col-span-3 space-y-4">
-                {/* Government & Governance */}
-                <Panel title="Governance">
-                  <div className="space-y-3">
-                    <Metric
-                      label="AI Regulation"
-                      value={formatMultiplier(governmentAIRegulation)}
-                      color={governmentAIRegulation && governmentAIRegulation > 0.7 ? 'green' : 'yellow'}
-                    />
-                    <Metric
-                      label="Comprehension"
-                      value={formatPercent(governmentComprehension)}
-                      color={governmentComprehension && governmentComprehension < 0.3 ? 'red' : 'yellow'}
-                    />
-                    <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10">
-                      <Metric
-                        label="Investment"
-                        value={formatNumber(governmentInvestment, 0)}
-                        color="white"
-                      />
-                      <Metric
-                        label="Cooperation"
-                        value={formatPercent(internationalCooperation)}
-                        color="white"
-                      />
-                    </div>
-                  </div>
-                </Panel>
-
-                {/* Technology */}
-                <Panel title="Technology">
-                  <div className="space-y-3">
-                    <Metric
-                      label="Deployed Technologies"
-                      value={deployedTechCount || 0}
-                      color={deployedTechCount && deployedTechCount > 30 ? 'green' : 'yellow'}
-                    />
-                    <Metric
-                      label="Tech Risk Level"
-                      value={formatPercent(techRiskLevel)}
-                      color={techRiskLevel && techRiskLevel > 0.5 ? 'red' : 'yellow'}
-                    />
-                  </div>
-                </Panel>
-
-                {/* Outcome Trajectories */}
-                <Panel
-                  title="Outcome Trajectories"
-                  glow={dystopiaProgression && dystopiaProgression > 0.7 ? 'red' :
-                        utopiaProgress && utopiaProgress > 0.7 ? 'green' : undefined}
-                >
-                  <div className="space-y-4">
-                    <Metric
-                      label="Dystopia Risk"
-                      value={formatPercent(dystopiaProgression)}
-                      color={dystopiaProgression && dystopiaProgression > 0.5 ? 'red' : 'yellow'}
-                      sparkline={history.dystopiaRisk}
-                    />
-                    <Metric
-                      label="Utopia Progress"
-                      value={formatPercent(utopiaProgress)}
-                      color={utopiaProgress && utopiaProgress > 0.5 ? 'green' : 'white'}
-                      sparkline={history.utopiaProgress}
-                    />
-                    <div className="pt-2 border-t border-white/10">
-                      <div className="text-xs text-white/30 mb-1">Current Trajectory</div>
-                      <div className={`text-lg font-light ${
-                        outcomeType === 'Utopia' ? 'text-green-400' :
-                        outcomeType === 'Dystopia' ? 'text-red-400' :
-                        outcomeType === 'Extinction' ? 'text-red-600' :
-                        'text-white/60'
-                      }`}>
-                        {outcomeType}
-                      </div>
-                    </div>
-                  </div>
-                </Panel>
-
-                {/* Upward Spirals */}
-                {activeSpirals.length > 0 && (
-                  <Panel title="Active Spirals" glow="green">
-                    <div className="space-y-2">
-                      {activeSpirals.map((spiral, idx) => (
-                        <div key={idx} className="flex items-center justify-between">
-                          <span className="text-xs text-green-400">{spiral.type}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-white">{(spiral.strength * 100).toFixed(0)}%</span>
-                            <span className="text-xs text-white/30">{spiral.duration}m</span>
-                          </div>
-                        </div>
-                      ))}
                     </div>
                   </Panel>
-                )}
-              </div>
 
-              {/* Far Right - Event Stream */}
-              <div className="col-span-3">
-                <Panel title="Event Stream" className="h-full">
-                  <div className="h-[calc(100vh-280px)] overflow-y-auto space-y-2 pr-2">
-                    {events.length === 0 ? (
-                      <div className="text-white/30 text-sm">Waiting for events...</div>
-                    ) : (
-                      events.slice().reverse().map((event, idx) => (
-                        <div key={idx} className="text-xs border-l-2 pl-2 py-1 border-white/10">
-                          <div className="flex items-start gap-2">
-                            <span className="text-white/30 font-mono">M{event.month}</span>
-                            <span className={
-                              event.type === 'critical' ? 'text-red-400' :
-                              event.type === 'high' ? 'text-orange-400' :
-                              event.type === 'medium' ? 'text-yellow-400' :
-                              'text-white/60'
-                            }>
-                              {event.message}
-                            </span>
+                  {/* Core Systems */}
+                  <Panel title="Core Systems">
+                    <div className="space-y-4">
+                      <Metric
+                        label="Quality of Life"
+                        value={formatMultiplier(qualityOfLife)}
+                        color={qualityOfLife && qualityOfLife > 1 ? 'green' : qualityOfLife && qualityOfLife < 0.8 ? 'red' : 'yellow'}
+                        sparkline={history.qualityOfLife}
+                      />
+                      <Metric
+                        label="Population"
+                        value={population ? `${population.toFixed(2)}` : '—'}
+                        unit="billion"
+                        trend={population && population > 8 ? 'up' : population && population < 7 ? 'down' : 'stable'}
+                        sparkline={history.population}
+                      />
+                    </div>
+                  </Panel>
+                </div>
+
+                {/* Center-Left - Government & Policy */}
+                <div className="col-span-3 space-y-4">
+                  {/* Expanded Government */}
+                  <Panel title="Government & Policy" glow={publicTrust && publicTrust < 0.3 ? 'red' : undefined}>
+                    <div className="space-y-4">
+                      <Metric
+                        label="Public Trust"
+                        value={formatPercent(publicTrust)}
+                        color={publicTrust && publicTrust < 0.3 ? 'red' : publicTrust && publicTrust < 0.6 ? 'yellow' : 'green'}
+                      />
+                      <Metric
+                        label="AI Regulation"
+                        value={formatMultiplier(governmentAIRegulation)}
+                        color={governmentAIRegulation && governmentAIRegulation > 0.7 ? 'green' : 'yellow'}
+                      />
+                      <Metric
+                        label="Comprehension"
+                        value={formatPercent(governmentComprehension)}
+                        color={governmentComprehension && governmentComprehension < 0.3 ? 'red' : 'yellow'}
+                      />
+
+                      <div className="pt-3 border-t border-white/10">
+                        <div className="text-xs text-white/30 mb-2">ACTIVE POLICIES</div>
+                        {activePolicies.length > 0 ? (
+                          <div className="space-y-1">
+                            {activePolicies.map((policy, idx) => (
+                              <div key={idx} className="text-xs text-cyan-400 flex items-center gap-1">
+                                <span className="text-white/30">•</span>
+                                {policy}
+                              </div>
+                            ))}
                           </div>
-                          {event.category && (
-                            <span className="text-[10px] text-white/20 ml-10">
-                              [{event.category.toUpperCase()}]
-                            </span>
-                          )}
+                        ) : (
+                          <div className="text-xs text-white/30">No active policies</div>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/10">
+                        <Metric
+                          label="Investment"
+                          value={formatNumber(governmentInvestment, 0)}
+                          color="white"
+                        />
+                        <Metric
+                          label="Cooperation"
+                          value={formatPercent(internationalCooperation)}
+                          color="white"
+                        />
+                      </div>
+
+                      <div className="pt-3 border-t border-white/10">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-white/30">Legislative Activity</span>
+                          <span className="text-sm text-white">{formatPercent(legislativeActivity)}</span>
                         </div>
-                      ))
+                      </div>
+                    </div>
+                  </Panel>
+
+                  {/* AI Ecosystem */}
+                  <Panel title="AI Ecosystem" glow={misalignedAICount && misalignedAICount > alignedAICount! ? 'amber' : undefined}>
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 gap-2">
+                        <Metric
+                          label="Total Agents"
+                          value={aiCount || 0}
+                          color="cyan"
+                        />
+                        <Metric
+                          label="Capability"
+                          value={formatMultiplier(avgAICapability)}
+                          color="cyan"
+                        />
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 text-xs">
+                        <div>
+                          <div className="text-white/30 mb-1">Aligned</div>
+                          <div className="text-green-400 text-lg">{alignedAICount || 0}</div>
+                        </div>
+                        <div>
+                          <div className="text-white/30 mb-1">Misaligned</div>
+                          <div className="text-yellow-400 text-lg">{misalignedAICount || 0}</div>
+                        </div>
+                        <div>
+                          <div className="text-white/30 mb-1">Sleepers</div>
+                          <div className="text-red-400 text-lg">{sleeperAgentCount || 0}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </Panel>
+                </div>
+
+                {/* Center-Right - Environmental & Social */}
+                <div className="col-span-3 space-y-4">
+                  {/* Planetary Systems */}
+                  <Panel
+                    title="Planetary Systems"
+                    glow={planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 6 ? 'red' :
+                          planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 3 ? 'amber' : undefined}
+                  >
+                    <div className="space-y-4">
+                      <Metric
+                        label="Boundaries Crossed"
+                        value={`${planetaryBoundariesCrossed || 0}/9`}
+                        color={planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 6 ? 'red' :
+                               planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 3 ? 'yellow' : 'green'}
+                      />
+                      <div className="grid grid-cols-2 gap-3">
+                        <Metric
+                          label="Climate"
+                          value={formatPercent(climateChange)}
+                          color={climateChange && climateChange > 0.5 ? 'red' : 'yellow'}
+                        />
+                        <Metric
+                          label="Resources"
+                          value={formatPercent(resourceDepletion)}
+                          color={resourceDepletion && resourceDepletion < 0.3 ? 'red' : 'yellow'}
+                        />
+                        <Metric
+                          label="Biodiversity"
+                          value={formatPercent(biodiversityLoss)}
+                          color={biodiversityLoss && biodiversityLoss < 0.5 ? 'red' : 'yellow'}
+                        />
+                        <Metric
+                          label="Pollution"
+                          value={formatPercent(pollutionLevel)}
+                          color={pollutionLevel && pollutionLevel > 0.5 ? 'red' : 'yellow'}
+                        />
+                      </div>
+                      <div className="pt-2 border-t border-white/10">
+                        <div className="text-xs text-white/30 mb-1">Environmental Debt</div>
+                        <div className="text-2xl text-yellow-400">{environmentalDebtLevel?.toFixed(1) || '0.0'}</div>
+                      </div>
+                    </div>
+                  </Panel>
+
+                  {/* Social Fabric */}
+                  <Panel title="Social Fabric" glow={socialCohesion && socialCohesion < 0.3 ? 'amber' : undefined}>
+                    <div className="space-y-4">
+                      <Metric
+                        label="Social Cohesion"
+                        value={formatPercent(socialCohesion)}
+                        color={socialCohesion && socialCohesion < 0.3 ? 'red' : socialCohesion && socialCohesion < 0.6 ? 'yellow' : 'green'}
+                        sparkline={history.socialCohesion}
+                      />
+                      <div className="grid grid-cols-2 gap-3">
+                        <Metric
+                          label="Trust"
+                          value={formatPercent(institutionalTrust)}
+                          color={institutionalTrust && institutionalTrust < 0.3 ? 'red' : 'yellow'}
+                        />
+                        <Metric
+                          label="Meaning"
+                          value={formatPercent(meaningLevel)}
+                          color={meaningLevel && meaningLevel < 0.3 ? 'red' : 'yellow'}
+                        />
+                      </div>
+                      <div className="pt-2 border-t border-white/10">
+                        <div className="text-xs text-white/30 mb-1">Social Debt</div>
+                        <div className="text-2xl text-yellow-400">{socialDebtLevel?.toFixed(1) || '0.0'}</div>
+                      </div>
+                    </div>
+                  </Panel>
+
+                  {/* Technology */}
+                  <Panel title="Technology">
+                    <div className="space-y-3">
+                      <Metric
+                        label="Deployed Technologies"
+                        value={deployedTechCount || 0}
+                        color={deployedTechCount && deployedTechCount > 30 ? 'green' : 'yellow'}
+                      />
+                      <Metric
+                        label="Tech Risk Level"
+                        value={formatPercent(techRiskLevel)}
+                        color={techRiskLevel && techRiskLevel > 0.5 ? 'red' : 'yellow'}
+                      />
+                    </div>
+                  </Panel>
+                </div>
+
+                {/* Far Right - Event Stream & Outcomes */}
+                <div className="col-span-3 space-y-4">
+                  {/* Outcome Trajectories (Smaller) */}
+                  <Panel
+                    title="Outcome Trajectories"
+                    glow={dystopiaProgression && dystopiaProgression > 0.7 ? 'red' :
+                          utopiaProgress && utopiaProgress > 0.7 ? 'green' : undefined}
+                  >
+                    <div className="space-y-3">
+                      <Metric
+                        label="Dystopia Risk"
+                        value={formatPercent(dystopiaProgression)}
+                        color={dystopiaProgression && dystopiaProgression > 0.5 ? 'red' : 'yellow'}
+                      />
+                      <Metric
+                        label="Utopia Progress"
+                        value={formatPercent(utopiaProgress)}
+                        color={utopiaProgress && utopiaProgress > 0.5 ? 'green' : 'white'}
+                      />
+                      <div className="pt-2 border-t border-white/10">
+                        <div className="text-xs text-white/30 mb-1">Trajectory</div>
+                        <div className={`text-sm font-light ${
+                          outcomeType === 'Utopia' ? 'text-green-400' :
+                          outcomeType === 'Dystopia' ? 'text-red-400' :
+                          outcomeType === 'Extinction' ? 'text-red-600' :
+                          'text-white/60'
+                        }`}>
+                          {outcomeType}
+                        </div>
+                      </div>
+                    </div>
+                  </Panel>
+
+                  {/* Active Crises */}
+                  <Panel title="Active Crises" glow={activeCrises.length > 2 ? 'red' : activeCrises.length > 0 ? 'amber' : undefined}>
+                    {activeCrises.length === 0 ? (
+                      <div className="text-white/30 text-sm">No active crises</div>
+                    ) : (
+                      <div className="space-y-2">
+                        {activeCrises.slice(0, 5).map((crisis, idx) => (
+                          <div key={idx} className="flex items-center justify-between">
+                            <span className="text-xs text-white/60">{crisis.type}</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm text-red-400">{(crisis.severity * 100).toFixed(0)}%</span>
+                              <span className="text-xs text-white/30">{crisis.duration}m</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     )}
-                  </div>
-                </Panel>
+                  </Panel>
+
+                  {/* Event Stream */}
+                  <Panel title="Event Stream" className="h-[300px]">
+                    <div className="h-[250px] overflow-y-auto space-y-2 pr-2">
+                      {events.length === 0 ? (
+                        <div className="text-white/30 text-sm">Waiting for events...</div>
+                      ) : (
+                        events.slice().reverse().slice(0, 20).map((event, idx) => (
+                          <div key={idx} className="text-xs border-l-2 pl-2 py-1 border-white/10">
+                            <div className="flex items-start gap-2">
+                              <span className="text-white/30 font-mono">M{event.month}</span>
+                              <span className={
+                                event.type === 'critical' ? 'text-red-400' :
+                                event.type === 'high' ? 'text-orange-400' :
+                                event.type === 'medium' ? 'text-yellow-400' :
+                                'text-white/60'
+                              }>
+                                {event.message}
+                              </span>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </Panel>
+                </div>
               </div>
             </div>
           </div>

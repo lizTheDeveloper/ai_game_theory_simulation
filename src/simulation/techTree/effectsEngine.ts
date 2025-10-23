@@ -380,10 +380,11 @@ function applyGlobalEffects(
 
       case 'extinctionRateReduction':
         // Reduce species extinction rate (global biodiversity protection)
-        if (gameState.planetaryBoundaries) {
-          gameState.planetaryBoundaries.biodiversityLoss = Math.max(
-            0,
-            gameState.planetaryBoundaries.biodiversityLoss - value * 0.005
+        // Research: Habitat restoration reduces extinction pressure
+        if (gameState.planetaryBoundariesSystem?.landUse) {
+          gameState.planetaryBoundariesSystem.landUse.currentExtinctionRate = Math.max(
+            1.0, // Can't go below natural rate (1.0)
+            gameState.planetaryBoundariesSystem.landUse.currentExtinctionRate - value * 10 // Reduce by 10× per unit
           );
         }
         break;
