@@ -205,9 +205,9 @@ export class SimulationWorkerClient {
    * Initialize simulation with seed and scenario
    * @param seed - RNG seed for deterministic runs
    * @param scenario - 'historical' or 'unprecedented'
-   * @param interval - Step interval in milliseconds (default: 1000 = 1 day/second)
+   * @param interval - Simulation step interval in milliseconds (default: 30000 = 1 month/30 seconds)
    */
-  init(seed: number, scenario: ScenarioMode = 'historical', interval = 1000): void {
+  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000): void {
     if (this.initialized) {
       throw new Error('Already initialized. Create a new client to reinitialize.');
     }
