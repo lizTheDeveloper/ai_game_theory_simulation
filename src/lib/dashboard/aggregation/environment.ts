@@ -1,57 +1,64 @@
-import { GameState } from '@/types/game';
-import { BoundaryName, BoundaryStatus, BoundaryTrend } from '@/types/planetaryBoundaries';
+import { GameState, PlanetaryBoundaryName } from '@/types/game';
 
 export interface PlanetaryBoundaryData {
-  name: BoundaryName;
-  displayName: string;
+  name: PlanetaryBoundaryName;
   current: number;
   threshold: number;
   safeZone: number;
-  status: BoundaryStatus;
-  trend: BoundaryTrend;
+  status: 'safe' | 'increasing-risk' | 'high-risk' | 'critical';
+  trend: 'improving' | 'worsening' | 'stable';
   regionalVariation?: Record<string, number>;
 }
 
 export function getPlanetaryBoundaries(
   state: GameState
 ): PlanetaryBoundaryData[] {
-  const boundaries = state.planetaryBoundariesSystem;
+  const boundaries = state.planetaryBoundaries;
   if (!boundaries) return [];
 
-  const boundaryNames: BoundaryName[] = [
-    'climate_change',
-    'biosphere_integrity',
-    'land_system_change',
-    'freshwater_change',
-    'biogeochemical_flows',
-    'ocean_acidification',
-    'atmospheric_aerosols',
-    'stratospheric_ozone',
-    'novel_entities',
+  const boundaryNames: PlanetaryBoundaryName[] = [
+    'climateChange',
+    'biosphereIntegrity',
+    'landSystemChange',
+    'freshwaterUse',
+    'biogeochemicalFlows',
+    'oceanAcidification',
+    'atmosphericAerosol',
+    'stratosphericOzone',
+    'novelEntities',
   ];
 
   return boundaryNames.map(name => {
-    const boundary = boundaries.boundaries?.[name];
-    if (!boundary) {
-      return {
-        name,
-        displayName: name.replace(/_/g, ' '),
-        current: 0,
-        threshold: 1.0,
-        safeZone: 0.7,
-        status: 'safe' as BoundaryStatus,
-        trend: 'stable' as BoundaryTrend,
-      };
-    }
+    const current = (boundaries as any)[name] || 0;
+    const threshold = 1.0; // Normalized threshold
+    const safeZone = 0.7; // Safe operating space
+
+    let status: PlanetaryBoundaryData['status'] = 'safe';
+    if (current >= threshold) status = 'critical';
+    else if (current >= 0.9) status = 'high-risk';
+    else if (current >= safeZone) status = 'increasing-risk';
+
+    // Calculate trend from history
+    const history = state.history?.planetaryBoundaries || [];
+    const recentValues = history.slice(-6).map(h => (h as any)?.[name] || 0);
+    const trend =
+      recentValues.length >= 2 &&
+      recentValues[recentValues.length - 1] <
+        recentValues[recentValues.length - 2]
+        ? 'improving'
+        : recentValues.length >= 2 &&
+          recentValues[recentValues.length - 1] >
+            recentValues[recentValues.length - 2]
+        ? 'worsening'
+        : 'stable';
 
     return {
       name,
-      displayName: boundary.displayName,
-      current: boundary.currentValue,
-      threshold: boundary.boundaryThreshold,
-      safeZone: 0.7, // Safe operating space
-      status: boundary.status,
-      trend: boundary.trend,
+      current,
+      threshold,
+      safeZone,
+      status,
+      trend,
     };
   });
 }
