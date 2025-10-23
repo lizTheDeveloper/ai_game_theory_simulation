@@ -504,7 +504,8 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   let planetaryBoundariesCrossed = 0;
   if (state.planetaryBoundariesSystem?.boundaries) {
     const boundaries = state.planetaryBoundariesSystem.boundaries;
-    const isCrossed = (status: string) => status === 'beyond_boundary' || status === 'high_risk';
+    const isCrossed = (status: string) =>
+      status === 'beyond_boundary' || status === 'increasing_risk' || status === 'high_risk';
 
     // Correct boundary names from BoundaryName type definition
     if (boundaries.climate_change && isCrossed(boundaries.climate_change.status)) planetaryBoundariesCrossed++;
