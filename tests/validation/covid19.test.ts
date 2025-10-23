@@ -51,7 +51,7 @@ describe('COVID-19 Pandemic Validation (2020-2023)', () => {
     const metrics = extractValidationMetrics(
       initialState,
       result.finalState,
-      result.log.events
+      []
     );
 
     // Validate mortality is in historical range
@@ -59,7 +59,7 @@ describe('COVID-19 Pandemic Validation (2020-2023)', () => {
     expect(metrics.populationMortality).toBeLessThanOrEqual(0.3); // Slight tolerance
 
     // Validate absolute deaths
-    const totalDeaths = result.finalState.humanPopulationSystem.totalDeaths;
+    const totalDeaths = result.finalState.humanPopulationSystem.cumulativeCrisisDeaths || 0;
     expect(totalDeaths).toBeGreaterThanOrEqual(7_000_000);
     expect(totalDeaths).toBeLessThanOrEqual(25_000_000); // Upper bound with tolerance
   });

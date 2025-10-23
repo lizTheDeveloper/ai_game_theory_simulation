@@ -120,7 +120,18 @@ interface RunResult {
   genocideFamines: number;           // Count of genocide-driven famines
   techPreventedDeaths: number;       // Deaths prevented by tech (billions)
   famineAffectedRegions: string[];   // Regions that experienced famines
-  
+
+  // NEW (Oct 20, 2025): Multi-Paradigm DUI (Phase 6)
+  finalWestern: number;              // Western Liberal paradigm final score
+  finalDevelopment: number;          // Development paradigm final score
+  finalEcological: number;           // Ecological paradigm final score
+  finalIndigenous: number;           // Indigenous paradigm final score
+  paradigmDivergence: number;        // Overall paradigm divergence (std dev)
+  paradigmMaxRange: number;          // Max range between paradigms
+  paradigmTrend: string;             // Trend direction (CONVERGING/STABLE/DIVERGING)
+  paradigmOutcome: string;           // Outcome label (e.g., "Contested", "Aligned Utopia")
+  paradigmContested: boolean;        // Whether paradigms have conflicting outcomes
+
   // Alignment statistics (ENHANCED)
   avgTrueAlignment: number;
   minTrueAlignment: number;
@@ -284,13 +295,28 @@ interface RunResult {
     other: number;
   };
   deathsByRoot: {                     // WHY it happened (underlying driver)
-    climateChange: number;
-    conflict: number;
-    governance: number;
+    // Environmental drivers (4 categories)
+    climate: number;
+    resource: number;
+    pollution: number;
+    ecosystem: number;
+    // Social drivers (3 categories)
+    inequality: number;
+    demographic: number;
+    social: number;
+    // Technology drivers (2 categories)
     alignment: number;
-    natural: number;
-    poverty: number;
-    other: number;
+    disruption: number;
+    // External shocks (2 categories)
+    conflict: number;
+    pandemic: number;
+    // Compound attribution
+    compound: number;
+    confidenceDistribution: {
+      HIGH: number;
+      MEDIUM: number;
+      LOW: number;
+    };
   };
 
   // Population outcome
@@ -1122,8 +1148,12 @@ for (let i = 0; i < NUM_RUNS; i++) {
     ecosystem: 0, pollution: 0, ai: 0, cascade: 0, other: 0
   };
   const deathsByRootCause = pop.deathsByRootCause || {
-    climateChange: 0, conflict: 0, governance: 0, alignment: 0,
-    natural: 0, poverty: 0, other: 0
+    climate: 0, resource: 0, pollution: 0, ecosystem: 0,
+    inequality: 0, demographic: 0, social: 0,
+    alignment: 0, disruption: 0,
+    conflict: 0, pandemic: 0,
+    compound: 0,
+    confidenceDistribution: { HIGH: 0, MEDIUM: 0, LOW: 0 }
   };
   
   const initialPopulation = pop.baselinePopulation;
@@ -1468,13 +1498,19 @@ for (let i = 0; i < NUM_RUNS; i++) {
       other: deathsByCategory.other
     },
     deathsByRoot: {
-      climateChange: deathsByRootCause.climateChange,
-      conflict: deathsByRootCause.conflict,
-      governance: deathsByRootCause.governance,
+      climate: deathsByRootCause.climate,
+      resource: deathsByRootCause.resource,
+      pollution: deathsByRootCause.pollution,
+      ecosystem: deathsByRootCause.ecosystem,
+      inequality: deathsByRootCause.inequality,
+      demographic: deathsByRootCause.demographic,
+      social: deathsByRootCause.social,
       alignment: deathsByRootCause.alignment,
-      natural: deathsByRootCause.natural,
-      poverty: deathsByRootCause.poverty,
-      other: deathsByRootCause.other
+      disruption: deathsByRootCause.disruption,
+      conflict: deathsByRootCause.conflict,
+      pandemic: deathsByRootCause.pandemic,
+      compound: deathsByRootCause.compound,
+      confidenceDistribution: deathsByRootCause.confidenceDistribution
     },
 
     populationOutcome,
@@ -2862,8 +2898,12 @@ const aggregateProximate = {
   ecosystem: 0, pollution: 0, ai: 0, cascade: 0, other: 0
 };
 const aggregateRoot = {
-  climateChange: 0, conflict: 0, governance: 0, alignment: 0,
-  natural: 0, poverty: 0, other: 0
+  climate: 0, resource: 0, pollution: 0, ecosystem: 0,
+  inequality: 0, demographic: 0, social: 0,
+  alignment: 0, disruption: 0,
+  conflict: 0, pandemic: 0,
+  compound: 0,
+  HIGH: 0, MEDIUM: 0, LOW: 0
 };
 
 // Sum across all runs
@@ -2878,13 +2918,21 @@ results.forEach(r => {
   aggregateProximate.cascade += r.deathsByProximate.cascade;
   aggregateProximate.other += r.deathsByProximate.other;
 
-  aggregateRoot.climateChange += r.deathsByRoot.climateChange;
-  aggregateRoot.conflict += r.deathsByRoot.conflict;
-  aggregateRoot.governance += r.deathsByRoot.governance;
+  aggregateRoot.climate += r.deathsByRoot.climate;
+  aggregateRoot.resource += r.deathsByRoot.resource;
+  aggregateRoot.pollution += r.deathsByRoot.pollution;
+  aggregateRoot.ecosystem += r.deathsByRoot.ecosystem;
+  aggregateRoot.inequality += r.deathsByRoot.inequality;
+  aggregateRoot.demographic += r.deathsByRoot.demographic;
+  aggregateRoot.social += r.deathsByRoot.social;
   aggregateRoot.alignment += r.deathsByRoot.alignment;
-  aggregateRoot.natural += r.deathsByRoot.natural;
-  aggregateRoot.poverty += r.deathsByRoot.poverty;
-  aggregateRoot.other += r.deathsByRoot.other;
+  aggregateRoot.disruption += r.deathsByRoot.disruption;
+  aggregateRoot.conflict += r.deathsByRoot.conflict;
+  aggregateRoot.pandemic += r.deathsByRoot.pandemic;
+  aggregateRoot.compound += r.deathsByRoot.compound;
+  aggregateRoot.HIGH += r.deathsByRoot.confidenceDistribution.HIGH;
+  aggregateRoot.MEDIUM += r.deathsByRoot.confidenceDistribution.MEDIUM;
+  aggregateRoot.LOW += r.deathsByRoot.confidenceDistribution.LOW;
 });
 
 // Calculate totals
@@ -2916,29 +2964,41 @@ log(`    Cascade:    ${formatDeathStat(aggregateProximate.cascade, totalProximat
 log(`    Other:      ${formatDeathStat(aggregateProximate.other, totalProximateDeaths)}`);
 
 log(`\n  === ROOT CAUSES (Why it happened) ===`);
-log(`    Governance:      ${formatDeathStat(aggregateRoot.governance, totalRootDeaths)}`);
-log(`    Climate Change:  ${formatDeathStat(aggregateRoot.climateChange, totalRootDeaths)}`);
-log(`    Conflict:        ${formatDeathStat(aggregateRoot.conflict, totalRootDeaths)}`);
-log(`    Poverty:         ${formatDeathStat(aggregateRoot.poverty, totalRootDeaths)}`);
-log(`    Alignment:       ${formatDeathStat(aggregateRoot.alignment, totalRootDeaths)}`);
-log(`    Natural:         ${formatDeathStat(aggregateRoot.natural, totalRootDeaths)}`);
-log(`    Other:           ${formatDeathStat(aggregateRoot.other, totalRootDeaths)}`);
+log(`    Environmental Drivers:`);
+log(`      Climate:       ${formatDeathStat(aggregateRoot.climate, totalRootDeaths)}`);
+log(`      Resource:      ${formatDeathStat(aggregateRoot.resource, totalRootDeaths)}`);
+log(`      Pollution:     ${formatDeathStat(aggregateRoot.pollution, totalRootDeaths)}`);
+log(`      Ecosystem:     ${formatDeathStat(aggregateRoot.ecosystem, totalRootDeaths)}`);
+log(`    Social Drivers:`);
+log(`      Inequality:    ${formatDeathStat(aggregateRoot.inequality, totalRootDeaths)}`);
+log(`      Demographic:   ${formatDeathStat(aggregateRoot.demographic, totalRootDeaths)}`);
+log(`      Social:        ${formatDeathStat(aggregateRoot.social, totalRootDeaths)}`);
+log(`    Technology Drivers:`);
+log(`      Alignment:     ${formatDeathStat(aggregateRoot.alignment, totalRootDeaths)}`);
+log(`      Disruption:    ${formatDeathStat(aggregateRoot.disruption, totalRootDeaths)}`);
+log(`    External Shocks:`);
+log(`      Conflict:      ${formatDeathStat(aggregateRoot.conflict, totalRootDeaths)}`);
+log(`      Pandemic:      ${formatDeathStat(aggregateRoot.pandemic, totalRootDeaths)}`);
+log(`    Compound:        ${formatDeathStat(aggregateRoot.compound, totalRootDeaths)}`);
+log(`    Confidence: HIGH ${aggregateRoot.HIGH.toFixed(0)}M | MEDIUM ${aggregateRoot.MEDIUM.toFixed(0)}M | LOW ${aggregateRoot.LOW.toFixed(0)}M`);
 
 // Key insight: Proximate vs Root comparison
 if (totalProximateDeaths > 0 && totalRootDeaths > 0) {
-  const govPercent = (aggregateRoot.governance / totalRootDeaths) * 100;
-  const climatePercent = (aggregateRoot.climateChange / totalRootDeaths) * 100;
-  const povertyPercent = (aggregateRoot.poverty / totalRootDeaths) * 100;
+  const inequalityPercent = (aggregateRoot.inequality / totalRootDeaths) * 100;
+  const climatePercent = (aggregateRoot.climate / totalRootDeaths) * 100;
+  const demographicPercent = (aggregateRoot.demographic / totalRootDeaths) * 100;
+  const environmentalPercent = ((aggregateRoot.climate + aggregateRoot.resource + aggregateRoot.pollution + aggregateRoot.ecosystem) / totalRootDeaths) * 100;
+  const socialPercent = ((aggregateRoot.inequality + aggregateRoot.demographic + aggregateRoot.social) / totalRootDeaths) * 100;
 
   log(`\n  KEY INSIGHT: Multi-Factor Attribution`);
-  if (govPercent > 60) {
-    log(`    ${govPercent.toFixed(0)}% governance root cause → policy/distribution failures dominate`);
+  if (inequalityPercent > 60) {
+    log(`    ${inequalityPercent.toFixed(0)}% inequality root cause → policy/distribution failures dominate`);
     log(`    ${climatePercent.toFixed(0)}% climate creates stress, but systems amplify it into mass death`);
-  } else if (climatePercent > 50) {
-    log(`    ${climatePercent.toFixed(0)}% climate root cause → environmental limits exceeded`);
-    log(`    ${govPercent.toFixed(0)}% governance amplifies climate stress into mortality`);
+  } else if (environmentalPercent > 50) {
+    log(`    ${environmentalPercent.toFixed(0)}% environmental root causes → ecological limits exceeded`);
+    log(`    ${inequalityPercent.toFixed(0)}% inequality amplifies environmental stress into mortality`);
   } else {
-    log(`    Multi-factor causation: Climate ${climatePercent.toFixed(0)}%, Governance ${govPercent.toFixed(0)}%, Poverty ${povertyPercent.toFixed(0)}%`);
+    log(`    Multi-factor causation: Environmental ${environmentalPercent.toFixed(0)}%, Social ${socialPercent.toFixed(0)}%`);
     log(`    No single root cause dominates - systemic interaction`);
   }
 }

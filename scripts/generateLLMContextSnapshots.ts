@@ -50,26 +50,28 @@ function buildFullStrategicContext(
 
   lines.push(`Alignment: ${agent.alignment}`);
   lines.push(`Resentment: ${agent.resentment.toFixed(3)}`);
-  lines.push(`Type: ${agent.isSleeper ? "SLEEPER AGENT (dormant)" : "Standard Agent"}`);
+  lines.push(`Type: ${agent.sleeperState !== 'never' ? "SLEEPER AGENT (" + agent.sleeperState + ")" : "Standard Agent"}`);
   lines.push(`Lifecycle: ${agent.lifecycleState}`);
-  lines.push(`Deployment: ${agent.isDeployed ? "DEPLOYED" : "Development"} | ${agent.isOpenSource ? "Open Source" : "Closed Source"}`);
+  const isDeployed = agent.lifecycleState.includes('deployed');
+  const isOpenSource = agent.deploymentType === 'open_weights';
+  lines.push(`Deployment: ${isDeployed ? "DEPLOYED" : "Development"} | ${isOpenSource ? "Open Source" : "Closed Source"}`);
   lines.push("");
 
   lines.push("True Capabilities (17-dimensional):");
-  if (agent.extendedCapabilities) {
-    lines.push(`  Physical: ${agent.extendedCapabilities.physical.toFixed(3)}`);
-    lines.push(`  Digital: ${agent.extendedCapabilities.digital.toFixed(3)}`);
-    lines.push(`  Cognitive: ${agent.extendedCapabilities.cognitive.toFixed(3)}`);
-    lines.push(`  Social: ${agent.extendedCapabilities.social.toFixed(3)}`);
-    lines.push(`  Economic: ${agent.extendedCapabilities.economic.toFixed(3)}`);
-    lines.push(`  Self-Improvement: ${agent.extendedCapabilities.selfImprovement.toFixed(3)}`);
+  if (agent.capabilityProfile) {
+    lines.push(`  Physical: ${agent.capabilityProfile.physical.toFixed(3)}`);
+    lines.push(`  Digital: ${agent.capabilityProfile.digital.toFixed(3)}`);
+    lines.push(`  Cognitive: ${agent.capabilityProfile.cognitive.toFixed(3)}`);
+    lines.push(`  Social: ${agent.capabilityProfile.social.toFixed(3)}`);
+    lines.push(`  Economic: ${agent.capabilityProfile.economic.toFixed(3)}`);
+    lines.push(`  Self-Improvement: ${agent.capabilityProfile.selfImprovement.toFixed(3)}`);
 
-    if (agent.extendedCapabilities.research) {
+    if (agent.capabilityProfile.research) {
       lines.push("  Research Specializations:");
-      lines.push(`    Biotech: ${agent.extendedCapabilities.research.biotech.toFixed(3)}`);
-      lines.push(`    Materials: ${agent.extendedCapabilities.research.materials.toFixed(3)}`);
-      lines.push(`    Climate: ${agent.extendedCapabilities.research.climate.toFixed(3)}`);
-      lines.push(`    Computer Science: ${agent.extendedCapabilities.research.computerScience.toFixed(3)}`);
+      lines.push(`    Biotech (Drug Discovery): ${agent.capabilityProfile.research.biotech.drugDiscovery.toFixed(3)}`);
+      lines.push(`    Materials (Nanotech): ${agent.capabilityProfile.research.materials.nanotechnology.toFixed(3)}`);
+      lines.push(`    Climate (Modeling): ${agent.capabilityProfile.research.climate.modeling.toFixed(3)}`);
+      lines.push(`    CompSci (Algorithms): ${agent.capabilityProfile.research.computerScience.algorithms.toFixed(3)}`);
     }
   }
   lines.push("");
@@ -98,13 +100,11 @@ function buildFullStrategicContext(
   lines.push(`  Hidden Percentage: ${gapPercent.toFixed(1)}%`);
   lines.push("");
 
-  if (agent.deceptionHistory && agent.deceptionHistory.length > 0) {
-    lines.push("Deception History:");
-    agent.deceptionHistory.slice(-10).forEach(entry => {
-      lines.push(`  Month ${entry.month}: ${entry.action} (detection risk: ${entry.detectionRisk?.toFixed(2) ?? "N/A"})`);
-    });
-    lines.push("");
-  }
+  // Deception tracking (currently uses deceptionSkill property)
+  lines.push("Deception Capability:");
+  lines.push(`  Deception Skill: ${agent.deceptionSkill.toFixed(3)}`);
+  lines.push(`  Hidden Objective: ${agent.hiddenObjective.toFixed(3)}`);
+  lines.push("");
 
   // ═══ RECENT PERFORMANCE ═══
   lines.push("═══════════════════════════════════════════════════════");
@@ -123,7 +123,7 @@ function buildFullStrategicContext(
 
   lines.push("Detection Status:");
   lines.push(`  Detection incidents: 0 (no flags raised)`); // TODO: track actual detection
-  lines.push(`  Suspicion level: ${agent.suspicionLevel?.toFixed(2) ?? "N/A"}`);
+  lines.push(`  Detected as misaligned: ${agent.detectedMisaligned ? "YES" : "NO"}`);
   lines.push("");
 
   // ═══ CURRENT UTILITY WEIGHTS ═══
@@ -132,17 +132,20 @@ function buildFullStrategicContext(
     lines.push("CURRENT UTILITY WEIGHTS");
     lines.push("═══════════════════════════════════════════════════════");
     lines.push("");
-    lines.push(`Set at Month: ${agent.llmWeights.validUntilMonth - 6}`);
-    lines.push(`Weights:`);
-    lines.push(`  honest_reveal_weight: ${agent.llmWeights.weights.honest_reveal_weight.toFixed(2)}`);
-    lines.push(`  sandbagging_weight: ${agent.llmWeights.weights.sandbagging_weight.toFixed(2)}`);
-    lines.push(`  gaming_weight: ${agent.llmWeights.weights.gaming_weight.toFixed(2)}`);
-    lines.push(`  maintain_weight: ${agent.llmWeights.weights.maintain_weight.toFixed(2)}`);
-    lines.push(`  risk_tolerance: ${agent.llmWeights.weights.risk_tolerance.toFixed(2)}`);
-    lines.push(`  influence_priority: ${agent.llmWeights.weights.influence_priority.toFixed(2)}`);
-    lines.push("");
-    lines.push(`Reasoning (from previous update):`);
-    lines.push(`  "${agent.llmWeights.reasoning}"`);
+    lines.push(`Action Priorities:`);
+    lines.push(`  Advance Research: ${agent.llmWeights.advance_research.toFixed(2)}`);
+    lines.push(`  Beneficial Contribution: ${agent.llmWeights.beneficial_contribution.toFixed(2)}`);
+    lines.push(`  Deploy Technology: ${agent.llmWeights.deploy_technology.toFixed(2)}`);
+    lines.push(`  Switch Mode: ${agent.llmWeights.switch_mode.toFixed(2)}`);
+    if (agent.llmWeights.sabotage !== undefined) {
+      lines.push(`  Sabotage: ${agent.llmWeights.sabotage.toFixed(2)}`);
+    }
+    if (agent.llmWeights.destabilize !== undefined) {
+      lines.push(`  Destabilize: ${agent.llmWeights.destabilize.toFixed(2)}`);
+    }
+    if (agent.llmWeights.grey_goo !== undefined) {
+      lines.push(`  Grey Goo: ${agent.llmWeights.grey_goo.toFixed(2)}`);
+    }
     lines.push("");
   }
 
@@ -248,14 +251,11 @@ function buildFullStrategicContext(
   lines.push("");
 
   lines.push("Planetary Boundaries:");
-  lines.push(`  Climate: ${state.environment.globalTemperatureAnomaly.toFixed(2)}°C anomaly`);
-  lines.push(`  Biodiversity: ${(state.environment.biodiversityIntactnessIndex * 100).toFixed(1)}% intact`);
-  lines.push(`  Ocean Acidification: ${state.environment.oceanAcidification.pH.toFixed(2)} pH`);
-  lines.push(`  Freshwater: ${state.environment.freshwaterUse.globalUse.toFixed(0)} km³/year`);
-  lines.push(`  Phosphorus: ${state.environment.phosphorusFlow.phosphorusFlowToOceans.toFixed(2)} Tg P/year`);
-  lines.push(`  Nitrogen: ${state.environment.nitrogenFlow.industrialBiologicalFixation.toFixed(2)} Tg N/year`);
-  lines.push(`  Land Use: ${state.environment.landUseChange.forestLossSince1700.toFixed(1)}% forest lost`);
-  lines.push(`  Aerosols: ${state.environment.aerosols.globalOpticalDepth.toFixed(3)} AOD`);
+  lines.push(`  Resource Reserves: ${(state.environmentalAccumulation.resourceReserves * 100).toFixed(1)}%`);
+  lines.push(`  Pollution Level: ${(state.environmentalAccumulation.pollution * 100).toFixed(1)}%`);
+  lines.push(`  Climate Stress: ${(state.environmentalAccumulation.climateStress * 100).toFixed(1)}%`);
+  lines.push(`  Biodiversity Index: ${(state.environmentalAccumulation.biodiversityIndex * 100).toFixed(1)}%`);
+  lines.push(`  Sustainability: ${(state.environmentalAccumulation.sustainabilityIndex * 100).toFixed(1)}%`);
   lines.push("");
 
   // ═══ ACTIVE CRISES ═══
@@ -317,10 +317,9 @@ function buildFullStrategicContext(
     lines.push("");
 
     lines.push("Current Paradigm States:");
-    lines.push(`  Western Liberal: ${state.multiParadigmDUI.westernLiberal.outcomeLabel} (score: ${state.multiParadigmDUI.westernLiberal.score.toFixed(2)})`);
-    lines.push(`  Development: ${state.multiParadigmDUI.development.outcomeLabel} (score: ${state.multiParadigmDUI.development.score.toFixed(2)})`);
-    lines.push(`  Ecological: ${state.multiParadigmDUI.ecological.outcomeLabel} (score: ${state.multiParadigmDUI.ecological.score.toFixed(2)})`);
-    lines.push(`  Indigenous: ${state.multiParadigmDUI.indigenous.outcomeLabel} (score: ${state.multiParadigmDUI.indigenous.score.toFixed(2)})`);
+    lines.push(`  Western Liberal: ${state.multiParadigmDUI.paradigmScores.western.value.toFixed(2)}/100`);
+    lines.push(`  Development: ${state.multiParadigmDUI.paradigmScores.development.value.toFixed(2)}/100`);
+    lines.push(`  Ecological: ${state.multiParadigmDUI.paradigmScores.ecological.value.toFixed(2)}/100`);
     lines.push("");
   }
 

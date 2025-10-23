@@ -6,17 +6,25 @@
  */
 
 import {
-  Government,
-  GovernmentType,
   loadCountries,
   createPolicyVector,
   calculatePolicyDistance,
-  attemptInternationalTreaty,
-  TreatyProposal,
+  type CountryData,
+  type PolicyVector,
 } from '../src';
 
+// Treaty proposal type (local to this example)
+interface TreatyProposal {
+  name: string;
+  domain: string;
+  requiredSupport: number;
+  policyTarget: PolicyVector;
+  economicCost: number;
+  urgency: number;
+}
+
 // Load G20 governments
-const g20Countries = [
+const g20CountryCodes = [
   'USA',
   'CHN',
   'JPN',
@@ -38,7 +46,10 @@ const g20Countries = [
   'ZAF',
 ];
 
-const governments = loadCountries(g20Countries);
+const allCountries = loadCountries();
+const governments = Array.from(allCountries.entries())
+  .filter(([code]) => g20CountryCodes.includes(code))
+  .map(([code, data]) => [code, data] as [string, CountryData]);
 
 // Treaty proposals
 const treaties: TreatyProposal[] = [
@@ -94,9 +105,13 @@ for (const treaty of treaties) {
   const supportingCountries: string[] = [];
   const opposingCountries: string[] = [];
 
-  for (const government of governments) {
+  for (const [_code, country] of governments) {
+    // For this example, assume country's current policy is neutral (0,0,0,0,0,0)
+    // In a real implementation, this would come from historical policy data
+    const countryPolicy = createPolicyVector({});
+
     const policyDistance = calculatePolicyDistance(
-      government.getCoalitionPolicyPosition(),
+      countryPolicy,
       treaty.policyTarget
     );
 
@@ -109,20 +124,20 @@ for (const treaty of treaties) {
 
     const supports =
       policyDistance < distanceThreshold &&
-      government.capacity.governmentEffectiveness > capacityThreshold &&
+      country.wgi.governmentEffectiveness > capacityThreshold &&
       treaty.economicCost < costThreshold;
 
     if (supports) {
-      supportingCountries.push(government.name);
+      supportingCountries.push(country.name);
     } else {
-      opposingCountries.push(government.name);
+      opposingCountries.push(country.name);
     }
 
     // Log details
     const supportStatus = supports ? '✓ SUPPORT' : '✗ OPPOSE';
-    console.log(`${government.name.padEnd(15)} ${supportStatus}`);
+    console.log(`${country.name.padEnd(15)} ${supportStatus}`);
     console.log(`  Policy Distance: ${policyDistance.toFixed(3)}`);
-    console.log(`  State Capacity: ${government.capacity.governmentEffectiveness.toFixed(2)}`);
+    console.log(`  State Capacity: ${country.wgi.governmentEffectiveness.toFixed(2)}`);
     console.log(
       `  Reason: ${
         !supports && policyDistance >= distanceThreshold
@@ -153,8 +168,8 @@ for (const treaty of treaties) {
     // Compliance estimate
     const avgCapacity =
       supportingCountries.reduce((sum, name) => {
-        const gov = governments.find((g) => g.name === name)!;
-        return sum + gov.capacity.governmentEffectiveness;
+        const gov = governments.find(([_, c]) => c.name === name)!;
+        return sum + gov[1].wgi.governmentEffectiveness;
       }, 0) / supportingCountries.length;
 
     const complianceRate = Math.max(0.3, Math.min(0.95, 0.6 + avgCapacity * 0.15));
@@ -166,16 +181,17 @@ for (const treaty of treaties) {
     console.log(`Reasons for failure:`);
     const reasonCounts = {
       policy: opposingCountries.filter((name) => {
-        const gov = governments.find((g) => g.name === name)!;
+        const gov = governments.find(([_, c]) => c.name === name)!;
+        const countryPolicy = createPolicyVector({});
         return (
-          calculatePolicyDistance(gov.getCoalitionPolicyPosition(), treaty.policyTarget) >= 0.8
+          calculatePolicyDistance(countryPolicy, treaty.policyTarget) >= 0.8
         );
       }).length,
       capacity: opposingCountries.filter((name) => {
-        const gov = governments.find((g) => g.name === name)!;
-        return gov.capacity.governmentEffectiveness <= -0.5;
+        const gov = governments.find(([_, c]) => c.name === name)!;
+        return gov[1].wgi.governmentEffectiveness <= -0.5;
       }).length,
-      cost: opposingCountries.filter((name) => treaty.economicCost >= 0.1).length,
+      cost: opposingCountries.filter(() => treaty.economicCost >= 0.1).length,
     };
 
     console.log(`  Policy mismatch: ${reasonCounts.policy} countries`);

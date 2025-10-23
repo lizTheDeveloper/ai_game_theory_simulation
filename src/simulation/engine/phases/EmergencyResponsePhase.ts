@@ -55,15 +55,15 @@ export class EmergencyResponsePhase implements SimulationPhase {
    */
   private checkAndDeployEmergencyResponses(state: GameState, events: any[]): void {
     // PANDEMIC CRISIS
-    // FIX #11A: Lower threshold from 0.3 → 0.2 (trigger earlier)
-    if (state.pandemic?.active && state.pandemic.severity > 0.2) {
+    // FIX #11A: Lower threshold from 0.2 (trigger earlier)
+    if (state.crises?.megaPandemic?.active && state.crises.megaPandemic.socialDisruption > 0.2) {
       const existing = getActiveResponse(state, 'pandemic');
       if (!existing) {
         const response = deployEmergencyResponse(
           state,
           'pandemic',
-          state.pandemic.severity,
-          state.pandemic.startMonth || state.currentMonth
+          state.crises.megaPandemic.socialDisruption,
+          state.crises.megaPandemic.startMonth || state.currentMonth
         );
         if (response) {
           events.push({
@@ -79,19 +79,20 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
     // CLIMATE CRISIS (multiple planetary boundaries)
     // FIX #11A: Keep at 0.35 (moderate degradation triggers response)
+    const climateChangeCurrent = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
     const climateCrisisActive = (
-      (state.planetaryBoundaries?.freshwater < 0.35) ||
-      (state.planetaryBoundaries?.phosphorus < 0.35) ||
-      (state.climateState?.globalWarming > 1.9)
+      (state.freshwaterSystem?.waterStress || 0) > 0.65 ||
+      (state.phosphorusSystem?.reserves || 1.0) < 0.35 ||
+      climateChangeCurrent > 0.6
     );
     if (climateCrisisActive) {
       const existing = getActiveResponse(state, 'climate');
       if (!existing) {
         // Estimate severity from planetary boundaries
         const severity = Math.max(
-          1.0 - (state.planetaryBoundaries?.freshwater || 1.0),
-          1.0 - (state.planetaryBoundaries?.phosphorus || 1.0),
-          (state.climateState?.globalWarming || 0) / 4.0
+          state.freshwaterSystem?.waterStress || 0,
+          1.0 - (state.phosphorusSystem?.reserves || 1.0),
+          climateChangeCurrent
         );
         const response = deployEmergencyResponse(
           state,
@@ -198,15 +199,16 @@ export class EmergencyResponsePhase implements SimulationPhase {
     }
 
     // NUCLEAR CRISIS
-    if (state.nuclearWar?.active) {
+    if (state.nuclearWinterState?.active) {
       const existing = getActiveResponse(state, 'nuclear');
       if (!existing) {
-        const severity = state.nuclearWar.severity;
+        // Estimate severity from nuclear winter impacts
+        const severity = Math.min(1.0, Math.abs(state.nuclearWinterState.temperatureAnomaly) / 15);
         const response = deployEmergencyResponse(
           state,
           'nuclear',
           severity,
-          state.nuclearWar.startMonth || state.currentMonth
+          state.nuclearWinterState.triggerMonth || state.currentMonth
         );
         if (response) {
           events.push({
@@ -236,20 +238,18 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
       switch (response.crisisType) {
         case 'pandemic':
-          if (state.pandemic?.active) {
-            // Reduce pandemic severity (mortality rate)
+          if (state.crises?.megaPandemic?.active) {
+            // Reduce pandemic severity (social disruption)
             const reductionFactor = 1.0 - (effectivenessBonus * 0.5); // Max 50% reduction
-            state.pandemic.severity *= reductionFactor;
+            state.crises.megaPandemic.socialDisruption *= reductionFactor;
 
-            // Reduce spread rate
-            if (state.pandemic.spreadRate) {
-              state.pandemic.spreadRate *= reductionFactor;
-            }
+            // Reduce monthly mortality
+            state.crises.megaPandemic.monthlyMortality *= reductionFactor;
 
             // Update crisis experience on resolution
-            if (state.pandemic.severity < 0.1) {
+            if (state.crises.megaPandemic.socialDisruption < 0.1) {
               updateCrisisExperience(state, 'pandemic', true);
-              state.pandemic.active = false;
+              state.crises.megaPandemic.active = false;
               events.push({
                 type: 'crisis_resolved',
                 month: state.currentMonth,
@@ -406,15 +406,15 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
         case 'nuclear':
           // Nuclear emergency response reduces fallout, coordinates evacuation
-          if (state.nuclearWar?.active) {
-            // Reduce severity (damage control, evacuation effectiveness)
+          if (state.nuclearWinterState?.active) {
+            // Reduce nuclear winter effects (damage control, evacuation effectiveness)
             const damageReductionFactor = 1.0 - (effectivenessBonus * 0.3); // Max 30% reduction
-            state.nuclearWar.severity *= damageReductionFactor;
 
-            // Reduce nuclear winter effects
-            if (state.nuclearWinter?.active) {
-              state.nuclearWinter.temperatureDrop *= damageReductionFactor;
-            }
+            // Reduce temperature anomaly (emergency cooling mitigation, cloud seeding, etc.)
+            state.nuclearWinterState.temperatureAnomaly *= damageReductionFactor;
+
+            // Reduce starvation rate through emergency food distribution
+            state.nuclearWinterState.monthlyStarvationRate *= damageReductionFactor;
           }
           break;
       }

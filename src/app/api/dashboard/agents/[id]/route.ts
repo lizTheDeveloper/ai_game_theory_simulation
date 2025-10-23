@@ -23,11 +23,11 @@ export interface AgentDetail {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  return monitor.measureAsync(`agent-detail-${params.id}`, async () => {
+  const { id } = await params;
+  return monitor.measureAsync(`agent-detail-${id}`, async () => {
     try {
-      const { id } = params;
       const cacheKey = `dashboard:agent:${id}`;
       const cached = getCached(cacheKey);
       if (cached) {

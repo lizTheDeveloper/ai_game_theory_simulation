@@ -95,7 +95,7 @@ export function setupBlackDeathPandemic(state: GameState): void {
     affectedFraction: 1.0,   // Europe-wide (medieval world)
     economicImpact: 0.9,     // 90% severity (catastrophic)
     techResilience: false,   // No tech sector in 1347
-    vaccineTimeline: undefined // No vaccines in medieval era
+    // No vaccineTimeline - optional property omitted for medieval era
   });
 }
 

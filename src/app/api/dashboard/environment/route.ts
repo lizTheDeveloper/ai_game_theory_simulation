@@ -44,55 +44,64 @@ export async function GET() {
       const tippingPoints: TippingPoint[] = [
         {
           name: 'Amazon Rainforest Dieback',
-          triggered: state.tippingPoints?.amazonCollapse?.triggered || false,
-          progress: state.tippingPoints?.amazonCollapse?.progress || 0,
-          reversible: state.tippingPoints?.amazonCollapse?.reversible !== false,
+          triggered: state.specificTippingPoints?.amazon?.triggered || false,
+          progress: state.specificTippingPoints?.amazon?.transitionProgress || 0,
+          reversible: state.specificTippingPoints?.amazon?.reversibility !== 'irreversible',
           cascadeEffects: ['Biodiversity loss', 'Carbon release', 'Regional climate'],
-          monthsToPointOfNoReturn: state.tippingPoints?.amazonCollapse?.monthsToNoReturn || 0,
+          monthsToPointOfNoReturn: 0, // Not tracked in current structure
         },
         {
           name: 'Coral Reef Collapse',
-          triggered: state.tippingPoints?.coralCollapse?.triggered || false,
-          progress: state.tippingPoints?.coralCollapse?.progress || 0,
-          reversible: state.tippingPoints?.coralCollapse?.reversible !== false,
+          triggered: state.specificTippingPoints?.coral?.triggered || false,
+          progress: state.specificTippingPoints?.coral?.collapseProgress || 0,
+          reversible: state.specificTippingPoints?.coral?.reversibility !== 'irreversible',
           cascadeEffects: ['Marine biodiversity', 'Coastal protection', 'Fisheries'],
-          monthsToPointOfNoReturn: state.tippingPoints?.coralCollapse?.monthsToNoReturn || 0,
+          monthsToPointOfNoReturn: 0, // Not tracked in current structure
         },
         {
-          name: 'Greenland Ice Sheet',
-          triggered: state.tippingPoints?.greenlandCollapse?.triggered || false,
-          progress: state.tippingPoints?.greenlandCollapse?.progress || 0,
-          reversible: state.tippingPoints?.greenlandCollapse?.reversible !== false,
-          cascadeEffects: ['Sea level rise', 'Ocean circulation'],
-          monthsToPointOfNoReturn: state.tippingPoints?.greenlandCollapse?.monthsToNoReturn || 0,
+          name: 'Permafrost Carbon Release',
+          triggered: state.specificTippingPoints?.permafrost?.triggered || false,
+          progress: state.specificTippingPoints?.permafrost?.thawRate || 0,
+          reversible: state.specificTippingPoints?.permafrost?.reversibility !== 'irreversible',
+          cascadeEffects: ['Carbon release', 'Methane emissions', 'Arctic warming'],
+          monthsToPointOfNoReturn: 0,
         },
         {
-          name: 'West Antarctic Ice Sheet',
-          triggered: state.tippingPoints?.antarcticCollapse?.triggered || false,
-          progress: state.tippingPoints?.antarcticCollapse?.progress || 0,
-          reversible: state.tippingPoints?.antarcticCollapse?.reversible !== false,
-          cascadeEffects: ['Catastrophic sea level rise', 'Global climate'],
-          monthsToPointOfNoReturn: state.tippingPoints?.antarcticCollapse?.monthsToNoReturn || 0,
+          name: 'Pollinator Collapse',
+          triggered: state.specificTippingPoints?.pollinators?.triggered || false,
+          progress: 1 - (state.specificTippingPoints?.pollinators?.populationPercentage || 1),
+          reversible: state.specificTippingPoints?.pollinators?.reversibility !== 'irreversible',
+          cascadeEffects: ['Food production loss', 'Ecosystem disruption'],
+          monthsToPointOfNoReturn: 0,
         },
         {
           name: 'Atlantic Meridional Overturning Circulation',
-          triggered: state.tippingPoints?.amocCollapse?.triggered || false,
-          progress: state.tippingPoints?.amocCollapse?.progress || 0,
-          reversible: state.tippingPoints?.amocCollapse?.reversible !== false,
+          triggered: state.specificTippingPoints?.amoc?.triggered || false,
+          progress: 1 - (state.specificTippingPoints?.amoc?.strength || 1),
+          reversible: state.specificTippingPoints?.amoc?.reversibility !== 'irreversible',
           cascadeEffects: ['European cooling', 'Monsoon disruption', 'Amazon dieback'],
-          monthsToPointOfNoReturn: state.tippingPoints?.amocCollapse?.monthsToNoReturn || 0,
+          monthsToPointOfNoReturn: 0,
         },
       ];
+
+      // Calculate environmental debt from accumulation metrics
+      const env = state.environmentalAccumulation;
+      const totalDebt = (
+        (1 - env.resourceReserves) +     // Resource depletion
+        env.pollutionLevel +              // Pollution accumulation
+        (1 - env.climateStability) +     // Climate degradation
+        (1 - env.biodiversityIndex)      // Biodiversity loss
+      ) / 4;
 
       const data: EnvironmentResponse = {
         planetaryBoundaries: getPlanetaryBoundaries(state),
         tippingPoints,
         environmentalDebt: {
-          total: state.accumulationSystems?.environmental?.totalDebt || 0,
-          hidden: state.accumulationSystems?.environmental?.hiddenDebt || 0,
-          visible: state.accumulationSystems?.environmental?.visibleDebt || 0,
-          cascadePotential: state.accumulationSystems?.environmental?.cascadePotential || 0,
-          history: state.history?.environmental?.map((h: unknown) => (h as { totalDebt?: number }).totalDebt || 0) || [],
+          total: totalDebt,
+          hidden: totalDebt * 0.6, // Estimate: ~60% of debt is hidden during prosperity
+          visible: totalDebt * 0.4, // Estimate: ~40% visible
+          cascadePotential: env.resourceCrisisActive || env.pollutionCrisisActive || env.climateCrisisActive || env.ecosystemCrisisActive ? 0.8 : totalDebt,
+          history: [], // History not tracked in current structure
         },
       };
 

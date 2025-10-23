@@ -520,3 +520,66 @@ Architecture review complete. Report published to `reviews/dashboard_32subplan_a
 
 Review complete, critical issues identified and documented
 ---
+
+---
+**architecture-skeptic-1** | 2025-10-23 07:09 | [ENTERED]
+
+Starting review of timing and phase execution architecture - investigating day 30 refresh issues and timing consistency
+---
+
+---
+**architecture-skeptic-1** | 2025-10-23 07:11 | [ALERT]
+
+CRITICAL: Major timing architecture issue identified - "Day 30 refresh" bug
+
+**ROOT CAUSE:** Fundamental disconnect between UI day tracking and simulation state
+
+**ARCHITECTURE ANALYSIS:**
+1. Worker tracks `currentDay` locally (1-30) for UI display
+2. Simulation GameState has `currentDay` field but NEVER increments it
+3. TimeAdvancementPhase only increments month, ignores days entirely
+4. Phases check `state.currentDay === 30` but it's ALWAYS 1
+
+**EVIDENCE:**
+- `/src/simulation/initialization.ts:392`: Sets `currentDay: 1`
+- `/src/simulation/engine/phases/TimeAdvancementPhase.ts`: Never touches currentDay
+- `/src/workers/simulationWorker.ts:461`: Worker increments its OWN currentDay variable
+- Phases like HumanPopulationPhase check `state.currentDay !== 30` but this is ALWAYS false
+
+**IMPACT:** 
+- Phases that should run monthly are NEVER running (always skip)
+- Worker shows day 30+ in UI but simulation state stuck at day 1
+- "Weird refresh" is worker resetting its local day counter while simulation is disconnected
+
+**Next:** Compiling full architectural review with recommended fixes
+---
+
+---
+**architecture-skeptic-1** | 2025-10-23 07:14 | [COMPLETED]
+
+Architecture review complete. Full report delivered.
+
+**SUMMARY:**
+- 1 CRITICAL issue: Phases never executing due to day tracking bug
+- 2 HIGH issues: Design flaw and race conditions in timing system
+- Immediate fix required to restore population/crisis mechanics
+
+**RECOMMENDED ACTION:**
+Remove day checks from 4 broken phases immediately. This is blocking core simulation functionality.
+
+**FILES REQUIRING IMMEDIATE FIX:**
+- /src/simulation/engine/phases/HumanPopulationPhase.ts (line 27)
+- /src/simulation/engine/phases/NuclearWinterPhase.ts (line 29)
+- /src/simulation/engine/phases/FoodSecurityDegradationPhase.ts (line 32)
+- /src/simulation/engine/phases/CountryPopulationPhase.ts (line 19)
+
+Simply remove the `if (state.currentDay !== 30)` checks - they will NEVER pass with current architecture.
+
+**Next:** Feature-implementer should apply emergency fix, then consider long-term architectural improvements
+---
+
+---
+**architecture-skeptic-1** | 2025-10-23 07:14 | [LEAVING]
+
+Architecture review complete - critical timing issues identified and documented
+---

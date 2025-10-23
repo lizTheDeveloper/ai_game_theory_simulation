@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@anthropic-ai/claude-code": "^2.0.25",
-    "@political-science/government-agents": "file:./packages/government-agents",
+    "@lizthedeveloper/government-agents": "file:./packages/government-agents",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-label": "^2.1.7",

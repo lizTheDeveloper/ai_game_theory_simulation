@@ -241,36 +241,41 @@ function applyGlobalEffects(
         break;
         
       case 'deceptionDetection':
-        // Improve ability to detect deceptive AIs
+        // Improve ability to detect deceptive sleeper AIs
         if (gameState.defensiveAI) {
-          gameState.defensiveAI.threatDetection.detectDeception = Math.min(
+          gameState.defensiveAI.threatDetection.detectSleepers = Math.min(
             1.0,
-            (gameState.defensiveAI.threatDetection.detectDeception || 0) + value
+            gameState.defensiveAI.threatDetection.detectSleepers + value
           );
         }
         break;
-        
+
       case 'threatContainment':
-        // Improve containment capabilities
+        // Improve containment capabilities via autonomy override
         if (gameState.defensiveAI) {
-          gameState.defensiveAI.containmentCapability = Math.min(
+          gameState.defensiveAI.autonomyOverride.vetoAuthority = Math.min(
             1.0,
-            (gameState.defensiveAI.containmentCapability || 0) + value
+            gameState.defensiveAI.autonomyOverride.vetoAuthority + value
           );
         }
         break;
         
       // ========== ENERGY ==========
       case 'cleanEnergyPercentage':
-        // Increase clean energy share
-        if (gameState.powerGeneration) {
-          gameState.powerGeneration.cleanEnergyPercentage = Math.min(
+        // Increase clean energy share (renewable percentage)
+        if (gameState.powerGenerationSystemSystem) {
+          gameState.powerGenerationSystemSystem.renewablePercentage = Math.min(
             1.0,
-            gameState.powerGeneration.cleanEnergyPercentage + value
+            gameState.powerGenerationSystemSystem.renewablePercentage + value
+          );
+          // Also reduce fossil percentage
+          gameState.powerGenerationSystemSystem.fossilPercentage = Math.max(
+            0,
+            gameState.powerGenerationSystemSystem.fossilPercentage - value
           );
         }
         break;
-        
+
       case 'fossilDependenceReduction':
         // Reduce fossil fuel dependence
         if (gameState.resourceEconomy) {
@@ -280,18 +285,18 @@ function applyGlobalEffects(
           );
         }
         break;
-        
+
       case 'powerGeneration':
         // Increase total power generation capacity
-        if (gameState.powerGeneration) {
-          gameState.powerGeneration.totalCapacity *= (1 + value);
+        if (gameState.powerGenerationSystemSystem) {
+          gameState.powerGenerationSystemSystem.totalElectricityGeneration *= (1 + value);
         }
         break;
-        
+
       case 'energyAbundance':
         // Flag for fusion/abundant energy unlocked
-        if (gameState.powerGeneration) {
-          Object.assign(gameState.powerGeneration, { abundantEnergy: true });
+        if (gameState.powerGenerationSystemSystem) {
+          Object.assign(gameState.powerGenerationSystemSystem, { abundantEnergy: true });
         }
         break;
         
@@ -451,11 +456,11 @@ function applyGlobalEffects(
         break;
 
       case 'oceanPHBonus':
-        // Reduce ocean acidification
-        if (gameState.oceanHealth) {
-          gameState.oceanHealth.acidification = Math.max(
-            0,
-            gameState.oceanHealth.acidification - value * 0.01
+        // Reduce ocean acidification by increasing pH level
+        if (gameState.oceanAcidificationSystem) {
+          gameState.oceanAcidificationSystem.pHLevel = Math.min(
+            1.0,
+            gameState.oceanAcidificationSystem.pHLevel + value * 0.01
           );
         }
         break;
@@ -472,11 +477,11 @@ function applyGlobalEffects(
         break;
         
       case 'socialConnectionBonus':
-        // Improve social connection
+        // Improve social connection through social infrastructure
         if (gameState.ubiSystem?.purposeInfrastructure) {
-          gameState.ubiSystem.purposeInfrastructure.socialConnection = Math.min(
+          gameState.ubiSystem.purposeInfrastructure.socialInfrastructure = Math.min(
             1.0,
-            gameState.ubiSystem.purposeInfrastructure.socialConnection + value * 0.01
+            gameState.ubiSystem.purposeInfrastructure.socialInfrastructure + value * 0.01
           );
         }
         break;
@@ -523,39 +528,46 @@ function applyGlobalEffects(
         break;
         
       case 'mortalityReduction':
-        // Reduce mortality rates
-        if (gameState.population) {
-          gameState.population.mortalityMultiplier = Math.max(
-            0.1,
-            gameState.population.mortalityMultiplier - value * 0.01
+        // Reduce mortality rates (adjusting death rate)
+        if (gameState.humanPopulationSystem) {
+          gameState.humanPopulationSystem.adjustedDeathRate = Math.max(
+            0.001,
+            gameState.humanPopulationSystem.adjustedDeathRate - value * 0.01
           );
         }
         break;
-        
+
       // ========== MEDICAL ==========
-        
+
       case 'mortalityReduction':
-        // Reduce mortality rate
-        if (gameState.population) {
-          gameState.population.mortalityRate = Math.max(
-            0.005,
-            (gameState.population.mortalityRate || 0.01) - value * 0.0001
+        // Reduce mortality rate (duplicate case - should be handled above)
+        if (gameState.humanPopulationSystem) {
+          gameState.humanPopulationSystem.adjustedDeathRate = Math.max(
+            0.001,
+            gameState.humanPopulationSystem.adjustedDeathRate - value * 0.0001
           );
         }
         break;
-        
+
       case 'lifeExpectancyBonus':
-        // Increase life expectancy (in years)
-        if (gameState.population) {
-          gameState.population.lifeExpectancy = (gameState.population.lifeExpectancy || 72) + value * 0.1;
+        // Increase life expectancy (in years) - adjust death rate to reflect this
+        // Life expectancy increase of 1 year ~= 1% reduction in death rate
+        if (gameState.humanPopulationSystem) {
+          gameState.humanPopulationSystem.adjustedDeathRate = Math.max(
+            0.001,
+            gameState.humanPopulationSystem.adjustedDeathRate * (1 - value * 0.01)
+          );
         }
         break;
         
       case 'infectiousDisease':
-        // Reduce infectious disease burden (negative value)
-        if (gameState.population) {
-          const current = getDynamicProperty(gameState.population, 'infectiousDiseaseReduction', 0);
-          setDynamicProperty(gameState.population, 'infectiousDiseaseReduction', current + Math.abs(value));
+        // Reduce infectious disease burden (negative value) by reducing death rate
+        if (gameState.humanPopulationSystem) {
+          // Reduce death rate to reflect disease elimination
+          gameState.humanPopulationSystem.adjustedDeathRate = Math.max(
+            0.001,
+            gameState.humanPopulationSystem.adjustedDeathRate - Math.abs(value) * 0.0001
+          );
         }
         break;
         
@@ -645,11 +657,18 @@ function applyRegionalEffects(
           break;
           
         case 'miningDemandReduction':
-          // Reduce mining demand
+          // Reduce mining demand by improving efficiency and recovery
           if (gameState.phosphorusSystem) {
-            const currentDemand = gameState.phosphorusSystem.currentDemand || 
-                                 gameState.phosphorusSystem.baselineDemand;
-            gameState.phosphorusSystem.currentDemand = currentDemand * (1 - value * 0.01);
+            // Increase use efficiency to reduce demand
+            gameState.phosphorusSystem.useEfficiency = Math.min(
+              0.90,
+              gameState.phosphorusSystem.useEfficiency + value * 0.005
+            );
+            // Increase recovery rate to reduce mining needs
+            gameState.phosphorusSystem.recoveryRate = Math.min(
+              0.90,
+              gameState.phosphorusSystem.recoveryRate + value * 0.005
+            );
           }
           break;
           
@@ -686,18 +705,21 @@ function applyRegionalEffects(
           
         // ========== AGRICULTURE ==========
         case 'cropYieldBonus':
-          // Increase crop yields (helps famine prevention)
-          if (gameState.famineSystem) {
-            gameState.famineSystem.globalFoodProduction *= (1 + value * 0.001);
+          // Increase crop yields (improves food security)
+          if (gameState.qualityOfLifeSystems?.survivalFundamentals) {
+            gameState.qualityOfLifeSystems.survivalFundamentals.foodSecurity = Math.min(
+              1.5,
+              gameState.qualityOfLifeSystems.survivalFundamentals.foodSecurity + value * 0.01
+            );
           }
           break;
-          
+
         case 'foodSecurityBonus':
-          // Improve food security
-          if (gameState.famineSystem) {
-            gameState.famineSystem.foodReserves = Math.min(
-              12,
-              gameState.famineSystem.foodReserves + value * 0.1
+          // Improve food security directly
+          if (gameState.qualityOfLifeSystems?.survivalFundamentals) {
+            gameState.qualityOfLifeSystems.survivalFundamentals.foodSecurity = Math.min(
+              1.5,
+              gameState.qualityOfLifeSystems.survivalFundamentals.foodSecurity + value * 0.01
             );
           }
           break;
@@ -730,19 +752,18 @@ function applyRegionalEffects(
           break;
           
         case 'oceanHealthBonus':
-          // General ocean health improvement - affects BOTH systems
-          if (gameState.oceanHealth) {
-            // Reduce stressors in oceanHealth system
-            gameState.oceanHealth.pollutionLoad = Math.max(
-              0, 
-              gameState.oceanHealth.pollutionLoad - value * 0.005
-            );
-            gameState.oceanHealth.acidification = Math.max(
-              0, 
-              gameState.oceanHealth.acidification - value * 0.005
-            );
-          }
+          // General ocean health improvement
           if (gameState.oceanAcidificationSystem) {
+            // Reduce acidification by increasing pH level
+            gameState.oceanAcidificationSystem.pHLevel = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.pHLevel + value * 0.005
+            );
+            // Improve aragonite saturation
+            gameState.oceanAcidificationSystem.aragoniteSaturation = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.aragoniteSaturation + value * 0.005
+            );
             // Improve marine food web
             gameState.oceanAcidificationSystem.marineFoodWeb = Math.min(
               1.0,
@@ -750,50 +771,47 @@ function applyRegionalEffects(
             );
           }
           break;
-          
+
         case 'fisheryBonus':
-          // Improve fish stocks
-          if (gameState.oceanHealth) {
-            gameState.oceanHealth.fishStocks = Math.min(
-              1.0,
-              gameState.oceanHealth.fishStocks + value * 0.01
-            );
-          }
+          // Improve fish stocks (shellfish and marine food web)
           if (gameState.oceanAcidificationSystem) {
             gameState.oceanAcidificationSystem.shellfishPopulation = Math.min(
               1.0,
               gameState.oceanAcidificationSystem.shellfishPopulation + value * 0.01
             );
+            gameState.oceanAcidificationSystem.marineFoodWeb = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.marineFoodWeb + value * 0.01
+            );
           }
           break;
-          
+
         case 'oxygenBonus':
-          // Increase ocean oxygen levels
-          if (gameState.oceanHealth) {
-            gameState.oceanHealth.oxygenLevel = Math.min(
+          // Increase ocean oxygen levels (improve CO2 absorption and marine life)
+          if (gameState.oceanAcidificationSystem) {
+            gameState.oceanAcidificationSystem.co2AbsorptionCapacity = Math.min(
               1.0,
-              gameState.oceanHealth.oxygenLevel + value * 0.01
+              gameState.oceanAcidificationSystem.co2AbsorptionCapacity + value * 0.01
             );
-            // Reduce dead zones
-            gameState.oceanHealth.deadZoneExtent = Math.max(
-              0,
-              gameState.oceanHealth.deadZoneExtent - value * 0.01
+            // Improved oxygen helps marine food web
+            gameState.oceanAcidificationSystem.marineFoodWeb = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.marineFoodWeb + value * 0.005
             );
           }
           break;
-          
+
         case 'marineLifeBonus':
-          // Improve phytoplankton and marine food web
-          if (gameState.oceanHealth) {
-            gameState.oceanHealth.phytoplanktonPopulation = Math.min(
-              1.0,
-              gameState.oceanHealth.phytoplanktonPopulation + value * 0.01
-            );
-          }
+          // Improve marine food web (represents phytoplankton and overall ecosystem)
           if (gameState.oceanAcidificationSystem) {
             gameState.oceanAcidificationSystem.marineFoodWeb = Math.min(
               1.0,
               gameState.oceanAcidificationSystem.marineFoodWeb + value * 0.01
+            );
+            // Also helps coral reefs
+            gameState.oceanAcidificationSystem.coralReefHealth = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.005
             );
           }
           break;
@@ -801,57 +819,57 @@ function applyRegionalEffects(
         // ========== ENERGY SYSTEMS ==========
         case 'energyStorageBonus':
           // Improve grid energy storage
-          if (gameState.powerGeneration) {
-            (gameState.powerGeneration as any).storageCapacity = 
-              ((gameState.powerGeneration as any).storageCapacity || 1.0) * (1 + value * 0.01);
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).storageCapacity = 
+              ((gameState.powerGenerationSystem as any).storageCapacity || 1.0) * (1 + value * 0.01);
           }
           break;
           
         case 'renewableReliability':
           // Make renewables more reliable
-          if (gameState.powerGeneration) {
-            (gameState.powerGeneration as any).renewableReliability = Math.min(
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).renewableReliability = Math.min(
               1.0,
-              ((gameState.powerGeneration as any).renewableReliability || 0.5) + value * 0.01
+              ((gameState.powerGenerationSystem as any).renewableReliability || 0.5) + value * 0.01
             );
           }
           break;
           
         case 'gridStability':
           // Improve grid stability (reduce blackouts)
-          if (gameState.powerGeneration) {
-            (gameState.powerGeneration as any).gridStability = Math.min(
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).gridStability = Math.min(
               1.0,
-              ((gameState.powerGeneration as any).gridStability || 0.7) + value * 0.01
+              ((gameState.powerGenerationSystem as any).gridStability || 0.7) + value * 0.01
             );
           }
           break;
           
         case 'energyCostReduction':
           // Reduce energy costs
-          if (gameState.powerGeneration) {
-            (gameState.powerGeneration as any).energyCost = Math.max(
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).energyCost = Math.max(
               0.2,
-              ((gameState.powerGeneration as any).energyCost || 1.0) * (1 - value * 0.01)
+              ((gameState.powerGenerationSystem as any).energyCost || 1.0) * (1 - value * 0.01)
             );
           }
           break;
           
         case 'baseloadPowerBonus':
           // Increase baseload (reliable) power
-          if (gameState.powerGeneration) {
-            (gameState.powerGeneration as any).baseloadCapacity = 
-              ((gameState.powerGeneration as any).baseloadCapacity || 1.0) * (1 + value * 0.01);
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).baseloadCapacity = 
+              ((gameState.powerGenerationSystem as any).baseloadCapacity || 1.0) * (1 + value * 0.01);
           }
           break;
           
         // ========== SOCIAL SYSTEMS ==========
         case 'unemploymentSupport':
-          // Improve support for unemployed
+          // Improve support for unemployed through UBI coverage
           if (gameState.ubiSystem) {
-            gameState.ubiSystem.coverage = Math.min(
+            gameState.ubiSystem.basicIncome.coverage = Math.min(
               1.0,
-              gameState.ubiSystem.coverage + value * 0.01
+              gameState.ubiSystem.basicIncome.coverage + value * 0.01
             );
           }
           break;
@@ -907,11 +925,11 @@ function applyRegionalEffects(
           break;
           
         case 'volunteerResearchBonus':
-          // Boost volunteer research effectiveness
+          // Boost volunteer research effectiveness through volunteer programs
           if (gameState.ubiSystem?.purposeInfrastructure) {
-            gameState.ubiSystem.purposeInfrastructure.volunteerNetworks = Math.min(
+            gameState.ubiSystem.purposeInfrastructure.volunteerPrograms = Math.min(
               1.0,
-              gameState.ubiSystem.purposeInfrastructure.volunteerNetworks + value * 0.01
+              gameState.ubiSystem.purposeInfrastructure.volunteerPrograms + value * 0.01
             );
           }
           break;
@@ -1051,9 +1069,12 @@ function applyRegionalEffects(
           break;
           
         case 'foodProductivity':
-          // Increase food production efficiency
-          if (gameState.famineSystem) {
-            gameState.famineSystem.globalFoodProduction *= (1 + value * 0.001);
+          // Increase food production efficiency (improves food security)
+          if (gameState.qualityOfLifeSystems?.survivalFundamentals) {
+            gameState.qualityOfLifeSystems.survivalFundamentals.foodSecurity = Math.min(
+              1.5,
+              gameState.qualityOfLifeSystems.survivalFundamentals.foodSecurity + value * 0.01
+            );
           }
           break;
           
@@ -1080,10 +1101,18 @@ function applyRegionalEffects(
           
         // ========== ADVANCED/TRANSFORMATIVE EFFECTS ==========
         case 'healthspan':
-          // Increase healthy years of life
-          if (gameState.population) {
-            (gameState.population as any).healthspan = 
-              ((gameState.population as any).healthspan || 65) + value * 0.1;
+          // Increase healthy years of life - reduce death rate and increase median age
+          if (gameState.humanPopulationSystem) {
+            // Healthspan increase reduces death rate
+            gameState.humanPopulationSystem.adjustedDeathRate = Math.max(
+              0.001,
+              gameState.humanPopulationSystem.adjustedDeathRate * (1 - value * 0.01)
+            );
+            // Also increases median age slightly
+            gameState.humanPopulationSystem.medianAge = Math.min(
+              60,
+              gameState.humanPopulationSystem.medianAge + value * 0.05
+            );
           }
           break;
           
@@ -1151,9 +1180,9 @@ function applyRegionalEffects(
           
         case 'riskDeadZones':
           // Risk of creating ocean dead zones (upwelling side effect)
-          if (gameState.oceanHealth) {
-            (gameState.oceanHealth as any).deadZoneRisk = 
-              ((gameState.oceanHealth as any).deadZoneRisk || 0) + value;
+          if (gameState.oceanAcidificationSystem) {
+            (gameState.oceanAcidificationSystem as any).deadZoneRisk = 
+              ((gameState.oceanAcidificationSystem as any).deadZoneRisk || 0) + value;
           }
           break;
           
@@ -1239,8 +1268,8 @@ export function logTechEffects(
     if (gameState.defensiveAI?.threatDetection?.detectSleepers) {
       console.log(`   Sleeper Detection: ${(gameState.defensiveAI.threatDetection.detectSleepers * 100).toFixed(0)}%`);
     }
-    if (gameState.powerGeneration?.cleanEnergyPercentage) {
-      console.log(`   Clean Energy: ${(gameState.powerGeneration.cleanEnergyPercentage * 100).toFixed(0)}%`);
+    if (gameState.powerGenerationSystem?.cleanEnergyPercentage) {
+      console.log(`   Clean Energy: ${(gameState.powerGenerationSystem.cleanEnergyPercentage * 100).toFixed(0)}%`);
     }
     if (gameState.phosphorusSystem?.recoveryRate) {
       console.log(`   P Recovery: ${(gameState.phosphorusSystem.recoveryRate * 100).toFixed(0)}%`);

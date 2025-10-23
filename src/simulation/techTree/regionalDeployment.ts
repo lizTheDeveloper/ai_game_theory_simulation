@@ -13,6 +13,7 @@ import { GameState } from '@/types/game';
 import { TechDefinition } from './comprehensiveTechTree';
 import { RegionalTechDeployment } from './engine';
 import { getAverageAICapability } from '../utils/ai';
+import { detectCrisis } from '../calculations';
 
 export interface RegionalFactors {
   region: string;
@@ -277,17 +278,25 @@ export function calculateDeploymentSpeed(tech: TechDefinition, region: string, g
   let crisisMultiplier = 1.0;
 
   // Check for existential threats
+  const nuclearActive = gameState.nuclearWinterState?.active || false;
+  const climateChangeCurrent = gameState.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue || 0;
+  const pandemicActive = gameState.crises?.megaPandemic?.active || false;
+  const pandemicSeverity = gameState.crises?.megaPandemic?.socialDisruption || 0;
+
   const hasExtinctionRisk = (
-    (gameState.nuclearWar?.active && gameState.nuclearWar.severity > 0.8) ||
-    (gameState.climateState?.globalWarming > 3.5) ||
-    (gameState.pandemic?.active && gameState.pandemic.severity > 0.9)
+    nuclearActive ||
+    (climateChangeCurrent > 1.75) || // >3.5°C warming (currentValue * 2)
+    (pandemicActive && pandemicSeverity > 0.9)
   );
+
+  // Detect crisis for deployment acceleration
+  const crisis = detectCrisis(gameState);
 
   if (hasExtinctionRisk) {
     crisisMultiplier = 0.1;  // Manhattan Project-level mobilization
-  } else if (gameState.crisisDetected && gameState.crisisDetected.severity > 0.7) {
+  } else if (crisis.inCrisis && crisis.severity > 0.7) {
     crisisMultiplier = 0.25; // COVID vaccine-level urgency
-  } else if (gameState.crisisDetected && gameState.crisisDetected.severity > 0.4) {
+  } else if (crisis.inCrisis && crisis.severity > 0.4) {
     crisisMultiplier = 0.5;  // Accelerated but not emergency
   }
 
@@ -332,9 +341,10 @@ export function calculateDeploymentCost(tech: TechDefinition, region: string, ga
   cost *= (1.3 - factors.politicalStability * 0.3); // 1.0x to 1.3x based on stability
   
   // Crisis modifiers
-  if (gameState.crisisDetected) {
+  const crisis = detectCrisis(gameState);
+  if (crisis.inCrisis) {
     // Crisis increases costs due to supply chain disruption
-    const crisisModifier = 1 + gameState.crisisDetected.severity * 0.5;
+    const crisisModifier = 1 + crisis.severity * 0.5;
     cost *= crisisModifier;
   }
   
@@ -383,9 +393,10 @@ export function getDeploymentPriority(tech: TechDefinition, region: string, game
   if (region === 'South America' && tech.category === 'agriculture') priority *= 1.3;
   
   // Crisis modifiers
-  if (gameState.crisisDetected) {
+  const crisis = detectCrisis(gameState);
+  if (crisis.inCrisis) {
     // Crisis increases priority for relevant tech
-    if (tech.category === 'environmental' && gameState.crisisDetected.severity > 0.5) {
+    if (tech.category === 'environmental' && crisis.severity > 0.5) {
       priority *= 2.0;
     }
   }

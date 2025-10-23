@@ -38,61 +38,105 @@ export async function GET() {
       const crises: CrisisData[] = [];
 
       // Extract active crises from individual crisis systems
-      if (state.phosphorusSystem?.crisisActive) {
+      // Phosphorus: Use supplyShockActive or criticalDepletionActive
+      const phosphorusCrisis = state.phosphorusSystem?.supplyShockActive || state.phosphorusSystem?.criticalDepletionActive;
+      if (phosphorusCrisis) {
+        const reserves = state.phosphorusSystem.reserves || 1.0;
+        const severity = reserves < 0.3 ? 'critical' : reserves < 0.5 ? 'high' : 'medium';
+        // Estimate affected population: Agricultural sector + dependent population (~40% global)
+        const affectedPopulation = state.society?.totalPopulation ? state.society.totalPopulation * 0.4 : 0;
+
         crises.push({
           type: 'Phosphorus Depletion',
           active: true,
-          severity: ('crisisSeverity' in state.phosphorusSystem ? String(state.phosphorusSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
-          affectedPopulation: state.phosphorusSystem.affectedPopulation || 0,
-          interventionWindow: state.phosphorusSystem.interventionMonths || 0,
+          severity,
+          affectedPopulation,
+          interventionWindow: state.phosphorusSystem.supplyShockDuration || 0,
           cascadeMultiplier: 1.0,
           regionalImpact: {},
         });
       }
 
-      if (state.freshwaterSystem?.crisisActive) {
+      // Freshwater: Use dayZeroDrought.active or criticalScarcityActive
+      const freshwaterCrisis = state.freshwaterSystem?.dayZeroDrought?.active || state.freshwaterSystem?.criticalScarcityActive;
+      if (freshwaterCrisis) {
+        const waterStress = state.freshwaterSystem.waterStress || 0;
+        const severity = waterStress > 0.8 ? 'critical' : waterStress > 0.6 ? 'high' : 'medium';
+        // Population stressed from freshwater system
+        const affectedPopulation = state.society?.totalPopulation
+          ? state.society.totalPopulation * (state.freshwaterSystem.populationStressed || 0.41)
+          : 0;
+
         crises.push({
           type: 'Freshwater Scarcity',
           active: true,
-          severity: ('crisisSeverity' in state.freshwaterSystem ? String(state.freshwaterSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
-          affectedPopulation: state.freshwaterSystem.affectedPopulation || 0,
-          interventionWindow: state.freshwaterSystem.interventionMonths || 0,
+          severity,
+          affectedPopulation,
+          interventionWindow: state.freshwaterSystem.dayZeroDrought?.duration || 0,
           cascadeMultiplier: 1.0,
           regionalImpact: {},
         });
       }
 
-      if (state.oceanAcidificationSystem?.crisisActive) {
+      // Ocean Acidification: Use boundaryBreached or specific collapse flags
+      const oceanCrisis = state.oceanAcidificationSystem?.boundaryBreached
+        || state.oceanAcidificationSystem?.coralExtinctionActive
+        || state.oceanAcidificationSystem?.marineFoodWebCollapseActive;
+      if (oceanCrisis) {
+        const marineFoodWeb = state.oceanAcidificationSystem.marineFoodWeb || 1.0;
+        const severity = marineFoodWeb < 0.4 ? 'critical' : marineFoodWeb < 0.7 ? 'high' : 'medium';
+        // Fish-dependent impact (~3 billion people globally)
+        const affectedPopulation = state.society?.totalPopulation
+          ? state.society.totalPopulation * (state.oceanAcidificationSystem.fishDependentImpact || 0.3)
+          : 0;
+
         crises.push({
           type: 'Ocean Acidification',
           active: true,
-          severity: ('crisisSeverity' in state.oceanAcidificationSystem ? String(state.oceanAcidificationSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
-          affectedPopulation: state.oceanAcidificationSystem.affectedPopulation || 0,
-          interventionWindow: state.oceanAcidificationSystem.interventionMonths || 0,
+          severity,
+          affectedPopulation,
+          interventionWindow: 0, // Slow crisis, no clear intervention window
           cascadeMultiplier: 1.0,
           regionalImpact: {},
         });
       }
 
-      if (state.novelEntitiesSystem?.crisisActive) {
+      // Novel Entities: Use boundaryBreached or specific crisis flags
+      const novelEntitiesCrisis = state.novelEntitiesSystem?.boundaryBreached
+        || state.novelEntitiesSystem?.reproductiveCrisisActive
+        || state.novelEntitiesSystem?.chronicDiseaseEpidemicActive;
+      if (novelEntitiesCrisis) {
+        const chronicDisease = state.novelEntitiesSystem.chronicDiseasePrevalence || 0;
+        const severity = chronicDisease > 0.6 ? 'critical' : chronicDisease > 0.4 ? 'high' : 'medium';
+        // Global population affected (everyone exposed to some degree)
+        const affectedPopulation = state.society?.totalPopulation
+          ? state.society.totalPopulation * chronicDisease
+          : 0;
+
         crises.push({
           type: 'Novel Entities (PFAS)',
           active: true,
-          severity: ('crisisSeverity' in state.novelEntitiesSystem ? String(state.novelEntitiesSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
-          affectedPopulation: state.novelEntitiesSystem.affectedPopulation || 0,
-          interventionWindow: state.novelEntitiesSystem.interventionMonths || 0,
+          severity,
+          affectedPopulation,
+          interventionWindow: 0, // Very slow crisis (100-200 years)
           cascadeMultiplier: 1.0,
           regionalImpact: {},
         });
       }
 
-      if (state.nuclearSystem?.radiationActive) {
+      // Nuclear Winter: Use nuclearWinterState.active (not nuclearSystem)
+      if (state.nuclearWinterState?.active) {
+        // Calculate affected population from starvation rate
+        const affectedPopulation = state.society?.totalPopulation
+          ? state.society.totalPopulation * (state.nuclearWinterState.monthlyStarvationRate || 0.05)
+          : 0;
+
         crises.push({
-          type: 'Nuclear Radiation',
+          type: 'Nuclear Winter',
           active: true,
           severity: 'critical',
-          affectedPopulation: state.nuclearSystem.affectedPopulation || 0,
-          interventionWindow: 0,
+          affectedPopulation,
+          interventionWindow: state.nuclearWinterState.peakMortalityMonths - state.nuclearWinterState.monthsSinceWar || 0,
           cascadeMultiplier: 1.0,
           regionalImpact: {},
         });
