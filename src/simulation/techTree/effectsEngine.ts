@@ -382,55 +382,71 @@ function applyGlobalEffects(
         // Mechanistic habitat restoration: Address ROOT CAUSES, not just symptoms
         // Research: Moreno-Mateos et al. (2017) - habitat restoration takes decades
         //
-        // MECHANISTIC CASCADE:
-        // 1. Increase reforestation rate → recover forest cover
+        // MECHANISTIC CASCADE (REGIONAL):
+        // 1. Increase reforestation rate → recover habitat cover
         // 2. Decrease deforestation rate → protect remaining habitat
-        // 3. Reduce habitat loss → slow extinction acceleration
-        // 4. Slow extinction acceleration → stop exponential growth
-        // 5. Eventually reduce extinction rate as ecosystem stabilizes
+        // 3. Slow extinction acceleration → stop exponential growth
+        // 4. Eventually reduce extinction rate as ecosystem stabilizes
         //
-        // This models the ACTUAL PROCESS, not a magic reduction
+        // REGIONAL VARIATION:
+        // - Tropical: Hardest to restore (2.0x difficulty), highest priority (50% biodiversity)
+        // - Temperate: Baseline difficulty (1.0x), active programs
+        // - Grasslands: Moderate difficulty (1.3x), megafauna habitat
+        // - Boreal/Arctic: Slow growth (1.5x difficulty), climate-vulnerable
         if (gameState.planetaryBoundariesSystem?.landUse) {
           const landUse = gameState.planetaryBoundariesSystem.landUse;
+          const regions = landUse.regions;
 
-          // 1. INCREASE REFORESTATION (habitat restoration primary effect)
-          // Research: Large-scale reforestation programs (China, EU, US)
-          // Baseline: 0.01%/month → Target: 0.05-0.10%/month with intervention
-          landUse.reforestationRate = Math.min(
-            0.10, // Cap at 0.10%/month (realistic maximum)
-            landUse.reforestationRate + value * 0.15 // Habitat restoration boosts by +0.045%/month at full deployment
-          );
+          // Apply restoration effects to ALL regions (global programs)
+          // BUT scale by restoration difficulty (easier in temperate, harder in tropical)
+          const regionNames: Array<keyof typeof regions> = ['tropical', 'temperate', 'grasslands', 'borealArctic'];
 
-          // 2. DECREASE DEFORESTATION (enforcement + alternatives)
-          // Baseline: 0.03%/month → Target: 0.01%/month with strong protection
-          landUse.deforestationRate = Math.max(
-            0.005, // Can't eliminate entirely (some sustainable use)
-            landUse.deforestationRate - value * 0.04 // Reduce by -0.012%/month at full deployment
-          );
+          for (const regionName of regionNames) {
+            const region = regions[regionName];
 
-          // 3. REDUCE HABITAT LOSS (direct restoration of degraded land)
-          // This is the % already destroyed - restoration can recover some
-          landUse.habitatLossPercent = Math.max(
-            20, // Can't restore to pristine (some loss is permanent)
-            landUse.habitatLossPercent - value * 0.5 // Recover 0.15%/month at full deployment
-          );
+            // Scale effect by inverse of restoration difficulty
+            // Temperate (1.0x) gets full effect, tropical (2.0x) gets half
+            const effectScale = 1.0 / region.restorationDifficulty;
 
-          // 4. SLOW EXTINCTION ACCELERATION (ecosystem stabilization)
-          // As habitat recovers, extinction pressure decreases
-          landUse.extinctionAcceleration = Math.max(
-            0.1, // Minimum acceleration (can't stop all pressures)
-            landUse.extinctionAcceleration - value * 1.0 // Reduce acceleration by 0.3/month at full deployment
-          );
-
-          // 5. DIRECT EXTINCTION RATE REDUCTION (only as ecosystem stabilizes)
-          // This is now a CONSEQUENCE of the above, not the primary mechanism
-          // Only apply if acceleration is slowing (i.e., habitat recovering)
-          if (landUse.extinctionAcceleration < 1.0) {
-            landUse.currentExtinctionRate = Math.max(
-              1.0, // Can't go below natural rate
-              landUse.currentExtinctionRate - value * 5.0 // Moderate reduction once ecosystem stabilizing
+            // 1. INCREASE HABITAT RESTORATION RATE (primary effect)
+            // Research: Large-scale reforestation programs (China, EU, US)
+            // Target: 0.05-0.10%/month with intervention
+            const restorationBoost = value * 0.015 * effectScale; // 0.0045%/month at full deployment (temperate)
+            region.habitatRestorationRate = Math.min(
+              0.10, // Cap at 0.10%/month (realistic maximum)
+              region.habitatRestorationRate + restorationBoost
             );
+
+            // 2. DECREASE HABITAT LOSS RATE (enforcement + alternatives)
+            // Priority: Tropical (highest deforestation)
+            const protectionBoost = value * 0.004 * (region.biodiversityWeight * 2.0); // Weight by biodiversity importance
+            region.habitatLossRate = Math.max(
+              0.005, // Can't eliminate entirely
+              region.habitatLossRate - protectionBoost
+            );
+
+            // 3. SLOW EXTINCTION ACCELERATION (ecosystem stabilization)
+            // As habitat recovers, extinction pressure decreases
+            const stabilizationEffect = value * 0.10 * effectScale;
+            region.extinctionAcceleration = Math.max(
+              0.1, // Minimum acceleration
+              region.extinctionAcceleration - stabilizationEffect
+            );
+
+            // 4. DIRECT EXTINCTION RATE REDUCTION (only as ecosystem stabilizes)
+            // Only apply if acceleration is slowing (i.e., habitat recovering)
+            if (region.extinctionAcceleration < 1.0) {
+              const extinctionReduction = value * 0.50 * effectScale; // Moderate reduction once stabilizing
+              region.extinctionRate = Math.max(
+                region.biodiversityWeight === 0.50 ? 100 : // Tropical can't go below 100x (hotspot baseline)
+                region.biodiversityWeight === 0.20 ? 30 :   // Temperate/grasslands baseline
+                region.biodiversityWeight === 0.10 ? 20 : 50, // Boreal baseline
+                region.extinctionRate - extinctionReduction
+              );
+            }
           }
+
+          // Global metrics will be recalculated in updateLandUseSystem()
         }
         break;
 

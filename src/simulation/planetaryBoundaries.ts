@@ -23,6 +23,7 @@ import {
   TippingPointCascade,
   PlanetaryBoundaryEvent,
   LandUseSystem,
+  RegionalBiome,
   OzoneRecoverySystem
 } from '@/types/planetaryBoundaries';
 
@@ -484,8 +485,17 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   climateBoundary.currentValue = Math.max(0, 1.21 - (env.climateStability * 0.21));
   updateBoundaryStatus(climateBoundary);
 
-  // Biosphere integrity (from biodiversity)
-  system.boundaries.biosphere_integrity.currentValue = Math.max(0, 10.0 * (1 - env.biodiversityIndex));
+  // Biosphere integrity (from regional extinction rates)
+  // Research: IPBES (2024) - 100-1000x natural extinction rate
+  // Safe threshold: 10x natural rate
+  // Current baseline: 137x natural rate (weighted across regions)
+  if (system.landUse) {
+    const extinctionRatio = system.landUse.globalExtinctionRate / system.landUse.naturalExtinctionRate;
+    system.boundaries.biosphere_integrity.currentValue = extinctionRatio;
+  } else {
+    // Fallback to biodiversity index if land use system not initialized
+    system.boundaries.biosphere_integrity.currentValue = Math.max(0, 10.0 * (1 - env.biodiversityIndex));
+  }
   updateBoundaryStatus(system.boundaries.biosphere_integrity);
 
   // Freshwater (from freshwater system if available)
@@ -831,75 +841,161 @@ function updateLandUseSystem(state: GameState): void {
   const landUse = system.landUse;
   const env = state.environmentalAccumulation;
 
-  // === 1. UPDATE FOREST COVER ===
-  // Net change = reforestation - deforestation
-  const netForestChange = landUse.reforestationRate - landUse.deforestationRate;
-  landUse.forestCoverPercent = Math.max(0, Math.min(100,
-    landUse.forestCoverPercent + netForestChange
-  ));
+  // === 1. UPDATE REGIONAL BIOMES ===
+  // Update each biome separately with region-specific dynamics
+  const regions = landUse.regions;
+  const regionNames: Array<keyof typeof regions> = ['tropical', 'temperate', 'grasslands', 'borealArctic'];
 
-  // Habitat loss = inverse of forest cover
-  landUse.habitatLossPercent = 100 - landUse.forestCoverPercent;
+  for (const regionName of regionNames) {
+    const region = regions[regionName];
 
-  // === 2. FEEDBACK LOOP: DEFORESTATION → CLIMATE ACCELERATION ===
-  // Loss of carbon sinks amplifies climate change
-  const forestDeficit = (landUse.forestCoverSafe - landUse.forestCoverPercent) / landUse.forestCoverSafe;
-  landUse.carbonSinkLossMultiplier = 1.0 + Math.max(0, forestDeficit * 2.0); // Up to 3x multiplier
+    // 1A. UPDATE HABITAT COVER (region-specific rates)
+    const netHabitatChange = region.habitatRestorationRate - region.habitatLossRate;
+    region.habitatCoverPercent = Math.max(0, Math.min(100,
+      region.habitatCoverPercent + netHabitatChange
+    ));
 
-  // Apply to climate boundary
-  if (system.boundaries.climate_change) {
-    const climateAcceleration = (landUse.carbonSinkLossMultiplier - 1.0) * 0.001; // +0.1% per 10% forest loss
-    system.boundaries.climate_change.currentValue += climateAcceleration;
-  }
+    // 1B. FEEDBACK: HABITAT LOSS → EXTINCTION ACCELERATION
+    // Threshold varies by biome - tropical more sensitive (30%), boreal/arctic less (40%)
+    const criticalThreshold = regionName === 'tropical' ? 30 :
+                             regionName === 'temperate' ? 35 :
+                             regionName === 'grasslands' ? 40 : 45;
 
-  // === 3. FEEDBACK LOOP: HABITAT LOSS → BIODIVERSITY CRISIS ===
-  // Habitat destruction drives extinctions
-  if (landUse.habitatLossPercent > 30) {
-    const habitatSeverity = (landUse.habitatLossPercent - 30) / 70; // 0-1 scale
-    landUse.extinctionAcceleration = 0.5 + (habitatSeverity * 2.0); // 0.5x → 2.5x acceleration
-  }
+    const habitatLost = 100 - region.habitatCoverPercent;
+    if (habitatLost > criticalThreshold) {
+      const habitatSeverity = (habitatLost - criticalThreshold) / (100 - criticalThreshold);
+      region.extinctionAcceleration = 0.5 + (habitatSeverity * 2.0); // 0.5x → 2.5x acceleration
+    } else {
+      // Recovery phase
+      region.extinctionAcceleration = Math.max(0.1, region.extinctionAcceleration * 0.98);
+    }
 
-  // Update extinction rate
-  landUse.currentExtinctionRate = Math.min(1000,
-    landUse.currentExtinctionRate * (1 + landUse.extinctionAcceleration / 100)
-  );
+    // 1C. UPDATE REGIONAL EXTINCTION RATE
+    region.extinctionRate = Math.min(1000,
+      region.extinctionRate * (1 + region.extinctionAcceleration / 100)
+    );
 
-  // === 4. FEEDBACK LOOP: EXTINCTION → ECOSYSTEM COLLAPSE ===
-  // High extinction rates → food web breakdown
-  if (landUse.currentExtinctionRate > 200) {
-    landUse.ecosystemCollapseRisk = Math.min(1.0, landUse.ecosystemCollapseRisk + 0.01); // +1% per month
+    // 1D. FEEDBACK: EXTINCTION → ECOSYSTEM COLLAPSE
+    // Tropical collapses are cascading (highest biodiversity)
+    const collapseThreshold = regionName === 'tropical' ? 150 :
+                             regionName === 'temperate' ? 100 :
+                             regionName === 'grasslands' ? 180 : 80;
 
-    // Check for critical ecosystem collapse
-    if (landUse.ecosystemCollapseRisk > 0.80 && Math.random() < 0.05) {
-      landUse.criticalEcosystemsLost++;
-      console.log(`\n🌳💀 CRITICAL ECOSYSTEM COLLAPSED (Total: ${landUse.criticalEcosystemsLost})`);
-      console.log(`   Extinction rate: ${landUse.currentExtinctionRate.toFixed(0)}x baseline`);
-      console.log(`   Habitat loss: ${landUse.habitatLossPercent.toFixed(1)}%`);
-      console.log(`   Forest cover: ${landUse.forestCoverPercent.toFixed(1)}% (need ${landUse.forestCoverSafe}%)\n`);
+    if (region.extinctionRate > collapseThreshold) {
+      region.ecosystemCollapseRisk = Math.min(1.0, region.ecosystemCollapseRisk + 0.01);
 
-      // Apply collapse effects
-      env.biodiversityIndex = Math.max(0, env.biodiversityIndex * 0.90); // -10% immediate
-      env.resourceReserves = Math.max(0, env.resourceReserves * 0.95); // -5% resources
+      // Check for ecosystem collapse (varies by biodiversity weight)
+      const collapseChance = region.biodiversityWeight * 0.05; // Tropical has highest chance
+      if (region.ecosystemCollapseRisk > 0.80 && Math.random() < collapseChance) {
+        region.ecosystemsLost++;
+        const regionLabel = String(regionName).toUpperCase();
+        console.log(`\n🌳💀 ${regionLabel} ECOSYSTEM COLLAPSED (Total: ${region.ecosystemsLost})`);
+        console.log(`   Extinction rate: ${region.extinctionRate.toFixed(0)}x baseline`);
+        console.log(`   Habitat cover: ${region.habitatCoverPercent.toFixed(1)}% (need ${region.habitatCoverSafe}%)\n`);
+
+        // Apply collapse effects (weighted by biodiversity importance)
+        env.biodiversityIndex = Math.max(0, env.biodiversityIndex * (1.0 - region.biodiversityWeight * 0.10));
+        env.resourceReserves = Math.max(0, env.resourceReserves * 0.95);
+      }
+    } else {
+      // Recovery phase
+      region.ecosystemCollapseRisk = Math.max(0, region.ecosystemCollapseRisk * 0.98);
     }
   }
 
-  // === 5. UPDATE LAND SYSTEM CHANGE BOUNDARY ===
-  // Boundary value scales with forest cover deficit
+  // === 2. AGGREGATE REGIONAL METRICS TO GLOBAL ===
+  // Land area weights (for habitat cover averaging)
+  const landAreaWeights = {
+    tropical: 0.17,
+    temperate: 0.10,
+    grasslands: 0.20,
+    borealArctic: 0.23,
+  };
+
+  // Global habitat cover (weighted by land area)
+  landUse.globalHabitatCoverPercent =
+    regions.tropical.habitatCoverPercent * landAreaWeights.tropical +
+    regions.temperate.habitatCoverPercent * landAreaWeights.temperate +
+    regions.grasslands.habitatCoverPercent * landAreaWeights.grasslands +
+    regions.borealArctic.habitatCoverPercent * landAreaWeights.borealArctic;
+
+  // Global extinction rate (weighted by biodiversity importance)
+  landUse.globalExtinctionRate =
+    regions.tropical.extinctionRate * regions.tropical.biodiversityWeight +
+    regions.temperate.extinctionRate * regions.temperate.biodiversityWeight +
+    regions.grasslands.extinctionRate * regions.grasslands.biodiversityWeight +
+    regions.borealArctic.extinctionRate * regions.borealArctic.biodiversityWeight;
+
+  // Global extinction acceleration (average)
+  landUse.globalExtinctionAcceleration = (
+    regions.tropical.extinctionAcceleration +
+    regions.temperate.extinctionAcceleration +
+    regions.grasslands.extinctionAcceleration +
+    regions.borealArctic.extinctionAcceleration
+  ) / 4;
+
+  // Global ecosystem collapse metrics
+  landUse.globalEcosystemsLost =
+    regions.tropical.ecosystemsLost +
+    regions.temperate.ecosystemsLost +
+    regions.grasslands.ecosystemsLost +
+    regions.borealArctic.ecosystemsLost;
+
+  landUse.globalEcosystemCollapseRisk = Math.max(
+    regions.tropical.ecosystemCollapseRisk,
+    regions.temperate.ecosystemCollapseRisk,
+    regions.grasslands.ecosystemCollapseRisk,
+    regions.borealArctic.ecosystemCollapseRisk
+  );
+
+  // === 3. FEEDBACK LOOP: DEFORESTATION → CLIMATE ACCELERATION ===
+  // Forest-heavy regions (tropical, boreal) contribute most to carbon sink loss
+  const tropicalDeficit = Math.max(0, (regions.tropical.habitatCoverSafe - regions.tropical.habitatCoverPercent) / regions.tropical.habitatCoverSafe);
+  const borealDeficit = Math.max(0, (regions.borealArctic.habitatCoverSafe - regions.borealArctic.habitatCoverPercent) / regions.borealArctic.habitatCoverSafe);
+
+  // Tropical forests are 60% of carbon sink, boreal 30%, others 10%
+  const weightedDeficit = tropicalDeficit * 0.60 + borealDeficit * 0.30 +
+    ((regions.temperate.habitatCoverSafe - regions.temperate.habitatCoverPercent) / regions.temperate.habitatCoverSafe) * 0.10;
+
+  landUse.carbonSinkLossMultiplier = 1.0 + Math.max(0, weightedDeficit * 2.0);
+
+  // Apply to climate boundary
+  if (system.boundaries.climate_change) {
+    const climateAcceleration = (landUse.carbonSinkLossMultiplier - 1.0) * 0.001;
+    system.boundaries.climate_change.currentValue += climateAcceleration;
+  }
+
+  // === 4. UPDATE LAND SYSTEM CHANGE BOUNDARY ===
+  // Use global habitat cover deficit
   if (system.boundaries.land_system_change) {
-    const boundaryValue = 1.0 + (landUse.forestCoverSafe - landUse.forestCoverPercent) / landUse.forestCoverSafe;
+    // Average safe threshold weighted by land area
+    const globalSafeThreshold =
+      regions.tropical.habitatCoverSafe * landAreaWeights.tropical +
+      regions.temperate.habitatCoverSafe * landAreaWeights.temperate +
+      regions.grasslands.habitatCoverSafe * landAreaWeights.grasslands +
+      regions.borealArctic.habitatCoverSafe * landAreaWeights.borealArctic;
+
+    const boundaryValue = 1.0 + Math.max(0, (globalSafeThreshold - landUse.globalHabitatCoverPercent) / globalSafeThreshold);
     system.boundaries.land_system_change.currentValue = boundaryValue;
   }
 
-  // === 6. LOGGING (Every 12 months) ===
+  // === 5. LOGGING (Every 12 months) ===
   if (state.currentMonth % 12 === 0 && state.currentMonth > 0) {
     console.log(`\n🌳 LAND USE SYSTEM (Year ${Math.floor(state.currentMonth / 12)})`);
-    console.log(`   Forest cover: ${landUse.forestCoverPercent.toFixed(1)}% (need ${landUse.forestCoverSafe}%)`);
-    console.log(`   Extinction rate: ${landUse.currentExtinctionRate.toFixed(0)}x natural`);
+    console.log(`   Global habitat cover: ${landUse.globalHabitatCoverPercent.toFixed(1)}%`);
+    console.log(`   Global extinction rate: ${landUse.globalExtinctionRate.toFixed(0)}x natural`);
     console.log(`   Carbon sink loss: ${((landUse.carbonSinkLossMultiplier - 1.0) * 100).toFixed(0)}% climate acceleration`);
-    console.log(`   Ecosystem collapse risk: ${(landUse.ecosystemCollapseRisk * 100).toFixed(0)}%`);
+    console.log(`   Global ecosystem collapse risk: ${(landUse.globalEcosystemCollapseRisk * 100).toFixed(0)}%`);
 
-    if (landUse.criticalEcosystemsLost > 0) {
-      console.log(`   Critical ecosystems lost: ${landUse.criticalEcosystemsLost} 💀`);
+    // Regional details
+    console.log(`   REGIONAL BREAKDOWN:`);
+    console.log(`     Tropical: ${regions.tropical.habitatCoverPercent.toFixed(1)}% habitat, ${regions.tropical.extinctionRate.toFixed(0)}x extinction`);
+    console.log(`     Temperate: ${regions.temperate.habitatCoverPercent.toFixed(1)}% habitat, ${regions.temperate.extinctionRate.toFixed(0)}x extinction`);
+    console.log(`     Grasslands: ${regions.grasslands.habitatCoverPercent.toFixed(1)}% habitat, ${regions.grasslands.extinctionRate.toFixed(0)}x extinction`);
+    console.log(`     Boreal/Arctic: ${regions.borealArctic.habitatCoverPercent.toFixed(1)}% habitat, ${regions.borealArctic.extinctionRate.toFixed(0)}x extinction`);
+
+    if (landUse.globalEcosystemsLost > 0) {
+      console.log(`   Critical ecosystems lost: ${landUse.globalEcosystemsLost} 💀`);
     }
   }
 }
