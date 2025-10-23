@@ -265,9 +265,9 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
     stepInterval = interval;
   }
 
-  // Initialize calendar to today's date
+  // Initialize calendar to today's actual date
   startDate = new Date();
-  currentDay = 1;
+  currentDay = startDate.getDate(); // Start on actual day of month (e.g., 22nd)
 
   // Create initial snapshot
   const snapshot: InitialStateSnapshot = {
@@ -285,6 +285,18 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
     type: 'initialized',
     initialState: snapshot,
     startDate: startDate.toISOString()
+  } as WorkerResponse);
+
+  // Immediately send full state delta so dashboard shows initial values
+  // This populates paradigms, environmental metrics, government, etc.
+  const initialDelta = calculateDelta(previousState, state, true); // Force full delta
+  self.postMessage({
+    type: 'update',
+    delta: initialDelta,
+    month: state.currentMonth,
+    day: currentDay,
+    calendarDate: startDate.toISOString(),
+    timestamp: Date.now()
   } as WorkerResponse);
 }
 
@@ -615,14 +627,14 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   };
 }
 
-function calculateDelta(previous: StateSnapshot, current: GameState): StateDelta {
+function calculateDelta(previous: StateSnapshot, current: GameState, forceFull = false): StateDelta {
   const delta: StateDelta = {};
 
   // Capture current state snapshot for comparison
   const currentSnapshot = captureStateSnapshot(current);
 
-  // On first step, force-send all metrics regardless of change
-  if (isFirstStep) {
+  // On first step or when forced, send all metrics regardless of change
+  if (isFirstStep || forceFull) {
     return { ...currentSnapshot } as StateDelta;
   }
 
