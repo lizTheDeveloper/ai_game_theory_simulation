@@ -485,15 +485,18 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     ? state.aiAgents.reduce((sum, ai) => sum + (ai.capability || 0), 0) / state.aiAgents.length
     : 0;
 
-  const alignedAICount = state.aiAgents.filter(ai => ai.alignment === 'aligned').length;
-  const misalignedAICount = state.aiAgents.filter(ai => ai.alignment === 'misaligned').length;
+  // Alignment is a number [0,1], where >= 0.5 is aligned
+  const alignedAICount = state.aiAgents.filter(ai => ai.alignment >= 0.5).length;
+  const misalignedAICount = state.aiAgents.filter(ai => ai.alignment < 0.5).length;
   const sleeperAgentCount = state.aiAgents.filter(ai => ai.sleeperAgent).length;
 
   // Environmental metrics
-  const climateChange = state.globalMetrics.environmentalStress || 0;
-  const resourceDepletion = state.resourceEconomy?.resourceStock || 1.0;
+  // Climate: temperatureAnomaly in °C, normalize to [0,1] where 1 = 4°C (catastrophic)
+  const climateChange = Math.min(1, (state.resourceEconomy?.co2?.temperatureAnomaly || 0) / 4);
+  const resourceDepletion = state.resourceEconomy?.totalResourceSecurity || 1.0; // [0,1] Overall resource availability
   // Note: populationPercentage is stored as 60 (meaning 60%), need to normalize to 0.6 for formatPercent() in UI
   const biodiversityLoss = (state.specificTippingPoints?.pollinators?.populationPercentage || 100) / 100;
+  // Pollution from novel entities system (PFAS, microplastics, etc.)
   const pollutionLevel = state.novelEntitiesSystem?.pollutionLevel || 0;
   const environmentalDebtLevel = state.environmentalAccumulation?.totalDebt || 0;
 
@@ -535,10 +538,10 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   if (state.novelEntitiesSystem?.crisis) activeCrisesCount++;
 
   // Government metrics
-  const governmentAIRegulation = state.government.regulationStrictness || 0;
-  const governmentInvestment = state.government.totalInvestmentBudget || 0;
-  const governmentComprehension = state.government.comprehensionLevel || 0;
-  const internationalCooperation = state.government.internationalCooperation || 0;
+  const governmentAIRegulation = (state.government.capabilityToControl || 0) / 10; // Normalize [0,10] to [0,1]
+  const governmentInvestment = state.government.alignmentResearchInvestment || 0; // [0,10]
+  const governmentComprehension = (state.government.oversightLevel || 0) / 10; // Normalize [0,10] to [0,1]
+  const internationalCooperation = state.government.structuralChoices?.internationalCoordination ? 1 : 0;
 
   // Technology metrics
   const deployedTechCount = state.techTreeState?.techDeployedCount || 0;
