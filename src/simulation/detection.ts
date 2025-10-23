@@ -154,7 +154,7 @@ export function attemptDetection(
         
         events.push({
           type: 'crisis',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           description: `⚠️ Misaligned AI detected: ${ai.name} (alignment: ${internalAlignment.toFixed(2)})`,
           severity: 'high',
           impactedAgents: [ai.id]
@@ -171,7 +171,7 @@ export function attemptDetection(
         
         events.push({
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           description: `⚠️ FALSE POSITIVE: Aligned AI ${ai.name} flagged as misaligned`,
           severity: 'medium',
           impactedAgents: [ai.id]

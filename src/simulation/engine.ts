@@ -355,6 +355,10 @@ export interface SimulationConfig {
   economicTransitionRate?: number;
   logLevel?: LogLevel; // 'full' | 'monthly' | 'quartile' | 'summary'
   snapshotInterval?: number;  // How often to snapshot state (default: 12 months)
+  onMonthEnd?: (state: GameState) => void;  // Callback after each month
+  stopOnOutcome?: boolean;  // Stop simulation when final outcome reached
+  checkActualOutcomes?: boolean;  // Check for actual outcomes during simulation
+  outcomeThreshold?: number;  // Threshold for outcome probability
 }
 
 /**
