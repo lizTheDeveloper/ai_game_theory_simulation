@@ -37,10 +37,10 @@ export function ParadigmDashboard() {
 
   // Calculate divergence
   const scores = [
-    (paradigms.paradigmScores.western as any).score,
-    (paradigms.paradigmScores.development as any).score,
-    (paradigms.paradigmScores.ecological as any).score,
-    (paradigms.diagnosticLenses.indigenous as any).score
+    (paradigms.paradigmScores.western as any).value,
+    (paradigms.paradigmScores.development as any).value,
+    (paradigms.paradigmScores.ecological as any).value,
+    (paradigms.diagnosticLenses.indigenous as any).value
   ]
   const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
   const divergence = Math.sqrt(scores.reduce((sum, s) => sum + Math.pow(s - avgScore, 2), 0) / scores.length)
@@ -57,9 +57,9 @@ export function ParadigmDashboard() {
       const dui = state.multiParadigmDUI as any
       if (!dui) return 50
       if (paradigm === 'indigenous') {
-        return dui.diagnosticLenses?.indigenous?.score || 50
+        return dui.diagnosticLenses?.indigenous?.value || 50
       }
-      return dui.paradigmScores?.[paradigm]?.score || 50
+      return dui.paradigmScores?.[paradigm]?.value || 50
     })
   }
 
@@ -108,11 +108,11 @@ export function ParadigmDashboard() {
         {/* Western Liberal */}
         <Panel
           title="Western Liberal"
-          glow={(paradigms.paradigmScores.western as any).score < 30 ? 'red' : 'none'}
+          glow={(paradigms.paradigmScores.western as any).value < 30 ? 'red' : 'none'}
         >
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-western-liberal)' }}>
-              {((paradigms.paradigmScores.western as any).score || 0).toFixed(1)}
+              {((paradigms.paradigmScores.western as any).value || 0).toFixed(1)}
             </div>
             {trajectory.length > 1 && (
               <Sparkline data={getSparkline('western')} color="var(--color-western-liberal)" />
@@ -137,11 +137,11 @@ export function ParadigmDashboard() {
         {/* Development */}
         <Panel
           title="Development"
-          glow={(paradigms.paradigmScores.development as any).score >= 80 ? 'cyan' : 'none'}
+          glow={(paradigms.paradigmScores.development as any).value >= 80 ? 'cyan' : 'none'}
         >
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-development)' }}>
-              {((paradigms.paradigmScores.development as any).score || 0).toFixed(1)}
+              {((paradigms.paradigmScores.development as any).value || 0).toFixed(1)}
             </div>
             {trajectory.length > 1 && (
               <Sparkline data={getSparkline('development')} color="var(--color-development)" />
@@ -162,13 +162,13 @@ export function ParadigmDashboard() {
         {/* Ecological */}
         <Panel
           title="Ecological"
-          glow={(paradigms.paradigmScores.ecological as any).score < 20 ? 'red' : 'none'}
+          glow={(paradigms.paradigmScores.ecological as any).value < 20 ? 'red' : 'none'}
         >
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{
-              color: (paradigms.paradigmScores.ecological as any).score < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
+              color: (paradigms.paradigmScores.ecological as any).value < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
             }}>
-              {((paradigms.paradigmScores.ecological as any).score || 0).toFixed(1)}
+              {((paradigms.paradigmScores.ecological as any).value || 0).toFixed(1)}
             </div>
             {trajectory.length > 1 && (
               <Sparkline data={getSparkline('ecological')} color="var(--color-ecological)" />
@@ -190,7 +190,7 @@ export function ParadigmDashboard() {
         <Panel title="Indigenous">
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-indigenous)' }}>
-              {((paradigms.diagnosticLenses.indigenous as any).score || 0).toFixed(1)}
+              {((paradigms.diagnosticLenses.indigenous as any).value || 0).toFixed(1)}
             </div>
             {trajectory.length > 1 && (
               <Sparkline data={getSparkline('indigenous')} color="var(--color-indigenous)" />
@@ -213,7 +213,7 @@ export function ParadigmDashboard() {
       <Panel title="Historical Patterns">
         <div className="space-y-3">
           {/* Singapore Pattern */}
-          {(paradigms.paradigmScores.development as any).score >= 80 && (paradigms.paradigmScores.western as any).score < 50 && (
+          {(paradigms.paradigmScores.development as any).value >= 80 && (paradigms.paradigmScores.western as any).value < 50 && (
             <div className="p-3" style={{ backgroundColor: 'var(--color-near-black)', borderLeft: '3px solid var(--color-development)' }}>
               <div className="font-semibold mb-1">Singapore Pattern Detected</div>
               <div className="text-sm" style={{ color: 'var(--white-60)' }}>
@@ -223,7 +223,7 @@ export function ParadigmDashboard() {
           )}
 
           {/* Norway Pattern */}
-          {(paradigms.paradigmScores.development as any).score >= 80 && (paradigms.paradigmScores.western as any).score >= 70 && (paradigms.paradigmScores.ecological as any).score < 30 && (
+          {(paradigms.paradigmScores.development as any).value >= 80 && (paradigms.paradigmScores.western as any).value >= 70 && (paradigms.paradigmScores.ecological as any).value < 30 && (
             <div className="p-3" style={{ backgroundColor: 'var(--color-near-black)', borderLeft: '3px solid var(--color-development)' }}>
               <div className="font-semibold mb-1">Norway Pattern Detected</div>
               <div className="text-sm" style={{ color: 'var(--white-60)' }}>

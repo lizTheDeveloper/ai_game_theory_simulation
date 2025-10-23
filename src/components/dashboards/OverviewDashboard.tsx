@@ -49,7 +49,7 @@ export function OverviewDashboard() {
   // Extract key metrics
   const population = currentState.globalMetrics?.population || 8_000_000_000
   const qol = currentState.globalMetrics?.qualityOfLife || 0
-  const aiCap = currentState.aiAgents?.[0]?.capabilityProfile?.cognitive || 0
+  const aiCap = currentState.aiAgents?.[0]?.capability || 0
   const alignment = currentState.aiAgents?.[0]?.trueAlignment || 0
 
   // Multi-paradigm scores
@@ -63,8 +63,8 @@ export function OverviewDashboard() {
   // Determine overall status
   const getOverallStatus = () => {
     if (currentState.extinctionState?.active) return 'extinction'
-    if (paradigms.ecological.score < 20) return 'critical'
-    if (paradigms.western.score < 30) return 'warning'
+    if (paradigms.ecological.value < 20) return 'critical'
+    if (paradigms.western.value < 30) return 'warning'
     return 'normal'
   }
 
@@ -115,7 +115,7 @@ export function OverviewDashboard() {
         {/* Multi-Paradigm Status */}
         <Panel
           title="Multi-Paradigm DUI"
-          glow={(paradigms.ecological as any).score < 20 ? 'red' : 'cyan'}
+          glow={(paradigms.ecological as any).value < 20 ? 'red' : 'cyan'}
         >
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -123,7 +123,7 @@ export function OverviewDashboard() {
                 Western Liberal
               </div>
               <div className="text-3xl font-light">
-                {(paradigms.western.score || 0).toFixed(1)}
+                {(paradigms.western.value || 0).toFixed(1)}
               </div>
             </div>
             <div>
@@ -131,15 +131,15 @@ export function OverviewDashboard() {
                 Development
               </div>
               <div className="text-3xl font-light">
-                {(paradigms.development.score || 0).toFixed(1)}
+                {(paradigms.development.value || 0).toFixed(1)}
               </div>
             </div>
             <div>
               <div className="text-xs mb-2" style={{ color: 'var(--color-ecological)' }}>
                 Ecological
               </div>
-              <div className={`text-3xl font-light ${paradigms.ecological.score < 20 ? 'text-red-500' : ''}`}>
-                {(paradigms.ecological.score || 0).toFixed(1)}
+              <div className={`text-3xl font-light ${paradigms.ecological.value < 20 ? 'text-red-500' : ''}`}>
+                {(paradigms.ecological.value || 0).toFixed(1)}
               </div>
             </div>
             <div>
@@ -147,7 +147,7 @@ export function OverviewDashboard() {
                 Indigenous
               </div>
               <div className="text-3xl font-light">
-                {(paradigms.indigenous.score || 0).toFixed(1)}
+                {(paradigms.indigenous.value || 0).toFixed(1)}
               </div>
             </div>
           </div>
