@@ -62,6 +62,7 @@ interface StateSnapshot {
   pollutionLevel: number;
   planetaryBoundariesCrossed: number;
   environmentalDebtLevel: number;
+  landUseData: any; // Regional biomes data
 
   // Social
   socialCohesion: number;
@@ -642,6 +643,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     pollutionLevel,
     planetaryBoundariesCrossed,
     environmentalDebtLevel,
+    landUseData: state.planetaryBoundariesSystem?.landUse || null,
     socialCohesion,
     institutionalTrust,
     meaningLevel,

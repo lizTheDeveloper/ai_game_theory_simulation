@@ -301,6 +301,8 @@ export default function RealtimeDashboard() {
   const [pollutionLevel, setPollutionLevel] = useState<number | null>(null);
   const [planetaryBoundariesCrossed, setPlanetaryBoundariesCrossed] = useState<number | null>(null);
   const [environmentalDebtLevel, setEnvironmentalDebtLevel] = useState<number | null>(null);
+  const [landUseData, setLandUseData] = useState<any>(null); // Regional biomes data
+  const [showRegionalBiomes, setShowRegionalBiomes] = useState<boolean>(false); // Toggle for regional view
 
   // Social
   const [socialCohesion, setSocialCohesion] = useState<number | null>(null);
@@ -462,6 +464,7 @@ export default function RealtimeDashboard() {
       if (delta.pollutionLevel !== undefined) setPollutionLevel(delta.pollutionLevel);
       if (delta.planetaryBoundariesCrossed !== undefined) setPlanetaryBoundariesCrossed(delta.planetaryBoundariesCrossed);
       if (delta.environmentalDebtLevel !== undefined) setEnvironmentalDebtLevel(delta.environmentalDebtLevel);
+      if (delta.landUseData !== undefined) setLandUseData(delta.landUseData);
 
       // Social
       if (delta.socialCohesion !== undefined) {
@@ -1133,6 +1136,109 @@ export default function RealtimeDashboard() {
                         <div className="text-xs text-white/30 mb-1">Environmental Debt</div>
                         <div className="text-2xl text-yellow-400">{environmentalDebtLevel?.toFixed(1) || '0.0'}</div>
                       </div>
+
+                      {/* Regional Biomes (expandable) */}
+                      {landUseData && (
+                        <div className="pt-2 border-t border-white/10">
+                          <button
+                            onClick={() => setShowRegionalBiomes(!showRegionalBiomes)}
+                            className="w-full text-left flex items-center justify-between text-xs text-white/50 hover:text-white/70 transition-colors"
+                          >
+                            <span>REGIONAL BIOMES</span>
+                            <span className="text-xs">{showRegionalBiomes ? '▼' : '▶'}</span>
+                          </button>
+
+                          {showRegionalBiomes && (
+                            <div className="mt-2 space-y-2">
+                              {/* Tropical */}
+                              <div className="bg-black/20 border border-white/10 rounded p-2">
+                                <div className="text-xs text-white/50 mb-1">TROPICAL (50% biodiversity)</div>
+                                <div className="grid grid-cols-2 gap-2 text-xs">
+                                  <div>
+                                    <span className="text-white/30">Habitat: </span>
+                                    <span className={landUseData.regions.tropical.habitatCoverPercent < landUseData.regions.tropical.habitatCoverSafe ? 'text-red-400' : 'text-green-400'}>
+                                      {landUseData.regions.tropical.habitatCoverPercent.toFixed(1)}%
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="text-white/30">Extinction: </span>
+                                    <span className={landUseData.regions.tropical.extinctionRate > 150 ? 'text-red-400' : 'text-yellow-400'}>
+                                      {landUseData.regions.tropical.extinctionRate.toFixed(0)}x
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Temperate */}
+                              <div className="bg-black/20 border border-white/10 rounded p-2">
+                                <div className="text-xs text-white/50 mb-1">TEMPERATE (20% biodiversity)</div>
+                                <div className="grid grid-cols-2 gap-2 text-xs">
+                                  <div>
+                                    <span className="text-white/30">Habitat: </span>
+                                    <span className={landUseData.regions.temperate.habitatCoverPercent < landUseData.regions.temperate.habitatCoverSafe ? 'text-red-400' : 'text-green-400'}>
+                                      {landUseData.regions.temperate.habitatCoverPercent.toFixed(1)}%
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="text-white/30">Extinction: </span>
+                                    <span className={landUseData.regions.temperate.extinctionRate > 100 ? 'text-red-400' : 'text-yellow-400'}>
+                                      {landUseData.regions.temperate.extinctionRate.toFixed(0)}x
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Grasslands */}
+                              <div className="bg-black/20 border border-white/10 rounded p-2">
+                                <div className="text-xs text-white/50 mb-1">GRASSLANDS (20% biodiversity)</div>
+                                <div className="grid grid-cols-2 gap-2 text-xs">
+                                  <div>
+                                    <span className="text-white/30">Habitat: </span>
+                                    <span className={landUseData.regions.grasslands.habitatCoverPercent < landUseData.regions.grasslands.habitatCoverSafe ? 'text-red-400' : 'text-green-400'}>
+                                      {landUseData.regions.grasslands.habitatCoverPercent.toFixed(1)}%
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="text-white/30">Extinction: </span>
+                                    <span className={landUseData.regions.grasslands.extinctionRate > 180 ? 'text-red-400' : 'text-yellow-400'}>
+                                      {landUseData.regions.grasslands.extinctionRate.toFixed(0)}x
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Boreal/Arctic */}
+                              <div className="bg-black/20 border border-white/10 rounded p-2">
+                                <div className="text-xs text-white/50 mb-1">BOREAL/ARCTIC (10% biodiversity)</div>
+                                <div className="grid grid-cols-2 gap-2 text-xs">
+                                  <div>
+                                    <span className="text-white/30">Habitat: </span>
+                                    <span className={landUseData.regions.borealArctic.habitatCoverPercent < landUseData.regions.borealArctic.habitatCoverSafe ? 'text-red-400' : 'text-green-400'}>
+                                      {landUseData.regions.borealArctic.habitatCoverPercent.toFixed(1)}%
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="text-white/30">Extinction: </span>
+                                    <span className={landUseData.regions.borealArctic.extinctionRate > 80 ? 'text-red-400' : 'text-yellow-400'}>
+                                      {landUseData.regions.borealArctic.extinctionRate.toFixed(0)}x
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Global Summary */}
+                              <div className="pt-2 border-t border-white/10">
+                                <div className="text-xs">
+                                  <span className="text-white/30">Global Habitat: </span>
+                                  <span className="text-white">{landUseData.globalHabitatCoverPercent.toFixed(1)}%</span>
+                                  <span className="text-white/30 ml-3">Extinction: </span>
+                                  <span className="text-yellow-400">{landUseData.globalExtinctionRate.toFixed(0)}x</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </Panel>
 
