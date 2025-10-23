@@ -27,7 +27,7 @@ export interface EnvironmentResponse {
   };
 }
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   return monitor.measureAsync('environment-api', async () => {
     try {
       const cacheKey = 'dashboard:environment';
@@ -92,7 +92,7 @@ export async function GET(_request: NextRequest) {
           hidden: state.accumulationSystems?.environmental?.hiddenDebt || 0,
           visible: state.accumulationSystems?.environmental?.visibleDebt || 0,
           cascadePotential: state.accumulationSystems?.environmental?.cascadePotential || 0,
-          history: state.history?.environmental?.map((h: any) => h.totalDebt || 0) || [],
+          history: state.history?.environmental?.map((h: unknown) => (h as { totalDebt?: number }).totalDebt || 0) || [],
         },
       };
 

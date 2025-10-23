@@ -21,7 +21,7 @@ export interface CrisesResponse {
   totalAffectedPopulation: number;
 }
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   return monitor.measureAsync('crises-api', async () => {
     try {
       const cacheKey = 'dashboard:crises';
@@ -42,7 +42,7 @@ export async function GET(_request: NextRequest) {
         crises.push({
           type: 'Phosphorus Depletion',
           active: true,
-          severity: (state.phosphorusSystem.crisisSeverity as any) || 'medium',
+          severity: ('crisisSeverity' in state.phosphorusSystem ? String(state.phosphorusSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
           affectedPopulation: state.phosphorusSystem.affectedPopulation || 0,
           interventionWindow: state.phosphorusSystem.interventionMonths || 0,
           cascadeMultiplier: 1.0,
@@ -54,7 +54,7 @@ export async function GET(_request: NextRequest) {
         crises.push({
           type: 'Freshwater Scarcity',
           active: true,
-          severity: (state.freshwaterSystem.crisisSeverity as any) || 'medium',
+          severity: ('crisisSeverity' in state.freshwaterSystem ? String(state.freshwaterSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
           affectedPopulation: state.freshwaterSystem.affectedPopulation || 0,
           interventionWindow: state.freshwaterSystem.interventionMonths || 0,
           cascadeMultiplier: 1.0,
@@ -66,7 +66,7 @@ export async function GET(_request: NextRequest) {
         crises.push({
           type: 'Ocean Acidification',
           active: true,
-          severity: (state.oceanAcidificationSystem.crisisSeverity as any) || 'medium',
+          severity: ('crisisSeverity' in state.oceanAcidificationSystem ? String(state.oceanAcidificationSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
           affectedPopulation: state.oceanAcidificationSystem.affectedPopulation || 0,
           interventionWindow: state.oceanAcidificationSystem.interventionMonths || 0,
           cascadeMultiplier: 1.0,
@@ -78,7 +78,7 @@ export async function GET(_request: NextRequest) {
         crises.push({
           type: 'Novel Entities (PFAS)',
           active: true,
-          severity: (state.novelEntitiesSystem.crisisSeverity as any) || 'medium',
+          severity: ('crisisSeverity' in state.novelEntitiesSystem ? String(state.novelEntitiesSystem.crisisSeverity) : 'medium') as 'critical' | 'high' | 'medium' | 'low',
           affectedPopulation: state.novelEntitiesSystem.affectedPopulation || 0,
           interventionWindow: state.novelEntitiesSystem.interventionMonths || 0,
           cascadeMultiplier: 1.0,

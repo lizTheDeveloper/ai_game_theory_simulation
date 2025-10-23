@@ -8,6 +8,7 @@ import {
   calculateAgentDistribution,
   getCapabilityMatrix,
 } from '@/lib/dashboard/aggregation/agents';
+import { AIAgent } from '@/types/ai-agents';
 
 export interface AgentSummary {
   id: string;
@@ -46,7 +47,7 @@ export interface AgentsResponse {
   agents: AgentSummary[];
 }
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   return monitor.measureAsync('agents-api', async () => {
     try {
       const cacheKey = 'dashboard:agents';
@@ -144,7 +145,7 @@ export async function GET(_request: NextRequest) {
   });
 }
 
-function calculateAvgCapability(agent: any): number {
+function calculateAvgCapability(agent: AIAgent): number {
   const profile = agent.capabilityProfile;
   if (!profile) return 0;
 

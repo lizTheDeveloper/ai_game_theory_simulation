@@ -72,7 +72,7 @@ export async function GET() {
       const qolDist = getQoLDistribution(state);
 
       const population = state.globalMetrics?.population || 0;
-      const popHistory = state.history?.metrics?.map((h: any) => h.population || 0) || [];
+      const popHistory = state.history?.metrics?.map((h: unknown) => (h as { population?: number }).population || 0) || [];
 
       const data: CriticalMetricsData = {
         population: {
@@ -85,7 +85,7 @@ export async function GET() {
           average: qolDist.global.average,
           tierDistribution: qolDist.global.byTier,
           trend: 'stable', // TODO: Calculate from history
-          sparkline: state.history?.metrics?.slice(-12).map((h: any) => h.qualityOfLife || 0) || [],
+          sparkline: state.history?.metrics?.slice(-12).map((h: unknown) => (h as { qualityOfLife?: number }).qualityOfLife || 0) || [],
         },
         aiCapability: {
           distribution: {
@@ -142,7 +142,7 @@ function calculatePopulationTrend(history: number[]): 'increasing' | 'decreasing
   return 'stable';
 }
 
-function countActiveCrises(state: any): number {
+function countActiveCrises(state: unknown): number {
   let count = 0;
 
   if (state.crisisSystem?.phosphorusCrisis?.active) count++;

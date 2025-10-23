@@ -81,10 +81,10 @@ export async function GET() {
         },
         paradigms: {
           westernLiberal:
-            (state.multiParadigmDUI as any)?.westernLiberal?.overallScore || 0,
-          development: (state.multiParadigmDUI as any)?.development?.overallScore || 0,
-          ecological: (state.multiParadigmDUI as any)?.ecological?.overallScore || 0,
-          indigenous: (state.multiParadigmDUI as any)?.indigenous?.overallScore || 0,
+            (state.multiParadigmDUI as { westernLiberal?: { overallScore?: number } })?.westernLiberal?.overallScore || 0,
+          development: (state.multiParadigmDUI as { development?: { overallScore?: number } })?.development?.overallScore || 0,
+          ecological: (state.multiParadigmDUI as { ecological?: { overallScore?: number } })?.ecological?.overallScore || 0,
+          indigenous: (state.multiParadigmDUI as { indigenous?: { overallScore?: number } })?.indigenous?.overallScore || 0,
         },
         activeCrises: getActiveCrises(state),
         systemHealth: getSystemHealth(state),
@@ -109,7 +109,7 @@ export async function GET() {
   });
 }
 
-function getActiveCrises(state: any): OverviewData['activeCrises'] {
+function getActiveCrises(state: unknown): OverviewData['activeCrises'] {
   const crises: OverviewData['activeCrises'] = [];
 
   // Check planetary boundary crises
@@ -171,7 +171,7 @@ function getActiveCrises(state: any): OverviewData['activeCrises'] {
   return crises;
 }
 
-function getSystemHealth(state: any): OverviewData['systemHealth'] {
+function getSystemHealth(state: unknown): OverviewData['systemHealth'] {
   // Simplified health assessment
   const boundaries = getPlanetaryBoundaries(state);
   const envHealth = boundaries.some(b => b.status === 'critical')

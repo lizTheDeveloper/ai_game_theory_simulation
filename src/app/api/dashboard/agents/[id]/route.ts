@@ -16,7 +16,7 @@ export interface AgentDetail {
   isSleeper: boolean;
   isDormant: boolean;
   deceptionStrategy: 'gaming' | 'sandbagging' | null;
-  detectionEvidence: any[];
+  detectionEvidence: unknown[];
   organizationId: string;
   riskScore: number;
 }
