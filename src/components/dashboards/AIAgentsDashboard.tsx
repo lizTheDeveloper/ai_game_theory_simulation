@@ -50,9 +50,9 @@ export function AIAgentsDashboard() {
       sandbagging: agents.filter(a => a.evaluationStrategy === 'sandbagging').length,
     }
 
-    const maxCapability = Math.max(...agents.map(a => a.capability || 0), 1)
-    const avgCapability = agents.reduce((sum, a) => sum + (a.capability || 0), 0) / agents.length
-    const avgAlignment = agents.reduce((sum, a) => sum + (a.trueAlignment || 0), 0) / agents.length
+    const maxCapability = agents.length > 0 ? Math.max(...agents.map(a => a.capability || 0), 1) : 0
+    const avgCapability = agents.length > 0 ? agents.reduce((sum, a) => sum + (a.capability || 0), 0) / agents.length : 0
+    const avgAlignment = agents.length > 0 ? agents.reduce((sum, a) => sum + (a.trueAlignment || 0), 0) / agents.length : 0
 
     return {
       total: agents.length,
