@@ -478,6 +478,16 @@ export default function RealtimeDashboard() {
     return `${(n * 100).toFixed(1)}%`;
   };
 
+  const formatMultiplier = (n: number | null): string => {
+    if (n === null) return '—';
+    // For values > 2.0, display as "Nx baseline"
+    // For values <= 2.0, display as percentage
+    if (n > 2.0) {
+      return `${n.toFixed(1)}x`;
+    }
+    return `${(n * 100).toFixed(1)}%`;
+  };
+
   // Determine severity colors
   const getSeverityColor = (value: number, thresholds: { green: number; yellow: number; red: number }): 'green' | 'yellow' | 'red' => {
     if (value >= thresholds.red) return 'red';
@@ -623,7 +633,7 @@ export default function RealtimeDashboard() {
                   <div className="space-y-4">
                     <Metric
                       label="Quality of Life"
-                      value={formatPercent(qualityOfLife)}
+                      value={formatMultiplier(qualityOfLife)}
                       color={qualityOfLife && qualityOfLife > 1 ? 'green' : qualityOfLife && qualityOfLife < 0.8 ? 'red' : 'yellow'}
                       sparkline={history.qualityOfLife}
                     />
@@ -654,7 +664,7 @@ export default function RealtimeDashboard() {
                       />
                       <Metric
                         label="Capability"
-                        value={formatPercent(avgAICapability)}
+                        value={formatMultiplier(avgAICapability)}
                         color="cyan"
                       />
                     </div>
@@ -833,7 +843,7 @@ export default function RealtimeDashboard() {
                   <div className="space-y-3">
                     <Metric
                       label="AI Regulation"
-                      value={formatPercent(governmentAIRegulation)}
+                      value={formatMultiplier(governmentAIRegulation)}
                       color={governmentAIRegulation && governmentAIRegulation > 0.7 ? 'green' : 'yellow'}
                     />
                     <Metric
