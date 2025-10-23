@@ -65,7 +65,9 @@
       "Bash(scripts/testBreakthroughTech.ts )",
       "Bash(scripts/testEmergencyDeployment.ts )",
       "Bash(scripts/testTechnologyDiffusion.ts )",
-      "Bash(scripts/migrateTechTreeReferences.ts)"
+      "Bash(scripts/migrateTechTreeReferences.ts)",
+      "Bash(for file in environmental.ts freshwaterDepletion.ts geoengineering.ts humanEnhancement.ts)",
+      "Bash(do echo \"=== $file ===\")"
     ],
     "deny": [],
     "ask": []

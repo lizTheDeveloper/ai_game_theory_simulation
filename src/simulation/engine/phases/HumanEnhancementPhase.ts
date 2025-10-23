@@ -67,7 +67,7 @@ export class HumanEnhancementPhase implements SimulationPhase {
       // Phase 4: Update labor-capital distribution based on AI-driven productivity gains
       if (state.laborCapitalDistribution) {
         const productivityMultiplier = calculateProductivityMultiplierFromAIAssistedSkills(state);
-        const ubiLevel = state.ubiSystem?.currentAmount || 0;
+        const ubiLevel = state.ubiSystem?.basicIncome?.amount || 0;
 
         // Phase 6: Apply policy interventions if configured
         if (state.policyInterventions && (

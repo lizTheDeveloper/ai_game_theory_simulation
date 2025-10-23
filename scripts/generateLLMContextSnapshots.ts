@@ -282,29 +282,25 @@ function buildFullStrategicContext(
   }
 
   // ═══ BREAKTHROUGH TECHNOLOGIES ═══
-  const deployedTechs = state.breakthroughTechnologies.filter((t: any) => t.isDeployed);
-  const availableTechs = state.breakthroughTechnologies.filter((t: any) => !t.isDeployed && t.isAvailable);
+  const unlockedTechs = state.techTreeState.unlockedTech || [];
+  const totalTechs = state.technologyTree.length;
 
   lines.push("═══════════════════════════════════════════════════════");
   lines.push("BREAKTHROUGH TECHNOLOGIES");
   lines.push("═══════════════════════════════════════════════════════");
   lines.push("");
 
-  lines.push(`Deployed: ${deployedTechs.length} | Available: ${availableTechs.length} | Total: ${state.breakthroughTechnologies.length}`);
+  lines.push(`Unlocked: ${unlockedTechs.length} | Total: ${totalTechs}`);
   lines.push("");
 
-  if (deployedTechs.length > 0) {
-    lines.push("Recently Deployed Technologies:");
-    deployedTechs.slice(-5).forEach((tech: any) => {
-      lines.push(`  ${tech.name} (Tier ${tech.tier}) - Deployed month ${tech.deploymentMonth}`);
-    });
-    lines.push("");
-  }
-
-  if (availableTechs.length > 0 && availableTechs.length <= 10) {
-    lines.push("Available for Deployment:");
-    availableTechs.forEach((tech: any) => {
-      lines.push(`  ${tech.name} (Tier ${tech.tier})`);
+  if (unlockedTechs.length > 0) {
+    lines.push("Recently Unlocked Technologies:");
+    const recentUnlocks = state.techTreeState.unlockHistory?.slice(-5) || [];
+    recentUnlocks.forEach((unlock: any) => {
+      const tech = state.technologyTree.find((t: any) => t.id === unlock.techId);
+      if (tech) {
+        lines.push(`  ${tech.name} (Tier ${tech.tier}) - Unlocked month ${unlock.month}`);
+      }
     });
     lines.push("");
   }

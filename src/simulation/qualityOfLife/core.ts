@@ -195,10 +195,9 @@ export function updateQualityOfLifeSystems(
   const transparencyFloor = (govQuality?.transparency || 0.5) * 0.15;
   const participationFloor = (govQuality?.participationRate || 0.5) * 0.10;
 
-  const autonomyBreakthrough = state.breakthroughTech;
-  const counterSurveillanceTech =
-    (autonomyBreakthrough.communityPlatforms?.deploymentLevel || 0) * 0.15 +
-    (autonomyBreakthrough.purposeFrameworks?.deploymentLevel || 0) * 0.10;
+  // Tech tree: collective purpose networks provide autonomy boost
+  const purposeTech = state.techTreeState.technologies['collective_purpose_networks'];
+  const counterSurveillanceTech = (purposeTech?.deploymentLevel || 0) * 0.25; // Combined boost
 
   const minimumAutonomy = democraticFloor + transparencyFloor + participationFloor + counterSurveillanceTech;
   autonomy = Math.max(minimumAutonomy, Math.min(1, autonomy));
@@ -229,8 +228,9 @@ export function updateQualityOfLifeSystems(
   // Community strength
   let communityStrength = 0.5 + society.socialAdaptation * 0.3 + globalMetrics.socialStability * 0.2;
 
-  const communityBreakthrough = state.breakthroughTech;
-  const communityTechBoost = (communityBreakthrough.communityPlatforms?.deploymentLevel || 0) * 0.15;
+  // Tech tree: collective purpose networks boost community
+  const communityTech = state.techTreeState.technologies['collective_purpose_networks'];
+  const communityTechBoost = (communityTech?.deploymentLevel || 0) * 0.15;
   const postScarcityBoost = economicStage >= 3 ? 0.10 : 0;
   const ubiBoost = hasUBI ? 0.05 : 0;
 
@@ -276,15 +276,9 @@ export function updateQualityOfLifeSystems(
   pollutionLevel = Math.max(0, Math.min(1, pollutionLevel));
 
   // === BREAKTHROUGH TECHNOLOGY BOOSTS ===
-  if (state.breakthroughTech) {
-    const { getTechnologyQoLBoosts } = require('../breakthroughTechnologies');
-    const techBoosts = getTechnologyQoLBoosts(state);
-
-    mentalHealth = Math.min(1.5, mentalHealth + techBoosts.mentalHealth);
-    healthcareQuality = Math.min(1.5, healthcareQuality + techBoosts.healthcare);
-    ecosystemHealth = Math.min(1.0, ecosystemHealth + techBoosts.environmental);
-    climateStability = Math.min(1.0, climateStability + techBoosts.environmental * 0.5);
-  }
+  // NOTE: Technology effects now applied via TechTreePhase regional deployment
+  // QoL boosts are calculated directly from state.techTreeState.technologies
+  // No additional boosts needed here - tech tree handles all effects
 
   // === PSYCHOLOGICAL TRAUMA EFFECTS ===
   if (state.psychologicalTrauma && state.psychologicalTrauma.traumaLevel > 0) {

@@ -18,9 +18,7 @@ export interface TechnologyTreeSummary {
 }
 
 export function getTechnologyTreeSummary(state: GameState): TechnologyTreeSummary {
-  const techState = state.breakthroughTech;
-
-  if (!techState) {
+  if (!state.technologyTree || !state.techTreeState) {
     return {
       totalTechnologies: 0,
       unlocked: 0,
@@ -31,11 +29,8 @@ export function getTechnologyTreeSummary(state: GameState): TechnologyTreeSummar
     };
   }
 
-  // Extract all technology nodes from the state (they're individual fields)
-  const technologies = Object.values(techState).filter(
-    (value): value is import('@/types/technologies').TechnologyNode =>
-      typeof value === 'object' && value !== null && 'id' in value && 'unlocked' in value
-  );
+  const technologies = state.technologyTree;
+  const unlockedSet = new Set(state.techTreeState.unlockedTech || []);
   const totalTechnologies = technologies.length;
 
   let unlocked = 0;
@@ -46,28 +41,30 @@ export function getTechnologyTreeSummary(state: GameState): TechnologyTreeSummar
   const byTier: TechnologyTreeSummary['byTier'] = {};
 
   for (const tech of technologies) {
-    if (tech.unlocked) unlocked++;
-    if (tech.researchProgress > 0 && tech.researchProgress < 1) researching++;
-    if (tech.deploymentLevel > 0) deployed++;
+    const isUnlocked = unlockedSet.has(tech.id);
+    const isCompleted = tech.completed;
 
-    // By category
-    const category = tech.category || 'unknown';
+    if (isUnlocked) unlocked++;
+    if (tech.progress > 0 && tech.progress < 1) researching++;
+    if (isCompleted) deployed++;
+
+    // By category (using branch as category)
+    const category = tech.branch || 'unknown';
     if (!byCategory[category]) {
       byCategory[category] = { total: 0, unlocked: 0, deployed: 0 };
     }
     byCategory[category]!.total++;
-    if (tech.unlocked) byCategory[category]!.unlocked++;
-    if (tech.deploymentLevel > 0) byCategory[category]!.deployed++;
+    if (isUnlocked) byCategory[category]!.unlocked++;
+    if (isCompleted) byCategory[category]!.deployed++;
 
-    // By tier (extract from tech id if available)
-    const tierMatch = tech.id.match(/tier(\d+)/i);
-    const tier = tierMatch ? parseInt(tierMatch[1] ?? '0', 10) : 0;
+    // By tier (new tech tree doesn't use tiers, so all go into tier 0)
+    const tier = 0;
     if (!byTier[tier]) {
       byTier[tier] = { total: 0, unlocked: 0, deployed: 0 };
     }
     byTier[tier]!.total++;
-    if (tech.unlocked) byTier[tier]!.unlocked++;
-    if (tech.deploymentLevel > 0) byTier[tier]!.deployed++;
+    if (isUnlocked) byTier[tier]!.unlocked++;
+    if (isCompleted) byTier[tier]!.deployed++;
   }
 
   return {
@@ -92,31 +89,23 @@ export interface TechnologyDetail {
 }
 
 export function getTechnologyDetails(state: GameState): TechnologyDetail[] {
-  const techState = state.breakthroughTech;
-
-  if (!techState) {
+  if (!state.technologyTree || !state.techTreeState) {
     return [];
   }
 
-  // Extract all technology nodes from the state (they're individual fields)
-  const technologies = Object.values(techState).filter(
-    (value): value is import('@/types/technologies').TechnologyNode =>
-      typeof value === 'object' && value !== null && 'id' in value && 'unlocked' in value
-  );
+  const unlockedSet = new Set(state.techTreeState.unlockedTech || []);
+  const technologies = state.technologyTree;
 
   return technologies.map(tech => {
-    const tierMatch = tech.id.match(/tier(\d+)/i);
-    const tier = tierMatch ? parseInt(tierMatch[1] ?? '0', 10) : 0;
-
     return {
       id: tech.id,
       name: tech.name,
-      category: tech.category || 'unknown',
-      unlocked: tech.unlocked,
-      researchProgress: tech.researchProgress,
-      deploymentLevel: tech.deploymentLevel,
-      prerequisites: tech.requirements?.prerequisiteTechs || [],
-      tier,
+      category: tech.branch || 'unknown',
+      unlocked: unlockedSet.has(tech.id),
+      researchProgress: tech.progress,
+      deploymentLevel: tech.completed ? 1.0 : 0,
+      prerequisites: tech.prerequisites || [],
+      tier: 0, // New tech tree doesn't use tiers
     };
   });
 }

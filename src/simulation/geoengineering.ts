@@ -233,8 +233,8 @@ function updateArtificialUpwelling(state: GameState, tech: ArtificialUpwellingSt
   const deploymentFactor = tech.deploymentLevel;
   
   // Check if fusion is available (REQUIRED for energy)
-  const fusion = state.breakthroughTech?.fusionPower;
-  const hasFusion = fusion?.unlocked && fusion.deploymentLevel > 0.3;
+  const fusion = state.techTreeState.technologies['fusion_power'];
+  const hasFusion = fusion?.deployed && (fusion.deploymentLevel || 0) > 0.3;
   
   if (!hasFusion) {
     // Can't run without fusion (too energy-intensive)

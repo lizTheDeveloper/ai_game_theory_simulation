@@ -312,12 +312,7 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
 
   // Check for struvite recovery technology (TIER 1: 98% phosphorus recovery from wastewater)
   // FIX (Oct 21, 2025): Use compatibility layer to check both old and new tech systems
-  const struviteDeployed = (
-    // Try old system first (state.breakthroughTech object)
-    (state as any).breakthroughTech?.struviteRecovery?.deployed ||
-    // Try new tech tree system
-    (state.techTreeState.unlockedTech.includes('struvite_recovery'))
-  );
+  const struviteDeployed = state.techTreeState.unlockedTech.includes('struvite_recovery');
 
   // Governance capacity (enforcement of agricultural runoff regulations)
   const enforcementCapacity = state.government?.governanceQuality?.enforcementCapacity ?? 0.5;
@@ -500,12 +495,7 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
     // This is NOT reversing extinction - species stay lost
     // But populations of SURVIVING species can recover
     // FIX (Oct 21, 2025): Use compatibility layer to check both old and new tech systems
-    const hasEcosystemManagement = (
-      // Try old system first
-      (state as any).breakthroughTech?.ecosystemManagement?.deployed ||
-      // Try new tech tree system
-      (state.techTreeState.unlockedTech.includes('ecosystem_management_ai'))
-    );
+    const hasEcosystemManagement = state.techTreeState.unlockedTech.includes('ecosystem_management_ai');
 
     const baseRecoveryRate = 0.001; // 0.1%/month (slow population rebound)
     const techBonus = hasEcosystemManagement ? 0.004 : 0; // +0.4% with AI ecosystem management

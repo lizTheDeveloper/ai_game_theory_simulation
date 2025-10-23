@@ -82,8 +82,9 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
       // Research: PTSD recovery typically 12-24 months with treatment, longer without
       let recoveryRate = 0.02;
 
-      // Mental health tech (TIER 3) increases recovery rate
-      if (state.breakthroughTech?.psychologicalWellbeing?.deployed) {
+      // Mental health tech increases recovery rate
+      const psychWellbeingTech = state.technologyTree?.find(t => t.id === 'psychologicalWellbeing');
+      if (psychWellbeingTech?.completed) {
         recoveryRate *= 1.5;  // 50% faster recovery with tech
       }
 
