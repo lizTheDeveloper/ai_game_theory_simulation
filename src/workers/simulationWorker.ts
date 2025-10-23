@@ -37,8 +37,9 @@ let dayIntervalId: ReturnType<typeof setInterval> | null = null; // Daily UI upd
 let stepInterval = 30000; // 30 seconds = 1 month (each month takes 30 seconds)
 
 // Calendar tracking
-let currentDay = 1; // Current day of month (1-31)
+let currentDay = 1; // Current day of month (1-31) - for display only
 let startDate: Date | null = null; // Real calendar start date
+let totalSimulationDaysElapsed = 0; // Total simulation days since initialization
 
 // Previous state snapshot for delta calculation (expanded)
 interface StateSnapshot {
@@ -269,7 +270,8 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
 
   // Initialize calendar to today's actual date
   startDate = new Date();
-  currentDay = 1; // Simulation always starts at Day 1
+  currentDay = startDate.getDate(); // Start with the current day of the month (e.g., 23 for Oct 23)
+  totalSimulationDaysElapsed = 0; // Reset simulation day counter
 
   // Create initial snapshot
   const snapshot: InitialStateSnapshot = {
@@ -314,6 +316,13 @@ function handleStart() {
   running = true;
   isFirstStep = true; // Force full delta on first step
   startSimulationLoop();
+
+  // Notify UI that simulation is now running
+  self.postMessage({
+    type: 'resumed',
+    month: state.currentMonth,
+    day: currentDay
+  } as WorkerResponse);
 }
 
 function handlePause() {
@@ -364,15 +373,34 @@ function handleStep() {
     throw new Error('Not initialized');
   }
 
-  // STEP advances one day, not a full month
-  // This matches the auto-run day ticker behavior
-  currentDay++;
+  // Get the previous calendar date before incrementing
+  const previousCalendarDate = new Date(startDate);
+  previousCalendarDate.setDate(startDate.getDate() + totalSimulationDaysElapsed);
+  const previousCalendarMonth = previousCalendarDate.getMonth();
+  const previousCalendarYear = previousCalendarDate.getFullYear();
 
-  // Calculate actual calendar date: startDate + elapsed days
-  const monthsElapsed = state.currentMonth;
-  const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
+  // Increment total simulation days elapsed
+  totalSimulationDaysElapsed++;
+
+  // Calculate new calendar date based on total days elapsed
   const calendarDate = new Date(startDate);
-  calendarDate.setDate(calendarDate.getDate() + totalDaysElapsed);
+  calendarDate.setDate(startDate.getDate() + totalSimulationDaysElapsed);
+
+  // Update current day for display (extract from calendar date)
+  currentDay = calendarDate.getDate();
+
+  // Check if we've crossed into a new calendar month
+  const currentCalendarMonth = calendarDate.getMonth();
+  const currentCalendarYear = calendarDate.getFullYear();
+
+  const crossedIntoNewMonth =
+    (currentCalendarMonth !== previousCalendarMonth) ||
+    (currentCalendarYear !== previousCalendarYear);
+
+  if (crossedIntoNewMonth) {
+    // We've reached the 1st of a new calendar month - advance simulation
+    performStep();
+  }
 
   // Send day update to UI
   self.postMessage({
@@ -380,12 +408,6 @@ function handleStep() {
     day: currentDay,
     calendarDate: calendarDate.toISOString()
   } as WorkerResponse);
-
-  // If we've reached day 31, advance the simulation month
-  if (currentDay >= 31) {
-    currentDay = 1;
-    performStep();
-  }
 }
 
 function handleSetSpeed(interval: number) {
@@ -440,16 +462,20 @@ function startSimulationLoop() {
     clearInterval(dayIntervalId);
   }
 
-  // Don't reset currentDay here - it should only reset when the month actually advances
-  // On initialization, currentDay is set to the actual date (e.g., 22)
-  // When month advances in performStep(), it will be reset to 1 there
+  if (!startDate) return;
 
-  // Calculate days in current month (approximate to 30 for now)
-  const daysInMonth = 30;
+  // Track the current calendar month/year to detect when we cross into a new month
+  let lastCalendarMonth = new Date(startDate).getMonth();
+  let lastCalendarYear = new Date(startDate).getFullYear();
 
-  // Start day counter (updates every second)
+  // Calculate how many milliseconds per simulation day based on stepInterval
+  // stepInterval is milliseconds per simulation month (default 30000ms = 30 seconds)
+  // So each simulation day should take stepInterval / 30 milliseconds
+  const msPerSimulationDay = stepInterval / 30;
+
+  // Start combined day counter and simulation stepper
   dayIntervalId = setInterval(() => {
-    if (!running || !startDate) {
+    if (!running || !startDate || !state) {
       if (dayIntervalId !== null) {
         clearInterval(dayIntervalId);
         dayIntervalId = null;
@@ -457,14 +483,32 @@ function startSimulationLoop() {
       return;
     }
 
-    // Increment day continuously (no cap - it's OK if day 31+ appears)
-    currentDay++;
+    // Increment total simulation days elapsed
+    totalSimulationDaysElapsed++;
 
-    // Calculate actual calendar date: startDate + elapsed days
-    const monthsElapsed = state?.currentMonth || 0;
-    const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
+    // Calculate actual calendar date based on total days elapsed
     const calendarDate = new Date(startDate);
-    calendarDate.setDate(calendarDate.getDate() + totalDaysElapsed);
+    calendarDate.setDate(startDate.getDate() + totalSimulationDaysElapsed);
+
+    // Update current day for display (extract from calendar date)
+    currentDay = calendarDate.getDate();
+
+    // Check if we've crossed into a new calendar month
+    const currentCalendarMonth = calendarDate.getMonth();
+    const currentCalendarYear = calendarDate.getFullYear();
+
+    const crossedIntoNewMonth =
+      (currentCalendarMonth !== lastCalendarMonth) ||
+      (currentCalendarYear !== lastCalendarYear);
+
+    if (crossedIntoNewMonth) {
+      // We've reached the 1st of a new calendar month - advance simulation
+      lastCalendarMonth = currentCalendarMonth;
+      lastCalendarYear = currentCalendarYear;
+
+      // Perform simulation step
+      performStep();
+    }
 
     // Send day update to UI
     self.postMessage({
@@ -472,24 +516,7 @@ function startSimulationLoop() {
       day: currentDay,
       calendarDate: calendarDate.toISOString()
     } as WorkerResponse);
-  }, 1000); // Update every second
-
-  // Start simulation step interval (runs actual simulation)
-  simulationIntervalId = setInterval(() => {
-    if (!running || !engine || !state) {
-      if (simulationIntervalId !== null) {
-        clearInterval(simulationIntervalId);
-        simulationIntervalId = null;
-      }
-      return;
-    }
-
-    // Reset day to 1 for new month
-    currentDay = 1;
-
-    // Perform simulation step
-    performStep();
-  }, stepInterval); // Default 30 seconds = 1 month
+  }, msPerSimulationDay); // Update based on simulation speed
 }
 
 function performStep() {
