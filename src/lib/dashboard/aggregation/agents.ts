@@ -37,16 +37,15 @@ export function calculateAgentDistribution(
 
   // Calculate statistics
   const mean = values.reduce((a, b) => a + b, 0) / count;
-  const median = values[Math.floor(count / 2)] ?? 0;
-  const q1 = values[Math.floor(count * 0.25)] ?? 0;
-  const q3 = values[Math.floor(count * 0.75)] ?? 0;
-  const min = values[0] ?? 0;
-  const max = values[values.length - 1] ?? 0;
+  const median = values[Math.floor(count / 2)];
+  const q1 = values[Math.floor(count * 0.25)];
+  const q3 = values[Math.floor(count * 0.75)];
+  const min = values[0];
+  const max = values[values.length - 1];
 
   // Violin plot bins (20 bins)
   const binCount = 20;
-  const range = max - min;
-  const binSize = range > 0 ? range / binCount : 1;
+  const binSize = (max - min) / binCount || 1;
   const violinPlotBins = Array.from({ length: binCount }, (_, i) => {
     const binMin = min + i * binSize;
     const binMax = binMin + binSize;
@@ -113,7 +112,7 @@ export function getCapabilityMatrix(state: GameState): CapabilityMatrix {
   return {
     agents: agents.map(agent => ({
       id: agent.id,
-      name: agent.id, // Or generate name
+      name: agent.id,
       capabilities: Object.fromEntries(
         dimensions.map(dim => [
           dim,
