@@ -22,6 +22,7 @@ const navItems = [
   { label: 'Detection', href: '/detection', shortcut: '7' },
   { label: 'Regions', href: '/regions', shortcut: '8' },
   { label: 'Timeline', href: '/timeline', shortcut: '9' },
+  { label: 'Real-Time', href: '/realtime', shortcut: '0' },
 ]
 
 export function Navigation() {
@@ -35,11 +36,17 @@ export function Navigation() {
         return
       }
 
-      const num = parseInt(e.key)
-      if (num >= 1 && num <= 9) {
-        const item = navItems[num - 1]
-        if (item) {
-          window.location.href = item.href
+      const key = e.key
+      if (key === '0') {
+        // Real-time view (last item)
+        window.location.href = navItems[navItems.length - 1]?.href || '/realtime'
+      } else {
+        const num = parseInt(key)
+        if (num >= 1 && num <= 9) {
+          const item = navItems[num - 1]
+          if (item) {
+            window.location.href = item.href
+          }
         }
       }
     }
@@ -90,7 +97,7 @@ export function Navigation() {
 
       {/* Footer */}
       <div className="absolute bottom-0 left-0 right-0 p-4 border-t text-xs" style={{ borderColor: 'var(--white-10)', color: 'var(--white-30)' }}>
-        <div className="mb-2">Keyboard: 1-9 for quick nav</div>
+        <div className="mb-2">Keyboard: 0-9 for quick nav</div>
         <div>Design: Elysium 2100s</div>
       </div>
     </nav>
