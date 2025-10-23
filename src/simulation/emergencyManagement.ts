@@ -141,7 +141,7 @@ export function calculateEmergencyDeploymentTime(
 
   // MODIFIER 3: Prior experience (learning effect)
   // Research: Katrina (2005) → Sandy (2012) = 50% improvement over 7 years
-  const experience = em.crisisExperience[getCrisisExperienceCategory(crisisType)];
+  const experience = em.crisisExperience[getCrisisExperienceCategory(crisisType)] || 0;
   const experienceModifier = 1.0 - (experience * 0.5); // Max 50% reduction
   deploymentTime *= experienceModifier;
 
@@ -170,12 +170,12 @@ function getRelevantReserve(
   crisisType: EmergencyResponse['crisisType']
 ): number {
   switch (crisisType) {
-    case 'pandemic': return reserves.medical;
-    case 'climate': return (reserves.food + reserves.water) / 2;
-    case 'economic': return reserves.financial;
-    case 'social': return reserves.food; // Social unrest often food-related
+    case 'pandemic': return reserves.medical || 0;
+    case 'climate': return ((reserves.food || 0) + (reserves.water || 0)) / 2;
+    case 'economic': return reserves.financial || 0;
+    case 'social': return reserves.food || 0; // Social unrest often food-related
     case 'technological': return 0; // No physical reserves help with AI crisis
-    case 'nuclear': return reserves.food; // Nuclear fallout → food/water critical
+    case 'nuclear': return reserves.food || 0; // Nuclear fallout → food/water critical
   }
 }
 

@@ -192,7 +192,7 @@ function countActiveCrises(state: GameState): number {
   if (state.planetaryBoundaries?.novelEntities?.active) count++;
 
   // Check other crises
-  if (state.nuclearWinter?.active) count++;
+  if (state.nuclearWinterState?.active) count++;
 
   return count;
 }

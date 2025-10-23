@@ -67,7 +67,12 @@
       "Bash(scripts/testTechnologyDiffusion.ts )",
       "Bash(scripts/migrateTechTreeReferences.ts)",
       "Bash(for file in environmental.ts freshwaterDepletion.ts geoengineering.ts humanEnhancement.ts)",
-      "Bash(do echo \"=== $file ===\")"
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(for file in src/simulation/humanEnhancement.ts src/simulation/novelEntities.ts src/simulation/oceanAcidification.ts src/simulation/phosphorusDepletion.ts src/simulation/resourceDepletion.ts src/simulation/resourceTechnology.ts tests/tier2-8-phase4-tests.ts)",
+      "Bash(do)",
+      "Bash(if [ -f \"$file\" ])",
+      "Bash(then)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

@@ -284,7 +284,7 @@ console.log('--- Test Group 5: Green Technology Transfer ---\n');
   const countries = state.countryPopulationSystem.countries;
 
   // Unlock solar + wind technologies (cleanEnergy)
-  state.breakthroughTech = {
+  state.techTreeState = {
     cleanEnergy: {
       id: 'cleanEnergy',
       name: 'Clean Energy',
@@ -331,7 +331,7 @@ console.log('--- Test Group 5: Green Technology Transfer ---\n');
   // Test 21: Tech transfer only happens when technologies unlocked
   const state2 = createTestState();
   state2.environmentalAccumulation.climateChange = 0.7;
-  state2.breakthroughTech = {
+  state2.techTreeState = {
     cleanEnergy: { unlocked: false },
     carbonCapture: { unlocked: false }
   } as any; // No techs unlocked
@@ -344,7 +344,7 @@ console.log('--- Test Group 5: Green Technology Transfer ---\n');
 
   // Test 22: Tech transfer increases with climate severity
   const state3 = createTestState();
-  state3.breakthroughTech = state.breakthroughTech; // Same unlocked techs
+  state3.techTreeState = state.techTreeState; // Same unlocked techs
   state3.environmentalAccumulation.climateChange = 0.9; // Higher severity
   for (let i = 0; i < 24; i++) updateClimateJustice(state3);
 
@@ -366,7 +366,7 @@ console.log('--- Test Group 6: Climate Justice Integration ---\n');
   const countries = state.countryPopulationSystem.countries;
 
   // Unlock solar + carbon capture
-  state.breakthroughTech = {
+  state.techTreeState = {
     cleanEnergy: {
       id: 'cleanEnergy',
       name: 'Clean Energy',

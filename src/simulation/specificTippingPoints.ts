@@ -462,7 +462,7 @@ export function updatePollinators(state: GameState): void {
   
   // Chemical pollution (pesticides, neonicotinoids)
   if (state.novelEntitiesSystem) {
-    declineRate += state.novelEntitiesSystem.pfasContamination * 0.08;
+    declineRate += state.novelEntitiesSystem.pfasPrevalence * 0.08;
   } else {
     declineRate += env.pollutionLevel * 0.06;
   }

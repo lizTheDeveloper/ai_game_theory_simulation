@@ -26,7 +26,7 @@ export function applyTechnologyToResources(state: GameState): void {
   return;
 
   /* const resources = state.resourceEconomy;
-  const tech = state.breakthroughTech;
+  const tech = state.techTreeState;
 
   if (!resources || !tech) return;
 
@@ -352,7 +352,7 @@ export function applyIndustryOppositionToTech(state: GameState): void {
   return;
 
   /* const resources = state.resourceEconomy;
-  const tech = state.breakthroughTech;
+  const tech = state.techTreeState;
 
   if (!resources || !tech) return;
 
