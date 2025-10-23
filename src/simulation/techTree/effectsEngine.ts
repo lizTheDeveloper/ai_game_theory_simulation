@@ -379,13 +379,58 @@ function applyGlobalEffects(
         break;
 
       case 'extinctionRateReduction':
-        // Reduce species extinction rate (global biodiversity protection)
-        // Research: Habitat restoration reduces extinction pressure
+        // Mechanistic habitat restoration: Address ROOT CAUSES, not just symptoms
+        // Research: Moreno-Mateos et al. (2017) - habitat restoration takes decades
+        //
+        // MECHANISTIC CASCADE:
+        // 1. Increase reforestation rate → recover forest cover
+        // 2. Decrease deforestation rate → protect remaining habitat
+        // 3. Reduce habitat loss → slow extinction acceleration
+        // 4. Slow extinction acceleration → stop exponential growth
+        // 5. Eventually reduce extinction rate as ecosystem stabilizes
+        //
+        // This models the ACTUAL PROCESS, not a magic reduction
         if (gameState.planetaryBoundariesSystem?.landUse) {
-          gameState.planetaryBoundariesSystem.landUse.currentExtinctionRate = Math.max(
-            1.0, // Can't go below natural rate (1.0)
-            gameState.planetaryBoundariesSystem.landUse.currentExtinctionRate - value * 10 // Reduce by 10× per unit
+          const landUse = gameState.planetaryBoundariesSystem.landUse;
+
+          // 1. INCREASE REFORESTATION (habitat restoration primary effect)
+          // Research: Large-scale reforestation programs (China, EU, US)
+          // Baseline: 0.01%/month → Target: 0.05-0.10%/month with intervention
+          landUse.reforestationRate = Math.min(
+            0.10, // Cap at 0.10%/month (realistic maximum)
+            landUse.reforestationRate + value * 0.15 // Habitat restoration boosts by +0.045%/month at full deployment
           );
+
+          // 2. DECREASE DEFORESTATION (enforcement + alternatives)
+          // Baseline: 0.03%/month → Target: 0.01%/month with strong protection
+          landUse.deforestationRate = Math.max(
+            0.005, // Can't eliminate entirely (some sustainable use)
+            landUse.deforestationRate - value * 0.04 // Reduce by -0.012%/month at full deployment
+          );
+
+          // 3. REDUCE HABITAT LOSS (direct restoration of degraded land)
+          // This is the % already destroyed - restoration can recover some
+          landUse.habitatLossPercent = Math.max(
+            20, // Can't restore to pristine (some loss is permanent)
+            landUse.habitatLossPercent - value * 0.5 // Recover 0.15%/month at full deployment
+          );
+
+          // 4. SLOW EXTINCTION ACCELERATION (ecosystem stabilization)
+          // As habitat recovers, extinction pressure decreases
+          landUse.extinctionAcceleration = Math.max(
+            0.1, // Minimum acceleration (can't stop all pressures)
+            landUse.extinctionAcceleration - value * 1.0 // Reduce acceleration by 0.3/month at full deployment
+          );
+
+          // 5. DIRECT EXTINCTION RATE REDUCTION (only as ecosystem stabilizes)
+          // This is now a CONSEQUENCE of the above, not the primary mechanism
+          // Only apply if acceleration is slowing (i.e., habitat recovering)
+          if (landUse.extinctionAcceleration < 1.0) {
+            landUse.currentExtinctionRate = Math.max(
+              1.0, // Can't go below natural rate
+              landUse.currentExtinctionRate - value * 5.0 // Moderate reduction once ecosystem stabilizing
+            );
+          }
         }
         break;
 

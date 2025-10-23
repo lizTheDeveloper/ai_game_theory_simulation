@@ -215,25 +215,58 @@ export interface PlanetaryBoundariesBaseline2025 {
  * - Nature (2024): Deforestation → carbon sink loss → climate acceleration
  * - Science (2023): Habitat loss → biodiversity crisis → ecosystem collapse
  */
+/**
+ * Regional Biome Data (Oct 22, 2025)
+ *
+ * Tracks habitat and biodiversity for a specific biome type.
+ * Different biomes have different baseline conditions, restoration rates, and biodiversity impacts.
+ */
+export interface RegionalBiome {
+  // === FOREST/HABITAT COVER ===
+  habitatCoverPercent: number;      // [0, 100] % of region with natural habitat
+  habitatCoverSafe: number;         // Safe boundary (varies by biome)
+  habitatLossRate: number;          // % per month lost (deforestation, conversion)
+  habitatRestorationRate: number;   // % per month restored
+
+  // === EXTINCTION RATE (regional contribution) ===
+  extinctionRate: number;           // [1, 1000] x baseline for this biome
+  extinctionAcceleration: number;   // Rate of change in this region
+  biodiversityWeight: number;       // [0, 1] How much this biome contributes to global extinction (tropical = 0.5)
+
+  // === ECOSYSTEM STATE ===
+  ecosystemsLost: number;           // Count of collapsed ecosystems in this region
+  ecosystemCollapseRisk: number;    // [0, 1] Risk of further collapses
+
+  // === RESTORATION PARAMETERS (biome-specific) ===
+  restorationDifficulty: number;    // [0.5, 2.0] How hard it is to restore (tropical = 2.0, temperate = 1.0)
+  climateVulnerability: number;     // [0, 1] Susceptibility to climate change
+}
+
+/**
+ * Land Use System (Oct 22, 2025 - REGIONALIZED)
+ *
+ * Tracks regional biodiversity and habitat across 4 major biome types.
+ * Global metrics are AGGREGATED from regional data, weighted by biodiversity importance.
+ */
 export interface LandUseSystem {
-  // === FOREST COVER ===
-  forestCoverPercent: number;       // [0, 100] % of land area forested
-  forestCoverSafe: number;          // 75% safe boundary
-  deforestationRate: number;        // % per month lost
-  reforestationRate: number;        // % per month gained
+  // === REGIONAL BIOMES (Oct 22, 2025) ===
+  regions: {
+    tropical: RegionalBiome;        // Amazon, Congo, SE Asia (50% of global biodiversity)
+    temperate: RegionalBiome;       // N America, Europe, E Asia (20% of global biodiversity)
+    grasslands: RegionalBiome;      // Savanna, prairie, steppe (20% of global biodiversity)
+    borealArctic: RegionalBiome;    // Taiga, tundra (10% of global biodiversity)
+  };
 
-  // === EXTINCTION RATE ===
-  currentExtinctionRate: number;    // [1, 1000] x baseline (natural = 1.0)
-  naturalExtinctionRate: number;    // 1.0 baseline (10 extinctions per million species-years)
-  extinctionAcceleration: number;   // Rate of change
+  // === GLOBAL AGGREGATES (derived from regions) ===
+  globalHabitatCoverPercent: number;        // Weighted average across regions
+  globalExtinctionRate: number;             // Weighted sum of regional rates
+  globalExtinctionAcceleration: number;     // Average acceleration
+  globalEcosystemsLost: number;             // Total collapsed ecosystems
+  globalEcosystemCollapseRisk: number;      // Highest regional risk
 
-  // === HABITAT LOSS ===
-  habitatLossPercent: number;       // [0, 100] % habitat destroyed
-  criticalEcosystemsLost: number;   // Count of collapsed ecosystems
-
-  // === FEEDBACK AMPLIFIERS ===
-  carbonSinkLossMultiplier: number; // [1.0, 3.0] Climate acceleration from deforestation
-  ecosystemCollapseRisk: number;    // [0, 1] Risk of cascading food web breakdown
+  // === GLOBAL CONSTANTS ===
+  naturalExtinctionRate: number;            // 1.0 baseline (10 extinctions per million species-years)
+  carbonSinkLossMultiplier: number;         // [1.0, 3.0] Climate feedback from deforestation
 }
 
 /**

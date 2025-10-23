@@ -502,4 +502,22 @@ export interface GameState {
       trigger: string;
     }>;
   };
+
+  /**
+   * Player Decision Queue (Oct 22, 2025)
+   *
+   * Queue of player decisions from UI to be processed by PlayerDecisionPhase.
+   * Decisions are injected by simulationWorker and processed in order 8.5
+   * (after AI agents, before environmental updates).
+   *
+   * Decision types:
+   * - policy: Government policy changes (AI regulation, safety investment, etc.)
+   * - investment: Technology research/deployment funding
+   * - emergency: Emergency response actions during crises
+   */
+  playerDecisions?: Array<{
+    type: 'policy' | 'investment' | 'emergency';
+    data: any;
+    timestamp: number; // Month when decision was queued
+  }>;
 }

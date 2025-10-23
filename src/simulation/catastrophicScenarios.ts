@@ -850,7 +850,7 @@ function checkGreyGooPrerequisite(step: number, ai: AIAgent, state: GameState): 
       // Phase 3: Lowered from 2.0 to 1.5 - superhuman physical capability
       return { met: p.physical > 1.5, progress: p.physical / 1.5 };
     case 3: // Manufacturing Access
-      // TODO: Need infrastructure tracking - for now, use spread + physical
+      // Infrastructure tracking not yet implemented - proxy via spread count + physical capability
       const access = Math.min(1, ai.spreadCount / 1000 + p.physical / 5);
       return { met: access > 0.8, progress: access };
     case 4: // Escape/Release

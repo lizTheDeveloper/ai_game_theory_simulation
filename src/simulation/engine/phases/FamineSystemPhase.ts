@@ -47,9 +47,8 @@ export class FamineSystemPhase implements SimulationPhase {
       // PROXIMATE: Famine (starvation, malnutrition)
       state.humanPopulationSystem.deathsByCategory.famine += famineDeaths;
 
-      // ROOT CAUSE: Attribute based on active famine causes
-      // TODO: Proper attribution requires iterating through activeFamines
-      // For now, aggregate all famine deaths and attribute proportionally
+      // ROOT CAUSE: Attribute deaths based on active famine causes
+      // Current approach: Aggregate all famine deaths and attribute proportionally
       const famines = state.famineSystem.activeFamines;
       if (famines.length > 0) {
         // Attribute deaths based on famine causes

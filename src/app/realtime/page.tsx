@@ -135,9 +135,15 @@ interface ParadigmTimeSeriesProps {
   color: string;
   history?: number[];
   trend?: 'up' | 'down' | 'stable';
+  allHistories?: {
+    westernLiberal: number[];
+    development: number[];
+    ecological: number[];
+    indigenous: number[];
+  };
 }
 
-const ParadigmTimeSeries: React.FC<ParadigmTimeSeriesProps> = ({ name, value, color, history, trend }) => {
+const ParadigmTimeSeries: React.FC<ParadigmTimeSeriesProps> = ({ name, value, color, history, trend, allHistories }) => {
   const trendIcon = trend === 'up' ? '↗' : trend === 'down' ? '↘' : '→';
   const percentage = (value * 100).toFixed(1);
 
@@ -168,43 +174,49 @@ const ParadigmTimeSeries: React.FC<ParadigmTimeSeriesProps> = ({ name, value, co
       </div>
 
       {/* Time Series Area Chart */}
-      <div className="relative" style={{ height: '120px' }}>
+      <div className="relative bg-black border border-white/20 overflow-hidden" style={{ height: '120px' }}>
         {historyPercentages.length > 1 ? (
           <>
-            {/* Reference lines at 20%, 40%, 70% thresholds */}
-            <div className="absolute inset-0 pointer-events-none">
-              {/* 70% threshold - optimal */}
-              <div
-                className="absolute w-full border-t border-green-400/20"
-                style={{ top: `${100 - ((70 - minValue) / range * 100)}%` }}
-              >
-                <span className="absolute -top-2 right-0 text-[9px] text-green-400/40">70%</span>
+            {/* Chart container with proper sizing */}
+            <div className="w-full h-full relative">
+              {/* Reference lines at 20%, 40%, 70% thresholds */}
+              <div className="absolute inset-0 pointer-events-none px-2">
+                {/* 70% threshold - optimal */}
+                <div
+                  className="absolute w-full border-t border-green-400/20"
+                  style={{ top: `${100 - ((70 - minValue) / range * 100)}%` }}
+                >
+                  <span className="absolute -top-2 right-0 text-[9px] text-green-400/40">70%</span>
+                </div>
+                {/* 40% threshold - stable */}
+                <div
+                  className="absolute w-full border-t border-cyan-400/20"
+                  style={{ top: `${100 - ((40 - minValue) / range * 100)}%` }}
+                >
+                  <span className="absolute -top-2 right-0 text-[9px] text-cyan-400/40">40%</span>
+                </div>
+                {/* 20% threshold - warning */}
+                <div
+                  className="absolute w-full border-t border-yellow-400/20"
+                  style={{ top: `${100 - ((20 - minValue) / range * 100)}%` }}
+                >
+                  <span className="absolute -top-2 right-0 text-[9px] text-yellow-400/40">20%</span>
+                </div>
               </div>
-              {/* 40% threshold - stable */}
-              <div
-                className="absolute w-full border-t border-cyan-400/20"
-                style={{ top: `${100 - ((40 - minValue) / range * 100)}%` }}
-              >
-                <span className="absolute -top-2 right-0 text-[9px] text-cyan-400/40">40%</span>
-              </div>
-              {/* 20% threshold - warning */}
-              <div
-                className="absolute w-full border-t border-yellow-400/20"
-                style={{ top: `${100 - ((20 - minValue) / range * 100)}%` }}
-              >
-                <span className="absolute -top-2 right-0 text-[9px] text-yellow-400/40">20%</span>
+
+              {/* Main sparkline with area fill - constrained to container */}
+              <div className="absolute inset-0 p-1">
+                <Sparkline
+                  data={historyPercentages}
+                  width={280}
+                  height={114}
+                  color={color}
+                  showArea
+                  strokeWidth={2}
+                  className="mx-auto"
+                />
               </div>
             </div>
-
-            {/* Sparkline with area fill */}
-            <Sparkline
-              data={historyPercentages}
-              width={300}
-              height={120}
-              color={color}
-              showArea
-              strokeWidth={2}
-            />
 
             {/* Time labels */}
             <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[9px] text-white/30">
@@ -666,7 +678,9 @@ export default function RealtimeDashboard() {
     if (!client || !initialized) return;
 
     setSpeed(newSpeed);
-    const interval = Math.floor(1000 / newSpeed);
+    // Calculate interval: 30000ms base (30 seconds = 1 month at 1x speed)
+    // Speed multiplier: 0.5x = 60s/month, 1x = 30s/month, 2x = 15s/month, 4x = 7.5s/month
+    const interval = Math.floor(30000 / newSpeed);
     client.setSpeed(interval);
   }, [client, initialized]);
 
@@ -821,7 +835,7 @@ export default function RealtimeDashboard() {
             <div className="flex items-center gap-2">
               <label className="text-xs text-white/40">SPEED:</label>
               <select
-                value={speed}
+                value={speed.toFixed(1)}
                 onChange={(e) => handleSpeedChange(parseFloat(e.target.value))}
                 className="bg-black border border-white/20 px-3 py-1 text-sm text-white"
               >
@@ -861,6 +875,7 @@ export default function RealtimeDashboard() {
                     color="#00F0FF"
                     history={history.westernLiberal}
                     trend={getParadigmTrend(history.westernLiberal)}
+                    allHistories={history}
                   />
                   <ParadigmTimeSeries
                     name="Development"
@@ -868,6 +883,7 @@ export default function RealtimeDashboard() {
                     color="#00FF88"
                     history={history.development}
                     trend={getParadigmTrend(history.development)}
+                    allHistories={history}
                   />
                   <ParadigmTimeSeries
                     name="Ecological"
@@ -875,6 +891,7 @@ export default function RealtimeDashboard() {
                     color="#90EE90"
                     history={history.ecological}
                     trend={getParadigmTrend(history.ecological)}
+                    allHistories={history}
                   />
                   <ParadigmTimeSeries
                     name="Indigenous"
@@ -882,6 +899,7 @@ export default function RealtimeDashboard() {
                     color="#FFB000"
                     history={history.indigenous}
                     trend={getParadigmTrend(history.indigenous)}
+                    allHistories={history}
                   />
                 </div>
 

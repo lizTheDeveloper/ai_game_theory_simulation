@@ -117,6 +117,7 @@ type WorkerResponse =
   | { type: 'dayUpdate'; day: number; calendarDate: string }  // Daily UI updates (no simulation step)
   | { type: 'paused'; month: number; day: number }
   | { type: 'resumed'; month: number; day: number }
+  | { type: 'decisionAck'; decisionType: string; queueLength: number }  // Player decision acknowledgment
   | { type: 'error'; error: string };
 
 // Minimal initial state snapshot (not full state)
@@ -267,7 +268,7 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
 
   // Initialize calendar to today's actual date
   startDate = new Date();
-  currentDay = startDate.getDate(); // Start on actual day of month (e.g., 22nd)
+  currentDay = startDate.getDate(); // Start at current day of month to pre-fill chart
 
   // Create initial snapshot
   const snapshot: InitialStateSnapshot = {
@@ -358,11 +359,34 @@ function handleResume() {
 }
 
 function handleStep() {
-  if (!engine || !state) {
+  if (!engine || !state || !startDate) {
     throw new Error('Not initialized');
   }
 
-  performStep();
+  // STEP advances one day, not a full month
+  // This matches the auto-run day ticker behavior
+  currentDay++;
+
+  // Calculate actual calendar date
+  // Start from today's date and add elapsed days
+  // totalDays = (completed months × 30) + (current day - 1)
+  const monthsElapsed = state.currentMonth;
+  const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
+  const calendarDate = new Date(startDate);
+  calendarDate.setDate(calendarDate.getDate() + totalDaysElapsed);
+
+  // Send day update to UI
+  self.postMessage({
+    type: 'dayUpdate',
+    day: currentDay,
+    calendarDate: calendarDate.toISOString()
+  } as WorkerResponse);
+
+  // If we've reached day 31, advance the simulation month
+  if (currentDay >= 31) {
+    currentDay = 1;
+    performStep();
+  }
 }
 
 function handleSetSpeed(interval: number) {
@@ -381,12 +405,31 @@ function handleDecision(decision: PlayerDecision) {
     throw new Error('Not initialized');
   }
 
-  // Player decision injection (Phase 3 - future work)
-  // For now, just log
-  console.log('[Worker] Player decision received:', decision);
+  // Player decision injection - Queue for PlayerDecisionPhase (order 8.5)
+  // Initialize queue if not present
+  if (!state.playerDecisions) {
+    state.playerDecisions = [];
+  }
 
-  // TODO: Inject into state before next step
-  // This would go into a PlayerDecisionPhase (order 8.5)
+  // Add decision to queue with timestamp
+  state.playerDecisions.push({
+    type: decision.type,
+    data: decision.data,
+    timestamp: state.currentMonth
+  });
+
+  console.log('[Worker] Player decision queued:', {
+    type: decision.type,
+    queueLength: state.playerDecisions.length,
+    month: state.currentMonth
+  });
+
+  // Send acknowledgment to UI
+  self.postMessage({
+    type: 'decisionAck',
+    decisionType: decision.type,
+    queueLength: state.playerDecisions.length
+  } as WorkerResponse);
 }
 
 function startSimulationLoop() {
@@ -398,8 +441,9 @@ function startSimulationLoop() {
     clearInterval(dayIntervalId);
   }
 
-  // Reset day counter to 1 at start of new month
-  currentDay = 1;
+  // Don't reset currentDay here - it should only reset when the month actually advances
+  // On initialization, currentDay is set to the actual date (e.g., 22)
+  // When month advances in performStep(), it will be reset to 1 there
 
   // Calculate days in current month (approximate to 30 for now)
   const daysInMonth = 30;
@@ -414,17 +458,15 @@ function startSimulationLoop() {
       return;
     }
 
-    // Increment day
+    // Increment day continuously (no cap - it's OK if day 31+ appears)
     currentDay++;
-    if (currentDay > daysInMonth) {
-      currentDay = daysInMonth; // Cap at end of month
-    }
 
     // Calculate actual calendar date
+    // Start from today's date and add elapsed days
     const monthsElapsed = state?.currentMonth || 0;
+    const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
     const calendarDate = new Date(startDate);
-    calendarDate.setMonth(calendarDate.getMonth() + monthsElapsed);
-    calendarDate.setDate(currentDay);
+    calendarDate.setDate(calendarDate.getDate() + totalDaysElapsed);
 
     // Send day update to UI
     self.postMessage({
@@ -472,10 +514,11 @@ function performStep() {
   previousState = captureStateSnapshot(state);
 
   // Calculate calendar date
+  // Start from today's date and add elapsed days
   const monthsElapsed = state.currentMonth;
+  const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
   const calendarDate = new Date(startDate!);
-  calendarDate.setMonth(calendarDate.getMonth() + monthsElapsed);
-  calendarDate.setDate(currentDay);
+  calendarDate.setDate(calendarDate.getDate() + totalDaysElapsed);
 
   // Send update to main thread
   self.postMessage({

@@ -127,6 +127,7 @@ import {
   GovernmentElectionPhase,  // Oct 19, 2025: Government system elections
   GovernmentResponsePhase,  // Oct 19, 2025: Government system policy response
   SocietyActionsPhase,
+  PlayerDecisionPhase,  // Oct 22, 2025: Player decision injection
   // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
   ExtinctionTriggersPhase,
   ExtinctionProgressPhase,
@@ -513,6 +514,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new GovernmentElectionPhase());  // Oct 19, 2025: Elections & opinion
     this.orchestrator.registerPhase(new GovernmentResponsePhase());  // Oct 19, 2025: Policy response
     this.orchestrator.registerPhase(new SocietyActionsPhase());
+    this.orchestrator.registerPhase(new PlayerDecisionPhase());  // Oct 22, 2025: Player decision injection (order 8.5)
 
     // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
     this.orchestrator.registerPhase(new ExtinctionTriggersPhase());
@@ -1011,11 +1013,15 @@ export class SimulationEngine {
 
 /**
  * Create a default initial state for simulations
+ *
+ * NOTE: This function is not currently used. Initial state creation happens via:
+ * - src/simulation/initialization.ts (for simulation engine)
+ * - src/lib/gameStore.ts (for UI/frontend)
+ *
+ * This function exists for potential future use cases but should not be called directly.
+ * If you need to create initial state, import from the appropriate module above.
  */
 export function createDefaultInitialState(): GameState {
-  // This would import from gameStore's createInitialState
-  // For now, return a minimal valid state
-  // TODO: Import actual initial state creation logic
-  return {} as GameState; // Placeholder
+  throw new Error('createDefaultInitialState() is not implemented. Use src/simulation/initialization.ts or src/lib/gameStore.ts instead.');
 }
 
