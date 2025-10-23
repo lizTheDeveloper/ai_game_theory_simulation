@@ -29,7 +29,7 @@ export interface GovernmentResponse {
   }>;
 }
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   return monitor.measureAsync('government-api', async () => {
     try {
       const cacheKey = 'dashboard:government';

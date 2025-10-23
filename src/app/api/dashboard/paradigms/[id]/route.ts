@@ -19,7 +19,7 @@ export async function GET(
       }
 
       const cacheKey = `dashboard:paradigm:${id}`;
-      const cached = getCached<ApiResponse<any>>(cacheKey);
+      const cached = getCached<ApiResponse<unknown>>(cacheKey);
       if (cached) {
         return NextResponse.json(cached);
       }
@@ -32,7 +32,7 @@ export async function GET(
       // Get detailed paradigm data with regional breakdown
       const data = await getParadigmDetail(state, id);
 
-      const response: ApiResponse<any> = {
+      const response: ApiResponse<unknown> = {
         data,
         meta: {
           timestamp: new Date().toISOString(),
@@ -49,25 +49,26 @@ export async function GET(
   });
 }
 
-async function getParadigmDetail(state: any, id: string) {
-  const paradigm = state.multiParadigmDUI?.[id];
+async function getParadigmDetail(state: unknown, id: string) {
+  const paradigm = (state as { multiParadigmDUI?: Record<string, unknown> }).multiParadigmDUI?.[id];
 
   // Get regional breakdown
-  const countries = state.countryPopulationSystem?.countries || [];
-  const regionalBreakdown = countries.reduce((acc: any, country: any) => {
-    acc[country.name] = country[id] || paradigm?.overallScore || 0;
+  const countries = (state as { countryPopulationSystem?: { countries?: unknown[] } }).countryPopulationSystem?.countries || [];
+  const regionalBreakdown = countries.reduce((acc: Record<string, number>, country: unknown) => {
+    const countryObj = country as { name: string; [key: string]: unknown };
+    acc[countryObj.name] = (countryObj[id] as number) || (paradigm as { overallScore?: number })?.overallScore || 0;
     return acc;
   }, {});
 
   return {
     id,
     name: getParadigmName(id),
-    overallScore: paradigm?.overallScore || 0,
-    status: paradigm?.status || 'hybrid',
+    overallScore: (paradigm as { overallScore?: number })?.overallScore || 0,
+    status: (paradigm as { status?: string })?.status || 'hybrid',
     regionalBreakdown,
-    history: state.history?.paradigms?.slice(-24).map((h: any) => ({
-      month: h.month,
-      score: h[id]?.overallScore || 0,
+    history: (state as { history?: { paradigms?: unknown[] } }).history?.paradigms?.slice(-24).map((h: unknown) => ({
+      month: (h as { month: number }).month,
+      score: ((h as Record<string, { overallScore?: number }>)[id])?.overallScore || 0,
     })) || [],
     components: paradigm || {},
   };
