@@ -72,7 +72,8 @@
       "Bash(do)",
       "Bash(if [ -f \"$file\" ])",
       "Bash(then)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []

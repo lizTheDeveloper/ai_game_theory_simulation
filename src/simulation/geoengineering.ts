@@ -231,10 +231,10 @@ function updateArtificialUpwelling(state: GameState, tech: ArtificialUpwellingSt
   
   const qualityFactor = Math.max(0.5, tech.deploymentQuality); // Minimum 50% quality
   const deploymentFactor = tech.deploymentLevel;
-  
+
   // Check if fusion is available (REQUIRED for energy)
-  const fusion = state.technologyTree?.find(t => t.id === 'fusion_power');
-  const hasFusion = fusion?.completed && (fusion.progress || 0) > 0.3;
+  const fusionDeployment = require('./techTree/helpers').isTechDeployed(state, 'fusion_power');
+  const hasFusion = fusionDeployment > 0.3;
   
   if (!hasFusion) {
     // Can't run without fusion (too energy-intensive)
