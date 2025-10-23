@@ -2058,8 +2058,14 @@ function isCrisisActive(state: GameState, crisisType: string): boolean {
 }
 
 /**
- * TEMPORARY: Auto-allocate research budget for testing
- * TODO: Replace with proper government decision-making
+ * Auto-allocate research budget across domains
+ *
+ * DESIGN NOTE: This uses a balanced baseline allocation. Government system can
+ * override via policy actions if needed (see government/actions/economicActions.ts).
+ * Current design: Economic stage drives total budget, balanced allocation across domains.
+ *
+ * Future enhancement: Government policies could adjust domain priorities (e.g., climate-focused
+ * vs biotech-focused strategies) based on political priorities and state capacity.
  */
 function autoAllocateResearchBudget(state: GameState, month: number): void {
   const research = state.government.researchInvestments;

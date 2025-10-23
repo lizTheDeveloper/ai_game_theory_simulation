@@ -18,7 +18,16 @@ export class HumanPopulationPhase implements SimulationPhase {
   readonly name = 'Human Population Dynamics';
   readonly order = 20.5;
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, _rng: RNGFunction): PhaseResult {
+    // CRITICAL FIX: Only update population at end of month (day 30)
+    // Population calculations use MONTHLY rates (netGrowthRate / 12, overshoot * 0.05 per month)
+    // but were executing DAILY (30x per month), causing exponential population loss:
+    // - Monthly death rate 0.5% applied 30 times = (1-0.005)^30 ≈ 0.86 = 14% loss per month
+    // - Result: 8.0B → 6.88B in one month (640M-1.1B people lost)
+    if (state.currentDay !== 30) {
+      return { events: [] }; // Skip population updates on non-month-end days
+    }
+
     const {
       updateHumanPopulation,
       applyPopulationEffectsToQoL,

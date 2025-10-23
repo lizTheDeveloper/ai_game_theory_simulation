@@ -23,7 +23,16 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly name = 'Food Security Degradation';
   readonly order = 34.5;  // AFTER QualityOfLifePhase (34.0)
 
-  execute(state: GameState, rng: RNGFunction): PhaseResult {
+  execute(state: GameState, _rng: RNGFunction): PhaseResult {
+    // CRITICAL FIX: Only update at end of month (day 30)
+    // This phase calculates MONTHLY degradation rates (1-15% per month)
+    // but was executing DAILY (30x per month), causing exponential food loss:
+    // - 1% monthly rate applied 30 times = (1-0.01)^30 ≈ 0.74 = 26% loss per month!
+    // - 2.25% with 2 crises applied 30 times = (1-0.0225)^30 ≈ 0.51 = 49% loss per month!
+    if (state.currentDay !== 30) {
+      return { events: [] }; // Skip food degradation on non-month-end days
+    }
+
     // Only degrade if survivalFundamentals exists
     if (!state.survivalFundamentals) {
       return { events: [] };
