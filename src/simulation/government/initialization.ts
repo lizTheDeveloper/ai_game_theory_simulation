@@ -12,7 +12,7 @@
  * @module simulation/government/initialization
  */
 
-import { loadCountries, Government, createStateCapacity } from '@political-science/government-agents';
+import { loadCountries, Government, createStateCapacity } from '@lizthedeveloper/government-agents';
 import type { GovernmentSystemState } from '../../types/government';
 import type { RNGFunction } from '../../types/config';
 
