@@ -176,12 +176,12 @@ export function ParadigmDashboard() {
           </div>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Climate</span>
-              <span>{((currentState.planetaryBoundaries?.climateChange?.current || 0) * 100).toFixed(0)}%</span>
+              <span style={{ color: 'var(--white-40)' }}>Climate Stability</span>
+              <span>{((currentState.environmentalAccumulation?.climateStability || 0) * 100).toFixed(0)}%</span>
             </div>
             <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Biodiversity</span>
-              <span>{((currentState.planetaryBoundaries?.biosphereIntegrity?.current || 0) * 100).toFixed(0)}%</span>
+              <span style={{ color: 'var(--white-40)' }}>Biodiversity Index</span>
+              <span>{((currentState.environmentalAccumulation?.biodiversityIndex || 0) * 100).toFixed(0)}%</span>
             </div>
           </div>
         </Panel>

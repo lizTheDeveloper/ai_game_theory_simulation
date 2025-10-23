@@ -33,7 +33,7 @@ export interface GameEvent {
   agent: string; // Which agent caused this event
   title: string;
   description: string;
-  effects: Record<string, number>; // State changes caused
+  effects: Record<string, number | string | boolean>; // State changes caused
 }
 
 // Action types for game events
