@@ -268,7 +268,7 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
 
   // Initialize calendar to today's actual date
   startDate = new Date();
-  currentDay = startDate.getDate(); // Start at current day of month to pre-fill chart
+  currentDay = 1; // Simulation always starts at Day 1
 
   // Create initial snapshot
   const snapshot: InitialStateSnapshot = {
@@ -367,9 +367,7 @@ function handleStep() {
   // This matches the auto-run day ticker behavior
   currentDay++;
 
-  // Calculate actual calendar date
-  // Start from today's date and add elapsed days
-  // totalDays = (completed months × 30) + (current day - 1)
+  // Calculate actual calendar date: startDate + elapsed days
   const monthsElapsed = state.currentMonth;
   const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
   const calendarDate = new Date(startDate);
@@ -461,8 +459,7 @@ function startSimulationLoop() {
     // Increment day continuously (no cap - it's OK if day 31+ appears)
     currentDay++;
 
-    // Calculate actual calendar date
-    // Start from today's date and add elapsed days
+    // Calculate actual calendar date: startDate + elapsed days
     const monthsElapsed = state?.currentMonth || 0;
     const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
     const calendarDate = new Date(startDate);
@@ -513,8 +510,7 @@ function performStep() {
   // Update previous state snapshot
   previousState = captureStateSnapshot(state);
 
-  // Calculate calendar date
-  // Start from today's date and add elapsed days
+  // Calculate calendar date: startDate + elapsed days
   const monthsElapsed = state.currentMonth;
   const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
   const calendarDate = new Date(startDate!);
