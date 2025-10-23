@@ -31,7 +31,7 @@ export function checkCooperationTriggers(state: GameState): void {
 
   // Triggers for cooperation
   const highDiplomaticAI = state.diplomaticAI.deploymentMonth !== -1 &&
-    state.diplomaticAI.capability > 3.5;
+    state.diplomaticAI.strategicReasoning > 3.5;
   const highGlobalPeace = (state.conflictResolution?.globalPeaceLevel || 0) > 0.8;
   const nuclearCloseCall = state.eventLog.some(e =>
     e.type === 'crisis' &&

@@ -155,8 +155,9 @@ export function applyResourceConstraints(
     : false;
 
   // Energy constraint threshold (from resource economy)
+  // Energy is constrained if surplus is negative (demand > production)
   const energyConstrained = state.resourceEconomy?.energy
-    ? state.resourceEconomy.energy.currentStock < state.resourceEconomy.energy.demand * 0.8
+    ? state.resourceEconomy.energy.surplus < 0
     : false;
 
   // Apply growth penalty if constrained

@@ -440,8 +440,8 @@ function calculateCircuitBreakerRate(state: GameState, tension: BilateralTension
 
   // 4. Diplomatic AI deployed and trusted
   const dipAI = state.diplomaticAI;
-  if (dipAI.deploymentMonth !== -1 && dipAI.trustLevel > 0.5) {
-    circuitBreakerStrength += dipAI.trustLevel * dipAI.informationIntegrity * 0.15; // 0.0 to 0.15
+  if (dipAI.deploymentMonth !== -1 && dipAI.stakeholderTrust > 0.5) {
+    circuitBreakerStrength += dipAI.stakeholderTrust * dipAI.informationIntegrity * 0.15; // 0.0 to 0.15
   }
 
   // 5. Global peace level

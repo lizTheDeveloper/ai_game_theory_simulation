@@ -120,7 +120,7 @@ import {
   SleeperWakePhase,
   SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
   AIAgentActionsPhase,
-  TechnologyBreakthroughsPhase,
+  // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
   StochasticInnovationPhase,
   GovernmentActionsPhase,
   GovernmentElectionPhase,  // Oct 19, 2025: Government system elections
@@ -507,7 +507,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SleeperWakePhase());
     this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
-    this.orchestrator.registerPhase(new TechnologyBreakthroughsPhase());
+    // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
     this.orchestrator.registerPhase(new StochasticInnovationPhase());
     this.orchestrator.registerPhase(new GovernmentActionsPhase());
     this.orchestrator.registerPhase(new GovernmentElectionPhase());  // Oct 19, 2025: Elections & opinion

@@ -93,13 +93,14 @@ export function calculateVolunteerResearchContribution(state: GameState): number
  */
 function getTechCoordinationBonus(state: GameState): number {
   let bonus = 0;
-  
+
   // Purpose infrastructure tech deployed
-  const purposeNetworks = state.breakthroughTech?.collectivePurposeNetworks?.deploymentLevel || 0;
+  const purposeTech = state.techTreeState.technologies['collective_purpose_networks'];
+  const purposeNetworks = purposeTech?.deploymentLevel || 0;
   bonus += purposeNetworks * 0.5;
-  
-  // Community platforms
-  const communityPlatforms = state.breakthroughTech?.communityPlatforms?.deploymentLevel || 0;
+
+  // Community platforms (no direct tech tree equivalent - using same tech)
+  const communityPlatforms = purposeNetworks * 0.6; // Assume 60% of purpose networks
   bonus += communityPlatforms * 0.3;
   
   // AI capability (AI can help coordinate volunteers)

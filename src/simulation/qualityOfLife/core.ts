@@ -87,7 +87,9 @@ export function updateQualityOfLifeSystems(
 
   // Post-scarcity multipliers
   const pop = state.humanPopulationSystem;
-  const populationFraction = pop.population / pop.baselinePopulation;
+  const populationFraction = pop.baselinePopulation > 0
+    ? pop.population / pop.baselinePopulation
+    : 1.0; // Fallback to 1.0 if baseline is invalid
 
   if (economicStage >= 4) {
     const { materialBonus, infrastructureScaling } = calculatePostScarcityMultipliers(

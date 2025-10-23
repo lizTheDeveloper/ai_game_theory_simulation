@@ -304,7 +304,7 @@ export function checkCircuitBreakers(
 
     // Check for diplomatic AI intervention during delay
     const dipAI = state.diplomaticAI;
-    const diplomaticBonus = (dipAI.deploymentMonth !== -1 && dipAI.trustLevel > 0.6) ? 0.2 : 0;
+    const diplomaticBonus = (dipAI.deploymentMonth !== -1 && dipAI.stakeholderTrust > 0.6) ? 0.2 : 0;
 
     if (rng() < deEscalationChance + diplomaticBonus) {
       ncc.timeDelays.escalationsPrevented += 1;

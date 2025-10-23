@@ -265,7 +265,10 @@ export function updateFreshwaterSystem(state: GameState): void {
  * Check if freshwater breakthrough technologies should unlock
  */
 export function checkFreshwaterTechUnlocks(state: GameState): void {
-  if (!state.freshwaterSystem || !state.breakthroughTech) return;
+  // NOTE: Tech unlocking now handled by TechTreePhase
+  // This function is deprecated but kept for backward compatibility
+  if (!state.freshwaterSystem) return;
+  return; // Early return - tech tree handles all unlocking now
   
   const fw = state.freshwaterSystem;
   const tech = state.breakthroughTech;

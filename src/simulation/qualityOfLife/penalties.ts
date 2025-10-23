@@ -67,6 +67,11 @@ export function calculatePopulationCollapsePenalty(
   population: number,
   baselinePopulation: number
 ): number {
+  // Guard against division by zero
+  if (baselinePopulation <= 0) {
+    return 0.1; // Total collapse if baseline is invalid
+  }
+
   const populationFraction = population / baselinePopulation;
 
   if (populationFraction >= 0.5) {

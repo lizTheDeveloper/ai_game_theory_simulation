@@ -200,13 +200,13 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
   energyCost: 10,
 
   canExecute: (state: GameState): boolean => {
-    if (!state.breakthroughTech || state.government.resources < 10) return false;
+    if (state.government.resources < 10) return false;
 
-    // Check if any environmental tech is unlocked but <50% deployed
-    const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
-    const needsDeployment = envTechs.some(techKey => {
-      const tech = state.breakthroughTech[techKey];
-      return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+    // Check if any environmental tech from tech tree is unlocked but <50% deployed
+    const envTechIds = ['direct_air_capture', 'ocean_alkalinity_enhancement', 'ai_pollution_remediation'];
+    const needsDeployment = envTechIds.some(techId => {
+      const tech = state.techTreeState.technologies[techId];
+      return tech && tech.deployed && (tech.deploymentLevel || 0) < 0.5;
     });
 
     // Also check if ecosystem crisis is active
@@ -228,10 +228,10 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
     };
 
     // Count how many techs will benefit
-    const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
-    const benefitingTechs = envTechs.filter(techKey => {
-      const tech = state.breakthroughTech[techKey];
-      return tech && tech.unlocked && tech.deploymentLevel < 0.5;
+    const envTechIds = ['direct_air_capture', 'ocean_alkalinity_enhancement', 'ai_pollution_remediation'];
+    const benefitingTechs = envTechIds.filter(techId => {
+      const tech = state.techTreeState.technologies[techId];
+      return tech && tech.deployed && (tech.deploymentLevel || 0) < 0.5;
     });
 
     // Cost

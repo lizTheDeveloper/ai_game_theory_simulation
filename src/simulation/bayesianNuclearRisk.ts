@@ -297,12 +297,12 @@ function calculateDiplomaticAIMultiplier(state: GameState): number {
   const dipAI = state.diplomaticAI;
 
   // Not deployed or low trust
-  if (dipAI.deploymentMonth === -1 || dipAI.trustLevel < 0.5) {
+  if (dipAI.deploymentMonth === -1 || dipAI.stakeholderTrust < 0.5) {
     return 1.0; // No reduction
   }
 
   // Effectiveness scales with trust and information integrity
-  const effectiveness = (dipAI.trustLevel * 0.6 + dipAI.informationIntegrity * 0.4);
+  const effectiveness = (dipAI.stakeholderTrust * 0.6 + dipAI.informationIntegrity * 0.4);
 
   // Multiplier: 0.5 (highly effective) to 1.0 (not deployed)
   // effectiveness=1.0 → 1.0 - 0.5 = 0.5 (50% reduction)
