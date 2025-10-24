@@ -25,8 +25,9 @@ RUN npm install
 FROM base AS builder
 WORKDIR /app
 
-# Copy dependencies from deps stage
+# Copy dependencies and built packages from deps stage
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/packages ./packages
 
 # Copy source code
 COPY . .
