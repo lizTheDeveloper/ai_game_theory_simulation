@@ -595,6 +595,70 @@ const value = rng();
 
 This ensures reproducibility with seeds for Monte Carlo analysis.
 
+### NaN and Invalid Value Handling
+
+**CRITICAL: Never use silent fallback values for NaN/undefined in simulation calculations.**
+
+This is a **research simulation**, not a production app. Invalid values indicate bugs that must be fixed, not hidden.
+
+**❌ BAD - Silent fallback hides bugs:**
+```typescript
+// This masks the root cause - NEVER do this in simulation code
+const value = isNaN(x) ? 50 : x;
+const score = state.metric ?? 0.5;
+```
+
+**✅ GOOD - Detect and trace errors:**
+```typescript
+// Detect NaN and log detailed diagnostic information
+if (isNaN(value)) {
+  console.error(`❌ NaN detected in ${functionName} at month ${state.currentMonth}`);
+  console.error(`   Input values: x=${x}, y=${y}, z=${z}`);
+  console.error(`   State snapshot: ${JSON.stringify(relevantState)}`);
+  throw new Error(`NaN in ${functionName} - simulation invalid`);
+}
+
+// For geometric means and other fragile calculations, use minimum floors
+// instead of fallbacks to prevent mathematical collapse:
+const MIN_FLOOR = 0.001; // Prevents exactly 0, which breaks geometric means
+const safeValue = Math.max(MIN_FLOOR, calculatedValue);
+```
+
+**When to use fallbacks:**
+- **Initialization only:** Default values when creating new state
+- **Compatibility layers:** When interfacing with external systems that may not have all fields
+- **UI display:** When showing values to users (but NOT in simulation calculations)
+
+**NaN Audit Checklist:**
+When adding/modifying simulation code, check:
+1. ✓ Are there any `?? defaultValue` fallbacks in calculations? (Remove them)
+2. ✓ Are there any `isNaN(x) ? fallback : x` patterns? (Replace with error detection)
+3. ✓ Do geometric means have minimum floors to prevent exactly 0? (Add MIN_FLOOR)
+4. ✓ Are circular dependencies possible (read → transform → write back)? (Break the cycle)
+5. ✓ Are all division operations protected from 0 denominators? (Add checks)
+
+**Example of proper NaN handling:**
+```typescript
+// Environmental accumulation - proper error detection
+function updateEnvironmentalMetric(state: GameState, newValue: number): void {
+  // Validate input
+  if (isNaN(newValue)) {
+    console.error(`❌ NaN value in updateEnvironmentalMetric at month ${state.currentMonth}`);
+    console.error(`   Current state: ${JSON.stringify(state.environmentalAccumulation)}`);
+    throw new Error('Invalid environmental metric - simulation corrupted');
+  }
+
+  // Use minimum floor for fragile calculations (geometric means, etc.)
+  const MIN_FLOOR = 0.001;
+  state.environmentalAccumulation.metric = Math.max(MIN_FLOOR, Math.min(1, newValue));
+
+  // NO fallback - if value is invalid, the simulation should fail loudly
+}
+```
+
+**Why this matters:**
+The Oct 24, 2025 ecology NaN bug was hidden for months by a `?? 50` fallback, making all scenarios show identical (incorrect) results. Silent fallbacks in simulations are **bugs masquerading as features**.
+
 ### State Mutation
 
 Phases **mutate state directly** for performance (not immutable):

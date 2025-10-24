@@ -280,8 +280,9 @@ export class SimulationWorkerClient {
    * @param scenario - 'historical' or 'unprecedented'
    * @param interval - Simulation step interval in milliseconds (default: 30000 = 1 month/30 seconds)
    * @param alignmentConfig - Optional alignment dynamics configuration
+   * @param climatePriorityConfig - Optional government climate priority configuration
    */
-  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig): void {
+  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig): void {
     if (this.initialized) {
       throw new Error('Already initialized. Create a new client to reinitialize.');
     }
@@ -290,14 +291,15 @@ export class SimulationWorkerClient {
       throw new Error('Worker not available. Check browser console for errors. Web Workers may not be supported in this environment.');
     }
 
-    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario, 'alignment:', alignmentConfig ? 'custom' : 'default');
+    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario, 'alignment:', alignmentConfig ? 'custom' : 'default', 'climate:', climatePriorityConfig?.preset || 'baseline');
 
     this.worker.postMessage({
       type: 'init',
       seed,
       scenario,
       interval,
-      alignmentConfig
+      alignmentConfig,
+      climatePriorityConfig
     });
   }
 
