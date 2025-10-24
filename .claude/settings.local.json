@@ -57,7 +57,8 @@
       "Bash(gh secret list:*)",
       "Bash(gh label create:*)",
       "Bash(gh label:*)",
-      "Bash(do sleep 5)"
+      "Bash(do sleep 5)",
+      "Bash(git stash:*)"
     ],
     "deny": [],
     "ask": []
