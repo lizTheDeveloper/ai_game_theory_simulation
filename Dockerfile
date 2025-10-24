@@ -14,6 +14,9 @@ COPY package.json ./
 # Copy local packages (needed for @lizthedeveloper/government-agents)
 COPY packages ./packages
 
+# Build local packages before npm install
+RUN cd packages/government-agents && npm install && npm run build
+
 # Install dependencies
 # Using npm install instead of npm ci since package-lock.json may not exist
 RUN npm install
