@@ -1,7 +1,8 @@
 /**
  * Population & Regions Dashboard - Phase 8
  *
- * Regional QoL, demographics, inequality metrics.
+ * Global population and QoL metrics.
+ * Regional breakdowns not yet available in Web Worker interface.
  * Reference: /designs/10_regions.md
  */
 
@@ -9,349 +10,191 @@
 
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
-import { useSimulation } from "@/lib/hooks/useSimulation"
-import { useEffect, useMemo } from "react"
+import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 
 export function RegionsDashboard() {
-  const { currentState, loadCurrent } = useSimulation()
+  const { lastUpdate, initialized } = useSimulationWorker()
 
-  useEffect(() => {
-    loadCurrent()
-  }, [])
-
-  // Regional data (placeholder - would come from regionalPopulations)
-  const regions = useMemo(() => {
-    return [
-      {
-        id: 'north_america',
-        name: 'North America',
-        population: 580_000_000,
-        qol: 0.78,
-        survivalTier: 4.2,
-        inequality: 0.42,
-        status: 'stable',
-      },
-      {
-        id: 'europe',
-        name: 'Europe',
-        population: 740_000_000,
-        qol: 0.82,
-        survivalTier: 4.5,
-        inequality: 0.38,
-        status: 'stable',
-      },
-      {
-        id: 'asia',
-        name: 'Asia',
-        population: 4_700_000_000,
-        qol: 0.65,
-        survivalTier: 3.8,
-        inequality: 0.55,
-        status: 'developing',
-      },
-      {
-        id: 'africa',
-        name: 'Africa',
-        population: 1_400_000_000,
-        qol: 0.52,
-        survivalTier: 3.2,
-        inequality: 0.62,
-        status: 'challenged',
-      },
-      {
-        id: 'latin_america',
-        name: 'Latin America',
-        population: 670_000_000,
-        qol: 0.68,
-        survivalTier: 3.9,
-        inequality: 0.51,
-        status: 'stable',
-      },
-      {
-        id: 'oceania',
-        name: 'Oceania',
-        population: 45_000_000,
-        qol: 0.80,
-        survivalTier: 4.3,
-        inequality: 0.40,
-        status: 'stable',
-      },
-    ]
-  }, [])
-
-  // Global population stats
-  const globalStats = useMemo(() => {
-    if (!currentState) return null
-
-    const population = currentState.globalMetrics?.population || 8_000_000_000
-    const qol = currentState.globalMetrics?.qualityOfLife || 0
-    // Calculate average survival tier from regions (population-weighted)
-    const totalPop = regions.reduce((sum, r) => sum + r.population, 0)
-    const survivalTier = regions.reduce((sum, r) => sum + (r.survivalTier * r.population / totalPop), 0)
-
-    return {
-      population,
-      qol,
-      survivalTier,
-      formatted: {
-        population: (population / 1_000_000_000).toFixed(2) + 'B',
-        qol: (qol * 100).toFixed(1),
-        survivalTier: survivalTier.toFixed(1),
-      }
-    }
-  }, [currentState, regions])
-
-  // Inequality analysis
-  const inequalityStats = useMemo(() => {
-    const qolValues = regions.map(r => r.qol)
-    const avgQoL = qolValues.reduce((sum, q) => sum + q, 0) / qolValues.length
-    const variance = qolValues.reduce((sum, q) => sum + Math.pow(q - avgQoL, 2), 0) / qolValues.length
-    const stdDev = Math.sqrt(variance)
-
-    const highest = Math.max(...qolValues)
-    const lowest = Math.min(...qolValues)
-    const spread = highest - lowest
-
-    // Detect "Elysium" pattern: elite utopia + masses dystopia
-    const eliteRegions = regions.filter(r => r.qol >= 0.75).length
-    const strugglingRegions = regions.filter(r => r.qol < 0.55).length
-    const elysiumPattern = eliteRegions >= 2 && strugglingRegions >= 2
-
-    return {
-      avgQoL,
-      stdDev,
-      spread,
-      highest,
-      lowest,
-      elysiumPattern,
-    }
-  }, [regions])
-
-  if (!currentState) {
-    return <div className="p-8">Loading...</div>
+  if (!initialized) {
+    return (
+      <div className="p-8">
+        <Panel title="Not Initialized">
+          Click "Configure & Start" to initialize the simulation
+        </Panel>
+      </div>
+    )
   }
+
+  if (!lastUpdate) {
+    return <div className="p-8">Waiting for simulation update...</div>
+  }
+
+  const population = lastUpdate.population || 8_000_000_000
+  const qol = lastUpdate.qualityOfLife || 0
+  const socialCohesion = lastUpdate.socialCohesion || 0
+  const institutionalTrust = lastUpdate.institutionalTrust || 0
+
+  // Infer status from QoL
+  const getStatus = (qolValue: number) => {
+    if (qolValue >= 0.7) return { label: 'Thriving', color: 'var(--color-green)' }
+    if (qolValue >= 0.5) return { label: 'Stable', color: 'var(--color-cyan)' }
+    if (qolValue >= 0.3) return { label: 'Stressed', color: 'var(--color-amber)' }
+    return { label: 'Crisis', color: 'var(--color-red)' }
+  }
+
+  const status = getStatus(qol)
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl mb-2">Population & Regions</h1>
+        <h1 className="text-2xl mb-2">Population & Global Metrics</h1>
         <p style={{ color: 'var(--white-40)' }}>
-          Regional QoL, Demographics, and Inequality Metrics
+          Global population, quality of life, and social cohesion
         </p>
       </div>
 
-      {/* Global Overview */}
+      {/* Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <MetricCard
           label="Global Population"
-          value={globalStats?.formatted.population || 'N/A'}
-          status="normal"
+          value={(population / 1_000_000_000).toFixed(2)}
+          unit="B"
+          status={population < 2_000_000_000 ? 'critical' : 'normal'}
         />
         <MetricCard
-          label="Average QoL"
-          value={(inequalityStats.avgQoL * 100).toFixed(1)}
-          status={inequalityStats.avgQoL > 0.7 ? 'normal' : inequalityStats.avgQoL > 0.5 ? 'warning' : 'critical'}
+          label="Quality of Life"
+          value={(qol * 100).toFixed(0)}
+          unit="%"
+          status={qol < 0.4 ? 'critical' : qol < 0.6 ? 'warning' : 'normal'}
         />
         <MetricCard
-          label="QoL Spread"
-          value={(inequalityStats.spread * 100).toFixed(1)}
-          status={inequalityStats.spread > 0.3 ? 'warning' : 'normal'}
+          label="Social Cohesion"
+          value={(socialCohesion * 100).toFixed(0)}
+          unit="%"
+          status={socialCohesion < 0.4 ? 'critical' : socialCohesion < 0.6 ? 'warning' : 'normal'}
         />
         <MetricCard
-          label="Average Survival Tier"
-          value={globalStats?.formatted.survivalTier || 'N/A'}
-          status={globalStats && globalStats.survivalTier > 3.5 ? 'normal' : 'warning'}
+          label="Institutional Trust"
+          value={(institutionalTrust * 100).toFixed(0)}
+          unit="%"
+          status={institutionalTrust < 0.4 ? 'critical' : institutionalTrust < 0.6 ? 'warning' : 'normal'}
         />
       </div>
 
-      {/* Elysium Pattern Alert */}
-      {inequalityStats.elysiumPattern && (
-        <Panel title="⚠️ 'Elysium' Pattern Detected" glow="amber">
+      {/* Global Status */}
+      <Panel title="Global Status">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Overall Status</div>
+            <div className="text-4xl font-light mb-2" style={{ color: status.color }}>
+              {status.label}
+            </div>
+            <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+              Based on quality of life index
+            </p>
+          </div>
+
+          <div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Population Trend</div>
+            <div className="text-4xl font-light mb-2" style={{ color: population < 7_000_000_000 ? 'var(--color-red)' : 'var(--white-80)' }}>
+              {population < 7_000_000_000 ? 'Declining' : 'Stable'}
+            </div>
+            <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+              {(population / 1_000_000_000).toFixed(2)}B people
+            </p>
+          </div>
+        </div>
+      </Panel>
+
+      {/* Quality of Life Breakdown */}
+      <Panel title="Quality of Life Metrics">
+        <div className="space-y-4">
+          <div>
+            <div className="flex justify-between mb-2">
+              <span className="text-sm">Overall QoL</span>
+              <span className="text-sm font-semibold">{(qol * 100).toFixed(0)}%</span>
+            </div>
+            <div className="h-3 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+              <div
+                className="h-full rounded"
+                style={{
+                  width: `${Math.min(100, qol * 100)}%`,
+                  backgroundColor: qol >= 0.7 ? 'var(--color-green)' : qol >= 0.5 ? 'var(--color-cyan)' : qol >= 0.3 ? 'var(--color-amber)' : 'var(--color-red)'
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex justify-between mb-2">
+              <span className="text-sm">Social Cohesion</span>
+              <span className="text-sm font-semibold">{(socialCohesion * 100).toFixed(0)}%</span>
+            </div>
+            <div className="h-3 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+              <div
+                className="h-full rounded"
+                style={{
+                  width: `${Math.min(100, socialCohesion * 100)}%`,
+                  backgroundColor: 'var(--color-cyan)'
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex justify-between mb-2">
+              <span className="text-sm">Institutional Trust</span>
+              <span className="text-sm font-semibold">{(institutionalTrust * 100).toFixed(0)}%</span>
+            </div>
+            <div className="h-3 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+              <div
+                className="h-full rounded"
+                style={{
+                  width: `${Math.min(100, institutionalTrust * 100)}%`,
+                  backgroundColor: 'var(--color-cyan)'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </Panel>
+
+      {/* Regional Data Note */}
+      <Panel title="📍 Regional Tracking">
+        <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+          Regional population and QoL breakdowns are not yet available in the Web Worker interface.
+          Currently showing global aggregated metrics only. Regional granularity requires full state access.
+        </p>
+      </Panel>
+
+      {/* Crisis Alerts */}
+      {population < 2_000_000_000 && (
+        <Panel title="⚠️ Population Collapse" glow="red">
           <p className="text-sm" style={{ color: 'var(--white-60)' }}>
-            Extreme regional inequality: elite regions experiencing utopia ({(inequalityStats.highest * 100).toFixed(1)} QoL)
-            while other regions struggle ({(inequalityStats.lowest * 100).toFixed(1)} QoL).
-            This pattern resembles the "Elysium" scenario where technological abundance is not equally distributed.
+            Global population has fallen below 2 billion ({(population / 1_000_000_000).toFixed(2)}B).
+            This represents severe population decline with potential for civilizational collapse.
           </p>
         </Panel>
       )}
 
-      {/* Regional Comparison */}
-      <Panel title="Regional Quality of Life">
-        <div className="space-y-3">
-          {regions
-            .sort((a, b) => b.qol - a.qol)
-            .map((region) => (
-              <div
-                key={region.id}
-                className="p-4 rounded"
-                style={{
-                  backgroundColor: 'var(--color-near-black)',
-                  border: `1px solid ${region.qol < 0.55 ? 'var(--color-red)' : 'var(--white-10)'}`,
-                  boxShadow: region.qol < 0.55 ? '0 0 10px rgba(255, 0, 64, 0.2)' : 'none'
-                }}
-              >
-                {/* Region Header */}
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <h3 className="text-sm font-semibold mb-1">{region.name}</h3>
-                    <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--white-40)' }}>
-                      <span>{(region.population / 1_000_000_000).toFixed(2)}B people</span>
-                      <span>•</span>
-                      <span className="capitalize">{region.status}</span>
-                    </div>
-                  </div>
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{
-                      backgroundColor: region.qol >= 0.75 ? 'var(--color-green)' :
-                                     region.qol >= 0.60 ? 'var(--color-cyan)' :
-                                     region.qol >= 0.50 ? 'var(--color-amber)' :
-                                     'var(--color-red)'
-                    }}
-                  />
-                </div>
-
-                {/* Metrics */}
-                <div className="grid grid-cols-4 gap-4 mb-3">
-                  <div>
-                    <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Quality of Life</div>
-                    <div className="text-lg font-semibold" style={{
-                      color: region.qol >= 0.75 ? 'var(--color-green)' :
-                             region.qol >= 0.60 ? 'var(--color-cyan)' :
-                             region.qol >= 0.50 ? 'var(--color-amber)' :
-                             'var(--color-red)'
-                    }}>
-                      {(region.qol * 100).toFixed(1)}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Survival Tier</div>
-                    <div className="text-lg font-semibold">{region.survivalTier.toFixed(1)}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Inequality (Gini)</div>
-                    <div className="text-lg font-semibold" style={{
-                      color: region.inequality > 0.55 ? 'var(--color-red)' :
-                             region.inequality > 0.45 ? 'var(--color-amber)' :
-                             'var(--white-80)'
-                    }}>
-                      {region.inequality.toFixed(2)}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Status</div>
-                    <div className="text-sm font-semibold capitalize">{region.status}</div>
-                  </div>
-                </div>
-
-                {/* QoL Bar */}
-                <div>
-                  <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
-                    <div
-                      className="h-full rounded"
-                      style={{
-                        width: `${region.qol * 100}%`,
-                        backgroundColor: region.qol >= 0.75 ? 'var(--color-green)' :
-                                       region.qol >= 0.60 ? 'var(--color-cyan)' :
-                                       region.qol >= 0.50 ? 'var(--color-amber)' :
-                                       'var(--color-red)'
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
-      </Panel>
-
-      {/* Inequality Metrics */}
-      <Panel title="Global Inequality Analysis">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-4 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>QoL Standard Deviation</div>
-            <div className="text-3xl font-light mb-2">
-              {inequalityStats.stdDev.toFixed(3)}
-            </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-              Lower is better (less variation)
-            </p>
-          </div>
-
-          <div className="p-4 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>QoL Range</div>
-            <div className="text-3xl font-light mb-2" style={{
-              color: inequalityStats.spread > 0.3 ? 'var(--color-amber)' : 'var(--white-80)'
-            }}>
-              {inequalityStats.spread.toFixed(2)}
-            </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-              {inequalityStats.lowest.toFixed(2)} to {inequalityStats.highest.toFixed(2)}
-            </p>
-          </div>
-
-          <div className="p-4 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Elysium Risk</div>
-            <div className="text-3xl font-light mb-2" style={{
-              color: inequalityStats.elysiumPattern ? 'var(--color-red)' : 'var(--color-green)'
-            }}>
-              {inequalityStats.elysiumPattern ? 'High' : 'Low'}
-            </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-              Elite utopia + mass struggle
-            </p>
-          </div>
-        </div>
-      </Panel>
-
-      {/* Population Distribution */}
-      <Panel title="Population Distribution by Region">
-        <div className="space-y-2">
-          {regions
-            .sort((a, b) => b.population - a.population)
-            .map((region) => {
-              const percentage = (region.population / (globalStats?.population || 8_000_000_000)) * 100
-
-              return (
-                <div key={region.id} className="flex items-center gap-3">
-                  <div className="w-32 text-sm" style={{ color: 'var(--white-60)' }}>
-                    {region.name}
-                  </div>
-                  <div className="flex-1">
-                    <div className="h-6 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
-                      <div
-                        className="h-full rounded flex items-center justify-end px-2"
-                        style={{
-                          width: `${percentage}%`,
-                          backgroundColor: 'var(--color-cyan)'
-                        }}
-                      >
-                        <span className="text-xs font-semibold">{percentage.toFixed(1)}%</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-24 text-sm text-right" style={{ color: 'var(--white-60)' }}>
-                    {(region.population / 1_000_000_000).toFixed(2)}B
-                  </div>
-                </div>
-              )
-            })}
-        </div>
-      </Panel>
-
-      {/* Survival Tier Explanation */}
-      <Panel title="Survival Tier Framework">
-        <div className="space-y-2 text-sm" style={{ color: 'var(--white-60)' }}>
-          <div><strong>Tier 1-2:</strong> Survival fundamentals (food, water, shelter, habitability)</div>
-          <div><strong>Tier 3:</strong> Material needs (clothing, household goods, connectivity)</div>
-          <div><strong>Tier 4:</strong> Psychological and social needs (meaning, community, belonging)</div>
-          <div><strong>Tier 5:</strong> Self-actualization and flourishing (purpose, creativity, growth)</div>
-          <p className="mt-3">
-            Distribution tracking detects "Elysium" scenarios where elite regions achieve Tier 5 flourishing
-            while other regions struggle at Tier 1-2 survival.
+      {qol < 0.3 && (
+        <Panel title="⚠️ Quality of Life Crisis" glow="red">
+          <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Global quality of life has fallen below 30% ({(qol * 100).toFixed(0)}%).
+            Survival fundamentals are no longer met for large portions of the population.
           </p>
-        </div>
-      </Panel>
+        </Panel>
+      )}
+
+      {socialCohesion < 0.3 && (
+        <Panel title="⚠️ Social Fragmentation" glow="amber">
+          <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Social cohesion is critically low ({(socialCohesion * 100).toFixed(0)}%).
+            Increased risk of social unrest, institutional breakdown, and meaning crisis.
+          </p>
+        </Panel>
+      )}
     </div>
   )
 }
