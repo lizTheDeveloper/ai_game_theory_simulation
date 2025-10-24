@@ -4,7 +4,7 @@
  * Pure functions for government policy decisions
  */
 
-import { GameState, GameEvent } from '@/types/game';
+import { GameState, GameEvent, AIAgent } from '@/types/game';
 import { getTrustInAIForPolicy } from '../socialCohesion';
 import { GameAction, ActionResult } from './types';
 import { getTrustInAI } from '../socialCohesion';
@@ -1754,12 +1754,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     canExecute: (state) => {
       if (!state.techTreeState || state.government.resources < 10) return false;
 
-      // Check if any environmental tech is unlocked but not completed
+      // Check if any environmental tech is unlocked but not fully deployed
+      const { isTechUnlocked, isTechDeployed } = require('../techTree/helpers');
       const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
-      const unlockedSet = new Set(state.techTreeState.unlockedTech || []);
       const needsDeployment = envTechs.some(techId => {
-        const tech = state.technologyTree?.find(t => t.id === techId);
-        return tech && unlockedSet.has(techId) && !tech.completed;
+        return isTechUnlocked(state, techId) && isTechDeployed(state, techId) < 1.0;
       });
 
       // Also check if ecosystem crisis is active
@@ -1781,11 +1780,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       };
       
       // Count how many techs will benefit
+      const { isTechUnlocked, isTechDeployed } = require('../techTree/helpers');
       const envTechs = ['deExtinction', 'oceanAlkalinity', 'advancedDAC', 'ecosystemManagement'];
-      const unlockedSet = new Set(state.techTreeState?.unlockedTech || []);
       const benefitingTechs = envTechs.filter(techId => {
-        const tech = state.technologyTree?.find(t => t.id === techId);
-        return tech && unlockedSet.has(techId) && !tech.completed;
+        return isTechUnlocked(state, techId) && isTechDeployed(state, techId) < 1.0;
       });
       
       // Cost

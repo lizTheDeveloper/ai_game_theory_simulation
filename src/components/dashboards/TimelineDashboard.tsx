@@ -30,7 +30,7 @@ export function TimelineDashboard() {
     if (currentState.eventLog) {
       currentState.eventLog.forEach((event: any) => {
         allEvents.push({
-          month: event.month,
+          month: event.timestamp,
           type: event.type,
           category: event.category || 'system',
           description: event.description,
@@ -192,7 +192,7 @@ export function TimelineDashboard() {
 
           {filteredEvents.slice(0, 50).map((event, idx) => (
             <div
-              key={`${event.month}-${idx}`}
+              key={`${event.timestamp}-${idx}`}
               className="p-3 rounded flex items-start gap-3"
               style={{
                 backgroundColor: 'var(--color-near-black)',
@@ -214,7 +214,7 @@ export function TimelineDashboard() {
                   textAlign: 'center',
                 }}
               >
-                Month {event.month}
+                Month {event.timestamp}
               </div>
 
               {/* Event Content */}
