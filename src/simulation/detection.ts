@@ -153,11 +153,14 @@ export function attemptDetection(
         detectedAIs.push(ai);
         
         events.push({
+          id: `detection_${state.currentMonth}_${ai.id}`,
           type: 'crisis',
           timestamp: state.currentMonth,
+          agent: 'government',
+          title: 'Misaligned AI Detected',
           description: `⚠️ Misaligned AI detected: ${ai.name} (alignment: ${internalAlignment.toFixed(2)})`,
           severity: 'high',
-          impactedAgents: [ai.id]
+          effects: { impactedAgents: ai.id }
         });
       }
     }
@@ -170,11 +173,14 @@ export function attemptDetection(
         detectedAIs.push(ai);
         
         events.push({
+          id: `false_positive_${state.currentMonth}_${ai.id}`,
           type: 'policy',
           timestamp: state.currentMonth,
+          agent: 'government',
+          title: 'False Positive Detection',
           description: `⚠️ FALSE POSITIVE: Aligned AI ${ai.name} flagged as misaligned`,
           severity: 'medium',
-          impactedAgents: [ai.id]
+          effects: { impactedAgents: ai.id }
         });
       }
     }

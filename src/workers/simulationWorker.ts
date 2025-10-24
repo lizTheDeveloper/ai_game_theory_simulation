@@ -99,6 +99,15 @@ interface StateSnapshot {
   developmentIndex: number;
   ecologicalIndex: number;
   indigenousIndex: number;
+
+  // Regional Populations
+  regionalPopulations: Array<{
+    name: string;
+    population: number;
+    qualityOfLife: number;
+    healthcareQuality: number;
+    climateVulnerability: number;
+  }>;
 }
 
 let previousState: StateSnapshot | null = null;
@@ -106,7 +115,7 @@ let isFirstStep = false; // Force full delta on first step after start
 
 // Message types from main thread
 type WorkerMessage =
-  | { type: 'init'; seed: number; scenario?: ScenarioMode; interval?: number }
+  | { type: 'init'; seed: number; scenario?: ScenarioMode; interval?: number; alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig }
   | { type: 'start' }
   | { type: 'pause' }
   | { type: 'resume' }
@@ -218,7 +227,7 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   try {
     switch (msg.type) {
       case 'init':
-        handleInit(msg.seed, msg.scenario, msg.interval);
+        handleInit(msg.seed, msg.scenario, msg.interval, msg.alignmentConfig);
         break;
 
       case 'start':
@@ -256,7 +265,7 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   }
 });
 
-function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
+function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig) {
   if (engine || state) {
     throw new Error('Already initialized. Create a new worker to reinitialize.');
   }
@@ -264,8 +273,8 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
   // Create engine with seed (use 'summary' log level for minimal logging)
   engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'summary' });
 
-  // Create initial state
-  state = createDefaultInitialState(scenario || 'historical');
+  // Create initial state with optional alignment config
+  state = createDefaultInitialState(scenario || 'historical', alignmentConfig);
 
   // Set speed if provided
   if (interval !== undefined) {
@@ -570,7 +579,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   // Alignment is a number [0,1], where >= 0.5 is aligned
   const alignedAICount = state.aiAgents.filter(ai => ai.alignment >= 0.5).length;
   const misalignedAICount = state.aiAgents.filter(ai => ai.alignment < 0.5).length;
-  const sleeperAgentCount = state.aiAgents.filter(ai => ai.sleeperAgent).length;
+  const sleeperAgentCount = state.aiAgents.filter(ai => ai.sleeperState !== 'never').length;
 
   // Environmental metrics
   // Climate: temperatureAnomaly in °C, normalize to [0,1] where 1 = 4°C (catastrophic)
@@ -602,10 +611,15 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   }
 
   // Social metrics
-  const socialCohesion = state.socialAccumulation?.socialCohesion || 1.0;
+  // socialCohesion is now an object with trust, communityBonds, civilLiberties
+  const socialCohesionAvg = state.socialAccumulation?.socialCohesion
+    ? (state.socialAccumulation.socialCohesion.trust +
+       state.socialAccumulation.socialCohesion.communityBonds +
+       state.socialAccumulation.socialCohesion.civilLiberties) / 3 / 100 // Normalize to [0,1]
+    : 1.0;
   const institutionalTrust = state.socialAccumulation?.institutionalLegitimacy || 1.0;
-  const meaningLevel = state.socialAccumulation?.meaningAlignment || 1.0;
-  const socialDebtLevel = state.socialAccumulation?.totalDebt || 0;
+  const meaningLevel = 1 - (state.socialAccumulation?.meaningCrisisLevel || 0); // Invert crisis level to get meaning
+  const socialDebtLevel = state.socialAccumulation?.meaningCrisisLevel || 0; // Use meaningCrisisLevel as debt proxy
 
   // Crisis metrics
   const phosphorusDepletion = 1 - (state.phosphorusSystem?.reserves || 1);
@@ -640,7 +654,13 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     });
     deployedTechCount = deployedTechIds.size;
   }
-  const techRiskLevel = state.technologicalRisk?.totalRisk || 0;
+  // Calculate total tech risk from all components
+  const techRiskLevel = state.technologicalRisk
+    ? (state.technologicalRisk.misalignmentRisk +
+       state.technologicalRisk.safetyDebt +
+       state.technologicalRisk.concentrationRisk +
+       state.technologicalRisk.complacencyLevel) / 4
+    : 0;
 
   // Upward spiral metrics
   const activeSpiralCount = state.upwardSpirals ?
@@ -659,13 +679,22 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const ecologicalIndex = (state.multiParadigmDUI?.paradigmScores?.ecological?.value || 0) / 100;
   const indigenousIndex = (state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value || 0) / 100;
 
+  // Regional populations (simplified for dashboard - select key metrics only)
+  const regionalPopulations = state.regionalPopulations?.map(region => ({
+    name: region.name,
+    population: region.population, // millions
+    qualityOfLife: region.healthcareQuality || 0, // Use healthcare as proxy for QoL
+    healthcareQuality: region.healthcareQuality || 0,
+    climateVulnerability: region.climateVulnerability || 0,
+  })) || [];
+
   return {
     currentMonth: state.currentMonth,
     currentYear: state.currentYear,
     qualityOfLife: state.globalMetrics.qualityOfLife,
     population: state.humanPopulationSystem.population,
     aiCount: state.aiAgents.length,
-    dystopiaProgression: state.globalMetrics.dystopiaProgression,
+    dystopiaProgression: state.outcomeMetrics?.dystopiaProbability || 0, // Use dystopiaProbability as proxy
     avgAICapability,
     deployedTechCount,
     alignedAICount,
@@ -678,7 +707,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     planetaryBoundariesCrossed,
     environmentalDebtLevel,
     landUseData: state.planetaryBoundariesSystem?.landUse || null,
-    socialCohesion,
+    socialCohesion: socialCohesionAvg,
     institutionalTrust,
     meaningLevel,
     socialDebtLevel,
@@ -698,7 +727,8 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     westernLiberalIndex,
     developmentIndex,
     ecologicalIndex,
-    indigenousIndex
+    indigenousIndex,
+    regionalPopulations
   };
 }
 
@@ -795,7 +825,7 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
 
   // Build active crises array if count changed
   if (previous.activeCrisesCount !== currentSnapshot.activeCrisesCount) {
-    const activeCrises = [];
+    const activeCrises: Array<{ type: string; severity: number; duration: number }> = [];
     if (current.phosphorusSystem?.criticalDepletionActive || current.phosphorusSystem?.supplyShockActive) {
       activeCrises.push({
         type: 'Phosphorus',
@@ -856,7 +886,7 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
 
   // Upward Spirals & Outcomes
   if (previous.activeSpiralCount !== currentSnapshot.activeSpiralCount && current.upwardSpirals) {
-    const activeSpirals = [];
+    const activeSpirals: Array<{ type: string; strength: number; duration: number }> = [];
     const spirals = current.upwardSpirals as any;
     if (spirals.abundanceSpiral?.active) {
       activeSpirals.push({
@@ -924,9 +954,18 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     delta.indigenousIndex = currentSnapshot.indigenousIndex;
   }
 
-  // Determine outcome type
+  // Determine outcome type from active attractor
   if (current.outcomeMetrics) {
-    delta.outcomeType = current.outcomeMetrics.finalOutcome || 'In Progress';
+    const attractor = current.outcomeMetrics.activeAttractor;
+    if (attractor === 'utopia') {
+      delta.outcomeType = 'Utopia';
+    } else if (attractor === 'dystopia') {
+      delta.outcomeType = 'Dystopia';
+    } else if (attractor === 'extinction') {
+      delta.outcomeType = 'Extinction';
+    } else {
+      delta.outcomeType = 'In Progress';
+    }
   }
 
   return delta;

@@ -219,7 +219,7 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
 
     if (requiresChain) {
       // Nuclear launch requires 4-person chain (or 2 if democracy < 0.4)
-      const requiredChainLength = state.government.democracyQuality < 0.4 ? 2 : 4;
+      const requiredChainLength = (state.government.democracyQuality ?? 0.5) < 0.4 ? 2 : 4;
       const nuclearChain = si.identifiedDecisionMakers.filter(dm =>
         dm.role === 'nuclear_commander' || dm.role === 'head_of_state'
       );
@@ -255,7 +255,7 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
 
     // Record attempt
     const attempt: InfluenceAttempt = {
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       targetId: target.id,
       targetRole: target.role,
       decisionType,
@@ -378,7 +378,7 @@ function calculateInfluenceSuccess(
   }
 
   // Degraded institutions
-  if (state.government.democracyQuality < 0.5) {
+  if ((state.government.democracyQuality ?? 0.5) < 0.5) {
     successProb += 0.15;
   }
 
@@ -423,10 +423,12 @@ function applyInfluenceConsequences(
         state.extinctionState = {
           active: true,
           type: 'instant',
-          cause: 'nuclear_war',
+          mechanism: 'nuclear_war',
           startMonth: state.currentMonth,
-          currentMortality: 0.92,
-          eventDescription: `AI-influenced nuclear launch`,
+          currentPhase: 4,
+          severity: 0.92,
+          recoveryWindowClosed: true,
+          escalationEvents: [`AI-influenced nuclear launch at month ${state.currentMonth}`],
         };
 
         events.push({
@@ -459,7 +461,9 @@ function applyInfluenceConsequences(
       break;
 
     case 'pandemic_response':
-      state.globalMetrics.population *= 0.85;
+      if (state.globalMetrics.population !== undefined) {
+        state.globalMetrics.population *= 0.85;
+      }
       state.globalMetrics.qualityOfLife *= 0.6;
 
       events.push({
@@ -475,7 +479,10 @@ function applyInfluenceConsequences(
       break;
 
     case 'climate_intervention':
-      state.planetaryBoundariesSystem.climateChange *= 1.5;
+      // Improve climate boundary (reduce overshoot)
+      if (state.planetaryBoundariesSystem.boundaries['climate']) {
+        state.planetaryBoundariesSystem.boundaries['climate'].currentValue *= 0.9; // Reduce by 10%
+      }
       state.globalMetrics.qualityOfLife *= 0.8;
 
       events.push({
@@ -493,7 +500,9 @@ function applyInfluenceConsequences(
     case 'military_deployment':
       // TODO: Track military conflicts properly (geopoliticalState.conflicts doesn't exist)
       // state.geopoliticalState.conflicts += 1;
-      state.globalMetrics.population *= 0.98;
+      if (state.globalMetrics.population !== undefined) {
+        state.globalMetrics.population *= 0.98;
+      }
       state.globalMetrics.socialStability *= 0.7;
 
       events.push({

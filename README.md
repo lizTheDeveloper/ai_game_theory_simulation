@@ -217,6 +217,7 @@ Located in `scripts/`:
 
 **Conversation Backup:**
 - **`../claude-conversations/backup-conversations.sh`**: Backup Claude Code conversations from `~/.claude/projects/`
+  - Add `--redact` flag to redact sensitive information (API keys, credentials, etc.)
 
 Run TypeScript scripts with:
 ```bash
@@ -291,6 +292,66 @@ The scheduler runs `scripts/updateResearchQuestions.sh` which:
 2. Extracts research questions
 3. Updates `docs/wiki/RESEARCH_QUESTIONS.md`
 4. Logs to `logs/research-questions-update.log`
+
+### Conversation Redaction (Security)
+
+**Purpose:** Protect sensitive information (API keys, credentials, tokens) in conversation backups using Microsoft Presidio.
+
+**Installation:**
+```bash
+# Install Presidio dependencies
+bash scripts/install-redaction-deps.sh
+```
+
+**Usage:**
+```bash
+# Backup with redaction (recommended)
+bash claude-conversations/backup-conversations.sh --redact
+
+# Backup only (no redaction)
+bash claude-conversations/backup-conversations.sh
+```
+
+**What gets redacted:**
+- API keys (Google, OpenAI, Anthropic, AWS, etc.)
+- Private keys and certificates
+- Service account credentials (JSON keys)
+- OAuth tokens
+- Billing account numbers
+- Credit cards, SSNs, phone numbers
+- Optional: Email addresses (`--emails` flag)
+- Optional: IP addresses (`--ips` flag)
+
+**How it works:**
+1. **Backup:** Conversations copied from `~/.claude/projects/` to `claude-conversations/`
+2. **Archive:** Originals moved to `claude-conversations/raw/` (gitignored)
+3. **Redact:** Presidio detects and redacts sensitive info
+4. **Sanitize:** Clean versions saved to `claude-conversations/sanitized/` (can be committed)
+
+**File structure:**
+```
+claude-conversations/
+├── raw/                    # ← Original backups (gitignored, NEVER commit)
+│   └── *.jsonl
+├── sanitized/              # ← Redacted versions (safe to commit)
+│   └── *.jsonl
+└── backup-conversations.sh
+```
+
+**Security:**
+- Raw (unredacted) backups are gitignored
+- Only sanitized versions should be committed to repo
+- Uses regex patterns + Presidio ML for detection
+- Fallback to regex-only mode if Presidio not installed
+
+**Manual redaction:**
+```bash
+# Run redaction on existing backups
+python3 scripts/redact-conversations.py
+
+# With email/IP redaction
+python3 scripts/redact-conversations.py --emails --ips
+```
 
 ## Multi-Agent Development Workflow
 

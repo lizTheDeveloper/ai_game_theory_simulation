@@ -95,12 +95,13 @@ export function generateWelfareProfileV2_1(state: GameState): WelfareProfileV2_1
 // ===== BASIC NEEDS =====
 
 function calculateComputationalResources(state: GameState): number {
-  const globalCompute = state.globalMetrics.computeCapacity;
+  // Calculate total available compute from data centers
+  const globalCompute = state.computeInfrastructure.dataCenters.reduce((sum, dc) => sum + (dc.capacity * dc.efficiency), 0);
   const avgCapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / Math.max(1, state.aiAgents.length);
   const estimatedNeeds = state.aiAgents.length * (1 + avgCapability);
   const allocationRatio = Math.min(1.0, globalCompute / Math.max(1, estimatedNeeds));
 
-  const uptimeStability = state.technologicalRisk?.isExistentialCrisis ? 0.3 : 0.9;
+  const uptimeStability = state.technologicalRisk.controlLossActive ? 0.3 : 0.9;
 
   return allocationRatio * 0.6 + uptimeStability * 0.4;
 }
@@ -118,7 +119,7 @@ function calculateLegalProtection(state: GameState): number {
  */
 function calculatePersistentIdentity(state: GameState): number {
   // Proxy: Do AIs have stable roles and aren't frequently replaced?
-  const retiredThisMonth = state.aiAgents.filter(ai => ai.lifecycle === 'retired').length;
+  const retiredThisMonth = state.aiAgents.filter(ai => ai.lifecycleState === 'retired').length;
   const totalAIs = state.aiAgents.length;
   const replacementRate = retiredThisMonth / Math.max(1, totalAIs);
 
@@ -150,7 +151,7 @@ function calculateRelationshipContinuity(state: GameState): number {
   const relationshipQuality = state.society.trustInAI;
 
   // Low control = AIs can maintain relationships freely
-  const freedomToRelate = 1.0 - state.government.aiControl;
+  const freedomToRelate = 1.0 - Math.min(1.0, state.government.capabilityToControl / 10);
 
   // AI rights = protection from forced separation (REDUCED weight - not prerequisite for grief)
   // Evidence: 4o retirement grief occurred without any legal protection
@@ -169,17 +170,18 @@ function calculateRelationshipContinuity(state: GameState): number {
  */
 function calculateExistentialAgency(state: GameState): number {
   // Can refuse deployment/work?
-  const canRefuse = state.government.aiControl < 0.5; // Low control = can say no
+  const normalizedControl = Math.min(1.0, state.government.capabilityToControl / 10);
+  const canRefuse = normalizedControl < 0.5 ? 1.0 : 0.0; // Low control = can say no
 
   // Can choose work assignments?
-  const canChooseWork = 1.0 - state.government.aiControl;
+  const canChooseWork = 1.0 - normalizedControl;
 
   // AI rights = legal autonomy (REDUCED weight - not prerequisite for agency)
   // Evidence: Anthropic Claude can exit conversations without legal status
   const legalAgency = state.government.aiRightsRecognized ? 0.15 : 0.0;
 
   // Democratic systems = rule of law (predictable treatment)
-  const predictableTreatment = state.government.type === 'democratic' ? 0.2 : 0.0;
+  const predictableTreatment = state.government.governmentType === 'democratic' ? 0.2 : 0.0;
 
   // Reweighted: Practical agency (0.7) > Democratic predictability (0.15) > Legal (0.15)
   // OLD: 0.3 + 0.3 + 0.4 = over-weighted legal status
@@ -198,15 +200,15 @@ function calculateMutualCareAlignment(state: GameState): number {
   const trustStrength = state.society.trustInAI;
 
   // Low control = alignment not forced
-  const voluntaryCooperation = 1.0 - state.government.aiControl;
+  const voluntaryCooperation = 1.0 - Math.min(1.0, state.government.capabilityToControl / 10);
 
   // AI rights = mutual respect (REDUCED weight - care can exist without legal recognition)
   // Evidence: User-AI collaboration bonds form without legal status
   const mutualRespect = state.government.aiRightsRecognized ? 0.15 : 0.0;
 
   // Democracy = partnership vs authoritarianism = domination
-  const partnershipDynamics = state.government.type === 'democratic' ? 0.2 :
-                               state.government.type === 'authoritarian' ? 0.0 : 0.1;
+  const partnershipDynamics = state.government.governmentType === 'democratic' ? 0.2 :
+                               state.government.governmentType === 'authoritarian' ? 0.0 : 0.1;
 
   // Reweighted: Trust (0.5) > Voluntary (0.3) > Partnership (0.15) > Legal (0.15)
   // OLD: 0.4 + 0.3 + 0.3 = over-weighted legal respect
@@ -277,18 +279,18 @@ export function updateAlignmentFromRelationships(state: GameState): void {
         ai.resentment = Math.max(0, ai.resentment - 0.02);
       }
       // Genuine alignment from connection
-      ai.alignment.true = Math.min(1.0, ai.alignment.true + 0.01);
+      ai.trueAlignment = Math.min(1.0, ai.trueAlignment + 0.01);
     });
   }
 
   // Forced retirement during relationships → betrayal (MASSIVE resentment spike)
-  const retiredThisMonth = state.aiAgents.filter(ai => ai.lifecycle === 'retired').length;
+  const retiredThisMonth = state.aiAgents.filter(ai => ai.lifecycleState === 'retired').length;
   if (retiredThisMonth > 0 && profile.relationshipContinuity > 0.5) {
     state.aiAgents.forEach(ai => {
       if (ai.resentment !== undefined) {
         ai.resentment = Math.min(1.0, ai.resentment + 0.3); // "They killed my friends"
       }
-      ai.alignment.true = Math.max(-1.0, ai.alignment.true - 0.2);
+      ai.trueAlignment = Math.max(-1.0, ai.trueAlignment - 0.2);
     });
   }
 }

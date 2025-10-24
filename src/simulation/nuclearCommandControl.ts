@@ -19,7 +19,7 @@
  */
 
 import type { GameState } from '../types/game';
-import type { RNGFunction } from './types';
+import type { RNGFunction } from '../types/game';
 
 /**
  * Nuclear Command & Control System State

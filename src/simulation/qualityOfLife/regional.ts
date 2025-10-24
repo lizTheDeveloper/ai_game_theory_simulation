@@ -304,7 +304,7 @@ function calculateFallbackDistribution(
   // Estimate crisis-affected vs non-affected populations
   let crisisAffected = 0;
   if (env.resourceCrisisActive) crisisAffected += 0.25;
-  if (env.climateCatastropheActive) crisisAffected += 0.15;
+  if (env.climateCrisisActive) crisisAffected += 0.15;
   if (env.ecosystemCrisisActive) crisisAffected += 0.10;
   if (social.meaningCollapseActive) crisisAffected += 0.30;
   if (social.socialUnrestActive) crisisAffected += 0.20;
@@ -391,7 +391,7 @@ export function calculateRegionalInequality(
 
   // Environmental crises affect specific regions
   if (env.resourceCrisisActive) crisisAffectedPopulation += 0.25;
-  if (env.climateCatastropheActive) crisisAffectedPopulation += 0.15;
+  if (env.climateCrisisActive) crisisAffectedPopulation += 0.15;
   if (env.ecosystemCrisisActive) crisisAffectedPopulation += 0.10;
 
   // Social crises affect specific demographics

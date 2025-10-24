@@ -153,10 +153,10 @@ function countActiveCrises(state: GameState): number {
   if (state.freshwaterSystem.dayZeroDrought?.active || state.freshwaterSystem.criticalScarcityActive) count++;
 
   // Ocean acidification crisis
-  if (state.oceanAcidificationSystem.coralDieoffActive || state.oceanAcidificationSystem.fisheryCollapseActive) count++;
+  if (state.oceanAcidificationSystem.coralExtinctionActive || state.oceanAcidificationSystem.shellfishCollapseActive) count++;
 
   // Novel entities (PFAS) crisis
-  if (state.novelEntitiesSystem.pfasHealthCrisis || state.novelEntitiesSystem.microplasticCrisis) count++;
+  if (state.novelEntitiesSystem.reproductiveCrisisActive || state.novelEntitiesSystem.chronicDiseaseEpidemicActive) count++;
 
   // Nuclear winter
   if (state.nuclearWinterState?.active) count++;

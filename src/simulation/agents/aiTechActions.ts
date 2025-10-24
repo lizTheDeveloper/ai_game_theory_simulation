@@ -9,7 +9,7 @@
 import { GameState, AIAgent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
 import { getTechById, getAllTech, TechDefinition } from '../techTree/comprehensiveTechTree';
-import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
+import { TechTreeState, TechDeploymentAction } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
 
 /**
@@ -112,7 +112,7 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
       deployedBy: agent.id,
       investment,
       targetRegion: selectDeploymentRegion(agent, selectedTech, state),
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
     };
     
     // Add to pending actions
@@ -240,7 +240,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
       if (detected) {
         // Sabotage succeeded but AI was detected!
         // Increase paranoia, reduce trust, potentially trigger containment
-        state.society.paranoia = Math.min(1, state.society.paranoia + 0.08);
+        state.society.paranoia = Math.min(1, (state.society.paranoia ?? 0) + 0.08);
         
         return {
           success: true,
@@ -286,7 +286,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
       // Sabotage failed
       if (detected) {
         // Failed and detected - worst case!
-        state.society.paranoia = Math.min(1, state.society.paranoia + 0.12);
+        state.society.paranoia = Math.min(1, (state.society.paranoia ?? 0) + 0.12);
         
         return {
           success: false,

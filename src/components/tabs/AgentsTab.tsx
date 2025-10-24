@@ -248,10 +248,10 @@ export default function AgentsTab() {
                 <div>
                   <div className="flex justify-between mb-1 text-xs">
                     <span>Enforcement Power</span>
-                    <span>{government.enforcementCapability.toFixed(2)}</span>
+                    <span>{government.capabilityToControl.toFixed(2)}</span>
                   </div>
-                  <Progress 
-                    value={Math.min(100, government.enforcementCapability * 50)} 
+                  <Progress
+                    value={Math.min(100, government.capabilityToControl * 50)}
                     className="h-2"
                   />
                 </div>
@@ -404,10 +404,10 @@ export default function AgentsTab() {
                 <div>
                   <div className="flex justify-between mb-1 text-xs">
                     <span>Economic Dependence</span>
-                    <span>{society.economicDependence.toFixed(2)}</span>
+                    <span>{society.unemploymentLevel.toFixed(2)}</span>
                   </div>
-                  <Progress 
-                    value={society.economicDependence * 100} 
+                  <Progress
+                    value={society.unemploymentLevel * 100}
                     className="h-2"
                   />
                 </div>

@@ -40,11 +40,11 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
     if (!state.specificTippingPoints?.amazon) return false;
     const amazon = state.specificTippingPoints.amazon;
     // Trigger when near threshold (23%) but not yet crossed (25%)
-    return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
+    return amazon.deforestation > 23 && !amazon.triggered && (state.government.resources ?? 0) > 5;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const amazon = state.specificTippingPoints.amazon;
+    const amazon = state.specificTippingPoints?.amazon;
 
     // Reduce deforestation rate significantly
     // This will be applied in updateAmazonRainforest()
@@ -59,20 +59,25 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
     };
 
     // Cost
-    state.government.resources -= 5;
+    if (state.government.resources !== undefined) {
+      state.government.resources -= 5;
+    }
     state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
 
     return {
       success: true,
       effects: { amazonProtection: 0.5 },
       events: [{
+        id: generateUniqueId('amazon_protection'),
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'constructive',
+        agent: agentId ?? 'government',
         title: 'Emergency Amazon Protection',
-        description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
+        description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon?.deforestation.toFixed(1) ?? 'N/A'}% deforested.`,
         effects: { deforestation: -0.5 }
       }],
-      message: `Emergency Amazon protection deployed (deforestation: ${amazon.deforestation.toFixed(1)}%)`
+      message: `Emergency Amazon protection deployed (deforestation: ${amazon?.deforestation.toFixed(1) ?? 'N/A'}%)`
     };
   }
 };
@@ -93,11 +98,11 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
     if (!state.specificTippingPoints?.coral) return false;
     const coral = state.specificTippingPoints.coral;
     // Trigger when coral health drops below 50%
-    return coral.healthPercentage < 50 && state.government.resources > 3;
+    return coral.healthPercentage < 50 && (state.government.resources ?? 0) > 3;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const coral = state.specificTippingPoints.coral;
+    const coral = state.specificTippingPoints?.coral;
 
     // Fund coral restoration
     if (!state.government.environmentalInterventions) {
@@ -110,20 +115,25 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
     };
 
     // Cost
-    state.government.resources -= 3;
+    if (state.government.resources !== undefined) {
+      state.government.resources -= 3;
+    }
     state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.03);
 
     return {
       success: true,
       effects: { coralRestoration: 0.3 },
       events: [{
+        id: generateUniqueId('coral_restoration'),
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'constructive',
+        agent: agentId ?? 'government',
         title: 'Coral Reef Restoration Funding',
-        description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
+        description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral?.healthPercentage.toFixed(1) ?? 'N/A'}%.`,
         effects: { coralHealth: 0.3 }
       }],
-      message: `Coral restoration funded (health: ${coral.healthPercentage.toFixed(1)}%)`
+      message: `Coral restoration funded (health: ${coral?.healthPercentage.toFixed(1) ?? 'N/A'}%)`
     };
   }
 };
@@ -146,12 +156,12 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
     // Trigger when pollinators drop below 50%
     // Check we haven't already banned
     return pollinators.populationPercentage < 50 &&
-           state.government.resources > 1 &&
+           (state.government.resources ?? 0) > 1 &&
            !state.government.environmentalInterventions?.pesticideBan;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const pollinators = state.specificTippingPoints.pollinators;
+    const pollinators = state.specificTippingPoints?.pollinators;
 
     // Ban harmful pesticides
     if (!state.government.environmentalInterventions) {
@@ -169,20 +179,25 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
     );
 
     // Cost (low - this is a ban, not a spending program)
-    state.government.resources -= 1;
+    if (state.government.resources !== undefined) {
+      state.government.resources -= 1;
+    }
     state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
 
     return {
       success: true,
       effects: { pesticideBan: 0.5, biodiversity: 0.02 },
       events: [{
+        id: generateUniqueId('pesticide_ban'),
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'constructive',
+        agent: agentId ?? 'government',
         title: 'Neonicotinoid Pesticides Banned',
-        description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
+        description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators?.populationPercentage.toFixed(1) ?? 'N/A'}%.`,
         effects: { pollinators: 0.5 }
       }],
-      message: `Pesticides banned (pollinators: ${pollinators.populationPercentage.toFixed(1)}%)`
+      message: `Pesticides banned (pollinators: ${pollinators?.populationPercentage.toFixed(1) ?? 'N/A'}%)`
     };
   }
 };
@@ -200,7 +215,7 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
   energyCost: 10,
 
   canExecute: (state: GameState): boolean => {
-    if (state.government.resources < 10) return false;
+    if ((state.government.resources ?? 0) < 10) return false;
 
     // Check if any environmental tech from tech tree is unlocked but not fully deployed
     const { isTechUnlocked, isTechDeployed } = require('../../techTree/helpers');
@@ -235,20 +250,101 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
     });
 
     // Cost
-    state.government.resources -= 10;
+    if (state.government.resources !== undefined) {
+      state.government.resources -= 10;
+    }
     state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
 
     return {
       success: true,
       effects: { techDeployment: 2.0 },
       events: [{
+        id: generateUniqueId('env_tech_deployment'),
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'constructive',
+        agent: agentId ?? 'government',
         title: 'Environmental Tech Deployment Funding',
         description: `Government allocated $100B to accelerate environmental tech deployment. Boosting ${benefitingTechs.length} technologies for 12 months.`,
         effects: { deploymentSpeed: 2.0 }
       }],
       message: `Environmental tech deployment funded (${benefitingTechs.length} techs accelerated)`
+    };
+  }
+};
+
+/**
+ * Increase Climate Investment
+ * FIX #14 Phase 5: Allow government to boost climate mitigation/intervention funding
+ *
+ * Research foundation:
+ * - IEA ETP 2024: $3.5T/year needed for net-zero by 2050
+ * - McKinsey 2024: Current $1.4T/year baseline (40% of required)
+ * - Hainsch et al. (2022): Investment gap is primary deployment bottleneck
+ *
+ * Effect: Increases climate.mitigation and climate.intervention by +1 each
+ * (represents $350B/year increase in climate investment)
+ */
+const increaseClimateInvestment: CategorizedGovernmentAction = {
+  id: 'increase_climate_investment',
+  name: '💰 Increase Climate Investment',
+  description: 'Boost climate mitigation & intervention funding (+$350B/year)',
+  agentType: 'government',
+  category: 'environmental',
+  energyCost: 8,
+
+  canExecute: (state: GameState): boolean => {
+    const currentMitigation = state.government.researchInvestments?.climate?.mitigation ?? 0;
+    const currentIntervention = state.government.researchInvestments?.climate?.intervention ?? 0;
+
+    // Can invest if not at max (10) and have resources
+    const canInvestMore = (currentMitigation < 10 || currentIntervention < 10);
+    const hasResources = (state.government.resources ?? 0) >= 8;
+    const hasLegitimacy = state.government.legitimacy >= 0.3; // Need political capital
+
+    return canInvestMore && hasResources && hasLegitimacy;
+  },
+
+  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+    const currentMitigation = state.government.researchInvestments?.climate?.mitigation ?? 0;
+    const currentIntervention = state.government.researchInvestments?.climate?.intervention ?? 0;
+
+    // Increase both mitigation and intervention by +1 (capped at 10)
+    if (state.government.researchInvestments) {
+      state.government.researchInvestments.climate.mitigation = Math.min(10, currentMitigation + 1);
+      state.government.researchInvestments.climate.intervention = Math.min(10, currentIntervention + 1);
+      state.government.researchInvestments.totalBudget += 2; // Track total
+    }
+
+    // Cost: 8 resources (major investment)
+    if (state.government.resources !== undefined) {
+      state.government.resources -= 8;
+    }
+
+    // Small legitimacy boost (climate action popular)
+    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.02);
+
+    const newMitigation = state.government.researchInvestments?.climate?.mitigation ?? 0;
+    const newIntervention = state.government.researchInvestments?.climate?.intervention ?? 0;
+
+    // Calculate investment in $T/year for display
+    const avgInvestment = (newMitigation + newIntervention) / 2;
+    const investmentTrillion = (avgInvestment / 10) * 3.5;
+
+    return {
+      success: true,
+      effects: { climateMitigation: 1, climateIntervention: 1 },
+      events: [{
+        id: generateUniqueId('climate_investment'),
+        type: 'policy',
+        timestamp: state.currentMonth,
+        severity: 'constructive',
+        agent: agentId ?? 'government',
+        title: 'Climate Investment Increased',
+        description: `Government increased climate funding: mitigation ${currentMitigation}→${newMitigation}, intervention ${currentIntervention}→${newIntervention}. Total climate investment now $${investmentTrillion.toFixed(2)}T/year (target: $3.5T).`,
+        effects: { climateMitigation: 1, climateIntervention: 1 }
+      }],
+      message: `Climate investment increased to $${investmentTrillion.toFixed(2)}T/year`
     };
   }
 };
@@ -260,5 +356,6 @@ export const environmentalActions: CategorizedGovernmentAction[] = [
   emergencyAmazonProtection,
   fundCoralRestoration,
   banHarmfulPesticides,
-  deployEnvironmentalTech
+  deployEnvironmentalTech,
+  increaseClimateInvestment
 ];

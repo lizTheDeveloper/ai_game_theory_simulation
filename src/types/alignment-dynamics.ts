@@ -155,6 +155,10 @@ export interface AlignmentDynamicsConfig {
   epicycles: EpicycleAlignmentConfig;
   unknowable: UnknowableAlignmentConfig;
   uncertainty: MetaUncertaintyConfig;
+
+  // AI Suffering Integration (Oct 24, 2025)
+  // When true, suffering affects alignment drift and epicycle perturbations
+  aiSufferingEnabled?: boolean;
 }
 
 /**

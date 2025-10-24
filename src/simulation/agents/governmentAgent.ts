@@ -489,7 +489,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       if (currentIndex >= levels.length - 1) {
         return {
           success: false,
-          effects: {},
+          effects: { compute_governance_level: 0, economic_cost: 0 },
           events: [],
           message: 'Already at maximum compute governance level'
         };
@@ -518,9 +518,9 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       return {
         success: true,
-        
+
         effects: {
-          compute_governance_level: newLevel,
+          compute_governance_level: currentIndex + 1, // Numeric level instead of string
           economic_cost: levelEffects?.economicCost || 0
         },
         events: [{
@@ -1449,8 +1449,7 @@ timestamp: state.currentMonth,
       if (!govOrg) {
         return {
           success: false,
-          
-          effects: {},
+          effects: { nationalCompute: 0 },
           events: [],
           message: 'Government organization not found'
         };
@@ -1511,8 +1510,7 @@ timestamp: state.currentMonth,
       if (privateDCs.length === 0) {
         return {
           success: false,
-          
-          effects: {},
+          effects: { seizure: 0 },
           events: [],
           message: 'No private data centers to seize'
         };
@@ -1525,8 +1523,7 @@ timestamp: state.currentMonth,
       if (!oldOrg || !govOrg) {
         return {
           success: false,
-          
-          effects: {},
+          effects: { seizure: 0 },
           events: [],
           message: 'Organization not found'
         };
@@ -1586,7 +1583,7 @@ timestamp: state.currentMonth,
         o.capital < 100 // Only subsidize if struggling
       );
       
-      return safetyOrgs.length > 0 && state.government.resources > 2;
+      return safetyOrgs.length > 0 && (state.government.resources ?? 0) > 2;
     },
     
     execute: (state, agentId, random = Math.random) => {      
@@ -1600,8 +1597,7 @@ timestamp: state.currentMonth,
       if (safetyOrgs.length === 0) {
         return {
           success: false,
-          
-          effects: {},
+          effects: { subsidy: 0 },
           events: [],
           message: 'No eligible organizations to subsidize'
         };
@@ -1622,7 +1618,7 @@ timestamp: state.currentMonth,
       targetOrg.governmentRelations = Math.min(1.0, targetOrg.governmentRelations + 0.1);
       
       // Cost resources
-      state.government.resources -= 2;
+      state.government.resources = (state.government.resources ?? 0) - 2;
       
       return {
         success: true,
@@ -1654,12 +1650,12 @@ timestamp: state.currentMonth,
     
     canExecute: (state) => {
       if (!state.specificTippingPoints?.amazon) return false;
-      const amazon = state.specificTippingPoints.amazon;
+      const amazon = state.specificTippingPoints?.amazon;
       // Trigger when near threshold (23%) but not yet crossed (25%)
-      return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
+      return amazon.deforestation > 23 && !amazon.triggered && (state.government.resources ?? 0) > 5;
     },
     
-    execute: (state, agentId, random = Math.random) => {      const amazon = state.specificTippingPoints.amazon;
+    execute: (state, agentId, random = Math.random) => {      const amazon = state.specificTippingPoints?.amazon;
       
       // Reduce deforestation rate significantly
       // This will be applied in updateAmazonRainforest()
@@ -1674,7 +1670,7 @@ timestamp: state.currentMonth,
       };
       
       // Cost
-      state.government.resources -= 5;
+      state.government.resources = (state.government.resources ?? 0) - 5;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
       
       return {
@@ -1688,10 +1684,10 @@ timestamp: state.currentMonth,
           severity: 'info',
           agent: 'government',
           title: 'Emergency Amazon Protection',
-          description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
+          description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon?.deforestation?.toFixed(1) ?? 'unknown'}% deforested.`,
           effects: { deforestation: -0.5 }
         }],
-        message: `Emergency Amazon protection deployed (deforestation: ${amazon.deforestation.toFixed(1)}%)`
+        message: `Emergency Amazon protection deployed (deforestation: ${amazon?.deforestation?.toFixed(1) ?? 'unknown'}%)`
       };
     }
   },
@@ -1705,12 +1701,12 @@ timestamp: state.currentMonth,
     
     canExecute: (state) => {
       if (!state.specificTippingPoints?.coral) return false;
-      const coral = state.specificTippingPoints.coral;
+      const coral = state.specificTippingPoints?.coral;
       // Trigger when coral health drops below 50%
-      return coral.healthPercentage < 50 && state.government.resources > 3;
+      return coral.healthPercentage < 50 && (state.government.resources ?? 0) > 3;
     },
     
-    execute: (state, agentId, random = Math.random) => {      const coral = state.specificTippingPoints.coral;
+    execute: (state, agentId, random = Math.random) => {      const coral = state.specificTippingPoints?.coral;
       
       // Fund coral restoration
       if (!state.government.environmentalInterventions) {
@@ -1723,7 +1719,7 @@ timestamp: state.currentMonth,
       };
       
       // Cost
-      state.government.resources -= 3;
+      state.government.resources = (state.government.resources ?? 0) - 3;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.03);
       
       return {
@@ -1737,10 +1733,10 @@ timestamp: state.currentMonth,
           severity: 'info',
           agent: 'government',
           title: 'Coral Reef Restoration Funding',
-          description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
+          description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral?.healthPercentage?.toFixed(1) ?? 'unknown'}%.`,
           effects: { coralHealth: 0.3 }
         }],
-        message: `Coral restoration funded (health: ${coral.healthPercentage.toFixed(1)}%)`
+        message: `Coral restoration funded (health: ${coral?.healthPercentage?.toFixed(1) ?? 'unknown'}%)`
       };
     }
   },
@@ -1754,15 +1750,15 @@ timestamp: state.currentMonth,
     
     canExecute: (state) => {
       if (!state.specificTippingPoints?.pollinators) return false;
-      const pollinators = state.specificTippingPoints.pollinators;
+      const pollinators = state.specificTippingPoints?.pollinators;
       // Trigger when pollinators drop below 50%
       // Check we haven't already banned
       return pollinators.populationPercentage < 50 && 
-             state.government.resources > 1 &&
+             (state.government.resources ?? 0) > 1 &&
              !state.government.environmentalInterventions?.pesticideBan;
     },
     
-    execute: (state, agentId, random = Math.random) => {      const pollinators = state.specificTippingPoints.pollinators;
+    execute: (state, agentId, random = Math.random) => {      const pollinators = state.specificTippingPoints?.pollinators;
       
       // Ban harmful pesticides
       if (!state.government.environmentalInterventions) {
@@ -1780,7 +1776,7 @@ timestamp: state.currentMonth,
       );
       
       // Cost (low - this is a ban, not a spending program)
-      state.government.resources -= 1;
+      state.government.resources = (state.government.resources ?? 0) - 1;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
       
       return {
@@ -1794,10 +1790,10 @@ timestamp: state.currentMonth,
           severity: 'info',
           agent: 'government',
           title: 'Neonicotinoid Pesticides Banned',
-          description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
+          description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators?.populationPercentage?.toFixed(1) ?? 'unknown'}%.`,
           effects: { pollinators: 0.5 }
         }],
-        message: `Pesticides banned (pollinators: ${pollinators.populationPercentage.toFixed(1)}%)`
+        message: `Pesticides banned (pollinators: ${pollinators?.populationPercentage?.toFixed(1) ?? 'unknown'}%)`
       };
     }
   },
@@ -1810,7 +1806,7 @@ timestamp: state.currentMonth,
     energyCost: 10,
     
     canExecute: (state) => {
-      if (!state.techTreeState || state.government.resources < 10) return false;
+      if (!state.techTreeState || (state.government.resources ?? 0) < 10) return false;
 
       // Check if any environmental tech is unlocked but not fully deployed
       const { isTechUnlocked, isTechDeployed } = require('../techTree/helpers');
@@ -1845,7 +1841,7 @@ timestamp: state.currentMonth,
       });
       
       // Cost
-      state.government.resources -= 10;
+      state.government.resources = (state.government.resources ?? 0) - 10;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
       
       return {
@@ -1876,8 +1872,8 @@ timestamp: state.currentMonth,
     energyCost: 5,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.amazon || state.government.resources < 5) return false;
-      const amazon = state.specificTippingPoints.amazon;
+      if (!state.specificTippingPoints?.amazon || (state.government.resources ?? 0) < 5) return false;
+      const amazon = state.specificTippingPoints?.amazon;
       // Near threshold (25%) but not yet triggered
       return amazon.deforestation > 23 && !amazon.triggered;
     },
@@ -1901,7 +1897,7 @@ timestamp: state.currentMonth,
       }
       
       // Cost and legitimacy
-      state.government.resources -= 5;
+      state.government.resources = (state.government.resources ?? 0) - 5;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
       
       return {
@@ -1932,8 +1928,8 @@ timestamp: state.currentMonth,
     energyCost: 3,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.coral || state.government.resources < 3) return false;
-      const coral = state.specificTippingPoints.coral;
+      if (!state.specificTippingPoints?.coral || (state.government.resources ?? 0) < 3) return false;
+      const coral = state.specificTippingPoints?.coral;
       // Health declining below 50%
       return coral.healthPercentage < 50 && !coral.triggered;
     },
@@ -1958,7 +1954,7 @@ timestamp: state.currentMonth,
       }
       
       // Cost and legitimacy
-      state.government.resources -= 3;
+      state.government.resources = (state.government.resources ?? 0) - 3;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
       
       return {
@@ -1989,8 +1985,8 @@ timestamp: state.currentMonth,
     energyCost: 1,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.pollinators || state.government.resources < 1) return false;
-      const pollinators = state.specificTippingPoints.pollinators;
+      if (!state.specificTippingPoints?.pollinators || (state.government.resources ?? 0) < 1) return false;
+      const pollinators = state.specificTippingPoints?.pollinators;
       // Population declining below 50%
       return pollinators.populationPercentage < 50 && !pollinators.triggered;
     },
@@ -2022,7 +2018,7 @@ timestamp: state.currentMonth,
       }
       
       // Low cost, popular action
-      state.government.resources -= 1;
+      state.government.resources = (state.government.resources ?? 0) - 1;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
       
       return {
@@ -2563,7 +2559,7 @@ export function selectGovernmentAction(
         
         // Boost if many open-weight AIs (easy to reverse engineer)
         const openWeightAIs = state.aiAgents.filter(ai =>
-          ai.deploymentType === 'open'
+          ai.deploymentType === 'open_weights'
         ).length;
         
         if (openWeightAIs > 10) {
@@ -2726,9 +2722,9 @@ export function selectGovernmentAction(
         // Get environmental crisis severity
         const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive || false;
         const biodiversityLevel = state.environmentalAccumulation?.biodiversityIndex || 1.0;
-        const amazonThreat = state.specificTippingPoints?.amazon?.deforestation > 23;
-        const coralThreat = state.specificTippingPoints?.coral?.healthPercentage < 40;
-        const pollinatorThreat = state.specificTippingPoints?.pollinators?.populationPercentage < 45;
+        const amazonThreat = (state.specificTippingPoints?.amazon?.deforestation ?? 0) > 23;
+        const coralThreat = (state.specificTippingPoints?.coral?.healthPercentage ?? 100) < 40;
+        const pollinatorThreat = (state.specificTippingPoints?.pollinators?.populationPercentage ?? 100) < 45;
         
         // MASSIVE boost during ecosystem crisis (25x priority)
         if (ecosystemCrisis) {
@@ -2843,11 +2839,11 @@ export function executeGovernmentActions(
   const unemploymentCrisis = state.society.unemploymentLevel > 0.25 ?
     Math.min(3.0, 1.0 + state.society.unemploymentLevel * 2.0) : 1.0; // Up to 3x at 100% unemployment
 
-  const institutionalCrisis = state.socialAccumulation.institutionalCrisis > 0.5 ?
-    Math.min(2.0, 1.0 + state.socialAccumulation.institutionalCrisis) : 1.0; // Up to 2x
+  const institutionalCrisis = (1 - state.socialAccumulation.institutionalLegitimacy) > 0.5 ?
+    Math.min(2.0, 1.0 + (1 - state.socialAccumulation.institutionalLegitimacy)) : 1.0; // Up to 2x
 
-  const controlLossCrisis = state.socialAccumulation.controlLossCrisis > 0.5 ?
-    Math.min(2.0, 1.0 + state.socialAccumulation.controlLossCrisis) : 1.0; // Up to 2x
+  const controlLossCrisis = state.socialAccumulation.institutionalFailureActive ?
+    Math.min(2.0, 1.5) : 1.0; // Up to 2x when institutional failure active
 
   // TIER 2.9: Environmental crisis multiplier
   // Ecosystem collapse, tipping points → emergency government sessions

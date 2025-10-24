@@ -1,7 +1,8 @@
-import { GameState, PlanetaryBoundaryName } from '@/types/game';
+import { GameState } from '@/types/game';
+import { BoundaryName } from '@/types/planetaryBoundaries';
 
 export interface PlanetaryBoundaryData {
-  name: PlanetaryBoundaryName;
+  name: BoundaryName;
   current: number;
   threshold: number;
   safeZone: number;
@@ -16,16 +17,16 @@ export function getPlanetaryBoundaries(
   const boundaries = state.planetaryBoundariesSystem;
   if (!boundaries) return [];
 
-  const boundaryNames: PlanetaryBoundaryName[] = [
-    'climateChange',
-    'biosphereIntegrity',
-    'landSystemChange',
-    'freshwaterUse',
-    'biogeochemicalFlows',
-    'oceanAcidification',
-    'atmosphericAerosol',
-    'stratosphericOzone',
-    'novelEntities',
+  const boundaryNames: BoundaryName[] = [
+    'climate_change',
+    'biosphere_integrity',
+    'land_system_change',
+    'freshwater_change',
+    'biogeochemical_flows',
+    'ocean_acidification',
+    'atmospheric_aerosols',
+    'stratospheric_ozone',
+    'novel_entities',
   ];
 
   return boundaryNames.map(name => {

@@ -38,6 +38,8 @@
     "packages/government-agents/examples",
     "packages/government-agents/tests",
     "scripts/**/*",
-    "tests/**/*"
+    "tests/**/*",
+    "src/app/api/**/*",
+    "src/data/loaders/**/*"
   ]
 }

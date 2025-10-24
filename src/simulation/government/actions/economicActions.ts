@@ -270,7 +270,7 @@ const subsidizeOrganization: CategorizedGovernmentAction = {
       o.capital < 100 // Only subsidize if struggling
     );
 
-    return safetyOrgs.length > 0 && state.government.resources > 2;
+    return safetyOrgs.length > 0 && (state.government.resources ?? 0) > 2;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
@@ -305,7 +305,9 @@ const subsidizeOrganization: CategorizedGovernmentAction = {
     targetOrg.governmentRelations = Math.min(1.0, targetOrg.governmentRelations + 0.1);
 
     // Cost resources
-    state.government.resources -= 2;
+    if (state.government.resources !== undefined) {
+      state.government.resources -= 2;
+    }
 
     return {
       success: true,

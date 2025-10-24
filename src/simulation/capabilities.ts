@@ -120,11 +120,24 @@ export function initializeCapabilityProfile(seed: number = Math.random()): AICap
 export function initializeResearchInvestments(economicStage: number = 0): ResearchInvestments {
   // Budget scales with economic stage
   const budgetLimit = 10 + economicStage * 5; // Stage 0: 10, Stage 4: 30
-  
+
+  // FIX #14 Phase 5: Set baseline climate investment to match 2024 reality
+  // Current global climate investment: ~$1.4T/year (McKinsey 2024, IEA 2024)
+  // This maps to level 4 on [0-10] scale (4/10 * $3.5T = $1.4T)
+  const baselineClimateMitigation = 4;  // Renewables, efficiency, DAC baseline
+  const baselineClimateIntervention = 4; // Geoengineering research baseline
+  const baselineClimateModeling = 2;     // Climate science baseline
+
+  const initialTotalBudget = baselineClimateMitigation + baselineClimateIntervention + baselineClimateModeling;
+
   return {
     biotech: { drugDiscovery: 0, geneEditing: 0, syntheticBiology: 0, neuroscience: 0 },
     materials: { nanotechnology: 0, quantumComputing: 0, energySystems: 0 },
-    climate: { modeling: 0, intervention: 0, mitigation: 0 },
+    climate: {
+      modeling: baselineClimateModeling,
+      intervention: baselineClimateIntervention,
+      mitigation: baselineClimateMitigation
+    },
     computerScience: { algorithms: 0, security: 0, architectures: 0 },
     physical: 0,
     digital: 0,
@@ -132,7 +145,7 @@ export function initializeResearchInvestments(economicStage: number = 0): Resear
     social: 0,
     economic: 0,
     selfImprovement: 0,
-    totalBudget: 0,
+    totalBudget: initialTotalBudget,
     budgetLimit
   };
 }

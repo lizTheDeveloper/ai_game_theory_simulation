@@ -136,7 +136,7 @@ export function updateClimateJustice(state: GameState): void {
  */
 function calculateClimateDebt(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
-  const climateSeverity = state.environmentalAccumulation.climateChange; // [0, 1]
+  const climateSeverity = 1 - state.environmentalAccumulation.climateStability; // [0, 1] - inverted since climateStability is 1=good, 0=bad
 
   for (const country of Object.values(countries)) {
     // Historical emissions contribution (normalized)
@@ -180,7 +180,7 @@ function processReparationsTransfers(state: GameState): void {
       const capacity = Math.min(1.0, (country.sovereignty?.overallSovereignty || 0.5));
 
       // International pressure increases with crisis severity
-      const pressure = state.environmentalAccumulation.climateChange * 0.5;
+      const pressure = (1 - state.environmentalAccumulation.climateStability) * 0.5;
 
       // Monthly transfer (fraction of total debt)
       const monthlyTransfer = country.climateReparationsOwed! * willingness * capacity * pressure * 0.01;
@@ -189,7 +189,7 @@ function processReparationsTransfers(state: GameState): void {
     } else {
       // Country is owed reparations (climate victim)
       const sufferingRatio = country.climateSufferingRatio!;
-      const need = sufferingRatio * state.environmentalAccumulation.climateChange * 10; // Billions
+      const need = sufferingRatio * (1 - state.environmentalAccumulation.climateStability) * 10; // Billions
 
       receivers.push({ country, need });
     }
@@ -229,7 +229,7 @@ function processReparationsTransfers(state: GameState): void {
  */
 function updateClimateMigrationPressure(state: GameState): void {
   const countries = state.countryPopulationSystem.countries;
-  const climateSeverity = state.environmentalAccumulation.climateChange;
+  const climateSeverity = 1 - state.environmentalAccumulation.climateStability;
 
   for (const country of Object.values(countries)) {
     // Base migration pressure from climate suffering
@@ -243,13 +243,13 @@ function updateClimateMigrationPressure(state: GameState): void {
       pressure *= 2.0; // Double for low-lying coastal areas
     }
 
-    // Food insecurity amplifies migration
-    if (state.environmentalAccumulation.foodSecurity < 0.5) {
+    // Food insecurity amplifies migration (using biodiversity as proxy for food system health)
+    if (state.environmentalAccumulation.biodiversityIndex < 0.5) {
       pressure *= 1.5;
     }
 
     // Water scarcity amplifies migration
-    const waterScarcity = 1.0 - (state.environmentalAccumulation.freshwaterAvailability || 0.8);
+    const waterScarcity = state.freshwaterSystem.waterStress || 0;
     pressure *= (1 + waterScarcity);
 
     // Update migration pressure (cumulative)
@@ -302,7 +302,7 @@ function processGreenTechTransfer(state: GameState): void {
   );
 
   // Climate severity increases urgency and international pressure
-  const climateSeverity = state.environmentalAccumulation.climateChange;
+  const climateSeverity = 1 - state.environmentalAccumulation.climateStability;
 
   for (const donor of richDonors) {
     // Transfer capacity scales with willingness, techs available, and climate urgency

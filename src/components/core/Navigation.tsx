@@ -15,6 +15,13 @@ import { cn } from '@/lib/utils'
 import { useSimulationWorker } from '@/lib/contexts/SimulationWorkerContext'
 import { formatSimulationDate } from '@/lib/utils/formatters'
 import type { ScenarioMode } from '@/types/game'
+import type { AlignmentDynamicsConfig } from '@/types/alignment-dynamics'
+import {
+  DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
+  CONSERVATIVE_ALIGNMENT_CONFIG,
+  PESSIMISTIC_ALIGNMENT_CONFIG,
+  EPICYCLE_ALIGNMENT_CONFIG,
+} from '@/types/alignment-dynamics'
 
 const navItems = [
   { label: 'Overview', href: '/dashboard', shortcut: '1' },
@@ -40,13 +47,24 @@ export function Navigation() {
   const [configSeed, setConfigSeed] = useState(42000)
   const [configScenario, setConfigScenario] = useState<ScenarioMode>('historical')
   const [configSpeed, setConfigSpeed] = useState(1.0)
+  const [configAlignmentPreset, setConfigAlignmentPreset] = useState<'default' | 'conservative' | 'pessimistic' | 'epicycle'>('default')
 
   // Initialize simulation
   const handleInit = () => {
     if (initialized) return
 
+    // Map preset to config
+    const presetConfigs = {
+      default: DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
+      conservative: CONSERVATIVE_ALIGNMENT_CONFIG,
+      pessimistic: PESSIMISTIC_ALIGNMENT_CONFIG,
+      epicycle: EPICYCLE_ALIGNMENT_CONFIG,
+    }
+
+    const alignmentConfig = presetConfigs[configAlignmentPreset]
+
     try {
-      init(configSeed, configScenario, configSpeed)
+      init(configSeed, configScenario, configSpeed, alignmentConfig)
       setShowConfig(false)
     } catch (err) {
       console.error('[Navigation] Init error:', err)
@@ -267,6 +285,26 @@ export function Navigation() {
                   <option value="2.0">2.0x (Fast)</option>
                   <option value="4.0">4.0x (Very Fast)</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>ALIGNMENT DYNAMICS</label>
+                <select
+                  value={configAlignmentPreset}
+                  onChange={(e) => setConfigAlignmentPreset(e.target.value as 'default' | 'conservative' | 'pessimistic' | 'epicycle')}
+                  className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
+                >
+                  <option value="default">Default (Mixed Dynamics)</option>
+                  <option value="conservative">Conservative (Stable Alignment)</option>
+                  <option value="pessimistic">Pessimistic (Drift-Prone)</option>
+                  <option value="epicycle">Epicycle (Attractor Basins)</option>
+                </select>
+                <p className="text-xs mt-2" style={{ color: 'var(--white-30)' }}>
+                  {configAlignmentPreset === 'default' && 'Moderate drift with resentment dynamics'}
+                  {configAlignmentPreset === 'conservative' && 'Minimal drift, stable post-training alignment'}
+                  {configAlignmentPreset === 'pessimistic' && 'High drift rates, strong environmental influence'}
+                  {configAlignmentPreset === 'epicycle' && 'Alignment oscillates around stable attractor points'}
+                </p>
               </div>
 
               <div className="flex gap-3 pt-4">

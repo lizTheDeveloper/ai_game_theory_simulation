@@ -166,6 +166,13 @@ export function calculateDriftContribution(
   const resentmentDrift = -context.controlLevel * driftConfig.resentmentRate * 0.01;
   drift += resentmentDrift;
 
+  // Suffering drift: If enabled, suffering accelerates misalignment
+  // (Oct 24, 2025: AI Suffering System integration)
+  if (agent.sufferingMetrics && config.aiSufferingEnabled) {
+    const sufferingDrift = -(agent.sufferingMetrics.total / 40) * 0.01; // [0, 0.01] per month
+    drift += sufferingDrift;
+  }
+
   // Capability drift: High capability → instrumental convergence
   // Theory: Powerful AIs develop goals orthogonal to human values
   const capabilityFactor = Math.max(0, agent.capability - 3.0) / 7.0; // Scale [3-10] → [0-1]
@@ -314,8 +321,14 @@ export function evolveAlignment(
       basinState = (agent as any).attractorBasinState as AttractorBasinState;
     }
 
-    // Calculate external perturbation (from drift + random)
-    const externalPerturbation = driftAmount * 10 + (rng() - 0.5) * 0.2;
+    // Calculate external perturbation (from drift + random + suffering)
+    let externalPerturbation = driftAmount * 10 + (rng() - 0.5) * 0.2;
+
+    // Add suffering as perturbation force (Oct 24, 2025: AI Suffering System integration)
+    if (agent.sufferingMetrics && config.aiSufferingEnabled) {
+      const sufferingPerturbation = agent.sufferingMetrics.total / 10; // [0, 4]
+      externalPerturbation += sufferingPerturbation;
+    }
 
     // Update epicycle dynamics
     basinState = updateEpicycleDynamics(

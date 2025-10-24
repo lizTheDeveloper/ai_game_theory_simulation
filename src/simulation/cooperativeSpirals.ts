@@ -107,7 +107,7 @@ export function applyTrustCascade(state: GameState): void {
     state.history.cooperativeSpirals = [];
   }
   state.history.cooperativeSpirals.push({
-    timestamp: state.currentMonth,
+    month: state.currentMonth,
     type: 'alignment-success',
     trustBoost: trustBoost,
     trigger: 'demonstrated-ai-governance'
@@ -276,7 +276,7 @@ export function applyDeepInstitutionalReform(state: GameState): void {
     state.history.cooperativeSpirals = [];
   }
   state.history.cooperativeSpirals.push({
-    timestamp: state.currentMonth,
+    month: state.currentMonth,
     type: 'critical-juncture-reform',
     trustBoost: 0.15,
     institutionBoost: institutionBoost,

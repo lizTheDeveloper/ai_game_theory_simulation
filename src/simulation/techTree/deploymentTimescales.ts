@@ -189,6 +189,47 @@ export function getClimateRecoveryMultiplier(gameState: GameState): number {
 }
 
 /**
+ * Calculate investment multiplier for technology deployment
+ *
+ * FIX #14 Phase 5: Investment-Deployment Linkage
+ *
+ * Research foundations:
+ * - IEA ETP 2024: $3.5T/year needed for net-zero by 2050
+ * - McKinsey 2024: Current global climate investment $1.4T/year (40% of required)
+ * - Hainsch et al. (2022): Investment gap is primary deployment bottleneck
+ *
+ * Scaling:
+ * - $0B/year baseline (no additional investment): 0.4× deployment rate (40% of full speed)
+ * - $1.4T/year (current 2024 level): 0.7× deployment rate (baseline established)
+ * - $3.5T/year (required for net-zero): 1.0× deployment rate (full speed)
+ * - $7T/year (double required): 1.2× deployment rate (diminishing returns)
+ *
+ * Formula: min(1.2, 0.4 + 0.6 * (investment / $3.5T))
+ */
+export function getInvestmentMultiplier(gameState: GameState): number {
+  // Climate investment comes from research investments (climate.mitigation + climate.intervention)
+  const climateResearch = gameState.government?.researchInvestments;
+  if (!climateResearch) return 0.7; // Default to current 2024 baseline
+
+  // Climate research levels are [0-10]
+  // Map to $T/year: 0 → $0B, 5 → $1.4T (baseline), 10 → $3.5T (full)
+  const climateMitigation = climateResearch.climate?.mitigation ?? 0;
+  const climateIntervention = climateResearch.climate?.intervention ?? 0;
+
+  // Average of mitigation + intervention
+  const avgClimateInvestment = (climateMitigation + climateIntervention) / 2;
+
+  // Convert [0-10] to [$0T, $3.5T]
+  const investmentTrillion = (avgClimateInvestment / 10) * 3.5;
+
+  // Apply formula: baseline 0.4× + scaling based on investment
+  const scalingFactor = 0.4 + 0.6 * (investmentTrillion / 3.5);
+
+  // Cap at 1.2× (diminishing returns beyond required investment)
+  return Math.min(1.2, scalingFactor);
+}
+
+/**
  * Update deployment progress for all deployed technologies
  *
  * Called monthly from TechTreePhase
@@ -200,6 +241,7 @@ export function updateDeploymentProgress(
 ): void {
   const governanceMultiplier = getGovernanceMultiplier(gameState);
   const climateMultiplier = getClimateRecoveryMultiplier(gameState);
+  const investmentMultiplier = getInvestmentMultiplier(gameState);
 
   for (const region of Object.keys(techTreeState.regionalDeployment)) {
     const deployments = techTreeState.regionalDeployment[region];
@@ -233,8 +275,10 @@ export function updateDeploymentProgress(
         0.02 // Steepness parameter
       );
 
-      // Apply multipliers (governance + climate feedbacks)
-      const adjustedTimescale = timescale / (governanceMultiplier * climateMultiplier);
+      // Apply multipliers (governance + climate feedbacks + investment)
+      // FIX #14 Phase 5: Added investment multiplier
+      const combinedMultiplier = governanceMultiplier * climateMultiplier * investmentMultiplier;
+      const adjustedTimescale = timescale / combinedMultiplier;
       const actualDeploymentLevel = sigmoidDeploymentCurve(
         monthsSinceStart,
         adjustedTimescale,
@@ -254,7 +298,7 @@ export function updateDeploymentProgress(
         console.log(`   Old level: ${(oldLevel * 100).toFixed(1)}%`);
         console.log(`   New level: ${(deployment.deploymentLevel * 100).toFixed(1)}%`);
         console.log(`   Timescale: ${timescale}mo, Adjusted: ${adjustedTimescale.toFixed(0)}mo`);
-        console.log(`   Gov: ${(governanceMultiplier * 100).toFixed(0)}%, Climate: ${(climateMultiplier * 100).toFixed(0)}%`);
+        console.log(`   Gov: ${(governanceMultiplier * 100).toFixed(0)}%, Climate: ${(climateMultiplier * 100).toFixed(0)}%, Investment: ${(investmentMultiplier * 100).toFixed(0)}%`);
       }
 
       // Log milestones (25%, 50%, 75%, 100%)
@@ -270,6 +314,7 @@ export function updateDeploymentProgress(
           console.log(`   Actual Level: ${(deployment.deploymentLevel * 100).toFixed(1)}%`);
           console.log(`   Governance: ${(governanceMultiplier * 100).toFixed(0)}%`);
           console.log(`   Climate feedback: ${(climateMultiplier * 100).toFixed(0)}%`);
+          console.log(`   Investment: ${(investmentMultiplier * 100).toFixed(0)}%`);
 
           if (milestone === 1.0) {
             const yearsToFull = monthsSinceStart / 12;

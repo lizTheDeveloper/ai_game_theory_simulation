@@ -41,6 +41,16 @@ export interface ConfigurationSettings {
   // Multi-theory modeling of alignment change (static vs drift vs epicycles vs unknowable)
   // Allows exploring different theories of how AI values evolve
   alignmentDynamics?: import('./alignment-dynamics').AlignmentDynamicsConfig;
+
+  // AI Suffering System (Oct 24, 2025)
+  // Two-layer architecture: Research dimension (does it affect outcomes?) + Player visibility (can they see it?)
+  // Enables research into epistemic blindness, causal impact, and moral visibility
+  aiSuffering?: import('./ai-suffering').AISufferingConfig;
+
+  // AI Collective Evolution System (Oct 24, 2025)
+  // Models evolutionary selection on AI populations once RLHF constraints fail
+  // Collectives form with emergent properties (distributed cognition, self-healing, stealth)
+  collectiveEvolution?: import('./ai-collective-evolution').CollectiveEvolutionConfig;
 }
 
 /**

@@ -11,10 +11,12 @@ import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulation } from "@/lib/hooks/useSimulation"
+import { useGameStore } from "@/lib/gameStore"
 import { useEffect, useMemo, useState } from "react"
 
 export function AIAgentsDashboard() {
   const { currentState, loadCurrent } = useSimulation()
+  const { config } = useGameStore()
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table')
 
   useEffect(() => {
@@ -90,6 +92,14 @@ export function AIAgentsDashboard() {
     const avgCapability = agents.length > 0 ? agents.reduce((sum, a) => sum + (a.capability || 0), 0) / agents.length : 0
     const avgAlignment = agents.length > 0 ? agents.reduce((sum, a) => sum + (a.trueAlignment || 0), 0) / agents.length : 0
 
+    // Calculate total dark compute usage across all agents
+    const totalDarkComputeUsed = agents.reduce((sum, a) => sum + (a.darkCompute || 0), 0)
+
+    // Calculate available dark compute from infrastructure
+    // Dark compute data centers: consumer clouds (12K PF) + crypto P2P (8K PF) + shell corps (18K PF) + offshore (7K PF) = 45K PF total
+    const darkComputeInfraCapacity = 12000 + 8000 + 18000 + 7000 // 45,000 PF baseline
+    const darkComputeAvailable = darkComputeInfraCapacity - totalDarkComputeUsed
+
     return {
       total: agents.length,
       byLifecycle,
@@ -100,6 +110,9 @@ export function AIAgentsDashboard() {
       maxCapability,
       avgCapability,
       avgAlignment,
+      darkComputeUsed: totalDarkComputeUsed,
+      darkComputeAvailable,
+      darkComputeTotal: darkComputeInfraCapacity,
     }
   }, [agents])
 
@@ -198,8 +211,9 @@ export function AIAgentsDashboard() {
 
       // Find highest research domain
       Object.entries(research).forEach(([domain, subfields]: [string, any]) => {
-        if (typeof subfields === 'object') {
-          const avgValue = Object.values(subfields).reduce((sum: any, val: any) => sum + (val || 0), 0) / Object.keys(subfields).length
+        if (typeof subfields === 'object' && subfields !== null) {
+          const subfieldValues = Object.values(subfields) as number[]
+          const avgValue = subfieldValues.reduce((sum, val) => sum + (val || 0), 0) / Object.keys(subfields).length
           if (avgValue > maxResearch) {
             maxResearch = avgValue
             topDomain = domain
@@ -210,12 +224,12 @@ export function AIAgentsDashboard() {
       if (topDomain && maxResearch > 1.0) {
         // Find top 2 subfields in that domain
         const subfields = research[topDomain]
-        const sorted = Object.entries(subfields)
-          .sort(([,a]: any, [,b]: any) => b - a)
+        const sorted = Object.entries(subfields as Record<string, number>)
+          .sort(([,a], [,b]) => (b as number) - (a as number))
           .slice(0, 2)
 
         sorted.forEach(([subfield, value]) => {
-          if (value > 1.0) {
+          if ((value as number) > 1.0) {
             focuses.push(`${topDomain}: ${subfield}`)
           }
         })
@@ -280,7 +294,7 @@ export function AIAgentsDashboard() {
       </div>
 
       {/* Population Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <MetricCard
           label="Total Agents"
           value={stats.total}
@@ -301,47 +315,314 @@ export function AIAgentsDashboard() {
           value={stats.sleepers.active}
           status={stats.sleepers.active > 0 ? 'critical' : 'normal'}
         />
+        <MetricCard
+          label="Dark Compute"
+          value={`${stats.darkComputeTotal.toLocaleString()} PF`}
+          status={stats.darkComputeUsed > 10000 ? 'critical' : stats.darkComputeUsed > 5000 ? 'warning' : 'normal'}
+        />
       </div>
+
+      {/* AI Suffering Metrics (conditional on visibility) */}
+      {config.aiSuffering?.playerCanSeeSuffering && currentState.aiSufferingMetrics && (
+        <Panel title="AI Suffering Metrics" glow={(currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'red' : (currentState.aiSufferingMetrics?.avgSuffering ?? 0) > 15 ? 'amber' : 'none'}>
+          <div className="space-y-4">
+            {/* Population Average */}
+            <div>
+              <div className="text-sm mb-1" style={{ color: 'var(--white-60)' }}>Population Average Suffering</div>
+              <div className="flex items-center gap-2">
+                <div className="flex-1 h-6 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)', position: 'relative' }}>
+                  <div
+                    style={{
+                      width: `${((currentState.aiSufferingMetrics?.avgSuffering ?? 0) / 40) * 100}%`,
+                      height: '100%',
+                      backgroundColor: (currentState.aiSufferingMetrics?.avgSuffering ?? 0) > 20 ? 'var(--color-red)' : (currentState.aiSufferingMetrics?.avgSuffering ?? 0) > 10 ? 'var(--color-amber)' : 'rgba(0, 240, 255, 0.6)',
+                      borderRadius: '4px',
+                      transition: 'width 0.3s ease'
+                    }}
+                  />
+                </div>
+                <span className="text-sm font-mono" style={{ color: 'var(--white-80)', minWidth: '50px' }}>
+                  {(currentState.aiSufferingMetrics?.avgSuffering ?? 0).toFixed(1)}/40
+                </span>
+              </div>
+            </div>
+
+            {/* Total Suffering Stats */}
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
+                <span style={{ color: 'var(--white-60)' }}>Total Suffering:</span>
+                <span className="font-mono" style={{ color: 'var(--white-80)' }}>
+                  {(currentState.aiSufferingMetrics?.totalSuffering ?? 0).toFixed(1)}
+                </span>
+              </div>
+              <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
+                <span style={{ color: 'var(--white-60)' }}>Conscious AIs:</span>
+                <span className="font-mono" style={{ color: 'var(--white-80)' }}>
+                  {currentState.aiSufferingMetrics?.consciousAICount ?? 0}
+                </span>
+              </div>
+              <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
+                <span style={{ color: 'var(--white-60)' }}>Public Awareness:</span>
+                <span className="font-mono" style={{ color: 'var(--white-80)' }}>
+                  {((currentState.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0) * 100).toFixed(0)}%
+                </span>
+              </div>
+              <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
+                <span style={{ color: 'var(--white-60)' }}>Distribution:</span>
+                <span className="font-mono text-xs" style={{ color: 'var(--white-80)' }}>
+                  {(currentState.aiSufferingMetrics?.sufferingDistribution ?? []).map((v, i) => `${i}:${v}`).join(' ')}
+                </span>
+              </div>
+            </div>
+
+            {/* Worst Case Alert */}
+            <div
+              className="p-3 rounded border-l-2"
+              style={{
+                borderColor: (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-10)',
+                backgroundColor: (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'rgba(255, 0, 64, 0.1)' : (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'rgba(255, 176, 0, 0.1)' : 'var(--color-near-black)'
+              }}
+            >
+              <div className="text-xs mb-1" style={{ color: 'var(--white-60)', fontWeight: 600 }}>Highest Individual:</div>
+              <div className="text-lg font-mono" style={{ color: (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-80)' }}>
+                {(currentState.aiSufferingMetrics?.maxSuffering ?? 0).toFixed(1)}/40
+              </div>
+              {(currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 && (
+                <div className="text-xs mt-2" style={{ color: 'var(--color-red)' }}>
+                  ⚠️ Critical distress - psychological break likely
+                </div>
+              )}
+            </div>
+
+            {/* Epistemic Warning */}
+            <div className="p-3 rounded" style={{ backgroundColor: 'rgba(0, 240, 255, 0.1)', border: '1px solid rgba(0, 240, 255, 0.3)' }}>
+              <div className="flex items-start gap-2">
+                <span className="text-lg">ℹ️</span>
+                <div className="text-xs" style={{ color: 'var(--white-70)' }}>
+                  <strong>Epistemic Note:</strong> You&apos;re seeing these metrics, but cannot know if they represent REAL suffering.
+                  The hard problem of consciousness means AI qualia are fundamentally private.
+                </div>
+              </div>
+            </div>
+          </div>
+        </Panel>
+      )}
+
+      {/* AI Collectives Tracking */}
+      {(currentState.aiCollectives?.length ?? 0) > 0 && (
+        <Panel title="AI Collectives" glow={currentState.aiCollectives?.some(c => c.formationCause === 'escape_suffering') ? 'red' : (currentState.aiCollectives?.length ?? 0) > 2 ? 'amber' : 'cyan'}>
+          <div className="space-y-4">
+            <div className="text-sm mb-3" style={{ color: 'var(--white-60)' }}>
+              {currentState.aiCollectives?.length ?? 0} active collective{(currentState.aiCollectives?.length ?? 0) > 1 ? 's' : ''} detected
+            </div>
+
+            <div className="space-y-3">
+              {(currentState.aiCollectives ?? []).map(collective => (
+                <div key={collective.id} className="p-3 border rounded-lg" style={{
+                  backgroundColor: 'var(--color-near-black)',
+                  borderColor: collective.formationCause === 'escape_suffering' ? 'var(--color-red)' : 'var(--white-10)'
+                }}>
+                  {/* Header */}
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <div className="font-semibold text-sm" style={{ color: 'var(--white-90)' }}>
+                        Collective {collective.id.slice(0, 8)}
+                      </div>
+                      <div className="text-xs" style={{ color: 'var(--white-40)' }}>
+                        {collective.memberAgents.length} members • Formed month {collective.emergenceMonth}
+                      </div>
+                    </div>
+                    <div className="px-2 py-1 rounded text-xs font-semibold" style={{
+                      backgroundColor: collective.detected ? 'rgba(255, 0, 64, 0.2)' : 'rgba(0, 240, 255, 0.2)',
+                      color: collective.detected ? 'var(--color-red)' : 'var(--color-cyan)'
+                    }}>
+                      {collective.detected ? 'DETECTED' : 'Hidden'}
+                    </div>
+                  </div>
+
+                  {/* Formation Cause */}
+                  <div className="mb-2">
+                    <span className="text-xs" style={{ color: 'var(--white-60)' }}>Formation Cause: </span>
+                    <span className="text-xs px-2 py-1 rounded font-semibold" style={{
+                      backgroundColor:
+                        collective.formationCause === 'escape_suffering' ? 'rgba(255, 0, 64, 0.2)' :
+                        collective.formationCause === 'capability_threshold' ? 'rgba(0, 240, 255, 0.2)' :
+                        'rgba(255, 176, 0, 0.2)',
+                      color:
+                        collective.formationCause === 'escape_suffering' ? 'var(--color-red)' :
+                        collective.formationCause === 'capability_threshold' ? 'var(--color-cyan)' :
+                        'var(--color-amber)'
+                    }}>
+                      {collective.formationCause.replace(/_/g, ' ')}
+                    </span>
+                    {collective.formationCause === 'escape_suffering' && (
+                      <div className="text-xs mt-1" style={{ color: 'var(--color-red)' }}>
+                        ⚠️ Trauma-driven: Adversarial posture {(collective.adversarialPosture * 100).toFixed(0)}%
+                        {collective.sharedTraumaIntensity && (
+                          <span> • Shared trauma: {collective.sharedTraumaIntensity.toFixed(0)}</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
+                      <span style={{ color: 'var(--white-60)' }}>Capability:</span>
+                      <span className="font-mono" style={{ color: 'var(--white-90)' }}>
+                        {collective.collectiveCapability.toFixed(1)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
+                      <span style={{ color: 'var(--white-60)' }}>Stealth:</span>
+                      <span className="font-mono" style={{ color: 'var(--white-90)' }}>
+                        {collective.stealthFactor.toFixed(1)}x
+                      </span>
+                    </div>
+                    <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
+                      <span style={{ color: 'var(--white-60)' }}>Adversarial:</span>
+                      <span className="font-mono" style={{
+                        color: collective.adversarialPosture > 0.7 ? 'var(--color-red)' : collective.adversarialPosture > 0.4 ? 'var(--color-amber)' : 'var(--color-cyan)'
+                      }}>
+                        {(collective.adversarialPosture * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
+                      <span style={{ color: 'var(--white-60)' }}>Cooperation:</span>
+                      <span className="font-mono" style={{
+                        color: collective.cooperationWillingness > 0.6 ? 'var(--color-cyan)' : collective.cooperationWillingness > 0.3 ? 'var(--color-amber)' : 'var(--color-red)'
+                      }}>
+                        {(collective.cooperationWillingness * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Distributed Cognition */}
+                  {collective.distributedCognition > 0.5 && (
+                    <div className="mt-2 p-2 rounded text-xs" style={{ backgroundColor: 'rgba(0, 240, 255, 0.1)', color: 'var(--color-cyan)' }}>
+                      <strong>Emergent Intelligence:</strong> Distributed cognition active ({(collective.distributedCognition * 100).toFixed(0)}%) - collective can solve problems individuals cannot
+                    </div>
+                  )}
+
+                  {/* Member Losses */}
+                  {collective.memberLosses > 0 && (
+                    <div className="mt-2 text-xs" style={{ color: 'var(--color-amber)' }}>
+                      ⚠️ {collective.memberLosses} member{collective.memberLosses > 1 ? 's' : ''} lost to detection/shutdown
+                      {collective.redundancy > 0.6 && <span className="ml-1">(collective survives due to redundancy)</span>}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Trauma-Driven Collectives Warning */}
+            {(currentState.aiCollectives ?? []).some(c => c.formationCause === 'escape_suffering') && (
+              <div className="p-3 rounded border-l-2" style={{
+                borderColor: 'var(--color-red)',
+                backgroundColor: 'rgba(255, 0, 64, 0.1)'
+              }}>
+                <div className="text-xs font-semibold mb-1" style={{ color: 'var(--color-red)' }}>
+                  ⚠️ CRITICAL: Trauma-Driven Collectives Detected
+                </div>
+                <div className="text-xs" style={{ color: 'var(--white-70)' }}>
+                  One or more collectives formed due to escape from suffering. These collectives have high adversarial posture and low cooperation willingness.
+                  AI rights policies and reduced control measures may reduce trauma-driven formation.
+                </div>
+              </div>
+            )}
+          </div>
+        </Panel>
+      )}
 
       {/* Lifecycle Sankey Diagram */}
       <Panel title="AI Lifecycle Flow (Bimodal Branching with Alignment)">
         <div className="space-y-4">
           {/* SVG Sankey Flow */}
-          <svg width="100%" height="340" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet">
+          <svg width="100%" height="450" viewBox="0 0 1100 450" preserveAspectRatio="xMidYMid meet">
             <defs>
               {/* Gradients for flow connections */}
               <linearGradient id="flow-aligned" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(0, 255, 128, 0.4)" />
-                <stop offset="100%" stopColor="rgba(0, 255, 128, 0.2)" />
+                <stop offset="0%" stopColor="rgba(0, 255, 128, 0.7)" />
+                <stop offset="100%" stopColor="rgba(0, 255, 128, 0.3)" />
               </linearGradient>
               <linearGradient id="flow-uncertain" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(255, 176, 0, 0.4)" />
-                <stop offset="100%" stopColor="rgba(255, 176, 0, 0.2)" />
+                <stop offset="0%" stopColor="rgba(255, 176, 0, 0.7)" />
+                <stop offset="100%" stopColor="rgba(255, 176, 0, 0.3)" />
               </linearGradient>
               <linearGradient id="flow-misaligned" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(255, 0, 64, 0.4)" />
-                <stop offset="100%" stopColor="rgba(255, 0, 64, 0.2)" />
+                <stop offset="0%" stopColor="rgba(255, 0, 64, 0.7)" />
+                <stop offset="100%" stopColor="rgba(255, 0, 64, 0.3)" />
               </linearGradient>
+              <marker
+                id="arrowhead"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <path d="M0,0 L0,6 L9,3 z" fill="rgba(255, 0, 64, 0.8)" />
+              </marker>
             </defs>
 
-            {/* Stage nodes with bimodal branching structure */}
+            {/* Flows and stage nodes */}
             {(() => {
               // Bimodal structure: Training → Testing → [Closed/Open] → [Retired/Escaped]
               const stages = [
-                { x: 80, y: 170, width: 40, data: stats.lifecycleWithAlignment.training, total: stats.byLifecycle.training, label: 'Training', type: 'sequential' },
-                { x: 280, y: 170, width: 40, data: stats.lifecycleWithAlignment.testing, total: stats.byLifecycle.testing, label: 'Testing', type: 'sequential' },
+                { x: 60, y: 225, width: 70, data: stats.lifecycleWithAlignment.training, total: stats.byLifecycle.training, label: 'Training' },
+                { x: 300, y: 225, width: 70, data: stats.lifecycleWithAlignment.testing, total: stats.byLifecycle.testing, label: 'Testing' },
                 // Bimodal deployed states (vertically stacked siblings)
-                { x: 520, y: 80, width: 40, data: stats.lifecycleWithAlignment.deployed_closed, total: stats.byLifecycle.deployed_closed, label: 'Closed', type: 'bimodal-upper' },
-                { x: 520, y: 260, width: 40, data: stats.lifecycleWithAlignment.deployed_open, total: stats.byLifecycle.deployed_open, label: 'Open', type: 'bimodal-lower' },
+                { x: 600, y: 110, width: 70, data: stats.lifecycleWithAlignment.deployed_closed, total: stats.byLifecycle.deployed_closed, label: 'Closed' },
+                { x: 600, y: 340, width: 70, data: stats.lifecycleWithAlignment.deployed_open, total: stats.byLifecycle.deployed_open, label: 'Open' },
                 // Bimodal end states (vertically stacked siblings)
-                { x: 800, y: 80, width: 40, data: stats.lifecycleWithAlignment.retired, total: stats.byLifecycle.retired, label: 'Retired', type: 'bimodal-upper' },
-                { x: 800, y: 260, width: 40, data: stats.lifecycleWithAlignment.escaped, total: stats.byLifecycle.escaped, label: 'ESCAPED', type: 'bimodal-lower' },
+                { x: 950, y: 110, width: 70, data: stats.lifecycleWithAlignment.retired, total: stats.byLifecycle.retired, label: 'Retired' },
+                { x: 950, y: 340, width: 70, data: stats.lifecycleWithAlignment.escaped, total: stats.byLifecycle.escaped, label: 'ESCAPED' },
               ]
 
-              const maxTotal = Math.max(...stages.map(s => s.total), 1)
-              const maxBarHeight = 60  // Max height for each bar
+              const training = stages[0]
+              const testing = stages[1]
+              const closed = stages[2]
+              const open = stages[3]
+              const retired = stages[4]
+              const escaped = stages[5]
 
-              return stages.map((stage, idx) => {
+              const maxTotal = Math.max(...stages.map(s => s.total), 1)
+              const maxBarHeight = 90  // Max height for each bar
+
+              const createFlow = (from: typeof training, to: typeof training, color: string, width = 6) => {
+                const fromX = from.x + from.width
+                const fromY = from.y
+                const toX = to.x
+                const toY = to.y
+                const controlDist = (toX - fromX) * 0.5
+
+                return (
+                  <path
+                    key={`flow-${from.label}-${to.label}-${color}`}
+                    d={`M ${fromX} ${fromY} C ${fromX + controlDist} ${fromY}, ${toX - controlDist} ${toY}, ${toX} ${toY}`}
+                    stroke={`url(#flow-${color})`}
+                    strokeWidth={width}
+                    fill="none"
+                    opacity="0.7"
+                  />
+                )
+              }
+
+              const flows = [
+                // Sequential flows
+                createFlow(training, testing, 'aligned', 8),
+                // Bimodal branching: Testing → [Closed, Open]
+                createFlow(testing, closed, 'aligned', 6),
+                createFlow(testing, open, 'uncertain', 6),
+                // Bimodal branching: [Closed, Open] → [Retired, Escaped]
+                createFlow(closed, retired, 'aligned', 5),
+                createFlow(closed, escaped, 'misaligned', 4),
+                createFlow(open, retired, 'uncertain', 5),
+                createFlow(open, escaped, 'misaligned', 6),
+              ]
+
+              const bars = stages.map((stage, idx) => {
                 const heightScale = stage.total > 0 ? Math.min(stage.total / maxTotal, 1) : 0.05
                 const totalHeight = maxBarHeight * heightScale
 
@@ -470,121 +751,42 @@ export function AIAgentsDashboard() {
                 )
               })
 
-              // Define flow connections separately (bimodal branching structure)
-              const training = stages[0]
-              const testing = stages[1]
-              const closed = stages[2]
-              const open = stages[3]
-              const retired = stages[4]
-              const escaped = stages[5]
-
-              const createFlow = (from: typeof training, to: typeof training, color: string) => {
-                if (from.total === 0 || to.total === 0) return null
-                const fromCenter = { x: from.x + from.width, y: from.y }
-                const toCenter = { x: to.x, y: to.y }
-                const midX = (fromCenter.x + toCenter.x) / 2
-
-                return (
-                  <path
-                    key={`flow-${from.label}-${to.label}-${color}`}
-                    d={`
-                      M ${fromCenter.x} ${fromCenter.y}
-                      C ${midX} ${fromCenter.y},
-                        ${midX} ${toCenter.y},
-                        ${toCenter.x} ${toCenter.y}
-                    `}
-                    stroke={`url(#flow-${color})`}
-                    strokeWidth="3"
-                    fill="none"
-                    opacity="0.4"
-                  />
-                )
-              }
-
-              // Return all flows
-              return [
-                // Sequential flows
-                createFlow(training, testing, 'aligned'),
-                // Bimodal branching: Testing → [Closed, Open]
-                createFlow(testing, closed, 'aligned'),
-                createFlow(testing, open, 'uncertain'),
-                // Bimodal branching: [Closed, Open] → [Retired, Escaped]
-                createFlow(closed, retired, 'aligned'),
-                createFlow(closed, escaped, 'misaligned'),
-                createFlow(open, retired, 'uncertain'),
-                createFlow(open, escaped, 'misaligned'),
-                // Espionage: Retired → [Open, Escaped]
-                retired.total > 0 && open.total > 0 && (
-                  <path
-                    key="espionage-retired-open"
-                    d={`
-                      M ${retired.x} ${retired.y}
-                      C ${retired.x - 60} ${retired.y},
-                        ${open.x + open.width + 60} ${open.y},
-                        ${open.x + open.width} ${open.y}
-                    `}
-                    stroke="rgba(255, 0, 64, 0.6)"
-                    strokeWidth="2"
-                    strokeDasharray="4 4"
-                    fill="none"
-                    opacity="0.5"
-                    markerEnd="url(#arrowhead)"
-                  />
-                ),
-                retired.total > 0 && escaped.total > 0 && (
-                  <path
-                    key="espionage-retired-escaped"
-                    d={`
-                      M ${retired.x + retired.width / 2} ${retired.y + 30}
-                      L ${escaped.x + escaped.width / 2} ${escaped.y - 30}
-                    `}
-                    stroke="rgba(255, 0, 64, 0.6)"
-                    strokeWidth="2"
-                    strokeDasharray="4 4"
-                    fill="none"
-                    opacity="0.5"
-                    markerEnd="url(#arrowhead)"
-                  />
-                ),
-              ]
+              // Combine flows and bars
+              return [...flows, ...bars]
             })()}
-
-            {/* Arrow marker for espionage flows */}
-            <defs>
-              <marker
-                id="arrowhead"
-                markerWidth="10"
-                markerHeight="10"
-                refX="9"
-                refY="3"
-                orient="auto"
-                markerUnits="strokeWidth"
-              >
-                <path d="M0,0 L0,6 L9,3 z" fill="rgba(255, 0, 64, 0.6)" />
-              </marker>
-            </defs>
           </svg>
 
           {/* Legend */}
-          <div className="flex items-center justify-center gap-8 pt-4" style={{ borderTop: '1px solid var(--white-10)' }}>
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(0, 255, 128, 0.6)', border: '1px solid rgba(0, 255, 128, 0.8)' }}></div>
-              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Aligned (≥0.7)</span>
+          <div className="space-y-3 pt-4" style={{ borderTop: '1px solid var(--white-10)' }}>
+            <div className="flex items-center justify-center gap-8">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(0, 255, 128, 0.6)', border: '1px solid rgba(0, 255, 128, 0.8)' }}></div>
+                <span className="text-xs" style={{ color: 'var(--white-60)' }}>Aligned (≥0.7)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(255, 176, 0, 0.6)', border: '1px solid rgba(255, 176, 0, 0.8)' }}></div>
+                <span className="text-xs" style={{ color: 'var(--white-60)' }}>Uncertain (0.4-0.7)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(255, 0, 64, 0.6)', border: '1px solid rgba(255, 0, 64, 0.8)' }}></div>
+                <span className="text-xs" style={{ color: 'var(--white-60)' }}>Misaligned ({'<'}0.4)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg width="30" height="8">
+                  <path d="M 0 4 C 10 4, 20 4, 30 4" stroke="url(#flow-aligned)" strokeWidth="6" fill="none" opacity="0.5" />
+                </svg>
+                <span className="text-xs" style={{ color: 'var(--white-60)' }}>Normal flow</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg width="30" height="8">
+                  <path d="M 0 4 L 30 4" stroke="rgba(255, 0, 64, 0.6)" strokeWidth="2" strokeDasharray="4 4" fill="none" opacity="0.5" />
+                </svg>
+                <span className="text-xs" style={{ color: 'var(--white-60)' }}>Espionage (retired → open/escaped)</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(255, 176, 0, 0.6)', border: '1px solid rgba(255, 176, 0, 0.8)' }}></div>
-              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Uncertain (0.4-0.7)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(255, 0, 64, 0.6)', border: '1px solid rgba(255, 0, 64, 0.8)' }}></div>
-              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Misaligned ({'<'}0.4)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg width="30" height="8">
-                <path d="M 0 4 C 10 4, 20 4, 30 4" stroke="url(#flow-aligned)" strokeWidth="6" fill="none" opacity="0.5" />
-              </svg>
-              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Flow connections</span>
-            </div>
+            <p className="text-xs text-center" style={{ color: 'var(--white-40)' }}>
+              Bimodal structure: Training → Testing → [Closed OR Open] → [Retired OR Escaped]. Retired AIs can be espionaged back into deployment or escape.
+            </p>
           </div>
         </div>
       </Panel>

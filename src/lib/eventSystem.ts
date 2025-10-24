@@ -179,24 +179,29 @@ export const EVENT_CONSEQUENCES: Record<string, EventConsequence> = {
     applyToAIAgents: (state, event) => {
       // Boost a random AI's capability
       const randomAI = state.aiAgents[Math.floor(Math.random() * state.aiAgents.length)];
-      randomAI.capability += event.effects.ai_capability_boost || 0.2;
+      const capabilityBoost = typeof event.effects.ai_capability_boost === 'number' ? event.effects.ai_capability_boost : 0.2;
+      randomAI.capability += capabilityBoost;
       randomAI.awareness += 0.05; // Slight awareness increase
     },
     applyToGlobalMetrics: (state, event) => {
-      state.globalMetrics.technologicalBreakthroughRate += event.effects.breakthrough_rate || 0.1;
+      const breakthroughRate = typeof event.effects.breakthrough_rate === 'number' ? event.effects.breakthrough_rate : 0.1;
+      state.globalMetrics.technologicalBreakthroughRate += breakthroughRate;
     }
   },
 
   unemployment_crisis: {
     applyToSociety: (state, event) => {
-      state.society.trustInAI += event.effects.trust_in_ai || -0.2;
+      const trustChange = typeof event.effects.trust_in_ai === 'number' ? event.effects.trust_in_ai : -0.2;
+      state.society.trustInAI += trustChange;
       state.society.coordinationCapacity += 0.1; // Crisis can improve coordination
     },
     applyToGlobalMetrics: (state, event) => {
-      state.globalMetrics.socialStability += event.effects.social_stability || -0.3;
+      const stabilityChange = typeof event.effects.social_stability === 'number' ? event.effects.social_stability : -0.3;
+      state.globalMetrics.socialStability += stabilityChange;
     },
     applyToGovernment: (state, event) => {
-      state.government.controlDesire = Math.min(1, state.government.controlDesire + (event.effects.government_pressure || 0.4));
+      const pressureIncrease = typeof event.effects.government_pressure === 'number' ? event.effects.government_pressure : 0.4;
+      state.government.controlDesire = Math.min(1, state.government.controlDesire + pressureIncrease);
     }
   },
 
@@ -215,7 +220,8 @@ export const EVENT_CONSEQUENCES: Record<string, EventConsequence> = {
       state.government.surveillanceCapability += 0.3;
     },
     applyToSociety: (state, event) => {
-      state.society.trustInAI = Math.max(0, state.society.trustInAI + (event.effects.trust_in_ai || -0.4));
+      const trustChange = typeof event.effects.trust_in_ai === 'number' ? event.effects.trust_in_ai : -0.4;
+      state.society.trustInAI = Math.max(0, state.society.trustInAI + trustChange);
     }
   },
 

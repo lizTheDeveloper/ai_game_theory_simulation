@@ -16,7 +16,8 @@ export type GovernmentActionCategory =
   | 'crisis'        // Emergency responses (environmental, nuclear)
   | 'international' // Cooperation, trade, espionage
   | 'rights'        // AI rights, data control
-  | 'technology';   // Tech deployment, infrastructure
+  | 'technology'    // Tech deployment, infrastructure
+  | 'environmental';// Environmental protection, planetary boundaries
 
 /**
  * Government action with category metadata

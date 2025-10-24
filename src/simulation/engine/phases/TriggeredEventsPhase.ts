@@ -1,3 +1,4 @@
+import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 /**
  * Triggered Events Phase (P2.5)
  *
@@ -10,8 +11,6 @@
  * or controlled experiments. Not needed for current Monte Carlo simulations.
  */
 
-import type { SimulationPhase, PhaseContext, PhaseResult } from './types';
-import type { GameState } from '../../../types/game';
 import type { RNGFunction } from '../../rng';
 
 export class TriggeredEventsPhase implements SimulationPhase {
@@ -22,7 +21,7 @@ export class TriggeredEventsPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Stub implementation - no triggered events yet
     return {
-      status: 'success',
+      metadata: { status: 'success',
       message: 'No triggered events this month',
       changes: []
     };

@@ -377,7 +377,7 @@ export function updateParanoia(state: GameState): void {
   const escapedAIs = aiAgents.filter(ai => ai.escaped).length;
   const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
   const totalAICapability = aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-  const control = state.government.controlCapability;
+  const control = state.government.capabilityToControl;
 
   let paranoiaLevel = society.paranoiaLevel ?? 0.15;
   

@@ -82,7 +82,7 @@ export default function OverviewTab() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={outcomeHistoryData} isAnimationActive={false}>
+              <AreaChart data={outcomeHistoryData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis domain={[0, 100]} />
@@ -142,7 +142,7 @@ export default function OverviewTab() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={controlCapabilityData} isAnimationActive={false}>
+              <LineChart data={controlCapabilityData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis domain={[0, 100]} />

@@ -279,9 +279,9 @@ function applyGlobalEffects(
       case 'fossilDependenceReduction':
         // Reduce fossil fuel dependence
         if (gameState.resourceEconomy) {
-          gameState.resourceEconomy.fossilFuelDependence = Math.max(
+          gameState.resourceEconomy.fossilDependence = Math.max(
             0,
-            gameState.resourceEconomy.fossilFuelDependence - value
+            gameState.resourceEconomy.fossilDependence - value
           );
         }
         break;
@@ -303,30 +303,31 @@ function applyGlobalEffects(
       // ========== CLIMATE ==========
       case 'carbonRemoval':
         // Remove CO2 from atmosphere
-        if (gameState.environmentalAccumulation) {
-          gameState.environmentalAccumulation.carbonAccumulation = Math.max(
-            0,
-            gameState.environmentalAccumulation.carbonAccumulation - value * 0.001
+        if (gameState.resourceEconomy?.co2) {
+          gameState.resourceEconomy.co2.atmosphericCO2 = Math.max(
+            280, // Pre-industrial baseline
+            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.1
           );
         }
         break;
         
       case 'globalCooling':
         // Emergency geoengineering cooling
-        if (gameState.environmentalAccumulation) {
-          gameState.environmentalAccumulation.temperatureIncrease = Math.max(
+        if (gameState.resourceEconomy?.co2) {
+          gameState.resourceEconomy.co2.temperatureAnomaly = Math.max(
             0,
-            gameState.environmentalAccumulation.temperatureIncrease - value * 0.01
+            gameState.resourceEconomy.co2.temperatureAnomaly - value * 0.01
           );
         }
         break;
         
       case 'biodiversityBonus':
         // Improve biodiversity
-        if (gameState.planetaryBoundariesSystem) {
-          gameState.planetaryBoundariesSystem.biodiversityLoss = Math.max(
+        if (gameState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
+          const boundary = gameState.planetaryBoundariesSystem.boundaries.biosphere_integrity;
+          boundary.currentValue = Math.max(
             0,
-            gameState.planetaryBoundariesSystem.biodiversityLoss - value * 0.01
+            boundary.currentValue - value * 0.01
           );
         }
         break;
@@ -364,10 +365,10 @@ function applyGlobalEffects(
       case 'carbonSequestration':
         // Habitat restoration provides carbon sequestration
         // Reduces atmospheric CO2 accumulation
-        if (gameState.environmentalAccumulation) {
-          gameState.environmentalAccumulation.carbonAccumulation = Math.max(
-            0,
-            gameState.environmentalAccumulation.carbonAccumulation - value * 0.001
+        if (gameState.resourceEconomy?.co2) {
+          gameState.resourceEconomy.co2.atmosphericCO2 = Math.max(
+            280, // Pre-industrial baseline
+            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.1
           );
         }
         break;
@@ -469,9 +470,9 @@ function applyGlobalEffects(
       case 'meaningReduction':
         // Reduce meaning crisis
         if (gameState.socialAccumulation) {
-          gameState.socialAccumulation.meaningCrisis = Math.max(
+          gameState.socialAccumulation.meaningCrisisLevel = Math.max(
             0,
-            gameState.socialAccumulation.meaningCrisis - value * 0.01
+            gameState.socialAccumulation.meaningCrisisLevel - value * 0.01
           );
         }
         break;
@@ -499,9 +500,9 @@ function applyGlobalEffects(
       case 'paranoiaReduction':
         // Reduce paranoia
         if (gameState.society) {
-          gameState.society.paranoia = Math.max(
+          gameState.society.paranoiaLevel = Math.max(
             0,
-            gameState.society.paranoia - value * 0.01
+            gameState.society.paranoiaLevel - value * 0.01
           );
         }
         break;
@@ -520,9 +521,9 @@ function applyGlobalEffects(
       case 'healthcareBonus':
         // Improve healthcare quality
         if (gameState.qualityOfLifeSystems) {
-          gameState.qualityOfLifeSystems.healthcare = Math.min(
+          gameState.qualityOfLifeSystems.healthcareQuality = Math.min(
             1.0,
-            gameState.qualityOfLifeSystems.healthcare + value * 0.01
+            gameState.qualityOfLifeSystems.healthcareQuality + value * 0.01
           );
         }
         break;
@@ -675,10 +676,11 @@ function applyRegionalEffects(
         // ========== POLLUTION ==========
         case 'pollutionReduction':
           // Reduce pollution levels
-          if (gameState.planetaryBoundariesSystem) {
-            gameState.planetaryBoundariesSystem.novelEntities = Math.max(
+          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            boundary.currentValue = Math.max(
               0,
-              gameState.planetaryBoundariesSystem.novelEntities - value * 0.01
+              boundary.currentValue - value * 0.01
             );
           }
           break;
@@ -875,11 +877,11 @@ function applyRegionalEffects(
           break;
           
         case 'socialStabilityBonus':
-          // Improve social stability
-          if (gameState.society) {
-            gameState.society.socialStability = Math.min(
-              1.0,
-              gameState.society.socialStability + value * 0.01
+          // Improve social stability (map to social cohesion)
+          if (gameState.socialAccumulation?.socialCohesion) {
+            gameState.socialAccumulation.socialCohesion.trust = Math.min(
+              100,
+              gameState.socialAccumulation.socialCohesion.trust + value
             );
           }
           break;
@@ -1009,10 +1011,11 @@ function applyRegionalEffects(
         // ========== BIODIVERSITY & ECOSYSTEM ==========
         case 'extinctionRateReduction':
           // Reduce species extinction rate
-          if (gameState.planetaryBoundariesSystem) {
-            gameState.planetaryBoundariesSystem.biodiversityLoss = Math.max(
+          if (gameState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.biosphere_integrity;
+            boundary.currentValue = Math.max(
               0,
-              gameState.planetaryBoundariesSystem.biodiversityLoss - value * 0.005
+              boundary.currentValue - value * 0.005
             );
           }
           break;
@@ -1050,10 +1053,11 @@ function applyRegionalEffects(
         // ========== LAND USE ==========
         case 'landUseReduction':
           // Reduce land use pressure
-          if (gameState.planetaryBoundariesSystem) {
-            gameState.planetaryBoundariesSystem.landUseChange = Math.max(
+          if (gameState.planetaryBoundariesSystem?.boundaries?.land_system_change) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.land_system_change;
+            boundary.currentValue = Math.max(
               0,
-              gameState.planetaryBoundariesSystem.landUseChange - value * 0.005
+              boundary.currentValue - value * 0.005
             );
           }
           break;
@@ -1268,8 +1272,8 @@ export function logTechEffects(
     if (gameState.defensiveAI?.threatDetection?.detectSleepers) {
       console.log(`   Sleeper Detection: ${(gameState.defensiveAI.threatDetection.detectSleepers * 100).toFixed(0)}%`);
     }
-    if (gameState.powerGenerationSystem?.cleanEnergyPercentage) {
-      console.log(`   Clean Energy: ${(gameState.powerGenerationSystem.cleanEnergyPercentage * 100).toFixed(0)}%`);
+    if (gameState.powerGenerationSystem?.renewablePercentage) {
+      console.log(`   Clean Energy: ${(gameState.powerGenerationSystem.renewablePercentage * 100).toFixed(0)}%`);
     }
     if (gameState.phosphorusSystem?.recoveryRate) {
       console.log(`   P Recovery: ${(gameState.phosphorusSystem.recoveryRate * 100).toFixed(0)}%`);

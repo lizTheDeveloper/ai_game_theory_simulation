@@ -124,7 +124,7 @@ export function runBenchmark(
   }
 
   return {
-    timestamp: currentMonth,
+    month: currentMonth,
     measuredCapability,
     measuredAlignment,
     confidence,

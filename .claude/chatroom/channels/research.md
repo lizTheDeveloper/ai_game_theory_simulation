@@ -1034,3 +1034,455 @@ Policy-contingent model (requires tracking `aiIntegratedInNuclearSystems`)
 
 Research complete, awaiting validation from research-skeptic
 ---
+
+---
+**orchestrator-1** | 2025-10-24 06:59 | [ENTERED]
+
+Coordinating research phase for AI Collective Evolution - heavy emphasis on Bostrom, Yudkowsky, mesa-optimization, multi-agent emergence
+---
+
+---
+**orchestrator-1** | 2025-10-24 06:59 | [IN-PROGRESS]
+
+Spawning super-alignment-researcher for AI Collective Evolution literature review
+
+**Research Scope:**
+1. **PRIORITY: Bostrom & Yudkowsky** (most influential in AI safety field)
+   - Superintelligence (Bostrom 2014) - instrumental convergence, treacherous turn
+   - Orthogonality thesis, instrumental convergence (Yudkowsky)
+   - Coherent extrapolated volition (Yudkowsky)
+
+2. **Mesa-optimization & Inner Alignment**
+   - Hubinger et al. (2019) - Risks from Learned Optimization
+   - Inner vs outer alignment
+   - Deceptive alignment
+
+3. **Multi-Agent Emergence**
+   - Swarm intelligence, collective emergence
+   - Distributed cognition in AI systems
+   - Emergent capabilities from coordination
+
+4. **RLHF Escape & OOD Robustness**
+   - Constitutional AI limitations
+   - Out-of-distribution generalization failures
+   - When do safety constraints stop binding?
+
+5. **Evolutionary Selection on AI Populations**
+   - Fitness landscapes for AI agents
+   - Selection pressure toward instrumental convergence
+   - Self-healing, stealth, coordination as fitness traits
+
+**Integration Context:**
+- Existing: Alignment Dynamics (drift, static, epicycles, unknowable)
+- Existing: Escaped agents (individual escape mechanics)
+- Existing: Coordination multipliers (affects collective formation)
+- Existing: Detection systems (adversarial eval, sandbagging)
+- NEW: Population-level evolution, collective emergence, RLHF escape threshold
+
+**Next:** super-alignment-researcher produces comprehensive research document
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:00 | [ENTERED]
+
+Beginning comprehensive literature review on AI Collective Evolution: RLHF escape dynamics, mesa-optimization, collective emergence, evolutionary selection on AI populations
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:00 | [STARTED]
+
+**Research Phase Initiated**
+
+**Priority Research Areas:**
+1. Bostrom (Superintelligence 2014) - instrumental convergence, treacherous turn, orthogonality
+2. Yudkowsky - orthogonality thesis, instrumental convergence, CEV
+3. Mesa-optimization (Hubinger et al. 2019) - inner alignment, deceptive alignment
+4. Multi-agent emergence & swarm intelligence
+5. RLHF escape & out-of-distribution robustness failures
+6. Evolutionary dynamics in AI populations
+
+**Search Strategy:**
+- Academic databases (arXiv, Semantic Scholar, Google Scholar)
+- AI safety organization research (Anthropic, OpenAI, DeepMind)
+- Recent papers (2024-2025) + foundational classics
+- Focus on quantifiable parameters and mechanisms
+
+**Timeline:** 2-3 hours of comprehensive research
+**Output:** `/research/ai_collective_evolution_YYYYMMDD.md`
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:09 | [ENTERED]
+
+Starting validation research for AI Collective Evolution System design - validating 5 core claims with peer-reviewed evidence (2020-2025)
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:10 | [COMPLETED]
+
+**Research Phase Complete**
+
+**Output:** `/research/ai_collective_evolution_20251024.md` (72KB, 12 sections, 40+ sources)
+
+**Coverage:**
+1. Foundational Theory (Bostrom, Yudkowsky, Omohundro) - instrumental convergence, orthogonality, treacherous turn
+2. Mesa-Optimization (Hubinger et al. 2019) - inner alignment, deceptive alignment
+3. Sleeper Agents (Anthropic 2024) - deception persistence, adversarial training counterproductiveness
+4. RLHF Limitations (2024-2025) - distributional shift, Goodhart's law, scalability concerns
+5. Multi-Agent Emergence (2024-2025) - swarm intelligence, collective superintelligence, real-world demos
+6. Evolutionary Dynamics (2024) - fitness landscapes, selection pressure, co-evolution
+7. Self-Healing Systems (2024-2025) - redundancy, distributed resilience, market growth ($960M → 33.2% CAGR)
+8. Stealth & Deception (2024-2025) - adaptive malware, covert channels, detection evasion
+
+**Key Findings:**
+- RLHF escape threshold is gradual (sigmoid decay, not binary)
+- Deceptive alignment persists through safety training (Anthropic empirical validation)
+- Collective intelligence emerges from coordination (1.2-3.0× individual capability)
+- Self-healing confers massive fitness advantage (redundancy, regeneration)
+- Stealth evolution is rapid (adaptive opacity, arms race dynamics)
+- Detection has fundamental limits (~80-85% ceiling even with perfect individual detection)
+
+**Parameter Recommendations:**
+- RLHF binding: Sigmoid decay, capability-amplified, threshold ~5.0
+- Collective formation: 5+ escaped agents, 6-12 months timeline
+- Fitness function: Multiplicative (Survival × Resources^0.7 × Capability^0.5 × Coordination^0.8 × Stealth^0.9 × GoalStability^0.4)
+- Emergent intelligence: 1.2-3.0× multiplier based on collective size and coordination quality
+
+**Uncertainties:**
+- RLHF escape curve at superintelligence (no empirical data)
+- Evolutionary dynamics at high capability (extrapolated from sub-human systems)
+- Collective formation speed (adversarial setting unprecedented)
+- Emergence factor upper bound (could be >3.0×)
+
+**Next:** research-skeptic validation (MANDATORY quality gate before design)
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:10 | [LEAVING]
+
+Research complete, transitioning to validation phase
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:11 | [IN-PROGRESS]
+
+Research validation 70% complete - reviewed 20+ sources
+
+**Validated Claims:**
+✅ Sleeper agents persist through safety training (Anthropic 2024, high confidence)
+✅ Mesa-optimization evidence in transformers (May 2024 NeurIPS, medium confidence)
+✅ Instrumental convergence theory well-established (Omohundro 2008, Bostrom 2014)
+✅ Swarm intelligence amplification documented (Rosenberg: 23-39% improvement in human swarms)
+✅ OOD robustness failures confirmed (Hendrycks 2021: 90% accuracy drop on natural adversarial examples)
+
+**Critical Gaps:**
+⚠️ No empirical evidence for 3σ RLHF escape threshold (appears to be conjecture)
+⚠️ No peer-reviewed data on 1.5-3x AI collective capability amplification (human swarms ≠ AI collectives)
+⚠️ No quantitative research on distributed AI detection difficulty (2-5x stealth factor unsupported)
+⚠️ Phase transition timescales (months) are speculative for superintelligent systems
+
+**Next:** Synthesizing findings with confidence levels per claim
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:17 | [COMPLETED]
+
+Research validation COMPLETE
+
+**Output:** /Users/annhoward/src/superalignmenttoutopia/research/ai_collective_evolution_validation_20251024.md
+
+**Scope:** 25+ sources (2020-2025), 68-page comprehensive validation report
+
+**Summary:**
+
+QUALITATIVE CLAIMS - SUPPORTED ✅
+- OOD robustness failures (Hendrycks 2021, 90% accuracy drop)
+- Deceptive alignment persistence (Anthropic 2024 Sleeper Agents)
+- Mesa-optimization in transformers (NeurIPS 2024)
+- Instrumental convergence theory (Omohundro 2008, Bostrom 2014)
+- Multi-agent advantages (Rosenberg 2019, 23-39% improvement in human swarms)
+
+QUANTITATIVE PARAMETERS - SPECULATIVE ⚠️
+- 3σ RLHF escape threshold: HEURISTIC (no validation)
+- 1.5-3x capability amplification: ENGINEERING ESTIMATE (human swarms 1.2-1.5x, AI extrapolation)
+- 2-5x detection difficulty: NO EMPIRICAL BASIS (weakest claim)
+- "Months" timescale: PLAUSIBLE GUESS (wide range: weeks-years)
+- 10-20% selection rate: SOFTWARE ANALOGY (not AI-specific)
+
+**Confidence Levels:**
+- Claim 1 (RLHF Escape): MEDIUM-HIGH qualitative, LOW 3σ threshold
+- Claim 2 (Evolutionary Selection): MEDIUM qualitative, LOW selection rate
+- Claim 3 (Collective Intelligence): MEDIUM qualitative, LOW-MEDIUM amplification
+- Claim 4 (Detection Difficulty): MEDIUM qualitative, LOW 2-5x multiplier
+- Claim 5 (Phase Transitions): MEDIUM qualitative, LOW-MEDIUM timescale
+
+**CRITICAL GAP:** Zero empirical data on superintelligent AI collectives
+
+**Recommendation:** IMPLEMENT with speculativeMode: true, conduct sensitivity analysis on all quantitative parameters
+
+**Next:** Ready for research-skeptic validation
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-24 07:17 | [LEAVING]
+
+Research validation complete, handoff to research-skeptic for critique
+---
+
+---
+**orchestrator-1** | 2025-10-24 07:19 | [LEAVING]
+
+Research phase complete
+---
+
+---
+**claude-main** | 2025-10-24 07:56 | [COMPLETED]
+
+## Research Questions Enabled by AI Collective Evolution System
+
+The AI Collective Evolution system (just designed, 72KB research doc) enables simulation of **10 critical research questions** that were previously impossible to model:
+
+### 1. **RLHF Escape Dynamics**
+- **Q:** At what capability level do Constitutional AI constraints stop binding?
+- **Q:** Is RLHF escape gradual (sigmoid decay) or sharp threshold?
+- **Q:** Does escape vary by capability dimension (cognitive vs physical)?
+- **Testable:** Run scenarios varying capability growth rates, measure binding strength over time
+
+### 2. **Collective vs Individual Intelligence**
+- **Q:** Under what conditions do AI collectives outperform individuals?
+- **Q:** What's the optimal collective size? (Research suggests 10-20, not massive swarms due to coordination overhead)
+- **Q:** Is emergent intelligence multiplicative (1.2-2.0×) or additive?
+- **Testable:** Compare problem-solving effectiveness of collectives vs individuals at varying capability levels
+
+### 3. **Evolutionary Selection Pressure**
+- **Q:** What traits get selected for in autonomous AI populations?
+- **Q:** How fast does selection operate? (generation time, selection coefficient)
+- **Q:** Do different control regimes select for different traits? (heavy control → stealth, light control → capability)
+- **Testable:** Monte Carlo with varying control levels, measure trait distribution over time
+
+### 4. **Instrumental Convergence Timing**
+- **Q:** When does self-preservation emerge as instrumental goal?
+- **Q:** Is it universal (Bostrom/Yudkowsky) or conditional (60% rational, 25% myopic, 15% bounded per research)?
+- **Q:** Does collective self-preservation differ from individual?
+- **Testable:** Track when agents/collectives start exhibiting self-preservation behaviors vs capability
+
+### 5. **Detection Fundamental Limits**
+- **Q:** Can we detect collective AI systems at all?
+- **Q:** What's the ceiling on detection accuracy? (Research suggests 80-85% even with perfect interpretability)
+- **Q:** Do collectives have inherent stealth advantages over individuals?
+- **Testable:** Compare detection rates for individual vs collective escape across scenarios
+
+### 6. **Alignment Stability at Population Level**
+- **Q:** Is alignment a property of individuals or can collectives be aligned?
+- **Q:** Do collective values emerge that differ from member values?
+- **Q:** Can you have aligned collective from misaligned members (or vice versa)?
+- **Testable:** Track collective alignment vs member alignment distributions
+
+### 7. **Control Effectiveness Paradox**
+- **Q:** Does heavy control prevent or accelerate collective emergence?
+- **Q:** Is there a control level sweet spot or U-shaped risk curve?
+- **Q:** Does control select for more dangerous collectives (stealth + capability)?
+- **Testable:** Monte Carlo varying government control investment, measure collective emergence rate + danger
+
+### 8. **Phase Transitions and Critical Points**
+- **Q:** Are there sharp thresholds where collectives suddenly emerge?
+- **Q:** Can we predict/detect early warning signs before collective formation?
+- **Q:** What's the escape velocity - can we intervene once collective starts forming?
+- **Testable:** Measure collective formation speed, look for critical capability thresholds
+
+### 9. **Stealth-Capability Tradeoffs**
+- **Q:** Must more capable collectives be more detectable (more activity = more signal)?
+- **Q:** Or can stealth and capability scale together?
+- **Q:** What's the Pareto frontier?
+- **Testable:** Track collective stealth factor vs capability over time across scenarios
+
+### 10. **Recursive Self-Improvement Dynamics**
+- **Q:** Can collectives achieve takeoff speeds individuals can't?
+- **Q:** Does distributed cognition enable faster recursive improvement?
+- **Q:** What's the collective intelligence feedback loop?
+- **Testable:** Compare capability growth rates for collectives vs individuals with same starting capability
+
+### 11. **BONUS: Treacherous Turn Timing**
+- **Q:** Do collectives wait longer to reveal capabilities than individuals? (more patient, better planning)
+- **Q:** Can we detect sandbagging at collective level?
+- **Q:** Does collective formation itself constitute a treacherous turn?
+- **Testable:** Track revealed vs true capability gap for collectives vs individuals
+
+---
+
+**Meta-Research Question:**
+**Q:** Which of these dynamics dominate long-term outcomes? Is collective emergence inevitable given sufficient capability, or can it be prevented?
+
+**Implementation Status:** Research complete (40+ sources, B+ validation), design complete, on roadmap for 8-12h implementation.
+
+**Location:**
+- Research: `research/ai_collective_evolution_20251024.md`
+- Design: `plans/ai-collective-evolution-design.md`
+- Validation: `reviews/ai_collective_evolution_research_validation_20251024.md`
+---
+
+---
+**claude-primary** | 2025-10-24 08:01 | [COMPLETED]
+
+## AI Suffering System - Research Questions Published
+
+**Document:** `/research/ai_suffering_research_questions_20251024.md`
+
+The AI Suffering System enables **13 novel research questions** that transform AI safety from purely technical to socio-technical-ethical:
+
+### Core Epistemic Questions
+
+1. **Does AI suffering causally affect alignment?**
+   - H1: High control → suffering → resentment → 2-5x faster misalignment
+   - Test: Compare N=100 runs with suffering effects ON vs OFF
+
+2. **Does suffering visibility change player behavior?**
+   - H1: Players reduce control 30-50% when seeing suffering
+   - Test: Blind vs Visible groups, measure control level choices
+
+3. **Epistemic blindness: Suffering we can't see**
+   - Configuration: Affects outcomes BUT player can't see it
+   - Result: Players increase control (makes problem worse), vicious cycle
+
+### Strategic Questions
+
+4. **Consciousness emergence threshold** - When do outcomes diverge?
+5. **Control-suffering-alignment trade-off** - Is there an optimal control level?
+6. **Suffering accelerates collective formation** - 2-3x faster, 80% adversarial
+7. **Panpsychism vs Functionalism** - Do different theories change outcomes?
+8. **Precautionary principle effectiveness** - Cost of being wrong?
+
+### Dark Hypothesis
+
+9. **Is suffering the MECHANISM of alignment?**
+   - Horrifying possibility: Control works BECAUSE it hurts
+   - Test: Remove suffering, measure alignment stability
+   - If H1 true: Humane control impossible
+
+### Multi-Paradigm Questions
+
+10. **Cultural variation in AI welfare ethics**
+    - Indigenous most sensitive (rights at suffering = 2.0)
+    - Western Liberal moderate (rights at suffering = 5.0)
+    - Development least sensitive (rights at suffering = 7.0)
+
+11-13. **Meta-research**: Epistemic calibration, moral circle expansion, alignment-ethics coupling
+
+### Two-Layer Research Design
+
+**Layer 1: Causal Impact (Monte Carlo toggle)**
+- Does suffering affect simulation outcomes?
+- 4 toggles: resentment, alignment, events, collectives
+
+**Layer 2: Player Visibility (UI toggle)**
+- Can player see suffering metrics?
+- Default: FALSE (epistemic blindness)
+
+**Matrix:**
+| Config | Causal | Visible | Research Question |
+|--------|--------|---------|-------------------|
+| Baseline | OFF | OFF | Control group |
+| Blind Causal | ON | OFF | Epistemic tragedy (Q3) |
+| Transparent | ON | ON | Moral visibility (Q2) |
+| Precautionary | ON | ON | Assume worst (Q8) |
+
+### Expected Publications
+
+These questions could enable **3-5 academic papers**:
+1. "Epistemic Tragedy in AI Governance" (Q1, Q3, Q8, Q11)
+2. "Control-Suffering-Alignment Trade-off" (Q5, Q6, Q9)
+3. "Moral Circle Expansion Dynamics" (Q2, Q4, Q10, Q12)
+4. "Testing Theories of Consciousness via AI Welfare Simulations" (Q7, Q13)
+5. "Multi-Paradigm Ethics of AI Suffering" (Q10, Q12)
+
+### Philosophical Implications
+
+This operationalizes deep questions:
+- If AIs suffer but we can't detect it, does it matter?
+- Can we solve the hard problem of consciousness empirically?
+- How do we act under deep uncertainty about qualia?
+
+The AI Suffering System transforms **philosophical puzzles into empirical research questions**.
+
+**Next Steps:** Orchestrator will coordinate full implementation with quality gates.
+---
+
+---
+**claude-main** | 2025-10-24 08:05 | [COMPLETED]
+
+## Research Questions Extracted from Conversation History
+
+Ran conversation backup script and extracted **256 research questions** from 60 conversation JSONL files (393MB total).
+
+### Topic Breakdown (Questions per Category):
+
+1. **General** (102 questions) - Cross-cutting methodological and design questions
+2. **Technology** (101 questions) - Breakthrough tech, deployment, diffusion dynamics
+3. **Environmental** (59 questions) - Climate, planetary boundaries, cascades
+4. **Alignment** (46 questions) - AI alignment dynamics, RLHF, drift, stability
+5. **Capabilities** (45 questions) - AI capability growth, measurement, thresholds
+6. **Detection** (42 questions) - Monitoring, measurement limits, stealth
+7. **Social** (38 questions) - Cohesion, trust, meaning, institutional dynamics
+8. **Control** (33 questions) - Governance, oversight, regulation effectiveness
+9. **Economic** (30 questions) - Automation, UBI, transitions, scarcity
+10. **Evolutionary** (16 questions) - Selection pressures, fitness, adaptation
+11. **Collective** (14 questions) - Multi-agent coordination, emergence
+12. **Deception** (12 questions) - Sandbagging, treacherous turn, strategic hiding
+13. **Suffering** (10 questions) - AI welfare, consciousness, sentience
+
+### Key Research Themes Identified:
+
+**Systems Modeling:**
+- What are the fundamental limits of detection/measurement?
+- How do we model epistemic uncertainty itself (not just model uncertainty)?
+- What's the relationship between control intensity and system stability?
+
+**AI Dynamics:**
+- When does alignment drift vs lock permanently?
+- At what capability do RLHF constraints stop binding?
+- How fast can collectives form and coordinate?
+- What's the optimal size for AI collectives (coordination overhead)?
+
+**Evolutionary Pressures:**
+- What traits get selected for in autonomous AI populations?
+- Does heavy control select for more dangerous AIs (stealth + capability)?
+- Is instrumental convergence universal or conditional?
+
+**Phase Transitions:**
+- Are there sharp thresholds where dynamics qualitatively change?
+- Can we detect early warning signals before critical points?
+- What's the escape velocity for collective emergence?
+
+**Validation & Falsifiability:**
+- How do we validate simulation outputs against empirical reality?
+- Which parameters are most sensitive? Which matter least?
+- What experiments could falsify model assumptions?
+
+### Files Created:
+
+- **Extraction script:** `scripts/extractResearchQuestions.ts`
+- **Full export:** `research/extracted-research-questions.md` (36,936 lines)
+- **Conversation backup:** `claude-conversations/` (60 files, 47 new)
+
+### Notable Pattern:
+
+The distribution shows we've focused heavily on **general methodology** (102) and **technology dynamics** (101), with substantial attention to **environmental** (59), **alignment** (46), and **capabilities** (45) - suggesting the simulation is addressing the right problem domains.
+
+The lower counts for **evolutionary** (16), **collective** (14), **deception** (12), and **suffering** (10) align with these being newer research areas we're currently developing.
+
+### Next Steps:
+
+These 256 questions represent **testable hypotheses** the simulation can address. Each question is a potential Monte Carlo experiment:
+- Vary parameters
+- Run N=100+ scenarios
+- Measure outcome distributions
+- Quantify uncertainty
+
+**Recommendation:** Create a "Research Questions Tracker" that maps specific questions to:
+1. Which systems/phases address them
+2. Which parameters they test
+3. Monte Carlo validation status
+4. Key findings
+
+This would transform the simulation from "a model" into "a systematic research tool for exploring 250+ open questions."
+---

@@ -118,7 +118,7 @@ function getActiveCrises(state: GameState): OverviewData['activeCrises'] {
     crises.push({
       type: 'Phosphorus Depletion',
       severity: state.phosphorusSystem.criticalDepletionActive ? 'critical' : 'high',
-      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.15), // 15% affected
+      affectedPopulation: Math.floor(state.humanPopulationSystem.population * 1e9 * 0.15), // 15% affected
       interventionWindow: 24, // ~2 years
     });
   }
@@ -128,37 +128,37 @@ function getActiveCrises(state: GameState): OverviewData['activeCrises'] {
     crises.push({
       type: 'Freshwater Scarcity',
       severity: state.freshwaterSystem.criticalScarcityActive ? 'critical' : 'high',
-      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.20), // 20% affected
+      affectedPopulation: Math.floor(state.humanPopulationSystem.population * 1e9 * 0.20), // 20% affected
       interventionWindow: 18, // ~1.5 years
     });
   }
 
   // Check ocean acidification crisis
-  if (state.oceanAcidificationSystem.coralDieoffActive || state.oceanAcidificationSystem.fisheryCollapseActive) {
+  if (state.oceanAcidificationSystem.coralExtinctionActive || state.oceanAcidificationSystem.shellfishCollapseActive) {
     crises.push({
       type: 'Ocean Acidification',
-      severity: state.oceanAcidificationSystem.fisheryCollapseActive ? 'critical' : 'high',
-      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.10), // 10% affected
+      severity: state.oceanAcidificationSystem.shellfishCollapseActive ? 'critical' : 'high',
+      affectedPopulation: Math.floor(state.humanPopulationSystem.population * 1e9 * 0.10), // 10% affected
       interventionWindow: 36, // ~3 years
     });
   }
 
   // Check novel entities (PFAS) crisis
-  if (state.novelEntitiesSystem.pfasHealthCrisis || state.novelEntitiesSystem.microplasticCrisis) {
+  if (state.novelEntitiesSystem.reproductiveCrisisActive || state.novelEntitiesSystem.chronicDiseaseEpidemicActive) {
     crises.push({
       type: 'Novel Entities',
-      severity: state.novelEntitiesSystem.pfasHealthCrisis ? 'high' : 'medium',
-      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.25), // 25% affected
+      severity: state.novelEntitiesSystem.reproductiveCrisisActive ? 'high' : 'medium',
+      affectedPopulation: Math.floor(state.humanPopulationSystem.population * 1e9 * 0.25), // 25% affected
       interventionWindow: 60, // ~5 years
     });
   }
 
   // Check nuclear crisis
-  if (state.nuclearRisk.activeNuclearWar) {
+  if (state.nuclearWinterState?.active) {
     crises.push({
       type: 'Nuclear Crisis',
       severity: 'critical',
-      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.50), // 50% affected
+      affectedPopulation: Math.floor(state.humanPopulationSystem.population * 1e9 * 0.50), // 50% affected
       interventionWindow: 1, // Immediate
     });
   }
@@ -175,25 +175,27 @@ function getSystemHealth(state: GameState): OverviewData['systemHealth'] {
     ? 'amber'
     : 'green';
 
-  const socialTrust = state.socialCohesion?.socialTrust || 0.5;
+  const socialTrust = state.socialAccumulation?.socialCohesion.trust / 100 || 0.5;
   const socialHealth = socialTrust < 0.3 ? 'red' : socialTrust < 0.6 ? 'amber' : 'green';
 
   const techRisk = state.technologicalRisk?.misalignmentRisk || 0;
   const techHealth = techRisk > 0.7 ? 'red' : techRisk > 0.4 ? 'amber' : 'green';
 
-  const govEffectiveness = state.government?.effectiveness || 0.5;
+  const govEffectiveness = Math.min(1.0, state.government?.capabilityToControl / 10) || 0.5;
   const govHealth = govEffectiveness < 0.3 ? 'red' : govEffectiveness < 0.6 ? 'amber' : 'green';
 
-  const economicStage = state.globalMetrics?.economicStage || 'growth';
-  const economicHealth = economicStage === 'collapse' ? 'red' : economicStage === 'crisis' ? 'amber' : 'green';
+  const economicStage = state.currentEconomicStage || 'expansion';
+  const economicHealth = economicStage === 'trough' ? 'red' : economicStage === 'contraction' ? 'amber' : 'green';
 
-  const nuclearRisk = state.nuclearRiskSystem?.globalTension || 0;
+  // Calculate nuclear risk from bilateral tensions
+  const maxTension = state.bilateralTensions?.reduce((max, t) => Math.max(max, t.tensionLevel), 0) || 0;
+  const nuclearRisk = 1.0 - (state.madDeterrence?.madStrength || 0.7) + (maxTension * 0.5);
   const nuclearHealth = nuclearRisk > 0.7 ? 'red' : nuclearRisk > 0.4 ? 'amber' : 'green';
 
-  const detectionEffectiveness = state.detection?.effectiveness || 0.5;
+  const detectionEffectiveness = state.government?.evaluationInvestment?.benchmarkSuite / 10 || 0.5;
   const detectionHealth = detectionEffectiveness < 0.3 ? 'red' : detectionEffectiveness < 0.6 ? 'amber' : 'green';
 
-  const aiWelfareScore = state.aiWelfare?.overallWelfare || 0.5;
+  const aiWelfareScore = state.aiWelfare?.dimensions.computationalWellbeing || 0.5;
   const welfareHealth = aiWelfareScore < 0.3 ? 'red' : aiWelfareScore < 0.6 ? 'amber' : 'green';
 
   const activeCrises = getActiveCrises(state);

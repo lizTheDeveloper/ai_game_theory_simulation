@@ -608,7 +608,7 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
     if (!state.extinctionState.active) {
       state.extinctionState.active = true;
       state.extinctionState.type = 'slow';
-      state.extinctionState.mechanism = 'anoxic_ocean';
+      state.extinctionState.mechanism = 'climate_tipping_point'; // Ocean anoxia is a climate tipping point
       state.extinctionState.severity = 1.0;
       
       addEvent(state, {

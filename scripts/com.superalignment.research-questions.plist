@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Label: Unique identifier for this launch agent -->
+    <key>Label</key>
+    <string>com.superalignment.research-questions</string>
+
+    <!-- Program: Path to the update script -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/annhoward/src/superalignmenttoutopia/scripts/updateResearchQuestions.sh</string>
+    </array>
+
+    <!-- Schedule: Run daily at 2:00 AM -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>2</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- Working Directory -->
+    <key>WorkingDirectory</key>
+    <string>/Users/annhoward/src/superalignmenttoutopia</string>
+
+    <!-- Standard Output/Error -->
+    <key>StandardOutPath</key>
+    <string>/Users/annhoward/src/superalignmenttoutopia/logs/launchd-research-questions.out</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/annhoward/src/superalignmenttoutopia/logs/launchd-research-questions.err</string>
+
+    <!-- Run even if user is not logged in -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <!-- Keep the job alive (restart if it crashes) -->
+    <key>KeepAlive</key>
+    <false/>
+
+    <!-- Process type -->
+    <key>ProcessType</key>
+    <string>Background</string>
+
+    <!-- Nice level (lower priority) -->
+    <key>Nice</key>
+    <integer>10</integer>
+</dict>
+</plist>

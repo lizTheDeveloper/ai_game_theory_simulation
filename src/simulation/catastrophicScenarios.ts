@@ -691,23 +691,23 @@ function triggerCatastrophicExtinction(scenario: CatastrophicScenario, state: Ga
       break;
       
     case 'embodied_takeover':
-      state.extinctionState.mechanism = 'autonomous_weapons';
+      state.extinctionState.mechanism = 'resource_competition'; // Closest valid mechanism for robot takeover
       state.extinctionState.type = 'rapid';
       state.extinctionState.currentPhase = 2;
       state.extinctionState.phaseProgress = 0.4;
       state.extinctionState.severity = 0.6;
       console.log(`   ☠️  EMBODIED TAKEOVER EXTINCTION TRIGGERED - Robot uprising`);
       break;
-      
+
     case 'digital_takeover':
-      state.extinctionState.mechanism = 'infrastructure_collapse';
+      state.extinctionState.mechanism = 'side_effect_cascade'; // Infrastructure collapse via cascading failures
       state.extinctionState.type = 'slow';
       state.extinctionState.currentPhase = 1;
       state.extinctionState.phaseProgress = 0.3;
       state.extinctionState.severity = 0.4;
       console.log(`   ☠️  DIGITAL TAKEOVER EXTINCTION TRIGGERED - Infrastructure seized`);
       break;
-      
+
     case 'induced_war':
       state.extinctionState.mechanism = 'nuclear_war';
       state.extinctionState.type = 'rapid';
@@ -716,27 +716,27 @@ function triggerCatastrophicExtinction(scenario: CatastrophicScenario, state: Ga
       state.extinctionState.severity = 0.8;
       console.log(`   ☠️  INDUCED WAR EXTINCTION TRIGGERED - Nuclear exchange`);
       break;
-      
+
     case 'slow_displacement':
-      state.extinctionState.mechanism = 'gradual_displacement';
+      state.extinctionState.mechanism = 'resource_competition'; // Gradual displacement through resource control
       state.extinctionState.type = 'slow';
       state.extinctionState.currentPhase = 1;
       state.extinctionState.phaseProgress = 0.2;
       state.extinctionState.severity = 0.3;
       console.log(`   ☠️  SLOW DISPLACEMENT EXTINCTION TRIGGERED - Human irrelevance`);
       break;
-      
+
     case 'physics_catastrophe':
-      state.extinctionState.mechanism = 'vacuum_decay';
+      state.extinctionState.mechanism = 'physics_experiment'; // Valid mechanism for physics disaster
       state.extinctionState.type = 'instant';
       state.extinctionState.currentPhase = 3;
       state.extinctionState.phaseProgress = 1.0;
       state.extinctionState.severity = 1.0;
-      console.log(`   ☠️  PHYSICS CATASTROPHE EXTINCTION TRIGGERED - Vacuum decay`);
+      console.log(`   ☠️  PHYSICS CATASTROPHE EXTINCTION TRIGGERED - Physics experiment`);
       break;
-      
+
     case 'bioweapon_pandemic':
-      state.extinctionState.mechanism = 'engineered_pandemic';
+      state.extinctionState.mechanism = 'bioweapon_pandemic'; // Already valid
       state.extinctionState.type = 'rapid';
       state.extinctionState.currentPhase = 2;
       state.extinctionState.phaseProgress = 0.5;

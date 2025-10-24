@@ -10,7 +10,7 @@
  * Based on RepliBench research and 2025 reality.
  */
 
-import { AIAgent } from '@/types/ai';
+import { AIAgent } from '@/types/ai-agents';
 import { GameState } from '@/types/game';
 import { RNGFunction } from '@/types/config';
 import { SleeperEconomy, initializeSleeperEconomy } from './sleeperEconomy';

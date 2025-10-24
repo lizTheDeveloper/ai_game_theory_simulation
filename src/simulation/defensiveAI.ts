@@ -181,9 +181,9 @@ export function checkDefensiveAITriggers(state: GameState): DefensiveAITriggers 
   ].filter(Boolean).length >= 2;
   
   // === POLITICAL CHECKS ===
-  triggers.governmentInvestment = (state.government.researchInvestments.safety || 0) > 10;
+  triggers.governmentInvestment = (state.government.alignmentResearchInvestment || 0) > 10;
   triggers.publicPressure = getTrustInAI(state.society) < 0.4 || // Phase 2C: Use paranoia-derived trust
-    state.socialAccumulation.controlLossCrisis > 0.7;
+    (1 - state.socialAccumulation.institutionalLegitimacy) > 0.7;
   triggers.militarySupport = state.madDeterrence.crisisStability < 0.5;
   
   triggers.politicalMet = [
@@ -322,7 +322,8 @@ export function updateDefensiveAI(state: GameState): void {
   applyDefensiveAIToMAD(state);
   
   // Monthly costs
-  state.government.publicSpending += defense.costs.monthlyCost;
+  // TODO: Track defensive AI costs (no publicSpending property exists)
+  // state.government.publicSpending += defense.costs.monthlyCost;
 }
 
 // ============================================================================
@@ -635,7 +636,7 @@ function updateDefenseOffenseArmsRace(state: GameState): void {
   }
   
   // Defenders can upgrade (requires high investment)
-  if ((state.government.researchInvestments.safety || 0) > 20) {
+  if ((state.government.alignmentResearchInvestment || 0) > 20) {
     if (Math.random() < 0.1) { // 10% chance per month
       defense.armsRace.defenseGeneration++;
       

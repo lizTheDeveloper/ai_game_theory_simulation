@@ -13,7 +13,7 @@
  * - Stripe for Agents (2025) creates new attack vectors
  */
 
-import { AIAgent } from '@/types/ai';
+import { AIAgent } from '@/types/ai-agents';
 import { GameState } from '@/types/game';
 import { RNGFunction } from '@/types/config';
 

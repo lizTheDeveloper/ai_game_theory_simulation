@@ -78,9 +78,9 @@ function updateFreshwaterRecovery(state: GameState, rng: RNGFunction): void {
   const isImproving = isBreached; // If breached, we CAN improve toward threshold
 
   // Governance capacity check (research-skeptic requirement)
-  const enforcementCapacity = state.government?.governanceQuality?.enforcementCapacity ?? 0.5;
-  const internationalCooperation = state.government?.internationalCooperation ?? 0.5;
-  const governanceMultiplier = (enforcementCapacity + internationalCooperation) / 2;
+  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  const internationalCoordination = state.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
+  const governanceMultiplier = (institutionalCapacity + internationalCoordination) / 2;
 
   if (isImproving && governanceMultiplier >= 0.3) {
     // Low governance slows recovery (not blocks completely)
@@ -202,7 +202,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
   const isBreached = globalWarming > 1.0; // Boundary threshold, not stabilization target
 
   // Recovery possible if: governance good enough to coordinate action
-  const governanceGoodEnough = (state.government?.internationalCooperation ?? 0.5) >= 0.3;
+  const governanceGoodEnough = (state.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5) >= 0.3;
 
   const isRecovering = isBreached && governanceGoodEnough;
 
@@ -211,8 +211,8 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
   const climateMultiplier = globalWarming >= 1.5 ? 1.5 : 1.0;
 
   // Governance capacity (international cooperation critical for climate)
-  const internationalCooperation = state.government?.internationalCooperation ?? 0.5;
-  const governanceMultiplier = internationalCooperation < 0.5 ? 0.5 : 1.0;
+  const internationalCoordination = state.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
+  const governanceMultiplier = internationalCoordination < 0.5 ? 0.5 : 1.0;
 
   if (isRecovering) {
     const combinedMultiplier = governanceMultiplier / climateMultiplier;
@@ -243,7 +243,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
     if (netNegative) {
       const baseRecoveryRate = hasActiveCDR ? 0.00278 : 0.00167; // 30yr with CDR, 50yr natural
       const climatePenalty = climateMultiplier > 1 ? 0.5 : 1.0; // Half speed if ≥1.5°C
-      const governanceBonus = internationalCooperation > 0.7 ? 1.2 : 1.0; // 20% faster with strong cooperation
+      const governanceBonus = internationalCoordination > 0.7 ? 1.2 : 1.0; // 20% faster with strong cooperation
 
       const recoveryRate = baseRecoveryRate * climatePenalty * governanceBonus;
 
@@ -315,8 +315,8 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
   const struviteDeployed = state.techTreeState.unlockedTech.includes('struvite_recovery');
 
   // Governance capacity (enforcement of agricultural runoff regulations)
-  const enforcementCapacity = state.government?.governanceQuality?.enforcementCapacity ?? 0.5;
-  const governanceMultiplier = enforcementCapacity < 0.5 ? 0.5 : 1.0;
+  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   // Climate feedback (warming makes recovery harder - Lake Erie empirical)
   const climateBoundary = state.planetaryBoundariesSystem?.boundaries.climate_change;
@@ -378,8 +378,8 @@ function updateNitrogenRecovery(state: GameState, rng: RNGFunction): void {
   const isImproving = boundary.currentValue < boundary.boundaryThreshold;
 
   // Governance capacity (agricultural regulation enforcement)
-  const enforcementCapacity = state.government?.governanceQuality?.enforcementCapacity ?? 0.5;
-  const governanceMultiplier = enforcementCapacity < 0.5 ? 0.5 : 1.0;
+  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   if (isImproving && governanceMultiplier >= 0.3) {
     boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceMultiplier;
@@ -416,14 +416,14 @@ function updateLandSystemRecovery(state: GameState, rng: RNGFunction): void {
   const boundary = state.planetaryBoundariesSystem?.boundaries.land_system_change;
   if (!boundary) return;
 
-  const forestCover = state.environmentalAccumulation?.forestCover ?? 0.62;
+  const forestCover = (state.planetaryBoundariesSystem?.landUse?.globalHabitatCoverPercent ?? 62) / 100;
   const forestThreshold = 0.75; // 75% safe boundary (FAO)
 
   const isImproving = forestCover > forestThreshold;
 
   // Governance capacity (rewilding programs, habitat protection)
-  const enforcementCapacity = state.government?.governanceQuality?.enforcementCapacity ?? 0.5;
-  const governanceMultiplier = enforcementCapacity < 0.5 ? 0.5 : 1.0;
+  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   if (isImproving && governanceMultiplier >= 0.3) {
     boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceMultiplier;
@@ -603,10 +603,12 @@ function updateNovelEntitiesStabilization(state: GameState, rng: RNGFunction): v
   if (!boundary) return;
 
   // Check if PFAS production banned (policy, not technology)
-  const pfasBanned = state.government?.policies?.pfasProductionBan ?? false;
+  // Note: These policies would need to be added to GameState.policies interface
+  // For now, assume no policy intervention (conservative default)
+  const pfasBanned = false; // TODO: Add pfasProductionBan to policies interface
 
   // Check if microplastic regulations in place
-  const microplasticRegulated = state.government?.policies?.microplasticRegulations ?? false;
+  const microplasticRegulated = false; // TODO: Add microplasticRegulations to policies interface
 
   const inputsStopped = pfasBanned && microplasticRegulated;
 
