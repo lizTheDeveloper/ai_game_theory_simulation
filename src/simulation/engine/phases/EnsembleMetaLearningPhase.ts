@@ -51,7 +51,7 @@ export const EnsembleMetaLearningPhase: SimulationPhase = {
 
     // Store adaptation in history
     meta.adaptationHistory.push({
-      month: currentMonth,
+      timestamp: currentMonth,
       oldWeights,
       newWeights,
       reason: `Meta-learning update: ${totalSamples} evaluations, ${monthsSinceUpdate} months`

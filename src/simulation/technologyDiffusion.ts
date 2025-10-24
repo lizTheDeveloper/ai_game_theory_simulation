@@ -145,7 +145,7 @@ export function updateFrontierCapabilities(
   // Record breakthroughs
   for (const breakthrough of breakthroughs) {
     state.ecosystem.breakthroughs.push({
-      month: currentMonth,
+      timestamp: currentMonth,
       aiId: ai.id,
       ...breakthrough
     });

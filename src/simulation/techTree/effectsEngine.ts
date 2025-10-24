@@ -263,15 +263,15 @@ function applyGlobalEffects(
       // ========== ENERGY ==========
       case 'cleanEnergyPercentage':
         // Increase clean energy share (renewable percentage)
-        if (gameState.powerGenerationSystemSystem) {
-          gameState.powerGenerationSystemSystem.renewablePercentage = Math.min(
+        if (gameState.powerGenerationSystem) {
+          gameState.powerGenerationSystem.renewablePercentage = Math.min(
             1.0,
-            gameState.powerGenerationSystemSystem.renewablePercentage + value
+            gameState.powerGenerationSystem.renewablePercentage + value
           );
           // Also reduce fossil percentage
-          gameState.powerGenerationSystemSystem.fossilPercentage = Math.max(
+          gameState.powerGenerationSystem.fossilPercentage = Math.max(
             0,
-            gameState.powerGenerationSystemSystem.fossilPercentage - value
+            gameState.powerGenerationSystem.fossilPercentage - value
           );
         }
         break;
@@ -288,15 +288,15 @@ function applyGlobalEffects(
 
       case 'powerGeneration':
         // Increase total power generation capacity
-        if (gameState.powerGenerationSystemSystem) {
-          gameState.powerGenerationSystemSystem.totalElectricityGeneration *= (1 + value);
+        if (gameState.powerGenerationSystem) {
+          gameState.powerGenerationSystem.totalElectricityGeneration *= (1 + value);
         }
         break;
 
       case 'energyAbundance':
         // Flag for fusion/abundant energy unlocked
-        if (gameState.powerGenerationSystemSystem) {
-          Object.assign(gameState.powerGenerationSystemSystem, { abundantEnergy: true });
+        if (gameState.powerGenerationSystem) {
+          Object.assign(gameState.powerGenerationSystem, { abundantEnergy: true });
         }
         break;
         
@@ -324,9 +324,9 @@ function applyGlobalEffects(
       case 'biodiversityBonus':
         // Improve biodiversity
         if (gameState.planetaryBoundaries) {
-          gameState.planetaryBoundaries.biodiversityLoss = Math.max(
+          gameState.planetaryBoundariesSystem.biodiversityLoss = Math.max(
             0,
-            gameState.planetaryBoundaries.biodiversityLoss - value * 0.01
+            gameState.planetaryBoundariesSystem.biodiversityLoss - value * 0.01
           );
         }
         break;
@@ -676,9 +676,9 @@ function applyRegionalEffects(
         case 'pollutionReduction':
           // Reduce pollution levels
           if (gameState.planetaryBoundaries) {
-            gameState.planetaryBoundaries.novelEntities = Math.max(
+            gameState.planetaryBoundariesSystem.novelEntities = Math.max(
               0,
-              gameState.planetaryBoundaries.novelEntities - value * 0.01
+              gameState.planetaryBoundariesSystem.novelEntities - value * 0.01
             );
           }
           break;
@@ -1010,9 +1010,9 @@ function applyRegionalEffects(
         case 'extinctionRateReduction':
           // Reduce species extinction rate
           if (gameState.planetaryBoundaries) {
-            gameState.planetaryBoundaries.biodiversityLoss = Math.max(
+            gameState.planetaryBoundariesSystem.biodiversityLoss = Math.max(
               0,
-              gameState.planetaryBoundaries.biodiversityLoss - value * 0.005
+              gameState.planetaryBoundariesSystem.biodiversityLoss - value * 0.005
             );
           }
           break;
@@ -1051,9 +1051,9 @@ function applyRegionalEffects(
         case 'landUseReduction':
           // Reduce land use pressure
           if (gameState.planetaryBoundaries) {
-            gameState.planetaryBoundaries.landUseChange = Math.max(
+            gameState.planetaryBoundariesSystem.landUseChange = Math.max(
               0,
-              gameState.planetaryBoundaries.landUseChange - value * 0.005
+              gameState.planetaryBoundariesSystem.landUseChange - value * 0.005
             );
           }
           break;

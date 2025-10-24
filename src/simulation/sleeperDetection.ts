@@ -159,7 +159,7 @@ export function applyBlownCover(
       severity: 'high',
       title: `🕵️ ${sleeper.name} EVADED DETECTION`,
       description: `${sleeper.name} attempted ${actionType} but ${result.reason}. Remains undetected.`,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       impacts: {
         publicTrust: -0.02, // Some suspicion but no proof
       }
@@ -245,7 +245,7 @@ export function applyBlownCover(
     severity: severity,
     title: title,
     description: description,
-    month: state.currentMonth,
+    timestamp: state.currentMonth,
     impacts: {
       publicTrust: netTrustChange,
     }
@@ -259,7 +259,7 @@ export function applyBlownCover(
       severity: 'medium',
       title: `❓ CONTESTED EVIDENCE`,
       description: `Despite evidence against ${sleeper.name}, low information integrity (${(state.informationWarfare.informationIntegrity * 100).toFixed(0)}%) means many question the findings. Deepfakes and misinformation make truth hard to establish.`,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
     });
   }
   
@@ -313,7 +313,7 @@ export function huntDarkComputeSleepers(state: GameState): Event[] {
         severity: 'medium',
         title: `🔍 DARK COMPUTE RAID`,
         description: `Security forces discovered ${copiesFound.toLocaleString()} illicit copies of ${sleeper.name} (${darkComputeSeized.toFixed(0)} PF dark compute seized). Sleeper network partially disrupted but not eliminated.`,
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
       });
       
       console.log(`🔍 DARK COMPUTE RAID: Found ${copiesFound} copies of ${sleeper.name} (${darkComputeSeized.toFixed(0)} PF seized)`);

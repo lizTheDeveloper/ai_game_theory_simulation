@@ -17,7 +17,7 @@
 
 import { SimulationPhase, PhaseResult, PhaseContext } from '../PhaseOrchestrator';
 import { GameState } from '@/types/game';
-import { RNGFunction } from '@/types/rng';
+import { RNGFunction } from '@/types/config';
 import {
   updateEmergencyResponses,
   deployEmergencyResponse,
@@ -276,11 +276,11 @@ export class EmergencyResponsePhase implements SimulationPhase {
 
             // Improve planetary boundaries slightly
             if (state.planetaryBoundaries) {
-              if (state.planetaryBoundaries.freshwater < 0.5) {
-                state.planetaryBoundaries.freshwater = Math.min(0.7, state.planetaryBoundaries.freshwater + recoveryBonus);
+              if (state.planetaryBoundariesSystem.freshwater < 0.5) {
+                state.planetaryBoundariesSystem.freshwater = Math.min(0.7, state.planetaryBoundariesSystem.freshwater + recoveryBonus);
               }
-              if (state.planetaryBoundaries.phosphorus < 0.5) {
-                state.planetaryBoundaries.phosphorus = Math.min(0.7, state.planetaryBoundaries.phosphorus + recoveryBonus);
+              if (state.planetaryBoundariesSystem.phosphorus < 0.5) {
+                state.planetaryBoundariesSystem.phosphorus = Math.min(0.7, state.planetaryBoundariesSystem.phosphorus + recoveryBonus);
               }
             }
 

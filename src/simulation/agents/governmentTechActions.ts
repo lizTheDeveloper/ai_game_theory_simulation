@@ -175,7 +175,7 @@ export const DEPLOY_NATIONAL_TECHNOLOGY_ACTION: GameAction = {
       deployedBy: nation,
       investment,
       targetRegion,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
     };
     
     // Add to pending actions

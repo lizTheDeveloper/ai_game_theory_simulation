@@ -11,6 +11,7 @@ export { CyberSecurityPhase } from './CyberSecurityPhase';
 export { SleeperWakePhase } from './SleeperWakePhase';
 export { SocialInfluenceUpdatePhase } from './SocialInfluenceUpdatePhase';  // Oct 21, 2025: Social influence accumulation
 export { AIAgentActionsPhase } from './AIAgentActionsPhase';
+export { AlignmentDynamicsPhase } from './AlignmentDynamicsPhase';  // Oct 23, 2025: Multi-theory alignment evolution
 export { StochasticInnovationPhase } from './StochasticInnovationPhase';
 export { GovernmentActionsPhase } from './GovernmentActionsPhase';
 export { GovernmentElectionPhase } from './GovernmentElectionPhase';  // Oct 19, 2025: Government system elections

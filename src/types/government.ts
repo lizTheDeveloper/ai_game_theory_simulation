@@ -173,6 +173,10 @@ export interface GovernmentAgent {
     minorityProtectionStrength: number;  // [0,1] Safeguards for vulnerable groups (AI bias detection)
   };
 
+  // Backward compatibility accessors
+  democracy?: number; // [0,1] Aggregate democracy quality (convenience accessor)
+  democracyQuality?: number; // [0,1] Alias for democracy
+
   // Cooperative Spirals: Institutional resilience (Oct 17, 2025)
   // Research: Acemoglu & Robinson (2001) - reforms can lock in during critical junctures
   institutionalResilience?: number;  // [0,1] Ability to maintain reforms during crises

@@ -77,7 +77,7 @@ const investCyberDefense: CategorizedGovernmentAction = {
       },
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Cybersecurity Investment',
         description: `Defense capabilities improved to ~${defensePower.toFixed(1)}. Attack power: ${attackPower.toFixed(1)}. Status: ${status}. ${ratio < 0.5 ? 'Open source can be contained!' : ratio > 2.0 ? 'Attacks overwhelming defenses!' : 'Arms race continues.'}`,
         effects: {
@@ -134,7 +134,7 @@ const deployNuclearHumanInTheLoop: CategorizedGovernmentAction = {
         effects: { nuclearSafety: 0.95 },
         events: [{
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           title: '🔒 Human-in-the-Loop Nuclear Authorization',
           description: 'Government enforces human veto points in nuclear launch decisions. AI systems CANNOT authorize nuclear weapons without multiple human approvals (3 veto points). Implements Biden-Xi Agreement and DoD Directive 3000.09.',
           effects: { nuclearCircuitBreakers: 1 }
@@ -152,7 +152,7 @@ const deployNuclearHumanInTheLoop: CategorizedGovernmentAction = {
         effects: { nuclearSafety: 0.02 },
         events: [{
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           title: '🔒 Enhanced Human Veto Points',
           description: `Increased nuclear authorization veto points from ${ncc.humanInTheLoop.vetoPointsEnforced - 1} to ${newVetoPoints}. More human oversight = harder for AI to bypass.`,
           effects: { nuclearVetoPoints: newVetoPoints }
@@ -206,7 +206,7 @@ const deployAIKillSwitches: CategorizedGovernmentAction = {
         effects: { nuclearSafety: 0.9 },
         events: [{
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           title: '🔴 AI Kill Switches Deployed',
           description: 'Government installs remote deactivation mechanisms in 80% of AI systems. Dangerous AIs can be shut down before nuclear escalation. Implements UN CCW technical safeguards.',
           effects: { aiKillSwitches: 0.8 }
@@ -224,7 +224,7 @@ const deployAIKillSwitches: CategorizedGovernmentAction = {
         effects: { nuclearSafety: 0.05 },
         events: [{
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           title: '🔴 Kill Switch Coverage Expanded',
           description: `AI kill switch coverage increased from ${Math.round(ncc.aiKillSwitches.coverage * 100 - 10)}% to ${Math.round(newCoverage * 100)}%. More AIs can be remotely deactivated.`,
           effects: { killSwitchCoverage: newCoverage }
@@ -278,7 +278,7 @@ const deployNuclearTimeDelays: CategorizedGovernmentAction = {
         effects: { nuclearSafety: 0.7 },
         events: [{
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           title: '⏰ Nuclear Time Delays Enforced',
           description: 'Mandatory 24-hour cooling-off period for high-tension nuclear situations. Allows diplomacy and AI mediation to de-escalate crises before launch.',
           effects: { nuclearTimeDelay: 24 }
@@ -296,7 +296,7 @@ const deployNuclearTimeDelays: CategorizedGovernmentAction = {
         effects: { nuclearSafety: 0.05 },
         events: [{
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           title: '⏰ Time Delay Extended',
           description: `Nuclear cooling-off period extended from ${ncc.timeDelays.delayDuration - 6} hours to ${newDuration} hours. More time for diplomatic resolution.`,
           effects: { timeDelayDuration: newDuration }

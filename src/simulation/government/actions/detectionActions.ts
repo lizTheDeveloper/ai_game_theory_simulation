@@ -65,7 +65,7 @@ const detectMisalignedAIs: CategorizedGovernmentAction = {
       events: [
         {
           type: 'policy',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           title: 'AI Misalignment Scan Complete',
           description: `Detected ${truePositives} misaligned AIs and ${falsePositives} false positives. ${detectedAIs.length === 0 ? 'No threats detected.' : 'Flagged AIs await removal decision.'}`,
           effects: { detected: detectedAIs.length }
@@ -150,7 +150,7 @@ const removeDetectedAI: CategorizedGovernmentAction = {
       },
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'AI Removal Operation',
         description: `Removed ${fullRemovals} AIs completely, ${partialRemovals} partially (${totalRemainingSpread} copies remain). ${failedRemovals} failed (open weights). ${falsePositiveRemoved > 0 ? `WARNING: ${falsePositiveRemoved} false positives removed (trust/innovation damage).` : ''}`,
         effects: {

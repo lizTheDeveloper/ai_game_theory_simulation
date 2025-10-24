@@ -20,7 +20,7 @@
 
 import { SimulationPhase, PhaseResult } from '../PhaseOrchestrator';
 import { GameState, GameEvent } from '@/types/game';
-import { RNGFunction } from '@/types/rng';
+import { RNGFunction } from '@/types/config';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
 
 interface Breakthrough {

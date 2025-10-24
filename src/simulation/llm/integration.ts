@@ -163,7 +163,7 @@ function applyWeightUpdate(
   }
 
   const historyEntry: WeightUpdateHistory = {
-    month: currentMonth,
+    timestamp: currentMonth,
     capability: agent.capability,
     alignment: agent.trueAlignment ?? agent.alignment,
     trustInAI: 0, // Will be filled by caller if available

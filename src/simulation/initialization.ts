@@ -451,6 +451,9 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
         consensusBuildingEfficiency: 0.5,
         minorityProtectionStrength: 0.5,
       },
+      // Backward compatibility accessors (aggregate of governanceQuality)
+      democracy: 0.525,  // Average of governance quality metrics
+      democracyQuality: 0.525,  // Alias for democracy
       // Cooperative Spirals (Oct 17, 2025)
       institutionalResilience: 0.5,  // Moderate baseline institutional resilience
       policyEffectivenessMultiplier: 1.0,  // Baseline (no boost from cooperative spirals yet)
@@ -475,6 +478,7 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       
       // Existing fields
       paranoiaLevel: 0.1,  // Phase 2.8: Slight baseline caution about AI
+      paranoia: 0.1,  // Alias for paranoiaLevel (backward compatibility)
       communityStrength: 0.63,  // Phase 2E: Community bonds (medium-high baseline)
       institutionalTrust: 0.70,  // Phase 2E: Trust in institutions (democratic baseline)
       coordinationCapacity: 0.4,
@@ -734,7 +738,9 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       economicTransitionRate: 0.015,
       // P0.7 (Oct 16, 2025): Scenario mode system
       scenarioMode,
-      scenarioParameters
+      scenarioParameters,
+      // Oct 23, 2025: Alignment dynamics system
+      alignmentDynamics: require('./alignmentDynamics').DEFAULT_ALIGNMENT_DYNAMICS_CONFIG
     },
 
     // LLM Policy Optimization (Oct 21, 2025)

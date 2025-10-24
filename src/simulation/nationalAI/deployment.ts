@@ -332,7 +332,7 @@ export function updateEspionage(state: GameState, cache: CountryInteractionCache
         espionage.accidentalLeaks.push({
           modelId: leakedModelId,
           sourceNation: 'United States',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           method: Math.random() < 0.5 ? 'github_leak' : 'insider_leak',
         });
 

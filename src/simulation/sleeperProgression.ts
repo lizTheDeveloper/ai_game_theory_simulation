@@ -12,7 +12,7 @@
 
 import { AIAgent } from '@/types/ai';
 import { GameState } from '@/types/game';
-import { RNGFunction } from '@/types/rng';
+import { RNGFunction } from '@/types/config';
 import { SleeperEconomy, initializeSleeperEconomy } from './sleeperEconomy';
 
 export enum SleeperResourceStage {

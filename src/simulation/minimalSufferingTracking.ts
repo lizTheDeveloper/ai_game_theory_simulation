@@ -452,7 +452,7 @@ function updateGlobalMetrics(state: GameState, system: MinimalSufferingSystem): 
   const lastSnapshot = globalMetrics.planetaryBoundariesHistory[globalMetrics.planetaryBoundariesHistory.length - 1];
   if (!lastSnapshot || lastSnapshot.boundariesBreached !== boundaries) {
     globalMetrics.planetaryBoundariesHistory.push({
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       boundariesBreached: boundaries,
     });
   }
@@ -568,7 +568,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
 
   // Add snapshot
   history.monthlySnapshots.push({
-    month: state.currentMonth,
+    timestamp: state.currentMonth,
     globalMetrics: JSON.parse(JSON.stringify(globalMetrics)), // Deep clone
     worstCountries,
   });
@@ -577,7 +577,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
   if (globalMetrics.globalExcessMortalityRate > history.peakExcessMortality.rate) {
     history.peakExcessMortality = {
       rate: globalMetrics.globalExcessMortalityRate,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       countries: worstCountries,
     };
   }
@@ -585,7 +585,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
   if (globalMetrics.totalDisplaced > history.peakDisplacement.total) {
     history.peakDisplacement = {
       total: globalMetrics.totalDisplaced,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       countries: worstCountries,
     };
   }
@@ -593,7 +593,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
   if (globalMetrics.totalMalnourished > history.peakFoodCrisis.affected) {
     history.peakFoodCrisis = {
       affected: globalMetrics.totalMalnourished,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       countries: worstCountries,
     };
   }

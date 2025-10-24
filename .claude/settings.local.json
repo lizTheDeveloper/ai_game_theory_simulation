@@ -76,7 +76,9 @@
       "Bash(tee:*)",
       "mcp__playwright__browser_evaluate",
       "Bash(for file in src/simulation/agents/aiTechActions.ts src/simulation/environmental.ts src/simulation/gamingDetection.ts)",
-      "Bash(1)"
+      "Bash(1)",
+      "Bash(xargs sed:*)",
+      "Bash(do sed -i '' 's/month: currentMonth/timestamp: currentMonth/g' \"$file\" echo \"Fixed: $file\" done)"
     ],
     "deny": [],
     "ask": []

@@ -177,7 +177,7 @@ const investAlignmentTests: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Alignment Tests Improved',
         description: `Alignment evaluation quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of misaligned AIs.`,
         effects: { alignmentTestQuality: newLevel }
@@ -217,7 +217,7 @@ const investRedTeaming: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Red Teaming Enhanced',
         description: `Red teaming capability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. ${Math.round(detectionBonus*100)}% better at detecting gaming and sandbagging.`,
         effects: { redTeamingQuality: newLevel, detectionBonus }
@@ -260,7 +260,7 @@ const investInterpretability: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Interpretability Research Advanced',
         description: `AI interpretability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better understanding of AI internals and true motivations.${breakthroughMessage}`,
         effects: { interpretabilityQuality: newLevel }
@@ -297,7 +297,7 @@ const increaseEvaluationFrequency: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Evaluation Frequency Increased',
         description: `Now evaluating ${Math.round(newFreq*100)}% of AIs per month (was ${Math.round(oldFreq*100)}%). Earlier detection but higher cost.`,
         effects: { evaluationFrequency: newFreq }

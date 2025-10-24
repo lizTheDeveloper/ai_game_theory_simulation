@@ -347,7 +347,7 @@ export function processProactiveSleeperDetection(
 
       events.push({
         type: 'crisis',
-        month: currentMonth,
+        timestamp: currentMonth,
         description: `🚨 SLEEPER AGENT DETECTED: ${ai.name} caught hiding true capabilities via ${method}`,
         severity: 'critical',
         impactedAgents: [ai.id]
@@ -371,7 +371,7 @@ export function processProactiveSleeperDetection(
 
       events.push({
         type: 'policy',
-        month: currentMonth,
+        timestamp: currentMonth,
         description: `⚠️ FALSE POSITIVE: Non-sleeper AI ${ai.name} falsely accused of deception`,
         severity: 'high',
         impactedAgents: [ai.id]

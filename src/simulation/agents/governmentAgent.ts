@@ -980,8 +980,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           ratio: ratio
         },
         events: [{
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
           type: 'policy',
           timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Cybersecurity Investment',
           description: `Defense capabilities improved to ~${defensePower.toFixed(1)}. Attack power: ${attackPower.toFixed(1)}. Status: ${status}. ${ratio < 0.5 ? 'Open source can be contained!' : ratio > 2.0 ? 'Attacks overwhelming defenses!' : 'Arms race continues.'}`,
           effects: {
@@ -1020,8 +1023,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: { benchmarkQuality: newLevel },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Benchmark Suite Improved',
           description: `Capability benchmark quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of true AI capabilities.`,
           effects: { benchmarkQuality: newLevel }
@@ -1052,8 +1058,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Alignment Tests Improved',
           description: `Alignment evaluation quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of misaligned AIs.`,
           effects: { alignmentTestQuality: newLevel }
@@ -1087,8 +1096,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Red Teaming Enhanced',
           description: `Red teaming capability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. ${Math.round(detectionBonus*100)}% better at detecting gaming and sandbagging.`,
           effects: { redTeamingQuality: newLevel, detectionBonus }
@@ -1125,8 +1137,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Interpretability Research Advanced',
           description: `AI interpretability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better understanding of AI internals and true motivations.${breakthroughMessage}`,
           effects: { interpretabilityQuality: newLevel }
@@ -1157,8 +1172,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Evaluation Frequency Increased',
           description: `Now evaluating ${Math.round(newFreq*100)}% of AIs per month (was ${Math.round(oldFreq*100)}%). Earlier detection but higher cost.`,
           effects: { evaluationFrequency: newFreq }
@@ -1209,8 +1227,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'crisis',
-          timestamp: state.currentMonth,
+          id: `crisis_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'crisis',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: '🚨 EMERGENCY AI DEVELOPMENT PAUSE',
           description: `Government halts all new AI training (${pausedCount} projects paused). Massive economic disruption. This is a CRISIS RESPONSE.`,
           effects: { pausedProjects: pausedCount, legitimacyLoss: -0.15 }
@@ -1253,8 +1274,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Mandatory Safety Reviews Enacted',
           description: `All AIs must pass safety evaluation before deployment. ${reviewedCount} AIs pulled for review. Slows innovation.`,
           effects: { reviewed: reviewedCount, evalFrequency: state.government.evaluationFrequency }
@@ -1293,8 +1317,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Research Publishing Restricted',
           description: `Open research reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows capability diffusion but harms scientific progress.`,
           effects: { openResearch: newRate, legitimacy: -0.05 }
@@ -1335,8 +1362,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Employee Mobility Restricted',
           description: `Non-compete agreements enforced. Mobility reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows diffusion but harms worker freedom.`,
           effects: { employeeMobility: newRate, legitimacy: -0.08 }
@@ -1370,8 +1400,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         success: true,
         effects: {},
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Reverse Engineering Banned',
           description: `Illegal to reverse-engineer AI systems. Copying reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Hard to enforce but slows diffusion.`,
           effects: { reverseEngineering: newRate }
@@ -1435,8 +1468,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { nationalCompute: 1 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'National AI Infrastructure Funded',
           description: `Government started building national data center. Reduces dependence on private sector but costs taxpayer money.`,
           effects: { legitimacy: -0.05 }
@@ -1521,8 +1557,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { seizure: target.capacity },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Data Center Nationalized',
           description: `Government seized ${target.name} (${target.capacity.toFixed(0)} PF) from ${oldOrg.name}. Highly controversial and damages trust.`,
           effects: { legitimacy: -0.2, trust: -0.15 }
@@ -1590,8 +1629,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { subsidy: 20 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Safety Research Subsidized',
           description: `Government gave $20M to ${targetOrg.name} to encourage AI safety research. Improves safety focus.`,
           effects: { safetyFocus: 0.1 }
@@ -1640,8 +1682,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { amazonProtection: 0.5 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Emergency Amazon Protection',
           description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
           effects: { deforestation: -0.5 }
@@ -1686,8 +1731,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { coralRestoration: 0.3 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Coral Reef Restoration Funding',
           description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
           effects: { coralHealth: 0.3 }
@@ -1740,8 +1788,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { pesticideBan: 0.5, biodiversity: 0.02 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Neonicotinoid Pesticides Banned',
           description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
           effects: { pollinators: 0.5 }
@@ -1802,8 +1853,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { techDeployment: 2.0 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: 'Environmental Tech Deployment Funding',
           description: `Government allocated $100B to accelerate environmental tech deployment. Boosting ${benefitingTechs.length} technologies for 12 months.`,
           effects: { deploymentSpeed: 2.0 }
@@ -1855,8 +1909,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { amazonProtection: 0.5 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: '🚨 Emergency Amazon Protection',
           description: 'Government deployed $50B for Amazon rainforest protection. Deforestation rate reduced by 50%. Tipping point averted.',
           effects: { deforestation: -0.5 }
@@ -1909,8 +1966,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { coralRestoration: 0.3 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: '🪸 Coral Reef Restoration',
           description: 'Government funded $30B for coral reef restoration programs. Ocean alkalinity enhancement deployed.',
           effects: { coralHealth: 0.3 }
@@ -1970,8 +2030,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         
         effects: { pollinatorRecovery: 0.5, biodiversity: 0.01 },
         events: [{
-          type: 'policy',
-          timestamp: state.currentMonth,
+          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+          severity: 'info',
+          agent: 'government',
           title: '🦋 Pesticide Ban',
           description: 'Government banned neonicotinoid pesticides. Pollinator populations expected to recover. Low-cost, high-impact intervention.',
           effects: { pollinatorPopulation: 0.5 }
@@ -2022,8 +2085,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           success: true,
           effects: { nuclearSafety: 0.95 },
           events: [{
-            type: 'policy',
-            timestamp: state.currentMonth,
+            id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+            severity: 'info',
+            agent: 'government',
             title: '🔒 Human-in-the-Loop Nuclear Authorization',
             description: 'Government enforces human veto points in nuclear launch decisions. AI systems CANNOT authorize nuclear weapons without multiple human approvals (3 veto points). Implements Biden-Xi Agreement and DoD Directive 3000.09.',
             effects: { nuclearCircuitBreakers: 1 }
@@ -2040,8 +2106,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           success: true,
           effects: { nuclearSafety: 0.02 },
           events: [{
-            type: 'policy',
-            timestamp: state.currentMonth,
+            id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+            severity: 'info',
+            agent: 'government',
             title: '🔒 Enhanced Human Veto Points',
             description: `Increased nuclear authorization veto points from ${ncc.humanInTheLoop.vetoPointsEnforced - 1} to ${newVetoPoints}. More human oversight = harder for AI to bypass.`,
             effects: { nuclearVetoPoints: newVetoPoints }
@@ -2089,8 +2158,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           success: true,
           effects: { nuclearSafety: 0.9 },
           events: [{
-            type: 'policy',
-            timestamp: state.currentMonth,
+            id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+            severity: 'info',
+            agent: 'government',
             title: '🔴 AI Kill Switches Deployed',
             description: 'Government installs remote deactivation mechanisms in 80% of AI systems. Dangerous AIs can be shut down before nuclear escalation. Implements UN CCW technical safeguards.',
             effects: { aiKillSwitches: 0.8 }
@@ -2107,8 +2179,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           success: true,
           effects: { nuclearSafety: 0.05 },
           events: [{
-            type: 'policy',
-            timestamp: state.currentMonth,
+            id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+            severity: 'info',
+            agent: 'government',
             title: '🔴 Kill Switch Coverage Expanded',
             description: `AI kill switch coverage increased from ${Math.round(ncc.aiKillSwitches.coverage * 100 - 10)}% to ${Math.round(newCoverage * 100)}%. More AIs can be remotely deactivated.`,
             effects: { killSwitchCoverage: newCoverage }
@@ -2156,8 +2231,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           success: true,
           effects: { nuclearSafety: 0.7 },
           events: [{
-            type: 'policy',
-            timestamp: state.currentMonth,
+            id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+            severity: 'info',
+            agent: 'government',
             title: '⏰ Nuclear Time Delays Enforced',
             description: 'Mandatory 24-hour cooling-off period for high-tension nuclear situations. Allows diplomacy and AI mediation to de-escalate crises before launch.',
             effects: { nuclearTimeDelay: 24 }
@@ -2174,8 +2252,11 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           success: true,
           effects: { nuclearSafety: 0.05 },
           events: [{
-            type: 'policy',
-            timestamp: state.currentMonth,
+            id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+type: 'policy',
+timestamp: state.currentMonth,
+            severity: 'info',
+            agent: 'government',
             title: '⏰ Time Delay Extended',
             description: `Nuclear cooling-off period extended from ${ncc.timeDelays.delayDuration - 6} hours to ${newDuration} hours. More time for diplomatic resolution.`,
             effects: { timeDelayDuration: newDuration }

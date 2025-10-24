@@ -25,7 +25,7 @@
 
 import { SimulationPhase, PhaseResult } from '../PhaseOrchestrator';
 import { GameState } from '@/types/game';
-import { RNGFunction } from '@/types/rng';
+import { RNGFunction } from '@/types/config';
 import { updateEarlyWarningDetection } from '@/simulation/earlyWarningSystems';
 
 export class EarlyWarningPhase implements SimulationPhase {

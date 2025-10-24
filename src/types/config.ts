@@ -36,6 +36,11 @@ export interface ConfigurationSettings {
   // P0.7 (Oct 16, 2025): Scenario mode selection
   scenarioMode: ScenarioMode; // 'historical' or 'unprecedented'
   scenarioParameters?: ScenarioParameters; // Computed parameters for selected scenario
+
+  // Alignment Dynamics System (Oct 23, 2025)
+  // Multi-theory modeling of alignment change (static vs drift vs epicycles vs unknowable)
+  // Allows exploring different theories of how AI values evolve
+  alignmentDynamics?: import('./alignment-dynamics').AlignmentDynamicsConfig;
 }
 
 /**

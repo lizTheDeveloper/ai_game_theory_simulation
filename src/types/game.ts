@@ -370,10 +370,10 @@ export interface GameState {
   powerGenerationSystem: import('../types/powerGeneration').PowerGenerationSystem; // Electricity generation, AI efficiency, crypto mining, climate impact
 
   // AI-Assisted Skills Enhancement (TIER 4.6) - Research-validated digital augmentation
-  aiAssistedSkillsMetrics?: import('../simulation/bionicSkills').AIAssistedSkillsMetrics; // Population-level metrics for AI tool adoption (GitHub Copilot, ChatGPT, AI tutors)
+  aiAssistedSkillsMetrics?: import('../simulation/aiAssistedSkills/types').AIAssistedSkillsMetrics; // Population-level metrics for AI tool adoption (GitHub Copilot, ChatGPT, AI tutors)
 
   // Labor-Capital Distribution & Productivity-Wage Decoupling (TIER 4.6 - Phase 4)
-  laborCapitalDistribution?: import('../simulation/bionicSkills').LaborCapitalDistribution; // Tracks productivity-wage gap (1973-2024: 77.5% productivity, 12.4% wages)
+  laborCapitalDistribution?: import('../simulation/aiAssistedSkills/types').LaborCapitalDistribution; // Tracks productivity-wage gap (1973-2024: 77.5% productivity, 12.4% wages)
 
   // Policy Interventions (TIER 4.6 - Phase 6) - Mitigations for AI automation impacts
   policyInterventions?: {

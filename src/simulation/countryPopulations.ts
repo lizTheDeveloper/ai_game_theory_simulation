@@ -532,7 +532,7 @@ export function updateCountryPopulations(state: GameState): void {
       
       sys.depopulationEvents.push({
         country: countryName,
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         finalPopulation: country.population
       });
       
