@@ -113,59 +113,53 @@ export async function GET() {
 function getActiveCrises(state: GameState): OverviewData['activeCrises'] {
   const crises: OverviewData['activeCrises'] = [];
 
-  // Check planetary boundary crises
-  if (state.crisisSystem?.phosphorusCrisis?.active) {
+  // Check phosphorus crisis
+  if (state.phosphorusSystem.supplyShockActive || state.phosphorusSystem.criticalDepletionActive) {
     crises.push({
       type: 'Phosphorus Depletion',
-      severity: state.crisisSystem.phosphorusCrisis.severity || 'medium',
-      affectedPopulation:
-        state.crisisSystem.phosphorusCrisis.affectedPopulation || 0,
-      interventionWindow:
-        state.crisisSystem.phosphorusCrisis.interventionWindow || 0,
+      severity: state.phosphorusSystem.criticalDepletionActive ? 'critical' : 'high',
+      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.15), // 15% affected
+      interventionWindow: 24, // ~2 years
     });
   }
 
-  if (state.crisisSystem?.freshwaterCrisis?.active) {
+  // Check freshwater crisis
+  if (state.freshwaterSystem.dayZeroDrought?.active || state.freshwaterSystem.criticalScarcityActive) {
     crises.push({
       type: 'Freshwater Scarcity',
-      severity: state.crisisSystem.freshwaterCrisis.severity || 'medium',
-      affectedPopulation:
-        state.crisisSystem.freshwaterCrisis.affectedPopulation || 0,
-      interventionWindow:
-        state.crisisSystem.freshwaterCrisis.interventionWindow || 0,
+      severity: state.freshwaterSystem.criticalScarcityActive ? 'critical' : 'high',
+      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.20), // 20% affected
+      interventionWindow: 18, // ~1.5 years
     });
   }
 
-  if (state.crisisSystem?.oceanAcidificationCrisis?.active) {
+  // Check ocean acidification crisis
+  if (state.oceanAcidificationSystem.coralDieoffActive || state.oceanAcidificationSystem.fisheryCollapseActive) {
     crises.push({
       type: 'Ocean Acidification',
-      severity: state.crisisSystem.oceanAcidificationCrisis.severity || 'medium',
-      affectedPopulation:
-        state.crisisSystem.oceanAcidificationCrisis.affectedPopulation || 0,
-      interventionWindow:
-        state.crisisSystem.oceanAcidificationCrisis.interventionWindow || 0,
+      severity: state.oceanAcidificationSystem.fisheryCollapseActive ? 'critical' : 'high',
+      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.10), // 10% affected
+      interventionWindow: 36, // ~3 years
     });
   }
 
-  if (state.crisisSystem?.novelEntitiesCrisis?.active) {
+  // Check novel entities (PFAS) crisis
+  if (state.novelEntitiesSystem.pfasHealthCrisis || state.novelEntitiesSystem.microplasticCrisis) {
     crises.push({
       type: 'Novel Entities',
-      severity: state.crisisSystem.novelEntitiesCrisis.severity || 'medium',
-      affectedPopulation:
-        state.crisisSystem.novelEntitiesCrisis.affectedPopulation || 0,
-      interventionWindow:
-        state.crisisSystem.novelEntitiesCrisis.interventionWindow || 0,
+      severity: state.novelEntitiesSystem.pfasHealthCrisis ? 'high' : 'medium',
+      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.25), // 25% affected
+      interventionWindow: 60, // ~5 years
     });
   }
 
-  if (state.crisisSystem?.nuclearCrisis?.active) {
+  // Check nuclear crisis
+  if (state.nuclearRisk.activeNuclearWar) {
     crises.push({
       type: 'Nuclear Crisis',
-      severity: state.crisisSystem.nuclearCrisis.severity || 'critical',
-      affectedPopulation:
-        state.crisisSystem.nuclearCrisis.affectedPopulation || 0,
-      interventionWindow:
-        state.crisisSystem.nuclearCrisis.interventionWindow || 0,
+      severity: 'critical',
+      affectedPopulation: Math.floor(state.humanPopulationSystem.currentPopulation * 0.50), // 50% affected
+      interventionWindow: 1, // Immediate
     });
   }
 

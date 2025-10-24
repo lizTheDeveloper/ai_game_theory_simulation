@@ -186,10 +186,10 @@ function countActiveCrises(state: GameState): number {
   let count = 0;
 
   // Check planetary boundaries
-  if (state.planetaryBoundaries?.phosphorus?.active) count++;
-  if (state.planetaryBoundaries?.freshwater?.active) count++;
-  if (state.planetaryBoundaries?.oceanAcidification?.active) count++;
-  if (state.planetaryBoundaries?.novelEntities?.active) count++;
+  if (state.planetaryBoundariesSystem?.phosphorus?.active) count++;
+  if (state.planetaryBoundariesSystem?.freshwater?.active) count++;
+  if (state.planetaryBoundariesSystem?.oceanAcidification?.active) count++;
+  if (state.planetaryBoundariesSystem?.novelEntities?.active) count++;
 
   // Check other crises
   if (state.nuclearWinterState?.active) count++;

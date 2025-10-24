@@ -117,7 +117,7 @@ export function calculateInfrastructureMultiplier(state: GameState): number {
   }
 
   // Tipping point cascade severely disrupts infrastructure
-  if (state.planetaryBoundaries?.tippingPointCascade?.active) {
+  if (state.planetaryBoundariesSystem?.tippingPointCascade?.active) {
     const months = state.planetaryBoundariesSystem.tippingPointCascade.monthsActive || 0;
     // Degradation increases over time during cascade
     const cascadePenalty = Math.max(0.5, 1.0 - (months * 0.02)); // 2% per month, floor at 50%

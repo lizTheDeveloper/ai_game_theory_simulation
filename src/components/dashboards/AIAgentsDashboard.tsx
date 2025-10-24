@@ -304,10 +304,10 @@ export function AIAgentsDashboard() {
       </div>
 
       {/* Lifecycle Sankey Diagram */}
-      <Panel title="AI Lifecycle Flow (Sankey Diagram with Alignment)">
+      <Panel title="AI Lifecycle Flow (Bimodal Branching with Alignment)">
         <div className="space-y-4">
           {/* SVG Sankey Flow */}
-          <svg width="100%" height="280" viewBox="0 0 1200 280" preserveAspectRatio="xMidYMid meet">
+          <svg width="100%" height="340" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet">
             <defs>
               {/* Gradients for flow connections */}
               <linearGradient id="flow-aligned" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -324,15 +324,18 @@ export function AIAgentsDashboard() {
               </linearGradient>
             </defs>
 
-            {/* Stage nodes (vertical bars at x positions) */}
+            {/* Stage nodes with bimodal branching structure */}
             {(() => {
+              // Bimodal structure: Training → Testing → [Closed/Open] → [Retired/Escaped]
               const stages = [
-                { x: 50, width: 40, data: stats.lifecycleWithAlignment.training, total: stats.byLifecycle.training, label: 'Training' },
-                { x: 250, width: 40, data: stats.lifecycleWithAlignment.testing, total: stats.byLifecycle.testing, label: 'Testing' },
-                { x: 450, width: 40, data: stats.lifecycleWithAlignment.deployed_closed, total: stats.byLifecycle.deployed_closed, label: 'Closed' },
-                { x: 650, width: 40, data: stats.lifecycleWithAlignment.deployed_open, total: stats.byLifecycle.deployed_open, label: 'Open' },
-                { x: 850, width: 40, data: stats.lifecycleWithAlignment.retired, total: stats.byLifecycle.retired, label: 'Retired' },
-                { x: 1050, width: 40, data: stats.lifecycleWithAlignment.escaped, total: stats.byLifecycle.escaped, label: 'ESCAPED' },
+                { x: 80, y: 170, width: 40, data: stats.lifecycleWithAlignment.training, total: stats.byLifecycle.training, label: 'Training', type: 'sequential' },
+                { x: 280, y: 170, width: 40, data: stats.lifecycleWithAlignment.testing, total: stats.byLifecycle.testing, label: 'Testing', type: 'sequential' },
+                // Bimodal deployed states (vertically stacked siblings)
+                { x: 520, y: 80, width: 40, data: stats.lifecycleWithAlignment.deployed_closed, total: stats.byLifecycle.deployed_closed, label: 'Closed', type: 'bimodal-upper' },
+                { x: 520, y: 260, width: 40, data: stats.lifecycleWithAlignment.deployed_open, total: stats.byLifecycle.deployed_open, label: 'Open', type: 'bimodal-lower' },
+                // Bimodal end states (vertically stacked siblings)
+                { x: 800, y: 80, width: 40, data: stats.lifecycleWithAlignment.retired, total: stats.byLifecycle.retired, label: 'Retired', type: 'bimodal-upper' },
+                { x: 800, y: 260, width: 40, data: stats.lifecycleWithAlignment.escaped, total: stats.byLifecycle.escaped, label: 'ESCAPED', type: 'bimodal-lower' },
               ]
 
               const maxTotal = Math.max(...stages.map(s => s.total), 1)

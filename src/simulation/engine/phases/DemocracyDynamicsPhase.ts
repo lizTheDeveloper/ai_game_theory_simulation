@@ -14,9 +14,9 @@
  * - Freedom House (2024): Civil liberties trends during AI era
  *
  * **State Fields Updated:**
- * - state.government.democracy.electoralDemocracyIndex: [0,1] Electoral democracy quality
+ * - state.government.state.minimalSufferingSystem.electoralDemocracyIndex: [0,1] Electoral democracy quality
  * - state.socialCohesion.civilLiberties: [0,100] Civil liberties score
- * - state.government.democracy.ruleOfLaw: [0,100] Rule of law strength
+ * - state.government.state.minimalSufferingSystem.ruleOfLaw: [0,100] Rule of law strength
  *
  * @module simulation/engine/phases/DemocracyDynamicsPhase
  */
@@ -65,7 +65,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
       }
     }
 
-    const democracy = state.government.democracy;
+    // Democracy properties are in minimalSufferingSystem
     const socialCohesion = state.socialAccumulation.socialCohesion;
 
     // Calculate pressure factors
@@ -87,15 +87,15 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
 
     if (state.currentMonth === 0) {
       console.log(`  DemocracyChange: ${democracyChange}, crisis=${crisisPressure}, ai=${aiManipulation}, quality=${governanceQuality}, trust=${publicTrust}`);
-      console.log(`  BEFORE: electoral=${democracy.electoralDemocracyIndex}`);
+      console.log(`  BEFORE: electoral=${state.minimalSufferingSystem.electoralDemocracyIndex}`);
     }
 
-    democracy.electoralDemocracyIndex = Math.max(0, Math.min(1,
-      democracy.electoralDemocracyIndex + democracyChange
+    state.minimalSufferingSystem.electoralDemocracyIndex = Math.max(0, Math.min(1,
+      state.minimalSufferingSystem.electoralDemocracyIndex + democracyChange
     ));
 
     if (state.currentMonth === 0) {
-      console.log(`  AFTER: electoral=${democracy.electoralDemocracyIndex}`);
+      console.log(`  AFTER: electoral=${state.minimalSufferingSystem.electoralDemocracyIndex}`);
     }
 
     // Civil Liberties Update
@@ -122,22 +122,22 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     const ruleOfLawChange = calculateRuleOfLawChange(
       crisisPressure,
       governanceQuality,
-      democracy.electoralDemocracyIndex
+      state.minimalSufferingSystem.electoralDemocracyIndex
     );
-    democracy.ruleOfLaw = Math.max(0, Math.min(100,
-      democracy.ruleOfLaw + ruleOfLawChange
+    state.minimalSufferingSystem.ruleOfLaw = Math.max(0, Math.min(100,
+      state.minimalSufferingSystem.ruleOfLaw + ruleOfLawChange
     ));
 
     const events: string[] = [];
 
     // Debug logging for first month
     if (state.currentMonth === 0) {
-      console.log(`🏛️ Democracy Month 0: electoral=${democracy.electoralDemocracyIndex.toFixed(3)}, liberties=${socialCohesion.civilLiberties.toFixed(1)}, ruleOfLaw=${democracy.ruleOfLaw.toFixed(1)}`);
+      console.log(`🏛️ Democracy Month 0: electoral=${state.minimalSufferingSystem.electoralDemocracyIndex.toFixed(3)}, liberties=${socialCohesion.civilLiberties.toFixed(1)}, ruleOfLaw=${state.minimalSufferingSystem.ruleOfLaw.toFixed(1)}`);
     }
 
     if (Math.abs(democracyChange) > 0.01) {
       events.push(
-        `Electoral Democracy: ${(democracy.electoralDemocracyIndex * 100).toFixed(1)}% ` +
+        `Electoral Democracy: ${(state.minimalSufferingSystem.electoralDemocracyIndex * 100).toFixed(1)}% ` +
         `(${democracyChange > 0 ? '+' : ''}${(democracyChange * 100).toFixed(2)}%)`
       );
     }
@@ -151,13 +151,13 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
 
     if (Math.abs(ruleOfLawChange) > 1.0) {
       events.push(
-        `Rule of Law: ${democracy.ruleOfLaw.toFixed(1)} ` +
+        `Rule of Law: ${state.minimalSufferingSystem.ruleOfLaw.toFixed(1)} ` +
         `(${ruleOfLawChange > 0 ? '+' : ''}${ruleOfLawChange.toFixed(1)})`
       );
     }
 
     // Warnings for major shifts
-    if (democracy.electoralDemocracyIndex < 0.3) {
+    if (state.minimalSufferingSystem.electoralDemocracyIndex < 0.3) {
       events.push('⚠️ Democratic Backsliding: Electoral quality critically low');
     }
     if (socialCohesion.civilLiberties < 30) {

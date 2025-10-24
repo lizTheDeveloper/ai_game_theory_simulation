@@ -13,7 +13,7 @@ export interface PlanetaryBoundaryData {
 export function getPlanetaryBoundaries(
   state: GameState
 ): PlanetaryBoundaryData[] {
-  const boundaries = state.planetaryBoundaries;
+  const boundaries = state.planetaryBoundariesSystem;
   if (!boundaries) return [];
 
   const boundaryNames: PlanetaryBoundaryName[] = [
@@ -39,7 +39,7 @@ export function getPlanetaryBoundaries(
     else if (current >= safeZone) status = 'increasing-risk';
 
     // Calculate trend from history
-    const history = (state.history as any)?.planetaryBoundaries || [];
+    const history = (state.history as any)?.planetaryBoundariesSystem || [];
     const recentValues = history.slice(-6).map(h => (h as any)?.[name] || 0);
     const trend =
       recentValues.length >= 2 &&

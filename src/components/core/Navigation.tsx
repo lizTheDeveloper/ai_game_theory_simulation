@@ -33,7 +33,7 @@ export function Navigation() {
   const pathname = usePathname()
 
   // Get shared worker state from context
-  const { initialized, running, month, day, year, scenario, seed, init, start, pause, step } = useSimulationWorker()
+  const { initialized, running, month, day, year, simulationMonth, simulationDay, scenario, seed, init, start, pause, step } = useSimulationWorker()
 
   // Local UI state only
   const [showConfig, setShowConfig] = useState(false)
@@ -135,11 +135,11 @@ export function Navigation() {
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span style={{ color: 'var(--white-40)' }}>Month</span>
-                  <span className="text-white">{month}</span>
+                  <span className="text-white">{simulationMonth}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span style={{ color: 'var(--white-40)' }}>Day</span>
-                  <span className="text-white">{day}</span>
+                  <span className="text-white">{simulationDay}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span style={{ color: 'var(--white-40)' }}>Scenario</span>
