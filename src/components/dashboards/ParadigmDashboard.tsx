@@ -10,38 +10,33 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { Sparkline } from "@/components/charts/Sparkline"
-import { useSimulation } from "@/lib/hooks/useSimulation"
-import { useEffect } from "react"
+import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 
 export function ParadigmDashboard() {
-  const { currentState, trajectory, loadCurrent } = useSimulation()
+  const { lastUpdate, initialized } = useSimulationWorker()
 
-  useEffect(() => {
-    loadCurrent()
-  }, [])
-
-  if (!currentState) {
-    return <div className="p-8">Loading...</div>
+  if (!initialized) {
+    return (
+      <div className="p-8">
+        <Panel title="Not Initialized">
+          Click "Configure & Start" to initialize the simulation
+        </Panel>
+      </div>
+    )
   }
 
-  const paradigms = currentState.multiParadigmDUI || {
-    paradigmScores: {
-      western: { score: 50, components: {} },
-      development: { score: 50, components: {} },
-      ecological: { score: 50, components: {} }
-    },
-    diagnosticLenses: {
-      indigenous: { score: 50, components: {} }
-    }
+  if (!lastUpdate) {
+    return <div className="p-8">Waiting for simulation update...</div>
   }
 
-  // Calculate divergence
+  // Get scores from StateDelta
   const scores = [
-    (paradigms.paradigmScores.western as any).value,
-    (paradigms.paradigmScores.development as any).value,
-    (paradigms.paradigmScores.ecological as any).value,
-    (paradigms.diagnosticLenses.indigenous as any).value
+    lastUpdate.westernLiberalIndex ?? 50,
+    lastUpdate.developmentIndex ?? 50,
+    lastUpdate.ecologicalIndex ?? 50,
+    lastUpdate.indigenousIndex ?? 50
   ]
+
   const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
   const divergence = Math.sqrt(scores.reduce((sum, s) => sum + Math.pow(s - avgScore, 2), 0) / scores.length)
 
@@ -50,17 +45,10 @@ export function ParadigmDashboard() {
   const dystopiaCount = scores.filter(s => s < 30).length
   const isContested = utopiaCount > 0 && dystopiaCount > 0
 
-  // Get sparklines from trajectory
-  const getSparkline = (paradigm: 'western' | 'development' | 'ecological' | 'indigenous') => {
-    if (trajectory.length < 2) return []
-    return trajectory.slice(-12).map(state => {
-      const dui = state.multiParadigmDUI as any
-      if (!dui) return 50
-      if (paradigm === 'indigenous') {
-        return dui.diagnosticLenses?.indigenous?.value || 50
-      }
-      return dui.paradigmScores?.[paradigm]?.value || 50
-    })
+  // Note: Sparklines removed - trajectory not available in StateDelta
+  // Would need to implement history tracking in Web Worker if needed
+  const getSparkline = (_paradigm: 'western' | 'development' | 'ecological' | 'indigenous') => {
+    return [] // Placeholder - trajectory tracking not yet implemented
   }
 
   return (
@@ -108,85 +96,51 @@ export function ParadigmDashboard() {
         {/* Western Liberal */}
         <Panel
           title="Western Liberal"
-          glow={(paradigms.paradigmScores.western as any).value < 30 ? 'red' : 'none'}
+          glow={scores[0] < 30 ? 'red' : 'none'}
         >
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-western-liberal)' }}>
-              {((paradigms.paradigmScores.western as any).value || 0).toFixed(1)}
+              {scores[0].toFixed(1)}
             </div>
-            {trajectory.length > 1 && (
-              <Sparkline data={getSparkline('western')} color="var(--color-western-liberal)" />
-            )}
+            <Sparkline data={getSparkline('western')} color="var(--color-western-liberal)" />
           </div>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Democracy</span>
-              <span>{((paradigms.paradigmScores.western as any).components?.electoralDemocracy || 0).toFixed(1)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Civil Liberties</span>
-              <span>{((paradigms.paradigmScores.western as any).components?.civilLiberties || 0).toFixed(1)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Rule of Law</span>
-              <span>{((paradigms.paradigmScores.western as any).components?.ruleOfLaw || 0).toFixed(1)}</span>
-            </div>
+          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Democracy, civil liberties, rule of law, economic freedom
           </div>
         </Panel>
 
         {/* Development */}
         <Panel
           title="Development"
-          glow={(paradigms.paradigmScores.development as any).value >= 80 ? 'cyan' : 'none'}
+          glow={scores[1] >= 80 ? 'cyan' : 'none'}
         >
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-development)' }}>
-              {((paradigms.paradigmScores.development as any).value || 0).toFixed(1)}
+              {scores[1].toFixed(1)}
             </div>
-            {trajectory.length > 1 && (
-              <Sparkline data={getSparkline('development')} color="var(--color-development)" />
-            )}
+            <Sparkline data={getSparkline('development')} color="var(--color-development)" />
           </div>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Quality of Life</span>
-              <span>{(() => {
-                const rawQol = currentState.globalMetrics?.qualityOfLife || 0
-                const qol = rawQol > 1 ? rawQol : rawQol * 100
-                return qol.toFixed(1)
-              })()}</span>
-            </div>
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Survival Tier</span>
-              <span>{(currentState.globalMetrics?.survival?.tier || 0).toFixed(1)}</span>
-            </div>
+          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Quality of life, survival fundamentals, material needs, health
           </div>
         </Panel>
 
         {/* Ecological */}
         <Panel
           title="Ecological"
-          glow={(paradigms.paradigmScores.ecological as any).value < 20 ? 'red' : 'none'}
+          glow={scores[2] < 20 ? 'red' : 'none'}
         >
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{
-              color: (paradigms.paradigmScores.ecological as any).value < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
+              color: scores[2] < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
             }}>
-              {((paradigms.paradigmScores.ecological as any).value || 0).toFixed(1)}
+              {scores[2].toFixed(1)}
             </div>
-            {trajectory.length > 1 && (
-              <Sparkline data={getSparkline('ecological')} color="var(--color-ecological)" />
-            )}
+            <Sparkline data={getSparkline('ecological')} color="var(--color-ecological)" />
           </div>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Climate Stability</span>
-              <span>{((currentState.environmentalAccumulation?.climateStability || 0) * 100).toFixed(0)}%</span>
-            </div>
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Biodiversity Index</span>
-              <span>{((currentState.environmentalAccumulation?.biodiversityIndex || 0) * 100).toFixed(0)}%</span>
-            </div>
+          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Climate: {((1 - (lastUpdate.climateChange || 0)) * 100).toFixed(0)}%,
+            Biodiversity: {((1 - (lastUpdate.biodiversityLoss || 0)) * 100).toFixed(0)}%
           </div>
         </Panel>
 
@@ -194,21 +148,13 @@ export function ParadigmDashboard() {
         <Panel title="Indigenous">
           <div className="mb-4">
             <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-indigenous)' }}>
-              {((paradigms.diagnosticLenses.indigenous as any).value || 0).toFixed(1)}
+              {scores[3].toFixed(1)}
             </div>
-            {trajectory.length > 1 && (
-              <Sparkline data={getSparkline('indigenous')} color="var(--color-indigenous)" />
-            )}
+            <Sparkline data={getSparkline('indigenous')} color="var(--color-indigenous)" />
           </div>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Social Trust</span>
-              <span>{((currentState.society?.trustLevel || 0) * 100).toFixed(1)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--white-40)' }}>Purpose Diversity</span>
-              <span>{((currentState.meaningRenaissance?.purposeDiversity || 0) * 100).toFixed(1)}</span>
-            </div>
+          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Social cohesion: {((lastUpdate.socialCohesion || 0) * 100).toFixed(0)}%,
+            Meaning: {((lastUpdate.meaningLevel || 0) * 100).toFixed(0)}%
           </div>
         </Panel>
       </div>
@@ -217,7 +163,7 @@ export function ParadigmDashboard() {
       <Panel title="Historical Patterns">
         <div className="space-y-3">
           {/* Singapore Pattern */}
-          {(paradigms.paradigmScores.development as any).value >= 80 && (paradigms.paradigmScores.western as any).value < 50 && (
+          {scores[1] >= 80 && scores[0] < 50 && (
             <div className="p-3" style={{ backgroundColor: 'var(--color-near-black)', borderLeft: '3px solid var(--color-development)' }}>
               <div className="font-semibold mb-1">Singapore Pattern Detected</div>
               <div className="text-sm" style={{ color: 'var(--white-60)' }}>
@@ -227,7 +173,7 @@ export function ParadigmDashboard() {
           )}
 
           {/* Norway Pattern */}
-          {(paradigms.paradigmScores.development as any).value >= 80 && (paradigms.paradigmScores.western as any).value >= 70 && (paradigms.paradigmScores.ecological as any).value < 30 && (
+          {scores[1] >= 80 && scores[0] >= 70 && scores[2] < 30 && (
             <div className="p-3" style={{ backgroundColor: 'var(--color-near-black)', borderLeft: '3px solid var(--color-development)' }}>
               <div className="font-semibold mb-1">Norway Pattern Detected</div>
               <div className="text-sm" style={{ color: 'var(--white-60)' }}>
