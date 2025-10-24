@@ -25,9 +25,11 @@ interface SimulationWorkerContextValue {
   // Simulation state
   initialized: boolean
   running: boolean
-  month: number
-  day: number
-  year: number
+  month: number  // UI display month (for formatted date)
+  day: number    // UI display day (for formatted date)
+  year: number   // UI display year (for formatted date)
+  simulationMonth: number  // Actual simulation month (0, 1, 2...)
+  simulationDay: number    // Actual simulation day (1-30)
   scenario: ScenarioMode
   seed: number
 
@@ -47,15 +49,17 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
   // Use ref to ensure worker persists across re-renders
   const clientRef = useRef<SimulationWorkerClient | null>(null)
 
-  // Shared state
+  // Simulation state (actual month/day in the simulation)
   const [initialized, setInitialized] = useState(false)
   const [running, setRunning] = useState(false)
-  const [month, setMonth] = useState(0)
-  const [day, setDay] = useState(1)
-  const [year, setYear] = useState(2025)
+  const [simulationMonth, setSimulationMonth] = useState(0)
+  const [simulationDay, setSimulationDay] = useState(1)
   const [scenario, setScenario] = useState<ScenarioMode>('historical')
   const [seed, setSeed] = useState(42000)
   const [lastUpdate, setLastUpdate] = useState<StateDelta | null>(null)
+
+  // UI-only date display (doesn't affect simulation state)
+  const [displayDate, setDisplayDate] = useState<Date>(new Date())
 
   // Create singleton worker on mount
   useEffect(() => {
@@ -70,29 +74,39 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
         console.log('[WorkerContext] Created singleton worker client')
 
         // Setup global listeners
-        client.on('initialized', (snapshot: InitialStateSnapshot) => {
+        client.on('initialized', (snapshot: InitialStateSnapshot, startDate?: string) => {
           console.log('[WorkerContext] Worker initialized:', snapshot)
           setInitialized(true)
-          setMonth(snapshot.currentMonth)
-          setYear(snapshot.currentYear)
+          setSimulationMonth(snapshot.currentMonth)
           setScenario(snapshot.scenario)
+
+          // Set UI display date to today's real-world date
+          if (startDate) {
+            setDisplayDate(new Date(startDate))
+          } else {
+            setDisplayDate(new Date())
+          }
         })
 
         client.on('update', (delta: StateDelta, currentMonth?: number, currentDay?: number) => {
           setLastUpdate(delta)
           if (delta.currentMonth !== undefined) {
-            setMonth(delta.currentMonth)
-          }
-          if (delta.currentYear !== undefined) {
-            setYear(delta.currentYear)
+            setSimulationMonth(delta.currentMonth)
           }
           if (currentDay !== undefined) {
-            setDay(currentDay)
+            setSimulationDay(currentDay)
           }
         })
 
         client.on('dayUpdate', (currentDay: number) => {
-          setDay(currentDay)
+          setSimulationDay(currentDay)
+
+          // Increment UI display date by 1 day (purely cosmetic)
+          setDisplayDate(prevDate => {
+            const newDate = new Date(prevDate)
+            newDate.setDate(newDate.getDate() + 1)
+            return newDate
+          })
         })
 
         client.on('paused', () => {
@@ -174,15 +188,22 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
     clientRef.current.step()
   }
 
+  // Compute UI display values from displayDate (for formatted date string)
+  const displayYear = displayDate.getFullYear()
+  const displayMonth = displayDate.getMonth() // 0-based (0 = January)
+  const displayDay = displayDate.getDate()
+
   return (
     <SimulationWorkerContext.Provider
       value={{
         client: clientRef.current,
         initialized,
         running,
-        month,
-        day,
-        year,
+        month: displayMonth,         // UI display month (0-11, for formatted date like "October")
+        day: displayDay,             // UI display day (1-31, for formatted date like "23")
+        year: displayYear,           // UI display year (for formatted date like "2025")
+        simulationMonth,             // Actual simulation month (0, 1, 2...)
+        simulationDay,               // Actual simulation day (1-30)
         scenario,
         seed,
         lastUpdate,

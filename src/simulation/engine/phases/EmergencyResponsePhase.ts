@@ -275,7 +275,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
             const recoveryBonus = effectivenessBonus * 0.02; // +2% per month max
 
             // Improve planetary boundaries slightly
-            if (state.planetaryBoundaries) {
+            if (state.planetaryBoundariesSystem) {
               if (state.planetaryBoundariesSystem.freshwater < 0.5) {
                 state.planetaryBoundariesSystem.freshwater = Math.min(0.7, state.planetaryBoundariesSystem.freshwater + recoveryBonus);
               }

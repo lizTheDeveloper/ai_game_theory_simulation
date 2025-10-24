@@ -146,11 +146,20 @@ function calculatePopulationTrend(history: number[]): 'increasing' | 'decreasing
 function countActiveCrises(state: GameState): number {
   let count = 0;
 
-  if (state.crisisSystem?.phosphorusCrisis?.active) count++;
-  if (state.crisisSystem?.freshwaterCrisis?.active) count++;
-  if (state.crisisSystem?.oceanAcidificationCrisis?.active) count++;
-  if (state.crisisSystem?.novelEntitiesCrisis?.active) count++;
-  if (state.crisisSystem?.nuclearCrisis?.active) count++;
+  // Phosphorus crisis
+  if (state.phosphorusSystem.supplyShockActive || state.phosphorusSystem.criticalDepletionActive) count++;
+
+  // Freshwater crisis
+  if (state.freshwaterSystem.dayZeroDrought?.active || state.freshwaterSystem.criticalScarcityActive) count++;
+
+  // Ocean acidification crisis
+  if (state.oceanAcidificationSystem.coralDieoffActive || state.oceanAcidificationSystem.fisheryCollapseActive) count++;
+
+  // Novel entities (PFAS) crisis
+  if (state.novelEntitiesSystem.pfasHealthCrisis || state.novelEntitiesSystem.microplasticCrisis) count++;
+
+  // Nuclear winter
+  if (state.nuclearWinterState?.active) count++;
 
   return count;
 }

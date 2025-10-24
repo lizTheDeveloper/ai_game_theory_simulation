@@ -323,7 +323,7 @@ function applyGlobalEffects(
         
       case 'biodiversityBonus':
         // Improve biodiversity
-        if (gameState.planetaryBoundaries) {
+        if (gameState.planetaryBoundariesSystem) {
           gameState.planetaryBoundariesSystem.biodiversityLoss = Math.max(
             0,
             gameState.planetaryBoundariesSystem.biodiversityLoss - value * 0.01
@@ -675,7 +675,7 @@ function applyRegionalEffects(
         // ========== POLLUTION ==========
         case 'pollutionReduction':
           // Reduce pollution levels
-          if (gameState.planetaryBoundaries) {
+          if (gameState.planetaryBoundariesSystem) {
             gameState.planetaryBoundariesSystem.novelEntities = Math.max(
               0,
               gameState.planetaryBoundariesSystem.novelEntities - value * 0.01
@@ -685,20 +685,20 @@ function applyRegionalEffects(
           
         case 'pfasReduction':
           // Reduce PFAS contamination
-          if (gameState.planetaryBoundaries) {
-            (gameState.planetaryBoundaries as any).pfasContamination = Math.max(
+          if (gameState.planetaryBoundariesSystem) {
+            (gameState.planetaryBoundariesSystem as any).pfasContamination = Math.max(
               0,
-              ((gameState.planetaryBoundaries as any).pfasContamination || 0.5) - value * 0.01
+              ((gameState.planetaryBoundariesSystem as any).pfasContamination || 0.5) - value * 0.01
             );
           }
           break;
           
         case 'plasticReduction':
           // Reduce plastic pollution
-          if (gameState.planetaryBoundaries) {
-            (gameState.planetaryBoundaries as any).plasticPollution = Math.max(
+          if (gameState.planetaryBoundariesSystem) {
+            (gameState.planetaryBoundariesSystem as any).plasticPollution = Math.max(
               0,
-              ((gameState.planetaryBoundaries as any).plasticPollution || 0.6) - value * 0.01
+              ((gameState.planetaryBoundariesSystem as any).plasticPollution || 0.6) - value * 0.01
             );
           }
           break;
@@ -1009,7 +1009,7 @@ function applyRegionalEffects(
         // ========== BIODIVERSITY & ECOSYSTEM ==========
         case 'extinctionRateReduction':
           // Reduce species extinction rate
-          if (gameState.planetaryBoundaries) {
+          if (gameState.planetaryBoundariesSystem) {
             gameState.planetaryBoundariesSystem.biodiversityLoss = Math.max(
               0,
               gameState.planetaryBoundariesSystem.biodiversityLoss - value * 0.005
@@ -1029,20 +1029,20 @@ function applyRegionalEffects(
           
         case 'pollinatorPopulation':
           // Increase pollinator populations
-          if (gameState.planetaryBoundaries) {
-            (gameState.planetaryBoundaries as any).pollinatorHealth = Math.min(
+          if (gameState.planetaryBoundariesSystem) {
+            (gameState.planetaryBoundariesSystem as any).pollinatorHealth = Math.min(
               1.0,
-              ((gameState.planetaryBoundaries as any).pollinatorHealth || 0.5) + value * 0.01
+              ((gameState.planetaryBoundariesSystem as any).pollinatorHealth || 0.5) + value * 0.01
             );
           }
           break;
           
         case 'invasiveSpeciesReduction':
           // Reduce invasive species impact
-          if (gameState.planetaryBoundaries) {
-            (gameState.planetaryBoundaries as any).invasiveSpeciesImpact = Math.max(
+          if (gameState.planetaryBoundariesSystem) {
+            (gameState.planetaryBoundariesSystem as any).invasiveSpeciesImpact = Math.max(
               0,
-              ((gameState.planetaryBoundaries as any).invasiveSpeciesImpact || 0.4) - value * 0.01
+              ((gameState.planetaryBoundariesSystem as any).invasiveSpeciesImpact || 0.4) - value * 0.01
             );
           }
           break;
@@ -1050,7 +1050,7 @@ function applyRegionalEffects(
         // ========== LAND USE ==========
         case 'landUseReduction':
           // Reduce land use pressure
-          if (gameState.planetaryBoundaries) {
+          if (gameState.planetaryBoundariesSystem) {
             gameState.planetaryBoundariesSystem.landUseChange = Math.max(
               0,
               gameState.planetaryBoundariesSystem.landUseChange - value * 0.005

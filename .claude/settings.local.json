@@ -78,7 +78,13 @@
       "Bash(for file in src/simulation/agents/aiTechActions.ts src/simulation/environmental.ts src/simulation/gamingDetection.ts)",
       "Bash(1)",
       "Bash(xargs sed:*)",
-      "Bash(do sed -i '' 's/month: currentMonth/timestamp: currentMonth/g' \"$file\" echo \"Fixed: $file\" done)"
+      "Bash(do sed -i '' 's/month: currentMonth/timestamp: currentMonth/g' \"$file\" echo \"Fixed: $file\" done)",
+      "Bash(for file in )",
+      "Bash(src/lib/dashboard/aggregation/environment.ts )",
+      "Bash(src/simulation/engine/phases/EmergencyResponsePhase.ts )",
+      "Bash(src/simulation/llm/integration.ts )",
+      "Bash(src/simulation/research.ts )",
+      "Bash(src/simulation/techTree/effectsEngine.ts)"
     ],
     "deny": [],
     "ask": []

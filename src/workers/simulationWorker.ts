@@ -272,17 +272,14 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
     stepInterval = interval;
   }
 
-  // Initialize calendar to today's actual date
+  // Initialize calendar tracking (for UI display only)
   startDate = new Date();
   currentCalendarDate = new Date(startDate); // Clone startDate
-  currentDay = startDate.getDate(); // Start with the current day of the month (e.g., 23 for Oct 23)
+  currentDay = 1; // Simulation always starts at day 1
   totalSimulationDaysElapsed = 0; // Reset simulation day counter
 
-  // Set simulation state to today's actual date
-  state.currentYear = startDate.getFullYear();
-  state.currentMonth = startDate.getMonth(); // 0-based (0 = January, 11 = December)
-  state.currentDay = startDate.getDate();
-  state.daysInCurrentMonth = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate();
+  // Simulation state always starts at month 0, day 1 (not today's date)
+  // The actual calendar date is tracked separately for UI display only
 
   // Create initial snapshot
   const snapshot: InitialStateSnapshot = {
