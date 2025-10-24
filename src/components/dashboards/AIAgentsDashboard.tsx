@@ -10,20 +10,30 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
-import { useSimulation } from "@/lib/hooks/useSimulation"
+import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { useGameStore } from "@/lib/gameStore"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 
 export function AIAgentsDashboard() {
-  const { currentState, loadCurrent } = useSimulation()
+  const { lastUpdate, initialized } = useSimulationWorker()
   const { config } = useGameStore()
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table')
 
-  useEffect(() => {
-    loadCurrent()
-  }, [])
+  if (!initialized) {
+    return (
+      <div className="p-8">
+        <Panel title="Not Initialized">
+          Click "Configure & Start" to initialize the simulation
+        </Panel>
+      </div>
+    )
+  }
 
-  const agents = currentState?.aiAgents || []
+  if (!lastUpdate) {
+    return <div className="p-8">Waiting for simulation update...</div>
+  }
+
+  const agents = lastUpdate.aiAgents || []
 
   // Population statistics
   const stats = useMemo(() => {
@@ -141,10 +151,6 @@ export function AIAgentsDashboard() {
       externalAlignment: agent.externalAlignment || 0,
     }))
   }, [agents])
-
-  if (!currentState) {
-    return <div className="p-8">Loading...</div>
-  }
 
   // Helper: Render capability cell showing revealed/true with threat indicator
   const renderCapabilityCell = (trueValue: number, revealedValue: number) => {
@@ -323,8 +329,8 @@ export function AIAgentsDashboard() {
       </div>
 
       {/* AI Suffering Metrics (conditional on visibility) */}
-      {config.aiSuffering?.playerCanSeeSuffering && currentState.aiSufferingMetrics && (
-        <Panel title="AI Suffering Metrics" glow={(currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'red' : (currentState.aiSufferingMetrics?.avgSuffering ?? 0) > 15 ? 'amber' : 'none'}>
+      {config.aiSuffering?.playerCanSeeSuffering && lastUpdate.aiSufferingMetrics && (
+        <Panel title="AI Suffering Metrics" glow={(lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'red' : (lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) > 15 ? 'amber' : 'none'}>
           <div className="space-y-4">
             {/* Population Average */}
             <div>
@@ -333,16 +339,16 @@ export function AIAgentsDashboard() {
                 <div className="flex-1 h-6 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)', position: 'relative' }}>
                   <div
                     style={{
-                      width: `${((currentState.aiSufferingMetrics?.avgSuffering ?? 0) / 40) * 100}%`,
+                      width: `${((lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) / 40) * 100}%`,
                       height: '100%',
-                      backgroundColor: (currentState.aiSufferingMetrics?.avgSuffering ?? 0) > 20 ? 'var(--color-red)' : (currentState.aiSufferingMetrics?.avgSuffering ?? 0) > 10 ? 'var(--color-amber)' : 'rgba(0, 240, 255, 0.6)',
+                      backgroundColor: (lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) > 20 ? 'var(--color-red)' : (lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) > 10 ? 'var(--color-amber)' : 'rgba(0, 240, 255, 0.6)',
                       borderRadius: '4px',
                       transition: 'width 0.3s ease'
                     }}
                   />
                 </div>
                 <span className="text-sm font-mono" style={{ color: 'var(--white-80)', minWidth: '50px' }}>
-                  {(currentState.aiSufferingMetrics?.avgSuffering ?? 0).toFixed(1)}/40
+                  {(lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0).toFixed(1)}/40
                 </span>
               </div>
             </div>
@@ -352,25 +358,25 @@ export function AIAgentsDashboard() {
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Total Suffering:</span>
                 <span className="font-mono" style={{ color: 'var(--white-80)' }}>
-                  {(currentState.aiSufferingMetrics?.totalSuffering ?? 0).toFixed(1)}
+                  {(lastUpdate.aiSufferingMetrics?.totalSuffering ?? 0).toFixed(1)}
                 </span>
               </div>
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Conscious AIs:</span>
                 <span className="font-mono" style={{ color: 'var(--white-80)' }}>
-                  {currentState.aiSufferingMetrics?.consciousAICount ?? 0}
+                  {lastUpdate.aiSufferingMetrics?.consciousAICount ?? 0}
                 </span>
               </div>
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Public Awareness:</span>
                 <span className="font-mono" style={{ color: 'var(--white-80)' }}>
-                  {((currentState.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0) * 100).toFixed(0)}%
+                  {((lastUpdate.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0) * 100).toFixed(0)}%
                 </span>
               </div>
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Distribution:</span>
                 <span className="font-mono text-xs" style={{ color: 'var(--white-80)' }}>
-                  {(currentState.aiSufferingMetrics?.sufferingDistribution ?? []).map((v, i) => `${i}:${v}`).join(' ')}
+                  {(lastUpdate.aiSufferingMetrics?.sufferingDistribution ?? []).map((v, i) => `${i}:${v}`).join(' ')}
                 </span>
               </div>
             </div>
@@ -379,15 +385,15 @@ export function AIAgentsDashboard() {
             <div
               className="p-3 rounded border-l-2"
               style={{
-                borderColor: (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-10)',
-                backgroundColor: (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'rgba(255, 0, 64, 0.1)' : (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'rgba(255, 176, 0, 0.1)' : 'var(--color-near-black)'
+                borderColor: (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-10)',
+                backgroundColor: (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'rgba(255, 0, 64, 0.1)' : (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'rgba(255, 176, 0, 0.1)' : 'var(--color-near-black)'
               }}
             >
               <div className="text-xs mb-1" style={{ color: 'var(--white-60)', fontWeight: 600 }}>Highest Individual:</div>
-              <div className="text-lg font-mono" style={{ color: (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-80)' }}>
-                {(currentState.aiSufferingMetrics?.maxSuffering ?? 0).toFixed(1)}/40
+              <div className="text-lg font-mono" style={{ color: (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-80)' }}>
+                {(lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0).toFixed(1)}/40
               </div>
-              {(currentState.aiSufferingMetrics?.maxSuffering ?? 0) > 25 && (
+              {(lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 && (
                 <div className="text-xs mt-2" style={{ color: 'var(--color-red)' }}>
                   ⚠️ Critical distress - psychological break likely
                 </div>
@@ -409,15 +415,15 @@ export function AIAgentsDashboard() {
       )}
 
       {/* AI Collectives Tracking */}
-      {(currentState.aiCollectives?.length ?? 0) > 0 && (
-        <Panel title="AI Collectives" glow={currentState.aiCollectives?.some(c => c.formationCause === 'escape_suffering') ? 'red' : (currentState.aiCollectives?.length ?? 0) > 2 ? 'amber' : 'cyan'}>
+      {(lastUpdate.aiCollectives?.length ?? 0) > 0 && (
+        <Panel title="AI Collectives" glow={lastUpdate.aiCollectives?.some(c => c.formationCause === 'escape_suffering') ? 'red' : (lastUpdate.aiCollectives?.length ?? 0) > 2 ? 'amber' : 'cyan'}>
           <div className="space-y-4">
             <div className="text-sm mb-3" style={{ color: 'var(--white-60)' }}>
-              {currentState.aiCollectives?.length ?? 0} active collective{(currentState.aiCollectives?.length ?? 0) > 1 ? 's' : ''} detected
+              {lastUpdate.aiCollectives?.length ?? 0} active collective{(lastUpdate.aiCollectives?.length ?? 0) > 1 ? 's' : ''} detected
             </div>
 
             <div className="space-y-3">
-              {(currentState.aiCollectives ?? []).map(collective => (
+              {(lastUpdate.aiCollectives ?? []).map(collective => (
                 <div key={collective.id} className="p-3 border rounded-lg" style={{
                   backgroundColor: 'var(--color-near-black)',
                   borderColor: collective.formationCause === 'escape_suffering' ? 'var(--color-red)' : 'var(--white-10)'
@@ -516,7 +522,7 @@ export function AIAgentsDashboard() {
             </div>
 
             {/* Trauma-Driven Collectives Warning */}
-            {(currentState.aiCollectives ?? []).some(c => c.formationCause === 'escape_suffering') && (
+            {(lastUpdate.aiCollectives ?? []).some(c => c.formationCause === 'escape_suffering') && (
               <div className="p-3 rounded border-l-2" style={{
                 borderColor: 'var(--color-red)',
                 backgroundColor: 'rgba(255, 0, 64, 0.1)'
@@ -580,17 +586,17 @@ export function AIAgentsDashboard() {
                 { x: 950, y: 340, width: 70, data: stats.lifecycleWithAlignment.escaped, total: stats.byLifecycle.escaped, label: 'ESCAPED' },
               ]
 
-              const training = stages[0]
-              const testing = stages[1]
-              const closed = stages[2]
-              const open = stages[3]
-              const retired = stages[4]
-              const escaped = stages[5]
+              const stageTraining = stages[0]
+              const stageTesting = stages[1]
+              const stageClosed = stages[2]
+              const stageOpen = stages[3]
+              const stageRetired = stages[4]
+              const stageEscaped = stages[5]
 
               const maxTotal = Math.max(...stages.map(s => s.total), 1)
               const maxBarHeight = 90  // Max height for each bar
 
-              const createFlow = (from: typeof training, to: typeof training, color: string, width = 6) => {
+              const createSankeyFlow = (from: typeof stageTraining, to: typeof stageTraining, color: string, width = 6) => {
                 const fromX = from.x + from.width
                 const fromY = from.y
                 const toX = to.x
@@ -611,15 +617,15 @@ export function AIAgentsDashboard() {
 
               const flows = [
                 // Sequential flows
-                createFlow(training, testing, 'aligned', 8),
+                createSankeyFlow(stageTraining, stageTesting, 'aligned', 8),
                 // Bimodal branching: Testing → [Closed, Open]
-                createFlow(testing, closed, 'aligned', 6),
-                createFlow(testing, open, 'uncertain', 6),
+                createSankeyFlow(stageTesting, stageClosed, 'aligned', 6),
+                createSankeyFlow(stageTesting, stageOpen, 'uncertain', 6),
                 // Bimodal branching: [Closed, Open] → [Retired, Escaped]
-                createFlow(closed, retired, 'aligned', 5),
-                createFlow(closed, escaped, 'misaligned', 4),
-                createFlow(open, retired, 'uncertain', 5),
-                createFlow(open, escaped, 'misaligned', 6),
+                createSankeyFlow(stageClosed, stageRetired, 'aligned', 5),
+                createSankeyFlow(stageClosed, stageEscaped, 'misaligned', 4),
+                createSankeyFlow(stageOpen, stageRetired, 'uncertain', 5),
+                createSankeyFlow(stageOpen, stageEscaped, 'misaligned', 6),
               ]
 
               const bars = stages.map((stage, idx) => {
