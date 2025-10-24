@@ -10,71 +10,54 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
-import { useSimulation } from "@/lib/hooks/useSimulation"
-import { useEffect } from "react"
+import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 
 export function OverviewDashboard() {
-  const { currentState, loadCurrent, error } = useSimulation()
+  const { lastUpdate, initialized } = useSimulationWorker()
 
-  useEffect(() => {
-    loadCurrent()
-  }, [])
-
-  if (error) {
+  if (!initialized) {
     return (
       <div className="p-8">
-        <Panel title="Error" glow="red">
-          <p>{error}</p>
-          <p className="mt-4 text-sm" style={{ color: 'var(--white-40)' }}>
-            Make sure simulation outputs exist in monteCarloOutputs/
-          </p>
-        </Panel>
-      </div>
-    )
-  }
-
-  if (!currentState) {
-    return (
-      <div className="p-8">
-        <Panel title="Loading">
+        <Panel title="Not Initialized">
           <div className="flex items-center gap-3">
             <div className="status-indicator status-normal animate-pulse" />
-            <span>Loading simulation state...</span>
+            <span>Click "Configure & Start" to initialize the simulation</span>
           </div>
         </Panel>
       </div>
     )
   }
 
-  // Extract key metrics
-  const population = currentState.globalMetrics?.population || 8_000_000_000
-  // QoL: Handle both 0-1 and 0-100 scales (backend inconsistency)
-  const rawQol = currentState.globalMetrics?.qualityOfLife || 0
-  const qol = rawQol > 1 ? rawQol / 100 : rawQol
+  if (!lastUpdate) {
+    return (
+      <div className="p-8">
+        <Panel title="Loading">
+          <div className="flex items-center gap-3">
+            <div className="status-indicator status-normal animate-pulse" />
+            <span>Waiting for simulation update...</span>
+          </div>
+        </Panel>
+      </div>
+    )
+  }
 
-  // Calculate average AI capability (cognitive dimension as proxy for overall capability)
-  const aiCap = currentState.aiAgents && currentState.aiAgents.length > 0
-    ? currentState.aiAgents.reduce((sum, agent) =>
-        sum + (agent.capabilityProfile?.cognitive || 0), 0) / currentState.aiAgents.length
-    : 0
-
-  // Calculate average alignment across all agents
-  const alignment = currentState.aiAgents && currentState.aiAgents.length > 0
-    ? currentState.aiAgents.reduce((sum, agent) =>
-        sum + (agent.trueAlignment || 0), 0) / currentState.aiAgents.length
-    : 0
+  // Extract key metrics from StateDelta
+  const population = lastUpdate.population || 8_000_000_000
+  const qol = lastUpdate.qualityOfLife || 0
+  const aiCap = lastUpdate.avgAICapability || 0
+  const alignment = (lastUpdate.alignedAICount || 0) / Math.max(1, lastUpdate.aiCount || 1)
 
   // Multi-paradigm scores
   const paradigms = {
-    western: { value: currentState.multiParadigmDUI?.paradigmScores?.western?.value ?? 50 },
-    development: { value: currentState.multiParadigmDUI?.paradigmScores?.development?.value ?? 50 },
-    ecological: { value: currentState.multiParadigmDUI?.paradigmScores?.ecological?.value ?? 50 },
-    indigenous: { value: currentState.multiParadigmDUI?.diagnosticLenses?.indigenous?.value ?? 50 }
+    western: { value: lastUpdate.westernLiberal ?? 50 },
+    development: { value: lastUpdate.development ?? 50 },
+    ecological: { value: lastUpdate.ecological ?? 50 },
+    indigenous: { value: lastUpdate.indigenous ?? 50 }
   }
 
   // Determine overall status
   const getOverallStatus = () => {
-    if (currentState.extinctionState?.active) return 'extinction'
+    if (lastUpdate.extinctionRisk && lastUpdate.extinctionRisk > 0.9) return 'extinction'
     if (paradigms.ecological.value < 20) return 'critical'
     if (paradigms.western.value < 30) return 'warning'
     return 'normal'
@@ -88,7 +71,7 @@ export function OverviewDashboard() {
         <div className="flex items-center gap-4">
           <StatusIndicator status={getOverallStatus()} label="System Status" />
           <span style={{ color: 'var(--white-40)' }}>
-            Month {currentState.currentMonth} / Seed {currentState.seed || 'N/A'}
+            Month {lastUpdate.currentMonth || 0} / Seed N/A
           </span>
         </div>
       </div>
@@ -171,19 +154,19 @@ export function OverviewDashboard() {
             <div className="flex items-center justify-between">
               <span>AI Agents</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {currentState.aiAgents?.length || 0} active
+                {lastUpdate.aiCount || 0} active
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Organizations</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {currentState.organizations?.filter(o => !o.bankrupt).length || 0} operational
+                {lastUpdate.organizationCount || 0} operational
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Extinction Risk</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {((currentState.outcomeMetrics?.extinctionProbability || 0) * 100).toFixed(1)}%
+                {((lastUpdate.extinctionRisk || 0) * 100).toFixed(1)}%
               </span>
             </div>
           </div>
@@ -198,7 +181,7 @@ export function OverviewDashboard() {
               Climate Stability
             </div>
             <div className="text-2xl font-light">
-              {((currentState.environmentalAccumulation?.climateStability || 0) * 100).toFixed(0)}%
+              {((1 - (lastUpdate.climateChange || 0)) * 100).toFixed(0)}%
             </div>
           </div>
           <div>
@@ -206,7 +189,7 @@ export function OverviewDashboard() {
               Biodiversity Index
             </div>
             <div className="text-2xl font-light">
-              {((currentState.environmentalAccumulation?.biodiversityIndex || 0) * 100).toFixed(0)}%
+              {((1 - (lastUpdate.biodiversityLoss || 0)) * 100).toFixed(0)}%
             </div>
           </div>
           <div>
@@ -214,13 +197,7 @@ export function OverviewDashboard() {
               Social Cohesion
             </div>
             <div className="text-2xl font-light">
-              {(() => {
-                const sc = currentState.socialAccumulation?.socialCohesion
-                if (!sc || typeof sc !== 'object') return '0'
-                // Average of trust, communityBonds, and civilLiberties (already 0-100 scale)
-                const avg = ((sc.trust || 0) + (sc.communityBonds || 0) + (sc.civilLiberties || 0)) / 3
-                return avg.toFixed(0)
-              })()}%
+              {((lastUpdate.socialCohesion || 0) * 100).toFixed(0)}%
             </div>
           </div>
         </div>
