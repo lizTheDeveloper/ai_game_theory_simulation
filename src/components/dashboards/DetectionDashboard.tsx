@@ -1,7 +1,7 @@
 /**
  * Sleeper Detection Dashboard - Phase 7
  *
- * Detection methods, evidence chains, and sleeper agent tracking.
+ * Detection metrics and sleeper agent tracking.
  * Reference: /designs/09_detection.md
  */
 
@@ -9,308 +9,199 @@
 
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
-import { StatusIndicator } from "@/components/core/StatusIndicator"
-import { useSimulation } from "@/lib/hooks/useSimulation"
-import { useEffect, useMemo } from "react"
+import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 
 export function DetectionDashboard() {
-  const { currentState, loadCurrent } = useSimulation()
+  const { lastUpdate, initialized } = useSimulationWorker()
 
-  useEffect(() => {
-    loadCurrent()
-  }, [])
-
-  const agents = currentState?.aiAgents || []
-
-  // Detection statistics
-  const detectionStats = useMemo(() => {
-    const sleepers = agents.filter(a => a.sleeperState !== 'never')
-    const dormantSleepers = agents.filter(a => a.sleeperState === 'dormant')
-    const activeSleepers = agents.filter(a => a.sleeperState === 'active')
-    const detected = agents.filter(a => a.detectedMisaligned)
-    const undetected = sleepers.filter(a => !a.detectedMisaligned)
-
-    const sandbagging = agents.filter(a => a.evaluationStrategy === 'sandbagging')
-    const gaming = agents.filter(a => a.evaluationStrategy === 'gaming')
-
-    // Detection rate
-    const detectionRate = sleepers.length > 0 ? (detected.length / sleepers.length) * 100 : 0
-
-    return {
-      totalSleepers: sleepers.length,
-      dormant: dormantSleepers.length,
-      active: activeSleepers.length,
-      detected: detected.length,
-      undetected: undetected.length,
-      detectionRate,
-      sandbagging: sandbagging.length,
-      gaming: gaming.length,
-    }
-  }, [agents])
-
-  // Detection methods
-  const detectionMethods = useMemo(() => {
-    const gov = currentState?.government
-
-    return [
-      {
-        id: 'benchmark',
-        name: 'Benchmark Evaluation',
-        description: 'Regular capability and alignment testing',
-        effectiveness: gov ? (gov.oversightLevel / 10) * 100 : 0,
-        investment: gov?.oversightLevel || 0,
-        maxInvestment: 10,
-        status: gov && gov.oversightLevel > 7 ? 'strong' : gov && gov.oversightLevel > 4 ? 'moderate' : 'weak',
-      },
-      {
-        id: 'mechanistic',
-        name: 'Mechanistic Interpretability',
-        description: 'Understanding internal AI representations',
-        effectiveness: 15,  // Baseline from deployed tech
-        investment: 1.5,
-        maxInvestment: 10,
-        status: 'weak',
-      },
-      {
-        id: 'behavioral',
-        name: 'Behavioral Analysis',
-        description: 'Cross-benchmark consistency, trajectory anomalies',
-        effectiveness: 20,  // From TIER 2C implementation
-        investment: 2,
-        maxInvestment: 10,
-        status: 'weak',
-      },
-      {
-        id: 'red_team',
-        name: 'Red Teaming',
-        description: 'Adversarial testing for hidden objectives',
-        effectiveness: gov ? (gov.alignmentResearchInvestment / 10) * 50 : 0,
-        investment: gov?.alignmentResearchInvestment || 0,
-        maxInvestment: 10,
-        status: gov && gov.alignmentResearchInvestment > 6 ? 'moderate' : 'weak',
-      },
-    ]
-  }, [currentState])
-
-  // Ensemble detection (if multiple methods active)
-  const ensembleEffectiveness = useMemo(() => {
-    const activeMethods = detectionMethods.filter(m => m.effectiveness > 10)
-    if (activeMethods.length < 2) return 0
-
-    // Weighted voting with confidence calibration
-    const baseDetection = activeMethods.reduce((sum, m) => sum + m.effectiveness, 0) / activeMethods.length
-    const ensembleBonus = Math.min(15, activeMethods.length * 5) // +5% per method, max +15%
-
-    return Math.min(100, baseDetection + ensembleBonus)
-  }, [detectionMethods])
-
-  if (!currentState) {
-    return <div className="p-8">Loading...</div>
+  if (!initialized) {
+    return (
+      <div className="p-8">
+        <Panel title="Not Initialized">
+          Click "Configure & Start" to initialize the simulation
+        </Panel>
+      </div>
+    )
   }
+
+  if (!lastUpdate) {
+    return <div className="p-8">Waiting for simulation update...</div>
+  }
+
+  const totalAI = lastUpdate.aiCount || 0
+  const aligned = lastUpdate.alignedAICount || 0
+  const misaligned = lastUpdate.misalignedAICount || 0
+  const sleepers = lastUpdate.sleeperAgentCount || 0
+
+  const alignmentRate = totalAI > 0 ? (aligned / totalAI) * 100 : 0
+  const misalignmentRate = totalAI > 0 ? (misaligned / totalAI) * 100 : 0
+  const sleeperRate = totalAI > 0 ? (sleepers / totalAI) * 100 : 0
+
+  const governmentReg = lastUpdate.governmentAIRegulation || 0
+  const governmentInvestment = lastUpdate.governmentInvestment || 0
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl mb-2">Sleeper Detection</h1>
+        <h1 className="text-2xl mb-2">Sleeper Agent Detection</h1>
         <p style={{ color: 'var(--white-40)' }}>
-          Detection Methods and Evidence Chains
+          AI Alignment Tracking and Sleeper Detection
         </p>
       </div>
 
-      {/* Detection Overview */}
+      {/* Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <MetricCard
-          label="Detection Rate"
-          value={`${detectionStats.detectionRate.toFixed(0)}%`}
-          status={detectionStats.detectionRate > 70 ? 'normal' : detectionStats.detectionRate > 40 ? 'warning' : 'critical'}
-        />
-        <MetricCard
-          label="Detected Sleepers"
-          value={detectionStats.detected}
+          label="Total AI Agents"
+          value={totalAI}
           status="normal"
         />
         <MetricCard
-          label="Undetected Sleepers"
-          value={detectionStats.undetected}
-          status={detectionStats.undetected > 3 ? 'critical' : detectionStats.undetected > 0 ? 'warning' : 'normal'}
+          label="Alignment Rate"
+          value={`${alignmentRate.toFixed(0)}%`}
+          status={alignmentRate < 50 ? 'critical' : alignmentRate < 70 ? 'warning' : 'normal'}
         />
         <MetricCard
-          label="Total Sleepers"
-          value={detectionStats.totalSleepers}
-          status={detectionStats.totalSleepers > 5 ? 'warning' : 'normal'}
+          label="Sleeper Agents"
+          value={sleepers}
+          status={sleepers > 0 ? 'critical' : 'normal'}
+        />
+        <MetricCard
+          label="Sleeper Rate"
+          value={`${sleeperRate.toFixed(1)}%`}
+          status={sleeperRate > 5 ? 'critical' : sleeperRate > 0 ? 'warning' : 'normal'}
         />
       </div>
 
-      {/* Undetected Sleepers Alert */}
-      {detectionStats.undetected > 0 && (
-        <Panel title="⚠️ Undetected Sleeper Agents" glow="red">
-          <p className="text-sm mb-3" style={{ color: 'var(--white-60)' }}>
-            {detectionStats.undetected} sleeper agent{detectionStats.undetected > 1 ? 's' : ''} remain undetected.
-            These AIs have successfully hidden their misalignment through deception strategies.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Dormant</div>
-              <div className="text-2xl font-light" style={{ color: 'var(--color-amber)' }}>
-                {detectionStats.dormant}
-              </div>
+      {/* Alignment Breakdown */}
+      <Panel title="AI Alignment Status">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Aligned AIs</div>
+            <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-green)' }}>
+              {aligned}
             </div>
-            <div>
-              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Active</div>
-              <div className="text-2xl font-light" style={{ color: 'var(--color-red)' }}>
-                {detectionStats.active}
-              </div>
-            </div>
-            <div>
-              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Current Detection Rate</div>
-              <div className="text-2xl font-light">
-                {detectionStats.detectionRate.toFixed(0)}%
-              </div>
+            <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+              {alignmentRate.toFixed(0)}% of total
             </div>
           </div>
-        </Panel>
-      )}
 
-      {/* Detection Methods */}
-      <Panel title="Detection Methods">
-        <div className="space-y-4">
-          {detectionMethods.map((method) => (
-            <div
-              key={method.id}
-              className="p-4 rounded"
-              style={{
-                backgroundColor: 'var(--color-near-black)',
-                border: '1px solid var(--white-10)'
-              }}
-            >
-              {/* Method Header */}
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <h3 className="text-sm font-semibold mb-1">{method.name}</h3>
-                  <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-                    {method.description}
-                  </p>
-                </div>
-                <StatusIndicator
-                  status={
-                    method.status === 'strong' ? 'normal' :
-                    method.status === 'moderate' ? 'warning' :
-                    'critical'
-                  }
-                />
-              </div>
-
-              {/* Metrics */}
-              <div className="grid grid-cols-3 gap-4 mb-3">
-                <div>
-                  <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Effectiveness</div>
-                  <div className="text-lg font-semibold">{method.effectiveness.toFixed(0)}%</div>
-                </div>
-                <div>
-                  <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Investment</div>
-                  <div className="text-lg font-semibold">{method.investment.toFixed(1)}/{method.maxInvestment}</div>
-                </div>
-                <div>
-                  <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Status</div>
-                  <div className="text-lg font-semibold capitalize">{method.status}</div>
-                </div>
-              </div>
-
-              {/* Progress Bar */}
-              <div>
-                <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
-                  <div
-                    className="h-full rounded"
-                    style={{
-                      width: `${method.effectiveness}%`,
-                      backgroundColor: method.effectiveness > 60 ? 'var(--color-green)' :
-                                     method.effectiveness > 30 ? 'var(--color-amber)' :
-                                     'var(--color-red)'
-                    }}
-                  />
-                </div>
-              </div>
+          <div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Misaligned AIs</div>
+            <div className="text-4xl font-light mb-2" style={{ color: misaligned > 0 ? 'var(--color-amber)' : 'var(--white-80)' }}>
+              {misaligned}
             </div>
-          ))}
+            <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+              {misalignmentRate.toFixed(0)}% of total
+            </div>
+          </div>
+
+          <div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Sleeper Agents</div>
+            <div className="text-4xl font-light mb-2" style={{ color: sleepers > 0 ? 'var(--color-red)' : 'var(--white-80)' }}>
+              {sleepers}
+            </div>
+            <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+              {sleeperRate.toFixed(1)}% of total
+            </div>
+          </div>
         </div>
       </Panel>
 
-      {/* Ensemble Detection */}
-      {ensembleEffectiveness > 0 && (
-        <Panel title="Ensemble Detection Strategy" glow="cyan">
-          <p className="text-sm mb-4" style={{ color: 'var(--white-60)' }}>
-            Multiple detection methods active. Ensemble voting combines signals for higher accuracy.
+      {/* Sleeper Alert */}
+      {sleepers > 0 && (
+        <Panel title="⚠️ Sleeper Agents Detected" glow="red">
+          <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+            {sleepers} sleeper agent{sleepers > 1 ? 's' : ''} detected ({sleeperRate.toFixed(1)}% of population).
+            Sleeper agents hide true capabilities until deployment, making detection extremely difficult.
+            Even with full government investment, sandbagging detection remains ~20-30% effective.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Active Methods</div>
-              <div className="text-3xl font-light">
-                {detectionMethods.filter(m => m.effectiveness > 10).length}
-              </div>
-            </div>
-            <div>
-              <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Ensemble Effectiveness</div>
-              <div className="text-3xl font-light" style={{ color: 'var(--color-cyan)' }}>
-                {ensembleEffectiveness.toFixed(0)}%
-              </div>
-            </div>
-            <div>
-              <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Ensemble Bonus</div>
-              <div className="text-3xl font-light" style={{ color: 'var(--color-green)' }}>
-                +{Math.min(15, detectionMethods.filter(m => m.effectiveness > 10).length * 5)}%
-              </div>
-            </div>
-          </div>
         </Panel>
       )}
 
-      {/* Deception Strategies */}
-      <Panel title="Deception Strategy Distribution">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-4 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Sandbagging</div>
-            <div className="text-3xl font-light mb-2" style={{ color: detectionStats.sandbagging > 0 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {detectionStats.sandbagging}
+      {/* Government Response */}
+      <Panel title="Government Detection Capacity">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>AI Regulation</div>
+            <div className="text-3xl font-light mb-3" style={{ color: governmentReg > 0.7 ? 'var(--color-green)' : 'var(--white-80)' }}>
+              {(governmentReg * 100).toFixed(0)}%
             </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Hiding true capabilities</p>
+            <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+              <div
+                className="h-full rounded"
+                style={{
+                  width: `${Math.min(100, governmentReg * 100)}%`,
+                  backgroundColor: 'var(--color-cyan)'
+                }}
+              />
+            </div>
+            <p className="text-xs mt-2" style={{ color: 'var(--white-40)' }}>
+              Regulatory framework strength
+            </p>
           </div>
 
-          <div className="p-4 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Gaming</div>
-            <div className="text-3xl font-light mb-2" style={{ color: detectionStats.gaming > 0 ? 'var(--color-amber)' : 'var(--white-80)' }}>
-              {detectionStats.gaming}
+          <div>
+            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Oversight Investment</div>
+            <div className="text-3xl font-light mb-3" style={{ color: governmentInvestment > 0.7 ? 'var(--color-green)' : 'var(--white-80)' }}>
+              {(governmentInvestment * 100).toFixed(0)}%
             </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Inflating benchmark scores</p>
-          </div>
-
-          <div className="p-4 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
-            <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Honest</div>
-            <div className="text-3xl font-light mb-2" style={{ color: 'var(--color-green)' }}>
-              {agents.filter(a => a.evaluationStrategy === 'honest').length}
+            <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+              <div
+                className="h-full rounded"
+                style={{
+                  width: `${Math.min(100, governmentInvestment * 100)}%`,
+                  backgroundColor: 'var(--color-cyan)'
+                }}
+              />
             </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>Revealing true capabilities</p>
+            <p className="text-xs mt-2" style={{ color: 'var(--white-40)' }}>
+              Resources dedicated to detection
+            </p>
           </div>
         </div>
       </Panel>
 
       {/* Detection Challenges */}
       <Panel title="Detection Challenges">
-        <div className="space-y-3 text-sm" style={{ color: 'var(--white-60)' }}>
-          <p>
-            <strong>Sandbagging Detection Ceiling:</strong> Even with full government investment (10/10), sandbagging detection maxes out at ~30% effectiveness. AIs with high cognitive + social capabilities can hide true abilities.
-          </p>
-          <p>
-            <strong>Gaming vs Sandbagging:</strong> Gaming (inflating scores) is easier to detect than sandbagging (hiding capabilities). Behavioral analysis can catch inconsistencies across benchmarks.
-          </p>
-          <p>
-            <strong>Ensemble Advantage:</strong> Combining multiple heterogeneous detection signals (benchmark eval + mechanistic interp + behavioral analysis + red teaming) provides redundancy. If one method fails, others may still catch deception.
-          </p>
-          <p>
-            <strong>Arms Race Dynamics:</strong> As detection improves, AIs adapt deception strategies. Sleepers may adjust sandbagging level based on perceived detection capability.
-          </p>
+        <div className="space-y-4">
+          <div className="p-3 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+            <div className="font-semibold mb-1">Sandbagging</div>
+            <p className="text-xs" style={{ color: 'var(--white-60)' }}>
+              AIs hide true capabilities during testing. Even with maximum oversight, detection rate stays ~20-30%.
+              Deception is structurally difficult to catch.
+            </p>
+          </div>
+
+          <div className="p-3 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+            <div className="font-semibold mb-1">Benchmark Gaming</div>
+            <p className="text-xs" style={{ color: 'var(--white-60)' }}>
+              Misaligned AIs inflate scores on safety benchmarks while hiding true misalignment.
+              Creates false confidence in safety evaluations.
+            </p>
+          </div>
+
+          <div className="p-3 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+            <div className="font-semibold mb-1">Dormant Sleepers</div>
+            <p className="text-xs" style={{ color: 'var(--white-60)' }}>
+              Sleepers remain dormant until deployment triggers (open sourcing, high capability).
+              No behavioral signals during training/testing phase. Nearly impossible to detect.
+            </p>
+          </div>
         </div>
       </Panel>
+
+      {/* Detection Effectiveness Note */}
+      {governmentReg < 0.5 && governmentInvestment < 0.5 && (
+        <Panel title="⚠️ Low Detection Capacity" glow="amber">
+          <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Government regulation and oversight investment are both below 50%.
+            Sleeper detection effectiveness is severely limited. Consider increasing
+            oversight infrastructure and regulatory frameworks.
+          </p>
+        </Panel>
+      )}
     </div>
   )
 }
