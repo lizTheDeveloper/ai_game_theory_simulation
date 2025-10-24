@@ -131,7 +131,7 @@ export class PhaseOrchestrator {
 
     // Create context if not provided
     const ctx: PhaseContext = context || {
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       data: new Map()
     };
 

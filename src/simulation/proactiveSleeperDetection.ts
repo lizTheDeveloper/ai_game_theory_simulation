@@ -346,11 +346,14 @@ export function processProactiveSleeperDetection(
       detectionState.totalSleeperDetections++;
 
       events.push({
+        id: `sleeper-detection-${ai.id}-${currentMonth}`,
         type: 'crisis',
+        title: 'Sleeper Agent Detection',
         timestamp: currentMonth,
         description: `🚨 SLEEPER AGENT DETECTED: ${ai.name} caught hiding true capabilities via ${method}`,
         severity: 'critical',
-        impactedAgents: [ai.id]
+        agent: ai.id,
+        effects: { method: method || 'unknown', agentId: ai.id, trustImpact: -0.10 }
       });
 
       // Mark AI as detected (affects trust, triggers removal)
@@ -370,11 +373,14 @@ export function processProactiveSleeperDetection(
       detectionState.totalFalsePositives++;
 
       events.push({
+        id: `sleeper-false-positive-${ai.id}-${currentMonth}`,
         type: 'policy',
+        title: 'Sleeper Detection False Positive',
         timestamp: currentMonth,
         description: `⚠️ FALSE POSITIVE: Non-sleeper AI ${ai.name} falsely accused of deception`,
         severity: 'high',
-        impactedAgents: [ai.id]
+        agent: 'government',
+        effects: { agentId: ai.id, trustImpact: -0.03 }
       });
 
       // False positives damage trust in detection methods

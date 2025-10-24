@@ -1050,8 +1050,10 @@ export function logDeathSummary(state: GameState): void {
   const rootCause = pop.deathsByRootCause;
 
   // Calculate totals for both dimensions
-  const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + val, 0);
-  const totalRootCauseDeaths = Object.values(rootCause).reduce((sum, val) => sum + val, 0);
+  const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0);
+  const totalRootCauseDeaths = Object.entries(rootCause)
+    .filter(([key]) => key !== 'confidenceDistribution') // Exclude nested object
+    .reduce((sum, [, val]) => sum + (typeof val === 'number' ? val : 0), 0);
 
   // Use the larger total as denominator
   const totalDeaths = Math.max(pop.cumulativeCrisisDeaths, totalProximateDeaths, totalRootCauseDeaths);

@@ -401,8 +401,8 @@ function checkSocialCrises(state: GameState): void {
       // War destroyed state capacity
       institutionFailureAttribution = RootCause.conflict;
       institutionFailureConfidence = 'HIGH';
-    } else if (state.society.socialCohesion < 0.3) {
-      // Extreme inequality → legitimacy collapse
+    } else if ((state.society.trust || 0.5) < 0.3) {
+      // Extreme inequality → legitimacy collapse (using trust as proxy for socialCohesion)
       institutionFailureAttribution = {
         causes: [
           { cause: RootCause.inequality, weight: 0.60, confidence: 'MEDIUM' },
@@ -607,10 +607,13 @@ function calculateAlignmentPerception(state: GameState): number {
   if (totalAIs === 0) return 0.2; // Moderate default
 
   // Public perception based on detected issues
-  // Only count detected misalignments (revealed === true) - people can't see hidden issues
-  const detectedMisalignments = state.aiAgents.filter(ai =>
-    ai.alignment < 0.5 && ai.revealed === true
-  ).length;
+  // Only count detected misalignments (revealedCapability significantly differs) - people can't see hidden issues
+  const { calculateTotalCapabilityFromProfile } = require('./capabilities');
+  const detectedMisalignments = state.aiAgents.filter(ai => {
+    const trueCap = calculateTotalCapabilityFromProfile(ai.trueCapability);
+    const revealedCap = calculateTotalCapabilityFromProfile(ai.revealedCapability);
+    return ai.alignment < 0.5 && Math.abs(trueCap - revealedCap) < 0.1; // Detected if no hiding
+  }).length;
 
   const perceptionRate = 1 - (detectedMisalignments / totalAIs);
 

@@ -104,7 +104,7 @@ interface ProviderUsage {
 }
 
 export class ProviderManager {
-  private config: MultiProviderConfig;
+  private config!: MultiProviderConfig; // Initialized in loadConfig()
   private configPath: string;
   private currentProviderIndex: number = 0;
   private providerUsage: Map<string, ProviderUsage> = new Map();

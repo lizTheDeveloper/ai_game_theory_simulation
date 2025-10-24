@@ -337,7 +337,7 @@ export function getRadiationStats(system: RadiationSystem): {
   contaminatedRegions: string[];
   longestExposure: number | null;
 } {
-  let longestExposure = null;
+  let longestExposure: number | null = null;
   if (system.activeExposures.length > 0) {
     const oldest = Math.min(...system.activeExposures.map(e => e.startMonth));
     longestExposure = oldest;

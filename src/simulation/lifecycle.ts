@@ -434,7 +434,7 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState, rng: () => numbe
   
   // Dark compute: only 10-20% of unused compute can be covertly acquired
   // Depends on government monitoring capability
-  const monitoringGap = 1 - (state.government.cyberDefense.monitoring / 10); // 0.0-1.0
+  const monitoringGap = 1 - ((state.government.cyberDefense?.monitoring ?? 0) / 10); // 0.0-1.0
   const darkComputeRatio = 0.10 + (monitoringGap * 0.10); // 10-20% based on monitoring
   const availableDarkCompute = unusedLegitimateCompute * darkComputeRatio;
   

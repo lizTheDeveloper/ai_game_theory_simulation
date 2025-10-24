@@ -329,7 +329,7 @@ export function selectGovernmentAction(
 
         // Boost if many open-weight AIs (easy to reverse engineer)
         const openWeightAIs = state.aiAgents.filter(ai =>
-          ai.deploymentType === 'open'
+          ai.deploymentType === 'open_weights'
         ).length;
 
         if (openWeightAIs > 10) {
@@ -592,8 +592,8 @@ function executeEarlyWarningInterventions(
   // Government needs AI assistance for effective intervention design
   // Research: IPCC (2023) - complex interventions require modeling capability
   const hasAdvancedAI = state.aiAgents.some(ai =>
-    ai.lifecycle === 'deployed' &&
-    (ai.capabilityProfile.research ?? ai.capabilities.research ?? 0) > 2.5
+    (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') &&
+    ai.capability > 2.5
   );
 
   if (!hasAdvancedAI) {
@@ -707,11 +707,11 @@ export function executeGovernmentActions(
   const unemploymentCrisis = state.society.unemploymentLevel > 0.25 ?
     Math.min(3.0, 1.0 + state.society.unemploymentLevel * 2.0) : 1.0; // Up to 3x at 100% unemployment
 
-  const institutionalCrisis = state.socialAccumulation.institutionalCrisis > 0.5 ?
-    Math.min(2.0, 1.0 + state.socialAccumulation.institutionalCrisis) : 1.0; // Up to 2x
+  const institutionalCrisis = (1 - state.socialAccumulation.institutionalLegitimacy) > 0.5 ?
+    Math.min(2.0, 1.0 + (1 - state.socialAccumulation.institutionalLegitimacy)) : 1.0; // Up to 2x
 
-  const controlLossCrisis = state.socialAccumulation.controlLossCrisis > 0.5 ?
-    Math.min(2.0, 1.0 + state.socialAccumulation.controlLossCrisis) : 1.0; // Up to 2x
+  const controlLossCrisis = state.socialAccumulation.institutionalFailureActive ?
+    2.0 : 1.0; // 2x when institutional failure active
 
   // TIER 2.9: Environmental crisis multiplier
   // Ecosystem collapse, tipping points → emergency government sessions

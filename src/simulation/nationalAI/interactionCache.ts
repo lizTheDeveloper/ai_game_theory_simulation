@@ -10,8 +10,8 @@
  * - Cached bilateral relationships
  */
 
-import { GameState, NationName } from '@/types/game';
-import { NationalAICapability } from '@/types/nationalAI';
+import { GameState } from '@/types/game';
+import { NationalAICapability, NationName } from '@/types/nationalAI';
 
 export interface CountryInteractionCache {
   // O(1) nation lookups

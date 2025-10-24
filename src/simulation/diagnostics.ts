@@ -29,7 +29,7 @@ export interface InterventionImpact {
   agent: string;
   before: Record<string, number>;
   after: Record<string, number>;
-  effects: Record<string, number>;
+  effects: Record<string, number | string | boolean>;
 }
 
 export interface DecisionLog {
@@ -270,10 +270,10 @@ export class DiagnosticLogger {
       month,
       foodStock: resources.food.reserves || 0,
       waterStock: resources.water.reserves || 0,
-      energyStock: state.computeInfrastructure?.totalEnergyCapacity || 0,
+      energyStock: 0, // TODO: state.computeInfrastructure?.totalEnergyCapacity || 0,
       foodDepletion: resources.food.monthlyHarvest || 0,
       waterDepletion: resources.water.monthlyHarvest || 0,
-      energyDepletion: state.computeInfrastructure?.energyConsumptionRate || 0,
+      energyDepletion: 0, // TODO: state.computeInfrastructure?.energyConsumptionRate || 0,
       foodSecurity: state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity || 0
     });
 
@@ -282,7 +282,7 @@ export class DiagnosticLogger {
       month,
       climateStability: env.climateStability || 0,
       biodiversityIndex: env.biodiversityIndex || 0,
-      oceanHealth: env.oceanHealth || 0,
+      oceanHealth: 0, // TODO: Calculate from ocean acidification system
       pollutionLevel: env.pollutionLevel || 0,
       tippingPointRisk: boundaries.tippingPointRisk || 0
     });
@@ -292,7 +292,7 @@ export class DiagnosticLogger {
     const bankruptCount = orgs.filter(o => o.bankrupt).length;
     this.economicSnapshots.push({
       month,
-      globalGDP: state.globalMetrics?.globalGDP || 0,
+      globalGDP: 0, // TODO: Calculate from economic systems
       unemploymentLevel: state.society?.unemploymentLevel || 0,
       economicStage: state.globalMetrics?.economicTransitionStage || 0,
       organizationsBankrupt: bankruptCount,

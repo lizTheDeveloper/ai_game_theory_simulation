@@ -261,7 +261,7 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
     return {
       success: true,
       effects: {
-        compute_governance_level: newLevel,
+        compute_governance_level: currentIndex + 1,
         economic_cost: levelEffects?.economicCost || 0
       },
       events: [{

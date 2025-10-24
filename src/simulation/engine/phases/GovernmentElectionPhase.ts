@@ -22,7 +22,8 @@ export class GovernmentElectionPhase implements SimulationPhase {
   readonly order = 8.5;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    return executeGovernmentElectionPhase(state, rng, context || { timestamp: state.currentMonth, data: new Map() });
+    const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map() };
+    return executeGovernmentElectionPhase(state, rng, context || defaultContext);
   }
 }
 
@@ -44,7 +45,7 @@ function executeGovernmentElectionPhase(
     return { events: [], metadata: { warnings: [] } };
   }
 
-  const events: string[] = [];
+  const events: GameEvent[] = [];
 
   // 1. Check for scheduled elections
   let electionsHeld = 0;
@@ -56,7 +57,16 @@ function executeGovernmentElectionPhase(
       // Hold election
       const result = simulateElection(state, countryCode, rng);
       if (result.changed) {
-        events.push(`${(gov as any).countryName}: ${result.message}`);
+        events.push({
+          id: `election_${countryCode}_${state.currentMonth}`,
+          timestamp: state.currentMonth,
+          type: 'government',
+          severity: 'info',
+          agent: 'government',
+          title: 'Election Held',
+          description: `${(gov as any).countryName}: ${result.message}`,
+          effects: { country: countryCode, changed: result.changed }
+        });
         electionsHeld++;
       }
 
@@ -124,11 +134,11 @@ function updatePublicOpinion(state: GameState, rng: RNGFunction): void {
     let opinion = state.governmentSystem!.publicOpinion.get(countryCode) || 0.5;
 
     // 1. Economic performance affects opinion
-    const economicOutput = state.globalMetrics.economicOutput || 100;
-    if (economicOutput > 110) {
-      opinion += 0.02; // Strong economy boosts opinion
-    } else if (economicOutput < 90) {
-      opinion -= 0.03; // Weak economy hurts opinion
+    const economicStage = state.globalMetrics.economicTransitionStage || 1;
+    if (economicStage > 2) {
+      opinion += 0.02; // Advanced economy boosts opinion
+    } else if (economicStage < 1) {
+      opinion -= 0.03; // Struggling economy hurts opinion
     }
 
     // 2. Quality of life affects opinion
@@ -183,7 +193,7 @@ function updatePublicOpinion(state: GameState, rng: RNGFunction): void {
 function checkCoalitionStability(
   state: GameState,
   rng: RNGFunction,
-  events: string[]
+  events: GameEvent[]
 ): void {
   for (const [countryCode, coalition] of state.governmentSystem!.coalitions) {
     const opinion = state.governmentSystem!.publicOpinion.get(countryCode) || 0.5;
@@ -194,7 +204,16 @@ function checkCoalitionStability(
     // Coalition collapses if stability drops below threshold
     if (coalition.stability < 0.3 && rng() > 0.7) {
       const gov = state.governmentSystem!.governments.get(countryCode);
-      events.push(`${(gov as any)?.countryName || countryCode}: Coalition collapsed - snap election called`);
+      events.push({
+        id: `coalition_collapse_${countryCode}_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'government',
+        severity: 'warning',
+        agent: 'government',
+        title: 'Coalition Collapse',
+        description: `${(gov as any)?.countryName || countryCode}: Coalition collapsed - snap election called`,
+        effects: { country: countryCode, coalitionStability: coalition.stability }
+      });
 
       // Schedule snap election
       state.governmentSystem!.nextElections.set(countryCode, state.currentMonth + 2);

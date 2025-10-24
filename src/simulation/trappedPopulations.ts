@@ -83,8 +83,8 @@ export function updateTrappedPopulations(state: GameState): void {
   }
 
   // === 4. CONFLICT ZONES ===
-  if (state.conflictResolution?.activeConflicts > 0) {
-    const conflictAffected = totalPopulation * state.conflictResolution.activeConflicts * 0.05; // 5% per conflict
+  if ((state.conflictResolution?.activeConflicts ?? 0) > 0) {
+    const conflictAffected = totalPopulation * (state.conflictResolution?.activeConflicts ?? 0) * 0.05; // 5% per conflict
     const aspiringConflict = conflictAffected * 0.80; // 80% want to escape war
     const ableConflict = conflictAffected * 0.30; // 30% can afford to leave (conflict destroys wealth)
 

@@ -145,7 +145,6 @@ export function initializeSpecificTippingPoints(): {
       regionallyAffected: ['Brazil', 'Peru', 'Colombia', 'Venezuela', 'Ecuador', 'Bolivia'],
       // Phase 2: Reversibility (IRREVERSIBLE - Amazon dieback permanent on human timescales)
       // Research: Staal et al. 2020 - bistability, hysteresis prevents reversal
-      reversibility: 'irreversible' as const,
     },
 
     coral: {
@@ -158,7 +157,6 @@ export function initializeSpecificTippingPoints(): {
       regionallyAffected: ['Pacific Islands', 'Australia', 'Indonesia', 'Philippines', 'Caribbean', 'East Africa'],
       // Phase 2: Reversibility (IRREVERSIBLE - coral bleaching very difficult to reverse)
       // Research: Hughes et al. 2018 - recovery requires centuries if possible at all
-      reversibility: 'irreversible' as const,
     },
 
     pollinators: {
@@ -170,9 +168,6 @@ export function initializeSpecificTippingPoints(): {
       regionallyAffected: ['North America', 'Europe', 'China', 'India', 'Brazil', 'Sub-Saharan Africa'],
       // Phase 2: Reversibility (REVERSIBLE - populations can recover if stressors removed)
       // Research: Wagner 2020, IPBES 2019 - pollinator recovery feasible with habitat restoration
-      reversibility: 'reversible-with-damping' as const,
-      dampingFeedbackStrength: 0.6, // Moderate damping (60% of forcing reduction translates to recovery)
-      recoveryTimescale: 240, // 20 years for population recovery to pre-crisis levels
     },
 
     permafrost: {
@@ -184,7 +179,6 @@ export function initializeSpecificTippingPoints(): {
       regionallyAffected: ['Russia', 'Canada', 'Alaska', 'Scandinavia', 'Greenland'],
       // Phase 2: Reversibility (IRREVERSIBLE - carbon release cannot be reversed)
       // Research: Turetsky et al. 2020 - positive feedback loop, self-sustaining thaw
-      reversibility: 'irreversible' as const,
     },
 
     amoc: {
@@ -195,7 +189,6 @@ export function initializeSpecificTippingPoints(): {
       regionallyAffected: ['Europe', 'West Africa', 'Eastern Americas', 'Caribbean'],
       // Phase 2: Reversibility (IRREVERSIBLE - circulation collapse permanent on human timescales)
       // Research: Boers 2021, Armstrong McKay et al. 2022 - hysteresis prevents reversal
-      reversibility: 'irreversible' as const,
     },
   };
 }
@@ -249,10 +242,14 @@ export function updateAmazonRainforest(state: GameState): void {
     } catch (e) { /* Ignore EPIPE */ }
     
     state.eventLog.push({
+      id: `amazon-tipping-${state.currentMonth}`,
       type: 'crisis',
+      title: 'Amazon Tipping Point',
       timestamp: state.currentMonth,
-      description: `Amazon Tipping Point: ${amazon.deforestation.toFixed(1)}% deforested`,
-      impact: 'Rainforest → savanna transition begins (50-year process)'
+      severity: 'existential',
+      agent: 'environmental',
+      description: `Amazon Tipping Point: ${amazon.deforestation.toFixed(1)}% deforested. Rainforest → savanna transition begins (50-year process)`,
+      effects: { deforestation: amazon.deforestation }
     });
   }
   
@@ -371,10 +368,14 @@ export function updateCoralReefs(state: GameState): void {
     } catch (e) { /* Ignore EPIPE */ }
     
     state.eventLog.push({
+      id: `coral-collapse-${state.currentMonth}`,
       type: 'crisis',
+      title: 'Coral Reef Collapse',
       timestamp: state.currentMonth,
-      description: `Coral Reef Collapse: ${coral.healthPercentage.toFixed(1)}% health`,
-      impact: 'Mass die-off begins (15-year process), fisheries collapsing'
+      severity: 'critical',
+      agent: 'environmental',
+      description: `Coral Reef Collapse: ${coral.healthPercentage.toFixed(1)}% health. Mass die-off begins (15-year process), fisheries collapsing`,
+      effects: { coralHealth: coral.healthPercentage }
     });
   }
   
@@ -533,10 +534,14 @@ export function updatePollinators(state: GameState): void {
     } catch (e) { /* Ignore EPIPE */ }
     
     state.eventLog.push({
+      id: `pollinator-collapse-${state.currentMonth}`,
       type: 'crisis',
+      title: 'Pollinator Collapse',
       timestamp: state.currentMonth,
-      description: `Pollinator Collapse: ${pollinators.populationPercentage.toFixed(1)}% remaining`,
-      impact: 'Agricultural crisis - 35% food production failing'
+      severity: 'critical',
+      agent: 'environmental',
+      description: `Pollinator Collapse: ${pollinators.populationPercentage.toFixed(1)}% remaining. Agricultural crisis - 35% food production failing`,
+      effects: { pollinatorPopulation: pollinators.populationPercentage }
     });
   }
   

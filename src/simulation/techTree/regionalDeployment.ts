@@ -103,8 +103,9 @@ export function calculateRegionalRelevance(tech: TechDefinition, region: string)
   
   // Technology-specific regional relevance
   switch (tech.category) {
-    case 'environmental':
-      // Environmental tech is more relevant to regions with environmental problems
+    case 'climate':
+    case 'pollution':
+      // Climate/pollution tech is more relevant to regions with environmental problems
       if (region === 'Africa') relevance = 0.9; // High environmental stress
       if (region === 'Asia') relevance = 0.8;   // High pollution, population
       if (region === 'South America') relevance = 0.9; // Amazon protection
@@ -119,8 +120,9 @@ export function calculateRegionalRelevance(tech: TechDefinition, region: string)
       if (region === 'North America') relevance = 0.6; // Already developed
       break;
       
-    case 'water':
-      // Water tech is highly relevant to water-stressed regions
+    case 'freshwater':
+    case 'ocean':
+      // Water/ocean tech is highly relevant to water-stressed regions
       if (region === 'Africa') relevance = 0.9; // Water scarcity
       if (region === 'Asia') relevance = 0.8;   // Large populations, water stress
       if (region === 'Oceania') relevance = 0.7; // Drought-prone
@@ -155,8 +157,8 @@ export function calculateRegionalRelevance(tech: TechDefinition, region: string)
       if (region === 'North America') relevance = 0.6; // Generally good social systems
       break;
       
-    case 'ai_safety':
-      // AI safety is more relevant to regions with AI development
+    case 'alignment':
+      // AI alignment is more relevant to regions with AI development
       if (region === 'North America') relevance = 0.9; // Major AI companies
       if (region === 'Asia') relevance = 0.8;   // China, Japan AI development
       if (region === 'Europe') relevance = 0.7; // EU AI regulation
@@ -260,13 +262,13 @@ export function calculateDeploymentSpeed(tech: TechDefinition, region: string, g
   let categoryModifier = 1.0;
   const category = tech.category || 'other';
 
-  if (category === 'ai_safety' || category === 'social') {
+  if (category === 'alignment' || category === 'social') {
     categoryModifier = 0.3;  // 70% faster (digital scales quickly)
   } else if (category === 'medical') {
     categoryModifier = 2.5;  // 150% slower (FDA, clinical trials, risk aversion)
-  } else if (category === 'environmental') {
+  } else if (category === 'climate' || category === 'pollution') {
     categoryModifier = 1.5;  // 50% slower (EPA, pilot testing)
-  } else if (category === 'energy' || category === 'infrastructure') {
+  } else if (category === 'energy') {
     categoryModifier = 1.75; // 75% slower (capital-intensive, long depreciation)
   }
 
@@ -388,15 +390,15 @@ export function getDeploymentPriority(tech: TechDefinition, region: string, game
   let priority = relevance * speed * factors.economicCapacity;
   
   // Boost priority for high-need regions
-  if (region === 'Africa' && tech.category === 'environmental') priority *= 1.5;
+  if (region === 'Africa' && (tech.category === 'climate' || tech.category === 'pollution')) priority *= 1.5;
   if (region === 'Asia' && tech.category === 'energy') priority *= 1.3;
   if (region === 'South America' && tech.category === 'agriculture') priority *= 1.3;
-  
+
   // Crisis modifiers
   const crisis = detectCrisis(gameState);
   if (crisis.inCrisis) {
     // Crisis increases priority for relevant tech
-    if (tech.category === 'environmental' && crisis.severity > 0.5) {
+    if ((tech.category === 'climate' || tech.category === 'pollution') && crisis.severity > 0.5) {
       priority *= 2.0;
     }
   }

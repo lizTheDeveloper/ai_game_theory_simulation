@@ -152,8 +152,8 @@ export function sigmoidDeploymentCurve(
  * - International cooperation: Critical for global tech (climate, AI)
  */
 export function getGovernanceMultiplier(gameState: GameState): number {
-  const enforcement = gameState.government?.governanceQuality?.enforcementCapacity ?? 0.5;
-  const cooperation = gameState.government?.internationalCooperation ?? 0.5;
+  const enforcement = gameState.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  const cooperation = gameState.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
 
   const governanceCapacity = (enforcement + cooperation) / 2;
 

@@ -394,10 +394,10 @@ function updateBioengineeredCleaners(state: GameState, tech: BioengineeredCleane
       
       // Major trust loss
       state.society.trustInAI = Math.max(0.2, state.society.trustInAI - 0.15);
-      
-      // Increase biotech risk
+
+      // Increase technological risk (biotechRisk not in TechnologicalRisk, use safetyDebt)
       if (state.technologicalRisk) {
-        state.technologicalRisk.biotechRisk = Math.min(1.0, state.technologicalRisk.biotechRisk + 0.2);
+        state.technologicalRisk.safetyDebt = Math.min(1.0, state.technologicalRisk.safetyDebt + 0.2);
       }
     }
   }
@@ -476,7 +476,9 @@ function triggerTerminationShock(state: GameState, techName: string, adaptationL
   if (!state.extinctionState.active) {
     state.extinctionState.active = true;
     state.extinctionState.type = 'slow';
-    state.extinctionState.mechanism = 'geoeng_termination_shock';
+    state.extinctionState.mechanism = 'climate_tipping_point'; // Use valid ExtinctionMechanism
+    state.extinctionState.startMonth = state.currentMonth;
+    state.extinctionState.currentPhase = 0;
     state.extinctionState.severity = adaptationLevel; // Severity scales with adaptation
   }
   

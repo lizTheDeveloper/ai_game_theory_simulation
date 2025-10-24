@@ -388,7 +388,7 @@ export function updateWetBulbTemperatureSystem(
 
         // Create event
         const event: WetBulbEvent = {
-          timestamp: state.currentMonth,
+          month: state.currentMonth,
           region: regionalClimate.region,
           wetBulbTemp,
           dryBulbTemp,
@@ -446,7 +446,7 @@ export function updateWetBulbTemperatureSystem(
   if (system.eventsThisMonth.length > 0) {
     const maxWetBulbTemp = Math.max(...system.eventsThisMonth.map(e => e.wetBulbTemp));
     system.eventHistory.push({
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       eventCount: system.eventsThisMonth.length,
       totalDeaths: monthlyDeaths,
       maxWetBulbTemp,
@@ -464,10 +464,18 @@ export function updateWetBulbTemperatureSystem(
     console.log(`   Event frequency: ${system.eventFrequencyMultiplier.toFixed(1)}x baseline`);
 
     state.eventLog.push({
+      id: `wet-bulb-crisis-${state.currentMonth}`,
       type: 'crisis',
+      title: 'Deadly Heat Crisis',
       timestamp: state.currentMonth,
-      description: `Deadly Heat Crisis: ${(system.cumulativeDeaths * 1_000_000).toFixed(0)} deaths from extreme wet bulb events`,
-      impact: `Event frequency ${system.eventFrequencyMultiplier.toFixed(1)}x baseline, warming +${temperatureAnomaly.toFixed(2)}°C`,
+      severity: 'critical',
+      agent: 'environmental',
+      description: `Deadly Heat Crisis: ${(system.cumulativeDeaths * 1_000_000).toFixed(0)} deaths from extreme wet bulb events. Event frequency ${system.eventFrequencyMultiplier.toFixed(1)}x baseline, warming +${temperatureAnomaly.toFixed(2)}°C`,
+      effects: {
+        cumulativeDeaths: system.cumulativeDeaths,
+        eventFrequency: system.eventFrequencyMultiplier,
+        temperatureAnomaly
+      }
     });
   }
 

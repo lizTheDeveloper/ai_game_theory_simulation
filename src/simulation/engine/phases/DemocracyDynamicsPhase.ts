@@ -41,10 +41,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Initialize democracy state if not present
     if (!state.government.democracy) {
-      state.government.democracy = {
-        electoralDemocracyIndex: 0.5, // Global average (V-Dem 2024: ~0.45)
-        ruleOfLaw: 50,                // 0-100 scale, 50 = global average
-      };
+      state.government.democracy = 0.5; // Global average (V-Dem 2024: ~0.45)
       if (state.currentMonth === 0) {
         console.log('🏛️ DemocracyDynamicsPhase: Initialized democracy state');
       }
@@ -191,7 +188,7 @@ function calculateCrisisPressure(state: GameState): number {
   pressure += unemployment * 0.3; // 30% unemployment = 0.09 pressure
 
   // Environmental crisis (scarcity → conflict)
-  const resourceDepletion = state.environmentalAccumulation?.resourceDepletion ?? 0;
+  const resourceDepletion = (1 - (state.environmentalAccumulation?.resourceReserves ?? 1)) * 100;
   pressure += (resourceDepletion / 100) * 0.2; // Max 0.2 pressure
 
   // Nuclear conflict (existential threat → emergency powers)
@@ -234,7 +231,7 @@ function calculateAIManipulation(state: GameState): number {
   // Count misaligned AIs with social capability
   const misalignedAIs = state.aiAgents.filter(agent => {
     const alignment = agent.alignment ?? 0.5;
-    const social = agent.capabilities?.social?.currentLevel ?? 0;
+    const social = agent.capabilityProfile?.social ?? 0;
     return alignment < 0.5 && social > 3;
   });
 

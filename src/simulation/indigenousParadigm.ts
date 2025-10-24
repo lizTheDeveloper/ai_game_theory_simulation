@@ -210,7 +210,7 @@ function calculateWVSProxyScore(state: GameState, wvs: WVSProxyData): Diagnostic
     {
       id: 'social_cohesion',
       name: 'Social Cohesion (from simulation)',
-      value: social.socialCohesion * 100,
+      value: ((social.socialCohesion.trust + social.socialCohesion.communityBonds) / 200) * 100,
       weight: 0.20, // 20%
       confidence: 'MEDIUM',
       hasData: true,
@@ -268,7 +268,7 @@ function calculateDerivedScore(state: GameState, countryCode?: string): Diagnost
     {
       id: 'social_cohesion_derived',
       name: 'Social Cohesion (derived)',
-      value: social.socialCohesion * 100,
+      value: ((social.socialCohesion.trust + social.socialCohesion.communityBonds) / 200) * 100,
       weight: 0.30, // 30%
       confidence: 'LOW',
       hasData: true,

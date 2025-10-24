@@ -50,10 +50,13 @@ export interface TechDefinition {
   
   // Current deployment (for deployed_2025 tech)
   deploymentLevel: number;  // 0-1
-  
+
   // Effects (when fully deployed)
   effects: Record<string, number>;
-  
+
+  // Optional citations (research backing)
+  citations?: string[];
+
   // NEW: Capability dimension effects (how this tech advances AI capabilities)
   capabilityEffects?: {
     dimensions?: Partial<Record<'physical' | 'digital' | 'cognitive' | 'social' | 'economic' | 'selfImprovement', number>>;
@@ -810,11 +813,7 @@ const ALL_TECH: TechDefinition[] = [
       publicAwarenessBonus: 0.02, // Increases public understanding of AI benefits
       paranoiaReduction: 0.02, // Transparency reduces fear
     },
-    citations: [
-      'IEA Energy Efficiency 2024',
-      'Epoch AI Compute Trends',
-      'Stanford AI Index 2024',
-    ],
+    // Citations: IEA Energy Efficiency 2024, Epoch AI Compute Trends, Stanford AI Index 2024
   },
   {
     id: 'education_personalization',

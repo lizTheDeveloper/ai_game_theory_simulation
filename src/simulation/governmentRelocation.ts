@@ -99,7 +99,7 @@ export function updateGovernmentRelocation(state: GameState): void {
     const successfulRelocations = relocated * program.successRate;
     const trustIncrease = (successfulRelocations / totalPopulation) * 0.02; // 0.02 per 1% of population
     program.trustBonus = trustIncrease;
-    state.society.trust = Math.min(1.0, state.society.trust + trustIncrease);
+    state.society.trust = Math.min(1.0, (state.society.trust ?? 0.5) + trustIncrease);
 
     // Inadequate coverage generates resentment
     const unmetNeed = program.eligiblePopulation - relocated;
@@ -170,7 +170,7 @@ function updatePoliticalWill(state: GameState): void {
   // === ECONOMIC CRISIS PENALTY ===
   // -0.4 during recession
   const economicStage = state.globalMetrics.economicTransitionStage;
-  const inRecession = economicStage < 2.0 || state.globalMetrics.economicGrowthRate < -0.02;
+  const inRecession = economicStage < 2.0; // Economic crisis check
   modifiers.economicCrisis = inRecession ? -0.4 : 0;
 
   // === ELECTION YEAR PENALTY ===

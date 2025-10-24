@@ -256,7 +256,7 @@ export function updateSocialSafetyNets(state: GameState): void {
   // Apply to actual community strength
   state.society.communityStrength = Math.min(
     1.0,
-    state.society.communityStrength + communityStrengthRate
+    (state.society.communityStrength ?? 0.5) + communityStrengthRate
   );
   
   // Social cohesion increase (World Bank: Strong bonds → resilience)

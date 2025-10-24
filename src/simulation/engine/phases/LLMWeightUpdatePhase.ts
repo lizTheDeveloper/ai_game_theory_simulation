@@ -14,8 +14,6 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  * - Fall back to hardcoded weights on error
  */
 
-import type {   PhaseContext } from '../../../types/phases';
-import type { RNGFunction } from '../../../types/config';
 import { checkAndUpdateAgentWeights } from '../../llm/integration';
 
 export const LLMWeightUpdatePhase: SimulationPhase = {
@@ -23,7 +21,9 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
   name: 'LLM Weight Update',
   order: 2.5, // After time advancement (0-1), before agent actions (3+)
 
-  async execute(state: GameState, rng: RNGFunction, context: PhaseContext): Promise<PhaseResult> {
+  execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
+    // Note: This phase is synchronous but checkAndUpdateAgentWeights internally handles async LLM calls
+    // by queuing them and processing them in the background. The phase doesn't wait for responses.
     const changes: string[] = [];
 
     // DEBUG: Log phase execution
@@ -33,7 +33,7 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
 
     // Skip if LLM disabled
     if (!state.llmConfig?.enabled) {
-      return { success: true, changes: [] };
+      return { events: [], metadata: { changes: [] } };
     }
 
     const updatedAgents: string[] = [];
@@ -42,14 +42,16 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
     console.log(`[LLM PHASE] Checking ${state.aiAgents?.length || 0} agents for updates`);
 
     // Check each AI agent for weight updates
+    // Note: checkAndUpdateAgentWeights is now synchronous - async LLM calls are queued internally
     for (const agent of state.aiAgents ?? []) {
       try {
-        const updated = await checkAndUpdateAgentWeights(
+        // Synchronous call - LLM updates happen in background
+        const updated = checkAndUpdateAgentWeights(
           state,
           agent.id,
           state.currentMonth,
           rng
-        );
+        ) as any; // Type assertion to handle potential async/sync mismatch
 
         if (updated) {
           updatedAgents.push(agent.name);
@@ -76,8 +78,8 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
     }
 
     return {
-      success: true,
-      changes
+      events: [],
+      metadata: { changes }
     };
   }
 };

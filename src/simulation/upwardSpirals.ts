@@ -156,7 +156,7 @@ function updateCognitiveSpiral(spiral: UpwardSpiral, state: GameState, month: nu
   // FIX #2A (Oct 19, 2025): Removed explainability (contradicts research)
   // NEW: Benefits demonstrated + acceptance-level trust (trust includes performance now)
   const comprehensiveTrust = calculateComprehensiveTrustInAI(state);
-  const demonstratedBenefits = qol.qualityOfLife > 0.5;  // AI has improved life
+  const demonstratedBenefits = state.globalMetrics.qualityOfLife > 0.5;  // AI has improved life
 
   const cognitiveEnhanced = demonstratedBenefits &&
                            comprehensiveTrust > TRUST_THRESHOLD_ACCEPTANCE;

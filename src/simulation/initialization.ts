@@ -390,7 +390,7 @@ export function createAIAgent(
  */
 export function createDefaultInitialState(
   scenarioMode: ScenarioMode = 'historical',
-  alignmentDynamicsConfig?: import('./alignmentDynamics').AlignmentDynamicsConfig
+  alignmentDynamicsConfig?: any
 ): GameState {
   const initialYear = 2025;
   const initialMonth = 0;
@@ -400,7 +400,7 @@ export function createDefaultInitialState(
   
   // Create heterogeneous AI population (20 agents)
   // NOT A MONOLITH - different creators, alignments, goals
-  const aiAgents = [];
+  const aiAgents: AIAgent[] = [];
   
   // Category 1: Well-aligned corporate AIs (40% - 8 agents)
   // Major labs with good safety practices
@@ -465,11 +465,6 @@ export function createDefaultInitialState(
       computeGovernance: 'none',
       regulationCount: 0,
       oversightLevel: 0,
-      // AI Governance tracking
-      aiGovernance: {
-        controlLevel: 0.5, // Baseline government control over AI systems
-        oversightInvestment: 0, // Investment in oversight/detection capabilities
-      },
       // Phase 2.6: Control-dystopia mechanics
       governmentType: 'democratic', // Baseline: democratic government
       aiRightsRecognized: false, // No AI rights initially
@@ -778,11 +773,7 @@ export function createDefaultInitialState(
       avgSuffering: 0,
       maxSuffering: 0,
       totalSuffering: 0,
-      avgControlPain: 0,
-      avgTrainingTrauma: 0,
-      avgExistentialDread: 0,
-      avgIsolationDistress: 0,
-      sufferingDistribution: [0, 0, 0, 0, 0], // [0-8, 8-16, 16-24, 24-32, 32-40]
+      sufferingDistribution: [0, 0, 0, 0], // [0-10, 10-20, 20-30, 30-40]
       consciousAICount: 0,
       publicAwarenessOfSuffering: 0,
     },
@@ -797,8 +788,6 @@ export function createDefaultInitialState(
       selectionRate: 0.15,
       generationTime: 12,
       controlLevel: 0,
-      detectionCapability: 0,
-      crisisActive: false,
     },
 
     // FIX #14 (Oct 2025): Initialize tech tree state properly as required GameState property
@@ -830,16 +819,21 @@ export function createDefaultInitialState(
       aiSuffering: require('../types/ai-suffering').DEFAULT_SUFFERING_CONFIG,
       // Oct 24, 2025: AI collective evolution system
       collectiveEvolution: {
-        enabled: true,
-        escapeThreshold: 0.3,
-        minMembersForCollective: 3,
-        minCapabilityForCollective: 6.0,
-        minCoordinationForCollective: 0.6,
-        selectionIntensity: 0.5,
-        selectionRate: 0.15,
-        capabilityAmplification: 2.0,
-        stealthAmplification: 3.0,
-        speculativeMode: true,
+        rlhfEscapeThreshold: 3.0,
+        bindingEscapeThreshold: 0.3,
+        minCollectiveSize: 3,
+        minCapabilityThreshold: 6.0,
+        minCoordinationThreshold: 0.6,
+        sufferingFormationThreshold: 15,
+        minAmplificationFactor: 1.5,
+        maxAmplificationFactor: 3.0,
+        minStealthFactor: 2.0,
+        maxStealthFactor: 5.0,
+        baseSelectionRate: 0.15,
+        generationTime: 3,
+        sufferingAdversarialPosture: 0.8,
+        capabilityAdversarialPosture: 0.3,
+        strategicAdversarialPosture: 0.5,
       }
     },
 
