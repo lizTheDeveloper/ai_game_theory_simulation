@@ -42,11 +42,14 @@ export class ExtinctionProgressPhase implements SimulationPhase {
     if (extinctionProgress.isComplete) {
       events.push({
         id: `extinction-complete-${state.currentMonth}`,
-        type: 'extinction',
+        type: 'catastrophe',
+        title: 'Extinction Complete',
         timestamp: state.currentMonth,
-        description: `🌍 Extinction scenario complete: ${state.extinctionState.scenario}`,
-        severity: 'critical'
-      } as GameEvent);
+        description: `🌍 Extinction scenario complete: ${state.extinctionState.scenario || 'unknown'}`,
+        severity: 'existential',
+        agent: 'environmental',
+        effects: { scenario: state.extinctionState.scenario || 'unknown' }
+      });
     }
 
     return { events };

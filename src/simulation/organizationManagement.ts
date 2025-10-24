@@ -316,9 +316,10 @@ export function shouldTrainNewModel(
   const capFloor = getCapabilityFloorForNewAI(state);
   const capFloorTotal = calculateTotalCapabilityFromProfile(capFloor);
   
+  // Note: AIAgent doesn't have createdAt field, use capability as proxy for "newest"
   const newestModel = state.aiAgents
     .filter(ai => org.ownedAIModels.includes(ai.id))
-    .sort((a, b) => b.createdAt - a.createdAt)[0];
+    .sort((a, b) => b.capability - a.capability)[0];
   
   const worthTraining = !newestModel || capFloorTotal > newestModel.capability * 1.2;
   
@@ -559,7 +560,8 @@ export function calculateAIRevenue(org: Organization, state: GameState): number 
   
   // 2. FOOD CRISIS PENALTY
   // Starving people don't buy AI services
-  const foodSecurity = state.environmentalAccumulation.foodSecurity || 0.7;
+  // Note: foodSecurity not in EnvironmentalAccumulation, use climate stability as proxy
+  const foodSecurity = state.environmentalAccumulation.climateStability;
   if (foodSecurity < 0.4) {
     const foodCrisisSeverity = (0.4 - foodSecurity) / 0.4; // 0-1 scale
     baseRevenue *= (1 - foodCrisisSeverity * 0.5); // Up to 50% revenue loss

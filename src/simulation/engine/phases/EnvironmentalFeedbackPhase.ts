@@ -21,7 +21,7 @@
  * @module simulation/engine/phases/EnvironmentalFeedbackPhase
  */
 
-import type { GameState, RNGFunction } from '@/types/game';
+import type { GameState, RNGFunction, GameEvent } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
 
 /**
@@ -68,16 +68,24 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
     // Update climate stability from climate state
     state.environmentalAccumulation.climateStability = climateState.climateStability;
 
-    const events: string[] = [];
+    const events: GameEvent[] = [];
 
     // Report significant changes (only log major updates)
     if (state.currentMonth % 12 === 0) { // Annual reporting
-      events.push(
-        `Environmental State: ` +
-        `Climate=${climateState.globalTemperatureAnomaly.toFixed(2)}°C, ` +
-        `Pollution=${pollutionLevel.toFixed(1)}, ` +
-        `Resources=${(100 - resourceDepletion).toFixed(1)}% remaining`
-      );
+      events.push({
+        id: `environmental_state_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'environmental',
+        severity: 'info',
+        agent: 'system',
+        title: 'Environmental State Annual Report',
+        description: `Climate=${climateState.globalTemperatureAnomaly.toFixed(2)}°C, Pollution=${pollutionLevel.toFixed(1)}, Resources=${(100 - resourceDepletion).toFixed(1)}% remaining`,
+        effects: {
+          climateAnomaly: climateState.globalTemperatureAnomaly,
+          pollution: pollutionLevel,
+          resourcesRemaining: 100 - resourceDepletion
+        }
+      });
     }
 
     return { events };

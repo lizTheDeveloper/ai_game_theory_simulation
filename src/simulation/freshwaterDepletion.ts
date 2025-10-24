@@ -187,9 +187,9 @@ export function updateFreshwaterSystem(state: GameState): void {
       
       // Immediate impacts
       state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.08);
-      state.qualityOfLifeSystems.health = Math.max(0.1, state.qualityOfLifeSystems.health - 0.05);
-      state.society.trust -= 0.04;
-      state.globalMetrics.economicGrowthRate -= 0.03;
+      state.qualityOfLifeSystems.healthcareQuality = Math.max(0.1, (state.qualityOfLifeSystems.healthcareQuality ?? 0.5) - 0.05);
+      state.society.trust = (state.society.trust ?? 0.5) - 0.04;
+      // Economic impact handled through materialAbundance reduction
       
       // Regional collapse effects
       if (state.environmentalAccumulation) {

@@ -24,14 +24,14 @@ export const EnsembleMetaLearningPhase: SimulationPhase = {
 
     // Check if ensemble detection is enabled
     if (!state.government.ensembleDetection?.enabled) {
-      return { state, events };
+      return { events };
     }
 
     const meta = state.government.ensembleDetection.metaLearning;
 
     // Check if meta-learning is enabled
     if (!meta.enabled) {
-      return { state, events };
+      return { events };
     }
 
     // Check if it's time to update (every updateFrequency months)
@@ -39,7 +39,7 @@ export const EnsembleMetaLearningPhase: SimulationPhase = {
     const totalSamples = meta.totalEvaluations;
 
     if (monthsSinceUpdate < meta.updateFrequency || totalSamples < meta.minSamples) {
-      return { state, events }; // Not time yet
+      return { events }; // Not time yet
     }
 
     // Calculate accuracy for each method
@@ -51,7 +51,7 @@ export const EnsembleMetaLearningPhase: SimulationPhase = {
 
     // Store adaptation in history
     meta.adaptationHistory.push({
-      timestamp: currentMonth,
+      month: currentMonth,
       oldWeights,
       newWeights,
       reason: `Meta-learning update: ${totalSamples} evaluations, ${monthsSinceUpdate} months`
@@ -76,7 +76,7 @@ export const EnsembleMetaLearningPhase: SimulationPhase = {
     console.log(`    Benchmark Manip: ${(accuracies.benchmarkManip * 100).toFixed(1)}%`);
     console.log(`    Deployment Risk: ${(accuracies.deploymentRisk * 100).toFixed(1)}%`);
 
-    return { state, events };
+    return { events };
   }
 };
 

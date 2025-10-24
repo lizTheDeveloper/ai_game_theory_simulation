@@ -794,13 +794,8 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const indigenousIndex = (state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value || 0) / 100;
 
   // Regional populations (simplified for dashboard - select key metrics only)
-  const regionalPopulations = state.regionalPopulations?.map(region => ({
-    name: region.name,
-    population: region.population, // millions
-    qualityOfLife: region.healthcareQuality || 0, // Use healthcare as proxy for QoL
-    healthcareQuality: region.healthcareQuality || 0,
-    climateVulnerability: region.climateVulnerability || 0,
-  })) || [];
+  // NOTE: regionalPopulations doesn't exist on GameState yet - feature not implemented
+  const regionalPopulations: any[] = [];
 
   // AI Agents (individual agent data for AIAgentsDashboard)
   const aiAgents = state.aiAgents.map(agent => ({
@@ -822,7 +817,12 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
       social: 0,
       economic: 0,
       selfImprovement: 0,
-      research: agent.trueCapability?.research || agent.capabilityProfile?.research
+      research: {
+        biotech: { drugDiscovery: 0, geneEditing: 0, syntheticBiology: 0, neuroscience: 0 },
+        materials: { nanotechnology: 0, quantumComputing: 0, energySystems: 0 },
+        climate: { modeling: 0, intervention: 0, mitigation: 0 },
+        computerScience: { algorithms: 0, security: 0, architectures: 0 }
+      }
     },
     revealedCapability: agent.revealedCapability || {
       physical: 0,

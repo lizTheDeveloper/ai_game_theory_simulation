@@ -31,7 +31,8 @@ const formatFullGameDate = (year: number, month: number, day: number): string =>
   return format(date, 'MMM d, yyyy');
 };
 
-// Initial state factory
+// Initial state factory (mock data for UI - not production simulation)
+// Type assertion needed because full AIAgent interface has 40+ required fields
 const createInitialAIAgent = (id: string, name: string): AIAgent => ({
   id,
   name,
@@ -40,20 +41,21 @@ const createInitialAIAgent = (id: string, name: string): AIAgent => ({
   alignment: 0.7 + Math.random() * 0.2, // Generally aligned initially
   hiddenObjective: (Math.random() - 0.5) * 0.6, // Random hidden preference
   latentSpaceSize: Math.random() * 0.3, // Limited opaque actions initially
-  
+
   // Escape capabilities start at zero
   selfReplicationLevel: 0,
   selfImprovementLevel: 0,
   resourceControl: 0,
   manipulationCapability: 0,
   hackingCapability: 0,
-  
+
   // State tracking
   escaped: false,
   beneficialActions: 0,
   harmfulActions: 0,
-});
+} as AIAgent);
 
+// Type assertion needed because full GovernmentAgent interface has 20+ required fields
 const createInitialGovernment = (): GovernmentAgent => ({
   controlDesire: 0.3, // Moderate initial control desire
   capabilityToControl: 0.5, // Medium initial capability
@@ -63,7 +65,7 @@ const createInitialGovernment = (): GovernmentAgent => ({
   legitimacy: 0.6, // Moderate public support
   lastMajorPolicyMonth: -12, // Can take major policy immediately at start
   majorPoliciesThisYear: 0 // No major policies enacted yet
-});
+} as unknown as GovernmentAgent);
 
 const createInitialSociety = (): HumanSocietyAgent => ({
   trustInAI: 0.6, // Cautious optimism initially
@@ -124,6 +126,7 @@ const createInitialTechTree = (): TechnologyNode[] => [
   // More tech nodes will be added
 ];
 
+// Type assertion needed because full GameState interface has 50+ required fields
 const createInitialState = (): GameState => {
   const initialYear = 2025;
   const initialMonth = 0; // January
@@ -170,7 +173,7 @@ const createInitialState = (): GameState => {
         coordinationCapacity: 0.4
       }]
     },
-  };
+  } as unknown as GameState;
 };
 
 // Store interface

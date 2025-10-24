@@ -431,7 +431,7 @@ function calculateEnvironmentalImpact(state: GameState): void {
 
   // Boost economic metrics if cost savings significant
   if (costSavings > 0.01) {
-    state.globalMetrics.economicStage += costSavings * 0.1;
+    state.globalMetrics.economicTransitionStage += costSavings * 0.1;
   }
 
   // Calculate adoption acceleration vs business-as-usual

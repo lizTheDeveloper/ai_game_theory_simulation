@@ -293,9 +293,9 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
   // Fragile State Index (estimate from trust + violence + economic factors)
   // Research: FSI = Security + Economy + Politics + Social (12 indicators)
   // Simplified: Map simulation trust, violence, GDP to FSI scale
-  const trust = state.government.trustInGovernment;
+  const trust = state.society.trustInGovernment || 0.5;
   const violence = state.humanPopulationSystem.deathsByCategory.war / (metrics.population * 1_000_000_000);
-  const gdpLevel = state.globalMetrics.economicOutput;
+  const gdpLevel = state.globalMetrics.qualityOfLife; // Use QoL as proxy for economic output
 
   // FSI scale: 0 (stable) to 120 (failed)
   // Low trust → high FSI, high violence → high FSI, low GDP → high FSI
@@ -325,7 +325,7 @@ function updateTier2Indicators(state: GameState, metrics: CountrySufferingMetric
 
   // Healthcare Access & Quality (from QoL health dimension)
   // HAQ scale: 0 (worst) to 100 (best)
-  const healthQoL = state.qualityOfLifeSystems?.dimensions?.health?.overallScore || 60;
+  const healthQoL = (state.qualityOfLifeSystems?.health || 0.6) * 100; // Convert [0,1] to [0,100]
   tier2Indicators.haqIndex = healthQoL;
   tier2Indicators.healthcareCollapseActive = tier2Indicators.haqIndex < system.thresholds.haqThreshold;
 }
@@ -452,7 +452,7 @@ function updateGlobalMetrics(state: GameState, system: MinimalSufferingSystem): 
   const lastSnapshot = globalMetrics.planetaryBoundariesHistory[globalMetrics.planetaryBoundariesHistory.length - 1];
   if (!lastSnapshot || lastSnapshot.boundariesBreached !== boundaries) {
     globalMetrics.planetaryBoundariesHistory.push({
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       boundariesBreached: boundaries,
     });
   }
@@ -568,7 +568,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
 
   // Add snapshot
   history.monthlySnapshots.push({
-    timestamp: state.currentMonth,
+    month: state.currentMonth,
     globalMetrics: JSON.parse(JSON.stringify(globalMetrics)), // Deep clone
     worstCountries,
   });
@@ -577,7 +577,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
   if (globalMetrics.globalExcessMortalityRate > history.peakExcessMortality.rate) {
     history.peakExcessMortality = {
       rate: globalMetrics.globalExcessMortalityRate,
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       countries: worstCountries,
     };
   }
@@ -585,7 +585,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
   if (globalMetrics.totalDisplaced > history.peakDisplacement.total) {
     history.peakDisplacement = {
       total: globalMetrics.totalDisplaced,
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       countries: worstCountries,
     };
   }
@@ -593,7 +593,7 @@ function recordMonthlySnapshot(state: GameState, system: MinimalSufferingSystem)
   if (globalMetrics.totalMalnourished > history.peakFoodCrisis.affected) {
     history.peakFoodCrisis = {
       affected: globalMetrics.totalMalnourished,
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       countries: worstCountries,
     };
   }

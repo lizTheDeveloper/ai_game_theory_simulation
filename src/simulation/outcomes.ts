@@ -456,7 +456,7 @@ export function determineActualOutcome(
       };
     } else {
       // Golden Age continues, but not yet Utopia
-      const blockingFactors = [];
+      const blockingFactors: string[] = [];
       if (envSustainability < 0.65 || hasEnvCrisis) blockingFactors.push('environmental');
       if (socialSustainability < 0.65 || hasSocCrisis) blockingFactors.push('social');
       if (techSafety < 0.65 || hasTechCrisis) blockingFactors.push('technological');

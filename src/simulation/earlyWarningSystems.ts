@@ -102,7 +102,7 @@ export function updateEarlyWarningDetection(state: GameState, rng: RNGFunction):
 
   // === 1. UPDATE DETECTION QUALITY (scales with government investment) ===
   // Research: IPCC (2023) - monitoring quality ranges 0.3-0.9 based on investment
-  const govInvestment = state.government.researchInvestments?.environmental ?? 0;
+  const govInvestment = 0; // TODO: Add environmental research investment tracking
   const aiCapability = getMaxAIResearchCapability(state, 'climate');
 
   // Detection quality improves with investment + AI assistance
@@ -276,9 +276,20 @@ function getMaxAIResearchCapability(state: GameState, domain: string): number {
   let maxCapability = 0;
 
   for (const ai of state.aiAgents) {
-    if (ai.lifecycle === 'deployed') {
-      const capability = ai.capabilities.research ?? 0;
-      maxCapability = Math.max(maxCapability, capability);
+    if (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') {
+      // capabilityProfile.research is AIResearchCapabilities, need scalar
+      // Use overall research capability (average across all research sub-capabilities)
+      const researchCap = ai.capabilityProfile.research;
+      const avgBiotech = (researchCap.biotech.drugDiscovery + researchCap.biotech.geneEditing +
+                         researchCap.biotech.syntheticBiology + researchCap.biotech.neuroscience) / 4;
+      const avgMaterials = (researchCap.materials.nanotechnology + researchCap.materials.quantumComputing +
+                           researchCap.materials.energySystems) / 3;
+      const avgClimate = (researchCap.climate.modeling + researchCap.climate.intervention +
+                         researchCap.climate.mitigation) / 3;
+      const avgCS = (researchCap.computerScience.algorithms + researchCap.computerScience.architectures +
+                    researchCap.computerScience.security) / 3;
+      const avgResearch = (avgBiotech + avgMaterials + avgClimate + avgCS) / 4;
+      maxCapability = Math.max(maxCapability, avgResearch);
     }
   }
 

@@ -160,7 +160,7 @@ export function updateCooperationAgreement(state: GameState, cache: CountryInter
     natAI.raceIntensity.raceIntensity = Math.min(1.0, natAI.raceIntensity.raceIntensity * 1.5);
 
     // Global trust damaged
-    state.society.trust = Math.max(0, state.society.trust - 0.08);
+    state.society.trust = Math.max(0, (state.society.trust ?? 0.5) - 0.08);
 
   } else {
     // Agreement holds, reduce race intensity
@@ -197,7 +197,7 @@ export function updateInternationalCooperation(state: GameState, cache: CountryI
 
     // Higher if: low race intensity, high trust, recent crisis
     const raceBonus = (1 - natAI.raceIntensity.raceIntensity) * 0.002;
-    const trustBonus = (state.society.trust - 0.5) * 0.002;
+    const trustBonus = ((state.society.trust ?? 0.5) - 0.5) * 0.002;
 
     // OPTIMIZATION: Use pre-computed cooperation potential (O(1))
     // instead of iterating over all nation pairs (O(n²))
@@ -277,7 +277,7 @@ export function updateInternationalCooperation(state: GameState, cache: CountryI
     natAI.cooperationAgreement = null;
 
     // Negative effects on trust
-    state.society.trust = Math.max(0, state.society.trust - 0.08); // -8% global trust
+    state.society.trust = Math.max(0, (state.society.trust ?? 0.5) - 0.08); // -8% global trust
 
     // Race intensity spikes
     natAI.raceIntensity.raceIntensity = Math.min(1, natAI.raceIntensity.raceIntensity + 0.15);
@@ -293,7 +293,7 @@ export function updateInternationalCooperation(state: GameState, cache: CountryI
 
   // Boost global trust slightly
   if (coop.mutualTrust > 0.70) {
-    state.society.trust = Math.min(1, state.society.trust + 0.002); // +0.2%/month
+    state.society.trust = Math.min(1, (state.society.trust ?? 0.5) + 0.002); // +0.2%/month
   }
 
   // Log milestones

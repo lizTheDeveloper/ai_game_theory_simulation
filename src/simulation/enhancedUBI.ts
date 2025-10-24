@@ -267,7 +267,7 @@ export function updateUBISystem(state: GameState): void {
   // Apply social cohesion boost to society
   state.society.communityStrength = Math.min(
     1.0,
-    state.society.communityStrength + ubi.effects.socialCohesion * 0.005
+    (state.society.communityStrength ?? 0.5) + ubi.effects.socialCohesion * 0.005
   );
   
   // === ECONOMIC EFFECTS ===

@@ -47,8 +47,11 @@ const investBenchmarkSuite: CategorizedGovernmentAction = {
       success: true,
       effects: { benchmarkQuality: newLevel },
       events: [{
+        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'info',
+        agent: 'government',
         title: 'Benchmark Suite Improved',
         description: `Capability benchmark quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of true AI capabilities.`,
         effects: { benchmarkQuality: newLevel }
@@ -112,8 +115,11 @@ const fundNationalCompute: CategorizedGovernmentAction = {
       success: true,
       effects: { nationalCompute: 1 },
       events: [{
+        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'medium',
+        agent: 'government',
         title: 'National AI Infrastructure Funded',
         description: `Government started building national data center. Reduces dependence on private sector but costs taxpayer money.`,
         effects: { legitimacy: -0.05 }

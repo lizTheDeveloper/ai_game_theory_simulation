@@ -77,7 +77,8 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
 
   // === WATER SECURITY ===
   // Water < 0.4 = crisis (leads to cholera, dysentery, other waterborne disease)
-  const waterSecurity = env.waterSecurity || 0.7;
+  // Note: waterSecurity not in EnvironmentalAccumulation, use QoL system
+  const waterSecurity = state.qualityOfLifeSystems.survivalFundamentals?.waterSecurity || 0.7;
   if (waterSecurity < 0.4) {
     const waterSeverity = (0.4 - waterSecurity) / 0.4;
     diseaseMortality += 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food

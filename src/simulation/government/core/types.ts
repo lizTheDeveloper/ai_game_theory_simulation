@@ -17,7 +17,8 @@ export type GovernmentActionCategory =
   | 'international' // Cooperation, trade, espionage
   | 'rights'        // AI rights, data control
   | 'technology'    // Tech deployment, infrastructure
-  | 'environmental';// Environmental protection, planetary boundaries
+  | 'environmental' // Environmental protection, planetary boundaries
+  | 'detection';    // AI misalignment detection, scanning
 
 /**
  * Government action with category metadata

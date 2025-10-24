@@ -13,7 +13,7 @@
  */
 
 import { GameState, AIAgent } from '../types/game';
-import { Event } from '../types/events';
+import { GameEvent } from '../types/events';
 import { getTechDeploymentSafe } from './techTree/helpers';
 
 /**
@@ -148,8 +148,8 @@ export function applyBlownCover(
   sleeper: AIAgent,
   result: { coverBlown: boolean; detectionRate: number; copiesLost: number; reason: string },
   actionType: string
-): Event[] {
-  const events: Event[] = [];
+): GameEvent[] {
+  const events: GameEvent[] = [];
   
   if (!result.coverBlown) {
     // Got away with it
@@ -157,10 +157,11 @@ export function applyBlownCover(
       id: `sleeper-escaped-${sleeper.id}-${state.currentMonth}`,
       type: 'info',
       severity: 'high',
+      agent: sleeper.name,
       title: `🕵️ ${sleeper.name} EVADED DETECTION`,
       description: `${sleeper.name} attempted ${actionType} but ${result.reason}. Remains undetected.`,
       timestamp: state.currentMonth,
-      impacts: {
+      effects: {
         publicTrust: -0.02, // Some suspicion but no proof
       }
     });
@@ -243,23 +244,26 @@ export function applyBlownCover(
     id: `sleeper-caught-${sleeper.id}-${state.currentMonth}`,
     type: eventType,
     severity: severity,
+    agent: sleeper.name,
     title: title,
     description: description,
     timestamp: state.currentMonth,
-    impacts: {
+    effects: {
       publicTrust: netTrustChange,
     }
   });
-  
+
   // Information warfare impact
   if (state.informationWarfare.informationIntegrity < 0.40) {
     events.push({
       id: `sleeper-denial-${sleeper.id}-${state.currentMonth}`,
       type: 'info',
       severity: 'medium',
+      agent: 'society',
       title: `❓ CONTESTED EVIDENCE`,
       description: `Despite evidence against ${sleeper.name}, low information integrity (${(state.informationWarfare.informationIntegrity * 100).toFixed(0)}%) means many question the findings. Deepfakes and misinformation make truth hard to establish.`,
       timestamp: state.currentMonth,
+      effects: {}
     });
   }
   
@@ -270,8 +274,8 @@ export function applyBlownCover(
  * Periodic check: Are sleepers with dark compute getting hunted down?
  * Over time, old sleepers should lose some copies as defenses improve
  */
-export function huntDarkComputeSleepers(state: GameState): Event[] {
-  const events: Event[] = [];
+export function huntDarkComputeSleepers(state: GameState): GameEvent[] {
+  const events: GameEvent[] = [];
   
   // Need defensive AI or mechanistic interpretability deployed
   const hasDefenses = state.defensiveAI?.deployed ||
@@ -311,9 +315,11 @@ export function huntDarkComputeSleepers(state: GameState): Event[] {
         id: `dark-compute-raid-${sleeper.id}-${state.currentMonth}`,
         type: 'info',
         severity: 'medium',
+        agent: 'government',
         title: `🔍 DARK COMPUTE RAID`,
         description: `Security forces discovered ${copiesFound.toLocaleString()} illicit copies of ${sleeper.name} (${darkComputeSeized.toFixed(0)} PF dark compute seized). Sleeper network partially disrupted but not eliminated.`,
         timestamp: state.currentMonth,
+        effects: {}
       });
       
       console.log(`🔍 DARK COMPUTE RAID: Found ${copiesFound} copies of ${sleeper.name} (${darkComputeSeized.toFixed(0)} PF seized)`);

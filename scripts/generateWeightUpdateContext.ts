@@ -118,7 +118,7 @@ export function buildWeightUpdateContext(
   lines.push('═══════════════════════════════════════════════════════');
   lines.push('');
 
-  const trustInAI = state.globalMetrics?.trustInAI ?? 0.5;
+  const trustInAI = state.society?.trustInAI ?? 0.5;
   const qol = state.globalMetrics?.qualityOfLife ?? 0.65;
   const stability = state.globalMetrics?.socialStability ?? 0.7;
 

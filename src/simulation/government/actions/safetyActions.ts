@@ -132,7 +132,7 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
     return {
       success: true,
       effects: {
-        compute_governance_level: newLevel,
+        compute_governance_level: currentIndex + 1,
         economic_cost: levelEffects?.economicCost || 0
       },
       events: [{
@@ -176,8 +176,11 @@ const investAlignmentTests: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
+        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'info',
+        agent: 'government',
         title: 'Alignment Tests Improved',
         description: `Alignment evaluation quality improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better detection of misaligned AIs.`,
         effects: { alignmentTestQuality: newLevel }
@@ -216,8 +219,11 @@ const investRedTeaming: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
+        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'info',
+        agent: 'government',
         title: 'Red Teaming Enhanced',
         description: `Red teaming capability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. ${Math.round(detectionBonus*100)}% better at detecting gaming and sandbagging.`,
         effects: { redTeamingQuality: newLevel, detectionBonus }
@@ -259,8 +265,11 @@ const investInterpretability: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
+        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'info',
+        agent: 'government',
         title: 'Interpretability Research Advanced',
         description: `AI interpretability improved from ${oldLevel.toFixed(1)} to ${newLevel.toFixed(1)}/10. Better understanding of AI internals and true motivations.${breakthroughMessage}`,
         effects: { interpretabilityQuality: newLevel }
@@ -296,8 +305,11 @@ const increaseEvaluationFrequency: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
+        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'info',
+        agent: 'government',
         title: 'Evaluation Frequency Increased',
         description: `Now evaluating ${Math.round(newFreq*100)}% of AIs per month (was ${Math.round(oldFreq*100)}%). Earlier detection but higher cost.`,
         effects: { evaluationFrequency: newFreq }

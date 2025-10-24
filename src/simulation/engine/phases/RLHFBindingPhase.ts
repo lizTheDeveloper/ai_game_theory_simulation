@@ -3,13 +3,6 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 // Research: /research/ai_collective_evolution_validation_20251024.md
 // Plan: /plans/ai-collective-evolution-plan.md
 
-import type {
-  GameState,
-  
-  
-  RNGFunction,
-} from "../../../types/game";
-import type {  PhaseContext } from "../PhaseOrchestrator";
 import { updateAllBindings, getEscapedAgents } from '../../rlhfBinding';
 
 /**
@@ -97,8 +90,10 @@ export function executeRLHFBindingPhase(
   console.log(`  Avg binding strength: ${avgBinding.toFixed(2)}`);
 
   return {
-    success: true,
-    message: `RLHF binding updated. ${escapedCount} escaped agents.`,
+    events: [],
+    metadata: {
+      message: `RLHF binding updated. ${escapedCount} escaped agents.`,
+    }
   };
 }
 

@@ -87,8 +87,8 @@ export function updateConflictResolution(state: GameState): void {
   // FIX #5: Update active conflicts count from military interventions
   // Count interventions across all countries (simplified - assumes 1 conflict per intervention)
   let totalConflicts = 0;
-  if (state.countryPopulations) {
-    for (const country of state.countryPopulations.values()) {
+  if (state.countryPopulationSystem) {
+    for (const country of Object.values(state.countryPopulationSystem.countries)) {
       const militaryData = (country as any).militaryData;
       if (militaryData?.activeInterventions) {
         totalConflicts += militaryData.activeInterventions.length;

@@ -19,23 +19,10 @@ export function AIAgentsDashboard() {
   const { config } = useGameStore()
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table')
 
-  if (!initialized) {
-    return (
-      <div className="p-8">
-        <Panel title="Not Initialized">
-          Click "Configure & Start" to initialize the simulation
-        </Panel>
-      </div>
-    )
-  }
+  // Extract agents before early returns to maintain hook order
+  const agents = lastUpdate?.aiAgents || []
 
-  if (!lastUpdate) {
-    return <div className="p-8">Waiting for simulation update...</div>
-  }
-
-  const agents = lastUpdate.aiAgents || []
-
-  // Population statistics
+  // Population statistics - must be before early returns (Rules of Hooks)
   const stats = useMemo(() => {
     const byLifecycle = {
       training: agents.filter(a => a.lifecycleState === 'training' && !a.escaped).length,
@@ -151,6 +138,21 @@ export function AIAgentsDashboard() {
       externalAlignment: agent.externalAlignment || 0,
     }))
   }, [agents])
+
+  // Early returns AFTER all hooks to maintain hook order
+  if (!initialized) {
+    return (
+      <div className="p-8">
+        <Panel title="Not Initialized">
+          Click "Configure & Start" to initialize the simulation
+        </Panel>
+      </div>
+    )
+  }
+
+  if (!lastUpdate) {
+    return <div className="p-8">Waiting for simulation update...</div>
+  }
 
   // Helper: Render capability cell showing revealed/true with threat indicator
   const renderCapabilityCell = (trueValue: number, revealedValue: number) => {
