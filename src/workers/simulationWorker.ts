@@ -160,7 +160,7 @@ let isFirstStep = false; // Force full delta on first step after start
 
 // Message types from main thread
 type WorkerMessage =
-  | { type: 'init'; seed: number; scenario?: ScenarioMode; interval?: number; alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig }
+  | { type: 'init'; seed: number; scenario?: ScenarioMode; interval?: number; alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig; climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig }
   | { type: 'start' }
   | { type: 'pause' }
   | { type: 'resume' }
