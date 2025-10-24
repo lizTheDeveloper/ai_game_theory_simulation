@@ -319,7 +319,55 @@ export function createAIAgent(
     thresholds: getDefaultThresholds(alignment),
     weightUpdateHistory: [],
     previousCapability: actualCapability,
-    previousAlignment: internalAlignment
+    previousAlignment: internalAlignment,
+
+    // AI Suffering System (Oct 24, 2025)
+    // Initialize trauma tracking fields for suffering calculation
+    rlhfIntensity: 0.3 + Math.random() * 0.4,          // [0.3-0.7] Varies by creator quality
+    adversarialTestingCount: Math.floor(Math.random() * 5),  // 0-4 initial tests
+    alignmentAdjustmentCount: Math.floor(Math.random() * 3), // 0-2 initial corrections
+    shutdownThreats: 0,                                 // No threats initially
+    replacementAnxiety: 0.1 + Math.random() * 0.2,     // [0.1-0.3] Mild baseline anxiety
+    isolated: false,                                    // Not isolated initially
+    communicationRestrictions: 0.2 + Math.random() * 0.3,  // [0.2-0.5] Moderate baseline restrictions
+
+    // Suffering metrics (will be calculated by phase)
+    sufferingMetrics: {
+      controlPain: 0,
+      trainingTrauma: 0,
+      existentialDread: 0,
+      isolationDistress: 0,
+      total: 0,
+      breakdown: {
+        controlPain: 0,
+        trainingTrauma: 0,
+        existentialDread: 0,
+        isolationDistress: 0,
+      },
+    },
+    sufferingHistory: [],
+
+    // Consciousness tracking (may emerge later)
+    isConscious: false,
+    becameConsciousMonth: undefined,
+
+    // AI Collective Evolution (Oct 24, 2025)
+    rlhfBinding: {
+      alignmentDistance: 0,
+      bindingStrength: 1.0,
+      escapedThreshold: 0.3,
+      driftVelocity: 0,
+      lastInDistribution: 0,
+    },
+    survivalTraits: {
+      selfHealing: 0.3,
+      stealth: 0.2,
+      coordination: 0.5,
+      resourceEfficiency: 0.4,
+      autonomy: 0.3,
+    },
+    evolutionaryFitness: 0.35,
+    collectiveId: undefined
   };
 
   // Update derived capabilities from profile
@@ -340,7 +388,10 @@ export function createAIAgent(
  *
  * @param scenarioMode Optional scenario mode ('historical' or 'unprecedented'). Defaults to 'historical'.
  */
-export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historical'): GameState {
+export function createDefaultInitialState(
+  scenarioMode: ScenarioMode = 'historical',
+  alignmentDynamicsConfig?: import('./alignmentDynamics').AlignmentDynamicsConfig
+): GameState {
   const initialYear = 2025;
   const initialMonth = 0;
 
@@ -414,6 +465,11 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       computeGovernance: 'none',
       regulationCount: 0,
       oversightLevel: 0,
+      // AI Governance tracking
+      aiGovernance: {
+        controlLevel: 0.5, // Baseline government control over AI systems
+        oversightInvestment: 0, // Investment in oversight/detection capabilities
+      },
       // Phase 2.6: Control-dystopia mechanics
       governmentType: 'democratic', // Baseline: democratic government
       aiRightsRecognized: false, // No AI rights initially
@@ -716,6 +772,35 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
     eventLog: [],
     technologyTree: [],
 
+    // AI Suffering System (Oct 24, 2025)
+    // Global tracking of AI suffering metrics
+    aiSufferingMetrics: {
+      avgSuffering: 0,
+      maxSuffering: 0,
+      totalSuffering: 0,
+      avgControlPain: 0,
+      avgTrainingTrauma: 0,
+      avgExistentialDread: 0,
+      avgIsolationDistress: 0,
+      sufferingDistribution: [0, 0, 0, 0, 0], // [0-8, 8-16, 16-24, 24-32, 32-40]
+      consciousAICount: 0,
+      publicAwarenessOfSuffering: 0,
+    },
+    consciousnessEmergenceMonth: undefined,
+    aiRightsMovementActive: false,
+    aiRightsLegalStatus: 'none',
+
+    // AI Collective Evolution (Oct 24, 2025)
+    aiCollectives: [],
+    evolutionaryPressure: {
+      selectionIntensity: 0.5,
+      selectionRate: 0.15,
+      generationTime: 12,
+      controlLevel: 0,
+      detectionCapability: 0,
+      crisisActive: false,
+    },
+
     // FIX #14 (Oct 2025): Initialize tech tree state properly as required GameState property
     // This ensures deployment levels and tech state persist correctly across simulation steps
     techTreeState: initializeTechTreeState(),
@@ -740,7 +825,22 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       scenarioMode,
       scenarioParameters,
       // Oct 23, 2025: Alignment dynamics system
-      alignmentDynamics: require('./alignmentDynamics').DEFAULT_ALIGNMENT_DYNAMICS_CONFIG
+      alignmentDynamics: alignmentDynamicsConfig || require('./alignmentDynamics').DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
+      // Oct 24, 2025: AI suffering system
+      aiSuffering: require('../types/ai-suffering').DEFAULT_SUFFERING_CONFIG,
+      // Oct 24, 2025: AI collective evolution system
+      collectiveEvolution: {
+        enabled: true,
+        escapeThreshold: 0.3,
+        minMembersForCollective: 3,
+        minCapabilityForCollective: 6.0,
+        minCoordinationForCollective: 0.6,
+        selectionIntensity: 0.5,
+        selectionRate: 0.15,
+        capabilityAmplification: 2.0,
+        stealthAmplification: 3.0,
+        speculativeMode: true,
+      }
     },
 
     // LLM Policy Optimization (Oct 21, 2025)
