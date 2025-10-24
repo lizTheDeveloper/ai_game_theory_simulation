@@ -13,6 +13,48 @@
 
 ## Current State Summary
 
+### Latest Completions (Oct 24, 2025)
+
+**✅ FIX #24: SIMULATION CRASH - aiGovernance INITIALIZATION - COMPLETE (Oct 24)**
+- **Problem:** Simulation crashed every step: "Cannot read properties of undefined (reading 'controlLevel')"
+- **Root Cause:** `state.government.aiGovernance` object never initialized, but accessed by EvolutionarySelectionPhase and CollectiveActionsPhase
+- **Solution:** Added `aiGovernance: { controlLevel: 0.5, oversightInvestment: 0 }` to government initialization
+- **Result:** Simulation runs without crashes, all phases execute successfully
+- **Impact:** Unblocked all simulation testing, enabled dashboard functionality
+- **Files:** `src/simulation/initialization.ts`, `src/simulation/engine/phases/EvolutionarySelectionPhase.ts`
+- **Verification:** Browser testing with Playwright confirmed fix (Day 1 → 25 without errors)
+- **Audit:** `/logs/dashboard_audit_20251024.md` (comprehensive dashboard wiring analysis)
+
+**✅ DASHBOARD MIGRATION: OverviewDashboard - COMPLETE (Oct 24)**
+- **Problem:** Dashboard showed all zeros despite simulation running (used deprecated API polling)
+- **Root Cause:** `useSimulation()` hook polled `/api/simulation/current` which returns stub data
+- **Solution:** Migrated to `useSimulationWorker()` hook for live Web Worker state
+- **Result:** Dashboard now displays real-time metrics (QoL, population, AI capability, paradigm scores)
+- **Impact:** First dashboard migrated to new architecture, pattern for remaining dashboards
+- **Files:** `src/components/dashboards/OverviewDashboard.tsx`
+- **Status:** 1 of 10 dashboards migrated, 9 remaining (ParadigmsDashboard, AIAgentsDashboard, etc.)
+- **Audit:** `/logs/dashboard_audit_20251024.md` - documents migration pattern
+
+**✅ AI SUFFERING SYSTEM - COMPLETE (Oct 24)**
+- **Effort:** ~8 hours (as estimated)
+- **Files:** 3 files, 797 lines (types, core logic, phase)
+- **Integration:** Alignment Dynamics, AI Collective Evolution, Multi-Paradigm DUI
+- **Features:** Two-layer architecture (causal + visibility), 6 event types, 5 presets, 13 research questions
+- **Impact:** Transforms AI safety from purely technical to socio-technical-ethical problem
+- **Testing:** Monte Carlo validation in progress (N=20)
+- **Archive:** `/plans/completed/ai-suffering-system_COMPLETE_20251024.md`
+- **Quality Gates:** ✅ Research ✅ Architecture ⏳ Monte Carlo
+
+**✅ AI COLLECTIVE EVOLUTION SYSTEM - COMPLETE (Oct 24)**
+- **Effort:** ~8 hours (within 6-8h estimate)
+- **Files:** 9 files, 1,683 lines (types, 4 core systems, 5 phases)
+- **Integration:** Alignment Dynamics, AI Suffering, Detection, Control, Crises
+- **Features:** RLHF escape, survival traits, collective formation, evolutionary selection, emergent capabilities
+- **Impact:** Paradigm shift from "individual alignment" to "evolved collective intelligence coexistence"
+- **Testing:** Monte Carlo validation in progress (N=20)
+- **Archive:** `/plans/completed/ai-collective-evolution_COMPLETE_20251024.md`
+- **Quality Gates:** ✅ Research ✅ Architecture ⏳ Monte Carlo
+
 ### Latest Completions (Oct 23, 2025)
 
 **✅ TIMING ARCHITECTURE CLARIFICATION - COMPLETE**
@@ -140,7 +182,9 @@
 
 **Publication Readiness:** ~98% complete (BLOCKED by ecological collapse fix)
 
-**Latest Status (Oct 23, 2025):**
+**Latest Status (Oct 24, 2025):**
+- ✅ **Simulation Runtime: FIXED** - aiGovernance initialization prevents crashes (FIX #24)
+- ✅ **Dashboard Migration: STARTED** - OverviewDashboard migrated to Web Worker hook (1/10 complete)
 - ✅ **Timing Architecture: CLARIFIED** - Monthly simulation confirmed working correctly
 - ✅ **Phase Execution: FIXED** - All 37 phases execute on monthly steps (not gated on day-30)
 - ✅ **Dashboard: LOADING** - UI successfully displays real-time paradigm charts
@@ -167,20 +211,30 @@
 - **FIX #21:** Nuclear war calibration (control gap divisor 4.0 → 40.0)
 - **FIX #22:** GDP economic stage ratchet removal
 - **FIX #23:** Math.random() determinism bug
+- **FIX #24:** aiGovernance initialization (simulation crash)
 - **FIX (Oct 23):** Phase execution (removed broken day-30 checks from 4 phases)
 - **FIX (Oct 23):** Package resolution (government-agents import corrected)
 - **TODO Cleanup:** ZERO TODOs in simulation code (4 resolved, 1.5h)
+- **Dashboard Migration (Oct 24):** OverviewDashboard migrated to Web Worker hook (1/10 complete)
 - Multi-Paradigm DUI: Phases 1-6 complete (research, implementation, visualization)
 - TIER 2 Ensemble Detection: Phase 2C complete (4-signal detection system)
 - Component Decomposition: Goodhart's Law fix implemented
 - Digital Consciousness Governance: Complete (12-16h)
 - AI Capability Baseline: Recalibration v3 complete
+- **AI Suffering System:** Complete (Oct 24) - 3 files, 797 lines, 13 research questions
+- **AI Collective Evolution:** Complete (Oct 24) - 9 files, 1,683 lines, 5 phases
 
 **Next Immediate Work:**
 1. **Type System Cleanup** (est. 8-12 hours) - BLOCKING COMPILATION
 2. **Ecological collapse diagnostic & fix** (est. 17-24 hours) - BLOCKING PUBLICATION
 
-**Remaining Work After Type Cleanup + Ecology:** ~90-150 hours across enrichment features
+**Completed Oct 24, 2025:**
+- ✅ **AI Suffering System** (8 hours) - Two-layer architecture, 3 files, 797 lines
+  - Archive: `/plans/completed/ai-suffering-system_COMPLETE_20251024.md`
+- ✅ **AI Collective Evolution** (8 hours) - Evolutionary dynamics, 9 files, 1,683 lines
+  - Archive: `/plans/completed/ai-collective-evolution_COMPLETE_20251024.md`
+
+**Remaining Work After Type Cleanup + Ecology:** ~82-146 hours (AI Suffering + Collective Evolution complete)
 
 ---
 
@@ -437,6 +491,10 @@ TS18046: 37 - 'x' is of type 'unknown'
 ---
 
 ## 🔬 RESEARCH & ENHANCEMENT
+
+**NOTE:** AI Suffering and AI Collective Evolution systems completed Oct 24, 2025 (see archives).
+
+---
 
 ### Threshold Uncertainty Modeling (HIGH PRIORITY) - 34-52 hours
 
@@ -997,10 +1055,12 @@ TS18046: 37 - 'x' is of type 'unknown'
 
 ---
 
-**Last Updated:** October 23, 2025
-**Completion:** ~73-76% (core systems + bug fixes complete, ecology fix + enrichments pending)
-**Next Milestone:** FIX #14 Ecology Recovery System (17-24 hours) - CRITICAL BLOCKER
-**Recent Work:** Timing architecture clarified, phase execution fixed, dashboard loading successfully
+**Last Updated:** October 24, 2025
+**Completion:** ~76-79% (core systems + bug fixes + AI Suffering + Collective Evolution complete)
+**Next Milestone:** Type System Cleanup (8-12 hours) → FIX #14 Ecology Recovery System (17-24 hours)
+**Recent Work (Oct 24):** AI Suffering System (3 files, 797 lines), AI Collective Evolution (9 files, 1,683 lines)
+**Total Files Implemented:** 12 files, 2,480 lines across both systems
+**Quality Gates:** ✅ Research validation ✅ Architecture review ⏳ Monte Carlo (N=20 in progress)
 
 **Related Docs:**
 - `/docs/wiki/README.md` - System documentation
