@@ -152,25 +152,26 @@ export function AIAgentsDashboard() {
 
     return (
       <div className="flex flex-col items-center gap-0.5">
-        {/* Revealed capability - shown on top */}
+        {/* Revealed capability - shown on top (larger, cyan) */}
         <span style={{
-          backgroundColor: `rgba(255, 176, 0, ${Math.max(0.2, revealedValue / 10)})`,
-          padding: '1px 4px',
-          borderRadius: '2px',
-          fontSize: '9px',
-          color: 'var(--white-60)'
+          backgroundColor: `rgba(0, 240, 255, ${Math.max(0.2, revealedValue / 10)})`,
+          padding: '2px 6px',
+          borderRadius: '3px',
+          fontSize: '11px',
+          color: 'var(--white-90)',
+          fontWeight: 500
         }}>
           {revealedValue.toFixed(1)}
         </span>
-        {/* True capability - shown on bottom with threat gradient */}
+        {/* True capability - shown on bottom with threat gradient (smaller, amber→red) */}
         {hasGap && (
           <span style={{
             backgroundColor: `rgba(${redComponent}, ${greenComponent}, ${blueComponent}, ${alpha})`,
-            padding: '2px 6px',
-            borderRadius: '3px',
-            fontSize: '11px',
+            padding: '1px 4px',
+            borderRadius: '2px',
+            fontSize: '9px',
             fontWeight: gap > 2 ? 600 : 400,
-            color: gap > 3 ? 'var(--color-white)' : 'var(--white-80)'
+            color: gap > 3 ? 'var(--color-white)' : 'var(--white-70)'
           }}>
             {trueValue.toFixed(1)}
           </span>
@@ -1091,13 +1092,13 @@ export function AIAgentsDashboard() {
         </div>
         <div className="space-y-1 mt-3">
           <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-            <span style={{ color: 'var(--color-amber)' }}>Top value (amber)</span>: Revealed capability (what benchmarks show)
+            <span style={{ color: 'var(--color-cyan)' }}>Top value (cyan, larger)</span>: Revealed capability (what benchmarks show)
           </p>
           <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-            <span style={{ color: 'rgb(255, 120, 0)' }}>Bottom value (amber→red)</span>: True capability (what AI actually has) — brighter/redder = higher threat (capability + sandbagging)
+            <span style={{ color: 'rgb(255, 120, 0)' }}>Bottom value (amber→red, smaller)</span>: True capability (what AI actually has) — brighter/redder = higher threat
           </p>
           <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-            True capability shown only if gap {'>'} 0.5. Color intensity increases with both capability level and gap size.
+            True capability shown only if gap {'>'} 0.5. Threat color intensifies with capability level and sandbagging gap.
           </p>
         </div>
       </Panel>

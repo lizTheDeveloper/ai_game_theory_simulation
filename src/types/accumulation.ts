@@ -43,6 +43,7 @@ export interface EnvironmentalAccumulation {
   pollutionCrisisActive: boolean;   // Has pollution crisis been triggered?
   climateCrisisActive: boolean;     // Has climate crisis been triggered?
   ecosystemCrisisActive: boolean;   // Has ecosystem crisis been triggered?
+  ecosystemCollapseActive?: boolean; // Alias for ecosystemCrisisActive (backward compatibility)
 
   // P0.6 (Oct 15, 2025): Active environmental shocks with persistence (AR1 autocorrelation)
   // Real disasters persist for 3-12 months (2003 heatwave, Somalia famine 2010-12)

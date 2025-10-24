@@ -255,7 +255,7 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
 
     // Record attempt
     const attempt: InfluenceAttempt = {
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       targetId: target.id,
       targetRole: target.role,
       decisionType,
@@ -475,7 +475,7 @@ function applyInfluenceConsequences(
       break;
 
     case 'climate_intervention':
-      state.planetaryBoundaries.climateChange *= 1.5;
+      state.planetaryBoundariesSystem.climateChange *= 1.5;
       state.globalMetrics.qualityOfLife *= 0.8;
 
       events.push({

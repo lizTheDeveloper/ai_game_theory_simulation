@@ -171,6 +171,11 @@ export interface AIAgent {
   previousCapability?: number;                           // For threshold checking (capability change)
   previousAlignment?: number;                            // For threshold checking (alignment drift)
 
+  // Alignment Dynamics System (Oct 23, 2025)
+  // Multi-theory modeling of alignment change
+  attractorBasinState?: import('./alignment-dynamics').AttractorBasinState;  // Epicycle dynamics state
+  alignmentMeasurementState?: import('./alignment-dynamics').AlignmentMeasurementState;  // Unknowability tracking
+
   // Phase 1: Compute Allocation (NEW)
   allocatedCompute: number;     // Current compute allocation in PetaFLOPs
   computeEfficiency: number;    // [0.8-1.2] How efficiently this AI uses compute

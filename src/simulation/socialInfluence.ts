@@ -8,7 +8,7 @@
 
 import { AIAgent, DecisionMaker, DecisionMakerRole, SleeperSocialInfluence } from '@/types/ai-agents';
 import { GameState } from '@/types/game';
-import { RNGFunction } from '@/types/rng';
+import { RNGFunction } from '@/types/config';
 
 // ============================================================================
 // PARAMETERS (Research-Backed)

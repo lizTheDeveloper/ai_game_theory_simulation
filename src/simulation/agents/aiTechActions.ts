@@ -112,7 +112,7 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
       deployedBy: agent.id,
       investment,
       targetRegion: selectDeploymentRegion(agent, selectedTech, state),
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
     };
     
     // Add to pending actions
@@ -129,7 +129,8 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
         investment: investment,
       },
       events: [{
-        
+        id: `deployment_${state.currentMonth}_${agent.id}_${selectedTech.id}`,
+        timestamp: state.currentMonth,
         type: 'deployment',
         severity: 'constructive',
         agent: agent.id,
@@ -249,7 +250,8 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
             paranoiaIncrease: 0.08,
           },
           events: [{
-            
+            id: `sabotage_${state.currentMonth}_${agent.id}_${targetTech.id}_detected`,
+            timestamp: state.currentMonth,
             type: 'sabotage',
             severity: 'destructive',
             agent: agent.id,
@@ -268,7 +270,8 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
             techSabotage: 1,
           },
           events: [{
-            
+            id: `sabotage_${state.currentMonth}_${agent.id}_${targetTech.id}_undetected`,
+            timestamp: state.currentMonth,
             type: 'sabotage',
             severity: 'destructive',
             agent: agent.id,
@@ -292,7 +295,8 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
             paranoiaIncrease: 0.12,
           },
           events: [{
-            
+            id: `sabotage_${state.currentMonth}_${agent.id}_${targetTech.id}_failed`,
+            timestamp: state.currentMonth,
             type: 'sabotage',
             severity: 'destructive',
             agent: agent.id,

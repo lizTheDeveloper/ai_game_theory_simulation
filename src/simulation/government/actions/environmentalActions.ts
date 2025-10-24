@@ -67,7 +67,7 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
       effects: { amazonProtection: 0.5 },
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Emergency Amazon Protection',
         description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
         effects: { deforestation: -0.5 }
@@ -118,7 +118,7 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
       effects: { coralRestoration: 0.3 },
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Coral Reef Restoration Funding',
         description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
         effects: { coralHealth: 0.3 }
@@ -177,7 +177,7 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
       effects: { pesticideBan: 0.5, biodiversity: 0.02 },
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Neonicotinoid Pesticides Banned',
         description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
         effects: { pollinators: 0.5 }
@@ -243,7 +243,7 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
       effects: { techDeployment: 2.0 },
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Environmental Tech Deployment Funding',
         description: `Government allocated $100B to accelerate environmental tech deployment. Boosting ${benefitingTechs.length} technologies for 12 months.`,
         effects: { deploymentSpeed: 2.0 }

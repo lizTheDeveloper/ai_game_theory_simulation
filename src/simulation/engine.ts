@@ -120,6 +120,7 @@ import {
   SleeperWakePhase,
   SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
   AIAgentActionsPhase,
+  AlignmentDynamicsPhase,  // Oct 23, 2025: Multi-theory alignment evolution
   // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
   StochasticInnovationPhase,
   GovernmentActionsPhase,
@@ -511,6 +512,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SleeperWakePhase());
     this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
+    this.orchestrator.registerPhase(new AlignmentDynamicsPhase());  // Oct 23, 2025: Multi-theory alignment evolution
     // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
     this.orchestrator.registerPhase(new StochasticInnovationPhase());
     this.orchestrator.registerPhase(new GovernmentActionsPhase());

@@ -177,7 +177,7 @@ export function initializeRecoveryTracking(state: GameState): void {
     state.recoveryBaseline = {
       gdp: getGDPProxy(state),
       qol: state.globalMetrics.qualityOfLife,
-      month: state.currentMonth
+      timestamp: state.currentMonth
     };
   }
 }

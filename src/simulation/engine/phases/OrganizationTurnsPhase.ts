@@ -19,7 +19,7 @@
 
 import { SimulationPhase, PhaseResult } from '../PhaseOrchestrator';
 import { GameState } from '@/types/game';
-import { RNGFunction } from '@/types/rng';
+import { RNGFunction } from '@/types/config';
 
 export class OrganizationTurnsPhase implements SimulationPhase {
   readonly id = 'organization-turns';

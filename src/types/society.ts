@@ -59,6 +59,7 @@ export interface HumanSocietyAgent {
 
   // === EXISTING FIELDS ===
   paranoiaLevel: number; // [0,1] Fear/anxiety about AI (Phase 2.8: Paranoia System)
+  paranoia?: number; // [0,1] Alias for paranoiaLevel (backward compatibility)
   communityStrength?: number; // [0,1] Community bonds and mutual aid strength
   institutionalTrust?: number; // [0,1] Trust in institutions
   coordinationCapacity: number; // [0,1] Ability to organize collective action

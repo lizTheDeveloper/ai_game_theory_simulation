@@ -38,7 +38,8 @@ let stepInterval = 30000; // 30 seconds = 1 month (each month takes 30 seconds)
 
 // Calendar tracking
 let currentDay = 1; // Current day of month (1-31) - for display only
-let startDate: Date | null = null; // Real calendar start date
+let startDate: Date | null = null; // Real calendar start date (preserved for reference)
+let currentCalendarDate: Date | null = null; // Current calendar date (incremented each day)
 let totalSimulationDaysElapsed = 0; // Total simulation days since initialization
 
 // Previous state snapshot for delta calculation (expanded)
@@ -273,6 +274,7 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
 
   // Initialize calendar to today's actual date
   startDate = new Date();
+  currentCalendarDate = new Date(startDate); // Clone startDate
   currentDay = startDate.getDate(); // Start with the current day of the month (e.g., 23 for Oct 23)
   totalSimulationDaysElapsed = 0; // Reset simulation day counter
 
@@ -383,25 +385,24 @@ function handleStep() {
     throw new Error('Not initialized');
   }
 
-  // Get the previous calendar date before incrementing
-  const previousCalendarDate = new Date(startDate);
-  previousCalendarDate.setDate(startDate.getDate() + totalSimulationDaysElapsed);
-  const previousCalendarMonth = previousCalendarDate.getMonth();
-  const previousCalendarYear = previousCalendarDate.getFullYear();
+  if (!currentCalendarDate) {
+    throw new Error('Calendar not initialized');
+  }
 
-  // Increment total simulation days elapsed
+  // Track previous month/year for month-crossing detection
+  const previousCalendarMonth = currentCalendarDate.getMonth();
+  const previousCalendarYear = currentCalendarDate.getFullYear();
+
+  // Increment calendar date by 1 day (instead of recalculating)
+  currentCalendarDate.setDate(currentCalendarDate.getDate() + 1);
   totalSimulationDaysElapsed++;
 
-  // Calculate new calendar date based on total days elapsed
-  const calendarDate = new Date(startDate);
-  calendarDate.setDate(startDate.getDate() + totalSimulationDaysElapsed);
-
-  // Update current day for display (extract from calendar date)
-  currentDay = calendarDate.getDate();
+  // Update current day for display
+  currentDay = currentCalendarDate.getDate();
 
   // Check if we've crossed into a new calendar month
-  const currentCalendarMonth = calendarDate.getMonth();
-  const currentCalendarYear = calendarDate.getFullYear();
+  const currentCalendarMonth = currentCalendarDate.getMonth();
+  const currentCalendarYear = currentCalendarDate.getFullYear();
 
   const crossedIntoNewMonth =
     (currentCalendarMonth !== previousCalendarMonth) ||
@@ -416,7 +417,7 @@ function handleStep() {
   self.postMessage({
     type: 'dayUpdate',
     day: currentDay,
-    calendarDate: calendarDate.toISOString()
+    calendarDate: currentCalendarDate.toISOString()
   } as WorkerResponse);
 }
 
@@ -452,7 +453,7 @@ function handleDecision(decision: PlayerDecision) {
   console.log('[Worker] Player decision queued:', {
     type: decision.type,
     queueLength: state.playerDecisions.length,
-    month: state.currentMonth
+    timestamp: state.currentMonth
   });
 
   // Send acknowledgment to UI
@@ -485,7 +486,7 @@ function startSimulationLoop() {
 
   // Start combined day counter and simulation stepper
   dayIntervalId = setInterval(() => {
-    if (!running || !startDate || !state) {
+    if (!running || !startDate || !state || !currentCalendarDate) {
       if (dayIntervalId !== null) {
         clearInterval(dayIntervalId);
         dayIntervalId = null;
@@ -493,23 +494,24 @@ function startSimulationLoop() {
       return;
     }
 
-    // Increment total simulation days elapsed
+    // Track previous month/year for month-crossing detection
+    const previousCalendarMonth = currentCalendarDate.getMonth();
+    const previousCalendarYear = currentCalendarDate.getFullYear();
+
+    // Increment calendar date by 1 day (instead of recalculating)
+    currentCalendarDate.setDate(currentCalendarDate.getDate() + 1);
     totalSimulationDaysElapsed++;
 
-    // Calculate actual calendar date based on total days elapsed
-    const calendarDate = new Date(startDate);
-    calendarDate.setDate(startDate.getDate() + totalSimulationDaysElapsed);
-
-    // Update current day for display (extract from calendar date)
-    currentDay = calendarDate.getDate();
+    // Update current day for display
+    currentDay = currentCalendarDate.getDate();
 
     // Check if we've crossed into a new calendar month
-    const currentCalendarMonth = calendarDate.getMonth();
-    const currentCalendarYear = calendarDate.getFullYear();
+    const currentCalendarMonth = currentCalendarDate.getMonth();
+    const currentCalendarYear = currentCalendarDate.getFullYear();
 
     const crossedIntoNewMonth =
-      (currentCalendarMonth !== lastCalendarMonth) ||
-      (currentCalendarYear !== lastCalendarYear);
+      (currentCalendarMonth !== previousCalendarMonth) ||
+      (currentCalendarYear !== previousCalendarYear);
 
     if (crossedIntoNewMonth) {
       // We've reached the 1st of a new calendar month - advance simulation
@@ -524,7 +526,7 @@ function startSimulationLoop() {
     self.postMessage({
       type: 'dayUpdate',
       day: currentDay,
-      calendarDate: calendarDate.toISOString()
+      calendarDate: currentCalendarDate.toISOString()
     } as WorkerResponse);
   }, msPerSimulationDay); // Update based on simulation speed
 }
@@ -548,19 +550,13 @@ function performStep() {
   // Update previous state snapshot
   previousState = captureStateSnapshot(state);
 
-  // Calculate calendar date: startDate + elapsed days
-  const monthsElapsed = state.currentMonth;
-  const totalDaysElapsed = (monthsElapsed * 30) + (currentDay - 1);
-  const calendarDate = new Date(startDate!);
-  calendarDate.setDate(calendarDate.getDate() + totalDaysElapsed);
-
-  // Send update to main thread
+  // Send update to main thread (use current calendar date directly)
   self.postMessage({
     type: 'update',
     delta,
     month: state.currentMonth,
     day: currentDay,
-    calendarDate: calendarDate.toISOString(),
+    calendarDate: currentCalendarDate?.toISOString() || new Date().toISOString(),
     timestamp: Date.now()
   } as WorkerResponse);
 }

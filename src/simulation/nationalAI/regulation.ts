@@ -70,7 +70,7 @@ export function updateRegulatoryArbitrage(state: GameState, cache: CountryIntera
       arb.companiesMigrated.push({
         from: strictestNation.nation,
         to: laxestNation.nation,
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         reason: 'regulation',
       });
 

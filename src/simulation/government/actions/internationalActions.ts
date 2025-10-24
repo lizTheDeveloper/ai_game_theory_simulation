@@ -55,7 +55,7 @@ const restrictResearchPublishing: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Research Publishing Restricted',
         description: `Open research reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows capability diffusion but harms scientific progress.`,
         effects: { openResearch: newRate, legitimacy: -0.05 }
@@ -102,7 +102,7 @@ const limitEmployeeMobility: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Employee Mobility Restricted',
         description: `Non-compete agreements enforced. Mobility reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows diffusion but harms worker freedom.`,
         effects: { employeeMobility: newRate, legitimacy: -0.08 }
@@ -142,7 +142,7 @@ const banReverseEngineering: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Reverse Engineering Banned',
         description: `Illegal to reverse-engineer AI systems. Copying reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Hard to enforce but slows diffusion.`,
         effects: { reverseEngineering: newRate }

@@ -65,7 +65,7 @@ const emergencyAIPause: CategorizedGovernmentAction = {
       effects: {},
       events: [{
         type: 'crisis',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: '🚨 EMERGENCY AI DEVELOPMENT PAUSE',
         description: `Government halts all new AI training (${pausedCount} projects paused). Massive economic disruption. This is a CRISIS RESPONSE.`,
         effects: { pausedProjects: pausedCount, legitimacyLoss: -0.15 }
@@ -153,7 +153,7 @@ const seizeDataCenter: CategorizedGovernmentAction = {
       effects: { seizure: target.capacity },
       events: [{
         type: 'policy',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         title: 'Data Center Nationalized',
         description: `Government seized ${target.name} (${target.capacity.toFixed(0)} PF) from ${oldOrg.name}. Highly controversial and damages trust.`,
         effects: { legitimacy: -0.2, trust: -0.15 }

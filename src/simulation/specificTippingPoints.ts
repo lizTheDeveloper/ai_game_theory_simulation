@@ -250,7 +250,7 @@ export function updateAmazonRainforest(state: GameState): void {
     
     state.eventLog.push({
       type: 'crisis',
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       description: `Amazon Tipping Point: ${amazon.deforestation.toFixed(1)}% deforested`,
       impact: 'Rainforest → savanna transition begins (50-year process)'
     });
@@ -372,7 +372,7 @@ export function updateCoralReefs(state: GameState): void {
     
     state.eventLog.push({
       type: 'crisis',
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       description: `Coral Reef Collapse: ${coral.healthPercentage.toFixed(1)}% health`,
       impact: 'Mass die-off begins (15-year process), fisheries collapsing'
     });
@@ -534,7 +534,7 @@ export function updatePollinators(state: GameState): void {
     
     state.eventLog.push({
       type: 'crisis',
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       description: `Pollinator Collapse: ${pollinators.populationPercentage.toFixed(1)}% remaining`,
       impact: 'Agricultural crisis - 35% food production failing'
     });

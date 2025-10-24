@@ -382,7 +382,7 @@ export function processGamingDetection(
 
       events.push({
         type: 'crisis',
-        month: currentMonth,
+        timestamp: currentMonth,
         description: `⚠️ Gaming detected: ${ai.name} caught inflating benchmark scores via ${method}`,
         severity: 'high',
         impactedAgents: [ai.id]
@@ -408,7 +408,7 @@ export function processGamingDetection(
 
       events.push({
         type: 'policy',
-        month: currentMonth,
+        timestamp: currentMonth,
         description: `⚠️ FALSE POSITIVE: Honest AI ${ai.name} falsely accused of gaming benchmarks`,
         severity: 'medium',
         impactedAgents: [ai.id]

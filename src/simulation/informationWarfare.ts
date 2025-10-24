@@ -158,7 +158,7 @@ export function updateInformationWarfare(state: GameState): Event[] {
       severity: 'high',
       title: '🎭 DEEPFAKE SATURATION',
       description: `AI-generated content everywhere. Can't trust photos, videos, or audio anymore. Detection failing.`,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       impacts: {
         publicTrust: -0.05,
         economicStage: 0,
@@ -175,7 +175,7 @@ export function updateInformationWarfare(state: GameState): Event[] {
       severity: 'critical',
       title: '❓ EPISTEMOLOGICAL CRISIS',
       description: `Society can't agree on basic facts. Coordination breaking down. Shared reality dissolving.`,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       impacts: {
         publicTrust: -0.10,
         economicStage: 0,
@@ -201,7 +201,7 @@ export function updateInformationWarfare(state: GameState): Event[] {
       severity: 'critical',
       title: '📉 INFORMATION COLLAPSE',
       description: `Truth has lost all meaning. Post-truth society. Democracy cannot function.`,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       impacts: {
         publicTrust: -0.05,
         economicStage: 0,
@@ -225,7 +225,7 @@ export function updateInformationWarfare(state: GameState): Event[] {
       severity: 'medium',
       title: '🤖 AI NARRATIVE DOMINANCE',
       description: `AI agents now dominate information landscape. Most content AI-generated. Human voices marginalized.`,
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
     });
   }
   
