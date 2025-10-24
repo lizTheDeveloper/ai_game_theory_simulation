@@ -1,0 +1,436 @@
+# Senior Developer Checklist - Auto-Review
+#
+# PATTERN: Fresh Claude Code SDK Session (minimal context)
+# - Launch NEW Claude Code SDK session (not continuing prior conversation)
+# - Give agent: Original feature prompt + accumulated git diff
+# - Agent has Read/Edit/Bash/Grep tools to investigate
+# - Agent answers 15 standard questions, terminates
+#
+# CONTEXT BUDGET:
+# - Original feature goal (what was supposed to be implemented)
+# - Git diff (all changes made so far)
+# - NO prior conversation history from feature-implementer
+#
+# QUESTIONS: 20 standard senior dev questions junior devs forget:
+# - Testing (coverage, edge cases, end-to-end) [3 questions]
+# - Code quality (TODOs, mocks, magic numbers, console.logs) [5 questions]
+# - Documentation (wiki, comments, type definitions, citations) [4 questions]
+# - System integration (TypeScript, related systems, phase registration) [3 questions]
+# - Phase architecture (interactions, order, duplication, necessity, propagation) [5 questions]
+
+name: Senior Developer Checklist
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+jobs:
+  checklist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # ========================================
+      # COLLECT CONTEXT (git diff only)
+      # ========================================
+      - name: Get Changed Files
+        id: changes
+        run: |
+          # Get diff stats
+          git diff origin/main...HEAD --stat > diff_stats.txt
+          git diff origin/main...HEAD --name-only > changed_files.txt
+
+          # Count changes by category
+          SIMULATION_FILES=$(grep "^src/simulation/" changed_files.txt | wc -l)
+          TEST_FILES=$(grep "\.test\.ts$\|\.spec\.ts$" changed_files.txt | wc -l)
+          TYPE_FILES=$(grep "^src/types/" changed_files.txt | wc -l)
+          PHASE_FILES=$(grep "Phase\.ts$" changed_files.txt | wc -l)
+          DOC_FILES=$(grep "\.md$\|docs/" changed_files.txt | wc -l)
+
+          echo "simulation_count=$SIMULATION_FILES" >> $GITHUB_OUTPUT
+          echo "test_count=$TEST_FILES" >> $GITHUB_OUTPUT
+          echo "type_count=$TYPE_FILES" >> $GITHUB_OUTPUT
+          echo "phase_count=$PHASE_FILES" >> $GITHUB_OUTPUT
+          echo "doc_count=$DOC_FILES" >> $GITHUB_OUTPUT
+
+          # Get actual diff (first 500 lines for context)
+          git diff origin/main...HEAD | head -500 > diff_preview.txt
+
+      # ========================================
+      # RUN AUTOMATED CHECKS (factual)
+      # ========================================
+      - name: Check - TypeScript Compiles
+        id: typescript
+        run: |
+          npx tsc --noEmit 2>&1 | tee ts_output.txt
+          ERRORS=$(grep "error TS" ts_output.txt | wc -l)
+          echo "errors=$ERRORS" >> $GITHUB_OUTPUT
+          echo "status=$([ $ERRORS -eq 0 ] && echo 'PASS' || echo 'FAIL')" >> $GITHUB_OUTPUT
+
+      - name: Check - Tests Exist
+        id: tests
+        run: |
+          TEST_COUNT=${{ steps.changes.outputs.test_count }}
+          SIM_COUNT=${{ steps.changes.outputs.simulation_count }}
+
+          # Heuristic: If simulation files changed, expect tests
+          if [ "$SIM_COUNT" -gt 0 ] && [ "$TEST_COUNT" -eq 0 ]; then
+            echo "status=MISSING" >> $GITHUB_OUTPUT
+            echo "ratio=0" >> $GITHUB_OUTPUT
+          elif [ "$SIM_COUNT" -gt 0 ]; then
+            RATIO=$(echo "scale=2; $TEST_COUNT / $SIM_COUNT" | bc)
+            echo "status=EXISTS" >> $GITHUB_OUTPUT
+            echo "ratio=$RATIO" >> $GITHUB_OUTPUT
+          else
+            echo "status=N/A" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check - Tests Pass
+        id: test_run
+        run: |
+          npm test 2>&1 | tee test_output.txt
+          if grep -q "FAIL" test_output.txt; then
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+          elif grep -q "PASS" test_output.txt; then
+            echo "status=PASS" >> $GITHUB_OUTPUT
+          else
+            echo "status=UNKNOWN" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: Check - TODOs Added
+        id: todos
+        run: |
+          NEW_TODOS=$(git diff origin/main...HEAD | grep "^+.*TODO" | wc -l)
+          REMOVED_TODOS=$(git diff origin/main...HEAD | grep "^-.*TODO" | wc -l)
+          NET_TODOS=$((NEW_TODOS - REMOVED_TODOS))
+
+          echo "new=$NEW_TODOS" >> $GITHUB_OUTPUT
+          echo "removed=$REMOVED_TODOS" >> $GITHUB_OUTPUT
+          echo "net=$NET_TODOS" >> $GITHUB_OUTPUT
+          echo "status=$([ $NET_TODOS -le 0 ] && echo 'GOOD' || echo 'ADDED')" >> $GITHUB_OUTPUT
+
+      - name: Check - Mocks Used
+        id: mocks
+        run: |
+          MOCK_COUNT=$(git diff origin/main...HEAD | grep -i "mock\|stub\|spy" | grep "^+" | wc -l)
+          echo "count=$MOCK_COUNT" >> $GITHUB_OUTPUT
+          echo "status=$([ $MOCK_COUNT -gt 5 ] && echo 'MANY' || echo 'FEW')" >> $GITHUB_OUTPUT
+
+      - name: Check - Documentation Updated
+        id: docs
+        run: |
+          DOC_COUNT=${{ steps.changes.outputs.doc_count }}
+          SIM_COUNT=${{ steps.changes.outputs.simulation_count }}
+
+          # If new features added, expect docs
+          if [ "$SIM_COUNT" -gt 3 ] && [ "$DOC_COUNT" -eq 0 ]; then
+            echo "status=MISSING" >> $GITHUB_OUTPUT
+          elif [ "$DOC_COUNT" -gt 0 ]; then
+            echo "status=UPDATED" >> $GITHUB_OUTPUT
+          else
+            echo "status=N/A" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check - Console.logs Added
+        id: console_logs
+        run: |
+          NEW_LOGS=$(git diff origin/main...HEAD | grep "^+.*console\.log\|console\.warn\|console\.error" | wc -l)
+          echo "count=$NEW_LOGS" >> $GITHUB_OUTPUT
+          echo "status=$([ $NEW_LOGS -gt 10 ] && echo 'MANY' || echo 'FEW')" >> $GITHUB_OUTPUT
+
+      - name: Check - Magic Numbers
+        id: magic_numbers
+        run: |
+          # Find hardcoded numbers that should be constants
+          MAGIC=$(git diff origin/main...HEAD | grep "^+" | grep -E "[^a-zA-Z0-9_][0-9]{2,}" | grep -v "\.ts:[0-9]" | wc -l)
+          echo "count=$MAGIC" >> $GITHUB_OUTPUT
+          echo "status=$([ $MAGIC -gt 20 ] && echo 'MANY' || echo 'FEW')" >> $GITHUB_OUTPUT
+
+      # ========================================
+      # ASK CLAUDE CODE SDK: FRESH SESSION
+      # ========================================
+      - name: Extract Original Feature Goal
+        id: original_goal
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          # Extract what the feature-implementer was SUPPOSED to do
+          # Look for "Original Prompt:" or "Feature Requirements:" section in PR body
+          ORIGINAL_PROMPT=$(echo "$PR_BODY" | sed -n '/Original Prompt:/,/^$/p' | tail -n +2)
+
+          if [ -z "$ORIGINAL_PROMPT" ]; then
+            # Fallback: use PR title + first paragraph
+            ORIGINAL_PROMPT="Feature: ${{ github.event.pull_request.title }}\n\n$(echo "$PR_BODY" | head -10)"
+          fi
+
+          # Save for prompt
+          echo "$ORIGINAL_PROMPT" > original_feature_goal.txt
+
+      - name: Build Senior Dev Checklist Prompt
+        run: |
+          cat > senior_dev_checklist_prompt.txt << 'EOF'
+          You are reviewing a PR for a research simulation project. You have Claude Code SDK tools available.
+
+          **YOUR CONTEXT (fresh session, NO prior conversation):**
+
+          **ORIGINAL FEATURE GOAL:**
+          $(cat original_feature_goal.txt)
+
+          **WHAT WAS ACTUALLY CHANGED:**
+          PR: ${{ github.event.pull_request.title }}
+          Branch: ${{ github.event.pull_request.head.ref }}
+
+          Files changed:
+          - Simulation: ${{ steps.changes.outputs.simulation_count }}
+          - Tests: ${{ steps.changes.outputs.test_count }}
+          - Types: ${{ steps.changes.outputs.type_count }}
+          - Phases: ${{ steps.changes.outputs.phase_count }}
+          - Docs: ${{ steps.changes.outputs.doc_count }}
+
+          Git diff preview (first 500 lines):
+          $(cat diff_preview.txt)
+
+          **YOUR TASK:**
+          Answer these 20 senior developer questions. You have Read/Edit/Bash tools - USE THEM to investigate:
+          - Use Grep to search for TODOs, console.logs, magic numbers
+          - Use Read to check test files, wiki documentation, phase files
+          - Use Bash to run `npx tsc --noEmit` or `npm test` if needed
+
+          **20 QUESTIONS (1 line each, use emoji):**
+
+          **Testing & Validation:**
+          1. **Tests?** Check for test files matching changed simulation files
+          2. **Edge cases?** Read tests, check for null/empty/boundary tests
+          3. **End-to-end?** Look for Monte Carlo logs or integration test evidence
+
+          **Code Quality:**
+          4. **TODOs?** Grep for TODO comments in diff
+          5. **Mocks?** Grep for mock/stub/spy in test files
+          6. **Test quality?** Read tests - do they test behavior or implementation?
+          7. **Magic numbers?** Grep for hardcoded numbers (not constants)
+          8. **Console.logs?** Grep for console.log in production code
+
+          **Documentation:**
+          9. **Documentation?** Check for comments on complex logic
+          10. **Type definitions?** Read src/types/ for new state types
+          11. **Wiki?** Check docs/wiki/README.md for new system docs
+          12. **Research citations?** Check /research/ files for parameter justification
+
+          **System Integration:**
+          13. **TypeScript errors?** Run `npx tsc --noEmit` (should be 0)
+          14. **Related systems?** Think about cross-system impacts (QoL, population, etc)
+          15. **Phase registration?** If new phase, check src/simulation/engine/phases/index.ts
+
+          **Phase Architecture (CRITICAL):**
+          16. **Phase interactions?** Read phase files - does this phase read state from other phases? List dependencies
+          17. **Phase order?** Check execution order in phases/index.ts - does order matter for this phase?
+          18. **Duplicate logic?** Read similar phases - is this duplicating existing phase logic?
+          19. **Phase necessity?** Could this logic live in an existing phase instead of new phase?
+          20. **State propagation?** What state does this phase write? Which phases depend on it?
+
+          **OUTPUT FORMAT (save to checklist_answers.md):**
+          ```markdown
+          **Testing & Validation:**
+          1. ✅ Yes, 3 test files for 3 simulation files
+          2. ⚠️ Missing null checks in calculateImpact()
+          3. ❌ No Monte Carlo log found
+
+          **Code Quality:**
+          4. ✅ 0 TODOs added
+          5. ✅ Only 2 mocks for external API
+          6. ✅ Tests check behavior (QoL outcomes), not implementation
+          7. ⚠️ 5 hardcoded thresholds, need constants
+          8. ✅ 2 console.logs (both in test files)
+
+          **Documentation:**
+          9. ⚠️ Complex cascade logic needs comments
+          10. ✅ New NuclearWinterState in src/types/climate.ts
+          11. ❌ Wiki not updated for nuclear winter system
+          12. ✅ Citations in research/nuclear-winter_20251024.md
+
+          **System Integration:**
+          13. ✅ TypeScript compiles, 0 errors
+          14. ⚠️ Impacts QoL, population - check FoodProductionPhase
+          15. ✅ Registered in phases/index.ts at order 18
+
+          **Phase Architecture:**
+          16. ✅ Reads climate.temperature from ClimatePhase (order 12)
+          17. ✅ Must run after ClimatePhase, before FoodProductionPhase
+          18. ✅ No duplication - new logic, no overlap
+          19. ✅ Needs separate phase - complex cascade system
+          20. ⚠️ Writes climate.nuclearWinter - FoodProductionPhase should read it
+          ```
+
+          **RULES:**
+          - Each answer: 1 line, max 20 words (phase questions can be slightly longer)
+          - Use tools to investigate (don't guess)
+          - For phase questions: READ the actual phase files to understand dependencies
+          - Save answers to `checklist_answers.md`
+          - After saving, TERMINATE (don't add commentary)
+          EOF
+
+      - name: Run Senior Dev Checklist (Claude Code SDK)
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt_file: senior_dev_checklist_prompt.txt
+          claude_args: |
+            --max-turns 20
+
+      - name: Read Checklist Answers
+        id: claude_review
+        run: |
+          # Read the answers Claude wrote to checklist_answers.md
+          if [ -f "checklist_answers.md" ]; then
+            ANSWERS=$(cat checklist_answers.md)
+          else
+            ANSWERS="⚠️ Claude did not produce checklist_answers.md"
+          fi
+
+          echo "answers<<EOF" >> $GITHUB_OUTPUT
+          echo "$ANSWERS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # ========================================
+      # BUILD FINAL REPORT (token-efficient)
+      # ========================================
+      - name: Generate Checklist Report
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Read automated checks
+            const checks = {
+              typescript: {
+                status: '${{ steps.typescript.outputs.status }}',
+                errors: '${{ steps.typescript.outputs.errors }}'
+              },
+              tests: {
+                status: '${{ steps.tests.outputs.status }}',
+                ratio: '${{ steps.tests.outputs.ratio }}'
+              },
+              testRun: '${{ steps.test_run.outputs.status }}',
+              todos: {
+                status: '${{ steps.todos.outputs.status }}',
+                net: '${{ steps.todos.outputs.net }}'
+              },
+              mocks: {
+                status: '${{ steps.mocks.outputs.status }}',
+                count: '${{ steps.mocks.outputs.count }}'
+              },
+              docs: '${{ steps.docs.outputs.status }}',
+              consoleLogs: {
+                status: '${{ steps.console_logs.outputs.status }}',
+                count: '${{ steps.console_logs.outputs.count }}'
+              },
+              magicNumbers: {
+                status: '${{ steps.magic_numbers.outputs.status }}',
+                count: '${{ steps.magic_numbers.outputs.count }}'
+              }
+            };
+
+            // Read Claude's answers
+            const claudeAnswers = `${{ steps.claude_review.outputs.answers }}`;
+
+            // Build report
+            let report = `## Senior Developer Checklist\n\n`;
+
+            // Automated checks section (factual)
+            report += `### Automated Checks\n\n`;
+
+            report += `| Check | Status | Details |\n`;
+            report += `|-------|--------|----------|\n`;
+            report += `| TypeScript | ${checks.typescript.status === 'PASS' ? '✅' : '❌'} | ${checks.typescript.errors} errors |\n`;
+            report += `| Tests Exist | ${checks.tests.status === 'EXISTS' ? '✅' : '⚠️'} | ${checks.tests.ratio || 'N/A'} test/sim ratio |\n`;
+            report += `| Tests Pass | ${checks.testRun === 'PASS' ? '✅' : '❌'} | See test output |\n`;
+            report += `| TODOs | ${checks.todos.status === 'GOOD' ? '✅' : '⚠️'} | ${checks.todos.net > 0 ? '+' : ''}${checks.todos.net} net |\n`;
+            report += `| Mocks | ${checks.mocks.status === 'FEW' ? '✅' : '⚠️'} | ${checks.mocks.count} uses |\n`;
+            report += `| Docs Updated | ${checks.docs === 'UPDATED' ? '✅' : '⚠️'} | ${checks.docs} |\n`;
+            report += `| Console Logs | ${checks.consoleLogs.status === 'FEW' ? '✅' : '⚠️'} | ${checks.consoleLogs.count} added |\n`;
+            report += `| Magic Numbers | ${checks.magicNumbers.status === 'FEW' ? '✅' : '⚠️'} | ${checks.magicNumbers.count} found |\n`;
+
+            report += `\n`;
+
+            // Claude's review (concise)
+            report += `### Senior Developer Review\n\n`;
+            report += claudeAnswers;
+            report += `\n\n`;
+
+            // Summary
+            const criticalIssues = [
+              checks.typescript.status !== 'PASS',
+              checks.testRun === 'FAIL',
+              checks.tests.status === 'MISSING'
+            ].filter(Boolean).length;
+
+            const warnings = [
+              checks.todos.status === 'ADDED',
+              checks.mocks.status === 'MANY',
+              checks.docs === 'MISSING',
+              checks.consoleLogs.status === 'MANY',
+              checks.magicNumbers.status === 'MANY'
+            ].filter(Boolean).length;
+
+            report += `---\n`;
+            report += `**Summary:** `;
+            if (criticalIssues > 0) {
+              report += `❌ ${criticalIssues} critical issue(s) - needs fixes before merge`;
+            } else if (warnings > 0) {
+              report += `⚠️ ${warnings} warning(s) - review recommended`;
+            } else {
+              report += `✅ All checks passed - looks good!`;
+            }
+
+            report += `\n\n`;
+            report += `<details><summary>About this checklist</summary>\n\n`;
+            report += `This is an automated senior developer review. It asks standard questions junior devs often forget:\n`;
+            report += `- Testing coverage and quality\n`;
+            report += `- Code cleanliness (TODOs, console.logs, magic numbers)\n`;
+            report += `- Documentation updates\n`;
+            report += `- Integration with related systems\n\n`;
+            report += `Automated checks are factual. Claude's review is advisory.\n`;
+            report += `</details>\n`;
+
+            // Post comment
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+
+            // Add labels based on results
+            const labels = [];
+            if (criticalIssues > 0) {
+              labels.push('needs-fixes');
+            }
+            if (warnings > 0) {
+              labels.push('has-warnings');
+            }
+            if (criticalIssues === 0 && warnings === 0) {
+              labels.push('checklist-passed');
+            }
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels
+              });
+            }
