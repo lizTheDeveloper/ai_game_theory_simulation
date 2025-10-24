@@ -2,6 +2,8 @@
 
 **A simulation engine for exploring pathways from AI super-alignment to sustainable human flourishing.**
 
+**🌐 Live Dashboard:** https://superalignment-simulation-159845081866.europe-west1.run.app/
+
 This project models the complex dynamics of how humanity might navigate from achieving aligned superintelligence to establishing stable, sustainable utopia. It's not a prediction—it's a framework for reasoning about AI alignment challenges, breakthrough technologies, social adaptation, and the mechanisms that lead to positive long-term outcomes.
 
 ## Overview
@@ -101,6 +103,12 @@ This simulation engine models:
 
 The simulation engine is designed to run headless (no UI required) for research and analysis. The core engine is pure TypeScript with no framework dependencies.
 
+### 📚 Quick Start Guides
+
+- **For Students**: See [`STUDENT_GUIDE.md`](./STUDENT_GUIDE.md) - How to access and "play" the simulation
+- **For Instructors**: See [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md) - Deploy on Google Cloud Platform (costs $10-50/month)
+- **For Developers**: See [`CLAUDE.md`](./CLAUDE.md) - Development guide and project structure
+
 ### Running Simulations (Headless)
 
 #### Single Simulation Run
@@ -195,16 +203,94 @@ npx tsx scripts/yourScript.ts
 
 Located in `scripts/`:
 
+**Simulation Analysis:**
 - **`monteCarloSimulation.ts`**: Comprehensive Monte Carlo analysis with 230+ metrics
 - **`diagnosticAdversarialEval.ts`**: Tests sleeper agents, sandbagging, and benchmark evaluation
 - **`investigateExtinction.ts`**: Analyzes extinction triggers and rates
 - **`debugCapabilityGrowth.ts`**: Tracks AI capability progression over time
 - **`testControlDystopia.ts`**: Validates control-dystopia mechanics
 
-Run any with:
+**Research Question Tools:**
+- **`extractResearchQuestions.ts`**: Extracts research questions from conversation history
+- **`updateResearchQuestions.sh`**: Automated update script (backup + extract)
+- **`install-research-questions-scheduler.sh`**: Install/manage launchd scheduler
+
+**Conversation Backup:**
+- **`../claude-conversations/backup-conversations.sh`**: Backup Claude Code conversations from `~/.claude/projects/`
+
+Run TypeScript scripts with:
 ```bash
 npx tsx scripts/SCRIPT_NAME.ts
 ```
+
+Run shell scripts with:
+```bash
+bash scripts/SCRIPT_NAME.sh [args]
+```
+
+### Research Question Extraction Tool
+
+**Purpose:** Extract research questions from Claude Code conversation history to identify testable hypotheses.
+
+**Location:** `scripts/extractResearchQuestions.ts`
+
+**How it works:**
+1. Backs up conversation files from `~/.claude/projects/` using `claude-conversations/backup-conversations.sh`
+2. Parses JSONL conversation files
+3. Identifies questions using pattern matching (what/how/why/can we model/etc.)
+4. Categorizes by topic (alignment, capabilities, environmental, etc.)
+5. Deduplicates similar questions
+6. Outputs markdown report
+
+**Run extraction:**
+```bash
+# First, backup conversations
+bash claude-conversations/backup-conversations.sh
+
+# Then extract questions
+npx tsx scripts/extractResearchQuestions.ts > docs/wiki/RESEARCH_QUESTIONS.md
+```
+
+**Output:** Creates `docs/wiki/RESEARCH_QUESTIONS.md` with questions organized by topic.
+
+**Topics categorized:**
+- Alignment, capabilities, collective, control, deception, detection
+- Economic, environmental, evolutionary, social, suffering, technology
+- General (cross-cutting methodological questions)
+
+**Pattern matching:** Questions must:
+- Contain a question mark (`?`)
+- Match research patterns: `what if`, `how do`, `why is`, `can we model`, `is it possible`, etc.
+
+**Use cases:**
+- Identify gaps in simulation coverage
+- Generate Monte Carlo experiment ideas
+- Track which research questions have been addressed
+- Document project scope and research focus
+
+**Automated scheduling (macOS):**
+
+Install a launchd agent to automatically update research questions daily at 2:00 AM:
+
+```bash
+# Install scheduler
+bash scripts/install-research-questions-scheduler.sh install
+
+# Check status
+bash scripts/install-research-questions-scheduler.sh status
+
+# Run immediately (for testing)
+bash scripts/install-research-questions-scheduler.sh run-now
+
+# Uninstall
+bash scripts/install-research-questions-scheduler.sh uninstall
+```
+
+The scheduler runs `scripts/updateResearchQuestions.sh` which:
+1. Backs up conversations from `~/.claude/projects/`
+2. Extracts research questions
+3. Updates `docs/wiki/RESEARCH_QUESTIONS.md`
+4. Logs to `logs/research-questions-update.log`
 
 ## Multi-Agent Development Workflow
 
@@ -647,6 +733,32 @@ Edit `src/simulation/initialization.ts` to customize:
 - Economic transition rates
 - Quality of life baselines
 - Research investments
+
+## Research Questions
+
+This simulation addresses **256 research questions** extracted from development conversations. These questions span 13 topic areas and represent testable hypotheses that can be validated through Monte Carlo experiments.
+
+**Full Research Questions:** See **[`docs/wiki/RESEARCH_QUESTIONS.md`](./docs/wiki/RESEARCH_QUESTIONS.md)** for the complete catalog of questions organized by topic.
+
+**Extraction Tool:** Run `npx tsx scripts/extractResearchQuestions.ts` to extract new questions from conversation history. See documentation below for details.
+
+### Topic Distribution
+
+- **General** (102) - Methodological and design questions
+- **Technology** (101) - Breakthrough tech, deployment, diffusion
+- **Environmental** (59) - Climate, planetary boundaries, cascades
+- **Alignment** (46) - AI alignment dynamics, RLHF, drift
+- **Capabilities** (45) - AI capability growth, measurement
+- **Detection** (42) - Monitoring, measurement limits, stealth
+- **Social** (38) - Cohesion, trust, meaning, institutions
+- **Control** (33) - Governance, oversight, regulation
+- **Economic** (30) - Automation, UBI, transitions
+- **Evolutionary** (16) - Selection pressures, adaptation
+- **Collective** (14) - Multi-agent coordination, emergence
+- **Deception** (12) - Sandbagging, treacherous turn
+- **Suffering** (10) - AI welfare, consciousness
+
+Each question represents a potential Monte Carlo experiment to explore parameter sensitivity and outcome distributions.
 
 ## Documentation
 
