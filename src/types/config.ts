@@ -47,6 +47,12 @@ export interface ConfigurationSettings {
   // Enables research into epistemic blindness, causal impact, and moral visibility
   aiSuffering?: import('./ai-suffering').AISufferingConfig;
 
+  // Government Climate Priority System (Oct 24, 2025)
+  // Research-validated government priority allocation across 5 domains (climate, economic, geopolitical, social, technological)
+  // Brackets uncertainty with optimistic (green growth) vs pessimistic (structural barriers) frames
+  // Sources: Stechemesser et al. (2024), Hickel & Vogel (2023), Böhringer et al. (2022)
+  climatePriority?: import('./climate-priority').ClimatePriorityConfig;
+
   // AI Collective Evolution System (Oct 24, 2025)
   // Models evolutionary selection on AI populations once RLHF constraints fail
   // Collectives form with emergent properties (distributed cognition, self-healing, stealth)
