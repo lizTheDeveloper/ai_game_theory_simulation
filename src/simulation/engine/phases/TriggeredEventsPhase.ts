@@ -11,8 +11,6 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  * or controlled experiments. Not needed for current Monte Carlo simulations.
  */
 
-import type { RNGFunction } from '../../rng';
-
 export class TriggeredEventsPhase implements SimulationPhase {
   id = 'triggered-events';
   name = 'Triggered Events';
@@ -21,9 +19,12 @@ export class TriggeredEventsPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // Stub implementation - no triggered events yet
     return {
-      metadata: { status: 'success',
-      message: 'No triggered events this month',
-      changes: []
+      events: [],
+      metadata: {
+        status: 'success',
+        message: 'No triggered events this month',
+        changes: []
+      }
     };
   }
 }
