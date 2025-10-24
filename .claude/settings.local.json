@@ -73,7 +73,10 @@
       "Bash(if [ -f \"$file\" ])",
       "Bash(then)",
       "Bash(echo:*)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "mcp__playwright__browser_evaluate",
+      "Bash(for file in src/simulation/agents/aiTechActions.ts src/simulation/environmental.ts src/simulation/gamingDetection.ts)",
+      "Bash(1)"
     ],
     "deny": [],
     "ask": []

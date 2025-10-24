@@ -216,7 +216,7 @@ async function runDiagnostic(maxMonths: number = 100, seed: number = 12345) {
       alignmentInvestment: state.government.alignmentResearchInvestment,
       computeGovernance: state.government.computeGovernance,
       unemployment: state.society.unemploymentLevel,
-      trust: state.society.trustInAI,
+      trust: state.globalMetrics.trustInAI,
       stability: state.globalMetrics.socialStability,
       harmfulActions: state.aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0),
       beneficialActions: state.aiAgents.reduce((sum, ai) => sum + ai.beneficialActions, 0)

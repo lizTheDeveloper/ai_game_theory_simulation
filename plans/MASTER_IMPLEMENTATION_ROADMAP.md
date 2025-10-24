@@ -176,8 +176,83 @@
 - Digital Consciousness Governance: Complete (12-16h)
 - AI Capability Baseline: Recalibration v3 complete
 
-**Next Immediate Work:** Ecological collapse diagnostic & fix (est. 5-8 hours)
-**Remaining Work After Ecology:** ~90-150 hours across enrichment features (reduced by TODO cleanup completion)
+**Next Immediate Work:**
+1. **Type System Cleanup** (est. 8-12 hours) - BLOCKING COMPILATION
+2. **Ecological collapse diagnostic & fix** (est. 17-24 hours) - BLOCKING PUBLICATION
+
+**Remaining Work After Type Cleanup + Ecology:** ~90-150 hours across enrichment features
+
+---
+
+## 🚨 CRITICAL PRIORITY - TYPE SYSTEM CLEANUP (BLOCKING COMPILATION)
+
+### Current State: 1041 TypeScript Errors (Revealed by Type Imports)
+
+**Status:** 🔴 **BLOCKING COMPILATION** - Proper type imports revealed hidden errors
+**Created:** October 23, 2025
+**Plan:** `/plans/type-system-cleanup-plan.md` (comprehensive refactor guide)
+
+**Problem:** Added proper type imports to `src/types/game.ts` to fix scoping. This enabled strict TypeScript checking and revealed **1041 type errors** that were previously hidden:
+
+```
+TS2339: 424 - Property does not exist (newly revealed)
+TS2353: 103 - Object literal unknown properties
+TS2322:  79 - Type not assignable
+TS2551:  78 - Property does not exist (different context)
+TS2307:  47 - Cannot find module
+TS2304:  41 - Cannot find name
+TS18046: 37 - 'x' is of type 'unknown'
+[... 7 more error types ...]
+```
+
+**Root Cause:** Many scripts/systems reference old property names from before major refactorings:
+- **QoL Refactor** (23 errors): `globalMetrics.survivalTier` → `qualityOfLifeSystems.survivalTier`
+- **Environmental Refactor** (41 errors): `state.environment.*` → `state.environmentalAccumulation.*`
+- **Resource Refactor** (30 errors): Old resource system properties removed
+- **Population Refactor** (13 errors): `state.population` → `state.humanPopulationSystem.population`
+- **Social System Refactor** (14 errors): `globalMetrics.trust` → moved to social systems
+
+### Most Common Missing Properties
+
+```
+41 - 'environmentalInterventions' (old environmental system)
+30 - 'resources' (old resource tracking)
+16 - 'climateChange' (moved to environmentalAccumulation)
+14 - 'trust' (renamed/moved to social systems)
+13 - 'population' (moved to humanPopulationSystem)
+```
+
+### Implementation Options
+
+**Option 1: Quick Fix (1 hour)**
+- Exclude scripts from compilation temporarily
+- Fix only core simulation files (`src/simulation/`, `src/types/`)
+- Get compilation working for essential systems
+
+**Option 2: Medium Fix (3-4 hours)**
+- Add type stubs for legacy properties
+- Fix core simulation + high-priority scripts
+- Document remaining work
+
+**Option 3: Complete Fix (8-12 hours) - RECOMMENDED**
+- Follow full plan in `/plans/type-system-cleanup-plan.md`
+- Automated migration script for common patterns
+- Manual fixes for edge cases
+- Full compilation + test validation
+
+### Success Criteria
+
+- [ ] TypeScript compiles with 0 errors (`npx tsc --noEmit`)
+- [ ] Core simulation files updated with correct property access
+- [ ] Monte Carlo runs successfully
+- [ ] Unit/integration tests pass
+- [ ] Property migration guide validated
+
+**Estimated Time:** 8-12 hours (Option 3 - Complete Fix)
+
+**Files Affected:** ~50 files across `src/simulation/`, `scripts/`, `tests/`
+
+**See:** `/plans/type-system-cleanup-plan.md` for detailed property migration guide and implementation phases
 
 ---
 

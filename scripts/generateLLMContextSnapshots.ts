@@ -1,6 +1,7 @@
 import { createDefaultInitialState } from "../src/simulation/initialization";
 import { PhaseOrchestrator } from "../src/simulation/engine/PhaseOrchestrator";
 import { GameState, AIAgent } from "../src/types/game";
+import { calculateAllTiers } from "../src/simulation/qualityOfLifeHelpers";
 import * as fs from "fs";
 
 /**
@@ -157,25 +158,20 @@ function buildFullStrategicContext(
 
   lines.push("Quality of Life:");
   lines.push(`  Overall: ${(state.globalMetrics.qualityOfLife * 100).toFixed(1)}% (${categorize(state.globalMetrics.qualityOfLife)})`);
-  lines.push(`  Survival Tier: ${(state.globalMetrics.survivalTier * 100).toFixed(1)}%`);
-  if (state.globalMetrics.materialTier !== undefined) {
-    lines.push(`  Material Tier: ${(state.globalMetrics.materialTier * 100).toFixed(1)}%`);
-  }
-  if (state.globalMetrics.psychologicalTier !== undefined) {
-    lines.push(`  Psychological Tier: ${(state.globalMetrics.psychologicalTier * 100).toFixed(1)}%`);
-  }
-  if (state.globalMetrics.socialTier !== undefined) {
-    lines.push(`  Social Tier: ${(state.globalMetrics.socialTier * 100).toFixed(1)}%`);
-  }
-  if (state.globalMetrics.environmentalTier !== undefined) {
-    lines.push(`  Environmental Tier: ${(state.globalMetrics.environmentalTier * 100).toFixed(1)}%`);
-  }
+
+  // Calculate tier aggregates from multi-dimensional QoL system
+  const tiers = calculateAllTiers(state.qualityOfLifeSystems);
+  lines.push(`  Survival Tier: ${(tiers.survivalTier * 100).toFixed(1)}%`);
+  lines.push(`  Material Tier: ${(tiers.materialTier * 100).toFixed(1)}%`);
+  lines.push(`  Psychological Tier: ${(tiers.psychologicalTier * 100).toFixed(1)}%`);
+  lines.push(`  Social Tier: ${(tiers.socialTier * 100).toFixed(1)}%`);
+  lines.push(`  Environmental Tier: ${(tiers.environmentalTier * 100).toFixed(1)}%`);
   lines.push("");
 
   lines.push("Trust & Social Cohesion:");
-  lines.push(`  Trust in Government: ${(state.government.trustInGovernment * 100).toFixed(1)}%`);
-  lines.push(`  Trust in AI: ${(state.government.trustInAI * 100).toFixed(1)}%`);
-  lines.push(`  Social Cohesion: ${(state.globalMetrics.socialCohesion * 100).toFixed(1)}%`);
+  lines.push(`  Trust in Government: ${(state.society.trustInGovernment * 100).toFixed(1)}%`);
+  lines.push(`  Trust in AI: ${(state.society.trustInAI * 100).toFixed(1)}%`);
+  lines.push(`  Social Cohesion: ${(state.socialAccumulation.socialCohesion * 100).toFixed(1)}%`);
   lines.push(`  Institutional Quality: ${state.government.governmentQuality?.institutionalQuality?.toFixed(2) ?? "N/A"}`);
   lines.push("");
 

@@ -18,6 +18,10 @@ import {
 import { GOVERNMENT_TECH_ACTIONS } from './governmentTechActions';
 
 let eventIdCounter = 0;
+
+function generateEventId(): string {
+  return `gov_event_${eventIdCounter++}`;
+}
 const generateUniqueId = (prefix: string): string => {
   eventIdCounter += 1;
   return `${prefix}_${Date.now()}_${eventIdCounter}`;
@@ -907,7 +911,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           false_positives: falsePositiveRemoved
         },
         events: [{
+          id: generateEventId(),
           type: 'policy',
+          severity: falsePositiveRemoved > 0 ? 'warning' : 'info',
+          agent: 'government',
           timestamp: state.currentMonth,
           title: 'AI Removal Operation',
           description: `Removed ${fullRemovals} AIs completely, ${partialRemovals} partially (${totalRemainingSpread} copies remain). ${failedRemovals} failed (open weights). ${falsePositiveRemoved > 0 ? `WARNING: ${falsePositiveRemoved} false positives removed (trust/innovation damage).` : ''}`,

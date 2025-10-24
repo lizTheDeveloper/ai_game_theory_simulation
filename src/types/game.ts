@@ -1,7 +1,30 @@
 // Core Game Types for AI Alignment Game
 // This file now imports from focused type modules and re-exports for backward compatibility
 
-// Import all types from new focused modules
+// Import types for use in GameState interface
+import type {
+  AIAgent,
+  EcosystemState
+} from './ai-agents';
+import type { GovernmentAgent } from './government';
+import type { HumanSocietyAgent } from './society';
+import type { Organization, ComputeInfrastructure } from './organizations';
+import type { QualityOfLifeSystems } from './quality-of-life';
+import type {
+  GoldenAgeState,
+  EnvironmentalAccumulation,
+  SocialAccumulation,
+  TechnologicalRisk,
+  PsychologicalTraumaState
+} from './accumulation';
+import type { GlobalMetrics } from './metrics';
+import type { TechnologyNode } from './technology';
+import type { OutcomeMetrics, ExtinctionState, OutcomeType, StratifiedOutcomeType, MortalityBand } from './outcomes';
+import type { GameEvent } from './events';
+import type { ConfigurationSettings } from './config';
+import type { PositiveTippingPointsState } from './positiveTippingPoints';
+
+// Re-export all types for backward compatibility
 export type {
   ScenarioMode,
   ScenarioParameters,

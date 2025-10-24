@@ -45,7 +45,7 @@ export class ExtinctionProgressPhase implements SimulationPhase {
       events.push({
         id: `extinction-complete-${state.currentMonth}`,
         type: 'extinction',
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         description: `🌍 Extinction scenario complete: ${state.extinctionState.scenario}`,
         severity: 'critical'
       } as GameEvent);

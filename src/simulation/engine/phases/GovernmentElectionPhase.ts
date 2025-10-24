@@ -23,7 +23,7 @@ export class GovernmentElectionPhase implements SimulationPhase {
   readonly order = 8.5;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    return executeGovernmentElectionPhase(state, rng, context || { month: state.currentMonth, data: new Map() });
+    return executeGovernmentElectionPhase(state, rng, context || { timestamp: state.currentMonth, data: new Map() });
   }
 }
 

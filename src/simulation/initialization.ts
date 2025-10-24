@@ -453,7 +453,10 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       },
       // Cooperative Spirals (Oct 17, 2025)
       institutionalResilience: 0.5,  // Moderate baseline institutional resilience
-      policyEffectivenessMultiplier: 1.0  // Baseline (no boost from cooperative spirals yet)
+      policyEffectivenessMultiplier: 1.0,  // Baseline (no boost from cooperative spirals yet)
+
+      // Government Resources (Budget Pool)
+      resources: 10  // Baseline resource pool for government actions
     },
     
     society: {
@@ -462,6 +465,9 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       
       // Aggregate values (calculated from segments if present, else defaults)
       trustInAI: 0.6,
+      trust: 0.65,  // General social trust
+      trustInGovernment: 0.70,  // Trust in government institutions
+      totalPopulation: 8.0,  // Convenience accessor (synced with humanPopulationSystem.population)
       powerWeightedTrustInAI: 0.65,  // Elites have slightly higher trust
       powerWeightedTrustInGovernment: 0.70,
       polarizationIndex: 0.15,  // Moderate baseline polarization (2025)
@@ -501,7 +507,8 @@ export function createDefaultInitialState(scenarioMode: ScenarioMode = 'historic
       technologicalBreakthroughRate: 0.15,
       manufacturingCapability: 0.1,
       informationIntegrity: 0.6,
-      publicTrust: 0.5 // Moderate baseline trust in technology (2025)
+      publicTrust: 0.5, // Moderate baseline trust in technology (2025)
+      population: 8.0 // Convenience accessor (synced with humanPopulationSystem.population)
     },
     
     // Initialize multi-dimensional QoL system

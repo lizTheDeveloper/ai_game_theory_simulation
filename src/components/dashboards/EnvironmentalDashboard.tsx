@@ -33,7 +33,7 @@ export function EnvironmentalDashboard() {
         threshold: pb.climate_change?.boundaryThreshold || 1,
         safe: pb.climate_change?.preIndustrialValue || 0,
         unit: 'Relative',
-        breached: pb.climate_change?.status === 'beyond_boundary' || pb.climate_change?.status === 'high_risk',
+        breached: pb.climate_change?.status === 'beyond_boundary' || pb.climate_change?.status === 'high_risk' || (pb.climate_change?.currentValue || 0) > (pb.climate_change?.boundaryThreshold || 1),
       },
       {
         id: 'biosphere_integrity',
@@ -60,7 +60,7 @@ export function EnvironmentalDashboard() {
         threshold: pb.freshwater_change?.boundaryThreshold || 1,
         safe: pb.freshwater_change?.preIndustrialValue || 0,
         unit: 'Relative',
-        breached: pb.freshwater_change?.status === 'beyond_boundary' || pb.freshwater_change?.status === 'high_risk',
+        breached: pb.freshwater_change?.status === 'beyond_boundary' || pb.freshwater_change?.status === 'high_risk' || (pb.freshwater_change?.currentValue || 0) > (pb.freshwater_change?.boundaryThreshold || 1),
       },
       {
         id: 'biogeochemical_flows',
@@ -78,7 +78,7 @@ export function EnvironmentalDashboard() {
         threshold: pb.novel_entities?.boundaryThreshold || 1,
         safe: pb.novel_entities?.preIndustrialValue || 0,
         unit: 'Relative',
-        breached: pb.novel_entities?.status === 'beyond_boundary' || pb.novel_entities?.status === 'high_risk',
+        breached: pb.novel_entities?.status === 'beyond_boundary' || pb.novel_entities?.status === 'high_risk' || (pb.novel_entities?.currentValue || 0) > (pb.novel_entities?.boundaryThreshold || 1),
       },
       {
         id: 'ocean_acidification',

@@ -67,13 +67,14 @@ const createInitialGovernment = (): GovernmentAgent => ({
 
 const createInitialSociety = (): HumanSocietyAgent => ({
   trustInAI: 0.6, // Cautious optimism initially
+  paranoiaLevel: 0.2, // Low fear/anxiety about AI initially
   coordinationCapacity: 0.4, // Medium coordination ability
   unemploymentLevel: 0.1, // Low unemployment initially
   socialAdaptation: 0.1, // Much more limited initial adaptation
   activeMovements: [],
   // Quartile-based adoption (all start at 0, will adapt at different rates)
   earlyAdopters: 0.0, // Q1: Will adapt first with minimal pressure
-  mediumAdopters: 0.0, // Q2: Need moderate unemployment pressure  
+  mediumAdopters: 0.0, // Q2: Need moderate unemployment pressure
   slowAdopters: 0.0, // Q3: Need sustained high pressure over years
   resistantAdopters: 0.0 // Q4: May never adapt without extreme pressure
 });
@@ -86,6 +87,7 @@ const createInitialGlobalMetrics = (): GlobalMetrics => ({
   wealthDistribution: 0.4, // Realistic high inequality (US Gini ~0.48, we use inverse where 1.0=perfect equality)
   qualityOfLife: 0.6, // Baseline quality
   informationIntegrity: 0.8, // High truth initially
+  publicTrust: 0.6, // Moderate public trust in technology/AI initially
 });
 
 const createInitialOutcomeMetrics = (): OutcomeMetrics => ({
@@ -101,6 +103,7 @@ const createInitialConfig = (): ConfigurationSettings => ({
   socialAdaptationRate: 0.3,
   aiCoordinationMultiplier: 1.0,
   economicTransitionRate: 0.5,
+  scenarioMode: 'historical', // Default to historical scenario
 });
 
 // Technology tree will be loaded separately

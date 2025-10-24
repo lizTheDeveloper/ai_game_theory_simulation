@@ -150,7 +150,11 @@ export function ParadigmDashboard() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span style={{ color: 'var(--white-40)' }}>Quality of Life</span>
-              <span>{(currentState.globalMetrics?.qualityOfLife || 0).toFixed(2)}</span>
+              <span>{(() => {
+                const rawQol = currentState.globalMetrics?.qualityOfLife || 0
+                const qol = rawQol > 1 ? rawQol : rawQol * 100
+                return qol.toFixed(1)
+              })()}</span>
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--white-40)' }}>Survival Tier</span>
@@ -199,11 +203,11 @@ export function ParadigmDashboard() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span style={{ color: 'var(--white-40)' }}>Social Trust</span>
-              <span>{(currentState.society?.trustLevel || 0).toFixed(2)}</span>
+              <span>{((currentState.society?.trustLevel || 0) * 100).toFixed(1)}</span>
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--white-40)' }}>Purpose Diversity</span>
-              <span>{(currentState.meaningRenaissance?.purposeDiversity || 0).toFixed(2)}</span>
+              <span>{((currentState.meaningRenaissance?.purposeDiversity || 0) * 100).toFixed(1)}</span>
             </div>
           </div>
         </Panel>

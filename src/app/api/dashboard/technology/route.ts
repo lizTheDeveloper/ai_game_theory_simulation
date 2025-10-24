@@ -40,18 +40,22 @@ export async function GET(_request: NextRequest) {
       }
 
       // Get all technologies from tech tree
+      const { isTechDeployed } = require('@/simulation/techTree/helpers');
       const unlockedTechs = new Set(state.techTreeState.unlockedTech || []);
       const technologies: TechnologySummary[] =
-        state.technologyTree?.map(tech => ({
-          id: tech.id,
-          name: tech.name,
-          tier: 0 as any, // Tech tree doesn't use tiers, using 0 as placeholder
-          unlocked: unlockedTechs.has(tech.id),
-          deployed: tech.completed || false,
-          globalDeployment: tech.completed ? 1.0 : 0,
-          prerequisites: tech.prerequisites || [],
-          effects: tech.effects || [],
-        })) || [];
+        state.technologyTree?.map(tech => {
+          const deploymentLevel = isTechDeployed(state, tech.id);
+          return {
+            id: tech.id,
+            name: tech.name,
+            tier: tech.tier || 0,
+            unlocked: unlockedTechs.has(tech.id),
+            deployed: deploymentLevel > 0,
+            globalDeployment: deploymentLevel,
+            prerequisites: tech.prerequisites || [],
+            effects: [], // Effects are functions, can't serialize
+          };
+        }) || [];
 
       const byTier = technologies.reduce((acc, tech) => {
         if (!acc[tech.tier]) acc[tech.tier] = [];

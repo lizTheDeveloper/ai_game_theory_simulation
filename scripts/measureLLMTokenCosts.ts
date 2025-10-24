@@ -1,5 +1,6 @@
 import { createDefaultInitialState } from "../src/simulation/initialization";
 import { PhaseOrchestrator } from "../src/simulation/engine/PhaseOrchestrator";
+import { calculateAllTiers } from "../src/simulation/qualityOfLifeHelpers";
 import { encoding_for_model } from "tiktoken";
 
 /**
@@ -53,15 +54,18 @@ function serializeFullGameState(state: any): string {
   // Time & Environment
   lines.push("═══ GLOBAL METRICS ═══");
   lines.push(`Quality of Life: ${state.globalMetrics.qualityOfLife.toFixed(3)}`);
-  lines.push(`  Survival Tier: ${state.globalMetrics.survivalTier.toFixed(3)}`);
-  lines.push(`  Material Tier: ${state.globalMetrics.materialTier?.toFixed(3) ?? "N/A"}`);
-  lines.push(`  Psychological Tier: ${state.globalMetrics.psychologicalTier?.toFixed(3) ?? "N/A"}`);
-  lines.push(`  Social Tier: ${state.globalMetrics.socialTier?.toFixed(3) ?? "N/A"}`);
-  lines.push(`  Environmental Tier: ${state.globalMetrics.environmentalTier?.toFixed(3) ?? "N/A"}`);
-  lines.push(`Sustainability: ${state.globalMetrics.sustainability.toFixed(3)}`);
-  lines.push(`Social Cohesion: ${state.globalMetrics.socialCohesion.toFixed(3)}`);
-  lines.push(`Trust in Government: ${state.government.trustInGovernment.toFixed(3)}`);
-  lines.push(`Trust in AI: ${state.government.trustInAI.toFixed(3)}\n`);
+
+  // Calculate tier aggregates from multi-dimensional QoL system
+  const tiers = calculateAllTiers(state.qualityOfLifeSystems);
+  lines.push(`  Survival Tier: ${tiers.survivalTier.toFixed(3)}`);
+  lines.push(`  Material Tier: ${tiers.materialTier.toFixed(3)}`);
+  lines.push(`  Psychological Tier: ${tiers.psychologicalTier.toFixed(3)}`);
+  lines.push(`  Social Tier: ${tiers.socialTier.toFixed(3)}`);
+  lines.push(`  Environmental Tier: ${tiers.environmentalTier.toFixed(3)}`);
+
+  lines.push(`Social Cohesion: ${state.socialAccumulation.socialCohesion.toFixed(3)}`);
+  lines.push(`Trust in Government: ${state.society.trustInGovernment.toFixed(3)}`);
+  lines.push(`Trust in AI: ${state.society.trustInAI.toFixed(3)}\n`);
 
   // AI Agents - Full profiles
   lines.push("═══ AI AGENTS (20 agents) ═══");

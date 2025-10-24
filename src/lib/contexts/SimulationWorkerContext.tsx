@@ -27,6 +27,7 @@ interface SimulationWorkerContextValue {
   running: boolean
   month: number
   day: number
+  year: number
   scenario: ScenarioMode
   seed: number
 
@@ -51,6 +52,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
   const [running, setRunning] = useState(false)
   const [month, setMonth] = useState(0)
   const [day, setDay] = useState(1)
+  const [year, setYear] = useState(2025)
   const [scenario, setScenario] = useState<ScenarioMode>('historical')
   const [seed, setSeed] = useState(42000)
   const [lastUpdate, setLastUpdate] = useState<StateDelta | null>(null)
@@ -72,6 +74,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
           console.log('[WorkerContext] Worker initialized:', snapshot)
           setInitialized(true)
           setMonth(snapshot.currentMonth)
+          setYear(snapshot.currentYear)
           setScenario(snapshot.scenario)
         })
 
@@ -79,6 +82,9 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
           setLastUpdate(delta)
           if (delta.currentMonth !== undefined) {
             setMonth(delta.currentMonth)
+          }
+          if (delta.currentYear !== undefined) {
+            setYear(delta.currentYear)
           }
           if (currentDay !== undefined) {
             setDay(currentDay)
@@ -176,6 +182,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
         running,
         month,
         day,
+        year,
         scenario,
         seed,
         lastUpdate,

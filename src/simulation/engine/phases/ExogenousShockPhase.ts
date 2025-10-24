@@ -98,7 +98,7 @@ function applyExogenousShock(
       : 'major-recoverable';
 
   state.history.exogenousShocks.push({
-    month: state.currentMonth,
+    timestamp: state.currentMonth,
     type: shockType,
     severity,
   });

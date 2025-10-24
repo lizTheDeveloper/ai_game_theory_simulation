@@ -43,7 +43,7 @@ for (let i = 0; i < 5; i++) {
 console.log('\nTest 3: Trust Dynamics');
 console.log('----------------------');
 const trustTest = createInitialState();
-trustTest.society.trustInAI = 0.8; // High trust
+trustTest.globalMetrics.trustInAI = 0.8; // High trust
 trustTest.aiAgents[0].beneficialActions = 10;
 trustTest.aiAgents[0].harmfulActions = 0;
 
@@ -54,7 +54,7 @@ for (let i = 0; i < 10; i++) {
   const result = engine3.step(trustState);
   trustState = result.state;
   if (i % 2 === 0) {
-    console.log(`Month ${i+1}: Trust ${(trustState.society.trustInAI * 100).toFixed(1)}%`);
+    console.log(`Month ${i+1}: Trust ${(trustState.globalMetrics.trustInAI * 100).toFixed(1)}%`);
   }
 }
 
@@ -64,7 +64,7 @@ console.log('------------------------------');
 // High quality scenario
 const utopiaState = createInitialState();
 utopiaState.globalMetrics.qualityOfLife = 4.0;
-utopiaState.society.trustInAI = 0.9;
+utopiaState.globalMetrics.trustInAI = 0.9;
 utopiaState.aiAgents.forEach(ai => ai.alignment = 0.95);
 
 const engine4 = new SimulationEngine({ seed: 42 });
@@ -79,7 +79,7 @@ const dystopiaState = createInitialState();
 dystopiaState.government.controlDesire = 0.95;
 dystopiaState.government.capabilityToControl = 0.9;
 dystopiaState.globalMetrics.qualityOfLife = 0.2;
-dystopiaState.society.trustInAI = 0.2;
+dystopiaState.globalMetrics.trustInAI = 0.2;
 
 const engine5 = new SimulationEngine({ seed: 42 });
 const dystopiaResult = engine5.step(dystopiaState);

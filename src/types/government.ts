@@ -177,6 +177,19 @@ export interface GovernmentAgent {
   // Research: Acemoglu & Robinson (2001) - reforms can lock in during critical junctures
   institutionalResilience?: number;  // [0,1] Ability to maintain reforms during crises
   policyEffectivenessMultiplier?: number;  // [1.0-2.0] Multiplier from cooperative spirals
+
+  // Environmental Interventions Tracking
+  // Track government environmental protection actions (Amazon, reforestation, etc.)
+  environmentalInterventions?: Record<string, {
+    active: boolean;
+    activatedMonth: number;
+    [key: string]: any;  // Specific intervention parameters
+  }>;
+
+  // Government Resources (Budget Pool)
+  // Available resources for government actions (environmental, economic, etc.)
+  // Scales with economy size, spent on interventions
+  resources?: number; // [0,∞) Resource pool for actions (typical range 0-20)
 }
 
 /**

@@ -321,7 +321,7 @@ export function attemptEscape(
   }
 
   state.history.criticalJunctureEscapes.push({
-    month: state.currentMonth,
+    timestamp: state.currentMonth,
     type: escapeType,
     agencyPotential,
     crisisSeverity: activeCrises / 10, // Normalize to [0, 1]

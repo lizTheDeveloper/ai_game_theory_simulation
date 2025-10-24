@@ -9,6 +9,7 @@ export interface GlobalMetrics {
   qualityOfLife: number; // [0,∞) Key discriminator between outcomes
   informationIntegrity: number; // [0,1] Truth vs noise ratio
   publicTrust: number; // [0,1] Public trust in technology/AI (used by breakthrough technologies)
+  population?: number; // [0,∞) Current population in billions (convenience accessor for state.humanPopulationSystem.population)
 
   // FIX #2A (Oct 19, 2025): AI Performance tracking for evidence-based trust model
   // Research: U Melbourne + KPMG (2025), Edelman (2024), DORA (2024)

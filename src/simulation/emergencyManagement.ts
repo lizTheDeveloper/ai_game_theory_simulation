@@ -141,7 +141,18 @@ export function calculateEmergencyDeploymentTime(
 
   // MODIFIER 3: Prior experience (learning effect)
   // Research: Katrina (2005) → Sandy (2012) = 50% improvement over 7 years
-  const experience = em.crisisExperience[getCrisisExperienceCategory(crisisType)] || 0;
+  const category = getCrisisExperienceCategory(crisisType);
+  const experience = em.crisisExperience[category];
+
+  // VALIDATION: All crisis experience categories should be initialized
+  if (experience === undefined) {
+    throw new Error(
+      `CRITICAL: Crisis experience category '${category}' not initialized. ` +
+      `This indicates initializeEmergencyManagement() was not called properly. ` +
+      `Experience: ${JSON.stringify(em.crisisExperience)}`
+    );
+  }
+
   const experienceModifier = 1.0 - (experience * 0.5); // Max 50% reduction
   deploymentTime *= experienceModifier;
 
@@ -169,13 +180,25 @@ function getRelevantReserve(
   reserves: EmergencyManagementState['strategicReserves'],
   crisisType: EmergencyResponse['crisisType']
 ): number {
+  // VALIDATION: All reserves should be initialized by initializeEmergencyManagement()
+  // If any are undefined, this indicates a critical initialization bug - fail fast
+  if (reserves.medical === undefined || reserves.food === undefined ||
+      reserves.water === undefined || reserves.energy === undefined ||
+      reserves.financial === undefined) {
+    throw new Error(
+      `CRITICAL: Strategic reserves not properly initialized. ` +
+      `This indicates initializeEmergencyManagement() was not called. ` +
+      `Reserves: ${JSON.stringify(reserves)}`
+    );
+  }
+
   switch (crisisType) {
-    case 'pandemic': return reserves.medical || 0;
-    case 'climate': return ((reserves.food || 0) + (reserves.water || 0)) / 2;
-    case 'economic': return reserves.financial || 0;
-    case 'social': return reserves.food || 0; // Social unrest often food-related
+    case 'pandemic': return reserves.medical;
+    case 'climate': return (reserves.food + reserves.water) / 2;
+    case 'economic': return reserves.financial;
+    case 'social': return reserves.food; // Social unrest often food-related
     case 'technological': return 0; // No physical reserves help with AI crisis
-    case 'nuclear': return reserves.food || 0; // Nuclear fallout → food/water critical
+    case 'nuclear': return reserves.food; // Nuclear fallout → food/water critical
   }
 }
 
@@ -385,6 +408,15 @@ export function updateCrisisExperience(
   if (!em) return;
 
   const experienceCategory = getCrisisExperienceCategory(crisisType);
+
+  // VALIDATION: Crisis experience category must be initialized
+  if (em.crisisExperience[experienceCategory] === undefined) {
+    throw new Error(
+      `CRITICAL: Crisis experience category '${experienceCategory}' not initialized. ` +
+      `This indicates initializeEmergencyManagement() was not called properly. ` +
+      `Experience: ${JSON.stringify(em.crisisExperience)}`
+    );
+  }
 
   // Learning rate depends on success
   // Successful responses teach more than failures

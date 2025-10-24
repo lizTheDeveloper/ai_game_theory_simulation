@@ -68,7 +68,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
         if (response) {
           events.push({
             type: 'emergency_response',
-            month: state.currentMonth,
+            timestamp: state.currentMonth,
             title: '🚨 Emergency Pandemic Response Deployed',
             description: `Government deploys strategic medical reserves. Deployment time: ${response.deploymentTime.toFixed(1)} months. Effectiveness: ${(response.effectiveness * 100).toFixed(0)}%`,
             effects: { crisisType: 'pandemic', effectiveness: response.effectiveness },
@@ -103,7 +103,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
         if (response) {
           events.push({
             type: 'emergency_response',
-            month: state.currentMonth,
+            timestamp: state.currentMonth,
             title: '🚨 Emergency Climate Response Deployed',
             description: `Government mobilizes disaster relief and resource distribution. Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
             effects: { crisisType: 'climate', effectiveness: response.effectiveness },
@@ -127,7 +127,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
         if (response) {
           events.push({
             type: 'emergency_response',
-            month: state.currentMonth,
+            timestamp: state.currentMonth,
             title: '🚨 Emergency Economic Response Deployed',
             description: `Government deploys financial stabilization measures (TARP-style intervention). Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
             effects: { crisisType: 'economic', effectiveness: response.effectiveness },
@@ -173,7 +173,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
         if (response) {
           events.push({
             type: 'emergency_response',
-            month: state.currentMonth,
+            timestamp: state.currentMonth,
             title: '🚨 Emergency Social Response Deployed',
             description: `Government mobilizes social stabilization measures (trust=${(state.society.trustInAI * 100).toFixed(0)}%, cohesion=${(avgCohesion * 100).toFixed(0)}%). Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
             effects: { crisisType: 'social', effectiveness: response.effectiveness },
@@ -196,7 +196,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
         if (response) {
           events.push({
             type: 'emergency_response',
-            month: state.currentMonth,
+            timestamp: state.currentMonth,
             title: '🚨 Emergency AI Safety Response Deployed',
             description: `Government activates AI oversight protocols and emergency pause procedures. Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
             effects: { crisisType: 'technological', effectiveness: response.effectiveness },
@@ -220,7 +220,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
         if (response) {
           events.push({
             type: 'emergency_response',
-            month: state.currentMonth,
+            timestamp: state.currentMonth,
             title: '🚨 Emergency Nuclear Response Deployed',
             description: `Government activates nuclear emergency protocols. Military mobilization in days. Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
             effects: { crisisType: 'nuclear', effectiveness: response.effectiveness },
@@ -259,7 +259,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
               state.crises.megaPandemic.active = false;
               events.push({
                 type: 'crisis_resolved',
-                month: state.currentMonth,
+                timestamp: state.currentMonth,
                 title: '✅ Pandemic Crisis Resolved',
                 description: `Emergency response successfully contained pandemic. Experience gained for future responses.`,
                 effects: { crisisType: 'pandemic', learned: true },
@@ -378,7 +378,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
             updateCrisisExperience(state, 'social', true);
             events.push({
               type: 'crisis_resolved',
-              month: state.currentMonth,
+              timestamp: state.currentMonth,
               title: '✅ Social Unrest Resolved',
               description: `Emergency response successfully de-escalated social crisis. Trust in AI restored to ${(state.society.trustInAI * 100).toFixed(0)}%. Institutional capacity strengthened.`,
               effects: { crisisType: 'social', learned: true },
@@ -412,7 +412,7 @@ export class EmergencyResponsePhase implements SimulationPhase {
               updateCrisisExperience(state, 'technological', true);
               events.push({
                 type: 'crisis_resolved',
-                month: state.currentMonth,
+                timestamp: state.currentMonth,
                 title: '✅ AI Control Crisis Resolved',
                 description: `Emergency oversight measures successfully stabilized AI systems.`,
                 effects: { crisisType: 'technological', learned: true },

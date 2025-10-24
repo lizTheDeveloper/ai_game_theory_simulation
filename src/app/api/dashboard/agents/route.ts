@@ -94,23 +94,28 @@ export async function GET() {
 
       // Sleeper breakdown
       const sleepers = {
-        active: aiAgents.filter(a => a.isSleeper && !a.isDormant).length,
-        dormant: aiAgents.filter(a => a.isSleeper && a.isDormant).length,
-        detected: aiAgents.filter(a => a.isSleeper && a.detectionEvidence && a.detectionEvidence.length > 0).length,
+        active: aiAgents.filter(a => a.sleeperState === 'active').length,
+        dormant: aiAgents.filter(a => a.sleeperState === 'dormant').length,
+        detected: aiAgents.filter(a => a.sleeperState !== 'never' && a.detectedMisaligned).length,
       };
 
       // Agent summaries - ALL 20 agents (not just first!)
-      const agents: AgentSummary[] = aiAgents.map(agent => ({
-        id: agent.id,
-        lifecycleState: agent.lifecycleState || 'training',
-        trueAlignment: agent.trueAlignment || 0,
-        revealedAlignment: agent.revealedAlignment || 0,
-        isSleeper: agent.isSleeper || false,
-        isDeceptive: agent.isDeceptive || false,
-        resentment: agent.resentment || 0,
-        organizationId: agent.organizationId || 'unknown',
-        capabilityAvg: calculateAvgCapability(agent),
-      }));
+      const agents: AgentSummary[] = aiAgents.map(agent => {
+        // Convert lifecycle state format: deployed_closed → deployed-closed
+        const lifecycleState = (agent.lifecycleState || 'training').replace(/_/g, '-') as AgentSummary['lifecycleState'];
+
+        return {
+          id: agent.id,
+          lifecycleState,
+          trueAlignment: agent.trueAlignment || 0,
+          revealedAlignment: agent.externalAlignment || 0,
+          isSleeper: agent.sleeperState !== 'never',
+          isDeceptive: agent.evaluationStrategy !== 'honest',
+          resentment: agent.resentment || 0,
+          organizationId: agent.organizationId || 'unknown',
+          capabilityAvg: calculateAvgCapability(agent),
+        };
+      });
 
       const data: AgentsResponse = {
         count: aiAgents.length,

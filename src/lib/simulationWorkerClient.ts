@@ -17,6 +17,7 @@ import type { ScenarioMode } from '@/types/game';
 export interface StateDelta {
   // Core metrics
   currentMonth?: number;
+  currentYear?: number;
   qualityOfLife?: number;
   population?: number;
   aiCount?: number;
@@ -85,6 +86,7 @@ export interface StateDelta {
 
 export interface InitialStateSnapshot {
   currentMonth: number;
+  currentYear: number;
   qualityOfLife: number;
   population: number;
   aiCount: number;

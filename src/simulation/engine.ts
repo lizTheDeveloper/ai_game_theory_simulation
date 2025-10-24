@@ -5,7 +5,7 @@
  * All functions are deterministic given a seed for the random number generator.
  */
 
-import { GameState, GameEvent, OutcomeMetrics } from '@/types/game';
+import { GameState, GameEvent, OutcomeMetrics, OutcomeType } from '@/types/game';
 import {
   calculateQualityOfLife,
   updateQualityOfLifeSystems,
@@ -635,6 +635,12 @@ export class SimulationEngine {
   run(initialState: GameState, stopConditions?: {
     maxMonths?: number;
     checkActualOutcomes?: boolean; // Stop when ACTUAL outcomes occur (not probabilities)
+    onMonthEnd?: (state: GameState) => void; // Callback after each month
+    logLevel?: LogLevel; // Override log level for this run
+    seed?: number; // Override seed for this run
+    snapshotInterval?: number; // Override snapshot interval for this run
+    stopOnOutcome?: boolean; // Stop simulation when final outcome reached
+    outcomeThreshold?: number; // Threshold for outcome probability
   }): SimulationRunResult {
     const maxMonths = stopConditions?.maxMonths ?? this.config.maxMonths!;
     const checkActualOutcomes = stopConditions?.checkActualOutcomes ?? true;
@@ -692,9 +698,14 @@ export class SimulationEngine {
       // Log this step
       logger.logStep(state, stepResult.events);
       diagnosticLogger.logStep(state, stepResult.events);
-      
+
       // Periodic event summary (every 12 months)
       eventAggregator.reportSummary(state.currentMonth, state.config.runLabel);
+
+      // Call onMonthEnd callback if provided
+      if (stopConditions?.onMonthEnd) {
+        stopConditions.onMonthEnd(state);
+      }
       
       // Phase 3: Check for end-game transition
       if (!state.endGameState.active && checkEndGameTransition(state)) {

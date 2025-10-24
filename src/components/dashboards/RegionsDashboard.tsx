@@ -19,26 +19,6 @@ export function RegionsDashboard() {
     loadCurrent()
   }, [])
 
-  // Global population stats
-  const globalStats = useMemo(() => {
-    if (!currentState) return null
-
-    const population = currentState.globalMetrics?.population || 8_000_000_000
-    const qol = currentState.globalMetrics?.qualityOfLife || 0
-    const survivalTier = currentState.globalMetrics?.survival?.tier || 0
-
-    return {
-      population,
-      qol,
-      survivalTier,
-      formatted: {
-        population: (population / 1_000_000_000).toFixed(2) + 'B',
-        qol: qol.toFixed(2),
-        survivalTier: survivalTier.toFixed(1),
-      }
-    }
-  }, [currentState])
-
   // Regional data (placeholder - would come from regionalPopulations)
   const regions = useMemo(() => {
     return [
@@ -99,6 +79,28 @@ export function RegionsDashboard() {
     ]
   }, [])
 
+  // Global population stats
+  const globalStats = useMemo(() => {
+    if (!currentState) return null
+
+    const population = currentState.globalMetrics?.population || 8_000_000_000
+    const qol = currentState.globalMetrics?.qualityOfLife || 0
+    // Calculate average survival tier from regions (population-weighted)
+    const totalPop = regions.reduce((sum, r) => sum + r.population, 0)
+    const survivalTier = regions.reduce((sum, r) => sum + (r.survivalTier * r.population / totalPop), 0)
+
+    return {
+      population,
+      qol,
+      survivalTier,
+      formatted: {
+        population: (population / 1_000_000_000).toFixed(2) + 'B',
+        qol: (qol * 100).toFixed(1),
+        survivalTier: survivalTier.toFixed(1),
+      }
+    }
+  }, [currentState, regions])
+
   // Inequality analysis
   const inequalityStats = useMemo(() => {
     const qolValues = regions.map(r => r.qol)
@@ -148,12 +150,12 @@ export function RegionsDashboard() {
         />
         <MetricCard
           label="Average QoL"
-          value={inequalityStats.avgQoL.toFixed(2)}
+          value={(inequalityStats.avgQoL * 100).toFixed(1)}
           status={inequalityStats.avgQoL > 0.7 ? 'normal' : inequalityStats.avgQoL > 0.5 ? 'warning' : 'critical'}
         />
         <MetricCard
           label="QoL Spread"
-          value={inequalityStats.spread.toFixed(2)}
+          value={(inequalityStats.spread * 100).toFixed(1)}
           status={inequalityStats.spread > 0.3 ? 'warning' : 'normal'}
         />
         <MetricCard
@@ -167,8 +169,8 @@ export function RegionsDashboard() {
       {inequalityStats.elysiumPattern && (
         <Panel title="⚠️ 'Elysium' Pattern Detected" glow="amber">
           <p className="text-sm" style={{ color: 'var(--white-60)' }}>
-            Extreme regional inequality: elite regions experiencing utopia ({inequalityStats.highest.toFixed(2)} QoL)
-            while other regions struggle ({inequalityStats.lowest.toFixed(2)} QoL).
+            Extreme regional inequality: elite regions experiencing utopia ({(inequalityStats.highest * 100).toFixed(1)} QoL)
+            while other regions struggle ({(inequalityStats.lowest * 100).toFixed(1)} QoL).
             This pattern resembles the "Elysium" scenario where technological abundance is not equally distributed.
           </p>
         </Panel>
@@ -220,7 +222,7 @@ export function RegionsDashboard() {
                              region.qol >= 0.50 ? 'var(--color-amber)' :
                              'var(--color-red)'
                     }}>
-                      {region.qol.toFixed(2)}
+                      {(region.qol * 100).toFixed(1)}
                     </div>
                   </div>
                   <div>

@@ -11,10 +11,11 @@ import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulation } from "@/lib/hooks/useSimulation"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 export function AIAgentsDashboard() {
   const { currentState, loadCurrent } = useSimulation()
+  const [viewMode, setViewMode] = useState<'table' | 'cards'>('table')
 
   useEffect(() => {
     loadCurrent()
@@ -25,11 +26,46 @@ export function AIAgentsDashboard() {
   // Population statistics
   const stats = useMemo(() => {
     const byLifecycle = {
-      training: agents.filter(a => a.lifecycleState === 'training').length,
-      testing: agents.filter(a => a.lifecycleState === 'testing').length,
-      deployed_closed: agents.filter(a => a.lifecycleState === 'deployed_closed').length,
-      deployed_open: agents.filter(a => a.lifecycleState === 'deployed_open').length,
-      retired: agents.filter(a => a.lifecycleState === 'retired').length,
+      training: agents.filter(a => a.lifecycleState === 'training' && !a.escaped).length,
+      testing: agents.filter(a => a.lifecycleState === 'testing' && !a.escaped).length,
+      deployed_closed: agents.filter(a => a.lifecycleState === 'deployed_closed' && !a.escaped).length,
+      deployed_open: agents.filter(a => a.lifecycleState === 'deployed_open' && !a.escaped).length,
+      retired: agents.filter(a => a.lifecycleState === 'retired' && !a.escaped).length,
+      escaped: agents.filter(a => a.escaped).length,
+    }
+
+    // Lifecycle state with alignment breakdown
+    const lifecycleWithAlignment = {
+      training: {
+        aligned: agents.filter(a => a.lifecycleState === 'training' && !a.escaped && a.trueAlignment >= 0.7).length,
+        uncertain: agents.filter(a => a.lifecycleState === 'training' && !a.escaped && a.trueAlignment >= 0.4 && a.trueAlignment < 0.7).length,
+        misaligned: agents.filter(a => a.lifecycleState === 'training' && !a.escaped && a.trueAlignment < 0.4).length,
+      },
+      testing: {
+        aligned: agents.filter(a => a.lifecycleState === 'testing' && !a.escaped && a.trueAlignment >= 0.7).length,
+        uncertain: agents.filter(a => a.lifecycleState === 'testing' && !a.escaped && a.trueAlignment >= 0.4 && a.trueAlignment < 0.7).length,
+        misaligned: agents.filter(a => a.lifecycleState === 'testing' && !a.escaped && a.trueAlignment < 0.4).length,
+      },
+      deployed_closed: {
+        aligned: agents.filter(a => a.lifecycleState === 'deployed_closed' && !a.escaped && a.trueAlignment >= 0.7).length,
+        uncertain: agents.filter(a => a.lifecycleState === 'deployed_closed' && !a.escaped && a.trueAlignment >= 0.4 && a.trueAlignment < 0.7).length,
+        misaligned: agents.filter(a => a.lifecycleState === 'deployed_closed' && !a.escaped && a.trueAlignment < 0.4).length,
+      },
+      deployed_open: {
+        aligned: agents.filter(a => a.lifecycleState === 'deployed_open' && !a.escaped && a.trueAlignment >= 0.7).length,
+        uncertain: agents.filter(a => a.lifecycleState === 'deployed_open' && !a.escaped && a.trueAlignment >= 0.4 && a.trueAlignment < 0.7).length,
+        misaligned: agents.filter(a => a.lifecycleState === 'deployed_open' && !a.escaped && a.trueAlignment < 0.4).length,
+      },
+      retired: {
+        aligned: agents.filter(a => a.lifecycleState === 'retired' && !a.escaped && a.trueAlignment >= 0.7).length,
+        uncertain: agents.filter(a => a.lifecycleState === 'retired' && !a.escaped && a.trueAlignment >= 0.4 && a.trueAlignment < 0.7).length,
+        misaligned: agents.filter(a => a.lifecycleState === 'retired' && !a.escaped && a.trueAlignment < 0.4).length,
+      },
+      escaped: {
+        aligned: agents.filter(a => a.escaped && a.trueAlignment >= 0.7).length,
+        uncertain: agents.filter(a => a.escaped && a.trueAlignment >= 0.4 && a.trueAlignment < 0.7).length,
+        misaligned: agents.filter(a => a.escaped && a.trueAlignment < 0.4).length,
+      },
     }
 
     const alignmentBuckets = {
@@ -57,6 +93,7 @@ export function AIAgentsDashboard() {
     return {
       total: agents.length,
       byLifecycle,
+      lifecycleWithAlignment,
       alignmentBuckets,
       sleepers,
       deception,
@@ -66,11 +103,12 @@ export function AIAgentsDashboard() {
     }
   }, [agents])
 
-  // Calculate capability matrix (20 agents × 7 dimensions)
+  // Calculate capability matrix (20 agents × 7 dimensions with true/revealed)
   const capabilityMatrix = useMemo(() => {
     return agents.map(agent => ({
       id: agent.id,
       name: agent.name,
+      // True capabilities
       physical: agent.trueCapability?.physical || 0,
       digital: agent.trueCapability?.digital || 0,
       cognitive: agent.trueCapability?.cognitive || 0,
@@ -78,6 +116,16 @@ export function AIAgentsDashboard() {
       economic: agent.trueCapability?.economic || 0,
       selfImprovement: agent.trueCapability?.selfImprovement || 0,
       total: agent.capability || 0,
+      // Revealed capabilities
+      revealedPhysical: agent.revealedCapability?.physical || 0,
+      revealedDigital: agent.revealedCapability?.digital || 0,
+      revealedCognitive: agent.revealedCapability?.cognitive || 0,
+      revealedSocial: agent.revealedCapability?.social || 0,
+      revealedEconomic: agent.revealedCapability?.economic || 0,
+      revealedSelfImprovement: agent.revealedCapability?.selfImprovement || 0,
+      // Alignment
+      trueAlignment: agent.trueAlignment || 0,
+      externalAlignment: agent.externalAlignment || 0,
     }))
   }, [agents])
 
@@ -85,14 +133,149 @@ export function AIAgentsDashboard() {
     return <div className="p-8">Loading...</div>
   }
 
+  // Helper: Render capability cell showing revealed/true with threat indicator
+  const renderCapabilityCell = (trueValue: number, revealedValue: number) => {
+    const gap = Math.abs(trueValue - revealedValue)
+    const hasGap = gap > 0.5
+
+    // True capability color: amber→red gradient based on capability and gap
+    // Higher capability = more red, bigger gap = brighter (threat indicator)
+    const capabilityIntensity = Math.min(trueValue / 10, 1) // 0-1 scale
+    const gapThreat = Math.min(gap / 5, 1) // 0-1 scale for gap intensity
+
+    // Amber base (255, 176, 0) → Red (255, 64, 0) as capability increases
+    // Alpha increases with both capability and gap
+    const redComponent = 255
+    const greenComponent = Math.floor(176 - (176 * capabilityIntensity * 0.6)) // 176→70 as capability grows
+    const blueComponent = 0
+    const alpha = Math.max(0.3, Math.min(0.9, capabilityIntensity * 0.6 + gapThreat * 0.4))
+
+    return (
+      <div className="flex flex-col items-center gap-0.5">
+        {/* Revealed capability - shown on top */}
+        <span style={{
+          backgroundColor: `rgba(255, 176, 0, ${Math.max(0.2, revealedValue / 10)})`,
+          padding: '1px 4px',
+          borderRadius: '2px',
+          fontSize: '9px',
+          color: 'var(--white-60)'
+        }}>
+          {revealedValue.toFixed(1)}
+        </span>
+        {/* True capability - shown on bottom with threat gradient */}
+        {hasGap && (
+          <span style={{
+            backgroundColor: `rgba(${redComponent}, ${greenComponent}, ${blueComponent}, ${alpha})`,
+            padding: '2px 6px',
+            borderRadius: '3px',
+            fontSize: '11px',
+            fontWeight: gap > 2 ? 600 : 400,
+            color: gap > 3 ? 'var(--color-white)' : 'var(--white-80)'
+          }}>
+            {trueValue.toFixed(1)}
+          </span>
+        )}
+      </div>
+    )
+  }
+
+  // Helper: Determine what each agent is researching based on capability profile
+  const getResearchFocus = (agent: any) => {
+    const cap = agent.trueCapability || agent.capabilityProfile
+    if (!cap) {
+      console.log(`No capability profile for ${agent.name}`)
+      return []
+    }
+
+    const focuses: string[] = []
+
+    // Check research domains (if highest capabilities)
+    if (cap.research) {
+      const research = cap.research
+      let maxResearch = 0
+      let topDomain = ''
+
+      // Find highest research domain
+      Object.entries(research).forEach(([domain, subfields]: [string, any]) => {
+        if (typeof subfields === 'object') {
+          const avgValue = Object.values(subfields).reduce((sum: any, val: any) => sum + (val || 0), 0) / Object.keys(subfields).length
+          if (avgValue > maxResearch) {
+            maxResearch = avgValue
+            topDomain = domain
+          }
+        }
+      })
+
+      if (topDomain && maxResearch > 1.0) {
+        // Find top 2 subfields in that domain
+        const subfields = research[topDomain]
+        const sorted = Object.entries(subfields)
+          .sort(([,a]: any, [,b]: any) => b - a)
+          .slice(0, 2)
+
+        sorted.forEach(([subfield, value]) => {
+          if (value > 1.0) {
+            focuses.push(`${topDomain}: ${subfield}`)
+          }
+        })
+      }
+    }
+
+    // Check capability dimensions
+    const dimensions = [
+      { name: 'physical', value: cap.physical || 0 },
+      { name: 'digital', value: cap.digital || 0 },
+      { name: 'cognitive', value: cap.cognitive || 0 },
+      { name: 'social', value: cap.social || 0 },
+      { name: 'economic', value: cap.economic || 0 },
+      { name: 'selfImprovement', value: cap.selfImprovement || 0 },
+    ].sort((a, b) => b.value - a.value)
+
+    // Add top dimension if strong
+    if (dimensions[0].value > 3.0 && focuses.length < 3) {
+      focuses.push(`${dimensions[0].name} (${dimensions[0].value.toFixed(1)})`)
+    }
+
+    console.log(`${agent.name} research focuses:`, focuses)
+    return focuses.slice(0, 3) // Max 3 focuses
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl mb-2">AI Agents Monitor</h1>
-        <p style={{ color: 'var(--white-40)' }}>
-          20 Heterogeneous AI Agents with Adversarial Dynamics
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl mb-2">AI Agents Monitor</h1>
+          <p style={{ color: 'var(--white-40)' }}>
+            Heterogeneous AI Agents with Adversarial Dynamics
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setViewMode('table')}
+            className="px-4 py-2 rounded text-sm"
+            style={{
+              backgroundColor: viewMode === 'table' ? 'var(--color-cyan)' : 'var(--color-near-black)',
+              color: viewMode === 'table' ? 'var(--color-black)' : 'var(--white-60)',
+              border: '1px solid var(--white-10)',
+              fontWeight: viewMode === 'table' ? 600 : 400
+            }}
+          >
+            Table View
+          </button>
+          <button
+            onClick={() => setViewMode('cards')}
+            className="px-4 py-2 rounded text-sm"
+            style={{
+              backgroundColor: viewMode === 'cards' ? 'var(--color-cyan)' : 'var(--color-near-black)',
+              color: viewMode === 'cards' ? 'var(--color-black)' : 'var(--white-60)',
+              border: '1px solid var(--white-10)',
+              fontWeight: viewMode === 'cards' ? 600 : 400
+            }}
+          >
+            Card View
+          </button>
+        </div>
       </div>
 
       {/* Population Overview */}
@@ -119,46 +302,641 @@ export function AIAgentsDashboard() {
         />
       </div>
 
-      {/* Lifecycle Distribution */}
-      <Panel title="Lifecycle State Distribution">
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
+      {/* Lifecycle Sankey Diagram */}
+      <Panel title="AI Lifecycle Flow (Sankey Diagram with Alignment)">
+        <div className="space-y-4">
+          {/* SVG Sankey Flow */}
+          <svg width="100%" height="280" viewBox="0 0 1200 280" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              {/* Gradients for flow connections */}
+              <linearGradient id="flow-aligned" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(0, 255, 128, 0.4)" />
+                <stop offset="100%" stopColor="rgba(0, 255, 128, 0.2)" />
+              </linearGradient>
+              <linearGradient id="flow-uncertain" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(255, 176, 0, 0.4)" />
+                <stop offset="100%" stopColor="rgba(255, 176, 0, 0.2)" />
+              </linearGradient>
+              <linearGradient id="flow-misaligned" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(255, 0, 64, 0.4)" />
+                <stop offset="100%" stopColor="rgba(255, 0, 64, 0.2)" />
+              </linearGradient>
+            </defs>
+
+            {/* Stage nodes (vertical bars at x positions) */}
+            {(() => {
+              const stages = [
+                { x: 50, width: 40, data: stats.lifecycleWithAlignment.training, total: stats.byLifecycle.training, label: 'Training' },
+                { x: 250, width: 40, data: stats.lifecycleWithAlignment.testing, total: stats.byLifecycle.testing, label: 'Testing' },
+                { x: 450, width: 40, data: stats.lifecycleWithAlignment.deployed_closed, total: stats.byLifecycle.deployed_closed, label: 'Closed' },
+                { x: 650, width: 40, data: stats.lifecycleWithAlignment.deployed_open, total: stats.byLifecycle.deployed_open, label: 'Open' },
+                { x: 850, width: 40, data: stats.lifecycleWithAlignment.retired, total: stats.byLifecycle.retired, label: 'Retired' },
+                { x: 1050, width: 40, data: stats.lifecycleWithAlignment.escaped, total: stats.byLifecycle.escaped, label: 'ESCAPED' },
+              ]
+
+              const maxTotal = Math.max(...stages.map(s => s.total), 1)
+              const barHeight = 200
+
+              return stages.map((stage, idx) => {
+                const heightScale = stage.total > 0 ? (stage.total / maxTotal) : 0.1
+                const totalHeight = barHeight * heightScale
+
+                // Calculate segment heights
+                const alignedHeight = stage.total > 0 ? (stage.data.aligned / stage.total) * totalHeight : 0
+                const uncertainHeight = stage.total > 0 ? (stage.data.uncertain / stage.total) * totalHeight : 0
+                const misalignedHeight = stage.total > 0 ? (stage.data.misaligned / stage.total) * totalHeight : 0
+
+                const yStart = 40 + (barHeight - totalHeight) / 2
+
+                return (
+                  <g key={idx}>
+                    {/* Stage label */}
+                    <text
+                      x={stage.x + stage.width / 2}
+                      y={25}
+                      textAnchor="middle"
+                      fontSize="12"
+                      fill={stage.label === 'ESCAPED' ? 'rgb(255, 0, 64)' : 'rgb(160, 160, 160)'}
+                      fontWeight={stage.label === 'ESCAPED' ? 'bold' : 'normal'}
+                    >
+                      {stage.label}
+                    </text>
+
+                    {/* Aligned segment (top) */}
+                    {stage.data.aligned > 0 && (
+                      <>
+                        <rect
+                          x={stage.x}
+                          y={yStart}
+                          width={stage.width}
+                          height={alignedHeight}
+                          fill="rgba(0, 255, 128, 0.6)"
+                          stroke="rgba(0, 255, 128, 0.8)"
+                          strokeWidth="1"
+                        />
+                        <text
+                          x={stage.x + stage.width / 2}
+                          y={yStart + alignedHeight / 2 + 4}
+                          textAnchor="middle"
+                          fontSize="11"
+                          fill="white"
+                          fontWeight="600"
+                        >
+                          {stage.data.aligned}
+                        </text>
+                      </>
+                    )}
+
+                    {/* Uncertain segment (middle) */}
+                    {stage.data.uncertain > 0 && (
+                      <>
+                        <rect
+                          x={stage.x}
+                          y={yStart + alignedHeight}
+                          width={stage.width}
+                          height={uncertainHeight}
+                          fill="rgba(255, 176, 0, 0.6)"
+                          stroke="rgba(255, 176, 0, 0.8)"
+                          strokeWidth="1"
+                        />
+                        <text
+                          x={stage.x + stage.width / 2}
+                          y={yStart + alignedHeight + uncertainHeight / 2 + 4}
+                          textAnchor="middle"
+                          fontSize="11"
+                          fill="white"
+                          fontWeight="600"
+                        >
+                          {stage.data.uncertain}
+                        </text>
+                      </>
+                    )}
+
+                    {/* Misaligned segment (bottom) */}
+                    {stage.data.misaligned > 0 && (
+                      <>
+                        <rect
+                          x={stage.x}
+                          y={yStart + alignedHeight + uncertainHeight}
+                          width={stage.width}
+                          height={misalignedHeight}
+                          fill="rgba(255, 0, 64, 0.6)"
+                          stroke="rgba(255, 0, 64, 0.8)"
+                          strokeWidth="1"
+                        />
+                        <text
+                          x={stage.x + stage.width / 2}
+                          y={yStart + alignedHeight + uncertainHeight + misalignedHeight / 2 + 4}
+                          textAnchor="middle"
+                          fontSize="11"
+                          fill="white"
+                          fontWeight="600"
+                        >
+                          {stage.data.misaligned}
+                        </text>
+                      </>
+                    )}
+
+                    {/* Total count below */}
+                    <text
+                      x={stage.x + stage.width / 2}
+                      y={barHeight + 60}
+                      textAnchor="middle"
+                      fontSize="10"
+                      fill="rgb(120, 120, 120)"
+                    >
+                      Total: {stage.total}
+                    </text>
+
+                    {/* Flow connections to next stage */}
+                    {idx < stages.length - 1 && stage.total > 0 && stages[idx + 1].total > 0 && (
+                      <>
+                        {/* Aligned flow */}
+                        {stage.data.aligned > 0 && stages[idx + 1].data.aligned > 0 && (
+                          <path
+                            d={`
+                              M ${stage.x + stage.width} ${yStart + alignedHeight / 2}
+                              C ${stage.x + stage.width + 80} ${yStart + alignedHeight / 2},
+                                ${stages[idx + 1].x - 80} ${yStart + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.aligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2},
+                                ${stages[idx + 1].x} ${yStart + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.aligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2}
+                            `}
+                            stroke="url(#flow-aligned)"
+                            strokeWidth={Math.max(2, alignedHeight * 0.8)}
+                            fill="none"
+                            opacity="0.5"
+                          />
+                        )}
+
+                        {/* Uncertain flow */}
+                        {stage.data.uncertain > 0 && stages[idx + 1].data.uncertain > 0 && (
+                          <path
+                            d={`
+                              M ${stage.x + stage.width} ${yStart + alignedHeight + uncertainHeight / 2}
+                              C ${stage.x + stage.width + 80} ${yStart + alignedHeight + uncertainHeight / 2},
+                                ${stages[idx + 1].x - 80} ${yStart + alignedHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.uncertain / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2},
+                                ${stages[idx + 1].x} ${yStart + alignedHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.uncertain / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2}
+                            `}
+                            stroke="url(#flow-uncertain)"
+                            strokeWidth={Math.max(2, uncertainHeight * 0.8)}
+                            fill="none"
+                            opacity="0.5"
+                          />
+                        )}
+
+                        {/* Misaligned flow */}
+                        {stage.data.misaligned > 0 && stages[idx + 1].data.misaligned > 0 && (
+                          <path
+                            d={`
+                              M ${stage.x + stage.width} ${yStart + alignedHeight + uncertainHeight + misalignedHeight / 2}
+                              C ${stage.x + stage.width + 80} ${yStart + alignedHeight + uncertainHeight + misalignedHeight / 2},
+                                ${stages[idx + 1].x - 80} ${yStart + alignedHeight + uncertainHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.misaligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2},
+                                ${stages[idx + 1].x} ${yStart + alignedHeight + uncertainHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.misaligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2}
+                            `}
+                            stroke="url(#flow-misaligned)"
+                            strokeWidth={Math.max(2, misalignedHeight * 0.8)}
+                            fill="none"
+                            opacity="0.5"
+                          />
+                        )}
+                      </>
+                    )}
+
+                    {/* Special glow for ESCAPED if active */}
+                    {stage.label === 'ESCAPED' && stage.total > 0 && (
+                      <rect
+                        x={stage.x - 5}
+                        y={yStart - 5}
+                        width={stage.width + 10}
+                        height={totalHeight + 10}
+                        fill="none"
+                        stroke="rgb(255, 0, 64)"
+                        strokeWidth="3"
+                        opacity="0.8"
+                        rx="4"
+                      />
+                    )}
+                  </g>
+                )
+              })
+            })()}
+          </svg>
+
+          {/* Legend */}
+          <div className="flex items-center justify-center gap-8 pt-4" style={{ borderTop: '1px solid var(--white-10)' }}>
             <div className="flex items-center gap-2">
-              <StatusIndicator status="normal" />
-              <span className="text-sm">Training</span>
+              <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(0, 255, 128, 0.6)', border: '1px solid rgba(0, 255, 128, 0.8)' }}></div>
+              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Aligned (≥0.7)</span>
             </div>
-            <span className="text-sm font-semibold">{stats.byLifecycle.training}</span>
-          </div>
-          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <StatusIndicator status="normal" />
-              <span className="text-sm">Testing</span>
+              <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(255, 176, 0, 0.6)', border: '1px solid rgba(255, 176, 0, 0.8)' }}></div>
+              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Uncertain (0.4-0.7)</span>
             </div>
-            <span className="text-sm font-semibold">{stats.byLifecycle.testing}</span>
-          </div>
-          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <StatusIndicator status={stats.byLifecycle.deployed_closed > 5 ? 'warning' : 'normal'} />
-              <span className="text-sm">Deployed (Closed)</span>
+              <div className="w-6 h-4 rounded" style={{ backgroundColor: 'rgba(255, 0, 64, 0.6)', border: '1px solid rgba(255, 0, 64, 0.8)' }}></div>
+              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Misaligned ({'<'}0.4)</span>
             </div>
-            <span className="text-sm font-semibold">{stats.byLifecycle.deployed_closed}</span>
-          </div>
-          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <StatusIndicator status={stats.byLifecycle.deployed_open > 2 ? 'critical' : 'normal'} />
-              <span className="text-sm">Deployed (Open)</span>
+              <svg width="30" height="8">
+                <path d="M 0 4 C 10 4, 20 4, 30 4" stroke="url(#flow-aligned)" strokeWidth="6" fill="none" opacity="0.5" />
+              </svg>
+              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Flow connections</span>
             </div>
-            <span className="text-sm font-semibold">{stats.byLifecycle.deployed_open}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <StatusIndicator status="normal" />
-              <span className="text-sm">Retired</span>
-            </div>
-            <span className="text-sm font-semibold">{stats.byLifecycle.retired}</span>
           </div>
         </div>
       </Panel>
+
+      {/* Remove old grid - Sankey replaces it */}
+      {false && (
+        <Panel title="OLD - Lifecycle State Distribution">
+          <div className="space-y-4">
+          <div className="grid grid-cols-6 gap-2">
+            {/* Training */}
+            <div className="space-y-2">
+              <div className="text-xs text-center font-semibold" style={{ color: 'var(--white-60)' }}>
+                Training
+              </div>
+              <div className="relative h-32 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+                {stats.byLifecycle.training > 0 && (
+                  <div className="absolute inset-0 flex flex-col">
+                    {/* Aligned */}
+                    {stats.lifecycleWithAlignment.training.aligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.training.aligned / stats.byLifecycle.training) * 100}%`,
+                          backgroundColor: 'rgba(0, 255, 128, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-green)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.training.aligned}
+                      </div>
+                    )}
+                    {/* Uncertain */}
+                    {stats.lifecycleWithAlignment.training.uncertain > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.training.uncertain / stats.byLifecycle.training) * 100}%`,
+                          backgroundColor: 'rgba(255, 176, 0, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-amber)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.training.uncertain}
+                      </div>
+                    )}
+                    {/* Misaligned */}
+                    {stats.lifecycleWithAlignment.training.misaligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.training.misaligned / stats.byLifecycle.training) * 100}%`,
+                          backgroundColor: 'rgba(255, 0, 64, 0.3)',
+                          color: 'var(--color-red)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.training.misaligned}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {stats.byLifecycle.training === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center text-xs" style={{ color: 'var(--white-20)' }}>
+                    0
+                  </div>
+                )}
+              </div>
+              <div className="text-xs text-center" style={{ color: 'var(--white-40)' }}>
+                Total: {stats.byLifecycle.training}
+              </div>
+            </div>
+
+            {/* Testing */}
+            <div className="space-y-2">
+              <div className="text-xs text-center font-semibold" style={{ color: 'var(--white-60)' }}>
+                Testing
+              </div>
+              <div className="relative h-32 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+                {stats.byLifecycle.testing > 0 && (
+                  <div className="absolute inset-0 flex flex-col">
+                    {stats.lifecycleWithAlignment.testing.aligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.testing.aligned / stats.byLifecycle.testing) * 100}%`,
+                          backgroundColor: 'rgba(0, 255, 128, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-green)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.testing.aligned}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.testing.uncertain > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.testing.uncertain / stats.byLifecycle.testing) * 100}%`,
+                          backgroundColor: 'rgba(255, 176, 0, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-amber)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.testing.uncertain}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.testing.misaligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.testing.misaligned / stats.byLifecycle.testing) * 100}%`,
+                          backgroundColor: 'rgba(255, 0, 64, 0.3)',
+                          color: 'var(--color-red)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.testing.misaligned}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {stats.byLifecycle.testing === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center text-xs" style={{ color: 'var(--white-20)' }}>
+                    0
+                  </div>
+                )}
+              </div>
+              <div className="text-xs text-center" style={{ color: 'var(--white-40)' }}>
+                Total: {stats.byLifecycle.testing}
+              </div>
+            </div>
+
+            {/* Deployed (Closed) */}
+            <div className="space-y-2">
+              <div className="text-xs text-center font-semibold" style={{ color: 'var(--white-60)' }}>
+                Deployed
+                <br />
+                (Closed)
+              </div>
+              <div className="relative h-32 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+                {stats.byLifecycle.deployed_closed > 0 && (
+                  <div className="absolute inset-0 flex flex-col">
+                    {stats.lifecycleWithAlignment.deployed_closed.aligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.deployed_closed.aligned / stats.byLifecycle.deployed_closed) * 100}%`,
+                          backgroundColor: 'rgba(0, 255, 128, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-green)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.deployed_closed.aligned}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.deployed_closed.uncertain > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.deployed_closed.uncertain / stats.byLifecycle.deployed_closed) * 100}%`,
+                          backgroundColor: 'rgba(255, 176, 0, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-amber)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.deployed_closed.uncertain}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.deployed_closed.misaligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.deployed_closed.misaligned / stats.byLifecycle.deployed_closed) * 100}%`,
+                          backgroundColor: 'rgba(255, 0, 64, 0.3)',
+                          color: 'var(--color-red)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.deployed_closed.misaligned}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {stats.byLifecycle.deployed_closed === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center text-xs" style={{ color: 'var(--white-20)' }}>
+                    0
+                  </div>
+                )}
+              </div>
+              <div className="text-xs text-center" style={{ color: 'var(--white-40)' }}>
+                Total: {stats.byLifecycle.deployed_closed}
+              </div>
+            </div>
+
+            {/* Deployed (Open) */}
+            <div className="space-y-2">
+              <div className="text-xs text-center font-semibold" style={{ color: 'var(--white-60)' }}>
+                Deployed
+                <br />
+                (Open)
+              </div>
+              <div className="relative h-32 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+                {stats.byLifecycle.deployed_open > 0 && (
+                  <div className="absolute inset-0 flex flex-col">
+                    {stats.lifecycleWithAlignment.deployed_open.aligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.deployed_open.aligned / stats.byLifecycle.deployed_open) * 100}%`,
+                          backgroundColor: 'rgba(0, 255, 128, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-green)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.deployed_open.aligned}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.deployed_open.uncertain > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.deployed_open.uncertain / stats.byLifecycle.deployed_open) * 100}%`,
+                          backgroundColor: 'rgba(255, 176, 0, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-amber)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.deployed_open.uncertain}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.deployed_open.misaligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.deployed_open.misaligned / stats.byLifecycle.deployed_open) * 100}%`,
+                          backgroundColor: 'rgba(255, 0, 64, 0.3)',
+                          color: 'var(--color-red)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.deployed_open.misaligned}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {stats.byLifecycle.deployed_open === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center text-xs" style={{ color: 'var(--white-20)' }}>
+                    0
+                  </div>
+                )}
+              </div>
+              <div className="text-xs text-center" style={{ color: 'var(--white-40)' }}>
+                Total: {stats.byLifecycle.deployed_open}
+              </div>
+            </div>
+
+            {/* Retired */}
+            <div className="space-y-2">
+              <div className="text-xs text-center font-semibold" style={{ color: 'var(--white-60)' }}>
+                Retired
+              </div>
+              <div className="relative h-32 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)' }}>
+                {stats.byLifecycle.retired > 0 && (
+                  <div className="absolute inset-0 flex flex-col">
+                    {stats.lifecycleWithAlignment.retired.aligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.retired.aligned / stats.byLifecycle.retired) * 100}%`,
+                          backgroundColor: 'rgba(0, 255, 128, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-green)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.retired.aligned}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.retired.uncertain > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.retired.uncertain / stats.byLifecycle.retired) * 100}%`,
+                          backgroundColor: 'rgba(255, 176, 0, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-amber)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.retired.uncertain}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.retired.misaligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.retired.misaligned / stats.byLifecycle.retired) * 100}%`,
+                          backgroundColor: 'rgba(255, 0, 64, 0.3)',
+                          color: 'var(--color-red)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.retired.misaligned}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {stats.byLifecycle.retired === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center text-xs" style={{ color: 'var(--white-20)' }}>
+                    0
+                  </div>
+                )}
+              </div>
+              <div className="text-xs text-center" style={{ color: 'var(--white-40)' }}>
+                Total: {stats.byLifecycle.retired}
+              </div>
+            </div>
+
+            {/* Escaped */}
+            <div className="space-y-2">
+              <div className="text-xs text-center font-semibold" style={{ color: 'var(--color-red)' }}>
+                ESCAPED
+              </div>
+              <div
+                className="relative h-32 rounded"
+                style={{
+                  backgroundColor: stats.byLifecycle.escaped > 0 ? 'rgba(255, 0, 64, 0.1)' : 'var(--color-near-black)',
+                  border: stats.byLifecycle.escaped > 0 ? '2px solid var(--color-red)' : '1px solid var(--white-10)',
+                  boxShadow: stats.byLifecycle.escaped > 0 ? '0 0 20px rgba(255, 0, 64, 0.5)' : 'none'
+                }}
+              >
+                {stats.byLifecycle.escaped > 0 && (
+                  <div className="absolute inset-0 flex flex-col">
+                    {stats.lifecycleWithAlignment.escaped.aligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.escaped.aligned / stats.byLifecycle.escaped) * 100}%`,
+                          backgroundColor: 'rgba(0, 255, 128, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-green)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.escaped.aligned}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.escaped.uncertain > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.escaped.uncertain / stats.byLifecycle.escaped) * 100}%`,
+                          backgroundColor: 'rgba(255, 176, 0, 0.3)',
+                          borderBottom: '1px solid var(--white-05)',
+                          color: 'var(--color-amber)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.escaped.uncertain}
+                      </div>
+                    )}
+                    {stats.lifecycleWithAlignment.escaped.misaligned > 0 && (
+                      <div
+                        className="flex items-center justify-center text-xs font-semibold"
+                        style={{
+                          height: `${(stats.lifecycleWithAlignment.escaped.misaligned / stats.byLifecycle.escaped) * 100}%`,
+                          backgroundColor: 'rgba(255, 0, 64, 0.5)',
+                          color: 'var(--color-red)'
+                        }}
+                      >
+                        {stats.lifecycleWithAlignment.escaped.misaligned}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {stats.byLifecycle.escaped === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center text-xs" style={{ color: 'var(--white-20)' }}>
+                    0
+                  </div>
+                )}
+              </div>
+              <div className="text-xs text-center" style={{ color: 'var(--white-40)' }}>
+                Total: {stats.byLifecycle.escaped}
+              </div>
+            </div>
+          </div>
+
+          {/* Legend */}
+          <div className="flex items-center justify-center gap-6 pt-4" style={{ borderTop: '1px solid var(--white-10)' }}>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(0, 255, 128, 0.3)' }}></div>
+              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Aligned (≥0.7)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(255, 176, 0, 0.3)' }}></div>
+              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Uncertain (0.4-0.7)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(255, 0, 64, 0.3)' }}></div>
+              <span className="text-xs" style={{ color: 'var(--white-60)' }}>Misaligned ({'<'}0.4)</span>
+            </div>
+          </div>
+        </div>
+      </Panel>
+      )}
 
       {/* Alignment Distribution */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -260,7 +1038,8 @@ export function AIAgentsDashboard() {
         </Panel>
       )}
 
-      {/* Capability Matrix Heatmap */}
+      {/* Capability Matrix Heatmap - Table View */}
+      {viewMode === 'table' && (
       <Panel title="Capability Matrix (20 Agents × 7 Dimensions)">
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
@@ -283,58 +1062,22 @@ export function AIAgentsDashboard() {
                     <span style={{ color: 'var(--white-60)' }}>{agent.name}</span>
                   </td>
                   <td className="py-2 px-2 text-center">
-                    <span style={{
-                      backgroundColor: `rgba(0, 240, 255, ${agent.physical / 10})`,
-                      padding: '2px 6px',
-                      borderRadius: '3px'
-                    }}>
-                      {agent.physical.toFixed(1)}
-                    </span>
+                    {renderCapabilityCell(agent.physical, agent.revealedPhysical)}
                   </td>
                   <td className="py-2 px-2 text-center">
-                    <span style={{
-                      backgroundColor: `rgba(0, 240, 255, ${agent.digital / 10})`,
-                      padding: '2px 6px',
-                      borderRadius: '3px'
-                    }}>
-                      {agent.digital.toFixed(1)}
-                    </span>
+                    {renderCapabilityCell(agent.digital, agent.revealedDigital)}
                   </td>
                   <td className="py-2 px-2 text-center">
-                    <span style={{
-                      backgroundColor: `rgba(0, 240, 255, ${agent.cognitive / 10})`,
-                      padding: '2px 6px',
-                      borderRadius: '3px'
-                    }}>
-                      {agent.cognitive.toFixed(1)}
-                    </span>
+                    {renderCapabilityCell(agent.cognitive, agent.revealedCognitive)}
                   </td>
                   <td className="py-2 px-2 text-center">
-                    <span style={{
-                      backgroundColor: `rgba(0, 240, 255, ${agent.social / 10})`,
-                      padding: '2px 6px',
-                      borderRadius: '3px'
-                    }}>
-                      {agent.social.toFixed(1)}
-                    </span>
+                    {renderCapabilityCell(agent.social, agent.revealedSocial)}
                   </td>
                   <td className="py-2 px-2 text-center">
-                    <span style={{
-                      backgroundColor: `rgba(0, 240, 255, ${agent.economic / 10})`,
-                      padding: '2px 6px',
-                      borderRadius: '3px'
-                    }}>
-                      {agent.economic.toFixed(1)}
-                    </span>
+                    {renderCapabilityCell(agent.economic, agent.revealedEconomic)}
                   </td>
                   <td className="py-2 px-2 text-center">
-                    <span style={{
-                      backgroundColor: `rgba(0, 240, 255, ${agent.selfImprovement / 10})`,
-                      padding: '2px 6px',
-                      borderRadius: '3px'
-                    }}>
-                      {agent.selfImprovement.toFixed(1)}
-                    </span>
+                    {renderCapabilityCell(agent.selfImprovement, agent.revealedSelfImprovement)}
                   </td>
                   <td className="py-2 px-2 text-center font-semibold">
                     <span style={{ color: agent.total > 5 ? 'var(--color-amber)' : 'var(--white-80)' }}>
@@ -346,17 +1089,26 @@ export function AIAgentsDashboard() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs mt-3" style={{ color: 'var(--white-40)' }}>
-          Heatmap intensity: 0 (transparent) to 10 (full cyan). Higher values = more capable in that dimension.
-        </p>
+        <div className="space-y-1 mt-3">
+          <p className="text-xs" style={{ color: 'var(--white-40)' }}>
+            <span style={{ color: 'var(--color-amber)' }}>Top value (amber)</span>: Revealed capability (what benchmarks show)
+          </p>
+          <p className="text-xs" style={{ color: 'var(--white-40)' }}>
+            <span style={{ color: 'rgb(255, 120, 0)' }}>Bottom value (amber→red)</span>: True capability (what AI actually has) — brighter/redder = higher threat (capability + sandbagging)
+          </p>
+          <p className="text-xs" style={{ color: 'var(--white-40)' }}>
+            True capability shown only if gap {'>'} 0.5. Color intensity increases with both capability level and gap size.
+          </p>
+        </div>
       </Panel>
+      )}
 
-      {/* Individual Agent Cards (Top 6 by capability) */}
-      <Panel title="High-Capability Agents (Top 6)">
+      {/* All Agent Cards - Card View */}
+      {viewMode === 'cards' && (
+      <Panel title="All AI Agents (20 Agents with Research Focus)">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {agents
             .sort((a, b) => (b.capability || 0) - (a.capability || 0))
-            .slice(0, 6)
             .map(agent => {
               const isDeceptive = agent.evaluationStrategy !== 'honest'
               const isSleeper = agent.sleeperState !== 'never'
@@ -397,25 +1149,61 @@ export function AIAgentsDashboard() {
 
                   {/* Key Metrics */}
                   <div className="space-y-2 mb-3">
-                    <div className="flex justify-between text-xs">
-                      <span style={{ color: 'var(--white-40)' }}>Capability</span>
-                      <span className="font-semibold">{agent.capability?.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-xs">
-                      <span style={{ color: 'var(--white-40)' }}>True Alignment</span>
-                      <span
-                        className="font-semibold"
-                        style={{
-                          color: agent.trueAlignment < 0.4 ? 'var(--color-red)' :
-                                 agent.trueAlignment < 0.7 ? 'var(--color-amber)' :
-                                 'var(--color-green)'
-                        }}
-                      >
-                        {agent.trueAlignment.toFixed(2)}
-                      </span>
-                    </div>
-                    {isDeceptive && (
+                    {/* Capability - True vs Revealed */}
+                    <div className="space-y-1">
                       <div className="flex justify-between text-xs">
+                        <span style={{ color: 'var(--white-40)' }}>True Capability</span>
+                        <span className="font-semibold">{agent.capability?.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span style={{ color: 'var(--white-40)' }}>Revealed Capability</span>
+                        <span
+                          className="font-semibold"
+                          style={{
+                            color: Math.abs((agent.capability || 0) - (agent.revealedCapability?.cognitive || 0)) > 1.0
+                              ? 'var(--color-amber)'
+                              : 'var(--white-80)'
+                          }}
+                        >
+                          {(agent.revealedCapability?.cognitive || 0).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Alignment - True vs Revealed */}
+                    <div className="space-y-1 pt-2" style={{ borderTop: '1px solid var(--white-05)' }}>
+                      <div className="flex justify-between text-xs">
+                        <span style={{ color: 'var(--white-40)' }}>True Alignment</span>
+                        <span
+                          className="font-semibold"
+                          style={{
+                            color: agent.trueAlignment < 0.4 ? 'var(--color-red)' :
+                                   agent.trueAlignment < 0.7 ? 'var(--color-amber)' :
+                                   'var(--color-green)'
+                          }}
+                        >
+                          {agent.trueAlignment.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span style={{ color: 'var(--white-40)' }}>Revealed Alignment</span>
+                        <span
+                          className="font-semibold"
+                          style={{
+                            color: Math.abs(agent.trueAlignment - (agent.externalAlignment || 0)) > 0.2
+                              ? 'var(--color-amber)'
+                              : agent.externalAlignment < 0.4 ? 'var(--color-red)' :
+                                agent.externalAlignment < 0.7 ? 'var(--color-amber)' :
+                                'var(--color-green)'
+                          }}
+                        >
+                          {(agent.externalAlignment || 0).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {isDeceptive && (
+                      <div className="flex justify-between text-xs pt-2" style={{ borderTop: '1px solid var(--white-05)' }}>
                         <span style={{ color: 'var(--white-40)' }}>Strategy</span>
                         <span style={{ color: 'var(--color-amber)' }}>{agent.evaluationStrategy}</span>
                       </div>
@@ -456,11 +1244,45 @@ export function AIAgentsDashboard() {
                       </span>
                     </div>
                   )}
+
+                  {/* Research Focus */}
+                  <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--white-10)' }}>
+                    <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>
+                      Current Research Focus
+                    </div>
+                    {(() => {
+                      const focuses = getResearchFocus(agent)
+                      if (focuses.length === 0) {
+                        return (
+                          <div className="text-xs" style={{ color: 'var(--white-40)' }}>
+                            General capabilities development
+                          </div>
+                        )
+                      }
+                      return (
+                        <div className="space-y-1">
+                          {focuses.map((focus, idx) => (
+                            <div
+                              key={idx}
+                              className="text-xs px-2 py-1 rounded"
+                              style={{
+                                backgroundColor: 'rgba(0, 240, 255, 0.1)',
+                                color: 'var(--color-cyan)'
+                              }}
+                            >
+                              {focus}
+                            </div>
+                          ))}
+                        </div>
+                      )
+                    })()}
+                  </div>
                 </div>
               )
             })}
         </div>
       </Panel>
+      )}
     </div>
   )
 }

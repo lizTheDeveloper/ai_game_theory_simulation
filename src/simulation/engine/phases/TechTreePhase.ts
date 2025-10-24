@@ -42,7 +42,7 @@ export class TechTreePhase implements SimulationPhase {
 
     // Convert tech unlock events to game events
     const events: GameEvent[] = unlockEvents.map(unlockEvent => ({
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       type: 'breakthrough',
       severity: 'constructive',
       agent: 'Research Community',
