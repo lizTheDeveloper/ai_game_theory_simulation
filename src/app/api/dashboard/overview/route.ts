@@ -4,6 +4,7 @@ import { handleApiError, ApiError } from '@/lib/api/errors';
 import { monitor } from '@/lib/api/monitoring';
 import { ApiResponse } from '@/lib/api/types';
 import { getGameState } from '@/lib/gameState';
+import { GameState } from '@/types/game';
 import {
   getPlanetaryBoundaries,
   calculateAgentDistribution,
@@ -109,7 +110,7 @@ export async function GET() {
   });
 }
 
-function getActiveCrises(state: unknown): OverviewData['activeCrises'] {
+function getActiveCrises(state: GameState): OverviewData['activeCrises'] {
   const crises: OverviewData['activeCrises'] = [];
 
   // Check planetary boundary crises
@@ -171,7 +172,7 @@ function getActiveCrises(state: unknown): OverviewData['activeCrises'] {
   return crises;
 }
 
-function getSystemHealth(state: unknown): OverviewData['systemHealth'] {
+function getSystemHealth(state: GameState): OverviewData['systemHealth'] {
   // Simplified health assessment
   const boundaries = getPlanetaryBoundaries(state);
   const envHealth = boundaries.some(b => b.status === 'critical')

@@ -38,7 +38,7 @@ export class CatastrophicScenariosPhase implements SimulationPhase {
       for (const prereq of newlyMetPrereqs) {
         events.push({
           type: 'technology',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           description: `📋 Catastrophic scenario prerequisite met: ${prereq.scenarioName} - ${prereq.stepName}`,
           severity: 'medium'
         } as GameEvent);
@@ -51,7 +51,7 @@ export class CatastrophicScenariosPhase implements SimulationPhase {
       for (const scenario of summary.activeScenarios) {
         events.push({
           type: 'crisis',
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           description: `⚠️ Catastrophic scenario ACTIVE: ${scenario.name} - Outcome inevitable in ${scenario.timeToCompletion} months`,
           severity: 'high'
         } as GameEvent);

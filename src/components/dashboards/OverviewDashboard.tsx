@@ -48,16 +48,28 @@ export function OverviewDashboard() {
 
   // Extract key metrics
   const population = currentState.globalMetrics?.population || 8_000_000_000
-  const qol = currentState.globalMetrics?.qualityOfLife || 0
-  const aiCap = currentState.aiAgents?.[0]?.capability || 0
-  const alignment = currentState.aiAgents?.[0]?.trueAlignment || 0
+  // QoL: Handle both 0-1 and 0-100 scales (backend inconsistency)
+  const rawQol = currentState.globalMetrics?.qualityOfLife || 0
+  const qol = rawQol > 1 ? rawQol / 100 : rawQol
+
+  // Calculate average AI capability (cognitive dimension as proxy for overall capability)
+  const aiCap = currentState.aiAgents && currentState.aiAgents.length > 0
+    ? currentState.aiAgents.reduce((sum, agent) =>
+        sum + (agent.capabilityProfile?.cognitive || 0), 0) / currentState.aiAgents.length
+    : 0
+
+  // Calculate average alignment across all agents
+  const alignment = currentState.aiAgents && currentState.aiAgents.length > 0
+    ? currentState.aiAgents.reduce((sum, agent) =>
+        sum + (agent.trueAlignment || 0), 0) / currentState.aiAgents.length
+    : 0
 
   // Multi-paradigm scores
   const paradigms = {
-    western: { score: currentState.multiParadigmDUI?.paradigmScores?.western?.value ?? 50 },
-    development: { score: currentState.multiParadigmDUI?.paradigmScores?.development?.value ?? 50 },
-    ecological: { score: currentState.multiParadigmDUI?.paradigmScores?.ecological?.value ?? 50 },
-    indigenous: { score: currentState.multiParadigmDUI?.diagnosticLenses?.indigenous?.value ?? 50 }
+    western: { value: currentState.multiParadigmDUI?.paradigmScores?.western?.value ?? 50 },
+    development: { value: currentState.multiParadigmDUI?.paradigmScores?.development?.value ?? 50 },
+    ecological: { value: currentState.multiParadigmDUI?.paradigmScores?.ecological?.value ?? 50 },
+    indigenous: { value: currentState.multiParadigmDUI?.diagnosticLenses?.indigenous?.value ?? 50 }
   }
 
   // Determine overall status
@@ -92,7 +104,7 @@ export function OverviewDashboard() {
         />
         <MetricCard
           label="Quality of Life"
-          value={qol.toFixed(2)}
+          value={(qol * 100).toFixed(1)}
           status={qol < 0.4 ? 'critical' : qol < 0.6 ? 'warning' : 'normal'}
           trend={qol < 0.5 ? 'down' : 'stable'}
         />
@@ -165,14 +177,14 @@ export function OverviewDashboard() {
             <div className="flex items-center justify-between">
               <span>Organizations</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {currentState.organizations?.filter(o => o.capitalPerMonth > 0).length || 0} operational
+                {currentState.organizations?.filter(o => !o.bankrupt).length || 0} operational
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Extinction Risk</span>
-              <StatusIndicator
-                status={currentState.extinctionState?.active ? 'extinction' : 'normal'}
-              />
+              <span className="text-sm" style={{ color: 'var(--white-60)' }}>
+                {((currentState.outcomeMetrics?.extinctionProbability || 0) * 100).toFixed(1)}%
+              </span>
             </div>
           </div>
         </Panel>
@@ -202,7 +214,13 @@ export function OverviewDashboard() {
               Social Cohesion
             </div>
             <div className="text-2xl font-light">
-              {((currentState.socialAccumulation?.socialCohesion || 0) * 100).toFixed(0)}%
+              {(() => {
+                const sc = currentState.socialAccumulation?.socialCohesion
+                if (!sc || typeof sc !== 'object') return '0'
+                // Average of trust, communityBonds, and civilLiberties (already 0-100 scale)
+                const avg = ((sc.trust || 0) + (sc.communityBonds || 0) + (sc.civilLiberties || 0)) / 3
+                return avg.toFixed(0)
+              })()}%
             </div>
           </div>
         </div>

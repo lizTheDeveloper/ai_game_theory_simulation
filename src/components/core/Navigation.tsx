@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useSimulationWorker } from '@/lib/contexts/SimulationWorkerContext'
+import { formatSimulationDate } from '@/lib/utils/formatters'
 import type { ScenarioMode } from '@/types/game'
 
 const navItems = [
@@ -32,7 +33,7 @@ export function Navigation() {
   const pathname = usePathname()
 
   // Get shared worker state from context
-  const { initialized, running, month, day, scenario, seed, init, start, pause, step } = useSimulationWorker()
+  const { initialized, running, month, day, year, scenario, seed, init, start, pause, step } = useSimulationWorker()
 
   // Local UI state only
   const [showConfig, setShowConfig] = useState(false)
@@ -113,6 +114,11 @@ export function Navigation() {
           <p className="text-xs" style={{ color: 'var(--white-40)' }}>
             Research Tool
           </p>
+          {initialized && (
+            <p className="text-xs mt-1" style={{ color: 'var(--color-cyan)' }}>
+              {formatSimulationDate(year, month, day)}
+            </p>
+          )}
         </div>
 
         {/* Simulation Status */}

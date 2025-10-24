@@ -870,7 +870,7 @@ for (let i = 0; i < NUM_RUNS; i++) {
   // ENHANCED: Economic & Social metrics
   const finalEconomicStage = finalState.globalMetrics.economicTransitionStage;
   const finalUnemployment = finalState.society.unemploymentLevel;
-  const finalTrust = finalState.society.trustInAI;
+  const finalTrust = finalState.globalMetrics.trustInAI;
   const finalSocialStability = finalState.globalMetrics.socialStability;
   const finalWealthDistribution = finalState.globalMetrics.wealthDistribution; // FIX: was society.wealthDistribution
   

@@ -4,6 +4,7 @@ import { handleApiError, ApiError } from '@/lib/api/errors';
 import { monitor } from '@/lib/api/monitoring';
 import { ApiResponse } from '@/lib/api/types';
 import { getGameState } from '@/lib/gameState';
+import { GameState } from '@/types/game';
 import {
   calculateAgentDistribution,
   getQoLDistribution,
@@ -142,7 +143,7 @@ function calculatePopulationTrend(history: number[]): 'increasing' | 'decreasing
   return 'stable';
 }
 
-function countActiveCrises(state: unknown): number {
+function countActiveCrises(state: GameState): number {
   let count = 0;
 
   if (state.crisisSystem?.phosphorusCrisis?.active) count++;

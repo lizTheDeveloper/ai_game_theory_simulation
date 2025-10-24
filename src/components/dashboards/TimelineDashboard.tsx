@@ -214,7 +214,7 @@ export function TimelineDashboard() {
                   textAlign: 'center',
                 }}
               >
-                Month {event.timestamp}
+                Month {event.month || event.timestamp}
               </div>
 
               {/* Event Content */}

@@ -38,6 +38,7 @@ export interface QualityOfLifeSystems {
   healthcareQuality: number;      // [0,1] Medical outcomes, access
   longevityGains: number;         // [0,2] Lifespan increases above baseline
   diseasesBurden: number;         // [0,1] Illness prevalence (inverted in calc)
+  health?: number;                // [0,1] General health metric (convenience accessor, aggregate of health tier)
 
   // Tier 5: Environmental (weight: 0.1)
   ecosystemHealth: number;        // [0,1] Nature access, biodiversity

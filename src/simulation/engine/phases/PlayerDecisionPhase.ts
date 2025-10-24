@@ -86,7 +86,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
       events.push({
         id: `policy-control-desire-${state.currentMonth}`,
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         type: 'government',
         severity: 'medium',
         title: 'AI Regulation Policy Change',
@@ -103,7 +103,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
       events.push({
         id: `policy-alignment-research-${state.currentMonth}`,
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         type: 'government',
         severity: 'medium',
         title: 'AI Safety Investment Change',
@@ -122,7 +122,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
         events.push({
           id: `policy-compute-governance-${state.currentMonth}`,
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           type: 'government',
           severity: 'medium',
           title: 'Compute Governance Change',
@@ -149,7 +149,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
         events.push({
           id: `investment-tech-${data.techId}-${state.currentMonth}`,
-          month: state.currentMonth,
+          timestamp: state.currentMonth,
           type: 'technology',
           severity: 'low',
           title: `Technology Investment: ${tech.name}`,
@@ -176,7 +176,7 @@ export class PlayerDecisionPhase implements SimulationPhase {
 
       events.push({
         id: `emergency-${data.crisis}-${state.currentMonth}`,
-        month: state.currentMonth,
+        timestamp: state.currentMonth,
         type: 'crisis',
         severity: 'high',
         title: `Emergency Response: ${data.crisis}`,

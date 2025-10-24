@@ -39,7 +39,7 @@ export class UpdateEconomicStagePhase implements SimulationPhase {
     const baseline = state.recoveryBaseline;
 
     state.economicStageHistory.push({
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       stage: newStage,
       gdpLevel: gdp,
       qolLevel: qol,

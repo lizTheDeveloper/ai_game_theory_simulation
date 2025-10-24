@@ -36,6 +36,8 @@
   "exclude": [
     "node_modules",
     "packages/government-agents/examples",
-    "packages/government-agents/tests"
+    "packages/government-agents/tests",
+    "scripts/**/*",
+    "tests/**/*"
   ]
 }

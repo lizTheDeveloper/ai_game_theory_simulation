@@ -25,7 +25,7 @@ console.log(`    ecosystemCrisis: ${state.environmentalAccumulation.ecosystemCri
 console.log('\n  Social:');
 console.log(`    meaningCrisisLevel: ${state.socialAccumulation.meaningCrisisLevel}`);
 console.log(`    institutionalLegitimacy: ${state.socialAccumulation.institutionalLegitimacy}`);
-console.log(`    socialCohesion: ${state.socialAccumulation.socialCohesion}`);
+console.log(`    socialCohesion: ${state.globalMetrics.socialCohesion}`);
 console.log('  Crises Active:');
 console.log(`    meaningCollapse: ${state.socialAccumulation.meaningCollapseActive}`);
 console.log(`    institutionalFailure: ${state.socialAccumulation.institutionalFailureActive}`);

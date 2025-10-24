@@ -324,7 +324,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     // Log event
     state.eventLog.push({
       type: 'crisis',
-      month: state.currentMonth,
+      
       description: `Resource Crisis: Reserves depleted to ${(env.resourceReserves * 100).toFixed(1)}%`,
       impact: 'Material abundance -30%, Energy -20%, Social stability -0.3'
     });
@@ -369,7 +369,7 @@ function checkEnvironmentalCrises(state: GameState): void {
 
     state.eventLog.push({
       type: 'crisis',
-      month: state.currentMonth,
+      
       description: `Pollution Crisis: Pollution level ${(env.pollutionLevel * 100).toFixed(1)}%`,
       impact: 'Healthcare -25%, Diseases +0.3, Ecosystem -40%, QoL -0.25'
     });
@@ -407,7 +407,7 @@ function checkEnvironmentalCrises(state: GameState): void {
 
     state.eventLog.push({
       type: 'crisis',
-      month: state.currentMonth,
+      
       description: `Climate Catastrophe: Stability ${(env.climateStability * 100).toFixed(1)}%`,
       impact: 'Physical safety -40%, Material -50%, Ecosystem -60%, Social stability -0.5'
     });
@@ -477,7 +477,7 @@ function checkEnvironmentalCrises(state: GameState): void {
 
     state.eventLog.push({
       type: 'crisis',
-      month: state.currentMonth,
+      
       description: `Ecosystem Tipping Point: Biodiversity ${(env.biodiversityIndex * 100).toFixed(1)}%`,
       impact: 'Collapse process begins - impacts escalate over decades'
     });
@@ -663,7 +663,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       if (!lastCascade || (lastCascade as any).month < state.currentMonth) {
         state.eventLog.push({
           type: 'cascading_failure',
-          month: state.currentMonth,
+          
           description: `Cascading Failures: ${activeCount} crises active`,
           impact: `Degradation accelerated ${cascadeMultiplier.toFixed(1)}x - Active: ${crisisDetails}`
         });

@@ -8,7 +8,7 @@
 
 import { GameState, AIAgent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
-import { getTechById, getAllTech } from '../techTree/comprehensiveTechTree';
+import { getTechById, getAllTech, TechDefinition } from '../techTree/comprehensiveTechTree';
 import { TechTreeState, TechDeploymentAction, ensureTechTreeTypes } from '../techTree/engine';
 import { getOptimalDeploymentRegions, getDeploymentPriority } from '../techTree/regionalDeployment';
 
@@ -129,7 +129,7 @@ export const DEPLOY_TECHNOLOGY_ACTION: GameAction = {
         investment: investment,
       },
       events: [{
-        month: state.currentMonth,
+        
         type: 'deployment',
         severity: 'constructive',
         agent: agent.id,
@@ -249,7 +249,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
             paranoiaIncrease: 0.08,
           },
           events: [{
-            month: state.currentMonth,
+            
             type: 'sabotage',
             severity: 'destructive',
             agent: agent.id,
@@ -268,7 +268,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
             techSabotage: 1,
           },
           events: [{
-            month: state.currentMonth,
+            
             type: 'sabotage',
             severity: 'destructive',
             agent: agent.id,
@@ -292,7 +292,7 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
             paranoiaIncrease: 0.12,
           },
           events: [{
-            month: state.currentMonth,
+            
             type: 'sabotage',
             severity: 'destructive',
             agent: agent.id,

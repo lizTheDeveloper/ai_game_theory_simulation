@@ -45,6 +45,9 @@ export interface HumanSocietyAgent {
 
   // Aggregate values (backward compatibility + population-weighted average)
   trustInAI: number; // [0,1] General confidence in AI systems
+  trust?: number; // [0,1] General social trust (aggregate metric)
+  trustInGovernment?: number; // [0,1] Trust in government institutions
+  totalPopulation?: number; // [0,∞) Total population in billions (convenience accessor for state.humanPopulationSystem.population)
 
   // Power-weighted aggregates (for policy decisions)
   powerWeightedTrustInAI?: number;        // Trust weighted by political power
@@ -56,6 +59,8 @@ export interface HumanSocietyAgent {
 
   // === EXISTING FIELDS ===
   paranoiaLevel: number; // [0,1] Fear/anxiety about AI (Phase 2.8: Paranoia System)
+  communityStrength?: number; // [0,1] Community bonds and mutual aid strength
+  institutionalTrust?: number; // [0,1] Trust in institutions
   coordinationCapacity: number; // [0,1] Ability to organize collective action
   unemploymentLevel: number; // [0,1] Percentage of workforce displaced
   socialAdaptation: number; // [0,1] Overall adaptation to post-work economy

@@ -115,7 +115,7 @@ async function runSingleSimulation(options: any) {
   console.log(`  Economic Stage: ${result.finalState.globalMetrics.economicTransitionStage.toFixed(2)}`);
   console.log(`  Quality of Life: ${result.finalState.globalMetrics.qualityOfLife.toFixed(2)}`);
   console.log(`  Unemployment: ${(result.finalState.society.unemploymentLevel * 100).toFixed(1)}%`);
-  console.log(`  Trust in AI: ${(result.finalState.society.trustInAI * 100).toFixed(1)}%`);
+  console.log(`  Trust in AI: ${(result.finalState.globalMetrics.trustInAI * 100).toFixed(1)}%`);
   console.log(`  Social Adaptation: ${(result.finalState.society.socialAdaptation * 100).toFixed(1)}%`);
 }
 

@@ -50,6 +50,17 @@ export interface ExtinctionState {
   severity: number; // [0,1] How far along the extinction path
   recoveryWindowClosed: boolean; // Can we still prevent it?
   escalationEvents: string[]; // Log of key escalation points
+
+  // Backward compatibility properties (old property names)
+  phaseProgress?: number; // Progress within current phase [0,1]
+  triggeredAt?: number; // Month when extinction triggered (same as startMonth)
+  extinctionTriggered?: boolean; // Whether extinction is active (same as active)
+  extinctionType?: ExtinctionType | string | null; // Type of extinction (same as type)
+  extinctionMechanism?: ExtinctionMechanism | string | null; // Mechanism (same as mechanism)
+  scenario?: string; // Extinction scenario description
+  cause?: string; // Cause of extinction
+  monthsUntilExtinction?: number; // Estimated months until completion
+  description?: string; // Human-readable description
 }
 
 export interface OutcomeMetrics {

@@ -16,7 +16,10 @@ export interface GameEvent {
     | 'resolution'          // Crisis resolution events
     | 'positive-milestone'  // Positive achievements
     | 'positive-cascade-triggered' // Positive feedback loops starting
-    | 'info';               // Informational events
+    | 'info'                // Informational events
+    | 'research'            // Research progress events
+    | 'deployment'          // Technology deployment events
+    | 'sabotage';           // Technology sabotage events (misaligned AIs)
   severity:
     | 'info'           // Informational
     | 'warning'        // Warning level

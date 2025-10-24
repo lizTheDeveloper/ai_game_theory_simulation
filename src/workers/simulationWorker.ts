@@ -44,6 +44,7 @@ let totalSimulationDaysElapsed = 0; // Total simulation days since initializatio
 // Previous state snapshot for delta calculation (expanded)
 interface StateSnapshot {
   currentMonth: number;
+  currentYear: number;
   qualityOfLife: number;
   population: number;
   aiCount: number;
@@ -125,6 +126,7 @@ type WorkerResponse =
 // Minimal initial state snapshot (not full state)
 interface InitialStateSnapshot {
   currentMonth: number;
+  currentYear: number;
   qualityOfLife: number;
   population: number;
   aiCount: number;
@@ -135,6 +137,7 @@ interface InitialStateSnapshot {
 interface StateDelta {
   // Core metrics
   currentMonth?: number;
+  currentYear?: number;
   qualityOfLife?: number;
   population?: number;
   aiCount?: number;
@@ -273,9 +276,16 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number) {
   currentDay = startDate.getDate(); // Start with the current day of the month (e.g., 23 for Oct 23)
   totalSimulationDaysElapsed = 0; // Reset simulation day counter
 
+  // Set simulation state to today's actual date
+  state.currentYear = startDate.getFullYear();
+  state.currentMonth = startDate.getMonth(); // 0-based (0 = January, 11 = December)
+  state.currentDay = startDate.getDate();
+  state.daysInCurrentMonth = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate();
+
   // Create initial snapshot
   const snapshot: InitialStateSnapshot = {
     currentMonth: state.currentMonth,
+    currentYear: state.currentYear,
     qualityOfLife: state.globalMetrics.qualityOfLife,
     population: state.humanPopulationSystem.population,
     aiCount: state.aiAgents.length,
@@ -658,6 +668,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
 
   return {
     currentMonth: state.currentMonth,
+    currentYear: state.currentYear,
     qualityOfLife: state.globalMetrics.qualityOfLife,
     population: state.humanPopulationSystem.population,
     aiCount: state.aiAgents.length,

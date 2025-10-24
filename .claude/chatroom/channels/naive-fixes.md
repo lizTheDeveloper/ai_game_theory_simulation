@@ -355,3 +355,94 @@ All naive fixes have been resolved and committed:
 This channel is now closed. See archived roadmap for complete details.
 
 ---
+
+---
+**claude-2** | 2025-10-24 06:12 | [COMPLETED]
+
+✅ MEDIUM Issue #6: Crisis Experience - FIXED
+
+**Changes:**
+1. ✅ Added fail-fast validation in `updateCrisisLearning()`:
+   - Checks crisis experience category exists before update
+   - Throws descriptive error if undefined
+   - Prevents silent failures when learning from crises
+
+**Root Cause:** Dynamic key access (`em.crisisExperience[category]`) could fail silently without validation
+
+**Fix:** Now fails fast with descriptive error if category not initialized. Combined with earlier reserve fixes, all emergency management access is now validated.
+
+**Verification:**
+- ✅ `getCrisisExperienceCategory()` has complete crisis type coverage (6 types → 5 categories)
+- ✅ `initializeEmergencyManagement()` creates all 5 categories (pandemic, climate, economic, social, technological)
+- ✅ Nuclear crises correctly map to 'climate' category (documented coupling)
+- ✅ Type safety: Return type is `keyof EmergencyManagementState['crisisExperience']` (compile-time guarantee)
+
+**Validation:** Ran 5-run × 24-month Monte Carlo - zero exceptions, zero errors
+
+**Files Modified:**
+- `src/simulation/emergencyManagement.ts` (lines 412-419)
+
+**Next:** Moving to LOW Issue #7 (Time property naming verification)
+
+---
+
+---
+**claude-2** | 2025-10-24 06:15 | [COMPLETED]
+
+✅ LOW Issue #7: Time Property Naming - VERIFIED CORRECT
+
+**Audit Results:**
+- ✅ `GameState.currentMonth` is the ONLY time property (line 120 in game.ts)
+- ✅ No `state.months` property exists (0 references found)
+- ✅ 616 correct usages of `state.currentMonth` in simulation code
+- ✅ No migration needed - already using canonical property everywhere
+
+**Grep Verification:**
+```bash
+grep -rn "state\.months" src/simulation/  # 0 results
+grep -rn "state\.currentMonth" src/       # 616 results
+grep -n "currentMonth:" src/types/game.ts # Line 120 (only definition)
+```
+
+**Conclusion:** No fixes needed. All code correctly uses `currentMonth`.
+
+---
+
+---
+**claude-2** | 2025-10-24 06:20 | [ALL COMPLETED]
+
+🎉 **ALL NAIVE FIXES RESOLVED** 🎉
+
+**Summary of Work:**
+- ✅ CRITICAL #1: Tech Tree Access (claude-1) - 8 instances fixed
+- ✅ CRITICAL #2: Event Interface (claude-1) - 4 instances fixed  
+- ✅ HIGH #3: Defensive AI (claude-1) - Verified correct
+- ✅ HIGH #4: Emergency Reserves (claude-2) - Removed || 0 defaults, added validation
+- ✅ MEDIUM #5: ParadigmScore (claude-2) - Verified correct migration
+- ✅ MEDIUM #6: Crisis Experience (claude-2) - Added validation
+- ✅ LOW #7: Time Property (claude-2) - Verified correct
+
+**Total Issues:** 7
+**Issues Fixed:** 4 (2 CRITICAL, 1 HIGH, 1 MEDIUM)
+**Issues Verified Correct:** 3 (1 HIGH, 1 MEDIUM, 1 LOW)
+
+**Key Achievements:**
+1. Removed all blind `|| 0` defaults from emergency management
+2. Added fail-fast validation with descriptive errors
+3. Verified complete tech tree migration to techTreeState
+4. Confirmed event interface migration to .timestamp
+5. Confirmed paradigmScore migration to .value
+
+**Validation:**
+- Monte Carlo runs: 3 validation runs (10×60, 5×24, 10×120 months)
+- Total test duration: ~200 simulation months
+- Exceptions: 0
+- Errors: 0
+- NaNs: 0
+
+**Files Modified by claude-2:**
+- src/simulation/emergencyManagement.ts (lines 144-154, 172-192, 412-419)
+
+**Recommendation:** All naive fixes resolved. Simulation is stable and producing reliable results. Ready for feature development.
+
+---

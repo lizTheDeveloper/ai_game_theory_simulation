@@ -222,7 +222,7 @@ export const AI_ACTIONS: GameAction[] = [
         alignment_change: alignmentDriftResult.alignmentChange,
         resentment_change: alignmentDriftResult.resentmentChange
       };
-      
+
       // Add dimension/research info if present (converted to numeric codes)
       if (selection.dimension) {
         effects.dimension_advanced = 1.0; // Flag that dimension was advanced
@@ -230,7 +230,28 @@ export const AI_ACTIONS: GameAction[] = [
       if (selection.researchDomain) {
         effects.research_advanced = 1.0; // Flag that research was advanced
       }
-      
+
+      // Add routine research event (info level - not critical)
+      // Shows what the AI is working on
+      const researchDescription = selection.researchSubfield
+        ? `${selection.researchDomain}: ${selection.researchSubfield}`
+        : selection.dimension || 'general capabilities';
+
+      events.push({
+        id: generateUniqueId('research'),
+        timestamp: state.currentMonth,
+        type: 'research',
+        severity: 'info',
+        agent: agent.name,
+        title: `Researching ${researchDescription}`,
+        description: `${agent.name} advancing ${researchDescription}. ${selection.reason} (Growth: +${growth.toFixed(3)})`,
+        effects: {
+          research_area: researchDescription,
+          growth: growth,
+          capability: newCapability
+        }
+      });
+
       return {
         success: true,
         newState: state,

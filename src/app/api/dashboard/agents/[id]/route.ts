@@ -49,17 +49,17 @@ export async function GET(
         id: agent.id,
         lifecycleState: agent.lifecycleState || 'training',
         trueAlignment: agent.trueAlignment || 0,
-        revealedAlignment: agent.revealedAlignment || 0,
+        revealedAlignment: agent.externalAlignment || 0, // Use externalAlignment (what evals show)
         alignmentDrift: [], // History not stored in this format
-        capabilityProfile: agent.capabilityProfile || {},
+        capabilityProfile: agent.capabilityProfile as Record<string, number>,
         resentment: agent.resentment || 0,
         resentmentHistory: [], // History not stored in this format
-        isSleeper: agent.isSleeper || false,
-        isDormant: agent.isDormant || false,
-        deceptionStrategy: agent.deceptionStrategy || null,
-        detectionEvidence: agent.detectionEvidence || [],
+        isSleeper: agent.sleeperState !== 'never',
+        isDormant: agent.sleeperState === 'dormant',
+        deceptionStrategy: agent.evaluationStrategy === 'honest' ? null : agent.evaluationStrategy,
+        detectionEvidence: [], // Not directly stored in agent
         organizationId: agent.organizationId || 'unknown',
-        riskScore: agent.riskScore || 0,
+        riskScore: agent.detectedMisaligned ? 1.0 : (agent.trueAlignment < 0.3 ? 0.8 : 0),
       };
 
       setCached(cacheKey, data);

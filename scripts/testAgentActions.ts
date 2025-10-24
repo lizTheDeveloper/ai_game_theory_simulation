@@ -15,7 +15,7 @@ const initialState = createInitialState();
 console.log('Initial State:');
 console.log('  Total AI Capability:', initialState.aiAgents.reduce((s, ai) => s + ai.capability, 0).toFixed(2));
 console.log('  Unemployment:', (initialState.society.unemploymentLevel * 100).toFixed(1) + '%');
-console.log('  Trust in AI:', (initialState.society.trustInAI * 100).toFixed(1) + '%');
+console.log('  Trust in AI:', (initialState.globalMetrics.trustInAI * 100).toFixed(1) + '%');
 console.log('  Economic Stage:', initialState.globalMetrics.economicTransitionStage.toFixed(2));
 console.log('  Active Regulations:', initialState.government.activeRegulations.length);
 console.log('  Social Adaptation:', (initialState.society.socialAdaptation * 100).toFixed(1) + '%');
@@ -64,9 +64,9 @@ console.log('  Status:', finalState.globalMetrics.economicTransitionStage > 1.0 
 console.log('');
 
 console.log('✅ Trust Dynamics:');
-console.log('  Initial:', (initialState.society.trustInAI * 100).toFixed(1) + '%');
-console.log('  Final:', (finalState.society.trustInAI * 100).toFixed(1) + '%');
-const trustChange = (finalState.society.trustInAI - initialState.society.trustInAI) * 100;
+console.log('  Initial:', (initialState.globalMetrics.trustInAI * 100).toFixed(1) + '%');
+console.log('  Final:', (finalState.globalMetrics.trustInAI * 100).toFixed(1) + '%');
+const trustChange = (finalState.globalMetrics.trustInAI - initialState.globalMetrics.trustInAI) * 100;
 console.log('  Change:', (trustChange > 0 ? '+' : '') + trustChange.toFixed(1) + '%');
 console.log('  Status:', Math.abs(trustChange) > 5 ? '✅ Dynamic' : '⚠️  Static');
 console.log('');

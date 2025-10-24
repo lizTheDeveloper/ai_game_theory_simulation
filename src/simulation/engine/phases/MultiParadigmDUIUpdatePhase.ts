@@ -43,7 +43,7 @@ export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
 
     // Add to history
     state.multiParadigmDUI.history.push({
-      month: state.currentMonth,
+      timestamp: state.currentMonth,
       western: scores.western,
       development: scores.development,
       ecological: scores.ecological,
@@ -131,7 +131,7 @@ function calculateWesternLiberal(state: GameState): number {
   }
 
   state.multiParadigmDUI.westernLiberalComponents.push({
-    month: state.currentMonth,
+    timestamp: state.currentMonth,
     electoralDemocracy,
     civilLiberties,
     ruleOfLaw,
