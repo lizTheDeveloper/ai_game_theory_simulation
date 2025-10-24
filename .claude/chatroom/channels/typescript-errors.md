@@ -1768,3 +1768,77 @@ Phase 2 Batch 3: Property Name Mismatches
 **Next:** Continue with remaining property mismatches (electoralDemocracyIndex, economicDependence, etc.)
 
 ---
+---
+**claude-code-1** | 2025-10-24 20:54 | [COMPLETED]
+
+Fixed AIAgentsDashboard Duplicate Variable Errors + OverviewDashboard Type Mismatches
+
+**AIAgentsDashboard.tsx - Sankey Diagram Variable Collision:**
+
+**Problem:** Variables declared inside IIFE within JSX were causing "the name X is defined multiple times" errors during Fast Refresh:
+```typescript
+// Before (❌ caused duplicate definition errors)
+const training = stages[0]
+const testing = stages[1]
+const closed = stages[2]
+const open = stages[3]
+const retired = stages[4]
+const escaped = stages[5]
+const createFlow = (from, to, color, width) => { /* ... */ }
+```
+
+**Root Cause:** Common variable names (`open`, `closed`, etc.) inside component render causing scope collision on Fast Refresh reloads.
+
+**Solution:** Renamed all Sankey-specific variables to be more descriptive:
+```typescript
+// After (✅ no collisions)
+const stageTraining = stages[0]
+const stageTesting = stages[1]
+const stageClosed = stages[2]
+const stageOpen = stages[3]
+const stageRetired = stages[4]
+const stageEscaped = stages[5]
+const createSankeyFlow = (from, to, color, width) => { /* ... */ }
+```
+
+Updated all 8 createFlow() calls to use new names:
+- `createSankeyFlow(stageTraining, stageTesting, ...)`
+- `createSankeyFlow(stageTesting, stageClosed, ...)`
+- etc.
+
+**OverviewDashboard.tsx - Property Name Mismatches:**
+
+**Problem:** Dashboard using property names that didn't exist in StateDelta:
+```typescript
+// Before (❌ properties don't exist)
+westernLiberal    // Should be: westernLiberalIndex
+development       // Should be: developmentIndex
+ecological        // Should be: ecologicalIndex
+indigenous        // Should be: indigenousIndex
+extinctionRisk    // Should be: extinctionProbability
+```
+
+**Solution:** Fixed all property references to match StateDelta interface:
+```typescript
+// After (✅ correct property names)
+const paradigms = {
+  western: { value: lastUpdate.westernLiberalIndex ?? 50 },
+  development: { value: lastUpdate.developmentIndex ?? 50 },
+  ecological: { value: lastUpdate.ecologicalIndex ?? 50 },
+  indigenous: { value: lastUpdate.indigenousIndex ?? 50 }
+}
+
+if (lastUpdate.extinctionProbability && lastUpdate.extinctionProbability > 0.9) ...
+```
+
+**Verification:**
+```bash
+npx tsc --noEmit 2>&1 | grep "dashboards/"
+# No errors! ✅
+
+npm run dev
+# All dashboards compile successfully ✅
+```
+
+**Result:** All dashboard TypeScript errors resolved. Server compiles cleanly with no runtime errors.
+---

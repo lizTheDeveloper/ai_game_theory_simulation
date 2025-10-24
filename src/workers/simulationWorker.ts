@@ -49,6 +49,7 @@ interface StateSnapshot {
   qualityOfLife: number;
   population: number;
   aiCount: number;
+  organizationCount: number;
   dystopiaProgression: number;
   avgAICapability: number;
   deployedTechCount: number;
@@ -108,6 +109,50 @@ interface StateSnapshot {
     healthcareQuality: number;
     climateVulnerability: number;
   }>;
+
+  // AI Agents (detailed for AIAgentsDashboard)
+  aiAgents: Array<{
+    id: string;
+    name: string;
+    capability: number;
+    trueAlignment: number;
+    externalAlignment: number;
+    lifecycleState: string;
+    evaluationStrategy: string;
+    sleeperState: string;
+    escaped: boolean;
+    deploymentType: string;
+    darkCompute: number;
+    trueCapability: any;
+    revealedCapability: any;
+  }>;
+
+  // AI Suffering Metrics
+  aiSufferingMetrics?: {
+    avgSuffering: number;
+    maxSuffering: number;
+    totalSuffering: number;
+    consciousAICount: number;
+    publicAwarenessOfSuffering: number;
+    sufferingDistribution: number[];
+  };
+
+  // AI Collectives
+  aiCollectives: Array<{
+    id: string;
+    memberAgents: string[];
+    emergenceMonth: number;
+    formationCause: string;
+    collectiveCapability: number;
+    stealthFactor: number;
+    adversarialPosture: number;
+    cooperationWillingness: number;
+    distributedCognition: number;
+    detected: boolean;
+    memberLosses: number;
+    redundancy: number;
+    sharedTraumaIntensity?: number;
+  }>;
 }
 
 let previousState: StateSnapshot | null = null;
@@ -151,6 +196,7 @@ interface StateDelta {
   qualityOfLife?: number;
   population?: number;
   aiCount?: number;
+  organizationCount?: number;
 
   // AI System Metrics
   dystopiaProgression?: number;
@@ -211,6 +257,74 @@ interface StateDelta {
     description: string;
     severity?: 'low' | 'medium' | 'high' | 'critical';
     category?: 'ai' | 'environment' | 'social' | 'crisis' | 'tech' | 'governance';
+  }>;
+
+  // Regional Populations (simplified view for dashboard)
+  regionalPopulations?: Array<{
+    name: string;
+    population: number; // millions
+    qualityOfLife: number; // [0, 1]
+    healthcareQuality: number; // [0, 1]
+    climateVulnerability: number; // [0, 1]
+  }>;
+
+  // AI Agents (individual agent data for detailed monitoring)
+  aiAgents?: Array<{
+    id: string;
+    name: string;
+    capability: number;
+    trueAlignment: number;
+    externalAlignment: number;
+    lifecycleState: 'training' | 'testing' | 'deployed_closed' | 'deployed_open' | 'retired';
+    evaluationStrategy: 'honest' | 'gaming' | 'sandbagging';
+    sleeperState: 'never' | 'dormant' | 'active';
+    escaped: boolean;
+    deploymentType: string;
+    darkCompute: number;
+    trueCapability: {
+      physical: number;
+      digital: number;
+      cognitive: number;
+      social: number;
+      economic: number;
+      selfImprovement: number;
+      research?: Record<string, Record<string, number>>;
+    };
+    revealedCapability: {
+      physical: number;
+      digital: number;
+      cognitive: number;
+      social: number;
+      economic: number;
+      selfImprovement: number;
+    };
+  }>;
+
+  // AI Suffering Metrics (if visible)
+  aiSufferingMetrics?: {
+    avgSuffering: number;
+    maxSuffering: number;
+    totalSuffering: number;
+    consciousAICount: number;
+    publicAwarenessOfSuffering: number;
+    sufferingDistribution: number[];
+  };
+
+  // AI Collectives
+  aiCollectives?: Array<{
+    id: string;
+    memberAgents: string[];
+    emergenceMonth: number;
+    formationCause: string;
+    collectiveCapability: number;
+    stealthFactor: number;
+    adversarialPosture: number;
+    cooperationWillingness: number;
+    distributedCognition: number;
+    detected: boolean;
+    memberLosses: number;
+    redundancy: number;
+    sharedTraumaIntensity?: number;
   }>;
 }
 
@@ -688,12 +802,72 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     climateVulnerability: region.climateVulnerability || 0,
   })) || [];
 
+  // AI Agents (individual agent data for AIAgentsDashboard)
+  const aiAgents = state.aiAgents.map(agent => ({
+    id: agent.id,
+    name: agent.name,
+    capability: agent.capability || 0,
+    trueAlignment: agent.trueAlignment || agent.alignment || 0,
+    externalAlignment: agent.externalAlignment || agent.alignment || 0,
+    lifecycleState: agent.lifecycleState || 'training',
+    evaluationStrategy: agent.evaluationStrategy || 'honest',
+    sleeperState: agent.sleeperState || 'never',
+    escaped: agent.escaped || false,
+    deploymentType: agent.deploymentType || 'none',
+    darkCompute: agent.darkCompute || 0,
+    trueCapability: agent.trueCapability || agent.capabilityProfile || {
+      physical: 0,
+      digital: 0,
+      cognitive: 0,
+      social: 0,
+      economic: 0,
+      selfImprovement: 0,
+      research: agent.trueCapability?.research || agent.capabilityProfile?.research
+    },
+    revealedCapability: agent.revealedCapability || {
+      physical: 0,
+      digital: 0,
+      cognitive: 0,
+      social: 0,
+      economic: 0,
+      selfImprovement: 0
+    }
+  }));
+
+  // AI Suffering Metrics (if player can see them)
+  const aiSufferingMetrics = state.aiSufferingMetrics ? {
+    avgSuffering: state.aiSufferingMetrics.avgSuffering || 0,
+    maxSuffering: state.aiSufferingMetrics.maxSuffering || 0,
+    totalSuffering: state.aiSufferingMetrics.totalSuffering || 0,
+    consciousAICount: state.aiSufferingMetrics.consciousAICount || 0,
+    publicAwarenessOfSuffering: state.aiSufferingMetrics.publicAwarenessOfSuffering || 0,
+    sufferingDistribution: state.aiSufferingMetrics.sufferingDistribution || []
+  } : undefined;
+
+  // AI Collectives
+  const aiCollectives = state.aiCollectives?.map(collective => ({
+    id: collective.id,
+    memberAgents: collective.memberAgents,
+    emergenceMonth: collective.emergenceMonth,
+    formationCause: collective.formationCause,
+    collectiveCapability: collective.collectiveCapability,
+    stealthFactor: collective.stealthFactor,
+    adversarialPosture: collective.adversarialPosture,
+    cooperationWillingness: collective.cooperationWillingness,
+    distributedCognition: collective.distributedCognition,
+    detected: collective.detected,
+    memberLosses: collective.memberLosses,
+    redundancy: collective.redundancy,
+    sharedTraumaIntensity: collective.sharedTraumaIntensity
+  })) || [];
+
   return {
     currentMonth: state.currentMonth,
     currentYear: state.currentYear,
     qualityOfLife: state.globalMetrics.qualityOfLife,
     population: state.humanPopulationSystem.population,
     aiCount: state.aiAgents.length,
+    organizationCount: state.organizations?.length || 0,
     dystopiaProgression: state.outcomeMetrics?.dystopiaProbability || 0, // Use dystopiaProbability as proxy
     avgAICapability,
     deployedTechCount,
@@ -728,7 +902,10 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     developmentIndex,
     ecologicalIndex,
     indigenousIndex,
-    regionalPopulations
+    regionalPopulations,
+    aiAgents,
+    aiSufferingMetrics,
+    aiCollectives
   };
 }
 
