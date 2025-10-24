@@ -10,8 +10,8 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
-import { useSimulation } from "@/lib/hooks/useSimulation"
-import { useEffect, useMemo } from "react"
+import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
+import { useMemo } from "react"
 import { formatInteger, formatNumber } from "@/lib/utils/formatters"
 
 interface CrisisItem {
@@ -24,335 +24,117 @@ interface CrisisItem {
 }
 
 export function CrisisDashboard() {
-  const { currentState, loadCurrent } = useSimulation()
+  const { lastUpdate, initialized } = useSimulationWorker()
 
-  useEffect(() => {
-    loadCurrent()
-  }, [])
-
-  // Extract crisis systems
+  // Extract crisis data from StateDelta
   const crises = useMemo(() => {
-    if (!currentState) return []
+    if (!lastUpdate) return []
 
     const crisisList: CrisisItem[] = []
 
-    // Phosphorus Crisis
-    if (currentState.phosphorusSystem) {
-      const p = currentState.phosphorusSystem
-      crisisList.push({
-        id: 'phosphorus',
-        name: 'Phosphorus Depletion',
-        type: 'Resource',
-        active: p.criticalDepletionActive || p.supplyShockActive || false,
-        severity: p.reserves < 0.3 ? 'critical' : p.reserves < 0.5 ? 'warning' : 'normal',
-        metrics: {
-          'Reserves': `${((p.reserves || 0) * 100).toFixed(0)}%`,
-          'Price Index': (p.priceIndex || 1).toFixed(1) + 'x',
-          'Supply Shock': p.supplyShockActive ? 'Active' : 'None',
-        }
+    // Use activeCrises array if available
+    if (lastUpdate.activeCrises && lastUpdate.activeCrises.length > 0) {
+      lastUpdate.activeCrises.forEach((crisis, index) => {
+        crisisList.push({
+          id: `crisis_${index}`,
+          name: crisis.type,
+          type: 'Active',
+          active: true,
+          severity: crisis.severity > 0.8 ? 'critical' : crisis.severity > 0.5 ? 'warning' : 'normal',
+          metrics: {
+            'Severity': `${(crisis.severity * 100).toFixed(0)}%`,
+            'Duration': `${crisis.duration} months`,
+          }
+        })
       })
     }
+
+    // Phosphorus Crisis
+    const phosphorus = lastUpdate.phosphorusDepletion || 0
+    crisisList.push({
+      id: 'phosphorus',
+      name: 'Phosphorus Depletion',
+      type: 'Resource',
+      active: phosphorus > 0.5,
+      severity: phosphorus > 0.7 ? 'critical' : phosphorus > 0.5 ? 'warning' : 'normal',
+      metrics: {
+        'Depletion Level': `${(phosphorus * 100).toFixed(0)}%`,
+        'Status': phosphorus > 0.5 ? 'Active Crisis' : 'Monitoring',
+      }
+    })
 
     // Freshwater Crisis
-    if (currentState.freshwaterSystem) {
-      const fw = currentState.freshwaterSystem
-      const availableWater = (fw.blueWater.surfaceWater + fw.blueWater.groundwater) / 2
-      crisisList.push({
-        id: 'freshwater',
-        name: 'Freshwater Depletion',
-        type: 'Resource',
-        active: fw.dayZeroDrought.active || fw.criticalScarcityActive || false,
-        severity: availableWater < 0.3 ? 'critical' : availableWater < 0.5 ? 'warning' : 'normal',
-        metrics: {
-          'Available Water': `${((availableWater || 0) * 100).toFixed(0)}%`,
-          'Aquifer Health': `${((fw.blueWater.groundwater || 1) * 100).toFixed(0)}%`,
-          'Day Zero': fw.dayZeroDrought.active ? 'Active' : 'None',
-        }
-      })
-    }
+    const freshwater = lastUpdate.freshwaterStress || 0
+    crisisList.push({
+      id: 'freshwater',
+      name: 'Freshwater Stress',
+      type: 'Resource',
+      active: freshwater > 0.5,
+      severity: freshwater > 0.7 ? 'critical' : freshwater > 0.5 ? 'warning' : 'normal',
+      metrics: {
+        'Stress Level': `${(freshwater * 100).toFixed(0)}%`,
+        'Status': freshwater > 0.5 ? 'Active Crisis' : 'Monitoring',
+      }
+    })
 
     // Ocean Acidification
-    if (currentState.oceanAcidificationSystem) {
-      const oa = currentState.oceanAcidificationSystem
-      crisisList.push({
-        id: 'ocean',
-        name: 'Ocean Acidification',
-        type: 'Environmental',
-        active: oa.coralExtinctionActive || oa.boundaryBreached || false,
-        severity: oa.pHLevel < 0.85 ? 'critical' : oa.pHLevel < 0.92 ? 'warning' : 'normal',
-        metrics: {
-          'Ocean pH Health': `${((oa.pHLevel || 1.0) * 100).toFixed(0)}%`,
-          'Coral Health': `${((oa.coralReefHealth || 1) * 100).toFixed(0)}%`,
-          'Fishery Impact': `${((oa.fishDependentImpact || 0) * 100).toFixed(0)}%`,
-        }
-      })
-    }
-
-    // Novel Entities (Chemical Pollution)
-    if (currentState.novelEntitiesSystem) {
-      const ne = currentState.novelEntitiesSystem
-      crisisList.push({
-        id: 'novel_entities',
-        name: 'Novel Entities Crisis',
-        type: 'Environmental',
-        active: ne.reproductiveCrisisActive || ne.boundaryBreached || false,
-        severity: ne.syntheticChemicalLoad > 0.7 ? 'critical' : ne.syntheticChemicalLoad > 0.5 ? 'warning' : 'normal',
-        metrics: {
-          'Pollution Load': `${((ne.syntheticChemicalLoad || 0) * 100).toFixed(0)}%`,
-          'PFAS Prevalence': `${((ne.pfasPrevalence || 0) * 100).toFixed(0)}%`,
-          'Chronic Disease': `${((ne.chronicDiseasePrevalence || 0) * 100).toFixed(0)}%`,
-        }
-      })
-    }
-
-    // Planetary Boundaries
-    if (currentState.planetaryBoundariesSystem) {
-      const pb = currentState.planetaryBoundariesSystem.boundaries
-
-      // Climate
-      if (pb.climate_change) {
-        const isBreached = pb.climate_change.currentValue > pb.climate_change.boundaryThreshold ||
-                          pb.climate_change.status === 'beyond_boundary' ||
-                          pb.climate_change.status === 'high_risk' ||
-                          pb.climate_change.status === 'increasing_risk'
-        crisisList.push({
-          id: 'climate',
-          name: 'Climate Change',
-          type: 'Planetary Boundary',
-          active: isBreached,
-          severity: pb.climate_change.status === 'high_risk' ? 'critical' :
-                   isBreached ? 'warning' : 'normal',
-          metrics: {
-            'Current': pb.climate_change.currentValue.toFixed(2) + '°C',
-            'Threshold': pb.climate_change.boundaryThreshold.toFixed(2) + '°C',
-            'Status': isBreached ? 'Breached' : 'Safe',
-          }
-        })
+    const ocean = lastUpdate.oceanAcidification || 0
+    crisisList.push({
+      id: 'ocean',
+      name: 'Ocean Acidification',
+      type: 'Environmental',
+      active: ocean > 0.5,
+      severity: ocean > 0.7 ? 'critical' : ocean > 0.5 ? 'warning' : 'normal',
+      metrics: {
+        'Acidification': `${(ocean * 100).toFixed(0)}%`,
+        'Status': ocean > 0.5 ? 'Active Crisis' : 'Monitoring',
       }
+    })
 
-      // Biodiversity
-      if (pb.biosphere_integrity) {
-        const isBreached = pb.biosphere_integrity.currentValue > pb.biosphere_integrity.boundaryThreshold ||
-                          pb.biosphere_integrity.status === 'beyond_boundary' ||
-                          pb.biosphere_integrity.status === 'high_risk' ||
-                          pb.biosphere_integrity.status === 'increasing_risk'
-        crisisList.push({
-          id: 'biodiversity',
-          name: 'Biodiversity Loss',
-          type: 'Planetary Boundary',
-          active: isBreached,
-          severity: pb.biosphere_integrity.status === 'high_risk' ? 'critical' :
-                   isBreached ? 'warning' : 'normal',
-          metrics: {
-            'Extinction Rate': pb.biosphere_integrity.currentValue.toFixed(1) + ' E/MSY',
-            'Safe Limit': pb.biosphere_integrity.boundaryThreshold.toFixed(1) + ' E/MSY',
-            'Status': isBreached ? 'Breached' : 'Safe',
-          }
-        })
+    // Novel Entities
+    const novelEntities = lastUpdate.novelEntitiesLevel || 0
+    crisisList.push({
+      id: 'novel_entities',
+      name: 'Chemical Pollution',
+      type: 'Environmental',
+      active: novelEntities > 0.5,
+      severity: novelEntities > 0.7 ? 'critical' : novelEntities > 0.5 ? 'warning' : 'normal',
+      metrics: {
+        'Pollution Load': `${(novelEntities * 100).toFixed(0)}%`,
+        'Status': novelEntities > 0.5 ? 'Active Crisis' : 'Monitoring',
       }
+    })
 
-      // Freshwater Change
-      if (pb.freshwater_change) {
-        const isBreached = pb.freshwater_change.currentValue > pb.freshwater_change.boundaryThreshold ||
-                          pb.freshwater_change.status === 'beyond_boundary' ||
-                          pb.freshwater_change.status === 'high_risk' ||
-                          pb.freshwater_change.status === 'increasing_risk'
-        crisisList.push({
-          id: 'freshwater_pb',
-          name: 'Freshwater Change',
-          type: 'Planetary Boundary',
-          active: isBreached,
-          severity: pb.freshwater_change.status === 'high_risk' ? 'critical' :
-                   isBreached ? 'warning' : 'normal',
-          metrics: {
-            'Current Level': (pb.freshwater_change.currentValue * 100).toFixed(0) + '%',
-            'Safe Limit': (pb.freshwater_change.boundaryThreshold * 100).toFixed(0) + '%',
-            'Status': isBreached ? 'Breached' : 'Safe',
-          }
-        })
+    // Climate Change
+    const climate = lastUpdate.climateChange || 0
+    crisisList.push({
+      id: 'climate',
+      name: 'Climate Change',
+      type: 'Planetary Boundary',
+      active: climate > 0.5,
+      severity: climate > 0.7 ? 'critical' : climate > 0.5 ? 'warning' : 'normal',
+      metrics: {
+        'Impact': `${(climate * 100).toFixed(0)}%`,
+        'Status': climate > 0.5 ? 'Breached' : 'Safe',
       }
+    })
 
-      // Novel Entities (from Planetary Boundaries)
-      if (pb.novel_entities) {
-        const isBreached = pb.novel_entities.currentValue > pb.novel_entities.boundaryThreshold ||
-                          pb.novel_entities.status === 'beyond_boundary' ||
-                          pb.novel_entities.status === 'high_risk' ||
-                          pb.novel_entities.status === 'increasing_risk'
-        crisisList.push({
-          id: 'novel_entities_pb',
-          name: 'Novel Entities (Chemical)',
-          type: 'Planetary Boundary',
-          active: isBreached,
-          severity: pb.novel_entities.status === 'high_risk' ? 'critical' :
-                   isBreached ? 'warning' : 'normal',
-          metrics: {
-            'Pollution Level': (pb.novel_entities.currentValue * 100).toFixed(0) + '%',
-            'Safe Limit': (pb.novel_entities.boundaryThreshold * 100).toFixed(0) + '%',
-            'Status': isBreached ? 'Breached' : 'Safe',
-          }
-        })
+    // Biodiversity Loss
+    const biodiversity = lastUpdate.biodiversityLoss || 0
+    crisisList.push({
+      id: 'biodiversity',
+      name: 'Biodiversity Loss',
+      type: 'Planetary Boundary',
+      active: biodiversity > 0.5,
+      severity: biodiversity > 0.7 ? 'critical' : biodiversity > 0.5 ? 'warning' : 'normal',
+      metrics: {
+        'Loss Rate': `${(biodiversity * 100).toFixed(0)}%`,
+        'Status': biodiversity > 0.5 ? 'Breached' : 'Safe',
       }
-
-      // Land System Change
-      if (pb.land_system_change) {
-        const isBreached = pb.land_system_change.currentValue > pb.land_system_change.boundaryThreshold ||
-                          pb.land_system_change.status === 'beyond_boundary' ||
-                          pb.land_system_change.status === 'high_risk' ||
-                          pb.land_system_change.status === 'increasing_risk'
-        crisisList.push({
-          id: 'land_system',
-          name: 'Land System Change',
-          type: 'Planetary Boundary',
-          active: isBreached,
-          severity: pb.land_system_change.status === 'high_risk' ? 'critical' :
-                   isBreached ? 'warning' : 'normal',
-          metrics: {
-            'Forest Loss': (pb.land_system_change.currentValue * 100).toFixed(0) + '%',
-            'Safe Limit': (pb.land_system_change.boundaryThreshold * 100).toFixed(0) + '%',
-            'Status': isBreached ? 'Breached' : 'Safe',
-          }
-        })
-      }
-
-      // Ocean Acidification (PB)
-      if (pb.ocean_acidification) {
-        const isBreached = pb.ocean_acidification.currentValue > pb.ocean_acidification.boundaryThreshold ||
-                          pb.ocean_acidification.status === 'beyond_boundary' ||
-                          pb.ocean_acidification.status === 'high_risk' ||
-                          pb.ocean_acidification.status === 'increasing_risk'
-        crisisList.push({
-          id: 'ocean_acidification_pb',
-          name: 'Ocean Acidification',
-          type: 'Planetary Boundary',
-          active: isBreached,
-          severity: pb.ocean_acidification.status === 'high_risk' ? 'critical' :
-                   isBreached ? 'warning' : 'normal',
-          metrics: {
-            'Aragonite Sat.': (pb.ocean_acidification.currentValue * 100).toFixed(0) + '%',
-            'Safe Limit': (pb.ocean_acidification.boundaryThreshold * 100).toFixed(0) + '%',
-            'Status': isBreached ? 'Breached' : 'Safe',
-          }
-        })
-      }
-
-      // Biogeochemical Flows
-      if (pb.biogeochemical_flows) {
-        const isBreached = pb.biogeochemical_flows.currentValue > pb.biogeochemical_flows.boundaryThreshold ||
-                          pb.biogeochemical_flows.status === 'beyond_boundary' ||
-                          pb.biogeochemical_flows.status === 'high_risk' ||
-                          pb.biogeochemical_flows.status === 'increasing_risk'
-        crisisList.push({
-          id: 'biogeochemical',
-          name: 'Biogeochemical Flows',
-          type: 'Planetary Boundary',
-          active: isBreached,
-          severity: pb.biogeochemical_flows.status === 'high_risk' ? 'critical' :
-                   isBreached ? 'warning' : 'normal',
-          metrics: {
-            'N/P Cycling': (pb.biogeochemical_flows.currentValue * 100).toFixed(0) + '%',
-            'Safe Limit': (pb.biogeochemical_flows.boundaryThreshold * 100).toFixed(0) + '%',
-            'Status': isBreached ? 'Breached' : 'Safe',
-          }
-        })
-      }
-    }
-
-    // Nuclear Tensions
-    if (currentState.madDeterrence && currentState.bilateralTensions) {
-      const mad = currentState.madDeterrence
-      const activeConflicts = currentState.bilateralTensions.filter(t => t.conventionalConflict || t.nuclearThreats).length
-      const maxTension = currentState.bilateralTensions.length > 0
-        ? Math.max(...currentState.bilateralTensions.map(t => t.tensionLevel))
-        : 0
-      const totalStockpile = currentState.nuclearStates?.reduce((sum, state) => sum + state.arsenal, 0) || 0
-
-      crisisList.push({
-        id: 'nuclear',
-        name: 'Nuclear Tensions',
-        type: 'Geopolitical',
-        active: activeConflicts > 0 || mad.crisisStability < 0.3,
-        severity: activeConflicts > 0 ? 'critical' : maxTension > 0.7 ? 'warning' : 'normal',
-        metrics: {
-          'Max Tension': `${((maxTension || 0) * 100).toFixed(0)}%`,
-          'Active Conflicts': activeConflicts,
-          'Global Stockpile': totalStockpile.toLocaleString(),
-        }
-      })
-    }
-
-    // AMR (Antimicrobial Resistance)
-    if (currentState.antimicrobialResistanceSystem) {
-      const amr = currentState.antimicrobialResistanceSystem
-      // Crisis is active when medical effectiveness drops below 85% or deaths exceed 5M/year
-      const isCrisis = amr.currentMedicalEffectiveness < 0.85 || amr.annualDeaths > 5000000
-      crisisList.push({
-        id: 'amr',
-        name: 'Antimicrobial Resistance',
-        type: 'Health',
-        active: isCrisis,
-        severity: amr.currentMedicalEffectiveness < 0.75 ? 'critical' : amr.currentMedicalEffectiveness < 0.85 ? 'warning' : 'normal',
-        metrics: {
-          'Medical Effectiveness': `${((amr.currentMedicalEffectiveness || 1) * 100).toFixed(0)}%`,
-          'Annual Deaths': formatInteger(amr.annualDeaths || 0),
-          'Death Rate': `${formatNumber(amr.currentDeathRate, 1)}/100K`,
-        }
-      })
-    }
-
-    // Ecosystem Collapse
-    if (currentState.ecosystemCollapse?.triggered) {
-      const ec = currentState.ecosystemCollapse
-      crisisList.push({
-        id: 'ecosystem',
-        name: 'Ecosystem Collapse',
-        type: 'Environmental',
-        active: true,
-        severity: ec.phase === 'collapse' ? 'extinction' : ec.phase === 'crisis' ? 'critical' : 'warning',
-        metrics: {
-          'Phase': ec.phase,
-          'Months Since Trigger': ec.monthsSinceTrigger || 0,
-          'Triggered At': `Month ${ec.triggeredAt}`,
-        }
-      })
-    }
-
-    // Tipping Points
-    if (currentState.specificTippingPoints) {
-      const tp = currentState.specificTippingPoints
-
-      if (tp.amazon?.triggered) {
-        crisisList.push({
-          id: 'amazon',
-          name: 'Amazon Rainforest Dieback',
-          type: 'Tipping Point',
-          active: true,
-          severity: 'critical',
-          metrics: {
-            'Deforestation': `${((tp.amazon.deforestation || 0) * 100).toFixed(0)}%`,
-            'Carbon Released': `${(tp.amazon.carbonReleased || 0).toFixed(1)} Gt`,
-            'Progress': `${((tp.amazon.transitionProgress || 0) * 100).toFixed(0)}%`,
-          }
-        })
-      }
-
-      if (tp.coral?.triggered) {
-        crisisList.push({
-          id: 'coral',
-          name: 'Coral Reef Collapse',
-          type: 'Tipping Point',
-          active: true,
-          severity: 'critical',
-          metrics: {
-            'Health': `${((tp.coral.healthPercentage || 0) * 100).toFixed(0)}%`,
-            'Collapse Progress': `${((tp.coral.collapseProgress || 0) * 100).toFixed(0)}%`,
-            'Fishery Loss': `${((tp.coral.fisheryCollapseLevel || 0) * 100).toFixed(0)}%`,
-          }
-        })
-      }
-    }
+    })
 
     return crisisList
-  }, [currentState])
+  }, [lastUpdate])
 
   // Statistics
   const stats = useMemo(() => {
@@ -363,8 +145,18 @@ export function CrisisDashboard() {
     return { activeCrises, criticalCrises, warningCrises, totalCrises: crises.length }
   }, [crises])
 
-  if (!currentState) {
-    return <div className="p-8">Loading...</div>
+  if (!initialized) {
+    return (
+      <div className="p-8">
+        <Panel title="Not Initialized">
+          Click "Configure & Start" to initialize the simulation
+        </Panel>
+      </div>
+    )
+  }
+
+  if (!lastUpdate) {
+    return <div className="p-8">Waiting for simulation update...</div>
   }
 
   return (
@@ -496,24 +288,22 @@ export function CrisisDashboard() {
       )}
 
       {/* Government Response Status */}
-      {currentState.government && (
-        <Panel title="Emergency Response Capacity">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Action Frequency</div>
-              <div className="text-lg font-semibold">{formatNumber(currentState.government.actionFrequency, 2) || 'N/A'}</div>
-            </div>
-            <div>
-              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Oversight Level</div>
-              <div className="text-lg font-semibold">{formatNumber(currentState.government.oversightLevel || 0, 1)}/10</div>
-            </div>
-            <div>
-              <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Alignment Investment</div>
-              <div className="text-lg font-semibold">{formatNumber(currentState.government.alignmentResearchInvestment || 0, 0)}/10</div>
-            </div>
+      <Panel title="Emergency Response Capacity">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>AI Regulation</div>
+            <div className="text-lg font-semibold">{((lastUpdate.governmentAIRegulation || 0) * 100).toFixed(0)}%</div>
           </div>
-        </Panel>
-      )}
+          <div>
+            <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Government Investment</div>
+            <div className="text-lg font-semibold">{((lastUpdate.governmentInvestment || 0) * 100).toFixed(0)}%</div>
+          </div>
+          <div>
+            <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>International Cooperation</div>
+            <div className="text-lg font-semibold">{((lastUpdate.internationalCooperation || 0) * 100).toFixed(0)}%</div>
+          </div>
+        </div>
+      </Panel>
     </div>
   )
 }
