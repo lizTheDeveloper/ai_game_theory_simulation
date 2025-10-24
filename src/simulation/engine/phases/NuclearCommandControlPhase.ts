@@ -1,4 +1,3 @@
-import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 /**
  * Nuclear Command & Control Phase
  *
@@ -8,6 +7,7 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  * before checking for nuclear escalation.
  */
 
+import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateNuclearCommandControl } from '../../nuclearCommandControl';
 
 export class NuclearCommandControlPhase implements SimulationPhase {
@@ -20,9 +20,12 @@ export class NuclearCommandControlPhase implements SimulationPhase {
 
     if (!ncc) {
       return {
-        metadata: { stateChanges: [],
         events: [],
-        logs: ['Nuclear command control system not initialized']
+        metadata: {
+          stateChanges: [],
+          events: [],
+          logs: ['Nuclear command control system not initialized']
+        }
       };
     }
 
@@ -64,16 +67,19 @@ export class NuclearCommandControlPhase implements SimulationPhase {
     }
 
     return {
-      metadata: { stateChanges: [
-        {
-          path: 'nuclearCommandControlState.totalSafeguardStrength',
-          before: previousStrength,
-          after: ncc.totalSafeguardStrength,
-          description: 'Updated circuit breaker effectiveness'
-        }
-      ],
       events: [],
-      logs
+      metadata: {
+        stateChanges: [
+          {
+            path: 'nuclearCommandControlState.totalSafeguardStrength',
+            before: previousStrength,
+            after: ncc.totalSafeguardStrength,
+            description: 'Updated circuit breaker effectiveness'
+          }
+        ],
+        events: [],
+        logs
+      }
     };
   }
 }
