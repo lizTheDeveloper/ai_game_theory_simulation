@@ -45,7 +45,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       (state.phosphorusSystem?.reserves ?? 1.0) < 0.3 ? 1 : 0,  // Phosphorus crisis when reserves < 30%
       (state.freshwaterSystem?.blueWater?.groundwater ?? 1.0) < 0.3 ? 1 : 0,  // Freshwater crisis when groundwater < 30%
       (state.biodiversitySystem?.globalBiodiversityIndex ?? 0.5) < 0.3 ? 1 : 0,  // Biodiversity crisis when BLI < 30%
-      state.environmentalAccumulation?.tipSurpassed ? 1 : 0,
+      (state.environmentalAccumulation?.climateCrisisActive || state.environmentalAccumulation?.ecosystemCrisisActive) ? 1 : 0,
       state.planetaryBoundariesSystem?.cascadeActive ? 1 : 0,
     ].reduce((sum, c) => sum + c, 0);
 

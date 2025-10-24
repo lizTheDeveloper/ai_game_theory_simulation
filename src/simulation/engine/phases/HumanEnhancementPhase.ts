@@ -30,7 +30,7 @@ export class HumanEnhancementPhase implements SimulationPhase {
   readonly order = 17.0; // After social systems (UBI, safety nets), before QoL calculation
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const events: Array<{ type: string; severity: string; description: string; month: number }> = [];
+    const events: GameEvent[] = [];
 
     // Calculate aggregate metrics if we have segments and metrics tracking
     if (state.society.segments && state.society.segments.length > 0) {
@@ -48,17 +48,28 @@ export class HumanEnhancementPhase implements SimulationPhase {
 
       // Calculate aggregate metrics from segment data
       // Pass AI capability and current month for phase transition tracking
-      calculateAIAssistedSkillsAggregateMetrics(
-        state.society.segments,
-        state.aiAssistedSkillsMetrics,
-        avgAICapability,
-        state.currentMonth
-      );
+      if (state.aiAssistedSkillsMetrics) {
+        calculateAIAssistedSkillsAggregateMetrics(
+          state.society.segments,
+          state.aiAssistedSkillsMetrics,
+          avgAICapability,
+          state.currentMonth
+        );
+      }
 
       // Phase 3: Check for competence crisis (AI dependency)
       const competenceEvent = checkCompetenceCrisis(state.society.segments, state.currentMonth);
       if (competenceEvent) {
-        events.push(competenceEvent);
+        events.push({
+          id: `competence_crisis_${state.currentMonth}`,
+          timestamp: state.currentMonth,
+          type: 'crisis',
+          severity: competenceEvent.severity as any,
+          agent: 'society',
+          title: competenceEvent.type,
+          description: competenceEvent.description,
+          effects: {}
+        });
         console.log(`\n⚠️  ${competenceEvent.type} [Month ${state.currentMonth}]`);
         console.log(`  ${competenceEvent.description}`);
       }
@@ -96,7 +107,16 @@ export class HumanEnhancementPhase implements SimulationPhase {
         // Check for wage inequality crisis
         const wageEvent = checkWageInequality(state.laborCapitalDistribution, state.currentMonth);
         if (wageEvent) {
-          events.push(wageEvent);
+          events.push({
+            id: `wage_inequality_${state.currentMonth}`,
+            timestamp: state.currentMonth,
+            type: 'crisis',
+            severity: wageEvent.severity as any,
+            agent: 'society',
+            title: wageEvent.type,
+            description: wageEvent.description,
+            effects: {}
+          });
           console.log(`\n⚠️  ${wageEvent.type} [Month ${state.currentMonth}]`);
           console.log(`  ${wageEvent.description}`);
         }

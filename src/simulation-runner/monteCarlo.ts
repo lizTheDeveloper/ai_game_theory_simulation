@@ -8,6 +8,7 @@
 import { GameState } from '@/types/game';
 import { SimulationEngine, SimulationRunResult, SimulationConfig } from '../simulation/engine';
 import { SimulationLog, aggregateLogs } from '../simulation/logging';
+import { OutcomeType } from '@/types/outcomes';
 /**
  * Configuration for Monte Carlo simulation
  */
@@ -75,14 +76,14 @@ export interface MonteCarloResults {
     byRun: Array<{
       runId: number;
       months: number;
-      outcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
+      outcome: OutcomeType;
       probabilities: {
         utopia: number;
         dystopia: number;
         extinction: number;
       };
-      extinctionType?: string | null;
-      extinctionMechanism?: string | null;
+      extinctionType: string | null;
+      extinctionMechanism: string | null;
     }>;
     sortedByUtopia: number[]; // Run IDs sorted by utopia probability (high to low)
     sortedByExtinction: number[]; // Run IDs sorted by extinction probability (low to high)
@@ -394,7 +395,7 @@ function analyzeMonteCarloResults(
     // Get final outcome metrics (probabilities)
     const finalMetrics = run.finalState.outcomeMetrics;
     const extinctionState = run.finalState.extinctionState;
-    
+
     return {
       runId,
       months: run.summary.totalMonths,
@@ -404,8 +405,8 @@ function analyzeMonteCarloResults(
         dystopia: finalMetrics.dystopiaProbability,
         extinction: finalMetrics.extinctionProbability
       },
-      extinctionType: extinctionState.active ? extinctionState.type : null,
-      extinctionMechanism: extinctionState.active ? extinctionState.mechanism : null
+      extinctionType: extinctionState.active ? String(extinctionState.type) : null,
+      extinctionMechanism: extinctionState.active ? String(extinctionState.mechanism) : null
     };
   });
   

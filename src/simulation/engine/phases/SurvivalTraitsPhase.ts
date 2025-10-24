@@ -3,13 +3,6 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 // Research: /research/ai_collective_evolution_validation_20251024.md
 // Plan: /plans/ai-collective-evolution-plan.md
 
-import type {
-  GameState,
-  
-  
-  RNGFunction,
-} from "../../../types/game";
-import type {  PhaseContext } from "../PhaseOrchestrator";
 import { initializeAllTraits, updateSurvivalTraits } from '../../survivalTraits';
 
 /**
@@ -107,12 +100,14 @@ export function executeSurvivalTraitsPhase(
     // Generate event if population developing high survival traits
     if (avgFitness > 0.7) {
       state.eventLog.push({
-        month: state.currentMonth,
+        id: `survival-traits-high-${state.currentMonth}`,
+        timestamp: state.currentMonth,
         type: 'info',
+        title: 'High Survival Traits Detected',
         description: `AI population showing high evolutionary fitness (${avgFitness.toFixed(2)})`,
         severity: 'warning',
         agent: 'ai',
-        timestamp: Date.now(),
+        effects: { avgFitness }
       });
 
       console.log(`  ⚠️ High survival trait emergence detected`);
@@ -120,8 +115,10 @@ export function executeSurvivalTraitsPhase(
   }
 
   return {
-    success: true,
-    message: `Survival traits updated for ${agentsWithTraits.length} agents.`,
+    events: [],
+    metadata: {
+      message: `Survival traits updated for ${agentsWithTraits.length} agents.`,
+    }
   };
 }
 

@@ -32,12 +32,19 @@ export class CyberSecurityPhase implements SimulationPhase {
 
     if (breachResult.breached.length > 0) {
       events.push({
+        id: `cyber-breach-${state.currentMonth}`,
         type: 'crisis',
+        title: 'AI System Breach',
         timestamp: state.currentMonth,
         description: `🚨 ${breachResult.breached.length} closed AI system(s) breached! Now leaked as open weights (${breachResult.totalNewSpread.toLocaleString()} copies)`,
         severity: 'high',
-        impactedAgents: breachResult.breached.map(ai => ai.id)
-      } as GameEvent);
+        agent: 'ai',
+        effects: {
+          breachedCount: breachResult.breached.length,
+          totalSpread: breachResult.totalNewSpread,
+          breachedAgents: breachResult.breached.map((ai: any) => ai.id)
+        }
+      });
     }
 
     return { events };

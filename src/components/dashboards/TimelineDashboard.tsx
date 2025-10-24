@@ -1,7 +1,8 @@
 /**
  * Timeline Dashboard - Phase 9
  *
- * Filterable event log with cause-effect chains and milestones.
+ * Recent event log with filtering and severity tracking.
+ * Shows last 100 events from live simulation updates.
  * Reference: /designs/11_timeline.md
  */
 
@@ -9,73 +10,44 @@
 
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
-import { useSimulation } from "@/lib/hooks/useSimulation"
+import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { useEffect, useMemo, useState } from "react"
 
+interface TimelineEvent {
+  month: number
+  type: string
+  category: string
+  description: string
+  severity: 'low' | 'medium' | 'high' | 'critical'
+  agent: string
+}
+
 export function TimelineDashboard() {
-  const { currentState, trajectory, loadCurrent } = useSimulation()
+  const { lastUpdate, initialized } = useSimulationWorker()
   const [filterType, setFilterType] = useState<string>('all')
+  const [eventHistory, setEventHistory] = useState<TimelineEvent[]>([])
 
+  // Accumulate events from updates (keep last 100)
   useEffect(() => {
-    loadCurrent()
-  }, [])
+    if (!lastUpdate?.events || lastUpdate.events.length === 0) return
 
-  // Extract events from current state and trajectory
-  const events = useMemo(() => {
-    if (!currentState) return []
+    const newEvents: TimelineEvent[] = lastUpdate.events.map(e => ({
+      month: lastUpdate.currentMonth || 0,
+      type: e.type,
+      category: e.category || 'system',
+      description: e.description,
+      severity: e.severity || 'low',
+      agent: 'system',
+    }))
 
-    const allEvents: any[] = []
+    setEventHistory(prev => {
+      const combined = [...newEvents, ...prev]
+      return combined.slice(0, 100) // Keep last 100 events
+    })
+  }, [lastUpdate])
 
-    // Historical events from current state
-    if (currentState.eventLog) {
-      currentState.eventLog.forEach((event: any) => {
-        allEvents.push({
-          month: event.timestamp,
-          type: event.type,
-          category: event.category || 'system',
-          description: event.description,
-          severity: event.severity || 'normal',
-          agent: event.agent || 'system',
-        })
-      })
-    }
-
-    // Extract major events from trajectory
-    if (trajectory.length > 0) {
-      // Sample: Crisis activations, tech breakthroughs, tipping points
-      trajectory.forEach((state, idx) => {
-        // Check for ecosystem collapse trigger
-        if (state.ecosystemCollapse?.triggered && idx > 0 && !trajectory[idx - 1].ecosystemCollapse?.triggered) {
-          allEvents.push({
-            month: state.currentMonth,
-            type: 'tipping_point',
-            category: 'environmental',
-            description: 'Ecosystem collapse triggered',
-            severity: 'critical',
-            agent: 'system',
-          })
-        }
-
-        // Check for tipping points
-        if (state.specificTippingPoints) {
-          const tp = state.specificTippingPoints
-          if (tp.amazon?.triggered && idx > 0 && !trajectory[idx - 1].specificTippingPoints?.amazon?.triggered) {
-            allEvents.push({
-              month: state.currentMonth,
-              type: 'tipping_point',
-              category: 'environmental',
-              description: 'Amazon rainforest dieback initiated',
-              severity: 'critical',
-              agent: 'system',
-            })
-          }
-        }
-      })
-    }
-
-    // Sort by month
-    return allEvents.sort((a, b) => b.month - a.month)
-  }, [currentState, trajectory])
+  // Use accumulated event history
+  const events = eventHistory
 
   // Filter events
   const filteredEvents = useMemo(() => {
@@ -92,19 +64,31 @@ export function TimelineDashboard() {
   // Stats
   const stats = useMemo(() => {
     const critical = events.filter(e => e.severity === 'critical').length
-    const warning = events.filter(e => e.severity === 'warning').length
-    const normal = events.filter(e => e.severity === 'normal').length
+    const high = events.filter(e => e.severity === 'high').length
+    const medium = events.filter(e => e.severity === 'medium').length
+    const low = events.filter(e => e.severity === 'low').length
 
     return {
       total: events.length,
       critical,
-      warning,
-      normal,
+      high,
+      medium,
+      low,
     }
   }, [events])
 
-  if (!currentState) {
-    return <div className="p-8">Loading...</div>
+  if (!initialized) {
+    return (
+      <div className="p-8">
+        <Panel title="Not Initialized">
+          Click "Configure & Start" to initialize the simulation
+        </Panel>
+      </div>
+    )
+  }
+
+  if (!lastUpdate) {
+    return <div className="p-8">Waiting for simulation update...</div>
   }
 
   return (
@@ -127,16 +111,16 @@ export function TimelineDashboard() {
         <MetricCard
           label="Critical Events"
           value={stats.critical}
-          status={stats.critical > 10 ? 'critical' : 'normal'}
+          status={stats.critical > 5 ? 'critical' : 'normal'}
         />
         <MetricCard
-          label="Warning Events"
-          value={stats.warning}
-          status="normal"
+          label="High Severity"
+          value={stats.high}
+          status={stats.high > 10 ? 'warning' : 'normal'}
         />
         <MetricCard
           label="Current Month"
-          value={currentState.currentMonth || 0}
+          value={lastUpdate.currentMonth || 0}
           status="normal"
         />
       </div>
@@ -192,13 +176,14 @@ export function TimelineDashboard() {
 
           {filteredEvents.slice(0, 50).map((event, idx) => (
             <div
-              key={`${event.timestamp}-${idx}`}
+              key={`${event.month}-${idx}`}
               className="p-3 rounded flex items-start gap-3"
               style={{
                 backgroundColor: 'var(--color-near-black)',
                 border: `1px solid ${
                   event.severity === 'critical' ? 'var(--color-red)' :
-                  event.severity === 'warning' ? 'var(--color-amber)' :
+                  event.severity === 'high' ? 'var(--color-amber)' :
+                  event.severity === 'medium' ? 'var(--white-20)' :
                   'var(--white-10)'
                 }`,
                 boxShadow: event.severity === 'critical' ? '0 0 10px rgba(255, 0, 64, 0.2)' : 'none'
@@ -214,7 +199,7 @@ export function TimelineDashboard() {
                   textAlign: 'center',
                 }}
               >
-                Month {event.month || event.timestamp}
+                Month {event.month}
               </div>
 
               {/* Event Content */}
@@ -232,7 +217,7 @@ export function TimelineDashboard() {
                       CRITICAL
                     </span>
                   )}
-                  {event.severity === 'warning' && (
+                  {event.severity === 'high' && (
                     <span
                       className="px-2 py-0.5 rounded text-xs font-semibold"
                       style={{
@@ -240,7 +225,18 @@ export function TimelineDashboard() {
                         color: 'var(--color-amber)',
                       }}
                     >
-                      WARNING
+                      HIGH
+                    </span>
+                  )}
+                  {event.severity === 'medium' && (
+                    <span
+                      className="px-2 py-0.5 rounded text-xs font-semibold"
+                      style={{
+                        backgroundColor: 'rgba(0, 240, 255, 0.1)',
+                        color: 'var(--color-cyan)',
+                      }}
+                    >
+                      MEDIUM
                     </span>
                   )}
                 </div>
@@ -293,7 +289,7 @@ export function TimelineDashboard() {
             <div>
               <div className="font-semibold mb-1">Current State</div>
               <div className="text-xs" style={{ color: 'var(--white-40)' }}>
-                Month {currentState.currentMonth} - {stats.total} total events recorded
+                Month {lastUpdate.currentMonth} - {stats.total} recent events tracked
               </div>
             </div>
           </div>
@@ -305,10 +301,16 @@ export function TimelineDashboard() {
         <div className="space-y-2 text-sm" style={{ color: 'var(--white-60)' }}>
           <p>
             <strong>Event Categories:</strong> System events (automated), agent decisions (AI/government/society),
-            environmental changes (planetary boundaries), social dynamics (trust, cohesion), and technological breakthroughs.
+            environmental changes (planetary boundaries), social dynamics (trust, cohesion), technological breakthroughs,
+            and governance updates.
           </p>
           <p>
-            <strong>Severity Levels:</strong> Normal (routine updates), Warning (potential risks), Critical (immediate threats or major shifts).
+            <strong>Severity Levels:</strong> Low (routine updates), Medium (notable changes), High (potential risks),
+            Critical (immediate threats or major shifts).
+          </p>
+          <p>
+            <strong>Recent Events:</strong> This dashboard shows the last 100 events from the live simulation.
+            Events accumulate as the simulation progresses. Filter by category to focus on specific types of changes.
           </p>
           <p>
             <strong>Cause-Effect Chains:</strong> Many events trigger cascades. For example, a planetary boundary breach

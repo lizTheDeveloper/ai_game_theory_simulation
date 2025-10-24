@@ -49,15 +49,15 @@ export function OverviewDashboard() {
 
   // Multi-paradigm scores
   const paradigms = {
-    western: { value: lastUpdate.westernLiberal ?? 50 },
-    development: { value: lastUpdate.development ?? 50 },
-    ecological: { value: lastUpdate.ecological ?? 50 },
-    indigenous: { value: lastUpdate.indigenous ?? 50 }
+    western: { value: lastUpdate.westernLiberalIndex ?? 50 },
+    development: { value: lastUpdate.developmentIndex ?? 50 },
+    ecological: { value: lastUpdate.ecologicalIndex ?? 50 },
+    indigenous: { value: lastUpdate.indigenousIndex ?? 50 }
   }
 
   // Determine overall status
   const getOverallStatus = () => {
-    if (lastUpdate.extinctionRisk && lastUpdate.extinctionRisk > 0.9) return 'extinction'
+    if (lastUpdate.extinctionProbability && lastUpdate.extinctionProbability > 0.9) return 'extinction'
     if (paradigms.ecological.value < 20) return 'critical'
     if (paradigms.western.value < 30) return 'warning'
     return 'normal'
@@ -166,7 +166,7 @@ export function OverviewDashboard() {
             <div className="flex items-center justify-between">
               <span>Extinction Risk</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {((lastUpdate.extinctionRisk || 0) * 100).toFixed(1)}%
+                {((lastUpdate.extinctionProbability || 0) * 100).toFixed(1)}%
               </span>
             </div>
           </div>

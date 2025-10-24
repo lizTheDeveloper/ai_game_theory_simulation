@@ -1102,7 +1102,7 @@ export default function RealtimeDashboard() {
                         events.slice().reverse().slice(0, 20).map((event, idx) => (
                           <div key={idx} className="text-xs border-l-2 pl-2 py-1 border-white/10">
                             <div className="flex items-start gap-2">
-                              <span className="text-white/30 font-mono">M{event.timestamp}</span>
+                              <span className="text-white/30 font-mono">M{event.month}</span>
                               <span className={
                                 event.type === 'critical' ? 'text-red-400' :
                                 event.type === 'high' ? 'text-orange-400' :

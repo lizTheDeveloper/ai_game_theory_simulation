@@ -33,6 +33,22 @@ import type { QualityOfLifeSystems } from '@/types/game';
  * @returns Weighted quality of life score [0, ~1.5] where 1.0 is "good"
  */
 export function calculateQualityOfLife(systems: QualityOfLifeSystems): number {
+  // Validate all inputs - fail loudly if any are NaN
+  if (!validateQoLSystems(systems)) {
+    // Find which value is NaN
+    const nanFields: string[] = [];
+    Object.entries(systems).forEach(([key, value]) => {
+      if (typeof value === 'number' && (isNaN(value) || !isFinite(value))) {
+        nanFields.push(`${key}: ${value}`);
+      }
+    });
+
+    console.error(`❌ NaN/Infinity in QoL systems`);
+    console.error(`   Invalid fields: ${nanFields.join(', ')}`);
+    console.error(`   Full systems: ${JSON.stringify(systems, null, 2)}`);
+    throw new Error(`NaN in Quality of Life calculation - fields: ${nanFields.join(', ')}`);
+  }
+
   // Basic Needs (30% weight)
   const basicNeeds = (
     systems.materialAbundance * 0.4 +    // Food, shelter, goods
@@ -70,7 +86,20 @@ export function calculateQualityOfLife(systems: QualityOfLifeSystems): number {
     (1 - systems.pollutionLevel) * 0.3    // Clean air/water
   ) * 0.1;
 
-  return basicNeeds + psychological + social + health + environmental;
+  const result = basicNeeds + psychological + social + health + environmental;
+
+  // Final NaN check on result
+  if (isNaN(result) || !isFinite(result)) {
+    console.error(`❌ NaN/Infinity in QoL RESULT`);
+    console.error(`   basicNeeds: ${basicNeeds}`);
+    console.error(`   psychological: ${psychological}`);
+    console.error(`   social: ${social}`);
+    console.error(`   health: ${health}`);
+    console.error(`   environmental: ${environmental}`);
+    throw new Error(`Quality of Life calculation produced NaN/Infinity`);
+  }
+
+  return result;
 }
 
 /**

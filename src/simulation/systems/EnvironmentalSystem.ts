@@ -7,9 +7,9 @@
  */
 
 import { GameState } from '@/types/game';
+import { EnvironmentalAccumulation } from '@/types/accumulation';
 import { AccumulationSystem } from './interfaces';
 import {
-  EnvironmentalAccumulation,
   initializeEnvironmentalAccumulation,
   updateEnvironmentalAccumulation,
   getEnvironmentalSustainability,

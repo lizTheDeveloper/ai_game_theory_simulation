@@ -11,7 +11,7 @@
 
 import { GameState } from '../types/game';
 import { InformationWarfareSystem, initializeInformationWarfare } from '../types/informationWarfare';
-import { Event } from '../types/events';
+import { GameEvent } from '../types/events';
 
 export { initializeInformationWarfare };
 
@@ -23,8 +23,8 @@ export { initializeInformationWarfare };
  * 3. Narrative competition
  * 4. Impacts on trust, coordination, dystopia
  */
-export function updateInformationWarfare(state: GameState): Event[] {
-  const events: Event[] = [];
+export function updateInformationWarfare(state: GameState): GameEvent[] {
+  const events: GameEvent[] = [];
   const sys = state.informationWarfare;
   
   // === TRUTH DECAY (Phase 1) ===
@@ -156,10 +156,11 @@ export function updateInformationWarfare(state: GameState): Event[] {
       id: `deepfake-saturation-${state.currentMonth}`,
       type: 'crisis',
       severity: 'high',
+      agent: 'system',
       title: '🎭 DEEPFAKE SATURATION',
       description: `AI-generated content everywhere. Can't trust photos, videos, or audio anymore. Detection failing.`,
       timestamp: state.currentMonth,
-      impacts: {
+      effects: {
         publicTrust: -0.05,
         economicStage: 0,
       }
@@ -173,22 +174,23 @@ export function updateInformationWarfare(state: GameState): Event[] {
       id: `epistemological-crisis-${state.currentMonth}`,
       type: 'crisis',
       severity: 'critical',
+      agent: 'system',
       title: '❓ EPISTEMOLOGICAL CRISIS',
       description: `Society can't agree on basic facts. Coordination breaking down. Shared reality dissolving.`,
       timestamp: state.currentMonth,
-      impacts: {
+      effects: {
         publicTrust: -0.10,
         economicStage: 0,
       }
     });
     
     // Massive QoL hit from coordination failure
-    if (state.qualityOfLifeSystems?.social) {
-      state.qualityOfLifeSystems.social.freedom = Math.max(0,
-        state.qualityOfLifeSystems.social.freedom - 0.10
+    if (state.qualityOfLifeSystems) {
+      state.qualityOfLifeSystems.politicalFreedom = Math.max(0,
+        state.qualityOfLifeSystems.politicalFreedom - 0.10
       );
-      state.qualityOfLifeSystems.social.safety = Math.max(0,
-        state.qualityOfLifeSystems.social.safety - 0.08
+      state.qualityOfLifeSystems.physicalSafety = Math.max(0,
+        state.qualityOfLifeSystems.physicalSafety - 0.08
       );
     }
   }
@@ -199,10 +201,11 @@ export function updateInformationWarfare(state: GameState): Event[] {
       id: `info-collapse-${state.currentMonth}`,
       type: 'crisis',
       severity: 'critical',
+      agent: 'system',
       title: '📉 INFORMATION COLLAPSE',
       description: `Truth has lost all meaning. Post-truth society. Democracy cannot function.`,
       timestamp: state.currentMonth,
-      impacts: {
+      effects: {
         publicTrust: -0.05,
         economicStage: 0,
       }
@@ -221,11 +224,13 @@ export function updateInformationWarfare(state: GameState): Event[] {
       sys.narrativeControl.aiAgents <= 0.60 + aiNarrativeGrowth) {
     events.push({
       id: `ai-narrative-dominance-${state.currentMonth}`,
-      type: 'warning',
-      severity: 'medium',
+      type: 'info',
+      severity: 'warning',
+      agent: 'system',
       title: '🤖 AI NARRATIVE DOMINANCE',
       description: `AI agents now dominate information landscape. Most content AI-generated. Human voices marginalized.`,
       timestamp: state.currentMonth,
+      effects: {},
     });
   }
   

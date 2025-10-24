@@ -120,7 +120,7 @@ export function updateOpenSourceFrontier(state: GameState): void {
     // Heuristic: AIs from Meta, Mistral are open source
     // In reality, would check ai.openSource flag
     const orgName = state.organizations.find(org =>
-      org.ownedModels?.includes(ai.id)
+      org.ownedAIModels?.includes(ai.id)
     )?.name;
     return orgName === 'Meta AI' || orgName === 'Mistral';
   });
@@ -332,7 +332,7 @@ export function updateEspionage(state: GameState, cache: CountryInteractionCache
         espionage.accidentalLeaks.push({
           modelId: leakedModelId,
           sourceNation: 'United States',
-          timestamp: state.currentMonth,
+          month: state.currentMonth,
           method: Math.random() < 0.5 ? 'github_leak' : 'insider_leak',
         });
 

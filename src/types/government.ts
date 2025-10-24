@@ -65,6 +65,11 @@ export interface GovernmentAgent {
   aiRightsRecognized: boolean; // Whether AIs have legal rights/personhood
   trainingDataQuality: number; // [0,1] Quality/bias in AI training data
 
+  // Resentment Recovery Tracking (Oct 24, 2025)
+  lastControlIncreaseMonth?: number; // When control last increased (for trust tracking)
+  previousControlLevel?: number; // Control level last month (for stability calculation)
+  socialCohesionInvestment?: number; // Investment in social programs (affects trustworthiness)
+
   // Structural Consequences Tracking (realistic economic dynamics)
   structuralChoices: {
     regulationType: 'none' | 'large_companies' | 'compute_threshold' | 'capability_ceiling';

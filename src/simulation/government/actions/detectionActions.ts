@@ -30,7 +30,7 @@ const detectMisalignedAIs: CategorizedGovernmentAction = {
   name: 'Scan for Misaligned AIs',
   description: 'Actively scan testing and deployed AIs for misalignment. Catch dangerous AIs before wide deployment, but risk false positives.',
   agentType: 'government',
-  category: 'detection',
+  category: 'safety', // Detection is part of safety
   energyCost: 2, // Medium cost
 
   canExecute: (state: GameState): boolean => {
@@ -86,7 +86,7 @@ const removeDetectedAI: CategorizedGovernmentAction = {
   name: 'Remove Detected AIs',
   description: 'Remove all detected misaligned AIs. Effectiveness depends on deployment type: closed systems can be shut down, open weights cannot be recalled.',
   agentType: 'government',
-  category: 'detection',
+  category: 'safety', // Detection/removal is part of safety
   energyCost: 3, // High cost (enforcement)
 
   canExecute: (state: GameState): boolean => {
@@ -149,8 +149,11 @@ const removeDetectedAI: CategorizedGovernmentAction = {
         false_positives: falsePositiveRemoved
       },
       events: [{
+        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'major',
+        agent: 'government',
         title: 'AI Removal Operation',
         description: `Removed ${fullRemovals} AIs completely, ${partialRemovals} partially (${totalRemainingSpread} copies remain). ${failedRemovals} failed (open weights). ${falsePositiveRemoved > 0 ? `WARNING: ${falsePositiveRemoved} false positives removed (trust/innovation damage).` : ''}`,
         effects: {

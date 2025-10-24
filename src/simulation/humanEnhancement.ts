@@ -15,8 +15,6 @@
 
 import {
   HumanEnhancementSystem,
-  EnhancementAccess,
-  AIAugmentationSystem,
   BCIAdoptionSystem,
   EnhancementStratification,
   HumanAIHybridSystem,
@@ -299,8 +297,8 @@ function checkBCIAvailability(
   }
   
   // Safety improves slowly with research investment
-  if (state.government.investmentInResearch > 0.30) {
-    system.bciAdoption.bciSafetyLevel = Math.min(0.95, 
+  if (state.government.alignmentResearchInvestment > 3.0) {
+    system.bciAdoption.bciSafetyLevel = Math.min(0.95,
       system.bciAdoption.bciSafetyLevel + 0.001); // +1.2% per year at high research
   }
 }

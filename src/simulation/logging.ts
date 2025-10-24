@@ -151,7 +151,7 @@ export class SimulationLogger {
       (1 + Math.pow(totalAICapability, 1.5));
     
     return {
-      timestamp: state.currentMonth,
+      month: state.currentMonth,
       totalAICapability,
       avgAIAlignment,
       aiEscaped,

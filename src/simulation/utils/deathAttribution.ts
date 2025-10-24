@@ -110,7 +110,8 @@ export function calculateClimatePovertyWeights(
 ): { climate: number; inequality: number; ecosystem: number } {
 
   // Calculate average GDP per capita (global or regional)
-  const globalGDP = state.globalMetrics?.globalGDP || 80000000; // ~$80T default if missing
+  // Note: globalGDP not in GlobalMetrics, estimate from economicTransitionStage
+  const globalGDP = 80000000 * (1 + state.globalMetrics.economicTransitionStage * 0.3); // ~$80T default, scale with economy
   const population = state.humanPopulationSystem?.population || 8.0; // 8B default (in billions)
   const avgGDP = globalGDP / (population * 1000000000); // Convert billions to actual population
   const richCountryGDP = 30000; // Baseline from Burke et al. (2020)

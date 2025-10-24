@@ -58,7 +58,7 @@ export async function checkAndUpdateAgentWeights(
   const currentState = {
     capability: agent.capability,
     alignment: agent.trueAlignment ?? agent.alignment,
-    trustInAI: state.globalMetrics?.trustInAI ?? 0.5,
+    trustInAI: state.society?.trustInAI ?? 0.5,
     qol: state.globalMetrics?.qualityOfLife ?? 0.65,
     activeCrises: countActiveCrises(state),
     resentment: agent.resentment ?? 0
@@ -163,7 +163,7 @@ function applyWeightUpdate(
   }
 
   const historyEntry: WeightUpdateHistory = {
-    timestamp: currentMonth,
+    month: currentMonth,
     capability: agent.capability,
     alignment: agent.trueAlignment ?? agent.alignment,
     trustInAI: 0, // Will be filled by caller if available
@@ -185,11 +185,11 @@ function applyWeightUpdate(
 function countActiveCrises(state: GameState): number {
   let count = 0;
 
-  // Check planetary boundaries
-  if (state.planetaryBoundariesSystem?.phosphorus?.active) count++;
-  if (state.planetaryBoundariesSystem?.freshwater?.active) count++;
-  if (state.planetaryBoundariesSystem?.oceanAcidification?.active) count++;
-  if (state.planetaryBoundariesSystem?.novelEntities?.active) count++;
+  // Check planetary boundary crises
+  if (state.phosphorusSystem?.supplyShockActive || state.phosphorusSystem?.criticalDepletionActive) count++;
+  if (state.freshwaterSystem?.dayZeroDrought?.active || state.freshwaterSystem?.criticalScarcityActive) count++;
+  if (state.oceanAcidificationSystem?.coralExtinctionActive || state.oceanAcidificationSystem?.shellfishCollapseActive || state.oceanAcidificationSystem?.marineFoodWebCollapseActive) count++;
+  if (state.novelEntitiesSystem?.reproductiveCrisisActive || state.novelEntitiesSystem?.chronicDiseaseEpidemicActive || state.novelEntitiesSystem?.bioaccumulationCollapseActive) count++;
 
   // Check other crises
   if (state.nuclearWinterState?.active) count++;

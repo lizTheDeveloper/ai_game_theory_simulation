@@ -102,7 +102,7 @@ export function getCachedRegions(
   state: GameState,
   existingCache: RegionalCache | null
 ): RegionalCache {
-  if (isCacheValid(existingCache, state.currentMonth)) {
+  if (existingCache && isCacheValid(existingCache, state.currentMonth)) {
     return existingCache;
   }
   return buildRegionalCache(state);

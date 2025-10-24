@@ -168,14 +168,14 @@ export class UNDPLoader {
   async loadHDI(options?: {
     forceRefresh?: boolean;
     year?: number;
-  }): Promise<{ version: string; year: number; countries: HDICountryData[] }> {
+  }): Promise<{ version: string; year: number; updateDate: string; countries: HDICountryData[] }> {
     const year = options?.year || 2024;
 
     if (options?.forceRefresh) {
       await cacheManager.forceRefresh('undp-hdi');
     }
 
-    const cached = await cacheManager.loadFromCache<{ version: string; year: number; countries: HDICountryData[] }>('undp-hdi');
+    const cached = await cacheManager.loadFromCache<{ version: string; year: number; updateDate: string; countries: HDICountryData[] }>('undp-hdi');
     if (cached) {
       console.log(`[UNDPLoader] Loaded HDI from cache (${cached.countries.length} countries)`);
       return cached;
@@ -202,14 +202,14 @@ export class UNDPLoader {
   async loadMPI(options?: {
     forceRefresh?: boolean;
     year?: number;
-  }): Promise<{ version: string; year: number; countries: MPICountryData[] }> {
+  }): Promise<{ version: string; year: number; updateDate: string; countries: MPICountryData[] }> {
     const year = options?.year || 2024;
 
     if (options?.forceRefresh) {
       await cacheManager.forceRefresh('undp-mpi');
     }
 
-    const cached = await cacheManager.loadFromCache<{ version: string; year: number; countries: MPICountryData[] }>('undp-mpi');
+    const cached = await cacheManager.loadFromCache<{ version: string; year: number; updateDate: string; countries: MPICountryData[] }>('undp-mpi');
     if (cached) {
       console.log(`[UNDPLoader] Loaded MPI from cache (${cached.countries.length} countries)`);
       return cached;
@@ -248,7 +248,7 @@ export class UNDPLoader {
   /**
    * Fetch HDI from source (mock data for now)
    */
-  private async fetchHDI(year: number): Promise<{ version: string; year: number; countries: HDICountryData[] }> {
+  private async fetchHDI(year: number): Promise<{ version: string; year: number; updateDate: string; countries: HDICountryData[] }> {
     console.log(`[UNDPLoader] Fetching HDI data for ${year}...`);
 
     // Real HDI 2023 scores (UNDP Human Development Report 2024)
@@ -300,6 +300,7 @@ export class UNDPLoader {
     return {
       version: '2024',
       year,
+      updateDate: new Date().toISOString(),
       countries,
     };
   }
@@ -307,7 +308,7 @@ export class UNDPLoader {
   /**
    * Fetch MPI from source (mock data for now)
    */
-  private async fetchMPI(year: number): Promise<{ version: string; year: number; countries: MPICountryData[] }> {
+  private async fetchMPI(year: number): Promise<{ version: string; year: number; updateDate: string; countries: MPICountryData[] }> {
     console.log(`[UNDPLoader] Fetching MPI data for ${year}...`);
 
     // Real MPI 2024 scores (OPHI Global MPI 2024)
@@ -343,6 +344,7 @@ export class UNDPLoader {
     return {
       version: '2024',
       year,
+      updateDate: new Date().toISOString(),
       countries,
     };
   }

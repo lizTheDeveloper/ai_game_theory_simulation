@@ -77,10 +77,9 @@ function updateFossilFuelDepletion(state: GameState, resources: ResourceEconomy)
     resources.ocean.pollutionLoad += resources.oil.spillSeverity * 0.05;
     
     addEvent(state, {
-      id: `oil_spill_${state.currentMonth}`,
-      timestamp: state.currentMonth,
       type: 'crisis',
       severity: 'warning',
+      agent: 'environmental',
       title: '🛢️ Oil Spill',
       description: `Major oil spill occurred. ${(resources.oil.spillSeverity * 100).toFixed(0)}% severity. Ocean pollution increasing.`,
       effects: { ocean_pollution: resources.oil.spillSeverity }
@@ -588,10 +587,9 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
     // First month of crisis
     if (!wasInCrisis) {
       addEvent(state, {
-        id: `ocean_crisis_${state.currentMonth}`,
-        timestamp: state.currentMonth,
         type: 'crisis',
         severity: 'critical',
+        agent: 'environmental',
         title: '🌊 OCEAN CRISIS',
         description: `Ocean health collapsing! pH: ${ocean.pH.toFixed(2)}, Oxygen: ${(ocean.oxygenLevel * 100).toFixed(0)}%, Dead zones: ${(ocean.deadZoneExtent * 100).toFixed(0)}%`,
         effects: { ocean_crisis: 1.0 }
@@ -612,10 +610,9 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
       state.extinctionState.severity = 1.0;
       
       addEvent(state, {
-        id: `anoxic_extinction_${state.currentMonth}`,
-        timestamp: state.currentMonth,
         type: 'catastrophe',
         severity: 'existential',
+        agent: 'environmental',
         title: '☠️ ANOXIC OCEAN EXTINCTION',
         description: `Oceans have passed the point of no return. pH: ${ocean.pH.toFixed(2)} (<7.5), oxygen: ${(ocean.oxygenLevel * 100).toFixed(0)}% (<20%). Phytoplankton populations collapsed. Atmospheric oxygen will decline over next 10-50 years. Human extinction inevitable without geoengineering intervention.`,
         effects: { extinction: 1.0 }
@@ -653,7 +650,7 @@ function updateIndustryOpposition(state: GameState, resources: ResourceEconomy):
   fossil.deploymentResistance = fossil.politicalPower * fossil.desperation * 0.5; // Up to 50%
   
   // Government capture (depends on government type)
-  const govType = state.government.type;
+  const govType = state.government.governmentType;
   fossil.governmentCapture = (
     (govType === 'authoritarian' && fossil.politicalPower > 0.6) ||
     fossil.politicalPower > 0.75
@@ -670,10 +667,9 @@ function updateIndustryOpposition(state: GameState, resources: ResourceEconomy):
     fossil.sabotageAttempts++;
     
     addEvent(state, {
-      id: `fossil_sabotage_${state.currentMonth}`,
-      timestamp: state.currentMonth,
       type: 'crisis',
       severity: 'warning',
+      agent: 'society',
       title: '⚠️ Industry Sabotage',
       description: `Fossil fuel industry actors attempting to sabotage clean energy projects. Political opposition intensifying.`,
       effects: { industry_opposition: 1.0 }
@@ -747,76 +743,70 @@ function checkResourceEvents(state: GameState, resources: ResourceEconomy): void
   
   if (resources.oil.reserves < 0.2 && month % 12 === 0) {
     addEvent(state, {
-      id: `oil_depletion_${month}`,
-      timestamp: month,
       type: 'crisis',
       severity: 'warning',
+      agent: 'environmental',
       title: '⚠️ Oil Reserves Critical',
       description: `Oil reserves down to ${(resources.oil.reserves * 100).toFixed(0)}%. Price increasing, economic disruption likely without substitution.`,
       effects: { resource_scarcity: 0.5 }
     });
   }
-  
+
   if (resources.rareEarths.reserves < 0.3 && month % 12 === 0) {
     addEvent(state, {
-      id: `rare_earth_bottleneck_${month}`,
-      timestamp: month,
       type: 'crisis',
       severity: 'critical',
+      agent: 'environmental',
       title: '⚠️ Rare Earth Bottleneck',
       description: `Rare earth reserves at ${(resources.rareEarths.reserves * 100).toFixed(0)}%. Clean energy transition blocked! Solar panels, wind turbines require rare earth magnets.`,
       effects: { tech_bottleneck: 0.8 }
     });
   }
-  
+
   if (resources.lithium.reserves < 0.2 && month % 12 === 0) {
     addEvent(state, {
-      id: `lithium_crisis_${month}`,
-      timestamp: month,
       type: 'crisis',
       severity: 'critical',
+      agent: 'environmental',
       title: '🔋 Lithium Crisis',
       description: `Lithium reserves depleted to ${(resources.lithium.reserves * 100).toFixed(0)}%. EV production and grid storage severely limited. Battery technology transition urgent!`,
       effects: { battery_crisis: 0.7 }
     });
   }
-  
+
   // === FOOD/WATER CRISES ===
-  
+
   if (resources.food.reserves < 0.5 && month % 6 === 0) {
     addEvent(state, {
-      id: `food_shortage_${month}`,
-      timestamp: month,
       type: 'crisis',
       severity: 'critical',
+      agent: 'environmental',
       title: '🌾 Food Shortage',
       description: `Food reserves at ${(resources.food.reserves * 100).toFixed(0)}%. Soil health: ${(resources.food.soilHealth * 100).toFixed(0)}%, Pollinators: ${(resources.food.pollinatorPopulation * 100).toFixed(0)}%. Mass famine risk.`,
       effects: { food_crisis: 1.0 }
     });
   }
-  
+
   if (resources.water.reserves < 0.4 && month % 6 === 0) {
     addEvent(state, {
-      id: `water_crisis_${month}`,
-      timestamp: month,
       type: 'crisis',
       severity: 'critical',
+      agent: 'environmental',
       title: '💧 Water Crisis',
       description: `Water reserves at ${(resources.water.reserves * 100).toFixed(0)}%. Aquifers: ${(resources.water.aquiferLevels * 100).toFixed(0)}%. Regional conflicts over water likely.`,
       effects: { water_crisis: 1.0 }
     });
   }
-  
+
   // === CLIMATE MILESTONES ===
-  
+
   if (resources.co2.temperatureAnomaly > 1.5 && month % 12 === 0) {
     const milestone = Math.floor(resources.co2.temperatureAnomaly * 2) / 2; // Round to 0.5°C
-    
+
     addEvent(state, {
-      id: `climate_milestone_${milestone}_${month}`,
-      timestamp: month,
       type: 'crisis',
       severity: 'critical',
+      agent: 'environmental',
       title: `🌡️ +${milestone.toFixed(1)}°C Warming`,
       description: `Global temperature now +${resources.co2.temperatureAnomaly.toFixed(1)}°C above pre-industrial. CO2: ${Math.round(resources.co2.atmosphericCO2)} ppm. Tipping points approaching.`,
       effects: { climate_crisis: milestone / 4.0 }

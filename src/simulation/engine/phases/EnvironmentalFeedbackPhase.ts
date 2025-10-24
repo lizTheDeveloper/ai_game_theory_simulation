@@ -21,7 +21,7 @@
  * @module simulation/engine/phases/EnvironmentalFeedbackPhase
  */
 
-import type { GameState, RNGFunction } from '@/types/game';
+import type { GameState, RNGFunction, GameEvent } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
 
 /**
@@ -62,22 +62,36 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
       };
     }
 
-    // Sync pollution to 0-100 scale
-    state.environmentalAccumulation.pollutionLevel = pollutionLevel / 100;
+    // Sync pollution to 0-100 scale (detect NaN and fail loudly)
+    if (isNaN(pollutionLevel)) {
+      console.error(`❌ NaN pollution level in EnvironmentalFeedbackPhase at month ${state.currentMonth}`);
+      console.error(`   environmentalAccumulation.pollutionLevel: ${state.environmentalAccumulation?.pollutionLevel}`);
+      console.error(`   novelEntitiesSystem exists: ${!!state.novelEntitiesSystem}`);
+      throw new Error(`NaN pollution level detected - simulation corrupted at month ${state.currentMonth}`);
+    }
+    state.environmentalAccumulation.pollutionLevel = Math.max(0, Math.min(1, pollutionLevel / 100));
 
     // Update climate stability from climate state
     state.environmentalAccumulation.climateStability = climateState.climateStability;
 
-    const events: string[] = [];
+    const events: GameEvent[] = [];
 
     // Report significant changes (only log major updates)
     if (state.currentMonth % 12 === 0) { // Annual reporting
-      events.push(
-        `Environmental State: ` +
-        `Climate=${climateState.globalTemperatureAnomaly.toFixed(2)}°C, ` +
-        `Pollution=${pollutionLevel.toFixed(1)}, ` +
-        `Resources=${(100 - resourceDepletion).toFixed(1)}% remaining`
-      );
+      events.push({
+        id: `environmental_state_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'environmental',
+        severity: 'info',
+        agent: 'system',
+        title: 'Environmental State Annual Report',
+        description: `Climate=${climateState.globalTemperatureAnomaly.toFixed(2)}°C, Pollution=${pollutionLevel.toFixed(1)}, Resources=${(100 - resourceDepletion).toFixed(1)}% remaining`,
+        effects: {
+          climateAnomaly: climateState.globalTemperatureAnomaly,
+          pollution: pollutionLevel,
+          resourcesRemaining: 100 - resourceDepletion
+        }
+      });
     }
 
     return { events };
@@ -130,7 +144,16 @@ function aggregateClimateState(state: GameState): {
 function aggregatePollutionLevel(state: GameState): number {
   // Priority 1: Environmental accumulation (0-1 scale → 0-100)
   if (state.environmentalAccumulation?.pollutionLevel !== undefined) {
-    return state.environmentalAccumulation.pollutionLevel * 100;
+    const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
+
+    // Detect NaN and fail loudly - this is a bug that needs fixing
+    if (isNaN(pollutionLevel)) {
+      console.error(`❌ NaN in environmentalAccumulation.pollutionLevel at month ${state.currentMonth}`);
+      console.error(`   Raw value: ${pollutionLevel}`);
+      throw new Error(`NaN pollution in environmental accumulation - trace and fix source`);
+    }
+
+    return pollutionLevel * 100;
   }
 
   // Priority 2: Novel entities system (plastic, PFAS, etc.)

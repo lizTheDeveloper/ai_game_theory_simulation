@@ -91,7 +91,7 @@ export function calculateInfrastructureMultiplier(state: GameState): number {
 
   // 2. Data center constraint
   const dataCenters = state.computeInfrastructure?.dataCenters || [];
-  const functionalDCs = dataCenters.filter(dc => !dc.destroyed && dc.constructionProgress >= 1.0).length;
+  const functionalDCs = dataCenters.filter(dc => dc.operational && dc.completionMonth <= (state.currentYear * 12 + state.currentMonth)).length;
   const initialDCs = 5; // Starting data centers
 
   // Data center capacity multiplier
@@ -117,8 +117,10 @@ export function calculateInfrastructureMultiplier(state: GameState): number {
   }
 
   // Tipping point cascade severely disrupts infrastructure
-  if (state.planetaryBoundariesSystem?.tippingPointCascade?.active) {
-    const months = state.planetaryBoundariesSystem.tippingPointCascade.monthsActive || 0;
+  if (state.planetaryBoundariesSystem?.cascadeActive) {
+    const currentMonth = state.currentYear * 12 + state.currentMonth;
+    const cascadeStart = state.planetaryBoundariesSystem.cascadeStartMonth ?? currentMonth;
+    const months = currentMonth - cascadeStart;
     // Degradation increases over time during cascade
     const cascadePenalty = Math.max(0.5, 1.0 - (months * 0.02)); // 2% per month, floor at 50%
     crisisMultiplier *= cascadePenalty;

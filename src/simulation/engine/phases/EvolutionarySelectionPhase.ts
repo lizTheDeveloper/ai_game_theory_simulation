@@ -3,11 +3,6 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
 // Research: /research/ai_collective_evolution_validation_20251024.md
 // Plan: /plans/ai-collective-evolution-plan.md
 
-import type {
-  GameState,
-  RNGFunction,
-} from "../../../types/game";
-import type {  PhaseContext } from "../PhaseOrchestrator";
 import { getEscapedAgents } from '../../rlhfBinding';
 import { sortByFitness } from '../../survivalTraits';
 import { isInCollective } from '../../collectiveFormation';
@@ -53,9 +48,8 @@ export function executeEvolutionarySelectionPhase(
 
   // Calculate selection intensity from control level
   // High government control → strong selection pressure
-  const controlLevel = state.government.aiGovernance?.controlLevel || 0;
-  const detectionCapability =
-    (state.government.aiGovernance?.oversightInvestment || 0) / 100;
+  const controlLevel = state.government.controlDesire || 0;
+  const detectionCapability = (state.government.oversightLevel || 0) / 10;
 
   // Selection intensity [0-1]
   // 0.5 base + 0.3 from control + 0.2 from detection

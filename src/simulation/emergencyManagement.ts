@@ -164,8 +164,8 @@ export function calculateEmergencyDeploymentTime(
   // MODIFIER 5: Government type
   // Research: Authoritarian can mobilize faster but less legitimacy
   // China locked down Wuhan in 76 days, Western democracies took longer
-  const govType = state.government.structuralChoices.governmentType || 'democracy';
-  const govModifier = govType === 'autocracy' ? 0.7 : govType === 'democracy' ? 1.0 : 0.85;
+  const govType = state.government.governmentType || 'democratic';
+  const govModifier = govType === 'authoritarian' ? 0.7 : govType === 'democratic' ? 1.0 : 0.85;
   deploymentTime *= govModifier;
 
   // Minimum deployment time: 0.25 months (1 week)

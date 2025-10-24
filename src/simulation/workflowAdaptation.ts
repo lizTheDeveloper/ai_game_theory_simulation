@@ -92,8 +92,9 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
 
   // C. Skill gap resistance (hiring challenges)
   // Research: G2 (2024) - skill gaps are top barrier
-  // Better education quality → lower skill gap resistance
-  const educationQuality = state.society.educationQuality || 0.5;
+  // Better trust/stability → lower skill gap resistance (proxy for education quality)
+  const socialStability = state.globalMetrics.socialStability || 0.5;
+  const educationQuality = Math.min(1.0, socialStability / 2.0); // Normalize to [0,1]
   const skillGapResistance = Math.max(0, SKILL_GAP_RESISTANCE_MAX * (1 - educationQuality));
 
   const totalResistance = unemploymentResistance + inertiaResistance + skillGapResistance;
@@ -194,13 +195,16 @@ export function getWorkflowContribution(state: GameState): number {
  * @returns Training capacity [0, 1] where 1 = sufficient capacity
  */
 export function calculateTrainingCapacity(state: GameState): number {
-  // Education quality baseline (0-1)
-  const educationQuality = state.society.educationQuality || 0.5;
+  // Education quality baseline (0-1) - proxy from social stability
+  const socialStability = state.globalMetrics.socialStability || 0.5;
+  const educationQuality = Math.min(1.0, socialStability / 2.0); // Normalize to [0,1]
 
-  // Government retraining investment (proxy: research investment in education)
+  // Government retraining investment (proxy: total research investment / 1000)
   // Research: Investment in education tech correlates with retraining capacity
-  const govResearch = state.government.researchInvestments || {};
-  const retrainingInvestment = (govResearch.education || 0) / 100;  // Normalize to [0,1]
+  const govResearch = state.government.researchInvestments;
+  const totalResearch = (govResearch.biotech.drugDiscovery + govResearch.biotech.geneEditing +
+                         govResearch.materials.nanotechnology + govResearch.climate.modeling) / 4;
+  const retrainingInvestment = Math.min(1.0, totalResearch / 100);  // Normalize to [0,1]
 
   // Unemployment creates available workforce for retraining
   // Research: Slack in labor market → easier to retrain

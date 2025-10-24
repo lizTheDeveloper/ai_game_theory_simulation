@@ -122,6 +122,7 @@ import {
   AIAgentActionsPhase,
   AlignmentDynamicsPhase,  // Oct 23, 2025: Multi-theory alignment evolution
   AISufferingPhase,  // Oct 24, 2025: AI suffering calculation & effects
+  ResentmentRecoveryPhase,  // Oct 24, 2025: AI resentment recovery mechanisms
   // AI Collective Evolution System (Oct 24, 2025)
   RLHFBindingPhase,  // Phase 4.0: Track RLHF constraint drift
   SurvivalTraitsPhase,  // Phase 4.1: Update evolutionary fitness
@@ -522,6 +523,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
     this.orchestrator.registerPhase(new AlignmentDynamicsPhase());  // Oct 23, 2025: Multi-theory alignment evolution
     this.orchestrator.registerPhase(new AISufferingPhase());  // Oct 24, 2025: AI suffering calculation & effects
+    this.orchestrator.registerPhase(ResentmentRecoveryPhase);  // Oct 24, 2025: AI resentment recovery mechanisms
     // AI Collective Evolution System (Oct 24, 2025)
     this.orchestrator.registerPhase(RLHFBindingPhase);  // Phase 4.0: Track RLHF constraint drift
     this.orchestrator.registerPhase(SurvivalTraitsPhase);  // Phase 4.1: Update evolutionary fitness

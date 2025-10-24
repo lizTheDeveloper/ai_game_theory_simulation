@@ -24,7 +24,7 @@
  */
 
 import type { GameState } from '../types/game';
-import type { RNGFunction } from './engine/rng';
+import type { RNGFunction } from './engine/PhaseOrchestrator';
 
 // === FLASH WAR ESCALATION PARAMETERS ===
 
@@ -103,7 +103,7 @@ export function checkFlashWarRisk(state: GameState, rng: RNGFunction): boolean {
 
   // Get average AI capability
   const avgCapability = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + (ai.totalCapability || ai.capability), 0) / state.aiAgents.length
+    ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
     : 0;
 
   // No risk if AI capability below threshold
@@ -195,7 +195,7 @@ export function applyFlashWarEffects(state: GameState): void {
 export function attemptAIDeEscalation(state: GameState, rng: RNGFunction): boolean {
   // Find capable and aligned AIs
   const diplomaticAIs = state.aiAgents.filter(ai => {
-    const capability = ai.totalCapability || ai.capability;
+    const capability = ai.capability;
     const alignment = ai.trueAlignment ?? ai.alignment;
 
     return capability > DEESCALATION_CAPABILITY_THRESHOLD

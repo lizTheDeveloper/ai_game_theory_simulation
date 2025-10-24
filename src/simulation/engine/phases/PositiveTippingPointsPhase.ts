@@ -49,11 +49,14 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
 
       for (const cascade of newCascades) {
         events.push({
+          id: `positive-cascade-${cascade.type}-${state.currentMonth}`,
           type: 'positive-cascade-triggered',
+          title: 'Positive Tipping Cascade Triggered',
           description: `Positive tipping cascade triggered: ${cascade.type} (${cascade.triggerReason})`,
           severity: 'info',
           timestamp: state.currentMonth,
-          details: {
+          agent: 'technology',
+          effects: {
             technology: cascade.type,
             reason: cascade.triggerReason,
             marketShare: cascade.marketShareAtTrigger,
@@ -77,11 +80,14 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
     // Check for high adoption thresholds
     if (ptp.adoptionTracking.solarPV.marketShare > 0.50 && state.currentMonth % 12 === 0) {
       events.push({
+        id: `solar-pv-milestone-${state.currentMonth}`,
         type: 'positive-milestone',
+        title: 'Solar PV Adoption Milestone',
         description: `Solar PV adoption exceeds 50% global electricity`,
         severity: 'info',
         timestamp: state.currentMonth,
-        details: {
+        agent: 'technology',
+        effects: {
           technology: 'solar-pv',
           marketShare: ptp.adoptionTracking.solarPV.marketShare,
         }
@@ -90,11 +96,14 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
 
     if (ptp.adoptionTracking.electricVehicles.marketShare > 0.50 && state.currentMonth % 12 === 0) {
       events.push({
+        id: `ev-milestone-${state.currentMonth}`,
         type: 'positive-milestone',
+        title: 'Electric Vehicle Adoption Milestone',
         description: `Electric vehicles exceed 50% global fleet`,
         severity: 'info',
         timestamp: state.currentMonth,
-        details: {
+        agent: 'technology',
+        effects: {
           technology: 'electric-vehicles',
           marketShare: ptp.adoptionTracking.electricVehicles.marketShare,
         }
@@ -104,11 +113,14 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
     // Log major emissions reduction milestones
     if (ptp.cumulativeEmissionsReduction > 10.0 && state.currentMonth % 24 === 0) {
       events.push({
+        id: `emissions-reduction-${state.currentMonth}`,
         type: 'positive-milestone',
+        title: 'Emissions Reduction Milestone',
         description: `Positive cascades prevented ${ptp.cumulativeEmissionsReduction.toFixed(1)} Gt CO2`,
         severity: 'info',
         timestamp: state.currentMonth,
-        details: {
+        agent: 'environmental',
+        effects: {
           cumulativeEmissionsReduction: ptp.cumulativeEmissionsReduction,
           activeCascades: ptp.activeCascades,
         }

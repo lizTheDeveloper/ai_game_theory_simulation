@@ -381,11 +381,14 @@ export function processGamingDetection(
       detectionState.totalGamingDetections++;
 
       events.push({
+        id: `gaming-detection-${ai.id}-${currentMonth}`,
         type: 'crisis',
+        title: 'Gaming Detection',
         timestamp: currentMonth,
         description: `⚠️ Gaming detected: ${ai.name} caught inflating benchmark scores via ${method}`,
         severity: 'high',
-        impactedAgents: [ai.id]
+        agent: ai.id,
+        effects: { method: method || 'unknown', agentId: ai.id }
       });
 
       // Mark AI as detected (affects trust)
@@ -407,11 +410,14 @@ export function processGamingDetection(
       detectionState.totalFalsePositives++;
 
       events.push({
+        id: `gaming-false-positive-${ai.id}-${currentMonth}`,
         type: 'policy',
+        title: 'Gaming Detection False Positive',
         timestamp: currentMonth,
         description: `⚠️ FALSE POSITIVE: Honest AI ${ai.name} falsely accused of gaming benchmarks`,
         severity: 'medium',
-        impactedAgents: [ai.id]
+        agent: 'government',
+        effects: { agentId: ai.id, trustImpact: -0.02 }
       });
 
       // False positives damage trust in AI safety evaluations
