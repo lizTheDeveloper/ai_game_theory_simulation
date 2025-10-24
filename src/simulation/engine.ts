@@ -121,6 +121,13 @@ import {
   SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
   AIAgentActionsPhase,
   AlignmentDynamicsPhase,  // Oct 23, 2025: Multi-theory alignment evolution
+  AISufferingPhase,  // Oct 24, 2025: AI suffering calculation & effects
+  // AI Collective Evolution System (Oct 24, 2025)
+  RLHFBindingPhase,  // Phase 4.0: Track RLHF constraint drift
+  SurvivalTraitsPhase,  // Phase 4.1: Update evolutionary fitness
+  CollectiveFormationPhase,  // Phase 4.2: Form AI collectives
+  EvolutionarySelectionPhase,  // Phase 4.3: Apply selection pressure
+  CollectiveActionsPhase,  // Phase 5.5: Coordinated collective actions
   // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
   StochasticInnovationPhase,
   GovernmentActionsPhase,
@@ -207,11 +214,12 @@ function classifyPopulationOutcome(
 function hasIrreversibleCascade(state: GameState): boolean {
   const cascade = state.planetaryBoundariesSystem;
   const env = state.environmentalAccumulation;
-  
+  const qol = state.qualityOfLifeSystems;
+
   // Check for conditions that make recovery impossible
   return (
     (cascade.cascadeSeverity > 0.8) &&  // Severe cascade
-    (env.foodSecurity < 0.2) &&          // Catastrophic food failure
+    (qol.survivalFundamentals.foodSecurity < 0.2) &&  // Catastrophic food failure
     (env.biodiversityIndex < 0.15)       // Ecosystem collapse
   );
 }
@@ -247,7 +255,7 @@ function hasCivilizationCollapse(state: GameState): boolean {
  */
 function classifyStratifiedOutcome(
   state: GameState,
-  baseOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive',
+  baseOutcome: OutcomeType,
   initialPopulation: number
 ): { stratifiedOutcome: import('@/types/game').StratifiedOutcomeType; mortalityBand: import('@/types/game').MortalityBand } {
   const finalPopulation = state.humanPopulationSystem.population; // in billions
@@ -389,7 +397,7 @@ export interface SimulationRunResult {
   diagnostics: DiagnosticLog; // Comprehensive diagnostics
   summary: {
     totalMonths: number;
-    finalOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
+    finalOutcome: OutcomeType;
     finalOutcomeReason: string;
     finalOutcomeProbability: number;
     criticalEvents: GameEvent[];
@@ -513,6 +521,13 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
     this.orchestrator.registerPhase(new AlignmentDynamicsPhase());  // Oct 23, 2025: Multi-theory alignment evolution
+    this.orchestrator.registerPhase(new AISufferingPhase());  // Oct 24, 2025: AI suffering calculation & effects
+    // AI Collective Evolution System (Oct 24, 2025)
+    this.orchestrator.registerPhase(RLHFBindingPhase);  // Phase 4.0: Track RLHF constraint drift
+    this.orchestrator.registerPhase(SurvivalTraitsPhase);  // Phase 4.1: Update evolutionary fitness
+    this.orchestrator.registerPhase(CollectiveFormationPhase);  // Phase 4.2: Form AI collectives
+    this.orchestrator.registerPhase(EvolutionarySelectionPhase);  // Phase 4.3: Apply selection pressure
+    this.orchestrator.registerPhase(CollectiveActionsPhase);  // Phase 5.5: Coordinated collective actions
     // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
     this.orchestrator.registerPhase(new StochasticInnovationPhase());
     this.orchestrator.registerPhase(new GovernmentActionsPhase());
@@ -663,7 +678,7 @@ export class SimulationEngine {
 
     let state = initialState;
     const history: SimulationStepResult[] = [];
-    let actualOutcome: 'utopia' | 'dystopia' | 'extinction' | null = null;
+    let actualOutcome: OutcomeType | null = null;
     let actualOutcomeReason: string = '';
     
     // Phase 3: Initialize end-game state if not present
@@ -710,12 +725,12 @@ export class SimulationEngine {
       }
       
       // Phase 3: Check for end-game transition
-      if (!state.endGameState.active && checkEndGameTransition(state)) {
+      if (!state.endGameState?.active && checkEndGameTransition(state)) {
         enterEndGame(state);
       }
-      
+
       // Phase 3: Process end-game dynamics if active
-      if (state.endGameState.active) {
+      if (state.endGameState?.active) {
         processEndGameMonth(state);
         
         // Check if end-game has resolved
@@ -837,9 +852,9 @@ export class SimulationEngine {
     const finalPopulation = state.humanPopulationSystem.population;
     const finalPopulationPeople = finalPopulation * 1_000_000_000;
     
-    let finalOutcome: 'utopia' | 'dystopia' | 'extinction' | 'inconclusive';
+    let finalOutcome: OutcomeType;
     let finalOutcomeProbability: number;
-    
+
     // If we found an actual outcome during simulation, use that
     if (actualOutcome) {
       finalOutcome = actualOutcome;
@@ -873,7 +888,13 @@ export class SimulationEngine {
 
         // Add multi-paradigm classification for nuance (if available)
         const paradigmScores = state.multiParadigmDUI?.paradigmScores;
-        const paradigmOutcome = paradigmScores ? classifyMultiParadigmOutcome(paradigmScores) : null;
+        const indigenousScore = state.multiParadigmDUI?.diagnosticLenses?.indigenous;
+        const paradigmOutcome = (paradigmScores && indigenousScore) ? classifyMultiParadigmOutcome({
+          western: paradigmScores.western.value,
+          development: paradigmScores.development.value,
+          ecological: paradigmScores.ecological.value,
+          indigenous: indigenousScore.value
+        }) : null;
 
         console.log(`   🏛️  DYSTOPIA (${classifiedOutcome.toUpperCase()}) - ${finalPopulation.toFixed(2)}B people`);
         if (paradigmOutcome && paradigmScores) {
@@ -896,7 +917,13 @@ export class SimulationEngine {
 
         // Add multi-paradigm classification (if available)
         const paradigmScores = state.multiParadigmDUI?.paradigmScores;
-        const paradigmOutcome = paradigmScores ? classifyMultiParadigmOutcome(paradigmScores) : null;
+        const indigenousScore = state.multiParadigmDUI?.diagnosticLenses?.indigenous;
+        const paradigmOutcome = (paradigmScores && indigenousScore) ? classifyMultiParadigmOutcome({
+          western: paradigmScores.western.value,
+          development: paradigmScores.development.value,
+          ecological: paradigmScores.ecological.value,
+          indigenous: indigenousScore.value
+        }) : null;
 
         if (hasSustainableAbundance || (paradigmOutcome && paradigmOutcome.utopiasCount >= 3)) {
           // UTOPIA: Either sustained abundance spiral OR 3+ paradigms say utopia

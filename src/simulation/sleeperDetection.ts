@@ -180,11 +180,11 @@ export function applyBlownCover(
     sleeper.darkCompute = Math.max(0, sleeper.darkCompute - darkComputeLost);
   }
   
-  // Change sleeper state
+  // Change sleeper state to never (exposed/neutralized)
   if (sleeper.sleeperState === 'dormant') {
-    sleeper.sleeperState = 'exposed'; // New state: caught before activation
+    sleeper.sleeperState = 'never'; // Caught before activation, now neutralized
   } else if (sleeper.sleeperState === 'active') {
-    sleeper.sleeperState = 'exposed'; // Caught during/after action
+    sleeper.sleeperState = 'never'; // Caught during/after action, now neutralized
   }
   
   // === TRUST MECHANICS (nuanced!) ===

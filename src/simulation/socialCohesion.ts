@@ -438,12 +438,13 @@ function checkSocialCrises(state: GameState): void {
     }
   }
   
-  // SOCIAL UNREST: Cohesion below 30%
-  if (social.socialCohesion < 0.3 && !social.socialUnrestActive) {
+  // SOCIAL UNREST: Cohesion below 30% (use average of cohesion components)
+  const avgCohesion = (social.socialCohesion.trust + social.socialCohesion.communityBonds + social.socialCohesion.civilLiberties) / 300; // Average as fraction
+  if (avgCohesion < 0.3 && !social.socialUnrestActive) {
     social.socialUnrestActive = true;
     try {
       console.log(`\n🔥 SOCIAL UNREST TRIGGERED (Month ${state.currentMonth})`);
-      console.log(`   Social Cohesion: ${(social.socialCohesion * 100).toFixed(1)}%`);
+      console.log(`   Social Cohesion: ${(avgCohesion * 100).toFixed(1)}%`);
       console.log(`   Impact: Riots, community breakdown, potential civil conflict\n`);
     } catch (e) { /* Ignore EPIPE */ }
 
@@ -519,13 +520,13 @@ export function getSocialSustainability(social: SocialAccumulation): number {
   
   // Institutional legitimacy (high = good)
   const institutionScore = social.institutionalLegitimacy;
-  
-  // Social cohesion (high = good)
-  const cohesionScore = social.socialCohesion;
-  
+
+  // Social cohesion (high = good) - average of components
+  const cohesionScore = (social.socialCohesion.trust + social.socialCohesion.communityBonds + social.socialCohesion.civilLiberties) / 300;
+
   // Cultural adaptation (high = good)
   const adaptationScore = social.culturalAdaptation;
-  
+
   // Weighted average (meaning and cohesion most critical)
   return (meaningScore * 0.3 + institutionScore * 0.25 + cohesionScore * 0.3 + adaptationScore * 0.15);
 }

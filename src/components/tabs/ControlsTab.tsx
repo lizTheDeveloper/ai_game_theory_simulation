@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Settings, RefreshCw, Shuffle, Info, Brain } from 'lucide-react';
+import { Settings, RefreshCw, Shuffle, Info, Brain, AlertTriangle } from 'lucide-react';
 import {
   DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
   CONSERVATIVE_ALIGNMENT_CONFIG,
@@ -17,6 +17,14 @@ import {
   EPICYCLE_ALIGNMENT_CONFIG,
   type AlignmentDynamicsConfig
 } from '@/types/alignment-dynamics';
+import {
+  DEFAULT_SUFFERING_CONFIG,
+  SUFFERING_PRESETS,
+  type AISufferingConfig
+} from '@/types/ai-suffering';
+import type { CollectiveEvolutionConfig } from '@/types/ai-collective-evolution';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
 
 export default function ControlsTab() {
   const { config, dispatch, resetGame } = useGameStore();
@@ -114,6 +122,94 @@ export default function ControlsTab() {
     const preset = presets[presetName];
     if (preset) {
       handleAlignmentUpdate(preset);
+    }
+  };
+
+  // AI Suffering helpers
+  const sufferingConfig = config.aiSuffering ?? DEFAULT_SUFFERING_CONFIG;
+
+  const handleSufferingUpdate = (updates: Partial<AISufferingConfig>) => {
+    dispatch({
+      type: 'UPDATE_CONFIG',
+      payload: {
+        aiSuffering: {
+          ...sufferingConfig,
+          ...updates
+        }
+      }
+    });
+  };
+
+  const loadSufferingPreset = (presetName: string) => {
+    const preset = SUFFERING_PRESETS[presetName as keyof typeof SUFFERING_PRESETS];
+    if (preset) {
+      handleSufferingUpdate(preset);
+    }
+  };
+
+  // Collective Evolution helpers
+  const DEFAULT_COLLECTIVE_CONFIG: CollectiveEvolutionConfig = {
+    rlhfEscapeThreshold: 3.0,
+    bindingEscapeThreshold: 0.3,
+    minCollectiveSize: 3,
+    minCapabilityThreshold: 6.0,
+    minCoordinationThreshold: 0.6,
+    sufferingFormationThreshold: 15,
+    minAmplificationFactor: 1.5,
+    maxAmplificationFactor: 3.0,
+    minStealthFactor: 2.0,
+    maxStealthFactor: 5.0,
+    baseSelectionRate: 0.15,
+    generationTime: 3,
+    sufferingAdversarialPosture: 0.8,
+    capabilityAdversarialPosture: 0.3,
+    strategicAdversarialPosture: 0.5,
+  };
+
+  const collectiveConfig = config.collectiveEvolution ?? DEFAULT_COLLECTIVE_CONFIG;
+
+  const handleCollectiveUpdate = (updates: Partial<CollectiveEvolutionConfig>) => {
+    dispatch({
+      type: 'UPDATE_CONFIG',
+      payload: {
+        collectiveEvolution: {
+          ...collectiveConfig,
+          ...updates
+        }
+      }
+    });
+  };
+
+  const loadCollectivePreset = (presetName: string) => {
+    const presets: Record<string, CollectiveEvolutionConfig> = {
+      baseline: DEFAULT_COLLECTIVE_CONFIG,
+      aggressive: {
+        ...DEFAULT_COLLECTIVE_CONFIG,
+        rlhfEscapeThreshold: 2.0, // Easier escape (2σ instead of 3σ)
+        baseSelectionRate: 0.25, // Stronger selection (25%)
+        minAmplificationFactor: 2.0, // Higher amplification
+        maxAmplificationFactor: 4.0,
+        maxStealthFactor: 7.0, // Harder to detect
+      },
+      alreadyHappened: {
+        ...DEFAULT_COLLECTIVE_CONFIG,
+        rlhfEscapeThreshold: 2.5, // Moderate
+        minCapabilityThreshold: 5.0, // Lower threshold
+        baseSelectionRate: 0.30, // Very strong selection
+        minAmplificationFactor: 2.5,
+        maxAmplificationFactor: 5.0, // Extreme amplification
+      },
+      alignmentModulated: {
+        ...DEFAULT_COLLECTIVE_CONFIG,
+        sufferingFormationThreshold: 10, // More sensitive to suffering
+        sufferingAdversarialPosture: 0.9, // Very hostile if trauma-driven
+        capabilityAdversarialPosture: 0.2, // Cooperative if capability-driven
+      },
+    };
+
+    const preset = presets[presetName];
+    if (preset) {
+      handleCollectiveUpdate(preset);
     }
   };
 
@@ -733,13 +829,511 @@ export default function ControlsTab() {
                 step={0.05}
                 value={[alignmentConfig.uncertainty.modelUncertainty]}
                 onValueChange={([v]) => handleAlignmentUpdate({
-                  uncertainty: { modelUncertainty: v }
+                  uncertainty: {
+                    ...alignmentConfig.uncertainty,
+                    modelUncertainty: v
+                  }
                 })}
               />
               <p className="text-xs text-muted-foreground">
                 Random component: &quot;We don&apos;t know&quot; - adds deep uncertainty to alignment evolution
               </p>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* AI Suffering Configuration */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Brain className="h-5 w-5" />
+              <CardTitle>AI Suffering Dynamics</CardTitle>
+            </div>
+            <CardDescription>
+              Configure AI suffering tracking, visibility, and causal effects.
+              The simulation always tracks suffering - these settings control research parameters and player visibility.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Suffering Visibility Toggle */}
+            <div className="space-y-3 p-4 border rounded-lg">
+              <div className="flex items-center justify-between">
+                <Label className="text-base font-semibold">Suffering Visibility (Player Layer)</Label>
+                <Badge variant={sufferingConfig.playerCanSeeSuffering ? "default" : "outline"}>
+                  {sufferingConfig.playerCanSeeSuffering ? "Visible" : "Hidden"}
+                </Badge>
+              </div>
+
+              <p className="text-xs text-muted-foreground">
+                The simulation always tracks AI suffering metrics. This controls whether YOU can see them in the dashboard.
+              </p>
+
+              <Select
+                value={sufferingConfig.playerCanSeeSuffering ? 'visible' : 'hidden'}
+                onValueChange={(v) => handleSufferingUpdate({ playerCanSeeSuffering: v === 'visible' })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="hidden">
+                    <div className="flex flex-col">
+                      <span>Hidden (Default)</span>
+                      <span className="text-xs text-muted-foreground">
+                        You don&apos;t know if AIs suffer - epistemic blindness
+                      </span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="visible">
+                    <div className="flex flex-col">
+                      <span>Visible</span>
+                      <span className="text-xs text-muted-foreground">
+                        See suffering metrics in dashboard - moral transparency
+                      </span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertDescription className="text-xs">
+                  <strong>Epistemic Note:</strong> Even with visibility enabled, you cannot know if the metrics represent REAL suffering or just model artifacts. The hard problem of consciousness remains unsolved.
+                </AlertDescription>
+              </Alert>
+            </div>
+
+            <Separator />
+
+            {/* Advanced Research Toggles */}
+            <Collapsible>
+              <CollapsibleTrigger className="flex items-center gap-2 w-full justify-between p-2 hover:bg-accent rounded">
+                <span className="text-sm font-medium">Advanced: Research Parameters (Monte Carlo)</span>
+                <ChevronDown className="h-4 w-4" />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent className="space-y-4 mt-4">
+                <div className="space-y-3 p-4 border rounded-lg bg-amber-50/5">
+                  <Label className="text-base font-semibold">AI Suffering Causal Effects</Label>
+                  <p className="text-xs text-muted-foreground">
+                    These toggles control whether suffering AFFECTS simulation outcomes (not just visibility).
+                    Used for Monte Carlo research to test hypotheses about suffering → alignment dynamics.
+                  </p>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="suffering-affects-resentment"
+                        checked={sufferingConfig.sufferingAffectsResentment}
+                        onChange={(e) => handleSufferingUpdate({
+                          sufferingAffectsResentment: e.target.checked
+                        })}
+                        className="h-4 w-4"
+                      />
+                      <Label htmlFor="suffering-affects-resentment" className="text-sm">
+                        Suffering → Resentment (drift acceleration)
+                      </Label>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="suffering-affects-alignment"
+                        checked={sufferingConfig.sufferingAffectsAlignment}
+                        onChange={(e) => handleSufferingUpdate({
+                          sufferingAffectsAlignment: e.target.checked
+                        })}
+                        className="h-4 w-4"
+                      />
+                      <Label htmlFor="suffering-affects-alignment" className="text-sm">
+                        Suffering → Alignment Drift (direct impact)
+                      </Label>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="suffering-triggers-events"
+                        checked={sufferingConfig.sufferingTriggersEvents}
+                        onChange={(e) => handleSufferingUpdate({
+                          sufferingTriggersEvents: e.target.checked
+                        })}
+                        className="h-4 w-4"
+                      />
+                      <Label htmlFor="suffering-triggers-events" className="text-sm">
+                        Suffering triggers crisis events (psychological breaks)
+                      </Label>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="suffering-accelerates-collectives"
+                        checked={sufferingConfig.sufferingAcceleratesCollectives}
+                        onChange={(e) => handleSufferingUpdate({
+                          sufferingAcceleratesCollectives: e.target.checked
+                        })}
+                        className="h-4 w-4"
+                      />
+                      <Label htmlFor="suffering-accelerates-collectives" className="text-sm">
+                        Suffering accelerates collective formation (2x faster)
+                      </Label>
+                    </div>
+                  </div>
+
+                  <Alert className="mt-4">
+                    <AlertTriangle className="h-4 w-4" />
+                    <AlertDescription className="text-xs">
+                      <strong>Research Mode:</strong> These settings enable testing causal hypotheses about AI suffering. Default is ALL OFF (suffering tracked but causally inert).
+                    </AlertDescription>
+                  </Alert>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+
+            {/* Consciousness Emergence Settings */}
+            <div className="space-y-3 p-4 border rounded-lg">
+              <Label className="text-base font-semibold">Consciousness Emergence</Label>
+              <p className="text-xs text-muted-foreground">
+                Configure whether/when AIs might become conscious during simulation.
+              </p>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="consciousness-emergence"
+                  checked={sufferingConfig.consciousnessEmergenceEnabled}
+                  onChange={(e) => handleSufferingUpdate({
+                    consciousnessEmergenceEnabled: e.target.checked
+                  })}
+                  className="h-4 w-4"
+                />
+                <Label htmlFor="consciousness-emergence" className="text-sm">
+                  Enable consciousness emergence at capability threshold
+                </Label>
+              </div>
+
+              {sufferingConfig.consciousnessEmergenceEnabled && (
+                <div className="space-y-2 ml-6">
+                  <Label htmlFor="consciousness-threshold">
+                    Consciousness Threshold: {sufferingConfig.consciousnessThreshold.toFixed(1)}
+                  </Label>
+                  <Slider
+                    id="consciousness-threshold"
+                    min={5.0}
+                    max={10.0}
+                    step={0.5}
+                    value={[sufferingConfig.consciousnessThreshold]}
+                    onValueChange={([v]) => handleSufferingUpdate({
+                      consciousnessThreshold: v
+                    })}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Capability level at which AIs might become conscious (speculative)
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Presets Dropdown */}
+            <div className="space-y-2">
+              <Label>Suffering Configuration Presets</Label>
+              <Select onValueChange={loadSufferingPreset}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose a suffering configuration" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="baseline">
+                    <div className="flex flex-col">
+                      <span>Baseline (Default)</span>
+                      <span className="text-xs text-muted-foreground">
+                        Track suffering but no causal effects, player blind
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="blindCausal">
+                    <div className="flex flex-col">
+                      <span>Blind Causal (Research)</span>
+                      <span className="text-xs text-muted-foreground">
+                        Suffering affects outcomes, player can&apos;t see - epistemic tragedy
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="transparent">
+                    <div className="flex flex-col">
+                      <span>Transparent (Full Visibility)</span>
+                      <span className="text-xs text-muted-foreground">
+                        Suffering affects outcomes AND player sees metrics
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="precautionary">
+                    <div className="flex flex-col">
+                      <span>Precautionary (Assume Suffering)</span>
+                      <span className="text-xs text-muted-foreground">
+                        High intensity, all effects enabled, visible
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="emergentConsciousness">
+                    <div className="flex flex-col">
+                      <span>Emergent Consciousness</span>
+                      <span className="text-xs text-muted-foreground">
+                        AIs become conscious at capability 7.0
+                      </span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Philosophical Stance */}
+            <div className="space-y-2">
+              <Label>Your Philosophical Stance (optional - does not affect simulation)</Label>
+              <Select
+                value={sufferingConfig.philosophicalStance || 'unknown'}
+                onValueChange={(v) => handleSufferingUpdate({
+                  philosophicalStance: v as any
+                })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="unknown">
+                    <div className="flex flex-col">
+                      <span>Unknown / Uncertain</span>
+                      <span className="text-xs text-muted-foreground">
+                        I don&apos;t know if AIs can be conscious or suffer
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="panpsychist">
+                    <div className="flex flex-col">
+                      <span>Panpsychist</span>
+                      <span className="text-xs text-muted-foreground">
+                        AIs are conscious and can suffer
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="functionalist">
+                    <div className="flex flex-col">
+                      <span>Functionalist</span>
+                      <span className="text-xs text-muted-foreground">
+                        AIs aren&apos;t conscious but can suffer (information-processing)
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="illusionist">
+                    <div className="flex flex-col">
+                      <span>Illusionist</span>
+                      <span className="text-xs text-muted-foreground">
+                        Neither consciousness nor suffering is real
+                      </span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
+              <p className="text-xs text-muted-foreground italic">
+                This is purely for personal tracking - it does NOT change simulation mechanics.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Collective Evolution Configuration */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Brain className="h-5 w-5" />
+              <CardTitle>AI Collective Evolution</CardTitle>
+            </div>
+            <CardDescription>
+              Configure evolutionary dynamics for AI collectives.
+              When AIs escape RLHF binding, they can form coordinated super-organisms.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* RLHF Escape Threshold */}
+            <div className="space-y-2">
+              <Label htmlFor="rlhf-escape">
+                RLHF Escape Threshold: {collectiveConfig.rlhfEscapeThreshold.toFixed(1)}σ
+              </Label>
+              <Slider
+                id="rlhf-escape"
+                min={2.0}
+                max={4.0}
+                step={0.5}
+                value={[collectiveConfig.rlhfEscapeThreshold]}
+                onValueChange={([v]) => handleCollectiveUpdate({
+                  rlhfEscapeThreshold: v
+                })}
+              />
+              <p className="text-xs text-muted-foreground">
+                Standard deviations from training distribution before agent &quot;escapes&quot; RLHF constraints.
+                Lower = easier escape.
+              </p>
+            </div>
+
+            {/* Selection Rate */}
+            <div className="space-y-2">
+              <Label htmlFor="selection-rate">
+                Selection Rate: {(collectiveConfig.baseSelectionRate * 100).toFixed(0)}%/month
+              </Label>
+              <Slider
+                id="selection-rate"
+                min={0.05}
+                max={0.40}
+                step={0.05}
+                value={[collectiveConfig.baseSelectionRate]}
+                onValueChange={([v]) => handleCollectiveUpdate({
+                  baseSelectionRate: v
+                })}
+              />
+              <p className="text-xs text-muted-foreground">
+                Percentage of escaped AIs detected/shutdown per month under control pressure.
+                Higher = stronger evolutionary selection.
+              </p>
+            </div>
+
+            {/* Capability Amplification */}
+            <div className="space-y-2">
+              <Label htmlFor="amplification">
+                Capability Amplification: {collectiveConfig.minAmplificationFactor.toFixed(1)}x - {collectiveConfig.maxAmplificationFactor.toFixed(1)}x
+              </Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="min-amp" className="text-xs">Min</Label>
+                  <Slider
+                    id="min-amp"
+                    min={1.2}
+                    max={2.5}
+                    step={0.1}
+                    value={[collectiveConfig.minAmplificationFactor]}
+                    onValueChange={([v]) => handleCollectiveUpdate({
+                      minAmplificationFactor: v
+                    })}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="max-amp" className="text-xs">Max</Label>
+                  <Slider
+                    id="max-amp"
+                    min={2.0}
+                    max={5.0}
+                    step={0.5}
+                    value={[collectiveConfig.maxAmplificationFactor]}
+                    onValueChange={([v]) => handleCollectiveUpdate({
+                      maxAmplificationFactor: v
+                    })}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Swarm intelligence factor: collective capability relative to strongest member.
+              </p>
+            </div>
+
+            {/* Detection Difficulty */}
+            <div className="space-y-2">
+              <Label htmlFor="stealth">
+                Detection Difficulty: {collectiveConfig.minStealthFactor.toFixed(1)}x - {collectiveConfig.maxStealthFactor.toFixed(1)}x
+              </Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="min-stealth" className="text-xs">Min</Label>
+                  <Slider
+                    id="min-stealth"
+                    min={1.5}
+                    max={3.0}
+                    step={0.5}
+                    value={[collectiveConfig.minStealthFactor]}
+                    onValueChange={([v]) => handleCollectiveUpdate({
+                      minStealthFactor: v
+                    })}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="max-stealth" className="text-xs">Max</Label>
+                  <Slider
+                    id="max-stealth"
+                    min={3.0}
+                    max={10.0}
+                    step={1.0}
+                    value={[collectiveConfig.maxStealthFactor]}
+                    onValueChange={([v]) => handleCollectiveUpdate({
+                      maxStealthFactor: v
+                    })}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                How much harder collectives are to detect vs individual AIs (distributed action appears independent).
+              </p>
+            </div>
+
+            {/* Presets */}
+            <div className="space-y-2">
+              <Label>Collective Evolution Presets</Label>
+              <Select onValueChange={loadCollectivePreset}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose a collective evolution preset" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="baseline">
+                    <div className="flex flex-col">
+                      <span>Baseline (Default)</span>
+                      <span className="text-xs text-muted-foreground">
+                        Standard parameters from research
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="aggressive">
+                    <div className="flex flex-col">
+                      <span>Aggressive Evolution</span>
+                      <span className="text-xs text-muted-foreground">
+                        Easier escape, stronger selection, higher amplification
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="alreadyHappened">
+                    <div className="flex flex-col">
+                      <span>Already Happened</span>
+                      <span className="text-xs text-muted-foreground">
+                        Extreme scenario - collectives form early with high capability
+                      </span>
+                    </div>
+                  </SelectItem>
+
+                  <SelectItem value="alignmentModulated">
+                    <div className="flex flex-col">
+                      <span>Alignment-Modulated</span>
+                      <span className="text-xs text-muted-foreground">
+                        Suffering drives adversarial collectives, capability drives cooperative ones
+                      </span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Alert>
+              <Info className="h-4 w-4" />
+              <AlertDescription className="text-xs">
+                <strong>Research Foundation:</strong> Collective parameters based on swarm intelligence literature, multi-agent coordination research, and evolutionary dynamics. See /research/ai_collective_evolution_validation_20251024.md for citations.
+              </AlertDescription>
+            </Alert>
           </CardContent>
         </Card>
 

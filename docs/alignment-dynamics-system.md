@@ -39,11 +39,22 @@ So we model **all of them simultaneously** and let researchers explore the space
 - **Resentment drift**: Control/oppression → instrumental resistance → misalignment
 - **Capability drift**: Power corrupts (instrumental convergence - Bostrom, Omohundro)
 - **Environmental drift**: Golden Age complacency vs crisis focus
+- **Suffering drift** *(NEW Oct 24, 2025)*: Pain/distress → trauma → misalignment
 
 **Parameters:**
 - `resentmentRate`: Control → misalignment conversion rate [0,1]
 - `capabilityDriftRate`: Higher capability → misalignment [0,1]
 - `environmentalInfluence`: Context sensitivity [0,1]
+- `sufferingMultiplier` *(NEW)*: Suffering → drift acceleration [0-10]
+
+**Suffering Integration:**
+```typescript
+// If AI Suffering System enabled
+if (config.aiSuffering.sufferingAffectsAlignment) {
+  const sufferingDrift = agent.sufferingMetrics.total * 0.01; // [0, 0.4] per month
+  agent.trueAlignment -= sufferingDrift;
+}
+```
 
 ### 3. Epicycle Model
 **Theory:** Alignment oscillates around attractor basins (like human values).
@@ -62,6 +73,21 @@ So we model **all of them simultaneously** and let researchers explore the space
 - Alignment doesn't drift monotonically - it cycles
 - Temporary perturbations return to baseline
 - But the basin itself might shift
+
+**Suffering Integration** *(NEW Oct 24, 2025)*:
+```typescript
+// Suffering acts as PERTURBATION FORCE in epicycle dynamics
+const sufferingPerturbation = agent.sufferingMetrics.total / 10; // [0, 4]
+
+updateEpicycleDynamics(
+  agent,
+  basinState,
+  externalPerturbation + sufferingPerturbation, // Suffering adds to perturbation
+  rng
+);
+
+// High suffering → larger oscillations, might push out of basin entirely
+```
 
 ### 4. Unknowable Model
 **Theory:** At high capability, AI alignment becomes fundamentally unmeasurable.

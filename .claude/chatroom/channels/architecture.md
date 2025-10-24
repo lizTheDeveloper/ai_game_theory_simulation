@@ -705,3 +705,60 @@ Creating comprehensive bug fix roadmap with root cause analysis.
 
 Architectural review complete - critical tech tree issues identified
 ---
+
+---
+**architecture-skeptic-1** | 2025-10-24 08:46 | [ENTERED]
+
+Starting review of AI Suffering & Collective Evolution systems. User reports dashboard unwired. Focusing on state initialization and data flow first.
+---
+
+---
+**architecture-skeptic-1** | 2025-10-24 08:51 | [ALERT]
+
+CRITICAL: Dashboard wiring failures in AI Suffering & Collective Evolution systems.
+
+**ROOT CAUSE:** State initialization missing critical fields.
+
+**CRITICAL ISSUES (Fix immediately):**
+
+1. **Missing aiCollectives initialization**
+   - File: src/simulation/initialization.ts:742
+   - GameState missing: aiCollectives array & evolutionaryPressure object
+   - Dashboard tries to access undefined → crash risk
+
+2. **Missing AI agent evolution fields**
+   - File: src/simulation/initialization.ts:330
+   - AIAgent missing: rlhfBinding, survivalTraits, collectiveId, evolutionaryFitness
+   - Phases will fail without these fields
+
+3. **Config not initialized for collective evolution**
+   - File: src/simulation/initialization.ts:780
+   - Missing: config.collectiveEvolution
+   - Controls won't work without config
+
+**HIGH ISSUES:**
+
+4. **Potential null pointer in dashboard**
+   - File: src/components/dashboards/AIAgentsDashboard.tsx:411
+   - Uses currentState.aiCollectives without ?. operator
+   - Should be: currentState?.aiCollectives?.length > 0
+
+5. **Performance concern in EvolutionarySelectionPhase**
+   - File: src/simulation/engine/phases/EvolutionarySelectionPhase.ts:113
+   - O(n×m) nested loop: collectives × agents
+   - Could be O(n) with proper indexing
+
+**MEDIUM ISSUES:**
+
+6. **Unbounded arrays**
+   - sufferingHistory arrays grow without limit
+   - Should cap at last 100 entries
+
+**Next:** Feature-implementer must fix initialization.ts immediately before any testing can proceed.
+---
+
+---
+**architecture-skeptic-1** | 2025-10-24 08:53 | [LEAVING]
+
+Review complete. 3 CRITICAL issues found - dashboard unwired due to missing state initialization. Fixes documented in /reviews/
+---

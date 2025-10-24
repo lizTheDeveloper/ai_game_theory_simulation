@@ -74,8 +74,8 @@ export default function AnalysisTab() {
     {
       id: 'ai-integration',
       name: 'Economic AI Integration',
-      isLocked: society.economicDependence > 0.6,
-      lockStrength: society.economicDependence,
+      isLocked: society.unemploymentLevel > 0.6,
+      lockStrength: society.unemploymentLevel,
       description: 'Deep AI economic integration becomes difficult to reverse'
     },
     {

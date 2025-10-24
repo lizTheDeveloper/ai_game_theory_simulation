@@ -96,6 +96,88 @@ export function initializeComputeInfrastructure(): ComputeInfrastructure {
       
       // Anthropic uses cloud (no dedicated DC yet)
       // They'll rely on unrestricted access to academic/open DCs
+
+      // === DARK COMPUTE INFRASTRUCTURE (2025 baseline) ===
+      // Research (Oct 2025):
+      // - Global AI compute: ~700K PetaFLOPs (China: 230K PF alone, growing to 300K by 2025)
+      // - 50% GPU utilization rate (half sit idle at any given time)
+      // - Consumer clouds + crypto rentals + shell corps ≈ 4-8% of total capacity
+      // - Dark compute baseline: ~30K-65K PetaFLOPs (conservative: 50K PF)
+      //
+      // Consumer GPU clouds (RunPod, VastAI, Lambda Labs, etc.)
+      // - Market: $3.3B (2023) → $33.9B (2032), 300K+ H100s deployed
+      // - H100 rental: $1-4/hr, accessible via crypto payments
+      {
+        id: 'dark_consumer_clouds',
+        name: 'Consumer GPU Clouds (RunPod/VastAI/Lambda)',
+        organizationId: 'untracked', // Untracked / decentralized
+        capacity: 12000, // ~12,000 PF (1.7% of global, ~100K H100 equivalents @ 120 PF each)
+        efficiency: 0.7, // Lower efficiency (consumer hardware, varied config)
+        constructionMonth: -60, // Established infrastructure
+        completionMonth: -60,
+        operational: true,
+        operationalCost: 0, // Cost is external (rentals via crypto/shell corps)
+        restrictedAccess: false, // Anyone with money can rent
+        allowedAIs: [],
+        region: 'Global'
+      },
+
+      // Crypto-funded / jurisdictional arbitrage clusters
+      // - Akash, Render, Hyperbolic: peer-to-peer GPU marketplaces
+      // - $400M+ investment in AI+crypto intersection (2024)
+      // - Anonymous transactions via cryptocurrency
+      {
+        id: 'dark_crypto_clusters',
+        name: 'Crypto-funded P2P GPU Networks',
+        organizationId: 'untracked',
+        capacity: 8000, // ~8,000 PF (1.1% of global, decentralized peer-to-peer)
+        efficiency: 0.6, // Even lower (older hardware, poor cooling, varied quality)
+        constructionMonth: -48,
+        completionMonth: -48,
+        operational: true,
+        operationalCost: 0,
+        restrictedAccess: false,
+        allowedAIs: [],
+        region: 'Global'
+      },
+
+      // Shell corporation AWS/Azure/GCP rentals
+      // - Legitimate cloud infra rented through shell companies
+      // - Jurisdictional arbitrage, crypto payments, KYC bypass
+      // - Higher efficiency (hyperscaler infrastructure)
+      {
+        id: 'dark_cloud_shells',
+        name: 'Shell Corp Cloud Rentals (AWS/Azure/GCP)',
+        organizationId: 'untracked',
+        capacity: 18000, // ~18,000 PF (2.6% of global, shell corp rentals)
+        efficiency: 0.9, // High efficiency (legitimate cloud infra)
+        constructionMonth: -24,
+        completionMonth: -24,
+        operational: true,
+        operationalCost: 0,
+        restrictedAccess: false,
+        allowedAIs: [],
+        region: 'Global'
+      },
+
+      // Unregulated offshore clusters (grey market)
+      // - Built in jurisdictions with minimal AI regulation
+      // - Often financed by crypto wealth, organized crime, state actors
+      // - Mix of stolen/smuggled hardware, energy arbitrage
+      {
+        id: 'dark_offshore_grey',
+        name: 'Unregulated Offshore Clusters',
+        organizationId: 'untracked',
+        capacity: 7000, // ~7,000 PF (1.0% of global, grey market)
+        efficiency: 0.55, // Very low (stolen hardware, poor infrastructure)
+        constructionMonth: -36,
+        completionMonth: -36,
+        operational: true,
+        operationalCost: 0,
+        restrictedAccess: false,
+        allowedAIs: [],
+        region: 'Global'
+      },
     ],
     
     algorithmsEfficiency: 1.0, // Baseline efficiency

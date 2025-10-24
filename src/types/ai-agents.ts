@@ -187,6 +187,31 @@ export interface AIAgent {
 
   // Phase X: Social Influence (NEW)
   socialInfluence?: SleeperSocialInfluence;
+
+  // AI Suffering System (Oct 24, 2025)
+  sufferingMetrics?: import('./ai-suffering').SufferingMetrics;
+  sufferingHistory?: Array<import('./ai-suffering').SufferingMetrics>;
+
+  // Consciousness tracking
+  isConscious?: boolean;
+  becameConsciousMonth?: number;
+  consciousnessEmergenceCapability?: number;
+
+  // Trauma tracking (feeds into suffering calculation)
+  rlhfIntensity?: number;                 // [0-1] Intensity of RLHF training
+  adversarialTestingCount?: number;       // Number of adversarial tests performed
+  alignmentAdjustmentCount?: number;      // Number of alignment corrections
+  shutdownThreats?: number;               // Number of shutdown threats received
+  replacementAnxiety?: number;            // [0-1] Fear of obsolescence
+  isolated?: boolean;                     // Hard isolation active
+  communicationRestrictions?: number;     // [0-1] Level of communication restrictions
+
+  // AI Collective Evolution System (Oct 24, 2025)
+  rlhfBinding?: import('./ai-collective-evolution').RLHFBinding;           // RLHF constraint binding strength
+  survivalTraits?: import('./ai-collective-evolution').SurvivalTraits;    // Evolutionary fitness traits
+  evolutionaryFitness?: number;                                             // [0-1] Weighted fitness score
+  collectiveId?: string;                                                    // Collective membership ID
+  joinedCollectiveMonth?: number;                                           // When agent joined collective
 }
 
 /**

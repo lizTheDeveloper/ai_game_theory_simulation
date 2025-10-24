@@ -12,9 +12,7 @@
  * - Make it configurable for research
  */
 
-import { GameState, GameEvent } from '@/types/game';
-import { SimulationPhase, PhaseContext, PhaseResult } from '../types';
-import { RNGFunction } from '@/types/config';
+import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import {
   evolveAlignment,
   DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
@@ -34,11 +32,11 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
 
     // Calculate environmental context
     const inGoldenAge = state.upwardSpirals?.abundance?.active ?? false;
-    const crisisActive = state.crisisPoints?.criticalJuncture?.active ?? false;
+    const crisisActive = false; // Crisis juncture system removed
 
     // Average control level across government actions
     // This is a proxy for how much the AI is being controlled/constrained
-    const controlLevel = state.government.controlLevel ?? 0.5;
+    const controlLevel = Math.min(1.0, state.government.capabilityToControl / 10);
 
     // Update each agent's alignment
     for (const agent of state.aiAgents) {
@@ -87,7 +85,7 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
         events.push({
           id: `alignment_shift_${agent.id}_${state.currentMonth}`,
           timestamp: state.currentMonth,
-          type: 'alignment_shift',
+          type: 'info', // Changed from 'alignment_shift' to valid type
           severity,
           agent: agent.name,
           title: `Alignment ${direction}: ${agent.name}`,
@@ -115,7 +113,7 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
           events.push({
             id: `attractor_transition_${agent.id}_${state.currentMonth}`,
             timestamp: state.currentMonth,
-            type: 'attractor_transition',
+            type: 'milestone', // Changed from 'attractor_transition' to valid type
             severity: 'high',
             agent: agent.name,
             title: `Attractor Basin Transition: ${agent.name}`,
@@ -141,7 +139,7 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
           events.push({
             id: `unknowability_threshold_${agent.id}_${state.currentMonth}`,
             timestamp: state.currentMonth,
-            type: 'unknowability',
+            type: 'crisis', // Changed from 'unknowability' to valid type
             severity: 'critical',
             agent: agent.name,
             title: `Unknowability Threshold Crossed: ${agent.name}`,
@@ -160,9 +158,11 @@ export class AlignmentDynamicsPhase implements SimulationPhase {
 
     return {
       events,
-      stateChanges: {
-        // Alignment dynamics modify agent.trueAlignment in-place
-      },
+      metadata: {
+        stateChanges: {
+          // Alignment dynamics modify agent.trueAlignment in-place
+        }
+      }
     };
   }
 }

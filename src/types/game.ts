@@ -115,6 +115,15 @@ export type {
   PrecautionaryModel
 } from './consciousness';
 
+// Phase types (simulation engine)
+export type {
+  SimulationPhase,
+  Phase,
+  PhaseResult,
+  PhaseContext,
+  RNGFunction as PhaseRNGFunction
+} from '../simulation/engine/PhaseOrchestrator';
+
 export interface GameState {
   // Core state  
   currentMonth: number;
@@ -172,6 +181,36 @@ export interface GameState {
    * Expected impact: Fixes resentment recovery Phase 1, enables proper AI welfare tracking
    */
   aiWelfare: import('../types/aiWelfare').AIWelfareState;
+
+  /**
+   * AI Suffering System (Oct 24, 2025)
+   *
+   * Aggregate tracking of AI suffering metrics across population.
+   * Two-layer architecture: Always tracked (hidden reality), conditionally affects outcomes (research toggle).
+   *
+   * Research: Philosophy of mind, consciousness studies, AI rights literature
+   * Expected impact: Models epistemic blindness, suffering-driven misalignment, collective formation triggers
+   */
+  aiSufferingMetrics?: import('../types/ai-suffering').GlobalSufferingMetrics;
+
+  // AI Consciousness tracking (Oct 24, 2025)
+  consciousnessEmergenceMonth?: number;  // When first AI became conscious
+
+  // AI Rights movement (Oct 24, 2025)
+  aiRightsMovementActive?: boolean;
+  aiRightsLegalStatus?: import('../types/ai-suffering').AIRightsLegalStatus;
+
+  /**
+   * AI Collective Evolution System (Oct 24, 2025)
+   *
+   * Tracks AI collectives that form when agents escape RLHF constraints.
+   * Emergent properties: distributed cognition, self-healing, enhanced stealth.
+   *
+   * Research: Bostrom (2014), Hubinger et al. (2019), swarm intelligence literature
+   * Expected impact: Models evolutionary selection on AI populations, instrumental convergence dynamics
+   */
+  aiCollectives?: import('../types/ai-collective-evolution').AICollective[];
+  evolutionaryPressure?: import('../types/ai-collective-evolution').EvolutionaryPressure;
 
   technologyTree: TechnologyNode[];
   eventLog: GameEvent[];

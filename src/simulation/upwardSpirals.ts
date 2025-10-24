@@ -289,8 +289,9 @@ function updateMeaningSpiral(spiral: UpwardSpiral, state: GameState, month: numb
   // Low meaning crisis
   const meaningFulfilled = social.meaningCrisisLevel < 0.2;
 
-  // High social cohesion (community bonds)
-  const strongCommunity = social.socialCohesion > 0.7;
+  // High social cohesion (community bonds) - use average of components
+  const avgCohesion = (social.socialCohesion.trust + social.socialCohesion.communityBonds + social.socialCohesion.civilLiberties) / 300;
+  const strongCommunity = avgCohesion > 0.7;
 
   // Cultural adaptation (people adapted to post-work life)
   const culturallyAdapted = social.culturalAdaptation > 0.7;
@@ -329,7 +330,7 @@ function updateMeaningSpiral(spiral: UpwardSpiral, state: GameState, month: numb
   if (spiral.active) {
     spiral.strength = (
       (1 - social.meaningCrisisLevel) * 0.3 +
-      social.socialCohesion * 0.25 +
+      avgCohesion * 0.25 +
       social.culturalAdaptation * 0.25 +
       (qol.autonomy + qol.culturalVitality) / 2 * 0.2
     );
@@ -747,13 +748,14 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   
   // MEANING SPIRAL
   const meaningFulfilled = social.meaningCrisisLevel < 0.2;
-  const strongCommunity = social.socialCohesion > 0.7;
+  const avgCohesionDebug = (social.socialCohesion.trust + social.socialCohesion.communityBonds + social.socialCohesion.civilLiberties) / 300;
+  const strongCommunity = avgCohesionDebug > 0.7;
   const culturallyAdapted = social.culturalAdaptation > 0.7;
   const autonomous = qol.autonomy > 0.7 && qol.culturalVitality > 0.7;
-  
+
   // console.log(`\n💫 MEANING SPIRAL: ${spirals.meaning.active ? '✅ ACTIVE' : '❌ INACTIVE'}`);
   // console.log(`   Meaning Crisis: ${(social.meaningCrisisLevel * 100).toFixed(0)}% ${meaningFulfilled ? '✅' : '❌'} (need <20%)`);
-  // console.log(`   Community: ${(social.socialCohesion * 100).toFixed(0)}% ${strongCommunity ? '✅' : '❌'} (need >70%)`);
+  // console.log(`   Community: ${(avgCohesionDebug * 100).toFixed(0)}% ${strongCommunity ? '✅' : '❌'} (need >70%)`);
   // console.log(`   Cultural Adaptation: ${(social.culturalAdaptation * 100).toFixed(0)}% ${culturallyAdapted ? '✅' : '❌'} (need >70%)`);
   // console.log(`   Autonomy & Creativity: autonomy ${(qol.autonomy * 100).toFixed(0)}%, cultural ${(qol.culturalVitality * 100).toFixed(0)}% ${autonomous ? '✅' : '❌'} (need both >70%)`);
   

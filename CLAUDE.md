@@ -84,6 +84,64 @@ npx tsc --noEmit
 npm run lint
 ```
 
+### Research Question Extraction
+
+**Automated Research Tracking:** The project automatically extracts and catalogs research questions from all conversation history.
+
+**What Gets Extracted:**
+- Questions must contain a question mark (`?`)
+- Questions must match research-oriented patterns (14 patterns):
+  - `what if`, `what would`, `what happens`, `what are the`, `what is the`, `what does`
+  - `how do`, `how does`, `how can`, `how would`, `how might`
+  - `why do`, `why does`, `why is`, `why are`, `why would`
+  - `can we model`, `can we simulate`, `can we test`, `can we measure`
+  - `is it possible`, `would it`, `could we`, `could it`, `should we`
+  - `do you think`
+  - `what's the relationship`, `what's the effect`, `what's the impact`
+  - `how much`, `how often`, `how fast`, `how quickly`
+  - `what determines`, `what drives`, `what causes`
+
+**Topic Categorization:**
+- Questions are automatically tagged by topic using keyword matching
+- 13 topics: alignment, capabilities, collective, control, deception, detection, economic, environmental, evolutionary, social, suffering, technology, general
+
+**Current Status:**
+- **256 research questions** extracted from conversation history
+- Cataloged in `docs/wiki/RESEARCH_QUESTIONS.md`
+- See README.md "Research Questions" section for topic distribution
+
+**Manual Extraction:**
+```bash
+# Backup conversations first
+bash claude-conversations/backup-conversations.sh
+
+# Extract questions to wiki
+npx tsx scripts/extractResearchQuestions.ts > docs/wiki/RESEARCH_QUESTIONS.md
+```
+
+**Automated Extraction (macOS):**
+```bash
+# Install daily scheduler (runs at 2:00 AM)
+bash scripts/install-research-questions-scheduler.sh install
+
+# Check status
+bash scripts/install-research-questions-scheduler.sh status
+
+# Run immediately
+bash scripts/install-research-questions-scheduler.sh run-now
+
+# Uninstall
+bash scripts/install-research-questions-scheduler.sh uninstall
+```
+
+The scheduler automatically:
+1. Backs up conversations from `~/.claude/projects/`
+2. Extracts research questions using pattern matching
+3. Updates `docs/wiki/RESEARCH_QUESTIONS.md`
+4. Logs to `logs/research-questions-update.log`
+
+**Purpose:** Track which research questions the simulation addresses, identify gaps, and generate Monte Carlo experiment ideas.
+
 ## Architecture Overview
 
 ### Core Simulation Engine (Framework-Agnostic)

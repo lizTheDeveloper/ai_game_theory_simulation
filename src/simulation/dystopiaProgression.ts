@@ -81,8 +81,8 @@ export function updateGovernmentControlResponse(state: GameState): void {
     const crisisCount = [
       env.resourceCrisisActive,
       env.pollutionCrisisActive,
-      env.climateCatastropheActive,
-      env.ecosystemCollapseActive,
+      env.climateCrisisActive,
+      env.ecosystemCrisisActive,
       social.meaningCollapseActive,
       social.socialUnrestActive,
       social.institutionalFailureActive
@@ -161,8 +161,8 @@ export function updateGovernmentControlResponse(state: GameState): void {
     );
     
     // Economic efficiency decline (authoritarianism → corruption, inefficiency)
-    state.globalMetrics.economicProductivity = Math.max(0.5,
-      state.globalMetrics.economicProductivity * 0.999 // -0.1%/month
+    state.globalMetrics.manufacturingCapability = Math.max(0.5,
+      state.globalMetrics.manufacturingCapability * 0.999 // -0.1%/month
     );
   }
   

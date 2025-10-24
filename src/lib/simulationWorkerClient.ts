@@ -82,6 +82,15 @@ export interface StateDelta {
     severity?: 'low' | 'medium' | 'high' | 'critical';
     category?: 'ai' | 'environment' | 'social' | 'crisis' | 'tech' | 'governance';
   }>;
+
+  // Regional Populations (simplified view for dashboard)
+  regionalPopulations?: Array<{
+    name: string;
+    population: number; // millions
+    qualityOfLife: number; // [0, 1]
+    healthcareQuality: number; // [0, 1]
+    climateVulnerability: number; // [0, 1]
+  }>;
 }
 
 export interface InitialStateSnapshot {
@@ -208,8 +217,9 @@ export class SimulationWorkerClient {
    * @param seed - RNG seed for deterministic runs
    * @param scenario - 'historical' or 'unprecedented'
    * @param interval - Simulation step interval in milliseconds (default: 30000 = 1 month/30 seconds)
+   * @param alignmentConfig - Optional alignment dynamics configuration
    */
-  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000): void {
+  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig): void {
     if (this.initialized) {
       throw new Error('Already initialized. Create a new client to reinitialize.');
     }
@@ -218,13 +228,14 @@ export class SimulationWorkerClient {
       throw new Error('Worker not available. Check browser console for errors. Web Workers may not be supported in this environment.');
     }
 
-    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario);
+    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario, 'alignment:', alignmentConfig ? 'custom' : 'default');
 
     this.worker.postMessage({
       type: 'init',
       seed,
       scenario,
-      interval
+      interval,
+      alignmentConfig
     });
   }
 

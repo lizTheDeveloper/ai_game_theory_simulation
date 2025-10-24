@@ -54,8 +54,11 @@ const restrictResearchPublishing: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
+        id: generateUniqueId('restrict_research'),
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'warning',
+        agent: agentId ?? 'government',
         title: 'Research Publishing Restricted',
         description: `Open research reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows capability diffusion but harms scientific progress.`,
         effects: { openResearch: newRate, legitimacy: -0.05 }
@@ -101,8 +104,11 @@ const limitEmployeeMobility: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
+        id: generateUniqueId('limit_mobility'),
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'warning',
+        agent: agentId ?? 'government',
         title: 'Employee Mobility Restricted',
         description: `Non-compete agreements enforced. Mobility reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Slows diffusion but harms worker freedom.`,
         effects: { employeeMobility: newRate, legitimacy: -0.08 }
@@ -141,8 +147,11 @@ const banReverseEngineering: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
+        id: generateUniqueId('ban_reverse_eng'),
         type: 'policy',
         timestamp: state.currentMonth,
+        severity: 'warning',
+        agent: agentId ?? 'government',
         title: 'Reverse Engineering Banned',
         description: `Illegal to reverse-engineer AI systems. Copying reduced from ${Math.round(oldRate*100)}% to ${Math.round(newRate*100)}%. Hard to enforce but slows diffusion.`,
         effects: { reverseEngineering: newRate }

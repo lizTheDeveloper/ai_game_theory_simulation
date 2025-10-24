@@ -494,9 +494,9 @@ export function selectGovernmentAction(
         // Get environmental crisis severity
         const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive || false;
         const biodiversityLevel = state.environmentalAccumulation?.biodiversityIndex || 1.0;
-        const amazonThreat = state.specificTippingPoints?.amazon?.deforestation > 23;
-        const coralThreat = state.specificTippingPoints?.coral?.healthPercentage < 40;
-        const pollinatorThreat = state.specificTippingPoints?.pollinators?.populationPercentage < 45;
+        const amazonThreat = (state.specificTippingPoints?.amazon?.deforestation ?? 0) > 23;
+        const coralThreat = (state.specificTippingPoints?.coral?.healthPercentage ?? 100) < 40;
+        const pollinatorThreat = (state.specificTippingPoints?.pollinators?.populationPercentage ?? 100) < 45;
 
         // MASSIVE boost during ecosystem crisis (25x priority)
         if (ecosystemCrisis) {
@@ -609,7 +609,7 @@ function executeEarlyWarningInterventions(
 
     // Check if government has resources
     const resourceCost = intervention.gdpCost;
-    if (gov.resources < resourceCost) {
+    if ((gov.resources ?? 0) < resourceCost) {
       // Insufficient resources - skip this intervention
       continue;
     }
@@ -623,7 +623,9 @@ function executeEarlyWarningInterventions(
     }
 
     // Deduct resources
-    gov.resources -= resourceCost;
+    if (gov.resources !== undefined) {
+      gov.resources -= resourceCost;
+    }
 
     // Execute intervention (stochastic success)
     applyEmergencyIntervention(state, intervention, random);

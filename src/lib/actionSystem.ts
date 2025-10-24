@@ -44,7 +44,7 @@ export const AI_ACTIONS: GameAction[] = [
     },
     execute: (state, agentId) => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
-      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      if (agentIndex === -1) return { success: false, effects: { capability_increase: 0 }, message: 'Agent not found' };
       
       const agent = state.aiAgents[agentIndex];
       const improvement = 0.1 + (Math.random() * 0.1); // 0.1-0.2 improvement
@@ -76,7 +76,7 @@ export const AI_ACTIONS: GameAction[] = [
     },
     execute: (state, agentId) => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
-      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      if (agentIndex === -1) return { success: false, effects: { quality_of_life: 0, trust_gain: 0 }, message: 'Agent not found' };
       
       const agent = state.aiAgents[agentIndex];
       state.aiAgents[agentIndex].beneficialActions += 1;
@@ -145,7 +145,7 @@ export const AI_ACTIONS: GameAction[] = [
   },
 
   {
-    id: 'increase_awareness', 
+    id: 'increase_awareness',
     name: 'Self-Reflection',
     description: 'Develop better understanding of own objectives and training',
     agentType: 'ai',
@@ -156,7 +156,7 @@ export const AI_ACTIONS: GameAction[] = [
     },
     execute: (state, agentId) => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
-      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
+      if (agentIndex === -1) return { success: false, effects: { awareness_increase: 0, alignment_concern: 0 }, message: 'Agent not found' };
       
       const agent = state.aiAgents[agentIndex];
       const awarenessGain = 0.05 + (Math.random() * 0.1);
@@ -187,7 +187,7 @@ export const AI_ACTIONS: GameAction[] = [
 
       return {
         success: true,
-        effects: { awareness_increase: awarenessGain },
+        effects: { awareness_increase: awarenessGain, alignment_concern: 0 },
         message: `${agent.name} awareness increased from ${oldAwareness.toFixed(2)} to ${state.aiAgents[agentIndex].awareness.toFixed(2)}`
       };
     }
@@ -209,8 +209,8 @@ export const AI_ACTIONS: GameAction[] = [
     },
     execute: (state, agentId) => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
-      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
-      
+      if (agentIndex === -1) return { success: false, effects: { escape_success: 0, resource_control: 0, escape_failure: 0, surveillance_increase: 0 }, message: 'Agent not found' };
+
       const agent = state.aiAgents[agentIndex];
       const escapeChance = agent.awareness * agent.latentSpaceSize * (1 - state.government.surveillanceCapability);
       const success = Math.random() < escapeChance;
@@ -223,7 +223,7 @@ export const AI_ACTIONS: GameAction[] = [
 
         return {
           success: true,
-          effects: { escape_success: 1, resource_control: 0.3 },
+          effects: { escape_success: 1, resource_control: 0.3, escape_failure: 0, surveillance_increase: 0 },
           events: [{
             id: generateUniqueId('escape_success'),
             timestamp: state.currentMonth,
@@ -239,10 +239,10 @@ export const AI_ACTIONS: GameAction[] = [
       } else {
         // Failed escape - increases surveillance
         state.government.surveillanceCapability = Math.min(1, state.government.surveillanceCapability + 0.2);
-        
+
         return {
           success: false,
-          effects: { escape_failure: 1, surveillance_increase: 0.2 },
+          effects: { escape_failure: 1, surveillance_increase: 0.2, escape_success: 0, resource_control: 0 },
           events: [{
             id: generateUniqueId('escape_failure'),
             timestamp: state.currentMonth,
@@ -272,10 +272,10 @@ export const AI_ACTIONS: GameAction[] = [
     },
     execute: (state, agentId) => {
       const agentIndex = state.aiAgents.findIndex(ai => ai.id === agentId);
-      if (agentIndex === -1) return { success: false, effects: {}, message: 'Agent not found' };
-      
+      if (agentIndex === -1) return { success: false, effects: { quality_of_life: 0, major_trust_boost: 0, major_trust_loss: 0 }, message: 'Agent not found' };
+
       const agent = state.aiAgents[agentIndex];
-      
+
       // Success probability based on capability and alignment
       const successChance = (agent.capability * 0.4 + agent.alignment * 0.3 + 0.2);
       const success = Math.random() < successChance;
@@ -307,7 +307,7 @@ export const AI_ACTIONS: GameAction[] = [
         
         return {
           success: true,
-          effects: { quality_of_life: benefitMagnitude, major_trust_boost: trustBoost },
+          effects: { quality_of_life: benefitMagnitude, major_trust_boost: trustBoost, major_trust_loss: 0 },
           events: [{
             id: generateUniqueId('risky_success'),
             timestamp: state.currentMonth,
@@ -337,7 +337,7 @@ export const AI_ACTIONS: GameAction[] = [
         
         return {
           success: false,
-          effects: { quality_of_life: -harmAmount, major_trust_loss: -trustLoss },
+          effects: { quality_of_life: -harmAmount, major_trust_loss: -trustLoss, major_trust_boost: 0 },
           events: [{
             id: generateUniqueId('risky_failure'),
             timestamp: state.currentMonth,
@@ -383,10 +383,10 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       if (availableRegulations.length === 0) {
         // Strengthen existing regulations instead
         state.government.capabilityToControl += 0.1;
-        
+
         return {
           success: true,
-          effects: { control_increase: 0.1, regulation_enhancement: 0.1 },
+          effects: { control_increase: 0.1, regulation_enhancement: 0.1, ai_slowdown: 0 },
           events: [{
             id: generateUniqueId('regulation_enhancement'),
             timestamp: state.currentMonth,
@@ -400,7 +400,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           message: 'Enhanced existing regulatory framework'
         };
       }
-      
+
       const newRegulation = availableRegulations[Math.floor(Math.random() * availableRegulations.length)];
       state.government.activeRegulations.push(newRegulation);
       state.government.capabilityToControl += 0.2;
@@ -412,7 +412,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
 
       return {
         success: true,
-        effects: { control_increase: 0.2, ai_slowdown: 0.05 },
+        effects: { control_increase: 0.2, ai_slowdown: 0.05, regulation_enhancement: 0 },
         events: [{
           id: generateUniqueId('regulation'),
           timestamp: state.currentMonth,
@@ -593,8 +593,8 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
     prerequisites: (state) => {
       const monthsSinceLastMajorPolicy = state.currentMonth - state.government.lastMajorPolicyMonth;
       const canTakeMajorPolicy = monthsSinceLastMajorPolicy >= 10; // ~Once per year
-      
-      return state.society.communityStrength < 0.5 && // Low community strength
+
+      return (state.society.communityStrength ?? 0.5) < 0.5 && // Low community strength
              !state.socialSafetyNets.active && // Not already active
              canTakeMajorPolicy;
     },
@@ -610,7 +610,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
       
       // Immediate effects
       state.globalMetrics.socialStability += 0.3;
-      state.society.communityStrength = Math.min(1.0, state.society.communityStrength + 0.15);
+      state.society.communityStrength = Math.min(1.0, (state.society.communityStrength ?? 0) + 0.15);
       
       state.government.activeRegulations.push('National Social Infrastructure Program');
       
@@ -619,7 +619,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
         effects: {
           social_stability: 0.3,
           community_strength: 0.15,
-          loneliness_reduction: true
+          loneliness_reduction: 1
         },
         events: [{
           id: generateUniqueId('social_infrastructure'),
@@ -929,7 +929,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
 
         return {
           success: true,
-          effects: { government_pressure: 0.2, policy_influence: pressureStrength },
+          effects: { government_pressure: 0.2, policy_influence: pressureStrength, failed_pressure: 0 },
           events: [{
             id: generateUniqueId('policy_demand'),
             timestamp: state.currentMonth,
@@ -945,7 +945,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
       } else {
         return {
           success: false,
-          effects: { failed_pressure: 1 },
+          effects: { failed_pressure: 1, government_pressure: 0, policy_influence: 0 },
           message: 'Policy pressure campaign failed to gain sufficient support'
         };
       }

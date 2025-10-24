@@ -65,6 +65,11 @@ export interface SimulationPhase {
 }
 
 /**
+ * Alias for backward compatibility
+ */
+export type Phase = SimulationPhase;
+
+/**
  * Context shared between phases during a single step
  */
 export interface PhaseContext {

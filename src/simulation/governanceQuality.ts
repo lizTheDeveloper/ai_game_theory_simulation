@@ -125,8 +125,8 @@ export function updateGovernanceQuality(state: GameState): void {
   const activeCrises = [
     env.resourceCrisisActive,
     env.pollutionCrisisActive,
-    env.climateCatastropheActive,
-    env.ecosystemCollapseActive,
+    env.climateCrisisActive,
+    env.ecosystemCrisisActive,
     social.meaningCollapseActive,
     social.socialUnrestActive,
     social.institutionalFailureActive

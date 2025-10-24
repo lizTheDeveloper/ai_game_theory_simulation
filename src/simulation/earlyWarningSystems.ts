@@ -308,7 +308,7 @@ export function protectCriticalInfrastructure(state: GameState): void {
     w => w.warningLevel === 'red' || w.warningLevel === 'orange'
   );
 
-  if (urgentWarnings.length > 0 && gov.resources > protectionCost) {
+  if (urgentWarnings.length > 0 && (gov.resources ?? 0) > protectionCost) {
     // Protect all unprotected nodes
     for (const node of unprotectedNodes) {
       node.protected = true;
@@ -317,7 +317,9 @@ export function protectCriticalInfrastructure(state: GameState): void {
       earlyWarning.nodesProtected++;
     }
 
-    gov.resources -= protectionCost;
+    if (gov.resources !== undefined) {
+      gov.resources -= protectionCost;
+    }
 
     // Calculate cascade risk reduction
     // Research: One Earth (2024) - critical node protection → 30% cascade reduction

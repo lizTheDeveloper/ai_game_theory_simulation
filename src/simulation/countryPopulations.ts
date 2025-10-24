@@ -16,6 +16,71 @@ import {
   CountryPopulationSystem,
   CountryName
 } from '../types/countryPopulations';
+import {
+  createEmptyResourceEndowment,
+  createDefaultSovereignty,
+  calculateResourceValue
+} from '../types/resourceEndowment';
+
+/**
+ * Helper to create country with all required fields
+ * TIER 2.8 fields will be overwritten by initializeTier28Extensions()
+ */
+function createCountry(base: {
+  name: CountryName;
+  region: string;
+  population: number;
+  birthRate: number;
+  deathRate: number;
+  isNuclearPower: boolean;
+  isAIHub: boolean;
+  isMajorEconomy: boolean;
+  carryingCapacity: number;
+}): CountryPopulation {
+  const emptyResources = createEmptyResourceEndowment();
+  const defaultSovereignty = createDefaultSovereignty();
+  const resourceValue = calculateResourceValue(emptyResources, defaultSovereignty);
+
+  return {
+    ...base,
+    baselinePopulation: base.population,
+    peakPopulation: base.population,
+    monthlyExcessDeaths: 0,
+    cumulativeCrisisDeaths: 0,
+    depopulated: false,
+    populationPressure: base.population / base.carryingCapacity,
+    // TIER 2.8 fields - initialized by initializeTier28Extensions()
+    isHegemon: false,
+    domesticResources: emptyResources,
+    extractedResources: emptyResources,
+    sovereignty: defaultSovereignty,
+    resourceValue: resourceValue,
+    extractionTargets: [],
+    extractedBy: [],
+    militaryCapability: 0,
+    militarySpendingPercent: 0,
+    militarySpendingAbsolute: 0,
+    militaryCO2Emissions: 0,
+    militaryBases: new Map(),
+    activeInterventions: [],
+    militaryRnDPercent: 0,
+    meaningCrisis: 0,
+    nationalismStrength: 0,
+    warMotivation: 0,
+    parentalFulfillment: 0,
+    moralInjury: 0,
+    historicalEmissions: 0,
+    currentEmissions: 0,
+    climateSufferingRatio: 0,
+    climateReparationsOwed: 0,
+    climateReparationsReceived: 0,
+    militaryEmissionsPercent: 0,
+    climateReparationsWillingness: 0,
+    climateMigrationPressure: 0,
+    greenTechReceived: 0,
+    greenTechShared: 0
+  };
+}
 
 /**
  * Initialize country population tracking
@@ -23,313 +88,205 @@ import {
  */
 export function initializeCountryPopulations(): CountryPopulationSystem {
   const countries: Record<CountryName, CountryPopulation> = {
-    'United States': {
+    'United States': createCountry({
       name: 'United States',
       region: 'North America',
       population: 335,
-      baselinePopulation: 335,
-      peakPopulation: 335,
       birthRate: 11.0,
       deathRate: 8.9,
       isNuclearPower: true,
       isAIHub: true,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 400,
-      populationPressure: 0.84
-    },
-    'China': {
+      carryingCapacity: 400
+    }),
+    'China': createCountry({
       name: 'China',
       region: 'East Asia',
       population: 1425,
-      baselinePopulation: 1425,
-      peakPopulation: 1425,
       birthRate: 6.5,
       deathRate: 7.4,
       isNuclearPower: true,
       isAIHub: true,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 1600,
-      populationPressure: 0.89
-    },
-    'Russia': {
+      carryingCapacity: 1600
+    }),
+    'Russia': createCountry({
       name: 'Russia',
       region: 'Eastern Europe',
       population: 144,
-      baselinePopulation: 144,
-      peakPopulation: 144,
       birthRate: 9.2,
       deathRate: 14.6,
       isNuclearPower: true,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 200,
-      populationPressure: 0.72
-    },
-    'India': {
+      carryingCapacity: 200
+    }),
+    'India': createCountry({
       name: 'India',
       region: 'South Asia',
       population: 1425,
-      baselinePopulation: 1425,
-      peakPopulation: 1425,
       birthRate: 16.2,
       deathRate: 7.3,
       isNuclearPower: true,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 1800,
-      populationPressure: 0.79
-    },
-    'United Kingdom': {
+      carryingCapacity: 1800
+    }),
+    'United Kingdom': createCountry({
       name: 'United Kingdom',
       region: 'Western Europe',
       population: 67,
-      baselinePopulation: 67,
-      peakPopulation: 67,
       birthRate: 10.7,
       deathRate: 9.4,
       isNuclearPower: true,
       isAIHub: true,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 80,
-      populationPressure: 0.84
-    },
-    'France': {
+      carryingCapacity: 80
+    }),
+    'France': createCountry({
       name: 'France',
       region: 'Western Europe',
       population: 65,
-      baselinePopulation: 65,
-      peakPopulation: 65,
       birthRate: 10.9,
       deathRate: 9.6,
       isNuclearPower: true,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 80,
-      populationPressure: 0.81
-    },
-    'Pakistan': {
+      carryingCapacity: 80
+    }),
+    'Pakistan': createCountry({
       name: 'Pakistan',
       region: 'South Asia',
       population: 235,
-      baselinePopulation: 235,
-      peakPopulation: 235,
       birthRate: 25.4,
       deathRate: 6.5,
       isNuclearPower: true,
       isAIHub: false,
       isMajorEconomy: false,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 300,
-      populationPressure: 0.78
-    },
-    'Israel': {
+      carryingCapacity: 300
+    }),
+    'Israel': createCountry({
       name: 'Israel',
       region: 'Middle East',
       population: 9,
-      baselinePopulation: 9,
-      peakPopulation: 9,
       birthRate: 19.2,
       deathRate: 5.2,
       isNuclearPower: true,
       isAIHub: false,
       isMajorEconomy: false,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 15,
-      populationPressure: 0.60
-    },
-    'Japan': {
+      carryingCapacity: 15
+    }),
+    'Japan': createCountry({
       name: 'Japan',
       region: 'East Asia',
       population: 125,
-      baselinePopulation: 125,
-      peakPopulation: 125,
       birthRate: 6.9,
       deathRate: 11.7,
       isNuclearPower: false,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 150,
-      populationPressure: 0.83
-    },
-    'Germany': {
+      carryingCapacity: 150
+    }),
+    'Germany': createCountry({
       name: 'Germany',
       region: 'Western Europe',
       population: 84,
-      baselinePopulation: 84,
-      peakPopulation: 84,
       birthRate: 9.3,
       deathRate: 11.8,
       isNuclearPower: false,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 100,
-      populationPressure: 0.84
-    },
-    'Brazil': {
+      carryingCapacity: 100
+    }),
+    'Brazil': createCountry({
       name: 'Brazil',
       region: 'South America',
       population: 215,
-      baselinePopulation: 215,
-      peakPopulation: 215,
       birthRate: 13.4,
       deathRate: 6.8,
       isNuclearPower: false,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 350,
-      populationPressure: 0.61
-    },
-    'Indonesia': {
+      carryingCapacity: 350
+    }),
+    'Indonesia': createCountry({
       name: 'Indonesia',
       region: 'Southeast Asia',
       population: 275,
-      baselinePopulation: 275,
-      peakPopulation: 275,
       birthRate: 15.4,
       deathRate: 6.7,
       isNuclearPower: false,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 350,
-      populationPressure: 0.79
-    },
-    'Canada': {
+      carryingCapacity: 350
+    }),
+    'Canada': createCountry({
       name: 'Canada',
       region: 'North America',
       population: 39,
-      baselinePopulation: 39,
-      peakPopulation: 39,
       birthRate: 10.2,
       deathRate: 8.1,
       isNuclearPower: false,
       isAIHub: true,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 60,
-      populationPressure: 0.65
-    },
-    'Bangladesh': {
+      carryingCapacity: 60
+    }),
+    'Bangladesh': createCountry({
       name: 'Bangladesh',
       region: 'South Asia',
       population: 172,
-      baselinePopulation: 172,
-      peakPopulation: 172,
       birthRate: 17.6,
       deathRate: 5.6,
       isNuclearPower: false,
       isAIHub: false,
       isMajorEconomy: false,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 200,
-      populationPressure: 0.86
-    },
-    'Nigeria': {
+      carryingCapacity: 200
+    }),
+    'Nigeria': createCountry({
       name: 'Nigeria',
       region: 'West Africa',
       population: 223,
-      baselinePopulation: 223,
-      peakPopulation: 223,
       birthRate: 35.2,
       deathRate: 11.6,
       isNuclearPower: false,
       isAIHub: false,
       isMajorEconomy: false,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 300,
-      populationPressure: 0.74
-    },
+      carryingCapacity: 300
+    }),
     // P2.4: Additional countries for organization geographic diversification
-    'Ireland': {
+    'Ireland': createCountry({
       name: 'Ireland',
       region: 'Western Europe',
       population: 5.1,
-      baselinePopulation: 5.1,
-      peakPopulation: 5.1,
       birthRate: 11.5,
       deathRate: 6.8,
       isNuclearPower: false,
       isAIHub: true, // Major tech hub (Google, Microsoft, Meta EU HQ)
       isMajorEconomy: false,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 8,
-      populationPressure: 0.64
-    },
-    'Singapore': {
+      carryingCapacity: 8
+    }),
+    'Singapore': createCountry({
       name: 'Singapore',
       region: 'Southeast Asia',
       population: 5.9,
-      baselinePopulation: 5.9,
-      peakPopulation: 5.9,
       birthRate: 8.5,
       deathRate: 5.0,
       isNuclearPower: false,
       isAIHub: true, // AI research hub (Google, Meta, OpenAI offices)
       isMajorEconomy: false,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 7,
-      populationPressure: 0.84
-    },
-    'Australia': {
+      carryingCapacity: 7
+    }),
+    'Australia': createCountry({
       name: 'Australia',
       region: 'Oceania',
       population: 26.4,
-      baselinePopulation: 26.4,
-      peakPopulation: 26.4,
       birthRate: 12.0,
       deathRate: 6.7,
       isNuclearPower: false,
       isAIHub: false,
       isMajorEconomy: true,
-      monthlyExcessDeaths: 0,
-      cumulativeCrisisDeaths: 0,
-      depopulated: false,
-      carryingCapacity: 50,
-      populationPressure: 0.53
-    }
+      carryingCapacity: 50
+    })
   };
 
   // Initialize TIER 2.8 extensions (resources, military, war-meaning)
@@ -532,7 +489,7 @@ export function updateCountryPopulations(state: GameState): void {
       
       sys.depopulationEvents.push({
         country: countryName,
-        timestamp: state.currentMonth,
+        month: state.currentMonth,
         finalPopulation: country.population
       });
       

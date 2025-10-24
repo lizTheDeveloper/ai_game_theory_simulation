@@ -556,7 +556,7 @@ function checkEnhancementOutcomes(system: HumanEnhancementSystem): void {
   
   // Universal Enhancement (high enhancement + low inequality)
   else if (system.overallEnhancementLevel > 0.70 && system.enhancementInequality < 0.25) {
-    outcome = 'universal_enhancement';
+    outcome = 'cognitive_utopia'; // Universal enhancement enables flourishing
     confidence = system.overallEnhancementLevel * (1 - system.enhancementInequality);
   }
   

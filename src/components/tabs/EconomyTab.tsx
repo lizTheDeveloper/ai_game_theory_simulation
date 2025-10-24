@@ -100,7 +100,7 @@ export default function EconomyTab() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">{sector.sector}</span>
                       <div className="flex gap-2">
-                        <Badge variant={riskLevel.color} className="text-xs">
+                        <Badge variant={riskLevel.color as "destructive" | "default" | "secondary" | "outline"} className="text-xs">
                           {riskLevel.label}
                         </Badge>
                         <span className="text-xs text-muted-foreground">
@@ -204,9 +204,9 @@ export default function EconomyTab() {
                     <DollarSign className="h-4 w-4" />
                     Economic Dependence on AI
                   </span>
-                  <span className="text-sm">{(society.economicDependence * 100).toFixed(1)}%</span>
+                  <span className="text-sm">{(society.unemploymentLevel * 100).toFixed(1)}%</span>
                 </div>
-                <Progress value={society.economicDependence * 100} className="h-3" />
+                <Progress value={society.unemploymentLevel * 100} className="h-3" />
               </div>
             </div>
 
