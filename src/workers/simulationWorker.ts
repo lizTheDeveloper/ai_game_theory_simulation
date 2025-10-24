@@ -341,7 +341,7 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   try {
     switch (msg.type) {
       case 'init':
-        handleInit(msg.seed, msg.scenario, msg.interval, msg.alignmentConfig);
+        handleInit(msg.seed, msg.scenario, msg.interval, msg.alignmentConfig, msg.climatePriorityConfig);
         break;
 
       case 'start':
@@ -379,7 +379,7 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   }
 });
 
-function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig) {
+function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig) {
   if (engine || state) {
     throw new Error('Already initialized. Create a new worker to reinitialize.');
   }
@@ -387,8 +387,8 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
   // Create engine with seed (use 'summary' log level for minimal logging)
   engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'summary' });
 
-  // Create initial state with optional alignment config
-  state = createDefaultInitialState(scenario || 'historical', alignmentConfig);
+  // Create initial state with optional alignment and climate configs
+  state = createDefaultInitialState(scenario || 'historical', alignmentConfig, climatePriorityConfig);
 
   // Set speed if provided
   if (interval !== undefined) {

@@ -34,6 +34,7 @@ import { GameState } from '../src/types/game';
 interface GovernmentPriorityProfile {
   name: string;
   description: string;
+  researchFrame: 'optimistic' | 'pessimistic';
   weights: {
     climate: number;
     economic: number;
@@ -41,60 +42,165 @@ interface GovernmentPriorityProfile {
     social: number;
     technological: number;
   };
+  // Research-backed effectiveness parameters
+  policyEffectiveness: number; // Annual emission reduction rate
+  economicImpact: number; // GDP multiplier
+  synergyMultiplier: number; // Policy interaction effect
+  implementationLag: number; // Months from decision to impact
+  reversalRisk: number; // Probability per election cycle
+  vestedInterestPenalty?: number; // Effectiveness reduction from lobbying
+  carbonLeakage?: number; // Emission leakage without global coordination
 }
 
 /**
- * Research-Validated Government Priority Profiles
+ * Research-Validated Government Priority Profiles with Uncertainty Bracketing
  *
- * Based on empirical data from Stechemesser et al. (2024), IEA WEO 2023,
- * and analysis of current government spending/attention allocation.
+ * Two competing research narratives (both peer-reviewed):
+ * - OPTIMISTIC (Green Growth): Policy mixes work, synergies exist, 15-25% emission reductions
+ * - PESSIMISTIC (Structural Barriers): 96% of policies fail, vested interests dominate, 5-8% reductions
  *
- * Note: "Security" replaces "geopolitical" for clarity (defense + international relations)
+ * Sources:
+ * - Optimistic: Stechemesser et al. (2024), Hagedorn et al. (2024), IEA WEO 2023
+ * - Pessimistic: Hickel & Vogel (2023), Böhringer et al. (2022), Nature Comm (2024)
+ *
+ * We test BOTH to bracket uncertainty per project philosophy: "let the model show what it shows"
  */
 const PRIORITY_PROFILES: GovernmentPriorityProfile[] = [
+  // ============================================================================
+  // BASELINE (Both Frames Agree)
+  // ============================================================================
   {
-    name: 'Status Quo',
-    description: 'Current baseline allocation (most countries 2020-2024)',
+    name: 'Baseline - Status Quo',
+    description: 'Current allocation (most countries 2020-2024) - neutral baseline',
+    researchFrame: 'optimistic', // Minimal difference between frames at 10%
     weights: {
-      climate: 0.10,      // 10% - minimal climate action
-      economic: 0.30,     // 30% - dominant priority (growth, employment, trade)
-      geopolitical: 0.20, // 20% - security, defense, international relations
-      social: 0.35,       // 35% - welfare, education, healthcare, pensions
-      technological: 0.05, // 5% - R&D, innovation policy
+      climate: 0.10,
+      economic: 0.30,
+      geopolitical: 0.20,
+      social: 0.35,
+      technological: 0.05,
     },
+    policyEffectiveness: 0.005, // 0-0.5%/year emission reduction
+    economicImpact: 1.025, // +2.5%/year GDP growth (baseline)
+    synergyMultiplier: 1.0, // No synergy at minimal priority
+    implementationLag: 36, // 3 years (bureaucratic baseline)
+    reversalRisk: 0.2, // 20% per election (low stakes)
+  },
+
+  // ============================================================================
+  // OPTIMISTIC FRAME (Green Growth)
+  // ============================================================================
+  {
+    name: 'Optimistic - Moderate Priority (20%)',
+    description: 'Progressive govts (Biden, von der Leyen) with green growth synergies',
+    researchFrame: 'optimistic',
+    weights: {
+      climate: 0.20,
+      economic: 0.25,
+      geopolitical: 0.18,
+      social: 0.30,
+      technological: 0.07,
+    },
+    policyEffectiveness: 0.02, // 1-3%/year emission reduction
+    economicImpact: 1.027, // +2.7%/year (green jobs + co-benefits)
+    synergyMultiplier: 1.3, // Modest synergy from policy coordination
+    implementationLag: 30, // 2.5 years (proactive government)
+    reversalRisk: 0.35, // 35% per election
   },
   {
-    name: 'Moderate Climate Priority',
-    description: 'Progressive governments (Biden admin, EU Commission 2020-2024)',
+    name: 'Optimistic - Ambitious Priority (35%)',
+    description: 'Denmark/Germany level with strong policy mixes, Paris-aligned',
+    researchFrame: 'optimistic',
     weights: {
-      climate: 0.20,      // 20% - significant but balanced climate action
-      economic: 0.25,     // 25% - economic growth + green jobs
-      geopolitical: 0.18, // 18% - slightly reduced security focus
-      social: 0.30,       // 30% - maintained welfare state
-      technological: 0.07, // 7% - increased R&D (green tech focus)
+      climate: 0.35,
+      economic: 0.22,
+      geopolitical: 0.13,
+      social: 0.20,
+      technological: 0.10,
     },
+    policyEffectiveness: 0.05, // 4-6%/year emission reduction (Paris 1.5°C)
+    economicImpact: 1.020, // +2.0%/year (co-benefits offset costs)
+    synergyMultiplier: 1.7, // Strong policy mix synergy
+    implementationLag: 24, // 2 years (coordinated action)
+    reversalRisk: 0.55, // 55% per election (ambitious = risky)
   },
   {
-    name: 'Ambitious Climate Priority',
-    description: 'Maximum observed globally (Denmark, Germany 2023-2024)',
+    name: 'Optimistic - Crisis Mode (45%)',
+    description: 'Wartime-level mobilization (theoretical max, no empirical examples)',
+    researchFrame: 'optimistic',
     weights: {
-      climate: 0.35,      // 35% - Paris 1.5°C alignment, policy mix coordination
-      economic: 0.22,     // 22% - green growth strategy
-      geopolitical: 0.13, // 13% - reduced but maintained security
-      social: 0.20,       // 20% - climate policy integrated with social policy
-      technological: 0.10, // 10% - high R&D investment (climate + AI)
+      climate: 0.45,
+      economic: 0.20,
+      geopolitical: 0.12,
+      social: 0.15,
+      technological: 0.08,
     },
+    policyEffectiveness: 0.085, // 7-10%/year (approaching degrowth)
+    economicImpact: 1.012, // +1.2%/year (uncertain, minimal growth)
+    synergyMultiplier: 2.0, // Maximum coordination (theory)
+    implementationLag: 18, // 1.5 years (emergency powers)
+    reversalRisk: 0.70, // 70% per election (extreme political risk)
+  },
+
+  // ============================================================================
+  // PESSIMISTIC FRAME (Structural Barriers)
+  // ============================================================================
+  {
+    name: 'Pessimistic - Moderate Priority (20%)',
+    description: 'Progressive govts constrained by vested interests & carbon leakage',
+    researchFrame: 'pessimistic',
+    weights: {
+      climate: 0.20,
+      economic: 0.25,
+      geopolitical: 0.18,
+      social: 0.30,
+      technological: 0.07,
+    },
+    policyEffectiveness: 0.012, // 0.5-2%/year (median policy performance)
+    economicImpact: 1.020, // +2.0%/year (modest co-benefits)
+    synergyMultiplier: 0.95, // Slight policy interference
+    implementationLag: 96, // 8 years (permitting, lawsuits, resistance)
+    reversalRisk: 0.45, // 45% per election
+    vestedInterestPenalty: 0.15, // -15% effectiveness from lobbying
+    carbonLeakage: 0.30, // -30% effectiveness from leakage
   },
   {
-    name: 'Crisis-Mode Maximum',
-    description: 'Theoretical upper bound (no empirical examples, high political risk)',
+    name: 'Pessimistic - Ambitious Priority (30%)',
+    description: 'Near-maximum feasible (Denmark) but structural barriers dominate',
+    researchFrame: 'pessimistic',
     weights: {
-      climate: 0.45,      // 45% - wartime-level mobilization
-      economic: 0.20,     // 20% - minimum to maintain core economic functions
-      geopolitical: 0.12, // 12% - minimum defense/security
-      social: 0.15,       // 15% - essential welfare only
-      technological: 0.08, // 8% - focused R&D (climate breakthrough priority)
+      climate: 0.30, // Capped at 30% (40%+ politically infeasible per skeptic)
+      economic: 0.23,
+      geopolitical: 0.15,
+      social: 0.22,
+      technological: 0.10,
     },
+    policyEffectiveness: 0.03, // 2-4%/year (hitting barriers)
+    economicImpact: 1.012, // +1.2%/year (growing economic tensions)
+    synergyMultiplier: 0.90, // Policy interference increases
+    implementationLag: 120, // 10 years (major resistance)
+    reversalRisk: 0.55, // 55% per election
+    vestedInterestPenalty: 0.30, // -30% effectiveness (heavy lobbying)
+    carbonLeakage: 0.40, // -40% effectiveness (unilateral action)
+  },
+  {
+    name: 'Pessimistic - Maximum Feasible (35%)',
+    description: 'Absolute ceiling before political collapse (gilets jaunes threshold)',
+    researchFrame: 'pessimistic',
+    weights: {
+      climate: 0.35, // At backlash threshold
+      economic: 0.20,
+      geopolitical: 0.13,
+      social: 0.20,
+      technological: 0.12,
+    },
+    policyEffectiveness: 0.035, // 2.5-4.5%/year (diminishing returns)
+    economicImpact: 1.008, // +0.8%/year (economic drag)
+    synergyMultiplier: 0.85, // Strong policy interference (Böhringer et al.)
+    implementationLag: 144, // 12 years (near-gridlock)
+    reversalRisk: 0.65, // 65% per election (backlash risk)
+    vestedInterestPenalty: 0.40, // -40% effectiveness (existential threat response)
+    carbonLeakage: 0.50, // -50% effectiveness (capital flight)
   },
 ];
 

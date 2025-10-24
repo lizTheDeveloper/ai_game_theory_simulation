@@ -106,9 +106,17 @@ export function updateEnvironmentalAccumulation(
   // NOTE: Resource efficiency now handled by TechTreePhase regional effects
   // No additional multiplier needed here
   
-  // Apply depletion
-  const currentReserves = isNaN(env.resourceReserves) ? 1.0 : env.resourceReserves;
-  env.resourceReserves = Math.max(0, currentReserves - resourceDepletionRate);
+  // Apply depletion (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
+  const MIN_RESERVE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
+
+  // Detect NaN and fail loudly - don't hide bugs with fallbacks
+  if (isNaN(env.resourceReserves)) {
+    console.error(`❌ NaN in resourceReserves at month ${state.currentMonth}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN resource reserves - simulation corrupted at month ${state.currentMonth}`);
+  }
+
+  env.resourceReserves = Math.max(MIN_RESERVE_FLOOR, env.resourceReserves - resourceDepletionRate);
   
   // === RESOURCE REGENERATION (Phase 2.8) ===
   // Tech-enabled recovery: Circular economy, sustainable agriculture, clean energy
@@ -147,9 +155,23 @@ export function updateEnvironmentalAccumulation(
   // Natural degradation (Earth can process some pollution)
   const naturalDegradation = 0.003; // 0.3% per month natural cleanup
   
+  // Detect NaN before calculation - fail loudly
+  if (isNaN(env.pollutionLevel)) {
+    console.error(`❌ NaN in pollutionLevel BEFORE calculation at month ${state.currentMonth}`);
+    console.error(`   pollutionRate: ${pollutionRate}, naturalDegradation: ${naturalDegradation}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN pollution level - simulation corrupted at month ${state.currentMonth}`);
+  }
+
   // Apply pollution (accumulation - degradation)
-  const currentPollution = isNaN(env.pollutionLevel) ? 0.0 : env.pollutionLevel;
-  env.pollutionLevel = Math.max(0, Math.min(1, currentPollution + pollutionRate - naturalDegradation));
+  env.pollutionLevel = Math.max(0, Math.min(1, env.pollutionLevel + pollutionRate - naturalDegradation));
+
+  // Detect NaN after calculation - this means the calculation itself produced NaN
+  if (isNaN(env.pollutionLevel)) {
+    console.error(`❌ NaN in pollutionLevel AFTER calculation at month ${state.currentMonth}`);
+    console.error(`   pollutionRate: ${pollutionRate}, naturalDegradation: ${naturalDegradation}`);
+    throw new Error(`Pollution calculation produced NaN - check pollutionRate/naturalDegradation`);
+  }
   
   // === CLIMATE DEGRADATION ===
   // Energy usage drives climate impact
@@ -182,9 +204,17 @@ export function updateEnvironmentalAccumulation(
   // Natural stabilization (very slow)
   const naturalStabilization = 0.001; // 0.1% per month
   
-  // Apply climate degradation
-  const currentClimate = isNaN(env.climateStability) ? 1.0 : env.climateStability;
-  env.climateStability = Math.max(0, Math.min(1, currentClimate - climateDegradationRate + naturalStabilization));
+  // Detect NaN before calculation - fail loudly
+  if (isNaN(env.climateStability)) {
+    console.error(`❌ NaN in climateStability at month ${state.currentMonth}`);
+    console.error(`   climateDegradationRate: ${climateDegradationRate}, naturalStabilization: ${naturalStabilization}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN climate stability - simulation corrupted at month ${state.currentMonth}`);
+  }
+
+  // Apply climate degradation (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
+  const MIN_CLIMATE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
+  env.climateStability = Math.max(MIN_CLIMATE_FLOOR, Math.min(1, env.climateStability - climateDegradationRate + naturalStabilization));
   
   // === BIODIVERSITY LOSS ===
   // Habitat disruption from expansion
@@ -214,9 +244,16 @@ export function updateEnvironmentalAccumulation(
   // Natural recovery (very slow without active management)
   const naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
   
+  // Detect NaN before calculation - fail loudly
+  if (isNaN(env.biodiversityIndex)) {
+    console.error(`❌ NaN in biodiversityIndex at month ${state.currentMonth}`);
+    console.error(`   biodiversityLossRate: ${biodiversityLossRate}, naturalRecovery: ${naturalRecovery}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN biodiversity index - simulation corrupted at month ${state.currentMonth}`);
+  }
+
   // Apply biodiversity loss
-  const currentBiodiversity = isNaN(env.biodiversityIndex) ? 1.0 : env.biodiversityIndex;
-  env.biodiversityIndex = Math.max(0, Math.min(1, currentBiodiversity - biodiversityLossRate + naturalRecovery));
+  env.biodiversityIndex = Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery));
 
   // === P1.5: ECOSYSTEM REGENERATION FROM POPULATION DECLINE ===
   // Historical evidence: Nature rebounds when human pressure reduces

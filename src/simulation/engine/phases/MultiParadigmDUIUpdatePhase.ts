@@ -173,13 +173,34 @@ function calculateWesternLiberal(state: GameState): number {
   // Geometric mean (non-compensatory) - KEPT for backward compatibility
   // BUT: Users should analyze components, not this headline number
   const indicators = [electoralDemocracy, civilLiberties, ruleOfLaw, economicFreedom];
+
+  // Detect NaN in any indicator - fail loudly instead of silent fallback
+  for (let i = 0; i < indicators.length; i++) {
+    if (isNaN(indicators[i])) {
+      console.error(`❌ NaN in Western Liberal indicator ${i} at month ${state.currentMonth}`);
+      console.error(`   electoralDemocracy: ${electoralDemocracy}`);
+      console.error(`   civilLiberties: ${civilLiberties}`);
+      console.error(`   ruleOfLaw: ${ruleOfLaw}`);
+      console.error(`   economicFreedom: ${economicFreedom}`);
+      throw new Error(`NaN in Western Liberal paradigm calculation - indicator ${i} is NaN`);
+    }
+  }
+
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val ?? 50, MIN_FLOOR);
+    const floored = Math.max(val, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
   const result = Math.pow(product, 1 / indicators.length) * 100;
-  return isNaN(result) ? 50 : result;
+
+  // Final NaN check - if this triggers, something is wrong with the calculation itself
+  if (isNaN(result)) {
+    console.error(`❌ NaN result in Western Liberal calculation at month ${state.currentMonth}`);
+    console.error(`   product: ${product}, indicators: [${indicators.join(', ')}]`);
+    throw new Error(`Western Liberal geometric mean produced NaN - check calculation`);
+  }
+
+  return result;
 }
 
 /**
@@ -217,13 +238,31 @@ function calculateDevelopment(state: GameState): number {
 
   // Geometric mean
   const indicators = [qol, survivalScore, healthcare];
+
+  // Detect NaN in any indicator - fail loudly instead of silent fallback
+  for (let i = 0; i < indicators.length; i++) {
+    if (isNaN(indicators[i])) {
+      console.error(`❌ NaN in Development indicator ${i} at month ${state.currentMonth}`);
+      console.error(`   qol: ${qol}, survivalScore: ${survivalScore}, healthcare: ${healthcare}`);
+      throw new Error(`NaN in Development paradigm calculation - indicator ${i} is NaN`);
+    }
+  }
+
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val ?? 50, MIN_FLOOR);
+    const floored = Math.max(val, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
   const result = Math.pow(product, 1 / indicators.length) * 100;
-  return isNaN(result) ? 50 : result;
+
+  // Final NaN check
+  if (isNaN(result)) {
+    console.error(`❌ NaN result in Development calculation at month ${state.currentMonth}`);
+    console.error(`   product: ${product}, indicators: [${indicators.join(', ')}]`);
+    throw new Error(`Development geometric mean produced NaN - check calculation`);
+  }
+
+  return result;
 }
 
 /**
@@ -289,15 +328,48 @@ function calculateEcological(state: GameState): number {
   const pollutionLevel = state.environmentalAccumulation?.pollutionLevel ?? 0.4;
   const pollutionScore = (1 - pollutionLevel) * 100;
 
+  // DEBUG: Log when any value is problematic
+  if (state.currentMonth % 12 === 0 || isNaN(boundariesScore) || isNaN(resourceScore) || isNaN(climateScore) || isNaN(pollutionScore)) {
+    const hasNaN = isNaN(boundariesScore) || isNaN(resourceScore) || isNaN(climateScore) || isNaN(pollutionScore);
+    if (hasNaN || state.currentMonth === 168) {
+      console.log(`\n🔍 ECOLOGY DEBUG (Month ${state.currentMonth}):`);
+      console.log(`   boundariesScore: ${boundariesScore} (${isNaN(boundariesScore) ? 'NaN!' : 'ok'})`);
+      console.log(`   resourceScore: ${resourceScore} (reserves: ${resourceReserves})`);
+      console.log(`   climateScore: ${climateScore} (stability: ${climateStability})`);
+      console.log(`   pollutionScore: ${pollutionScore} (level: ${pollutionLevel})`);
+    }
+  }
+
   // Geometric mean
   const indicators = [boundariesScore, resourceScore, climateScore, pollutionScore];
+
+  // Detect NaN in any indicator - fail loudly instead of silent fallback
+  for (let i = 0; i < indicators.length; i++) {
+    if (isNaN(indicators[i])) {
+      console.error(`❌ NaN in Ecological indicator ${i} at month ${state.currentMonth}`);
+      console.error(`   boundariesScore: ${boundariesScore}`);
+      console.error(`   resourceScore: ${resourceScore} (reserves: ${resourceReserves})`);
+      console.error(`   climateScore: ${climateScore} (stability: ${climateStability})`);
+      console.error(`   pollutionScore: ${pollutionScore} (level: ${pollutionLevel})`);
+      throw new Error(`NaN in Ecological paradigm calculation - indicator ${i} is NaN`);
+    }
+  }
+
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val ?? 50, MIN_FLOOR);
+    const floored = Math.max(val, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
   const result = Math.pow(product, 1 / indicators.length) * 100;
-  return isNaN(result) ? 50 : result;
+
+  // Final NaN check - if this triggers, the bug is in geometric mean calculation
+  if (isNaN(result)) {
+    console.error(`❌ NaN result in Ecological calculation at month ${state.currentMonth}`);
+    console.error(`   product: ${product}, indicators: [${indicators.join(', ')}]`);
+    throw new Error(`Ecological geometric mean produced NaN - THIS IS THE BUG WE FIXED!`);
+  }
+
+  return result;
 }
 
 /**
@@ -326,11 +398,31 @@ function calculateIndigenous(state: GameState): number {
 
   // Geometric mean
   const indicators = [socialTrust, communityBonds, meaningScore];
+
+  // Detect NaN in any indicator - fail loudly instead of silent fallback
+  for (let i = 0; i < indicators.length; i++) {
+    if (isNaN(indicators[i])) {
+      console.error(`❌ NaN in Indigenous indicator ${i} at month ${state.currentMonth}`);
+      console.error(`   socialTrust: ${socialTrust}`);
+      console.error(`   communityBonds: ${communityBonds}`);
+      console.error(`   meaningScore: ${meaningScore} (crisis: ${meaningCrisisLevel})`);
+      throw new Error(`NaN in Indigenous paradigm calculation - indicator ${i} is NaN`);
+    }
+  }
+
   const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val ?? 50, MIN_FLOOR);
+    const floored = Math.max(val, MIN_FLOOR);
     return acc * (floored / 100);
   }, 1);
 
   const result = Math.pow(product, 1 / indicators.length) * 100;
-  return isNaN(result) ? 50 : result;
+
+  // Final NaN check
+  if (isNaN(result)) {
+    console.error(`❌ NaN result in Indigenous calculation at month ${state.currentMonth}`);
+    console.error(`   product: ${product}, indicators: [${indicators.join(', ')}]`);
+    throw new Error(`Indigenous geometric mean produced NaN - check calculation`);
+  }
+
+  return result;
 }

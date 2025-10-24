@@ -52,7 +52,12 @@
       "mcp__playwright__browser_close",
       "WebFetch(domain:www.oecd.org)",
       "Bash(pkill:*)",
-      "mcp__playwright__browser_click"
+      "mcp__playwright__browser_click",
+      "Bash(kill:*)",
+      "Bash(gh secret list:*)",
+      "Bash(gh label create:*)",
+      "Bash(gh label:*)",
+      "Bash(do sleep 5)"
     ],
     "deny": [],
     "ask": []
