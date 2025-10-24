@@ -42,7 +42,7 @@ function executeGovernmentResponsePhase(
   context: PhaseContext
 ): PhaseResult {
   if (!state.governmentSystem) {
-    return { events: [], metadata: { warnings: [] };
+    return { events: [], metadata: { warnings: [] } };
   }
 
   const events: string[] = [];
@@ -140,7 +140,7 @@ function executeGovernmentResponsePhase(
   console.log(`  Active policies: ${state.governmentSystem.activePolicies.length}`);
   console.log(`  International coordination: ${(state.governmentSystem.internationalCoordination * 100).toFixed(0)}%`);
 
-  return { events, metadata: { warnings: [] };
+  return { events, metadata: { warnings: [] } };
 }
 
 /**
