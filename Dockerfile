@@ -11,6 +11,9 @@ WORKDIR /app
 # Copy package files
 COPY package.json ./
 
+# Copy local packages (needed for @lizthedeveloper/government-agents)
+COPY packages ./packages
+
 # Install dependencies
 # Using npm install instead of npm ci since package-lock.json may not exist
 RUN npm install

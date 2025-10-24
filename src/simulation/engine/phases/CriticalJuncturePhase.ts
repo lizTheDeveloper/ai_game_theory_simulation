@@ -24,8 +24,6 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext } from
  * Order in PhaseOrchestrator: 29 (after crisis detection, before extinction checks)
  */
 
-import {   PhaseContext } from '../SimulationPhase';
-
 /**
  * Count active crises in the simulation
  * Used to determine if forces are "balanced" (not zero crises, not overwhelming)
@@ -350,7 +348,7 @@ export class CriticalJuncturePhase implements SimulationPhase {
 
     if (!atJuncture) {
       // Not at critical juncture - structural forces dominate (90% of history)
-      return { events: [], metadata: { stateChanges: 0 };
+      return { events: [], metadata: { stateChanges: 0 } };
     }
 
     // At critical juncture! Calculate agency potential
@@ -365,6 +363,6 @@ export class CriticalJuncturePhase implements SimulationPhase {
     events.push(...escapeResult.events);
     stateChanges += escapeResult.stateChanges;
 
-    return { events, stateChanges };
+    return { events, metadata: { stateChanges } };
   }
 }

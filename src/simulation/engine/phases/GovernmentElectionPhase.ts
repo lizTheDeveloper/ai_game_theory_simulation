@@ -41,7 +41,7 @@ function executeGovernmentElectionPhase(
   context: PhaseContext
 ): PhaseResult {
   if (!state.governmentSystem) {
-    return { events: [], metadata: { warnings: [] };
+    return { events: [], metadata: { warnings: [] } };
   }
 
   const events: string[] = [];
@@ -80,7 +80,7 @@ function executeGovernmentElectionPhase(
   // 3. Check coalition stability (for parliamentary systems)
   checkCoalitionStability(state, rng, events);
 
-  return { events, metadata: { warnings: [] };
+  return { events, metadata: { warnings: [] } };
 }
 
 /**
