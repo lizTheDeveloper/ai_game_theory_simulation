@@ -2,6 +2,10 @@
 
 # Claude Code Conversation Backup Script
 # Backs up conversation history from ~/.claude/projects/ to this repo
+#
+# Usage:
+#   bash backup-conversations.sh          # Backup only
+#   bash backup-conversations.sh --redact # Backup + redact sensitive info
 
 # Configuration
 PROJECTS=(
@@ -11,6 +15,12 @@ PROJECTS=(
 CLAUDE_BASE="$HOME/.claude/projects"
 BACKUP_DIR="$(dirname "$0")"  # Same directory as this script
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+REDACT=false
+
+# Parse arguments
+if [[ "$1" == "--redact" ]]; then
+    REDACT=true
+fi
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -95,8 +105,50 @@ echo "  Total size: $TOTAL_SIZE"
 # Log backup event
 echo "$TIMESTAMP - Backed up $TOTAL_FILES files across ${#PROJECTS[@]} projects ($TOTAL_SIZE)" >> "$BACKUP_DIR/backup.log"
 
+# Run redaction if requested
+if [ "$REDACT" = true ]; then
+    echo ""
+    echo -e "${BLUE}=== Running Redaction ===${NC}"
+
+    # Check if Python 3 is available
+    if ! command -v python3 &> /dev/null; then
+        echo -e "${RED}✗ Python 3 not found. Skipping redaction.${NC}"
+        echo "  Install Python 3 to use redaction feature."
+    else
+        # Check if Presidio is installed
+        if python3 -c "import presidio_analyzer" 2>/dev/null; then
+            echo -e "${GREEN}✓ Presidio installed${NC}"
+            REDACT_CMD="python3"
+        else
+            echo -e "${YELLOW}⚠ Presidio not installed (falling back to regex-only mode)${NC}"
+            echo "  For better detection: pip install -r scripts/redaction-requirements.txt"
+            REDACT_CMD="python3"
+        fi
+
+        # Run redaction script
+        cd "$(dirname "$BACKUP_DIR")" # Go to project root
+
+        # Use venv python if available, otherwise system python
+        if [ -f "venv/bin/python3" ]; then
+            PYTHON_CMD="venv/bin/python3"
+        else
+            PYTHON_CMD="python3"
+        fi
+
+        $PYTHON_CMD scripts/redact-conversations.py
+
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✓ Redaction complete${NC}"
+        else
+            echo -e "${RED}✗ Redaction failed${NC}"
+            ERRORS=$((ERRORS + 1))
+        fi
+    fi
+fi
+
+echo ""
 if [ $ERRORS -eq 0 ]; then
-    echo -e "${GREEN}✓ All backups complete!${NC}"
+    echo -e "${GREEN}✓ All operations complete!${NC}"
     exit 0
 else
     echo -e "${YELLOW}⚠ Completed with $ERRORS errors${NC}"

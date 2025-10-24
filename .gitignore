@@ -47,12 +47,24 @@ logs/*.log
 # Heap profiles
 profiles/
 
-# Claude Code conversation backups (large JSONL files)
+# Claude Code conversation backups
+# Raw (unredacted) backups - NEVER commit these
+claude-conversations/raw/
 claude-conversations/*.jsonl
 claude-conversations/*/*.jsonl
+!claude-conversations/sanitized/*.jsonl  # Allow sanitized versions
+
+# Backup logs
 claude-conversations/backup.log
+
+# Redaction Python cache
+scripts/__pycache__/
+*.pyc
 
 # Chatroom state tracking (agent last-read markers & active status)
 .claude/chatroom/.*_lastread
 .claude/chatroom/.*_active
 .claude/chatroom/archive/
+
+# Python virtual environment for Presidio
+venv/
