@@ -59,6 +59,19 @@ export function updateQualityOfLifeSystems(
   const harmfulActions = aiAgents.reduce((sum, ai) => sum + ai.harmfulActions, 0);
   const economicStage = globalMetrics.economicTransitionStage;
 
+  // Detect NaN in key inputs - fail loudly
+  if (isNaN(totalAICapability)) {
+    console.error(`❌ NaN totalAICapability in updateQualityOfLifeSystems at month ${state.currentMonth}`);
+    console.error(`   AI agents: ${aiAgents.map(ai => `${ai.id}: ${ai.capability}`).join(', ')}`);
+    throw new Error(`NaN in totalAICapability - check AI agent capabilities`);
+  }
+
+  if (isNaN(economicStage)) {
+    console.error(`❌ NaN economicStage in updateQualityOfLifeSystems at month ${state.currentMonth}`);
+    console.error(`   economicTransitionStage: ${globalMetrics.economicTransitionStage}`);
+    throw new Error(`NaN in economicStage - check globalMetrics.economicTransitionStage`);
+  }
+
   // Phase 1.2: Check for UBI (strengthens safety net effects)
   const hasUBI = government.activeRegulations.some(reg => reg.includes('UBI'));
   const ubiVariant = government.structuralChoices.ubiVariant || 'none';
@@ -111,6 +124,15 @@ export function updateQualityOfLifeSystems(
 
   // Energy availability
   let energyAvailability = 0.9 + totalAICapability * 0.05 + economicStage * 0.1;
+
+  // Detect NaN after initial calculation
+  if (isNaN(energyAvailability)) {
+    console.error(`❌ NaN energyAvailability after initial calculation at month ${state.currentMonth}`);
+    console.error(`   totalAICapability: ${totalAICapability}`);
+    console.error(`   economicStage: ${economicStage}`);
+    console.error(`   calculation: 0.9 + ${totalAICapability} * 0.05 + ${economicStage} * 0.1 = ${energyAvailability}`);
+    throw new Error(`NaN in energyAvailability calculation`);
+  }
 
   if (economicStage >= 4) {
     const { energyBonus, infrastructureScaling } = calculatePostScarcityMultipliers(

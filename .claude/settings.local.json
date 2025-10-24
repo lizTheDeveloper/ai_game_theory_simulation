@@ -4,7 +4,8 @@
       "Bash(1)",
       "mcp__chatroom__chatroom_enter",
       "Bash(git commit:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git merge production -m \"$(cat <<''EOF''\nfeat: Merge automation workflows and climate priority improvements from production\n\nMerging production branch with GitHub Actions automation workflows and parallel agent improvements.\n\n**Automation Workflows (Fresh Claude Code SDK Pattern):**\n- senior-dev-checklist.yml: 20-question review (includes phase architecture)\n- architecture-review.yml: Automated architecture-skeptic quality gate\n- feature-implementer.yml: Automated feature implementation\n- feature-approved-example.yml: Prerequisites validation\n\n**Phase Architecture Questions (NEW):**\n- Phase interactions: dependency analysis\n- Phase order: execution order verification  \n- Duplicate logic: overlap detection\n- Phase necessity: avoid phase proliferation\n- State propagation: who reads/writes what\n\n**Climate Priority Improvements:**\n- Climate-focused government UI integration\n- NaN fallback improvements\n- Ecology bug fixes\n- Multi-paradigm DUI updates\n\n**Quality Gates Active:**\n- Architecture review blocks merge if CRITICAL issues\n- Senior checklist flags needs-fixes if tests fail\n- 80-85% token reduction vs full conversation context\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
