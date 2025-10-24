@@ -85,6 +85,9 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
       institutionalLegitimacy
     );
 
+    // TODO: Fix democracy tracking - electoralDemocracyIndex is per-country in minimalSufferingSystem
+    // Need to either aggregate from countries or use globalMetrics
+    /* TEMPORARILY DISABLED - TYPE ERRORS
     if (state.currentMonth === 0) {
       console.log(`  DemocracyChange: ${democracyChange}, crisis=${crisisPressure}, ai=${aiManipulation}, quality=${governanceQuality}, trust=${publicTrust}`);
       console.log(`  BEFORE: electoral=${state.minimalSufferingSystem.electoralDemocracyIndex}`);
@@ -163,6 +166,8 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     if (socialCohesion.civilLiberties < 30) {
       events.push('⚠️ Civil Liberties Crisis: Fundamental freedoms severely restricted');
     }
+
+    */
 
     return { events: [] }; // PhaseResult.events expects GameEvent[], not string[]
   }

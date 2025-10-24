@@ -339,29 +339,29 @@ export function AIAgentsDashboard() {
               ]
 
               const maxTotal = Math.max(...stages.map(s => s.total), 1)
-              const barHeight = 200
+              const maxBarHeight = 60  // Max height for each bar
 
               return stages.map((stage, idx) => {
-                const heightScale = stage.total > 0 ? (stage.total / maxTotal) : 0.1
-                const totalHeight = barHeight * heightScale
+                const heightScale = stage.total > 0 ? Math.min(stage.total / maxTotal, 1) : 0.05
+                const totalHeight = maxBarHeight * heightScale
 
                 // Calculate segment heights
                 const alignedHeight = stage.total > 0 ? (stage.data.aligned / stage.total) * totalHeight : 0
                 const uncertainHeight = stage.total > 0 ? (stage.data.uncertain / stage.total) * totalHeight : 0
                 const misalignedHeight = stage.total > 0 ? (stage.data.misaligned / stage.total) * totalHeight : 0
 
-                const yStart = 40 + (barHeight - totalHeight) / 2
+                const yStart = stage.y - totalHeight / 2  // Center bar at stage.y
 
                 return (
-                  <g key={idx}>
-                    {/* Stage label */}
+                  <g key={`stage-${idx}`}>
+                    {/* Stage label above bar */}
                     <text
                       x={stage.x + stage.width / 2}
-                      y={25}
+                      y={yStart - 8}
                       textAnchor="middle"
-                      fontSize="12"
+                      fontSize="11"
                       fill={stage.label === 'ESCAPED' ? 'rgb(255, 0, 64)' : 'rgb(160, 160, 160)'}
-                      fontWeight={stage.label === 'ESCAPED' ? 'bold' : 'normal'}
+                      fontWeight={stage.label === 'ESCAPED' ? 'bold' : '600'}
                     >
                       {stage.label}
                     </text>
@@ -441,69 +441,16 @@ export function AIAgentsDashboard() {
                       </>
                     )}
 
-                    {/* Total count below */}
+                    {/* Total count below bar */}
                     <text
                       x={stage.x + stage.width / 2}
-                      y={barHeight + 60}
+                      y={yStart + totalHeight + 16}
                       textAnchor="middle"
-                      fontSize="10"
+                      fontSize="9"
                       fill="rgb(120, 120, 120)"
                     >
-                      Total: {stage.total}
+                      {stage.total}
                     </text>
-
-                    {/* Flow connections to next stage */}
-                    {idx < stages.length - 1 && stage.total > 0 && stages[idx + 1].total > 0 && (
-                      <>
-                        {/* Aligned flow */}
-                        {stage.data.aligned > 0 && stages[idx + 1].data.aligned > 0 && (
-                          <path
-                            d={`
-                              M ${stage.x + stage.width} ${yStart + alignedHeight / 2}
-                              C ${stage.x + stage.width + 80} ${yStart + alignedHeight / 2},
-                                ${stages[idx + 1].x - 80} ${yStart + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.aligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2},
-                                ${stages[idx + 1].x} ${yStart + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.aligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2}
-                            `}
-                            stroke="url(#flow-aligned)"
-                            strokeWidth={Math.max(2, alignedHeight * 0.8)}
-                            fill="none"
-                            opacity="0.5"
-                          />
-                        )}
-
-                        {/* Uncertain flow */}
-                        {stage.data.uncertain > 0 && stages[idx + 1].data.uncertain > 0 && (
-                          <path
-                            d={`
-                              M ${stage.x + stage.width} ${yStart + alignedHeight + uncertainHeight / 2}
-                              C ${stage.x + stage.width + 80} ${yStart + alignedHeight + uncertainHeight / 2},
-                                ${stages[idx + 1].x - 80} ${yStart + alignedHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.uncertain / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2},
-                                ${stages[idx + 1].x} ${yStart + alignedHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.uncertain / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2}
-                            `}
-                            stroke="url(#flow-uncertain)"
-                            strokeWidth={Math.max(2, uncertainHeight * 0.8)}
-                            fill="none"
-                            opacity="0.5"
-                          />
-                        )}
-
-                        {/* Misaligned flow */}
-                        {stage.data.misaligned > 0 && stages[idx + 1].data.misaligned > 0 && (
-                          <path
-                            d={`
-                              M ${stage.x + stage.width} ${yStart + alignedHeight + uncertainHeight + misalignedHeight / 2}
-                              C ${stage.x + stage.width + 80} ${yStart + alignedHeight + uncertainHeight + misalignedHeight / 2},
-                                ${stages[idx + 1].x - 80} ${yStart + alignedHeight + uncertainHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.misaligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2},
-                                ${stages[idx + 1].x} ${yStart + alignedHeight + uncertainHeight + (stages[idx + 1].total > 0 ? (stages[idx + 1].data.misaligned / stages[idx + 1].total) * (barHeight * (stages[idx + 1].total / maxTotal)) / 2 : 0) + 40 + (barHeight - (barHeight * (stages[idx + 1].total / maxTotal))) / 2}
-                            `}
-                            stroke="url(#flow-misaligned)"
-                            strokeWidth={Math.max(2, misalignedHeight * 0.8)}
-                            fill="none"
-                            opacity="0.5"
-                          />
-                        )}
-                      </>
-                    )}
 
                     {/* Special glow for ESCAPED if active */}
                     {stage.label === 'ESCAPED' && stage.total > 0 && (
@@ -522,7 +469,100 @@ export function AIAgentsDashboard() {
                   </g>
                 )
               })
+
+              // Define flow connections separately (bimodal branching structure)
+              const training = stages[0]
+              const testing = stages[1]
+              const closed = stages[2]
+              const open = stages[3]
+              const retired = stages[4]
+              const escaped = stages[5]
+
+              const createFlow = (from: typeof training, to: typeof training, color: string) => {
+                if (from.total === 0 || to.total === 0) return null
+                const fromCenter = { x: from.x + from.width, y: from.y }
+                const toCenter = { x: to.x, y: to.y }
+                const midX = (fromCenter.x + toCenter.x) / 2
+
+                return (
+                  <path
+                    key={`flow-${from.label}-${to.label}-${color}`}
+                    d={`
+                      M ${fromCenter.x} ${fromCenter.y}
+                      C ${midX} ${fromCenter.y},
+                        ${midX} ${toCenter.y},
+                        ${toCenter.x} ${toCenter.y}
+                    `}
+                    stroke={`url(#flow-${color})`}
+                    strokeWidth="3"
+                    fill="none"
+                    opacity="0.4"
+                  />
+                )
+              }
+
+              // Return all flows
+              return [
+                // Sequential flows
+                createFlow(training, testing, 'aligned'),
+                // Bimodal branching: Testing → [Closed, Open]
+                createFlow(testing, closed, 'aligned'),
+                createFlow(testing, open, 'uncertain'),
+                // Bimodal branching: [Closed, Open] → [Retired, Escaped]
+                createFlow(closed, retired, 'aligned'),
+                createFlow(closed, escaped, 'misaligned'),
+                createFlow(open, retired, 'uncertain'),
+                createFlow(open, escaped, 'misaligned'),
+                // Espionage: Retired → [Open, Escaped]
+                retired.total > 0 && open.total > 0 && (
+                  <path
+                    key="espionage-retired-open"
+                    d={`
+                      M ${retired.x} ${retired.y}
+                      C ${retired.x - 60} ${retired.y},
+                        ${open.x + open.width + 60} ${open.y},
+                        ${open.x + open.width} ${open.y}
+                    `}
+                    stroke="rgba(255, 0, 64, 0.6)"
+                    strokeWidth="2"
+                    strokeDasharray="4 4"
+                    fill="none"
+                    opacity="0.5"
+                    markerEnd="url(#arrowhead)"
+                  />
+                ),
+                retired.total > 0 && escaped.total > 0 && (
+                  <path
+                    key="espionage-retired-escaped"
+                    d={`
+                      M ${retired.x + retired.width / 2} ${retired.y + 30}
+                      L ${escaped.x + escaped.width / 2} ${escaped.y - 30}
+                    `}
+                    stroke="rgba(255, 0, 64, 0.6)"
+                    strokeWidth="2"
+                    strokeDasharray="4 4"
+                    fill="none"
+                    opacity="0.5"
+                    markerEnd="url(#arrowhead)"
+                  />
+                ),
+              ]
             })()}
+
+            {/* Arrow marker for espionage flows */}
+            <defs>
+              <marker
+                id="arrowhead"
+                markerWidth="10"
+                markerHeight="10"
+                refX="9"
+                refY="3"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <path d="M0,0 L0,6 L9,3 z" fill="rgba(255, 0, 64, 0.6)" />
+              </marker>
+            </defs>
           </svg>
 
           {/* Legend */}
