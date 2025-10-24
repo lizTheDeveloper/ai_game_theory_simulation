@@ -40,6 +40,7 @@
     "scripts/**/*",
     "tests/**/*",
     "src/app/api/**/*",
-    "src/data/loaders/**/*"
+    "src/data/loaders/**/*",
+    "src/mcp-servers/**/*"
   ]
 }

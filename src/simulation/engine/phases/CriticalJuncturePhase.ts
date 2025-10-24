@@ -48,9 +48,9 @@ function countActiveCrises(state: GameState): number {
   if (state.technologicalRisk.complacencyCrisisActive) count++;
 
   // Planetary boundaries crises
-  if (state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.status === 'critical') count++;
-  if (state.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows?.status === 'critical') count++;
-  if (state.planetaryBoundariesSystem?.boundaries?.land_system_change?.status === 'critical') count++;
+  if (state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.status === 'high_risk') count++;
+  if (state.planetaryBoundariesSystem?.boundaries?.biogeochemical_flows?.status === 'high_risk') count++;
+  if (state.planetaryBoundariesSystem?.boundaries?.land_system_change?.status === 'high_risk') count++;
 
   // Specific system crises
   const phosphorusCrisis = state.phosphorusSystem?.supplyShockActive || state.phosphorusSystem?.criticalDepletionActive;
@@ -189,14 +189,23 @@ export function attemptEscape(
   rng: () => number,
   agencyPotential: number
 ): PhaseResult {
-  const events: string[] = [];
+  const events: GameEvent[] = [];
   let stateChanges = 0;
 
   // Roll for escape attempt
   if (rng() > agencyPotential) {
     // Escape failed - structural forces dominate
-    events.push(`  ⚠️  Critical juncture escape attempt FAILED (agency: ${(agencyPotential * 100).toFixed(1)}%)`);
-    return { events, stateChanges };
+    events.push({
+      id: `critical_juncture_failed_${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'info',
+      severity: 'info',
+      agent: 'system',
+      title: 'Critical Juncture Escape Failed',
+      description: `Critical juncture escape attempt FAILED (agency: ${(agencyPotential * 100).toFixed(1)}%)`,
+      effects: {}
+    });
+    return { events, metadata: { stateChanges } };
   }
 
   // Escape succeeded! Determine type based on current conditions
@@ -224,8 +233,16 @@ export function attemptEscape(
       });
     }
 
-    events.push(`  ✅ CRITICAL JUNCTURE ESCAPE: War prevented by individual/collective action`);
-    events.push(`     Vasili Arkhipov moment: Single decision prevented nuclear catastrophe`);
+    events.push({
+      id: `critical_juncture_war_prevented_${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'positive-milestone',
+      severity: 'transformative',
+      agent: 'society',
+      title: 'Critical Juncture: War Prevented',
+      description: 'Vasili Arkhipov moment: Individual/collective action prevented nuclear catastrophe',
+      effects: { warPrevented: true, crisisStability: state.madDeterrence?.crisisStability ?? 0 }
+    });
     stateChanges++;
   }
   // 2. Enable Cooperation (if multiple crises but QoL not collapsed)
@@ -252,8 +269,16 @@ export function attemptEscape(
       state.globalMetrics.informationIntegrity + 0.15
     );
 
-    events.push(`  ✅ CRITICAL JUNCTURE ESCAPE: International cooperation achieved`);
-    events.push(`     Montreal Protocol moment: Collective action despite incentives`);
+    events.push({
+      id: `critical_juncture_cooperation_${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'positive-milestone',
+      severity: 'transformative',
+      agent: 'government',
+      title: 'Critical Juncture: International Cooperation',
+      description: 'Montreal Protocol moment: Collective action achieved despite incentives',
+      effects: { cooperationEnabled: true, researchInvestment: state.government.alignmentResearchInvestment }
+    });
     stateChanges++;
   }
   // 3. Recover from Crisis (if QoL low but population surviving)
@@ -288,8 +313,16 @@ export function attemptEscape(
       state.globalMetrics.qualityOfLife + 0.3
     );
 
-    events.push(`  ✅ CRITICAL JUNCTURE ESCAPE: Social recovery cascade`);
-    events.push(`     Leipzig 1989 moment: Hidden preferences revealed, collective action emerged`);
+    events.push({
+      id: `critical_juncture_recovery_${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'positive-milestone',
+      severity: 'transformative',
+      agent: 'society',
+      title: 'Critical Juncture: Social Recovery',
+      description: 'Leipzig 1989 moment: Hidden preferences revealed, collective action emerged',
+      effects: { socialRecovery: true, qol: state.globalMetrics.qualityOfLife }
+    });
     stateChanges++;
   }
   // 4. Unlock Breakthrough (if research stalled but institutions functional)
@@ -308,8 +341,16 @@ export function attemptEscape(
       state.globalMetrics.technologicalBreakthroughRate + 1.5
     );
 
-    events.push(`  ✅ CRITICAL JUNCTURE ESCAPE: Research breakthrough under duress`);
-    events.push(`     Manhattan Project moment: Crisis mobilization unlocked innovation`);
+    events.push({
+      id: `critical_juncture_breakthrough_${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'positive-milestone',
+      severity: 'transformative',
+      agent: 'government',
+      title: 'Critical Juncture: Research Breakthrough',
+      description: 'Manhattan Project moment: Crisis mobilization unlocked innovation',
+      effects: { breakthroughUnlocked: true, breakthroughRate: state.globalMetrics.technologicalBreakthroughRate }
+    });
     stateChanges++;
   }
 
@@ -319,13 +360,13 @@ export function attemptEscape(
   }
 
   state.history.criticalJunctureEscapes.push({
-    timestamp: state.currentMonth,
+    month: state.currentMonth,
     type: escapeType,
     agencyPotential,
     crisisSeverity: activeCrises / 10, // Normalize to [0, 1]
   });
 
-  return { events, stateChanges };
+  return { events, metadata: { stateChanges } };
 }
 
 /**
@@ -340,7 +381,7 @@ export class CriticalJuncturePhase implements SimulationPhase {
   order = 29;
 
   execute(state: GameState, rng: () => number, context: PhaseContext): PhaseResult {
-    const events: string[] = [];
+    const events: GameEvent[] = [];
     let stateChanges = 0;
 
     // Check if at critical juncture
@@ -354,14 +395,21 @@ export class CriticalJuncturePhase implements SimulationPhase {
     // At critical juncture! Calculate agency potential
     const agencyPotential = calculateAgencyPotential(state, rng);
 
-    events.push(`\n=== Critical Juncture Agency ===`);
-    events.push(`  Critical juncture detected (10% window for agency)`);
-    events.push(`  Agency potential: ${(agencyPotential * 100).toFixed(1)}%`);
+    events.push({
+      id: `critical_juncture_detected_${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'info',
+      severity: 'info',
+      agent: 'system',
+      title: 'Critical Juncture Detected',
+      description: `Critical juncture detected (10% window for agency). Agency potential: ${(agencyPotential * 100).toFixed(1)}%`,
+      effects: { agencyPotential }
+    });
 
     // Attempt escape
     const escapeResult = attemptEscape(state, rng, agencyPotential);
     events.push(...escapeResult.events);
-    stateChanges += escapeResult.stateChanges;
+    stateChanges += escapeResult.metadata?.stateChanges ?? 0;
 
     return { events, metadata: { stateChanges } };
   }

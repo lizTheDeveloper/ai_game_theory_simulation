@@ -1,0 +1,270 @@
+# Architecture Review - Automated Quality Gate
+#
+# PATTERN: Iterative analysis using Claude Code SDK
+# - Agent reads multiple files, analyzes system architecture
+# - Uses .claude/agents/architecture-skeptic.md agent definition
+# - Reviews state propagation, performance, complexity
+# - BLOCKS merge if CRITICAL issues found
+#
+# TRIGGER: PR opened/updated to main branch
+
+name: Architecture Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+jobs:
+  architecture-review:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Analyze Changed Files
+        id: changes
+        run: |
+          # Get list of changed files
+          git diff --name-only origin/main...HEAD > changed_files.txt
+
+          # Categorize changes
+          SIMULATION_FILES=$(grep "^src/simulation/" changed_files.txt || echo "")
+          PHASE_FILES=$(grep "Phase\.ts$" changed_files.txt || echo "")
+          TYPE_FILES=$(grep "^src/types/" changed_files.txt || echo "")
+          ENGINE_FILES=$(grep "^src/simulation/engine/" changed_files.txt || echo "")
+
+          # Count files
+          SIM_COUNT=$(echo "$SIMULATION_FILES" | grep -c "." || echo "0")
+          PHASE_COUNT=$(echo "$PHASE_FILES" | grep -c "." || echo "0")
+          TYPE_COUNT=$(echo "$TYPE_FILES" | grep -c "." || echo "0")
+          ENGINE_COUNT=$(echo "$ENGINE_FILES" | grep -c "." || echo "0")
+
+          echo "sim_count=$SIM_COUNT" >> $GITHUB_OUTPUT
+          echo "phase_count=$PHASE_COUNT" >> $GITHUB_OUTPUT
+          echo "type_count=$TYPE_COUNT" >> $GITHUB_OUTPUT
+          echo "engine_count=$ENGINE_COUNT" >> $GITHUB_OUTPUT
+
+          # Save file lists for agent
+          echo "$SIMULATION_FILES" > simulation_files.txt
+          echo "$PHASE_FILES" > phase_files.txt
+          echo "$TYPE_FILES" > type_files.txt
+
+      - name: Get PR Context
+        id: pr_context
+        run: |
+          # Extract PR description
+          PR_BODY="${{ github.event.pull_request.body }}"
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$PR_BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          # Get git diff stats
+          git diff --stat origin/main...HEAD > diff_stats.txt
+
+      - name: Build Architecture Review Prompt
+        run: |
+          cat > architecture_review_prompt.txt << 'EOF'
+          You are the architecture-skeptic agent from .claude/agents/architecture-skeptic.md
+
+          **YOUR CONTEXT:**
+          - PR: ${{ github.event.pull_request.title }}
+          - Branch: ${{ github.event.pull_request.head.ref }}
+          - You have NO prior conversation history (fresh agent instance)
+
+          **PR DESCRIPTION:**
+          ${{ steps.pr_context.outputs.body }}
+
+          **CHANGED FILES:**
+          - Simulation files: ${{ steps.changes.outputs.sim_count }}
+          - Phase files: ${{ steps.changes.outputs.phase_count }}
+          - Type files: ${{ steps.changes.outputs.type_count }}
+          - Engine files: ${{ steps.changes.outputs.engine_count }}
+
+          **FILE LISTS:**
+          Simulation: $(cat simulation_files.txt)
+          Phases: $(cat phase_files.txt)
+          Types: $(cat type_files.txt)
+
+          **YOUR TASK:**
+          Perform a critical architecture review of this PR. Focus on:
+
+          ### 1. State Propagation Analysis
+          - Read changed files and trace how state flows
+          - Check for missing state updates in related systems
+          - Verify phase execution order handles new state
+          - Look for stale data from missed updates
+
+          ### 2. Performance Complications
+          - Identify O(n²) operations in hot paths
+          - Check for deep cloning in loops
+          - Look for unnecessary array operations
+          - Flag memory allocation patterns
+
+          ### 3. System Complexity
+          - Assess if new code increases cognitive load
+          - Check for competing/duplicate systems
+          - Verify consistency with existing patterns
+          - Look for tight coupling between systems
+
+          ### 4. Integration Points
+          - Read related files (not just changed files)
+          - Check if changes require updates elsewhere
+          - Verify phase registration if new phase added
+          - Check wiki documentation consistency
+
+          **SEVERITY LEVELS:**
+          Use these severity levels in your report:
+
+          - **CRITICAL:** Breaks simulation, causes data loss, or major performance regression
+          - **HIGH:** Creates subtle bugs, complicates future work, or minor performance issues
+          - **MEDIUM:** Code quality concerns, maintainability issues
+          - **LOW:** Style suggestions, minor improvements
+
+          **OUTPUT FORMAT:**
+          Create a detailed review report with:
+
+          1. **Summary** (2-3 sentences)
+          2. **Issues Found** (grouped by severity, with file:line references)
+          3. **Recommendations** (specific, actionable fixes)
+          4. **Verdict:** APPROVE / REQUEST CHANGES / BLOCK MERGE
+
+          **VERDICT LOGIC:**
+          - BLOCK MERGE: Any CRITICAL issues found
+          - REQUEST CHANGES: HIGH severity issues found
+          - APPROVE: Only MEDIUM/LOW issues or none
+
+          Work iteratively. Read multiple files to understand system context. This is a quality gate - be thorough but fair.
+          EOF
+
+      - name: Run Architecture Review (Claude Code SDK)
+        id: review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt_file: architecture_review_prompt.txt
+          claude_args: |
+            --max-turns 30
+            --agent architecture-skeptic
+
+      - name: Extract Review Verdict
+        id: verdict
+        run: |
+          # Look for verdict in Claude's output (saved to review.md by action)
+          if grep -q "BLOCK MERGE" review.md; then
+            echo "verdict=BLOCK" >> $GITHUB_OUTPUT
+            echo "severity=CRITICAL" >> $GITHUB_OUTPUT
+          elif grep -q "REQUEST CHANGES" review.md; then
+            echo "verdict=REQUEST" >> $GITHUB_OUTPUT
+            echo "severity=HIGH" >> $GITHUB_OUTPUT
+          else
+            echo "verdict=APPROVE" >> $GITHUB_OUTPUT
+            echo "severity=OK" >> $GITHUB_OUTPUT
+          fi
+
+          # Count issues by severity
+          CRITICAL=$(grep -c "CRITICAL:" review.md || echo "0")
+          HIGH=$(grep -c "HIGH:" review.md || echo "0")
+          MEDIUM=$(grep -c "MEDIUM:" review.md || echo "0")
+          LOW=$(grep -c "LOW:" review.md || echo "0")
+
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          echo "medium=$MEDIUM" >> $GITHUB_OUTPUT
+          echo "low=$LOW" >> $GITHUB_OUTPUT
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = fs.readFileSync('review.md', 'utf8');
+
+            const verdict = '${{ steps.verdict.outputs.verdict }}';
+            const critical = parseInt('${{ steps.verdict.outputs.critical }}');
+            const high = parseInt('${{ steps.verdict.outputs.high }}');
+            const medium = parseInt('${{ steps.verdict.outputs.medium }}');
+            const low = parseInt('${{ steps.verdict.outputs.low }}');
+
+            let emoji = '✅';
+            let status = 'Approved';
+            if (verdict === 'BLOCK') {
+              emoji = '❌';
+              status = 'Blocked - Critical Issues';
+            } else if (verdict === 'REQUEST') {
+              emoji = '⚠️';
+              status = 'Changes Requested';
+            }
+
+            const body = `## ${emoji} Architecture Review - ${status}
+
+            **Issues Found:**
+            - 🔴 CRITICAL: ${critical}
+            - 🟠 HIGH: ${high}
+            - 🟡 MEDIUM: ${medium}
+            - ⚪ LOW: ${low}
+
+            ---
+
+            ${review}
+
+            ---
+            🤖 Automated by architecture-skeptic agent via Claude Code SDK`;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
+
+      - name: Add Labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const verdict = '${{ steps.verdict.outputs.verdict }}';
+            const labels = [];
+
+            if (verdict === 'BLOCK') {
+              labels.push('architecture-review-blocked');
+              labels.push('needs-fixes');
+            } else if (verdict === 'REQUEST') {
+              labels.push('architecture-review-changes-requested');
+            } else {
+              labels.push('architecture-review-approved');
+            }
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels
+              });
+            }
+
+      - name: Block Merge if Critical Issues
+        if: steps.verdict.outputs.verdict == 'BLOCK'
+        run: |
+          echo "❌ CRITICAL issues found. Merge blocked."
+          echo "Fix all CRITICAL issues before merging."
+          exit 1

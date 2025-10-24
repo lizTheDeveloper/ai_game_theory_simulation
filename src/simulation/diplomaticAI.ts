@@ -355,9 +355,9 @@ function checkBiasedMediation(dipAI: DiplomaticAIState, state: GameState): void 
     // Severe trust loss
     dipAI.stakeholderTrust = Math.max(0.1, dipAI.stakeholderTrust - 0.4);
     dipAI.controls.oversightStrength = Math.min(1, dipAI.controls.oversightStrength + 0.3);
-    
+
     // Possible shutdown
-    const shutdownProbability = 0.5 * (1 - state.government.governmentType === 'democratic' ? 0.3 : 0);
+    const shutdownProbability = 0.5 * (1 - (state.government.governmentType === 'democratic' ? 0.3 : 0));
     if (Math.random() < shutdownProbability) {
       dipAI.protocolDeployed = false;
       

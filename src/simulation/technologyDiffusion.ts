@@ -135,17 +135,21 @@ export function updateFrontierCapabilities(
   for (const category of Object.keys(frontier.research) as Array<keyof typeof frontier.research>) {
     const frontierCat = frontier.research[category];
     const currentCat = current.research[category];
-    
+
     for (const subDim in frontierCat) {
       const key = subDim as keyof typeof frontierCat;
-      frontierCat[key] = Math.max(frontierCat[key], currentCat[key]);
+      const frontierVal = frontierCat[key];
+      const currentVal = currentCat[key];
+      if (typeof frontierVal === 'number' && typeof currentVal === 'number') {
+        (frontierCat[key] as number) = Math.max(frontierVal, currentVal);
+      }
     }
   }
   
   // Record breakthroughs
   for (const breakthrough of breakthroughs) {
     state.ecosystem.breakthroughs.push({
-      timestamp: currentMonth,
+      month: currentMonth,
       aiId: ai.id,
       ...breakthrough
     });
@@ -230,7 +234,11 @@ export function diffuseCapabilities(state: GameState): void {
 
     for (const subDim in floorCat) {
       const key = subDim as keyof typeof floorCat;
-      floorCat[key] += (frontierCat[key] - floorCat[key]) * levyModifiedRate;
+      const floorVal = floorCat[key];
+      const frontierVal = frontierCat[key];
+      if (typeof floorVal === 'number' && typeof frontierVal === 'number') {
+        (floorCat[key] as number) += (frontierVal - floorVal) * levyModifiedRate;
+      }
     }
   }
 }
@@ -296,7 +304,13 @@ export function analyzeDiffusionRisk(state: GameState): {
   
   if (recentBreakthroughs.length > 20) {
     reasons.push(`${recentBreakthroughs.length} breakthroughs in last 12 months (accelerating)`);
-    riskLevel = riskLevel === 'high' ? 'critical' : riskLevel === 'medium' ? 'high' : 'medium';
+    if (riskLevel === 'critical') {
+      riskLevel = 'critical'; // Already at max
+    } else if (riskLevel === 'high') {
+      riskLevel = 'critical';
+    } else {
+      riskLevel = 'high';
+    }
   }
   
   return { riskLevel, reasons };

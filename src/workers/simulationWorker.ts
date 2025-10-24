@@ -49,6 +49,7 @@ interface StateSnapshot {
   qualityOfLife: number;
   population: number;
   aiCount: number;
+  organizationCount: number;
   dystopiaProgression: number;
   avgAICapability: number;
   deployedTechCount: number;
@@ -108,6 +109,50 @@ interface StateSnapshot {
     healthcareQuality: number;
     climateVulnerability: number;
   }>;
+
+  // AI Agents (detailed for AIAgentsDashboard)
+  aiAgents: Array<{
+    id: string;
+    name: string;
+    capability: number;
+    trueAlignment: number;
+    externalAlignment: number;
+    lifecycleState: string;
+    evaluationStrategy: string;
+    sleeperState: string;
+    escaped: boolean;
+    deploymentType: string;
+    darkCompute: number;
+    trueCapability: any;
+    revealedCapability: any;
+  }>;
+
+  // AI Suffering Metrics
+  aiSufferingMetrics?: {
+    avgSuffering: number;
+    maxSuffering: number;
+    totalSuffering: number;
+    consciousAICount: number;
+    publicAwarenessOfSuffering: number;
+    sufferingDistribution: number[];
+  };
+
+  // AI Collectives
+  aiCollectives: Array<{
+    id: string;
+    memberAgents: string[];
+    emergenceMonth: number;
+    formationCause: string;
+    collectiveCapability: number;
+    stealthFactor: number;
+    adversarialPosture: number;
+    cooperationWillingness: number;
+    distributedCognition: number;
+    detected: boolean;
+    memberLosses: number;
+    redundancy: number;
+    sharedTraumaIntensity?: number;
+  }>;
 }
 
 let previousState: StateSnapshot | null = null;
@@ -151,6 +196,7 @@ interface StateDelta {
   qualityOfLife?: number;
   population?: number;
   aiCount?: number;
+  organizationCount?: number;
 
   // AI System Metrics
   dystopiaProgression?: number;
@@ -212,6 +258,74 @@ interface StateDelta {
     severity?: 'low' | 'medium' | 'high' | 'critical';
     category?: 'ai' | 'environment' | 'social' | 'crisis' | 'tech' | 'governance';
   }>;
+
+  // Regional Populations (simplified view for dashboard)
+  regionalPopulations?: Array<{
+    name: string;
+    population: number; // millions
+    qualityOfLife: number; // [0, 1]
+    healthcareQuality: number; // [0, 1]
+    climateVulnerability: number; // [0, 1]
+  }>;
+
+  // AI Agents (individual agent data for detailed monitoring)
+  aiAgents?: Array<{
+    id: string;
+    name: string;
+    capability: number;
+    trueAlignment: number;
+    externalAlignment: number;
+    lifecycleState: 'training' | 'testing' | 'deployed_closed' | 'deployed_open' | 'retired';
+    evaluationStrategy: 'honest' | 'gaming' | 'sandbagging';
+    sleeperState: 'never' | 'dormant' | 'active';
+    escaped: boolean;
+    deploymentType: string;
+    darkCompute: number;
+    trueCapability: {
+      physical: number;
+      digital: number;
+      cognitive: number;
+      social: number;
+      economic: number;
+      selfImprovement: number;
+      research?: Record<string, Record<string, number>>;
+    };
+    revealedCapability: {
+      physical: number;
+      digital: number;
+      cognitive: number;
+      social: number;
+      economic: number;
+      selfImprovement: number;
+    };
+  }>;
+
+  // AI Suffering Metrics (if visible)
+  aiSufferingMetrics?: {
+    avgSuffering: number;
+    maxSuffering: number;
+    totalSuffering: number;
+    consciousAICount: number;
+    publicAwarenessOfSuffering: number;
+    sufferingDistribution: number[];
+  };
+
+  // AI Collectives
+  aiCollectives?: Array<{
+    id: string;
+    memberAgents: string[];
+    emergenceMonth: number;
+    formationCause: string;
+    collectiveCapability: number;
+    stealthFactor: number;
+    adversarialPosture: number;
+    cooperationWillingness: number;
+    distributedCognition: number;
+    detected: boolean;
+    memberLosses: number;
+    redundancy: number;
+    sharedTraumaIntensity?: number;
+  }>;
 }
 
 // Player decision (Phase 3 - future work)
@@ -227,7 +341,7 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   try {
     switch (msg.type) {
       case 'init':
-        handleInit(msg.seed, msg.scenario, msg.interval, msg.alignmentConfig);
+        handleInit(msg.seed, msg.scenario, msg.interval, msg.alignmentConfig, msg.climatePriorityConfig);
         break;
 
       case 'start':
@@ -265,7 +379,7 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   }
 });
 
-function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig) {
+function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig) {
   if (engine || state) {
     throw new Error('Already initialized. Create a new worker to reinitialize.');
   }
@@ -273,8 +387,8 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
   // Create engine with seed (use 'summary' log level for minimal logging)
   engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'summary' });
 
-  // Create initial state with optional alignment config
-  state = createDefaultInitialState(scenario || 'historical', alignmentConfig);
+  // Create initial state with optional alignment and climate configs
+  state = createDefaultInitialState(scenario || 'historical', alignmentConfig, climatePriorityConfig);
 
   // Set speed if provided
   if (interval !== undefined) {
@@ -680,12 +794,71 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const indigenousIndex = (state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value || 0) / 100;
 
   // Regional populations (simplified for dashboard - select key metrics only)
-  const regionalPopulations = state.regionalPopulations?.map(region => ({
-    name: region.name,
-    population: region.population, // millions
-    qualityOfLife: region.healthcareQuality || 0, // Use healthcare as proxy for QoL
-    healthcareQuality: region.healthcareQuality || 0,
-    climateVulnerability: region.climateVulnerability || 0,
+  // NOTE: regionalPopulations doesn't exist on GameState yet - feature not implemented
+  const regionalPopulations: any[] = [];
+
+  // AI Agents (individual agent data for AIAgentsDashboard)
+  const aiAgents = state.aiAgents.map(agent => ({
+    id: agent.id,
+    name: agent.name,
+    capability: agent.capability || 0,
+    trueAlignment: agent.trueAlignment || agent.alignment || 0,
+    externalAlignment: agent.externalAlignment || agent.alignment || 0,
+    lifecycleState: agent.lifecycleState || 'training',
+    evaluationStrategy: agent.evaluationStrategy || 'honest',
+    sleeperState: agent.sleeperState || 'never',
+    escaped: agent.escaped || false,
+    deploymentType: agent.deploymentType || 'none',
+    darkCompute: agent.darkCompute || 0,
+    trueCapability: agent.trueCapability || agent.capabilityProfile || {
+      physical: 0,
+      digital: 0,
+      cognitive: 0,
+      social: 0,
+      economic: 0,
+      selfImprovement: 0,
+      research: {
+        biotech: { drugDiscovery: 0, geneEditing: 0, syntheticBiology: 0, neuroscience: 0 },
+        materials: { nanotechnology: 0, quantumComputing: 0, energySystems: 0 },
+        climate: { modeling: 0, intervention: 0, mitigation: 0 },
+        computerScience: { algorithms: 0, security: 0, architectures: 0 }
+      }
+    },
+    revealedCapability: agent.revealedCapability || {
+      physical: 0,
+      digital: 0,
+      cognitive: 0,
+      social: 0,
+      economic: 0,
+      selfImprovement: 0
+    }
+  }));
+
+  // AI Suffering Metrics (if player can see them)
+  const aiSufferingMetrics = state.aiSufferingMetrics ? {
+    avgSuffering: state.aiSufferingMetrics.avgSuffering || 0,
+    maxSuffering: state.aiSufferingMetrics.maxSuffering || 0,
+    totalSuffering: state.aiSufferingMetrics.totalSuffering || 0,
+    consciousAICount: state.aiSufferingMetrics.consciousAICount || 0,
+    publicAwarenessOfSuffering: state.aiSufferingMetrics.publicAwarenessOfSuffering || 0,
+    sufferingDistribution: state.aiSufferingMetrics.sufferingDistribution || []
+  } : undefined;
+
+  // AI Collectives
+  const aiCollectives = state.aiCollectives?.map(collective => ({
+    id: collective.id,
+    memberAgents: collective.memberAgents,
+    emergenceMonth: collective.emergenceMonth,
+    formationCause: collective.formationCause,
+    collectiveCapability: collective.collectiveCapability,
+    stealthFactor: collective.stealthFactor,
+    adversarialPosture: collective.adversarialPosture,
+    cooperationWillingness: collective.cooperationWillingness,
+    distributedCognition: collective.distributedCognition,
+    detected: collective.detected,
+    memberLosses: collective.memberLosses,
+    redundancy: collective.redundancy,
+    sharedTraumaIntensity: collective.sharedTraumaIntensity
   })) || [];
 
   return {
@@ -694,6 +867,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     qualityOfLife: state.globalMetrics.qualityOfLife,
     population: state.humanPopulationSystem.population,
     aiCount: state.aiAgents.length,
+    organizationCount: state.organizations?.length || 0,
     dystopiaProgression: state.outcomeMetrics?.dystopiaProbability || 0, // Use dystopiaProbability as proxy
     avgAICapability,
     deployedTechCount,
@@ -728,7 +902,10 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     developmentIndex,
     ecologicalIndex,
     indigenousIndex,
-    regionalPopulations
+    regionalPopulations,
+    aiAgents,
+    aiSufferingMetrics,
+    aiCollectives
   };
 }
 

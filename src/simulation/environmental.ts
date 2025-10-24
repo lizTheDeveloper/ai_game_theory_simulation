@@ -106,9 +106,17 @@ export function updateEnvironmentalAccumulation(
   // NOTE: Resource efficiency now handled by TechTreePhase regional effects
   // No additional multiplier needed here
   
-  // Apply depletion
-  const currentReserves = isNaN(env.resourceReserves) ? 1.0 : env.resourceReserves;
-  env.resourceReserves = Math.max(0, currentReserves - resourceDepletionRate);
+  // Apply depletion (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
+  const MIN_RESERVE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
+
+  // Detect NaN and fail loudly - don't hide bugs with fallbacks
+  if (isNaN(env.resourceReserves)) {
+    console.error(`❌ NaN in resourceReserves at month ${state.currentMonth}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN resource reserves - simulation corrupted at month ${state.currentMonth}`);
+  }
+
+  env.resourceReserves = Math.max(MIN_RESERVE_FLOOR, env.resourceReserves - resourceDepletionRate);
   
   // === RESOURCE REGENERATION (Phase 2.8) ===
   // Tech-enabled recovery: Circular economy, sustainable agriculture, clean energy
@@ -147,9 +155,23 @@ export function updateEnvironmentalAccumulation(
   // Natural degradation (Earth can process some pollution)
   const naturalDegradation = 0.003; // 0.3% per month natural cleanup
   
+  // Detect NaN before calculation - fail loudly
+  if (isNaN(env.pollutionLevel)) {
+    console.error(`❌ NaN in pollutionLevel BEFORE calculation at month ${state.currentMonth}`);
+    console.error(`   pollutionRate: ${pollutionRate}, naturalDegradation: ${naturalDegradation}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN pollution level - simulation corrupted at month ${state.currentMonth}`);
+  }
+
   // Apply pollution (accumulation - degradation)
-  const currentPollution = isNaN(env.pollutionLevel) ? 0.0 : env.pollutionLevel;
-  env.pollutionLevel = Math.max(0, Math.min(1, currentPollution + pollutionRate - naturalDegradation));
+  env.pollutionLevel = Math.max(0, Math.min(1, env.pollutionLevel + pollutionRate - naturalDegradation));
+
+  // Detect NaN after calculation - this means the calculation itself produced NaN
+  if (isNaN(env.pollutionLevel)) {
+    console.error(`❌ NaN in pollutionLevel AFTER calculation at month ${state.currentMonth}`);
+    console.error(`   pollutionRate: ${pollutionRate}, naturalDegradation: ${naturalDegradation}`);
+    throw new Error(`Pollution calculation produced NaN - check pollutionRate/naturalDegradation`);
+  }
   
   // === CLIMATE DEGRADATION ===
   // Energy usage drives climate impact
@@ -182,9 +204,17 @@ export function updateEnvironmentalAccumulation(
   // Natural stabilization (very slow)
   const naturalStabilization = 0.001; // 0.1% per month
   
-  // Apply climate degradation
-  const currentClimate = isNaN(env.climateStability) ? 1.0 : env.climateStability;
-  env.climateStability = Math.max(0, Math.min(1, currentClimate - climateDegradationRate + naturalStabilization));
+  // Detect NaN before calculation - fail loudly
+  if (isNaN(env.climateStability)) {
+    console.error(`❌ NaN in climateStability at month ${state.currentMonth}`);
+    console.error(`   climateDegradationRate: ${climateDegradationRate}, naturalStabilization: ${naturalStabilization}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN climate stability - simulation corrupted at month ${state.currentMonth}`);
+  }
+
+  // Apply climate degradation (with MIN_FLOOR to prevent exactly 0, which breaks geometric means)
+  const MIN_CLIMATE_FLOOR = 0.001; // 0.1% minimum to prevent geometric mean collapse
+  env.climateStability = Math.max(MIN_CLIMATE_FLOOR, Math.min(1, env.climateStability - climateDegradationRate + naturalStabilization));
   
   // === BIODIVERSITY LOSS ===
   // Habitat disruption from expansion
@@ -214,9 +244,16 @@ export function updateEnvironmentalAccumulation(
   // Natural recovery (very slow without active management)
   const naturalRecovery = hasEcosystemManagement ? 0.005 : 0.001;
   
+  // Detect NaN before calculation - fail loudly
+  if (isNaN(env.biodiversityIndex)) {
+    console.error(`❌ NaN in biodiversityIndex at month ${state.currentMonth}`);
+    console.error(`   biodiversityLossRate: ${biodiversityLossRate}, naturalRecovery: ${naturalRecovery}`);
+    console.error(`   environmentalAccumulation state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN biodiversity index - simulation corrupted at month ${state.currentMonth}`);
+  }
+
   // Apply biodiversity loss
-  const currentBiodiversity = isNaN(env.biodiversityIndex) ? 1.0 : env.biodiversityIndex;
-  env.biodiversityIndex = Math.max(0, Math.min(1, currentBiodiversity - biodiversityLossRate + naturalRecovery));
+  env.biodiversityIndex = Math.max(0, Math.min(1, env.biodiversityIndex - biodiversityLossRate + naturalRecovery));
 
   // === P1.5: ECOSYSTEM REGENERATION FROM POPULATION DECLINE ===
   // Historical evidence: Nature rebounds when human pressure reduces
@@ -323,10 +360,18 @@ function checkEnvironmentalCrises(state: GameState): void {
 
     // Log event
     state.eventLog.push({
+      id: `resource-crisis-${state.currentMonth}`,
       type: 'crisis',
-      
+      title: 'Resource Crisis',
+      timestamp: state.currentMonth,
+      severity: 'critical',
+      agent: 'environmental',
       description: `Resource Crisis: Reserves depleted to ${(env.resourceReserves * 100).toFixed(1)}%`,
-      impact: 'Material abundance -30%, Energy -20%, Social stability -0.3'
+      effects: {
+        materialAbundance: -0.3,
+        energyAvailability: -0.2,
+        socialStability: -0.3
+      }
     });
 
     // Immediate QoL impacts
@@ -368,10 +413,19 @@ function checkEnvironmentalCrises(state: GameState): void {
     } catch (e) { /* Ignore EPIPE */ }
 
     state.eventLog.push({
+      id: `pollution-crisis-${state.currentMonth}`,
       type: 'crisis',
-      
+      title: 'Pollution Crisis',
+      timestamp: state.currentMonth,
+      severity: 'critical',
+      agent: 'environmental',
       description: `Pollution Crisis: Pollution level ${(env.pollutionLevel * 100).toFixed(1)}%`,
-      impact: 'Healthcare -25%, Diseases +0.3, Ecosystem -40%, QoL -0.25'
+      effects: {
+        healthcareQuality: -0.25,
+        diseasesBurden: 0.3,
+        ecosystemHealth: -0.4,
+        qualityOfLife: -0.25
+      }
     });
 
     // Immediate QoL impacts
@@ -406,10 +460,19 @@ function checkEnvironmentalCrises(state: GameState): void {
     } catch (e) { /* Ignore EPIPE */ }
 
     state.eventLog.push({
+      id: `climate-catastrophe-${state.currentMonth}`,
       type: 'crisis',
-      
+      title: 'Climate Catastrophe',
+      timestamp: state.currentMonth,
+      severity: 'existential',
+      agent: 'environmental',
       description: `Climate Catastrophe: Stability ${(env.climateStability * 100).toFixed(1)}%`,
-      impact: 'Physical safety -40%, Material -50%, Ecosystem -60%, Social stability -0.5'
+      effects: {
+        physicalSafety: -0.4,
+        materialAbundance: -0.5,
+        ecosystemHealth: -0.6,
+        socialStability: -0.5
+      }
     });
 
     // Severe QoL impacts
@@ -476,10 +539,17 @@ function checkEnvironmentalCrises(state: GameState): void {
     } catch (e) { /* Ignore EPIPE */ }
 
     state.eventLog.push({
+      id: `ecosystem-collapse-${state.currentMonth}`,
       type: 'crisis',
-      
+      title: 'Ecosystem Tipping Point',
+      timestamp: state.currentMonth,
+      severity: 'existential',
+      agent: 'environmental',
       description: `Ecosystem Tipping Point: Biodiversity ${(env.biodiversityIndex * 100).toFixed(1)}%`,
-      impact: 'Collapse process begins - impacts escalate over decades'
+      effects: {
+        biodiversityIndex: env.biodiversityIndex,
+        collapsePhase: 'declining'
+      }
     });
 
     // Initial QoL impacts (minor at first)
@@ -659,13 +729,17 @@ function checkEnvironmentalCrises(state: GameState): void {
       console.log(`   ⚠️⚠️⚠️  CASCADING FAILURES (Month ${state.currentMonth}): ${activeCount} crises active [${crisisDetails}], degradation accelerated ${cascadeMultiplier.toFixed(1)}x`);
       
       // Log cascading failure event (only once per month to avoid spam)
-      const lastCascade = state.eventLog.filter(e => e.type === 'cascading_failure').slice(-1)[0];
+      const lastCascade = state.eventLog.filter(e => e.type === 'crisis').slice(-1)[0];
       if (!lastCascade || (lastCascade as any).month < state.currentMonth) {
         state.eventLog.push({
-          type: 'cascading_failure',
-          
-          description: `Cascading Failures: ${activeCount} crises active`,
-          impact: `Degradation accelerated ${cascadeMultiplier.toFixed(1)}x - Active: ${crisisDetails}`
+          id: `crisis-cascade-${state.currentMonth}`,
+          type: 'crisis',
+          severity: 'critical',
+          agent: 'system',
+          timestamp: state.currentMonth,
+          title: `Cascading Failures: ${activeCount} crises active`,
+          description: `Degradation accelerated ${cascadeMultiplier.toFixed(1)}x - Active: ${crisisDetails}`,
+          effects: {}
         });
       }
     } catch (e) { /* Ignore EPIPE */ }

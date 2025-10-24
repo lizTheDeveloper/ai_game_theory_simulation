@@ -879,7 +879,7 @@ export function attemptAutonomousLaunchOverride(
   // 2. HUMAN IN LOOP CHECK
   let humanApproval = true;
   if (defense.autonomyOverride.humanInLoop) {
-    const institutionalCapacity = state.government.governance.institutionalCapacity;
+    const institutionalCapacity = state.government.governanceQuality.institutionalCapacity;
     humanApproval = Math.random() < institutionalCapacity;
     
     if (!humanApproval && defense.autonomyOverride.failsafeActive) {

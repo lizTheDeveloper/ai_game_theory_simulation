@@ -1,0 +1,244 @@
+# Feature Implementer - Automated Implementation via Claude Code SDK
+#
+# PATTERN: Iterative agent using Claude Code SDK (NOT raw API)
+# - Agent can read/edit/test files iteratively
+# - Uses .claude/agents/feature-implementer.md agent definition
+# - Gets original prompt + current diff as starting context
+# - Runs Monte Carlo validation after each phase
+#
+# TRIGGER: Label "ready-for-implementation" on issue
+# REQUIRES: Research + plan files exist (validated in feature-approved.yml)
+
+name: Feature Implementer
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  implement:
+    # Only run if labeled "ready-for-implementation" by owner
+    if: |
+      github.event.label.name == 'ready-for-implementation' &&
+      github.event.sender.login == github.repository_owner
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract Feature Information
+        id: feature
+        run: |
+          TITLE="${{ github.event.issue.title }}"
+          FEATURE_NAME=$(echo "$TITLE" | sed 's/^Feature: //g' | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]')
+
+          echo "name=$FEATURE_NAME" >> $GITHUB_OUTPUT
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+
+      - name: Find Implementation Plan
+        id: plan
+        run: |
+          FEATURE_SLUG="${{ steps.feature.outputs.name }}"
+          PLAN_FILE=$(find plans/ -name "*${FEATURE_SLUG}*plan.md" -not -path "plans/completed/*" | head -1)
+
+          if [ -z "$PLAN_FILE" ]; then
+            echo "❌ No implementation plan found for $FEATURE_SLUG"
+            exit 1
+          fi
+
+          echo "path=$PLAN_FILE" >> $GITHUB_OUTPUT
+
+          # Read plan content
+          PLAN_CONTENT=$(cat "$PLAN_FILE")
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$PLAN_CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Checkout Feature Branch
+        run: |
+          BRANCH_NAME="feature/${{ steps.feature.outputs.name }}"
+
+          # Check if branch exists
+          if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
+            git fetch origin "$BRANCH_NAME"
+            git checkout "$BRANCH_NAME"
+          else
+            git checkout -b "$BRANCH_NAME"
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Implementation Prompt
+        id: prompt
+        run: |
+          # Build minimal context for fresh agent instance
+          cat > implementation_prompt.txt << 'EOF'
+          You are the feature-implementer agent from .claude/agents/feature-implementer.md
+
+          **YOUR CONTEXT:**
+          - Feature name: ${{ steps.feature.outputs.title }}
+          - Implementation plan: ${{ steps.plan.outputs.path }}
+          - Current branch: feature/${{ steps.feature.outputs.name }}
+          - You have NO prior conversation history (fresh agent instance)
+
+          **IMPLEMENTATION PLAN:**
+          ${{ steps.plan.outputs.content }}
+
+          **YOUR TASK:**
+          Implement this feature following the plan. You should:
+
+          1. **Phase-based implementation:** Implement in phases as defined in the plan
+          2. **After each phase:**
+             - Run `npx tsc --noEmit` to check types
+             - Run `npm test` to verify tests pass
+             - Run Monte Carlo validation: `npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=60`
+             - Commit changes with descriptive message
+          3. **Create state types:** Add to src/types/[system].ts
+          4. **Create system module:** Add to src/simulation/[system].ts
+          5. **Create phase:** Add to src/simulation/engine/phases/[System]Phase.ts
+          6. **Register phase:** Update src/simulation/engine/phases/index.ts
+          7. **Add logging:** Use console.log with clear prefixes
+          8. **Update wiki:** Add system documentation to docs/wiki/README.md
+
+          **QUALITY STANDARDS:**
+          - All mechanics must cite peer-reviewed research (check /research/ files)
+          - No "TODO" comments (track in issues instead)
+          - No console.logs in production code (only for debugging)
+          - Use RNG function, never Math.random()
+          - Follow existing patterns in similar phases
+
+          **VALIDATION REQUIREMENTS:**
+          - TypeScript must compile (0 errors)
+          - Tests must pass
+          - Monte Carlo run (N=10) must complete without crashes
+          - Check logs for unexpected behavior
+
+          **WHEN COMPLETE:**
+          1. Update MASTER_IMPLEMENTATION_ROADMAP.md (mark feature complete)
+          2. Move plan to /plans/completed/
+          3. Report completion status
+
+          Work iteratively. Use Read/Edit/Bash tools as needed. This is a GitHub Actions environment - you have full access to the codebase.
+          EOF
+
+      - name: Run Feature Implementer (Claude Code SDK)
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt_file: implementation_prompt.txt
+          claude_args: |
+            --max-turns 50
+            --agent feature-implementer
+
+      - name: Check Implementation Status
+        id: status
+        run: |
+          # Check if implementation completed successfully
+          if npx tsc --noEmit; then
+            echo "typescript=PASS" >> $GITHUB_OUTPUT
+          else
+            echo "typescript=FAIL" >> $GITHUB_OUTPUT
+          fi
+
+          if npm test; then
+            echo "tests=PASS" >> $GITHUB_OUTPUT
+          else
+            echo "tests=FAIL" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.status.outputs.typescript == 'PASS' && steps.status.outputs.tests == 'PASS'
+        run: |
+          # Get diff summary
+          DIFF_SUMMARY=$(git diff origin/main...HEAD --stat)
+
+          # Create PR
+          gh pr create \
+            --title "feat: ${{ steps.feature.outputs.title }}" \
+            --body "$(cat <<'EOF'
+          ## Automated Implementation
+
+          This PR was generated by the feature-implementer agent.
+
+          **Feature:** ${{ steps.feature.outputs.title }}
+          **Plan:** ${{ steps.plan.outputs.path }}
+          **Issue:** #${{ github.event.issue.number }}
+
+          ### Changes
+
+          \`\`\`
+          $DIFF_SUMMARY
+          \`\`\`
+
+          ### Validation
+
+          - ✅ TypeScript compiles (0 errors)
+          - ✅ Tests pass
+          - ⏳ Monte Carlo validation (check logs)
+          - ⏳ Architecture review required
+
+          ### Next Steps
+
+          1. ⏳ architecture-skeptic review will run automatically
+          2. 👤 Manual review required before merge
+          3. ⏳ Senior dev checklist will run on PR
+
+          ---
+          🤖 Generated by feature-implementer agent via Claude Code SDK
+
+          **Original Prompt:**
+          ${{ steps.plan.outputs.path }}
+          EOF
+          )" \
+            --base main \
+            --head "feature/${{ steps.feature.outputs.name }}" \
+            --label "automated-implementation"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const typescript = '${{ steps.status.outputs.typescript }}';
+            const tests = '${{ steps.status.outputs.tests }}';
+
+            let body = '## 🤖 Feature Implementer - Status Update\n\n';
+
+            if (typescript === 'PASS' && tests === 'PASS') {
+              body += '✅ **Implementation Complete**\n\n';
+              body += '- ✅ TypeScript compiles\n';
+              body += '- ✅ Tests pass\n';
+              body += '- ✅ PR created: #TODO (link)\n\n';
+              body += '**Next:** architecture-skeptic review will run automatically on the PR.\n';
+            } else {
+              body += '❌ **Implementation Failed**\n\n';
+              body += `- ${typescript === 'PASS' ? '✅' : '❌'} TypeScript compilation\n`;
+              body += `- ${tests === 'PASS' ? '✅' : '❌'} Tests\n\n`;
+              body += '**Action Required:** Check workflow logs and fix errors.\n';
+            }
+
+            body += '\n---\n🤖 Automated by feature-implementer agent';
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });

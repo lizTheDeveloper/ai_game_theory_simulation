@@ -46,7 +46,8 @@ export function updatePhosphorusSystem(state: GameState): void {
   const p = state.phosphorusSystem;
   const economicStage = state.globalMetrics.economicTransitionStage;
   const population = 8.0; // Billion people (approximate)
-  const tensions = state.globalMetrics.geopoliticalTensions || 0.3;
+  // Note: geopoliticalTensions not in GlobalMetrics, use default
+  const tensions = 0.3;
   
   // === RESERVE DEPLETION ===
   // Base depletion rate: Economic activity drives mining
@@ -110,8 +111,8 @@ export function updatePhosphorusSystem(state: GameState): void {
       
       // Immediate QoL impact
       state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.05);
-      state.society.trust -= 0.03;
-      state.globalMetrics.economicGrowthRate -= 0.02;
+      state.society.trust = (state.society.trust ?? 0.5) - 0.03;
+      // Note: economicGrowthRate not in GlobalMetrics, skip adjustment
     }
   } else {
     // Decrement shock duration
@@ -285,7 +286,8 @@ export function checkPhosphorusTechUnlocks(state: GameState): void {
   // === 3. P-EFFICIENT CULTIVARS ===
   // Biotech: Enhanced mycorrhizal partnerships
   if (!tech.efficientCrops?.unlocked) {
-    const biotech = state.aiAgents[0]?.researchCapabilities?.biotech?.geneEditing || 0;
+    // Note: AIAgent doesn't have researchCapabilities, use avgAICapability as proxy
+    const biotech = avgAICapability;
     if (biotech > 2.0 && totalResearch > 150) {
       tech.efficientCrops = {
         unlocked: true,

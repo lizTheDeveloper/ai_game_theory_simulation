@@ -1,0 +1,203 @@
+# Example: Feature Approval Workflow (Phase 1)
+# This workflow runs when you label an issue "feature-approved"
+
+name: Feature Approval Workflow
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  validate-and-prepare:
+    # Only run if the label is "feature-approved" AND added by owner
+    if: |
+      github.event.label.name == 'feature-approved' &&
+      github.event.sender.login == github.repository_owner
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for searching research files
+
+      - name: Extract Feature Information
+        id: feature
+        run: |
+          # Parse issue title and body
+          TITLE="${{ github.event.issue.title }}"
+          FEATURE_NAME=$(echo "$TITLE" | sed 's/^Feature: //g' | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]')
+
+          echo "name=$FEATURE_NAME" >> $GITHUB_OUTPUT
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+
+      - name: Check for Research Files
+        id: research
+        run: |
+          FEATURE_SLUG="${{ steps.feature.outputs.name }}"
+
+          # Search for related research in /research/ directory
+          RESEARCH_COUNT=$(find research/ -name "*${FEATURE_SLUG}*.md" 2>/dev/null | wc -l)
+          RESEARCH_FILES=$(find research/ -name "*${FEATURE_SLUG}*.md" 2>/dev/null | tr '\n' ', ')
+
+          echo "count=$RESEARCH_COUNT" >> $GITHUB_OUTPUT
+          echo "files=$RESEARCH_FILES" >> $GITHUB_OUTPUT
+
+          if [ "$RESEARCH_COUNT" -gt 0 ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for Implementation Plan
+        id: plan
+        run: |
+          FEATURE_SLUG="${{ steps.feature.outputs.name }}"
+
+          # Search for plan file
+          PLAN_FILE=$(find plans/ -name "*${FEATURE_SLUG}*.md" -not -path "plans/completed/*" 2>/dev/null | head -1)
+
+          if [ -n "$PLAN_FILE" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "path=$PLAN_FILE" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post Status - Missing Prerequisites
+        if: steps.research.outputs.exists == 'false' || steps.plan.outputs.exists == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const researchExists = ${{ steps.research.outputs.exists }};
+            const planExists = ${{ steps.plan.outputs.exists }};
+
+            let body = `## ⚠️ Prerequisites Missing\n\n`;
+
+            if (!researchExists) {
+              body += `### Missing Research
+
+              No research files found for this feature.
+
+              **Required:**
+              1. Run \`super-alignment-researcher\` agent to find peer-reviewed sources
+              2. Save research to \`/research/${steps.feature.outputs.name}_YYYYMMDD.md\`
+              3. Validate with \`research-skeptic\` agent
+              4. Re-label this issue when ready
+
+              `;
+            }
+
+            if (!planExists) {
+              body += `### Missing Implementation Plan
+
+              No plan file found for this feature.
+
+              **Required:**
+              1. Create plan in \`/plans/${steps.feature.outputs.name}-plan.md\`
+              2. Include: state changes, phase modules, integration points
+              3. Cite research findings
+              4. Re-label this issue when ready
+
+              `;
+            }
+
+            body += `\n---\n🤖 Automated by Feature Approval Workflow`;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
+
+            // Remove the feature-approved label
+            await github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'feature-approved'
+            });
+
+            // Add "needs-prerequisites" label
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['needs-prerequisites']
+            });
+
+      - name: Create Feature Branch
+        if: steps.research.outputs.exists == 'true' && steps.plan.outputs.exists == 'true'
+        run: |
+          BRANCH_NAME="feature/${{ steps.feature.outputs.name }}"
+
+          # Check if branch already exists
+          if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
+            echo "Branch already exists: $BRANCH_NAME"
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else
+            # Create new branch
+            git checkout -b "$BRANCH_NAME"
+            git push origin "$BRANCH_NAME"
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
+
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Post Status - Ready for Implementation
+        if: steps.research.outputs.exists == 'true' && steps.plan.outputs.exists == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branchName = process.env.branch_name;
+            const branchExists = process.env.branch_exists === 'true';
+            const researchFiles = `${{ steps.research.outputs.files }}`;
+            const planFile = `${{ steps.plan.outputs.path }}`;
+
+            const body = `## ✅ Feature Approved - Prerequisites Met
+
+            All prerequisites found! This feature is ready for implementation.
+
+            ### Research
+            **Found ${${{ steps.research.outputs.count }}} research file(s):**
+            ${researchFiles.split(',').map(f => f.trim()).filter(f => f).map(f => `- \`${f}\``).join('\n')}
+
+            ### Implementation Plan
+            **Plan file:** \`${planFile}\`
+
+            ### Feature Branch
+            **Branch:** \`${branchName}\` ${branchExists ? '(already exists)' : '(created)'}
+
+            ### Next Steps
+
+            ${branchExists ? '1. Branch already exists - check existing work' : '1. ✅ Branch created'}
+            2. ⏳ Automated implementation workflow will trigger next
+            3. ⏳ Architecture review will run on PR creation
+            4. 👤 Your review required before merge
+
+            ---
+            🤖 Automated by Feature Approval Workflow
+
+            **Workflow:** Orchestrator → Research Validated → Implementation → Review → Documentation`;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
+
+            // Add "ready-for-implementation" label
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['ready-for-implementation', 'automated-workflow']
+            });

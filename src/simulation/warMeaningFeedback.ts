@@ -186,7 +186,9 @@ function updateMeaningCrisis(country: CountryPopulation, state: GameState): void
   }
 
   // Social isolation increases meaning crisis
-  if (state.society.socialCohesion < 0.5) {
+  // Note: HumanSocietyAgent doesn't have socialCohesion, use trust as proxy
+  const socialTrust = state.society.trust || 0.5;
+  if (socialTrust < 0.5) {
     delta += 0.001; // Low social cohesion → atomization
   }
 
@@ -242,7 +244,9 @@ function updateNationalism(country: CountryPopulation, state: GameState): void {
   }
 
   // Strong social cohesion reduces nationalism (community without jingoism)
-  if (state.society.socialCohesion > 0.7) {
+  // Note: HumanSocietyAgent doesn't have socialCohesion, use trust as proxy
+  const socialTrust = state.society.trust || 0.5;
+  if (socialTrust > 0.7) {
     delta -= 0.001;
   }
 

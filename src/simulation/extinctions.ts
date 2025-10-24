@@ -570,7 +570,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
 
             // Trigger radiation exposure (TIER 1.7: Crisis Realism)
             // 30% of world population in nuclear regions, each participant represents ~15% exposure
-            const exposedPopulation = state.humanPopulationSystem.totalPopulation * 0.15;
+            const exposedPopulation = state.humanPopulationSystem.population * 0.15;
             console.log(`   ☢️ Triggering radiation exposure: ${targetRegion} (${(exposedPopulation * 1000).toFixed(0)}M exposed)`);
             triggerRadiationExposure(state.radiationSystem, state.currentMonth, targetRegion, exposedPopulation, 1.0);
           }

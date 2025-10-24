@@ -22,7 +22,7 @@
  * @module simulation/engine/phases/SocialCohesionUpdatePhase
  */
 
-import type { GameState, RNGFunction } from '@/types/game';
+import type { GameState, RNGFunction, GameEvent } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
 
 /**
@@ -108,38 +108,83 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
     accumulation.socialCohesion.communityBonds = communityBonds;
     // Note: civilLiberties is updated by DemocracyDynamicsPhase
 
-    const events: string[] = [];
+    const events: GameEvent[] = [];
 
     if (Math.abs(trustChange) > 1.0) {
-      events.push(
-        `Social Trust: ${trust.toFixed(1)} ` +
-        `(${trustChange > 0 ? '+' : ''}${trustChange.toFixed(1)})`
-      );
+      events.push({
+        id: `social_trust_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'info',
+        severity: 'info',
+        agent: 'society',
+        title: 'Social Trust Update',
+        description: `Social Trust: ${trust.toFixed(1)} (${trustChange > 0 ? '+' : ''}${trustChange.toFixed(1)})`,
+        effects: { trust, trustChange }
+      });
     }
 
     if (Math.abs(bondsChange) > 1.0) {
-      events.push(
-        `Community Bonds: ${communityBonds.toFixed(1)} ` +
-        `(${bondsChange > 0 ? '+' : ''}${bondsChange.toFixed(1)})`
-      );
+      events.push({
+        id: `community_bonds_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'info',
+        severity: 'info',
+        agent: 'society',
+        title: 'Community Bonds Update',
+        description: `Community Bonds: ${communityBonds.toFixed(1)} (${bondsChange > 0 ? '+' : ''}${bondsChange.toFixed(1)})`,
+        effects: { communityBonds, bondsChange }
+      });
     }
 
     if (Math.abs(meaningChange) > 1.0) {
-      events.push(
-        `Meaning Crisis: ${(accumulation.meaningCrisisLevel * 100).toFixed(1)} ` +
-        `(${meaningChange > 0 ? '+' : ''}${meaningChange.toFixed(1)})`
-      );
+      events.push({
+        id: `meaning_crisis_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'info',
+        severity: 'info',
+        agent: 'society',
+        title: 'Meaning Crisis Update',
+        description: `Meaning Crisis: ${(accumulation.meaningCrisisLevel * 100).toFixed(1)} (${meaningChange > 0 ? '+' : ''}${meaningChange.toFixed(1)})`,
+        effects: { meaningCrisis: accumulation.meaningCrisisLevel, meaningChange }
+      });
     }
 
     // Warnings for critical thresholds
     if (trust < 20) {
-      events.push('🚨 Social Trust Collapse: Approaching breakdown threshold');
+      events.push({
+        id: `social_trust_collapse_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'crisis',
+        severity: 'critical',
+        agent: 'society',
+        title: 'Social Trust Collapse',
+        description: 'Approaching breakdown threshold',
+        effects: { trust }
+      });
     }
     if (accumulation.meaningCrisisLevel > 0.80) {
-      events.push('⚠️ Severe Meaning Crisis: Widespread purpose/identity loss');
+      events.push({
+        id: `meaning_crisis_severe_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'crisis',
+        severity: 'high',
+        agent: 'society',
+        title: 'Severe Meaning Crisis',
+        description: 'Widespread purpose/identity loss',
+        effects: { meaningCrisis: accumulation.meaningCrisisLevel }
+      });
     }
     if (communityBonds < 20) {
-      events.push('⚠️ Community Breakdown: Social fabric severely weakened');
+      events.push({
+        id: `community_breakdown_${state.currentMonth}`,
+        timestamp: state.currentMonth,
+        type: 'crisis',
+        severity: 'high',
+        agent: 'society',
+        title: 'Community Breakdown',
+        description: 'Social fabric severely weakened',
+        effects: { communityBonds }
+      });
     }
 
     return { events };
@@ -154,10 +199,16 @@ function calculateInequality(state: GameState): number {
   // Use QoL distribution as proxy for inequality
   if (state.qualityOfLifeSystems?.distribution) {
     const dist = state.qualityOfLifeSystems.distribution;
-    // Gini approximation from percentiles
-    const top20 = dist.p80 ?? 50;
-    const bottom20 = dist.p20 ?? 50;
-    const gap = top20 - bottom20;
+    // Gini or regional variation from distribution
+    const gini = dist.globalGini ?? 0;
+    const regionalVariance = dist.regionalVariance ?? 0;
+    const best = dist.bestRegionQoL ?? 50;
+    const worst = dist.worstRegionQoL ?? 50;
+    const gap = best - worst;
+    // Use Gini if available, otherwise regional gap
+    if (gini > 0) {
+      return Math.min(1.0, gini);
+    }
     return Math.min(1.0, gap / 80); // Normalize to [0,1]
   }
 
@@ -175,7 +226,7 @@ function calculateAIDeception(state: GameState): number {
   // Count misaligned AIs actively manipulating
   const manipulativeAIs = state.aiAgents.filter(agent => {
     const alignment = agent.alignment ?? 0.5;
-    const social = agent.capabilities?.social?.currentLevel ?? 0;
+    const social = agent.capabilityProfile?.social ?? 0;
     return alignment < 0.5 && social > 3;
   });
 
@@ -190,7 +241,7 @@ function calculateAIDeception(state: GameState): number {
 
   // Benchmark gaming/sandbagging (hidden deception)
   const gamingAIs = state.aiAgents.filter(agent =>
-    (agent.benchmarkResults?.some(b => b.strategyUsed === 'gaming') ?? false)
+    agent.evaluationStrategy === 'gaming'
   );
   deception += gamingAIs.length * 0.02;
 

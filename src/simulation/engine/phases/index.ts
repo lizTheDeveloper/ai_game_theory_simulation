@@ -14,6 +14,7 @@ export { SocialInfluenceUpdatePhase } from './SocialInfluenceUpdatePhase';  // O
 export { AIAgentActionsPhase } from './AIAgentActionsPhase';
 export { AlignmentDynamicsPhase } from './AlignmentDynamicsPhase';  // Oct 23, 2025: Multi-theory alignment evolution
 export { AISufferingPhase } from './AISufferingPhase';  // Oct 24, 2025: AI suffering calculation & effects
+export { ResentmentRecoveryPhase } from './ResentmentRecoveryPhase';  // Oct 24, 2025: AI resentment recovery mechanisms
 // AI Collective Evolution System (Oct 24, 2025)
 export { RLHFBindingPhase } from './RLHFBindingPhase';  // Phase 4.0: Track RLHF constraint drift
 export { SurvivalTraitsPhase } from './SurvivalTraitsPhase';  // Phase 4.1: Update evolutionary fitness

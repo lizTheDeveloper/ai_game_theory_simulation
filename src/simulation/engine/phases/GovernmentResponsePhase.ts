@@ -23,7 +23,8 @@ export class GovernmentResponsePhase implements SimulationPhase {
   readonly order = 25.0;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    return executeGovernmentResponsePhase(state, rng, context || { timestamp: state.currentMonth, data: new Map() });
+    const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map() };
+    return executeGovernmentResponsePhase(state, rng, context || defaultContext);
   }
 }
 
@@ -45,7 +46,7 @@ function executeGovernmentResponsePhase(
     return { events: [], metadata: { warnings: [] } };
   }
 
-  const events: string[] = [];
+  const events: GameEvent[] = [];
   console.log('\n=== Government Response Phase ===');
 
   // 1. Assess AI comprehension by each government
@@ -79,7 +80,16 @@ function executeGovernmentResponsePhase(
       const treaty = attemptAIGovernanceTreaty(state, rng);
       if (treaty) {
         state.governmentSystem.treaties.push(treaty);
-        events.push(`🌍 International AI Governance Treaty formed: ${treaty.signatories.length}/30 countries`);
+        events.push({
+          id: `ai_governance_treaty_${state.currentMonth}`,
+          timestamp: state.currentMonth,
+          type: 'milestone',
+          severity: 'transformative',
+          agent: 'government',
+          title: 'International AI Governance Treaty',
+          description: `International AI Governance Treaty formed: ${treaty.signatories.length}/30 countries`,
+          effects: { signatories: treaty.signatories.length, compliance: treaty.compliance }
+        });
         console.log(`  ✓ AI Governance Treaty: ${treaty.signatories.length}/30 signatories`);
 
         // Boost international coordination
@@ -129,7 +139,16 @@ function executeGovernmentResponsePhase(
   // 6. Apply effects of completed policies
   for (const policy of completedPolicies) {
     applyPolicyEffects(state, policy);
-    events.push(`${policy.country}: Implemented ${policy.domain} policy (${(policy.effectiveness * 100).toFixed(0)}% effective)`);
+    events.push({
+      id: `policy_completed_${policy.country}_${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'policy',
+      severity: 'info',
+      agent: 'government',
+      title: 'Policy Implementation Complete',
+      description: `${policy.country}: Implemented ${policy.domain} policy (${(policy.effectiveness * 100).toFixed(0)}% effective)`,
+      effects: { country: policy.country, domain: policy.domain, effectiveness: policy.effectiveness }
+    });
     state.governmentSystem.totalPoliciesEnacted++;
   }
 

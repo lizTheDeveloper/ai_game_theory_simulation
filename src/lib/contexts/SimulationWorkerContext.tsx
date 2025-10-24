@@ -37,7 +37,7 @@ interface SimulationWorkerContextValue {
   lastUpdate: StateDelta | null
 
   // Control functions
-  init: (seed: number, scenario: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig) => void
+  init: (seed: number, scenario: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('@/types/climate-priority').ClimatePriorityConfig) => void
   start: () => void
   pause: () => void
   step: () => void
@@ -138,7 +138,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
   }, []) // Empty deps - only run on mount/unmount
 
   // Control functions
-  const init = (seedValue: number, scenarioValue: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig) => {
+  const init = (seedValue: number, scenarioValue: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('@/types/climate-priority').ClimatePriorityConfig) => {
     if (!clientRef.current) {
       console.error('[WorkerContext] Cannot init: no worker client')
       return
@@ -153,7 +153,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
     setScenario(scenarioValue)
 
     const interval = Math.floor(30000 / speed)
-    clientRef.current.init(seedValue, scenarioValue, interval, alignmentConfig)
+    clientRef.current.init(seedValue, scenarioValue, interval, alignmentConfig, climatePriorityConfig)
   }
 
   const start = () => {

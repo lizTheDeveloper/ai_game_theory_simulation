@@ -1,8 +1,8 @@
 /**
  * Population & Regions Dashboard - Phase 8
  *
- * Global population and QoL metrics.
- * Regional breakdowns not yet available in Web Worker interface.
+ * Global population and QoL metrics with regional breakdowns.
+ * Shows regional population, quality of life, healthcare, and climate vulnerability.
  * Reference: /designs/10_regions.md
  */
 
@@ -33,6 +33,8 @@ export function RegionsDashboard() {
   const qol = lastUpdate.qualityOfLife || 0
   const socialCohesion = lastUpdate.socialCohesion || 0
   const institutionalTrust = lastUpdate.institutionalTrust || 0
+  const regions = lastUpdate.regionalPopulations || []
+  const hasRegionalData = regions.length > 0
 
   // Infer status from QoL
   const getStatus = (qolValue: number) => {
@@ -43,6 +45,7 @@ export function RegionsDashboard() {
   }
 
   const status = getStatus(qol)
+  const vulnerableRegions = regions.filter(r => r.climateVulnerability > 0.7)
 
   return (
     <div className="space-y-6">
@@ -160,13 +163,122 @@ export function RegionsDashboard() {
         </div>
       </Panel>
 
-      {/* Regional Data Note */}
-      <Panel title="📍 Regional Tracking">
-        <p className="text-sm" style={{ color: 'var(--white-60)' }}>
-          Regional population and QoL breakdowns are not yet available in the Web Worker interface.
-          Currently showing global aggregated metrics only. Regional granularity requires full state access.
-        </p>
-      </Panel>
+      {/* Regional Data */}
+      {hasRegionalData ? (
+        <Panel title="📍 Regional Breakdown">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {regions.map((region, index) => {
+              const regionStatus = getStatus(region.qualityOfLife)
+              return (
+                <div
+                  key={index}
+                  className="p-4 rounded"
+                  style={{
+                    backgroundColor: 'var(--color-near-black)',
+                    border: '1px solid var(--white-10)'
+                  }}
+                >
+                  {/* Region Header */}
+                  <div className="mb-3">
+                    <h3 className="text-base font-semibold mb-1">{region.name}</h3>
+                    <div className="flex items-center justify-between text-xs">
+                      <span style={{ color: 'var(--white-60)' }}>
+                        {region.population.toFixed(0)}M people
+                      </span>
+                      <span style={{ color: regionStatus.color }}>
+                        {regionStatus.label}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Quality of Life */}
+                  <div className="mb-3">
+                    <div className="flex justify-between mb-1 text-xs">
+                      <span style={{ color: 'var(--white-60)' }}>Quality of Life</span>
+                      <span className="font-semibold">{(region.qualityOfLife * 100).toFixed(0)}%</span>
+                    </div>
+                    <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+                      <div
+                        className="h-full rounded"
+                        style={{
+                          width: `${Math.min(100, region.qualityOfLife * 100)}%`,
+                          backgroundColor: regionStatus.color
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Healthcare Quality */}
+                  <div className="mb-3">
+                    <div className="flex justify-between mb-1 text-xs">
+                      <span style={{ color: 'var(--white-60)' }}>Healthcare Quality</span>
+                      <span className="font-semibold">{(region.healthcareQuality * 100).toFixed(0)}%</span>
+                    </div>
+                    <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+                      <div
+                        className="h-full rounded"
+                        style={{
+                          width: `${Math.min(100, region.healthcareQuality * 100)}%`,
+                          backgroundColor: 'var(--color-cyan)'
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Climate Vulnerability */}
+                  <div>
+                    <div className="flex justify-between mb-1 text-xs">
+                      <span style={{ color: 'var(--white-60)' }}>Climate Vulnerability</span>
+                      <span className="font-semibold">{(region.climateVulnerability * 100).toFixed(0)}%</span>
+                    </div>
+                    <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+                      <div
+                        className="h-full rounded"
+                        style={{
+                          width: `${Math.min(100, region.climateVulnerability * 100)}%`,
+                          backgroundColor: region.climateVulnerability > 0.7 ? 'var(--color-red)' : region.climateVulnerability > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </Panel>
+      ) : (
+        <Panel title="📍 Regional Tracking">
+          <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+            Regional population data is initializing. Once available, this panel will show
+            population, quality of life, healthcare quality, and climate vulnerability
+            breakdowns for each region.
+          </p>
+        </Panel>
+      )}
+
+      {/* High Vulnerability Alert */}
+      {vulnerableRegions.length > 0 && (
+        <Panel title="⚠️ High Climate Vulnerability Regions" glow="amber">
+          <p className="text-sm mb-3" style={{ color: 'var(--white-60)' }}>
+            {vulnerableRegions.length} region{vulnerableRegions.length > 1 ? 's' : ''} with climate vulnerability above 70%:
+          </p>
+          <div className="space-y-2">
+            {vulnerableRegions.map((region, index) => (
+              <div
+                key={index}
+                className="p-2 rounded text-sm"
+                style={{
+                  backgroundColor: 'var(--color-near-black)',
+                  border: '1px solid var(--color-amber)'
+                }}
+              >
+                <span className="font-semibold">{region.name}</span>
+                <span style={{ color: 'var(--white-60)' }}> — {(region.climateVulnerability * 100).toFixed(0)}% vulnerable</span>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
 
       {/* Crisis Alerts */}
       {population < 2_000_000_000 && (

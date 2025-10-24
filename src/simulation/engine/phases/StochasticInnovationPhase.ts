@@ -228,10 +228,14 @@ export class StochasticInnovationPhase implements SimulationPhase {
 
           // Log to event system
           events.push({
+            id: `breakthrough-${breakthrough.id}-${state.currentMonth}`,
             type: 'breakthrough',
+            title: `Breakthrough: ${breakthrough.name}`,
             timestamp: state.currentMonth,
-            description: `Breakthrough: ${breakthrough.name}`,
-            impact: `Game-changing ${breakthrough.type} innovation achieved`
+            description: `Game-changing ${breakthrough.type} innovation achieved`,
+            severity: 'transformative',
+            agent: 'technology',
+            effects: { breakthroughId: breakthrough.id, breakthroughType: breakthrough.type }
           });
 
           // Track that breakthrough occurred (prevent duplicates)

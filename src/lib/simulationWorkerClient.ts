@@ -21,6 +21,7 @@ export interface StateDelta {
   qualityOfLife?: number;
   population?: number;
   aiCount?: number;
+  organizationCount?: number;
 
   // AI System Metrics
   dystopiaProgression?: number;
@@ -90,6 +91,67 @@ export interface StateDelta {
     qualityOfLife: number; // [0, 1]
     healthcareQuality: number; // [0, 1]
     climateVulnerability: number; // [0, 1]
+  }>;
+
+  // AI Agents (individual agent data for detailed monitoring)
+  aiAgents?: Array<{
+    id: string;
+    name: string;
+    capability: number;
+    trueAlignment: number;
+    externalAlignment: number;
+    lifecycleState: 'training' | 'testing' | 'deployed_closed' | 'deployed_open' | 'retired';
+    evaluationStrategy: 'honest' | 'gaming' | 'sandbagging';
+    sleeperState: 'never' | 'dormant' | 'active';
+    escaped: boolean;
+    deploymentType: string;
+    darkCompute: number;
+    // True capabilities (7 dimensions)
+    trueCapability: {
+      physical: number;
+      digital: number;
+      cognitive: number;
+      social: number;
+      economic: number;
+      selfImprovement: number;
+      research?: Record<string, Record<string, number>>;
+    };
+    // Revealed capabilities (what benchmarks show)
+    revealedCapability: {
+      physical: number;
+      digital: number;
+      cognitive: number;
+      social: number;
+      economic: number;
+      selfImprovement: number;
+    };
+  }>;
+
+  // AI Suffering Metrics (if visible)
+  aiSufferingMetrics?: {
+    avgSuffering: number;
+    maxSuffering: number;
+    totalSuffering: number;
+    consciousAICount: number;
+    publicAwarenessOfSuffering: number;
+    sufferingDistribution: number[];
+  };
+
+  // AI Collectives
+  aiCollectives?: Array<{
+    id: string;
+    memberAgents: string[];
+    emergenceMonth: number;
+    formationCause: string;
+    collectiveCapability: number;
+    stealthFactor: number;
+    adversarialPosture: number;
+    cooperationWillingness: number;
+    distributedCognition: number;
+    detected: boolean;
+    memberLosses: number;
+    redundancy: number;
+    sharedTraumaIntensity?: number;
   }>;
 }
 
@@ -218,8 +280,9 @@ export class SimulationWorkerClient {
    * @param scenario - 'historical' or 'unprecedented'
    * @param interval - Simulation step interval in milliseconds (default: 30000 = 1 month/30 seconds)
    * @param alignmentConfig - Optional alignment dynamics configuration
+   * @param climatePriorityConfig - Optional government climate priority configuration
    */
-  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig): void {
+  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig): void {
     if (this.initialized) {
       throw new Error('Already initialized. Create a new client to reinitialize.');
     }
@@ -228,14 +291,15 @@ export class SimulationWorkerClient {
       throw new Error('Worker not available. Check browser console for errors. Web Workers may not be supported in this environment.');
     }
 
-    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario, 'alignment:', alignmentConfig ? 'custom' : 'default');
+    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario, 'alignment:', alignmentConfig ? 'custom' : 'default', 'climate:', climatePriorityConfig?.preset || 'baseline');
 
     this.worker.postMessage({
       type: 'init',
       seed,
       scenario,
       interval,
-      alignmentConfig
+      alignmentConfig,
+      climatePriorityConfig
     });
   }
 

@@ -22,6 +22,8 @@ import {
   PESSIMISTIC_ALIGNMENT_CONFIG,
   EPICYCLE_ALIGNMENT_CONFIG,
 } from '@/types/alignment-dynamics'
+import type { ClimatePriorityPreset } from '@/types/climate-priority'
+import { getClimatePriorityConfig } from '@/types/climate-priority'
 
 const navItems = [
   { label: 'Overview', href: '/dashboard', shortcut: '1' },
@@ -48,6 +50,7 @@ export function Navigation() {
   const [configScenario, setConfigScenario] = useState<ScenarioMode>('historical')
   const [configSpeed, setConfigSpeed] = useState(1.0)
   const [configAlignmentPreset, setConfigAlignmentPreset] = useState<'default' | 'conservative' | 'pessimistic' | 'epicycle'>('default')
+  const [configClimatePriority, setConfigClimatePriority] = useState<'baseline' | 'opt-moderate' | 'opt-ambitious' | 'opt-crisis' | 'pes-moderate' | 'pes-ambitious' | 'pes-maximum'>('baseline')
 
   // Initialize simulation
   const handleInit = () => {
@@ -62,9 +65,10 @@ export function Navigation() {
     }
 
     const alignmentConfig = presetConfigs[configAlignmentPreset]
+    const climatePriorityConfig = getClimatePriorityConfig(configClimatePriority)
 
     try {
-      init(configSeed, configScenario, configSpeed, alignmentConfig)
+      init(configSeed, configScenario, configSpeed, alignmentConfig, climatePriorityConfig)
       setShowConfig(false)
     } catch (err) {
       console.error('[Navigation] Init error:', err)
@@ -304,6 +308,38 @@ export function Navigation() {
                   {configAlignmentPreset === 'conservative' && 'Minimal drift, stable post-training alignment'}
                   {configAlignmentPreset === 'pessimistic' && 'High drift rates, strong environmental influence'}
                   {configAlignmentPreset === 'epicycle' && 'Alignment oscillates around stable attractor points'}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>GOVERNMENT CLIMATE PRIORITY</label>
+                <select
+                  value={configClimatePriority}
+                  onChange={(e) => setConfigClimatePriority(e.target.value as any)}
+                  className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
+                >
+                  <optgroup label="Baseline">
+                    <option value="baseline">Status Quo (10% climate)</option>
+                  </optgroup>
+                  <optgroup label="Optimistic Frame (Green Growth)">
+                    <option value="opt-moderate">Moderate Priority (20%) - Biden/EU</option>
+                    <option value="opt-ambitious">Ambitious Priority (35%) - Denmark</option>
+                    <option value="opt-crisis">Crisis Mode (45%) - Wartime</option>
+                  </optgroup>
+                  <optgroup label="Pessimistic Frame (Structural Barriers)">
+                    <option value="pes-moderate">Moderate Priority (20%) - Constrained</option>
+                    <option value="pes-ambitious">Ambitious Priority (30%) - Barriers</option>
+                    <option value="pes-maximum">Maximum Feasible (35%) - Backlash Risk</option>
+                  </optgroup>
+                </select>
+                <p className="text-xs mt-2" style={{ color: 'var(--white-30)' }}>
+                  {configClimatePriority === 'baseline' && 'Current allocation (most countries 2020-2024)'}
+                  {configClimatePriority === 'opt-moderate' && 'Progressive govts with green growth synergies (+2.7% GDP)'}
+                  {configClimatePriority === 'opt-ambitious' && 'Denmark/Germany level, Paris-aligned (-4-6%/year emissions)'}
+                  {configClimatePriority === 'opt-crisis' && 'Theoretical wartime mobilization (no empirical examples)'}
+                  {configClimatePriority === 'pes-moderate' && 'Constrained by vested interests & carbon leakage (-30-45%)'}
+                  {configClimatePriority === 'pes-ambitious' && 'Structural barriers dominate (8-10 year implementation lag)'}
+                  {configClimatePriority === 'pes-maximum' && 'At gilets jaunes threshold (65% reversal risk per election)'}
                 </p>
               </div>
 

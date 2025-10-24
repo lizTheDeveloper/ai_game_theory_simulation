@@ -108,11 +108,10 @@ export function updateFirstMoverAdvantage(state: GameState, cache: CountryIntera
   fma.leaderEconomicBonus = fma.marketShareCapture * 0.25; // Up to 25% GDP boost
 
   // Apply economic bonus to leader's growth
-  if (leaderNation.nation === 'United States') {
-    state.globalMetrics.economicGrowthRate = Math.max(0,
-      state.globalMetrics.economicGrowthRate + fma.leaderEconomicBonus * 0.01
-    );
-  }
+  // TODO: Re-implement with correct economic property
+  // if (leaderNation.nation === 'United States') {
+  //   // Apply economic growth bonus
+  // }
 
   // === STANDARD-SETTING POWER ===
   fma.standardSetter = leader;
