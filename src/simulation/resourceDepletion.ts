@@ -474,9 +474,8 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   // This fertilizes phytoplankton, enhancing ocean productivity
   // Source: "The Whale Pump" (Roman et al. 2010), WDC, NOAA, WWF
 
-  const interspeciesTech = state.technologyTree?.find(t => t.id === 'interspecies_communication');
   const deploymentLevel = require('./techTree/helpers').isTechDeployed(state, 'interspecies_communication');
-  if (interspeciesTech?.completed && deploymentLevel > 0.5) {
+  if (deploymentLevel > 0.5) {
     // Understanding cetacean behavior → restore whale/dolphin populations → nutrient cycling
     
     // WHALE PUMP EFFECT: Nutrient cycling boosts phytoplankton

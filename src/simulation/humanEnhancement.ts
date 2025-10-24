@@ -21,6 +21,8 @@ import {
   EnhancementStratification,
   HumanAIHybridSystem,
   ENHANCEMENT_PARAMETERS,
+  EnhancementBarriers,
+  EnhancementOutcome,
 } from '../types/humanEnhancement';
 
 /**
@@ -283,10 +285,11 @@ function checkBCIAvailability(
   
   // Check tech tree for "Neural Interface" or similar BCI tech
   const bciTechId = 'bci_interface'; // TODO: Update with actual tech tree ID when BCI tech is added
-  const bciTech = state.technologyTree?.find(t => t.id === bciTechId);
+  const { isTechDeployed } = require('./techTree/helpers');
+  const bciDeploymentLevel = isTechDeployed(state, bciTechId);
 
-  // BCI available if tech completed AND safety threshold met
-  if (bciTech?.completed && system.bciAdoption.bciSafetyLevel >= 0.70) {
+  // BCI available if tech deployed AND safety threshold met
+  if (bciDeploymentLevel > 0.5 && system.bciAdoption.bciSafetyLevel >= 0.70) {
     system.bciAdoption.bciAvailableMonth = state.currentMonth;
     system.bciAdoption.monthsSinceBCIAvailable = 0;
 

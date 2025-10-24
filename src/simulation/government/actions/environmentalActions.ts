@@ -202,12 +202,11 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
   canExecute: (state: GameState): boolean => {
     if (state.government.resources < 10) return false;
 
-    // Check if any environmental tech from tech tree is unlocked but not completed
+    // Check if any environmental tech from tech tree is unlocked but not fully deployed
+    const { isTechUnlocked, isTechDeployed } = require('../../techTree/helpers');
     const envTechIds = ['direct_air_capture', 'ocean_alkalinity_enhancement', 'ai_pollution_remediation'];
     const needsDeployment = envTechIds.some(techId => {
-      const tech = state.technologyTree?.find(t => t.id === techId);
-      const unlockedSet = new Set(state.techTreeState?.unlockedTech || []);
-      return tech && unlockedSet.has(techId) && !tech.completed;
+      return isTechUnlocked(state, techId) && isTechDeployed(state, techId) < 1.0;
     });
 
     // Also check if ecosystem crisis is active
@@ -229,11 +228,10 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
     };
 
     // Count how many techs will benefit
+    const { isTechUnlocked, isTechDeployed } = require('../../techTree/helpers');
     const envTechIds = ['direct_air_capture', 'ocean_alkalinity_enhancement', 'ai_pollution_remediation'];
-    const unlockedSet = new Set(state.techTreeState?.unlockedTech || []);
     const benefitingTechs = envTechIds.filter(techId => {
-      const tech = state.technologyTree?.find(t => t.id === techId);
-      return tech && unlockedSet.has(techId) && !tech.completed;
+      return isTechUnlocked(state, techId) && isTechDeployed(state, techId) < 1.0;
     });
 
     // Cost

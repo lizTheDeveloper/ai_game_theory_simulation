@@ -41,12 +41,11 @@ const BREAKTHROUGHS: Breakthrough[] = [
     prerequisites: ['cleanEnergy', 'advancedMaterials'],
     effects: (state) => {
       // Unlock fusion technology immediately
-      const fusionTech = state.technologyTree?.find(t => t.id === 'fusionPower');
-      if (fusionTech && state.techTreeState) {
+      if (state.techTreeState) {
         if (!state.techTreeState.unlockedTech.includes('fusionPower')) {
           state.techTreeState.unlockedTech.push('fusionPower');
         }
-        fusionTech.progress = 0.05; // 5% immediate progress
+        // Note: Progress/deployment is tracked in techTreeState.regionalDeployment, not static definitions
       }
 
       // Climate benefit: Huge emissions reduction
@@ -232,7 +231,7 @@ export class StochasticInnovationPhase implements SimulationPhase {
           // Log to event system
           events.push({
             type: 'breakthrough',
-            month: state.currentMonth,
+            timestamp: state.currentMonth,
             description: `Breakthrough: ${breakthrough.name}`,
             impact: `Game-changing ${breakthrough.type} innovation achieved`
           });
