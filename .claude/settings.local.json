@@ -58,7 +58,13 @@
       "Bash(gh label create:*)",
       "Bash(gh label:*)",
       "Bash(do sleep 5)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(git log:*)",
+      "Bash(gh issue create:*)",
+      "Bash(gh issue edit:*)",
+      "Bash(gh run:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh api:*)"
     ],
     "deny": [],
     "ask": []
