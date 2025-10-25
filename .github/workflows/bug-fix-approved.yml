@@ -182,11 +182,11 @@ jobs:
               "grants": [
                 {
                   "type": "write",
-                  "path_patterns": ["reviews/**", "devlogs/**", "src/**"]
+                  "path_patterns": ["reviews/**", "devlogs/**", "src/**", "**/*.md", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.json"]
                 },
                 {
                   "type": "bash",
-                  "command_patterns": ["git *", "npm test", "npx tsc --noEmit"]
+                  "command_patterns": ["*"]
                 }
               ]
             }
