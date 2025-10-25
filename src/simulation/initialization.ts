@@ -390,7 +390,8 @@ export function createAIAgent(
  */
 export function createDefaultInitialState(
   scenarioMode: ScenarioMode = 'historical',
-  alignmentDynamicsConfig?: any
+  alignmentDynamicsConfig?: any,
+  climatePriorityConfig?: any
 ): GameState {
   const initialYear = 2025;
   const initialMonth = 0;
@@ -815,6 +816,8 @@ export function createDefaultInitialState(
       scenarioParameters,
       // Oct 23, 2025: Alignment dynamics system
       alignmentDynamics: alignmentDynamicsConfig || require('./alignmentDynamics').DEFAULT_ALIGNMENT_DYNAMICS_CONFIG,
+      // Oct 24, 2025: Climate priority system
+      climatePriority: climatePriorityConfig || require('../types/climate-priority').DEFAULT_CLIMATE_PRIORITY_CONFIGS['baseline'],
       // Oct 24, 2025: AI suffering system
       aiSuffering: require('../types/ai-suffering').DEFAULT_SUFFERING_CONFIG,
       // Oct 24, 2025: AI collective evolution system

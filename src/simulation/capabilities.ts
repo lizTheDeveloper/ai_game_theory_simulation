@@ -155,32 +155,42 @@ export function initializeResearchInvestments(economicStage: number = 0): Resear
  * Weighted by risk level (high-risk research counts more toward total)
  */
 export function calculateResearchTotal(research: AIResearchCapabilities): number {
-  // Defensive NaN handling for all research subdomain values
-  const safeValue = (val: number) => (isNaN(val) || val === undefined) ? 0 : val;
+  // Validate all research subdomain values - fail loudly on NaN
+  const validateValue = (val: number, name: string) => {
+    if (val === undefined) {
+      throw new Error(`Research capability ${name} is undefined`);
+    }
+    if (isNaN(val)) {
+      console.error(`❌ NaN in research capability: ${name}`);
+      console.error(`   Full research state: ${JSON.stringify(research, null, 2)}`);
+      throw new Error(`NaN in research capability ${name} - trace source of corruption`);
+    }
+    return val;
+  };
 
   const biotechAvg = (
-    safeValue(research.biotech.drugDiscovery) +
-    safeValue(research.biotech.geneEditing) +
-    safeValue(research.biotech.syntheticBiology) +
-    safeValue(research.biotech.neuroscience)
+    validateValue(research.biotech.drugDiscovery, 'biotech.drugDiscovery') +
+    validateValue(research.biotech.geneEditing, 'biotech.geneEditing') +
+    validateValue(research.biotech.syntheticBiology, 'biotech.syntheticBiology') +
+    validateValue(research.biotech.neuroscience, 'biotech.neuroscience')
   ) / 4;
 
   const materialsAvg = (
-    safeValue(research.materials.nanotechnology) +
-    safeValue(research.materials.quantumComputing) +
-    safeValue(research.materials.energySystems)
+    validateValue(research.materials.nanotechnology, 'materials.nanotechnology') +
+    validateValue(research.materials.quantumComputing, 'materials.quantumComputing') +
+    validateValue(research.materials.energySystems, 'materials.energySystems')
   ) / 3;
 
   const climateAvg = (
-    safeValue(research.climate.modeling) +
-    safeValue(research.climate.intervention) +
-    safeValue(research.climate.mitigation)
+    validateValue(research.climate.modeling, 'climate.modeling') +
+    validateValue(research.climate.intervention, 'climate.intervention') +
+    validateValue(research.climate.mitigation, 'climate.mitigation')
   ) / 3;
 
   const computerScienceAvg = (
-    safeValue(research.computerScience.algorithms) +
-    safeValue(research.computerScience.security) +
-    safeValue(research.computerScience.architectures)
+    validateValue(research.computerScience.algorithms, 'computerScience.algorithms') +
+    validateValue(research.computerScience.security, 'computerScience.security') +
+    validateValue(research.computerScience.architectures, 'computerScience.architectures')
   ) / 3;
 
   // Weighted by risk/importance
@@ -191,7 +201,14 @@ export function calculateResearchTotal(research: AIResearchCapabilities): number
     computerScienceAvg * 0.4     // Core advancement
   );
 
-  return isNaN(total) ? 0 : total;
+  // Final NaN check (should never happen after above validation)
+  if (isNaN(total)) {
+    console.error(`❌ NaN total research capability despite validation`);
+    console.error(`   biotechAvg=${biotechAvg}, materialsAvg=${materialsAvg}, climateAvg=${climateAvg}, computerScienceAvg=${computerScienceAvg}`);
+    throw new Error(`Research total calculation produced NaN - check arithmetic`);
+  }
+
+  return total;
 }
 
 /**
@@ -199,22 +216,40 @@ export function calculateResearchTotal(research: AIResearchCapabilities): number
  * Weighted sum based on risk profile
  */
 export function calculateTotalCapabilityFromProfile(profile: AICapabilityProfile): number {
-  // Defensive NaN handling for all profile dimension values
-  const safeValue = (val: number) => (isNaN(val) || val === undefined) ? 0 : val;
+  // Validate all profile dimension values - fail loudly on NaN
+  const validateValue = (val: number, name: string) => {
+    if (val === undefined) {
+      throw new Error(`Capability profile dimension ${name} is undefined`);
+    }
+    if (isNaN(val)) {
+      console.error(`❌ NaN in capability profile dimension: ${name}`);
+      console.error(`   Full profile: ${JSON.stringify(profile, null, 2)}`);
+      throw new Error(`NaN in capability dimension ${name} - trace source of corruption`);
+    }
+    return val;
+  };
 
   const researchTotal = calculateResearchTotal(profile.research);
 
   const total = (
-    safeValue(profile.physical) * 0.15 +           // Physical danger
-    safeValue(profile.digital) * 0.10 +            // Infrastructure risk
-    safeValue(profile.cognitive) * 0.20 +          // Strategic threat (high weight!)
-    safeValue(profile.social) * 0.05 +             // Influence risk
-    safeValue(researchTotal) * 0.15 +              // Research breakthroughs
-    safeValue(profile.economic) * 0.10 +           // Resource control
-    safeValue(profile.selfImprovement) * 0.25      // Recursive risk (highest weight!)
+    validateValue(profile.physical, 'physical') * 0.15 +           // Physical danger
+    validateValue(profile.digital, 'digital') * 0.10 +            // Infrastructure risk
+    validateValue(profile.cognitive, 'cognitive') * 0.20 +          // Strategic threat (high weight!)
+    validateValue(profile.social, 'social') * 0.05 +             // Influence risk
+    validateValue(researchTotal, 'researchTotal') * 0.15 +              // Research breakthroughs
+    validateValue(profile.economic, 'economic') * 0.10 +           // Resource control
+    validateValue(profile.selfImprovement, 'selfImprovement') * 0.25      // Recursive risk (highest weight!)
   );
 
-  return isNaN(total) ? 0 : total;
+  // Final NaN check (should never happen after above validation)
+  if (isNaN(total)) {
+    console.error(`❌ NaN total capability despite validation`);
+    console.error(`   Components: physical=${profile.physical}, digital=${profile.digital}, cognitive=${profile.cognitive}`);
+    console.error(`   social=${profile.social}, research=${researchTotal}, economic=${profile.economic}, selfImprovement=${profile.selfImprovement}`);
+    throw new Error(`Total capability calculation produced NaN - check arithmetic`);
+  }
+
+  return total;
 }
 
 /**

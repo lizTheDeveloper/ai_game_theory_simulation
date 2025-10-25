@@ -44,6 +44,14 @@ export function selectGovernmentAction(
 
   if (availableActions.length === 0) return null;
 
+  // Oct 24, 2025: Log climate priority configuration (first month only)
+  if (state.currentMonth === 0 && state.config.climatePriority) {
+    console.log(`\n[Government] Climate Priority: ${state.config.climatePriority.preset}`);
+    console.log(`  Climate weight: ${(state.config.climatePriority.weights.climate * 100).toFixed(0)}%`);
+    console.log(`  Economic weight: ${(state.config.climatePriority.weights.economic * 100).toFixed(0)}%`);
+    console.log(`  Policy effectiveness: ${(state.config.climatePriority.policyEffectiveness * 100).toFixed(1)}%/year`);
+  }
+
   const unemploymentLevel = state.society.unemploymentLevel;
   const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
   // P2.3 UPDATE (Oct 16, 2025): Use power-weighted trust for policy decisions
@@ -490,6 +498,14 @@ export function selectGovernmentAction(
       case 'deploy_environmental_tech':
         // Environmental actions with crisis-driven priority
         priority = 5; // Base priority
+
+        // Oct 24, 2025: Apply climate priority configuration
+        // Climate priority weight boosts environmental actions (range: 0.10-0.45)
+        const climatePriority = state.config.climatePriority || { preset: 'baseline', weights: { climate: 0.10 } } as any;
+        const climateWeight = climatePriority.weights?.climate || 0.10;
+
+        // Apply climate weight as multiplier (baseline 0.10 → 1.0x, ambitious 0.35 → 3.5x, crisis 0.45 → 4.5x)
+        priority *= (climateWeight * 10); // Scale to meaningful multiplier range
 
         // Get environmental crisis severity
         const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive || false;
