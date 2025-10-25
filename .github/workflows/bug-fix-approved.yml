@@ -86,8 +86,6 @@ jobs:
           cat > investigation_prompt.txt <<PROMPT_END
           You are a bug fix / audit specialist using Claude Code SDK tools.
 
-          **YOUR CONTEXT (fresh session, NO prior conversation):**
-
           **TASK:** $TASK_TITLE
           **TYPE:** $LABEL_TYPE
           **BRANCH:** $BRANCH_NAME
