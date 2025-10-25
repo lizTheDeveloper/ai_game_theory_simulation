@@ -1,0 +1,286 @@
+# Bug Fix / Audit Workflow
+#
+# PATTERN: Fresh Claude Code SDK Session for bug fixes and audits
+# - No research required (these are code improvements, not new features)
+# - No implementation plan required (ad-hoc investigation)
+# - Just needs clear issue description
+#
+# TRIGGER: Label "bug-fix-approved" or "audit-approved" on issue
+
+name: Bug Fix / Audit Workflow
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  investigate:
+    # Only run if labeled "bug-fix-approved" or "audit-approved" by owner
+    if: |
+      (github.event.label.name == 'bug-fix-approved' || github.event.label.name == 'audit-approved') &&
+      github.event.sender.login == github.repository_owner
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Extract Task Information
+        id: task
+        run: |
+          TITLE="${{ github.event.issue.title }}"
+          TASK_NAME=$(echo "$TITLE" | sed 's/^Bug: //g' | sed 's/^Feature: //g' | sed 's/^Audit: //g' | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]')
+
+          echo "name=$TASK_NAME" >> $GITHUB_OUTPUT
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+
+      - name: Create Investigation Branch
+        run: |
+          BRANCH_NAME="investigation/${{ steps.task.outputs.name }}"
+
+          # Check if branch already exists
+          if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
+            echo "Branch already exists: $BRANCH_NAME"
+            git fetch origin "$BRANCH_NAME"
+            git checkout "$BRANCH_NAME"
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else
+            # Create new branch
+            git checkout -b "$BRANCH_NAME"
+            git push origin "$BRANCH_NAME"
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
+
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Build Investigation Prompt
+        run: |
+          ISSUE_BODY="${{ github.event.issue.body }}"
+
+          cat > investigation_prompt.txt << 'EOF'
+          You are a bug fix / audit specialist using Claude Code SDK tools.
+
+          **YOUR CONTEXT (fresh session, NO prior conversation):**
+
+          **TASK:** ${{ steps.task.outputs.title }}
+          **TYPE:** ${{ github.event.label.name }}
+          **BRANCH:** ${{ env.branch_name }}
+
+          **ISSUE DESCRIPTION:**
+          $ISSUE_BODY
+
+          **YOUR MISSION:**
+
+          For BUG FIXES:
+          1. Use Grep/Read to find the bug location
+          2. Use Read to understand the surrounding code
+          3. Fix the bug using Edit
+          4. Run tests with Bash: `npm test`
+          5. Verify TypeScript compiles: `npx tsc --noEmit`
+          6. Commit changes
+          7. Create findings report: `bug_fix_report_${{ steps.task.outputs.name }}.md`
+
+          For AUDITS:
+          1. Use Grep to find patterns (defensive coding, console.logs, etc.)
+          2. Use Read to understand context for each finding
+          3. Categorize findings (legitimate vs problematic)
+          4. Create audit report: `audit_report_${{ steps.task.outputs.name }}.md`
+          5. Create GitHub issues for any problems found
+          6. NO code changes (audit only)
+
+          **OUTPUT FORMAT:**
+
+          Create a report file with:
+          ```markdown
+          # [Bug Fix / Audit] Report
+
+          ## Summary
+          [2-3 sentence overview]
+
+          ## Findings
+          [Detailed findings with file:line references]
+
+          ## Actions Taken (for bug fixes)
+          - Fixed: [description]
+          - Tests: [pass/fail]
+          - TypeScript: [compiles/errors]
+
+          ## Recommended Actions (for audits)
+          - Issue #X: [description]
+          - Issue #Y: [description]
+
+          ## Next Steps
+          [What should happen next]
+          ```
+
+          **TOOLS AVAILABLE:**
+          - Grep: Search for patterns
+          - Read: Read files
+          - Edit: Fix code (bug fixes only)
+          - Bash: Run tests, compile TypeScript
+          - Write: Create report file
+
+          **WHEN COMPLETE:**
+          1. Save report to `/logs/` directory
+          2. Commit all changes (if bug fix)
+          3. Report completion status
+
+          Work iteratively. Investigate thoroughly. This is a GitHub Actions environment.
+          EOF
+
+      - name: Run Investigation (Claude Code SDK)
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt_file: investigation_prompt.txt
+          claude_args: |
+            --max-turns 30
+
+      - name: Check Investigation Status
+        id: status
+        run: |
+          # Check if investigation produced a report
+          REPORT_FILE=$(find logs/ -name "*${{ steps.task.outputs.name }}*.md" -type f 2>/dev/null | head -1)
+
+          if [ -n "$REPORT_FILE" ]; then
+            echo "report_exists=true" >> $GITHUB_OUTPUT
+            echo "report_path=$REPORT_FILE" >> $GITHUB_OUTPUT
+          else
+            echo "report_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Check TypeScript (for bug fixes)
+          if npx tsc --noEmit 2>&1 | tee ts_output.txt; then
+            echo "typescript=PASS" >> $GITHUB_OUTPUT
+          else
+            echo "typescript=FAIL" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request (for bug fixes)
+        if: github.event.label.name == 'bug-fix-approved' && steps.status.outputs.typescript == 'PASS'
+        run: |
+          # Get diff summary
+          DIFF_SUMMARY=$(git diff origin/main...HEAD --stat)
+
+          # Create PR
+          gh pr create \
+            --title "fix: ${{ steps.task.outputs.title }}" \
+            --body "$(cat <<'EOF'
+          ## Automated Bug Fix
+
+          This PR was generated by the bug-fix investigation workflow.
+
+          **Issue:** #${{ github.event.issue.number }}
+          **Branch:** ${{ env.branch_name }}
+
+          ### Changes
+
+          \`\`\`
+          $DIFF_SUMMARY
+          \`\`\`
+
+          ### Investigation Report
+
+          See: `${{ steps.status.outputs.report_path }}`
+
+          ### Validation
+
+          - ✅ TypeScript compiles (0 errors)
+          - ⏳ Tests status: check workflow logs
+          - ⏳ Architecture review will run automatically
+
+          ---
+          🤖 Generated by bug-fix-approved workflow via Claude Code SDK
+          EOF
+          )" \
+            --base main \
+            --head "${{ env.branch_name }}" \
+            --label "automated-bugfix"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Post Investigation Results
+        uses: actions/github-script@v7
+        env:
+          TASK_TITLE: ${{ steps.task.outputs.title }}
+          BRANCH_NAME: ${{ env.branch_name }}
+          REPORT_EXISTS: ${{ steps.status.outputs.report_exists }}
+          REPORT_PATH: ${{ steps.status.outputs.report_path }}
+          TYPESCRIPT_STATUS: ${{ steps.status.outputs.typescript }}
+          LABEL_TYPE: ${{ github.event.label.name }}
+        with:
+          script: |
+            const taskTitle = process.env.TASK_TITLE;
+            const branchName = process.env.BRANCH_NAME;
+            const reportExists = process.env.REPORT_EXISTS === 'true';
+            const reportPath = process.env.REPORT_PATH;
+            const typescript = process.env.TYPESCRIPT_STATUS;
+            const labelType = process.env.LABEL_TYPE;
+
+            let body = `## 🔍 Investigation Complete\n\n`;
+            body += `**Task:** ${taskTitle}\n`;
+            body += `**Type:** ${labelType}\n`;
+            body += `**Branch:** \`${branchName}\`\n\n`;
+
+            if (reportExists) {
+              body += `### Report Generated\n`;
+              body += `📄 **Report:** \`${reportPath}\`\n\n`;
+              body += `Review the report for detailed findings.\n\n`;
+            } else {
+              body += `⚠️ **No report generated** - check workflow logs\n\n`;
+            }
+
+            if (labelType === 'bug-fix-approved') {
+              body += `### Bug Fix Status\n`;
+              body += `- ${typescript === 'PASS' ? '✅' : '❌'} TypeScript compilation\n`;
+
+              if (typescript === 'PASS') {
+                body += `\n✅ PR created automatically\n`;
+              } else {
+                body += `\n❌ TypeScript errors - fix before PR\n`;
+              }
+            }
+
+            if (labelType === 'audit-approved') {
+              body += `### Audit Complete\n`;
+              body += `Review the report for findings and recommended actions.\n`;
+              body += `Create issues for any problems that need fixing.\n`;
+            }
+
+            body += `\n---\n🤖 Automated by bug-fix/audit workflow`;
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
+
+            // Add completion label
+            const completionLabel = labelType === 'bug-fix-approved'
+              ? 'bugfix-investigated'
+              : 'audit-complete';
+
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [completionLabel]
+            });
