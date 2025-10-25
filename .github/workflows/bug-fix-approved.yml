@@ -26,6 +26,7 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+      id-token: write
 
     steps:
       - name: Checkout Repository
@@ -159,11 +160,20 @@ jobs:
           Work iteratively. Investigate thoroughly. This is a GitHub Actions environment.
           MISSION_END
 
+      - name: Read Investigation Prompt
+        id: read_prompt
+        run: |
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          cat investigation_prompt.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Run Investigation (Claude Code SDK)
+        id: investigation
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt_file: investigation_prompt.txt
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
             --max-turns 30
 
