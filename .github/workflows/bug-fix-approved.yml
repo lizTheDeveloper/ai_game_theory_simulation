@@ -176,9 +176,9 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: ${{ steps.read_prompt.outputs.prompt }}
-          permission_mode: bypassPermissions
           claude_args: |
             --max-turns 100
+            --dangerously-skip-permissions
 
       - name: Check Investigation Status
         id: status
