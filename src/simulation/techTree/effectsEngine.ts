@@ -320,7 +320,33 @@ function applyGlobalEffects(
           );
         }
         break;
-        
+
+      case 'regionalCooling':
+        // Regional cooling from marine cloud brightening
+        if (gameState.resourceEconomy?.co2) {
+          // Less effective than global cooling but safer
+          gameState.resourceEconomy.co2.temperatureAnomaly = Math.max(
+            0,
+            gameState.resourceEconomy.co2.temperatureAnomaly - value * 0.005
+          );
+        }
+        // Flag that regional cooling is active
+        if (gameState.globalMetrics) {
+          setDynamicProperty(gameState.globalMetrics, 'regionalCoolingActive', true);
+        }
+        break;
+
+      case 'greenhouseGasReduction':
+        // Reduce greenhouse gas emissions from agriculture
+        if (gameState.resourceEconomy?.co2) {
+          // Reduce atmospheric CO2 directly
+          gameState.resourceEconomy.co2.atmosphericCO2 = Math.max(
+            280,
+            gameState.resourceEconomy.co2.atmosphericCO2 - value * 0.5
+          );
+        }
+        break;
+
       case 'biodiversityBonus':
         // Improve biodiversity
         if (gameState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
@@ -630,12 +656,42 @@ function applyRegionalEffects(
           if (gameState.freshwaterSystem?.regions) {
             const regionData = gameState.freshwaterSystem.regions[region];
             if (regionData) {
-              (regionData as any).droughtResilience = 
+              (regionData as any).droughtResilience =
                 Math.min(1.0, ((regionData as any).droughtResilience || 0) + value);
             }
           }
           break;
-          
+
+        case 'aquiferProtection':
+          // Protect groundwater levels via GRACE satellites + ML prediction
+          if (gameState.freshwaterSystem?.regions) {
+            const regionData = gameState.freshwaterSystem.regions[region];
+            if (regionData) {
+              // Reduce aquifer depletion rate
+              (regionData as any).aquiferDepletionRate = Math.max(
+                0,
+                ((regionData as any).aquiferDepletionRate || 0.02) - value * 0.01
+              );
+            }
+          }
+          break;
+
+        case 'waterManagementBonus':
+          // Improve water management efficiency
+          if (gameState.freshwaterSystem?.regions) {
+            const regionData = gameState.freshwaterSystem.regions[region];
+            if (regionData) {
+              // Increase available water through better management
+              regionData.availableWater *= (1 + value * 0.01);
+              // Improve efficiency
+              (regionData as any).waterUseEfficiency = Math.min(
+                0.95,
+                ((regionData as any).waterUseEfficiency || 0.30) + value * 0.01
+              );
+            }
+          }
+          break;
+
         // ========== PHOSPHORUS ==========
         case 'phosphorusRecovery':
           // Increase phosphorus recovery rate
@@ -704,7 +760,56 @@ function applyRegionalEffects(
             );
           }
           break;
-          
+
+        case 'endocrineDisruptorReduction':
+          // Remove hormone-mimicking chemicals from water
+          if (gameState.planetaryBoundariesSystem) {
+            (gameState.planetaryBoundariesSystem as any).endocrineDisruptorLevel = Math.max(
+              0,
+              ((gameState.planetaryBoundariesSystem as any).endocrineDisruptorLevel || 0.7) - value * 0.01
+            );
+          }
+          break;
+
+        case 'microplasticReduction':
+          // Reduce microplastic contamination in oceans
+          if (gameState.planetaryBoundariesSystem) {
+            (gameState.planetaryBoundariesSystem as any).microplasticLevel = Math.max(
+              0,
+              ((gameState.planetaryBoundariesSystem as any).microplasticLevel || 0.8) - value * 0.01
+            );
+          }
+          // Also improve ocean health
+          if (gameState.oceanAcidificationSystem) {
+            gameState.oceanAcidificationSystem.marineFoodWeb = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.marineFoodWeb + value * 0.005
+            );
+          }
+          break;
+
+        case 'nanomaterialRisk':
+          // Reduce nanomaterial risk through safety protocols
+          if (gameState.planetaryBoundariesSystem) {
+            (gameState.planetaryBoundariesSystem as any).nanomaterialRisk = Math.max(
+              0,
+              ((gameState.planetaryBoundariesSystem as any).nanomaterialRisk || 0.3) - value
+            );
+          }
+          break;
+
+        case 'newPollutionPrevention':
+          // Prevent new pollution from green chemistry
+          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            // Reduce future pollution accumulation rate
+            (boundary as any).accumulationRate = Math.max(
+              0,
+              ((boundary as any).accumulationRate || 0.02) - value * 0.01
+            );
+          }
+          break;
+
         // ========== AGRICULTURE ==========
         case 'cropYieldBonus':
           // Increase crop yields (improves food security)
@@ -817,7 +922,39 @@ function applyRegionalEffects(
             );
           }
           break;
-          
+
+        case 'coralProtection':
+          // Protect coral reefs from temperature stress (marine cloud brightening)
+          if (gameState.oceanAcidificationSystem) {
+            // Regional cooling protects corals
+            gameState.oceanAcidificationSystem.coralReefHealth = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.01
+            );
+            // Reduce coral bleaching risk
+            (gameState.oceanAcidificationSystem as any).coralBleachingRisk = Math.max(
+              0,
+              ((gameState.oceanAcidificationSystem as any).coralBleachingRisk || 0.5) - value * 0.01
+            );
+          }
+          break;
+
+        case 'coralSurvival':
+          // Increase coral survival through ocean alkalinity enhancement
+          if (gameState.oceanAcidificationSystem) {
+            // Major boost to coral reef health
+            gameState.oceanAcidificationSystem.coralReefHealth = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.coralReefHealth + value * 0.015
+            );
+            // Improve aragonite saturation (critical for coral calcification)
+            gameState.oceanAcidificationSystem.aragoniteSaturation = Math.min(
+              1.0,
+              gameState.oceanAcidificationSystem.aragoniteSaturation + value * 0.02
+            );
+          }
+          break;
+
         // ========== ENERGY SYSTEMS ==========
         case 'energyStorageBonus':
           // Improve grid energy storage
@@ -846,7 +983,52 @@ function applyRegionalEffects(
             );
           }
           break;
-          
+
+        case 'gridEfficiency':
+          // Improve grid efficiency through AI demand response
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).gridEfficiency = Math.min(
+              0.98,
+              ((gameState.powerGenerationSystem as any).gridEfficiency || 0.70) + value * 0.01
+            );
+            // Efficiency reduces effective demand
+            (gameState.powerGenerationSystem as any).effectiveDemandReduction = Math.min(
+              0.30,
+              ((gameState.powerGenerationSystem as any).effectiveDemandReduction || 0) + value * 0.005
+            );
+          }
+          break;
+
+        case 'renewableIntegration':
+          // Improve renewable energy integration into grid
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).renewableIntegration = Math.min(
+              1.0,
+              ((gameState.powerGenerationSystem as any).renewableIntegration || 0.5) + value * 0.01
+            );
+            // Better integration increases effective renewable capacity
+            gameState.powerGenerationSystem.renewablePercentage = Math.min(
+              1.0,
+              gameState.powerGenerationSystem.renewablePercentage + value * 0.002
+            );
+          }
+          break;
+
+        case 'blackoutReduction':
+          // Reduce blackout risk through smart grids
+          if (gameState.powerGenerationSystem) {
+            (gameState.powerGenerationSystem as any).blackoutRisk = Math.max(
+              0,
+              ((gameState.powerGenerationSystem as any).blackoutRisk || 0.10) - value
+            );
+            // Also improves grid stability
+            (gameState.powerGenerationSystem as any).gridStability = Math.min(
+              1.0,
+              ((gameState.powerGenerationSystem as any).gridStability || 0.7) + value * 0.01
+            );
+          }
+          break;
+
         case 'energyCostReduction':
           // Reduce energy costs
           if (gameState.powerGenerationSystem) {
@@ -895,7 +1077,52 @@ function applyRegionalEffects(
             );
           }
           break;
-          
+
+        case 'healthBonus':
+          // General health improvement from pollution remediation
+          if (gameState.qualityOfLifeSystems) {
+            gameState.qualityOfLifeSystems.healthcareQuality = Math.min(
+              1.0,
+              gameState.qualityOfLifeSystems.healthcareQuality + value * 0.01
+            );
+          }
+          // Also reduce mortality slightly
+          if (gameState.humanPopulationSystem) {
+            gameState.humanPopulationSystem.adjustedDeathRate = Math.max(
+              0.001,
+              gameState.humanPopulationSystem.adjustedDeathRate - value * 0.0001
+            );
+          }
+          break;
+
+        case 'fertilityBonus':
+          // Increase fertility by removing endocrine disruptors
+          if (gameState.humanPopulationSystem) {
+            // Increase birth rate slightly
+            gameState.humanPopulationSystem.adjustedBirthRate = Math.min(
+              0.025,
+              gameState.humanPopulationSystem.adjustedBirthRate + value * 0.0001
+            );
+          }
+          break;
+
+        case 'globalHealthBonus':
+          // Major global health improvement from disease elimination
+          if (gameState.qualityOfLifeSystems) {
+            gameState.qualityOfLifeSystems.healthcareQuality = Math.min(
+              1.0,
+              gameState.qualityOfLifeSystems.healthcareQuality + value * 0.015
+            );
+          }
+          // Major mortality reduction
+          if (gameState.humanPopulationSystem) {
+            gameState.humanPopulationSystem.adjustedDeathRate = Math.max(
+              0.001,
+              gameState.humanPopulationSystem.adjustedDeathRate * (1 - value)
+            );
+          }
+          break;
+
         case 'suicideReduction':
           // Reduce suicide rate
           if (gameState.socialAccumulation) {
@@ -966,7 +1193,52 @@ function applyRegionalEffects(
             );
           }
           break;
-          
+
+        case 'plasticRecycling':
+          // Chemical recycling - infinite plastic recyclability
+          if (gameState.planetaryBoundariesSystem) {
+            // Reduce plastic waste accumulation
+            (gameState.planetaryBoundariesSystem as any).plasticPollution = Math.max(
+              0,
+              ((gameState.planetaryBoundariesSystem as any).plasticPollution || 0.6) - value * 0.015
+            );
+            // Increase recycling rate
+            (gameState.resourceEconomy as any).plasticRecyclingRate = Math.min(
+              0.95,
+              ((gameState.resourceEconomy as any).plasticRecyclingRate || 0.09) + value * 0.01
+            );
+          }
+          break;
+
+        case 'rareEarthRecovery':
+          // Recover critical metals from e-waste
+          if (gameState.resourceEconomy) {
+            // Increase rare earth recovery rate
+            (gameState.resourceEconomy as any).rareEarthRecoveryRate = Math.min(
+              0.80,
+              ((gameState.resourceEconomy as any).rareEarthRecoveryRate || 0.01) + value * 0.01
+            );
+            // Reduce mining demand
+            (gameState.resourceEconomy as any).miningIntensity = Math.max(
+              0.2,
+              ((gameState.resourceEconomy as any).miningIntensity || 1.0) - value * 0.005
+            );
+          }
+          break;
+
+        case 'terrestrialMiningReduction':
+          // Reduce terrestrial mining through space industrialization
+          if (gameState.resourceEconomy) {
+            // Major reduction in Earth-based mining
+            (gameState.resourceEconomy as any).miningIntensity = Math.max(
+              0.05,
+              ((gameState.resourceEconomy as any).miningIntensity || 1.0) * (1 - value)
+            );
+            // Flag space economy active
+            (gameState.globalMetrics as any).spaceIndustrializationActive = true;
+          }
+          break;
+
         case 'supplyChainResilience':
           // Improve supply chain resilience
           if (gameState.resourceEconomy) {
