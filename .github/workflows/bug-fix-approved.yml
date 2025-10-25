@@ -116,9 +116,9 @@ jobs:
           1. Use Grep to find patterns (defensive coding, console.logs, etc.)
           2. Use Read to understand context for each finding
           3. Categorize findings (legitimate vs problematic)
-          4. Create audit report: \`audit_report_${TASK_NAME}.md\`
-          5. Create GitHub issues for any problems found
-          6. NO code changes (audit only)
+          4. **CRITICAL:** Use the Write tool to create \`logs/audit_report_${TASK_NAME}.md\`
+          5. Create GitHub issues for any problems found (optional)
+          6. NO code changes to src/ (audit only)
 
           **OUTPUT FORMAT:**
 
@@ -153,9 +153,11 @@ jobs:
           - Write: Create report file
 
           **WHEN COMPLETE:**
-          1. Save report to \`/logs/\` directory
-          2. Commit all changes (if bug fix)
-          3. Report completion status
+          1. **MUST DO:** Use Write tool to save report to \`logs/audit_report_${TASK_NAME}.md\` or \`logs/bug_fix_report_${TASK_NAME}.md\`
+          2. Commit all changes using Bash (if bug fix): \`git add . && git commit -m "fix: description"\`
+          3. Agent completes when report file is written
+
+          **IMPORTANT:** You MUST create the report file in logs/ directory. This is the deliverable.
 
           Work iteratively. Investigate thoroughly. This is a GitHub Actions environment.
           MISSION_END
@@ -175,7 +177,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
-            --max-turns 30
+            --max-turns 100
 
       - name: Check Investigation Status
         id: status
