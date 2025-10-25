@@ -115,8 +115,9 @@ jobs:
           2. Use Read to understand context for each finding
           3. Categorize findings (legitimate vs problematic)
           4. **CRITICAL:** Use the Write tool to create \`reviews/audit_report_${TASK_NAME}.md\`
-          5. Create GitHub issues for any problems found (optional)
-          6. NO code changes to src/ (audit only)
+          5. **CRITICAL:** Commit the audit report: \`git add reviews/ && git commit -m "audit: ${TASK_NAME}"\`
+          6. Create GitHub issues for any problems found (optional)
+          7. NO code changes to src/ (audit only)
 
           **OUTPUT FORMAT:**
 
@@ -154,10 +155,12 @@ jobs:
           1. **MUST DO:** Use Write tool to save report:
              - Audits: \`reviews/audit_report_${TASK_NAME}.md\`
              - Bug fixes: \`devlogs/bug_fix_report_${TASK_NAME}.md\`
-          2. Commit all changes using Bash (if bug fix): \`git add . && git commit -m "fix: description"\`
-          3. Agent completes when report file is written
+          2. **MUST DO:** Commit the report using Bash:
+             - Audits: \`git add reviews/ && git commit -m "audit: ${TASK_NAME}"\`
+             - Bug fixes: \`git add . && git commit -m "fix: description"\`
+          3. Agent completes when report is written AND committed
 
-          **IMPORTANT:** You MUST create the report file (reviews/ for audits, devlogs/ for bug fixes). This is the deliverable.
+          **IMPORTANT:** You MUST both create AND commit the report file. The commit persists it to git.
 
           Work iteratively. Investigate thoroughly. This is a GitHub Actions environment.
           MISSION_END
