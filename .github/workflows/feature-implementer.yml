@@ -145,6 +145,7 @@ jobs:
           claude_args: |
             --max-turns 50
             --agent feature-implementer
+            --dangerously-skip-permissions
 
       - name: Check Implementation Status
         id: status
