@@ -176,20 +176,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: ${{ steps.read_prompt.outputs.prompt }}
-          additional_permissions: |
-            {
-              "mode": "auto_grant",
-              "grants": [
-                {
-                  "type": "write",
-                  "path_patterns": ["reviews/**", "devlogs/**", "src/**", "**/*.md", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.json"]
-                },
-                {
-                  "type": "bash",
-                  "command_patterns": ["*"]
-                }
-              ]
-            }
+          permission_mode: bypassPermissions
           claude_args: |
             --max-turns 100
 
