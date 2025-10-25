@@ -108,7 +108,7 @@ jobs:
           4. Run tests with Bash: \`npm test\`
           5. Verify TypeScript compiles: \`npx tsc --noEmit\`
           6. Commit changes
-          7. Create findings report: \`bug_fix_report_${TASK_NAME}.md\`
+          7. **CRITICAL:** Use the Write tool to create \`devlogs/bug_fix_report_${TASK_NAME}.md\`
 
           For AUDITS:
           1. Use Grep to find patterns (defensive coding, console.logs, etc.)
@@ -153,11 +153,11 @@ jobs:
           **WHEN COMPLETE:**
           1. **MUST DO:** Use Write tool to save report:
              - Audits: \`reviews/audit_report_${TASK_NAME}.md\`
-             - Bug fixes: \`logs/bug_fix_report_${TASK_NAME}.md\`
+             - Bug fixes: \`devlogs/bug_fix_report_${TASK_NAME}.md\`
           2. Commit all changes using Bash (if bug fix): \`git add . && git commit -m "fix: description"\`
           3. Agent completes when report file is written
 
-          **IMPORTANT:** You MUST create the report file (reviews/ for audits, logs/ for bug fixes). This is the deliverable.
+          **IMPORTANT:** You MUST create the report file (reviews/ for audits, devlogs/ for bug fixes). This is the deliverable.
 
           Work iteratively. Investigate thoroughly. This is a GitHub Actions environment.
           MISSION_END
@@ -182,8 +182,8 @@ jobs:
       - name: Check Investigation Status
         id: status
         run: |
-          # Check if investigation produced a report (audits in reviews/, bug fixes in logs/)
-          REPORT_FILE=$(find reviews/ logs/ -name "*${{ steps.task.outputs.name }}*.md" -type f 2>/dev/null | head -1)
+          # Check if investigation produced a report (audits in reviews/, bug fixes in devlogs/)
+          REPORT_FILE=$(find reviews/ devlogs/ -name "*${{ steps.task.outputs.name }}*.md" -type f 2>/dev/null | head -1)
 
           if [ -n "$REPORT_FILE" ]; then
             echo "report_exists=true" >> $GITHUB_OUTPUT
