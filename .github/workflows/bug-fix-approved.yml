@@ -114,7 +114,7 @@ jobs:
           1. Use Grep to find patterns (defensive coding, console.logs, etc.)
           2. Use Read to understand context for each finding
           3. Categorize findings (legitimate vs problematic)
-          4. **CRITICAL:** Use the Write tool to create \`logs/audit_report_${TASK_NAME}.md\`
+          4. **CRITICAL:** Use the Write tool to create \`reviews/audit_report_${TASK_NAME}.md\`
           5. Create GitHub issues for any problems found (optional)
           6. NO code changes to src/ (audit only)
 
@@ -151,11 +151,13 @@ jobs:
           - Write: Create report file
 
           **WHEN COMPLETE:**
-          1. **MUST DO:** Use Write tool to save report to \`logs/audit_report_${TASK_NAME}.md\` or \`logs/bug_fix_report_${TASK_NAME}.md\`
+          1. **MUST DO:** Use Write tool to save report:
+             - Audits: \`reviews/audit_report_${TASK_NAME}.md\`
+             - Bug fixes: \`logs/bug_fix_report_${TASK_NAME}.md\`
           2. Commit all changes using Bash (if bug fix): \`git add . && git commit -m "fix: description"\`
           3. Agent completes when report file is written
 
-          **IMPORTANT:** You MUST create the report file in logs/ directory. This is the deliverable.
+          **IMPORTANT:** You MUST create the report file (reviews/ for audits, logs/ for bug fixes). This is the deliverable.
 
           Work iteratively. Investigate thoroughly. This is a GitHub Actions environment.
           MISSION_END
@@ -180,8 +182,8 @@ jobs:
       - name: Check Investigation Status
         id: status
         run: |
-          # Check if investigation produced a report
-          REPORT_FILE=$(find logs/ -name "*${{ steps.task.outputs.name }}*.md" -type f 2>/dev/null | head -1)
+          # Check if investigation produced a report (audits in reviews/, bug fixes in logs/)
+          REPORT_FILE=$(find reviews/ logs/ -name "*${{ steps.task.outputs.name }}*.md" -type f 2>/dev/null | head -1)
 
           if [ -n "$REPORT_FILE" ]; then
             echo "report_exists=true" >> $GITHUB_OUTPUT
