@@ -83,7 +83,7 @@ jobs:
           echo "$ISSUE_BODY" > issue_body.txt
 
           # Build prompt in parts
-          cat > investigation_prompt.txt <<'PROMPT_END'
+          cat > investigation_prompt.txt <<PROMPT_END
           You are a bug fix / audit specialist using Claude Code SDK tools.
 
           **YOUR CONTEXT (fresh session, NO prior conversation):**
@@ -99,7 +99,7 @@ jobs:
           cat issue_body.txt >> investigation_prompt.txt
 
           # Append rest of prompt
-          cat >> investigation_prompt.txt <<'MISSION_END'
+          cat >> investigation_prompt.txt <<MISSION_END
 
           **YOUR MISSION:**
 
