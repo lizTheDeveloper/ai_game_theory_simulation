@@ -290,6 +290,7 @@ jobs:
           prompt_file: senior_dev_checklist_prompt.txt
           claude_args: |
             --max-turns 20
+            --dangerously-skip-permissions
 
       - name: Read Checklist Answers
         id: claude_review
