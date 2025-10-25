@@ -82,47 +82,47 @@ jobs:
           echo "$ISSUE_BODY" > issue_body.txt
 
           # Build prompt in parts
-          cat > investigation_prompt.txt <<EOF
-You are a bug fix / audit specialist using Claude Code SDK tools.
+          cat > investigation_prompt.txt <<'PROMPT_END'
+          You are a bug fix / audit specialist using Claude Code SDK tools.
 
-**YOUR CONTEXT (fresh session, NO prior conversation):**
+          **YOUR CONTEXT (fresh session, NO prior conversation):**
 
-**TASK:** $TASK_TITLE
-**TYPE:** $LABEL_TYPE
-**BRANCH:** $BRANCH_NAME
+          **TASK:** $TASK_TITLE
+          **TYPE:** $LABEL_TYPE
+          **BRANCH:** $BRANCH_NAME
 
-**ISSUE DESCRIPTION:**
-EOF
+          **ISSUE DESCRIPTION:**
+          PROMPT_END
 
           # Append issue body (already in file)
           cat issue_body.txt >> investigation_prompt.txt
 
           # Append rest of prompt
-          cat >> investigation_prompt.txt <<EOF
+          cat >> investigation_prompt.txt <<'MISSION_END'
 
-**YOUR MISSION:**
+          **YOUR MISSION:**
 
-For BUG FIXES:
-1. Use Grep/Read to find the bug location
-2. Use Read to understand the surrounding code
-3. Fix the bug using Edit
-4. Run tests with Bash: \`npm test\`
-5. Verify TypeScript compiles: \`npx tsc --noEmit\`
-6. Commit changes
-7. Create findings report: \`bug_fix_report_${TASK_NAME}.md\`
+          For BUG FIXES:
+          1. Use Grep/Read to find the bug location
+          2. Use Read to understand the surrounding code
+          3. Fix the bug using Edit
+          4. Run tests with Bash: \`npm test\`
+          5. Verify TypeScript compiles: \`npx tsc --noEmit\`
+          6. Commit changes
+          7. Create findings report: \`bug_fix_report_${TASK_NAME}.md\`
 
-For AUDITS:
-1. Use Grep to find patterns (defensive coding, console.logs, etc.)
-2. Use Read to understand context for each finding
-3. Categorize findings (legitimate vs problematic)
-4. Create audit report: \`audit_report_${TASK_NAME}.md\`
-5. Create GitHub issues for any problems found
-6. NO code changes (audit only)
+          For AUDITS:
+          1. Use Grep to find patterns (defensive coding, console.logs, etc.)
+          2. Use Read to understand context for each finding
+          3. Categorize findings (legitimate vs problematic)
+          4. Create audit report: \`audit_report_${TASK_NAME}.md\`
+          5. Create GitHub issues for any problems found
+          6. NO code changes (audit only)
 
           **OUTPUT FORMAT:**
 
           Create a report file with:
-          ```markdown
+          \`\`\`markdown
           # [Bug Fix / Audit] Report
 
           ## Summary
@@ -142,7 +142,7 @@ For AUDITS:
 
           ## Next Steps
           [What should happen next]
-          ```
+          \`\`\`
 
           **TOOLS AVAILABLE:**
           - Grep: Search for patterns
@@ -152,12 +152,12 @@ For AUDITS:
           - Write: Create report file
 
           **WHEN COMPLETE:**
-          1. Save report to `/logs/` directory
+          1. Save report to \`/logs/\` directory
           2. Commit all changes (if bug fix)
           3. Report completion status
 
           Work iteratively. Investigate thoroughly. This is a GitHub Actions environment.
-          EOF
+          MISSION_END
 
       - name: Run Investigation (Claude Code SDK)
         uses: anthropics/claude-code-action@v1
