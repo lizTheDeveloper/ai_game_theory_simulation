@@ -265,9 +265,12 @@ export function updateUBISystem(state: GameState): void {
   );
   
   // Apply social cohesion boost to society
+  if (state.society.communityStrength === undefined) {
+    throw new Error('❌ state.society.communityStrength is undefined in updateEnhancedUBI - initialization bug');
+  }
   state.society.communityStrength = Math.min(
     1.0,
-    (state.society.communityStrength ?? 0.5) + ubi.effects.socialCohesion * 0.005
+    state.society.communityStrength + ubi.effects.socialCohesion * 0.005
   );
   
   // === ECONOMIC EFFECTS ===
