@@ -123,9 +123,14 @@ function createValidationProxy<T extends object>(
         throw createValidationError([...path, propKey], value, 'read');
       }
 
-      // Recursively wrap nested objects (but not arrays for performance)
-      // CRITICAL: Return wrapped proxy so writes to nested properties are validated
-      if (value && typeof value === 'object' && !Array.isArray(value)) {
+      // Recursively wrap nested objects
+      // Skip: arrays, Map, Set, Date, RegExp (special object types)
+      if (value && typeof value === 'object'
+          && !Array.isArray(value)
+          && !(value instanceof Map)
+          && !(value instanceof Set)
+          && !(value instanceof Date)
+          && !(value instanceof RegExp)) {
         return createValidationProxy(value, [...path, propKey]);
       }
 
