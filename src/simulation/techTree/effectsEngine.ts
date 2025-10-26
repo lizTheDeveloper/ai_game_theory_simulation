@@ -835,12 +835,13 @@ function applyRegionalEffects(
           if (gameState.freshwaterSystem?.regions) {
             const regionData = gameState.freshwaterSystem.regions[region];
             if (regionData) {
-              (regionData as any).droughtResilience =
-                assertFinite(Math.min(1.0, (regionData as any).droughtResilience + value), {
-        location: 'applyRegionalEffects:droughtResilience',
-        valueName: 'droughtResilience',
-        month: gameState.currentMonth
-      });
+              // FIX: Phase 2, Batch 1 (Oct 25, 2025) - Fail loudly if property missing
+              const current = assertStateProperty(
+                regionData,
+                'droughtResilience',
+                { location: 'applyRegionalEffects.droughtResilience', month: gameState.currentMonth }
+              );
+              (regionData as any).droughtResilience = Math.min(1.0, current + value);
             }
           }
           break;
@@ -850,15 +851,13 @@ function applyRegionalEffects(
           if (gameState.freshwaterSystem?.regions) {
             const regionData = gameState.freshwaterSystem.regions[region];
             if (regionData) {
-              // Reduce aquifer depletion rate
-              (regionData as any).aquiferDepletionRate = assertFinite(Math.max(
-                0,
-                (regionData as any).aquiferDepletionRate - value * 0.01
-              ), {
-        location: 'applyRegionalEffects:aquiferProtection',
-        valueName: 'aquiferDepletionRate',
-        month: gameState.currentMonth
-      });
+              // FIX: Phase 2, Batch 1 (Oct 25, 2025) - Fail loudly if property missing
+              const current = assertStateProperty(
+                regionData,
+                'aquiferDepletionRate',
+                { location: 'applyRegionalEffects.aquiferProtection', month: gameState.currentMonth }
+              );
+              (regionData as any).aquiferDepletionRate = Math.max(0, current - value * 0.01);
             }
           }
           break;
@@ -870,15 +869,13 @@ function applyRegionalEffects(
             if (regionData) {
               // Increase available water through better management
               regionData.availableWater *= (1 + value * 0.01);
-              // Improve efficiency
-              (regionData as any).waterUseEfficiency = assertFinite(Math.min(
-                0.95,
-                (regionData as any).waterUseEfficiency + value * 0.01
-              ), {
-        location: 'applyRegionalEffects:waterManagementBonus',
-        valueName: 'waterUseEfficiency',
-        month: gameState.currentMonth
-      });
+              // FIX: Phase 2, Batch 1 (Oct 25, 2025) - Fail loudly if property missing
+              const current = assertStateProperty(
+                regionData,
+                'waterUseEfficiency',
+                { location: 'applyRegionalEffects.waterManagementBonus', month: gameState.currentMonth }
+              );
+              (regionData as any).waterUseEfficiency = Math.min(0.95, current + value * 0.01);
             }
           }
           break;
@@ -1973,14 +1970,13 @@ function applyRegionalEffects(
         case 'cyberDefenseBonus':
           // Improve cybersecurity defenses
           if (gameState.defensiveAI) {
-            gameState.defensiveAI.cyberDefense.strength = assertFinite(Math.min(
-              1.0,
-              gameState.defensiveAI.cyberDefense.strength + value
-            ), {
-        location: 'applyRegionalEffects:cyberDefenseBonus',
-        valueName: 'strength',
-        month: gameState.currentMonth
-      });
+            // FIX: Phase 2, Batch 1 (Oct 25, 2025) - Fail loudly if property missing
+            const current = assertStateProperty(
+              gameState.defensiveAI.cyberDefense,
+              'strength',
+              { location: 'applyRegionalEffects.cyberDefenseBonus', month: gameState.currentMonth }
+            );
+            gameState.defensiveAI.cyberDefense.strength = Math.min(1.0, current + value);
           }
           break;
           

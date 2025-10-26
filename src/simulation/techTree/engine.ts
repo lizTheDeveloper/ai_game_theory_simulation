@@ -8,6 +8,8 @@
 import { GameState } from '@/types/game';
 import { TechDefinition } from './comprehensiveTechTree';
 import { getAllTech, getTechById } from './comprehensiveTechTree';
+import { calculateTotalCapabilityFromProfile } from '../capabilities';
+import { assertEconomicStage } from '../utils/assertions';
 
 export interface TechUnlockEvent {
   techId: string;
@@ -127,7 +129,8 @@ export function updateTechTree(
   // Debug logging (probabilistic to avoid spam)
   if (Math.random() < 0.01 && lockedTech.length > 0) {
     const avgCapability = getAverageAICapability(gameState);
-    const economicStage = gameState.globalMetrics?.economicTransitionStage || 0;
+    // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+    const economicStage = assertEconomicStage(gameState, 'techTree.unlock (debug)');
     
     console.log(`\n🔍 TECH TREE DEBUG (Month ${gameState.currentMonth}):`);
     console.log(`   Checking ${lockedTech.length} locked technologies`);
@@ -246,7 +249,8 @@ export function checkUnlockConditions(
   
   // 3. Check economic stage
   if (tech.minEconomicStage) {
-    const economicStage = gameState.globalMetrics?.economicTransitionStage || 0;
+    // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+    const economicStage = assertEconomicStage(gameState, 'techTree.checkPrerequisites');
     if (economicStage < tech.minEconomicStage) {
       blockers.push(`Economic stage ${economicStage.toFixed(1)} < ${tech.minEconomicStage}`);
     }
@@ -258,7 +262,8 @@ export function checkUnlockConditions(
   }
   
   // 5. Check research progress
-  const progress = techTreeState.researchProgress[tech.id] || 0;
+  // Note: Missing research progress = 0 is valid (tech hasn't been researched yet)
+  const progress = techTreeState.researchProgress[tech.id] ?? 0;
   if (progress < 1.0) {
     blockers.push(`Research incomplete: ${(progress * 100).toFixed(0)}% complete`);
   }
@@ -516,7 +521,8 @@ function getAverageAICapability(gameState: GameState): number {
   const activeAIs = gameState.aiAgents.filter(ai => ai.lifecycleState !== 'retired');
   if (activeAIs.length === 0) return 0;
 
-  const { calculateTotalCapabilityFromProfile } = require('../capabilities');
+  // FIX #25 (Oct 25, 2025): Import at top of file instead of inline require
+  // Bug: Inline require was returning 0 during simulation (circular dependency?)
   const totalCapability = activeAIs.reduce(
     (sum, ai) => sum + calculateTotalCapabilityFromProfile(ai.capabilityProfile),
     0
@@ -552,8 +558,21 @@ function getAverageResearchCapability(
   
   const total = activeAIs.reduce((sum, ai) => {
     const domainCap = ai.capabilityProfile.research[domain];
+
+    // FIX #25 (Oct 25, 2025): Fail loudly if domain doesn't exist
+    if (domainCap === undefined) {
+      throw new Error(`Research domain "${domain}" not found in AI capability profile. AI: ${ai.id}`);
+    }
+
     if (subdomain && typeof domainCap === 'object') {
-      return sum + (domainCap[subdomain as keyof typeof domainCap] || 0);
+      const subdomainValue = domainCap[subdomain as keyof typeof domainCap];
+
+      // FIX #25 (Oct 25, 2025): Fail loudly if subdomain doesn't exist
+      if (subdomainValue === undefined) {
+        throw new Error(`Research subdomain "${domain}.${subdomain}" not found in AI capability profile. AI: ${ai.id}`);
+      }
+
+      return sum + (typeof subdomainValue === 'number' ? subdomainValue : 0);
     }
     // If no subdomain specified or domain is a number, return the domain value
     if (typeof domainCap === 'number') return sum + domainCap;
@@ -680,7 +699,8 @@ function getEnergyMultiplier(gameState: GameState): number {
 
 function generateUnlockReason(_tech: TechDefinition, gameState: GameState): string {
   const avgCapability = getAverageAICapability(gameState);
-  const economicStage = gameState.globalMetrics?.economicTransitionStage || 0;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const economicStage = assertEconomicStage(gameState, 'techTree.generateUnlockReason');
   
   return `Prerequisites met. AI capability: ${avgCapability.toFixed(2)}, Economic stage: ${economicStage.toFixed(1)}, Research: 100%`;
 }
