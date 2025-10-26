@@ -183,6 +183,8 @@ jobs:
           - REQUEST CHANGES: HIGH severity issues found
           - APPROVE: Only MEDIUM/LOW issues or none
 
+          **IMPORTANT:** Write your complete review report to a file named `review.md` using the Write tool.
+
           Work iteratively. Read multiple files to understand system context. This is a quality gate - be thorough but fair.
           TEMPLATE_EOF
 
