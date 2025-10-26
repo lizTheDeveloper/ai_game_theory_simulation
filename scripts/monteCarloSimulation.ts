@@ -18,9 +18,26 @@ import { createDefaultInitialState } from '../src/simulation/initialization';
 import { calculateTotalCapabilityFromProfile } from '../src/simulation/capabilities';
 import { AIAgent, ScenarioMode } from '../src/types/game';
 import { getScenarioDescription } from '../src/simulation/scenarioParameters';
+import { getTier3Scenario, getScenarioDescription as getTier3Description, type ScenarioName } from '../src/simulation/thresholds/tier3Config';
 import { logger } from '../src/simulation/utils/asyncLogger';
 import * as fs from 'fs';
 import * as path from 'path';
+
+// Phase 4: Unified Threshold System Integration
+import {
+  sampleAllThresholds,
+  type SliderSettings,
+  getScenarioList,
+  getSliderList
+} from '../src/simulation/thresholds';
+import {
+  createThresholdConfig,
+  exportThresholdConfig,
+  importThresholdConfig,
+  printThresholdConfig,
+  validateThresholdConfig,
+  type ThresholdConfig
+} from '../src/simulation/thresholds/config';
 
 // ============================================================================
 // FILE LOGGING SETUP
@@ -663,14 +680,85 @@ function generateMechanismSummary(
 
 log('\n🎲 MONTE CARLO SIMULATION - FULL SYSTEM TEST');
 log('='.repeat(80));
-// accept --max-months, --runs, and --scenario
+
+// Parse command line arguments
+// Support: --max-months, --runs, --scenario (Tier 2), --tier3-scenario (Tier 3, DEPRECATED)
+// Phase 4 NEW: --threshold-scenario, --slider-*, --export-config, --import-config, --nested, --help
 const args = process.argv.slice(2);
 
-// Support both positional args (runs, months, name) and flag args (--runs=X --max-months=Y --scenario=Z --llm-enabled)
+// Show help if requested
+if (args.includes('--help') || args.includes('-h')) {
+  console.log(`
+Monte Carlo Simulation - Threshold Uncertainty System (Phase 4)
+
+USAGE:
+  npx tsx scripts/monteCarloSimulation.ts [OPTIONS]
+
+BASIC OPTIONS:
+  --runs=N              Number of simulation runs (default: 10)
+  --max-months=N        Max simulation duration in months (default: 240)
+  --scenario=MODE       Scenario parameter mode: 'historical', 'unprecedented', or 'dual' (default: dual)
+
+THRESHOLD OPTIONS (Phase 4):
+  --threshold-scenario=NAME    Named threshold scenario (overrides --tier3-scenario)
+                               Options: doom, cautious, baseline, progressive, utopia
+                               Default: baseline
+
+  --slider-NAME=VALUE          Override specific threshold distribution (0.0-1.0)
+                               0.0 = pessimistic extreme, 0.5 = median, 1.0 = optimistic extreme
+                               Available sliders:
+${getSliderList().map(s => `                                 - ${s.name}: ${s.description} ${s.range}`).join('\n')}
+
+  --nested                     Enable nested Monte Carlo (epistemic/aleatory separation)
+                               WARNING: Computationally expensive
+
+  --export-config=PATH         Export threshold configuration to JSON file
+                               Example: --export-config=thresholdConfigs/my_scenario.json
+
+  --import-config=PATH         Import threshold configuration from JSON file
+                               Overrides --threshold-scenario and --slider-* flags
+                               Example: --import-config=thresholdConfigs/baseline.json
+
+OTHER OPTIONS:
+  --llm-enabled                Enable LLM policy optimization (experimental)
+  --help, -h                   Show this help message
+
+EXAMPLES:
+  # Basic run with default settings
+  npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=120
+
+  # Named scenario
+  npx tsx scripts/monteCarloSimulation.ts --threshold-scenario=doom --runs=10
+
+  # Custom slider overrides
+  npx tsx scripts/monteCarloSimulation.ts --slider-climateSensitivity=0.9 --slider-trustRecoveryRate=0.1 --runs=10
+
+  # Export configuration for reproducibility
+  npx tsx scripts/monteCarloSimulation.ts --threshold-scenario=utopia --export-config=thresholdConfigs/utopia_baseline.json --runs=1
+
+  # Import saved configuration
+  npx tsx scripts/monteCarloSimulation.ts --import-config=thresholdConfigs/utopia_baseline.json --runs=100
+
+  # Combined example
+  npx tsx scripts/monteCarloSimulation.ts --threshold-scenario=cautious --slider-climateSensitivity=0.8 --runs=50 --max-months=120
+
+SCENARIOS:
+${getScenarioList().map(s => `  ${s.name.padEnd(12)} - ${s.description}`).join('\n')}
+`);
+  process.exit(0);
+}
+
+// Parse flag arguments
 let numRuns: number;
 let maxMonthsValue: number;
 let runName: string | undefined;
 let scenarioMode: ScenarioMode | 'dual' = 'dual'; // P0.7: Default to dual-mode (50/50 split)
+let tier3Scenario: ScenarioName = 'baseline'; // Phase 3: Tier 3 scenario (DEPRECATED, use --threshold-scenario)
+let thresholdScenario: ScenarioName | undefined; // Phase 4: Unified threshold scenario
+let sliderOverrides: SliderSettings = {}; // Phase 4: Custom slider overrides
+let nestedMonteCarlo = false; // Phase 4: Epistemic/aleatory separation
+let exportConfigPath: string | undefined; // Phase 4: Export threshold config
+let importConfigPath: string | undefined; // Phase 4: Import threshold config
 let llmEnabled = false; // Oct 21, 2025: LLM policy optimization (default: disabled)
 
 if (args[0] && !args[0].startsWith('--')) {
@@ -679,14 +767,64 @@ if (args[0] && !args[0].startsWith('--')) {
   maxMonthsValue = parseInt(args[1]) || 240;
   runName = args[2];
 } else {
-  // Flag arguments format: --runs=X --max-months=Y --scenario=Z --llm-enabled
+  // Flag arguments format
   const maxMonthsArg = args.find(arg => arg.split('=')[0] === '--max-months')?.split('=')[1];
   const runsArg = args.find(arg => arg.split('=')[0] === '--runs')?.split('=')[1];
   const scenarioArg = args.find(arg => arg.split('=')[0] === '--scenario')?.split('=')[1] as ScenarioMode | 'dual' | undefined;
-  llmEnabled = args.includes('--llm-enabled'); // Oct 21, 2025: Enable LLM policy optimization
+  const tier3ScenarioArg = args.find(arg => arg.split('=')[0] === '--tier3-scenario')?.split('=')[1] as ScenarioName | undefined;
+
+  // Phase 4: New threshold flags
+  const thresholdScenarioArg = args.find(arg => arg.split('=')[0] === '--threshold-scenario')?.split('=')[1] as ScenarioName | undefined;
+  const exportConfigArg = args.find(arg => arg.split('=')[0] === '--export-config')?.split('=')[1];
+  const importConfigArg = args.find(arg => arg.split('=')[0] === '--import-config')?.split('=')[1];
+  nestedMonteCarlo = args.includes('--nested');
+  llmEnabled = args.includes('--llm-enabled');
+
+  // Parse slider overrides (--slider-NAME=VALUE)
+  const sliderArgs = args.filter(arg => arg.startsWith('--slider-'));
+  for (const sliderArg of sliderArgs) {
+    const [key, value] = sliderArg.replace('--slider-', '').split('=');
+    if (key && value) {
+      const numValue = parseFloat(value);
+      if (numValue >= 0 && numValue <= 1) {
+        sliderOverrides[key as keyof SliderSettings] = numValue;
+      } else {
+        console.warn(`⚠️  Invalid slider value for ${key}: ${value} (must be 0.0-1.0), ignoring`);
+      }
+    }
+  }
+
   numRuns = runsArg ? parseInt(runsArg) : 10;
   maxMonthsValue = maxMonthsArg ? parseInt(maxMonthsArg) : 240;
   scenarioMode = scenarioArg || 'dual';
+  tier3Scenario = tier3ScenarioArg || 'baseline';
+  thresholdScenario = thresholdScenarioArg; // Phase 4: Takes precedence over tier3Scenario
+  exportConfigPath = exportConfigArg;
+  importConfigPath = importConfigArg;
+}
+
+// Resolve threshold scenario priority: --threshold-scenario > --tier3-scenario > 'baseline'
+const finalThresholdScenario = thresholdScenario || tier3Scenario;
+
+// Phase 4: Load imported config if specified
+let importedConfig: ThresholdConfig | undefined;
+if (importConfigPath) {
+  try {
+    importedConfig = importThresholdConfig(importConfigPath);
+    log(`\n✅ Imported threshold config from: ${importConfigPath}`);
+    printThresholdConfig(importedConfig);
+
+    // Validate imported config
+    const errors = validateThresholdConfig(importedConfig);
+    if (errors.length > 0) {
+      logError(`\n❌ Imported config validation failed:`);
+      errors.forEach(err => logError(`  - ${err}`));
+      process.exit(1);
+    }
+  } catch (err) {
+    logError(`\n❌ Failed to import threshold config: ${err}`);
+    process.exit(1);
+  }
 }
 
 // Configuration
@@ -694,12 +832,38 @@ const NUM_RUNS = numRuns;
 const MAX_MONTHS = maxMonthsValue;
 const SEED_START = 42000;
 const SCENARIO_MODE = scenarioMode; // P0.7: 'historical', 'unprecedented', or 'dual' (50/50 split)
+const TIER3_SCENARIO = tier3Scenario; // Phase 3: Tier 3 named scenario (DEPRECATED)
+const THRESHOLD_SCENARIO = finalThresholdScenario; // Phase 4: Unified threshold scenario
 
 log(`\n⚙️  CONFIGURATION:`);
 log(`  Runs: ${NUM_RUNS}`);
 log(`  Duration: ${MAX_MONTHS} months (${(MAX_MONTHS/12).toFixed(1)} years)`);
 log(`  Seed Range: ${SEED_START} - ${SEED_START + NUM_RUNS - 1}`);
 log(`  Scenario Mode: ${SCENARIO_MODE}${SCENARIO_MODE === 'dual' ? ' (50% historical, 50% unprecedented)' : ''}`);
+
+// Phase 4: Threshold configuration logging
+if (importedConfig) {
+  log(`  Threshold Mode: IMPORTED (${importedConfig.metadata.id})`);
+  if (importedConfig.metadata.scenario) {
+    log(`    Original Scenario: ${importedConfig.metadata.scenario}`);
+  }
+} else {
+  log(`  Threshold Scenario: ${THRESHOLD_SCENARIO.toUpperCase()}`);
+  const scenarioDesc = getScenarioList().find(s => s.name === THRESHOLD_SCENARIO);
+  if (scenarioDesc) {
+    log(`    Description: ${scenarioDesc.description}`);
+  }
+  if (Object.keys(sliderOverrides).length > 0) {
+    log(`  Custom Sliders:`);
+    for (const [key, value] of Object.entries(sliderOverrides)) {
+      log(`    - ${key}: ${value.toFixed(2)}`);
+    }
+  }
+  if (nestedMonteCarlo) {
+    log(`  Nested Monte Carlo: ⚠️  ENABLED (epistemic/aleatory separation)`);
+  }
+}
+
 log(`  LLM Policy Optimization: ${llmEnabled ? '🤖 ENABLED (agents use LLM for weight updates)' : '❌ DISABLED (using hardcoded weights)'}`);
 
 // Yearly batching: DISABLED BY DEFAULT for full logs
@@ -733,6 +897,21 @@ for (let i = 0; i < NUM_RUNS; i++) {
 
   // Set run label for logging
   initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;
+
+  // Phase 4: Apply threshold configuration
+  if (importedConfig) {
+    // Use imported thresholds
+    initialState.thresholds = importedConfig.thresholds;
+  } else {
+    // Sample thresholds using unified system
+    const seededRng = engine.getRNG(); // Get SeededRandom object
+    const rng = seededRng.next.bind(seededRng); // Bind to get function
+    initialState.thresholds = sampleAllThresholds(rng, {
+      scenario: THRESHOLD_SCENARIO,
+      sliders: sliderOverrides,
+      nested: nestedMonteCarlo
+    });
+  }
 
   // Oct 21, 2025: Enable LLM policy optimization if flag set
   if (initialState.llmConfig) {
@@ -3202,6 +3381,39 @@ if (avgEvalQuality < 5) {
 }
 
 log('\n' + '='.repeat(80));
+
+// Phase 4: Export threshold configuration if requested
+if (exportConfigPath && !importedConfig) {
+  try {
+    // Sample thresholds once for export (using first run's seed for reproducibility)
+    const exportEngine = new SimulationEngine({ seed: SEED_START, maxMonths: 1, logLevel: 'silent' });
+    const seededExportRng = exportEngine.getRNG();
+    const exportRng = seededExportRng.next.bind(seededExportRng);
+    const exportedThresholds = sampleAllThresholds(exportRng, {
+      scenario: THRESHOLD_SCENARIO,
+      sliders: sliderOverrides,
+      nested: nestedMonteCarlo
+    });
+
+    const config = createThresholdConfig(
+      exportedThresholds,
+      {
+        description: `Monte Carlo run: ${NUM_RUNS} runs, ${MAX_MONTHS} months, scenario=${THRESHOLD_SCENARIO}`,
+        scenario: THRESHOLD_SCENARIO,
+        sliders: Object.keys(sliderOverrides).length > 0 ? sliderOverrides : undefined,
+        seed: SEED_START
+      },
+      `Generated from Monte Carlo simulation run at ${new Date().toISOString()}`
+    );
+
+    const savedPath = exportThresholdConfig(config, exportConfigPath);
+    log(`\n💾 Threshold configuration exported to: ${savedPath}`);
+    printThresholdConfig(config);
+  } catch (err) {
+    logError(`\n❌ Failed to export threshold config: ${err}`);
+  }
+}
+
 log(`\n✅ Monte Carlo analysis complete!`);
 log(`   ${NUM_RUNS} runs, ${MAX_MONTHS} months each`);
 log(`   Total simulation time: ${totalTime.toFixed(1)}s\n`);

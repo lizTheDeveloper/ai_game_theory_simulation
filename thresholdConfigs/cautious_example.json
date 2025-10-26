@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "id": "threshold-config-2025-10-26T22-03-23-arfp",
+    "description": "Monte Carlo run: 1 runs, 1 months, scenario=cautious",
+    "createdAt": "2025-10-26T22:03:23.717Z",
+    "scenario": "cautious",
+    "seed": 42000,
+    "gitCommit": "e59f96f"
+  },
+  "thresholds": {
+    "socialCriticalMass": 0.235,
+    "trustRecoveryRate": 0.013749999999999998,
+    "climateSensitivity": 3.95,
+    "governmentLegitimacyCrisisThreshold": 0.285,
+    "automationJobLossThreshold": 0.32,
+    "surveillanceDystopiaThreshold": 0.7025,
+    "automationDisplacementCrisisThreshold": 0.47,
+    "aiRecursiveImprovementThreshold": 1.395,
+    "resentmentRevoltTriggerThreshold": 0.6699999999999999
+  },
+  "notes": "Generated from Monte Carlo simulation run at 2025-10-26T22:03:23.717Z"
+}

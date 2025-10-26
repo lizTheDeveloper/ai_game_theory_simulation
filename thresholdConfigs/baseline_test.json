@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "id": "threshold-config-2025-10-26T22-01-29-yequ",
+    "description": "Monte Carlo run: 1 runs, 12 months, scenario=baseline",
+    "createdAt": "2025-10-26T22:01:29.978Z",
+    "scenario": "baseline",
+    "seed": 42000,
+    "gitCommit": "e59f96f"
+  },
+  "thresholds": {
+    "socialCriticalMass": 0.25,
+    "trustRecoveryRate": 0.017499999999999998,
+    "climateSensitivity": 3.5,
+    "governmentLegitimacyCrisisThreshold": 0.3,
+    "automationJobLossThreshold": 0.35,
+    "surveillanceDystopiaThreshold": 0.7250000000000001,
+    "automationDisplacementCrisisThreshold": 0.5,
+    "aiRecursiveImprovementThreshold": 1.35,
+    "resentmentRevoltTriggerThreshold": 0.7
+  },
+  "notes": "Generated from Monte Carlo simulation run at 2025-10-26T22:01:29.978Z"
+}
