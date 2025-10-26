@@ -54,6 +54,8 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
     monthlyExcessDeaths: 0,
     cumulativeCrisisDeaths: 0,
     geneticBottleneckActive: false,
+    monthlyDeathsApplied: 0,  // BUG FIX (Oct 26, 2025): Initialize death cap tracker
+    monthlyDeathCapReached: false,
 
     // Multi-dimensional death tracking
     // PROXIMATE CAUSE: What killed them
@@ -343,6 +345,17 @@ export function updateHumanPopulation(state: GameState): void {
   // NEW: Environmental mortality ADDS to baseline (not multiplies)
   // This is because environmental deaths are additional excess mortality
   const environmentalDeathRate = envMortality.total * 12; // Convert monthly to annual
+
+  // DEBUG (Oct 26, 2025): Track environmental mortality breakdown
+  if (state.currentMonth <= 12) {
+    console.log(`\n🌍 ENVIRONMENTAL MORTALITY BREAKDOWN (Month ${state.currentMonth}):`);
+    console.log(`   Total: ${(envMortality.total * 100).toFixed(4)}% monthly (${(envMortality.total * 100 * pop.population * 1000).toFixed(0)}M deaths/month)`);
+    console.log(`   Famine: ${(envMortality.famine * 100).toFixed(4)}%`);
+    console.log(`   Disease: ${(envMortality.disease * 100).toFixed(4)}%`);
+    console.log(`   Climate: ${(envMortality.climate * 100).toFixed(4)}%`);
+    console.log(`   Ecosystem: ${(envMortality.ecosystem * 100).toFixed(4)}%`);
+    console.log(`   Pollution: ${(envMortality.pollution * 100).toFixed(4)}%`);
+  }
 
   // === 4. APPLY EXTINCTION SCENARIO IMPACTS (Non-Environmental) ===
   // Nuclear war, AI takeover, etc. - still use old extinction logic
