@@ -41,33 +41,95 @@ jobs:
         id: research
         run: |
           FEATURE_SLUG="${{ steps.feature.outputs.name }}"
+          ISSUE_BODY='${{ github.event.issue.body }}'
 
-          # Search for related research in /research/ directory
-          RESEARCH_COUNT=$(find research/ -name "*${FEATURE_SLUG}*.md" 2>/dev/null | wc -l)
-          RESEARCH_FILES=$(find research/ -name "*${FEATURE_SLUG}*.md" 2>/dev/null | tr '\n' ', ')
+          # Method 1: Check if issue body explicitly references research files
+          EXPLICIT_RESEARCH=$(echo "$ISSUE_BODY" | grep -oP '/research/[a-zA-Z0-9_/-]+\.md' | head -1 || echo "")
 
-          echo "count=$RESEARCH_COUNT" >> $GITHUB_OUTPUT
-          echo "files=$RESEARCH_FILES" >> $GITHUB_OUTPUT
-
-          if [ "$RESEARCH_COUNT" -gt 0 ]; then
+          if [ -n "$EXPLICIT_RESEARCH" ] && [ -f "$EXPLICIT_RESEARCH" ]; then
+            # Issue body explicitly lists research file and it exists
+            echo "count=1" >> $GITHUB_OUTPUT
+            echo "files=$EXPLICIT_RESEARCH" >> $GITHUB_OUTPUT
             echo "exists=true" >> $GITHUB_OUTPUT
+            echo "method=explicit" >> $GITHUB_OUTPUT
           else
-            echo "exists=false" >> $GITHUB_OUTPUT
+            # Method 2: Fuzzy keyword matching
+            # Extract keywords from title (remove common words, split on spaces/dashes)
+            KEYWORDS=$(echo "${{ github.event.issue.title }}" | \
+              tr '[:upper:]' '[:lower:]' | \
+              sed 's/implement //g; s/feature: //g; s/ - /-/g; s/phase [0-9]//g; s/(tier [0-9])//g' | \
+              tr '-' '\n' | \
+              grep -v '^$' | \
+              head -3 | \
+              tr '\n' '|' | \
+              sed 's/|$//')
+
+            # Search for files containing ANY keyword
+            if [ -n "$KEYWORDS" ]; then
+              RESEARCH_FILES=$(find research/ -type f -name "*.md" 2>/dev/null | \
+                grep -iE "$KEYWORDS" | \
+                tr '\n' ', ')
+              RESEARCH_COUNT=$(echo "$RESEARCH_FILES" | grep -o ',' | wc -l)
+              RESEARCH_COUNT=$((RESEARCH_COUNT + 1))
+            else
+              RESEARCH_FILES=""
+              RESEARCH_COUNT=0
+            fi
+
+            echo "count=$RESEARCH_COUNT" >> $GITHUB_OUTPUT
+            echo "files=$RESEARCH_FILES" >> $GITHUB_OUTPUT
+            echo "method=fuzzy" >> $GITHUB_OUTPUT
+
+            if [ "$RESEARCH_COUNT" -gt 0 ]; then
+              echo "exists=true" >> $GITHUB_OUTPUT
+            else
+              echo "exists=false" >> $GITHUB_OUTPUT
+            fi
           fi
 
       - name: Check for Implementation Plan
         id: plan
         run: |
           FEATURE_SLUG="${{ steps.feature.outputs.name }}"
+          ISSUE_BODY='${{ github.event.issue.body }}'
 
-          # Search for plan file
-          PLAN_FILE=$(find plans/ -name "*${FEATURE_SLUG}*.md" -not -path "plans/completed/*" 2>/dev/null | head -1)
+          # Method 1: Check if issue body explicitly references plan files
+          EXPLICIT_PLAN=$(echo "$ISSUE_BODY" | grep -oP '/plans/[a-zA-Z0-9_/-]+\.md' | head -1 || echo "")
 
-          if [ -n "$PLAN_FILE" ]; then
+          if [ -n "$EXPLICIT_PLAN" ] && [ -f "$EXPLICIT_PLAN" ]; then
+            # Issue body explicitly lists plan file and it exists
             echo "exists=true" >> $GITHUB_OUTPUT
-            echo "path=$PLAN_FILE" >> $GITHUB_OUTPUT
+            echo "path=$EXPLICIT_PLAN" >> $GITHUB_OUTPUT
+            echo "method=explicit" >> $GITHUB_OUTPUT
           else
-            echo "exists=false" >> $GITHUB_OUTPUT
+            # Method 2: Fuzzy keyword matching
+            # Extract keywords from title (remove common words, split on spaces/dashes)
+            KEYWORDS=$(echo "${{ github.event.issue.title }}" | \
+              tr '[:upper:]' '[:lower:]' | \
+              sed 's/implement //g; s/feature: //g; s/ - /-/g; s/phase [0-9]//g; s/(tier [0-9])//g' | \
+              tr '-' '\n' | \
+              grep -v '^$' | \
+              head -3 | \
+              tr '\n' '|' | \
+              sed 's/|$//')
+
+            # Search for files containing ANY keyword
+            if [ -n "$KEYWORDS" ]; then
+              PLAN_FILE=$(find plans/ -type f -name "*.md" -not -path "plans/completed/*" 2>/dev/null | \
+                grep -iE "$KEYWORDS" | \
+                head -1)
+            else
+              PLAN_FILE=""
+            fi
+
+            echo "method=fuzzy" >> $GITHUB_OUTPUT
+
+            if [ -n "$PLAN_FILE" ]; then
+              echo "exists=true" >> $GITHUB_OUTPUT
+              echo "path=$PLAN_FILE" >> $GITHUB_OUTPUT
+            else
+              echo "exists=false" >> $GITHUB_OUTPUT
+            fi
           fi
 
       - name: Post Status - Missing Prerequisites
