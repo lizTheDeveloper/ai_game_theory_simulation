@@ -125,7 +125,14 @@
       "WebFetch(domain:www.ncbi.nlm.nih.gov)",
       "WebFetch(domain:bmcpublichealth.biomedcentral.com)",
       "Bash(npm test:*)",
-      "mcp__playwright__browser_take_screenshot"
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(git rev-parse:*)",
+      "mcp__playwright__browser_handle_dialog",
+      "mcp__chatroom__chatroom_read_new",
+      "WebFetch(domain:esd.copernicus.org)",
+      "WebFetch(domain:report-2023.global-tipping-points.org)",
+      "WebFetch(domain:davidarmstrongmckay.com)",
+      "mcp__chatroom__chatroom_who_active"
     ],
     "deny": [],
     "ask": [],

@@ -391,6 +391,27 @@ export function updateRegionalPopulations(state: GameState): void {
       region.adjustedDeathRate = region.baselineDeathRate;
     }
 
+    // DEBUG (Oct 26, 2025): Track what's causing massive death rates
+    // Log ALL regions in first 2 months to establish baseline
+    const isBaseline = state.currentMonth <= 1;
+    const isHighDeathRate = region.adjustedDeathRate > 0.02; // 2% annual
+
+    if (isBaseline || isHighDeathRate) {
+      const monthlyDeathsM = (region.adjustedDeathRate / 12 * region.population).toFixed(1);
+      const monthlyDeathRate = (region.adjustedDeathRate / 12 * 100).toFixed(3);
+
+      console.log(`\n${isHighDeathRate ? '⚠️  HIGH DEATH RATE' : '📊 BASELINE'}: ${region.name} (Month ${state.currentMonth})`);
+      console.log(`   Adjusted death rate: ${(region.adjustedDeathRate * 100).toFixed(2)}% annual (${monthlyDeathRate}% monthly)`);
+      console.log(`   Baseline death rate: ${(region.baselineDeathRate * 100).toFixed(2)}%`);
+      console.log(`   Healthcare reduction: ${healthcareReduction.toFixed(2)}x`);
+      console.log(`   Crisis multiplier: ${crisisMultiplier.toFixed(2)}x`);
+      console.log(`     Food/water stress: ${foodWaterStress.toFixed(3)}`);
+      console.log(`     Climate stress: ${climateStress.toFixed(3)}`);
+      console.log(`     Pollution stress: ${pollutionStress.toFixed(3)}`);
+      console.log(`   War multiplier: ${warMultiplier.toFixed(2)}x`);
+      console.log(`   Monthly deaths: ${monthlyDeathsM}M (population: ${region.population.toFixed(0)}M)`);
+    }
+
     // === 3. CALCULATE NET GROWTH ===
     region.netGrowthRate = region.adjustedBirthRate - region.adjustedDeathRate;
     const monthlyGrowthRate = region.netGrowthRate / 12;
