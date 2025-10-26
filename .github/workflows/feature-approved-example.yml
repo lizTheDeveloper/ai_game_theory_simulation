@@ -43,7 +43,7 @@ jobs:
           ISSUE_BODY='${{ github.event.issue.body }}'
 
           # Check if issue body explicitly references research files
-          EXPLICIT_RESEARCH=$(echo "$ISSUE_BODY" | grep -oP '/research/[a-zA-Z0-9_/-]+\.md' | head -1 || echo "")
+          EXPLICIT_RESEARCH=$(echo "$ISSUE_BODY" | grep -oP '/research/[a-zA-Z0-9_\-/]+\.md' | head -1 || echo "")
 
           if [ -n "$EXPLICIT_RESEARCH" ] && [ -f "$EXPLICIT_RESEARCH" ]; then
             # Issue body explicitly lists research file and it exists
@@ -63,7 +63,7 @@ jobs:
           ISSUE_BODY='${{ github.event.issue.body }}'
 
           # Check if issue body explicitly references plan files
-          EXPLICIT_PLAN=$(echo "$ISSUE_BODY" | grep -oP '/plans/[a-zA-Z0-9_/-]+\.md' | head -1 || echo "")
+          EXPLICIT_PLAN=$(echo "$ISSUE_BODY" | grep -oP '/plans/[a-zA-Z0-9_\-/]+\.md' | head -1 || echo "")
 
           if [ -n "$EXPLICIT_PLAN" ] && [ -f "$EXPLICIT_PLAN" ]; then
             # Issue body explicitly lists plan file and it exists
