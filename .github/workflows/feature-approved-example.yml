@@ -40,10 +40,9 @@ jobs:
       - name: Check for Research Files
         id: research
         run: |
-          FEATURE_SLUG="${{ steps.feature.outputs.name }}"
           ISSUE_BODY='${{ github.event.issue.body }}'
 
-          # Method 1: Check if issue body explicitly references research files
+          # Check if issue body explicitly references research files
           EXPLICIT_RESEARCH=$(echo "$ISSUE_BODY" | grep -oP '/research/[a-zA-Z0-9_/-]+\.md' | head -1 || echo "")
 
           if [ -n "$EXPLICIT_RESEARCH" ] && [ -f "$EXPLICIT_RESEARCH" ]; then
@@ -51,85 +50,29 @@ jobs:
             echo "count=1" >> $GITHUB_OUTPUT
             echo "files=$EXPLICIT_RESEARCH" >> $GITHUB_OUTPUT
             echo "exists=true" >> $GITHUB_OUTPUT
-            echo "method=explicit" >> $GITHUB_OUTPUT
           else
-            # Method 2: Fuzzy keyword matching
-            # Extract keywords from title (remove common words, split on spaces/dashes)
-            KEYWORDS=$(echo "${{ github.event.issue.title }}" | \
-              tr '[:upper:]' '[:lower:]' | \
-              sed 's/implement //g; s/feature: //g; s/ - /-/g; s/phase [0-9]//g; s/(tier [0-9])//g' | \
-              tr '-' '\n' | \
-              grep -v '^$' | \
-              head -3 | \
-              tr '\n' '|' | \
-              sed 's/|$//')
-
-            # Search for files containing ANY keyword
-            if [ -n "$KEYWORDS" ]; then
-              RESEARCH_FILES=$(find research/ -type f -name "*.md" 2>/dev/null | \
-                grep -iE "$KEYWORDS" | \
-                tr '\n' ', ')
-              RESEARCH_COUNT=$(echo "$RESEARCH_FILES" | grep -o ',' | wc -l)
-              RESEARCH_COUNT=$((RESEARCH_COUNT + 1))
-            else
-              RESEARCH_FILES=""
-              RESEARCH_COUNT=0
-            fi
-
-            echo "count=$RESEARCH_COUNT" >> $GITHUB_OUTPUT
-            echo "files=$RESEARCH_FILES" >> $GITHUB_OUTPUT
-            echo "method=fuzzy" >> $GITHUB_OUTPUT
-
-            if [ "$RESEARCH_COUNT" -gt 0 ]; then
-              echo "exists=true" >> $GITHUB_OUTPUT
-            else
-              echo "exists=false" >> $GITHUB_OUTPUT
-            fi
+            # No explicit reference found - agent will verify research exists
+            echo "count=0" >> $GITHUB_OUTPUT
+            echo "files=" >> $GITHUB_OUTPUT
+            echo "exists=agent-verify" >> $GITHUB_OUTPUT
           fi
 
       - name: Check for Implementation Plan
         id: plan
         run: |
-          FEATURE_SLUG="${{ steps.feature.outputs.name }}"
           ISSUE_BODY='${{ github.event.issue.body }}'
 
-          # Method 1: Check if issue body explicitly references plan files
+          # Check if issue body explicitly references plan files
           EXPLICIT_PLAN=$(echo "$ISSUE_BODY" | grep -oP '/plans/[a-zA-Z0-9_/-]+\.md' | head -1 || echo "")
 
           if [ -n "$EXPLICIT_PLAN" ] && [ -f "$EXPLICIT_PLAN" ]; then
             # Issue body explicitly lists plan file and it exists
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "path=$EXPLICIT_PLAN" >> $GITHUB_OUTPUT
-            echo "method=explicit" >> $GITHUB_OUTPUT
           else
-            # Method 2: Fuzzy keyword matching
-            # Extract keywords from title (remove common words, split on spaces/dashes)
-            KEYWORDS=$(echo "${{ github.event.issue.title }}" | \
-              tr '[:upper:]' '[:lower:]' | \
-              sed 's/implement //g; s/feature: //g; s/ - /-/g; s/phase [0-9]//g; s/(tier [0-9])//g' | \
-              tr '-' '\n' | \
-              grep -v '^$' | \
-              head -3 | \
-              tr '\n' '|' | \
-              sed 's/|$//')
-
-            # Search for files containing ANY keyword
-            if [ -n "$KEYWORDS" ]; then
-              PLAN_FILE=$(find plans/ -type f -name "*.md" -not -path "plans/completed/*" 2>/dev/null | \
-                grep -iE "$KEYWORDS" | \
-                head -1)
-            else
-              PLAN_FILE=""
-            fi
-
-            echo "method=fuzzy" >> $GITHUB_OUTPUT
-
-            if [ -n "$PLAN_FILE" ]; then
-              echo "exists=true" >> $GITHUB_OUTPUT
-              echo "path=$PLAN_FILE" >> $GITHUB_OUTPUT
-            else
-              echo "exists=false" >> $GITHUB_OUTPUT
-            fi
+            # No explicit reference found - agent will verify plan exists
+            echo "exists=agent-verify" >> $GITHUB_OUTPUT
+            echo "path=" >> $GITHUB_OUTPUT
           fi
 
       - name: Post Status - Missing Prerequisites
@@ -201,7 +144,7 @@ jobs:
             });
 
       - name: Create Feature Branch
-        if: steps.research.outputs.exists == 'true' && steps.plan.outputs.exists == 'true'
+        if: steps.research.outputs.exists != 'false' && steps.plan.outputs.exists != 'false'
         run: |
           BRANCH_NAME="feature/${{ steps.feature.outputs.name }}"
 
@@ -219,32 +162,52 @@ jobs:
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Post Status - Ready for Implementation
-        if: steps.research.outputs.exists == 'true' && steps.plan.outputs.exists == 'true'
+        if: steps.research.outputs.exists != 'false' && steps.plan.outputs.exists != 'false'
         uses: actions/github-script@v7
         env:
           BRANCH_NAME: ${{ env.branch_name }}
           BRANCH_EXISTS: ${{ env.branch_exists }}
+          RESEARCH_EXISTS: ${{ steps.research.outputs.exists }}
           RESEARCH_FILES: ${{ steps.research.outputs.files }}
           RESEARCH_COUNT: ${{ steps.research.outputs.count }}
+          PLAN_EXISTS: ${{ steps.plan.outputs.exists }}
           PLAN_FILE: ${{ steps.plan.outputs.path }}
         with:
           script: |
             const branchName = process.env.BRANCH_NAME;
             const branchExists = process.env.BRANCH_EXISTS === 'true';
+            const researchExists = process.env.RESEARCH_EXISTS;
             const researchFiles = process.env.RESEARCH_FILES;
             const researchCount = process.env.RESEARCH_COUNT;
+            const planExists = process.env.PLAN_EXISTS;
             const planFile = process.env.PLAN_FILE;
 
-            const body = `## ✅ Feature Approved - Prerequisites Met
-
-            All prerequisites found! This feature is ready for implementation.
-
-            ### Research
+            let researchSection = '';
+            if (researchExists === 'true') {
+              researchSection = `### Research
             **Found ${researchCount} research file(s):**
-            ${researchFiles.split(',').map(f => f.trim()).filter(f => f).map(f => `- \`${f}\``).join('\n')}
+            ${researchFiles.split(',').map(f => f.trim()).filter(f => f).map(f => `- \`${f}\``).join('\n')}`;
+            } else {
+              researchSection = `### Research
+            ⚠️ No explicit research files referenced - agent will verify research exists`;
+            }
 
-            ### Implementation Plan
-            **Plan file:** \`${planFile}\`
+            let planSection = '';
+            if (planExists === 'true') {
+              planSection = `### Implementation Plan
+            **Plan file:** \`${planFile}\``;
+            } else {
+              planSection = `### Implementation Plan
+            ⚠️ No explicit plan file referenced - agent will verify plan exists`;
+            }
+
+            const body = `## ✅ Feature Approved
+
+            This feature is ready for implementation. The agent will verify prerequisites before beginning.
+
+            ${researchSection}
+
+            ${planSection}
 
             ### Feature Branch
             **Branch:** \`${branchName}\` ${branchExists ? '(already exists)' : '(created)'}
