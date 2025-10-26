@@ -41,11 +41,11 @@ export function OverviewDashboard() {
     )
   }
 
-  // Extract key metrics from StateDelta
-  const population = lastUpdate.population || 8_000_000_000
-  const qol = lastUpdate.qualityOfLife || 0
-  const aiCap = lastUpdate.avgAICapability || 0
-  const alignment = (lastUpdate.alignedAICount || 0) / Math.max(1, lastUpdate.aiCount || 1)
+  // Extract key metrics from StateDelta (use ?? instead of || to handle 0 values correctly)
+  const population = lastUpdate.population ?? 8_000_000_000
+  const qol = lastUpdate.qualityOfLife ?? 0.65  // Default 65% baseline QoL
+  const aiCap = lastUpdate.avgAICapability ?? 0
+  const alignment = (lastUpdate.alignedAICount ?? 0) / Math.max(1, lastUpdate.aiCount ?? 1)
 
   // Multi-paradigm scores
   const paradigms = {
@@ -118,7 +118,7 @@ export function OverviewDashboard() {
                 Western Liberal
               </div>
               <div className="text-3xl font-light">
-                {(paradigms.western.value || 0).toFixed(1)}
+                {paradigms.western.value.toFixed(1)}
               </div>
             </div>
             <div>
@@ -126,7 +126,7 @@ export function OverviewDashboard() {
                 Development
               </div>
               <div className="text-3xl font-light">
-                {(paradigms.development.value || 0).toFixed(1)}
+                {paradigms.development.value.toFixed(1)}
               </div>
             </div>
             <div>
@@ -134,7 +134,7 @@ export function OverviewDashboard() {
                 Ecological
               </div>
               <div className={`text-3xl font-light ${paradigms.ecological.value < 20 ? 'text-red-500' : ''}`}>
-                {(paradigms.ecological.value || 0).toFixed(1)}
+                {paradigms.ecological.value.toFixed(1)}
               </div>
             </div>
             <div>
@@ -142,7 +142,7 @@ export function OverviewDashboard() {
                 Indigenous
               </div>
               <div className="text-3xl font-light">
-                {(paradigms.indigenous.value || 0).toFixed(1)}
+                {paradigms.indigenous.value.toFixed(1)}
               </div>
             </div>
           </div>
@@ -154,19 +154,19 @@ export function OverviewDashboard() {
             <div className="flex items-center justify-between">
               <span>AI Agents</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {lastUpdate.aiCount || 0} active
+                {lastUpdate.aiCount ?? 0} active
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Organizations</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {lastUpdate.organizationCount || 0} operational
+                {lastUpdate.organizationCount ?? 0} operational
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Extinction Risk</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {((lastUpdate.extinctionProbability || 0) * 100).toFixed(1)}%
+                {((lastUpdate.extinctionProbability ?? 0) * 100).toFixed(1)}%
               </span>
             </div>
           </div>
@@ -181,7 +181,7 @@ export function OverviewDashboard() {
               Climate Stability
             </div>
             <div className="text-2xl font-light">
-              {((1 - (lastUpdate.climateChange || 0)) * 100).toFixed(0)}%
+              {((1 - (lastUpdate.climateChange ?? 0)) * 100).toFixed(0)}%
             </div>
           </div>
           <div>
@@ -189,7 +189,7 @@ export function OverviewDashboard() {
               Biodiversity Index
             </div>
             <div className="text-2xl font-light">
-              {((1 - (lastUpdate.biodiversityLoss || 0)) * 100).toFixed(0)}%
+              {((1 - (lastUpdate.biodiversityLoss ?? 1)) * 100).toFixed(0)}%
             </div>
           </div>
           <div>
@@ -197,7 +197,7 @@ export function OverviewDashboard() {
               Social Cohesion
             </div>
             <div className="text-2xl font-light">
-              {((lastUpdate.socialCohesion || 0) * 100).toFixed(0)}%
+              {((lastUpdate.socialCohesion ?? 0.7) * 100).toFixed(0)}%
             </div>
           </div>
         </div>

@@ -23,6 +23,14 @@
 - [x] Created `assertEconomicStage()` helper
 - [x] Updated CLAUDE.md with defensive programming anti-patterns (lines 788-844)
 - [x] Documented philosophy and examples
+- [x] **ROOT CAUSE BUG FIX (Oct 25, 2025 - Late Evening):**
+  - ✅ Fixed `crisisPoints.ts:99` - Unclamped socialStability subtraction
+  - ✅ Bug: `socialStability - 0.1` could produce negative values (e.g., 0.0738 - 0.1 = -0.0262)
+  - ✅ Fix: Added `Math.max(0, socialStability - 0.1)` to clamp to valid range [0, 1]
+  - ✅ Replaced 36 defensive patterns with assertions (waterSecurity, socialStability, publicTrust, etc.)
+  - ✅ Assertions caught bug in Monte Carlo runs that defensive programming would have masked
+  - ✅ Verification: Monte Carlo N=10 runs - all 10/10 completed successfully
+  - **This is a perfect example of why assertions > defensive programming**
 
 ### ✅ Phase 1: Tech Tree System (COMPLETE)
 - [x] Fixed `techTree/engine.ts` (FIX #25)
@@ -97,15 +105,18 @@
 
 Audit and fix defensive fallbacks in core simulation files:
 
-#### 3.1: State Calculations
-**Files to audit:**
-- `src/simulation/qualityOfLife.ts`
-- `src/simulation/environmental.ts`
-- `src/simulation/socialCohesion.ts`
-- `src/simulation/technologicalRisk.ts`
+#### 3.1: State Calculations - **IN PROGRESS** (Oct 25, 2025 - 8:15 PM)
+**Files audited:**
+- ✅ `src/simulation/environmental.ts` - 0 patterns (CLEAN!)
+- 🔄 `src/simulation/socialCohesion.ts` - **4/5 fixed** (lines 419✅, 652✅, 707✅, 799✅, 837🔄)
+- ✅ `src/simulation/technologicalRisk.ts` - 0 patterns to fix (1 legitimate default)
+- ⏳ `src/simulation/populationDynamics.ts` - 4 patterns pending (lines 327, 820, 838, 943 - CRITICAL)
 
-**Estimated Fallbacks:** ~50-80
-**Effort:** 3-4 hours
+**Audit Complete:** 13 patterns found, 8 to fix, 5 legitimate/logging
+**Progress:** 4/8 fixes complete
+**Currently fixing:** socialCohesion.ts line 837 (previousMisalignedCount)
+**Next:** Complete socialCohesion.ts, then populationDynamics.ts (critical)
+**Audit report:** `devlogs/phase_3_1_audit_oct25_2025.md`
 
 #### 3.2: Crisis Systems
 **Files to audit:**

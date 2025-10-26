@@ -430,8 +430,12 @@ function calculateEnvironmentalImpact(state: GameState): void {
   ptp.cumulativeCostSavings += costSavings;
 
   // Boost economic metrics if cost savings significant
-  if (costSavings > 0.01) {
-    state.globalMetrics.economicTransitionStage += costSavings * 0.1;
+  // FIX (Oct 25, 2025): Add bounds checking to prevent Infinity overflow
+  if (costSavings > 0.01 && isFinite(costSavings)) {
+    const boost = Math.min(0.5, costSavings * 0.1); // Cap boost at 0.5 per step
+    state.globalMetrics.economicTransitionStage = Math.min(4.0,
+      state.globalMetrics.economicTransitionStage + boost
+    );
   }
 
   // Calculate adoption acceleration vs business-as-usual

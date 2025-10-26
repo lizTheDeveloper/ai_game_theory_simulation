@@ -261,66 +261,66 @@ export default function RealtimeDashboard() {
   // Local state for error handling
   const [error, setError] = useState<string | null>(null);
 
-  // Core metrics
+  // Core metrics (initialize with defaults to avoid `—` display)
   const [month, setMonth] = useState(0);
   const [day, setDay] = useState(1);
   const [calendarDate, setCalendarDate] = useState<string | null>(null);
-  const [qualityOfLife, setQualityOfLife] = useState<number | null>(null);
-  const [population, setPopulation] = useState<number | null>(null);
-  const [aiCount, setAiCount] = useState<number | null>(null);
+  const [qualityOfLife, setQualityOfLife] = useState<number>(1.0); // Default baseline QoL
+  const [population, setPopulation] = useState<number>(8.0); // Default 8 billion
+  const [aiCount, setAiCount] = useState<number>(0);
 
-  // AI System
-  const [avgAICapability, setAvgAICapability] = useState<number | null>(null);
-  const [alignedAICount, setAlignedAICount] = useState<number | null>(null);
-  const [misalignedAICount, setMisalignedAICount] = useState<number | null>(null);
-  const [sleeperAgentCount, setSleeperAgentCount] = useState<number | null>(null);
+  // AI System (initialize with defaults)
+  const [avgAICapability, setAvgAICapability] = useState<number>(0);
+  const [alignedAICount, setAlignedAICount] = useState<number>(0);
+  const [misalignedAICount, setMisalignedAICount] = useState<number>(0);
+  const [sleeperAgentCount, setSleeperAgentCount] = useState<number>(0);
 
-  // Environmental
-  const [climateChange, setClimateChange] = useState<number | null>(null);
-  const [resourceDepletion, setResourceDepletion] = useState<number | null>(null);
-  const [biodiversityLoss, setBiodiversityLoss] = useState<number | null>(null);
-  const [pollutionLevel, setPollutionLevel] = useState<number | null>(null);
-  const [planetaryBoundariesCrossed, setPlanetaryBoundariesCrossed] = useState<number | null>(null);
-  const [environmentalDebtLevel, setEnvironmentalDebtLevel] = useState<number | null>(null);
+  // Environmental (initialize with defaults)
+  const [climateChange, setClimateChange] = useState<number>(0);
+  const [resourceDepletion, setResourceDepletion] = useState<number>(1.0); // Full resources initially
+  const [biodiversityLoss, setBiodiversityLoss] = useState<number>(1.0); // Full biodiversity initially
+  const [pollutionLevel, setPollutionLevel] = useState<number>(0);
+  const [planetaryBoundariesCrossed, setPlanetaryBoundariesCrossed] = useState<number>(0);
+  const [environmentalDebtLevel, setEnvironmentalDebtLevel] = useState<number>(0);
 
-  // Social
-  const [socialCohesion, setSocialCohesion] = useState<number | null>(null);
-  const [institutionalTrust, setInstitutionalTrust] = useState<number | null>(null);
-  const [meaningLevel, setMeaningLevel] = useState<number | null>(null);
-  const [socialDebtLevel, setSocialDebtLevel] = useState<number | null>(null);
+  // Social (initialize with defaults)
+  const [socialCohesion, setSocialCohesion] = useState<number>(0.7); // Moderate initial cohesion
+  const [institutionalTrust, setInstitutionalTrust] = useState<number>(0.7); // Moderate initial trust
+  const [meaningLevel, setMeaningLevel] = useState<number>(0.7); // Moderate meaning initially
+  const [socialDebtLevel, setSocialDebtLevel] = useState<number>(0);
 
-  // Crisis
+  // Crisis (initialize with defaults)
   const [activeCrises, setActiveCrises] = useState<Array<{ type: string; severity: number; duration: number }>>([]);
-  const [phosphorusDepletion, setPhosphorusDepletion] = useState<number | null>(null);
-  const [freshwaterStress, setFreshwaterStress] = useState<number | null>(null);
-  const [oceanAcidification, setOceanAcidification] = useState<number | null>(null);
-  const [novelEntitiesLevel, setNovelEntitiesLevel] = useState<number | null>(null);
+  const [phosphorusDepletion, setPhosphorusDepletion] = useState<number>(0);
+  const [freshwaterStress, setFreshwaterStress] = useState<number>(0);
+  const [oceanAcidification, setOceanAcidification] = useState<number>(0);
+  const [novelEntitiesLevel, setNovelEntitiesLevel] = useState<number>(0);
 
-  // Government
-  const [governmentAIRegulation, setGovernmentAIRegulation] = useState<number | null>(null);
-  const [governmentInvestment, setGovernmentInvestment] = useState<number | null>(null);
-  const [governmentComprehension, setGovernmentComprehension] = useState<number | null>(null);
-  const [internationalCooperation, setInternationalCooperation] = useState<number | null>(null);
+  // Government (initialize with defaults)
+  const [governmentAIRegulation, setGovernmentAIRegulation] = useState<number>(0);
+  const [governmentInvestment, setGovernmentInvestment] = useState<number>(0);
+  const [governmentComprehension, setGovernmentComprehension] = useState<number>(0);
+  const [internationalCooperation, setInternationalCooperation] = useState<number>(0);
   const [activePolicies, setActivePolicies] = useState<string[]>([]);
   const [legislativeActivity, setLegislativeActivity] = useState<number>(0);
-  const [publicTrust, setPublicTrust] = useState<number | null>(null);
+  const [publicTrust, setPublicTrust] = useState<number>(0.7); // Mirror institutionalTrust default
 
-  // Technology
-  const [deployedTechCount, setDeployedTechCount] = useState<number | null>(null);
-  const [techRiskLevel, setTechRiskLevel] = useState<number | null>(null);
+  // Technology (initialize with defaults)
+  const [deployedTechCount, setDeployedTechCount] = useState<number>(0);
+  const [techRiskLevel, setTechRiskLevel] = useState<number>(0);
 
-  // Outcomes
-  const [dystopiaProgression, setDystopiaProgression] = useState<number | null>(null);
-  const [utopiaProgress, setUtopiaProgress] = useState<number | null>(null);
-  const [extinctionProbability, setExtinctionProbability] = useState<number | null>(null);
+  // Outcomes (initialize with defaults)
+  const [dystopiaProgression, setDystopiaProgression] = useState<number>(0);
+  const [utopiaProgress, setUtopiaProgress] = useState<number>(0);
+  const [extinctionProbability, setExtinctionProbability] = useState<number>(0);
   const [outcomeType, setOutcomeType] = useState<string>('In Progress');
   const [activeSpirals, setActiveSpirals] = useState<Array<{ type: string; strength: number; duration: number }>>([]);
 
-  // Multi-Paradigm DUI
-  const [westernLiberalIndex, setWesternLiberalIndex] = useState<number | null>(null);
-  const [developmentIndex, setDevelopmentIndex] = useState<number | null>(null);
-  const [ecologicalIndex, setEcologicalIndex] = useState<number | null>(null);
-  const [indigenousIndex, setIndigenousIndex] = useState<number | null>(null);
+  // Multi-Paradigm DUI (initialize with 0.5 default to match worker initialization)
+  const [westernLiberalIndex, setWesternLiberalIndex] = useState<number>(0.5);
+  const [developmentIndex, setDevelopmentIndex] = useState<number>(0.5);
+  const [ecologicalIndex, setEcologicalIndex] = useState<number>(0.5);
+  const [indigenousIndex, setIndigenousIndex] = useState<number>(0.5);
 
   // Economic Indicators (simulated for now)
   const [gdp, setGdp] = useState<number>(100);
@@ -384,6 +384,7 @@ export default function RealtimeDashboard() {
       setAiCount(snapshot.aiCount);
       setError(null);
       console.log('[RealtimeDashboard] Initialized:', snapshot, 'Start date:', startDate);
+      // Note: Full delta will arrive immediately after initialization to populate all other metrics
     };
 
     const handleUpdate = (delta: StateDelta, currentMonth: number, currentDay: number, date: string, timestamp: number) => {
@@ -736,15 +737,15 @@ export default function RealtimeDashboard() {
                 title="Multi-Paradigm Dystopia/Utopia Indicators"
                 className="col-span-12"
                 glow={
-                  (westernLiberalIndex !== null && westernLiberalIndex < 0.2) ||
-                  (developmentIndex !== null && developmentIndex < 0.2) ||
-                  (ecologicalIndex !== null && ecologicalIndex < 0.2) ||
-                  (indigenousIndex !== null && indigenousIndex < 0.2)
+                  (westernLiberalIndex < 0.2) ||
+                  (developmentIndex < 0.2) ||
+                  (ecologicalIndex < 0.2) ||
+                  (indigenousIndex < 0.2)
                     ? 'red'
-                    : (westernLiberalIndex !== null && westernLiberalIndex > 0.7) &&
-                      (developmentIndex !== null && developmentIndex > 0.7) &&
-                      (ecologicalIndex !== null && ecologicalIndex > 0.7) &&
-                      (indigenousIndex !== null && indigenousIndex > 0.7)
+                    : (westernLiberalIndex > 0.7) &&
+                      (developmentIndex > 0.7) &&
+                      (ecologicalIndex > 0.7) &&
+                      (indigenousIndex > 0.7)
                     ? 'green'
                     : undefined
                 }
@@ -789,8 +790,7 @@ export default function RealtimeDashboard() {
                   <div className="text-xs text-white/40">PARADIGM DIVERGENCE</div>
                   <div className="text-sm text-white">
                     {(() => {
-                      const values = [westernLiberalIndex, developmentIndex, ecologicalIndex, indigenousIndex].filter(v => v !== null) as number[];
-                      if (values.length === 0) return '—';
+                      const values = [westernLiberalIndex, developmentIndex, ecologicalIndex, indigenousIndex];
                       const max = Math.max(...values);
                       const min = Math.min(...values);
                       const divergence = max - min;
@@ -846,14 +846,14 @@ export default function RealtimeDashboard() {
                       <Metric
                         label="Quality of Life"
                         value={formatMultiplier(qualityOfLife)}
-                        color={qualityOfLife && qualityOfLife > 1 ? 'green' : qualityOfLife && qualityOfLife < 0.8 ? 'red' : 'yellow'}
+                        color={qualityOfLife > 1 ? 'green' : qualityOfLife < 0.8 ? 'red' : 'yellow'}
                         sparkline={history.qualityOfLife}
                       />
                       <Metric
                         label="Population"
-                        value={population ? `${population.toFixed(2)}` : '—'}
+                        value={`${population.toFixed(2)}`}
                         unit="billion"
-                        trend={population && population > 8 ? 'up' : population && population < 7 ? 'down' : 'stable'}
+                        trend={population > 8 ? 'up' : population < 7 ? 'down' : 'stable'}
                         sparkline={history.population}
                       />
                     </div>
@@ -863,22 +863,22 @@ export default function RealtimeDashboard() {
                 {/* Center-Left - Government & Policy */}
                 <div className="col-span-3 space-y-4">
                   {/* Expanded Government */}
-                  <Panel title="Government & Policy" glow={publicTrust && publicTrust < 0.3 ? 'red' : undefined}>
+                  <Panel title="Government & Policy" glow={publicTrust < 0.3 ? 'red' : undefined}>
                     <div className="space-y-4">
                       <Metric
                         label="Public Trust"
                         value={formatPercent(publicTrust)}
-                        color={publicTrust && publicTrust < 0.3 ? 'red' : publicTrust && publicTrust < 0.6 ? 'yellow' : 'green'}
+                        color={publicTrust < 0.3 ? 'red' : publicTrust < 0.6 ? 'yellow' : 'green'}
                       />
                       <Metric
                         label="AI Regulation"
                         value={formatMultiplier(governmentAIRegulation)}
-                        color={governmentAIRegulation && governmentAIRegulation > 0.7 ? 'green' : 'yellow'}
+                        color={governmentAIRegulation > 0.7 ? 'green' : 'yellow'}
                       />
                       <Metric
                         label="Comprehension"
                         value={formatPercent(governmentComprehension)}
-                        color={governmentComprehension && governmentComprehension < 0.3 ? 'red' : 'yellow'}
+                        color={governmentComprehension < 0.3 ? 'red' : 'yellow'}
                       />
 
                       <div className="pt-3 border-t border-white/10">
@@ -920,7 +920,7 @@ export default function RealtimeDashboard() {
                   </Panel>
 
                   {/* AI Ecosystem */}
-                  <Panel title="AI Ecosystem" glow={misalignedAICount && misalignedAICount > alignedAICount! ? 'amber' : undefined}>
+                  <Panel title="AI Ecosystem" glow={misalignedAICount > alignedAICount ? 'amber' : undefined}>
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-2">
                         <Metric
@@ -957,69 +957,69 @@ export default function RealtimeDashboard() {
                   {/* Planetary Systems */}
                   <Panel
                     title="Planetary Systems"
-                    glow={planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 6 ? 'red' :
-                          planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 3 ? 'amber' : undefined}
+                    glow={planetaryBoundariesCrossed >= 6 ? 'red' :
+                          planetaryBoundariesCrossed >= 3 ? 'amber' : undefined}
                   >
                     <div className="space-y-4">
                       <Metric
                         label="Boundaries Crossed"
-                        value={`${planetaryBoundariesCrossed || 0}/9`}
-                        color={planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 6 ? 'red' :
-                               planetaryBoundariesCrossed && planetaryBoundariesCrossed >= 3 ? 'yellow' : 'green'}
+                        value={`${planetaryBoundariesCrossed}/9`}
+                        color={planetaryBoundariesCrossed >= 6 ? 'red' :
+                               planetaryBoundariesCrossed >= 3 ? 'yellow' : 'green'}
                       />
                       <div className="grid grid-cols-2 gap-3">
                         <Metric
                           label="Climate"
                           value={formatPercent(climateChange)}
-                          color={climateChange && climateChange > 0.5 ? 'red' : 'yellow'}
+                          color={climateChange > 0.5 ? 'red' : 'yellow'}
                         />
                         <Metric
                           label="Resources"
                           value={formatPercent(resourceDepletion)}
-                          color={resourceDepletion && resourceDepletion < 0.3 ? 'red' : 'yellow'}
+                          color={resourceDepletion < 0.3 ? 'red' : 'yellow'}
                         />
                         <Metric
                           label="Biodiversity"
                           value={formatPercent(biodiversityLoss)}
-                          color={biodiversityLoss && biodiversityLoss < 0.5 ? 'red' : 'yellow'}
+                          color={biodiversityLoss < 0.5 ? 'red' : 'yellow'}
                         />
                         <Metric
                           label="Pollution"
                           value={formatPercent(pollutionLevel)}
-                          color={pollutionLevel && pollutionLevel > 0.5 ? 'red' : 'yellow'}
+                          color={pollutionLevel > 0.5 ? 'red' : 'yellow'}
                         />
                       </div>
                       <div className="pt-2 border-t border-white/10">
                         <div className="text-xs text-white/30 mb-1">Environmental Debt</div>
-                        <div className="text-2xl text-yellow-400">{environmentalDebtLevel?.toFixed(1) || '0.0'}</div>
+                        <div className="text-2xl text-yellow-400">{environmentalDebtLevel.toFixed(1)}</div>
                       </div>
                     </div>
                   </Panel>
 
                   {/* Social Fabric */}
-                  <Panel title="Social Fabric" glow={socialCohesion && socialCohesion < 0.3 ? 'amber' : undefined}>
+                  <Panel title="Social Fabric" glow={socialCohesion < 0.3 ? 'amber' : undefined}>
                     <div className="space-y-4">
                       <Metric
                         label="Social Cohesion"
                         value={formatPercent(socialCohesion)}
-                        color={socialCohesion && socialCohesion < 0.3 ? 'red' : socialCohesion && socialCohesion < 0.6 ? 'yellow' : 'green'}
+                        color={socialCohesion < 0.3 ? 'red' : socialCohesion < 0.6 ? 'yellow' : 'green'}
                         sparkline={history.socialCohesion}
                       />
                       <div className="grid grid-cols-2 gap-3">
                         <Metric
                           label="Trust"
                           value={formatPercent(institutionalTrust)}
-                          color={institutionalTrust && institutionalTrust < 0.3 ? 'red' : 'yellow'}
+                          color={institutionalTrust < 0.3 ? 'red' : 'yellow'}
                         />
                         <Metric
                           label="Meaning"
                           value={formatPercent(meaningLevel)}
-                          color={meaningLevel && meaningLevel < 0.3 ? 'red' : 'yellow'}
+                          color={meaningLevel < 0.3 ? 'red' : 'yellow'}
                         />
                       </div>
                       <div className="pt-2 border-t border-white/10">
                         <div className="text-xs text-white/30 mb-1">Social Debt</div>
-                        <div className="text-2xl text-yellow-400">{socialDebtLevel?.toFixed(1) || '0.0'}</div>
+                        <div className="text-2xl text-yellow-400">{socialDebtLevel.toFixed(1)}</div>
                       </div>
                     </div>
                   </Panel>
@@ -1029,13 +1029,13 @@ export default function RealtimeDashboard() {
                     <div className="space-y-3">
                       <Metric
                         label="Deployed Technologies"
-                        value={deployedTechCount || 0}
-                        color={deployedTechCount && deployedTechCount > 30 ? 'green' : 'yellow'}
+                        value={deployedTechCount}
+                        color={deployedTechCount > 30 ? 'green' : 'yellow'}
                       />
                       <Metric
                         label="Tech Risk Level"
                         value={formatPercent(techRiskLevel)}
-                        color={techRiskLevel && techRiskLevel > 0.5 ? 'red' : 'yellow'}
+                        color={techRiskLevel > 0.5 ? 'red' : 'yellow'}
                       />
                     </div>
                   </Panel>
@@ -1046,19 +1046,19 @@ export default function RealtimeDashboard() {
                   {/* Outcome Trajectories (Smaller) */}
                   <Panel
                     title="Outcome Trajectories"
-                    glow={dystopiaProgression && dystopiaProgression > 0.7 ? 'red' :
-                          utopiaProgress && utopiaProgress > 0.7 ? 'green' : undefined}
+                    glow={dystopiaProgression > 0.7 ? 'red' :
+                          utopiaProgress > 0.7 ? 'green' : undefined}
                   >
                     <div className="space-y-3">
                       <Metric
                         label="Dystopia Risk"
                         value={formatPercent(dystopiaProgression)}
-                        color={dystopiaProgression && dystopiaProgression > 0.5 ? 'red' : 'yellow'}
+                        color={dystopiaProgression > 0.5 ? 'red' : 'yellow'}
                       />
                       <Metric
                         label="Utopia Progress"
                         value={formatPercent(utopiaProgress)}
-                        color={utopiaProgress && utopiaProgress > 0.5 ? 'green' : 'white'}
+                        color={utopiaProgress > 0.5 ? 'green' : 'white'}
                       />
                       <div className="pt-2 border-t border-white/10">
                         <div className="text-xs text-white/30 mb-1">Trajectory</div>

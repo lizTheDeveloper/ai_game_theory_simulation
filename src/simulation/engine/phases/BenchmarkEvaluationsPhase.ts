@@ -14,8 +14,10 @@ export class BenchmarkEvaluationsPhase implements SimulationPhase {
   readonly order = 22.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    console.log(`[DEBUG BENCHMARK START month=${state.currentMonth}] socialStability = ${state.globalMetrics.socialStability.toFixed(4)}`);
     const { performMonthlyEvaluations } = require('../../benchmark');
     const benchmarkResult = performMonthlyEvaluations(state, rng);
+    console.log(`[DEBUG BENCHMARK END month=${state.currentMonth}] socialStability = ${state.globalMetrics.socialStability.toFixed(4)}`);
 
     return { events: benchmarkResult.events || [] };
   }

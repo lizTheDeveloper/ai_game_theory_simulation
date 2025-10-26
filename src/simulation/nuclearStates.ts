@@ -8,6 +8,7 @@
 
 import { GameState } from '../types/game';
 import { NuclearState, MADDeterrence, BilateralTension } from '../types/nuclearStates';
+import { assertEconomicStage } from './utils/assertions';
 
 /**
  * Initialize nuclear states (2025 starting conditions)
@@ -546,7 +547,8 @@ export function updateBilateralTensions(state: GameState): void {
     }
     
     // Post-scarcity peace (Phase 2F)
-    const economicStage = state.globalMetrics.economicTransitionStage || 0;
+    // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+    const economicStage = assertEconomicStage(state, 'nuclearStates.updateTension');
     if (economicStage >= 3 && tension.escalationLadder < 4) {
       tension.tensionLevel = Math.max(0.2, tension.tensionLevel - 0.01);
     }

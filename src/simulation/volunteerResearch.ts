@@ -8,6 +8,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertProbability } from './utils/assertions';
 
 /**
  * Calculate volunteer research contribution
@@ -207,10 +208,13 @@ export function applyVolunteerResearchBenefits(state: GameState, volunteerComput
   // 4. TRUST: Seeing research make progress builds trust in institutions
   if (state.globalMetrics) {
     const trustGain = participationRate * 0.01; // Up to +0.5% per month
-    state.globalMetrics.publicTrust = Math.min(
-      1.0,
-      (state.globalMetrics.publicTrust || 0.5) + trustGain
-    );
+    // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+    const currentTrust = assertProbability(state.globalMetrics.publicTrust, {
+      location: 'applyVolunteerResearchEffects',
+      valueName: 'globalMetrics.publicTrust',
+      month: state.currentMonth
+    });
+    state.globalMetrics.publicTrust = Math.min(1.0, currentTrust + trustGain);
   }
 }
 

@@ -15,6 +15,7 @@
 import type { GameState, QualityOfLifeSystems } from '@/types/game';
 import type { RegionalCache } from './cache/regionalCache';
 import { getCachedRegions } from './cache/regionalCache';
+import { assertFinite, assertInRange, assertProbability } from '../utils/assertions';
 
 /**
  * Calculate QoL inequality across regions
@@ -114,21 +115,58 @@ export function calculateDistributionMetrics(
     bestRegion > 0.6                   // Some regions doing well
   );
 
-  // Final NaN guards (safety check)
-  const safeGini = isNaN(gini) ? 0.38 : gini;
-  const safeVariance = isNaN(variance) ? 0.08 : variance;
-  const safeCrisisAffected = isNaN(crisisAffectedFraction) ? 0 : crisisAffectedFraction;
-  const safeWorstRegion = isNaN(worstRegion) ? 0.35 : worstRegion;
-  const safeBestRegion = isNaN(bestRegion) ? 0.95 : bestRegion;
-  const safeMedianRegion = isNaN(medianRegion) ? 0.65 : medianRegion;
+  // FIX (Oct 25, 2025): Replaced defensive NaN guards with assertive validation
+  // If any calculation produces NaN, that's a BUG in population/QoL aggregation that needs fixing
+  const month = state.currentMonth;
+  const location = 'calculateDistributionMetrics';
+
+  const validatedGini = assertInRange(gini, 0, 1, {
+    location,
+    valueName: 'gini',
+    month,
+  });
+
+  const validatedVariance = assertFinite(variance, {
+    location,
+    valueName: 'variance',
+    month,
+  });
+  // Variance must be non-negative
+  if (validatedVariance < 0) {
+    throw new Error(`❌ Negative variance in ${location}\n   variance = ${validatedVariance}\n   Month: ${month}`);
+  }
+
+  const validatedCrisisAffected = assertProbability(crisisAffectedFraction, {
+    location,
+    valueName: 'crisisAffectedFraction',
+    month,
+  });
+
+  const validatedWorstRegion = assertInRange(worstRegion, 0, 2, {
+    location,
+    valueName: 'worstRegion',
+    month,
+  });
+
+  const validatedBestRegion = assertInRange(bestRegion, 0, 2, {
+    location,
+    valueName: 'bestRegion',
+    month,
+  });
+
+  const validatedMedianRegion = assertInRange(medianRegion, 0, 2, {
+    location,
+    valueName: 'medianRegion',
+    month,
+  });
 
   return {
-    globalGini: safeGini,
-    regionalVariance: safeVariance,
-    crisisAffectedFraction: safeCrisisAffected,
-    worstRegionQoL: safeWorstRegion,
-    bestRegionQoL: safeBestRegion,
-    medianRegionQoL: safeMedianRegion,
+    globalGini: validatedGini,
+    regionalVariance: validatedVariance,
+    crisisAffectedFraction: validatedCrisisAffected,
+    worstRegionQoL: validatedWorstRegion,
+    bestRegionQoL: validatedBestRegion,
+    medianRegionQoL: validatedMedianRegion,
     isDystopicInequality,
     isRegionalDystopia
   };

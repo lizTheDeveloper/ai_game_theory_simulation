@@ -29,11 +29,12 @@ export function RegionsDashboard() {
     return <div className="p-8">Waiting for simulation update...</div>
   }
 
-  const population = lastUpdate.population || 8_000_000_000
-  const qol = lastUpdate.qualityOfLife || 0
-  const socialCohesion = lastUpdate.socialCohesion || 0
-  const institutionalTrust = lastUpdate.institutionalTrust || 0
-  const regions = lastUpdate.regionalPopulations || []
+  // Use ?? instead of || to handle 0 values correctly
+  const population = lastUpdate.population ?? 8_000_000_000
+  const qol = lastUpdate.qualityOfLife ?? 0.65  // Default 65% baseline QoL
+  const socialCohesion = lastUpdate.socialCohesion ?? 0.7  // Default 70% baseline cohesion
+  const institutionalTrust = lastUpdate.institutionalTrust ?? 0.7  // Default 70% baseline trust
+  const regions = lastUpdate.regionalPopulations ?? []
   const hasRegionalData = regions.length > 0
 
   // Infer status from QoL

@@ -1,4 +1,5 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { assertEconomicStage } from '../../utils/assertions';
 /**
  * Government Election Phase
  *
@@ -134,7 +135,8 @@ function updatePublicOpinion(state: GameState, rng: RNGFunction): void {
     let opinion = state.governmentSystem!.publicOpinion.get(countryCode) || 0.5;
 
     // 1. Economic performance affects opinion
-    const economicStage = state.globalMetrics.economicTransitionStage || 1;
+    // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+    const economicStage = assertEconomicStage(state, 'GovernmentElectionPhase.updatePublicOpinion');
     if (economicStage > 2) {
       opinion += 0.02; // Advanced economy boosts opinion
     } else if (economicStage < 1) {

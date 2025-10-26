@@ -117,9 +117,14 @@ export function updateSocialAccumulation(
     meaningCrisisRate *= 0.5; // 50% reduction (new frameworks emerging)
   }
   
-  // Apply meaning crisis accumulation
-  const currentMeaningCrisis = isNaN(social.meaningCrisisLevel) ? 0.0 : social.meaningCrisisLevel;
-  social.meaningCrisisLevel = Math.max(0, Math.min(1, currentMeaningCrisis + meaningCrisisRate));
+  // Apply meaning crisis accumulation (detect NaN - fail loudly)
+  if (isNaN(social.meaningCrisisLevel)) {
+    console.error(`❌ NaN in meaningCrisisLevel at month ${state.currentMonth}`);
+    console.error(`   meaningCrisisRate: ${meaningCrisisRate}`);
+    console.error(`   social state: ${JSON.stringify(social)}`);
+    throw new Error(`NaN in meaningCrisisLevel - trace source of social accumulation corruption`);
+  }
+  social.meaningCrisisLevel = Math.max(0, Math.min(1, social.meaningCrisisLevel + meaningCrisisRate));
   
   // === INSTITUTIONAL LEGITIMACY EROSION ===
   // Governments lag behind technological change
@@ -155,10 +160,15 @@ export function updateSocialAccumulation(
     legitimacyRecoveryRate += 0.003; // Balanced regulation works
   }
   
-  // Apply legitimacy change
-  const currentLegitimacy = isNaN(social.institutionalLegitimacy) ? 0.7 : social.institutionalLegitimacy;
-  social.institutionalLegitimacy = Math.max(0, Math.min(1, 
-    currentLegitimacy - legitimacyErosionRate + legitimacyRecoveryRate
+  // Apply legitimacy change (detect NaN - fail loudly)
+  if (isNaN(social.institutionalLegitimacy)) {
+    console.error(`❌ NaN in institutionalLegitimacy at month ${state.currentMonth}`);
+    console.error(`   legitimacyErosionRate: ${legitimacyErosionRate}, legitimacyRecoveryRate: ${legitimacyRecoveryRate}`);
+    console.error(`   social state: ${JSON.stringify(social)}`);
+    throw new Error(`NaN in institutionalLegitimacy - trace source of social accumulation corruption`);
+  }
+  social.institutionalLegitimacy = Math.max(0, Math.min(1,
+    social.institutionalLegitimacy - legitimacyErosionRate + legitimacyRecoveryRate
   ));
   
   // === SOCIAL COHESION DEPLETION ===
@@ -267,10 +277,15 @@ export function updateSocialAccumulation(
     adaptationRate *= 0.5; // Hard to coordinate without institutions
   }
   
-  // Apply cultural adaptation
-  const currentAdaptation = isNaN(social.culturalAdaptation) ? 0.2 : social.culturalAdaptation;
+  // Apply cultural adaptation (detect NaN - fail loudly)
+  if (isNaN(social.culturalAdaptation)) {
+    console.error(`❌ NaN in culturalAdaptation at month ${state.currentMonth}`);
+    console.error(`   adaptationRate: ${adaptationRate}`);
+    console.error(`   social state: ${JSON.stringify(social)}`);
+    throw new Error(`NaN in culturalAdaptation - trace source of social accumulation corruption`);
+  }
   social.culturalAdaptation = Math.max(0, Math.min(1,
-    currentAdaptation + adaptationRate
+    social.culturalAdaptation + adaptationRate
   ));
   
   // === PHASE 1: LÉVY FLIGHT CASCADE CHECKS (Preference Falsification Cascades) ===
@@ -401,7 +416,7 @@ function checkSocialCrises(state: GameState): void {
       // War destroyed state capacity
       institutionFailureAttribution = RootCause.conflict;
       institutionFailureConfidence = 'HIGH';
-    } else if ((state.society.trust || 0.5) < 0.3) {
+    } else if (state.society.trust < 0.3) {
       // Extreme inequality → legitimacy collapse (using trust as proxy for socialCohesion)
       institutionFailureAttribution = {
         causes: [
@@ -634,7 +649,10 @@ function calculateAlignmentPerception(state: GameState): number {
  */
 function calculateAIPerformance(state: GameState): number {
   const qol = state.globalMetrics.qualityOfLife;
-  const previousQoL = state.globalMetrics.previousQoL || 0.5;
+  if (state.globalMetrics.previousQoL === undefined) {
+    throw new Error('❌ state.globalMetrics.previousQoL is undefined in calculateAIPerformance - initialization bug');
+  }
+  const previousQoL = state.globalMetrics.previousQoL;
   const qolTrend = qol - previousQoL;
 
   // Performance baseline from QoL (is AI making life better?)
@@ -689,7 +707,10 @@ function calculateCapabilityFear(state: GameState): number {
 
   // Estimate change rate (actual implementation would track history)
   // For now, assume rapid growth if capability > 3.0 and increasing
-  const previousCapability = (state as any).previousAICapability || 0;
+  if (!('previousAICapability' in state)) {
+    throw new Error('❌ state.previousAICapability is undefined in calculateAIPerformance - initialization bug');
+  }
+  const previousCapability = (state as any).previousAICapability;
   const capabilityChange = currentCapability - previousCapability;
 
   // Store for next iteration
@@ -781,7 +802,10 @@ export function updateTrustRecovery(state: GameState): void {
   }
 
   // 2. Demonstrated benefits (+2%/month when QoL improving)
-  const qolTrend = state.globalMetrics.qualityOfLife - (state.globalMetrics.previousQoL || 0.5);
+  if (state.globalMetrics.previousQoL === undefined) {
+    throw new Error('❌ state.globalMetrics.previousQoL is undefined in updateTrustInAI - initialization bug');
+  }
+  const qolTrend = state.globalMetrics.qualityOfLife - state.globalMetrics.previousQoL;
   if (qolTrend > 0) {
     baseTrustChange += TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS;
   }
@@ -819,7 +843,10 @@ export function updateTrustRecovery(state: GameState): void {
 
   // 2. Detected misalignment (-2% per detection)
   const misalignedAIs = state.aiAgents.filter(ai => ai.alignment < 0.5).length;
-  const previousMisaligned = (state as any).previousMisalignedCount || 0;
+  if (!('previousMisalignedCount' in state)) {
+    throw new Error('❌ state.previousMisalignedCount is undefined in updateTrustInAI - initialization bug');
+  }
+  const previousMisaligned = (state as any).previousMisalignedCount;
   const newMisalignments = Math.max(0, misalignedAIs - previousMisaligned);
   baseTrustChange -= newMisalignments * TRUST_DECAY_FROM_MISALIGNMENT;
   (state as any).previousMisalignedCount = misalignedAIs;

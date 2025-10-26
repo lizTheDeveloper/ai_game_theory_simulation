@@ -426,6 +426,15 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
   // Immediately send full state delta so dashboard shows initial values
   // This populates paradigms, environmental metrics, government, etc.
   const initialDelta = calculateDelta(previousState, state, true); // Force full delta
+
+  // DEBUG: Log what's in the initial delta
+  console.log('[Worker] Initial delta contains:', {
+    population: initialDelta.population,
+    qualityOfLife: initialDelta.qualityOfLife,
+    westernLiberalIndex: initialDelta.westernLiberalIndex,
+    developmentIndex: initialDelta.developmentIndex
+  });
+
   self.postMessage({
     type: 'update',
     delta: initialDelta,
@@ -685,6 +694,10 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   // Capture only fields we need for delta calculation
   // Don't deep clone entire 1.78MB state (too expensive)
 
+  // DEBUG: Log what we're reading from state
+  console.log('[Worker] Capturing snapshot - population:', state.humanPopulationSystem.population);
+  console.log('[Worker] Capturing snapshot - qualityOfLife:', state.globalMetrics.qualityOfLife);
+
   // Calculate AI metrics
   const avgAICapability = state.aiAgents.length > 0
     ? state.aiAgents.reduce((sum, ai) => sum + (ai.capability || 0), 0) / state.aiAgents.length
@@ -861,7 +874,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     sharedTraumaIntensity: collective.sharedTraumaIntensity
   })) || [];
 
-  return {
+  const snapshot = {
     currentMonth: state.currentMonth,
     currentYear: state.currentYear,
     qualityOfLife: state.globalMetrics.qualityOfLife,
@@ -907,6 +920,11 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     aiSufferingMetrics,
     aiCollectives
   };
+
+  // DEBUG: Log what we're returning
+  console.log('[Worker] Snapshot created - population:', snapshot.population, 'qualityOfLife:', snapshot.qualityOfLife);
+
+  return snapshot;
 }
 
 function calculateDelta(previous: StateSnapshot, current: GameState, forceFull = false): StateDelta {

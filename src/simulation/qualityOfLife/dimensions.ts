@@ -16,6 +16,7 @@
 import type { GameState, QualityOfLifeSystems } from '@/types/game';
 import { getTrustInAI } from '../socialCohesion';
 import { getTechDeploymentSafe } from '../techTree/helpers';
+import { assertProbability } from '../utils/assertions';
 
 /**
  * Calculate Tier 0: Survival Fundamentals
@@ -29,12 +30,16 @@ export function calculateSurvivalFundamentals(state: GameState): QualityOfLifeSy
   const rawThermalHabitability = calculateThermalHabitability(state);
   const rawShelterSecurity = calculateShelterSecurity(state);
 
-  // NaN guards
+  // FIX (Oct 25, 2025): Replaced defensive NaN guards with assertive validation
+  // If any calculation produces NaN, that's a BUG that needs fixing, not a value to replace
+  const month = state.currentMonth;
+  const location = 'calculateSurvivalFundamentals';
+
   return {
-    foodSecurity: isNaN(rawFoodSecurity) ? 0.85 : rawFoodSecurity,
-    waterSecurity: isNaN(rawWaterSecurity) ? 0.80 : rawWaterSecurity,
-    thermalHabitability: isNaN(rawThermalHabitability) ? 1.0 : rawThermalHabitability,
-    shelterSecurity: isNaN(rawShelterSecurity) ? 0.75 : rawShelterSecurity,
+    foodSecurity: assertProbability(rawFoodSecurity, { location, valueName: 'foodSecurity', month }),
+    waterSecurity: assertProbability(rawWaterSecurity, { location, valueName: 'waterSecurity', month }),
+    thermalHabitability: assertProbability(rawThermalHabitability, { location, valueName: 'thermalHabitability', month }),
+    shelterSecurity: assertProbability(rawShelterSecurity, { location, valueName: 'shelterSecurity', month }),
   };
 }
 
@@ -223,7 +228,9 @@ export function calculateWaterSecurity(state: GameState): number {
   const cleanEnergy = getTechDeploymentSafe(state, 'cleanEnergy');
   waterSecurity += cleanEnergy * 0.15; // Desalination powered by clean energy
 
-  return Math.max(0, Math.min(1.5, waterSecurity));
+  // FIX (Oct 25, 2025): Cap at 1.0, not 1.5 - waterSecurity is a probability [0, 1]
+  // Bug found by assertProbability: waterSecurity was reaching 1.096
+  return Math.max(0, Math.min(1.0, waterSecurity));
 }
 
 /**
