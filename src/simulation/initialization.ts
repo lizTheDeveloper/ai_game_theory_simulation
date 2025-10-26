@@ -559,6 +559,7 @@ export function createDefaultInitialState(
       economicTransitionStage: 0,
       socialStability: 0.7,
       qualityOfLife: 0.65,
+      previousQoL: 0.65, // Track QoL changes for trust dynamics (initialized to current QoL)
       wealthDistribution: 0.5,
       technologicalBreakthroughRate: 0.15,
       manufacturingCapability: 0.1,
@@ -566,6 +567,10 @@ export function createDefaultInitialState(
       publicTrust: 0.5, // Moderate baseline trust in technology (2025)
       population: 8.0 // Convenience accessor (synced with humanPopulationSystem.population)
     },
+
+    // Track AI capability changes for performance calculation (Phase 3.1 initialization fix)
+    previousAICapability: 0, // Will be updated in first month
+    previousMisalignedCount: 0, // Track new misalignments for trust decay
     
     // Initialize multi-dimensional QoL system
     qualityOfLifeSystems: initializeQualityOfLifeSystems(),

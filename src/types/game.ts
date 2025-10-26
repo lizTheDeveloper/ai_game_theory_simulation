@@ -581,4 +581,16 @@ export interface GameState {
     data: any;
     timestamp: number; // Month when decision was queued
   }>;
+
+  /**
+   * Trust Dynamics Tracking (Phase 3.1 - Defensive Programming Elimination, Oct 25 2025)
+   *
+   * Properties for tracking AI capability and QoL changes over time.
+   * Used in socialCohesion.ts for trust recovery/decay calculations.
+   *
+   * Previously these were defensive fallbacks (`|| 0`), now proper state.
+   */
+  previousQoL?: number; // Previous month's QoL for trend calculation (initialized in globalMetrics)
+  previousAICapability?: number; // Previous month's average AI capability
+  previousMisalignedCount?: number; // Previous month's misaligned AI count
 }
