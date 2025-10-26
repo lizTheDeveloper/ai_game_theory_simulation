@@ -608,21 +608,41 @@ const value = isNaN(x) ? 50 : x;
 const score = state.metric ?? 0.5;
 ```
 
-**✅ GOOD - Detect and trace errors:**
+**✅ GOOD - Use assertion utilities:**
 ```typescript
-// Detect NaN and log detailed diagnostic information
-if (isNaN(value)) {
-  console.error(`❌ NaN detected in ${functionName} at month ${state.currentMonth}`);
-  console.error(`   Input values: x=${x}, y=${y}, z=${z}`);
-  console.error(`   State snapshot: ${JSON.stringify(relevantState)}`);
-  throw new Error(`NaN in ${functionName} - simulation invalid`);
-}
+import { assertFinite, assertStateProperty, assertProbability } from '@/simulation/utils/assertions';
 
-// For geometric means and other fragile calculations, use minimum floors
-// instead of fallbacks to prevent mathematical collapse:
-const MIN_FLOOR = 0.001; // Prevents exactly 0, which breaks geometric means
-const safeValue = Math.max(MIN_FLOOR, calculatedValue);
+// Validate calculations - fails loudly with full context if NaN/Infinity
+const metric = assertFinite(calculatedValue, {
+  location: 'updateEnvironmentalMetric',
+  valueName: 'environmentalScore',
+  month: state.currentMonth,
+  additionalInfo: { inputs: { x, y, z } }
+});
+
+// Replace defensive fallbacks with explicit assertions
+// ❌ BAD: const pH = state.oceanHealth.pH ?? 8.1;
+// ✅ GOOD:
+const pH = assertStateProperty(state.oceanHealth, 'pH', {
+  location: 'applyOceanTech',
+  month: state.currentMonth
+});
+
+// Validate probabilities are in [0, 1]
+const probability = assertProbability(riskScore, {
+  location: 'calculateRisk',
+  valueName: 'riskScore',
+  month: state.currentMonth
+});
 ```
+
+**Available assertion utilities** (`src/simulation/utils/assertions.ts`):
+- `assertFinite(value, context)` - Rejects NaN/Infinity with detailed error
+- `assertDefined(value, context)` - Rejects undefined/null
+- `assertInRange(value, min, max, context)` - Validates numeric ranges
+- `assertProbability(value, context)` - Validates [0, 1] range
+- `assertStateProperty(obj, 'path.to.prop', context)` - Replaces `?? fallback` patterns
+- `assertNonEmpty(array, context)` - Validates array has elements
 
 **When to use fallbacks:**
 - **Initialization only:** Default values when creating new state
@@ -637,20 +657,26 @@ When adding/modifying simulation code, check:
 4. ✓ Are circular dependencies possible (read → transform → write back)? (Break the cycle)
 5. ✓ Are all division operations protected from 0 denominators? (Add checks)
 
-**Example of proper NaN handling:**
+**Example of proper error detection with assertion utilities:**
 ```typescript
+import { assertFinite, assertInRange } from '@/simulation/utils/assertions';
+
 // Environmental accumulation - proper error detection
 function updateEnvironmentalMetric(state: GameState, newValue: number): void {
-  // Validate input
-  if (isNaN(newValue)) {
-    console.error(`❌ NaN value in updateEnvironmentalMetric at month ${state.currentMonth}`);
-    console.error(`   Current state: ${JSON.stringify(state.environmentalAccumulation)}`);
-    throw new Error('Invalid environmental metric - simulation corrupted');
-  }
+  // Validate input - throws with full context if NaN/Infinity
+  const validated = assertFinite(newValue, {
+    location: 'updateEnvironmentalMetric',
+    valueName: 'newValue',
+    month: state.currentMonth,
+    additionalInfo: { current: state.environmentalAccumulation.metric }
+  });
 
-  // Use minimum floor for fragile calculations (geometric means, etc.)
-  const MIN_FLOOR = 0.001;
-  state.environmentalAccumulation.metric = Math.max(MIN_FLOOR, Math.min(1, newValue));
+  // Ensure value is in valid range [0.001, 1]
+  state.environmentalAccumulation.metric = assertInRange(validated, 0.001, 1, {
+    location: 'updateEnvironmentalMetric',
+    valueName: 'metric',
+    month: state.currentMonth
+  });
 
   // NO fallback - if value is invalid, the simulation should fail loudly
 }
