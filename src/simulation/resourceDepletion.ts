@@ -22,6 +22,7 @@ import {
   TimberResource,
   CO2System,
 } from '../types/resources';
+import { assertEconomicStage } from './utils/assertions';
 
 // Helper to add events to state
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
@@ -63,7 +64,8 @@ export function updateResourceEconomy(state: GameState): void {
 
 function updateFossilFuelDepletion(state: GameState, resources: ResourceEconomy): void {
   // Base depletion scales with economic stage
-  const economicStage = state.globalMetrics?.economicTransitionStage || 1;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const economicStage = assertEconomicStage(state, 'resourceDepletion');
   const economicMultiplier = 0.5 + economicStage * 0.5; // 1.0x at stage 1, 2.5x at stage 3
   
   // Update each fossil fuel
@@ -140,7 +142,8 @@ function updateFossilFuel(
 // ============================================================================
 
 function updateMetalDepletion(state: GameState, resources: ResourceEconomy): void {
-  const economicStage = state.globalMetrics?.economicTransitionStage || 1;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const economicStage = assertEconomicStage(state, 'resourceDepletion');
   const economicMultiplier = 0.5 + economicStage * 0.5;
   
   // Update each metal
@@ -254,7 +257,8 @@ function updateRenewable(
   resource.reserves = Math.min(resource.capacity, resource.reserves + regen);
   
   // Harvesting (scales with economic stage)
-  const economicStage = state.globalMetrics?.economicTransitionStage || 1;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const economicStage = assertEconomicStage(state, 'resourceDepletion');
   const economicMultiplier = 0.8 + economicStage * 0.2; // 1.0x to 1.4x
   resource.monthlyHarvest = resource.sustainableHarvestRate * economicMultiplier;
   
@@ -285,7 +289,8 @@ function updateEnergySystem(state: GameState, resources: ResourceEconomy): void 
   const energy = resources.energy;
   
   // Demand scales with economic stage
-  const economicStage = state.globalMetrics?.economicTransitionStage || 1;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const economicStage = assertEconomicStage(state, 'resourceDepletion');
   energy.totalDemand = 95 + economicStage * 10; // 95 → 125 units
   
   // Production from each source (limited by capacity and fuel availability)
@@ -531,7 +536,8 @@ function updateOceanHealth(state: GameState, resources: ResourceEconomy): void {
   ocean.fishStocks = Math.max(0, ocean.fishStocks - fishDieoff);
   
   // Overfishing (economic pressure)
-  const economicStage = state.globalMetrics?.economicTransitionStage || 1;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const economicStage = assertEconomicStage(state, 'resourceDepletion');
   let overfishing = economicStage * 0.003; // 0.3-0.9% per month
   
   // PUBLIC SUPPORT FOR OCEAN PROTECTION (from interspecies communication)

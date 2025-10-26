@@ -12,6 +12,7 @@
 import { GameState } from '../types/game';
 import { InformationWarfareSystem, initializeInformationWarfare } from '../types/informationWarfare';
 import { GameEvent } from '../types/events';
+import { assertProbability } from './utils/assertions';
 
 export { initializeInformationWarfare };
 
@@ -102,7 +103,12 @@ export function updateInformationWarfare(state: GameState): GameEvent[] {
   ));
   
   // Corporate power stable but erodes with low trust
-  const publicTrust = state.globalMetrics.publicTrust || 0.5;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const publicTrust = assertProbability(state.globalMetrics.publicTrust, {
+    location: 'updateNarrativeControl',
+    valueName: 'globalMetrics.publicTrust',
+    month: state.currentMonth
+  });
   const corpNarrativeChange = (publicTrust - 0.5) * 0.001;
   sys.narrativeControl.corporations = Math.max(0.05, Math.min(0.95,
     sys.narrativeControl.corporations + corpNarrativeChange
@@ -130,7 +136,12 @@ export function updateInformationWarfare(state: GameState): GameEvent[] {
                          (sys.epistemologicalCrisisLevel * 0.003); // Crisis compounds
   
   // Apply trust erosion to public trust in AI
-  const currentTrust = state.globalMetrics.publicTrust || 0.5;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const currentTrust = assertProbability(state.globalMetrics.publicTrust, {
+    location: 'updateInformationWarfare',
+    valueName: 'globalMetrics.publicTrust',
+    month: state.currentMonth
+  });
   state.globalMetrics.publicTrust = Math.max(0.0,
     currentTrust - sys.trustErosionRate
   );

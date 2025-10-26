@@ -317,15 +317,37 @@ export function updateRegionalPopulations(state: GameState): void {
 
     // === 2. CALCULATE DEATH RATE ===
     const healthcareReduction = Math.max(0.3, 1 - (region.healthcareQuality * 0.7));
-    const foodStock = isNaN(state.resourceEconomy.food.reserves) ? 1.0 : state.resourceEconomy.food.reserves;
-    const waterStock = isNaN(state.resourceEconomy.water.reserves) ? 1.0 : state.resourceEconomy.water.reserves;
+
+    // Detect NaN in resource reserves - fail loudly
+    if (isNaN(state.resourceEconomy.food.reserves)) {
+      console.error(`❌ NaN in food.reserves at month ${state.currentMonth}`);
+      throw new Error(`NaN in food.reserves - trace source`);
+    }
+    if (isNaN(state.resourceEconomy.water.reserves)) {
+      console.error(`❌ NaN in water.reserves at month ${state.currentMonth}`);
+      throw new Error(`NaN in water.reserves - trace source`);
+    }
+
+    const foodStock = state.resourceEconomy.food.reserves;
+    const waterStock = state.resourceEconomy.water.reserves;
     const foodWaterStress = Math.max(0,
       (1 - foodStock) * 0.3 +
       (1 - waterStock) * 0.3
     );
-    const climateStability = isNaN(state.environmentalAccumulation.climateStability) ? 0.5 : state.environmentalAccumulation.climateStability;
+
+    // Detect NaN in environmental metrics - fail loudly
+    if (isNaN(state.environmentalAccumulation.climateStability)) {
+      console.error(`❌ NaN in climateStability at month ${state.currentMonth}`);
+      throw new Error(`NaN in climateStability - trace source`);
+    }
+    if (isNaN(state.environmentalAccumulation.pollutionLevel)) {
+      console.error(`❌ NaN in pollutionLevel at month ${state.currentMonth}`);
+      throw new Error(`NaN in pollutionLevel - trace source`);
+    }
+
+    const climateStability = state.environmentalAccumulation.climateStability;
     const climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
-    const pollutionLevel = isNaN(state.environmentalAccumulation.pollutionLevel) ? 0 : state.environmentalAccumulation.pollutionLevel;
+    const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
     const pollutionStress = pollutionLevel * 0.3;
     const warMultiplier = region.conflictRisk > 0.5 ? 1.5 : 1.0;
 
@@ -361,17 +383,31 @@ export function updateRegionalPopulations(state: GameState): void {
     // Calculate capacity modifier independently (don't rely on global)
     const env = state.environmentalAccumulation;
 
-    // Reuse foodStock and waterStock already calculated above (lines 319-320)
-    const climateModifier = isNaN(env.climateStability) ? 0.5 : env.climateStability;
+    // Reuse foodStock and waterStock already calculated above (now validated)
+    // Detect NaN in environmental metrics - fail loudly
+    if (isNaN(env.climateStability)) {
+      console.error(`❌ NaN in env.climateStability at month ${state.currentMonth}`);
+      throw new Error(`NaN in env.climateStability - trace source`);
+    }
+    if (isNaN(env.biodiversityIndex)) {
+      console.error(`❌ NaN in env.biodiversityIndex at month ${state.currentMonth}`);
+      throw new Error(`NaN in env.biodiversityIndex - trace source`);
+    }
+    if (isNaN(state.globalMetrics.economicTransitionStage)) {
+      console.error(`❌ NaN in economicTransitionStage at month ${state.currentMonth}`);
+      throw new Error(`NaN in economicTransitionStage - trace source`);
+    }
+
+    const climateModifier = env.climateStability;
     const foodAvailability = Math.min(1.0, foodStock / 100);
     const waterAvailability = Math.min(1.0, waterStock / 100);
     const resourceModifier = Math.min(foodAvailability, waterAvailability);
     // FIX (Oct 16, 2025): Same biodiversity decoupling as global population
-    const biodiversity = isNaN(env.biodiversityIndex) ? 0.35 : env.biodiversityIndex;
-    const ecosystemModifier = biodiversity < 0.20 
-      ? biodiversity * 2.5 
+    const biodiversity = env.biodiversityIndex;
+    const ecosystemModifier = biodiversity < 0.20
+      ? biodiversity * 2.5
       : Math.max(0.8, 0.8 + (biodiversity - 0.2) * 0.5);
-    const economicStage = isNaN(state.globalMetrics.economicTransitionStage) ? 0 : state.globalMetrics.economicTransitionStage;
+    const economicStage = state.globalMetrics.economicTransitionStage;
     const techModifier = 1.0 +
       (economicStage * 0.2) +
       (getTechDeploymentSafe(state, 'fusionPower')) * 1.0 +
@@ -495,9 +531,20 @@ export function logRegionalPopulationSummary(state: GameState): void {
 
   for (const region of pop.regionalPopulations) {
     const popBillions = (region.population / 1000).toFixed(2);
-    const growthRate = isNaN(region.netGrowthRate) ? 0 : region.netGrowthRate;
+
+    // Detect NaN in regional metrics - fail loudly (even in logging)
+    if (isNaN(region.netGrowthRate)) {
+      console.error(`❌ NaN in netGrowthRate for ${region.name} at month ${state.currentMonth}`);
+      throw new Error(`NaN in netGrowthRate for ${region.name} - trace source`);
+    }
+    if (isNaN(region.fertilityRate)) {
+      console.error(`❌ NaN in fertilityRate for ${region.name} at month ${state.currentMonth}`);
+      throw new Error(`NaN in fertilityRate for ${region.name} - trace source`);
+    }
+
+    const growthRate = region.netGrowthRate;
     const growth = (growthRate * 100).toFixed(1);
-    const fertility = isNaN(region.fertilityRate) ? 0 : region.fertilityRate;
+    const fertility = region.fertilityRate;
     const fertilityStr = fertility.toFixed(1);
 
     console.log(`  ${region.name}: ${popBillions}B (${growthRate >= 0 ? '+' : ''}${growth}% growth, ${fertilityStr} fertility)`);

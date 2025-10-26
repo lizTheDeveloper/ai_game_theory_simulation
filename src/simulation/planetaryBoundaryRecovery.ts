@@ -28,6 +28,7 @@
 
 import type { GameState, RNGFunction } from '../types/game';
 import type { BoundaryName } from '../types/planetaryBoundaries';
+import { assertFinite, assertDefined } from './utils/assertions';
 
 /**
  * Main recovery update function
@@ -188,9 +189,22 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
   // but FIX #18 updates resourceEconomy.co2.annualEmissions (actual emissions)
   // This architectural flaw meant FIX #18 had NO EFFECT on climate recovery
   //
-  // FIX #18.2 (Oct 22, 2025): Add robust fallback handling for undefined/NaN
-  const rawEmissions = state.resourceEconomy?.co2?.annualEmissions;
-  const annualEmissions = (rawEmissions !== undefined && !isNaN(rawEmissions)) ? rawEmissions : 40; // GtCO₂
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertive validation
+  // If annualEmissions is NaN/undefined, that's a BUG in CO2 system initialization
+  const rawEmissions = assertDefined(
+    state.resourceEconomy?.co2?.annualEmissions,
+    {
+      location: 'updateClimateRecovery',
+      valueName: 'resourceEconomy.co2.annualEmissions',
+      month: state.currentMonth,
+      expectedSource: 'resourceDepletion.ts CO2 system'
+    }
+  );
+  const annualEmissions = assertFinite(rawEmissions, {
+    location: 'updateClimateRecovery',
+    valueName: 'annualEmissions',
+    month: state.currentMonth
+  });
   // CDR tracking: No dedicated property yet, use natural sinks as proxy
   const annualCDR = (state.resourceEconomy?.co2?.oceanAbsorption ?? 0) + (state.resourceEconomy?.co2?.landAbsorption ?? 0);
 
@@ -550,9 +564,21 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
   // CRITICAL: Ocean acidification recovery was reading climateState.annualEmissions (never updated)
   // but FIX #18 updates resourceEconomy.co2.annualEmissions (actual emissions)
   //
-  // FIX #18.2 (Oct 22, 2025): Add robust fallback handling for undefined/NaN
-  const rawEmissions = state.resourceEconomy?.co2?.annualEmissions;
-  const annualEmissions = (rawEmissions !== undefined && !isNaN(rawEmissions)) ? rawEmissions : 40; // GtCO₂
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertive validation
+  const rawEmissions = assertDefined(
+    state.resourceEconomy?.co2?.annualEmissions,
+    {
+      location: 'updateOceanAcidificationRecovery',
+      valueName: 'resourceEconomy.co2.annualEmissions',
+      month: state.currentMonth,
+      expectedSource: 'resourceDepletion.ts CO2 system'
+    }
+  );
+  const annualEmissions = assertFinite(rawEmissions, {
+    location: 'updateOceanAcidificationRecovery',
+    valueName: 'annualEmissions',
+    month: state.currentMonth
+  });
   // CDR tracking: No dedicated property yet, use natural sinks as proxy
   const annualCDR = (state.resourceEconomy?.co2?.oceanAbsorption ?? 0) + (state.resourceEconomy?.co2?.landAbsorption ?? 0);
 

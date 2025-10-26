@@ -20,6 +20,7 @@
  */
 
 import { GameState, RNGFunction } from '@/types/game';
+import { assertProbability } from './utils/assertions';
 
 /**
  * S-curve growth parameters
@@ -93,7 +94,12 @@ export function updateWorkflowAdaptation(state: GameState, rng: RNGFunction): vo
   // C. Skill gap resistance (hiring challenges)
   // Research: G2 (2024) - skill gaps are top barrier
   // Better trust/stability → lower skill gap resistance (proxy for education quality)
-  const socialStability = state.globalMetrics.socialStability || 0.5;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const socialStability = assertProbability(state.globalMetrics.socialStability, {
+    location: 'updateWorkflowAdaptation',
+    valueName: 'globalMetrics.socialStability',
+    month: state.currentMonth
+  });
   const educationQuality = Math.min(1.0, socialStability / 2.0); // Normalize to [0,1]
   const skillGapResistance = Math.max(0, SKILL_GAP_RESISTANCE_MAX * (1 - educationQuality));
 
@@ -196,7 +202,12 @@ export function getWorkflowContribution(state: GameState): number {
  */
 export function calculateTrainingCapacity(state: GameState): number {
   // Education quality baseline (0-1) - proxy from social stability
-  const socialStability = state.globalMetrics.socialStability || 0.5;
+  // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+  const socialStability = assertProbability(state.globalMetrics.socialStability, {
+    location: 'calculateTrainingCapacity',
+    valueName: 'globalMetrics.socialStability',
+    month: state.currentMonth
+  });
   const educationQuality = Math.min(1.0, socialStability / 2.0); // Normalize to [0,1]
 
   // Government retraining investment (proxy: total research investment / 1000)

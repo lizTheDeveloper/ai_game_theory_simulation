@@ -61,6 +61,7 @@ How the simulation operates and what determines outcomes:
 |----------|--------|-------------|
 | [💰 Economics](./mechanics/economics.md) | ✅ | Stages, revenue, expenses, UBI transitions |
 | [📊 Quality of Life](./mechanics/quality-of-life.md) | ✅ | 17-dimensional welfare measurement |
+| [🌐 Multi-Paradigm DUI](./mechanics/multi-paradigm-dui.md) | ✅ | 4 simultaneous paradigms (Western, Development, Ecological, Indigenous) - Oct 2025 |
 | [🎯 Outcomes](./mechanics/outcomes.md) | ✅ | Utopia, Dystopia, Extinction attractors |
 | [✨ Golden Age](./mechanics/golden-age.md) | ✅ | Prosperity state vs Utopia outcome |
 | [⚡ Crisis Cascades](./mechanics/crisis-cascades.md) | ✅ | How multiple crises compound |

@@ -150,12 +150,27 @@ export function updateHumanPopulation(state: GameState): void {
   // === 1. CALCULATE CARRYING CAPACITY ===
   // Base capacity affected by: climate, resources, ecosystem, technology
 
-  // Climate modifier: stable climate = high capacity
-  const climateModifier = isNaN(env.climateStability) ? 0.5 : env.climateStability; // 1.0 = normal, 0 = uninhabitable
+  // Climate modifier: stable climate = high capacity (detect NaN - fail loudly)
+  if (isNaN(env.climateStability)) {
+    console.error(`❌ NaN in climateStability at month ${state.currentMonth}`);
+    console.error(`   env state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN in climateStability - trace source of environmental corruption`);
+  }
+  const climateModifier = env.climateStability; // 1.0 = normal, 0 = uninhabitable
 
-  // Resource modifier: need food AND water
-  const foodStock = isNaN(resources.food.reserves) ? 1.0 : resources.food.reserves;
-  const waterStock = isNaN(resources.water.reserves) ? 1.0 : resources.water.reserves;
+  // Resource modifier: need food AND water (detect NaN - fail loudly)
+  if (isNaN(resources.food.reserves)) {
+    console.error(`❌ NaN in food.reserves at month ${state.currentMonth}`);
+    console.error(`   resources state: ${JSON.stringify(resources)}`);
+    throw new Error(`NaN in food.reserves - trace source of resource corruption`);
+  }
+  if (isNaN(resources.water.reserves)) {
+    console.error(`❌ NaN in water.reserves at month ${state.currentMonth}`);
+    console.error(`   resources state: ${JSON.stringify(resources)}`);
+    throw new Error(`NaN in water.reserves - trace source of resource corruption`);
+  }
+  const foodStock = resources.food.reserves;
+  const waterStock = resources.water.reserves;
   const foodAvailability = Math.min(1.0, foodStock);
   const waterAvailability = Math.min(1.0, waterStock);
   const resourceModifier = Math.min(foodAvailability, waterAvailability);
@@ -165,13 +180,23 @@ export function updateHumanPopulation(state: GameState): void {
   // NOT immediate carrying capacity. Industrial agriculture feeds 8B despite 65% biodiversity loss.
   // Research: No evidence that 35% biodiversity = 35% capacity in 2025.
   // Only catastrophic collapse (<20%) immediately constrains food production.
-  const biodiversity = isNaN(env.biodiversityIndex) ? 0.35 : env.biodiversityIndex;
+  if (isNaN(env.biodiversityIndex)) {
+    console.error(`❌ NaN in biodiversityIndex at month ${state.currentMonth}`);
+    console.error(`   env state: ${JSON.stringify(env)}`);
+    throw new Error(`NaN in biodiversityIndex - trace source of environmental corruption`);
+  }
+  const biodiversity = env.biodiversityIndex;
   const ecosystemModifier = biodiversity < 0.20 
     ? biodiversity * 2.5  // Catastrophic: 20% biodiv → 50% capacity, 10% → 25%, 0% → 0%
     : Math.max(0.8, 0.8 + (biodiversity - 0.2) * 0.5); // 20-100% biodiv → 80-120% capacity
 
-  // Tech modifier: advancement increases capacity
-  const economicStage = isNaN(state.globalMetrics.economicTransitionStage) ? 0 : state.globalMetrics.economicTransitionStage;
+  // Tech modifier: advancement increases capacity (detect NaN - fail loudly)
+  if (isNaN(state.globalMetrics.economicTransitionStage)) {
+    console.error(`❌ NaN in economicTransitionStage at month ${state.currentMonth}`);
+    console.error(`   globalMetrics: ${JSON.stringify(state.globalMetrics)}`);
+    throw new Error(`NaN in economicTransitionStage - trace source of globalMetrics corruption`);
+  }
+  const economicStage = state.globalMetrics.economicTransitionStage;
   const techModifier = 1.0 +
     (economicStage * 0.2) + // Tech advancement
     (getTechDeploymentSafe(state, 'fusionPower')) * 1.0 + // Energy abundance
@@ -299,7 +324,10 @@ export function updateHumanPopulation(state: GameState): void {
   // FIX #1 (Oct 18, 2025): Cap multiplier to prevent 92% war death dominance
   // Research: ECFR (2024), CSET Georgetown (2024) - force multiplication plateaus, not unlimited
   // UN resolution 166-3: Flash war risk from speed, not simple lethality scaling
-  const activeConflicts = state.conflictResolution?.activeConflicts || 0;
+  if (state.conflictResolution?.activeConflicts === undefined) {
+    throw new Error('❌ state.conflictResolution.activeConflicts is undefined in calculateWarDeaths - initialization bug');
+  }
+  const activeConflicts = state.conflictResolution.activeConflicts;
   const BASE_WAR_MULTIPLIER = 1.5;
   const WAR_MULTIPLIER_PER_CONFLICT = 0.15;  // Reduced from 0.2 (more realistic)
   const MAX_WAR_MULTIPLIER = 2.0;  // HARD CAP (force multiplication plateaus)
@@ -789,10 +817,13 @@ function addSegmentSpecificCrisisDeaths(
       mortality: segmentMortality
     });
   }
-  
+
   // Apply death cap (20% monthly max)
   const monthlyDeathCap = pop.population * 0.20;
-  const remainingCapacity = Math.max(0, monthlyDeathCap - (pop.monthlyDeathsApplied || 0));
+  if (pop.monthlyDeathsApplied === undefined) {
+    throw new Error('❌ pop.monthlyDeathsApplied is undefined in applyDeathsWithCap - initialization bug');
+  }
+  const remainingCapacity = Math.max(0, monthlyDeathCap - pop.monthlyDeathsApplied);
   const totalDeathsAllowed = Math.min(totalDeathsRequested, remainingCapacity);
   
   // If capped, scale down all segment deaths proportionally
@@ -810,7 +841,10 @@ function addSegmentSpecificCrisisDeaths(
   pop.population = Math.max(0, pop.population - totalDeathsApplied);
   pop.monthlyExcessDeaths += totalDeathsApplied;
   pop.cumulativeCrisisDeaths += totalDeathsApplied;
-  pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + totalDeathsApplied;
+  if (pop.monthlyDeathsApplied === undefined) {
+    throw new Error('❌ pop.monthlyDeathsApplied is undefined in applyDeathsWithCap line 844 - initialization bug');
+  }
+  pop.monthlyDeathsApplied = pop.monthlyDeathsApplied + totalDeathsApplied;
 
   // Track by category (stored in billions, converted to millions for display)
   pop.deathsByCategory[category] += totalDeathsApplied;
@@ -915,7 +949,10 @@ function addUniformCrisisDeaths(
   pop.population = Math.max(0, pop.population - deathsInBillions);
   pop.monthlyExcessDeaths += deathsInBillions;
   pop.cumulativeCrisisDeaths += deathsInBillions;
-  pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + deathsInBillions;
+  if (pop.monthlyDeathsApplied === undefined) {
+    throw new Error('❌ pop.monthlyDeathsApplied is undefined in applyImmediateDeaths line 952 - initialization bug');
+  }
+  pop.monthlyDeathsApplied = pop.monthlyDeathsApplied + deathsInBillions;
 
   // Track by category (stored in billions, converted to millions for display)
   pop.deathsByCategory[category] += deathsInBillions;

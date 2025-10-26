@@ -137,9 +137,11 @@ export function updateTrappedPopulations(state: GameState): void {
     );
 
     // Social cohesion breakdown
-    state.globalMetrics.socialStability = Math.max(0,
-      state.globalMetrics.socialStability * (1 - trapped.socialCohesionImpact * 0.08)
-    );
+    const oldStability = state.globalMetrics.socialStability;
+    const cohesionFactor = 1 - trapped.socialCohesionImpact * 0.08;
+    const newStability = Math.max(0, oldStability * cohesionFactor);
+    console.log(`[DEBUG trappedPopulations:${state.currentMonth}] socialStability: ${oldStability.toFixed(4)} * ${cohesionFactor.toFixed(4)} = ${(oldStability * cohesionFactor).toFixed(4)} → ${newStability.toFixed(4)}`);
+    state.globalMetrics.socialStability = newStability;
 
     // Excess mortality from being trapped (applies to death tracking)
     const excessDeaths = (trapped.totalTrapped / 1000) * (trapped.mortalityMultiplier - 1.0) * 0.001; // Billions

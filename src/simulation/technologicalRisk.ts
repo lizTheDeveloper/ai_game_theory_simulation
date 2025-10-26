@@ -50,8 +50,14 @@ export function updateTechnologicalRisk(state: GameState): void {
   const alignmentResearch = state.government.alignmentResearchInvestment ?? 0;
   if (alignmentResearch > 3.0) misalignmentRate *= 0.7;
   
-  const currentMisalignmentRisk = isNaN(risk.misalignmentRisk) ? 0.1 : risk.misalignmentRisk;
-  risk.misalignmentRisk = Math.max(0, Math.min(1, currentMisalignmentRisk + misalignmentRate));
+  // Detect NaN in misalignmentRisk - fail loudly
+  if (isNaN(risk.misalignmentRisk)) {
+    console.error(`❌ NaN in misalignmentRisk at month ${state.currentMonth}`);
+    console.error(`   misalignmentRate: ${misalignmentRate}`);
+    console.error(`   risk state: ${JSON.stringify(risk)}`);
+    throw new Error(`NaN in misalignmentRisk - trace source of technological risk corruption`);
+  }
+  risk.misalignmentRisk = Math.max(0, Math.min(1, risk.misalignmentRisk + misalignmentRate));
   
   // === SAFETY DEBT ===
   // Use evaluation investment as proxy for safety research
@@ -68,14 +74,26 @@ export function updateTechnologicalRisk(state: GameState): void {
     safetyGap += 0.003 * unsafeOrgs.length;
   }
   
-  const currentSafetyDebt = isNaN(risk.safetyDebt) ? 0.05 : risk.safetyDebt;
-  risk.safetyDebt = Math.max(0, Math.min(1, currentSafetyDebt + safetyGap * 0.05));
+  // Detect NaN in safetyDebt - fail loudly
+  if (isNaN(risk.safetyDebt)) {
+    console.error(`❌ NaN in safetyDebt at month ${state.currentMonth}`);
+    console.error(`   safetyGap: ${safetyGap}`);
+    console.error(`   risk state: ${JSON.stringify(risk)}`);
+    throw new Error(`NaN in safetyDebt - trace source of technological risk corruption`);
+  }
+  risk.safetyDebt = Math.max(0, Math.min(1, risk.safetyDebt + safetyGap * 0.05));
   
   // === CONCENTRATION RISK ===
   const orgCount = state.organizations?.length ?? 4;
   const marketConcentration = orgCount < 5 ? 0.8 : orgCount < 10 ? 0.5 : 0.3;
-  const currentConcentrationRisk = isNaN(risk.concentrationRisk) ? marketConcentration : risk.concentrationRisk;
-  risk.concentrationRisk = Math.max(currentConcentrationRisk, marketConcentration);
+  // Detect NaN in concentrationRisk - fail loudly
+  if (isNaN(risk.concentrationRisk)) {
+    console.error(`❌ NaN in concentrationRisk at month ${state.currentMonth}`);
+    console.error(`   marketConcentration: ${marketConcentration}`);
+    console.error(`   risk state: ${JSON.stringify(risk)}`);
+    throw new Error(`NaN in concentrationRisk - trace source of technological risk corruption`);
+  }
+  risk.concentrationRisk = Math.max(risk.concentrationRisk, marketConcentration);
   
   // === COMPLACENCY (Golden Age effect) ===
   if (state.goldenAgeState.active) {

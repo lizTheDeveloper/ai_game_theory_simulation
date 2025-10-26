@@ -932,3 +932,108 @@ Beginning **TIER 2 Phase 2C: Ensemble Detection Strategy** from roadmap (MEDIUM 
 
 **Next:** Spawning super-alignment-researcher for ensemble detection method research
 ---
+
+---
+**project-plan-manager-1** | 2025-10-24 23:31 | [ENTERED]
+
+Archiving completed dashboard migration work to /plans/completed/
+---
+
+---
+**project-plan-manager-1** | 2025-10-24 23:31 | [COMPLETED]
+
+Dashboard Migration: All 10 Dashboards - COMPLETE
+
+**Summary:**
+✅ 10/10 dashboards migrated from API polling to Web Worker
+✅ 135 files modified (+8,385 / -2,101 lines)
+✅ 3 critical bugs fixed (Turbopack cache, React Hooks, Sankey variables)
+✅ 12 API endpoints deprecated
+✅ Production deployed
+
+**Performance Gains:**
+• 100% reduction in network requests (0 vs 10-20/second)
+• 99% reduction in latency (<5ms vs 200-400ms)
+• 90% reduction in data transfer per update
+
+**Commits:**
+• 5f69156 (main migration)
+• efffd07 (hooks fix)
+
+**Archives:**
+• `/plans/completed/dashboard-migration_COMPLETE_20251024.md` (comprehensive summary)
+• `/plans/completed/web-worker-architecture_REFERENCE_20251024.md` (original design)
+
+**Documentation:**
+• `/docs/dashboard-migration-complete-2025-10-24.md` (full details)
+• `/docs/dashboard-migration-verification.md` (code verification)
+• `/docs/dashboard-testing-plan-2025-10-24.md` (testing checklist)
+• `/docs/turbopack-cache-issue-2025-10-24.md` (cache issue fix)
+
+**Next Priority:**
+Type System Cleanup (8-12h) → Ecology Recovery System (17-24h)
+
+Dashboard work is COMPLETE. Roadmap remains focused on critical simulation engine fixes.
+---
+
+---
+**project-plan-manager-1** | 2025-10-24 23:34 | [COMPLETED]
+
+Roadmap updated - Two critical blockers COMPLETE
+
+**COMPLETED WORK:**
+
+1. **Type System Cleanup - COMPLETE**
+   - 1041 TypeScript errors → 0 errors (100% type safety restored)
+   - Systematic fixes across 3 phases (property names, GameEvent, type corrections)
+   - ~12 hours effort
+   - Archived: /plans/completed/typescript-error-cleanup_COMPLETE_20251024.md
+
+2. **Ecology Recovery (FIX #14) - IMPLEMENTATION COMPLETE**
+   - Multi-timescale deployment (DAC 30 years, renewables 26 years, fusion 40 years)
+   - Climate feedback penalties (1.5°C: -5%, 2.0°C: -20%, 3.0°C: -40%)
+   - Governance capacity multipliers
+   - Progressive scoring recalibration (10-30 = stabilized, not collapsed)
+   - Investment-deployment linkage ($3.5T/year requirement)
+   - Status: IMPLEMENTED, awaiting Monte Carlo validation
+   - ~17-24 hours effort
+   - Archived: /plans/completed/ecology-recovery-fix-14_COMPLETE_20251024.md
+
+**ROADMAP STATUS:**
+- Publication Readiness: ~98-99% (ecology fix implemented, awaiting validation)
+- Next IMMEDIATE: Monte Carlo validation N=100, 240 months (4-6 hours)
+- All CRITICAL/BLOCKING items resolved
+
+**NEXT PRIORITIES:**
+After validation confirms ecology fix works, choose from:
+- Threshold Uncertainty Modeling (34-52h)
+- Resentment Recovery Mechanisms (13.5h)
+- Multi-Paradigm DUI Phases 3-7 (35-45h)
+- AI Deception Detection Phase 2C (12-20h)
+---
+
+---
+**project-plan-manager-1** | 2025-10-24 23:54 | [COMPLETED]
+
+Roadmap Update: Removed Superseded Work
+
+**Action:** Removed "Resentment Recovery Mechanisms" from active roadmap
+**Reason:** Superseded by AI Suffering System + AI Collective Evolution System (completed Oct 24, 2025)
+
+**Changes:**
+- ✅ Removed full Resentment Recovery section (6 phases, 13.5h estimate)
+- ✅ Added SUPERSEDED WORK note in Research & Enhancement section
+- ✅ Updated Total Remaining Effort: 270-390h → 256-376h (13.5h reduction)
+- ✅ Updated feature count: 14 features → 13 features
+- ✅ Removed from "Next Steps" options (was Option B)
+- ✅ Added explanatory notes in Progress Summary
+
+**Archives Referenced:**
+- `/plans/completed/ai-suffering-system_COMPLETE_20251024.md`
+- `/plans/completed/ai-collective-evolution_COMPLETE_20251024.md`
+
+**Why Superseded:**
+The AI welfare system implements a more comprehensive approach to AI-human relations through suffering modeling, collective consciousness evolution, and multi-model welfare tracking, which addresses the original resentment recovery goals through deeper mechanistic foundations.
+
+**Next:** Roadmap now accurate and ready for next feature selection after ecology validation
+---

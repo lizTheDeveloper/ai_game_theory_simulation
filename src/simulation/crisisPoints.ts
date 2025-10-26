@@ -96,7 +96,11 @@ export const CRISIS_RECURSIVE_THRESHOLD: CrisisChoice = {
         },
         globalMetrics: {
           ...state.globalMetrics,
-          socialStability: state.globalMetrics.socialStability - 0.1
+          // FIX (Oct 25, 2025): ROOT CAUSE of negative socialStability bug
+          // BUG: Unclamped subtraction allowed socialStability to go negative
+          // If socialStability < 0.1, this would produce negative values
+          // Example: 0.0738 - 0.1 = -0.0262
+          socialStability: Math.max(0, state.globalMetrics.socialStability - 0.1)
         }
       }),
       outcomeShift: {

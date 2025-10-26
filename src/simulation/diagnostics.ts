@@ -6,6 +6,7 @@
  */
 
 import { GameState, GameEvent } from '@/types/game';
+import { assertEconomicStage } from './utils/assertions';
 
 export interface ThresholdCrossing {
   month: number;
@@ -290,11 +291,14 @@ export class DiagnosticLogger {
     // Economic systems
     const orgs = state.organizations || [];
     const bankruptCount = orgs.filter(o => o.bankrupt).length;
+    // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
+    const economicStage = assertEconomicStage(state, 'diagnostics.recordMonthlySnapshot');
+
     this.economicSnapshots.push({
       month,
       globalGDP: 0, // TODO: Calculate from economic systems
       unemploymentLevel: state.society?.unemploymentLevel || 0,
-      economicStage: state.globalMetrics?.economicTransitionStage || 0,
+      economicStage,
       organizationsBankrupt: bankruptCount,
       totalOrganizations: orgs.length
     });

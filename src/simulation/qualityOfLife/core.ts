@@ -331,10 +331,20 @@ export function updateQualityOfLifeSystems(
   }
 
   // === SURVIVAL FUNDAMENTALS ===
-  const survivalFundamentals = calculateSurvivalFundamentals(state);
+  // FIX (Oct 25, 2025): Only recalculate if missing - otherwise preserve existing values
+  // FoodSecurityDegradationPhase applies incremental degradation, which gets wiped if we recalculate
+  const survivalFundamentals = state.qualityOfLifeSystems.survivalFundamentals
+    ? {
+        // Preserve foodSecurity from FoodSecurityDegradationPhase
+        foodSecurity: state.qualityOfLifeSystems.survivalFundamentals.foodSecurity,
+        // Recalculate other survival fundamentals
+        waterSecurity: calculateSurvivalFundamentals(state).waterSecurity,
+        thermalHabitability: calculateSurvivalFundamentals(state).thermalHabitability,
+        shelterSecurity: calculateSurvivalFundamentals(state).shelterSecurity,
+      }
+    : calculateSurvivalFundamentals(state); // First time initialization
 
-  // CRITICAL FIX (Oct 13, 2025): Assign survivalFundamentals to state!
-  // BUG: Was calculated but never assigned → famines never trigger!
+  // Assign to state
   state.qualityOfLifeSystems.survivalFundamentals = survivalFundamentals;
 
   // === DISTRIBUTION METRICS ===
