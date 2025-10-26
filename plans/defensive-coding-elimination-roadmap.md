@@ -1,5 +1,6 @@
 # Defensive Coding Elimination Roadmap
 
+**Status:** 🔥 **CURRENT ACTIVE EFFORT** 🔥
 **Date:** October 25, 2025
 **Goal:** Systematically remove all defensive fallbacks (`|| 0`, `?? 0`) from simulation code
 **Philosophy:** Fail fast with rich error messages instead of hiding bugs with silent fallbacks
@@ -14,15 +15,28 @@
 - ✅ **Phase 2 COMPLETE** - All 48 patterns in effectsEngine.ts removed
 - ✅ **Phase 2+** - All 116 Math.min/max calculations wrapped with assertFinite
 - ✅ **Government Actions** - All 14 defensive patterns removed
+- ✅ **Documentation COMPLETE** - CLAUDE.md updated with assertion utilities
+- ✅ **Automation COMPLETE** - Senior dev checklist enforces anti-patterns
 - **Total fixed today:** 76 patterns + 116 assertFinite wraps = **192 improvements**
+
+**DOCUMENTATION UPDATE (Oct 25, 2025 - Late Evening):**
+- ✅ Added defensive programming anti-patterns section to CLAUDE.md (lines 788-843)
+- ✅ Updated NaN handling section with assertion utilities examples (lines 611-683)
+- ✅ Added 2 new questions to senior dev checklist (Q9-Q10) to detect defensive fallbacks
+- ✅ Created comprehensive documentation chain: Philosophy → Tools → Automation
+- **Result:** All future code will be checked for defensive fallbacks in PR reviews
 
 ## Completed Work (Oct 25, 2025)
 
 ### ✅ Phase 0: Infrastructure & Tools
 - [x] Created `assertStateProperty()` utility (`src/simulation/utils/assertions.ts:205-260`)
 - [x] Created `assertEconomicStage()` helper
-- [x] Updated CLAUDE.md with defensive programming anti-patterns (lines 788-844)
-- [x] Documented philosophy and examples
+- [x] **Documentation Suite (Oct 25, 2025 - Late Evening):**
+  - [x] CLAUDE.md: Defensive programming anti-patterns (bash/workflows, lines 788-843)
+  - [x] CLAUDE.md: NaN handling with assertion utilities (TypeScript, lines 611-683)
+  - [x] Senior dev checklist: Added Q9 (TypeScript fallbacks) and Q10 (bash fallbacks)
+  - [x] Automated enforcement: Claude agent greps for violations in PRs
+  - [x] Complete chain: Philosophy → Utilities → Examples → Automation
 - [x] **ROOT CAUSE BUG FIX (Oct 25, 2025 - Late Evening):**
   - ✅ Fixed `crisisPoints.ts:99` - Unclamped socialStability subtraction
   - ✅ Bug: `socialStability - 0.1` could produce negative values (e.g., 0.0738 - 0.1 = -0.0262)
