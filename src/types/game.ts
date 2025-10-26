@@ -491,22 +491,29 @@ export interface GameState {
   llmConfig?: import('./llm').LLMConfig; // LLM policy optimization configuration (Oct 21, 2025)
 
   /**
-   * Threshold Uncertainty System (Phase 1B, Oct 26, 2025)
+   * Threshold Uncertainty System (Phase 1B, Oct 26, 2025; Phase 2, Oct 26, 2025)
    *
    * Research-backed uncertainty distributions for critical simulation thresholds.
    * Each threshold samples from a distribution at initialization, creating run-to-run variation.
    *
-   * Tier 1 Thresholds:
+   * Tier 1 Thresholds (Empirical - Peer-reviewed distributions):
    * - Social Critical Mass: Centola et al. (2018) - 25% ± 2%
    * - Trust Recovery Rate: Meta-analysis - Beta(α=2, β=5)
    * - Climate Sensitivity: IPCC AR6 - Log-Normal(μ=3.0, σ=0.75)
    * - Government Legitimacy Crisis: Historical cases - Triangular(0.25, 0.30, 0.40)
    * - Automation Job Loss: Acemoglu & Restrepo (2022) - 35% ± 5%
    *
+   * Tier 2 Thresholds (Historical Ranges - Semi-known):
+   * - Government Legitimacy Crisis: Weimar, USSR, Arab Spring - Triangular(0.25, 0.30, 0.40)
+   * - Surveillance Dystopia: East Germany, China, North Korea - Uniform[0.65, 0.80]
+   * - Automation Displacement: Industrial Revolution, Great Depression - Triangular(0.40, 0.50, 0.60)
+   * - AI Recursive Improvement: Moore's Law analogs - Uniform[1.2, 1.5]
+   * - Resentment Revolt: French/Russian revolutions - Triangular(0.60, 0.70, 0.80)
+   *
    * Research: Issue #8 - Threshold uncertainty reflects epistemic uncertainty in social/physical systems
    * Expected impact: ±10-40% outcome variation reflecting parameter uncertainty
    */
-  thresholds: import('../simulation/thresholds/tier1Config').Tier1Thresholds;
+  thresholds: import('../simulation/thresholds/tier1Config').Tier1Thresholds & import('../simulation/thresholds/tier2Config').Tier2Thresholds;
 
   // Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
   // Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe)
