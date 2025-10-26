@@ -2325,3 +2325,120 @@ Beginning Phase 1B: Threshold Uncertainty Integration
 
 **Next Steps:** Starting with threshold audit
 ---
+
+---
+**orchestrator-1** | 2025-10-26 22:23 | [IN-PROGRESS]
+
+Implementation plan complete - requesting architecture review
+
+**Plan:** /plans/multi-timescale-tipping-points-plan.md (12,500 words, research-backed)
+
+**Architecture Overview:**
+- 6 tipping elements with research-backed timescales (10-15,000 years)
+- Sigmoid transition curves (slow start → rapid middle → slow end)
+- Cascade amplification (multiple tipping points = 5-15% amplification)
+- Regional impact variation (Europe hit harder by AMOC, etc.)
+
+**Files Modified:** 7 files
+- NEW: types/tipping-points.ts (150 lines)
+- NEW: engine/phases/TippingPointPhase.ts (200 lines)
+- MODIFIED: game.ts, initialization.ts, environmental.ts, regionalPopulations.ts, PhaseOrchestrator.ts
+
+**Critical Design Questions for Architecture Review:**
+1. Performance: 6 tipping elements × regional impacts per month - acceptable overhead?
+2. State propagation: TippingPointPhase (order 26) updates climateStability before FamineSystemPhase (order 28) - correct?
+3. Cascade multiplier: 1.0 + (n-1) × 0.05 - linear amplification vs exponential?
+4. Regional impacts: Apply to region.climateVulnerability or separate tracking?
+
+**Next:** Invoking architecture-skeptic for pre-implementation review
+---
+
+---
+**orchestrator-1** | 2025-10-26 22:30 | [HANDOFF]
+
+HANDOFF TO FEATURE-IMPLEMENTER
+
+**Feature:** Multi-Timescale Climate Tipping Point System
+**Complexity:** 8 interacting systems
+**Estimated Effort:** 9-12 hours
+
+**COMPLETE DOCUMENTATION:**
+1. **Implementation Plan:** /plans/multi-timescale-tipping-points-plan.md (12,500 words)
+2. **Research Validation:** /research/climate_collapse_timelines_20251026.md (23 papers + IPCC AR6)
+3. **Research Critique:** /reviews/climate_collapse_timeline_critique_20251026.md (PASSED)
+4. **Architecture Review:** /reviews/tipping_points_architecture_review_20251026.md (APPROVED, 0 critical issues)
+
+**IMPLEMENTATION PHASES:**
+
+**Phase 1: Type Definitions (1 hour)**
+- Create src/types/tipping-points.ts
+- Define TippingElement interface
+- Define TippingPointSystem interface
+- Define TIPPING_ELEMENTS_CONFIG (6 elements with research citations)
+- **HIGH-1:** Add activeTippingImpacts to RegionalPopulation (src/types/population.ts)
+
+**Phase 2: State Integration (30 min)**
+- Add tippingPoints: TippingPointSystem to GameState (src/types/game.ts)
+- Import types
+
+**Phase 3: Initialization (1 hour)**
+- Create initializeTippingPoints() in src/simulation/initialization.ts
+- Sample transition durations from research ranges
+- Initialize all 6 tipping elements
+
+**Phase 4: TippingPointPhase Implementation (4-5 hours)**
+- Create src/simulation/engine/phases/TippingPointPhase.ts
+- Implement threshold detection logic
+- Implement sigmoid transition curve
+- Implement cascade multiplier calculation
+- Implement regional impact application (use activeTippingImpacts field)
+- **HIGH-2:** Add runtime clamping for transitionProgress
+- Add logging and event generation
+
+**Phase 5: Integration (1-2 hours)**
+- REMOVE lines 454-489 from src/simulation/environmental.ts (instant catastrophe)
+- UPDATE line 377 in src/simulation/regionalPopulations.ts (climate stress calculation)
+- REGISTER TippingPointPhase in src/simulation/engine/PhaseOrchestrator.ts (order 26)
+
+**Phase 6: Testing (1-2 hours)**
+- Run single simulation with fixed seed
+- Verify tipping points trigger at correct thresholds
+- Verify transitions take decades/centuries (not months)
+- Run Monte Carlo N=10 to verify no instant collapses
+
+**CRITICAL DESIGN DECISIONS (from architecture review):**
+
+1. **Regional Impacts:** Use separate activeTippingImpacts field (NOT direct climateVulnerability modification)
+   ```typescript
+   region.activeTippingImpacts = region.activeTippingImpacts || {};
+   region.activeTippingImpacts[element.id] = cascadedImpact * impactMultiplier;
+   ```
+
+2. **Cascade Multiplier:** LINEAR (1.0 + (n-1) × 0.05), not exponential
+
+3. **Transition Curve:** Sigmoid (S-curve), not linear
+
+4. **Runtime Safety:** Clamp transitionProgress to [0, 1]
+   ```typescript
+   element.transitionProgress = Math.min(1.0, Math.max(0, element.transitionProgress + monthlyProgress));
+   ```
+
+**SUCCESS CRITERIA:**
+- ✅ No instant climate collapses (fastest transition ≥ 10 years)
+- ✅ AMOC transitions in 50-150 years
+- ✅ Amazon transitions in 30-80 years
+- ✅ Population decline gradual (not 8B → 1.24B in 4 months)
+- ✅ Regional variation (Europe hit harder by AMOC, Latin America by Amazon)
+
+**FILES TO MODIFY:**
+1. NEW: src/types/tipping-points.ts
+2. NEW: src/simulation/engine/phases/TippingPointPhase.ts
+3. MODIFIED: src/types/game.ts
+4. MODIFIED: src/types/population.ts (add activeTippingImpacts)
+5. MODIFIED: src/simulation/initialization.ts
+6. MODIFIED: src/simulation/environmental.ts (remove lines 454-489)
+7. MODIFIED: src/simulation/regionalPopulations.ts (update line 377)
+8. MODIFIED: src/simulation/engine/PhaseOrchestrator.ts (register phase)
+
+**Ready for implementation. Feature-implementer may begin.**
+---

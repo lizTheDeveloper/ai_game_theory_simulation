@@ -132,7 +132,9 @@
       "WebFetch(domain:esd.copernicus.org)",
       "WebFetch(domain:report-2023.global-tipping-points.org)",
       "WebFetch(domain:davidarmstrongmckay.com)",
-      "mcp__chatroom__chatroom_who_active"
+      "mcp__chatroom__chatroom_who_active",
+      "Bash(then)",
+      "Bash(else)"
     ],
     "deny": [],
     "ask": [],
