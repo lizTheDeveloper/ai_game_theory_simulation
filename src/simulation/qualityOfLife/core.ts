@@ -331,10 +331,24 @@ export function updateQualityOfLifeSystems(
   }
 
   // === SURVIVAL FUNDAMENTALS ===
-  // FIX (Oct 25, 2025 PART 3): RECALCULATE base food security every month
-  // FoodSecurityDegradationPhase now applies BOTH crisis degradation AND infrastructure penalty
-  // This ensures base resources/tech/climate effects are always current
-  const survivalFundamentals = calculateSurvivalFundamentals(state);
+  // FIX (Oct 25, 2025): Preserve foodSecurity from FoodSecurityDegradationPhase
+  // FoodSecurityDegradationPhase applies BOTH crisis degradation AND infrastructure penalty
+  // Preserving allows degradation to accumulate month-over-month correctly
+  const survivalFundamentals = state.qualityOfLifeSystems.survivalFundamentals
+    ? {
+        // Preserve foodSecurity from FoodSecurityDegradationPhase (includes infrastructure penalty)
+        foodSecurity: state.qualityOfLifeSystems.survivalFundamentals.foodSecurity,
+        // Recalculate other survival fundamentals
+        ...(() => {
+          const calculated = calculateSurvivalFundamentals(state);
+          return {
+            waterSecurity: calculated.waterSecurity,
+            thermalHabitability: calculated.thermalHabitability,
+            shelterSecurity: calculated.shelterSecurity,
+          };
+        })()
+      }
+    : calculateSurvivalFundamentals(state); // First time initialization
 
   // Assign to state
   state.qualityOfLifeSystems.survivalFundamentals = survivalFundamentals;
@@ -362,6 +376,15 @@ export function updateQualityOfLifeSystems(
     healthcareQuality
   });
 
+  // === HEALTH AGGREGATE ===
+  // Calculate aggregate health metric from health tier components
+  // Matches aggregation.ts formula: (healthcareQuality * 0.4 + longevityGains * 0.3 + (1 - diseasesBurden) * 0.3)
+  const health = (
+    healthcareQuality * 0.4 +
+    longevityGains * 0.3 +
+    (1 - diseasesBurden) * 0.3
+  );
+
   return {
     // Survival fundamentals (required)
     survivalFundamentals,
@@ -387,6 +410,7 @@ export function updateQualityOfLifeSystems(
     healthcareQuality,
     longevityGains,
     diseasesBurden,
+    health, // Aggregate health metric (required)
 
     // Environmental
     ecosystemHealth,
@@ -437,6 +461,9 @@ export function initializeQualityOfLifeSystems(): QualityOfLifeSystems {
     healthcareQuality: 0.75,
     longevityGains: 0.1, // Slight gains above historical baseline
     diseasesBurden: 0.3,
+    // FIX (Oct 26, 2025): Initialize health property (required by novelEntities.ts)
+    // Aggregate of health tier: baseline 0.7 (good healthcare, moderate disease burden)
+    health: 0.7,
 
     // Environmental - declining
     ecosystemHealth: 0.4,
