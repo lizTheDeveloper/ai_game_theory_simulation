@@ -33,6 +33,7 @@
 import { GameState } from '@/types/game';
 import { TechTreeState } from './engine';
 import { getTechById } from './comprehensiveTechTree';
+import { assertFinite } from '../utils/assertions';
 
 /**
  * Type-safe helper to set dynamic properties on objects
@@ -190,14 +191,26 @@ function applyCapabilityBoosts(
         if (subdomain && typeof domainCap === 'object') {
           // Boost specific subdomain
           const currentValue = (domainCap as any)[subdomain] || 0;
-          const safeValue = isNaN(currentValue) ? 0 : currentValue;
-          (domainCap as any)[subdomain] = Math.min(5.0, safeValue + scaledBoost);
+          // FIX (Oct 25, 2025): Replaced defensive NaN guard with assertion
+          const validatedValue = assertFinite(currentValue, {
+            location: 'applyCapabilityBoosts',
+            valueName: `research.${domain}.${subdomain}`,
+            month: gameState.currentMonth,
+            additionalInfo: { aiId: ai.id, domain, subdomain }
+          });
+          (domainCap as any)[subdomain] = Math.min(5.0, validatedValue + scaledBoost);
         } else if (!subdomain && typeof domainCap === 'object') {
           // Boost all subdomains equally
           for (const key of Object.keys(domainCap)) {
             const currentValue = (domainCap as any)[key] || 0;
-            const safeValue = isNaN(currentValue) ? 0 : currentValue;
-            (domainCap as any)[key] = Math.min(5.0, safeValue + scaledBoost);
+            // FIX (Oct 25, 2025): Replaced defensive NaN guard with assertion
+            const validatedValue = assertFinite(currentValue, {
+              location: 'applyCapabilityBoosts',
+              valueName: `research.${domain}.${key}`,
+              month: gameState.currentMonth,
+              additionalInfo: { aiId: ai.id, domain, subdomain: key }
+            });
+            (domainCap as any)[key] = Math.min(5.0, validatedValue + scaledBoost);
           }
         }
       }
@@ -206,8 +219,15 @@ function applyCapabilityBoosts(
     // Recalculate total capability
     const { calculateTotalCapabilityFromProfile } = require('../capabilities');
     const newCapability = calculateTotalCapabilityFromProfile(ai.capabilityProfile);
-    // Defensive: Ensure capability is never NaN
-    ai.capability = isNaN(newCapability) ? 0 : newCapability;
+
+    // FIX (Oct 25, 2025): Replaced defensive NaN guard with assertive validation
+    // If capability calculation produces NaN, that's a BUG in calculateTotalCapabilityFromProfile
+    ai.capability = assertFinite(newCapability, {
+      location: 'applyCapabilityBoosts',
+      valueName: `ai.capability (AI ${ai.id})`,
+      month: gameState.currentMonth,
+      additionalInfo: { aiId: ai.id, alignment: ai.alignment }
+    });
   }
 }
 
@@ -1403,9 +1423,37 @@ function applyRegionalEffects(
           break;
           
         case 'recursiveSafety':
-          // Enable recursive self-improvement safety
+          // Recursive alignment prevents capability drift during self-improvement
+          // Reduces misalignment risk when AIs improve their own capabilities
           if (gameState.globalMetrics) {
             (gameState.globalMetrics as any).recursiveSafety = true;
+
+            // Reduce alignment drift rate for all AI agents
+            if (gameState.aiAgents) {
+              gameState.aiAgents.forEach(agent => {
+                // Reduce drift by 50% for agents with recursive capabilities
+                if (agent.capabilityProfile.selfImprovement > 3.0) {
+                  // Initialize if not present
+                  if (!('alignmentDriftRate' in (agent as any))) {
+                    (agent as any).alignmentDriftRate = 0.01; // Default drift rate
+                  }
+
+                  const currentDrift = (agent as any).alignmentDriftRate;
+                  (agent as any).alignmentDriftRate = currentDrift * (1 - value * 0.5);
+                }
+              });
+            }
+
+            // Initialize catastrophic risk tracker if not present
+            if (!('catastrophicRiskFromRecursion' in (gameState.globalMetrics as any))) {
+              (gameState.globalMetrics as any).catastrophicRiskFromRecursion = 0.2; // Default risk level
+            }
+
+            // Reduce catastrophic risk from recursive self-improvement
+            (gameState.globalMetrics as any).catastrophicRiskFromRecursion = Math.max(
+              0,
+              (gameState.globalMetrics as any).catastrophicRiskFromRecursion * (1 - value * 0.8)
+            );
           }
           break;
           
@@ -1470,11 +1518,38 @@ function applyRegionalEffects(
           }
           break;
           
-        // ========== FLAG EFFECTS (Boolean unlocks) ==========
+        case 'fusionEnabling':
+          // Fusion prerequisite techs (materials, plasma control) accelerate fusion research
+          // This is tracked cumulatively - two prerequisite techs give max benefit
+          if (gameState.globalMetrics) {
+            // Initialize on first use
+            if (!('fusionEnabling' in (gameState.globalMetrics as any))) {
+              (gameState.globalMetrics as any).fusionEnabling = 0;
+            }
+
+            (gameState.globalMetrics as any).fusionEnabling += value;
+
+            // Track cumulative fusion enabling progress (max 1.0 from two prerequisite techs)
+            const fusionProgress = Math.min(1.0, (gameState.globalMetrics as any).fusionEnabling);
+
+            // Store fusion research and deployment bonuses that will be applied by government/research phases
+            (gameState.globalMetrics as any).fusionResearchBonus = fusionProgress * 2.0; // 2x speed at 100%
+            (gameState.globalMetrics as any).fusionDeploymentCostReduction = fusionProgress * 0.4; // 40% cost reduction
+            (gameState.globalMetrics as any).fusionDeploymentTimeReduction = fusionProgress * 0.3; // 30% time reduction
+          }
+          break;
+
         case 'emergencyOnly':
+          // Mark technology as emergency-only (should only activate under crisis conditions)
+          // Used for risky geoengineering like stratospheric aerosols
+          if (gameState.globalMetrics) {
+            (gameState.globalMetrics as any).emergencyOnly = true;
+          }
+          break;
+
+        // ========== FLAG EFFECTS (Boolean unlocks) ==========
         case 'lowRisk':
         case 'negativeEmissions':
-        case 'fusionEnabling':
         case 'digitalImmortality':
         case 'societalTransformation':
         case 'philosophicalRevolution':

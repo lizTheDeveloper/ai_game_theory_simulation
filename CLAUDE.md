@@ -783,6 +783,64 @@ All agents follow the project structure and maintain research standards.
 11. ❌ **Don't simplify when nuance matters** - this is a research tool, not a game
 12. ❌ **Don't make monolithic AIs** - population is heterogeneous (20 agents, different alignments)
 13. ❌ **Don't assume alignment is stable** - it drifts based on resentment, control, capabilities
+14. ❌ **Don't use defensive fallbacks in bash/workflows** - see "Defensive Programming Anti-Patterns" below
+
+### Defensive Programming Anti-Patterns
+
+**In bash scripts and GitHub Actions workflows, NEVER use silent fallbacks like `|| 0` or `|| echo ""`.**
+
+These patterns hide errors and make debugging impossible. If a required value is missing, the workflow should FAIL LOUDLY.
+
+**❌ BAD - Silent fallback hides missing data:**
+```bash
+# This masks bugs - if grep fails, you get 0 instead of an error
+COUNT=$(grep "pattern" file.txt | wc -l || echo "0")
+
+# This hides file not found errors
+FILES=$(find src/ -name "*.ts" 2>/dev/null || echo "")
+
+# This returns empty string on failure, no error visible
+RESULT=$(some_command || echo "")
+```
+
+**✅ GOOD - Explicit error handling:**
+```bash
+# Let grep fail if file doesn't exist - workflow should error
+COUNT=$(grep "pattern" file.txt | wc -l)
+
+# If 0 results is valid, handle it explicitly
+if ! FILES=$(find src/ -name "*.ts"); then
+  echo "❌ Error: find command failed"
+  exit 1
+fi
+
+# Check exit code explicitly
+if ! RESULT=$(some_command); then
+  echo "❌ Error: command failed with exit code $?"
+  exit 1
+fi
+
+# For optional values, use explicit conditional logic
+if [ -f "optional_file.txt" ]; then
+  VALUE=$(cat optional_file.txt)
+else
+  echo "⚠️ Warning: optional_file.txt not found, using default"
+  VALUE="default"
+fi
+```
+
+**When to use defensive fallbacks:**
+- **NEVER in required parameters** - missing required values should fail the workflow
+- **UI display only** - when showing data to users (not in automation logic)
+- **Explicit optional values** - with clear warning messages when fallback is used
+
+**Why this matters:**
+- Silent fallbacks make CI/CD failures invisible
+- Bugs propagate through automation without detection
+- Root causes become impossible to debug
+- Workflows succeed when they should fail
+
+**Type safety extends to bash:** Just like TypeScript's strict mode catches type errors, bash scripts should fail on missing required values.
 
 ## Additional Resources
 
