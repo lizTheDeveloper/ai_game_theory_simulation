@@ -61,6 +61,7 @@ import { initializeGamingDetection } from './gamingDetection';
 import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
 import { initializeGovernmentSystem } from './government/initialization';
 import { initializeTechTreeState } from './techTree/engine';
+import { sampleTier1Thresholds } from './thresholds/tier1Config';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -388,14 +389,23 @@ export function createAIAgent(
  * This provides a consistent starting point for all test scripts and simulations.
  *
  * @param scenarioMode Optional scenario mode ('historical' or 'unprecedented'). Defaults to 'historical'.
+ * @param alignmentDynamicsConfig Optional alignment dynamics configuration override
+ * @param climatePriorityConfig Optional climate priority configuration override
+ * @param preSampledThresholds Optional pre-sampled thresholds (Phase 1C: Nested Monte Carlo)
  */
 export function createDefaultInitialState(
   scenarioMode: ScenarioMode = 'historical',
   alignmentDynamicsConfig?: any,
-  climatePriorityConfig?: any
+  climatePriorityConfig?: any,
+  preSampledThresholds?: any // Phase 1C: Accept pre-sampled thresholds from outer loop
 ): GameState {
   const initialYear = 2025;
   const initialMonth = 0;
+
+  // Phase 1C (Oct 26, 2025): Pre-sampled thresholds support
+  // NOTE: preSampledThresholds parameter exists but isn't wired up yet.
+  // Phase 1D will replace hard-coded thresholds with preSampledThresholds values.
+  // This allows nestedMonteCarloSimulation.ts to pass thresholds from outer loop.
 
   // P0.7 (Oct 16, 2025): Get scenario-specific parameters
   const scenarioParameters = getScenarioParameters(scenarioMode);
@@ -855,6 +865,11 @@ export function createDefaultInitialState(
 
     // LLM Policy Optimization (Oct 21, 2025)
     llmConfig: { ...DEFAULT_LLM_CONFIG },
+
+    // Phase 1B: Threshold Uncertainty System (Oct 26, 2025)
+    // Sample research-backed distributions for critical thresholds
+    // Uses Math.random for now (deterministic seeding in Monte Carlo scripts)
+    thresholds: sampleTier1Thresholds(() => Math.random()),
 
     history: {
       qualityOfLife: [],
