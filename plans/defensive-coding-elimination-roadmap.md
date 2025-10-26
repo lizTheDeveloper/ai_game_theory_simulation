@@ -146,16 +146,19 @@ Audit and fix defensive fallbacks in core simulation files:
 
 **Actual Effort:** ~1 hour (patterns were already fixed in previous work)
 
-#### 3.2: Crisis Systems - 🔥 **IN PROGRESS** (Assigned: Claude Agent, Oct 25 2025, 11:35 PM)
-**Files to audit:**
-- `src/simulation/phosphorusDepletion.ts`
-- `src/simulation/freshwaterDepletion.ts`
-- `src/simulation/oceanAcidification.ts`
-- `src/simulation/novelEntities.ts`
-- `src/simulation/resourceDepletion.ts`
+#### 3.2: Crisis Systems - 🔄 **IN PROGRESS** (Oct 25, 2025 - 11:45 PM)
+**Files audited:**
+- ⏳ `src/simulation/phosphorusDepletion.ts` - 4 patterns (1 to fix, 3 legitimate)
+- ⏳ `src/simulation/freshwaterDepletion.ts` - 3 patterns (3 to fix)
+- ⏳ `src/simulation/oceanAcidification.ts` - 3 patterns (2 to fix, 1 legitimate)
+- ⏳ `src/simulation/novelEntities.ts` - 6 patterns (5 to fix, 1 legitimate)
+- ⏳ `src/simulation/resourceDepletion.ts` - 1 pattern (1 to fix)
 
-**Estimated Fallbacks:** ~40-60
-**Effort:** 2-3 hours
+**Audit Complete:** 17 patterns found, 13 to fix, 4 legitimate (3 tech checks + 2 AI research caps - verified)
+**Currently fixing:** Starting with phosphorusDepletion.ts
+**Audit report:** `devlogs/phase_3_2_audit_oct25_2025.md`
+
+**Estimated Effort:** 45-60 minutes (less than estimated due to many legitimate patterns)
 
 #### 3.3: Agent Systems
 **Files to audit:**
