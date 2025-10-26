@@ -88,15 +88,17 @@ jobs:
           echo "$PHASE_FILES" > phase_files.txt
           echo "$TYPE_FILES" > type_files.txt
 
+      - name: Write PR Body to File
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const prBody = context.payload.pull_request.body || '';
+            fs.writeFileSync('pr_body_safe.txt', prBody, 'utf8');
+
       - name: Get PR Context
         id: pr_context
         run: |
-          # Extract PR description
-          PR_BODY="${{ github.event.pull_request.body }}"
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$PR_BODY" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
           # Get git diff stats
           git diff --stat origin/main...HEAD > diff_stats.txt
 
@@ -104,15 +106,11 @@ jobs:
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BRANCH: ${{ github.event.pull_request.head.ref }}
-          PR_BODY: ${{ steps.pr_context.outputs.body }}
           SIM_COUNT: ${{ steps.changes.outputs.sim_count }}
           PHASE_COUNT: ${{ steps.changes.outputs.phase_count }}
           TYPE_COUNT: ${{ steps.changes.outputs.type_count }}
           ENGINE_COUNT: ${{ steps.changes.outputs.engine_count }}
         run: |
-          # Write PR body to temp file to avoid bash execution
-          printf '%s\n' "$PR_BODY" > pr_body_safe.txt
-
           # Build prompt template (quoted heredoc prevents ALL expansion)
           cat > architecture_review_prompt.txt <<'TEMPLATE_EOF'
           You are the architecture-skeptic agent from .claude/agents/architecture-skeptic.md
