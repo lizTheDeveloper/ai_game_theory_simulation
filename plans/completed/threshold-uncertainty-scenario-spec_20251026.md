@@ -1,9 +1,39 @@
 # Threshold Uncertainty Scenario Specification
 
-**Date:** October 21, 2025
-**Status:** Design Phase
+**Date:** October 21, 2025 (Created), October 26, 2025 (Archived)
+**Status:** ✅ PHASE 1 COMPLETE - Phases 2-4 deferred
 **Implementation:** Progressive (Tier 1 → Tier 2 → Tier 3)
 **Philosophy:** Preserve uncertainty rather than laundering it with fake precision
+
+---
+
+## COMPLETION SUMMARY (October 26, 2025)
+
+**Phase 1 Complete (Issues #7-10):**
+- ✅ Phase 1A: Distribution sampling library (379 lines, 28/28 tests passing) - Commit d23ea76
+- ✅ Phase 1B: Threshold integration (tier1Config, thresholdInventory, GameState integration) - Commit a762d2c
+- ✅ Phase 1C: Nested Monte Carlo architecture (epistemic/aleatory loops) - Commit 83ef1e3
+- ✅ Phase 1D: Validation & documentation complete - Commit a762d2c
+
+**Implementation Files:**
+- `src/simulation/thresholds/distributions.ts` (379 lines)
+- `src/simulation/thresholds/tier1Config.ts` (5 research-backed thresholds)
+- `src/simulation/thresholds/thresholdInventory.ts` (audit of all thresholds)
+- `tests/thresholds/distributions.test.ts` (500 lines, 28/28 passing)
+- `scripts/monteCarloSimulation.ts` (updated with --nested flag)
+
+**Deliverables:**
+- 5 Tier 1 thresholds integrated (social critical mass, trust recovery, climate sensitivity, legitimacy crisis, automation)
+- Nested Monte Carlo with epistemic/aleatory separation
+- Validation comparison complete
+- Devlog: `devlogs/threshold_uncertainty_phase1d_20251026.md`
+
+**Remaining Work (Deferred to future):**
+- Phase 2: Tier 2 bounded thresholds (6-10h)
+- Phase 3: Tier 3 speculative scenarios (8-12h)
+- Phase 4: Scenario builder CLI (10-15h)
+
+**Total Effort Phase 1:** ~10-15 hours (as estimated)
 
 ---
 
