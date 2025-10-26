@@ -47,7 +47,19 @@ jobs:
         id: task
         run: |
           TITLE="${{ github.event.issue.title }}"
-          TASK_NAME=$(echo "$TITLE" | sed 's/^Bug: //g' | sed 's/^Feature: //g' | sed 's/^Audit: //g' | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]')
+          # Sanitize for git branch name: remove invalid characters
+          TASK_NAME=$(echo "$TITLE" | \
+            sed 's/^Fix: //g' | \
+            sed 's/^Bug: //g' | \
+            sed 's/^Feature: //g' | \
+            sed 's/^Audit: //g' | \
+            sed 's/&/and/g' | \
+            sed 's/[^a-zA-Z0-9 -]/-/g' | \
+            sed 's/ /-/g' | \
+            tr '[:upper:]' '[:lower:]' | \
+            sed 's/--*/-/g' | \
+            sed 's/^-//g' | \
+            sed 's/-$//g')
 
           echo "name=$TASK_NAME" >> $GITHUB_OUTPUT
           echo "title=$TITLE" >> $GITHUB_OUTPUT
