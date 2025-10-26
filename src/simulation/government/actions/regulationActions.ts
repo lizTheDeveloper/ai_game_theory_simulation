@@ -258,11 +258,15 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
         state.government.oversightLevel + 2);
     }
 
+    if (!levelEffects?.economicCost) {
+      throw new Error(`❌ levelEffects.economicCost is undefined for compute governance level ${currentIndex + 1} - data corruption`);
+    }
+
     return {
       success: true,
       effects: {
         compute_governance_level: currentIndex + 1,
-        economic_cost: levelEffects?.economicCost || 0
+        economic_cost: levelEffects.economicCost
       },
       events: [{
         id: generateUniqueId('compute_governance'),

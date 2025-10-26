@@ -133,7 +133,9 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
       success: true,
       effects: {
         compute_governance_level: currentIndex + 1,
-        economic_cost: levelEffects?.economicCost || 0
+        economic_cost: levelEffects?.economicCost ?? (() => {
+          throw new Error(`❌ levelEffects.economicCost is undefined for safety governance level ${currentIndex + 1} - data corruption`);
+        })()
       },
       events: [{
         id: generateUniqueId('compute_governance'),

@@ -270,7 +270,11 @@ const subsidizeOrganization: CategorizedGovernmentAction = {
       o.capital < 100 // Only subsidize if struggling
     );
 
-    return safetyOrgs.length > 0 && (state.government.resources ?? 0) > 2;
+    if (state.government.resources === undefined) {
+      throw new Error('❌ state.government.resources is undefined in subsidizeSafetyOrgs canExecute - initialization bug');
+    }
+
+    return safetyOrgs.length > 0 && state.government.resources > 2;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
