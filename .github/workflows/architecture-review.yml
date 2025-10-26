@@ -47,17 +47,36 @@ jobs:
           # Get list of changed files
           git diff --name-only origin/main...HEAD > changed_files.txt
 
-          # Categorize changes
-          SIMULATION_FILES=$(grep "^src/simulation/" changed_files.txt || echo "")
-          PHASE_FILES=$(grep "Phase\.ts$" changed_files.txt || echo "")
-          TYPE_FILES=$(grep "^src/types/" changed_files.txt || echo "")
-          ENGINE_FILES=$(grep "^src/simulation/engine/" changed_files.txt || echo "")
+          # Categorize changes (grep returns empty string if no matches, which is fine)
+          SIMULATION_FILES=$(grep "^src/simulation/" changed_files.txt || true)
+          PHASE_FILES=$(grep "Phase\.ts$" changed_files.txt || true)
+          TYPE_FILES=$(grep "^src/types/" changed_files.txt || true)
+          ENGINE_FILES=$(grep "^src/simulation/engine/" changed_files.txt || true)
 
-          # Count files
-          SIM_COUNT=$(echo "$SIMULATION_FILES" | grep -c "." || echo "0")
-          PHASE_COUNT=$(echo "$PHASE_FILES" | grep -c "." || echo "0")
-          TYPE_COUNT=$(echo "$TYPE_FILES" | grep -c "." || echo "0")
-          ENGINE_COUNT=$(echo "$ENGINE_FILES" | grep -c "." || echo "0")
+          # Count files (handle empty strings explicitly)
+          if [ -z "$SIMULATION_FILES" ]; then
+            SIM_COUNT=0
+          else
+            SIM_COUNT=$(echo "$SIMULATION_FILES" | grep -c ".")
+          fi
+
+          if [ -z "$PHASE_FILES" ]; then
+            PHASE_COUNT=0
+          else
+            PHASE_COUNT=$(echo "$PHASE_FILES" | grep -c ".")
+          fi
+
+          if [ -z "$TYPE_FILES" ]; then
+            TYPE_COUNT=0
+          else
+            TYPE_COUNT=$(echo "$TYPE_FILES" | grep -c ".")
+          fi
+
+          if [ -z "$ENGINE_FILES" ]; then
+            ENGINE_COUNT=0
+          else
+            ENGINE_COUNT=$(echo "$ENGINE_FILES" | grep -c ".")
+          fi
 
           echo "sim_count=$SIM_COUNT" >> $GITHUB_OUTPUT
           echo "phase_count=$PHASE_COUNT" >> $GITHUB_OUTPUT
@@ -156,12 +175,19 @@ jobs:
           Work iteratively. Read multiple files to understand system context. This is a quality gate - be thorough but fair.
           EOF
 
+      - name: Read Architecture Review Prompt
+        id: read_prompt
+        run: |
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          cat architecture_review_prompt.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Run Architecture Review (Claude Code SDK)
         id: review
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt_file: architecture_review_prompt.txt
+          prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
             --max-turns 30
             --agent architecture-skeptic
@@ -170,7 +196,13 @@ jobs:
       - name: Extract Review Verdict
         id: verdict
         run: |
-          # Look for verdict in Claude's output (saved to review.md by action)
+          # Check if review file exists (fail loudly if Claude Code SDK failed)
+          if [ ! -f "review.md" ]; then
+            echo "❌ Error: review.md not found - Claude Code SDK failed to generate review"
+            exit 1
+          fi
+
+          # Look for verdict in Claude's output
           if grep -q "BLOCK MERGE" review.md; then
             echo "verdict=BLOCK" >> $GITHUB_OUTPUT
             echo "severity=CRITICAL" >> $GITHUB_OUTPUT
@@ -182,11 +214,11 @@ jobs:
             echo "severity=OK" >> $GITHUB_OUTPUT
           fi
 
-          # Count issues by severity
-          CRITICAL=$(grep -c "CRITICAL:" review.md || echo "0")
-          HIGH=$(grep -c "HIGH:" review.md || echo "0")
-          MEDIUM=$(grep -c "MEDIUM:" review.md || echo "0")
-          LOW=$(grep -c "LOW:" review.md || echo "0")
+          # Count issues by severity (using grep | wc -l to avoid exit code 1 on 0 matches)
+          CRITICAL=$(grep "CRITICAL:" review.md | wc -l)
+          HIGH=$(grep "HIGH:" review.md | wc -l)
+          MEDIUM=$(grep "MEDIUM:" review.md | wc -l)
+          LOW=$(grep "LOW:" review.md | wc -l)
 
           echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
           echo "high=$HIGH" >> $GITHUB_OUTPUT
