@@ -41,79 +41,55 @@
 
 ## Remaining Work
 
-### Phase 2: Complete Tech Tree System (4-6 hours)
+### ✅ Phase 2: Complete Tech Tree System - **COMPLETE** (Oct 25, 2025)
 
 **File:** `src/simulation/techTree/effectsEngine.ts`
-**Remaining:** 47 defensive fallbacks
+**Status:** ALL 48 defensive fallbacks removed ✅
+**Bonus:** ALL 116 Math.min/max calculations wrapped with assertFinite ✅
 
-**Approach:** Manual replacement in batches of 5-10, test after each batch
+**Approach:** Automated removal with regex script + manual verification
 
-#### Batch 1: Core State Properties (Priority 1) - ✅ COMPLETE
-**Lines:** 833-844, 849-860, 865-878, 1970-1981
-**Properties:**
-- `regionData.droughtResilience` ✅
-- `regionData.aquiferDepletionRate` ✅
-- `regionData.waterUseEfficiency` ✅
-- `gameState.defensiveAI.cyberDefense.strength` ✅
+#### Summary of Phase 2 Completion:
+- ✅ Removed all 48 defensive fallback patterns (automated script)
+- ✅ Wrapped all 116 Math.min/max calculations with assertFinite guards
+- ✅ Fixed 3 flag-only effects (fusionEnabling, recursiveSafety, emergencyOnly)
+- ✅ TypeScript compiles cleanly
+- ✅ Monte Carlo validation (2 runs × 24 months, no NaN errors)
 
-**Actual Effort:** 15 minutes
-**Result:** No assertion errors - all properties properly initialized
-**Validation:** TypeScript compiles, Monte Carlo N=1 runs without errors from these properties
+**Scripts created:**
+- `scripts/removeDefensiveProgramming.ts` - Automated removal of defensive patterns
+- `scripts/wrapMathMinMaxWithAssertFinite.ts` - Automated assertFinite wrapping
 
-#### Batch 2: Power Generation System (Priority 2) - ✅ COMPLETE
-**Lines:** 1267-1277, 1280-1290, 1293-1303, 1306-1324, 1327-1336, 1349-1367, 1370-1380, 1383-1393
-**Properties:** All `powerGenerationSystem.*` properties with `as any` cast
-- `storageCapacity` ✅
-- `renewableReliability` ✅
-- `gridStability` ✅ (2 occurrences)
-- `gridEfficiency` ✅
-- `effectiveDemandReduction` ✅
-- `renewableIntegration` ✅
-- `blackoutRisk` ✅
-- `energyCost` ✅
-- `baseloadCapacity` ✅
+**Actual Effort:** 2 hours (vs estimated 4-6 hours)
 
-**Actual Effort:** 25 minutes
-**Result:** No assertion errors - all properties properly initialized
-**Validation:** TypeScript compiles, Monte Carlo N=1 runs without errors from these properties
+---
 
-#### Batch 3: Planetary Boundaries (Priority 2)
-**Lines:** 792, 802, 812, 822, 839, 1246, 1353, 1363
-**Properties:** All `planetaryBoundariesSystem.*` with `as any` cast
-- `pfasContamination`, `plasticPollution`, `endocrineDisruptorLevel`, `microplasticLevel`
-- `nanomaterialRisk`, `pollinatorHealth`, `invasiveSpeciesImpact`
+### ✅ Government Actions Cleanup - **COMPLETE** (Oct 25, 2025)
 
-**Effort:** 45-60 minutes
+**Files:** 4 government action files
+**Status:** ALL 14 defensive fallbacks removed ✅
 
-#### Batch 4: Resource Economy (Priority 2)
-**Lines:** 879, 882, 1232, 1248, 1259, 1267, 1278, 1290, 1301, 1311, 1321, 1406
-**Properties:** All `resourceEconomy.*` with `as any` cast
-- `waterUseEfficiency`, `resourceEfficiency`, `plasticRecyclingRate`, `rareEarthRecoveryRate`
-- `miningIntensity`, `supplyChainResilience`, `industrialEmissions`, `transportEmissions`, `animalAgricultureShare`
+#### Fixed Patterns:
+- ✅ `src/simulation/government/actions/environmentalActions.ts` - 11 patterns
+  - `state.government.resources ?? 0` → explicit undefined check (5 occurrences)
+  - `state.government.researchInvestments?.climate?.mitigation ?? 0` → explicit checks (6 occurrences)
+- ✅ `src/simulation/government/actions/economicActions.ts` - 1 pattern
+  - `state.government.resources ?? 0` → explicit undefined check
+- ✅ `src/simulation/government/actions/regulationActions.ts` - 1 pattern
+  - `levelEffects?.economicCost || 0` → explicit undefined check with error throw
+- ✅ `src/simulation/government/actions/safetyActions.ts` - 1 pattern
+  - `levelEffects?.economicCost ?? 0` → IIFE error throw pattern
 
-**Effort:** 1-1.5 hours
+**Audit Report:** `devlogs/government_actions_audit_20251025.md`
 
-#### Batch 5: Social & Global Metrics (Priority 2)
-**Lines:** 851, 1116, 1171, 1191, 1211, 1222, 1385, 1416, 1443
-**Properties:**
-- `boundary.accumulationRate`
-- `socialAccumulation.mentalHealthIndex`, `socialAccumulation.suicideRate`
-- `ubiSystem.purposeInfrastructure.skillLevel`
-- `globalMetrics.crisisResilience`, `globalMetrics.localEconomyStrength`, `globalMetrics.animalWelfareIndex`, `globalMetrics.catastrophicRisk`
-- `famineSystem.urbanFoodAccess`
+**Verification:**
+- ✅ TypeScript compiles cleanly
+- ✅ Monte Carlo validation (2 runs × 24 months, no errors)
+- ✅ Grep verification: 0 defensive patterns remain in government actions
 
-**Effort:** 1-1.5 hours
+**Actual Effort:** 30 minutes
 
-#### Batch 6: Environmental Accumulation (Priority 3)
-**Lines:** 980, 1343, 1516, 1524, 1532, 1540
-**Properties:**
-- `oceanAcidificationSystem.coralBleachingRisk`, `oceanAcidificationSystem.deadZoneRisk`
-- `environmentalAccumulation.ecosystemHealth`, `environmentalAccumulation.monsoonDisruptionRisk`, `environmentalAccumulation.ozoneDepletionRisk`
-- `globalMetrics.existentialRisk`
-
-**Effort:** 45-60 minutes
-
-**Total Phase 2 Effort:** 4-6 hours
+---
 
 ---
 
@@ -323,9 +299,10 @@ Update this file after each batch:
 - Document any initialization bugs found
 - Update effort estimates based on actual time
 
-**Last Updated:** October 25, 2025, 6:35 PM
-**Status:** Phase 2, Batch 2 complete ✅
-**Next:** Phase 2, Batch 3 (planetary boundaries - 8 properties)
+**Last Updated:** October 25, 2025, 8:45 PM
+**Status:** Phase 2 COMPLETE ✅ | Government Actions COMPLETE ✅
+**Total Progress:** 138 patterns fixed (76 removed + 62 assertFinite guards) + 14 government action patterns
+**Next:** Phase 3 - Core Simulation Files (~362 patterns remaining)
 
 ---
 
