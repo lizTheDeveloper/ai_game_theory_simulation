@@ -53,7 +53,8 @@ export function initializeOrganizations(): Organization[] {
       governmentRelations: 0.7,   // Good relations
       foundingMonth: -120,        // ~10 years ago (Dec 2015)
       reputation: 0.8,
-      bankrupt: false            // TIER 1.7.3: Track bankruptcy
+      bankrupt: false,           // TIER 1.7.3: Track bankruptcy
+      bankruptcyRisk: 0          // P2.4: Calculated by updateOrganizationViability
     },
     
     // Anthropic
@@ -81,7 +82,8 @@ export function initializeOrganizations(): Organization[] {
       governmentRelations: 0.8,   // Very good relations (safety focus)
       foundingMonth: -48,         // ~4 years ago (Jan 2021)
       reputation: 0.85,
-      bankrupt: false            // TIER 1.7.3: Track bankruptcy
+      bankrupt: false,           // TIER 1.7.3: Track bankruptcy
+      bankruptcyRisk: 0          // P2.4: Calculated by updateOrganizationViability
     },
     
     // Google DeepMind
@@ -124,7 +126,8 @@ export function initializeOrganizations(): Organization[] {
       governmentRelations: 0.6,   // Moderate (antitrust concerns)
       foundingMonth: -180,        // ~15 years ago (DeepMind 2010)
       reputation: 0.75,
-      bankrupt: false            // TIER 1.7.3: Track bankruptcy
+      bankrupt: false,           // TIER 1.7.3: Track bankruptcy
+      bankruptcyRisk: 0          // P2.4: Calculated by updateOrganizationViability
     },
     
     // Meta AI
@@ -152,7 +155,8 @@ export function initializeOrganizations(): Organization[] {
       governmentRelations: 0.4,   // Poor (regulatory scrutiny, privacy issues)
       foundingMonth: -144,        // ~12 years ago (FAIR 2013)
       reputation: 0.6,
-      bankrupt: false            // TIER 1.7.3: Track bankruptcy
+      bankrupt: false,           // TIER 1.7.3: Track bankruptcy
+      bankruptcyRisk: 0          // P2.4: Calculated by updateOrganizationViability
     },
     
     // Government AI Research Initiative
@@ -184,7 +188,8 @@ export function initializeOrganizations(): Organization[] {
       governmentRelations: 1.0,   // IS the government
       foundingMonth: -12,         // ~1 year ago (Jan 2024)
       reputation: 0.5,            // Neutral public perception
-      bankrupt: false            // TIER 1.7.3: Track bankruptcy
+      bankrupt: false,           // TIER 1.7.3: Track bankruptcy
+      bankruptcyRisk: 0          // P2.4: Calculated by updateOrganizationViability
     },
     
     // Academic AI Consortium
@@ -234,7 +239,8 @@ export function initializeOrganizations(): Organization[] {
       governmentRelations: 0.9,   // Very good (grants, collaboration)
       foundingMonth: -240,        // ~20 years ago (many universities)
       reputation: 0.9,            // High public trust
-      bankrupt: false            // TIER 1.7.3: Track bankruptcy
+      bankrupt: false,           // TIER 1.7.3: Track bankruptcy
+      bankruptcyRisk: 0          // P2.4: Calculated by updateOrganizationViability
     }
   ];
 }
