@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "id": "threshold-config-2025-10-26T22-03-27-n1r6",
+    "description": "Monte Carlo run: 1 runs, 1 months, scenario=utopia",
+    "createdAt": "2025-10-26T22:03:27.229Z",
+    "scenario": "utopia",
+    "seed": 42000,
+    "gitCommit": "e59f96f"
+  },
+  "thresholds": {
+    "socialCriticalMass": 0.28,
+    "trustRecoveryRate": 0.0275,
+    "climateSensitivity": 2.3,
+    "governmentLegitimacyCrisisThreshold": 0.36,
+    "automationJobLossThreshold": 0.41000000000000003,
+    "surveillanceDystopiaThreshold": 0.77,
+    "automationDisplacementCrisisThreshold": 0.56,
+    "aiRecursiveImprovementThreshold": 1.26,
+    "resentmentRevoltTriggerThreshold": 0.76
+  },
+  "notes": "Generated from Monte Carlo simulation run at 2025-10-26T22:03:27.229Z"
+}

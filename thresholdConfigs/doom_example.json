@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "id": "threshold-config-2025-10-26T22-03-22-7uzi",
+    "description": "Monte Carlo run: 1 runs, 1 months, scenario=doom",
+    "createdAt": "2025-10-26T22:03:22.488Z",
+    "scenario": "doom",
+    "seed": 42000,
+    "gitCommit": "e59f96f"
+  },
+  "thresholds": {
+    "socialCriticalMass": 0.22,
+    "trustRecoveryRate": 0.0075,
+    "climateSensitivity": 4.7,
+    "governmentLegitimacyCrisisThreshold": 0.27,
+    "automationJobLossThreshold": 0.29000000000000004,
+    "surveillanceDystopiaThreshold": 0.68,
+    "automationDisplacementCrisisThreshold": 0.44,
+    "aiRecursiveImprovementThreshold": 1.44,
+    "resentmentRevoltTriggerThreshold": 0.64
+  },
+  "notes": "Generated from Monte Carlo simulation run at 2025-10-26T22:03:22.488Z"
+}

@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "id": "threshold-config-2025-10-26T22-03-26-e45t",
+    "description": "Monte Carlo run: 1 runs, 1 months, scenario=progressive",
+    "createdAt": "2025-10-26T22:03:26.075Z",
+    "scenario": "progressive",
+    "seed": 42000,
+    "gitCommit": "e59f96f"
+  },
+  "thresholds": {
+    "socialCriticalMass": 0.265,
+    "trustRecoveryRate": 0.02125,
+    "climateSensitivity": 3.05,
+    "governmentLegitimacyCrisisThreshold": 0.33,
+    "automationJobLossThreshold": 0.38,
+    "surveillanceDystopiaThreshold": 0.7475,
+    "automationDisplacementCrisisThreshold": 0.53,
+    "aiRecursiveImprovementThreshold": 1.305,
+    "resentmentRevoltTriggerThreshold": 0.73
+  },
+  "notes": "Generated from Monte Carlo simulation run at 2025-10-26T22:03:26.075Z"
+}
