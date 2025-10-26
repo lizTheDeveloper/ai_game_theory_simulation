@@ -88,8 +88,11 @@ export function activateSocialSafetyNets(
   
   const avgAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / Math.max(1, state.aiAgents.length);
   system.aiCoordination = Math.min(0.8, avgAICapability * 0.2); // AI optimizes placement
-  
-  system.governmentCapacity = state.government.governanceQuality?.institutionalCapacity || 0.5;
+
+  if (!state.government.governanceQuality?.institutionalCapacity) {
+    throw new Error('❌ state.government.governanceQuality.institutionalCapacity is undefined in updateSocialSafetyNets - initialization bug');
+  }
+  system.governmentCapacity = state.government.governanceQuality.institutionalCapacity;
   
   console.log(`✅ SOCIAL SAFETY NETS ACTIVATED (Month ${state.currentMonth})`);
   console.log(`   Investment: $${investmentLevel}B/month`);
@@ -252,11 +255,14 @@ export function updateSocialSafetyNets(state: GameState): void {
   
   system.effects.communityStrengthBoost = communityStrengthRate;
   system.communityStrengthGain += communityStrengthRate;
-  
+
   // Apply to actual community strength
+  if (state.society.communityStrength === undefined) {
+    throw new Error('❌ state.society.communityStrength is undefined in updateSocialSafetyNets - initialization bug');
+  }
   state.society.communityStrength = Math.min(
     1.0,
-    (state.society.communityStrength ?? 0.5) + communityStrengthRate
+    state.society.communityStrength + communityStrengthRate
   );
   
   // Social cohesion increase (World Bank: Strong bonds → resilience)
