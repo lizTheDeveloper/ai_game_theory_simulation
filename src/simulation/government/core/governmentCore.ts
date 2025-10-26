@@ -625,7 +625,11 @@ function executeEarlyWarningInterventions(
 
     // Check if government has resources
     const resourceCost = intervention.gdpCost;
-    if ((gov.resources ?? 0) < resourceCost) {
+    // FIX: Phase 5.1 (Oct 26, 2025) - Fail loudly if property missing
+    if (gov.resources === undefined) {
+      throw new Error('❌ gov.resources is undefined in governmentCore - initialization bug');
+    }
+    if (gov.resources < resourceCost) {
       // Insufficient resources - skip this intervention
       continue;
     }
