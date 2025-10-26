@@ -18,6 +18,7 @@ import { GameState, SocialAccumulation } from '@/types/game';
 import { HumanSocietyAgent } from '@/types/society';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { RootCause } from '@/types/population';
+import { assertStateProperty } from './utils/assertions';
 import {
   TRUST_THRESHOLD_ACCEPTANCE,
   TRUST_THRESHOLD_EMBRACE,
@@ -649,10 +650,11 @@ function calculateAlignmentPerception(state: GameState): number {
  */
 function calculateAIPerformance(state: GameState): number {
   const qol = state.globalMetrics.qualityOfLife;
-  if (state.globalMetrics.previousQoL === undefined) {
-    throw new Error('❌ state.globalMetrics.previousQoL is undefined in calculateAIPerformance - initialization bug');
-  }
-  const previousQoL = state.globalMetrics.previousQoL;
+  const previousQoL = assertStateProperty(
+    state.globalMetrics,
+    'previousQoL',
+    { location: 'calculateAIPerformance', month: state.currentMonth }
+  );
   const qolTrend = qol - previousQoL;
 
   // Performance baseline from QoL (is AI making life better?)
@@ -707,10 +709,11 @@ function calculateCapabilityFear(state: GameState): number {
 
   // Estimate change rate (actual implementation would track history)
   // For now, assume rapid growth if capability > 3.0 and increasing
-  if (!('previousAICapability' in state)) {
-    throw new Error('❌ state.previousAICapability is undefined in calculateAIPerformance - initialization bug');
-  }
-  const previousCapability = (state as any).previousAICapability;
+  const previousCapability = assertStateProperty(
+    state,
+    'previousAICapability',
+    { location: 'calculateAIPerformance', month: state.currentMonth }
+  );
   const capabilityChange = currentCapability - previousCapability;
 
   // Store for next iteration
@@ -802,10 +805,12 @@ export function updateTrustRecovery(state: GameState): void {
   }
 
   // 2. Demonstrated benefits (+2%/month when QoL improving)
-  if (state.globalMetrics.previousQoL === undefined) {
-    throw new Error('❌ state.globalMetrics.previousQoL is undefined in updateTrustInAI - initialization bug');
-  }
-  const qolTrend = state.globalMetrics.qualityOfLife - state.globalMetrics.previousQoL;
+  const previousQoL = assertStateProperty(
+    state.globalMetrics,
+    'previousQoL',
+    { location: 'updateTrustInAI', month: state.currentMonth }
+  );
+  const qolTrend = state.globalMetrics.qualityOfLife - previousQoL;
   if (qolTrend > 0) {
     baseTrustChange += TRUST_RECOVERY_FROM_DEMONSTRATED_BENEFITS;
   }
@@ -843,10 +848,11 @@ export function updateTrustRecovery(state: GameState): void {
 
   // 2. Detected misalignment (-2% per detection)
   const misalignedAIs = state.aiAgents.filter(ai => ai.alignment < 0.5).length;
-  if (!('previousMisalignedCount' in state)) {
-    throw new Error('❌ state.previousMisalignedCount is undefined in updateTrustInAI - initialization bug');
-  }
-  const previousMisaligned = (state as any).previousMisalignedCount;
+  const previousMisaligned = assertStateProperty(
+    state,
+    'previousMisalignedCount',
+    { location: 'updateTrustInAI', month: state.currentMonth }
+  );
   const newMisalignments = Math.max(0, misalignedAIs - previousMisaligned);
   baseTrustChange -= newMisalignments * TRUST_DECAY_FROM_MISALIGNMENT;
   (state as any).previousMisalignedCount = misalignedAIs;
