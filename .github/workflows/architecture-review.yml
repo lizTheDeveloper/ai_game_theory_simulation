@@ -110,28 +110,31 @@ jobs:
           TYPE_COUNT: ${{ steps.changes.outputs.type_count }}
           ENGINE_COUNT: ${{ steps.changes.outputs.engine_count }}
         run: |
-          # Build prompt with file contents expanded
-          cat > architecture_review_prompt.txt <<EOF
+          # Write PR body to temp file to avoid bash execution
+          printf '%s\n' "$PR_BODY" > pr_body_safe.txt
+
+          # Build prompt template (quoted heredoc prevents ALL expansion)
+          cat > architecture_review_prompt.txt <<'TEMPLATE_EOF'
           You are the architecture-skeptic agent from .claude/agents/architecture-skeptic.md
 
           **YOUR CONTEXT:**
-          - PR: ${PR_TITLE}
-          - Branch: ${PR_BRANCH}
+          - PR: PR_TITLE_PLACEHOLDER
+          - Branch: PR_BRANCH_PLACEHOLDER
           - You have NO prior conversation history (fresh agent instance)
 
           **PR DESCRIPTION:**
-          ${PR_BODY}
+          PR_BODY_PLACEHOLDER
 
           **CHANGED FILES:**
-          - Simulation files: ${SIM_COUNT}
-          - Phase files: ${PHASE_COUNT}
-          - Type files: ${TYPE_COUNT}
-          - Engine files: ${ENGINE_COUNT}
+          - Simulation files: SIM_COUNT_PLACEHOLDER
+          - Phase files: PHASE_COUNT_PLACEHOLDER
+          - Type files: TYPE_COUNT_PLACEHOLDER
+          - Engine files: ENGINE_COUNT_PLACEHOLDER
 
           **FILE LISTS:**
-          Simulation: $(cat simulation_files.txt)
-          Phases: $(cat phase_files.txt)
-          Types: $(cat type_files.txt)
+          Simulation: SIMULATION_FILES_PLACEHOLDER
+          Phases: PHASE_FILES_PLACEHOLDER
+          Types: TYPE_FILES_PLACEHOLDER
 
           **YOUR TASK:**
           Perform a critical architecture review of this PR. Focus on:
@@ -182,7 +185,24 @@ jobs:
           - APPROVE: Only MEDIUM/LOW issues or none
 
           Work iteratively. Read multiple files to understand system context. This is a quality gate - be thorough but fair.
-          EOF
+          TEMPLATE_EOF
+
+          # Replace placeholders with actual values using sed
+          # Use | as delimiter to avoid issues with / in paths
+          sed -i'' -e "s|PR_TITLE_PLACEHOLDER|$PR_TITLE|g" architecture_review_prompt.txt
+          sed -i'' -e "s|PR_BRANCH_PLACEHOLDER|$PR_BRANCH|g" architecture_review_prompt.txt
+          sed -i'' -e "s|SIM_COUNT_PLACEHOLDER|$SIM_COUNT|g" architecture_review_prompt.txt
+          sed -i'' -e "s|PHASE_COUNT_PLACEHOLDER|$PHASE_COUNT|g" architecture_review_prompt.txt
+          sed -i'' -e "s|TYPE_COUNT_PLACEHOLDER|$TYPE_COUNT|g" architecture_review_prompt.txt
+          sed -i'' -e "s|ENGINE_COUNT_PLACEHOLDER|$ENGINE_COUNT|g" architecture_review_prompt.txt
+
+          # Replace PR body placeholder with file contents (using perl for multi-line)
+          perl -i -pe 'BEGIN{undef $/;} s/PR_BODY_PLACEHOLDER/`cat pr_body_safe.txt`/smge' architecture_review_prompt.txt
+
+          # Replace file list placeholders with file contents
+          perl -i -pe 'BEGIN{undef $/;} s/SIMULATION_FILES_PLACEHOLDER/`cat simulation_files.txt`/smge' architecture_review_prompt.txt
+          perl -i -pe 'BEGIN{undef $/;} s/PHASE_FILES_PLACEHOLDER/`cat phase_files.txt`/smge' architecture_review_prompt.txt
+          perl -i -pe 'BEGIN{undef $/;} s/TYPE_FILES_PLACEHOLDER/`cat type_files.txt`/smge' architecture_review_prompt.txt
 
       - name: Read Architecture Review Prompt
         id: read_prompt
