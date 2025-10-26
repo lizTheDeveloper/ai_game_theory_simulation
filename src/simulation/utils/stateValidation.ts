@@ -84,13 +84,23 @@ function createValidationError(
 }
 
 /**
+ * Cache for wrapped objects to prevent infinite recursion
+ */
+const proxyCache = new WeakMap<object, any>();
+
+/**
  * Recursively wrap an object with validation proxy
  */
 function createValidationProxy<T extends object>(
   target: T,
   path: string[] = []
 ): T {
-  return new Proxy(target, {
+  // Return cached proxy if exists
+  if (proxyCache.has(target)) {
+    return proxyCache.get(target);
+  }
+
+  const proxy = new Proxy(target, {
     get(obj, prop, receiver) {
       // Skip symbols and functions
       if (typeof prop === 'symbol') {
@@ -111,6 +121,7 @@ function createValidationProxy<T extends object>(
       }
 
       // Recursively wrap nested objects (but not arrays for performance)
+      // CRITICAL: Return wrapped proxy so writes to nested properties are validated
       if (value && typeof value === 'object' && !Array.isArray(value)) {
         return createValidationProxy(value, [...path, propKey]);
       }
@@ -134,6 +145,11 @@ function createValidationProxy<T extends object>(
       return Reflect.set(obj, prop, value, receiver);
     }
   });
+
+  // Cache the proxy
+  proxyCache.set(target, proxy);
+
+  return proxy;
 }
 
 /**
