@@ -42,8 +42,8 @@ jobs:
         run: |
           ISSUE_BODY='${{ github.event.issue.body }}'
 
-          # Check if issue body explicitly references research files (extract from backticks)
-          EXPLICIT_RESEARCH=$(echo "$ISSUE_BODY" | grep "/research/" | head -1 | sed -n 's/.*`\(\/research\/[^`]*\.md\)`.*/\1/p' || echo "")
+          # Check if issue body explicitly references research files (extract from backticks, strip leading slash)
+          EXPLICIT_RESEARCH=$(echo "$ISSUE_BODY" | grep "/research/" | head -1 | sed -n 's/.*`\(\/research\/[^`]*\.md\)`.*/\1/p' | sed 's|^/||' || echo "")
 
           if [ -n "$EXPLICIT_RESEARCH" ] && [ -f "$EXPLICIT_RESEARCH" ]; then
             # Issue body explicitly lists research file and it exists
@@ -62,8 +62,8 @@ jobs:
         run: |
           ISSUE_BODY='${{ github.event.issue.body }}'
 
-          # Check if issue body explicitly references plan files (extract from backticks)
-          EXPLICIT_PLAN=$(echo "$ISSUE_BODY" | grep "/plans/" | head -1 | sed -n 's/.*`\(\/plans\/[^`]*\.md\)`.*/\1/p' || echo "")
+          # Check if issue body explicitly references plan files (extract from backticks, strip leading slash)
+          EXPLICIT_PLAN=$(echo "$ISSUE_BODY" | grep "/plans/" | head -1 | sed -n 's/.*`\(\/plans\/[^`]*\.md\)`.*/\1/p' | sed 's|^/||' || echo "")
 
           if [ -n "$EXPLICIT_PLAN" ] && [ -f "$EXPLICIT_PLAN" ]; then
             # Issue body explicitly lists plan file and it exists
