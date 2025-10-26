@@ -181,7 +181,10 @@ export function checkDefensiveAITriggers(state: GameState): DefensiveAITriggers 
   ].filter(Boolean).length >= 2;
   
   // === POLITICAL CHECKS ===
-  triggers.governmentInvestment = (state.government.alignmentResearchInvestment || 0) > 10;
+  if (state.government.alignmentResearchInvestment === undefined) {
+    throw new Error('❌ state.government.alignmentResearchInvestment is undefined in defensiveAI.ts:184 - initialization bug');
+  }
+  triggers.governmentInvestment = state.government.alignmentResearchInvestment > 10;
   triggers.publicPressure = getTrustInAI(state.society) < 0.4 || // Phase 2C: Use paranoia-derived trust
     (1 - state.socialAccumulation.institutionalLegitimacy) > 0.7;
   triggers.militarySupport = state.madDeterrence.crisisStability < 0.5;
@@ -636,7 +639,10 @@ function updateDefenseOffenseArmsRace(state: GameState): void {
   }
   
   // Defenders can upgrade (requires high investment)
-  if ((state.government.alignmentResearchInvestment || 0) > 20) {
+  if (state.government.alignmentResearchInvestment === undefined) {
+    throw new Error('❌ state.government.alignmentResearchInvestment is undefined in defensiveAI.ts:639 - initialization bug');
+  }
+  if (state.government.alignmentResearchInvestment > 20) {
     if (Math.random() < 0.1) { // 10% chance per month
       defense.armsRace.defenseGeneration++;
       

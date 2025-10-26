@@ -331,22 +331,10 @@ export function updateQualityOfLifeSystems(
   }
 
   // === SURVIVAL FUNDAMENTALS ===
-  // FIX (Oct 25, 2025): Only recalculate if missing - otherwise preserve existing values
-  // FoodSecurityDegradationPhase applies incremental degradation, which gets wiped if we recalculate
-  // FIX (Oct 25, 2025 PART 2): Call calculateSurvivalFundamentals ONCE to avoid 3x redundant calculation
-  const survivalFundamentals = state.qualityOfLifeSystems.survivalFundamentals
-    ? (() => {
-        const calculated = calculateSurvivalFundamentals(state);
-        return {
-          // Preserve foodSecurity from FoodSecurityDegradationPhase
-          foodSecurity: state.qualityOfLifeSystems.survivalFundamentals.foodSecurity,
-          // Use other values from single calculation
-          waterSecurity: calculated.waterSecurity,
-          thermalHabitability: calculated.thermalHabitability,
-          shelterSecurity: calculated.shelterSecurity,
-        };
-      })()
-    : calculateSurvivalFundamentals(state); // First time initialization
+  // FIX (Oct 25, 2025 PART 3): RECALCULATE base food security every month
+  // FoodSecurityDegradationPhase now applies BOTH crisis degradation AND infrastructure penalty
+  // This ensures base resources/tech/climate effects are always current
+  const survivalFundamentals = calculateSurvivalFundamentals(state);
 
   // Assign to state
   state.qualityOfLifeSystems.survivalFundamentals = survivalFundamentals;

@@ -60,18 +60,14 @@ export function calculateFoodSecurity(state: GameState): number {
   // Base food availability from resource stocks
   let foodSecurity = Math.min(1.0, resources.food.reserves);
 
-  // Phase 1B Refinement (Oct 17, 2025): Food production requires human infrastructure
-  // Research: Tainter (1988) - complexity requires minimum population to maintain
-  // FIX (Oct 25, 2025): Cap at 1.0 (no bonus production above baseline population)
-  const populationRatio = state.humanPopulationSystem.population / 8.0; // 8B baseline
-  const infrastructurePenalty = Math.min(1.0, Math.max(0.3, populationRatio)); // 30%-100% capacity
-
-  foodSecurity *= infrastructurePenalty;
-
-  // Log when infrastructure collapses significantly
-  if (infrastructurePenalty < 0.5) {
-    console.log(`  🏭 Agricultural infrastructure collapse: ${(populationRatio * 100).toFixed(0)}% capacity remaining`);
-  }
+  // FIX (Oct 25, 2025 PART 3): Infrastructure penalty MOVED to FoodSecurityDegradationPhase
+  // Reason: Applying it here conflicts with preservation logic in updateQualityOfLifeSystems
+  // Now applied as multiplier in degradation phase alongside crisis degradation
+  //
+  // REMOVED FROM HERE:
+  // const populationRatio = state.humanPopulationSystem.population / 8.0;
+  // const infrastructurePenalty = Math.min(1.0, Math.max(0.3, populationRatio));
+  // foodSecurity *= infrastructurePenalty;
 
   // === PHOSPHORUS DEPLETION ===
   // Low reserves = reduced agricultural yields
@@ -179,7 +175,7 @@ export function calculateFoodSecurity(state: GameState): number {
 
   // DEBUG: Log food security calculation every 12 months
   if (state.currentMonth % 12 === 0) {
-    console.log(`  [QoL Phase] Food Security Calc (Month ${state.currentMonth}): ${(finalFoodSec * 100).toFixed(1)}% | Infra: ${(infrastructurePenalty * 100).toFixed(0)}%, Tech: vf=${(verticalFarming * 100).toFixed(0)}% cf=${(circularFood * 100).toFixed(0)}%`);
+    console.log(`  [QoL Phase] Food Security BASE Calc (Month ${state.currentMonth}): ${(finalFoodSec * 100).toFixed(1)}% | Tech: vf=${(verticalFarming * 100).toFixed(0)}% cf=${(circularFood * 100).toFixed(0)}% (infra penalty now in degradation phase)`);
   }
 
   return finalFoodSec;

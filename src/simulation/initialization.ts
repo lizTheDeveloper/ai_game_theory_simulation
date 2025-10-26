@@ -737,6 +737,13 @@ export function createDefaultInitialState(
       8e9     // Initial population (8 billion)
     ),
 
+    // TIER 4.6: Policy Interventions (Phase 6: Mitigations for AI automation)
+    policyInterventions: {
+      retrainingLevel: 0,        // No retraining programs at 2025 baseline
+      teachingSupportLevel: 0,   // No AI-human teaching support at baseline
+      jobGuaranteeLevel: 0,      // No federal job guarantee at baseline
+    },
+
     // TIER 4.6: Human Enhancement (DEPRECATED - contains sci-fi BCI/merger code)
     humanEnhancementSystem: initializeHumanEnhancementSystem(), // DEPRECATED: Being phased out, use aiAssistedSkillsMetrics
 
