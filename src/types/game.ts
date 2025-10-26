@@ -490,6 +490,24 @@ export interface GameState {
   config: ConfigurationSettings;
   llmConfig?: import('./llm').LLMConfig; // LLM policy optimization configuration (Oct 21, 2025)
 
+  /**
+   * Threshold Uncertainty System (Phase 1B, Oct 26, 2025)
+   *
+   * Research-backed uncertainty distributions for critical simulation thresholds.
+   * Each threshold samples from a distribution at initialization, creating run-to-run variation.
+   *
+   * Tier 1 Thresholds:
+   * - Social Critical Mass: Centola et al. (2018) - 25% ± 2%
+   * - Trust Recovery Rate: Meta-analysis - Beta(α=2, β=5)
+   * - Climate Sensitivity: IPCC AR6 - Log-Normal(μ=3.0, σ=0.75)
+   * - Government Legitimacy Crisis: Historical cases - Triangular(0.25, 0.30, 0.40)
+   * - Automation Job Loss: Acemoglu & Restrepo (2022) - 35% ± 5%
+   *
+   * Research: Issue #8 - Threshold uncertainty reflects epistemic uncertainty in social/physical systems
+   * Expected impact: ±10-40% outcome variation reflecting parameter uncertainty
+   */
+  thresholds: import('../simulation/thresholds/tier1Config').Tier1Thresholds;
+
   // Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
   // Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe)
   // Research: Wilkinson & Pickett (2009), Rawls (1971)

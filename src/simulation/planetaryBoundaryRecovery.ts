@@ -29,6 +29,7 @@
 import type { GameState, RNGFunction } from '../types/game';
 import type { BoundaryName } from '../types/planetaryBoundaries';
 import { assertFinite, assertDefined } from './utils/assertions';
+import { addSimulationEvent } from './utils/eventLogger';
 
 /**
  * Main recovery update function
@@ -237,6 +238,23 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
       console.log(`\n🌡️  CLIMATE RECOVERY ACTIVATED (Month ${state.currentMonth})`);
       console.log(`   Temp: ${globalWarming.toFixed(2)}°C, Emissions: ${netEmissions.toFixed(1)} GtCO₂`);
       console.log(`   isBreached: ${isBreached}, governanceGoodEnough: ${governanceGoodEnough}`);
+
+      // Add event to timeline (first activation only)
+      addSimulationEvent(state, {
+        type: 'environmental',
+        severity: 'constructive',
+        agent: 'planetary-systems',
+        title: `🌡️ CLIMATE RECOVERY ACTIVATED`,
+        description: `Planetary boundary recovery triggered for climate change. Current temperature: ${globalWarming.toFixed(2)}°C above pre-industrial. Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year (requires net-negative for recovery). International governance: ${(internationalCoordination * 100).toFixed(0)}%. This is the first step toward reversing climate damage.`,
+        effects: {
+          globalWarming,
+          netEmissions,
+          internationalCoordination,
+          boundaryValue: boundary.currentValue,
+          isBreached,
+          governanceGoodEnough
+        }
+      });
     }
 
     // FIX #17 (Oct 21, 2025): ACTUALLY REDUCE BOUNDARY VALUE
@@ -274,6 +292,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
       }
 
       // Update boundary status based on actual value
+      const wasBreached = boundary.status !== 'safe';
       if (boundary.currentValue < boundary.boundaryThreshold) {
         boundary.status = 'safe';
         boundary.trend = 'improving';
@@ -285,6 +304,24 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
         console.log(`  Temperature: ${globalWarming.toFixed(2)}°C`);
         console.log(`  Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year`);
         console.log(`  Recovery time: ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years`);
+
+        // Add recovery event to timeline (only once when status changes to safe)
+        if (wasBreached) {
+          addSimulationEvent(state, {
+            type: 'environmental',
+            severity: 'positive',
+            agent: 'planetary-systems',
+            title: `✅ CLIMATE BOUNDARY RECOVERED`,
+            description: `Climate change planetary boundary returned to SAFE status after ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years of net-negative emissions. Boundary value: ${boundary.currentValue.toFixed(3)} (below threshold ${boundary.boundaryThreshold.toFixed(3)}). Global temperature: ${globalWarming.toFixed(2)}°C. Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year. This is a major milestone for ecological sustainability.`,
+            effects: {
+              recoveryYears: Math.floor((boundary.recoveryMonths ?? 0) / 12),
+              boundaryValue: boundary.currentValue,
+              globalWarming,
+              netEmissions,
+              threshold: boundary.boundaryThreshold
+            }
+          });
+        }
       } else {
         boundary.trend = 'improving';
       }

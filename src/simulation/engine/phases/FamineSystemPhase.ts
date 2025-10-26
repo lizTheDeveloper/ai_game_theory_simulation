@@ -28,14 +28,16 @@ export class FamineSystemPhase implements SimulationPhase {
 
     // 2. Update active famines (progress death curves)
     const { updateFamineSystem } = require('../../../types/famine');
-    
+
     const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
     const resourcesAvailable = state.resourceEconomy.food.reserves > 0.5;
-    
+
+    // FIX (Oct 26, 2025): Pass current month for seasonal mortality calculation
     const famineDeaths = updateFamineSystem(
       state.famineSystem,
       totalAICapability,
-      resourcesAvailable
+      resourcesAvailable,
+      state.currentMonth
     );
 
     // 3. Apply famine deaths to population

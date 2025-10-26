@@ -42,7 +42,8 @@ export function OverviewDashboard() {
   }
 
   // Extract key metrics from StateDelta (use ?? instead of || to handle 0 values correctly)
-  const population = lastUpdate.population ?? 8_000_000_000
+  // NOTE: Worker sends population in billions (8 = 8 billion people), not individual count
+  const population = lastUpdate.population ?? 8.0
   const qol = lastUpdate.qualityOfLife ?? 0.65  // Default 65% baseline QoL
   const aiCap = lastUpdate.avgAICapability ?? 0
   const alignment = (lastUpdate.alignedAICount ?? 0) / Math.max(1, lastUpdate.aiCount ?? 1)
@@ -80,10 +81,10 @@ export function OverviewDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           label="Global Population"
-          value={(population / 1_000_000_000).toFixed(2)}
+          value={population.toFixed(2)}
           unit="B"
-          status={population < 2_000_000_000 ? 'critical' : 'normal'}
-          trend={population < 7_000_000_000 ? 'down' : 'stable'}
+          status={population < 2.0 ? 'critical' : 'normal'}
+          trend={population < 7.0 ? 'down' : 'stable'}
         />
         <MetricCard
           label="Quality of Life"

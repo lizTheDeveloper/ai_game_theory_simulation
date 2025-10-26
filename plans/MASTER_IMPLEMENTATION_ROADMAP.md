@@ -188,7 +188,9 @@
 
 ## 📊 LOW PRIORITY - ENRICHMENT FEATURES
 
-### Priority 3 Enhancements (33-43h)
+### Priority 3 Enhancements (39-51h)
+
+**Total Effort:** 39-51h (was 33-43h)
 
 **P3.1: Variable Timesteps (10-12h)**
 - Event-driven architecture, 3-5x performance gain
@@ -210,6 +212,14 @@
 - Multi-model voting for safety-critical decisions
 - Plan: `/plans/p3-6-ensemble-alignment-verification.md`
 - Note: Prototype only (40% overhead, collusion risk)
+
+**P3.7: Regional-First Population Architecture (6-8h)**
+- Refactor population calculations to be regional-first with cached global aggregates
+- Single source of truth (regional level), global metrics are pure sums
+- Benefits: Eliminates double-counting bugs, performance improvements (O(1) cached lookups vs O(n) array scans)
+- Requirements: Must include toJson serialization method for backward compatibility
+- Architecture: Calculate at regional level → aggregate to global as cached values
+- Status: Deferred from Oct 26, 2025 bug fix session
 
 ---
 
@@ -349,14 +359,14 @@
 
 ## Summary
 
-**Total Remaining Effort:** ~147-228 hours across 9 feature groups
+**Total Remaining Effort:** ~153-236 hours across 9 feature groups
 
 **By Priority:**
 - 🟡 HIGH: Threshold Uncertainty Modeling (34-52h)
 - 🟡 MEDIUM: AI Deception Detection Phase 2C or 2D (12-74h)
 - 🟡 MEDIUM: AI-Assisted Skills (78h)
 - 🟡 MEDIUM: LLM Policy Optimization Phase 5 (6-8h) - Testing only
-- 🟢 LOW: P3 Enhancements (33-43h)
+- 🟢 LOW: P3 Enhancements (39-51h)
 - 🟢 LOW: Policy Improvements (35-42h)
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks, phased)

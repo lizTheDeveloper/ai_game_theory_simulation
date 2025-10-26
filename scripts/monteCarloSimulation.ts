@@ -1170,14 +1170,16 @@ for (let i = 0; i < NUM_RUNS; i++) {
   const avgPopulation = (initialPopulation + finalPopulation) / 2;
   const deathsNatural = (avgPopulation * pop.baselineDeathRate * (monthsElapsed / 12)) * 1000; // Convert to millions
   
-  // Crisis deaths by category (already in millions from deathsByCategory tracking)
+  // Crisis deaths by category (tracked in billions, NOT converted yet)
+  // FIX (Oct 26, 2025): deathsByCategory is in BILLIONS (same units as population)
+  // Values will be multiplied by 1000 later when displayed to convert billions → millions
   // BUG FIX (Oct 16, 2025): Removed cascade as separate category (was double-counting)
   // Cascade deaths are now included in disasters/ecosystem/pollution (environmental degradation)
   // MULTI-DIMENSIONAL UPDATE (Oct 18, 2025): Renamed climate → disasters
-  const deathsNuclear = deathsByCategory.war; // War includes nuclear
-  const deathsCrisis = deathsByCategory.famine + deathsByCategory.disease + deathsByCategory.other;
-  const deathsClimateEcoPollution = deathsByCategory.disasters + deathsByCategory.ecosystem + deathsByCategory.pollution + (deathsByCategory.cascade || 0);
-  const deathsMeaning = deathsByCategory.ai; // AI-related deaths (alignment failures, manipulation)
+  const deathsNuclear = deathsByCategory.war; // War includes nuclear (in billions)
+  const deathsCrisis = deathsByCategory.famine + deathsByCategory.disease + deathsByCategory.other; // in billions
+  const deathsClimateEcoPollution = deathsByCategory.disasters + deathsByCategory.ecosystem + deathsByCategory.pollution + (deathsByCategory.cascade || 0); // in billions
+  const deathsMeaning = deathsByCategory.ai; // AI-related deaths (alignment failures, manipulation) (in billions)
   
   // Population outcome
   let populationOutcome: 'growth' | 'stable' | 'decline' | 'bottleneck' | 'extinction';
@@ -2837,6 +2839,7 @@ results.forEach(r => r.famineAffectedRegions.forEach(region => allAffectedRegion
 
 log(`\n🌾 FAMINE STATISTICS (TIER 1.7 Integration)`);
 log(`${'='.repeat(50)}`);
+// FIX (Oct 26, 2025): totalFamineDeaths is in BILLIONS, already converted above
 log(`  Total famine deaths: ${(avgTotalFamineDeaths * 1000).toFixed(0)}M avg (${(avgTotalFamineDeaths * 1000 * NUM_RUNS).toFixed(0)}M cumulative)`);
 log(`  Runs with famines: ${runsWithFamines}/${NUM_RUNS} (${(runsWithFamines/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Active famines at end: ${avgActiveFamines.toFixed(1)} avg`);

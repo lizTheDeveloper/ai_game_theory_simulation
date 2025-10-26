@@ -219,9 +219,25 @@ export function applyExportControls(state: GameState, cache: CountryInteractionC
   // China accelerates spending if restricted
   if (exportControlsActive && !natAI.raceIntensity.chinaAccelerating) {
     natAI.raceIntensity.chinaAccelerating = true;
+    const oldInvestment = chinaNation.investmentLevel / 1.5;
     chinaNation.investmentLevel *= 1.5; // +50% spending
 
-    console.log(`💰 CHINA ACCELERATES: Investment ${(chinaNation.investmentLevel / 1.5).toFixed(0)} → ${chinaNation.investmentLevel.toFixed(0)} $B/year`);
+    console.log(`💰 CHINA ACCELERATES: Investment ${oldInvestment.toFixed(0)} → ${chinaNation.investmentLevel.toFixed(0)} $B/year`);
+
+    // Add event to timeline
+    addEvent(state, {
+      type: 'technology',
+      severity: 'medium',
+      agent: 'China',
+      title: '💰 CHINA ACCELERATES AI DEVELOPMENT',
+      description: `Export controls triggered massive Chinese AI investment increase. Annual spending: $${oldInvestment.toFixed(0)}B → $${chinaNation.investmentLevel.toFixed(0)}B (+50%). This may accelerate indigenous capability development and reduce US technological lead.`,
+      effects: {
+        oldInvestment,
+        newInvestment: chinaNation.investmentLevel,
+        investmentIncrease: 0.5,
+        exportControlsActive: true
+      }
+    });
   }
 }
 

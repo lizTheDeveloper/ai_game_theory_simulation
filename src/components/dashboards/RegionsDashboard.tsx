@@ -30,7 +30,8 @@ export function RegionsDashboard() {
   }
 
   // Use ?? instead of || to handle 0 values correctly
-  const population = lastUpdate.population ?? 8_000_000_000
+  // NOTE: Worker sends population in billions (8 = 8 billion people), not individual count
+  const population = lastUpdate.population ?? 8.0
   const qol = lastUpdate.qualityOfLife ?? 0.65  // Default 65% baseline QoL
   const socialCohesion = lastUpdate.socialCohesion ?? 0.7  // Default 70% baseline cohesion
   const institutionalTrust = lastUpdate.institutionalTrust ?? 0.7  // Default 70% baseline trust
@@ -62,9 +63,9 @@ export function RegionsDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <MetricCard
           label="Global Population"
-          value={(population / 1_000_000_000).toFixed(2)}
+          value={population.toFixed(2)}
           unit="B"
-          status={population < 2_000_000_000 ? 'critical' : 'normal'}
+          status={population < 2.0 ? 'critical' : 'normal'}
         />
         <MetricCard
           label="Quality of Life"
@@ -101,11 +102,11 @@ export function RegionsDashboard() {
 
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Population Trend</div>
-            <div className="text-4xl font-light mb-2" style={{ color: population < 7_000_000_000 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {population < 7_000_000_000 ? 'Declining' : 'Stable'}
+            <div className="text-4xl font-light mb-2" style={{ color: population < 7.0 ? 'var(--color-red)' : 'var(--white-80)' }}>
+              {population < 7.0 ? 'Declining' : 'Stable'}
             </div>
             <p className="text-sm" style={{ color: 'var(--white-60)' }}>
-              {(population / 1_000_000_000).toFixed(2)}B people
+              {population.toFixed(2)}B people
             </p>
           </div>
         </div>
@@ -282,10 +283,10 @@ export function RegionsDashboard() {
       )}
 
       {/* Crisis Alerts */}
-      {population < 2_000_000_000 && (
+      {population < 2.0 && (
         <Panel title="⚠️ Population Collapse" glow="red">
           <p className="text-sm" style={{ color: 'var(--white-60)' }}>
-            Global population has fallen below 2 billion ({(population / 1_000_000_000).toFixed(2)}B).
+            Global population has fallen below 2 billion ({population.toFixed(2)}B).
             This represents severe population decline with potential for civilizational collapse.
           </p>
         </Panel>

@@ -33,8 +33,97 @@ export function TechTreeDashboard() {
   const activeResearch = lastUpdate.activeResearch || []
   const techRiskLevel = lastUpdate.techRiskLevel || 0
 
-  // Group by tier
-  const techByTier = deployedTechs.reduce((acc, tech) => {
+  // Build tree structure: find root nodes and their children
+  const rootTechs = deployedTechs.filter(tech => tech.prerequisites.length === 0)
+
+  // Function to find children of a tech
+  const findChildren = (parentId: string) => {
+    return deployedTechs.filter(tech =>
+      tech.prerequisites.includes(parentId)
+    )
+  }
+
+  // Recursive component to render a tech and its children
+  const TechNode = ({ tech, depth = 0 }: { tech: typeof deployedTechs[0], depth?: number }) => {
+    const children = findChildren(tech.id)
+    const hasChildren = children.length > 0
+
+    return (
+      <div className="tech-node">
+        {/* Current tech */}
+        <div
+          className="flex items-start gap-3 mb-2"
+          style={{
+            marginLeft: `${depth * 32}px`
+          }}
+        >
+          {/* Tree connector */}
+          {depth > 0 && (
+            <div
+              className="mt-3"
+              style={{
+                width: '24px',
+                height: '2px',
+                backgroundColor: 'var(--white-20)',
+                flexShrink: 0
+              }}
+            />
+          )}
+
+          {/* Tech card */}
+          <div
+            className="flex-1 p-3 rounded"
+            style={{
+              backgroundColor: 'var(--color-near-black)',
+              border: '1px solid var(--white-10)'
+            }}
+          >
+            <div className="flex items-start justify-between mb-2">
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold mb-1">{tech.name}</h3>
+                <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--white-40)' }}>
+                  <span>Tier {tech.tier}</span>
+                  {tech.prerequisites.length > 0 && (
+                    <>
+                      <span>•</span>
+                      <span>Requires {tech.prerequisites.length} tech{tech.prerequisites.length > 1 ? 's' : ''}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-xs font-semibold">{(tech.deployment * 100).toFixed(0)}%</span>
+                <div className="text-xs" style={{ color: 'var(--white-40)' }}>deployed</div>
+              </div>
+            </div>
+
+            {/* Deployment bar */}
+            <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
+              <div
+                className="h-full rounded"
+                style={{
+                  width: `${Math.min(100, tech.deployment * 100)}%`,
+                  backgroundColor: tech.deployment >= 0.7 ? 'var(--color-green)' : 'var(--color-cyan)'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Children */}
+        {hasChildren && (
+          <div>
+            {children.map((child, i) => (
+              <TechNode key={child.id} tech={child} depth={depth + 1} />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Group root nodes by tier for organized display
+  const rootsByTier = rootTechs.reduce((acc, tech) => {
     if (!acc[tech.tier]) acc[tech.tier] = []
     acc[tech.tier].push(tech)
     return acc
@@ -108,54 +197,38 @@ export function TechTreeDashboard() {
         </Panel>
       )}
 
-      {/* Deployed Technologies by Tier */}
-      {Object.keys(techByTier)
+      {/* Technology Tree - Organized by Tier */}
+      {Object.keys(rootsByTier)
         .map(Number)
         .sort((a, b) => a - b)
         .map(tier => {
-          const techs = techByTier[tier]
+          const techs = rootsByTier[tier]
           if (!techs || techs.length === 0) return null
 
           const tierName =
-            tier === 0 ? 'TIER 0 (2025 Deployed)' :
-            tier === 1 ? 'TIER 1 (Crisis Mitigation)' :
-            tier === 2 ? 'TIER 2 (Major Solutions)' :
-            tier === 3 ? 'TIER 3 (Transformative)' :
-            tier === 4 ? 'TIER 4 (Clarketech)' :
-            `TIER ${tier}`
+            tier === 0 ? 'TIER 0 - Root Technologies (2025 Deployed)' :
+            tier === 1 ? 'TIER 1 - Crisis Mitigation Trees' :
+            tier === 2 ? 'TIER 2 - Major Solutions Trees' :
+            tier === 3 ? 'TIER 3 - Transformative Trees' :
+            tier === 4 ? 'TIER 4 - Clarketech Trees' :
+            `TIER ${tier} - Technology Trees`
+
+          const tierDescription =
+            tier === 0 ? 'Foundation technologies with no prerequisites. These unlock higher-tier techs.' :
+            tier === 1 ? 'Root technologies addressing planetary boundary crises.' :
+            tier === 2 ? 'Advanced technologies building on previous tiers.' :
+            tier === 3 ? 'Transformative technologies requiring complex prerequisites.' :
+            tier === 4 ? 'Clarketech capabilities at the frontier of possibility.' :
+            ''
 
           return (
             <Panel key={tier} title={tierName}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {techs.map((tech, index) => (
-                  <div
-                    key={index}
-                    className="p-4 rounded"
-                    style={{
-                      backgroundColor: 'var(--color-near-black)',
-                      border: '1px solid var(--white-10)'
-                    }}
-                  >
-                    <div className="mb-3">
-                      <h3 className="text-sm font-semibold mb-1">{tech.name}</h3>
-                      <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--white-40)' }}>
-                        <span>Tier {tech.tier}</span>
-                        <span>•</span>
-                        <span>{(tech.deployment * 100).toFixed(0)}% deployed</span>
-                      </div>
-                    </div>
-
-                    {/* Deployment Bar */}
-                    <div className="h-2 rounded" style={{ backgroundColor: 'var(--white-10)' }}>
-                      <div
-                        className="h-full rounded"
-                        style={{
-                          width: `${Math.min(100, tech.deployment * 100)}%`,
-                          backgroundColor: tech.deployment >= 0.7 ? 'var(--color-green)' : 'var(--color-cyan)'
-                        }}
-                      />
-                    </div>
-                  </div>
+              <p className="text-sm mb-4" style={{ color: 'var(--white-60)' }}>
+                {tierDescription}
+              </p>
+              <div className="space-y-1">
+                {techs.map(tech => (
+                  <TechNode key={tech.id} tech={tech} depth={0} />
                 ))}
               </div>
             </Panel>

@@ -16,8 +16,9 @@
 // This prevents browser from accumulating hundreds of console messages per second
 const originalLog = console.log;
 const originalWarn = console.warn;
-console.log = () => {}; // Suppress simulation logs
-console.warn = () => {}; // Suppress warnings
+// TEMPORARILY ENABLED for debugging population issue
+// console.log = () => {}; // Suppress simulation logs
+// console.warn = () => {}; // Suppress warnings
 // Keep console.error for critical issues
 self.addEventListener('error', (e) => {
   originalLog('[Worker Error]', e.message, e.filename, e.lineno);
@@ -53,6 +54,7 @@ interface StateSnapshot {
   dystopiaProgression: number;
   avgAICapability: number;
   deployedTechCount: number;
+  deployedTechs: Array<{ id: string; name: string; tier: number; deployment: number; prerequisites: string[] }>;
 
   // AI System
   alignedAICount: number;
@@ -186,6 +188,7 @@ interface InitialStateSnapshot {
   population: number;
   aiCount: number;
   scenario: ScenarioMode;
+  startDate?: string;  // ISO date string of simulation start
 }
 
 // Delta contains only changed fields (expanded for comprehensive dashboard)
@@ -434,6 +437,21 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
     westernLiberalIndex: initialDelta.westernLiberalIndex,
     developmentIndex: initialDelta.developmentIndex
   });
+
+  // Test which fields are serializable
+  try {
+    structuredClone(initialDelta);
+  } catch (cloneError) {
+    console.error('[Worker] Initial delta contains non-serializable data:', cloneError);
+    // Test each field individually to find the culprit
+    for (const [key, value] of Object.entries(initialDelta)) {
+      try {
+        structuredClone(value);
+      } catch (fieldError) {
+        console.error(`[Worker] Field "${key}" is not serializable:`, fieldError);
+      }
+    }
+  }
 
   self.postMessage({
     type: 'update',
@@ -768,18 +786,99 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const internationalCooperation = state.government.structuralChoices?.internationalCoordination ? 1 : 0;
 
   // Technology metrics
-  // Count deployed techs across all regions
+  // Count deployed techs across all regions and build deployed techs array
   let deployedTechCount = 0;
+  const deployedTechs: Array<{ id: string; name: string; tier: number; deployment: number; prerequisites: string[] }> = [];
+
+  // DEBUG: Log tech tree state structure
+  if (state.currentMonth % 5 === 0) {  // Log every 5 months to avoid spam
+    console.log(`[Worker Debug Month ${state.currentMonth}] techTreeState exists:`, !!state.techTreeState);
+    console.log(`[Worker Debug Month ${state.currentMonth}] regionalDeployment exists:`, !!state.techTreeState?.regionalDeployment);
+    const regions = Object.keys(state.techTreeState?.regionalDeployment || {});
+    console.log(`[Worker Debug Month ${state.currentMonth}] regionalDeployment regions:`, regions.join(', '));
+
+    // Count deployments per region
+    regions.forEach(region => {
+      const deployments = state.techTreeState?.regionalDeployment?.[region];
+      console.log(`[Worker Debug Month ${state.currentMonth}]   ${region}: ${deployments?.length || 0} deployments`);
+    });
+  }
+
   if (state.techTreeState?.regionalDeployment) {
-    const deployedTechIds = new Set<string>();
-    Object.values(state.techTreeState.regionalDeployment).forEach(regionDeployments => {
-      regionDeployments?.forEach(deployment => {
-        if (deployment.deploymentLevel > 0) {
-          deployedTechIds.add(deployment.techId);
+    // Static tech metadata mapping (avoids async import issues in Web Worker)
+    // Based on comprehensiveTechTree.ts structure - includes prerequisites for tree visualization
+    const techMetadata: Record<string, { name: string; tier: number; prerequisites: string[] }> = {
+      // TIER 0 (deployed 2025) - root nodes with no prerequisites
+      'rlhf_basic': { name: 'Basic RLHF', tier: 0, prerequisites: [] },
+      'mech_interp_basic': { name: 'Basic Mechanistic Interpretability', tier: 0, prerequisites: [] },
+      'adversarial_eval': { name: 'Adversarial Evaluation', tier: 0, prerequisites: [] },
+      'ai_diagnostics': { name: 'AI Diagnostics', tier: 0, prerequisites: [] },
+      'mrna_vaccines': { name: 'mRNA Vaccine Platforms', tier: 0, prerequisites: [] },
+      'solar_4th_gen': { name: '4th Generation Solar', tier: 0, prerequisites: [] },
+      'offshore_wind': { name: 'Offshore Wind', tier: 0, prerequisites: [] },
+      'grid_batteries': { name: 'Grid-Scale Batteries', tier: 0, prerequisites: [] },
+      'dac_basic': { name: 'Basic Direct Air Capture', tier: 0, prerequisites: [] },
+      'ai_power_efficiency': { name: 'AI Power Efficiency Communication', tier: 0, prerequisites: [] },
+      'collective_purpose_networks': { name: 'Collective Purpose Networks', tier: 0, prerequisites: [] },
+      // TIER 1 (planetary boundary crisis tech)
+      'phosphorus_recovery': { name: 'Phosphorus Recovery Systems', tier: 1, prerequisites: [] },
+      'advanced_desalination': { name: 'Advanced Desalination', tier: 1, prerequisites: [] },
+      'ocean_alkalinity_enhancement': { name: 'Ocean Alkalinity Enhancement', tier: 1, prerequisites: [] },
+      'pfas_remediation': { name: 'PFAS Remediation', tier: 1, prerequisites: [] },
+      'soil_p_optimization': { name: 'Soil Phosphorus Optimization', tier: 1, prerequisites: [] },
+      'struvite_recovery': { name: 'Struvite Recovery', tier: 1, prerequisites: [] },
+      // TIER 2 (major mitigations)
+      'enhanced_ubi': { name: 'Enhanced UBI', tier: 2, prerequisites: [] },
+      'scalable_oversight': { name: 'Scalable Oversight', tier: 2, prerequisites: ['rlhf_basic', 'mech_interp_basic'] },
+      'collective_purpose': { name: 'Collective Purpose Networks', tier: 2, prerequisites: ['collective_purpose_networks'] },
+      'advanced_dac': { name: 'Advanced Direct Air Capture', tier: 2, prerequisites: [] },
+      'closed_loop_phosphorus': { name: 'Closed-Loop Phosphorus Systems', tier: 2, prerequisites: ['soil_p_optimization'] },
+      'phosphorus_artificial': { name: 'Artificial Phosphorus Synthesis', tier: 2, prerequisites: ['struvite_recovery'] },
+      'solar_5th_gen': { name: '5th Generation Solar', tier: 2, prerequisites: ['solar_4th_gen'] },
+      'desalination_zld': { name: 'Zero-Liquid Discharge Desalination', tier: 2, prerequisites: ['advanced_desalination', 'solar_4th_gen'] },
+      // Add more as needed...
+    };
+
+    // Collect all deployed tech IDs with their max deployment level across ALL regions
+    const deployedTechMap = new Map<string, number>();
+
+    // Iterate through all regions (global, Asia, Europe, etc.)
+    Object.entries(state.techTreeState.regionalDeployment).forEach(([region, regionDeployments]) => {
+      if (!regionDeployments || !Array.isArray(regionDeployments)) return;
+
+      regionDeployments.forEach(deployment => {
+        if (deployment && deployment.deploymentLevel > 0) {
+          const currentMax = deployedTechMap.get(deployment.techId) || 0;
+          deployedTechMap.set(deployment.techId, Math.max(currentMax, deployment.deploymentLevel));
         }
       });
     });
-    deployedTechCount = deployedTechIds.size;
+
+    deployedTechCount = deployedTechMap.size;
+
+    // Build deployed techs array with metadata
+    deployedTechMap.forEach((deploymentLevel, techId) => {
+      const metadata = techMetadata[techId];
+
+      if (metadata) {
+        deployedTechs.push({
+          id: techId,
+          name: metadata.name,
+          tier: metadata.tier,
+          deployment: deploymentLevel,
+          prerequisites: metadata.prerequisites
+        });
+      } else {
+        // Fallback for unknown tech IDs
+        deployedTechs.push({
+          id: techId,
+          name: techId.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          tier: 0,
+          deployment: deploymentLevel,
+          prerequisites: []
+        });
+      }
+    });
   }
   // Calculate total tech risk from all components
   const techRiskLevel = state.technologicalRisk
@@ -807,8 +906,35 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const indigenousIndex = (state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value || 0) / 100;
 
   // Regional populations (simplified for dashboard - select key metrics only)
-  // NOTE: regionalPopulations doesn't exist on GameState yet - feature not implemented
-  const regionalPopulations: any[] = [];
+  const regionalPopulations = (state.humanPopulationSystem.regionalPopulations || []).map(region => {
+    // Calculate regional QoL based on multiple factors
+    // Positive factors: healthcare, economic development, food security
+    // Negative factors: climate vulnerability, resource vulnerability, conflict risk
+    const positiveFactors = (
+      region.healthcareQuality +
+      (region.economicStage / 4) +  // Normalize economic stage [0, 4] to [0, 1]
+      region.foodSecurity
+    ) / 3;
+
+    const negativeFactors = (
+      region.climateVulnerability +
+      region.resourceVulnerability +
+      region.conflictRisk
+    ) / 3;
+
+    // Regional QoL is weighted average: 70% positive factors, 30% penalty from negatives
+    const regionalQoL = Math.max(0, Math.min(1,
+      positiveFactors * 0.7 + (1 - negativeFactors) * 0.3
+    ));
+
+    return {
+      name: region.name,
+      population: region.population,                    // millions
+      qualityOfLife: regionalQoL,                       // Calculated from regional characteristics
+      healthcareQuality: region.healthcareQuality,      // [0, 1]
+      climateVulnerability: region.climateVulnerability // [0, 1]
+    };
+  });
 
   // AI Agents (individual agent data for AIAgentsDashboard)
   const aiAgents = state.aiAgents.map(agent => ({
@@ -874,6 +1000,34 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     sharedTraumaIntensity: collective.sharedTraumaIntensity
   })) || [];
 
+  // Safely serialize landUseData (may contain non-serializable properties)
+  let landUseData = null;
+  if (state.planetaryBoundariesSystem?.landUse) {
+    try {
+      // Test if it's serializable
+      structuredClone(state.planetaryBoundariesSystem.landUse);
+      landUseData = state.planetaryBoundariesSystem.landUse;
+    } catch (error) {
+      // If not serializable, extract just the plain data
+      const landUse = state.planetaryBoundariesSystem.landUse;
+      landUseData = {
+        regions: {
+          tropical: { ...landUse.regions.tropical },
+          temperate: { ...landUse.regions.temperate },
+          grasslands: { ...landUse.regions.grasslands },
+          borealArctic: { ...landUse.regions.borealArctic },
+        },
+        globalHabitatCoverPercent: landUse.globalHabitatCoverPercent,
+        globalExtinctionRate: landUse.globalExtinctionRate,
+        globalExtinctionAcceleration: landUse.globalExtinctionAcceleration,
+        globalEcosystemsLost: landUse.globalEcosystemsLost,
+        globalEcosystemCollapseRisk: landUse.globalEcosystemCollapseRisk,
+        naturalExtinctionRate: landUse.naturalExtinctionRate,
+        carbonSinkLossMultiplier: landUse.carbonSinkLossMultiplier,
+      };
+    }
+  }
+
   const snapshot = {
     currentMonth: state.currentMonth,
     currentYear: state.currentYear,
@@ -884,6 +1038,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     dystopiaProgression: state.outcomeMetrics?.dystopiaProbability || 0, // Use dystopiaProbability as proxy
     avgAICapability,
     deployedTechCount,
+    deployedTechs,
     alignedAICount,
     misalignedAICount,
     sleeperAgentCount,
@@ -893,7 +1048,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     pollutionLevel,
     planetaryBoundariesCrossed,
     environmentalDebtLevel,
-    landUseData: state.planetaryBoundariesSystem?.landUse || null,
+    landUseData,
     socialCohesion: socialCohesionAvg,
     institutionalTrust,
     meaningLevel,
@@ -918,11 +1073,64 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     regionalPopulations,
     aiAgents,
     aiSufferingMetrics,
-    aiCollectives
+    aiCollectives,
+    // Events from event log (map to simplified dashboard format)
+    events: (state.eventLog || []).map(event => {
+      // Map GameEvent severity to dashboard severity
+      let dashboardSeverity: 'low' | 'medium' | 'high' | 'critical';
+      if (event.severity === 'critical' || event.severity === 'existential' || event.severity === 'destructive') {
+        dashboardSeverity = 'critical';
+      } else if (event.severity === 'high' || event.severity === 'warning' || event.severity === 'major') {
+        dashboardSeverity = 'high';
+      } else if (event.severity === 'medium' || event.severity === 'transformative' || event.severity === 'constructive') {
+        dashboardSeverity = 'medium';
+      } else {
+        dashboardSeverity = 'low';
+      }
+
+      // Map event type to category
+      let category: 'ai' | 'environment' | 'social' | 'crisis' | 'tech' | 'governance';
+      if (event.type === 'environmental') {
+        category = 'environment';
+      } else if (event.type === 'crisis' || event.type === 'catastrophe') {
+        category = 'crisis';
+      } else if (event.type === 'breakthrough' || event.type === 'technology' || event.type === 'deployment' || event.type === 'research') {
+        category = 'tech';
+      } else if (event.type === 'policy' || event.type === 'government') {
+        category = 'governance';
+      } else if (event.type === 'action' || event.type === 'sabotage') {
+        category = 'ai';
+      } else {
+        category = 'social';
+      }
+
+      return {
+        type: event.type,
+        description: event.description,
+        severity: dashboardSeverity,
+        category,
+        timestamp: event.timestamp  // Include event's actual month
+      };
+    })
   };
 
   // DEBUG: Log what we're returning
-  console.log('[Worker] Snapshot created - population:', snapshot.population, 'qualityOfLife:', snapshot.qualityOfLife);
+  console.log('[Worker] Snapshot created:');
+  console.log('  - Month:', snapshot.currentMonth);
+  console.log('  - Population:', snapshot.population, 'billion');
+  console.log('  - Regional populations:', snapshot.regionalPopulations.length, 'regions');
+  console.log('  - Events in eventLog:', state.eventLog.length, 'total events');
+  console.log('  - Events being sent:', snapshot.events.length, 'events');
+  console.log('  - Deployed techs:', snapshot.deployedTechs.length, 'technologies');
+
+  // Log event types if there are events
+  if (state.eventLog.length > 0) {
+    const eventTypes = state.eventLog.reduce((acc, e) => {
+      acc[e.type] = (acc[e.type] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    console.log('  - Event types:', eventTypes);
+  }
 
   return snapshot;
 }
@@ -938,9 +1146,12 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     return { ...currentSnapshot } as StateDelta;
   }
 
-  // Core metrics - always include month
+  // Core metrics - always include month and year
   if (previous.currentMonth !== currentSnapshot.currentMonth) {
     delta.currentMonth = currentSnapshot.currentMonth;
+  }
+  if (previous.currentYear !== currentSnapshot.currentYear) {
+    delta.currentYear = currentSnapshot.currentYear;
   }
 
   // Quality of Life
@@ -1069,6 +1280,7 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   // Technology
   if (previous.deployedTechCount !== currentSnapshot.deployedTechCount) {
     delta.deployedTechCount = currentSnapshot.deployedTechCount;
+    delta.deployedTechs = currentSnapshot.deployedTechs;  // Send array when count changes
   }
   if (Math.abs(previous.techRiskLevel - currentSnapshot.techRiskLevel) > 0.01) {
     delta.techRiskLevel = currentSnapshot.techRiskLevel;

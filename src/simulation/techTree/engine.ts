@@ -10,6 +10,7 @@ import { TechDefinition } from './comprehensiveTechTree';
 import { getAllTech, getTechById } from './comprehensiveTechTree';
 import { calculateTotalCapabilityFromProfile } from '../capabilities';
 import { assertEconomicStage } from '../utils/assertions';
+import { addSimulationEvent } from '../utils/eventLogger';
 
 export interface TechUnlockEvent {
   techId: string;
@@ -419,6 +420,22 @@ function applyDeploymentActions(
       console.log(`\n🚀 DEPLOYMENT STARTED: ${tech.name} in ${action.targetRegion}`);
       console.log(`   Initial investment: $${action.investment}M`);
       console.log(`   Deployed by: ${action.deployedBy}`);
+
+      // Add event to timeline
+      addSimulationEvent(_gameState, {
+        type: 'deployment',
+        severity: 'medium',
+        agent: action.deployedBy,
+        title: `🚀 DEPLOYMENT STARTED: ${tech.name}`,
+        description: `Deployment initiated in ${action.targetRegion}. Initial investment: $${action.investment.toFixed(0)}M. Technology will deploy gradually over ${(tech.timescale || 120) / 12} years. Category: ${tech.category}.`,
+        effects: {
+          techId: tech.id,
+          region: action.targetRegion,
+          investment: action.investment,
+          deployedBy: action.deployedBy,
+          timescale: tech.timescale || 120
+        }
+      });
     }
 
     // OLD BEHAVIOR (instant deployment) - DISABLED for FIX #14
@@ -678,6 +695,28 @@ function getEnergyMultiplier(gameState: GameState): number {
   const finalMultiplier = Math.max(0.1, Math.min(1.0, multiplier));
 
   // Log energy constraints when they're significant (< 0.8)
+  // Add event for severe constraints only (< 0.5) to avoid spam
+  if (finalMultiplier < 0.5 && Math.random() < 0.02) {
+    const severity = finalMultiplier < 0.3 ? 'critical' : 'warning';
+    const constraintLevel = finalMultiplier < 0.3 ? 'SEVERE' : 'MODERATE';
+
+    addSimulationEvent(gameState, {
+      type: 'technology',
+      severity,
+      agent: 'infrastructure',
+      title: `⚡ ENERGY CONSTRAINT - Tech deployment slowed`,
+      description: `${constraintLevel} energy constraint detected. Grid capacity (${totalAvailable.toFixed(0)} TWh/mo) insufficient for ${activeDeployments} active tech deployments (require ${requiredEnergy.toFixed(0)} TWh/mo). Available headroom: ${availableHeadroom.toFixed(0)} TWh/mo. Deployment speed reduced to ${(finalMultiplier * 100).toFixed(0)}% of normal rate. Data centers consuming ${dataCenterConsumption.toFixed(0)} TWh/mo.`,
+      effects: {
+        energyMultiplier: finalMultiplier,
+        requiredEnergy,
+        availableHeadroom,
+        activeDeployments,
+        gridCapacity: totalAvailable,
+        dataCenterConsumption
+      }
+    });
+  }
+
   if (finalMultiplier < 0.8 && Math.random() < 0.05) {
     console.log(`\n⚡ ENERGY CONSTRAINT (Month ${gameState.currentMonth}):`);
     console.log(`   Total grid capacity: ${totalAvailable.toFixed(1)} TWh/month`);

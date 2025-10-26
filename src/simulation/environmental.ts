@@ -19,6 +19,7 @@ import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { updateCatastropheTracking } from './calculations';
 import { RootCause } from '@/types/population';
 import { calculateClimatePovertyWeights, calculateEcosystemWeights } from './utils/deathAttribution';
+import { convertClimateSensitivityToRate } from './thresholds/tier1Config';
 
 /**
  * Initialize environmental accumulation state
@@ -182,10 +183,11 @@ export function updateEnvironmentalAccumulation(
 
   const energyUsage = (totalCompute / 10000) + manufacturingCap + (economicStage * 0.3);
 
-  // P2.1: IPCC AR6 WG1 (2021) - 0.2°C/decade current warming = 0.0167°C/year = 0.00139°C/month
-  // Target: 75-year simulation reaches ~40% degradation (catastrophe threshold) = 0.53%/month
-  // Calibration: 0.00015 base rate achieves IPCC SSP5-8.5 trajectory (+4.4°C by 2100)
-  let climateDegradationRate = energyUsage * 0.00015; // Was 0.0008 (reduced 5.3x)
+  // Phase 1B: Use sampled climate sensitivity (IPCC AR6 - ECS distribution)
+  // Convert ECS (°C) to simulation degradation rate
+  // Base rate calibrated to IPCC SSP5-8.5 trajectory, scaled by sampled ECS
+  const baseClimateRate = convertClimateSensitivityToRate(state.thresholds.climateSensitivity);
+  let climateDegradationRate = energyUsage * baseClimateRate;
 
   // Stage 3-4 transition: Accelerating emissions from rapid industrialization
   // Positive feedbacks (permafrost, ice-albedo) emerge after critical thresholds
@@ -481,28 +483,22 @@ function checkEnvironmentalCrises(state: GameState): void {
     qol.ecosystemHealth *= 0.4; // 60% drop
     state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.5);
 
-    // Population impact: Extreme weather + crop failure (1-2% casualties)
-    // SEMI-GLOBAL: Coastal + climate-vulnerable regions (~30% of world)
-    // 1.5% mortality rate from disasters/starvation
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    const climateWeights = calculateClimatePovertyWeights(state, 0.30);
-    addAcuteCrisisDeaths(
-      state,
-      0.015,
-      'Climate catastrophe - extreme weather/famine (vulnerable regions)',
-      0.30,
-      'disasters',
-      {
-        causes: [
-          { cause: RootCause.climate, weight: climateWeights.climate, confidence: 'MEDIUM' },
-          { cause: RootCause.inequality, weight: climateWeights.inequality, confidence: 'MEDIUM' },
-          { cause: RootCause.ecosystem, weight: climateWeights.ecosystem, confidence: 'MEDIUM' }
-        ],
-        evidence: 'Burke et al. (2020) climate-poverty interaction (23x multiplier) + IPCC AR6 cascades',
-        mechanism: 'Temperature/precipitation shock × poverty (no adaptation) × degraded ecosystems → famine'
-      },
-      'MEDIUM'
-    );
+    // FIX (Oct 25, 2025): REMOVED redundant famine death calculation
+    // Climate catastrophe degrades REGIONAL food security via FoodSecurityDegradationPhase
+    // Famine deaths are then handled by FamineSystemPhase based on regional food security
+    // This prevents double-counting food-related deaths
+    //
+    // OLD APPROACH (removed):
+    // - Climate catastrophe triggered flat 1.5% mortality globally
+    // - Famine system triggered separately based on global food security
+    // - Deaths were DOUBLE-COUNTED (climate catastrophe deaths + famine deaths)
+    //
+    // NEW APPROACH (correct):
+    // - Climate catastrophe triggers FoodSecurityDegradationPhase
+    // - Regional food security drops in vulnerable regions
+    // - FamineSystemPhase checks each region's food security
+    // - Famine deaths occur ONLY in regions with food security < 0.6
+    // - Deaths attributed properly to famine with climate as root cause
 
     // Check for extinction trigger
     // Climate catastrophe can lead to slow collapse

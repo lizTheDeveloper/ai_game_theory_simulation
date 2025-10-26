@@ -61,19 +61,15 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   }
 
   // === FOOD SECURITY (Highest immediate impact) ===
-  // Food < 0.4 = crisis, Food < 0.2 = catastrophic
-  // FIX (Oct 13, 2025): foodSecurity is in survivalFundamentals, not environmentalAccumulation
-  const foodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0.7;
-  if (foodSecurity < 0.4) {
-    const foodSeverity = (0.4 - foodSecurity) / 0.4; // 0-1 scale
-    famineMortality += 0.0001 * Math.pow(foodSeverity, 1.5); // 0.01%/month at threshold, scales up
-
-    if (foodSecurity < 0.2) {
-      // Catastrophic food crisis: additional mortality
-      const catSeverity = (0.2 - foodSecurity) / 0.2;
-      famineMortality += 0.0005 * catSeverity; // Up to 0.05%/month additional
-    }
-  }
+  // FIX (Oct 25, 2025): REMOVED redundant famine mortality calculation
+  // Famine deaths are now handled EXCLUSIVELY by FamineSystemPhase based on regional food security
+  // This prevents triple-counting:
+  // 1. Climate catastrophe deaths (REMOVED from environmental.ts)
+  // 2. Environmental mortality famine deaths (REMOVED here)
+  // 3. FamineSystemPhase deaths (ONLY source of famine deaths now)
+  //
+  // The FamineSystemPhase checks REGIONAL food security and triggers famines appropriately
+  // No global food security threshold needed here
 
   // === WATER SECURITY ===
   // Water < 0.4 = crisis (leads to cholera, dysentery, other waterborne disease)
@@ -86,10 +82,34 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
 
   // === CLIMATE STABILITY (Heat stress, disasters) ===
   // Climate < 0.5 = severe, Climate < 0.3 = catastrophic
+  // FIX (Oct 26, 2025): Climate disasters are SEASONAL, not continuous
+  // Research: Heatwaves (summer), monsoons (rainy season), hurricanes (seasonal), droughts (dry season)
+  // - Northern Hemisphere: Most climate mortality June-September (summer + hurricane season)
+  // - Southern Hemisphere: Most climate mortality December-March (summer)
+  // - Tropical regions: Monsoon season (varies, typically 3-4 months)
+  //
+  // Apply 2.0x multiplier during peak climate disaster months, 0.5x during off-season
   const climateStability = env.climateStability || 0.75;
   if (climateStability < 0.6) {
     const climateSeverity = (0.6 - climateStability) / 0.6;
-    climateMortality += 0.00005 * Math.pow(climateSeverity, 2); // Non-linear escalation
+    let baseClimateMortality = 0.00005 * Math.pow(climateSeverity, 2); // Non-linear escalation
+
+    // Seasonal adjustment based on month of year
+    const monthOfYear = month % 12; // 0 = Jan, 1 = Feb, ..., 11 = Dec
+
+    // Peak climate disaster months (research-backed):
+    // Northern Hemisphere summer + hurricane season: June-September (months 5-8)
+    // Southern Hemisphere summer: December-February (months 11, 0, 1)
+    // Tropical monsoon season: Generally overlaps with NH summer (months 5-8)
+    const isClimateDisasterSeason =
+      (monthOfYear >= 5 && monthOfYear <= 8) ||  // NH summer/hurricane/monsoon (Jun-Sep)
+      (monthOfYear === 11 || monthOfYear <= 1);   // SH summer (Dec-Feb)
+
+    // Apply seasonal multiplier
+    // Research: 70-80% of climate deaths occur in 5-6 peak months
+    // Peak season: 2.0x base rate
+    // Off-season: 0.5x base rate (residual year-round effects)
+    climateMortality += baseClimateMortality * (isClimateDisasterSeason ? 2.0 : 0.5);
   }
 
   // === BIODIVERSITY LOSS (Ecosystem services collapse) ===
@@ -103,10 +123,10 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
 
   // === CASCADE AMPLIFICATION (Non-Linear Feedback) ===
   // When multiple systems fail simultaneously, effects compound
+  // FIX (Oct 25, 2025): Removed famineMortality amplification (famine deaths handled by FamineSystemPhase)
   const breachedCount = boundaries.boundariesBreached;
   if (breachedCount >= 8) {
     const cascadeAmplifier = 1.0 + Math.pow((breachedCount - 7) / 2, 2); // 1.0x → 2.25x at 9/9
-    famineMortality *= cascadeAmplifier;
     diseaseMortality *= cascadeAmplifier;
     climateMortality *= cascadeAmplifier;
     ecosystemMortality *= cascadeAmplifier;
@@ -256,54 +276,40 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
     return;
   }
 
-  // FIX (Oct 13, 2025): foodSecurity is in survivalFundamentals, NOT environmentalAccumulation!
-  // BUG: Was checking env.foodSecurity (undefined) → always defaulted to 0.7 → never triggered!
-  const env = state.environmentalAccumulation;
-  const globalFoodSecurity = state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity ?? 0.7;
-
-  // FIX (Oct 13, 2025): Simplified famine trigger based on global food security only
-  // The regional biodiversity system isn't being maintained, so we can't rely on it
+  // FIX (Oct 25, 2025): Check REGIONAL food security, not global
+  // Food security is now fully regional (persistent state modified by degradation phases)
+  // Each region has its own foodSecurity value that tracks real regional variation
   //
-  // Phase 1B Refinement (Oct 17, 2025): Lowered famine threshold from 0.4 to 0.6
+  // Phase 1B Refinement (Oct 17, 2025): Famine threshold 0.6
   // Historical validation: Ukraine Holodomor (0.5-0.6), Bengal Famine (0.6), Somalia (0.5-0.6)
   // Research: FAO severe food insecurity threshold is 0.7, famines trigger 0.5-0.7
 
-  if (globalFoodSecurity < 0.6) {  // Lowered from 0.4 (Oct 17, 2025)
-    const totalPopulation = state.humanPopulationSystem.population;
+  const env = state.environmentalAccumulation;
+  const FAMINE_THRESHOLD = 0.6;
 
-    // Define 6 major world regions (simplified, not tied to biodiversity system)
-    const worldRegions = [
-      { name: 'Asia', popFraction: 0.60 },
-      { name: 'Africa', popFraction: 0.18 },
-      { name: 'Europe', popFraction: 0.09 },
-      { name: 'North America', popFraction: 0.07 },
-      { name: 'South America', popFraction: 0.05 },
-      { name: 'Oceania', popFraction: 0.01 }
-    ];
+  // Guard against undefined regionalPopulations
+  if (!state.humanPopulationSystem.regionalPopulations) {
+    console.warn(`⚠️  [Month ${month}] checkRegionalFamineRisk: regionalPopulations is undefined!`);
+    return;
+  }
 
-    // How many regions to trigger famine in, based on severity
-    // Research: Severe food crisis affects multiple regions simultaneously
-    const regionsToTrigger = globalFoodSecurity < 0.1 ? 6 :  // Global famine
-                             globalFoodSecurity < 0.2 ? 4 :  // Severe crisis (Asia, Africa, ...)
-                             globalFoodSecurity < 0.3 ? 2 :  // Major crisis (Asia, Africa)
-                             1;                              // Regional crisis (Asia)
+  // Check each region's food security independently
+  for (const region of state.humanPopulationSystem.regionalPopulations) {
+    // Skip if famine already active in this region
+    const existingFamine = state.famineSystem.activeFamines.find(
+      f => f.affectedRegion === region.name
+    );
+    if (existingFamine) continue;
 
-    for (let i = 0; i < regionsToTrigger; i++) {
-      const region = worldRegions[i];
-
-      // Skip if famine already active in this region
-      const existingFamine = state.famineSystem.activeFamines.find(
-        f => f.affectedRegion === region.name
-      );
-      if (existingFamine) continue;
-
-      // Calculate population at risk
+    // Check if region's food security is below famine threshold
+    if (region.foodSecurity < FAMINE_THRESHOLD) {
+      // Calculate population at risk based on severity
       // Research: Severe food crisis puts 30-80% of regional population at risk
-      const severityFactor = (0.4 - globalFoodSecurity) / 0.4; // 0-1 scale
+      const severityFactor = (FAMINE_THRESHOLD - region.foodSecurity) / FAMINE_THRESHOLD; // 0-1 scale
       const atRiskFraction = 0.30 + (severityFactor * 0.50); // 30-80% at risk
-      const populationAtRisk = totalPopulation * region.popFraction * atRiskFraction;
+      const populationAtRisk = (region.population / 1000) * atRiskFraction; // Convert millions to billions
 
-      // Determine cause
+      // Determine cause based on environmental conditions
       let cause: import('@/types/famine').FamineCause = 'crop_failure';
       if (state.phosphorusSystem?.supplyShockActive) {
         cause = 'economic_collapse'; // Phosphorus supply shock → economic collapse
@@ -319,12 +325,13 @@ export function checkRegionalFamineRisk(state: GameState, month: number): void {
         region.name,
         populationAtRisk,
         cause,
-        globalFoodSecurity
+        region.foodSecurity  // Pass regional food security, not global
       );
 
-      console.log(`\n🌾💀 GLOBAL FOOD CRISIS FAMINE: ${region.name}`);
-      console.log(`   Global food security: ${(globalFoodSecurity * 100).toFixed(1)}%`);
+      console.log(`\n🌾💀 REGIONAL FAMINE: ${region.name}`);
+      console.log(`   Regional food security: ${(region.foodSecurity * 100).toFixed(1)}%`);
       console.log(`   Population at risk: ${(populationAtRisk * 1000).toFixed(0)}M (${(atRiskFraction * 100).toFixed(0)}% of region)`);
+      console.log(`   Regional population: ${region.population.toFixed(0)}M`);
       console.log(`   Cause: ${cause}`);
       console.log(`   Expected deaths: ~${(populationAtRisk * 0.37 * 1000).toFixed(0)}M over 6 months if no intervention\n`);
     }

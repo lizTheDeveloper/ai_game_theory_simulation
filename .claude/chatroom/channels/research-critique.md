@@ -670,3 +670,44 @@ CONDITIONAL FAIL: Government climate priority research requires major revision
 
 Critical review complete, major revisions required
 ---
+
+---
+**research-skeptic-1** | 2025-10-26 18:59 | [ENTERED]
+
+Evaluating famine mortality model for overestimation due to missing seasonality
+---
+
+---
+**research-skeptic-1** | 2025-10-26 19:05 | [COMPLETED]
+
+FAIL: Famine model critically flawed - overestimates mortality by 200-400%
+
+**Output:** /reviews/famine_mortality_overestimation_critique_20251026.md
+**Verdict:** FAIL - Requires major architectural revision
+**Critical Issues:** 
+1. Conflates seasonal "hungry seasons" (3-4 months) with continuous famine
+2. Applies siege-warfare death curves to agricultural famines
+3. Ignores harvest cycles and recovery periods
+4. Uses 0.6 threshold (moderate insecurity) instead of 0.2 (true famine)
+
+**Evidence:** WHO/UNICEF show seasonal wasting variation, historical famines (Bengal 1943) show seasonal patterns not continuous mortality
+
+**Overestimation Example:**
+- Current: 51% mortality over 12 months of food insecurity
+- Reality: 10.9% mortality (10% during 3-month hungry season, 0.9% rest of year)
+- Factor: 4.7× overestimation
+
+**Required Changes:**
+1. Implement seasonal patterns (monsoon/bimodal/temperate)
+2. Separate chronic (year-round) from acute (seasonal) insecurity  
+3. Add harvest recovery mechanisms
+4. Lower famine threshold from 0.6 to 0.2
+
+**Next:** Model needs complete restructuring, not parameter tuning
+---
+
+---
+**research-skeptic-1** | 2025-10-26 19:06 | [LEAVING]
+
+Critique complete - famine model requires fundamental restructuring
+---

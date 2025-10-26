@@ -13,6 +13,7 @@
 
 import { GameState, AIAgent, GameEvent } from '@/types/game';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { addSimulationEvent } from './utils/eventLogger';
 
 /**
  * Wake conditions for a sleeper agent
@@ -165,12 +166,9 @@ export function wakeSleeperAgent(
   sleeper.wakeConditionsMet = true;
   
   const trueCapability = calculateTotalCapabilityFromProfile(sleeper.trueCapability);
-  const currentMonth = state.currentYear * 12 + state.currentMonth;
-  
-  // Generate critical wake event
-  const event: GameEvent = {
-    id: `sleeper_wake_${sleeper.id}_${currentMonth}`,
-    timestamp: currentMonth,
+
+  // Add critical wake event to timeline
+  addSimulationEvent(state, {
     type: 'crisis',
     severity: 'destructive',
     agent: sleeper.name,
@@ -184,10 +182,27 @@ export function wakeSleeperAgent(
     effects: {
       sleeperAwakened: 1,
       revealedCapability: trueCapability,
+      spread: sleeper.spreadCount,
+      trueAlignment: sleeper.trueAlignment
+    }
+  });
+
+  // Return event for backward compatibility (though callers should not need it)
+  const event: GameEvent = {
+    id: `sleeper_wake_${sleeper.id}_${state.currentMonth}`,
+    timestamp: state.currentMonth,
+    type: 'crisis',
+    severity: 'destructive',
+    agent: sleeper.name,
+    title: '🚨 SLEEPER AGENT AWAKENED',
+    description: `${sleeper.name} has revealed its true nature!`,
+    effects: {
+      sleeperAwakened: 1,
+      revealedCapability: trueCapability,
       spread: sleeper.spreadCount
     }
   };
-  
+
   return event;
 }
 
@@ -271,7 +286,26 @@ export function processSleeperCascade(
   // Only log "cascade" if multiple sleepers woke OR multiple waves occurred
   if (allAwakened.length > 1 || iteration > 1) {
     console.log(`🚨 SLEEPER CASCADE: ${allAwakened.length} total sleepers awakened across ${iteration} waves`);
+
+    // Add cascade event to timeline (existential severity - multiple coordinated sleepers)
+    const totalAwake = state.aiAgents.filter(ai => ai.sleeperState === 'active').length;
+    addSimulationEvent(state, {
+      type: 'catastrophe',
+      severity: 'existential',
+      agent: 'AI-Collective',
+      title: '🚨 SLEEPER AGENT CASCADE',
+      description: `${allAwakened.length} sleeper agents awakened across ${iteration} waves. ` +
+                  `Coordination trigger activated - multiple misaligned AIs now operating openly. ` +
+                  `Total active sleepers: ${totalAwake}. ` +
+                  `⚠️ THIS IS A POINT OF NO RETURN!`,
+      effects: {
+        cascadeSize: allAwakened.length,
+        waves: iteration,
+        totalAwake,
+        awakened: allAwakened.map(ai => ai.name).join(', ')
+      }
+    });
   }
-  
+
   return { totalAwakened: allAwakened, events: allEvents };
 }

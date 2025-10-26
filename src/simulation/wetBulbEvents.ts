@@ -20,6 +20,7 @@ import {
   MODERATE_RISK_REGIONS,
   LOW_RISK_REGIONS
 } from '@/types/wetBulbTemperature';
+import { addSimulationEvent } from './utils/eventLogger';
 
 /**
  * Initialize wet bulb temperature system with 2025 baseline
@@ -407,7 +408,7 @@ export function updateWetBulbTemperatureSystem(
         // Apply mortality to population
         applyWetBulbMortality(state, event);
 
-        // Log significant events
+        // Log significant events and add to timeline
         if (deaths > 0.01 || threshold.severity === 'extreme') {
           console.log(`\n🌡️ DEADLY HEAT EVENT: ${regionalClimate.region} (Month ${state.currentMonth})`);
           console.log(`   Wet bulb temp: ${wetBulbTemp.toFixed(1)}°C (dry: ${dryBulbTemp.toFixed(1)}°C, humidity: ${relativeHumidity.toFixed(0)}%)`);
@@ -415,6 +416,30 @@ export function updateWetBulbTemperatureSystem(
           console.log(`   Exposed: ${exposedPopulation.toFixed(1)}M people`);
           console.log(`   Deaths: ${(deaths * 1_000_000).toFixed(0)} (${(adjustedMortalityRate * 100).toFixed(1)}% mortality)`);
           console.log(`   Duration: ${durationDays} days`);
+
+          // Add heat event to timeline
+          addSimulationEvent(state, {
+            type: 'environmental',
+            severity: threshold.severity === 'extreme' ? 'existential' :
+                      threshold.severity === 'severe' ? 'critical' : 'high',
+            agent: 'climate',
+            title: `🌡️ DEADLY HEAT EVENT: ${regionalClimate.region}`,
+            description: `Wet bulb temperature ${wetBulbTemp.toFixed(1)}°C (dry: ${dryBulbTemp.toFixed(1)}°C, humidity: ${relativeHumidity.toFixed(0)}%) in ${regionalClimate.region}. ` +
+                        `Severity: ${threshold.severity.toUpperCase()}. ` +
+                        `${exposedPopulation.toFixed(1)}M people exposed, ${(deaths * 1_000_000).toFixed(0)} deaths (${(adjustedMortalityRate * 100).toFixed(1)}% mortality). ` +
+                        `Duration: ${durationDays} days.`,
+            effects: {
+              wetBulbTemp,
+              dryBulbTemp,
+              relativeHumidity,
+              exposedPopulation,
+              deaths,
+              mortalityRate: adjustedMortalityRate,
+              duration: durationDays,
+              region: regionalClimate.region,
+              severity: threshold.severity
+            }
+          });
         }
       }
     }
@@ -491,6 +516,23 @@ export function updateWetBulbTemperatureSystem(
       console.log(`   Sustained wet bulb: ${wetBulbTemp.toFixed(1)}°C (threshold: 32°C)`);
       console.log(`   Population affected: ${regionalClimate.population.toFixed(0)}M`);
       console.log(`   Migration crisis likely`);
+
+      // Add critical event to timeline (existential - region permanently uninhabitable)
+      addSimulationEvent(state, {
+        type: 'environmental',
+        severity: 'existential',
+        agent: 'climate',
+        title: `🚨 REGION UNINHABITABLE: ${regionalClimate.region}`,
+        description: `Sustained wet bulb temperature of ${wetBulbTemp.toFixed(1)}°C (threshold: 32°C) has made ${regionalClimate.region} permanently uninhabitable. ` +
+                    `Population affected: ${regionalClimate.population.toFixed(0)}M people. ` +
+                    `Mass migration crisis imminent as the region can no longer support human life.`,
+        effects: {
+          wetBulbTemp,
+          populationAffected: regionalClimate.population,
+          region: regionalClimate.region,
+          threshold: 32
+        }
+      });
     }
   }
 }

@@ -13,6 +13,7 @@ import { AIAgent, AICapabilityProfile, GameState, ResearchInvestments } from '@/
 import { calculateTotalCapabilityFromProfile } from './capabilities';
 import { getEnergyConstraintMultiplier } from './powerGeneration';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
+import { addSimulationEvent } from './utils/eventLogger';
 
 /**
  * Phase 4: Compute scaling law
@@ -493,6 +494,22 @@ export function applyResearchGrowth(
       console.log(`\n  🚀 TRANSFORMATIVE BREAKTHROUGH: ${ai.name} - ${dim}`);
       console.log(`     Magnitude: ${breakthroughMagnitude.toFixed(2)} → +${(capabilityGain * 100).toFixed(1)}% capability`);
       console.log(`     Current → New: ${newProfile[dim].toFixed(3)} → ${Math.min(10, newProfile[dim] + growth).toFixed(3)}`);
+
+      // Add event to timeline (rare, transformative events only)
+      addSimulationEvent(state, {
+        type: 'research',
+        severity: 'transformative',
+        agent: ai.id,
+        title: `🚀 TRANSFORMATIVE BREAKTHROUGH: ${dim}`,
+        description: `${ai.name} achieved a transformative research breakthrough in ${dim} capability (Lévy flight magnitude: ${breakthroughMagnitude.toFixed(2)}). Capability gain: +${(capabilityGain * 100).toFixed(1)}%. New level: ${Math.min(10, newProfile[dim] + growth).toFixed(3)}. This represents a rare fat-tail event in AI development.`,
+        effects: {
+          dimension: dim,
+          magnitude: breakthroughMagnitude,
+          capabilityGain,
+          newCapability: Math.min(10, newProfile[dim] + growth),
+          aiId: ai.id
+        }
+      });
     } else if (breakthroughMagnitude > 2.0) {
       // Incremental breakthrough (more common)
       const capabilityGain = breakthroughMagnitude / 50; // Max +0.1
@@ -538,6 +555,23 @@ export function applyResearchGrowth(
       console.log(`\n  🚀 TRANSFORMATIVE RESEARCH BREAKTHROUGH: ${ai.name} - ${domain}.${subfield}`);
       console.log(`     Magnitude: ${breakthroughMagnitude.toFixed(2)} → +${(researchGain * 100).toFixed(1)}%`);
       console.log(`     Current → New: ${currentValue.toFixed(3)} → ${Math.min(5, currentValue + growth).toFixed(3)}`);
+
+      // Add event to timeline (rare, transformative events only)
+      addSimulationEvent(state, {
+        type: 'research',
+        severity: 'transformative',
+        agent: ai.id,
+        title: `🚀 TRANSFORMATIVE RESEARCH BREAKTHROUGH: ${domain}.${subfield}`,
+        description: `${ai.name} achieved a transformative research breakthrough in ${domain} → ${subfield} (Lévy flight magnitude: ${breakthroughMagnitude.toFixed(2)}). Research gain: +${(researchGain * 100).toFixed(1)}%. New level: ${Math.min(5, currentValue + growth).toFixed(3)}. This could unlock new technologies or capabilities.`,
+        effects: {
+          researchDomain: domain,
+          researchSubfield: subfield,
+          magnitude: breakthroughMagnitude,
+          researchGain,
+          newResearchLevel: Math.min(5, currentValue + growth),
+          aiId: ai.id
+        }
+      });
     } else if (breakthroughMagnitude > 2.0) {
       // Incremental research breakthrough
       const researchGain = breakthroughMagnitude / 50;
