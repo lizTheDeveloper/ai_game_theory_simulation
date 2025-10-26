@@ -45,7 +45,7 @@ jobs:
           # Replace spaces and dashes with single dash, convert to lowercase
           FEATURE_NAME=$(echo "$TITLE" | \
             sed 's/^Feature: //g' | \
-            sed 's/[:\?\*\[\]~\^\\]//g' | \
+            tr -d ':?*[]~^\\' | \
             sed 's/ /-/g' | \
             sed 's/--*/-/g' | \
             tr '[:upper:]' '[:lower:]')
