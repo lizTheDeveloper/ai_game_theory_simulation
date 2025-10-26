@@ -1792,12 +1792,15 @@ timestamp: state.currentMonth,
       };
       
       // Boost biodiversity too
-      state.environmentalAccumulation.biodiversityIndex = Math.min(1.0, 
+      state.environmentalAccumulation.biodiversityIndex = Math.min(1.0,
         state.environmentalAccumulation.biodiversityIndex + 0.02
       );
-      
+
       // Cost (low - this is a ban, not a spending program)
-      state.government.resources = (state.government.resources ?? 0) - 1;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1797 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 1;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
       
       return {
@@ -1827,7 +1830,10 @@ timestamp: state.currentMonth,
     energyCost: 10,
     
     canExecute: (state) => {
-      if (!state.techTreeState || (state.government.resources ?? 0) < 10) return false;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1827 - initialization bug');
+      }
+      if (!state.techTreeState || state.government.resources < 10) return false;
 
       // Check if any environmental tech is unlocked but not fully deployed
       const { isTechUnlocked, isTechDeployed } = require('../techTree/helpers');
@@ -1860,9 +1866,12 @@ timestamp: state.currentMonth,
       const benefitingTechs = envTechs.filter(techId => {
         return isTechUnlocked(state, techId) && isTechDeployed(state, techId) < 1.0;
       });
-      
+
       // Cost
-      state.government.resources = (state.government.resources ?? 0) - 10;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1868 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 10;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
       
       return {
@@ -1893,7 +1902,10 @@ timestamp: state.currentMonth,
     energyCost: 5,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.amazon || (state.government.resources ?? 0) < 5) return false;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1906 - initialization bug');
+      }
+      if (!state.specificTippingPoints?.amazon || state.government.resources < 5) return false;
       const amazon = state.specificTippingPoints?.amazon;
       // Near threshold (25%) but not yet triggered
       return amazon.deforestation > 23 && !amazon.triggered;
@@ -1916,9 +1928,12 @@ timestamp: state.currentMonth,
         const currentRate = 0.05; // Baseline 0.05% per month from specificTippingPoints
         state.specificTippingPoints.amazon.deforestation -= currentRate * 0.5; // Undo half this month's damage
       }
-      
+
       // Cost and legitimacy
-      state.government.resources = (state.government.resources ?? 0) - 5;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1933 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 5;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
       
       return {
