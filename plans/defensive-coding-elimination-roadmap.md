@@ -146,7 +146,7 @@ Audit and fix defensive fallbacks in core simulation files:
 
 **Actual Effort:** ~1 hour (patterns were already fixed in previous work)
 
-#### 3.2: Crisis Systems
+#### 3.2: Crisis Systems - 🔥 **IN PROGRESS** (Assigned: Claude Agent, Oct 25 2025, 11:35 PM)
 **Files to audit:**
 - `src/simulation/phosphorusDepletion.ts`
 - `src/simulation/freshwaterDepletion.ts`
