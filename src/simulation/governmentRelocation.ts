@@ -16,6 +16,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 /**
  * Update government relocation program each month
@@ -99,11 +100,13 @@ export function updateGovernmentRelocation(state: GameState): void {
     const successfulRelocations = relocated * program.successRate;
     const trustIncrease = (successfulRelocations / totalPopulation) * 0.02; // 0.02 per 1% of population
     program.trustBonus = trustIncrease;
-    // FIX: Phase 5.1 (Oct 26, 2025) - Fail loudly if property missing
-    if (state.society.trust === undefined) {
-      throw new Error('❌ state.society.trust is undefined in governmentRelocation - initialization bug');
-    }
-    state.society.trust = Math.min(1.0, state.society.trust + trustIncrease);
+    // FIX: Phase 5.1 (Oct 26, 2025) - Use assertStateProperty for consistent validation
+    const currentTrust = assertStateProperty(
+      state.society,
+      'trust',
+      { location: 'governmentRelocation.updateGovernmentRelocation', month: state.currentMonth }
+    );
+    state.society.trust = Math.min(1.0, currentTrust + trustIncrease);
 
     // Inadequate coverage generates resentment
     const unmetNeed = program.eligiblePopulation - relocated;

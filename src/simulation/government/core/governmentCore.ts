@@ -19,6 +19,7 @@ import {
   CAPABILITY_SYSTEMIC_RISK,
   classifyAIThreatLevel
 } from '../capabilityThresholds';  // FIX #8 (Oct 18, 2025)
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 // Import from new modular structure
 import { migratedActions } from '../actions';
@@ -625,11 +626,13 @@ function executeEarlyWarningInterventions(
 
     // Check if government has resources
     const resourceCost = intervention.gdpCost;
-    // FIX: Phase 5.1 (Oct 26, 2025) - Fail loudly if property missing
-    if (gov.resources === undefined) {
-      throw new Error('❌ gov.resources is undefined in governmentCore - initialization bug');
-    }
-    if (gov.resources < resourceCost) {
+    // FIX: Phase 5.1 (Oct 26, 2025) - Use assertStateProperty for consistent validation
+    const currentResources = assertStateProperty(
+      gov,
+      'resources',
+      { location: 'governmentCore.executeEarlyWarningInterventions', month: state.currentMonth }
+    );
+    if (currentResources < resourceCost) {
       // Insufficient resources - skip this intervention
       continue;
     }
@@ -642,10 +645,8 @@ function executeEarlyWarningInterventions(
       earlyWarning.lateInterventions++;
     }
 
-    // Deduct resources
-    if (gov.resources !== undefined) {
-      gov.resources -= resourceCost;
-    }
+    // Deduct resources (validated above via assertStateProperty)
+    gov.resources = currentResources - resourceCost;
 
     // Execute intervention (stochastic success)
     applyEmergencyIntervention(state, intervention, random);
