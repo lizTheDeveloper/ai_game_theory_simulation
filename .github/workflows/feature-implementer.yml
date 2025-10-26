@@ -168,7 +168,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
-            --max-turns 50
+            --max-turns 100
             --agents feature-implementer
             --dangerously-skip-permissions
 
@@ -267,4 +267,165 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body
+            });
+
+      - name: Check Continuation Need
+        id: continuation
+        if: steps.status.outputs.typescript == 'PASS' && steps.status.outputs.tests == 'PASS'
+        run: |
+          # Get recent commits to see what was accomplished
+          RECENT_COMMITS=$(git log --oneline -10 || echo "No commits found")
+
+          # Get acceptance criteria from plan file
+          PLAN_CONTENT=$(cat "${{ steps.plan.outputs.path }}" || echo "Plan not found")
+
+          # Save context for Claude API call
+          cat > continuation_check_context.txt <<EOF
+          You are evaluating if a feature implementation is complete.
+
+          **Feature:** ${{ steps.feature.outputs.title }}
+          **Plan:** ${{ steps.plan.outputs.path }}
+
+          **Recent commits (last 10):**
+          $RECENT_COMMITS
+
+          **Implementation plan:**
+          $PLAN_CONTENT
+
+          **Question:** Based on the commits and acceptance criteria in the plan, is this implementation COMPLETE?
+
+          Answer with EXACTLY ONE WORD:
+          - "COMPLETE" if all acceptance criteria are met and implementation is done
+          - "INCOMPLETE" if more work is needed to meet acceptance criteria
+          - "UNCERTAIN" if you cannot determine from the commits
+
+          Answer:
+          EOF
+
+          echo "context_ready=true" >> $GITHUB_OUTPUT
+
+      - name: Evaluate Completion Status
+        id: evaluate
+        if: steps.continuation.outputs.context_ready == 'true'
+        run: |
+          # Call Claude API to evaluate completion
+          CONTEXT=$(cat continuation_check_context.txt)
+
+          RESPONSE=$(curl -s https://api.anthropic.com/v1/messages \
+            -H "content-type: application/json" \
+            -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
+            -H "anthropic-version: 2023-06-01" \
+            -d "{
+              \"model\": \"claude-sonnet-4-5-20250929\",
+              \"max_tokens\": 50,
+              \"messages\": [{
+                \"role\": \"user\",
+                \"content\": $(echo "$CONTEXT" | jq -Rs .)
+              }]
+            }")
+
+          # Extract completion status from response
+          STATUS=$(echo "$RESPONSE" | jq -r '.content[0].text' | tr '[:lower:]' '[:upper:]' | grep -oE '(COMPLETE|INCOMPLETE|UNCERTAIN)' | head -1)
+
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+          echo "Completion status: $STATUS"
+
+      - name: Check Retry Count
+        id: retry
+        if: steps.evaluate.outputs.status == 'INCOMPLETE' || steps.evaluate.outputs.status == 'UNCERTAIN'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Get current issue labels
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            // Check for auto-retry-N labels
+            const retryLabels = issue.data.labels
+              .map(l => l.name)
+              .filter(name => name.startsWith('auto-retry-'));
+
+            let retryCount = 0;
+            if (retryLabels.length > 0) {
+              // Extract highest retry number
+              const numbers = retryLabels.map(label => {
+                const match = label.match(/auto-retry-(\d+)/);
+                return match ? parseInt(match[1]) : 0;
+              });
+              retryCount = Math.max(...numbers);
+            }
+
+            const maxRetries = 3; // Limit to 3 auto-retries
+            core.setOutput('count', retryCount);
+            core.setOutput('should_retry', retryCount < maxRetries ? 'true' : 'false');
+            core.setOutput('next_count', retryCount + 1);
+
+      - name: Trigger Continuation
+        if: steps.retry.outputs.should_retry == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const nextCount = '${{ steps.retry.outputs.next_count }}';
+            const status = '${{ steps.evaluate.outputs.status }}';
+
+            // Comment about continuation
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔄 Auto-Continuation Triggered (Retry ${nextCount}/3)\n\n` +
+                    `**Status:** ${status}\n` +
+                    `**Reason:** Implementation appears incomplete based on acceptance criteria.\n\n` +
+                    `Starting next iteration to continue implementation...\n\n` +
+                    `---\n🤖 Automated continuation by feature-implementer workflow`
+            });
+
+            // Add retry label
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [`auto-retry-${nextCount}`]
+            });
+
+            // Remove and re-add ready-for-implementation to trigger new run
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              name: 'ready-for-implementation'
+            });
+
+            // Wait 5 seconds to ensure label removal is processed
+            await new Promise(resolve => setTimeout(resolve, 5000));
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['ready-for-implementation']
+            });
+
+      - name: Max Retries Reached
+        if: steps.retry.outputs.should_retry == 'false' && (steps.evaluate.outputs.status == 'INCOMPLETE' || steps.evaluate.outputs.status == 'UNCERTAIN')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ⚠️ Maximum Auto-Retries Reached\n\n` +
+                    `The implementation appears incomplete, but the maximum number of ` +
+                    `automatic retries (3) has been reached.\n\n` +
+                    `**Next Steps:**\n` +
+                    `1. Review the implementation progress in the commits\n` +
+                    `2. Check the acceptance criteria in the plan\n` +
+                    `3. Manually continue implementation or adjust the plan\n` +
+                    `4. Remove auto-retry labels and re-add 'ready-for-implementation' ` +
+                    `to trigger a fresh start if needed\n\n` +
+                    `---\n🤖 Automated by feature-implementer workflow`
             });
