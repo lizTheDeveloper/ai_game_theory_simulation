@@ -865,7 +865,8 @@ export function createDefaultInitialState(
   // P2.4 Feature 3: Initialize recovery tracking (Oct 16, 2025)
   initializeRecoveryTracking(state);
 
-  return state;
+  // Wrap with validation proxy in dev mode (zero overhead in production)
+  return wrapStateForValidation(state);
 }
 
 /**
@@ -879,7 +880,7 @@ export function createDefaultInitialState(
 export function createTestState(overrides?: Partial<GameState>, scenarioMode: ScenarioMode = 'historical'): GameState {
   const baseState = createDefaultInitialState(scenarioMode);
 
-  if (!overrides) return baseState;
+  if (!overrides) return wrapStateForValidation(baseState);
 
   // Deep merge overrides
   const initialState: GameState = {
