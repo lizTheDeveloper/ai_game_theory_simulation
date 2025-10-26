@@ -178,15 +178,22 @@ Audit and fix defensive fallbacks in core simulation files:
 
 **Total patterns:** 3 patterns removed
 **Replacements:**
-- `state.society.communityStrength ?? 0.5` → explicit undefined check + throw
-- `state.government.governanceQuality?.institutionalCapacity || 0.5` → explicit check + throw
+- `state.society.communityStrength ?? 0.5` → `assertStateProperty(state.society, 'communityStrength', {...})`
+- `state.government.governanceQuality?.institutionalCapacity || 0.5` → `assertStateProperty(state.government.governanceQuality, 'institutionalCapacity', {...})`
+
+**Approach:** Used `assertStateProperty` utility (provides rich error messages, assertFinite validation, type checking)
 
 **Audit report:** `devlogs/phase_3_4_audit_oct25_2025.md`
+**Completion report:** `devlogs/phase_3_4_completion_oct26_2025.md`
 **Verification:**
 - ✅ TypeScript compiles cleanly
-- ✅ Monte Carlo N=2 × 24 months - 0 assertion errors
-- 🔄 Monte Carlo N=10 × 120 months - running async (logs/phase_3_4_validation_*)
-**Actual effort:** 15 minutes
+- ✅ Monte Carlo N=2 × 24 months - 0 assertion errors (with assertStateProperty)
+- ✅ Monte Carlo N=10 × 120 months - 0 assertion errors (logs/phase_3_4_validation_*)
+**Actual effort:** 20 minutes (15 min initial + 5 min to use proper utility)
+
+**Commits:**
+- `d2aabda` - Initial fix with manual undefined checks
+- `5106f71` - Corrected to use assertStateProperty utility
 
 **Total Phase 3 Effort:** 8-12 hours
 
