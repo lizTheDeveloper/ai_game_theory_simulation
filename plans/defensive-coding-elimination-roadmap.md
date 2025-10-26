@@ -20,7 +20,9 @@
 - ✅ **Documentation COMPLETE** - CLAUDE.md updated with assertion utilities
 - ✅ **Automation COMPLETE** - Senior dev checklist enforces anti-patterns
 - ✅ **METHODOLOGY COMPLETE** - All fixes use assertStateProperty utility
+- ✅ **DEV-MODE PROXY COMPLETE** - Automatic validation for all property access
 - **Total fixed:** 149 patterns (76 + 62 assertFinite + 4 Phase 3.1 + 3 Phase 3.4 + 4 Phase 3.1 corrections)
+- **Hybrid Approach:** Manual assertions (context) + Automatic proxy (coverage)
 
 **DOCUMENTATION UPDATE (Oct 25, 2025 - Late Evening):**
 - ✅ Added defensive programming anti-patterns section to CLAUDE.md (lines 788-843)
@@ -48,6 +50,45 @@
   - ✅ Assertions caught bug in Monte Carlo runs that defensive programming would have masked
   - ✅ Verification: Monte Carlo N=10 runs - all 10/10 completed successfully
   - **This is a perfect example of why assertions > defensive programming**
+
+### ✅ Phase 0.5: Dev-Mode Validation Proxy (Oct 26, 2025)
+**Hybrid Approach:** Manual assertions + Automatic validation
+
+**Implementation:**
+- [x] Created `src/simulation/utils/stateValidation.ts`
+- [x] Integrated into `initialization.ts` - wraps GameState automatically
+- [x] Zero overhead in production (NODE_ENV=production)
+- [x] Full validation in development/test modes
+
+**How It Works:**
+```typescript
+// Development mode (NODE_ENV=development or test):
+const state = createDefaultInitialState(); // Automatically wrapped with Proxy
+
+// ALL numeric writes are validated
+state.globalMetrics.qualityOfLife = NaN; // ❌ Throws detailed error
+
+// ALL numeric reads are validated
+const value = state.society.communityStrength; // ❌ Throws if NaN/Infinity
+
+// Production mode (NODE_ENV=production):
+const state = createDefaultInitialState(); // No proxy, zero overhead
+```
+
+**Benefits:**
+- ✅ Catches NaN/Infinity at source (writes) and destination (reads)
+- ✅ Automatic - no manual assertions needed
+- ✅ Rich error messages with property path, month, phase
+- ✅ Zero production overhead - proxy only in dev/test
+- ✅ Works alongside manual `assertStateProperty` for critical paths
+
+**Files:**
+- `src/simulation/utils/stateValidation.ts` - Proxy implementation
+- `scripts/testStateValidation.ts` - Demonstration test
+
+**Commits:**
+- `cfc4ce8` - Initial dev-mode proxy implementation
+- `30a8471` - Fixed proxy caching for recursive wrapping
 
 ### ✅ Phase 1: Tech Tree System (COMPLETE)
 - [x] Fixed `techTree/engine.ts` (FIX #25)
