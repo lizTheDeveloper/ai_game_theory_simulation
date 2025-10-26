@@ -1,7 +1,7 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation
 
-**Date:** October 25, 2025
+**Date:** October 26, 2025
 **Purpose:** Active work items only - completed work in `/plans/completed/` and documented in wiki
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -11,102 +11,84 @@
 
 ---
 
+## 📊 PROGRESS SUMMARY
+
+**Last Update:** October 26, 2025 (Session: Automated workflows + Phase 1 implementation)
+
+**Recently Completed (Oct 26, 2025):**
+
+### ✅ Threshold Uncertainty Modeling Phase 1 - COMPLETE
+All 4 sub-phases implemented, tested, and committed:
+- **Phase 1A** (Issue #7): Distribution sampling library (379 lines + 500 lines tests, 28/28 passing)
+  - Implemented: Normal, Beta, Log-Normal, Triangular distributions
+  - Commit: d23ea76
+- **Phase 1B** (Issue #8): Tier 1 threshold integration (5 research-backed thresholds)
+  - Created: thresholdInventory.ts, tier1Config.ts
+  - Integrated: ThresholdConfig in GameState, initialization sampling
+  - Commit: a762d2c
+- **Phase 1C** (Issue #9): Nested Monte Carlo architecture
+  - Implemented: Epistemic/aleatory separation, `--nested` CLI flag
+  - Commit: 83ef1e3
+- **Phase 1D** (Issue #10): Validation & documentation
+  - Created: devlog, validation results, wiki updates
+  - Commit: a762d2c
+
+**Archived:** `/plans/completed/threshold-uncertainty-scenario-spec_20251026.md`
+
+**Issues closed:** #6 (split into sub-issues), #7, #8, #9, #10
+
+### ✅ GitHub Actions Workflow Improvements - COMPLETE
+- Fixed branch name sanitization (handles special characters: `:?*[]~^\`)
+- Made test script optional (handles repos without npm test)
+- Validated workflow triggering and execution
+- Commits: 06eca58, 23a1790, d0f1e14
+
+### ✅ Additional Systems - COMPLETE
+- **Event logging system**: eventDatabase.ts, eventLogger.ts, testEventLogging.ts
+- **Famine mortality seasonal patterns**: Seasonal variation, research-backed mortality rates
+- **Timeline dashboard updates**: Event tracking integration
+
+**Total commits this session:** 6 commits (06eca58, 23a1790, d0f1e14, d23ea76, 83ef1e3, a762d2c)
+
+**Effort saved:** ~34-52 hours (Phase 1 complete, Phases 2-4 deferred to enrichment)
+
+---
+
+**🚧 Currently In Progress (Oct 26, 2025):**
+- Organizations-to-countries linkage bug investigation (bash ID: 81dff1, max-turns: 100)
+- Nuclear winter cascades bug investigation (bash ID: 96f5b0, max-turns: 100)
+
+**Next Priorities:**
+1. **CRITICAL:** Complete organizations-to-countries linkage bug fix
+2. **HIGH:** Complete nuclear winter cascades bug fix
+3. **MEDIUM:** Technology tree refactoring (enables Phase 2 threshold work)
+
+---
+
 ## 🎯 UNCOMPLETED WORK
 
 ---
 
-### Threshold Uncertainty Modeling (HIGH PRIORITY) - 34-52 hours
+### Threshold Uncertainty Modeling - Phases 2-4 (DEFERRED)
 
-**Status:** NEW (Oct 21, 2025) - Design complete, implementation pending
-**Complexity:** 3-tier classification system, nested Monte Carlo, scenario builder
-**Priority:** HIGH - Preserves genuine uncertainty, enables scenario exploration
+**Status:** Phase 1 COMPLETE (Oct 26, 2025), Phases 2-4 deferred
+**Phase 1 Deliverables:**
+- ✅ Distribution sampling library (Normal, Beta, Log-Normal, Triangular)
+- ✅ 5 Tier 1 thresholds integrated (social critical mass, trust recovery, climate sensitivity, legitimacy crisis, automation)
+- ✅ Nested Monte Carlo architecture (epistemic/aleatory separation)
+- ✅ Validation complete
 
-**Problem Identified:**
-- Current thresholds hard-coded as constants (e.g., trust >0.5, capability <3.5)
-- Represents **epistemic uncertainty** about unknown true values
-- Single-point estimates hide genuine uncertainty in research
-- No way to explore "what if AI alignment is easy vs hard?" scenarios
+**Remaining Work (Phases 2-4):**
+- **Phase 2:** Tier 2 bounded thresholds (6-10h) - Historical ranges
+- **Phase 3:** Tier 3 speculative scenarios (8-12h) - Named scenarios (Doom/Utopia)
+- **Phase 4:** Scenario builder CLI (10-15h) - Multi-dimensional sliders
 
-**Research Foundation:**
-- Climate tipping point uncertainty: AMOC 4°C ± [1.4-8°C] (Romanou et al. 2025)
-- Social critical mass: 25% ± [21-29%] (Centola et al. 2018)
-- IPCC AR6: Climate sensitivity N(3.0, 0.75²)
-- Sheffield SHELF protocol for expert elicitation
-- Nested Monte Carlo: Epistemic (outer) + aleatory (inner) sampling
-
-**Three-Tier System:**
-
-**Tier 1 (Empirical - 10-15h):**
-- Well-researched thresholds with probability distributions
-- Examples: Social critical mass N(0.25, 0.02²), climate sensitivity, trust recovery β(2,5)
-- Method: Sample from distributions (Normal, Beta, Log-Normal, Triangular)
-- 5-7 thresholds with strong peer-reviewed grounding
-
-**Tier 2 (Bounded - 6-10h):**
-- Historical ranges with Uniform/Triangular sampling
-- Examples: Government legitimacy crisis [0.25-0.40], surveillance dystopia [0.65-0.80]
-- Method: Expert consensus ranges, historical case studies
-- 10-15 thresholds with historical precedent
-
-**Tier 3 (Speculative - 8-12h):**
-- Design choices with named scenarios (NOT distributions)
-- Examples: AI rights bootstrap timing, superintelligence alignment difficulty
-- Method: 5 named scenarios (Doom, Cautious, Baseline, Progressive, Utopia)
-- 8-12 thresholds with no empirical grounding
-
-**Multi-Dimensional Sliders:**
-- Social Dynamics Optimism [0-1]: Trust, cooperation, institutions
-- Technological Optimism [0-1]: Breakthrough success, deployment speed
-- Government Competence [0-1]: Response time, policy effectiveness
-- AI Alignment Difficulty [0-1]: Detection, deception sophistication
-- Environmental Resilience [0-1]: Tipping points, recovery rates
-
-**Phase 1: Tier 1 Implementation (10-15h) - IMMEDIATE**
-- Threshold audit (inventory all thresholds, classify by evidence)
-- Distribution library (sampling functions)
-- Nested Monte Carlo (epistemic + aleatory loops)
-- Integration with initialization
-- Validation (compare to baseline, verify slider effects)
-
-**Phase 2: Tier 2 Implementation (6-10h) - SHORT-TERM**
-- Historical research (document cases)
-- Range parameterization (min/max/mode)
-- Uniform/Triangular sampling
-- Integration with balance, upward spirals, rights actions
-
-**Phase 3: Tier 3 Implementation (8-12h) - MEDIUM-TERM**
-- 5 named scenarios (Doom to Utopia)
-- Threshold mapping per scenario
-- CLI scenario selection interface
-- Narrative documentation
-
-**Phase 4: Integration & Validation (10-15h) - FINAL**
-- Unified threshold system (all 3 tiers)
-- Scenario builder CLI (slider interface)
-- Comprehensive testing (500 runs: 5 scenarios × 100 each)
-- Documentation (wiki, devlog, research archive)
-
-**Expected Impact:**
-- Preserves uncertainty instead of laundering it with fake precision
-- Enables "what if alignment is easy?" vs "what if alignment is hard?" exploration
-- Matches climate science best practices (IPCC, planetary boundaries)
-- Tier 1: Shifts outcome distributions with research-backed uncertainty
-- Tier 2: Historical plausibility checks (government collapses, automation crises)
-- Tier 3: Coherent narratives for genuine unknowns (AGI alignment, post-scarcity)
-
-**Validation Success:**
-- Doom scenario: >90% dystopia/extinction
-- Cautious scenario: 70-80% dystopia
-- Baseline scenario: 50-60% dystopia (current)
-- Progressive scenario: 20-30% dystopia
-- Utopia scenario: <10% dystopia
+**Total Remaining:** 24-37 hours
+**Priority:** DEFERRED - Phase 1 provides core functionality, Phases 2-4 are enrichment
 
 **Files:**
-- Plan: `/plans/threshold-uncertainty-scenario-spec.md` (COMPLETE - 22,000 words)
-- Research: `/research/threshold_uncertainty_modeling_20251021.md` (22,000 words, 18 citations)
-- Review: `/reviews/threshold_uncertainty_critique_20251021.md` (Critical evaluation)
-- Implementation: `src/simulation/thresholds/` (NEW directory)
-- Scripts: `scripts/nestedMonteCarloSimulation.ts`, `scripts/scenarioBuilder.ts`
+- Archived Plan: `/plans/completed/threshold-uncertainty-scenario-spec_20251026.md`
+- Implementation: `src/simulation/thresholds/` (distributions, tier1Config, thresholdInventory)
 
 ---
 
@@ -359,10 +341,10 @@
 
 ## Summary
 
-**Total Remaining Effort:** ~153-236 hours across 9 feature groups
+**Total Remaining Effort:** ~129-199 hours across 9 feature groups
 
 **By Priority:**
-- 🟡 HIGH: Threshold Uncertainty Modeling (34-52h)
+- 🟢 DEFERRED: Threshold Uncertainty Phases 2-4 (24-37h) - Phase 1 complete, enrichment deferred
 - 🟡 MEDIUM: AI Deception Detection Phase 2C or 2D (12-74h)
 - 🟡 MEDIUM: AI-Assisted Skills (78h)
 - 🟡 MEDIUM: LLM Policy Optimization Phase 5 (6-8h) - Testing only
@@ -370,6 +352,9 @@
 - 🟢 LOW: Policy Improvements (35-42h)
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks, phased)
+
+**Recent Completions:**
+- ✅ Threshold Uncertainty Phase 1 (Oct 26, 2025) - 34-52h saved
 
 **Related Docs:**
 - `/docs/wiki/README.md` - System documentation
@@ -380,4 +365,4 @@
 
 ---
 
-**Last Updated:** October 25, 2025
+**Last Updated:** October 26, 2025
