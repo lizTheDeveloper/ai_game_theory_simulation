@@ -1964,7 +1964,10 @@ timestamp: state.currentMonth,
     energyCost: 3,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.coral || (state.government.resources ?? 0) < 3) return false;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1964 - initialization bug');
+      }
+      if (!state.specificTippingPoints?.coral || state.government.resources < 3) return false;
       const coral = state.specificTippingPoints?.coral;
       // Health declining below 50%
       return coral.healthPercentage < 50 && !coral.triggered;
@@ -1988,9 +1991,12 @@ timestamp: state.currentMonth,
           state.specificTippingPoints.coral.healthPercentage + 1.0 // +1% immediate boost
         );
       }
-      
+
       // Cost and legitimacy
-      state.government.resources = (state.government.resources ?? 0) - 3;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1996 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 3;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.04);
       
       return {
@@ -2021,7 +2027,10 @@ timestamp: state.currentMonth,
     energyCost: 1,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.pollinators || (state.government.resources ?? 0) < 1) return false;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:2028 - initialization bug');
+      }
+      if (!state.specificTippingPoints?.pollinators || state.government.resources < 1) return false;
       const pollinators = state.specificTippingPoints?.pollinators;
       // Population declining below 50%
       return pollinators.populationPercentage < 50 && !pollinators.triggered;
