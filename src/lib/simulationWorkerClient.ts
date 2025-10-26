@@ -78,6 +78,7 @@ export interface StateDelta {
 
   // Events (optional - only when significant changes happen)
   events?: Array<{
+    id?: string;         // Unique event ID
     type: string;
     description: string;
     severity?: 'low' | 'medium' | 'high' | 'critical';

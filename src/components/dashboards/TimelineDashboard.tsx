@@ -40,14 +40,21 @@ export function TimelineDashboard() {
     if (!lastUpdate?.events || lastUpdate.events.length === 0) return
 
     const storeEvents = async () => {
-      const eventsToStore = lastUpdate.events.map(e => ({
-        id: `${simulationId}_${e.type}_${e.timestamp}_${Math.random().toString(36).substr(2, 9)}`,
-        timestamp: e.timestamp ?? lastUpdate.currentMonth ?? 0,
-        type: e.type,
-        category: e.category || 'system',
-        description: e.description,
-        severity: e.severity || 'low',
-      }))
+      const eventsToStore = lastUpdate.events.map(e => {
+        const timestamp = e.timestamp ?? lastUpdate.currentMonth ?? 0
+        console.log(`[Timeline] Event: ${e.id}`)
+        console.log(`  e.timestamp = ${e.timestamp} (${e.timestamp === undefined ? 'UNDEFINED' : 'defined'})`)
+        console.log(`  lastUpdate.currentMonth = ${lastUpdate.currentMonth}`)
+        console.log(`  final timestamp = ${timestamp}`)
+        return {
+          id: e.id || `${simulationId}_${e.type}_${timestamp}_${Date.now()}`, // Use event's actual ID
+          timestamp,
+          type: e.type,
+          category: e.category || 'system',
+          description: e.description,
+          severity: e.severity || 'low',
+        }
+      })
 
       try {
         await eventDatabase.addEvents(simulationId, eventsToStore)
@@ -166,6 +173,22 @@ export function TimelineDashboard() {
     return `${monthNames[targetDate.getMonth()]} ${targetDate.getFullYear()}`;
   }
 
+  // Clear all data handler
+  const handleClearAllData = async () => {
+    if (!confirm('Clear ALL event data? This cannot be undone.')) return
+
+    try {
+      await eventDatabase.clearAll()
+      setEventHistory([])
+      setTotalEvents(0)
+      console.log('[Timeline] All event data cleared')
+      alert('All event data cleared successfully!')
+    } catch (error) {
+      console.error('[Timeline] Error clearing data:', error)
+      alert('Error clearing data - check console')
+    }
+  }
+
   // Filter events
   const filteredEvents = useMemo(() => {
     if (filterType === 'all') return events
@@ -244,8 +267,9 @@ export function TimelineDashboard() {
 
       {/* Filter Controls */}
       <Panel title="Event Filters">
-        <div className="flex flex-wrap gap-2">
-          <button
+        <div className="flex justify-between items-start mb-2">
+          <div className="flex flex-wrap gap-2">
+            <button
             onClick={() => setFilterType('all')}
             className={`px-3 py-1 rounded text-sm transition-colors ${
               filterType === 'all'
@@ -279,6 +303,18 @@ export function TimelineDashboard() {
               </button>
             )
           })}
+          </div>
+          <button
+            onClick={handleClearAllData}
+            className="px-4 py-2 rounded text-sm font-semibold transition-colors flex-shrink-0"
+            style={{
+              backgroundColor: 'var(--color-near-black)',
+              border: '1px solid var(--color-red)',
+              color: 'var(--color-red)',
+            }}
+          >
+            Clear All Data
+          </button>
         </div>
       </Panel>
 

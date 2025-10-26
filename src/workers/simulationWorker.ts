@@ -1105,6 +1105,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
       }
 
       return {
+        id: event.id,              // Include unique event ID
         type: event.type,
         description: event.description,
         severity: dashboardSeverity,
@@ -1131,6 +1132,10 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     }, {} as Record<string, number>);
     console.log('  - Event types:', eventTypes);
   }
+
+  // Clear the event log after capturing - we've already sent these events
+  // This prevents sending the same events multiple times in subsequent snapshots
+  state.eventLog = [];
 
   return snapshot;
 }
