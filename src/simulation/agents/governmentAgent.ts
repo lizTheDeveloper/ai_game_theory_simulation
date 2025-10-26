@@ -1577,13 +1577,16 @@ timestamp: state.currentMonth,
     
     canExecute: (state) => {
       // Can subsidize if there are private orgs with safety focus
-      const safetyOrgs = state.organizations.filter((o: any) => 
-        o.type === 'private' && 
+      const safetyOrgs = state.organizations.filter((o: any) =>
+        o.type === 'private' &&
         o.priorities.safetyResearch > 0.4 &&
         o.capital < 100 // Only subsidize if struggling
       );
-      
-      return safetyOrgs.length > 0 && (state.government.resources ?? 0) > 2;
+
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1586 - initialization bug');
+      }
+      return safetyOrgs.length > 0 && state.government.resources > 2;
     },
     
     execute: (state, agentId, random = Math.random) => {      
@@ -1616,9 +1619,12 @@ timestamp: state.currentMonth,
       
       // Improve relations
       targetOrg.governmentRelations = Math.min(1.0, targetOrg.governmentRelations + 0.1);
-      
+
       // Cost resources
-      state.government.resources = (state.government.resources ?? 0) - 2;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1624 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 2;
       
       return {
         success: true,
@@ -1651,8 +1657,11 @@ timestamp: state.currentMonth,
     canExecute: (state) => {
       if (!state.specificTippingPoints?.amazon) return false;
       const amazon = state.specificTippingPoints?.amazon;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1658 - initialization bug');
+      }
       // Trigger when near threshold (23%) but not yet crossed (25%)
-      return amazon.deforestation > 23 && !amazon.triggered && (state.government.resources ?? 0) > 5;
+      return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
     },
     
     execute: (state, agentId, random = Math.random) => {      const amazon = state.specificTippingPoints?.amazon;
@@ -1668,9 +1677,12 @@ timestamp: state.currentMonth,
         activatedMonth: state.currentMonth,
         deforestationReduction: 0.5, // 50% reduction in deforestation rate
       };
-      
+
       // Cost
-      state.government.resources = (state.government.resources ?? 0) - 5;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1678 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 5;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.05);
       
       return {
@@ -1702,8 +1714,11 @@ timestamp: state.currentMonth,
     canExecute: (state) => {
       if (!state.specificTippingPoints?.coral) return false;
       const coral = state.specificTippingPoints?.coral;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1715 - initialization bug');
+      }
       // Trigger when coral health drops below 50%
-      return coral.healthPercentage < 50 && (state.government.resources ?? 0) > 3;
+      return coral.healthPercentage < 50 && state.government.resources > 3;
     },
     
     execute: (state, agentId, random = Math.random) => {      const coral = state.specificTippingPoints?.coral;
@@ -1717,9 +1732,12 @@ timestamp: state.currentMonth,
         activatedMonth: state.currentMonth,
         restorationBoost: 0.3, // 0.3%/month boost to coral health
       };
-      
+
       // Cost
-      state.government.resources = (state.government.resources ?? 0) - 3;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1735 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 3;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.03);
       
       return {
@@ -1751,10 +1769,13 @@ timestamp: state.currentMonth,
     canExecute: (state) => {
       if (!state.specificTippingPoints?.pollinators) return false;
       const pollinators = state.specificTippingPoints?.pollinators;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:1770 - initialization bug');
+      }
       // Trigger when pollinators drop below 50%
       // Check we haven't already banned
-      return pollinators.populationPercentage < 50 && 
-             (state.government.resources ?? 0) > 1 &&
+      return pollinators.populationPercentage < 50 &&
+             state.government.resources > 1 &&
              !state.government.environmentalInterventions?.pesticideBan;
     },
     

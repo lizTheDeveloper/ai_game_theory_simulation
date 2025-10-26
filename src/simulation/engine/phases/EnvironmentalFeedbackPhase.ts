@@ -122,10 +122,13 @@ function aggregateClimateState(state: GameState): {
 
   // Fallback to environmental accumulation
   if (state.environmentalAccumulation) {
+    if (state.environmentalAccumulation.climateStability === undefined) {
+      throw new Error('❌ state.environmentalAccumulation.climateStability is undefined in EnvironmentalFeedbackPhase:128 - initialization bug');
+    }
     return {
       globalTemperatureAnomaly: 1.0 + (1 - state.environmentalAccumulation.climateStability) * 2.0,
       carbonPPM: 420,
-      climateStability: state.environmentalAccumulation.climateStability ?? 0.6,
+      climateStability: state.environmentalAccumulation.climateStability,
     };
   }
 
@@ -158,6 +161,7 @@ function aggregatePollutionLevel(state: GameState): number {
 
   // Priority 2: Novel entities system (plastic, PFAS, etc.)
   if (state.novelEntitiesSystem) {
+    // KEEP LEGITIMATE DEFAULTS - Novel entities may not be initialized yet
     const syntheticLoad = state.novelEntitiesSystem.syntheticChemicalLoad ?? 0;
     const microplastics = state.novelEntitiesSystem.microplasticConcentration ?? 0;
     const pfas = state.novelEntitiesSystem.pfasPrevalence ?? 0;
@@ -181,18 +185,21 @@ function aggregateResourceDepletion(state: GameState): number {
 
   // Check various resource systems
   if (state.phosphorusSystem) {
+    // KEEP LEGITIMATE DEFAULT - reserves may not be initialized yet
     const phosphorusDepletion = (1 - (state.phosphorusSystem.reserves ?? 0.7)) * 100;
     depletion += phosphorusDepletion;
     count++;
   }
 
   if (state.freshwaterSystem) {
+    // KEEP LEGITIMATE DEFAULT - waterStress may not be initialized yet
     const freshwaterDepletion = (state.freshwaterSystem.waterStress ?? 0.3) * 100;
     depletion += freshwaterDepletion;
     count++;
   }
 
   if (state.environmentalAccumulation) {
+    // KEEP LEGITIMATE DEFAULT - resourceReserves may not be initialized yet
     const resourceReserves = state.environmentalAccumulation.resourceReserves ?? 0.65;
     const resourceDepletion = (1 - resourceReserves) * 100;
     depletion += resourceDepletion;

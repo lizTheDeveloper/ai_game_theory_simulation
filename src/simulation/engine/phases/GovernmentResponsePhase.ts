@@ -59,6 +59,7 @@ function executeGovernmentResponsePhase(
   // 2. Check for governments still comprehending AI capabilities
   let comprehendingCount = 0;
   for (const [countryCode, gov] of state.governmentSystem.governments) {
+    // KEEP LEGITIMATE DEFAULT - Map.get() returns undefined for new keys
     const lag = state.governmentSystem.comprehensionLag.get(countryCode) || 12;
 
     // Simplified: assume government comprehends if enough time has passed
@@ -108,6 +109,7 @@ function executeGovernmentResponsePhase(
     let policiesInitiated = 0;
 
     for (const [countryCode, gov] of state.governmentSystem.governments) {
+      // KEEP LEGITIMATE DEFAULT - government capacity may not be initialized yet
       const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
       const isDemo = (gov as any).type?.includes('liberal') || (gov as any).type?.includes('electoral');
 
@@ -169,6 +171,7 @@ function calculateAverageAICapability(state: GameState): number {
   if (!state.aiAgents || state.aiAgents.length === 0) return 0;
   // FIX #20 (Oct 22, 2025): Access correct property - capabilityProfile.cognitive, not a.cognitive
   // Bug: AI agents don't have a.cognitive property (always undefined), they have capabilityProfile.cognitive
+  // KEEP LEGITIMATE DEFAULT - capabilityProfile may not exist for agents in training
   return state.aiAgents.reduce((sum, a) => sum + (a.capabilityProfile?.cognitive || 0), 0) / state.aiAgents.length;
 }
 
@@ -182,6 +185,7 @@ function attemptAIGovernanceTreaty(state: GameState, rng: RNGFunction): Treaty |
   const supporters: string[] = [];
 
   for (const [countryCode, gov] of state.governmentSystem!.governments) {
+    // KEEP LEGITIMATE DEFAULT - government capacity may not be initialized yet
     const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
     const isDemo = (gov as any).type?.includes('liberal') || (gov as any).type?.includes('electoral');
 
@@ -222,6 +226,7 @@ function initiatePolicyResponse(
   const gov = state.governmentSystem!.governments.get(countryCode);
   if (!gov) return null;
 
+  // KEEP LEGITIMATE DEFAULT - government capacity may not be initialized yet
   const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
 
   // Implementation time: 6-24 months based on capacity

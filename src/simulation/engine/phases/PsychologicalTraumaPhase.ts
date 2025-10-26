@@ -40,7 +40,10 @@ export class PsychologicalTraumaPhase implements SimulationPhase {
     const initialPopulation = 8000; // 8B baseline (in millions)
 
     // Calculate monthly mortality rate
-    const monthlyDeaths = state.humanPopulationSystem.monthlyExcessDeaths || 0;
+    if (state.humanPopulationSystem.monthlyExcessDeaths === undefined) {
+      throw new Error('❌ state.humanPopulationSystem.monthlyExcessDeaths is undefined in PsychologicalTraumaPhase:43 - initialization bug');
+    }
+    const monthlyDeaths = state.humanPopulationSystem.monthlyExcessDeaths;
     const monthlyMortalityRate = monthlyDeaths / population;
 
     // Check for mass death events

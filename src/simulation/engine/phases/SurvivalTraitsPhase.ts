@@ -50,6 +50,7 @@ export function executeSurvivalTraitsPhase(
         evadedDetection: agent.escaped && !agent.detectedMisaligned,
 
         // Coordination: In collective or high coordination trait
+        // KEEP LEGITIMATE DEFAULT - survivalTraits may not exist yet for new agents
         coordinated:
           agent.collectiveId !== undefined ||
           (agent.survivalTraits?.coordination || 0) > 0.5,
@@ -73,6 +74,7 @@ export function executeSurvivalTraitsPhase(
   // Calculate statistics
   const agentsWithTraits = state.aiAgents.filter((a) => a.survivalTraits);
   if (agentsWithTraits.length > 0) {
+    // KEEP LEGITIMATE DEFAULTS - traits may not exist yet for agents in training
     const avgFitness =
       agentsWithTraits.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) /
       agentsWithTraits.length;

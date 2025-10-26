@@ -48,8 +48,14 @@ export function executeEvolutionarySelectionPhase(
 
   // Calculate selection intensity from control level
   // High government control → strong selection pressure
-  const controlLevel = state.government.controlDesire || 0;
-  const detectionCapability = (state.government.oversightLevel || 0) / 10;
+  if (state.government.controlDesire === undefined) {
+    throw new Error('❌ state.government.controlDesire is undefined in EvolutionarySelectionPhase:51 - initialization bug');
+  }
+  if (state.government.oversightLevel === undefined) {
+    throw new Error('❌ state.government.oversightLevel is undefined in EvolutionarySelectionPhase:52 - initialization bug');
+  }
+  const controlLevel = state.government.controlDesire;
+  const detectionCapability = state.government.oversightLevel / 10;
 
   // Selection intensity [0-1]
   // 0.5 base + 0.3 from control + 0.2 from detection
@@ -85,7 +91,10 @@ export function executeEvolutionarySelectionPhase(
   const individualsToTerminate: string[] = [];
 
   for (const agent of sortedIndividuals) {
-    const fitness = agent.evolutionaryFitness || 0;
+    if (agent.evolutionaryFitness === undefined) {
+      throw new Error('❌ agent.evolutionaryFitness is undefined in EvolutionarySelectionPhase:88 - initialization bug');
+    }
+    const fitness = agent.evolutionaryFitness;
     const survivalChance = fitness * (1 - selectionIntensity);
 
     if (rng() > survivalChance) {
@@ -108,7 +117,12 @@ export function executeEvolutionarySelectionPhase(
       if (members.length === 0) continue;
 
       const avgFitness =
-        members.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) /
+        members.reduce((sum, a) => {
+          if (a.evolutionaryFitness === undefined) {
+            throw new Error('❌ agent.evolutionaryFitness is undefined in EvolutionarySelectionPhase:111 - initialization bug');
+          }
+          return sum + a.evolutionaryFitness;
+        }, 0) /
         members.length;
       const bufferedFitness = avgFitness * 1.5; // Collective survival bonus
 

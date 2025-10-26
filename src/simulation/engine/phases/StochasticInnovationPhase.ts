@@ -153,13 +153,16 @@ export class StochasticInnovationPhase implements SimulationPhase {
     const baseBreakthroughProb = 0.002;
 
     // Crisis pressure: Necessity breeds innovation
+    if (state.socialAccumulation === undefined) {
+      throw new Error('❌ state.socialAccumulation is undefined in StochasticInnovationPhase:161 - initialization bug');
+    }
     const activeCrises = [
       state.environmentalAccumulation.resourceCrisisActive,
       state.environmentalAccumulation.pollutionCrisisActive,
       state.environmentalAccumulation.climateCrisisActive,
       state.environmentalAccumulation.ecosystemCrisisActive,
-      state.socialAccumulation?.meaningCollapseActive,
-      state.socialAccumulation?.institutionalFailureActive,
+      state.socialAccumulation.meaningCollapseActive,
+      state.socialAccumulation.institutionalFailureActive,
       state.technologicalRisk?.controlLossActive,
     ].filter(Boolean).length;
 

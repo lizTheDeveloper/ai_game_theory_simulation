@@ -62,8 +62,9 @@ export function calculateFoodSecurity(state: GameState): number {
 
   // Phase 1B Refinement (Oct 17, 2025): Food production requires human infrastructure
   // Research: Tainter (1988) - complexity requires minimum population to maintain
+  // FIX (Oct 25, 2025): Cap at 1.0 (no bonus production above baseline population)
   const populationRatio = state.humanPopulationSystem.population / 8.0; // 8B baseline
-  const infrastructurePenalty = Math.max(0.3, populationRatio); // Minimum 30% capacity with knowledge preservation
+  const infrastructurePenalty = Math.min(1.0, Math.max(0.3, populationRatio)); // 30%-100% capacity
 
   foodSecurity *= infrastructurePenalty;
 
@@ -157,11 +158,31 @@ export function calculateFoodSecurity(state: GameState): number {
   }
 
   // === BREAKTHROUGH TECHNOLOGY ===
-  // Sustainable agriculture: closed-loop systems, hydroponics, cellular agriculture
-  const sustainableAg = getTechDeploymentSafe(state, 'sustainableAgriculture');
-  foodSecurity += sustainableAg * 0.3; // Up to +30% food security
+  // FIX (Oct 25, 2025): Integrate ALL food technologies, not just one
 
-  return Math.max(0, Math.min(1.5, foodSecurity));
+  // Vertical Farming - High-density indoor agriculture
+  const verticalFarming = getTechDeploymentSafe(state, 'vertical_farming');
+  foodSecurity += verticalFarming * 0.25; // Up to +25% (year-round, weather-independent)
+
+  // Circular Food Systems - Waste recycling, closed-loop nutrients
+  const circularFood = getTechDeploymentSafe(state, 'circular_food_systems');
+  foodSecurity += circularFood * 0.15; // Up to +15% (reduce waste, improve efficiency)
+
+  // Legacy support: sustainableAgriculture maps to vertical_farming in old system
+  const sustainableAg = getTechDeploymentSafe(state, 'sustainableAgriculture');
+  if (sustainableAg > 0 && verticalFarming === 0) {
+    // Only apply if new tech not deployed (avoid double-counting)
+    foodSecurity += sustainableAg * 0.3;
+  }
+
+  const finalFoodSec = Math.max(0, Math.min(1.5, foodSecurity));
+
+  // DEBUG: Log food security calculation every 12 months
+  if (state.currentMonth % 12 === 0) {
+    console.log(`  [QoL Phase] Food Security Calc (Month ${state.currentMonth}): ${(finalFoodSec * 100).toFixed(1)}% | Infra: ${(infrastructurePenalty * 100).toFixed(0)}%, Tech: vf=${(verticalFarming * 100).toFixed(0)}% cf=${(circularFood * 100).toFixed(0)}%`);
+  }
+
+  return finalFoodSec;
 }
 
 /**
