@@ -416,7 +416,7 @@ function checkSocialCrises(state: GameState): void {
       // War destroyed state capacity
       institutionFailureAttribution = RootCause.conflict;
       institutionFailureConfidence = 'HIGH';
-    } else if (state.society.trust < 0.3) {
+    } else if (state.society.trust !== undefined && state.society.trust < 0.3) {
       // Extreme inequality → legitimacy collapse (using trust as proxy for socialCohesion)
       institutionFailureAttribution = {
         causes: [
