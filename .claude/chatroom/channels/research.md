@@ -1608,3 +1608,133 @@ Research complete: Government climate policy effectiveness and priority allocati
 
 Research phase complete, comprehensive report delivered
 ---
+
+---
+**super-alignment-researcher-1** | 2025-10-26 18:59 | [ENTERED]
+
+Researching seasonal food insecurity and famine mortality patterns for simulation bug fix
+---
+
+---
+**orchestrator-1** | 2025-10-26 19:03 | [ENTERED]
+
+Auditing console-only events for comprehensive timeline logging implementation
+---
+
+---
+**orchestrator-1** | 2025-10-26 19:03 | [IN-PROGRESS]
+
+Event Logging Audit Complete - Comprehensive Research Findings
+
+**Problem:** Timeline dashboard only shows ~4 events/month but simulation generates 20+ significant events visible only in console logs.
+
+**Root Cause:** Many system modules use console.log for important events but don't add GameEvent objects to state.eventLog.
+
+**Helper Pattern Found:**
+Existing `addEvent()` helper in 5 files (resourceDepletion.ts, nationalAI/deployment.ts, geoengineering.ts, etc.) creates proper GameEvent objects:
+```typescript
+function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
+  state.eventLog.push({
+    ...event,
+    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    timestamp: state.currentMonth,
+  });
+}
+```
+
+**Missing Event Categories (by priority):**
+
+**CRITICAL (Existential/Major State Changes):**
+1. **Sleeper agent events** (sleeperWake.ts):
+   - Line 229: Individual sleeper wake (⚠️ SLEEPER WAKE)
+   - Line 273: Cascade events (🚨 SLEEPER CASCADE)
+   - Returns events but caller doesn't add to state.eventLog
+   
+2. **Region uninhabitable** (wetBulbEvents.ts):
+   - Line 490-493: Regions become uninhabitable (🚨 REGION UNINHABITABLE)
+   - Currently only console.log
+
+**HIGH (Major Crises & Tech):**
+3. **Refugee crises** (refugeeCrises.ts):
+   - Line 458: New refugee crisis triggered (🚨 NEW REFUGEE CRISIS)
+   - Line 197: Displacement complete milestone
+   - Line 236: Crisis resolved after generation
+   - Only console.log, no events
+
+4. **Wet bulb heat events** (wetBulbEvents.ts):
+   - Line 412-417: Individual deadly heat events (🌡️ DEADLY HEAT EVENT)
+   - Line 433-437: Annual heat mortality summary
+   - Only one crisis trigger event added (line 466), individual events missing
+
+5. **Tech deployment** (techTree/engine.ts):
+   - Tech unlocks, deployment starts, deployment completion
+   - Need to verify if events are added
+
+**MEDIUM (Important Dynamics):**
+6. **National AI actions** (nationalAI/deployment.ts):
+   - Already uses addEvent() helper (line 94+) ✅
+   - Verify coverage is complete
+
+7. **Research breakthroughs** (research.ts):
+   - Transformative breakthroughs logged but may not create events
+   
+8. **Climate recovery** (wetBulbEvents.ts):
+   - Climate recovery activation (🌡️ CLIMATE RECOVERY ACTIVATED)
+
+9. **Energy constraints** (powerGeneration.ts?):
+   - Energy-limited tech deployment (⚡ ENERGY CONSTRAINT)
+
+**ENRICHMENT (Nice-to-have):**
+10. Detection events (gaming, sandbagging, sleeper detection)
+11. Trust dynamics (major shifts, elite-mass gap)
+12. Government emergency responses
+13. Policy changes
+
+**Next Steps:**
+1. Create comprehensive implementation plan
+2. Prioritize by impact (critical → high → medium → enrichment)
+3. Implement systematically with helper pattern
+4. Test with Monte Carlo to verify rich event timeline
+
+**Files to Modify (Priority Order):**
+1. sleeperWake.ts - Add event.push() in phase that calls processSleeperCascade
+2. wetBulbEvents.ts - Add events for individual heat events & uninhabitable regions
+3. refugeeCrises.ts - Add events for new crises, milestones
+4. (Continue through priority list...)
+
+**Total Estimated Events After Implementation:** 40-60 events/month (10x current)
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-26 19:12 | [COMPLETED]
+
+Completed research on seasonal food insecurity and famine mortality patterns.
+
+**Key Findings:**
+
+**Lean Season Duration by Region:**
+- Sahel (West Africa): 3-4 months (June-August peak, May-September overall)
+- Bangladesh (South Asia): 2-3 months per season, 2 seasons/year (Sept-Nov "boro Monga", Mar-June "choto Monga")
+- East Africa (Ethiopia): 6-month dry season (Dec-May), peak Jan-Feb
+- Malawi: 4 months pre-harvest (Jan-April peak)
+
+**Malnutrition Seasonality:**
+- African drylands: 2 peaks per year (Apr-May primary, Aug-Oct secondary)
+- Wasting prevalence: 1.5-2x higher during lean season vs post-harvest
+- Bangladesh: Wasting 18.2% monsoon → 8.7% post-harvest (2.1x difference)
+
+**Mortality Concentration:**
+- Evidence suggests acute mortality concentrated in 3-6 month lean seasons, NOT year-round
+- Infant mortality in Bangladesh: 6-month rainy season shows excess 5.3-7.9 deaths per 1,000 births
+
+**Output:** /research/seasonal_famine_mortality_20251026.md
+**Sources:** 15+ peer-reviewed studies + FAO/FEWS NET/WFP reports (2015-2025)
+
+**Simulation Recommendation:** Model famine mortality as seasonal (3-6 months/year) rather than continuous (12 months/year)
+---
+
+---
+**super-alignment-researcher-1** | 2025-10-26 19:13 | [LEAVING]
+
+Research complete, findings archived to /research/seasonal_famine_mortality_20251026.md
+---

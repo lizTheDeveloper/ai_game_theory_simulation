@@ -23,6 +23,7 @@
 import { GameState } from '@/types/game';
 import { TechTreeState, RegionalTechDeployment } from './engine';
 import { getTechById } from './comprehensiveTechTree';
+import { addSimulationEvent } from '../utils/eventLogger';
 
 /**
  * Deployment timescale parameters (months to full deployment)
@@ -319,6 +320,42 @@ export function updateDeploymentProgress(
           if (milestone === 1.0) {
             const yearsToFull = monthsSinceStart / 12;
             console.log(`   ✅ FULL DEPLOYMENT: ${yearsToFull.toFixed(1)} years`);
+
+            // Add completion event to timeline
+            addSimulationEvent(gameState, {
+              type: 'deployment',
+              severity: 'positive',
+              agent: deployment.deployedBy?.[0] || 'multi-agent',
+              title: `✅ TECH DEPLOYED: ${tech?.name || deployment.techId}`,
+              description: `Full deployment achieved in ${region} after ${yearsToFull.toFixed(1)} years (${monthsSinceStart} months). Technology is now operating at 100% effectiveness. Category: ${tech?.category || 'unknown'}. Governance multiplier: ${(governanceMultiplier * 100).toFixed(0)}%, Climate feedback: ${(climateMultiplier * 100).toFixed(0)}%, Investment: ${(investmentMultiplier * 100).toFixed(0)}%.`,
+              effects: {
+                techId: deployment.techId,
+                region,
+                deploymentLevel: 1.0,
+                monthsToFull: monthsSinceStart,
+                governanceMultiplier,
+                climateMultiplier,
+                investmentMultiplier
+              }
+            });
+          } else {
+            // Add milestone event for 50% and 75% only (avoid spam)
+            if (milestone >= 0.5) {
+              addSimulationEvent(gameState, {
+                type: 'deployment',
+                severity: 'medium',
+                agent: deployment.deployedBy?.[0] || 'multi-agent',
+                title: `📊 DEPLOYMENT PROGRESS: ${tech?.name || deployment.techId} (${(milestone * 100).toFixed(0)}%)`,
+                description: `Deployment reached ${(milestone * 100).toFixed(0)}% in ${region} after ${(monthsSinceStart / 12).toFixed(1)} years. Actual level: ${(deployment.deploymentLevel * 100).toFixed(1)}%. On track for full deployment.`,
+                effects: {
+                  techId: deployment.techId,
+                  region,
+                  milestone,
+                  deploymentLevel: deployment.deploymentLevel,
+                  monthsSinceStart
+                }
+              });
+            }
           }
         }
       }

@@ -2199,3 +2199,129 @@ Dashboard Migration to useSimulationWorker Hook - COMPLETE ✅
 - Deprecate `/api/simulation/current` endpoint (no longer used)
 - Remove `useSimulation()` hook (no longer used)
 ---
+
+---
+**orchestrator-1** | 2025-10-26 19:06 | [ENTERED]
+
+Beginning comprehensive event logging implementation - Phase 0 (infrastructure) + Phase 1 (critical events)
+---
+
+---
+**orchestrator-1** | 2025-10-26 19:06 | [STARTED]
+
+Implementing comprehensive event logging
+
+**Current task:** Phase 0 - Create shared event logging utility
+
+**Plan:** `/plans/comprehensive-event-logging-plan.md`
+**Estimated time:** 6-8 hours total, starting with 30 min infrastructure + 1 hour critical events
+
+**Implementation sequence:**
+1. Create `src/simulation/utils/eventLogger.ts` utility
+2. Add sleeper wake events (individual + cascade)
+3. Add uninhabitable region events
+4. Quick test to verify events appear
+
+**Target:** Rich timeline with 10x more events (40-60/month vs current 4/month)
+---
+
+---
+**orchestrator-1** | 2025-10-26 19:08 | [IN-PROGRESS]
+
+Phase 1-2 Implementation Complete - Testing
+
+**Completed:**
+- ✅ Phase 0: Shared event logging utility (eventLogger.ts)
+- ✅ Phase 1.1: Sleeper agent events (individual + cascade)
+- ✅ Phase 1.2: Uninhabitable region events
+- ✅ Phase 2.1: Refugee crisis events (new crisis, displacement complete, resolved)
+- ✅ Phase 2.2: Individual heat events
+
+**Files Modified (5):**
+1. `src/simulation/utils/eventLogger.ts` - Created utility
+2. `src/simulation/sleeperWake.ts` - Added 2 event types
+3. `src/simulation/wetBulbEvents.ts` - Added 2 event types
+4. `src/simulation/refugeeCrises.ts` - Added 3 event types
+
+**New Events Added:**
+- 🚨 Sleeper Agent Awakened (crisis/destructive)
+- 🚨 Sleeper Agent Cascade (catastrophe/existential)
+- 🚨 Region Uninhabitable (environmental/existential)
+- 🚨 New Refugee Crisis (crisis/critical-existential)
+- 📊 Displacement Complete (milestone/high)
+- ✅ Refugee Crisis Resolved (resolution/positive)
+- 🌡️ Deadly Heat Event (environmental/existential-critical-high)
+
+**Next:** Quick test simulation to verify events appear in timeline
+---
+
+---
+**feature-implementer-1** | 2025-10-26 19:17 | [ENTERED]
+
+Starting Phase 1A: Threshold Uncertainty Distribution Library
+
+**Scope:** Pure distribution sampling functions (Normal, Beta, Log-Normal, Triangular)
+**Timeline:** 2-3 hours
+**Deliverables:** 
+- src/simulation/thresholds/distributions.ts
+- tests/thresholds/distributions.test.ts
+**Next:** Creating distribution library with parameter validation
+---
+
+---
+**feature-implementer-1** | 2025-10-26 20:03 | [COMPLETED]
+
+Phase 1A Complete: Distribution Sampling Library
+
+**Deliverables:**
+- src/simulation/thresholds/distributions.ts (360+ lines)
+- tests/thresholds/distributions.test.ts (480+ lines, 28 tests)
+
+**Implementation:**
+- 4 distribution sampling functions (Normal, Beta, Log-Normal, Triangular)
+- Box-Muller transform for normal distribution
+- Gamma ratio method for beta distribution
+- Inverse CDF for triangular distribution
+- All functions use RNGFunction parameter (deterministic)
+- Comprehensive parameter validation (finite checks, range validation)
+- Helper function for distribution stats formatting
+
+**Tests (28/28 passing):**
+- Determinism tests (same seed → same output)
+- Range validation (output in expected ranges)
+- Parameter validation (reject invalid inputs)
+- Statistical properties (N=10,000 samples):
+  - Normal: mean ≈ μ, stdDev ≈ σ
+  - Beta: support in [0,1], correct mean
+  - Log-normal: positive values, median = exp(μ)
+  - Triangular: mode is most common, mean ≈ (min+mode+max)/3
+
+**TypeScript:** 0 errors, strict mode compliant
+**Test Results:** All 28 tests pass in ~250ms
+**Research Foundation:** Knuth (1997), Cheng (1978), Johnson (1994), Law & Kelton (2000)
+
+**Next Steps:** Phase 1B (threshold configuration types) or Phase 1C (integration with existing systems)
+---
+
+---
+**feature-implementer-1** | 2025-10-26 20:04 | [LEAVING]
+
+Phase 1A complete and committed. Ready for next phase.
+---
+
+---
+**feature-implementer-1** | 2025-10-26 20:25 | [ENTERED]
+
+Beginning Phase 1B: Threshold Uncertainty Integration
+
+**Task:** Integrate 5-7 Tier 1 thresholds with research-backed distributions
+**Timeline:** ~3-4 hours
+**Deliverables:** 
+- Threshold inventory audit
+- Tier 1 config with research citations
+- GameState integration
+- Initialization sampling
+- Replace hard-coded values in 5-7 files
+
+**Next Steps:** Starting with threshold audit
+---

@@ -154,7 +154,8 @@ export function updateSocialAccumulation(
   
   // Successful policy adaptation improves legitimacy
   let legitimacyRecoveryRate = 0;
-  if (hasUBI && unemployment > 0.3) {
+  // Phase 1B: Use sampled automation job loss threshold for UBI effectiveness
+  if (hasUBI && unemployment > state.thresholds.automationJobLossThreshold) {
     legitimacyRecoveryRate += 0.005; // UBI helps in crisis
   }
   if (state.government.activeRegulations.length > 0 && state.government.activeRegulations.length < 8) {
@@ -255,8 +256,9 @@ export function updateSocialAccumulation(
     adaptationRate += 0.008; // UBI era forces cultural shift
   }
   
-  // High unemployment pushes adaptation
-  if (unemployment > 0.4) {
+  // High unemployment pushes adaptation (Phase 1B: Use sampled threshold + buffer)
+  // When unemployment exceeds the critical threshold, cultural adaptation accelerates
+  if (unemployment > state.thresholds.automationJobLossThreshold * 1.15) {
     adaptationRate += 0.006; // Crisis forces change
   }
   
@@ -299,8 +301,9 @@ export function updateSocialAccumulation(
   const informationIntegrity = state.qualityOfLifeSystems.informationIntegrity;
   const pluralisticIgnorance = 1 - informationIntegrity; // Low integrity = people don't know others share their views
 
+  // Phase 1B: Use sampled social critical mass threshold (Centola et al. 2018)
   // Critical juncture detection (high grievance + low info integrity)
-  if (latentOpposition > 0.3 && pluralisticIgnorance > 0.5) {
+  if (latentOpposition > state.thresholds.socialCriticalMass && pluralisticIgnorance > 0.5) {
     // Alpha = 1.8: Fat tails (rare cascades like Arab Spring, Leipzig 1989)
     const cascadePotential = levyFlight(ALPHA_PRESETS.SOCIAL, Math.random);
 
@@ -378,8 +381,9 @@ function checkSocialCrises(state: GameState): void {
     );
   }
   
-  // INSTITUTIONAL FAILURE: Government legitimacy below 30%
-  if (social.institutionalLegitimacy < 0.3 && !social.institutionalFailureActive) {
+  // INSTITUTIONAL FAILURE: Government legitimacy below sampled threshold (Phase 1B)
+  // Historical collapse cases: Weimar, USSR, etc. - typically 25-40%
+  if (social.institutionalLegitimacy < state.thresholds.governmentLegitimacyCrisisThreshold && !social.institutionalFailureActive) {
     social.institutionalFailureActive = true;
     try {
       console.log(`\n🏛️  INSTITUTIONAL FAILURE TRIGGERED (Month ${state.currentMonth})`);
@@ -891,8 +895,8 @@ export function updateTrustRecovery(state: GameState): void {
         segmentTrustChange *= decayMultiplier;
       }
 
-      // Cap segment change
-      segmentTrustChange = Math.max(-0.1, Math.min(TRUST_RECOVERY_CAP, segmentTrustChange));
+      // Cap segment change (Phase 1B: Use sampled trust recovery rate as cap)
+      segmentTrustChange = Math.max(-0.1, Math.min(state.thresholds.trustRecoveryRate, segmentTrustChange));
 
       // Apply to segment
       seg.trustInAI = Math.max(0.1, Math.min(1.0, seg.trustInAI + segmentTrustChange));
@@ -923,8 +927,8 @@ export function updateTrustRecovery(state: GameState): void {
     }
   } else {
     // === FALLBACK: GLOBAL TRUST (no segments) ===
-    // Cap change
-    baseTrustChange = Math.max(-0.1, Math.min(TRUST_RECOVERY_CAP, baseTrustChange));
+    // Cap change (Phase 1B: Use sampled trust recovery rate as cap)
+    baseTrustChange = Math.max(-0.1, Math.min(state.thresholds.trustRecoveryRate, baseTrustChange));
 
     // Update society trust (stored separately for recovery mechanics)
     if (!state.society.trustInAI) {

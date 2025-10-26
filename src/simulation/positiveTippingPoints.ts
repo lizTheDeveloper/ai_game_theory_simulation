@@ -23,6 +23,7 @@ import type {
   PositiveTippingEvent,
   TechnologySynergy
 } from '../types/positiveTippingPoints';
+import { addSimulationEvent } from './utils/eventLogger';
 
 /**
  * Initialize positive tipping points system
@@ -294,6 +295,24 @@ function detectAndTriggerCascades(state: GameState, rng: RNGFunction): void {
       console.log(`    Reason: ${triggerReason}`);
       console.log(`    Market share: ${(tech.marketShare * 100).toFixed(1)}%`);
       console.log(`    Cascade strength: ${(tech.cascadeStrength * 100).toFixed(0)}%`);
+
+      // Add event to timeline
+      addSimulationEvent(state, {
+        type: 'positive-cascade-triggered',
+        severity: 'constructive',
+        agent: 'technology-adoption',
+        title: `🚀 POSITIVE CASCADE: ${tech.technology}`,
+        description: `Positive tipping point triggered for ${tech.technology}. ${triggerReason}. Market share: ${(tech.marketShare * 100).toFixed(1)}%, Price parity: ${(tech.priceParity * 100).toFixed(0)}%, Social acceptance: ${(tech.socialAcceptance * 100).toFixed(0)}%. Cascade strength: ${(tech.cascadeStrength * 100).toFixed(0)}%. This creates self-reinforcing adoption dynamics.`,
+        effects: {
+          technology: tech.technology,
+          triggerReason,
+          marketShare: tech.marketShare,
+          priceParity: tech.priceParity,
+          socialAcceptance: tech.socialAcceptance,
+          cascadeStrength: tech.cascadeStrength,
+          socialImpact: tech.visibility * tech.cascadeStrength
+        }
+      });
     }
   }
 }

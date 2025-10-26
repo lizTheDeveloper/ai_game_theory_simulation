@@ -61,7 +61,7 @@ export interface StateDelta {
 
   // Technology & Research
   activeResearch?: Array<{ tech: string; progress: number }>;
-  deployedTechs?: Array<{ name: string; tier: number; deployment: number }>;
+  deployedTechs?: Array<{ id: string; name: string; tier: number; deployment: number; prerequisites: string[] }>;
   techRiskLevel?: number;
 
   // Upward Spirals & Outcomes
@@ -82,6 +82,7 @@ export interface StateDelta {
     description: string;
     severity?: 'low' | 'medium' | 'high' | 'critical';
     category?: 'ai' | 'environment' | 'social' | 'crisis' | 'tech' | 'governance';
+    timestamp?: number;  // Month when event occurred
   }>;
 
   // Regional Populations (simplified view for dashboard)

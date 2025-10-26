@@ -402,10 +402,10 @@ export function createDefaultInitialState(
   const initialYear = 2025;
   const initialMonth = 0;
 
-  // Phase 1C (Oct 26, 2025): Pre-sampled thresholds support
-  // NOTE: preSampledThresholds parameter exists but isn't wired up yet.
-  // Phase 1D will replace hard-coded thresholds with preSampledThresholds values.
-  // This allows nestedMonteCarloSimulation.ts to pass thresholds from outer loop.
+  // Phase 1D (Oct 26, 2025): Pre-sampled thresholds support
+  // Use pre-sampled thresholds from outer Monte Carlo loop if provided,
+  // otherwise sample fresh thresholds for this run.
+  // This enables nested Monte Carlo: outer loop varies thresholds, inner loop varies events.
 
   // P0.7 (Oct 16, 2025): Get scenario-specific parameters
   const scenarioParameters = getScenarioParameters(scenarioMode);
@@ -866,10 +866,9 @@ export function createDefaultInitialState(
     // LLM Policy Optimization (Oct 21, 2025)
     llmConfig: { ...DEFAULT_LLM_CONFIG },
 
-    // Phase 1B: Threshold Uncertainty System (Oct 26, 2025)
-    // Sample research-backed distributions for critical thresholds
-    // Uses Math.random for now (deterministic seeding in Monte Carlo scripts)
-    thresholds: sampleTier1Thresholds(() => Math.random()),
+    // Phase 1D: Threshold Uncertainty System (Oct 26, 2025)
+    // Use pre-sampled thresholds from outer loop if provided, otherwise sample fresh
+    thresholds: preSampledThresholds || sampleTier1Thresholds(() => Math.random()),
 
     history: {
       qualityOfLife: [],

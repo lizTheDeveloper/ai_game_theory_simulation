@@ -28,6 +28,7 @@ import {
 } from '@/types/population';
 import { updateTrappedPopulations } from './trappedPopulations';
 import { updateGovernmentRelocation } from './governmentRelocation';
+import { addSimulationEvent } from './utils/eventLogger';
 
 /**
  * Initialize refugee crisis system (2025 baseline)
@@ -199,6 +200,26 @@ export function updateRefugeeCrises(state: GameState): void {
         console.log(`   Total fled: ${crisis.displacedPopulation.toFixed(1)}M`);
         console.log(`   Still in source: ${crisis.remainingInSource.toFixed(1)}M`);
         console.log(`   Deaths in transit: ${crisis.deathsInTransit.toFixed(1)}M`);
+
+        // Add displacement complete milestone to timeline
+        addSimulationEvent(state, {
+          type: 'milestone',
+          severity: 'high',
+          agent: 'environmental',
+          title: `📊 DISPLACEMENT COMPLETE: ${crisis.cause}`,
+          description: `Mass exodus from ${crisis.sourceRegion} is complete after ${(crisis.monthsActive / 12).toFixed(1)} years. ` +
+                      `${crisis.displacedPopulation.toFixed(1)}M people fled, ` +
+                      `${crisis.remainingInSource.toFixed(1)}M remain in source region, ` +
+                      `${crisis.deathsInTransit.toFixed(1)}M died in transit.`,
+          effects: {
+            totalFled: crisis.displacedPopulation,
+            stillInSource: crisis.remainingInSource,
+            deaths: crisis.deathsInTransit,
+            duration: crisis.monthsActive,
+            cause: crisis.cause,
+            region: crisis.sourceRegion
+          }
+        });
       }
     }
 
@@ -230,6 +251,7 @@ export function updateRefugeeCrises(state: GameState): void {
       crisis.duration = crisis.monthsActive;
 
       // Tension drops sharply
+      const tensionReduction = crisis.socialTension * 0.7; // 70% drop
       crisis.socialTension *= 0.3;
       crisis.economicStrain *= 0.2;
 
@@ -237,6 +259,25 @@ export function updateRefugeeCrises(state: GameState): void {
       console.log(`   Duration: ${crisis.monthsActive} months (${(crisis.monthsActive / 12).toFixed(1)} years)`);
       console.log(`   Total displaced: ${crisis.displacedPopulation.toFixed(1)}M`);
       console.log(`   Resettled: ${crisis.resettledCount.toFixed(1)}M`);
+
+      // Add crisis resolution event to timeline
+      addSimulationEvent(state, {
+        type: 'resolution',
+        severity: 'positive',
+        agent: 'society',
+        title: `✅ REFUGEE CRISIS RESOLVED: ${crisis.cause}`,
+        description: `Refugee crisis from ${crisis.sourceRegion} fully resolved after ${(crisis.monthsActive / 12).toFixed(1)} years (1 generation). ` +
+                    `${crisis.resettledCount.toFixed(1)}M people successfully resettled and integrated. ` +
+                    `Social tension and economic strain declining sharply.`,
+        effects: {
+          totalDisplaced: crisis.displacedPopulation,
+          resettled: crisis.resettledCount,
+          duration: crisis.monthsActive,
+          tensionReduction,
+          cause: crisis.cause,
+          region: crisis.sourceRegion
+        }
+      });
     }
 
     // === CALCULATE SOCIAL TENSION ===
@@ -453,13 +494,32 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
     }
   }
 
-  // Log new crises
+  // Log new crises and add events to timeline
   for (const crisis of newCrises) {
     console.log(`🚨 NEW REFUGEE CRISIS: ${crisis.cause.toUpperCase()}`);
     console.log(`   Source: ${crisis.sourceRegion}`);
     console.log(`   At risk: ${crisis.potentialDisplaced.toFixed(1)}M people`);
     console.log(`   Displacement: Gradual over ${crisis.displacementDuration} months (${(crisis.displacementDuration/12).toFixed(1)} years)`);
     console.log(`   Rate: 10% flee per month`);
+
+    // Add crisis trigger event to timeline
+    addSimulationEvent(state, {
+      type: 'crisis',
+      severity: crisis.cause === 'nuclear' ? 'existential' : 'critical',
+      agent: 'environmental',
+      title: `🚨 NEW REFUGEE CRISIS: ${crisis.cause.toUpperCase()}`,
+      description: `Refugee crisis triggered in ${crisis.sourceRegion}. ` +
+                  `${crisis.potentialDisplaced.toFixed(1)}M people at risk of displacement. ` +
+                  `Exodus will be gradual over ${(crisis.displacementDuration/12).toFixed(1)} years at 10% flee rate per month. ` +
+                  `Cause: ${crisis.cause}.`,
+      effects: {
+        cause: crisis.cause,
+        potentialDisplaced: crisis.potentialDisplaced,
+        region: crisis.sourceRegion,
+        displacementDuration: crisis.displacementDuration,
+        monthsToComplete: crisis.displacementDuration
+      }
+    });
   }
 
   return newCrises;

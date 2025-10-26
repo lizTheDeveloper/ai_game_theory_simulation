@@ -11,7 +11,8 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
-import { useEffect, useMemo, useState } from "react"
+import { eventDatabase } from "@/lib/eventDatabase"
+import { useEffect, useMemo, useState, useRef } from "react"
 
 interface TimelineEvent {
   month: number
@@ -23,31 +24,147 @@ interface TimelineEvent {
 }
 
 export function TimelineDashboard() {
-  const { lastUpdate, initialized } = useSimulationWorker()
+  const { lastUpdate, initialized, startDate, seed, scenario } = useSimulationWorker()
   const [filterType, setFilterType] = useState<string>('all')
   const [eventHistory, setEventHistory] = useState<TimelineEvent[]>([])
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+  const [totalEvents, setTotalEvents] = useState(0)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  // Accumulate events from updates (keep last 100)
+  // Generate unique simulation ID
+  const simulationId = `${seed}_${scenario}`
+
+  // Store events in IndexedDB as they arrive
   useEffect(() => {
     if (!lastUpdate?.events || lastUpdate.events.length === 0) return
 
-    const newEvents: TimelineEvent[] = lastUpdate.events.map(e => ({
-      month: lastUpdate.currentMonth || 0,
-      type: e.type,
-      category: e.category || 'system',
-      description: e.description,
-      severity: e.severity || 'low',
-      agent: 'system',
-    }))
+    const storeEvents = async () => {
+      const eventsToStore = lastUpdate.events.map(e => ({
+        id: `${simulationId}_${e.type}_${e.timestamp}_${Math.random().toString(36).substr(2, 9)}`,
+        timestamp: e.timestamp ?? lastUpdate.currentMonth ?? 0,
+        type: e.type,
+        category: e.category || 'system',
+        description: e.description,
+        severity: e.severity || 'low',
+      }))
 
-    setEventHistory(prev => {
-      const combined = [...newEvents, ...prev]
-      return combined.slice(0, 100) // Keep last 100 events
-    })
-  }, [lastUpdate])
+      try {
+        await eventDatabase.addEvents(simulationId, eventsToStore)
+
+        // Update total count
+        const count = await eventDatabase.getEventCount(simulationId)
+        setTotalEvents(count)
+
+        // Reload events to show updates
+        loadInitialEvents()
+      } catch (error) {
+        console.error('[Timeline] Error storing events:', error)
+      }
+    }
+
+    storeEvents()
+  }, [lastUpdate, simulationId])
+
+  // Load initial events on mount or when simulation ID changes
+  const loadInitialEvents = async () => {
+    try {
+      const events = await eventDatabase.getEvents(simulationId, 50)
+      setEventHistory(events.map(e => ({
+        month: e.timestamp,
+        type: e.type,
+        category: e.category,
+        description: e.description,
+        severity: e.severity,
+        agent: 'system',
+      })))
+      setHasMore(events.length === 50)
+    } catch (error) {
+      console.error('[Timeline] Error loading events:', error)
+    }
+  }
+
+  useEffect(() => {
+    if (initialized) {
+      loadInitialEvents()
+    }
+  }, [initialized, simulationId])
+
+  // Load more events when scrolling (infinite scroll)
+  const loadMoreEvents = async () => {
+    if (loadingMore || !hasMore) return
+
+    setLoadingMore(true)
+
+    try {
+      const oldestTimestamp = eventHistory.length > 0
+        ? Math.min(...eventHistory.map(e => e.month))
+        : undefined
+
+      const moreEvents = await eventDatabase.getEvents(simulationId, 50, oldestTimestamp)
+
+      if (moreEvents.length === 0) {
+        setHasMore(false)
+      } else {
+        setEventHistory(prev => [
+          ...prev,
+          ...moreEvents.map(e => ({
+            month: e.timestamp,
+            type: e.type,
+            category: e.category,
+            description: e.description,
+            severity: e.severity,
+            agent: 'system',
+          }))
+        ])
+        setHasMore(moreEvents.length === 50)
+      }
+    } catch (error) {
+      console.error('[Timeline] Error loading more events:', error)
+    } finally {
+      setLoadingMore(false)
+    }
+  }
+
+  // Detect scroll to bottom
+  useEffect(() => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container
+      const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100
+
+      if (isNearBottom && hasMore && !loadingMore) {
+        loadMoreEvents()
+      }
+    }
+
+    container.addEventListener('scroll', handleScroll)
+    return () => container.removeEventListener('scroll', handleScroll)
+  }, [hasMore, loadingMore, eventHistory])
 
   // Use accumulated event history
   const events = eventHistory
+
+  // Helper function to convert month offset to calendar date
+  // Uses the simulation's startDate to calculate real calendar dates
+  const formatMonthYear = (monthOffset: number): string => {
+    if (!startDate) {
+      return `Month ${monthOffset}`;
+    }
+
+    // Calculate the date by adding monthOffset months to startDate
+    const targetDate = new Date(startDate);
+    targetDate.setMonth(targetDate.getMonth() + monthOffset);
+
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    return `${monthNames[targetDate.getMonth()]} ${targetDate.getFullYear()}`;
+  }
 
   // Filter events
   const filteredEvents = useMemo(() => {
@@ -119,8 +236,8 @@ export function TimelineDashboard() {
           status={stats.high > 10 ? 'warning' : 'normal'}
         />
         <MetricCard
-          label="Current Month"
-          value={lastUpdate.currentMonth || 0}
+          label="Current Date"
+          value={formatMonthYear(lastUpdate.currentMonth || 0)}
           status="normal"
         />
       </div>
@@ -166,15 +283,23 @@ export function TimelineDashboard() {
       </Panel>
 
       {/* Event Timeline */}
-      <Panel title={`Event Log (${filteredEvents.length} events)`}>
-        <div className="space-y-2">
+      <Panel title={`Event Log (${filteredEvents.length} loaded, ${totalEvents} total)`}>
+        <div
+          ref={scrollContainerRef}
+          className="space-y-2"
+          style={{
+            maxHeight: '600px',
+            overflowY: 'auto',
+            paddingRight: '8px'
+          }}
+        >
           {filteredEvents.length === 0 && (
             <p className="text-sm text-center py-8" style={{ color: 'var(--white-40)' }}>
               No events recorded yet. Events will appear as the simulation progresses.
             </p>
           )}
 
-          {filteredEvents.slice(0, 50).map((event, idx) => (
+          {filteredEvents.map((event, idx) => (
             <div
               key={`${event.month}-${idx}`}
               className="p-3 rounded flex items-start gap-3"
@@ -195,11 +320,11 @@ export function TimelineDashboard() {
                 style={{
                   backgroundColor: 'rgba(0, 240, 255, 0.1)',
                   color: 'var(--color-cyan)',
-                  minWidth: '80px',
+                  minWidth: '120px',
                   textAlign: 'center',
                 }}
               >
-                Month {event.month}
+                {formatMonthYear(event.month)}
               </div>
 
               {/* Event Content */}
@@ -251,9 +376,17 @@ export function TimelineDashboard() {
             </div>
           ))}
 
-          {filteredEvents.length > 50 && (
-            <div className="text-xs text-center py-3" style={{ color: 'var(--white-40)' }}>
-              Showing 50 of {filteredEvents.length} events
+          {/* Loading indicator */}
+          {loadingMore && (
+            <div className="text-xs text-center py-4" style={{ color: 'var(--color-cyan)' }}>
+              Loading more events...
+            </div>
+          )}
+
+          {/* End of timeline indicator */}
+          {!hasMore && filteredEvents.length > 0 && (
+            <div className="text-xs text-center py-4" style={{ color: 'var(--white-40)' }}>
+              ⦿ Beginning of simulation (Month 0)
             </div>
           )}
         </div>
@@ -267,7 +400,7 @@ export function TimelineDashboard() {
             <div>
               <div className="font-semibold mb-1">Simulation Start</div>
               <div className="text-xs" style={{ color: 'var(--white-40)' }}>
-                Month 0 - Initial state: 8B population, basic RLHF deployed, planetary boundaries monitoring begins
+                {formatMonthYear(0)} - Initial state: 8B population, basic RLHF deployed, planetary boundaries monitoring begins
               </div>
             </div>
           </div>
@@ -289,7 +422,7 @@ export function TimelineDashboard() {
             <div>
               <div className="font-semibold mb-1">Current State</div>
               <div className="text-xs" style={{ color: 'var(--white-40)' }}>
-                Month {lastUpdate.currentMonth} - {stats.total} recent events tracked
+                {formatMonthYear(lastUpdate.currentMonth || 0)} - {stats.total} recent events tracked
               </div>
             </div>
           </div>

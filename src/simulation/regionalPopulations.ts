@@ -458,9 +458,16 @@ export function updateRegionalPopulations(state: GameState): void {
       region.monthlyExcessDeaths += overshootDeaths;
 
       // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025 - UPDATED)
-      // Track overshoot deaths in global categories (convert from millions to billions)
-      // PROXIMATE: Famine (Malthusian collapse manifests as food shortage)
-      pop.deathsByCategory.famine += overshootDeaths / 1000;
+      // FIX (Oct 26, 2025): REMOVED regional overshoot death attribution
+      // Regional overshoot deaths are already captured by the GLOBAL overshoot calculation
+      // in populationDynamics.ts lines 403-447. Adding them here caused DOUBLE-COUNTING
+      // AND a units mismatch bug (regional is in millions, global is in billions).
+      //
+      // The global calculation sums all regional populations to get total global population,
+      // then applies the same 5% overshoot mortality logic. Regional data provides nuance
+      // (specific regions hit harder), but death attribution should only happen at global level.
+      //
+      // Keeping this comment for documentation - do NOT re-add this line!
 
       // ROOT CAUSE: Multi-factor attribution (research-backed)
       // Same logic as global population but using regional data where available

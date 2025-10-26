@@ -126,18 +126,81 @@ export function calculateMonthlyMortalityRate(monthsSinceOnset: number): number 
 }
 
 /**
+ * Determine if current month is in regional lean season
+ *
+ * FIX (Oct 26, 2025): Seasonal famine mortality
+ * Research: Venkat et al. 2023, PNAS 2023, WFP 2025
+ * - Lean seasons: 3-4 months/year with 1.75x mortality
+ * - Regional timing varies by climate zone
+ *
+ * @param month - Current simulation month (0-indexed)
+ * @param region - Region name
+ * @returns true if in lean season, false otherwise
+ */
+export function isLeanSeason(month: number, region: string): boolean {
+  const monthOfYear = month % 12; // 0 = Jan, 1 = Feb, ..., 11 = Dec
+
+  // Regional lean season timing (research-backed)
+  // Source: WFP 2025 (Sahel), PNAS 2023 (Bangladesh), FAO (East Africa)
+  const leanSeasonMonths: Record<string, number[]> = {
+    // Sub-Saharan Africa (Sahel): June-August (pre-harvest)
+    'Sub-Saharan Africa': [5, 6, 7], // Months 5, 6, 7 = June, July, August
+
+    // South Asia (monsoon): March-June (pre-monsoon hungry season)
+    'South Asia': [2, 3, 4, 5], // Months 2-5 = March-June
+
+    // East Africa: January-April (dry season peak)
+    'East Africa': [0, 1, 2, 3], // Months 0-3 = Jan-April
+
+    // Southeast Asia: Similar to South Asia monsoon pattern
+    'Southeast Asia': [2, 3, 4, 5],
+
+    // Middle East & North Africa: Summer months (heat stress)
+    'Middle East and North Africa': [5, 6, 7, 8], // June-September
+
+    // Central America: May-August ("hungry months")
+    'Central America': [4, 5, 6, 7],
+  };
+
+  // Get lean season months for this region (default to none if not specified)
+  const leanMonths = leanSeasonMonths[region] || [];
+
+  return leanMonths.includes(monthOfYear);
+}
+
+/**
  * Progress a famine event by one month
  * Returns new deaths this month
+ *
+ * FIX (Oct 26, 2025): Seasonal mortality
+ * - Only apply ACUTE deaths during lean season months (3-4 months/year)
+ * - Apply low baseline mortality during non-lean months
+ * - Lean season: 1.75x base mortality rate
+ * - Non-lean season: 0.25x base mortality rate (chronic undernourishment)
+ *
+ * Research: Overestimation factor of 4.7x when applying continuous mortality
+ * to seasonal agricultural crises (see reviews/famine_mortality_overestimation_critique_20251026.md)
  */
 export function progressFamine(
   famine: FamineEvent,
   aiCapability: number,
-  resourcesAvailable: boolean
+  resourcesAvailable: boolean,
+  currentMonth: number  // NEW: Need current month to determine seasonality
 ): number {
   famine.monthsSinceOnset++;
 
-  // Get base mortality rate
-  let mortalityRate = calculateMonthlyMortalityRate(famine.monthsSinceOnset);
+  // FIX (Oct 26, 2025): Check if we're in lean season for this region
+  const inLeanSeason = isLeanSeason(currentMonth, famine.affectedRegion);
+
+  // Get base mortality rate from death curve
+  let baseMortalityRate = calculateMonthlyMortalityRate(famine.monthsSinceOnset);
+
+  // Apply seasonal adjustment
+  // Research: 1.5-2x severity during lean season (using 1.75x midpoint)
+  // Non-lean season: Chronic undernourishment only (0.25x baseline)
+  let mortalityRate = inLeanSeason
+    ? baseMortalityRate * 1.75  // ACUTE lean season mortality
+    : baseMortalityRate * 0.25; // Chronic year-round undernourishment
 
   // Apply tech mitigation (only if not genocide)
   if (famine.canDeployTech && !famine.techDeployed) {
@@ -180,11 +243,14 @@ export function isFamineActive(famine: FamineEvent): boolean {
 /**
  * Update famine system for one month
  * Returns total deaths this month
+ *
+ * FIX (Oct 26, 2025): Pass current month for seasonal mortality
  */
 export function updateFamineSystem(
   system: FamineSystem,
   aiCapability: number,
-  resourcesAvailable: boolean
+  resourcesAvailable: boolean,
+  currentMonth: number  // NEW: Current simulation month for seasonality
 ): number {
   let totalDeathsThisMonth = 0;
 
@@ -192,8 +258,8 @@ export function updateFamineSystem(
   for (let i = system.activeFamines.length - 1; i >= 0; i--) {
     const famine = system.activeFamines[i];
 
-    // Calculate deaths this month
-    const deaths = progressFamine(famine, aiCapability, resourcesAvailable);
+    // Calculate deaths this month (with seasonal adjustment)
+    const deaths = progressFamine(famine, aiCapability, resourcesAvailable, currentMonth);
     totalDeathsThisMonth += deaths;
     system.totalDeaths += deaths;
 

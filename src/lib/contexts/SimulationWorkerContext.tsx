@@ -32,6 +32,7 @@ interface SimulationWorkerContextValue {
   simulationDay: number    // Actual simulation day (1-30)
   scenario: ScenarioMode
   seed: number
+  startDate: Date | null  // Real-world date when simulation started
 
   // Latest update delta (for pages that need detailed state)
   lastUpdate: StateDelta | null
@@ -206,6 +207,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
         simulationDay,               // Actual simulation day (1-30)
         scenario,
         seed,
+        startDate: displayDate,      // Real-world date when simulation started
         lastUpdate,
         init,
         start,
