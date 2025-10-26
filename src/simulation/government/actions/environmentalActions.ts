@@ -40,7 +40,10 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
     if (!state.specificTippingPoints?.amazon) return false;
     const amazon = state.specificTippingPoints.amazon;
     // Trigger when near threshold (23%) but not yet crossed (25%)
-    return amazon.deforestation > 23 && !amazon.triggered && (state.government.resources ?? 0) > 5;
+    if (state.government.resources === undefined) {
+      throw new Error('❌ state.government.resources is undefined in saveAmazonRainforest canExecute - initialization bug');
+    }
+    return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
@@ -98,7 +101,10 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
     if (!state.specificTippingPoints?.coral) return false;
     const coral = state.specificTippingPoints.coral;
     // Trigger when coral health drops below 50%
-    return coral.healthPercentage < 50 && (state.government.resources ?? 0) > 3;
+    if (state.government.resources === undefined) {
+      throw new Error('❌ state.government.resources is undefined in interveneCoralReefs canExecute - initialization bug');
+    }
+    return coral.healthPercentage < 50 && state.government.resources > 3;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
@@ -155,8 +161,11 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
     const pollinators = state.specificTippingPoints.pollinators;
     // Trigger when pollinators drop below 50%
     // Check we haven't already banned
+    if (state.government.resources === undefined) {
+      throw new Error('❌ state.government.resources is undefined in banNeonicotinoids canExecute - initialization bug');
+    }
     return pollinators.populationPercentage < 50 &&
-           (state.government.resources ?? 0) > 1 &&
+           state.government.resources > 1 &&
            !state.government.environmentalInterventions?.pesticideBan;
   },
 
@@ -215,7 +224,10 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
   energyCost: 10,
 
   canExecute: (state: GameState): boolean => {
-    if ((state.government.resources ?? 0) < 10) return false;
+    if (state.government.resources === undefined) {
+      throw new Error('❌ state.government.resources is undefined in deployEnvironmentalTech canExecute - initialization bug');
+    }
+    if (state.government.resources < 10) return false;
 
     // Check if any environmental tech from tech tree is unlocked but not fully deployed
     const { isTechUnlocked, isTechDeployed } = require('../../techTree/helpers');
@@ -294,20 +306,31 @@ const increaseClimateInvestment: CategorizedGovernmentAction = {
   energyCost: 8,
 
   canExecute: (state: GameState): boolean => {
-    const currentMitigation = state.government.researchInvestments?.climate?.mitigation ?? 0;
-    const currentIntervention = state.government.researchInvestments?.climate?.intervention ?? 0;
+    if (!state.government.researchInvestments?.climate) {
+      throw new Error('❌ state.government.researchInvestments.climate is undefined in boostClimateResearch canExecute - initialization bug');
+    }
+    if (state.government.resources === undefined) {
+      throw new Error('❌ state.government.resources is undefined in boostClimateResearch canExecute - initialization bug');
+    }
+
+    const currentMitigation = state.government.researchInvestments.climate.mitigation;
+    const currentIntervention = state.government.researchInvestments.climate.intervention;
 
     // Can invest if not at max (10) and have resources
     const canInvestMore = (currentMitigation < 10 || currentIntervention < 10);
-    const hasResources = (state.government.resources ?? 0) >= 8;
+    const hasResources = state.government.resources >= 8;
     const hasLegitimacy = state.government.legitimacy >= 0.3; // Need political capital
 
     return canInvestMore && hasResources && hasLegitimacy;
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const currentMitigation = state.government.researchInvestments?.climate?.mitigation ?? 0;
-    const currentIntervention = state.government.researchInvestments?.climate?.intervention ?? 0;
+    if (!state.government.researchInvestments?.climate) {
+      throw new Error('❌ state.government.researchInvestments.climate is undefined in boostClimateResearch execute - initialization bug');
+    }
+
+    const currentMitigation = state.government.researchInvestments.climate.mitigation;
+    const currentIntervention = state.government.researchInvestments.climate.intervention;
 
     // Increase both mitigation and intervention by +1 (capped at 10)
     if (state.government.researchInvestments) {
@@ -324,8 +347,12 @@ const increaseClimateInvestment: CategorizedGovernmentAction = {
     // Small legitimacy boost (climate action popular)
     state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.02);
 
-    const newMitigation = state.government.researchInvestments?.climate?.mitigation ?? 0;
-    const newIntervention = state.government.researchInvestments?.climate?.intervention ?? 0;
+    if (!state.government.researchInvestments?.climate) {
+      throw new Error('❌ state.government.researchInvestments.climate is undefined in boostClimateResearch (post-modification) - state corruption');
+    }
+
+    const newMitigation = state.government.researchInvestments.climate.mitigation;
+    const newIntervention = state.government.researchInvestments.climate.intervention;
 
     // Calculate investment in $T/year for display
     const avgInvestment = (newMitigation + newIntervention) / 2;
