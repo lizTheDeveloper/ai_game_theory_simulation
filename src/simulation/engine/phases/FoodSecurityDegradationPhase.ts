@@ -67,12 +67,21 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
 
     // Apply degradation (cap at 15% per month to prevent unrealistic spikes)
     degradationRate = Math.min(0.15, degradationRate);
-    const newFoodSec = Math.max(0, currentFoodSec * (1 - degradationRate));
+
+    // FIX (Oct 25, 2025 PART 3): Apply infrastructure penalty HERE alongside crisis degradation
+    // Moved from calculateFoodSecurity() to avoid conflict with preservation logic
+    // Research: Tainter (1988) - complexity requires minimum population to maintain
+    const populationRatio = state.humanPopulationSystem.population / 8.0; // 8B baseline
+    const infrastructurePenalty = Math.min(1.0, Math.max(0.3, populationRatio)); // 30%-100% capacity
+
+    // Apply BOTH crisis degradation AND infrastructure penalty
+    const crisisDegradation = 1 - degradationRate;
+    const newFoodSec = Math.max(0, currentFoodSec * crisisDegradation * infrastructurePenalty);
     state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = newFoodSec;
 
     // DEBUG: Log every month to verify phase is running
     if (state.currentMonth % 12 === 0) {
-      console.log(`[Phase ${this.order}] ${this.name}: Food sec BEFORE degrade = ${(currentFoodSec * 100).toFixed(1)}%, AFTER degrade = ${(newFoodSec * 100).toFixed(1)}% | Crises: ${activeCrises}, Rate: ${(degradationRate * 100).toFixed(2)}%/month`);
+      console.log(`[Phase ${this.order}] ${this.name}: Food sec BEFORE = ${(currentFoodSec * 100).toFixed(1)}%, AFTER = ${(newFoodSec * 100).toFixed(1)}% | Crises: ${activeCrises}, CrisisRate: ${(degradationRate * 100).toFixed(2)}%/mo, InfraPenalty: ${(infrastructurePenalty * 100).toFixed(0)}%`);
     }
 
     // Log when degradation accelerates significantly

@@ -325,7 +325,10 @@ export function calculateGamingReviewWorkload(
 ): number {
   const totalAIInteractions = state.aiAgents.reduce((sum, ai) => {
     if (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open') {
-      return sum + (ai.spreadCount || 0);
+      if (ai.spreadCount === undefined) {
+        throw new Error(`❌ ai.spreadCount is undefined for AI ${ai.id} in gamingDetection.ts:328 - initialization bug`);
+      }
+      return sum + ai.spreadCount;
     }
     return sum;
   }, 0);

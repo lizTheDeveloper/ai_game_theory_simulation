@@ -182,7 +182,7 @@ export function updateRefugeeCrises(state: GameState): void {
       const transitDeathsBillions = transitDeaths / 1000;
       const category = crisis.cause === 'war' || crisis.cause === 'nuclear' ? 'war' :
                        crisis.cause === 'famine' ? 'famine' :
-                       crisis.cause === 'climate' ? 'climate' :
+                       crisis.cause === 'climate' ? 'disasters' :
                        crisis.cause === 'ecosystem' ? 'ecosystem' : 'other';
       state.humanPopulationSystem.deathsByCategory[category] += transitDeathsBillions;
       state.humanPopulationSystem.cumulativeCrisisDeaths += transitDeathsBillions;

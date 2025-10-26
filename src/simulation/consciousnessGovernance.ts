@@ -86,7 +86,8 @@ export function initializeConsciousnessGovernance(): ConsciousnessGovernanceRead
         india: 0.0,
         globalSouth: 0.0
       },
-      falsePositiveBurden: 0.50 // 50% false positive rate (high uncertainty initially)
+      falsePositiveBurden: 0.50, // 50% false positive rate (high uncertainty initially)
+      cumulativeOpportunityCost: 0.0 // Cumulative R&D opportunity cost (tracked monthly)
     },
 
     // Accelerators (factors speeding up governance timeline)
