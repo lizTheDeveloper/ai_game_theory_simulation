@@ -18,6 +18,7 @@
 
 import { GameState } from '@/types/game';
 import { UBISystem } from '@/types/ubi';
+import { assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize UBI system (not active by default)
@@ -265,12 +266,14 @@ export function updateUBISystem(state: GameState): void {
   );
   
   // Apply social cohesion boost to society
-  if (state.society.communityStrength === undefined) {
-    throw new Error('❌ state.society.communityStrength is undefined in updateEnhancedUBI - initialization bug');
-  }
+  const currentCommunityStrength = assertStateProperty(
+    state.society,
+    'communityStrength',
+    { location: 'updateEnhancedUBI', month: state.currentMonth }
+  );
   state.society.communityStrength = Math.min(
     1.0,
-    state.society.communityStrength + ubi.effects.socialCohesion * 0.005
+    currentCommunityStrength + ubi.effects.socialCohesion * 0.005
   );
   
   // === ECONOMIC EFFECTS ===
