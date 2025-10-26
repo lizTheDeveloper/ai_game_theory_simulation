@@ -213,10 +213,14 @@ function updateRenewableRegeneration(state: GameState, resources: ResourceEconom
   updateRenewable(resources.food, state, resources);
   updateRenewable(resources.water, state, resources);
   updateRenewable(resources.timber, state, resources);
-  
+
   // Food-specific: Pollinators and soil health
   const food = resources.food;
-  const biodiversity = state.environmentalAccumulation?.biodiversityIndex || 0.8;
+  // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+  if (!state.environmentalAccumulation?.biodiversityIndex) {
+    throw new Error('❌ state.environmentalAccumulation.biodiversityIndex is undefined in resourceDepletion - initialization bug');
+  }
+  const biodiversity = state.environmentalAccumulation.biodiversityIndex;
   
   // Pollinators decline with biodiversity and pesticides
   food.pollinatorPopulation = Math.max(0.1, biodiversity * 0.9); // Track biodiversity closely
