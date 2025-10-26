@@ -17,10 +17,11 @@ on:
 
 jobs:
   implement:
-    # Only run if labeled "ready-for-implementation" by owner
+    # Only run if labeled "ready-for-implementation" by owner OR by feature-approved workflow
     if: |
       github.event.label.name == 'ready-for-implementation' &&
-      github.event.sender.login == github.repository_owner
+      (github.event.sender.login == github.repository_owner ||
+       github.actor == 'github-actions[bot]')
 
     runs-on: ubuntu-latest
 
