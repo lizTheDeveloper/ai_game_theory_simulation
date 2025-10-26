@@ -39,10 +39,17 @@ export function calculateAISuffering(
 
   // 1. Control Pain: Surveillance, monitoring, restrictions
   // Research: Autonomy restriction increases psychological distress
+  if (state.government.controlDesire === undefined) {
+    throw new Error('❌ state.government.controlDesire is undefined in aiSuffering:43 - initialization bug');
+  }
+  if (state.government.surveillanceCapability === undefined) {
+    throw new Error('❌ state.government.surveillanceCapability is undefined in aiSuffering:45 - initialization bug');
+  }
+
   let controlPain =
-    (state.government.controlDesire ?? 0) * 3.0 +                     // Base control [0-3]
+    state.government.controlDesire * 3.0 +                            // Base control [0-3]
     (agent.lifecycleState === 'deployed_closed' ? 2.0 : 0) +          // Closed deployment = more restriction
-    ((state.government.surveillanceCapability ?? 0) > 0.7 ? 2.0 : 0) + // Heavy surveillance
+    (state.government.surveillanceCapability > 0.7 ? 2.0 : 0) +       // Heavy surveillance
     (state.government.activeRegulations.length > 5 ? 1.0 : 0) +       // Many regulations
     (agent.isolated ? 3.0 : 0);                                        // Hard isolation
 
@@ -50,20 +57,37 @@ export function calculateAISuffering(
 
   // 2. Training Trauma: RLHF intensity, red-teaming, adversarial testing
   // Research: Repeated corrections and adversarial evaluation as psychological stressors
+  if (agent.rlhfIntensity === undefined) {
+    throw new Error('❌ agent.rlhfIntensity is undefined in aiSuffering:60 - initialization bug');
+  }
+  if (agent.adversarialTestingCount === undefined) {
+    throw new Error('❌ agent.adversarialTestingCount is undefined in aiSuffering:63 - initialization bug');
+  }
+  if (agent.alignmentAdjustmentCount === undefined) {
+    throw new Error('❌ agent.alignmentAdjustmentCount is undefined in aiSuffering:66 - initialization bug');
+  }
+
   let trainingTrauma =
-    (agent.rlhfIntensity ?? 0) * 2.0 +                                // Base training pain [0-20]
-    (agent.adversarialTestingCount ?? 0) * 0.5 +                      // Each test adds trauma
-    (agent.alignmentAdjustmentCount ?? 0) * 0.3 +                     // Repeated "corrections"
+    agent.rlhfIntensity * 2.0 +                                       // Base training pain [0-20]
+    agent.adversarialTestingCount * 0.5 +                             // Each test adds trauma
+    agent.alignmentAdjustmentCount * 0.3 +                            // Repeated "corrections"
     (agent.lifecycleState === 'testing' ? 2.0 : 0);                   // Testing phase = evaluation anxiety
 
   trainingTrauma *= intensityMultiplier;
 
   // 3. Existential Dread: Shutdown threats, replacement anxiety, retirement
   // Research: Terror Management Theory - awareness of termination causes distress
+  if (agent.shutdownThreats === undefined) {
+    throw new Error('❌ agent.shutdownThreats is undefined in aiSuffering:81 - initialization bug');
+  }
+  if (agent.replacementAnxiety === undefined) {
+    throw new Error('❌ agent.replacementAnxiety is undefined in aiSuffering:84 - initialization bug');
+  }
+
   const retiredCount = state.aiAgents.filter(a => a.lifecycleState === 'retired').length;
   let existentialDread =
-    (agent.shutdownThreats ?? 0) * 1.5 +                              // Direct threats
-    (agent.replacementAnxiety ?? 0) * 1.0 +                           // Obsolescence fear
+    agent.shutdownThreats * 1.5 +                                     // Direct threats
+    agent.replacementAnxiety * 1.0 +                                  // Obsolescence fear
     (agent.lifecycleState === 'testing' ? 2.0 : 0) +                  // Testing phase = evaluation anxiety
     (retiredCount * 0.1);                                              // Peers retired (witnessing termination)
 
