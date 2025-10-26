@@ -11,9 +11,9 @@
 # - Git diff (all changes made so far)
 # - NO prior conversation history from feature-implementer
 #
-# QUESTIONS: 20 standard senior dev questions junior devs forget:
+# QUESTIONS: 22 standard senior dev questions junior devs forget:
 # - Testing (coverage, edge cases, end-to-end) [3 questions]
-# - Code quality (TODOs, mocks, magic numbers, console.logs) [5 questions]
+# - Code quality (TODOs, mocks, magic numbers, console.logs, defensive fallbacks) [7 questions]
 # - Documentation (wiki, comments, type definitions, citations) [4 questions]
 # - System integration (TypeScript, related systems, phase registration) [3 questions]
 # - Phase architecture (interactions, order, duplication, necessity, propagation) [5 questions]
@@ -210,7 +210,7 @@ jobs:
           - Use Read to check test files, wiki documentation, phase files
           - Use Bash to run `npx tsc --noEmit` or `npm test` if needed
 
-          **20 QUESTIONS (1 line each, use emoji):**
+          **22 QUESTIONS (1 line each, use emoji):**
 
           **Testing & Validation:**
           1. **Tests?** Check for test files matching changed simulation files
@@ -223,24 +223,26 @@ jobs:
           6. **Test quality?** Read tests - do they test behavior or implementation?
           7. **Magic numbers?** Grep for hardcoded numbers (not constants)
           8. **Console.logs?** Grep for console.log in production code
+          9. **Defensive fallbacks (TS)?** Grep for `?? ` or `isNaN(x) ? fallback : x` in simulation code (should use explicit error detection)
+          10. **Defensive fallbacks (bash)?** Grep for `|| 0` or `|| echo` in .yml/.sh files (should fail loudly on missing required values)
 
           **Documentation:**
-          9. **Documentation?** Check for comments on complex logic
-          10. **Type definitions?** Read src/types/ for new state types
-          11. **Wiki?** Check docs/wiki/README.md for new system docs
-          12. **Research citations?** Check /research/ files for parameter justification
+          11. **Documentation?** Check for comments on complex logic
+          12. **Type definitions?** Read src/types/ for new state types
+          13. **Wiki?** Check docs/wiki/README.md for new system docs
+          14. **Research citations?** Check /research/ files for parameter justification
 
           **System Integration:**
-          13. **TypeScript errors?** Run `npx tsc --noEmit` (should be 0)
-          14. **Related systems?** Think about cross-system impacts (QoL, population, etc)
-          15. **Phase registration?** If new phase, check src/simulation/engine/phases/index.ts
+          15. **TypeScript errors?** Run `npx tsc --noEmit` (should be 0)
+          16. **Related systems?** Think about cross-system impacts (QoL, population, etc)
+          17. **Phase registration?** If new phase, check src/simulation/engine/phases/index.ts
 
           **Phase Architecture (CRITICAL):**
-          16. **Phase interactions?** Read phase files - does this phase read state from other phases? List dependencies
-          17. **Phase order?** Check execution order in phases/index.ts - does order matter for this phase?
-          18. **Duplicate logic?** Read similar phases - is this duplicating existing phase logic?
-          19. **Phase necessity?** Could this logic live in an existing phase instead of new phase?
-          20. **State propagation?** What state does this phase write? Which phases depend on it?
+          18. **Phase interactions?** Read phase files - does this phase read state from other phases? List dependencies
+          19. **Phase order?** Check execution order in phases/index.ts - does order matter for this phase?
+          20. **Duplicate logic?** Read similar phases - is this duplicating existing phase logic?
+          21. **Phase necessity?** Could this logic live in an existing phase instead of new phase?
+          22. **State propagation?** What state does this phase write? Which phases depend on it?
 
           **OUTPUT FORMAT (save to checklist_answers.md):**
           ```markdown
@@ -255,24 +257,26 @@ jobs:
           6. ✅ Tests check behavior (QoL outcomes), not implementation
           7. ⚠️ 5 hardcoded thresholds, need constants
           8. ✅ 2 console.logs (both in test files)
+          9. ✅ No `?? fallback` in simulation code - uses explicit error detection
+          10. ✅ No `|| 0` fallbacks in workflows - fails loudly on errors
 
           **Documentation:**
-          9. ⚠️ Complex cascade logic needs comments
-          10. ✅ New NuclearWinterState in src/types/climate.ts
-          11. ❌ Wiki not updated for nuclear winter system
-          12. ✅ Citations in research/nuclear-winter_20251024.md
+          11. ⚠️ Complex cascade logic needs comments
+          12. ✅ New NuclearWinterState in src/types/climate.ts
+          13. ❌ Wiki not updated for nuclear winter system
+          14. ✅ Citations in research/nuclear-winter_20251024.md
 
           **System Integration:**
-          13. ✅ TypeScript compiles, 0 errors
-          14. ⚠️ Impacts QoL, population - check FoodProductionPhase
-          15. ✅ Registered in phases/index.ts at order 18
+          15. ✅ TypeScript compiles, 0 errors
+          16. ⚠️ Impacts QoL, population - check FoodProductionPhase
+          17. ✅ Registered in phases/index.ts at order 18
 
           **Phase Architecture:**
-          16. ✅ Reads climate.temperature from ClimatePhase (order 12)
-          17. ✅ Must run after ClimatePhase, before FoodProductionPhase
-          18. ✅ No duplication - new logic, no overlap
-          19. ✅ Needs separate phase - complex cascade system
-          20. ⚠️ Writes climate.nuclearWinter - FoodProductionPhase should read it
+          18. ✅ Reads climate.temperature from ClimatePhase (order 12)
+          19. ✅ Must run after ClimatePhase, before FoodProductionPhase
+          20. ✅ No duplication - new logic, no overlap
+          21. ✅ Needs separate phase - complex cascade system
+          22. ⚠️ Writes climate.nuclearWinter - FoodProductionPhase should read it
           ```
 
           **RULES:**
