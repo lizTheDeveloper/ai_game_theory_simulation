@@ -29,6 +29,7 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       name: 'Sub-Saharan Africa',
       population: 1200,                    // 1.2B
       peakPopulation: 1200,
+      baselinePopulation: 1200,            // 2025 baseline for infrastructure scaling
 
       // Demographics (high fertility, improving healthcare)
       baselineBirthRate: 0.034,            // 3.4% per year (high)
@@ -53,6 +54,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       resourceVulnerability: 0.6,          // Food insecurity
       conflictRisk: 0.5,                   // Civil wars, instability
 
+      // Regional food security (Oct 25, 2025 - regionalized)
+      foodSecurity: 0.70,                  // Below global average due to vulnerability
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -65,6 +69,7 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       name: 'East Asia',
       population: 1700,                    // 1.7B (China 1.4B, Japan 125M, Korea 52M, etc.)
       peakPopulation: 1700,
+      baselinePopulation: 1700,            // 2025 baseline for infrastructure scaling
 
       // Demographics (low fertility, excellent healthcare)
       baselineBirthRate: 0.010,            // 1.0% per year (very low)
@@ -89,6 +94,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       resourceVulnerability: 0.7,          // Heavy resource imports
       conflictRisk: 0.3,                   // Regional tensions (Taiwan)
 
+      // Regional food security (Oct 25, 2025 - regionalized)
+      foodSecurity: 0.90,                  // Above average (advanced economy, imports)
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -101,6 +109,7 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       name: 'South Asia',
       population: 2000,                    // 2.0B (India 1.4B, Pakistan 240M, Bangladesh 170M)
       peakPopulation: 2000,
+      baselinePopulation: 2000,            // 2025 baseline for infrastructure scaling
 
       // Demographics (transitioning fertility)
       baselineBirthRate: 0.018,            // 1.8% per year
@@ -125,6 +134,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       resourceVulnerability: 0.7,          // Water stress (Indus, Ganges)
       conflictRisk: 0.6,                   // India-Pakistan tensions
 
+      // Regional food security (Oct 25, 2025 - regionalized)
+      foodSecurity: 0.75,                  // Below average (water stress, high population pressure)
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -137,6 +149,7 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       name: 'Europe',
       population: 750,                     // 750M (EU 450M, Russia 145M, UK 68M, etc.)
       peakPopulation: 750,
+      baselinePopulation: 750,             // 2025 baseline for infrastructure scaling
 
       // Demographics (low fertility, aging)
       baselineBirthRate: 0.010,            // 1.0% per year
@@ -161,6 +174,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       resourceVulnerability: 0.5,          // Energy dependence
       conflictRisk: 0.2,                   // Low (Ukraine war exception)
 
+      // Regional food security (Oct 25, 2025 - regionalized)
+      foodSecurity: 0.92,                  // High (advanced economy, CAP subsidies, imports)
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -173,6 +189,7 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       name: 'North America',
       population: 580,                     // 580M (US 335M, Mexico 130M, Canada 40M)
       peakPopulation: 580,
+      baselinePopulation: 580,             // 2025 baseline for infrastructure scaling
 
       // Demographics (low fertility, immigration compensates)
       baselineBirthRate: 0.012,            // 1.2% per year
@@ -197,6 +214,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       resourceVulnerability: 0.3,          // Resource-rich
       conflictRisk: 0.1,                   // Low (domestic polarization)
 
+      // Regional food security (Oct 25, 2025 - regionalized)
+      foodSecurity: 0.95,                  // Very high (resource-rich, breadbasket)
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -209,6 +229,7 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       name: 'Latin America',
       population: 660,                     // 660M (Brazil 215M, Mexico in NA, Colombia, Argentina, etc.)
       peakPopulation: 660,
+      baselinePopulation: 660,             // 2025 baseline for infrastructure scaling
 
       // Demographics (transitioning)
       baselineBirthRate: 0.015,            // 1.5% per year
@@ -233,6 +254,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       resourceVulnerability: 0.4,          // Mostly self-sufficient
       conflictRisk: 0.4,                   // Drug wars, instability
 
+      // Regional food security (Oct 25, 2025 - regionalized)
+      foodSecurity: 0.85,                  // Average (self-sufficient, some distribution issues)
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -245,6 +269,7 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       name: 'Middle East & North Africa',
       population: 530,                     // 530M (Egypt 110M, Iran 88M, Turkey 85M, etc.)
       peakPopulation: 530,
+      baselinePopulation: 530,             // 2025 baseline for infrastructure scaling
 
       // Demographics (youth bulge, transitioning)
       baselineBirthRate: 0.022,            // 2.2% per year
@@ -268,6 +293,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       climateVulnerability: 0.9,           // Extreme heat, water scarcity
       resourceVulnerability: 0.8,          // Heavy food imports
       conflictRisk: 0.7,                   // Wars, civil conflicts
+
+      // Regional food security (Oct 25, 2025 - regionalized)
+      foodSecurity: 0.65,                  // Low (import-dependent, water scarcity, conflict)
 
       // Crisis impacts
       monthlyExcessDeaths: 0,
@@ -383,7 +411,13 @@ export function updateRegionalPopulations(state: GameState): void {
     // Calculate capacity modifier independently (don't rely on global)
     const env = state.environmentalAccumulation;
 
-    // Reuse foodStock and waterStock already calculated above (now validated)
+    // FIX (Oct 25, 2025): Regional food security is PERSISTENT STATE
+    // Initialized to realistic regional values (65-95%)
+    // Modified by FoodSecurityDegradationPhase (crisis degradation)
+    // Modified by tech deployment (vertical farming, etc.)
+    // NOT recalculated from global food stock (preserves regional variation)
+
+    // Reuse waterStock already calculated above (now validated)
     // Detect NaN in environmental metrics - fail loudly
     if (isNaN(env.climateStability)) {
       console.error(`❌ NaN in env.climateStability at month ${state.currentMonth}`);
@@ -399,7 +433,7 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     const climateModifier = env.climateStability;
-    const foodAvailability = Math.min(1.0, foodStock / 100);
+    const foodAvailability = region.foodSecurity; // Use REGIONAL food security, not global foodStock
     const waterAvailability = Math.min(1.0, waterStock / 100);
     const resourceModifier = Math.min(foodAvailability, waterAvailability);
     // FIX (Oct 16, 2025): Same biodiversity decoupling as global population

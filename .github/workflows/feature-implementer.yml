@@ -29,6 +29,7 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+      id-token: write
 
     steps:
       - name: Checkout Repository
@@ -154,14 +155,21 @@ jobs:
           Work iteratively. Use Read/Edit/Bash tools as needed. This is a GitHub Actions environment - you have full access to the codebase.
           EOF
 
+      - name: Read Implementation Prompt
+        id: read_prompt
+        run: |
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          cat implementation_prompt.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Run Feature Implementer (Claude Code SDK)
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt_file: implementation_prompt.txt
+          prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
             --max-turns 50
-            --agent feature-implementer
+            --agents feature-implementer
             --dangerously-skip-permissions
 
       - name: Check Implementation Status

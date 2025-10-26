@@ -18,7 +18,7 @@
 
 import type { GameState, QualityOfLifeSystems } from '@/types/game';
 import { getTrustInAI } from '../socialCohesion';
-import { calculateSurvivalFundamentals } from './dimensions';
+import { calculateNonFoodSurvivalMetrics } from './dimensions';
 import {
   calculateUnemploymentPenalty,
   calculateFoodSecurityPenalty,
@@ -331,24 +331,27 @@ export function updateQualityOfLifeSystems(
   }
 
   // === SURVIVAL FUNDAMENTALS ===
-  // FIX (Oct 25, 2025): Preserve foodSecurity from FoodSecurityDegradationPhase
-  // FoodSecurityDegradationPhase applies BOTH crisis degradation AND infrastructure penalty
-  // Preserving allows degradation to accumulate month-over-month correctly
-  const survivalFundamentals = state.qualityOfLifeSystems.survivalFundamentals
-    ? {
-        // Preserve foodSecurity from FoodSecurityDegradationPhase (includes infrastructure penalty)
-        foodSecurity: state.qualityOfLifeSystems.survivalFundamentals.foodSecurity,
-        // Recalculate other survival fundamentals
-        ...(() => {
-          const calculated = calculateSurvivalFundamentals(state);
-          return {
-            waterSecurity: calculated.waterSecurity,
-            thermalHabitability: calculated.thermalHabitability,
-            shelterSecurity: calculated.shelterSecurity,
-          };
-        })()
-      }
-    : calculateSurvivalFundamentals(state); // First time initialization
+  // FIX (Oct 25, 2025 REGIONALIZATION): Food security is now REGIONAL
+  // Global food security is population-weighted average of regional values
+  // Regional populations calculate their own food security (see regionalPopulations.ts:410)
+
+  let globalFoodSecurity = 0.85; // Fallback if no regions initialized yet
+  if (state.humanPopulationSystem.regionalPopulations && state.humanPopulationSystem.regionalPopulations.length > 0) {
+    const regions = state.humanPopulationSystem.regionalPopulations;
+    const totalPop = regions.reduce((sum, r) => sum + r.population, 0);
+    if (totalPop > 0) {
+      globalFoodSecurity = regions.reduce((sum, r) => sum + (r.foodSecurity * r.population), 0) / totalPop;
+    }
+  }
+
+  // Calculate other survival fundamentals (water, thermal, shelter) - still global
+  const nonFoodMetrics = calculateNonFoodSurvivalMetrics(state);
+  const survivalFundamentals = {
+    foodSecurity: globalFoodSecurity,  // Population-weighted average from regional
+    waterSecurity: nonFoodMetrics.waterSecurity,
+    thermalHabitability: nonFoodMetrics.thermalHabitability,
+    shelterSecurity: nonFoodMetrics.shelterSecurity,
+  };
 
   // Assign to state
   state.qualityOfLifeSystems.survivalFundamentals = survivalFundamentals;

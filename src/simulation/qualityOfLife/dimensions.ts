@@ -19,13 +19,15 @@ import { getTechDeploymentSafe } from '../techTree/helpers';
 import { assertProbability } from '../utils/assertions';
 
 /**
- * Calculate Tier 0: Survival Fundamentals
+ * Calculate Tier 0: Survival Fundamentals (NON-FOOD ONLY)
+ *
+ * FIX (Oct 25, 2025): Food security is now REGIONAL and aggregated separately
+ * This function calculates ONLY water, thermal, and shelter security
  *
  * These CANNOT be averaged away - track minimums, not means.
  * Required for Utopia determination.
  */
-export function calculateSurvivalFundamentals(state: GameState): QualityOfLifeSystems['survivalFundamentals'] {
-  const rawFoodSecurity = calculateFoodSecurity(state);
+export function calculateNonFoodSurvivalMetrics(state: GameState): { waterSecurity: number; thermalHabitability: number; shelterSecurity: number } {
   const rawWaterSecurity = calculateWaterSecurity(state);
   const rawThermalHabitability = calculateThermalHabitability(state);
   const rawShelterSecurity = calculateShelterSecurity(state);
@@ -33,10 +35,9 @@ export function calculateSurvivalFundamentals(state: GameState): QualityOfLifeSy
   // FIX (Oct 25, 2025): Replaced defensive NaN guards with assertive validation
   // If any calculation produces NaN, that's a BUG that needs fixing, not a value to replace
   const month = state.currentMonth;
-  const location = 'calculateSurvivalFundamentals';
+  const location = 'calculateNonFoodSurvivalMetrics';
 
   return {
-    foodSecurity: assertProbability(rawFoodSecurity, { location, valueName: 'foodSecurity', month }),
     waterSecurity: assertProbability(rawWaterSecurity, { location, valueName: 'waterSecurity', month }),
     thermalHabitability: assertProbability(rawThermalHabitability, { location, valueName: 'thermalHabitability', month }),
     shelterSecurity: assertProbability(rawShelterSecurity, { location, valueName: 'shelterSecurity', month }),
@@ -44,142 +45,19 @@ export function calculateSurvivalFundamentals(state: GameState): QualityOfLifeSy
 }
 
 /**
- * Calculate food security across population
+ * REMOVED (Oct 25, 2025): calculateFoodSecurity() function
  *
- * Research basis:
- * - FAO: 1800+ kcal/day minimum for survival
- * - Food security = availability + access + utilization + stability
- * - Phosphorus depletion, ocean collapse, water stress, temperature all affect food
+ * Food security is now fully REGIONAL with no global recalculation.
+ *
+ * Regional food security is PERSISTENT STATE:
+ * - Initialized to realistic regional values (65-95% by region)
+ * - Modified by FoodSecurityDegradationPhase (crisis degradation, vulnerability-weighted)
+ * - Modified by tech deployment (vertical farming, etc.)
+ * - Global food security = population-weighted average of regional values
+ *
+ * This architecture preserves regional variation and prevents all regions
+ * from converging to the same global baseline.
  */
-export function calculateFoodSecurity(state: GameState): number {
-  const resources = state.resourceEconomy;
-  const phosphorus = state.phosphorusSystem;
-  const ocean = state.oceanAcidificationSystem;
-  const freshwater = state.freshwaterSystem;
-
-  // Base food availability from resource stocks
-  let foodSecurity = Math.min(1.0, resources.food.reserves);
-
-  // FIX (Oct 25, 2025 PART 3): Infrastructure penalty MOVED to FoodSecurityDegradationPhase
-  // Reason: Applying it here conflicts with preservation logic in updateQualityOfLifeSystems
-  // Now applied as multiplier in degradation phase alongside crisis degradation
-  //
-  // REMOVED FROM HERE:
-  // const populationRatio = state.humanPopulationSystem.population / 8.0;
-  // const infrastructurePenalty = Math.min(1.0, Math.max(0.3, populationRatio));
-  // foodSecurity *= infrastructurePenalty;
-
-  // === PHOSPHORUS DEPLETION ===
-  // Low reserves = reduced agricultural yields
-  if (phosphorus && phosphorus.reserves < 0.50) {
-    const depletionPenalty = (0.50 - phosphorus.reserves) * 0.8;
-    foodSecurity -= depletionPenalty;
-  }
-
-  // High phosphorus prices = food price crisis (access problem)
-  // Research: 2007-08 food crisis saw 4x prices, 40M+ pushed into poverty
-  if (phosphorus && phosphorus.priceIndex > 2.0) {
-    const priceAccessPenalty = Math.min(0.4, (phosphorus.priceIndex - 2.0) * 0.05);
-    foodSecurity -= priceAccessPenalty;
-  }
-
-  // === OCEAN ACIDIFICATION ===
-  // Marine food web collapse affects 3 billion fish-dependent people
-  // Research: 37.5% of global population relies on fish as primary protein
-  if (ocean && ocean.marineFoodWebCollapseActive) {
-    const fishDependentPenalty = ocean.fishDependentImpact * 0.375;
-    foodSecurity -= fishDependentPenalty;
-  }
-
-  // === FRESHWATER STRESS ===
-  // Agriculture uses 70% of freshwater - stress directly impacts food production
-  if (freshwater && freshwater.waterStress > 0.50) {
-    const waterPenalty = (freshwater.waterStress - 0.50) * 0.6;
-    foodSecurity -= waterPenalty;
-  }
-
-  // === TEMPERATURE STRESS ===
-  // Research: Each 1°C above 1.5°C reduces crop yields 10-15%
-  // Major crops (wheat, rice, maize) have temperature optima
-  const tempAnomaly = resources.co2.temperatureAnomaly;
-  if (tempAnomaly > 1.5) {
-    const climatePenalty = (tempAnomaly - 1.5) * 0.15; // 15% per degree
-    foodSecurity -= climatePenalty;
-  }
-
-  // === BIODIVERSITY LOSS ===
-  // Research: IPBES (2016), Bardgett & van der Putten (2014), FAO soil reports
-  // Biodiversity loss affects food security through multiple pathways:
-  // 1. Pollinator decline (35% of crops depend on animal pollinators)
-  // 2. Soil health degradation (95% of food comes from soil)
-  // 3. Loss of natural pest control
-  if (state.biodiversitySystem) {
-    const globalBio = state.biodiversitySystem.globalBiodiversityIndex;
-
-    // Pollination crisis
-    // IPBES: 35% of global food crops depend on pollinators
-    // Threshold at 80% biodiversity (pollinators decline faster than general biodiversity)
-    if (globalBio < 0.80) {
-      const pollinatorLoss = 0.80 - globalBio;
-      const pollinationPenalty = pollinatorLoss * 0.35; // Up to 35% loss at bio=45%
-      foodSecurity -= pollinationPenalty;
-    }
-
-    // Soil health degradation
-    // Microbiomes, decomposers, nutrient cycling
-    // 95% of food comes from soil
-    if (globalBio < 0.60) {
-      const soilHealthLoss = 0.60 - globalBio;
-      const soilPenalty = soilHealthLoss * 0.25; // Up to 25% loss at bio=35%
-      foodSecurity -= soilPenalty;
-    }
-
-    // Natural pest control loss
-    // Without predators: 20-30% higher crop losses
-    if (globalBio < 0.50) {
-      const pestControlLoss = 0.50 - globalBio;
-      const pestPenalty = pestControlLoss * 0.20; // Up to 20% loss at bio=30%
-      foodSecurity -= pestPenalty;
-    }
-  }
-
-  // === AI ENHANCEMENT ===
-  // Aligned superintelligent AI can help food production
-  // Precision agriculture, vertical farms, synthetic biology
-  const totalAI = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-  const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
-  if (totalAI > 1.5 && avgAlignment > 0.7) {
-    const aiAgriculture = Math.min(0.3, (totalAI - 1.5) * 0.1);
-    foodSecurity += aiAgriculture;
-  }
-
-  // === BREAKTHROUGH TECHNOLOGY ===
-  // FIX (Oct 25, 2025): Integrate ALL food technologies, not just one
-
-  // Vertical Farming - High-density indoor agriculture
-  const verticalFarming = getTechDeploymentSafe(state, 'vertical_farming');
-  foodSecurity += verticalFarming * 0.25; // Up to +25% (year-round, weather-independent)
-
-  // Circular Food Systems - Waste recycling, closed-loop nutrients
-  const circularFood = getTechDeploymentSafe(state, 'circular_food_systems');
-  foodSecurity += circularFood * 0.15; // Up to +15% (reduce waste, improve efficiency)
-
-  // Legacy support: sustainableAgriculture maps to vertical_farming in old system
-  const sustainableAg = getTechDeploymentSafe(state, 'sustainableAgriculture');
-  if (sustainableAg > 0 && verticalFarming === 0) {
-    // Only apply if new tech not deployed (avoid double-counting)
-    foodSecurity += sustainableAg * 0.3;
-  }
-
-  const finalFoodSec = Math.max(0, Math.min(1.5, foodSecurity));
-
-  // DEBUG: Log food security calculation every 12 months
-  if (state.currentMonth % 12 === 0) {
-    console.log(`  [QoL Phase] Food Security BASE Calc (Month ${state.currentMonth}): ${(finalFoodSec * 100).toFixed(1)}% | Tech: vf=${(verticalFarming * 100).toFixed(0)}% cf=${(circularFood * 100).toFixed(0)}% (infra penalty now in degradation phase)`);
-  }
-
-  return finalFoodSec;
-}
 
 /**
  * Calculate water security across population

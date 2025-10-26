@@ -416,8 +416,32 @@ function calculateEnvironmentalImpact(state: GameState): void {
 
   // Apply to environmental system
   if (state.resourceEconomy && state.resourceEconomy.co2) {
+    // FIX (Oct 26, 2025): Validate inputs before modifying annualEmissions
+    if (!isFinite(monthlyReduction)) {
+      console.error(`❌ PositiveTippingPoints: monthlyReduction is NaN (month ${state.currentMonth})`);
+      console.error(`   solarImpact=${solarImpact}, windImpact=${windImpact}, evImpact=${evImpact}, heatPumpImpact=${heatPumpImpact}`);
+      throw new Error(`❌ NaN detected in positive tipping points emissions reduction`);
+    }
+
+    const currentEmissions = state.resourceEconomy.co2.annualEmissions;
+    if (!isFinite(currentEmissions)) {
+      console.error(`❌ PositiveTippingPoints: annualEmissions is NaN BEFORE modification (month ${state.currentMonth})`);
+      console.error(`   Value: ${currentEmissions}`);
+      throw new Error(`❌ annualEmissions is NaN before positive tipping points modification`);
+    }
+
+    // Calculate reduction factor (capped at 1% per month max to avoid over-reduction)
+    const reductionFactor = Math.min(0.01, monthlyReduction * 0.01);
+    const newEmissions = currentEmissions * (1 - reductionFactor);
+
+    if (!isFinite(newEmissions)) {
+      console.error(`❌ PositiveTippingPoints: annualEmissions became NaN AFTER calculation (month ${state.currentMonth})`);
+      console.error(`   currentEmissions=${currentEmissions}, reductionFactor=${reductionFactor}, newEmissions=${newEmissions}`);
+      throw new Error(`❌ annualEmissions calculation produced NaN`);
+    }
+
     // Reduce CO2 emissions (monthly reduction offsets annual emissions)
-    state.resourceEconomy.co2.annualEmissions *= (1 - monthlyReduction * 0.01);
+    state.resourceEconomy.co2.annualEmissions = newEmissions;
   }
 
   // Calculate cost savings (clean tech cheaper than fossil fuels)
