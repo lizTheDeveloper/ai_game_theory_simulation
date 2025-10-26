@@ -41,7 +41,14 @@ jobs:
         id: feature
         run: |
           TITLE="${{ github.event.issue.title }}"
-          FEATURE_NAME=$(echo "$TITLE" | sed 's/^Feature: //g' | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]')
+          # Remove invalid git branch characters: : ? * [ ] ~ ^ \ and consecutive dots
+          # Replace spaces and dashes with single dash, convert to lowercase
+          FEATURE_NAME=$(echo "$TITLE" | \
+            sed 's/^Feature: //g' | \
+            sed 's/[:\?\*\[\]~\^\\]//g' | \
+            sed 's/ /-/g' | \
+            sed 's/--*/-/g' | \
+            tr '[:upper:]' '[:lower:]')
 
           echo "name=$FEATURE_NAME" >> $GITHUB_OUTPUT
           echo "title=$TITLE" >> $GITHUB_OUTPUT
