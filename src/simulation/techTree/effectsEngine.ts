@@ -33,7 +33,7 @@
 import { GameState } from '@/types/game';
 import { TechTreeState } from './engine';
 import { getTechById } from './comprehensiveTechTree';
-import { assertFinite } from '../utils/assertions';
+import { assertFinite, assertStateProperty } from '../utils/assertions';
 
 /**
  * Type-safe helper to set dynamic properties on objects
@@ -74,14 +74,16 @@ export function applyAllTechEffects(
         // Determine if effect is global or regional
         if (isGlobalEffect(effectName)) {
           // Global effects (e.g., alignment, climate)
-          globalEffects.set(effectName, (globalEffects.get(effectName) || 0) + scaledValue);
+          // Note: Map.get() returns undefined for new keys - fallback is valid here
+          globalEffects.set(effectName, (globalEffects.get(effectName) ?? 0) + scaledValue);
         } else {
           // Regional effects (e.g., freshwater, local pollution)
           if (!regionalEffects.has(region)) {
             regionalEffects.set(region, new Map());
           }
           const regionMap = regionalEffects.get(region)!;
-          regionMap.set(effectName, (regionMap.get(effectName) || 0) + scaledValue);
+          // Note: Map.get() returns undefined for new keys - fallback is valid here
+          regionMap.set(effectName, (regionMap.get(effectName) ?? 0) + scaledValue);
         }
       }
       
@@ -168,14 +170,22 @@ function applyCapabilityBoosts(
         // Scale boost by deployment level and apply (monthly increment)
         const scaledBoost = boost * deploymentLevel * 0.01; // 1% per month at full deployment
 
-        // Defensive: Handle NaN or undefined capability values (root cause fix)
-        const currentValue = isNaN(ai.capabilityProfile[dimKey]) || ai.capabilityProfile[dimKey] === undefined
-          ? 0
-          : ai.capabilityProfile[dimKey];
+        // FIX #25 (Oct 25, 2025): Fail loudly if capability dimension missing/invalid
+        const currentValue = ai.capabilityProfile[dimKey];
+        if (currentValue === undefined) {
+          throw new Error(`Capability dimension ${dimKey} missing in AI ${ai.id} profile`);
+        }
+
+        const validatedValue = assertFinite(currentValue, {
+          location: 'applyCapabilityBoosts',
+          valueName: `capability.${dimKey}`,
+          month: gameState.currentMonth,
+          additionalInfo: { aiId: ai.id, dimension: dimKey }
+        });
 
         ai.capabilityProfile[dimKey] = Math.min(
           10.0, // Cap at 10.0
-          currentValue + scaledBoost
+          validatedValue + scaledBoost
         );
       }
     }
@@ -190,8 +200,13 @@ function applyCapabilityBoosts(
 
         if (subdomain && typeof domainCap === 'object') {
           // Boost specific subdomain
-          const currentValue = (domainCap as any)[subdomain] || 0;
-          // FIX (Oct 25, 2025): Replaced defensive NaN guard with assertion
+          const currentValue = (domainCap as any)[subdomain];
+
+          // FIX #25 (Oct 25, 2025): Fail loudly if subdomain missing
+          if (currentValue === undefined) {
+            throw new Error(`Research subdomain ${domain}.${subdomain} missing in AI ${ai.id} capability profile`);
+          }
+
           const validatedValue = assertFinite(currentValue, {
             location: 'applyCapabilityBoosts',
             valueName: `research.${domain}.${subdomain}`,
@@ -202,8 +217,13 @@ function applyCapabilityBoosts(
         } else if (!subdomain && typeof domainCap === 'object') {
           // Boost all subdomains equally
           for (const key of Object.keys(domainCap)) {
-            const currentValue = (domainCap as any)[key] || 0;
-            // FIX (Oct 25, 2025): Replaced defensive NaN guard with assertion
+            const currentValue = (domainCap as any)[key];
+
+            // FIX #25 (Oct 25, 2025): Fail loudly if subdomain missing
+            if (currentValue === undefined) {
+              throw new Error(`Research subdomain ${domain}.${key} missing in AI ${ai.id} capability profile`);
+            }
+
             const validatedValue = assertFinite(currentValue, {
               location: 'applyCapabilityBoosts',
               valueName: `research.${domain}.${key}`,
@@ -253,10 +273,13 @@ function applyGlobalEffects(
       case 'sleeperDetectionBonus':
         // Improve defensive AI detection
         if (gameState.defensiveAI) {
-          gameState.defensiveAI.threatDetection.detectSleepers = Math.min(
-            1.0,
-            (gameState.defensiveAI.threatDetection.detectSleepers || 0) + value
+          // FIX #25 (Oct 25, 2025): Use assertion instead of fallback
+          const current = assertStateProperty(
+            gameState.defensiveAI.threatDetection,
+            'detectSleepers',
+            { location: 'applyGlobalEffects.sleeperDetection', month: gameState.currentMonth }
           );
+          gameState.defensiveAI.threatDetection.detectSleepers = Math.min(1.0, current + value);
         }
         break;
         
@@ -536,10 +559,12 @@ function applyGlobalEffects(
       case 'trustBonus':
         // Increase public trust
         if (gameState.globalMetrics) {
-          gameState.globalMetrics.publicTrust = Math.min(
-            1.0,
-            (gameState.globalMetrics.publicTrust || 0.5) + value * 0.01
+          const current = assertStateProperty(
+            gameState.globalMetrics,
+            'publicTrust',
+            { location: 'applyGlobalEffects.trustBonus', month: gameState.currentMonth }
           );
+          gameState.globalMetrics.publicTrust = Math.min(1.0, current + value * 0.01);
         }
         break;
         
@@ -557,10 +582,12 @@ function applyGlobalEffects(
         // Increase public awareness/understanding of AI benefits
         // This could map to education or trust
         if (gameState.globalMetrics) {
-          gameState.globalMetrics.publicTrust = Math.min(
-            1.0,
-            (gameState.globalMetrics.publicTrust || 0.5) + value * 0.005
+          const current = assertStateProperty(
+            gameState.globalMetrics,
+            'publicTrust',
+            { location: 'applyGlobalEffects.publicAwarenessBonus', month: gameState.currentMonth }
           );
+          gameState.globalMetrics.publicTrust = Math.min(1.0, current + value * 0.005);
         }
         break;
         
@@ -677,7 +704,7 @@ function applyRegionalEffects(
             const regionData = gameState.freshwaterSystem.regions[region];
             if (regionData) {
               (regionData as any).droughtResilience =
-                Math.min(1.0, ((regionData as any).droughtResilience || 0) + value);
+                Math.min(1.0, (regionData as any).droughtResilience + value);
             }
           }
           break;
@@ -690,7 +717,7 @@ function applyRegionalEffects(
               // Reduce aquifer depletion rate
               (regionData as any).aquiferDepletionRate = Math.max(
                 0,
-                ((regionData as any).aquiferDepletionRate || 0.02) - value * 0.01
+                (regionData as any).aquiferDepletionRate - value * 0.01
               );
             }
           }
@@ -706,7 +733,7 @@ function applyRegionalEffects(
               // Improve efficiency
               (regionData as any).waterUseEfficiency = Math.min(
                 0.95,
-                ((regionData as any).waterUseEfficiency || 0.30) + value * 0.01
+                (regionData as any).waterUseEfficiency + value * 0.01
               );
             }
           }
@@ -766,7 +793,7 @@ function applyRegionalEffects(
           if (gameState.planetaryBoundariesSystem) {
             (gameState.planetaryBoundariesSystem as any).pfasContamination = Math.max(
               0,
-              ((gameState.planetaryBoundariesSystem as any).pfasContamination || 0.5) - value * 0.01
+              (gameState.planetaryBoundariesSystem as any).pfasContamination - value * 0.01
             );
           }
           break;
@@ -776,7 +803,7 @@ function applyRegionalEffects(
           if (gameState.planetaryBoundariesSystem) {
             (gameState.planetaryBoundariesSystem as any).plasticPollution = Math.max(
               0,
-              ((gameState.planetaryBoundariesSystem as any).plasticPollution || 0.6) - value * 0.01
+              (gameState.planetaryBoundariesSystem as any).plasticPollution - value * 0.01
             );
           }
           break;
@@ -786,7 +813,7 @@ function applyRegionalEffects(
           if (gameState.planetaryBoundariesSystem) {
             (gameState.planetaryBoundariesSystem as any).endocrineDisruptorLevel = Math.max(
               0,
-              ((gameState.planetaryBoundariesSystem as any).endocrineDisruptorLevel || 0.7) - value * 0.01
+              (gameState.planetaryBoundariesSystem as any).endocrineDisruptorLevel - value * 0.01
             );
           }
           break;
@@ -796,7 +823,7 @@ function applyRegionalEffects(
           if (gameState.planetaryBoundariesSystem) {
             (gameState.planetaryBoundariesSystem as any).microplasticLevel = Math.max(
               0,
-              ((gameState.planetaryBoundariesSystem as any).microplasticLevel || 0.8) - value * 0.01
+              (gameState.planetaryBoundariesSystem as any).microplasticLevel - value * 0.01
             );
           }
           // Also improve ocean health
@@ -813,7 +840,7 @@ function applyRegionalEffects(
           if (gameState.planetaryBoundariesSystem) {
             (gameState.planetaryBoundariesSystem as any).nanomaterialRisk = Math.max(
               0,
-              ((gameState.planetaryBoundariesSystem as any).nanomaterialRisk || 0.3) - value
+              (gameState.planetaryBoundariesSystem as any).nanomaterialRisk - value
             );
           }
           break;
@@ -825,7 +852,7 @@ function applyRegionalEffects(
             // Reduce future pollution accumulation rate
             (boundary as any).accumulationRate = Math.max(
               0,
-              ((boundary as any).accumulationRate || 0.02) - value * 0.01
+              (boundary as any).accumulationRate - value * 0.01
             );
           }
           break;
@@ -856,7 +883,7 @@ function applyRegionalEffects(
           if (gameState.resourceEconomy) {
             (gameState.resourceEconomy as any).waterUseEfficiency = Math.min(
               0.95,
-              ((gameState.resourceEconomy as any).waterUseEfficiency || 0.20) + value * 0.01
+              (gameState.resourceEconomy as any).waterUseEfficiency + value * 0.01
             );
           }
           break;
@@ -954,7 +981,7 @@ function applyRegionalEffects(
             // Reduce coral bleaching risk
             (gameState.oceanAcidificationSystem as any).coralBleachingRisk = Math.max(
               0,
-              ((gameState.oceanAcidificationSystem as any).coralBleachingRisk || 0.5) - value * 0.01
+              (gameState.oceanAcidificationSystem as any).coralBleachingRisk - value * 0.01
             );
           }
           break;
@@ -980,7 +1007,7 @@ function applyRegionalEffects(
           // Improve grid energy storage
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).storageCapacity = 
-              ((gameState.powerGenerationSystem as any).storageCapacity || 1.0) * (1 + value * 0.01);
+              (gameState.powerGenerationSystem as any).storageCapacity * (1 + value * 0.01);
           }
           break;
           
@@ -989,7 +1016,7 @@ function applyRegionalEffects(
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).renewableReliability = Math.min(
               1.0,
-              ((gameState.powerGenerationSystem as any).renewableReliability || 0.5) + value * 0.01
+              (gameState.powerGenerationSystem as any).renewableReliability + value * 0.01
             );
           }
           break;
@@ -999,7 +1026,7 @@ function applyRegionalEffects(
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).gridStability = Math.min(
               1.0,
-              ((gameState.powerGenerationSystem as any).gridStability || 0.7) + value * 0.01
+              (gameState.powerGenerationSystem as any).gridStability + value * 0.01
             );
           }
           break;
@@ -1009,12 +1036,12 @@ function applyRegionalEffects(
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).gridEfficiency = Math.min(
               0.98,
-              ((gameState.powerGenerationSystem as any).gridEfficiency || 0.70) + value * 0.01
+              (gameState.powerGenerationSystem as any).gridEfficiency + value * 0.01
             );
             // Efficiency reduces effective demand
             (gameState.powerGenerationSystem as any).effectiveDemandReduction = Math.min(
               0.30,
-              ((gameState.powerGenerationSystem as any).effectiveDemandReduction || 0) + value * 0.005
+              (gameState.powerGenerationSystem as any).effectiveDemandReduction + value * 0.005
             );
           }
           break;
@@ -1024,7 +1051,7 @@ function applyRegionalEffects(
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).renewableIntegration = Math.min(
               1.0,
-              ((gameState.powerGenerationSystem as any).renewableIntegration || 0.5) + value * 0.01
+              (gameState.powerGenerationSystem as any).renewableIntegration + value * 0.01
             );
             // Better integration increases effective renewable capacity
             gameState.powerGenerationSystem.renewablePercentage = Math.min(
@@ -1039,12 +1066,12 @@ function applyRegionalEffects(
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).blackoutRisk = Math.max(
               0,
-              ((gameState.powerGenerationSystem as any).blackoutRisk || 0.10) - value
+              (gameState.powerGenerationSystem as any).blackoutRisk - value
             );
             // Also improves grid stability
             (gameState.powerGenerationSystem as any).gridStability = Math.min(
               1.0,
-              ((gameState.powerGenerationSystem as any).gridStability || 0.7) + value * 0.01
+              (gameState.powerGenerationSystem as any).gridStability + value * 0.01
             );
           }
           break;
@@ -1054,7 +1081,7 @@ function applyRegionalEffects(
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).energyCost = Math.max(
               0.2,
-              ((gameState.powerGenerationSystem as any).energyCost || 1.0) * (1 - value * 0.01)
+              (gameState.powerGenerationSystem as any).energyCost * (1 - value * 0.01)
             );
           }
           break;
@@ -1063,7 +1090,7 @@ function applyRegionalEffects(
           // Increase baseload (reliable) power
           if (gameState.powerGenerationSystem) {
             (gameState.powerGenerationSystem as any).baseloadCapacity = 
-              ((gameState.powerGenerationSystem as any).baseloadCapacity || 1.0) * (1 + value * 0.01);
+              (gameState.powerGenerationSystem as any).baseloadCapacity * (1 + value * 0.01);
           }
           break;
           
@@ -1093,7 +1120,7 @@ function applyRegionalEffects(
           if (gameState.socialAccumulation) {
             (gameState.socialAccumulation as any).mentalHealthIndex = Math.min(
               1.0,
-              ((gameState.socialAccumulation as any).mentalHealthIndex || 0.6) + value * 0.01
+              (gameState.socialAccumulation as any).mentalHealthIndex + value * 0.01
             );
           }
           break;
@@ -1148,7 +1175,7 @@ function applyRegionalEffects(
           if (gameState.socialAccumulation) {
             (gameState.socialAccumulation as any).suicideRate = Math.max(
               0.0001,
-              ((gameState.socialAccumulation as any).suicideRate || 0.001) * (1 - value * 0.01)
+              (gameState.socialAccumulation as any).suicideRate * (1 - value * 0.01)
             );
           }
           break;
@@ -1168,7 +1195,7 @@ function applyRegionalEffects(
           if (gameState.ubiSystem?.purposeInfrastructure) {
             (gameState.ubiSystem.purposeInfrastructure as any).skillLevel = Math.min(
               1.0,
-              ((gameState.ubiSystem.purposeInfrastructure as any).skillLevel || 0.5) + value * 0.01
+              (gameState.ubiSystem.purposeInfrastructure as any).skillLevel + value * 0.01
             );
           }
           break;
@@ -1188,7 +1215,7 @@ function applyRegionalEffects(
           if (gameState.globalMetrics) {
             (gameState.globalMetrics as any).crisisResilience = Math.min(
               1.0,
-              ((gameState.globalMetrics as any).crisisResilience || 0.5) + value * 0.01
+              (gameState.globalMetrics as any).crisisResilience + value * 0.01
             );
           }
           break;
@@ -1199,7 +1226,7 @@ function applyRegionalEffects(
           if (gameState.globalMetrics) {
             (gameState.globalMetrics as any).localEconomyStrength = Math.min(
               1.0,
-              ((gameState.globalMetrics as any).localEconomyStrength || 0.5) + value * 0.01
+              (gameState.globalMetrics as any).localEconomyStrength + value * 0.01
             );
           }
           break;
@@ -1209,7 +1236,7 @@ function applyRegionalEffects(
           if (gameState.resourceEconomy) {
             (gameState.resourceEconomy as any).resourceEfficiency = Math.min(
               0.95,
-              ((gameState.resourceEconomy as any).resourceEfficiency || 0.30) + value * 0.01
+              (gameState.resourceEconomy as any).resourceEfficiency + value * 0.01
             );
           }
           break;
@@ -1220,12 +1247,12 @@ function applyRegionalEffects(
             // Reduce plastic waste accumulation
             (gameState.planetaryBoundariesSystem as any).plasticPollution = Math.max(
               0,
-              ((gameState.planetaryBoundariesSystem as any).plasticPollution || 0.6) - value * 0.015
+              (gameState.planetaryBoundariesSystem as any).plasticPollution - value * 0.015
             );
             // Increase recycling rate
             (gameState.resourceEconomy as any).plasticRecyclingRate = Math.min(
               0.95,
-              ((gameState.resourceEconomy as any).plasticRecyclingRate || 0.09) + value * 0.01
+              (gameState.resourceEconomy as any).plasticRecyclingRate + value * 0.01
             );
           }
           break;
@@ -1236,12 +1263,12 @@ function applyRegionalEffects(
             // Increase rare earth recovery rate
             (gameState.resourceEconomy as any).rareEarthRecoveryRate = Math.min(
               0.80,
-              ((gameState.resourceEconomy as any).rareEarthRecoveryRate || 0.01) + value * 0.01
+              (gameState.resourceEconomy as any).rareEarthRecoveryRate + value * 0.01
             );
             // Reduce mining demand
             (gameState.resourceEconomy as any).miningIntensity = Math.max(
               0.2,
-              ((gameState.resourceEconomy as any).miningIntensity || 1.0) - value * 0.005
+              (gameState.resourceEconomy as any).miningIntensity - value * 0.005
             );
           }
           break;
@@ -1252,7 +1279,7 @@ function applyRegionalEffects(
             // Major reduction in Earth-based mining
             (gameState.resourceEconomy as any).miningIntensity = Math.max(
               0.05,
-              ((gameState.resourceEconomy as any).miningIntensity || 1.0) * (1 - value)
+              (gameState.resourceEconomy as any).miningIntensity * (1 - value)
             );
             // Flag space economy active
             (gameState.globalMetrics as any).spaceIndustrializationActive = true;
@@ -1264,7 +1291,7 @@ function applyRegionalEffects(
           if (gameState.resourceEconomy) {
             (gameState.resourceEconomy as any).supplyChainResilience = Math.min(
               1.0,
-              ((gameState.resourceEconomy as any).supplyChainResilience || 0.6) + value * 0.01
+              (gameState.resourceEconomy as any).supplyChainResilience + value * 0.01
             );
           }
           break;
@@ -1275,7 +1302,7 @@ function applyRegionalEffects(
           if (gameState.resourceEconomy) {
             (gameState.resourceEconomy as any).industrialEmissions = Math.max(
               0.1,
-              ((gameState.resourceEconomy as any).industrialEmissions || 1.0) * (1 - value * 0.01)
+              (gameState.resourceEconomy as any).industrialEmissions * (1 - value * 0.01)
             );
           }
           break;
@@ -1285,7 +1312,7 @@ function applyRegionalEffects(
           if (gameState.resourceEconomy) {
             (gameState.resourceEconomy as any).transportEmissions = Math.max(
               0.1,
-              ((gameState.resourceEconomy as any).transportEmissions || 1.0) * (1 - value * 0.01)
+              (gameState.resourceEconomy as any).transportEmissions * (1 - value * 0.01)
             );
           }
           break;
@@ -1295,7 +1322,7 @@ function applyRegionalEffects(
           if (gameState.resourceEconomy) {
             (gameState.resourceEconomy as any).miningIntensity = Math.max(
               0.2,
-              ((gameState.resourceEconomy as any).miningIntensity || 1.0) * (1 - value * 0.01)
+              (gameState.resourceEconomy as any).miningIntensity * (1 - value * 0.01)
             );
           }
           break;
@@ -1317,7 +1344,7 @@ function applyRegionalEffects(
           if (gameState.environmentalAccumulation) {
             (gameState.environmentalAccumulation as any).ecosystemHealth = Math.min(
               1.0,
-              ((gameState.environmentalAccumulation as any).ecosystemHealth || 0.6) + value * 0.01
+              (gameState.environmentalAccumulation as any).ecosystemHealth + value * 0.01
             );
           }
           break;
@@ -1327,7 +1354,7 @@ function applyRegionalEffects(
           if (gameState.planetaryBoundariesSystem) {
             (gameState.planetaryBoundariesSystem as any).pollinatorHealth = Math.min(
               1.0,
-              ((gameState.planetaryBoundariesSystem as any).pollinatorHealth || 0.5) + value * 0.01
+              (gameState.planetaryBoundariesSystem as any).pollinatorHealth + value * 0.01
             );
           }
           break;
@@ -1337,7 +1364,7 @@ function applyRegionalEffects(
           if (gameState.planetaryBoundariesSystem) {
             (gameState.planetaryBoundariesSystem as any).invasiveSpeciesImpact = Math.max(
               0,
-              ((gameState.planetaryBoundariesSystem as any).invasiveSpeciesImpact || 0.4) - value * 0.01
+              (gameState.planetaryBoundariesSystem as any).invasiveSpeciesImpact - value * 0.01
             );
           }
           break;
@@ -1359,7 +1386,7 @@ function applyRegionalEffects(
           if (gameState.famineSystem) {
             (gameState.famineSystem as any).urbanFoodAccess = Math.min(
               1.0,
-              ((gameState.famineSystem as any).urbanFoodAccess || 0.7) + value * 0.01
+              (gameState.famineSystem as any).urbanFoodAccess + value * 0.01
             );
           }
           break;
@@ -1380,7 +1407,7 @@ function applyRegionalEffects(
           if (gameState.resourceEconomy) {
             (gameState.resourceEconomy as any).animalAgricultureShare = Math.max(
               0.1,
-              ((gameState.resourceEconomy as any).animalAgricultureShare || 0.8) * (1 - value * 0.01)
+              (gameState.resourceEconomy as any).animalAgricultureShare * (1 - value * 0.01)
             );
           }
           break;
@@ -1390,7 +1417,7 @@ function applyRegionalEffects(
           if (gameState.globalMetrics) {
             (gameState.globalMetrics as any).animalWelfareIndex = Math.min(
               1.0,
-              ((gameState.globalMetrics as any).animalWelfareIndex || 0.3) + value * 0.01
+              (gameState.globalMetrics as any).animalWelfareIndex + value * 0.01
             );
           }
           break;
@@ -1417,7 +1444,7 @@ function applyRegionalEffects(
           if (gameState.globalMetrics) {
             (gameState.globalMetrics as any).catastrophicRisk = Math.max(
               0,
-              ((gameState.globalMetrics as any).catastrophicRisk || 0.1) * (1 - value)
+              (gameState.globalMetrics as any).catastrophicRisk * (1 - value)
             );
           }
           break;
@@ -1480,7 +1507,7 @@ function applyRegionalEffects(
           if (gameState.defensiveAI) {
             gameState.defensiveAI.cyberDefense.strength = Math.min(
               1.0,
-              (gameState.defensiveAI.cyberDefense.strength || 0.5) + value
+              gameState.defensiveAI.cyberDefense.strength + value
             );
           }
           break;
@@ -1490,7 +1517,7 @@ function applyRegionalEffects(
           // Risk of disrupting monsoons (geoengineering side effect)
           if (gameState.environmentalAccumulation) {
             (gameState.environmentalAccumulation as any).monsoonDisruptionRisk = 
-              ((gameState.environmentalAccumulation as any).monsoonDisruptionRisk || 0) + value;
+              (gameState.environmentalAccumulation as any).monsoonDisruptionRisk + value;
           }
           break;
           
@@ -1498,7 +1525,7 @@ function applyRegionalEffects(
           // Risk of ozone depletion (aerosol side effect)
           if (gameState.environmentalAccumulation) {
             (gameState.environmentalAccumulation as any).ozoneDepletionRisk = 
-              ((gameState.environmentalAccumulation as any).ozoneDepletionRisk || 0) + value;
+              (gameState.environmentalAccumulation as any).ozoneDepletionRisk + value;
           }
           break;
           
@@ -1506,7 +1533,7 @@ function applyRegionalEffects(
           // Risk of creating ocean dead zones (upwelling side effect)
           if (gameState.oceanAcidificationSystem) {
             (gameState.oceanAcidificationSystem as any).deadZoneRisk = 
-              ((gameState.oceanAcidificationSystem as any).deadZoneRisk || 0) + value;
+              (gameState.oceanAcidificationSystem as any).deadZoneRisk + value;
           }
           break;
           
@@ -1514,7 +1541,7 @@ function applyRegionalEffects(
           // General existential risk increase (nanotech, brain upload, etc.)
           if (gameState.globalMetrics) {
             (gameState.globalMetrics as any).existentialRisk = 
-              ((gameState.globalMetrics as any).existentialRisk || 0) + value;
+              (gameState.globalMetrics as any).existentialRisk + value;
           }
           break;
           
