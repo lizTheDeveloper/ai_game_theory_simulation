@@ -163,18 +163,26 @@ jobs:
       # ========================================
       # ASK CLAUDE CODE SDK: FRESH SESSION
       # ========================================
+      - name: Write PR Body to File
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const prBody = context.payload.pull_request.body || '';
+            fs.writeFileSync('pr_body_safe.txt', prBody, 'utf8');
+
       - name: Extract Original Feature Goal
         id: original_goal
         env:
-          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
           # Extract what the feature-implementer was SUPPOSED to do
           # Look for "Original Prompt:" or "Feature Requirements:" section in PR body
-          ORIGINAL_PROMPT=$(echo "$PR_BODY" | sed -n '/Original Prompt:/,/^$/p' | tail -n +2)
+          ORIGINAL_PROMPT=$(sed -n '/Original Prompt:/,/^$/p' pr_body_safe.txt | tail -n +2)
 
           if [ -z "$ORIGINAL_PROMPT" ]; then
             # Fallback: use PR title + first paragraph
-            ORIGINAL_PROMPT="Feature: ${{ github.event.pull_request.title }}\n\n$(echo "$PR_BODY" | head -10)"
+            ORIGINAL_PROMPT="Feature: ${PR_TITLE}\n\n$(head -10 pr_body_safe.txt)"
           fi
 
           # Save for prompt
