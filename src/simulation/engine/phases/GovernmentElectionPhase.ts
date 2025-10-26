@@ -105,7 +105,10 @@ function simulateElection(
   countryCode: string,
   rng: RNGFunction
 ): { changed: boolean; message: string } {
-  const opinion = state.governmentSystem!.publicOpinion.get(countryCode) || 0.5;
+  const opinion = state.governmentSystem!.publicOpinion.get(countryCode);
+  if (opinion === undefined) {
+    throw new Error('❌ state.governmentSystem.publicOpinion.get(countryCode) is undefined in GovernmentElectionPhase:108 - initialization bug');
+  }
 
   // High opinion = government likely to be reelected
   // Low opinion = government likely to change
@@ -132,7 +135,11 @@ function simulateElection(
  */
 function updatePublicOpinion(state: GameState, rng: RNGFunction): void {
   for (const [countryCode, gov] of state.governmentSystem!.governments) {
-    let opinion = state.governmentSystem!.publicOpinion.get(countryCode) || 0.5;
+    const opinionValue = state.governmentSystem!.publicOpinion.get(countryCode);
+    if (opinionValue === undefined) {
+      throw new Error('❌ state.governmentSystem.publicOpinion.get(countryCode) is undefined in GovernmentElectionPhase:135 - initialization bug');
+    }
+    let opinion = opinionValue;
 
     // 1. Economic performance affects opinion
     // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
@@ -172,7 +179,10 @@ function updatePublicOpinion(state: GameState, rng: RNGFunction): void {
     }
 
     // 4. AI trust affects opinion
-    const aiTrust = state.society?.trustInAI || 0.6;
+    if (state.society === undefined || state.society.trustInAI === undefined) {
+      throw new Error('❌ state.society or state.society.trustInAI is undefined in GovernmentElectionPhase:176 - initialization bug');
+    }
+    const aiTrust = state.society.trustInAI;
     if (aiTrust < 0.3) {
       opinion -= 0.02; // Low AI trust hurts government
     }
@@ -198,7 +208,10 @@ function checkCoalitionStability(
   events: GameEvent[]
 ): void {
   for (const [countryCode, coalition] of state.governmentSystem!.coalitions) {
-    const opinion = state.governmentSystem!.publicOpinion.get(countryCode) || 0.5;
+    const opinion = state.governmentSystem!.publicOpinion.get(countryCode);
+    if (opinion === undefined) {
+      throw new Error('❌ state.governmentSystem.publicOpinion.get(countryCode) is undefined in GovernmentElectionPhase:201 - initialization bug');
+    }
 
     // Coalition stability decreases with low opinion
     coalition.stability = coalition.stability * 0.95 + opinion * 0.05;

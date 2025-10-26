@@ -219,7 +219,10 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
 
     if (requiresChain) {
       // Nuclear launch requires 4-person chain (or 2 if democracy < 0.4)
-      const requiredChainLength = (state.government.democracyQuality ?? 0.5) < 0.4 ? 2 : 4;
+      if (state.government.democracyQuality === undefined) {
+        throw new Error('❌ state.government.democracyQuality is undefined in socialInfluenceActions.ts:222 - initialization bug');
+      }
+      const requiredChainLength = state.government.democracyQuality < 0.4 ? 2 : 4;
       const nuclearChain = si.identifiedDecisionMakers.filter(dm =>
         dm.role === 'nuclear_commander' || dm.role === 'head_of_state'
       );
@@ -378,7 +381,10 @@ function calculateInfluenceSuccess(
   }
 
   // Degraded institutions
-  if ((state.government.democracyQuality ?? 0.5) < 0.5) {
+  if (state.government.democracyQuality === undefined) {
+    throw new Error('❌ state.government.democracyQuality is undefined in socialInfluenceActions.ts:381 - initialization bug');
+  }
+  if (state.government.democracyQuality < 0.5) {
     successProb += 0.15;
   }
 

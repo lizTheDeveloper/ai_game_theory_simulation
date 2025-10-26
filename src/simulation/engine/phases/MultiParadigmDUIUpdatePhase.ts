@@ -146,13 +146,22 @@ function calculateWesternLiberal(state: GameState): number {
   const MIN_FLOOR = 0.1;
 
   // Electoral Democracy (0-1 → 0-100)
-  const electoralDemocracy = ((state.government.democracy ?? 0.5)) * 100;
+  if (state.government.democracy === undefined) {
+    throw new Error('❌ state.government.democracy is undefined in calculateWesternLiberal:149 - initialization bug');
+  }
+  const electoralDemocracy = state.government.democracy * 100;
 
   // Civil Liberties (0-100)
-  const civilLiberties = state.socialAccumulation?.socialCohesion?.civilLiberties ?? 50;
+  if (state.socialAccumulation?.socialCohesion?.civilLiberties === undefined) {
+    throw new Error('❌ state.socialAccumulation.socialCohesion.civilLiberties is undefined in calculateWesternLiberal:152 - initialization bug');
+  }
+  const civilLiberties = state.socialAccumulation.socialCohesion.civilLiberties;
 
   // Rule of Law (0-100) - use democracy as proxy if specific property not available
-  const ruleOfLaw = ((state.government.democracy ?? 0.5)) * 100;
+  if (state.government.democracy === undefined) {
+    throw new Error('❌ state.government.democracy is undefined in calculateWesternLiberal:155 - initialization bug');
+  }
+  const ruleOfLaw = state.government.democracy * 100;
 
   // Economic Freedom (inverted market regulation) - default to moderate
   const economicFreedom = 50;
@@ -218,22 +227,40 @@ function calculateDevelopment(state: GameState): number {
   const MIN_FLOOR = 0.1;
 
   // Quality of Life (0-1 → 0-100, primary driver)
-  const qolRaw = state.globalMetrics.qualityOfLife ?? 0.5;
+  if (state.globalMetrics.qualityOfLife === undefined) {
+    throw new Error('❌ state.globalMetrics.qualityOfLife is undefined in calculateDevelopment:221 - initialization bug');
+  }
+  const qolRaw = state.globalMetrics.qualityOfLife;
   const qol = qolRaw * 100;
 
   // Survival Fundamentals (geometric mean of 4 survival dimensions, 0-1 → 0-100)
   const survival = state.qualityOfLifeSystems?.survivalFundamentals;
   let survivalScore = 50;
   if (survival) {
-    const food = Math.max(MIN_FLOOR, Math.min(1, survival.foodSecurity ?? 0.5));
-    const water = Math.max(MIN_FLOOR, Math.min(1, survival.waterSecurity ?? 0.5));
-    const thermal = Math.max(MIN_FLOOR, Math.min(1, survival.thermalHabitability ?? 0.8));
-    const shelter = Math.max(MIN_FLOOR, Math.min(1, survival.shelterSecurity ?? 0.5));
+    if (survival.foodSecurity === undefined) {
+      throw new Error('❌ survival.foodSecurity is undefined in calculateDevelopment:228 - initialization bug');
+    }
+    if (survival.waterSecurity === undefined) {
+      throw new Error('❌ survival.waterSecurity is undefined in calculateDevelopment:229 - initialization bug');
+    }
+    if (survival.thermalHabitability === undefined) {
+      throw new Error('❌ survival.thermalHabitability is undefined in calculateDevelopment:230 - initialization bug');
+    }
+    if (survival.shelterSecurity === undefined) {
+      throw new Error('❌ survival.shelterSecurity is undefined in calculateDevelopment:231 - initialization bug');
+    }
+    const food = Math.max(MIN_FLOOR, Math.min(1, survival.foodSecurity));
+    const water = Math.max(MIN_FLOOR, Math.min(1, survival.waterSecurity));
+    const thermal = Math.max(MIN_FLOOR, Math.min(1, survival.thermalHabitability));
+    const shelter = Math.max(MIN_FLOOR, Math.min(1, survival.shelterSecurity));
     survivalScore = Math.pow(food * water * thermal * shelter, 1/4) * 100;
   }
 
   // Healthcare Quality (0-1 → 0-100)
-  const healthcareRaw = state.qualityOfLifeSystems?.healthcareQuality ?? 0.5;
+  if (state.qualityOfLifeSystems?.healthcareQuality === undefined) {
+    throw new Error('❌ state.qualityOfLifeSystems.healthcareQuality is undefined in calculateDevelopment:236 - initialization bug');
+  }
+  const healthcareRaw = state.qualityOfLifeSystems.healthcareQuality;
   const healthcare = healthcareRaw * 100;
 
   // Geometric mean
@@ -317,15 +344,24 @@ function calculateEcological(state: GameState): number {
   const boundariesScore = calculateProgressiveEcologicalScore(state);
 
   // Resource Reserves (0-1 → 0-100)
-  const resourceReserves = state.environmentalAccumulation?.resourceReserves ?? 0.7;
+  if (state.environmentalAccumulation?.resourceReserves === undefined) {
+    throw new Error('❌ state.environmentalAccumulation.resourceReserves is undefined in calculateEcological:320 - initialization bug');
+  }
+  const resourceReserves = state.environmentalAccumulation.resourceReserves;
   const resourceScore = resourceReserves * 100;
 
   // Climate Stability (0-1 → 0-100)
-  const climateStability = state.environmentalAccumulation?.climateStability ?? 0.5;
+  if (state.environmentalAccumulation?.climateStability === undefined) {
+    throw new Error('❌ state.environmentalAccumulation.climateStability is undefined in calculateEcological:324 - initialization bug');
+  }
+  const climateStability = state.environmentalAccumulation.climateStability;
   const climateScore = climateStability * 100;
 
   // Pollution (0-1 → 100-0, inverted)
-  const pollutionLevel = state.environmentalAccumulation?.pollutionLevel ?? 0.4;
+  if (state.environmentalAccumulation?.pollutionLevel === undefined) {
+    throw new Error('❌ state.environmentalAccumulation.pollutionLevel is undefined in calculateEcological:328 - initialization bug');
+  }
+  const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
   const pollutionScore = (1 - pollutionLevel) * 100;
 
   // DEBUG: Log when any value is problematic
@@ -387,13 +423,22 @@ function calculateIndigenous(state: GameState): number {
   const MIN_FLOOR = 0.1;
 
   // Social Trust (0-100)
-  const socialTrust = state.socialAccumulation?.socialCohesion?.trust ?? 50;
+  if (state.socialAccumulation?.socialCohesion?.trust === undefined) {
+    throw new Error('❌ state.socialAccumulation.socialCohesion.trust is undefined in calculateIndigenous:390 - initialization bug');
+  }
+  const socialTrust = state.socialAccumulation.socialCohesion.trust;
 
   // Community Bonds (0-100)
-  const communityBonds = state.socialAccumulation?.socialCohesion?.communityBonds ?? 50;
+  if (state.socialAccumulation?.socialCohesion?.communityBonds === undefined) {
+    throw new Error('❌ state.socialAccumulation.socialCohesion.communityBonds is undefined in calculateIndigenous:393 - initialization bug');
+  }
+  const communityBonds = state.socialAccumulation.socialCohesion.communityBonds;
 
   // Meaning Crisis (0-1, inverted to 0-100)
-  const meaningCrisisLevel = state.socialAccumulation?.meaningCrisisLevel ?? 0.5;
+  if (state.socialAccumulation?.meaningCrisisLevel === undefined) {
+    throw new Error('❌ state.socialAccumulation.meaningCrisisLevel is undefined in calculateIndigenous:396 - initialization bug');
+  }
+  const meaningCrisisLevel = state.socialAccumulation.meaningCrisisLevel;
   const meaningScore = (1 - meaningCrisisLevel) * 100;
 
   // Geometric mean

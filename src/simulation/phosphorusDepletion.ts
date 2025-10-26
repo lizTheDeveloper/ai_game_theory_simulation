@@ -14,6 +14,7 @@
 
 import { GameState } from '@/types/game';
 import { PhosphorusSystem, PhosphorusSupplyShock } from '@/types/phosphorus';
+import { assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize phosphorus system state (2025 baseline)
@@ -111,11 +112,12 @@ export function updatePhosphorusSystem(state: GameState): void {
       
       // Immediate QoL impact
       state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.05);
-      // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
-      if (state.society.trust === undefined) {
-        throw new Error('❌ state.society.trust is undefined in phosphorusDepletion - initialization bug');
-      }
-      state.society.trust = state.society.trust - 0.03;
+      const currentTrust = assertStateProperty(
+        state.society,
+        'trust',
+        { location: 'updatePhosphorusSystem[supply shock]', month: state.currentMonth }
+      );
+      state.society.trust = currentTrust - 0.03;
       // Note: economicGrowthRate not in GlobalMetrics, skip adjustment
     }
   } else {

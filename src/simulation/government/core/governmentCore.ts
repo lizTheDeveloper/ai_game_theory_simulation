@@ -413,10 +413,12 @@ export function selectGovernmentAction(
           ].filter(Boolean).length,
 
           // MAD deterrence strength (weaker = more urgent)
-          madStrength: state.madDeterrence?.madStrength || 1.0,
+          // FIX: Phase 5.1 (Oct 26, 2025) - madDeterrence is required
+          madStrength: state.madDeterrence.madStrength,
 
           // Current circuit breaker coverage
-          currentCoverage: state.nuclearCommandControlState?.totalSafeguardStrength || 0
+          // FIX: Phase 5.1 (Oct 26, 2025) - nuclearCommandControlState is required
+          currentCoverage: state.nuclearCommandControlState.totalSafeguardStrength
         };
 
         // URGENT if dangerous AIs exist (10x multiplier)
@@ -449,7 +451,8 @@ export function selectGovernmentAction(
           priority *= 2.0;
 
           // EXTREMELY urgent if AI decision-making is being used
-          const aiIntegration = state.madDeterrence?.aiErosionFactor || 0;
+          // FIX: Phase 5.1 (Oct 26, 2025) - madDeterrence is required
+          const aiIntegration = state.madDeterrence.aiErosionFactor;
           if (aiIntegration > 0.3) {
             priority *= 3.0; // AI in nuclear decisions = CRITICAL
           }

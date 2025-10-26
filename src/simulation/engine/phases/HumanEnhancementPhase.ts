@@ -80,11 +80,14 @@ export class HumanEnhancementPhase implements SimulationPhase {
         const ubiLevel = state.ubiSystem?.basicIncome?.amount || 0;
 
         // Phase 6: Apply policy interventions if configured
-        if (state.policyInterventions && (
-          (state.policyInterventions.retrainingLevel && state.policyInterventions.retrainingLevel > 0) ||
-          (state.policyInterventions.teachingSupportLevel && state.policyInterventions.teachingSupportLevel > 0) ||
-          (state.policyInterventions.jobGuaranteeLevel && state.policyInterventions.jobGuaranteeLevel > 0)
-        )) {
+        if (state.policyInterventions === undefined) {
+          throw new Error('❌ state.policyInterventions is undefined in HumanEnhancementPhase:84 - initialization bug');
+        }
+        if (
+          (state.policyInterventions.retrainingLevel !== undefined && state.policyInterventions.retrainingLevel > 0) ||
+          (state.policyInterventions.teachingSupportLevel !== undefined && state.policyInterventions.teachingSupportLevel > 0) ||
+          (state.policyInterventions.jobGuaranteeLevel !== undefined && state.policyInterventions.jobGuaranteeLevel > 0)
+        ) {
           applyPolicyInterventions(
             state.laborCapitalDistribution,
             productivityMultiplier,

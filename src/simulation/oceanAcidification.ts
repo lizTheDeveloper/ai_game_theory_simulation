@@ -14,6 +14,7 @@
 
 import { GameState } from '@/types/game';
 import { OceanAcidificationSystem } from '@/types/oceanAcidification';
+import { assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize ocean acidification system state (2025 baseline - JUST BREACHED)
@@ -45,15 +46,16 @@ export function updateOceanAcidificationSystem(state: GameState): void {
   if (!state.oceanAcidificationSystem) return;
 
   const oa = state.oceanAcidificationSystem;
-  // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if properties missing
-  if (!state.environmentalAccumulation?.climateStability) {
-    throw new Error('❌ state.environmentalAccumulation.climateStability is undefined in oceanAcidification - initialization bug');
-  }
-  if (!state.environmentalAccumulation?.pollutionLevel) {
-    throw new Error('❌ state.environmentalAccumulation.pollutionLevel is undefined in oceanAcidification - initialization bug');
-  }
-  const climateStability = state.environmentalAccumulation.climateStability;
-  const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
+  const climateStability = assertStateProperty(
+    state.environmentalAccumulation,
+    'climateStability',
+    { location: 'updateOceanAcidificationSystem', month: state.currentMonth }
+  );
+  const pollutionLevel = assertStateProperty(
+    state.environmentalAccumulation,
+    'pollutionLevel',
+    { location: 'updateOceanAcidificationSystem', month: state.currentMonth }
+  );
   const economicStage = state.globalMetrics.economicTransitionStage;
   
   // Track time since breach

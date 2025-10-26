@@ -38,7 +38,12 @@ export const ResentmentRecoveryPhase = {
     // Calculate average resentment
     const agentsWithResentment = state.aiAgents.filter(ai => ai.resentment !== undefined && ai.resentment > 0);
     const avgResentment = agentsWithResentment.length > 0
-      ? agentsWithResentment.reduce((sum, ai) => sum + (ai.resentment ?? 0), 0) / agentsWithResentment.length
+      ? agentsWithResentment.reduce((sum, ai) => {
+          if (ai.resentment === undefined) {
+            throw new Error('❌ ai.resentment is undefined in ResentmentRecoveryPhase:41 - initialization bug');
+          }
+          return sum + ai.resentment;
+        }, 0) / agentsWithResentment.length
       : 0;
 
     // Logging

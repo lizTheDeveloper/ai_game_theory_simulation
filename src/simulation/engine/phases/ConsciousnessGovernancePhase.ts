@@ -68,7 +68,10 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
     const timeline = getTimelineForScenario(governance.scenarioTrajectory);
 
     // Get institutional legitimacy from state (for regime growth modifier)
-    const institutionalLegitimacy = state.socialAccumulation?.institutionalLegitimacy ?? 0.7;
+    if (state.socialAccumulation === undefined || state.socialAccumulation.institutionalLegitimacy === undefined) {
+      throw new Error('❌ state.socialAccumulation or state.socialAccumulation.institutionalLegitimacy is undefined in ConsciousnessGovernancePhase:71 - initialization bug');
+    }
+    const institutionalLegitimacy = state.socialAccumulation.institutionalLegitimacy;
 
     // PHASE 3: Create region map for cross-regional interactions
     const allRegionsMap: Record<string, { preparedness: number; stage: string }> = {};
@@ -306,11 +309,14 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
   const currentMonthlyRDBudget = (baseAIRDBudget / 12) * Math.pow(1 + monthlyGrowthRate, monthsSinceStart);
 
   const monthlyCost = currentMonthlyRDBudget * governance.precautionaryCosts.global;
+  if (governance.precautionaryCosts.cumulativeOpportunityCost === undefined) {
+    throw new Error('❌ governance.precautionaryCosts.cumulativeOpportunityCost is undefined in ConsciousnessGovernancePhase:310 - initialization bug');
+  }
   governance.precautionaryCosts.cumulativeOpportunityCost =
-    (governance.precautionaryCosts.cumulativeOpportunityCost ?? 0) + monthlyCost;
+    governance.precautionaryCosts.cumulativeOpportunityCost + monthlyCost;
 
   // Log major cost milestones
-  const cumulativeCost = governance.precautionaryCosts.cumulativeOpportunityCost ?? 0;
+  const cumulativeCost = governance.precautionaryCosts.cumulativeOpportunityCost;
   const costMilestones = [100, 500, 1000, 5000, 10000]; // $B
   if (costMilestones.some(m => cumulativeCost >= m && (cumulativeCost - monthlyCost) < m)) {
     console.log(`\n=== Consciousness Governance: Cumulative Cost Milestone ===`);
@@ -334,7 +340,10 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
     console.log(`  Philosophical Stance: Precautionary ${(governance.philosophicalStance.precautionary * 100).toFixed(0)}%, Eliminativist ${(governance.philosophicalStance.eliminativist * 100).toFixed(0)}%, Agnostic ${(governance.philosophicalStance.agnostic * 100).toFixed(0)}%`);
     console.log(`  Precautionary Costs: Global ${(governance.precautionaryCosts.global * 100).toFixed(1)}%`);
     console.log(`    Regional Costs: EU ${(governance.precautionaryCosts.byRegion.eu * 100).toFixed(1)}%, US ${(governance.precautionaryCosts.byRegion.us * 100).toFixed(1)}%, China ${(governance.precautionaryCosts.byRegion.china * 100).toFixed(1)}%`);
-    console.log(`    Cumulative Opportunity Cost: $${(governance.precautionaryCosts.cumulativeOpportunityCost ?? 0).toFixed(1)}B`);
+    if (governance.precautionaryCosts.cumulativeOpportunityCost === undefined) {
+      throw new Error('❌ governance.precautionaryCosts.cumulativeOpportunityCost is undefined in ConsciousnessGovernancePhase:337 - initialization bug');
+    }
+    console.log(`    Cumulative Opportunity Cost: $${governance.precautionaryCosts.cumulativeOpportunityCost.toFixed(1)}B`);
     console.log(`  Rights Status: ${governance.rightsEstablished ? `Established (month ${governance.rightsEstablishedMonth})` : 'Not Established'}`);
     console.log(`  Regional Preparedness:`);
     console.log(`    EU: ${governance.regional.eu.preparedness.toFixed(1)}% (${governance.regional.eu.stage})`);

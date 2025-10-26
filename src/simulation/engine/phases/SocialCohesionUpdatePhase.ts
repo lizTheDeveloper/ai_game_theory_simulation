@@ -66,7 +66,10 @@ export class SocialCohesionUpdatePhase implements SimulationPhase {
     // Calculate driving factors
     const inequality = calculateInequality(state);
     const aiDeception = calculateAIDeception(state);
-    const unemployment = state.society.unemploymentLevel ?? 0;
+    if (state.society.unemploymentLevel === undefined) {
+      throw new Error('❌ state.society.unemploymentLevel is undefined in SocialCohesionUpdatePhase:69 - initialization bug');
+    }
+    const unemployment = state.society.unemploymentLevel;
     const displacement = calculateDisplacement(state);
     const purposeInfrastructure = calculatePurposeInfrastructure(state);
 
@@ -213,7 +216,10 @@ function calculateInequality(state: GameState): number {
   }
 
   // Fallback: use unemployment as inequality proxy
-  return Math.min(1.0, (state.society.unemploymentLevel ?? 0) * 1.5);
+  if (state.society.unemploymentLevel === undefined) {
+    throw new Error('❌ state.society.unemploymentLevel is undefined in calculateInequality:216 - initialization bug');
+  }
+  return Math.min(1.0, state.society.unemploymentLevel * 1.5);
 }
 
 /**
@@ -225,8 +231,11 @@ function calculateAIDeception(state: GameState): number {
 
   // Count misaligned AIs actively manipulating
   const manipulativeAIs = state.aiAgents.filter(agent => {
-    const alignment = agent.alignment ?? 0.5;
-    const social = agent.capabilityProfile?.social ?? 0;
+    if (agent.alignment === undefined) {
+      throw new Error('❌ agent.alignment is undefined in calculateAIDeception:228 - initialization bug');
+    }
+    const alignment = agent.alignment;
+    const social = agent.capabilityProfile?.social ?? 0; // Legitimate default - AI may not have social capability yet
     return alignment < 0.5 && social > 3;
   });
 
@@ -234,8 +243,14 @@ function calculateAIDeception(state: GameState): number {
 
   // Information warfare - use deepfake prevalence and epistemological crisis as proxies for deception
   if (state.informationWarfare) {
-    const deepfakes = state.informationWarfare.deepfakePrevalence ?? 0;
-    const crisis = state.informationWarfare.epistemologicalCrisisLevel ?? 0;
+    if (state.informationWarfare.deepfakePrevalence === undefined) {
+      throw new Error('❌ state.informationWarfare.deepfakePrevalence is undefined in calculateAIDeception:237 - initialization bug');
+    }
+    if (state.informationWarfare.epistemologicalCrisisLevel === undefined) {
+      throw new Error('❌ state.informationWarfare.epistemologicalCrisisLevel is undefined in calculateAIDeception:238 - initialization bug');
+    }
+    const deepfakes = state.informationWarfare.deepfakePrevalence;
+    const crisis = state.informationWarfare.epistemologicalCrisisLevel;
     deception += (deepfakes * 0.3) + (crisis * 0.1);
   }
 
@@ -255,8 +270,14 @@ function calculateAIDeception(state: GameState): number {
 function calculateDisplacement(state: GameState): number {
   if (!state.refugeeCrisisSystem) return 0;
 
-  const totalDisplaced = state.refugeeCrisisSystem.totalDisplaced ?? 0;
-  const population = state.humanPopulationSystem?.population ?? 8e9;
+  if (state.refugeeCrisisSystem.totalDisplaced === undefined) {
+    throw new Error('❌ state.refugeeCrisisSystem.totalDisplaced is undefined in calculateDisplacement:258 - initialization bug');
+  }
+  if (state.humanPopulationSystem?.population === undefined) {
+    throw new Error('❌ state.humanPopulationSystem.population is undefined in calculateDisplacement:259 - initialization bug');
+  }
+  const totalDisplaced = state.refugeeCrisisSystem.totalDisplaced;
+  const population = state.humanPopulationSystem.population;
 
   // Displacement as fraction of population (in millions)
   return Math.min(1.0, (totalDisplaced * 1e6) / (population * 0.1)); // 10% displacement = 1.0
@@ -271,24 +292,30 @@ function calculatePurposeInfrastructure(state: GameState): number {
 
   // UBI with purpose infrastructure
   if (state.ubiSystem && state.ubiSystem.active) {
-    const coverage = state.ubiSystem.basicIncome?.coverage ?? 0;
-    const adequacy = state.ubiSystem.basicIncome?.adequacy ?? 0;
+    if (state.ubiSystem.basicIncome?.coverage === undefined) {
+      throw new Error('❌ state.ubiSystem.basicIncome.coverage is undefined in calculatePurposeInfrastructure:274 - initialization bug');
+    }
+    if (state.ubiSystem.basicIncome?.adequacy === undefined) {
+      throw new Error('❌ state.ubiSystem.basicIncome.adequacy is undefined in calculatePurposeInfrastructure:275 - initialization bug');
+    }
+    const coverage = state.ubiSystem.basicIncome.coverage;
+    const adequacy = state.ubiSystem.basicIncome.adequacy;
     // Average of purpose infrastructure components (no single "coverage" property)
-    const educationAccess = state.ubiSystem.purposeInfrastructure?.educationAccess ?? 0;
-    const creativeSpaces = state.ubiSystem.purposeInfrastructure?.creativeSpaces ?? 0;
-    const volunteerPrograms = state.ubiSystem.purposeInfrastructure?.volunteerPrograms ?? 0;
+    const educationAccess = state.ubiSystem.purposeInfrastructure?.educationAccess ?? 0; // Legitimate default - may not be built yet
+    const creativeSpaces = state.ubiSystem.purposeInfrastructure?.creativeSpaces ?? 0; // Legitimate default - may not be built yet
+    const volunteerPrograms = state.ubiSystem.purposeInfrastructure?.volunteerPrograms ?? 0; // Legitimate default - may not be built yet
     const purposePrograms = (educationAccess + creativeSpaces + volunteerPrograms) / 3;
     infrastructure += (coverage * adequacy * purposePrograms) * 0.5;
   }
 
   // Social safety nets (community programs)
   if (state.socialSafetyNets && state.socialSafetyNets.active) {
-    const communityInfra = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0;
+    const communityInfra = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0; // Legitimate default - may not be built yet
     infrastructure += communityInfra * 0.3;
   }
 
   // Governance quality (civic participation)
-  const participation = state.government.governanceQuality?.participationRate ?? 0;
+  const participation = state.government.governanceQuality?.participationRate ?? 0; // Legitimate default - may not be initialized yet
   infrastructure += participation * 0.2;
 
   return Math.min(1.0, infrastructure);
@@ -356,12 +383,12 @@ function calculateCommunityBondsChange(
 
   // Social safety nets → community building
   if (state.socialSafetyNets && state.socialSafetyNets.active) {
-    const communityCenters = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0;
+    const communityCenters = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0; // Legitimate default - may not be built yet
     change += communityCenters * 0.2;
   }
 
   // Purpose infrastructure → social connection
-  const participation = state.government.governanceQuality?.participationRate ?? 0;
+  const participation = state.government.governanceQuality?.participationRate ?? 0; // Legitimate default - may not be initialized yet
   change += participation * 0.1;
 
   // Floor/ceiling effects

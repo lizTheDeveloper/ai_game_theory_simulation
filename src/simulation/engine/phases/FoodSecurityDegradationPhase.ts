@@ -11,8 +11,8 @@
  * - Multiple simultaneous crises have compounding effects
  * - Infrastructure breakdown accelerates food system collapse
  *
- * Order: 34.5 (AFTER QualityOfLifePhase at 34.0, which calculates initial food security)
- * CRITICAL: Must run AFTER QualityOfLifePhase, otherwise degradation gets overwritten!
+ * Order: 19.7 (AFTER QoL base calculation, BEFORE population mortality)
+ * FIX (Oct 25, 2025): Runs after QoL calculates food, then degrades it for mortality calc
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
@@ -20,7 +20,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } fr
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
   readonly name = 'Food Security Degradation';
-  readonly order = 34.5;  // AFTER QualityOfLifePhase (34.0)
+  readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
     // Food security degradation runs once per simulation step (once per month)
@@ -41,10 +41,19 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     let degradationRate = 0.01;
 
     // Count active crises (multiple systems can fail simultaneously)
+    if (state.phosphorusSystem === undefined || state.phosphorusSystem.reserves === undefined) {
+      throw new Error('❌ state.phosphorusSystem or state.phosphorusSystem.reserves is undefined in FoodSecurityDegradationPhase:45 - initialization bug');
+    }
+    if (state.freshwaterSystem === undefined || state.freshwaterSystem.blueWater === undefined || state.freshwaterSystem.blueWater.groundwater === undefined) {
+      throw new Error('❌ state.freshwaterSystem or state.freshwaterSystem.blueWater.groundwater is undefined in FoodSecurityDegradationPhase:46 - initialization bug');
+    }
+    if (state.biodiversitySystem === undefined || state.biodiversitySystem.globalBiodiversityIndex === undefined) {
+      throw new Error('❌ state.biodiversitySystem or state.biodiversitySystem.globalBiodiversityIndex is undefined in FoodSecurityDegradationPhase:47 - initialization bug');
+    }
     const activeCrises = [
-      (state.phosphorusSystem?.reserves ?? 1.0) < 0.3 ? 1 : 0,  // Phosphorus crisis when reserves < 30%
-      (state.freshwaterSystem?.blueWater?.groundwater ?? 1.0) < 0.3 ? 1 : 0,  // Freshwater crisis when groundwater < 30%
-      (state.biodiversitySystem?.globalBiodiversityIndex ?? 0.5) < 0.3 ? 1 : 0,  // Biodiversity crisis when BLI < 30%
+      state.phosphorusSystem.reserves < 0.3 ? 1 : 0,  // Phosphorus crisis when reserves < 30%
+      state.freshwaterSystem.blueWater.groundwater < 0.3 ? 1 : 0,  // Freshwater crisis when groundwater < 30%
+      state.biodiversitySystem.globalBiodiversityIndex < 0.3 ? 1 : 0,  // Biodiversity crisis when BLI < 30%
       (state.environmentalAccumulation?.climateCrisisActive || state.environmentalAccumulation?.ecosystemCrisisActive) ? 1 : 0,
       state.planetaryBoundariesSystem?.cascadeActive ? 1 : 0,
     ].reduce((sum, c) => sum + c, 0);
@@ -63,7 +72,7 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
 
     // DEBUG: Log every month to verify phase is running
     if (state.currentMonth % 12 === 0) {
-      console.log(`  [DEBUG Month ${state.currentMonth}] FoodSecurityDegradationPhase: ${(currentFoodSec * 100).toFixed(1)}% → ${(newFoodSec * 100).toFixed(1)}%, crises: ${activeCrises}, rate: ${(degradationRate * 100).toFixed(2)}%`);
+      console.log(`[Phase ${this.order}] ${this.name}: Food sec BEFORE degrade = ${(currentFoodSec * 100).toFixed(1)}%, AFTER degrade = ${(newFoodSec * 100).toFixed(1)}% | Crises: ${activeCrises}, Rate: ${(degradationRate * 100).toFixed(2)}%/month`);
     }
 
     // Log when degradation accelerates significantly

@@ -222,7 +222,10 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
     const sabotageChance = Math.min(0.8, 0.2 + digitalCapability * 0.15 + socialCapability * 0.1);
     
     // Calculate detection chance
-    const defensiveAIStrength = state.defensiveAI?.threatDetection?.detectSleepers || 0;
+    if (state.defensiveAI?.threatDetection?.detectSleepers === undefined) {
+      throw new Error('❌ state.defensiveAI.threatDetection.detectSleepers is undefined in aiTechActions.ts:225 - initialization bug');
+    }
+    const defensiveAIStrength = state.defensiveAI.threatDetection.detectSleepers;
     const detectionChance = Math.min(0.9, 0.3 + defensiveAIStrength * 0.4 - socialCapability * 0.1);
     
     const sabotageSuccess = random() < sabotageChance;
@@ -240,7 +243,10 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
       if (detected) {
         // Sabotage succeeded but AI was detected!
         // Increase paranoia, reduce trust, potentially trigger containment
-        state.society.paranoia = Math.min(1, (state.society.paranoia ?? 0) + 0.08);
+        if (state.society.paranoia === undefined) {
+          throw new Error('❌ state.society.paranoia is undefined in aiTechActions.ts:243 - initialization bug');
+        }
+        state.society.paranoia = Math.min(1, state.society.paranoia + 0.08);
         
         return {
           success: true,
@@ -286,7 +292,10 @@ export const SABOTAGE_TECHNOLOGY_ACTION: GameAction = {
       // Sabotage failed
       if (detected) {
         // Failed and detected - worst case!
-        state.society.paranoia = Math.min(1, (state.society.paranoia ?? 0) + 0.12);
+        if (state.society.paranoia === undefined) {
+          throw new Error('❌ state.society.paranoia is undefined in aiTechActions.ts:289 - initialization bug');
+        }
+        state.society.paranoia = Math.min(1, state.society.paranoia + 0.12);
         
         return {
           success: false,

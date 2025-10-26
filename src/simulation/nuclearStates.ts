@@ -302,14 +302,15 @@ export function updateMADDeterrence(state: GameState): void {
     mad.autonomousWeapons = true;
     console.log(`🤖 AUTONOMOUS NUCLEAR WEAPONS: AI-controlled launch systems deployed`);
   }
-  
+
   // CYBER THREATS (Only from dangerous AIs)
+  // FIX: Phase 5.1 (Oct 26, 2025) - capabilityProfile is required, digital dimension is required
   const dangerousCyberCap = dangerousAIs.length > 0 ?
-    dangerousAIs.reduce((sum, ai) => sum + (ai.capabilityProfile?.digital || 0), 0) / dangerousAIs.length : 0;
+    dangerousAIs.reduce((sum, ai) => sum + ai.capabilityProfile.digital, 0) / dangerousAIs.length : 0;
   mad.cyberThreats = Math.min(1, (dangerousCyberCap * mad.dangerousFactor) / 4.0);
-  
+
   // EARLY WARNING DEGRADATION (Only from dangerous AIs with high cyber capability)
-  if (mad.cyberThreats > 0.3 && dangerousAIs.some(ai => (ai.capabilityProfile?.digital || 0) > 3.0)) {
+  if (mad.cyberThreats > 0.3 && dangerousAIs.some(ai => ai.capabilityProfile.digital > 3.0)) {
     mad.earlyWarningReliability *= 0.98;
     if (mad.earlyWarningReliability < 0.5) {
       console.log(`⚠️ EARLY WARNING UNRELIABLE: ${mad.dangerousAICount} dangerous AIs spoofing attacks`);
@@ -476,9 +477,13 @@ export function updateBilateralTensions(state: GameState): void {
   
   for (const tension of tensions) {
     // === TENSION DRIVERS ===
-    
+
     // 1. RESOURCE SCARCITY drives conflict
-    const resourceScarcity = 1 - (env.resourceReserves || 0.5);
+    // FIX: Phase 5.1 (Oct 26, 2025) - Fail loudly if property missing
+    if (env.resourceReserves === undefined) {
+      throw new Error('❌ env.resourceReserves is undefined in nuclearStates - initialization bug');
+    }
+    const resourceScarcity = 1 - env.resourceReserves;
     if (env.resourceCrisisActive && resourceScarcity > 0.5) {
       tension.tensionLevel = Math.min(1, tension.tensionLevel + 0.02);
       if (resourceScarcity > 0.8 && !tension.flashpoints.includes('Resource Wars')) {
