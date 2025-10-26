@@ -190,28 +190,28 @@ jobs:
           PHASE_COUNT: ${{ steps.changes.outputs.phase_count }}
           DOC_COUNT: ${{ steps.changes.outputs.doc_count }}
         run: |
-          # Build prompt with file contents expanded
-          cat > senior_dev_checklist_prompt.txt <<EOF
+          # Build prompt template (quoted heredoc prevents bash execution of user content)
+          cat > senior_dev_checklist_prompt.txt <<'TEMPLATE_EOF'
           You are reviewing a PR for a research simulation project. You have Claude Code SDK tools available.
 
           **YOUR CONTEXT (fresh session, NO prior conversation):**
 
           **ORIGINAL FEATURE GOAL:**
-          $(cat original_feature_goal.txt)
+          ORIGINAL_GOAL_PLACEHOLDER
 
           **WHAT WAS ACTUALLY CHANGED:**
-          PR: ${PR_TITLE}
-          Branch: ${PR_BRANCH}
+          PR: PR_TITLE_PLACEHOLDER
+          Branch: PR_BRANCH_PLACEHOLDER
 
           Files changed:
-          - Simulation: ${SIM_COUNT}
-          - Tests: ${TEST_COUNT}
-          - Types: ${TYPE_COUNT}
-          - Phases: ${PHASE_COUNT}
-          - Docs: ${DOC_COUNT}
+          - Simulation: SIM_COUNT_PLACEHOLDER
+          - Tests: TEST_COUNT_PLACEHOLDER
+          - Types: TYPE_COUNT_PLACEHOLDER
+          - Phases: PHASE_COUNT_PLACEHOLDER
+          - Docs: DOC_COUNT_PLACEHOLDER
 
           Git diff preview (first 500 lines):
-          $(cat diff_preview.txt)
+          DIFF_PREVIEW_PLACEHOLDER
 
           **YOUR TASK:**
           Answer these 20 senior developer questions. You have Read/Edit/Bash tools - USE THEM to investigate:
@@ -294,7 +294,20 @@ jobs:
           - For phase questions: READ the actual phase files to understand dependencies
           - Save answers to `checklist_answers.md`
           - After saving, TERMINATE (don't add commentary)
-          EOF
+          TEMPLATE_EOF
+
+          # Replace placeholders with actual values
+          sed -i'' -e "s|PR_TITLE_PLACEHOLDER|$PR_TITLE|g" senior_dev_checklist_prompt.txt
+          sed -i'' -e "s|PR_BRANCH_PLACEHOLDER|$PR_BRANCH|g" senior_dev_checklist_prompt.txt
+          sed -i'' -e "s|SIM_COUNT_PLACEHOLDER|$SIM_COUNT|g" senior_dev_checklist_prompt.txt
+          sed -i'' -e "s|TEST_COUNT_PLACEHOLDER|$TEST_COUNT|g" senior_dev_checklist_prompt.txt
+          sed -i'' -e "s|TYPE_COUNT_PLACEHOLDER|$TYPE_COUNT|g" senior_dev_checklist_prompt.txt
+          sed -i'' -e "s|PHASE_COUNT_PLACEHOLDER|$PHASE_COUNT|g" senior_dev_checklist_prompt.txt
+          sed -i'' -e "s|DOC_COUNT_PLACEHOLDER|$DOC_COUNT|g" senior_dev_checklist_prompt.txt
+
+          # Replace file content placeholders (using perl for multi-line replacement)
+          perl -i -pe 'BEGIN{undef $/;} s/ORIGINAL_GOAL_PLACEHOLDER/`cat original_feature_goal.txt`/smge' senior_dev_checklist_prompt.txt
+          perl -i -pe 'BEGIN{undef $/;} s/DIFF_PREVIEW_PLACEHOLDER/`cat diff_preview.txt`/smge' senior_dev_checklist_prompt.txt
 
       - name: Read Senior Dev Checklist Prompt
         id: read_prompt
