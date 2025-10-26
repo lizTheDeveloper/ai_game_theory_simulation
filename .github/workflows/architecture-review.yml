@@ -101,23 +101,32 @@ jobs:
           git diff --stat origin/main...HEAD > diff_stats.txt
 
       - name: Build Architecture Review Prompt
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+          PR_BODY: ${{ steps.pr_context.outputs.body }}
+          SIM_COUNT: ${{ steps.changes.outputs.sim_count }}
+          PHASE_COUNT: ${{ steps.changes.outputs.phase_count }}
+          TYPE_COUNT: ${{ steps.changes.outputs.type_count }}
+          ENGINE_COUNT: ${{ steps.changes.outputs.engine_count }}
         run: |
-          cat > architecture_review_prompt.txt << 'EOF'
+          # Build prompt with file contents expanded
+          cat > architecture_review_prompt.txt <<EOF
           You are the architecture-skeptic agent from .claude/agents/architecture-skeptic.md
 
           **YOUR CONTEXT:**
-          - PR: ${{ github.event.pull_request.title }}
-          - Branch: ${{ github.event.pull_request.head.ref }}
+          - PR: ${PR_TITLE}
+          - Branch: ${PR_BRANCH}
           - You have NO prior conversation history (fresh agent instance)
 
           **PR DESCRIPTION:**
-          ${{ steps.pr_context.outputs.body }}
+          ${PR_BODY}
 
           **CHANGED FILES:**
-          - Simulation files: ${{ steps.changes.outputs.sim_count }}
-          - Phase files: ${{ steps.changes.outputs.phase_count }}
-          - Type files: ${{ steps.changes.outputs.type_count }}
-          - Engine files: ${{ steps.changes.outputs.engine_count }}
+          - Simulation files: ${SIM_COUNT}
+          - Phase files: ${PHASE_COUNT}
+          - Type files: ${TYPE_COUNT}
+          - Engine files: ${ENGINE_COUNT}
 
           **FILE LISTS:**
           Simulation: $(cat simulation_files.txt)

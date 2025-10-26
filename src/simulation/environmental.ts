@@ -491,7 +491,7 @@ function checkEnvironmentalCrises(state: GameState): void {
       0.015,
       'Climate catastrophe - extreme weather/famine (vulnerable regions)',
       0.30,
-      'climate',
+      'disasters',
       {
         causes: [
           { cause: RootCause.climate, weight: climateWeights.climate, confidence: 'MEDIUM' },

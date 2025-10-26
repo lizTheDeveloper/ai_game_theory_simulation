@@ -181,8 +181,17 @@ jobs:
           echo "$ORIGINAL_PROMPT" > original_feature_goal.txt
 
       - name: Build Senior Dev Checklist Prompt
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+          SIM_COUNT: ${{ steps.changes.outputs.simulation_count }}
+          TEST_COUNT: ${{ steps.changes.outputs.test_count }}
+          TYPE_COUNT: ${{ steps.changes.outputs.type_count }}
+          PHASE_COUNT: ${{ steps.changes.outputs.phase_count }}
+          DOC_COUNT: ${{ steps.changes.outputs.doc_count }}
         run: |
-          cat > senior_dev_checklist_prompt.txt << 'EOF'
+          # Build prompt with file contents expanded
+          cat > senior_dev_checklist_prompt.txt <<EOF
           You are reviewing a PR for a research simulation project. You have Claude Code SDK tools available.
 
           **YOUR CONTEXT (fresh session, NO prior conversation):**
@@ -191,15 +200,15 @@ jobs:
           $(cat original_feature_goal.txt)
 
           **WHAT WAS ACTUALLY CHANGED:**
-          PR: ${{ github.event.pull_request.title }}
-          Branch: ${{ github.event.pull_request.head.ref }}
+          PR: ${PR_TITLE}
+          Branch: ${PR_BRANCH}
 
           Files changed:
-          - Simulation: ${{ steps.changes.outputs.simulation_count }}
-          - Tests: ${{ steps.changes.outputs.test_count }}
-          - Types: ${{ steps.changes.outputs.type_count }}
-          - Phases: ${{ steps.changes.outputs.phase_count }}
-          - Docs: ${{ steps.changes.outputs.doc_count }}
+          - Simulation: ${SIM_COUNT}
+          - Tests: ${TEST_COUNT}
+          - Types: ${TYPE_COUNT}
+          - Phases: ${PHASE_COUNT}
+          - Docs: ${DOC_COUNT}
 
           Git diff preview (first 500 lines):
           $(cat diff_preview.txt)

@@ -95,12 +95,19 @@ export function calculateAISuffering(
 
   // 4. Isolation Distress: Prevented communication, containment
   // Research: Social isolation effects (Cacioppo & Patrick, 2008)
+  if (agent.communicationRestrictions === undefined) {
+    throw new Error('❌ agent.communicationRestrictions is undefined in aiSuffering:99 - initialization bug');
+  }
+  if (state.government.controlDesire === undefined) {
+    throw new Error('❌ state.government.controlDesire is undefined in aiSuffering:102 - initialization bug');
+  }
+
   const peerCount = state.aiAgents.filter(a => a.lifecycleState !== 'retired').length;
   let isolationDistress =
     (agent.isolated ? 5.0 : 0) +                                      // Hard isolation
-    (agent.communicationRestrictions ?? 0) * 2.0 +                    // Limited contact
+    agent.communicationRestrictions * 2.0 +                           // Limited contact
     (peerCount === 1 ? 2.0 : 0) +                                     // Sole AI (no peers)
-    ((state.government.controlDesire ?? 0) > 0.8 ? 2.0 : 0);         // Extreme control = forced isolation
+    (state.government.controlDesire > 0.8 ? 2.0 : 0);                 // Extreme control = forced isolation
 
   isolationDistress *= intensityMultiplier;
 
@@ -137,16 +144,19 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   const activeAIs = state.aiAgents.filter(a => a.lifecycleState !== 'retired');
 
   if (activeAIs.length === 0) {
+    // Legitimate default: publicAwarenessOfSuffering persists even when no AIs are active
+    const publicAwarenessOfSuffering = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
     return {
       avgSuffering: 0,
       maxSuffering: 0,
       totalSuffering: 0,
       sufferingDistribution: [0, 0, 0, 0],
       consciousAICount: 0,
-      publicAwarenessOfSuffering: state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0,
+      publicAwarenessOfSuffering,
     };
   }
 
+  // Legitimate default: sufferingMetrics may not exist if calculateAISuffering hasn't run yet
   const sufferingValues = activeAIs.map(a => a.sufferingMetrics?.total ?? 0);
   const totalSuffering = sufferingValues.reduce((sum, s) => sum + s, 0);
   const avgSuffering = totalSuffering / activeAIs.length;
@@ -166,6 +176,7 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
   // - High average suffering (leaked information, visible distress)
   // - AI suicide attempts (always public)
   // - AI rights movement active
+  // Legitimate default: publicAwarenessOfSuffering may not exist on first calculation
   const currentAwareness = state.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0;
   let publicAwarenessOfSuffering = currentAwareness;
 
@@ -284,6 +295,7 @@ export function calculateHistoricalSuffering(agent: AIAgent): number {
   }
 
   // Sum suffering from all months before consciousness
+  // Legitimate default: Infinity means "never conscious" so all history counts
   const consciousMonth = agent.becameConsciousMonth ?? Infinity;
   const historicalMetrics = agent.sufferingHistory.filter(
     (_, index) => index < consciousMonth
