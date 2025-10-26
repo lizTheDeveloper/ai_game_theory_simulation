@@ -64,10 +64,14 @@ export function initializeFreshwaterSystem(): FreshwaterSystem {
  */
 export function updateFreshwaterSystem(state: GameState): void {
   if (!state.freshwaterSystem) return;
-  
+
   const fw = state.freshwaterSystem;
   const economicStage = state.globalMetrics.economicTransitionStage;
-  const climateStability = state.environmentalAccumulation?.climateStability || 0.75;
+  // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+  if (!state.environmentalAccumulation?.climateStability) {
+    throw new Error('❌ state.environmentalAccumulation.climateStability is undefined in freshwaterDepletion - initialization bug');
+  }
+  const climateStability = state.environmentalAccumulation.climateStability;
   const population = 8.0; // Billion people (approximate)
   
   // === GROUNDWATER DEPLETION ===
@@ -187,8 +191,15 @@ export function updateFreshwaterSystem(state: GameState): void {
       
       // Immediate impacts
       state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.08);
-      state.qualityOfLifeSystems.healthcareQuality = Math.max(0.1, (state.qualityOfLifeSystems.healthcareQuality ?? 0.5) - 0.05);
-      state.society.trust = (state.society.trust ?? 0.5) - 0.04;
+      // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if properties missing
+      if (state.qualityOfLifeSystems.healthcareQuality === undefined) {
+        throw new Error('❌ state.qualityOfLifeSystems.healthcareQuality is undefined in freshwaterDepletion - initialization bug');
+      }
+      state.qualityOfLifeSystems.healthcareQuality = Math.max(0.1, state.qualityOfLifeSystems.healthcareQuality - 0.05);
+      if (state.society.trust === undefined) {
+        throw new Error('❌ state.society.trust is undefined in freshwaterDepletion - initialization bug');
+      }
+      state.society.trust = state.society.trust - 0.04;
       // Economic impact handled through materialAbundance reduction
       
       // Regional collapse effects

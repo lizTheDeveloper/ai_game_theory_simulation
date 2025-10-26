@@ -43,10 +43,17 @@ export function initializeOceanAcidificationSystem(): OceanAcidificationSystem {
  */
 export function updateOceanAcidificationSystem(state: GameState): void {
   if (!state.oceanAcidificationSystem) return;
-  
+
   const oa = state.oceanAcidificationSystem;
-  const climateStability = state.environmentalAccumulation?.climateStability || 0.75;
-  const pollutionLevel = state.environmentalAccumulation?.pollutionLevel || 0.30;
+  // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if properties missing
+  if (!state.environmentalAccumulation?.climateStability) {
+    throw new Error('❌ state.environmentalAccumulation.climateStability is undefined in oceanAcidification - initialization bug');
+  }
+  if (!state.environmentalAccumulation?.pollutionLevel) {
+    throw new Error('❌ state.environmentalAccumulation.pollutionLevel is undefined in oceanAcidification - initialization bug');
+  }
+  const climateStability = state.environmentalAccumulation.climateStability;
+  const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
   const economicStage = state.globalMetrics.economicTransitionStage;
   
   // Track time since breach

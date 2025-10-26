@@ -111,7 +111,11 @@ export function updatePhosphorusSystem(state: GameState): void {
       
       // Immediate QoL impact
       state.qualityOfLifeSystems.materialAbundance = Math.max(0.1, state.qualityOfLifeSystems.materialAbundance - 0.05);
-      state.society.trust = (state.society.trust ?? 0.5) - 0.03;
+      // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+      if (state.society.trust === undefined) {
+        throw new Error('❌ state.society.trust is undefined in phosphorusDepletion - initialization bug');
+      }
+      state.society.trust = state.society.trust - 0.03;
       // Note: economicGrowthRate not in GlobalMetrics, skip adjustment
     }
   } else {

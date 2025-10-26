@@ -111,7 +111,11 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     console.log(`   PFAS prevalence: ${(ne.pfasPrevalence * 100).toFixed(0)}%`);
 
     // Health impact
-    state.qualityOfLifeSystems.health = Math.max(0.3, (state.qualityOfLifeSystems.health ?? 0.5) - 0.08);
+    // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+    if (state.qualityOfLifeSystems.health === undefined) {
+      throw new Error('❌ state.qualityOfLifeSystems.health is undefined in novelEntities line 114 - initialization bug');
+    }
+    state.qualityOfLifeSystems.health = Math.max(0.3, state.qualityOfLifeSystems.health - 0.08);
 
     // Population impact: Reproductive crisis causes despair, failed fertility treatments (0.05-0.1% casualties)
     // TRULY GLOBAL: PFAS in 99% of human blood = everyone exposed (100% of world)
@@ -131,7 +135,11 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   // === BIOACCUMULATION ===
   // Chemicals concentrate up food chain (apex predators hit hardest)
   // Interacts with biodiversity (more species = more bioaccumulation pathways)
-  const biodiversity = state.environmentalAccumulation?.biodiversityIndex || 0.35;
+  // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+  if (!state.environmentalAccumulation?.biodiversityIndex) {
+    throw new Error('❌ state.environmentalAccumulation.biodiversityIndex is undefined in novelEntities - initialization bug');
+  }
+  const biodiversity = state.environmentalAccumulation.biodiversityIndex;
   ne.bioaccumulationFactor = ne.syntheticChemicalLoad * (0.5 + biodiversity * 0.5);
   
   // Bioaccumulation collapse (apex predators failing)
@@ -182,7 +190,11 @@ export function updateNovelEntitiesSystem(state: GameState): void {
 
     // Health QoL impact
     const healthImpact = (ne.chronicDiseasePrevalence - 0.40) * 0.3; // Up to 12% impact
-    state.qualityOfLifeSystems.health = Math.max(0.2, (state.qualityOfLifeSystems.health ?? 0.5) - healthImpact);
+    // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+    if (state.qualityOfLifeSystems.health === undefined) {
+      throw new Error('❌ state.qualityOfLifeSystems.health is undefined in novelEntities line 185 - initialization bug');
+    }
+    state.qualityOfLifeSystems.health = Math.max(0.2, state.qualityOfLifeSystems.health - healthImpact);
 
     // Population impact: Chronic disease epidemic causes cancer/autoimmune deaths (0.3-0.5% casualties)
     // TRULY GLOBAL: Chemical exposure is global (100% of world affected)
@@ -203,15 +215,23 @@ export function updateNovelEntitiesSystem(state: GameState): void {
   // Monthly degradation from chemical exposure
   if (ne.syntheticChemicalLoad > 0.50) {
     const monthlyHealthImpact = (ne.syntheticChemicalLoad - 0.50) * 0.0005; // Up to 0.025%/month
-    state.qualityOfLifeSystems.health = Math.max(0, (state.qualityOfLifeSystems.health ?? 0.5) - monthlyHealthImpact);
+    // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+    if (state.qualityOfLifeSystems.health === undefined) {
+      throw new Error('❌ state.qualityOfLifeSystems.health is undefined in novelEntities line 206 - initialization bug');
+    }
+    state.qualityOfLifeSystems.health = Math.max(0, state.qualityOfLifeSystems.health - monthlyHealthImpact);
   }
-  
+
   // === EXTINCTION PATHWAY ===
   // Slow collapse: Reproductive failure + chronic disease = population decline
   // Timeline: 100-200 years (1200-2400 months)
-  
+
   if (ne.reproductiveHealthDecline > 0.70 && ne.chronicDiseasePrevalence > 0.60) {
-    const healthQoL = state.qualityOfLifeSystems.health ?? 0.5;
+    // FIX: Phase 3.2 (Oct 25, 2025) - Fail loudly if property missing
+    if (state.qualityOfLifeSystems.health === undefined) {
+      throw new Error('❌ state.qualityOfLifeSystems.health is undefined in novelEntities line 214 - initialization bug');
+    }
+    const healthQoL = state.qualityOfLifeSystems.health;
 
     // Check if detoxification technologies deployed
     const hasDetox = (ne.greenChemistryDeployment + ne.bioremediationDeployment + ne.chemicalBansDeployment) > 1.5;
