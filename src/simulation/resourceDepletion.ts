@@ -22,7 +22,7 @@ import {
   TimberResource,
   CO2System,
 } from '../types/resources';
-import { assertEconomicStage, assertStateProperty } from './utils/assertions';
+import { assertEconomicStage, assertStateProperty, assertFinite } from './utils/assertions';
 
 // Helper to add events to state
 function addEvent(state: GameState, event: Omit<GameEvent, 'id' | 'timestamp'>): void {
@@ -48,14 +48,29 @@ export function updateResourceEconomy(state: GameState): void {
   updateRenewableRegeneration(state, resources);
   updateEnergySystem(state, resources);
   updateCO2System(state, resources);
+
+  // FIX (Oct 26, 2025): Verify annualEmissions persists through remaining updates
+  if (!isFinite(resources.co2.annualEmissions)) {
+    console.error(`❌ annualEmissions corrupted IMMEDIATELY after updateCO2System (month ${state.currentMonth})`);
+    console.error(`   Value: ${resources.co2.annualEmissions}`);
+    throw new Error(`❌ annualEmissions NaN after updateCO2System - corruption in updateResourceEconomy`);
+  }
+
   updateOceanHealth(state, resources);
   updateIndustryOpposition(state, resources);
-  
+
   // Calculate aggregates
   updateAggregates(state, resources);
-  
+
   // Check for critical events
   checkResourceEvents(state, resources);
+
+  // FIX (Oct 26, 2025): Final check at end of updateResourceEconomy
+  if (!isFinite(resources.co2.annualEmissions)) {
+    console.error(`❌ annualEmissions corrupted at END of updateResourceEconomy (month ${state.currentMonth})`);
+    console.error(`   Value: ${resources.co2.annualEmissions}`);
+    throw new Error(`❌ annualEmissions NaN at end of updateResourceEconomy`);
+  }
 }
 
 // ============================================================================
@@ -298,10 +313,20 @@ function updateEnergySystem(state: GameState, resources: ResourceEconomy): void 
   energy.totalDemand = 95 + economicStage * 10; // 95 → 125 units
   
   // Production from each source (limited by capacity and fuel availability)
-  energy.sources.oil = Math.min(energy.capacity.oil, energy.sources.oil);
-  energy.sources.coal = Math.min(energy.capacity.coal, energy.sources.coal);
-  energy.sources.naturalGas = Math.min(energy.capacity.naturalGas, energy.sources.naturalGas);
-  
+  // FIX (Oct 26, 2025): Assert finite values to catch NaN propagation
+  energy.sources.oil = assertFinite(
+    Math.min(energy.capacity.oil, energy.sources.oil),
+    { location: 'updateEnergySystem[oil capping]', valueName: 'energy.sources.oil', month: state.currentMonth }
+  );
+  energy.sources.coal = assertFinite(
+    Math.min(energy.capacity.coal, energy.sources.coal),
+    { location: 'updateEnergySystem[coal capping]', valueName: 'energy.sources.coal', month: state.currentMonth }
+  );
+  energy.sources.naturalGas = assertFinite(
+    Math.min(energy.capacity.naturalGas, energy.sources.naturalGas),
+    { location: 'updateEnergySystem[gas capping]', valueName: 'energy.sources.naturalGas', month: state.currentMonth }
+  );
+
   // Fossil sources decline as fuels deplete
   if (resources.oil.reserves < 0.1) energy.sources.oil *= 0.9; // 10% reduction per month when nearly depleted
   if (resources.coal.reserves < 0.1) energy.sources.coal *= 0.9;
@@ -348,23 +373,80 @@ function updateEnergySystem(state: GameState, resources: ResourceEconomy): void 
 function updateCO2System(state: GameState, resources: ResourceEconomy): void {
   const co2 = resources.co2;
   const energy = resources.energy;
-  
+
+  // FIX (Oct 26, 2025): Check if annualEmissions is already NaN on entry
+  if (!isFinite(co2.annualEmissions)) {
+    console.error(`❌ annualEmissions is NaN at START of updateCO2System (month ${state.currentMonth})`);
+    console.error(`   This means it was corrupted by a previous phase`);
+    console.error(`   Current value: ${co2.annualEmissions}`);
+    throw new Error(`❌ annualEmissions corrupted by previous phase - initialization or phase bug`);
+  }
+
   // === EMISSIONS FROM FOSSIL FUEL USE ===
   
   // Calculate emissions (Gt CO2 per month)
   // Scale: 1 unit of monthly extraction ≈ 1% of global reserves ≈ 3 Gt CO2
+  // FIX (Oct 26, 2025): Assert inputs are finite before calculation
+  if (!isFinite(resources.oil.monthlyConsumption) || !isFinite(resources.oil.co2PerUnit)) {
+    throw new Error(`❌ Oil inputs not finite: consumption=${resources.oil.monthlyConsumption}, co2PerUnit=${resources.oil.co2PerUnit} (month ${state.currentMonth})`);
+  }
+  if (!isFinite(resources.coal.monthlyConsumption) || !isFinite(resources.coal.co2PerUnit)) {
+    throw new Error(`❌ Coal inputs not finite: consumption=${resources.coal.monthlyConsumption}, co2PerUnit=${resources.coal.co2PerUnit} (month ${state.currentMonth})`);
+  }
+  if (!isFinite(resources.naturalGas.monthlyConsumption) || !isFinite(resources.naturalGas.co2PerUnit)) {
+    throw new Error(`❌ Gas inputs not finite: consumption=${resources.naturalGas.monthlyConsumption}, co2PerUnit=${resources.naturalGas.co2PerUnit} (month ${state.currentMonth})`);
+  }
+
   const oilEmissions = resources.oil.monthlyConsumption * resources.oil.co2PerUnit * 3.0;
   const coalEmissions = resources.coal.monthlyConsumption * resources.coal.co2PerUnit * 3.0;
   const gasEmissions = resources.naturalGas.monthlyConsumption * resources.naturalGas.co2PerUnit * 3.0;
-  
+
   // Methane leakage (CH4 is 80x worse than CO2 over 20 years)
-  const methaneEmissions = resources.naturalGas.monthlyConsumption * 
+  if (!isFinite(resources.naturalGas.methaneLeakage)) {
+    throw new Error(`❌ Methane leakage not finite: ${resources.naturalGas.methaneLeakage} (month ${state.currentMonth})`);
+  }
+  const methaneEmissions = resources.naturalGas.monthlyConsumption *
     resources.naturalGas.methaneLeakage * 80;
-  
+
   // Total monthly emissions (Gt CO2 equivalent)
   const monthlyEmissions = oilEmissions + coalEmissions + gasEmissions + methaneEmissions;
-  co2.annualEmissions = monthlyEmissions * 12;
-  
+
+  // Catch NaN at source with detailed debugging
+  if (!isFinite(monthlyEmissions)) {
+    console.error(`❌ NaN detected in CO2 emissions calculation (month ${state.currentMonth}):`);
+    console.error(`   oil: ${resources.oil.monthlyConsumption} * ${resources.oil.co2PerUnit} * 3.0 = ${oilEmissions}`);
+    console.error(`   coal: ${resources.coal.monthlyConsumption} * ${resources.coal.co2PerUnit} * 3.0 = ${coalEmissions}`);
+    console.error(`   gas: ${resources.naturalGas.monthlyConsumption} * ${resources.naturalGas.co2PerUnit} * 3.0 = ${gasEmissions}`);
+    console.error(`   methane: ${resources.naturalGas.monthlyConsumption} * ${resources.naturalGas.methaneLeakage} * 80 = ${methaneEmissions}`);
+    console.error(`   renewablePercentage: ${resources.energy.renewablePercentage}`);
+    console.error(`   energy.sources.oil: ${resources.energy.sources.oil}`);
+    console.error(`   energy.sources.coal: ${resources.energy.sources.coal}`);
+    console.error(`   energy.sources.solar: ${resources.energy.sources.solar}`);
+    console.error(`   energy.sources.wind: ${resources.energy.sources.wind}`);
+    console.error(`   energy.totalProduction: ${resources.energy.totalProduction}`);
+    throw new Error(`❌ Non-finite monthlyEmissions in updateCO2System`);
+  }
+
+  // FIX (Oct 26, 2025): Catch division/multiplication edge cases
+  const calculatedAnnual = monthlyEmissions * 12;
+  if (!isFinite(calculatedAnnual)) {
+    console.error(`❌ Annual emissions calculation produced NaN (month ${state.currentMonth}):`);
+    console.error(`   monthlyEmissions: ${monthlyEmissions}`);
+    console.error(`   monthlyEmissions * 12: ${calculatedAnnual}`);
+    throw new Error(`❌ Annual emissions calculation is NaN`);
+  }
+
+  co2.annualEmissions = calculatedAnnual;
+
+  // Verify it stuck
+  if (!isFinite(co2.annualEmissions)) {
+    console.error(`❌ annualEmissions became NaN AFTER assignment (month ${state.currentMonth}):`);
+    console.error(`   calculatedAnnual: ${calculatedAnnual}`);
+    console.error(`   co2.annualEmissions: ${co2.annualEmissions}`);
+    console.error(`   co2 object: ${JSON.stringify(co2).substring(0, 200)}`);
+    throw new Error(`❌ annualEmissions is NaN after valid calculation`);
+  }
+
   // === ATMOSPHERIC CO2 ===
   
   // Natural sinks absorb some emissions (ocean + land)

@@ -25,9 +25,10 @@ export { updateQualityOfLifeSystems, initializeQualityOfLifeSystems } from './co
 export { calculateQualityOfLife, calculateQualityOfLifeOptimized, DIMENSION_WEIGHTS, validateQoLSystems } from './aggregation';
 
 // === SURVIVAL FUNDAMENTALS ===
+// FIX (Oct 25, 2025): Removed calculateFoodSecurity (now regional only)
+// FIX (Oct 25, 2025): calculateSurvivalFundamentals renamed to calculateNonFoodSurvivalMetrics
 export {
-  calculateSurvivalFundamentals,
-  calculateFoodSecurity,
+  calculateNonFoodSurvivalMetrics,
   calculateWaterSecurity,
   calculateThermalHabitability,
   calculateShelterSecurity

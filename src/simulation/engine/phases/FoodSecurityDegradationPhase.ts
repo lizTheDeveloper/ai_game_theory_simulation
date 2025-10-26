@@ -23,24 +23,17 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly order = 19.7;  // AFTER QualityOfLifePhase (19.5), BEFORE population (20.5)
 
   execute(state: GameState, _rng: RNGFunction): PhaseResult {
-    // Food security degradation runs once per simulation step (once per month)
-    // Each engine.step() represents one month advancing
-    // Degradation rates are monthly (1-15% per month) - no need to gate on day
+    // FIX (Oct 25, 2025 REGIONALIZATION): Food security is now REGIONAL
+    // Apply crisis degradation to EACH REGION, not global
+    // Vulnerable regions degrade faster than resilient ones
 
-    // Only degrade if survivalFundamentals exists
-    if (!state.qualityOfLifeSystems?.survivalFundamentals) {
+    // Check if regional populations exist
+    const pop = state.humanPopulationSystem;
+    if (!pop.regionalPopulations || pop.regionalPopulations.length === 0) {
       return { events: [] };
     }
 
-    const currentFoodSec = state.qualityOfLifeSystems.survivalFundamentals.foodSecurity;
-
-    // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
-    // This happens EVERY MONTH when crises are active, not just during cascades
-
-    // Baseline degradation: 1% per month in normal conditions
-    let degradationRate = 0.01;
-
-    // Count active crises (multiple systems can fail simultaneously)
+    // Validate required systems
     if (state.phosphorusSystem === undefined || state.phosphorusSystem.reserves === undefined) {
       throw new Error('❌ state.phosphorusSystem or state.phosphorusSystem.reserves is undefined in FoodSecurityDegradationPhase:45 - initialization bug');
     }
@@ -50,44 +43,53 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
     if (state.biodiversitySystem === undefined || state.biodiversitySystem.globalBiodiversityIndex === undefined) {
       throw new Error('❌ state.biodiversitySystem or state.biodiversitySystem.globalBiodiversityIndex is undefined in FoodSecurityDegradationPhase:47 - initialization bug');
     }
-    const activeCrises = [
-      state.phosphorusSystem.reserves < 0.3 ? 1 : 0,  // Phosphorus crisis when reserves < 30%
-      state.freshwaterSystem.blueWater.groundwater < 0.3 ? 1 : 0,  // Freshwater crisis when groundwater < 30%
-      state.biodiversitySystem.globalBiodiversityIndex < 0.3 ? 1 : 0,  // Biodiversity crisis when BLI < 30%
-      (state.environmentalAccumulation?.climateCrisisActive || state.environmentalAccumulation?.ecosystemCrisisActive) ? 1 : 0,
-      state.planetaryBoundariesSystem?.cascadeActive ? 1 : 0,
-    ].reduce((sum, c) => sum + c, 0);
 
-    // Each active crisis increases degradation by 50% (compound effect)
-    // Example: 2 crises → 1% × 1.5² = 2.25%/month
-    // Example: 3 crises → 1% × 1.5³ = 3.375%/month
-    if (activeCrises > 0) {
-      degradationRate *= Math.pow(1.5, activeCrises);
+    // Apply degradation to each region
+    for (const region of pop.regionalPopulations) {
+      // Count active crises, weighted by regional vulnerability
+      const climateWeight = region.climateVulnerability;
+      const resourceWeight = region.resourceVulnerability;
+
+      const activeCrises = [
+        state.phosphorusSystem.reserves < 0.3 ? resourceWeight : 0,  // Resource-dependent regions hit harder
+        state.freshwaterSystem.blueWater.groundwater < 0.3 ? climateWeight : 0,  // Climate-vulnerable regions hit harder
+        state.biodiversitySystem.globalBiodiversityIndex < 0.3 ? climateWeight : 0,  // Ecosystem-dependent regions hit harder
+        (state.environmentalAccumulation?.climateCrisisActive || state.environmentalAccumulation?.ecosystemCrisisActive) ? climateWeight : 0,
+        state.planetaryBoundariesSystem?.cascadeActive ? 1.0 : 0,  // Cascades affect all regions
+      ].reduce((sum, c) => sum + c, 0);
+
+      // Regional degradation rate (baseline 1% per month)
+      let degradationRate = 0.01;
+
+      // Each crisis level increases degradation by 50% (compound effect)
+      if (activeCrises > 0) {
+        degradationRate *= Math.pow(1.5, activeCrises);
+      }
+
+      // Cap at 15% per month
+      degradationRate = Math.min(0.15, degradationRate);
+
+      // Apply degradation to regional food security
+      const currentFood = region.foodSecurity;
+      const newFood = Math.max(0, currentFood * (1 - degradationRate));
+      region.foodSecurity = newFood;
+
+      // DEBUG: Log for each region annually
+      if (state.currentMonth % 12 === 0 && activeCrises > 0.5) {
+        console.log(`  [${region.name}] Food: ${(currentFood * 100).toFixed(1)}% → ${(newFood * 100).toFixed(1)}% | Crises: ${activeCrises.toFixed(2)}, Rate: ${(degradationRate * 100).toFixed(2)}%/mo`);
+      }
     }
 
-    // Apply degradation (cap at 15% per month to prevent unrealistic spikes)
-    degradationRate = Math.min(0.15, degradationRate);
+    // Recalculate global food security from regional (population-weighted average)
+    const totalPop = pop.regionalPopulations.reduce((sum, r) => sum + r.population, 0);
+    if (totalPop > 0 && state.qualityOfLifeSystems?.survivalFundamentals) {
+      const globalFoodSec = pop.regionalPopulations.reduce((sum, r) => sum + (r.foodSecurity * r.population), 0) / totalPop;
+      state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = globalFoodSec;
 
-    // FIX (Oct 25, 2025 PART 3): Apply infrastructure penalty HERE alongside crisis degradation
-    // Moved from calculateFoodSecurity() to avoid conflict with preservation logic
-    // Research: Tainter (1988) - complexity requires minimum population to maintain
-    const populationRatio = state.humanPopulationSystem.population / 8.0; // 8B baseline
-    const infrastructurePenalty = Math.min(1.0, Math.max(0.3, populationRatio)); // 30%-100% capacity
-
-    // Apply BOTH crisis degradation AND infrastructure penalty
-    const crisisDegradation = 1 - degradationRate;
-    const newFoodSec = Math.max(0, currentFoodSec * crisisDegradation * infrastructurePenalty);
-    state.qualityOfLifeSystems.survivalFundamentals.foodSecurity = newFoodSec;
-
-    // DEBUG: Log every month to verify phase is running
-    if (state.currentMonth % 12 === 0) {
-      console.log(`[Phase ${this.order}] ${this.name}: Food sec BEFORE = ${(currentFoodSec * 100).toFixed(1)}%, AFTER = ${(newFoodSec * 100).toFixed(1)}% | Crises: ${activeCrises}, CrisisRate: ${(degradationRate * 100).toFixed(2)}%/mo, InfraPenalty: ${(infrastructurePenalty * 100).toFixed(0)}%`);
-    }
-
-    // Log when degradation accelerates significantly
-    if (activeCrises >= 2 && degradationRate > 0.02) {
-      console.log(`  🌾 Food system under stress: ${activeCrises} active crises, degradation ${(degradationRate * 100).toFixed(1)}%/month`);
-      console.log(`     Food security: ${(currentFoodSec * 100).toFixed(1)}% → ${(newFoodSec * 100).toFixed(1)}%`);
+      // DEBUG: Log global aggregate annually
+      if (state.currentMonth % 12 === 0) {
+        console.log(`[Phase ${this.order}] ${this.name}: Global food security = ${(globalFoodSec * 100).toFixed(1)}% (pop-weighted avg of regional)`);
+      }
     }
 
     return { events: [] };

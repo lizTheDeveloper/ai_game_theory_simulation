@@ -62,16 +62,32 @@ function applyCleanEnergy(state: GameState, resources: ResourceEconomy, tech: Br
   const fossilDecline = renewableGrowth * 0.8; // Fossils decline as renewables grow
   
   // Transfer from fossil to renewable
+  // FIX (Oct 26, 2025): Add assertions to catch NaN propagation in energy sources
   const totalFossil = resources.energy.sources.oil + resources.energy.sources.coal + resources.energy.sources.naturalGas;
   if (totalFossil > 0) {
     const transferAmount = Math.min(totalFossil, fossilDecline);
-    
+
     // Reduce fossil proportionally
     const fossilRatio = resources.energy.sources.oil / Math.max(1, totalFossil);
-    resources.energy.sources.oil = Math.max(0, resources.energy.sources.oil - transferAmount * fossilRatio * 0.4);
-    resources.energy.sources.coal = Math.max(0, resources.energy.sources.coal - transferAmount * (1 - fossilRatio) * 0.6);
-    resources.energy.sources.naturalGas = Math.max(0, resources.energy.sources.naturalGas - transferAmount * 0.3);
-    
+
+    // Assert finite before assignment to catch NaN propagation
+    const newOil = Math.max(0, resources.energy.sources.oil - transferAmount * fossilRatio * 0.4);
+    const newCoal = Math.max(0, resources.energy.sources.coal - transferAmount * (1 - fossilRatio) * 0.6);
+    const newGas = Math.max(0, resources.energy.sources.naturalGas - transferAmount * 0.3);
+
+    if (!isFinite(newOil) || !isFinite(newCoal) || !isFinite(newGas)) {
+      console.error(`❌ NaN detected in clean energy transfer (month ${state.currentMonth}):`);
+      console.error(`   oil: ${resources.energy.sources.oil} → ${newOil}`);
+      console.error(`   coal: ${resources.energy.sources.coal} → ${newCoal}`);
+      console.error(`   gas: ${resources.energy.sources.naturalGas} → ${newGas}`);
+      console.error(`   totalFossil: ${totalFossil}, transferAmount: ${transferAmount}, fossilRatio: ${fossilRatio}`);
+      throw new Error(`❌ Non-finite value in applyCleanEnergy transfer`);
+    }
+
+    resources.energy.sources.oil = newOil;
+    resources.energy.sources.coal = newCoal;
+    resources.energy.sources.naturalGas = newGas;
+
     // Add to renewables
     resources.energy.sources.solar += transferAmount * 0.6;
     resources.energy.sources.wind += transferAmount * 0.4;

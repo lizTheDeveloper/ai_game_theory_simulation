@@ -224,6 +224,7 @@ export interface RegionalPopulation {
   name: string;                          // Region name (e.g., 'Sub-Saharan Africa')
   population: number;                    // Current population (millions)
   peakPopulation: number;                // Highest population reached (millions)
+  baselinePopulation: number;            // 2025 baseline for infrastructure scaling (Tainter 1988)
 
   // Demographics (region-specific)
   baselineBirthRate: number;             // Natural birth rate per year
@@ -247,6 +248,11 @@ export interface RegionalPopulation {
   climateVulnerability: number;          // [0, 1] Exposure to climate change
   resourceVulnerability: number;         // [0, 1] Dependence on imports
   conflictRisk: number;                  // [0, 1] War/civil unrest probability
+
+  // Regional food security (Oct 25, 2025)
+  // Food insecurity in one region doesn't always propagate to others
+  // Research: FAO (2023) - regional food systems vary by trade integration
+  foodSecurity: number;                  // [0, 1] Regional food availability & access
 
   // Crisis impacts
   monthlyExcessDeaths: number;           // Deaths beyond baseline
