@@ -1267,73 +1267,73 @@ function applyRegionalEffects(
         case 'energyStorageBonus':
           // Improve grid energy storage
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).storageCapacity = 
-              (gameState.powerGenerationSystem as any).storageCapacity * (1 + value * 0.01);
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const current = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'storageCapacity',
+              { location: 'applyRegionalEffects.energyStorageBonus', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).storageCapacity = current * (1 + value * 0.01);
           }
           break;
           
         case 'renewableReliability':
           // Make renewables more reliable
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).renewableReliability = assertFinite(Math.min(
-              1.0,
-              (gameState.powerGenerationSystem as any).renewableReliability + value * 0.01
-            ), {
-        location: 'applyRegionalEffects:renewableReliability',
-        valueName: 'renewableReliability',
-        month: gameState.currentMonth
-      });
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const current = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'renewableReliability',
+              { location: 'applyRegionalEffects.renewableReliability', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).renewableReliability = Math.min(1.0, current + value * 0.01);
           }
           break;
           
         case 'gridStability':
           // Improve grid stability (reduce blackouts)
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).gridStability = assertFinite(Math.min(
-              1.0,
-              (gameState.powerGenerationSystem as any).gridStability + value * 0.01
-            ), {
-        location: 'applyRegionalEffects:gridStability',
-        valueName: 'gridStability',
-        month: gameState.currentMonth
-      });
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const current = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'gridStability',
+              { location: 'applyRegionalEffects.gridStability', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).gridStability = Math.min(1.0, current + value * 0.01);
           }
           break;
 
         case 'gridEfficiency':
           // Improve grid efficiency through AI demand response
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).gridEfficiency = assertFinite(Math.min(
-              0.98,
-              (gameState.powerGenerationSystem as any).gridEfficiency + value * 0.01
-            ), {
-        location: 'applyRegionalEffects:gridEfficiency',
-        valueName: 'gridEfficiency',
-        month: gameState.currentMonth
-      });
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const currentEfficiency = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'gridEfficiency',
+              { location: 'applyRegionalEffects.gridEfficiency', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).gridEfficiency = Math.min(0.98, currentEfficiency + value * 0.01);
+
             // Efficiency reduces effective demand
-            (gameState.powerGenerationSystem as any).effectiveDemandReduction = assertFinite(Math.min(
-              0.30,
-              (gameState.powerGenerationSystem as any).effectiveDemandReduction + value * 0.005
-            ), {
-        location: 'applyRegionalEffects:gridEfficiency',
-        valueName: 'effectiveDemandReduction',
-        month: gameState.currentMonth
-      });
+            const currentDemandReduction = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'effectiveDemandReduction',
+              { location: 'applyRegionalEffects.gridEfficiency', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).effectiveDemandReduction = Math.min(0.30, currentDemandReduction + value * 0.005);
           }
           break;
 
         case 'renewableIntegration':
           // Improve renewable energy integration into grid
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).renewableIntegration = assertFinite(Math.min(
-              1.0,
-              (gameState.powerGenerationSystem as any).renewableIntegration + value * 0.01
-            ), {
-        location: 'applyRegionalEffects:renewableIntegration',
-        valueName: 'renewableIntegration',
-        month: gameState.currentMonth
-      });
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const current = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'renewableIntegration',
+              { location: 'applyRegionalEffects.renewableIntegration', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).renewableIntegration = Math.min(1.0, current + value * 0.01);
             // Better integration increases effective renewable capacity
             gameState.powerGenerationSystem.renewablePercentage = assertFinite(Math.min(
               1.0,
@@ -1349,45 +1349,47 @@ function applyRegionalEffects(
         case 'blackoutReduction':
           // Reduce blackout risk through smart grids
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).blackoutRisk = assertFinite(Math.max(
-              0,
-              (gameState.powerGenerationSystem as any).blackoutRisk - value
-            ), {
-        location: 'applyRegionalEffects:blackoutReduction',
-        valueName: 'blackoutRisk',
-        month: gameState.currentMonth
-      });
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const currentRisk = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'blackoutRisk',
+              { location: 'applyRegionalEffects.blackoutReduction', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).blackoutRisk = Math.max(0, currentRisk - value);
+
             // Also improves grid stability
-            (gameState.powerGenerationSystem as any).gridStability = assertFinite(Math.min(
-              1.0,
-              (gameState.powerGenerationSystem as any).gridStability + value * 0.01
-            ), {
-        location: 'applyRegionalEffects:blackoutReduction',
-        valueName: 'gridStability',
-        month: gameState.currentMonth
-      });
+            const currentStability = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'gridStability',
+              { location: 'applyRegionalEffects.blackoutReduction', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).gridStability = Math.min(1.0, currentStability + value * 0.01);
           }
           break;
 
         case 'energyCostReduction':
           // Reduce energy costs
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).energyCost = assertFinite(Math.max(
-              0.2,
-              (gameState.powerGenerationSystem as any).energyCost * (1 - value * 0.01)
-            ), {
-        location: 'applyRegionalEffects:energyCostReduction',
-        valueName: 'energyCost',
-        month: gameState.currentMonth
-      });
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const current = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'energyCost',
+              { location: 'applyRegionalEffects.energyCostReduction', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).energyCost = Math.max(0.2, current * (1 - value * 0.01));
           }
           break;
           
         case 'baseloadPowerBonus':
           // Increase baseload (reliable) power
           if (gameState.powerGenerationSystem) {
-            (gameState.powerGenerationSystem as any).baseloadCapacity = 
-              (gameState.powerGenerationSystem as any).baseloadCapacity * (1 + value * 0.01);
+            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
+            const current = assertStateProperty(
+              gameState.powerGenerationSystem,
+              'baseloadCapacity',
+              { location: 'applyRegionalEffects.baseloadPowerBonus', month: gameState.currentMonth }
+            );
+            (gameState.powerGenerationSystem as any).baseloadCapacity = current * (1 + value * 0.01);
           }
           break;
           
