@@ -23,7 +23,10 @@
  * - Non-numeric properties (strings, booleans, etc.)
  */
 
-const IS_DEVELOPMENT = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+// Check development mode at runtime (not module load time)
+function isDevelopmentMode(): boolean {
+  return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+}
 
 // Track validation context for better error messages
 let validationContext = {
@@ -162,13 +165,15 @@ function createValidationProxy<T extends object>(
  * @returns Validated GameState (or original in production)
  */
 export function wrapStateForValidation<T extends object>(state: T): T {
-  if (!IS_DEVELOPMENT) {
+  const isdev = isDevelopmentMode();
+  if (!isdev) {
+    console.log('📦 PRODUCTION MODE: State validation proxy DISABLED (zero overhead)');
     return state; // Zero overhead in production
   }
 
-  console.log('🔍 DEV MODE: State validation proxy enabled');
+  console.log('🔍 DEV MODE: State validation proxy ENABLED');
   console.log('   All numeric property reads/writes will be validated');
-  console.log('   Disable by setting NODE_ENV=production');
+  console.log('   NODE_ENV:', process.env.NODE_ENV);
 
   return createValidationProxy(state, ['state']);
 }
@@ -177,5 +182,5 @@ export function wrapStateForValidation<T extends object>(state: T): T {
  * Check if state validation is enabled
  */
 export function isStateValidationEnabled(): boolean {
-  return IS_DEVELOPMENT;
+  return isDevelopmentMode();
 }
