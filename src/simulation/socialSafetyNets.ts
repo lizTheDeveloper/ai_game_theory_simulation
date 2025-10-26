@@ -14,6 +14,7 @@
 
 import { GameState } from '@/types/game';
 import { SocialSafetyNetsSystem } from '@/types/socialSafetyNets';
+import { assertStateProperty } from './utils/assertions';
 
 /**
  * Initialize social safety nets system (not active by default)
@@ -89,10 +90,11 @@ export function activateSocialSafetyNets(
   const avgAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / Math.max(1, state.aiAgents.length);
   system.aiCoordination = Math.min(0.8, avgAICapability * 0.2); // AI optimizes placement
 
-  if (!state.government.governanceQuality?.institutionalCapacity) {
-    throw new Error('❌ state.government.governanceQuality.institutionalCapacity is undefined in updateSocialSafetyNets - initialization bug');
-  }
-  system.governmentCapacity = state.government.governanceQuality.institutionalCapacity;
+  system.governmentCapacity = assertStateProperty(
+    state.government.governanceQuality,
+    'institutionalCapacity',
+    { location: 'updateSocialSafetyNets', month: state.currentMonth }
+  );
   
   console.log(`✅ SOCIAL SAFETY NETS ACTIVATED (Month ${state.currentMonth})`);
   console.log(`   Investment: $${investmentLevel}B/month`);
@@ -257,12 +259,14 @@ export function updateSocialSafetyNets(state: GameState): void {
   system.communityStrengthGain += communityStrengthRate;
 
   // Apply to actual community strength
-  if (state.society.communityStrength === undefined) {
-    throw new Error('❌ state.society.communityStrength is undefined in updateSocialSafetyNets - initialization bug');
-  }
+  const currentCommunityStrength = assertStateProperty(
+    state.society,
+    'communityStrength',
+    { location: 'updateSocialSafetyNets', month: state.currentMonth }
+  );
   state.society.communityStrength = Math.min(
     1.0,
-    state.society.communityStrength + communityStrengthRate
+    currentCommunityStrength + communityStrengthRate
   );
   
   // Social cohesion increase (World Bank: Strong bonds → resilience)
