@@ -108,7 +108,8 @@
       "Read(//private/tmp/**)",
       "Bash(NODE_ENV=development npx tsx:*)",
       "Bash(NODE_ENV=development node:*)",
-      "Bash(NODE_ENV=development timeout 60 npx tsx:*)"
+      "Bash(NODE_ENV=development timeout 60 npx tsx:*)",
+      "Bash(gh pr create:*)"
     ],
     "deny": [],
     "ask": [],

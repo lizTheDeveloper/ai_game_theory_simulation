@@ -2061,9 +2061,12 @@ timestamp: state.currentMonth,
           state.environmentalAccumulation.biodiversityIndex + 0.01
         );
       }
-      
+
       // Low cost, popular action
-      state.government.resources = (state.government.resources ?? 0) - 1;
+      if (state.government.resources === undefined) {
+        throw new Error('❌ state.government.resources is undefined in governmentAgent:2066 - initialization bug');
+      }
+      state.government.resources = state.government.resources - 1;
       state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.06);
       
       return {
@@ -2665,7 +2668,7 @@ export function selectGovernmentAction(
             (ai.capabilityProfile.digital > 2.0 || ai.capabilityProfile.social > 2.0)
           ).length,
 
-          // High bilateral tensions
+          // High bilateral tensions (legitimate default - array may be empty)
           highTensions: state.bilateralTensions?.filter(t =>
             t.tensionLevel > 0.7 || t.nuclearThreats
           ).length || 0,
@@ -2678,10 +2681,10 @@ export function selectGovernmentAction(
           ].filter(Boolean).length,
 
           // MAD deterrence strength (weaker = more urgent)
-          madStrength: state.madDeterrence?.madStrength || 1.0,
+          madStrength: state.madDeterrence.madStrength,
 
           // Current circuit breaker coverage
-          currentCoverage: state.nuclearCommandControlState?.totalSafeguardStrength || 0
+          currentCoverage: state.nuclearCommandControlState.totalSafeguardStrength
         };
 
         // URGENT if dangerous AIs exist (10x multiplier)
@@ -2714,7 +2717,7 @@ export function selectGovernmentAction(
           priority *= 2.0;
 
           // EXTREMELY urgent if AI decision-making is being used
-          const aiIntegration = state.madDeterrence?.aiErosionFactor || 0;
+          const aiIntegration = state.madDeterrence.aiErosionFactor;
           if (aiIntegration > 0.3) {
             priority *= 3.0; // AI in nuclear decisions = CRITICAL
           }
@@ -2766,7 +2769,8 @@ export function selectGovernmentAction(
         
         // Get environmental crisis severity
         const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive || false;
-        const biodiversityLevel = state.environmentalAccumulation?.biodiversityIndex || 1.0;
+        const biodiversityLevel = state.environmentalAccumulation.biodiversityIndex;
+        // Tipping point properties use ?? because they're optional nested properties
         const amazonThreat = (state.specificTippingPoints?.amazon?.deforestation ?? 0) > 23;
         const coralThreat = (state.specificTippingPoints?.coral?.healthPercentage ?? 100) < 40;
         const pollinatorThreat = (state.specificTippingPoints?.pollinators?.populationPercentage ?? 100) < 45;
