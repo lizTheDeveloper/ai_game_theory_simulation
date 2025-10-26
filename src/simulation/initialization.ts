@@ -62,6 +62,7 @@ import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection
 import { initializeGovernmentSystem } from './government/initialization';
 import { initializeTechTreeState } from './techTree/engine';
 import { sampleTier1Thresholds } from './thresholds/tier1Config';
+import { sampleTier2Thresholds } from './thresholds/tier2Config';
 
 /**
  * P2.3: Initialize Heterogeneous Population Segments (Oct 16, 2025)
@@ -866,9 +867,13 @@ export function createDefaultInitialState(
     // LLM Policy Optimization (Oct 21, 2025)
     llmConfig: { ...DEFAULT_LLM_CONFIG },
 
-    // Phase 1D: Threshold Uncertainty System (Oct 26, 2025)
+    // Phase 1D & Phase 2: Threshold Uncertainty System (Oct 26, 2025)
     // Use pre-sampled thresholds from outer loop if provided, otherwise sample fresh
-    thresholds: preSampledThresholds || sampleTier1Thresholds(() => Math.random()),
+    // Combines Tier 1 (empirical) + Tier 2 (historical ranges)
+    thresholds: preSampledThresholds || {
+      ...sampleTier1Thresholds(() => Math.random()),
+      ...sampleTier2Thresholds(() => Math.random())
+    },
 
     history: {
       qualityOfLife: [],

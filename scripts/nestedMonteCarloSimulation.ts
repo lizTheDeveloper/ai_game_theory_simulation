@@ -34,6 +34,7 @@ import { calculateTotalCapabilityFromProfile } from '../src/simulation/capabilit
 import { AIAgent, ScenarioMode } from '../src/types/game';
 import { getScenarioDescription } from '../src/simulation/scenarioParameters';
 import { sampleTier1Thresholds, Tier1Thresholds } from '../src/simulation/thresholds/tier1Config';
+import { sampleTier2Thresholds, Tier2Thresholds } from '../src/simulation/thresholds/tier2Config';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -202,19 +203,26 @@ async function runNestedMonteCarlo(args: CLIArgs): Promise<NestedMCResults> {
     const thresholdSeed = 100000 + epistemicIdx * 1000; // Separate seed space for thresholds
     const thresholdRng = new SeededRandom(thresholdSeed);
 
-    // Sample thresholds once for this epistemic scenario
-    const thresholds = sampleTier1Thresholds(() => thresholdRng.next());
+    // Sample thresholds once for this epistemic scenario (Tier 1 + Tier 2)
+    const tier1Thresholds = sampleTier1Thresholds(() => thresholdRng.next());
+    const tier2Thresholds = sampleTier2Thresholds(() => thresholdRng.next());
+    const thresholds = { ...tier1Thresholds, ...tier2Thresholds };
 
     log(`\n${'─'.repeat(80)}`);
     log(`EPISTEMIC SCENARIO ${epistemicIdx + 1}/${args.outerRuns}`);
     log(`${'─'.repeat(80)}`);
     log(`Threshold seed: ${thresholdSeed}`);
-    log(`Sampled thresholds:`);
+    log(`Sampled thresholds (Tier 1 - Empirical):`);
     log(`  Social critical mass: ${thresholds.socialCriticalMass.toFixed(4)}`);
     log(`  Trust recovery rate: ${thresholds.trustRecoveryRate.toFixed(5)}`);
     log(`  Climate sensitivity: ${thresholds.climateSensitivity.toFixed(3)}°C`);
-    log(`  Gov legitimacy crisis: ${thresholds.governmentLegitimacyCrisisThreshold.toFixed(3)}`);
+    log(`  Gov legitimacy crisis (T1): ${thresholds.governmentLegitimacyCrisisThreshold.toFixed(3)}`);
     log(`  Automation job loss: ${thresholds.automationJobLossThreshold.toFixed(3)}`);
+    log(`Sampled thresholds (Tier 2 - Historical Ranges):`);
+    log(`  Surveillance dystopia: ${thresholds.surveillanceDystopiaThreshold.toFixed(3)}`);
+    log(`  Automation displacement crisis: ${thresholds.automationDisplacementCrisisThreshold.toFixed(3)}`);
+    log(`  AI recursive improvement: ${thresholds.aiRecursiveImprovementThreshold.toFixed(3)}`);
+    log(`  Resentment revolt trigger: ${thresholds.resentmentRevoltTriggerThreshold.toFixed(3)}`);
     log(``);
 
     const innerRuns: InnerRunResult[] = [];
