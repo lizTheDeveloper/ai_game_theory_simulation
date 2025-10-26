@@ -7,6 +7,7 @@
 
 import { GameState, AIAgent, ScenarioMode } from '@/types/game';
 import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities } from './capabilities';
+import { wrapStateForValidation } from './utils/stateValidation';
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
 import { getScenarioParameters } from './scenarioParameters';
 import { initializeExtinctionState } from './extinctions';
@@ -881,7 +882,7 @@ export function createTestState(overrides?: Partial<GameState>, scenarioMode: Sc
   if (!overrides) return baseState;
 
   // Deep merge overrides
-  return {
+  const initialState: GameState = {
     ...baseState,
     ...overrides,
     aiAgents: overrides.aiAgents || baseState.aiAgents,
@@ -902,5 +903,8 @@ export function createTestState(overrides?: Partial<GameState>, scenarioMode: Sc
       ...(overrides.config || {})
     }
   };
+
+  // Wrap with validation proxy in dev mode (zero overhead in production)
+  return wrapStateForValidation(initialState);
 }
 
