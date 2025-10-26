@@ -39,11 +39,14 @@ export const LLMWeightUpdatePhase: SimulationPhase = {
     const updatedAgents: string[] = [];
 
     // DEBUG: Log agent count
-    console.log(`[LLM PHASE] Checking ${state.aiAgents?.length || 0} agents for updates`);
+    if (state.aiAgents === undefined) {
+      throw new Error('❌ state.aiAgents is undefined in LLMWeightUpdatePhase:46 - initialization bug');
+    }
+    console.log(`[LLM PHASE] Checking ${state.aiAgents.length} agents for updates`);
 
     // Check each AI agent for weight updates
     // Note: checkAndUpdateAgentWeights is now synchronous - async LLM calls are queued internally
-    for (const agent of state.aiAgents ?? []) {
+    for (const agent of state.aiAgents) {
       try {
         // Synchronous call - LLM updates happen in background
         const updated = checkAndUpdateAgentWeights(

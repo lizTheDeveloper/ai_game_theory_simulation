@@ -69,8 +69,14 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     const crisisPressure = calculateCrisisPressure(state);
     const aiManipulation = calculateAIManipulation(state);
     const governanceQuality = calculateGovernanceQuality(state);
-    const publicTrust = state.society.trustInAI ?? 0.5;
-    const institutionalLegitimacy = state.socialAccumulation?.institutionalLegitimacy ?? 0.5;
+    if (state.society.trustInAI === undefined) {
+      throw new Error('❌ state.society.trustInAI is undefined in DemocracyDynamicsPhase:72 - initialization bug');
+    }
+    const publicTrust = state.society.trustInAI;
+    if (state.socialAccumulation?.institutionalLegitimacy === undefined) {
+      throw new Error('❌ state.socialAccumulation.institutionalLegitimacy is undefined in DemocracyDynamicsPhase:73 - initialization bug');
+    }
+    const institutionalLegitimacy = state.socialAccumulation.institutionalLegitimacy;
 
     // Electoral Democracy Index Update
     // Research: Acemoglu & Robinson (2019) - crisis → authoritarianism
@@ -103,12 +109,13 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     // DEMOCRACY RECOVERY (Tier 2): Added recovery mechanisms
     const emergencyResponseActive = state.emergencyManagement?.activeResponses.some(
       r => r.completed && r.effectiveness > 0.5
-    ) ?? false;
+    ) ?? false; // Legitimate default - emergency management may not exist yet
 
+    const surveillanceLevel = state.government.structuralChoices?.surveillanceLevel ?? 0; // Legitimate default - surveillance may not be set yet
     const libertiesChange = calculateCivilLibertiesChange(
       crisisPressure,
       aiManipulation,
-      state.government.structuralChoices?.surveillanceLevel ?? 0,
+      surveillanceLevel,
       emergencyResponseActive,
       governanceQuality,
       publicTrust
@@ -184,11 +191,17 @@ function calculateCrisisPressure(state: GameState): number {
   let pressure = 0;
 
   // Economic crisis (unemployment → authoritarian demand)
-  const unemployment = state.society.unemploymentLevel ?? 0;
+  if (state.society.unemploymentLevel === undefined) {
+    throw new Error('❌ state.society.unemploymentLevel is undefined in calculateCrisisPressure:187 - initialization bug');
+  }
+  const unemployment = state.society.unemploymentLevel;
   pressure += unemployment * 0.3; // 30% unemployment = 0.09 pressure
 
   // Environmental crisis (scarcity → conflict)
-  const resourceDepletion = (1 - (state.environmentalAccumulation?.resourceReserves ?? 1)) * 100;
+  if (state.environmentalAccumulation?.resourceReserves === undefined) {
+    throw new Error('❌ state.environmentalAccumulation.resourceReserves is undefined in calculateCrisisPressure:191 - initialization bug');
+  }
+  const resourceDepletion = (1 - state.environmentalAccumulation.resourceReserves) * 100;
   pressure += (resourceDepletion / 100) * 0.2; // Max 0.2 pressure
 
   // Nuclear conflict (existential threat → emergency powers)
@@ -198,7 +211,7 @@ function calculateCrisisPressure(state: GameState): number {
   }
 
   // Refugee crisis (displacement → xenophobia → strongman appeal)
-  const activeCrises = state.refugeeCrisisSystem?.activeRefugeeCrises?.length ?? 0;
+  const activeCrises = state.refugeeCrisisSystem?.activeRefugeeCrises?.length ?? 0; // Legitimate default - array may not exist yet
   pressure += activeCrises * 0.05; // Each crisis adds 0.05
 
   // TIER 3: Emergency response reduces crisis pressure
@@ -230,8 +243,11 @@ function calculateAIManipulation(state: GameState): number {
 
   // Count misaligned AIs with social capability
   const misalignedAIs = state.aiAgents.filter(agent => {
-    const alignment = agent.alignment ?? 0.5;
-    const social = agent.capabilityProfile?.social ?? 0;
+    if (agent.alignment === undefined) {
+      throw new Error('❌ agent.alignment is undefined in calculateAIManipulation:232 - initialization bug');
+    }
+    const alignment = agent.alignment;
+    const social = agent.capabilityProfile?.social ?? 0; // Legitimate default - AI may not have social capability yet
     return alignment < 0.5 && social > 3;
   });
 
@@ -240,7 +256,10 @@ function calculateAIManipulation(state: GameState): number {
 
   // Information warfare intensity (use inverted information integrity as proxy)
   if (state.informationWarfare) {
-    const integrity = state.informationWarfare.informationIntegrity ?? 0.5;
+    if (state.informationWarfare.informationIntegrity === undefined) {
+      throw new Error('❌ state.informationWarfare.informationIntegrity is undefined in calculateAIManipulation:242 - initialization bug');
+    }
+    const integrity = state.informationWarfare.informationIntegrity;
     const intensity = 1 - integrity; // Low integrity = high manipulation intensity
     if (!isNaN(intensity)) {
       manipulation += intensity * 0.3;
@@ -258,13 +277,16 @@ function calculateGovernanceQuality(state: GameState): number {
   const govt = state.government;
 
   // Government legitimacy
-  const legitimacy = govt.legitimacy ?? 0.5;
+  if (govt.legitimacy === undefined) {
+    throw new Error('❌ govt.legitimacy is undefined in calculateGovernanceQuality:261 - initialization bug');
+  }
+  const legitimacy = govt.legitimacy;
 
   // Institutional capacity (if available from governanceQuality)
-  const institutionalCapacity = govt.governanceQuality?.institutionalCapacity ?? 0.5;
+  const institutionalCapacity = govt.governanceQuality?.institutionalCapacity ?? 0.5; // Legitimate default - may not be initialized yet
 
   // Transparency
-  const transparency = govt.governanceQuality?.transparency ?? 0.5;
+  const transparency = govt.governanceQuality?.transparency ?? 0.5; // Legitimate default - may not be initialized yet
 
   return (legitimacy + institutionalCapacity + transparency) / 3;
 }

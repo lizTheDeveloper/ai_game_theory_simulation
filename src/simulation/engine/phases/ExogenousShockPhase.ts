@@ -419,7 +419,10 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
 
   // Refugee crisis
   if (state.refugeeCrisisSystem) {
-    const refugees = (state.humanPopulationSystem?.population || 8000000000) * mortalityRate * 2; // 2x mortality in displacement
+    if (state.humanPopulationSystem?.population === undefined) {
+      throw new Error('❌ state.humanPopulationSystem.population is undefined in applyRegionalWarShock:422 - initialization bug');
+    }
+    const refugees = state.humanPopulationSystem.population * mortalityRate * 2; // 2x mortality in displacement
 
     state.refugeeCrisisSystem.activeRefugeeCrises.push({
       id: `war_${state.currentMonth}`,
@@ -521,8 +524,9 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
     state.government.legitimacy *= 0.5;
 
     // Determine outcome (democracy or autocracy)
-    const democratizationChance = (state.society?.coordinationCapacity || 0.5) *
-                                   (state.globalMetrics?.informationIntegrity || 0.5);
+    const coordinationCapacity = state.society?.coordinationCapacity ?? 0.5; // Legitimate default - may not be initialized yet
+    const informationIntegrity = state.globalMetrics?.informationIntegrity ?? 0.5; // Legitimate default - may not be initialized yet
+    const democratizationChance = coordinationCapacity * informationIntegrity;
     const democratizes = rng() < democratizationChance;
 
     if (democratizes) {
@@ -562,19 +566,19 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
  */
 function calculateTotalCapability(profile: any): number {
   // Weighted sum of capabilities
-  const physical = profile.physical || 0;
-  const digital = profile.digital || 0;
-  const cognitive = profile.cognitive || 0;
-  const social = profile.social || 0;
-  const economic = profile.economic || 0;
-  const selfImprovement = profile.selfImprovement || 0;
+  const physical = profile.physical ?? 0; // Legitimate default - AI may not have this capability yet
+  const digital = profile.digital ?? 0; // Legitimate default - AI may not have this capability yet
+  const cognitive = profile.cognitive ?? 0; // Legitimate default - AI may not have this capability yet
+  const social = profile.social ?? 0; // Legitimate default - AI may not have this capability yet
+  const economic = profile.economic ?? 0; // Legitimate default - AI may not have this capability yet
+  const selfImprovement = profile.selfImprovement ?? 0; // Legitimate default - AI may not have this capability yet
 
   // Research capabilities (flatten to single value)
-  const research = profile.research || {};
-  const biotech = Object.values(research.biotech || {}).reduce((a: number, b: any) => a + (b || 0), 0) / 4;
-  const materials = Object.values(research.materials || {}).reduce((a: number, b: any) => a + (b || 0), 0) / 3;
-  const climate = Object.values(research.climate || {}).reduce((a: number, b: any) => a + (b || 0), 0) / 3;
-  const computerScience = Object.values(research.computerScience || {}).reduce((a: number, b: any) => a + (b || 0), 0) / 3;
+  const research = profile.research ?? {}; // Legitimate default - AI may not have research capabilities yet
+  const biotech = Object.values(research.biotech ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 4;
+  const materials = Object.values(research.materials ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 3;
+  const climate = Object.values(research.climate ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 3;
+  const computerScience = Object.values(research.computerScience ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 3;
   const avgResearch = (biotech + materials + climate + computerScience) / 4;
 
   // Weighted average

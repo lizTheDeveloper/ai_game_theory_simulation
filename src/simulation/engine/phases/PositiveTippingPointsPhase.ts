@@ -60,13 +60,19 @@ export class PositiveTippingPointsPhase implements SimulationPhase {
             technology: cascade.type,
             reason: cascade.triggerReason,
             marketShare: cascade.marketShareAtTrigger,
-            cascadeStrength: (state.positiveTippingPoints.adoptionTracking as any)[
-              cascade.type === 'solar-pv' ? 'solarPV' :
-              cascade.type === 'electric-vehicles' ? 'electricVehicles' :
-              cascade.type === 'wind-power' ? 'windPower' :
-              cascade.type === 'heat-pumps' ? 'heatPumps' :
-              'batteryStorage'
-            ]?.cascadeStrength || 0,
+            cascadeStrength: (() => {
+              const tracking = (state.positiveTippingPoints.adoptionTracking as any)[
+                cascade.type === 'solar-pv' ? 'solarPV' :
+                cascade.type === 'electric-vehicles' ? 'electricVehicles' :
+                cascade.type === 'wind-power' ? 'windPower' :
+                cascade.type === 'heat-pumps' ? 'heatPumps' :
+                'batteryStorage'
+              ];
+              if (tracking === undefined || tracking.cascadeStrength === undefined) {
+                throw new Error('❌ adoptionTracking cascadeStrength is undefined in PositiveTippingPointsPhase:67 - initialization bug');
+              }
+              return tracking.cascadeStrength;
+            })(),
             expectedDuration: cascade.expectedDuration,
             environmentalImpact: cascade.environmentalImpact,
           }

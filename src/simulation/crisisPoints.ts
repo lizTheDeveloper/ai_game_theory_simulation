@@ -68,7 +68,8 @@ export const CRISIS_RECURSIVE_THRESHOLD: CrisisChoice = {
         },
         globalMetrics: {
           ...state.globalMetrics,
-          socialStability: state.globalMetrics.socialStability - 0.4
+          // FIX (Oct 26, 2025): Clamp to prevent negative values
+          socialStability: Math.max(0, state.globalMetrics.socialStability - 0.4)
         }
       }),
       outcomeShift: {

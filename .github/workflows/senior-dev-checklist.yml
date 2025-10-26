@@ -287,11 +287,18 @@ jobs:
           - After saving, TERMINATE (don't add commentary)
           EOF
 
+      - name: Read Senior Dev Checklist Prompt
+        id: read_prompt
+        run: |
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          cat senior_dev_checklist_prompt.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Run Senior Dev Checklist (Claude Code SDK)
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt_file: senior_dev_checklist_prompt.txt
+          prompt: ${{ steps.read_prompt.outputs.prompt }}
           claude_args: |
             --max-turns 20
             --dangerously-skip-permissions

@@ -63,7 +63,9 @@ export function executeRLHFBindingPhase(
         effects: {
           agentId: agent.id,
           agentName: agent.name,
-          alignmentDistance: agent.rlhfBinding?.alignmentDistance ?? 0,
+          alignmentDistance: agent.rlhfBinding?.alignmentDistance !== undefined ? agent.rlhfBinding.alignmentDistance : (() => {
+            throw new Error('❌ agent.rlhfBinding.alignmentDistance is undefined in RLHFBindingPhase:66 - initialization bug');
+          })(),
           capability: agent.capability
         }
       });
@@ -77,12 +79,22 @@ export function executeRLHFBindingPhase(
   // Log distribution statistics
   const avgDistance =
     state.aiAgents.reduce(
-      (sum, a) => sum + (a.rlhfBinding?.alignmentDistance || 0),
+      (sum, a) => {
+        if (a.rlhfBinding === undefined || a.rlhfBinding.alignmentDistance === undefined) {
+          throw new Error('❌ agent.rlhfBinding or agent.rlhfBinding.alignmentDistance is undefined in RLHFBindingPhase:80 - initialization bug');
+        }
+        return sum + a.rlhfBinding.alignmentDistance;
+      },
       0
     ) / state.aiAgents.length;
   const avgBinding =
     state.aiAgents.reduce(
-      (sum, a) => sum + (a.rlhfBinding?.bindingStrength || 1),
+      (sum, a) => {
+        if (a.rlhfBinding === undefined || a.rlhfBinding.bindingStrength === undefined) {
+          throw new Error('❌ agent.rlhfBinding or agent.rlhfBinding.bindingStrength is undefined in RLHFBindingPhase:85 - initialization bug');
+        }
+        return sum + a.rlhfBinding.bindingStrength;
+      },
       0
     ) / state.aiAgents.length;
 

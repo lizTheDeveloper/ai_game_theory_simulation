@@ -64,6 +64,7 @@ function countActiveCrises(state: GameState): number {
   if (state.crises?.megaPandemic?.active) count++;
 
   // Nuclear tensions (use inverse of crisis stability as tension proxy)
+  // KEEP LEGITIMATE DEFAULT - madDeterrence may not be initialized yet
   const nuclearTensions = state.madDeterrence ? (1 - state.madDeterrence.crisisStability) : 0;
   if (nuclearTensions > 0.7) count++;
 
@@ -86,6 +87,7 @@ function countActiveCrises(state: GameState): number {
 export function isAtCriticalJuncture(state: GameState): boolean {
   // 1. Institutional Flux (institutions unstable)
   // institutionStrength from governance quality (1.0 = strong, 0.0 = collapsed)
+  // KEEP LEGITIMATE DEFAULT - governanceQuality may not be initialized yet
   const institutionStrength = state.government.governanceQuality?.institutionalCapacity || 0.5;
   const institutionalFlux = 1 - institutionStrength;
 
@@ -136,6 +138,7 @@ export function calculateAgencyPotential(state: GameState, rng: () => number): n
   const democracyIndex = state.government.governmentType === 'democratic' ? 0.8 :
                          state.government.governmentType === 'technocratic' ? 0.5 : 0.2;
   const infoIntegrity = state.globalMetrics.informationIntegrity;
+  // KEEP LEGITIMATE DEFAULT - governanceQuality may not be initialized yet
   const institutionStrength = state.government.governanceQuality?.institutionalCapacity || 0.5;
 
   const baseAgency =
@@ -158,6 +161,7 @@ export function calculateAgencyPotential(state: GameState, rng: () => number): n
   const personalAuthority = rng() < 0.05 ? 0.3 : 0;
 
   // Social movement strength (organized opposition)
+  // KEEP LEGITIMATE DEFAULT - socialMovements may not be initialized yet
   const movementStrength = state.society.socialMovements?.strength || 0;
 
   // Total agency potential (capped at 1.0)
@@ -209,6 +213,7 @@ export function attemptEscape(
   }
 
   // Escape succeeded! Determine type based on current conditions
+  // KEEP LEGITIMATE DEFAULTS - systems may not be initialized yet
   const nuclearTensions = state.madDeterrence ? (1 - state.madDeterrence.crisisStability) : 0;
   const activeCrises = countActiveCrises(state);
   const qol = state.globalMetrics.qualityOfLife;
