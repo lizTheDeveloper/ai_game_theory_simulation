@@ -1003,15 +1003,15 @@ function applyRegionalEffects(
           break;
 
         case 'nanomaterialRisk':
-          // Reduce nanomaterial risk through safety protocols
-          if (gameState.planetaryBoundariesSystem) {
-            // FIX: Phase 2, Batch 3 (Oct 25, 2025) - Fail loudly if property missing
-            const current = assertStateProperty(
-              gameState.planetaryBoundariesSystem,
-              'nanomaterialRisk',
-              { location: 'applyRegionalEffects.nanomaterialRisk', month: gameState.currentMonth }
+          // ROOT CAUSE FIX (Oct 27, 2025): Bug #15 - Map to novel_entities boundary
+          // Nanomaterials (engineered materials like carbon nanotubes, graphene) are novel entities
+          // Reducing their risk improves the novel entities planetary boundary
+          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            boundary.currentValue = Math.max(
+              0,
+              boundary.currentValue - value * 0.01
             );
-            (gameState.planetaryBoundariesSystem as any).nanomaterialRisk = Math.max(0, current - value);
           }
           break;
 
@@ -1716,15 +1716,16 @@ function applyRegionalEffects(
           break;
           
         case 'pollinatorPopulation':
-          // Increase pollinator populations
-          if (gameState.planetaryBoundariesSystem) {
-            // FIX: Phase 2, Batch 3 (Oct 25, 2025) - Fail loudly if property missing
-            const current = assertStateProperty(
-              gameState.planetaryBoundariesSystem,
-              'pollinatorHealth',
-              { location: 'applyRegionalEffects.pollinatorPopulation', month: gameState.currentMonth }
+          // ROOT CAUSE FIX (Oct 27, 2025): Bug #11 - Map to biosphere_integrity boundary
+          // Pollinator populations (bees, butterflies, etc.) are part of biodiversity
+          // They directly affect the biosphere integrity planetary boundary
+          // Increasing pollinator health IMPROVES biosphere integrity (reduces currentValue toward safe zone)
+          if (gameState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.biosphere_integrity;
+            boundary.currentValue = Math.max(
+              0,
+              boundary.currentValue - value * 0.01  // Reduce pressure on boundary (improve health)
             );
-            (gameState.planetaryBoundariesSystem as any).pollinatorHealth = Math.min(1.0, current + value * 0.01);
           }
           break;
           
