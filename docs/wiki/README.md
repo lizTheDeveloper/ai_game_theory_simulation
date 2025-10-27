@@ -34,7 +34,7 @@ The fundamental building blocks of the simulation:
 | [🧠 Alignment Dynamics](./systems/alignment-dynamics.md) | ✅ | Multi-theory alignment evolution (Oct 23, 2025) |
 | [🏛️ Government](./systems/government.md) | ✅ | Regulations, control, policies |
 | [👥 Society](./systems/society.md) | ✅ | Trust, unemployment, adaptation |
-| [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%) |
+| [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025) |
 | [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
 | [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |

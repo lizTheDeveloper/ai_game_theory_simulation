@@ -136,16 +136,55 @@ The Environmental Accumulation System tracks four metrics that slowly degrade du
 - Public health crisis
 - Environmental regulations tighten (economic drag)
 
-### 3. Climate Catastrophe
-**Trigger:** Climate stability < 30%
-**Condition:** `env.climateDisasterActive = true`
-**Resolution:** Stability restored > 70% (requires Carbon Capture + aggressive mitigation)
+### 3. Multi-Timescale Climate Tipping Points (October 26, 2025)
 
-**What happens:**
-- Extreme weather events
-- Agricultural collapse
-- Mass migration and displacement
-- Tipping point risk (irreversible at very low stability)
+**Module:** `src/simulation/engine/phases/TippingPointPhase.ts`
+**Research Foundation:** Armstrong McKay et al. (2022) *Science*, IPCC AR6, 23 peer-reviewed papers
+
+**IMPORTANT CHANGE (Oct 26, 2025):** Replaced instant climate catastrophe with research-backed gradual tipping point transitions.
+
+**Old Behavior (Removed):**
+- Instant catastrophe when climateStability < 0.4
+- Immediate 40-60% QoL drops
+- 8B → 1.24B population crash in 4 months (physically impossible)
+
+**New Behavior (Research-Backed):**
+- 6 major tipping elements with realistic timescales (10-15,000 years)
+- Temperature-based threshold detection (1.5-2.3°C above pre-industrial)
+- Sigmoid transition curves for smooth progression
+- Cascade amplification when multiple elements active
+- Regional variation in impacts
+
+**Six Major Tipping Elements:**
+
+| Element | Transition Duration | Threshold | Impact |
+|---------|-------------------|-----------|---------|
+| **Arctic Sea Ice Loss** | 10-30 years | climateStability < 0.65 | -0.10 climate (albedo feedback) |
+| **Amazon Dieback** | 30-80 years | climateStability < 0.55 | -0.15 biodiversity, -0.08 climate |
+| **AMOC Collapse** | 50-150 years | climateStability < 0.60 | -0.25 climate (Europe -40%) |
+| **Permafrost Carbon** | 50-300 years | climateStability < 0.60 | -0.15 climate (carbon feedback) |
+| **West Antarctic Ice** | 500-13,000 years | climateStability < 0.65 | -0.20 climate (coastal -50%) |
+| **Greenland Ice Sheet** | 1,000-15,000 years | climateStability < 0.65 | -0.25 climate (coastal -60%) |
+
+**How It Works:**
+
+1. **Threshold Detection:** Each element monitors climate stability (proxy for temperature)
+2. **Transition Progress:** Once triggered, element transitions gradually over research-backed duration
+3. **Sigmoid Curves:** S-curve progression (slow start → rapid middle → slow end)
+4. **Cascade Amplification:** Multiple active tipping points amplify each other (+5% per additional element)
+5. **Regional Impacts:** Europe hit harder by AMOC, Latin America by Amazon, coastal regions by ice sheets
+
+**Example Timeline:**
+- **Month 12:** climateStability drops to 0.58 → AMOC tipping point triggered (62.5 year transition begins)
+- **Month 100:** AMOC 11.7% complete → gradual European climate stress increases
+- **Month 400:** AMOC 51.7% complete → Amazon dieback triggered → 2 active tipping points (5% cascade amplification)
+- **Month 762:** AMOC complete, Amazon 64% complete → 3 active elements → 10% cascade amplification
+
+**Key Differences from Old System:**
+- ✅ No instant collapses (realistic)
+- ✅ Gradual population decline (7-10% per decade during transitions, not 85% in 4 months)
+- ✅ Regional variation (Europe/Latin America/coastal regions affected differently)
+- ✅ Recovery possible (if climate stabilized early, tipping point progression slows)
 
 ### 4. Ecosystem Collapse
 **Trigger:** Biodiversity < 40%
