@@ -88,15 +88,46 @@ jobs:
           echo "$PLAN_CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Check for Retry Context
+        id: retry_context
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Check for auto-retry labels
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const retryLabels = issue.data.labels
+              .map(l => l.name)
+              .filter(name => name.startsWith('auto-retry-'));
+
+            let retryCount = 0;
+            if (retryLabels.length > 0) {
+              const numbers = retryLabels.map(label => {
+                const match = label.match(/auto-retry-(\d+)/);
+                return match ? parseInt(match[1]) : 0;
+              });
+              retryCount = Math.max(...numbers);
+            }
+
+            core.setOutput('is_retry', retryCount > 0 ? 'true' : 'false');
+            core.setOutput('retry_count', retryCount);
+
       - name: Checkout Feature Branch
         run: |
           BRANCH_NAME="feature/${{ steps.feature.outputs.name }}"
 
-          # Check if branch exists
+          # Check if branch exists remotely
           if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
+            echo "Branch exists remotely - checking out and pulling latest"
             git fetch origin "$BRANCH_NAME"
             git checkout "$BRANCH_NAME"
+            git pull origin "$BRANCH_NAME"
           else
+            echo "Creating new branch"
             git checkout -b "$BRANCH_NAME"
           fi
 
@@ -109,11 +140,106 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Gather Progress Context
+        id: progress
+        if: steps.retry_context.outputs.is_retry == 'true'
+        run: |
+          # Get commits on this branch (not in main)
+          COMMITS=$(git log origin/main..HEAD --oneline --no-decorate 2>/dev/null || echo "No commits yet")
+
+          # Get list of changed files
+          FILES=$(git diff --name-only origin/main..HEAD 2>/dev/null || echo "No files changed yet")
+
+          # Get summary of changes
+          DIFF_STAT=$(git diff --stat origin/main..HEAD 2>/dev/null || echo "No changes yet")
+
+          # Save to outputs using heredoc
+          {
+            echo "commits<<COMMITS_EOF"
+            echo "$COMMITS"
+            echo "COMMITS_EOF"
+            echo "files<<FILES_EOF"
+            echo "$FILES"
+            echo "FILES_EOF"
+            echo "diff_stat<<DIFF_EOF"
+            echo "$DIFF_STAT"
+            echo "DIFF_EOF"
+          } >> $GITHUB_OUTPUT
+
       - name: Build Implementation Prompt
         id: prompt
         run: |
-          # Build minimal context for fresh agent instance
-          cat > implementation_prompt.txt << 'EOF'
+          IS_RETRY="${{ steps.retry_context.outputs.is_retry }}"
+          RETRY_COUNT="${{ steps.retry_context.outputs.retry_count }}"
+
+          if [ "$IS_RETRY" = "true" ]; then
+            # Build continuation prompt with context
+            cat > implementation_prompt.txt << 'EOF'
+          You are the feature-implementer agent from .claude/agents/feature-implementer.md
+
+          **YOUR CONTEXT:**
+          - Feature name: ${{ steps.feature.outputs.title }}
+          - Implementation plan: ${{ steps.plan.outputs.path }}
+          - Current branch: feature/${{ steps.feature.outputs.name }}
+          - **THIS IS CONTINUATION #${{ steps.retry_context.outputs.retry_count }}** - Previous agent made partial progress
+          - You have NO conversation history, but you CAN see previous work via git
+
+          **PREVIOUS WORK COMPLETED:**
+
+          Recent commits:
+          ```
+          ${{ steps.progress.outputs.commits }}
+          ```
+
+          Files modified:
+          ```
+          ${{ steps.progress.outputs.files }}
+          ```
+
+          Changes summary:
+          ```
+          ${{ steps.progress.outputs.diff_stat }}
+          ```
+
+          **IMPLEMENTATION PLAN:**
+          ${{ steps.plan.outputs.content }}
+
+          **YOUR TASK:**
+          Review the previous work and CONTINUE where the last agent left off.
+          - Use git log and git diff to understand what's done
+          - Read modified files to see partial implementations
+          - Complete remaining acceptance criteria from the plan
+          - DO NOT redo work that's already complete
+
+          **IMPLEMENTATION GUIDELINES:**
+          1. **Phase-based implementation:** Continue in phases as defined in the plan
+          2. **After each phase:**
+             - Run npx tsc --noEmit to check types
+             - Run npm test to verify tests pass
+             - Commit changes with descriptive message
+          3. **Follow project patterns:** Check existing similar files for patterns
+
+          **QUALITY STANDARDS:**
+          - All mechanics must cite peer-reviewed research (check /research/ files)
+          - No "TODO" comments (track in issues instead)
+          - Use RNG function, never Math.random()
+          - Follow existing patterns in similar phases
+
+          **VALIDATION REQUIREMENTS:**
+          - TypeScript must compile (0 errors)
+          - Tests must pass
+          - Monte Carlo run (N=10) should complete without crashes (optional for Phase 1)
+
+          **WHEN COMPLETE:**
+          1. Update MASTER_IMPLEMENTATION_ROADMAP.md (mark feature complete)
+          2. Move plan to /plans/completed/
+          3. Report completion status
+
+          Work iteratively. Use Read/Edit/Bash tools as needed. This is a GitHub Actions environment - you have full access to the codebase.
+          EOF
+          else
+            # Build fresh start prompt
+            cat > implementation_prompt.txt << 'EOF'
           You are the feature-implementer agent from .claude/agents/feature-implementer.md
 
           **YOUR CONTEXT:**
@@ -130,29 +256,26 @@ jobs:
 
           1. **Phase-based implementation:** Implement in phases as defined in the plan
           2. **After each phase:**
-             - Run `npx tsc --noEmit` to check types
-             - Run `npm test` to verify tests pass
-             - Run Monte Carlo validation: `npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=60`
+             - Run npx tsc --noEmit to check types
+             - Run npm test to verify tests pass
              - Commit changes with descriptive message
-          3. **Create state types:** Add to src/types/[system].ts
-          4. **Create system module:** Add to src/simulation/[system].ts
-          5. **Create phase:** Add to src/simulation/engine/phases/[System]Phase.ts
-          6. **Register phase:** Update src/simulation/engine/phases/index.ts
+          3. **Create state types:** Add to src/types/[system].ts if needed
+          4. **Create system module:** Add to src/simulation/[system].ts if needed
+          5. **Create phase:** Add to src/simulation/engine/phases/[System]Phase.ts if needed
+          6. **Register phase:** Update src/simulation/engine/phases/index.ts if needed
           7. **Add logging:** Use console.log with clear prefixes
           8. **Update wiki:** Add system documentation to docs/wiki/README.md
 
           **QUALITY STANDARDS:**
           - All mechanics must cite peer-reviewed research (check /research/ files)
           - No "TODO" comments (track in issues instead)
-          - No console.logs in production code (only for debugging)
           - Use RNG function, never Math.random()
           - Follow existing patterns in similar phases
 
           **VALIDATION REQUIREMENTS:**
           - TypeScript must compile (0 errors)
           - Tests must pass
-          - Monte Carlo run (N=10) must complete without crashes
-          - Check logs for unexpected behavior
+          - Monte Carlo run (N=10) should complete without crashes (optional for Phase 1)
 
           **WHEN COMPLETE:**
           1. Update MASTER_IMPLEMENTATION_ROADMAP.md (mark feature complete)
@@ -161,6 +284,7 @@ jobs:
 
           Work iteratively. Use Read/Edit/Bash tools as needed. This is a GitHub Actions environment - you have full access to the codebase.
           EOF
+          fi
 
       - name: Read Implementation Prompt
         id: read_prompt
