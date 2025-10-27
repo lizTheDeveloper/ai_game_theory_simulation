@@ -134,7 +134,9 @@
       "WebFetch(domain:davidarmstrongmckay.com)",
       "mcp__chatroom__chatroom_who_active",
       "Bash(then)",
-      "Bash(else)"
+      "Bash(else)",
+      "mcp__playwright__browser_press_key",
+      "Bash(do echo -n \"Run $i: \")"
     ],
     "deny": [],
     "ask": [],
