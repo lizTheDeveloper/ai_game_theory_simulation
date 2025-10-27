@@ -955,7 +955,11 @@ function applyRegionalEffects(
             // Initialize pfasContamination if not set (part of Novel Entities boundary)
             // Default: 0.5 (moderate contamination, 2025 baseline)
             const current = (gameState.planetaryBoundariesSystem as any).pfasContamination ?? 0.5;
-            (gameState.planetaryBoundariesSystem as any).pfasContamination = Math.max(0, current - value * 0.01);
+            const newValue = Math.max(0, current - value * 0.01);
+            (gameState.planetaryBoundariesSystem as any).pfasContamination = newValue;
+
+            // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
+            console.log(`  🧪 PFAS Reduction: ${(current * 100).toFixed(1)}% → ${(newValue * 100).toFixed(1)}% contamination (Δ=${(value * 0.01 * 100).toFixed(2)}%) | Month ${gameState.currentMonth}`);
           }
           break;
           
@@ -965,10 +969,14 @@ function applyRegionalEffects(
           // Reducing them improves the novel entities planetary boundary
           if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
             const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            const oldValue = boundary.currentValue;
             boundary.currentValue = Math.max(
               0,
               boundary.currentValue - value * 0.01
             );
+
+            // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
+            console.log(`  ♻️ Plastic Pollution Reduction: novel_entities ${oldValue.toFixed(3)} → ${boundary.currentValue.toFixed(3)} (Δ=${(value * 0.01).toFixed(4)}) | Month ${gameState.currentMonth}`);
           }
           break;
 
@@ -978,10 +986,14 @@ function applyRegionalEffects(
           // Reducing them improves the novel entities planetary boundary
           if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
             const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            const oldValue = boundary.currentValue;
             boundary.currentValue = Math.max(
               0,
               boundary.currentValue - value * 0.01
             );
+
+            // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
+            console.log(`  🧬 Endocrine Disruptor Reduction: novel_entities ${oldValue.toFixed(3)} → ${boundary.currentValue.toFixed(3)} (Δ=${(value * 0.01).toFixed(4)}) | Month ${gameState.currentMonth}`);
           }
           break;
 
@@ -991,6 +1003,7 @@ function applyRegionalEffects(
           // Note: microplasticLevel property was never defined, but ocean health improvement is valid
           // Improve ocean health from reduced microplastics
           if (gameState.oceanAcidificationSystem) {
+            const oldValue = gameState.oceanAcidificationSystem.marineFoodWeb;
             gameState.oceanAcidificationSystem.marineFoodWeb = assertFinite(Math.min(
               1.0,
               gameState.oceanAcidificationSystem.marineFoodWeb + value * 0.005
@@ -999,6 +1012,9 @@ function applyRegionalEffects(
         valueName: 'marineFoodWeb',
         month: gameState.currentMonth
       });
+
+            // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
+            console.log(`  🌊 Microplastic Reduction: marineFoodWeb ${oldValue.toFixed(3)} → ${gameState.oceanAcidificationSystem.marineFoodWeb.toFixed(3)} (Δ=${(value * 0.005).toFixed(4)}) | Month ${gameState.currentMonth}`);
           }
           break;
 
@@ -1008,10 +1024,14 @@ function applyRegionalEffects(
           // Reducing their risk improves the novel entities planetary boundary
           if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
             const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            const oldValue = boundary.currentValue;
             boundary.currentValue = Math.max(
               0,
               boundary.currentValue - value * 0.01
             );
+
+            // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
+            console.log(`  ⚛️ Nanomaterial Risk Reduction: novel_entities ${oldValue.toFixed(3)} → ${boundary.currentValue.toFixed(3)} (Δ=${(value * 0.01).toFixed(4)}) | Month ${gameState.currentMonth}`);
           }
           break;
 
@@ -1019,6 +1039,7 @@ function applyRegionalEffects(
           // Prevent new pollution from green chemistry
           if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
             const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
+            const oldRate = (boundary as any).accumulationRate ?? 0;
             // Reduce future pollution accumulation rate
             (boundary as any).accumulationRate = assertFinite(Math.max(
               0,
@@ -1028,6 +1049,9 @@ function applyRegionalEffects(
         valueName: 'accumulationRate',
         month: gameState.currentMonth
       });
+
+            // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
+            console.log(`  🧪 Green Chemistry Prevention: novel_entities accumulationRate ${oldRate.toFixed(4)} → ${((boundary as any).accumulationRate).toFixed(4)} (Δ=${(value * 0.01).toFixed(4)}) | Month ${gameState.currentMonth}`);
           }
           break;
 

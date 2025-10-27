@@ -339,6 +339,22 @@ function updateGridMix(power: PowerGenerationSystem, state: GameState): void {
     power.fossilPercentage /= total;
   }
 
+  // DEFENSIVE (Oct 27, 2025): Verify grid mix integrity before emissions calculation
+  // Architecture review concern: Tech effects (renewableReliability) AND natural transition
+  // both modify renewablePercentage. If they desync, carbon intensity is corrupted.
+  const gridMixTotal = power.renewablePercentage + power.nuclearPercentage + power.fossilPercentage;
+
+  if (gridMixTotal < 0.99 || gridMixTotal > 1.01) {
+    throw new Error(
+      `❌ GRID MIX CORRUPTION: Percentages sum to ${(gridMixTotal * 100).toFixed(2)}%, should be 100%\n` +
+      `   renewable: ${(power.renewablePercentage * 100).toFixed(2)}%\n` +
+      `   nuclear: ${(power.nuclearPercentage * 100).toFixed(2)}%\n` +
+      `   fossil: ${(power.fossilPercentage * 100).toFixed(2)}%\n` +
+      `   Month: ${power.monthsSinceStart}\n` +
+      `   → Carbon intensity calculation would be incorrect!`
+    );
+  }
+
   // Update carbon intensity (weighted by fuel mix)
   const renewableCI = 50;   // gCO2e/kWh (lifecycle emissions)
   const nuclearCI = 12;     // gCO2e/kWh (very low)
@@ -468,7 +484,7 @@ function calculateEnergyConstraints(power: PowerGenerationSystem): void {
 
     // Log warning when first entering soft constraint
     if (power.monthsConstrained === 1) {
-      console.log(`\n⚠️ ENERGY CONSTRAINT ACTIVATED (SOFT)`);
+      console.warn(`\n⚠️ ENERGY CONSTRAINT ACTIVATED (SOFT)`);
       console.log(`   Data centers using ${(utilizationRate * 100).toFixed(1)}% of global power`);
       console.log(`   Threshold: ${(hardThreshold * 100).toFixed(0)}% max`);
       console.log(`   AI growth will slow as power becomes scarce\n`);
