@@ -56,6 +56,7 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
         pollutionLevel: 0.40,        // 40% pollution (baseline)
         climateStability: 0.60,      // 60% stability (baseline)
         biodiversityIndex: 0.65,     // 65% remaining (35% loss)
+        pollutionPreventionFactor: 1.0,  // Oct 27, 2025: Baseline (no advanced prevention)
         resourceCrisisActive: false,
         pollutionCrisisActive: false,
         climateCrisisActive: false,

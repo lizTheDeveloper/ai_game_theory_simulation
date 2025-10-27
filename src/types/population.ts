@@ -64,6 +64,11 @@ export interface HumanPopulationSystem {
   monthlyDeathsApplied?: number;         // Deaths applied this month (reset each month)
   monthlyDeathCapReached?: boolean;      // Flag if cap was hit (for logging)
 
+  // Bayesian Mortality System (Oct 27, 2025)
+  // Accumulated mortality risks throughout the month, resolved at month end
+  // Research: /research/mortality_caps_historical_data_20251027.md
+  mortalityRisks?: import('../types/bayesianMortality').MortalityRisk[];
+
   // Multi-dimensional death tracking (TIER 1.5 - Summary Statistics)
   // PROXIMATE CAUSE: What killed them (medical/physical cause of death)
   deathsByCategory: {

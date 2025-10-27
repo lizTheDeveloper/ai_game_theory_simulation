@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parameter Sweep Integration Test</title>
+  <style>
+    body {
+      font-family: 'Monaco', 'Courier New', monospace;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #0a0a0a;
+      color: #00ff00;
+    }
+
+    h1 {
+      border-bottom: 2px solid #00ff00;
+      padding-bottom: 10px;
+    }
+
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #00ff00;
+      background: #0f0f0f;
+    }
+
+    .log {
+      background: #0f0f0f;
+      border: 1px solid #00ff00;
+      padding: 15px;
+      margin: 10px 0;
+      max-height: 600px;
+      overflow-y: auto;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .log-entry {
+      margin: 2px 0;
+      font-family: monospace;
+    }
+
+    .log-entry.started { color: #00aaff; }
+    .log-entry.progress { color: #ffaa00; }
+    .log-entry.completed { color: #00ff00; }
+    .log-entry.error { color: #ff0000; }
+
+    button {
+      background: #00ff00;
+      color: #0a0a0a;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+      font-family: 'Monaco', monospace;
+    }
+
+    button:hover {
+      background: #00cc00;
+    }
+
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 30px;
+      background: #0f0f0f;
+      border: 1px solid #00ff00;
+      margin: 10px 0;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00ff00;
+      transition: width 0.3s;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #0a0a0a;
+      font-weight: bold;
+    }
+
+    .sweep-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .sweep-group {
+      border: 1px solid #00ff00;
+      padding: 10px;
+      background: #0f0f0f;
+    }
+
+    .sweep-group h3 {
+      margin: 0 0 10px 0;
+      color: #00aaff;
+    }
+
+    .outcome-bar {
+      height: 20px;
+      background: #0f0f0f;
+      border: 1px solid #00ff00;
+      margin: 5px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .outcome-fill {
+      height: 100%;
+      display: flex;
+    }
+
+    .outcome-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #0a0a0a;
+      font-weight: bold;
+    }
+
+    .outcome-utopia { background: #00ff00; }
+    .outcome-dystopia { background: #ff6600; }
+    .outcome-extinction { background: #ff0000; }
+    .outcome-status-quo { background: #666; }
+  </style>
+</head>
+<body>
+  <h1>Monte Carlo Parameter Sweep Integration Test</h1>
+
+  <div class="status">
+    <h2>Test Configuration</h2>
+    <p><strong>Seeds:</strong> 42000-42002 (3 seeds)</p>
+    <p><strong>Threshold Scenarios:</strong> baseline, utopia (2 scenarios)</p>
+    <p><strong>Fixed:</strong> historical scenario, 12 months</p>
+    <p><strong>Total Simulations:</strong> 3 × 2 = 6</p>
+    <p><strong>Expected Time:</strong> ~6-12 minutes</p>
+  </div>
+
+  <div>
+    <button id="startBtn" onclick="runTest()">Start Parameter Sweep Test</button>
+    <button id="clearBtn" onclick="clearLog()">Clear Log</button>
+  </div>
+
+  <div class="status">
+    <h2>Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+      <div class="progress-text" id="progressText">0 / 6 (0%)</div>
+    </div>
+    <p><strong>Status:</strong> <span id="status">Ready</span></p>
+    <p><strong>Running:</strong> <span id="running">0</span> | <strong>Queued:</strong> <span id="queued">0</span></p>
+    <p><strong>Elapsed:</strong> <span id="elapsed">0s</span></p>
+  </div>
+
+  <div class="sweep-groups" id="sweepGroups"></div>
+
+  <div class="log" id="log">
+    <div class="log-entry">Waiting to start test...</div>
+  </div>
+
+  <script type="module">
+    // This is a browser test page - it will load the MonteCarloManager
+    // and run a real parameter sweep with Web Workers
+
+    import { MonteCarloManager } from '../src/lib/MonteCarloManager.ts';
+
+    let manager = null;
+    let startTime = null;
+    let elapsedInterval = null;
+
+    window.runTest = async function() {
+      const startBtn = document.getElementById('startBtn');
+      startBtn.disabled = true;
+
+      log('=== Parameter Sweep Integration Test Started ===', 'started');
+      log('Initializing MonteCarloManager...', 'progress');
+
+      manager = new MonteCarloManager();
+      startTime = Date.now();
+
+      // Start elapsed timer
+      elapsedInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        document.getElementById('elapsed').textContent = elapsed + 's';
+      }, 1000);
+
+      // Setup event listeners
+      manager.on('batchStarted', (batchId) => {
+        log(`✅ Batch started: ${batchId}`, 'started');
+        updateStatus('Running');
+      });
+
+      manager.on('simulationStarted', (simId) => {
+        log(`  ▶️  Simulation started: ${simId}`, 'started');
+      });
+
+      manager.on('simulationProgress', (simId, month) => {
+        if (month % 3 === 0) {
+          log(`  📊 ${simId}: Month ${month}`, 'progress');
+        }
+      });
+
+      manager.on('simulationCompleted', (simId, result) => {
+        log(`  ✅ ${simId} complete: ${result.summary.finalOutcome}`, 'completed');
+      });
+
+      manager.on('batchProgress', (progress) => {
+        const pct = Math.round(progress.progress * 100);
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('progressText').textContent =
+          `${progress.completedRuns} / ${progress.totalRuns} (${pct}%)`;
+        document.getElementById('running').textContent = progress.activeSimulations;
+        document.getElementById('queued').textContent = progress.queuedSimulations;
+
+        log(`📈 Progress: ${progress.completedRuns}/${progress.totalRuns} (${pct}%) - Running: ${progress.activeSimulations}, Queued: ${progress.queuedSimulations}`, 'progress');
+      });
+
+      manager.on('batchCompleted', (batchId, results) => {
+        clearInterval(elapsedInterval);
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+
+        log(`✅ Batch ${batchId} COMPLETE!`, 'completed');
+        log(`   Total time: ${elapsed}s`, 'completed');
+        log(`   Total simulations: ${results.length}`, 'completed');
+
+        // Show outcome distribution
+        const outcomes = results.reduce((acc, r) => {
+          const outcome = r.summary.finalOutcome;
+          acc[outcome] = (acc[outcome] || 0) + 1;
+          return acc;
+        }, {});
+
+        log('', 'completed');
+        log('📊 Outcome Distribution:', 'completed');
+        Object.entries(outcomes).forEach(([outcome, count]) => {
+          const pct = Math.round(count / results.length * 100);
+          log(`   ${outcome}: ${count}/${results.length} (${pct}%)`, 'completed');
+        });
+
+        updateStatus('Complete');
+        updateSweepGroups(batchId);
+      });
+
+      manager.on('error', (error) => {
+        log(`❌ Error: ${error.message}`, 'error');
+        if (error.simulationId) {
+          log(`   Simulation: ${error.simulationId}`, 'error');
+        }
+      });
+
+      try {
+        // Create parameter sweep
+        log('Creating parameter sweep...', 'progress');
+        const batchId = await manager.createParameterSweep({
+          seeds: { start: 42000, count: 3 },
+          sweepParameters: {
+            thresholdScenarios: ['baseline', 'utopia']
+          },
+          fixedParameters: {
+            scenario: 'historical',
+            maxMonths: 12,
+            updateInterval: 100
+          },
+          name: 'Browser Integration Test Sweep'
+        });
+
+        log(`Created batch: ${batchId}`, 'started');
+
+        // Start execution
+        log('Starting parameter sweep execution...', 'progress');
+        await manager.startParameterSweep(batchId);
+
+        log('', 'completed');
+        log('=== Test Complete ===', 'completed');
+
+      } catch (error) {
+        log(`❌ Test failed: ${error.message}`, 'error');
+        console.error(error);
+        clearInterval(elapsedInterval);
+        updateStatus('Failed');
+        startBtn.disabled = false;
+      }
+    };
+
+    window.clearLog = function() {
+      document.getElementById('log').innerHTML = '<div class="log-entry">Log cleared.</div>';
+    };
+
+    function log(message, type = '') {
+      const logDiv = document.getElementById('log');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry ' + type;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logDiv.appendChild(entry);
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    function updateStatus(status) {
+      document.getElementById('status').textContent = status;
+    }
+
+    function updateSweepGroups(batchId) {
+      const sweepGroups = manager.getSweepResults(batchId);
+      if (!sweepGroups) return;
+
+      const container = document.getElementById('sweepGroups');
+      container.innerHTML = '<h2 style="grid-column: 1/-1;">Sweep Group Results</h2>';
+
+      // Only show the main parameter groups (not fixed parameters)
+      const mainGroups = sweepGroups.filter(g =>
+        g.parameterName === 'thresholdScenario' || g.parameterName === 'seed'
+      );
+
+      mainGroups.forEach(group => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'sweep-group';
+
+        const outcomes = group.runs.reduce((acc, r) => {
+          if (r.outcome) {
+            acc[r.outcome] = (acc[r.outcome] || 0) + 1;
+          }
+          return acc;
+        }, {});
+
+        const total = group.runs.length;
+
+        let html = `<h3>${group.label}</h3>`;
+        html += `<p><strong>Runs:</strong> ${total}</p>`;
+        html += `<p><strong>Parameters:</strong> ${JSON.stringify(group.parameters)}</p>`;
+
+        if (Object.keys(outcomes).length > 0) {
+          html += `<div class="outcome-bar"><div class="outcome-fill">`;
+
+          Object.entries(outcomes).forEach(([outcome, count]) => {
+            const pct = (count / total) * 100;
+            const className = `outcome-${outcome.toLowerCase().replace(/\s+/g, '-')}`;
+            html += `<div class="${className} outcome-segment" style="width: ${pct}%">${count}</div>`;
+          });
+
+          html += `</div></div>`;
+          html += `<p><strong>Outcomes:</strong></p><ul>`;
+          Object.entries(outcomes).forEach(([outcome, count]) => {
+            html += `<li>${outcome}: ${count}/${total} (${Math.round(count/total*100)}%)</li>`;
+          });
+          html += `</ul>`;
+        }
+
+        groupDiv.innerHTML = html;
+        container.appendChild(groupDiv);
+      });
+    }
+  </script>
+</body>
+</html>

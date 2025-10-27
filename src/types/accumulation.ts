@@ -38,6 +38,13 @@ export interface EnvironmentalAccumulation {
   // Biodiversity loss (starts at 1.0, degrades toward 0)
   biodiversityIndex: number;    // [0, 1] Ecosystem health, species diversity
 
+  // === POLLUTION PREVENTION FACTOR (Oct 27, 2025) ===
+  // Research: EPA Green Chemistry Challenge - 830M lbs hazardous chemicals eliminated/year
+  // Green chemistry (benign-by-design) prevents NEW pollution from entering system
+  // Factor applied to pollution generation rate: 1.0 = baseline, 0.4 = 60% prevention
+  // Tech: "Green Chemistry" reduces this multiplicatively (prevents future pollution)
+  pollutionPreventionFactor: number;  // [0, 1] 1.0 = baseline, lower = more prevention
+
   // Crisis tracking
   resourceCrisisActive: boolean;    // Has resource crisis been triggered?
   pollutionCrisisActive: boolean;   // Has pollution crisis been triggered?

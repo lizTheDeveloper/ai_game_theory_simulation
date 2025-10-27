@@ -185,14 +185,34 @@ function calculateWesternLiberal(state: GameState): number {
   }
   const civilLiberties = state.socialAccumulation.socialCohesion.civilLiberties;
 
-  // Rule of Law (0-100) - use democracy as proxy if specific property not available
-  if (state.government.democracy === undefined) {
-    throw new Error('❌ state.government.democracy is undefined in calculateWesternLiberal:155 - initialization bug');
+  // Rule of Law (0-100) - use institutionalLegitimacy (independent judiciary, property rights, equal treatment)
+  // FIX (Oct 27, 2025): Was duplicate of democracy - now uses distinct metric
+  if (state.socialAccumulation?.institutionalLegitimacy === undefined) {
+    throw new Error('❌ state.socialAccumulation.institutionalLegitimacy is undefined in calculateWesternLiberal:155 - initialization bug');
   }
-  const ruleOfLaw = state.government.democracy * 100;
+  const ruleOfLaw = state.socialAccumulation.institutionalLegitimacy * 100;
 
-  // Economic Freedom (inverted market regulation) - default to moderate
-  const economicFreedom = 50;
+  // Economic Freedom (0-100) - map from AI regulation level (inverted)
+  // FIX (Oct 27, 2025): Was hardcoded to 50 - now uses actual regulation type
+  // Western Liberal paradigm values free markets, so less regulation = higher score
+  const regulationType = state.government.structuralChoices.regulationType;
+  let economicFreedom: number;
+  switch (regulationType) {
+    case 'none':
+      economicFreedom = 100; // Laissez-faire, no AI regulation
+      break;
+    case 'large_companies':
+      economicFreedom = 75; // Light regulation (only big players)
+      break;
+    case 'compute_threshold':
+      economicFreedom = 50; // Moderate regulation (compute-based)
+      break;
+    case 'capability_ceiling':
+      economicFreedom = 25; // Heavy regulation (capability limits)
+      break;
+    default:
+      economicFreedom = 100; // Default to no regulation
+  }
 
   // Privacy/Freedom from Surveillance (0-100) - invert surveillance level
   const surveillanceLevel = state.government.structuralChoices.surveillanceLevel;

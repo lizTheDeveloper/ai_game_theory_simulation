@@ -1036,22 +1036,26 @@ function applyRegionalEffects(
           break;
 
         case 'newPollutionPrevention':
-          // Prevent new pollution from green chemistry
-          if (gameState.planetaryBoundariesSystem?.boundaries?.novel_entities) {
-            const boundary = gameState.planetaryBoundariesSystem.boundaries.novel_entities;
-            const oldRate = (boundary as any).accumulationRate ?? 0;
-            // Reduce future pollution accumulation rate
-            (boundary as any).accumulationRate = assertFinite(Math.max(
-              0,
-              (boundary as any).accumulationRate - value * 0.01
+          // Prevent new pollution from green chemistry (Oct 27, 2025 ROOT CAUSE FIX)
+          // Research: EPA Green Chemistry Challenge - 830M lbs hazardous chemicals eliminated/year
+          // Green chemistry prevents NEW pollution via benign-by-design chemicals
+          if (gameState.environmentalAccumulation) {
+            const oldFactor = gameState.environmentalAccumulation.pollutionPreventionFactor;
+            // Reduce pollution generation factor (lower = more prevention)
+            // Effect value 0.60 = 60% prevention → factor reduces by 1% per month per point
+            gameState.environmentalAccumulation.pollutionPreventionFactor = assertFinite(Math.max(
+              0.1,  // Floor at 10% (90% prevention is maximum realistic)
+              gameState.environmentalAccumulation.pollutionPreventionFactor - value * 0.01
             ), {
-        location: 'applyRegionalEffects:newPollutionPrevention',
-        valueName: 'accumulationRate',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:newPollutionPrevention',
+              valueName: 'pollutionPreventionFactor',
+              month: gameState.currentMonth
+            });
 
-            // DEFENSIVE LOGGING (Oct 27, 2025): Track novel entities sub-pollutant
-            console.log(`  🧪 Green Chemistry Prevention: novel_entities accumulationRate ${oldRate.toFixed(4)} → ${((boundary as any).accumulationRate).toFixed(4)} (Δ=${(value * 0.01).toFixed(4)}) | Month ${gameState.currentMonth}`);
+            // Log pollution prevention improvement
+            const newFactor = gameState.environmentalAccumulation.pollutionPreventionFactor;
+            const preventionPercent = (1 - newFactor) * 100;
+            console.log(`  🧪 Green Chemistry Prevention: factor ${oldFactor.toFixed(3)} → ${newFactor.toFixed(3)} (${preventionPercent.toFixed(1)}% prevention) | Month ${gameState.currentMonth}`);
           }
           break;
 
