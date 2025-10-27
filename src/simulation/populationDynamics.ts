@@ -17,19 +17,309 @@
  */
 
 import { GameState } from '@/types/game';
-import { HumanPopulationSystem, PopulationStatus, PopulationOutcome, RootCause, CompoundCause, isCompoundCause } from '@/types/population';
+import { HumanPopulationSystem, PopulationStatus, PopulationOutcome, RootCause, CompoundCause, isCompoundCause, RegionalPopulation } from '@/types/population';
 import { validateCompoundCause, getCompoundConfidence } from './utils/deathAttribution';
 import { getTechDeploymentSafe } from './techTree/helpers';
 
 /**
+ * Initialize regional populations (2025 baseline)
+ *
+ * Based on UN World Population Prospects 2024 data for major world regions.
+ * Includes realistic demographics, vulnerabilities, and development stages.
+ */
+function initializeRegionalPopulations(): RegionalPopulation[] {
+  return [
+    {
+      name: 'Eastern Asia',
+      population: 1677,  // millions (China 1425M + Japan 123M + Koreas 77M + Mongolia 3M) - UN 2024 data
+      peakPopulation: 1677,
+      baselinePopulation: 1677,
+      baselineBirthRate: 0.010,  // Low fertility region
+      baselineDeathRate: 0.008,
+      adjustedBirthRate: 0.010,
+      adjustedDeathRate: 0.008,
+      netGrowthRate: 0.002,
+      healthcareQuality: 0.75,  // High quality (Japan 0.9, China 0.7)
+      economicStage: 3.5,  // Advanced manufacturing + services (0-4 scale)
+      fertilityRate: 1.3,  // Below replacement
+      medianAge: 41,
+      carryingCapacity: 1800,
+      baselineCarryingCapacity: 1800,
+      populationPressure: 0.93,
+      climateVulnerability: 0.4,  // Moderate (typhoons, flooding)
+      resourceVulnerability: 0.5,  // Dependent on imports
+      conflictRisk: 0.3,  // Geopolitical tensions
+      foodSecurity: 0.8,
+      qualityOfLife: 0.81,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Southern Asia',
+      population: 2048,  // millions (India 1428M + Pakistan 240M + Bangladesh 173M + others 207M) - UN 2024 data
+      peakPopulation: 2048,
+      baselinePopulation: 2048,
+      baselineBirthRate: 0.019,  // Moderate-high fertility
+      baselineDeathRate: 0.007,
+      adjustedBirthRate: 0.019,
+      adjustedDeathRate: 0.007,
+      netGrowthRate: 0.012,
+      healthcareQuality: 0.55,  // Moderate (improving)
+      economicStage: 2.0,  // Industrializing
+      fertilityRate: 2.1,  // Near replacement
+      medianAge: 28,
+      carryingCapacity: 2200,
+      baselineCarryingCapacity: 2200,
+      populationPressure: 0.93,
+      climateVulnerability: 0.75,  // HIGH (heat waves, wet bulb events)
+      resourceVulnerability: 0.65,  // Water stress
+      conflictRisk: 0.4,  // Regional tensions
+      foodSecurity: 0.65,
+      qualityOfLife: 0.64,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Sub-Saharan Africa',
+      population: 1220,  // millions (Nigeria 223M + Ethiopia 126M + Congo 102M + others) - UN 2024 data
+      peakPopulation: 1220,
+      baselinePopulation: 1220,
+      baselineBirthRate: 0.034,  // Highest fertility region
+      baselineDeathRate: 0.009,
+      adjustedBirthRate: 0.034,
+      adjustedDeathRate: 0.009,
+      netGrowthRate: 0.025,
+      healthcareQuality: 0.35,  // Low (improving slowly)
+      economicStage: 1.0,  // Primarily agriculture
+      fertilityRate: 4.3,  // Very high
+      medianAge: 19,
+      carryingCapacity: 2000,
+      baselineCarryingCapacity: 2000,
+      populationPressure: 0.61,
+      climateVulnerability: 0.85,  // VERY HIGH (drought, desertification)
+      resourceVulnerability: 0.80,  // Water/food stress
+      conflictRisk: 0.55,  // Civil wars, terrorism
+      foodSecurity: 0.45,
+      qualityOfLife: 0.57,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Europe',
+      population: 742,  // millions (Russia 144M + Germany 84M + UK 68M + France 65M + others) - UN 2024 data
+      peakPopulation: 742,
+      baselinePopulation: 742,
+      baselineBirthRate: 0.010,  // Low fertility
+      baselineDeathRate: 0.011,  // Aging population
+      adjustedBirthRate: 0.010,
+      adjustedDeathRate: 0.011,
+      netGrowthRate: -0.001,  // Declining
+      healthcareQuality: 0.85,  // Very high quality
+      economicStage: 4.0,  // Post-industrial services
+      fertilityRate: 1.5,  // Below replacement
+      medianAge: 44,
+      carryingCapacity: 800,
+      baselineCarryingCapacity: 800,
+      populationPressure: 0.93,
+      climateVulnerability: 0.3,  // Lower (northern latitude)
+      resourceVulnerability: 0.4,  // Import dependent
+      conflictRisk: 0.25,  // Ukraine war, stability concerns
+      foodSecurity: 0.85,
+      qualityOfLife: 0.89,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Latin America',
+      population: 664,  // millions (Brazil 216M + Mexico 128M + Colombia 52M + Argentina 46M + others) - UN 2024 data
+      peakPopulation: 664,
+      baselinePopulation: 664,
+      baselineBirthRate: 0.015,  // Moderate fertility
+      baselineDeathRate: 0.006,
+      adjustedBirthRate: 0.015,
+      adjustedDeathRate: 0.006,
+      netGrowthRate: 0.009,
+      healthcareQuality: 0.60,  // Moderate
+      economicStage: 2.5,  // Middle income
+      fertilityRate: 1.9,  // Below replacement
+      medianAge: 31,
+      carryingCapacity: 800,
+      baselineCarryingCapacity: 800,
+      populationPressure: 0.83,
+      climateVulnerability: 0.60,  // Moderate-high (Amazon, droughts)
+      resourceVulnerability: 0.45,  // Resource rich
+      conflictRisk: 0.35,  // Drug violence, political instability
+      foodSecurity: 0.70,
+      qualityOfLife: 0.78,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Northern America',
+      population: 380,  // millions (USA 339M + Canada 39M + others 2M) - UN 2024 data
+      peakPopulation: 380,
+      baselinePopulation: 380,
+      baselineBirthRate: 0.011,  // Low-moderate fertility
+      baselineDeathRate: 0.009,
+      adjustedBirthRate: 0.011,
+      adjustedDeathRate: 0.009,
+      netGrowthRate: 0.002,
+      healthcareQuality: 0.80,  // High (but unequal)
+      economicStage: 4.0,  // Advanced services/tech
+      fertilityRate: 1.7,  // Below replacement
+      medianAge: 39,
+      carryingCapacity: 450,
+      baselineCarryingCapacity: 450,
+      populationPressure: 0.84,
+      climateVulnerability: 0.45,  // Moderate (wildfires, hurricanes)
+      resourceVulnerability: 0.25,  // Resource independent
+      conflictRisk: 0.15,  // Low external, moderate internal
+      foodSecurity: 0.90,
+      qualityOfLife: 0.94,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Middle East & North Africa',
+      population: 583,  // millions (Egypt 113M + Iran 89M + Turkey 86M + Iraq 45M + others) - UN 2024 data
+      peakPopulation: 583,
+      baselinePopulation: 583,
+      baselineBirthRate: 0.020,  // Moderate-high fertility
+      baselineDeathRate: 0.006,
+      adjustedBirthRate: 0.020,
+      adjustedDeathRate: 0.006,
+      netGrowthRate: 0.014,
+      healthcareQuality: 0.50,  // Moderate (varies widely)
+      economicStage: 2.0,  // Oil dependent economies
+      fertilityRate: 2.5,  // Above replacement
+      medianAge: 27,
+      carryingCapacity: 650,
+      baselineCarryingCapacity: 650,
+      populationPressure: 0.90,
+      climateVulnerability: 0.90,  // EXTREME (heat, water scarcity)
+      resourceVulnerability: 0.85,  // Water crisis
+      conflictRisk: 0.70,  // Wars, civil unrest
+      foodSecurity: 0.50,
+      qualityOfLife: 0.82,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'South-East Asia',
+      population: 698,  // millions (Indonesia 277M + Philippines 117M + Vietnam 99M + Thailand 71M + Myanmar 54M + others) - UN 2024 data
+      peakPopulation: 698,
+      baselinePopulation: 698,
+      baselineBirthRate: 0.016,  // Moderate fertility
+      baselineDeathRate: 0.007,
+      adjustedBirthRate: 0.016,
+      adjustedDeathRate: 0.007,
+      netGrowthRate: 0.009,
+      healthcareQuality: 0.60,  // Moderate (improving)
+      economicStage: 2.5,  // Rapidly industrializing
+      fertilityRate: 2.1,  // Replacement level
+      medianAge: 32,
+      carryingCapacity: 750,
+      baselineCarryingCapacity: 750,
+      populationPressure: 0.93,
+      climateVulnerability: 0.70,  // High (typhoons, sea level)
+      resourceVulnerability: 0.55,  // Island/coastal vulnerability
+      conflictRisk: 0.30,  // Some regional tensions
+      foodSecurity: 0.70,
+      qualityOfLife: 0.77,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Central Asia',
+      population: 78,  // millions (Uzbekistan 35M + Kazakhstan 20M + Tajikistan 10M + others 13M) - UN 2024 data
+      peakPopulation: 78,
+      baselinePopulation: 78,
+      baselineBirthRate: 0.021,  // Moderate-high fertility
+      baselineDeathRate: 0.006,
+      adjustedBirthRate: 0.021,
+      adjustedDeathRate: 0.006,
+      netGrowthRate: 0.015,
+      healthcareQuality: 0.55,  // Moderate
+      economicStage: 2.0,  // Transitioning economies
+      fertilityRate: 2.7,  // High
+      medianAge: 29,
+      carryingCapacity: 100,
+      baselineCarryingCapacity: 100,
+      populationPressure: 0.78,
+      climateVulnerability: 0.65,  // Moderate-high (water stress, Aral Sea)
+      resourceVulnerability: 0.70,  // Water dependent
+      conflictRisk: 0.40,  // Political instability
+      foodSecurity: 0.60,
+      qualityOfLife: 0.80,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    },
+    {
+      name: 'Oceania',
+      population: 46,  // millions (Australia 26M + Papua New Guinea 10M + New Zealand 5M + others 5M) - UN 2024 data
+      peakPopulation: 46,
+      baselinePopulation: 46,
+      baselineBirthRate: 0.013,  // Moderate fertility
+      baselineDeathRate: 0.007,
+      adjustedBirthRate: 0.013,
+      adjustedDeathRate: 0.007,
+      netGrowthRate: 0.006,
+      healthcareQuality: 0.85,  // Very high (Australia/NZ)
+      economicStage: 3.5,  // Advanced economies
+      fertilityRate: 1.8,  // Below replacement
+      medianAge: 34,
+      carryingCapacity: 60,
+      baselineCarryingCapacity: 60,
+      populationPressure: 0.77,
+      climateVulnerability: 0.55,  // Moderate-high (wildfires, cyclones)
+      resourceVulnerability: 0.30,  // Resource independent
+      conflictRisk: 0.10,  // Very low
+      foodSecurity: 0.90,
+      qualityOfLife: 0.80,  // Oct 26, 2025 - HDI 2023 (UNDP)
+      monthlyExcessDeaths: 0,
+      cumulativeCrisisDeaths: 0,
+      refugeeBurden: 0,
+      emigrationPressure: 0
+    }
+  ];
+}
+
+/**
  * Initialize population system (2025 baseline)
+ *
+ * NOTE: Global population is DERIVED from regional populations (bottom-up architecture).
+ * The hardcoded values below are placeholders that get overwritten by aggregation in first update.
  */
 export function initializeHumanPopulationSystem(): HumanPopulationSystem {
+  const regionalPopulations = initializeRegionalPopulations();
+
+  // Calculate initial global population from regional data (UN 2024: ~8.136B)
+  const initialPopulationMillions = regionalPopulations.reduce((sum, region) => sum + region.population, 0);
+  const initialPopulationBillions = initialPopulationMillions / 1000;
+
   return {
-    // Core population metrics
-    population: 8.0,                      // 2025: 8.0B people
-    baselinePopulation: 8.0,
-    peakPopulation: 8.0,
+    // Core population metrics (DERIVED from regional populations)
+    population: initialPopulationBillions,                 // 2025: 8.136B people (UN World Population Prospects 2024)
+    baselinePopulation: initialPopulationBillions,
+    peakPopulation: initialPopulationBillions,
     peakPopulationMonth: 0,
 
     // Growth dynamics (2025 global averages)
@@ -43,7 +333,7 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
     carryingCapacity: 10.0,               // 10B with current tech
     baselineCarryingCapacity: 10.0,
     capacityModifier: 1.0,
-    populationPressure: 0.80,             // 8B / 10B = 80% pressure
+    populationPressure: initialPopulationBillions / 10.0,  // ~8.136B / 10B = 81% pressure
 
     // Demographics
     fertilityRate: 2.3,                   // Global average 2025
@@ -112,7 +402,303 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
     canRecover: true,
     recoveryRate: 0,
     monthsSinceLastCrisis: 0,
+
+    // Regional populations (10 major world regions) - SINGLE SOURCE OF TRUTH
+    regionalPopulations: regionalPopulations,
   };
+}
+
+/**
+ * Aggregate Global Population from Regional Populations (Oct 26, 2025 - Phase 2)
+ *
+ * Bottom-up aggregation: Global population = sum of regional populations
+ *
+ * Architecture: Regional population values are single source of truth, global is derived
+ * Validation: Fails loudly on NaN/undefined/empty regions
+ *
+ * @param state - Game state containing regional populations
+ */
+export function aggregateGlobalPopulation(state: GameState): void {
+  const regions = state.humanPopulationSystem.regionalPopulations;
+
+  // Validate regions array exists and is non-empty
+  if (!regions || regions.length === 0) {
+    throw new Error(
+      `aggregateGlobalPopulation: regionalPopulations is ${regions ? 'empty' : 'undefined'} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Sum regional populations
+  let totalPopulation = 0;
+
+  for (const region of regions) {
+    // Validate regional data - fail loudly on invalid values
+    if (!isFinite(region.population) || isNaN(region.population) || region.population < 0) {
+      throw new Error(
+        `aggregateGlobalPopulation: Invalid population for region "${region.name}": ${region.population} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    totalPopulation += region.population;
+  }
+
+  // Final validation - fail loudly on NaN
+  if (!isFinite(totalPopulation) || isNaN(totalPopulation) || totalPopulation < 0) {
+    throw new Error(
+      `aggregateGlobalPopulation: Calculation produced invalid value: ${totalPopulation} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Update global population
+  state.humanPopulationSystem.population = totalPopulation;
+
+  // Track peak population
+  if (totalPopulation > state.humanPopulationSystem.peakPopulation) {
+    state.humanPopulationSystem.peakPopulation = totalPopulation;
+    state.humanPopulationSystem.peakPopulationMonth = state.currentMonth;
+  }
+}
+
+/**
+ * Aggregate Global Demographics from Regional Populations (Oct 26, 2025 - Phase 2)
+ *
+ * Bottom-up aggregation: Global demographics = population-weighted average of regional demographics
+ *
+ * Architecture: Regional demographic values are single source of truth, global is derived
+ * Validation: Fails loudly on NaN/undefined/empty regions
+ *
+ * @param state - Game state containing regional populations
+ */
+export function aggregateGlobalDemographics(state: GameState): void {
+  const regions = state.humanPopulationSystem.regionalPopulations;
+
+  // Validate regions array exists and is non-empty
+  if (!regions || regions.length === 0) {
+    throw new Error(
+      `aggregateGlobalDemographics: regionalPopulations is ${regions ? 'empty' : 'undefined'} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Calculate total population for weighting
+  let totalPopulation = 0;
+  let weightedBirthRate = 0;
+  let weightedDeathRate = 0;
+  let weightedFertilityRate = 0;
+  let weightedMedianAge = 0;
+
+  for (const region of regions) {
+    // Validate regional data - fail loudly on invalid values
+    if (!isFinite(region.population) || isNaN(region.population) || region.population < 0) {
+      throw new Error(
+        `aggregateGlobalDemographics: Invalid population for region "${region.name}": ${region.population} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    if (!isFinite(region.adjustedBirthRate) || isNaN(region.adjustedBirthRate)) {
+      throw new Error(
+        `aggregateGlobalDemographics: Invalid adjustedBirthRate for region "${region.name}": ${region.adjustedBirthRate} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    if (!isFinite(region.adjustedDeathRate) || isNaN(region.adjustedDeathRate)) {
+      throw new Error(
+        `aggregateGlobalDemographics: Invalid adjustedDeathRate for region "${region.name}": ${region.adjustedDeathRate} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    if (!isFinite(region.fertilityRate) || isNaN(region.fertilityRate)) {
+      throw new Error(
+        `aggregateGlobalDemographics: Invalid fertilityRate for region "${region.name}": ${region.fertilityRate} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    if (!isFinite(region.medianAge) || isNaN(region.medianAge)) {
+      throw new Error(
+        `aggregateGlobalDemographics: Invalid medianAge for region "${region.name}": ${region.medianAge} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    // Accumulate weighted demographics
+    totalPopulation += region.population;
+    weightedBirthRate += region.population * region.adjustedBirthRate;
+    weightedDeathRate += region.population * region.adjustedDeathRate;
+    weightedFertilityRate += region.population * region.fertilityRate;
+    weightedMedianAge += region.population * region.medianAge;
+  }
+
+  // Validate total population is positive
+  if (totalPopulation <= 0) {
+    throw new Error(
+      `aggregateGlobalDemographics: Total population is ${totalPopulation} (all regions empty?) ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Calculate population-weighted averages
+  const globalBirthRate = weightedBirthRate / totalPopulation;
+  const globalDeathRate = weightedDeathRate / totalPopulation;
+  const globalFertilityRate = weightedFertilityRate / totalPopulation;
+  const globalMedianAge = weightedMedianAge / totalPopulation;
+
+  // Final validation - fail loudly on NaN
+  if (!isFinite(globalBirthRate) || isNaN(globalBirthRate)) {
+    throw new Error(
+      `aggregateGlobalDemographics: Birth rate calculation produced NaN/Infinity ` +
+      `(weightedBirthRate=${weightedBirthRate}, totalPopulation=${totalPopulation}, month=${state.currentMonth})`
+    );
+  }
+
+  if (!isFinite(globalDeathRate) || isNaN(globalDeathRate)) {
+    throw new Error(
+      `aggregateGlobalDemographics: Death rate calculation produced NaN/Infinity ` +
+      `(weightedDeathRate=${weightedDeathRate}, totalPopulation=${totalPopulation}, month=${state.currentMonth})`
+    );
+  }
+
+  if (!isFinite(globalFertilityRate) || isNaN(globalFertilityRate)) {
+    throw new Error(
+      `aggregateGlobalDemographics: Fertility rate calculation produced NaN/Infinity ` +
+      `(weightedFertilityRate=${weightedFertilityRate}, totalPopulation=${totalPopulation}, month=${state.currentMonth})`
+    );
+  }
+
+  if (!isFinite(globalMedianAge) || isNaN(globalMedianAge)) {
+    throw new Error(
+      `aggregateGlobalDemographics: Median age calculation produced NaN/Infinity ` +
+      `(weightedMedianAge=${weightedMedianAge}, totalPopulation=${totalPopulation}, month=${state.currentMonth})`
+    );
+  }
+
+  // Update global population system with aggregated demographics
+  state.humanPopulationSystem.adjustedBirthRate = globalBirthRate;
+  state.humanPopulationSystem.adjustedDeathRate = globalDeathRate;
+  state.humanPopulationSystem.fertilityRate = globalFertilityRate;
+  state.humanPopulationSystem.medianAge = globalMedianAge;
+
+  // Update net growth rate
+  state.humanPopulationSystem.netGrowthRate = globalBirthRate - globalDeathRate;
+}
+
+/**
+ * Aggregate Global Carrying Capacity from Regional Populations (Oct 26, 2025 - Phase 3)
+ *
+ * Bottom-up aggregation: Global carrying capacity = sum of regional capacities
+ *
+ * Architecture: Regional capacity values are single source of truth, global is derived
+ * Validation: Fails loudly on NaN/undefined/empty regions
+ *
+ * @param state - Game state containing regional populations
+ */
+export function aggregateGlobalCarryingCapacity(state: GameState): void {
+  const regions = state.humanPopulationSystem.regionalPopulations;
+
+  // Validate regions array exists and is non-empty
+  if (!regions || regions.length === 0) {
+    throw new Error(
+      `aggregateGlobalCarryingCapacity: regionalPopulations is ${regions ? 'empty' : 'undefined'} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Sum regional carrying capacities
+  let totalCapacity = 0;
+
+  for (const region of regions) {
+    // Validate regional data - fail loudly on invalid values
+    if (!isFinite(region.carryingCapacity) || isNaN(region.carryingCapacity) || region.carryingCapacity < 0) {
+      throw new Error(
+        `aggregateGlobalCarryingCapacity: Invalid carryingCapacity for region "${region.name}": ${region.carryingCapacity} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    totalCapacity += region.carryingCapacity;
+  }
+
+  // Final validation - fail loudly on NaN
+  if (!isFinite(totalCapacity) || isNaN(totalCapacity) || totalCapacity < 0) {
+    throw new Error(
+      `aggregateGlobalCarryingCapacity: Calculation produced invalid value: ${totalCapacity} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Update global carrying capacity
+  state.humanPopulationSystem.carryingCapacity = totalCapacity;
+}
+
+/**
+ * Aggregate Global Deaths from Regional Populations (Oct 26, 2025 - Phase 4)
+ *
+ * Bottom-up aggregation: Global deaths = sum of regional deaths
+ *
+ * Architecture: Regional death values are single source of truth, global is derived
+ * Validation: Fails loudly on NaN/undefined/empty regions
+ *
+ * @param state - Game state containing regional populations
+ */
+export function aggregateGlobalDeaths(state: GameState): void {
+  const regions = state.humanPopulationSystem.regionalPopulations;
+
+  // Validate regions array exists and is non-empty
+  if (!regions || regions.length === 0) {
+    throw new Error(
+      `aggregateGlobalDeaths: regionalPopulations is ${regions ? 'empty' : 'undefined'} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Sum regional deaths
+  let totalMonthlyExcessDeaths = 0;
+  let totalCumulativeCrisisDeaths = 0;
+
+  for (const region of regions) {
+    // Validate regional data - fail loudly on invalid values
+    if (!isFinite(region.monthlyExcessDeaths) || isNaN(region.monthlyExcessDeaths) || region.monthlyExcessDeaths < 0) {
+      throw new Error(
+        `aggregateGlobalDeaths: Invalid monthlyExcessDeaths for region "${region.name}": ${region.monthlyExcessDeaths} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    if (!isFinite(region.cumulativeCrisisDeaths) || isNaN(region.cumulativeCrisisDeaths) || region.cumulativeCrisisDeaths < 0) {
+      throw new Error(
+        `aggregateGlobalDeaths: Invalid cumulativeCrisisDeaths for region "${region.name}": ${region.cumulativeCrisisDeaths} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    totalMonthlyExcessDeaths += region.monthlyExcessDeaths;
+    totalCumulativeCrisisDeaths += region.cumulativeCrisisDeaths;
+  }
+
+  // Final validation - fail loudly on NaN
+  if (!isFinite(totalMonthlyExcessDeaths) || isNaN(totalMonthlyExcessDeaths) || totalMonthlyExcessDeaths < 0) {
+    throw new Error(
+      `aggregateGlobalDeaths: Monthly excess deaths calculation produced invalid value: ${totalMonthlyExcessDeaths} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  if (!isFinite(totalCumulativeCrisisDeaths) || isNaN(totalCumulativeCrisisDeaths) || totalCumulativeCrisisDeaths < 0) {
+    throw new Error(
+      `aggregateGlobalDeaths: Cumulative crisis deaths calculation produced invalid value: ${totalCumulativeCrisisDeaths} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Update global death tracking
+  state.humanPopulationSystem.monthlyExcessDeaths = totalMonthlyExcessDeaths;
+  state.humanPopulationSystem.cumulativeCrisisDeaths = totalCumulativeCrisisDeaths;
 }
 
 /**
@@ -136,10 +722,20 @@ export function updateHumanPopulation(state: GameState): void {
   pop.monthlyDeathsApplied = 0;
   pop.monthlyDeathCapReached = false;
 
-  // === PHASE 5: SKIP GLOBAL UPDATE IF REGIONAL POPULATIONS ARE ACTIVE ===
-  // Regional populations handle all population dynamics and aggregate to global
+  // === PHASE 5: AGGREGATE REGIONAL POPULATIONS TO GLOBAL ===
+  // Global population is DERIVED from regional populations (bottom-up architecture)
   if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
-    // Regional system is active, skip global update
+    // Sum regional populations (in millions) and convert to billions
+    const totalPopulationMillions = pop.regionalPopulations.reduce((sum, region) => sum + region.population, 0);
+    pop.population = totalPopulationMillions / 1000; // Convert millions → billions
+
+    // Update peak if current exceeds it
+    if (pop.population > pop.peakPopulation) {
+      pop.peakPopulation = pop.population;
+      pop.peakPopulationMonth = state.currentMonth;
+    }
+
+    // Regional system handles all population dynamics, skip legacy global update
     updateDemographics(state); // Still update global demographics
     return;
   }

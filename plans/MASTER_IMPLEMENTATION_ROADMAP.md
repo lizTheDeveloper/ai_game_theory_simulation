@@ -15,7 +15,7 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 **All simulation engine work** - mechanics, systems, features, AI agents, environmental systems, crises, etc.
 
 **Current Priority:**
-- **HIGH:** Simulation state persistence & management (11-16h)
+- **HIGH:** Simulation state persistence & management (11-16h) - 🚧 Currently being worked on by another agent
 
 **Active Work:** Enrichment features (P3 enhancements, TIER 5, policy improvements)
 
@@ -63,6 +63,9 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - ✅ Web Worker architecture (Oct 24, 2025) - Simulation runs in background
 
 **Active Tech Debt:**
+- **Regional → Global Aggregation:** `/plans/regional-aggregation-refactor.md` (5-8h, 5 phases) - 🚧 Currently being worked on by another agent
+  - QoL, demographics, carrying capacity, deaths must be derived from regional data
+  - Prevents drift between global and regional values (population bug pattern)
 - Performance optimization plan exists: `/plans/performance-optimization-plan.md`
   - Memory-intensive operations (deep cloning in hot paths)
   - O(n²) array operations (505+ across 70 files)
