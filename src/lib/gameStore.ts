@@ -92,7 +92,8 @@ const createInitialGlobalMetrics = (): GlobalMetrics => ({
   publicTrust: 0.6, // Moderate public trust in technology/AI initially
   crisisResilience: 0.5,  // Baseline resilience
   localEconomyStrength: 0.3, // Globalized economy
-  spaceIndustrializationActive: false // No space industry yet
+  spaceIndustrializationActive: false, // No space industry yet
+  animalWelfareIndex: 0.10 // Oct 27, 2025: 90%+ factory farming baseline
 });
 
 const createInitialOutcomeMetrics = (): OutcomeMetrics => ({

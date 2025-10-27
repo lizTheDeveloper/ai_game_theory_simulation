@@ -36,6 +36,13 @@ export function initializeEnvironmentalAccumulation(): EnvironmentalAccumulation
     pollutionLevel: 0.30,         // Was 0.15 - Research: 46% unhealthy air (ALA 2025), 7/9 boundaries breached
     climateStability: 0.75,       // KEEP - Validated (Copernicus 2024: +1.2°C warming)
     biodiversityIndex: 0.35,      // Was 0.70 - Research: 50-70% loss since 1970 (IPBES 2024)
+
+    // Pollution Prevention Factor (Oct 27, 2025)
+    // Research: Baseline 2025 = current regulations (EPA standards, EU REACH)
+    // Factor 1.0 = baseline prevention, <1.0 = advanced green chemistry prevention
+    // EPA: Green Chemistry Challenge eliminated 830M lbs hazardous chemicals/year
+    pollutionPreventionFactor: 1.0,  // Baseline 2025 (current regulations only)
+
     resourceCrisisActive: false,
     pollutionCrisisActive: false,
     climateCrisisActive: false,
@@ -139,19 +146,25 @@ export function updateEnvironmentalAccumulation(
   // === POLLUTION ACCUMULATION ===
   // Base pollution from production
   let pollutionRate = economicStage * 0.006; // 0.6% per month at Stage 1
-  
+
   // Manufacturing capability increases pollution
   pollutionRate += manufacturingCap * 0.005;
-  
+
   // Rapid industrial growth spikes pollution
   if (economicStage > 2.0 && economicStage < 3.5) {
     pollutionRate += 0.01; // Industrial transition period
   }
-  
+
   // Mitigation from clean technologies
   if (hasCleanEnergy) pollutionRate *= 0.4; // 60% reduction
   if (hasRecycling) pollutionRate *= 0.6; // Additional 40% reduction
   if (hasNanotech) pollutionRate *= 0.5; // Molecular precision reduces waste
+
+  // Green Chemistry prevention (Oct 27, 2025)
+  // Research: EPA Green Chemistry Challenge - 830M lbs hazardous chemicals eliminated/year
+  // Prevents NEW pollution from entering system via benign-by-design chemicals
+  // Factor 1.0 = baseline (current regulations), <1.0 = advanced prevention
+  pollutionRate *= env.pollutionPreventionFactor;
   
   // Natural degradation (Earth can process some pollution)
   const naturalDegradation = 0.003; // 0.3% per month natural cleanup

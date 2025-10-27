@@ -31,4 +31,12 @@ export interface GlobalMetrics {
   // Unemployment is calculated in state.society.unemploymentLevel by UnemploymentPhase
   // Copied here for convenient access by intervention unlock conditions
   unemployment?: number;                // [0,1] Fraction of population unemployed (from society.unemploymentLevel)
+
+  // === ANIMAL WELFARE INDEX (Oct 27, 2025) ===
+  // Research: World Animal Foundation (2024) - 94.9B animals in factory farms yearly
+  // Research: Our World in Data (2024) - 90%+ of farmed animals in factory farms
+  // Research: Sentience Institute (2024) - 74% of farmed land animals in factory farms
+  // Baseline 2025: 0.10 (90%+ factory farming, minimal welfare protections)
+  // Tech: "Precision Fermentation" (cell-cultured meat) and "Interspecies Communication" improve this
+  animalWelfareIndex: number;           // [0,1] 0 = factory farming norm, 1 = universal welfare
 }

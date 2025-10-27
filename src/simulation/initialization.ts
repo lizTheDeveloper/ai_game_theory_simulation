@@ -630,7 +630,13 @@ export function createDefaultInitialState(
       // FIX: Initialize fields discovered missing by Monte Carlo validation (Oct 26, 2025)
       crisisResilience: 0.5,           // Baseline societal resilience
       localEconomyStrength: 0.3,       // Moderate local economy strength (globalized 2025 baseline)
-      spaceIndustrializationActive: false // No space industry yet
+      spaceIndustrializationActive: false, // No space industry yet
+
+      // Animal Welfare Index (Oct 27, 2025)
+      // Research: World Animal Foundation (2024) - 94.9B animals in factory farms
+      // Research: Sentience Institute (2024) - 90%+ of farmed animals in factory farms
+      // Baseline 2025: 0.10 (terrible - 90%+ factory farming, minimal protections)
+      animalWelfareIndex: 0.10
     },
 
     // Track AI capability changes for performance calculation (Phase 3.1 initialization fix)

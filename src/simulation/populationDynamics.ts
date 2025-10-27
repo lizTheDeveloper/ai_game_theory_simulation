@@ -346,6 +346,7 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
     geneticBottleneckActive: false,
     monthlyDeathsApplied: 0,  // BUG FIX (Oct 26, 2025): Initialize death cap tracker
     monthlyDeathCapReached: false,
+    mortalityRisks: [],  // Bayesian Mortality System (Oct 27, 2025): Accumulated risks
 
     // Multi-dimensional death tracking
     // PROXIMATE CAUSE: What killed them

@@ -53,6 +53,14 @@ export interface FamineSystem {
   totalDeaths: number;
   genocideFamines: number;          // Count of genocide-driven famines
   techPreventedDeaths: number;      // Deaths prevented by tech
+
+  // === URBAN FOOD ACCESS (Oct 27, 2025) ===
+  // Research: FAO (2024) - 23.9% of urban populations experience moderate/severe food insecurity
+  // Therefore: 76.1% have reliable food access in baseline 2025
+  // Urban advantage: Better infrastructure, markets, supply chains vs rural (68%)
+  // Vulnerability: Price shocks, supply chain disruptions
+  // Tech: "Vertical Farming" improves this via indoor agriculture in cities
+  urbanFoodAccess: number;  // [0, 1] 0 = no access, 1 = universal access
 }
 
 /**
@@ -65,6 +73,11 @@ export function initializeFamineSystem(): FamineSystem {
     totalDeaths: 0,
     genocideFamines: 0,
     techPreventedDeaths: 0,
+
+    // Urban Food Access (Oct 27, 2025)
+    // Research: FAO (2024) - 76.1% of urban populations have reliable food access
+    // Baseline 2025: 0.76 (urban advantage over rural 68% due to infrastructure)
+    urbanFoodAccess: 0.76,
   };
 }
 

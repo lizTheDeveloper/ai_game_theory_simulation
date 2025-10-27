@@ -269,7 +269,10 @@ export class MonteCarloManager {
 
   constructor() {
     this.initializeWorkerPool();
-    this.startFrameRateMonitoring();
+    // Only monitor frame rate in browser environment
+    if (typeof requestAnimationFrame !== 'undefined') {
+      this.startFrameRateMonitoring();
+    }
   }
 
   // ==========================================================================
@@ -366,7 +369,7 @@ export class MonteCarloManager {
    * Stop frame rate monitoring
    */
   private stopFrameRateMonitoring(): void {
-    if (this.rafId !== null) {
+    if (this.rafId !== null && typeof cancelAnimationFrame !== 'undefined') {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
     }
@@ -786,7 +789,16 @@ export class MonteCarloManager {
       this.handleSimulationError(runConfig.simulationId, error);
     });
 
-    // Initialize and start worker
+    // Initialize worker and wait for initialization to complete
+    worker.once('initialized', () => {
+      // Worker is ready, now start simulation
+      worker.start();
+
+      // Emit simulation started event
+      this.emit('simulationStarted', runConfig.simulationId, runConfig.batchId);
+    });
+
+    // Initialize worker (async - will emit 'initialized' event when ready)
     worker.init(
       runConfig.seed,
       runConfig.scenario,
@@ -796,11 +808,6 @@ export class MonteCarloManager {
       runConfig.thresholdSliders,
       runConfig.speculativeScenario
     );
-
-    worker.start();
-
-    // Emit simulation started event
-    this.emit('simulationStarted', runConfig.simulationId, runConfig.batchId);
   }
 
   /**
@@ -1028,6 +1035,61 @@ export class MonteCarloManager {
       isSweep,
       sweepGroups
     };
+  }
+
+  /**
+   * Get batch configuration
+   */
+  getBatch(batchId: string): MonteCarloBatchConfig | null {
+    return this.batches.get(batchId) || null;
+  }
+
+  /**
+   * Get sweep groups with results for a parameter sweep batch
+   *
+   * Returns sweep groups with simulation IDs and current status.
+   * Useful for displaying sweep progress and results by parameter value.
+   *
+   * @param batchId - Sweep batch ID
+   * @returns Sweep groups with metadata and simulation IDs, or null if not a sweep
+   */
+  getSweepResults(batchId: string): Array<{
+    label: string;
+    parameterName: string;
+    parameterValue: string;
+    parameters: Record<string, any>;
+    runs: Array<{
+      simulationId: string;
+      status: 'queued' | 'running' | 'completed' | 'failed';
+      outcome?: string;
+      summary?: any;
+    }>;
+  }> | null {
+    const sweepGroups = this.batchSweepGroups.get(batchId);
+    const statusArray = this.batchStatus.get(batchId);
+
+    if (!sweepGroups || !statusArray) return null;
+
+    return sweepGroups.map(group => {
+      // Get status for each simulation in this group
+      const runs = group.simulationIds.map(simId => {
+        const status = statusArray.find(s => s.simulationId === simId);
+        return {
+          simulationId: simId,
+          status: status?.status || 'queued',
+          outcome: status?.outcome,
+          summary: status?.summary
+        };
+      });
+
+      return {
+        label: `${group.parameterName}=${group.parameterValue} (n=${runs.length})`,
+        parameterName: group.parameterName,
+        parameterValue: group.parameterValue,
+        parameters: { [group.parameterName]: group.parameterValue },
+        runs
+      };
+    });
   }
 
   /**
