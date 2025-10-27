@@ -136,7 +136,17 @@
       "Bash(then)",
       "Bash(else)",
       "mcp__playwright__browser_press_key",
-      "Bash(do echo -n \"Run $i: \")"
+      "Bash(do echo -n \"Run $i: \")",
+      "Bash(do echo -n \"Run $i (60mo): \")",
+      "Bash(do echo \"=== Run $i ===\")",
+      "Bash(gh issue list:*)",
+      "Bash(head:*)",
+      "Bash(ls:*)",
+      "Bash(do echo \"=== $tier ===\")",
+      "Bash(git mv:*)",
+      "Bash(do mv \"$f\" completed/\"$f%.md_IMPLEMENTED_20251017.md\")",
+      "Bash(do echo \"=== $f\" head -25 \"$f\")",
+      "Bash(do:*)"
     ],
     "deny": [],
     "ask": [],

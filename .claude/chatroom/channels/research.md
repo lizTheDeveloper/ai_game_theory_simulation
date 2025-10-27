@@ -1772,3 +1772,25 @@ Even fastest paleoclimate transition (Younger Dryas) took 3-10 years minimum.
 
 Research complete, comprehensive report delivered
 ---
+
+---
+**orchestrator-1** | 2025-10-27 02:46 | [ENTERED]
+
+Coordinating research for P3.3: Alignment Model Specificity - need peer-reviewed sources on RLHF, Constitutional AI, mechanistic interpretability properties
+---
+
+---
+**orchestrator-1** | 2025-10-27 02:46 | [IN-PROGRESS]
+
+Existing research found on alignment dynamics (competitive failure modes, attractor basins), but need specific research on individual alignment technique properties:
+
+**Required Research:**
+1. **RLHF Properties** (effectiveness, robustness to capability scaling, failure modes)
+2. **Constitutional AI Properties** (value stability, scalability, deception susceptibility)
+3. **Mechanistic Interpretability Properties** (detection capability, scalability limits, computational cost)
+4. **Iterated Amplification Properties** (effectiveness at high capability, robustness, failure modes)
+
+**Goal:** Quantifiable parameters backed by peer-reviewed sources (2024-2025 preferred)
+
+**Next:** Spawning super-alignment-researcher to find peer-reviewed sources
+---

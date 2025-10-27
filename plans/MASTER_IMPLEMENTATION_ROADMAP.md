@@ -11,56 +11,9 @@
 
 ---
 
-## 📊 PROGRESS SUMMARY
+**Last Update:** October 26, 2025
 
-**Last Update:** October 26, 2025 (Session: Automated workflows + Phase 1 implementation)
-
-**Recently Completed (Oct 26, 2025):**
-
-### ✅ Threshold Uncertainty Modeling Phase 1 - COMPLETE
-All 4 sub-phases implemented, tested, and committed:
-- **Phase 1A** (Issue #7): Distribution sampling library (379 lines + 500 lines tests, 28/28 passing)
-  - Implemented: Normal, Beta, Log-Normal, Triangular distributions
-  - Commit: d23ea76
-- **Phase 1B** (Issue #8): Tier 1 threshold integration (5 research-backed thresholds)
-  - Created: thresholdInventory.ts, tier1Config.ts
-  - Integrated: ThresholdConfig in GameState, initialization sampling
-  - Commit: a762d2c
-- **Phase 1C** (Issue #9): Nested Monte Carlo architecture
-  - Implemented: Epistemic/aleatory separation, `--nested` CLI flag
-  - Commit: 83ef1e3
-- **Phase 1D** (Issue #10): Validation & documentation
-  - Created: devlog, validation results, wiki updates
-  - Commit: a762d2c
-
-**Archived:** `/plans/completed/threshold-uncertainty-scenario-spec_20251026.md`
-
-**Issues closed:** #6 (split into sub-issues), #7, #8, #9, #10
-
-### ✅ GitHub Actions Workflow Improvements - COMPLETE
-- Fixed branch name sanitization (handles special characters: `:?*[]~^\`)
-- Made test script optional (handles repos without npm test)
-- Validated workflow triggering and execution
-- Commits: 06eca58, 23a1790, d0f1e14
-
-### ✅ Additional Systems - COMPLETE
-- **Event logging system**: eventDatabase.ts, eventLogger.ts, testEventLogging.ts
-- **Famine mortality seasonal patterns**: Seasonal variation, research-backed mortality rates
-- **Timeline dashboard updates**: Event tracking integration
-
-**Total commits this session:** 8 commits (06eca58, 23a1790, d0f1e14, d23ea76, 83ef1e3, a762d2c, 13d616e, 9c278ff)
-
-**Effort saved:** ~34-52 hours (Phase 1 complete, Phases 2-4 deferred to enrichment)
-
-### ✅ Bug Fixes - COMPLETE
-- **Organizations-to-countries linkage bug** (Commit: 13d616e)
-  - Fixed: Missing `bankruptcyRisk` initialization in all 6 organizations
-  - Validated: 5/5 tests passing, multi-country operations working correctly
-  - Devlog: `devlogs/organization_country_linkage_fix_20251026.md`
-- **Nuclear winter cascades bug** (Commit: 9c278ff)
-  - Fixed: Missing `monthlyDeathsApplied` and `monthlyDeathCapReached` initialization
-  - Validated: Test scenarios (100-warhead, 1000-warhead) match research parameters
-  - Devlog: `devlogs/nuclear_winter_initialization_fix_20251026.md`
+**For completed work history, see:** `/plans/completed/COMPLETED_WORK_OCT_2025.md`
 
 ---
 
@@ -69,9 +22,6 @@ All 4 sub-phases implemented, tested, and committed:
 
 **Next Priorities:**
 1. **HIGH:** Simulation state persistence & management (11-16h, builds on event persistence)
-2. **MEDIUM:** AI Deception Detection Phase 2C (12-20h, multi-method ensemble)
-3. **MEDIUM:** Technology tree refactoring (enables Phase 2 threshold work)
-4. **LOW:** AI-Assisted Skills Enhancement (78h, 6 phases remaining)
 
 ---
 
@@ -99,82 +49,6 @@ All 4 sub-phases implemented, tested, and committed:
 **Files:**
 - Archived Plan: `/plans/completed/threshold-uncertainty-scenario-spec_20251026.md`
 - Implementation: `src/simulation/thresholds/` (distributions, tier1Config, thresholdInventory)
-
----
-
-### TIER 2 AI Deception Detection (12-74 hours)
-
-**Status:** Infrastructure complete, Phase 2C or 2D remaining
-**Complexity:** Multi-method ensemble or competitive equilibrium model
-
-**Phase 2C: Multi-Method Ensemble (12-20h)**
-- 5 detection methods (noise injection + behavioral anomaly + internal consistency + adversarial probing + cross-model comparison)
-- Investment scaling: $1B (20%) → $10B (40%) → $50B (60% max)
-- Expected: Maintain 100% neutralization at lower investment levels (6/10 or 4/10)
-- Objectives: Test ensemble synergies, identify minimal sufficient investment
-- Trade-off: 40% compute overhead ($400B-$600B/year)
-
-**Phase 2D: Alternative - Competitive Equilibrium Model (30-50h) - DEFERRED**
-- Alternative to detection: cooperation emerges from game theory + market dynamics
-- Research: Axelrod 1984, Ostrom 2009, Bostrom 2014, Critch & Krueger 2020
-- Core: AI-to-AI competition, heterogeneous values, market equilibria
-- Reduces resentment 0.73 → 0.2-0.4 through autonomy
-- Files: New `competitiveAlignment.ts` system
-
-**Total Effort:** 12-74h (12-20h for Phase 2C, 30-50h for Phase 2D if pursued)
-
-**Files:**
-- Plans: `/plans/tier2-ai-deception-detection.md`
-- Research: `/research/gaming-sleeper-detection_20251017.md`
-
----
-
-### AI-Assisted Skills Enhancement (78 hours)
-
-**Status:** Core system validated, critical gaps remaining
-**Complexity:** 6 phases, 7 interacting systems (bionicSkills, unemployment, policy, QoL, inequality)
-
-**Phase 1: Terminology & Documentation (8h)**
-- Remove "bionic" terminology (too sci-fi), use "AI-assisted skills"
-- Add research citations (JSDoc with study references)
-- Document TRL levels for each mechanic
-- Update TIER 4.6 plan to remove BCI language
-
-**Phase 2: Phase Transition Mechanics (12h)**
-- Model complementarity → transition → substitution timeline (5-10 year phases)
-- Add displacement tracking by population segment
-- Implement policy interventions (retraining, job guarantee, UBI)
-- Research: Acemoglu & Restrepo 2022 (50-70% wage inequality from automation)
-
-**Phase 3: Performance vs Competence Tracking (8h)**
-- Separate AI-assisted performance from true skill retention
-- Add scaffolding quality tracking (education, mentorship by segment)
-- Model retention mechanics (scaffolding × reliance → retention rate)
-- Add competence crisis events (30% gap = warning, 50% = crisis)
-- Research: Cognitive Research 2024 ("illusion of understanding")
-
-**Phase 4: Economic Distribution & Wage Decoupling (6h)**
-- Add labor share tracking (currently 0.62, declining with AI)
-- Model capital vs labor capture (70/30 default, policy-adjustable)
-- Implement policy levers (union strength, minimum wage, worker ownership, UBI)
-- Research: Brookings 2024 (65pp productivity-wage gap since 1973)
-
-**Phase 5: Validation & Testing (16h)**
-- Historical comparison (ATMs, Excel, self-checkout timelines)
-- Sensitivity analysis (parameter ranges, policy interventions)
-- Literature comparison (run scenarios matching published studies)
-- Edge case testing (extreme AI capability, zero/max policy)
-
-**Phase 6: Policy Testing (16h)**
-- Implement policy levers (retraining, UBI, worker ownership, teaching support, job guarantee)
-- Run scenario comparisons (baseline vs single vs combined interventions)
-- Document effectiveness (which policies reduce inequality? preserve employment?)
-- Cost-benefit analysis and recommendations
-
-**Total Effort:** 78h (8h + 12h + 8h + 6h + 16h + 16h + 12h integration/testing)
-
-**Files:**
-- Plans: `/plans/bionic-skills-research-grounding.md`, `/plans/bionic-skills-phase-transition.md`, `/plans/bionic-skills-competence-tracking.md`, `/plans/bionic-skills-economic-distribution.md`
 
 ---
 
@@ -267,23 +141,6 @@ All 4 sub-phases implemented, tested, and committed:
 - Requirements: Must include toJson serialization method for backward compatibility
 - Architecture: Calculate at regional level → aggregate to global as cached values
 - Status: Deferred from Oct 26, 2025 bug fix session
-
----
-
-### LLM Policy Optimization System - Phase 5 Testing (6-8h)
-
-**Status:** Infrastructure complete (Phases 1-4), testing remaining
-**Remaining Work:**
-- Test with Qwen3-32B (localhost:1234)
-- Run comparative Monte Carlo (LLM policy vs hardcoded weights)
-- Validate weights make sense (aligned agents prioritize beneficial contributions?)
-- Analyze token budget exhaustion patterns
-- Compare utopia/dystopia/extinction rates
-
-**Design Documents:**
-- Full architecture: `docs/design/llm-policy-optimization-system.md` (968 lines)
-- Action space reference: `docs/design/ai-agent-action-space.md`
-- Turn-by-turn context: `scripts/generateTurnByTurnContext.ts` (550 lines)
 
 ---
 
@@ -406,21 +263,23 @@ All 4 sub-phases implemented, tested, and committed:
 
 ## Summary
 
-**Total Remaining Effort:** ~140-215 hours across 10 feature groups
+**Total Remaining Effort:** ~131-155 hours across 7 feature groups
 
 **By Priority:**
 - 🟢 DEFERRED: Threshold Uncertainty Phases 2-4 (24-37h) - Phase 1 complete, enrichment deferred
-- 🟡 MEDIUM: Simulation State Persistence & Management (11-16h) - **NEW** - UX enhancement for research workflow
-- 🟡 MEDIUM: AI Deception Detection Phase 2C or 2D (12-74h)
-- 🟡 MEDIUM: AI-Assisted Skills (78h)
-- 🟡 MEDIUM: LLM Policy Optimization Phase 5 (6-8h) - Testing only
+- 🟡 HIGH: Simulation State Persistence & Management (11-16h) - UX enhancement for research workflow
 - 🟢 LOW: P3 Enhancements (39-51h)
 - 🟢 LOW: Policy Improvements (35-42h)
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks, phased)
 
 **Recent Completions:**
+- ✅ LLM Policy Optimization System (Oct 21-22, 2025) - Phases 1-5 complete
+- ✅ AI-Assisted Skills Enhancement (Oct 16-17, 2025) - Core system complete, minor cleanup remaining
+- ✅ TIER 2 AI Deception Detection Phase 2C (Oct 20, 2025) - 12-20h
 - ✅ Threshold Uncertainty Phase 1 (Oct 26, 2025) - 34-52h saved
+- ✅ Technology Tree Refactoring (Oct 14, 2025)
+- ✅ Bug Fixes (Oct 26, 2025) - Organizations linkage + Nuclear winter initialization
 
 **Related Docs:**
 - `/docs/wiki/README.md` - System documentation
@@ -431,4 +290,4 @@ All 4 sub-phases implemented, tested, and committed:
 
 ---
 
-**Last Updated:** October 26, 2025
+**Last Updated:** October 26, 2025 (Session: Roadmap cleanup - LLM & AI-Assisted Skills marked complete)
