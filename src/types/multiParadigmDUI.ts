@@ -316,6 +316,8 @@ export interface MultiParadigmDUI {
    *
    * Real story: "Electoral democracy 45%, civil liberties 8%, rule of law 30%"
    * NOT: "Western Liberal: 2/100" (compresses everything, invokes Goodhart)
+   *
+   * **Oct 27, 2025:** Added privacyFreedom component (surveillance tracking)
    */
   westernLiberalComponents?: Array<{
     month: number;
@@ -323,6 +325,7 @@ export interface MultiParadigmDUI {
     civilLiberties: number;      // 0-100
     ruleOfLaw: number;           // 0-100
     economicFreedom: number;     // 0-100
+    privacyFreedom: number;      // 0-100 (Oct 27, 2025 - inverted surveillance level)
   }>;
 }
 

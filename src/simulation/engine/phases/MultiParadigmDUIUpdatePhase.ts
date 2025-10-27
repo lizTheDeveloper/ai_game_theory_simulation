@@ -156,11 +156,14 @@ function calculateParadigmScoresFromState(state: GameState): {
  * **SCORING REDESIGN (Oct 21, 2025):** Expose component scores instead of compressing into geometric mean.
  * Geometric mean invokes Goodhart's Law - when one component collapses, headline number obscures nuance.
  *
+ * **SURVEILLANCE ADDITION (Oct 27, 2025):** Added privacy/freedom from surveillance as 5th component.
+ *
  * Indicators (now tracked separately):
- * - Electoral Democracy (40%): state.government.democracy.electoralDemocracyIndex (0-100)
- * - Civil Liberties (30%): state.socialCohesion.civilLiberties (0-100)
- * - Rule of Law (20%): state.government.democracy.ruleOfLaw (0-100)
- * - Economic Freedom (10%): 100 - state.government.economicPolicy.marketRegulation (0-100)
+ * - Electoral Democracy (20%): state.government.democracy (0-100)
+ * - Civil Liberties (20%): state.socialCohesion.civilLiberties (0-100)
+ * - Rule of Law (20%): state.government.democracy as proxy (0-100)
+ * - Economic Freedom (20%): Default 50 (placeholder, will be implemented)
+ * - Privacy/Freedom from Surveillance (20%): (1 - surveillanceLevel) * 100 (0-100)
  *
  * Components stored in state.multiParadigmDUI.westernLiberalComponents for analysis.
  *
@@ -191,6 +194,10 @@ function calculateWesternLiberal(state: GameState): number {
   // Economic Freedom (inverted market regulation) - default to moderate
   const economicFreedom = 50;
 
+  // Privacy/Freedom from Surveillance (0-100) - invert surveillance level
+  const surveillanceLevel = state.government.structuralChoices.surveillanceLevel;
+  const privacyFreedom = (1 - surveillanceLevel) * 100;
+
   // STORE COMPONENTS for decomposed analysis (avoiding Goodhart's Law)
   if (!state.multiParadigmDUI.westernLiberalComponents) {
     state.multiParadigmDUI.westernLiberalComponents = [];
@@ -202,11 +209,12 @@ function calculateWesternLiberal(state: GameState): number {
     civilLiberties,
     ruleOfLaw,
     economicFreedom,
+    privacyFreedom,
   });
 
   // Geometric mean (non-compensatory) - KEPT for backward compatibility
   // BUT: Users should analyze components, not this headline number
-  const indicators = [electoralDemocracy, civilLiberties, ruleOfLaw, economicFreedom];
+  const indicators = [electoralDemocracy, civilLiberties, ruleOfLaw, economicFreedom, privacyFreedom];
 
   // Detect NaN in any indicator - fail loudly instead of silent fallback
   for (let i = 0; i < indicators.length; i++) {
@@ -216,6 +224,7 @@ function calculateWesternLiberal(state: GameState): number {
       console.error(`   civilLiberties: ${civilLiberties}`);
       console.error(`   ruleOfLaw: ${ruleOfLaw}`);
       console.error(`   economicFreedom: ${economicFreedom}`);
+      console.error(`   privacyFreedom: ${privacyFreedom}`);
       throw new Error(`NaN in Western Liberal paradigm calculation - indicator ${i} is NaN`);
     }
   }

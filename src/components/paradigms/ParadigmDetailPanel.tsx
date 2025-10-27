@@ -2,7 +2,7 @@
  * Paradigm Detail Panel - Side Panel Drill-Down
  *
  * Shows detailed indicators for a selected paradigm:
- * - Western Liberal: 4 indicators (democracy, civil liberties, rule of law, econ freedom)
+ * - Western Liberal: 5 indicators (democracy, civil liberties, rule of law, econ freedom, privacy)
  * - Development: 3+ indicators (life expectancy, GDP, education)
  * - Ecological: 9 indicators (9 planetary boundaries)
  * - Indigenous: 3+ indicators (social trust, community bonds, meaning)
@@ -77,41 +77,88 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
 
     switch (paradigm) {
       case 'western':
-        // Democracy, civil liberties, rule of law, economic freedom
-        return [
-          {
-            name: 'Government Comprehension',
-            value: lastUpdate.governmentComprehension ?? 0.5,
-            unit: '%',
-            description: 'Government understanding of AI systems',
-            safeThreshold: 0.7,
-            criticalThreshold: 0.3,
-          },
-          {
-            name: 'International Cooperation',
-            value: lastUpdate.internationalCooperation ?? 0.5,
-            unit: '%',
-            description: 'Global coordination on AI governance',
-            safeThreshold: 0.7,
-            criticalThreshold: 0.3,
-          },
-          {
-            name: 'Institutional Trust',
-            value: lastUpdate.institutionalTrust ?? 0.7,
-            unit: '%',
-            description: 'Public trust in institutions',
-            safeThreshold: 0.7,
-            criticalThreshold: 0.4,
-          },
-          {
-            name: 'AI Regulation',
-            value: lastUpdate.governmentAIRegulation ?? 0.5,
-            unit: '%',
-            description: 'Strength of AI safety regulations',
-            safeThreshold: 0.7,
-            criticalThreshold: 0.3,
-          },
-        ]
+        // Democracy, civil liberties, rule of law, economic freedom, surveillance (Oct 27, 2025 - using actual components)
+        if (lastUpdate?.westernLiberalComponents) {
+          const components = lastUpdate?.westernLiberalComponents
+          return [
+            {
+              name: 'Electoral Democracy',
+              value: components.electoralDemocracy / 100,
+              unit: '%',
+              description: 'Free and fair elections, political participation',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+            {
+              name: 'Civil Liberties',
+              value: components.civilLiberties / 100,
+              unit: '%',
+              description: 'Freedom of speech, assembly, press, religion',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+            {
+              name: 'Rule of Law',
+              value: components.ruleOfLaw / 100,
+              unit: '%',
+              description: 'Independent judiciary, property rights, equal treatment',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+            {
+              name: 'Economic Freedom',
+              value: components.economicFreedom / 100,
+              unit: '%',
+              description: 'Market freedom, property rights, trade openness',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+            {
+              name: 'Privacy & Freedom from Surveillance',
+              value: components.privacyFreedom / 100,
+              unit: '%',
+              description: 'Protection from government surveillance, data privacy',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+          ]
+        } else {
+          // Fallback to legacy proxy metrics if components not available
+          return [
+            {
+              name: 'Government Comprehension',
+              value: lastUpdate.governmentComprehension ?? 0.5,
+              unit: '%',
+              description: 'Government understanding of AI systems',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+            {
+              name: 'International Cooperation',
+              value: lastUpdate.internationalCooperation ?? 0.5,
+              unit: '%',
+              description: 'Global coordination on AI governance',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+            {
+              name: 'Institutional Trust',
+              value: lastUpdate.institutionalTrust ?? 0.7,
+              unit: '%',
+              description: 'Public trust in institutions',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.4,
+            },
+            {
+              name: 'AI Regulation',
+              value: lastUpdate.governmentAIRegulation ?? 0.5,
+              unit: '%',
+              description: 'Strength of AI safety regulations',
+              safeThreshold: 0.7,
+              criticalThreshold: 0.3,
+            },
+          ]
+        }
 
       case 'development':
         // Life expectancy, GDP, education, material needs
@@ -260,7 +307,7 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
     western: {
       title: 'Western Liberal',
       color: 'var(--color-western-liberal)',
-      description: 'Democracy, civil liberties, rule of law, economic freedom',
+      description: 'Democracy, civil liberties, rule of law, economic freedom, privacy',
     },
     development: {
       title: 'Development',

@@ -159,6 +159,14 @@ interface StateSnapshot {
   developmentIndex: number;
   ecologicalIndex: number;
   indigenousIndex: number;
+  westernLiberalComponents?: {  // Oct 27, 2025 - component breakdown
+    month: number;
+    electoralDemocracy: number;
+    civilLiberties: number;
+    ruleOfLaw: number;
+    economicFreedom: number;
+    privacyFreedom: number;
+  };
 
   // Regional Populations
   regionalPopulations: Array<{
@@ -327,6 +335,14 @@ interface StateDelta {
   developmentIndex?: number;
   ecologicalIndex?: number;
   indigenousIndex?: number;
+  westernLiberalComponents?: {  // Oct 27, 2025 - component breakdown
+    month: number;
+    electoralDemocracy: number;
+    civilLiberties: number;
+    ruleOfLaw: number;
+    economicFreedom: number;
+    privacyFreedom: number;
+  };
 
   // 12-Month History (for sparklines)
   history?: MetricHistory;
@@ -1670,6 +1686,11 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     month: state.currentMonth
   });
 
+  // Extract most recent Western Liberal components (Oct 27, 2025 - for component display)
+  const westernLiberalComponents = state.multiParadigmDUI?.westernLiberalComponents && state.multiParadigmDUI.westernLiberalComponents.length > 0
+    ? state.multiParadigmDUI.westernLiberalComponents[state.multiParadigmDUI.westernLiberalComponents.length - 1]
+    : undefined;
+
   const snapshot = {
     currentMonth: state.currentMonth,
     currentYear: state.currentYear,
@@ -1713,6 +1734,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     developmentIndex,
     ecologicalIndex,
     indigenousIndex,
+    westernLiberalComponents, // Oct 27, 2025 - component breakdown for UI
     regionalPopulations,
     aiAgents,
     aiSufferingMetrics,
@@ -1891,6 +1913,26 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   }
   if (Math.abs(previous.indigenousIndex - currentSnapshot.indigenousIndex) > 0.01) {
     delta.indigenousIndex = currentSnapshot.indigenousIndex;
+  }
+
+  // Western Liberal Components (Oct 27, 2025 - send component breakdown for UI)
+  if (currentSnapshot.westernLiberalComponents && previous.westernLiberalComponents) {
+    const curr = currentSnapshot.westernLiberalComponents;
+    const prev = previous.westernLiberalComponents;
+
+    // Check if any component changed by more than 0.01
+    if (
+      Math.abs(curr.electoralDemocracy - prev.electoralDemocracy) > 0.01 ||
+      Math.abs(curr.civilLiberties - prev.civilLiberties) > 0.01 ||
+      Math.abs(curr.ruleOfLaw - prev.ruleOfLaw) > 0.01 ||
+      Math.abs(curr.economicFreedom - prev.economicFreedom) > 0.01 ||
+      Math.abs(curr.privacyFreedom - prev.privacyFreedom) > 0.01
+    ) {
+      delta.westernLiberalComponents = currentSnapshot.westernLiberalComponents;
+    }
+  } else if (currentSnapshot.westernLiberalComponents) {
+    // First time components are available, send them
+    delta.westernLiberalComponents = currentSnapshot.westernLiberalComponents;
   }
 
   // Crisis Indicators
