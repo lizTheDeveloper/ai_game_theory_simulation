@@ -757,6 +757,7 @@ let tier3Scenario: ScenarioName = 'baseline'; // Phase 3: Tier 3 scenario (DEPRE
 let thresholdScenario: ScenarioName | undefined; // Phase 4: Unified threshold scenario
 let sliderOverrides: SliderSettings = {}; // Phase 4: Custom slider overrides
 let nestedMonteCarlo = false; // Phase 4: Epistemic/aleatory separation
+let aleatoryNumSamples = 10; // Phase 1C: Aleatory samples per epistemic sample (default: 10)
 let exportConfigPath: string | undefined; // Phase 4: Export threshold config
 let importConfigPath: string | undefined; // Phase 4: Import threshold config
 let llmEnabled = false; // Oct 21, 2025: LLM policy optimization (default: disabled)
@@ -777,8 +778,19 @@ if (args[0] && !args[0].startsWith('--')) {
   const thresholdScenarioArg = args.find(arg => arg.split('=')[0] === '--threshold-scenario')?.split('=')[1] as ScenarioName | undefined;
   const exportConfigArg = args.find(arg => arg.split('=')[0] === '--export-config')?.split('=')[1];
   const importConfigArg = args.find(arg => arg.split('=')[0] === '--import-config')?.split('=')[1];
+  const aleatoryArg = args.find(arg => arg.split('=')[0] === '--aleatory-samples')?.split('=')[1];
   nestedMonteCarlo = args.includes('--nested');
   llmEnabled = args.includes('--llm-enabled');
+
+  // Parse aleatory samples parameter
+  if (aleatoryArg) {
+    const parsed = parseInt(aleatoryArg);
+    if (parsed > 0) {
+      aleatoryNumSamples = parsed;
+    } else {
+      console.warn(`⚠️  Invalid aleatory-samples value: ${aleatoryArg} (must be > 0), using default: 10`);
+    }
+  }
 
   // Parse slider overrides (--slider-NAME=VALUE)
   const sliderArgs = args.filter(arg => arg.startsWith('--slider-'));
