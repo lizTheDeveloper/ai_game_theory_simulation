@@ -43,6 +43,13 @@ export function initializeEnvironmentalAccumulation(): EnvironmentalAccumulation
     // EPA: Green Chemistry Challenge eliminated 830M lbs hazardous chemicals/year
     pollutionPreventionFactor: 1.0,  // Baseline 2025 (current regulations only)
 
+    // Geoengineering Risks (Oct 27, 2025)
+    // Research: Robock et al. (2008), Tilmes et al. (2013), MacMartin et al. (2016)
+    // Baseline 2025: 0 (no geoengineering deployed yet)
+    // Risks accumulate if Stratospheric Aerosol Injection deployed
+    monsoonDisruptionRisk: 0,    // No monsoon disruption risk without geoengineering
+    ozoneDepletionRisk: 0,       // No ozone depletion risk without geoengineering
+
     resourceCrisisActive: false,
     pollutionCrisisActive: false,
     climateCrisisActive: false,

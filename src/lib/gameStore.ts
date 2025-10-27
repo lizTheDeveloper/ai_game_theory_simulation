@@ -93,7 +93,17 @@ const createInitialGlobalMetrics = (): GlobalMetrics => ({
   crisisResilience: 0.5,  // Baseline resilience
   localEconomyStrength: 0.3, // Globalized economy
   spaceIndustrializationActive: false, // No space industry yet
-  animalWelfareIndex: 0.10 // Oct 27, 2025: 90%+ factory farming baseline
+  animalWelfareIndex: 0.10, // Oct 27, 2025: 90%+ factory farming baseline
+  // Existential Risk Tracking (Oct 27, 2025)
+  catastrophicRisk: 0.10,
+  existentialRisk: 0.10,
+  catastrophicRiskFromRecursion: 0.20,
+  recursiveSafety: false,
+  fusionEnabling: 0,
+  // Fusion Enabling Bonuses (Oct 27, 2025)
+  fusionResearchBonus: 0,
+  fusionDeploymentCostReduction: 0,
+  fusionDeploymentTimeReduction: 0
 });
 
 const createInitialOutcomeMetrics = (): OutcomeMetrics => ({

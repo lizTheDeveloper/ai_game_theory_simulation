@@ -57,6 +57,8 @@ export class EnvironmentalFeedbackPhase implements SimulationPhase {
         climateStability: 0.60,      // 60% stability (baseline)
         biodiversityIndex: 0.65,     // 65% remaining (35% loss)
         pollutionPreventionFactor: 1.0,  // Oct 27, 2025: Baseline (no advanced prevention)
+        monsoonDisruptionRisk: 0,    // Oct 27, 2025: No geoengineering yet
+        ozoneDepletionRisk: 0,       // Oct 27, 2025: No geoengineering yet
         resourceCrisisActive: false,
         pollutionCrisisActive: false,
         climateCrisisActive: false,

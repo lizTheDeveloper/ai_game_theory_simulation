@@ -636,7 +636,23 @@ export function createDefaultInitialState(
       // Research: World Animal Foundation (2024) - 94.9B animals in factory farms
       // Research: Sentience Institute (2024) - 90%+ of farmed animals in factory farms
       // Baseline 2025: 0.10 (terrible - 90%+ factory farming, minimal protections)
-      animalWelfareIndex: 0.10
+      animalWelfareIndex: 0.10,
+
+      // Existential Risk Tracking (Oct 27, 2025)
+      // Research: Ord (2020) "The Precipice" - 1/6 (16.7%) existential risk this century
+      // Research: Carlsmith (2021) - AI takeover risk by 2070: ~5%
+      // Baseline 2025: 0.10 (10% existential risk - conservative AI + nanotech + biotech)
+      catastrophicRisk: 0.10,               // 10% risk of catastrophic AI failure
+      existentialRisk: 0.10,                // 10% general existential risk
+      catastrophicRiskFromRecursion: 0.20,  // 20% risk from recursive self-improvement (higher baseline)
+      recursiveSafety: false,               // Recursive safety not yet deployed
+      fusionEnabling: 0,                    // No progress toward fusion yet
+
+      // Fusion Enabling Bonuses (Oct 27, 2025)
+      // Derived from fusionEnabling progress (start at 0)
+      fusionResearchBonus: 0,               // No research bonus initially
+      fusionDeploymentCostReduction: 0,     // No cost reduction initially
+      fusionDeploymentTimeReduction: 0      // No time reduction initially
     },
 
     // Track AI capability changes for performance calculation (Phase 3.1 initialization fix)

@@ -36,6 +36,10 @@ export function initializeOceanAcidificationSystem(): OceanAcidificationSystem {
     alkalinityEnhancementDeployment: 0.0,
     coralRestorationDeployment: 0.05, // Some existing programs
     marineProtectedAreasDeployment: 0.08, // ~8% of oceans protected (2025)
+    // Geoengineering Risks (Oct 27, 2025)
+    // Research: Oschlies et al. (2010), Williamson et al. (2012)
+    // Baseline 2025: 0 (no artificial upwelling deployed yet)
+    deadZoneRisk: 0.0,  // No dead zone risk without artificial upwelling
   };
 }
 

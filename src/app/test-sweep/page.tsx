@@ -18,6 +18,7 @@ export default function ParameterSweepTestPage() {
   const [elapsed, setElapsed] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [sweepGroups, setSweepGroups] = useState<any[]>([]);
+  const [completedOutcomes, setCompletedOutcomes] = useState<string[]>([]);
 
   const managerRef = useRef<MonteCarloManager | null>(null);
   const startTimeRef = useRef<number>(0);
@@ -71,8 +72,9 @@ export default function ParameterSweepTestPage() {
       }
     });
 
-    manager.on('simulationCompleted', (simId, result) => {
-      addLog(`  ✅ ${simId} complete: ${result.summary.finalOutcome}`, 'completed');
+    manager.on('simulationCompleted', (simId, batchId, outcome) => {
+      addLog(`  ✅ ${simId} complete: ${outcome}`, 'completed');
+      setCompletedOutcomes(prev => [...prev, outcome]);
     });
 
     manager.on('batchProgress', (progressData) => {
@@ -91,7 +93,7 @@ export default function ParameterSweepTestPage() {
       );
     });
 
-    manager.on('batchCompleted', (batchId, results) => {
+    manager.on('batchCompleted', (batchId) => {
       if (elapsedIntervalRef.current) {
         clearInterval(elapsedIntervalRef.current);
       }
@@ -99,20 +101,25 @@ export default function ParameterSweepTestPage() {
 
       addLog(`✅ Batch ${batchId} COMPLETE!`, 'completed');
       addLog(`   Total time: ${totalElapsed}s`, 'completed');
-      addLog(`   Total simulations: ${results.length}`, 'completed');
 
-      // Show outcome distribution
-      const outcomes = results.reduce((acc: Record<string, number>, r) => {
-        const outcome = r.summary.finalOutcome;
-        acc[outcome] = (acc[outcome] || 0) + 1;
-        return acc;
-      }, {});
+      // Use completedOutcomes from state
+      setCompletedOutcomes(outcomes => {
+        addLog(`   Total simulations: ${outcomes.length}`, 'completed');
 
-      addLog('', 'completed');
-      addLog('📊 Outcome Distribution:', 'completed');
-      Object.entries(outcomes).forEach(([outcome, count]) => {
-        const pct = Math.round((count / results.length) * 100);
-        addLog(`   ${outcome}: ${count}/${results.length} (${pct}%)`, 'completed');
+        // Show outcome distribution
+        const outcomeCounts = outcomes.reduce((acc: Record<string, number>, outcome) => {
+          acc[outcome] = (acc[outcome] || 0) + 1;
+          return acc;
+        }, {});
+
+        addLog('', 'completed');
+        addLog('📊 Outcome Distribution:', 'completed');
+        Object.entries(outcomeCounts).forEach(([outcome, count]) => {
+          const pct = Math.round((count / outcomes.length) * 100);
+          addLog(`   ${outcome}: ${count}/${outcomes.length} (${pct}%)`, 'completed');
+        });
+
+        return outcomes;
       });
 
       setStatus('Complete');

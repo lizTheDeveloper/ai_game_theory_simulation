@@ -949,10 +949,16 @@ export class MonteCarloManager {
   private freeWorkerSlot(simulationId: string): void {
     for (const slot of this.workerPool.values()) {
       if (slot.currentSimulationId === simulationId) {
+        // Destroy the old worker client (cannot be reinitialized)
+        slot.worker.destroy();
+
+        // Create a new worker client for reuse
+        slot.worker = new SimulationWorkerClient();
+
         slot.status = 'idle';
         slot.currentSimulationId = undefined;
         slot.assignedAt = undefined;
-        console.log(`[MonteCarloManager] Freed worker slot: ${slot.id}`);
+        console.log(`[MonteCarloManager] Freed worker slot: ${slot.id} (worker recreated)`);
         break;
       }
     }
