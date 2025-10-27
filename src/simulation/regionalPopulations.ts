@@ -57,6 +57,10 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       // Regional food security (Oct 25, 2025 - regionalized)
       foodSecurity: 0.70,                  // Below global average due to vulnerability
 
+      // Quality of Life (Oct 26, 2025 - UNDP HDI 2023)
+      // Source: https://en.wikipedia.org/wiki/List_of_countries_by_Human_Development_Index
+      qualityOfLife: 0.57,  // Sub-Saharan Africa regional HDI average
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -96,6 +100,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
 
       // Regional food security (Oct 25, 2025 - regionalized)
       foodSecurity: 0.90,                  // Above average (advanced economy, imports)
+
+      // Quality of Life (Oct 26, 2025 - UNDP HDI 2023)
+      qualityOfLife: 0.81,  // East Asia regional HDI average
 
       // Crisis impacts
       monthlyExcessDeaths: 0,
@@ -137,6 +144,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       // Regional food security (Oct 25, 2025 - regionalized)
       foodSecurity: 0.75,                  // Below average (water stress, high population pressure)
 
+      // Quality of Life (Oct 26, 2025 - UNDP HDI 2023)
+      qualityOfLife: 0.64,  // South Asia regional HDI average
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -176,6 +186,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
 
       // Regional food security (Oct 25, 2025 - regionalized)
       foodSecurity: 0.92,                  // High (advanced economy, CAP subsidies, imports)
+
+      // Quality of Life (Oct 26, 2025 - UNDP HDI 2023)
+      qualityOfLife: 0.89,  // Europe regional HDI average
 
       // Crisis impacts
       monthlyExcessDeaths: 0,
@@ -217,6 +230,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       // Regional food security (Oct 25, 2025 - regionalized)
       foodSecurity: 0.95,                  // Very high (resource-rich, breadbasket)
 
+      // Quality of Life (Oct 26, 2025 - UNDP HDI 2023)
+      qualityOfLife: 0.94,  // North America regional HDI average
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -257,6 +273,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
       // Regional food security (Oct 25, 2025 - regionalized)
       foodSecurity: 0.85,                  // Average (self-sufficient, some distribution issues)
 
+      // Quality of Life (Oct 26, 2025 - UNDP HDI 2023)
+      qualityOfLife: 0.78,  // Latin America regional HDI average
+
       // Crisis impacts
       monthlyExcessDeaths: 0,
       cumulativeCrisisDeaths: 0,
@@ -296,6 +315,9 @@ export function initializeRegionalPopulations(): RegionalPopulation[] {
 
       // Regional food security (Oct 25, 2025 - regionalized)
       foodSecurity: 0.65,                  // Low (import-dependent, water scarcity, conflict)
+
+      // Quality of Life (Oct 26, 2025 - UNDP HDI 2023)
+      qualityOfLife: 0.82,  // Middle East & North Africa regional HDI average
 
       // Crisis impacts
       monthlyExcessDeaths: 0,
@@ -411,7 +433,7 @@ export function updateRegionalPopulations(state: GameState): void {
       const monthlyDeathsM = (region.adjustedDeathRate / 12 * region.population).toFixed(1);
       const monthlyDeathRate = (region.adjustedDeathRate / 12 * 100).toFixed(3);
 
-      console.log(`\n${isHighDeathRate ? '⚠️  HIGH DEATH RATE' : '📊 BASELINE'}: ${region.name} (Month ${state.currentMonth})`);
+      console.warn(`\n${isHighDeathRate ? '⚠️  HIGH DEATH RATE' : '📊 BASELINE'}: ${region.name} (Month ${state.currentMonth})`);
       console.log(`   Adjusted death rate: ${(region.adjustedDeathRate * 100).toFixed(2)}% annual (${monthlyDeathRate}% monthly)`);
       console.log(`   Baseline death rate: ${(region.baselineDeathRate * 100).toFixed(2)}%`);
       console.log(`   Healthcare reduction: ${healthcareReduction.toFixed(2)}x`);

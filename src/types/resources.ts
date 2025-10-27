@@ -371,7 +371,19 @@ export interface ResourceEconomy {
   circularityIndex: number;          // [0, 1] % of materials recycled
   fossilDependence: number;          // [0, 1] How much economy relies on fossil fuels
   criticalBottlenecks: string[];     // List of resources in crisis
-  
+
+  // FIX: Missing fields discovered by Monte Carlo validation (Oct 26, 2025)
+  // These were being accessed with (resourceEconomy as any) casts, causing NaN bugs
+  waterUseEfficiency: number;        // [0, 1] Efficiency of water usage
+  resourceEfficiency: number;        // [0, 1] Overall resource utilization efficiency
+  plasticRecyclingRate: number;      // [0, 1] % of plastic waste recycled
+  rareEarthRecoveryRate: number;     // [0, 1] % of rare earths recovered from electronics
+  miningIntensity: number;           // [0, ∞) Environmental intensity of mining operations
+  supplyChainResilience: number;     // [0, 1] Resilience of global supply chains
+  industrialEmissions: number;       // [0, ∞) Industrial CO2 emissions intensity
+  transportEmissions: number;        // [0, ∞) Transportation emissions intensity
+  animalAgricultureShare: number;    // [0, 1] Share of agriculture from animal products
+
   // === LEGACY (for backward compatibility) ===
   // Map to old single 'resourceReserves' value for existing code
   resourceReserves: number;          // [0, 1] Weighted average of all resources

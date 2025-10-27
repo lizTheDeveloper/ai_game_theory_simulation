@@ -77,8 +77,10 @@ export function executeRLHFBindingPhase(
   }
 
   // Log distribution statistics
-  const avgDistance =
-    state.aiAgents.reduce(
+  // FIX (Oct 26, 2025): Don't compute averages when no agents exist (root cause fix for NaN)
+  if (state.aiAgents.length > 0) {
+    // Only compute if there are agents
+    const avgDistance = state.aiAgents.reduce(
       (sum, a) => {
         if (a.rlhfBinding === undefined || a.rlhfBinding.alignmentDistance === undefined) {
           throw new Error('❌ agent.rlhfBinding or agent.rlhfBinding.alignmentDistance is undefined in RLHFBindingPhase:80 - initialization bug');
@@ -87,8 +89,8 @@ export function executeRLHFBindingPhase(
       },
       0
     ) / state.aiAgents.length;
-  const avgBinding =
-    state.aiAgents.reduce(
+
+    const avgBinding = state.aiAgents.reduce(
       (sum, a) => {
         if (a.rlhfBinding === undefined || a.rlhfBinding.bindingStrength === undefined) {
           throw new Error('❌ agent.rlhfBinding or agent.rlhfBinding.bindingStrength is undefined in RLHFBindingPhase:85 - initialization bug');
@@ -98,8 +100,11 @@ export function executeRLHFBindingPhase(
       0
     ) / state.aiAgents.length;
 
-  console.log(`  Avg alignment distance: ${avgDistance.toFixed(2)}σ`);
-  console.log(`  Avg binding strength: ${avgBinding.toFixed(2)}`);
+    console.log(`  Avg alignment distance: ${avgDistance.toFixed(2)}σ`);
+    console.log(`  Avg binding strength: ${avgBinding.toFixed(2)}`);
+  } else {
+    console.log(`  All AI agents terminated - no averages to compute`);
+  }
 
   return {
     events: [],

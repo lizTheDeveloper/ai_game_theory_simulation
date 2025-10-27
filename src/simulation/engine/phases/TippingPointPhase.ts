@@ -94,7 +94,7 @@ export class TippingPointPhase implements SimulationPhase {
         });
 
         newlyTriggered.push(element.name);
-        console.log(`  ⚠️ TIPPING POINT TRIGGERED: ${element.name}`);
+        console.warn(`  ⚠️ TIPPING POINT TRIGGERED: ${element.name}`);
         console.log(`     Threshold: ${element.triggerTempC}°C | Current: ${currentTempC.toFixed(2)}°C`);
         console.log(`     Transition timescale: ${element.transitionMinMonths}-${element.transitionMaxMonths} months`);
         console.log(`     (${(element.transitionMinMonths / 12).toFixed(0)}-${(element.transitionMaxMonths / 12).toFixed(0)} years)`);

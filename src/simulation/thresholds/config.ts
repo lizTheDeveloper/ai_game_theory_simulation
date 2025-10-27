@@ -11,7 +11,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import type { AllThresholds, ScenarioName, SliderSettings } from './index';
+import type { Thresholds, ScenarioName, SliderSettings } from './index';
 
 /**
  * Threshold configuration metadata
@@ -42,7 +42,7 @@ export interface ThresholdConfig {
   };
 
   /** Sampled threshold values */
-  thresholds: AllThresholds;
+  thresholds: Thresholds;
 
   /** Optional notes/annotations */
   notes?: string;
@@ -105,7 +105,7 @@ export function importThresholdConfig(filePath: string): ThresholdConfig {
  * @returns Complete threshold configuration
  */
 export function createThresholdConfig(
-  thresholds: AllThresholds,
+  thresholds: Thresholds,
   metadata: {
     id?: string;
     description: string;

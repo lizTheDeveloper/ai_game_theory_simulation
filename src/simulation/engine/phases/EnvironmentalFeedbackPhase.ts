@@ -23,6 +23,7 @@
 
 import type { GameState, RNGFunction, GameEvent } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 /**
  * Environmental Feedback Phase
@@ -161,10 +162,22 @@ function aggregatePollutionLevel(state: GameState): number {
 
   // Priority 2: Novel entities system (plastic, PFAS, etc.)
   if (state.novelEntitiesSystem) {
-    // KEEP LEGITIMATE DEFAULTS - Novel entities may not be initialized yet
-    const syntheticLoad = state.novelEntitiesSystem.syntheticChemicalLoad ?? 0;
-    const microplastics = state.novelEntitiesSystem.microplasticConcentration ?? 0;
-    const pfas = state.novelEntitiesSystem.pfasPrevalence ?? 0;
+    // Novel entities system is always initialized - no fallbacks needed
+    const syntheticLoad = assertStateProperty(
+      state.novelEntitiesSystem,
+      'syntheticChemicalLoad',
+      { location: 'EnvironmentalFeedbackPhase.aggregatePollutionLevel', month: state.currentMonth }
+    );
+    const microplastics = assertStateProperty(
+      state.novelEntitiesSystem,
+      'microplasticConcentration',
+      { location: 'EnvironmentalFeedbackPhase.aggregatePollutionLevel', month: state.currentMonth }
+    );
+    const pfas = assertStateProperty(
+      state.novelEntitiesSystem,
+      'pfasPrevalence',
+      { location: 'EnvironmentalFeedbackPhase.aggregatePollutionLevel', month: state.currentMonth }
+    );
 
     // Average of pollution types (0-1 → 0-100)
     const avgPollution = (syntheticLoad + microplastics + pfas) / 3;
@@ -183,24 +196,35 @@ function aggregateResourceDepletion(state: GameState): number {
   let depletion = 0;
   let count = 0;
 
-  // Check various resource systems
+  // Check various resource systems (all initialized by default)
   if (state.phosphorusSystem) {
-    // KEEP LEGITIMATE DEFAULT - reserves may not be initialized yet
-    const phosphorusDepletion = (1 - (state.phosphorusSystem.reserves ?? 0.7)) * 100;
+    const reserves = assertStateProperty(
+      state.phosphorusSystem,
+      'reserves',
+      { location: 'EnvironmentalFeedbackPhase.aggregateResourceDepletion', month: state.currentMonth }
+    );
+    const phosphorusDepletion = (1 - reserves) * 100;
     depletion += phosphorusDepletion;
     count++;
   }
 
   if (state.freshwaterSystem) {
-    // KEEP LEGITIMATE DEFAULT - waterStress may not be initialized yet
-    const freshwaterDepletion = (state.freshwaterSystem.waterStress ?? 0.3) * 100;
+    const waterStress = assertStateProperty(
+      state.freshwaterSystem,
+      'waterStress',
+      { location: 'EnvironmentalFeedbackPhase.aggregateResourceDepletion', month: state.currentMonth }
+    );
+    const freshwaterDepletion = waterStress * 100;
     depletion += freshwaterDepletion;
     count++;
   }
 
   if (state.environmentalAccumulation) {
-    // KEEP LEGITIMATE DEFAULT - resourceReserves may not be initialized yet
-    const resourceReserves = state.environmentalAccumulation.resourceReserves ?? 0.65;
+    const resourceReserves = assertStateProperty(
+      state.environmentalAccumulation,
+      'resourceReserves',
+      { location: 'EnvironmentalFeedbackPhase.aggregateResourceDepletion', month: state.currentMonth }
+    );
     const resourceDepletion = (1 - resourceReserves) * 100;
     depletion += resourceDepletion;
     count++;

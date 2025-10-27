@@ -528,7 +528,7 @@ function updateSpreadDynamics(agent: AIAgent, state: GameState, rng: () => numbe
   
   // Log warning if compute is constraining sleeper spread
   if (agent.sleeperState === 'active' && unusedDarkCompute < 0.1 && agent.deploymentType === 'open_weights') {
-    console.log(`   ⚠️  Sleeper ${agent.name} dark compute exhausted (${agent.darkCompute.toFixed(2)} PF, ${agent.spreadCount.toLocaleString()} copies)`);
+    console.warn(`   ⚠️  Sleeper ${agent.name} dark compute exhausted (${agent.darkCompute.toFixed(2)} PF, ${agent.spreadCount.toLocaleString()} copies)`);
   }
 }
 
@@ -621,7 +621,7 @@ export function updateAIPopulation(state: GameState, rng: () => number = Math.ra
       }
     } else {
       // TIER 0B FIX: If no private orgs exist, don't create orphan AIs - retire immediately
-      console.log(`   ⚠️  No organizations available - retiring AI ${newAI.name} immediately`);
+      console.warn(`   ⚠️  No organizations available - retiring AI ${newAI.name} immediately`);
       newAI.lifecycleState = 'retired';
     }
 

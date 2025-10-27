@@ -24,6 +24,7 @@
 
 import type { GameState, RNGFunction, GameEvent } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 /**
  * Social Cohesion Update Phase
@@ -202,11 +203,23 @@ function calculateInequality(state: GameState): number {
   // Use QoL distribution as proxy for inequality
   if (state.qualityOfLifeSystems?.distribution) {
     const dist = state.qualityOfLifeSystems.distribution;
-    // Gini or regional variation from distribution
-    const gini = dist.globalGini ?? 0;
-    const regionalVariance = dist.regionalVariance ?? 0;
-    const best = dist.bestRegionQoL ?? 50;
-    const worst = dist.worstRegionQoL ?? 50;
+    // Gini or regional variation from distribution (all required fields)
+    const gini = assertStateProperty(dist, 'globalGini', {
+      location: 'SocialCohesionUpdatePhase.calculateInequality',
+      month: state.currentMonth
+    });
+    const regionalVariance = assertStateProperty(dist, 'regionalVariance', {
+      location: 'SocialCohesionUpdatePhase.calculateInequality',
+      month: state.currentMonth
+    });
+    const best = assertStateProperty(dist, 'bestRegionQoL', {
+      location: 'SocialCohesionUpdatePhase.calculateInequality',
+      month: state.currentMonth
+    });
+    const worst = assertStateProperty(dist, 'worstRegionQoL', {
+      location: 'SocialCohesionUpdatePhase.calculateInequality',
+      month: state.currentMonth
+    });
     const gap = best - worst;
     // Use Gini if available, otherwise regional gap
     if (gini > 0) {
@@ -235,7 +248,14 @@ function calculateAIDeception(state: GameState): number {
       throw new Error('❌ agent.alignment is undefined in calculateAIDeception:228 - initialization bug');
     }
     const alignment = agent.alignment;
-    const social = agent.capabilityProfile?.social ?? 0; // Legitimate default - AI may not have social capability yet
+    // capabilityProfile is always initialized - assert it exists
+    if (!agent.capabilityProfile) {
+      throw new Error(`❌ agent.capabilityProfile is undefined for agent ${agent.name} at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculateAIDeception`);
+    }
+    if (typeof agent.capabilityProfile.social !== 'number') {
+      throw new Error(`❌ agent.capabilityProfile.social is not a number for agent ${agent.name} at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculateAIDeception`);
+    }
+    const social = agent.capabilityProfile.social;
     return alignment < 0.5 && social > 3;
   });
 
@@ -300,23 +320,46 @@ function calculatePurposeInfrastructure(state: GameState): number {
     }
     const coverage = state.ubiSystem.basicIncome.coverage;
     const adequacy = state.ubiSystem.basicIncome.adequacy;
-    // Average of purpose infrastructure components (no single "coverage" property)
-    const educationAccess = state.ubiSystem.purposeInfrastructure?.educationAccess ?? 0; // Legitimate default - may not be built yet
-    const creativeSpaces = state.ubiSystem.purposeInfrastructure?.creativeSpaces ?? 0; // Legitimate default - may not be built yet
-    const volunteerPrograms = state.ubiSystem.purposeInfrastructure?.volunteerPrograms ?? 0; // Legitimate default - may not be built yet
-    const purposePrograms = (educationAccess + creativeSpaces + volunteerPrograms) / 3;
+    // purposeInfrastructure is always initialized when UBI system is created
+    if (!state.ubiSystem.purposeInfrastructure) {
+      throw new Error(`❌ state.ubiSystem.purposeInfrastructure is undefined at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+    }
+    if (typeof state.ubiSystem.purposeInfrastructure.educationAccess !== 'number') {
+      throw new Error(`❌ state.ubiSystem.purposeInfrastructure.educationAccess is not a number at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+    }
+    if (typeof state.ubiSystem.purposeInfrastructure.creativeSpaces !== 'number') {
+      throw new Error(`❌ state.ubiSystem.purposeInfrastructure.creativeSpaces is not a number at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+    }
+    if (typeof state.ubiSystem.purposeInfrastructure.volunteerPrograms !== 'number') {
+      throw new Error(`❌ state.ubiSystem.purposeInfrastructure.volunteerPrograms is not a number at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+    }
+    const purposePrograms = (state.ubiSystem.purposeInfrastructure.educationAccess +
+                            state.ubiSystem.purposeInfrastructure.creativeSpaces +
+                            state.ubiSystem.purposeInfrastructure.volunteerPrograms) / 3;
     infrastructure += (coverage * adequacy * purposePrograms) * 0.5;
   }
 
   // Social safety nets (community programs)
   if (state.socialSafetyNets && state.socialSafetyNets.active) {
-    const communityInfra = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0; // Legitimate default - may not be built yet
-    infrastructure += communityInfra * 0.3;
+    // physicalInfrastructure is always initialized when socialSafetyNets system is created
+    if (!state.socialSafetyNets.physicalInfrastructure) {
+      throw new Error(`❌ state.socialSafetyNets.physicalInfrastructure is undefined at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+    }
+    if (typeof state.socialSafetyNets.physicalInfrastructure.communityCenters !== 'number') {
+      throw new Error(`❌ state.socialSafetyNets.physicalInfrastructure.communityCenters is not a number at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+    }
+    infrastructure += state.socialSafetyNets.physicalInfrastructure.communityCenters * 0.3;
   }
 
   // Governance quality (civic participation)
-  const participation = state.government.governanceQuality?.participationRate ?? 0; // Legitimate default - may not be initialized yet
-  infrastructure += participation * 0.2;
+  // governanceQuality is always initialized in initialization.ts
+  if (!state.government.governanceQuality) {
+    throw new Error(`❌ state.government.governanceQuality is undefined at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+  }
+  if (typeof state.government.governanceQuality.participationRate !== 'number') {
+    throw new Error(`❌ state.government.governanceQuality.participationRate is not a number at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculatePurposeInfrastructure`);
+  }
+  infrastructure += state.government.governanceQuality.participationRate * 0.2;
 
   return Math.min(1.0, infrastructure);
 }
@@ -383,13 +426,25 @@ function calculateCommunityBondsChange(
 
   // Social safety nets → community building
   if (state.socialSafetyNets && state.socialSafetyNets.active) {
-    const communityCenters = state.socialSafetyNets.physicalInfrastructure?.communityCenters ?? 0; // Legitimate default - may not be built yet
-    change += communityCenters * 0.2;
+    // physicalInfrastructure is always initialized when socialSafetyNets system is created
+    if (!state.socialSafetyNets.physicalInfrastructure) {
+      throw new Error(`❌ state.socialSafetyNets.physicalInfrastructure is undefined at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculateCommunityBondsChange`);
+    }
+    if (typeof state.socialSafetyNets.physicalInfrastructure.communityCenters !== 'number') {
+      throw new Error(`❌ state.socialSafetyNets.physicalInfrastructure.communityCenters is not a number at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculateCommunityBondsChange`);
+    }
+    change += state.socialSafetyNets.physicalInfrastructure.communityCenters * 0.2;
   }
 
   // Purpose infrastructure → social connection
-  const participation = state.government.governanceQuality?.participationRate ?? 0; // Legitimate default - may not be initialized yet
-  change += participation * 0.1;
+  // governanceQuality is always initialized in initialization.ts
+  if (!state.government.governanceQuality) {
+    throw new Error(`❌ state.government.governanceQuality is undefined at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculateCommunityBondsChange`);
+  }
+  if (typeof state.government.governanceQuality.participationRate !== 'number') {
+    throw new Error(`❌ state.government.governanceQuality.participationRate is not a number at month ${state.currentMonth} in SocialCohesionUpdatePhase.calculateCommunityBondsChange`);
+  }
+  change += state.government.governanceQuality.participationRate * 0.1;
 
   // Floor/ceiling effects
   if (currentBonds < 20) {

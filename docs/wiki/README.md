@@ -93,6 +93,7 @@ Implementation details and code references:
 | [🧪 Testing & Monte Carlo](./technical/testing.md) | ✅ | Running simulations, analyzing results |
 | [🎮 UI Components](./technical/ui.md) | ✅ | React components, state management |
 | [⚙️ Engine Architecture](./technical/engine.md) | ✅ | Core simulation engine design |
+| [💾 State Persistence](./technical/persistence.md) | ✅ | IndexedDB resume, RNG determinism, save rotation (Oct 26, 2025) |
 | [🔄 Refactoring Status](./technical/refactoring-status.md) | ✅ | Phase 0-6 roadmap and current status |
 | [🔧 Phase 2 Refactoring](./technical/phase2-refactoring.md) | ✅ | Architectural cleanup details (Oct 2025) |
 | [❓ Research Questions](./RESEARCH_QUESTIONS.md) | ✅ | 256 questions extracted from conversation history (Oct 24, 2025) |

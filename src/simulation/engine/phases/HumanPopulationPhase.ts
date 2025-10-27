@@ -31,10 +31,40 @@ export class HumanPopulationPhase implements SimulationPhase {
       updateRegionalPopulations
     } = require('../../regionalPopulations');
 
+    const {
+      aggregateGlobalPopulation,
+      aggregateGlobalDemographics,
+      aggregateGlobalCarryingCapacity,
+      aggregateGlobalDeaths
+    } = require('../../populationDynamics');
+
+    const {
+      assertRegionalConsistency
+    } = require('../../utils/assertions');
+
     // === PHASE 5: REGIONAL POPULATION DYNAMICS ===
     // Update regional populations with differential growth/decline rates
-    // This aggregates to global population
     updateRegionalPopulations(state);
+
+    // === PHASE 2: POPULATION AGGREGATION (Oct 26, 2025) ===
+    // Bottom-up aggregation: Global population = sum of regional populations
+    aggregateGlobalPopulation(state);
+
+    // === PHASE 2: DEMOGRAPHICS AGGREGATION (Oct 26, 2025) ===
+    // Bottom-up aggregation: Global demographics = population-weighted average of regional
+    aggregateGlobalDemographics(state);
+
+    // === PHASE 3: CARRYING CAPACITY AGGREGATION (Oct 26, 2025) ===
+    // Bottom-up aggregation: Global capacity = sum of regional capacities
+    aggregateGlobalCarryingCapacity(state);
+
+    // === PHASE 4: DEATH TRACKING AGGREGATION (Oct 26, 2025) ===
+    // Bottom-up aggregation: Global deaths = sum of regional deaths
+    aggregateGlobalDeaths(state);
+
+    // === PHASE 5: CONSISTENCY ASSERTION (Oct 26, 2025) ===
+    // Verify no drift between regional and global values
+    assertRegionalConsistency(state);
 
     // === LEGACY: GLOBAL POPULATION UPDATE ===
     // Still run global update for systems that don't use regional data yet

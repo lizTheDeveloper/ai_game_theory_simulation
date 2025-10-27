@@ -147,7 +147,7 @@ export function updateGovernmentRelocation(state: GameState): void {
       console.log(`   ✅ Trust bonus: +${(program.trustBonus * 100).toFixed(2)}%`);
     }
     if (program.resentmentPenalty > 0) {
-      console.log(`   ⚠️ Unmet need resentment: -${(program.resentmentPenalty * 100).toFixed(2)}%`);
+      console.warn(`   ⚠️ Unmet need resentment: -${(program.resentmentPenalty * 100).toFixed(2)}%`);
     }
   }
 }

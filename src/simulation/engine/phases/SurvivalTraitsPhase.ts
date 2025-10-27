@@ -112,7 +112,7 @@ export function executeSurvivalTraitsPhase(
         effects: { avgFitness }
       });
 
-      console.log(`  ⚠️ High survival trait emergence detected`);
+      console.warn(`  ⚠️ High survival trait emergence detected`);
     }
   }
 

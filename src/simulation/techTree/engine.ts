@@ -336,10 +336,10 @@ function applyDeploymentActions(
     // Get or create regional deployment
     const regionExisted = action.targetRegion in techTreeState.regionalDeployment;
     if (!regionExisted) {
-      console.log(`\n🚨 CREATING NEW REGIONAL ARRAY for ${action.targetRegion} (Month ${_gameState.currentMonth})`);
-      console.log(`   This WIPES all existing deployments in this region!`);
-      console.log(`   Action tech: ${action.techId}`);
-      console.log(`   All regions before: ${Object.keys(techTreeState.regionalDeployment).join(', ')}`);
+      console.log(`\n📍 Creating new regional deployment array for ${action.targetRegion} (Month ${_gameState.currentMonth})`);
+      console.log(`   No previous deployments in this region`);
+      console.log(`   First tech deployment: ${action.techId}`);
+      console.log(`   All regions tracked: ${Object.keys(techTreeState.regionalDeployment).join(', ')}`);
       techTreeState.regionalDeployment[action.targetRegion] = [];
     }
 
@@ -394,7 +394,7 @@ function applyDeploymentActions(
 
       // DEBUG: Log new deployment creation
       if (action.techId === 'scalable_oversight') {
-        console.log(`\n⚠️  CREATED NEW DEPLOYMENT (Month ${_gameState.currentMonth})`);
+        console.warn(`\n⚠️  CREATED NEW DEPLOYMENT (Month ${_gameState.currentMonth})`);
         console.log(`   Tech: ${action.techId}, Region: ${action.targetRegion}`);
         console.log(`   This should only happen ONCE per tech per region!`);
       }
@@ -727,9 +727,9 @@ function getEnergyMultiplier(gameState: GameState): number {
     console.log(`   Required for tech: ${requiredEnergy.toFixed(1)} TWh/month`);
     console.log(`   Energy multiplier: ${finalMultiplier.toFixed(2)}x`);
     if (finalMultiplier < 0.3) {
-      console.log(`   ⚠️  SEVERE CONSTRAINT - Tech deployment significantly slowed`);
+      console.warn(`   ⚠️  SEVERE CONSTRAINT - Tech deployment significantly slowed`);
     } else if (finalMultiplier < 0.6) {
-      console.log(`   ⚠️  MODERATE CONSTRAINT - Tech deployment moderately slowed`);
+      console.warn(`   ⚠️  MODERATE CONSTRAINT - Tech deployment moderately slowed`);
     }
   }
 

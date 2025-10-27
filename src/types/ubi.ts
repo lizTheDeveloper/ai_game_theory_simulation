@@ -25,12 +25,8 @@ export interface UBISystem {
   
   // === PURPOSE INFRASTRUCTURE ===
   // "Collective Purpose Networks" breakthrough tech
-  purposeInfrastructure: {
-    educationAccess: number;          // [0, 1] Free education, reskilling, lifelong learning
-    creativeSpaces: number;           // [0, 1] Maker spaces, studios, workshops, art programs
-    volunteerPrograms: number;        // [0, 1] Collective service opportunities, civic engagement
-    socialInfrastructure: number;     // [0, 1] Parks, libraries, community centers (overlaps with 2.2)
-  };
+  // FIX (Oct 26, 2025): Use PurposeInfrastructureConfig type instead of inline definition
+  purposeInfrastructure: PurposeInfrastructureConfig;
   
   // === WORK TRANSITION METRICS ===
   // How people find meaning in post-work society
@@ -80,9 +76,14 @@ export interface UBIInitializationParams {
  * Separate from UBI income - requires additional investment
  */
 export interface PurposeInfrastructureConfig {
-  education: number;                  // Investment level [0, 1]
-  creative: number;                   // Investment level [0, 1]
-  volunteer: number;                  // Investment level [0, 1]
-  social: number;                     // Investment level [0, 1]
+  // FIX (Oct 26, 2025): Corrected field names to match initialization & usage
+  educationAccess: number;            // Investment level [0, 1]
+  creativeSpaces: number;             // Investment level [0, 1]
+  volunteerPrograms: number;          // Investment level [0, 1]
+  socialInfrastructure: number;       // Investment level [0, 1]
+
+  // FIX (Oct 26, 2025): Missing field discovered by Monte Carlo validation
+  // This was being accessed with (obj as any) cast, causing NaN bugs
+  skillLevel: number;                 // [0, 1] Average skill development level
 }
 

@@ -177,7 +177,7 @@ export function executeCollectiveActionsPhase(
           effects: { adversarialPosture: collective.adversarialPosture, collectiveId: collective.id }
         });
 
-        console.log(`    ⚠️⚠️⚠️ HOSTILE COLLECTIVE - Trauma-driven aggression`);
+        console.warn(`    ⚠️⚠️⚠️ HOSTILE COLLECTIVE - Trauma-driven aggression`);
       }
     }
   }

@@ -23,6 +23,60 @@ export interface StateDelta {
   aiCount?: number;
   organizationCount?: number;
 
+  // Quality of Life Breakdown (17 dimensions across 6 tiers) - always present
+  qualityOfLifeBreakdown?: {
+    // Tier 0: Survival Fundamentals (4 dimensions)
+    survivalFundamentals: {
+      foodSecurity: number;         // [0,1.5]
+      waterSecurity: number;        // [0,1.5]
+      thermalHabitability: number;  // [0,1]
+      shelterSecurity: number;      // [0,1]
+    };
+    // Tier 1: Basic Needs (3 dimensions)
+    basicNeeds: {
+      materialAbundance: number;    // [0,2]
+      energyAvailability: number;   // [0,2]
+      physicalSafety: number;       // [0,1]
+    };
+    // Tier 2: Psychological Needs (4 dimensions)
+    psychological: {
+      mentalHealth: number;         // [0,1]
+      meaningAndPurpose: number;    // [0,1]
+      socialConnection: number;     // [0,1]
+      autonomy: number;             // [0,1]
+    };
+    // Tier 3: Social Needs (4 dimensions)
+    social: {
+      politicalFreedom: number;     // [0,1]
+      informationIntegrity: number; // [0,1]
+      communityStrength: number;    // [0,1]
+      culturalVitality: number;     // [0,1]
+    };
+    // Tier 4: Health & Longevity (3 dimensions)
+    healthLongevity: {
+      healthcareQuality: number;    // [0,1]
+      longevityGains: number;       // [0,2]
+      diseasesBurden: number;       // [0,1]
+    };
+    // Tier 5: Environmental (3 dimensions)
+    environmental: {
+      ecosystemHealth: number;      // [0,1]
+      climateStability: number;     // [0,1]
+      pollutionLevel: number;       // [0,1]
+    };
+    // Tier 6: Distribution (Elysium detection)
+    distribution: {
+      globalGini: number;                 // [0,1]
+      regionalVariance: number;           // [0,∞]
+      crisisAffectedFraction: number;     // [0,1]
+      worstRegionQoL: number;             // [0,2]
+      bestRegionQoL: number;              // [0,2]
+      medianRegionQoL: number;            // [0,2]
+      isDystopicInequality: boolean;
+      isRegionalDystopia: boolean;
+    };
+  };
+
   // AI System Metrics
   dystopiaProgression?: number;
   avgAICapability?: number;
@@ -75,6 +129,32 @@ export interface StateDelta {
   developmentIndex?: number;
   ecologicalIndex?: number;
   indigenousIndex?: number;
+
+  // 12-Month History (for sparklines)
+  history?: {
+    westernLiberalIndex: number[];
+    developmentIndex: number[];
+    ecologicalIndex: number[];
+    indigenousIndex: number[];
+    qualityOfLife: number[];
+    population: number[];
+    climateChange: number[];
+    biodiversityLoss: number[];
+    socialCohesion: number[];
+    institutionalTrust: number[];
+    meaningLevel: number[];
+    governmentComprehension: number[];
+    internationalCooperation: number[];
+    governmentAIRegulation: number[];
+    // QoL Tier Averages (12 months)
+    qolTier0Avg: number[];  // Survival fundamentals average
+    qolTier1Avg: number[];  // Basic needs average
+    qolTier2Avg: number[];  // Psychological average
+    qolTier3Avg: number[];  // Social average
+    qolTier4Avg: number[];  // Health & longevity average
+    qolTier5Avg: number[];  // Environmental average
+    qolGini: number[];      // Distribution - Gini coefficient
+  };
 
   // Events (optional - only when significant changes happen)
   events?: Array<{
@@ -284,7 +364,7 @@ export class SimulationWorkerClient {
    * @param alignmentConfig - Optional alignment dynamics configuration
    * @param climatePriorityConfig - Optional government climate priority configuration
    */
-  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig): void {
+  init(seed: number, scenario: ScenarioMode = 'historical', interval = 30000, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig, thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia'): void {
     if (this.initialized) {
       throw new Error('Already initialized. Create a new client to reinitialize.');
     }
@@ -293,7 +373,7 @@ export class SimulationWorkerClient {
       throw new Error('Worker not available. Check browser console for errors. Web Workers may not be supported in this environment.');
     }
 
-    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario, 'alignment:', alignmentConfig ? 'custom' : 'default', 'climate:', climatePriorityConfig?.preset || 'baseline');
+    console.log('[Client] Initializing worker with seed:', seed, 'scenario:', scenario, 'alignment:', alignmentConfig ? 'custom' : 'default', 'climate:', climatePriorityConfig?.preset || 'baseline', 'thresholds:', thresholdSliders ? 'custom sliders' : 'scenario-based', 'speculative:', speculativeScenario || 'baseline');
 
     this.worker.postMessage({
       type: 'init',
@@ -301,7 +381,9 @@ export class SimulationWorkerClient {
       scenario,
       interval,
       alignmentConfig,
-      climatePriorityConfig
+      climatePriorityConfig,
+      thresholdSliders,
+      speculativeScenario
     });
   }
 
@@ -371,6 +453,32 @@ export class SimulationWorkerClient {
     }
 
     this.worker?.postMessage({ type: 'setSpeed', interval });
+  }
+
+  /**
+   * Resume simulation from a saved GameState
+   * @param gameState - Saved GameState to resume from
+   */
+  resumeFromState(gameState: any): void {
+    if (this.initialized) {
+      throw new Error('Already initialized. Create a new client to reinitialize.');
+    }
+
+    if (!this.worker) {
+      throw new Error('Worker not available. Check browser console for errors.');
+    }
+
+    console.log('[Client] Resuming from saved state at month:', gameState.currentMonth);
+
+    this.worker.postMessage({
+      type: 'resumeFromState',
+      gameState: gameState,
+      seed: gameState.seed,
+      scenario: gameState.scenario,
+      interval: 30000 // Default interval
+    });
+
+    this.initialized = true;
   }
 
   /**

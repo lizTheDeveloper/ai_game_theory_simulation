@@ -7,13 +7,18 @@
 
 'use client'
 
+import { useState } from 'react'
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
+import { ParadigmDetailPanel } from "@/components/paradigms/ParadigmDetailPanel"
+
+type ParadigmType = 'western' | 'development' | 'ecological' | 'indigenous' | null
 
 export function OverviewDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
+  const [selectedParadigm, setSelectedParadigm] = useState<ParadigmType>(null)
 
   if (!initialized) {
     return (
@@ -114,38 +119,50 @@ export function OverviewDashboard() {
           glow={(paradigms.ecological as any).value < 20 ? 'red' : 'cyan'}
         >
           <div className="grid grid-cols-2 gap-4">
-            <div>
+            <button
+              onClick={() => setSelectedParadigm('western')}
+              className="text-left p-3 rounded transition-opacity hover:opacity-80 hover:bg-white/5 cursor-pointer"
+            >
               <div className="text-xs mb-2" style={{ color: 'var(--color-western-liberal)' }}>
-                Western Liberal
+                Western Liberal →
               </div>
               <div className="text-3xl font-light">
                 {paradigms.western.value.toFixed(1)}
               </div>
-            </div>
-            <div>
+            </button>
+            <button
+              onClick={() => setSelectedParadigm('development')}
+              className="text-left p-3 rounded transition-opacity hover:opacity-80 hover:bg-white/5 cursor-pointer"
+            >
               <div className="text-xs mb-2" style={{ color: 'var(--color-development)' }}>
-                Development
+                Development →
               </div>
               <div className="text-3xl font-light">
                 {paradigms.development.value.toFixed(1)}
               </div>
-            </div>
-            <div>
+            </button>
+            <button
+              onClick={() => setSelectedParadigm('ecological')}
+              className="text-left p-3 rounded transition-opacity hover:opacity-80 hover:bg-white/5 cursor-pointer"
+            >
               <div className="text-xs mb-2" style={{ color: 'var(--color-ecological)' }}>
-                Ecological
+                Ecological →
               </div>
               <div className={`text-3xl font-light ${paradigms.ecological.value < 20 ? 'text-red-500' : ''}`}>
                 {paradigms.ecological.value.toFixed(1)}
               </div>
-            </div>
-            <div>
+            </button>
+            <button
+              onClick={() => setSelectedParadigm('indigenous')}
+              className="text-left p-3 rounded transition-opacity hover:opacity-80 hover:bg-white/5 cursor-pointer"
+            >
               <div className="text-xs mb-2" style={{ color: 'var(--color-indigenous)' }}>
-                Indigenous
+                Indigenous →
               </div>
               <div className="text-3xl font-light">
                 {paradigms.indigenous.value.toFixed(1)}
               </div>
-            </div>
+            </button>
           </div>
         </Panel>
 
@@ -203,6 +220,16 @@ export function OverviewDashboard() {
           </div>
         </div>
       </Panel>
+
+      {/* Paradigm Detail Panel */}
+      {selectedParadigm && (
+        <ParadigmDetailPanel
+          paradigm={selectedParadigm}
+          score={paradigms[selectedParadigm].value}
+          isOpen={selectedParadigm !== null}
+          onClose={() => setSelectedParadigm(null)}
+        />
+      )}
     </div>
   )
 }

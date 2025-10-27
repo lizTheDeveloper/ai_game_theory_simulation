@@ -236,10 +236,10 @@ export function logAIResourceConsumption(state: GameState): void {
 
   // Warn if approaching critical thresholds
   if (waterStressPct > 5) {
-    console.log(`   ⚠️  WARNING: AI consuming >5% of global freshwater (stress risk)`);
+    console.warn(`   ⚠️  WARNING: AI consuming >5% of global freshwater (stress risk)`);
   }
 
   if (consumption.energyConsumption > 2000) {
-    console.log(`   ⚠️  WARNING: AI consuming >2 GW energy (grid stress risk)`);
+    console.warn(`   ⚠️  WARNING: AI consuming >2 GW energy (grid stress risk)`);
   }
 }

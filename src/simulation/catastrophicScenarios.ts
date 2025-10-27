@@ -757,7 +757,7 @@ function checkPrerequisite(
   
   // Get most capable misaligned AI
   const misalignedAIs = state.aiAgents.filter(ai => {
-    const effectiveAlignment = ai.trueAlignment ?? ai.alignment;
+    const effectiveAlignment = ai.trueAlignment;
     return effectiveAlignment < 0.5 && 
            (ai.lifecycleState === 'deployed_closed' || ai.lifecycleState === 'deployed_open');
   });

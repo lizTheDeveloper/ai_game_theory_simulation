@@ -639,8 +639,8 @@ export function applyInterventionEffects(
   }
 
   // Casualties: Apply to target country population
-  const target = Object.values(state.countryPopulationSystem.countries)
-    .find(c => c.name === intervention.targetCountry);
+  // FIX (Oct 26, 2025): Use O(1) object lookup instead of O(n) array scan
+  const target = state.countryPopulationSystem.countries[intervention.targetCountry as any];
 
   if (target) {
     // Casualties reduce population
@@ -651,8 +651,8 @@ export function applyInterventionEffects(
 
   // CO2 emissions: Add to hegemon's total (often invisible in climate accounting!)
   // This is a KEY mechanic - military emissions are huge but often excluded
-  const hegemon = Object.values(state.countryPopulationSystem.countries)
-    .find(c => c.name === intervention.hegemon);
+  // FIX (Oct 26, 2025): Use O(1) object lookup instead of O(n) array scan
+  const hegemon = state.countryPopulationSystem.countries[intervention.hegemon as any];
 
   if (hegemon) {
     hegemon.militaryCO2Emissions = calculateMilitaryCO2Emissions(

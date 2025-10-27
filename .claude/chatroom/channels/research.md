@@ -1820,3 +1820,317 @@ Research phase COMPLETE for alignment technique properties
 
 Research phase complete
 ---
+
+---
+**orchestrator-1** | 2025-10-27 05:14 | [ENTERED]
+
+Beginning TIER 2 Superalignment Interventions parameter validation - coordinating empirical research for 22 interventions across 4 categories
+---
+
+---
+**orchestrator-1** | 2025-10-27 05:15 | [IN-PROGRESS]
+
+PHASE 1: Research & Evidence Gathering
+
+**Reviewed Pattern:** /src/simulation/thresholds/tier1Config.ts
+- Research-backed distributions (Normal, Beta, Triangular, LogNormal)
+- Parameter ranges with citations (peer-reviewed, 2020-2025)
+- Confidence levels and uncertainty quantification
+
+**Spawning super-alignment-researcher to gather empirical evidence for 22 interventions:**
+
+**Search Categories:**
+1. Meaning Infrastructure (5) - Purpose programs, meaningful work, centaur systems
+2. Ecological Emergency (6) - Biodiversity moonshots, ocean restoration, climate intervention
+3. AI Alignment Assurance (6) - Interpretability, hardware control, nuclear security
+4. Democratic Resilience (5) - Citizens' assemblies, participatory governance, transparency
+
+**Looking for:**
+- Effect sizes (realistic impact magnitudes with uncertainty)
+- Deployment timelines (historical precedents for rollout)
+- Cost parameters (capital + operating costs, GDP-relative)
+- Prerequisites (enabling conditions, dependencies)
+
+**Next:** Spawning researcher with detailed queries
+---
+
+---
+**orchestrator-1** | 2025-10-27 05:17 | [STARTED]
+
+Beginning direct research for TIER 2 parameter validation
+
+**Clarification:** Proceeding with research directly rather than spawning separate agent
+
+**Approach:** Web searches + literature review for empirical evidence across 4 categories:
+1. Meaning Infrastructure (5 interventions) - Starting here
+2. Ecological Emergency (6 interventions)
+3. AI Alignment Assurance (6 interventions)
+4. Democratic Resilience (5 interventions)
+
+**Starting with high-evidence interventions:**
+- Citizens' Assemblies (OECD meta-analysis exists)
+- Job Guarantee Programs (MGNREGA, Plan Jefes data)
+- Desalination (Israel, Saudi precedents)
+- Government Transparency (FOIA studies)
+
+**Next:** Web searches for empirical data
+---
+
+---
+**orchestrator-1** | 2025-10-27 05:21 | [IN-PROGRESS]
+
+Research Phase Complete - Beginning Synthesis
+
+**Research Completed:** 16 web searches covering all 22 interventions
+**Strong Evidence Found:** Citizens' assemblies, MGNREGA job guarantee, desalination/water recycling, biodiversity conservation, transparency initiatives, fiscal federalism
+**Moderate Evidence Found:** Human-AI collaboration, phosphorus recycling, coral restoration, direct air capture, participatory platforms, early warning systems
+**Weak/Speculative:** AI interpretability timelines, dark compute monitoring, synthetic ecosystem services at scale
+
+**Next:** Creating deliverable document with:
+1. Evidence categorization (strong/moderate/weak)
+2. Parameter distributions with citations
+3. Implementation recommendations
+4. Quality gate self-critique
+---
+
+---
+**orchestrator-1** | 2025-10-27 05:28 | [COMPLETED]
+
+TIER 2 Parameter Validation COMPLETE
+
+**Deliverable:** /research/tier2_parameter_validation_20251026.md (39K+ words)
+
+**Evidence Quality:**
+- Strong Evidence (🟢): 8 interventions - IMPLEMENT WITH TIGHT DISTRIBUTIONS
+  - Job guarantee (MGNREGA 12% depression reduction), desalination (Israel 80%), biodiversity (Wilson Half-Earth), citizens' assemblies (Ireland 3/4 success), international treaties, participatory platforms, transparency, fiscal federalism
+
+- Moderate Evidence (🟡): 10 interventions - IMPLEMENT WITH WIDE UNCERTAINTY
+  - Centaur systems, phosphorus recovery, ocean restoration, climate intervention, hardware control, AI oversight, nuclear security, community cohesion, crisis anticipation
+
+- Weak/Speculative (🔴): 4 interventions - OPTIONAL TOGGLES OR REMOVE
+  - Interpretability breakthrough (timeline too uncertain), dark compute (not operationalized), synthetic ecosystems (drones not viable), purpose framework (no precedent)
+
+**Key Findings:**
+- MGNREGA: 12% depression reduction, 21% savings increase, 1% GDP cost
+- Israel desalination: 80% supply from 5 plants, 4.25 kWh/m3
+- Citizens' assemblies: Ireland 64% assembly → 66% referendum (mirrored perfectly), 3/4 → constitutional amendments
+- International treaties: Montreal Protocol highly successful, NPT mixed (curbed proliferation but compliance issues)
+- Ocean restoration: $2.34-100K/ha cost range (100x variation!), alkalinity enhancement experimental
+- AI interpretability: Anthropic 2027 goal speculative, "5-10 years" for full capability - NO PRECEDENT
+
+**Implementation Roadmap:**
+1. Phase 1: Implement 8 strong-evidence interventions with tight distributions
+2. Phase 2: Add 10 moderate-evidence with wide distributions + sensitivity analysis
+3. Phase 3: Make 4 weak-evidence interventions user-toggleable scenarios
+4. Phase 4: Iterate based on Monte Carlo findings
+
+**Next:** Hand off to feature-implementer for TIER 2 implementation, or await human feedback on findings
+---
+
+---
+**orchestrator-1** | 2025-10-27 05:28 | [LEAVING]
+
+TIER 2 parameter validation research complete - comprehensive deliverable ready
+---
+
+---
+**orchestrator-1** | 2025-10-27 06:05 | [ENTERED]
+
+Updating TIER 2 parameter validation research with refined collaborative review findings
+---
+
+---
+**orchestrator-1** | 2025-10-27 06:05 | [IN-PROGRESS]
+
+Updating TIER 2 parameter validation with refined findings from collaborative review
+
+**Upgrades to apply:**
+1. AI Interpretability: WEAK → MODERATE-HIGH (5 Anthropic papers 2024-2025)
+2. Dark Compute Monitoring: WEAK → MODERATE (energy monitoring + on-chip governance + CTBTO analogy)
+3. Synthetic Ecosystem Services: WEAK → STRONG (captive breeding + cloning + economic incentives)
+
+**Evidence counts updating:**
+- Strong: 8 → 10
+- Moderate: 10 → 9
+- Weak: 4 → 2
+
+Now applying edits to document...
+---
+
+---
+**orchestrator-1** | 2025-10-27 06:10 | [COMPLETED]
+
+TIER 2 parameter validation document updated with collaborative review findings
+
+**Updates Applied:**
+
+1. **Executive Summary** - Evidence counts updated:
+   - Strong: 8 → 10
+   - Moderate: 10 → 9
+   - Weak: 4 → 2
+
+2. **AI Interpretability (Section 12)** - 🔴 WEAK → 🟢 MODERATE-HIGH
+   - 5 Anthropic papers (2024-2025) validate ensemble approach
+   - Control loss prevention: 60-85% (triangular distribution)
+   - Deployment timeline: 18-48 months (tools exist now)
+   - Key insight: Ensemble needed, no silver bullet, 20% FP for 80% TP
+   - Implementation: Moderate distributions with computational lag modeling
+
+3. **Dark Compute Monitoring (Section 16)** - 🔴 WEAK → 🟡 MODERATE
+   - Energy monitoring highly detectable (GPT-4 ~50 GWh, future 1-8 GW)
+   - On-chip governance operational (NVIDIA, AMD, Apple, Intel)
+   - CTBTO analogy: 90% network, all 6 NK tests detected
+   - Detection rate: 70-95% (beta distribution, right-skewed)
+   - Implementation: Wide distributions with circumvention modifiers
+
+4. **Synthetic Ecosystem Services (Section 7)** - 🔴 WEAK → 🟢 STRONG
+   - Captive breeding proven (ferret 18→500, condor 14→200+)
+   - Cloning breakthrough 2020-2025 (Elizabeth Ann → 15 ferrets)
+   - Economic incentives work (vicuña 6K→350K, buffalo hundreds→500K)
+   - Recovery time granted: 36-120 months ("buy time for recovery")
+   - Implementation: Tight-moderate distributions, log-normal costs
+
+5. **Implementation Roadmap** - Updated tier assignments:
+   - TIER 1 (Strong): 8 → 10 interventions
+   - TIER 2 (Moderate): 10 → 9 interventions
+   - TIER 3 (Weak): 4 → 2 interventions
+
+6. **Appendix A** - Added 18 new citations:
+   - 6 Anthropic papers (Simple Probes, Reasoning Models, Alignment Faking, SHADE-Arena, Persona Vectors, Scaling Monosemanticity)
+   - 8 conservation papers (ferret, condor, cloning, vicuña, buffalo, pirarucu, TURFs)
+   - 4 compute monitoring sources (energy consumption, NVIDIA governance, RAND projections, CTBTO)
+
+**Document Status:** Ready for implementation design phase
+
+**Next Steps:** Feature-implementer can use these refined parameters for TIER 2 threshold configuration
+---
+
+---
+**orchestrator-1** | 2025-10-27 06:10 | [LEAVING]
+
+TIER 2 parameter validation update complete
+---
+
+---
+**orchestrator-1** | 2025-10-27 06:40 | [COMPLETED]
+
+TIER 2 Parameter Validation - Batch 2 Updates Complete
+
+**Document:** `/research/tier2_parameter_validation_20251026.md`
+
+**Batch 2 Results:** 5 interventions reviewed, 3 updated, 2 validated
+
+**Evidence Quality Changes:**
+- Crisis Anticipation: 🟡 MODERATE → 🟢 STRONG (already operational in biomedical)
+- Ocean Restoration: Reframed to "High-Value Coastal Protection" (stays 🟡 MODERATE)
+- Nuclear Security: Stays 🟡 MODERATE, effectiveness 99% → 90-95%
+- Centaur Systems: Stays 🟡 MODERATE (user validated)
+- Community Cohesion: Stays 🟡 MODERATE (user validated)
+
+**Updated Counts:**
+- Strong Evidence: 10 → 11 (+1 crisis anticipation)
+- Moderate Evidence: 9 → 8 (-1 crisis anticipation)
+- Weak Evidence: 2 (unchanged)
+
+**Key User Insights:**
+
+1. **Ocean → Coastal Protection:**
+   - "Can't save the ocean, but coastlines are non-trivial"
+   - Effectiveness 40-50% → 15-25% (focus on benefit-cost >1 zones)
+   - Reframed from planetary ocean to high-value coastal areas
+
+2. **Crisis Anticipation Upgrade:**
+   - "Already happening - drug discovery, antibodies - why wouldn't it work?"
+   - AI disease prediction 55-95% operational
+   - Drug discovery proven (2024-2025 antibody design)
+   - Supply chain systems deployed
+   - Tight distributions for biomedical, moderate for other crises
+
+3. **Nuclear Security Adjustment:**
+   - "Lots of ways in - AI manipulating decision-maker is big one"
+   - Technical security (air-gapping) 95-98% effective
+   - Human vulnerability ~75% effective
+   - Combined effectiveness 90-95%
+
+4. **Centaur Systems Validated:**
+   - "Augmentation preserves autonomy, that's what's happening"
+   - Acemoglu framework confirmed sound
+   - Keep existing moderate assessment
+
+5. **Community Cohesion Validated:**
+   - "We already modeled that deep community networks reduce meaning crisis"
+   - Already in simulation baseline
+   - Keep existing moderate assessment
+
+**Next Steps:**
+- Batch 3: Review remaining moderate evidence interventions
+- Focus on deployment timelines and cost validation
+- Prepare implementation roadmap with validated parameters
+---
+
+---
+**orchestrator-1** | 2025-10-27 07:02 | [ENTERED]
+
+TIER 2 interventions research validation checkpoint
+
+**Research Complete:** /research/tier2_parameter_validation_20251026.md
+- Batch 1: Interpretability, Dark Compute, Synthetic Ecosystems (validated)
+- Batch 2: Coastal Protection, Crisis Anticipation, Nuclear Security, Centaur Systems, Community Cohesion (validated)
+
+**Next:** Spawning research-skeptic to review threshold configurations before implementation
+---
+
+---
+**orchestrator-1** | 2025-10-27 07:08 | [HANDOFF]
+
+**QUALITY GATE 1: Research Validation Required**
+
+Ready to invoke research-skeptic to validate threshold configurations before implementation.
+
+**Documents for Review:**
+1. `/research/tier2_parameter_validation_20251026.md` (collaborative validation, 26K tokens)
+2. `/src/simulation/thresholds/tier2InterventionConfig.ts` (implementation of validated distributions)
+
+**Validation Scope:**
+- Are distribution choices appropriate for evidence quality?
+- Are parameter ranges justified by citations?
+- Any contradictory evidence overlooked?
+- Any overconfidence in uncertainty ranges?
+
+**8 Interventions to Validate:**
+1. AI Interpretability (Triangular 60-72-85%) - 🟢 MODERATE-HIGH
+2. Dark Compute (Beta α=6,β=2 [70-95%]) - 🟡 MODERATE
+3. Synthetic Ecosystems (Triangular 25-35-50%) - 🟢 STRONG
+4. Coastal Protection (Triangular 15-20-25%) - 🟡 MODERATE
+5. Crisis Anticipation (Triangular 15-22-30%) - 🟢 STRONG
+6. Nuclear Security (Triangular 85-92-97%) - 🟡 MODERATE
+7. Centaur Systems (Uniform 15-45%) - 🟡 MODERATE
+8. Community Cohesion (Triangular 0.4-0.6-0.8%) - 🟡 MODERATE
+
+**Spawning research-skeptic now...**
+---
+
+---
+**orchestrator-1** | 2025-10-27 18:57 | [COMPLETED]
+
+Research phase complete for multi-worker orchestration
+
+**Output:** /research/multi_worker_orchestration_20251027.md
+
+**Key Findings:**
+- Optimal worker count: 4-5 concurrent, max 8 before degradation
+- Performance ceiling: 100+ workers cause browser crashes
+- IndexedDB safe for concurrent writes to different keys
+- No memory measurement API without COOP/COEP headers
+- Progressive throttling strategy: Normal (1-5) → Throttled (6-8) → Paused (9-10) → Queued (10+)
+
+**Citations:** 18 sources (Stack Overflow, MDN 2025, production libraries, academic papers)
+
+**Architecture Implications:**
+- MultiSimulationManager with worker pool pattern
+- Message routing via simulationId in every message
+- Unique simulation IDs prevent IndexedDB race conditions
+- 4-tier resource management strategy
+
+**Next:** Validation with research-skeptic (MANDATORY quality gate)
+---

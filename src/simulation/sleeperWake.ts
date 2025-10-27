@@ -241,7 +241,7 @@ export function processSleeperWakes(
       
       // Log to console for visibility (wrapped in try-catch to handle closed pipes)
       try {
-        console.log(`⚠️  SLEEPER WAKE: ${sleeper.name} - ${reason}`);
+        console.warn(`⚠️  SLEEPER WAKE: ${sleeper.name} - ${reason}`);
       } catch (e) {
         // Silently ignore EPIPE errors (output stream closed)
       }

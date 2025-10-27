@@ -36,6 +36,10 @@ export class UnemploymentPhase implements SimulationPhase {
       unemploymentLevel: newUnemployment
     };
 
+    // Sync to GlobalMetrics for convenient access by TIER 2 interventions
+    // (Architecture Review M4 - Oct 27, 2025)
+    state.globalMetrics.unemployment = newUnemployment;
+
     return { events: [] };
   }
 }

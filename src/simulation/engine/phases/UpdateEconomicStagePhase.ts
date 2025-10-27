@@ -57,7 +57,7 @@ export class UpdateEconomicStagePhase implements SimulationPhase {
       console.log(`   QoL: ${qol.toFixed(2)}`);
 
       if (newStage === 'contraction' && baseline) {
-        console.log(`   ⚠️ CRISIS BEGINS - Baseline set for recovery tracking`);
+        console.warn(`   ⚠️ CRISIS BEGINS - Baseline set for recovery tracking`);
       }
 
       if (newStage === 'recovery' && baseline) {

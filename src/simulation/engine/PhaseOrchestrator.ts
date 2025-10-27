@@ -157,9 +157,14 @@ export class PhaseOrchestrator {
           ctx.data.set(phase.id, result.metadata);
         }
       } catch (error) {
-        console.error(`\n❌ ERROR in phase "${phase.name}" (${phase.id}):`, error);
-        // Continue with other phases to avoid complete simulation failure
-        // This matches current engine behavior (some phases have try/catch)
+        console.error(`\n❌ FATAL ERROR in phase "${phase.name}" (${phase.id}):`, error);
+        console.error(`   Month: ${state.currentMonth}`);
+        console.error(`   This error will halt the simulation to prevent invalid state propagation.`);
+
+        // FIX (Oct 26, 2025): Re-throw to fail loudly - defensive fallback was masking bugs
+        // Previous behavior: silently continued, causing paradigm scores to stay at 50.0
+        // New behavior: throw immediately so bugs can't hide
+        throw error;
       }
     }
 

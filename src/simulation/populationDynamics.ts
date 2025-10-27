@@ -1061,7 +1061,7 @@ export function updateHumanPopulation(state: GameState): void {
     const trackedDeaths = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0); // Already in billions
     const discrepancy = Math.abs(actualDeaths - trackedDeaths);
     if (discrepancy > 0.5) { // >500M discrepancy
-      console.log(`⚠️  DEATH ACCOUNTING MISMATCH (Month ${state.currentMonth}):`);
+      console.warn(`⚠️  DEATH ACCOUNTING MISMATCH (Month ${state.currentMonth}):`);
       console.log(`   Actual population deaths: ${actualDeaths.toFixed(3)}B (${(actualDeaths * 1000).toFixed(0)}M)`);
       console.log(`   Tracked by category: ${trackedDeaths.toFixed(3)}B (${(trackedDeaths * 1000).toFixed(0)}M)`);
       console.log(`   Discrepancy: ${discrepancy.toFixed(3)}B (${(discrepancy * 1000).toFixed(0)}M) - ${(discrepancy / actualDeaths * 100).toFixed(0)}%`);
@@ -1225,7 +1225,7 @@ function detectPopulationEvents(state: GameState): void {
   // Log major thresholds crossed
   if (status === PopulationStatus.DECLINING && decline > 10) {
     if (state.currentMonth % 12 === 0) { // Log once per year
-      console.log(`⚠️ POPULATION DECLINE: ${pop.population.toFixed(2)}B (${decline.toFixed(0)}% from peak)`);
+      console.warn(`⚠️ POPULATION DECLINE: ${pop.population.toFixed(2)}B (${decline.toFixed(0)}% from peak)`);
     }
   }
 

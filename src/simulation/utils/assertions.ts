@@ -258,3 +258,150 @@ export function assertStateProperty(
     month: context.month,
   });
 }
+
+/**
+ * Assert Regional-Global Consistency (Oct 26, 2025 - Phase 5)
+ *
+ * Prevents drift between regional and global values in bottom-up aggregation architecture.
+ * All global values MUST be derived from regional values - this assertion catches violations.
+ *
+ * Architecture: Regional values are single source of truth, global is derived
+ * Validation: Fails loudly if drift detected
+ *
+ * Checks consistency for:
+ * - Population (sum)
+ * - Carrying capacity (sum)
+ * - Deaths (sum)
+ * - Demographics (population-weighted average)
+ *
+ * @param state - Game state with regional and global values
+ * @throws Error if drift detected between regional and global
+ */
+export function assertRegionalConsistency(state: GameState): void {
+  const regions = state.humanPopulationSystem.regionalPopulations;
+
+  // Skip if regions not initialized (shouldn't happen in normal execution)
+  if (!regions || regions.length === 0) {
+    return;
+  }
+
+  // === POPULATION CONSISTENCY ===
+  const regionalPopulationSum = regions.reduce((sum, r) => sum + r.population, 0);
+  const globalPopulation = state.humanPopulationSystem.population;
+  const populationDiff = Math.abs(regionalPopulationSum - globalPopulation);
+
+  if (populationDiff > 0.001) {  // 1M tolerance
+    throw new Error(
+      `❌ REGIONAL-GLOBAL DRIFT: Population\n` +
+      `   Regional sum: ${regionalPopulationSum.toFixed(3)}B\n` +
+      `   Global value: ${globalPopulation.toFixed(3)}B\n` +
+      `   Difference:   ${populationDiff.toFixed(3)}B (${(populationDiff / globalPopulation * 100).toFixed(2)}%)\n` +
+      `   Month:        ${state.currentMonth}`
+    );
+  }
+
+  // === CARRYING CAPACITY CONSISTENCY ===
+  const regionalCapacitySum = regions.reduce((sum, r) => sum + r.carryingCapacity, 0);
+  const globalCapacity = state.humanPopulationSystem.carryingCapacity;
+  const capacityDiff = Math.abs(regionalCapacitySum - globalCapacity);
+
+  if (capacityDiff > 0.001) {  // 1M tolerance
+    throw new Error(
+      `❌ REGIONAL-GLOBAL DRIFT: Carrying Capacity\n` +
+      `   Regional sum: ${regionalCapacitySum.toFixed(3)}B\n` +
+      `   Global value: ${globalCapacity.toFixed(3)}B\n` +
+      `   Difference:   ${capacityDiff.toFixed(3)}B (${(capacityDiff / globalCapacity * 100).toFixed(2)}%)\n` +
+      `   Month:        ${state.currentMonth}`
+    );
+  }
+
+  // === DEATH TRACKING CONSISTENCY ===
+  const regionalMonthlyDeathsSum = regions.reduce((sum, r) => sum + r.monthlyExcessDeaths, 0);
+  const globalMonthlyDeaths = state.humanPopulationSystem.monthlyExcessDeaths;
+  const monthlyDeathsDiff = Math.abs(regionalMonthlyDeathsSum - globalMonthlyDeaths);
+
+  if (monthlyDeathsDiff > 0.001) {  // 1M tolerance
+    throw new Error(
+      `❌ REGIONAL-GLOBAL DRIFT: Monthly Excess Deaths\n` +
+      `   Regional sum: ${regionalMonthlyDeathsSum.toFixed(3)}M\n` +
+      `   Global value: ${globalMonthlyDeaths.toFixed(3)}M\n` +
+      `   Difference:   ${monthlyDeathsDiff.toFixed(3)}M\n` +
+      `   Month:        ${state.currentMonth}`
+    );
+  }
+
+  const regionalCumulativeDeathsSum = regions.reduce((sum, r) => sum + r.cumulativeCrisisDeaths, 0);
+  const globalCumulativeDeaths = state.humanPopulationSystem.cumulativeCrisisDeaths;
+  const cumulativeDeathsDiff = Math.abs(regionalCumulativeDeathsSum - globalCumulativeDeaths);
+
+  if (cumulativeDeathsDiff > 0.001) {  // 1M tolerance
+    throw new Error(
+      `❌ REGIONAL-GLOBAL DRIFT: Cumulative Crisis Deaths\n` +
+      `   Regional sum: ${regionalCumulativeDeathsSum.toFixed(3)}M\n` +
+      `   Global value: ${globalCumulativeDeaths.toFixed(3)}M\n` +
+      `   Difference:   ${cumulativeDeathsDiff.toFixed(3)}M\n` +
+      `   Month:        ${state.currentMonth}`
+    );
+  }
+
+  // === DEMOGRAPHICS CONSISTENCY ===
+  const totalPopulation = regionalPopulationSum;
+
+  if (totalPopulation > 0) {
+    const regionalBirthRateAvg = regions.reduce((sum, r) => sum + r.adjustedBirthRate * r.population, 0) / totalPopulation;
+    const globalBirthRate = state.humanPopulationSystem.adjustedBirthRate;
+    const birthRateDiff = Math.abs(regionalBirthRateAvg - globalBirthRate);
+
+    if (birthRateDiff > 0.0001) {  // 0.01% tolerance
+      throw new Error(
+        `❌ REGIONAL-GLOBAL DRIFT: Birth Rate\n` +
+        `   Regional avg: ${(regionalBirthRateAvg * 100).toFixed(4)}%\n` +
+        `   Global value: ${(globalBirthRate * 100).toFixed(4)}%\n` +
+        `   Difference:   ${(birthRateDiff * 100).toFixed(4)}%\n` +
+        `   Month:        ${state.currentMonth}`
+      );
+    }
+
+    const regionalDeathRateAvg = regions.reduce((sum, r) => sum + r.adjustedDeathRate * r.population, 0) / totalPopulation;
+    const globalDeathRate = state.humanPopulationSystem.adjustedDeathRate;
+    const deathRateDiff = Math.abs(regionalDeathRateAvg - globalDeathRate);
+
+    if (deathRateDiff > 0.0001) {  // 0.01% tolerance
+      throw new Error(
+        `❌ REGIONAL-GLOBAL DRIFT: Death Rate\n` +
+        `   Regional avg: ${(regionalDeathRateAvg * 100).toFixed(4)}%\n` +
+        `   Global value: ${(globalDeathRate * 100).toFixed(4)}%\n` +
+        `   Difference:   ${(deathRateDiff * 100).toFixed(4)}%\n` +
+        `   Month:        ${state.currentMonth}`
+      );
+    }
+
+    const regionalFertilityRateAvg = regions.reduce((sum, r) => sum + r.fertilityRate * r.population, 0) / totalPopulation;
+    const globalFertilityRate = state.humanPopulationSystem.fertilityRate;
+    const fertilityRateDiff = Math.abs(regionalFertilityRateAvg - globalFertilityRate);
+
+    if (fertilityRateDiff > 0.01) {  // 0.01 children/woman tolerance
+      throw new Error(
+        `❌ REGIONAL-GLOBAL DRIFT: Fertility Rate\n` +
+        `   Regional avg: ${regionalFertilityRateAvg.toFixed(3)} children/woman\n` +
+        `   Global value: ${globalFertilityRate.toFixed(3)} children/woman\n` +
+        `   Difference:   ${fertilityRateDiff.toFixed(3)}\n` +
+        `   Month:        ${state.currentMonth}`
+      );
+    }
+
+    const regionalMedianAgeAvg = regions.reduce((sum, r) => sum + r.medianAge * r.population, 0) / totalPopulation;
+    const globalMedianAge = state.humanPopulationSystem.medianAge;
+    const medianAgeDiff = Math.abs(regionalMedianAgeAvg - globalMedianAge);
+
+    if (medianAgeDiff > 0.1) {  // 0.1 years tolerance
+      throw new Error(
+        `❌ REGIONAL-GLOBAL DRIFT: Median Age\n` +
+        `   Regional avg: ${regionalMedianAgeAvg.toFixed(2)} years\n` +
+        `   Global value: ${globalMedianAge.toFixed(2)} years\n` +
+        `   Difference:   ${medianAgeDiff.toFixed(2)} years\n` +
+        `   Month:        ${state.currentMonth}`
+      );
+    }
+  }
+}

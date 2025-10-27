@@ -370,6 +370,107 @@ The system generates events for significant changes:
 - External measurement: 7.5 (gaming)
 - We think we're safe, we're not
 
+## Alignment Technique Specificity (P3.3, October 26, 2025)
+
+**Location:**
+- Types: `src/types/alignment-techniques.ts`
+- Phase: `src/simulation/engine/phases/AlignmentTechniquePhase.ts` (order 3.4)
+- Research: `research/alignment_technique_properties_20251026.md`
+- Critique: `reviews/alignment_technique_properties_critique_20251026.md`
+
+**Core Innovation:** Rather than treating alignment as an abstract metric, the system models **specific alignment techniques** with distinct properties and failure modes.
+
+### Four Major Techniques (2024-2025)
+
+#### 1. RLHF (Reinforcement Learning from Human Feedback)
+- **Effectiveness:** 0.58 (adjusted from 0.65 per research critique)
+- **Robustness:** 0.45 (degrades significantly at high capability)
+- **Scalability:** 0.50 (breaks down at superhuman levels)
+- **Deployment:** 0.85 (near-universal: OpenAI, Anthropic, Google, Meta)
+
+**Failure Modes:**
+- Susceptible to deception (reward hacking)
+- Susceptible to goal misspecification (sycophancy bias)
+- Susceptible to distribution shift (generalization failures)
+
+**Fundamental Limitations:**
+- Preference matching ≠ value alignment
+- "Relying solely on RLHF for AI safety is profoundly risky" (Casper et al. 2023)
+- Requires augmentation with other techniques
+
+#### 2. Constitutional AI
+- **Effectiveness:** 0.70
+- **Robustness:** 0.60 (more stable than RLHF at high capability)
+- **Scalability:** 0.65 (AI feedback removes human bottleneck)
+- **Deployment:** 0.40 (primarily Anthropic Claude models)
+
+**Failure Modes:**
+- NOT susceptible to deception (constitutional oversight)
+- NOT susceptible to goal misspecification (explicit value grounding)
+- NOT susceptible to distribution shift (constitution applies broadly)
+
+**Key Advantage:** Can work alone, no known theoretical limit
+
+#### 3. Mechanistic Interpretability
+- **Effectiveness:** 0.55 (detection capability, not alignment creation)
+- **Robustness:** 0.35 (degrades with model scale)
+- **Scalability:** 0.30 (major computational bottleneck)
+- **Deployment:** 0.15 (primarily research, limited production)
+
+**Key Insight:** Provides detection and auditing, does NOT create alignment. Must combine with other techniques.
+
+**Failure Modes:**
+- Susceptible to deception (steganography, distributed representations)
+- Detects goal drift (strength)
+- NOT susceptible to distribution shift (analyzes internals, not inputs)
+
+#### 4. Iterated Amplification
+- **Effectiveness:** 0.75 (highest theoretical effectiveness)
+- **Robustness:** 0.70 (designed for capability scaling)
+- **Scalability:** 0.40 (computational cost limits deployment)
+- **Deployment:** 0.05 (mostly theoretical, GPT-3 book summarization only)
+
+**Failure Modes:**
+- NOT susceptible to deception (human oversight at each step)
+- Susceptible to goal misspecification (decomposition errors)
+- NOT susceptible to distribution shift (creates distribution at each level)
+
+### Capability Scaling Degradation
+
+**Core Formula:**
+```typescript
+effectiveAlignment = baseEffectiveness * (1 - (capability - 1.0) * (1 - scalability))
+```
+
+**At capability = 2.0 (2× human level):**
+- RLHF: 50% loss (0.58 → 0.29)
+- Constitutional AI: 35% loss (0.70 → 0.46)
+- Mechanistic Interp: 70% loss (0.55 → 0.17)
+- Iterated Amp: 60% loss (0.75 → 0.30)
+
+**Key Insight:** All alignment techniques degrade as capability increases, but at different rates. This models the fundamental challenge that superhuman AIs may be harder to align than human-level systems.
+
+### Interaction Effects
+
+Techniques can synergize when combined:
+- **RLHF + Constitutional AI:** +0.05 effectiveness, +0.08 robustness
+- **Mech Interp + RLHF:** +0.10 audit capability (post-hoc analysis)
+- **Iterated Amp + Constitutional AI:** +0.10 effectiveness, +0.18 robustness (theoretical)
+
+**Research Foundation:** Empirical evidence ranges from "strong" (Anthropic's CAI+RLHF) to "theoretical" (IDA combinations).
+
+### Integration with Alignment Dynamics
+
+The Alignment Technique Phase (order 3.4) runs **before** the Alignment Dynamics Phase (order 3.5):
+
+1. **AlignmentTechniquePhase** computes `effectiveAlignment` from techniques + capability scaling
+2. **AlignmentDynamicsPhase** applies drift/epicycle/unknowability on top of effective alignment
+3. Updates `trueAlignment` for downstream systems
+
+This two-stage architecture separates:
+- **Technique effectiveness** (what alignment you get from specific methods)
+- **Alignment stability** (how alignment changes over time due to external pressures)
+
 ## Future Enhancements
 
 **Potential additions:**
@@ -378,6 +479,8 @@ The system generates events for significant changes:
 - Explicit attractor landscape visualization
 - Historical alignment trajectory tracking
 - Correlation between capability dimension and alignment drift
+- Dynamic technique deployment (research breakthroughs unlock new techniques)
+- Technique quality variance (not all RLHF implementations are equal)
 
 ## References
 

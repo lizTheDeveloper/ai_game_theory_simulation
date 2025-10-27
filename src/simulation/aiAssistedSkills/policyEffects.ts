@@ -65,21 +65,26 @@ export function calculateRetrainingEffect(retrainingLevel: number, segmentStatus
   // Base effect (assumes ideal conditions - corporate/elite programs)
   const baseEffect = retrainingLevel * 0.50;
 
-  // POLICY CALIBRATION (Oct 17, 2025): Retraining effectiveness recalibrated
+  // POLICY CALIBRATION (Oct 27, 2025): Retraining effectiveness recalibrated
   // Apply program quality multiplier based on segment
   // Reality: The most marginalized get the worst programs
   //
   // Research: Katz & Krueger (2019) - Training completion rates 65% college-ed vs 28% HS-or-less
+  //           Overall effectiveness: 20-40% (30% population-weighted average)
+  //           By education: College 50-60%, HS 30-40%, <HS 15-25%
   // Autor et al. (2023) - Displaced manufacturing: only 25% successfully retrain
-  // Calibration: Elite 80% (not 100%) → max 40% displacement reduction (realistic upper bound)
+  // Card et al. (2018) - Meta-analysis: 10-30% average, 40-50% best case
   //
-  // Elite multiplier reduced from 1.00 → 0.80 to match Katz & Krueger (2019) 20-40% range
-  // @see research/policy-interventions-systemic-inequality-validation_20251016.md
+  // Calibration ensures population-weighted average = 30% (Katz & Krueger midpoint)
+  // Population: Elite 5%, Middle 40%, Working 50%, Precariat 5%
+  // Check: 0.05×50 + 0.40×35 + 0.50×25 + 0.05×15 = 29.75% ≈ 30% ✓
+  //
+  // @see plans/policy-calibration-improvements.md (Section 3)
   const qualityMultiplier: Record<string, number> = {
-    'elite': 0.80,      // Corporate retraining, university partnerships (40% max effect, 65% completion)
-    'middle': 0.60,     // Community college, moderate funding (30% max effect, ~45% completion)
-    'working': 0.35,    // Underfunded public programs (17.5% max effect, ~30% completion)
-    'precariat': 0.18,  // Severely underfunded, high barriers (9% max effect, ~25% completion)
+    'elite': 1.00,      // Corporate/university retraining (50% max effect - college-educated)
+    'middle': 0.70,     // Community college (35% max effect - high school educated)
+    'working': 0.50,    // Underfunded public programs (25% max effect - below HS)
+    'precariat': 0.30,  // Severely underfunded, high barriers (15% max effect - worst case)
   };
 
   const multiplier = segmentStatus ? (qualityMultiplier[segmentStatus] || 0.50) : 0.50;

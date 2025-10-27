@@ -119,7 +119,7 @@ export function updateRegulatoryArbitrage(state: GameState, cache: CountryIntera
 
   // Log warnings
   if (arb.safetyErosion > 0.30 && state.currentMonth % 12 === 0) {
-    console.log(`⚠️ REGULATORY RACE TO BOTTOM`);
+    console.warn(`⚠️ REGULATORY RACE TO BOTTOM`);
     console.log(`   Safety erosion: ${(arb.safetyErosion * 100).toFixed(0)}%`);
     console.log(`   Regulatory spread: ${(arb.regulatorySpread * 100).toFixed(0)} points`);
     console.log(`   Harmonization: ${(arb.harmonizationLevel * 100).toFixed(0)}%`);

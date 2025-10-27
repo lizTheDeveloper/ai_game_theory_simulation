@@ -374,7 +374,7 @@ export function allocateComputeWithinOrganization(
     case 'efficiency':
       // Allocate based on ROI (capability × alignment)
       const rois = ownedModels.map(ai => {
-        const effectiveAlignment = ai.trueAlignment ?? ai.alignment;
+        const effectiveAlignment = ai.trueAlignment;
         return {
           ai,
           roi: ai.capability * effectiveAlignment

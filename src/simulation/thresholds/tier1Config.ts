@@ -118,7 +118,7 @@ export const AUTOMATION_JOB_LOSS_THRESHOLD_PARAMS = {
  * @param rng - Random number generator function (for deterministic seeding)
  * @returns Sampled threshold values
  */
-export interface Tier1Thresholds {
+export interface ResearchBackedThresholds {
   socialCriticalMass: number;
   trustRecoveryRate: number;
   climateSensitivity: number;
@@ -126,7 +126,7 @@ export interface Tier1Thresholds {
   automationJobLossThreshold: number;
 }
 
-export function sampleTier1Thresholds(rng: () => number): Tier1Thresholds {
+export function sampleResearchBackedThresholds(rng: () => number): ResearchBackedThresholds {
   // Sample raw values from distributions
   const socialCriticalMass = sampleNormal(
     SOCIAL_CRITICAL_MASS_PARAMS.mean,

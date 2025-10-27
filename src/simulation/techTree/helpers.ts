@@ -90,12 +90,14 @@ const OLD_TO_NEW_TECH_MAPPING: Record<string, string> = {
 export function getTechDeploymentByOldName(state: GameState, oldPropertyName: string): number {
   const newTechId = OLD_TO_NEW_TECH_MAPPING[oldPropertyName];
 
-  if (!newTechId) {
-    console.warn(`Tech mapping not found for old property: ${oldPropertyName}`);
-    return 0;
+  // If mapping exists, use it
+  if (newTechId) {
+    return isTechDeployed(state, newTechId);
   }
 
-  return isTechDeployed(state, newTechId);
+  // If no mapping, try the property name as a direct tech ID (backwards compatibility)
+  // This allows callers to pass either OLD property names OR NEW tech IDs
+  return isTechDeployed(state, oldPropertyName);
 }
 
 /**

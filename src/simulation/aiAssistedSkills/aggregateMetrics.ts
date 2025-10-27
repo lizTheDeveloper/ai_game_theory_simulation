@@ -263,7 +263,7 @@ export function calculateAIAssistedSkillsAggregateMetrics(
           (previousPhase === 'complementarity' && currentPhase === 'transition') ||
           (previousPhase === 'transition' && currentPhase === 'substitution')
         ) {
-          console.log(`\n⚠️  PHASE TRANSITION [Month ${currentMonth}]`);
+          console.warn(`\n⚠️  PHASE TRANSITION [Month ${currentMonth}]`);
           console.log(`  Segment: ${segment.economicStatus} (${segment.geographic})`);
           console.log(`  ${previousPhase} → ${currentPhase}`);
           console.log(`  AI Capability: ${aiCapability.toFixed(2)} | Task Complexity: ${taskComplexity.toFixed(2)}`);

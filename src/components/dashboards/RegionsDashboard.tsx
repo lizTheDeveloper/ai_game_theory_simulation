@@ -8,12 +8,15 @@
 
 'use client'
 
+import { useState } from "react"
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
+import { QoLDetailPanel } from "@/components/quality-of-life/QoLDetailPanel"
 
 export function RegionsDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
+  const [showQoLPanel, setShowQoLPanel] = useState(false)
 
   if (!initialized) {
     return (
@@ -67,12 +70,18 @@ export function RegionsDashboard() {
           unit="B"
           status={population < 2.0 ? 'critical' : 'normal'}
         />
-        <MetricCard
-          label="Quality of Life"
-          value={(qol * 100).toFixed(0)}
-          unit="%"
-          status={qol < 0.4 ? 'critical' : qol < 0.6 ? 'warning' : 'normal'}
-        />
+        <div
+          onClick={() => setShowQoLPanel(true)}
+          className="cursor-pointer transition-transform hover:scale-105"
+          style={{ cursor: 'pointer' }}
+        >
+          <MetricCard
+            label="Quality of Life"
+            value={(qol * 100).toFixed(0)}
+            unit="%"
+            status={qol < 0.4 ? 'critical' : qol < 0.6 ? 'warning' : 'normal'}
+          />
+        </div>
         <MetricCard
           label="Social Cohesion"
           value={(socialCohesion * 100).toFixed(0)}
@@ -308,6 +317,14 @@ export function RegionsDashboard() {
             Increased risk of social unrest, institutional breakdown, and meaning crisis.
           </p>
         </Panel>
+      )}
+
+      {/* QoL Detail Panel */}
+      {showQoLPanel && lastUpdate && (
+        <QoLDetailPanel
+          data={lastUpdate}
+          onClose={() => setShowQoLPanel(false)}
+        />
       )}
     </div>
   )

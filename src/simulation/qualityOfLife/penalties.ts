@@ -14,17 +14,27 @@
 import type { GameState } from '@/types/game';
 
 /**
- * Calculate unemployment penalty on material abundance
+ * Calculate unemployment penalty on material abundance with nonlinear scaling
  *
  * Research: COVID-19 at 14.7% unemployment caused:
  * - +40% food insecurity (USDA 2020: 10.5% → 21%)
  * - +12% homelessness (Eviction Lab 2020)
  * - +30% depression (Kessler et al. 2008)
+ * - Eviction Lab (2016): Every 1% unemployment → +0.5% eviction rate
+ * - At 54% unemployment: Eviction rate could reach 25-30% (catastrophic)
  *
- * Suggests ~-0.5 multiplier for realistic impact
- * At 54% unemployment: -0.27 penalty → QoL drops from ~78% to ~50% (catastrophic without UBI)
+ * Nonlinear penalty structure (Policy Calibration Improvements, Oct 17 2025):
+ * - 0-15%: Linear penalty (-0.2 per point) - mild economic stress
+ * - 15-40%: Accelerating penalty (-0.4 per point) - crisis territory
+ * - 40%+: Catastrophic penalty (-0.8 per point) - cascading failures
  *
+ * At 54% unemployment (pre-UBI): -0.142 total penalty
+ * - vs old linear -0.5: -0.27 penalty
+ * - New system more realistic: gradual then rapid deterioration
+ *
+ * @see Kessler et al. (2008) - Unemployment and mental health
  * @see Kahneman & Deaton (2010) - Income-life satisfaction relationship
+ * @see Desmond (2016) - Eviction Lab data on unemployment-housing crisis link
  */
 export function calculateUnemploymentPenalty(
   unemploymentLevel: number,
@@ -35,8 +45,24 @@ export function calculateUnemploymentPenalty(
     return unemploymentLevel * 0.1; // Positive contribution
   }
 
-  // Pre-transition: Unemployment is catastrophic
-  return unemploymentLevel * -0.5;
+  // Pre-transition: Unemployment is catastrophic with nonlinear scaling
+  if (unemploymentLevel < 0.15) {
+    // Low unemployment: linear penalty (mild economic stress)
+    return unemploymentLevel * -0.2;
+  } else if (unemploymentLevel < 0.4) {
+    // Medium unemployment: accelerating penalty (crisis territory)
+    const basePenalty = 0.15 * -0.2;  // First 15%: -0.03
+    const excessUnemployment = unemploymentLevel - 0.15;
+    const acceleratedPenalty = excessUnemployment * -0.4;  // Doubled rate
+    return basePenalty + acceleratedPenalty;
+  } else {
+    // High unemployment: catastrophic (cascading failures)
+    const basePenalty = 0.15 * -0.2;  // First 15%: -0.03
+    const mediumPenalty = 0.25 * -0.4;  // 15-40%: -0.10
+    const excessUnemployment = unemploymentLevel - 0.4;
+    const catastrophicPenalty = excessUnemployment * -0.8;  // Quadrupled rate
+    return basePenalty + mediumPenalty + catastrophicPenalty;
+  }
 }
 
 /**

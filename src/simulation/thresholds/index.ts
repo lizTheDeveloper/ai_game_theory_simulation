@@ -13,13 +13,13 @@
  * 4. Export/import for reproducibility
  */
 
-import { sampleTier1Thresholds, type Tier1Thresholds } from './tier1Config';
-import { sampleTier2Thresholds, type Tier2Thresholds } from './tier2Config';
+import { sampleResearchBackedThresholds, type ResearchBackedThresholds } from './tier1Config';
+import { sampleHistoricalThresholds, type HistoricalThresholds } from './tier2Config';
 
 /**
- * Combined threshold interface - all tiers unified
+ * Combined threshold interface - all uncertainty parameters
  */
-export type AllThresholds = Tier1Thresholds & Tier2Thresholds;
+export type Thresholds = ResearchBackedThresholds & HistoricalThresholds;
 
 /**
  * Named scenario definitions (Tier 3)
@@ -43,7 +43,7 @@ export type ScenarioName = 'doom' | 'cautious' | 'baseline' | 'progressive' | 'u
  *
  * Example: { climateSensitivity: 0.9 } → sample at 90th percentile (high sensitivity)
  */
-export type SliderSettings = Partial<Record<keyof AllThresholds, number>>;
+export type SliderSettings = Partial<Record<keyof Thresholds, number>>;
 
 /**
  * Threshold sampling options
@@ -203,7 +203,7 @@ function applySlider(min: number, max: number, slider: number, mode?: number): n
 export function sampleAllThresholds(
   rng: () => number,
   options: ThresholdSamplingOptions = {}
-): AllThresholds {
+): Thresholds {
   const { scenario, sliders = {}, nested = false } = options;
 
   // Get scenario sliders if specified
@@ -212,60 +212,60 @@ export function sampleAllThresholds(
   // Merge sliders: custom sliders override scenario sliders
   const finalSliders: SliderSettings = { ...scenarioSliders, ...sliders };
 
-  // Sample Tier 1 thresholds with slider overrides
-  const tier1Raw = sampleTier1Thresholds(rng);
-  const tier1: Tier1Thresholds = {
+  // Sample research-backed thresholds with slider overrides
+  const researchRaw = sampleResearchBackedThresholds(rng);
+  const research: ResearchBackedThresholds = {
     socialCriticalMass: finalSliders.socialCriticalMass !== undefined
       ? applySlider(0.20, 0.30, finalSliders.socialCriticalMass)
-      : tier1Raw.socialCriticalMass,
+      : researchRaw.socialCriticalMass,
 
     trustRecoveryRate: finalSliders.trustRecoveryRate !== undefined
       ? applySlider(0.005, 0.03, finalSliders.trustRecoveryRate)
-      : tier1Raw.trustRecoveryRate,
+      : researchRaw.trustRecoveryRate,
 
     climateSensitivity: finalSliders.climateSensitivity !== undefined
       ? applySlider(2.0, 5.0, finalSliders.climateSensitivity)
-      : tier1Raw.climateSensitivity,
+      : researchRaw.climateSensitivity,
 
     governmentLegitimacyCrisisThreshold: finalSliders.governmentLegitimacyCrisisThreshold !== undefined
       ? applySlider(0.25, 0.40, finalSliders.governmentLegitimacyCrisisThreshold, 0.30)
-      : tier1Raw.governmentLegitimacyCrisisThreshold,
+      : researchRaw.governmentLegitimacyCrisisThreshold,
 
     automationJobLossThreshold: finalSliders.automationJobLossThreshold !== undefined
       ? applySlider(0.25, 0.45, finalSliders.automationJobLossThreshold)
-      : tier1Raw.automationJobLossThreshold
+      : researchRaw.automationJobLossThreshold
   };
 
-  // Sample Tier 2 thresholds with slider overrides
-  const tier2Raw = sampleTier2Thresholds(rng);
-  const tier2: Tier2Thresholds = {
+  // Sample historical thresholds with slider overrides
+  const historicalRaw = sampleHistoricalThresholds(rng);
+  const historical: HistoricalThresholds = {
     governmentLegitimacyCrisisThreshold: finalSliders.governmentLegitimacyCrisisThreshold !== undefined
       ? applySlider(0.25, 0.40, finalSliders.governmentLegitimacyCrisisThreshold, 0.30)
-      : tier2Raw.governmentLegitimacyCrisisThreshold,
+      : historicalRaw.governmentLegitimacyCrisisThreshold,
 
     surveillanceDystopiaThreshold: finalSliders.surveillanceDystopiaThreshold !== undefined
       ? applySlider(0.65, 0.80, finalSliders.surveillanceDystopiaThreshold)
-      : tier2Raw.surveillanceDystopiaThreshold,
+      : historicalRaw.surveillanceDystopiaThreshold,
 
     automationDisplacementCrisisThreshold: finalSliders.automationDisplacementCrisisThreshold !== undefined
       ? applySlider(0.40, 0.60, finalSliders.automationDisplacementCrisisThreshold, 0.50)
-      : tier2Raw.automationDisplacementCrisisThreshold,
+      : historicalRaw.automationDisplacementCrisisThreshold,
 
     aiRecursiveImprovementThreshold: finalSliders.aiRecursiveImprovementThreshold !== undefined
       ? applySlider(1.2, 1.5, finalSliders.aiRecursiveImprovementThreshold)
-      : tier2Raw.aiRecursiveImprovementThreshold,
+      : historicalRaw.aiRecursiveImprovementThreshold,
 
     resentmentRevoltTriggerThreshold: finalSliders.resentmentRevoltTriggerThreshold !== undefined
       ? applySlider(0.60, 0.80, finalSliders.resentmentRevoltTriggerThreshold, 0.70)
-      : tier2Raw.resentmentRevoltTriggerThreshold
+      : historicalRaw.resentmentRevoltTriggerThreshold
   };
 
-  // Combine all tiers
-  // Note: governmentLegitimacyCrisisThreshold appears in both Tier 1 and Tier 2
-  // Use Tier 2 version (more recent, historical range-based)
+  // Combine all thresholds
+  // Note: governmentLegitimacyCrisisThreshold appears in both sets
+  // Use historical version (more recent, range-based sampling)
   return {
-    ...tier1,
-    ...tier2
+    ...research,
+    ...historical
   };
 }
 
@@ -300,7 +300,7 @@ export function getScenarioList(): Array<{ name: ScenarioName; description: stri
 /**
  * Get list of available slider names with descriptions
  */
-export function getSliderList(): Array<{ name: keyof AllThresholds; description: string; range: string }> {
+export function getSliderList(): Array<{ name: keyof Thresholds; description: string; range: string }> {
   return [
     { name: 'socialCriticalMass', description: 'Social tipping point threshold', range: '[0.20, 0.30]' },
     { name: 'trustRecoveryRate', description: 'Monthly trust recovery rate', range: '[0.005, 0.03]' },
@@ -315,6 +315,5 @@ export function getSliderList(): Array<{ name: keyof AllThresholds; description:
 }
 
 // Re-export component modules for convenience
-export { sampleTier1Thresholds, type Tier1Thresholds } from './tier1Config';
-export { sampleTier2Thresholds, type Tier2Thresholds } from './tier2Config';
-export type { AllThresholds as Thresholds };
+export { sampleResearchBackedThresholds, type ResearchBackedThresholds } from './tier1Config';
+export { sampleHistoricalThresholds, type HistoricalThresholds } from './tier2Config';

@@ -496,7 +496,7 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
 
   // Log new crises and add events to timeline
   for (const crisis of newCrises) {
-    console.log(`🚨 NEW REFUGEE CRISIS: ${crisis.cause.toUpperCase()}`);
+    console.log(`\n🚨 NEW REFUGEE CRISIS (Month ${state.currentMonth}): ${crisis.cause.toUpperCase()}`);
     console.log(`   Source: ${crisis.sourceRegion}`);
     console.log(`   At risk: ${crisis.potentialDisplaced.toFixed(1)}M people`);
     console.log(`   Displacement: Gradual over ${crisis.displacementDuration} months (${(crisis.displacementDuration/12).toFixed(1)} years)`);

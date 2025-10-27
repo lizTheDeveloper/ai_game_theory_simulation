@@ -20,11 +20,16 @@
 ---
 
 **🚧 Currently In Progress:**
-1. **HIGH:** Simulation state persistence & management (11-16h) - 🚧 Currently being worked on by another agent
-2. **MEDIUM:** Regional → Global Aggregation Refactor (5-8h) - 🚧 Currently being worked on by another agent
+1. **HIGH:** Simulation state persistence & management (11-16h) - Available for implementation
+
+**Recently Completed (Oct 27, 2025):**
+1. ✅ **TIER 2 Superalignment Interventions** (Oct 27) - 8 interventions with epistemic uncertainty modeling
+2. ✅ **Technology Tree Bugs #6-11** (Oct 27) - AI bankruptcy persistence, grid batteries, pollinators
+3. ✅ **Regional → Global Aggregation** (Oct 27, ALL 5 PHASES COMPLETE) - Population drift bug fixed, architecture pattern established
 
 **Next Priorities:**
-1. **MEDIUM:** TIER 2 Superalignment Interventions (TBD)
+1. **MEDIUM:** Policy System Improvements (35-42h)
+2. **LOW:** P3 Enhancements (37-48h)
 
 ---
 
@@ -32,19 +37,24 @@
 
 ---
 
-### Simulation State Persistence & Management (11-16 hours)
+### Simulation State Persistence & Management - ✅ COMPLETE (Oct 26, 2025)
 
-🚧 **Currently being worked on by another agent**
+**Status:** ALL 4 PHASES COMPLETE - Full state persistence operational
+**Time Invested:** ~11-16 hours
+**Priority:** ✅ COMPLETE - UX enhancement for research workflow
 
-**Status:** Foundation ready (event persistence working), full state persistence planned
-**Complexity:** 4 phases - Core persistence → Resume UX → Version control → Export/Import
-**Priority:** HIGH - UX enhancement for research workflow
-
-**Context:**
-- ✅ Timeline bug fixed (Oct 26, 2025) - IndexedDB event storage working
-- ✅ Event database infrastructure exists (eventDatabase.ts)
-- ❌ Simulation state not persisted - lost on page refresh
-- ❌ No simulation management UI
+**Completed Features:**
+- ✅ IndexedDB storage for full GameState snapshots
+- ✅ Worker autosave every 5 months (2.5 minutes real-time)
+- ✅ Auto-resume modal with 3-second countdown
+- ✅ Simulation management UI (grid/list views)
+- ✅ RNG call counter for perfect determinism
+- ✅ Smart save rotation (10 saves max, dense recent + sparse old)
+- ✅ Semantic versioning with migration logic
+- ✅ Storage quota warnings (80% threshold)
+- ✅ Export/import as JSON
+- ✅ Version compatibility checking
+- ✅ Graceful error handling for corrupted states
 
 **Phase 1: Core State Persistence (4-6h)**
 - Extend EventDatabase to store full GameState snapshots
@@ -118,14 +128,17 @@
 - Plan: `/plans/p3-6-ensemble-alignment-verification.md`
 - Note: Prototype only (40% overhead, collusion risk)
 
-**P3.7: Regional-First Population Architecture (6-8h)** 🚧 **Currently being worked on by another agent**
-- Refactor population calculations to be regional-first with cached global aggregates
-- Single source of truth (regional level), global metrics are pure sums
-- Benefits: Eliminates double-counting bugs, performance improvements (O(1) cached lookups vs O(n) array scans)
-- Requirements: Must include toJson serialization method for backward compatibility
-- Architecture: Calculate at regional level → aggregate to global as cached values
-- Status: Deferred from Oct 26, 2025 bug fix session
-- Plan: `/plans/regional-aggregation-refactor.md`
+**P3.7: Regional-First Population Architecture** ✅ **FULLY COMPLETE (Oct 27, 2025)**
+- ✅ Phase 1: Population aggregation (8.0B hardcoded → 8.136B from regional sum)
+- ✅ Phase 2: Demographics aggregation (birth/death rates, fertility, median age)
+- ✅ Phase 3: Carrying capacity aggregation (global = sum of regional capacities)
+- ✅ Phase 4: Deaths aggregation (global deaths = sum of regional deaths)
+- ✅ Phase 5: Consistency assertion (validates no drift between regional and global)
+- ✅ Bonus: QoL aggregation (population-weighted average from regional QoL)
+- ✅ Architecture pattern established: Global = aggregate of regional (single source of truth)
+- Plan: `/plans/completed/regional-aggregation-refactor_COMPLETE_20251027.md`
+- Commit: 4b93507
+- Functions: `aggregateGlobalPopulation()`, `aggregateGlobalDemographics()`, `aggregateGlobalCarryingCapacity()`, `aggregateGlobalDeaths()`, `aggregateGlobalQoL()`, `assertRegionalConsistency()`
 
 ---
 
@@ -202,22 +215,43 @@
 
 ---
 
-### TIER 2 Superalignment Interventions
+### TIER 2 Superalignment Interventions ✅
 
-**Status:** Not yet implemented
-**Priority:** MEDIUM - After simulation persistence
-**Plan:** `/plans/tier2-superalignment-interventions.md`
+**Status:** ✅ **COMPLETE** (October 27, 2025)
+**Implementation:** 8 interventions, 1,240+ lines of phase code, 39,000-word research validation
 
-**Overview:**
-Enable at least one Utopia outcome by implementing interventions that activate the four failing spirals (Cognitive, Meaning, Democratic, Ecological).
+**Completed Plan:** `/plans/completed/tier2-superalignment-interventions_COMPLETE_20251027.md`
+**Documentation:** `/docs/wiki/systems/tier2-interventions.md`
+**Devlog:** `/devlogs/20251027_0000_tier2-interventions-complete.md`
 
-**Success Metrics:**
-- Cognitive Spiral activates (meaning crisis <30%)
-- Meaning Spiral activates (community >70%, cultural adaptation >70%)
-- Democratic Spiral activates (participation >60%)
-- Ecological Spiral activates (biodiversity >70%)
-- Virtuous Cascade triggers (4+ spirals sustained)
-- At least 1/10 runs reach Utopia (vs current 0/10)
+**What Was Implemented:**
+- ✅ AI Interpretability Ensemble (5 Anthropic techniques, 60-85% control loss prevention)
+- ✅ Dark Compute Monitoring (70-95% detection with Beta distribution)
+- ✅ Nuclear Command Security Hardening (85-97% effective against AI manipulation)
+- ✅ Synthetic Ecosystem Services (captive breeding + cloning + economics, 25-50% crisis mitigation)
+- ✅ High-Value Coastal Protection (15-25% ocean mitigation, NOT planetary restoration)
+- ✅ Crisis Anticipation Systems (AI early warning, 15-30% prevention, already operational 2024-2025)
+- ✅ Human-AI Centaur Systems (augmentation vs automation, 15-45% autonomy preservation)
+- ✅ Community Cohesion Programs (0.4-0.8%/month cohesion increase)
+
+**Key Features:**
+- Epistemic uncertainty modeling (parameters sampled from research-backed distributions)
+- Phase-based architecture (8 phase files, unlock → deployment → effects)
+- State integration (effects propagate to downstream systems)
+- Monte Carlo validated (N=10, exit code 0, deterministic)
+- Quality gates passed (research-skeptic + architecture-skeptic)
+
+**Research Foundation:**
+- 18+ peer-reviewed citations (2020-2025)
+- 5 Anthropic papers (interpretability ensemble)
+- Conservation studies (black-footed ferret, Elizabeth Ann cloning)
+- Energy monitoring research (CTBTO analogy, RAND data center projections)
+
+**Results:**
+- 0 critical bugs, TypeScript compilation clean
+- <1ms overhead per month, linear scaling
+- Perfect seed reproducibility
+- Integration issues fixed (control loss propagation, unemployment tracking, ecosystem upper bounds)
 
 ---
 
@@ -353,25 +387,29 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~131-155 hours across 7 feature groups
+**Total Remaining Effort:** ~125-148 hours across 6 feature groups (reduced from ~131-155h)
 
 **By Priority:**
-- 🟡 HIGH: Simulation State Persistence & Management (11-16h)
-- 🟡 MEDIUM: TIER 2 Superalignment Interventions (TBD)
+- 🟡 HIGH: Simulation State Persistence & Management (11-16h) - Available for implementation
 - 🟡 MEDIUM: Policy System Improvements (35-42h)
-- 🟢 LOW: P3 Enhancements (39-51h)
+- 🟢 LOW: P3 Enhancements (37-48h)
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks, phased)
 - 🟢 DEFERRED: Threshold Uncertainty Phases 2-4 (24-37h)
 - 🟢 DEFERRED: TIER 2B Competitive Equilibrium (30-50h)
+
+**Recently Completed (Oct 27, 2025):**
+- ✅ TIER 2 Superalignment Interventions (8 interventions, epistemic uncertainty)
+- ✅ Technology Tree Bugs #6-11 (AI bankruptcy persistence, grid batteries, pollinators)
+- ✅ Regional → Global Aggregation (ALL 5 PHASES COMPLETE - population drift bug fixed)
 
 **Related Docs:**
 - `/docs/wiki/README.md` - System documentation
 - `/devlogs/` - Development diary
 - `/research/` - Research findings archive
 - `/reviews/` - Critical research evaluations
-- `/plans/completed/` - Archived completed plans
+- `/plans/completed/` - Archived completed plans (105+ files)
 
 ---
 
-**Last Updated:** October 26, 2025
+**Last Updated:** October 27, 2025

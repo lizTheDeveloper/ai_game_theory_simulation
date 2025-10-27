@@ -323,7 +323,7 @@ export class AISufferingPhase implements SimulationPhase {
         console.log(`  Public Awareness: ${(globalMetrics.publicAwarenessOfSuffering * 100).toFixed(0)}%`);
 
         if (config.sufferingAffectsResentment || config.sufferingAffectsAlignment) {
-          console.log(`  ⚠️ Suffering affecting outcomes (causal mode enabled)`);
+          console.warn(`  ⚠️ Suffering affecting outcomes (causal mode enabled)`);
         }
       }
     }

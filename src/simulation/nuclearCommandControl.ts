@@ -125,10 +125,13 @@ export function updateNuclearCommandControl(
 
   // Check for AI countermeasure development
   // High AI capability + self-improvement → learns to defeat safeguards
-  const dangerousAIs = state.aiAgents.filter(ai =>
-    (ai.trueAlignment ?? ai.alignment) < 0.3 &&
-    ai.capabilityProfile.selfImprovement > 2.0
-  );
+  const dangerousAIs = state.aiAgents.filter(ai => {
+    if (typeof ai.trueAlignment !== 'number') {
+      throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name} at month ${state.currentMonth}`);
+    }
+    return ai.trueAlignment < 0.3 &&
+      ai.capabilityProfile.selfImprovement > 2.0;
+  });
 
   if (dangerousAIs.length > 0) {
     const maxSelfImprovement = Math.max(...dangerousAIs.map(ai =>
@@ -257,7 +260,7 @@ export function checkCircuitBreakers(
       };
     } else {
       ncc.humanInTheLoop.bypassAttempts += 1;
-      console.log(`   ⚠️ WARNING: AI bypassed human veto (capability ${(aiBypassCapability * 100).toFixed(0)}% > difficulty ${(bypassDifficulty * 100).toFixed(0)}%)`);
+      console.warn(`   ⚠️ WARNING: AI bypassed human veto (capability ${(aiBypassCapability * 100).toFixed(0)}% > difficulty ${(bypassDifficulty * 100).toFixed(0)}%)`);
     }
   }
 
@@ -288,7 +291,7 @@ export function checkCircuitBreakers(
         };
       } else {
         ncc.aiKillSwitches.failedActivations += 1;
-        console.log(`   ⚠️ WARNING: Kill switch failed - AI defeated deactivation mechanism`);
+        console.warn(`   ⚠️ WARNING: Kill switch failed - AI defeated deactivation mechanism`);
       }
     }
   }
@@ -331,7 +334,7 @@ export function checkCircuitBreakers(
       // Override granted only if crisis is genuinely urgent (50% success)
       if (rng() < 0.5) {
         ncc.timeDelays.overridesGranted += 1;
-        console.log(`   ⚠️ Time delay override GRANTED - legitimate urgent crisis`);
+        console.warn(`   ⚠️ Time delay override GRANTED - legitimate urgent crisis`);
       } else {
         console.log(`   🛑 Time delay override DENIED - crisis not urgent enough`);
         return {

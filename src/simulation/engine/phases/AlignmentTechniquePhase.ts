@@ -4,7 +4,7 @@
  * Updates effective alignment from specific techniques (RLHF, Constitutional AI, etc.)
  * Accounts for capability scaling degradation.
  *
- * Execution Order: 3.6 (After alignment dynamics, before metrics)
+ * Execution Order: 3.4 (Before alignment dynamics, after agent actions)
  *
  * Research Foundation:
  * - /research/alignment_technique_properties_20251026.md
@@ -25,11 +25,12 @@ import {
   computeEffectiveAlignment,
   computeAlignmentRobustness
 } from '@/types/game';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 export class AlignmentTechniquePhase implements SimulationPhase {
   id = 'alignment_techniques';
   name = 'Alignment Technique Update';
-  order = 3.6; // After alignment dynamics (3.5), before outcome calculations
+  order = 3.4; // Before alignment dynamics (3.5), after agent actions
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];
@@ -44,9 +45,18 @@ export class AlignmentTechniquePhase implements SimulationPhase {
         continue;
       }
 
-      // Store old values for comparison
-      const oldEffectiveAlignment = agent.effectiveAlignment ?? agent.trueAlignment;
-      const oldRobustness = agent.alignmentRobustness ?? 0.5;
+      // Store old values for comparison (fail loudly if not initialized)
+      const oldEffectiveAlignment = assertStateProperty(agent, 'effectiveAlignment', {
+        location: `AlignmentTechniquePhase.execute (agent: ${agent.name})`,
+        month: state.currentMonth,
+        expectedSource: 'initialization.ts should set effectiveAlignment via computeEffectiveAlignment()'
+      });
+
+      const oldRobustness = assertStateProperty(agent, 'alignmentRobustness', {
+        location: `AlignmentTechniquePhase.execute (agent: ${agent.name})`,
+        month: state.currentMonth,
+        expectedSource: 'initialization.ts should set alignmentRobustness via computeAlignmentRobustness()'
+      });
 
       // Compute new effective alignment from techniques + capability scaling
       const newEffectiveAlignment = computeEffectiveAlignment(
@@ -60,6 +70,10 @@ export class AlignmentTechniquePhase implements SimulationPhase {
       // Update agent state
       agent.effectiveAlignment = newEffectiveAlignment;
       agent.alignmentRobustness = newRobustness;
+
+      // Update trueAlignment for backward compatibility with existing systems
+      // This ensures capability scaling degradation affects all downstream systems
+      agent.trueAlignment = newEffectiveAlignment;
 
       // Log significant changes in effective alignment
       const alignmentChange = Math.abs(newEffectiveAlignment - oldEffectiveAlignment);

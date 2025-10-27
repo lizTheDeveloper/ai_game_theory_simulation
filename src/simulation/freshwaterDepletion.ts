@@ -117,7 +117,7 @@ export function updateFreshwaterSystem(state: GameState): void {
   // Like peak oil - extraction becomes uneconomical/impossible after peak
   if (!fw.peakGroundwaterReached && fw.blueWater.groundwater < 0.50) {
     fw.peakGroundwaterReached = true;
-    console.log(`⚠️ PEAK GROUNDWATER: Depletion phase begins (Month ${state.currentMonth})`);
+    console.warn(`⚠️ PEAK GROUNDWATER: Depletion phase begins (Month ${state.currentMonth})`);
     console.log(`   Groundwater: ${(fw.blueWater.groundwater * 100).toFixed(0)}%`);
     console.log(`   Water stress: ${(fw.waterStress * 100).toFixed(0)}%`);
     
@@ -270,7 +270,7 @@ export function updateFreshwaterSystem(state: GameState): void {
         console.log(`   Groundwater: ${(fw.blueWater.groundwater * 100).toFixed(0)}%`);
         console.log(`   Agricultural productivity declining: -${(monthlyProductivityLoss * 100).toFixed(1)}%/month`);
         console.log(`   Material abundance: ${(state.qualityOfLifeSystems.materialAbundance * 100).toFixed(0)}%`);
-        console.log(`   ⚠️ Trapped populations experiencing excess mortality`);
+        console.warn(`   ⚠️ Trapped populations experiencing excess mortality`);
       }
     }
   }

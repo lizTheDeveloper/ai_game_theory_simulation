@@ -14,6 +14,7 @@ import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchest
 import { calculateDivergence } from '@/data/aggregators/divergenceCalculator';
 import { calculateCorrelations } from '@/data/aggregators/correlationTracker';
 import { classifyOutcome } from '@/data/aggregators/outcomeClassifier';
+import { assertFinite } from '@/simulation/utils/assertions';
 
 /**
  * Multi-Paradigm DUI Update Phase
@@ -84,6 +85,35 @@ function calculateParadigmScoresFromState(state: GameState): {
   let ecological = calculateEcological(state);
   let indigenous = calculateIndigenous(state);
 
+  // Validate all paradigm scores before AI suffering adjustments
+  western = assertFinite(western, {
+    location: 'MultiParadigmDUIUpdatePhase.calculateParadigmScoresFromState',
+    valueName: 'western paradigm score',
+    month: state.currentMonth,
+    additionalInfo: { source: 'calculateWesternLiberal' }
+  });
+
+  development = assertFinite(development, {
+    location: 'MultiParadigmDUIUpdatePhase.calculateParadigmScoresFromState',
+    valueName: 'development paradigm score',
+    month: state.currentMonth,
+    additionalInfo: { source: 'calculateDevelopment' }
+  });
+
+  ecological = assertFinite(ecological, {
+    location: 'MultiParadigmDUIUpdatePhase.calculateParadigmScoresFromState',
+    valueName: 'ecological paradigm score',
+    month: state.currentMonth,
+    additionalInfo: { source: 'calculateEcological' }
+  });
+
+  indigenous = assertFinite(indigenous, {
+    location: 'MultiParadigmDUIUpdatePhase.calculateParadigmScoresFromState',
+    valueName: 'indigenous paradigm score',
+    month: state.currentMonth,
+    additionalInfo: { source: 'calculateIndigenous' }
+  });
+
   // AI Suffering System Integration (Oct 24, 2025)
   // Different paradigms have different thresholds for AI suffering concern
   if (state.config.aiSuffering?.sufferingAffectsAlignment && state.aiSufferingMetrics) {
@@ -116,12 +146,7 @@ function calculateParadigmScoresFromState(state: GameState): {
     }
   }
 
-  // Ensure no NaN/undefined values (fallback to neutral 50)
-  if (isNaN(western) || western === undefined) western = 50;
-  if (isNaN(development) || development === undefined) development = 50;
-  if (isNaN(ecological) || ecological === undefined) ecological = 50;
-  if (isNaN(indigenous) || indigenous === undefined) indigenous = 50;
-
+  // NO FALLBACKS - if any score is NaN/undefined, simulation should fail loudly above
   return { western, development, ecological, indigenous };
 }
 

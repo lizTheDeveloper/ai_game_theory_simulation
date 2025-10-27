@@ -204,7 +204,7 @@ export function updateHumanEnhancementSystem(state: import('../types/game').Game
     }
     
     if (system.stratification.cognitiveApartheidActive) {
-      console.log(`  ⚠️  COGNITIVE APARTHEID ACTIVE`);
+      console.warn(`  ⚠️  COGNITIVE APARTHEID ACTIVE`);
     }
     
     if (system.potentialOutcome) {
@@ -483,7 +483,7 @@ function updateStratification(
   
   if (apartheidThreshold && !strat.cognitiveApartheidActive) {
     strat.cognitiveApartheidActive = true;
-    console.log(`\n⚠️  COGNITIVE APARTHEID ACTIVATED`);
+    console.warn(`\n⚠️  COGNITIVE APARTHEID ACTIVATED`);
     console.log(`   Cognitive Gap: ${strat.cognitiveGap.toFixed(2)}x`);
     console.log(`   Social Stratification: ${(strat.socialStratification * 100).toFixed(1)}%`);
   }

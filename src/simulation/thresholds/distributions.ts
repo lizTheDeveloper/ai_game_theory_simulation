@@ -351,6 +351,58 @@ export function sampleTriangular(
 }
 
 /**
+ * Sample from Uniform distribution U(min, max)
+ *
+ * Uniform distribution models complete uncertainty within a known range.
+ * All values in [min, max] are equally likely.
+ *
+ * @param min - Minimum value
+ * @param max - Maximum value, must be > min
+ * @param rng - Deterministic RNG function
+ * @returns Sample from U(min, max) in [min, max]
+ *
+ * @throws Error if min ≥ max or parameters are NaN/Infinity
+ *
+ * @example
+ * const rng = seedrandom('test-seed');
+ * // Complete uncertainty about effect size
+ * const effect = sampleUniform(0.15, 0.45, rng);
+ */
+export function sampleUniform(
+  min: number,
+  max: number,
+  rng: RNGFunction
+): number {
+  // Validate parameters
+  assertFinite(min, {
+    location: 'sampleUniform',
+    valueName: 'min',
+    additionalInfo: { max }
+  });
+
+  assertFinite(max, {
+    location: 'sampleUniform',
+    valueName: 'max',
+    additionalInfo: { min }
+  });
+
+  if (min >= max) {
+    throw new Error([
+      '❌ Invalid parameters in sampleUniform',
+      `   min = ${min}, max = ${max}`,
+      '   min must be < max',
+    ].join('\n'));
+  }
+
+  const result = min + rng() * (max - min);
+
+  return assertInRange(result, min, max, {
+    location: 'sampleUniform',
+    valueName: 'result',
+  });
+}
+
+/**
  * Helper: Convert distribution parameters to descriptive stats
  *
  * Useful for logging and debugging threshold configurations.
@@ -360,7 +412,7 @@ export function sampleTriangular(
  * console.log(stats); // "Normal(μ=1.50, σ=0.30)"
  */
 export function getDistributionStats(
-  type: 'normal' | 'beta' | 'lognormal' | 'triangular',
+  type: 'normal' | 'beta' | 'lognormal' | 'triangular' | 'uniform',
   params: Record<string, number>
 ): string {
   switch (type) {
@@ -372,6 +424,8 @@ export function getDistributionStats(
       return `LogNormal(μ=${params.mu?.toFixed(2)}, σ=${params.sigma?.toFixed(2)})`;
     case 'triangular':
       return `Triangular(min=${params.min?.toFixed(2)}, mode=${params.mode?.toFixed(2)}, max=${params.max?.toFixed(2)})`;
+    case 'uniform':
+      return `Uniform(min=${params.min?.toFixed(2)}, max=${params.max?.toFixed(2)})`;
     default:
       return 'Unknown distribution';
   }

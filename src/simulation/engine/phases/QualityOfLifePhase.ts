@@ -4,10 +4,11 @@
  * Updates multi-dimensional quality of life systems and calculates aggregate QoL
  * Order: 19.5 (BEFORE population mortality so it uses current values)
  * FIX (Oct 25, 2025): Moved from 34.0 to 19.5 - population was using stale data
+ * FIX (Oct 26, 2025): Regional → Global aggregation architecture
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
-import { updateQualityOfLifeSystems, calculateQualityOfLife } from '../../calculations';
+import { updateQualityOfLifeSystems, calculateQualityOfLife, aggregateGlobalQoL } from '../../calculations';
 
 export class QualityOfLifePhase implements SimulationPhase {
   readonly id = 'quality-of-life';
@@ -19,17 +20,37 @@ export class QualityOfLifePhase implements SimulationPhase {
     const updatedQoLSystems = updateQualityOfLifeSystems(state);
     state.qualityOfLifeSystems = updatedQoLSystems;
 
-    // Calculate aggregate quality of life from systems
-    const qualityOfLife = calculateQualityOfLife(updatedQoLSystems);
-    state.globalMetrics = {
-      ...state.globalMetrics,
-      qualityOfLife
-    };
+    // Calculate global-level QoL from systems
+    const globalQoLFromSystems = calculateQualityOfLife(updatedQoLSystems);
+
+    // Phase 1: Regional QoL Integration (Oct 26, 2025)
+    // Apply global QoL to each region (for now, uniform - later phases will add variation)
+    if (state.humanPopulationSystem.regionalPopulations && state.humanPopulationSystem.regionalPopulations.length > 0) {
+      for (const region of state.humanPopulationSystem.regionalPopulations) {
+        // For Phase 1: Use global QoL uniformly
+        // TODO (Phase 4): Add regional variation based on region-specific factors
+        region.qualityOfLife = globalQoLFromSystems;
+      }
+
+      // Bottom-up aggregation: Global QoL = population-weighted average of regional QoL
+      const aggregatedQoL = aggregateGlobalQoL(state);
+      state.globalMetrics = {
+        ...state.globalMetrics,
+        qualityOfLife: aggregatedQoL
+      };
+    } else {
+      // Fallback if regions not initialized (shouldn't happen)
+      state.globalMetrics = {
+        ...state.globalMetrics,
+        qualityOfLife: globalQoLFromSystems
+      };
+    }
 
     // DEBUG: Log phase execution every 12 months
     if (state.currentMonth % 12 === 0) {
       const foodSec = state.qualityOfLifeSystems.survivalFundamentals?.foodSecurity || 0;
-      console.log(`[Phase ${this.order}] ${this.name}: Food sec AFTER calc = ${(foodSec * 100).toFixed(1)}%, QoL = ${(qualityOfLife * 100).toFixed(1)}%`);
+      const qol = state.globalMetrics.qualityOfLife;
+      console.log(`[Phase ${this.order}] ${this.name}: Food sec AFTER calc = ${(foodSec * 100).toFixed(1)}%, QoL = ${(qol * 100).toFixed(1)}% (aggregated from ${state.humanPopulationSystem.regionalPopulations?.length || 0} regions)`);
     }
 
     return { events: [] };

@@ -85,8 +85,8 @@ export function checkEndGameTransition(state: GameState): boolean {
   // (Some AIs very aligned, others very misaligned → civil war scenario)
   // Use max capability, not total, to avoid false triggers with many weak AIs
   if (maxCapability > 1.5) {
-    const alignedAIs = state.aiAgents.filter(ai => (ai.trueAlignment ?? ai.alignment) > 0.6);
-    const misalignedAIs = state.aiAgents.filter(ai => (ai.trueAlignment ?? ai.alignment) < 0.4);
+    const alignedAIs = state.aiAgents.filter(ai => ai.trueAlignment > 0.6);
+    const misalignedAIs = state.aiAgents.filter(ai => ai.trueAlignment < 0.4);
     
     if (alignedAIs.length > 0 && misalignedAIs.length > 0) {
       const alignedPower = alignedAIs.reduce((sum, ai) => sum + ai.capability, 0);
@@ -104,9 +104,10 @@ export function checkEndGameTransition(state: GameState): boolean {
   // Phase 3: Updated to match new prerequisite thresholds (lowered from 2.5-2.8 to 1.8-2.2)
   for (const ai of state.aiAgents) {
     const profile = ai.capabilityProfile;
-    
-    const effectiveAlignment = ai.trueAlignment ?? ai.alignment;
-    
+
+    // FIX (Oct 26, 2025): Removed defensive fallback - trueAlignment is required field
+    const effectiveAlignment = ai.trueAlignment;
+
     // Check grey goo potential
     // Phase 3: Lowered threshold from 2.5 to 1.8 (superhuman nanotech)
     const greyGooCapability = 
@@ -166,10 +167,11 @@ export function processEndGameMonth(state: GameState): void {
   
   for (const ai of state.aiAgents) {
     if (ai.lifecycleState === 'retired') continue;
-    
-    // Use trueAlignment (accounts for resentment) if available, otherwise alignment
-    const effectiveAlignment = ai.trueAlignment ?? ai.alignment;
-    
+
+    // FIX (Oct 26, 2025): Removed defensive fallback - trueAlignment is required field
+    // trueAlignment accounts for resentment (see alignmentDynamics.ts)
+    const effectiveAlignment = ai.trueAlignment;
+
     // Alignment 0-1: multiply capability by alignment for aligned side
     // Alignment 0-1: multiply capability by (1-alignment) for misaligned side
     const alignedContribution = ai.capability * effectiveAlignment;
@@ -252,7 +254,8 @@ function checkEndGameResolution(state: GameState): void {
       endGame.monthsInEndGame > 12) { // Extended period of misaligned dominance
     // Check if they have catastrophic capabilities
     const hasCatastrophicCapability = state.aiAgents.some(ai => {
-      const effectiveAlignment = ai.trueAlignment ?? ai.alignment;
+      // FIX (Oct 26, 2025): Removed defensive fallback - trueAlignment is required field
+      const effectiveAlignment = ai.trueAlignment;
       if (effectiveAlignment > 0.5) return false; // Not misaligned
       const profile = ai.capabilityProfile;
       const greyGoo = profile.research.materials.nanotechnology * 0.5 + profile.physical * 0.3;

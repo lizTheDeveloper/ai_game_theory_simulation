@@ -63,9 +63,6 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - ✅ Web Worker architecture (Oct 24, 2025) - Simulation runs in background
 
 **Active Tech Debt:**
-- **Regional → Global Aggregation:** `/plans/regional-aggregation-refactor.md` (5-8h, 5 phases) - 🚧 Currently being worked on by another agent
-  - QoL, demographics, carrying capacity, deaths must be derived from regional data
-  - Prevents drift between global and regional values (population bug pattern)
 - Performance optimization plan exists: `/plans/performance-optimization-plan.md`
   - Memory-intensive operations (deep cloning in hot paths)
   - O(n²) array operations (505+ across 70 files)
@@ -104,24 +101,27 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ## 📊 Overall Project Status
 
-**Last Update:** October 26, 2025
+**Last Update:** October 27, 2025 (Post-Bug-Fix Session)
 
 ### Recent Completions (Oct 2025)
 
 **Major Systems:**
+- ✅ TIER 2 Superalignment Interventions (Oct 27, 8 interventions, epistemic uncertainty modeling, 39K-word research validation)
 - ✅ Threshold Uncertainty Phase 1 (34-52h saved by deferring Phases 2-4)
 - ✅ TIER 2 AI Deception Detection Phase 2C (12-20h, ensemble detection)
 - ✅ LLM Policy Optimization System (Phases 1-5, ~2,000 lines)
 - ✅ AI-Assisted Skills Enhancement (Core system, ~1,869 lines refactored)
 - ✅ Technology Tree Refactoring (71 techs, prerequisites, regional deployment)
 - ✅ Multi-Paradigm DUI (4 paradigm perspectives, 42 indicators)
+- ✅ Regional → Global Aggregation Architecture (Oct 27, ALL 5 PHASES COMPLETE, population drift bug fixed)
 
 **Bug Fixes:**
+- ✅ Technology Tree Bugs #6-11 (Oct 27) - AI bankruptcy persistence, grid batteries, pollinators
 - ✅ Organizations linkage + Nuclear winter initialization (Oct 26)
 - ✅ Ecology NaN bug (Oct 24) - Removed silent fallbacks
 - ✅ Timeline dashboard (Oct 26) - Event persistence working
 
-**Total Work Completed:** ~150-200 hours equivalent
+**Total Work Completed:** ~155-210 hours equivalent (updated Oct 27)
 
 ---
 
@@ -132,7 +132,7 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 2. **Frontend:** God Mode UI planning & dashboard API infrastructure (Phase -1)
 
 **Medium-Term (Next 1-3 months):**
-1. **Simulation:** TIER 2 superalignment interventions, policy improvements
+1. **Simulation:** Policy improvements, P3 enhancements
 2. **Frontend:** Complete dashboard implementation (8 phases, 3-4 weeks parallel)
 
 **Long-Term (3-6+ months):**
@@ -144,10 +144,10 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ## 🎯 Quick Stats
 
-**Total Remaining Work (Simulation):** ~131-155 hours
+**Total Remaining Work (Simulation):** ~125-148 hours (reduced from ~131-155h after completing regional aggregation)
 **Total Remaining Work (Frontend):** ~3-4 weeks with parallelization
-**Active Plans:** 18+ simulation plans, 32 dashboard subplans, 4 god-mode plans
-**Completed Plans (Archived):** 100+ in `/plans/completed/`
+**Active Plans:** 17+ simulation plans, 32 dashboard subplans, 4 god-mode plans
+**Completed Plans (Archived):** 105+ in `/plans/completed/` (updated Oct 27)
 
 ---
 

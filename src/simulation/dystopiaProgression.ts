@@ -114,7 +114,7 @@ export function updateGovernmentControlResponse(state: GameState): void {
         state.government.legitimacy = Math.min(0.7, state.government.legitimacy + 0.1);
         
         // DYSTOPIA LOCK-IN: Now can't research social tech to resolve crises!
-        console.log(`      ⚠️  DYSTOPIA LOCK-IN: Authoritarian regime will struggle to resolve social crises`);
+        console.warn(`      ⚠️  DYSTOPIA LOCK-IN: Authoritarian regime will struggle to resolve social crises`);
       }
     }
   }

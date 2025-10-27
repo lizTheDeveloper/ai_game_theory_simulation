@@ -145,13 +145,24 @@ export type {
 } from '../simulation/engine/PhaseOrchestrator';
 
 export interface GameState {
-  // Core state  
+  // Core state
   currentMonth: number;
   currentDay: number; // Day of the month (1-31)
   currentYear: number; // Year for leap year calculations
   daysInCurrentMonth: number; // Days in current month (28-31)
   speed: 'paused' | 'slow' | 'normal' | 'fast' | 'max';
   gameStarted: boolean;
+
+  /**
+   * RNG Call Counter (Simulation Persistence, Oct 26, 2025)
+   *
+   * Tracks total number of RNG calls to ensure perfect determinism after resume.
+   * Different simulation steps may call RNG different numbers of times, so we
+   * store an explicit counter rather than estimating based on currentMonth.
+   *
+   * Expected impact: Enables perfect reproducibility after resume/continue
+   */
+  rngCallCounter?: number;
   
   // Agents
   aiAgents: AIAgent[];
@@ -266,6 +277,24 @@ export interface GameState {
 
   upwardSpirals: import('../simulation/upwardSpirals').UpwardSpiralState; // Phase 2D: Upward spirals for Utopia detection
   meaningRenaissance: import('../simulation/meaningRenaissance').MeaningRenaissanceState; // Phase 2E: Meaning renaissance
+
+  /**
+   * TIER 2 Interventions System (Oct 27, 2025)
+   *
+   * 8 validated superalignment interventions with epistemic uncertainty modeling.
+   *
+   * Evidence Quality:
+   * - Strong (3): Crisis Anticipation, Synthetic Ecosystems, Interpretability (moderate-high)
+   * - Moderate (5): Dark Compute, Coastal Protection, Nuclear Security, Centaur Systems, Community Cohesion
+   *
+   * Research: /research/tier2_parameter_validation_20251026.md
+   * Config: /src/simulation/thresholds/tier2InterventionConfig.ts
+   *
+   * Parameters sampled ONCE at initialization for epistemic uncertainty.
+   * State tracks deployment progress and effects over time.
+   */
+  tier2Interventions?: import('../types/tier2Interventions').Tier2InterventionsState;
+  tier2InterventionParameters?: import('../simulation/thresholds/tier2InterventionConfig').Tier2InterventionParameters;
   conflictResolution: import('../simulation/conflictResolution').ConflictResolutionState; // Phase 2F: Peace systems
   diplomaticAI: import('../simulation/diplomaticAI').DiplomaticAIState; // Phase 2F+: Research-based diplomatic AI (dual-use)
   
@@ -545,7 +574,18 @@ export interface GameState {
    * Research: Issue #8 - Threshold uncertainty reflects epistemic uncertainty in social/physical systems
    * Expected impact: ±10-40% outcome variation reflecting parameter uncertainty
    */
-  thresholds: import('../simulation/thresholds/tier1Config').Tier1Thresholds & import('../simulation/thresholds/tier2Config').Tier2Thresholds;
+  thresholds: import('../simulation/thresholds').Thresholds;
+
+  /**
+   * Phase 3: Speculative Scenario Thresholds (Tier 3)
+   *
+   * Speculative parameters for unprecedented scenarios (AI alignment difficulty,
+   * post-scarcity distribution, meaning framework adoption). Uses named scenarios
+   * instead of probability distributions.
+   *
+   * Five scenarios: doom, cautious, baseline, progressive, utopia
+   */
+  speculativeThresholds?: import('../simulation/thresholds/tier3Config').Tier3Thresholds;
 
   // Phase 1B Refinement (Oct 17, 2025): Stratified Outcome Classification
   // Distinguishes humane (prosperity without mass death) vs pyrrhic (recovery after catastrophe)

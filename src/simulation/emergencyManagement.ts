@@ -285,14 +285,14 @@ export function deployEmergencyResponse(
 ): EmergencyResponse | null {
   const em = state.emergencyManagement;
   if (!em) {
-    console.log('⚠️  No emergency management bureau - cannot deploy fast response');
+    console.warn('⚠️  No emergency management bureau - cannot deploy fast response');
     return null;
   }
 
   // Check if already responding to this crisis type
   const existingResponse = em.activeResponses.find(r => r.crisisType === crisisType && !r.completed);
   if (existingResponse) {
-    console.log(`⚠️  Already responding to ${crisisType} crisis`);
+    console.warn(`⚠️  Already responding to ${crisisType} crisis`);
     return existingResponse;
   }
 

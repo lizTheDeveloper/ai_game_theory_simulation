@@ -137,6 +137,13 @@ export interface PlanetaryBoundariesSystem {
   // Detection window: 0.8-0.95 of critical threshold (6-24 months warning)
   // Intervention effectiveness: 60-80% success rate during "golden hour"
   earlyWarning?: EarlyWarningSystem;
+
+  // === INVASIVE SPECIES IMPACT (Oct 27, 2025) ===
+  // Research: IPBES (2019) - Invasive species responsible for ~40% of modern extinctions
+  // Economic damage: $423 billion/year globally (2019 estimate)
+  // Contributes to biosphere_integrity boundary breach
+  // Tech: "Invasive Species Control" reduces this via gene drives, precision targeting
+  invasiveSpeciesImpact: number;  // [0, 1] 0 = no impact, 1 = catastrophic
 }
 
 /**

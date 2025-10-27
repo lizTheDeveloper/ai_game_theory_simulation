@@ -80,7 +80,9 @@ function updateFreshwaterRecovery(state: GameState, rng: RNGFunction): void {
   const isImproving = isBreached; // If breached, we CAN improve toward threshold
 
   // Governance capacity check (research-skeptic requirement)
-  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  if (!state.government.governanceQuality) throw new Error(`❌ governanceQuality undefined in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  if (typeof state.government.governanceQuality.institutionalCapacity !== "number") throw new Error(`❌ institutionalCapacity not a number in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  const institutionalCapacity = state.government.governanceQuality.institutionalCapacity;
   const internationalCoordination = state.government?.structuralChoices?.internationalCoordination ? 1.0 : 0.5;
   const governanceMultiplier = (institutionalCapacity + internationalCoordination) / 2;
 
@@ -207,7 +209,11 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
     month: state.currentMonth
   });
   // CDR tracking: No dedicated property yet, use natural sinks as proxy
-  const annualCDR = (state.resourceEconomy?.co2?.oceanAbsorption ?? 0) + (state.resourceEconomy?.co2?.landAbsorption ?? 0);
+  const annualCDR = (() => {
+    if (!state.resourceEconomy?.co2) throw new Error(`❌ resourceEconomy.co2 undefined in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+    if (typeof state.resourceEconomy.co2.oceanAbsorption !== "number" || typeof state.resourceEconomy.co2.landAbsorption !== "number") throw new Error(`❌ co2 absorption values not numbers in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+    return state.resourceEconomy.co2.oceanAbsorption + state.resourceEconomy.co2.landAbsorption;
+  })();
 
   const netEmissions = annualEmissions - annualCDR;
 
@@ -329,7 +335,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
       // Not net-negative - recovery stalled
       boundary.trend = 'stable';
       if (state.currentMonth % 24 === 0 && (boundary.recoveryMonths ?? 0) > 0) {
-        console.log(`⚠️  CLIMATE RECOVERY STALLED: Net emissions still positive (+${netEmissions.toFixed(1)} GtCO₂/year)`);
+        console.warn(`⚠️  CLIMATE RECOVERY STALLED: Net emissions still positive (+${netEmissions.toFixed(1)} GtCO₂/year)`);
         console.log(`   Need net-negative emissions for recovery`);
       }
     }
@@ -366,7 +372,9 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
   const struviteDeployed = state.techTreeState.unlockedTech.includes('struvite_recovery');
 
   // Governance capacity (enforcement of agricultural runoff regulations)
-  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  if (!state.government.governanceQuality) throw new Error(`❌ governanceQuality undefined in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  if (typeof state.government.governanceQuality.institutionalCapacity !== "number") throw new Error(`❌ institutionalCapacity not a number in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  const institutionalCapacity = state.government.governanceQuality.institutionalCapacity;
   const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   // Climate feedback (warming makes recovery harder - Lake Erie empirical)
@@ -429,7 +437,9 @@ function updateNitrogenRecovery(state: GameState, rng: RNGFunction): void {
   const isImproving = boundary.currentValue < boundary.boundaryThreshold;
 
   // Governance capacity (agricultural regulation enforcement)
-  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  if (!state.government.governanceQuality) throw new Error(`❌ governanceQuality undefined in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  if (typeof state.government.governanceQuality.institutionalCapacity !== "number") throw new Error(`❌ institutionalCapacity not a number in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  const institutionalCapacity = state.government.governanceQuality.institutionalCapacity;
   const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   if (isImproving && governanceMultiplier >= 0.3) {
@@ -467,13 +477,21 @@ function updateLandSystemRecovery(state: GameState, rng: RNGFunction): void {
   const boundary = state.planetaryBoundariesSystem?.boundaries.land_system_change;
   if (!boundary) return;
 
-  const forestCover = (state.planetaryBoundariesSystem?.landUse?.globalHabitatCoverPercent ?? 62) / 100;
+  if (!state.planetaryBoundariesSystem?.landUse) {
+    throw new Error(`❌ planetaryBoundariesSystem.landUse is undefined at month ${state.currentMonth} in trackLandSystemRecovery`);
+  }
+  if (typeof state.planetaryBoundariesSystem.landUse.globalHabitatCoverPercent !== 'number') {
+    throw new Error(`❌ globalHabitatCoverPercent is not a number at month ${state.currentMonth}`);
+  }
+  const forestCover = state.planetaryBoundariesSystem.landUse.globalHabitatCoverPercent / 100;
   const forestThreshold = 0.75; // 75% safe boundary (FAO)
 
   const isImproving = forestCover > forestThreshold;
 
   // Governance capacity (rewilding programs, habitat protection)
-  const institutionalCapacity = state.government?.governanceQuality?.institutionalCapacity ?? 0.5;
+  if (!state.government.governanceQuality) throw new Error(`❌ governanceQuality undefined in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  if (typeof state.government.governanceQuality.institutionalCapacity !== "number") throw new Error(`❌ institutionalCapacity not a number in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+  const institutionalCapacity = state.government.governanceQuality.institutionalCapacity;
   const governanceMultiplier = institutionalCapacity < 0.5 ? 0.5 : 1.0;
 
   if (isImproving && governanceMultiplier >= 0.3) {
@@ -526,8 +544,17 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
   const boundary = state.planetaryBoundariesSystem?.boundaries.biosphere_integrity;
   if (!boundary) return;
 
-  const extinctionRate = state.planetaryBoundariesSystem?.landUse?.globalExtinctionRate ?? 100;
-  const naturalRate = state.planetaryBoundariesSystem?.landUse?.naturalExtinctionRate ?? 1.0;
+  if (!state.planetaryBoundariesSystem?.landUse) {
+    throw new Error(`❌ planetaryBoundariesSystem.landUse is undefined at month ${state.currentMonth} in trackBiodiversityRecovery`);
+  }
+  if (typeof state.planetaryBoundariesSystem.landUse.globalExtinctionRate !== 'number') {
+    throw new Error(`❌ globalExtinctionRate is not a number at month ${state.currentMonth}`);
+  }
+  if (typeof state.planetaryBoundariesSystem.landUse.naturalExtinctionRate !== 'number') {
+    throw new Error(`❌ naturalExtinctionRate is not a number at month ${state.currentMonth}`);
+  }
+  const extinctionRate = state.planetaryBoundariesSystem.landUse.globalExtinctionRate;
+  const naturalRate = state.planetaryBoundariesSystem.landUse.naturalExtinctionRate;
 
   // FIX (Oct 21, 2025): Stabilization activates when WORKING TOWARD recovery, not when already recovered
   // Old: Required < 10x natural (impossible from 100x start)
@@ -617,7 +644,11 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
     month: state.currentMonth
   });
   // CDR tracking: No dedicated property yet, use natural sinks as proxy
-  const annualCDR = (state.resourceEconomy?.co2?.oceanAbsorption ?? 0) + (state.resourceEconomy?.co2?.landAbsorption ?? 0);
+  const annualCDR = (() => {
+    if (!state.resourceEconomy?.co2) throw new Error(`❌ resourceEconomy.co2 undefined in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+    if (typeof state.resourceEconomy.co2.oceanAbsorption !== "number" || typeof state.resourceEconomy.co2.landAbsorption !== "number") throw new Error(`❌ co2 absorption values not numbers in planetaryBoundaryRecovery at month ${state.currentMonth}`);
+    return state.resourceEconomy.co2.oceanAbsorption + state.resourceEconomy.co2.landAbsorption;
+  })();
 
   const netEmissions = annualEmissions - annualCDR;
   const surfaceRecoveryPossible = globalWarming < 1.5 && netEmissions < 0;
@@ -799,7 +830,13 @@ export function calculateProgressiveEcologicalScore(state: GameState): number {
       case 'stratospheric_ozone': {
         // Already recovering (Montreal Protocol success)
         // Use ozone recovery progress from ozoneRecovery system
-        const ozoneProgress = state.planetaryBoundariesSystem?.ozoneRecovery?.recoveryProgress ?? 0.5;
+        if (!state.planetaryBoundariesSystem?.ozoneRecovery) {
+          throw new Error(`❌ planetaryBoundariesSystem.ozoneRecovery is undefined at month ${state.currentMonth}`);
+        }
+        if (typeof state.planetaryBoundariesSystem.ozoneRecovery.recoveryProgress !== 'number') {
+          throw new Error(`❌ ozoneRecovery.recoveryProgress is not a number at month ${state.currentMonth}`);
+        }
+        const ozoneProgress = state.planetaryBoundariesSystem.ozoneRecovery.recoveryProgress;
         return ozoneProgress * 100;
       }
 

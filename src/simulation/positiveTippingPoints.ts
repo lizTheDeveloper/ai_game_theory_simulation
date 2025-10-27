@@ -330,6 +330,11 @@ function applyCascadeDynamics(state: GameState, rng: RNGFunction): void {
     if (!tech.cascadeActive) {
       // No cascade - normal linear growth
       tech.marketShare += tech.adoptionRate;
+
+      // FIX (Oct 26, 2025): Cap marketShare when cascade is inactive
+      // Previous: No cap → if adoptionRate becomes Infinity, marketShare becomes Infinity
+      // New: Always cap at 1.0 (100% market saturation)
+      tech.marketShare = Math.min(1.0, tech.marketShare);
       continue;
     }
 
@@ -346,12 +351,18 @@ function applyCascadeDynamics(state: GameState, rng: RNGFunction): void {
 
     tech.marketShare += adjustedRate;
 
+    // FIX (Oct 27, 2025): Cap marketShare BEFORE using in socialBoost calculation
+    // Previous: socialBoost used uncapped marketShare → positive feedback loop → Infinity → NaN
+    // Root cause: marketShare feeds into socialBoost, which increases marketShare exponentially
+    // By month 160, marketShare reached Infinity, causing NaN in emissions calculations
+    tech.marketShare = Math.min(1.0, tech.marketShare);
+
     // Social contagion boost (visibility amplifies adoption)
     const socialBoost = tech.visibility * tech.marketShare * ptp.parameters.earlyAdopterInfluence * 0.01;
     tech.marketShare += socialBoost;
     tech.socialProofStrength = tech.visibility * tech.marketShare;
 
-    // Cap market share at 1.0
+    // Cap market share at 1.0 (again, to handle socialBoost addition)
     tech.marketShare = Math.min(1.0, tech.marketShare);
 
     // End cascade if saturated or duration exceeded
@@ -383,8 +394,12 @@ function updateTechnologySynergies(state: GameState): void {
   const combinedBatteryProduction = evAdoption.cumulativeProduction + batteryAdoption.cumulativeProduction;
   const synergyCostReduction = Math.log2(combinedBatteryProduction) * 0.02; // 2% additional reduction
 
-  evAdoption.costPerUnit *= (1 - synergyCostReduction);
-  batteryAdoption.costPerUnit *= (1 - synergyCostReduction);
+  // FIX (Oct 26, 2025): Remove compounding multiplication that causes costs to spiral to 0
+  // Previous: costPerUnit *= (1 - reduction) every month → exponential decay → 0
+  // New: Apply small additive reduction with floor
+  const costReduction = Math.min(0.001, synergyCostReduction * 0.0001); // Max 0.1% reduction per month
+  evAdoption.costPerUnit = Math.max(0.1, evAdoption.costPerUnit - costReduction); // Floor at 10% of original
+  batteryAdoption.costPerUnit = Math.max(0.1, batteryAdoption.costPerUnit - costReduction);
 
   // Synergy 2: Solar + Wind → Renewable grid infrastructure investment
   const solarAdoption = ptp.adoptionTracking.solarPV;
@@ -392,10 +407,15 @@ function updateTechnologySynergies(state: GameState): void {
 
   const renewableShare = solarAdoption.marketShare + windAdoption.marketShare;
   if (renewableShare > 0.20) {
+    // FIX (Oct 26, 2025): Remove compounding multiplication that causes Infinity
+    // Previous: adoptionRate *= (1 + boost) every month → exponential growth → Infinity
+    // New: adoptionRate bonus is capped, not compounded
+    //
     // High renewable share → grid infrastructure investment → easier to add more renewables
     const infrastructureBoost = (renewableShare - 0.20) * 0.5; // 50% boost above 20% threshold
-    solarAdoption.adoptionRate *= (1 + infrastructureBoost * 0.1);
-    windAdoption.adoptionRate *= (1 + infrastructureBoost * 0.1);
+    const adoptionBonus = infrastructureBoost * 0.001; // Small additive bonus (0.1% per month max)
+    solarAdoption.adoptionRate = Math.min(0.05, solarAdoption.adoptionRate + adoptionBonus); // Cap at 5%/month
+    windAdoption.adoptionRate = Math.min(0.05, windAdoption.adoptionRate + adoptionBonus);
   }
 
   // Track synergies for analysis
