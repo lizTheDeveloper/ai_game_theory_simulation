@@ -1757,15 +1757,20 @@ function applyRegionalEffects(
           break;
           
         case 'invasiveSpeciesReduction':
-          // Reduce invasive species impact
-          if (gameState.planetaryBoundariesSystem) {
-            // FIX: Phase 2, Batch 3 (Oct 25, 2025) - Fail loudly if property missing
-            const current = assertStateProperty(
-              gameState.planetaryBoundariesSystem,
-              'invasiveSpeciesImpact',
-              { location: 'applyRegionalEffects.invasiveSpeciesReduction', month: gameState.currentMonth }
-            );
-            (gameState.planetaryBoundariesSystem as any).invasiveSpeciesImpact = Math.max(0, current - value * 0.01);
+          // ROOT CAUSE FIX (Oct 27, 2025): Bug #16 - Map to biosphere_integrity improvement
+          // Invasive species = species that harm native biodiversity
+          // Invasive species reduction = improving biosphere integrity (biodiversity recovery)
+          // Gene drives + precision targeting reduce invasive species → improves biosphere boundary
+          if (gameState.planetaryBoundariesSystem?.boundaries?.biosphere_integrity) {
+            const boundary = gameState.planetaryBoundariesSystem.boundaries.biosphere_integrity;
+            boundary.currentValue = assertFinite(Math.max(
+              0,
+              boundary.currentValue - value * 0.01  // Reduce boundary stress (lower = better)
+            ), {
+              location: 'applyRegionalEffects:invasiveSpeciesReduction',
+              valueName: 'biosphere_integrity.currentValue',
+              month: gameState.currentMonth
+            });
           }
           break;
           
