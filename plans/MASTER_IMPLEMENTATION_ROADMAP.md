@@ -48,21 +48,30 @@ All 4 sub-phases implemented, tested, and committed:
 - **Famine mortality seasonal patterns**: Seasonal variation, research-backed mortality rates
 - **Timeline dashboard updates**: Event tracking integration
 
-**Total commits this session:** 6 commits (06eca58, 23a1790, d0f1e14, d23ea76, 83ef1e3, a762d2c)
+**Total commits this session:** 8 commits (06eca58, 23a1790, d0f1e14, d23ea76, 83ef1e3, a762d2c, 13d616e, 9c278ff)
 
 **Effort saved:** ~34-52 hours (Phase 1 complete, Phases 2-4 deferred to enrichment)
+
+### ✅ Bug Fixes - COMPLETE
+- **Organizations-to-countries linkage bug** (Commit: 13d616e)
+  - Fixed: Missing `bankruptcyRisk` initialization in all 6 organizations
+  - Validated: 5/5 tests passing, multi-country operations working correctly
+  - Devlog: `devlogs/organization_country_linkage_fix_20251026.md`
+- **Nuclear winter cascades bug** (Commit: 9c278ff)
+  - Fixed: Missing `monthlyDeathsApplied` and `monthlyDeathCapReached` initialization
+  - Validated: Test scenarios (100-warhead, 1000-warhead) match research parameters
+  - Devlog: `devlogs/nuclear_winter_initialization_fix_20251026.md`
 
 ---
 
 **🚧 Currently In Progress (Oct 26, 2025):**
-- Organizations-to-countries linkage bug investigation (bash ID: 81dff1, max-turns: 100)
-- Nuclear winter cascades bug investigation (bash ID: 96f5b0, max-turns: 100)
+- None
 
 **Next Priorities:**
-1. **CRITICAL:** Complete organizations-to-countries linkage bug fix
-2. **HIGH:** Complete nuclear winter cascades bug fix
-3. **MEDIUM:** Simulation state persistence & management (11-16h, builds on event persistence)
-4. **MEDIUM:** Technology tree refactoring (enables Phase 2 threshold work)
+1. **HIGH:** Simulation state persistence & management (11-16h, builds on event persistence)
+2. **MEDIUM:** AI Deception Detection Phase 2C (12-20h, multi-method ensemble)
+3. **MEDIUM:** Technology tree refactoring (enables Phase 2 threshold work)
+4. **LOW:** AI-Assisted Skills Enhancement (78h, 6 phases remaining)
 
 ---
 
