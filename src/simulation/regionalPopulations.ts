@@ -374,7 +374,18 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     const climateStability = state.environmentalAccumulation.climateStability;
-    const climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
+
+    // Base climate stress from general climate degradation
+    let climateStress = (1 - climateStability) * 0.4 * region.climateVulnerability;
+
+    // Add tipping point impacts (if any active)
+    // TippingPointPhase (order 21.6) stores impacts in state for regional variation
+    const tippingImpacts = (state as any)._tippingPointImpacts;
+    if (tippingImpacts) {
+      // Each tipping element has regional multipliers (e.g., AMOC hits Europe 1.4x harder)
+      const tippingStress = tippingImpacts.habitability * 0.5 * region.climateVulnerability;
+      climateStress += tippingStress;
+    }
     const pollutionLevel = state.environmentalAccumulation.pollutionLevel;
     const pollutionStress = pollutionLevel * 0.3;
     const warMultiplier = region.conflictRisk > 0.5 ? 1.5 : 1.0;

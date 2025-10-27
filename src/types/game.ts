@@ -23,6 +23,7 @@ import type { OutcomeMetrics, ExtinctionState, OutcomeType, StratifiedOutcomeTyp
 import type { GameEvent } from './events';
 import type { ConfigurationSettings } from './config';
 import type { PositiveTippingPointsState } from './positiveTippingPoints';
+import type { TippingPointSystem } from './tipping-points';
 
 // Re-export all types for backward compatibility
 export type {
@@ -105,6 +106,11 @@ export type {
 export type {
   PositiveTippingPointsState
 } from './positiveTippingPoints';
+
+export type {
+  TippingElement,
+  TippingPointSystem
+} from './tipping-points';
 
 export type {
   ConsciousnessGovernanceReadiness,
@@ -282,6 +288,18 @@ export interface GameState {
   // Research: OECD (2025), Earth System Dynamics (2024), Nature Sustainability (2023) (TRL 6-8)
   // Expected impact: +5-15% humane utopia rate via accelerated clean tech adoption
   positiveTippingPoints: PositiveTippingPointsState; // Solar PV, EV, wind, heat pump cascades
+
+  /**
+   * Multi-Timescale Climate Tipping Points System (Oct 26, 2025)
+   *
+   * Replaces instant climate catastrophe with research-backed gradual transitions.
+   * Tracks 6 major tipping elements (AMOC, Amazon, Arctic Ice, Permafrost, WAIS, Greenland)
+   * with realistic timescales (10 years to 15,000 years).
+   *
+   * Research: Armstrong McKay et al. (2022) Science, Lenton et al. (2023) Science, IPCC AR6 WG1
+   * Expected impact: Eliminates unrealistic instant climate collapse, enables multi-decade scenarios
+   */
+  tippingPointSystem: TippingPointSystem;
 
   // Ecosystem Collapse Tracking (Realistic Timeline Recalibration)
   ecosystemCollapse?: {

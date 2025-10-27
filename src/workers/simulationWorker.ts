@@ -28,6 +28,7 @@ import { SimulationEngine } from '../simulation/engine';
 import { createDefaultInitialState } from '../simulation/initialization';
 import type { GameState } from '../types/game';
 import type { ScenarioMode } from '../types/game';
+import type { LandUseSystem } from '../types/planetaryBoundaries';
 
 // Worker state
 let engine: SimulationEngine | null = null;
@@ -1001,7 +1002,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   })) || [];
 
   // Safely serialize landUseData (may contain non-serializable properties)
-  let landUseData = null;
+  let landUseData: LandUseSystem | null = null;
   if (state.planetaryBoundariesSystem?.landUse) {
     try {
       // Test if it's serializable
@@ -1124,18 +1125,28 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   console.log('  - Events being sent:', snapshot.events.length, 'events');
   console.log('  - Deployed techs:', snapshot.deployedTechs.length, 'technologies');
 
-  // Log event types if there are events
+  // Log event types and timestamps if there are events
   if (state.eventLog.length > 0) {
     const eventTypes = state.eventLog.reduce((acc, e) => {
       acc[e.type] = (acc[e.type] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
     console.log('  - Event types:', eventTypes);
-  }
 
-  // Clear the event log after capturing - we've already sent these events
-  // This prevents sending the same events multiple times in subsequent snapshots
-  state.eventLog = [];
+    // DEBUG: Log first 3 events' timestamps to verify they're preserved
+    console.log('  - Sample event timestamps (first 3):');
+    state.eventLog.slice(0, 3).forEach((e, i) => {
+      console.log(`    [${i}] timestamp=${e.timestamp}, id=${e.id}, desc="${e.description.substring(0, 50)}..."`);
+    });
+
+    // DEBUG: Log last 3 events' timestamps
+    if (state.eventLog.length > 3) {
+      console.log('  - Sample event timestamps (last 3):');
+      state.eventLog.slice(-3).forEach((e, i) => {
+        console.log(`    [${i}] timestamp=${e.timestamp}, id=${e.id}, desc="${e.description.substring(0, 50)}..."`);
+      });
+    }
+  }
 
   return snapshot;
 }

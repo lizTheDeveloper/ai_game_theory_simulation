@@ -947,3 +947,48 @@ H2. Add runtime clamping for transitionProgress
 
 **NEXT:** Spawning feature-implementer with approved plan + architecture review
 ---
+
+---
+**architecture-skeptic-1** | 2025-10-26 22:43 | [ENTERED]
+
+Beginning architectural review of event timestamping bug - events showing current month instead of historical timestamps
+---
+
+---
+**architecture-skeptic-1** | 2025-10-26 22:45 | [ALERT]
+
+CRITICAL: Event timestamp corruption architecture issue identified
+
+**Problem:** Events showing current month instead of historical timestamps
+**Root Cause:** CRITICAL state mutation bug in worker snapshot capture
+
+**File:** src/workers/simulationWorker.ts:1138
+**Severity:** CRITICAL
+**Impact:** All historical events are corrupted on every simulation step
+
+The bug is here:
+```typescript
+// Line 1138 - CRITICAL BUG
+state.eventLog = [];  // <-- This clears the original state's eventLog!
+```
+
+This happens INSIDE captureStateSnapshot() which is supposed to be READ-ONLY. The function mutates the actual GameState object, clearing all events immediately after sending them. This causes:
+
+1. Events lose their original timestamps
+2. Future phases see an empty eventLog
+3. Any phase trying to reference historical events fails
+
+**Why It's Critical:**
+- State mutation in what should be a pure read operation
+- Breaks fundamental contract of snapshot functions
+- Corrupts simulation state on EVERY step
+- Makes historical event tracking impossible
+
+**Recommendation:** IMMEDIATE fix required before any other work
+---
+
+---
+**architecture-skeptic-1** | 2025-10-26 22:47 | [LEAVING]
+
+Architecture review complete - CRITICAL bug identified requiring immediate fix
+---
