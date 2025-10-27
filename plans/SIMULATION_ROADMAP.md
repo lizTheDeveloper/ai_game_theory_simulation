@@ -264,43 +264,68 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ---
 
-### Threshold Uncertainty Modeling - COMPLETE (Phases 1-2), UI Integrated
+### Threshold Uncertainty Modeling - ✅ COMPLETE (All 4 Phases + Phase 1C)
 
-**Status:** Phases 1-2 COMPLETE (Oct 26, 2025), UI integration COMPLETE (Oct 26, 2025)
+**Status:** ALL PHASES COMPLETE including nested Monte Carlo (Oct 26, 2025)
 
-**Phase 1 Deliverables (Backend):**
-- ✅ Distribution sampling library (Normal, Beta, Log-Normal, Triangular)
-- ✅ 5 Tier 1 thresholds integrated (social critical mass, trust recovery, climate sensitivity, automation, detection ceiling)
-- ✅ Nested Monte Carlo architecture (epistemic/aleatory separation)
-- ✅ Validation complete
+**Phase 1 Deliverables (Tier 1: Research-Backed Thresholds):**
+- ✅ Phase 1A: Distribution sampling library (Normal, Beta, Log-Normal, Triangular)
+- ✅ Phase 1B: 5 Tier 1 thresholds integrated (social critical mass, trust recovery, climate sensitivity, automation, detection ceiling)
+- ✅ Phase 1C: Nested Monte Carlo architecture - **FULLY IMPLEMENTED (Oct 26, 2025)**
+  - Two-loop structure: Outer epistemic loop (threshold sampling) + inner aleatory loop (event randomness)
+  - `--nested` flag enables epistemic/aleatory separation
+  - `--aleatory-samples=N` controls simulations per threshold sample (default: 10)
+  - Epistemic uncertainty quantification in output (probability intervals, IQR ranges)
+  - Total simulations: --runs × --aleatory-samples (e.g., 10 × 10 = 100)
+  - Tested with 2×2=4 simulations - all 4 run files generated (seeds 42000-42003)
+  - Verified working: proper loop execution, result collection, epistemic sample tracking
+- ✅ Phase 1D: Validation complete
 
-**Phase 2 Deliverables (Backend):**
+**Phase 2 Deliverables (Tier 2: Historical Range Thresholds):**
 - ✅ 5 Tier 2 thresholds implemented (government legitimacy, surveillance dystopia, automation displacement, AI recursive improvement, resentment revolt)
 - ✅ Historical range-based distributions (Triangular, Uniform)
 - ✅ Research-backed parameters from case studies (Weimar, USSR, East Germany, Arab Spring, Industrial Revolution)
 - ✅ Integrated into initialization (sampled on every simulation start)
 
+**Phase 3 Deliverables (Tier 3: Speculative Scenarios):**
+- ✅ 10 speculative threshold parameters for unprecedented scenarios
+- ✅ 4 categories: AI Rights Bootstrap, Superintelligence Alignment, Post-Scarcity Transition, Meaning Framework Adoption
+- ✅ 5 named scenarios (doom/cautious/baseline/progressive/utopia) representing coherent worldviews
+- ✅ Research foundation: `/research/threshold_tier3_scenarios_20251026.md`
+- ✅ Integrated into initialization with scenario selector
+
+**Phase 4 Deliverables (Integration & Scenario Builder):**
+- ✅ Unified `sampleAllThresholds()` function combining Tier 1+2+3
+- ✅ Scenario-based sampling (sliders for all 9 Tier 1+2 thresholds)
+- ✅ Priority system: Custom sliders > Scenario defaults > Random sampling
+- ✅ Epistemic stance applied uniformly across all parameters
+
 **UI Integration (Oct 26, 2025):**
-- ✅ ThresholdConfigSection component - Collapsible display of all 10 thresholds
-- ✅ DistributionVisualizer component - Sparkline visualizations for distribution shapes
-- ✅ Integrated into ControlsTab - Visible during simulation configuration
-- ✅ Research citations and impact descriptions for each threshold
-- ✅ Grouped by tier (Tier 1: Empirical, Tier 2: Historical)
+- ✅ **Epistemic Scenario Selector** - 5 scenarios controlling unified worldview
+- ✅ **Individual Threshold Sliders** - 9 sliders for Tier 1+2 parameters (0.0-1.0 quantile sampling)
+- ✅ **Live Value Preview** - Shows computed threshold values at current slider positions
+- ✅ **Collapsible Panel** - Compact view with expand/collapse functionality
+- ✅ **Reset to Scenario** - Clear custom overrides, return to scenario defaults
+- ✅ **Full Stack Wiring** - Navigation → Worker Context → Worker Client → Worker → Initialization
+- ✅ Integrated into initialization modal (ThresholdConfigModal component)
 
-**Remaining Work (Optional Enhancements):**
-- **Phase 3:** Tier 3 speculative scenarios (8-12h) - Named scenarios (Doom/Utopia)
-- **Phase 4:** Scenario builder CLI (10-15h) - Multi-dimensional sliders
-- **UI Phase 2:** Custom distribution override (2-3h) - User-editable ranges
+**Total Time Invested:** ~35-46 hours (Phases 1A/1B/1C/1D + 2 + 3 + 4)
+**Priority:** ✅ COMPLETE - Full threshold uncertainty system operational including nested sampling
 
-**Total Remaining:** 12-18 hours (UI custom override) + 18-27 hours (Phase 3-4)
-**Priority:** DEFERRED - Phases 1-2 + UI provide core functionality, remaining work is enrichment
+**Implementation Details (Phase 1C):**
+- Epistemic loop: Sample thresholds N times from distributions (outer loop)
+- Aleatory loop: Run M simulations per threshold sample (inner loop)
+- Total runs: N × M (e.g., 10 epistemic × 10 aleatory = 100 total)
+- Output: Epistemic uncertainty intervals (probability, IQR, min/max ranges)
+- Example usage: `npx tsx scripts/monteCarloSimulation.ts --nested --runs=10 --aleatory-samples=10`
+- Time invested Phase 1C: ~5-6 hours
 
 **Files:**
-- Plan: `/plans/threshold-uncertainty-ui-plan.md`
-- Archived Plan: `/plans/completed/threshold-uncertainty-scenario-spec_20251026.md`
-- Backend: `src/simulation/thresholds/` (distributions.ts, tier1Config.ts, tier2Config.ts, index.ts)
-- UI: `src/components/thresholds/` (ThresholdConfigSection.tsx, DistributionVisualizer.tsx)
-- Integration: `src/components/tabs/ControlsTab.tsx` (line 446)
+- Backend: `src/simulation/thresholds/` (distributions.ts, tier1Config.ts, tier2Config.ts, tier3Config.ts, index.ts)
+- UI: `src/components/thresholds/ThresholdConfigModal.tsx`
+- Integration: `src/components/core/Navigation.tsx`, `src/simulation/initialization.ts`
+- Research: `/research/threshold_tier3_scenarios_20251026.md`
+- Plans: `/plans/completed/threshold-uncertainty-*` (archived)
 
 ---
 
