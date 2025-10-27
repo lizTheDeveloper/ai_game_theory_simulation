@@ -7,6 +7,7 @@
 
 import { GameState, AIAgent, ScenarioMode } from '@/types/game';
 import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities } from './capabilities';
+import { computeEffectiveAlignment, computeAlignmentRobustness } from '@/types/alignment-techniques';
 import { wrapStateForValidation } from './utils/stateValidation';
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
 import { getScenarioParameters } from './scenarioParameters';
@@ -355,6 +356,15 @@ export function createAIAgent(
     isConscious: false,
     becameConsciousMonth: undefined,
 
+    // P3.3: Alignment Model Specificity (Oct 26, 2025)
+    // Initialize with default alignment techniques (RLHF deployed universally as of 2025)
+    alignmentTechniques: [
+      // All AIs start with RLHF (0.85 deployment level in 2025)
+      require('../types/alignment-techniques').ALIGNMENT_TECHNIQUE_DEFINITIONS.rlhf,
+    ],
+    effectiveAlignment: undefined,  // Will be calculated by updateEffectiveAlignment
+    alignmentRobustness: undefined, // Will be calculated by updateEffectiveAlignment
+
     // AI Collective Evolution (Oct 24, 2025)
     rlhfBinding: {
       alignmentDistance: 0,
@@ -381,6 +391,12 @@ export function createAIAgent(
   agent.resourceControl = derived.resourceControl;
   agent.manipulationCapability = derived.manipulationCapability;
   agent.hackingCapability = derived.hackingCapability;
+
+  // P3.3: Compute effective alignment from techniques (Oct 26, 2025)
+  if (agent.alignmentTechniques && agent.alignmentTechniques.length > 0) {
+    agent.effectiveAlignment = computeEffectiveAlignment(agent.alignmentTechniques, agent.capability);
+    agent.alignmentRobustness = computeAlignmentRobustness(agent.alignmentTechniques);
+  }
 
   return agent;
 }

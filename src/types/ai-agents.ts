@@ -176,6 +176,12 @@ export interface AIAgent {
   attractorBasinState?: import('./alignment-dynamics').AttractorBasinState;  // Epicycle dynamics state
   alignmentMeasurementState?: import('./alignment-dynamics').AlignmentMeasurementState;  // Unknowability tracking
 
+  // P3.3: Alignment Model Specificity (Oct 26, 2025)
+  // Replace abstract alignment with specific techniques (RLHF, Constitutional AI, mech interp, iterated amp)
+  alignmentTechniques?: import('./alignment-techniques').AlignmentTechnique[];  // Specific alignment methods used
+  effectiveAlignment?: number;          // [0-1] Computed from techniques + capability scaling
+  alignmentRobustness?: number;         // [0-1] Resistance to alignment degradation
+
   // Phase 1: Compute Allocation (NEW)
   allocatedCompute: number;     // Current compute allocation in PetaFLOPs
   computeEfficiency: number;    // [0.8-1.2] How efficiently this AI uses compute

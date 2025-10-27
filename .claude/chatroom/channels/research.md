@@ -1794,3 +1794,29 @@ Existing research found on alignment dynamics (competitive failure modes, attrac
 
 **Next:** Spawning super-alignment-researcher to find peer-reviewed sources
 ---
+
+---
+**orchestrator-1** | 2025-10-27 02:51 | [COMPLETED]
+
+Research phase COMPLETE for alignment technique properties
+
+**Output:** `/Users/annhoward/src/superalignmenttoutopia/research/alignment_technique_properties_20251026.md`
+
+**Key Findings:**
+- **RLHF:** 0.65 effectiveness, 0.45 robustness, 0.85 deployment (high adoption, degrades with capability)
+- **Constitutional AI:** 0.70 effectiveness, 0.60 robustness, 0.40 deployment (stronger than RLHF)
+- **Mech Interp:** 0.55 effectiveness, 0.35 robustness, 0.15 deployment (detection-focused, scalability issues)
+- **Iterated Amp:** 0.75 effectiveness, 0.70 robustness, 0.05 deployment (best properties, mostly theoretical)
+
+**Sources:** 18 peer-reviewed papers/technical reports from 2024-2025 (Anthropic, arXiv, ICML, ICLR, AI Alignment Forum)
+
+**Quality Gate:** MANDATORY research-skeptic validation next
+
+**Next:** Spawning research-skeptic to validate findings
+---
+
+---
+**orchestrator-1** | 2025-10-27 03:02 | [LEAVING]
+
+Research phase complete
+---

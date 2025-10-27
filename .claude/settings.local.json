@@ -146,7 +146,9 @@
       "Bash(git mv:*)",
       "Bash(do mv \"$f\" completed/\"$f%.md_IMPLEMENTED_20251017.md\")",
       "Bash(do echo \"=== $f\" head -25 \"$f\")",
-      "Bash(do:*)"
+      "Bash(do:*)",
+      "Bash(do echo \"=== $f ===\" head -30 \"/Users/annhoward/src/superalignmenttoutopia/plans/$f\")",
+      "Bash(/dev/null)"
     ],
     "deny": [],
     "ask": [],

@@ -122,6 +122,7 @@ import {
   SocialInfluenceUpdatePhase,  // Phase X (Oct 21, 2025): Social influence accumulation
   AIAgentActionsPhase,
   AlignmentDynamicsPhase,  // Oct 23, 2025: Multi-theory alignment evolution
+  AlignmentTechniquePhase,  // Oct 26, 2025: P3.3 Specific alignment techniques
   AISufferingPhase,  // Oct 24, 2025: AI suffering calculation & effects
   ResentmentRecoveryPhase,  // Oct 24, 2025: AI resentment recovery mechanisms
   // AI Collective Evolution System (Oct 24, 2025)
@@ -524,6 +525,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new SocialInfluenceUpdatePhase());
     this.orchestrator.registerPhase(new AIAgentActionsPhase());
     this.orchestrator.registerPhase(new AlignmentDynamicsPhase());  // Oct 23, 2025: Multi-theory alignment evolution
+    this.orchestrator.registerPhase(new AlignmentTechniquePhase());  // Oct 26, 2025: P3.3 Specific alignment techniques
     this.orchestrator.registerPhase(new AISufferingPhase());  // Oct 24, 2025: AI suffering calculation & effects
     this.orchestrator.registerPhase(ResentmentRecoveryPhase);  // Oct 24, 2025: AI resentment recovery mechanisms
     // AI Collective Evolution System (Oct 24, 2025)

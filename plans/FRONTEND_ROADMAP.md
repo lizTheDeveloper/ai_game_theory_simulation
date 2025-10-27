@@ -6,6 +6,38 @@
 **Design System:** `/designs/` (Elysium-inspired far-future aesthetic)
 **Architecture Review:** `reviews/dashboard_architecture_20251022.md` (7 CRITICAL issues addressed)
 
+**🗺️ Return to Master Roadmap:** `/plans/MASTER_IMPLEMENTATION_ROADMAP.md`
+
+---
+
+## 🎮 God Mode UI System
+
+**Comprehensive manual control interface for all simulation decisions**
+
+**Status:** Planning Phase (Created Oct 27, 2025)
+**Master Plan:** `/plans/god-mode-ui-master-plan.md`
+**Supporting Plans:**
+- `/plans/god-mode-ui-architecture.md` - Technical architecture
+- `/plans/god-mode-decision-inventory.md` - Complete list of all automated decisions
+- `/plans/god-mode-implementation-phases.md` - Phased implementation strategy
+
+**Overview:**
+Create a comprehensive "God Mode" UI that exposes ALL automated simulation decisions as manual controls, allowing the user to:
+- Override government policy decisions
+- Control individual AI agent actions
+- Set society priorities and responses
+- Adjust organizational strategies
+- Intervene in any phase's automated logic
+- See what each actor is prioritizing
+- Make real-time decisions during simulation
+
+**Integration with Dashboard:**
+God Mode UI will be accessible from the main dashboard with per-phase control panels. Implementation will follow dashboard foundation (Phase 0) completion.
+
+---
+
+## 📊 Dashboard Visualization System
+
 ---
 
 ## Executive Summary
