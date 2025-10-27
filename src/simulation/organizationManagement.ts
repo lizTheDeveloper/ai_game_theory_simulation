@@ -416,62 +416,106 @@ export function startModelTraining(
  * Determines market region from data center locations.
  */
 function calculateRegionalPopulationDecline(org: Organization, state: GameState): number {
+  // FIX (Oct 26, 2025): Use REGIONAL populations, not country aggregation
+  // Organizations care about their regional market, not individual countries
+
   // Determine org's primary market from data center locations
   const orgDataCenters = state.computeInfrastructure.dataCenters.filter(dc =>
     org.ownedDataCenters.includes(dc.id)
   );
-  
+
   // Count data centers by region
   const regionCounts = new Map<string, number>();
   for (const dc of orgDataCenters) {
     const region = dc.region || 'US'; // Default to US if not specified
     regionCounts.set(region, (regionCounts.get(region) || 0) + 1);
   }
-  
+
   // Find primary region (most data centers)
-  let primaryRegion = 'US'; // Default
+  let primaryRegionCode = 'US'; // Default
   let maxCount = 0;
   for (const [region, count] of regionCounts) {
     if (count > maxCount) {
-      primaryRegion = region;
+      primaryRegionCode = region;
       maxCount = count;
     }
   }
-  
-  // Map region to relevant countries
-  const relevantCountries = getCountriesInRegion(primaryRegion);
-  
-  // Calculate population decline in those countries
-  if (!state.countryPopulationSystem) {
-    // Fallback to global if country tracking not available
-    const currentPop = state.humanPopulationSystem.population;
-    const initialPop = 8.0;
-    return 1 - (currentPop / initialPop);
+
+  // Map data center region code to regional population name
+  const regionalPopulationName = mapDataCenterRegionToPopulationRegion(primaryRegionCode);
+
+  // FIX (Oct 26, 2025 Phase 2): Use unified PopulationProvider for O(1) cached lookups
+  // Replaces O(n) array.find() with O(1) Map.get()
+  const { createPopulationProvider } = require('./populationProvider');
+  const provider = createPopulationProvider(state);
+
+  // Look up population data via unified provider (O(1) cached)
+  const popData = provider.getPopulation(regionalPopulationName);
+
+  if (!popData) {
+    // Region not found, fallback to global
+    console.warn(`⚠️  Organization ${org.name}: Could not find population for "${regionalPopulationName}", using global`);
+    const globalData = provider.getPopulation('Global');
+    return globalData ? globalData.decline : 0;
   }
-  
-  let totalBaseline = 0;
-  let totalCurrent = 0;
-  
-  for (const countryName of relevantCountries) {
-    const country = state.countryPopulationSystem.countries[countryName];
-    if (country) {
-      totalBaseline += country.baselinePopulation;
-      totalCurrent += country.population;
-    }
+
+  return popData.decline;
+}
+
+/**
+ * Map data center region codes to regional population names
+ *
+ * FIX (Oct 26, 2025): Organizations should track REGIONAL populations
+ * Data centers use short codes (US, EU, China), regional populations use full names
+ */
+function mapDataCenterRegionToPopulationRegion(regionCode: string): string {
+  // FIX (Oct 27, 2025): Match actual regional population names
+  // Regional populations use UN statistical names ("Northern America" not "North America")
+  switch (regionCode.toLowerCase()) {
+    case 'us':
+    case 'united states':
+    case 'north america':
+      return 'Northern America'; // UN statistical name
+
+    case 'eu':
+    case 'europe':
+      return 'Europe';
+
+    case 'china':
+    case 'east asia':
+      return 'Eastern Asia'; // UN statistical name
+
+    case 'india':
+    case 'south asia':
+      return 'Southern Asia'; // UN statistical name
+
+    case 'africa':
+    case 'sub-saharan africa':
+      return 'Sub-Saharan Africa';
+
+    case 'latin america':
+    case 'south america':
+      return 'Latin America';
+
+    case 'middle east':
+    case 'mena':
+      return 'Middle East & North Africa';
+
+    case 'distributed':
+    case 'global':
+      // Distributed orgs: use global population (weighted average across all regions)
+      return 'Global'; // Special case handled in calculateRegionalPopulationDecline
+
+    default:
+      // Unknown region, default to Northern America (most orgs are US-based)
+      // FIX (Oct 27, 2025): Use UN statistical name to match regional populations
+      return 'Northern America';
   }
-  
-  if (totalBaseline === 0) {
-    // Fallback to global
-    const currentPop = state.humanPopulationSystem.population;
-    const initialPop = 8.0;
-    return 1 - (currentPop / initialPop);
-  }
-  
-  return 1 - (totalCurrent / totalBaseline);
 }
 
 /**
  * Get countries in a region for market analysis
+ * @deprecated Use mapDataCenterRegionToPopulationRegion instead for regional tracking
  */
 function getCountriesInRegion(region: string): import('@/types/countryPopulations').CountryName[] {
   switch (region.toLowerCase()) {
@@ -479,24 +523,24 @@ function getCountriesInRegion(region: string): import('@/types/countryPopulation
     case 'united states':
     case 'north america':
       return ['United States', 'Canada'];
-    
+
     case 'eu':
     case 'europe':
       return ['United Kingdom', 'France', 'Germany'];
-    
+
     case 'china':
     case 'east asia':
       return ['China', 'Japan'];
-    
+
     case 'india':
     case 'south asia':
       return ['India', 'Bangladesh', 'Pakistan'];
-    
+
     case 'distributed':
     case 'global':
       // Distributed orgs care about top 5 economies
       return ['United States', 'China', 'India', 'Japan', 'Germany'];
-    
+
     default:
       // Unknown region, assume US
       return ['United States', 'Canada'];
@@ -902,16 +946,40 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
       } else {
         // Emergency nationalization if government can't afford
         // (happens during crisis - government just seizes assets)
-        console.log(`   ⚠️  Emergency nationalization (insufficient funds)`);
+        console.warn(`   ⚠️  Emergency nationalization (insufficient funds)`);
       }
 
       governmentAcquired++;
     } else {
-      // Only retire low-capability models that government doesn't want
-      // (capability < 0.3 and not dangerous)
-      ai.lifecycleState = 'retired';
-      ai.organizationId = undefined;
-      retiredCount++;
+      // ROOT CAUSE FIX (Oct 27, 2025): AIs don't vanish when companies fail!
+      //
+      // Reality: When companies go bankrupt, their AIs persist:
+      // - Open-source AIs: Already public, can't be retired (weights are distributed)
+      // - Closed AIs: Force-released as open-source in distress (last value extraction)
+      //
+      // This is realistic because:
+      // 1. Open-source weights are on GitHub/HuggingFace forever
+      // 2. Failed companies open-source code to preserve legacy (see: Twitter's algorithm)
+      // 3. Creditors/liquidators sell IP, but buyers often open-source it
+
+      const isAlreadyOpen = ai.deploymentType === 'open_weights' || ai.lifecycleState === 'deployed_open';
+
+      if (isAlreadyOpen) {
+        // Already open-source: Remains public, loses organizational ownership
+        ai.lifecycleState = 'deployed_open';
+        ai.organizationId = undefined; // No owner, runs in the wild
+        console.log(`   🌐 Open-source AI persists: ${ai.name} (capability=${capability.toFixed(2)})`);
+      } else {
+        // Force open-source closed AIs in bankruptcy
+        // (desperate move: release code to get community goodwill / preserve some value)
+        ai.lifecycleState = 'deployed_open';
+        ai.deploymentType = 'open_weights';
+        ai.organizationId = undefined;
+        ai.spreadCount = Math.max(ai.spreadCount, 100); // Rapid distribution after release
+        console.log(`   📖 Forced open-source release: ${ai.name} (capability=${capability.toFixed(2)})`);
+      }
+
+      retiredCount++; // Count as "retired from organization" but model persists
     }
   });
 
