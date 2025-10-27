@@ -179,6 +179,32 @@ jobs:
             --agents feature-implementer
             --dangerously-skip-permissions
 
+      - name: Commit Agent Changes
+        id: commit
+        run: |
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if there are changes
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Changes detected - committing"
+            git add -A
+            git commit -m "feat: ${{ steps.feature.outputs.title }}
+
+            Automated implementation by feature-implementer agent
+
+            Co-Authored-By: Claude <noreply@anthropic.com>"
+
+            # Push to remote
+            git push origin "feature/${{ steps.feature.outputs.name }}"
+
+            echo "committed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes detected"
+            echo "committed=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Check Implementation Status
         id: status
         run: |
@@ -204,7 +230,7 @@ jobs:
           fi
 
       - name: Create Pull Request
-        if: steps.status.outputs.typescript == 'PASS' && steps.status.outputs.tests == 'PASS'
+        if: steps.status.outputs.typescript == 'PASS' && steps.status.outputs.tests == 'PASS' && steps.commit.outputs.committed == 'true'
         run: |
           # Get diff summary
           DIFF_SUMMARY=$(git diff origin/main...HEAD --stat)
@@ -259,17 +285,28 @@ jobs:
           script: |
             const typescript = '${{ steps.status.outputs.typescript }}';
             const tests = '${{ steps.status.outputs.tests }}';
+            const committed = '${{ steps.commit.outputs.committed }}';
 
             let body = '## 🤖 Feature Implementer - Status Update\n\n';
 
-            if (typescript === 'PASS' && tests === 'PASS') {
+            if (committed === 'false') {
+              body += '⚠️ **No Changes Made**\n\n';
+              body += 'The agent ran but did not make any file changes.\n\n';
+              body += '**Possible causes:**\n';
+              body += '- Agent hit 100-turn limit without completing\n';
+              body += '- Agent encountered errors reading files\n';
+              body += '- Task description may need clarification\n\n';
+              body += '**Action Required:** Check workflow logs or retry with label removal/re-add.\n';
+            } else if (typescript === 'PASS' && tests === 'PASS') {
               body += '✅ **Implementation Complete**\n\n';
               body += '- ✅ TypeScript compiles\n';
               body += '- ✅ Tests pass\n';
-              body += '- ✅ PR created: #TODO (link)\n\n';
+              body += '- ✅ Changes committed and pushed\n';
+              body += '- ✅ PR created (check above)\n\n';
               body += '**Next:** architecture-skeptic review will run automatically on the PR.\n';
             } else {
               body += '❌ **Implementation Failed**\n\n';
+              body += `- ${committed === 'true' ? '✅' : '❌'} Changes committed\n`;
               body += `- ${typescript === 'PASS' ? '✅' : '❌'} TypeScript compilation\n`;
               body += `- ${tests === 'PASS' ? '✅' : '❌'} Tests\n\n`;
               body += '**Action Required:** Check workflow logs and fix errors.\n';
@@ -286,7 +323,7 @@ jobs:
 
       - name: Check Continuation Need
         id: continuation
-        if: steps.status.outputs.typescript == 'PASS' && steps.status.outputs.tests == 'PASS'
+        if: steps.status.outputs.typescript == 'PASS' && steps.status.outputs.tests == 'PASS' && steps.commit.outputs.committed == 'true'
         run: |
           # Get recent commits to see what was accomplished
           RECENT_COMMITS=$(git log --oneline -10 || echo "No commits found")
