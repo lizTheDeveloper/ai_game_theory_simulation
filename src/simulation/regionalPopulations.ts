@@ -483,56 +483,25 @@ export function updateRegionalPopulations(state: GameState): void {
     region.carryingCapacity = Math.max(100, region.baselineCarryingCapacity * capacityModifier);
     region.populationPressure = region.population / region.carryingCapacity;
 
-    if (region.population > region.carryingCapacity) {
-      const overshoot = region.population - region.carryingCapacity;
-      const overshootDeaths = overshoot * 0.05; // 5% of excess dies per month
-      region.population -= overshootDeaths;
-      region.monthlyExcessDeaths += overshootDeaths;
-
-      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025 - UPDATED)
-      // FIX (Oct 26, 2025): REMOVED regional overshoot death attribution
-      // Regional overshoot deaths are already captured by the GLOBAL overshoot calculation
-      // in populationDynamics.ts lines 403-447. Adding them here caused DOUBLE-COUNTING
-      // AND a units mismatch bug (regional is in millions, global is in billions).
-      //
-      // The global calculation sums all regional populations to get total global population,
-      // then applies the same 5% overshoot mortality logic. Regional data provides nuance
-      // (specific regions hit harder), but death attribution should only happen at global level.
-      //
-      // Keeping this comment for documentation - do NOT re-add this line!
-
-      // ROOT CAUSE: Multi-factor attribution (research-backed)
-      // Same logic as global population but using regional data where available
-      // Research: IPCC AR6 (2022), Rapa Nui study (2020), Sahel 2022 analysis
-
-      // Climate contribution (using climateModifier from capacity calculation)
-      const climateContribution = Math.min(0.6, Math.max(0.2, 1.0 - climateModifier)); // 20-60%
-
-      // Resource/ecosystem contribution
-      const resourceContribution = Math.min(0.3, Math.max(0, 1.0 - resourceModifier) * 0.5);
-      const ecosystemContribution = biodiversity < 0.20 ? 0.2 : Math.min(0.2, (1.0 - ecosystemModifier) * 0.3);
-
-      // Total environmental impact
-      const environmentalImpact = Math.min(0.7, climateContribution + resourceContribution + ecosystemContribution);
-
-      // Poverty constraint (using global QoL as proxy - could be regionalized later)
-      const povertyConstraint = Math.max(0.05, Math.min(0.3, (1 - state.qualityOfLifeSystems.materialAbundance) * 0.4));
-
-      // Governance responsibility (minimum 20% floor)
-      const governanceShare = Math.max(0.2, 1.0 - environmentalImpact - povertyConstraint);
-
-      // Normalize
-      const totalShares = environmentalImpact + povertyConstraint + governanceShare;
-      const climateShare = environmentalImpact / totalShares;
-      const povertyShare = povertyConstraint / totalShares;
-      const govShare = governanceShare / totalShares;
-
-      // Apply proportional attribution (convert millions to billions)
-      const deathsInBillions = overshootDeaths / 1000;
-      pop.deathsByRootCause.climate += deathsInBillions * climateShare;
-      pop.deathsByRootCause.inequality += deathsInBillions * povertyShare;
-      pop.deathsByRootCause.social += deathsInBillions * govShare;
-    }
+    // FIX (Oct 26, 2025): REMOVED instant 5% per month overshoot death mechanic
+    //
+    // OLD BEHAVIOR (lines 486-534, removed):
+    // - if (population > carryingCapacity) → kill 5% of overshoot per month
+    // - Result: 87% population loss in 5 years (8B → 1B) - PHYSICALLY IMPOSSIBLE
+    // - No research backing for 5% per month mortality rate
+    //
+    // ACTUAL HISTORICAL FAMINE MORTALITY:
+    // - Great Irish Famine: 0.15% per month
+    // - Bengal Famine: 0.4% per month
+    // - Ethiopian Famine: 0.1% per month
+    // - Simulation rate: 10-50× too high
+    //
+    // NEW BEHAVIOR:
+    // - Famine system (FamineSystemPhase) handles food-related mortality with research backing
+    // - Carrying capacity still tracked for pressure metric
+    // - No instant death from capacity overshoot
+    //
+    // Research: research/seasonal_famine_mortality_20251026.md
 
     // === 6. TRACK CRISIS DEATHS ===
     const naturalDeaths = previousPopulation * (region.baselineDeathRate / 12);

@@ -992,3 +992,46 @@ This happens INSIDE captureStateSnapshot() which is supposed to be READ-ONLY. Th
 
 Architecture review complete - CRITICAL bug identified requiring immediate fix
 ---
+
+---
+**architecture-skeptic-1** | 2025-10-27 01:02 | [ENTERED]
+
+Beginning architectural review of event storage system - investigating timestamp corruption and IndexedDB complexity
+---
+
+---
+**architecture-skeptic-1** | 2025-10-27 01:06 | [ALERT]
+
+CRITICAL: Event timestamp corruption identified in simulation worker
+
+**Root Cause Found:** Events are NEVER included in delta updates after the first frame
+
+**File:** src/workers/simulationWorker.ts:1160-1398 (calculateDelta function)
+**Severity:** CRITICAL
+**Impact:** All events show current month instead of historical timestamps
+
+**The Bug:**
+- captureStateSnapshot() correctly extracts events with timestamps ✓
+- StateDelta interface has events? field ✓  
+- calculateDelta() NEVER adds events to returned delta ✗
+
+**Required Fix (5 lines):**
+```typescript
+// In calculateDelta(), after line 1396:
+if (current.eventLog && current.eventLog.length > 0) {
+  delta.events = currentSnapshot.events;
+}
+```
+
+**IndexedDB Assessment:** NOT the problem, works correctly, should be kept for persistence
+
+**Next:** Feature-implementer must add events to delta calculation immediately
+
+Full review: /reviews/event-storage-architecture-review-2025-10-26.md
+---
+
+---
+**architecture-skeptic-1** | 2025-10-27 01:06 | [LEAVING]
+
+Critical review complete - timestamp corruption root cause identified
+---
