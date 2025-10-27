@@ -45,6 +45,15 @@ export interface EnvironmentalAccumulation {
   // Tech: "Green Chemistry" reduces this multiplicatively (prevents future pollution)
   pollutionPreventionFactor: number;  // [0, 1] 1.0 = baseline, lower = more prevention
 
+  // === GEOENGINEERING RISKS (Oct 27, 2025) ===
+  // Research: Robock et al. (2008) - SAI could reduce Asian monsoon precipitation by 20%
+  // Research: Tilmes et al. (2013) - SAI increases polar ozone depletion risk
+  // Research: MacMartin et al. (2016) - Regional climate shifts from stratospheric intervention
+  // These risks accumulate with deployment of risky geoengineering (Stratospheric Aerosol Injection)
+  // Baseline 2025: 0 (no geoengineering deployed yet)
+  monsoonDisruptionRisk: number;     // [0, 1] Risk of disrupting Asian/African monsoons
+  ozoneDepletionRisk: number;        // [0, 1] Risk of stratospheric ozone depletion
+
   // Crisis tracking
   resourceCrisisActive: boolean;    // Has resource crisis been triggered?
   pollutionCrisisActive: boolean;   // Has pollution crisis been triggered?

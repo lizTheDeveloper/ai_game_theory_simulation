@@ -288,27 +288,28 @@ function calculateDevelopment(state: GameState): number {
   const qol = qolRaw * 100;
 
   // Survival Fundamentals (geometric mean of 4 survival dimensions, 0-1 → 0-100)
+  // FIX (Oct 27, 2025): Removed silent fallback to 50 - fail loudly if survival undefined
   const survival = state.qualityOfLifeSystems?.survivalFundamentals;
-  let survivalScore = 50;
-  if (survival) {
-    if (survival.foodSecurity === undefined) {
-      throw new Error('❌ survival.foodSecurity is undefined in calculateDevelopment:228 - initialization bug');
-    }
-    if (survival.waterSecurity === undefined) {
-      throw new Error('❌ survival.waterSecurity is undefined in calculateDevelopment:229 - initialization bug');
-    }
-    if (survival.thermalHabitability === undefined) {
-      throw new Error('❌ survival.thermalHabitability is undefined in calculateDevelopment:230 - initialization bug');
-    }
-    if (survival.shelterSecurity === undefined) {
-      throw new Error('❌ survival.shelterSecurity is undefined in calculateDevelopment:231 - initialization bug');
-    }
-    const food = Math.max(MIN_FLOOR, Math.min(1, survival.foodSecurity));
-    const water = Math.max(MIN_FLOOR, Math.min(1, survival.waterSecurity));
-    const thermal = Math.max(MIN_FLOOR, Math.min(1, survival.thermalHabitability));
-    const shelter = Math.max(MIN_FLOOR, Math.min(1, survival.shelterSecurity));
-    survivalScore = Math.pow(food * water * thermal * shelter, 1/4) * 100;
+  if (!survival) {
+    throw new Error('❌ state.qualityOfLifeSystems.survivalFundamentals is undefined in calculateDevelopment:228 - initialization bug');
   }
+  if (survival.foodSecurity === undefined) {
+    throw new Error('❌ survival.foodSecurity is undefined in calculateDevelopment:229 - initialization bug');
+  }
+  if (survival.waterSecurity === undefined) {
+    throw new Error('❌ survival.waterSecurity is undefined in calculateDevelopment:230 - initialization bug');
+  }
+  if (survival.thermalHabitability === undefined) {
+    throw new Error('❌ survival.thermalHabitability is undefined in calculateDevelopment:231 - initialization bug');
+  }
+  if (survival.shelterSecurity === undefined) {
+    throw new Error('❌ survival.shelterSecurity is undefined in calculateDevelopment:232 - initialization bug');
+  }
+  const food = Math.max(MIN_FLOOR, Math.min(1, survival.foodSecurity));
+  const water = Math.max(MIN_FLOOR, Math.min(1, survival.waterSecurity));
+  const thermal = Math.max(MIN_FLOOR, Math.min(1, survival.thermalHabitability));
+  const shelter = Math.max(MIN_FLOOR, Math.min(1, survival.shelterSecurity));
+  const survivalScore = Math.pow(food * water * thermal * shelter, 1/4) * 100;
 
   // Healthcare Quality (0-1 → 0-100)
   if (state.qualityOfLifeSystems?.healthcareQuality === undefined) {

@@ -39,4 +39,21 @@ export interface GlobalMetrics {
   // Baseline 2025: 0.10 (90%+ factory farming, minimal welfare protections)
   // Tech: "Precision Fermentation" (cell-cultured meat) and "Interspecies Communication" improve this
   animalWelfareIndex: number;           // [0,1] 0 = factory farming norm, 1 = universal welfare
+
+  // === EXISTENTIAL RISK TRACKING (Oct 27, 2025) ===
+  // Research: Ord (2020) "The Precipice" - 1/6 (16.7%) existential risk this century
+  // Research: Carlsmith (2021) - AI takeover risk by 2070: ~5%
+  // Baseline 2025: 0.10 (10% existential risk - conservative estimate)
+  catastrophicRisk: number;              // [0,1] Risk of catastrophic AI failure/takeover
+  existentialRisk: number;               // [0,1] General existential risk (nanotech, biotech, AI)
+  catastrophicRiskFromRecursion: number; // [0,1] Risk from recursive self-improvement
+  recursiveSafety: boolean;              // Whether recursive alignment safety is active
+  fusionEnabling: number;                // [0,1] Progress toward fusion enabling (0=none, 1=ready)
+
+  // === FUSION ENABLING BONUSES (Oct 27, 2025) ===
+  // Derived from fusionEnabling progress (prerequisite techs: Fusion Materials, Fusion Plasma Control)
+  // Each provides 0.33, max 1.0 from both → bonuses scale with progress
+  fusionResearchBonus: number;           // [0,2] Research speed multiplier (2x at 100% enabling)
+  fusionDeploymentCostReduction: number; // [0,0.4] Deployment cost reduction (40% at 100%)
+  fusionDeploymentTimeReduction: number; // [0,0.3] Deployment time reduction (30% at 100%)
 }

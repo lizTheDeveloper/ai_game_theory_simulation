@@ -1878,10 +1878,11 @@ function applyRegionalEffects(
           
         case 'catastrophicRiskReduction':
           // Reduce catastrophic AI risk
+          // ROOT CAUSE FIX (Oct 27, 2025): Field now properly initialized in GlobalMetrics
           if (gameState.globalMetrics) {
-            (gameState.globalMetrics as any).catastrophicRisk = assertFinite(Math.max(
+            gameState.globalMetrics.catastrophicRisk = assertFinite(Math.max(
               0,
-              (gameState.globalMetrics as any).catastrophicRisk * (1 - value)
+              gameState.globalMetrics.catastrophicRisk * (1 - value)
             ), {
         location: 'applyRegionalEffects:catastrophicRiskReduction',
         valueName: 'catastrophicRisk',
@@ -1893,8 +1894,9 @@ function applyRegionalEffects(
         case 'recursiveSafety':
           // Recursive alignment prevents capability drift during self-improvement
           // Reduces misalignment risk when AIs improve their own capabilities
+          // ROOT CAUSE FIX (Oct 27, 2025): Field now properly initialized in GlobalMetrics
           if (gameState.globalMetrics) {
-            (gameState.globalMetrics as any).recursiveSafety = true;
+            gameState.globalMetrics.recursiveSafety = true;
 
             // Reduce alignment drift rate for all AI agents
             if (gameState.aiAgents) {
@@ -1920,24 +1922,16 @@ function applyRegionalEffects(
               });
             }
 
-            // Initialize catastrophic risk tracker if not present
-            if (!('catastrophicRiskFromRecursion' in (gameState.globalMetrics as any))) {
-              (gameState.globalMetrics as any).catastrophicRiskFromRecursion = assertFinite(0.2, {
-                location: 'applyRegionalEffects:recursiveSafety',
-                valueName: 'catastrophicRiskFromRecursion',
-                month: gameState.currentMonth
-              });
-            }
-
             // Reduce catastrophic risk from recursive self-improvement
-            (gameState.globalMetrics as any).catastrophicRiskFromRecursion = assertFinite(Math.max(
+            // ROOT CAUSE FIX (Oct 27, 2025): Field now properly initialized in GlobalMetrics
+            gameState.globalMetrics.catastrophicRiskFromRecursion = assertFinite(Math.max(
               0,
-              (gameState.globalMetrics as any).catastrophicRiskFromRecursion * (1 - value * 0.8)
+              gameState.globalMetrics.catastrophicRiskFromRecursion * (1 - value * 0.8)
             ), {
-        location: 'applyRegionalEffects:recursiveSafety',
-        valueName: 'catastrophicRiskFromRecursion',
-        month: gameState.currentMonth
-      });
+              location: 'applyRegionalEffects:recursiveSafety',
+              valueName: 'catastrophicRiskFromRecursion',
+              month: gameState.currentMonth
+            });
           }
           break;
           
@@ -1983,70 +1977,93 @@ function applyRegionalEffects(
         // ========== RISKY EFFECTS (Geoengineering, etc) ==========
         case 'riskMonsoonsDisrupt':
           // Risk of disrupting monsoons (geoengineering side effect)
+          // ROOT CAUSE FIX (Oct 27, 2025): Field now properly initialized in EnvironmentalAccumulation
+          // Research: Robock et al. (2008) - SAI could reduce Asian monsoon precipitation by 20%
           if (gameState.environmentalAccumulation) {
-            (gameState.environmentalAccumulation as any).monsoonDisruptionRisk = 
-              (gameState.environmentalAccumulation as any).monsoonDisruptionRisk + value;
+            gameState.environmentalAccumulation.monsoonDisruptionRisk = assertFinite(
+              gameState.environmentalAccumulation.monsoonDisruptionRisk + value,
+              {
+                location: 'applyRegionalEffects:riskMonsoonsDisrupt',
+                valueName: 'monsoonDisruptionRisk',
+                month: gameState.currentMonth
+              }
+            );
           }
           break;
-          
+
         case 'riskOzoneDepletion':
           // Risk of ozone depletion (aerosol side effect)
+          // ROOT CAUSE FIX (Oct 27, 2025): Field now properly initialized in EnvironmentalAccumulation
+          // Research: Tilmes et al. (2013) - SAI increases polar ozone depletion risk
           if (gameState.environmentalAccumulation) {
-            (gameState.environmentalAccumulation as any).ozoneDepletionRisk = 
-              (gameState.environmentalAccumulation as any).ozoneDepletionRisk + value;
+            gameState.environmentalAccumulation.ozoneDepletionRisk = assertFinite(
+              gameState.environmentalAccumulation.ozoneDepletionRisk + value,
+              {
+                location: 'applyRegionalEffects:riskOzoneDepletion',
+                valueName: 'ozoneDepletionRisk',
+                month: gameState.currentMonth
+              }
+            );
           }
           break;
           
         case 'riskDeadZones':
           // Risk of creating ocean dead zones (upwelling side effect)
+          // ROOT CAUSE FIX (Oct 27, 2025): Field now properly initialized in OceanAcidificationSystem
+          // Research: Oschlies et al. (2010) - Artificial upwelling can create hypoxic zones
           if (gameState.oceanAcidificationSystem) {
-            (gameState.oceanAcidificationSystem as any).deadZoneRisk = 
-              (gameState.oceanAcidificationSystem as any).deadZoneRisk + value;
+            gameState.oceanAcidificationSystem.deadZoneRisk = assertFinite(
+              gameState.oceanAcidificationSystem.deadZoneRisk + value,
+              {
+                location: 'applyRegionalEffects:riskDeadZones',
+                valueName: 'deadZoneRisk',
+                month: gameState.currentMonth
+              }
+            );
           }
           break;
           
         case 'existentialRisk':
           // General existential risk increase (nanotech, brain upload, etc.)
+          // ROOT CAUSE FIX (Oct 27, 2025): Field now properly initialized in GlobalMetrics
           if (gameState.globalMetrics) {
-            (gameState.globalMetrics as any).existentialRisk = 
-              (gameState.globalMetrics as any).existentialRisk + value;
+            gameState.globalMetrics.existentialRisk = assertFinite(
+              gameState.globalMetrics.existentialRisk + value,
+              {
+                location: 'applyRegionalEffects:existentialRisk',
+                valueName: 'existentialRisk',
+                month: gameState.currentMonth
+              }
+            );
           }
           break;
           
         case 'fusionEnabling':
           // Fusion prerequisite techs (materials, plasma control) accelerate fusion research
           // This is tracked cumulatively - two prerequisite techs give max benefit
+          // ROOT CAUSE FIX (Oct 27, 2025): Fields now properly initialized in GlobalMetrics
           if (gameState.globalMetrics) {
-            // Initialize on first use
-            if (!('fusionEnabling' in (gameState.globalMetrics as any))) {
-              (gameState.globalMetrics as any).fusionEnabling = assertFinite(0, {
-                location: 'applyRegionalEffects:fusionEnabling',
-                valueName: 'fusionEnabling',
-                month: gameState.currentMonth
-              });
-            }
-
-            (gameState.globalMetrics as any).fusionEnabling += value;
+            gameState.globalMetrics.fusionEnabling += value;
 
             // Track cumulative fusion enabling progress (max 1.0 from two prerequisite techs)
-            const fusionProgress = assertFinite(Math.min(1.0, (gameState.globalMetrics as any).fusionEnabling), {
-        location: 'applyRegionalEffects:fusionEnabling',
-        valueName: 'value',
-        month: gameState.currentMonth
-      });
+            const fusionProgress = assertFinite(Math.min(1.0, gameState.globalMetrics.fusionEnabling), {
+              location: 'applyRegionalEffects:fusionEnabling',
+              valueName: 'fusionProgress',
+              month: gameState.currentMonth
+            });
 
             // Store fusion research and deployment bonuses that will be applied by government/research phases
-            (gameState.globalMetrics as any).fusionResearchBonus = assertFinite(fusionProgress * 2.0, {
+            gameState.globalMetrics.fusionResearchBonus = assertFinite(fusionProgress * 2.0, {
               location: 'applyRegionalEffects:fusionEnabling',
               valueName: 'fusionResearchBonus',
               month: gameState.currentMonth
             });
-            (gameState.globalMetrics as any).fusionDeploymentCostReduction = assertFinite(fusionProgress * 0.4, {
+            gameState.globalMetrics.fusionDeploymentCostReduction = assertFinite(fusionProgress * 0.4, {
               location: 'applyRegionalEffects:fusionEnabling',
               valueName: 'fusionDeploymentCostReduction',
               month: gameState.currentMonth
             });
-            (gameState.globalMetrics as any).fusionDeploymentTimeReduction = assertFinite(fusionProgress * 0.3, {
+            gameState.globalMetrics.fusionDeploymentTimeReduction = assertFinite(fusionProgress * 0.3, {
               location: 'applyRegionalEffects:fusionEnabling',
               valueName: 'fusionDeploymentTimeReduction',
               month: gameState.currentMonth

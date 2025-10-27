@@ -40,7 +40,15 @@ export interface OceanAcidificationSystem {
   
   /** Fish-dependent population impact [0,1] - 3 billion people affected */
   fishDependentImpact: number;
-  
+
+  // === GEOENGINEERING RISKS (Oct 27, 2025) ===
+  // Research: Oschlies et al. (2010) - Artificial upwelling can create hypoxic zones
+  // Research: Williamson et al. (2012) - Ocean fertilization increases dead zone risk
+  // Dead zones = low-oxygen areas where marine life cannot survive
+  // Baseline 2025: 0 (no artificial upwelling deployed yet)
+  // Risk increases with deployment of "Artificial Upwelling" technology
+  deadZoneRisk: number; // [0,1] Risk of creating oxygen-depleted dead zones
+
   // === CRISIS FLAGS ===
   
   /** Boundary breached (aragonite < 0.80) */

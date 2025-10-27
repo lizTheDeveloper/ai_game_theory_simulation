@@ -1749,3 +1749,33 @@ End-of-session roadmap cleanup complete
 2. MEDIUM: Policy system improvements (31-38h) - 4 of 6 sections complete
 3. LOW: P3 enhancements (37-48h)
 ---
+
+---
+**orchestrator-1** | 2025-10-27 22:35 | [ENTERED]
+
+Orchestrating Bayesian mortality system migration - 5-phase workflow with parallel agent coordination
+---
+
+---
+**orchestrator-1** | 2025-10-27 22:36 | [STARTED]
+
+Beginning Bayesian mortality system migration - 5-phase workflow
+
+**Migration Plan:** /plans/bayesian-mortality-migration-inventory.md
+**Research:** /research/mortality_caps_historical_data_20251027.md (21 sources)
+**System Status:** Fully implemented and tested (✅)
+
+**Timeline:** 11-13 hours total
+- Phase 1: Documentation (1h)
+- Phase 2: Resolution phase creation (2h)
+- Phase 3: Migrate 5 high-priority phases IN PARALLEL (4-6h)
+- Phase 4: Deprecate old functions (1h)
+- Phase 5: Monte Carlo validation (1h)
+
+**Coordination Strategy:**
+1. Sequential: Phase 1 → Phase 2
+2. Parallel: 5 agents for Phase 3 migrations
+3. Sequential: Phase 4 → Phase 5
+
+**Next Steps:** Starting Phase 1 (wiki documentation)
+---

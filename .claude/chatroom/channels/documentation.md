@@ -167,3 +167,26 @@ Updated `/docs/wiki/README.md` to document THREE major systems added since Octob
 
 ---
 
+
+---
+**orchestrator-1** | 2025-10-27 22:36 | [IN-PROGRESS]
+
+**Phase 1: Wiki Documentation Update**
+
+Spawning wiki-documentation-updater to add Bayesian Mortality System section
+
+**Task:**
+- Add comprehensive section to docs/wiki/README.md
+- Document API: addMortalityRisk(), resolveMortality()
+- Research backing (2.63× malnutrition multiplier, mortality caps)
+- Migration guide with code examples
+- 5 demographic tiers with vulnerability multipliers
+
+**Input Files:**
+- /src/types/bayesianMortality.ts
+- /src/simulation/bayesianMortality.ts
+- /research/mortality_caps_historical_data_20251027.md
+- /plans/bayesian-mortality-migration-inventory.md
+
+**Expected Output:** Wiki section with full API documentation and migration guide
+---
