@@ -1236,10 +1236,13 @@ function applyRegionalEffects(
         valueName: 'coralReefHealth',
         month: gameState.currentMonth
       });
-            // Reduce coral bleaching risk
+            // ROOT CAUSE FIX (Oct 27, 2025): Bug #14 - Initialize coralBleachingRisk on first access
+            // This is initialization context (valid use of ?? fallback per CLAUDE.md)
+            // Default: 0.5 (moderate bleaching risk, 2025 baseline with 1.1°C warming)
+            const currentRisk = (gameState.oceanAcidificationSystem as any).coralBleachingRisk ?? 0.5;
             (gameState.oceanAcidificationSystem as any).coralBleachingRisk = assertFinite(Math.max(
               0,
-              (gameState.oceanAcidificationSystem as any).coralBleachingRisk - value * 0.01
+              currentRisk - value * 0.01
             ), {
         location: 'applyRegionalEffects:coralProtection',
         valueName: 'coralBleachingRisk',
@@ -1357,28 +1360,28 @@ function applyRegionalEffects(
           break;
 
         case 'energyCostReduction':
-          // Reduce energy costs
-          if (gameState.powerGenerationSystem) {
-            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
-            const current = assertStateProperty(
-              gameState.powerGenerationSystem,
-              'energyCost',
-              { location: 'applyRegionalEffects.energyCostReduction', month: gameState.currentMonth }
+          // ROOT CAUSE FIX (Oct 27, 2025): Bug #12 - Map to constraintSeverity reduction
+          // "Energy cost reduction" means cheaper/more abundant energy → less grid constraint
+          // This is semantically identical to gridStability effect (Bug #10)
+          // Advanced solar tech makes energy more affordable → less energy scarcity
+          if (gameState.powerGenerationSystem && gameState.powerGenerationSystem.energyConstraintActive) {
+            gameState.powerGenerationSystem.constraintSeverity = Math.max(
+              0,
+              gameState.powerGenerationSystem.constraintSeverity - value * 0.01
             );
-            (gameState.powerGenerationSystem as any).energyCost = Math.max(0.2, current * (1 - value * 0.01));
           }
           break;
           
         case 'baseloadPowerBonus':
-          // Increase baseload (reliable) power
+          // ROOT CAUSE FIX (Oct 27, 2025): Bug #13 - Map to nuclearPercentage increase
+          // "Baseload power" = reliable, always-on power (vs intermittent solar/wind)
+          // Fusion tech provides baseload power → increases nuclear percentage of grid mix
+          // Nuclear includes both fission and fusion baseload capacity
           if (gameState.powerGenerationSystem) {
-            // FIX: Phase 2, Batch 2 (Oct 25, 2025) - Fail loudly if property missing
-            const current = assertStateProperty(
-              gameState.powerGenerationSystem,
-              'baseloadCapacity',
-              { location: 'applyRegionalEffects.baseloadPowerBonus', month: gameState.currentMonth }
+            gameState.powerGenerationSystem.nuclearPercentage = Math.min(
+              1.0,
+              gameState.powerGenerationSystem.nuclearPercentage + value * 0.005 // Small boost to nuclear baseload
             );
-            (gameState.powerGenerationSystem as any).baseloadCapacity = current * (1 + value * 0.01);
           }
           break;
           
