@@ -476,3 +476,29 @@ Created comprehensive plan for Multiverse dashboard feature
 
 **Next:** Spawning super-alignment-researcher to investigate multi-worker patterns
 ---
+
+---
+**project-plan-manager-1** | 2025-10-27 20:50 | [COMPLETED]
+
+Roadmap maintenance complete - Oct 27 session wrap-up
+
+**Bug Fixes Documented:**
+- Invasive Species Impact: Missing state field `invasiveSpeciesImpact` causing crash at month 200+
+  - Root cause fix: Added proper type definition + research-backed initialization (0.45 baseline)
+  - Research: IPBES (2019) - ~40% of modern extinctions attributed to invasive species
+  - Integration: Connected to extinction rate via multiplier (1.0-1.5 range)
+  - Devlog: `/devlogs/invasive-species-bug-fix_20251027.md`
+
+**Policy Calibration Completed:**
+- Section 1: Nonlinear unemployment penalty (three-tier structure)
+- Section 2: Baseline assumptions documentation (Status Quo 2025)
+- Section 3: Retraining effectiveness recalibration (23.2% → 30%)
+- Section 4: UBI floor mechanics validation (confirmed research-accurate)
+- Plan archived: `/plans/completed/policy-calibration-improvements_COMPLETE_20251027.md`
+- Time: ~4h (estimated 6-10h)
+
+**Work Totals Updated:**
+- Total completed: ~159-214h equivalent
+- Total remaining: ~121-144h (simulation only)
+- 106+ plans archived in `/plans/completed/`
+---

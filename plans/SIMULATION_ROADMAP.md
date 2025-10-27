@@ -24,11 +24,13 @@
 
 **Recently Completed (Oct 27, 2025):**
 1. ✅ **TIER 2 Superalignment Interventions** (Oct 27) - 8 interventions with epistemic uncertainty modeling
-2. ✅ **Technology Tree Bugs #6-11** (Oct 27) - AI bankruptcy persistence, grid batteries, pollinators
-3. ✅ **Regional → Global Aggregation** (Oct 27, ALL 5 PHASES COMPLETE) - Population drift bug fixed, architecture pattern established
+2. ✅ **Policy Calibration Improvements** (Oct 27) - Nonlinear unemployment penalty, retraining effectiveness (30%), UBI validation
+3. ✅ **Invasive Species Impact Bug** (Oct 27) - Root cause fix with research-backed initialization (IPBES 2019, 0.45 baseline)
+4. ✅ **Technology Tree Bugs #6-11** (Oct 27) - AI bankruptcy persistence, grid batteries, pollinators
+5. ✅ **Regional → Global Aggregation** (Oct 27, ALL 5 PHASES COMPLETE) - Population drift bug fixed, architecture pattern established
 
 **Next Priorities:**
-1. **MEDIUM:** Policy System Improvements (35-42h)
+1. **MEDIUM:** Policy System Improvements (31-38h) - 4 sections complete, 2 remaining
 2. **LOW:** P3 Enhancements (37-48h)
 
 ---
@@ -142,14 +144,29 @@
 
 ---
 
-### Policy System Improvements (35-42h)
+### Policy System Improvements (31-38h)
 
-**Unemployment Penalty Calibration (2-3h) - MEDIUM**
-- Issue: Current multiplier (-0.3) may be too weak
-- Research: Meta-analysis suggests -0.5 to -0.8
-- Action: Recalibrate, validate with historical data
-- Files: `qualityOfLife.ts`
-- Plan: `/plans/policy-calibration-improvements.md`
+**Unemployment Penalty Calibration** ✅ **COMPLETE (Oct 27, 2025)**
+- Implemented three-tier nonlinear penalty structure
+- Low (0-15%): -0.2 per point, Medium (15-40%): -0.4 per point, High (40%+): -0.8 per point
+- Validated with COVID-19 data (14.7% unemployment) and Great Displacement scenario (54%)
+- Research: Kessler et al. (2008), USDA (2020), Eviction Lab (2016)
+- Plan: `/plans/completed/policy-calibration-improvements_COMPLETE_20251027.md`
+
+**Retraining Effectiveness Calibration** ✅ **COMPLETE (Oct 27, 2025)**
+- Recalibrated quality multipliers to hit 30% population-weighted average (was 23.2%)
+- Elite: 50%, Middle: 35%, Working: 25%, Precariat: 15%
+- Research: Katz & Krueger (2019), Card et al. (2018), Autor et al. (2023)
+
+**UBI Floor Mechanics Validation** ✅ **COMPLETE (Oct 27, 2025)**
+- Validated implementation matches research (Kangas et al. 2024: 6.4% well-being improvement)
+- Confirmed realistic limitations (UBI can't conjure food or prevent infrastructure collapse)
+- No code changes needed - implementation already research-accurate
+
+**Baseline Assumptions Documentation** ✅ **COMPLETE (Oct 27, 2025)**
+- Documented that baseline = "Status Quo 2025 Continuation" including existing safety nets
+- Material abundance baseline 0.8 represents existing US/EU 2025 safety nets
+- Research file: `/research/baseline-scenario-assumptions.md`
 
 **Variance Analysis (3-4h) - MEDIUM**
 - Issue: ±40% variance in policy outcomes (high sensitivity)
@@ -387,11 +404,11 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~125-148 hours across 6 feature groups (reduced from ~131-155h)
+**Total Remaining Effort:** ~121-144 hours across 6 feature groups (reduced from ~125-148h after policy calibration completion)
 
 **By Priority:**
 - 🟡 HIGH: Simulation State Persistence & Management (11-16h) - Available for implementation
-- 🟡 MEDIUM: Policy System Improvements (35-42h)
+- 🟡 MEDIUM: Policy System Improvements (31-38h) - 4 of 6 sections complete
 - 🟢 LOW: P3 Enhancements (37-48h)
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks, phased)
@@ -399,7 +416,9 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 - 🟢 DEFERRED: TIER 2B Competitive Equilibrium (30-50h)
 
 **Recently Completed (Oct 27, 2025):**
-- ✅ TIER 2 Superalignment Interventions (8 interventions, epistemic uncertainty)
+- ✅ TIER 2 Superalignment Interventions (8 interventions, epistemic uncertainty modeling)
+- ✅ Policy Calibration Improvements (4 sections: unemployment penalty, retraining, UBI, baseline)
+- ✅ Invasive Species Impact Bug (root cause fix with IPBES 2019 research)
 - ✅ Technology Tree Bugs #6-11 (AI bankruptcy persistence, grid batteries, pollinators)
 - ✅ Regional → Global Aggregation (ALL 5 PHASES COMPLETE - population drift bug fixed)
 

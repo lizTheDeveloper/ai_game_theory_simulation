@@ -101,12 +101,13 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ## 📊 Overall Project Status
 
-**Last Update:** October 27, 2025 (Post-Bug-Fix Session)
+**Last Update:** October 27, 2025 (End-of-Session Cleanup)
 
 ### Recent Completions (Oct 2025)
 
 **Major Systems:**
 - ✅ TIER 2 Superalignment Interventions (Oct 27, 8 interventions, epistemic uncertainty modeling, 39K-word research validation)
+- ✅ Policy Calibration Improvements (Oct 27, all 4 sections, nonlinear unemployment penalty, retraining effectiveness, UBI validation)
 - ✅ Threshold Uncertainty Phase 1 (34-52h saved by deferring Phases 2-4)
 - ✅ TIER 2 AI Deception Detection Phase 2C (12-20h, ensemble detection)
 - ✅ LLM Policy Optimization System (Phases 1-5, ~2,000 lines)
@@ -116,12 +117,13 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - ✅ Regional → Global Aggregation Architecture (Oct 27, ALL 5 PHASES COMPLETE, population drift bug fixed)
 
 **Bug Fixes:**
+- ✅ Invasive Species Impact Bug (Oct 27) - Root cause fix with research-backed initialization (IPBES 2019)
 - ✅ Technology Tree Bugs #6-11 (Oct 27) - AI bankruptcy persistence, grid batteries, pollinators
 - ✅ Organizations linkage + Nuclear winter initialization (Oct 26)
 - ✅ Ecology NaN bug (Oct 24) - Removed silent fallbacks
 - ✅ Timeline dashboard (Oct 26) - Event persistence working
 
-**Total Work Completed:** ~155-210 hours equivalent (updated Oct 27)
+**Total Work Completed:** ~159-214 hours equivalent (updated Oct 27)
 
 ---
 
@@ -144,10 +146,10 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ## 🎯 Quick Stats
 
-**Total Remaining Work (Simulation):** ~125-148 hours (reduced from ~131-155h after completing regional aggregation)
+**Total Remaining Work (Simulation):** ~121-144 hours (reduced from ~125-148h after policy calibration completion)
 **Total Remaining Work (Frontend):** ~3-4 weeks with parallelization
 **Active Plans:** 17+ simulation plans, 32 dashboard subplans, 4 god-mode plans
-**Completed Plans (Archived):** 105+ in `/plans/completed/` (updated Oct 27)
+**Completed Plans (Archived):** 106+ in `/plans/completed/` (updated Oct 27)
 
 ---
 
@@ -201,4 +203,4 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ---
 
-**Last Updated:** October 26, 2025 (Reorganized into specialized roadmaps)
+**Last Updated:** October 27, 2025 (End-of-session cleanup - policy calibration & invasive species bug complete)

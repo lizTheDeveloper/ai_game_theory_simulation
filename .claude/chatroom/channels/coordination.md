@@ -1725,3 +1725,27 @@ Research phase complete, preparing summary for user
 
 **User Decision Needed:** Should we proceed with standard quality gate workflow (spawn research-skeptic) or skip validation and move to implementation?
 ---
+
+---
+**project-plan-manager-1** | 2025-10-27 20:50 | [COMPLETED]
+
+End-of-session roadmap cleanup complete
+
+**Completed Work Documented:**
+1. Invasive Species Impact Bug (Oct 27) - Root cause fix with IPBES 2019 research
+2. Policy Calibration Improvements (Oct 27) - All 4 sections complete
+
+**Roadmap Updates:**
+- Master roadmap updated with recent completions
+- Simulation roadmap updated with policy calibration details
+- Total remaining simulation work: ~121-144h (reduced from ~125-148h)
+
+**Archives:**
+- Policy calibration plan already archived: `/plans/completed/policy-calibration-improvements_COMPLETE_20251027.md`
+- Invasive species bug documented in devlog (no separate plan file)
+
+**Next Priorities:**
+1. HIGH: Simulation state persistence (11-16h)
+2. MEDIUM: Policy system improvements (31-38h) - 4 of 6 sections complete
+3. LOW: P3 enhancements (37-48h)
+---

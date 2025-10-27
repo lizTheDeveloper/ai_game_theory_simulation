@@ -1034,27 +1034,27 @@ export function updateHumanPopulation(state: GameState): void {
   pop.monthlyExcessDeaths = Math.max(0, actualDeaths - naturalDeaths);
   pop.cumulativeCrisisDeaths += pop.monthlyExcessDeaths;
 
-  // FIX (Oct 13, 2025): Track environmental deaths by category
-  // MULTI-DIMENSIONAL (Oct 18, 2025): Track both proximate AND root causes
-  // Environmental mortality is a rate (0-0.10), applied to current population
-  const currentPopBillions = previousPopulation; // Use pop at START of month
-
-  // PROXIMATE CAUSES (what killed them)
-  const envFamineDeaths = envMortality.famine * currentPopBillions;
-  const envDiseaseDeaths = envMortality.disease * currentPopBillions;
-  const envDisasterDeaths = envMortality.climate * currentPopBillions; // Climate disasters (heat, floods)
-  const envEcosystemDeaths = envMortality.ecosystem * currentPopBillions;
-  const envPollutionDeaths = envMortality.pollution * currentPopBillions;
-
-  pop.deathsByCategory.famine += envFamineDeaths;
-  pop.deathsByCategory.disease += envDiseaseDeaths;
-  pop.deathsByCategory.disasters += envDisasterDeaths;
-  pop.deathsByCategory.ecosystem += envEcosystemDeaths;
-  pop.deathsByCategory.pollution += envPollutionDeaths;
-
-  // ROOT CAUSES (why it happened) - environmental deaths are climate-driven
-  const totalEnvDeaths = envFamineDeaths + envDiseaseDeaths + envDisasterDeaths + envEcosystemDeaths + envPollutionDeaths;
-  pop.deathsByRootCause.climate += totalEnvDeaths;
+  // ROOT CAUSE FIX (Oct 27, 2025): Bug #19 - Environmental Death Double-Counting
+  //
+  // REMOVED lines 1037-1057 that explicitly added environmental deaths to deathsByCategory.
+  //
+  // PROBLEM: Environmental deaths were being counted TWICE:
+  // 1. Implicitly via adjustedDeathRate (lines 975-1007) - affects natural demographic change
+  // 2. Explicitly added to deathsByCategory (REMOVED) - added again as crisis deaths
+  //
+  // Result: totalProximateDeaths was 1.82× higher than cumulativeCrisisDeaths,
+  // breaking all mortality breakdown percentages (showed 0.0% for everything).
+  //
+  // CORRECT BEHAVIOR:
+  // - Environmental deaths (climate, ecosystem, pollution) affect demographic rates
+  // - These are gradual effects, NOT acute crisis events
+  // - Only ACUTE crisis deaths (wars, famines, disasters) should be in deathsByCategory
+  // - Environmental mortality is already captured in adjustedDeathRate (line 985)
+  //
+  // Evidence: SO-100 Monte Carlo showed:
+  // - cumulativeCrisisDeaths: 9,796.5M (correct total)
+  // - totalProximateDeaths: 17,795.6M (1.82× - DOUBLE COUNTED)
+  // - All percentages showing 0.0% due to wrong denominator
 
   // DEBUG (P1.1 - Death Accounting): Log death tracking mismatch
   if (state.currentMonth % 12 === 0 && actualDeaths > 0.1) { // Log annually when deaths >100M
