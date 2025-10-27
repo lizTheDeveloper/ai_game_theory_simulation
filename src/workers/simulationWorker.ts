@@ -698,6 +698,10 @@ function performStep() {
   // Update previous state snapshot
   previousState = captureStateSnapshot(state);
 
+  // Clear event log after capturing snapshot to prevent re-sending old events
+  // This must happen AFTER captureStateSnapshot() to avoid state corruption
+  state.eventLog = [];
+
   // Send update to main thread (use current calendar date directly)
   self.postMessage({
     type: 'update',
@@ -1389,6 +1393,11 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     } else {
       delta.outcomeType = 'In Progress';
     }
+  }
+
+  // Always include events in delta updates (with proper timestamps from snapshot)
+  if (currentSnapshot.events && currentSnapshot.events.length > 0) {
+    delta.events = currentSnapshot.events;
   }
 
   return delta;
