@@ -95,6 +95,7 @@ import {
   WetBulbTemperaturePhase,  // Oct 17, 2025: Wet bulb temperature deadly heat events
   PlanetaryBoundariesPhase,
   PositiveTippingPointsPhase,  // Oct 17, 2025: Positive technology adoption cascades
+  TippingPointPhase,  // Oct 26, 2025: Multi-timescale climate tipping points (replaces instant catastrophe)
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
   AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
@@ -494,6 +495,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new WetBulbTemperaturePhase());  // Oct 17, 2025: Wet bulb temperature deadly heat events
     this.orchestrator.registerPhase(new PlanetaryBoundariesPhase());
     this.orchestrator.registerPhase(new PositiveTippingPointsPhase());  // Oct 17, 2025: Positive cascades (solar, EV, wind)
+    this.orchestrator.registerPhase(new TippingPointPhase());  // Oct 26, 2025: Multi-timescale climate tipping points (order 21.6)
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline

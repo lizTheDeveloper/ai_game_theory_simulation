@@ -149,10 +149,12 @@ function createTechnologyAdoption(
     learningRate,
     conventionalAlternativeCost: conventionalCost,
     priceParityAchieved,
+    priceParity: priceParityAchieved ? 1.0 : Math.min(1.0, conventionalCost / costPerUnit),
     supportingPolicies: [],
     policyStrength: 0,
     visibility,
     socialProofStrength: 0,
+    socialAcceptance: marketShare * 2.0, // Initial social acceptance based on market share
   };
 }
 

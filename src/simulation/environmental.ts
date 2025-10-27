@@ -451,63 +451,28 @@ function checkEnvironmentalCrises(state: GameState): void {
     );
   }
   
-  // CLIMATE CATASTROPHE: Stability below 40%
-  if (env.climateStability < 0.4 && !env.climateCrisisActive) {
-    env.climateCrisisActive = true;
-    updateCatastropheTracking(state, 'climate_catastrophe', 1.0 - env.climateStability);
-    try {
-      console.log(`\n🌡️  CLIMATE CATASTROPHE TRIGGERED (Month ${state.currentMonth})`);
-      console.log(`   Climate Stability: ${(env.climateStability * 100).toFixed(1)}%`);
-      console.log(`   Impact: Cascading failures, potential extinction pathway\n`);
-    } catch (e) { /* Ignore EPIPE */ }
-
-    state.eventLog.push({
-      id: `climate-catastrophe-${state.currentMonth}`,
-      type: 'crisis',
-      title: 'Climate Catastrophe',
-      timestamp: state.currentMonth,
-      severity: 'existential',
-      agent: 'environmental',
-      description: `Climate Catastrophe: Stability ${(env.climateStability * 100).toFixed(1)}%`,
-      effects: {
-        physicalSafety: -0.4,
-        materialAbundance: -0.5,
-        ecosystemHealth: -0.6,
-        socialStability: -0.5
-      }
-    });
-
-    // Severe QoL impacts
-    qol.physicalSafety *= 0.6; // 40% drop (extreme weather, disasters)
-    qol.materialAbundance *= 0.5; // 50% drop (agricultural collapse)
-    qol.ecosystemHealth *= 0.4; // 60% drop
-    state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.5);
-
-    // FIX (Oct 25, 2025): REMOVED redundant famine death calculation
-    // Climate catastrophe degrades REGIONAL food security via FoodSecurityDegradationPhase
-    // Famine deaths are then handled by FamineSystemPhase based on regional food security
-    // This prevents double-counting food-related deaths
-    //
-    // OLD APPROACH (removed):
-    // - Climate catastrophe triggered flat 1.5% mortality globally
-    // - Famine system triggered separately based on global food security
-    // - Deaths were DOUBLE-COUNTED (climate catastrophe deaths + famine deaths)
-    //
-    // NEW APPROACH (correct):
-    // - Climate catastrophe triggers FoodSecurityDegradationPhase
-    // - Regional food security drops in vulnerable regions
-    // - FamineSystemPhase checks each region's food security
-    // - Famine deaths occur ONLY in regions with food security < 0.6
-    // - Deaths attributed properly to famine with climate as root cause
-
-    // Check for extinction trigger
-    // Climate catastrophe can lead to slow collapse
-    if (env.biodiversityIndex < 0.4) {
-      try {
-        console.log(`   ⚠️  Combined with ecosystem collapse - extinction risk elevated\n`);
-      } catch (e) { /* Ignore EPIPE */ }
-    }
-  }
+  // ============================================================================
+  // INSTANT CLIMATE CATASTROPHE REMOVED (Oct 26, 2025)
+  // ============================================================================
+  //
+  // Replaced with Multi-Timescale Climate Tipping Points System
+  // (TippingPointPhase, order 21.6)
+  //
+  // OLD BEHAVIOR (unrealistic):
+  // - Instant catastrophe when climateStability < 0.4
+  // - Immediate 40-60% QoL drops
+  // - No gradual transition, no recovery possible
+  //
+  // NEW BEHAVIOR (research-backed):
+  // - 6 tipping elements with realistic timescales (10-15,000 years)
+  // - Temperature threshold detection (1.5-2.3°C above pre-industrial)
+  // - Sigmoid transition curves for smooth progression
+  // - Cascade amplification when multiple elements active
+  // - Regional variation in impacts
+  //
+  // Research: Armstrong McKay et al. (2022) Science, Lenton et al. (2023), IPCC AR6
+  // See: /src/simulation/engine/phases/TippingPointPhase.ts
+  // ============================================================================
   
   // ECOSYSTEM TIPPING POINT: Biodiversity below 20%
   // REALISTIC TIMELINE: Threshold triggers collapse PROCESS, not instant apocalypse

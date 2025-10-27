@@ -56,6 +56,7 @@ import { initializeRecoveryTracking } from './utils/recoveryCalculations';
 import { initializeMemeticSystem } from './memetics/initialization';
 import { initializeNuclearCommandControl } from './nuclearCommandControl';
 import { initializePositiveTippingPoints } from './positiveTippingPoints';
+import { initializeTippingPointSystem } from './tippingPoints';
 import { initializeConsciousnessGovernance } from './consciousnessGovernance';
 import { initializeGamingDetection } from './gamingDetection';
 import { initializeProactiveSleeperDetection } from './proactiveSleeperDetection';
@@ -723,6 +724,9 @@ export function createDefaultInitialState(
 
     // Positive Tipping Point Cascades (Oct 17, 2025)
     positiveTippingPoints: initializePositiveTippingPoints(),
+
+    // Multi-Timescale Climate Tipping Points (Oct 26, 2025)
+    tippingPointSystem: initializeTippingPointSystem(),
 
     // Population Dynamics & Refugee Crises (TIER 1.6)
     humanPopulationSystem: initializeHumanPopulationSystem(),

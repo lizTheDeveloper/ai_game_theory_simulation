@@ -133,7 +133,10 @@ class EventDatabase {
       ? [simulationId, beforeTimestamp]
       : [simulationId, Number.MAX_SAFE_INTEGER];
 
-    const range = IDBKeyRange.bound(keyRangeStart, keyRangeEnd, false, beforeTimestamp !== undefined);
+    // If beforeTimestamp is 0 or less, we can't create an exclusive upper bound
+    // because it would make start === end with an open bound, which is invalid
+    const upperOpen = beforeTimestamp !== undefined && beforeTimestamp > 0;
+    const range = IDBKeyRange.bound(keyRangeStart, keyRangeEnd, false, upperOpen);
 
     return new Promise((resolve, reject) => {
       const request = index.openCursor(range, 'prev'); // Reverse order (newest first)

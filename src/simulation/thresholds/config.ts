@@ -234,7 +234,7 @@ export function printThresholdConfig(config: ThresholdConfig): void {
   }
 
   console.log('\nThreshold Values:');
-  const thresholds = config.thresholds as Record<string, number>;
+  const thresholds = config.thresholds as unknown as Record<string, number>;
   for (const [key, value] of Object.entries(thresholds)) {
     console.log(`  ${key}: ${typeof value === 'number' ? value.toFixed(4) : value}`);
   }

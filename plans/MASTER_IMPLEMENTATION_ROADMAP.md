@@ -61,7 +61,8 @@ All 4 sub-phases implemented, tested, and committed:
 **Next Priorities:**
 1. **CRITICAL:** Complete organizations-to-countries linkage bug fix
 2. **HIGH:** Complete nuclear winter cascades bug fix
-3. **MEDIUM:** Technology tree refactoring (enables Phase 2 threshold work)
+3. **MEDIUM:** Simulation state persistence & management (11-16h, builds on event persistence)
+4. **MEDIUM:** Technology tree refactoring (enables Phase 2 threshold work)
 
 ---
 
@@ -165,6 +166,61 @@ All 4 sub-phases implemented, tested, and committed:
 
 **Files:**
 - Plans: `/plans/bionic-skills-research-grounding.md`, `/plans/bionic-skills-phase-transition.md`, `/plans/bionic-skills-competence-tracking.md`, `/plans/bionic-skills-economic-distribution.md`
+
+---
+
+### Simulation State Persistence & Management (11-16 hours)
+
+**Status:** Foundation ready (event persistence working), full state persistence planned
+**Complexity:** 4 phases - Core persistence → Resume UX → Version control → Export/Import
+**Priority:** MEDIUM - UX enhancement for research workflow
+
+**Context:**
+- ✅ Timeline bug fixed (Oct 26, 2025) - IndexedDB event storage working
+- ✅ Event database infrastructure exists (eventDatabase.ts)
+- ❌ Simulation state not persisted - lost on page refresh
+- ❌ No simulation management UI
+
+**Phase 1: Core State Persistence (4-6h)**
+- Extend EventDatabase to store full GameState snapshots
+- Worker autosave after each simulation step (debounced)
+- IndexedDB object stores: `simulations`, `simulation_metadata`
+- Handle storage quotas (browser limits ~50-100MB)
+
+**Phase 2: Resume/Continue UX (3-4h)**
+- Auto-resume flow (3-second modal with cancel option)
+- Simulation management interface (grid/list views)
+- Resume from state via new worker message
+- RNG reconstruction for determinism
+
+**Phase 3: Version Control & Edge Cases (2-3h)**
+- Git commit hash validation (block incompatible versions)
+- Schema versioning for migrations
+- Corrupted state handling
+- Storage quota warnings
+
+**Phase 4: Export/Import & Testing (2-3h)**
+- Download/upload simulation state as JSON
+- Clear all data functionality
+- Testing checklist (RNG determinism, multiple simulations, resume correctness)
+
+**Total Effort:** 11-16h
+
+**Benefits:**
+- No data loss on browser refresh/crash
+- Multiple simulations can coexist
+- Research workflow improvements (pause/resume, compare runs)
+- Foundation for future Monte Carlo UI integration
+
+**Files:**
+- Plan: `/plans/simulation-persistence-plan.md` (1,107 lines with UI/UX specs)
+- Existing: `src/lib/eventDatabase.ts`, `src/workers/simulationWorker.ts`
+- New: `src/components/dashboards/SimulationPersistenceManager.tsx`
+
+**Design:**
+- Complete UI/UX specifications included in plan (grid/list views, modals, accessibility)
+- Visual aesthetic: Far-future dark mode with cyan glow effects
+- Keyboard shortcuts, screen reader support, motion preferences
 
 ---
 
@@ -341,10 +397,11 @@ All 4 sub-phases implemented, tested, and committed:
 
 ## Summary
 
-**Total Remaining Effort:** ~129-199 hours across 9 feature groups
+**Total Remaining Effort:** ~140-215 hours across 10 feature groups
 
 **By Priority:**
 - 🟢 DEFERRED: Threshold Uncertainty Phases 2-4 (24-37h) - Phase 1 complete, enrichment deferred
+- 🟡 MEDIUM: Simulation State Persistence & Management (11-16h) - **NEW** - UX enhancement for research workflow
 - 🟡 MEDIUM: AI Deception Detection Phase 2C or 2D (12-74h)
 - 🟡 MEDIUM: AI-Assisted Skills (78h)
 - 🟡 MEDIUM: LLM Policy Optimization Phase 5 (6-8h) - Testing only

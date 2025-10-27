@@ -427,13 +427,13 @@ function applyDeploymentActions(
         severity: 'medium',
         agent: action.deployedBy,
         title: `🚀 DEPLOYMENT STARTED: ${tech.name}`,
-        description: `Deployment initiated in ${action.targetRegion}. Initial investment: $${action.investment.toFixed(0)}M. Technology will deploy gradually over ${(tech.timescale || 120) / 12} years. Category: ${tech.category}.`,
+        description: `Deployment initiated in ${action.targetRegion}. Initial investment: $${action.investment.toFixed(0)}M. Technology will deploy gradually over ${tech.deploymentMonthsRequired / 12} years. Category: ${tech.category}.`,
         effects: {
           techId: tech.id,
           region: action.targetRegion,
           investment: action.investment,
           deployedBy: action.deployedBy,
-          timescale: tech.timescale || 120
+          timescale: tech.deploymentMonthsRequired
         }
       });
     }

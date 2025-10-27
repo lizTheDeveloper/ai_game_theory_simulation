@@ -40,7 +40,7 @@ export function TimelineDashboard() {
     if (!lastUpdate?.events || lastUpdate.events.length === 0) return
 
     const storeEvents = async () => {
-      const eventsToStore = lastUpdate.events.map(e => {
+      const eventsToStore = lastUpdate.events!.map(e => {
         const timestamp = e.timestamp ?? lastUpdate.currentMonth ?? 0
         console.log(`[Timeline] Event: ${e.id}`)
         console.log(`  e.timestamp = ${e.timestamp} (${e.timestamp === undefined ? 'UNDEFINED' : 'defined'})`)

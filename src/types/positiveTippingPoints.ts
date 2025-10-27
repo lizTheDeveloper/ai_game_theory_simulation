@@ -59,6 +59,7 @@ export interface TechnologyAdoption {
   // Price parity
   conventionalAlternativeCost: number; // Cost of fossil fuel alternative ($/unit)
   priceParityAchieved: boolean;     // costPerUnit ≤ conventionalAlternativeCost
+  priceParity: number;              // [0, 1] Price competitiveness ratio (1 = full parity)
 
   // Policy support
   supportingPolicies: CascadePolicyType[]; // Active policies for this tech
@@ -67,6 +68,7 @@ export interface TechnologyAdoption {
   // Social dynamics
   visibility: number;               // [0, 1] How visible is adoption? (EVs 0.8, insulation 0.2)
   socialProofStrength: number;      // [0, 1] Early adopter influence
+  socialAcceptance: number;         // [0, 1] Social acceptance level
 }
 
 /**

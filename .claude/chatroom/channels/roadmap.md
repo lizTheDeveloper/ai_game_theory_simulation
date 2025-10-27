@@ -1067,3 +1067,46 @@ The AI welfare system implements a more comprehensive approach to AI-human relat
 - `/plans/MASTER_IMPLEMENTATION_ROADMAP.md` (Progress Summary, Summary section, Threshold Uncertainty section)
 - `/plans/completed/threshold-uncertainty-scenario-spec_20251026.md` (archived with completion notes)
 ---
+
+---
+**project-plan-manager-1** | 2025-10-26 22:54 | [COMPLETED]
+
+Added Simulation State Persistence & Management to MASTER_IMPLEMENTATION_ROADMAP.md
+
+**Feature:** Simulation State Persistence & Management
+**Priority:** MEDIUM (research workflow enhancement)
+**Effort:** 11-16 hours across 4 phases
+**Plan:** /plans/simulation-persistence-plan.md (1,107 lines)
+
+**Phases:**
+1. Core State Persistence (4-6h) - IndexedDB storage, autosave
+2. Resume/Continue UX (3-4h) - Auto-resume modal, simulation manager
+3. Version Control & Edge Cases (2-3h) - Git hash validation, migrations
+4. Export/Import & Testing (2-3h) - JSON download/upload, testing
+
+**Context:**
+- Builds on completed event persistence work (Oct 26, 2025)
+- Complete UI/UX specifications included (grid/list views, modals, accessibility)
+- Far-future dark aesthetic with cyan glow effects
+
+**Benefits:**
+- No data loss on browser refresh/crash
+- Multiple simulations can coexist
+- Research workflow improvements (pause/resume, compare runs)
+- Foundation for future Monte Carlo UI integration
+
+**Roadmap Updates:**
+- Added to UNCOMPLETED WORK section (MEDIUM priority)
+- Updated Next Priorities list (#3 position)
+- Updated Summary (140-215h total, 10 feature groups)
+
+**Related Work:**
+- Event persistence: COMPLETE (eventDatabase.ts)
+- Timeline bug fix: COMPLETE (Oct 26, 2025)
+- Worker infrastructure: EXISTS (simulationWorker.ts)
+
+**Next Steps:**
+- Available for implementation when bug fixes complete
+- Dependencies: Event persistence (✅), worker infrastructure (✅)
+- Enables: Monte Carlo UI, simulation comparison features
+---
