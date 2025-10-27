@@ -20,10 +20,11 @@
 ---
 
 **🚧 Currently In Progress:**
-- None
+1. **HIGH:** Simulation state persistence & management (11-16h) - 🚧 Currently being worked on by another agent
+2. **MEDIUM:** Regional → Global Aggregation Refactor (5-8h) - 🚧 Currently being worked on by another agent
 
 **Next Priorities:**
-1. **HIGH:** Simulation state persistence & management (11-16h) - UX enhancement
+1. **MEDIUM:** TIER 2 Superalignment Interventions (TBD)
 
 ---
 
@@ -32,6 +33,8 @@
 ---
 
 ### Simulation State Persistence & Management (11-16 hours)
+
+🚧 **Currently being worked on by another agent**
 
 **Status:** Foundation ready (event persistence working), full state persistence planned
 **Complexity:** 4 phases - Core persistence → Resume UX → Version control → Export/Import
@@ -83,9 +86,9 @@
 
 ## 📊 LOW PRIORITY - ENRICHMENT FEATURES
 
-### Priority 3 Enhancements (39-51h)
+### Priority 3 Enhancements (37-48h)
 
-**Total Effort:** 39-51h
+**Total Effort:** 37-48h (was 39-51h, P3.3 complete -2-3h)
 
 **P3.1: Variable Timesteps (10-12h)**
 - Event-driven architecture, 3-5x performance gain
@@ -95,9 +98,12 @@
 - Black swan events, true uncertainty
 - Plan: `/plans/p3-2-unknown-unknowns.md`
 
-**P3.3: Alignment Specificity (2-3h)**
-- RLHF, Constitutional AI, mech interp as distinct techniques
-- Plan: `/plans/p3-3-alignment-model-specificity.md`
+**P3.3: Alignment Specificity** ✅ **COMPLETE (Oct 26, 2025)**
+- RLHF, Constitutional AI, mech interp, iterated amplification as distinct techniques
+- Capability scaling degradation, interaction effects, research-backed parameters
+- Fixed: Phase order conflict, state propagation, NaN protection
+- Plan: `/plans/completed/p3-3-alignment-model-specificity_COMPLETE_20251026.md`
+- Wiki: `docs/wiki/systems/alignment-dynamics.md` (Alignment Technique Specificity section)
 
 **P3.4: Government Implementation Realism (6-8h)**
 - Policy implementation delays, bureaucratic friction
@@ -112,13 +118,14 @@
 - Plan: `/plans/p3-6-ensemble-alignment-verification.md`
 - Note: Prototype only (40% overhead, collusion risk)
 
-**P3.7: Regional-First Population Architecture (6-8h)**
+**P3.7: Regional-First Population Architecture (6-8h)** 🚧 **Currently being worked on by another agent**
 - Refactor population calculations to be regional-first with cached global aggregates
 - Single source of truth (regional level), global metrics are pure sums
 - Benefits: Eliminates double-counting bugs, performance improvements (O(1) cached lookups vs O(n) array scans)
 - Requirements: Must include toJson serialization method for backward compatibility
 - Architecture: Calculate at regional level → aggregate to global as cached values
 - Status: Deferred from Oct 26, 2025 bug fix session
+- Plan: `/plans/regional-aggregation-refactor.md`
 
 ---
 
@@ -257,26 +264,43 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ---
 
-### Threshold Uncertainty Modeling - Phases 2-4 (DEFERRED)
+### Threshold Uncertainty Modeling - COMPLETE (Phases 1-2), UI Integrated
 
-**Status:** Phase 1 COMPLETE (Oct 26, 2025), Phases 2-4 deferred
-**Phase 1 Deliverables:**
+**Status:** Phases 1-2 COMPLETE (Oct 26, 2025), UI integration COMPLETE (Oct 26, 2025)
+
+**Phase 1 Deliverables (Backend):**
 - ✅ Distribution sampling library (Normal, Beta, Log-Normal, Triangular)
-- ✅ 5 Tier 1 thresholds integrated (social critical mass, trust recovery, climate sensitivity, legitimacy crisis, automation)
+- ✅ 5 Tier 1 thresholds integrated (social critical mass, trust recovery, climate sensitivity, automation, detection ceiling)
 - ✅ Nested Monte Carlo architecture (epistemic/aleatory separation)
 - ✅ Validation complete
 
-**Remaining Work (Phases 2-4):**
-- **Phase 2:** Tier 2 bounded thresholds (6-10h) - Historical ranges
+**Phase 2 Deliverables (Backend):**
+- ✅ 5 Tier 2 thresholds implemented (government legitimacy, surveillance dystopia, automation displacement, AI recursive improvement, resentment revolt)
+- ✅ Historical range-based distributions (Triangular, Uniform)
+- ✅ Research-backed parameters from case studies (Weimar, USSR, East Germany, Arab Spring, Industrial Revolution)
+- ✅ Integrated into initialization (sampled on every simulation start)
+
+**UI Integration (Oct 26, 2025):**
+- ✅ ThresholdConfigSection component - Collapsible display of all 10 thresholds
+- ✅ DistributionVisualizer component - Sparkline visualizations for distribution shapes
+- ✅ Integrated into ControlsTab - Visible during simulation configuration
+- ✅ Research citations and impact descriptions for each threshold
+- ✅ Grouped by tier (Tier 1: Empirical, Tier 2: Historical)
+
+**Remaining Work (Optional Enhancements):**
 - **Phase 3:** Tier 3 speculative scenarios (8-12h) - Named scenarios (Doom/Utopia)
 - **Phase 4:** Scenario builder CLI (10-15h) - Multi-dimensional sliders
+- **UI Phase 2:** Custom distribution override (2-3h) - User-editable ranges
 
-**Total Remaining:** 24-37 hours
-**Priority:** DEFERRED - Phase 1 provides core functionality, Phases 2-4 are enrichment
+**Total Remaining:** 12-18 hours (UI custom override) + 18-27 hours (Phase 3-4)
+**Priority:** DEFERRED - Phases 1-2 + UI provide core functionality, remaining work is enrichment
 
 **Files:**
+- Plan: `/plans/threshold-uncertainty-ui-plan.md`
 - Archived Plan: `/plans/completed/threshold-uncertainty-scenario-spec_20251026.md`
-- Implementation: `src/simulation/thresholds/` (distributions, tier1Config, thresholdInventory)
+- Backend: `src/simulation/thresholds/` (distributions.ts, tier1Config.ts, tier2Config.ts, index.ts)
+- UI: `src/components/thresholds/` (ThresholdConfigSection.tsx, DistributionVisualizer.tsx)
+- Integration: `src/components/tabs/ControlsTab.tsx` (line 446)
 
 ---
 
