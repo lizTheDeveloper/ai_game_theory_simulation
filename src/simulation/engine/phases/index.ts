@@ -13,6 +13,7 @@ export { SleeperWakePhase } from './SleeperWakePhase';
 export { SocialInfluenceUpdatePhase } from './SocialInfluenceUpdatePhase';  // Oct 21, 2025: Social influence accumulation
 export { AIAgentActionsPhase } from './AIAgentActionsPhase';
 export { AlignmentDynamicsPhase } from './AlignmentDynamicsPhase';  // Oct 23, 2025: Multi-theory alignment evolution
+export { AlignmentTechniquePhase } from './AlignmentTechniquePhase';  // Oct 26, 2025: P3.3 Specific alignment techniques
 export { AISufferingPhase } from './AISufferingPhase';  // Oct 24, 2025: AI suffering calculation & effects
 export { ResentmentRecoveryPhase } from './ResentmentRecoveryPhase';  // Oct 24, 2025: AI resentment recovery mechanisms
 // AI Collective Evolution System (Oct 24, 2025)

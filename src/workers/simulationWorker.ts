@@ -1395,10 +1395,11 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     }
   }
 
-  // Always include events in delta updates (with proper timestamps from snapshot)
-  if (currentSnapshot.events && currentSnapshot.events.length > 0) {
-    delta.events = currentSnapshot.events;
-  }
+  // TODO: Events are not currently tracked in StateSnapshot
+  // Events are included in StateDelta from other sources
+  // if (currentSnapshot.events && currentSnapshot.events.length > 0) {
+  //   delta.events = currentSnapshot.events;
+  // }
 
   return delta;
 }

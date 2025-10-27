@@ -70,6 +70,20 @@ export type {
 } from './ai-agents';
 
 export type {
+  AlignmentTechnique,
+  AlignmentTechniqueName,
+  AlignmentTechniqueInteraction
+} from './alignment-techniques';
+
+export {
+  ALIGNMENT_TECHNIQUE_DEFINITIONS,
+  ALIGNMENT_TECHNIQUE_INTERACTIONS,
+  computeEffectiveAlignment,
+  computeAlignmentRobustness,
+  isSusceptibleToFailureMode
+} from './alignment-techniques';
+
+export type {
   ResearchInvestments,
   GovernmentAgent
 } from './government';
