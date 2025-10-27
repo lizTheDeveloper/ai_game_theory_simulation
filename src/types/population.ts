@@ -239,6 +239,11 @@ export interface RegionalPopulation {
   fertilityRate: number;                 // Children per woman
   medianAge: number;                     // Median population age
 
+  // Quality of Life (Oct 26, 2025)
+  // Regional QoL calculated from multi-dimensional systems
+  // Global QoL = population-weighted average of regional QoL
+  qualityOfLife: number;                 // [0, ~1.5] Regional quality of life score
+
   // Carrying capacity
   carryingCapacity: number;              // Regional capacity (millions)
   baselineCarryingCapacity: number;      // Baseline capacity

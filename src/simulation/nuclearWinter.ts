@@ -78,7 +78,7 @@ export function triggerNuclearWinter(
   
   // Already in nuclear winter? Add to existing soot
   if (winter.active) {
-    console.log(`\n⚠️  ADDITIONAL NUCLEAR EXCHANGE during existing nuclear winter`);
+    console.warn(`\n⚠️  ADDITIONAL NUCLEAR EXCHANGE during existing nuclear winter`);
     winter.sootInStratosphere += calculateSootInjection(warScale);
     winter.currentSoot = winter.sootInStratosphere;
     

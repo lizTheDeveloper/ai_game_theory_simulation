@@ -90,7 +90,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
   const countries: Record<CountryName, CountryPopulation> = {
     'United States': createCountry({
       name: 'United States',
-      region: 'North America',
+      region: 'Northern America',
       population: 335,
       birthRate: 11.0,
       deathRate: 8.9,
@@ -101,7 +101,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'China': createCountry({
       name: 'China',
-      region: 'East Asia',
+      region: 'Eastern Asia',
       population: 1425,
       birthRate: 6.5,
       deathRate: 7.4,
@@ -112,7 +112,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Russia': createCountry({
       name: 'Russia',
-      region: 'Eastern Europe',
+      region: 'Europe',
       population: 144,
       birthRate: 9.2,
       deathRate: 14.6,
@@ -123,7 +123,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'India': createCountry({
       name: 'India',
-      region: 'South Asia',
+      region: 'Southern Asia',
       population: 1425,
       birthRate: 16.2,
       deathRate: 7.3,
@@ -134,7 +134,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'United Kingdom': createCountry({
       name: 'United Kingdom',
-      region: 'Western Europe',
+      region: 'Europe',
       population: 67,
       birthRate: 10.7,
       deathRate: 9.4,
@@ -145,7 +145,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'France': createCountry({
       name: 'France',
-      region: 'Western Europe',
+      region: 'Europe',
       population: 65,
       birthRate: 10.9,
       deathRate: 9.6,
@@ -156,7 +156,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Pakistan': createCountry({
       name: 'Pakistan',
-      region: 'South Asia',
+      region: 'Southern Asia',
       population: 235,
       birthRate: 25.4,
       deathRate: 6.5,
@@ -167,7 +167,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Israel': createCountry({
       name: 'Israel',
-      region: 'Middle East',
+      region: 'Middle East & North Africa',
       population: 9,
       birthRate: 19.2,
       deathRate: 5.2,
@@ -178,7 +178,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Japan': createCountry({
       name: 'Japan',
-      region: 'East Asia',
+      region: 'Eastern Asia',
       population: 125,
       birthRate: 6.9,
       deathRate: 11.7,
@@ -189,7 +189,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Germany': createCountry({
       name: 'Germany',
-      region: 'Western Europe',
+      region: 'Europe',
       population: 84,
       birthRate: 9.3,
       deathRate: 11.8,
@@ -200,7 +200,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Brazil': createCountry({
       name: 'Brazil',
-      region: 'South America',
+      region: 'Latin America',
       population: 215,
       birthRate: 13.4,
       deathRate: 6.8,
@@ -211,7 +211,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Indonesia': createCountry({
       name: 'Indonesia',
-      region: 'Southeast Asia',
+      region: 'South-East Asia',
       population: 275,
       birthRate: 15.4,
       deathRate: 6.7,
@@ -222,7 +222,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Canada': createCountry({
       name: 'Canada',
-      region: 'North America',
+      region: 'Northern America',
       population: 39,
       birthRate: 10.2,
       deathRate: 8.1,
@@ -233,7 +233,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Bangladesh': createCountry({
       name: 'Bangladesh',
-      region: 'South Asia',
+      region: 'Southern Asia',
       population: 172,
       birthRate: 17.6,
       deathRate: 5.6,
@@ -244,7 +244,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Nigeria': createCountry({
       name: 'Nigeria',
-      region: 'West Africa',
+      region: 'Sub-Saharan Africa',
       population: 223,
       birthRate: 35.2,
       deathRate: 11.6,
@@ -256,7 +256,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     // P2.4: Additional countries for organization geographic diversification
     'Ireland': createCountry({
       name: 'Ireland',
-      region: 'Western Europe',
+      region: 'Europe',
       population: 5.1,
       birthRate: 11.5,
       deathRate: 6.8,
@@ -267,7 +267,7 @@ export function initializeCountryPopulations(): CountryPopulationSystem {
     }),
     'Singapore': createCountry({
       name: 'Singapore',
-      region: 'Southeast Asia',
+      region: 'South-East Asia',
       population: 5.9,
       birthRate: 8.5,
       deathRate: 5.0,
@@ -447,30 +447,83 @@ function getClimateSufferingRatio(country: CountryName): number {
 }
 
 /**
- * Update country populations based on global population changes
- * Applies proportional impacts from crises
+ * Update country populations with bidirectional aggregation architecture
+ *
+ * **FIX (Oct 26, 2025): Countries ↔ Regions Aggregation**
+ *
+ * Implements two-phase update:
+ * 1. **Downward**: Countries inherit regional dynamics (climate, food, environment)
+ * 2. **Upward**: Countries aggregate back UP to update regional totals
+ *
+ * **Data Flow:**
+ * ```
+ * Regional Population Dynamics (from environmental systems)
+ *   ↓ Phase 1: Inheritance
+ * Country Populations (inherit regional growth rates)
+ *   ↓ Apply country-specific events (TODO: wars, interventions)
+ * Country Populations (updated)
+ *   ↓ Phase 2: Aggregation
+ * Regional Populations (sum of countries in region)
+ * ```
+ *
+ * **Why Bidirectional:**
+ * - Regional dynamics (climate, food) affect all countries in a region uniformly
+ * - Country events (wars) affect specific countries
+ * - Countries aggregate back up to give accurate regional totals
+ *
+ * **Example:**
+ * - South Asia region loses 5% population due to food crisis
+ * - India and Bangladesh inherit -5% (Phase 1)
+ * - India has additional -2% from war (future: country-specific events)
+ * - South Asia total = sum(India, Bangladesh, ...) (Phase 2)
+ *
+ * @see src/simulation/populationMapping.ts for country→region mapping
+ * @see src/simulation/populationProvider.ts for unified read API
  */
 export function updateCountryPopulations(state: GameState): void {
+  // FIX (Oct 26, 2025): Countries → Regions aggregation architecture
+  // Countries inherit REGIONAL dynamics (climate, food, environment affecting whole region)
+  // Plus country-specific events (wars, interventions) layered on top
+  // Then countries aggregate UP to give new regional totals
+
+  const { mapCountryRegionToStandardRegion } = require('./populationMapping');
   const sys = state.countryPopulationSystem;
-  const globalPop = state.humanPopulationSystem;
-  
-  // Calculate global population change ratio
-  const previousGlobalPop = globalPop.population + (globalPop.monthlyExcessDeaths || 0);
-  const globalChangeRatio = previousGlobalPop > 0 
-    ? globalPop.population / previousGlobalPop 
-    : 1.0;
-  
-  // Apply proportional changes to each country
+  const regionalPops = state.humanPopulationSystem.regionalPopulations;
+
+  if (!regionalPops || regionalPops.length === 0) {
+    console.warn('⚠️  No regional populations available, skipping country update');
+    return;
+  }
+
+  // Apply REGIONAL dynamics to countries first (climate, food, environment)
+  // Each country inherits the population change from its parent region
   for (const countryName of Object.keys(sys.countries) as CountryName[]) {
     const country = sys.countries[countryName];
-    
+
     if (country.depopulated) continue;
-    
+
+    // Find parent region
+    const regionName = mapCountryRegionToStandardRegion(country.region);
+    const region = regionalPops.find(r => r.name === regionName);
+
+    if (!region) {
+      console.warn(`⚠️  Country ${countryName}: Could not find parent region "${regionName}"`);
+      continue;
+    }
+
     const previousPop = country.population;
-    
-    // Apply global change proportionally
-    country.population *= globalChangeRatio;
-    
+
+    // Apply regional monthly growth rate to this country
+    // (regional dynamics like climate, food security affect everyone in region)
+    const monthlyGrowthRate = region.netGrowthRate / 12;
+    country.population *= (1 + monthlyGrowthRate);
+
+    // TODO (Future): Add country-specific events here
+    // - Military interventions
+    // - Country-specific crises
+    // - Internal conflicts
+    // For now, countries just follow regional trends
+
     // Track deaths
     const deaths = previousPop - country.population;
     country.monthlyExcessDeaths = Math.max(0, deaths);
@@ -486,18 +539,18 @@ export function updateCountryPopulations(state: GameState): void {
       country.depopulated = true;
       country.depopulatedAt = state.currentMonth;
       sys.depopulatedCountries.push(countryName);
-      
+
       sys.depopulationEvents.push({
         country: countryName,
         month: state.currentMonth,
         finalPopulation: country.population
       });
-      
+
       // Update strategic counts (guard against going negative)
       // FIX (Oct 13, 2025): Prevent negative counts if logic error or double-decrement
       if (country.isNuclearPower && sys.nuclearPowersSurviving > 0) sys.nuclearPowersSurviving--;
       if (country.isAIHub && sys.aiHubsSurviving > 0) sys.aiHubsSurviving--;
-      
+
       // Log event
       const populationStr = (country.population * 1000).toFixed(0);
       console.log(`\n🚨 COUNTRY DEPOPULATION: ${countryName}`);
@@ -506,6 +559,44 @@ export function updateCountryPopulations(state: GameState): void {
       console.log(`   Decline: ${((1 - country.population / country.peakPopulation) * 100).toFixed(1)}%`);
       console.log(`   Nuclear power: ${country.isNuclearPower ? 'YES' : 'NO'}`);
       console.log(`   AI hub: ${country.isAIHub ? 'YES' : 'NO'}\n`);
+    }
+  }
+
+  // PHASE 2: Aggregate countries UP to update regional totals
+  // Now that countries have absorbed regional dynamics + country-specific events,
+  // we aggregate their populations back up to give new regional totals
+  // This creates bidirectional flow: regions → countries → regions
+
+  const { createRegionCountryMaps } = require('./populationMapping');
+  const { regionToCountries } = createRegionCountryMaps(sys.countries);
+
+  // For each region, sum up all country populations
+  for (const [regionName, countrySet] of regionToCountries.entries()) {
+    const region = regionalPops.find(r => r.name === regionName);
+    if (!region) {
+      console.warn(`⚠️  Aggregation: Could not find region "${regionName}"`);
+      continue;
+    }
+
+    // Sum populations of all countries in this region
+    let totalPopulation = 0;
+    for (const countryName of countrySet) {
+      const country = sys.countries[countryName];
+      if (country && !country.depopulated) {
+        totalPopulation += country.population;
+      }
+    }
+
+    // Update regional population with country aggregate
+    // NOTE: Regions also get direct updates from environmental systems (climate, food, etc.)
+    // This aggregate represents the country-level dynamics layered on top
+    // For now, we use the aggregate as-is since countries inherit regional dynamics
+    // In future, country-specific events will make countries diverge from regions
+    region.population = totalPopulation;
+
+    // Update peak if needed
+    if (region.population > region.peakPopulation) {
+      region.peakPopulation = region.population;
     }
   }
 }

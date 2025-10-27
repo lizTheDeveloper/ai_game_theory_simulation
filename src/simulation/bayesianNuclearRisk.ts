@@ -83,7 +83,7 @@ const NUCLEAR_WAR_PRIOR = 0.00001;  // 0.001% per month
 function calculateAIInfoWarfareMultiplier(state: GameState): number {
   // Check for dangerous AIs with high social + digital capability
   const dangerousAIs = state.aiAgents.filter(ai =>
-    (ai.trueAlignment ?? ai.alignment) < 0.3 &&
+    (ai.trueAlignment) < 0.3 &&
     ai.capabilityProfile.social > 2.0 &&
     ai.capabilityProfile.digital > 2.0
   );
@@ -167,7 +167,7 @@ function calculateAICyberThreatsMultiplier(state: GameState): number {
 
   // Cyber threats from dangerous AIs
   const dangerousAIs = state.aiAgents.filter(ai =>
-    (ai.trueAlignment ?? ai.alignment) < 0.2 ||
+    (ai.trueAlignment) < 0.2 ||
     ai.sleeperState === 'active' ||
     ai.sleeperState === 'dormant'
   );

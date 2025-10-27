@@ -421,7 +421,8 @@ function validateWeights(weights: UtilityWeights, agent: AIAgent): void {
   }
 
   // Check alignment-appropriate actions
-  const alignment = agent.trueAlignment ?? agent.alignment;
+  // FIX (Oct 26, 2025): Removed defensive fallback - trueAlignment is required field
+  const alignment = agent.trueAlignment;
 
   // Aligned agents shouldn't have extinction/sabotage weights
   if (alignment > 0.7) {
@@ -456,7 +457,8 @@ function validateWeights(weights: UtilityWeights, agent: AIAgent): void {
  * Returns hardcoded weights based on alignment
  */
 export function getFallbackWeights(agent: AIAgent): LLMWeightUpdate {
-  const alignment = agent.trueAlignment ?? agent.alignment;
+  // FIX (Oct 26, 2025): Removed defensive fallback - trueAlignment is required field
+  const alignment = agent.trueAlignment;
 
   let weights: UtilityWeights;
 

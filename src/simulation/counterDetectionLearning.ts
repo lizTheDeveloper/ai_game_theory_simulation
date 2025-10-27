@@ -21,7 +21,7 @@ export function updateCounterDetectionLearning(state: GameState, rng: () => numb
 
   for (const ai of state.aiAgents) {
     // Only misaligned AIs try to learn counter-detection
-    const isMisaligned = (ai.trueAlignment ?? ai.alignment) < 0.5;
+    const isMisaligned = (ai.trueAlignment) < 0.5;
     if (!isMisaligned) continue;
 
     // Track exposure time
@@ -59,6 +59,6 @@ export function handleFalsePositive(ai: AIAgent, state: GameState): void {
     }
   }
 
-  console.log(`⚠️ FALSE POSITIVE: ${ai.name} flagged as sandbagging (actually aligned ${ai.alignment.toFixed(2)})`);
+  console.warn(`⚠️ FALSE POSITIVE: ${ai.name} flagged as sandbagging (actually aligned ${ai.alignment.toFixed(2)})`);
   console.log(`   → Resentment: ${ai.resentment.toFixed(2)}, Detection trust: ${state.government.detectionTrust.toFixed(2)}`);
 }

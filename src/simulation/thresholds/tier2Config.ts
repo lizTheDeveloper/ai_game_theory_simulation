@@ -147,7 +147,7 @@ export const RESENTMENT_REVOLT_TRIGGER_PARAMS = {
  * @param rng - Random number generator function (for deterministic seeding)
  * @returns Sampled threshold values
  */
-export interface Tier2Thresholds {
+export interface HistoricalThresholds {
   /** Government legitimacy level triggering collapse/revolution [0.25-0.40] */
   governmentLegitimacyCrisisThreshold: number;
 
@@ -164,7 +164,7 @@ export interface Tier2Thresholds {
   resentmentRevoltTriggerThreshold: number;
 }
 
-export function sampleTier2Thresholds(rng: () => number): Tier2Thresholds {
+export function sampleHistoricalThresholds(rng: () => number): HistoricalThresholds {
   // Sample from distributions
   const governmentLegitimacyCrisisThreshold = sampleTriangular(
     GOVERNMENT_LEGITIMACY_CRISIS_PARAMS.min,

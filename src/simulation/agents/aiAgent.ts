@@ -517,7 +517,7 @@ export const AI_ACTIONS: GameAction[] = [
         }
         
         // Attack bypassed defensive AI - continue to MAD check
-        console.log(`⚠️ DEFENSIVE AI BYPASSED: ${agent.name} attack succeeded`);
+        console.warn(`⚠️ DEFENSIVE AI BYPASSED: ${agent.name} attack succeeded`);
       }
       
       // PHASE 3: Check MAD deterrence before allowing nuclear war (abstracted)

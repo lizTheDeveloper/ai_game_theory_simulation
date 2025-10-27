@@ -639,12 +639,12 @@ export function logSufferingMetrics(state: GameState): void {
 
   // Dystopia detection
   if (detection.activeDystopias.length > 0) {
-    console.log(`  ⚠️ Active Dystopias: ${detection.activeDystopias.join(', ')}`);
+    console.warn(`  ⚠️ Active Dystopias: ${detection.activeDystopias.join(', ')}`);
   }
 
   // Data quality
   console.log(`  Data Quality: ${dataQuality.highConfidenceCountriesCount}/${dataQuality.authoritarianCountriesCount + dataQuality.conflictZonesCount + dataQuality.highConfidenceCountriesCount} high confidence`);
   if (dataQuality.authoritarianCountriesCount > 0) {
-    console.log(`  ⚠️ ${dataQuality.authoritarianCountriesCount} authoritarian regimes (likely data fabrication)`);
+    console.warn(`  ⚠️ ${dataQuality.authoritarianCountriesCount} authoritarian regimes (likely data fabrication)`);
   }
 }

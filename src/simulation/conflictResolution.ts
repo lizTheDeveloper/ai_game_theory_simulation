@@ -124,7 +124,7 @@ function updateDiplomaticAI(peace: ConflictResolutionState, state: GameState): v
   let avgAlignment = 0;
   
   for (const ai of aiAgents) {
-    const alignment = ai.trueAlignment ?? ai.alignment;
+    const alignment = ai.trueAlignment;
     const socialCap = ai.capabilityProfile?.social || ai.capability * 0.3;
     const cognitiveCap = ai.capabilityProfile?.cognitive || ai.capability * 0.3;
     
@@ -212,7 +212,7 @@ function updateCyberDefense(peace: ConflictResolutionState, state: GameState): v
   // High-alignment AI → defense advantage (cooperative)
   // Low-alignment AI → offense advantage (adversarial)
   const avgAlignment = aiAgents.length > 0 ?
-    aiAgents.reduce((sum, ai) => sum + (ai.trueAlignment ?? ai.alignment), 0) / aiAgents.length : 0.5;
+    aiAgents.reduce((sum, ai) => sum + (ai.trueAlignment), 0) / aiAgents.length : 0.5;
   
   const alignmentEffect = (avgAlignment - 0.5) * 0.8; // -0.4 to +0.4
   const investmentEffect = cyberInvestment > 30 ? 0.3 : 0; // Explicit defense prioritization

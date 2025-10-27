@@ -1655,16 +1655,22 @@ timestamp: state.currentMonth,
     energyCost: 5,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.amazon) return false;
-      const amazon = state.specificTippingPoints?.amazon;
+      if (!state.specificTippingPoints?.amazon) {
+        throw new Error(`❌ specificTippingPoints.amazon is undefined at month ${state.currentMonth} in emergency_amazon_protection.canExecute`);
+      }
+      const amazon = state.specificTippingPoints.amazon;
       if (state.government.resources === undefined) {
         throw new Error('❌ state.government.resources is undefined in governmentAgent:1658 - initialization bug');
       }
       // Trigger when near threshold (23%) but not yet crossed (25%)
       return amazon.deforestation > 23 && !amazon.triggered && state.government.resources > 5;
     },
-    
-    execute: (state, agentId, random = Math.random) => {      const amazon = state.specificTippingPoints?.amazon;
+
+    execute: (state, agentId, random = Math.random) => {
+      if (!state.specificTippingPoints?.amazon) {
+        throw new Error(`❌ specificTippingPoints.amazon is undefined at month ${state.currentMonth} in emergency_amazon_protection.execute`);
+      }
+      const amazon = state.specificTippingPoints.amazon;
       
       // Reduce deforestation rate significantly
       // This will be applied in updateAmazonRainforest()
@@ -1696,10 +1702,10 @@ timestamp: state.currentMonth,
           severity: 'info',
           agent: 'government',
           title: 'Emergency Amazon Protection',
-          description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon?.deforestation?.toFixed(1) ?? 'unknown'}% deforested.`,
+          description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
           effects: { deforestation: -0.5 }
         }],
-        message: `Emergency Amazon protection deployed (deforestation: ${amazon?.deforestation?.toFixed(1) ?? 'unknown'}%)`
+        message: `Emergency Amazon protection deployed (deforestation: ${amazon.deforestation.toFixed(1)}%)`
       };
     }
   },
@@ -1712,16 +1718,22 @@ timestamp: state.currentMonth,
     energyCost: 3,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.coral) return false;
-      const coral = state.specificTippingPoints?.coral;
+      if (!state.specificTippingPoints?.coral) {
+        throw new Error(`❌ specificTippingPoints.coral is undefined at month ${state.currentMonth} in fund_coral_restoration.canExecute`);
+      }
+      const coral = state.specificTippingPoints.coral;
       if (state.government.resources === undefined) {
         throw new Error('❌ state.government.resources is undefined in governmentAgent:1715 - initialization bug');
       }
       // Trigger when coral health drops below 50%
       return coral.healthPercentage < 50 && state.government.resources > 3;
     },
-    
-    execute: (state, agentId, random = Math.random) => {      const coral = state.specificTippingPoints?.coral;
+
+    execute: (state, agentId, random = Math.random) => {
+      if (!state.specificTippingPoints?.coral) {
+        throw new Error(`❌ specificTippingPoints.coral is undefined at month ${state.currentMonth} in fund_coral_restoration.execute`);
+      }
+      const coral = state.specificTippingPoints.coral;
       
       // Fund coral restoration
       if (!state.government.environmentalInterventions) {
@@ -1751,10 +1763,10 @@ timestamp: state.currentMonth,
           severity: 'info',
           agent: 'government',
           title: 'Coral Reef Restoration Funding',
-          description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral?.healthPercentage?.toFixed(1) ?? 'unknown'}%.`,
+          description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
           effects: { coralHealth: 0.3 }
         }],
-        message: `Coral restoration funded (health: ${coral?.healthPercentage?.toFixed(1) ?? 'unknown'}%)`
+        message: `Coral restoration funded (health: ${coral.healthPercentage.toFixed(1)}%)`
       };
     }
   },
@@ -1767,8 +1779,10 @@ timestamp: state.currentMonth,
     energyCost: 1,
     
     canExecute: (state) => {
-      if (!state.specificTippingPoints?.pollinators) return false;
-      const pollinators = state.specificTippingPoints?.pollinators;
+      if (!state.specificTippingPoints?.pollinators) {
+        throw new Error(`❌ specificTippingPoints.pollinators is undefined at month ${state.currentMonth} in ban_harmful_pesticides.canExecute`);
+      }
+      const pollinators = state.specificTippingPoints.pollinators;
       if (state.government.resources === undefined) {
         throw new Error('❌ state.government.resources is undefined in governmentAgent:1770 - initialization bug');
       }
@@ -1778,8 +1792,12 @@ timestamp: state.currentMonth,
              state.government.resources > 1 &&
              !state.government.environmentalInterventions?.pesticideBan;
     },
-    
-    execute: (state, agentId, random = Math.random) => {      const pollinators = state.specificTippingPoints?.pollinators;
+
+    execute: (state, agentId, random = Math.random) => {
+      if (!state.specificTippingPoints?.pollinators) {
+        throw new Error(`❌ specificTippingPoints.pollinators is undefined at month ${state.currentMonth} in ban_harmful_pesticides.execute`);
+      }
+      const pollinators = state.specificTippingPoints.pollinators;
       
       // Ban harmful pesticides
       if (!state.government.environmentalInterventions) {
@@ -1814,10 +1832,10 @@ timestamp: state.currentMonth,
           severity: 'info',
           agent: 'government',
           title: 'Neonicotinoid Pesticides Banned',
-          description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators?.populationPercentage?.toFixed(1) ?? 'unknown'}%.`,
+          description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
           effects: { pollinators: 0.5 }
         }],
-        message: `Pesticides banned (pollinators: ${pollinators?.populationPercentage?.toFixed(1) ?? 'unknown'}%)`
+        message: `Pesticides banned (pollinators: ${pollinators.populationPercentage.toFixed(1)}%)`
       };
     }
   },
@@ -2663,10 +2681,13 @@ export function selectGovernmentAction(
         // Calculate nuclear risk factors
         const nuclearRiskFactors = {
           // AI capabilities that threaten nuclear stability
-          dangerousAIs: state.aiAgents.filter(ai =>
-            (ai.trueAlignment ?? ai.alignment) < 0.3 &&
-            (ai.capabilityProfile.digital > 2.0 || ai.capabilityProfile.social > 2.0)
-          ).length,
+          dangerousAIs: state.aiAgents.filter(ai => {
+            if (typeof ai.trueAlignment !== 'number') {
+              throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name} at month ${state.currentMonth}`);
+            }
+            return ai.trueAlignment < 0.3 &&
+              (ai.capabilityProfile.digital > 2.0 || ai.capabilityProfile.social > 2.0);
+          }).length,
 
           // High bilateral tensions (legitimate default - array may be empty)
           highTensions: state.bilateralTensions?.filter(t =>
@@ -2770,10 +2791,24 @@ export function selectGovernmentAction(
         // Get environmental crisis severity
         const ecosystemCrisis = state.environmentalAccumulation?.ecosystemCrisisActive || false;
         const biodiversityLevel = state.environmentalAccumulation.biodiversityIndex;
-        // Tipping point properties use ?? because they're optional nested properties
-        const amazonThreat = (state.specificTippingPoints?.amazon?.deforestation ?? 0) > 23;
-        const coralThreat = (state.specificTippingPoints?.coral?.healthPercentage ?? 100) < 40;
-        const pollinatorThreat = (state.specificTippingPoints?.pollinators?.populationPercentage ?? 100) < 45;
+
+        // Validate specificTippingPoints - fail loudly if missing
+        if (!state.specificTippingPoints) {
+          throw new Error(`❌ specificTippingPoints is undefined at month ${state.currentMonth} in governmentAgent`);
+        }
+        if (!state.specificTippingPoints.amazon || typeof state.specificTippingPoints.amazon.deforestation !== 'number') {
+          throw new Error(`❌ amazon.deforestation is not a number at month ${state.currentMonth}`);
+        }
+        if (!state.specificTippingPoints.coral || typeof state.specificTippingPoints.coral.healthPercentage !== 'number') {
+          throw new Error(`❌ coral.healthPercentage is not a number at month ${state.currentMonth}`);
+        }
+        if (!state.specificTippingPoints.pollinators || typeof state.specificTippingPoints.pollinators.populationPercentage !== 'number') {
+          throw new Error(`❌ pollinators.populationPercentage is not a number at month ${state.currentMonth}`);
+        }
+
+        const amazonThreat = state.specificTippingPoints.amazon.deforestation > 23;
+        const coralThreat = state.specificTippingPoints.coral.healthPercentage < 40;
+        const pollinatorThreat = state.specificTippingPoints.pollinators.populationPercentage < 45;
         
         // MASSIVE boost during ecosystem crisis (25x priority)
         if (ecosystemCrisis) {

@@ -58,10 +58,22 @@ export function selectGovernmentAction(
   // P2.3 UPDATE (Oct 16, 2025): Use power-weighted trust for policy decisions
   // Elite preferences dominate policy-making (Gilens & Page 2014)
   const trustLevel = getTrustInAIForPolicy(state.society);
-  const threatLevel = state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length;
+
+  // AI threat metrics (Oct 27, 2025 ROOT CAUSE FIX)
+  // When no AIs exist, these have specific semantic meanings:
+  // - threatLevel = 0 (no threat if no AI agents)
+  // - avgAlignment = 1.0 (perfect alignment of empty set - no misalignment problem exists)
+  // This makes safety/control policies correctly de-prioritize when no AI threat exists
+  const threatLevel = state.aiAgents.length > 0
+    ? state.aiAgents.filter(ai => ai.escaped).length / state.aiAgents.length
+    : 0; // No escaped AIs = no threat
+
   // Use OBSERVABLE capability - government makes decisions based on what it can see, not hidden power
   const observableCapability = calculateObservableAICapability(state.aiAgents);
-  const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length;
+
+  const avgAlignment = state.aiAgents.length > 0
+    ? state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / state.aiAgents.length
+    : 1.0; // No AIs = no alignment problem (perfect by definition)
 
   let selectedAction = availableActions[0];
   let highestPriority = 0;
@@ -396,8 +408,9 @@ export function selectGovernmentAction(
           // FIX #8: AI capabilities that threaten nuclear stability (updated thresholds)
           // OLD: digital/social > 2.0 (too low with baseline 3.10)
           // NEW: > CAPABILITY_SYSTEMIC_RISK (3.5+, EU high-risk threshold)
+          // FIX (Oct 26, 2025): Removed defensive fallback - trueAlignment is required field
           dangerousAIs: state.aiAgents.filter(ai =>
-            (ai.trueAlignment ?? ai.alignment) < 0.3 &&
+            ai.trueAlignment < 0.3 &&
             (ai.capabilityProfile.digital > CAPABILITY_SYSTEMIC_RISK || ai.capabilityProfile.social > CAPABILITY_SYSTEMIC_RISK)
           ).length,
 

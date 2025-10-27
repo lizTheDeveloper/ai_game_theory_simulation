@@ -71,7 +71,7 @@ export const ResentmentRecoveryPhase = {
 
     // Warning for high resentment
     if (avgResentment > 0.7) {
-      console.log(`  ⚠️ High resentment (${avgResentment.toFixed(3)}) - utopia paths blocked`);
+      console.warn(`  ⚠️ High resentment (${avgResentment.toFixed(3)}) - utopia paths blocked`);
     }
 
     // Success indicator

@@ -22,7 +22,13 @@
 export { updateQualityOfLifeSystems, initializeQualityOfLifeSystems } from './core';
 
 // === AGGREGATION ===
-export { calculateQualityOfLife, calculateQualityOfLifeOptimized, DIMENSION_WEIGHTS, validateQoLSystems } from './aggregation';
+export {
+  calculateQualityOfLife,
+  calculateQualityOfLifeOptimized,
+  aggregateGlobalQoL,  // Oct 26, 2025: Regional → Global aggregation
+  DIMENSION_WEIGHTS,
+  validateQoLSystems
+} from './aggregation';
 
 // === SURVIVAL FUNDAMENTALS ===
 // FIX (Oct 25, 2025): Removed calculateFoodSecurity (now regional only)

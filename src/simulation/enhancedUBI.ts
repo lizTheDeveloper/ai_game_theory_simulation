@@ -40,7 +40,9 @@ export function initializeUBISystem(): UBISystem {
       educationAccess: 0,
       creativeSpaces: 0,
       volunteerPrograms: 0,
-      socialInfrastructure: 0
+      socialInfrastructure: 0,
+      // FIX (Oct 26, 2025): Initialize missing field discovered by Monte Carlo validation
+      skillLevel: 0                  // Baseline skill development level
     },
     
     workTransition: {

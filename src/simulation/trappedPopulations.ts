@@ -161,7 +161,7 @@ export function updateTrappedPopulations(state: GameState): void {
 
     // Logging (only if significant)
     if (trapped.totalTrapped > 50) { // >50 million trapped
-      console.log(`⚠️ INVOLUNTARY IMMOBILITY: ${trapped.totalTrapped.toFixed(1)}M people TRAPPED`);
+      console.warn(`⚠️ INVOLUNTARY IMMOBILITY: ${trapped.totalTrapped.toFixed(1)}M people TRAPPED`);
       console.log(`   Aspiring to migrate: ${trapped.aspiringToMigrate.toFixed(1)}M`);
       console.log(`   Able to afford migration: ${trapped.ableToMigrate.toFixed(1)}M`);
       console.log(`   MOBILITY GAP: ${trapped.mobilityGap.toFixed(1)}M`);

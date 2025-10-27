@@ -23,6 +23,7 @@
 
 import type { GameState, RNGFunction } from '@/types/game';
 import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchestrator';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 /**
  * Democracy Dynamics Phase
@@ -107,11 +108,25 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     // Civil Liberties Update
     // Research: Freedom House (2024) - surveillance tech → liberties erosion
     // DEMOCRACY RECOVERY (Tier 2): Added recovery mechanisms
-    const emergencyResponseActive = state.emergencyManagement?.activeResponses.some(
+    // emergencyManagement is always initialized with activeResponses array
+    if (!state.emergencyManagement) {
+      throw new Error(`❌ state.emergencyManagement is undefined at month ${state.currentMonth} in DemocracyDynamicsPhase.execute`);
+    }
+    if (!Array.isArray(state.emergencyManagement.activeResponses)) {
+      throw new Error(`❌ state.emergencyManagement.activeResponses is not an array at month ${state.currentMonth} in DemocracyDynamicsPhase.execute`);
+    }
+    const emergencyResponseActive = state.emergencyManagement.activeResponses.some(
       r => r.completed && r.effectiveness > 0.5
-    ) ?? false; // Legitimate default - emergency management may not exist yet
+    );
 
-    const surveillanceLevel = state.government.structuralChoices?.surveillanceLevel ?? 0; // Legitimate default - surveillance may not be set yet
+    // structuralChoices is always initialized with surveillanceLevel
+    if (!state.government.structuralChoices) {
+      throw new Error(`❌ state.government.structuralChoices is undefined at month ${state.currentMonth} in DemocracyDynamicsPhase.execute`);
+    }
+    if (typeof state.government.structuralChoices.surveillanceLevel !== 'number') {
+      throw new Error(`❌ state.government.structuralChoices.surveillanceLevel is not a number at month ${state.currentMonth} in DemocracyDynamicsPhase.execute`);
+    }
+    const surveillanceLevel = state.government.structuralChoices.surveillanceLevel;
     const libertiesChange = calculateCivilLibertiesChange(
       crisisPressure,
       aiManipulation,
@@ -211,7 +226,14 @@ function calculateCrisisPressure(state: GameState): number {
   }
 
   // Refugee crisis (displacement → xenophobia → strongman appeal)
-  const activeCrises = state.refugeeCrisisSystem?.activeRefugeeCrises?.length ?? 0; // Legitimate default - array may not exist yet
+  // refugeeCrisisSystem is always initialized with activeRefugeeCrises array
+  if (!state.refugeeCrisisSystem) {
+    throw new Error(`❌ state.refugeeCrisisSystem is undefined at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateCrisisPressure`);
+  }
+  if (!state.refugeeCrisisSystem.activeRefugeeCrises) {
+    throw new Error(`❌ state.refugeeCrisisSystem.activeRefugeeCrises is undefined at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateCrisisPressure`);
+  }
+  const activeCrises = state.refugeeCrisisSystem.activeRefugeeCrises.length;
   pressure += activeCrises * 0.05; // Each crisis adds 0.05
 
   // TIER 3: Emergency response reduces crisis pressure
@@ -247,7 +269,14 @@ function calculateAIManipulation(state: GameState): number {
       throw new Error('❌ agent.alignment is undefined in calculateAIManipulation:232 - initialization bug');
     }
     const alignment = agent.alignment;
-    const social = agent.capabilityProfile?.social ?? 0; // Legitimate default - AI may not have social capability yet
+    // capabilityProfile is always initialized for all agents
+    if (!agent.capabilityProfile) {
+      throw new Error(`❌ agent.capabilityProfile is undefined for agent ${agent.name} at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateAIManipulation`);
+    }
+    if (typeof agent.capabilityProfile.social !== 'number') {
+      throw new Error(`❌ agent.capabilityProfile.social is not a number for agent ${agent.name} at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateAIManipulation`);
+    }
+    const social = agent.capabilityProfile.social;
     return alignment < 0.5 && social > 3;
   });
 
@@ -282,13 +311,18 @@ function calculateGovernanceQuality(state: GameState): number {
   }
   const legitimacy = govt.legitimacy;
 
-  // Institutional capacity (if available from governanceQuality)
-  const institutionalCapacity = govt.governanceQuality?.institutionalCapacity ?? 0.5; // Legitimate default - may not be initialized yet
+  // governanceQuality is always initialized in initialization.ts
+  if (!govt.governanceQuality) {
+    throw new Error(`❌ govt.governanceQuality is undefined at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateGovernanceQuality`);
+  }
+  if (typeof govt.governanceQuality.institutionalCapacity !== 'number') {
+    throw new Error(`❌ govt.governanceQuality.institutionalCapacity is not a number at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateGovernanceQuality`);
+  }
+  if (typeof govt.governanceQuality.transparency !== 'number') {
+    throw new Error(`❌ govt.governanceQuality.transparency is not a number at month ${state.currentMonth} in DemocracyDynamicsPhase.calculateGovernanceQuality`);
+  }
 
-  // Transparency
-  const transparency = govt.governanceQuality?.transparency ?? 0.5; // Legitimate default - may not be initialized yet
-
-  return (legitimacy + institutionalCapacity + transparency) / 3;
+  return (legitimacy + govt.governanceQuality.institutionalCapacity + govt.governanceQuality.transparency) / 3;
 }
 
 /**

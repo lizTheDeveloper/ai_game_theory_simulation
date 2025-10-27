@@ -10,6 +10,25 @@
 
 ---
 
+## Architecture Review Summary (October 26, 2025)
+
+**Status:** ✅ APPROVED WITH MINOR CHANGES
+
+**Architecture-Skeptic Review:** Plan reviewed after correcting timing assumptions (1 step = 1 month = ~30s real time, saves every 5 months = 2.5 minutes). Key findings:
+
+- **Memory allocation:** 21 KB/s (not 19.2 MB/s as initially calculated) - **no problem**
+- **Original concerns:** 5 "CRITICAL" issues reduced to 3 minor improvements
+- **Revised timeline:** 11-16 hours (down from initial 30-40h estimate)
+
+**Three improvements added:**
+1. **RNG call counter persistence** (Phase 2.3) - 30 min - Ensures perfect determinism after resume
+2. **Save rotation system** (Phase 1.3) - 1-2 hrs - Prevents unbounded storage growth
+3. **Semantic versioning** (Phase 3.1) - 2-3 hrs - Clearer than git commit hashes, enables migration logic
+
+**Architecture verdict:** "Perfectly fine architecture. 21 KB/s at 2.5-minute intervals = zero pressure."
+
+---
+
 ## Phase 1: Core State Persistence (4-6 hours)
 
 ### 1.1 Extend EventDatabase to Store Simulation State
@@ -64,6 +83,94 @@ await eventDatabase.saveSimulation(simulationId, currentState);
 - Handle save failures gracefully (log, don't crash)
 
 **Estimated:** 2-3 hours
+
+### 1.3 Save Rotation to Prevent Unbounded Growth
+
+**Problem:** Without rotation, IndexedDB storage grows without bound. At 640 KB per save and 1 save every 5 months (2.5 minutes), a 120-month simulation creates 24 snapshots (~15 MB). Multiple simulations compound this.
+
+**Solution:** Implement automatic save rotation with configurable retention policies.
+
+**File:** `src/lib/eventDatabase.ts`
+
+```typescript
+interface SaveRotationConfig {
+  maxSavesPerSimulation: number;    // e.g., 10 (keep last 10 saves)
+  rotationStrategy: 'fifo' | 'smart'; // FIFO or smart spacing
+}
+
+const DEFAULT_ROTATION_CONFIG: SaveRotationConfig = {
+  maxSavesPerSimulation: 10,
+  rotationStrategy: 'smart'  // Keep saves with smart spacing
+};
+
+/**
+ * Smart rotation: Keep recent saves dense, older saves sparse
+ * Example (10 saves max):
+ * - Last 5 saves: Keep all (dense recent history)
+ * - 6-20 saves back: Keep every other
+ * - 21+ saves back: Keep every 5th
+ */
+async function rotateSaves(simulationId: string, config = DEFAULT_ROTATION_CONFIG) {
+  const saves = await db.getAll('simulations')
+    .then(all => all.filter(s => s.id.startsWith(simulationId))
+                   .sort((a, b) => b.lastUpdated - a.lastUpdated));
+
+  if (saves.length <= config.maxSavesPerSimulation) {
+    return; // No rotation needed
+  }
+
+  const toDelete: string[] = [];
+
+  if (config.rotationStrategy === 'fifo') {
+    // Simple FIFO: Delete oldest saves
+    toDelete.push(...saves.slice(config.maxSavesPerSimulation).map(s => s.id));
+  } else {
+    // Smart spacing: Keep recent dense, older sparse
+    const toKeep = new Set<string>();
+
+    // Always keep most recent save
+    toKeep.add(saves[0].id);
+
+    // Keep last 5 saves (dense recent history)
+    for (let i = 0; i < Math.min(5, saves.length); i++) {
+      toKeep.add(saves[i].id);
+    }
+
+    // Keep every other from 6-20
+    for (let i = 5; i < Math.min(20, saves.length); i += 2) {
+      if (toKeep.size < config.maxSavesPerSimulation) {
+        toKeep.add(saves[i].id);
+      }
+    }
+
+    // Keep every 5th from 21+
+    for (let i = 20; i < saves.length; i += 5) {
+      if (toKeep.size < config.maxSavesPerSimulation) {
+        toKeep.add(saves[i].id);
+      }
+    }
+
+    // Mark saves not in toKeep for deletion
+    toDelete.push(...saves.filter(s => !toKeep.has(s.id)).map(s => s.id));
+  }
+
+  // Delete old saves
+  for (const id of toDelete) {
+    await db.delete('simulations', id);
+  }
+
+  console.log(`[SaveRotation] Deleted ${toDelete.length} old saves for ${simulationId}`);
+}
+```
+
+**Integration:** Call `rotateSaves()` after each save in Phase 1.2.
+
+**Rationale:**
+- Prevents unbounded storage growth (critical for long simulations)
+- Smart strategy preserves ability to resume from various points
+- Users can still resume recent progress without storage bloat
+
+**Estimated time:** 1-2 hours
 
 ---
 
@@ -130,7 +237,7 @@ When page loads, the system checks for the most recent compatible simulation:
 │  │ QoL: 68%           │  │ QoL: 72%           │  │ QoL: 31%           │ │
 │  │ AI Cap: 3.2        │  │ AI Cap: 2.8        │  │ AI Cap: 4.8        │ │
 │  │                      │  │                      │  │                      │ │
-│  │ 2 min ago • v7a2d3  │  │ 3 days ago • v7a2d3 │  │ 1 week ago • v6b1c2 │ │
+│  │ 2 min ago • v1.1.0  │  │ 3 days ago • v1.1.0 │  │ 1 week ago • v1.0.2 │ │
 │  │                      │  │                      │  │  OLD VERSION        │ │
 │  │ [CONTINUE] [···]    │  │ [CONTINUE] [···]    │  │ [DOWNLOAD] [···]    │ │
 │  └─────────────────────┘  └─────────────────────┘  └─────────────────────┘ │
@@ -159,14 +266,14 @@ When page loads, the system checks for the most recent compatible simulation:
 │                                                                                  │
 │  SEED      SCENARIO           MONTH   POP    QOL   AI    SAVED       VERSION    │
 │  ──────────────────────────────────────────────────────────────────────────────  │
-│  42000  ● Historical Events    15/120  7.8B   68%   3.2   2 min ago   v7a2d3  ▼ │
+│  42000  ● Historical Events    15/120  7.8B   68%   3.2   2 min ago   v1.1.0  ▼ │
 │         └─ Environmental crisis cascade detected                                 │
 │         └─ 3 active upward spirals                                              │
 │         └─ [CONTINUE] [DOWNLOAD] [DELETE]                                       │
 │                                                                                  │
-│  55123  ○ Optimistic           8/120   8.1B   72%   2.8   3 days ago  v7a2d3  ► │
+│  55123  ○ Optimistic           8/120   8.1B   72%   2.8   3 days ago  v1.1.0  ► │
 │                                                                                  │
-│  77890  ⚠ Pessimistic         120/120  2.1B   31%   4.8   1 week ago  v6b1c2  ► │
+│  77890  ⚠ Pessimistic         120/120  2.1B   31%   4.8   1 week ago  v1.0.2  ► │
 │                                                                                  │
 │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ │
 │                                                                                  │
@@ -188,13 +295,13 @@ When attempting to load an incompatible version:
 │  This simulation was created with a different version           │
 │  of the simulation engine and cannot be resumed.                │
 │                                                                  │
-│  Simulation Version: v6b1c2 (7 days old)                       │
-│  Current Version:    v7a2d3                                    │
+│  Simulation Version: v1.0.2 (7 days old)                       │
+│  Current Version:    v2.0.0                                    │
 │                                                                  │
-│  Changes since this simulation:                                 │
-│  • Nuclear winter cascade mechanics                            │
-│  • Organization-to-country linkage fix                         │
-│  • Enhanced environmental accumulation                         │
+│  Breaking changes since this simulation:                        │
+│  • Major GameState restructuring (v2.0.0)                      │
+│  • AI agent capability model redesign                          │
+│  • Environmental systems refactoring                           │
 │                                                                  │
 │  You can still download this simulation for analysis.          │
 │                                                                  │
@@ -261,7 +368,7 @@ When attempting to load an incompatible version:
 │  │                 │ Scenario:         Historical Events                   │ │
 │  │                 │ Started:          Oct 26, 2025 14:32:15              │ │
 │  │                 │ Last Saved:       Oct 26, 2025 14:34:28 (2 min ago)  │ │
-│  │                 │ Version:          v7a2d3c (compatible)               │ │
+│  │                 │ Version:          v1.1.0 (compatible)               │ │
 │  │                 │ Storage Size:     3.2 MB                             │ │
 │  ├─────────────────┼─────────────────────────────────────────────────────┤ │
 │  │ Progress        │ Current Month:    15 / 120                           │ │
@@ -342,11 +449,20 @@ case 'resumeFromState': {
   currentState = state;
   previousSnapshot = captureSnapshot(currentState);
 
-  // Reconstruct RNG from state
+  // Reconstruct RNG from state with explicit call counter
   rng = seedRandom(`${currentState.seed}`);
-  // Skip forward RNG to current position (currentState.currentMonth steps)
-  for (let i = 0; i < currentState.currentMonth; i++) {
-    rng();
+  // Use stored RNG call counter instead of skipping forward
+  // This ensures perfect determinism even with variable RNG calls per step
+  if (currentState.rngCallCounter !== undefined) {
+    for (let i = 0; i < currentState.rngCallCounter; i++) {
+      rng();
+    }
+  } else {
+    // Legacy fallback: estimate based on currentMonth
+    // Note: This is approximate and may cause slight RNG desync
+    for (let i = 0; i < currentState.currentMonth; i++) {
+      rng();
+    }
   }
 
   self.postMessage({
@@ -358,37 +474,178 @@ case 'resumeFromState': {
 }
 ```
 
+**IMPORTANT: Add RNG call counter tracking**
+
+To enable perfect RNG determinism after resume, add a call counter to GameState:
+
+```typescript
+// In src/types/game.ts
+interface GameState {
+  // ... existing fields
+  rngCallCounter?: number;  // Track total RNG calls for perfect resume determinism
+}
+```
+
+And increment it in the RNG wrapper:
+
+```typescript
+// In src/workers/simulationWorker.ts
+let rngCallCounter = 0;
+
+function rngWithCounter() {
+  rngCallCounter++;
+  return rng();
+}
+
+// Use rngWithCounter() instead of rng() throughout simulation
+// Update currentState.rngCallCounter before each save
+```
+
+**Rationale:** Different simulation steps may call RNG different numbers of times (variable agent actions, crisis checks). Storing an explicit counter ensures perfect reproducibility.
+
+**Estimated time:** 30 minutes
+
 **Estimated:** 3-4 hours
 
 ---
 
 ## Phase 3: Data Migration & Edge Cases (2-3 hours)
 
-### 3.1 Schema Versioning
+### 3.1 Schema Versioning with Semantic Versioning
+
+**Use semantic versioning (MAJOR.MINOR.PATCH) instead of git commit hashes for better clarity and migration logic.**
 
 Store version in `StoredSimulation.version`:
 
 ```typescript
-const SCHEMA_VERSION = '1.0';
+// Semantic versioning for simulation state
+const SIMULATION_STATE_VERSION = '1.0.0';
 
 interface StoredSimulation {
-  version: string;  // '1.0', '1.1', etc.
+  version: string;  // '1.0.0', '1.1.0', '2.0.0', etc.
   // ...
 }
 
-// On load, check version
+/**
+ * Parse semantic version string into comparable components
+ */
+function parseVersion(version: string): { major: number; minor: number; patch: number } {
+  const [major, minor, patch] = version.split('.').map(Number);
+  return { major, minor, patch };
+}
+
+/**
+ * Check if version is compatible
+ * - MAJOR version change: Breaking changes, cannot resume (data structure changed)
+ * - MINOR version change: New features, backward compatible (can resume with warnings)
+ * - PATCH version change: Bug fixes, fully compatible (can resume seamlessly)
+ */
+function isVersionCompatible(savedVersion: string, currentVersion: string): {
+  compatible: boolean;
+  requiresMigration: boolean;
+  canResume: boolean;
+} {
+  const saved = parseVersion(savedVersion);
+  const current = parseVersion(currentVersion);
+
+  // Major version mismatch = breaking changes
+  if (saved.major !== current.major) {
+    return { compatible: false, requiresMigration: false, canResume: false };
+  }
+
+  // Minor version older = might need migration
+  if (saved.minor < current.minor) {
+    return { compatible: true, requiresMigration: true, canResume: true };
+  }
+
+  // Same major.minor = fully compatible
+  return { compatible: true, requiresMigration: false, canResume: true };
+}
+
+// On load, check version compatibility
 async function loadSimulation(id: string) {
   const stored = await db.get(id);
+  const compatibility = isVersionCompatible(stored.version, SIMULATION_STATE_VERSION);
 
-  if (stored.version !== SCHEMA_VERSION) {
-    // Run migration
-    const migrated = migrateSimulation(stored, SCHEMA_VERSION);
+  if (!compatibility.canResume) {
+    throw new Error(
+      `Cannot resume simulation: version ${stored.version} is incompatible with current ${SIMULATION_STATE_VERSION}`
+    );
+  }
+
+  if (compatibility.requiresMigration) {
+    console.log(`[Migration] Migrating simulation from ${stored.version} to ${SIMULATION_STATE_VERSION}`);
+    const migrated = await migrateSimulation(stored, SIMULATION_STATE_VERSION);
     return migrated;
   }
 
   return stored;
 }
+
+/**
+ * Migration functions for version upgrades
+ */
+async function migrateSimulation(stored: StoredSimulation, targetVersion: string): Promise<StoredSimulation> {
+  const currentVersion = parseVersion(stored.version);
+  const target = parseVersion(targetVersion);
+
+  let state = stored.gameState;
+
+  // Apply migrations sequentially
+  if (currentVersion.major === 1 && currentVersion.minor === 0) {
+    // Migrate 1.0.x → 1.1.0: Add rngCallCounter
+    if (target.minor >= 1) {
+      state = migrate_1_0_to_1_1(state);
+      stored.version = '1.1.0';
+    }
+  }
+
+  // Future migrations go here
+  // if (currentVersion.major === 1 && currentVersion.minor === 1) {
+  //   if (target.minor >= 2) {
+  //     state = migrate_1_1_to_1_2(state);
+  //     stored.version = '1.2.0';
+  //   }
+  // }
+
+  stored.gameState = state;
+  return stored;
+}
+
+/**
+ * Example migration: Add RNG call counter to old saves
+ */
+function migrate_1_0_to_1_1(state: GameState): GameState {
+  if (state.rngCallCounter === undefined) {
+    // Estimate RNG calls based on current month (approximate)
+    state.rngCallCounter = state.currentMonth * 100; // Rough estimate
+    console.warn('[Migration] RNG call counter estimated - determinism may be slightly affected');
+  }
+  return state;
+}
 ```
+
+**Version Bump Guidelines:**
+
+- **MAJOR (1.0.0 → 2.0.0):** Breaking changes to GameState structure
+  - Example: Renaming core fields, removing systems, restructuring data
+  - Action: Block resume, offer download only
+
+- **MINOR (1.0.0 → 1.1.0):** New features, backward compatible
+  - Example: Adding new optional fields (rngCallCounter, new metrics)
+  - Action: Allow resume with automatic migration
+
+- **PATCH (1.0.0 → 1.0.1):** Bug fixes, no state changes
+  - Example: Fixing calculation bugs, performance improvements
+  - Action: Allow seamless resume
+
+**Rationale:**
+- **Semantic versioning is clearer** than git commit hashes for users
+- **Enables migration logic** based on version differences
+- **Better UX messaging** ("version 1.0 vs 2.0" clearer than "commit 7a2d3c vs 9f1e4b")
+- **Standard practice** familiar to developers
+
+**Estimated time:** 2-3 hours
 
 ### 3.2 Handle Corrupted State
 
@@ -534,19 +791,29 @@ UI:
 
 ### Save Frequency?
 
-**Option 1:** Every step (30 steps/second at 1x speed)
+**IMPORTANT:** 1 simulation step = 1 month of game time = ~30 seconds real time
+
+**Option 1:** Every step (1 save per 30 seconds real time)
 - **Pros:** Never lose progress
-- **Cons:** Heavy write load, potential performance impact
+- **Cons:** Unnecessary write frequency (21 KB every 30s = 42 KB/min)
 
-**Option 2:** Every 5-10 steps (~1-2 seconds)
-- **Pros:** Balanced write load
-- **Cons:** Lose up to 2 seconds of progress
+**Option 2:** Every 5 steps (~2.5 minutes real time)
+- **Pros:** Balanced write load (21 KB per 2.5 minutes)
+- **Cons:** Lose up to 5 months (2.5 minutes) of progress
+- **RECOMMENDED:** This is the target cadence
 
-**Option 3:** On pause + every 30 seconds
+**Option 3:** On pause + every 10 steps (~5 minutes real time)
 - **Pros:** Minimal write load
-- **Cons:** Lose up to 30 seconds
+- **Cons:** Lose up to 10 months (5 minutes) of progress
 
-**Recommendation:** Start with Option 2, make configurable if needed.
+**Recommendation:** Start with Option 2 (every 5 steps = 2.5 minutes), make configurable if needed.
+
+**Memory Analysis:**
+- Save size: ~640 KB per snapshot (deep-cloned GameState)
+- Save frequency: Every 5 months (2.5 minutes)
+- Memory allocation rate: 21 KB/s
+- 120-month simulation: 24 saves × 640 KB = ~15 MB total
+- **Verdict:** Perfectly fine for IndexedDB (50-100 MB typical quota)
 
 ---
 
@@ -759,8 +1026,8 @@ const containerVariants = {
    - **Rationale:** Ensures perfect determinism after resume
 
 5. **Version compatibility handling?**
-   - **Decision:** Store git commit hash, block resume if different
-   - **Rationale:** Prevents corrupted state from incompatible code
+   - **Decision:** Store semantic version (MAJOR.MINOR.PATCH), enable migration for minor versions, block major version mismatches
+   - **Rationale:** Clearer than git commit hashes, enables automatic migration logic, prevents corrupted state from breaking changes
 
 6. **Download format?**
    - **Decision:** Uncompressed JSON with readable formatting
@@ -1057,8 +1324,9 @@ const buttonSecondaryClasses = `
 <Alert variant="warning" className="border-amber-400/40">
   <AlertTitle>Version Mismatch</AlertTitle>
   <AlertDescription>
-    This simulation was created with version {oldVersion} and cannot
-    be resumed with the current version {currentVersion}.
+    This simulation was created with version 1.0.2 and cannot
+    be resumed with the current version 2.0.0 (major version change).
+    Breaking changes were made to the simulation engine structure.
     You can still download or view the event history.
   </AlertDescription>
 </Alert>

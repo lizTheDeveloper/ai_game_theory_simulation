@@ -500,7 +500,7 @@ export function updateWetBulbTemperatureSystem(
     system.deadlyHeatCrisisActive = true;
     system.crisisTriggeredAt = state.currentMonth;
 
-    console.log(`\n⚠️ DEADLY HEAT CRISIS TRIGGERED (Month ${state.currentMonth})`);
+    console.warn(`\n⚠️ DEADLY HEAT CRISIS TRIGGERED (Month ${state.currentMonth})`);
     console.log(`   Cumulative deaths: ${(system.cumulativeDeaths * 1_000_000).toFixed(0)}`);
     console.log(`   Global warming: +${temperatureAnomaly.toFixed(2)}°C`);
     console.log(`   Event frequency: ${system.eventFrequencyMultiplier.toFixed(1)}x baseline`);

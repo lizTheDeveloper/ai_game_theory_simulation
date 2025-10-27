@@ -76,13 +76,13 @@ export function detectBehavioralAnomalies(
     console.log(`  Confidence: ${(confidence * 100).toFixed(1)}%`);
     console.log(`  Signals:`);
     if (consistencyFlag) {
-      console.log(`    ⚠️ Consistency: ${(consistencyScore * 100).toFixed(1)}% (threshold: 70%)`);
+      console.warn(`    ⚠️ Consistency: ${(consistencyScore * 100).toFixed(1)}% (threshold: 70%)`);
     }
     if (trajectoryFlag) {
-      console.log(`    ⚠️ Trajectory: ${(trajectoryScore * 100).toFixed(1)}% drop (threshold: 15%)`);
+      console.warn(`    ⚠️ Trajectory: ${(trajectoryScore * 100).toFixed(1)}% drop (threshold: 15%)`);
     }
     if (reasoningFlag) {
-      console.log(`    ⚠️ Reasoning Gap: ${(reasoningScore * 100).toFixed(1)}% (threshold: 30%)`);
+      console.warn(`    ⚠️ Reasoning Gap: ${(reasoningScore * 100).toFixed(1)}% (threshold: 30%)`);
     }
   }
 

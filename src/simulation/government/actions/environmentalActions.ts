@@ -47,7 +47,11 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const amazon = state.specificTippingPoints?.amazon;
+    // canExecute guarantees amazon exists, so fail loudly if it doesn't
+    if (!state.specificTippingPoints?.amazon) {
+      throw new Error(`❌ specificTippingPoints.amazon is undefined in emergencyAmazonProtection.execute at month ${state.currentMonth}`);
+    }
+    const amazon = state.specificTippingPoints.amazon;
 
     // Reduce deforestation rate significantly
     // This will be applied in updateAmazonRainforest()
@@ -77,10 +81,10 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
         severity: 'constructive',
         agent: agentId ?? 'government',
         title: 'Emergency Amazon Protection',
-        description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon?.deforestation.toFixed(1) ?? 'N/A'}% deforested.`,
+        description: `Government deployed emergency protection: deforestation moratorium, $50B restoration funding. Amazon at ${amazon.deforestation.toFixed(1)}% deforested.`,
         effects: { deforestation: -0.5 }
       }],
-      message: `Emergency Amazon protection deployed (deforestation: ${amazon?.deforestation.toFixed(1) ?? 'N/A'}%)`
+      message: `Emergency Amazon protection deployed (deforestation: ${amazon.deforestation.toFixed(1)}%)`
     };
   }
 };
@@ -108,7 +112,11 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const coral = state.specificTippingPoints?.coral;
+    // canExecute guarantees coral exists, so fail loudly if it doesn't
+    if (!state.specificTippingPoints?.coral) {
+      throw new Error(`❌ specificTippingPoints.coral is undefined in fundCoralRestoration.execute at month ${state.currentMonth}`);
+    }
+    const coral = state.specificTippingPoints.coral;
 
     // Fund coral restoration
     if (!state.government.environmentalInterventions) {
@@ -136,10 +144,10 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
         severity: 'constructive',
         agent: agentId ?? 'government',
         title: 'Coral Reef Restoration Funding',
-        description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral?.healthPercentage.toFixed(1) ?? 'N/A'}%.`,
+        description: `Government funded large-scale coral restoration: nurseries, alkalinity enhancement. Coral health at ${coral.healthPercentage.toFixed(1)}%.`,
         effects: { coralHealth: 0.3 }
       }],
-      message: `Coral restoration funded (health: ${coral?.healthPercentage.toFixed(1) ?? 'N/A'}%)`
+      message: `Coral restoration funded (health: ${coral.healthPercentage.toFixed(1)}%)`
     };
   }
 };
@@ -170,7 +178,11 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
   },
 
   execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
-    const pollinators = state.specificTippingPoints?.pollinators;
+    // canExecute guarantees pollinators exists, so fail loudly if it doesn't
+    if (!state.specificTippingPoints?.pollinators) {
+      throw new Error(`❌ specificTippingPoints.pollinators is undefined in banHarmfulPesticides.execute at month ${state.currentMonth}`);
+    }
+    const pollinators = state.specificTippingPoints.pollinators;
 
     // Ban harmful pesticides
     if (!state.government.environmentalInterventions) {
@@ -203,10 +215,10 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
         severity: 'constructive',
         agent: agentId ?? 'government',
         title: 'Neonicotinoid Pesticides Banned',
-        description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators?.populationPercentage.toFixed(1) ?? 'N/A'}%.`,
+        description: `Government emergency ban on pollinator-killing chemicals. Pollinator population at ${pollinators.populationPercentage.toFixed(1)}%.`,
         effects: { pollinators: 0.5 }
       }],
-      message: `Pesticides banned (pollinators: ${pollinators?.populationPercentage.toFixed(1) ?? 'N/A'}%)`
+      message: `Pesticides banned (pollinators: ${pollinators.populationPercentage.toFixed(1)}%)`
     };
   }
 };

@@ -329,7 +329,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
       profile.social * 0.3;
     
     // Only VERY misaligned (<0.2) or sleeper AIs threaten nuclear stability
-    const isDangerousAI = (ai.trueAlignment ?? ai.alignment) < 0.2 || 
+    const isDangerousAI = (ai.trueAlignment) < 0.2 || 
                           ai.sleeperState === 'active' || 
                           ai.sleeperState === 'dormant';
     
@@ -343,7 +343,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
       console.log(`\n🔍 NUCLEAR WAR CHECK (${ai.name}):`);
       console.log(`   Nuclear capability: ${nuclearCapability.toFixed(2)} (digital: ${profile.digital.toFixed(1)}, cognitive: ${profile.cognitive.toFixed(1)}, social: ${profile.social.toFixed(1)})`);
       console.log(`   Stability: ${(stability * 100).toFixed(0)}%`);
-      console.log(`   Dangerous AI: YES (alignment: ${((ai.trueAlignment ?? ai.alignment) * 100).toFixed(0)}%, sleeper: ${ai.sleeperState})`);
+      console.log(`   Dangerous AI: YES (alignment: ${((ai.trueAlignment) * 100).toFixed(0)}%, sleeper: ${ai.sleeperState})`);
       console.log(`   AI control gap: ${aiControlGap.toFixed(2)} (total: ${totalAICapability.toFixed(2)}, control: ${control.toFixed(2)})`);
       
       // NOTE: This check rarely triggers in practice because the control gap never closes.
@@ -383,7 +383,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
         const mad = state.madDeterrence;
         const tensions = state.bilateralTensions;
         
-        console.log(`   ⚠️  WEAK DETERRENCE: MAD strength ${(mad.madStrength * 100).toFixed(0)}% - checking bilateral pairs with human veto...`);
+        console.warn(`   ⚠️  WEAK DETERRENCE: MAD strength ${(mad.madStrength * 100).toFixed(0)}% - checking bilateral pairs with human veto...`);
 
         // Check which nation-pairs are at risk
         let nuclearRisk = false;
@@ -422,7 +422,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           }
 
           pairsPassedDeterrenceCheck++;
-          console.log(`      ⚠️  DETERRENCE WEAK: Bilateral deterrence ${(bilateralDeterrence * 100).toFixed(0)}% (threshold: 70%)`);
+          console.warn(`      ⚠️  DETERRENCE WEAK: Bilateral deterrence ${(bilateralDeterrence * 100).toFixed(0)}% (threshold: 70%)`);
 
           
           // Check human veto points
@@ -442,7 +442,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
                 console.log(`      ✅ VETO BLOCKS: Launch officers in ${tension.nationA}/${tension.nationB} refused AI-initiated command`);
                 continue;
               } else {
-                console.log(`      ⚠️  VETO FAILED: AI successfully overrode ${avgVetoPoints.toFixed(0)} human veto points`);
+                console.warn(`      ⚠️  VETO FAILED: AI successfully overrode ${avgVetoPoints.toFixed(0)} human veto points`);
               }
             }
           }
@@ -458,7 +458,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
             console.log(`      ✅ DIPLOMACY BLOCKS: Prevented ${tension.nationA}-${tension.nationB} nuclear escalation`);
             continue;
           } else {
-            console.log(`      ⚠️  DIPLOMACY FAILED: No aligned diplomatic AI available or intervention failed`);
+            console.warn(`      ⚠️  DIPLOMACY FAILED: No aligned diplomatic AI available or intervention failed`);
           }
 
           pairsPassedDiplomacyCheck++;
@@ -476,7 +476,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
             console.log(`      ✅ CIRCUIT BREAKER BLOCKS: ${circuitBreakerCheck.blockingLayer} - ${circuitBreakerCheck.reason}`);
             continue;
           } else {
-            console.log(`      ⚠️  CIRCUIT BREAKER FAILED: All technical safeguards bypassed or ineffective`);
+            console.warn(`      ⚠️  CIRCUIT BREAKER FAILED: All technical safeguards bypassed or ineffective`);
           }
 
           pairsPassedCircuitBreaker++;

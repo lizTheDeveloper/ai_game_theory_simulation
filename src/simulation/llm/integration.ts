@@ -55,18 +55,32 @@ export async function checkAndUpdateAgentWeights(
   }
 
   // Check if update needed
+  // Validate required state fields
+  if (typeof agent.trueAlignment !== 'number') {
+    throw new Error(`❌ agent.trueAlignment is not a number for agent ${agent.name} at month ${currentMonth}`);
+  }
+  if (!state.society || typeof state.society.trustInAI !== 'number') {
+    throw new Error(`❌ state.society.trustInAI is not a number at month ${currentMonth}`);
+  }
+  if (!state.globalMetrics || typeof state.globalMetrics.qualityOfLife !== 'number') {
+    throw new Error(`❌ state.globalMetrics.qualityOfLife is not a number at month ${currentMonth}`);
+  }
+  if (typeof agent.resentment !== 'number') {
+    throw new Error(`❌ agent.resentment is not a number for agent ${agent.name} at month ${currentMonth}`);
+  }
+
   const currentState = {
     capability: agent.capability,
-    alignment: agent.trueAlignment ?? agent.alignment,
-    trustInAI: state.society?.trustInAI ?? 0.5,
-    qol: state.globalMetrics?.qualityOfLife ?? 0.65,
+    alignment: agent.trueAlignment,
+    trustInAI: state.society.trustInAI,
+    qol: state.globalMetrics.qualityOfLife,
     activeCrises: countActiveCrises(state),
-    resentment: agent.resentment ?? 0
+    resentment: agent.resentment
   };
 
   const previousState = {
     capability: agent.previousCapability ?? agent.capability,
-    alignment: agent.previousAlignment ?? (agent.trueAlignment ?? agent.alignment)
+    alignment: agent.previousAlignment ?? agent.trueAlignment
   };
 
   const check = shouldUpdateWeights(
@@ -155,17 +169,23 @@ function applyWeightUpdate(
 
   // Update previous state for threshold checking
   agent.previousCapability = agent.capability;
-  agent.previousAlignment = agent.trueAlignment ?? agent.alignment;
+  if (typeof agent.trueAlignment !== 'number') {
+    throw new Error(`❌ agent.trueAlignment is not a number for agent ${agent.name} at month ${currentMonth}`);
+  }
+  agent.previousAlignment = agent.trueAlignment;
 
   // Add to history
   if (!agent.weightUpdateHistory) {
     agent.weightUpdateHistory = [];
   }
 
+  if (typeof agent.trueAlignment !== 'number') {
+    throw new Error(`❌ agent.trueAlignment is not a number for agent ${agent.name} at month ${currentMonth}`);
+  }
   const historyEntry: WeightUpdateHistory = {
     month: currentMonth,
     capability: agent.capability,
-    alignment: agent.trueAlignment ?? agent.alignment,
+    alignment: agent.trueAlignment,
     trustInAI: 0, // Will be filled by caller if available
     qol: 0,
     activeCrises: 0,
@@ -279,7 +299,10 @@ export async function initializeAllAgentWeights(
 ): Promise<void> {
   if (!state.llmConfig?.enabled) {
     // Use fallback weights for all agents
-    for (const agent of state.aiAgents ?? []) {
+    if (!Array.isArray(state.aiAgents)) {
+      throw new Error(`❌ state.aiAgents is not an array at month ${currentMonth}`);
+    }
+    for (const agent of state.aiAgents) {
       if (!agent.llmWeights) {
         const fallback = getFallbackWeights(agent);
         applyWeightUpdate(agent, fallback, currentMonth, 'disabled');
@@ -291,7 +314,10 @@ export async function initializeAllAgentWeights(
   // Initialize with LLM or fallback
   const updatePromises: Promise<void>[] = [];
 
-  for (const agent of state.aiAgents ?? []) {
+  if (!Array.isArray(state.aiAgents)) {
+    throw new Error(`❌ state.aiAgents is not an array at month ${currentMonth}`);
+  }
+  for (const agent of state.aiAgents) {
     if (agent.llmWeights) continue; // Already initialized
 
     updatePromises.push(

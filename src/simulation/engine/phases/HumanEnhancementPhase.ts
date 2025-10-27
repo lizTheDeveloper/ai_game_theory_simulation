@@ -70,7 +70,7 @@ export class HumanEnhancementPhase implements SimulationPhase {
           description: competenceEvent.description,
           effects: {}
         });
-        console.log(`\n⚠️  ${competenceEvent.type} [Month ${state.currentMonth}]`);
+        console.warn(`\n⚠️  ${competenceEvent.type} [Month ${state.currentMonth}]`);
         console.log(`  ${competenceEvent.description}`);
       }
 
@@ -120,13 +120,13 @@ export class HumanEnhancementPhase implements SimulationPhase {
             description: wageEvent.description,
             effects: {}
           });
-          console.log(`\n⚠️  ${wageEvent.type} [Month ${state.currentMonth}]`);
+          console.warn(`\n⚠️  ${wageEvent.type} [Month ${state.currentMonth}]`);
           console.log(`  ${wageEvent.description}`);
         }
 
         // Log productivity-wage decoupling when gap becomes significant
         if (state.laborCapitalDistribution.productivityWageGap > 0.20) {
-          console.log(`\n⚠️  Productivity-Wage Gap: ${(state.laborCapitalDistribution.productivityWageGap * 100).toFixed(1)}%`);
+          console.warn(`\n⚠️  Productivity-Wage Gap: ${(state.laborCapitalDistribution.productivityWageGap * 100).toFixed(1)}%`);
           console.log(`  Productivity Growth: +${(state.laborCapitalDistribution.productivityGrowth * 100).toFixed(1)}%`);
           console.log(`  Wage Growth: +${(state.laborCapitalDistribution.wageGrowth * 100).toFixed(1)}%`);
           console.log(`  Gains to Capital: ${(state.laborCapitalDistribution.gainsToCapital * 100).toFixed(0)}%`);

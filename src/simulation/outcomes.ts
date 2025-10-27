@@ -206,7 +206,7 @@ export function updateGoldenAgeState(
   } else if (!conditions.met && state.goldenAgeState.active) {
     // Exit Golden Age (conditions no longer met)
     const duration = currentMonth - (state.goldenAgeState.entryMonth || 0);
-    console.log(`\n⚠️  GOLDEN AGE ENDED (Month ${currentMonth})`);
+    console.warn(`\n⚠️  GOLDEN AGE ENDED (Month ${currentMonth})`);
     console.log(`   Duration: ${duration} months`);
     console.log(`   Reason: ${conditions.reason}\n`);
     

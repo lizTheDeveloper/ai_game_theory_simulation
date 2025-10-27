@@ -192,3 +192,72 @@ export function validateQoLSystems(systems: QualityOfLifeSystems): boolean {
 
   return values.every(v => isFinite(v) && !isNaN(v));
 }
+
+/**
+ * Aggregate global QoL from regional populations (Oct 26, 2025)
+ *
+ * Bottom-up aggregation: Global QoL = population-weighted average of regional QoL
+ *
+ * Architecture: Regional values are single source of truth, global is derived
+ * Validation: Fails loudly on NaN/undefined/empty regions
+ *
+ * @param state - Game state containing regional populations
+ * @returns Population-weighted global quality of life
+ */
+export function aggregateGlobalQoL(state: import('@/types/game').GameState): number {
+  const regions = state.humanPopulationSystem.regionalPopulations;
+
+  // Validate regions array exists and is non-empty
+  if (!regions || regions.length === 0) {
+    throw new Error(
+      `aggregateGlobalQoL: regionalPopulations is ${regions ? 'empty' : 'undefined'} ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Calculate total population for weighting
+  let totalPopulation = 0;
+  let weightedQoL = 0;
+
+  for (const region of regions) {
+    // Validate regional data - fail loudly on invalid values
+    if (!isFinite(region.population) || isNaN(region.population) || region.population < 0) {
+      throw new Error(
+        `aggregateGlobalQoL: Invalid population for region "${region.name}": ${region.population} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    if (!isFinite(region.qualityOfLife) || isNaN(region.qualityOfLife)) {
+      throw new Error(
+        `aggregateGlobalQoL: Invalid qualityOfLife for region "${region.name}": ${region.qualityOfLife} ` +
+        `(month ${state.currentMonth})`
+      );
+    }
+
+    // Accumulate weighted QoL
+    totalPopulation += region.population;
+    weightedQoL += region.population * region.qualityOfLife;
+  }
+
+  // Validate total population is positive
+  if (totalPopulation <= 0) {
+    throw new Error(
+      `aggregateGlobalQoL: Total population is ${totalPopulation} (all regions empty?) ` +
+      `(month ${state.currentMonth})`
+    );
+  }
+
+  // Calculate population-weighted average
+  const globalQoL = weightedQoL / totalPopulation;
+
+  // Final validation - fail loudly on NaN
+  if (!isFinite(globalQoL) || isNaN(globalQoL)) {
+    throw new Error(
+      `aggregateGlobalQoL: Calculation produced NaN/Infinity ` +
+      `(weightedQoL=${weightedQoL}, totalPopulation=${totalPopulation}, month=${state.currentMonth})`
+    );
+  }
+
+  return globalQoL;
+}

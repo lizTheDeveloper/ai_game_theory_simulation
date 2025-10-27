@@ -71,7 +71,18 @@ export function initializeResourceEconomy(): ResourceEconomy {
     circularityIndex: 0.10,       // 10% recycled (low!)
     fossilDependence: 0.82,       // 82% of energy from fossil (2023)
     criticalBottlenecks: [],
-    
+
+    // FIX: Initialize fields discovered missing by Monte Carlo validation (Oct 26, 2025)
+    waterUseEfficiency: 0.60,     // 60% water use efficiency (room for improvement)
+    resourceEfficiency: 0.55,     // 55% overall resource efficiency
+    plasticRecyclingRate: 0.09,   // 9% plastic recycling rate (global avg 2023)
+    rareEarthRecoveryRate: 0.01,  // 1% rare earth recovery (very low!)
+    miningIntensity: 1.0,         // Baseline mining intensity
+    supplyChainResilience: 0.60,  // Moderate supply chain resilience (pre-2025)
+    industrialEmissions: 1.0,     // Baseline industrial emissions intensity
+    transportEmissions: 1.0,      // Baseline transport emissions intensity
+    animalAgricultureShare: 0.40, // 40% of agriculture from animals (2023 global avg)
+
     // Legacy compatibility
     resourceReserves: 0.85,       // Weighted average
   };

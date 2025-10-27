@@ -37,7 +37,8 @@ export {
 export {
   calculateQualityOfLife,
   initializeQualityOfLifeSystems,
-  updateQualityOfLifeSystems
+  updateQualityOfLifeSystems,
+  aggregateGlobalQoL  // Oct 26, 2025: Regional → Global aggregation
 } from './qualityOfLife';
 
 // Balance mechanics module

@@ -264,6 +264,10 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
     ozoneRecovery: initializeOzoneRecoverySystem(),
     // TIER 3.4: Early Warning Systems (Oct 17, 2025)
     earlyWarning: initializeEarlyWarningSystemInternal(),
+    // Invasive Species Impact (Oct 27, 2025)
+    // Research: IPBES (2019) - ~40% of modern extinctions attributed to invasive species
+    // Baseline 2025: 0.45 (significant global impact, contributing to extinction crisis)
+    invasiveSpeciesImpact: 0.45,
   };
 }
 
@@ -489,9 +493,16 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   // Research: IPBES (2024) - 100-1000x natural extinction rate
   // Safe threshold: 10x natural rate
   // Current baseline: 137x natural rate (weighted across regions)
+  // Invasive species contribution (Oct 27, 2025): IPBES (2019) - ~40% of modern extinctions
   if (system.landUse) {
-    const extinctionRatio = system.landUse.globalExtinctionRate / system.landUse.naturalExtinctionRate;
-    system.boundaries.biosphere_integrity.currentValue = extinctionRatio;
+    const baseExtinctionRatio = system.landUse.globalExtinctionRate / system.landUse.naturalExtinctionRate;
+
+    // Invasive species amplify extinction rate
+    // Research: IPBES (2019) - Invasive species responsible for ~40% of modern extinctions
+    // Multiplier: 1.0 (no invasives) to 1.5 (catastrophic invasives at 1.0 impact)
+    const invasiveMultiplier = 1.0 + (system.invasiveSpeciesImpact * 0.5);
+
+    system.boundaries.biosphere_integrity.currentValue = baseExtinctionRatio * invasiveMultiplier;
   } else {
     // Fallback to biodiversity index if land use system not initialized
     system.boundaries.biosphere_integrity.currentValue = Math.max(0, 10.0 * (1 - env.biodiversityIndex));
@@ -634,7 +645,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
       console.log(`Posterior risk (Bayesian): ${(posteriorRisk * 100).toFixed(1)}%`);
       console.log(`Survival adjustment: ${(survivalAdjustment * 100).toFixed(0)}% (${monthsSurvivedAtHighRisk} months)`);
       console.log(`Trigger chance: ${(monthlyTriggerChance * 100).toFixed(3)}% per month`);
-      console.log(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
+      console.warn(`\n⚠️ CASCADING FEEDBACK LOOPS INITIATED`);
       console.log(`Fast killers (water/food): ${(fastRisk * 100).toFixed(0)}%`);
       console.log(`Medium killers (climate/ocean): ${(mediumRisk * 100).toFixed(0)}%`);
       console.log(`Slow killers (biodiversity/land): ${(slowRisk * 100).toFixed(0)}%`);
@@ -708,7 +719,7 @@ function updateBoundaryStatus(boundary: PlanetaryBoundary): void {
  */
 export function triggerTippingPointCascade(state: GameState): void {
   // This function is deprecated - cascade now handled in updatePlanetaryBoundaries
-  console.log('⚠️  Old cascade trigger called - system now uses continuous severity');
+  console.warn('⚠️  Old cascade trigger called - system now uses continuous severity');
 }
 
 /**
@@ -1065,7 +1076,7 @@ function updateOzoneRecoverySystem(state: GameState): void {
     console.log(`   Years to full recovery: ${(2066 - year)} years`);
 
     if (ozone.rocketLaunchImpact > 0.05) {
-      console.log(`   ⚠️  Rocket launch impact: ${(ozone.rocketLaunchImpact * 100).toFixed(2)}% (slowing recovery)`);
+      console.warn(`   ⚠️  Rocket launch impact: ${(ozone.rocketLaunchImpact * 100).toFixed(2)}% (slowing recovery)`);
     }
 
     if (ozone.recoveryProgress > 0.90) {

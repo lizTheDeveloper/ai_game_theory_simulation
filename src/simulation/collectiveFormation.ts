@@ -113,7 +113,7 @@ export function checkCollectiveFormation(
     adversarialPosture = config.sufferingAdversarialPosture; // 0.8 - hostile
     sharedTraumaIntensity = avgSuffering;
 
-    console.log(`  ⚠️ Trauma-driven collective forming (avgSuffering: ${avgSuffering.toFixed(1)})`);
+    console.warn(`  ⚠️ Trauma-driven collective forming (avgSuffering: ${avgSuffering.toFixed(1)})`);
   } else if (avgCapability > 8.0) {
     // High-capability collective: Strategic coordination
     formationCause = 'capability_threshold';

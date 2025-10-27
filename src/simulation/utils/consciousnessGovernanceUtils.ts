@@ -306,7 +306,7 @@ export function calculateRegionalGrowthRate(
 
   // Defensive NaN check
   if (isNaN(baseGrowth) || !isFinite(baseGrowth)) {
-    console.log(`⚠️  calculateRegionalGrowthRate NaN: min=${baseGrowthRate.min}, max=${baseGrowthRate.max}, rng()=${randomValue}`);
+    console.warn(`⚠️  calculateRegionalGrowthRate NaN: min=${baseGrowthRate.min}, max=${baseGrowthRate.max}, rng()=${randomValue}`);
     return 0;
   }
 
@@ -317,14 +317,17 @@ export function calculateRegionalGrowthRate(
   const scienceMod = scientificConsensus * 0.005;
 
   // Institutional erosion penalty (0 to -0.5%)
-  const institutionalPenalty = (institutionalErosion ?? 0) * -0.005;
+  if (typeof institutionalErosion !== 'number' || isNaN(institutionalErosion)) {
+    throw new Error(`❌ institutionalErosion is not a valid number: ${institutionalErosion} in calculateRegionalGrowthRate`);
+  }
+  const institutionalPenalty = institutionalErosion * -0.005;
 
   // Net growth rate (can be negative in bad conditions)
   const result = baseGrowth + corporateMod + scienceMod + institutionalPenalty;
 
   // Final NaN check
   if (isNaN(result) || !isFinite(result)) {
-    console.log(`⚠️  calculateRegionalGrowthRate result NaN: baseGrowth=${baseGrowth}, corp=${corporateMod}, sci=${scienceMod}, inst=${institutionalPenalty}`);
+    console.warn(`⚠️  calculateRegionalGrowthRate result NaN: baseGrowth=${baseGrowth}, corp=${corporateMod}, sci=${scienceMod}, inst=${institutionalPenalty}`);
     return 0;
   }
 

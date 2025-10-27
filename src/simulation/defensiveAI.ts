@@ -430,7 +430,7 @@ function eliminateLaggardDangerousAIs(state: GameState): void {
   
   // Only target dangerous AIs (very misaligned or sleepers)
   const dangerousAIs = state.aiAgents.filter(ai => {
-    const trueAlign = ai.trueAlignment ?? ai.alignment;
+    const trueAlign = ai.trueAlignment;
     return trueAlign < 0.2 || 
            ai.sleeperState === 'active' || 
            ai.sleeperState === 'dormant';
@@ -551,7 +551,7 @@ function updateFalsePositiveRisk(state: GameState): void {
     
     // If too many false alarms, operators start ignoring it (cry wolf)
     if (defense.falsePositives.credibilityLoss > 0.3) {
-      console.log(`⚠️ CRY WOLF: Defensive AI losing credibility (${(defense.falsePositives.operatorOverrideRate * 100).toFixed(0)}% alerts ignored)`);
+      console.warn(`⚠️ CRY WOLF: Defensive AI losing credibility (${(defense.falsePositives.operatorOverrideRate * 100).toFixed(0)}% alerts ignored)`);
       
       // Reduce effective coverage
       defense.cyberDefense.coverage *= 0.95;

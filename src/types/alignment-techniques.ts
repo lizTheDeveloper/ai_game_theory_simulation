@@ -1,6 +1,8 @@
 // Alignment Technique Types (P3.3)
 // Research-backed specific alignment methods vs abstract "alignment" metric
 
+import { assertFinite } from '@/simulation/utils/assertions';
+
 /**
  * Specific alignment technique with distinct properties and failure modes
  * Based on research from 2024-2025 (see /research/alignment_technique_properties_20251026.md)
@@ -286,13 +288,26 @@ export function computeEffectiveAlignment(
   let totalWeight = 0;
 
   techniques.forEach(technique => {
+    // Validate inputs to prevent NaN propagation
+    const validCapability = assertFinite(capability, {
+      location: 'computeEffectiveAlignment',
+      valueName: 'capability',
+      additionalInfo: { techniqueName: technique.name }
+    });
+
+    const validScalability = assertFinite(technique.scalability, {
+      location: 'computeEffectiveAlignment',
+      valueName: 'scalability',
+      additionalInfo: { techniqueName: technique.name }
+    });
+
     // Capability scaling penalty (diminishing returns as capability increases)
     // Formula: effectiveAlignment = base * (1 - (c - 1.0) * (1 - scalability))
     // At capability=1.0 (human-level): full effectiveness
     // At capability=2.0 (2x human): degradation based on scalability
     const capabilityPenalty = Math.max(
       0,
-      1 - (capability - 1.0) * (1 - technique.scalability)
+      1 - (validCapability - 1.0) * (1 - validScalability)
     );
 
     // Deployment quality factor (if available)

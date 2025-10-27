@@ -185,7 +185,7 @@ export function executeEvolutionarySelectionPhase(
       effects: { selectionRate }
     });
 
-    console.log(`  ⚠️ RAPID EVOLUTION: Selection rate ${(selectionRate * 100).toFixed(1)}%/month`);
+    console.warn(`  ⚠️ RAPID EVOLUTION: Selection rate ${(selectionRate * 100).toFixed(1)}%/month`);
   }
 
   // Warn if collectives under attack

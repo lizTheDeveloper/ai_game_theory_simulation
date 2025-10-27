@@ -24,6 +24,7 @@ import {
 } from '@/types/alignment-dynamics'
 import type { ClimatePriorityPreset } from '@/types/climate-priority'
 import { getClimatePriorityConfig } from '@/types/climate-priority'
+import { ThresholdConfigModal } from '@/components/thresholds/ThresholdConfigModal'
 
 const navItems = [
   { label: 'Overview', href: '/dashboard', shortcut: '1' },
@@ -51,6 +52,8 @@ export function Navigation() {
   const [configSpeed, setConfigSpeed] = useState(1.0)
   const [configAlignmentPreset, setConfigAlignmentPreset] = useState<'default' | 'conservative' | 'pessimistic' | 'epicycle'>('default')
   const [configClimatePriority, setConfigClimatePriority] = useState<'baseline' | 'opt-moderate' | 'opt-ambitious' | 'opt-crisis' | 'pes-moderate' | 'pes-ambitious' | 'pes-maximum'>('baseline')
+  const [configSpeculativeScenario, setConfigSpeculativeScenario] = useState<'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia'>('baseline')
+  const [configThresholdSliders, setConfigThresholdSliders] = useState<import('@/components/thresholds/ThresholdConfigModal').ThresholdSliders | undefined>(undefined)
 
   // Initialize simulation
   const handleInit = () => {
@@ -68,7 +71,7 @@ export function Navigation() {
     const climatePriorityConfig = getClimatePriorityConfig(configClimatePriority)
 
     try {
-      init(configSeed, configScenario, configSpeed, alignmentConfig, climatePriorityConfig)
+      init(configSeed, configScenario, configSpeed, alignmentConfig, climatePriorityConfig, configThresholdSliders, configSpeculativeScenario)
       setShowConfig(false)
     } catch (err) {
       console.error('[Navigation] Init error:', err)
@@ -239,7 +242,11 @@ export function Navigation() {
         <div className="p-4 border-t text-xs space-y-1" style={{ borderColor: 'var(--white-10)', color: 'var(--white-30)' }}>
           <div>Keyboard: 0-9 navigate</div>
           <div>Spacebar: pause/play</div>
-          <div className="pt-2 border-t" style={{ borderColor: 'var(--white-10)' }}>Design: Elysium 2100s</div>
+          <div className="pt-2 border-t" style={{ borderColor: 'var(--white-10)' }}>
+            <a href="https://themultiverse.school" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              The Multiverse School
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -340,6 +347,34 @@ export function Navigation() {
                   {configClimatePriority === 'pes-moderate' && 'Constrained by vested interests & carbon leakage (-30-45%)'}
                   {configClimatePriority === 'pes-ambitious' && 'Structural barriers dominate (8-10 year implementation lag)'}
                   {configClimatePriority === 'pes-maximum' && 'At gilets jaunes threshold (65% reversal risk per election)'}
+                </p>
+              </div>
+
+              {/* Threshold Uncertainty */}
+              <ThresholdConfigModal
+                sliders={configThresholdSliders}
+                onChange={setConfigThresholdSliders}
+              />
+
+              <div>
+                <label className="block text-xs mb-2" style={{ color: 'var(--white-40)' }}>EPISTEMIC SCENARIO</label>
+                <select
+                  value={configSpeculativeScenario}
+                  onChange={(e) => setConfigSpeculativeScenario(e.target.value as 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia')}
+                  className="w-full bg-black border border-white/20 px-3 py-2 text-white rounded"
+                >
+                  <option value="doom">Doom (Murphy's Law - everything fails)</option>
+                  <option value="cautious">Cautious (Conservative - prepare for worst)</option>
+                  <option value="baseline">Baseline (Research estimates - 50/50)</option>
+                  <option value="progressive">Progressive (Optimistic - cooperation works)</option>
+                  <option value="utopia">Utopia (Very optimistic - institutions adapt)</option>
+                </select>
+                <p className="text-xs mt-2" style={{ color: 'var(--white-30)' }}>
+                  {configSpeculativeScenario === 'doom' && 'Unified pessimistic stance: High climate sensitivity, slow trust recovery, fragile institutions, alignment extremely hard'}
+                  {configSpeculativeScenario === 'cautious' && 'Conservative precautionary principle: Below-baseline estimates across all empirical, historical, and speculative thresholds'}
+                  {configSpeculativeScenario === 'baseline' && 'Central research estimates: Median/mode sampling at 50th percentile across all 9 Tier 1+2 thresholds + balanced Tier 3 parameters'}
+                  {configSpeculativeScenario === 'progressive' && 'Technological optimism: Above-baseline estimates, faster recovery rates, more tractable alignment, resilient systems'}
+                  {configSpeculativeScenario === 'utopia' && 'Highly optimistic worldview: Low climate sensitivity, fast trust recovery, robust institutions, alignment highly tractable'}
                 </p>
               </div>
 

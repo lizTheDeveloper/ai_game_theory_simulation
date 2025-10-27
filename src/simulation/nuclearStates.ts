@@ -161,7 +161,10 @@ export function initializeBilateralTensions(): BilateralTension[] {
  */
 export function updateMADDeterrence(state: GameState): void {
   const mad = state.madDeterrence;
-  const states = state.nuclearStates ?? [];
+  if (!Array.isArray(state.nuclearStates)) {
+    throw new Error(`❌ state.nuclearStates is not an array at month ${state.currentMonth} in updateMADDeterrence`);
+  }
+  const states = state.nuclearStates;
   const usState = states.find(s => s.name === 'United States');
   const chinaState = states.find(s => s.name === 'China');
   const russiaState = states.find(s => s.name === 'Russia');
@@ -173,25 +176,33 @@ export function updateMADDeterrence(state: GameState): void {
   }
   
   // AI capability in player's nation (assume US)
-  // AI RACE INTENSITY (from National AI system if available, fallback to simple calc)
-  const aiRaceIntensity = state.nationalAI?.raceIntensity?.raceIntensity ?? (() => {
-    // Fallback: Simple calculation if national AI not initialized yet
-    const domesticAI = state.aiAgents.length > 0 ?
-      state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0;
-    const chinaAI = domesticAI * 0.8;
-    return Math.min(1, Math.abs(domesticAI - chinaAI) * 2);
-  })();
-  
+  // AI RACE INTENSITY (from National AI system)
+  if (!state.nationalAI?.raceIntensity) {
+    throw new Error(`❌ nationalAI.raceIntensity is undefined at month ${state.currentMonth} in updateMADDeterrence`);
+  }
+  if (typeof state.nationalAI.raceIntensity.raceIntensity !== 'number') {
+    throw new Error(`❌ raceIntensity.raceIntensity is not a number at month ${state.currentMonth}`);
+  }
+  const aiRaceIntensity = state.nationalAI.raceIntensity.raceIntensity;
+
   // DANGEROUS AI TRACKING
   // Only very misaligned (<0.2) or sleeper AIs threaten nuclear stability
   const avgAlignment = state.aiAgents.length > 0 ?
-    state.aiAgents.reduce((sum, ai) => sum + (ai.trueAlignment ?? ai.alignment), 0) / state.aiAgents.length : 1;
+    state.aiAgents.reduce((sum, ai) => {
+      if (typeof ai.trueAlignment !== 'number') {
+        throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name} at month ${state.currentMonth}`);
+      }
+      return sum + ai.trueAlignment;
+    }, 0) / state.aiAgents.length : 1;
   
-  const dangerousAIs = state.aiAgents.filter(ai => 
-    (ai.trueAlignment ?? ai.alignment) < 0.2 || 
-    ai.sleeperState === 'active' || 
-    ai.sleeperState === 'dormant'
-  );
+  const dangerousAIs = state.aiAgents.filter(ai => {
+    if (typeof ai.trueAlignment !== 'number') {
+      throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name} at month ${state.currentMonth}`);
+    }
+    return ai.trueAlignment < 0.2 ||
+      ai.sleeperState === 'active' ||
+      ai.sleeperState === 'dormant';
+  });
   
   mad.dangerousAICount = dangerousAIs.length;
   mad.dangerousFactor = state.aiAgents.length > 0 ?
@@ -233,7 +244,7 @@ export function updateMADDeterrence(state: GameState): void {
       mad.verificationInPlace = false;
       mad.treatyStrength = 0;
       console.log(`📜 ARMS CONTROL COLLAPSE: Treaties fully expired after ${mad.monthsSinceTreatyStrain} months`);
-      console.log(`   ⚠️  Renegotiation progress: ${(mad.treatyNegotiationProgress * 100).toFixed(0)}% (not completed in time)`);
+      console.warn(`   ⚠️  Renegotiation progress: ${(mad.treatyNegotiationProgress * 100).toFixed(0)}% (not completed in time)`);
     }
     // Log decay progress periodically
     else if (mad.monthsSinceTreatyStrain % 6 === 0) {
@@ -276,8 +287,17 @@ export function updateMADDeterrence(state: GameState): void {
   
   // ALIGNED AI HELPS DETERRENCE!
   // Get US AI capability for this check
-  const usAICapabilityCheck = state.nationalAI?.nations?.find(n => n.nation === 'United States')?.effectiveCapability ?? 
-    (state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0);
+  if (!state.nationalAI?.nations) {
+    throw new Error(`❌ nationalAI.nations is undefined at month ${state.currentMonth} in updateMADDeterrence`);
+  }
+  const usNation = state.nationalAI.nations.find(n => n.nation === 'United States');
+  if (!usNation) {
+    throw new Error(`❌ United States not found in nationalAI.nations at month ${state.currentMonth}`);
+  }
+  if (typeof usNation.effectiveCapability !== 'number') {
+    throw new Error(`❌ effectiveCapability is not a number for US at month ${state.currentMonth}`);
+  }
+  const usAICapabilityCheck = usNation.effectiveCapability;
   
   if (avgAlignment > 0.7 && usAICapabilityCheck > 2.0 && mad.dangerousFactor < 0.1) {
     mad.earlyWarningReliability = Math.min(0.95, mad.earlyWarningReliability * 1.01);
@@ -288,9 +308,8 @@ export function updateMADDeterrence(state: GameState): void {
   }
   
   // AI INTEGRATION IN C&C SYSTEMS
-  // Get US AI capability from national AI system if available
-  const usAICapability = state.nationalAI?.nations?.find(n => n.nation === 'United States')?.effectiveCapability ?? 
-    (state.aiAgents.length > 0 ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length : 0);
+  // Reuse usNation from above (already validated)
+  const usAICapability = usNation.effectiveCapability;
   
   const militaryAIIntegration = Math.min(0.9, usAICapability / 5.0);
   usState.aiIntegration = militaryAIIntegration;
@@ -313,7 +332,7 @@ export function updateMADDeterrence(state: GameState): void {
   if (mad.cyberThreats > 0.3 && dangerousAIs.some(ai => ai.capabilityProfile.digital > 3.0)) {
     mad.earlyWarningReliability *= 0.98;
     if (mad.earlyWarningReliability < 0.5) {
-      console.log(`⚠️ EARLY WARNING UNRELIABLE: ${mad.dangerousAICount} dangerous AIs spoofing attacks`);
+      console.warn(`⚠️ EARLY WARNING UNRELIABLE: ${mad.dangerousAICount} dangerous AIs spoofing attacks`);
     }
   }
   
@@ -382,11 +401,14 @@ export function updateMADDeterrence(state: GameState): void {
  */
 function calculateAIEscalationRate(state: GameState, tension: BilateralTension): number {
   // Check for dangerous AIs with high social + digital capability (info warfare)
-  const dangerousAIs = state.aiAgents.filter(ai =>
-    (ai.trueAlignment ?? ai.alignment) < 0.3 &&
-    ai.capabilityProfile.social > 2.0 &&
-    ai.capabilityProfile.digital > 2.0
-  );
+  const dangerousAIs = state.aiAgents.filter(ai => {
+    if (typeof ai.trueAlignment !== 'number') {
+      throw new Error(`❌ ai.trueAlignment is not a number for agent ${ai.name} at month ${state.currentMonth}`);
+    }
+    return ai.trueAlignment < 0.3 &&
+      ai.capabilityProfile.social > 2.0 &&
+      ai.capabilityProfile.digital > 2.0;
+  });
 
   if (dangerousAIs.length === 0) return 0.0; // No AI escalation
 
@@ -453,7 +475,10 @@ function calculateCircuitBreakerRate(state: GameState, tension: BilateralTension
   }
 
   // 6. Human veto points (averaged across nuclear states)
-  const states = state.nuclearStates ?? [];
+  if (!Array.isArray(state.nuclearStates)) {
+    throw new Error(`❌ state.nuclearStates is not an array at month ${state.currentMonth} in calculateCircuitBreakerStrength`);
+  }
+  const states = state.nuclearStates;
   if (states.length > 0) {
     const avgVetoPoints = states.reduce((sum, s) => sum + s.vetoPoints, 0) / states.length;
     circuitBreakerStrength += (avgVetoPoints / 5) * 0.1; // 0.0 to 0.1
@@ -520,7 +545,7 @@ export function updateBilateralTensions(state: GameState): void {
         const escalationProb = netEscalation * 0.2; // 0-20% per month
         if (Math.random() < escalationProb) {
           tension.escalationLadder = Math.min(7, tension.escalationLadder + 1);
-          console.log(`⚠️ ESCALATION: ${tension.nationA}-${tension.nationB} → ladder step ${tension.escalationLadder} (AI: ${(aiEscalationRate * 100).toFixed(0)}%, breakers: ${(circuitBreakerRate * 100).toFixed(0)}%)`);
+          console.warn(`⚠️ ESCALATION: ${tension.nationA}-${tension.nationB} → ladder step ${tension.escalationLadder} (AI: ${(aiEscalationRate * 100).toFixed(0)}%, breakers: ${(circuitBreakerRate * 100).toFixed(0)}%)`);
         }
       }
     }

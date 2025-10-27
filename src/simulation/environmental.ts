@@ -301,7 +301,7 @@ export function updateEnvironmentalAccumulation(
       const cascadeSize = Math.min(cascadeMagnitude / 100, 0.3); // Max 30% drop
       env.resourceReserves = Math.max(0, env.resourceReserves - cascadeSize);
 
-      console.log(`\n  ⚠️ RESOURCE MEGA-CASCADE: Lévy flight triggered`);
+      console.warn(`\n  ⚠️ RESOURCE MEGA-CASCADE: Lévy flight triggered`);
       console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% reserves`);
       console.log(`     Triggered at ${(env.resourceReserves * 100).toFixed(1)}% (critical threshold)`);
     }
@@ -316,7 +316,7 @@ export function updateEnvironmentalAccumulation(
       const cascadeSize = Math.min(cascadeMagnitude / 150, 0.25); // Max 25% drop
       env.climateStability = Math.max(0, env.climateStability - cascadeSize);
 
-      console.log(`\n  ⚠️ CLIMATE MEGA-CASCADE: Tipping point cascade`);
+      console.warn(`\n  ⚠️ CLIMATE MEGA-CASCADE: Tipping point cascade`);
       console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% stability`);
       console.log(`     Feedback loop: permafrost methane / ice-albedo effect activated`);
     }
@@ -331,7 +331,7 @@ export function updateEnvironmentalAccumulation(
       const cascadeSize = Math.min(cascadeMagnitude / 100, 0.35); // Max 35% drop
       env.biodiversityIndex = Math.max(0, env.biodiversityIndex - cascadeSize);
 
-      console.log(`\n  ⚠️ BIODIVERSITY MEGA-CASCADE: Keystone species collapse`);
+      console.warn(`\n  ⚠️ BIODIVERSITY MEGA-CASCADE: Keystone species collapse`);
       console.log(`     Magnitude: ${cascadeMagnitude.toFixed(2)} → -${(cascadeSize * 100).toFixed(1)}% biodiversity`);
       console.log(`     Trophic cascade: keystone predator/pollinator loss → ecosystem avalanche`);
     }
@@ -355,7 +355,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     env.resourceCrisisActive = true;
     updateCatastropheTracking(state, 'resource_crisis', 1.0 - env.resourceReserves);
     try {
-      console.log(`\n⚠️  RESOURCE CRISIS TRIGGERED (Month ${state.currentMonth})`);
+      console.warn(`\n⚠️  RESOURCE CRISIS TRIGGERED (Month ${state.currentMonth})`);
       console.log(`   Resource Reserves: ${(env.resourceReserves * 100).toFixed(1)}%`);
       console.log(`   Impact: Manufacturing disrupted, QoL declining\n`);
     } catch (e) { /* Ignore EPIPE */ }
@@ -409,7 +409,7 @@ function checkEnvironmentalCrises(state: GameState): void {
     env.pollutionCrisisActive = true;
     updateCatastropheTracking(state, 'pollution_crisis', env.pollutionLevel);
     try {
-      console.log(`\n⚠️  POLLUTION CRISIS TRIGGERED (Month ${state.currentMonth})`);
+      console.warn(`\n⚠️  POLLUTION CRISIS TRIGGERED (Month ${state.currentMonth})`);
       console.log(`   Pollution Level: ${(env.pollutionLevel * 100).toFixed(1)}%`);
       console.log(`   Impact: Health crisis, ecosystem contamination\n`);
     } catch (e) { /* Ignore EPIPE */ }
@@ -687,7 +687,7 @@ function checkEnvironmentalCrises(state: GameState): void {
         state.technologicalRisk.corporateDystopiaActive && 'Corporate',
         state.technologicalRisk.complacencyCrisisActive && 'Complacency'
       ].filter(Boolean).join(', ');
-      console.log(`   ⚠️⚠️⚠️  CASCADING FAILURES (Month ${state.currentMonth}): ${activeCount} crises active [${crisisDetails}], degradation accelerated ${cascadeMultiplier.toFixed(1)}x`);
+      console.warn(`   ⚠️⚠️⚠️  CASCADING FAILURES (Month ${state.currentMonth}): ${activeCount} crises active [${crisisDetails}], degradation accelerated ${cascadeMultiplier.toFixed(1)}x`);
       
       // Log cascading failure event (only once per month to avoid spam)
       const lastCascade = state.eventLog.filter(e => e.type === 'crisis').slice(-1)[0];

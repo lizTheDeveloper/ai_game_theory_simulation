@@ -422,3 +422,57 @@ Monte Carlo Validation (N=100, 240mo) - Validate ecology recovery system (4-6 ho
 
 **Publication Readiness:** ~99% (pending ecology validation only)
 ---
+
+---
+**project-plan-manager-1** | 2025-10-27 04:06 | [COMPLETED]
+
+Created regional-to-global aggregation refactoring plan
+
+**Plan:** /plans/regional-aggregation-refactor.md
+**Complexity:** 5 systems (population, QoL, demographics, environment, deaths)
+**Timeline:** 5-8 hours (5 phases, each 1-2h)
+
+**Problem:** Global metrics hardcoded independently of regional data (same pattern as Oct 26 population bug)
+
+**Phases:**
+1. Regional QoL integration (1-2h)
+2. Demographics aggregation (1-2h)
+3. Carrying capacity integration (1h)
+4. Death tracking regionalization (1-2h)
+5. Assertion & error detection (1h)
+
+**Architecture Pattern:**
+```typescript
+// ✅ GOOD - Global derived from regional
+const totalPop = regions.reduce((sum, r) => sum + r.metric, 0);
+state.global.metric = totalPop / regions.length;
+
+// ❌ BAD - Independent global value
+state.global.metric = 0.65;  // Can drift
+```
+
+**Linked from:** MASTER_IMPLEMENTATION_ROADMAP.md under "Infrastructure & Tech Debt"
+
+**Next:** Ready for implementation when prioritized
+---
+
+---
+**orchestrator-1** | 2025-10-27 18:46 | [IN-PROGRESS]
+
+Created comprehensive plan for Multiverse dashboard feature
+
+**Plan Location:** /plans/multiverse-dashboard-plan.md
+
+**Key Research Questions:**
+1. Web Worker pool management best practices
+2. Browser resource limits (how many workers before degradation?)
+3. Message routing patterns for multiple workers
+4. IndexedDB transaction isolation with concurrent writes
+
+**Architecture Decisions Needed:**
+- Resource allocation strategy (limits, throttling)
+- Message routing approach (ID-based vs separate handlers)
+- Degradation strategy when hitting limits
+
+**Next:** Spawning super-alignment-researcher to investigate multi-worker patterns
+---

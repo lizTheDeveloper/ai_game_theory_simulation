@@ -74,7 +74,7 @@ export function updatePhosphorusSystem(state: GameState): void {
   // In simulation: ~540 months (45 years)
   if (!p.peakPhosphorusReached && state.currentMonth > 480) {
     p.peakPhosphorusReached = true;
-    console.log(`⚠️ PEAK PHOSPHORUS: Decline phase begins (Month ${state.currentMonth})`);
+    console.warn(`⚠️ PEAK PHOSPHORUS: Decline phase begins (Month ${state.currentMonth})`);
     console.log(`   Reserves: ${(p.reserves * 100).toFixed(0)}%`);
   }
   

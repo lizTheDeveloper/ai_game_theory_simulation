@@ -19,6 +19,7 @@
 
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 
 /**
  * Exogenous Shock Types
@@ -524,8 +525,23 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
     state.government.legitimacy *= 0.5;
 
     // Determine outcome (democracy or autocracy)
-    const coordinationCapacity = state.society?.coordinationCapacity ?? 0.5; // Legitimate default - may not be initialized yet
-    const informationIntegrity = state.globalMetrics?.informationIntegrity ?? 0.5; // Legitimate default - may not be initialized yet
+    // society and globalMetrics are always initialized
+    if (!state.society) {
+      throw new Error(`❌ state.society is undefined at month ${state.currentMonth} in ExogenousShockPhase.applyPoliticalUpheaval`);
+    }
+    if (state.society.coordinationCapacity === undefined) {
+      throw new Error(`❌ state.society.coordinationCapacity is undefined at month ${state.currentMonth} in ExogenousShockPhase.applyPoliticalUpheaval`);
+    }
+    const coordinationCapacity = state.society.coordinationCapacity;
+
+    if (!state.globalMetrics) {
+      throw new Error(`❌ state.globalMetrics is undefined at month ${state.currentMonth} in ExogenousShockPhase.applyPoliticalUpheaval`);
+    }
+    if (state.globalMetrics.informationIntegrity === undefined) {
+      throw new Error(`❌ state.globalMetrics.informationIntegrity is undefined at month ${state.currentMonth} in ExogenousShockPhase.applyPoliticalUpheaval`);
+    }
+    const informationIntegrity = state.globalMetrics.informationIntegrity;
+
     const democratizationChance = coordinationCapacity * informationIntegrity;
     const democratizes = rng() < democratizationChance;
 
@@ -563,22 +579,62 @@ function applyPoliticalUpheavalShock(state: GameState, rng: RNGFunction): GameEv
 
 /**
  * Helper function to calculate total capability from profile
+ * NOTE: capabilityProfile is ALWAYS initialized with ALL fields for every AI agent
  */
 function calculateTotalCapability(profile: any): number {
-  // Weighted sum of capabilities
-  const physical = profile.physical ?? 0; // Legitimate default - AI may not have this capability yet
-  const digital = profile.digital ?? 0; // Legitimate default - AI may not have this capability yet
-  const cognitive = profile.cognitive ?? 0; // Legitimate default - AI may not have this capability yet
-  const social = profile.social ?? 0; // Legitimate default - AI may not have this capability yet
-  const economic = profile.economic ?? 0; // Legitimate default - AI may not have this capability yet
-  const selfImprovement = profile.selfImprovement ?? 0; // Legitimate default - AI may not have this capability yet
+  // All capability fields are always initialized - validate they exist
+  if (typeof profile.physical !== 'number') {
+    throw new Error('❌ profile.physical is not a number - capabilityProfile initialization bug');
+  }
+  if (typeof profile.digital !== 'number') {
+    throw new Error('❌ profile.digital is not a number - capabilityProfile initialization bug');
+  }
+  if (typeof profile.cognitive !== 'number') {
+    throw new Error('❌ profile.cognitive is not a number - capabilityProfile initialization bug');
+  }
+  if (typeof profile.social !== 'number') {
+    throw new Error('❌ profile.social is not a number - capabilityProfile initialization bug');
+  }
+  if (typeof profile.economic !== 'number') {
+    throw new Error('❌ profile.economic is not a number - capabilityProfile initialization bug');
+  }
+  if (typeof profile.selfImprovement !== 'number') {
+    throw new Error('❌ profile.selfImprovement is not a number - capabilityProfile initialization bug');
+  }
 
-  // Research capabilities (flatten to single value)
-  const research = profile.research ?? {}; // Legitimate default - AI may not have research capabilities yet
-  const biotech = Object.values(research.biotech ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 4;
-  const materials = Object.values(research.materials ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 3;
-  const climate = Object.values(research.climate ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 3;
-  const computerScience = Object.values(research.computerScience ?? {}).reduce((a: number, b: any) => a + (b ?? 0), 0) / 3;
+  const physical = profile.physical;
+  const digital = profile.digital;
+  const cognitive = profile.cognitive;
+  const social = profile.social;
+  const economic = profile.economic;
+  const selfImprovement = profile.selfImprovement;
+
+  // Research capabilities (flatten to single value) - all always initialized
+  if (!profile.research) {
+    throw new Error('❌ profile.research is undefined - capabilityProfile initialization bug');
+  }
+  const research = profile.research;
+
+  if (!research.biotech) {
+    throw new Error('❌ research.biotech is undefined - capabilityProfile initialization bug');
+  }
+  const biotech = Object.values(research.biotech).reduce((a: number, b: any) => a + (b as number), 0) / 4;
+
+  if (!research.materials) {
+    throw new Error('❌ research.materials is undefined - capabilityProfile initialization bug');
+  }
+  const materials = Object.values(research.materials).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+
+  if (!research.climate) {
+    throw new Error('❌ research.climate is undefined - capabilityProfile initialization bug');
+  }
+  const climate = Object.values(research.climate).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+
+  if (!research.computerScience) {
+    throw new Error('❌ research.computerScience is undefined - capabilityProfile initialization bug');
+  }
+  const computerScience = Object.values(research.computerScience).reduce((a: number, b: any) => a + (b as number), 0) / 3;
+
   const avgResearch = (biotech + materials + climate + computerScience) / 4;
 
   // Weighted average

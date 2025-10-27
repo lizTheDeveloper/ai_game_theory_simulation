@@ -196,7 +196,7 @@ export function attemptAIDeEscalation(state: GameState, rng: RNGFunction): boole
   // Find capable and aligned AIs
   const diplomaticAIs = state.aiAgents.filter(ai => {
     const capability = ai.capability;
-    const alignment = ai.trueAlignment ?? ai.alignment;
+    const alignment = ai.trueAlignment;
 
     return capability > DEESCALATION_CAPABILITY_THRESHOLD
         && alignment > DEESCALATION_ALIGNMENT_THRESHOLD;

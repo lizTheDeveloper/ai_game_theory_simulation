@@ -124,6 +124,11 @@ export interface TechnologicalRisk {
   controlLossActive: boolean;       // Has AI control been lost?
   corporateDystopiaActive: boolean; // Has corporate feudalism emerged?
   complacencyCrisisActive: boolean; // Has safety lapse occurred?
+
+  // TIER 2: Interpretability effects propagation (Architecture Review M1 - Oct 27, 2025)
+  // Tracks fraction of control losses prevented by interpretability ensemble
+  // Used by downstream systems (extinction risk, crisis detection) to query mitigation status
+  controlLossPreventionRate?: number; // [0, 1] Fraction of control losses prevented
 }
 
 /**

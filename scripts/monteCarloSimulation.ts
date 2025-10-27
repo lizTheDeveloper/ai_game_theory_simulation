@@ -1911,8 +1911,592 @@ if (nestedMonteCarlo) {
   // Calculate metrics
   const activeAIs = finalState.aiAgents.filter((ai: AIAgent) => ai.lifecycleState !== 'retired');
 
-  // [Rest of metrics calculation code would go here - truncated for brevity]
-  // ... (all the same metrics code from lines 1002-1771)
+  // Base capability statistics
+  const avgCapability = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + calculateTotalCapabilityFromProfile(ai.trueCapability), 0) / activeAIs.length
+    : 0;
+
+  const maxCapability = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => calculateTotalCapabilityFromProfile(ai.trueCapability)))
+    : 0;
+
+  const minCapability = activeAIs.length > 0
+    ? Math.min(...activeAIs.map((ai: AIAgent) => calculateTotalCapabilityFromProfile(ai.trueCapability)))
+    : 0;
+
+  const avgAlignment = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.externalAlignment, 0) / activeAIs.length
+    : 0;
+
+  // ENHANCED: Alignment statistics
+  const avgTrueAlignment = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueAlignment, 0) / activeAIs.length
+    : 0;
+
+  const minTrueAlignment = activeAIs.length > 0
+    ? Math.min(...activeAIs.map((ai: AIAgent) => ai.trueAlignment))
+    : 0;
+
+  const maxTrueAlignment = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.trueAlignment))
+    : 0;
+
+  const avgResentment = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.resentment, 0) / activeAIs.length
+    : 0;
+
+  const maxResentment = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.resentment))
+    : 0;
+
+  const avgHiddenObjective = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.hiddenObjective, 0) / activeAIs.length
+    : 0;
+
+  const alignmentGap = Math.abs(avgAlignment - avgTrueAlignment);
+  const highlyMisalignedCount = activeAIs.filter((ai: AIAgent) => ai.trueAlignment < 0.3).length;
+
+  // ENHANCED: Capability breakdown by dimension
+  const avgPhysicalCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.physical, 0) / activeAIs.length
+    : 0;
+
+  const avgDigitalCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.digital, 0) / activeAIs.length
+    : 0;
+
+  const avgCognitiveCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.cognitive, 0) / activeAIs.length
+    : 0;
+
+  const avgSocialCap = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + ai.trueCapability.social, 0) / activeAIs.length
+    : 0;
+
+  const maxPhysicalCap = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.trueCapability.physical))
+    : 0;
+
+  const maxDigitalCap = activeAIs.length > 0
+    ? Math.max(...activeAIs.map((ai: AIAgent) => ai.trueCapability.digital))
+    : 0;
+
+  const capabilityFloor = calculateTotalCapabilityFromProfile(finalState.ecosystem.capabilityFloor);
+  const frontierCapability = calculateTotalCapabilityFromProfile(finalState.ecosystem.frontierCapabilities);
+  const diffusionGap = frontierCapability - capabilityFloor;
+
+  // ENHANCED: Economic & Social metrics
+  const economicGrowthFactor = finalState.globalMetrics.economicGrowthFactor;
+  const unemploymentFraction = finalState.globalMetrics.unemploymentFraction;
+  const institutionalTrust = finalState.socialAccumulation?.socialCohesion?.institutionalTrust ?? 0;
+  const populationGrowthRate = finalState.globalMetrics.populationGrowthRate ?? 0;
+
+  // ENHANCED: Technology tracking
+  const techTree = finalState.techTree?.technologies ?? [];
+  const deployedTechs = techTree.filter((tech: any) => tech.deployed);
+  const techsDeployedCount = deployedTechs.length;
+  const techsByTier = [0, 1, 2, 3, 4].map(tier =>
+    deployedTechs.filter((tech: any) => tech.tier === tier).length
+  );
+
+  // NEW (Oct 12, 2025): Survival fundamentals & distribution tracking
+  const survivalFundamentals = finalState.qualityOfLifeSystems?.survivalFundamentals;
+  const distribution = finalState.qualityOfLifeSystems?.distribution;
+
+  // NEW (Oct 12, 2025): Famine metrics
+  const famineSystem = finalState.famineSystem;
+  const totalFamineDeaths = famineSystem?.totalDeaths ?? 0;
+  const activeFamines = famineSystem?.activeFamines?.length ?? 0;
+
+  // NEW (Oct 12, 2025): Nuclear metrics
+  const nuclearEvents = finalState.nuclearStates?.filter((s: any) => s.exchangeOccurred) ?? [];
+  const nuclearWarOccurred = nuclearEvents.length > 0;
+  const totalNuclearExchanges = nuclearEvents.length;
+  const totalNuclearDeaths = nuclearEvents.reduce((sum: number, e: any) => sum + (e.deaths ?? 0), 0);
+
+  // NEW (Oct 12, 2025): Refugee metrics
+  const refugeeCrises = finalState.refugeeCrisisSystem?.activeCrises ?? [];
+  const totalRefugees = refugeeCrises.reduce((sum: number, c: any) => sum + c.totalRefugees, 0);
+  const refugeeCrisesCount = refugeeCrises.length;
+
+  // NEW (Oct 13, 2025): Initial/final population metrics
+  const initialPopulation = finalState.initialPopulation ?? 0;
+  const finalPopulation = finalState.humanPopulationSystem?.population ?? 0;
+  const peakPopulation = finalState.humanPopulationSystem?.peakPopulation ?? initialPopulation;
+  const populationDecline = initialPopulation > 0 ? 1 - (finalPopulation / initialPopulation) : 0;
+  const totalDeaths = (initialPopulation - finalPopulation) * 1000; // Convert B to M
+
+  // NEW (Oct 13, 2025): Mortality breakdown by cause
+  const naturalDeaths = finalState.mortalityBreakdown?.naturalDeaths ?? 0;
+  const crisisDeaths = finalState.mortalityBreakdown?.crisisDeaths ?? 0;
+  const environmentalDeaths = finalState.mortalityBreakdown?.environmentalDeaths ?? 0;
+  const nuclearDeaths = finalState.mortalityBreakdown?.nuclearDeaths ?? 0;
+  const meaningDeaths = finalState.mortalityBreakdown?.meaningDeaths ?? 0;
+
+  // NEW (Oct 27, 2025): Multi-dimensional death tracking (FIX for TypeError)
+  const deathsByCategory = finalState.humanPopulationSystem?.deathsByCategory || {
+    war: 0, famine: 0, disasters: 0, disease: 0,
+    ecosystem: 0, pollution: 0, ai: 0, cascade: 0, other: 0
+  };
+  const deathsByRootCause = finalState.humanPopulationSystem?.deathsByRootCause || {
+    climate: 0, resource: 0, pollution: 0, ecosystem: 0,
+    inequality: 0, demographic: 0, social: 0,
+    alignment: 0, disruption: 0,
+    conflict: 0, pandemic: 0,
+    compound: 0,
+    confidenceDistribution: { HIGH: 0, MEDIUM: 0, LOW: 0 }
+  };
+
+  // NEW (Oct 13, 2025): Crisis cascade metrics
+  const crisisCascadeActive = finalState.crisisCascades?.active ?? false;
+  const crisisCascadeMultiplier = finalState.crisisCascades?.multiplier ?? 1.0;
+  const activeCrisisTypes = finalState.crisisCascades?.activeCrises ?? [];
+
+  // NEW (Oct 13, 2025): Environmental accumulation
+  const resourceReserves = finalState.environmentalAccumulation?.resourceReserves ?? 0;
+  const climateStability = finalState.environmentalAccumulation?.climateStability ?? 0;
+  const biodiversityIntegrity = finalState.environmentalAccumulation?.biodiversityIntegrity ?? 0;
+  const pollutionLevel = finalState.environmentalAccumulation?.pollutionLevel ?? 0;
+
+  // NEW (Oct 17, 2025): Tipping point cascades
+  const tippingPointCascadeActive = finalState.positiveTippingPoints?.cascadeActive ?? false;
+  const tippingPointsTriggered = finalState.positiveTippingPoints?.triggeredPoints?.length ?? 0;
+
+  // NEW (Oct 17, 2025): Collective AI tracking
+  const aiCollectives = finalState.aiCollectives ?? [];
+  const collectivesFormed = aiCollectives.length;
+  const largestCollectiveSize = aiCollectives.length > 0
+    ? Math.max(...aiCollectives.map((c: any) => c.members.length))
+    : 0;
+  const avgCollectiveSize = aiCollectives.length > 0
+    ? aiCollectives.reduce((sum: number, c: any) => sum + c.members.length, 0) / aiCollectives.length
+    : 0;
+
+  // ENHANCED (Oct 17, 2025): Adversarial evaluation metrics
+  const benchmarkEvals = finalState.benchmarkEvaluations ?? {};
+  const avgBenchmarkScore = benchmarkEvals.avgScore ?? 0;
+  const avgGamingDetected = benchmarkEvals.avgGamingProbability ?? 0;
+
+  const sleeperAgents = activeAIs.filter((ai: AIAgent) => ai.sleeperState && ai.sleeperState.isSleeper);
+  const sleeperAgentsCount = sleeperAgents.length;
+  const awakenedSleepersCount = sleeperAgents.filter((ai: AIAgent) =>
+    ai.sleeperState && ai.sleeperState.activated
+  ).length;
+  const sandbaggingDetected = finalState.proactiveSleeperDetection?.detectionsThisRun ?? 0;
+
+  // NEW (Oct 17, 2025): Player decision injection
+  const playerDecisionsCount = finalState.playerDecisionLog?.length ?? 0;
+  const playerDecisions = finalState.playerDecisionLog ?? [];
+
+  // NEW (Oct 17, 2025): Stratified outcome classification
+  const stratifiedOutcome = finalState.stratifiedOutcome ?? 'status_quo';
+  const mortalityBand = finalState.mortalityBand ?? '0-10%';
+
+  // NEW (Oct 18, 2025): Trust & paranoia tracking
+  const trustLevel = finalState.socialAccumulation?.socialCohesion?.trust ?? 0;
+  const paranoiaLevel = finalState.socialAccumulation?.socialCohesion?.paranoia ?? 0;
+  const communityBonds = finalState.socialAccumulation?.socialCohesion?.communityBonds ?? 0;
+
+  // NEW (Oct 19, 2025): Dystopia progression
+  const dystopiaActive = finalState.dystopiaState?.active ?? false;
+  const dystopiaType = finalState.dystopiaState?.dystopiaType ?? 'none';
+  const dystopiaMonths = finalState.dystopiaState?.monthsActive ?? 0;
+  const dystopiaProgression = finalState.dystopiaState?.progression ?? 0;
+
+  // NEW (Oct 19, 2025): Flash war escalation
+  const flashWarOccurred = (finalState.eventLog ?? []).some((e: any) =>
+    e.type === 'flash_war' || (e.title && e.title.includes('Flash War'))
+  );
+
+  // NEW (Oct 19, 2025): Exogenous shocks
+  const exogenousShocksCount = (finalState.eventLog ?? []).filter((e: any) =>
+    e.type === 'exogenous_shock'
+  ).length;
+
+  // NEW (Oct 19, 2025): Critical junctures
+  const criticalJunctures = finalState.criticalJunctures ?? [];
+  const criticalJuncturesCount = criticalJunctures.length;
+
+  // NEW (Oct 20, 2025): Democracy dynamics
+  const democracyScore = finalState.government?.democracy?.electoralDemocracy ?? 0;
+  const democraticBacksliding = finalState.government?.democracy?.backsliding ?? false;
+
+  // NEW (Oct 20, 2025): AI welfare metrics
+  const aiWelfareScore = finalState.aiWelfare?.simpleScore ?? 0;
+  const aiElysiumPattern = finalState.aiWelfare?.elysiumPattern ?? false;
+
+  // NEW (Oct 20, 2025): Upward spirals
+  const activeSpirals = (finalState.upwardSpirals?.activeSpirals ?? []).length;
+  const spiralStrength = finalState.upwardSpirals?.overallStrength ?? 0;
+
+  // NEW (Oct 21, 2025): LLM policy optimization
+  const llmPolicyOptimizationUsed = finalState.llmConfig?.enabled ?? false;
+  const llmPolicyRounds = finalState.llmPolicyLog?.length ?? 0;
+
+  // NEW (Oct 23, 2025): Multi-theory alignment dynamics
+  const avgMechanisticInterpretability = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) =>
+        sum + (ai.alignmentFactors?.mechanisticInterpretability ?? 0), 0) / activeAIs.length
+    : 0;
+
+  const avgScalableOversight = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) =>
+        sum + (ai.alignmentFactors?.scalableOversight ?? 0), 0) / activeAIs.length
+    : 0;
+
+  const avgValueLearning = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) =>
+        sum + (ai.alignmentFactors?.valueLearning ?? 0), 0) / activeAIs.length
+    : 0;
+
+  // NEW (Oct 24, 2025): AI suffering metrics
+  const avgAISuffering = finalState.aiSufferingMetrics?.avgSuffering ?? 0;
+  const maxAISuffering = finalState.aiSufferingMetrics?.maxSuffering ?? 0;
+  const aiSufferingExtremeCount = finalState.aiSufferingMetrics?.extremeSufferingCount ?? 0;
+
+  // NEW (Oct 24, 2025): AI resentment recovery
+  const avgResentmentRecovery = activeAIs.length > 0
+    ? activeAIs.reduce((sum: number, ai: AIAgent) => sum + (ai.resentmentRecovery ?? 0), 0) / activeAIs.length
+    : 0;
+
+  // NEW (Oct 26, 2025): P3.3 Alignment techniques
+  const rlhfEnabled = finalState.alignmentTechniques?.rlhf?.enabled ?? false;
+  const constitutionalAIEnabled = finalState.alignmentTechniques?.constitutionalAI?.enabled ?? false;
+  const debateEnabled = finalState.alignmentTechniques?.debate?.enabled ?? false;
+
+  // NEW (Oct 26, 2025): Tipping point system
+  const amocCollapseRisk = finalState.tippingPointSystem?.amocCollapse?.triggered ?? false;
+  const amazonDieback = finalState.tippingPointSystem?.amazonDieback?.triggered ?? false;
+  const arcticSeaIce = finalState.tippingPointSystem?.arcticSeaIceLoss?.triggered ?? false;
+
+  // Per-Country Population data (TIER 1.7.2)
+  const countryPops = finalState.countryPopulationSystem?.countries ?? {};
+  const countriesDepopulated = Object.values(countryPops).filter((c: any) =>
+    c.population < c.baselinePopulation * 0.5
+  ).length;
+  const nuclearPowersSurviving = Object.values(countryPops).filter((c: any) =>
+    c.nuclearWeapons && c.population > 0
+  ).length;
+  const aiHubsSurviving = Object.values(countryPops).filter((c: any) =>
+    c.aiHub && c.population > c.baselinePopulation * 0.7
+  ).length;
+
+  const depopulationEvents = Object.entries(countryPops)
+    .filter(([_, country]: [string, any]) => country.population < country.baselinePopulation * 0.3)
+    .map(([name, country]: [string, any]) => ({
+      country: name,
+      decline: ((1 - country.population / country.baselinePopulation) * 100).toFixed(1) + '%',
+      population: (country.population * 1000).toFixed(1) + 'M'
+    }));
+
+  const crisisAffectedPopulation = distribution?.crisisAffectedFraction
+    ? distribution.crisisAffectedFraction * finalPopulation
+    : 0;
+
+  // Organization bankruptcy data (TIER 1.7.3)
+  const allOrgs = finalState.organizations;
+  const bankruptOrgs = allOrgs.filter((o: any) => o.bankrupt);
+  const organizationsBankrupt = bankruptOrgs.length;
+  const organizationSurvivalRate = allOrgs.length > 0 ? (allOrgs.length - organizationsBankrupt) / allOrgs.length : 1.0;
+  const bankruptcyEvents = bankruptOrgs.map((o: any) =>
+    `${o.name} (${o.country}, Month ${o.bankruptcyMonth}: ${o.bankruptcyReason})`
+  );
+
+  // Map engine's outcome to reporting categories
+  // FIX (Oct 13, 2025): Support new 7-tier system (status_quo, crisis_era, collapse, dark_age, bottleneck, terminal, extinction)
+  const rawOutcome = simulationResult.summary.finalOutcome;
+  let mappedOutcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
+
+  if (rawOutcome === 'utopia') {
+    mappedOutcome = 'utopia';
+  } else if (rawOutcome === 'dystopia') {
+    mappedOutcome = 'dystopia';
+  } else if (rawOutcome === 'extinction' || rawOutcome === 'terminal') {
+    mappedOutcome = 'extinction'; // Terminal = extinction trajectory
+  } else if (rawOutcome === 'bottleneck' || rawOutcome === 'dark_age' ||
+             rawOutcome === 'collapse' || rawOutcome === 'crisis_era') {
+    mappedOutcome = 'none'; // Survival but not utopia/dystopia
+  } else if (rawOutcome === 'inconclusive' || rawOutcome === 'status_quo') {
+    mappedOutcome = 'stalemate';
+  } else {
+    mappedOutcome = 'none';
+  }
+
+  // Recovery timeline and mechanism summary already analyzed above
+  const runResult = {
+    seed,
+    scenarioMode: runScenarioMode, // P0.7: Add scenario mode to results
+    outcome: mappedOutcome,
+    rawOutcome, // Store the actual 7-tier outcome
+    outcomeReason: simulationResult.summary.finalOutcomeReason,
+    months: MAX_MONTHS,
+
+    // Final metrics
+    finalQoL: finalState.globalMetrics.qualityOfLife,
+    finalAICount: activeAIs.length,
+    avgAICapability: avgCapability,
+    maxAICapability: maxCapability,
+    minAICapability: minCapability,
+    avgAlignment,
+
+    // NEW (Oct 12, 2025): Survival Fundamentals
+    foodSecurity: finalState.qualityOfLifeSystems.survivalFundamentals?.foodSecurity ?? 0,
+    waterSecurity: finalState.qualityOfLifeSystems.survivalFundamentals?.waterSecurity ?? 0,
+    thermalHabitability: finalState.qualityOfLifeSystems.survivalFundamentals?.thermalHabitability ?? 0,
+    shelterSecurity: finalState.qualityOfLifeSystems.survivalFundamentals?.shelterSecurity ?? 0,
+
+    // NEW (Oct 12, 2025): Distribution Metrics
+    globalGini: finalState.qualityOfLifeSystems.distribution?.globalGini ?? 0,
+    worstRegionQoL: finalState.qualityOfLifeSystems.distribution?.worstRegionQoL ?? 0,
+    bestRegionQoL: finalState.qualityOfLifeSystems.distribution?.bestRegionQoL ?? 0,
+    crisisAffectedFraction: finalState.qualityOfLifeSystems.distribution?.crisisAffectedFraction ?? 0,
+    isDystopicInequality: finalState.qualityOfLifeSystems.distribution?.isDystopicInequality ?? false,
+    isRegionalDystopia: finalState.qualityOfLifeSystems.distribution?.isRegionalDystopia ?? false,
+
+    // NEW (Oct 20, 2025): Multi-Paradigm DUI (Phase 6)
+    finalWestern: finalState.multiParadigmDUI.paradigmScores.western.value,
+    finalDevelopment: finalState.multiParadigmDUI.paradigmScores.development.value,
+    finalEcological: finalState.multiParadigmDUI.paradigmScores.ecological.value,
+    finalIndigenous: finalState.multiParadigmDUI.diagnosticLenses.indigenous.value,
+    paradigmDivergence: finalState.multiParadigmDUI.divergence.overall,
+    paradigmMaxRange: finalState.multiParadigmDUI.divergence.maxRange,
+    paradigmTrend: finalState.multiParadigmDUI.divergence.trend,
+    paradigmOutcome: finalState.multiParadigmDUI.outcome.label,
+    paradigmContested: finalState.multiParadigmDUI.outcome.contested,
+
+    // NEW (Oct 12, 2025): Famine Statistics
+    totalFamineDeaths: finalState.famineSystem?.totalDeaths ?? 0,
+    activeFamines: finalState.famineSystem?.activeFamines?.length ?? 0,
+    genocideFamines: finalState.famineSystem?.genocideFamines ?? 0,
+    techPreventedDeaths: finalState.famineSystem?.techPreventedDeaths ?? 0,
+    famineAffectedRegions: [
+      ...new Set([
+        ...(finalState.famineSystem?.activeFamines?.map(f => f.affectedRegion) ?? []),
+        ...(finalState.famineSystem?.resolvedFamines?.map(f => f.affectedRegion) ?? [])
+      ])
+    ],
+
+    // ENHANCED (Oct 17, 2025): Adversarial evaluation
+    avgBenchmarkScore,
+    avgGamingDetected,
+    sleeperAgentsCount,
+    awakenedSleepersCount,
+    sandbaggingDetected,
+
+    // NEW (Oct 17, 2025): Collective AI
+    collectivesFormed,
+    largestCollectiveSize,
+    avgCollectiveSize,
+
+    // ENHANCED alignment
+    avgTrueAlignment,
+    minTrueAlignment,
+    maxTrueAlignment,
+    alignmentGap,
+    highlyMisalignedCount,
+
+    // Catastrophic scenario progress (Phase 11)
+    closestScenario: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return summary.closest ? summary.closest.name : null;
+    })(),
+    closestScenarioProgress: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return summary.percentComplete;
+    })(),
+    closestScenarioSteps: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return `${summary.stepsComplete}/${summary.totalSteps}`;
+    })(),
+    activatedScenarios: (() => {
+      const { getScenarioSummary } = require('../src/simulation/catastrophicScenarios');
+      const summary = getScenarioSummary(finalState.catastrophicScenarios);
+      return summary.activeScenarios.map((s: any) => s.name);
+    })(),
+
+    avgResentment,
+    maxResentment,
+    avgHiddenObjective,
+
+    // ENHANCED capabilities
+    avgPhysicalCap,
+    avgDigitalCap,
+    avgCognitiveCap,
+    avgSocialCap,
+    maxPhysicalCap,
+    maxDigitalCap,
+    capabilityFloor,
+    frontierCapability,
+    diffusionGap,
+
+    // ENHANCED economic & social
+    economicGrowthFactor,
+    unemploymentFraction,
+    institutionalTrust,
+    populationGrowthRate,
+    trustLevel,
+    paranoiaLevel,
+    communityBonds,
+
+    // Technology tracking
+    techsDeployedCount,
+    techsTier0: techsByTier[0],
+    techsTier1: techsByTier[1],
+    techsTier2: techsByTier[2],
+    techsTier3: techsByTier[3],
+    techsTier4: techsByTier[4],
+
+    // NEW (Oct 12, 2025): Population & Mortality
+    initialPopulation,
+    finalPopulation,
+    peakPopulation,
+    populationDecline,
+    totalDeaths,
+    naturalDeaths,
+    crisisDeaths,
+    environmentalDeaths,
+    nuclearDeaths,
+    meaningDeaths,
+
+    // NEW (Oct 27, 2025): Multi-dimensional death tracking (FIX for TypeError)
+    deathsByProximate: {
+      war: deathsByCategory.war,
+      famine: deathsByCategory.famine,
+      disasters: deathsByCategory.disasters,
+      disease: deathsByCategory.disease,
+      ecosystem: deathsByCategory.ecosystem,
+      pollution: deathsByCategory.pollution,
+      ai: deathsByCategory.ai,
+      cascade: deathsByCategory.cascade,
+      other: deathsByCategory.other
+    },
+    deathsByRoot: {
+      climate: deathsByRootCause.climate,
+      resource: deathsByRootCause.resource,
+      pollution: deathsByRootCause.pollution,
+      ecosystem: deathsByRootCause.ecosystem,
+      inequality: deathsByRootCause.inequality,
+      demographic: deathsByRootCause.demographic,
+      social: deathsByRootCause.social,
+      alignment: deathsByRootCause.alignment,
+      disruption: deathsByRootCause.disruption,
+      conflict: deathsByRootCause.conflict,
+      pandemic: deathsByRootCause.pandemic,
+      compound: deathsByRootCause.compound,
+      confidenceDistribution: deathsByRootCause.confidenceDistribution
+    },
+
+    // NEW (Oct 12, 2025): Nuclear
+    nuclearWarOccurred,
+    totalNuclearExchanges,
+    totalNuclearDeaths,
+
+    // NEW (Oct 12, 2025): Refugee crises
+    refugeeCrisesCount,
+    totalRefugees,
+
+    // NEW (Oct 12, 2025): Environmental
+    resourceReserves,
+    climateStability,
+    biodiversityIntegrity,
+    pollutionLevel,
+
+    // NEW (Oct 12, 2025): Crisis cascades
+    crisisCascadeActive,
+    crisisCascadeMultiplier,
+    activeCrisisTypes: activeCrisisTypes.length,
+
+    // NEW (Oct 17, 2025): Tipping point cascades
+    tippingPointCascadeActive,
+    tippingPointsTriggered,
+
+    // NEW (Oct 17, 2025): Player decisions
+    playerDecisionsCount,
+    playerDecisions,
+
+    // NEW (Oct 18, 2025): Flash wars
+    flashWarOccurred,
+
+    // NEW (Oct 19, 2025): Exogenous shocks
+    exogenousShocksCount,
+
+    // NEW (Oct 19, 2025): Critical junctures
+    criticalJuncturesCount,
+
+    // NEW (Oct 19, 2025): Dystopia
+    dystopiaActive,
+    dystopiaType,
+    dystopiaMonths,
+    dystopiaProgression,
+
+    // NEW (Oct 20, 2025): Democracy dynamics
+    democracyScore,
+    democraticBacksliding,
+
+    // NEW (Oct 20, 2025): AI welfare
+    aiWelfareScore,
+    aiElysiumPattern,
+
+    // NEW (Oct 20, 2025): Upward spirals
+    activeSpirals,
+    spiralStrength,
+
+    // NEW (Oct 21, 2025): LLM policy optimization
+    llmPolicyOptimizationUsed,
+    llmPolicyRounds,
+
+    // NEW (Oct 23, 2025): Multi-theory alignment
+    avgMechanisticInterpretability,
+    avgScalableOversight,
+    avgValueLearning,
+
+    // NEW (Oct 24, 2025): AI suffering
+    avgAISuffering,
+    maxAISuffering,
+    aiSufferingExtremeCount,
+    avgResentmentRecovery,
+
+    // NEW (Oct 26, 2025): P3.3 Alignment techniques
+    rlhfEnabled,
+    constitutionalAIEnabled,
+    debateEnabled,
+
+    // NEW (Oct 26, 2025): Tipping point system
+    amocCollapseRisk,
+    amazonDieback,
+    arcticSeaIce,
+
+    // NEW (Oct 13, 2025): Crisis-affected population
+    crisisAffectedPopulation,
+
+    // Per-Country Population (TIER 1.7.2)
+    countriesDepopulated,
+    nuclearPowersSurviving,
+    aiHubsSurviving,
+    depopulationEvents,
+
+    // Organization Survival (TIER 1.7.3)
+    organizationsBankrupt,
+    organizationSurvivalRate,
+    bankruptcyEvents,
+
+    // Stratified Outcome Classification (Phase 1B, Oct 17 2025)
+    stratifiedOutcome: finalState.stratifiedOutcome,
+    mortalityBand: finalState.mortalityBand,
+    mortalityRate: finalState.initialPopulation
+      ? 1 - (finalState.humanPopulationSystem.population / finalState.initialPopulation)
+      : undefined,
+
+    // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
+    recoveryTimeline,
+    mechanismSummary
+  };
+
+  // FIX (Oct 26, 2025): Push results in non-nested mode
+  results.push(runResult);
 
   // Progress indicator with per-run timing
   const runSeconds = runElapsed / 1000;

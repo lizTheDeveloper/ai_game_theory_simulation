@@ -7,13 +7,18 @@
 
 'use client'
 
+import { useState } from 'react'
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { Sparkline } from "@/components/charts/Sparkline"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
+import { ParadigmDetailPanel } from "@/components/paradigms/ParadigmDetailPanel"
+
+type ParadigmType = 'western' | 'development' | 'ecological' | 'indigenous' | null
 
 export function ParadigmDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
+  const [selectedParadigm, setSelectedParadigm] = useState<ParadigmType>(null)
 
   if (!initialized) {
     return (
@@ -98,15 +103,24 @@ export function ParadigmDashboard() {
           title="Western Liberal"
           glow={scores[0] < 30 ? 'red' : 'none'}
         >
-          <div className="mb-4">
-            <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-western-liberal)' }}>
-              {scores[0].toFixed(1)}
+          <button
+            onClick={() => setSelectedParadigm('western')}
+            className="w-full text-left transition-opacity hover:opacity-80 cursor-pointer"
+            aria-label="View Western Liberal details"
+          >
+            <div className="mb-4">
+              <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-western-liberal)' }}>
+                {scores[0].toFixed(1)}
+              </div>
+              <Sparkline data={getSparkline('western')} color="var(--color-western-liberal)" />
             </div>
-            <Sparkline data={getSparkline('western')} color="var(--color-western-liberal)" />
-          </div>
-          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
-            Democracy, civil liberties, rule of law, economic freedom
-          </div>
+            <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+              Democracy, civil liberties, rule of law, economic freedom
+            </div>
+            <div className="text-xs mt-2" style={{ color: 'var(--color-cyan)' }}>
+              Click for detailed breakdown →
+            </div>
+          </button>
         </Panel>
 
         {/* Development */}
@@ -114,15 +128,24 @@ export function ParadigmDashboard() {
           title="Development"
           glow={scores[1] >= 80 ? 'cyan' : 'none'}
         >
-          <div className="mb-4">
-            <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-development)' }}>
-              {scores[1].toFixed(1)}
+          <button
+            onClick={() => setSelectedParadigm('development')}
+            className="w-full text-left transition-opacity hover:opacity-80 cursor-pointer"
+            aria-label="View Development details"
+          >
+            <div className="mb-4">
+              <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-development)' }}>
+                {scores[1].toFixed(1)}
+              </div>
+              <Sparkline data={getSparkline('development')} color="var(--color-development)" />
             </div>
-            <Sparkline data={getSparkline('development')} color="var(--color-development)" />
-          </div>
-          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
-            Quality of life, survival fundamentals, material needs, health
-          </div>
+            <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+              Quality of life, survival fundamentals, material needs, health
+            </div>
+            <div className="text-xs mt-2" style={{ color: 'var(--color-cyan)' }}>
+              Click for detailed breakdown →
+            </div>
+          </button>
         </Panel>
 
         {/* Ecological */}
@@ -130,34 +153,62 @@ export function ParadigmDashboard() {
           title="Ecological"
           glow={scores[2] < 20 ? 'red' : 'none'}
         >
-          <div className="mb-4">
-            <div className="text-4xl font-light mb-2" style={{
-              color: scores[2] < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
-            }}>
-              {scores[2].toFixed(1)}
+          <button
+            onClick={() => setSelectedParadigm('ecological')}
+            className="w-full text-left transition-opacity hover:opacity-80 cursor-pointer"
+            aria-label="View Ecological details"
+          >
+            <div className="mb-4">
+              <div className="text-4xl font-light mb-2" style={{
+                color: scores[2] < 20 ? 'var(--color-red)' : 'var(--color-ecological)'
+              }}>
+                {scores[2].toFixed(1)}
+              </div>
+              <Sparkline data={getSparkline('ecological')} color="var(--color-ecological)" />
             </div>
-            <Sparkline data={getSparkline('ecological')} color="var(--color-ecological)" />
-          </div>
-          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
-            Climate: {((1 - (lastUpdate.climateChange || 0)) * 100).toFixed(0)}%,
-            Biodiversity: {((1 - (lastUpdate.biodiversityLoss || 0)) * 100).toFixed(0)}%
-          </div>
+            <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+              Climate: {((1 - (lastUpdate.climateChange || 0)) * 100).toFixed(0)}%,
+              Biodiversity: {((1 - (lastUpdate.biodiversityLoss || 0)) * 100).toFixed(0)}%
+            </div>
+            <div className="text-xs mt-2" style={{ color: 'var(--color-cyan)' }}>
+              Click for detailed breakdown →
+            </div>
+          </button>
         </Panel>
 
         {/* Indigenous */}
         <Panel title="Indigenous">
-          <div className="mb-4">
-            <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-indigenous)' }}>
-              {scores[3].toFixed(1)}
+          <button
+            onClick={() => setSelectedParadigm('indigenous')}
+            className="w-full text-left transition-opacity hover:opacity-80 cursor-pointer"
+            aria-label="View Indigenous details"
+          >
+            <div className="mb-4">
+              <div className="text-4xl font-light mb-2" style={{ color: 'var(--color-indigenous)' }}>
+                {scores[3].toFixed(1)}
+              </div>
+              <Sparkline data={getSparkline('indigenous')} color="var(--color-indigenous)" />
             </div>
-            <Sparkline data={getSparkline('indigenous')} color="var(--color-indigenous)" />
-          </div>
-          <div className="text-sm" style={{ color: 'var(--white-60)' }}>
-            Social cohesion: {((lastUpdate.socialCohesion || 0) * 100).toFixed(0)}%,
-            Meaning: {((lastUpdate.meaningLevel || 0) * 100).toFixed(0)}%
-          </div>
+            <div className="text-sm" style={{ color: 'var(--white-60)' }}>
+              Social cohesion: {((lastUpdate.socialCohesion || 0) * 100).toFixed(0)}%,
+              Meaning: {((lastUpdate.meaningLevel || 0) * 100).toFixed(0)}%
+            </div>
+            <div className="text-xs mt-2" style={{ color: 'var(--color-cyan)' }}>
+              Click for detailed breakdown →
+            </div>
+          </button>
         </Panel>
       </div>
+
+      {/* Paradigm Detail Panel */}
+      {selectedParadigm && (
+        <ParadigmDetailPanel
+          paradigm={selectedParadigm}
+          score={scores[['western', 'development', 'ecological', 'indigenous'].indexOf(selectedParadigm)]}
+          isOpen={selectedParadigm !== null}
+          onClose={() => setSelectedParadigm(null)}
+        />
+      )}
 
       {/* Pattern Detection */}
       <Panel title="Historical Patterns">

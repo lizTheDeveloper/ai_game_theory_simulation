@@ -146,6 +146,16 @@ import {
   EventCollectionPhase,
   TimeAdvancementPhase
 } from './engine/phases';
+// TIER 2 Interventions (Oct 27, 2025)
+import { Tier2InterpretabilityPhase } from './engine/phases/Tier2InterpretabilityPhase';
+import { Tier2DarkComputePhase } from './engine/phases/Tier2DarkComputePhase';
+import { Tier2SyntheticEcosystemsPhase } from './engine/phases/Tier2SyntheticEcosystemsPhase';
+import { Tier2CoastalProtectionPhase } from './engine/phases/Tier2CoastalProtectionPhase';
+import { Tier2CrisisAnticipationPhase } from './engine/phases/Tier2CrisisAnticipationPhase';
+import { Tier2NuclearSecurityPhase } from './engine/phases/Tier2NuclearSecurityPhase';
+import { Tier2CentaurSystemsPhase } from './engine/phases/Tier2CentaurSystemsPhase';
+import { Tier2CommunityCohesionPhase } from './engine/phases/Tier2CommunityCohesionPhase';
+import { Tier2SynergyPhase } from './engine/phases/Tier2SynergyPhase';  // M3 Enhancement (Oct 27, 2025)
 
 /**
  * Classify population outcome based on 7-tier system (Oct 13, 2025)
@@ -202,7 +212,7 @@ function classifyPopulationOutcome(
   
   // CRISIS ERA: 10-20% mortality (6.4B-7.2B people)
   if (mortality > 0.10) {
-    console.log(`   ⚠️  CRISIS ERA: Significant challenges (${(currentPop).toFixed(2)}B people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
+    console.warn(`   ⚠️  CRISIS ERA: Significant challenges (${(currentPop).toFixed(2)}B people, ${(mortality * 100).toFixed(1)}% mortality)\n`);
     return 'crisis_era';
   }
   
@@ -319,34 +329,50 @@ function classifyStratifiedOutcome(
  */
 export class SeededRandom {
   private seed: number;
-  
+  private callCount: number = 0;  // Track RNG calls for deterministic resume
+
   constructor(seed: number) {
     this.seed = seed;
   }
-  
+
   /**
    * Generate next random number [0, 1)
    */
   next(): number {
+    this.callCount++; // Increment counter on every call
     // Simple LCG (Linear Congruential Generator)
     this.seed = (this.seed * 1664525 + 1013904223) % 2**32;
     return this.seed / 2**32;
   }
-  
+
+  /**
+   * Get total number of RNG calls made (for deterministic resume)
+   */
+  getCallCount(): number {
+    return this.callCount;
+  }
+
+  /**
+   * Set call count (used when resuming from saved state)
+   */
+  setCallCount(count: number): void {
+    this.callCount = count;
+  }
+
   /**
    * Generate random number in range [min, max)
    */
   range(min: number, max: number): number {
     return min + this.next() * (max - min);
   }
-  
+
   /**
    * Generate random boolean with given probability
    */
   chance(probability: number): boolean {
     return this.next() < probability;
   }
-  
+
   /**
    * Choose random element from array
    */
@@ -470,6 +496,16 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new UBIPhase());
     this.orchestrator.registerPhase(new SocialSafetyNetsPhase());
     this.orchestrator.registerPhase(new InformationWarfarePhase());
+    // TIER 2 Interventions (Oct 27, 2025)
+    this.orchestrator.registerPhase(new Tier2CrisisAnticipationPhase());  // Order 14.5: Before crisis detection
+    this.orchestrator.registerPhase(new Tier2InterpretabilityPhase());  // Order 15.5: After AI updates
+    this.orchestrator.registerPhase(new Tier2DarkComputePhase());  // Order 16.5: After AI capability growth
+    this.orchestrator.registerPhase(new Tier2CentaurSystemsPhase());  // Order 12.5: After employment
+    this.orchestrator.registerPhase(new Tier2CommunityCohesionPhase());  // Order 13.5: After social cohesion
+    this.orchestrator.registerPhase(new Tier2NuclearSecurityPhase());  // Order 18.5: After nuclear risk
+    this.orchestrator.registerPhase(new Tier2SyntheticEcosystemsPhase());  // Order 19.5: After environmental
+    this.orchestrator.registerPhase(new Tier2CoastalProtectionPhase());  // Order 20.5: After ocean updates
+    this.orchestrator.registerPhase(new Tier2SynergyPhase());  // Order 21.0: After all TIER 2, applies synergies
     this.orchestrator.registerPhase(new PowerGenerationPhase());
     this.orchestrator.registerPhase(new HumanEnhancementPhase());  // TIER 4.6: Human Enhancement & Merger Pathways
     this.orchestrator.registerPhase(new MemeticEvolutionPhase());  // P2.6: Memetic Evolution & Polarization Dynamics
@@ -783,7 +819,7 @@ export class SimulationEngine {
           // SURVIVED! Population crashed but humanity lives on
           // Don't break, keep simulating
           if (month - state.extinctionState.startMonth === 1) {  // Log once
-            console.log(`\n⚠️  MAJOR CRISIS COMPLETE: ${state.extinctionState.type?.toUpperCase()}`);
+            console.warn(`\n⚠️  MAJOR CRISIS COMPLETE: ${state.extinctionState.type?.toUpperCase()}`);
             console.log(`   Mechanism: ${state.extinctionState.mechanism}`);
             console.log(`   Duration: ${month - state.extinctionState.startMonth} months`);
             console.log(`   Population Remaining: ${population.toFixed(2)}B`);

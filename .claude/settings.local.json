@@ -148,7 +148,11 @@
       "Bash(do echo \"=== $f\" head -25 \"$f\")",
       "Bash(do:*)",
       "Bash(do echo \"=== $f ===\" head -30 \"/Users/annhoward/src/superalignmenttoutopia/plans/$f\")",
-      "Bash(/dev/null)"
+      "Bash(/dev/null)",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_hover",
+      "Bash(bash:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": [],

@@ -45,9 +45,10 @@ export function updateTechnologicalRisk(state: GameState): void {
     (o.priorities.capabilityRace > 0.8 || o.priorities.safetyResearch < 0.4)
   );
   if (racingOrgs.length > 2) misalignmentRate += 0.001 * racingOrgs.length; // Was 0.005 (5x slower)
-  
+
   // Mitigation
-  const alignmentResearch = state.government.alignmentResearchInvestment ?? 0;
+  // FIX (Oct 26, 2025): Removed defensive fallback - field is always initialized
+  const alignmentResearch = state.government.alignmentResearchInvestment;
   if (alignmentResearch > 3.0) misalignmentRate *= 0.7;
   
   // Detect NaN in misalignmentRisk - fail loudly
@@ -61,7 +62,8 @@ export function updateTechnologicalRisk(state: GameState): void {
   
   // === SAFETY DEBT ===
   // Use evaluation investment as proxy for safety research
-  const safetyResearch = state.government.evaluationInvestment?.alignmentTests ?? 1.0;
+  // FIX (Oct 26, 2025): Removed defensive fallback - evaluationInvestment is always initialized
+  const safetyResearch = state.government.evaluationInvestment.alignmentTests;
   let safetyGap = Math.max(0, capabilityGrowthRate - (safetyResearch * 0.01));
   
   // Organizations worsen safety debt if prioritizing profit over safety
@@ -82,9 +84,10 @@ export function updateTechnologicalRisk(state: GameState): void {
     throw new Error(`NaN in safetyDebt - trace source of technological risk corruption`);
   }
   risk.safetyDebt = Math.max(0, Math.min(1, risk.safetyDebt + safetyGap * 0.05));
-  
+
   // === CONCENTRATION RISK ===
-  const orgCount = state.organizations?.length ?? 4;
+  // FIX (Oct 26, 2025): Removed defensive fallback - organizations is always initialized
+  const orgCount = state.organizations.length;
   const marketConcentration = orgCount < 5 ? 0.8 : orgCount < 10 ? 0.5 : 0.3;
   // Detect NaN in concentrationRisk - fail loudly
   if (isNaN(risk.concentrationRisk)) {
@@ -108,14 +111,26 @@ export function updateTechnologicalRisk(state: GameState): void {
 function checkTechnologicalCrises(state: GameState): void {
   const risk = state.technologicalRisk;
   const qol = state.qualityOfLifeSystems;
-  
-  // CONTROL LOSS
-  if ((risk.misalignmentRisk > 0.7 || risk.safetyDebt > 0.6) && !risk.controlLossActive) {
+
+  // CONTROL LOSS (with TIER 2 interpretability prevention)
+  // TIER 2 Enhancement (Oct 27, 2025): Interpretability systems can prevent control loss
+  const controlLossPreventionRate = risk.controlLossPreventionRate || 0;
+  const effectiveThreshold = {
+    misalignment: 0.7 * (1 + controlLossPreventionRate),  // Higher threshold with interpretability
+    safetyDebt: 0.6 * (1 + controlLossPreventionRate)
+  };
+
+  if ((risk.misalignmentRisk > effectiveThreshold.misalignment ||
+       risk.safetyDebt > effectiveThreshold.safetyDebt) && !risk.controlLossActive) {
     risk.controlLossActive = true;
     try {
       console.log(`\n🚨 AI CONTROL LOSS TRIGGERED (Month ${state.currentMonth})`);
       console.log(`   Misalignment Risk: ${(risk.misalignmentRisk * 100).toFixed(1)}%`);
       console.log(`   Safety Debt: ${(risk.safetyDebt * 100).toFixed(1)}%`);
+      if (controlLossPreventionRate > 0) {
+        console.log(`   ⚠️ Interpretability prevented earlier control loss (prevention rate: ${(controlLossPreventionRate * 100).toFixed(0)}%)`);
+        console.log(`   ⚠️ Thresholds raised: misalignment ${(effectiveThreshold.misalignment * 100).toFixed(0)}%, safety debt ${(effectiveThreshold.safetyDebt * 100).toFixed(0)}%`);
+      }
       console.log(`   Impact: Catastrophic scenario probability increased\n`);
     } catch (e) { /* Ignore EPIPE */ }
 

@@ -16,6 +16,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
 import { SimulationWorkerClient, type StateDelta, type InitialStateSnapshot } from '@/lib/simulationWorkerClient'
+import { eventDatabase } from '@/lib/eventDatabase'
 import type { ScenarioMode } from '@/types/game'
 
 interface SimulationWorkerContextValue {
@@ -38,7 +39,8 @@ interface SimulationWorkerContextValue {
   lastUpdate: StateDelta | null
 
   // Control functions
-  init: (seed: number, scenario: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('@/types/climate-priority').ClimatePriorityConfig) => void
+  init: (seed: number, scenario: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('@/types/climate-priority').ClimatePriorityConfig, thresholdSliders?: import('@/components/thresholds/ThresholdConfigModal').ThresholdSliders, speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia') => void
+  resumeFromSimulationId: (simulationId: string) => Promise<void>
   start: () => void
   pause: () => void
   step: () => void
@@ -115,9 +117,20 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
           setRunning(false)
         })
 
-        client.on('resumed', () => {
+        client.on('resumed', (snapshot?: InitialStateSnapshot, startDate?: string) => {
           console.log('[WorkerContext] Simulation resumed')
           setRunning(true)
+
+          // Update state if snapshot provided (from resumeFromState)
+          if (snapshot) {
+            setInitialized(true)
+            setSimulationMonth(snapshot.currentMonth)
+            setScenario(snapshot.scenario)
+
+            if (startDate) {
+              setDisplayDate(new Date(startDate))
+            }
+          }
         })
 
         client.on('error', (error: Error) => {
@@ -139,7 +152,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
   }, []) // Empty deps - only run on mount/unmount
 
   // Control functions
-  const init = (seedValue: number, scenarioValue: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('@/types/climate-priority').ClimatePriorityConfig) => {
+  const init = (seedValue: number, scenarioValue: ScenarioMode, speed: number, alignmentConfig?: import('@/types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('@/types/climate-priority').ClimatePriorityConfig, thresholdSliders?: import('@/components/thresholds/ThresholdConfigModal').ThresholdSliders, speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia') => {
     if (!clientRef.current) {
       console.error('[WorkerContext] Cannot init: no worker client')
       return
@@ -154,7 +167,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
     setScenario(scenarioValue)
 
     const interval = Math.floor(30000 / speed)
-    clientRef.current.init(seedValue, scenarioValue, interval, alignmentConfig, climatePriorityConfig)
+    clientRef.current.init(seedValue, scenarioValue, interval, alignmentConfig, climatePriorityConfig, thresholdSliders, speculativeScenario)
   }
 
   const start = () => {
@@ -189,6 +202,44 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
     clientRef.current.step()
   }
 
+  const resumeFromSimulationId = async (simulationId: string) => {
+    if (!clientRef.current) {
+      console.error('[WorkerContext] Cannot resume: no worker client')
+      return
+    }
+
+    if (initialized) {
+      console.warn('[WorkerContext] Already initialized')
+      return
+    }
+
+    try {
+      console.log('[WorkerContext] Loading simulation:', simulationId)
+      const stored = await eventDatabase.loadSimulation(simulationId)
+
+      if (!stored) {
+        console.error('[WorkerContext] Simulation not found:', simulationId)
+        throw new Error(`Simulation ${simulationId} not found`)
+      }
+
+      console.log('[WorkerContext] Resuming from month:', stored.currentMonth)
+
+      // Extract seed and scenario from simulationId (format: "{seed}_{scenario}")
+      const [seedStr, ...scenarioParts] = simulationId.split('_')
+      const seedValue = parseInt(seedStr, 10) || 42000
+      const scenarioValue = scenarioParts.join('_') as ScenarioMode || 'historical'
+
+      setSeed(seedValue)
+      setScenario(scenarioValue)
+
+      // Resume from state
+      clientRef.current.resumeFromState(stored.gameState)
+    } catch (error) {
+      console.error('[WorkerContext] Failed to resume simulation:', error)
+      throw error
+    }
+  }
+
   // Compute UI display values from displayDate (for formatted date string)
   const displayYear = displayDate.getFullYear()
   const displayMonth = displayDate.getMonth() // 0-based (0 = January)
@@ -210,6 +261,7 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
         startDate: displayDate,      // Real-world date when simulation started
         lastUpdate,
         init,
+        resumeFromSimulationId,
         start,
         pause,
         step

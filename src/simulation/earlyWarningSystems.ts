@@ -478,7 +478,7 @@ export function applyEmergencyIntervention(
     // Failed intervention - boundary continues to worsen
     system.earlyWarning.interventionsFailed++;
 
-    console.log(`\n❌ EMERGENCY INTERVENTION FAILED`);
+    console.error(`\n❌ EMERGENCY INTERVENTION FAILED`);
     console.log(`   Boundary: ${intervention.tippingPoint}`);
     console.log(`   Type: ${intervention.type}`);
     console.log(`   Boundary continues to worsen (${boundary.currentValue.toFixed(2)})`);

@@ -131,7 +131,7 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
 
       // Defensive NaN check
       if (isNaN(monthlyGrowth) || !isFinite(monthlyGrowth)) {
-        console.log(`⚠️  NaN/Infinite growth detected for ${regionKey}`);
+        console.warn(`⚠️  NaN/Infinite growth detected for ${regionKey}`);
         console.log(`  baseGrowth: ${baseGrowth}, culturalModifier: ${culturalModifier}, regimeModifier: ${regimeModifier}`);
         console.log(`  coordinationBonus: ${coordinationBonus}, hegemonicInfluence: ${hegemonicInfluence}`);
         monthlyGrowth = 0; // Fallback to zero growth
@@ -143,7 +143,7 @@ export class ConsciousnessGovernancePhase implements SimulationPhase {
 
       // Defensive NaN check for preparedness
       if (isNaN(region.preparedness) || !isFinite(region.preparedness)) {
-        console.log(`⚠️  NaN/Infinite preparedness detected for ${regionKey}, resetting to ${oldPreparedness}`);
+        console.warn(`⚠️  NaN/Infinite preparedness detected for ${regionKey}, resetting to ${oldPreparedness}`);
         region.preparedness = oldPreparedness; // Revert to old value
       }
 

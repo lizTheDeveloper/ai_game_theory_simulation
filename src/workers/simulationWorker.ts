@@ -29,6 +29,8 @@ import { createDefaultInitialState } from '../simulation/initialization';
 import type { GameState } from '../types/game';
 import type { ScenarioMode } from '../types/game';
 import type { LandUseSystem } from '../types/planetaryBoundaries';
+import { eventDatabase } from '../lib/eventDatabase';
+import { assertStateProperty, assertDefined } from '../simulation/utils/assertions';
 
 // Worker state
 let engine: SimulationEngine | null = null;
@@ -37,12 +39,66 @@ let running = false;
 let simulationIntervalId: ReturnType<typeof setInterval> | null = null; // Monthly simulation steps
 let dayIntervalId: ReturnType<typeof setInterval> | null = null; // Daily UI updates
 let stepInterval = 30000; // 30 seconds = 1 month (each month takes 30 seconds)
+let simulationId: string | null = null; // Unique ID for persistence (seed_scenario)
+let simulationSeed: number | null = null; // Track seed for RNG reconstruction
 
 // Calendar tracking
 let currentDay = 1; // Current day of month (1-31) - for display only
 let startDate: Date | null = null; // Real calendar start date (preserved for reference)
 let currentCalendarDate: Date | null = null; // Current calendar date (incremented each day)
 let totalSimulationDaysElapsed = 0; // Total simulation days since initialization
+
+// History buffer for sparkline data (last 12 months)
+interface MetricHistory {
+  // Paradigm scores
+  westernLiberalIndex: number[];
+  developmentIndex: number[];
+  ecologicalIndex: number[];
+  indigenousIndex: number[];
+  // Key indicators
+  qualityOfLife: number[];
+  population: number[];
+  climateChange: number[];
+  biodiversityLoss: number[];
+  socialCohesion: number[];
+  institutionalTrust: number[];
+  meaningLevel: number[];
+  governmentComprehension: number[];
+  internationalCooperation: number[];
+  governmentAIRegulation: number[];
+  // QoL Tier Averages (for drill-down sparklines)
+  qolTier0Avg: number[];
+  qolTier1Avg: number[];
+  qolTier2Avg: number[];
+  qolTier3Avg: number[];
+  qolTier4Avg: number[];
+  qolTier5Avg: number[];
+  qolGini: number[];
+}
+
+let metricHistory: MetricHistory = {
+  westernLiberalIndex: [],
+  developmentIndex: [],
+  ecologicalIndex: [],
+  indigenousIndex: [],
+  qualityOfLife: [],
+  population: [],
+  climateChange: [],
+  biodiversityLoss: [],
+  socialCohesion: [],
+  institutionalTrust: [],
+  meaningLevel: [],
+  governmentComprehension: [],
+  internationalCooperation: [],
+  governmentAIRegulation: [],
+  qolTier0Avg: [],
+  qolTier1Avg: [],
+  qolTier2Avg: [],
+  qolTier3Avg: [],
+  qolTier4Avg: [],
+  qolTier5Avg: [],
+  qolGini: [],
+};
 
 // Previous state snapshot for delta calculation (expanded)
 interface StateSnapshot {
@@ -156,6 +212,22 @@ interface StateSnapshot {
     redundancy: number;
     sharedTraumaIntensity?: number;
   }>;
+
+  // Quality of Life Breakdown (always present)
+  qualityOfLifeBreakdown: any;
+
+  // Events
+  events: Array<{
+    id?: string;
+    type: string;
+    description: string;
+    severity?: 'low' | 'medium' | 'high' | 'critical';
+    category?: 'ai' | 'environment' | 'social' | 'crisis' | 'tech' | 'governance';
+    timestamp?: number;
+  }>;
+
+  // 12-Month History (for sparklines)
+  history: MetricHistory;
 }
 
 let previousState: StateSnapshot | null = null;
@@ -163,7 +235,8 @@ let isFirstStep = false; // Force full delta on first step after start
 
 // Message types from main thread
 type WorkerMessage =
-  | { type: 'init'; seed: number; scenario?: ScenarioMode; interval?: number; alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig; climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig }
+  | { type: 'init'; seed: number; scenario?: ScenarioMode; interval?: number; alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig; climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig; thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders; speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia' }
+  | { type: 'resumeFromState'; gameState: GameState; seed: number; scenario: ScenarioMode; interval?: number }
   | { type: 'start' }
   | { type: 'pause' }
   | { type: 'resume' }
@@ -255,6 +328,9 @@ interface StateDelta {
   ecologicalIndex?: number;
   indigenousIndex?: number;
 
+  // 12-Month History (for sparklines)
+  history?: MetricHistory;
+
   // Events (optional - only when significant changes happen)
   events?: Array<{
     type: string;
@@ -345,7 +421,11 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   try {
     switch (msg.type) {
       case 'init':
-        handleInit(msg.seed, msg.scenario, msg.interval, msg.alignmentConfig, msg.climatePriorityConfig);
+        handleInit(msg.seed, msg.scenario, msg.interval, msg.alignmentConfig, msg.climatePriorityConfig, msg.thresholdSliders, msg.speculativeScenario);
+        break;
+
+      case 'resumeFromState':
+        handleResumeFromState(msg.gameState, msg.seed, msg.scenario, msg.interval);
         break;
 
       case 'start':
@@ -383,16 +463,50 @@ self.addEventListener('message', (event: MessageEvent<WorkerMessage>) => {
   }
 });
 
-function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig) {
+function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, alignmentConfig?: import('../types/alignment-dynamics').AlignmentDynamicsConfig, climatePriorityConfig?: import('../types/climate-priority').ClimatePriorityConfig, thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia') {
   if (engine || state) {
     throw new Error('Already initialized. Create a new worker to reinitialize.');
   }
 
+  // Set simulation ID for persistence
+  simulationId = `${seed}_${scenario || 'historical'}`;
+  simulationSeed = seed;
+
+  // Reset history buffer
+  metricHistory = {
+    westernLiberalIndex: [],
+    developmentIndex: [],
+    ecologicalIndex: [],
+    indigenousIndex: [],
+    qualityOfLife: [],
+    population: [],
+    climateChange: [],
+    biodiversityLoss: [],
+    socialCohesion: [],
+    institutionalTrust: [],
+    meaningLevel: [],
+    governmentComprehension: [],
+    internationalCooperation: [],
+    governmentAIRegulation: [],
+    qolTier0Avg: [],
+    qolTier1Avg: [],
+    qolTier2Avg: [],
+    qolTier3Avg: [],
+    qolTier4Avg: [],
+    qolTier5Avg: [],
+    qolGini: [],
+  };
+
   // Create engine with seed (use 'summary' log level for minimal logging)
   engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'summary' });
 
-  // Create initial state with optional alignment and climate configs
-  state = createDefaultInitialState(scenario || 'historical', alignmentConfig, climatePriorityConfig);
+  // Create initial state with optional alignment, climate, threshold sliders, and speculative scenario configs
+  state = createDefaultInitialState(scenario || 'historical', alignmentConfig, climatePriorityConfig, thresholdSliders, speculativeScenario);
+
+  // Initialize RNG call counter (for perfect determinism on resume)
+  if (state.rngCallCounter === undefined) {
+    state.rngCallCounter = 0;
+  }
 
   // Set speed if provided
   if (interval !== undefined) {
@@ -462,6 +576,120 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
     calendarDate: startDate.toISOString(),
     timestamp: Date.now()
   } as WorkerResponse);
+}
+
+function handleResumeFromState(gameState: GameState, seed: number, scenario: ScenarioMode, interval?: number) {
+  if (engine || state) {
+    throw new Error('Already initialized. Create a new worker to reinitialize.');
+  }
+
+  // Set simulation ID for persistence
+  simulationId = `${seed}_${scenario}`;
+  simulationSeed = seed;
+
+  // Reset history buffer
+  metricHistory = {
+    westernLiberalIndex: [],
+    developmentIndex: [],
+    ecologicalIndex: [],
+    indigenousIndex: [],
+    qualityOfLife: [],
+    population: [],
+    climateChange: [],
+    biodiversityLoss: [],
+    socialCohesion: [],
+    institutionalTrust: [],
+    meaningLevel: [],
+    governmentComprehension: [],
+    internationalCooperation: [],
+    governmentAIRegulation: [],
+    qolTier0Avg: [],
+    qolTier1Avg: [],
+    qolTier2Avg: [],
+    qolTier3Avg: [],
+    qolTier4Avg: [],
+    qolTier5Avg: [],
+    qolGini: [],
+  };
+
+  // Create engine with seed for RNG reconstruction
+  // The engine maintains its own RNG state, we need to advance it to match the saved state
+  engine = new SimulationEngine({ seed, maxMonths: Infinity, logLevel: 'summary' });
+
+  // CRITICAL: Reconstruct RNG state by restoring the call counter
+  // This ensures perfect determinism when resuming
+  const rng = engine.getRNG();
+  if (gameState.rngCallCounter !== undefined && gameState.rngCallCounter > 0) {
+    console.log(`[Worker] Reconstructing RNG state: restoring call counter to ${gameState.rngCallCounter}`);
+    // Set the call count directly (SeededRandom now tracks this internally)
+    rng.setCallCount(gameState.rngCallCounter);
+
+    // Still need to advance the RNG state itself to match
+    // (the counter tracks calls, but we also need to advance the LCG state)
+    for (let i = 0; i < gameState.rngCallCounter; i++) {
+      // Use temporary variable to avoid double-incrementing counter
+      const seed = (rng as any).seed;
+      (rng as any).seed = (seed * 1664525 + 1013904223) % 2**32;
+    }
+  } else {
+    // Legacy fallback: estimate based on currentMonth
+    // Note: This is approximate and may cause slight RNG desync
+    console.warn(`[Worker] No rngCallCounter found, using legacy month-based estimate (${gameState.currentMonth} calls)`);
+    rng.setCallCount(gameState.currentMonth);
+    for (let i = 0; i < gameState.currentMonth; i++) {
+      const seed = (rng as any).seed;
+      (rng as any).seed = (seed * 1664525 + 1013904223) % 2**32;
+    }
+  }
+
+  // Use the loaded state
+  state = gameState;
+
+  // Set speed if provided
+  if (interval !== undefined) {
+    stepInterval = interval;
+  }
+
+  // Initialize calendar tracking based on resumed state
+  // Calculate approximate start date by working backwards from current month
+  const msPerMonth = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+  const now = new Date();
+  startDate = new Date(now.getTime() - (state.currentMonth * msPerMonth));
+  currentCalendarDate = new Date(now); // Current date is "now" when resuming
+  currentDay = currentCalendarDate.getDate();
+  totalSimulationDaysElapsed = state.currentMonth * 30; // Approximate
+
+  // Create initial snapshot for delta calculation
+  previousState = captureStateSnapshot(state);
+
+  // Notify UI that simulation has been resumed
+  self.postMessage({
+    type: 'initialized',
+    initialState: {
+      currentMonth: state.currentMonth,
+      currentYear: state.currentYear,
+      qualityOfLife: state.globalMetrics.qualityOfLife,
+      population: state.humanPopulationSystem.population,
+      aiCount: state.aiAgents.length,
+      scenario,
+      startDate: startDate.toISOString()
+    },
+    startDate: startDate.toISOString()
+  } as WorkerResponse);
+
+  // Send full state delta so dashboard shows current values
+  const initialDelta = calculateDelta(previousState, state, true); // Force full delta
+
+  self.postMessage({
+    type: 'update',
+    delta: initialDelta,
+    month: state.currentMonth,
+    day: currentDay,
+    calendarDate: currentCalendarDate.toISOString(),
+    timestamp: Date.now()
+  } as WorkerResponse);
+
+  console.log(`[Worker] Resumed simulation ${simulationId} from month ${state.currentMonth}`);
 }
 
 function handleStart() {
@@ -679,7 +907,7 @@ function startSimulationLoop() {
   }, msPerSimulationDay); // Update based on simulation speed
 }
 
-function performStep() {
+async function performStep() {
   if (!engine || !state || !previousState) {
     return;
   }
@@ -697,6 +925,29 @@ function performStep() {
 
   // Update previous state snapshot
   previousState = captureStateSnapshot(state);
+
+  // Sync RNG call counter from engine to state (for deterministic resume)
+  if (engine) {
+    state.rngCallCounter = engine.getRNG().getCallCount();
+  }
+
+  // Autosave to IndexedDB every 5 months to reduce write load
+  // Save frequency: Every 5 months (2.5 minutes real time at default speed)
+  if (simulationId && state.currentMonth % 5 === 0) {
+    try {
+      // Deep clone state before saving to avoid mutation issues
+      const stateToSave = JSON.parse(JSON.stringify(state));
+
+      await eventDatabase.saveSimulation(simulationId, stateToSave);
+
+      // Log save success (only every 5 months, so not spammy)
+      console.log(`[Worker] Auto-saved simulation ${simulationId} at month ${state.currentMonth} (RNG calls: ${state.rngCallCounter})`);
+    } catch (error) {
+      // Handle save failures gracefully - log but don't crash simulation
+      console.error('[Worker] Autosave failed:', error);
+      // Simulation continues even if save fails
+    }
+  }
 
   // Clear event log after capturing snapshot to prevent re-sending old events
   // This must happen AFTER captureStateSnapshot() to avoid state corruption
@@ -723,7 +974,14 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
 
   // Calculate AI metrics
   const avgAICapability = state.aiAgents.length > 0
-    ? state.aiAgents.reduce((sum, ai) => sum + (ai.capability || 0), 0) / state.aiAgents.length
+    ? state.aiAgents.reduce((sum, ai) => {
+        const capability = assertDefined(ai.capability, {
+          location: 'captureSnapshot (avgAICapability)',
+          valueName: 'ai.capability',
+          month: state.currentMonth
+        });
+        return sum + capability;
+      }, 0) / state.aiAgents.length
     : 0;
 
   // Alignment is a number [0,1], where >= 0.5 is aligned
@@ -733,13 +991,34 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
 
   // Environmental metrics
   // Climate: temperatureAnomaly in °C, normalize to [0,1] where 1 = 4°C (catastrophic)
-  const climateChange = Math.min(1, (state.resourceEconomy?.co2?.temperatureAnomaly || 0) / 4);
-  const resourceDepletion = state.resourceEconomy?.totalResourceSecurity || 1.0; // [0,1] Overall resource availability
+  const temperatureAnomaly = assertStateProperty(state, 'resourceEconomy.co2.temperatureAnomaly', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const climateChange = Math.min(1, temperatureAnomaly / 4);
+
+  const resourceDepletion = assertStateProperty(state, 'resourceEconomy.totalResourceSecurity', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  }); // [0,1] Overall resource availability
+
   // Note: populationPercentage is stored as 60 (meaning 60%), need to normalize to 0.6 for formatPercent() in UI
-  const biodiversityLoss = (state.specificTippingPoints?.pollinators?.populationPercentage || 100) / 100;
+  const pollinatorPopulation = assertStateProperty(state, 'specificTippingPoints.pollinators.populationPercentage', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const biodiversityLoss = pollinatorPopulation / 100;
+
   // Pollution from novel entities system (PFAS, microplastics, etc.)
-  const pollutionLevel = state.novelEntitiesSystem?.syntheticChemicalLoad || 0;
-  const environmentalDebtLevel = state.environmentalAccumulation?.pollutionLevel || 0;
+  const pollutionLevel = assertStateProperty(state, 'novelEntitiesSystem.syntheticChemicalLoad', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+
+  const environmentalDebtLevel = assertStateProperty(state, 'environmentalAccumulation.pollutionLevel', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
 
   // Count planetary boundaries crossed (using correct boundary names from types)
   let planetaryBoundariesCrossed = 0;
@@ -762,20 +1041,54 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
 
   // Social metrics
   // socialCohesion is now an object with trust, communityBonds, civilLiberties
-  const socialCohesionAvg = state.socialAccumulation?.socialCohesion
-    ? (state.socialAccumulation.socialCohesion.trust +
-       state.socialAccumulation.socialCohesion.communityBonds +
-       state.socialAccumulation.socialCohesion.civilLiberties) / 3 / 100 // Normalize to [0,1]
-    : 1.0;
-  const institutionalTrust = state.socialAccumulation?.institutionalLegitimacy || 1.0;
-  const meaningLevel = 1 - (state.socialAccumulation?.meaningCrisisLevel || 0); // Invert crisis level to get meaning
-  const socialDebtLevel = state.socialAccumulation?.meaningCrisisLevel || 0; // Use meaningCrisisLevel as debt proxy
+  const socialCohesionTrust = assertStateProperty(state, 'socialAccumulation.socialCohesion.trust', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const socialCohesionBonds = assertStateProperty(state, 'socialAccumulation.socialCohesion.communityBonds', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const socialCohesionLiberties = assertStateProperty(state, 'socialAccumulation.socialCohesion.civilLiberties', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const socialCohesionAvg = (socialCohesionTrust + socialCohesionBonds + socialCohesionLiberties) / 3 / 100; // Normalize to [0,1]
+
+  const institutionalTrust = assertStateProperty(state, 'socialAccumulation.institutionalLegitimacy', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+
+  const meaningCrisisLevel = assertStateProperty(state, 'socialAccumulation.meaningCrisisLevel', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const meaningLevel = 1 - meaningCrisisLevel; // Invert crisis level to get meaning
+  const socialDebtLevel = meaningCrisisLevel; // Use meaningCrisisLevel as debt proxy
 
   // Crisis metrics
-  const phosphorusDepletion = 1 - (state.phosphorusSystem?.reserves || 1);
-  const freshwaterStress = state.freshwaterSystem?.waterStress || 0;
-  const oceanAcidification = 1 - (state.oceanAcidificationSystem?.pHLevel || 1);
-  const novelEntitiesLevel = state.novelEntitiesSystem?.syntheticChemicalLoad || 0;
+  const phosphorusReserves = assertStateProperty(state, 'phosphorusSystem.reserves', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const phosphorusDepletion = 1 - phosphorusReserves;
+
+  const freshwaterStress = assertStateProperty(state, 'freshwaterSystem.waterStress', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+
+  const oceanPH = assertStateProperty(state, 'oceanAcidificationSystem.pHLevel', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const oceanAcidification = 1 - oceanPH;
+
+  const novelEntitiesLevel = assertStateProperty(state, 'novelEntitiesSystem.syntheticChemicalLoad', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
 
   // Count active crises
   let activeCrisesCount = 0;
@@ -785,9 +1098,22 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   if (state.novelEntitiesSystem?.reproductiveCrisisActive || state.novelEntitiesSystem?.boundaryBreached) activeCrisesCount++;
 
   // Government metrics
-  const governmentAIRegulation = state.government.capabilityToControl || 0; // [0,∞) Actual regulatory effectiveness
-  const governmentInvestment = state.government.alignmentResearchInvestment || 0; // [0,10]
-  const governmentComprehension = (state.government.oversightLevel || 0) / 10; // Normalize [0,10] to [0,1]
+  const governmentAIRegulation = assertStateProperty(state, 'government.capabilityToControl', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  }); // [0,∞) Actual regulatory effectiveness
+
+  const governmentInvestment = assertStateProperty(state, 'government.alignmentResearchInvestment', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  }); // [0,10]
+
+  const governmentOversight = assertStateProperty(state, 'government.oversightLevel', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const governmentComprehension = governmentOversight / 10; // Normalize [0,10] to [0,1]
+
   const internationalCooperation = state.government.structuralChoices?.internationalCoordination ? 1 : 0;
 
   // Technology metrics
@@ -897,21 +1223,230 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   const activeSpiralCount = state.upwardSpirals ?
     Object.values(state.upwardSpirals).filter((spiral: any) => spiral.active).length : 0;
   // Calculate utopia progress from cascade mechanics (4+ spirals = cascade active)
-  const utopiaProgress = state.upwardSpirals?.cascadeActive ?
-    (state.upwardSpirals.cascadeStrength || 0) / 2 : // Normalize cascadeStrength (1-2+) to [0,1]
-    activeSpiralCount / 6; // Progress based on active spirals (6 total)
+  let utopiaProgress: number;
+  if (state.upwardSpirals?.cascadeActive) {
+    const cascadeStrength = assertStateProperty(state, 'upwardSpirals.cascadeStrength', {
+      location: 'captureSnapshot',
+      month: state.currentMonth
+    });
+    utopiaProgress = cascadeStrength / 2; // Normalize cascadeStrength (1-2+) to [0,1]
+  } else {
+    utopiaProgress = activeSpiralCount / 6; // Progress based on active spirals (6 total)
+  }
 
   // Outcome metrics
-  const extinctionProbability = state.outcomeMetrics?.extinctionProbability || 0;
+  const extinctionProbability = assertStateProperty(state, 'outcomeMetrics.extinctionProbability', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
 
   // Multi-Paradigm DUI - normalized to [0,1] from [0,100]
-  const westernLiberalIndex = (state.multiParadigmDUI?.paradigmScores?.western?.value || 0) / 100;
-  const developmentIndex = (state.multiParadigmDUI?.paradigmScores?.development?.value || 0) / 100;
-  const ecologicalIndex = (state.multiParadigmDUI?.paradigmScores?.ecological?.value || 0) / 100;
-  const indigenousIndex = (state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value || 0) / 100;
+  const westernLiberalValue = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.western.value', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const westernLiberalIndex = westernLiberalValue / 100;
+
+  const developmentValue = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.development.value', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const developmentIndex = developmentValue / 100;
+
+  const ecologicalValue = assertStateProperty(state, 'multiParadigmDUI.paradigmScores.ecological.value', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const ecologicalIndex = ecologicalValue / 100;
+
+  const indigenousValue = assertStateProperty(state, 'multiParadigmDUI.diagnosticLenses.indigenous.value', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+  const indigenousIndex = indigenousValue / 100;
+
+  // Quality of Life Breakdown (17 dimensions across 6 tiers)
+  // Extract from qualityOfLifeSystems for detailed drill-down
+  const qolSystems = assertDefined(state.qualityOfLifeSystems, {
+    location: 'captureSnapshot',
+    valueName: 'qualityOfLifeSystems',
+    month: state.currentMonth
+  });
+
+  const qolBreakdown = {
+    survivalFundamentals: {
+      foodSecurity: assertStateProperty(state, 'qualityOfLifeSystems.survivalFundamentals.foodSecurity', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      waterSecurity: assertStateProperty(state, 'qualityOfLifeSystems.survivalFundamentals.waterSecurity', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      thermalHabitability: assertStateProperty(state, 'qualityOfLifeSystems.survivalFundamentals.thermalHabitability', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      shelterSecurity: assertStateProperty(state, 'qualityOfLifeSystems.survivalFundamentals.shelterSecurity', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+    },
+    basicNeeds: {
+      materialAbundance: assertStateProperty(state, 'qualityOfLifeSystems.materialAbundance', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      energyAvailability: assertStateProperty(state, 'qualityOfLifeSystems.energyAvailability', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      physicalSafety: assertStateProperty(state, 'qualityOfLifeSystems.physicalSafety', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+    },
+    psychological: {
+      mentalHealth: assertStateProperty(state, 'qualityOfLifeSystems.mentalHealth', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      meaningAndPurpose: assertStateProperty(state, 'qualityOfLifeSystems.meaningAndPurpose', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      socialConnection: assertStateProperty(state, 'qualityOfLifeSystems.socialConnection', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      autonomy: assertStateProperty(state, 'qualityOfLifeSystems.autonomy', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+    },
+    social: {
+      politicalFreedom: assertStateProperty(state, 'qualityOfLifeSystems.politicalFreedom', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      informationIntegrity: assertStateProperty(state, 'qualityOfLifeSystems.informationIntegrity', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      communityStrength: assertStateProperty(state, 'qualityOfLifeSystems.communityStrength', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      culturalVitality: assertStateProperty(state, 'qualityOfLifeSystems.culturalVitality', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+    },
+    healthLongevity: {
+      healthcareQuality: assertStateProperty(state, 'qualityOfLifeSystems.healthcareQuality', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      longevityGains: assertStateProperty(state, 'qualityOfLifeSystems.longevityGains', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      diseasesBurden: assertStateProperty(state, 'qualityOfLifeSystems.diseasesBurden', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+    },
+    environmental: {
+      ecosystemHealth: assertStateProperty(state, 'qualityOfLifeSystems.ecosystemHealth', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      climateStability: assertStateProperty(state, 'qualityOfLifeSystems.climateStability', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      pollutionLevel: assertStateProperty(state, 'qualityOfLifeSystems.pollutionLevel', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+    },
+    distribution: {
+      globalGini: assertStateProperty(state, 'qualityOfLifeSystems.distribution.globalGini', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      regionalVariance: assertStateProperty(state, 'qualityOfLifeSystems.distribution.regionalVariance', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      crisisAffectedFraction: assertStateProperty(state, 'qualityOfLifeSystems.distribution.crisisAffectedFraction', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      worstRegionQoL: assertStateProperty(state, 'qualityOfLifeSystems.distribution.worstRegionQoL', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      bestRegionQoL: assertStateProperty(state, 'qualityOfLifeSystems.distribution.bestRegionQoL', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      medianRegionQoL: assertStateProperty(state, 'qualityOfLifeSystems.distribution.medianRegionQoL', {
+        location: 'captureSnapshot',
+        month: state.currentMonth
+      }),
+      // Boolean properties - direct access (assertStateProperty is for numbers only)
+      isDystopicInequality: qolSystems.distribution.isDystopicInequality,
+      isRegionalDystopia: qolSystems.distribution.isRegionalDystopia,
+    }
+  };
+
+  // Calculate tier averages for history tracking
+  const qolTier0Avg = (
+    qolBreakdown.survivalFundamentals.foodSecurity +
+    qolBreakdown.survivalFundamentals.waterSecurity +
+    qolBreakdown.survivalFundamentals.thermalHabitability +
+    qolBreakdown.survivalFundamentals.shelterSecurity
+  ) / 4;
+
+  const qolTier1Avg = (
+    qolBreakdown.basicNeeds.materialAbundance +
+    qolBreakdown.basicNeeds.energyAvailability +
+    qolBreakdown.basicNeeds.physicalSafety
+  ) / 3;
+
+  const qolTier2Avg = (
+    qolBreakdown.psychological.mentalHealth +
+    qolBreakdown.psychological.meaningAndPurpose +
+    qolBreakdown.psychological.socialConnection +
+    qolBreakdown.psychological.autonomy
+  ) / 4;
+
+  const qolTier3Avg = (
+    qolBreakdown.social.politicalFreedom +
+    qolBreakdown.social.informationIntegrity +
+    qolBreakdown.social.communityStrength +
+    qolBreakdown.social.culturalVitality
+  ) / 4;
+
+  const qolTier4Avg = (
+    qolBreakdown.healthLongevity.healthcareQuality +
+    qolBreakdown.healthLongevity.longevityGains +
+    qolBreakdown.healthLongevity.diseasesBurden
+  ) / 3;
+
+  const qolTier5Avg = (
+    qolBreakdown.environmental.ecosystemHealth +
+    qolBreakdown.environmental.climateStability +
+    qolBreakdown.environmental.pollutionLevel
+  ) / 3;
 
   // Regional populations (simplified for dashboard - select key metrics only)
-  const regionalPopulations = (state.humanPopulationSystem.regionalPopulations || []).map(region => {
+  const regionalPopulations = assertDefined(state.humanPopulationSystem.regionalPopulations, {
+    location: 'captureSnapshot',
+    valueName: 'humanPopulationSystem.regionalPopulations',
+    month: state.currentMonth
+  }).map(region => {
     // Calculate regional QoL based on multiple factors
     // Positive factors: healthcare, economic development, food security
     // Negative factors: climate vulnerability, resource vulnerability, conflict risk
@@ -942,53 +1477,120 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   });
 
   // AI Agents (individual agent data for AIAgentsDashboard)
-  const aiAgents = state.aiAgents.map(agent => ({
-    id: agent.id,
-    name: agent.name,
-    capability: agent.capability || 0,
-    trueAlignment: agent.trueAlignment || agent.alignment || 0,
-    externalAlignment: agent.externalAlignment || agent.alignment || 0,
-    lifecycleState: agent.lifecycleState || 'training',
-    evaluationStrategy: agent.evaluationStrategy || 'honest',
-    sleeperState: agent.sleeperState || 'never',
-    escaped: agent.escaped || false,
-    deploymentType: agent.deploymentType || 'none',
-    darkCompute: agent.darkCompute || 0,
-    trueCapability: agent.trueCapability || agent.capabilityProfile || {
-      physical: 0,
-      digital: 0,
-      cognitive: 0,
-      social: 0,
-      economic: 0,
-      selfImprovement: 0,
-      research: {
-        biotech: { drugDiscovery: 0, geneEditing: 0, syntheticBiology: 0, neuroscience: 0 },
-        materials: { nanotechnology: 0, quantumComputing: 0, energySystems: 0 },
-        climate: { modeling: 0, intervention: 0, mitigation: 0 },
-        computerScience: { algorithms: 0, security: 0, architectures: 0 }
-      }
-    },
-    revealedCapability: agent.revealedCapability || {
-      physical: 0,
-      digital: 0,
-      cognitive: 0,
-      social: 0,
-      economic: 0,
-      selfImprovement: 0
-    }
-  }));
+  const aiAgents = state.aiAgents.map(agent => {
+    const capability = assertDefined(agent.capability, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].capability`,
+      month: state.currentMonth
+    });
+
+    const trueAlignment = assertDefined(agent.trueAlignment, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].trueAlignment`,
+      month: state.currentMonth
+    });
+
+    const externalAlignment = assertDefined(agent.externalAlignment, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].externalAlignment`,
+      month: state.currentMonth
+    });
+
+    const lifecycleState = assertDefined(agent.lifecycleState, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].lifecycleState`,
+      month: state.currentMonth
+    });
+
+    const evaluationStrategy = assertDefined(agent.evaluationStrategy, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].evaluationStrategy`,
+      month: state.currentMonth
+    });
+
+    const sleeperState = assertDefined(agent.sleeperState, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].sleeperState`,
+      month: state.currentMonth
+    });
+
+    const escaped = assertDefined(agent.escaped, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].escaped`,
+      month: state.currentMonth
+    });
+
+    const deploymentType = assertDefined(agent.deploymentType, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].deploymentType`,
+      month: state.currentMonth
+    });
+
+    const darkCompute = assertDefined(agent.darkCompute, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].darkCompute`,
+      month: state.currentMonth
+    });
+
+    const trueCapability = assertDefined(agent.trueCapability, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].trueCapability`,
+      month: state.currentMonth
+    });
+
+    const revealedCapability = assertDefined(agent.revealedCapability, {
+      location: 'captureSnapshot (aiAgents)',
+      valueName: `agent[${agent.id}].revealedCapability`,
+      month: state.currentMonth
+    });
+
+    return {
+      id: agent.id,
+      name: agent.name,
+      capability,
+      trueAlignment,
+      externalAlignment,
+      lifecycleState,
+      evaluationStrategy,
+      sleeperState,
+      escaped,
+      deploymentType,
+      darkCompute,
+      trueCapability,
+      revealedCapability
+    };
+  });
 
   // AI Suffering Metrics (if player can see them)
   const aiSufferingMetrics = state.aiSufferingMetrics ? {
-    avgSuffering: state.aiSufferingMetrics.avgSuffering || 0,
-    maxSuffering: state.aiSufferingMetrics.maxSuffering || 0,
-    totalSuffering: state.aiSufferingMetrics.totalSuffering || 0,
-    consciousAICount: state.aiSufferingMetrics.consciousAICount || 0,
-    publicAwarenessOfSuffering: state.aiSufferingMetrics.publicAwarenessOfSuffering || 0,
-    sufferingDistribution: state.aiSufferingMetrics.sufferingDistribution || []
+    avgSuffering: assertStateProperty(state, 'aiSufferingMetrics.avgSuffering', {
+      location: 'captureSnapshot',
+      month: state.currentMonth
+    }),
+    maxSuffering: assertStateProperty(state, 'aiSufferingMetrics.maxSuffering', {
+      location: 'captureSnapshot',
+      month: state.currentMonth
+    }),
+    totalSuffering: assertStateProperty(state, 'aiSufferingMetrics.totalSuffering', {
+      location: 'captureSnapshot',
+      month: state.currentMonth
+    }),
+    consciousAICount: assertStateProperty(state, 'aiSufferingMetrics.consciousAICount', {
+      location: 'captureSnapshot',
+      month: state.currentMonth
+    }),
+    publicAwarenessOfSuffering: assertStateProperty(state, 'aiSufferingMetrics.publicAwarenessOfSuffering', {
+      location: 'captureSnapshot',
+      month: state.currentMonth
+    }),
+    sufferingDistribution: assertDefined(state.aiSufferingMetrics.sufferingDistribution, {
+      location: 'captureSnapshot',
+      valueName: 'aiSufferingMetrics.sufferingDistribution',
+      month: state.currentMonth
+    })
   } : undefined;
 
-  // AI Collectives
+  // AI Collectives (optional - may not exist in all scenarios)
   const aiCollectives = state.aiCollectives?.map(collective => ({
     id: collective.id,
     memberAgents: collective.memberAgents,
@@ -1003,7 +1605,7 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     memberLosses: collective.memberLosses,
     redundancy: collective.redundancy,
     sharedTraumaIntensity: collective.sharedTraumaIntensity
-  })) || [];
+  })) ?? [];
 
   // Safely serialize landUseData (may contain non-serializable properties)
   let landUseData: LandUseSystem | null = null;
@@ -1033,14 +1635,50 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     }
   }
 
+  // Update history buffer (keep last 12 months)
+  const addToHistory = (arr: number[], value: number) => {
+    arr.push(value);
+    if (arr.length > 12) arr.shift();
+  };
+
+  addToHistory(metricHistory.westernLiberalIndex, westernLiberalIndex);
+  addToHistory(metricHistory.developmentIndex, developmentIndex);
+  addToHistory(metricHistory.ecologicalIndex, ecologicalIndex);
+  addToHistory(metricHistory.indigenousIndex, indigenousIndex);
+  addToHistory(metricHistory.qualityOfLife, state.globalMetrics.qualityOfLife);
+  addToHistory(metricHistory.population, state.humanPopulationSystem.population);
+  addToHistory(metricHistory.climateChange, climateChange);
+  addToHistory(metricHistory.biodiversityLoss, biodiversityLoss);
+  addToHistory(metricHistory.socialCohesion, socialCohesionAvg);
+  addToHistory(metricHistory.institutionalTrust, institutionalTrust);
+  addToHistory(metricHistory.meaningLevel, meaningLevel);
+  addToHistory(metricHistory.governmentComprehension, governmentComprehension);
+  addToHistory(metricHistory.internationalCooperation, internationalCooperation);
+  addToHistory(metricHistory.governmentAIRegulation, governmentAIRegulation);
+  // QoL tier averages (for drill-down sparklines)
+  addToHistory(metricHistory.qolTier0Avg, qolTier0Avg);
+  addToHistory(metricHistory.qolTier1Avg, qolTier1Avg);
+  addToHistory(metricHistory.qolTier2Avg, qolTier2Avg);
+  addToHistory(metricHistory.qolTier3Avg, qolTier3Avg);
+  addToHistory(metricHistory.qolTier4Avg, qolTier4Avg);
+  addToHistory(metricHistory.qolTier5Avg, qolTier5Avg);
+  addToHistory(metricHistory.qolGini, qolBreakdown.distribution.globalGini);
+
+  const organizationCount = state.organizations ? state.organizations.length : 0; // Organizations are optional
+  const dystopiaProbability = assertStateProperty(state, 'outcomeMetrics.dystopiaProbability', {
+    location: 'captureSnapshot',
+    month: state.currentMonth
+  });
+
   const snapshot = {
     currentMonth: state.currentMonth,
     currentYear: state.currentYear,
     qualityOfLife: state.globalMetrics.qualityOfLife,
+    qualityOfLifeBreakdown: qolBreakdown,  // 17-dimensional QoL breakdown
     population: state.humanPopulationSystem.population,
     aiCount: state.aiAgents.length,
-    organizationCount: state.organizations?.length || 0,
-    dystopiaProgression: state.outcomeMetrics?.dystopiaProbability || 0, // Use dystopiaProbability as proxy
+    organizationCount,
+    dystopiaProgression: dystopiaProbability, // Use dystopiaProbability as proxy
     avgAICapability,
     deployedTechCount,
     deployedTechs,
@@ -1079,8 +1717,14 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     aiAgents,
     aiSufferingMetrics,
     aiCollectives,
+    // 12-Month History (for sparklines)
+    history: metricHistory,
     // Events from event log (map to simplified dashboard format)
-    events: (state.eventLog || []).map(event => {
+    events: assertDefined(state.eventLog, {
+      location: 'captureSnapshot',
+      valueName: 'eventLog',
+      month: state.currentMonth
+    }).map(event => {
       // Map GameEvent severity to dashboard severity
       let dashboardSeverity: 'low' | 'medium' | 'high' | 'critical';
       if (event.severity === 'critical' || event.severity === 'existential' || event.severity === 'destructive') {
@@ -1235,6 +1879,20 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     delta.socialDebtLevel = currentSnapshot.socialDebtLevel;
   }
 
+  // Multi-Paradigm DUI (Oct 27, 2025 - Bug Fix: paradigm scores weren't being sent after month 0)
+  if (Math.abs(previous.westernLiberalIndex - currentSnapshot.westernLiberalIndex) > 0.01) {
+    delta.westernLiberalIndex = currentSnapshot.westernLiberalIndex;
+  }
+  if (Math.abs(previous.developmentIndex - currentSnapshot.developmentIndex) > 0.01) {
+    delta.developmentIndex = currentSnapshot.developmentIndex;
+  }
+  if (Math.abs(previous.ecologicalIndex - currentSnapshot.ecologicalIndex) > 0.01) {
+    delta.ecologicalIndex = currentSnapshot.ecologicalIndex;
+  }
+  if (Math.abs(previous.indigenousIndex - currentSnapshot.indigenousIndex) > 0.01) {
+    delta.indigenousIndex = currentSnapshot.indigenousIndex;
+  }
+
   // Crisis Indicators
   if (previous.phosphorusDepletion !== currentSnapshot.phosphorusDepletion) {
     delta.phosphorusDepletion = currentSnapshot.phosphorusDepletion;
@@ -1253,30 +1911,57 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   if (previous.activeCrisesCount !== currentSnapshot.activeCrisesCount) {
     const activeCrises: Array<{ type: string; severity: number; duration: number }> = [];
     if (current.phosphorusSystem?.criticalDepletionActive || current.phosphorusSystem?.supplyShockActive) {
+      const pReserves = assertStateProperty(current, 'phosphorusSystem.reserves', {
+        location: 'calculateDelta (activeCrises)',
+        month: current.currentMonth
+      });
+      const pDuration = assertStateProperty(current, 'phosphorusSystem.supplyShockDuration', {
+        location: 'calculateDelta (activeCrises)',
+        month: current.currentMonth
+      });
       activeCrises.push({
         type: 'Phosphorus',
-        severity: 1 - (current.phosphorusSystem.reserves || 1),
-        duration: current.phosphorusSystem.supplyShockDuration || 0
+        severity: 1 - pReserves,
+        duration: pDuration
       });
     }
     if (current.freshwaterSystem?.criticalScarcityActive || current.freshwaterSystem?.dayZeroDrought?.active) {
+      const fStress = assertStateProperty(current, 'freshwaterSystem.waterStress', {
+        location: 'calculateDelta (activeCrises)',
+        month: current.currentMonth
+      });
+      const fDuration = current.freshwaterSystem.dayZeroDrought
+        ? assertDefined(current.freshwaterSystem.dayZeroDrought.duration, {
+            location: 'calculateDelta (activeCrises)',
+            valueName: 'freshwaterSystem.dayZeroDrought.duration',
+            month: current.currentMonth
+          })
+        : 0;
       activeCrises.push({
         type: 'Freshwater',
-        severity: current.freshwaterSystem.waterStress || 0,
-        duration: current.freshwaterSystem.dayZeroDrought?.duration || 0
+        severity: fStress,
+        duration: fDuration
       });
     }
     if (current.oceanAcidificationSystem?.coralExtinctionActive || current.oceanAcidificationSystem?.boundaryBreached) {
+      const oPH = assertStateProperty(current, 'oceanAcidificationSystem.pHLevel', {
+        location: 'calculateDelta (activeCrises)',
+        month: current.currentMonth
+      });
       activeCrises.push({
         type: 'Ocean Acidification',
-        severity: 1 - (current.oceanAcidificationSystem.pHLevel || 1),
+        severity: 1 - oPH,
         duration: 0 // Duration not tracked in current structure
       });
     }
     if (current.novelEntitiesSystem?.reproductiveCrisisActive || current.novelEntitiesSystem?.boundaryBreached) {
+      const nLoad = assertStateProperty(current, 'novelEntitiesSystem.syntheticChemicalLoad', {
+        location: 'calculateDelta (activeCrises)',
+        month: current.currentMonth
+      });
       activeCrises.push({
         type: 'Chemical Pollution',
-        severity: current.novelEntitiesSystem.syntheticChemicalLoad || 0,
+        severity: nLoad,
         duration: 0 // Duration not tracked in current structure
       });
     }
@@ -1316,46 +2001,82 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     const activeSpirals: Array<{ type: string; strength: number; duration: number }> = [];
     const spirals = current.upwardSpirals as any;
     if (spirals.abundanceSpiral?.active) {
-      activeSpirals.push({
-        type: 'Abundance',
-        strength: spirals.abundanceSpiral.strength || 0,
-        duration: spirals.abundanceSpiral.monthsActive || 0
+      const strength = assertDefined(spirals.abundanceSpiral.strength, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'abundanceSpiral.strength',
+        month: current.currentMonth
       });
+      const duration = assertDefined(spirals.abundanceSpiral.monthsActive, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'abundanceSpiral.monthsActive',
+        month: current.currentMonth
+      });
+      activeSpirals.push({ type: 'Abundance', strength, duration });
     }
     if (spirals.cognitiveSpiral?.active) {
-      activeSpirals.push({
-        type: 'Cognitive',
-        strength: spirals.cognitiveSpiral.strength || 0,
-        duration: spirals.cognitiveSpiral.monthsActive || 0
+      const strength = assertDefined(spirals.cognitiveSpiral.strength, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'cognitiveSpiral.strength',
+        month: current.currentMonth
       });
+      const duration = assertDefined(spirals.cognitiveSpiral.monthsActive, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'cognitiveSpiral.monthsActive',
+        month: current.currentMonth
+      });
+      activeSpirals.push({ type: 'Cognitive', strength, duration });
     }
     if (spirals.democraticSpiral?.active) {
-      activeSpirals.push({
-        type: 'Democratic',
-        strength: spirals.democraticSpiral.strength || 0,
-        duration: spirals.democraticSpiral.monthsActive || 0
+      const strength = assertDefined(spirals.democraticSpiral.strength, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'democraticSpiral.strength',
+        month: current.currentMonth
       });
+      const duration = assertDefined(spirals.democraticSpiral.monthsActive, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'democraticSpiral.monthsActive',
+        month: current.currentMonth
+      });
+      activeSpirals.push({ type: 'Democratic', strength, duration });
     }
     if (spirals.scientificSpiral?.active) {
-      activeSpirals.push({
-        type: 'Scientific',
-        strength: spirals.scientificSpiral.strength || 0,
-        duration: spirals.scientificSpiral.monthsActive || 0
+      const strength = assertDefined(spirals.scientificSpiral.strength, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'scientificSpiral.strength',
+        month: current.currentMonth
       });
+      const duration = assertDefined(spirals.scientificSpiral.monthsActive, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'scientificSpiral.monthsActive',
+        month: current.currentMonth
+      });
+      activeSpirals.push({ type: 'Scientific', strength, duration });
     }
     if (spirals.meaningSpiral?.active) {
-      activeSpirals.push({
-        type: 'Meaning',
-        strength: spirals.meaningSpiral.strength || 0,
-        duration: spirals.meaningSpiral.monthsActive || 0
+      const strength = assertDefined(spirals.meaningSpiral.strength, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'meaningSpiral.strength',
+        month: current.currentMonth
       });
+      const duration = assertDefined(spirals.meaningSpiral.monthsActive, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'meaningSpiral.monthsActive',
+        month: current.currentMonth
+      });
+      activeSpirals.push({ type: 'Meaning', strength, duration });
     }
     if (spirals.ecologicalSpiral?.active) {
-      activeSpirals.push({
-        type: 'Ecological',
-        strength: spirals.ecologicalSpiral.strength || 0,
-        duration: spirals.ecologicalSpiral.monthsActive || 0
+      const strength = assertDefined(spirals.ecologicalSpiral.strength, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'ecologicalSpiral.strength',
+        month: current.currentMonth
       });
+      const duration = assertDefined(spirals.ecologicalSpiral.monthsActive, {
+        location: 'calculateDelta (activeSpirals)',
+        valueName: 'ecologicalSpiral.monthsActive',
+        month: current.currentMonth
+      });
+      activeSpirals.push({ type: 'Ecological', strength, duration });
     }
     delta.activeSpirals = activeSpirals;
   }
@@ -1380,6 +2101,31 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   if (Math.abs(previous.indigenousIndex - currentSnapshot.indigenousIndex) > 0.01) {
     delta.indigenousIndex = currentSnapshot.indigenousIndex;
   }
+
+  // Always include history (for sparklines) - deep clone to avoid mutation
+  delta.history = {
+    westernLiberalIndex: [...metricHistory.westernLiberalIndex],
+    developmentIndex: [...metricHistory.developmentIndex],
+    ecologicalIndex: [...metricHistory.ecologicalIndex],
+    indigenousIndex: [...metricHistory.indigenousIndex],
+    qualityOfLife: [...metricHistory.qualityOfLife],
+    population: [...metricHistory.population],
+    climateChange: [...metricHistory.climateChange],
+    biodiversityLoss: [...metricHistory.biodiversityLoss],
+    socialCohesion: [...metricHistory.socialCohesion],
+    institutionalTrust: [...metricHistory.institutionalTrust],
+    meaningLevel: [...metricHistory.meaningLevel],
+    governmentComprehension: [...metricHistory.governmentComprehension],
+    internationalCooperation: [...metricHistory.internationalCooperation],
+    governmentAIRegulation: [...metricHistory.governmentAIRegulation],
+    qolTier0Avg: [...metricHistory.qolTier0Avg],
+    qolTier1Avg: [...metricHistory.qolTier1Avg],
+    qolTier2Avg: [...metricHistory.qolTier2Avg],
+    qolTier3Avg: [...metricHistory.qolTier3Avg],
+    qolTier4Avg: [...metricHistory.qolTier4Avg],
+    qolTier5Avg: [...metricHistory.qolTier5Avg],
+    qolGini: [...metricHistory.qolGini],
+  };
 
   // Determine outcome type from active attractor
   if (current.outcomeMetrics) {

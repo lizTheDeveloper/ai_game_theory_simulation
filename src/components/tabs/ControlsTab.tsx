@@ -25,6 +25,7 @@ import {
 import type { CollectiveEvolutionConfig } from '@/types/ai-collective-evolution';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
+import { ThresholdConfigSection } from '@/components/thresholds/ThresholdConfigSection';
 
 export default function ControlsTab() {
   const { config, dispatch, resetGame } = useGameStore();
@@ -440,6 +441,9 @@ export default function ControlsTab() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Threshold Uncertainty Configuration */}
+        <ThresholdConfigSection />
 
         {/* Alignment Dynamics Configuration */}
         <Card>

@@ -90,6 +90,9 @@ const createInitialGlobalMetrics = (): GlobalMetrics => ({
   qualityOfLife: 0.6, // Baseline quality
   informationIntegrity: 0.8, // High truth initially
   publicTrust: 0.6, // Moderate public trust in technology/AI initially
+  crisisResilience: 0.5,  // Baseline resilience
+  localEconomyStrength: 0.3, // Globalized economy
+  spaceIndustrializationActive: false // No space industry yet
 });
 
 const createInitialOutcomeMetrics = (): OutcomeMetrics => ({
