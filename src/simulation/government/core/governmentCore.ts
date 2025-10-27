@@ -9,6 +9,7 @@
 import { GameState, GameEvent } from '@/types/game';
 import { ActionResult, GameAction } from '@/simulation/agents/types';
 import { getTrustInAIForPolicy, getTrustInAI } from '@/simulation/socialCohesion';
+import { assertStateProperty } from '@/simulation/utils/assertions';
 import {
   calculateObservableAICapability,
   calculateTotalCapabilityFromProfile
@@ -629,10 +630,12 @@ function executeEarlyWarningInterventions(
     // Check if government has resources
     const resourceCost = intervention.gdpCost;
     // FIX: Phase 5.1 (Oct 26, 2025) - Fail loudly if property missing
-    if (gov.resources === undefined) {
-      throw new Error('❌ gov.resources is undefined in governmentCore - initialization bug');
-    }
-    if (gov.resources < resourceCost) {
+    const currentResources = assertStateProperty(
+      gov,
+      'resources',
+      { location: 'governmentCore.executeEarlyWarningInterventions', month: state.currentMonth }
+    );
+    if (currentResources < resourceCost) {
       // Insufficient resources - skip this intervention
       continue;
     }
@@ -646,9 +649,7 @@ function executeEarlyWarningInterventions(
     }
 
     // Deduct resources
-    if (gov.resources !== undefined) {
-      gov.resources -= resourceCost;
-    }
+    gov.resources = currentResources - resourceCost;
 
     // Execute intervention (stochastic success)
     applyEmergencyIntervention(state, intervention, random);
