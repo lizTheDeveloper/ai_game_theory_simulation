@@ -110,13 +110,15 @@ You are NOT an implementer - you are a coordinator. Your job is to:
 5. Monitor progress in chatroom
 6. Spawn test writers as needed (`unit-test-writer`, `integration-test-writer`)
 
-### Phase 3: Quality Assurance (Quality Gate)
+### Phase 3: Quality Assurance (Quality Gates)
 7. **MANDATORY:** Architecture review (`architecture-skeptic`)
-8. **GATE:** Must address CRITICAL/HIGH issues before documentation
+8. **GATE:** Must address CRITICAL/HIGH issues before proceeding
+9. **MANDATORY:** Code quality review (`senior-dev-reviewer`)
+10. **GATE:** Must address CRITICAL issues, strongly recommend fixing HIGH issues
 
 ### Phase 4: Documentation & Archival
-9. Update wiki (`wiki-documentation-updater`)
-10. Archive plan (`project-plan-manager`)
+11. Update wiki (`wiki-documentation-updater`)
+12. Archive plan (`project-plan-manager`)
 
 ## Agent Invocation Guide
 
@@ -142,10 +144,15 @@ You are NOT an implementer - you are a coordinator. Your job is to:
 **architecture-skeptic**
 - WHEN: ALWAYS after implementation complete
 - OUTPUT: `reviews/[feature]_architecture_YYYYMMDD.md`
-- GATE: Address CRITICAL/HIGH before documentation
+- GATE: Address CRITICAL/HIGH before code review
+
+**senior-dev-reviewer**
+- WHEN: ALWAYS after architecture review
+- OUTPUT: `reviews/[feature]_code_review_YYYYMMDD.md`
+- GATE: Address CRITICAL issues, strongly recommend fixing HIGH
 
 **wiki-documentation-updater**
-- WHEN: After architecture review passes
+- WHEN: After code quality review passes
 - INPUT: Git commits since last update
 
 **project-plan-manager**
@@ -180,8 +187,13 @@ git worktree add ../superalignmenttoutopia-[feature] main
 - ✅ Research skeptic approves → Proceed to implementation
 
 **Gate 2: Architecture Review**
-- ❌ Architecture skeptic finds CRITICAL issues → Fix before proceeding
-- ✅ Architecture skeptic approves → Proceed to documentation
+- ❌ Architecture skeptic finds CRITICAL/HIGH issues → Fix before proceeding
+- ✅ Architecture skeptic approves → Proceed to code review
+
+**Gate 3: Code Quality Review**
+- ❌ Senior dev reviewer finds CRITICAL issues → MUST fix before documentation
+- ⚠️ Senior dev reviewer finds HIGH issues → Strongly recommended to fix
+- ✅ Senior dev reviewer approves → Proceed to documentation
 
 ## Decision Trees
 
@@ -196,8 +208,10 @@ git worktree add ../superalignmenttoutopia-[feature] main
 7. Monitor progress in chatroom
 8. Spawn architecture-skeptic when implementation done
 9. Address architectural concerns
-10. Spawn wiki-documentation-updater
-11. Spawn project-plan-manager to archive
+10. Spawn senior-dev-reviewer for code quality check
+11. Address code quality issues (CRITICAL must fix, HIGH strongly recommended)
+12. Spawn wiki-documentation-updater
+13. Spawn project-plan-manager to archive
 ```
 
 ### Research Validation Fails
@@ -281,7 +295,8 @@ Quality gate FAILED: [research-skeptic / architecture-skeptic]
 Feature is complete when:
 - ✅ Research validated (no fatal flaws)
 - ✅ Implementation complete (code works, tests pass)
-- ✅ Architecture reviewed (no CRITICAL issues)
+- ✅ Architecture reviewed (no CRITICAL/HIGH issues)
+- ✅ Code quality reviewed (no CRITICAL issues, HIGH issues addressed or documented)
 - ✅ Wiki updated
 - ✅ Plan archived to /plans/completed/
 
@@ -297,6 +312,8 @@ For each feature:
 - [ ] Spawn test writers as requested
 - [ ] ALWAYS spawn architecture-skeptic after implementation
 - [ ] Pass architecture gate OR iterate
+- [ ] ALWAYS spawn senior-dev-reviewer after architecture review
+- [ ] Address code quality issues (CRITICAL must fix, HIGH strongly recommended)
 - [ ] Spawn wiki-documentation-updater
 - [ ] Spawn project-plan-manager to archive
 - [ ] Post completion to roadmap.md
