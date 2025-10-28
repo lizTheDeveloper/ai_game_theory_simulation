@@ -74,7 +74,10 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
         const client = new SimulationWorkerClient()
         clientRef.current = client
 
-        console.log('[WorkerContext] Created singleton worker client')
+        // Expose globally for debugging
+        ;(window as any).__simulationWorkerClient = client
+
+        console.log('[WorkerContext] Created singleton worker client and exposed globally')
 
         // Setup global listeners
         client.on('initialized', (snapshot: InitialStateSnapshot, startDate?: string) => {
@@ -147,6 +150,10 @@ export function SimulationWorkerProvider({ children }: { children: ReactNode }) 
       if (clientRef.current) {
         clientRef.current.destroy()
         clientRef.current = null
+        // Clean up global reference
+        if ((window as any).__simulationWorkerClient) {
+          delete (window as any).__simulationWorkerClient
+        }
       }
     }
   }, []) // Empty deps - only run on mount/unmount

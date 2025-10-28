@@ -55,9 +55,27 @@ export function Navigation() {
   const [configSpeculativeScenario, setConfigSpeculativeScenario] = useState<'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia'>('baseline')
   const [configThresholdSliders, setConfigThresholdSliders] = useState<import('@/components/thresholds/ThresholdConfigModal').ThresholdSliders | undefined>(undefined)
 
-  // Initialize simulation
-  const handleInit = () => {
+  // Error state for initialization
+  const [initError, setInitError] = useState<string | null>(null)
+  const [isInitializing, setIsInitializing] = useState(false)
+  const [initTimeoutId, setInitTimeoutId] = useState<NodeJS.Timeout | null>(null)
+
+  // Initialize simulation with error handling and timeout
+  const handleInit = async () => {
     if (initialized) return
+
+    // Clear any previous errors
+    setInitError(null)
+    setIsInitializing(true)
+
+    // Set up timeout detection (10 seconds)
+    const timeoutId = setTimeout(() => {
+      if (!initialized) {
+        setInitError('Initialization timed out after 10 seconds. The simulation worker may have failed to load.')
+        setIsInitializing(false)
+      }
+    }, 10000)
+    setInitTimeoutId(timeoutId)
 
     // Map preset to config
     const presetConfigs = {
@@ -71,10 +89,123 @@ export function Navigation() {
     const climatePriorityConfig = getClimatePriorityConfig(configClimatePriority)
 
     try {
+      // Check if worker client exists
+      const workerClient = (window as any).__simulationWorkerClient
+      console.log('[Navigation] Initialization attempt:', {
+        hasWorkerClient: !!workerClient,
+        hasWorkerSupport: typeof Worker !== 'undefined',
+        environment: process.env.NODE_ENV,
+        seed: configSeed,
+        scenario: configScenario
+      })
+
+      if (!workerClient) {
+        throw new Error('Worker client not available. The simulation worker may have failed to initialize.')
+      }
+
+      // Attempt initialization
+      console.log('[Navigation] Calling init with config:', {
+        seed: configSeed,
+        scenario: configScenario,
+        speed: configSpeed,
+        alignmentPreset: configAlignmentPreset,
+        climatePriority: configClimatePriority,
+        speculativeScenario: configSpeculativeScenario
+      })
+
       init(configSeed, configScenario, configSpeed, alignmentConfig, climatePriorityConfig, configThresholdSliders, configSpeculativeScenario)
-      setShowConfig(false)
+
+      // Wait a moment to see if initialization succeeded
+      setTimeout(() => {
+        if (initialized) {
+          // Success - clear timeout and close modal
+          if (timeoutId) clearTimeout(timeoutId)
+          setInitTimeoutId(null)
+          setIsInitializing(false)
+          setShowConfig(false)
+        }
+      }, 100)
     } catch (err) {
+      // Clear timeout on error
+      if (timeoutId) clearTimeout(timeoutId)
+      setInitTimeoutId(null)
+      setIsInitializing(false)
+
+      // Set error message
+      const errorMessage = err instanceof Error ? err.message : String(err)
+      setInitError(`Failed to initialize simulation: ${errorMessage}`)
       console.error('[Navigation] Init error:', err)
+    }
+  }
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (initTimeoutId) {
+        clearTimeout(initTimeoutId)
+      }
+    }
+  }, [initTimeoutId])
+
+  // Monitor initialization success
+  useEffect(() => {
+    if (initialized && isInitializing) {
+      // Initialization succeeded
+      setIsInitializing(false)
+      setInitError(null)
+      setShowConfig(false)
+      if (initTimeoutId) {
+        clearTimeout(initTimeoutId)
+        setInitTimeoutId(null)
+      }
+    }
+  }, [initialized, isInitializing, initTimeoutId])
+
+  // Listen for worker errors
+  useEffect(() => {
+    // Access the worker client directly if available
+    const workerClient = (window as any).__simulationWorkerClient
+    if (!workerClient) {
+      // Check if worker failed to load initially
+      const checkWorkerAvailability = setTimeout(() => {
+        if (!initialized && !(window as any).__simulationWorkerClient) {
+          console.error('[Navigation] Worker client not available after page load')
+        }
+      }, 2000)
+      return () => clearTimeout(checkWorkerAvailability)
+    }
+
+    // Add error listener
+    const handleWorkerError = (error: Error) => {
+      console.error('[Navigation] Worker error received:', error)
+      if (isInitializing) {
+        setInitError(`Worker error: ${error.message || 'Unknown error occurred'}`)
+        setIsInitializing(false)
+        if (initTimeoutId) {
+          clearTimeout(initTimeoutId)
+          setInitTimeoutId(null)
+        }
+      }
+    }
+
+    workerClient.on('error', handleWorkerError)
+
+    // Cleanup
+    return () => {
+      if (workerClient && workerClient.off) {
+        workerClient.off('error', handleWorkerError)
+      }
+    }
+  }, [isInitializing, initTimeoutId])
+
+  // Reset error when modal is closed
+  const handleCloseConfig = () => {
+    setShowConfig(false)
+    setInitError(null)
+    setIsInitializing(false)
+    if (initTimeoutId) {
+      clearTimeout(initTimeoutId)
+      setInitTimeoutId(null)
     }
   }
 
@@ -252,9 +383,70 @@ export function Navigation() {
 
       {/* Configuration Modal */}
       {showConfig && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center z-50" onClick={() => setShowConfig(false)}>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center z-50" onClick={handleCloseConfig}>
           <div className="bg-black border border-white/20 p-8 max-w-md w-full shadow-[0_0_30px_rgba(0,240,255,0.3)]" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-2xl mb-6 text-cyan-400">Initialize Simulation</h2>
+
+            {/* Error Display */}
+            {initError && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-400/60 rounded shadow-[0_0_15px_rgba(255,0,64,0.3)]">
+                <div className="flex items-start gap-3">
+                  <span className="text-red-400 text-xl mt-0.5">❌</span>
+                  <div className="flex-1">
+                    <h3 className="text-red-400 font-medium mb-2">Initialization Failed</h3>
+                    <p className="text-white/80 text-sm mb-3">{initError}</p>
+
+                    {/* Diagnostic Information */}
+                    <details className="mb-3">
+                      <summary className="text-white/60 text-xs cursor-pointer hover:text-white/80">
+                        Diagnostic Information
+                      </summary>
+                      <div className="mt-2 p-2 bg-black/40 rounded text-xs font-mono text-white/50 space-y-1">
+                        <div>Browser: {typeof window !== 'undefined' && window.navigator ? window.navigator.userAgent.substring(0, 50) + '...' : 'Unknown'}</div>
+                        <div>Worker Support: {typeof Worker !== 'undefined' ? 'Yes' : 'No'}</div>
+                        <div>Worker Client: {typeof (window as any).__simulationWorkerClient !== 'undefined' ? 'Available' : 'Not Available'}</div>
+                        <div>Environment: {process.env.NODE_ENV}</div>
+                        <div>Time: {new Date().toISOString()}</div>
+                      </div>
+                    </details>
+
+                    <div className="space-y-2">
+                      <button
+                        onClick={() => {
+                          setInitError(null)
+                          handleInit()
+                        }}
+                        disabled={isInitializing}
+                        className="w-full px-3 py-2 bg-red-500/20 border border-red-400 text-red-400 hover:bg-red-400/30 transition-all rounded text-sm disabled:opacity-50"
+                      >
+                        {isInitializing ? 'INITIALIZING...' : 'TRY AGAIN'}
+                      </button>
+                      <a
+                        href="https://github.com/themultiverseai/superalignmenttoutopia/issues"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full px-3 py-2 bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 transition-all rounded text-sm text-center"
+                      >
+                        Report Issue on GitHub
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Initializing Status */}
+            {isInitializing && !initError && (
+              <div className="mb-6 p-4 bg-cyan-500/10 border border-cyan-400/60 rounded shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                <div className="flex items-center gap-3">
+                  <div className="animate-spin h-5 w-5 border-2 border-cyan-400 border-t-transparent rounded-full"></div>
+                  <div>
+                    <p className="text-cyan-400 font-medium">Initializing simulation...</p>
+                    <p className="text-white/60 text-sm mt-1">This may take a few seconds</p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="space-y-4">
               <div>
@@ -380,16 +572,18 @@ export function Navigation() {
 
               <div className="flex gap-3 pt-4">
                 <button
-                  onClick={() => setShowConfig(false)}
-                  className="flex-1 px-4 py-3 bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 transition-all rounded"
+                  onClick={handleCloseConfig}
+                  disabled={isInitializing}
+                  className="flex-1 px-4 py-3 bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 transition-all rounded disabled:opacity-50"
                 >
                   CANCEL
                 </button>
                 <button
                   onClick={handleInit}
-                  className="flex-1 px-4 py-3 bg-cyan-500/20 border border-cyan-400 text-cyan-400 hover:bg-cyan-400/30 transition-all rounded"
+                  disabled={isInitializing}
+                  className="flex-1 px-4 py-3 bg-cyan-500/20 border border-cyan-400 text-cyan-400 hover:bg-cyan-400/30 transition-all rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  INITIALIZE
+                  {isInitializing ? 'INITIALIZING...' : 'INITIALIZE'}
                 </button>
               </div>
             </div>
