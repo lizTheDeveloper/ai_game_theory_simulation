@@ -8,6 +8,8 @@
 import { GameState, TechnologicalRisk } from '@/types/game';
 import { calculateAverageAlignment } from './outcomes';
 import { RootCause } from '@/types/population';
+import { addMortalityRisk } from './bayesianMortality';
+import { assertFinite } from './utils/assertions';
 
 export function initializeTechnologicalRisk(): TechnologicalRisk {
   return {
@@ -141,16 +143,23 @@ function checkTechnologicalCrises(state: GameState): void {
     // Population impact: AI control loss causes accidents, infrastructure failures (0.5-1% casualties)
     // SEMI-GLOBAL: Infrastructure-dependent regions (modern nations with AI systems) = ~70% of world
     // 1.2% mortality rate from AI-caused disasters in dependent regions
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.012,
-      'AI control loss - infrastructure failures/accidents (AI-dependent regions)',
-      0.70,
-      'ai',
-      RootCause.alignment,
-      'LOW'  // Theoretical, no historical precedent
-    );
+    const baseRisk = assertFinite(0.012, {
+      location: 'updateTechnologicalRisk (AI control loss)',
+      valueName: 'baseRisk',
+      month: state.currentMonth
+    });
+
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'disaster',
+      baseRisk,
+      scope: 'SEMI-GLOBAL',
+      exposedFraction: 0.70,
+      proximate: 'ai',
+      root: RootCause.alignment,
+        month: state.currentMonth,
+      description: 'AI control loss - infrastructure failures/accidents (AI-dependent regions)',
+      confidence: 'LOW'  // Theoretical, no historical precedent
+    });
   }
   
   // CORPORATE DYSTOPIA
@@ -174,25 +183,23 @@ function checkTechnologicalCrises(state: GameState): void {
       // Population impact: Corporate dystopia causes resource hoarding, healthcare denial (0.2-0.4% casualties)
       // SEMI-GLOBAL: Regions where corporations dominate (US, EU, parts of Asia) = ~40% of world
       // 0.75% mortality rate from healthcare denial/resource hoarding
-      const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(
-        state,
-        0.0075,
-        'Corporate dystopia - resource hoarding/healthcare denial (corporate-controlled)',
-        0.40,
-        'ai',
-        {
-          causes: [
-            { cause: RootCause.inequality, weight: 0.60, confidence: 'MEDIUM',
-              citation: 'Acemoglu & Robinson (2012): Extractive institutions' },
-            { cause: RootCause.alignment, weight: 0.40, confidence: 'LOW',
-              citation: 'Theoretical: AI enables monopolization' }
-          ],
-          evidence: 'Acemoglu & Robinson extractive institutions + AI scaling effects',
-          mechanism: 'AI capabilities → market concentration → elite capture → resource hoarding'
-        },
-        'LOW'  // Compound with theoretical component
-      );
+      const corpBaseRisk = assertFinite(0.0075, {
+        location: 'updateTechnologicalRisk (corporate dystopia)',
+        valueName: 'corpBaseRisk',
+        month: state.currentMonth
+      });
+
+      addMortalityRisk(state.humanPopulationSystem, {
+        type: 'famine',  // Resource hoarding behaves like famine
+        baseRisk: corpBaseRisk,
+        scope: 'SEMI-GLOBAL',
+        exposedFraction: 0.40,
+        proximate: 'ai',
+        root: RootCause.inequality,
+        month: state.currentMonth,  // Primary cause (60% attribution) - Acemoglu & Robinson (2012)
+        description: 'Corporate dystopia - resource hoarding/healthcare denial (corporate-controlled). Mixed causes: 60% inequality, 40% AI-enabled monopolization. Evidence: Acemoglu & Robinson extractive institutions + AI scaling effects',
+        confidence: 'LOW'  // Compound with theoretical component
+      });
     }
   }
   

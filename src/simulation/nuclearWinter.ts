@@ -24,7 +24,8 @@
 
 import { GameState } from '../types/game';
 import { NuclearWinterState, RadiationZone } from '../types/nuclearWinter';
-import { addAcuteCrisisDeaths } from './populationDynamics';
+import { addMortalityRisk } from './bayesianMortality';
+import { assertFinite } from './utils/assertions';
 import { RootCause } from '../types/population';
 
 /**
@@ -284,15 +285,24 @@ export function updateNuclearWinter(state: GameState): void {
     const starvationDeaths = population * winter.monthlyStarvationRate;
     
     if (starvationDeaths > 0.001) {  // Only log if > 1 million deaths
-      addAcuteCrisisDeaths(
-        state,
-        starvationDeaths,
-        'Nuclear winter famine - agricultural collapse (global)',
-        1.00,
-        'famine',
-        RootCause.conflict,  // Root: Nuclear war caused nuclear winter
-        'HIGH'
-      );
+      const monthlyStarvationRate = assertFinite(winter.monthlyStarvationRate, {
+        location: 'updateNuclearWinter (famine)',
+        valueName: 'monthlyStarvationRate',
+        month: state.currentMonth,
+        additionalInfo: { soot: winter.currentSoot, cropYield: winter.cropYieldMultiplier }
+      });
+
+      addMortalityRisk(state.humanPopulationSystem, {
+        type: 'famine',
+        baseRisk: monthlyStarvationRate,
+        scope: 'GLOBAL',
+        exposedFraction: 1.00,
+        proximate: 'famine',
+        root: RootCause.conflict,
+        month: state.currentMonth,  // Root: Nuclear war caused nuclear winter
+        description: 'Nuclear winter famine - agricultural collapse (global)',
+        confidence: 'HIGH'  // Robock & Toon (2012)
+      });
       winter.totalWinterDeaths += starvationDeaths;
       
       // Log significant events
@@ -352,15 +362,26 @@ function updateRadiationZones(state: GameState, winter: NuclearWinterState): voi
   });
   
   if (totalRadiationDeaths > 0) {
-    addAcuteCrisisDeaths(
-      state,
-      totalRadiationDeaths,
-      'Radiation poisoning (nuclear zones)',
-      0.30,
-      'war',
-      RootCause.conflict,
-      'HIGH'
-    );
+    // Calculate average mortality rate across exposed zones
+    const nuclearNationsPopulation = state.humanPopulationSystem.population * 0.30;
+    const averageRadiationMortality = assertFinite(totalRadiationDeaths / (nuclearNationsPopulation || 1), {
+      location: 'updateNuclearWinter (radiation)',
+      valueName: 'averageRadiationMortality',
+      month: state.currentMonth,
+      additionalInfo: { totalDeaths: totalRadiationDeaths, zones: winter.radiationZones.length }
+    });
+
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'war',
+      baseRisk: averageRadiationMortality,
+      scope: 'REGIONAL',
+      exposedFraction: 0.30,
+      proximate: 'war',
+      root: RootCause.conflict,
+        month: state.currentMonth,
+      description: 'Radiation poisoning (nuclear zones)',
+      confidence: 'HIGH'  // Hiroshima/Nagasaki/Chernobyl data
+    });
     winter.totalRadiationDeaths += totalRadiationDeaths;
   }
   

@@ -13,6 +13,8 @@
 
 import { GameState } from '@/types/game';
 import { RootCause } from '@/types/population';
+import { addMortalityRisk } from './bayesianMortality';
+import { assertFinite } from './utils/assertions';
 
 // ============================================================================
 // TYPES
@@ -238,20 +240,28 @@ function processPandemicEvent(
   }
 
   // Apply mortality
-  const { addAcuteCrisisDeaths } = require('./populationDynamics');
   const deathsThisMonth = state.humanPopulationSystem.population *
                           currentMortality *
                           params.affectedFraction;
 
-  addAcuteCrisisDeaths(
-    state,
-    currentMortality,
-    `Pandemic - ${phaseData.currentPhase} phase`,
-    params.affectedFraction,
-    'disease',
-    RootCause.pandemic,
-    'HIGH'
-  );
+  const pandemicBaseRisk = assertFinite(currentMortality, {
+    location: 'executePandemicPhase',
+    valueName: 'currentMortality',
+    month: state.currentMonth,
+    additionalInfo: { phase: phaseData.currentPhase, affectedFraction: params.affectedFraction }
+  });
+
+  addMortalityRisk(state.humanPopulationSystem, {
+    type: 'disease',
+    baseRisk: pandemicBaseRisk,
+    scope: params.affectedFraction >= 0.8 ? 'GLOBAL' : 'SEMI-GLOBAL',
+    exposedFraction: params.affectedFraction,
+    proximate: 'disease',
+    root: RootCause.pandemic,
+        month: state.currentMonth,
+    description: `Pandemic - ${phaseData.currentPhase} phase`,
+    confidence: 'HIGH'  // Historical data (COVID-19, Spanish Flu, etc.)
+  });
 
   phaseData.cumulativeDeaths += deathsThisMonth;
 

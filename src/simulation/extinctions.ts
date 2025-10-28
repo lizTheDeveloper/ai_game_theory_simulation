@@ -15,6 +15,9 @@
 import { GameState, ExtinctionState, ExtinctionType, ExtinctionMechanism, GameEvent } from '@/types/game';
 import { calculateTotalAICapability, calculateAverageAlignment } from './calculations';
 import { calculateTotalCapabilityFromProfile } from './capabilities';
+import { addMortalityRisk } from './bayesianMortality';
+import { assertFinite } from './utils/assertions';
+import { RootCause } from '@/types/population';
 
 /**
  * Initialize a blank extinction state
@@ -476,17 +479,23 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           // Add immediate nuclear war casualties (blast + radiation)
           // REGIONAL CRISIS: Only nuclear nations (US, Russia, China, EU, allies) = ~30% of world population
           // 60% mortality rate within exposed regions (blast + immediate radiation)
-          const { addAcuteCrisisDeaths } = require('./populationDynamics');
-          const { RootCause } = require('../types/population');
-          addAcuteCrisisDeaths(
-            state,
-            0.60,
-            'Nuclear war (geopolitical) - blast/radiation (US/Russia/allies)',
-            0.30,
-            'war',
-            RootCause.conflict,
-            'HIGH'
-          );
+          const nuclearBaseRisk = assertFinite(0.60, {
+            location: 'triggerExtinction (nuclear war)',
+            valueName: 'nuclearBaseRisk',
+            month: state.currentMonth
+          });
+
+          addMortalityRisk(state.humanPopulationSystem, {
+            type: 'war',
+            baseRisk: nuclearBaseRisk,
+            scope: 'REGIONAL',
+            exposedFraction: 0.30,
+            proximate: 'war',
+            root: RootCause.conflict,
+            month: state.currentMonth,
+            description: 'Nuclear war (geopolitical) - blast/radiation (US/Russia/allies)',
+            confidence: 'HIGH'  // Hiroshima/Nagasaki data
+          });
 
           // Apply regional biodiversity loss (TIER 1.7: Crisis Realism)
           const { applyNuclearBiodiversityLoss, getRegionFromNation } = require('../types/regionalBiodiversity');
