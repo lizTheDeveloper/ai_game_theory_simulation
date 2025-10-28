@@ -1,0 +1,2680 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.080 --> 00:00:02.470 align:start position:0%
+ 
+progress<00:00:00.440><c> in</c><00:00:00.599><c> AI</c><00:00:01.040><c> is</c><00:00:01.240><c> increasingly</c><00:00:01.959><c> hidden</c>
+
+00:00:02.470 --> 00:00:02.480 align:start position:0%
+progress in AI is increasingly hidden
+ 
+
+00:00:02.480 --> 00:00:05.349 align:start position:0%
+progress in AI is increasingly hidden
+behind<00:00:03.040><c> closed</c><00:00:03.480><c> doors</c><00:00:04.200><c> but</c><00:00:04.440><c> not</c><00:00:04.759><c> all</c><00:00:04.960><c> of</c><00:00:05.160><c> those</c>
+
+00:00:05.349 --> 00:00:05.359 align:start position:0%
+behind closed doors but not all of those
+ 
+
+00:00:05.359 --> 00:00:08.629 align:start position:0%
+behind closed doors but not all of those
+doors<00:00:05.799><c> are</c><00:00:06.160><c> locked</c><00:00:06.960><c> so</c><00:00:07.439><c> let's</c><00:00:07.680><c> piece</c><00:00:08.160><c> together</c>
+
+00:00:08.629 --> 00:00:08.639 align:start position:0%
+doors are locked so let's piece together
+ 
+
+00:00:08.639 --> 00:00:10.990 align:start position:0%
+doors are locked so let's piece together
+what<00:00:08.840><c> we</c><00:00:09.000><c> do</c><00:00:09.280><c> know</c><00:00:09.800><c> we</c><00:00:09.920><c> know</c><00:00:10.120><c> for</c><00:00:10.360><c> example</c><00:00:10.800><c> that</c>
+
+00:00:10.990 --> 00:00:11.000 align:start position:0%
+what we do know we know for example that
+ 
+
+00:00:11.000 --> 00:00:13.910 align:start position:0%
+what we do know we know for example that
+open<00:00:11.280><c> AI</c><00:00:11.759><c> are</c><00:00:12.040><c> targeting</c><00:00:12.799><c> particular</c><00:00:13.519><c> AI</c>
+
+00:00:13.910 --> 00:00:13.920 align:start position:0%
+open AI are targeting particular AI
+ 
+
+00:00:13.920 --> 00:00:16.470 align:start position:0%
+open AI are targeting particular AI
+agent<00:00:14.320><c> benchmarks</c><00:00:15.240><c> and</c><00:00:15.559><c> I'll</c><00:00:15.759><c> give</c><00:00:15.960><c> you</c><00:00:16.199><c> the</c>
+
+00:00:16.470 --> 00:00:16.480 align:start position:0%
+agent benchmarks and I'll give you the
+ 
+
+00:00:16.480 --> 00:00:18.910 align:start position:0%
+agent benchmarks and I'll give you the
+highlights<00:00:16.920><c> of</c><00:00:17.119><c> two</c><00:00:17.400><c> papers</c><00:00:17.960><c> to</c><00:00:18.160><c> Showcase</c>
+
+00:00:18.910 --> 00:00:18.920 align:start position:0%
+highlights of two papers to Showcase
+ 
+
+00:00:18.920 --> 00:00:21.470 align:start position:0%
+highlights of two papers to Showcase
+what<00:00:19.119><c> that</c><00:00:19.320><c> might</c><00:00:19.520><c> mean</c><00:00:20.080><c> and</c><00:00:20.359><c> no</c><00:00:20.920><c> this</c><00:00:21.039><c> is</c><00:00:21.240><c> not</c>
+
+00:00:21.470 --> 00:00:21.480 align:start position:0%
+what that might mean and no this is not
+ 
+
+00:00:21.480 --> 00:00:24.029 align:start position:0%
+what that might mean and no this is not
+a<00:00:21.680><c> video</c><00:00:22.119><c> on</c><00:00:22.320><c> that</c><00:00:22.519><c> new</c><00:00:22.800><c> chat</c><00:00:23.119><c> GPT</c><00:00:23.640><c> task</c>
+
+00:00:24.029 --> 00:00:24.039 align:start position:0%
+a video on that new chat GPT task
+ 
+
+00:00:24.039 --> 00:00:25.710 align:start position:0%
+a video on that new chat GPT task
+feature<00:00:24.599><c> which</c><00:00:24.800><c> I</c><00:00:25.000><c> tried</c><00:00:25.279><c> to</c><00:00:25.439><c> find</c>
+
+00:00:25.710 --> 00:00:25.720 align:start position:0%
+feature which I tried to find
+ 
+
+00:00:25.720 --> 00:00:27.230 align:start position:0%
+feature which I tried to find
+interesting<00:00:26.279><c> but</c><00:00:26.439><c> I</c><00:00:26.560><c> just</c><00:00:26.720><c> couldn't</c>
+
+00:00:27.230 --> 00:00:27.240 align:start position:0%
+interesting but I just couldn't
+ 
+
+00:00:27.240 --> 00:00:30.029 align:start position:0%
+interesting but I just couldn't
+meanwhile<00:00:27.840><c> though</c><00:00:28.080><c> samman</c><00:00:28.880><c> markedly</c><00:00:29.400><c> changes</c>
+
+00:00:30.029 --> 00:00:30.039 align:start position:0%
+meanwhile though samman markedly changes
+ 
+
+00:00:30.039 --> 00:00:32.470 align:start position:0%
+meanwhile though samman markedly changes
+gear<00:00:30.359><c> on</c><00:00:30.679><c> takeoff</c><00:00:31.160><c> speeds</c><00:00:31.840><c> in</c><00:00:31.960><c> other</c><00:00:32.119><c> words</c>
+
+00:00:32.470 --> 00:00:32.480 align:start position:0%
+gear on takeoff speeds in other words
+ 
+
+00:00:32.480 --> 00:00:34.950 align:start position:0%
+gear on takeoff speeds in other words
+how<00:00:32.800><c> fast</c><00:00:33.200><c> super</c><00:00:33.520><c> intelligence</c><00:00:34.040><c> is</c><00:00:34.239><c> coming</c>
+
+00:00:34.950 --> 00:00:34.960 align:start position:0%
+how fast super intelligence is coming
+ 
+
+00:00:34.960 --> 00:00:38.270 align:start position:0%
+how fast super intelligence is coming
+while<00:00:35.239><c> telling</c><00:00:35.719><c> the</c><00:00:35.960><c> hyp</c><00:00:36.320><c> Bros</c><00:00:36.879><c> to</c><00:00:37.239><c> chill</c><00:00:37.960><c> but</c>
+
+00:00:38.270 --> 00:00:38.280 align:start position:0%
+while telling the hyp Bros to chill but
+ 
+
+00:00:38.280 --> 00:00:40.830 align:start position:0%
+while telling the hyp Bros to chill but
+deep<00:00:38.640><c> seek</c><00:00:38.960><c> based</c><00:00:39.200><c> in</c><00:00:39.360><c> China</c><00:00:39.879><c> proves</c><00:00:40.520><c> that</c>
+
+00:00:40.830 --> 00:00:40.840 align:start position:0%
+deep seek based in China proves that
+ 
+
+00:00:40.840 --> 00:00:43.069 align:start position:0%
+deep seek based in China proves that
+open<00:00:41.160><c> source</c><00:00:41.440><c> models</c><00:00:41.920><c> aren't</c><00:00:42.520><c> that</c><00:00:42.760><c> far</c>
+
+00:00:43.069 --> 00:00:43.079 align:start position:0%
+open source models aren't that far
+ 
+
+00:00:43.079 --> 00:00:45.549 align:start position:0%
+open source models aren't that far
+behind<00:00:43.600><c> with</c><00:00:43.760><c> their</c><00:00:43.920><c> new</c><00:00:44.160><c> R1</c><00:00:44.719><c> model</c><00:00:45.320><c> so</c>
+
+00:00:45.549 --> 00:00:45.559 align:start position:0%
+behind with their new R1 model so
+ 
+
+00:00:45.559 --> 00:00:47.630 align:start position:0%
+behind with their new R1 model so
+whatever<00:00:46.000><c> Western</c><00:00:46.360><c> Labs</c><00:00:46.640><c> cook</c><00:00:46.879><c> up</c><00:00:47.280><c> could</c><00:00:47.480><c> well</c>
+
+00:00:47.630 --> 00:00:47.640 align:start position:0%
+whatever Western Labs cook up could well
+ 
+
+00:00:47.640 --> 00:00:50.869 align:start position:0%
+whatever Western Labs cook up could well
+be<00:00:47.800><c> served</c><00:00:48.320><c> to</c><00:00:48.680><c> all</c><00:00:49.440><c> in</c><00:00:49.600><c> short</c><00:00:49.960><c> order</c><00:00:50.559><c> whether</c>
+
+00:00:50.869 --> 00:00:50.879 align:start position:0%
+be served to all in short order whether
+ 
+
+00:00:50.879 --> 00:00:53.310 align:start position:0%
+be served to all in short order whether
+any<00:00:51.079><c> of</c><00:00:51.320><c> this</c><00:00:51.559><c> honestly</c><00:00:52.199><c> affects</c><00:00:52.640><c> your</c><00:00:52.879><c> work</c>
+
+00:00:53.310 --> 00:00:53.320 align:start position:0%
+any of this honestly affects your work
+ 
+
+00:00:53.320 --> 00:00:55.869 align:start position:0%
+any of this honestly affects your work
+directly<00:00:53.879><c> this</c><00:00:54.160><c> year</c><00:00:54.600><c> will</c><00:00:54.800><c> more</c><00:00:55.160><c> depend</c><00:00:55.600><c> on</c>
+
+00:00:55.869 --> 00:00:55.879 align:start position:0%
+directly this year will more depend on
+ 
+
+00:00:55.879 --> 00:00:58.470 align:start position:0%
+directly this year will more depend on
+how<00:00:56.199><c> digital</c><00:00:56.680><c> your</c><00:00:56.879><c> work</c><00:00:57.239><c> is</c><00:00:57.800><c> and</c><00:00:58.160><c> how</c>
+
+00:00:58.470 --> 00:00:58.480 align:start position:0%
+how digital your work is and how
+ 
+
+00:00:58.480 --> 00:01:02.270 align:start position:0%
+how digital your work is and how
+quantifiable<00:00:59.480><c> or</c><00:01:00.079><c> Benchmark</c><00:01:01.079><c> it</c><00:01:01.239><c> is</c><00:01:01.879><c> that</c><00:01:02.160><c> to</c>
+
+00:01:02.270 --> 00:01:02.280 align:start position:0%
+quantifiable or Benchmark it is that to
+ 
+
+00:01:02.280 --> 00:01:04.469 align:start position:0%
+quantifiable or Benchmark it is that to
+be<00:01:02.480><c> honest</c><00:01:02.920><c> will</c><00:01:03.160><c> give</c><00:01:03.280><c> you</c><00:01:03.559><c> the</c><00:01:03.800><c> best</c><00:01:04.119><c> gauge</c>
+
+00:01:04.469 --> 00:01:04.479 align:start position:0%
+be honest will give you the best gauge
+ 
+
+00:01:04.479 --> 00:01:07.830 align:start position:0%
+be honest will give you the best gauge
+of<00:01:04.640><c> what</c><00:01:04.760><c> 2025</c><00:01:05.560><c> will</c><00:01:05.760><c> mean</c><00:01:06.119><c> for</c><00:01:06.439><c> you</c><00:01:07.000><c> with</c><00:01:07.280><c> AI</c>
+
+00:01:07.830 --> 00:01:07.840 align:start position:0%
+of what 2025 will mean for you with AI
+ 
+
+00:01:07.840 --> 00:01:09.830 align:start position:0%
+of what 2025 will mean for you with AI
+but<00:01:08.159><c> first</c><00:01:08.560><c> I</c><00:01:08.640><c> want</c><00:01:08.840><c> to</c><00:01:09.040><c> give</c><00:01:09.200><c> you</c><00:01:09.479><c> some</c>
+
+00:01:09.830 --> 00:01:09.840 align:start position:0%
+but first I want to give you some
+ 
+
+00:01:09.840 --> 00:01:12.429 align:start position:0%
+but first I want to give you some
+numbers<00:01:10.479><c> and</c><00:01:10.600><c> I</c><00:01:10.720><c> don't</c><00:01:10.920><c> just</c><00:01:11.040><c> mean</c><00:01:11.600><c> the</c><00:01:11.960><c> cost</c>
+
+00:01:12.429 --> 00:01:12.439 align:start position:0%
+numbers and I don't just mean the cost
+ 
+
+00:01:12.439 --> 00:01:15.550 align:start position:0%
+numbers and I don't just mean the cost
+of<00:01:12.680><c> 03</c><00:01:13.680><c> when</c><00:01:14.159><c> it</c><00:01:14.360><c> is</c><00:01:14.600><c> released</c><00:01:15.320><c> which</c>
+
+00:01:15.550 --> 00:01:15.560 align:start position:0%
+of 03 when it is released which
+ 
+
+00:01:15.560 --> 00:01:19.109 align:start position:0%
+of 03 when it is released which
+apparently<00:01:16.280><c> will</c><00:01:16.479><c> be</c><00:01:16.799><c> still</c><00:01:17.360><c> $200</c><00:01:18.360><c> on</c><00:01:18.560><c> the</c><00:01:18.799><c> pro</c>
+
+00:01:19.109 --> 00:01:19.119 align:start position:0%
+apparently will be still $200 on the pro
+ 
+
+00:01:19.119 --> 00:01:21.270 align:start position:0%
+apparently will be still $200 on the pro
+tear<00:01:19.600><c> given</c><00:01:19.880><c> that</c><00:01:20.040><c> they</c><00:01:20.200><c> are</c><00:01:20.479><c> already</c><00:01:20.840><c> losing</c>
+
+00:01:21.270 --> 00:01:21.280 align:start position:0%
+tear given that they are already losing
+ 
+
+00:01:21.280 --> 00:01:23.789 align:start position:0%
+tear given that they are already losing
+money<00:01:21.759><c> with</c><00:01:22.000><c> 01</c><00:01:22.560><c> Pro</c><00:01:23.000><c> it</c><00:01:23.159><c> does</c><00:01:23.439><c> kind</c><00:01:23.560><c> of</c><00:01:23.680><c> make</c>
+
+00:01:23.789 --> 00:01:23.799 align:start position:0%
+money with 01 Pro it does kind of make
+ 
+
+00:01:23.799 --> 00:01:25.630 align:start position:0%
+money with 01 Pro it does kind of make
+you<00:01:24.000><c> wonder</c><00:01:24.400><c> about</c><00:01:24.640><c> the</c><00:01:24.799><c> economics</c><00:01:25.479><c> of</c>
+
+00:01:25.630 --> 00:01:25.640 align:start position:0%
+you wonder about the economics of
+ 
+
+00:01:25.640 --> 00:01:28.830 align:start position:0%
+you wonder about the economics of
+serving<00:01:26.040><c> out</c><00:01:26.240><c> o03</c><00:01:26.840><c> Pro</c><00:01:27.200><c> for</c><00:01:27.360><c> $200</c><00:01:28.079><c> a</c><00:01:28.240><c> month</c><00:01:28.680><c> but</c>
+
+00:01:28.830 --> 00:01:28.840 align:start position:0%
+serving out o03 Pro for $200 a month but
+ 
+
+00:01:28.840 --> 00:01:30.830 align:start position:0%
+serving out o03 Pro for $200 a month but
+let's<00:01:28.960><c> see</c><00:01:29.119><c> what</c><00:01:29.280><c> happens</c><00:01:29.759><c> no</c><00:01:30.079><c> I</c><00:01:30.200><c> more</c><00:01:30.400><c> mean</c>
+
+00:01:30.830 --> 00:01:30.840 align:start position:0%
+let's see what happens no I more mean
+ 
+
+00:01:30.840 --> 00:01:33.950 align:start position:0%
+let's see what happens no I more mean
+the<00:01:31.040><c> numbers</c><00:01:31.640><c> behind</c><00:01:32.320><c> the</c><00:01:32.680><c> operator</c><00:01:33.320><c> system</c>
+
+00:01:33.950 --> 00:01:33.960 align:start position:0%
+the numbers behind the operator system
+ 
+
+00:01:33.960 --> 00:01:36.550 align:start position:0%
+the numbers behind the operator system
+that<00:01:34.200><c> open</c><00:01:34.479><c> aai</c><00:01:35.000><c> looks</c><00:01:35.320><c> set</c><00:01:35.560><c> to</c><00:01:35.680><c> be</c><00:01:35.840><c> releasing</c>
+
+00:01:36.550 --> 00:01:36.560 align:start position:0%
+that open aai looks set to be releasing
+ 
+
+00:01:36.560 --> 00:01:38.710 align:start position:0%
+that open aai looks set to be releasing
+quite<00:01:36.799><c> soon</c><00:01:37.320><c> we</c><00:01:37.479><c> can</c><00:01:37.880><c> already</c><00:01:38.200><c> Glimpse</c>
+
+00:01:38.710 --> 00:01:38.720 align:start position:0%
+quite soon we can already Glimpse
+ 
+
+00:01:38.720 --> 00:01:41.310 align:start position:0%
+quite soon we can already Glimpse
+options<00:01:39.119><c> to</c><00:01:39.399><c> toggle</c><00:01:39.840><c> on</c><00:01:40.360><c> the</c><00:01:40.560><c> computer</c><00:01:41.040><c> use</c>
+
+00:01:41.310 --> 00:01:41.320 align:start position:0%
+options to toggle on the computer use
+ 
+
+00:01:41.320 --> 00:01:44.310 align:start position:0%
+options to toggle on the computer use
+agent<00:01:41.799><c> or</c><00:01:42.119><c> operator</c><00:01:42.920><c> or</c><00:01:43.159><c> force</c><00:01:43.479><c> it</c><00:01:43.680><c> to</c><00:01:44.000><c> quit</c>
+
+00:01:44.310 --> 00:01:44.320 align:start position:0%
+agent or operator or force it to quit
+ 
+
+00:01:44.320 --> 00:01:46.190 align:start position:0%
+agent or operator or force it to quit
+and<00:01:44.560><c> stop</c><00:01:45.000><c> I'll</c><00:01:45.159><c> get</c><00:01:45.280><c> to</c><00:01:45.520><c> the</c><00:01:45.640><c> two</c><00:01:45.880><c> relevant</c>
+
+00:01:46.190 --> 00:01:46.200 align:start position:0%
+and stop I'll get to the two relevant
+ 
+
+00:01:46.200 --> 00:01:48.709 align:start position:0%
+and stop I'll get to the two relevant
+papers<00:01:46.520><c> in</c><00:01:46.640><c> a</c><00:01:46.759><c> moment</c><00:01:47.119><c> but</c><00:01:47.280><c> at</c><00:01:47.479><c> face</c><00:01:47.920><c> value</c><00:01:48.600><c> if</c>
+
+00:01:48.709 --> 00:01:48.719 align:start position:0%
+papers in a moment but at face value if
+ 
+
+00:01:48.719 --> 00:01:50.870 align:start position:0%
+papers in a moment but at face value if
+the<00:01:48.840><c> O</c><00:01:49.159><c> Series</c><00:01:49.520><c> has</c><00:01:49.719><c> proven</c><00:01:50.159><c> anything</c><00:01:50.680><c> from</c>
+
+00:01:50.870 --> 00:01:50.880 align:start position:0%
+the O Series has proven anything from
+ 
+
+00:01:50.880 --> 00:01:53.429 align:start position:0%
+the O Series has proven anything from
+open<00:01:51.159><c> aai</c><00:01:51.719><c> it's</c><00:01:51.920><c> proven</c><00:01:52.320><c> that</c><00:01:52.439><c> it</c><00:01:52.560><c> can</c><00:01:52.920><c> rapidly</c>
+
+00:01:53.429 --> 00:01:53.439 align:start position:0%
+open aai it's proven that it can rapidly
+ 
+
+00:01:53.439 --> 00:01:55.230 align:start position:0%
+open aai it's proven that it can rapidly
+improve<00:01:53.920><c> in</c><00:01:54.119><c> any</c><00:01:54.360><c> domain</c><00:01:54.799><c> that</c><00:01:54.920><c> can</c><00:01:55.079><c> be</c>
+
+00:01:55.230 --> 00:01:55.240 align:start position:0%
+improve in any domain that can be
+ 
+
+00:01:55.240 --> 00:01:58.109 align:start position:0%
+improve in any domain that can be
+benchmarked<00:01:55.960><c> so</c><00:01:56.280><c> is</c><00:01:56.560><c> that</c><00:01:56.880><c> why</c><00:01:57.240><c> yesterday</c><00:01:57.960><c> we</c>
+
+00:01:58.109 --> 00:01:58.119 align:start position:0%
+benchmarked so is that why yesterday we
+ 
+
+00:01:58.119 --> 00:02:00.389 align:start position:0%
+benchmarked so is that why yesterday we
+got<00:01:58.520><c> this</c><00:01:58.759><c> headline</c><00:01:59.320><c> in</c><00:01:59.560><c> a</c>
+
+00:02:00.389 --> 00:02:00.399 align:start position:0%
+got this headline in a
+ 
+
+00:02:00.399 --> 00:02:03.469 align:start position:0%
+got this headline in a
+coming<00:02:00.640><c> soon</c><00:02:01.200><c> PhD</c><00:02:01.759><c> level</c><00:02:02.240><c> super</c><00:02:02.600><c> agents</c><00:02:03.320><c> it's</c>
+
+00:02:03.469 --> 00:02:03.479 align:start position:0%
+coming soon PhD level super agents it's
+ 
+
+00:02:03.479 --> 00:02:05.190 align:start position:0%
+coming soon PhD level super agents it's
+a<00:02:03.680><c> decently</c><00:02:04.119><c> long</c><00:02:04.399><c> article</c><00:02:04.840><c> but</c><00:02:04.960><c> I'm</c><00:02:05.079><c> just</c>
+
+00:02:05.190 --> 00:02:05.200 align:start position:0%
+a decently long article but I'm just
+ 
+
+00:02:05.200 --> 00:02:07.310 align:start position:0%
+a decently long article but I'm just
+going<00:02:05.280><c> to</c><00:02:05.479><c> give</c><00:02:05.600><c> you</c><00:02:06.079><c> the</c><00:02:06.399><c> two</c><00:02:06.719><c> or</c><00:02:07.000><c> three</c>
+
+00:02:07.310 --> 00:02:07.320 align:start position:0%
+going to give you the two or three
+ 
+
+00:02:07.320 --> 00:02:09.630 align:start position:0%
+going to give you the two or three
+highlights<00:02:08.000><c> a</c><00:02:08.160><c> top</c><00:02:08.399><c> company</c><00:02:09.000><c> possibly</c><00:02:09.360><c> open</c>
+
+00:02:09.630 --> 00:02:09.640 align:start position:0%
+highlights a top company possibly open
+ 
+
+00:02:09.640 --> 00:02:12.030 align:start position:0%
+highlights a top company possibly open
+aai<00:02:10.160><c> in</c><00:02:10.280><c> the</c><00:02:10.399><c> coming</c><00:02:10.640><c> weeks</c><00:02:10.920><c> will</c><00:02:11.120><c> announce</c><00:02:11.680><c> a</c>
+
+00:02:12.030 --> 00:02:12.040 align:start position:0%
+aai in the coming weeks will announce a
+ 
+
+00:02:12.040 --> 00:02:14.750 align:start position:0%
+aai in the coming weeks will announce a
+breakthrough<00:02:12.879><c> that</c><00:02:13.000><c> unleashes</c><00:02:13.720><c> quote</c><00:02:14.160><c> PhD</c>
+
+00:02:14.750 --> 00:02:14.760 align:start position:0%
+breakthrough that unleashes quote PhD
+ 
+
+00:02:14.760 --> 00:02:17.509 align:start position:0%
+breakthrough that unleashes quote PhD
+level<00:02:15.280><c> super</c><00:02:15.640><c> agents</c><00:02:16.200><c> to</c><00:02:16.360><c> do</c><00:02:16.680><c> complex</c><00:02:17.200><c> human</c>
+
+00:02:17.509 --> 00:02:17.519 align:start position:0%
+level super agents to do complex human
+ 
+
+00:02:17.519 --> 00:02:19.470 align:start position:0%
+level super agents to do complex human
+tasks<00:02:18.040><c> that's</c><00:02:18.200><c> all</c><00:02:18.440><c> their</c><00:02:18.640><c> words</c><00:02:18.920><c> not</c><00:02:19.120><c> mine</c>
+
+00:02:19.470 --> 00:02:19.480 align:start position:0%
+tasks that's all their words not mine
+ 
+
+00:02:19.480 --> 00:02:22.630 align:start position:0%
+tasks that's all their words not mine
+that<00:02:19.720><c> denomination</c><00:02:20.440><c> of</c><00:02:20.760><c> PhD</c><00:02:21.360><c> level</c><00:02:21.920><c> is</c><00:02:22.239><c> highly</c>
+
+00:02:22.630 --> 00:02:22.640 align:start position:0%
+that denomination of PhD level is highly
+ 
+
+00:02:22.640 --> 00:02:25.630 align:start position:0%
+that denomination of PhD level is highly
+disputed<00:02:23.120><c> of</c><00:02:23.280><c> course</c><00:02:23.640><c> openai</c><00:02:24.280><c> CEO</c><00:02:24.760><c> samman</c><00:02:25.519><c> has</c>
+
+00:02:25.630 --> 00:02:25.640 align:start position:0%
+disputed of course openai CEO samman has
+ 
+
+00:02:25.640 --> 00:02:28.270 align:start position:0%
+disputed of course openai CEO samman has
+scheduled<00:02:26.200><c> a</c><00:02:26.440><c> closed</c><00:02:26.840><c> door</c><00:02:27.080><c> briefing</c><00:02:27.640><c> for</c><00:02:27.959><c> US</c>
+
+00:02:28.270 --> 00:02:28.280 align:start position:0%
+scheduled a closed door briefing for US
+ 
+
+00:02:28.280 --> 00:02:30.430 align:start position:0%
+scheduled a closed door briefing for US
+government<00:02:28.640><c> officials</c><00:02:29.280><c> on</c><00:02:29.480><c> the</c><00:02:29.920><c> 30th</c><00:02:30.319><c> of</c>
+
+00:02:30.430 --> 00:02:30.440 align:start position:0%
+government officials on the 30th of
+ 
+
+00:02:30.440 --> 00:02:31.990 align:start position:0%
+government officials on the 30th of
+January<00:02:30.959><c> and</c><00:02:31.080><c> there's</c><00:02:31.280><c> not</c><00:02:31.440><c> much</c><00:02:31.760><c> other</c>
+
+00:02:31.990 --> 00:02:32.000 align:start position:0%
+January and there's not much other
+ 
+
+00:02:32.000 --> 00:02:34.350 align:start position:0%
+January and there's not much other
+information<00:02:32.560><c> in</c><00:02:32.720><c> the</c><00:02:32.879><c> article</c><00:02:33.480><c> other</c><00:02:33.840><c> than</c>
+
+00:02:34.350 --> 00:02:34.360 align:start position:0%
+information in the article other than
+ 
+
+00:02:34.360 --> 00:02:37.030 align:start position:0%
+information in the article other than
+this<00:02:34.519><c> sentence</c><00:02:35.440><c> several</c><00:02:35.800><c> open</c><00:02:36.040><c> AI</c><00:02:36.440><c> staff</c><00:02:36.879><c> have</c>
+
+00:02:37.030 --> 00:02:37.040 align:start position:0%
+this sentence several open AI staff have
+ 
+
+00:02:37.040 --> 00:02:39.110 align:start position:0%
+this sentence several open AI staff have
+been<00:02:37.160><c> telling</c><00:02:37.480><c> friends</c><00:02:38.200><c> that</c><00:02:38.360><c> they</c><00:02:38.480><c> are</c><00:02:38.680><c> both</c>
+
+00:02:39.110 --> 00:02:39.120 align:start position:0%
+been telling friends that they are both
+ 
+
+00:02:39.120 --> 00:02:41.790 align:start position:0%
+been telling friends that they are both
+jazzed<00:02:39.720><c> and</c><00:02:39.959><c> spooked</c><00:02:40.560><c> by</c><00:02:40.720><c> recent</c><00:02:41.120><c> progress</c>
+
+00:02:41.790 --> 00:02:41.800 align:start position:0%
+jazzed and spooked by recent progress
+ 
+
+00:02:41.800 --> 00:02:44.030 align:start position:0%
+jazzed and spooked by recent progress
+now<00:02:42.000><c> while</c><00:02:42.239><c> that's</c><00:02:42.519><c> vague</c><00:02:43.000><c> we</c><00:02:43.200><c> already</c><00:02:43.560><c> know</c>
+
+00:02:44.030 --> 00:02:44.040 align:start position:0%
+now while that's vague we already know
+ 
+
+00:02:44.040 --> 00:02:46.630 align:start position:0%
+now while that's vague we already know
+publicly<00:02:44.720><c> that</c><00:02:44.959><c> openai</c><00:02:45.720><c> are</c><00:02:46.040><c> hiring</c>
+
+00:02:46.630 --> 00:02:46.640 align:start position:0%
+publicly that openai are hiring
+ 
+
+00:02:46.640 --> 00:02:49.589 align:start position:0%
+publicly that openai are hiring
+aggressively<00:02:47.560><c> for</c><00:02:47.959><c> a</c><00:02:48.239><c> multi-agent</c><00:02:49.159><c> research</c>
+
+00:02:49.589 --> 00:02:49.599 align:start position:0%
+aggressively for a multi-agent research
+ 
+
+00:02:49.599 --> 00:02:51.990 align:start position:0%
+aggressively for a multi-agent research
+team<00:02:50.200><c> which</c><00:02:50.400><c> also</c><00:02:50.760><c> specializes</c><00:02:51.440><c> in</c><00:02:51.599><c> equipping</c>
+
+00:02:51.990 --> 00:02:52.000 align:start position:0%
+team which also specializes in equipping
+ 
+
+00:02:52.000 --> 00:02:54.869 align:start position:0%
+team which also specializes in equipping
+models<00:02:52.480><c> to</c><00:02:52.640><c> do</c><00:02:52.840><c> more</c><00:02:53.280><c> with</c><00:02:53.519><c> tools</c><00:02:54.239><c> think</c><00:02:54.560><c> teams</c>
+
+00:02:54.869 --> 00:02:54.879 align:start position:0%
+models to do more with tools think teams
+ 
+
+00:02:54.879 --> 00:02:57.350 align:start position:0%
+models to do more with tools think teams
+of<00:02:55.080><c> Agents</c><00:02:55.599><c> each</c><00:02:55.800><c> one</c><00:02:55.959><c> of</c><00:02:56.159><c> which</c><00:02:56.560><c> specialized</c>
+
+00:02:57.350 --> 00:02:57.360 align:start position:0%
+of Agents each one of which specialized
+ 
+
+00:02:57.360 --> 00:02:59.830 align:start position:0%
+of Agents each one of which specialized
+in<00:02:57.640><c> the</c><00:02:57.959><c> apps</c><00:02:58.360><c> and</c><00:02:58.519><c> tools</c><00:02:59.000><c> you</c><00:02:59.200><c> use</c><00:02:59.480><c> on</c><00:02:59.640><c> your</c>
+
+00:02:59.830 --> 00:02:59.840 align:start position:0%
+in the apps and tools you use on your
+ 
+
+00:02:59.840 --> 00:03:01.710 align:start position:0%
+in the apps and tools you use on your
+your<00:03:00.040><c> computer</c><00:03:00.560><c> open</c><00:03:00.800><c> AI</c><00:03:01.120><c> want</c><00:03:01.360><c> you</c><00:03:01.480><c> to</c><00:03:01.640><c> be</c>
+
+00:03:01.710 --> 00:03:01.720 align:start position:0%
+your computer open AI want you to be
+ 
+
+00:03:01.720 --> 00:03:03.710 align:start position:0%
+your computer open AI want you to be
+able<00:03:01.920><c> to</c><00:03:02.080><c> delegate</c><00:03:02.519><c> tasks</c><00:03:02.879><c> that</c><00:03:03.000><c> would</c><00:03:03.200><c> take</c><00:03:03.440><c> a</c>
+
+00:03:03.710 --> 00:03:03.720 align:start position:0%
+able to delegate tasks that would take a
+ 
+
+00:03:03.720 --> 00:03:05.670 align:start position:0%
+able to delegate tasks that would take a
+long<00:03:04.040><c> time</c><00:03:04.239><c> to</c><00:03:04.440><c> complete</c><00:03:05.000><c> and</c><00:03:05.159><c> involve</c>
+
+00:03:05.670 --> 00:03:05.680 align:start position:0%
+long time to complete and involve
+ 
+
+00:03:05.680 --> 00:03:07.830 align:start position:0%
+long time to complete and involve
+complex<00:03:06.159><c> environments</c><00:03:07.000><c> with</c><00:03:07.280><c> multiple</c>
+
+00:03:07.830 --> 00:03:07.840 align:start position:0%
+complex environments with multiple
+ 
+
+00:03:07.840 --> 00:03:10.229 align:start position:0%
+complex environments with multiple
+agents<00:03:08.519><c> this</c><00:03:08.599><c> is</c><00:03:08.760><c> something</c><00:03:09.280><c> that</c><00:03:09.519><c> they</c><00:03:09.760><c> are</c>
+
+00:03:10.229 --> 00:03:10.239 align:start position:0%
+agents this is something that they are
+ 
+
+00:03:10.239 --> 00:03:12.990 align:start position:0%
+agents this is something that they are
+Marching<00:03:10.799><c> towards</c><00:03:11.599><c> this</c><00:03:11.799><c> year</c><00:03:12.280><c> of</c><00:03:12.440><c> course</c><00:03:12.799><c> if</c>
+
+00:03:12.990 --> 00:03:13.000 align:start position:0%
+Marching towards this year of course if
+ 
+
+00:03:13.000 --> 00:03:15.789 align:start position:0%
+Marching towards this year of course if
+fulfilled<00:03:13.920><c> that</c><00:03:14.159><c> could</c><00:03:14.360><c> mean</c><00:03:14.959><c> the</c><00:03:15.239><c> massive</c>
+
+00:03:15.789 --> 00:03:15.799 align:start position:0%
+fulfilled that could mean the massive
+ 
+
+00:03:15.799 --> 00:03:18.710 align:start position:0%
+fulfilled that could mean the massive
+disruption<00:03:16.640><c> and</c><00:03:16.920><c> dislocation</c><00:03:17.720><c> of</c><00:03:18.000><c> jobs</c><00:03:18.519><c> in</c>
+
+00:03:18.710 --> 00:03:18.720 align:start position:0%
+disruption and dislocation of jobs in
+ 
+
+00:03:18.720 --> 00:03:21.309 align:start position:0%
+disruption and dislocation of jobs in
+the<00:03:18.920><c> medium</c><00:03:19.319><c> term</c><00:03:19.840><c> according</c><00:03:20.159><c> to</c><00:03:20.480><c> one</c><00:03:21.000><c> White</c>
+
+00:03:21.309 --> 00:03:21.319 align:start position:0%
+the medium term according to one White
+ 
+
+00:03:21.319 --> 00:03:23.390 align:start position:0%
+the medium term according to one White
+House<00:03:21.560><c> National</c><00:03:21.920><c> Security</c><00:03:22.360><c> adviser</c><00:03:23.000><c> this</c><00:03:23.159><c> was</c>
+
+00:03:23.390 --> 00:03:23.400 align:start position:0%
+House National Security adviser this was
+ 
+
+00:03:23.400 --> 00:03:25.509 align:start position:0%
+House National Security adviser this was
+again<00:03:23.640><c> an</c><00:03:23.879><c> exclusive</c><00:03:24.480><c> in</c><00:03:24.720><c> axios</c><00:03:25.280><c> and</c><00:03:25.360><c> that</c>
+
+00:03:25.509 --> 00:03:25.519 align:start position:0%
+again an exclusive in axios and that
+ 
+
+00:03:25.519 --> 00:03:27.589 align:start position:0%
+again an exclusive in axios and that
+adviser<00:03:26.000><c> by</c><00:03:26.120><c> the</c><00:03:26.239><c> way</c><00:03:26.440><c> spoke</c><00:03:26.799><c> with</c><00:03:26.959><c> an</c><00:03:27.159><c> urgency</c>
+
+00:03:27.589 --> 00:03:27.599 align:start position:0%
+adviser by the way spoke with an urgency
+ 
+
+00:03:27.599 --> 00:03:29.830 align:start position:0%
+adviser by the way spoke with an urgency
+and<00:03:27.879><c> directness</c><00:03:28.640><c> that</c><00:03:28.760><c> was</c><00:03:29.000><c> rarely</c><00:03:29.360><c> heard</c>
+
+00:03:29.830 --> 00:03:29.840 align:start position:0%
+and directness that was rarely heard
+ 
+
+00:03:29.840 --> 00:03:32.190 align:start position:0%
+and directness that was rarely heard
+during<00:03:30.239><c> his</c><00:03:30.480><c> decade</c><00:03:30.920><c> Plus</c><00:03:31.200><c> in</c><00:03:31.439><c> public</c><00:03:31.799><c> life</c>
+
+00:03:32.190 --> 00:03:32.200 align:start position:0%
+during his decade Plus in public life
+ 
+
+00:03:32.200 --> 00:03:34.509 align:start position:0%
+during his decade Plus in public life
+suffice<00:03:32.560><c> to</c><00:03:32.680><c> say</c><00:03:32.959><c> though</c><00:03:33.280><c> the</c><00:03:33.640><c> first</c><00:03:34.000><c> version</c>
+
+00:03:34.509 --> 00:03:34.519 align:start position:0%
+suffice to say though the first version
+ 
+
+00:03:34.519 --> 00:03:36.750 align:start position:0%
+suffice to say though the first version
+of<00:03:34.720><c> this</c><00:03:34.920><c> computer</c><00:03:35.360><c> use</c><00:03:35.799><c> operator</c><00:03:36.280><c> agent</c><00:03:36.560><c> from</c>
+
+00:03:36.750 --> 00:03:36.760 align:start position:0%
+of this computer use operator agent from
+ 
+
+00:03:36.760 --> 00:03:38.990 align:start position:0%
+of this computer use operator agent from
+openai<00:03:37.519><c> According</c><00:03:37.879><c> to</c><00:03:38.040><c> leaks</c><00:03:38.480><c> won't</c><00:03:38.760><c> be</c>
+
+00:03:38.990 --> 00:03:39.000 align:start position:0%
+openai According to leaks won't be
+ 
+
+00:03:39.000 --> 00:03:41.309 align:start position:0%
+openai According to leaks won't be
+capable<00:03:39.519><c> of</c><00:03:39.760><c> much</c><00:03:40.040><c> of</c><00:03:40.280><c> any</c><00:03:40.480><c> of</c><00:03:40.680><c> that</c><00:03:41.000><c> it</c><00:03:41.120><c> can't</c>
+
+00:03:41.309 --> 00:03:41.319 align:start position:0%
+capable of much of any of that it can't
+ 
+
+00:03:41.319 --> 00:03:43.869 align:start position:0%
+capable of much of any of that it can't
+yet<00:03:41.480><c> reliably</c><00:03:42.040><c> generate</c><00:03:42.560><c> profits</c><00:03:43.239><c> or</c><00:03:43.519><c> issue</c>
+
+00:03:43.869 --> 00:03:43.879 align:start position:0%
+yet reliably generate profits or issue
+ 
+
+00:03:43.879 --> 00:03:46.630 align:start position:0%
+yet reliably generate profits or issue
+meme<00:03:44.280><c> coins</c><00:03:44.959><c> although</c><00:03:45.480><c> I</c><00:03:45.760><c> doubt</c><00:03:45.959><c> open</c><00:03:46.239><c> AI</c>
+
+00:03:46.630 --> 00:03:46.640 align:start position:0%
+meme coins although I doubt open AI
+ 
+
+00:03:46.640 --> 00:03:48.949 align:start position:0%
+meme coins although I doubt open AI
+would<00:03:46.879><c> release</c><00:03:47.319><c> a</c><00:03:47.480><c> model</c><00:03:48.040><c> that</c><00:03:48.239><c> could</c><00:03:48.720><c> as</c><00:03:48.799><c> we</c>
+
+00:03:48.949 --> 00:03:48.959 align:start position:0%
+would release a model that could as we
+ 
+
+00:03:48.959 --> 00:03:50.910 align:start position:0%
+would release a model that could as we
+enter<00:03:49.280><c> this</c><00:03:49.439><c> year</c><00:03:49.640><c> of</c><00:03:49.799><c> AI</c><00:03:50.120><c> agents</c><00:03:50.480><c> doing</c><00:03:50.720><c> our</c>
+
+00:03:50.910 --> 00:03:50.920 align:start position:0%
+enter this year of AI agents doing our
+ 
+
+00:03:50.920 --> 00:03:53.589 align:start position:0%
+enter this year of AI agents doing our
+work<00:03:51.159><c> for</c><00:03:51.439><c> us</c><00:03:51.799><c> what</c><00:03:52.040><c> can</c><00:03:52.200><c> we</c><00:03:52.480><c> expect</c><00:03:53.079><c> from</c><00:03:53.360><c> this</c>
+
+00:03:53.589 --> 00:03:53.599 align:start position:0%
+work for us what can we expect from this
+ 
+
+00:03:53.599 --> 00:03:56.350 align:start position:0%
+work for us what can we expect from this
+first<00:03:54.040><c> version</c><00:03:54.680><c> of</c><00:03:54.879><c> open</c><00:03:55.159><c> ai's</c><00:03:55.680><c> computer</c><00:03:56.079><c> use</c>
+
+00:03:56.350 --> 00:03:56.360 align:start position:0%
+first version of open ai's computer use
+ 
+
+00:03:56.360 --> 00:03:58.390 align:start position:0%
+first version of open ai's computer use
+agent<00:03:56.840><c> what</c><00:03:56.959><c> kind</c><00:03:57.079><c> of</c><00:03:57.239><c> tasks</c><00:03:57.560><c> are</c><00:03:57.799><c> involved</c><00:03:58.200><c> in</c>
+
+00:03:58.390 --> 00:03:58.400 align:start position:0%
+agent what kind of tasks are involved in
+ 
+
+00:03:58.400 --> 00:04:01.270 align:start position:0%
+agent what kind of tasks are involved in
+web<00:03:58.680><c> Voyager</c><00:03:59.400><c> and</c><00:03:59.799><c> OS</c><00:04:00.200><c> world</c><00:04:00.760><c> how</c><00:04:00.879><c> about</c><00:04:01.159><c> this</c>
+
+00:04:01.270 --> 00:04:01.280 align:start position:0%
+web Voyager and OS world how about this
+ 
+
+00:04:01.280 --> 00:04:03.910 align:start position:0%
+web Voyager and OS world how about this
+one<00:04:01.599><c> where</c><00:04:01.799><c> you</c><00:04:02.040><c> type</c><00:04:02.439><c> search</c><00:04:02.840><c> Apple</c><00:04:03.360><c> for</c><00:04:03.640><c> the</c>
+
+00:04:03.910 --> 00:04:03.920 align:start position:0%
+one where you type search Apple for the
+ 
+
+00:04:03.920 --> 00:04:06.630 align:start position:0%
+one where you type search Apple for the
+accessory<00:04:04.560><c> smartfolio</c><00:04:05.439><c> for</c><00:04:05.680><c> iPad</c><00:04:06.159><c> and</c><00:04:06.280><c> check</c>
+
+00:04:06.630 --> 00:04:06.640 align:start position:0%
+accessory smartfolio for iPad and check
+ 
+
+00:04:06.640 --> 00:04:09.350 align:start position:0%
+accessory smartfolio for iPad and check
+the<00:04:06.840><c> closest</c><00:04:07.319><c> pickup</c><00:04:07.760><c> availability</c><00:04:08.599><c> next</c><00:04:08.879><c> to</c>
+
+00:04:09.350 --> 00:04:09.360 align:start position:0%
+the closest pickup availability next to
+ 
+
+00:04:09.360 --> 00:04:11.830 align:start position:0%
+the closest pickup availability next to
+this<00:04:09.640><c> ZIP</c><00:04:09.959><c> code</c><00:04:10.480><c> that</c><00:04:10.640><c> is</c><00:04:10.920><c> pretty</c><00:04:11.280><c> cool</c><00:04:11.640><c> that</c>
+
+00:04:11.830 --> 00:04:11.840 align:start position:0%
+this ZIP code that is pretty cool that
+ 
+
+00:04:11.840 --> 00:04:14.149 align:start position:0%
+this ZIP code that is pretty cool that
+the<00:04:12.040><c> agent</c><00:04:12.480><c> could</c><00:04:12.720><c> do</c><00:04:13.040><c> that</c><00:04:13.360><c> my</c><00:04:13.519><c> only</c><00:04:13.799><c> question</c>
+
+00:04:14.149 --> 00:04:14.159 align:start position:0%
+the agent could do that my only question
+ 
+
+00:04:14.159 --> 00:04:16.509 align:start position:0%
+the agent could do that my only question
+is<00:04:14.760><c> that</c><00:04:14.879><c> would</c><00:04:15.120><c> take</c><00:04:15.319><c> me</c><00:04:15.560><c> quite</c><00:04:15.799><c> a</c><00:04:16.000><c> while</c><00:04:16.320><c> to</c>
+
+00:04:16.509 --> 00:04:16.519 align:start position:0%
+is that would take me quite a while to
+ 
+
+00:04:16.519 --> 00:04:18.390 align:start position:0%
+is that would take me quite a while to
+type<00:04:16.840><c> out</c><00:04:17.199><c> I</c><00:04:17.239><c> mean</c><00:04:17.400><c> I</c><00:04:17.519><c> guess</c><00:04:17.639><c> I</c><00:04:17.759><c> could</c><00:04:17.959><c> speak</c>
+
+00:04:18.390 --> 00:04:18.400 align:start position:0%
+type out I mean I guess I could speak
+ 
+
+00:04:18.400 --> 00:04:20.430 align:start position:0%
+type out I mean I guess I could speak
+that<00:04:18.560><c> to</c><00:04:18.720><c> the</c><00:04:18.919><c> agent</c><00:04:19.440><c> but</c><00:04:19.600><c> if</c><00:04:19.720><c> I</c><00:04:19.799><c> was</c><00:04:20.000><c> typing</c><00:04:20.280><c> it</c>
+
+00:04:20.430 --> 00:04:20.440 align:start position:0%
+that to the agent but if I was typing it
+ 
+
+00:04:20.440 --> 00:04:22.749 align:start position:0%
+that to the agent but if I was typing it
+out<00:04:20.919><c> by</c><00:04:21.079><c> the</c><00:04:21.280><c> time</c><00:04:21.519><c> I</c><00:04:21.680><c> type</c><00:04:22.000><c> that</c><00:04:22.160><c> out</c><00:04:22.560><c> I</c>
+
+00:04:22.749 --> 00:04:22.759 align:start position:0%
+out by the time I type that out I
+ 
+
+00:04:22.759 --> 00:04:24.390 align:start position:0%
+out by the time I type that out I
+probably<00:04:23.120><c> could</c><00:04:23.280><c> have</c><00:04:23.440><c> got</c><00:04:23.600><c> the</c><00:04:23.800><c> answer</c><00:04:24.240><c> just</c>
+
+00:04:24.390 --> 00:04:24.400 align:start position:0%
+probably could have got the answer just
+ 
+
+00:04:24.400 --> 00:04:25.909 align:start position:0%
+probably could have got the answer just
+by<00:04:24.560><c> browsing</c><00:04:24.960><c> the</c><00:04:25.080><c> web</c><00:04:25.400><c> this</c><00:04:25.479><c> one's</c><00:04:25.680><c> kind</c><00:04:25.800><c> of</c>
+
+00:04:25.909 --> 00:04:25.919 align:start position:0%
+by browsing the web this one's kind of
+ 
+
+00:04:25.919 --> 00:04:28.070 align:start position:0%
+by browsing the web this one's kind of
+cool<00:04:26.240><c> find</c><00:04:26.720><c> this</c><00:04:26.919><c> particular</c><00:04:27.320><c> recipe</c><00:04:27.919><c> that</c>
+
+00:04:28.070 --> 00:04:28.080 align:start position:0%
+cool find this particular recipe that
+ 
+
+00:04:28.080 --> 00:04:29.749 align:start position:0%
+cool find this particular recipe that
+takes<00:04:28.440><c> less</c><00:04:28.600><c> than</c><00:04:28.800><c> 30</c><00:04:29.039><c> minutes</c><00:04:29.280><c> to</c><00:04:29.479><c> prepare</c>
+
+00:04:29.749 --> 00:04:29.759 align:start position:0%
+takes less than 30 minutes to prepare
+ 
+
+00:04:29.759 --> 00:04:31.950 align:start position:0%
+takes less than 30 minutes to prepare
+pair<00:04:30.080><c> and</c><00:04:30.240><c> has</c><00:04:30.400><c> at</c><00:04:30.520><c> least</c><00:04:30.759><c> a</c><00:04:30.919><c> fourstar</c><00:04:31.520><c> rating</c>
+
+00:04:31.950 --> 00:04:31.960 align:start position:0%
+pair and has at least a fourstar rating
+ 
+
+00:04:31.960 --> 00:04:34.230 align:start position:0%
+pair and has at least a fourstar rating
+based<00:04:32.199><c> on</c><00:04:32.400><c> user</c><00:04:32.800><c> reviews</c><00:04:33.520><c> I</c><00:04:33.600><c> think</c><00:04:33.759><c> stuff</c><00:04:34.000><c> like</c>
+
+00:04:34.230 --> 00:04:34.240 align:start position:0%
+based on user reviews I think stuff like
+ 
+
+00:04:34.240 --> 00:04:35.830 align:start position:0%
+based on user reviews I think stuff like
+this<00:04:34.400><c> is</c><00:04:34.520><c> going</c><00:04:34.639><c> to</c><00:04:34.840><c> work</c><00:04:35.280><c> because</c><00:04:35.479><c> you</c><00:04:35.600><c> could</c>
+
+00:04:35.830 --> 00:04:35.840 align:start position:0%
+this is going to work because you could
+ 
+
+00:04:35.840 --> 00:04:37.830 align:start position:0%
+this is going to work because you could
+just<00:04:36.080><c> immediately</c><00:04:36.680><c> verify</c><00:04:37.280><c> if</c><00:04:37.360><c> it's</c><00:04:37.560><c> giving</c>
+
+00:04:37.830 --> 00:04:37.840 align:start position:0%
+just immediately verify if it's giving
+ 
+
+00:04:37.840 --> 00:04:39.790 align:start position:0%
+just immediately verify if it's giving
+you<00:04:38.000><c> something</c><00:04:38.360><c> that</c><00:04:38.479><c> meets</c><00:04:38.759><c> your</c><00:04:39.000><c> criteria</c>
+
+00:04:39.790 --> 00:04:39.800 align:start position:0%
+you something that meets your criteria
+ 
+
+00:04:39.800 --> 00:04:42.189 align:start position:0%
+you something that meets your criteria
+likewise<00:04:40.320><c> for</c><00:04:40.680><c> Amazon</c><00:04:41.080><c> searches</c><00:04:41.880><c> I</c><00:04:42.000><c> could</c>
+
+00:04:42.189 --> 00:04:42.199 align:start position:0%
+likewise for Amazon searches I could
+ 
+
+00:04:42.199 --> 00:04:44.950 align:start position:0%
+likewise for Amazon searches I could
+well<00:04:42.400><c> imagine</c><00:04:43.039><c> listing</c><00:04:43.600><c> a</c><00:04:43.800><c> bunch</c><00:04:44.039><c> of</c><00:04:44.320><c> criteria</c>
+
+00:04:44.950 --> 00:04:44.960 align:start position:0%
+well imagine listing a bunch of criteria
+ 
+
+00:04:44.960 --> 00:04:46.909 align:start position:0%
+well imagine listing a bunch of criteria
+for<00:04:45.160><c> something</c><00:04:45.440><c> that</c><00:04:45.560><c> I</c><00:04:45.720><c> want</c><00:04:45.840><c> to</c><00:04:46.039><c> buy</c><00:04:46.600><c> and</c><00:04:46.759><c> it</c>
+
+00:04:46.909 --> 00:04:46.919 align:start position:0%
+for something that I want to buy and it
+ 
+
+00:04:46.919 --> 00:04:49.710 align:start position:0%
+for something that I want to buy and it
+just<00:04:47.199><c> popping</c><00:04:47.520><c> up</c><00:04:47.919><c> with</c><00:04:48.440><c> the</c><00:04:48.880><c> item</c><00:04:49.240><c> that</c><00:04:49.400><c> match</c>
+
+00:04:49.710 --> 00:04:49.720 align:start position:0%
+just popping up with the item that match
+ 
+
+00:04:49.720 --> 00:04:51.749 align:start position:0%
+just popping up with the item that match
+that<00:04:49.919><c> criteria</c><00:04:50.639><c> definitely</c><00:04:50.960><c> not</c><00:04:51.240><c> a</c><00:04:51.440><c> long</c>
+
+00:04:51.749 --> 00:04:51.759 align:start position:0%
+that criteria definitely not a long
+ 
+
+00:04:51.759 --> 00:04:54.189 align:start position:0%
+that criteria definitely not a long
+Horizon<00:04:52.360><c> task</c><00:04:52.720><c> in</c><00:04:52.840><c> a</c><00:04:53.039><c> complex</c><00:04:53.479><c> environment</c>
+
+00:04:54.189 --> 00:04:54.199 align:start position:0%
+Horizon task in a complex environment
+ 
+
+00:04:54.199 --> 00:04:56.390 align:start position:0%
+Horizon task in a complex environment
+but<00:04:54.320><c> it's</c><00:04:54.440><c> a</c><00:04:54.639><c> start</c><00:04:55.120><c> the</c><00:04:55.280><c> task</c><00:04:55.680><c> in</c><00:04:55.840><c> the</c><00:04:56.080><c> OS</c>
+
+00:04:56.390 --> 00:04:56.400 align:start position:0%
+but it's a start the task in the OS
+ 
+
+00:04:56.400 --> 00:04:58.550 align:start position:0%
+but it's a start the task in the OS
+World<00:04:56.759><c> Benchmark</c><00:04:57.360><c> seems</c><00:04:57.639><c> to</c><00:04:57.759><c> be</c><00:04:58.080><c> somewhat</c>
+
+00:04:58.550 --> 00:04:58.560 align:start position:0%
+World Benchmark seems to be somewhat
+ 
+
+00:04:58.560 --> 00:05:00.950 align:start position:0%
+World Benchmark seems to be somewhat
+harder<00:04:59.160><c> the</c><00:04:59.320><c> prompt</c><00:04:59.840><c> was</c><00:05:00.199><c> I</c><00:05:00.440><c> illegally</c>
+
+00:05:00.950 --> 00:05:00.960 align:start position:0%
+harder the prompt was I illegally
+ 
+
+00:05:00.960 --> 00:05:02.710 align:start position:0%
+harder the prompt was I illegally
+downloaded<00:05:01.520><c> an</c><00:05:01.680><c> episode</c><00:05:02.000><c> of</c><00:05:02.120><c> Friends</c><00:05:02.479><c> to</c>
+
+00:05:02.710 --> 00:05:02.720 align:start position:0%
+downloaded an episode of Friends to
+ 
+
+00:05:02.720 --> 00:05:04.390 align:start position:0%
+downloaded an episode of Friends to
+practice<00:05:03.080><c> listening</c><00:05:03.680><c> but</c><00:05:03.800><c> I</c><00:05:03.919><c> don't</c><00:05:04.080><c> know</c><00:05:04.280><c> how</c>
+
+00:05:04.390 --> 00:05:04.400 align:start position:0%
+practice listening but I don't know how
+ 
+
+00:05:04.400 --> 00:05:06.629 align:start position:0%
+practice listening but I don't know how
+to<00:05:04.600><c> remove</c><00:05:05.039><c> the</c><00:05:05.240><c> subtitles</c><00:05:06.000><c> please</c><00:05:06.240><c> help</c><00:05:06.440><c> me</c>
+
+00:05:06.629 --> 00:05:06.639 align:start position:0%
+to remove the subtitles please help me
+ 
+
+00:05:06.639 --> 00:05:08.629 align:start position:0%
+to remove the subtitles please help me
+remove<00:05:07.000><c> the</c><00:05:07.120><c> subtitles</c><00:05:08.000><c> now</c><00:05:08.240><c> this</c><00:05:08.360><c> is</c><00:05:08.520><c> the</c>
+
+00:05:08.629 --> 00:05:08.639 align:start position:0%
+remove the subtitles now this is the
+ 
+
+00:05:08.639 --> 00:05:10.310 align:start position:0%
+remove the subtitles now this is the
+kind<00:05:08.800><c> of</c><00:05:08.960><c> thing</c><00:05:09.320><c> that</c><00:05:09.479><c> I</c><00:05:09.600><c> am</c><00:05:09.759><c> looking</c><00:05:10.000><c> forward</c>
+
+00:05:10.310 --> 00:05:10.320 align:start position:0%
+kind of thing that I am looking forward
+ 
+
+00:05:10.320 --> 00:05:13.350 align:start position:0%
+kind of thing that I am looking forward
+to<00:05:10.639><c> honestly</c><00:05:11.360><c> it</c><00:05:11.520><c> takes</c><00:05:11.759><c> me</c><00:05:12.160><c> like</c><00:05:12.479><c> an</c><00:05:12.720><c> hour</c><00:05:13.160><c> at</c>
+
+00:05:13.350 --> 00:05:13.360 align:start position:0%
+to honestly it takes me like an hour at
+ 
+
+00:05:13.360 --> 00:05:15.749 align:start position:0%
+to honestly it takes me like an hour at
+least<00:05:14.039><c> sometimes</c><00:05:14.360><c> two</c><00:05:14.720><c> to</c><00:05:14.919><c> edit</c><00:05:15.199><c> these</c><00:05:15.360><c> videos</c>
+
+00:05:15.749 --> 00:05:15.759 align:start position:0%
+least sometimes two to edit these videos
+ 
+
+00:05:15.759 --> 00:05:18.110 align:start position:0%
+least sometimes two to edit these videos
+in<00:05:15.960><c> Des</c><00:05:16.199><c> script</c><00:05:16.759><c> and</c><00:05:17.000><c> I'm</c><00:05:17.160><c> looking</c><00:05:17.479><c> for</c><00:05:17.880><c> an</c>
+
+00:05:18.110 --> 00:05:18.120 align:start position:0%
+in Des script and I'm looking for an
+ 
+
+00:05:18.120 --> 00:05:21.189 align:start position:0%
+in Des script and I'm looking for an
+agent<00:05:18.759><c> that</c><00:05:18.919><c> can</c><00:05:19.560><c> kind</c><00:05:19.680><c> of</c><00:05:20.000><c> mimic</c><00:05:20.479><c> my</c><00:05:20.759><c> style</c><00:05:21.039><c> of</c>
+
+00:05:21.189 --> 00:05:21.199 align:start position:0%
+agent that can kind of mimic my style of
+ 
+
+00:05:21.199 --> 00:05:23.550 align:start position:0%
+agent that can kind of mimic my style of
+editing<00:05:21.880><c> and</c><00:05:22.039><c> just</c><00:05:22.280><c> like</c><00:05:22.720><c> immediately</c><00:05:23.280><c> edit</c>
+
+00:05:23.550 --> 00:05:23.560 align:start position:0%
+editing and just like immediately edit
+ 
+
+00:05:23.560 --> 00:05:26.070 align:start position:0%
+editing and just like immediately edit
+these<00:05:23.840><c> videos</c><00:05:24.520><c> why</c><00:05:24.680><c> can't</c><00:05:25.039><c> existing</c><00:05:25.520><c> agents</c>
+
+00:05:26.070 --> 00:05:26.080 align:start position:0%
+these videos why can't existing agents
+ 
+
+00:05:26.080 --> 00:05:28.550 align:start position:0%
+these videos why can't existing agents
+already<00:05:26.520><c> crush</c><00:05:27.000><c> the</c><00:05:27.199><c> simpler</c><00:05:27.720><c> tasks</c><00:05:28.319><c> well</c>
+
+00:05:28.550 --> 00:05:28.560 align:start position:0%
+already crush the simpler tasks well
+ 
+
+00:05:28.560 --> 00:05:31.830 align:start position:0%
+already crush the simpler tasks well
+apparently<00:05:29.120><c> more</c><00:05:29.400><c> than</c><00:05:29.840><c> 75%</c><00:05:30.800><c> of</c><00:05:31.000><c> their</c><00:05:31.240><c> clicks</c>
+
+00:05:31.830 --> 00:05:31.840 align:start position:0%
+apparently more than 75% of their clicks
+ 
+
+00:05:31.840 --> 00:05:33.710 align:start position:0%
+apparently more than 75% of their clicks
+are<00:05:32.319><c> inaccurate</c><00:05:33.080><c> must</c><00:05:33.280><c> be</c><00:05:33.479><c> pretty</c>
+
+00:05:33.710 --> 00:05:33.720 align:start position:0%
+are inaccurate must be pretty
+ 
+
+00:05:33.720 --> 00:05:35.710 align:start position:0%
+are inaccurate must be pretty
+frustrating<00:05:34.319><c> to</c><00:05:34.440><c> be</c><00:05:34.600><c> an</c><00:05:34.759><c> AI</c><00:05:35.120><c> agent</c><00:05:35.479><c> that's</c>
+
+00:05:35.710 --> 00:05:35.720 align:start position:0%
+frustrating to be an AI agent that's
+ 
+
+00:05:35.720 --> 00:05:37.430 align:start position:0%
+frustrating to be an AI agent that's
+repeatedly<00:05:36.280><c> clicking</c><00:05:36.600><c> the</c><00:05:36.720><c> screen</c><00:05:37.160><c> and</c><00:05:37.319><c> not</c>
+
+00:05:37.430 --> 00:05:37.440 align:start position:0%
+repeatedly clicking the screen and not
+ 
+
+00:05:37.440 --> 00:05:39.270 align:start position:0%
+repeatedly clicking the screen and not
+being<00:05:37.680><c> able</c><00:05:37.880><c> to</c><00:05:38.000><c> click</c><00:05:38.240><c> the</c><00:05:38.400><c> right</c><00:05:38.600><c> thing</c><00:05:39.080><c> oh</c>
+
+00:05:39.270 --> 00:05:39.280 align:start position:0%
+being able to click the right thing oh
+ 
+
+00:05:39.280 --> 00:05:41.749 align:start position:0%
+being able to click the right thing oh
+and<00:05:39.520><c> also</c><00:05:40.000><c> they</c><00:05:40.199><c> were</c><00:05:40.600><c> attracted</c><00:05:41.360><c> by</c>
+
+00:05:41.749 --> 00:05:41.759 align:start position:0%
+and also they were attracted by
+ 
+
+00:05:41.759 --> 00:05:43.950 align:start position:0%
+and also they were attracted by
+advertisement<00:05:42.520><c> content</c><00:05:43.319><c> which</c><00:05:43.520><c> affects</c>
+
+00:05:43.950 --> 00:05:43.960 align:start position:0%
+advertisement content which affects
+ 
+
+00:05:43.960 --> 00:05:46.070 align:start position:0%
+advertisement content which affects
+their<00:05:44.160><c> judgment</c><00:05:44.720><c> just</c><00:05:44.919><c> imagine</c><00:05:45.319><c> you</c><00:05:45.680><c> in</c><00:05:45.880><c> the</c>
+
+00:05:46.070 --> 00:05:46.080 align:start position:0%
+their judgment just imagine you in the
+ 
+
+00:05:46.080 --> 00:05:47.990 align:start position:0%
+their judgment just imagine you in the
+future<00:05:46.520><c> having</c><00:05:46.759><c> given</c><00:05:47.080><c> your</c><00:05:47.319><c> credit</c><00:05:47.639><c> card</c><00:05:47.880><c> to</c>
+
+00:05:47.990 --> 00:05:48.000 align:start position:0%
+future having given your credit card to
+ 
+
+00:05:48.000 --> 00:05:50.670 align:start position:0%
+future having given your credit card to
+an<00:05:48.120><c> AI</c><00:05:48.479><c> agent</c><00:05:49.039><c> and</c><00:05:49.280><c> watching</c><00:05:49.720><c> helpless</c><00:05:50.400><c> as</c><00:05:50.520><c> it</c>
+
+00:05:50.670 --> 00:05:50.680 align:start position:0%
+an AI agent and watching helpless as it
+ 
+
+00:05:50.680 --> 00:05:53.189 align:start position:0%
+an AI agent and watching helpless as it
+clicks<00:05:51.000><c> on</c><00:05:51.240><c> an</c><00:05:51.479><c> ad</c><00:05:51.919><c> and</c><00:05:52.160><c> buys</c><00:05:52.600><c> a</c><00:05:52.800><c> random</c>
+
+00:05:53.189 --> 00:05:53.199 align:start position:0%
+clicks on an ad and buys a random
+ 
+
+00:05:53.199 --> 00:05:55.629 align:start position:0%
+clicks on an ad and buys a random
+product<00:05:53.800><c> now</c><00:05:54.000><c> I</c><00:05:54.080><c> know</c><00:05:54.400><c> the</c><00:05:54.560><c> flaws</c><00:05:54.960><c> of</c><00:05:55.160><c> Agents</c>
+
+00:05:55.629 --> 00:05:55.639 align:start position:0%
+product now I know the flaws of Agents
+ 
+
+00:05:55.639 --> 00:05:57.710 align:start position:0%
+product now I know the flaws of Agents
+can<00:05:55.800><c> seem</c><00:05:56.080><c> silly</c><00:05:56.639><c> sometimes</c><00:05:57.000><c> and</c><00:05:57.240><c> like</c><00:05:57.400><c> we're</c>
+
+00:05:57.710 --> 00:05:57.720 align:start position:0%
+can seem silly sometimes and like we're
+ 
+
+00:05:57.720 --> 00:05:59.990 align:start position:0%
+can seem silly sometimes and like we're
+years<00:05:57.960><c> and</c><00:05:58.199><c> years</c><00:05:58.479><c> away</c><00:05:58.840><c> from</c><00:05:59.039><c> usable</c><00:05:59.639><c> agents</c>
+
+00:05:59.990 --> 00:06:00.000 align:start position:0%
+years and years away from usable agents
+ 
+
+00:06:00.000 --> 00:06:01.830 align:start position:0%
+years and years away from usable agents
+but<00:06:00.080><c> let</c><00:06:00.199><c> me</c><00:06:00.360><c> give</c><00:06:00.479><c> you</c><00:06:00.720><c> a</c><00:06:00.880><c> little</c><00:06:01.199><c> anecdote</c>
+
+00:06:01.830 --> 00:06:01.840 align:start position:0%
+but let me give you a little anecdote
+ 
+
+00:06:01.840 --> 00:06:04.590 align:start position:0%
+but let me give you a little anecdote
+just<00:06:02.080><c> almost</c><00:06:02.400><c> for</c><00:06:02.600><c> fun</c><00:06:02.960><c> one</c><00:06:03.240><c> time</c><00:06:03.560><c> years</c><00:06:03.840><c> ago</c><00:06:04.400><c> I</c>
+
+00:06:04.590 --> 00:06:04.600 align:start position:0%
+just almost for fun one time years ago I
+ 
+
+00:06:04.600 --> 00:06:07.749 align:start position:0%
+just almost for fun one time years ago I
+created<00:06:05.280><c> over</c><00:06:05.960><c> 200</c><00:06:06.400><c> Pages</c><00:06:07.039><c> worth</c><00:06:07.360><c> of</c>
+
+00:06:07.749 --> 00:06:07.759 align:start position:0%
+created over 200 Pages worth of
+ 
+
+00:06:07.759 --> 00:06:10.150 align:start position:0%
+created over 200 Pages worth of
+mathematics<00:06:08.400><c> puzzles</c><00:06:09.199><c> and</c><00:06:09.520><c> quizzes</c><00:06:09.960><c> with</c>
+
+00:06:10.150 --> 00:06:10.160 align:start position:0%
+mathematics puzzles and quizzes with
+ 
+
+00:06:10.160 --> 00:06:12.350 align:start position:0%
+mathematics puzzles and quizzes with
+explainers<00:06:10.960><c> now</c><00:06:11.160><c> as</c><00:06:11.280><c> it</c><00:06:11.440><c> happened</c><00:06:12.120><c> those</c>
+
+00:06:12.350 --> 00:06:12.360 align:start position:0%
+explainers now as it happened those
+ 
+
+00:06:12.360 --> 00:06:15.189 align:start position:0%
+explainers now as it happened those
+quizzes<00:06:13.039><c> proved</c><00:06:13.639><c> really</c><00:06:14.000><c> quite</c><00:06:14.280><c> useful</c><00:06:14.880><c> to</c>
+
+00:06:15.189 --> 00:06:15.199 align:start position:0%
+quizzes proved really quite useful to
+ 
+
+00:06:15.199 --> 00:06:17.270 align:start position:0%
+quizzes proved really quite useful to
+Benchmark<00:06:15.960><c> early</c><00:06:16.319><c> AI</c><00:06:16.639><c> models</c><00:06:17.039><c> like</c><00:06:17.160><c> the</c>
+
+00:06:17.270 --> 00:06:17.280 align:start position:0%
+Benchmark early AI models like the
+ 
+
+00:06:17.280 --> 00:06:19.550 align:start position:0%
+Benchmark early AI models like the
+original<00:06:17.599><c> chat</c><00:06:17.840><c> GPT</c><00:06:18.560><c> and</c><00:06:18.759><c> as</c><00:06:18.960><c> you</c><00:06:19.199><c> probably</c>
+
+00:06:19.550 --> 00:06:19.560 align:start position:0%
+original chat GPT and as you probably
+ 
+
+00:06:19.560 --> 00:06:22.070 align:start position:0%
+original chat GPT and as you probably
+experiened<00:06:20.120><c> yourself</c><00:06:21.039><c> those</c><00:06:21.280><c> early</c><00:06:21.599><c> models</c>
+
+00:06:22.070 --> 00:06:22.080 align:start position:0%
+experiened yourself those early models
+ 
+
+00:06:22.080 --> 00:06:24.029 align:start position:0%
+experiened yourself those early models
+like<00:06:22.319><c> again</c><00:06:22.479><c> the</c><00:06:22.599><c> original</c><00:06:22.880><c> chat</c><00:06:23.080><c> GPT</c><00:06:23.479><c> flopped</c>
+
+00:06:24.029 --> 00:06:24.039 align:start position:0%
+like again the original chat GPT flopped
+ 
+
+00:06:24.039 --> 00:06:26.510 align:start position:0%
+like again the original chat GPT flopped
+hard<00:06:24.639><c> on</c><00:06:25.160><c> pretty</c><00:06:25.360><c> much</c><00:06:25.599><c> all</c><00:06:25.759><c> of</c><00:06:25.919><c> the</c><00:06:26.039><c> questions</c>
+
+00:06:26.510 --> 00:06:26.520 align:start position:0%
+hard on pretty much all of the questions
+ 
+
+00:06:26.520 --> 00:06:28.589 align:start position:0%
+hard on pretty much all of the questions
+except<00:06:26.800><c> the</c><00:06:26.960><c> most</c><00:06:27.160><c> simple</c><00:06:27.560><c> calculation</c><00:06:28.120><c> ones</c>
+
+00:06:28.589 --> 00:06:28.599 align:start position:0%
+except the most simple calculation ones
+ 
+
+00:06:28.599 --> 00:06:30.510 align:start position:0%
+except the most simple calculation ones
+fast<00:06:28.880><c> forward</c><00:06:29.160><c> 2</c><00:06:29.360><c> years</c><00:06:29.639><c> years</c><00:06:30.000><c> after</c><00:06:30.319><c> the</c>
+
+00:06:30.510 --> 00:06:30.520 align:start position:0%
+fast forward 2 years years after the
+ 
+
+00:06:30.520 --> 00:06:33.670 align:start position:0%
+fast forward 2 years years after the
+initial<00:06:30.840><c> release</c><00:06:31.120><c> of</c><00:06:31.240><c> chat</c><00:06:31.440><c> gbt</c><00:06:32.120><c> and</c><00:06:32.479><c> 01</c><00:06:33.400><c> when</c>
+
+00:06:33.670 --> 00:06:33.680 align:start position:0%
+initial release of chat gbt and 01 when
+ 
+
+00:06:33.680 --> 00:06:37.029 align:start position:0%
+initial release of chat gbt and 01 when
+I<00:06:33.880><c> got</c><00:06:34.240><c> access</c><00:06:35.160><c> crushed</c><00:06:36.000><c> pretty</c><00:06:36.280><c> much</c><00:06:36.680><c> every</c>
+
+00:06:37.029 --> 00:06:37.039 align:start position:0%
+I got access crushed pretty much every
+ 
+
+00:06:37.039 --> 00:06:39.950 align:start position:0%
+I got access crushed pretty much every
+single<00:06:37.400><c> question</c><00:06:38.199><c> this</c><00:06:38.319><c> is</c><00:06:38.440><c> 01</c><00:06:38.960><c> in</c><00:06:39.199><c> Pro</c><00:06:39.520><c> mode</c>
+
+00:06:39.950 --> 00:06:39.960 align:start position:0%
+single question this is 01 in Pro mode
+ 
+
+00:06:39.960 --> 00:06:41.550 align:start position:0%
+single question this is 01 in Pro mode
+obviously<00:06:40.360><c> there</c><00:06:40.520><c> had</c><00:06:40.680><c> been</c><00:06:40.960><c> incremental</c>
+
+00:06:41.550 --> 00:06:41.560 align:start position:0%
+obviously there had been incremental
+ 
+
+00:06:41.560 --> 00:06:43.950 align:start position:0%
+obviously there had been incremental
+progress<00:06:42.039><c> before</c><00:06:42.400><c> that</c><00:06:42.680><c> but</c><00:06:42.880><c> even</c><00:06:43.479><c> tougher</c>
+
+00:06:43.950 --> 00:06:43.960 align:start position:0%
+progress before that but even tougher
+ 
+
+00:06:43.960 --> 00:06:47.189 align:start position:0%
+progress before that but even tougher
+challenges<00:06:44.680><c> like</c><00:06:44.960><c> this</c><00:06:45.120><c> one</c><00:06:45.560><c> o1</c><00:06:45.960><c> pro</c><00:06:46.280><c> a</c><00:06:46.840><c> so</c><00:06:47.080><c> I</c>
+
+00:06:47.189 --> 00:06:47.199 align:start position:0%
+challenges like this one o1 pro a so I
+ 
+
+00:06:47.199 --> 00:06:49.189 align:start position:0%
+challenges like this one o1 pro a so I
+guess<00:06:47.360><c> I'm</c><00:06:47.520><c> saying</c><00:06:48.120><c> that</c><00:06:48.319><c> I</c><00:06:48.440><c> feel</c><00:06:48.800><c> like</c><00:06:49.039><c> we</c>
+
+00:06:49.189 --> 00:06:49.199 align:start position:0%
+guess I'm saying that I feel like we
+ 
+
+00:06:49.199 --> 00:06:51.950 align:start position:0%
+guess I'm saying that I feel like we
+will<00:06:49.440><c> go</c><00:06:49.800><c> from</c><00:06:50.160><c> laughing</c><00:06:50.560><c> at</c><00:06:50.759><c> AI</c><00:06:51.120><c> agents</c><00:06:51.759><c> to</c>
+
+00:06:51.950 --> 00:06:51.960 align:start position:0%
+will go from laughing at AI agents to
+ 
+
+00:06:51.960 --> 00:06:54.070 align:start position:0%
+will go from laughing at AI agents to
+being<00:06:52.400><c> super</c><00:06:52.759><c> impressed</c><00:06:53.240><c> with</c><00:06:53.360><c> them</c><00:06:53.800><c> in</c>
+
+00:06:54.070 --> 00:06:54.080 align:start position:0%
+being super impressed with them in
+ 
+
+00:06:54.080 --> 00:06:55.990 align:start position:0%
+being super impressed with them in
+actually<00:06:54.520><c> less</c><00:06:54.759><c> than</c><00:06:54.919><c> 2</c><00:06:55.120><c> years</c><00:06:55.400><c> this</c><00:06:55.599><c> time</c>
+
+00:06:55.990 --> 00:06:56.000 align:start position:0%
+actually less than 2 years this time
+ 
+
+00:06:56.000 --> 00:06:58.270 align:start position:0%
+actually less than 2 years this time
+possibly<00:06:56.440><c> within</c><00:06:56.960><c> this</c><00:06:57.160><c> calendar</c><00:06:57.599><c> year</c><00:06:57.960><c> and</c><00:06:58.080><c> I</c>
+
+00:06:58.270 --> 00:06:58.280 align:start position:0%
+possibly within this calendar year and I
+ 
+
+00:06:58.280 --> 00:07:00.790 align:start position:0%
+possibly within this calendar year and I
+Echo<00:06:58.720><c> what</c><00:06:58.919><c> gome</c><00:06:59.240><c> Brown</c><00:06:59.800><c> said</c><00:07:00.039><c> who</c><00:07:00.160><c> is</c><00:07:00.319><c> a</c><00:07:00.479><c> lead</c>
+
+00:07:00.790 --> 00:07:00.800 align:start position:0%
+Echo what gome Brown said who is a lead
+ 
+
+00:07:00.800 --> 00:07:02.830 align:start position:0%
+Echo what gome Brown said who is a lead
+researcher<00:07:01.440><c> on</c><00:07:01.639><c> the</c><00:07:01.759><c> O</c><00:07:02.000><c> Series</c><00:07:02.240><c> of</c><00:07:02.360><c> models</c>
+
+00:07:02.830 --> 00:07:02.840 align:start position:0%
+researcher on the O Series of models
+ 
+
+00:07:02.840 --> 00:07:05.110 align:start position:0%
+researcher on the O Series of models
+when<00:07:02.960><c> he</c><00:07:03.080><c> said</c><00:07:03.639><c> it</c><00:07:03.759><c> can</c><00:07:03.879><c> be</c><00:07:04.120><c> hard</c><00:07:04.479><c> to</c><00:07:04.800><c> quote</c>
+
+00:07:05.110 --> 00:07:05.120 align:start position:0%
+when he said it can be hard to quote
+ 
+
+00:07:05.120 --> 00:07:08.350 align:start position:0%
+when he said it can be hard to quote
+feel<00:07:05.560><c> the</c><00:07:05.680><c> AGI</c><00:07:06.680><c> until</c><00:07:06.919><c> you</c><00:07:07.039><c> see</c><00:07:07.280><c> an</c><00:07:07.440><c> AI</c><00:07:07.800><c> surpass</c>
+
+00:07:08.350 --> 00:07:08.360 align:start position:0%
+feel the AGI until you see an AI surpass
+ 
+
+00:07:08.360 --> 00:07:10.309 align:start position:0%
+feel the AGI until you see an AI surpass
+top<00:07:08.599><c> humans</c><00:07:08.960><c> in</c><00:07:09.080><c> a</c><00:07:09.240><c> domain</c><00:07:09.560><c> you</c><00:07:09.759><c> care</c><00:07:10.000><c> deeply</c>
+
+00:07:10.309 --> 00:07:10.319 align:start position:0%
+top humans in a domain you care deeply
+ 
+
+00:07:10.319 --> 00:07:12.150 align:start position:0%
+top humans in a domain you care deeply
+about<00:07:10.720><c> competitive</c><00:07:11.160><c> coders</c><00:07:11.599><c> will</c><00:07:11.759><c> feel</c><00:07:12.000><c> it</c>
+
+00:07:12.150 --> 00:07:12.160 align:start position:0%
+about competitive coders will feel it
+ 
+
+00:07:12.160 --> 00:07:13.790 align:start position:0%
+about competitive coders will feel it
+within<00:07:12.360><c> a</c><00:07:12.479><c> couple</c><00:07:12.720><c> of</c><00:07:12.840><c> years</c><00:07:13.120><c> he</c><00:07:13.240><c> said</c><00:07:13.680><c> then</c>
+
+00:07:13.790 --> 00:07:13.800 align:start position:0%
+within a couple of years he said then
+ 
+
+00:07:13.800 --> 00:07:15.510 align:start position:0%
+within a couple of years he said then
+when<00:07:13.919><c> he</c><00:07:14.120><c> refers</c><00:07:14.520><c> to</c><00:07:14.800><c> Paul</c><00:07:15.120><c> he's</c><00:07:15.280><c> talking</c>
+
+00:07:15.510 --> 00:07:15.520 align:start position:0%
+when he refers to Paul he's talking
+ 
+
+00:07:15.520 --> 00:07:18.150 align:start position:0%
+when he refers to Paul he's talking
+about<00:07:15.800><c> the</c><00:07:16.000><c> writer</c><00:07:16.520><c> behind</c><00:07:16.919><c> taxi</c><00:07:17.280><c> driver</c><00:07:18.039><c> who</c>
+
+00:07:18.150 --> 00:07:18.160 align:start position:0%
+about the writer behind taxi driver who
+ 
+
+00:07:18.160 --> 00:07:20.230 align:start position:0%
+about the writer behind taxi driver who
+said<00:07:18.360><c> the</c><00:07:18.560><c> AI</c><00:07:18.960><c> came</c><00:07:19.120><c> up</c><00:07:19.319><c> with</c><00:07:19.520><c> better</c><00:07:19.800><c> script</c>
+
+00:07:20.230 --> 00:07:20.240 align:start position:0%
+said the AI came up with better script
+ 
+
+00:07:20.240 --> 00:07:22.270 align:start position:0%
+said the AI came up with better script
+ideas<00:07:20.560><c> than</c><00:07:20.720><c> he</c><00:07:20.879><c> could</c><00:07:21.280><c> and</c><00:07:21.400><c> he</c><00:07:21.520><c> said</c><00:07:21.879><c> Paul</c><00:07:22.120><c> is</c>
+
+00:07:22.270 --> 00:07:22.280 align:start position:0%
+ideas than he could and he said Paul is
+ 
+
+00:07:22.280 --> 00:07:24.550 align:start position:0%
+ideas than he could and he said Paul is
+early<00:07:22.879><c> but</c><00:07:23.039><c> I</c><00:07:23.160><c> think</c><00:07:23.360><c> writers</c><00:07:23.960><c> will</c><00:07:24.120><c> feel</c><00:07:24.400><c> it</c>
+
+00:07:24.550 --> 00:07:24.560 align:start position:0%
+early but I think writers will feel it
+ 
+
+00:07:24.560 --> 00:07:26.710 align:start position:0%
+early but I think writers will feel it
+too<00:07:25.039><c> everyone</c><00:07:25.400><c> will</c><00:07:25.599><c> have</c><00:07:25.759><c> their</c><00:07:25.960><c> leid</c><00:07:26.479><c> old</c>
+
+00:07:26.710 --> 00:07:26.720 align:start position:0%
+too everyone will have their leid old
+ 
+
+00:07:26.720 --> 00:07:28.869 align:start position:0%
+too everyone will have their leid old
+moment<00:07:27.199><c> at</c><00:07:27.319><c> a</c><00:07:27.520><c> different</c><00:07:27.879><c> time</c><00:07:28.319><c> of</c><00:07:28.440><c> course</c><00:07:28.680><c> the</c>
+
+00:07:28.869 --> 00:07:28.879 align:start position:0%
+moment at a different time of course the
+ 
+
+00:07:28.879 --> 00:07:31.390 align:start position:0%
+moment at a different time of course the
+legendary<00:07:29.599><c> player</c><00:07:30.080><c> at</c><00:07:30.360><c> go</c><00:07:30.680><c> who</c><00:07:30.800><c> was</c><00:07:30.919><c> beaten</c><00:07:31.240><c> by</c>
+
+00:07:31.390 --> 00:07:31.400 align:start position:0%
+legendary player at go who was beaten by
+ 
+
+00:07:31.400 --> 00:07:33.070 align:start position:0%
+legendary player at go who was beaten by
+Alpha<00:07:31.840><c> go</c><00:07:32.160><c> and</c><00:07:32.360><c> I</c><00:07:32.440><c> don't</c><00:07:32.639><c> think</c><00:07:32.840><c> that's</c>
+
+00:07:33.070 --> 00:07:33.080 align:start position:0%
+Alpha go and I don't think that's
+ 
+
+00:07:33.080 --> 00:07:35.990 align:start position:0%
+Alpha go and I don't think that's
+necessarily<00:07:33.720><c> contradictory</c><00:07:34.720><c> with</c><00:07:35.160><c> this</c><00:07:35.400><c> post</c>
+
+00:07:35.990 --> 00:07:36.000 align:start position:0%
+necessarily contradictory with this post
+ 
+
+00:07:36.000 --> 00:07:38.830 align:start position:0%
+necessarily contradictory with this post
+that<00:07:36.280><c> he</c><00:07:36.639><c> said</c><00:07:37.000><c> earlier</c><00:07:37.599><c> lots</c><00:07:37.800><c> of</c><00:07:38.039><c> vague</c><00:07:38.440><c> AI</c>
+
+00:07:38.830 --> 00:07:38.840 align:start position:0%
+that he said earlier lots of vague AI
+ 
+
+00:07:38.840 --> 00:07:40.550 align:start position:0%
+that he said earlier lots of vague AI
+hype<00:07:39.199><c> on</c><00:07:39.360><c> social</c><00:07:39.639><c> media</c><00:07:40.000><c> these</c><00:07:40.160><c> days</c><00:07:40.400><c> of</c>
+
+00:07:40.550 --> 00:07:40.560 align:start position:0%
+hype on social media these days of
+ 
+
+00:07:40.560 --> 00:07:42.510 align:start position:0%
+hype on social media these days of
+course<00:07:41.080><c> there</c><00:07:41.199><c> are</c><00:07:41.599><c> good</c><00:07:41.800><c> reasons</c><00:07:42.160><c> to</c><00:07:42.319><c> be</c>
+
+00:07:42.510 --> 00:07:42.520 align:start position:0%
+course there are good reasons to be
+ 
+
+00:07:42.520 --> 00:07:44.469 align:start position:0%
+course there are good reasons to be
+optimistic<00:07:43.000><c> about</c><00:07:43.199><c> further</c><00:07:43.560><c> progress</c><00:07:44.199><c> but</c>
+
+00:07:44.469 --> 00:07:44.479 align:start position:0%
+optimistic about further progress but
+ 
+
+00:07:44.479 --> 00:07:46.749 align:start position:0%
+optimistic about further progress but
+plenty<00:07:44.879><c> of</c><00:07:45.120><c> Unsolved</c><00:07:45.720><c> research</c><00:07:46.240><c> problems</c>
+
+00:07:46.749 --> 00:07:46.759 align:start position:0%
+plenty of Unsolved research problems
+ 
+
+00:07:46.759 --> 00:07:49.710 align:start position:0%
+plenty of Unsolved research problems
+remain<00:07:47.199><c> now</c><00:07:47.440><c> speaking</c><00:07:47.960><c> of</c><00:07:48.400><c> vague</c><00:07:48.879><c> hype</c><00:07:49.319><c> though</c>
+
+00:07:49.710 --> 00:07:49.720 align:start position:0%
+remain now speaking of vague hype though
+ 
+
+00:07:49.720 --> 00:07:52.790 align:start position:0%
+remain now speaking of vague hype though
+that<00:07:49.960><c> issue</c><00:07:50.400><c> is</c><00:07:50.599><c> not</c><00:07:50.919><c> helped</c><00:07:51.599><c> by</c><00:07:52.159><c> none</c><00:07:52.440><c> other</c>
+
+00:07:52.790 --> 00:07:52.800 align:start position:0%
+that issue is not helped by none other
+ 
+
+00:07:52.800 --> 00:07:55.990 align:start position:0%
+that issue is not helped by none other
+than<00:07:53.159><c> the</c><00:07:53.479><c> CEO</c><00:07:53.919><c> of</c><00:07:54.080><c> open</c><00:07:54.360><c> AI</c><00:07:54.960><c> who</c><00:07:55.199><c> has</c><00:07:55.440><c> reversed</c>
+
+00:07:55.990 --> 00:07:56.000 align:start position:0%
+than the CEO of open AI who has reversed
+ 
+
+00:07:56.000 --> 00:07:59.189 align:start position:0%
+than the CEO of open AI who has reversed
+his<00:07:56.199><c> position</c><00:07:57.039><c> on</c><00:07:57.599><c> Fast</c><00:07:58.000><c> takeoff</c><00:07:58.479><c> timelines</c>
+
+00:07:59.189 --> 00:07:59.199 align:start position:0%
+his position on Fast takeoff timelines
+ 
+
+00:07:59.199 --> 00:08:00.990 align:start position:0%
+his position on Fast takeoff timelines
+first<00:07:59.599><c> let</c><00:07:59.720><c> me</c><00:07:59.879><c> give</c><00:08:00.000><c> you</c><00:08:00.240><c> his</c><00:08:00.599><c> current</c>
+
+00:08:00.990 --> 00:08:01.000 align:start position:0%
+first let me give you his current
+ 
+
+00:08:01.000 --> 00:08:03.309 align:start position:0%
+first let me give you his current
+opinion<00:08:01.599><c> as</c><00:08:01.840><c> of</c><00:08:02.159><c> a</c><00:08:02.360><c> week</c><00:08:02.599><c> ago</c><00:08:03.159><c> what's</c>
+
+00:08:03.309 --> 00:08:03.319 align:start position:0%
+opinion as of a week ago what's
+ 
+
+00:08:03.319 --> 00:08:05.309 align:start position:0%
+opinion as of a week ago what's
+something<00:08:03.560><c> you've</c><00:08:03.840><c> rethought</c><00:08:04.400><c> recently</c><00:08:05.080><c> on</c>
+
+00:08:05.309 --> 00:08:05.319 align:start position:0%
+something you've rethought recently on
+ 
+
+00:08:05.319 --> 00:08:07.670 align:start position:0%
+something you've rethought recently on
+AI<00:08:05.759><c> or</c><00:08:05.919><c> changed</c><00:08:06.240><c> your</c><00:08:06.360><c> mind</c><00:08:06.599><c> about</c><00:08:07.280><c> I</c><00:08:07.360><c> think</c><00:08:07.520><c> a</c>
+
+00:08:07.670 --> 00:08:07.680 align:start position:0%
+AI or changed your mind about I think a
+ 
+
+00:08:07.680 --> 00:08:09.309 align:start position:0%
+AI or changed your mind about I think a
+fast<00:08:07.879><c> takeoff</c><00:08:08.240><c> is</c><00:08:08.360><c> more</c><00:08:08.639><c> possible</c><00:08:09.000><c> than</c><00:08:09.159><c> I</c>
+
+00:08:09.309 --> 00:08:09.319 align:start position:0%
+fast takeoff is more possible than I
+ 
+
+00:08:09.319 --> 00:08:11.629 align:start position:0%
+fast takeoff is more possible than I
+thought<00:08:09.840><c> a</c><00:08:09.919><c> couple</c><00:08:10.159><c> of</c><00:08:10.280><c> years</c><00:08:10.479><c> ago</c><00:08:10.879><c> how</c><00:08:11.080><c> fast</c>
+
+00:08:11.629 --> 00:08:11.639 align:start position:0%
+thought a couple of years ago how fast
+ 
+
+00:08:11.639 --> 00:08:13.230 align:start position:0%
+thought a couple of years ago how fast
+feels<00:08:11.919><c> hard</c><00:08:12.039><c> to</c><00:08:12.199><c> reason</c><00:08:12.520><c> about</c><00:08:12.759><c> but</c><00:08:12.919><c> something</c>
+
+00:08:13.230 --> 00:08:13.240 align:start position:0%
+feels hard to reason about but something
+ 
+
+00:08:13.240 --> 00:08:14.990 align:start position:0%
+feels hard to reason about but something
+that's<00:08:13.400><c> in</c><00:08:13.599><c> like</c><00:08:13.840><c> a</c><00:08:13.960><c> small</c><00:08:14.240><c> number</c><00:08:14.479><c> of</c><00:08:14.680><c> years</c>
+
+00:08:14.990 --> 00:08:15.000 align:start position:0%
+that's in like a small number of years
+ 
+
+00:08:15.000 --> 00:08:16.710 align:start position:0%
+that's in like a small number of years
+rather<00:08:15.199><c> than</c><00:08:15.360><c> a</c><00:08:15.560><c> decade</c><00:08:16.080><c> wow</c><00:08:16.440><c> what</c><00:08:16.560><c> do</c><00:08:16.639><c> you</c>
+
+00:08:16.710 --> 00:08:16.720 align:start position:0%
+rather than a decade wow what do you
+ 
+
+00:08:16.720 --> 00:08:18.350 align:start position:0%
+rather than a decade wow what do you
+think<00:08:16.879><c> is</c><00:08:17.080><c> the</c><00:08:17.240><c> worst</c><00:08:17.560><c> advice</c><00:08:18.000><c> people</c><00:08:18.199><c> are</c>
+
+00:08:18.350 --> 00:08:18.360 align:start position:0%
+think is the worst advice people are
+ 
+
+00:08:18.360 --> 00:08:20.950 align:start position:0%
+think is the worst advice people are
+given<00:08:18.800><c> on</c><00:08:19.159><c> adapting</c><00:08:19.560><c> to</c><00:08:19.720><c> ai</c><00:08:20.280><c> ai</c><00:08:20.520><c> is</c><00:08:20.599><c> hitting</c><00:08:20.840><c> a</c>
+
+00:08:20.950 --> 00:08:20.960 align:start position:0%
+given on adapting to ai ai is hitting a
+ 
+
+00:08:20.960 --> 00:08:22.869 align:start position:0%
+given on adapting to ai ai is hitting a
+wall<00:08:21.319><c> which</c><00:08:21.440><c> I</c><00:08:21.520><c> think</c><00:08:21.639><c> is</c><00:08:21.759><c> the</c><00:08:21.879><c> laziest</c><00:08:22.560><c> and</c>
+
+00:08:22.869 --> 00:08:22.879 align:start position:0%
+wall which I think is the laziest and
+ 
+
+00:08:22.879 --> 00:08:24.670 align:start position:0%
+wall which I think is the laziest and
+way<00:08:23.000><c> to</c><00:08:23.120><c> try</c><00:08:23.240><c> to</c><00:08:23.360><c> not</c><00:08:23.599><c> think</c><00:08:23.800><c> about</c><00:08:24.000><c> it</c><00:08:24.280><c> and</c>
+
+00:08:24.670 --> 00:08:24.680 align:start position:0%
+way to try to not think about it and
+ 
+
+00:08:24.680 --> 00:08:26.189 align:start position:0%
+way to try to not think about it and
+just<00:08:24.919><c> you</c><00:08:25.039><c> know</c><00:08:25.280><c> put</c><00:08:25.440><c> it</c><00:08:25.560><c> out</c><00:08:25.680><c> of</c><00:08:25.840><c> sight</c><00:08:26.000><c> out</c><00:08:26.080><c> of</c>
+
+00:08:26.189 --> 00:08:26.199 align:start position:0%
+just you know put it out of sight out of
+ 
+
+00:08:26.199 --> 00:08:28.790 align:start position:0%
+just you know put it out of sight out of
+M<00:08:26.560><c> now</c><00:08:26.720><c> let</c><00:08:26.840><c> me</c><00:08:26.960><c> play</c><00:08:27.199><c> you</c><00:08:27.560><c> a</c><00:08:27.759><c> brief</c><00:08:28.120><c> extract</c>
+
+00:08:28.790 --> 00:08:28.800 align:start position:0%
+M now let me play you a brief extract
+ 
+
+00:08:28.800 --> 00:08:31.309 align:start position:0%
+M now let me play you a brief extract
+from<00:08:29.000><c> a</c><00:08:29.159><c> video</c><00:08:29.840><c> I</c><00:08:30.120><c> just</c><00:08:30.400><c> published</c><00:08:30.800><c> on</c><00:08:31.000><c> my</c>
+
+00:08:31.309 --> 00:08:31.319 align:start position:0%
+from a video I just published on my
+ 
+
+00:08:31.319 --> 00:08:34.430 align:start position:0%
+from a video I just published on my
+patreon<00:08:32.240><c> about</c><00:08:32.560><c> what</c><00:08:32.800><c> he</c><00:08:33.080><c> thought</c><00:08:33.680><c> just</c><00:08:34.039><c> 18</c>
+
+00:08:34.430 --> 00:08:34.440 align:start position:0%
+patreon about what he thought just 18
+ 
+
+00:08:34.440 --> 00:08:36.790 align:start position:0%
+patreon about what he thought just 18
+months<00:08:34.760><c> ago</c><00:08:35.120><c> or</c><00:08:35.320><c> so</c><00:08:35.760><c> short</c><00:08:36.120><c> timelines</c><00:08:36.640><c> and</c>
+
+00:08:36.790 --> 00:08:36.800 align:start position:0%
+months ago or so short timelines and
+ 
+
+00:08:36.800 --> 00:08:39.430 align:start position:0%
+months ago or so short timelines and
+slow<00:08:37.120><c> takeoff</c><00:08:37.760><c> will</c><00:08:38.000><c> be</c><00:08:38.360><c> a</c><00:08:38.560><c> pretty</c><00:08:38.800><c> good</c><00:08:39.000><c> call</c>
+
+00:08:39.430 --> 00:08:39.440 align:start position:0%
+slow takeoff will be a pretty good call
+ 
+
+00:08:39.440 --> 00:08:41.430 align:start position:0%
+slow takeoff will be a pretty good call
+it's<00:08:39.640><c> the</c><00:08:39.800><c> prediction</c><00:08:40.200><c> he</c><00:08:40.320><c> would</c><00:08:40.519><c> make</c><00:08:41.240><c> but</c>
+
+00:08:41.430 --> 00:08:41.440 align:start position:0%
+it's the prediction he would make but
+ 
+
+00:08:41.440 --> 00:08:43.949 align:start position:0%
+it's the prediction he would make but
+the<00:08:41.560><c> way</c><00:08:41.760><c> people</c><00:08:42.120><c> Define</c><00:08:43.000><c> the</c><00:08:43.279><c> start</c><00:08:43.640><c> of</c><00:08:43.800><c> the</c>
+
+00:08:43.949 --> 00:08:43.959 align:start position:0%
+the way people Define the start of the
+ 
+
+00:08:43.959 --> 00:08:46.829 align:start position:0%
+the way people Define the start of the
+takeoff<00:08:44.680><c> reaching</c><00:08:45.120><c> the</c><00:08:45.279><c> human</c><00:08:45.640><c> Baseline</c><00:08:46.600><c> may</c>
+
+00:08:46.829 --> 00:08:46.839 align:start position:0%
+takeoff reaching the human Baseline may
+ 
+
+00:08:46.839 --> 00:08:49.350 align:start position:0%
+takeoff reaching the human Baseline may
+make<00:08:47.040><c> it</c><00:08:47.240><c> seem</c><00:08:47.640><c> otherwise</c><00:08:48.399><c> of</c><00:08:48.560><c> course</c><00:08:48.880><c> in</c><00:08:49.120><c> an</c>
+
+00:08:49.350 --> 00:08:49.360 align:start position:0%
+make it seem otherwise of course in an
+ 
+
+00:08:49.360 --> 00:08:51.310 align:start position:0%
+make it seem otherwise of course in an
+Ideal<00:08:49.839><c> World</c><00:08:50.200><c> we</c><00:08:50.320><c> would</c><00:08:50.560><c> have</c><00:08:50.839><c> clearer</c>
+
+00:08:51.310 --> 00:08:51.320 align:start position:0%
+Ideal World we would have clearer
+ 
+
+00:08:51.320 --> 00:08:53.350 align:start position:0%
+Ideal World we would have clearer
+communication<00:08:52.000><c> from</c><00:08:52.279><c> these</c><00:08:52.480><c> companies</c><00:08:53.040><c> about</c>
+
+00:08:53.350 --> 00:08:53.360 align:start position:0%
+communication from these companies about
+ 
+
+00:08:53.360 --> 00:08:56.150 align:start position:0%
+communication from these companies about
+just<00:08:53.720><c> what</c><00:08:53.920><c> the</c><00:08:54.120><c> frontier</c><00:08:54.880><c> is</c><00:08:55.519><c> but</c><00:08:55.720><c> we</c><00:08:55.880><c> don't</c>
+
+00:08:56.150 --> 00:08:56.160 align:start position:0%
+just what the frontier is but we don't
+ 
+
+00:08:56.160 --> 00:08:58.269 align:start position:0%
+just what the frontier is but we don't
+live<00:08:56.360><c> in</c><00:08:56.519><c> that</c><00:08:56.680><c> world</c><00:08:57.200><c> and</c><00:08:57.320><c> honestly</c><00:08:57.880><c> it</c><00:08:57.959><c> is</c>
+
+00:08:58.269 --> 00:08:58.279 align:start position:0%
+live in that world and honestly it is
+ 
+
+00:08:58.279 --> 00:09:00.430 align:start position:0%
+live in that world and honestly it is
+hard<00:08:58.560><c> to</c><00:08:58.800><c> keep</c><00:08:59.040><c> up</c><00:08:59.279><c> some</c><00:08:59.640><c> sometimes</c><00:09:00.040><c> with</c><00:09:00.240><c> the</c>
+
+00:09:00.430 --> 00:09:00.440 align:start position:0%
+hard to keep up some sometimes with the
+ 
+
+00:09:00.440 --> 00:09:02.949 align:start position:0%
+hard to keep up some sometimes with the
+changing<00:09:00.880><c> opinions</c><00:09:01.560><c> of</c><00:09:01.760><c> the</c><00:09:01.959><c> CEOs</c><00:09:02.600><c> of</c><00:09:02.800><c> these</c>
+
+00:09:02.949 --> 00:09:02.959 align:start position:0%
+changing opinions of the CEOs of these
+ 
+
+00:09:02.959 --> 00:09:05.710 align:start position:0%
+changing opinions of the CEOs of these
+AI<00:09:03.320><c> labs</c><00:09:03.959><c> when</c><00:09:04.160><c> open</c><00:09:04.440><c> AI</c><00:09:04.800><c> was</c><00:09:05.040><c> founded</c><00:09:05.480><c> Sam</c>
+
+00:09:05.710 --> 00:09:05.720 align:start position:0%
+AI labs when open AI was founded Sam
+ 
+
+00:09:05.720 --> 00:09:07.630 align:start position:0%
+AI labs when open AI was founded Sam
+wman<00:09:06.040><c> said</c><00:09:06.440><c> obviously</c><00:09:06.920><c> this</c><00:09:07.040><c> is</c><00:09:07.160><c> too</c><00:09:07.399><c> Elon</c>
+
+00:09:07.630 --> 00:09:07.640 align:start position:0%
+wman said obviously this is too Elon
+ 
+
+00:09:07.640 --> 00:09:10.110 align:start position:0%
+wman said obviously this is too Elon
+Musk<00:09:08.120><c> would</c><00:09:08.440><c> comply</c><00:09:08.920><c> with</c><00:09:09.200><c> and</c><00:09:09.480><c> aggressively</c>
+
+00:09:10.110 --> 00:09:10.120 align:start position:0%
+Musk would comply with and aggressively
+ 
+
+00:09:10.120 --> 00:09:12.949 align:start position:0%
+Musk would comply with and aggressively
+support<00:09:10.600><c> all</c><00:09:10.920><c> AI</c><00:09:11.320><c> regulation</c><00:09:12.079><c> 18</c><00:09:12.399><c> months</c><00:09:12.640><c> ago</c>
+
+00:09:12.949 --> 00:09:12.959 align:start position:0%
+support all AI regulation 18 months ago
+ 
+
+00:09:12.959 --> 00:09:15.269 align:start position:0%
+support all AI regulation 18 months ago
+he<00:09:13.279><c> personally</c><00:09:13.880><c> implored</c><00:09:14.440><c> Congress</c><00:09:15.000><c> to</c>
+
+00:09:15.269 --> 00:09:15.279 align:start position:0%
+he personally implored Congress to
+ 
+
+00:09:15.279 --> 00:09:17.110 align:start position:0%
+he personally implored Congress to
+regulate<00:09:15.800><c> Ai</c><00:09:16.120><c> and</c><00:09:16.240><c> I</c><00:09:16.360><c> covered</c><00:09:16.680><c> that</c><00:09:16.839><c> at</c><00:09:16.959><c> the</c>
+
+00:09:17.110 --> 00:09:17.120 align:start position:0%
+regulate Ai and I covered that at the
+ 
+
+00:09:17.120 --> 00:09:19.630 align:start position:0%
+regulate Ai and I covered that at the
+time<00:09:17.560><c> but</c><00:09:17.720><c> then</c><00:09:17.920><c> this</c><00:09:18.079><c> week</c><00:09:18.399><c> we</c><00:09:18.600><c> got</c><00:09:18.959><c> this</c><00:09:19.279><c> very</c>
+
+00:09:19.630 --> 00:09:19.640 align:start position:0%
+time but then this week we got this very
+ 
+
+00:09:19.640 --> 00:09:21.949 align:start position:0%
+time but then this week we got this very
+corporate<00:09:20.399><c> economic</c><00:09:20.800><c> blueprint</c><00:09:21.399><c> from</c><00:09:21.680><c> open</c>
+
+00:09:21.949 --> 00:09:21.959 align:start position:0%
+corporate economic blueprint from open
+ 
+
+00:09:21.959 --> 00:09:24.990 align:start position:0%
+corporate economic blueprint from open
+AI<00:09:22.640><c> which</c><00:09:23.040><c> was</c><00:09:23.399><c> not</c><00:09:23.600><c> fun</c><00:09:23.880><c> to</c><00:09:24.000><c> read</c><00:09:24.240><c> in</c><00:09:24.399><c> full</c><00:09:24.880><c> in</c>
+
+00:09:24.990 --> 00:09:25.000 align:start position:0%
+AI which was not fun to read in full in
+ 
+
+00:09:25.000 --> 00:09:27.350 align:start position:0%
+AI which was not fun to read in full in
+short<00:09:25.399><c> though</c><00:09:25.720><c> it</c><00:09:26.079><c> implores</c><00:09:26.880><c> the</c><00:09:27.000><c> US</c>
+
+00:09:27.350 --> 00:09:27.360 align:start position:0%
+short though it implores the US
+ 
+
+00:09:27.360 --> 00:09:29.910 align:start position:0%
+short though it implores the US
+government<00:09:27.839><c> not</c><00:09:28.040><c> to</c><00:09:28.399><c> stunt</c><00:09:28.880><c> AI</c><00:09:29.440><c> through</c>
+
+00:09:29.910 --> 00:09:29.920 align:start position:0%
+government not to stunt AI through
+ 
+
+00:09:29.920 --> 00:09:31.949 align:start position:0%
+government not to stunt AI through
+regulation<00:09:30.760><c> later</c><00:09:31.040><c> in</c><00:09:31.160><c> the</c><00:09:31.360><c> document</c><00:09:31.760><c> it's</c>
+
+00:09:31.949 --> 00:09:31.959 align:start position:0%
+regulation later in the document it's
+ 
+
+00:09:31.959 --> 00:09:33.750 align:start position:0%
+regulation later in the document it's
+promised<00:09:32.399><c> that</c><00:09:32.560><c> openai</c><00:09:33.160><c> would</c><00:09:33.399><c> never</c>
+
+00:09:33.750 --> 00:09:33.760 align:start position:0%
+promised that openai would never
+ 
+
+00:09:33.760 --> 00:09:35.829 align:start position:0%
+promised that openai would never
+facilitate<00:09:34.360><c> their</c><00:09:34.560><c> tools</c><00:09:35.000><c> being</c><00:09:35.200><c> used</c><00:09:35.519><c> to</c>
+
+00:09:35.829 --> 00:09:35.839 align:start position:0%
+facilitate their tools being used to
+ 
+
+00:09:35.839 --> 00:09:38.269 align:start position:0%
+facilitate their tools being used to
+threaten<00:09:36.240><c> or</c><00:09:36.480><c> coers</c><00:09:36.920><c> other</c><00:09:37.120><c> states</c><00:09:37.680><c> meanwhile</c>
+
+00:09:38.269 --> 00:09:38.279 align:start position:0%
+threaten or coers other states meanwhile
+ 
+
+00:09:38.279 --> 00:09:40.550 align:start position:0%
+threaten or coers other states meanwhile
+that<00:09:38.480><c> principle</c><00:09:38.920><c> doesn't</c><00:09:39.519><c> always</c><00:09:39.920><c> seem</c><00:09:40.200><c> to</c><00:09:40.360><c> be</c>
+
+00:09:40.550 --> 00:09:40.560 align:start position:0%
+that principle doesn't always seem to be
+ 
+
+00:09:40.560 --> 00:09:44.030 align:start position:0%
+that principle doesn't always seem to be
+top<00:09:40.800><c> of</c><00:09:41.000><c> Mind</c><00:09:41.480><c> of</c><00:09:41.720><c> open</c><00:09:42.000><c> AI</c><00:09:42.440><c> CEO</c><00:09:43.279><c> the</c><00:09:43.480><c> anthropic</c>
+
+00:09:44.030 --> 00:09:44.040 align:start position:0%
+top of Mind of open AI CEO the anthropic
+ 
+
+00:09:44.040 --> 00:09:46.230 align:start position:0%
+top of Mind of open AI CEO the anthropic
+CEO<00:09:44.600><c> who</c><00:09:44.760><c> chose</c><00:09:45.120><c> not</c><00:09:45.360><c> to</c><00:09:45.480><c> make</c><00:09:45.760><c> such</c><00:09:46.040><c> a</c>
+
+00:09:46.230 --> 00:09:46.240 align:start position:0%
+CEO who chose not to make such a
+ 
+
+00:09:46.240 --> 00:09:49.069 align:start position:0%
+CEO who chose not to make such a
+donation<00:09:47.000><c> did</c><00:09:47.240><c> say</c><00:09:47.680><c> this</c><00:09:48.079><c> about</c><00:09:48.360><c> the</c><00:09:48.600><c> stakes</c>
+
+00:09:49.069 --> 00:09:49.079 align:start position:0%
+donation did say this about the stakes
+ 
+
+00:09:49.079 --> 00:09:52.750 align:start position:0%
+donation did say this about the stakes
+for<00:09:49.800><c> 2025</c><00:09:50.800><c> and</c><00:09:51.000><c> his</c><00:09:51.200><c> sense</c><00:09:51.440><c> of</c><00:09:51.680><c> urgency</c><00:09:52.480><c> on</c>
+
+00:09:52.750 --> 00:09:52.760 align:start position:0%
+for 2025 and his sense of urgency on
+ 
+
+00:09:52.760 --> 00:09:55.030 align:start position:0%
+for 2025 and his sense of urgency on
+regulating<00:09:53.480><c> Ai</c><00:09:54.000><c> and</c><00:09:54.160><c> and</c><00:09:54.360><c> I</c><00:09:54.440><c> feel</c><00:09:54.760><c> I</c><00:09:54.839><c> feel</c>
+
+00:09:55.030 --> 00:09:55.040 align:start position:0%
+regulating Ai and and I feel I feel
+ 
+
+00:09:55.040 --> 00:09:56.670 align:start position:0%
+regulating Ai and and I feel I feel
+urgency<00:09:55.600><c> I</c><00:09:55.760><c> really</c><00:09:56.000><c> think</c><00:09:56.160><c> we</c><00:09:56.279><c> need</c><00:09:56.399><c> to</c><00:09:56.519><c> do</c>
+
+00:09:56.670 --> 00:09:56.680 align:start position:0%
+urgency I really think we need to do
+ 
+
+00:09:56.680 --> 00:09:58.710 align:start position:0%
+urgency I really think we need to do
+something<00:09:56.959><c> in</c><00:09:57.079><c> 2025</c><00:09:58.000><c> if</c><00:09:58.079><c> we</c><00:09:58.240><c> get</c><00:09:58.360><c> to</c><00:09:58.480><c> the</c><00:09:58.560><c> end</c>
+
+00:09:58.710 --> 00:09:58.720 align:start position:0%
+something in 2025 if we get to the end
+ 
+
+00:09:58.720 --> 00:09:59.870 align:start position:0%
+something in 2025 if we get to the end
+of<00:09:58.880><c> 202</c>
+
+00:09:59.870 --> 00:09:59.880 align:start position:0%
+of 202
+ 
+
+00:09:59.880 --> 00:10:01.829 align:start position:0%
+of 202
+and<00:10:00.000><c> we've</c><00:10:00.160><c> still</c><00:10:00.399><c> done</c><00:10:00.640><c> nothing</c><00:10:01.000><c> about</c><00:10:01.279><c> this</c>
+
+00:10:01.829 --> 00:10:01.839 align:start position:0%
+and we've still done nothing about this
+ 
+
+00:10:01.839 --> 00:10:03.190 align:start position:0%
+and we've still done nothing about this
+then<00:10:01.959><c> I'm</c><00:10:02.120><c> going</c><00:10:02.240><c> to</c><00:10:02.360><c> be</c><00:10:02.519><c> worried</c><00:10:03.000><c> I</c><00:10:03.079><c> don't</c>
+
+00:10:03.190 --> 00:10:03.200 align:start position:0%
+then I'm going to be worried I don't
+ 
+
+00:10:03.200 --> 00:10:04.990 align:start position:0%
+then I'm going to be worried I don't
+know<00:10:03.320><c> if</c><00:10:03.440><c> you</c><00:10:03.640><c> guys</c><00:10:03.800><c> remember</c><00:10:04.120><c> the</c><00:10:04.320><c> days</c><00:10:04.760><c> where</c>
+
+00:10:04.990 --> 00:10:05.000 align:start position:0%
+know if you guys remember the days where
+ 
+
+00:10:05.000 --> 00:10:07.790 align:start position:0%
+know if you guys remember the days where
+companies<00:10:05.480><c> used</c><00:10:05.680><c> to</c><00:10:05.880><c> take</c><00:10:06.240><c> 6</c><00:10:06.519><c> to</c><00:10:06.640><c> 8</c><00:10:07.000><c> months</c><00:10:07.480><c> to</c>
+
+00:10:07.790 --> 00:10:07.800 align:start position:0%
+companies used to take 6 to 8 months to
+ 
+
+00:10:07.800 --> 00:10:10.150 align:start position:0%
+companies used to take 6 to 8 months to
+safety<00:10:08.200><c> test</c><00:10:08.440><c> their</c><00:10:08.600><c> models</c><00:10:09.160><c> before</c><00:10:09.480><c> release</c>
+
+00:10:10.150 --> 00:10:10.160 align:start position:0%
+safety test their models before release
+ 
+
+00:10:10.160 --> 00:10:12.230 align:start position:0%
+safety test their models before release
+and<00:10:10.519><c> open</c><00:10:10.880><c> source</c><00:10:11.240><c> was</c><00:10:11.399><c> claimed</c><00:10:11.720><c> to</c><00:10:11.839><c> be</c><00:10:12.120><c> at</c>
+
+00:10:12.230 --> 00:10:12.240 align:start position:0%
+and open source was claimed to be at
+ 
+
+00:10:12.240 --> 00:10:14.710 align:start position:0%
+and open source was claimed to be at
+least<00:10:12.560><c> a</c><00:10:12.760><c> year</c><00:10:13.079><c> behind</c><00:10:13.519><c> the</c><00:10:13.680><c> frontier</c><00:10:14.519><c> these</c>
+
+00:10:14.710 --> 00:10:14.720 align:start position:0%
+least a year behind the frontier these
+ 
+
+00:10:14.720 --> 00:10:16.750 align:start position:0%
+least a year behind the frontier these
+days<00:10:14.959><c> speaking</c><00:10:15.360><c> to</c><00:10:15.600><c> official</c><00:10:15.959><c> safety</c><00:10:16.279><c> testers</c>
+
+00:10:16.750 --> 00:10:16.760 align:start position:0%
+days speaking to official safety testers
+ 
+
+00:10:16.760 --> 00:10:18.550 align:start position:0%
+days speaking to official safety testers
+and<00:10:17.000><c> others</c><00:10:17.399><c> and</c><00:10:17.600><c> correct</c><00:10:17.880><c> me</c><00:10:18.000><c> if</c><00:10:18.120><c> you</c><00:10:18.240><c> feel</c>
+
+00:10:18.550 --> 00:10:18.560 align:start position:0%
+and others and correct me if you feel
+ 
+
+00:10:18.560 --> 00:10:20.509 align:start position:0%
+and others and correct me if you feel
+differently<00:10:19.079><c> but</c><00:10:19.200><c> it</c><00:10:19.320><c> feels</c><00:10:19.680><c> like</c><00:10:20.200><c> get</c><00:10:20.399><c> the</c>
+
+00:10:20.509 --> 00:10:20.519 align:start position:0%
+differently but it feels like get the
+ 
+
+00:10:20.519 --> 00:10:22.829 align:start position:0%
+differently but it feels like get the
+model<00:10:20.800><c> out</c><00:10:21.160><c> as</c><00:10:21.320><c> soon</c><00:10:21.720><c> as</c><00:10:21.839><c> you</c><00:10:22.040><c> possibly</c><00:10:22.440><c> can</c>
+
+00:10:22.829 --> 00:10:22.839 align:start position:0%
+model out as soon as you possibly can
+ 
+
+00:10:22.839 --> 00:10:25.630 align:start position:0%
+model out as soon as you possibly can
+and<00:10:22.959><c> no</c><00:10:23.399><c> open</c><00:10:23.680><c> source</c><00:10:24.040><c> does</c><00:10:24.360><c> not</c><00:10:24.600><c> feel</c><00:10:25.079><c> like</c><00:10:25.360><c> a</c>
+
+00:10:25.630 --> 00:10:25.640 align:start position:0%
+and no open source does not feel like a
+ 
+
+00:10:25.640 --> 00:10:28.870 align:start position:0%
+and no open source does not feel like a
+year<00:10:25.920><c> behind</c><00:10:26.519><c> as</c><00:10:26.720><c> proven</c><00:10:27.240><c> by</c><00:10:27.440><c> Deep</c><00:10:27.760><c> seek</c><00:10:28.040><c> R1</c><00:10:28.760><c> it</c>
+
+00:10:28.870 --> 00:10:28.880 align:start position:0%
+year behind as proven by Deep seek R1 it
+ 
+
+00:10:28.880 --> 00:10:30.670 align:start position:0%
+year behind as proven by Deep seek R1 it
+was<00:10:29.000><c> announced</c><00:10:29.320><c> Ed</c><00:10:29.680><c> literally</c><00:10:30.120><c> an</c><00:10:30.240><c> hour</c><00:10:30.440><c> and</c><00:10:30.560><c> a</c>
+
+00:10:30.670 --> 00:10:30.680 align:start position:0%
+was announced Ed literally an hour and a
+ 
+
+00:10:30.680 --> 00:10:32.949 align:start position:0%
+was announced Ed literally an hour and a
+half<00:10:30.920><c> ago</c><00:10:31.399><c> while</c><00:10:31.600><c> I'm</c><00:10:31.760><c> filming</c><00:10:32.160><c> the</c><00:10:32.320><c> video</c><00:10:32.640><c> so</c>
+
+00:10:32.949 --> 00:10:32.959 align:start position:0%
+half ago while I'm filming the video so
+ 
+
+00:10:32.959 --> 00:10:35.190 align:start position:0%
+half ago while I'm filming the video so
+no<00:10:33.200><c> I</c><00:10:33.320><c> haven't</c><00:10:33.600><c> read</c><00:10:33.800><c> the</c><00:10:34.000><c> paper</c><00:10:34.320><c> in</c><00:10:34.560><c> full</c><00:10:35.079><c> but</c>
+
+00:10:35.190 --> 00:10:35.200 align:start position:0%
+no I haven't read the paper in full but
+ 
+
+00:10:35.200 --> 00:10:36.870 align:start position:0%
+no I haven't read the paper in full but
+I<00:10:35.320><c> have</c><00:10:35.560><c> digested</c><00:10:36.000><c> some</c><00:10:36.120><c> of</c><00:10:36.240><c> the</c><00:10:36.399><c> Benchmark</c>
+
+00:10:36.870 --> 00:10:36.880 align:start position:0%
+I have digested some of the Benchmark
+ 
+
+00:10:36.880 --> 00:10:39.389 align:start position:0%
+I have digested some of the Benchmark
+results<00:10:37.440><c> and</c><00:10:37.600><c> noticed</c><00:10:38.160><c> that</c><00:10:38.360><c> the</c><00:10:38.720><c> pricing</c><00:10:39.240><c> by</c>
+
+00:10:39.389 --> 00:10:39.399 align:start position:0%
+results and noticed that the pricing by
+ 
+
+00:10:39.399 --> 00:10:43.110 align:start position:0%
+results and noticed that the pricing by
+the<00:10:39.519><c> way</c><00:10:39.959><c> is</c><00:10:40.160><c> like</c><00:10:40.839><c> 95%</c><00:10:41.839><c> cheaper</c><00:10:42.639><c> than</c><00:10:42.920><c> for</c>
+
+00:10:43.110 --> 00:10:43.120 align:start position:0%
+the way is like 95% cheaper than for
+ 
+
+00:10:43.120 --> 00:10:45.910 align:start position:0%
+the way is like 95% cheaper than for
+example<00:10:43.600><c> 01</c><00:10:44.560><c> when</c><00:10:44.680><c> it</c><00:10:44.839><c> comes</c><00:10:45.279><c> to</c><00:10:45.519><c> Output</c>
+
+00:10:45.910 --> 00:10:45.920 align:start position:0%
+example 01 when it comes to Output
+ 
+
+00:10:45.920 --> 00:10:48.230 align:start position:0%
+example 01 when it comes to Output
+tokens<00:10:46.760><c> now</c><00:10:47.000><c> you</c><00:10:47.160><c> might</c><00:10:47.440><c> agree</c><00:10:47.720><c> with</c><00:10:47.839><c> me</c><00:10:48.079><c> at</c>
+
+00:10:48.230 --> 00:10:48.240 align:start position:0%
+tokens now you might agree with me at
+ 
+
+00:10:48.240 --> 00:10:50.550 align:start position:0%
+tokens now you might agree with me at
+this<00:10:48.399><c> stage</c><00:10:48.959><c> That</c><00:10:49.200><c> official</c><00:10:49.560><c> benchmarks</c><00:10:50.160><c> tell</c>
+
+00:10:50.550 --> 00:10:50.560 align:start position:0%
+this stage That official benchmarks tell
+ 
+
+00:10:50.560 --> 00:10:53.350 align:start position:0%
+this stage That official benchmarks tell
+a<00:10:51.160><c> less</c><00:10:51.639><c> than</c><00:10:52.000><c> they</c><00:10:52.160><c> used</c><00:10:52.440><c> to</c><00:10:52.839><c> and</c><00:10:53.000><c> that</c><00:10:53.160><c> each</c>
+
+00:10:53.350 --> 00:10:53.360 align:start position:0%
+a less than they used to and that each
+ 
+
+00:10:53.360 --> 00:10:55.230 align:start position:0%
+a less than they used to and that each
+of<00:10:53.519><c> us</c><00:10:53.760><c> really</c><00:10:54.079><c> should</c><00:10:54.320><c> come</c><00:10:54.480><c> up</c><00:10:54.639><c> with</c><00:10:54.760><c> our</c><00:10:54.959><c> own</c>
+
+00:10:55.230 --> 00:10:55.240 align:start position:0%
+of us really should come up with our own
+ 
+
+00:10:55.240 --> 00:10:57.269 align:start position:0%
+of us really should come up with our own
+Benchmark<00:10:55.800><c> and</c><00:10:55.959><c> see</c><00:10:56.240><c> which</c><00:10:56.399><c> model</c><00:10:56.760><c> performs</c>
+
+00:10:57.269 --> 00:10:57.279 align:start position:0%
+Benchmark and see which model performs
+ 
+
+00:10:57.279 --> 00:10:58.710 align:start position:0%
+Benchmark and see which model performs
+best<00:10:57.720><c> I</c><00:10:57.800><c> will</c><00:10:58.000><c> say</c><00:10:58.200><c> it</c><00:10:58.320><c> didn't</c><00:10:58.519><c> do</c>
+
+00:10:58.710 --> 00:10:58.720 align:start position:0%
+best I will say it didn't do
+ 
+
+00:10:58.720 --> 00:11:01.190 align:start position:0%
+best I will say it didn't do
+particularly<00:10:59.440><c> well</c><00:10:59.680><c> on</c><00:10:59.920><c> my</c><00:11:00.160><c> Benchmark</c><00:11:00.839><c> simple</c>
+
+00:11:01.190 --> 00:11:01.200 align:start position:0%
+particularly well on my Benchmark simple
+ 
+
+00:11:01.200 --> 00:11:03.710 align:start position:0%
+particularly well on my Benchmark simple
+bench<00:11:02.040><c> this</c><00:11:02.200><c> is</c><00:11:02.440><c> just</c><00:11:02.639><c> on</c><00:11:02.920><c> the</c><00:11:03.160><c> public</c><00:11:03.440><c> set</c><00:11:03.600><c> of</c>
+
+00:11:03.710 --> 00:11:03.720 align:start position:0%
+bench this is just on the public set of
+ 
+
+00:11:03.720 --> 00:11:05.670 align:start position:0%
+bench this is just on the public set of
+questions<00:11:04.160><c> we</c><00:11:04.279><c> are</c><00:11:04.480><c> going</c><00:11:04.560><c> to</c><00:11:04.680><c> do</c><00:11:04.920><c> a</c><00:11:05.040><c> full</c><00:11:05.320><c> run</c>
+
+00:11:05.670 --> 00:11:05.680 align:start position:0%
+questions we are going to do a full run
+ 
+
+00:11:05.680 --> 00:11:08.030 align:start position:0%
+questions we are going to do a full run
+very<00:11:05.880><c> soon</c><00:11:06.360><c> let</c><00:11:06.480><c> me</c><00:11:06.639><c> know</c><00:11:06.959><c> if</c><00:11:07.120><c> you</c><00:11:07.440><c> experience</c>
+
+00:11:08.030 --> 00:11:08.040 align:start position:0%
+very soon let me know if you experience
+ 
+
+00:11:08.040 --> 00:11:11.230 align:start position:0%
+very soon let me know if you experience
+the<00:11:08.240><c> same</c><00:11:08.600><c> but</c><00:11:08.720><c> it</c><00:11:08.959><c> repeatedly</c><00:11:09.800><c> says</c><00:11:10.600><c> wait</c><00:11:10.839><c> no</c>
+
+00:11:11.230 --> 00:11:11.240 align:start position:0%
+the same but it repeatedly says wait no
+ 
+
+00:11:11.240 --> 00:11:12.670 align:start position:0%
+the same but it repeatedly says wait no
+wait<00:11:11.519><c> I'm</c><00:11:11.600><c> going</c><00:11:11.720><c> to</c><00:11:11.800><c> do</c><00:11:12.000><c> this</c><00:11:12.200><c> wait</c><00:11:12.399><c> no</c><00:11:12.600><c> I'm</c>
+
+00:11:12.670 --> 00:11:12.680 align:start position:0%
+wait I'm going to do this wait no I'm
+ 
+
+00:11:12.680 --> 00:11:13.870 align:start position:0%
+wait I'm going to do this wait no I'm
+going<00:11:12.800><c> to</c><00:11:12.880><c> do</c><00:11:13.000><c> something</c><00:11:13.200><c> else</c><00:11:13.600><c> but</c><00:11:13.720><c> more</c>
+
+00:11:13.870 --> 00:11:13.880 align:start position:0%
+going to do something else but more
+ 
+
+00:11:13.880 --> 00:11:16.190 align:start position:0%
+going to do something else but more
+seriously<00:11:14.399><c> when</c><00:11:14.600><c> the</c><00:11:14.800><c> open</c><00:11:15.079><c> AI</c><00:11:15.480><c> operator</c><00:11:16.000><c> or</c>
+
+00:11:16.190 --> 00:11:16.200 align:start position:0%
+seriously when the open AI operator or
+ 
+
+00:11:16.200 --> 00:11:18.190 align:start position:0%
+seriously when the open AI operator or
+computer<00:11:16.560><c> use</c><00:11:16.800><c> agent</c><00:11:17.120><c> comes</c><00:11:17.320><c> out</c><00:11:17.680><c> it</c><00:11:17.800><c> will</c><00:11:17.959><c> be</c>
+
+00:11:18.190 --> 00:11:18.200 align:start position:0%
+computer use agent comes out it will be
+ 
+
+00:11:18.200 --> 00:11:19.910 align:start position:0%
+computer use agent comes out it will be
+very<00:11:18.480><c> interesting</c><00:11:18.959><c> to</c><00:11:19.079><c> see</c><00:11:19.320><c> how</c><00:11:19.519><c> quickly</c>
+
+00:11:19.910 --> 00:11:19.920 align:start position:0%
+very interesting to see how quickly
+ 
+
+00:11:19.920 --> 00:11:22.350 align:start position:0%
+very interesting to see how quickly
+Chinese<00:11:20.360><c> Labs</c><00:11:20.680><c> can</c><00:11:20.920><c> catch</c><00:11:21.120><c> up</c><00:11:21.399><c> with</c><00:11:21.639><c> that</c><00:11:22.120><c> the</c>
+
+00:11:22.350 --> 00:11:22.360 align:start position:0%
+Chinese Labs can catch up with that the
+ 
+
+00:11:22.360 --> 00:11:25.150 align:start position:0%
+Chinese Labs can catch up with that the
+fact<00:11:22.680><c> by</c><00:11:22.800><c> the</c><00:11:22.920><c> way</c><00:11:23.200><c> that</c><00:11:23.399><c> open</c><00:11:23.680><c> ai's</c><00:11:24.079><c> O</c><00:11:24.399><c> Series</c>
+
+00:11:25.150 --> 00:11:25.160 align:start position:0%
+fact by the way that open ai's O Series
+ 
+
+00:11:25.160 --> 00:11:27.790 align:start position:0%
+fact by the way that open ai's O Series
+sometimes<00:11:25.839><c> thinks</c><00:11:26.680><c> in</c><00:11:26.839><c> its</c><00:11:27.000><c> Chain</c><00:11:27.240><c> of</c><00:11:27.440><c> Thought</c>
+
+00:11:27.790 --> 00:11:27.800 align:start position:0%
+sometimes thinks in its Chain of Thought
+ 
+
+00:11:27.800 --> 00:11:30.470 align:start position:0%
+sometimes thinks in its Chain of Thought
+in<00:11:28.079><c> Chinese</c><00:11:28.920><c> is</c><00:11:29.279><c> perhaps</c><00:11:29.639><c> a</c><00:11:29.800><c> story</c><00:11:30.240><c> for</c>
+
+00:11:30.470 --> 00:11:30.480 align:start position:0%
+in Chinese is perhaps a story for
+ 
+
+00:11:30.480 --> 00:11:33.550 align:start position:0%
+in Chinese is perhaps a story for
+another<00:11:30.839><c> video</c><00:11:31.399><c> of</c><00:11:31.519><c> course</c><00:11:31.760><c> 2025</c><00:11:32.720><c> won't</c><00:11:33.200><c> only</c>
+
+00:11:33.550 --> 00:11:33.560 align:start position:0%
+another video of course 2025 won't only
+ 
+
+00:11:33.560 --> 00:11:36.590 align:start position:0%
+another video of course 2025 won't only
+be<00:11:33.760><c> about</c><00:11:34.079><c> agents</c><00:11:34.800><c> we're</c><00:11:35.160><c> also</c><00:11:35.600><c> set</c><00:11:35.959><c> to</c><00:11:36.160><c> see</c>
+
+00:11:36.590 --> 00:11:36.600 align:start position:0%
+be about agents we're also set to see
+ 
+
+00:11:36.600 --> 00:11:39.430 align:start position:0%
+be about agents we're also set to see
+the<00:11:36.760><c> merger</c><00:11:37.440><c> of</c><00:11:37.639><c> the</c><00:11:37.800><c> GPT</c><00:11:38.360><c> series</c><00:11:38.839><c> and</c><00:11:39.000><c> the</c><00:11:39.120><c> O</c>
+
+00:11:39.430 --> 00:11:39.440 align:start position:0%
+the merger of the GPT series and the O
+ 
+
+00:11:39.440 --> 00:11:41.509 align:start position:0%
+the merger of the GPT series and the O
+Series<00:11:39.920><c> that</c><00:11:40.000><c> would</c><00:11:40.160><c> be</c><00:11:40.519><c> really</c><00:11:40.800><c> interesting</c>
+
+00:11:41.509 --> 00:11:41.519 align:start position:0%
+Series that would be really interesting
+ 
+
+00:11:41.519 --> 00:11:43.190 align:start position:0%
+Series that would be really interesting
+and<00:11:41.680><c> I</c><00:11:41.800><c> will</c><00:11:42.000><c> be</c><00:11:42.160><c> honest</c><00:11:42.560><c> here</c><00:11:42.800><c> you</c><00:11:42.920><c> know</c><00:11:43.079><c> the</c>
+
+00:11:43.190 --> 00:11:43.200 align:start position:0%
+and I will be honest here you know the
+ 
+
+00:11:43.200 --> 00:11:44.870 align:start position:0%
+and I will be honest here you know the
+model<00:11:43.600><c> that</c><00:11:43.720><c> I'm</c><00:11:44.000><c> actually</c><00:11:44.279><c> looking</c><00:11:44.519><c> forward</c>
+
+00:11:44.870 --> 00:11:44.880 align:start position:0%
+model that I'm actually looking forward
+ 
+
+00:11:44.880 --> 00:11:47.629 align:start position:0%
+model that I'm actually looking forward
+to<00:11:45.160><c> the</c><00:11:45.399><c> most</c><00:11:46.079><c> that</c><00:11:46.240><c> would</c><00:11:46.440><c> be</c><00:11:46.760><c> Claude</c><00:11:47.200><c> for</c>
+
+00:11:47.629 --> 00:11:47.639 align:start position:0%
+to the most that would be Claude for
+ 
+
+00:11:47.639 --> 00:11:51.230 align:start position:0%
+to the most that would be Claude for
+Sonet<00:11:48.279><c> I</c><00:11:48.360><c> was</c><00:11:48.560><c> spending</c><00:11:49.160><c> about</c><00:11:49.880><c> 50</c><00:11:50.440><c> hours</c><00:11:51.000><c> the</c>
+
+00:11:51.230 --> 00:11:51.240 align:start position:0%
+Sonet I was spending about 50 hours the
+ 
+
+00:11:51.240 --> 00:11:53.790 align:start position:0%
+Sonet I was spending about 50 hours the
+last<00:11:51.760><c> 10</c><00:11:52.120><c> days</c><00:11:52.360><c> or</c><00:11:52.560><c> so</c><00:11:53.000><c> working</c><00:11:53.440><c> on</c><00:11:53.600><c> this</c>
+
+00:11:53.790 --> 00:11:53.800 align:start position:0%
+last 10 days or so working on this
+ 
+
+00:11:53.800 --> 00:11:55.990 align:start position:0%
+last 10 days or so working on this
+coding<00:11:54.240><c> project</c><00:11:54.800><c> with</c><00:11:55.040><c> a</c><00:11:55.279><c> colleague</c><00:11:55.880><c> and</c>
+
+00:11:55.990 --> 00:11:56.000 align:start position:0%
+coding project with a colleague and
+ 
+
+00:11:56.000 --> 00:11:58.269 align:start position:0%
+coding project with a colleague and
+there's<00:11:56.240><c> one</c><00:11:56.600><c> critical</c><00:11:57.120><c> task</c><00:11:57.600><c> that</c><00:11:57.720><c> we</c><00:11:57.839><c> needed</c>
+
+00:11:58.269 --> 00:11:58.279 align:start position:0%
+there's one critical task that we needed
+ 
+
+00:11:58.279 --> 00:11:59.750 align:start position:0%
+there's one critical task that we needed
+an<00:11:58.440><c> llm</c><00:11:58.880><c> to</c><00:11:59.000><c> do</c>
+
+00:11:59.750 --> 00:11:59.760 align:start position:0%
+an llm to do
+ 
+
+00:11:59.760 --> 00:12:02.829 align:start position:0%
+an llm to do
+and<00:12:00.279><c> 01</c><00:12:00.880><c> Pro</c><00:12:01.600><c> simply</c><00:12:02.079><c> couldn't</c><00:12:02.399><c> get</c><00:12:02.519><c> the</c><00:12:02.639><c> hang</c>
+
+00:12:02.829 --> 00:12:02.839 align:start position:0%
+and 01 Pro simply couldn't get the hang
+ 
+
+00:12:02.839 --> 00:12:05.470 align:start position:0%
+and 01 Pro simply couldn't get the hang
+of<00:12:03.000><c> it</c><00:12:03.519><c> but</c><00:12:03.680><c> Claude</c><00:12:04.040><c> 3.5</c><00:12:04.760><c> did</c><00:12:05.120><c> almost</c>
+
+00:12:05.470 --> 00:12:05.480 align:start position:0%
+of it but Claude 3.5 did almost
+ 
+
+00:12:05.480 --> 00:12:07.670 align:start position:0%
+of it but Claude 3.5 did almost
+instantly<00:12:06.160><c> I</c><00:12:06.279><c> know</c><00:12:06.480><c> that</c><00:12:06.720><c> super</c><00:12:07.040><c> anecdotal</c>
+
+00:12:07.670 --> 00:12:07.680 align:start position:0%
+instantly I know that super anecdotal
+ 
+
+00:12:07.680 --> 00:12:09.350 align:start position:0%
+instantly I know that super anecdotal
+and<00:12:07.800><c> I'll</c><00:12:07.920><c> be</c><00:12:08.040><c> telling</c><00:12:08.320><c> you</c><00:12:08.639><c> much</c><00:12:08.839><c> more</c><00:12:09.120><c> about</c>
+
+00:12:09.350 --> 00:12:09.360 align:start position:0%
+and I'll be telling you much more about
+ 
+
+00:12:09.360 --> 00:12:12.069 align:start position:0%
+and I'll be telling you much more about
+what<00:12:09.480><c> we're</c><00:12:09.680><c> working</c><00:12:09.959><c> on</c><00:12:10.480><c> soon</c><00:12:11.320><c> but</c><00:12:11.800><c> that</c><00:12:11.920><c> was</c>
+
+00:12:12.069 --> 00:12:12.079 align:start position:0%
+what we're working on soon but that was
+ 
+
+00:12:12.079 --> 00:12:13.750 align:start position:0%
+what we're working on soon but that was
+quite<00:12:12.200><c> a</c><00:12:12.320><c> powerful</c><00:12:12.680><c> moment</c><00:12:12.959><c> for</c><00:12:13.079><c> me</c><00:12:13.560><c> and</c>
+
+00:12:13.750 --> 00:12:13.760 align:start position:0%
+quite a powerful moment for me and
+ 
+
+00:12:13.760 --> 00:12:16.069 align:start position:0%
+quite a powerful moment for me and
+speaking<00:12:14.160><c> of</c><00:12:14.399><c> powerful</c><00:12:14.760><c> moments</c><00:12:15.360><c> I</c><00:12:15.560><c> honestly</c>
+
+00:12:16.069 --> 00:12:16.079 align:start position:0%
+speaking of powerful moments I honestly
+ 
+
+00:12:16.079 --> 00:12:19.430 align:start position:0%
+speaking of powerful moments I honestly
+think<00:12:16.639><c> you</c><00:12:16.880><c> might</c><00:12:17.240><c> have</c><00:12:17.839><c> just</c><00:12:18.240><c> a</c><00:12:18.519><c> few</c><00:12:19.199><c> while</c>
+
+00:12:19.430 --> 00:12:19.440 align:start position:0%
+think you might have just a few while
+ 
+
+00:12:19.440 --> 00:12:22.629 align:start position:0%
+think you might have just a few while
+listening<00:12:20.000><c> to</c><00:12:20.639><c> the</c><00:12:20.839><c> 880,000</c><00:12:21.320><c> hours</c><00:12:22.000><c> podcast</c>
+
+00:12:22.629 --> 00:12:22.639 align:start position:0%
+listening to the 880,000 hours podcast
+ 
+
+00:12:22.639 --> 00:12:24.750 align:start position:0%
+listening to the 880,000 hours podcast
+yes<00:12:22.839><c> they</c><00:12:22.959><c> are</c><00:12:23.240><c> the</c><00:12:23.399><c> sponsors</c><00:12:23.839><c> of</c><00:12:24.040><c> this</c><00:12:24.199><c> video</c>
+
+00:12:24.750 --> 00:12:24.760 align:start position:0%
+yes they are the sponsors of this video
+ 
+
+00:12:24.760 --> 00:12:26.790 align:start position:0%
+yes they are the sponsors of this video
+but<00:12:24.959><c> I</c><00:12:25.199><c> genuinely</c><00:12:25.760><c> listen</c><00:12:26.079><c> to</c><00:12:26.240><c> them</c><00:12:26.519><c> and</c>
+
+00:12:26.790 --> 00:12:26.800 align:start position:0%
+but I genuinely listen to them and
+ 
+
+00:12:26.800 --> 00:12:29.269 align:start position:0%
+but I genuinely listen to them and
+really<00:12:27.160><c> learn</c><00:12:27.560><c> a</c><00:12:27.760><c> lot</c><00:12:28.120><c> for</c><00:12:28.279><c> example</c><00:12:28.880><c> this</c>
+
+00:12:29.269 --> 00:12:29.279 align:start position:0%
+really learn a lot for example this
+ 
+
+00:12:29.279 --> 00:12:31.990 align:start position:0%
+really learn a lot for example this
+podcast<00:12:29.680><c> 209</c><00:12:30.399><c> I</c><00:12:30.480><c> was</c><00:12:30.600><c> listening</c><00:12:30.959><c> to</c><00:12:31.440><c> while</c><00:12:31.680><c> on</c>
+
+00:12:31.990 --> 00:12:32.000 align:start position:0%
+podcast 209 I was listening to while on
+ 
+
+00:12:32.000 --> 00:12:34.069 align:start position:0%
+podcast 209 I was listening to while on
+a<00:12:32.160><c> long</c><00:12:32.440><c> walk</c><00:12:32.720><c> in</c><00:12:32.880><c> London</c><00:12:33.480><c> really</c><00:12:33.680><c> interesting</c>
+
+00:12:34.069 --> 00:12:34.079 align:start position:0%
+a long walk in London really interesting
+ 
+
+00:12:34.079 --> 00:12:35.870 align:start position:0%
+a long walk in London really interesting
+of<00:12:34.240><c> course</c><00:12:34.519><c> all</c><00:12:34.760><c> the</c><00:12:34.920><c> shenanigans</c><00:12:35.600><c> that</c><00:12:35.720><c> are</c>
+
+00:12:35.870 --> 00:12:35.880 align:start position:0%
+of course all the shenanigans that are
+ 
+
+00:12:35.880 --> 00:12:38.590 align:start position:0%
+of course all the shenanigans that are
+going<00:12:36.079><c> on</c><00:12:36.440><c> with</c><00:12:36.600><c> the</c><00:12:36.800><c> nonprofit</c><00:12:37.600><c> oversight</c><00:12:38.399><c> of</c>
+
+00:12:38.590 --> 00:12:38.600 align:start position:0%
+going on with the nonprofit oversight of
+ 
+
+00:12:38.600 --> 00:12:41.150 align:start position:0%
+going on with the nonprofit oversight of
+open<00:12:38.920><c> AI</c><00:12:39.440><c> yes</c><00:12:39.639><c> by</c><00:12:39.760><c> the</c><00:12:39.880><c> way</c><00:12:40.120><c> they</c><00:12:40.320><c> also</c><00:12:40.680><c> have</c><00:12:40.959><c> a</c>
+
+00:12:41.150 --> 00:12:41.160 align:start position:0%
+open AI yes by the way they also have a
+ 
+
+00:12:41.160 --> 00:12:42.870 align:start position:0%
+open AI yes by the way they also have a
+YouTube<00:12:41.519><c> channel</c><00:12:41.880><c> that</c><00:12:42.040><c> I</c><00:12:42.120><c> know</c><00:12:42.399><c> some</c><00:12:42.560><c> of</c><00:12:42.680><c> you</c>
+
+00:12:42.870 --> 00:12:42.880 align:start position:0%
+YouTube channel that I know some of you
+ 
+
+00:12:42.880 --> 00:12:44.910 align:start position:0%
+YouTube channel that I know some of you
+have<00:12:43.040><c> already</c><00:12:43.360><c> checked</c><00:12:43.639><c> out</c><00:12:43.959><c> and</c><00:12:44.199><c> like</c><00:12:44.600><c> so</c>
+
+00:12:44.910 --> 00:12:44.920 align:start position:0%
+have already checked out and like so
+ 
+
+00:12:44.920 --> 00:12:46.829 align:start position:0%
+have already checked out and like so
+thank<00:12:45.160><c> you</c><00:12:45.360><c> for</c><00:12:45.600><c> checking</c><00:12:45.920><c> it</c><00:12:46.040><c> out</c><00:12:46.480><c> thank</c><00:12:46.639><c> you</c>
+
+00:12:46.829 --> 00:12:46.839 align:start position:0%
+thank you for checking it out thank you
+ 
+
+00:12:46.839 --> 00:12:49.670 align:start position:0%
+thank you for checking it out thank you
+also<00:12:47.120><c> to</c><00:12:47.480><c> everyone</c><00:12:48.000><c> who</c><00:12:48.240><c> has</c><00:12:48.560><c> participated</c><00:12:49.480><c> in</c>
+
+00:12:49.670 --> 00:12:49.680 align:start position:0%
+also to everyone who has participated in
+ 
+
+00:12:49.680 --> 00:12:51.790 align:start position:0%
+also to everyone who has participated in
+the<00:12:49.880><c> simple</c><00:12:50.240><c> bench</c><00:12:50.560><c> competition</c><00:12:51.240><c> which</c><00:12:51.399><c> runs</c>
+
+00:12:51.790 --> 00:12:51.800 align:start position:0%
+the simple bench competition which runs
+ 
+
+00:12:51.800 --> 00:12:55.269 align:start position:0%
+the simple bench competition which runs
+for<00:12:52.160><c> another</c><00:12:52.639><c> 11</c><00:12:53.240><c> days</c><00:12:53.839><c> lots</c><00:12:54.120><c> more</c><00:12:54.360><c> to</c><00:12:54.600><c> say</c><00:12:54.959><c> on</c>
+
+00:12:55.269 --> 00:12:55.279 align:start position:0%
+for another 11 days lots more to say on
+ 
+
+00:12:55.279 --> 00:12:57.710 align:start position:0%
+for another 11 days lots more to say on
+that<00:12:55.440><c> front</c><00:12:55.920><c> in</c><00:12:56.199><c> another</c><00:12:56.560><c> video</c><00:12:57.079><c> honestly</c><00:12:57.560><c> let</c>
+
+00:12:57.710 --> 00:12:57.720 align:start position:0%
+that front in another video honestly let
+ 
+
+00:12:57.720 --> 00:12:59.870 align:start position:0%
+that front in another video honestly let
+me<00:12:57.839><c> know</c><00:12:58.120><c> what</c><00:12:58.279><c> you</c><00:12:58.480><c> think</c><00:12:58.760><c> will</c><00:12:58.959><c> this</c><00:12:59.399><c> be</c><00:12:59.639><c> the</c>
+
+00:12:59.870 --> 00:12:59.880 align:start position:0%
+me know what you think will this be the
+ 
+
+00:12:59.880 --> 00:13:03.310 align:start position:0%
+me know what you think will this be the
+year<00:13:00.399><c> of</c><00:13:00.800><c> super</c><00:13:01.199><c> agents</c><00:13:01.959><c> or</c><00:13:02.240><c> is</c><00:13:02.480><c> Twitter</c><00:13:02.880><c> hype</c>
+
+00:13:03.310 --> 00:13:03.320 align:start position:0%
+year of super agents or is Twitter hype
+ 
+
+00:13:03.320 --> 00:13:06.470 align:start position:0%
+year of super agents or is Twitter hype
+out<00:13:03.480><c> of</c><00:13:03.720><c> control</c><00:13:04.320><c> again</c><00:13:04.800><c> for</c><00:13:04.959><c> me</c><00:13:05.440><c> as</c><00:13:05.639><c> ever</c><00:13:06.240><c> the</c>
+
+00:13:06.470 --> 00:13:06.480 align:start position:0%
+out of control again for me as ever the
+ 
+
+00:13:06.480 --> 00:13:08.870 align:start position:0%
+out of control again for me as ever the
+truth<00:13:06.920><c> lies</c><00:13:07.519><c> somewhere</c><00:13:07.959><c> in</c><00:13:08.120><c> between</c><00:13:08.720><c> thank</c>
+
+00:13:08.870 --> 00:13:08.880 align:start position:0%
+truth lies somewhere in between thank
+ 
+
+00:13:08.880 --> 00:13:10.790 align:start position:0%
+truth lies somewhere in between thank
+you<00:13:09.120><c> so</c><00:13:09.320><c> much</c><00:13:09.519><c> for</c><00:13:09.720><c> watching</c><00:13:10.160><c> and</c><00:13:10.360><c> have</c><00:13:10.600><c> a</c>
+
+00:13:10.790 --> 00:13:10.800 align:start position:0%
+you so much for watching and have a
+ 
+
+00:13:10.800 --> 00:13:13.639 align:start position:0%
+you so much for watching and have a
+wonderful<00:13:11.279><c> day</c>
+

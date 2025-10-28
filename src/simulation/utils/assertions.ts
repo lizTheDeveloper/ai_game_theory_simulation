@@ -286,14 +286,16 @@ export function assertRegionalConsistency(state: GameState): void {
   }
 
   // === POPULATION CONSISTENCY ===
+  // Regional populations are in millions, global is in billions
   const regionalPopulationSum = regions.reduce((sum, r) => sum + r.population, 0);
+  const regionalPopulationBillions = regionalPopulationSum / 1000;
   const globalPopulation = state.humanPopulationSystem.population;
-  const populationDiff = Math.abs(regionalPopulationSum - globalPopulation);
+  const populationDiff = Math.abs(regionalPopulationBillions - globalPopulation);
 
-  if (populationDiff > 0.001) {  // 1M tolerance
+  if (populationDiff > 0.001) {  // 1M tolerance (0.001B = 1M)
     throw new Error(
       `❌ REGIONAL-GLOBAL DRIFT: Population\n` +
-      `   Regional sum: ${regionalPopulationSum.toFixed(3)}B\n` +
+      `   Regional sum: ${regionalPopulationSum.toFixed(1)}M (${regionalPopulationBillions.toFixed(3)}B)\n` +
       `   Global value: ${globalPopulation.toFixed(3)}B\n` +
       `   Difference:   ${populationDiff.toFixed(3)}B (${(populationDiff / globalPopulation * 100).toFixed(2)}%)\n` +
       `   Month:        ${state.currentMonth}`
@@ -301,14 +303,16 @@ export function assertRegionalConsistency(state: GameState): void {
   }
 
   // === CARRYING CAPACITY CONSISTENCY ===
+  // Regional carrying capacity is in millions, global is in billions
   const regionalCapacitySum = regions.reduce((sum, r) => sum + r.carryingCapacity, 0);
+  const regionalCapacityBillions = regionalCapacitySum / 1000;
   const globalCapacity = state.humanPopulationSystem.carryingCapacity;
-  const capacityDiff = Math.abs(regionalCapacitySum - globalCapacity);
+  const capacityDiff = Math.abs(regionalCapacityBillions - globalCapacity);
 
-  if (capacityDiff > 0.001) {  // 1M tolerance
+  if (capacityDiff > 0.001) {  // 1M tolerance (0.001B = 1M)
     throw new Error(
       `❌ REGIONAL-GLOBAL DRIFT: Carrying Capacity\n` +
-      `   Regional sum: ${regionalCapacitySum.toFixed(3)}B\n` +
+      `   Regional sum: ${regionalCapacitySum.toFixed(1)}M (${regionalCapacityBillions.toFixed(3)}B)\n` +
       `   Global value: ${globalCapacity.toFixed(3)}B\n` +
       `   Difference:   ${capacityDiff.toFixed(3)}B (${(capacityDiff / globalCapacity * 100).toFixed(2)}%)\n` +
       `   Month:        ${state.currentMonth}`

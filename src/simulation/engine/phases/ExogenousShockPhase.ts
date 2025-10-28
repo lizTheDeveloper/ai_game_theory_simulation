@@ -20,6 +20,7 @@
 import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { getTechDeploymentSafe } from '../../techTree/helpers';
 import { assertStateProperty } from '@/simulation/utils/assertions';
+import { addMortalityRisk } from '@/simulation/bayesianMortality';
 
 /**
  * Exogenous Shock Types
@@ -117,15 +118,17 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
   console.log(`   💥 Full-scale nuclear exchange`);
   console.log(`   Estimated mortality: ${(mortalityRate * 100).toFixed(1)}%`);
 
-  // Apply mortality to population system
+  // Add mortality risk to centralized system (instant, global)
   if (state.humanPopulationSystem) {
-    state.humanPopulationSystem.population *= (1 - mortalityRate);
-  }
-
-  // Apply mortality to country populations
-  if (state.countryPopulationSystem) {
-    Object.values(state.countryPopulationSystem.countries).forEach(country => {
-      country.population *= (1 - mortalityRate);
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'war',
+      baseRisk: mortalityRate,
+      proximate: 'war',
+      root: 'conflict', // Nuclear war = geopolitical conflict
+      confidence: 'HIGH',
+      scope: 'GLOBAL', // Instant global catastrophe
+      month: state.currentMonth,
+      description: 'Full-scale nuclear exchange',
     });
   }
 
@@ -241,14 +244,17 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
   console.log(`   Impact size: ${(impactSize * 100).toFixed(1)}%`);
   console.log(`   Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
 
-  // Apply mortality
+  // Add mortality risk to centralized system (instant, global)
   if (state.humanPopulationSystem) {
-    state.humanPopulationSystem.population *= (1 - mortalityRate);
-  }
-
-  if (state.countryPopulationSystem) {
-    Object.values(state.countryPopulationSystem.countries).forEach(country => {
-      country.population *= (1 - mortalityRate);
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'disaster',
+      baseRisk: mortalityRate,
+      proximate: 'disasters',
+      root: 'natural', // Exogenous natural disaster
+      confidence: 'MEDIUM', // Less certain than deliberate war
+      scope: 'GLOBAL', // Instant global impact
+      month: state.currentMonth,
+      description: 'Asteroid impact',
     });
   }
 
@@ -399,17 +405,38 @@ function applyRegionalWarShock(state: GameState, rng: RNGFunction): GameEvent[] 
   console.log(`   ⚔️  Regional war outbreak`);
   console.log(`   Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
 
-  // Apply mortality
+  // Apply mortality via centralized system
   if (state.humanPopulationSystem) {
-    state.humanPopulationSystem.population *= (1 - mortalityRate);
-  }
+    // Base regional war impact (1-5% global mortality)
+    addMortalityRisk(state.humanPopulationSystem, {
+      type: 'war',
+      baseRisk: mortalityRate,
+      proximate: 'war',
+      root: 'conflict', // Regional conflict = geopolitical conflict
+      confidence: 'MEDIUM',
+      scope: 'SEMI-GLOBAL', // Regional war with global economic impact
+      month: state.currentMonth,
+      description: 'Regional war outbreak',
+    });
 
-  if (state.countryPopulationSystem) {
-    // Randomly select 1-3 countries to be affected more severely
-    const affectedCount = Math.floor(1 + rng() * 3);
-    const shuffled = Object.values(state.countryPopulationSystem.countries).sort(() => rng() - 0.5);
-    for (let i = 0; i < affectedCount && i < shuffled.length; i++) {
-      shuffled[i].population *= (1 - mortalityRate * 5); // War zone: 5x mortality
+    // War zones experience 5× higher mortality
+    if (state.countryPopulationSystem) {
+      const affectedCount = Math.floor(1 + rng() * 3);
+      const shuffled = Object.values(state.countryPopulationSystem.countries).sort(() => rng() - 0.5);
+      for (let i = 0; i < affectedCount && i < shuffled.length; i++) {
+        const country = shuffled[i];
+        addMortalityRisk(state.humanPopulationSystem, {
+          type: 'war',
+          baseRisk: mortalityRate * 4, // Additional 4× (total 5× with base)
+          proximate: 'war',
+          root: 'conflict',
+          confidence: 'HIGH', // Direct war zone casualties are well-documented
+          scope: 'REGIONAL',
+          region: country.name,
+          month: state.currentMonth,
+          description: `War zone: ${country.name}`,
+        });
+      }
     }
   }
 

@@ -1,0 +1,15 @@
+{
+  "total_videos": 228,
+  "total_chunks": 7849,
+  "embedding_dimension": 384,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "chunk_size": 512,
+  "chunk_overlap": 128,
+  "channels": [
+    "-aiexplained-official",
+    "-aispecies",
+    "robert-miles-ai-safety",
+    "species-agi-youtube"
+  ],
+  "database": "/Users/annhoward/src/superalignmenttoutopia/research/embeddings/transcripts.db"
+}

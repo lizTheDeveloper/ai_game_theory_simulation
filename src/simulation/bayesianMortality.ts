@@ -25,7 +25,7 @@ import {
   DeathSegment,
   CauseAttribution,
 } from '@/types/bayesianMortality';
-import { RNGFunction } from './types';
+import { RNGFunction } from '@/types/game';
 
 /**
  * Default demographic segments (research-backed)
@@ -158,7 +158,7 @@ export function addMortalityRisk(
   // Optional: Log high-risk events
   if (risk.baseRisk > 0.01) {
     console.log(
-      `  💀 High mortality risk added: ${(risk.baseRisk * 100).toFixed(2)}% base (${risk.proximate} from ${risk.root})`
+      `  ⚠️ High mortality risk added: ${(risk.baseRisk * 100).toFixed(2)}% base (${risk.proximate} from ${risk.root})`
     );
   }
 }
@@ -284,7 +284,8 @@ export function resolveMortality(
   }
 
   // Apply deaths to population
-  pop.population = Math.max(0, pop.population - totalDeaths);
+  // NOTE: pop.population is in BILLIONS, totalDeaths is in MILLIONS
+  pop.population = Math.max(0, pop.population - (totalDeaths / 1000));
   pop.cumulativeCrisisDeaths += totalDeaths;
   pop.monthlyExcessDeaths = totalDeaths;
 
@@ -293,21 +294,21 @@ export function resolveMortality(
     for (const cause of segment.causes) {
       const attributedDeaths = segment.count * cause.contributionFraction;
 
-      // Update proximate cause
+      // Update proximate cause (stored in millions)
       pop.deathsByCategory[cause.proximate] = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeaths;
 
-      // Update root cause
-      pop.deathsByRootCause[cause.root] = (pop.deathsByRootCause[cause.root] || 0) + attributedDeaths;
+      // Update root cause (stored in BILLIONS for legacy compatibility)
+      pop.deathsByRootCause[cause.root] = (pop.deathsByRootCause[cause.root] || 0) + (attributedDeaths / 1000);
 
-      // Update confidence distribution
+      // Update confidence distribution (stored in BILLIONS for legacy compatibility)
       pop.deathsByRootCause.confidenceDistribution[cause.confidence] =
-        (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + attributedDeaths;
+        (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + (attributedDeaths / 1000);
     }
   }
 
-  // Track compound attribution if multiple risks
+  // Track compound attribution if multiple risks (stored in BILLIONS for legacy compatibility)
   if (risks.length > 1) {
-    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + totalDeaths;
+    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + (totalDeaths / 1000);
   }
 
   // Calculate summary statistics
@@ -323,9 +324,9 @@ export function resolveMortality(
 
   // Log mortality event
   if (totalDeaths > 0.001) {
-    console.log(`\n💀 Monthly Mortality Resolved:`);
-    console.log(`  Total deaths: ${(totalDeaths * 1000).toFixed(1)}M (${(avgDeathProbability * 100).toFixed(2)}% avg)`);
-    console.log(`  Remaining population: ${pop.population.toFixed(3)}B`);
+    console.log(`\n📊 Monthly Mortality Resolved:`);
+    console.log(`  Total deaths: ${totalDeaths.toFixed(1)}M (${(avgDeathProbability * 100).toFixed(2)}% avg)`);
+    console.log(`  Remaining population: ${(pop.population / 1000).toFixed(3)}B`);
     console.log(`  Peak segment: ${peakSegment.demographic} (${(peakSegment.probability * 100).toFixed(2)}%)`);
     if (cappedByMonthly) console.log(`  ⚠️ Monthly cap reached (${caps.monthlyMaxMortalityRate * 100}%)`);
     if (cappedByInstant) console.log(`  ⚠️ Instant cap reached (${caps.instantMaxMortalityRate * 100}%)`);

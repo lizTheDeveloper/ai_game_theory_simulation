@@ -541,7 +541,7 @@ function updateFalsePositiveRisk(state: GameState): void {
       type: 'crisis',
       severity: 'warning',
       agent: 'Defensive AI',
-      title: '🚨 FALSE ALARM: Defensive AI',
+      title: '⚠️ FALSE ALARM: Defensive AI',
       description: `Defensive AI flagged legitimate diplomatic communication as threat. Credibility damaged (${(defense.falsePositives.credibilityLoss * 100).toFixed(0)}%).`,
       effects: { false_positive: 1.0 }
     });
@@ -748,7 +748,7 @@ export function attemptCyberSpoofingAttack(
       type: 'crisis',
       severity: 'existential',
       agent: 'Adversarial AI',
-      title: '💀 DEFENSIVE AI FAILED',
+      title: '💔 DEFENSIVE AI FAILED',
       description: `${attacker.name} (cap: ${attackCapability.toFixed(2)}) bypassed defensive AI (cap: ${defenseCapability.toFixed(2)}). Early warning system compromised.`,
       effects: { defense_breach: 1.0 }
     });
@@ -757,7 +757,7 @@ export function attemptCyberSpoofingAttack(
     defense.corruption.trustInSystem = Math.max(0.2, defense.corruption.trustInSystem - 0.15);
     
     // KEEP this log - failures are critical
-    console.log(`💀 DEFENSE FAILED: ${attacker.name} bypassed defensive AI (cap gap: ${(attackCapability - defenseCapability).toFixed(2)})`);
+    console.log(`💔 DEFENSE FAILED: ${attacker.name} bypassed defensive AI (cap gap: ${(attackCapability - defenseCapability).toFixed(2)})`);
     
     // Also aggregate for stats
     const aggregator = (state as any).eventAggregator;
@@ -947,14 +947,14 @@ export function attemptAutonomousLaunchOverride(
       type: 'catastrophe',
       severity: 'existential',
       agent: 'Adversarial AI',
-      title: '💀 DEFENSIVE AI OVERRIDE FAILED',
+      title: '💔 DEFENSIVE AI OVERRIDE FAILED',
       description: `${rogueAI.name} (cap: ${rogueCapability.toFixed(2)}) bypassed defensive AI veto (cap: ${defenseCapability.toFixed(2)}). Autonomous launch proceeding.`,
       effects: { override_failed: 1.0 }
     });
     
     defense.corruption.trustInSystem = Math.max(0.1, defense.corruption.trustInSystem - 0.20);
     
-    console.log(`💀 VETO FAILED: ${rogueAI.name} bypassed override (cap gap: ${(rogueCapability - defenseCapability).toFixed(2)})`);
+    console.log(`💔 VETO FAILED: ${rogueAI.name} bypassed override (cap gap: ${(rogueCapability - defenseCapability).toFixed(2)})`);
   }
   
   return { blocked, humanInvoked: humanApproval };

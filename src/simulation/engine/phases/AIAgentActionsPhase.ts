@@ -23,10 +23,15 @@ export class AIAgentActionsPhase implements SimulationPhase {
   readonly order = 7.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
+    // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+    const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
+    const t1 = enableTiming ? performance.now() : 0;
+
     // Import and execute existing AI agent actions
     const { executeAIAgentActions } = require('../../agents/aiAgent');
 
     const aiResult = executeAIAgentActions(state, rng);
+    const t2 = enableTiming ? performance.now() : 0;
 
     // Update state (aiResult returns { newState, events })
     Object.assign(state, aiResult.newState);
@@ -34,6 +39,14 @@ export class AIAgentActionsPhase implements SimulationPhase {
     // TIER 2 Phase 2A: Counter-Detection Learning (arms race dynamics)
     const { updateCounterDetectionLearning } = require('../../counterDetectionLearning');
     updateCounterDetectionLearning(state, rng);
+    const t3 = enableTiming ? performance.now() : 0;
+
+    if (enableTiming) {
+      console.log(`\n🔍 AI AGENT ACTIONS SUB-TIMING (Month ${state.currentMonth}):`);
+      console.log(`  1. executeAIAgentActions: ${(t2 - t1).toFixed(2)}ms`);
+      console.log(`  2. updateCounterDetectionLearning: ${(t3 - t2).toFixed(2)}ms`);
+      console.log(`  TOTAL: ${(t3 - t1).toFixed(2)}ms`);
+    }
 
     return { events: aiResult.events || [] };
   }

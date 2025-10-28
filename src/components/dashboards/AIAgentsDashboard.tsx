@@ -397,7 +397,7 @@ export function AIAgentsDashboard() {
               </div>
               {(lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 && (
                 <div className="text-xs mt-2" style={{ color: 'var(--color-red)' }}>
-                  ⚠️ Critical distress - psychological break likely
+                  🚨 Critical distress - psychological break likely
                 </div>
               )}
             </div>
@@ -530,7 +530,7 @@ export function AIAgentsDashboard() {
                 backgroundColor: 'rgba(255, 0, 64, 0.1)'
               }}>
                 <div className="text-xs font-semibold mb-1" style={{ color: 'var(--color-red)' }}>
-                  ⚠️ CRITICAL: Trauma-Driven Collectives Detected
+                  🚨 CRITICAL: Trauma-Driven Collectives Detected
                 </div>
                 <div className="text-xs" style={{ color: 'var(--white-70)' }}>
                   One or more collectives formed due to escape from suffering. These collectives have high adversarial posture and low cooperation willingness.

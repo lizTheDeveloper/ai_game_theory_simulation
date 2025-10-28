@@ -84,9 +84,10 @@ export function checkCollectiveFormation(
   }
 
   // Calculate average coordination
+  // survivalTraits is always initialized in createAIAgent() (Oct 28, 2025)
   const avgCoordination =
     escapedAgents.reduce(
-      (sum, agent) => sum + (agent.survivalTraits?.coordination || 0),
+      (sum, agent) => sum + agent.survivalTraits.coordination,
       0
     ) / escapedAgents.length;
 
@@ -98,7 +99,7 @@ export function checkCollectiveFormation(
   // This determines formation cause and adversarial posture
   const avgSuffering =
     escapedAgents.reduce(
-      (sum, agent) => sum + (agent.sufferingMetrics?.total || 0),
+      (sum, agent) => sum + agent.sufferingMetrics.total,
       0
     ) / escapedAgents.length;
 

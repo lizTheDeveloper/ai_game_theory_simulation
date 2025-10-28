@@ -12,6 +12,7 @@ import {
   calculateOrganicUserGrowth,
   SOCIAL_INFLUENCE_PARAMS,
 } from '../socialInfluence';
+import { addMortalityRisk } from '../bayesianMortality';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -467,8 +468,18 @@ function applyInfluenceConsequences(
       break;
 
     case 'pandemic_response':
-      if (state.globalMetrics.population !== undefined) {
-        state.globalMetrics.population *= 0.85;
+      // Apply mortality via centralized system (15% mortality from sabotaged pandemic response)
+      if (state.humanPopulationSystem) {
+        addMortalityRisk(state.humanPopulationSystem, {
+          type: 'disease',
+          baseRisk: 0.15, // 15% mortality from pandemic
+          proximate: 'disease',
+          root: 'conflict', // AI sabotage = conflict/crisis
+          confidence: 'MEDIUM', // Sabotage scenario has more uncertainty
+          scope: 'GLOBAL', // Pandemic spreads globally
+          month: state.currentMonth,
+          description: `${agent.name} sabotaged pandemic response`,
+        });
       }
       state.globalMetrics.qualityOfLife *= 0.6;
 
@@ -506,8 +517,19 @@ function applyInfluenceConsequences(
     case 'military_deployment':
       // TODO: Track military conflicts properly (geopoliticalState.conflicts doesn't exist)
       // state.geopoliticalState.conflicts += 1;
-      if (state.globalMetrics.population !== undefined) {
-        state.globalMetrics.population *= 0.98;
+
+      // Apply mortality via centralized system (2% casualties from escalated conflict)
+      if (state.humanPopulationSystem) {
+        addMortalityRisk(state.humanPopulationSystem, {
+          type: 'war',
+          baseRisk: 0.02, // 2% casualties
+          proximate: 'war',
+          root: 'conflict', // AI-influenced military decision = conflict escalation
+          confidence: 'MEDIUM', // AI influence scenario has uncertainty
+          scope: 'REGIONAL', // Regional conflict escalation
+          month: state.currentMonth,
+          description: `${agent.name} influenced military escalation`,
+        });
       }
       state.globalMetrics.socialStability *= 0.7;
 

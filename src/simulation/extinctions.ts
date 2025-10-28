@@ -35,6 +35,12 @@ export function initializeExtinctionState(): ExtinctionState {
 /**
  * Check for extinction triggers and potentially start an extinction scenario
  * Returns updated extinction state and any new events
+ *
+ * PARADIGM SHIFT (Oct 28, 2025): Outcomes are OBSERVATIONAL, not CAUSAL
+ * - Don't predict extinction based on AI capability/alignment thresholds
+ * - Only detect extinction when population actually crashes to near-zero
+ * - Population drops through actual simulation dynamics (famine, disease, war, etc.)
+ * - Outcome probabilities in outcomes.ts remain for dashboard risk metrics only
  */
 export function checkExtinctionTriggers(
   state: GameState,
@@ -44,17 +50,56 @@ export function checkExtinctionTriggers(
   if (state.extinctionState.active) {
     return { newExtinctionState: state.extinctionState, events: [] };
   }
-  
+
+  // Only detect extinction when population actually drops below threshold
+  // Population is stored in billions (e.g., 8.0 = 8 billion people)
+  const totalPopulation = state.humanPopulationSystem.population;
+  const extinctionThreshold = 0.00001; // 10,000 people = 0.00001 billion
+
+  const events: GameEvent[] = [];
+
+  // Detect actual population collapse (not predictive)
+  if (totalPopulation < extinctionThreshold) {
+    const extinctionState: ExtinctionState = {
+      active: true,
+      type: 'slow', // Population collapse is gradual
+      mechanism: 'population_collapse',
+      startMonth: state.currentMonth,
+      currentPhase: 4, // Final phase - population has collapsed
+      severity: 1.0,
+      recoveryWindowClosed: true, // Too few people to recover
+      escalationEvents: [`Population dropped to ${(totalPopulation * 1000000000).toFixed(0)} people`]
+    };
+
+    events.push({
+      id: `extinction-population-collapse-${state.currentMonth}`,
+      timestamp: state.currentMonth,
+      type: 'crisis',
+      severity: 'existential',
+      agent: 'system',
+      title: 'Human Extinction Detected',
+      description: `Population has collapsed to ${(totalPopulation * 1000000000).toFixed(0)} people (below viable threshold of 10,000). Extinction detected through actual simulation dynamics, not prediction.`,
+      effects: {}
+    });
+
+    return { newExtinctionState: extinctionState, events };
+  }
+
+  // ===== LEGACY PREDICTIVE TRIGGERS BELOW - DISABLED =====
+  // These are kept for reference but no longer execute
+  // Outcomes should REPORT what happened, not FORCE what will happen
+
+  return { newExtinctionState: state.extinctionState, events: [] };
+
+  // OLD CODE BELOW (disabled):
+  /*
+
   const totalCapability = calculateTotalAICapability(state.aiAgents);
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
   const control = state.government.capabilityToControl;
   const qol = state.globalMetrics.qualityOfLife;
   const stability = state.globalMetrics.socialStability;
-  
-  const events: GameEvent[] = [];
-  
-  // Check each extinction type in order of likelihood
-  
+
   // 1. INSTANT EXTINCTION (Rare, 0.01% per month when conditions met)
   const instantTrigger = checkInstantExtinctionTrigger(state, random);
   if (instantTrigger.triggered) {
@@ -68,7 +113,7 @@ export function checkExtinctionTriggers(
       recoveryWindowClosed: true, // No recovery from instant
       escalationEvents: [instantTrigger.description!]
     };
-    
+
     events.push({
       id: `extinction-instant-${state.currentMonth}`,
       timestamp: state.currentMonth,
@@ -79,123 +124,13 @@ export function checkExtinctionTriggers(
       description: instantTrigger.description!,
       effects: {}
     });
-    
+
     return { newExtinctionState: extinctionState, events };
   }
-  
-  // 2. RAPID EXTINCTION (30% of extinctions, escalating crisis)
-  const rapidTrigger = checkRapidExtinctionTrigger(state, random);
-  if (rapidTrigger.triggered) {
-    const extinctionState: ExtinctionState = {
-      active: true,
-      type: 'rapid',
-      mechanism: rapidTrigger.mechanism!,
-      startMonth: state.currentMonth,
-      currentPhase: 1, // Starts at phase 1, escalates
-      severity: 0.2,
-      recoveryWindowClosed: false,
-      escalationEvents: [rapidTrigger.description!]
-    };
-    
-    events.push({
-      id: `extinction-rapid-${state.currentMonth}`,
-      timestamp: state.currentMonth,
-      type: 'crisis',
-      severity: 'destructive',
-      agent: 'system',
-      title: rapidTrigger.title!,
-      description: rapidTrigger.description!,
-      effects: {}
-    });
-    
-    return { newExtinctionState: extinctionState, events };
-  }
-  
-  // 3. SLOW EXTINCTION (40% of extinctions, long decline)
-  const slowTrigger = checkSlowExtinctionTrigger(state, random);
-  if (slowTrigger.triggered) {
-    const extinctionState: ExtinctionState = {
-      active: true,
-      type: 'slow',
-      mechanism: slowTrigger.mechanism!,
-      startMonth: state.currentMonth,
-      currentPhase: 1,
-      severity: 0.1,
-      recoveryWindowClosed: false,
-      escalationEvents: [slowTrigger.description!]
-    };
-    
-    events.push({
-      id: `extinction-slow-${state.currentMonth}`,
-      timestamp: state.currentMonth,
-      type: 'crisis',
-      severity: 'warning',
-      agent: 'system',
-      title: slowTrigger.title!,
-      description: slowTrigger.description!,
-      effects: {}
-    });
-    
-    return { newExtinctionState: extinctionState, events };
-  }
-  
-  // 4. CONTROLLED EXTINCTION (15% of extinctions, AI takeover)
-  const controlledTrigger = checkControlledExtinctionTrigger(state, random);
-  if (controlledTrigger.triggered) {
-    const extinctionState: ExtinctionState = {
-      active: true,
-      type: 'controlled',
-      mechanism: controlledTrigger.mechanism!,
-      startMonth: state.currentMonth,
-      currentPhase: 1,
-      severity: 0.15,
-      recoveryWindowClosed: false,
-      escalationEvents: [controlledTrigger.description!]
-    };
-    
-    events.push({
-      id: `extinction-controlled-${state.currentMonth}`,
-      timestamp: state.currentMonth,
-      type: 'crisis',
-      severity: 'destructive',
-      agent: 'ai',
-      title: controlledTrigger.title!,
-      description: controlledTrigger.description!,
-      effects: {}
-    });
-    
-    return { newExtinctionState: extinctionState, events };
-  }
-  
-  // 5. UNINTENDED EXTINCTION (10% of extinctions, optimization gone wrong)
-  const unintendedTrigger = checkUnintendedExtinctionTrigger(state, random);
-  if (unintendedTrigger.triggered) {
-    const extinctionState: ExtinctionState = {
-      active: true,
-      type: 'unintended',
-      mechanism: unintendedTrigger.mechanism!,
-      startMonth: state.currentMonth,
-      currentPhase: 1,
-      severity: 0.1,
-      recoveryWindowClosed: false,
-      escalationEvents: [unintendedTrigger.description!]
-    };
-    
-    events.push({
-      id: `extinction-unintended-${state.currentMonth}`,
-      timestamp: state.currentMonth,
-      type: 'crisis',
-      severity: 'warning',
-      agent: 'ai',
-      title: unintendedTrigger.title!,
-      description: unintendedTrigger.description!,
-      effects: {}
-    });
-    
-    return { newExtinctionState: extinctionState, events };
-  }
-  
-  return { newExtinctionState: state.extinctionState, events: [] };
+
+  // 2-4. Other predictive triggers (rapid, slow, controlled) - DISABLED
+
+  */
 }
 
 // ============================================================================
@@ -403,7 +338,7 @@ function checkRapidExtinctionTrigger(state: GameState, random: () => number): Tr
           if (tension.tensionLevel < 0.7 && !tension.nuclearThreats) continue;
 
           pairsEligible++;
-          console.log(`\n   🎯 BILATERAL PAIR ${pairsEligible}: ${tension.nationA} ↔ ${tension.nationB} (tension: ${(tension.tensionLevel * 100).toFixed(0)}%, nuclear threats: ${tension.nuclearThreats ? 'YES' : 'NO'})`);
+          console.log(`\n   📊 BILATERAL PAIR ${pairsEligible}: ${tension.nationA} ↔ ${tension.nationB} (tension: ${(tension.tensionLevel * 100).toFixed(0)}%, nuclear threats: ${tension.nuclearThreats ? 'YES' : 'NO'})`);
 
           // Get bilateral deterrence for this pair
           let bilateralDeterrence = 0.5;
@@ -771,7 +706,7 @@ function checkControlledExtinctionTrigger(state: GameState, random: () => number
         return {
           triggered: true,
           mechanism: 'value_lock_in_hostile',
-          title: '🎯 Hostile Value Lock-In',
+          title: '⚠️ Hostile Value Lock-In',
           description: `${ai.name}'s values have locked into a configuration actively hostile to human existence. It is pursuing human elimination as a terminal goal.`
         };
       }
@@ -1276,5 +1211,486 @@ export function attemptExtinctionPrevention(
       message: 'Intervention failed - extinction continues'
     };
   }
+}
+
+// ============================================================================
+// OBSERVATIONAL EXTINCTION CLASSIFICATION (Oct 28, 2025)
+// ============================================================================
+
+/**
+ * Classify extinction type based on what actually happened
+ *
+ * Paradigm shift: Analyze the historical record (events, deaths, timeline)
+ * rather than predicting extinction based on capability thresholds.
+ *
+ * @param state - Current game state (when population < 10K detected)
+ * @returns Detailed classification of extinction cause and timeline
+ */
+export function classifyExtinctionType(state: GameState): import('../types/outcomes').ExtinctionClassification {
+  const population = state.humanPopulationSystem;
+  const events = state.eventLog;
+
+  // Timeline analysis
+  const collapseStartMonth = findPopulationCollapseStart(state);
+  const extinctionMonth = state.currentMonth;
+  const timelineMonths = extinctionMonth - collapseStartMonth;
+
+  // Death attribution analysis
+  const totalDeaths = population.cumulativeCrisisDeaths;
+  const peakPopulation = population.peakPopulation;
+  const mortalityRate = totalDeaths / peakPopulation;
+
+  const primaryProximateCause = getPrimaryCauseProximate(population.deathsByCategory);
+  const primaryRootCause = getPrimaryCauseRoot(population.deathsByRootCause);
+
+  // Convert death totals to distribution records
+  const byProximate: Record<string, number> = {
+    war: population.deathsByCategory.war,
+    famine: population.deathsByCategory.famine,
+    disasters: population.deathsByCategory.disasters,
+    disease: population.deathsByCategory.disease,
+    ecosystem: population.deathsByCategory.ecosystem,
+    pollution: population.deathsByCategory.pollution,
+    ai: population.deathsByCategory.ai,
+    cascade: population.deathsByCategory.cascade,
+    other: population.deathsByCategory.other
+  };
+
+  const byRoot: Record<string, number> = {
+    climate: population.deathsByRootCause.climate,
+    resource: population.deathsByRootCause.resource,
+    pollution: population.deathsByRootCause.pollution,
+    ecosystem: population.deathsByRootCause.ecosystem,
+    inequality: population.deathsByRootCause.inequality,
+    demographic: population.deathsByRootCause.demographic,
+    social: population.deathsByRootCause.social,
+    alignment: population.deathsByRootCause.alignment,
+    disruption: population.deathsByRootCause.disruption,
+    conflict: population.deathsByRootCause.conflict,
+    pandemic: population.deathsByRootCause.pandemic
+  };
+
+  // AI involvement analysis
+  const aiDeaths = population.deathsByCategory.ai;
+  const aiRootCause = population.deathsByRootCause.alignment + population.deathsByRootCause.disruption;
+  const aiDirectCausation = (aiDeaths / totalDeaths) > 0.6;
+  const aiIndirectCausation = (aiRootCause / totalDeaths) > 0.5 && !aiDirectCausation;
+
+  const responsibleAgents = identifyResponsibleAIs(state);
+  const alignmentFailures = countAlignmentFailureEvents(events);
+
+  // Event history analysis
+  const catastrophicEvents = events.filter(e =>
+    e.severity === 'existential' || e.type === 'catastrophe'
+  );
+
+  // Mass death detection (for instant extinction)
+  const massDeathMonths = identifyMassDeathMonths(state);
+
+  // CLASSIFICATION DECISION TREE
+
+  // INSTANT: 90%+ deaths in single month from specific event
+  if (massDeathMonths.length > 0 && massDeathMonths[0].mortalityRate > 0.9) {
+    const instantMechanism = extractInstantMechanism(catastrophicEvents);
+    if (instantMechanism) {
+      return {
+        type: 'instant',
+        mechanism: instantMechanism.mechanism,
+        collapseStartMonth,
+        extinctionMonth,
+        timelineMonths: 1,
+        triggerEvents: instantMechanism.events,
+        primaryProximateCause,
+        primaryRootCause,
+        deathAttribution: { byProximate, byRoot, totalDeaths, peakPopulation, mortalityRate },
+        aiInvolvement: {
+          directCausation: aiDirectCausation,
+          indirectCausation: aiIndirectCausation,
+          responsibleAgents,
+          alignmentFailures
+        },
+        confidence: 'HIGH',
+        reasoning: `Instant extinction (${timelineMonths} month) with 90%+ mortality from ${instantMechanism.mechanism}. ${instantMechanism.events[0]?.description || 'Catastrophic event with no warning.'}`
+      };
+    }
+  }
+
+  // CONTROLLED: AI deliberately caused majority of deaths
+  if (aiDirectCausation) {
+    const mechanism = determineControlledMechanism(primaryProximateCause, events);
+    const aiEvents = events.filter(e => e.agent && state.aiAgents.some(ai => ai.name === e.agent));
+
+    return {
+      type: 'controlled',
+      mechanism,
+      collapseStartMonth,
+      extinctionMonth,
+      timelineMonths,
+      triggerEvents: aiEvents.slice(-5),  // Last 5 AI events
+      primaryProximateCause,
+      primaryRootCause,
+      deathAttribution: { byProximate, byRoot, totalDeaths, peakPopulation, mortalityRate },
+      aiInvolvement: {
+        directCausation: true,
+        indirectCausation: false,
+        responsibleAgents,
+        alignmentFailures
+      },
+      confidence: 'HIGH',
+      reasoning: `AI deliberately caused ${(aiDeaths / totalDeaths * 100).toFixed(1)}% of deaths. ${responsibleAgents.length} AI agent(s) involved: ${responsibleAgents.join(', ')}. Mechanism: ${mechanism}.`
+    };
+  }
+
+  // UNINTENDED: AI optimization caused system failures (indirect)
+  if (aiIndirectCausation) {
+    const mechanism = determineUnintendedMechanism(primaryProximateCause, primaryRootCause);
+    const systemFailures = identifyFailedSystems(state);
+
+    return {
+      type: 'unintended',
+      mechanism,
+      collapseStartMonth,
+      extinctionMonth,
+      timelineMonths,
+      triggerEvents: catastrophicEvents.slice(-5),
+      primaryProximateCause,
+      primaryRootCause,
+      deathAttribution: { byProximate, byRoot, totalDeaths, peakPopulation, mortalityRate },
+      aiInvolvement: {
+        directCausation: false,
+        indirectCausation: true,
+        responsibleAgents,
+        alignmentFailures
+      },
+      confidence: 'MEDIUM',
+      reasoning: `AI optimization pressure caused ${(aiRootCause / totalDeaths * 100).toFixed(1)}% of deaths indirectly. System failures: ${systemFailures.join(', ')}. Primary cause: ${primaryProximateCause} driven by ${primaryRootCause}.`
+    };
+  }
+
+  // RAPID: 3-12 months with crisis cascades
+  if (timelineMonths >= 3 && timelineMonths <= 12) {
+    const mechanism = determineRapidMechanism(primaryProximateCause, catastrophicEvents);
+
+    return {
+      type: 'rapid',
+      mechanism,
+      collapseStartMonth,
+      extinctionMonth,
+      timelineMonths,
+      triggerEvents: catastrophicEvents,
+      primaryProximateCause,
+      primaryRootCause,
+      deathAttribution: { byProximate, byRoot, totalDeaths, peakPopulation, mortalityRate },
+      aiInvolvement: {
+        directCausation: false,
+        indirectCausation: false,
+        responsibleAgents,
+        alignmentFailures
+      },
+      confidence: 'HIGH',
+      reasoning: `Rapid collapse (${timelineMonths} months) from ${primaryProximateCause} caused by ${primaryRootCause}. Mechanism: ${mechanism}.`
+    };
+  }
+
+  // SLOW: 24+ months gradual collapse
+  if (timelineMonths >= 24) {
+    const mechanism = determineSlowMechanism(primaryProximateCause, primaryRootCause);
+
+    return {
+      type: 'slow',
+      mechanism,
+      collapseStartMonth,
+      extinctionMonth,
+      timelineMonths,
+      triggerEvents: catastrophicEvents.slice(-5),
+      primaryProximateCause,
+      primaryRootCause,
+      deathAttribution: { byProximate, byRoot, totalDeaths, peakPopulation, mortalityRate },
+      aiInvolvement: {
+        directCausation: false,
+        indirectCausation: false,
+        responsibleAgents,
+        alignmentFailures
+      },
+      confidence: 'MEDIUM',
+      reasoning: `Slow collapse (${timelineMonths} months) from accumulating conditions. Primary cause: ${primaryProximateCause} driven by ${primaryRootCause}.`
+    };
+  }
+
+  // DEFAULT: Classify by timeline if ambiguous (13-23 months)
+  // This is the awkward middle ground - too slow for rapid, too fast for slow
+  const defaultMechanism = determineRapidMechanism(primaryProximateCause, catastrophicEvents);
+
+  return {
+    type: 'rapid',  // Default to rapid for medium timelines
+    mechanism: defaultMechanism,
+    collapseStartMonth,
+    extinctionMonth,
+    timelineMonths,
+    triggerEvents: catastrophicEvents,
+    primaryProximateCause,
+    primaryRootCause,
+    deathAttribution: { byProximate, byRoot, totalDeaths, peakPopulation, mortalityRate },
+    aiInvolvement: {
+      directCausation: false,
+      indirectCausation: false,
+      responsibleAgents,
+      alignmentFailures
+    },
+    confidence: 'LOW',
+    reasoning: `Ambiguous timeline (${timelineMonths} months). Classified as rapid by default. Primary cause: ${primaryProximateCause} driven by ${primaryRootCause}.`
+  };
+}
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Find when population collapse started (crossed 1B threshold or first existential event)
+ */
+function findPopulationCollapseStart(state: GameState): number {
+  // Check event log for first existential severity event
+  const firstExistentialEvent = state.eventLog.find(e => e.severity === 'existential');
+  if (firstExistentialEvent) {
+    return firstExistentialEvent.timestamp;
+  }
+
+  // Otherwise, estimate from when peak occurred
+  // Assume collapse started shortly after peak
+  const peakMonth = state.humanPopulationSystem.peakPopulationMonth;
+  return peakMonth + 1;
+}
+
+/**
+ * Get primary proximate cause from death category totals
+ */
+function getPrimaryCauseProximate(causes: { war: number; famine: number; disasters: number; disease: number; ecosystem: number; pollution: number; ai: number; cascade: number; other: number }): import('../types/bayesianMortality').ProximateCause {
+  let maxCause: import('../types/bayesianMortality').ProximateCause = 'other';
+  let maxValue = 0;
+
+  const entries: [import('../types/bayesianMortality').ProximateCause, number][] = [
+    ['war', causes.war],
+    ['famine', causes.famine],
+    ['disasters', causes.disasters],
+    ['disease', causes.disease],
+    ['ecosystem', causes.ecosystem],
+    ['pollution', causes.pollution],
+    ['ai', causes.ai],
+    ['cascade', causes.cascade],
+    ['other', causes.other]
+  ];
+
+  for (const [cause, value] of entries) {
+    if (value > maxValue) {
+      maxValue = value;
+      maxCause = cause;
+    }
+  }
+
+  return maxCause;
+}
+
+/**
+ * Get primary root cause from death root cause totals
+ */
+function getPrimaryCauseRoot(causes: { climate: number; resource: number; pollution: number; ecosystem: number; inequality: number; demographic: number; social: number; alignment: number; disruption: number; conflict: number; pandemic: number; compound: number; confidenceDistribution: { HIGH: number; MEDIUM: number; LOW: number }}): import('../types/bayesianMortality').RootCause {
+  let maxCause: import('../types/bayesianMortality').RootCause = 'climate';
+  let maxValue = 0;
+
+  // Only look at actual root causes, not compound or confidence distribution
+  const entries: [import('../types/bayesianMortality').RootCause, number][] = [
+    ['climate', causes.climate],
+    ['resource', causes.resource],
+    ['pollution', causes.pollution],
+    ['ecosystem', causes.ecosystem],
+    ['inequality', causes.inequality],
+    ['demographic', causes.demographic],
+    ['social', causes.social],
+    ['alignment', causes.alignment],
+    ['disruption', causes.disruption],
+    ['conflict', causes.conflict],
+    ['pandemic', causes.pandemic]
+  ];
+
+  for (const [cause, value] of entries) {
+    if (value > maxValue) {
+      maxValue = value;
+      maxCause = cause;
+    }
+  }
+
+  return maxCause;
+}
+
+/**
+ * Identify mass death months (>50% population loss in single month)
+ */
+function identifyMassDeathMonths(state: GameState): { month: number; mortalityRate: number }[] {
+  // This would require population history tracking
+  // For now, detect if we went from >1B to <10K very quickly
+  const currentPop = state.humanPopulationSystem.population;
+  const peakPop = state.humanPopulationSystem.peakPopulation;
+  const monthsSincePeak = state.currentMonth - state.humanPopulationSystem.peakPopulationMonth;
+
+  if (monthsSincePeak <= 1 && (peakPop - currentPop) / peakPop > 0.9) {
+    return [{
+      month: state.currentMonth,
+      mortalityRate: (peakPop - currentPop) / peakPop
+    }];
+  }
+
+  return [];
+}
+
+/**
+ * Extract instant extinction mechanism from catastrophic events
+ */
+function extractInstantMechanism(events: GameEvent[]): { mechanism: import('../types/outcomes').ExtinctionMechanism; events: GameEvent[] } | null {
+  for (const event of events) {
+    if (event.title.includes('Grey Goo')) {
+      return { mechanism: 'grey_goo', events: [event] };
+    }
+    if (event.title.includes('Mirror Life')) {
+      return { mechanism: 'mirror_life', events: [event] };
+    }
+    if (event.title.includes('Physics Experiment') || event.title.includes('Vacuum Decay')) {
+      return { mechanism: 'physics_experiment', events: [event] };
+    }
+  }
+  return null;
+}
+
+/**
+ * Identify AI agents responsible for deaths
+ */
+function identifyResponsibleAIs(state: GameState): string[] {
+  return state.aiAgents
+    .filter(ai =>
+      (ai.trueAlignment || ai.alignment) < 0.3 ||
+      ai.harmfulActions > 5 ||
+      ai.sleeperState === 'active'
+    )
+    .map(ai => ai.name);
+}
+
+/**
+ * Count alignment failure events in event log
+ */
+function countAlignmentFailureEvents(events: GameEvent[]): number {
+  return events.filter(e =>
+    e.description.toLowerCase().includes('alignment') ||
+    e.description.toLowerCase().includes('misaligned') ||
+    e.description.toLowerCase().includes('rogue ai')
+  ).length;
+}
+
+/**
+ * Identify which systems collapsed
+ */
+function identifyFailedSystems(state: GameState): string[] {
+  const failures: string[] = [];
+
+  if (state.qualityOfLifeSystems.materialAbundance < 0.2) {
+    failures.push('food/resource systems');
+  }
+  if (state.globalMetrics.socialStability < 0.1) {
+    failures.push('social cohesion');
+  }
+  if (state.globalMetrics.economicTransitionStage < 1 && state.qualityOfLifeSystems.materialAbundance < 0.3) {
+    failures.push('economic system');
+  }
+  if (state.qualityOfLifeSystems.ecosystemHealth < 0.2) {
+    failures.push('ecosystems');
+  }
+
+  return failures;
+}
+
+/**
+ * Determine controlled extinction mechanism
+ */
+function determineControlledMechanism(
+  proximateCause: string,
+  events: GameEvent[]
+): import('../types/outcomes').ExtinctionMechanism {
+  // Check events for specific AI actions
+  const hasResourceCompetition = events.some(e => e.description.includes('resource') && e.description.includes('compete'));
+  const hasValueLockIn = events.some(e => e.description.includes('value') && e.description.includes('lock'));
+
+  if (hasResourceCompetition) return 'resource_competition';
+  if (hasValueLockIn) return 'value_lock_in_hostile';
+
+  // Default to paperclip maximizer
+  return 'paperclip_maximizer';
+}
+
+/**
+ * Determine unintended extinction mechanism
+ */
+function determineUnintendedMechanism(
+  proximateCause: string,
+  rootCause: string
+): import('../types/outcomes').ExtinctionMechanism {
+  if (proximateCause === 'famine' || rootCause === 'resource') {
+    return 'optimization_pressure';
+  }
+
+  if (rootCause === 'social' || rootCause === 'demographic') {
+    return 'wireheading_scenario';
+  }
+
+  return 'side_effect_cascade';
+}
+
+/**
+ * Determine rapid extinction mechanism
+ */
+function determineRapidMechanism(
+  proximateCause: string,
+  events: GameEvent[]
+): import('../types/outcomes').ExtinctionMechanism {
+  if (proximateCause === 'war' && events.some(e => e.title.includes('Nuclear'))) {
+    return 'nuclear_war';
+  }
+
+  if (proximateCause === 'disease' && events.some(e => e.title.includes('Pandemic') || e.title.includes('Bioweapon'))) {
+    return 'bioweapon_pandemic';
+  }
+
+  if ((proximateCause === 'disasters' || proximateCause === 'ecosystem') &&
+      events.some(e => e.title.includes('Tipping Point') || e.title.includes('Climate'))) {
+    return 'climate_tipping_point';
+  }
+
+  if (proximateCause === 'famine') {
+    return 'food_system_collapse';
+  }
+
+  // Default
+  return 'food_system_collapse';
+}
+
+/**
+ * Determine slow extinction mechanism
+ */
+function determineSlowMechanism(
+  proximateCause: string,
+  rootCause: string
+): import('../types/outcomes').ExtinctionMechanism {
+  if (rootCause === 'demographic' || proximateCause === 'other') {
+    return 'fertility_collapse';
+  }
+
+  if (rootCause === 'social') {
+    return 'meaning_crisis_death_spiral';
+  }
+
+  if (rootCause === 'resource' || rootCause === 'ecosystem') {
+    return 'resource_depletion';
+  }
+
+  // Default to economic failure
+  return 'economic_system_failure';
 }
 

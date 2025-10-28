@@ -176,8 +176,9 @@ function processReparationsTransfers(state: GameState): void {
   for (const country of Object.values(countries)) {
     if (country.climateReparationsOwed! > 0) {
       // Country owes reparations
-      const willingness = country.climateReparationsWillingness || 0.3;
-      const capacity = Math.min(1.0, (country.sovereignty?.overallSovereignty || 0.5));
+      // All fields initialized in createCountry() (Oct 28, 2025)
+      const willingness = country.climateReparationsWillingness;
+      const capacity = Math.min(1.0, country.sovereignty.overallSovereignty);
 
       // International pressure increases with crisis severity
       const pressure = (1 - state.environmentalAccumulation.climateStability) * 0.5;
@@ -205,7 +206,7 @@ function processReparationsTransfers(state: GameState): void {
       const received = totalPayments * share;
 
       receiver.country.climateReparationsReceived =
-        (receiver.country.climateReparationsReceived || 0) + received;
+        receiver.country.climateReparationsReceived + received;
 
       // Reparations reduce climate suffering (adaptation funding)
       // Each $1B reduces suffering by 0.1% (diminishing returns)
@@ -249,12 +250,13 @@ function updateClimateMigrationPressure(state: GameState): void {
     }
 
     // Water scarcity amplifies migration
-    const waterScarcity = state.freshwaterSystem.waterStress || 0;
+    // freshwaterSystem always initialized in createDefaultInitialState() (Oct 28, 2025)
+    const waterScarcity = state.freshwaterSystem.waterStress;
     pressure *= (1 + waterScarcity);
 
     // Update migration pressure (cumulative)
     country.climateMigrationPressure =
-      (country.climateMigrationPressure || 0) + pressure;
+      country.climateMigrationPressure + pressure;
 
     // Migration pressure affects population (people leave)
     if (country.climateMigrationPressure! > 0.1) {
@@ -311,8 +313,8 @@ function processGreenTechTransfer(state: GameState): void {
     for (const recipient of poorRecipients) {
       const transfer = transferCapacity / poorRecipients.length;
 
-      recipient.greenTechReceived = (recipient.greenTechReceived || 0) + transfer;
-      donor.greenTechShared = (donor.greenTechShared || 0) + transfer;
+      recipient.greenTechReceived = recipient.greenTechReceived + transfer;
+      donor.greenTechShared = donor.greenTechShared + transfer;
 
       // Green tech reduces emissions
       if (recipient.greenTechReceived! > 1.0) {
@@ -332,18 +334,18 @@ export function getClimateJusticeSummary(country: CountryPopulation): {
   migrationPressure: number;
   techReceived: number;
 } {
-  const isCreditor = (country.climateSufferingRatio || 1.0) > 2.0;
-  const debtOrCredit = country.climateReparationsOwed || 0;
+  const isCreditor = country.climateSufferingRatio > 2.0;
+  const debtOrCredit = country.climateReparationsOwed;
   const reparationsFlow = isCreditor
-    ? (country.climateReparationsReceived || 0)
-    : -(country.climateReparationsOwed || 0);
+    ? country.climateReparationsReceived
+    : -country.climateReparationsOwed;
 
   return {
     isCreditor,
     debtOrCredit,
     reparationsFlow,
-    migrationPressure: country.climateMigrationPressure || 0,
-    techReceived: country.greenTechReceived || 0
+    migrationPressure: country.climateMigrationPressure,
+    techReceived: country.greenTechReceived
   };
 }
 
@@ -360,17 +362,17 @@ export function getGlobalClimateJusticeMetrics(state: GameState): {
   const countries = Object.values(state.countryPopulationSystem.countries);
 
   const totalPaid = countries
-    .filter(c => (c.climateReparationsOwed || 0) > 0)
-    .reduce((sum, c) => sum + (c.climateReparationsOwed || 0), 0);
+    .filter(c => c.climateReparationsOwed > 0)
+    .reduce((sum, c) => sum + c.climateReparationsOwed, 0);
 
   const totalReceived = countries
-    .reduce((sum, c) => sum + (c.climateReparationsReceived || 0), 0);
+    .reduce((sum, c) => sum + c.climateReparationsReceived, 0);
 
   const totalMigration = countries
-    .reduce((sum, c) => sum + (c.climateMigrationPressure || 0), 0);
+    .reduce((sum, c) => sum + c.climateMigrationPressure, 0);
 
   const techTransfer = countries
-    .reduce((sum, c) => sum + (c.greenTechReceived || 0), 0);
+    .reduce((sum, c) => sum + c.greenTechReceived, 0);
 
   // Climate justice score: How well are reparations flowing
   const justiceScore = totalPaid > 0

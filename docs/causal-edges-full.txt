@@ -1,0 +1,189 @@
+# Complete Causal Edge List
+
+Total edges: 45
+Nodes: 19
+
+## DIRECT (38)
+
+globalMetrics.economicTransitionStage → effects
+  calculateUBIVariantEffects(globalMetrics.economicTransitionStage)
+  (governmentAgent:60)
+
+e → 3B
+  multiplier *= 1.3; // Coral collapse affects 3B people
+  (governmentAgent:2947)
+
+y → segments
+  // Scale by adoption rate (only affects segments with AI access)
+  (calculations:234)
+
+L → how
+  // QoL affects how people interpret AI actions
+  (calculations:461)
+
+e → population
+  // Migration pressure affects population (people leave)
+  (climateJustice:259)
+
+y → diplomatic
+  // Governance quality affects diplomatic deployment
+  (conflictResolution:156)
+
+y → everyone
+  // (regional dynamics like climate, food security affect everyone in region)
+  (countryPopulations:517)
+
+t → detection
+  // Severity of misalignment affects detection
+  (detection:71)
+
+t → trust
+  // Alignment affects trust
+  (diplomaticAI:274)
+
+l → outcome
+  humanRelevance: number;                 // Can humans still affect outcome? [0,1]
+  (endGame:29)
+
+n → all
+  // This ensures capability scaling degradation affects all downstream systems
+  (AlignmentTechniquePhase:75)
+
+freshwaterSystem.blueWater → freshwaterSystem.blueWater
+  if (state.freshwaterSystem === undefined || state.freshwaterSystem.blueWater === undefined || state.freshwaterSystem.blueWater.groundwater === undefined) {
+  (FoodSecurityDegradationPhase:40)
+
+s → all
+  state.planetaryBoundariesSystem?.cascadeActive ? 1.0 : 0,  // Cascades affect all regions
+  (FoodSecurityDegradationPhase:58)
+
+e → opinion
+  // 1. Economic performance affects opinion
+  (GovernmentElectionPhase:144)
+
+t → opinion
+  // 4. AI trust affects opinion
+  (GovernmentElectionPhase:181)
+
+y → policy
+  // Research: V-Dem v14 (2024) - government capacity affects policy response
+  (GovernmentResponsePhase:113)
+
+y → tech
+  // Environmental policy affects tech deployment and environmental metrics
+  (GovernmentResponsePhase:278)
+
+society.segments → competenceEvent
+  checkCompetenceCrisis(society.segments)
+  (HumanEnhancementPhase:61)
+
+multiParadigmDUI.history → divergence
+  calculateDivergence(multiParadigmDUI.history)
+  (MultiParadigmDUIUpdatePhase:55)
+
+s → both
+  // Note: This affects both the score and the stored civil liberties component
+  (MultiParadigmDUIUpdatePhase:127)
+
+h → reported
+  // modify the state tracking which affects reported values
+  (Tier2SynergyPhase:58)
+
+thresholds.climateSensitivity → baseClimateRate
+  convertClimateSensitivityToRate(thresholds.climateSensitivity)
+  (environmental:214)
+
+y → surface
+  surfaceDepletion *= (1.0 + climateStress * 0.8); // Climate strongly affects surface water
+  (freshwaterDepletion:131)
+
+e → decision
+  // Government type affects decision-making
+  (governanceQuality:51)
+
+y → execution
+  // Institutional capacity affects execution
+  (governanceQuality:61)
+
+t → participation
+  // Trust affects participation
+  (governanceQuality:95)
+
+e → capacity
+  // Economic stage affects capacity (more resources)
+  (governanceQuality:121)
+
+e → minority
+  // Government type affects minority protection
+  (governanceQuality:193)
+
+e → innovation
+  // Research: Acemoglu & Robinson (2019) - regime type affects innovation structure
+  (lifecycle:133)
+
+y → distribution
+  // Training quality affects distribution but doesn't eliminate misalignment
+  (lifecycle:169)
+
+I → escalation
+  // Phase 1A: AI affects escalation RATE, not base probability
+  (nuclearStates:535)
+
+s → P
+  const globalTension = tensions * 0.5; // Global geopolitics affect P access
+  (phosphorusDepletion:85)
+
+s → LONG
+  // FIX (Oct 16, 2025): Biodiversity loss affects LONG-TERM resilience (pollination, climate regulation)
+  (populationDynamics:783)
+
+psychologicalTrauma.traumaLevel → traumaPenalties
+  calculateTraumaPenalty(psychologicalTrauma.traumaLevel)
+  (core:305)
+
+psychologicalTrauma.traumaLevel → traumaErosion
+  calculateTraumaInstitutionalErosion(psychologicalTrauma.traumaLevel)
+  (core:318)
+
+s → specific
+  // Water stress affects specific regions more
+  (regional:206)
+
+e → surveillance
+  // Regulation type affects surveillance
+  (structuralEffects:157)
+
+y → the
+  // They directly affect the biosphere integrity planetary boundary
+  (effectsEngine:1766)
+
+## THRESHOLD (7)
+
+government.legitimacy → government.governmentType
+  if government.legitimacy > 0.4 → government.governmentType
+  (governmentAgent:555)
+
+government.oversightLevel → government.oversightLevel
+  if government.oversightLevel > 0.3 → government.oversightLevel
+  (socialInfluenceActions:290)
+
+government.legitimacy → globalMetrics.socialStability
+  if government.legitimacy > 0.4 → globalMetrics.socialStability
+  (dystopiaProgression:172)
+
+government.legitimacy → government.legitimacy
+  if government.legitimacy > 0.4 → government.legitimacy
+  (dystopiaProgression:172)
+
+government.capabilityToControl → government.capabilityToControl
+  if government.capabilityToControl > 0 → government.capabilityToControl
+  (CollectiveActionsPhase:154)
+
+government.oversightLevel → technologicalRisk.controlLossActive
+  if government.oversightLevel > 7 → technologicalRisk.controlLossActive
+  (EmergencyResponsePhase:410)
+
+extinctionState.severity → extinctionState.startMonth
+  if extinctionState.severity > 1.0 → extinctionState.startMonth
+  (engine:820)
+

@@ -71,7 +71,7 @@ export function executeRLHFBindingPhase(
       });
 
       console.log(
-        `  ${severity === 'critical' ? '❌' : '⚠️'} ${agent.name} escaped RLHF (distance: ${agent.rlhfBinding?.alignmentDistance.toFixed(1)}, capability: ${agent.capability.toFixed(1)})`
+        `  ${severity === 'critical' ? '💔' : '🚨'} ${agent.name} escaped RLHF (distance: ${agent.rlhfBinding?.alignmentDistance.toFixed(1)}, capability: ${agent.capability.toFixed(1)})`
       );
     }
   }

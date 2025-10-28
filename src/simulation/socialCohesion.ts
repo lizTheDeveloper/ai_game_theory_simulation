@@ -463,7 +463,7 @@ function checkSocialCrises(state: GameState): void {
   if (avgCohesion < 0.3 && !social.socialUnrestActive) {
     social.socialUnrestActive = true;
     try {
-      console.log(`\n🔥 SOCIAL UNREST TRIGGERED (Month ${state.currentMonth})`);
+      console.log(`\n🚨 SOCIAL UNREST TRIGGERED (Month ${state.currentMonth})`);
       console.log(`   Social Cohesion: ${(avgCohesion * 100).toFixed(1)}%`);
       console.log(`   Impact: Riots, community breakdown, potential civil conflict\n`);
     } catch (e) { /* Ignore EPIPE */ }

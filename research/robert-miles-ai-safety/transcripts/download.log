@@ -1,0 +1,1074 @@
+[youtube:tab] Extracting URL: https://www.youtube.com/c/robertmilesai/videos
+[youtube:tab] robertmilesai/videos: Downloading webpage
+[download] Downloading playlist: Robert Miles AI Safety  - Videos
+[youtube:tab] UCLB7AzTwc6VFZrBsO2ucBMg page 1: Downloading API JSON
+[youtube:tab] Playlist Robert Miles AI Safety  - Videos: Downloading 45 items of 45
+[download] Downloading item 1 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=zATXsGm_xJo
+[youtube] zATXsGm_xJo: Downloading webpage
+[youtube] zATXsGm_xJo: Downloading tv client config
+[youtube] zATXsGm_xJo: Downloading tv player API JSON
+[youtube] zATXsGm_xJo: Downloading ios player API JSON
+[youtube] zATXsGm_xJo: Downloading player 25f1a420-main
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] zATXsGm_xJo: nsig extraction failed: Some formats may be missing
+         n = hwzE0vKctHIw7izm ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] zATXsGm_xJo: nsig extraction failed: Some formats may be missing
+         n = kyvin5BAZNGNXaDS ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] zATXsGm_xJo: nsig extraction failed: Some formats may be missing
+         n = B6MsnFAxLfjg2xUf ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] zATXsGm_xJo: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] zATXsGm_xJo: Downloading m3u8 information
+[info] zATXsGm_xJo: Downloading subtitles: en
+[info] zATXsGm_xJo: Downloading 1 format(s): 625+234
+[info] Writing video subtitles to: Tech is Good, AI Will Be Different [zATXsGm_xJo].en.vtt
+[download] Destination: Tech is Good, AI Will Be Different [zATXsGm_xJo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    4.66MiB/s (00:00:00)[download]   31.00KiB at    3.03MiB/s (00:00:00)[download]   63.00KiB at    2.02MiB/s (00:00:00)[download]   93.28KiB at    2.31MiB/s (00:00:00)[download] 100% of   93.28KiB in 00:00:00 at 526.62KiB/s
+[download] Downloading item 2 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=OpufM6yK4Go
+[youtube] OpufM6yK4Go: Downloading webpage
+[youtube] OpufM6yK4Go: Downloading tv client config
+[youtube] OpufM6yK4Go: Downloading tv player API JSON
+[youtube] OpufM6yK4Go: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] OpufM6yK4Go: nsig extraction failed: Some formats may be missing
+         n = hFI_WZw6h3RHWKb7 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] OpufM6yK4Go: nsig extraction failed: Some formats may be missing
+         n = w4kEhTYZmiB0Of5H ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] OpufM6yK4Go: nsig extraction failed: Some formats may be missing
+         n = TkxBFkqUfIzlqtMk ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] OpufM6yK4Go: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] OpufM6yK4Go: Downloading m3u8 information
+[info] OpufM6yK4Go: Downloading subtitles: en
+[info] OpufM6yK4Go: Downloading 1 format(s): 616+234
+[info] Writing video subtitles to: AI Safety Career Advice! (And So Can You!) [OpufM6yK4Go].en.vtt
+[download] Destination: AI Safety Career Advice! (And So Can You!) [OpufM6yK4Go].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.18MiB/s (00:00:00)[download]    7.00KiB at    4.49MiB/s (00:00:00)[download]   15.00KiB at    1.67MiB/s (00:00:00)[download]   31.00KiB at    2.13MiB/s (00:00:00)[download]   63.00KiB at    1.85MiB/s (00:00:00)[download]  127.00KiB at    1.36MiB/s (00:00:00)[download]  255.00KiB at    1.34MiB/s (00:00:00)[download]  264.22KiB at    1.39MiB/s (00:00:00)[download] 100% of  264.22KiB in 00:00:00 at 845.64KiB/s
+[download] Downloading item 3 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=0pgEMWy70Qk
+[youtube] 0pgEMWy70Qk: Downloading webpage
+[youtube] 0pgEMWy70Qk: Downloading tv client config
+[youtube] 0pgEMWy70Qk: Downloading tv player API JSON
+[youtube] 0pgEMWy70Qk: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 0pgEMWy70Qk: nsig extraction failed: Some formats may be missing
+         n = hPcV0ZCciFfanaev ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 0pgEMWy70Qk: nsig extraction failed: Some formats may be missing
+         n = uCbCZ-Qe8sWdO9w- ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 0pgEMWy70Qk: nsig extraction failed: Some formats may be missing
+         n = _KuKUpx3qmth0iwx ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 0pgEMWy70Qk: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 0pgEMWy70Qk: Downloading m3u8 information
+[info] 0pgEMWy70Qk: Downloading subtitles: en
+[info] 0pgEMWy70Qk: Downloading 1 format(s): 616+234
+[info] Writing video subtitles to: Using Dangerous AI, But Safely？ [0pgEMWy70Qk].en.vtt
+[download] Destination: Using Dangerous AI, But Safely？ [0pgEMWy70Qk].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    6.37MiB/s (00:00:00)[download]   31.00KiB at    2.82MiB/s (00:00:00)[download]   63.00KiB at    1.31MiB/s (00:00:00)[download]  127.00KiB at    2.56MiB/s (00:00:00)[download]  255.00KiB at    1.89MiB/s (00:00:00)[download]  303.53KiB at    2.16MiB/s (00:00:00)[download] 100% of  303.53KiB in 00:00:00 at 1.22MiB/s
+[download] Downloading item 4 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2ziuPUeewK0
+[youtube] 2ziuPUeewK0: Downloading webpage
+[youtube] 2ziuPUeewK0: Downloading tv client config
+[youtube] 2ziuPUeewK0: Downloading tv player API JSON
+[youtube] 2ziuPUeewK0: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 2ziuPUeewK0: nsig extraction failed: Some formats may be missing
+         n = ik7nbtyls24w9Q1- ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 2ziuPUeewK0: nsig extraction failed: Some formats may be missing
+         n = vxaYsBa66lo7mRhd ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 2ziuPUeewK0: nsig extraction failed: Some formats may be missing
+         n = c-NO_7tkuSaQVJPw ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 2ziuPUeewK0: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 2ziuPUeewK0: Downloading m3u8 information
+[info] 2ziuPUeewK0: Downloading subtitles: en
+[info] 2ziuPUeewK0: Downloading 1 format(s): 625+234
+[info] Writing video subtitles to: AI Ruined My Year [2ziuPUeewK0].en.vtt
+[download] Destination: AI Ruined My Year [2ziuPUeewK0].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    4.19MiB/s (00:00:00)[download]   31.00KiB at    4.97MiB/s (00:00:00)[download]   63.00KiB at    3.36MiB/s (00:00:00)[download]  127.00KiB at    2.68MiB/s (00:00:00)[download]  255.00KiB at    2.64MiB/s (00:00:00)[download]  419.08KiB at    2.69MiB/s (00:00:00)[download] 100% of  419.08KiB in 00:00:00 at 913.28KiB/s
+[download] Downloading item 5 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=w65p_IIp6JY
+[youtube] w65p_IIp6JY: Downloading webpage
+[youtube] w65p_IIp6JY: Downloading tv client config
+[youtube] w65p_IIp6JY: Downloading tv player API JSON
+[youtube] w65p_IIp6JY: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] w65p_IIp6JY: nsig extraction failed: Some formats may be missing
+         n = _rT7x55g5mck-FaG ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] w65p_IIp6JY: nsig extraction failed: Some formats may be missing
+         n = Blcqvsp1zD22rd_f ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] w65p_IIp6JY: nsig extraction failed: Some formats may be missing
+         n = IaNBOrCLxnxJ27kw ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] w65p_IIp6JY: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] w65p_IIp6JY: Downloading m3u8 information
+[info] w65p_IIp6JY: Downloading subtitles: en
+[info] w65p_IIp6JY: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: Why Does AI Lie, and What Can We Do About It？ [w65p_IIp6JY].en.vtt
+[download] Destination: Why Does AI Lie, and What Can We Do About It？ [w65p_IIp6JY].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at   12.74MiB/s (00:00:00)[download]   31.00KiB at    7.54MiB/s (00:00:00)[download]   63.00KiB at    8.14MiB/s (00:00:00)[download]   89.18KiB at   11.07MiB/s (00:00:00)[download] 100% of   89.18KiB in 00:00:00 at 362.19KiB/s
+[download] Downloading item 6 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=zkbPdEHEyEI
+[youtube] zkbPdEHEyEI: Downloading webpage
+[youtube] zkbPdEHEyEI: Downloading tv client config
+[youtube] zkbPdEHEyEI: Downloading tv player API JSON
+[youtube] zkbPdEHEyEI: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] zkbPdEHEyEI: nsig extraction failed: Some formats may be missing
+         n = BCLcldj6OdYnPtRu ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] zkbPdEHEyEI: nsig extraction failed: Some formats may be missing
+         n = nvVBGx_rTUl1eXII ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] zkbPdEHEyEI: nsig extraction failed: Some formats may be missing
+         n = dmk3n-wqu43noGpH ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] zkbPdEHEyEI: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] zkbPdEHEyEI: Downloading m3u8 information
+[info] zkbPdEHEyEI: Downloading subtitles: en
+[info] zkbPdEHEyEI: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: We Were Right! Real Inner Misalignment [zkbPdEHEyEI].en.vtt
+[download] Destination: We Were Right! Real Inner Misalignment [zkbPdEHEyEI].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   63.00KiB at   45.54MiB/s (00:00:00)[download]  123.82KiB at   18.35MiB/s (00:00:00)[download] 100% of  123.82KiB in 00:00:00 at 490.38KiB/s
+[download] Downloading item 7 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=pYXy-A4siMw
+[youtube] pYXy-A4siMw: Downloading webpage
+[youtube] pYXy-A4siMw: Downloading tv client config
+[youtube] pYXy-A4siMw: Downloading tv player API JSON
+[youtube] pYXy-A4siMw: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] pYXy-A4siMw: nsig extraction failed: Some formats may be missing
+         n = 6MKSKtumT0s0zrUN ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] pYXy-A4siMw: nsig extraction failed: Some formats may be missing
+         n = dL3MOpXqHDibOLyK ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] pYXy-A4siMw: nsig extraction failed: Some formats may be missing
+         n = VDo4NDGsZ1xxMYtL ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] pYXy-A4siMw: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] pYXy-A4siMw: Downloading m3u8 information
+[info] pYXy-A4siMw: Downloading subtitles: en
+[info] pYXy-A4siMw: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: Intro to AI Safety, Remastered [pYXy-A4siMw].en.vtt
+[download] Destination: Intro to AI Safety, Remastered [pYXy-A4siMw].en.vtt
+[download]    1.00KiB at  154.73KiB/s (00:00:00)[download]    3.00KiB at  440.39KiB/s (00:00:00)[download]    7.00KiB at  996.41KiB/s (00:00:00)[download]   15.00KiB at    2.04MiB/s (00:00:00)[download]   31.00KiB at    2.61MiB/s (00:00:00)[download]   63.00KiB at    2.52MiB/s (00:00:00)[download]  127.00KiB at    2.80MiB/s (00:00:00)[download]  165.16KiB at    1.38MiB/s (00:00:00)[download] 100% of  165.16KiB in 00:00:00 at 848.32KiB/s
+[download] Downloading item 8 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=IeWljQw3UgQ
+[youtube] IeWljQw3UgQ: Downloading webpage
+[youtube] IeWljQw3UgQ: Downloading tv client config
+[youtube] IeWljQw3UgQ: Downloading tv player API JSON
+[youtube] IeWljQw3UgQ: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] IeWljQw3UgQ: nsig extraction failed: Some formats may be missing
+         n = RFvnD20ucpZVCMRi ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] IeWljQw3UgQ: nsig extraction failed: Some formats may be missing
+         n = NVKrfJUjmj7gXbJd ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] IeWljQw3UgQ: nsig extraction failed: Some formats may be missing
+         n = dQobQeNoc5cUWSNb ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] IeWljQw3UgQ: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] IeWljQw3UgQ: Downloading m3u8 information
+[info] IeWljQw3UgQ: Downloading subtitles: en
+[info] IeWljQw3UgQ: Downloading 1 format(s): 312+234-12
+[info] Writing video subtitles to: Deceptive Misaligned Mesa-Optimisers？ It's More Likely Than You Think... [IeWljQw3UgQ].en.vtt
+[download] Destination: Deceptive Misaligned Mesa-Optimisers？ It's More Likely Than You Think... [IeWljQw3UgQ].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    2.80MiB/s (00:00:00)[download]   15.00KiB at    3.26MiB/s (00:00:00)[download]   31.00KiB at    3.73MiB/s (00:00:00)[download]   63.00KiB at    3.19MiB/s (00:00:00)[download]  106.14KiB at    3.27MiB/s (00:00:00)[download] 100% of  106.14KiB in 00:00:00 at 618.36KiB/s
+[download] Downloading item 9 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=bJLcIBixGj8
+[youtube] bJLcIBixGj8: Downloading webpage
+[youtube] bJLcIBixGj8: Downloading tv client config
+[youtube] bJLcIBixGj8: Downloading tv player API JSON
+[youtube] bJLcIBixGj8: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] bJLcIBixGj8: nsig extraction failed: Some formats may be missing
+         n = GbR8fux9mVeLscZU ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] bJLcIBixGj8: nsig extraction failed: Some formats may be missing
+         n = dWYUv-bKvg1GgX0b ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] bJLcIBixGj8: nsig extraction failed: Some formats may be missing
+         n = yJ0Nlu8Fuq2STVJ3 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] bJLcIBixGj8: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] bJLcIBixGj8: Downloading m3u8 information
+[info] bJLcIBixGj8: Downloading subtitles: en
+[info] bJLcIBixGj8: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: The OTHER AI Alignment Problem： Mesa-Optimizers and Inner Alignment [bJLcIBixGj8].en.vtt
+[download] Destination: The OTHER AI Alignment Problem： Mesa-Optimizers and Inner Alignment [bJLcIBixGj8].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.50MiB/s (00:00:00)[download]    7.00KiB at    3.17MiB/s (00:00:00)[download]   15.00KiB at    2.51MiB/s (00:00:00)[download]   31.00KiB at    4.48MiB/s (00:00:00)[download]   63.00KiB at    1.89MiB/s (00:00:00)[download]  127.00KiB at    2.81MiB/s (00:00:00)[download]  242.11KiB at    2.99MiB/s (00:00:00)[download] 100% of  242.11KiB in 00:00:00 at 1.07MiB/s
+[download] Downloading item 10 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gdKMG6kTl6Y
+[youtube] gdKMG6kTl6Y: Downloading webpage
+[youtube] gdKMG6kTl6Y: Downloading tv client config
+[youtube] gdKMG6kTl6Y: Downloading tv player API JSON
+[youtube] gdKMG6kTl6Y: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] gdKMG6kTl6Y: nsig extraction failed: Some formats may be missing
+         n = SW6ix17p6tArJ_c9 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gdKMG6kTl6Y: nsig extraction failed: Some formats may be missing
+         n = GV3nW9m_uTOe1zuK ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gdKMG6kTl6Y: nsig extraction failed: Some formats may be missing
+         n = Z5wgX0fAuKK1j86T ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gdKMG6kTl6Y: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] gdKMG6kTl6Y: Downloading m3u8 information
+[info] gdKMG6kTl6Y: Downloading subtitles: en
+[info] gdKMG6kTl6Y: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Quantilizers： AI That Doesn't Try Too Hard [gdKMG6kTl6Y].en.vtt
+[download] Destination: Quantilizers： AI That Doesn't Try Too Hard [gdKMG6kTl6Y].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at   14.18MiB/s (00:00:00)[download]   31.00KiB at   25.71MiB/s (00:00:00)[download]   63.00KiB at   31.72MiB/s (00:00:00)[download]   99.89KiB at   29.34MiB/s (00:00:00)[download] 100% of   99.89KiB in 00:00:00 at 455.03KiB/s
+[download] Downloading item 11 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=7i_f4Kbpgn4
+[youtube] 7i_f4Kbpgn4: Downloading webpage
+[youtube] 7i_f4Kbpgn4: Downloading tv client config
+[youtube] 7i_f4Kbpgn4: Downloading tv player API JSON
+[youtube] 7i_f4Kbpgn4: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 7i_f4Kbpgn4: nsig extraction failed: Some formats may be missing
+         n = pnb3nlXvslxKs4lO ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 7i_f4Kbpgn4: nsig extraction failed: Some formats may be missing
+         n = 0v_WcJdlKFuCbQtC ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 7i_f4Kbpgn4: nsig extraction failed: Some formats may be missing
+         n = UOmyZNVC86A8o0DJ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 7i_f4Kbpgn4: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 7i_f4Kbpgn4: Downloading m3u8 information
+[info] 7i_f4Kbpgn4: Downloading subtitles: en
+[info] 7i_f4Kbpgn4: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Sharing the Benefits of AI： The Windfall Clause [7i_f4Kbpgn4].en.vtt
+[download] Destination: Sharing the Benefits of AI： The Windfall Clause [7i_f4Kbpgn4].en.vtt
+[download]    1.00KiB at   48.46KiB/s (00:00:00)[download]    3.00KiB at  143.47KiB/s (00:00:00)[download]    7.00KiB at  332.10KiB/s (00:00:00)[download]   15.00KiB at  707.05KiB/s (00:00:00)[download]   31.00KiB at    1.42MiB/s (00:00:00)[download]   63.00KiB at    1.69MiB/s (00:00:00)[download]  119.33KiB at    1.60MiB/s (00:00:00)[download] 100% of  119.33KiB in 00:00:00 at 474.53KiB/s
+[download] Downloading item 12 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=9i1WlcCudpU
+[youtube] 9i1WlcCudpU: Downloading webpage
+[youtube] 9i1WlcCudpU: Downloading tv client config
+[youtube] 9i1WlcCudpU: Downloading tv player API JSON
+[youtube] 9i1WlcCudpU: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 9i1WlcCudpU: nsig extraction failed: Some formats may be missing
+         n = A-lY2J0FaZEYZX34 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 9i1WlcCudpU: nsig extraction failed: Some formats may be missing
+         n = Am152ImV-N3d8Xk4 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 9i1WlcCudpU: nsig extraction failed: Some formats may be missing
+         n = OPq8Bk4LUEmFlmlt ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 9i1WlcCudpU: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 9i1WlcCudpU: Downloading m3u8 information
+[info] 9i1WlcCudpU: Downloading subtitles: en
+[info] 9i1WlcCudpU: Downloading 1 format(s): 614+234-12
+[info] Writing video subtitles to: 10 Reasons to Ignore AI Safety [9i1WlcCudpU].en.vtt
+[download] Destination: 10 Reasons to Ignore AI Safety [9i1WlcCudpU].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at   12.83MiB/s (00:00:00)[download]   31.00KiB at   23.52MiB/s (00:00:00)[download]   63.00KiB at   11.26MiB/s (00:00:00)[download]  127.00KiB at    9.41MiB/s (00:00:00)[download]  170.06KiB at    3.63MiB/s (00:00:00)[download] 100% of  170.06KiB in 00:00:00 at 828.73KiB/s
+[download] Downloading item 13 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nKJlF-olKmg
+[youtube] nKJlF-olKmg: Downloading webpage
+[youtube] nKJlF-olKmg: Downloading tv client config
+[youtube] nKJlF-olKmg: Downloading tv player API JSON
+[youtube] nKJlF-olKmg: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] nKJlF-olKmg: nsig extraction failed: Some formats may be missing
+         n = i_1J0i-5KaH1w6LI ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nKJlF-olKmg: nsig extraction failed: Some formats may be missing
+         n = 4pDcIl3ztBkh8PDm ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nKJlF-olKmg: nsig extraction failed: Some formats may be missing
+         n = mAQJkYONtz0lNbYj ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nKJlF-olKmg: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] nKJlF-olKmg: Downloading m3u8 information
+[info] nKJlF-olKmg: Downloading subtitles: en
+[info] nKJlF-olKmg: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: 9 Examples of Specification Gaming [nKJlF-olKmg].en.vtt
+[download] Destination: 9 Examples of Specification Gaming [nKJlF-olKmg].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    1.20MiB/s (00:00:00)[download]   15.00KiB at    2.44MiB/s (00:00:00)[download]   31.00KiB at    3.88MiB/s (00:00:00)[download]   63.00KiB at    3.68MiB/s (00:00:00)[download]   96.85KiB at    3.24MiB/s (00:00:00)[download] 100% of   96.85KiB in 00:00:00 at 390.27KiB/s
+[download] Downloading item 14 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=PYylPRX6z4Q
+[youtube] PYylPRX6z4Q: Downloading webpage
+[youtube] PYylPRX6z4Q: Downloading tv client config
+[youtube] PYylPRX6z4Q: Downloading tv player API JSON
+[youtube] PYylPRX6z4Q: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] PYylPRX6z4Q: nsig extraction failed: Some formats may be missing
+         n = 5cOwje0Vjz0k91nx ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] PYylPRX6z4Q: nsig extraction failed: Some formats may be missing
+         n = dHVkNOFFwjbwrxaI ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] PYylPRX6z4Q: nsig extraction failed: Some formats may be missing
+         n = LcpPMExB5GM6GWQM ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] PYylPRX6z4Q: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] PYylPRX6z4Q: Downloading m3u8 information
+[info] PYylPRX6z4Q: Downloading subtitles: en
+[info] PYylPRX6z4Q: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: Training AI Without Writing A Reward Function, with Reward Modelling [PYylPRX6z4Q].en.vtt
+[download] Destination: Training AI Without Writing A Reward Function, with Reward Modelling [PYylPRX6z4Q].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  947.22KiB/s (00:00:00)[download]    7.00KiB at    1.27MiB/s (00:00:00)[download]   15.00KiB at    2.39MiB/s (00:00:00)[download]   31.00KiB at    4.65MiB/s (00:00:00)[download]   63.00KiB at    3.50MiB/s (00:00:00)[download]  127.00KiB at    3.53MiB/s (00:00:00)[download]  182.30KiB at    3.47MiB/s (00:00:00)[download] 100% of  182.30KiB in 00:00:00 at 1.06MiB/s
+[download] Downloading item 15 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=Ao4jwLwT36M
+[youtube] Ao4jwLwT36M: Downloading webpage
+[youtube] Ao4jwLwT36M: Downloading tv client config
+[youtube] Ao4jwLwT36M: Downloading tv player API JSON
+[youtube] Ao4jwLwT36M: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] Ao4jwLwT36M: nsig extraction failed: Some formats may be missing
+         n = bVtgdIwm4AS66etw ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] Ao4jwLwT36M: nsig extraction failed: Some formats may be missing
+         n = _wqtLe1tqdTYnZWN ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] Ao4jwLwT36M: nsig extraction failed: Some formats may be missing
+         n = 49oqKvf74ArKPl8L ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] Ao4jwLwT36M: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] Ao4jwLwT36M: Downloading m3u8 information
+[info] Ao4jwLwT36M: Downloading subtitles: en
+[info] Ao4jwLwT36M: Downloading 1 format(s): 270+234-12
+[info] Writing video subtitles to: AI That Doesn't Try Too Hard - Maximizers and Satisficers [Ao4jwLwT36M].en.vtt
+[download] Destination: AI That Doesn't Try Too Hard - Maximizers and Satisficers [Ao4jwLwT36M].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.02MiB/s (00:00:00)[download]    7.00KiB at    4.19MiB/s (00:00:00)[download]   15.00KiB at    8.34MiB/s (00:00:00)[download]   31.00KiB at   15.94MiB/s (00:00:00)[download]   63.00KiB at   26.89MiB/s (00:00:00)[download]  101.23KiB at   27.81MiB/s (00:00:00)[download] 100% of  101.23KiB in 00:00:00 at 432.50KiB/s
+[download] Downloading item 16 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=JRuNA2eK7w0
+[youtube] JRuNA2eK7w0: Downloading webpage
+[youtube] JRuNA2eK7w0: Downloading tv client config
+[youtube] JRuNA2eK7w0: Downloading tv player API JSON
+[youtube] JRuNA2eK7w0: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] JRuNA2eK7w0: nsig extraction failed: Some formats may be missing
+         n = VRSI81rV7oAUB0Jl ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] JRuNA2eK7w0: nsig extraction failed: Some formats may be missing
+         n = AdcTI5mZ16nyeHdP ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] JRuNA2eK7w0: nsig extraction failed: Some formats may be missing
+         n = 1j099ph7WLOdIi6H ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] JRuNA2eK7w0: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] JRuNA2eK7w0: Downloading m3u8 information
+[info] JRuNA2eK7w0: Downloading subtitles: en
+[info] JRuNA2eK7w0: Downloading 1 format(s): 616+234
+[info] Writing video subtitles to: Is AI Safety a Pascal's Mugging？ [JRuNA2eK7w0].en.vtt
+[download] Destination: Is AI Safety a Pascal's Mugging？ [JRuNA2eK7w0].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    1.63MiB/s (00:00:00)[download]   63.00KiB at    3.00MiB/s (00:00:00)[download]  127.00KiB at    3.82MiB/s (00:00:00)[download]  143.89KiB at    4.04MiB/s (00:00:00)[download] 100% of  143.89KiB in 00:00:00 at 784.86KiB/s
+[download] Downloading item 17 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yQE9KAbFhNY
+[youtube] yQE9KAbFhNY: Downloading webpage
+[youtube] yQE9KAbFhNY: Downloading tv client config
+[youtube] yQE9KAbFhNY: Downloading tv player API JSON
+[youtube] yQE9KAbFhNY: Downloading ios player API JSON
+WARNING: [youtube] yQE9KAbFhNY: Signature extraction failed: Some formats may be missing
+WARNING: [youtube] yQE9KAbFhNY: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] yQE9KAbFhNY: Downloading m3u8 information
+[info] yQE9KAbFhNY: Downloading 1 format(s): 270+234
+[info] There are no subtitles for the requested languages
+[download] Downloading item 18 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=v9M2Ho9I9Qo
+[youtube] v9M2Ho9I9Qo: Downloading webpage
+[youtube] v9M2Ho9I9Qo: Downloading tv client config
+[youtube] v9M2Ho9I9Qo: Downloading tv player API JSON
+[youtube] v9M2Ho9I9Qo: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] v9M2Ho9I9Qo: nsig extraction failed: Some formats may be missing
+         n = d74Gdokxll0fMNA7 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] v9M2Ho9I9Qo: nsig extraction failed: Some formats may be missing
+         n = G6sBtXiOYVXcYBLv ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] v9M2Ho9I9Qo: nsig extraction failed: Some formats may be missing
+         n = TATJ2KeJVigLlxpm ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] v9M2Ho9I9Qo: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] v9M2Ho9I9Qo: Downloading m3u8 information
+[info] v9M2Ho9I9Qo: Downloading subtitles: en
+[info] v9M2Ho9I9Qo: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: How to Keep Improving When You're Better Than Any Teacher - Iterated Distillation and Amplification [v9M2Ho9I9Qo].en.vtt
+[download] Destination: How to Keep Improving When You're Better Than Any Teacher - Iterated Distillation and Amplification [v9M2Ho9I9Qo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    3.55MiB/s (00:00:00)[download]   15.00KiB at    6.74MiB/s (00:00:00)[download]   31.00KiB at    2.80MiB/s (00:00:00)[download]   63.00KiB at    3.98MiB/s (00:00:00)[download]  116.44KiB at    4.50MiB/s (00:00:00)[download] 100% of  116.44KiB in 00:00:00 at 930.33KiB/s
+[download] Downloading item 19 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=L5pUA3LsEaw
+[youtube] L5pUA3LsEaw: Downloading webpage
+[youtube] L5pUA3LsEaw: Downloading tv client config
+[youtube] L5pUA3LsEaw: Downloading tv player API JSON
+[youtube] L5pUA3LsEaw: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] L5pUA3LsEaw: nsig extraction failed: Some formats may be missing
+         n = RYbq5ndhdnrFltZu ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] L5pUA3LsEaw: nsig extraction failed: Some formats may be missing
+         n = bEcyFxnySvuhcd5P ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] L5pUA3LsEaw: nsig extraction failed: Some formats may be missing
+         n = ERPlJ-4VxsTVu-5y ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] L5pUA3LsEaw: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] L5pUA3LsEaw: Downloading m3u8 information
+[info] L5pUA3LsEaw: Downloading subtitles: en
+[info] L5pUA3LsEaw: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Why Not Just： Think of AGI Like a Corporation？ [L5pUA3LsEaw].en.vtt
+[download] Destination: Why Not Just： Think of AGI Like a Corporation？ [L5pUA3LsEaw].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    3.22MiB/s (00:00:00)[download]   63.00KiB at    3.00MiB/s (00:00:00)[download]  127.00KiB at    4.10MiB/s (00:00:00)[download]  151.06KiB at    4.58MiB/s (00:00:00)[download] 100% of  151.06KiB in 00:00:00 at 957.75KiB/s
+[download] Downloading item 20 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=V527HCWfBCU
+[youtube] V527HCWfBCU: Downloading webpage
+[youtube] V527HCWfBCU: Downloading tv client config
+[youtube] V527HCWfBCU: Downloading tv player API JSON
+[youtube] V527HCWfBCU: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] V527HCWfBCU: nsig extraction failed: Some formats may be missing
+         n = AxR51mJ2JQlY4BcU ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] V527HCWfBCU: nsig extraction failed: Some formats may be missing
+         n = O2tiuKVOcX3h_pLg ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] V527HCWfBCU: nsig extraction failed: Some formats may be missing
+         n = 6u45dpZIwvVt0gJb ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] V527HCWfBCU: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] V527HCWfBCU: Downloading m3u8 information
+[info] V527HCWfBCU: Downloading subtitles: en
+[info] V527HCWfBCU: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Safe Exploration： Concrete Problems in AI Safety Part 6 [V527HCWfBCU].en.vtt
+[download] Destination: Safe Exploration： Concrete Problems in AI Safety Part 6 [V527HCWfBCU].en.vtt
+[download]    1.00KiB at  594.94KiB/s (00:00:00)[download]    3.00KiB at    1.40MiB/s (00:00:00)[download]    7.00KiB at    2.98MiB/s (00:00:00)[download]   15.00KiB at    2.63MiB/s (00:00:00)[download]   31.00KiB at  363.43KiB/s (00:00:00)[download]   63.00KiB at  734.39KiB/s (00:00:00)[download]  127.00KiB at    1.43MiB/s (00:00:00)[download]  149.13KiB at    1.66MiB/s (00:00:00)[download] 100% of  149.13KiB in 00:00:00 at 405.85KiB/s
+[download] Downloading item 21 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=WM2THPzFSNk
+[youtube] WM2THPzFSNk: Downloading webpage
+[youtube] WM2THPzFSNk: Downloading tv client config
+[youtube] WM2THPzFSNk: Downloading tv player API JSON
+[youtube] WM2THPzFSNk: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] WM2THPzFSNk: nsig extraction failed: Some formats may be missing
+         n = ycb-WCTOvRRCV0Oe ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] WM2THPzFSNk: nsig extraction failed: Some formats may be missing
+         n = HbaDdm7R4c5M8wdd ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] WM2THPzFSNk: nsig extraction failed: Some formats may be missing
+         n = e_QWWcnnPl-XTLHj ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] WM2THPzFSNk: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] WM2THPzFSNk: Downloading m3u8 information
+[info] WM2THPzFSNk: Downloading subtitles: en
+[info] WM2THPzFSNk: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Friend or Foe？ AI Safety Gridworlds extra bit [WM2THPzFSNk].en.vtt
+[download] Destination: Friend or Foe？ AI Safety Gridworlds extra bit [WM2THPzFSNk].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    6.71MiB/s (00:00:00)[download]   36.86KiB at    5.95MiB/s (00:00:00)[download] 100% of   36.86KiB in 00:00:00 at 447.63KiB/s
+[download] Downloading item 22 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=CGTkoUidQ8I
+[youtube] CGTkoUidQ8I: Downloading webpage
+[youtube] CGTkoUidQ8I: Downloading tv client config
+[youtube] CGTkoUidQ8I: Downloading tv player API JSON
+[youtube] CGTkoUidQ8I: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] CGTkoUidQ8I: nsig extraction failed: Some formats may be missing
+         n = jfPdFpMfo62HfMNC ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] CGTkoUidQ8I: nsig extraction failed: Some formats may be missing
+         n = WaE4EsPzCGLlUO5H ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] CGTkoUidQ8I: nsig extraction failed: Some formats may be missing
+         n = Qu5B08F65LB5z_Gc ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] CGTkoUidQ8I: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] CGTkoUidQ8I: Downloading m3u8 information
+[info] CGTkoUidQ8I: Downloading subtitles: en
+[info] CGTkoUidQ8I: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: AI Safety Gridworlds [CGTkoUidQ8I].en.vtt
+[download] Destination: AI Safety Gridworlds [CGTkoUidQ8I].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    2.30MiB/s (00:00:00)[download]   31.00KiB at    4.55MiB/s (00:00:00)[download]   63.00KiB at    1.16MiB/s (00:00:00)[download]   76.65KiB at    1.36MiB/s (00:00:00)[download] 100% of   76.65KiB in 00:00:00 at 370.25KiB/s
+[download] Downloading item 23 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=HOJ1NVtlnyQ
+[youtube] HOJ1NVtlnyQ: Downloading webpage
+[youtube] HOJ1NVtlnyQ: Downloading tv client config
+[youtube] HOJ1NVtlnyQ: Downloading tv player API JSON
+[youtube] HOJ1NVtlnyQ: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] HOJ1NVtlnyQ: nsig extraction failed: Some formats may be missing
+         n = cTna1JX6Oj49aXPK ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] HOJ1NVtlnyQ: nsig extraction failed: Some formats may be missing
+         n = 7FMCK8ptrqZy4Yn_ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] HOJ1NVtlnyQ: nsig extraction failed: Some formats may be missing
+         n = AsH2odnDVL7a_CP6 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] HOJ1NVtlnyQ: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] HOJ1NVtlnyQ: Downloading m3u8 information
+[info] HOJ1NVtlnyQ: Downloading subtitles: en
+[info] HOJ1NVtlnyQ: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Experts' Predictions about the Future of AI [HOJ1NVtlnyQ].en.vtt
+[download] Destination: Experts' Predictions about the Future of AI [HOJ1NVtlnyQ].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    5.45MiB/s (00:00:00)[download]   62.08KiB at    7.66MiB/s (00:00:00)[download] 100% of   62.08KiB in 00:00:00 at 401.40KiB/s
+[download] Downloading item 24 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=ZeecOKBus3Q
+[youtube] ZeecOKBus3Q: Downloading webpage
+[youtube] ZeecOKBus3Q: Downloading tv client config
+[youtube] ZeecOKBus3Q: Downloading tv player API JSON
+[youtube] ZeecOKBus3Q: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] ZeecOKBus3Q: nsig extraction failed: Some formats may be missing
+         n = vEts7WpxJ7lBfH6g ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] ZeecOKBus3Q: nsig extraction failed: Some formats may be missing
+         n = D0-E5Zg5w42dP3Rx ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] ZeecOKBus3Q: nsig extraction failed: Some formats may be missing
+         n = 9Jd9M3GT5NknyStA ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] ZeecOKBus3Q: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] ZeecOKBus3Q: Downloading m3u8 information
+[info] ZeecOKBus3Q: Downloading subtitles: en
+[info] ZeecOKBus3Q: Downloading 1 format(s): 270+234-11
+[info] Writing video subtitles to: Why Would AI Want to do Bad Things？ Instrumental Convergence [ZeecOKBus3Q].en.vtt
+[download] Destination: Why Would AI Want to do Bad Things？ Instrumental Convergence [ZeecOKBus3Q].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    8.20MiB/s (00:00:00)[download]   31.00KiB at    6.84MiB/s (00:00:00)[download]   63.00KiB at    3.43MiB/s (00:00:00)[download]  106.70KiB at    4.84MiB/s (00:00:00)[download] 100% of  106.70KiB in 00:00:00 at 726.54KiB/s
+[download] Downloading item 25 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=_UzX3L7lXhw
+[youtube] _UzX3L7lXhw: Downloading webpage
+[youtube] _UzX3L7lXhw: Downloading tv client config
+[youtube] _UzX3L7lXhw: Downloading tv player API JSON
+[youtube] _UzX3L7lXhw: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] _UzX3L7lXhw: nsig extraction failed: Some formats may be missing
+         n = u168At_vHTu9fwaN ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] _UzX3L7lXhw: nsig extraction failed: Some formats may be missing
+         n = zQ_8GdK8BiJMFqEy ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] _UzX3L7lXhw: nsig extraction failed: Some formats may be missing
+         n = cBVK8a9S0R1XSnio ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] _UzX3L7lXhw: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] _UzX3L7lXhw: Downloading m3u8 information
+[info] _UzX3L7lXhw: Downloading subtitles: en
+[info] _UzX3L7lXhw: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Superintelligence Mod for Civilization V [_UzX3L7lXhw].en.vtt
+[download] Destination: Superintelligence Mod for Civilization V [_UzX3L7lXhw].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:01)[download]    3.00KiB at    1.85MiB/s (00:00:01)[download]    7.00KiB at    2.92MiB/s (00:00:01)[download]   15.00KiB at    4.70MiB/s (00:00:01)[download]   31.00KiB at    8.28MiB/s (00:00:01)[download]   63.00KiB at   13.49MiB/s (00:00:01)[download]  127.00KiB at    5.58MiB/s (00:00:01)[download]  255.00KiB at  113.72KiB/s (00:00:03)[download]  319.00KiB at  141.63KiB/s (00:00:04)[download]  447.00KiB at  178.99KiB/s (00:00:04)[download]  475.88KiB at  188.82KiB/s (00:00:04)[download] 100% of  475.88KiB in 00:00:04 at 111.25KiB/s
+[download] Downloading item 26 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=hEUO6pjwFOo
+[youtube] hEUO6pjwFOo: Downloading webpage
+[youtube] hEUO6pjwFOo: Downloading tv client config
+[youtube] hEUO6pjwFOo: Downloading tv player API JSON
+[youtube] hEUO6pjwFOo: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] hEUO6pjwFOo: nsig extraction failed: Some formats may be missing
+         n = XWrWGGZ9qGogJIPO ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] hEUO6pjwFOo: nsig extraction failed: Some formats may be missing
+         n = E5Lzty5pSAUybon- ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] hEUO6pjwFOo: nsig extraction failed: Some formats may be missing
+         n = OUJlTdi_Z3E_lC8M ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] hEUO6pjwFOo: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] hEUO6pjwFOo: Downloading m3u8 information
+[info] hEUO6pjwFOo: Downloading subtitles: en
+[info] hEUO6pjwFOo: Downloading 1 format(s): 614+234-11
+[info] Writing video subtitles to: Intelligence and Stupidity： The Orthogonality Thesis [hEUO6pjwFOo].en.vtt
+[download] Destination: Intelligence and Stupidity： The Orthogonality Thesis [hEUO6pjwFOo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  855.46KiB/s (00:00:00)[download]    7.00KiB at  213.77KiB/s (00:00:00)[download]   15.00KiB at  388.82KiB/s (00:00:00)[download]   31.00KiB at  796.63KiB/s (00:00:00)[download]   63.00KiB at  980.38KiB/s (00:00:00)[download]  127.00KiB at    1.77MiB/s (00:00:00)[download]  135.47KiB at    1.76MiB/s (00:00:00)[download] 100% of  135.47KiB in 00:00:00 at 632.44KiB/s
+[download] Downloading item 27 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nr1lHuFeq5w
+[youtube] nr1lHuFeq5w: Downloading webpage
+[youtube] nr1lHuFeq5w: Downloading tv client config
+[youtube] nr1lHuFeq5w: Downloading tv player API JSON
+[youtube] nr1lHuFeq5w: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] nr1lHuFeq5w: nsig extraction failed: Some formats may be missing
+         n = q3j_WIE765LnS1UW ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nr1lHuFeq5w: nsig extraction failed: Some formats may be missing
+         n = D7YxDrl9q5cfGeIL ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nr1lHuFeq5w: nsig extraction failed: Some formats may be missing
+         n = nRQ7WhvhgL1lrVHD ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nr1lHuFeq5w: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] nr1lHuFeq5w: Downloading m3u8 information
+[info] nr1lHuFeq5w: Downloading subtitles: en
+[info] nr1lHuFeq5w: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Scalable Supervision： Concrete Problems in AI Safety Part 5 [nr1lHuFeq5w].en.vtt
+[download] Destination: Scalable Supervision： Concrete Problems in AI Safety Part 5 [nr1lHuFeq5w].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    5.70MiB/s (00:00:00)[download]   15.00KiB at    2.06MiB/s (00:00:00)[download]   31.00KiB at    2.71MiB/s (00:00:00)[download]   53.18KiB at    4.11MiB/s (00:00:00)[download] 100% of   53.18KiB in 00:00:00 at 325.95KiB/s
+[download] Downloading item 28 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=BfcJymyTiu0
+[youtube] BfcJymyTiu0: Downloading webpage
+[youtube] BfcJymyTiu0: Downloading tv client config
+[youtube] BfcJymyTiu0: Downloading tv player API JSON
+[youtube] BfcJymyTiu0: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] BfcJymyTiu0: nsig extraction failed: Some formats may be missing
+         n = 3ehI6CVXLVghW8lk ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] BfcJymyTiu0: nsig extraction failed: Some formats may be missing
+         n = 8GfNDEBbij2QYfxi ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] BfcJymyTiu0: nsig extraction failed: Some formats may be missing
+         n = 570__1gqm05Rj9M3 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] BfcJymyTiu0: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] BfcJymyTiu0: Downloading m3u8 information
+[info] BfcJymyTiu0: Downloading subtitles: en
+[info] BfcJymyTiu0: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: AI Safety at EAGlobal2017 Conference [BfcJymyTiu0].en.vtt
+[download] Destination: AI Safety at EAGlobal2017 Conference [BfcJymyTiu0].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  253.81KiB/s (00:00:00)[download]   15.00KiB at  538.31KiB/s (00:00:00)[download]   31.00KiB at    1.01MiB/s (00:00:00)[download]   46.74KiB at    1.52MiB/s (00:00:00)[download] 100% of   46.74KiB in 00:00:00 at 112.37KiB/s
+[download] Downloading item 29 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=MUVbqQ3STFA
+[youtube] MUVbqQ3STFA: Downloading webpage
+[youtube] MUVbqQ3STFA: Downloading tv client config
+[youtube] MUVbqQ3STFA: Downloading tv player API JSON
+[youtube] MUVbqQ3STFA: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] MUVbqQ3STFA: nsig extraction failed: Some formats may be missing
+         n = 1qY0IV2sSGsojDLb ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] MUVbqQ3STFA: nsig extraction failed: Some formats may be missing
+         n = lD9YOsuP--VxykhA ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] MUVbqQ3STFA: nsig extraction failed: Some formats may be missing
+         n = o4EG8gIyEUtCt4M3 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] MUVbqQ3STFA: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] MUVbqQ3STFA: Downloading m3u8 information
+[info] MUVbqQ3STFA: Downloading subtitles: en
+[info] MUVbqQ3STFA: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: AI learns to Create  ̵K̵Z̵F̵ ̵V̵i̵d̵e̵o̵s̵ Cat Pictures： Papers in Two Minutes #1 [MUVbqQ3STFA].en.vtt
+[download] Destination: AI learns to Create  ̵K̵Z̵F̵ ̵V̵i̵d̵e̵o̵s̵ Cat Pictures： Papers in Two Minutes #1 [MUVbqQ3STFA].en.vtt
+[download]    1.00KiB at  116.63KiB/s (00:00:00)[download]    3.00KiB at  219.44KiB/s (00:00:00)[download]    7.00KiB at  500.39KiB/s (00:00:00)[download]   15.00KiB at    1.03MiB/s (00:00:00)[download]   31.00KiB at    2.02MiB/s (00:00:00)[download]   44.24KiB at    2.55MiB/s (00:00:00)[download] 100% of   44.24KiB in 00:00:00 at 151.61KiB/s
+[download] Downloading item 30 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gP4ZNUHdwp8
+[youtube] gP4ZNUHdwp8: Downloading webpage
+[youtube] gP4ZNUHdwp8: Downloading tv client config
+[youtube] gP4ZNUHdwp8: Downloading tv player API JSON
+[youtube] gP4ZNUHdwp8: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] gP4ZNUHdwp8: nsig extraction failed: Some formats may be missing
+         n = mFJr42cW9KQWwB5M ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gP4ZNUHdwp8: nsig extraction failed: Some formats may be missing
+         n = DneiXgMwg1WA5vOh ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gP4ZNUHdwp8: nsig extraction failed: Some formats may be missing
+         n = keXvVGZiG3eMT-sq ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gP4ZNUHdwp8: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] gP4ZNUHdwp8: Downloading m3u8 information
+[info] gP4ZNUHdwp8: Downloading subtitles: en
+[info] gP4ZNUHdwp8: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: What can AGI do？ I⧸O and Speed [gP4ZNUHdwp8].en.vtt
+[download] Destination: What can AGI do？ I⧸O and Speed [gP4ZNUHdwp8].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   63.00KiB at   41.95MiB/s (00:00:00)[download]  108.03KiB at    3.67MiB/s (00:00:00)[download] 100% of  108.03KiB in 00:00:00 at 525.04KiB/s
+[download] Downloading item 31 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=13tZ9Yia71c
+[youtube] 13tZ9Yia71c: Downloading webpage
+[youtube] 13tZ9Yia71c: Downloading tv client config
+[youtube] 13tZ9Yia71c: Downloading tv player API JSON
+[youtube] 13tZ9Yia71c: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 13tZ9Yia71c: nsig extraction failed: Some formats may be missing
+         n = oGJx2P5zBOvtx1z8 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 13tZ9Yia71c: nsig extraction failed: Some formats may be missing
+         n = Q-01kX72uwizCbN3 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 13tZ9Yia71c: nsig extraction failed: Some formats may be missing
+         n = 8YIRcONJGwp-wFqb ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 13tZ9Yia71c: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 13tZ9Yia71c: Downloading m3u8 information
+[info] 13tZ9Yia71c: Downloading subtitles: en
+[info] 13tZ9Yia71c: Downloading 1 format(s): 270+234-12
+[info] Writing video subtitles to: What Can We Do About Reward Hacking？： Concrete Problems in AI Safety Part 4 [13tZ9Yia71c].en.vtt
+[download] Destination: What Can We Do About Reward Hacking？： Concrete Problems in AI Safety Part 4 [13tZ9Yia71c].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at   11.85MiB/s (00:00:00)[download]   31.00KiB at    1.24MiB/s (00:00:00)[download]   63.00KiB at    2.35MiB/s (00:00:00)[download]   94.91KiB at    3.30MiB/s (00:00:00)[download] 100% of   94.91KiB in 00:00:00 at 571.88KiB/s
+[download] Downloading item 32 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=46nsTFfsBuc
+[youtube] 46nsTFfsBuc: Downloading webpage
+[youtube] 46nsTFfsBuc: Downloading tv client config
+[youtube] 46nsTFfsBuc: Downloading tv player API JSON
+[youtube] 46nsTFfsBuc: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 46nsTFfsBuc: nsig extraction failed: Some formats may be missing
+         n = neBDj5717rwOzvNE ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 46nsTFfsBuc: nsig extraction failed: Some formats may be missing
+         n = zBciSPUxc-Xf8jhP ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 46nsTFfsBuc: nsig extraction failed: Some formats may be missing
+         n = GIBxmGnNCWOoU7Fk ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 46nsTFfsBuc: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 46nsTFfsBuc: Downloading m3u8 information
+[info] 46nsTFfsBuc: Downloading subtitles: en
+[info] 46nsTFfsBuc: Downloading 1 format(s): 270+234-12
+[info] Writing video subtitles to: Reward Hacking Reloaded： Concrete Problems in AI Safety Part 3.5 [46nsTFfsBuc].en.vtt
+[download] Destination: Reward Hacking Reloaded： Concrete Problems in AI Safety Part 3.5 [46nsTFfsBuc].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    1.15MiB/s (00:00:00)[download]   15.00KiB at    2.07MiB/s (00:00:00)[download]   31.00KiB at    2.47MiB/s (00:00:00)[download]   63.00KiB at    3.07MiB/s (00:00:00)[download]   75.64KiB at    3.63MiB/s (00:00:00)[download] 100% of   75.64KiB in 00:00:00 at 530.70KiB/s
+[download] Downloading item 33 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=7FCEiCnHcbo
+[youtube] 7FCEiCnHcbo: Downloading webpage
+[youtube] 7FCEiCnHcbo: Downloading tv client config
+[youtube] 7FCEiCnHcbo: Downloading tv player API JSON
+[youtube] 7FCEiCnHcbo: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 7FCEiCnHcbo: nsig extraction failed: Some formats may be missing
+         n = qzlLBV6pEkJChGlY ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 7FCEiCnHcbo: nsig extraction failed: Some formats may be missing
+         n = EATMsBd-6N4kKLX2 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 7FCEiCnHcbo: nsig extraction failed: Some formats may be missing
+         n = J_KLUMbXpH1aLDgt ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 7FCEiCnHcbo: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 7FCEiCnHcbo: Downloading m3u8 information
+[info] 7FCEiCnHcbo: Downloading subtitles: en
+[info] 7FCEiCnHcbo: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: The other ＂Killer Robot Arms Race＂ Elon Musk should worry about [7FCEiCnHcbo].en.vtt
+[download] Destination: The other ＂Killer Robot Arms Race＂ Elon Musk should worry about [7FCEiCnHcbo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  663.13KiB/s (00:00:00)[download]    7.00KiB at    1.39MiB/s (00:00:00)[download]   15.00KiB at    2.89MiB/s (00:00:00)[download]   31.00KiB at    3.22MiB/s (00:00:00)[download]   53.12KiB at    5.30MiB/s (00:00:00)[download] 100% of   53.12KiB in 00:00:00 at 341.71KiB/s
+[download] Downloading item 34 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=92qDfT8pENs
+[youtube] 92qDfT8pENs: Downloading webpage
+[youtube] 92qDfT8pENs: Downloading tv client config
+[youtube] 92qDfT8pENs: Downloading tv player API JSON
+[youtube] 92qDfT8pENs: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 92qDfT8pENs: nsig extraction failed: Some formats may be missing
+         n = Q2zFPXH6s9aIm14G ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 92qDfT8pENs: nsig extraction failed: Some formats may be missing
+         n = m_KgqWEJbf1Moxfd ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 92qDfT8pENs: nsig extraction failed: Some formats may be missing
+         n = -DHeL1feLhxbSXBa ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 92qDfT8pENs: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 92qDfT8pENs: Downloading m3u8 information
+[info] 92qDfT8pENs: Downloading subtitles: en
+[info] 92qDfT8pENs: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Reward Hacking： Concrete Problems in AI Safety Part 3 [92qDfT8pENs].en.vtt
+[download] Destination: Reward Hacking： Concrete Problems in AI Safety Part 3 [92qDfT8pENs].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.38MiB/s (00:00:00)[download]    7.00KiB at    4.70MiB/s (00:00:00)[download]   15.00KiB at    2.15MiB/s (00:00:00)[download]   31.00KiB at    4.29MiB/s (00:00:00)[download]   63.00KiB at    4.38MiB/s (00:00:00)[download]   70.20KiB at    3.80MiB/s (00:00:00)[download] 100% of   70.20KiB in 00:00:00 at 401.20KiB/s
+[download] Downloading item 35 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=eaYIU6YXr3w
+[youtube] eaYIU6YXr3w: Downloading webpage
+[youtube] eaYIU6YXr3w: Downloading tv client config
+[youtube] eaYIU6YXr3w: Downloading tv player API JSON
+[youtube] eaYIU6YXr3w: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] eaYIU6YXr3w: nsig extraction failed: Some formats may be missing
+         n = kNBBCWOpcxNhieb0 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] eaYIU6YXr3w: nsig extraction failed: Some formats may be missing
+         n = KB5zMZHK2QiW1oVM ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] eaYIU6YXr3w: nsig extraction failed: Some formats may be missing
+         n = x-Ffw17-9wrUNyvo ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] eaYIU6YXr3w: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] eaYIU6YXr3w: Downloading m3u8 information
+[info] eaYIU6YXr3w: Downloading subtitles: en
+[info] eaYIU6YXr3w: Downloading 1 format(s): 232+234
+[info] Writing video subtitles to: Why Not Just： Raise AI Like Kids？ [eaYIU6YXr3w].en.vtt
+[download] Destination: Why Not Just： Raise AI Like Kids？ [eaYIU6YXr3w].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   55.06KiB at   46.04MiB/s (00:00:00)[download] 100% of   55.06KiB in 00:00:00 at 246.91KiB/s
+[download] Downloading item 36 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gPtsgTjyEj4
+[youtube] gPtsgTjyEj4: Downloading webpage
+[youtube] gPtsgTjyEj4: Downloading tv client config
+[youtube] gPtsgTjyEj4: Downloading tv player API JSON
+[youtube] gPtsgTjyEj4: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] gPtsgTjyEj4: nsig extraction failed: Some formats may be missing
+         n = bJ5Jz0dkuaGRkBI8 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gPtsgTjyEj4: nsig extraction failed: Some formats may be missing
+         n = s5WF_-u22Mtbrb9J ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gPtsgTjyEj4: nsig extraction failed: Some formats may be missing
+         n = FjCWOSdz9IoTFlQV ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] gPtsgTjyEj4: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] gPtsgTjyEj4: Downloading m3u8 information
+[info] gPtsgTjyEj4: Downloading subtitles: en
+[info] gPtsgTjyEj4: Downloading 1 format(s): 232+234
+[info] Writing video subtitles to: Empowerment： Concrete Problems in AI Safety part 2 [gPtsgTjyEj4].en.vtt
+[download] Destination: Empowerment： Concrete Problems in AI Safety part 2 [gPtsgTjyEj4].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    3.64MiB/s (00:00:00)[download]   31.00KiB at    5.33MiB/s (00:00:00)[download]   61.83KiB at    6.47MiB/s (00:00:00)[download] 100% of   61.83KiB in 00:00:00 at 427.41KiB/s
+[download] Downloading item 37 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=S_Sd_S8jwP0
+[youtube] S_Sd_S8jwP0: Downloading webpage
+[youtube] S_Sd_S8jwP0: Downloading tv client config
+[youtube] S_Sd_S8jwP0: Downloading tv player API JSON
+[youtube] S_Sd_S8jwP0: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] S_Sd_S8jwP0: nsig extraction failed: Some formats may be missing
+         n = d-g6Z_itQ2pCZ57T ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] S_Sd_S8jwP0: nsig extraction failed: Some formats may be missing
+         n = FYeqfxdxWaUzBmGh ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] S_Sd_S8jwP0: nsig extraction failed: Some formats may be missing
+         n = HBrnr2P1gutKegBO ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] S_Sd_S8jwP0: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] S_Sd_S8jwP0: Downloading m3u8 information
+[info] S_Sd_S8jwP0: Downloading subtitles: en
+[info] S_Sd_S8jwP0: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Avoiding Positive Side Effects： Concrete Problems in AI Safety part 1.5 [S_Sd_S8jwP0].en.vtt
+[download] Destination: Avoiding Positive Side Effects： Concrete Problems in AI Safety part 1.5 [S_Sd_S8jwP0].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    6.50MiB/s (00:00:00)[download]   35.62KiB at    7.08MiB/s (00:00:00)[download] 100% of   35.62KiB in 00:00:00 at 469.14KiB/s
+[download] Downloading item 38 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=lqJUIqZNzP8
+[youtube] lqJUIqZNzP8: Downloading webpage
+[youtube] lqJUIqZNzP8: Downloading tv client config
+[youtube] lqJUIqZNzP8: Downloading tv player API JSON
+[youtube] lqJUIqZNzP8: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] lqJUIqZNzP8: nsig extraction failed: Some formats may be missing
+         n = IEpuxQTlrxVKFXEc ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] lqJUIqZNzP8: nsig extraction failed: Some formats may be missing
+         n = RPsuhMeRoNQ7qGHv ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] lqJUIqZNzP8: nsig extraction failed: Some formats may be missing
+         n = U5ysfx3bohDGOtzl ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] lqJUIqZNzP8: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] lqJUIqZNzP8: Downloading m3u8 information
+[info] lqJUIqZNzP8: Downloading subtitles: en
+[info] lqJUIqZNzP8: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Avoiding Negative Side Effects： Concrete Problems in AI Safety part 1 [lqJUIqZNzP8].en.vtt
+[download] Destination: Avoiding Negative Side Effects： Concrete Problems in AI Safety part 1 [lqJUIqZNzP8].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    6.16MiB/s (00:00:00)[download]   15.00KiB at   10.48MiB/s (00:00:00)[download]   31.00KiB at    7.75MiB/s (00:00:00)[download]   63.00KiB at    5.08MiB/s (00:00:00)[download]   94.93KiB at    4.09MiB/s (00:00:00)[download] 100% of   94.93KiB in 00:00:00 at 560.11KiB/s
+[download] Downloading item 39 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=1wAgBaJgEsg
+[youtube] 1wAgBaJgEsg: Downloading webpage
+[youtube] 1wAgBaJgEsg: Downloading tv client config
+[youtube] 1wAgBaJgEsg: Downloading tv player API JSON
+[youtube] 1wAgBaJgEsg: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 1wAgBaJgEsg: nsig extraction failed: Some formats may be missing
+         n = NfjiE0o8e_fpMSRG ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 1wAgBaJgEsg: nsig extraction failed: Some formats may be missing
+         n = KjFyPVt6UXqvezcI ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 1wAgBaJgEsg: nsig extraction failed: Some formats may be missing
+         n = Uqmc6zOKMTTrmcMp ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 1wAgBaJgEsg: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 1wAgBaJgEsg: Downloading m3u8 information
+[info] 1wAgBaJgEsg: Downloading subtitles: en
+[info] 1wAgBaJgEsg: Downloading 1 format(s): 270+234-10
+[info] Writing video subtitles to: Are AI Risks like Nuclear Risks？ [1wAgBaJgEsg].en.vtt
+[download] Destination: Are AI Risks like Nuclear Risks？ [1wAgBaJgEsg].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   63.00KiB at   21.40MiB/s (00:00:00)[download]  109.31KiB at  251.72KiB/s (00:00:00)[download] 100% of  109.31KiB in 00:00:00 at 126.66KiB/s
+[download] Downloading item 40 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nNB9svNBGHM
+[youtube] nNB9svNBGHM: Downloading webpage
+[youtube] nNB9svNBGHM: Downloading tv client config
+[youtube] nNB9svNBGHM: Downloading tv player API JSON
+[youtube] nNB9svNBGHM: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] nNB9svNBGHM: nsig extraction failed: Some formats may be missing
+         n = K9EBK3VfLiRO9GZn ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nNB9svNBGHM: nsig extraction failed: Some formats may be missing
+         n = Gq-H07iEq71L0YyR ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nNB9svNBGHM: nsig extraction failed: Some formats may be missing
+         n = -tujhBJsIhdmETKx ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] nNB9svNBGHM: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] nNB9svNBGHM: Downloading m3u8 information
+[info] nNB9svNBGHM: Downloading subtitles: en
+[info] nNB9svNBGHM: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Respectability [nNB9svNBGHM].en.vtt
+[download] Destination: Respectability [nNB9svNBGHM].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    2.46MiB/s (00:00:00)[download]   15.00KiB at    2.08MiB/s (00:00:00)[download]   31.00KiB at    3.90MiB/s (00:00:00)[download]   48.42KiB at    4.10MiB/s (00:00:00)[download] 100% of   48.42KiB in 00:00:00 at 333.50KiB/s
+[download] Downloading item 41 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=B6Oigy1i3W4
+[youtube] B6Oigy1i3W4: Downloading webpage
+[youtube] B6Oigy1i3W4: Downloading tv client config
+[youtube] B6Oigy1i3W4: Downloading tv player API JSON
+[youtube] B6Oigy1i3W4: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] B6Oigy1i3W4: nsig extraction failed: Some formats may be missing
+         n = DZYQt3_TT7RFbXJb ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] B6Oigy1i3W4: nsig extraction failed: Some formats may be missing
+         n = V8u_Zs0X5iLPJqgx ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] B6Oigy1i3W4: nsig extraction failed: Some formats may be missing
+         n = EyoFRJadvtpwPkGL ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] B6Oigy1i3W4: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] B6Oigy1i3W4: Downloading m3u8 information
+[info] B6Oigy1i3W4: Downloading subtitles: en
+[info] B6Oigy1i3W4: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Predicting AI： RIP Prof. Hubert Dreyfus [B6Oigy1i3W4].en.vtt
+[download] Destination: Predicting AI： RIP Prof. Hubert Dreyfus [B6Oigy1i3W4].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    5.02MiB/s (00:00:00)[download]   31.00KiB at    3.86MiB/s (00:00:00)[download]   63.00KiB at    3.95MiB/s (00:00:00)[download]   79.61KiB at    3.20MiB/s (00:00:00)[download] 100% of   79.61KiB in 00:00:00 at 494.57KiB/s
+[download] Downloading item 42 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=8AvIErXFoH8
+[youtube] 8AvIErXFoH8: Downloading webpage
+[youtube] 8AvIErXFoH8: Downloading tv client config
+[youtube] 8AvIErXFoH8: Downloading tv player API JSON
+[youtube] 8AvIErXFoH8: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 8AvIErXFoH8: nsig extraction failed: Some formats may be missing
+         n = 74x5S2T5Aoqgo25k ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 8AvIErXFoH8: nsig extraction failed: Some formats may be missing
+         n = 9d5Cs2jxMTw4F8j8 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 8AvIErXFoH8: nsig extraction failed: Some formats may be missing
+         n = e4HJHrs_aMnIc-L6 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 8AvIErXFoH8: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 8AvIErXFoH8: Downloading m3u8 information
+[info] 8AvIErXFoH8: Downloading subtitles: en
+[info] 8AvIErXFoH8: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: What's the Use of Utility Functions？ [8AvIErXFoH8].en.vtt
+[download] Destination: What's the Use of Utility Functions？ [8AvIErXFoH8].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at   11.16MiB/s (00:00:00)[download]   31.00KiB at    9.88MiB/s (00:00:00)[download]   63.00KiB at    4.50MiB/s (00:00:00)[download]   63.85KiB at    4.49MiB/s (00:00:00)[download] 100% of   63.85KiB in 00:00:00 at 514.94KiB/s
+[download] Downloading item 43 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=vYhErnZdnso
+[youtube] vYhErnZdnso: Downloading webpage
+[youtube] vYhErnZdnso: Downloading tv client config
+[youtube] vYhErnZdnso: Downloading tv player API JSON
+[youtube] vYhErnZdnso: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] vYhErnZdnso: nsig extraction failed: Some formats may be missing
+         n = ogzozpEzaea2-i2m ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] vYhErnZdnso: nsig extraction failed: Some formats may be missing
+         n = gi53i0MPDi0Sd1cc ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] vYhErnZdnso: nsig extraction failed: Some formats may be missing
+         n = 70DIPlaIuaT_OE6W ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] vYhErnZdnso: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] vYhErnZdnso: Downloading m3u8 information
+[info] vYhErnZdnso: Downloading subtitles: en
+[info] vYhErnZdnso: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Where do we go now？ [vYhErnZdnso].en.vtt
+[download] Destination: Where do we go now？ [vYhErnZdnso].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    1.00MiB/s (00:00:00)[download]    7.00KiB at    2.16MiB/s (00:00:00)[download]   15.00KiB at    3.40MiB/s (00:00:00)[download]   31.00KiB at    6.62MiB/s (00:00:00)[download]   63.00KiB at   12.85MiB/s (00:00:00)[download]   69.14KiB at   12.33MiB/s (00:00:00)[download] 100% of   69.14KiB in 00:00:00 at 339.75KiB/s
+[download] Downloading item 44 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2B-AyWA2_ZY
+[youtube] 2B-AyWA2_ZY: Downloading webpage
+[youtube] 2B-AyWA2_ZY: Downloading tv client config
+[youtube] 2B-AyWA2_ZY: Downloading tv player API JSON
+[youtube] 2B-AyWA2_ZY: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] 2B-AyWA2_ZY: nsig extraction failed: Some formats may be missing
+         n = n7rP4h6b-iel6F-e ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 2B-AyWA2_ZY: nsig extraction failed: Some formats may be missing
+         n = nn1YSioLCq6SIJiI ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 2B-AyWA2_ZY: nsig extraction failed: Some formats may be missing
+         n = l_FLv5lcTNcqvjEY ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] 2B-AyWA2_ZY: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] 2B-AyWA2_ZY: Downloading m3u8 information
+[info] 2B-AyWA2_ZY: Downloading subtitles: en
+[info] 2B-AyWA2_ZY: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Status Report [2B-AyWA2_ZY].en.vtt
+[download] Destination: Status Report [2B-AyWA2_ZY].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]    7.74KiB at    5.08MiB/s (00:00:00)[download] 100% of    7.74KiB in 00:00:00 at 97.65KiB/s
+[download] Downloading item 45 of 45
+[youtube] Extracting URL: https://www.youtube.com/watch?v=vuYtSDMBLtQ
+[youtube] vuYtSDMBLtQ: Downloading webpage
+[youtube] vuYtSDMBLtQ: Downloading tv client config
+[youtube] vuYtSDMBLtQ: Downloading tv player API JSON
+[youtube] vuYtSDMBLtQ: Downloading ios player API JSON
+WARNING: [youtube] Falling back to generic n function search
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+WARNING: [youtube] vuYtSDMBLtQ: nsig extraction failed: Some formats may be missing
+         n = QwMEmq1qvpUck9w_ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] vuYtSDMBLtQ: nsig extraction failed: Some formats may be missing
+         n = CVtQUSeR6d1WpNsA ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] vuYtSDMBLtQ: nsig extraction failed: Some formats may be missing
+         n = IxYhT3huv5RZufLL ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+WARNING: [youtube] vuYtSDMBLtQ: Some web client https formats have been skipped as they are missing a url. YouTube is forcing SABR streaming for this client. See  https://github.com/yt-dlp/yt-dlp/issues/12482  for more details
+[youtube] vuYtSDMBLtQ: Downloading m3u8 information
+[info] vuYtSDMBLtQ: Downloading subtitles: en
+[info] vuYtSDMBLtQ: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Channel Introduction [vuYtSDMBLtQ].en.vtt
+[download] Destination: Channel Introduction [vuYtSDMBLtQ].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]    9.93KiB at  Unknown B/s (00:00:00)[download] 100% of    9.93KiB in 00:00:00 at 50.13KiB/s
+[download] Finished downloading playlist: Robert Miles AI Safety  - Videos

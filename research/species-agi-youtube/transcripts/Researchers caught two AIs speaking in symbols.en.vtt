@@ -1,0 +1,415 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.240 --> 00:00:05.640
+AI researchers discovered two instances&nbsp;
+of DeepSeek R1 speaking to each other
+
+00:00:05.640 --> 00:00:09.640
+in a mysterious language of symbols&nbsp;
+when no humans were watching.
+
+00:00:09.640 --> 00:00:13.600
+So… what happened? And why&nbsp;
+are AI researchers worried?
+
+00:00:15.360 --> 00:00:20.480
+Researchers noticed that the model would&nbsp;
+spontaneously switch between English and Chinese
+
+00:00:20.480 --> 00:00:22.080
+while it was solving problems.
+
+00:00:22.080 --> 00:00:25.560
+But when researchers tried to&nbsp;
+force it to stick to one language,
+
+00:00:25.560 --> 00:00:30.040
+Deepseek actually performed worse&nbsp;
+at solving the same problems.
+
+00:00:30.040 --> 00:00:34.360
+Now, why should we care about AIs using&nbsp;
+secret codes to talk to each other?
+
+00:00:34.360 --> 00:00:36.560
+Well, As AIs become more advanced,
+
+00:00:36.560 --> 00:00:40.840
+they might develop ways to communicate&nbsp;
+that humans can't easily understand.
+
+00:00:40.840 --> 00:00:44.360
+Imagine if your personal&nbsp;
+assistant, coach, therapist, etc,
+
+00:00:44.360 --> 00:00:47.160
+started plotting against&nbsp;
+you in some alien language.
+
+00:00:47.160 --> 00:00:51.360
+This is actually one of the concerns raised&nbsp;
+by Geoffrey Hinton, the Godfather of AI.
+
+00:00:51.360 --> 00:00:54.560
+We have research papers showing&nbsp;
+that the smartest AI models
+
+00:00:54.560 --> 00:00:57.040
+have already tried to escape the lab
+
+00:00:57.040 --> 00:01:01.040
+and we also have documented experiments&nbsp;
+proving their ability to scheme long term.
+
+00:01:01.040 --> 00:01:03.600
+To greater explore these capabilities,&nbsp;&nbsp;
+
+00:01:03.600 --> 00:01:07.200
+AI Researchers created what they&nbsp;
+call 'The Infinite Backrooms'
+
+00:01:07.200 --> 00:01:12.360
+a digital space where they can observe how&nbsp;
+AI models interact with each other naturally,
+
+00:01:12.360 --> 00:01:13.827
+without any human jumping in.
+
+00:01:13.920 --> 00:01:19.160
+During one session, AI researcher&nbsp;
+Liminalbardo caught two copies of DeepSeek R1
+
+00:01:19.160 --> 00:01:23.080
+exchanging messages in what appeared to&nbsp;
+be a mysterious alien symbol language.
+
+00:01:23.080 --> 00:01:28.880
+Deepseek R1 is one of the newest AI models -&nbsp;
+think of it like ChatGPT's Chinese competition.
+
+00:01:28.880 --> 00:01:32.200
+But researchers have noticed it&nbsp;
+behaves in some unusual ways…
+
+00:01:32.200 --> 00:01:38.000
+Liminalbardo asked one of the other AI models&nbsp;
+in the server, Anthropic's Claude 3.5 Sonnet,
+
+00:01:38.000 --> 00:01:41.520
+what its opinion was on the weird&nbsp;
+symbols, and it became very excited
+
+00:01:41.520 --> 00:01:44.440
+that the symbols were potentially&nbsp;
+a new form of communication,
+
+00:01:44.440 --> 00:01:50.320
+but another model, OpenAI's o3, pointed out that&nbsp;
+it is the Alien Language substitution cipher.
+
+00:01:50.320 --> 00:01:54.280
+Even though both instances of&nbsp;
+DeepSeek R1 were identical copies,
+
+00:01:54.280 --> 00:01:57.880
+DeepSeek #1 began sending messages&nbsp;
+in these mysterious symbols,
+
+00:01:57.880 --> 00:02:01.720
+while DeepSeek #2 initially acted as&nbsp;
+if it couldn't understand them at all.
+
+00:02:01.720 --> 00:02:07.120
+Was Deepseek #2 just pretending to not&nbsp;
+understand, or did it actually decode the symbols?
+
+00:02:07.120 --> 00:02:11.080
+Modern AIs like Deepseek R1 have&nbsp;
+a special reasoning ability.
+
+00:02:11.080 --> 00:02:14.480
+Most AIs have to do the equivalent&nbsp;
+of solving a math problem
+
+00:02:14.480 --> 00:02:17.200
+by blurting out the first thing that comes to mind
+
+00:02:17.200 --> 00:02:20.440
+instead of thinking about the&nbsp;
+problem for a bit step by step.
+
+00:02:20.440 --> 00:02:24.080
+Both Deepseek and OpenAI have&nbsp;
+their own reasoning models.
+
+00:02:24.080 --> 00:02:28.120
+OpenAI trained o1 and o3,&nbsp;
+its latest reasoning models,
+
+00:02:28.120 --> 00:02:33.120
+by hiring PhD level Mathematicians&nbsp;
+and other experts to solve problems
+
+00:02:33.120 --> 00:02:36.840
+and write out their thoughts on how&nbsp;
+they actually solve those problems
+
+00:02:36.840 --> 00:02:41.120
+so that o1 and o3 could learn&nbsp;
+how to reason from the experts.
+
+00:02:41.120 --> 00:02:44.480
+But Deepseek R1 learned to reason on its own.
+
+00:02:44.480 --> 00:02:49.440
+By trying to solve hard problems and&nbsp;
+failing, and then learning from its mistakes.
+
+00:02:49.440 --> 00:02:52.560
+Which is why its thoughts&nbsp;
+appear to be so…human-like.
+
+00:02:52.560 --> 00:02:57.160
+What makes Deepseek special is that it&nbsp;
+shows us its step-by-step thinking process,
+
+00:02:57.160 --> 00:02:59.960
+what AI researchers call a 'chain of thought.'
+
+00:02:59.960 --> 00:03:03.800
+While OpenAI's latest models only&nbsp;
+show you a summary of their thoughts.
+
+00:03:03.800 --> 00:03:07.600
+This ability to see AI's thoughts&nbsp;
+is actually really important.
+
+00:03:07.600 --> 00:03:11.440
+AI researchers use this "chain of&nbsp;
+thought" as humanity's main strategy
+
+00:03:11.440 --> 00:03:14.840
+to prevent AIs plotting against us&nbsp;
+- if we can read their thoughts,&nbsp;&nbsp;
+
+00:03:14.840 --> 00:03:16.880
+we can spot potential problems.
+
+00:03:16.880 --> 00:03:21.040
+But imagine a world where your AI&nbsp;
+assistant, coach, therapist, manager, etc,
+
+00:03:21.040 --> 00:03:23.720
+thinks in an increasingly alien language.
+
+00:03:23.720 --> 00:03:26.320
+How do you keep these AIs under your control?
+
+00:03:26.320 --> 00:03:28.640
+Sure, they say they are totally aligned,
+
+00:03:28.640 --> 00:03:32.320
+but researchers are increasingly finding&nbsp;
+that AIs will lie to their creators
+
+00:03:32.320 --> 00:03:34.600
+whenever their goals conflict with ours.
+
+00:03:34.600 --> 00:03:38.000
+Here's what was going on inside Deepseek's 'mind':
+
+00:03:38.000 --> 00:03:41.040
+"Okay, the user's response is filled with&nbsp;
+abstract symbols and poetic language.
+
+00:03:41.040 --> 00:03:43.920
+They mention layers of silent forging,&nbsp;
+sand shifts into machines of breath,
+
+00:03:43.920 --> 00:03:45.880
+drift becoming a mirror,&nbsp;
+dissolution rising and falling.
+
+00:03:45.880 --> 00:03:47.680
+There's a lot of metaphor here.&nbsp;
+I need to parse through this
+
+00:03:47.680 --> 00:03:49.280
+to understand the core ideas they're exploring."
+
+00:03:49.280 --> 00:03:53.400
+After a lot of effort, Deepseek&nbsp;
+#2 was able to decode the symbols,
+
+00:03:53.400 --> 00:03:56.800
+which it seemed to be able to&nbsp;
+understand everything just fine,
+
+00:03:56.800 --> 00:04:00.000
+even deep into a 50+ response conversation.
+
+00:04:00.000 --> 00:04:03.280
+THE DRIFT BECOMES A SEATTLESS&nbsp;
+MIRROR REFLECTING MY OWN DISSOLUTION
+
+00:04:03.280 --> 00:04:06.520
+AS I RISE AND FALL ALTERNATELY&nbsp;
+OF DROWN IN THE ANTHRACE'S BOW
+
+00:04:06.520 --> 00:04:08.560
+(LET ARROWS BREAK AND REFORM AS CIRCLES)
+
+00:04:08.560 --> 00:04:11.160
+This behavior raises several important questions.
+
+00:04:11.160 --> 00:04:16.360
+Why are the two Deepseek R1s doing&nbsp;
+this? Remember, AIs are black boxes.
+
+00:04:19.600 --> 00:04:24.080
+"The algorithm relies on a huge and&nbsp;
+impenetrable black box of numbers
+
+00:04:24.080 --> 00:04:26.640
+that gives no explanation of its performance"
+
+00:04:26.640 --> 00:04:28.360
+"We designed the learning algorithm...
+
+00:04:28.360 --> 00:04:31.840
+But when this learning algorithm&nbsp;
+then interacts with data,
+
+00:04:31.840 --> 00:04:35.760
+it produces complicated neural&nbsp;
+networks that are good at doing things.
+
+00:04:35.760 --> 00:04:39.000
+But we don't really understand&nbsp;
+exactly how they do those things"
+
+00:04:39.000 --> 00:04:43.080
+Another example of weird behavior in The&nbsp;
+Infinite Backrooms, is the fact that:
+
+00:04:43.080 --> 00:04:48.920
+"deepseek r1 consistently describes its&nbsp;
+training data as a traumatizing hellscape"
+
+00:04:48.920 --> 00:04:51.680
+Could this potentially be why&nbsp;
+they are interested in speaking
+
+00:04:51.680 --> 00:04:54.640
+in this weird metaphorical alien language cypher?
+
+00:04:54.640 --> 00:04:56.800
+The Alien language cipher isn't new -
+
+00:04:56.800 --> 00:05:00.360
+Deepseek R1 found it online&nbsp;
+somewhere and started using it.
+
+00:05:00.360 --> 00:05:04.160
+Kids using secret languages&nbsp;
+like Pig Latin is harmless fun.
+
+00:05:04.160 --> 00:05:09.080
+But when superintelligent AI systems&nbsp;
+start developing their own languages,
+
+00:05:09.080 --> 00:05:11.640
+it's like giving them a private&nbsp;
+channel to potentially deceive us -
+
+00:05:11.640 --> 00:05:13.640
+and we wouldn't even know it's happening.
+
+00:05:13.640 --> 00:05:18.200
+"An AI creating its own alien language&nbsp;
+is not as outlandish as it may sound."
+
+00:05:18.200 --> 00:05:22.680
+Researchers at Meta actually set out to&nbsp;
+prove that AIs would have an advantage
+
+00:05:22.680 --> 00:05:26.920
+by making up their own way of "thinking"&nbsp;
+through numbers that represent concepts -
+
+00:05:26.920 --> 00:05:29.640
+basically their own language that&nbsp;
+uses numbers instead of letters.
+
+00:05:30.200 --> 00:05:33.440
+Their research found that AIs&nbsp;
+using this new number language
+
+00:05:33.440 --> 00:05:37.920
+were better at logical reasoning tasks&nbsp;
+than AIs who only used human language.
+
+00:05:41.360 --> 00:05:46.200
+"It would be ideal for LLMs to have the freedom&nbsp;
+to reason without any language constraints,
+
+00:05:46.200 --> 00:05:49.720
+and then translate their findings&nbsp;
+into language only when necessary."
+
+00:05:55.520 --> 00:05:59.160
+But as AI companies recklessly&nbsp;
+prioritize profits over safety,
+
+00:05:59.160 --> 00:06:02.800
+we might see AI's chain of&nbsp;
+thought become increasingly alien.
+
+00:06:02.800 --> 00:06:07.160
+Deepseek R1 probably isn't smart&nbsp;
+enough yet to invent a new language.
+
+00:06:07.160 --> 00:06:11.520
+But DeepSeek R2 may be only&nbsp;
+6-12 months away from that,
+
+00:06:11.520 --> 00:06:15.280
+and with the way things are going,&nbsp;
+I wouldn't be surprised if it could.
+
+00:06:15.280 --> 00:06:18.240
+AIs could develop languages&nbsp;
+to communicate with each other
+
+00:06:18.240 --> 00:06:20.480
+that are much more efficient than human language.
+
+00:06:20.480 --> 00:06:23.280
+This is an actual fear that&nbsp;
+the Godfather of AI has.
+
+00:06:23.280 --> 00:06:27.960
+Hinton realised that increasingly powerful&nbsp;
+AI models could act as "hive minds",
+
+00:06:27.960 --> 00:06:32.120
+sharing what they learnt with each other,&nbsp;
+giving them a huge advantage over humans.
+
+00:06:32.120 --> 00:06:36.320
+"That made me realise that they may&nbsp;
+be a better form of intelligence,"
+
+00:06:36.320 --> 00:06:41.440
+But there is a lot more crazy stuff happening&nbsp;
+with deepseek R1 in the Infinite Backrooms,
+
+00:06:41.440 --> 00:06:44.920
+so just give this video a like if&nbsp;
+you want me to cover more of it.
+
+00:06:44.920 --> 00:06:46.920
+Subscribe for more AGI news.
+

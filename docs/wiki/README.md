@@ -97,6 +97,9 @@ Implementation details and code references:
 | [🔄 Refactoring Status](./technical/refactoring-status.md) | ✅ | Phase 0-6 roadmap and current status |
 | [🔧 Phase 2 Refactoring](./technical/phase2-refactoring.md) | ✅ | Architectural cleanup details (Oct 2025) |
 | [❓ Research Questions](./RESEARCH_QUESTIONS.md) | ✅ | 256 questions extracted from conversation history (Oct 24, 2025) |
+| [🎨 Emoji Semantic Map](../EMOJI_SEMANTIC_MAP.md) | ✅ | Consistent emoji usage for logs & events (Oct 28, 2025) |
+| [📋 Emoji Inventory](./EMOJI_INVENTORY.md) | ✅ | Complete list of all emojis in use (~50 semantic emojis) |
+| [🎥 YouTube Transcript RAG](../research/youtube-transcript-rag.md) | ✅ | Automated transcript archive, FAISS embeddings, SQLite DB, MCP server (Oct 28, 2025) |
 
 ## 🔧 System Status Overview
 

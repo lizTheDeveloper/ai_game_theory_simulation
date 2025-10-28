@@ -542,8 +542,9 @@ export function updateRegionalPopulations(state: GameState): void {
   }
 
   // === 8. UPDATE GLOBAL POPULATION ===
-  pop.population = totalPopulation / 1000; // Convert millions to billions
-  pop.monthlyExcessDeaths = totalCrisisDeaths / 1000; // Convert to billions
+  // Store in millions (consistent with regional populations)
+  pop.population = totalPopulation; // Already in millions
+  pop.monthlyExcessDeaths = totalCrisisDeaths; // Already in millions
 }
 
 /**

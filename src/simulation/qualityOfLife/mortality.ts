@@ -8,37 +8,50 @@
  * - UNEP (2024): Planetary boundaries and mortality impacts
  * - IPBES (2019): Ecosystem collapse → agricultural failure → famine
  * - FAO State of Food Security (2024): Famine triggers and thresholds
+ *
+ * MIGRATION (Oct 28, 2025): Converted to centralized Bayesian mortality system
+ * - Now calls addMortalityRisk() instead of returning death rates
+ * - Enables full Bayesian compounding, demographic vulnerability, multi-causal attribution
  */
 
 import { GameState } from '@/types/game';
+import { addMortalityRisk } from '@/simulation/bayesianMortality';
 
 /**
  * Environmental mortality breakdown by cause
+ * DEPRECATED (Oct 28, 2025): Return type kept for backward compatibility
+ * Function now adds mortality risks directly via addMortalityRisk()
  */
 export interface EnvironmentalMortalityBreakdown {
-  total: number;           // Total monthly mortality rate
-  famine: number;          // Deaths from food insecurity
-  disease: number;         // Deaths from water/sanitation
-  climate: number;         // Deaths from heat/disasters
-  ecosystem: number;       // Deaths from biodiversity loss
-  pollution: number;       // Deaths from pollution (baseline)
+  total: number;           // Total monthly mortality rate (DEPRECATED - always returns 0)
+  famine: number;          // Deaths from food insecurity (DEPRECATED - always returns 0)
+  disease: number;         // Deaths from water/sanitation (DEPRECATED - always returns 0)
+  climate: number;         // Deaths from heat/disasters (DEPRECATED - always returns 0)
+  ecosystem: number;       // Deaths from biodiversity loss (DEPRECATED - always returns 0)
+  pollution: number;       // Deaths from pollution (baseline) (DEPRECATED - always returns 0)
 }
 
 /**
- * Calculate environmental mortality rate based on threshold crossings
+ * Add environmental mortality risks via centralized Bayesian system
+ *
+ * MIGRATION (Oct 28, 2025): Converted from returning death rates to adding mortality risks
+ * - Now calls addMortalityRisk() for each environmental threat
+ * - Enables Bayesian compounding across all mortality sources
+ * - Applies demographic vulnerability automatically
+ * - Provides full multi-causal attribution
  *
  * Research-based (UNEP 2024, PNAS 2014):
  * - Current (2025): 7/9 boundaries, 9M deaths/8B people = 0.009% monthly
  * - Mortality scales with food, water, climate, biodiversity thresholds
  * - Non-linear escalation when multiple systems fail
  *
- * FIX (Oct 13, 2025): Now returns breakdown by cause to properly track deaths
  * P0.6 (Oct 15, 2025): Episodic environmental shocks instead of continuous noise
  * Research: Real environmental disasters are episodic (heatwaves, droughts, famines)
  *   - Events occur with ~5% monthly probability based on environmental stress
  *   - Events cause 50-200% mortality spikes for 3-12 months
  *   - Between events: minimal variation (baseline + small noise)
- * Returns monthly mortality rate (0-1, where 0.01 = 1% die per month)
+ *
+ * Returns deprecated breakdown for backward compatibility (all zeros)
  */
 export function calculateEnvironmentalMortality(state: GameState, month: number): EnvironmentalMortalityBreakdown {
   const env = state.environmentalAccumulation;
@@ -47,17 +60,23 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
     return { total: 0, famine: 0, disease: 0, climate: 0, ecosystem: 0, pollution: 0 };
   }
 
-  let famineMortality = 0;
-  let diseaseMortality = 0;
-  let climateMortality = 0;
-  let ecosystemMortality = 0;
-  let pollutionMortality = 0;
+  const pop = state.humanPopulationSystem;
 
   // === BASELINE (Current 2025 conditions) ===
   // 7/9 boundaries breached = 0.009% monthly (UNEP: 9M deaths/year globally)
   // Pollution is the main driver of current baseline mortality
   if (boundaries.boundariesBreached >= 7) {
-    pollutionMortality = 0.00009; // 0.009% baseline
+    const pollutionRisk = 0.00009; // 0.009% monthly
+    addMortalityRisk(pop, {
+      type: 'pollution',
+      baseRisk: pollutionRisk,
+      proximate: 'pollution',
+      root: 'pollution',
+      confidence: 'HIGH',
+      scope: 'GLOBAL',
+      month: state.currentMonth,
+      description: 'Baseline pollution mortality (7/9 boundaries breached)',
+    });
   }
 
   // === FOOD SECURITY (Highest immediate impact) ===
@@ -77,7 +96,17 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   const waterSecurity = state.qualityOfLifeSystems.survivalFundamentals?.waterSecurity || 0.7;
   if (waterSecurity < 0.4) {
     const waterSeverity = (0.4 - waterSecurity) / 0.4;
-    diseaseMortality += 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food
+    const waterDiseaseRisk = 0.00008 * Math.pow(waterSeverity, 1.5); // Slightly less immediate than food
+    addMortalityRisk(pop, {
+      type: 'disease',
+      baseRisk: waterDiseaseRisk,
+      proximate: 'disease',
+      root: 'resource', // Water depletion → disease
+      confidence: 'HIGH',
+      scope: 'SEMI-GLOBAL', // Water crises are regional but widespread
+      month: state.currentMonth,
+      description: 'Waterborne disease from water insecurity',
+    });
   }
 
   // === CLIMATE STABILITY (Heat stress, disasters) ===
@@ -109,7 +138,17 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
     // Research: 70-80% of climate deaths occur in 5-6 peak months
     // Peak season: 2.0x base rate
     // Off-season: 0.5x base rate (residual year-round effects)
-    climateMortality += baseClimateMortality * (isClimateDisasterSeason ? 2.0 : 0.5);
+    const climateRisk = baseClimateMortality * (isClimateDisasterSeason ? 2.0 : 0.5);
+    addMortalityRisk(pop, {
+      type: 'disaster',
+      baseRisk: climateRisk,
+      proximate: 'disasters',
+      root: 'climate',
+      confidence: 'HIGH',
+      scope: 'SEMI-GLOBAL', // Climate disasters are regional but widespread
+      month: state.currentMonth,
+      description: `Climate disasters (${isClimateDisasterSeason ? 'peak season' : 'off-season'})`,
+    });
   }
 
   // === BIODIVERSITY LOSS (Ecosystem services collapse) ===
@@ -118,25 +157,39 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   const biodiversity = env.biodiversityIndex || 0.35;
   if (biodiversity < 0.3) {
     const bioSeverity = (0.3 - biodiversity) / 0.3;
-    ecosystemMortality += 0.00003 * Math.pow(bioSeverity, 1.5); // Pollination, disease regulation lost
+    const ecosystemRisk = 0.00003 * Math.pow(bioSeverity, 1.5); // Pollination, disease regulation lost
+    addMortalityRisk(pop, {
+      type: 'ecosystem',
+      baseRisk: ecosystemRisk,
+      proximate: 'ecosystem',
+      root: 'ecosystem',
+      confidence: 'MEDIUM', // Ecosystem effects harder to quantify precisely
+      scope: 'GLOBAL',
+      month: state.currentMonth,
+      description: 'Ecosystem services collapse',
+    });
   }
 
   // === CASCADE AMPLIFICATION (Non-Linear Feedback) ===
-  // When multiple systems fail simultaneously, effects compound
-  // FIX (Oct 25, 2025): Removed famineMortality amplification (famine deaths handled by FamineSystemPhase)
-  const breachedCount = boundaries.boundariesBreached;
-  if (breachedCount >= 8) {
-    const cascadeAmplifier = 1.0 + Math.pow((breachedCount - 7) / 2, 2); // 1.0x → 2.25x at 9/9
-    diseaseMortality *= cascadeAmplifier;
-    climateMortality *= cascadeAmplifier;
-    ecosystemMortality *= cascadeAmplifier;
-  }
+  // MIGRATION (Oct 28, 2025): REMOVED explicit cascade amplification
+  // Bayesian mortality system handles compounding automatically via P(death) = 1 - ∏(1-p_i)
+  // When multiple risks are present, the compounding formula naturally creates non-linear escalation
+  // No need to manually amplify individual risks - the math does it for us
+  //
+  // Example: 3 independent 1% risks
+  // - Old system with 2.0x cascade: 1% + 1% + 1% = 3% × 2.0 = 6%
+  // - Bayesian compounding: 1 - (0.99 × 0.99 × 0.99) = 2.97%
+  //
+  // The Bayesian approach is more research-accurate and handles demographic vulnerability correctly
 
   // === P0.6 (Oct 15, 2025): PERSISTENT ENVIRONMENTAL SHOCKS (AR1 autocorrelation) ===
   // Research: Real disasters persist for 3-12 months (not single-month events)
   // - 2003 European heatwave: Sustained for 3 months, 40,000 deaths
   // - Somalia famine 2010-12: 24 months, 256,000 deaths
   // - Agricultural shocks: 3-6 month recovery periods
+  //
+  // MIGRATION (Oct 28, 2025): Shocks now add separate mortality risks instead of multiplying rates
+  // Each active shock contributes an independent risk that compounds via Bayesian formula
 
   // Initialize activeShocks array if missing
   if (!env.activeShocks) {
@@ -145,21 +198,45 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
 
   // === APPLY ACTIVE SHOCKS (persistent mortality spikes) ===
   for (const shock of env.activeShocks) {
-    // Apply shock magnitude to appropriate mortality type
+    // Calculate shock-induced mortality risk
+    // Old: multiplied existing mortality rate by magnitude (e.g., 2.0× = double deaths)
+    // New: add shock magnitude as additional independent risk
+    // Research: Environmental shocks add 50-300% additional mortality (magnitude 1.5-4.0)
+    const shockBaseRisk = 0.0001 * (shock.magnitude - 1.0); // Convert magnitude to risk
+
+    // Map shock type to proximate/root causes
+    let proximate: 'disasters' | 'disease' | 'ecosystem' | 'famine';
+    let root: 'climate' | 'resource' | 'ecosystem' | 'climate';
+
     switch (shock.type) {
       case 'climate':
-        climateMortality *= shock.magnitude;
+        proximate = 'disasters';
+        root = 'climate';
         break;
       case 'famine':
-        famineMortality *= shock.magnitude;
+        proximate = 'famine';
+        root = 'climate'; // Famines usually climate-driven (drought/flood)
         break;
       case 'disease':
-        diseaseMortality *= shock.magnitude;
+        proximate = 'disease';
+        root = 'resource'; // Disease outbreaks from water/sanitation
         break;
       case 'ecosystem':
-        ecosystemMortality *= shock.magnitude;
+        proximate = 'ecosystem';
+        root = 'ecosystem';
         break;
     }
+
+    addMortalityRisk(pop, {
+      type: shock.type === 'famine' ? 'famine' : shock.type === 'disease' ? 'disease' : shock.type === 'ecosystem' ? 'ecosystem' : 'disaster',
+      baseRisk: shockBaseRisk,
+      proximate,
+      root,
+      confidence: 'MEDIUM', // Shock magnitude estimates have uncertainty
+      scope: 'REGIONAL', // Most environmental shocks are regional
+      month: state.currentMonth,
+      description: `Environmental shock: ${shock.type} (month ${shock.remainingMonths}/${shock.duration})`,
+    });
   }
 
   // === DECAY ACTIVE SHOCKS (AR1 persistence) ===
@@ -179,6 +256,7 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
   const baseMag = scenarioParams?.environmentalShockMagnitude ?? 2.0;
 
   // Event probability scales with environmental stress
+  const breachedCount = boundaries.boundariesBreached;
   const eventProbability = Math.min(maxProb, baseProb + (breachedCount / 9) * (maxProb - baseProb));
 
   if (Math.random() < eventProbability) {
@@ -215,35 +293,16 @@ export function calculateEnvironmentalMortality(state: GameState, month: number)
     console.log(`   Month: ${month}\n`);
   }
 
-  // === BASELINE NOISE (±5%) ===
-  // Small variation between events (not continuous dice-rolling)
-  const baselineNoise = () => 0.95 + Math.random() * 0.1; // 95-105%
-  famineMortality *= baselineNoise();
-  diseaseMortality *= baselineNoise();
-  climateMortality *= baselineNoise();
-  ecosystemMortality *= baselineNoise();
-  pollutionMortality *= baselineNoise();
-
-  // === REGIONAL VARIATION MULTIPLIER ===
-  // Some regions hit harder (handled by regional crisis system)
-  // This is the global average; specific regions can be 2-5x worse
-
-  const total = famineMortality + diseaseMortality + climateMortality + ecosystemMortality + pollutionMortality;
-
-  // Cap at 10%/month (horrific but not instant extinction)
-  // Even worst-case scenarios take years to play out
-  const cappedTotal = Math.min(total, 0.10);
-
-  // Scale down individual categories if we hit the cap
-  const scaleFactor = total > 0.10 ? 0.10 / total : 1.0;
-
+  // MIGRATION (Oct 28, 2025): Return deprecated breakdown (all zeros)
+  // Function now adds mortality risks directly via addMortalityRisk()
+  // Return value kept for backward compatibility but is no longer used
   return {
-    total: cappedTotal,
-    famine: famineMortality * scaleFactor,
-    disease: diseaseMortality * scaleFactor,
-    climate: climateMortality * scaleFactor,
-    ecosystem: ecosystemMortality * scaleFactor,
-    pollution: pollutionMortality * scaleFactor
+    total: 0,
+    famine: 0,
+    disease: 0,
+    climate: 0,
+    ecosystem: 0,
+    pollution: 0
   };
 }
 

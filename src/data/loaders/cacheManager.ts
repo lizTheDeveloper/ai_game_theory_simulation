@@ -366,7 +366,7 @@ export class CacheManager {
       const isValid = await this.isCacheValid(source);
 
       if (metadata) {
-        const status = isValid ? '✅ VALID' : '❌ EXPIRED';
+        const status = isValid ? '✅ VALID' : '⏰ EXPIRED';
         const size = metadata.fileSize ? `${(metadata.fileSize / 1024 / 1024).toFixed(2)} MB` : 'unknown';
         console.log(`${status} ${source.padEnd(30)} | ${metadata.version.padEnd(10)} | ${metadata.coverage.countries} countries | ${size}`);
       } else {

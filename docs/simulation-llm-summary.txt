@@ -1,0 +1,22 @@
+SIMULATION STRUCTURE (Token-Optimized)
+
+ROOT: GameState (110 properties)
+AGENTS: 11 types (AIAgent, GovernmentAgent, HumanSocietyAgent, DecisionMaker)
+SYSTEMS: 42 types (FamineSystem, FreshwaterSystem, ResourceEconomy, etc.)
+FUNCTIONS: 732 (96 init, 102 update, 134 calc)
+
+KEY FLOW:
+1. Initialize state (96 functions)
+2. Phase execution (37 phases, see PhaseOrchestrator)
+3. Update systems (102 functions)
+4. Calculate outcomes (OutcomeCalculationPhase)
+
+CRITICAL TYPES:
+- GameState: Root state container
+- AIAgent: 81 props
+- GlobalMetrics: 43 props
+- QualityOfLifeSystems: Multi-dimensional QoL
+- ResourceEconomy: Full resource modeling
+
+TOTAL: 412 types, 732 functions
+FILES: 101 type files

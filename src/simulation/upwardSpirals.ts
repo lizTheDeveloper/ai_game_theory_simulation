@@ -441,7 +441,7 @@ function updateVirtuousCascade(spirals: UpwardSpiralState, month: number): void 
       const months = month % 12;
       const timeDisplay = years > 0 ? `Year ${years}, Month ${months + 1}` : `Month ${months + 1}`;
       // KEEP this log - virtuous cascades are major milestones!
-      console.log(`\n🌟✨ VIRTUOUS CASCADE BEGINS (${timeDisplay})`);
+      console.log(`\n✅ VIRTUOUS CASCADE BEGINS (${timeDisplay})`);
       console.log(`   ${activeCount} upward spirals active → ${spirals.cascadeStrength.toFixed(1)}x amplification`);
       console.log(`   Active spirals: ${getActiveSpiralNames(spirals).join(', ')}\n`);
     } else {
@@ -780,7 +780,7 @@ function logSpiralDiagnostics(state: GameState, currentMonth: number): void {
   // UTOPIA CHECK
   const utopiaResult = canDeclareUtopia(state);
   // KEEP Utopia eligibility - this is critical
-  console.error(`\n🌟 UTOPIA ELIGIBILITY: ${utopiaResult.can ? '✅ ELIGIBLE' : '❌ NOT YET'}`);
+  console.error(`\n✅ UTOPIA ELIGIBILITY: ${utopiaResult.can ? '✅ ELIGIBLE' : '🔄 NOT YET'}`);
   console.log(`   ${utopiaResult.reason}`);
   if (utopiaResult.spiralCount < 3) {
     const sustainedNames = getSustainedSpiralNames(spirals);

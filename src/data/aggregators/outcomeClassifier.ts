@@ -148,3 +148,142 @@ export function getDominantOutcome(
     return 'hybrid';
   }
 }
+
+/**
+ * Create Unified Outcome Classification (Oct 28, 2025)
+ *
+ * Combines all classification dimensions into one coherent structure.
+ * Replaces fragmented classification across multiple systems.
+ *
+ * @param params - All required classification inputs
+ * @returns Unified outcome classification with all dimensions
+ */
+export function createUnifiedOutcomeClassification(params: {
+  primaryOutcome: import('@/types/outcomes').OutcomeType;
+  initialPopulation: number;
+  finalPopulation: number;
+  paradigmScores: {
+    western: number;
+    development: number;
+    ecological: number;
+    indigenous: number;
+  };
+  extinctionClassification?: import('@/types/outcomes').ExtinctionClassification;
+}): import('@/types/outcomes').UnifiedOutcomeClassification {
+  const { primaryOutcome, initialPopulation, finalPopulation, paradigmScores, extinctionClassification } = params;
+
+  // Calculate mortality
+  const mortalityRate = 1 - (finalPopulation / initialPopulation);
+  const deathsAbsolute = initialPopulation - finalPopulation;
+  const finalPopulationPeople = finalPopulation * 1_000_000_000;
+
+  // Determine mortality band
+  let mortalityBand: import('@/types/outcomes').MortalityBand;
+  if (mortalityRate < 0.20) {
+    mortalityBand = 'low';
+  } else if (mortalityRate < 0.50) {
+    mortalityBand = 'moderate';
+  } else if (mortalityRate < 0.75) {
+    mortalityBand = 'high';
+  } else if (mortalityRate < 0.90) {
+    mortalityBand = 'extreme';
+  } else {
+    mortalityBand = 'bottleneck';
+  }
+
+  // Determine stratified outcome
+  let stratifiedOutcome: import('@/types/outcomes').StratifiedOutcomeType;
+  if (finalPopulationPeople < 10_000 || primaryOutcome === 'extinction') {
+    stratifiedOutcome = 'extinction';
+  } else if (finalPopulation < 0.5) {
+    stratifiedOutcome = 'bottleneck';
+  } else if (primaryOutcome === 'utopia') {
+    stratifiedOutcome = mortalityRate < 0.20 ? 'humane-utopia' : 'pyrrhic-utopia';
+  } else if (primaryOutcome === 'dystopia' || primaryOutcome === 'collapse' ||
+             primaryOutcome === 'dark_age' || primaryOutcome === 'crisis_era' ||
+             primaryOutcome === 'terminal' || primaryOutcome === 'bottleneck') {
+    stratifiedOutcome = mortalityRate < 0.20 ? 'humane-dystopia' : 'pyrrhic-dystopia';
+  } else {
+    stratifiedOutcome = 'inconclusive';
+  }
+
+  // Multi-paradigm classification
+  const paradigmOutcome = classifyOutcome(paradigmScores);
+  const paradigmOutcomes = getParadigmOutcomes(paradigmScores);
+
+  // Generate short label
+  let shortLabel: string;
+  if (primaryOutcome === 'extinction') {
+    shortLabel = 'EXTINCTION';
+  } else if (primaryOutcome === 'terminal') {
+    shortLabel = 'TERMINAL (EXTINCTION LIKELY)';
+  } else if (primaryOutcome === 'bottleneck') {
+    shortLabel = 'GENETIC BOTTLENECK';
+  } else if (primaryOutcome === 'dark_age') {
+    shortLabel = 'DARK AGE';
+  } else if (primaryOutcome === 'collapse') {
+    shortLabel = stratifiedOutcome === 'pyrrhic-dystopia' ? 'PYRRHIC DYSTOPIA (COLLAPSE)' : 'COLLAPSE';
+  } else if (primaryOutcome === 'crisis_era') {
+    shortLabel = stratifiedOutcome === 'pyrrhic-dystopia' ? 'PYRRHIC DYSTOPIA (CRISIS ERA)' : 'CRISIS ERA';
+  } else if (primaryOutcome === 'status_quo') {
+    shortLabel = 'STATUS QUO';
+  } else if (primaryOutcome === 'utopia') {
+    shortLabel = stratifiedOutcome === 'humane-utopia' ? 'HUMANE UTOPIA' : 'PYRRHIC UTOPIA';
+  } else if (primaryOutcome === 'dystopia') {
+    shortLabel = stratifiedOutcome === 'humane-dystopia' ? 'HUMANE DYSTOPIA' : 'PYRRHIC DYSTOPIA';
+  } else {
+    shortLabel = 'INCONCLUSIVE';
+  }
+
+  // Generate full description
+  const mortalityPct = (mortalityRate * 100).toFixed(1);
+  const deathsStr = deathsAbsolute.toFixed(1);
+  let fullDescription = `${shortLabel}: `;
+
+  if (primaryOutcome === 'extinction') {
+    fullDescription += `Human extinction (<10K people). ${extinctionClassification ? `${extinctionClassification.type.toUpperCase()} mechanism (${extinctionClassification.mechanism})` : 'Mechanism unknown'}.`;
+  } else {
+    fullDescription += `${finalPopulation.toFixed(2)}B people remaining (${mortalityPct}% mortality, ${deathsStr}B deaths). `;
+    fullDescription += `Multi-Paradigm: ${paradigmOutcome.label}.`;
+  }
+
+  // Determine confidence
+  let confidence: 'HIGH' | 'MEDIUM' | 'LOW';
+  if (primaryOutcome === 'extinction' && extinctionClassification) {
+    confidence = extinctionClassification.confidence;
+  } else if (primaryOutcome === 'inconclusive' || paradigmOutcome.contested) {
+    confidence = 'LOW';
+  } else if (mortalityRate > 0.75 || mortalityRate < 0.10) {
+    confidence = 'HIGH';  // Extreme outcomes are unambiguous
+  } else {
+    confidence = 'MEDIUM';
+  }
+
+  // Generate reasoning
+  let reasoning = `Primary outcome: ${primaryOutcome.toUpperCase()} (${mortalityPct}% mortality). `;
+  reasoning += `Stratified: ${stratifiedOutcome} (${mortalityBand} mortality band). `;
+  reasoning += `Paradigm classification: ${paradigmOutcome.label}${paradigmOutcome.contested ? ' (CONTESTED)' : ''}. `;
+  if (extinctionClassification) {
+    reasoning += `Extinction: ${extinctionClassification.type} via ${extinctionClassification.mechanism} (${extinctionClassification.timelineMonths} months).`;
+  }
+
+  return {
+    primaryOutcome,
+    mortalityRate,
+    mortalityBand,
+    deathsAbsolute,
+    stratifiedOutcome,
+    paradigmScores,
+    paradigmOutcomes,
+    paradigmLabel: paradigmOutcome.label,
+    paradigmContested: paradigmOutcome.contested,
+    initialPopulation,
+    finalPopulation,
+    finalPopulationPeople,
+    extinctionClassification,
+    confidence,
+    reasoning,
+    shortLabel,
+    fullDescription
+  };
+}

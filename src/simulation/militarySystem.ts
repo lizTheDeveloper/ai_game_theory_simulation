@@ -18,6 +18,7 @@
 
 import { GameState } from '../types/game';
 import { CountryName, CountryPopulation, MilitaryIntervention } from '../types/countryPopulations';
+import { addMortalityRisk } from './bayesianMortality';
 
 /**
  * Initialize military capabilities for all countries
@@ -643,8 +644,24 @@ export function applyInterventionEffects(
   const target = state.countryPopulationSystem.countries[intervention.targetCountry as any];
 
   if (target) {
-    // Casualties reduce population
-    target.population -= intervention.effects.civilianCasualties;
+    // Apply casualties via centralized mortality system
+    if (intervention.effects.civilianCasualties > 0 && state.humanPopulationSystem) {
+      const mortalityRate = intervention.effects.civilianCasualties / state.humanPopulationSystem.population;
+
+      addMortalityRisk(state.humanPopulationSystem, {
+        type: 'war',
+        baseRisk: mortalityRate,
+        proximate: 'war',
+        root: 'conflict', // Military intervention = geopolitical conflict
+        confidence: 'HIGH', // Direct war casualties are well-documented
+        scope: 'REGIONAL',
+        region: intervention.targetCountry,
+        month: state.currentMonth,
+        description: `Military intervention casualties: ${intervention.targetCountry}`,
+      });
+    }
+
+    // Track country-level statistics for intervention analysis
     target.monthlyExcessDeaths += intervention.effects.civilianCasualties;
     target.cumulativeCrisisDeaths += intervention.effects.civilianCasualties;
   }

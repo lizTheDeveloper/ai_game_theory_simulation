@@ -20,7 +20,10 @@
 ---
 
 **🚧 Currently In Progress:**
-1. **HIGH:** Simulation state persistence & management (11-16h) - Available for implementation
+1. **HIGH:** Unified Outcome Classification (4h) - Designed, ready for implementation
+
+**Recently Completed (Oct 28, 2025):**
+1. ✅ **Observational Extinction Detection** (Oct 28) - Population-based detection, no predictive triggers, full classification system
 
 **Recently Completed (Oct 27, 2025):**
 1. ✅ **TIER 2 Superalignment Interventions** (Oct 27) - 8 interventions with epistemic uncertainty modeling
@@ -36,6 +39,48 @@
 ---
 
 ## 🎯 ACTIVE SIMULATION WORK
+
+---
+
+### Unified Outcome Classification - 🚧 DESIGNED, READY FOR IMPLEMENTATION (Oct 28, 2025)
+
+**Status:** Type system and classification function complete, integration pending
+**Time Estimate:** 4 hours
+**Priority:** HIGH - Fixes misleading Monte Carlo reporting
+
+**Problem:**
+- Outcome classification fragmented across 5 different systems
+- 7 runs in N=100 sweep labeled "extinction" with 4.8B population (40% mortality)
+- Multiple contradictory sections in Monte Carlo output
+- Users must mentally combine 5 different classifications
+
+**Solution:**
+- Single `UnifiedOutcomeClassification` interface combining all dimensions
+- Integrates: 7-tier population outcome, stratified (humane/pyrrhic), multi-paradigm DUI, mortality bands, extinction classification
+- Single reporting section with all context visible
+
+**Completed Work:**
+- ✅ `UnifiedOutcomeClassification` interface (`src/types/outcomes.ts`)
+- ✅ `createUnifiedOutcomeClassification()` function (`src/data/aggregators/outcomeClassifier.ts`)
+- ✅ Comprehensive implementation plan
+
+**Remaining Work:**
+1. Integrate into simulation engine (`src/simulation/engine.ts`) - Generate and store unified classification
+2. Update Monte Carlo reporting (`scripts/monteCarloSimulation.ts`) - Replace 4 fragmented sections with single unified section
+3. Add helper functions for backward compatibility
+4. Test with N=10 run
+
+**Files:**
+- Plan: `/plans/unified-outcome-classification-plan.md` (detailed 4-phase implementation)
+- Types: `src/types/outcomes.ts` (UnifiedOutcomeClassification interface complete)
+- Classifier: `src/data/aggregators/outcomeClassifier.ts` (createUnifiedOutcomeClassification complete)
+- Engine: `src/simulation/engine.ts` (integration pending)
+- Reporting: `scripts/monteCarloSimulation.ts` (update pending)
+
+**Expected Result:**
+- 7 "extinction" runs with 4.8B pop correctly labeled as "COLLAPSE" (20-50% mortality)
+- Single unified section showing: Primary outcome, mortality band, stratified outcome, multi-paradigm classification
+- No contradictions between classification systems
 
 ---
 

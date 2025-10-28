@@ -93,6 +93,7 @@ export { PositiveTippingPointsPhase } from './PositiveTippingPointsPhase';  // O
 export { TippingPointPhase } from './TippingPointPhase';  // Oct 26, 2025: Multi-timescale climate tipping points
 export { FamineSystemPhase } from './FamineSystemPhase';
 export { FoodSecurityDegradationPhase } from './FoodSecurityDegradationPhase';  // Phase 1B Refinement (Oct 17, 2025)
+export { BayesianMortalityResolutionPhase } from './BayesianMortalityResolutionPhase';  // Phase 35 (Oct 27, 2025) - Centralized mortality resolution
 export { AntimicrobialResistancePhase } from './AntimicrobialResistancePhase';  // TIER 1.8 (Oct 17, 2025)
 export { MinimalSufferingPhase } from './MinimalSufferingPhase';  // Oct 19, 2025: Dystopia baseline measurement
 export { DystopiaProgressionPhase } from './DystopiaProgressionPhase';

@@ -84,7 +84,8 @@ export type RootCause =
 
   // External shocks
   | 'conflict'     // Wars, geopolitical conflict
-  | 'pandemic';    // Natural pandemics
+  | 'pandemic'     // Natural pandemics
+  | 'natural';     // Natural disasters (asteroids, earthquakes, etc.)
 
 /**
  * Demographic segment with differential vulnerability

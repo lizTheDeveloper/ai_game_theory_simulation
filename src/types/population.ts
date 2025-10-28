@@ -59,9 +59,9 @@ export interface HumanPopulationSystem {
   cumulativeCrisisDeaths: number;        // Total deaths from all crises
   geneticBottleneckActive: boolean;      // Population below 100M (genetic diversity lost)
   birthDefectsCount?: number;            // Cumulative non-fatal birth defects from radiation (billions)
-  
+
   // P2 Bug Fix: Monthly death cap (Oct 16, 2025)
-  monthlyDeathsApplied?: number;         // Deaths applied this month (reset each month)
+  monthlyDeathsApplied: number;         // Deaths applied this month (reset each month)
   monthlyDeathCapReached?: boolean;      // Flag if cap was hit (for logging)
 
   // Bayesian Mortality System (Oct 27, 2025)

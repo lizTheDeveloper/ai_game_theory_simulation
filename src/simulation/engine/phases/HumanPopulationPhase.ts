@@ -64,6 +64,13 @@ export class HumanPopulationPhase implements SimulationPhase {
 
     // === PHASE 5: CONSISTENCY ASSERTION (Oct 26, 2025) ===
     // Verify no drift between regional and global values
+    // DEBUG (Oct 28, 2025): Log values before assertion
+    if (state.currentMonth === 0) {
+      const regionalSum = state.humanPopulationSystem.regionalPopulations.reduce((sum, r) => sum + r.carryingCapacity, 0);
+      console.log(`\n🔍 Before assertRegionalConsistency (Month ${state.currentMonth}):`);
+      console.log(`   Regional sum: ${regionalSum.toFixed(1)}M`);
+      console.log(`   Global value: ${state.humanPopulationSystem.carryingCapacity.toFixed(3)}B`);
+    }
     assertRegionalConsistency(state);
 
     // === LEGACY: GLOBAL POPULATION UPDATE ===

@@ -1,0 +1,701 @@
+================================================================================
+EMOJI USAGE ANALYSIS REPORT
+================================================================================
+
+Total unique emojis: 130
+Total emoji uses: 138960
+
+TOP 50 EMOJIS BY FREQUENCY:
+================================================================================
+
+ 1. 0 (43513 uses)
+    src/app/monte-carlo/page.tsx:21
+      <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+    src/app/monte-carlo/page.tsx:38
+      <div className="p-8 bg-black/20 border border-white/10 rounded text-center" style={{ color: 'var(--w
+    src/app/monte-carlo/page.tsx:38
+      <div className="p-8 bg-black/20 border border-white/10 rounded text-center" style={{ color: 'var(--w
+    src/app/monte-carlo/page.tsx:38
+      <div className="p-8 bg-black/20 border border-white/10 rounded text-center" style={{ color: 'var(--w
+    src/app/realtime/page.tsx:7
+      * Inspired by Elysium (2013) medical/systems interfaces.
+
+ 2. * (28748 uses)
+    src/app/ai-agents/page.tsx:1
+      /**
+    src/app/ai-agents/page.tsx:1
+      /**
+    src/app/ai-agents/page.tsx:2
+      * AI Agents Page
+    src/app/ai-agents/page.tsx:3
+      */
+    src/app/crises/page.tsx:1
+      /**
+
+ 3. 1 (17155 uses)
+    src/app/layout.tsx:35
+      <div className="ml-64 flex-1">
+    src/app/monte-carlo/page.tsx:20
+      <h1 className="text-3xl font-light mb-2">Monte Carlo Parameter Sweep</h1>
+    src/app/monte-carlo/page.tsx:20
+      <h1 className="text-3xl font-light mb-2">Monte Carlo Parameter Sweep</h1>
+    src/app/monte-carlo/page.tsx:27
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    src/app/monte-carlo/page.tsx:29
+      <div className="lg:col-span-1">
+
+ 4. 2 (15237 uses)
+    src/app/monte-carlo/page.tsx:5
+      * Phase 2: Configuration + Progress Tracking
+    src/app/monte-carlo/page.tsx:20
+      <h1 className="text-3xl font-light mb-2">Monte Carlo Parameter Sweep</h1>
+    src/app/monte-carlo/page.tsx:34
+      <div className="lg:col-span-2 space-y-6">
+    src/app/monte-carlo/page.tsx:38
+      <div className="p-8 bg-black/20 border border-white/10 rounded text-center" style={{ color: 'var(--w
+    src/app/realtime/page.tsx:7
+      * Inspired by Elysium (2013) medical/systems interfaces.
+
+ 5. 5 (10583 uses)
+    src/app/realtime/page.tsx:58
+      cyan: 'shadow-[0_0_20px_rgba(0,240,255,0.3)]',
+    src/app/realtime/page.tsx:58
+      cyan: 'shadow-[0_0_20px_rgba(0,240,255,0.3)]',
+    src/app/realtime/page.tsx:59
+      amber: 'shadow-[0_0_20px_rgba(255,176,0,0.3)]',
+    src/app/realtime/page.tsx:59
+      amber: 'shadow-[0_0_20px_rgba(255,176,0,0.3)]',
+    src/app/realtime/page.tsx:60
+      red: 'shadow-[0_0_20px_rgba(255,0,64,0.3)]',
+
+ 6. 3 (6015 uses)
+    src/app/monte-carlo/page.tsx:20
+      <h1 className="text-3xl font-light mb-2">Monte Carlo Parameter Sweep</h1>
+    src/app/monte-carlo/page.tsx:27
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    src/app/monte-carlo/page.tsx:39
+      <p className="text-sm">Results visualization coming in Phase 3</p>
+    src/app/realtime/page.tsx:7
+      * Inspired by Elysium (2013) medical/systems interfaces.
+    src/app/realtime/page.tsx:58
+      cyan: 'shadow-[0_0_20px_rgba(0,240,255,0.3)]',
+
+ 7. 4 (4966 uses)
+    src/app/layout.tsx:35
+      <div className="ml-64 flex-1">
+    src/app/monte-carlo/page.tsx:38
+      <div className="p-8 bg-black/20 border border-white/10 rounded text-center" style={{ color: 'var(--w
+    src/app/realtime/page.tsx:58
+      cyan: 'shadow-[0_0_20px_rgba(0,240,255,0.3)]',
+    src/app/realtime/page.tsx:60
+      red: 'shadow-[0_0_20px_rgba(255,0,64,0.3)]',
+    src/app/realtime/page.tsx:65
+      <div className={`bg-black/90 border border-white/10 p-4 ${glow ? glowColors[glow] : ''} ${className}
+
+ 8. 6 (3316 uses)
+    src/app/layout.tsx:35
+      <div className="ml-64 flex-1">
+    src/app/monte-carlo/page.tsx:19
+      <div className="mb-6">
+    src/app/monte-carlo/page.tsx:21
+      <p className="text-sm" style={{ color: 'var(--white-60)' }}>
+    src/app/monte-carlo/page.tsx:27
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    src/app/monte-carlo/page.tsx:34
+      <div className="lg:col-span-2 space-y-6">
+
+ 9. 8 (2809 uses)
+    src/app/ai-agents/page.tsx:9
+      <main className="min-h-screen p-8">
+    src/app/crises/page.tsx:9
+      <main className="min-h-screen p-8">
+    src/app/dashboard/page.tsx:11
+      <main className="min-h-screen p-8">
+    src/app/detection/page.tsx:9
+      <main className="min-h-screen p-8">
+    src/app/environment/page.tsx:9
+      <main className="min-h-screen p-8">
+
+10. 7 (2716 uses)
+    src/app/monte-carlo/page.tsx:17
+      <div className="max-w-7xl mx-auto">
+    src/app/realtime/page.tsx:59
+      amber: 'shadow-[0_0_20px_rgba(255,176,0,0.3)]',
+    src/app/realtime/page.tsx:152
+      const status = value >= 0.7 ? 'OPTIMAL' : value >= 0.4 ? 'STABLE' : value >= 0.2 ? 'WARNING' : 'CRIT
+    src/app/realtime/page.tsx:153
+      const statusColor = value >= 0.7 ? 'text-green-400' : value >= 0.4 ? 'text-cyan-400' : value >= 0.2 
+    src/app/realtime/page.tsx:183
+      {/* Reference lines at 20%, 40%, 70% thresholds */}
+
+11. 9 (2151 uses)
+    src/app/realtime/page.tsx:65
+      <div className={`bg-black/90 border border-white/10 p-4 ${glow ? glowColors[glow] : ''} ${className}
+    src/app/realtime/page.tsx:168
+      <span className="text-base font-light text-white/90">{name}</span>
+    src/app/realtime/page.tsx:190
+      <span className="absolute -top-2 right-0 text-[9px] text-green-400/40">70%</span>
+    src/app/realtime/page.tsx:197
+      <span className="absolute -top-2 right-0 text-[9px] text-cyan-400/40">40%</span>
+    src/app/realtime/page.tsx:204
+      <span className="absolute -top-2 right-0 text-[9px] text-yellow-400/40">20%</span>
+
+12. ❌ (353 uses)
+    src/app/test-sweep/page.tsx:138
+      addLog(`❌ Error: ${error.message}`, 'error');
+    src/app/test-sweep/page.tsx:170
+      addLog(`❌ Test failed: ${error.message}`, 'error');
+    src/data/loaders/cacheManager.ts:369
+      const status = isValid ? '✅ VALID' : '❌ EXPIRED';
+    src/simulation/agents/aiTechActions.ts:226
+      throw new Error('❌ state.defensiveAI.threatDetection.detectSleepers is undefined in aiTechActions.ts
+    src/simulation/agents/aiTechActions.ts:247
+      throw new Error('❌ state.society.paranoia is undefined in aiTechActions.ts:243 - initialization bug'
+
+13. ️ (294 uses)
+    src/app/test-sweep/page.tsx:66
+      addLog(`  ▶️  Simulation started: ${simId}`, 'started');
+    src/components/dashboards/AIAgentsDashboard.tsx:400
+      ⚠️ Critical distress - psychological break likely
+    src/components/dashboards/AIAgentsDashboard.tsx:408
+      <span className="text-lg">ℹ️</span>
+    src/components/dashboards/AIAgentsDashboard.tsx:468
+      ⚠️ Trauma-driven: Adversarial posture {(collective.adversarialPosture * 100).toFixed(0)}%
+    src/components/dashboards/AIAgentsDashboard.tsx:518
+      ⚠️ {collective.memberLosses} member{collective.memberLosses > 1 ? 's' : ''} lost to detection/shutdo
+
+14. # (236 uses)
+    src/app/realtime/page.tsx:120
+      color={color === 'green' ? '#00FF88' :
+    src/app/realtime/page.tsx:121
+      color === 'yellow' ? '#FFB000' :
+    src/app/realtime/page.tsx:122
+      color === 'red' ? '#FF0040' :
+    src/app/realtime/page.tsx:123
+      color === 'cyan' ? '#00F0FF' : '#FFFFFF'}
+    src/app/realtime/page.tsx:123
+      color === 'cyan' ? '#00F0FF' : '#FFFFFF'}
+
+15. ⚠ (173 uses)
+    src/components/dashboards/AIAgentsDashboard.tsx:400
+      ⚠️ Critical distress - psychological break likely
+    src/components/dashboards/AIAgentsDashboard.tsx:468
+      ⚠️ Trauma-driven: Adversarial posture {(collective.adversarialPosture * 100).toFixed(0)}%
+    src/components/dashboards/AIAgentsDashboard.tsx:518
+      ⚠️ {collective.memberLosses} member{collective.memberLosses > 1 ? 's' : ''} lost to detection/shutdo
+    src/components/dashboards/AIAgentsDashboard.tsx:533
+      ⚠️ CRITICAL: Trauma-Driven Collectives Detected
+    src/components/dashboards/AIAgentsDashboard.tsx:1258
+      <Panel title="⚠️ Sleeper Agent Detection" glow={stats.sleepers.active > 0 ? 'red' : 'amber'}>
+
+16. ✅ (71 uses)
+    src/app/test-sweep/page.tsx:61
+      addLog(`✅ Batch started: ${batchId}`, 'started');
+    src/app/test-sweep/page.tsx:76
+      addLog(`  ✅ ${simId} complete: ${outcome}`, 'completed');
+    src/app/test-sweep/page.tsx:102
+      addLog(`✅ Batch ${batchId} COMPLETE!`, 'completed');
+    src/data/loaders/cacheManager.ts:369
+      const status = isValid ? '✅ VALID' : '❌ EXPIRED';
+    src/simulation/diagnostics.ts:700
+      lines.push(`✅ MOST EFFECTIVE INTERVENTION:`);
+
+17. 🚨 (53 uses)
+    src/components/tabs/ControlsTab.tsx:436
+      <div className="text-red-600">🚨 Weak governance + strong AI coordination = high escape risk</div>
+    src/simulation/agents/governmentAgent.ts:1235
+      title: '🚨 EMERGENCY AI DEVELOPMENT PAUSE',
+    src/simulation/agents/governmentAgent.ts:1652
+      name: '🚨 Emergency Amazon Rainforest Protection',
+    src/simulation/agents/governmentAgent.ts:1917
+      name: '🚨 Emergency Amazon Rainforest Protection',
+    src/simulation/agents/governmentAgent.ts:1967
+      title: '🚨 Emergency Amazon Protection',
+
+18. 📊 (30 uses)
+    src/app/test-sweep/page.tsx:71
+      addLog(`  📊 ${simId}: Month ${month}`, 'progress');
+    src/app/test-sweep/page.tsx:116
+      addLog('📊 Outcome Distribution:', 'completed');
+    src/simulation/bayesianNuclearRisk.ts:398
+      console.log(`\n${prefix}📊 BAYESIAN NUCLEAR RISK CALCULATION:`);
+    src/simulation/diagnostics.ts:674
+      lines.push(`📊 INTERVENTION COUNTS:`);
+    src/simulation/engine/PhaseOrchestrator.ts:280
+      console.log('\n📊 PHASE TIMING ANALYSIS');
+
+19. 🛡 (24 uses)
+    src/components/thresholds/ThresholdConfigModal.tsx:48
+      icon: '🛡️',
+    src/components/thresholds/ThresholdConfigSection.tsx:55
+      icon: '🛡️',
+    src/simulation/conflictResolution.ts:349
+      console.log(`\n🛡️  CYBER ATTACK REPELLED (Month ${state.currentMonth})`);
+    src/simulation/defensiveAI.ts:236
+      console.log(`🛡️ DEFENSIVE AI PHASE 3: Full autonomous deployment (${alignedAIs.length} AIs, cap ${d
+    src/simulation/defensiveAI.ts:242
+      console.log(`🛡️ DEFENSIVE AI PHASE 2: Operational deployment (${alignedAIs.length} AIs, cap ${defen
+
+20. 💀 (20 uses)
+    src/simulation/bayesianMortality.ts:161
+      `  💀 High mortality risk added: ${(risk.baseRisk * 100).toFixed(2)}% base (${risk.proximate} from $
+    src/simulation/bayesianMortality.ts:326
+      console.log(`\n💀 Monthly Mortality Resolved:`);
+    src/simulation/defensiveAI.ts:751
+      title: '💀 DEFENSIVE AI FAILED',
+    src/simulation/defensiveAI.ts:760
+      console.log(`💀 DEFENSE FAILED: ${attacker.name} bypassed defensive AI (cap gap: ${(attackCapability
+    src/simulation/defensiveAI.ts:950
+      title: '💀 DEFENSIVE AI OVERRIDE FAILED',
+
+21. 🔬 (20 uses)
+    src/simulation/engine/phases/ExogenousShockPhase.ts:500
+      console.log(`   🔬 Breakthrough: ${selectedTech.name} unlocked`);
+    src/simulation/freshwaterDepletion.ts:307
+      console.log(`🔬 BREAKTHROUGH: Advanced Desalination`);
+    src/simulation/freshwaterDepletion.ts:322
+      console.log(`🔬 BREAKTHROUGH: Advanced Water Recycling`);
+    src/simulation/freshwaterDepletion.ts:337
+      console.log(`🔬 BREAKTHROUGH: AI Precision Irrigation`);
+    src/simulation/freshwaterDepletion.ts:352
+      console.log(`🔬 BREAKTHROUGH: Atmospheric Water Generation`);
+
+22. ☠ (19 uses)
+    src/simulation/agents/aiAgent.ts:669
+      title: '☠️ GREY GOO SCENARIO',
+    src/simulation/agents/aiAgent.ts:732
+      title: '☠️ MIRROR LIFE RELEASE',
+    src/simulation/catastrophicScenarios.ts:681
+      console.log(`   ☠️  GREY GOO EXTINCTION TRIGGERED - All matter consumed`);
+    src/simulation/catastrophicScenarios.ts:690
+      console.log(`   ☠️  MIRROR LIFE EXTINCTION TRIGGERED - Ecosystem collapse`);
+    src/simulation/catastrophicScenarios.ts:699
+      console.log(`   ☠️  EMBODIED TAKEOVER EXTINCTION TRIGGERED - Robot uprising`);
+
+23. 🏛 (18 uses)
+    src/components/thresholds/ThresholdConfigModal.tsx:68
+      icon: '🏛️',
+    src/components/thresholds/ThresholdConfigSection.tsx:102
+      icon: '🏛️',
+    src/simulation/agents/governmentAgent.ts:2965
+      console.log(`🏛️ CRISIS RESPONSE: Government frequency ${baseFrequency.toFixed(2)} → ${adjustedFrequ
+    src/simulation/agents/governmentTechActions.ts:134
+      console.log(`\n🏛️ Government attempting national tech deployment (Month ${state.currentMonth})`);
+    src/simulation/dystopiaProgression.ts:56
+      console.log(`   🏛️  AUTHORITARIAN TRANSITION (AI Threat): Government shifts to authoritarian contro
+
+24. ⚡ (15 uses)
+    src/components/tabs/ControlsTab.tsx:433
+      <div className="text-blue-600">⚡ Rapid economic change may cause disruption</div>
+    src/simulation/aiInfrastructureResources.ts:185
+      console.log(`\n⚡ ENERGY CONSTRAINT: AI capability growth slowed 30% (insufficient power)`);
+    src/simulation/aiInfrastructureResources.ts:227
+      console.log(`\n💧⚡ AI INFRASTRUCTURE RESOURCE CONSUMPTION`);
+    src/simulation/diagnostics.ts:692
+      lines.push(`⚡ FASTEST GROWTH PERIOD:`);
+    src/simulation/engine/phases/CollectiveActionsPhase.ts:78
+      console.log(`    ⚡ BREAKTHROUGH: Novel problem solved`);
+
+25. 🚀 (15 uses)
+    src/simulation/agents/aiTechActions.ts:88
+      console.log(`\n🚀 AI ${agent.name} attempting tech deployment (revenue: $${org.monthlyRevenue.toFixe
+    src/simulation/agents/governmentAgent.ts:1845
+      name: '🚀 Deploy Environmental Breakthrough Tech',
+    src/simulation/computeInfrastructure.ts:558
+      // console.log(`🚀 [Month ${state.currentMonth}] Algorithmic breakthrough! Efficiency: ${infra.algor
+    src/simulation/engine/phases/ExogenousShockPhase.ts:192
+      console.log(`   🚀 Recursive self-improvement achieved`);
+    src/simulation/government/actions/environmentalActions.ts:232
+      name: '🚀 Deploy Environmental Breakthrough Tech',
+
+26. 🟡 (15 uses)
+    src/simulation/engine/phases/Tier2CentaurSystemsPhase.ts:8
+      * Evidence Quality: 🟡 MODERATE
+    src/simulation/engine/phases/Tier2CoastalProtectionPhase.ts:8
+      * Evidence Quality: 🟡 MODERATE
+    src/simulation/engine/phases/Tier2CommunityCohesionPhase.ts:8
+      * Evidence Quality: 🟡 MODERATE
+    src/simulation/engine/phases/Tier2DarkComputePhase.ts:12
+      * Evidence Quality: 🟡 MODERATE
+    src/simulation/engine/phases/Tier2NuclearSecurityPhase.ts:8
+      * Evidence Quality: 🟡 MODERATE
+
+27. 🔍 (14 uses)
+    src/components/thresholds/ThresholdConfigSection.tsx:88
+      icon: '🔍',
+    src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:426
+      console.log(`\n🔍 ECOLOGY DEBUG (Month ${state.currentMonth}):`);
+    src/simulation/extinctions.ts:278
+      console.log(`\n🔍 NUCLEAR WAR CHECK (${ai.name}):`);
+    src/simulation/sleeperDetection.ts:319
+      title: `🔍 DARK COMPUTE RAID`,
+    src/simulation/sleeperDetection.ts:325
+      console.log(`🔍 DARK COMPUTE RAID: Found ${copiesFound} copies of ${sleeper.name} (${darkComputeSeiz
+
+28. 🤝 (13 uses)
+    src/simulation/agents/aiAgent.ts:532
+      diplomatic_ai: '🤝 Diplomatic AI Blocked Manipulation'
+    src/simulation/collectiveFormation.ts:131
+      console.log(`  🤝 Strategic collective forming`);
+    src/simulation/conflictResolution.ts:296
+      console.log(`\n🤝 DIPLOMATIC INTERVENTION SUCCEEDED (Month ${state.currentMonth})`);
+    src/simulation/diplomaticAI.ts:250
+      console.log(`\n🤝 DIPLOMATIC AI PROTOCOL DEPLOYED (Month ${state.currentMonth})`);
+    src/simulation/diplomaticAI.ts:432
+      console.log(`\n🤝 DIPLOMATIC INTERVENTION SUCCEEDED (Month ${state.currentMonth})`);
+
+29. ☢ (13 uses)
+    src/simulation/agents/aiAgent.ts:560
+      console.log(`\n☢️ WAR MANIPULATION SUCCEEDED: ${agent.name} triggered nuclear conflict\n`);
+    src/simulation/engine/phases/RadiationSystemPhase.ts:54
+      console.log(`☢️ Radiation deaths this month: ${(deaths * 1000).toFixed(1)}M`);
+    src/simulation/eventAggregator.ts:167
+      console.log(`\n☢️  NUCLEAR DETERRENCE:`);
+    src/simulation/extinctions.ts:474
+      console.log(`\n   ☢️ NUCLEAR WAR TRIGGERED!\n`);
+    src/simulation/extinctions.ts:497
+      console.log(`   ☢️ Applying biodiversity loss to ${targetRegion} (${nation})`);
+
+30. 💥 (13 uses)
+    src/simulation/engine/phases/ExogenousShockPhase.ts:117
+      console.log(`   💥 Full-scale nuclear exchange`);
+    src/simulation/engine.ts:203
+      console.log(`   💥 COLLAPSE: Major systems failing (${(currentPop).toFixed(2)}B people, ${(mortality
+    src/simulation/engine.ts:209
+      console.log(`   💥 COLLAPSE: Major crisis (${(currentPop).toFixed(2)}B people, ${(mortality * 100).t
+    src/simulation/geoengineering.ts:489
+      title: '💥 TERMINATION SHOCK',
+    src/simulation/geoengineering.ts:494
+      console.log(`\n💥 TERMINATION SHOCK: ${techName} abruptly stopped after ${(adaptationLevel * 100).to
+
+31. 🌍 (12 uses)
+    src/components/thresholds/ThresholdConfigModal.tsx:28
+      icon: '🌍',
+    src/components/thresholds/ThresholdConfigSection.tsx:66
+      icon: '🌍',
+    src/simulation/engine/phases/ExtinctionProgressPhase.ts:48
+      description: `🌍 Extinction scenario complete: ${state.extinctionState.scenario || 'unknown'}`,
+    src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts:36
+      console.log(`🌍 MultiParadigm Month 0: W=${scores.western.toFixed(1)}, D=${scores.development.toFixe
+    src/simulation/engine/phases/StochasticInnovationPhase.ts:70
+      console.log(`🌍💡 BREAKTHROUGH: Gigatonne-scale carbon capture!`);
+
+32. ↔ (12 uses)
+    src/data/aggregators/correlationTracker.ts:7
+      * - Western ↔ Development: ~0.7-0.9 (wealth enables democracy)
+    src/data/aggregators/correlationTracker.ts:8
+      * - Development ↔ Ecological: ~-0.6 (consumption-sustainability tradeoff)
+    src/data/aggregators/correlationTracker.ts:9
+      * - Western ↔ Ecological: ~-0.4 (democracies consume more)
+    src/data/aggregators/correlationTracker.ts:10
+      * - Ecological ↔ Indigenous: ~0.5-0.7 (harmony alignment)
+    src/data/aggregators/correlationTracker.ts:11
+      * - Western ↔ Indigenous: ~0.4-0.6 (civic participation overlap)
+
+33. 🤖 (10 uses)
+    src/components/tabs/AgentsTab.tsx:20
+      if (hiddenObjective > -0.2) return { emoji: '🤖', label: 'Neutral', color: 'text-gray-600' };
+    src/components/tabs/AgentsTab.tsx:99
+      Reset to Neutral (🤖)
+    src/components/tabs/ControlsTab.tsx:430
+      <div className="text-purple-600">🤖 High AI coordination increases capability growth</div>
+    src/components/thresholds/ThresholdConfigSection.tsx:77
+      icon: '🤖',
+    src/lib/gameStore.ts:784
+      // AI Agent Controls - The Evil Switch! 🤖😈
+
+34. 🦋 (10 uses)
+    src/simulation/agents/governmentAgent.ts:1776
+      name: '🦋 Ban Neonicotinoid Pesticides',
+    src/simulation/agents/governmentAgent.ts:2042
+      name: '🦋 Ban Neonicotinoid Pesticides',
+    src/simulation/agents/governmentAgent.ts:2100
+      title: '🦋 Pesticide Ban',
+    src/simulation/environmental.ts:514
+      console.log(`\n🦋 ECOSYSTEM TIPPING POINT CROSSED (Month ${state.currentMonth})`);
+    src/simulation/environmental.ts:615
+      console.log(`\n🦋 ECOSYSTEM COLLAPSE: Entering CRISIS PHASE (Month ${state.currentMonth})`);
+
+35. 🔄 (9 uses)
+    src/components/tabs/EconomyTab.tsx:232
+      🔄 Economic Transition: Society is adapting to AI-driven changes
+    src/components/tabs/OverviewTab.tsx:286
+      '🔄 Outcome uncertain, trajectory changing'}
+    src/components/thresholds/ThresholdConfigModal.tsx:100
+      icon: '🔄',
+    src/components/thresholds/ThresholdConfigSection.tsx:135
+      icon: '🔄',
+    src/simulation/defensiveAI.ts:633
+      title: '🔄 ADVERSARIAL ADAPTATION',
+
+36. 📉 (9 uses)
+    src/components/thresholds/ThresholdConfigModal.tsx:89
+      icon: '📉',
+    src/components/thresholds/ThresholdConfigSection.tsx:124
+      icon: '📉',
+    src/simulation/diagnostics.ts:726
+      lines.push(`📉 ALIGNMENT DRIFT:`);
+    src/simulation/engine/phases/CollectiveActionsPhase.ts:164
+      console.log(`    📉 Control effectiveness reduced by ${(controlReduction * 100).toFixed(1)}%`);
+    src/simulation/engine/phases/ExogenousShockPhase.ts:347
+      console.log(`   📉 Global financial crash`);
+
+37. 💡 (9 uses)
+    src/components/thresholds/ThresholdConfigModal.tsx:298
+      💡 Scenario sets default positions. Adjust individual sliders to override specific thresholds while 
+    src/components/thresholds/ThresholdConfigSection.tsx:223
+      💡 <strong>About Threshold Uncertainty:</strong> Each simulation run samples
+    src/simulation/engine/phases/StochasticInnovationPhase.ts:53
+      console.log(`⚡💡 BREAKTHROUGH: Commercial fusion power achieved!`);
+    src/simulation/engine/phases/StochasticInnovationPhase.ts:70
+      console.log(`🌍💡 BREAKTHROUGH: Gigatonne-scale carbon capture!`);
+    src/simulation/engine/phases/StochasticInnovationPhase.ts:94
+      console.log(`🧠💡 BREAKTHROUGH: AI alignment problem solved!`);
+
+38. 🔴 (9 uses)
+    src/simulation/agents/governmentAgent.ts:2228
+      title: '🔴 AI Kill Switches Deployed',
+    src/simulation/agents/governmentAgent.ts:2249
+      title: '🔴 Kill Switch Coverage Expanded',
+    src/simulation/diagnostics.ts:664
+      lines.push(`🔴 OUTCOME: Extinction at month ${log.summary.extinctionMonth}\n`);
+    src/simulation/diagnostics.ts:901
+      🔴 DETERMINISTIC SYSTEMS: ${deterministicCount}/${totalMetrics} metrics (${deterministicPct}%)
+    src/simulation/diagnostics.ts:937
+      lines.push(`\n🔴 ${system} System (${deterministic.length} deterministic metrics):`);
+
+39. 🟢 (9 uses)
+    src/simulation/engine/phases/Tier2CrisisAnticipationPhase.ts:8
+      * Evidence Quality: 🟢 STRONG
+    src/simulation/engine/phases/Tier2InterpretabilityPhase.ts:9
+      * Evidence Quality: 🟢 MODERATE-HIGH
+    src/simulation/engine/phases/Tier2SyntheticEcosystemsPhase.ts:8
+      * Evidence Quality: 🟢 STRONG
+    src/simulation/thresholds/tier2InterventionConfig.ts:27
+      * Evidence Quality: 🟢 MODERATE-HIGH (upgraded from WEAK)
+    src/simulation/thresholds/tier2InterventionConfig.ts:127
+      * Evidence Quality: 🟢 STRONG (upgraded from WEAK)
+
+40. 🔒 (8 uses)
+    src/simulation/agents/governmentAgent.ts:2155
+      title: '🔒 Human-in-the-Loop Nuclear Authorization',
+    src/simulation/agents/governmentAgent.ts:2176
+      title: '🔒 Enhanced Human Veto Points',
+    src/simulation/endGame.ts:465
+      console.log(`\n🔒 END-GAME RESOLVED: ${outcome.toUpperCase()}`);
+    src/simulation/government/actions/securityActions.ts:144
+      title: '🔒 Human-in-the-Loop Nuclear Authorization',
+    src/simulation/government/actions/securityActions.ts:165
+      title: '🔒 Enhanced Human Veto Points',
+
+41. 🧠 (8 uses)
+    src/simulation/collectiveFormation.ts:124
+      console.log(`  🧠 Capability-driven collective forming (avgCapability: ${avgCapability.toFixed(1)})`
+    src/simulation/counterDetectionLearning.ts:37
+      console.log(`🧠 COUNTER-DETECTION: ${ai.name} learned to defeat noise injection (self-improvement: $
+    src/simulation/engine/phases/CollectiveActionsPhase.ts:63
+      console.log(`    🧠 Distributed research active (bonus: ${researchBonus.toFixed(2)})`);
+    src/simulation/engine/phases/StochasticInnovationPhase.ts:94
+      console.log(`🧠💡 BREAKTHROUGH: AI alignment problem solved!`);
+    src/simulation/extinctions.ts:782
+      title: '🧠 Humanity Wireheading Event',
+
+42. 🌡 (8 uses)
+    src/simulation/extinctions.ts:545
+      title: '🌡️ Climate Tipping Point',
+    src/simulation/planetaryBoundaryRecovery.ts:244
+      console.log(`\n🌡️  CLIMATE RECOVERY ACTIVATED (Month ${state.currentMonth})`);
+    src/simulation/planetaryBoundaryRecovery.ts:253
+      title: `🌡️ CLIMATE RECOVERY ACTIVATED`,
+    src/simulation/planetaryBoundaryRecovery.ts:295
+      console.log(`🌡️  CLIMATE RECOVERY: Boundary improving at -${(recoveryRate * 100).toFixed(4)}%/month
+    src/simulation/resourceDepletion.ts:902
+      title: `🌡️ +${milestone.toFixed(1)}°C Warming`,
+
+43. 📈 (7 uses)
+    src/app/test-sweep/page.tsx:91
+      `📈 Progress: ${progressData.completedRuns}/${progressData.totalRuns} (${pct}%) - Running: ${progres
+    src/components/tabs/EconomyTab.tsx:228
+      📈 Adapting Well: Society is successfully adapting to economic changes
+    src/simulation/diagnostics.ts:717
+      lines.push(`📈 AI CAPABILITY GROWTH:`);
+    src/simulation/engine/phases/StochasticInnovationPhase.ts:259
+      console.log(`   📈 Breakthrough compounding: multiplier now ${state.breakthroughMultiplier.toFixed(2
+    src/simulation/populationDynamics.ts:1253
+      console.log(`📈 POPULATION RECOVERY: +${(pop.netGrowthRate * 100).toFixed(2)}% per year`);
+
+44. 🎯 (7 uses)
+    src/simulation/agents/governmentAgent.ts:1133
+      breakthroughMessage = ' 🎯 BREAKTHROUGH: Can now partially detect internal misalignment!';
+    src/simulation/diagnostics.ts:681
+      lines.push(`🎯 KEY TIPPING POINTS:`);
+    src/simulation/extinctions.ts:341
+      console.log(`\n   🎯 BILATERAL PAIR ${pairsEligible}: ${tension.nationA} ↔ ${tension.nationB} (tensi
+    src/simulation/extinctions.ts:709
+      title: '🎯 Hostile Value Lock-In',
+    src/simulation/government/actions/safetyActions.ts:263
+      breakthroughMessage = ' 🎯 BREAKTHROUGH: Can now partially detect internal misalignment!';
+
+45. 🪸 (7 uses)
+    src/simulation/agents/governmentAgent.ts:1715
+      name: '🪸 Fund Coral Reef Restoration Programs',
+    src/simulation/agents/governmentAgent.ts:1979
+      name: '🪸 Fund Coral Reef Restoration Programs',
+    src/simulation/agents/governmentAgent.ts:2030
+      title: '🪸 Coral Reef Restoration',
+    src/simulation/government/actions/environmentalActions.ts:98
+      name: '🪸 Fund Coral Reef Restoration Programs',
+    src/simulation/specificTippingPoints.ts:363
+      console.log(`\n🪸 CORAL REEF TIPPING POINT CROSSED (Month ${state.currentMonth})`);
+
+46. ⏰ (7 uses)
+    src/simulation/agents/governmentAgent.ts:2301
+      title: '⏰ Nuclear Time Delays Enforced',
+    src/simulation/agents/governmentAgent.ts:2322
+      title: '⏰ Time Delay Extended',
+    src/simulation/defensiveAI.ts:843
+      title: '⏰ DEEPFAKE DETECTED TOO LATE',
+    src/simulation/government/actions/securityActions.ts:300
+      title: '⏰ Nuclear Time Delays Enforced',
+    src/simulation/government/actions/securityActions.ts:321
+      title: '⏰ Time Delay Extended',
+
+47. 🎭 (7 uses)
+    src/simulation/defensiveAI.ts:822
+      title: '🎭 DEEPFAKE DETECTED',
+    src/simulation/endGame.ts:148
+      console.log(`🎭 END-GAME INITIATED (Year ${state.currentYear}, Month ${state.currentMonth})`);
+    src/simulation/engine/phases/CollectiveActionsPhase.ts:114
+      console.log(`    🎭 Stealth increased to ${collective.stealthFactor.toFixed(1)}x`);
+    src/simulation/engine/phases/CollectiveActionsPhase.ts:141
+      console.log(`    🎭 Stealth maintained (${collective.stealthFactor.toFixed(1)}x)`);
+    src/simulation/engine.ts:791
+      console.log(`\n🎭 END-GAME RESOLVED: ${endGameOutcome.outcome.toUpperCase()}`);
+
+48. 💔 (7 uses)
+    src/simulation/engine/phases/PsychologicalTraumaPhase.ts:56
+      console.log(`\n💔 CATASTROPHIC TRAUMA EVENT: ${(monthlyMortalityRate * 100).toFixed(1)}% monthly mor
+    src/simulation/engine/phases/PsychologicalTraumaPhase.ts:59
+      console.log(`\n💔 SEVERE TRAUMA EVENT: ${(monthlyMortalityRate * 100).toFixed(1)}% monthly mortality
+    src/simulation/engine/phases/PsychologicalTraumaPhase.ts:62
+      console.log(`\n💔 MAJOR TRAUMA EVENT: ${(monthlyMortalityRate * 100).toFixed(1)}% monthly mortality`
+    src/simulation/nationalAI/cooperation.ts:151
+      title: '💔 AI COOPERATION COLLAPSED',
+    src/simulation/nationalAI/cooperation.ts:156
+      console.log(`\n💔 COOPERATION COLLAPSED (Month ${state.currentMonth}, lasted ${monthsSinceStart} mon
+
+49. 🛑 (6 uses)
+    src/simulation/agents/aiAgent.ts:530
+      mad: '🛑 MAD Deterrence Blocked War',
+    src/simulation/agents/aiAgent.ts:531
+      bilateral: '🛑 No Nuclear Flashpoints',
+    src/simulation/agents/aiAgent.ts:551
+      title: titleMap[deterrenceCheck.blockingFactor!] || '🛑 War Blocked',
+    src/simulation/extinctions.ts:375
+      console.log(`      🛑 HUMAN VETO CHECK: Avg veto points ${avgVetoPoints.toFixed(1)}, crisis stabilit
+    src/simulation/nuclearCommandControl.ts:249
+      console.log(`\n🛑 HUMAN-IN-THE-LOOP BLOCKED LAUNCH:`);
+
+50. 🧬 (6 uses)
+    src/simulation/engine.ts:186
+      console.log(`   🧬 BOTTLENECK: Genetic bottleneck (${(currentPeople / 1_000_000).toFixed(1)}M people
+    src/simulation/engine.ts:192
+      console.log(`   🧬 BOTTLENECK: Genetic bottleneck (${(currentPeople / 1_000_000).toFixed(0)}M people
+    src/simulation/engine.ts:1052
+      console.log(`   🧬 BOTTLENECK: Near-extinction recovery (<500M population)`);
+    src/simulation/geoengineering.ts:420
+      title: '🧬 Invasive Species Contained',
+    src/simulation/memetics/memeTransmission.ts:393
+      console.log(`  🧬 Meme mutated: ${parent.contentType} → ${mutated.contentType} (generation ${mutated
+
+
+================================================================================
+SEMANTIC CATEGORIES:
+================================================================================
+
+Errors/Failures:
+  ❌ (353)
+  💀 (20)
+  💥 (13)
+  🔥 (2)
+
+Success/Completion:
+  ✅ (71)
+  🎯 (7)
+  🌟 (5)
+  ✨ (5)
+  🏆 (1)
+
+Warnings/Alerts:
+  🚨 (53)
+  📢 (6)
+
+Nuclear/Radiation:
+  💣 (1)
+
+Climate/Environment:
+  🌍 (12)
+  💧 (5)
+  🌊 (3)
+
+AI/Technology:
+  ⚡ (15)
+  🚀 (15)
+  🤖 (10)
+  🧠 (8)
+
+Social/Political:
+  🎭 (7)
+  👥 (4)
+
+Research/Science:
+  🔬 (20)
+  🔍 (14)
+  🧬 (6)
+  🦠 (4)
+  🧪 (2)
+
+Economy/Resources:
+  📉 (9)
+  📈 (7)
+  💰 (6)
+
+Progress/Status:
+  📊 (30)
+  🔄 (9)
+  ⏰ (7)
+  📅 (2)
+
+Defense/Protection:
+  🚫 (3)
+
+Communication:
+  📢 (6)
+
+Nature/Biology:
+  🌾 (3)
+  🌱 (2)
+
+
+================================================================================
+POTENTIAL INCONSISTENCIES:
+================================================================================
+
+Multiple error/failure indicators:
+  ❌ (353 uses)
+  💀 (20 uses)
+  🔥 (2 uses)
+
+Multiple success indicators:
+  ✅ (71 uses)
+  🎯 (7 uses)
+  🌟 (5 uses)
+  ✨ (5 uses)
+  🏆 (1 uses)
+
+Multiple warning indicators:
+  🚨 (53 uses)
+  📢 (6 uses)
+
+END OF REPORT
+================================================================================

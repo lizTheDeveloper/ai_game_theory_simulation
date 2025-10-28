@@ -15,6 +15,7 @@
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { updateRadiationSystem } from '@/types/radiation';
+import { addMortalityRisk } from '@/simulation/bayesianMortality';
 
 export class RadiationSystemPhase implements SimulationPhase {
   readonly id = 'radiation_system';
@@ -36,23 +37,26 @@ export class RadiationSystemPhase implements SimulationPhase {
       state.humanPopulationSystem.population
     );
 
-    // Apply radiation deaths to population
+    // Apply radiation deaths via centralized mortality system
     if (deaths > 0) {
-      state.humanPopulationSystem.population -= deaths;
+      // Calculate monthly mortality rate (deaths is already in millions)
+      const mortalityRate = deaths / state.humanPopulationSystem.population;
 
-      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
-      // PROXIMATE: War (radiation is direct consequence of nuclear war)
-      state.humanPopulationSystem.deathsByCategory.war += deaths;
-      // ROOT CAUSE: Conflict (nuclear war stems from geopolitical conflict)
-      state.humanPopulationSystem.deathsByRootCause.conflict += deaths;
-
-      state.humanPopulationSystem.cumulativeCrisisDeaths += deaths;
-      state.humanPopulationSystem.monthlyExcessDeaths += deaths;
+      addMortalityRisk(state.humanPopulationSystem, {
+        type: 'disease', // Radiation sickness & cancer classified as disease
+        baseRisk: mortalityRate,
+        proximate: 'war', // Radiation is consequence of nuclear war
+        root: 'conflict', // Nuclear war = geopolitical conflict
+        confidence: 'HIGH', // Well-documented from Hiroshima, Chernobyl
+        scope: 'SEMI-GLOBAL', // Radiation zones are regional but widespread
+        month: state.currentMonth,
+        description: 'Radiation exposure deaths',
+      });
 
       // Log significant deaths
-      if (deaths > 0.001) { // > 1 million deaths/month
-        console.log(`☢️ Radiation deaths this month: ${(deaths * 1000).toFixed(1)}M`);
-        console.log(`   Total radiation deaths: ${(system.totalRadiationDeaths * 1000).toFixed(0)}M`);
+      if (deaths > 0.001) { // > 1K deaths/month
+        console.log(`☢️ Radiation deaths this month: ${deaths.toFixed(1)}M`);
+        console.log(`   Total radiation deaths: ${system.totalRadiationDeaths.toFixed(0)}M`);
         console.log(`   Active exposures: ${system.activeExposures.length}`);
       }
     }
@@ -60,15 +64,23 @@ export class RadiationSystemPhase implements SimulationPhase {
     // Track birth defects (reduce birth rate or increase infant mortality)
     if (birthDefects > 0) {
       // Birth defects reduce effective birth rate by reducing infant survival
-      // Convert birth defects to mortality (billions)
       const birthDefectMortality = birthDefects * 0.3; // 30% of birth defects are fatal
-      state.humanPopulationSystem.population -= birthDefectMortality;
 
-      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
-      // PROXIMATE: Other (indirect deaths from radiation)
-      state.humanPopulationSystem.deathsByCategory.other += birthDefectMortality;
-      // ROOT CAUSE: Conflict (birth defects caused by nuclear war)
-      state.humanPopulationSystem.deathsByRootCause.conflict += birthDefectMortality;
+      // Apply birth defect mortality via centralized system
+      if (birthDefectMortality > 0) {
+        const mortalityRate = birthDefectMortality / state.humanPopulationSystem.population;
+
+        addMortalityRisk(state.humanPopulationSystem, {
+          type: 'disease', // Genetic defects classified as disease
+          baseRisk: mortalityRate,
+          proximate: 'disease', // Infant mortality from birth defects
+          root: 'conflict', // Caused by nuclear war = geopolitical conflict
+          confidence: 'MEDIUM', // Multi-generational effects have more uncertainty
+          scope: 'REGIONAL', // Birth defects localized to contaminated zones
+          month: state.currentMonth,
+          description: 'Radiation-induced birth defects',
+        });
+      }
 
       // Track non-fatal birth defects for QoL impact
       const survivingWithDefects = birthDefects * 0.7; // 70% survive but with defects

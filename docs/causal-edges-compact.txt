@@ -1,0 +1,44 @@
+# Causal Edges (Most Important)
+
+## High-Impact Sources (affects many)
+y → 9 targets
+e → 8 targets
+s → 5 targets
+t → 4 targets
+government.legitimacy → 3 targets
+government.oversightLevel → 2 targets
+psychologicalTrauma.traumaLevel → 2 targets
+globalMetrics.economicTransitionStage → 1 targets
+L → 1 targets
+l → 1 targets
+n → 1 targets
+government.capabilityToControl → 1 targets
+freshwaterSystem.blueWater → 1 targets
+society.segments → 1 targets
+multiParadigmDUI.history → 1 targets
+h → 1 targets
+extinctionState.severity → 1 targets
+thresholds.climateSensitivity → 1 targets
+I → 1 targets
+
+## High-Impact Targets (affected by many)
+all ← 2 sources
+opinion ← 2 sources
+effects ← 1 sources
+government.governmentType ← 1 sources
+3B ← 1 sources
+government.oversightLevel ← 1 sources
+segments ← 1 sources
+how ← 1 sources
+population ← 1 sources
+diplomatic ← 1 sources
+everyone ← 1 sources
+detection ← 1 sources
+trust ← 1 sources
+globalMetrics.socialStability ← 1 sources
+government.legitimacy ← 1 sources
+outcome ← 1 sources
+government.capabilityToControl ← 1 sources
+technologicalRisk.controlLossActive ← 1 sources
+freshwaterSystem.blueWater ← 1 sources
+policy ← 1 sources

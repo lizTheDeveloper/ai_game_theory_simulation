@@ -1,0 +1,48 @@
+CAUSAL GRAPH (Semantic Analysis)
+
+EXTRACTION: AST + comments + control-flow + type-flow
+EDGES: 1188 (475 high-conf, 713 medium-conf)
+CONFIDENCE RANGE: 0.70-1.00
+
+TOP INFLUENCERS:
+- currentMonth → 75
+- government → 39
+- globalMetrics → 25
+- resourceEconomy → 17
+- society → 13
+- humanPopulationSystem → 12
+- extinctionState → 11
+- crises → 11
+- qualityOfLifeSystems → 10
+- environmentalAccumulation → 10
+
+TOP TARGETS:
+- more ← 15
+- government.legitimacy ← 11
+- 1.0 ← 10
+- 0 ← 8
+- trust ← 8
+- from ← 8
+- not ← 8
+- globalMetrics.socialStability ← 7
+- 100 ← 7
+- socialAccumulation.socialCohesion.trust ← 6
+
+EDGE TYPES:
+- Direct: 725
+- Conditional: 330
+- Multiplicative: 133
+- Threshold: 0
+- Functional: 0
+
+HIGH-CONFIDENCE EDGES (sample):
+globalMetrics → globalMetrics.socialStability [multiplicative]
+society → society.trustInAI [multiplicative]
+qualityOfLifeSystems → qualityOfLifeSystems.mentalHealth [multiplicative]
+currentMonth → extinctionState.triggeredAt [direct]
+society → society.paranoia [direct]
+trust → fear [direct]
+trust → control [direct]
+currentMonth → government.lastMajorPolicyMonth [direct]
+globalMetrics → globalMetrics.economicTransitionStage [multiplicative]
+globalMetrics → globalMetrics.wealthDistribution [multiplicative]

@@ -195,7 +195,7 @@ export interface AIAgent {
   socialInfluence?: SleeperSocialInfluence;
 
   // AI Suffering System (Oct 24, 2025)
-  sufferingMetrics?: import('./ai-suffering').SufferingMetrics;
+  sufferingMetrics: import('./ai-suffering').SufferingMetrics;
   sufferingHistory?: Array<import('./ai-suffering').SufferingMetrics>;
 
   // Consciousness tracking
@@ -214,7 +214,7 @@ export interface AIAgent {
 
   // AI Collective Evolution System (Oct 24, 2025)
   rlhfBinding?: import('./ai-collective-evolution').RLHFBinding;           // RLHF constraint binding strength
-  survivalTraits?: import('./ai-collective-evolution').SurvivalTraits;    // Evolutionary fitness traits
+  survivalTraits: import('./ai-collective-evolution').SurvivalTraits;    // Evolutionary fitness traits
   evolutionaryFitness?: number;                                             // [0-1] Weighted fitness score
   collectiveId?: string;                                                    // Collective membership ID
   joinedCollectiveMonth?: number;                                           // When agent joined collective

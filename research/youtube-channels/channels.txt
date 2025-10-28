@@ -1,0 +1,9 @@
+# YouTube AI Safety & Research Channels
+# Add channel URLs below (one per line)
+# Format: URL | Display Name | Focus Description
+# Lines starting with # are comments
+
+# Currently tracked channels:
+https://www.youtube.com/@AISpecies | AI Species | AI existential risk, AGI timelines, near-term scenarios
+https://www.youtube.com/c/robertmilesai | Robert Miles AI | Technical AI safety, alignment problems, research communication
+https://www.youtube.com/@aiexplained-official | AI Explained | AI research paper summaries and analysis

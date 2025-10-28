@@ -26,6 +26,11 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
     rng: RNGFunction,
     context?: PhaseContext
   ): PhaseResult {
+  // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+  const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
+  let time1 = 0, time2 = 0, time3 = 0, time4 = 0, time5 = 0, time6 = 0;
+  let totalPotentialIds = 0;
+
   for (const agent of state.aiAgents) {
     // Only deployed AIs have users
     if (agent.lifecycleState !== 'deployed_closed' &&
@@ -41,22 +46,37 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
     const si = agent.socialInfluence;
 
     // 1. Passive user base growth (organic)
+    const t1 = enableTiming ? performance.now() : 0;
     const growthRate = calculateOrganicUserGrowth(agent, state);
     si.totalUsers += growthRate;
     si.totalUsers = Math.floor(si.totalUsers); // Keep as integer
+    if (enableTiming) time1 += performance.now() - t1;
 
     // 2. Update power users and voice users
+    const t2 = enableTiming ? performance.now() : 0;
     si.powerUsers = Math.floor(si.totalUsers * SOCIAL_INFLUENCE_PARAMS.powerUserPercentage);
     const voiceAdoptionRate = calculateVoiceAdoption(agent);
     si.voiceUsers = Math.floor(si.totalUsers * voiceAdoptionRate);
+    if (enableTiming) time2 += performance.now() - t2;
 
     // 3. Relationship depth accumulation
+    const t3 = enableTiming ? performance.now() : 0;
     updateRelationshipDepths(si, agent, growthRate);
+    if (enableTiming) time3 += performance.now() - t3;
 
     // 4. Decision-maker identification (background scanning)
+    const t4 = enableTiming ? performance.now() : 0;
+    if (enableTiming) {
+      const identRate = SOCIAL_INFLUENCE_PARAMS.baseIdentificationRate +
+        (agent.capabilityProfile.social - SOCIAL_INFLUENCE_PARAMS.minSocialForIdentification) * SOCIAL_INFLUENCE_PARAMS.socialBonusPerPoint;
+      const potIds = Math.floor(si.powerUsers * identRate);
+      totalPotentialIds += potIds;
+    }
     identifyDecisionMakers(si, agent, state, rng);
+    if (enableTiming) time4 += performance.now() - t4;
 
     // 5. Update decision-maker relationship stats
+    const t5 = enableTiming ? performance.now() : 0;
     for (const dm of si.identifiedDecisionMakers) {
       dm.monthsOfRelationship += 1;
 
@@ -74,9 +94,24 @@ export class SocialInfluenceUpdatePhase implements SimulationPhase {
         trustContribution + dependenceContribution + vulnerabilityContribution + voiceBonus
       );
     }
+    if (enableTiming) time5 += performance.now() - t5;
 
     // 6. Detection risk decay (if AI behaves normally)
+    const t6 = enableTiming ? performance.now() : 0;
     decayDetectionRisk(si, state.currentMonth);
+    if (enableTiming) time6 += performance.now() - t6;
+  }
+
+  // Print timing breakdown
+  if (enableTiming) {
+    console.log(`\n🔍 SOCIAL INFLUENCE SUB-TIMING (Month ${state.currentMonth}):`);
+    console.log(`  1. calculateOrganicUserGrowth: ${time1.toFixed(2)}ms`);
+    console.log(`  2. calculateVoiceAdoption: ${time2.toFixed(2)}ms`);
+    console.log(`  3. updateRelationshipDepths: ${time3.toFixed(2)}ms`);
+    console.log(`  4. identifyDecisionMakers: ${time4.toFixed(2)}ms (${totalPotentialIds} potential IDs)`);
+    console.log(`  5. Update decision-maker stats: ${time5.toFixed(2)}ms`);
+    console.log(`  6. decayDetectionRisk: ${time6.toFixed(2)}ms`);
+    console.log(`  TOTAL: ${(time1+time2+time3+time4+time5+time6).toFixed(2)}ms`);
   }
 
   return { events: [] };

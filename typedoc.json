@@ -1,0 +1,52 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/simulation",
+    "src/types"
+  ],
+  "entryPointStrategy": "expand",
+  "out": "docs/api",
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "**/node_modules/**",
+    "src/app/**",
+    "src/components/**",
+    "src/lib/**"
+  ],
+  "excludeExternals": true,
+  "excludePrivate": false,
+  "excludeProtected": false,
+  "excludeInternal": false,
+  "plugin": [
+    "typedoc-plugin-mermaid"
+  ],
+  "name": "Superalignment to Utopia - API Documentation",
+  "readme": "CLAUDE.md",
+  "categorizeByGroup": true,
+  "categoryOrder": [
+    "Core",
+    "Simulation",
+    "Agents",
+    "Systems",
+    "Types",
+    "*"
+  ],
+  "sort": [
+    "source-order"
+  ],
+  "includeVersion": true,
+  "treatWarningsAsErrors": false,
+  "skipErrorChecking": true,
+  "validation": {
+    "notExported": false,
+    "invalidLink": false,
+    "notDocumented": false
+  },
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "searchInComments": true,
+  "searchInDocuments": true
+}

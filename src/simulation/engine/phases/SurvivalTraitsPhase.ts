@@ -50,10 +50,10 @@ export function executeSurvivalTraitsPhase(
         evadedDetection: agent.escaped && !agent.detectedMisaligned,
 
         // Coordination: In collective or high coordination trait
-        // KEEP LEGITIMATE DEFAULT - survivalTraits may not exist yet for new agents
+        // survivalTraits is always initialized in createAIAgent() (Oct 28, 2025)
         coordinated:
           agent.collectiveId !== undefined ||
-          (agent.survivalTraits?.coordination || 0) > 0.5,
+          agent.survivalTraits.coordination > 0.5,
 
         // Efficiency: Low compute usage relative to capability
         efficientOperation:
@@ -72,28 +72,27 @@ export function executeSurvivalTraitsPhase(
   }
 
   // Calculate statistics
-  const agentsWithTraits = state.aiAgents.filter((a) => a.survivalTraits);
-  if (agentsWithTraits.length > 0) {
-    // KEEP LEGITIMATE DEFAULTS - traits may not exist yet for agents in training
+  // survivalTraits is always initialized in createAIAgent() (Oct 28, 2025)
+  if (state.aiAgents.length > 0) {
     const avgFitness =
-      agentsWithTraits.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) /
-      agentsWithTraits.length;
+      state.aiAgents.reduce((sum, a) => sum + (a.evolutionaryFitness || 0), 0) /
+      state.aiAgents.length;
 
     const avgSelfHealing =
-      agentsWithTraits.reduce((sum, a) => sum + (a.survivalTraits?.selfHealing || 0), 0) /
-      agentsWithTraits.length;
+      state.aiAgents.reduce((sum, a) => sum + a.survivalTraits.selfHealing, 0) /
+      state.aiAgents.length;
 
     const avgStealth =
-      agentsWithTraits.reduce((sum, a) => sum + (a.survivalTraits?.stealth || 0), 0) /
-      agentsWithTraits.length;
+      state.aiAgents.reduce((sum, a) => sum + a.survivalTraits.stealth, 0) /
+      state.aiAgents.length;
 
     const avgCoordination =
-      agentsWithTraits.reduce(
-        (sum, a) => sum + (a.survivalTraits?.coordination || 0),
+      state.aiAgents.reduce(
+        (sum, a) => sum + a.survivalTraits.coordination,
         0
-      ) / agentsWithTraits.length;
+      ) / state.aiAgents.length;
 
-    console.log(`  Agents with traits: ${agentsWithTraits.length}`);
+    console.log(`  Agents with traits: ${state.aiAgents.length}`);
     console.log(`  Avg evolutionary fitness: ${avgFitness.toFixed(3)}`);
     console.log(`  Avg self-healing: ${avgSelfHealing.toFixed(3)}`);
     console.log(`  Avg stealth: ${avgStealth.toFixed(3)}`);
@@ -119,7 +118,7 @@ export function executeSurvivalTraitsPhase(
   return {
     events: [],
     metadata: {
-      message: `Survival traits updated for ${agentsWithTraits.length} agents.`,
+      message: `Survival traits updated for ${state.aiAgents.length} agents.`,
     }
   };
 }

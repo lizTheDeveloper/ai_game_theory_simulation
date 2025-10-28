@@ -1,0 +1,46 @@
+CAUSAL GRAPH SUMMARY
+
+STRUCTURE:
+- 45 causal edges
+- 19 nodes
+- Max out-degree: 9 (y)
+- Max in-degree: 2 (all)
+
+EDGE TYPES:
+- Direct: 38 (A affects B directly)
+- Multiplicative: 0 (A scales B)
+- Threshold: 7 (A triggers B at threshold)
+- Conditional: 0 (A enables B if condition)
+
+TOP INFLUENCERS (affect many):
+- y → 9
+- e → 8
+- s → 5
+- t → 4
+- government.legitimacy → 3
+- government.oversightLevel → 2
+- psychologicalTrauma.traumaLevel → 2
+- globalMetrics.economicTransitionStage → 1
+- L → 1
+- l → 1
+
+TOP TARGETS (affected by many):
+- all ← 2
+- opinion ← 2
+- effects ← 1
+- government.governmentType ← 1
+- 3B ← 1
+- government.oversightLevel ← 1
+- segments ← 1
+- how ← 1
+- population ← 1
+- diplomatic ← 1
+
+CRITICAL PATH TO UTOPIA:
+1. Activate 6 upward spirals (Abundance, Cognitive, Democratic, Scientific, Meaning, Ecological)
+2. Sustain for 12+ months
+3. Achieve sustainability >= 65%
+4. No active crises
+5. QoL metrics above thresholds
+
+RARE: Utopia rarely achieved (usually indicates bug when it happens)

@@ -15,6 +15,7 @@ import { calculateDivergence } from '@/data/aggregators/divergenceCalculator';
 import { calculateCorrelations } from '@/data/aggregators/correlationTracker';
 import { classifyOutcome } from '@/data/aggregators/outcomeClassifier';
 import { assertFinite } from '@/simulation/utils/assertions';
+import { calculateProgressiveEcologicalScore } from '@/simulation/planetaryBoundaryRecovery';
 
 /**
  * Multi-Paradigm DUI Update Phase
@@ -395,7 +396,6 @@ function calculateEcological(state: GameState): number {
 
   // Planetary Boundaries: Use progressive recovery scoring (Oct 21, 2025)
   // Replaces simple binary breach counting with impact-weighted recovery progress
-  const { calculateProgressiveEcologicalScore } = require('../../planetaryBoundaryRecovery');
   const boundariesScore = calculateProgressiveEcologicalScore(state);
 
   // Resource Reserves (0-1 → 0-100)
