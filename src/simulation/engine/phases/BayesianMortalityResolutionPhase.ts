@@ -43,6 +43,14 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
     // Resolve all accumulated mortality risks
     const result = resolveMortality(state, rng);
 
+    // DEBUG (Oct 28, 2025): Verify population after resolveMortality
+    if (isNaN(state.humanPopulationSystem.population)) {
+      console.error(`❌ Population is NaN after resolveMortality`);
+      console.error(`   totalDeaths (from result): ${result.totalDeaths}`);
+      console.error(`   remainingPopulation (from result): ${result.remainingPopulation}`);
+      throw new Error(`resolveMortality corrupted population to NaN`);
+    }
+
     // Log mortality results if significant deaths occurred
     const deathsMillions = result.totalDeaths; // Already in millions
     if (deathsMillions > 0.1) {
