@@ -145,6 +145,12 @@ export interface TechnologicalRisk {
   // Tracks fraction of control losses prevented by interpretability ensemble
   // Used by downstream systems (extinction risk, crisis detection) to query mitigation status
   controlLossPreventionRate?: number; // [0, 1] Fraction of control losses prevented
+
+  // AI Control Gap (Oct 28, 2025) - Governance metric
+  // Tracks divergence between AI capabilities and human oversight mechanisms
+  // This is a METRIC about governance, not a direct harm measure
+  // Used for UI display and paradigm-specific scoring (Western Liberal values oversight)
+  aiControlGap?: number; // [0, 1] Gap between capability and control (0 = full control, 1 = no control)
 }
 
 /**
