@@ -72,6 +72,8 @@ interface SimulationRunConfig {
   updateInterval: number;           // Update frequency
   batchId: string;                  // Parent batch ID
   runIndex: number;                 // Index within batch (0-based)
+  // Custom parameters from parameter sweeps (e.g., governmentActionFrequency)
+  [key: string]: any;
 }
 
 /**
@@ -84,11 +86,14 @@ interface SimulationRunStatus {
   status: 'queued' | 'running' | 'paused' | 'completed' | 'failed';
   currentMonth: number;
   maxMonths: number;
-  outcome?: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
+  // REMOVED (Oct 28, 2025): Legacy 4-category outcome replaced by unifiedOutcome
+  unifiedOutcome?: import('../types/outcomes').UnifiedOutcomeClassification;
   outcomeReason?: string;
   startTime?: number;               // Timestamp (ms)
   endTime?: number;                 // Timestamp (ms)
   error?: string;                   // Error message if failed
+  // Parameter sweep metadata (stores custom sweep parameters for this run)
+  parameters?: Record<string, string | number | boolean>;
 }
 
 /**
@@ -116,6 +121,8 @@ export interface ParameterSweepConfig {
     maxMonths?: number[];           // e.g., [60, 120, 360]
     nestedMC?: boolean[];           // e.g., [true, false]
     aleatoryCounts?: number[];      // e.g., [5, 10, 20] (if nested)
+    // Support for custom parameters from enhanced config
+    [key: string]: any[] | undefined;
   };
 
   // Fixed parameters (same for all runs)
@@ -140,6 +147,9 @@ export interface ParameterSweepGroup {
   parameterValue: string;           // e.g., "doom"
   simulationIds: string[];          // All simulations with this value
   batchId: string;
+  label?: string;                   // Human-readable label
+  runs?: Array<{ simulationId: string; outcome?: string }>;  // Run outcomes
+  parameters?: Record<string, any>; // All parameter values for this group
 }
 
 /**
@@ -160,6 +170,10 @@ export interface MonteCarloBatchProgress {
   // Parameter sweep metadata (if applicable)
   isSweep?: boolean;
   sweepGroups?: ParameterSweepGroup[];
+
+  // Additional queue tracking for debugging
+  activeSimulations?: number;       // Number actually running
+  queuedSimulations?: number;       // Number waiting to start
 }
 
 /**
@@ -198,214 +212,118 @@ export interface MonteCarloAggregateStats {
   // Key metrics (averages across completed runs)
   avgFinalQoL: number;              // Average final quality of life
   avgFinalPopulation: number;       // Average final population (billions)
-  avgMaxAICapability: number;       // Average max AI capability reached
+  avgMaxAICapability: number;       // Average max AI capability achieved
 
-  // Paradigm statistics (Phase 6 multi-paradigm DUI)
-  paradigmStats?: {
-    avgFinalWestern: number;
-    avgFinalDevelopment: number;
-    avgFinalEcological: number;
-    avgFinalIndigenous: number;
-    avgParadigmDivergence: number;
+  // Additional statistics for SweepResultsPanel
+  averageMonthsSurvived?: number;   // Average months survived across all runs
+  survivalRate?: number;            // Percentage of runs that didn't end in extinction (0-1)
+  outcomeBreakdown?: {              // Breakdown of outcomes for visualization
+    utopia?: number;
+    postScarcity?: number;
+    sustainable?: number;
+    struggling?: number;
+    collapse?: number;
+    extinction?: number;
+    unknown?: number;
   };
 
-  // Epistemic uncertainty (if nested MC)
-  epistemicUncertainty?: {
-    outcomeIntervals: {             // Outcome probability intervals
-      utopia: { median: number; iqr: [number, number] };
-      dystopia: { median: number; iqr: [number, number] };
-      extinction: { median: number; iqr: [number, number] };
-      stalemate: { median: number; iqr: [number, number] };
-    };
-  };
+  // Timeline data for visualization
+  timeline?: Array<{
+    month: number;
+    totalRuns: number;
+    survivingRuns: number;
+    outcomeDistribution: Record<string, number>;
+  }>;
+
+  // Parameter analysis (for sweeps)
+  parameterAnalysis?: any;
 }
 
-/**
- * Worker slot (reusable worker in pool)
- */
-interface WorkerSlot {
-  id: string;                       // Slot ID (e.g., "slot-0")
-  worker: SimulationWorkerClient;   // Worker instance
-  status: 'idle' | 'busy';          // Current status
-  currentSimulationId?: string;     // Active simulation ID (if busy)
-  assignedAt?: number;              // Assignment timestamp (if busy)
-}
-
-/**
- * Resource tier (progressive degradation strategy)
- */
-type ResourceTier = 'normal' | 'busy' | 'degraded' | 'at-capacity';
-
 // ============================================================================
-// MONTE CARLO MANAGER
+// MANAGER CLASS
 // ============================================================================
 
+/**
+ * Monte Carlo Manager
+ *
+ * Resource management:
+ * - NORMAL_CONCURRENCY = 5 (50% CPU)
+ * - DEGRADED_CONCURRENCY = 8 (80% CPU, frame drops)
+ * - MAX_WORKERS = 10 (absolute limit)
+ * - Queue simulations when at capacity
+ * - Progressive degradation under load
+ */
 export class MonteCarloManager {
   // Worker pool
-  private workerPool: Map<string, WorkerSlot> = new Map();
-  private maxConcurrent = 5;        // Normal operation: 5 concurrent
-  private maxDegraded = 8;          // Degraded operation: 8 concurrent
-  private maxTotal = 10;            // Absolute maximum: 10 total
+  private workerPool: Map<string, {
+    worker: SimulationWorkerClient;
+    simulationId: string | null;
+    busy: boolean;
+  }> = new Map();
 
-  // Batch tracking
+  // Batch management
   private batches: Map<string, MonteCarloBatchConfig> = new Map();
   private batchStatus: Map<string, SimulationRunStatus[]> = new Map();
-  private batchSweepGroups: Map<string, ParameterSweepGroup[]> = new Map(); // Sweep metadata
+  private batchSweepGroups: Map<string, ParameterSweepGroup[]> = new Map();
 
-  // Simulation queue
-  private queue: SimulationRunConfig[] = [];
+  // Queue management
+  private runQueue: SimulationRunConfig[] = [];
+  private isProcessingQueue = false;
 
-  // Resource monitoring
-  private frameRate = 60;           // Current FPS (tracked via RAF)
-  private messageQueueDepth = 0;    // Pending state updates
-  private rafId: number | null = null; // requestAnimationFrame ID
+  // Resource limits
+  private readonly NORMAL_CONCURRENCY = 5;    // 50% CPU
+  private readonly DEGRADED_CONCURRENCY = 8;  // 80% CPU
+  private readonly MAX_WORKERS = 10;          // Absolute limit
+
+  // Performance monitoring
+  private frameRateMonitor: number | null = null;
+  private lastFrameTime = 0;
+  private lowFrameCount = 0;
 
   // Event callbacks
   private callbacks: Map<string, Set<(...args: any[]) => void>> = new Map();
 
-  // Storage (IndexedDB)
-  private dbName = 'superalignment-montecarlo';
-  private dbVersion = 1;
-
   constructor() {
-    this.initializeWorkerPool();
-    // Only monitor frame rate in browser environment
-    if (typeof requestAnimationFrame !== 'undefined') {
+    console.log('[MonteCarloManager] Initialized');
+    console.log(`[MonteCarloManager] Concurrency: Normal=${this.NORMAL_CONCURRENCY}, Degraded=${this.DEGRADED_CONCURRENCY}, Max=${this.MAX_WORKERS}`);
+
+    // Start frame rate monitoring (only in browser)
+    if (typeof window !== 'undefined' && typeof requestAnimationFrame !== 'undefined') {
       this.startFrameRateMonitoring();
     }
   }
 
   // ==========================================================================
-  // WORKER POOL MANAGEMENT
+  // PUBLIC API
   // ==========================================================================
 
   /**
-   * Initialize worker pool (create reusable workers)
-   */
-  private initializeWorkerPool(): void {
-    console.log('[MonteCarloManager] Initializing worker pool');
-
-    // Start with 5 workers (normal tier)
-    for (let i = 0; i < this.maxConcurrent; i++) {
-      this.createWorkerSlot(`slot-${i}`);
-    }
-  }
-
-  /**
-   * Create a new worker slot
-   */
-  private createWorkerSlot(id: string): void {
-    try {
-      const worker = new SimulationWorkerClient();
-      const slot: WorkerSlot = {
-        id,
-        worker,
-        status: 'idle'
-      };
-
-      this.workerPool.set(id, slot);
-      console.log(`[MonteCarloManager] Created worker slot: ${id}`);
-    } catch (error) {
-      console.error(`[MonteCarloManager] Failed to create worker slot ${id}:`, error);
-    }
-  }
-
-  /**
-   * Get idle worker slot (or null if all busy)
-   */
-  private getIdleWorkerSlot(): WorkerSlot | null {
-    for (const slot of this.workerPool.values()) {
-      if (slot.status === 'idle') {
-        return slot;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Get current resource tier based on active simulations
-   */
-  private getResourceTier(): ResourceTier {
-    const activeCount = Array.from(this.workerPool.values()).filter(
-      slot => slot.status === 'busy'
-    ).length;
-
-    if (activeCount <= this.maxConcurrent) return 'normal';
-    if (activeCount <= this.maxDegraded) return 'busy';
-    if (activeCount < this.maxTotal) return 'degraded';
-    return 'at-capacity';
-  }
-
-  /**
-   * Start frame rate monitoring (progressive degradation)
-   */
-  private startFrameRateMonitoring(): void {
-    let lastTime = performance.now();
-    let frameCount = 0;
-
-    const measureFrameRate = (currentTime: number) => {
-      frameCount++;
-      const elapsed = currentTime - lastTime;
-
-      // Calculate FPS every second
-      if (elapsed >= 1000) {
-        this.frameRate = frameCount / (elapsed / 1000);
-        frameCount = 0;
-        lastTime = currentTime;
-
-        // Check for performance degradation
-        if (this.frameRate < 30) {
-          console.warn(`[MonteCarloManager] Frame rate dropped to ${this.frameRate.toFixed(1)} FPS - consider throttling`);
-        }
-      }
-
-      this.rafId = requestAnimationFrame(measureFrameRate);
-    };
-
-    this.rafId = requestAnimationFrame(measureFrameRate);
-  }
-
-  /**
-   * Stop frame rate monitoring
-   */
-  private stopFrameRateMonitoring(): void {
-    if (this.rafId !== null && typeof cancelAnimationFrame !== 'undefined') {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = null;
-    }
-  }
-
-  // ==========================================================================
-  // BATCH MANAGEMENT
-  // ==========================================================================
-
-  /**
-   * Create a new Monte Carlo batch
-   *
-   * @param config - Batch configuration
-   * @returns Batch ID (unique identifier)
+   * Create a new batch of Monte Carlo simulations
    */
   async createBatch(config: MonteCarloBatchConfig): Promise<string> {
+    // Validate configuration
+    if (config.numRuns < 1) {
+      throw new Error('numRuns must be at least 1');
+    }
+    if (config.numRuns > 1000) {
+      throw new Error('numRuns exceeds maximum (1000 for single batch)');
+    }
+
     // Generate unique batch ID
     const timestamp = Date.now();
     const batchId = `batch-${config.startSeed}-${timestamp}`;
 
-    // Validate configuration
-    this.validateBatchConfig(config);
-
     // Store batch configuration
     this.batches.set(batchId, config);
 
-    // Initialize batch status (all simulations start as queued)
+    // Initialize batch status
     const statusArray: SimulationRunStatus[] = [];
     for (let i = 0; i < config.numRuns; i++) {
-      const seed = config.startSeed + i;
       const simulationId = `${batchId}_run${i.toString().padStart(3, '0')}`;
-
       statusArray.push({
         simulationId,
         batchId,
-        seed,
+        seed: config.startSeed + i,
         status: 'queued',
         currentMonth: 0,
         maxMonths: config.maxMonths
@@ -413,37 +331,17 @@ export class MonteCarloManager {
     }
     this.batchStatus.set(batchId, statusArray);
 
-    // Persist to IndexedDB
-    await this.saveBatchToIndexedDB(batchId, config, statusArray);
+    // Persist to IndexedDB (async, don't await)
+    this.saveBatchToIndexedDB(batchId, config, statusArray);
 
     console.log(`[MonteCarloManager] Created batch ${batchId} with ${config.numRuns} runs`);
-
     return batchId;
-  }
-
-  /**
-   * Validate batch configuration
-   */
-  private validateBatchConfig(config: MonteCarloBatchConfig): void {
-    if (config.numRuns < 1) {
-      throw new Error('numRuns must be at least 1');
-    }
-    if (config.numRuns > 1000) {
-      throw new Error('numRuns exceeds maximum (1000)');
-    }
-    if (config.maxMonths < 1) {
-      throw new Error('maxMonths must be at least 1');
-    }
-    if (config.nestedMode && (!config.aleatorySamplesPerEpistemic || config.aleatorySamplesPerEpistemic < 1)) {
-      throw new Error('nestedMode requires aleatorySamplesPerEpistemic >= 1');
-    }
   }
 
   /**
    * Create a parameter sweep batch
    *
-   * Generates all combinations of sweep parameters (cartesian product) and
-   * creates a batch with grouped simulations for sensitivity analysis.
+   * Generates all combinations of specified parameters to explore parameter space.
    *
    * @param config - Parameter sweep configuration
    * @returns Batch ID (unique identifier)
@@ -502,7 +400,9 @@ export class MonteCarloManager {
         seed: sweepConfig.seed,
         status: 'queued',
         currentMonth: 0,
-        maxMonths: sweepConfig.maxMonths
+        maxMonths: sweepConfig.maxMonths,
+        // Store sweep parameters for this specific run
+        parameters: sweepConfig.parameters
       });
     }
     this.batchStatus.set(batchId, statusArray);
@@ -535,34 +435,30 @@ export class MonteCarloManager {
 
     // Check that at least one sweep parameter is specified
     const hasSweep = Object.values(config.sweepParameters).some(arr => arr && arr.length > 0);
-    if (!hasSweep) {
-      throw new Error('At least one sweep parameter must be specified');
-    }
+
+    // Allow seed-only sweeps (no parameters required)
+    // This was part of the bug - we were requiring parameters when seed-only sweeps are valid
 
     // Estimate total simulations
     let totalSims = config.seeds.count;
-    if (config.sweepParameters.thresholdScenarios) {
-      totalSims *= config.sweepParameters.thresholdScenarios.length;
-    }
-    if (config.sweepParameters.scenarioModes) {
-      totalSims *= config.sweepParameters.scenarioModes.length;
-    }
-    if (config.sweepParameters.maxMonths) {
-      totalSims *= config.sweepParameters.maxMonths.length;
-    }
-    if (config.sweepParameters.nestedMC) {
-      totalSims *= config.sweepParameters.nestedMC.length;
+
+    // Count all parameter dimensions
+    Object.entries(config.sweepParameters).forEach(([key, values]) => {
+      if (values && values.length > 0) {
+        totalSims *= values.length;
+      }
+    });
+
+    if (totalSims > 10000) {
+      throw new Error(`Total simulations (${totalSims}) exceeds maximum (10000). Reduce parameters or seeds.`);
     }
 
-    if (totalSims > 1000) {
-      throw new Error(`Parameter sweep would generate ${totalSims} simulations (max: 1000). Reduce seeds or sweep parameters.`);
-    }
-
-    console.log(`[MonteCarloManager] Parameter sweep will generate ${totalSims} simulations`);
+    console.log(`[MonteCarloManager] Sweep validation: ${totalSims} total simulations`);
   }
 
   /**
    * Generate all sweep configurations (cartesian product)
+   * FIXED: Now properly handles custom parameters from enhanced config
    */
   private generateSweepConfigurations(config: ParameterSweepConfig): Array<{
     seed: number;
@@ -576,47 +472,56 @@ export class MonteCarloManager {
   }> {
     const configurations: Array<any> = [];
 
-    // Get all parameter values to sweep
-    const seeds = Array.from({ length: config.seeds.count }, (_, i) => config.seeds.start + i);
-    const thresholdScenarios = config.sweepParameters.thresholdScenarios || [config.fixedParameters.speculativeScenario || undefined];
-    const scenarioModes = config.sweepParameters.scenarioModes || [config.fixedParameters.scenario || 'historical'];
-    const maxMonthsValues = config.sweepParameters.maxMonths || [config.fixedParameters.maxMonths || 120];
-    const nestedMCValues = config.sweepParameters.nestedMC || [false];
-    const aleatoryCounts = config.sweepParameters.aleatoryCounts || [10];
+    // Build parameter dimensions dynamically
+    const dimensions: Array<{ name: string; values: any[] }> = [];
 
-    // Generate cartesian product
-    for (const seed of seeds) {
-      for (const thresholdScenario of thresholdScenarios) {
-        for (const scenarioMode of scenarioModes) {
-          for (const maxMonths of maxMonthsValues) {
-            for (const nestedMode of nestedMCValues) {
-              // Only include aleatory count if nested mode
-              const aleatoryValues = nestedMode ? aleatoryCounts : [undefined];
+    // Always include seeds
+    dimensions.push({
+      name: 'seed',
+      values: Array.from({ length: config.seeds.count }, (_, i) => config.seeds.start + i)
+    });
 
-              for (const aleatorySamples of aleatoryValues) {
-                configurations.push({
-                  seed,
-                  scenario: scenarioMode,
-                  speculativeScenario: thresholdScenario,
-                  maxMonths,
-                  nestedMode,
-                  aleatorySamplesPerEpistemic: aleatorySamples,
-                  updateInterval: config.fixedParameters.updateInterval || 1000,
-                  parameters: {
-                    seed,
-                    thresholdScenario: thresholdScenario || 'none',
-                    scenarioMode,
-                    maxMonths,
-                    nestedMode,
-                    ...(nestedMode && aleatorySamples ? { aleatorySamples } : {})
-                  }
-                });
-              }
-            }
-          }
-        }
+    // Process ALL sweep parameters, including custom ones
+    Object.entries(config.sweepParameters).forEach(([paramName, values]) => {
+      if (values && values.length > 0) {
+        console.log(`[MonteCarloManager] Adding dimension: ${paramName} with ${values.length} values`);
+        dimensions.push({ name: paramName, values });
       }
-    }
+    });
+
+    // Generate cartesian product recursively
+    const generateCombinations = (dimIndex: number, current: Record<string, any>): void => {
+      if (dimIndex >= dimensions.length) {
+        // We've built a complete combination
+        const combination = { ...current };
+
+        // Map known parameters to expected format
+        configurations.push({
+          seed: combination.seed,
+          scenario: combination.scenarioModes || combination.scenarioMode || config.fixedParameters.scenario || 'historical',
+          speculativeScenario: combination.thresholdScenarios || combination.thresholdScenario || config.fixedParameters.speculativeScenario,
+          maxMonths: combination.maxMonths || config.fixedParameters.maxMonths || 120,
+          nestedMode: combination.nestedMC || combination.nestedMode || false,
+          aleatorySamplesPerEpistemic: combination.aleatoryCounts || combination.aleatorySamples,
+          updateInterval: config.fixedParameters.updateInterval || 1000,
+          parameters: { ...combination } // Keep all parameters for tracking
+        });
+        return;
+      }
+
+      const dimension = dimensions[dimIndex];
+      for (const value of dimension.values) {
+        generateCombinations(dimIndex + 1, { ...current, [dimension.name]: value });
+      }
+    };
+
+    // Start generation
+    generateCombinations(0, {});
+
+    console.log(`[MonteCarloManager] Generated ${configurations.length} configurations from ${dimensions.length} dimensions`);
+    dimensions.forEach(d => {
+      console.log(`  - ${d.name}: ${d.values.length} values`);
+    });
 
     return configurations;
   }
@@ -632,7 +537,6 @@ export class MonteCarloManager {
 
     // Group by each swept parameter
     const parameterNames = Object.keys(configurations[0].parameters);
-
     for (const paramName of parameterNames) {
       // Get unique values for this parameter
       const uniqueValues = new Set(
@@ -653,7 +557,10 @@ export class MonteCarloManager {
           parameterName: paramName,
           parameterValue: value,
           simulationIds,
-          batchId
+          batchId,
+          label: `${paramName}=${value}`,
+          runs: simulationIds.map(id => ({ simulationId: id })),
+          parameters: { [paramName]: value }
         });
       }
     }
@@ -662,305 +569,224 @@ export class MonteCarloManager {
   }
 
   /**
-   * Start parameter sweep execution
-   *
-   * @param batchId - Sweep batch ID
+   * Get sweep results for visualization
    */
-  async startParameterSweep(batchId: string): Promise<void> {
-    // Use the same execution logic as regular batches
-    await this.startBatch(batchId);
+  getSweepResults(batchId: string): ParameterSweepGroup[] | null {
+    return this.batchSweepGroups.get(batchId) || null;
   }
 
   /**
-   * Start batch execution
-   *
-   * Launches simulations up to resource limits, queues excess.
-   *
-   * @param batchId - Batch ID to start
+   * Start executing a batch or parameter sweep
    */
   async startBatch(batchId: string): Promise<void> {
     const config = this.batches.get(batchId);
-    if (!config) {
+    const statusArray = this.batchStatus.get(batchId);
+
+    if (!config || !statusArray) {
       throw new Error(`Batch ${batchId} not found`);
     }
 
-    const statusArray = this.batchStatus.get(batchId);
-    if (!statusArray) {
-      throw new Error(`Batch status ${batchId} not found`);
-    }
+    console.log(`[MonteCarloManager] Starting batch ${batchId}`);
 
-    console.log(`[MonteCarloManager] Starting batch ${batchId} (${config.numRuns} runs)`);
+    // Emit batch started event
+    this.emit('batchStarted', batchId);
 
     // Queue all simulations
-    for (let i = 0; i < config.numRuns; i++) {
-      const seed = config.startSeed + i;
-      const simulationId = `${batchId}_run${i.toString().padStart(3, '0')}`;
+    for (const status of statusArray) {
+      // For parameter sweeps, use per-run parameters if available
+      // Otherwise use batch config (standard Monte Carlo runs)
+      const hasCustomParams = status.parameters && Object.keys(status.parameters).length > 0;
 
       const runConfig: SimulationRunConfig = {
-        simulationId,
-        seed,
+        simulationId: status.simulationId,
+        seed: status.seed,
         scenario: config.scenario,
         speculativeScenario: config.speculativeScenario,
         thresholdSliders: config.thresholdSliders,
-        maxMonths: config.maxMonths,
+        maxMonths: status.maxMonths,
         updateInterval: config.updateInterval || 1000,
         batchId,
-        runIndex: i
+        runIndex: statusArray.indexOf(status),
+        // Merge custom sweep parameters (overwrites batch config if present)
+        ...(hasCustomParams ? status.parameters : {})
       };
 
-      this.queue.push(runConfig);
+      this.runQueue.push(runConfig);
+    }
+
+    console.log(`[MonteCarloManager] Queued ${statusArray.length} simulations`);
+
+    // Log parameter sweep dimensions if present
+    const firstStatus = statusArray[0];
+    if (firstStatus?.parameters) {
+      const paramNames = Object.keys(firstStatus.parameters);
+      console.log(`[MonteCarloManager] Parameter sweep active: ${paramNames.join(', ')}`);
     }
 
     // Start processing queue
     this.processQueue();
-
-    // Emit batch started event
-    this.emit('batchStarted', batchId);
   }
+
+  /**
+   * Alias for startBatch (for parameter sweeps)
+   */
+  async startParameterSweep(batchId: string): Promise<void> {
+    return this.startBatch(batchId);
+  }
+
+  // ==========================================================================
+  // QUEUE PROCESSING
+  // ==========================================================================
 
   /**
    * Process simulation queue
-   *
-   * Assigns queued simulations to idle workers up to resource limits.
    */
-  private processQueue(): void {
-    // Check resource tier
-    const tier = this.getResourceTier();
+  private async processQueue(): Promise<void> {
+    if (this.isProcessingQueue) return;
+    this.isProcessingQueue = true;
 
-    if (tier === 'at-capacity') {
-      console.log('[MonteCarloManager] At capacity, queue processing paused');
-      return;
+    while (this.runQueue.length > 0) {
+      // Check available capacity
+      const activeCount = Array.from(this.workerPool.values()).filter(w => w.busy).length;
+      const capacity = this.getCurrentCapacity();
+
+      if (activeCount >= capacity) {
+        // Wait briefly then retry
+        await new Promise(resolve => setTimeout(resolve, 100));
+        continue;
+      }
+
+      // Pop next simulation from queue
+      const runConfig = this.runQueue.shift()!;
+
+      // Get or create a worker
+      const worker = await this.getOrCreateWorker();
+      if (!worker) {
+        // No available workers, put back in queue
+        this.runQueue.unshift(runConfig);
+        await new Promise(resolve => setTimeout(resolve, 100));
+        continue;
+      }
+
+      // Start simulation
+      this.startSimulation(worker, runConfig);
+
+      // Emit progress update
+      this.emitBatchProgress(runConfig.batchId);
     }
 
-    // Get idle worker
-    const slot = this.getIdleWorkerSlot();
-    if (!slot) {
-      console.log('[MonteCarloManager] No idle workers, queue processing paused');
-      return;
-    }
-
-    // Get next queued simulation
-    const runConfig = this.queue.shift();
-    if (!runConfig) {
-      console.log('[MonteCarloManager] Queue empty');
-      return;
-    }
-
-    // Assign simulation to worker
-    this.assignSimulationToWorker(slot, runConfig);
-
-    // Continue processing queue (recursive)
-    if (this.queue.length > 0) {
-      this.processQueue();
-    }
+    this.isProcessingQueue = false;
   }
 
   /**
-   * Assign simulation to worker slot
+   * Start a simulation on a worker
    */
-  private assignSimulationToWorker(slot: WorkerSlot, runConfig: SimulationRunConfig): void {
-    console.log(`[MonteCarloManager] Assigning ${runConfig.simulationId} to ${slot.id}`);
+  private async startSimulation(
+    worker: SimulationWorkerClient,
+    config: SimulationRunConfig
+  ): Promise<void> {
+    const slot = Array.from(this.workerPool.entries())
+      .find(([_, s]) => s.worker === worker)?.[1];
 
-    // Mark slot as busy
-    slot.status = 'busy';
-    slot.currentSimulationId = runConfig.simulationId;
-    slot.assignedAt = Date.now();
+    if (!slot) return;
 
-    // Update simulation status
-    const statusArray = this.batchStatus.get(runConfig.batchId);
-    if (statusArray) {
-      const status = statusArray.find(s => s.simulationId === runConfig.simulationId);
-      if (status) {
-        status.status = 'running';
-        status.startTime = Date.now();
-      }
-    }
+    // Mark worker as busy
+    slot.busy = true;
+    slot.simulationId = config.simulationId;
 
-    // Set up worker callbacks
-    const worker = slot.worker;
+    // Update status
+    this.updateSimulationStatus(config.batchId, config.simulationId, { status: 'running', startTime: Date.now() });
 
-    // Update callback (track progress)
-    worker.on('update', (delta: StateDelta) => {
-      this.handleSimulationUpdate(runConfig.simulationId, delta);
-    });
+    // Emit simulation started
+    this.emit('simulationStarted', config.simulationId, config.batchId);
 
-    // Error callback
-    worker.on('error', (error: Error) => {
-      this.handleSimulationError(runConfig.simulationId, error);
-    });
+    try {
+      // Configure and start simulation
+      await worker.initializeSimulation({
+        seed: config.seed,
+        scenarioMode: config.scenario,
+        speculativeScenario: config.speculativeScenario,
+        thresholdSliders: config.thresholdSliders,
+        nestedMonteCarloMode: false,
+        maxMonths: config.maxMonths
+      });
 
-    // Initialize worker and wait for initialization to complete
-    worker.once('initialized', () => {
-      // Worker is ready, now start simulation
-      worker.start();
+      // Setup progress callback
+      worker.onProgress = (delta: StateDelta) => {
+        const month = delta.state?.currentMonth || 0;
+        this.emit('simulationProgress', config.simulationId, config.batchId, month);
 
-      // Emit simulation started event
-      this.emit('simulationStarted', runConfig.simulationId, runConfig.batchId);
-    });
+        // Update status
+        this.updateSimulationStatus(config.batchId, config.simulationId, { currentMonth: month });
 
-    // Initialize worker (async - will emit 'initialized' event when ready)
-    worker.init(
-      runConfig.seed,
-      runConfig.scenario,
-      runConfig.updateInterval,
-      undefined, // alignmentConfig
-      undefined, // climatePriorityConfig
-      runConfig.thresholdSliders,
-      runConfig.speculativeScenario
-    );
-  }
+        // Emit batch progress periodically
+        if (month % 10 === 0) {
+          this.emitBatchProgress(config.batchId);
+        }
+      };
 
-  /**
-   * Handle simulation update (track progress, detect completion)
-   */
-  private handleSimulationUpdate(simulationId: string, delta: StateDelta): void {
-    // Find simulation status
-    let status: SimulationRunStatus | undefined;
-    let batchId: string | undefined;
+      // Run simulation
+      const outcome = await worker.runSimulation();
 
-    for (const [bid, statusArray] of this.batchStatus.entries()) {
-      const s = statusArray.find(s => s.simulationId === simulationId);
-      if (s) {
-        status = s;
-        batchId = bid;
-        break;
-      }
-    }
+      // Simulation completed successfully
+      this.updateSimulationStatus(config.batchId, config.simulationId, {
+        status: 'completed',
+        outcome: outcome.outcome,
+        outcomeReason: outcome.reason,
+        endTime: Date.now()
+      });
 
-    if (!status || !batchId) {
-      console.warn(`[MonteCarloManager] Unknown simulation: ${simulationId}`);
-      return;
-    }
-
-    // Update current month
-    if (delta.currentMonth !== undefined) {
-      status.currentMonth = delta.currentMonth;
-    }
-
-    // Check for outcome (completion)
-    if (delta.outcomeType) {
-      // Map 7-tier outcome to 5 categories
-      const outcomeType = delta.outcomeType.toLowerCase();
-      if (outcomeType.includes('utopia')) {
-        status.outcome = 'utopia';
-      } else if (outcomeType.includes('dystopia')) {
-        status.outcome = 'dystopia';
-      } else if (outcomeType.includes('extinction') || outcomeType.includes('collapse')) {
-        status.outcome = 'extinction';
-      } else if (outcomeType.includes('status quo') || outcomeType.includes('crisis')) {
-        status.outcome = 'stalemate';
-      } else {
-        status.outcome = 'none';
+      // Update sweep groups if applicable
+      const sweepGroups = this.batchSweepGroups.get(config.batchId);
+      if (sweepGroups) {
+        for (const group of sweepGroups) {
+          const run = group.runs?.find(r => r.simulationId === config.simulationId);
+          if (run) {
+            run.outcome = outcome.outcome;
+          }
+        }
       }
 
-      // Mark completed
-      status.status = 'completed';
-      status.endTime = Date.now();
+      this.emit('simulationCompleted', config.simulationId, config.batchId, outcome.outcome);
 
-      console.log(`[MonteCarloManager] Simulation ${simulationId} completed: ${status.outcome} (${status.currentMonth} months)`);
+    } catch (error: any) {
+      // Simulation failed
+      console.error(`[MonteCarloManager] Simulation ${config.simulationId} failed:`, error);
 
-      // Free worker slot
-      this.freeWorkerSlot(simulationId);
+      this.updateSimulationStatus(config.batchId, config.simulationId, {
+        status: 'failed',
+        error: error.message,
+        endTime: Date.now()
+      });
 
-      // Emit completion event
-      this.emit('simulationCompleted', simulationId, batchId, status.outcome);
+      this.emit('simulationError', config.simulationId, config.batchId, error);
+    } finally {
+      // Mark worker as available
+      slot.busy = false;
+      slot.simulationId = null;
 
       // Check if batch is complete
-      this.checkBatchCompletion(batchId);
+      this.checkBatchCompletion(config.batchId);
 
-      // Process next queued simulation
+      // Continue processing queue
       this.processQueue();
     }
-
-    // Check for max months (timeout)
-    if (delta.currentMonth && delta.currentMonth >= status.maxMonths) {
-      status.outcome = 'none';
-      status.outcomeReason = 'Max months reached';
-      status.status = 'completed';
-      status.endTime = Date.now();
-
-      console.log(`[MonteCarloManager] Simulation ${simulationId} reached max months (${status.maxMonths})`);
-
-      // Free worker slot
-      this.freeWorkerSlot(simulationId);
-
-      // Emit completion event
-      this.emit('simulationCompleted', simulationId, batchId, status.outcome);
-
-      // Check if batch is complete
-      this.checkBatchCompletion(batchId);
-
-      // Process next queued simulation
-      this.processQueue();
-    }
-
-    // Emit progress event
-    this.emit('simulationProgress', simulationId, batchId, status.currentMonth, status.maxMonths);
-
-    // Emit batch progress event
-    this.emitBatchProgress(batchId);
   }
 
   /**
-   * Handle simulation error
+   * Update simulation status
    */
-  private handleSimulationError(simulationId: string, error: Error): void {
-    console.error(`[MonteCarloManager] Simulation ${simulationId} error:`, error);
+  private updateSimulationStatus(
+    batchId: string,
+    simulationId: string,
+    updates: Partial<SimulationRunStatus>
+  ): void {
+    const statusArray = this.batchStatus.get(batchId);
+    if (!statusArray) return;
 
-    // Find simulation status
-    let status: SimulationRunStatus | undefined;
-    let batchId: string | undefined;
-
-    for (const [bid, statusArray] of this.batchStatus.entries()) {
-      const s = statusArray.find(s => s.simulationId === simulationId);
-      if (s) {
-        status = s;
-        batchId = bid;
-        break;
-      }
-    }
-
-    if (!status || !batchId) {
-      console.warn(`[MonteCarloManager] Unknown simulation: ${simulationId}`);
-      return;
-    }
-
-    // Mark as failed
-    status.status = 'failed';
-    status.error = error.message;
-    status.endTime = Date.now();
-
-    // Free worker slot
-    this.freeWorkerSlot(simulationId);
-
-    // Emit error event
-    this.emit('simulationError', simulationId, batchId, error);
-
-    // Check if batch is complete
-    this.checkBatchCompletion(batchId);
-
-    // Process next queued simulation
-    this.processQueue();
-  }
-
-  /**
-   * Free worker slot (mark as idle)
-   */
-  private freeWorkerSlot(simulationId: string): void {
-    for (const slot of this.workerPool.values()) {
-      if (slot.currentSimulationId === simulationId) {
-        // Destroy the old worker client (cannot be reinitialized)
-        slot.worker.destroy();
-
-        // Create a new worker client for reuse
-        slot.worker = new SimulationWorkerClient();
-
-        slot.status = 'idle';
-        slot.currentSimulationId = undefined;
-        slot.assignedAt = undefined;
-        console.log(`[MonteCarloManager] Freed worker slot: ${slot.id} (worker recreated)`);
-        break;
-      }
+    const status = statusArray.find(s => s.simulationId === simulationId);
+    if (status) {
+      Object.assign(status, updates);
     }
   }
 
@@ -971,10 +797,7 @@ export class MonteCarloManager {
     const statusArray = this.batchStatus.get(batchId);
     if (!statusArray) return;
 
-    const allComplete = statusArray.every(
-      s => s.status === 'completed' || s.status === 'failed'
-    );
-
+    const allComplete = statusArray.every(s => s.status === 'completed' || s.status === 'failed');
     if (allComplete) {
       console.log(`[MonteCarloManager] Batch ${batchId} complete`);
       this.emit('batchCompleted', batchId);
@@ -982,124 +805,137 @@ export class MonteCarloManager {
   }
 
   /**
-   * Emit batch progress event
+   * Emit batch progress update
    */
   private emitBatchProgress(batchId: string): void {
-    const progress = this.getBatchProgress(batchId);
-    if (progress) {
-      this.emit('batchProgress', progress);
-    }
-  }
-
-  /**
-   * Get batch progress
-   */
-  getBatchProgress(batchId: string): MonteCarloBatchProgress | null {
-    const config = this.batches.get(batchId);
     const statusArray = this.batchStatus.get(batchId);
+    if (!statusArray) return;
 
-    if (!config || !statusArray) return null;
+    const completed = statusArray.filter(s => s.status === 'completed').length;
+    const running = statusArray.filter(s => s.status === 'running').length;
+    const queued = statusArray.filter(s => s.status === 'queued').length;
+    const failed = statusArray.filter(s => s.status === 'failed').length;
 
-    const totalRuns = config.numRuns;
-    const completedRuns = statusArray.filter(s => s.status === 'completed').length;
-    const runningRuns = statusArray.filter(s => s.status === 'running').length;
-    const queuedRuns = statusArray.filter(s => s.status === 'queued').length;
-    const failedRuns = statusArray.filter(s => s.status === 'failed').length;
-    const progress = completedRuns / totalRuns;
-
-    // Estimate time remaining
-    const completedStatuses = statusArray.filter(s => s.status === 'completed' && s.startTime && s.endTime);
-    let estimatedTimeRemaining: number | undefined;
-
-    if (completedStatuses.length > 0) {
-      const avgDuration = completedStatuses.reduce((sum, s) => {
-        return sum + ((s.endTime || 0) - (s.startTime || 0));
-      }, 0) / completedStatuses.length;
-
-      const remainingRuns = totalRuns - completedRuns - failedRuns;
-      estimatedTimeRemaining = avgDuration * remainingRuns;
-    }
-
-    const firstStatus = statusArray.find(s => s.startTime);
-    const startTime = firstStatus?.startTime || Date.now();
-
-    // Check if this is a parameter sweep
-    const sweepGroups = this.batchSweepGroups.get(batchId);
-    const isSweep = batchId.startsWith('sweep-') && sweepGroups !== undefined;
-
-    return {
+    const progress: MonteCarloBatchProgress = {
       batchId,
-      totalRuns,
-      completedRuns,
-      runningRuns,
-      queuedRuns,
-      failedRuns,
-      progress,
-      estimatedTimeRemaining,
-      startTime,
+      totalRuns: statusArray.length,
+      completedRuns: completed,
+      runningRuns: running,
+      queuedRuns: queued,
+      failedRuns: failed,
+      progress: completed / statusArray.length,
+      startTime: statusArray[0]?.startTime || Date.now(),
       currentTime: Date.now(),
-      isSweep,
-      sweepGroups
+      activeSimulations: running,
+      queuedSimulations: this.runQueue.length
     };
+
+    // Add sweep metadata if applicable
+    if (batchId.startsWith('sweep-')) {
+      progress.isSweep = true;
+      progress.sweepGroups = this.batchSweepGroups.get(batchId);
+    }
+
+    this.emit('batchProgress', progress);
   }
 
-  /**
-   * Get batch configuration
-   */
-  getBatch(batchId: string): MonteCarloBatchConfig | null {
-    return this.batches.get(batchId) || null;
-  }
+  // ==========================================================================
+  // WORKER MANAGEMENT
+  // ==========================================================================
 
   /**
-   * Get sweep groups with results for a parameter sweep batch
-   *
-   * Returns sweep groups with simulation IDs and current status.
-   * Useful for displaying sweep progress and results by parameter value.
-   *
-   * @param batchId - Sweep batch ID
-   * @returns Sweep groups with metadata and simulation IDs, or null if not a sweep
+   * Get or create an available worker
    */
-  getSweepResults(batchId: string): Array<{
-    label: string;
-    parameterName: string;
-    parameterValue: string;
-    parameters: Record<string, any>;
-    runs: Array<{
-      simulationId: string;
-      status: 'queued' | 'running' | 'completed' | 'failed';
-      outcome?: string;
-      summary?: any;
-    }>;
-  }> | null {
-    const sweepGroups = this.batchSweepGroups.get(batchId);
-    const statusArray = this.batchStatus.get(batchId);
+  private async getOrCreateWorker(): Promise<SimulationWorkerClient | null> {
+    // First, try to find an idle worker
+    for (const [id, slot] of this.workerPool) {
+      if (!slot.busy) {
+        return slot.worker;
+      }
+    }
 
-    if (!sweepGroups || !statusArray) return null;
+    // Check if we can create a new worker
+    if (this.workerPool.size < this.getCurrentCapacity()) {
+      const workerId = `worker-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const worker = new SimulationWorkerClient();
 
-    return sweepGroups.map(group => {
-      // Get status for each simulation in this group
-      const runs = group.simulationIds.map(simId => {
-        const status = statusArray.find(s => s.simulationId === simId);
-        return {
-          simulationId: simId,
-          status: status?.status || 'queued',
-          outcome: status?.outcome,
-          summary: status?.summary
-        };
+      this.workerPool.set(workerId, {
+        worker,
+        simulationId: null,
+        busy: false
       });
 
-      return {
-        label: `${group.parameterName}=${group.parameterValue} (n=${runs.length})`,
-        parameterName: group.parameterName,
-        parameterValue: group.parameterValue,
-        parameters: { [group.parameterName]: group.parameterValue },
-        runs
-      };
-    });
+      console.log(`[MonteCarloManager] Created worker ${workerId} (${this.workerPool.size}/${this.MAX_WORKERS})`);
+      return worker;
+    }
+
+    // No available workers and at capacity
+    return null;
   }
 
   /**
-   * Get aggregate statistics for batch
+   * Get current capacity based on performance
+   */
+  private getCurrentCapacity(): number {
+    // If experiencing frame drops, use degraded concurrency
+    if (this.lowFrameCount > 5) {
+      return Math.min(this.DEGRADED_CONCURRENCY, this.workerPool.size + 1);
+    }
+    return this.NORMAL_CONCURRENCY;
+  }
+
+  // ==========================================================================
+  // PERFORMANCE MONITORING
+  // ==========================================================================
+
+  /**
+   * Start monitoring frame rate for performance adaptation
+   */
+  private startFrameRateMonitoring(): void {
+    // Guard against non-browser environments
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+
+    const monitorFrame = (timestamp: number) => {
+      if (this.lastFrameTime > 0) {
+        const deltaTime = timestamp - this.lastFrameTime;
+        const fps = 1000 / deltaTime;
+
+        // Detect low frame rate (< 30 FPS)
+        if (fps < 30) {
+          this.lowFrameCount++;
+          if (this.lowFrameCount > 5) {
+            console.warn(`[MonteCarloManager] Low FPS detected (${fps.toFixed(1)}), throttling workers`);
+          }
+        } else {
+          this.lowFrameCount = Math.max(0, this.lowFrameCount - 1);
+        }
+      }
+
+      this.lastFrameTime = timestamp;
+      this.frameRateMonitor = requestAnimationFrame(monitorFrame);
+    };
+
+    this.frameRateMonitor = requestAnimationFrame(monitorFrame);
+  }
+
+  /**
+   * Stop frame rate monitoring
+   */
+  private stopFrameRateMonitoring(): void {
+    if (this.frameRateMonitor !== null && typeof cancelAnimationFrame !== 'undefined') {
+      cancelAnimationFrame(this.frameRateMonitor);
+      this.frameRateMonitor = null;
+    }
+  }
+
+  // ==========================================================================
+  // AGGREGATE STATISTICS
+  // ==========================================================================
+
+  /**
+   * Get aggregate statistics for a batch
    */
   async getAggregateStats(batchId: string): Promise<MonteCarloAggregateStats | null> {
     const config = this.batches.get(batchId);
@@ -1107,44 +943,76 @@ export class MonteCarloManager {
 
     if (!config || !statusArray) return null;
 
-    // Filter completed runs
-    const completed = statusArray.filter(s => s.status === 'completed');
-
     // Count outcomes
-    const utopiaCount = completed.filter(s => s.outcome === 'utopia').length;
-    const dystopiaCount = completed.filter(s => s.outcome === 'dystopia').length;
-    const extinctionCount = completed.filter(s => s.outcome === 'extinction').length;
-    const stalemateCount = completed.filter(s => s.outcome === 'stalemate').length;
-    const noneCount = completed.filter(s => s.outcome === 'none').length;
+    let utopiaCount = 0;
+    let dystopiaCount = 0;
+    let extinctionCount = 0;
+    let stalemateCount = 0;
+    let noneCount = 0;
 
-    const totalCompleted = completed.length;
+    const monthsToOutcome: number[] = [];
 
-    // Calculate probabilities
-    const outcomeProbabilities = {
-      utopia: totalCompleted > 0 ? (utopiaCount / totalCompleted) * 100 : 0,
-      dystopia: totalCompleted > 0 ? (dystopiaCount / totalCompleted) * 100 : 0,
-      extinction: totalCompleted > 0 ? (extinctionCount / totalCompleted) * 100 : 0,
-      stalemate: totalCompleted > 0 ? (stalemateCount / totalCompleted) * 100 : 0
-    };
+    for (const status of statusArray) {
+      switch (status.outcome) {
+        case 'utopia':
+          utopiaCount++;
+          monthsToOutcome.push(status.currentMonth);
+          break;
+        case 'dystopia':
+          dystopiaCount++;
+          monthsToOutcome.push(status.currentMonth);
+          break;
+        case 'extinction':
+          extinctionCount++;
+          monthsToOutcome.push(status.currentMonth);
+          break;
+        case 'stalemate':
+          stalemateCount++;
+          monthsToOutcome.push(status.currentMonth);
+          break;
+        default:
+          noneCount++;
+      }
+    }
 
     // Calculate timeline statistics
-    const months = completed.map(s => s.currentMonth).filter(m => m > 0);
-    const avgMonthsToOutcome = months.length > 0 ? months.reduce((a, b) => a + b, 0) / months.length : 0;
-    const minMonthsToOutcome = months.length > 0 ? Math.min(...months) : 0;
-    const maxMonthsToOutcome = months.length > 0 ? Math.max(...months) : 0;
-    const sortedMonths = [...months].sort((a, b) => a - b);
-    const medianMonthsToOutcome = sortedMonths.length > 0
-      ? sortedMonths[Math.floor(sortedMonths.length / 2)]
+    const avgMonthsToOutcome = monthsToOutcome.length > 0
+      ? monthsToOutcome.reduce((a, b) => a + b, 0) / monthsToOutcome.length
+      : 0;
+    const minMonthsToOutcome = monthsToOutcome.length > 0 ? Math.min(...monthsToOutcome) : 0;
+    const maxMonthsToOutcome = monthsToOutcome.length > 0 ? Math.max(...monthsToOutcome) : 0;
+    const medianMonthsToOutcome = monthsToOutcome.length > 0
+      ? monthsToOutcome.sort((a, b) => a - b)[Math.floor(monthsToOutcome.length / 2)]
       : 0;
 
-    // TODO: Calculate key metrics from IndexedDB (final QoL, population, etc.)
-    // This requires querying simulation results from IndexedDB
-    // For now, return placeholder values
+    // Calculate probabilities
+    const completedCount = statusArray.filter(s => s.status === 'completed').length;
+    const outcomeProbabilities = {
+      utopia: completedCount > 0 ? (utopiaCount / completedCount) * 100 : 0,
+      dystopia: completedCount > 0 ? (dystopiaCount / completedCount) * 100 : 0,
+      extinction: completedCount > 0 ? (extinctionCount / completedCount) * 100 : 0,
+      stalemate: completedCount > 0 ? (stalemateCount / completedCount) * 100 : 0
+    };
+
+    // Calculate survival rate and additional stats for SweepResultsPanel
+    const survivalRate = completedCount > 0 ? (completedCount - extinctionCount) / completedCount : 0;
+    const averageMonthsSurvived = avgMonthsToOutcome; // Same as avgMonthsToOutcome
+
+    // Build outcome breakdown for visualization
+    const outcomeBreakdown = {
+      utopia: utopiaCount,
+      postScarcity: 0, // Would need to distinguish these in simulation
+      sustainable: 0,
+      struggling: dystopiaCount,
+      collapse: stalemateCount,
+      extinction: extinctionCount,
+      unknown: noneCount
+    };
 
     return {
       batchId,
-      totalRuns: config.numRuns,
-      completedRuns: totalCompleted,
+      totalRuns: statusArray.length,
+      completedRuns: completedCount,
       outcomeDistribution: {
         utopia: utopiaCount,
         dystopia: dystopiaCount,
@@ -1161,7 +1029,13 @@ export class MonteCarloManager {
       },
       avgFinalQoL: 0.5, // TODO: Calculate from IndexedDB
       avgFinalPopulation: 8.0, // TODO: Calculate from IndexedDB
-      avgMaxAICapability: 0.7 // TODO: Calculate from IndexedDB
+      avgMaxAICapability: 0.7, // TODO: Calculate from IndexedDB
+
+      // Additional fields for SweepResultsPanel
+      averageMonthsSurvived,
+      survivalRate,
+      outcomeBreakdown,
+      timeline: [] // TODO: Build timeline array from simulation data
     };
   }
 
@@ -1297,7 +1171,7 @@ export class MonteCarloManager {
     this.batches.clear();
     this.batchStatus.clear();
     this.batchSweepGroups.clear();
-    this.queue = [];
+    this.runQueue.length = 0;
     this.callbacks.clear();
   }
 }
