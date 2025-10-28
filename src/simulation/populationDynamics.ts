@@ -475,10 +475,24 @@ export function aggregateGlobalPopulation(state: GameState): void {
   // Update global population
   state.humanPopulationSystem.population = totalPopulationBillions;
 
+  // DEBUG (Oct 28, 2025): Verify population immediately after setting in aggregateGlobalPopulation
+  if (isNaN(state.humanPopulationSystem.population)) {
+    console.error(`❌ population is NaN immediately after setting in aggregateGlobalPopulation`);
+    console.error(`   totalPopulationBillions: ${totalPopulationBillions}`);
+    console.error(`   totalPopulation: ${totalPopulation}M`);
+    throw new Error(`Population became NaN in aggregateGlobalPopulation`);
+  }
+
   // Track peak population
   if (totalPopulationBillions > state.humanPopulationSystem.peakPopulation) {
     state.humanPopulationSystem.peakPopulation = totalPopulationBillions;
     state.humanPopulationSystem.peakPopulationMonth = state.currentMonth;
+  }
+
+  // DEBUG (Oct 28, 2025): Final verification before leaving aggregateGlobalPopulation
+  if (isNaN(state.humanPopulationSystem.population)) {
+    console.error(`❌ population became NaN after peak tracking in aggregateGlobalPopulation`);
+    throw new Error(`Population corrupted during peak tracking`);
   }
 }
 
@@ -765,15 +779,50 @@ export function updateHumanPopulation(state: GameState): void {
   // === PHASE 5: AGGREGATE REGIONAL POPULATIONS TO GLOBAL ===
   // Global population is DERIVED from regional populations (bottom-up architecture)
   if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
+    // FIX (Oct 28, 2025): Validate regional populations before summing (fail loudly on NaN)
+    for (const region of pop.regionalPopulations) {
+      if (isNaN(region.population)) {
+        console.error(`❌ NaN detected in regional population at month ${state.currentMonth}`);
+        console.error(`   Region: ${region.name}`);
+        console.error(`   Population: ${region.population}`);
+        console.error(`   Full region data: ${JSON.stringify(region, null, 2)}`);
+        throw new Error(`NaN in regional population for ${region.name} - trace source of population corruption`);
+      }
+    }
+
     // Sum regional populations (already in millions)
     const totalPopulationMillions = pop.regionalPopulations.reduce((sum, region) => sum + region.population, 0);
+
+    // DEBUG (Oct 28, 2025): Check if sum produced NaN
+    if (isNaN(totalPopulationMillions)) {
+      console.error(`❌ totalPopulationMillions is NaN at month ${state.currentMonth}`);
+      console.error(`   Number of regions: ${pop.regionalPopulations.length}`);
+      console.error(`   Regional populations: ${pop.regionalPopulations.map(r => `${r.name}:${r.population}`).join(', ')}`);
+      throw new Error(`totalPopulationMillions is NaN despite individual region validation passing`);
+    }
 
     // FIX (Oct 28, 2025): Convert to billions to match global population convention
     // Regional populations are in millions, global population is in billions
     // This function was overwriting the correct billions value from aggregateGlobalPopulation()
     // with millions, causing outcome classification to read "4888B" and declare extinction
     const totalPopulationBillions = totalPopulationMillions / 1000;
+
+    // DEBUG (Oct 28, 2025): Check if billion conversion produced NaN
+    if (isNaN(totalPopulationBillions)) {
+      console.error(`❌ totalPopulationBillions is NaN at month ${state.currentMonth}`);
+      console.error(`   totalPopulationMillions: ${totalPopulationMillions}`);
+      throw new Error(`totalPopulationBillions is NaN after division by 1000`);
+    }
+
     pop.population = totalPopulationBillions; // Store in billions (global convention)
+
+    // DEBUG (Oct 28, 2025): Verify population is not NaN after setting
+    if (isNaN(pop.population)) {
+      console.error(`❌ pop.population is NaN immediately after setting from totalPopulationBillions`);
+      console.error(`   totalPopulationBillions: ${totalPopulationBillions}`);
+      console.error(`   totalPopulationMillions: ${totalPopulationMillions}`);
+      throw new Error(`Population became NaN in regional aggregation path`);
+    }
 
     // Update peak if current exceeds it
     if (pop.population > pop.peakPopulation) {
@@ -783,6 +832,15 @@ export function updateHumanPopulation(state: GameState): void {
 
     // Regional system handles all population dynamics, skip legacy global update
     updateDemographics(state); // Still update global demographics
+
+    // DEBUG (Oct 28, 2025): Verify population is still valid after updateDemographics
+    if (isNaN(pop.population)) {
+      const msg = `❌ pop.population became NaN after updateDemographics at month ${state.currentMonth}\n   Was ${totalPopulationBillions}B before updateDemographics\n`;
+      console.error(msg);
+      // Removed fs.appendFileSync - not available in Next.js client builds
+      throw new Error(`Population became NaN in updateDemographics`);
+    }
+
     return;
   }
 

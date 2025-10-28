@@ -20,6 +20,31 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  // Webpack configuration to prevent code-splitting race conditions
+  // Fix: Force synchronous loading of simulation initialization modules
+  webpack: (config, { isServer }) => {
+    // Only apply to server-side builds where workers run
+    if (isServer) {
+      config.optimization = config.optimization || {};
+      config.optimization.splitChunks = config.optimization.splitChunks || {};
+
+      // Prevent splitting of critical simulation modules
+      // These must load synchronously to avoid race conditions
+      config.optimization.splitChunks.cacheGroups = {
+        ...config.optimization.splitChunks.cacheGroups,
+        simulation: {
+          test: /[\\/]src[\\/]simulation[\\/](initialization|technologicalRisk|environmental|socialCohesion)\.ts$/,
+          name: 'simulation-core',
+          chunks: 'all',
+          priority: 30,
+          enforce: true,
+        },
+      };
+    }
+
+    return config;
+  },
 };
 
 export default nextConfig;

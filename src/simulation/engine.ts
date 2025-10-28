@@ -624,6 +624,13 @@ export class SimulationEngine {
     // See PhaseOrchestrator for execution order and phase list
     const events = this.orchestrator.executeAll(newState, rng);
 
+    // DEBUG (Oct 28, 2025): Verify population integrity after all phases
+    if (isNaN(newState.humanPopulationSystem.population)) {
+      console.error(`❌ Population is NaN after executeAll phases at month ${newState.currentMonth}`);
+      console.error(`   This means a phase AFTER HumanPopulationPhase corrupted population`);
+      throw new Error(`Population is NaN after phase execution`);
+    }
+
     // Calculate final metrics for return value
     // (All state updates are done by phases - we're just reading for the result)
     const crisis = detectCrisis(newState);

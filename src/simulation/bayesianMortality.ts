@@ -284,31 +284,58 @@ export function resolveMortality(
   }
 
   // Apply deaths to population
-  // NOTE: pop.population is in BILLIONS, totalDeaths is in MILLIONS
-  pop.population = Math.max(0, pop.population - (totalDeaths / 1000));
-  pop.cumulativeCrisisDeaths += totalDeaths;
-  pop.monthlyExcessDeaths = totalDeaths;
+  // FIX (Oct 28, 2025): totalDeaths is in BILLIONS, not millions!
+  // segmentPopulation = pop.population (billions) * demo.fraction
+  // segmentDeaths = segmentPopulation (billions) * finalDeathProb
+  // Therefore totalDeaths is in billions, subtract directly
+
+  // DEBUG: Validate before subtraction
+  if (isNaN(totalDeaths) || !isFinite(totalDeaths)) {
+    console.error(`❌ totalDeaths is invalid: ${totalDeaths}`);
+    console.error(`   Segments: ${deathSegments.length}`);
+    console.error(`   Segment deaths: ${deathSegments.map(s => s.count).join(', ')}`);
+    throw new Error(`totalDeaths is NaN or Infinity: ${totalDeaths}`);
+  }
+
+  const newPopulation = pop.population - totalDeaths;
+
+  // DEBUG: Validate after subtraction
+  if (isNaN(newPopulation) || !isFinite(newPopulation) || newPopulation < 0) {
+    console.error(`❌ newPopulation is invalid: ${newPopulation}`);
+    console.error(`   oldPopulation: ${pop.population}`);
+    console.error(`   totalDeaths: ${totalDeaths}`);
+    console.error(`   Calculation: ${pop.population} - ${totalDeaths} = ${newPopulation}`);
+    throw new Error(`Population became invalid after death subtraction`);
+  }
+
+  pop.population = newPopulation;
+
+  // Convert to millions for death tracking (legacy compatibility)
+  const totalDeathsMillions = totalDeaths * 1000;
+  pop.cumulativeCrisisDeaths += totalDeathsMillions;
+  pop.monthlyExcessDeaths = totalDeathsMillions;
 
   // Update death tracking by category and root cause
   for (const segment of deathSegments) {
     for (const cause of segment.causes) {
-      const attributedDeaths = segment.count * cause.contributionFraction;
+      // FIX (Oct 28, 2025): segment.count is in billions, convert to millions
+      const attributedDeathsMillions = segment.count * cause.contributionFraction * 1000;
 
       // Update proximate cause (stored in millions)
-      pop.deathsByCategory[cause.proximate] = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeaths;
+      pop.deathsByCategory[cause.proximate] = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
 
       // Update root cause (stored in BILLIONS for legacy compatibility)
-      pop.deathsByRootCause[cause.root] = (pop.deathsByRootCause[cause.root] || 0) + (attributedDeaths / 1000);
+      pop.deathsByRootCause[cause.root] = (pop.deathsByRootCause[cause.root] || 0) + (attributedDeathsMillions / 1000);
 
       // Update confidence distribution (stored in BILLIONS for legacy compatibility)
       pop.deathsByRootCause.confidenceDistribution[cause.confidence] =
-        (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + (attributedDeaths / 1000);
+        (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + (attributedDeathsMillions / 1000);
     }
   }
 
   // Track compound attribution if multiple risks (stored in BILLIONS for legacy compatibility)
   if (risks.length > 1) {
-    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + (totalDeaths / 1000);
+    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + totalDeaths;
   }
 
   // Calculate summary statistics
@@ -322,18 +349,18 @@ export function resolveMortality(
   // Clear risks after resolution
   pop.mortalityRisks = [];
 
-  // Log mortality event
-  if (totalDeaths > 0.001) {
+  // Log mortality event (totalDeaths is in billions)
+  if (totalDeaths > 0.000001) { // 0.000001B = 1000 people
     console.log(`\n📊 Monthly Mortality Resolved:`);
-    console.log(`  Total deaths: ${totalDeaths.toFixed(1)}M (${(avgDeathProbability * 100).toFixed(2)}% avg)`);
-    console.log(`  Remaining population: ${(pop.population / 1000).toFixed(3)}B`);
+    console.log(`  Total deaths: ${(totalDeaths * 1000).toFixed(1)}M (${(avgDeathProbability * 100).toFixed(2)}% avg)`);
+    console.log(`  Remaining population: ${pop.population.toFixed(3)}B`);
     console.log(`  Peak segment: ${peakSegment.demographic} (${(peakSegment.probability * 100).toFixed(2)}%)`);
     if (cappedByMonthly) console.log(`  ⚠️ Monthly cap reached (${caps.monthlyMaxMortalityRate * 100}%)`);
     if (cappedByInstant) console.log(`  ⚠️ Instant cap reached (${caps.instantMaxMortalityRate * 100}%)`);
   }
 
   return {
-    totalDeaths,
+    totalDeaths: totalDeaths * 1000, // Return in millions for compatibility
     deaths: deathSegments,
     remainingPopulation: pop.population,
     cappedByMonthlyLimit: cappedByMonthly,

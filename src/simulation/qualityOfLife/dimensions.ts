@@ -37,6 +37,27 @@ export function calculateNonFoodSurvivalMetrics(state: GameState): { waterSecuri
   const month = state.currentMonth;
   const location = 'calculateNonFoodSurvivalMetrics';
 
+  // DEBUG (Oct 28, 2025): Log values before assertion if NaN detected
+  if (isNaN(rawShelterSecurity)) {
+    const debugMsg = `
+❌ NaN DETECTED at month ${month}:
+  rawShelterSecurity: ${rawShelterSecurity}
+  Dumping state for root cause analysis:
+    wealth: ${state.globalMetrics.wealthDistribution}
+    population: ${state.humanPopulationSystem.population}
+    unemployment: ${state.society.unemploymentLevel}
+    economicStage: ${state.globalMetrics.economicTransitionStage}
+    tempAnomaly: ${state.resourceEconomy.co2.temperatureAnomaly}
+    aiAgents.length: ${state.aiAgents.length}
+    totalAI: ${state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0)}
+    avgAlignment: ${state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length)}
+    refugeeCrises: ${state.refugeeCrisisSystem?.activeRefugeeCrises?.length || 0}
+    ${state.refugeeCrisisSystem?.activeRefugeeCrises?.length > 0 ? `totalRefugees: ${state.refugeeCrisisSystem.activeRefugeeCrises.reduce((sum, crisis) => sum + crisis.displacedPopulation, 0)}` : ''}
+`;
+    console.error(debugMsg);
+    // Removed fs.appendFileSync - not available in Next.js client builds
+  }
+
   return {
     waterSecurity: assertProbability(rawWaterSecurity, { location, valueName: 'waterSecurity', month }),
     thermalHabitability: assertProbability(rawThermalHabitability, { location, valueName: 'thermalHabitability', month }),
@@ -201,9 +222,20 @@ export function calculateShelterSecurity(state: GameState): number {
   const wealth = state.globalMetrics.wealthDistribution;
   const ubiActive = state.government.activeRegulations.some(reg => reg.includes('UBI'));
 
+  // DEBUG: Log inputs for NaN investigation (Oct 28, 2025)
+  if (isNaN(wealth)) {
+    console.log(`⚠️  calculateShelterSecurity: wealth is NaN at month ${state.currentMonth}`);
+    console.log(`  globalMetrics.wealthDistribution: ${state.globalMetrics.wealthDistribution}`);
+  }
+
   // Base shelter security from wealth distribution
   // Research: Housing insecurity correlates with income inequality
   let shelterSecurity = 0.7 + wealth * 0.2;
+
+  if (isNaN(shelterSecurity)) {
+    console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after base calculation`);
+    console.log(`  wealth: ${wealth}, calculation: 0.7 + ${wealth} * 0.2 = ${shelterSecurity}`);
+  }
 
   // === REFUGEE CRISES ===
   // Displaced populations lose housing
@@ -211,7 +243,21 @@ export function calculateShelterSecurity(state: GameState): number {
     const totalRefugees = refugees.activeRefugeeCrises
       .reduce((sum, crisis) => sum + crisis.displacedPopulation, 0);
     const refugeeFraction = (totalRefugees / 1000) / state.humanPopulationSystem.population; // millions to billions
+
+    // DEBUG: Check for NaN in refugee calculation
+    if (isNaN(refugeeFraction)) {
+      console.log(`⚠️  calculateShelterSecurity: refugeeFraction is NaN`);
+      console.log(`  totalRefugees: ${totalRefugees}`);
+      console.log(`  humanPopulationSystem.population: ${state.humanPopulationSystem.population}`);
+      console.log(`  calculation: (${totalRefugees} / 1000) / ${state.humanPopulationSystem.population} = ${refugeeFraction}`);
+    }
+
     shelterSecurity -= refugeeFraction * 0.5; // Refugees have poor shelter access
+
+    if (isNaN(shelterSecurity)) {
+      console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after refugee calculation`);
+      console.log(`  refugeeFraction: ${refugeeFraction}, penalty: ${refugeeFraction * 0.5}`);
+    }
   }
 
   // === CLIMATE DISPLACEMENT ===
@@ -239,9 +285,21 @@ export function calculateShelterSecurity(state: GameState): number {
   const totalAI = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
   const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
 
+  // DEBUG: Check for NaN in AI calculation
+  if (isNaN(totalAI) || isNaN(avgAlignment)) {
+    console.log(`⚠️  calculateShelterSecurity: AI metrics contain NaN`);
+    console.log(`  totalAI: ${totalAI}, avgAlignment: ${avgAlignment}`);
+    console.log(`  aiAgents.length: ${state.aiAgents.length}`);
+  }
+
   if (totalAI > 1.5 && avgAlignment > 0.7) {
     const aiHousing = Math.min(0.2, (totalAI - 1.5) * 0.06);
     shelterSecurity += aiHousing;
+
+    if (isNaN(shelterSecurity)) {
+      console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after AI enhancement`);
+      console.log(`  aiHousing: ${aiHousing}`);
+    }
   }
 
   // === POST-SCARCITY ===
@@ -265,6 +323,27 @@ export function calculateShelterSecurity(state: GameState): number {
       ubiFloor = ubiVariant === 'generous' ? 0.68 : 0.60;
     }
     shelterSecurity = Math.max(shelterSecurity, ubiFloor);
+
+    // DEBUG: Check for NaN after UBI floor
+    if (isNaN(shelterSecurity)) {
+      console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after UBI floor`);
+      console.log(`  ubiFloor: ${ubiFloor}, ubiVariant: ${ubiVariant}`);
+    }
+  }
+
+  // DEBUG: Final NaN check before return
+  if (isNaN(shelterSecurity)) {
+    console.log(`❌ calculateShelterSecurity: Final value is NaN at month ${state.currentMonth}`);
+    console.log(`  State dump for debugging:`);
+    console.log(`    wealth: ${wealth}`);
+    console.log(`    tempAnomaly: ${tempAnomaly}`);
+    console.log(`    unemployment: ${unemployment}`);
+    console.log(`    economicStage: ${economicStage}`);
+    console.log(`    totalAI: ${totalAI}`);
+    console.log(`    avgAlignment: ${avgAlignment}`);
+    console.log(`    ubiActive: ${ubiActive}`);
+    console.log(`    refugees.activeRefugeeCrises: ${refugees?.activeRefugeeCrises?.length || 0}`);
+    console.log(`    humanPopulationSystem.population: ${state.humanPopulationSystem.population}`);
   }
 
   return Math.max(0, Math.min(1.0, shelterSecurity));

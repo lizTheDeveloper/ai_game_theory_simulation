@@ -173,6 +173,14 @@ export class PhaseOrchestrator {
         if (result.metadata) {
           ctx.data.set(phase.id, result.metadata);
         }
+
+        // DEBUG (Oct 28, 2025): Check population integrity after each phase
+        if (isNaN(state.humanPopulationSystem.population)) {
+          console.error(`\n❌ Population became NaN after phase "${phase.name}" (${phase.id})`);
+          console.error(`   Month: ${state.currentMonth}`);
+          console.error(`   Phase order: ${phase.order}`);
+          throw new Error(`Phase "${phase.name}" corrupted population to NaN`);
+        }
       } catch (error) {
         console.error(`\n❌ FATAL ERROR in phase "${phase.name}" (${phase.id}):`, error);
         console.error(`   Month: ${state.currentMonth}`);
