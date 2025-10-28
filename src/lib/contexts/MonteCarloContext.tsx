@@ -36,6 +36,9 @@ interface MonteCarloSweepConfig {
   fixedScenarioMode: ScenarioMode;
   fixedMaxMonths: number;
   fixedThresholdScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia';
+
+  // Custom parameter sweeps from enhanced config
+  customParameterSweeps?: Record<string, (string | number | boolean)[]>;
 }
 
 interface MonteCarloContextValue {
@@ -257,7 +260,7 @@ function calculateTotalSimulations(config: MonteCarloSweepConfig): number {
 /**
  * Convert UI config to ParameterSweepConfig for backend
  */
-function convertToParameterSweepConfig(config: MonteCarloSweepConfig): ParameterSweepConfig {
+function convertToParameterSweepConfig(config: MonteCarloSweepConfig & { customParameterSweeps?: Record<string, any[]> }): ParameterSweepConfig {
   const sweepParameters: any = {}
 
   // Add sweep parameters if enabled
@@ -277,6 +280,19 @@ function convertToParameterSweepConfig(config: MonteCarloSweepConfig): Parameter
     sweepParameters.nestedMC = [true, false]
   }
 
+  // CRITICAL FIX: Add custom parameter sweeps from enhanced config
+  if (config.customParameterSweeps) {
+    // The MonteCarloManager expects custom parameters to be included directly in sweepParameters
+    Object.entries(config.customParameterSweeps).forEach(([paramId, values]) => {
+      if (values && values.length > 0) {
+        sweepParameters[paramId] = values
+      }
+    })
+  }
+
+  // Count total parameter dimensions for accurate description
+  const totalDimensions = Object.keys(sweepParameters).length
+
   return {
     seeds: {
       start: config.startSeed,
@@ -289,6 +305,6 @@ function convertToParameterSweepConfig(config: MonteCarloSweepConfig): Parameter
       speculativeScenario: config.fixedThresholdScenario
     },
     name: 'Parameter Sweep',
-    description: `Exploring ${Object.keys(sweepParameters).length} parameter dimensions`
+    description: `Exploring ${totalDimensions} parameter dimensions`
   }
 }
