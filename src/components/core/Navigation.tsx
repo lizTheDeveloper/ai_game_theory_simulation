@@ -62,7 +62,12 @@ export function Navigation() {
 
   // Initialize simulation with error handling and timeout
   const handleInit = async () => {
-    if (initialized) return
+    // Check if simulation is already initialized
+    if (initialized) {
+      console.log('[Navigation] Already initialized, closing config modal')
+      setShowConfig(false)
+      return
+    }
 
     // Clear any previous errors
     setInitError(null)
@@ -383,54 +388,69 @@ export function Navigation() {
 
       {/* Configuration Modal */}
       {showConfig && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center z-50" onClick={handleCloseConfig}>
-          <div className="bg-black border border-white/20 p-8 max-w-md w-full shadow-[0_0_30px_rgba(0,240,255,0.3)]" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-2xl mb-6 text-cyan-400">Initialize Simulation</h2>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center z-50 p-4 overflow-y-auto" onClick={handleCloseConfig}>
+          <div className="bg-black border border-white/20 p-4 sm:p-6 md:p-8 w-full max-w-2xl my-8 shadow-[0_0_30px_rgba(0,240,255,0.3)] max-h-[calc(100vh-4rem)] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <h2 className="text-xl md:text-2xl mb-4 md:mb-6 text-cyan-400">Initialize Simulation</h2>
 
             {/* Error Display */}
             {initError && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-400/60 rounded shadow-[0_0_15px_rgba(255,0,64,0.3)]">
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 text-xl mt-0.5">❌</span>
+              <div className="mb-4 p-3 md:p-4 bg-red-500/10 border border-red-500/30 rounded max-h-[400px] overflow-y-auto">
+                <div className="flex items-start gap-2 mb-2">
+                  <span className="text-lg md:text-xl">⚠️</span>
                   <div className="flex-1">
-                    <h3 className="text-red-400 font-medium mb-2">Initialization Failed</h3>
-                    <p className="text-white/80 text-sm mb-3">{initError}</p>
+                    <h3 className="text-sm md:text-base font-medium text-red-400 mb-1">
+                      Initialization Failed
+                    </h3>
+                    <p className="text-xs md:text-sm text-red-300">
+                      {initError}
+                    </p>
+                  </div>
+                </div>
 
-                    {/* Diagnostic Information */}
-                    <details className="mb-3">
-                      <summary className="text-white/60 text-xs cursor-pointer hover:text-white/80">
-                        Diagnostic Information
-                      </summary>
-                      <div className="mt-2 p-2 bg-black/40 rounded text-xs font-mono text-white/50 space-y-1">
-                        <div>Browser: {typeof window !== 'undefined' && window.navigator ? window.navigator.userAgent.substring(0, 50) + '...' : 'Unknown'}</div>
-                        <div>Worker Support: {typeof Worker !== 'undefined' ? 'Yes' : 'No'}</div>
-                        <div>Worker Client: {typeof (window as any).__simulationWorkerClient !== 'undefined' ? 'Available' : 'Not Available'}</div>
-                        <div>Environment: {process.env.NODE_ENV}</div>
-                        <div>Time: {new Date().toISOString()}</div>
-                      </div>
-                    </details>
-
-                    <div className="space-y-2">
-                      <button
-                        onClick={() => {
-                          setInitError(null)
-                          handleInit()
-                        }}
-                        disabled={isInitializing}
-                        className="w-full px-3 py-2 bg-red-500/20 border border-red-400 text-red-400 hover:bg-red-400/30 transition-all rounded text-sm disabled:opacity-50"
-                      >
-                        {isInitializing ? 'INITIALIZING...' : 'TRY AGAIN'}
-                      </button>
-                      <a
-                        href="https://github.com/themultiverseai/superalignmenttoutopia/issues"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full px-3 py-2 bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 transition-all rounded text-sm text-center"
-                      >
-                        Report Issue on GitHub
-                      </a>
+                {/* Collapsible diagnostics */}
+                <details className="mt-3 text-xs md:text-sm">
+                  <summary className="cursor-pointer text-red-400/80 hover:text-red-400">
+                    Show diagnostic information
+                  </summary>
+                  <div className="mt-2 p-2 bg-black/30 rounded text-red-300/60 space-y-1">
+                    <div className="break-all">
+                      <strong>User Agent:</strong> {typeof window !== 'undefined' ? navigator.userAgent : 'Unknown'}
+                    </div>
+                    <div>
+                      <strong>Worker Support:</strong> {typeof Worker !== 'undefined' ? 'Yes' : 'No'}
+                    </div>
+                    <div>
+                      <strong>Worker Client:</strong> {typeof (window as any).__simulationWorkerClient !== 'undefined' ? 'Available' : 'Not Available'}
+                    </div>
+                    <div>
+                      <strong>Environment:</strong> {process.env.NODE_ENV}
+                    </div>
+                    <div>
+                      <strong>Time:</strong> {new Date().toISOString()}
                     </div>
                   </div>
+                </details>
+
+                {/* Action buttons - stack on mobile */}
+                <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                  <button
+                    onClick={() => {
+                      setInitError(null)
+                      handleInit()
+                    }}
+                    disabled={isInitializing}
+                    className="flex-1 px-3 py-2 bg-amber-500/20 border border-amber-400 text-amber-400 hover:bg-amber-400/30 transition-all rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isInitializing ? 'INITIALIZING...' : 'Try Again'}
+                  </button>
+                  <a
+                    href={`https://github.com/lizTheDeveloper/ai_game_theory_simulation/issues/new?title=${encodeURIComponent('Initialization Error')}&body=${encodeURIComponent(`Error: ${initError}\n\nDiagnostics:\n- Browser: ${typeof window !== 'undefined' ? navigator.userAgent : 'Unknown'}\n- Time: ${new Date().toISOString()}\n- Worker Support: ${typeof Worker !== 'undefined' ? 'Yes' : 'No'}\n- Worker Client: ${typeof (window as any).__simulationWorkerClient !== 'undefined' ? 'Available' : 'Not Available'}\n- Environment: ${process.env.NODE_ENV}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 px-3 py-2 bg-white/5 border border-white/20 text-white/60 hover:bg-white/10 transition-all rounded text-center text-sm"
+                  >
+                    Report Issue
+                  </a>
                 </div>
               </div>
             )}
@@ -580,10 +600,10 @@ export function Navigation() {
                 </button>
                 <button
                   onClick={handleInit}
-                  disabled={isInitializing}
+                  disabled={isInitializing || initialized}
                   className="flex-1 px-4 py-3 bg-cyan-500/20 border border-cyan-400 text-cyan-400 hover:bg-cyan-400/30 transition-all rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isInitializing ? 'INITIALIZING...' : 'INITIALIZE'}
+                  {isInitializing ? 'INITIALIZING...' : initialized ? 'ALREADY INITIALIZED' : 'INITIALIZE'}
                 </button>
               </div>
             </div>
