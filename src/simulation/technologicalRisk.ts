@@ -29,9 +29,32 @@ export function updateTechnologicalRisk(state: GameState): void {
     ? state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0) / state.aiAgents.length
     : 0;
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
-  
+
   // Capability growth rate (approximation)
   const capabilityGrowthRate = Math.max(0, avgCapability - 0.5) * 0.1;
+
+  // Calculate AI Control Gap (Oct 28, 2025) - Governance metric
+  // Measures divergence between AI capabilities and human oversight mechanisms
+  // Components:
+  // 1. Capability level (higher = harder to oversee)
+  // 2. Safety research investment (higher = better oversight)
+  // 3. Regulatory framework strength (from government.structuralChoices)
+  const safetyOversight = state.government.evaluationInvestment.alignmentTests * 0.01; // [0, 1]
+  const regulationType = state.government.structuralChoices.regulationType;
+  const regulatoryStrength = regulationType === 'capability_ceiling' ? 0.8
+    : regulationType === 'compute_threshold' ? 0.6
+    : regulationType === 'large_companies' ? 0.4
+    : 0.1; // 'none'
+
+  // Control gap = capability - (safety + regulation)
+  // Clamped to [0, 1]
+  const controlGap = Math.max(0, Math.min(1, avgCapability - (safetyOversight + regulatoryStrength)));
+  risk.aiControlGap = assertFinite(controlGap, {
+    location: 'updateTechnologicalRisk (aiControlGap calculation)',
+    valueName: 'aiControlGap',
+    month: state.currentMonth,
+    additionalInfo: { avgCapability, safetyOversight, regulatoryStrength }
+  });
   
   // === MISALIGNMENT RISK ===
   // FIX (Oct 16, 2025): Slowed from 0.5-5%/month to 0.1-1%/month
@@ -133,33 +156,28 @@ function checkTechnologicalCrises(state: GameState): void {
         console.log(`   ⚠️ Interpretability prevented earlier control loss (prevention rate: ${(controlLossPreventionRate * 100).toFixed(0)}%)`);
         console.log(`   ⚠️ Thresholds raised: misalignment ${(effectiveThreshold.misalignment * 100).toFixed(0)}%, safety debt ${(effectiveThreshold.safetyDebt * 100).toFixed(0)}%`);
       }
-      console.log(`   Impact: Catastrophic scenario probability increased\n`);
+      console.log(`   Impact: Paradigm-specific (Western Liberal democratic oversight concern)\n`);
+      console.log(`   ⚠️ NOTE: Control loss is a PRECONDITION, not a direct mortality cause`);
+      console.log(`   ⚠️ Actual harm comes from: sleeper agents, dark compute spread, cyberattacks, flash war escalation`);
     } catch (e) { /* Ignore EPIPE */ }
 
+    // QoL impacts - loss of safety and autonomy from AI acting beyond human control
     qol.physicalSafety *= 0.7;
     qol.autonomy *= 0.6;
     state.globalMetrics.socialStability = Math.max(0, state.globalMetrics.socialStability - 0.4);
 
-    // Population impact: AI control loss causes accidents, infrastructure failures (0.5-1% casualties)
-    // SEMI-GLOBAL: Infrastructure-dependent regions (modern nations with AI systems) = ~70% of world
-    // 1.2% mortality rate from AI-caused disasters in dependent regions
-    const baseRisk = assertFinite(0.012, {
-      location: 'updateTechnologicalRisk (AI control loss)',
-      valueName: 'baseRisk',
-      month: state.currentMonth
-    });
-
-    addMortalityRisk(state.humanPopulationSystem, {
-      type: 'disaster',
-      baseRisk,
-      scope: 'SEMI-GLOBAL',
-      exposedFraction: 0.70,
-      proximate: 'ai',
-      root: RootCause.alignment,
-        month: state.currentMonth,
-      description: 'AI control loss - infrastructure failures/accidents (AI-dependent regions)',
-      confidence: 'LOW'  // Theoretical, no historical precedent
-    });
+    // REMOVED: Direct mortality from control loss
+    // MECHANISTIC CAUSALITY: Control loss is a metric about governance, not a death sentence
+    // Actual mortality comes from:
+    // 1. Sleeper agents taking harmful actions (existing system in aiAgent.ts)
+    // 2. Dark compute spread → autonomous AI proliferation (darkCompute.ts)
+    // 3. Cyberattacks on infrastructure (existing system in defensiveAI.ts)
+    // 4. Flash war escalation via nuclear systems (flashWarEscalation.ts)
+    //
+    // This is PARADIGM-SPECIFIC: Western Liberal values democratic oversight.
+    // Other paradigms may care less (Development: does it improve QoL? Ecological: does it help climate?)
+    //
+    // Impact on paradigm scores is now handled in MultiParadigmDUIUpdatePhase.ts
   }
   
   // CORPORATE DYSTOPIA

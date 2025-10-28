@@ -217,7 +217,31 @@ function calculateWesternLiberal(state: GameState): number {
 
   // Privacy/Freedom from Surveillance (0-100) - invert surveillance level
   const surveillanceLevel = state.government.structuralChoices.surveillanceLevel;
-  const privacyFreedom = (1 - surveillanceLevel) * 100;
+  let privacyFreedom = (1 - surveillanceLevel) * 100;
+
+  // AI Control Loss Impact (Oct 28, 2025) - PARADIGM-SPECIFIC
+  // Western Liberal paradigm: Democratic oversight & rule of law suffer when AIs act autonomously
+  // This is a PERCEIVED THREAT (governance concern), not direct harm
+  // Actual mortality comes from sleeper agents, cyberattacks, nuclear escalation, etc.
+  let democracyPenalty = 0;
+  let ruleOfLawPenalty = 0;
+  if (state.technologicalRisk.controlLossActive) {
+    // Democracy component: Loss of democratic oversight over powerful AI systems
+    // Research: Acemoglu & Robinson (2019) - institutional control matters for legitimacy
+    // Penalty: -15 points (severe but not catastrophic)
+    democracyPenalty = 15;
+
+    // Rule of Law component: AI systems acting outside legal frameworks
+    // Research: Pasquale (2020) - algorithmic accountability crisis
+    // Penalty: -20 points (worse than democracy - rule of law is foundational)
+    ruleOfLawPenalty = 20;
+
+    // Autonomy already penalized via QoL systems (0.6x multiplier in technologicalRisk.ts)
+  }
+
+  // Apply penalties (after initial calculation)
+  const adjustedDemocracy = Math.max(MIN_FLOOR, electoralDemocracy - democracyPenalty);
+  const adjustedRuleOfLaw = Math.max(MIN_FLOOR, ruleOfLaw - ruleOfLawPenalty);
 
   // STORE COMPONENTS for decomposed analysis (avoiding Goodhart's Law)
   if (!state.multiParadigmDUI.westernLiberalComponents) {
@@ -226,16 +250,17 @@ function calculateWesternLiberal(state: GameState): number {
 
   state.multiParadigmDUI.westernLiberalComponents.push({
     month: state.currentMonth,
-    electoralDemocracy,
+    electoralDemocracy: adjustedDemocracy,
     civilLiberties,
-    ruleOfLaw,
+    ruleOfLaw: adjustedRuleOfLaw,
     economicFreedom,
     privacyFreedom,
   });
 
   // Geometric mean (non-compensatory) - KEPT for backward compatibility
   // BUT: Users should analyze components, not this headline number
-  const indicators = [electoralDemocracy, civilLiberties, ruleOfLaw, economicFreedom, privacyFreedom];
+  // Use adjusted values (with control loss penalties applied)
+  const indicators = [adjustedDemocracy, civilLiberties, adjustedRuleOfLaw, economicFreedom, privacyFreedom];
 
   // Detect NaN in any indicator - fail loudly instead of silent fallback
   for (let i = 0; i < indicators.length; i++) {
