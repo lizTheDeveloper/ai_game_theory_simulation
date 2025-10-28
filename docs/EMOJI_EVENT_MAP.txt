@@ -98,6 +98,8 @@
 🎉 | Celebration/success
 🏁 | Completion/finish
 🎨 | Art/culture/meaning
+🏢 | Corporate/business
+😴 | Complacency/inaction
 
 # AI-Related Events (Information/Control)
 📢 | AI narrative dominance
@@ -137,3 +139,4 @@
 📖 | Open book/reference
 📍 | Location/placement
 🗑️ | Deletion/removal
+📋 | Checklist/tasks
