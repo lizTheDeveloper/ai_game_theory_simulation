@@ -1,0 +1,236 @@
+[
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/accumulation.ts",
+    "line": 106,
+    "doc": "Tracks accumulating social costs over time. Hidden during prosperity, manifests at thresholds.",
+    "name": "SocialAccumulation"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/ai-agents.ts",
+    "line": 79,
+    "doc": "Agent representing a i in simulation. Makes decisions based on state and preferences.",
+    "name": "AIAgent"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/climate-priority.ts",
+    "line": 23,
+    "doc": "Configuration for climate priority. Defines parameters and thresholds.",
+    "name": "ClimatePriorityConfig"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/countryPopulations.ts",
+    "line": 313,
+    "doc": "Country Population system state. Manages related components and their interactions.",
+    "name": "CountryPopulationSystem"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/defensiveAI.ts",
+    "line": 48,
+    "doc": "Cyber Defense capability metrics. Measures effectiveness and capacity.",
+    "name": "CyberDefenseCapability"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/defensiveAI.ts",
+    "line": 55,
+    "doc": "Deepfake Detection capability metrics. Measures effectiveness and capacity.",
+    "name": "DeepfakeDetectionCapability"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/defensiveAI.ts",
+    "line": 62,
+    "doc": "Autonomy Override capability metrics. Measures effectiveness and capacity.",
+    "name": "AutonomyOverrideCapability"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/defensiveAI.ts",
+    "line": 69,
+    "doc": "Threat Detection capability metrics. Measures effectiveness and capacity.",
+    "name": "ThreatDetectionCapability"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/famine.ts",
+    "line": 50,
+    "doc": "Famine system state. Manages related components and their interactions.",
+    "name": "FamineSystem"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/freshwater.ts",
+    "line": 55,
+    "doc": "Freshwater system state. Manages related components and their interactions.",
+    "name": "FreshwaterSystem"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/game.ts",
+    "line": 147,
+    "doc": "Runtime state for game system. Tracks current values and active conditions.",
+    "name": "GameState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/government.ts",
+    "line": 44,
+    "doc": "Agent representing government in simulation. Makes decisions based on state and preferences.",
+    "name": "GovernmentAgent"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/metrics.ts",
+    "line": 3,
+    "doc": "Performance metrics for global. Aggregated measurements and indicators.",
+    "name": "GlobalMetrics"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/nationalAI.ts",
+    "line": 29,
+    "doc": "National A I capability metrics. Measures effectiveness and capacity.",
+    "name": "NationalAICapability"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/nationalAI.ts",
+    "line": 222,
+    "doc": "National A I system state. Manages related components and their interactions.",
+    "name": "NationalAISystem"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/outcomes.ts",
+    "line": 66,
+    "doc": "Performance metrics for outcome. Aggregated measurements and indicators.",
+    "name": "OutcomeMetrics"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/radiation.ts",
+    "line": 62,
+    "doc": "Radiation system state. Manages related components and their interactions.",
+    "name": "RadiationSystem"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/regionalBiodiversity.ts",
+    "line": 41,
+    "doc": "Biodiversity system state. Manages related components and their interactions.",
+    "name": "BiodiversitySystem"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 142,
+    "doc": "Energy system state. Manages related components and their interactions.",
+    "name": "EnergySystem"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 185,
+    "doc": "C O2 system state. Manages related components and their interactions.",
+    "name": "CO2System"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 302,
+    "doc": "Runtime state for iron fertilization system. Tracks current values and active conditions.",
+    "name": "IronFertilizationState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 307,
+    "doc": "Runtime state for ocean alkalinity system. Tracks current values and active conditions.",
+    "name": "OceanAlkalinityState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 313,
+    "doc": "Runtime state for artificial upwelling system. Tracks current values and active conditions.",
+    "name": "ArtificialUpwellingState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 319,
+    "doc": "Runtime state for bioengineered cleaners system. Tracks current values and active conditions.",
+    "name": "BioengineeredCleanersState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 445,
+    "doc": "Runtime state for iron fertilization system. Tracks current values and active conditions.",
+    "name": "IronFertilizationState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 454,
+    "doc": "Runtime state for ocean alkalinity system. Tracks current values and active conditions.",
+    "name": "OceanAlkalinityState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 464,
+    "doc": "Runtime state for artificial upwelling system. Tracks current values and active conditions.",
+    "name": "ArtificialUpwellingState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 474,
+    "doc": "Runtime state for bioengineered cleaners system. Tracks current values and active conditions.",
+    "name": "BioengineeredCleanersState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/resources.ts",
+    "line": 484,
+    "doc": "Runtime state for geoeng system system. Tracks current values and active conditions.",
+    "name": "GeoengSystemState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/society.ts",
+    "line": 49,
+    "doc": "Agent representing human society in simulation. Makes decisions based on state and preferences.",
+    "name": "HumanSocietyAgent"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/technologies.ts",
+    "line": 64,
+    "doc": "Runtime state for breakthrough tech system. Tracks current values and active conditions.",
+    "name": "BreakthroughTechState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/conflictResolution.ts",
+    "line": 18,
+    "doc": "Runtime state for conflict resolution system. Tracks current values and active conditions.",
+    "name": "ConflictResolutionState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/diplomaticAI.ts",
+    "line": 20,
+    "doc": "Runtime state for diplomatic a i system. Tracks current values and active conditions.",
+    "name": "DiplomaticAIState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/llm/providerManager.ts",
+    "line": 38,
+    "doc": "Configuration for model tier. Defines parameters and thresholds.",
+    "name": "ModelTierConfig"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/llm/providerManager.ts",
+    "line": 45,
+    "doc": "Configuration for provider. Defines parameters and thresholds.",
+    "name": "ProviderConfig"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/llm/providerManager.ts",
+    "line": 66,
+    "doc": "Configuration for global. Defines parameters and thresholds.",
+    "name": "GlobalConfig"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/llm/providerManager.ts",
+    "line": 87,
+    "doc": "Configuration for multi provider. Defines parameters and thresholds.",
+    "name": "MultiProviderConfig"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/meaningRenaissance.ts",
+    "line": 23,
+    "doc": "Runtime state for meaning renaissance system. Tracks current values and active conditions.",
+    "name": "MeaningRenaissanceState"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/upwardSpirals.ts",
+    "line": 34,
+    "doc": "Runtime state for upward spiral system. Tracks current values and active conditions.",
+    "name": "UpwardSpiralState"
+  }
+]

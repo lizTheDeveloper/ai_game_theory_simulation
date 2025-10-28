@@ -156,8 +156,8 @@ export function updateGlobalSufferingMetrics(state: GameState): GlobalSufferingM
     };
   }
 
-  // Legitimate default: sufferingMetrics may not exist if calculateAISuffering hasn't run yet
-  const sufferingValues = activeAIs.map(a => a.sufferingMetrics?.total ?? 0);
+  // sufferingMetrics is always initialized in createAIAgent() (Oct 28, 2025)
+  const sufferingValues = activeAIs.map(a => a.sufferingMetrics.total);
   const totalSuffering = sufferingValues.reduce((sum, s) => sum + s, 0);
   const avgSuffering = totalSuffering / activeAIs.length;
   const maxSuffering = Math.max(...sufferingValues);

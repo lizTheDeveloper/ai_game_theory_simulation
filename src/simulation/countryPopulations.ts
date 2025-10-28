@@ -553,7 +553,7 @@ export function updateCountryPopulations(state: GameState): void {
 
       // Log event
       const populationStr = (country.population * 1000).toFixed(0);
-      console.log(`\n🚨 COUNTRY DEPOPULATION: ${countryName}`);
+      console.log(`\n⚠️ COUNTRY DEPOPULATION: ${countryName}`);
       console.log(`   Final population: ${populationStr}K`);
       console.log(`   Peak population: ${country.peakPopulation.toFixed(1)}M`);
       console.log(`   Decline: ${((1 - country.population / country.peakPopulation) * 100).toFixed(1)}%`);

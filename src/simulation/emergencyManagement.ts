@@ -285,7 +285,7 @@ export function deployEmergencyResponse(
 ): EmergencyResponse | null {
   const em = state.emergencyManagement;
   if (!em) {
-    console.warn('⚠️  No emergency management bureau - cannot deploy fast response');
+    console.warn('🚨 No emergency management bureau - cannot deploy fast response');
     return null;
   }
 

@@ -90,7 +90,7 @@ function updateFreshwaterRecovery(state: GameState, rng: RNGFunction): void {
     // Low governance slows recovery (not blocks completely)
     const governanceAdjustment = governanceMultiplier < 0.5 ? 0.5 : 1.0;
 
-    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceAdjustment;
+    boundary.recoveryMonths = boundary.recoveryMonths + governanceAdjustment;
 
     // FIX (Oct 21, 2025): ACTUALLY IMPROVE ENVIRONMENTAL STATE
     // Freshwater stress reduction: 0.1-0.5% monthly improvement
@@ -108,14 +108,14 @@ function updateFreshwaterRecovery(state: GameState, rng: RNGFunction): void {
     // Recovery threshold: 15 years (180 months) if high governance
     const recoveryThreshold = 180 / governanceAdjustment;
 
-    if ((boundary.recoveryMonths ?? 0) >= recoveryThreshold) {
+    if (boundary.recoveryMonths >= recoveryThreshold) {
       boundary.status = 'safe';
       boundary.trend = 'improving';
       boundary.monthsBreached = 0;
       boundary.breachYear = null;
 
       console.log(`\n=== Freshwater Boundary RECOVERED ===`);
-      console.log(`  Recovery time: ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years`);
+      console.log(`  Recovery time: ${Math.floor(boundary.recoveryMonths / 12)} years`);
       console.log(`  Governance quality: ${(governanceMultiplier * 100).toFixed(1)}%`);
     }
   } else {
@@ -142,10 +142,10 @@ function updateAtmosphericAerosolRecovery(state: GameState, rng: RNGFunction): v
   const isImproving = boundary.currentValue < boundary.boundaryThreshold;
 
   if (isImproving) {
-    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + 1;
+    boundary.recoveryMonths = boundary.recoveryMonths + 1;
 
     // Very fast recovery (12 months) - aerosols clear quickly
-    if ((boundary.recoveryMonths ?? 0) >= 12) {
+    if (boundary.recoveryMonths >= 12) {
       boundary.status = 'safe';
       boundary.trend = 'improving';
       boundary.monthsBreached = 0;
@@ -237,10 +237,10 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
 
   if (isRecovering) {
     const combinedMultiplier = governanceMultiplier / climateMultiplier;
-    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + combinedMultiplier;
+    boundary.recoveryMonths = boundary.recoveryMonths + combinedMultiplier;
 
     // DEBUG (Oct 21, 2025): Log first activation
-    if ((boundary.recoveryMonths ?? 0) <= 1.5) {
+    if (boundary.recoveryMonths <= 1.5) {
       console.log(`\n🌡️  CLIMATE RECOVERY ACTIVATED (Month ${state.currentMonth})`);
       console.log(`   Temp: ${globalWarming.toFixed(2)}°C, Emissions: ${netEmissions.toFixed(1)} GtCO₂`);
       console.log(`   isBreached: ${isBreached}, governanceGoodEnough: ${governanceGoodEnough}`);
@@ -309,7 +309,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
         console.log(`  Boundary value: ${boundary.currentValue.toFixed(3)} (below ${boundary.boundaryThreshold} threshold)`);
         console.log(`  Temperature: ${globalWarming.toFixed(2)}°C`);
         console.log(`  Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year`);
-        console.log(`  Recovery time: ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years`);
+        console.log(`  Recovery time: ${Math.floor(boundary.recoveryMonths / 12)} years`);
 
         // Add recovery event to timeline (only once when status changes to safe)
         if (wasBreached) {
@@ -318,9 +318,9 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
             severity: 'positive',
             agent: 'planetary-systems',
             title: `✅ CLIMATE BOUNDARY RECOVERED`,
-            description: `Climate change planetary boundary returned to SAFE status after ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years of net-negative emissions. Boundary value: ${boundary.currentValue.toFixed(3)} (below threshold ${boundary.boundaryThreshold.toFixed(3)}). Global temperature: ${globalWarming.toFixed(2)}°C. Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year. This is a major milestone for ecological sustainability.`,
+            description: `Climate change planetary boundary returned to SAFE status after ${Math.floor(boundary.recoveryMonths / 12)} years of net-negative emissions. Boundary value: ${boundary.currentValue.toFixed(3)} (below threshold ${boundary.boundaryThreshold.toFixed(3)}). Global temperature: ${globalWarming.toFixed(2)}°C. Net emissions: ${netEmissions.toFixed(1)} GtCO₂/year. This is a major milestone for ecological sustainability.`,
             effects: {
-              recoveryYears: Math.floor((boundary.recoveryMonths ?? 0) / 12),
+              recoveryYears: Math.floor(boundary.recoveryMonths / 12),
               boundaryValue: boundary.currentValue,
               globalWarming,
               netEmissions,
@@ -334,7 +334,7 @@ function updateClimateRecovery(state: GameState, rng: RNGFunction): void {
     } else {
       // Not net-negative - recovery stalled
       boundary.trend = 'stable';
-      if (state.currentMonth % 24 === 0 && (boundary.recoveryMonths ?? 0) > 0) {
+      if (state.currentMonth % 24 === 0 && boundary.recoveryMonths > 0) {
         console.warn(`⚠️  CLIMATE RECOVERY STALLED: Net emissions still positive (+${netEmissions.toFixed(1)} GtCO₂/year)`);
         console.log(`   Need net-negative emissions for recovery`);
       }
@@ -384,7 +384,7 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
 
   if (isImproving && governanceMultiplier >= 0.3) {
     const combinedMultiplier = governanceMultiplier / climateMultiplier;
-    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + combinedMultiplier;
+    boundary.recoveryMonths = boundary.recoveryMonths + combinedMultiplier;
 
     // FIX (Oct 21, 2025): ACTUALLY REDUCE PHOSPHORUS POLLUTION
     // Research: Lake Erie showing 40% reduction target takes 30-50 years
@@ -402,7 +402,7 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
     const baseThreshold = struviteDeployed ? 60 : 120;
     const recoveryThreshold = baseThreshold * climateMultiplier / governanceMultiplier;
 
-    if ((boundary.recoveryMonths ?? 0) >= recoveryThreshold) {
+    if (boundary.recoveryMonths >= recoveryThreshold) {
       boundary.status = 'safe';
       boundary.trend = 'improving';
       boundary.monthsBreached = 0;
@@ -410,7 +410,7 @@ function updatePhosphorusRecovery(state: GameState, rng: RNGFunction): void {
 
       console.log(`\n=== Phosphorus Boundary RECOVERED ===`);
       console.log(`  Technology: ${struviteDeployed ? 'Struvite recovery deployed' : 'Natural sedimentation only'}`);
-      console.log(`  Recovery time: ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years`);
+      console.log(`  Recovery time: ${Math.floor(boundary.recoveryMonths / 12)} years`);
       console.log(`  Governance: ${(governanceMultiplier * 100).toFixed(1)}%`);
       console.log(`  Climate penalty: ${climateMultiplier}x (warming affects algal blooms)`);
     }
@@ -448,11 +448,11 @@ function updateNitrogenRecovery(state: GameState, rng: RNGFunction): void {
     // Faster than phosphorus (no legacy sediment): 36 months base
     const recoveryThreshold = 36 / governanceMultiplier;
 
-    if ((boundary.recoveryMonths ?? 0) >= recoveryThreshold) {
+    if (boundary.recoveryMonths >= recoveryThreshold) {
       boundary.status = 'safe';
       boundary.trend = 'improving';
       console.log(`\n=== Nitrogen Boundary RECOVERED ===`);
-      console.log(`  Recovery time: ${Math.floor((boundary.recoveryMonths ?? 0) / 12)} years (faster than phosphorus)`);
+      console.log(`  Recovery time: ${Math.floor(boundary.recoveryMonths / 12)} years (faster than phosphorus)`);
     }
   } else {
     boundary.recoveryMonths = 0;
@@ -498,7 +498,7 @@ function updateLandSystemRecovery(state: GameState, rng: RNGFunction): void {
     boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + governanceMultiplier;
 
     // Stage 1: Tree cover (360 months = 30 years)
-    if ((boundary.recoveryMonths ?? 0) >= 360 && !boundary.partialRecovery) {
+    if (boundary.recoveryMonths >= 360 && !boundary.partialRecovery) {
       boundary.partialRecovery = true;
       boundary.trend = 'improving';
       console.log(`\n=== Land System PARTIAL RECOVERY ===`);
@@ -507,7 +507,7 @@ function updateLandSystemRecovery(state: GameState, rng: RNGFunction): void {
     }
 
     // Stage 2: Ecosystem function (1200 months = 100 years)
-    if ((boundary.recoveryMonths ?? 0) >= 1200) {
+    if (boundary.recoveryMonths >= 1200) {
       boundary.status = 'safe';
       boundary.trend = 'improving';
       boundary.monthsBreached = 0;
@@ -661,10 +661,10 @@ function updateOceanAcidificationRecovery(state: GameState, rng: RNGFunction): v
   }
 
   if (surfaceRecoveryPossible) {
-    boundary.recoveryMonths = (boundary.recoveryMonths ?? 0) + 1;
+    boundary.recoveryMonths = boundary.recoveryMonths + 1;
 
     // Surface recovery: 100 years (1200 months)
-    if ((boundary.recoveryMonths ?? 0) >= 1200) {
+    if (boundary.recoveryMonths >= 1200) {
       boundary.surfaceRecovered = true;
       boundary.trend = 'stable'; // Not "improving" - deep ocean still acidified
 
@@ -754,26 +754,42 @@ export function calculateProgressiveEcologicalScore(state: GameState): number {
       case 'climate_change': {
         // Tier 2: Partial recovery possible
         // Full recovery: 24 months sustained improvement
-        const progress = Math.min(1.0, (b.recoveryMonths ?? 0) / 24);
+        if (typeof b.recoveryMonths !== 'number' || isNaN(b.recoveryMonths)) {
+          console.error(`❌ climate_change.recoveryMonths is ${typeof b.recoveryMonths} / ${b.recoveryMonths} at month ${state.currentMonth}`);
+          return 0;
+        }
+        const progress = Math.min(1.0, b.recoveryMonths / 24);
         return progress * 100;
       }
 
       case 'freshwater_change': {
         // Tier 1: Reversible (15 years / 180 months)
-        const progress = Math.min(1.0, (b.recoveryMonths ?? 0) / 180);
+        if (typeof b.recoveryMonths !== 'number' || isNaN(b.recoveryMonths)) {
+          console.error(`❌ freshwater_change.recoveryMonths is ${typeof b.recoveryMonths} / ${b.recoveryMonths} at month ${state.currentMonth}`);
+          return 0;
+        }
+        const progress = Math.min(1.0, b.recoveryMonths / 180);
         return progress * 100;
       }
 
       case 'biogeochemical_flows': {
         // Tier 2: Partial recovery (5 years / 60 months with tech)
-        const progress = Math.min(1.0, (b.recoveryMonths ?? 0) / 60);
+        if (typeof b.recoveryMonths !== 'number' || isNaN(b.recoveryMonths)) {
+          console.error(`❌ biogeochemical_flows.recoveryMonths is ${typeof b.recoveryMonths} / ${b.recoveryMonths} at month ${state.currentMonth}`);
+          return 0;
+        }
+        const progress = Math.min(1.0, b.recoveryMonths / 60);
         return progress * 100;
       }
 
       case 'land_system_change': {
         // Tier 2: Two-stage recovery
         if (b.partialRecovery) return 50; // Tree cover restored
-        const progress = Math.min(0.5, (b.recoveryMonths ?? 0) / 360); // Progress toward partial
+        if (typeof b.recoveryMonths !== 'number' || isNaN(b.recoveryMonths)) {
+          console.error(`❌ land_system_change.recoveryMonths is ${typeof b.recoveryMonths} / ${b.recoveryMonths} at month ${state.currentMonth}`);
+          return 0;
+        }
+        const progress = Math.min(0.5, b.recoveryMonths / 360); // Progress toward partial
         return progress * 100;
       }
 
@@ -812,7 +828,11 @@ export function calculateProgressiveEcologicalScore(state: GameState): number {
       case 'ocean_acidification': {
         // Tier 3: Partial recovery (surface only)
         if (b.surfaceRecovered) return 40; // Max 40% (deep ocean permanent)
-        const progress = Math.min(0.4, (b.recoveryMonths ?? 0) / 1200);
+        if (typeof b.recoveryMonths !== 'number' || isNaN(b.recoveryMonths)) {
+          console.error(`❌ ocean_acidification.recoveryMonths is ${typeof b.recoveryMonths} / ${b.recoveryMonths} at month ${state.currentMonth}`);
+          return 0;
+        }
+        const progress = Math.min(0.4, b.recoveryMonths / 1200);
         return progress * 100;
       }
 
@@ -823,7 +843,11 @@ export function calculateProgressiveEcologicalScore(state: GameState): number {
 
       case 'atmospheric_aerosols': {
         // Tier 1: Reversible (12 months)
-        const progress = Math.min(1.0, (b.recoveryMonths ?? 0) / 12);
+        if (typeof b.recoveryMonths !== 'number' || isNaN(b.recoveryMonths)) {
+          console.error(`❌ atmospheric_aerosols.recoveryMonths is ${typeof b.recoveryMonths} / ${b.recoveryMonths} at month ${state.currentMonth}`);
+          return 0;
+        }
+        const progress = Math.min(1.0, b.recoveryMonths / 12);
         return progress * 100;
       }
 
@@ -856,6 +880,20 @@ export function calculateProgressiveEcologicalScore(state: GameState): number {
     { name: 'novel_entities', value: boundaryScore('novel_entities'), weight: 0.03 },
     { name: 'atmospheric_aerosols', value: boundaryScore('atmospheric_aerosols'), weight: 0.02 }
   ];
+
+  // DEBUG: Check for NaN in any score
+  for (const s of scores) {
+    if (isNaN(s.value)) {
+      const b = boundaries[s.name as BoundaryName];
+      console.error(`\n❌ NaN detected in boundary score: ${s.name}`);
+      console.error(`   status: ${b?.status}`);
+      console.error(`   recoveryMonths: ${b?.recoveryMonths}`);
+      console.error(`   currentValue: ${b?.currentValue}`);
+      console.error(`   boundaryThreshold: ${b?.boundaryThreshold}`);
+      console.error(`   Month: ${state.currentMonth}`);
+      throw new Error(`Boundary ${s.name} returned NaN - initialization bug`);
+    }
+  }
 
   const weightedScore = scores.reduce((sum, s) => sum + (s.value * s.weight), 0);
 

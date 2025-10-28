@@ -1019,33 +1019,55 @@ export function executeAIAgentActions(
   state: GameState,
   random: () => number = Math.random
 ): ActionResult {
+  // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+  const enableTiming = state.currentMonth === 0 || state.currentMonth === 120 || state.currentMonth === 240;
+  let filterTime = 0, selectTime = 0, executeTime = 0;
+  let totalActions = 0;
+
   // Mutate state directly instead of deep cloning (performance optimization)
   const allEvents: GameEvent[] = [];
   const allEffects: Record<string, number> = {};
   const messages: string[] = [];
-  
+
   // AI Agents: 4 actions per month (weekly)
   for (let week = 0; week < 4; week++) {
     // Get active AIs from current state (not initial state)
     // Filter out retired AIs and only include deployed or testing AIs
+    const t1 = enableTiming ? performance.now() : 0;
     const activeAIs = state.aiAgents.filter((ai: AIAgent) =>
       ai.lifecycleState === 'deployed_closed' ||
       ai.lifecycleState === 'deployed_open' ||
       ai.lifecycleState === 'testing'
     );
+    if (enableTiming) filterTime += performance.now() - t1;
 
     for (const agent of activeAIs) {
+      const t2 = enableTiming ? performance.now() : 0;
       const selectedAction = selectAIAction(agent, state, random);
+      if (enableTiming) selectTime += performance.now() - t2;
+
       if (selectedAction) {
+        const t3 = enableTiming ? performance.now() : 0;
         const result = selectedAction.execute(state, agent.id, random);
+        if (enableTiming) executeTime += performance.now() - t3;
+
         if (result.success) {
           // Actions mutate state directly, no need to reassign
           allEvents.push(...result.events);
           Object.assign(allEffects, result.effects);
           messages.push(result.message);
+          totalActions++;
         }
       }
     }
+  }
+
+  if (enableTiming) {
+    console.log(`\n🔍 EXECUTE_AI_AGENT_ACTIONS DETAILED TIMING (Month ${state.currentMonth}):`);
+    console.log(`  Filter active AIs (×4 weeks): ${filterTime.toFixed(2)}ms`);
+    console.log(`  selectAIAction (×${totalActions}): ${selectTime.toFixed(2)}ms`);
+    console.log(`  action.execute (×${totalActions}): ${executeTime.toFixed(2)}ms`);
+    console.log(`  TOTAL: ${(filterTime + selectTime + executeTime).toFixed(2)}ms`);
   }
 
   return {

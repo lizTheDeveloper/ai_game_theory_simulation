@@ -1,0 +1,4088 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.040 --> 00:00:02.590 align:start position:0%
+ 
+in<00:00:00.240><c> the</c><00:00:00.560><c> 3</c><00:00:00.799><c> to</c><00:00:01.000><c> 4</c><00:00:01.240><c> hours</c><00:00:01.599><c> since</c><00:00:01.839><c> Google</c><00:00:02.120><c> Gemini</c>
+
+00:00:02.590 --> 00:00:02.600 align:start position:0%
+in the 3 to 4 hours since Google Gemini
+ 
+
+00:00:02.600 --> 00:00:04.430 align:start position:0%
+in the 3 to 4 hours since Google Gemini
+has<00:00:02.720><c> been</c><00:00:02.840><c> announced</c><00:00:03.360><c> I've</c><00:00:03.480><c> read</c><00:00:03.760><c> the</c><00:00:04.000><c> full</c>
+
+00:00:04.430 --> 00:00:04.440 align:start position:0%
+has been announced I've read the full
+ 
+
+00:00:04.440 --> 00:00:06.869 align:start position:0%
+has been announced I've read the full
+60-page<00:00:05.200><c> technical</c><00:00:05.600><c> report</c><00:00:06.160><c> the</c><00:00:06.359><c> attached</c>
+
+00:00:06.869 --> 00:00:06.879 align:start position:0%
+60-page technical report the attached
+ 
+
+00:00:06.879 --> 00:00:09.470 align:start position:0%
+60-page technical report the attached
+Alpha<00:00:07.359><c> code</c><00:00:07.640><c> to</c><00:00:08.360><c> fascinating</c><00:00:09.040><c> technical</c>
+
+00:00:09.470 --> 00:00:09.480 align:start position:0%
+Alpha code to fascinating technical
+ 
+
+00:00:09.480 --> 00:00:12.789 align:start position:0%
+Alpha code to fascinating technical
+report<00:00:10.280><c> and</c><00:00:10.719><c> all</c><00:00:11.040><c> the</c><00:00:11.400><c> media</c><00:00:11.960><c> interviews</c>
+
+00:00:12.789 --> 00:00:12.799 align:start position:0%
+report and all the media interviews
+ 
+
+00:00:12.799 --> 00:00:15.350 align:start position:0%
+report and all the media interviews
+clips<00:00:13.679><c> and</c><00:00:13.960><c> press</c><00:00:14.200><c> releases</c><00:00:14.839><c> that</c><00:00:15.000><c> Google</c>
+
+00:00:15.350 --> 00:00:15.360 align:start position:0%
+clips and press releases that Google
+ 
+
+00:00:15.360 --> 00:00:18.349 align:start position:0%
+clips and press releases that Google
+have<00:00:15.559><c> put</c><00:00:15.759><c> out</c><00:00:16.320><c> I've</c><00:00:16.480><c> got</c><00:00:16.760><c> 45</c><00:00:17.480><c> notes</c><00:00:18.080><c> so</c><00:00:18.240><c> I'm</c>
+
+00:00:18.349 --> 00:00:18.359 align:start position:0%
+have put out I've got 45 notes so I'm
+ 
+
+00:00:18.359 --> 00:00:20.070 align:start position:0%
+have put out I've got 45 notes so I'm
+going<00:00:18.439><c> to</c><00:00:18.600><c> skip</c><00:00:18.840><c> the</c><00:00:18.960><c> long</c><00:00:19.160><c> intro</c><00:00:19.680><c> and</c><00:00:19.880><c> get</c>
+
+00:00:20.070 --> 00:00:20.080 align:start position:0%
+going to skip the long intro and get
+ 
+
+00:00:20.080 --> 00:00:22.470 align:start position:0%
+going to skip the long intro and get
+straight<00:00:20.359><c> to</c><00:00:20.560><c> it</c><00:00:20.920><c> here</c><00:00:21.039><c> is</c><00:00:21.199><c> the</c><00:00:21.359><c> paper</c><00:00:21.840><c> Gemini</c>
+
+00:00:22.470 --> 00:00:22.480 align:start position:0%
+straight to it here is the paper Gemini
+ 
+
+00:00:22.480 --> 00:00:25.109 align:start position:0%
+straight to it here is the paper Gemini
+a<00:00:22.720><c> family</c><00:00:23.119><c> of</c><00:00:23.439><c> Highly</c><00:00:23.760><c> capable</c><00:00:24.359><c> multimodal</c>
+
+00:00:25.109 --> 00:00:25.119 align:start position:0%
+a family of Highly capable multimodal
+ 
+
+00:00:25.119 --> 00:00:27.310 align:start position:0%
+a family of Highly capable multimodal
+models<00:00:25.800><c> and</c><00:00:25.960><c> let's</c><00:00:26.199><c> get</c><00:00:26.439><c> one</c><00:00:26.679><c> thing</c><00:00:27.000><c> out</c><00:00:27.160><c> of</c>
+
+00:00:27.310 --> 00:00:27.320 align:start position:0%
+models and let's get one thing out of
+ 
+
+00:00:27.320 --> 00:00:30.630 align:start position:0%
+models and let's get one thing out of
+the<00:00:27.480><c> way</c><00:00:27.760><c> straight</c><00:00:28.119><c> away</c><00:00:28.599><c> is</c><00:00:28.760><c> this</c><00:00:28.960><c> AGI</c><00:00:30.080><c> no</c><00:00:30.560><c> is</c>
+
+00:00:30.630 --> 00:00:30.640 align:start position:0%
+the way straight away is this AGI no is
+ 
+
+00:00:30.640 --> 00:00:33.470 align:start position:0%
+the way straight away is this AGI no is
+it<00:00:30.800><c> better</c><00:00:31.000><c> than</c><00:00:31.160><c> GPT</c><00:00:31.560><c> 4</c><00:00:32.520><c> yes</c><00:00:32.880><c> in</c><00:00:33.160><c> many</c>
+
+00:00:33.470 --> 00:00:33.480 align:start position:0%
+it better than GPT 4 yes in many
+ 
+
+00:00:33.480 --> 00:00:36.430 align:start position:0%
+it better than GPT 4 yes in many
+modalities<00:00:34.440><c> but</c><00:00:34.559><c> in</c><00:00:34.840><c> text</c><00:00:35.360><c> it's</c><00:00:35.680><c> probably</c><00:00:36.200><c> a</c>
+
+00:00:36.430 --> 00:00:36.440 align:start position:0%
+modalities but in text it's probably a
+ 
+
+00:00:36.440 --> 00:00:38.549 align:start position:0%
+modalities but in text it's probably a
+draw<00:00:37.040><c> are</c><00:00:37.200><c> many</c><00:00:37.399><c> people</c><00:00:37.600><c> going</c><00:00:37.719><c> to</c><00:00:37.960><c> overlook</c>
+
+00:00:38.549 --> 00:00:38.559 align:start position:0%
+draw are many people going to overlook
+ 
+
+00:00:38.559 --> 00:00:41.069 align:start position:0%
+draw are many people going to overlook
+the<00:00:38.760><c> bombshell</c><00:00:39.399><c> Alpha</c><00:00:39.760><c> code</c><00:00:40.039><c> 2</c><00:00:40.440><c> paper</c>
+
+00:00:41.069 --> 00:00:41.079 align:start position:0%
+the bombshell Alpha code 2 paper
+ 
+
+00:00:41.079 --> 00:00:43.310 align:start position:0%
+the bombshell Alpha code 2 paper
+probably<00:00:41.680><c> anyway</c><00:00:41.920><c> it's</c><00:00:42.120><c> three</c><00:00:42.320><c> models</c><00:00:42.760><c> Ultra</c>
+
+00:00:43.310 --> 00:00:43.320 align:start position:0%
+probably anyway it's three models Ultra
+ 
+
+00:00:43.320 --> 00:00:46.430 align:start position:0%
+probably anyway it's three models Ultra
+Pro<00:00:43.719><c> and</c><00:00:44.000><c> Nano</c><00:00:44.640><c> Nano</c><00:00:45.039><c> being</c><00:00:45.280><c> for</c><00:00:45.480><c> your</c><00:00:45.680><c> phone</c>
+
+00:00:46.430 --> 00:00:46.440 align:start position:0%
+Pro and Nano Nano being for your phone
+ 
+
+00:00:46.440 --> 00:00:48.790 align:start position:0%
+Pro and Nano Nano being for your phone
+Pro<00:00:46.800><c> being</c><00:00:47.239><c> the</c><00:00:47.440><c> rough</c><00:00:47.800><c> equivalent</c><00:00:48.239><c> of</c><00:00:48.399><c> GPT</c>
+
+00:00:48.790 --> 00:00:48.800 align:start position:0%
+Pro being the rough equivalent of GPT
+ 
+
+00:00:48.800 --> 00:00:51.590 align:start position:0%
+Pro being the rough equivalent of GPT
+3.5<00:00:49.520><c> or</c><00:00:49.719><c> slightly</c><00:00:50.120><c> better</c><00:00:50.640><c> and</c><00:00:50.920><c> Ultra</c><00:00:51.399><c> being</c>
+
+00:00:51.590 --> 00:00:51.600 align:start position:0%
+3.5 or slightly better and Ultra being
+ 
+
+00:00:51.600 --> 00:00:54.670 align:start position:0%
+3.5 or slightly better and Ultra being
+released<00:00:52.199><c> early</c><00:00:52.640><c> next</c><00:00:52.960><c> year</c><00:00:53.440><c> as</c><00:00:53.680><c> the</c><00:00:53.960><c> GPT</c><00:00:54.359><c> 4</c>
+
+00:00:54.670 --> 00:00:54.680 align:start position:0%
+released early next year as the GPT 4
+ 
+
+00:00:54.680 --> 00:00:56.869 align:start position:0%
+released early next year as the GPT 4
+competitor<00:00:55.359><c> now</c><00:00:55.559><c> the</c><00:00:55.760><c> first</c><00:00:56.120><c> paragraph</c><00:00:56.680><c> of</c>
+
+00:00:56.869 --> 00:00:56.879 align:start position:0%
+competitor now the first paragraph of
+ 
+
+00:00:56.879 --> 00:00:58.670 align:start position:0%
+competitor now the first paragraph of
+both<00:00:57.120><c> that</c><00:00:57.320><c> technical</c><00:00:57.719><c> report</c><00:00:58.239><c> and</c><00:00:58.480><c> this</c>
+
+00:00:58.670 --> 00:00:58.680 align:start position:0%
+both that technical report and this
+ 
+
+00:00:58.680 --> 00:01:01.229 align:start position:0%
+both that technical report and this
+accompanying<00:00:59.280><c> web</c><00:00:59.519><c> page</c><00:01:00.039><c> tout</c><00:01:00.359><c> its</c><00:01:00.600><c> abilities</c>
+
+00:01:01.229 --> 00:01:01.239 align:start position:0%
+accompanying web page tout its abilities
+ 
+
+00:01:01.239 --> 00:01:03.709 align:start position:0%
+accompanying web page tout its abilities
+in<00:01:01.399><c> the</c><00:01:01.559><c> MML</c><00:01:02.519><c> and</c><00:01:02.600><c> I</c><00:01:02.680><c> must</c><00:01:02.879><c> say</c><00:01:03.079><c> in</c><00:01:03.239><c> the</c><00:01:03.480><c> web</c>
+
+00:01:03.709 --> 00:01:03.719 align:start position:0%
+in the MML and I must say in the web
+ 
+
+00:01:03.719 --> 00:01:06.149 align:start position:0%
+in the MML and I must say in the web
+page<00:01:04.000><c> they</c><00:01:04.119><c> were</c><00:01:04.320><c> gunning</c><00:01:04.680><c> for</c><00:01:05.159><c> maximum</c><00:01:05.720><c> hype</c>
+
+00:01:06.149 --> 00:01:06.159 align:start position:0%
+page they were gunning for maximum hype
+ 
+
+00:01:06.159 --> 00:01:08.429 align:start position:0%
+page they were gunning for maximum hype
+because<00:01:06.400><c> they</c><00:01:06.560><c> had</c><00:01:06.880><c> this</c><00:01:07.119><c> human</c><00:01:07.560><c> expert</c><00:01:08.040><c> level</c>
+
+00:01:08.429 --> 00:01:08.439 align:start position:0%
+because they had this human expert level
+ 
+
+00:01:08.439 --> 00:01:10.830 align:start position:0%
+because they had this human expert level
+here<00:01:08.840><c> and</c><00:01:09.080><c> they</c><00:01:09.240><c> had</c><00:01:09.479><c> Gemini</c><00:01:09.960><c> being</c><00:01:10.280><c> the</c><00:01:10.520><c> first</c>
+
+00:01:10.830 --> 00:01:10.840 align:start position:0%
+here and they had Gemini being the first
+ 
+
+00:01:10.840 --> 00:01:12.870 align:start position:0%
+here and they had Gemini being the first
+model<00:01:11.159><c> to</c><00:01:11.439><c> beat</c><00:01:11.680><c> it</c><00:01:12.000><c> the</c><00:01:12.200><c> first</c><00:01:12.479><c> problem</c><00:01:12.799><c> that</c>
+
+00:01:12.870 --> 00:01:12.880 align:start position:0%
+model to beat it the first problem that
+ 
+
+00:01:12.880 --> 00:01:15.030 align:start position:0%
+model to beat it the first problem that
+you<00:01:13.000><c> might</c><00:01:13.159><c> have</c><00:01:13.280><c> noticed</c><00:01:13.960><c> is</c><00:01:14.119><c> that</c><00:01:14.280><c> GPT</c><00:01:14.720><c> 4</c>
+
+00:01:15.030 --> 00:01:15.040 align:start position:0%
+you might have noticed is that GPT 4
+ 
+
+00:01:15.040 --> 00:01:17.710 align:start position:0%
+you might have noticed is that GPT 4
+score<00:01:15.680><c> was</c><00:01:16.000><c> done</c><00:01:16.479><c> five</c><00:01:16.759><c> shots</c><00:01:17.280><c> basically</c><00:01:17.640><c> it</c>
+
+00:01:17.710 --> 00:01:17.720 align:start position:0%
+score was done five shots basically it
+ 
+
+00:01:17.720 --> 00:01:19.990 align:start position:0%
+score was done five shots basically it
+was<00:01:17.880><c> given</c><00:01:18.280><c> five</c><00:01:18.560><c> examples</c><00:01:19.040><c> to</c><00:01:19.240><c> learn</c><00:01:19.640><c> from</c>
+
+00:01:19.990 --> 00:01:20.000 align:start position:0%
+was given five examples to learn from
+ 
+
+00:01:20.000 --> 00:01:21.830 align:start position:0%
+was given five examples to learn from
+before<00:01:20.280><c> answering</c><00:01:20.720><c> each</c><00:01:21.000><c> question</c><00:01:21.520><c> whereas</c>
+
+00:01:21.830 --> 00:01:21.840 align:start position:0%
+before answering each question whereas
+ 
+
+00:01:21.840 --> 00:01:24.469 align:start position:0%
+before answering each question whereas
+Gemini<00:01:22.280><c> Ultra</c><00:01:22.840><c> the</c><00:01:23.000><c> biggest</c><00:01:23.360><c> model</c><00:01:23.720><c> was</c><00:01:24.000><c> done</c>
+
+00:01:24.469 --> 00:01:24.479 align:start position:0%
+Gemini Ultra the biggest model was done
+ 
+
+00:01:24.479 --> 00:01:27.789 align:start position:0%
+Gemini Ultra the biggest model was done
+Chain<00:01:24.799><c> of</c><00:01:25.119><c> Thought</c><00:01:25.680><c> with</c><00:01:26.079><c> 32</c><00:01:26.799><c> samples</c><00:01:27.560><c> this</c><00:01:27.640><c> is</c>
+
+00:01:27.789 --> 00:01:27.799 align:start position:0%
+Chain of Thought with 32 samples this is
+ 
+
+00:01:27.799 --> 00:01:29.350 align:start position:0%
+Chain of Thought with 32 samples this is
+not<00:01:27.960><c> the</c><00:01:28.079><c> video</c><00:01:28.360><c> to</c><00:01:28.520><c> go</c><00:01:28.680><c> into</c><00:01:28.960><c> Chain</c><00:01:29.200><c> of</c>
+
+00:01:29.350 --> 00:01:29.360 align:start position:0%
+not the video to go into Chain of
+ 
+
+00:01:29.360 --> 00:01:31.230 align:start position:0%
+not the video to go into Chain of
+Thought<00:01:29.560><c> or</c><00:01:29.920><c> self-consistency</c><00:01:30.479><c> but</c><00:01:30.960><c> it's</c><00:01:31.040><c> a</c>
+
+00:01:31.230 --> 00:01:31.240 align:start position:0%
+Thought or self-consistency but it's a
+ 
+
+00:01:31.240 --> 00:01:32.749 align:start position:0%
+Thought or self-consistency but it's a
+different<00:01:31.520><c> way</c><00:01:31.680><c> of</c><00:01:31.799><c> measuring</c><00:01:32.360><c> it's</c><00:01:32.479><c> not</c><00:01:32.600><c> an</c>
+
+00:01:32.749 --> 00:01:32.759 align:start position:0%
+different way of measuring it's not an
+ 
+
+00:01:32.759 --> 00:01:34.710 align:start position:0%
+different way of measuring it's not an
+Apples<00:01:33.040><c> to</c><00:01:33.159><c> Apples</c><00:01:33.520><c> comparison</c><00:01:34.200><c> and</c><00:01:34.399><c> in</c><00:01:34.520><c> the</c>
+
+00:01:34.710 --> 00:01:34.720 align:start position:0%
+Apples to Apples comparison and in the
+ 
+
+00:01:34.720 --> 00:01:36.870 align:start position:0%
+Apples to Apples comparison and in the
+appendix<00:01:35.439><c> of</c><00:01:35.640><c> the</c><00:01:35.840><c> technical</c><00:01:36.240><c> report</c><00:01:36.680><c> we'll</c>
+
+00:01:36.870 --> 00:01:36.880 align:start position:0%
+appendix of the technical report we'll
+ 
+
+00:01:36.880 --> 00:01:39.429 align:start position:0%
+appendix of the technical report we'll
+see<00:01:37.240><c> a</c><00:01:37.439><c> genuine</c><00:01:38.000><c> comparison</c><00:01:38.720><c> also</c><00:01:39.040><c> I've</c><00:01:39.240><c> had</c>
+
+00:01:39.429 --> 00:01:39.439 align:start position:0%
+see a genuine comparison also I've had
+ 
+
+00:01:39.439 --> 00:01:41.749 align:start position:0%
+see a genuine comparison also I've had
+many<00:01:39.759><c> conversations</c><00:01:40.520><c> with</c><00:01:40.720><c> the</c><00:01:40.920><c> creators</c><00:01:41.560><c> of</c>
+
+00:01:41.749 --> 00:01:41.759 align:start position:0%
+many conversations with the creators of
+ 
+
+00:01:41.759 --> 00:01:44.709 align:start position:0%
+many conversations with the creators of
+the<00:01:41.920><c> MML</c><00:01:42.920><c> as</c><00:01:43.040><c> I</c><00:01:43.119><c> was</c><00:01:43.280><c> doing</c><00:01:43.640><c> my</c><00:01:43.840><c> smart</c><00:01:44.159><c> GPT</c>
+
+00:01:44.709 --> 00:01:44.719 align:start position:0%
+the MML as I was doing my smart GPT
+ 
+
+00:01:44.719 --> 00:01:47.149 align:start position:0%
+the MML as I was doing my smart GPT
+video<00:01:45.200><c> and</c><00:01:45.360><c> that</c><00:01:45.479><c> figure</c><00:01:45.880><c> of</c>
+
+00:01:47.149 --> 00:01:47.159 align:start position:0%
+video and that figure of
+ 
+
+00:01:47.159 --> 00:01:50.590 align:start position:0%
+video and that figure of
+89.8%<00:01:48.159><c> is</c><00:01:48.759><c> very</c><00:01:49.280><c> approximate</c><00:01:49.960><c> the</c><00:01:50.079><c> 10-second</c>
+
+00:01:50.590 --> 00:01:50.600 align:start position:0%
+89.8% is very approximate the 10-second
+ 
+
+00:01:50.600 --> 00:01:52.630 align:start position:0%
+89.8% is very approximate the 10-second
+summary<00:01:51.000><c> of</c><00:01:51.119><c> the</c><00:01:51.280><c> mlu</c><00:01:52.079><c> is</c><00:01:52.240><c> that</c><00:01:52.360><c> it's</c><00:01:52.479><c> a</c>
+
+00:01:52.630 --> 00:01:52.640 align:start position:0%
+summary of the mlu is that it's a
+ 
+
+00:01:52.640 --> 00:01:55.389 align:start position:0%
+summary of the mlu is that it's a
+multiple<00:01:53.119><c> choice</c><00:01:53.399><c> test</c><00:01:53.799><c> across</c><00:01:54.320><c> 57</c><00:01:55.040><c> different</c>
+
+00:01:55.389 --> 00:01:55.399 align:start position:0%
+multiple choice test across 57 different
+ 
+
+00:01:55.399 --> 00:01:57.670 align:start position:0%
+multiple choice test across 57 different
+subjects<00:01:55.960><c> from</c><00:01:56.159><c> chemistry</c><00:01:56.719><c> to</c><00:01:57.039><c> business</c><00:01:57.439><c> to</c>
+
+00:01:57.670 --> 00:01:57.680 align:start position:0%
+subjects from chemistry to business to
+ 
+
+00:01:57.680 --> 00:01:59.230 align:start position:0%
+subjects from chemistry to business to
+mathematics<00:01:58.280><c> to</c><00:01:58.479><c> morality</c><00:01:59.119><c> and</c>
+
+00:01:59.230 --> 00:01:59.240 align:start position:0%
+mathematics to morality and
+ 
+
+00:01:59.240 --> 00:02:01.709 align:start position:0%
+mathematics to morality and
+unfortunately<00:02:00.000><c> Demis</c><00:02:00.360><c> aabis</c><00:02:01.000><c> engaged</c><00:02:01.520><c> in</c>
+
+00:02:01.709 --> 00:02:01.719 align:start position:0%
+unfortunately Demis aabis engaged in
+ 
+
+00:02:01.719 --> 00:02:04.350 align:start position:0%
+unfortunately Demis aabis engaged in
+some<00:02:01.880><c> of</c><00:02:02.079><c> that</c><00:02:02.320><c> hype</c><00:02:02.799><c> with</c><00:02:03.039><c> this</c><00:02:03.360><c> remark</c>
+
+00:02:04.350 --> 00:02:04.360 align:start position:0%
+some of that hype with this remark
+ 
+
+00:02:04.360 --> 00:02:06.270 align:start position:0%
+some of that hype with this remark
+what's<00:02:04.600><c> amazing</c><00:02:05.000><c> about</c><00:02:05.280><c> Gemini</c><00:02:05.840><c> is</c><00:02:05.960><c> that</c><00:02:06.079><c> it's</c>
+
+00:02:06.270 --> 00:02:06.280 align:start position:0%
+what's amazing about Gemini is that it's
+ 
+
+00:02:06.280 --> 00:02:08.550 align:start position:0%
+what's amazing about Gemini is that it's
+so<00:02:06.520><c> good</c><00:02:06.680><c> at</c><00:02:06.880><c> so</c><00:02:07.079><c> many</c><00:02:07.399><c> things</c><00:02:07.920><c> as</c><00:02:08.039><c> we</c><00:02:08.200><c> started</c>
+
+00:02:08.550 --> 00:02:08.560 align:start position:0%
+so good at so many things as we started
+ 
+
+00:02:08.560 --> 00:02:10.749 align:start position:0%
+so good at so many things as we started
+getting<00:02:08.759><c> to</c><00:02:08.920><c> the</c><00:02:09.039><c> end</c><00:02:09.200><c> of</c><00:02:09.360><c> the</c><00:02:09.479><c> training</c><00:02:10.440><c> uh</c><00:02:10.599><c> we</c>
+
+00:02:10.749 --> 00:02:10.759 align:start position:0%
+getting to the end of the training uh we
+ 
+
+00:02:10.759 --> 00:02:12.630 align:start position:0%
+getting to the end of the training uh we
+started<00:02:11.160><c> seeing</c><00:02:11.560><c> that</c><00:02:11.760><c> Gemini</c><00:02:12.200><c> was</c><00:02:12.400><c> better</c>
+
+00:02:12.630 --> 00:02:12.640 align:start position:0%
+started seeing that Gemini was better
+ 
+
+00:02:12.640 --> 00:02:14.710 align:start position:0%
+started seeing that Gemini was better
+than<00:02:12.879><c> any</c><00:02:13.120><c> other</c><00:02:13.360><c> model</c><00:02:13.760><c> out</c><00:02:14.040><c> there</c><00:02:14.280><c> on</c><00:02:14.480><c> these</c>
+
+00:02:14.710 --> 00:02:14.720 align:start position:0%
+than any other model out there on these
+ 
+
+00:02:14.720 --> 00:02:16.509 align:start position:0%
+than any other model out there on these
+very<00:02:14.920><c> very</c><00:02:15.120><c> important</c><00:02:15.480><c> benchmarks</c><00:02:16.360><c> for</c>
+
+00:02:16.509 --> 00:02:16.519 align:start position:0%
+very very important benchmarks for
+ 
+
+00:02:16.519 --> 00:02:18.589 align:start position:0%
+very very important benchmarks for
+example<00:02:16.840><c> each</c><00:02:17.000><c> of</c><00:02:17.160><c> the</c><00:02:17.319><c> 50</c><00:02:17.720><c> different</c><00:02:18.120><c> subject</c>
+
+00:02:18.589 --> 00:02:18.599 align:start position:0%
+example each of the 50 different subject
+ 
+
+00:02:18.599 --> 00:02:21.070 align:start position:0%
+example each of the 50 different subject
+areas<00:02:19.000><c> that</c><00:02:19.160><c> we</c><00:02:19.280><c> tested</c><00:02:19.680><c> on</c><00:02:20.400><c> um</c><00:02:20.599><c> it's</c><00:02:20.760><c> as</c><00:02:20.920><c> good</c>
+
+00:02:21.070 --> 00:02:21.080 align:start position:0%
+areas that we tested on um it's as good
+ 
+
+00:02:21.080 --> 00:02:23.670 align:start position:0%
+areas that we tested on um it's as good
+as<00:02:21.319><c> the</c><00:02:21.480><c> best</c><00:02:21.840><c> expert</c><00:02:22.280><c> humans</c><00:02:22.720><c> in</c><00:02:22.879><c> those</c><00:02:23.120><c> areas</c>
+
+00:02:23.670 --> 00:02:23.680 align:start position:0%
+as the best expert humans in those areas
+ 
+
+00:02:23.680 --> 00:02:27.430 align:start position:0%
+as the best expert humans in those areas
+so<00:02:24.040><c> no</c><00:02:24.480><c> Gemini</c><00:02:24.920><c> Ultra</c><00:02:25.480><c> and</c><00:02:25.720><c> GPT</c><00:02:26.160><c> 4</c><00:02:26.680><c> can't</c><00:02:27.040><c> be</c>
+
+00:02:27.430 --> 00:02:27.440 align:start position:0%
+so no Gemini Ultra and GPT 4 can't be
+ 
+
+00:02:27.440 --> 00:02:29.270 align:start position:0%
+so no Gemini Ultra and GPT 4 can't be
+most<00:02:27.800><c> human</c><00:02:28.160><c> experts</c><00:02:28.800><c> and</c><00:02:28.959><c> while</c><00:02:29.160><c> they</c>
+
+00:02:29.270 --> 00:02:29.280 align:start position:0%
+most human experts and while they
+ 
+
+00:02:29.280 --> 00:02:31.790 align:start position:0%
+most human experts and while they
+describe<00:02:29.879><c> the</c><00:02:30.000><c> MML</c><00:02:30.400><c> U</c><00:02:30.879><c> as</c><00:02:31.040><c> one</c><00:02:31.160><c> of</c><00:02:31.280><c> the</c><00:02:31.440><c> most</c>
+
+00:02:31.790 --> 00:02:31.800 align:start position:0%
+describe the MML U as one of the most
+ 
+
+00:02:31.800 --> 00:02:33.750 align:start position:0%
+describe the MML U as one of the most
+popular<00:02:32.239><c> methods</c><00:02:32.720><c> to</c><00:02:32.879><c> test</c><00:02:33.200><c> the</c><00:02:33.360><c> knowledge</c>
+
+00:02:33.750 --> 00:02:33.760 align:start position:0%
+popular methods to test the knowledge
+ 
+
+00:02:33.760 --> 00:02:35.309 align:start position:0%
+popular methods to test the knowledge
+and<00:02:33.959><c> problem</c><00:02:34.239><c> solving</c><00:02:34.560><c> abilities</c><00:02:34.920><c> of</c><00:02:35.040><c> AI</c>
+
+00:02:35.309 --> 00:02:35.319 align:start position:0%
+and problem solving abilities of AI
+ 
+
+00:02:35.319 --> 00:02:37.509 align:start position:0%
+and problem solving abilities of AI
+models<00:02:35.879><c> they</c><00:02:36.000><c> don't</c><00:02:36.360><c> actually</c><00:02:36.680><c> try</c><00:02:36.920><c> to</c><00:02:37.319><c> back</c>
+
+00:02:37.509 --> 00:02:37.519 align:start position:0%
+models they don't actually try to back
+ 
+
+00:02:37.519 --> 00:02:39.350 align:start position:0%
+models they don't actually try to back
+up<00:02:37.800><c> its</c><00:02:38.000><c> credibility</c><00:02:38.720><c> if</c><00:02:38.800><c> you</c><00:02:38.920><c> watch</c><00:02:39.159><c> my</c>
+
+00:02:39.350 --> 00:02:39.360 align:start position:0%
+up its credibility if you watch my
+ 
+
+00:02:39.360 --> 00:02:41.949 align:start position:0%
+up its credibility if you watch my
+second<00:02:39.680><c> smart</c><00:02:40.000><c> GPT</c><00:02:40.440><c> video</c><00:02:40.920><c> I</c><00:02:41.000><c> showed</c><00:02:41.480><c> how</c><00:02:41.760><c> with</c>
+
+00:02:41.949 --> 00:02:41.959 align:start position:0%
+second smart GPT video I showed how with
+ 
+
+00:02:41.959 --> 00:02:44.030 align:start position:0%
+second smart GPT video I showed how with
+some<00:02:42.280><c> basic</c><00:02:42.720><c> prompt</c><00:02:43.080><c> scaffolding</c><00:02:43.760><c> you</c><00:02:43.879><c> can</c>
+
+00:02:44.030 --> 00:02:44.040 align:start position:0%
+some basic prompt scaffolding you can
+ 
+
+00:02:44.040 --> 00:02:47.630 align:start position:0%
+some basic prompt scaffolding you can
+reach<00:02:44.599><c> 89%</c><00:02:45.599><c> with</c><00:02:45.879><c> GPT</c><00:02:46.319><c> 4</c><00:02:46.760><c> and</c><00:02:46.879><c> frankly</c><00:02:47.319><c> if</c><00:02:47.440><c> we</c>
+
+00:02:47.630 --> 00:02:47.640 align:start position:0%
+reach 89% with GPT 4 and frankly if we
+ 
+
+00:02:47.640 --> 00:02:49.670 align:start position:0%
+reach 89% with GPT 4 and frankly if we
+had<00:02:47.920><c> a</c><00:02:48.120><c> slightly</c><00:02:48.519><c> larger</c><00:02:48.920><c> budget</c><00:02:49.319><c> than</c><00:02:49.480><c> the</c>
+
+00:02:49.670 --> 00:02:49.680 align:start position:0%
+had a slightly larger budget than the
+ 
+
+00:02:49.680 --> 00:02:51.790 align:start position:0%
+had a slightly larger budget than the
+couple<00:02:50.000><c> thousand</c><00:02:50.680><c> in</c><00:02:50.840><c> API</c><00:02:51.239><c> calls</c><00:02:51.560><c> that</c><00:02:51.680><c> we</c>
+
+00:02:51.790 --> 00:02:51.800 align:start position:0%
+couple thousand in API calls that we
+ 
+
+00:02:51.800 --> 00:02:54.509 align:start position:0%
+couple thousand in API calls that we
+used<00:02:52.400><c> we</c><00:02:52.519><c> could</c><00:02:52.680><c> have</c><00:02:52.840><c> reached</c><00:02:53.159><c> 90%</c><00:02:53.920><c> with</c><00:02:54.080><c> GPT</c>
+
+00:02:54.509 --> 00:02:54.519 align:start position:0%
+used we could have reached 90% with GPT
+ 
+
+00:02:54.519 --> 00:02:56.390 align:start position:0%
+used we could have reached 90% with GPT
+4<00:02:54.920><c> furthermore</c><00:02:55.360><c> it's</c><00:02:55.519><c> somewhat</c><00:02:55.879><c> ridiculous</c>
+
+00:02:56.390 --> 00:02:56.400 align:start position:0%
+4 furthermore it's somewhat ridiculous
+ 
+
+00:02:56.400 --> 00:02:58.589 align:start position:0%
+4 furthermore it's somewhat ridiculous
+to<00:02:56.560><c> Showcase</c><00:02:57.080><c> these</c><00:02:57.280><c> results</c><00:02:57.680><c> to</c><00:02:57.920><c> one</c><00:02:58.200><c> decimal</c>
+
+00:02:58.589 --> 00:02:58.599 align:start position:0%
+to Showcase these results to one decimal
+ 
+
+00:02:58.599 --> 00:03:01.630 align:start position:0%
+to Showcase these results to one decimal
+place<00:02:59.080><c> when</c><00:02:59.239><c> the</c><00:02:59.440><c> test</c><00:03:00.000><c> itself</c><00:03:00.680><c> has</c><00:03:00.920><c> maybe</c><00:03:01.319><c> 2</c>
+
+00:03:01.630 --> 00:03:01.640 align:start position:0%
+place when the test itself has maybe 2
+ 
+
+00:03:01.640 --> 00:03:04.190 align:start position:0%
+place when the test itself has maybe 2
+to<00:03:01.840><c> 3%</c><00:03:02.400><c> of</c><00:03:02.519><c> its</c><00:03:02.720><c> questions</c><00:03:03.280><c> being</c><00:03:03.560><c> in</c><00:03:03.720><c> error</c><00:03:04.120><c> if</c>
+
+00:03:04.190 --> 00:03:04.200 align:start position:0%
+to 3% of its questions being in error if
+ 
+
+00:03:04.200 --> 00:03:05.670 align:start position:0%
+to 3% of its questions being in error if
+you<00:03:04.319><c> want</c><00:03:04.480><c> more</c><00:03:04.640><c> details</c><00:03:05.080><c> check</c><00:03:05.280><c> out</c><00:03:05.480><c> that</c>
+
+00:03:05.670 --> 00:03:05.680 align:start position:0%
+you want more details check out that
+ 
+
+00:03:05.680 --> 00:03:07.589 align:start position:0%
+you want more details check out that
+video<00:03:06.159><c> but</c><00:03:06.360><c> it's</c><00:03:06.560><c> quite</c><00:03:06.799><c> egregious</c><00:03:07.480><c> I</c>
+
+00:03:07.589 --> 00:03:07.599 align:start position:0%
+video but it's quite egregious I
+ 
+
+00:03:07.599 --> 00:03:09.509 align:start position:0%
+video but it's quite egregious I
+actually<00:03:07.879><c> spoke</c><00:03:08.280><c> with</c><00:03:08.519><c> anthropic</c><00:03:09.159><c> another</c>
+
+00:03:09.509 --> 00:03:09.519 align:start position:0%
+actually spoke with anthropic another
+ 
+
+00:03:09.519 --> 00:03:12.110 align:start position:0%
+actually spoke with anthropic another
+leading<00:03:09.920><c> AGI</c><00:03:10.480><c> lab</c><00:03:10.799><c> about</c><00:03:11.120><c> this</c><00:03:11.519><c> and</c><00:03:11.760><c> they</c><00:03:11.920><c> did</c>
+
+00:03:12.110 --> 00:03:12.120 align:start position:0%
+leading AGI lab about this and they did
+ 
+
+00:03:12.120 --> 00:03:14.550 align:start position:0%
+leading AGI lab about this and they did
+a<00:03:12.319><c> blog</c><00:03:12.680><c> post</c><00:03:13.040><c> on</c><00:03:13.200><c> the</c><00:03:13.360><c> errors</c><00:03:13.760><c> in</c><00:03:13.920><c> this</c><00:03:14.120><c> test</c>
+
+00:03:14.550 --> 00:03:14.560 align:start position:0%
+a blog post on the errors in this test
+ 
+
+00:03:14.560 --> 00:03:16.430 align:start position:0%
+a blog post on the errors in this test
+so<00:03:14.760><c> the</c><00:03:14.920><c> fact</c><00:03:15.159><c> that</c><00:03:15.319><c> months</c><00:03:15.840><c> after</c><00:03:16.120><c> that</c>
+
+00:03:16.430 --> 00:03:16.440 align:start position:0%
+so the fact that months after that
+ 
+
+00:03:16.440 --> 00:03:18.550 align:start position:0%
+so the fact that months after that
+Google<00:03:16.840><c> is</c><00:03:17.000><c> still</c><00:03:17.280><c> touting</c><00:03:17.760><c> results</c><00:03:18.120><c> on</c><00:03:18.319><c> this</c>
+
+00:03:18.550 --> 00:03:18.560 align:start position:0%
+Google is still touting results on this
+ 
+
+00:03:18.560 --> 00:03:20.949 align:start position:0%
+Google is still touting results on this
+test<00:03:19.159><c> is</c><00:03:19.400><c> a</c><00:03:19.560><c> little</c><00:03:19.879><c> surprising</c><00:03:20.360><c> to</c><00:03:20.480><c> me</c><00:03:20.799><c> that's</c>
+
+00:03:20.949 --> 00:03:20.959 align:start position:0%
+test is a little surprising to me that's
+ 
+
+00:03:20.959 --> 00:03:22.869 align:start position:0%
+test is a little surprising to me that's
+not<00:03:21.120><c> to</c><00:03:21.239><c> say</c><00:03:21.440><c> that</c><00:03:21.560><c> Gemini</c><00:03:21.959><c> Ultra</c><00:03:22.480><c> isn't</c><00:03:22.760><c> the</c>
+
+00:03:22.869 --> 00:03:22.879 align:start position:0%
+not to say that Gemini Ultra isn't the
+ 
+
+00:03:22.879 --> 00:03:25.070 align:start position:0%
+not to say that Gemini Ultra isn't the
+best<00:03:23.040><c> new</c><00:03:23.239><c> model</c><00:03:23.720><c> I</c><00:03:23.840><c> think</c><00:03:24.000><c> it</c><00:03:24.159><c> is</c><00:03:24.560><c> it's</c><00:03:24.799><c> just</c>
+
+00:03:25.070 --> 00:03:25.080 align:start position:0%
+best new model I think it is it's just
+ 
+
+00:03:25.080 --> 00:03:26.830 align:start position:0%
+best new model I think it is it's just
+weird<00:03:25.400><c> that</c><00:03:25.599><c> they</c><00:03:25.760><c> picked</c><00:03:26.239><c> this</c><00:03:26.440><c> particular</c>
+
+00:03:26.830 --> 00:03:26.840 align:start position:0%
+weird that they picked this particular
+ 
+
+00:03:26.840 --> 00:03:28.630 align:start position:0%
+weird that they picked this particular
+Benchmark<00:03:27.480><c> and</c><00:03:27.640><c> deep</c><00:03:27.799><c> in</c><00:03:27.920><c> the</c><00:03:28.080><c> appendix</c><00:03:28.519><c> of</c>
+
+00:03:28.630 --> 00:03:28.640 align:start position:0%
+Benchmark and deep in the appendix of
+ 
+
+00:03:28.640 --> 00:03:30.869 align:start position:0%
+Benchmark and deep in the appendix of
+the<00:03:28.760><c> paper</c><00:03:29.120><c> Google</c><00:03:29.400><c> she</c><00:03:29.720><c> ially</c><00:03:30.280><c> gives</c><00:03:30.720><c> a</c>
+
+00:03:30.869 --> 00:03:30.879 align:start position:0%
+the paper Google she ially gives a
+ 
+
+00:03:30.879 --> 00:03:32.670 align:start position:0%
+the paper Google she ially gives a
+slightly<00:03:31.239><c> more</c><00:03:31.519><c> reasonable</c><00:03:32.080><c> comparison</c>
+
+00:03:32.670 --> 00:03:32.680 align:start position:0%
+slightly more reasonable comparison
+ 
+
+00:03:32.680 --> 00:03:34.750 align:start position:0%
+slightly more reasonable comparison
+between<00:03:32.959><c> the</c><00:03:33.080><c> two</c><00:03:33.280><c> models</c><00:03:33.799><c> on</c><00:03:34.040><c> these</c><00:03:34.360><c> text</c>
+
+00:03:34.750 --> 00:03:34.760 align:start position:0%
+between the two models on these text
+ 
+
+00:03:34.760 --> 00:03:36.550 align:start position:0%
+between the two models on these text
+questions<00:03:35.400><c> as</c><00:03:35.519><c> you</c><00:03:35.599><c> can</c><00:03:35.720><c> see</c><00:03:36.000><c> depending</c><00:03:36.360><c> on</c>
+
+00:03:36.550 --> 00:03:36.560 align:start position:0%
+questions as you can see depending on
+ 
+
+00:03:36.560 --> 00:03:38.429 align:start position:0%
+questions as you can see depending on
+the<00:03:36.760><c> prompting</c><00:03:37.200><c> strategy</c><00:03:37.720><c> you</c><00:03:37.920><c> get</c><00:03:38.120><c> different</c>
+
+00:03:38.429 --> 00:03:38.439 align:start position:0%
+the prompting strategy you get different
+ 
+
+00:03:38.439 --> 00:03:40.550 align:start position:0%
+the prompting strategy you get different
+results<00:03:39.040><c> and</c><00:03:39.200><c> please</c><00:03:39.439><c> forgive</c><00:03:39.760><c> me</c><00:03:40.000><c> for</c><00:03:40.319><c> one</c>
+
+00:03:40.550 --> 00:03:40.560 align:start position:0%
+results and please forgive me for one
+ 
+
+00:03:40.560 --> 00:03:42.869 align:start position:0%
+results and please forgive me for one
+last<00:03:40.799><c> bit</c><00:03:40.920><c> of</c><00:03:41.040><c> mockery</c><00:03:41.599><c> of</c><00:03:41.840><c> the</c><00:03:42.080><c> two</c><00:03:42.439><c> decimal</c>
+
+00:03:42.869 --> 00:03:42.879 align:start position:0%
+last bit of mockery of the two decimal
+ 
+
+00:03:42.879 --> 00:03:45.390 align:start position:0%
+last bit of mockery of the two decimal
+places<00:03:43.239><c> they</c><00:03:43.400><c> give</c><00:03:43.680><c> here</c><00:03:44.080><c> when</c><00:03:44.319><c> 2</c><00:03:44.560><c> to</c><00:03:44.760><c> 3%</c><00:03:45.280><c> of</c>
+
+00:03:45.390 --> 00:03:45.400 align:start position:0%
+places they give here when 2 to 3% of
+ 
+
+00:03:45.400 --> 00:03:47.710 align:start position:0%
+places they give here when 2 to 3% of
+the<00:03:45.519><c> test</c><00:03:46.120><c> contains</c><00:03:46.519><c> errors</c><00:03:47.040><c> very</c><00:03:47.239><c> briefly</c>
+
+00:03:47.710 --> 00:03:47.720 align:start position:0%
+the test contains errors very briefly
+ 
+
+00:03:47.720 --> 00:03:49.270 align:start position:0%
+the test contains errors very briefly
+though<00:03:47.920><c> before</c><00:03:48.120><c> we</c><00:03:48.239><c> get</c><00:03:48.400><c> back</c><00:03:48.560><c> to</c><00:03:48.680><c> the</c><00:03:48.840><c> paper</c>
+
+00:03:49.270 --> 00:03:49.280 align:start position:0%
+though before we get back to the paper
+ 
+
+00:03:49.280 --> 00:03:51.110 align:start position:0%
+though before we get back to the paper
+many<00:03:49.480><c> of</c><00:03:49.560><c> you</c><00:03:49.720><c> might</c><00:03:49.920><c> be</c><00:03:50.040><c> wondering</c><00:03:50.599><c> what</c><00:03:50.799><c> are</c>
+
+00:03:51.110 --> 00:03:51.120 align:start position:0%
+many of you might be wondering what are
+ 
+
+00:03:51.120 --> 00:03:52.869 align:start position:0%
+many of you might be wondering what are
+these<00:03:51.360><c> kind</c><00:03:51.519><c> of</c><00:03:51.680><c> techniques</c><00:03:52.239><c> that</c><00:03:52.360><c> can</c><00:03:52.560><c> boost</c>
+
+00:03:52.869 --> 00:03:52.879 align:start position:0%
+these kind of techniques that can boost
+ 
+
+00:03:52.879 --> 00:03:54.750 align:start position:0%
+these kind of techniques that can boost
+performance<00:03:53.640><c> well</c><00:03:53.879><c> I</c><00:03:53.959><c> was</c><00:03:54.120><c> intending</c><00:03:54.560><c> to</c>
+
+00:03:54.750 --> 00:03:54.760 align:start position:0%
+performance well I was intending to
+ 
+
+00:03:54.760 --> 00:03:57.750 align:start position:0%
+performance well I was intending to
+launch<00:03:55.239><c> this</c><00:03:55.599><c> slightly</c><00:03:56.040><c> later</c><00:03:56.360><c> on</c><00:03:56.840><c> but</c><00:03:57.159><c> now</c><00:03:57.560><c> is</c>
+
+00:03:57.750 --> 00:03:57.760 align:start position:0%
+launch this slightly later on but now is
+ 
+
+00:03:57.760 --> 00:04:00.390 align:start position:0%
+launch this slightly later on but now is
+as<00:03:57.920><c> good</c><00:03:58.040><c> a</c><00:03:58.239><c> time</c><00:03:58.680><c> as</c><00:03:58.879><c> any</c><00:03:59.280><c> it's</c><00:03:59.439><c> my</c><00:03:59.760><c> new</c><00:04:00.040><c> AI</c>
+
+00:04:00.390 --> 00:04:00.400 align:start position:0%
+as good a time as any it's my new AI
+ 
+
+00:04:00.400 --> 00:04:03.149 align:start position:0%
+as good a time as any it's my new AI
+insiders<00:04:01.040><c> content</c><00:04:01.560><c> on</c><00:04:01.879><c> patreon</c><00:04:02.560><c> and</c><00:04:02.760><c> no</c><00:04:03.040><c> I'm</c>
+
+00:04:03.149 --> 00:04:03.159 align:start position:0%
+insiders content on patreon and no I'm
+ 
+
+00:04:03.159 --> 00:04:04.910 align:start position:0%
+insiders content on patreon and no I'm
+not<00:04:03.319><c> going</c><00:04:03.400><c> to</c><00:04:03.519><c> do</c><00:04:03.680><c> a</c><00:04:03.840><c> long</c><00:04:04.159><c> ad</c><00:04:04.400><c> we'll</c><00:04:04.560><c> be</c><00:04:04.760><c> back</c>
+
+00:04:04.910 --> 00:04:04.920 align:start position:0%
+not going to do a long ad we'll be back
+ 
+
+00:04:04.920 --> 00:04:06.910 align:start position:0%
+not going to do a long ad we'll be back
+to<00:04:05.159><c> Gemini</c><00:04:05.599><c> in</c><00:04:05.760><c> 30</c><00:04:06.120><c> seconds</c><00:04:06.680><c> I've</c><00:04:06.799><c> been</c>
+
+00:04:06.910 --> 00:04:06.920 align:start position:0%
+to Gemini in 30 seconds I've been
+ 
+
+00:04:06.920 --> 00:04:08.509 align:start position:0%
+to Gemini in 30 seconds I've been
+working<00:04:07.200><c> on</c><00:04:07.400><c> this</c><00:04:07.640><c> for</c><00:04:07.920><c> months</c><00:04:08.200><c> doing</c>
+
+00:04:08.509 --> 00:04:08.519 align:start position:0%
+working on this for months doing
+ 
+
+00:04:08.519 --> 00:04:10.589 align:start position:0%
+working on this for months doing
+interviews<00:04:09.040><c> with</c><00:04:09.239><c> Google</c><00:04:09.599><c> deepmind</c><00:04:10.319><c> people</c>
+
+00:04:10.589 --> 00:04:10.599 align:start position:0%
+interviews with Google deepmind people
+ 
+
+00:04:10.599 --> 00:04:13.429 align:start position:0%
+interviews with Google deepmind people
+like<00:04:10.879><c> Jim</c><00:04:11.200><c> fan</c><00:04:11.840><c> Microsoft</c><00:04:12.360><c> authors</c><00:04:12.959><c> basically</c>
+
+00:04:13.429 --> 00:04:13.439 align:start position:0%
+like Jim fan Microsoft authors basically
+ 
+
+00:04:13.439 --> 00:04:15.750 align:start position:0%
+like Jim fan Microsoft authors basically
+creating<00:04:14.000><c> the</c><00:04:14.360><c> best</c><00:04:14.760><c> possible</c><00:04:15.200><c> exclusive</c>
+
+00:04:15.750 --> 00:04:15.760 align:start position:0%
+creating the best possible exclusive
+ 
+
+00:04:15.760 --> 00:04:17.310 align:start position:0%
+creating the best possible exclusive
+content<00:04:16.160><c> that</c><00:04:16.280><c> I</c><00:04:16.400><c> could</c><00:04:16.560><c> come</c><00:04:16.720><c> up</c><00:04:16.880><c> with</c><00:04:17.120><c> and</c>
+
+00:04:17.310 --> 00:04:17.320 align:start position:0%
+content that I could come up with and
+ 
+
+00:04:17.320 --> 00:04:19.310 align:start position:0%
+content that I could come up with and
+the<00:04:17.519><c> reason</c><00:04:17.840><c> I</c><00:04:17.959><c> mention</c><00:04:18.239><c> it</c><00:04:18.440><c> now</c><00:04:18.840><c> is</c><00:04:19.000><c> because</c>
+
+00:04:19.310 --> 00:04:19.320 align:start position:0%
+the reason I mention it now is because
+ 
+
+00:04:19.320 --> 00:04:22.469 align:start position:0%
+the reason I mention it now is because
+in<00:04:19.519><c> one</c><00:04:19.639><c> of</c><00:04:19.880><c> these</c><00:04:20.160><c> exclusive</c><00:04:20.759><c> videos</c><00:04:21.759><c> I</c><00:04:21.919><c> talk</c>
+
+00:04:22.469 --> 00:04:22.479 align:start position:0%
+in one of these exclusive videos I talk
+ 
+
+00:04:22.479 --> 00:04:24.870 align:start position:0%
+in one of these exclusive videos I talk
+with<00:04:22.880><c> a</c><00:04:23.160><c> top</c><00:04:23.639><c> Google</c><00:04:23.919><c> author</c><00:04:24.400><c> about</c><00:04:24.720><c> the</c>
+
+00:04:24.870 --> 00:04:24.880 align:start position:0%
+with a top Google author about the
+ 
+
+00:04:24.880 --> 00:04:26.590 align:start position:0%
+with a top Google author about the
+future<00:04:25.240><c> of</c><00:04:25.400><c> prompting</c><00:04:26.000><c> it's</c><00:04:26.120><c> not</c><00:04:26.320><c> this</c><00:04:26.440><c> one</c>
+
+00:04:26.590 --> 00:04:26.600 align:start position:0%
+future of prompting it's not this one
+ 
+
+00:04:26.600 --> 00:04:27.990 align:start position:0%
+future of prompting it's not this one
+although<00:04:26.880><c> I'm</c><00:04:27.040><c> really</c><00:04:27.240><c> proud</c><00:04:27.479><c> of</c><00:04:27.639><c> that</c><00:04:27.759><c> one</c>
+
+00:04:27.990 --> 00:04:28.000 align:start position:0%
+although I'm really proud of that one
+ 
+
+00:04:28.000 --> 00:04:31.029 align:start position:0%
+although I'm really proud of that one
+reasoning<00:04:28.560><c> as</c><00:04:28.720><c> the</c><00:04:28.919><c> holy</c><00:04:29.240><c> Gray</c><00:04:29.800><c> of</c><00:04:29.960><c> llms</c><00:04:30.800><c> not</c>
+
+00:04:31.029 --> 00:04:31.039 align:start position:0%
+reasoning as the holy Gray of llms not
+ 
+
+00:04:31.039 --> 00:04:32.990 align:start position:0%
+reasoning as the holy Gray of llms not
+this<00:04:31.199><c> one</c><00:04:31.560><c> I</c><00:04:31.639><c> think</c><00:04:31.759><c> it</c><00:04:31.840><c> was</c><00:04:32.120><c> this</c><00:04:32.280><c> one</c><00:04:32.639><c> I</c><00:04:32.759><c> spoke</c>
+
+00:04:32.990 --> 00:04:33.000 align:start position:0%
+this one I think it was this one I spoke
+ 
+
+00:04:33.000 --> 00:04:35.390 align:start position:0%
+this one I think it was this one I spoke
+to<00:04:33.160><c> shing</c><00:04:33.479><c> Chen</c><00:04:33.800><c> Juan</c><00:04:34.320><c> about</c><00:04:34.639><c> this</c><00:04:34.919><c> evolution</c>
+
+00:04:35.390 --> 00:04:35.400 align:start position:0%
+to shing Chen Juan about this evolution
+ 
+
+00:04:35.400 --> 00:04:37.430 align:start position:0%
+to shing Chen Juan about this evolution
+of<00:04:35.560><c> prompting</c><00:04:36.240><c> there</c><00:04:36.400><c> is</c><00:04:36.680><c> much</c><00:04:36.840><c> more</c><00:04:37.080><c> content</c>
+
+00:04:37.430 --> 00:04:37.440 align:start position:0%
+of prompting there is much more content
+ 
+
+00:04:37.440 --> 00:04:38.550 align:start position:0%
+of prompting there is much more content
+coming<00:04:37.800><c> and</c><00:04:37.919><c> I'm</c><00:04:38.039><c> even</c><00:04:38.199><c> going</c><00:04:38.280><c> to</c><00:04:38.360><c> have</c><00:04:38.440><c> a</c>
+
+00:04:38.550 --> 00:04:38.560 align:start position:0%
+coming and I'm even going to have a
+ 
+
+00:04:38.560 --> 00:04:40.749 align:start position:0%
+coming and I'm even going to have a
+feature<00:04:38.960><c> where</c><00:04:39.120><c> you</c><00:04:39.240><c> can</c><00:04:39.520><c> vote</c><00:04:39.919><c> on</c><00:04:40.440><c> what</c><00:04:40.600><c> kind</c>
+
+00:04:40.749 --> 00:04:40.759 align:start position:0%
+feature where you can vote on what kind
+ 
+
+00:04:40.759 --> 00:04:43.029 align:start position:0%
+feature where you can vote on what kind
+of<00:04:40.960><c> questions</c><00:04:41.479><c> I</c><00:04:41.720><c> ask</c><00:04:42.199><c> the</c><00:04:42.400><c> next</c><00:04:42.600><c> round</c><00:04:42.840><c> of</c>
+
+00:04:43.029 --> 00:04:43.039 align:start position:0%
+of questions I ask the next round of
+ 
+
+00:04:43.039 --> 00:04:45.350 align:start position:0%
+of questions I ask the next round of
+experts<00:04:43.720><c> some</c><00:04:43.880><c> of</c><00:04:44.080><c> whom</c><00:04:44.320><c> will</c><00:04:44.560><c> feature</c><00:04:45.039><c> later</c>
+
+00:04:45.350 --> 00:04:45.360 align:start position:0%
+experts some of whom will feature later
+ 
+
+00:04:45.360 --> 00:04:47.909 align:start position:0%
+experts some of whom will feature later
+in<00:04:45.600><c> this</c><00:04:45.759><c> video</c><00:04:46.199><c> on</c><00:04:46.479><c> Google</c><00:04:46.840><c> Gemini</c><00:04:47.560><c> but</c><00:04:47.759><c> why</c>
+
+00:04:47.909 --> 00:04:47.919 align:start position:0%
+in this video on Google Gemini but why
+ 
+
+00:04:47.919 --> 00:04:50.590 align:start position:0%
+in this video on Google Gemini but why
+do<00:04:48.080><c> I</c><00:04:48.280><c> say</c><00:04:48.680><c> in</c><00:04:48.960><c> other</c><00:04:49.280><c> modalities</c><00:04:50.120><c> it</c><00:04:50.280><c> beats</c>
+
+00:04:50.590 --> 00:04:50.600 align:start position:0%
+do I say in other modalities it beats
+ 
+
+00:04:50.600 --> 00:04:53.629 align:start position:0%
+do I say in other modalities it beats
+GPT<00:04:51.039><c> 4</c><00:04:51.600><c> well</c><00:04:51.840><c> look</c><00:04:52.000><c> at</c><00:04:52.199><c> this</c><00:04:52.560><c> in</c><00:04:52.720><c> nine</c><00:04:53.039><c> of</c><00:04:53.240><c> nine</c>
+
+00:04:53.629 --> 00:04:53.639 align:start position:0%
+GPT 4 well look at this in nine of nine
+ 
+
+00:04:53.639 --> 00:04:55.710 align:start position:0%
+GPT 4 well look at this in nine of nine
+image<00:04:54.199><c> understanding</c><00:04:54.479><c> benchmarks</c><00:04:55.199><c> it</c><00:04:55.360><c> beats</c>
+
+00:04:55.710 --> 00:04:55.720 align:start position:0%
+image understanding benchmarks it beats
+ 
+
+00:04:55.720 --> 00:04:58.550 align:start position:0%
+image understanding benchmarks it beats
+GPT<00:04:56.120><c> 4</c><00:04:56.440><c> vision</c><00:04:56.960><c> and</c><00:04:57.160><c> all</c><00:04:57.360><c> other</c><00:04:57.560><c> models</c><00:04:58.080><c> six</c><00:04:58.360><c> of</c>
+
+00:04:58.550 --> 00:04:58.560 align:start position:0%
+GPT 4 vision and all other models six of
+ 
+
+00:04:58.560 --> 00:05:01.270 align:start position:0%
+GPT 4 vision and all other models six of
+six<00:04:58.960><c> video</c><00:04:59.600><c> standing</c><00:04:59.840><c> benchmarks</c><00:05:00.720><c> and</c><00:05:01.000><c> five</c>
+
+00:05:01.270 --> 00:05:01.280 align:start position:0%
+six video standing benchmarks and five
+ 
+
+00:05:01.280 --> 00:05:03.629 align:start position:0%
+six video standing benchmarks and five
+of<00:05:01.560><c> five</c><00:05:01.919><c> speech</c><00:05:02.280><c> recognition</c><00:05:03.039><c> and</c><00:05:03.240><c> speech</c>
+
+00:05:03.629 --> 00:05:03.639 align:start position:0%
+of five speech recognition and speech
+ 
+
+00:05:03.639 --> 00:05:06.230 align:start position:0%
+of five speech recognition and speech
+translation<00:05:04.440><c> benchmarks</c><00:05:05.360><c> that's</c><00:05:05.600><c> not</c><00:05:05.840><c> bad</c>
+
+00:05:06.230 --> 00:05:06.240 align:start position:0%
+translation benchmarks that's not bad
+ 
+
+00:05:06.240 --> 00:05:08.990 align:start position:0%
+translation benchmarks that's not bad
+they<00:05:06.360><c> are</c><00:05:06.520><c> trained</c><00:05:06.880><c> to</c><00:05:07.080><c> support</c><00:05:07.560><c> a</c><00:05:08.000><c> 32,000</c>
+
+00:05:08.990 --> 00:05:09.000 align:start position:0%
+they are trained to support a 32,000
+ 
+
+00:05:09.000 --> 00:05:12.070 align:start position:0%
+they are trained to support a 32,000
+token<00:05:09.520><c> context</c><00:05:10.000><c> window</c><00:05:10.600><c> which</c><00:05:10.759><c> compares</c><00:05:11.199><c> to</c>
+
+00:05:12.070 --> 00:05:12.080 align:start position:0%
+token context window which compares to
+ 
+
+00:05:12.080 --> 00:05:15.230 align:start position:0%
+token context window which compares to
+128,000<00:05:13.080><c> for</c><00:05:13.360><c> GPT</c><00:05:13.759><c> 4</c><00:05:14.000><c> Turbo</c><00:05:14.520><c> with</c><00:05:14.680><c> anthropic</c>
+
+00:05:15.230 --> 00:05:15.240 align:start position:0%
+128,000 for GPT 4 Turbo with anthropic
+ 
+
+00:05:15.240 --> 00:05:18.230 align:start position:0%
+128,000 for GPT 4 Turbo with anthropic
+you<00:05:15.360><c> can</c><00:05:15.600><c> get</c><00:05:15.800><c> up</c><00:05:16.000><c> to</c><00:05:16.600><c> 200,000</c><00:05:17.240><c> tokens</c><00:05:17.880><c> but</c><00:05:18.080><c> the</c>
+
+00:05:18.230 --> 00:05:18.240 align:start position:0%
+you can get up to 200,000 tokens but the
+ 
+
+00:05:18.240 --> 00:05:20.029 align:start position:0%
+you can get up to 200,000 tokens but the
+performance<00:05:18.720><c> isn't</c><00:05:19.080><c> quite</c><00:05:19.400><c> as</c><00:05:19.639><c> good</c>
+
+00:05:20.029 --> 00:05:20.039 align:start position:0%
+performance isn't quite as good
+ 
+
+00:05:20.039 --> 00:05:21.909 align:start position:0%
+performance isn't quite as good
+interestingly<00:05:20.680><c> they</c><00:05:20.880><c> did</c><00:05:21.160><c> tell</c><00:05:21.360><c> us</c><00:05:21.680><c> the</c>
+
+00:05:21.909 --> 00:05:21.919 align:start position:0%
+interestingly they did tell us the
+ 
+
+00:05:21.919 --> 00:05:24.430 align:start position:0%
+interestingly they did tell us the
+parameter<00:05:22.400><c> count</c><00:05:22.840><c> of</c><00:05:23.039><c> the</c><00:05:23.240><c> Nano</c><00:05:23.680><c> models</c><00:05:24.199><c> at</c>
+
+00:05:24.430 --> 00:05:24.440 align:start position:0%
+parameter count of the Nano models at
+ 
+
+00:05:24.440 --> 00:05:27.590 align:start position:0%
+parameter count of the Nano models at
+1.8<00:05:25.080><c> billion</c><00:05:25.400><c> parameters</c><00:05:26.039><c> and</c><00:05:26.280><c> 3.25</c><00:05:27.280><c> billion</c>
+
+00:05:27.590 --> 00:05:27.600 align:start position:0%
+1.8 billion parameters and 3.25 billion
+ 
+
+00:05:27.600 --> 00:05:29.830 align:start position:0%
+1.8 billion parameters and 3.25 billion
+parameters<00:05:28.280><c> they</c><00:05:28.440><c> even</c><00:05:28.680><c> give</c><00:05:28.840><c> us</c><00:05:29.039><c> the</c><00:05:29.520><c> detail</c>
+
+00:05:29.830 --> 00:05:29.840 align:start position:0%
+parameters they even give us the detail
+ 
+
+00:05:29.840 --> 00:05:32.070 align:start position:0%
+parameters they even give us the detail
+that<00:05:30.000><c> they</c><00:05:30.080><c> are</c><00:05:30.280><c> 4bit</c><00:05:30.880><c> quantized</c><00:05:31.759><c> or</c>
+
+00:05:32.070 --> 00:05:32.080 align:start position:0%
+that they are 4bit quantized or
+ 
+
+00:05:32.080 --> 00:05:34.469 align:start position:0%
+that they are 4bit quantized or
+distilled<00:05:32.639><c> down</c><00:05:33.000><c> smaller</c><00:05:33.440><c> versions</c><00:05:34.080><c> of</c><00:05:34.280><c> the</c>
+
+00:05:34.469 --> 00:05:34.479 align:start position:0%
+distilled down smaller versions of the
+ 
+
+00:05:34.479 --> 00:05:36.510 align:start position:0%
+distilled down smaller versions of the
+larger<00:05:34.919><c> Gemini</c><00:05:35.360><c> models</c><00:05:35.960><c> what</c><00:05:36.039><c> about</c><00:05:36.280><c> other</c>
+
+00:05:36.510 --> 00:05:36.520 align:start position:0%
+larger Gemini models what about other
+ 
+
+00:05:36.520 --> 00:05:38.790 align:start position:0%
+larger Gemini models what about other
+key<00:05:36.759><c> details</c><00:05:37.199><c> like</c><00:05:37.360><c> the</c><00:05:37.600><c> data</c><00:05:37.880><c> set</c><00:05:38.120><c> they</c><00:05:38.240><c> used</c>
+
+00:05:38.790 --> 00:05:38.800 align:start position:0%
+key details like the data set they used
+ 
+
+00:05:38.800 --> 00:05:41.070 align:start position:0%
+key details like the data set they used
+well<00:05:39.039><c> as</c><00:05:39.160><c> you</c><00:05:39.280><c> might</c><00:05:39.440><c> have</c><00:05:39.639><c> guessed</c><00:05:40.160><c> they</c><00:05:40.360><c> say</c>
+
+00:05:41.070 --> 00:05:41.080 align:start position:0%
+well as you might have guessed they say
+ 
+
+00:05:41.080 --> 00:05:43.309 align:start position:0%
+well as you might have guessed they say
+we<00:05:41.319><c> plan</c><00:05:41.639><c> to</c><00:05:41.840><c> update</c><00:05:42.280><c> this</c><00:05:42.479><c> report</c><00:05:42.880><c> with</c><00:05:43.039><c> more</c>
+
+00:05:43.309 --> 00:05:43.319 align:start position:0%
+we plan to update this report with more
+ 
+
+00:05:43.319 --> 00:05:45.150 align:start position:0%
+we plan to update this report with more
+details<00:05:44.000><c> ahead</c><00:05:44.319><c> of</c><00:05:44.520><c> the</c><00:05:44.720><c> general</c>
+
+00:05:45.150 --> 00:05:45.160 align:start position:0%
+details ahead of the general
+ 
+
+00:05:45.160 --> 00:05:47.629 align:start position:0%
+details ahead of the general
+availability<00:05:45.960><c> of</c><00:05:46.160><c> the</c><00:05:46.360><c> Gemini</c><00:05:46.800><c> Ultra</c><00:05:47.199><c> model</c>
+
+00:05:47.629 --> 00:05:47.639 align:start position:0%
+availability of the Gemini Ultra model
+ 
+
+00:05:47.639 --> 00:05:49.629 align:start position:0%
+availability of the Gemini Ultra model
+and<00:05:47.800><c> later</c><00:05:48.039><c> on</c><00:05:48.240><c> they</c><00:05:48.360><c> go</c><00:05:48.520><c> into</c><00:05:49.000><c> fantastic</c>
+
+00:05:49.629 --> 00:05:49.639 align:start position:0%
+and later on they go into fantastic
+ 
+
+00:05:49.639 --> 00:05:52.189 align:start position:0%
+and later on they go into fantastic
+detail<00:05:50.240><c> but</c><00:05:50.360><c> not</c><00:05:50.560><c> really</c><00:05:51.199><c> saying</c><00:05:51.919><c> our</c>
+
+00:05:52.189 --> 00:05:52.199 align:start position:0%
+detail but not really saying our
+ 
+
+00:05:52.199 --> 00:05:54.909 align:start position:0%
+detail but not really saying our
+pre-training<00:05:52.800><c> data</c><00:05:53.080><c> set</c><00:05:53.600><c> uses</c><00:05:54.039><c> data</c><00:05:54.400><c> from</c><00:05:54.680><c> web</c>
+
+00:05:54.909 --> 00:05:54.919 align:start position:0%
+pre-training data set uses data from web
+ 
+
+00:05:54.919 --> 00:05:57.430 align:start position:0%
+pre-training data set uses data from web
+documents<00:05:55.440><c> super</c><00:05:55.720><c> helpful</c><00:05:56.360><c> books</c><00:05:56.759><c> and</c><00:05:57.000><c> code</c>
+
+00:05:57.430 --> 00:05:57.440 align:start position:0%
+documents super helpful books and code
+ 
+
+00:05:57.440 --> 00:06:00.029 align:start position:0%
+documents super helpful books and code
+and<00:05:57.600><c> includes</c><00:05:58.199><c> image</c><00:05:58.759><c> audio</c><00:05:59.280><c> and</c><00:05:59.479><c> and</c><00:05:59.639><c> video</c>
+
+00:06:00.029 --> 00:06:00.039 align:start position:0%
+and includes image audio and and video
+ 
+
+00:06:00.039 --> 00:06:02.350 align:start position:0%
+and includes image audio and and video
+data<00:06:00.520><c> great</c><00:06:00.800><c> instead</c><00:06:01.039><c> of</c><00:06:01.160><c> detail</c><00:06:01.560><c> on</c><00:06:01.759><c> the</c><00:06:02.000><c> data</c>
+
+00:06:02.350 --> 00:06:02.360 align:start position:0%
+data great instead of detail on the data
+ 
+
+00:06:02.360 --> 00:06:04.790 align:start position:0%
+data great instead of detail on the data
+set<00:06:02.680><c> we</c><00:06:02.880><c> do</c><00:06:03.199><c> get</c><00:06:03.440><c> this</c><00:06:03.639><c> incredible</c><00:06:04.160><c> nugget</c>
+
+00:06:04.790 --> 00:06:04.800 align:start position:0%
+set we do get this incredible nugget
+ 
+
+00:06:04.800 --> 00:06:08.270 align:start position:0%
+set we do get this incredible nugget
+some<00:06:05.280><c> of</c><00:06:05.520><c> the</c><00:06:05.759><c> delay</c><00:06:06.160><c> to</c><00:06:06.479><c> Gemini</c><00:06:07.240><c> was</c><00:06:07.560><c> due</c><00:06:07.880><c> to</c>
+
+00:06:08.270 --> 00:06:08.280 align:start position:0%
+some of the delay to Gemini was due to
+ 
+
+00:06:08.280 --> 00:06:11.710 align:start position:0%
+some of the delay to Gemini was due to
+external<00:06:08.840><c> factors</c><00:06:09.720><c> such</c><00:06:10.039><c> as</c><00:06:10.440><c> cosmic</c><00:06:10.880><c> rays</c><00:06:11.560><c> now</c>
+
+00:06:11.710 --> 00:06:11.720 align:start position:0%
+external factors such as cosmic rays now
+ 
+
+00:06:11.720 --> 00:06:13.510 align:start position:0%
+external factors such as cosmic rays now
+obviously<00:06:12.080><c> I'm</c><00:06:12.199><c> being</c><00:06:12.400><c> factious</c><00:06:13.039><c> but</c><00:06:13.240><c> that</c><00:06:13.360><c> is</c>
+
+00:06:13.510 --> 00:06:13.520 align:start position:0%
+obviously I'm being factious but that is
+ 
+
+00:06:13.520 --> 00:06:15.469 align:start position:0%
+obviously I'm being factious but that is
+an<00:06:13.680><c> interesting</c><00:06:14.120><c> detail</c><00:06:14.599><c> now</c><00:06:14.759><c> one</c><00:06:14.960><c> key</c><00:06:15.120><c> detail</c>
+
+00:06:15.469 --> 00:06:15.479 align:start position:0%
+an interesting detail now one key detail
+ 
+
+00:06:15.479 --> 00:06:17.670 align:start position:0%
+an interesting detail now one key detail
+that<00:06:15.599><c> I</c><00:06:15.720><c> mentioned</c><00:06:16.319><c> back</c><00:06:16.599><c> in</c><00:06:16.759><c> the</c><00:06:17.039><c> Palm</c><00:06:17.360><c> 2</c>
+
+00:06:17.670 --> 00:06:17.680 align:start position:0%
+that I mentioned back in the Palm 2
+ 
+
+00:06:17.680 --> 00:06:20.430 align:start position:0%
+that I mentioned back in the Palm 2
+video<00:06:18.240><c> was</c><00:06:18.479><c> this</c><00:06:18.720><c> case</c><00:06:19.000><c> of</c><00:06:19.319><c> positive</c><00:06:19.759><c> transfer</c>
+
+00:06:20.430 --> 00:06:20.440 align:start position:0%
+video was this case of positive transfer
+ 
+
+00:06:20.440 --> 00:06:22.270 align:start position:0%
+video was this case of positive transfer
+essentially<00:06:20.880><c> by</c><00:06:21.039><c> training</c><00:06:21.400><c> the</c><00:06:21.520><c> model</c><00:06:21.880><c> on</c>
+
+00:06:22.270 --> 00:06:22.280 align:start position:0%
+essentially by training the model on
+ 
+
+00:06:22.280 --> 00:06:25.510 align:start position:0%
+essentially by training the model on
+image<00:06:22.919><c> audio</c><00:06:23.599><c> as</c><00:06:23.759><c> well</c><00:06:23.960><c> as</c><00:06:24.240><c> text</c><00:06:24.720><c> and</c><00:06:25.000><c> video</c>
+
+00:06:25.510 --> 00:06:25.520 align:start position:0%
+image audio as well as text and video
+ 
+
+00:06:25.520 --> 00:06:27.270 align:start position:0%
+image audio as well as text and video
+they<00:06:25.680><c> got</c><00:06:25.919><c> positive</c><00:06:26.319><c> transfer</c><00:06:26.960><c> in</c><00:06:27.080><c> other</c>
+
+00:06:27.270 --> 00:06:27.280 align:start position:0%
+they got positive transfer in other
+ 
+
+00:06:27.280 --> 00:06:29.909 align:start position:0%
+they got positive transfer in other
+words<00:06:27.759><c> the</c><00:06:27.880><c> model</c><00:06:28.160><c> got</c><00:06:28.360><c> better</c><00:06:28.680><c> at</c><00:06:28.919><c> text</c><00:06:29.680><c> by</c>
+
+00:06:29.909 --> 00:06:29.919 align:start position:0%
+words the model got better at text by
+ 
+
+00:06:29.919 --> 00:06:32.070 align:start position:0%
+words the model got better at text by
+being<00:06:30.199><c> trained</c><00:06:30.639><c> on</c><00:06:30.840><c> images</c><00:06:31.440><c> as</c><00:06:31.560><c> Google</c><00:06:31.840><c> keeps</c>
+
+00:06:32.070 --> 00:06:32.080 align:start position:0%
+being trained on images as Google keeps
+ 
+
+00:06:32.080 --> 00:06:34.270 align:start position:0%
+being trained on images as Google keeps
+saying<00:06:32.400><c> it</c><00:06:32.520><c> was</c><00:06:32.680><c> trained</c><00:06:33.160><c> from</c><00:06:33.400><c> the</c><00:06:33.639><c> ground</c><00:06:34.039><c> up</c>
+
+00:06:34.270 --> 00:06:34.280 align:start position:0%
+saying it was trained from the ground up
+ 
+
+00:06:34.280 --> 00:06:36.710 align:start position:0%
+saying it was trained from the ground up
+to<00:06:34.440><c> be</c><00:06:34.680><c> multimodal</c><00:06:35.680><c> and</c><00:06:35.880><c> that's</c><00:06:36.160><c> why</c><00:06:36.319><c> it</c><00:06:36.440><c> gets</c>
+
+00:06:36.710 --> 00:06:36.720 align:start position:0%
+to be multimodal and that's why it gets
+ 
+
+00:06:36.720 --> 00:06:38.749 align:start position:0%
+to be multimodal and that's why it gets
+such<00:06:36.960><c> good</c><00:06:37.160><c> results</c><00:06:37.639><c> in</c><00:06:37.880><c> other</c><00:06:38.120><c> modalities</c>
+
+00:06:38.749 --> 00:06:38.759 align:start position:0%
+such good results in other modalities
+ 
+
+00:06:38.759 --> 00:06:40.550 align:start position:0%
+such good results in other modalities
+which<00:06:38.880><c> I'll</c><00:06:39.080><c> get</c><00:06:39.199><c> to</c><00:06:39.599><c> in</c><00:06:39.720><c> fact</c><00:06:40.000><c> here</c><00:06:40.120><c> they</c><00:06:40.240><c> are</c>
+
+00:06:40.550 --> 00:06:40.560 align:start position:0%
+which I'll get to in fact here they are
+ 
+
+00:06:40.560 --> 00:06:42.749 align:start position:0%
+which I'll get to in fact here they are
+pretty<00:06:40.800><c> much</c><00:06:41.039><c> state-of-the-art</c><00:06:41.960><c> across</c>
+
+00:06:42.749 --> 00:06:42.759 align:start position:0%
+pretty much state-of-the-art across
+ 
+
+00:06:42.759 --> 00:06:45.550 align:start position:0%
+pretty much state-of-the-art across
+natural<00:06:43.280><c> image</c><00:06:44.000><c> understanding</c><00:06:44.800><c> document</c>
+
+00:06:45.550 --> 00:06:45.560 align:start position:0%
+natural image understanding document
+ 
+
+00:06:45.560 --> 00:06:47.510 align:start position:0%
+natural image understanding document
+understanding<00:06:46.080><c> infographic</c><00:06:47.080><c> understanding</c>
+
+00:06:47.510 --> 00:06:47.520 align:start position:0%
+understanding infographic understanding
+ 
+
+00:06:47.520 --> 00:06:49.870 align:start position:0%
+understanding infographic understanding
+it's<00:06:47.680><c> even</c><00:06:47.960><c> better</c><00:06:48.440><c> in</c><00:06:48.759><c> video</c><00:06:49.160><c> captioning</c>
+
+00:06:49.870 --> 00:06:49.880 align:start position:0%
+it's even better in video captioning
+ 
+
+00:06:49.880 --> 00:06:52.110 align:start position:0%
+it's even better in video captioning
+video<00:06:50.280><c> question</c><00:06:50.759><c> answering</c><00:06:51.639><c> speech</c>
+
+00:06:52.110 --> 00:06:52.120 align:start position:0%
+video question answering speech
+ 
+
+00:06:52.120 --> 00:06:54.830 align:start position:0%
+video question answering speech
+translation<00:06:53.000><c> but</c><00:06:53.199><c> these</c><00:06:53.479><c> are</c><00:06:53.880><c> solid</c><00:06:54.280><c> results</c>
+
+00:06:54.830 --> 00:06:54.840 align:start position:0%
+translation but these are solid results
+ 
+
+00:06:54.840 --> 00:06:56.950 align:start position:0%
+translation but these are solid results
+this<00:06:54.919><c> is</c><00:06:55.160><c> nothing</c><00:06:55.400><c> to</c><00:06:55.520><c> do</c><00:06:55.680><c> with</c><00:06:55.840><c> prompting</c><00:06:56.720><c> it</c>
+
+00:06:56.950 --> 00:06:56.960 align:start position:0%
+this is nothing to do with prompting it
+ 
+
+00:06:56.960 --> 00:06:59.469 align:start position:0%
+this is nothing to do with prompting it
+genuinely<00:06:57.639><c> is</c><00:06:58.000><c> a</c><00:06:58.199><c> better</c><00:06:58.520><c> model</c><00:06:58.960><c> in</c><00:06:59.120><c> these</c>
+
+00:06:59.469 --> 00:06:59.479 align:start position:0%
+genuinely is a better model in these
+ 
+
+00:06:59.479 --> 00:07:01.189 align:start position:0%
+genuinely is a better model in these
+modalities<00:07:00.280><c> remember</c><00:07:00.680><c> though</c><00:07:00.879><c> that</c><00:07:01.039><c> we're</c>
+
+00:07:01.189 --> 00:07:01.199 align:start position:0%
+modalities remember though that we're
+ 
+
+00:07:01.199 --> 00:07:03.790 align:start position:0%
+modalities remember though that we're
+not<00:07:01.400><c> getting</c><00:07:01.680><c> the</c><00:07:01.840><c> ultra</c><00:07:02.440><c> until</c><00:07:03.120><c> early</c><00:07:03.520><c> next</c>
+
+00:07:03.790 --> 00:07:03.800 align:start position:0%
+not getting the ultra until early next
+ 
+
+00:07:03.800 --> 00:07:06.909 align:start position:0%
+not getting the ultra until early next
+year<00:07:04.240><c> and</c><00:07:04.479><c> at</c><00:07:04.639><c> the</c><00:07:04.879><c> moment</c><00:07:05.520><c> Pro</c><00:07:06.000><c> and</c><00:07:06.240><c> Nano</c><00:07:06.759><c> can</c>
+
+00:07:06.909 --> 00:07:06.919 align:start position:0%
+year and at the moment Pro and Nano can
+ 
+
+00:07:06.919 --> 00:07:09.510 align:start position:0%
+year and at the moment Pro and Nano can
+only<00:07:07.280><c> respond</c><00:07:07.840><c> with</c><00:07:08.120><c> text</c><00:07:08.520><c> and</c><00:07:08.800><c> code</c><00:07:09.400><c> they</c>
+
+00:07:09.510 --> 00:07:09.520 align:start position:0%
+only respond with text and code they
+ 
+
+00:07:09.520 --> 00:07:10.990 align:start position:0%
+only respond with text and code they
+can't<00:07:09.800><c> yet</c><00:07:09.960><c> do</c><00:07:10.240><c> what</c><00:07:10.360><c> you're</c><00:07:10.520><c> seeing</c><00:07:10.759><c> in</c><00:07:10.879><c> all</c>
+
+00:07:10.990 --> 00:07:11.000 align:start position:0%
+can't yet do what you're seeing in all
+ 
+
+00:07:11.000 --> 00:07:12.510 align:start position:0%
+can't yet do what you're seeing in all
+of<00:07:11.120><c> these</c><00:07:11.280><c> demos</c><00:07:11.639><c> which</c><00:07:11.759><c> I'll</c><00:07:11.919><c> get</c><00:07:12.000><c> to</c><00:07:12.240><c> in</c><00:07:12.319><c> a</c>
+
+00:07:12.510 --> 00:07:12.520 align:start position:0%
+of these demos which I'll get to in a
+ 
+
+00:07:12.520 --> 00:07:15.070 align:start position:0%
+of these demos which I'll get to in a
+second<00:07:13.160><c> which</c><00:07:13.319><c> is</c><00:07:13.560><c> generate</c><00:07:14.080><c> images</c><00:07:14.720><c> speaking</c>
+
+00:07:15.070 --> 00:07:15.080 align:start position:0%
+second which is generate images speaking
+ 
+
+00:07:15.080 --> 00:07:17.150 align:start position:0%
+second which is generate images speaking
+of<00:07:15.360><c> the</c><00:07:15.520><c> release</c><00:07:15.960><c> though</c><00:07:16.199><c> people</c><00:07:16.440><c> in</c><00:07:16.599><c> the</c><00:07:16.759><c> UK</c>
+
+00:07:17.150 --> 00:07:17.160 align:start position:0%
+of the release though people in the UK
+ 
+
+00:07:17.160 --> 00:07:20.070 align:start position:0%
+of the release though people in the UK
+and<00:07:17.400><c> EU</c><00:07:18.039><c> like</c><00:07:18.319><c> me</c><00:07:18.840><c> aren't</c><00:07:19.240><c> even</c><00:07:19.560><c> getting</c>
+
+00:07:20.070 --> 00:07:20.080 align:start position:0%
+and EU like me aren't even getting
+ 
+
+00:07:20.080 --> 00:07:22.189 align:start position:0%
+and EU like me aren't even getting
+Google<00:07:20.400><c> Gemini</c><00:07:20.879><c> on</c><00:07:21.080><c> launch</c><00:07:21.680><c> apparently</c><00:07:22.039><c> it's</c>
+
+00:07:22.189 --> 00:07:22.199 align:start position:0%
+Google Gemini on launch apparently it's
+ 
+
+00:07:22.199 --> 00:07:24.909 align:start position:0%
+Google Gemini on launch apparently it's
+about<00:07:22.479><c> regulations</c><00:07:23.440><c> so</c><00:07:23.840><c> time</c><00:07:24.080><c> will</c><00:07:24.280><c> tell</c><00:07:24.800><c> this</c>
+
+00:07:24.909 --> 00:07:24.919 align:start position:0%
+about regulations so time will tell this
+ 
+
+00:07:24.919 --> 00:07:27.029 align:start position:0%
+about regulations so time will tell this
+is<00:07:25.080><c> the</c><00:07:25.280><c> kind</c><00:07:25.440><c> of</c><00:07:25.720><c> interactive</c><00:07:26.400><c> UI</c><00:07:26.800><c> that</c><00:07:26.919><c> I</c>
+
+00:07:27.029 --> 00:07:27.039 align:start position:0%
+is the kind of interactive UI that I
+ 
+
+00:07:27.039 --> 00:07:29.869 align:start position:0%
+is the kind of interactive UI that I
+mean<00:07:27.599><c> and</c><00:07:27.759><c> it</c><00:07:27.960><c> does</c><00:07:28.240><c> look</c><00:07:28.560><c> good</c><00:07:29.479><c> clicking</c><00:07:29.759><c> on</c>
+
+00:07:29.869 --> 00:07:29.879 align:start position:0%
+mean and it does look good clicking on
+ 
+
+00:07:29.879 --> 00:07:31.950 align:start position:0%
+mean and it does look good clicking on
+the<00:07:30.039><c> interface</c><00:07:30.720><c> regenerates</c><00:07:31.360><c> the</c><00:07:31.479><c> data</c><00:07:31.720><c> to</c><00:07:31.840><c> be</c>
+
+00:07:31.950 --> 00:07:31.960 align:start position:0%
+the interface regenerates the data to be
+ 
+
+00:07:31.960 --> 00:07:34.270 align:start position:0%
+the interface regenerates the data to be
+rendered<00:07:32.400><c> by</c><00:07:32.520><c> the</c><00:07:32.599><c> code</c><00:07:32.840><c> at</c><00:07:33.080><c> Route</c><00:07:33.840><c> oh</c><00:07:34.080><c> I</c><00:07:34.160><c> know</c>
+
+00:07:34.270 --> 00:07:34.280 align:start position:0%
+rendered by the code at Route oh I know
+ 
+
+00:07:34.280 --> 00:07:37.110 align:start position:0%
+rendered by the code at Route oh I know
+she<00:07:34.400><c> likes</c><00:07:35.080><c> cupcakes</c><00:07:36.080><c> I</c><00:07:36.199><c> can</c><00:07:36.400><c> now</c><00:07:36.680><c> click</c><00:07:36.919><c> on</c>
+
+00:07:37.110 --> 00:07:37.120 align:start position:0%
+she likes cupcakes I can now click on
+ 
+
+00:07:37.120 --> 00:07:39.029 align:start position:0%
+she likes cupcakes I can now click on
+anything<00:07:37.520><c> in</c><00:07:37.639><c> the</c><00:07:37.800><c> interface</c><00:07:38.280><c> and</c><00:07:38.479><c> ask</c><00:07:38.680><c> it</c><00:07:38.840><c> for</c>
+
+00:07:39.029 --> 00:07:39.039 align:start position:0%
+anything in the interface and ask it for
+ 
+
+00:07:39.039 --> 00:07:42.869 align:start position:0%
+anything in the interface and ask it for
+more<00:07:39.319><c> information</c><00:07:40.319><c> I</c><00:07:40.440><c> could</c><00:07:40.639><c> say</c><00:07:41.879><c> stepbystep</c>
+
+00:07:42.869 --> 00:07:42.879 align:start position:0%
+more information I could say stepbystep
+ 
+
+00:07:42.879 --> 00:07:45.710 align:start position:0%
+more information I could say stepbystep
+instructions<00:07:43.720><c> on</c><00:07:44.000><c> how</c><00:07:44.159><c> to</c><00:07:44.360><c> bake</c><00:07:44.720><c> this</c><00:07:45.520><c> and</c><00:07:45.639><c> it</c>
+
+00:07:45.710 --> 00:07:45.720 align:start position:0%
+instructions on how to bake this and it
+ 
+
+00:07:45.720 --> 00:07:48.270 align:start position:0%
+instructions on how to bake this and it
+starts<00:07:46.000><c> to</c><00:07:46.120><c> generate</c><00:07:46.440><c> a</c><00:07:46.520><c> new</c><00:07:46.720><c> UI</c><00:07:47.680><c> this</c><00:07:47.840><c> time</c><00:07:48.159><c> it</c>
+
+00:07:48.270 --> 00:07:48.280 align:start position:0%
+starts to generate a new UI this time it
+ 
+
+00:07:48.280 --> 00:07:50.790 align:start position:0%
+starts to generate a new UI this time it
+designs<00:07:48.639><c> an</c><00:07:48.800><c> UI</c><00:07:49.520><c> best</c><00:07:49.759><c> suited</c><00:07:50.199><c> for</c><00:07:50.440><c> giving</c><00:07:50.639><c> me</c>
+
+00:07:50.790 --> 00:07:50.800 align:start position:0%
+designs an UI best suited for giving me
+ 
+
+00:07:50.800 --> 00:07:53.510 align:start position:0%
+designs an UI best suited for giving me
+step-by-step<00:07:51.599><c> instructions</c><00:07:52.599><c> but</c><00:07:52.840><c> now</c><00:07:53.159><c> time</c>
+
+00:07:53.510 --> 00:07:53.520 align:start position:0%
+step-by-step instructions but now time
+ 
+
+00:07:53.520 --> 00:07:55.230 align:start position:0%
+step-by-step instructions but now time
+for<00:07:53.840><c> some</c><00:07:54.039><c> of</c><00:07:54.159><c> the</c><00:07:54.360><c> highlights</c><00:07:54.919><c> and</c><00:07:55.039><c> I'm</c><00:07:55.120><c> going</c>
+
+00:07:55.230 --> 00:07:55.240 align:start position:0%
+for some of the highlights and I'm going
+ 
+
+00:07:55.240 --> 00:07:57.430 align:start position:0%
+for some of the highlights and I'm going
+to<00:07:55.479><c> start</c><00:07:55.840><c> with</c><00:07:56.039><c> the</c><00:07:56.159><c> one</c><00:07:56.520><c> that</c><00:07:56.680><c> I</c><00:07:56.800><c> was</c><00:07:57.120><c> most</c>
+
+00:07:57.430 --> 00:07:57.440 align:start position:0%
+to start with the one that I was most
+ 
+
+00:07:57.440 --> 00:08:00.110 align:start position:0%
+to start with the one that I was most
+impressed<00:07:58.080><c> by</c><00:07:59.080><c> because</c><00:07:59.280><c> because</c><00:07:59.440><c> of</c><00:07:59.560><c> Gemini's</c>
+
+00:08:00.110 --> 00:08:00.120 align:start position:0%
+impressed by because because of Gemini's
+ 
+
+00:08:00.120 --> 00:08:02.510 align:start position:0%
+impressed by because because of Gemini's
+ability<00:08:00.479><c> to</c><00:08:00.960><c> understand</c><00:08:01.120><c> Nuance</c><00:08:01.639><c> information</c>
+
+00:08:02.510 --> 00:08:02.520 align:start position:0%
+ability to understand Nuance information
+ 
+
+00:08:02.520 --> 00:08:04.149 align:start position:0%
+ability to understand Nuance information
+and<00:08:02.759><c> answer</c><00:08:03.120><c> questions</c><00:08:03.560><c> relating</c><00:08:03.919><c> to</c>
+
+00:08:04.149 --> 00:08:04.159 align:start position:0%
+and answer questions relating to
+ 
+
+00:08:04.159 --> 00:08:06.230 align:start position:0%
+and answer questions relating to
+complicated<00:08:04.840><c> topics</c><00:08:05.560><c> it</c><00:08:05.680><c> can</c><00:08:05.840><c> give</c><00:08:06.000><c> you</c><00:08:06.080><c> a</c>
+
+00:08:06.230 --> 00:08:06.240 align:start position:0%
+complicated topics it can give you a
+ 
+
+00:08:06.240 --> 00:08:08.029 align:start position:0%
+complicated topics it can give you a
+customized<00:08:06.840><c> explanation</c><00:08:07.479><c> of</c><00:08:07.599><c> the</c><00:08:07.759><c> subject</c>
+
+00:08:08.029 --> 00:08:08.039 align:start position:0%
+customized explanation of the subject
+ 
+
+00:08:08.039 --> 00:08:10.950 align:start position:0%
+customized explanation of the subject
+you're<00:08:08.240><c> trying</c><00:08:08.479><c> to</c><00:08:08.720><c> learn</c><00:08:09.720><c> and</c><00:08:09.919><c> lastly</c><00:08:10.720><c> if</c><00:08:10.840><c> you</c>
+
+00:08:10.950 --> 00:08:10.960 align:start position:0%
+you're trying to learn and lastly if you
+ 
+
+00:08:10.960 --> 00:08:16.510 align:start position:0%
+you're trying to learn and lastly if you
+want<00:08:11.159><c> to</c><00:08:11.319><c> learn</c><00:08:11.639><c> more</c><00:08:12.000><c> you</c><00:08:12.080><c> can</c><00:08:12.280><c> just</c>
+
+00:08:16.510 --> 00:08:16.520 align:start position:0%
+ 
+ 
+
+00:08:16.520 --> 00:08:19.270 align:start position:0%
+ 
+ask<00:08:17.520><c> Gemini</c><00:08:18.039><c> will</c><00:08:18.280><c> provide</c><00:08:18.639><c> personalized</c>
+
+00:08:19.270 --> 00:08:19.280 align:start position:0%
+ask Gemini will provide personalized
+ 
+
+00:08:19.280 --> 00:08:22.110 align:start position:0%
+ask Gemini will provide personalized
+practice<00:08:19.800><c> problems</c><00:08:20.599><c> based</c><00:08:20.840><c> on</c>
+
+00:08:22.110 --> 00:08:22.120 align:start position:0%
+practice problems based on
+ 
+
+00:08:22.120 --> 00:08:24.550 align:start position:0%
+practice problems based on
+mistakes<00:08:23.120><c> here</c><00:08:23.319><c> I</c><00:08:23.479><c> have</c><00:08:23.599><c> a</c><00:08:23.720><c> similar</c><00:08:24.199><c> problem</c>
+
+00:08:24.550 --> 00:08:24.560 align:start position:0%
+mistakes here I have a similar problem
+ 
+
+00:08:24.560 --> 00:08:26.790 align:start position:0%
+mistakes here I have a similar problem
+where<00:08:24.720><c> I</c><00:08:24.840><c> have</c><00:08:24.960><c> to</c><00:08:25.120><c> figure</c><00:08:25.360><c> out</c><00:08:25.520><c> the</c><00:08:25.680><c> cat</c><00:08:26.000><c> speed</c>
+
+00:08:26.790 --> 00:08:26.800 align:start position:0%
+where I have to figure out the cat speed
+ 
+
+00:08:26.800 --> 00:08:28.230 align:start position:0%
+where I have to figure out the cat speed
+the<00:08:26.919><c> height</c><00:08:27.080><c> of</c><00:08:27.159><c> the</c><00:08:27.280><c> r</c><00:08:27.560><c> is</c>
+
+00:08:28.230 --> 00:08:28.240 align:start position:0%
+the height of the r is
+ 
+
+00:08:28.240 --> 00:08:30.909 align:start position:0%
+the height of the r is
+double
+
+00:08:30.909 --> 00:08:30.919 align:start position:0%
+double
+ 
+
+00:08:30.919 --> 00:08:32.990 align:start position:0%
+double
+oh<00:08:31.159><c> yeah</c><00:08:31.440><c> I</c><00:08:31.520><c> knew</c><00:08:31.840><c> that</c><00:08:32.159><c> now</c><00:08:32.279><c> I'm</c><00:08:32.440><c> not</c><00:08:32.640><c> naive</c>
+
+00:08:32.990 --> 00:08:33.000 align:start position:0%
+oh yeah I knew that now I'm not naive
+ 
+
+00:08:33.000 --> 00:08:35.350 align:start position:0%
+oh yeah I knew that now I'm not naive
+enough<00:08:33.200><c> to</c><00:08:33.399><c> think</c><00:08:33.760><c> that</c><00:08:34.000><c> Google</c><00:08:34.360><c> Gemini</c><00:08:34.880><c> won't</c>
+
+00:08:35.350 --> 00:08:35.360 align:start position:0%
+enough to think that Google Gemini won't
+ 
+
+00:08:35.360 --> 00:08:37.310 align:start position:0%
+enough to think that Google Gemini won't
+sometimes<00:08:35.719><c> hallucinate</c><00:08:36.320><c> answers</c><00:08:36.880><c> but</c><00:08:37.080><c> this</c>
+
+00:08:37.310 --> 00:08:37.320 align:start position:0%
+sometimes hallucinate answers but this
+ 
+
+00:08:37.320 --> 00:08:40.269 align:start position:0%
+sometimes hallucinate answers but this
+format<00:08:37.800><c> of</c><00:08:38.039><c> providing</c><00:08:38.519><c> follow-up</c><00:08:39.279><c> questions</c>
+
+00:08:40.269 --> 00:08:40.279 align:start position:0%
+format of providing follow-up questions
+ 
+
+00:08:40.279 --> 00:08:41.990 align:start position:0%
+format of providing follow-up questions
+understanding<00:08:40.599><c> messy</c><00:08:41.000><c> handwriting</c><00:08:41.800><c> and</c>
+
+00:08:41.990 --> 00:08:42.000 align:start position:0%
+understanding messy handwriting and
+ 
+
+00:08:42.000 --> 00:08:44.590 align:start position:0%
+understanding messy handwriting and
+tying<00:08:42.440><c> all</c><00:08:42.760><c> together</c><00:08:43.320><c> is</c><00:08:43.680><c> pretty</c><00:08:44.039><c> impressive</c>
+
+00:08:44.590 --> 00:08:44.600 align:start position:0%
+tying all together is pretty impressive
+ 
+
+00:08:44.600 --> 00:08:45.910 align:start position:0%
+tying all together is pretty impressive
+the<00:08:44.760><c> paper</c><00:08:45.000><c> makes</c><00:08:45.240><c> a</c><00:08:45.360><c> great</c><00:08:45.560><c> point</c><00:08:45.800><c> that</c>
+
+00:08:45.910 --> 00:08:45.920 align:start position:0%
+the paper makes a great point that
+ 
+
+00:08:45.920 --> 00:08:47.389 align:start position:0%
+the paper makes a great point that
+because<00:08:46.120><c> it</c><00:08:46.240><c> was</c><00:08:46.360><c> trained</c><00:08:46.760><c> from</c><00:08:46.920><c> the</c><00:08:47.120><c> ground</c>
+
+00:08:47.389 --> 00:08:47.399 align:start position:0%
+because it was trained from the ground
+ 
+
+00:08:47.399 --> 00:08:49.389 align:start position:0%
+because it was trained from the ground
+up<00:08:47.600><c> to</c><00:08:47.720><c> be</c><00:08:47.839><c> multimodal</c><00:08:48.720><c> it</c><00:08:48.839><c> doesn't</c><00:08:49.160><c> take</c>
+
+00:08:49.389 --> 00:08:49.399 align:start position:0%
+up to be multimodal it doesn't take
+ 
+
+00:08:49.399 --> 00:08:51.430 align:start position:0%
+up to be multimodal it doesn't take
+audio<00:08:49.920><c> and</c><00:08:50.040><c> then</c><00:08:50.200><c> put</c><00:08:50.360><c> it</c><00:08:50.480><c> into</c><00:08:50.800><c> text</c><00:08:51.279><c> where</c>
+
+00:08:51.430 --> 00:08:51.440 align:start position:0%
+audio and then put it into text where
+ 
+
+00:08:51.440 --> 00:08:53.710 align:start position:0%
+audio and then put it into text where
+you<00:08:51.600><c> lose</c><00:08:51.959><c> some</c><00:08:52.200><c> Nuance</c><00:08:52.760><c> like</c><00:08:53.000><c> tone</c><00:08:53.519><c> for</c>
+
+00:08:53.710 --> 00:08:53.720 align:start position:0%
+you lose some Nuance like tone for
+ 
+
+00:08:53.720 --> 00:08:55.389 align:start position:0%
+you lose some Nuance like tone for
+languages<00:08:54.200><c> like</c><00:08:54.360><c> Mandarin</c><00:08:55.000><c> which</c><00:08:55.200><c> I've</c>
+
+00:08:55.389 --> 00:08:55.399 align:start position:0%
+languages like Mandarin which I've
+ 
+
+00:08:55.399 --> 00:08:58.030 align:start position:0%
+languages like Mandarin which I've
+studied<00:08:55.839><c> in</c><00:08:56.040><c> China</c><00:08:56.800><c> that's</c><00:08:57.080><c> super</c><00:08:57.399><c> important</c>
+
+00:08:58.030 --> 00:08:58.040 align:start position:0%
+studied in China that's super important
+ 
+
+00:08:58.040 --> 00:09:00.230 align:start position:0%
+studied in China that's super important
+as<00:08:58.240><c> this</c><00:08:58.440><c> demo</c><00:08:58.760><c> demonstrat</c><00:08:59.320><c> wres</c><00:08:59.680><c> how</c><00:08:59.800><c> to</c>
+
+00:09:00.230 --> 00:09:00.240 align:start position:0%
+as this demo demonstrat wres how to
+ 
+
+00:09:00.240 --> 00:09:02.829 align:start position:0%
+as this demo demonstrat wres how to
+pronounce<00:09:00.839><c> the</c><00:09:01.000><c> word</c><00:09:01.440><c> Luna</c><00:09:01.880><c> January</c><00:09:02.519><c> in</c>
+
+00:09:02.829 --> 00:09:02.839 align:start position:0%
+pronounce the word Luna January in
+ 
+
+00:09:02.839 --> 00:09:08.550 align:start position:0%
+pronounce the word Luna January in
+Chinese<00:09:03.839><c> option</c><00:09:04.240><c> A</c><00:09:05.200><c> J</c><00:09:06.200><c> option</c><00:09:06.600><c> b</c><00:09:07.399><c> Jung</c><00:09:08.399><c> which</c>
+
+00:09:08.550 --> 00:09:08.560 align:start position:0%
+Chinese option A J option b Jung which
+ 
+
+00:09:08.560 --> 00:09:10.550 align:start position:0%
+Chinese option A J option b Jung which
+one<00:09:08.720><c> is</c><00:09:08.920><c> correct</c><00:09:09.760><c> which</c><00:09:09.959><c> tongue</c><00:09:10.279><c> is</c><00:09:10.399><c> the</c>
+
+00:09:10.550 --> 00:09:10.560 align:start position:0%
+one is correct which tongue is the
+ 
+
+00:09:10.560 --> 00:09:12.670 align:start position:0%
+one is correct which tongue is the
+correct<00:09:10.839><c> tongue</c><00:09:11.120><c> for</c><00:09:11.320><c> the</c><00:09:11.519><c> first</c><00:09:11.880><c> character</c>
+
+00:09:12.670 --> 00:09:12.680 align:start position:0%
+correct tongue for the first character
+ 
+
+00:09:12.680 --> 00:09:14.829 align:start position:0%
+correct tongue for the first character
+option<00:09:13.000><c> A</c><00:09:13.720><c> the</c><00:09:13.880><c> first</c><00:09:14.200><c> character</c><00:09:14.640><c> is</c>
+
+00:09:14.829 --> 00:09:14.839 align:start position:0%
+option A the first character is
+ 
+
+00:09:14.839 --> 00:09:17.509 align:start position:0%
+option A the first character is
+pronounced<00:09:15.480><c> with</c><00:09:15.640><c> the</c><00:09:15.800><c> first</c><00:09:16.160><c> tone</c><00:09:17.040><c> Gemini</c>
+
+00:09:17.509 --> 00:09:17.519 align:start position:0%
+pronounced with the first tone Gemini
+ 
+
+00:09:17.519 --> 00:09:19.310 align:start position:0%
+pronounced with the first tone Gemini
+was<00:09:17.680><c> able</c><00:09:17.920><c> to</c><00:09:18.200><c> differentiate</c><00:09:18.839><c> the</c><00:09:18.959><c> two</c><00:09:19.120><c> ways</c>
+
+00:09:19.310 --> 00:09:19.320 align:start position:0%
+was able to differentiate the two ways
+ 
+
+00:09:19.320 --> 00:09:21.190 align:start position:0%
+was able to differentiate the two ways
+of<00:09:19.519><c> pronouncing</c><00:09:20.000><c> the</c><00:09:20.120><c> word</c><00:09:20.560><c> to</c><00:09:20.720><c> make</c><00:09:20.880><c> sure</c><00:09:21.079><c> it</c>
+
+00:09:21.190 --> 00:09:21.200 align:start position:0%
+of pronouncing the word to make sure it
+ 
+
+00:09:21.200 --> 00:09:23.310 align:start position:0%
+of pronouncing the word to make sure it
+was<00:09:21.399><c> correct</c><00:09:22.000><c> and</c><00:09:22.160><c> speaking</c><00:09:22.480><c> of</c><00:09:22.680><c> video</c>
+
+00:09:23.310 --> 00:09:23.320 align:start position:0%
+was correct and speaking of video
+ 
+
+00:09:23.320 --> 00:09:24.870 align:start position:0%
+was correct and speaking of video
+understanding<00:09:23.680><c> these</c><00:09:23.839><c> two</c><00:09:24.040><c> demos</c><00:09:24.480><c> weren't</c>
+
+00:09:24.870 --> 00:09:24.880 align:start position:0%
+understanding these two demos weren't
+ 
+
+00:09:24.880 --> 00:09:26.910 align:start position:0%
+understanding these two demos weren't
+bad
+
+00:09:26.910 --> 00:09:26.920 align:start position:0%
+bad
+ 
+
+00:09:26.920 --> 00:09:29.190 align:start position:0%
+bad
+either<00:09:27.920><c> you</c><00:09:28.040><c> were</c><00:09:28.200><c> trying</c><00:09:28.480><c> to</c><00:09:28.640><c> get</c><00:09:28.760><c> me</c><00:09:28.839><c> to</c><00:09:28.959><c> find</c>
+
+00:09:29.190 --> 00:09:29.200 align:start position:0%
+either you were trying to get me to find
+ 
+
+00:09:29.200 --> 00:09:31.150 align:start position:0%
+either you were trying to get me to find
+find<00:09:29.360><c> the</c><00:09:29.440><c> paper</c><00:09:29.680><c> ball</c><00:09:29.959><c> under</c><00:09:30.200><c> the</c><00:09:30.360><c> cup</c><00:09:30.959><c> I</c>
+
+00:09:31.150 --> 00:09:31.160 align:start position:0%
+find the paper ball under the cup I
+ 
+
+00:09:31.160 --> 00:09:34.230 align:start position:0%
+find the paper ball under the cup I
+accept<00:09:31.519><c> the</c>
+
+00:09:34.230 --> 00:09:34.240 align:start position:0%
+ 
+ 
+
+00:09:34.240 --> 00:09:37.030 align:start position:0%
+ 
+challenge<00:09:35.240><c> the</c><00:09:35.440><c> cup</c><00:09:35.680><c> to</c><00:09:35.839><c> the</c>
+
+00:09:37.030 --> 00:09:37.040 align:start position:0%
+challenge the cup to the
+ 
+
+00:09:37.040 --> 00:09:38.670 align:start position:0%
+challenge the cup to the
+left
+
+00:09:38.670 --> 00:09:38.680 align:start position:0%
+left
+ 
+
+00:09:38.680 --> 00:09:41.870 align:start position:0%
+left
+nice<00:09:39.680><c> what</c><00:09:39.920><c> movie</c><00:09:40.200><c> are</c><00:09:40.360><c> they</c><00:09:40.560><c> acting</c><00:09:40.839><c> out</c><00:09:41.160><c> here</c>
+
+00:09:41.870 --> 00:09:41.880 align:start position:0%
+nice what movie are they acting out here
+ 
+
+00:09:41.880 --> 00:09:43.389 align:start position:0%
+nice what movie are they acting out here
+I<00:09:41.959><c> think</c><00:09:42.160><c> they</c><00:09:42.279><c> are</c><00:09:42.480><c> acting</c><00:09:42.760><c> out</c><00:09:42.959><c> the</c><00:09:43.079><c> famous</c>
+
+00:09:43.389 --> 00:09:43.399 align:start position:0%
+I think they are acting out the famous
+ 
+
+00:09:43.399 --> 00:09:47.990 align:start position:0%
+I think they are acting out the famous
+bullet<00:09:43.800><c> time</c><00:09:44.000><c> scene</c><00:09:44.279><c> from</c><00:09:44.440><c> The</c><00:09:44.519><c> Matrix</c><00:09:45.279><c> ooh</c>
+
+00:09:47.990 --> 00:09:48.000 align:start position:0%
+ 
+ 
+
+00:09:48.000 --> 00:09:51.230 align:start position:0%
+ 
+nice<00:09:49.000><c> what</c><00:09:49.079><c> do</c><00:09:49.200><c> you</c><00:09:49.320><c> think</c><00:09:49.519><c> might</c><00:09:49.760><c> happen</c><00:09:50.240><c> next</c>
+
+00:09:51.230 --> 00:09:51.240 align:start position:0%
+nice what do you think might happen next
+ 
+
+00:09:51.240 --> 00:09:53.069 align:start position:0%
+nice what do you think might happen next
+the<00:09:51.440><c> cat</c><00:09:51.640><c> is</c><00:09:51.800><c> going</c><00:09:51.959><c> to</c><00:09:52.120><c> jump</c><00:09:52.320><c> to</c><00:09:52.480><c> the</c><00:09:52.600><c> wall</c><00:09:52.880><c> and</c>
+
+00:09:53.069 --> 00:09:53.079 align:start position:0%
+the cat is going to jump to the wall and
+ 
+
+00:09:53.079 --> 00:09:54.829 align:start position:0%
+the cat is going to jump to the wall and
+stick<00:09:53.360><c> The</c><00:09:53.480><c> Landing</c><00:09:54.079><c> it's</c><00:09:54.279><c> going</c><00:09:54.440><c> to</c><00:09:54.560><c> be</c><00:09:54.680><c> a</c>
+
+00:09:54.829 --> 00:09:54.839 align:start position:0%
+stick The Landing it's going to be a
+ 
+
+00:09:54.839 --> 00:09:56.590 align:start position:0%
+stick The Landing it's going to be a
+perfect
+
+00:09:56.590 --> 00:09:56.600 align:start position:0%
+perfect
+ 
+
+00:09:56.600 --> 00:09:59.630 align:start position:0%
+perfect
+10<00:09:57.600><c> oh</c><00:09:57.959><c> and</c><00:09:58.079><c> it's</c><00:09:58.200><c> a</c><00:09:58.399><c> miss</c><00:09:58.880><c> it</c><00:09:59.160><c> looks</c><00:09:59.399><c> like</c><00:09:59.519><c> it</c>
+
+00:09:59.630 --> 00:09:59.640 align:start position:0%
+10 oh and it's a miss it looks like it
+ 
+
+00:09:59.640 --> 00:10:01.790 align:start position:0%
+10 oh and it's a miss it looks like it
+was<00:09:59.880><c> just</c><00:10:00.040><c> a</c><00:10:00.160><c> little</c><00:10:00.360><c> too</c><00:10:00.600><c> far</c><00:10:00.839><c> away</c><00:10:01.399><c> but</c><00:10:01.560><c> don't</c>
+
+00:10:01.790 --> 00:10:01.800 align:start position:0%
+was just a little too far away but don't
+ 
+
+00:10:01.800 --> 00:10:03.829 align:start position:0%
+was just a little too far away but don't
+worry<00:10:02.360><c> the</c><00:10:02.519><c> cat</c><00:10:02.720><c> is</c><00:10:02.800><c> a</c><00:10:02.959><c> natural</c><00:10:03.399><c> athlete</c><00:10:03.760><c> and</c>
+
+00:10:03.829 --> 00:10:03.839 align:start position:0%
+worry the cat is a natural athlete and
+ 
+
+00:10:03.839 --> 00:10:06.069 align:start position:0%
+worry the cat is a natural athlete and
+it<00:10:03.959><c> will</c><00:10:04.079><c> be</c><00:10:04.279><c> back</c><00:10:04.440><c> up</c><00:10:04.640><c> there</c><00:10:04.800><c> in</c><00:10:04.959><c> no</c><00:10:05.240><c> time</c>
+
+00:10:06.069 --> 00:10:06.079 align:start position:0%
+it will be back up there in no time
+ 
+
+00:10:06.079 --> 00:10:07.870 align:start position:0%
+it will be back up there in no time
+going<00:10:06.320><c> back</c><00:10:06.480><c> to</c><00:10:06.720><c> languages</c><00:10:07.200><c> for</c><00:10:07.320><c> a</c><00:10:07.440><c> second</c><00:10:07.720><c> we</c>
+
+00:10:07.870 --> 00:10:07.880 align:start position:0%
+going back to languages for a second we
+ 
+
+00:10:07.880 --> 00:10:09.710 align:start position:0%
+going back to languages for a second we
+see<00:10:08.120><c> from</c><00:10:08.399><c> this</c><00:10:08.600><c> machine</c><00:10:09.079><c> translation</c>
+
+00:10:09.710 --> 00:10:09.720 align:start position:0%
+see from this machine translation
+ 
+
+00:10:09.720 --> 00:10:11.069 align:start position:0%
+see from this machine translation
+Benchmark<00:10:10.360><c> which</c><00:10:10.519><c> couldn't</c><00:10:10.760><c> have</c><00:10:10.880><c> been</c><00:10:11.000><c> in</c>
+
+00:10:11.069 --> 00:10:11.079 align:start position:0%
+Benchmark which couldn't have been in
+ 
+
+00:10:11.079 --> 00:10:13.269 align:start position:0%
+Benchmark which couldn't have been in
+the<00:10:11.200><c> training</c><00:10:11.519><c> data</c><00:10:11.880><c> by</c><00:10:12.000><c> the</c><00:10:12.120><c> way</c><00:10:12.560><c> that</c><00:10:12.839><c> Gemini</c>
+
+00:10:13.269 --> 00:10:13.279 align:start position:0%
+the training data by the way that Gemini
+ 
+
+00:10:13.279 --> 00:10:16.470 align:start position:0%
+the training data by the way that Gemini
+Ultra<00:10:14.000><c> beat</c><00:10:14.640><c> Palm</c><00:10:15.079><c> to</c><00:10:15.399><c> large</c><00:10:15.959><c> but</c><00:10:16.160><c> why</c><00:10:16.320><c> is</c>
+
+00:10:16.470 --> 00:10:16.480 align:start position:0%
+Ultra beat Palm to large but why is
+ 
+
+00:10:16.480 --> 00:10:19.150 align:start position:0%
+Ultra beat Palm to large but why is
+beating<00:10:17.000><c> Palm</c><00:10:17.320><c> to</c><00:10:17.680><c> large</c><00:10:18.160><c> so</c><00:10:18.440><c> significant</c>
+
+00:10:19.150 --> 00:10:19.160 align:start position:0%
+beating Palm to large so significant
+ 
+
+00:10:19.160 --> 00:10:20.870 align:start position:0%
+beating Palm to large so significant
+well<00:10:19.360><c> I</c><00:10:19.480><c> covered</c><00:10:19.839><c> this</c><00:10:19.959><c> at</c><00:10:20.079><c> the</c><00:10:20.279><c> time</c><00:10:20.560><c> but</c><00:10:20.720><c> in</c>
+
+00:10:20.870 --> 00:10:20.880 align:start position:0%
+well I covered this at the time but in
+ 
+
+00:10:20.880 --> 00:10:23.630 align:start position:0%
+well I covered this at the time but in
+certain<00:10:21.200><c> settings</c><00:10:21.880><c> we</c><00:10:22.079><c> observe</c><00:10:22.560><c> that</c><00:10:22.760><c> Palm</c><00:10:23.120><c> 2</c>
+
+00:10:23.630 --> 00:10:23.640 align:start position:0%
+certain settings we observe that Palm 2
+ 
+
+00:10:23.640 --> 00:10:25.990 align:start position:0%
+certain settings we observe that Palm 2
+improves<00:10:24.240><c> quality</c><00:10:24.880><c> both</c><00:10:25.079><c> over</c><00:10:25.399><c> palm</c><00:10:25.760><c> and</c>
+
+00:10:25.990 --> 00:10:26.000 align:start position:0%
+improves quality both over palm and
+ 
+
+00:10:26.000 --> 00:10:28.350 align:start position:0%
+improves quality both over palm and
+Google<00:10:26.360><c> translate</c><00:10:26.959><c> and</c><00:10:27.120><c> Gemini</c><00:10:27.519><c> Ultra</c><00:10:28.040><c> is</c><00:10:28.160><c> an</c>
+
+00:10:28.350 --> 00:10:28.360 align:start position:0%
+Google translate and Gemini Ultra is an
+ 
+
+00:10:28.360 --> 00:10:31.470 align:start position:0%
+Google translate and Gemini Ultra is an
+improvement<00:10:29.160><c> on</c><00:10:29.640><c> Palm</c><00:10:29.959><c> to</c><00:10:30.279><c> large</c><00:10:30.760><c> so</c><00:10:31.000><c> expect</c>
+
+00:10:31.470 --> 00:10:31.480 align:start position:0%
+improvement on Palm to large so expect
+ 
+
+00:10:31.480 --> 00:10:33.750 align:start position:0%
+improvement on Palm to large so expect
+the<00:10:31.640><c> multilingual</c><00:10:32.399><c> performance</c><00:10:32.920><c> to</c><00:10:33.079><c> be</c><00:10:33.480><c> next</c>
+
+00:10:33.750 --> 00:10:33.760 align:start position:0%
+the multilingual performance to be next
+ 
+
+00:10:33.760 --> 00:10:36.150 align:start position:0%
+the multilingual performance to be next
+level<00:10:34.320><c> now</c><00:10:34.519><c> what</c><00:10:34.640><c> about</c><00:10:34.920><c> coding</c><00:10:35.519><c> well</c><00:10:35.800><c> here's</c>
+
+00:10:36.150 --> 00:10:36.160 align:start position:0%
+level now what about coding well here's
+ 
+
+00:10:36.160 --> 00:10:39.310 align:start position:0%
+level now what about coding well here's
+where<00:10:36.560><c> it's</c><00:10:36.839><c> a</c><00:10:37.200><c> draw</c><00:10:37.639><c> in</c><00:10:37.839><c> some</c><00:10:38.120><c> ways</c><00:10:38.720><c> and</c><00:10:39.000><c> a</c>
+
+00:10:39.310 --> 00:10:39.320 align:start position:0%
+where it's a draw in some ways and a
+ 
+
+00:10:39.320 --> 00:10:41.990 align:start position:0%
+where it's a draw in some ways and a
+massive<00:10:39.720><c> win</c><00:10:40.399><c> for</c><00:10:40.720><c> Gemini</c><00:10:41.120><c> Ultra</c><00:10:41.600><c> in</c><00:10:41.760><c> other</c>
+
+00:10:41.990 --> 00:10:42.000 align:start position:0%
+massive win for Gemini Ultra in other
+ 
+
+00:10:42.000 --> 00:10:45.550 align:start position:0%
+massive win for Gemini Ultra in other
+ways<00:10:42.440><c> natural</c><00:10:42.880><c> 2</c><00:10:43.240><c> code</c><00:10:43.880><c> was</c><00:10:44.200><c> a</c><00:10:44.440><c> heldout</c><00:10:45.240><c> data</c>
+
+00:10:45.550 --> 00:10:45.560 align:start position:0%
+ways natural 2 code was a heldout data
+ 
+
+00:10:45.560 --> 00:10:48.150 align:start position:0%
+ways natural 2 code was a heldout data
+set<00:10:45.920><c> with</c><00:10:46.120><c> no</c><00:10:46.360><c> leakage</c><00:10:46.839><c> on</c><00:10:47.079><c> the</c><00:10:47.320><c> web</c><00:10:47.639><c> so</c><00:10:47.800><c> a</c>
+
+00:10:48.150 --> 00:10:48.160 align:start position:0%
+set with no leakage on the web so a
+ 
+
+00:10:48.160 --> 00:10:50.829 align:start position:0%
+set with no leakage on the web so a
+really<00:10:48.560><c> good</c><00:10:48.920><c> Benchmark</c><00:10:49.480><c> to</c><00:10:49.680><c> use</c><00:10:50.160><c> and</c><00:10:50.360><c> Gemini</c>
+
+00:10:50.829 --> 00:10:50.839 align:start position:0%
+really good Benchmark to use and Gemini
+ 
+
+00:10:50.839 --> 00:10:53.910 align:start position:0%
+really good Benchmark to use and Gemini
+Ultra<00:10:51.399><c> beats</c><00:10:51.760><c> gp4</c><00:10:52.600><c> Gemini</c><00:10:53.079><c> Pro</c><00:10:53.360><c> by</c><00:10:53.480><c> the</c><00:10:53.600><c> way</c>
+
+00:10:53.910 --> 00:10:53.920 align:start position:0%
+Ultra beats gp4 Gemini Pro by the way
+ 
+
+00:10:53.920 --> 00:10:57.389 align:start position:0%
+Ultra beats gp4 Gemini Pro by the way
+beats<00:10:54.320><c> GPT</c><00:10:54.839><c> 3.5</c><00:10:55.839><c> but</c><00:10:56.079><c> yes</c><00:10:56.360><c> the</c><00:10:56.560><c> results</c><00:10:57.079><c> are</c>
+
+00:10:57.389 --> 00:10:57.399 align:start position:0%
+beats GPT 3.5 but yes the results are
+ 
+
+00:10:57.399 --> 00:11:00.509 align:start position:0%
+beats GPT 3.5 but yes the results are
+fairly<00:10:57.800><c> close</c><00:10:58.320><c> a</c><00:10:58.519><c> 1%</c><00:10:59.000><c> %</c><00:10:59.320><c> Point</c><00:10:59.680><c> difference</c><00:11:00.320><c> the</c>
+
+00:11:00.509 --> 00:11:00.519 align:start position:0%
+fairly close a 1% % Point difference the
+ 
+
+00:11:00.519 --> 00:11:02.389 align:start position:0%
+fairly close a 1% % Point difference the
+craziness<00:11:01.160><c> though</c><00:11:01.440><c> comes</c><00:11:01.680><c> from</c><00:11:01.880><c> the</c><00:11:02.040><c> alpha</c>
+
+00:11:02.389 --> 00:11:02.399 align:start position:0%
+craziness though comes from the alpha
+ 
+
+00:11:02.399 --> 00:11:04.470 align:start position:0%
+craziness though comes from the alpha
+code<00:11:02.639><c> 2</c><00:11:03.000><c> technical</c><00:11:03.440><c> report</c><00:11:03.920><c> this</c><00:11:04.040><c> was</c><00:11:04.240><c> also</c>
+
+00:11:04.470 --> 00:11:04.480 align:start position:0%
+code 2 technical report this was also
+ 
+
+00:11:04.480 --> 00:11:06.910 align:start position:0%
+code 2 technical report this was also
+released<00:11:04.959><c> 3</c><00:11:05.160><c> to</c><00:11:05.320><c> 4</c><00:11:05.519><c> hours</c><00:11:05.800><c> ago</c><00:11:06.200><c> now</c><00:11:06.360><c> Alpha</c><00:11:06.720><c> code</c>
+
+00:11:06.910 --> 00:11:06.920 align:start position:0%
+released 3 to 4 hours ago now Alpha code
+ 
+
+00:11:06.920 --> 00:11:09.590 align:start position:0%
+released 3 to 4 hours ago now Alpha code
+2<00:11:07.399><c> is</c><00:11:07.680><c> based</c><00:11:07.959><c> on</c><00:11:08.160><c> Gemini</c><00:11:08.600><c> Gemini</c><00:11:09.000><c> Pro</c><00:11:09.320><c> actually</c>
+
+00:11:09.590 --> 00:11:09.600 align:start position:0%
+2 is based on Gemini Gemini Pro actually
+ 
+
+00:11:09.600 --> 00:11:12.030 align:start position:0%
+2 is based on Gemini Gemini Pro actually
+not<00:11:09.800><c> Gemini</c><00:11:10.200><c> Ultra</c><00:11:10.800><c> and</c><00:11:10.920><c> it</c><00:11:11.040><c> achieves</c><00:11:11.560><c> truly</c>
+
+00:11:12.030 --> 00:11:12.040 align:start position:0%
+not Gemini Ultra and it achieves truly
+ 
+
+00:11:12.040 --> 00:11:13.910 align:start position:0%
+not Gemini Ultra and it achieves truly
+outstanding<00:11:12.800><c> things</c><00:11:13.279><c> that's</c><00:11:13.440><c> not</c><00:11:13.560><c> to</c><00:11:13.680><c> say</c><00:11:13.839><c> it</c>
+
+00:11:13.910 --> 00:11:13.920 align:start position:0%
+outstanding things that's not to say it
+ 
+
+00:11:13.920 --> 00:11:16.069 align:start position:0%
+outstanding things that's not to say it
+will<00:11:14.040><c> be</c><00:11:14.240><c> available</c><00:11:14.639><c> to</c><00:11:14.839><c> you</c><00:11:15.279><c> anytime</c><00:11:15.680><c> soon</c>
+
+00:11:16.069 --> 00:11:16.079 align:start position:0%
+will be available to you anytime soon
+ 
+
+00:11:16.079 --> 00:11:18.030 align:start position:0%
+will be available to you anytime soon
+it's<00:11:16.320><c> very</c><00:11:16.639><c> compute</c><00:11:17.040><c> intensive</c><00:11:17.600><c> but</c><00:11:17.720><c> it</c><00:11:17.839><c> does</c>
+
+00:11:18.030 --> 00:11:18.040 align:start position:0%
+it's very compute intensive but it does
+ 
+
+00:11:18.040 --> 00:11:20.230 align:start position:0%
+it's very compute intensive but it does
+show<00:11:18.360><c> what</c><00:11:18.480><c> is</c><00:11:18.639><c> coming</c><00:11:19.000><c> to</c><00:11:19.240><c> the</c><00:11:19.399><c> automation</c><00:11:20.079><c> of</c>
+
+00:11:20.230 --> 00:11:20.240 align:start position:0%
+show what is coming to the automation of
+ 
+
+00:11:20.240 --> 00:11:22.350 align:start position:0%
+show what is coming to the automation of
+coding<00:11:20.760><c> I'll</c><00:11:20.959><c> try</c><00:11:21.200><c> to</c><00:11:21.480><c> get</c><00:11:21.639><c> to</c><00:11:22.000><c> as</c><00:11:22.160><c> many</c>
+
+00:11:22.350 --> 00:11:22.360 align:start position:0%
+coding I'll try to get to as many
+ 
+
+00:11:22.360 --> 00:11:24.509 align:start position:0%
+coding I'll try to get to as many
+details<00:11:22.760><c> as</c><00:11:22.880><c> I</c><00:11:23.120><c> can</c><00:11:23.519><c> yes</c><00:11:23.760><c> I</c><00:11:23.880><c> have</c><00:11:24.040><c> read</c><00:11:24.320><c> this</c>
+
+00:11:24.509 --> 00:11:24.519 align:start position:0%
+details as I can yes I have read this
+ 
+
+00:11:24.519 --> 00:11:26.949 align:start position:0%
+details as I can yes I have read this
+report<00:11:24.800><c> in</c><00:11:24.959><c> full</c><00:11:25.240><c> too</c><00:11:25.680><c> Alpha</c><00:11:26.000><c> code</c><00:11:26.200><c> 2</c><00:11:26.519><c> based</c><00:11:26.800><c> on</c>
+
+00:11:26.949 --> 00:11:26.959 align:start position:0%
+report in full too Alpha code 2 based on
+ 
+
+00:11:26.959 --> 00:11:29.550 align:start position:0%
+report in full too Alpha code 2 based on
+Gemini<00:11:27.440><c> Pro</c><00:11:27.959><c> was</c><00:11:28.160><c> evaluated</c><00:11:28.720><c> on</c><00:11:29.120><c> the</c><00:11:29.279><c> code</c>
+
+00:11:29.550 --> 00:11:29.560 align:start position:0%
+Gemini Pro was evaluated on the code
+ 
+
+00:11:29.560 --> 00:11:32.509 align:start position:0%
+Gemini Pro was evaluated on the code
+forces<00:11:30.040><c> platform</c><00:11:30.519><c> GPT</c><00:11:30.920><c> 4</c><00:11:31.399><c> could</c><00:11:31.560><c> solve</c><00:11:32.120><c> zero</c>
+
+00:11:32.509 --> 00:11:32.519 align:start position:0%
+forces platform GPT 4 could solve zero
+ 
+
+00:11:32.519 --> 00:11:34.949 align:start position:0%
+forces platform GPT 4 could solve zero
+out<00:11:32.680><c> of</c><00:11:32.880><c> 10</c><00:11:33.320><c> of</c><00:11:33.480><c> the</c><00:11:33.720><c> easiest</c><00:11:34.240><c> problems</c><00:11:34.760><c> when</c>
+
+00:11:34.949 --> 00:11:34.959 align:start position:0%
+out of 10 of the easiest problems when
+ 
+
+00:11:34.959 --> 00:11:37.430 align:start position:0%
+out of 10 of the easiest problems when
+they<00:11:35.120><c> were</c><00:11:35.519><c> recent</c><00:11:36.160><c> not</c><00:11:36.399><c> within</c><00:11:36.639><c> its</c><00:11:36.800><c> data</c><00:11:37.160><c> set</c>
+
+00:11:37.430 --> 00:11:37.440 align:start position:0%
+they were recent not within its data set
+ 
+
+00:11:37.440 --> 00:11:39.150 align:start position:0%
+they were recent not within its data set
+as<00:11:37.600><c> this</c><00:11:37.720><c> author</c><00:11:38.000><c> points</c><00:11:38.279><c> out</c><00:11:38.560><c> that</c><00:11:38.880><c> strongly</c>
+
+00:11:39.150 --> 00:11:39.160 align:start position:0%
+as this author points out that strongly
+ 
+
+00:11:39.160 --> 00:11:40.829 align:start position:0%
+as this author points out that strongly
+points<00:11:39.480><c> towards</c><00:11:39.800><c> contamination</c><00:11:40.560><c> because</c><00:11:40.720><c> it</c>
+
+00:11:40.829 --> 00:11:40.839 align:start position:0%
+points towards contamination because it
+ 
+
+00:11:40.839 --> 00:11:48.310 align:start position:0%
+points towards contamination because it
+could<00:11:41.000><c> solve</c><00:11:41.320><c> 10</c><00:11:41.519><c> out</c><00:11:41.680><c> of</c><00:11:41.800><c> 10</c><00:11:42.200><c> of</c><00:11:42.399><c> the</c>
+
+00:11:48.310 --> 00:11:48.320 align:start position:0%
+ 
+ 
+
+00:11:48.320 --> 00:11:51.509 align:start position:0%
+ 
+pre-2020<00:11:49.320><c> of</c><00:11:50.160><c> those</c><00:11:50.440><c> problems</c><00:11:50.959><c> within</c><00:11:51.279><c> 10</c>
+
+00:11:51.509 --> 00:11:51.519 align:start position:0%
+pre-2020 of those problems within 10
+ 
+
+00:11:51.519 --> 00:11:54.829 align:start position:0%
+pre-2020 of those problems within 10
+attempts<00:11:52.079><c> beating</c><00:11:52.800><c> 85%</c><00:11:53.800><c> of</c><00:11:54.120><c> competition</c>
+
+00:11:54.829 --> 00:11:54.839 align:start position:0%
+attempts beating 85% of competition
+ 
+
+00:11:54.839 --> 00:11:57.190 align:start position:0%
+attempts beating 85% of competition
+participants<00:11:55.680><c> now</c><00:11:55.880><c> Alpha</c><00:11:56.200><c> code</c><00:11:56.399><c> 2</c><00:11:56.720><c> isn't</c><00:11:57.000><c> just</c>
+
+00:11:57.190 --> 00:11:57.200 align:start position:0%
+participants now Alpha code 2 isn't just
+ 
+
+00:11:57.200 --> 00:11:59.310 align:start position:0%
+participants now Alpha code 2 isn't just
+one<00:11:57.440><c> model</c><00:11:57.839><c> it's</c><00:11:57.959><c> an</c><00:11:58.120><c> entire</c><00:11:58.560><c> system</c><00:11:59.160><c> they</c>
+
+00:11:59.310 --> 00:11:59.320 align:start position:0%
+one model it's an entire system they
+ 
+
+00:11:59.320 --> 00:12:02.069 align:start position:0%
+one model it's an entire system they
+basically<00:11:59.760><c> get</c><00:12:00.079><c> a</c><00:12:00.399><c> family</c><00:12:00.920><c> of</c><00:12:01.160><c> Gemini</c><00:12:01.560><c> models</c>
+
+00:12:02.069 --> 00:12:02.079 align:start position:0%
+basically get a family of Gemini models
+ 
+
+00:12:02.079 --> 00:12:04.110 align:start position:0%
+basically get a family of Gemini models
+by<00:12:02.240><c> tweaking</c><00:12:02.720><c> different</c><00:12:03.120><c> hyperparameters</c>
+
+00:12:04.110 --> 00:12:04.120 align:start position:0%
+by tweaking different hyperparameters
+ 
+
+00:12:04.120 --> 00:12:05.590 align:start position:0%
+by tweaking different hyperparameters
+think<00:12:04.279><c> of</c><00:12:04.399><c> it</c><00:12:04.560><c> as</c><00:12:04.760><c> different</c><00:12:05.000><c> flavors</c><00:12:05.440><c> of</c>
+
+00:12:05.590 --> 00:12:05.600 align:start position:0%
+think of it as different flavors of
+ 
+
+00:12:05.600 --> 00:12:07.629 align:start position:0%
+think of it as different flavors of
+Gemini<00:12:06.160><c> which</c><00:12:06.320><c> generate</c><00:12:06.800><c> code</c><00:12:07.079><c> samples</c><00:12:07.480><c> for</c>
+
+00:12:07.629 --> 00:12:07.639 align:start position:0%
+Gemini which generate code samples for
+ 
+
+00:12:07.639 --> 00:12:09.230 align:start position:0%
+Gemini which generate code samples for
+each<00:12:07.880><c> problem</c><00:12:08.320><c> it</c><00:12:08.399><c> was</c><00:12:08.560><c> important</c><00:12:08.920><c> to</c><00:12:09.079><c> have</c>
+
+00:12:09.230 --> 00:12:09.240 align:start position:0%
+each problem it was important to have
+ 
+
+00:12:09.240 --> 00:12:10.829 align:start position:0%
+each problem it was important to have
+those<00:12:09.399><c> different</c><00:12:09.639><c> flavors</c><00:12:10.160><c> cuz</c><00:12:10.320><c> they</c><00:12:10.440><c> wanted</c>
+
+00:12:10.829 --> 00:12:10.839 align:start position:0%
+those different flavors cuz they wanted
+ 
+
+00:12:10.839 --> 00:12:12.790 align:start position:0%
+those different flavors cuz they wanted
+code<00:12:11.240><c> diversity</c><00:12:12.000><c> then</c><00:12:12.120><c> they</c><00:12:12.240><c> sampled</c>
+
+00:12:12.790 --> 00:12:12.800 align:start position:0%
+code diversity then they sampled
+ 
+
+00:12:12.800 --> 00:12:15.189 align:start position:0%
+code diversity then they sampled
+hundreds<00:12:13.399><c> and</c><00:12:13.680><c> up</c><00:12:13.839><c> to</c><00:12:14.040><c> a</c><00:12:14.240><c> million</c><00:12:14.920><c> code</c>
+
+00:12:15.189 --> 00:12:15.199 align:start position:0%
+hundreds and up to a million code
+ 
+
+00:12:15.199 --> 00:12:17.710 align:start position:0%
+hundreds and up to a million code
+samples<00:12:16.000><c> to</c><00:12:16.240><c> search</c><00:12:16.680><c> over</c><00:12:16.959><c> the</c><00:12:17.120><c> space</c><00:12:17.480><c> of</c>
+
+00:12:17.710 --> 00:12:17.720 align:start position:0%
+samples to search over the space of
+ 
+
+00:12:17.720 --> 00:12:19.750 align:start position:0%
+samples to search over the space of
+possible<00:12:18.160><c> programs</c><00:12:18.920><c> this</c><00:12:19.040><c> is</c><00:12:19.240><c> maybe</c><00:12:19.560><c> what</c>
+
+00:12:19.750 --> 00:12:19.760 align:start position:0%
+possible programs this is maybe what
+ 
+
+00:12:19.760 --> 00:12:21.629 align:start position:0%
+possible programs this is maybe what
+Demis<00:12:20.079><c> cabis</c><00:12:20.600><c> mentioned</c><00:12:21.079><c> when</c><00:12:21.199><c> he</c><00:12:21.320><c> talked</c>
+
+00:12:21.629 --> 00:12:21.639 align:start position:0%
+Demis cabis mentioned when he talked
+ 
+
+00:12:21.639 --> 00:12:24.509 align:start position:0%
+Demis cabis mentioned when he talked
+about<00:12:22.040><c> Alpha</c><00:12:22.440><c> go</c><00:12:22.720><c> plus</c><00:12:22.959><c> GPT</c><00:12:23.600><c> in</c><00:12:23.680><c> a</c><00:12:23.839><c> video</c><00:12:24.160><c> I</c><00:12:24.279><c> did</c>
+
+00:12:24.509 --> 00:12:24.519 align:start position:0%
+about Alpha go plus GPT in a video I did
+ 
+
+00:12:24.519 --> 00:12:26.550 align:start position:0%
+about Alpha go plus GPT in a video I did
+a<00:12:24.720><c> while</c><00:12:24.959><c> back</c><00:12:25.320><c> at</c><00:12:25.480><c> this</c><00:12:25.600><c> point</c><00:12:25.839><c> you</c><00:12:25.920><c> can</c><00:12:26.120><c> see</c>
+
+00:12:26.550 --> 00:12:26.560 align:start position:0%
+a while back at this point you can see
+ 
+
+00:12:26.560 --> 00:12:28.670 align:start position:0%
+a while back at this point you can see
+why<00:12:26.720><c> it's</c><00:12:26.880><c> not</c><00:12:27.120><c> yet</c><00:12:27.320><c> for</c><00:12:27.639><c> Consumer</c><00:12:28.120><c> release</c>
+
+00:12:28.670 --> 00:12:28.680 align:start position:0%
+why it's not yet for Consumer release
+ 
+
+00:12:28.680 --> 00:12:30.910 align:start position:0%
+why it's not yet for Consumer release
+because<00:12:29.120><c> that</c><00:12:29.279><c> is</c><00:12:29.600><c> incredibly</c><00:12:30.480><c> compute</c>
+
+00:12:30.910 --> 00:12:30.920 align:start position:0%
+because that is incredibly compute
+ 
+
+00:12:30.920 --> 00:12:32.790 align:start position:0%
+because that is incredibly compute
+intensive<00:12:31.560><c> anyway</c><00:12:31.920><c> they</c><00:12:32.079><c> then</c><00:12:32.240><c> filtered</c><00:12:32.639><c> out</c>
+
+00:12:32.790 --> 00:12:32.800 align:start position:0%
+intensive anyway they then filtered out
+ 
+
+00:12:32.800 --> 00:12:35.110 align:start position:0%
+intensive anyway they then filtered out
+the<00:12:32.959><c> results</c><00:12:33.480><c> to</c><00:12:33.680><c> remove</c><00:12:34.120><c> code</c><00:12:34.600><c> that</c><00:12:34.760><c> didn't</c>
+
+00:12:35.110 --> 00:12:35.120 align:start position:0%
+the results to remove code that didn't
+ 
+
+00:12:35.120 --> 00:12:37.790 align:start position:0%
+the results to remove code that didn't
+compile<00:12:35.880><c> or</c><00:12:36.079><c> didn't</c><00:12:36.399><c> pass</c><00:12:36.760><c> the</c><00:12:36.959><c> unit</c><00:12:37.279><c> tests</c>
+
+00:12:37.790 --> 00:12:37.800 align:start position:0%
+compile or didn't pass the unit tests
+ 
+
+00:12:37.800 --> 00:12:39.509 align:start position:0%
+compile or didn't pass the unit tests
+they<00:12:37.920><c> also</c><00:12:38.120><c> had</c><00:12:38.240><c> a</c><00:12:38.360><c> mechanism</c><00:12:38.760><c> to</c><00:12:38.959><c> filter</c><00:12:39.279><c> out</c>
+
+00:12:39.509 --> 00:12:39.519 align:start position:0%
+they also had a mechanism to filter out
+ 
+
+00:12:39.519 --> 00:12:40.949 align:start position:0%
+they also had a mechanism to filter out
+code<00:12:39.760><c> that</c><00:12:39.880><c> was</c><00:12:40.000><c> too</c><00:12:40.199><c> similar</c><00:12:40.680><c> but</c><00:12:40.800><c> then</c>
+
+00:12:40.949 --> 00:12:40.959 align:start position:0%
+code that was too similar but then
+ 
+
+00:12:40.959 --> 00:12:42.670 align:start position:0%
+code that was too similar but then
+here's<00:12:41.199><c> the</c><00:12:41.360><c> interesting</c><00:12:41.800><c> bit</c><00:12:42.120><c> they</c><00:12:42.240><c> used</c>
+
+00:12:42.670 --> 00:12:42.680 align:start position:0%
+here's the interesting bit they used
+ 
+
+00:12:42.680 --> 00:12:46.150 align:start position:0%
+here's the interesting bit they used
+Gemini<00:12:43.519><c> as</c><00:12:43.680><c> a</c><00:12:43.880><c> scoring</c><00:12:44.360><c> model</c><00:12:45.079><c> to</c><00:12:45.399><c> surface</c><00:12:45.959><c> the</c>
+
+00:12:46.150 --> 00:12:46.160 align:start position:0%
+Gemini as a scoring model to surface the
+ 
+
+00:12:46.160 --> 00:12:48.550 align:start position:0%
+Gemini as a scoring model to surface the
+best<00:12:46.440><c> candidate</c><00:12:47.040><c> are</c><00:12:47.160><c> you</c><00:12:47.279><c> getting</c><00:12:47.639><c> Vibes</c><00:12:48.199><c> of</c>
+
+00:12:48.550 --> 00:12:48.560 align:start position:0%
+best candidate are you getting Vibes of
+ 
+
+00:12:48.560 --> 00:12:51.189 align:start position:0%
+best candidate are you getting Vibes of
+let's<00:12:48.839><c> verify</c><00:12:49.320><c> step</c><00:12:49.600><c> by</c><00:12:49.800><c> step</c><00:12:50.199><c> from</c><00:12:50.440><c> my</c><00:12:50.680><c> qar</c>
+
+00:12:51.189 --> 00:12:51.199 align:start position:0%
+let's verify step by step from my qar
+ 
+
+00:12:51.199 --> 00:12:53.350 align:start position:0%
+let's verify step by step from my qar
+video<00:12:51.680><c> if</c><00:12:51.839><c> not</c><00:12:52.120><c> I'm</c><00:12:52.240><c> not</c><00:12:52.480><c> hinting</c><00:12:53.079><c> strongly</c>
+
+00:12:53.350 --> 00:12:53.360 align:start position:0%
+video if not I'm not hinting strongly
+ 
+
+00:12:53.360 --> 00:12:54.670 align:start position:0%
+video if not I'm not hinting strongly
+enough<00:12:53.680><c> here's</c><00:12:53.839><c> some</c><00:12:54.000><c> more</c><00:12:54.160><c> evidence</c><00:12:54.519><c> they</c>
+
+00:12:54.670 --> 00:12:54.680 align:start position:0%
+enough here's some more evidence they
+ 
+
+00:12:54.680 --> 00:12:57.790 align:start position:0%
+enough here's some more evidence they
+used<00:12:55.000><c> a</c><00:12:55.320><c> fine-tuned</c><00:12:56.320><c> Gemini</c><00:12:56.800><c> pro</c><00:12:57.040><c> model</c><00:12:57.519><c> to</c>
+
+00:12:57.790 --> 00:12:57.800 align:start position:0%
+used a fine-tuned Gemini pro model to
+ 
+
+00:12:57.800 --> 00:12:59.949 align:start position:0%
+used a fine-tuned Gemini pro model to
+attribute<00:12:58.199><c> an</c><00:12:58.360><c> estimated</c><00:12:59.000><c> correctness</c><00:12:59.399><c> score</c>
+
+00:12:59.949 --> 00:12:59.959 align:start position:0%
+attribute an estimated correctness score
+ 
+
+00:12:59.959 --> 00:13:02.389 align:start position:0%
+attribute an estimated correctness score
+between<00:13:00.240><c> 0</c><00:13:00.519><c> and</c><00:13:00.639><c> 1</c><00:13:00.839><c> to</c><00:13:01.120><c> code</c><00:13:01.399><c> samples</c><00:13:02.079><c> remember</c>
+
+00:13:02.389 --> 00:13:02.399 align:start position:0%
+between 0 and 1 to code samples remember
+ 
+
+00:13:02.399 --> 00:13:04.750 align:start position:0%
+between 0 and 1 to code samples remember
+from<00:13:02.639><c> let's</c><00:13:02.959><c> verify</c><00:13:03.519><c> that</c><00:13:03.720><c> evaluation</c><00:13:04.560><c> is</c>
+
+00:13:04.750 --> 00:13:04.760 align:start position:0%
+from let's verify that evaluation is
+ 
+
+00:13:04.760 --> 00:13:06.430 align:start position:0%
+from let's verify that evaluation is
+easier<00:13:05.199><c> than</c><00:13:05.399><c> generation</c><00:13:06.120><c> I'll</c><00:13:06.240><c> have</c><00:13:06.360><c> to</c>
+
+00:13:06.430 --> 00:13:06.440 align:start position:0%
+easier than generation I'll have to
+ 
+
+00:13:06.440 --> 00:13:08.269 align:start position:0%
+easier than generation I'll have to
+cover<00:13:06.680><c> this</c><00:13:06.959><c> in</c><00:13:07.079><c> more</c><00:13:07.360><c> detail</c><00:13:07.760><c> in</c><00:13:07.959><c> another</c>
+
+00:13:08.269 --> 00:13:08.279 align:start position:0%
+cover this in more detail in another
+ 
+
+00:13:08.279 --> 00:13:10.069 align:start position:0%
+cover this in more detail in another
+video<00:13:08.800><c> because</c><00:13:09.079><c> there's</c><00:13:09.360><c> other</c><00:13:09.680><c> juicy</c>
+
+00:13:10.069 --> 00:13:10.079 align:start position:0%
+video because there's other juicy
+ 
+
+00:13:10.079 --> 00:13:12.829 align:start position:0%
+video because there's other juicy
+nuggets<00:13:10.560><c> to</c><00:13:10.800><c> get</c><00:13:10.959><c> into</c><00:13:11.519><c> the</c><00:13:11.720><c> ranking</c><00:13:12.240><c> of</c><00:13:12.440><c> alpha</c>
+
+00:13:12.829 --> 00:13:12.839 align:start position:0%
+nuggets to get into the ranking of alpha
+ 
+
+00:13:12.839 --> 00:13:16.030 align:start position:0%
+nuggets to get into the ranking of alpha
+code<00:13:13.040><c> 2</c><00:13:13.399><c> on</c><00:13:13.600><c> the</c><00:13:13.839><c> test</c><00:13:14.560><c> was</c><00:13:14.880><c> between</c><00:13:15.360><c> expert</c>
+
+00:13:16.030 --> 00:13:16.040 align:start position:0%
+code 2 on the test was between expert
+ 
+
+00:13:16.040 --> 00:13:18.350 align:start position:0%
+code 2 on the test was between expert
+and<00:13:16.360><c> master</c><00:13:17.000><c> in</c><00:13:17.120><c> its</c><00:13:17.320><c> best</c><00:13:17.519><c> two</c><00:13:17.720><c> performances</c>
+
+00:13:18.350 --> 00:13:18.360 align:start position:0%
+and master in its best two performances
+ 
+
+00:13:18.360 --> 00:13:21.310 align:start position:0%
+and master in its best two performances
+alphacode<00:13:18.920><c> 2</c><00:13:19.279><c> outperforms</c><00:13:20.000><c> more</c><00:13:20.199><c> than</c>
+
+00:13:21.310 --> 00:13:21.320 align:start position:0%
+alphacode 2 outperforms more than
+ 
+
+00:13:21.320 --> 00:13:24.150 align:start position:0%
+alphacode 2 outperforms more than
+99.5%<00:13:22.320><c> of</c><00:13:22.519><c> competition</c><00:13:23.199><c> participants</c><00:13:23.959><c> here's</c>
+
+00:13:24.150 --> 00:13:24.160 align:start position:0%
+99.5% of competition participants here's
+ 
+
+00:13:24.160 --> 00:13:25.629 align:start position:0%
+99.5% of competition participants here's
+where<00:13:24.279><c> it</c><00:13:24.360><c> gets</c><00:13:24.560><c> more</c><00:13:24.720><c> interesting</c><00:13:25.160><c> to</c><00:13:25.320><c> solve</c>
+
+00:13:25.629 --> 00:13:25.639 align:start position:0%
+where it gets more interesting to solve
+ 
+
+00:13:25.639 --> 00:13:27.350 align:start position:0%
+where it gets more interesting to solve
+these<00:13:25.800><c> level</c><00:13:26.040><c> of</c><00:13:26.240><c> problems</c><00:13:26.720><c> before</c><00:13:27.000><c> writing</c>
+
+00:13:27.350 --> 00:13:27.360 align:start position:0%
+these level of problems before writing
+ 
+
+00:13:27.360 --> 00:13:29.750 align:start position:0%
+these level of problems before writing
+the<00:13:27.600><c> code</c><00:13:27.920><c> implementation</c><00:13:28.839><c> one</c><00:13:29.000><c> needs</c><00:13:29.199><c> to</c>
+
+00:13:29.750 --> 00:13:29.760 align:start position:0%
+the code implementation one needs to
+ 
+
+00:13:29.760 --> 00:13:31.670 align:start position:0%
+the code implementation one needs to
+understand<00:13:30.160><c> analyze</c><00:13:30.680><c> and</c><00:13:30.839><c> reason</c><00:13:31.240><c> about</c><00:13:31.480><c> the</c>
+
+00:13:31.670 --> 00:13:31.680 align:start position:0%
+understand analyze and reason about the
+ 
+
+00:13:31.680 --> 00:13:33.629 align:start position:0%
+understand analyze and reason about the
+problem<00:13:32.160><c> this</c><00:13:32.320><c> explains</c><00:13:32.880><c> why</c><00:13:33.120><c> generally</c>
+
+00:13:33.629 --> 00:13:33.639 align:start position:0%
+problem this explains why generally
+ 
+
+00:13:33.639 --> 00:13:35.590 align:start position:0%
+problem this explains why generally
+available<00:13:34.079><c> AI</c><00:13:34.440><c> systems</c><00:13:35.079><c> I</c><00:13:35.160><c> think</c><00:13:35.279><c> they</c><00:13:35.399><c> mean</c>
+
+00:13:35.590 --> 00:13:35.600 align:start position:0%
+available AI systems I think they mean
+ 
+
+00:13:35.600 --> 00:13:38.389 align:start position:0%
+available AI systems I think they mean
+GPT<00:13:35.959><c> 4</c><00:13:36.480><c> perform</c><00:13:36.959><c> poorly</c><00:13:37.440><c> on</c><00:13:37.639><c> this</c><00:13:37.800><c> Benchmark</c>
+
+00:13:38.389 --> 00:13:38.399 align:start position:0%
+GPT 4 perform poorly on this Benchmark
+ 
+
+00:13:38.399 --> 00:13:40.710 align:start position:0%
+GPT 4 perform poorly on this Benchmark
+Alpha<00:13:38.760><c> code</c><00:13:38.959><c> 2's</c><00:13:39.480><c> success</c><00:13:40.160><c> on</c><00:13:40.440><c> this</c>
+
+00:13:40.710 --> 00:13:40.720 align:start position:0%
+Alpha code 2's success on this
+ 
+
+00:13:40.720 --> 00:13:42.790 align:start position:0%
+Alpha code 2's success on this
+competitive<00:13:41.480><c> programming</c><00:13:42.120><c> contest</c>
+
+00:13:42.790 --> 00:13:42.800 align:start position:0%
+competitive programming contest
+ 
+
+00:13:42.800 --> 00:13:45.150 align:start position:0%
+competitive programming contest
+represents<00:13:43.320><c> an</c><00:13:43.519><c> impressive</c><00:13:44.199><c> step</c><00:13:44.480><c> change</c>
+
+00:13:45.150 --> 00:13:45.160 align:start position:0%
+represents an impressive step change
+ 
+
+00:13:45.160 --> 00:13:46.750 align:start position:0%
+represents an impressive step change
+this<00:13:45.240><c> is</c><00:13:45.360><c> something</c><00:13:45.720><c> I</c><00:13:45.880><c> actually</c><00:13:46.199><c> discussed</c>
+
+00:13:46.750 --> 00:13:46.760 align:start position:0%
+this is something I actually discussed
+ 
+
+00:13:46.760 --> 00:13:49.470 align:start position:0%
+this is something I actually discussed
+with<00:13:46.959><c> Jim</c><00:13:47.240><c> fan</c><00:13:47.680><c> a</c><00:13:47.920><c> senior</c><00:13:48.399><c> AI</c><00:13:48.720><c> researcher</c><00:13:49.320><c> at</c>
+
+00:13:49.470 --> 00:13:49.480 align:start position:0%
+with Jim fan a senior AI researcher at
+ 
+
+00:13:49.480 --> 00:13:52.470 align:start position:0%
+with Jim fan a senior AI researcher at
+Nvidia<00:13:50.000><c> for</c><00:13:50.279><c> AI</c><00:13:50.600><c> insiders</c><00:13:51.360><c> and</c><00:13:51.560><c> he</c><00:13:51.720><c> quoted</c>
+
+00:13:52.470 --> 00:13:52.480 align:start position:0%
+Nvidia for AI insiders and he quoted
+ 
+
+00:13:52.480 --> 00:13:54.949 align:start position:0%
+Nvidia for AI insiders and he quoted
+mathematics<00:13:53.360><c> being</c><00:13:53.639><c> the</c><00:13:53.839><c> first</c><00:13:54.120><c> to</c><00:13:54.279><c> fall</c><00:13:54.839><c> and</c>
+
+00:13:54.949 --> 00:13:54.959 align:start position:0%
+mathematics being the first to fall and
+ 
+
+00:13:54.959 --> 00:13:56.389 align:start position:0%
+mathematics being the first to fall and
+I<00:13:55.040><c> think</c><00:13:55.160><c> that's</c><00:13:55.320><c> one</c><00:13:55.440><c> of</c><00:13:55.519><c> the</c><00:13:55.639><c> reasons</c><00:13:56.120><c> why</c>
+
+00:13:56.389 --> 00:13:56.399 align:start position:0%
+I think that's one of the reasons why
+ 
+
+00:13:56.399 --> 00:13:58.749 align:start position:0%
+I think that's one of the reasons why
+coding<00:13:56.959><c> and</c><00:13:57.240><c> math</c><00:13:57.600><c> look</c><00:13:57.880><c> set</c><00:13:58.120><c> to</c><00:13:58.240><c> be</c><00:13:58.399><c> the</c><00:13:58.519><c> first</c>
+
+00:13:58.749 --> 00:13:58.759 align:start position:0%
+coding and math look set to be the first
+ 
+
+00:13:58.759 --> 00:14:00.590 align:start position:0%
+coding and math look set to be the first
+first<00:13:58.959><c> to</c><00:13:59.120><c> fall</c><00:13:59.519><c> I'm</c><00:13:59.639><c> not</c><00:13:59.759><c> talking</c><00:14:00.000><c> imminently</c>
+
+00:14:00.590 --> 00:14:00.600 align:start position:0%
+first to fall I'm not talking imminently
+ 
+
+00:14:00.600 --> 00:14:02.550 align:start position:0%
+first to fall I'm not talking imminently
+but<00:14:00.759><c> if</c><00:14:00.839><c> you</c><00:14:00.959><c> can</c><00:14:01.160><c> generate</c><00:14:01.600><c> enough</c><00:14:01.880><c> samples</c>
+
+00:14:02.550 --> 00:14:02.560 align:start position:0%
+but if you can generate enough samples
+ 
+
+00:14:02.560 --> 00:14:04.590 align:start position:0%
+but if you can generate enough samples
+and<00:14:02.720><c> then</c><00:14:03.000><c> test</c><00:14:03.320><c> them</c><00:14:03.680><c> it</c><00:14:03.839><c> becomes</c><00:14:04.199><c> more</c><00:14:04.399><c> a</c>
+
+00:14:04.590 --> 00:14:04.600 align:start position:0%
+and then test them it becomes more a
+ 
+
+00:14:04.600 --> 00:14:07.189 align:start position:0%
+and then test them it becomes more a
+matter<00:14:04.920><c> of</c><00:14:05.240><c> compute</c><00:14:06.160><c> rather</c><00:14:06.399><c> than</c><00:14:06.639><c> reasoning</c>
+
+00:14:07.189 --> 00:14:07.199 align:start position:0%
+matter of compute rather than reasoning
+ 
+
+00:14:07.199 --> 00:14:10.150 align:start position:0%
+matter of compute rather than reasoning
+root<00:14:07.519><c> force</c><00:14:08.199><c> over</c><00:14:08.600><c> Beauty</c><00:14:09.279><c> you</c><00:14:09.360><c> can</c><00:14:09.480><c> see</c><00:14:09.839><c> here</c>
+
+00:14:10.150 --> 00:14:10.160 align:start position:0%
+root force over Beauty you can see here
+ 
+
+00:14:10.160 --> 00:14:11.949 align:start position:0%
+root force over Beauty you can see here
+how<00:14:10.480><c> even</c><00:14:10.759><c> with</c><00:14:10.920><c> the</c><00:14:11.079><c> number</c><00:14:11.320><c> of</c><00:14:11.440><c> samples</c>
+
+00:14:11.949 --> 00:14:11.959 align:start position:0%
+how even with the number of samples
+ 
+
+00:14:11.959 --> 00:14:14.389 align:start position:0%
+how even with the number of samples
+approaching<00:14:12.560><c> a</c><00:14:12.839><c> million</c><00:14:13.480><c> the</c><00:14:13.639><c> results</c><00:14:14.160><c> keep</c>
+
+00:14:14.389 --> 00:14:14.399 align:start position:0%
+approaching a million the results keep
+ 
+
+00:14:14.399 --> 00:14:16.590 align:start position:0%
+approaching a million the results keep
+getting<00:14:14.759><c> better</c><00:14:15.279><c> they</c><00:14:15.440><c> also</c><00:14:15.680><c> note</c><00:14:16.120><c> that</c><00:14:16.320><c> the</c>
+
+00:14:16.590 --> 00:14:16.600 align:start position:0%
+getting better they also note that the
+ 
+
+00:14:16.600 --> 00:14:18.790 align:start position:0%
+getting better they also note that the
+sample<00:14:17.079><c> efficiency</c><00:14:17.639><c> of</c><00:14:17.800><c> alpha</c><00:14:18.160><c> code</c><00:14:18.399><c> 2</c>
+
+00:14:18.790 --> 00:14:18.800 align:start position:0%
+sample efficiency of alpha code 2
+ 
+
+00:14:18.800 --> 00:14:20.749 align:start position:0%
+sample efficiency of alpha code 2
+because<00:14:19.000><c> of</c><00:14:19.120><c> the</c><00:14:19.240><c> underlying</c><00:14:19.759><c> model</c><00:14:20.120><c> is</c><00:14:20.279><c> a</c><00:14:20.480><c> lot</c>
+
+00:14:20.749 --> 00:14:20.759 align:start position:0%
+because of the underlying model is a lot
+ 
+
+00:14:20.759 --> 00:14:23.110 align:start position:0%
+because of the underlying model is a lot
+better<00:14:21.199><c> than</c><00:14:21.560><c> Alpha</c><00:14:21.880><c> code</c><00:14:22.120><c> 1</c><00:14:22.519><c> I'm</c><00:14:22.720><c> sure</c><00:14:22.959><c> you</c>
+
+00:14:23.110 --> 00:14:23.120 align:start position:0%
+better than Alpha code 1 I'm sure you
+ 
+
+00:14:23.120 --> 00:14:25.550 align:start position:0%
+better than Alpha code 1 I'm sure you
+all<00:14:23.360><c> want</c><00:14:23.600><c> to</c><00:14:23.880><c> try</c><00:14:24.120><c> it</c><00:14:24.279><c> and</c><00:14:24.440><c> they</c><00:14:24.600><c> say</c><00:14:25.160><c> we</c><00:14:25.279><c> are</c>
+
+00:14:25.550 --> 00:14:25.560 align:start position:0%
+all want to try it and they say we are
+ 
+
+00:14:25.560 --> 00:14:27.710 align:start position:0%
+all want to try it and they say we are
+working<00:14:26.000><c> towards</c><00:14:26.399><c> bringing</c><00:14:26.800><c> Alpha</c><00:14:27.120><c> code</c><00:14:27.320><c> 2's</c>
+
+00:14:27.710 --> 00:14:27.720 align:start position:0%
+working towards bringing Alpha code 2's
+ 
+
+00:14:27.720 --> 00:14:30.069 align:start position:0%
+working towards bringing Alpha code 2's
+unique<00:14:28.079><c> capabilities</c><00:14:29.120><c> to</c><00:14:29.320><c> our</c><00:14:29.519><c> foundation</c>
+
+00:14:30.069 --> 00:14:30.079 align:start position:0%
+unique capabilities to our foundation
+ 
+
+00:14:30.079 --> 00:14:32.269 align:start position:0%
+unique capabilities to our foundation
+Gemini<00:14:30.480><c> models</c><00:14:31.120><c> but</c><00:14:31.360><c> why</c><00:14:31.560><c> can't</c><00:14:31.759><c> we</c><00:14:31.920><c> have</c><00:14:32.040><c> it</c>
+
+00:14:32.269 --> 00:14:32.279 align:start position:0%
+Gemini models but why can't we have it
+ 
+
+00:14:32.279 --> 00:14:34.949 align:start position:0%
+Gemini models but why can't we have it
+here<00:14:32.639><c> well</c><00:14:32.920><c> they</c><00:14:33.160><c> reiterate</c><00:14:33.839><c> that</c><00:14:34.240><c> just</c><00:14:34.519><c> above</c>
+
+00:14:34.949 --> 00:14:34.959 align:start position:0%
+here well they reiterate that just above
+ 
+
+00:14:34.959 --> 00:14:36.990 align:start position:0%
+here well they reiterate that just above
+our<00:14:35.160><c> system</c><00:14:35.519><c> requires</c><00:14:36.040><c> a</c><00:14:36.240><c> lot</c><00:14:36.399><c> of</c><00:14:36.519><c> trial</c><00:14:36.839><c> and</c>
+
+00:14:36.990 --> 00:14:37.000 align:start position:0%
+our system requires a lot of trial and
+ 
+
+00:14:37.000 --> 00:14:39.790 align:start position:0%
+our system requires a lot of trial and
+error<00:14:37.639><c> and</c><00:14:38.000><c> remains</c><00:14:38.360><c> too</c><00:14:38.680><c> costly</c><00:14:39.160><c> to</c><00:14:39.440><c> operate</c>
+
+00:14:39.790 --> 00:14:39.800 align:start position:0%
+error and remains too costly to operate
+ 
+
+00:14:39.800 --> 00:14:41.949 align:start position:0%
+error and remains too costly to operate
+at<00:14:40.040><c> scale</c><00:14:40.600><c> and</c><00:14:40.839><c> many</c><00:14:41.040><c> of</c><00:14:41.199><c> you</c><00:14:41.360><c> may</c><00:14:41.519><c> have</c><00:14:41.680><c> picked</c>
+
+00:14:41.949 --> 00:14:41.959 align:start position:0%
+at scale and many of you may have picked
+ 
+
+00:14:41.959 --> 00:14:44.710 align:start position:0%
+at scale and many of you may have picked
+up<00:14:42.240><c> on</c><00:14:42.600><c> another</c><00:14:43.000><c> key</c><00:14:43.279><c> detail</c><00:14:44.079><c> I</c><00:14:44.199><c> said</c><00:14:44.480><c> they</c>
+
+00:14:44.710 --> 00:14:44.720 align:start position:0%
+up on another key detail I said they
+ 
+
+00:14:44.720 --> 00:14:47.310 align:start position:0%
+up on another key detail I said they
+used<00:14:45.399><c> Gemini</c><00:14:46.000><c> Pro</c><00:14:46.560><c> maybe</c><00:14:46.800><c> this</c><00:14:46.920><c> was</c><00:14:47.079><c> for</c>
+
+00:14:47.310 --> 00:14:47.320 align:start position:0%
+used Gemini Pro maybe this was for
+ 
+
+00:14:47.320 --> 00:14:49.150 align:start position:0%
+used Gemini Pro maybe this was for
+budgeting<00:14:47.800><c> reasons</c><00:14:48.279><c> but</c><00:14:48.440><c> they</c><00:14:48.560><c> say</c><00:14:48.920><c> we</c>
+
+00:14:49.150 --> 00:14:49.160 align:start position:0%
+budgeting reasons but they say we
+ 
+
+00:14:49.160 --> 00:14:51.990 align:start position:0%
+budgeting reasons but they say we
+suspect<00:14:49.839><c> using</c><00:14:50.279><c> Gemini</c><00:14:50.839><c> Ultra</c><00:14:51.639><c> as</c><00:14:51.800><c> the</c>
+
+00:14:51.990 --> 00:14:52.000 align:start position:0%
+suspect using Gemini Ultra as the
+ 
+
+00:14:52.000 --> 00:14:53.710 align:start position:0%
+suspect using Gemini Ultra as the
+foundation<00:14:52.440><c> model</c><00:14:52.800><c> instead</c><00:14:53.360><c> with</c><00:14:53.519><c> its</c>
+
+00:14:53.710 --> 00:14:53.720 align:start position:0%
+foundation model instead with its
+ 
+
+00:14:53.720 --> 00:14:55.310 align:start position:0%
+foundation model instead with its
+improved<00:14:54.360><c> coding</c><00:14:54.720><c> and</c><00:14:54.880><c> reasoning</c>
+
+00:14:55.310 --> 00:14:55.320 align:start position:0%
+improved coding and reasoning
+ 
+
+00:14:55.320 --> 00:14:57.590 align:start position:0%
+improved coding and reasoning
+capabilities<00:14:56.320><c> would</c><00:14:56.519><c> lead</c><00:14:56.839><c> to</c><00:14:57.240><c> further</c>
+
+00:14:57.590 --> 00:14:57.600 align:start position:0%
+capabilities would lead to further
+ 
+
+00:14:57.600 --> 00:14:59.230 align:start position:0%
+capabilities would lead to further
+improvements<00:14:58.120><c> in</c><00:14:58.240><c> the</c><00:14:58.360><c> overall</c><00:14:58.800><c> all</c><00:14:58.959><c> Alpha</c>
+
+00:14:59.230 --> 00:14:59.240 align:start position:0%
+improvements in the overall all Alpha
+ 
+
+00:14:59.240 --> 00:15:01.749 align:start position:0%
+improvements in the overall all Alpha
+code<00:14:59.440><c> 2</c><00:14:59.759><c> approach</c><00:15:00.320><c> they</c><00:15:00.480><c> do</c><00:15:00.720><c> try</c><00:15:00.959><c> to</c><00:15:01.240><c> give</c><00:15:01.560><c> a</c>
+
+00:15:01.749 --> 00:15:01.759 align:start position:0%
+code 2 approach they do try to give a
+ 
+
+00:15:01.759 --> 00:15:04.110 align:start position:0%
+code 2 approach they do try to give a
+sliver<00:15:02.199><c> of</c><00:15:02.360><c> reassurance</c><00:15:02.920><c> to</c><00:15:03.160><c> human</c><00:15:03.480><c> coders</c><00:15:04.000><c> a</c>
+
+00:15:04.110 --> 00:15:04.120 align:start position:0%
+sliver of reassurance to human coders a
+ 
+
+00:15:04.120 --> 00:15:05.870 align:start position:0%
+sliver of reassurance to human coders a
+bit<00:15:04.279><c> later</c><00:15:04.560><c> on</c><00:15:04.800><c> though</c><00:15:05.079><c> they</c><00:15:05.199><c> note</c><00:15:05.480><c> that</c><00:15:05.680><c> when</c>
+
+00:15:05.870 --> 00:15:05.880 align:start position:0%
+bit later on though they note that when
+ 
+
+00:15:05.880 --> 00:15:08.670 align:start position:0%
+bit later on though they note that when
+using<00:15:06.279><c> Alpha</c><00:15:06.720><c> code</c><00:15:06.959><c> 2</c><00:15:07.399><c> with</c><00:15:07.600><c> human</c><00:15:07.920><c> coders</c><00:15:08.560><c> who</c>
+
+00:15:08.670 --> 00:15:08.680 align:start position:0%
+using Alpha code 2 with human coders who
+ 
+
+00:15:08.680 --> 00:15:10.269 align:start position:0%
+using Alpha code 2 with human coders who
+can<00:15:08.880><c> specify</c><00:15:09.399><c> additional</c><00:15:09.759><c> filtering</c>
+
+00:15:10.269 --> 00:15:10.279 align:start position:0%
+can specify additional filtering
+ 
+
+00:15:10.279 --> 00:15:12.590 align:start position:0%
+can specify additional filtering
+properties<00:15:10.920><c> we</c><00:15:11.040><c> score</c><00:15:11.440><c> above</c><00:15:11.800><c> the</c><00:15:12.000><c> 90th</c>
+
+00:15:12.590 --> 00:15:12.600 align:start position:0%
+properties we score above the 90th
+ 
+
+00:15:12.600 --> 00:15:15.509 align:start position:0%
+properties we score above the 90th
+percentile<00:15:13.320><c> that's</c><00:15:13.639><c> a</c><00:15:13.920><c> 5en</c><00:15:14.880><c> increase</c><00:15:15.399><c> and</c>
+
+00:15:15.509 --> 00:15:15.519 align:start position:0%
+percentile that's a 5en increase and
+ 
+
+00:15:15.519 --> 00:15:17.590 align:start position:0%
+percentile that's a 5en increase and
+they<00:15:15.639><c> say</c><00:15:15.920><c> optimistically</c><00:15:16.800><c> we</c><00:15:17.079><c> hope</c><00:15:17.440><c> this</c>
+
+00:15:17.590 --> 00:15:17.600 align:start position:0%
+they say optimistically we hope this
+ 
+
+00:15:17.600 --> 00:15:19.550 align:start position:0%
+they say optimistically we hope this
+kind<00:15:17.759><c> of</c><00:15:17.959><c> interactive</c><00:15:18.480><c> coding</c><00:15:19.040><c> will</c><00:15:19.199><c> be</c><00:15:19.399><c> the</c>
+
+00:15:19.550 --> 00:15:19.560 align:start position:0%
+kind of interactive coding will be the
+ 
+
+00:15:19.560 --> 00:15:21.550 align:start position:0%
+kind of interactive coding will be the
+future<00:15:19.920><c> of</c><00:15:20.120><c> programming</c><00:15:20.759><c> where</c><00:15:21.040><c> programmers</c>
+
+00:15:21.550 --> 00:15:21.560 align:start position:0%
+future of programming where programmers
+ 
+
+00:15:21.560 --> 00:15:23.870 align:start position:0%
+future of programming where programmers
+make<00:15:21.800><c> use</c><00:15:22.000><c> of</c><00:15:22.120><c> the</c><00:15:22.279><c> highly</c><00:15:22.639><c> capable</c><00:15:23.000><c> AI</c><00:15:23.240><c> models</c>
+
+00:15:23.870 --> 00:15:23.880 align:start position:0%
+make use of the highly capable AI models
+ 
+
+00:15:23.880 --> 00:15:25.990 align:start position:0%
+make use of the highly capable AI models
+as<00:15:24.160><c> collaborative</c><00:15:24.759><c> tools</c><00:15:25.360><c> as</c><00:15:25.480><c> always</c><00:15:25.759><c> let</c><00:15:25.880><c> me</c>
+
+00:15:25.990 --> 00:15:26.000 align:start position:0%
+as collaborative tools as always let me
+ 
+
+00:15:26.000 --> 00:15:28.269 align:start position:0%
+as collaborative tools as always let me
+know<00:15:26.320><c> what</c><00:15:26.480><c> you</c><00:15:26.720><c> think</c><00:15:27.079><c> in</c><00:15:27.279><c> the</c><00:15:27.519><c> comments</c><00:15:28.120><c> some</c>
+
+00:15:28.269 --> 00:15:28.279 align:start position:0%
+know what you think in the comments some
+ 
+
+00:15:28.279 --> 00:15:30.790 align:start position:0%
+know what you think in the comments some
+more<00:15:28.720><c> notes</c><00:15:29.040><c> on</c><00:15:29.279><c> the</c><00:15:29.519><c> release</c><00:15:30.000><c> of</c><00:15:30.240><c> Gemini</c>
+
+00:15:30.790 --> 00:15:30.800 align:start position:0%
+more notes on the release of Gemini
+ 
+
+00:15:30.800 --> 00:15:32.990 align:start position:0%
+more notes on the release of Gemini
+before<00:15:31.079><c> we</c><00:15:31.279><c> get</c><00:15:31.480><c> to</c><00:15:31.759><c> the</c><00:15:31.959><c> media</c><00:15:32.399><c> round</c><00:15:32.800><c> that</c>
+
+00:15:32.990 --> 00:15:33.000 align:start position:0%
+before we get to the media round that
+ 
+
+00:15:33.000 --> 00:15:35.949 align:start position:0%
+before we get to the media round that
+hassabis<00:15:33.560><c> did</c><00:15:34.000><c> first</c><00:15:34.360><c> Gemini</c><00:15:34.800><c> Nano</c><00:15:35.440><c> is</c><00:15:35.639><c> coming</c>
+
+00:15:35.949 --> 00:15:35.959 align:start position:0%
+hassabis did first Gemini Nano is coming
+ 
+
+00:15:35.959 --> 00:15:38.269 align:start position:0%
+hassabis did first Gemini Nano is coming
+to<00:15:36.240><c> the</c><00:15:36.560><c> pixel</c><00:15:36.880><c> 8</c><00:15:37.199><c> Pro</c><00:15:37.639><c> that's</c><00:15:37.759><c> going</c><00:15:37.880><c> to</c><00:15:38.040><c> power</c>
+
+00:15:38.269 --> 00:15:38.279 align:start position:0%
+to the pixel 8 Pro that's going to power
+ 
+
+00:15:38.279 --> 00:15:40.790 align:start position:0%
+to the pixel 8 Pro that's going to power
+features<00:15:38.720><c> like</c><00:15:38.959><c> summarize</c><00:15:39.680><c> and</c><00:15:39.880><c> smart</c><00:15:40.240><c> reply</c>
+
+00:15:40.790 --> 00:15:40.800 align:start position:0%
+features like summarize and smart reply
+ 
+
+00:15:40.800 --> 00:15:43.150 align:start position:0%
+features like summarize and smart reply
+honestly<00:15:41.279><c> I</c><00:15:41.360><c> wouldn't</c><00:15:41.639><c> yet</c><00:15:41.839><c> trust</c><00:15:42.240><c> a</c><00:15:42.440><c> 3.5</c>
+
+00:15:43.150 --> 00:15:43.160 align:start position:0%
+honestly I wouldn't yet trust a 3.5
+ 
+
+00:15:43.160 --> 00:15:45.350 align:start position:0%
+honestly I wouldn't yet trust a 3.5
+billion<00:15:43.440><c> parameter</c><00:15:43.839><c> model</c><00:15:44.279><c> to</c><00:15:44.560><c> reply</c><00:15:45.079><c> to</c>
+
+00:15:45.350 --> 00:15:45.360 align:start position:0%
+billion parameter model to reply to
+ 
+
+00:15:45.360 --> 00:15:47.309 align:start position:0%
+billion parameter model to reply to
+anything<00:15:46.000><c> but</c><00:15:46.199><c> that's</c><00:15:46.399><c> just</c><00:15:46.560><c> me</c><00:15:46.880><c> they</c><00:15:47.000><c> say</c><00:15:47.199><c> you</c>
+
+00:15:47.309 --> 00:15:47.319 align:start position:0%
+anything but that's just me they say you
+ 
+
+00:15:47.319 --> 00:15:49.069 align:start position:0%
+anything but that's just me they say you
+can<00:15:47.519><c> expect</c><00:15:47.959><c> in</c><00:15:48.079><c> the</c><00:15:48.279><c> coming</c><00:15:48.560><c> months</c><00:15:48.920><c> that</c>
+
+00:15:49.069 --> 00:15:49.079 align:start position:0%
+can expect in the coming months that
+ 
+
+00:15:49.079 --> 00:15:50.749 align:start position:0%
+can expect in the coming months that
+Gemini<00:15:49.480><c> will</c><00:15:49.600><c> be</c><00:15:49.800><c> available</c><00:15:50.160><c> in</c><00:15:50.319><c> services</c>
+
+00:15:50.749 --> 00:15:50.759 align:start position:0%
+Gemini will be available in services
+ 
+
+00:15:50.759 --> 00:15:54.269 align:start position:0%
+Gemini will be available in services
+such<00:15:50.920><c> as</c><00:15:51.079><c> search</c><00:15:51.720><c> ads</c><00:15:52.279><c> Chrome</c><00:15:52.839><c> and</c><00:15:53.040><c> du</c><00:15:53.440><c> AI</c><00:15:53.959><c> in</c><00:15:54.079><c> a</c>
+
+00:15:54.269 --> 00:15:54.279 align:start position:0%
+such as search ads Chrome and du AI in a
+ 
+
+00:15:54.279 --> 00:15:57.030 align:start position:0%
+such as search ads Chrome and du AI in a
+week<00:15:54.680><c> though</c><00:15:54.920><c> starting</c><00:15:55.360><c> December</c><00:15:55.800><c> 13th</c><00:15:56.600><c> devs</c>
+
+00:15:57.030 --> 00:15:57.040 align:start position:0%
+week though starting December 13th devs
+ 
+
+00:15:57.040 --> 00:15:58.590 align:start position:0%
+week though starting December 13th devs
+and<00:15:57.279><c> Enterprise</c><00:15:57.800><c> customers</c><00:15:58.199><c> can</c><00:15:58.360><c> access</c>
+
+00:15:58.590 --> 00:15:58.600 align:start position:0%
+and Enterprise customers can access
+ 
+
+00:15:58.600 --> 00:16:01.829 align:start position:0%
+and Enterprise customers can access
+access<00:15:58.880><c> Gemini</c><00:15:59.319><c> Pro</c><00:15:59.839><c> via</c><00:16:00.160><c> the</c><00:16:00.319><c> Gemini</c><00:16:00.839><c> API</c><00:16:01.560><c> in</c>
+
+00:16:01.829 --> 00:16:01.839 align:start position:0%
+access Gemini Pro via the Gemini API in
+ 
+
+00:16:01.839 --> 00:16:04.189 align:start position:0%
+access Gemini Pro via the Gemini API in
+Google<00:16:02.199><c> AI</c><00:16:02.519><c> Studio</c><00:16:03.120><c> starting</c><00:16:03.440><c> today</c><00:16:03.800><c> Bard</c>
+
+00:16:04.189 --> 00:16:04.199 align:start position:0%
+Google AI Studio starting today Bard
+ 
+
+00:16:04.199 --> 00:16:06.550 align:start position:0%
+Google AI Studio starting today Bard
+will<00:16:04.399><c> use</c><00:16:04.720><c> a</c><00:16:04.880><c> fine-tune</c><00:16:05.480><c> version</c><00:16:05.880><c> of</c><00:16:06.079><c> Gemini</c>
+
+00:16:06.550 --> 00:16:06.560 align:start position:0%
+will use a fine-tune version of Gemini
+ 
+
+00:16:06.560 --> 00:16:09.509 align:start position:0%
+will use a fine-tune version of Gemini
+Pro<00:16:06.839><c> in</c><00:16:07.040><c> those</c><00:16:07.279><c> 170</c><00:16:08.040><c> countries</c><00:16:08.519><c> excluding</c><00:16:09.360><c> the</c>
+
+00:16:09.509 --> 00:16:09.519 align:start position:0%
+Pro in those 170 countries excluding the
+ 
+
+00:16:09.519 --> 00:16:11.829 align:start position:0%
+Pro in those 170 countries excluding the
+UK<00:16:10.040><c> and</c><00:16:10.279><c> EU</c><00:16:10.880><c> and</c><00:16:11.040><c> even</c><00:16:11.240><c> though</c><00:16:11.360><c> I'm</c><00:16:11.480><c> hearing</c>
+
+00:16:11.829 --> 00:16:11.839 align:start position:0%
+UK and EU and even though I'm hearing
+ 
+
+00:16:11.839 --> 00:16:13.509 align:start position:0%
+UK and EU and even though I'm hearing
+reports<00:16:12.240><c> of</c><00:16:12.399><c> people</c><00:16:12.639><c> being</c><00:16:12.920><c> disappointed</c>
+
+00:16:13.509 --> 00:16:13.519 align:start position:0%
+reports of people being disappointed
+ 
+
+00:16:13.519 --> 00:16:15.550 align:start position:0%
+reports of people being disappointed
+with<00:16:13.680><c> Gemini</c><00:16:14.079><c> Pro</c><00:16:14.440><c> remember</c><00:16:14.920><c> that's</c><00:16:15.120><c> not</c><00:16:15.399><c> the</c>
+
+00:16:15.550 --> 00:16:15.560 align:start position:0%
+with Gemini Pro remember that's not the
+ 
+
+00:16:15.560 --> 00:16:17.710 align:start position:0%
+with Gemini Pro remember that's not the
+biggest<00:16:15.880><c> model</c><00:16:16.240><c> that's</c><00:16:16.440><c> Gemini</c><00:16:16.800><c> Ultra</c><00:16:17.319><c> Gemini</c>
+
+00:16:17.710 --> 00:16:17.720 align:start position:0%
+biggest model that's Gemini Ultra Gemini
+ 
+
+00:16:17.720 --> 00:16:20.389 align:start position:0%
+biggest model that's Gemini Ultra Gemini
+Pro<00:16:18.000><c> is</c><00:16:18.160><c> more</c><00:16:18.440><c> like</c><00:16:18.759><c> the</c><00:16:19.040><c> original</c><00:16:19.440><c> chaty</c><00:16:19.920><c> PT</c>
+
+00:16:20.389 --> 00:16:20.399 align:start position:0%
+Pro is more like the original chaty PT
+ 
+
+00:16:20.399 --> 00:16:22.670 align:start position:0%
+Pro is more like the original chaty PT
+in<00:16:20.560><c> my</c><00:16:20.759><c> last</c><00:16:21.040><c> video</c><00:16:21.440><c> I</c><00:16:21.560><c> already</c><00:16:21.920><c> covered</c><00:16:22.360><c> what</c>
+
+00:16:22.670 --> 00:16:22.680 align:start position:0%
+in my last video I already covered what
+ 
+
+00:16:22.680 --> 00:16:24.749 align:start position:0%
+in my last video I already covered what
+the<00:16:22.880><c> delay</c><00:16:23.279><c> was</c><00:16:23.519><c> behind</c><00:16:23.839><c> Gemini</c><00:16:24.199><c> Ultra</c>
+
+00:16:24.749 --> 00:16:24.759 align:start position:0%
+the delay was behind Gemini Ultra
+ 
+
+00:16:24.759 --> 00:16:26.150 align:start position:0%
+the delay was behind Gemini Ultra
+they're<00:16:25.040><c> basically</c><00:16:25.480><c> doing</c><00:16:25.880><c> more</c>
+
+00:16:26.150 --> 00:16:26.160 align:start position:0%
+they're basically doing more
+ 
+
+00:16:26.160 --> 00:16:27.509 align:start position:0%
+they're basically doing more
+reinforcement<00:16:26.759><c> learning</c><00:16:27.040><c> from</c><00:16:27.240><c> Human</c>
+
+00:16:27.509 --> 00:16:27.519 align:start position:0%
+reinforcement learning from Human
+ 
+
+00:16:27.519 --> 00:16:30.350 align:start position:0%
+reinforcement learning from Human
+feedback<00:16:28.560><c> especially</c><00:16:28.959><c> for</c><00:16:29.560><c> low</c><00:16:29.880><c> resource</c>
+
+00:16:30.350 --> 00:16:30.360 align:start position:0%
+feedback especially for low resource
+ 
+
+00:16:30.360 --> 00:16:32.350 align:start position:0%
+feedback especially for low resource
+languages<00:16:31.040><c> where</c><00:16:31.240><c> it</c><00:16:31.360><c> was</c><00:16:31.560><c> apparently</c><00:16:32.079><c> really</c>
+
+00:16:32.350 --> 00:16:32.360 align:start position:0%
+languages where it was apparently really
+ 
+
+00:16:32.360 --> 00:16:34.670 align:start position:0%
+languages where it was apparently really
+easy<00:16:32.720><c> to</c><00:16:33.000><c> jailbreak</c><00:16:33.720><c> they</c><00:16:33.920><c> also</c><00:16:34.319><c> kind</c><00:16:34.480><c> of</c>
+
+00:16:34.670 --> 00:16:34.680 align:start position:0%
+easy to jailbreak they also kind of
+ 
+
+00:16:34.680 --> 00:16:37.150 align:start position:0%
+easy to jailbreak they also kind of
+teased<00:16:35.079><c> out</c><00:16:35.399><c> this</c><00:16:35.720><c> Bard</c><00:16:36.120><c> advanc</c><00:16:36.880><c> which</c><00:16:37.040><c> I</c>
+
+00:16:37.150 --> 00:16:37.160 align:start position:0%
+teased out this Bard advanc which I
+ 
+
+00:16:37.160 --> 00:16:39.030 align:start position:0%
+teased out this Bard advanc which I
+suspect<00:16:37.519><c> will</c><00:16:37.680><c> be</c><00:16:37.839><c> a</c><00:16:38.040><c> subscription</c><00:16:38.560><c> model</c><00:16:38.920><c> and</c>
+
+00:16:39.030 --> 00:16:39.040 align:start position:0%
+suspect will be a subscription model and
+ 
+
+00:16:39.040 --> 00:16:40.829 align:start position:0%
+suspect will be a subscription model and
+they<00:16:39.160><c> call</c><00:16:39.360><c> it</c><00:16:39.480><c> a</c><00:16:39.639><c> new</c><00:16:39.880><c> Cutting</c><00:16:40.199><c> Edge</c><00:16:40.480><c> AI</c>
+
+00:16:40.829 --> 00:16:40.839 align:start position:0%
+they call it a new Cutting Edge AI
+ 
+
+00:16:40.839 --> 00:16:42.509 align:start position:0%
+they call it a new Cutting Edge AI
+experience<00:16:41.360><c> that</c><00:16:41.519><c> gives</c><00:16:41.720><c> you</c><00:16:41.959><c> access</c><00:16:42.199><c> to</c><00:16:42.319><c> our</c>
+
+00:16:42.509 --> 00:16:42.519 align:start position:0%
+experience that gives you access to our
+ 
+
+00:16:42.519 --> 00:16:44.509 align:start position:0%
+experience that gives you access to our
+best<00:16:42.680><c> models</c><00:16:42.959><c> and</c><00:16:43.120><c> capabilities</c><00:16:44.040><c> starting</c>
+
+00:16:44.509 --> 00:16:44.519 align:start position:0%
+best models and capabilities starting
+ 
+
+00:16:44.519 --> 00:16:46.230 align:start position:0%
+best models and capabilities starting
+with<00:16:44.680><c> ultra</c><00:16:45.240><c> be</c><00:16:45.399><c> very</c><00:16:45.519><c> interesting</c><00:16:45.839><c> to</c><00:16:45.959><c> see</c>
+
+00:16:46.230 --> 00:16:46.240 align:start position:0%
+with ultra be very interesting to see
+ 
+
+00:16:46.240 --> 00:16:48.230 align:start position:0%
+with ultra be very interesting to see
+whether<00:16:46.480><c> they</c><00:16:46.639><c> pitch</c><00:16:46.959><c> that</c><00:16:47.240><c> higher</c><00:16:47.639><c> lower</c><00:16:48.040><c> or</c>
+
+00:16:48.230 --> 00:16:48.240 align:start position:0%
+whether they pitch that higher lower or
+ 
+
+00:16:48.240 --> 00:16:50.990 align:start position:0%
+whether they pitch that higher lower or
+the<00:16:48.399><c> same</c><00:16:48.959><c> as</c><00:16:49.319><c> chat</c><00:16:49.600><c> GPT</c><00:16:50.079><c> Pro</c><00:16:50.440><c> I'll</c><00:16:50.560><c> be</c><00:16:50.720><c> honest</c>
+
+00:16:50.990 --> 00:16:51.000 align:start position:0%
+the same as chat GPT Pro I'll be honest
+ 
+
+00:16:51.000 --> 00:16:52.829 align:start position:0%
+the same as chat GPT Pro I'll be honest
+I'll<00:16:51.160><c> be</c><00:16:51.279><c> buying</c><00:16:51.560><c> it</c><00:16:51.759><c> regardless</c><00:16:52.399><c> assuming</c>
+
+00:16:52.829 --> 00:16:52.839 align:start position:0%
+I'll be buying it regardless assuming
+ 
+
+00:16:52.839 --> 00:16:55.870 align:start position:0%
+I'll be buying it regardless assuming
+it's<00:16:53.079><c> available</c><00:16:53.519><c> in</c><00:16:53.639><c> the</c><00:16:53.800><c> UK</c><00:16:54.399><c> in</c><00:16:54.560><c> terms</c><00:16:55.000><c> of</c><00:16:55.319><c> API</c>
+
+00:16:55.870 --> 00:16:55.880 align:start position:0%
+it's available in the UK in terms of API
+ 
+
+00:16:55.880 --> 00:16:58.430 align:start position:0%
+it's available in the UK in terms of API
+pricing<00:16:56.480><c> we</c><00:16:56.720><c> don't</c><00:16:57.040><c> yet</c><00:16:57.279><c> know</c><00:16:57.759><c> but</c><00:16:58.000><c> this</c><00:16:58.160><c> new</c>
+
+00:16:58.430 --> 00:16:58.440 align:start position:0%
+pricing we don't yet know but this new
+ 
+
+00:16:58.440 --> 00:17:00.430 align:start position:0%
+pricing we don't yet know but this new
+New<00:16:58.560><c> York</c><00:16:58.720><c> Times</c><00:16:58.959><c> article</c><00:16:59.399><c> did</c><00:16:59.639><c> point</c><00:16:59.880><c> out</c>
+
+00:17:00.430 --> 00:17:00.440 align:start position:0%
+New York Times article did point out
+ 
+
+00:17:00.440 --> 00:17:03.069 align:start position:0%
+New York Times article did point out
+that<00:17:00.639><c> during</c><00:17:01.000><c> that</c><00:17:01.279><c> crisis</c><00:17:01.800><c> at</c><00:17:02.000><c> openai</c><00:17:02.759><c> Google</c>
+
+00:17:03.069 --> 00:17:03.079 align:start position:0%
+that during that crisis at openai Google
+ 
+
+00:17:03.079 --> 00:17:05.590 align:start position:0%
+that during that crisis at openai Google
+offered<00:17:03.480><c> the</c><00:17:03.680><c> same</c><00:17:04.039><c> price</c><00:17:04.480><c> to</c><00:17:04.839><c> customers</c><00:17:05.439><c> at</c>
+
+00:17:05.590 --> 00:17:05.600 align:start position:0%
+offered the same price to customers at
+ 
+
+00:17:05.600 --> 00:17:08.669 align:start position:0%
+offered the same price to customers at
+openai<00:17:06.439><c> as</c><00:17:06.600><c> their</c><00:17:06.880><c> current</c><00:17:07.240><c> open</c><00:17:07.520><c> AI</c><00:17:07.880><c> rate</c><00:17:08.400><c> and</c>
+
+00:17:08.669 --> 00:17:08.679 align:start position:0%
+openai as their current open AI rate and
+ 
+
+00:17:08.679 --> 00:17:10.870 align:start position:0%
+openai as their current open AI rate and
+also<00:17:09.000><c> offered</c><00:17:09.400><c> Cloud</c><00:17:09.720><c> credits</c><00:17:10.240><c> and</c><00:17:10.480><c> discounts</c>
+
+00:17:10.870 --> 00:17:10.880 align:start position:0%
+also offered Cloud credits and discounts
+ 
+
+00:17:10.880 --> 00:17:12.549 align:start position:0%
+also offered Cloud credits and discounts
+thrown<00:17:11.160><c> in</c><00:17:11.480><c> we'll</c><00:17:11.679><c> have</c><00:17:11.799><c> to</c><00:17:11.919><c> see</c><00:17:12.240><c> if</c><00:17:12.400><c> that</c>
+
+00:17:12.549 --> 00:17:12.559 align:start position:0%
+thrown in we'll have to see if that
+ 
+
+00:17:12.559 --> 00:17:14.990 align:start position:0%
+thrown in we'll have to see if that
+still<00:17:12.799><c> applies</c><00:17:13.240><c> to</c><00:17:13.480><c> Gemini</c><00:17:13.959><c> Pro</c><00:17:14.360><c> and</c><00:17:14.600><c> Gemini</c>
+
+00:17:14.990 --> 00:17:15.000 align:start position:0%
+still applies to Gemini Pro and Gemini
+ 
+
+00:17:15.000 --> 00:17:17.069 align:start position:0%
+still applies to Gemini Pro and Gemini
+Ultra<00:17:15.600><c> what</c><00:17:15.720><c> about</c><00:17:15.959><c> the</c><00:17:16.120><c> future</c><00:17:16.480><c> of</c><00:17:16.640><c> Gemini</c>
+
+00:17:17.069 --> 00:17:17.079 align:start position:0%
+Ultra what about the future of Gemini
+ 
+
+00:17:17.079 --> 00:17:19.590 align:start position:0%
+Ultra what about the future of Gemini
+though<00:17:17.319><c> Gemini</c><00:17:17.760><c> 2.0</c><00:17:18.520><c> well</c><00:17:18.679><c> Demis</c><00:17:19.120><c> Aris</c><00:17:19.480><c> the</c>
+
+00:17:19.590 --> 00:17:19.600 align:start position:0%
+though Gemini 2.0 well Demis Aris the
+ 
+
+00:17:19.600 --> 00:17:21.669 align:start position:0%
+though Gemini 2.0 well Demis Aris the
+CEO<00:17:19.919><c> of</c><00:17:20.039><c> Google</c><00:17:20.240><c> deepmind</c><00:17:20.760><c> gave</c><00:17:20.919><c> us</c><00:17:21.079><c> this</c><00:17:21.240><c> clue</c>
+
+00:17:21.669 --> 00:17:21.679 align:start position:0%
+CEO of Google deepmind gave us this clue
+ 
+
+00:17:21.679 --> 00:17:23.350 align:start position:0%
+CEO of Google deepmind gave us this clue
+he<00:17:21.799><c> said</c><00:17:22.120><c> that</c><00:17:22.280><c> Google</c><00:17:22.520><c> Deep</c><00:17:22.760><c> Mind</c><00:17:22.959><c> is</c><00:17:23.079><c> already</c>
+
+00:17:23.350 --> 00:17:23.360 align:start position:0%
+he said that Google Deep Mind is already
+ 
+
+00:17:23.360 --> 00:17:25.029 align:start position:0%
+he said that Google Deep Mind is already
+looking<00:17:23.720><c> into</c><00:17:23.959><c> how</c><00:17:24.160><c> Gemini</c><00:17:24.640><c> might</c><00:17:24.839><c> be</c>
+
+00:17:25.029 --> 00:17:25.039 align:start position:0%
+looking into how Gemini might be
+ 
+
+00:17:25.039 --> 00:17:27.750 align:start position:0%
+looking into how Gemini might be
+combined<00:17:25.559><c> with</c><00:17:25.839><c> robotics</c><00:17:26.799><c> to</c><00:17:27.160><c> physically</c>
+
+00:17:27.750 --> 00:17:27.760 align:start position:0%
+combined with robotics to physically
+ 
+
+00:17:27.760 --> 00:17:29.750 align:start position:0%
+combined with robotics to physically
+interact<00:17:28.199><c> with</c><00:17:28.520><c> the</c><00:17:28.640><c> world</c><00:17:29.000><c> to</c><00:17:29.200><c> become</c><00:17:29.440><c> truly</c>
+
+00:17:29.750 --> 00:17:29.760 align:start position:0%
+interact with the world to become truly
+ 
+
+00:17:29.760 --> 00:17:32.310 align:start position:0%
+interact with the world to become truly
+multimodal<00:17:30.720><c> you</c><00:17:30.880><c> want</c><00:17:31.080><c> to</c><00:17:31.240><c> include</c><00:17:31.640><c> touch</c><00:17:32.080><c> and</c>
+
+00:17:32.310 --> 00:17:32.320 align:start position:0%
+multimodal you want to include touch and
+ 
+
+00:17:32.320 --> 00:17:34.470 align:start position:0%
+multimodal you want to include touch and
+tactile<00:17:32.799><c> feedback</c><00:17:33.440><c> and</c><00:17:33.640><c> I</c><00:17:33.840><c> can't</c><00:17:34.120><c> resist</c>
+
+00:17:34.470 --> 00:17:34.480 align:start position:0%
+tactile feedback and I can't resist
+ 
+
+00:17:34.480 --> 00:17:36.110 align:start position:0%
+tactile feedback and I can't resist
+pointing<00:17:34.760><c> out</c><00:17:34.919><c> at</c><00:17:35.080><c> this</c><00:17:35.240><c> point</c><00:17:35.480><c> that</c><00:17:35.640><c> I</c><00:17:35.799><c> spoke</c>
+
+00:17:36.110 --> 00:17:36.120 align:start position:0%
+pointing out at this point that I spoke
+ 
+
+00:17:36.120 --> 00:17:39.310 align:start position:0%
+pointing out at this point that I spoke
+to<00:17:36.520><c> panag</c><00:17:36.919><c> sanetti</c><00:17:37.640><c> for</c><00:17:37.880><c> AI</c><00:17:38.240><c> insiders</c><00:17:38.960><c> he</c><00:17:39.120><c> is</c>
+
+00:17:39.310 --> 00:17:39.320 align:start position:0%
+to panag sanetti for AI insiders he is
+ 
+
+00:17:39.320 --> 00:17:41.909 align:start position:0%
+to panag sanetti for AI insiders he is
+the<00:17:39.480><c> tech</c><00:17:39.720><c> lead</c><00:17:39.960><c> manager</c><00:17:40.320><c> for</c><00:17:40.520><c> rt2</c><00:17:41.280><c> and</c><00:17:41.440><c> I</c><00:17:41.600><c> also</c>
+
+00:17:41.909 --> 00:17:41.919 align:start position:0%
+the tech lead manager for rt2 and I also
+ 
+
+00:17:41.919 --> 00:17:44.430 align:start position:0%
+the tech lead manager for rt2 and I also
+spoke<00:17:42.320><c> about</c><00:17:42.600><c> this</c><00:17:42.840><c> topic</c><00:17:43.360><c> with</c><00:17:43.720><c> many</c><00:17:44.080><c> other</c>
+
+00:17:44.430 --> 00:17:44.440 align:start position:0%
+spoke about this topic with many other
+ 
+
+00:17:44.440 --> 00:17:46.950 align:start position:0%
+spoke about this topic with many other
+lead<00:17:44.679><c> authors</c><00:17:45.280><c> at</c><00:17:45.440><c> Nvidia</c><00:17:46.080><c> and</c><00:17:46.280><c> elsewhere</c><00:17:46.840><c> and</c>
+
+00:17:46.950 --> 00:17:46.960 align:start position:0%
+lead authors at Nvidia and elsewhere and
+ 
+
+00:17:46.960 --> 00:17:48.950 align:start position:0%
+lead authors at Nvidia and elsewhere and
+I<00:17:47.080><c> hope</c><00:17:47.320><c> that</c><00:17:47.480><c> video</c><00:17:47.799><c> will</c><00:17:47.960><c> be</c><00:17:48.160><c> out</c><00:17:48.440><c> on</c><00:17:48.640><c> AI</c>
+
+00:17:48.950 --> 00:17:48.960 align:start position:0%
+I hope that video will be out on AI
+ 
+
+00:17:48.960 --> 00:17:50.990 align:start position:0%
+I hope that video will be out on AI
+insiders<00:17:49.520><c> before</c><00:17:49.799><c> the</c><00:17:49.919><c> end</c><00:17:50.160><c> of</c><00:17:50.320><c> this</c><00:17:50.480><c> month</c><00:17:50.880><c> in</c>
+
+00:17:50.990 --> 00:17:51.000 align:start position:0%
+insiders before the end of this month in
+ 
+
+00:17:51.000 --> 00:17:53.390 align:start position:0%
+insiders before the end of this month in
+this<00:17:51.200><c> wired</c><00:17:51.559><c> interview</c><00:17:52.000><c> demisa</c><00:17:52.559><c> sais</c><00:17:53.000><c> also</c>
+
+00:17:53.390 --> 00:17:53.400 align:start position:0%
+this wired interview demisa sais also
+ 
+
+00:17:53.400 --> 00:17:55.430 align:start position:0%
+this wired interview demisa sais also
+strongly<00:17:53.679><c> hinted</c><00:17:54.200><c> that</c><00:17:54.400><c> this</c><00:17:54.640><c> work</c><00:17:55.120><c> was</c>
+
+00:17:55.430 --> 00:17:55.440 align:start position:0%
+strongly hinted that this work was
+ 
+
+00:17:55.440 --> 00:17:57.830 align:start position:0%
+strongly hinted that this work was
+related<00:17:56.000><c> to</c><00:17:56.320><c> what</c><00:17:56.559><c> qar</c><00:17:57.200><c> might</c><00:17:57.400><c> be</c><00:17:57.559><c> about</c>
+
+00:17:57.830 --> 00:17:57.840 align:start position:0%
+related to what qar might be about
+ 
+
+00:17:57.840 --> 00:17:59.590 align:start position:0%
+related to what qar might be about
+further<00:17:58.120><c> Evidence</c><00:17:58.360><c> idence</c><00:17:58.840><c> that</c><00:17:59.080><c> this</c><00:17:59.200><c> is</c><00:17:59.360><c> the</c>
+
+00:17:59.590 --> 00:17:59.600 align:start position:0%
+further Evidence idence that this is the
+ 
+
+00:17:59.600 --> 00:18:02.310 align:start position:0%
+further Evidence idence that this is the
+direction<00:18:00.200><c> that</c><00:18:00.440><c> all</c><00:18:00.679><c> the</c><00:18:00.840><c> major</c><00:18:01.240><c> AI</c><00:18:01.760><c> labs</c><00:18:02.120><c> are</c>
+
+00:18:02.310 --> 00:18:02.320 align:start position:0%
+direction that all the major AI labs are
+ 
+
+00:18:02.320 --> 00:18:04.110 align:start position:0%
+direction that all the major AI labs are
+heading<00:18:02.559><c> toward</c><00:18:03.039><c> when</c><00:18:03.200><c> asked</c><00:18:03.480><c> about</c><00:18:03.760><c> that</c><00:18:04.000><c> he</c>
+
+00:18:04.110 --> 00:18:04.120 align:start position:0%
+heading toward when asked about that he
+ 
+
+00:18:04.120 --> 00:18:05.549 align:start position:0%
+heading toward when asked about that he
+said<00:18:04.360><c> we</c><00:18:04.480><c> have</c><00:18:04.600><c> some</c><00:18:04.720><c> of</c><00:18:04.840><c> the</c><00:18:04.960><c> world's</c><00:18:05.320><c> best</c>
+
+00:18:05.549 --> 00:18:05.559 align:start position:0%
+said we have some of the world's best
+ 
+
+00:18:05.559 --> 00:18:07.230 align:start position:0%
+said we have some of the world's best
+reinforcement<00:18:06.120><c> learning</c><00:18:06.480><c> experts</c><00:18:07.039><c> who</c>
+
+00:18:07.230 --> 00:18:07.240 align:start position:0%
+reinforcement learning experts who
+ 
+
+00:18:07.240 --> 00:18:09.110 align:start position:0%
+reinforcement learning experts who
+invented<00:18:07.720><c> some</c><00:18:07.840><c> of</c><00:18:08.000><c> this</c><00:18:08.159><c> stuff</c><00:18:08.520><c> and</c><00:18:08.640><c> went</c><00:18:08.840><c> on</c>
+
+00:18:09.110 --> 00:18:09.120 align:start position:0%
+invented some of this stuff and went on
+ 
+
+00:18:09.120 --> 00:18:11.110 align:start position:0%
+invented some of this stuff and went on
+we've<00:18:09.320><c> got</c><00:18:09.559><c> some</c><00:18:09.880><c> interesting</c><00:18:10.320><c> Innovations</c>
+
+00:18:11.110 --> 00:18:11.120 align:start position:0%
+we've got some interesting Innovations
+ 
+
+00:18:11.120 --> 00:18:13.110 align:start position:0%
+we've got some interesting Innovations
+we're<00:18:11.360><c> working</c><00:18:11.679><c> on</c><00:18:11.919><c> to</c><00:18:12.080><c> bring</c><00:18:12.360><c> to</c><00:18:12.760><c> Future</c>
+
+00:18:13.110 --> 00:18:13.120 align:start position:0%
+we're working on to bring to Future
+ 
+
+00:18:13.120 --> 00:18:15.350 align:start position:0%
+we're working on to bring to Future
+versions<00:18:13.440><c> of</c><00:18:13.600><c> Gemini</c><00:18:14.159><c> and</c><00:18:14.360><c> again</c><00:18:14.600><c> like</c><00:18:14.840><c> me</c><00:18:15.159><c> he</c>
+
+00:18:15.350 --> 00:18:15.360 align:start position:0%
+versions of Gemini and again like me he
+ 
+
+00:18:15.360 --> 00:18:18.149 align:start position:0%
+versions of Gemini and again like me he
+is<00:18:15.679><c> a</c><00:18:15.880><c> somewhat</c><00:18:16.320><c> understated</c><00:18:16.960><c> Londoner</c><00:18:17.720><c> so</c>
+
+00:18:18.149 --> 00:18:18.159 align:start position:0%
+is a somewhat understated Londoner so
+ 
+
+00:18:18.159 --> 00:18:20.230 align:start position:0%
+is a somewhat understated Londoner so
+that<00:18:18.320><c> could</c><00:18:18.520><c> be</c><00:18:18.880><c> pretty</c><00:18:19.200><c> significant</c><00:18:19.919><c> in</c><00:18:20.039><c> The</c>
+
+00:18:20.230 --> 00:18:20.240 align:start position:0%
+that could be pretty significant in The
+ 
+
+00:18:20.240 --> 00:18:21.789 align:start position:0%
+that could be pretty significant in The
+Verge<00:18:20.559><c> he</c><00:18:20.679><c> doubled</c><00:18:21.039><c> down</c><00:18:21.200><c> on</c><00:18:21.360><c> that</c><00:18:21.559><c> talking</c>
+
+00:18:21.789 --> 00:18:21.799 align:start position:0%
+Verge he doubled down on that talking
+ 
+
+00:18:21.799 --> 00:18:23.669 align:start position:0%
+Verge he doubled down on that talking
+about<00:18:22.000><c> Gemini</c><00:18:22.400><c> Ultra</c><00:18:22.880><c> saying</c><00:18:23.159><c> it's</c><00:18:23.360><c> going</c><00:18:23.520><c> to</c>
+
+00:18:23.669 --> 00:18:23.679 align:start position:0%
+about Gemini Ultra saying it's going to
+ 
+
+00:18:23.679 --> 00:18:26.190 align:start position:0%
+about Gemini Ultra saying it's going to
+get<00:18:23.919><c> even</c><00:18:24.200><c> more</c><00:18:24.480><c> General</c><00:18:25.120><c> than</c><00:18:25.440><c> images</c><00:18:25.880><c> video</c>
+
+00:18:26.190 --> 00:18:26.200 align:start position:0%
+get even more General than images video
+ 
+
+00:18:26.200 --> 00:18:27.750 align:start position:0%
+get even more General than images video
+and<00:18:26.360><c> audio</c><00:18:26.840><c> there's</c><00:18:27.039><c> still</c><00:18:27.240><c> things</c><00:18:27.520><c> like</c>
+
+00:18:27.750 --> 00:18:27.760 align:start position:0%
+and audio there's still things like
+ 
+
+00:18:27.760 --> 00:18:30.310 align:start position:0%
+and audio there's still things like
+action<00:18:28.080><c> and</c><00:18:28.440><c> touch</c><00:18:28.919><c> more</c><00:18:29.120><c> like</c><00:18:29.360><c> robotics</c><00:18:30.039><c> over</c>
+
+00:18:30.310 --> 00:18:30.320 align:start position:0%
+action and touch more like robotics over
+ 
+
+00:18:30.320 --> 00:18:33.190 align:start position:0%
+action and touch more like robotics over
+time<00:18:30.559><c> he</c><00:18:30.679><c> says</c><00:18:31.159><c> Gemini</c><00:18:31.559><c> will</c><00:18:31.760><c> get</c><00:18:31.960><c> more</c><00:18:32.200><c> senses</c>
+
+00:18:33.190 --> 00:18:33.200 align:start position:0%
+time he says Gemini will get more senses
+ 
+
+00:18:33.200 --> 00:18:35.950 align:start position:0%
+time he says Gemini will get more senses
+become<00:18:33.559><c> more</c><00:18:33.960><c> aware</c><00:18:34.640><c> and</c><00:18:34.799><c> he</c><00:18:35.000><c> ended</c><00:18:35.400><c> his</c><00:18:35.559><c> media</c>
+
+00:18:35.950 --> 00:18:35.960 align:start position:0%
+become more aware and he ended his media
+ 
+
+00:18:35.960 --> 00:18:38.270 align:start position:0%
+become more aware and he ended his media
+round<00:18:36.240><c> with</c><00:18:36.520><c> this</c><00:18:36.799><c> as</c><00:18:36.919><c> we</c><00:18:37.159><c> approach</c><00:18:37.520><c> AGI</c>
+
+00:18:38.270 --> 00:18:38.280 align:start position:0%
+round with this as we approach AGI
+ 
+
+00:18:38.280 --> 00:18:39.990 align:start position:0%
+round with this as we approach AGI
+things<00:18:38.480><c> are</c><00:18:38.640><c> going</c><00:18:38.799><c> to</c><00:18:38.960><c> be</c><00:18:39.120><c> different</c><00:18:39.520><c> hasab</c>
+
+00:18:39.990 --> 00:18:40.000 align:start position:0%
+things are going to be different hasab
+ 
+
+00:18:40.000 --> 00:18:41.950 align:start position:0%
+things are going to be different hasab
+says<00:18:40.280><c> we're</c><00:18:40.400><c> going</c><00:18:40.520><c> to</c><00:18:40.640><c> gain</c><00:18:40.919><c> Insanity</c><00:18:41.520><c> points</c>
+
+00:18:41.950 --> 00:18:41.960 align:start position:0%
+says we're going to gain Insanity points
+ 
+
+00:18:41.960 --> 00:18:43.990 align:start position:0%
+says we're going to gain Insanity points
+is<00:18:42.120><c> what</c><00:18:42.240><c> Sam</c><00:18:42.480><c> Alman</c><00:18:42.799><c> said</c><00:18:43.120><c> it's</c><00:18:43.400><c> kind</c><00:18:43.559><c> of</c><00:18:43.720><c> an</c>
+
+00:18:43.990 --> 00:18:44.000 align:start position:0%
+is what Sam Alman said it's kind of an
+ 
+
+00:18:44.000 --> 00:18:46.230 align:start position:0%
+is what Sam Alman said it's kind of an
+active<00:18:44.480><c> technology</c><00:18:45.200><c> so</c><00:18:45.400><c> I</c><00:18:45.520><c> think</c><00:18:45.720><c> we</c><00:18:45.880><c> have</c><00:18:46.000><c> to</c>
+
+00:18:46.230 --> 00:18:46.240 align:start position:0%
+active technology so I think we have to
+ 
+
+00:18:46.240 --> 00:18:48.990 align:start position:0%
+active technology so I think we have to
+approach<00:18:46.600><c> that</c><00:18:46.799><c> cautiously</c><00:18:47.640><c> cautiously</c><00:18:48.640><c> but</c>
+
+00:18:48.990 --> 00:18:49.000 align:start position:0%
+approach that cautiously cautiously but
+ 
+
+00:18:49.000 --> 00:18:50.870 align:start position:0%
+approach that cautiously cautiously but
+optimistically<00:18:49.880><c> and</c><00:18:50.000><c> on</c><00:18:50.159><c> that</c><00:18:50.320><c> note</c><00:18:50.600><c> I</c><00:18:50.679><c> want</c>
+
+00:18:50.870 --> 00:18:50.880 align:start position:0%
+optimistically and on that note I want
+ 
+
+00:18:50.880 --> 00:18:53.190 align:start position:0%
+optimistically and on that note I want
+to<00:18:51.120><c> end</c><00:18:51.400><c> the</c><00:18:51.640><c> video</c><00:18:52.120><c> and</c><00:18:52.360><c> yes</c><00:18:52.600><c> I'm</c><00:18:52.840><c> super</c>
+
+00:18:53.190 --> 00:18:53.200 align:start position:0%
+to end the video and yes I'm super
+ 
+
+00:18:53.200 --> 00:18:55.909 align:start position:0%
+to end the video and yes I'm super
+excited<00:18:53.880><c> about</c><00:18:54.159><c> the</c><00:18:54.360><c> rolling</c><00:18:54.799><c> launch</c><00:18:55.360><c> of</c><00:18:55.600><c> AI</c>
+
+00:18:55.909 --> 00:18:55.919 align:start position:0%
+excited about the rolling launch of AI
+ 
+
+00:18:55.919 --> 00:18:57.950 align:start position:0%
+excited about the rolling launch of AI
+insiders<00:18:56.559><c> which</c><00:18:56.679><c> you</c><00:18:56.799><c> can</c><00:18:57.000><c> sign</c><00:18:57.240><c> up</c><00:18:57.400><c> to</c><00:18:57.679><c> now</c>
+
+00:18:57.950 --> 00:18:57.960 align:start position:0%
+insiders which you can sign up to now
+ 
+
+00:18:57.960 --> 00:18:59.710 align:start position:0%
+insiders which you can sign up to now
+but<00:18:58.080><c> I</c><00:18:58.159><c> also</c><00:18:58.360><c> also</c><00:18:58.520><c> want</c><00:18:58.679><c> to</c><00:18:58.960><c> reassure</c><00:18:59.520><c> my</c>
+
+00:18:59.710 --> 00:18:59.720 align:start position:0%
+but I also also want to reassure my
+ 
+
+00:18:59.720 --> 00:19:01.830 align:start position:0%
+but I also also want to reassure my
+long-standing<00:19:00.200><c> audience</c><00:19:00.799><c> for</c><00:19:01.000><c> many</c><00:19:01.200><c> of</c><00:19:01.360><c> whom</c>
+
+00:19:01.830 --> 00:19:01.840 align:start position:0%
+long-standing audience for many of whom
+ 
+
+00:19:01.840 --> 00:19:06.149 align:start position:0%
+long-standing audience for many of whom
+$29<00:19:02.840><c> or</c><00:19:03.039><c> even</c><00:19:03.720><c> $25</c><00:19:04.720><c> is</c><00:19:05.080><c> way</c><00:19:05.280><c> too</c><00:19:05.520><c> expensive</c><00:19:05.960><c> for</c>
+
+00:19:06.149 --> 00:19:06.159 align:start position:0%
+$29 or even $25 is way too expensive for
+ 
+
+00:19:06.159 --> 00:19:08.510 align:start position:0%
+$29 or even $25 is way too expensive for
+them<00:19:06.600><c> I</c><00:19:06.720><c> totally</c><00:19:07.159><c> respect</c><00:19:07.559><c> that</c><00:19:07.840><c> and</c><00:19:08.000><c> for</c><00:19:08.320><c> most</c>
+
+00:19:08.510 --> 00:19:08.520 align:start position:0%
+them I totally respect that and for most
+ 
+
+00:19:08.520 --> 00:19:09.950 align:start position:0%
+them I totally respect that and for most
+of<00:19:08.720><c> my</c><00:19:08.919><c> life</c><00:19:09.200><c> it</c><00:19:09.280><c> would</c><00:19:09.440><c> have</c><00:19:09.559><c> been</c><00:19:09.720><c> too</c>
+
+00:19:09.950 --> 00:19:09.960 align:start position:0%
+of my life it would have been too
+ 
+
+00:19:09.960 --> 00:19:11.990 align:start position:0%
+of my life it would have been too
+expensive<00:19:10.440><c> for</c><00:19:10.600><c> me</c><00:19:10.760><c> too</c><00:19:11.159><c> so</c><00:19:11.280><c> don't</c><00:19:11.480><c> worry</c><00:19:11.840><c> as</c>
+
+00:19:11.990 --> 00:19:12.000 align:start position:0%
+expensive for me too so don't worry as
+ 
+
+00:19:12.000 --> 00:19:14.110 align:start position:0%
+expensive for me too so don't worry as
+this<00:19:12.159><c> video</c><00:19:12.400><c> shows</c><00:19:13.000><c> I</c><00:19:13.080><c> will</c><00:19:13.280><c> still</c><00:19:13.480><c> be</c><00:19:13.679><c> posting</c>
+
+00:19:14.110 --> 00:19:14.120 align:start position:0%
+this video shows I will still be posting
+ 
+
+00:19:14.120 --> 00:19:16.630 align:start position:0%
+this video shows I will still be posting
+as<00:19:14.360><c> frequently</c><00:19:14.960><c> on</c><00:19:15.200><c> the</c><00:19:15.400><c> main</c><00:19:15.840><c> AI</c><00:19:16.200><c> explain</c>
+
+00:19:16.630 --> 00:19:16.640 align:start position:0%
+as frequently on the main AI explain
+ 
+
+00:19:16.640 --> 00:19:18.390 align:start position:0%
+as frequently on the main AI explain
+Channel<00:19:17.080><c> and</c><00:19:17.200><c> for</c><00:19:17.360><c> those</c><00:19:17.559><c> who</c><00:19:17.760><c> can</c><00:19:17.960><c> join</c><00:19:18.280><c> at</c>
+
+00:19:18.390 --> 00:19:18.400 align:start position:0%
+Channel and for those who can join at
+ 
+
+00:19:18.400 --> 00:19:19.750 align:start position:0%
+Channel and for those who can join at
+least<00:19:18.600><c> for</c><00:19:18.760><c> the</c><00:19:18.880><c> next</c><00:19:19.039><c> few</c><00:19:19.240><c> weeks</c><00:19:19.559><c> I'm</c><00:19:19.640><c> going</c>
+
+00:19:19.750 --> 00:19:19.760 align:start position:0%
+least for the next few weeks I'm going
+ 
+
+00:19:19.760 --> 00:19:22.190 align:start position:0%
+least for the next few weeks I'm going
+to<00:19:19.840><c> be</c><00:19:20.000><c> writing</c><00:19:20.480><c> a</c><00:19:20.799><c> personal</c><00:19:21.280><c> message</c><00:19:21.799><c> of</c>
+
+00:19:22.190 --> 00:19:22.200 align:start position:0%
+to be writing a personal message of
+ 
+
+00:19:22.200 --> 00:19:24.830 align:start position:0%
+to be writing a personal message of
+thanks<00:19:22.679><c> for</c><00:19:22.960><c> joining</c><00:19:23.400><c> AI</c><00:19:23.720><c> insiders</c><00:19:24.440><c> of</c><00:19:24.600><c> course</c>
+
+00:19:24.830 --> 00:19:24.840 align:start position:0%
+thanks for joining AI insiders of course
+ 
+
+00:19:24.840 --> 00:19:27.430 align:start position:0%
+thanks for joining AI insiders of course
+I<00:19:24.960><c> am</c><00:19:25.159><c> also</c><00:19:25.600><c> massively</c><00:19:26.080><c> grateful</c><00:19:26.720><c> for</c><00:19:27.039><c> all</c><00:19:27.200><c> of</c>
+
+00:19:27.430 --> 00:19:27.440 align:start position:0%
+I am also massively grateful for all of
+ 
+
+00:19:27.440 --> 00:19:29.870 align:start position:0%
+I am also massively grateful for all of
+those<00:19:27.720><c> supporting</c><00:19:28.360><c> me</c><00:19:28.679><c> at</c><00:19:28.919><c> the</c><00:19:29.280><c> legendary</c>
+
+00:19:29.870 --> 00:19:29.880 align:start position:0%
+those supporting me at the legendary
+ 
+
+00:19:29.880 --> 00:19:31.430 align:start position:0%
+those supporting me at the legendary
+level<00:19:30.320><c> you</c><00:19:30.480><c> guys</c><00:19:30.640><c> will</c><00:19:30.799><c> still</c><00:19:31.039><c> get</c><00:19:31.240><c> my</c>
+
+00:19:31.430 --> 00:19:31.440 align:start position:0%
+level you guys will still get my
+ 
+
+00:19:31.440 --> 00:19:34.110 align:start position:0%
+level you guys will still get my
+personal<00:19:31.840><c> updates</c><00:19:32.440><c> and</c><00:19:32.679><c> blog</c><00:19:32.960><c> style</c><00:19:33.360><c> posts</c><00:19:33.880><c> so</c>
+
+00:19:34.110 --> 00:19:34.120 align:start position:0%
+personal updates and blog style posts so
+ 
+
+00:19:34.120 --> 00:19:36.110 align:start position:0%
+personal updates and blog style posts so
+that's<00:19:34.320><c> Google</c><00:19:34.600><c> Gemini</c><00:19:35.280><c> definitely</c><00:19:35.679><c> not</c><00:19:35.919><c> the</c>
+
+00:19:36.110 --> 00:19:36.120 align:start position:0%
+that's Google Gemini definitely not the
+ 
+
+00:19:36.120 --> 00:19:38.430 align:start position:0%
+that's Google Gemini definitely not the
+last<00:19:36.480><c> video</c><00:19:36.799><c> from</c><00:19:37.080><c> me</c><00:19:37.600><c> on</c><00:19:37.880><c> any</c><00:19:38.080><c> of</c><00:19:38.240><c> those</c>
+
+00:19:38.430 --> 00:19:38.440 align:start position:0%
+last video from me on any of those
+ 
+
+00:19:38.440 --> 00:19:40.270 align:start position:0%
+last video from me on any of those
+models<00:19:39.000><c> but</c><00:19:39.159><c> thank</c><00:19:39.320><c> you</c><00:19:39.559><c> so</c><00:19:39.799><c> much</c><00:19:40.039><c> for</c>
+
+00:19:40.270 --> 00:19:40.280 align:start position:0%
+models but thank you so much for
+ 
+
+00:19:40.280 --> 00:19:42.830 align:start position:0%
+models but thank you so much for
+watching<00:19:40.720><c> this</c><00:19:40.919><c> video</c><00:19:41.640><c> and</c><00:19:41.880><c> have</c><00:19:42.080><c> a</c><00:19:42.320><c> wonderful</c>
+
+00:19:42.830 --> 00:19:42.840 align:start position:0%
+watching this video and have a wonderful
+ 
+
+00:19:42.840 --> 00:19:45.120 align:start position:0%
+watching this video and have a wonderful
+day
+

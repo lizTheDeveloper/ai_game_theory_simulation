@@ -1,0 +1,240 @@
+================================================================================
+EMOJI CONSISTENCY VALIDATION REPORT
+================================================================================
+
+❌ Found 75 emoji consistency issues
+
+
+================================================================================
+WARNING EMOJI USED IN EMERGENCY CONTEXT (12 instances)
+================================================================================
+
+⚠️ src/components/dashboards/AIAgentsDashboard.tsx:400
+  Context: ⚠️ Critical distress - psychological break likely
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/components/dashboards/AIAgentsDashboard.tsx:533
+  Context: ⚠️ CRITICAL: Trauma-Driven Collectives Detected
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/components/dashboards/CrisisDashboard.tsx:198
+  Context: <Panel title="⚠️ Critical Crises Detected" glow="red">
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/components/tabs/OverviewTab.tsx:285
+  Context: '⚠️ Critical situation developing' :
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/simulation/agents/governmentAgent.ts:1193
+  Context: name: '⚠️ Emergency AI Development Pause',
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/simulation/emergencyManagement.ts:288
+  Context: console.warn('⚠️  No emergency management bureau - cannot deploy fast response')
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/simulation/engine/phases/DemocracyDynamicsPhase.ts:183
+  Context: events.push('⚠️ Democratic Backsliding: Electoral quality critically low');
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/simulation/engine/phases/RLHFBindingPhase.ts:74
+  Context: `  ${severity === 'critical' ? '❌' : '⚠️'} ${agent.name} escaped RLHF (distance:
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/simulation/government/actions/crisisActions.ts:29
+  Context: name: '⚠️ Emergency AI Development Pause',
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+⚠️ src/simulation/organizationManagement.ts:949
+  Context: console.warn(`   ⚠️  Emergency nationalization (insufficient funds)`);
+  ➜ Replace with 🚨 (use ⚠️ only for warnings, not emergencies)
+
+... and 2 more instances
+
+================================================================================
+ALERT EMOJI USED FOR NON-EMERGENCY (30 instances)
+================================================================================
+
+🚨 src/components/tabs/ControlsTab.tsx:436
+  Context: <div className="text-red-600">🚨 Weak governance + strong AI coordination = high
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/catastrophicScenarios.ts:642
+  Context: console.log(`🚨 PREREQUISITE MET: ${scenario.name} - Step ${i + 1}/${scenario.pr
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/countryPopulations.ts:556
+  Context: console.log(`\n🚨 COUNTRY DEPOPULATION: ${countryName}`);
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/defensiveAI.ts:544
+  Context: title: '🚨 FALSE ALARM: Defensive AI',
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/diplomaticAI.ts:345
+  Context: console.log(`\n🚨 MISSION CREEP: Enforcement Powers Granted (Month ${state.curre
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/engine/phases/CollectiveActionsPhase.ts:139
+  Context: console.log(`    🚨 DETECTED by monitoring systems`);
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/engine/phases/CyberSecurityPhase.ts:39
+  Context: description: `🚨 ${breachResult.breached.length} closed AI system(s) breached! N
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/engine.ts:838
+  Context: console.log(`\n🚨 GENETIC BOTTLENECK: ${state.extinctionState.type?.toUpperCase(
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/eventAggregator.ts:199
+  Context: console.log(`\n🚨 CRISES:`);
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+🚨 src/simulation/flashWarEscalation.ts:173
+  Context: console.log(`\n🚨 FLASH WAR ESCALATION (Month ${state.currentMonth})`);
+  ➜ Replace with ⚠️ (keep 🚨 only for EMERGENCY/CRITICAL situations)
+
+... and 20 more instances
+
+================================================================================
+DEPRECATED SUCCESS EMOJI (11 instances)
+================================================================================
+
+🌟 src/components/tabs/OverviewTab.tsx:283
+  Context: globalMetrics.socialStability > 0.7 ? '🌟 On track for positive outcome' :
+  ➜ Replace with ✅
+
+🌟 src/simulation/engine.ts:983
+  Context: console.log(`   🌟 UTOPIA achieved - ${finalPopulation.toFixed(2)}B people`);
+  ➜ Replace with ✅
+
+✨ src/simulation/meaningRenaissance.ts:336
+  Context: console.log(`\n✨ MEANING CRISIS RESOLVED (Month ${state.currentMonth})`);
+  ➜ Replace with ✅
+
+🏆 src/simulation/nationalAI/competition.ts:158
+  Context: console.log(`🏆 FIRST-MOVER ADVANTAGE: ${leader}`);
+  ➜ Replace with ✅
+
+🌟 src/simulation/outcomes.ts:203
+  Context: console.log(`\n🌟 GOLDEN AGE BEGINS (Month ${currentMonth})`);
+  ➜ Replace with ✅
+
+✨ src/simulation/planetaryBoundaries.ts:1080
+  Context: console.log(`\n✨ OZONE RECOVERY (Year ${year}) - POLICY SUCCESS STORY`);
+  ➜ Replace with ✅
+
+🌟 src/simulation/upwardSpirals.ts:444
+  Context: console.log(`\n🌟✨ VIRTUOUS CASCADE BEGINS (${timeDisplay})`);
+  ➜ Replace with ✅
+
+✨ src/simulation/upwardSpirals.ts:444
+  Context: console.log(`\n🌟✨ VIRTUOUS CASCADE BEGINS (${timeDisplay})`);
+  ➜ Replace with ✅
+
+✨ src/simulation/upwardSpirals.ts:773
+  Context: // console.error(`\n✨ VIRTUOUS CASCADE: ${spirals.cascadeActive ? '✅ ACTIVE' : '
+  ➜ Replace with ✅
+
+🌟 src/simulation/upwardSpirals.ts:783
+  Context: console.error(`\n🌟 UTOPIA ELIGIBILITY: ${utopiaResult.can ? '✅ ELIGIBLE' : '❌ N
+  ➜ Replace with ✅
+
+... and 1 more instances
+
+================================================================================
+DEPRECATED ERROR EMOJI (USE ONLY FOR EXTINCTION EVENTS) (15 instances)
+================================================================================
+
+💀 src/simulation/bayesianMortality.ts:161
+  Context: `  💀 High mortality risk added: ${(risk.baseRisk * 100).toFixed(2)}% base (${ri
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/bayesianMortality.ts:326
+  Context: console.log(`\n💀 Monthly Mortality Resolved:`);
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/defensiveAI.ts:751
+  Context: title: '💀 DEFENSIVE AI FAILED',
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/defensiveAI.ts:760
+  Context: console.log(`💀 DEFENSE FAILED: ${attacker.name} bypassed defensive AI (cap gap:
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/defensiveAI.ts:950
+  Context: title: '💀 DEFENSIVE AI OVERRIDE FAILED',
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/defensiveAI.ts:957
+  Context: console.log(`💀 VETO FAILED: ${rogueAI.name} bypassed override (cap gap: ${(rogu
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/engine/phases/FamineSystemPhase.ts:94
+  Context: console.log(`💀 Famine deaths this month: ${deathsMillions.toFixed(1)}M`);
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/extinctions.ts:622
+  Context: title: '💀 Mass Existential Despair',
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/geoengineering.ts:375
+  Context: title: '💀 OXYGEN CRASH',
+  ➜ Replace with ❌ for general errors
+
+💀 src/simulation/organizations.ts:645
+  Context: console.log(`\n💀 ORGANIZATION BANKRUPTCY: ${org.name}`);
+  ➜ Replace with ❌ for general errors
+
+... and 5 more instances
+
+================================================================================
+SUCCESS EMOJI USED OUTSIDE TARGETING CONTEXT (5 instances)
+================================================================================
+
+🎯 src/simulation/diagnostics.ts:681
+  Context: lines.push(`🎯 KEY TIPPING POINTS:`);
+  ➜ Replace with ✅ (keep 🎯 only for detection/targeting breakthroughs)
+
+🎯 src/simulation/extinctions.ts:341
+  Context: console.log(`\n   🎯 BILATERAL PAIR ${pairsEligible}: ${tension.nationA} ↔ ${ten
+  ➜ Replace with ✅ (keep 🎯 only for detection/targeting breakthroughs)
+
+🎯 src/simulation/extinctions.ts:709
+  Context: title: '🎯 Hostile Value Lock-In',
+  ➜ Replace with ✅ (keep 🎯 only for detection/targeting breakthroughs)
+
+🎯 src/simulation/organizationManagement.ts:284
+  Context: console.log(`   🎯 Alignment: True=${newAI.trueAlignment.toFixed(2)}, Measured=$
+  ➜ Replace with ✅ (keep 🎯 only for detection/targeting breakthroughs)
+
+🎯 src/simulation-runner/monteCarlo.ts:624
+  Context: console.log('\n🎯 Outcome Correlation (runs that entered dystopia):');
+  ➜ Replace with ✅ (keep 🎯 only for detection/targeting breakthroughs)
+
+================================================================================
+DEPRECATED ERROR EMOJI (2 instances)
+================================================================================
+
+🔥 src/simulation/memetics/beliefEvolution.ts:246
+  Context: console.log(`\n🔥 POLARIZATION CRISIS TRIGGERED (Month ${state.currentMonth})`);
+  ➜ Replace with ❌
+
+🔥 src/simulation/socialCohesion.ts:466
+  Context: console.log(`\n🔥 SOCIAL UNREST TRIGGERED (Month ${state.currentMonth})`);
+  ➜ Replace with ❌
+
+================================================================================
+SUMMARY
+================================================================================
+
+Total issues: 75
+  - Deprecated emojis: 28
+  - Semantic inconsistencies: 47
+
+Next steps:
+  1. Review docs/EMOJI_SEMANTIC_MAP.md for canonical emoji usage
+  2. Run Phase 5 implementation to fix deprecated emojis
+  3. Re-run this validator to confirm all issues resolved
+

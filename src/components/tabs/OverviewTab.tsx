@@ -280,9 +280,9 @@ export default function OverviewTab() {
               </div>
               <div className="text-xs text-muted-foreground pt-2">
                 {globalMetrics.qualityOfLife > 0.7 && globalMetrics.informationIntegrity > 0.7 && 
-                 globalMetrics.socialStability > 0.7 ? '🌟 On track for positive outcome' :
+                 globalMetrics.socialStability > 0.7 ? '✅ On track for positive outcome' :
                  globalMetrics.qualityOfLife < 0.3 || globalMetrics.socialStability < 0.3 ? 
-                 '⚠️ Critical situation developing' :
+                 '🚨 Critical situation developing' :
                  '🔄 Outcome uncertain, trajectory changing'}
               </div>
             </div>

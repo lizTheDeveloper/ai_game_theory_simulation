@@ -403,7 +403,7 @@ export class ProviderManager {
       console.log(`\n${provider.name}:`);
       console.log(`  Requests: ${usage.requests_day}/${provider.limits.requests_per_day || '∞'} (day)`);
       console.log(`  Tokens: ${usage.tokens_day}/${provider.limits.tokens_per_day || '∞'} (day)`);
-      console.error(`  Available: ${this.canUseProvider(provider) ? '✅' : '❌'}`);
+      console.error(`  Available: ${this.canUseProvider(provider) ? '✅' : '🔴'}`);
 
       if (!this.canUseProvider(provider)) {
         const delay = this.getTimeUntilAvailable(provider.name);

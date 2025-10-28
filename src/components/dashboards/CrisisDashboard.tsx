@@ -195,7 +195,7 @@ export function CrisisDashboard() {
 
       {/* Active Crisis Alert */}
       {stats.criticalCrises > 0 && (
-        <Panel title="⚠️ Critical Crises Detected" glow="red">
+        <Panel title="🚨 Critical Crises Detected" glow="red">
           <p className="text-sm" style={{ color: 'var(--white-60)' }}>
             {stats.criticalCrises} critical crisis{stats.criticalCrises > 1 ? 'es' : ''} requiring immediate intervention.
             Multiple active crises can create cascade effects with compounding mortality.

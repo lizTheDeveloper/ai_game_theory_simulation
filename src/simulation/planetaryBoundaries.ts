@@ -44,6 +44,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.climate_change = {
     name: 'climate_change',
     displayName: 'Climate Change',
+    recoveryMonths: 0,
     currentValue: 1.21,                    // 21% beyond boundary
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -64,6 +65,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.biosphere_integrity = {
     name: 'biosphere_integrity',
     displayName: 'Biosphere Integrity (Biodiversity)',
+    recoveryMonths: 0,
     currentValue: 10.0,                    // 10x boundary (catastrophic)
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -84,6 +86,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.land_system_change = {
     name: 'land_system_change',
     displayName: 'Land System Change',
+    recoveryMonths: 0,
     currentValue: 1.17,                    // 17% beyond boundary
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -104,6 +107,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.freshwater_change = {
     name: 'freshwater_change',
     displayName: 'Freshwater Change',
+    recoveryMonths: 0,
     currentValue: 1.15,                    // 15% beyond boundary
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -124,6 +128,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.biogeochemical_flows = {
     name: 'biogeochemical_flows',
     displayName: 'Biogeochemical Flows (N & P)',
+    recoveryMonths: 0,
     currentValue: 2.94,                    // 294% of boundary!
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -144,6 +149,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.novel_entities = {
     name: 'novel_entities',
     displayName: 'Novel Entities (Chemical Pollution)',
+    recoveryMonths: 0,
     currentValue: 1.50,                    // 50% beyond boundary
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -164,6 +170,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.ocean_acidification = {
     name: 'ocean_acidification',
     displayName: 'Ocean Acidification',
+    recoveryMonths: 0,
     currentValue: 1.05,                    // 5% beyond boundary (recent!)
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -186,6 +193,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.stratospheric_ozone = {
     name: 'stratospheric_ozone',
     displayName: 'Stratospheric Ozone Depletion',
+    recoveryMonths: 0,
     currentValue: 0.85,                    // Within safe zone, improving
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -206,6 +214,7 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   boundaries.atmospheric_aerosols = {
     name: 'atmospheric_aerosols',
     displayName: 'Atmospheric Aerosol Loading',
+    recoveryMonths: 0,
     currentValue: 0.70,                    // Safe zone
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
@@ -1068,7 +1077,7 @@ function updateOzoneRecoverySystem(state: GameState): void {
   // === 6. LOGGING (Every 12 months) ===
   if (state.currentMonth % 12 === 0 && state.currentMonth > 0) {
     const year = 2025 + Math.floor(state.currentMonth / 12);
-    console.log(`\n✨ OZONE RECOVERY (Year ${year}) - POLICY SUCCESS STORY`);
+    console.log(`\n✅ OZONE RECOVERY (Year ${year}) - POLICY SUCCESS STORY`);
     console.log(`   Ozone level: ${ozone.stratosphericO3DobsonUnits.toFixed(1)} DU (target: 290 DU)`);
     console.log(`   Recovery progress: ${(ozone.recoveryProgress * 100).toFixed(1)}%`);
     console.log(`   Ozone hole: ${ozone.ozoneHoleSize.toFixed(1)}M km² (shrinking)`);

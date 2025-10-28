@@ -19,7 +19,7 @@ import type {
 } from './accumulation';
 import type { GlobalMetrics } from './metrics';
 import type { TechnologyNode } from './technology';
-import type { OutcomeMetrics, ExtinctionState, OutcomeType, StratifiedOutcomeType, MortalityBand } from './outcomes';
+import type { OutcomeMetrics, ExtinctionState, OutcomeType, StratifiedOutcomeType, MortalityBand, UnifiedOutcomeClassification } from './outcomes';
 import type { GameEvent } from './events';
 import type { ConfigurationSettings } from './config';
 import type { PositiveTippingPointsState } from './positiveTippingPoints';
@@ -46,7 +46,8 @@ export type {
   OutcomeMetrics,
   OutcomeType,
   StratifiedOutcomeType,
-  MortalityBand
+  MortalityBand,
+  UnifiedOutcomeClassification
 } from './outcomes';
 
 export { OUTCOME_NAMES } from './outcomes';
@@ -593,6 +594,12 @@ export interface GameState {
   stratifiedOutcome?: StratifiedOutcomeType;  // Refined outcome classification
   mortalityBand?: MortalityBand;              // Mortality severity band
   initialPopulation?: number;                  // Starting population for mortality calculation (8.0B)
+
+  // Unified Outcome Classification (Oct 28, 2025)
+  // Combines 7-tier, stratified, multi-paradigm, and extinction classification into single coherent structure
+  // Fixes false extinctions (4.8B pop labeled as extinction) and fragmented reporting
+  // Research: Historical mortality precedents, paradigm conflicts, observational extinction detection
+  unifiedOutcome?: UnifiedOutcomeClassification;
 
   // Contingency & Agency Phase 2: Exogenous Shock System (Oct 17, 2025)
   crises?: {

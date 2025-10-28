@@ -1,0 +1,27 @@
+PROPERTY ACCESS VALIDATION
+
+SCANNED: 306 files
+ACCESSES: 10228
+ERRORS: 2689
+TYPES: 492
+
+❌ 2689 NON-EXISTENT PROPERTIES ACCESSED
+
+TOP ISSUES:
+aiAgent: 48 errors
+aiTechActions: 6 errors
+governmentAgent: 464 errors
+governmentTechActions: 6 errors
+socialInfluenceActions: 18 errors
+
+TOP ACCESSED:
+state.currentMonth (1092×)
+state.government (916×)
+state.aiAgents (498×)
+state.society (319×)
+state.globalMetrics (309×)
+state.environmentalAccumulation (183×)
+state.socialAccumulation (167×)
+state.extinctionState (156×)
+state.qualityOfLifeSystems (145×)
+gameState.currentMonth (143×)

@@ -248,48 +248,49 @@ export class DiagnosticLogger {
    * P0.4: Capture snapshots of key systems to identify determinism
    */
   private captureSystemSnapshots(state: GameState, month: number): void {
+    // All fields initialized in createDefaultInitialState() (Oct 28, 2025)
     // Population dynamics
     const pop = state.humanPopulationSystem;
-    const deaths = pop.deathsByRootCause || {};
+    const deaths = pop.deathsByRootCause;
     this.populationSnapshots.push({
       month,
       population: pop.population,
-      birthRate: pop.adjustedBirthRate || 0,
-      deathRate: pop.adjustedDeathRate || 0,
-      mortalityByEnvironment: (deaths.climate || 0) + (deaths.ecosystem || 0) + (deaths.pollution || 0),
-      mortalityByFamine: deaths.resource || 0,
-      mortalityByDisease: deaths.pandemic || 0,
-      mortalityByConflict: deaths.conflict || 0,
-      netGrowthRate: (pop.adjustedBirthRate || 0) - (pop.adjustedDeathRate || 0)
+      birthRate: pop.adjustedBirthRate,
+      deathRate: pop.adjustedDeathRate,
+      mortalityByEnvironment: deaths.climate + deaths.ecosystem + deaths.pollution,
+      mortalityByFamine: deaths.resource,
+      mortalityByDisease: deaths.pandemic,
+      mortalityByConflict: deaths.conflict,
+      netGrowthRate: pop.adjustedBirthRate - pop.adjustedDeathRate
     });
 
     // Resource systems
-    const env = state.environmentalAccumulation || {};
+    const env = state.environmentalAccumulation;
     const resources = state.resourceEconomy;
-    const boundaries = state.planetaryBoundariesSystem || {};
+    const boundaries = state.planetaryBoundariesSystem;
     this.resourceSnapshots.push({
       month,
-      foodStock: resources.food.reserves || 0,
-      waterStock: resources.water.reserves || 0,
-      energyStock: 0, // TODO: state.computeInfrastructure?.totalEnergyCapacity || 0,
-      foodDepletion: resources.food.monthlyHarvest || 0,
-      waterDepletion: resources.water.monthlyHarvest || 0,
-      energyDepletion: 0, // TODO: state.computeInfrastructure?.energyConsumptionRate || 0,
-      foodSecurity: state.qualityOfLifeSystems?.survivalFundamentals?.foodSecurity || 0
+      foodStock: resources.food.reserves,
+      waterStock: resources.water.reserves,
+      energyStock: 0, // TODO: state.computeInfrastructure?.totalEnergyCapacity,
+      foodDepletion: resources.food.monthlyHarvest,
+      waterDepletion: resources.water.monthlyHarvest,
+      energyDepletion: 0, // TODO: state.computeInfrastructure?.energyConsumptionRate,
+      foodSecurity: state.qualityOfLifeSystems.survivalFundamentals.foodSecurity
     });
 
     // Environmental systems
     this.environmentalSnapshots.push({
       month,
-      climateStability: env.climateStability || 0,
-      biodiversityIndex: env.biodiversityIndex || 0,
+      climateStability: env.climateStability,
+      biodiversityIndex: env.biodiversityIndex,
       oceanHealth: 0, // TODO: Calculate from ocean acidification system
-      pollutionLevel: env.pollutionLevel || 0,
-      tippingPointRisk: boundaries.tippingPointRisk || 0
+      pollutionLevel: env.pollutionLevel,
+      tippingPointRisk: boundaries.tippingPointRisk
     });
 
     // Economic systems
-    const orgs = state.organizations || [];
+    const orgs = state.organizations;
     const bankruptCount = orgs.filter(o => o.bankrupt).length;
     // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
     const economicStage = assertEconomicStage(state, 'diagnostics.recordMonthlySnapshot');
@@ -297,7 +298,7 @@ export class DiagnosticLogger {
     this.economicSnapshots.push({
       month,
       globalGDP: 0, // TODO: Calculate from economic systems
-      unemploymentLevel: state.society?.unemploymentLevel || 0,
+      unemploymentLevel: state.society.unemploymentLevel,
       economicStage,
       organizationsBankrupt: bankruptCount,
       totalOrganizations: orgs.length
@@ -307,11 +308,11 @@ export class DiagnosticLogger {
     const cascade = boundaries;
     this.cascadeSnapshots.push({
       month,
-      cascadeActive: cascade.cascadeActive || false,
-      cascadeSeverity: cascade.cascadeSeverity || 0,
-      activeCrises: cascade.boundariesBreached || 0,
-      monthsSinceTrigger: cascade.cascadeActive ? month - (cascade.cascadeStartMonth || month) : 0,
-      cumulativeDeaths: pop.cumulativeCrisisDeaths || 0
+      cascadeActive: cascade.cascadeActive,
+      cascadeSeverity: cascade.cascadeSeverity,
+      activeCrises: cascade.boundariesBreached,
+      monthsSinceTrigger: cascade.cascadeActive && cascade.cascadeStartMonth !== null ? month - cascade.cascadeStartMonth : 0,
+      cumulativeDeaths: pop.cumulativeCrisisDeaths
     });
   }
   
@@ -677,7 +678,7 @@ export function formatDiagnosticReport(log: DiagnosticLog): string {
   
   // Key tipping points
   if (log.summary.keyTippingPoints.length > 0) {
-    lines.push(`🎯 KEY TIPPING POINTS:`);
+    lines.push(`📊 KEY TIPPING POINTS:`);
     log.summary.keyTippingPoints.forEach(tp => {
       const dir = tp.direction === 'up' ? '↑' : '↓';
       lines.push(`   Month ${tp.month}: ${tp.metric} ${dir} ${tp.threshold.toFixed(2)} (now ${tp.value.toFixed(2)})`);

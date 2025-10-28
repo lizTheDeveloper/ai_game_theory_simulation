@@ -1,0 +1,22 @@
+# Type Dependencies (Most Connected)
+
+GameState: 57 references
+AIAgent: 12 references
+DiagnosticLog: 8 references
+AntimicrobialResistanceSystem: 4 references
+HumanPopulationSystem: 4 references
+PowerGenerationSystem: 4 references
+Tier3Thresholds: 4 references
+ConfigurationSettings: 3 references
+ConsciousnessGovernanceReadiness: 3 references
+ResourceRegion: 3 references
+HegemonicPowersSystem: 3 references
+ExtinctionState: 3 references
+SleeperSocialInfluence: 2 references
+RegionalGovernance: 2 references
+CountryPopulation: 2 references
+MilitaryIntervention: 2 references
+GovernmentAgent: 2 references
+LLMConfig: 2 references
+MinimalSufferingSystem: 2 references
+MultiParadigmDUI: 2 references

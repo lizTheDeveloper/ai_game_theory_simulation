@@ -1,0 +1,390 @@
+{
+  "nodes": [
+    {
+      "id": "globalMetrics.economicTransitionStage"
+    },
+    {
+      "id": "government.legitimacy"
+    },
+    {
+      "id": "e"
+    },
+    {
+      "id": "government.oversightLevel"
+    },
+    {
+      "id": "y"
+    },
+    {
+      "id": "L"
+    },
+    {
+      "id": "t"
+    },
+    {
+      "id": "l"
+    },
+    {
+      "id": "n"
+    },
+    {
+      "id": "government.capabilityToControl"
+    },
+    {
+      "id": "freshwaterSystem.blueWater"
+    },
+    {
+      "id": "s"
+    },
+    {
+      "id": "society.segments"
+    },
+    {
+      "id": "multiParadigmDUI.history"
+    },
+    {
+      "id": "h"
+    },
+    {
+      "id": "extinctionState.severity"
+    },
+    {
+      "id": "thresholds.climateSensitivity"
+    },
+    {
+      "id": "I"
+    },
+    {
+      "id": "psychologicalTrauma.traumaLevel"
+    }
+  ],
+  "edges": [
+    {
+      "source": "globalMetrics.economicTransitionStage",
+      "target": "effects",
+      "type": "direct",
+      "file": "governmentAgent",
+      "line": 60
+    },
+    {
+      "source": "government.legitimacy",
+      "target": "government.governmentType",
+      "type": "threshold",
+      "file": "governmentAgent",
+      "line": 555
+    },
+    {
+      "source": "e",
+      "target": "3B",
+      "type": "direct",
+      "file": "governmentAgent",
+      "line": 2947
+    },
+    {
+      "source": "government.oversightLevel",
+      "target": "government.oversightLevel",
+      "type": "threshold",
+      "file": "socialInfluenceActions",
+      "line": 290
+    },
+    {
+      "source": "y",
+      "target": "segments",
+      "type": "direct",
+      "file": "calculations",
+      "line": 234
+    },
+    {
+      "source": "L",
+      "target": "how",
+      "type": "direct",
+      "file": "calculations",
+      "line": 461
+    },
+    {
+      "source": "e",
+      "target": "population",
+      "type": "direct",
+      "file": "climateJustice",
+      "line": 259
+    },
+    {
+      "source": "y",
+      "target": "diplomatic",
+      "type": "direct",
+      "file": "conflictResolution",
+      "line": 156
+    },
+    {
+      "source": "y",
+      "target": "everyone",
+      "type": "direct",
+      "file": "countryPopulations",
+      "line": 517
+    },
+    {
+      "source": "t",
+      "target": "detection",
+      "type": "direct",
+      "file": "detection",
+      "line": 71
+    },
+    {
+      "source": "t",
+      "target": "trust",
+      "type": "direct",
+      "file": "diplomaticAI",
+      "line": 274
+    },
+    {
+      "source": "government.legitimacy",
+      "target": "globalMetrics.socialStability",
+      "type": "threshold",
+      "file": "dystopiaProgression",
+      "line": 172
+    },
+    {
+      "source": "government.legitimacy",
+      "target": "government.legitimacy",
+      "type": "threshold",
+      "file": "dystopiaProgression",
+      "line": 172
+    },
+    {
+      "source": "l",
+      "target": "outcome",
+      "type": "direct",
+      "file": "endGame",
+      "line": 29
+    },
+    {
+      "source": "n",
+      "target": "all",
+      "type": "direct",
+      "file": "AlignmentTechniquePhase",
+      "line": 75
+    },
+    {
+      "source": "government.capabilityToControl",
+      "target": "government.capabilityToControl",
+      "type": "threshold",
+      "file": "CollectiveActionsPhase",
+      "line": 154
+    },
+    {
+      "source": "government.oversightLevel",
+      "target": "technologicalRisk.controlLossActive",
+      "type": "threshold",
+      "file": "EmergencyResponsePhase",
+      "line": 410
+    },
+    {
+      "source": "freshwaterSystem.blueWater",
+      "target": "freshwaterSystem.blueWater",
+      "type": "direct",
+      "file": "FoodSecurityDegradationPhase",
+      "line": 40
+    },
+    {
+      "source": "s",
+      "target": "all",
+      "type": "direct",
+      "file": "FoodSecurityDegradationPhase",
+      "line": 58
+    },
+    {
+      "source": "e",
+      "target": "opinion",
+      "type": "direct",
+      "file": "GovernmentElectionPhase",
+      "line": 144
+    },
+    {
+      "source": "t",
+      "target": "opinion",
+      "type": "direct",
+      "file": "GovernmentElectionPhase",
+      "line": 181
+    },
+    {
+      "source": "y",
+      "target": "policy",
+      "type": "direct",
+      "file": "GovernmentResponsePhase",
+      "line": 113
+    },
+    {
+      "source": "y",
+      "target": "tech",
+      "type": "direct",
+      "file": "GovernmentResponsePhase",
+      "line": 278
+    },
+    {
+      "source": "society.segments",
+      "target": "competenceEvent",
+      "type": "direct",
+      "file": "HumanEnhancementPhase",
+      "line": 61
+    },
+    {
+      "source": "multiParadigmDUI.history",
+      "target": "divergence",
+      "type": "direct",
+      "file": "MultiParadigmDUIUpdatePhase",
+      "line": 55
+    },
+    {
+      "source": "s",
+      "target": "both",
+      "type": "direct",
+      "file": "MultiParadigmDUIUpdatePhase",
+      "line": 127
+    },
+    {
+      "source": "h",
+      "target": "reported",
+      "type": "direct",
+      "file": "Tier2SynergyPhase",
+      "line": 58
+    },
+    {
+      "source": "extinctionState.severity",
+      "target": "extinctionState.startMonth",
+      "type": "threshold",
+      "file": "engine",
+      "line": 820
+    },
+    {
+      "source": "thresholds.climateSensitivity",
+      "target": "baseClimateRate",
+      "type": "direct",
+      "file": "environmental",
+      "line": 214
+    },
+    {
+      "source": "y",
+      "target": "surface",
+      "type": "direct",
+      "file": "freshwaterDepletion",
+      "line": 131
+    },
+    {
+      "source": "e",
+      "target": "decision",
+      "type": "direct",
+      "file": "governanceQuality",
+      "line": 51
+    },
+    {
+      "source": "y",
+      "target": "execution",
+      "type": "direct",
+      "file": "governanceQuality",
+      "line": 61
+    },
+    {
+      "source": "t",
+      "target": "participation",
+      "type": "direct",
+      "file": "governanceQuality",
+      "line": 95
+    },
+    {
+      "source": "e",
+      "target": "capacity",
+      "type": "direct",
+      "file": "governanceQuality",
+      "line": 121
+    },
+    {
+      "source": "e",
+      "target": "minority",
+      "type": "direct",
+      "file": "governanceQuality",
+      "line": 193
+    },
+    {
+      "source": "e",
+      "target": "innovation",
+      "type": "direct",
+      "file": "lifecycle",
+      "line": 133
+    },
+    {
+      "source": "y",
+      "target": "distribution",
+      "type": "direct",
+      "file": "lifecycle",
+      "line": 169
+    },
+    {
+      "source": "I",
+      "target": "escalation",
+      "type": "direct",
+      "file": "nuclearStates",
+      "line": 535
+    },
+    {
+      "source": "s",
+      "target": "P",
+      "type": "direct",
+      "file": "phosphorusDepletion",
+      "line": 85
+    },
+    {
+      "source": "s",
+      "target": "LONG",
+      "type": "direct",
+      "file": "populationDynamics",
+      "line": 783
+    },
+    {
+      "source": "psychologicalTrauma.traumaLevel",
+      "target": "traumaPenalties",
+      "type": "direct",
+      "file": "core",
+      "line": 305
+    },
+    {
+      "source": "psychologicalTrauma.traumaLevel",
+      "target": "traumaErosion",
+      "type": "direct",
+      "file": "core",
+      "line": 318
+    },
+    {
+      "source": "s",
+      "target": "specific",
+      "type": "direct",
+      "file": "regional",
+      "line": 206
+    },
+    {
+      "source": "e",
+      "target": "surveillance",
+      "type": "direct",
+      "file": "structuralEffects",
+      "line": 157
+    },
+    {
+      "source": "y",
+      "target": "the",
+      "type": "direct",
+      "file": "effectsEngine",
+      "line": 1766
+    }
+  ],
+  "statistics": {
+    "totalEdges": 45,
+    "totalNodes": 19,
+    "maxOutDegree": 9,
+    "maxInDegree": 2,
+    "byType": {
+      "direct": 38,
+      "multiplicative": 0,
+      "threshold": 7,
+      "conditional": 0
+    }
+  }
+}

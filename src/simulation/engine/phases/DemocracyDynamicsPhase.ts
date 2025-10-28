@@ -180,7 +180,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
 
     // Warnings for major shifts
     if (state.minimalSufferingSystem.electoralDemocracyIndex < 0.3) {
-      events.push('⚠️ Democratic Backsliding: Electoral quality critically low');
+      events.push('🚨 Democratic Backsliding: Electoral quality critically low');
     }
     if (socialCohesion.civilLiberties < 30) {
       events.push('⚠️ Civil Liberties Crisis: Fundamental freedoms severely restricted');

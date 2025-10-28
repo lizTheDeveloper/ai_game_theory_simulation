@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "transcript-rag": {
+      "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
+      "args": [
+        "/Users/annhoward/src/superalignmenttoutopia/scripts/transcript-rag-server.py"
+      ],
+      "env": {}
+    }
+  }
+}

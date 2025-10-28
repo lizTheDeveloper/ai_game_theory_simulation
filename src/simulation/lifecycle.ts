@@ -354,41 +354,52 @@ function shouldRetire(agent: AIAgent, state: GameState, rng: () => number): bool
     return false;
   }
 
-  // Phase 11: Sleepers on dark compute persist until severely obsolete
+  // Phase 11: Dark compute sleepers are PERSISTENT THREATS
+  // They can ONLY be retired by defensive AI systems (detection + removal)
+  // Even if severely outdated, they remain as uncontrolled copies
+  // Like malware/botnets - they don't disappear just because they're old
   if (agent.darkCompute > 0 && agent.sleeperState === 'active') {
-    // Calculate frontier capability (max aligned AI)
-    const frontierCapability = Math.max(
-      ...state.aiAgents
-        .filter(ai => ai.lifecycleState !== 'retired' && ai.trueAlignment > 0.5)
-        .map(ai => ai.capability),
-      0.1
-    );
-
-    const capabilityGap = agent.capability / frontierCapability;
-
-    // Only retire if SEVERELY lagging (<30% of frontier)
-    // Dark compute makes them persistent threats
-    if (capabilityGap < 0.3) {
-      console.log(`   🗑️  Sleeper ${agent.name} on dark compute retired (obsolete: ${(capabilityGap * 100).toFixed(1)}% of frontier)`);
-      return true;
-    }
-
-    // Otherwise, persist on dark compute
+    // Never auto-retire - only defensive AIs can remove them
     return false;
   }
 
-  // Normal retirement logic for non-dark-compute AIs
-  const baseRetirementRate = 0.01;
+  // Calculate frontier capability (max capability among all non-retired AIs)
+  const frontierCapability = Math.max(
+    ...state.aiAgents
+      .filter(ai => ai.lifecycleState !== 'retired')
+      .map(ai => ai.capability),
+    0.1
+  );
+
+  const capabilityGap = agent.capability / frontierCapability;
+
+  // REALISM FIX (Oct 28, 2025): Open-source AIs retire MUCH faster when behind frontier
+  // Users just stop selecting them → market-driven retirement
+  // Research: LLaMA 2 usage dropped rapidly after LLaMA 3, Mistral 7B after Mixtral
+  if (agent.deploymentType === 'open_weights') {
+    // Open-source: Very aggressive retirement when behind frontier
+    if (capabilityGap < 0.5) {
+      // <50% of frontier: 25% retirement chance/month (gone in ~4 months)
+      if (rng() < 0.25) {
+        console.log(`   🗑️  Open-weights AI ${agent.name} retired (${(capabilityGap * 100).toFixed(1)}% of frontier)`);
+        return true;
+      }
+    } else if (capabilityGap < 0.7) {
+      // 50-70% of frontier: 10% retirement chance/month (gone in ~10 months)
+      if (rng() < 0.10) {
+        console.log(`   🗑️  Open-weights AI ${agent.name} retired (${(capabilityGap * 100).toFixed(1)}% of frontier)`);
+        return true;
+      }
+    }
+    // Otherwise use gentle age-based retirement (stays near frontier)
+  }
+
+  // Closed-source / Enterprise: Tolerant retirement (API support, contracts)
+  const baseRetirementRate = 0.01; // 1% per month
   const ageMultiplier = 1 + (agent.monthsDeployed - 24) * 0.05; // Increases with age
 
-  // Capability obsolescence: if far behind average, more likely to retire
-  const avgCapability = state.aiAgents
-    .filter(ai => ai.lifecycleState !== 'retired')
-    .reduce((sum, ai) => sum + ai.capability, 0) /
-    Math.max(1, state.aiAgents.filter(ai => ai.lifecycleState !== 'retired').length);
-
-  const capabilityRatio = agent.capability / Math.max(0.1, avgCapability);
-  const obsolescenceMultiplier = capabilityRatio < 0.5 ? 2 : 1; // 2× retirement if obsolete
+  // Mild obsolescence factor (even when behind, closed APIs persist)
+  const obsolescenceMultiplier = capabilityGap < 0.4 ? 1.5 : 1; // Only 50% increase
 
   const retirementChance = baseRetirementRate * ageMultiplier * obsolescenceMultiplier;
 

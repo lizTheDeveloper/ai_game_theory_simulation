@@ -157,5 +157,10 @@
     "deny": [],
     "ask": [],
     "permissionMode": "bypassPermissions"
-  }
+  },
+  "enabledMcpjsonServers": [
+    "transcript-rag",
+    "ai-safety-transcripts",
+    "arxiv"
+  ]
 }

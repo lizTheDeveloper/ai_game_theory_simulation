@@ -20,6 +20,7 @@ import { AIAgent, ScenarioMode } from '../src/types/game';
 import { getScenarioDescription } from '../src/simulation/scenarioParameters';
 import { getTier3Scenario, getScenarioDescription as getTier3Description, type ScenarioName } from '../src/simulation/thresholds/tier3Config';
 import { logger } from '../src/simulation/utils/asyncLogger';
+import { wrapConsoleWithPrefix, LogBuffer } from '../src/simulation/utils/consoleWrapper'; // Oct 28, 2025: Parallel execution log prefixing
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -219,6 +220,7 @@ interface RunResult {
   extinctionPhase?: string;
   extinctionMechanism?: string;
   extinctionSeverity?: number;
+  extinctionClassification?: import('../src/types/outcomes').ExtinctionClassification; // Oct 28, 2025: Observational classification
   
   // Critical events
   catastrophicActions: number;
@@ -373,9 +375,14 @@ interface RunResult {
   bankruptcyEvents: string[];         // List of orgs that went bankrupt (with reasons)
 
   // === STRATIFIED OUTCOME CLASSIFICATION (Phase 1B, Oct 17 2025) ===
-  stratifiedOutcome?: string;         // Refined outcome (humane-utopia, pyrrhic-utopia, etc.)
-  mortalityBand?: string;             // Mortality severity (low, moderate, high, extreme, bottleneck)
-  mortalityRate?: number;             // Actual mortality rate (0.0 to 1.0)
+  stratifiedOutcome?: string;         // Refined outcome (humane-utopia, pyrrhic-utopia, etc.) - DEPRECATED, use unifiedOutcome
+  mortalityBand?: string;             // Mortality severity (low, moderate, high, extreme, bottleneck) - DEPRECATED, use unifiedOutcome
+  mortalityRate?: number;             // Actual mortality rate (0.0 to 1.0) - DEPRECATED, use unifiedOutcome
+
+  // === UNIFIED OUTCOME CLASSIFICATION (Oct 28, 2025) ===
+  // Combines 7-tier, stratified, multi-paradigm, and extinction classification into single coherent structure
+  // Fixes false extinctions (4.8B population labeled as extinction) and fragmented reporting
+  unifiedOutcome?: import('../src/types/outcomes').UnifiedOutcomeClassification;
 
   // === RECOVERY TIMELINE TRACKING (NEW - Oct 17 2025) ===
   recoveryTimeline?: {
@@ -417,6 +424,42 @@ interface RunResult {
     tippingCascadeWithoutSpiral: boolean;  // Cascade but no recovery
     failedRecoveryAttempt: boolean;        // Recovered then collapsed
   };
+}
+
+/**
+ * Map unified outcome to legacy 4-category format for backward compatibility
+ * (Oct 28, 2025)
+ */
+function mapUnifiedToLegacyOutcome(unified: import('../src/types/outcomes').UnifiedOutcomeClassification): 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none' {
+  if (unified.primaryOutcome === 'utopia') return 'utopia';
+  if (unified.primaryOutcome === 'extinction') return 'extinction';
+  if (unified.primaryOutcome === 'dystopia' ||
+      unified.primaryOutcome === 'collapse' ||
+      unified.primaryOutcome === 'dark_age' ||
+      unified.primaryOutcome === 'crisis_era' ||
+      unified.primaryOutcome === 'terminal' ||
+      unified.primaryOutcome === 'bottleneck') {
+    return 'dystopia';
+  }
+  if (unified.primaryOutcome === 'status_quo') return 'none';
+  return 'none';  // inconclusive maps to none
+}
+
+/**
+ * Get emoji for unified outcome classification
+ * (Oct 28, 2025)
+ */
+function getOutcomeEmojiFromUnified(unified: import('../src/types/outcomes').UnifiedOutcomeClassification): string {
+  if (unified.primaryOutcome === 'extinction') return '💀';
+  if (unified.primaryOutcome === 'terminal') return '⚰️';
+  if (unified.primaryOutcome === 'bottleneck') return '🧬';
+  if (unified.primaryOutcome === 'dark_age') return '🏚️';
+  if (unified.primaryOutcome === 'collapse') return '💥';
+  if (unified.primaryOutcome === 'crisis_era') return '⚠️';
+  if (unified.primaryOutcome === 'status_quo') return '📊';
+  if (unified.primaryOutcome === 'utopia') return '🌟';
+  if (unified.primaryOutcome === 'dystopia') return '🏛️';
+  return '❓';
 }
 
 /**
@@ -719,6 +762,10 @@ ${getSliderList().map(s => `                                 - ${s.name}: ${s.de
                                Overrides --threshold-scenario and --slider-* flags
                                Example: --import-config=thresholdConfigs/baseline.json
 
+PARALLEL EXECUTION:
+  --sequential                 Disable parallel execution (default: parallel enabled)
+  --batch-size=N               Number of parallel runs (default: 8, max: 16)
+
 OTHER OPTIONS:
   --llm-enabled                Enable LLM policy optimization (experimental)
   --help, -h                   Show this help message
@@ -761,6 +808,8 @@ let aleatoryNumSamples = 10; // Phase 1C: Aleatory samples per epistemic sample 
 let exportConfigPath: string | undefined; // Phase 4: Export threshold config
 let importConfigPath: string | undefined; // Phase 4: Import threshold config
 let llmEnabled = false; // Oct 21, 2025: LLM policy optimization (default: disabled)
+let parallelEnabled = true; // Oct 28, 2025: Parallel execution (default: enabled)
+let parallelBatchSize = 8; // Oct 28, 2025: Batch size for parallel execution (default: 8)
 
 if (args[0] && !args[0].startsWith('--')) {
   // Positional arguments format: runs months [name]
@@ -781,6 +830,16 @@ if (args[0] && !args[0].startsWith('--')) {
   const aleatoryArg = args.find(arg => arg.split('=')[0] === '--aleatory-samples')?.split('=')[1];
   nestedMonteCarlo = args.includes('--nested');
   llmEnabled = args.includes('--llm-enabled');
+
+  // Oct 28, 2025: Parallel execution flags
+  parallelEnabled = !args.includes('--sequential'); // Default: parallel enabled
+  const batchSizeArg = args.find(arg => arg.split('=')[0] === '--batch-size')?.split('=')[1];
+  if (batchSizeArg) {
+    const parsed = parseInt(batchSizeArg);
+    if (parsed > 0 && parsed <= 16) {
+      parallelBatchSize = parsed;
+    }
+  }
 
   // Parse aleatory samples parameter
   if (aleatoryArg) {
@@ -876,6 +935,7 @@ if (importedConfig) {
   }
 }
 
+log(`  Execution Mode: ${parallelEnabled ? `⚡ PARALLEL (batch size: ${parallelBatchSize})` : '🔄 SEQUENTIAL'}`);
 log(`  LLM Policy Optimization: ${llmEnabled ? '🤖 ENABLED (agents use LLM for weight updates)' : '❌ DISABLED (using hardcoded weights)'}`);
 
 // Yearly batching: DISABLED BY DEFAULT for full logs
@@ -938,6 +998,11 @@ if (nestedMonteCarlo) {
       const seed = SEED_START + i;
       const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' });
 
+      // PERFORMANCE INSTRUMENTATION (Oct 28, 2025): Enable timing on first run
+      if (i === 0) {
+        engine.getOrchestrator().enablePerformanceTiming();
+      }
+
       // Determine scenario mode
       let runScenarioMode: ScenarioMode;
       if (SCENARIO_MODE === 'dual') {
@@ -973,6 +1038,11 @@ if (nestedMonteCarlo) {
 
   const runElapsed = Date.now() - runStartTime; // Calculate run time
   runTimings.push(runElapsed);
+
+  // PERFORMANCE INSTRUMENTATION (Oct 28, 2025): Print timing report after first run
+  if (i === 0) {
+    engine.getOrchestrator().printPhaseTimings();
+  }
 
   const finalState = simulationResult.finalState;
 
@@ -1209,12 +1279,14 @@ if (nestedMonteCarlo) {
   let extinctionPhase: string | undefined;
   let extinctionMechanism: string | undefined;
   let extinctionSeverity: number | undefined;
-  
+  let extinctionClassification: import('../src/types/outcomes').ExtinctionClassification | undefined;
+
   if (finalState.extinctionState.active) {
     extinctionType = finalState.extinctionState.type;
     extinctionPhase = finalState.extinctionState.phase;
     extinctionMechanism = finalState.extinctionState.mechanism || undefined;
     extinctionSeverity = finalState.extinctionState.severity;
+    extinctionClassification = finalState.extinctionState.classification; // Oct 28, 2025: Observational classification
   }
   
   // ========================================================================
@@ -1477,24 +1549,29 @@ if (nestedMonteCarlo) {
     `${o.name} (${o.country}, Month ${o.bankruptcyMonth}: ${o.bankruptcyReason})`
   );
   
-  // Map engine's outcome to reporting categories
-  // FIX (Oct 13, 2025): Support new 7-tier system (status_quo, crisis_era, collapse, dark_age, bottleneck, terminal, extinction)
+  // Map unified outcome to legacy format (Oct 28, 2025)
+  // Use unifiedOutcome if available, otherwise fall back to old mapping
   const rawOutcome = simulationResult.summary.finalOutcome;
   let mappedOutcome: 'utopia' | 'dystopia' | 'extinction' | 'stalemate' | 'none';
-  
-  if (rawOutcome === 'utopia') {
-    mappedOutcome = 'utopia';
-  } else if (rawOutcome === 'dystopia') {
-    mappedOutcome = 'dystopia';
-  } else if (rawOutcome === 'extinction' || rawOutcome === 'terminal') {
-    mappedOutcome = 'extinction'; // Terminal = extinction trajectory
-  } else if (rawOutcome === 'bottleneck' || rawOutcome === 'dark_age' || 
-             rawOutcome === 'collapse' || rawOutcome === 'crisis_era') {
-    mappedOutcome = 'none'; // Survival but not utopia/dystopia
-  } else if (rawOutcome === 'inconclusive' || rawOutcome === 'status_quo') {
-    mappedOutcome = 'stalemate';
+
+  if (finalState.unifiedOutcome) {
+    mappedOutcome = mapUnifiedToLegacyOutcome(finalState.unifiedOutcome);
   } else {
-    mappedOutcome = 'none';
+    // Fallback to old mapping if unifiedOutcome not available
+    if (rawOutcome === 'utopia') {
+      mappedOutcome = 'utopia';
+    } else if (rawOutcome === 'dystopia') {
+      mappedOutcome = 'dystopia';
+    } else if (rawOutcome === 'extinction' || rawOutcome === 'terminal') {
+      mappedOutcome = 'extinction'; // Terminal = extinction trajectory
+    } else if (rawOutcome === 'bottleneck' || rawOutcome === 'dark_age' ||
+               rawOutcome === 'collapse' || rawOutcome === 'crisis_era') {
+      mappedOutcome = 'none'; // Survival but not utopia/dystopia
+    } else if (rawOutcome === 'inconclusive' || rawOutcome === 'status_quo') {
+      mappedOutcome = 'stalemate';
+    } else {
+      mappedOutcome = 'none';
+    }
   }
 
   // Recovery timeline and mechanism summary already analyzed above
@@ -1640,6 +1717,7 @@ if (nestedMonteCarlo) {
     extinctionPhase,
     extinctionMechanism,
     extinctionSeverity,
+    extinctionClassification,
     
     // Critical events
     catastrophicActions,
@@ -1770,12 +1848,15 @@ if (nestedMonteCarlo) {
     organizationSurvivalRate,
     bankruptcyEvents,
 
-    // Stratified Outcome Classification (Phase 1B, Oct 17 2025)
+    // Stratified Outcome Classification (Phase 1B, Oct 17 2025) - DEPRECATED, use unifiedOutcome
     stratifiedOutcome: finalState.stratifiedOutcome,
     mortalityBand: finalState.mortalityBand,
     mortalityRate: finalState.initialPopulation
       ? 1 - (finalState.humanPopulationSystem.population / finalState.initialPopulation)
       : undefined,
+
+    // Unified Outcome Classification (Oct 28, 2025)
+    unifiedOutcome: finalState.unifiedOutcome,
 
     // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
     recoveryTimeline,
@@ -1819,11 +1900,33 @@ if (nestedMonteCarlo) {
   // ============================================================================
   // NON-NESTED MODE: Standard single-level Monte Carlo
   // ============================================================================
-  for (let i = 0; i < NUM_RUNS; i++) {
+
+  // Oct 28, 2025: Parallel execution support with optional log buffering
+  const runSingleSimulation = (i: number, useBuffer = false): { result: any; buffer?: LogBuffer } => {
     const runStartTime = Date.now();
 
-    const seed = SEED_START + i;
+    // Setup logging: Buffer (parallel) or immediate (sequential)
+    const runPrefix = `[Run ${String(i + 1).padStart(3, ' ')}/${NUM_RUNS}] `;
+    let buffer: LogBuffer | undefined;
+    let restoreConsole: (() => void) | undefined;
+
+    if (useBuffer) {
+      // Parallel mode: Buffer logs to memory
+      buffer = new LogBuffer(runPrefix);
+      buffer.install();
+    } else {
+      // Sequential mode: Print logs immediately
+      restoreConsole = wrapConsoleWithPrefix(runPrefix);
+    }
+
+    try {
+      const seed = SEED_START + i;
     const engine = new SimulationEngine({ seed, maxMonths: MAX_MONTHS, logLevel: 'summary' });
+
+    // PERFORMANCE INSTRUMENTATION (Oct 28, 2025): Enable timing on first run
+    if (i === 0) {
+      engine.getOrchestrator().enablePerformanceTiming();
+    }
 
     // Determine scenario mode
     let runScenarioMode: ScenarioMode;
@@ -1871,6 +1974,11 @@ if (nestedMonteCarlo) {
 
   const runElapsed = Date.now() - runStartTime; // Calculate run time
   runTimings.push(runElapsed);
+
+  // PERFORMANCE INSTRUMENTATION (Oct 28, 2025): Print timing report after first run
+  if (i === 0) {
+    engine.getOrchestrator().printPhaseTimings();
+  }
 
   const finalState = simulationResult.finalState;
 
@@ -2483,38 +2591,106 @@ if (nestedMonteCarlo) {
     organizationSurvivalRate,
     bankruptcyEvents,
 
-    // Stratified Outcome Classification (Phase 1B, Oct 17 2025)
+    // Stratified Outcome Classification (Phase 1B, Oct 17 2025) - DEPRECATED, use unifiedOutcome
     stratifiedOutcome: finalState.stratifiedOutcome,
     mortalityBand: finalState.mortalityBand,
     mortalityRate: finalState.initialPopulation
       ? 1 - (finalState.humanPopulationSystem.population / finalState.initialPopulation)
       : undefined,
 
+    // Unified Outcome Classification (Oct 28, 2025)
+    unifiedOutcome: finalState.unifiedOutcome,
+
     // Recovery Timeline & Mechanism Analysis (NEW - Oct 17, 2025)
     recoveryTimeline,
     mechanismSummary
   };
 
-  // FIX (Oct 26, 2025): Push results in non-nested mode
-  results.push(runResult);
+      // Progress indicator with per-run timing
+      const runSeconds = runElapsed / 1000;
+      const runSecondsPerMonth = runSeconds / finalState.currentMonth;
+      const runSecondsPerYear = runSecondsPerMonth * 12;
 
-  // Progress indicator with per-run timing
-  const runSeconds = runElapsed / 1000;
-  const runSecondsPerMonth = runSeconds / finalState.currentMonth;
-  const runSecondsPerYear = runSecondsPerMonth * 12;
+      log(`  ✅ Run ${i + 1}/${NUM_RUNS} completed in ${runSeconds.toFixed(1)}s (${runSecondsPerMonth.toFixed(3)}s/month, ${runSecondsPerYear.toFixed(2)}s/year)`);
 
-  log(`  ✅ Run ${i + 1}/${NUM_RUNS} completed in ${runSeconds.toFixed(1)}s (${runSecondsPerMonth.toFixed(3)}s/month, ${runSecondsPerYear.toFixed(2)}s/year)`);
+      return { result: runResult, buffer };
 
-  if ((i + 1) % 10 === 0) {
-    const elapsed = (Date.now() - startTime) / 1000;
-    const perRun = elapsed / (i + 1);
-    const remaining = perRun * (NUM_RUNS - i - 1);
-    log(`  📊 Progress: ${i + 1}/${NUM_RUNS} runs (${elapsed.toFixed(1)}s elapsed, ~${remaining.toFixed(1)}s remaining)`);
-  }
-  } // End non-nested for loop
-} // End else block
+    } finally {
+      // Always restore console even if error occurs
+      if (restoreConsole) {
+        restoreConsole();
+      }
+      if (buffer) {
+        buffer.restore();
+      }
+    }
+  }; // End runSingleSimulation function
 
-const totalTime = (Date.now() - startTime) / 1000;
+  // Oct 28, 2025: Execute runs (parallel or sequential)
+  // Wrap in async IIFE to support await without top-level await
+  (async () => {
+    if (parallelEnabled) {
+      // PARALLEL EXECUTION (DEFAULT)
+      log(`\n⚡ Running ${NUM_RUNS} simulations in PARALLEL (batch size: ${parallelBatchSize})...\n`);
+
+      const numBatches = Math.ceil(NUM_RUNS / parallelBatchSize);
+      for (let batchIndex = 0; batchIndex < numBatches; batchIndex++) {
+        const batchStart = batchIndex * parallelBatchSize;
+        const batchEnd = Math.min(batchStart + parallelBatchSize, NUM_RUNS);
+        const batchIndices = Array.from({ length: batchEnd - batchStart }, (_, i) => batchStart + i);
+
+        log(`\n🔄 Executing batch ${batchIndex + 1}/${numBatches} (runs ${batchStart + 1}-${batchEnd})...\n`);
+
+        // Run batch in parallel with log buffering
+        const batchResults = await Promise.allSettled(
+          batchIndices.map(i => Promise.resolve(runSingleSimulation(i, true))) // useBuffer=true
+        );
+
+        // Flush logs sequentially after batch completes
+        log(`\n📝 Printing logs for batch ${batchIndex + 1}...\n`);
+        batchResults.forEach((result, idx) => {
+          if (result.status === 'fulfilled') {
+            const { result: runResult, buffer } = result.value;
+
+            // Print all buffered logs for this run
+            if (buffer) {
+              buffer.flush();
+            }
+
+            // Collect result
+            results.push(runResult);
+          } else {
+            console.error(`\n❌ Run ${batchIndices[idx] + 1} failed:`, result.reason);
+          }
+        });
+
+        // Progress update
+        if ((batchEnd) % 10 === 0 || batchEnd === NUM_RUNS) {
+          const elapsed = (Date.now() - startTime) / 1000;
+          const perRun = elapsed / batchEnd;
+          const remaining = perRun * (NUM_RUNS - batchEnd);
+          log(`\n  📊 Progress: ${batchEnd}/${NUM_RUNS} runs (${elapsed.toFixed(1)}s elapsed, ~${remaining.toFixed(1)}s remaining)\n`);
+        }
+      }
+    } else {
+      // SEQUENTIAL EXECUTION (opt-in with --sequential)
+      log(`\n🔄 Running ${NUM_RUNS} simulations SEQUENTIALLY...\n`);
+
+      for (let i = 0; i < NUM_RUNS; i++) {
+        const { result: runResult } = runSingleSimulation(i, false); // useBuffer=false (immediate output)
+        results.push(runResult);
+
+        if ((i + 1) % 10 === 0) {
+          const elapsed = (Date.now() - startTime) / 1000;
+          const perRun = elapsed / (i + 1);
+          const remaining = perRun * (NUM_RUNS - i - 1);
+          log(`  📊 Progress: ${i + 1}/${NUM_RUNS} runs (${elapsed.toFixed(1)}s elapsed, ~${remaining.toFixed(1)}s remaining)`);
+        }
+      }
+    }
+  })().then(() => {
+    // Continue with analysis after all runs complete
+    const totalTime = (Date.now() - startTime) / 1000;
 
 // Calculate timing statistics
 const avgRunTime = runTimings.reduce((sum, t) => sum + t, 0) / runTimings.length / 1000; // seconds
@@ -2535,57 +2711,75 @@ log(`   Avg per year: ${(avgRunTime / MAX_MONTHS * 12).toFixed(2)}s\n`);
 // ============================================================================
 
 log('=' .repeat(80));
-log('📊 OUTCOME DISTRIBUTION');
+log('📊 UNIFIED OUTCOME DISTRIBUTION');
 log('='.repeat(80));
 
-// FIX (Oct 13, 2025): Show 7-tier outcomes prominently
-const sevenTierCounts: Record<string, number> = {};
+// Helper function for outcome emoji mapping
+function getOutcomeEmoji(outcome: string): string {
+  if (outcome === 'extinction') return '💀';
+  if (outcome === 'terminal') return '⚰️';
+  if (outcome === 'bottleneck') return '🧬';
+  if (outcome === 'dark_age') return '🏚️';
+  if (outcome === 'collapse') return '💥';
+  if (outcome === 'crisis_era') return '⚠️';
+  if (outcome === 'status_quo') return '📊';
+  if (outcome === 'utopia') return '🌟';
+  if (outcome === 'dystopia') return '🏛️';
+  return '❓';
+}
+
+// Group by primary outcome
+const primaryOutcomeCounts: Record<string, number> = {};
 results.forEach(r => {
-  const outcome = (r as any).rawOutcome || r.outcome;
-  sevenTierCounts[outcome] = (sevenTierCounts[outcome] || 0) + 1;
-});
-
-log(`\n  === 7-TIER OUTCOME SYSTEM (NEW) ===`);
-const outcomeOrder = ['utopia', 'dystopia', 'status_quo', 'crisis_era', 'collapse', 'dark_age', 'bottleneck', 'terminal', 'extinction', 'inconclusive'];
-const outcomeEmoji: Record<string, string> = {
-  utopia: '🌟', dystopia: '🏛️', status_quo: '📊', crisis_era: '⚠️',
-  collapse: '💥', dark_age: '🏚️', bottleneck: '🧬', terminal: '⚰️',
-  extinction: '💀', inconclusive: '❓'
-};
-
-outcomeOrder.forEach(outcome => {
-  const count = sevenTierCounts[outcome] || 0;
-  if (count > 0) {
-    const emoji = outcomeEmoji[outcome] || '•';
-    const displayName = outcome.replace(/_/g, ' ').toUpperCase();
-    log(`  ${emoji} ${displayName}: ${count} / ${NUM_RUNS} (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+  if (r.unifiedOutcome) {
+    const primary = r.unifiedOutcome.primaryOutcome;
+    primaryOutcomeCounts[primary] = (primaryOutcomeCounts[primary] || 0) + 1;
   }
 });
 
-// ============================================================================
-// STRATIFIED OUTCOME CLASSIFICATION (Phase 1B, Oct 17 2025)
-// ============================================================================
-log(`\n  === STRATIFIED OUTCOME CLASSIFICATION (Phase 1B) ===`);
-log(`  Distinguishes "humane" (<20% mortality) from "pyrrhic" (≥20% mortality) outcomes`);
+log(`\n  PRIMARY OUTCOMES (7-Tier Population-Based):`);
+Object.entries(primaryOutcomeCounts)
+  .sort((a, b) => b[1] - a[1])
+  .forEach(([outcome, count]) => {
+    const pct = (count / results.length * 100).toFixed(1);
+    const emoji = getOutcomeEmoji(outcome);
+    log(`    ${emoji} ${outcome.toUpperCase()}: ${count} / ${results.length} (${pct}%)`);
+  });
 
-// Count stratified outcomes
+// Mortality bands
+const mortalityBandCounts: Record<string, number> = {};
+results.forEach(r => {
+  if (r.unifiedOutcome) {
+    const band = r.unifiedOutcome.mortalityBand;
+    mortalityBandCounts[band] = (mortalityBandCounts[band] || 0) + 1;
+  }
+});
+
+log(`\n  MORTALITY BANDS:`);
+const mortalityBandOrder = ['low', 'moderate', 'high', 'extreme', 'bottleneck'];
+mortalityBandOrder.forEach(band => {
+  const count = mortalityBandCounts[band] || 0;
+  if (count > 0) {
+    const pct = (count / results.length * 100).toFixed(1);
+    const label = band === 'low' ? 'LOW (<20%)' :
+                  band === 'moderate' ? 'MODERATE (20-50%)' :
+                  band === 'high' ? 'HIGH (50-75%)' :
+                  band === 'extreme' ? 'EXTREME (75-90%)' :
+                  band === 'bottleneck' ? 'BOTTLENECK (>90%)' : band.toUpperCase();
+    log(`    ${label}: ${count} runs (${pct}%)`);
+  }
+});
+
+// Stratified outcomes
 const stratifiedCounts: Record<string, number> = {};
 results.forEach(r => {
-  if (r.stratifiedOutcome) {
-    stratifiedCounts[r.stratifiedOutcome] = (stratifiedCounts[r.stratifiedOutcome] || 0) + 1;
+  if (r.unifiedOutcome) {
+    const strat = r.unifiedOutcome.stratifiedOutcome;
+    stratifiedCounts[strat] = (stratifiedCounts[strat] || 0) + 1;
   }
 });
 
-const stratifiedEmoji: Record<string, string> = {
-  'humane-utopia': '✅',
-  'pyrrhic-utopia': '⚔️',
-  'humane-dystopia': '🔒',
-  'pyrrhic-dystopia': '⛓️',
-  'bottleneck': '🧬',
-  'extinction': '💀',
-  'inconclusive': '❓'
-};
-
+log(`\n  STRATIFIED OUTCOMES (Humane vs Pyrrhic):`);
 const stratifiedOrder = [
   'humane-utopia',
   'pyrrhic-utopia',
@@ -2595,80 +2789,42 @@ const stratifiedOrder = [
   'extinction',
   'inconclusive'
 ];
-
-stratifiedOrder.forEach(outcome => {
-  const count = stratifiedCounts[outcome] || 0;
-  if (count > 0) {
-    const emoji = stratifiedEmoji[outcome] || '•';
-    const displayName = outcome.replace(/-/g, ' ').toUpperCase();
-    log(`  ${emoji} ${displayName}: ${count} / ${NUM_RUNS} (${(count/NUM_RUNS*100).toFixed(1)}%)`);
-  }
-});
-
-// Show breakdown by mortality band
-log(`\n  MORTALITY BAND DISTRIBUTION:`);
-const mortalityBandCounts: Record<string, number> = {};
-results.forEach(r => {
-  if (r.mortalityBand) {
-    mortalityBandCounts[r.mortalityBand] = (mortalityBandCounts[r.mortalityBand] || 0) + 1;
-  }
-});
-
-const mortalityBandOrder = ['low', 'moderate', 'high', 'extreme', 'bottleneck'];
-const mortalityBandLabels: Record<string, string> = {
-  'low': 'Low (<20% mortality)',
-  'moderate': 'Moderate (20-50%)',
-  'high': 'High (50-75%)',
-  'extreme': 'Extreme (75-90%)',
-  'bottleneck': 'Bottleneck (>90%)'
+const stratifiedEmoji: Record<string, string> = {
+  'humane-utopia': '✅',
+  'pyrrhic-utopia': '⚔️',
+  'humane-dystopia': '🔒',
+  'pyrrhic-dystopia': '⛓️',
+  'bottleneck': '🧬',
+  'extinction': '💀',
+  'inconclusive': '❓'
 };
-
-mortalityBandOrder.forEach(band => {
-  const count = mortalityBandCounts[band] || 0;
+stratifiedOrder.forEach(strat => {
+  const count = stratifiedCounts[strat] || 0;
   if (count > 0) {
-    log(`    ${mortalityBandLabels[band]}: ${count} runs (${(count/NUM_RUNS*100).toFixed(1)}%)`);
+    const pct = (count / results.length * 100).toFixed(1);
+    const emoji = stratifiedEmoji[strat] || '•';
+    log(`    ${emoji} ${strat.toUpperCase()}: ${count} / ${results.length} (${pct}%)`);
   }
 });
 
-// Compare utopia/dystopia breakdown
-const humaneUtopia = stratifiedCounts['humane-utopia'] || 0;
-const pyrrhicUtopia = stratifiedCounts['pyrrhic-utopia'] || 0;
-const totalUtopia = humaneUtopia + pyrrhicUtopia;
+// Multi-paradigm contested outcomes
+const contestedCount = results.filter(r => r.unifiedOutcome?.paradigmContested).length;
+const contestedPct = (contestedCount / results.length * 100).toFixed(1);
+log(`\n  MULTI-PARADIGM CONFLICTS:`);
+log(`    Contested Outcomes: ${contestedCount} / ${results.length} (${contestedPct}%)`);
+log(`    (Contested = simultaneous utopias and dystopias across paradigms)`);
 
-if (totalUtopia > 0) {
-  log(`\n  UTOPIA BREAKDOWN:`);
-  log(`    Humane (no mass death): ${humaneUtopia} / ${totalUtopia} (${(humaneUtopia/totalUtopia*100).toFixed(1)}%)`);
-  log(`    Pyrrhic (after catastrophe): ${pyrrhicUtopia} / ${totalUtopia} (${(pyrrhicUtopia/totalUtopia*100).toFixed(1)}%)`);
-
-  if (pyrrhicUtopia > humaneUtopia) {
-    log(`    ⚠️  Most "utopias" came after catastrophe, not clean prosperity!`);
-  } else if (humaneUtopia > 0) {
-    log(`    ✅ Clean utopia is possible without mass death!`);
-  }
+// Average mortality
+const resultsWithUnified = results.filter(r => r.unifiedOutcome);
+if (resultsWithUnified.length > 0) {
+  const avgMortality = resultsWithUnified.reduce((sum, r) => sum + (r.unifiedOutcome?.mortalityRate || 0), 0) / resultsWithUnified.length;
+  const avgDeaths = resultsWithUnified.reduce((sum, r) => sum + (r.unifiedOutcome?.deathsAbsolute || 0), 0) / resultsWithUnified.length;
+  log(`\n  AVERAGE MORTALITY:`);
+  log(`    Rate: ${(avgMortality * 100).toFixed(1)}%`);
+  log(`    Deaths: ${avgDeaths.toFixed(2)}B people`);
 }
 
-const humaneDystopia = stratifiedCounts['humane-dystopia'] || 0;
-const pyrrhicDystopia = stratifiedCounts['pyrrhic-dystopia'] || 0;
-const totalDystopia = humaneDystopia + pyrrhicDystopia;
-
-if (totalDystopia > 0) {
-  log(`\n  DYSTOPIA BREAKDOWN:`);
-  log(`    Humane (oppression only): ${humaneDystopia} / ${totalDystopia} (${(humaneDystopia/totalDystopia*100).toFixed(1)}%)`);
-  log(`    Pyrrhic (oppression + death): ${pyrrhicDystopia} / ${totalDystopia} (${(pyrrhicDystopia/totalDystopia*100).toFixed(1)}%)`);
-}
-
-// Show average mortality rates by outcome
-log(`\n  AVERAGE MORTALITY BY STRATIFIED OUTCOME:`);
-stratifiedOrder.forEach(outcome => {
-  const runs = results.filter(r => r.stratifiedOutcome === outcome && r.mortalityRate !== undefined);
-  if (runs.length > 0) {
-    const avgMortality = runs.reduce((sum, r) => sum + (r.mortalityRate || 0), 0) / runs.length;
-    const totalDeaths = avgMortality * 8.0; // Assuming 8B baseline
-    log(`    ${outcome}: ${(avgMortality * 100).toFixed(1)}% (${totalDeaths.toFixed(1)}B deaths)`);
-  }
-});
-
-log(`\n  === LEGACY 4-CATEGORY (Deprecated) ===`);
+// Legacy 4-category for compatibility
 const outcomeCounts = {
   utopia: results.filter(r => r.outcome === 'utopia').length,
   dystopia: results.filter(r => r.outcome === 'dystopia').length,
@@ -2677,54 +2833,102 @@ const outcomeCounts = {
   none: results.filter(r => r.outcome === 'none').length
 };
 
+log(`\n  === LEGACY 4-CATEGORY (For compatibility) ===`);
 log(`  Utopia:     ${outcomeCounts.utopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Dystopia:   ${outcomeCounts.dystopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.dystopia/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Extinction: ${outcomeCounts.extinction.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
 log(`  Stalemate:  ${outcomeCounts.stalemate.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.stalemate/NUM_RUNS*100).toFixed(1)}%)`);
-log(`  None:       ${outcomeCounts.none.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.none/NUM_RUNS*100).toFixed(1)}%) ⚠️  Includes bottleneck/collapse!`);
+log(`  None:       ${outcomeCounts.none.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.none/NUM_RUNS*100).toFixed(1)}%)`);
 
-// Extinction type breakdown
+// Extinction type breakdown (Oct 28, 2025: Enhanced with observational classification)
 if (outcomeCounts.extinction > 0) {
-  log(`\n  📉 EXTINCTION TYPE BREAKDOWN:`);
+  log(`\n  📉 EXTINCTION TYPE BREAKDOWN (Observational Classification):`);
   const extinctionByType: Record<string, number> = {};
-  results.filter(r => r.outcome === 'extinction' && r.extinctionType).forEach(r => {
-    extinctionByType[r.extinctionType!] = (extinctionByType[r.extinctionType!] || 0) + 1;
+  const extinctionByMechanism: Record<string, number> = {};
+  const extinctionTimelines: number[] = [];
+
+  results.filter(r => r.outcome === 'extinction').forEach(r => {
+    // Use classification if available, otherwise fall back to old type
+    const type = r.extinctionClassification?.type || r.extinctionType || 'unknown';
+    const mechanism = r.extinctionClassification?.mechanism || r.extinctionMechanism || 'unknown';
+
+    extinctionByType[type] = (extinctionByType[type] || 0) + 1;
+    extinctionByMechanism[mechanism] = (extinctionByMechanism[mechanism] || 0) + 1;
+
+    if (r.extinctionClassification?.timelineMonths) {
+      extinctionTimelines.push(r.extinctionClassification.timelineMonths);
+    }
   });
-  
-  Object.entries(extinctionByType).forEach(([type, count]) => {
-    log(`     ${type}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}% of extinctions)`);
-  });
+
+  log(`     Types:`);
+  Object.entries(extinctionByType)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([type, count]) => {
+      log(`       ${type}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}%)`);
+    });
+
+  log(`\n     Mechanisms:`);
+  Object.entries(extinctionByMechanism)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([mechanism, count]) => {
+      log(`       ${mechanism}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}%)`);
+    });
+
+  if (extinctionTimelines.length > 0) {
+    const avgTimeline = extinctionTimelines.reduce((a, b) => a + b, 0) / extinctionTimelines.length;
+    const minTimeline = Math.min(...extinctionTimelines);
+    const maxTimeline = Math.max(...extinctionTimelines);
+    log(`\n     Collapse Timeline:`);
+    log(`       Average: ${avgTimeline.toFixed(1)} months`);
+    log(`       Range: ${minTimeline}-${maxTimeline} months`);
+  }
 }
 
 // Individual run outcome reasons
-log(`\n  📋 OUTCOME REASONS BY RUN:`);
+log(`\n  📋 OUTCOME DETAILS BY RUN:`);
 results.forEach((r, i) => {
-  // FIX (Oct 13, 2025): Show actual 7-tier outcome, not just mapped category
-  const detailedOutcome = (r as any).rawOutcome || r.outcome;
-  const emoji = detailedOutcome === 'utopia' ? '🌟' :
-                detailedOutcome === 'dystopia' ? '🏛️' :
-                detailedOutcome === 'extinction' ? '💀' :
-                detailedOutcome === 'terminal' ? '⚰️' :
-                detailedOutcome === 'bottleneck' ? '🧬' :
-                detailedOutcome === 'dark_age' ? '🏚️' :
-                detailedOutcome === 'collapse' ? '💥' :
-                detailedOutcome === 'crisis_era' ? '⚠️' :
-                detailedOutcome === 'status_quo' ? '📊' : '❓';
+  // Use unified outcome format if available
+  if (r.unifiedOutcome) {
+    const emoji = getOutcomeEmojiFromUnified(r.unifiedOutcome);
+    log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${r.unifiedOutcome.shortLabel}`);
+    log(`        ${r.unifiedOutcome.fullDescription}`);
 
-  // Phase 1B: Show stratified outcome if available
-  const stratifiedDisplay = r.stratifiedOutcome
-    ? ` [${r.stratifiedOutcome.toUpperCase()}]`
-    : '';
+    // Show mortality and population
+    const mortality = (r.unifiedOutcome.mortalityRate * 100).toFixed(1);
+    const deaths = r.unifiedOutcome.deathsAbsolute.toFixed(2);
+    log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B | Mortality: ${mortality}% (${deaths}B deaths)`);
 
-  log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${detailedOutcome.toUpperCase()}${stratifiedDisplay}`);
-  log(`        ${r.outcomeReason}`);
+    // Show paradigm conflicts if contested
+    if (r.unifiedOutcome.paradigmContested) {
+      log(`        ⚠️  CONTESTED: Different paradigms see utopia vs dystopia`);
+    }
+  } else {
+    // Fallback to old format if unifiedOutcome not available
+    const detailedOutcome = (r as any).rawOutcome || r.outcome;
+    const emoji = detailedOutcome === 'utopia' ? '🌟' :
+                  detailedOutcome === 'dystopia' ? '🏛️' :
+                  detailedOutcome === 'extinction' ? '💀' :
+                  detailedOutcome === 'terminal' ? '⚰️' :
+                  detailedOutcome === 'bottleneck' ? '🧬' :
+                  detailedOutcome === 'dark_age' ? '🏚️' :
+                  detailedOutcome === 'collapse' ? '💥' :
+                  detailedOutcome === 'crisis_era' ? '⚠️' :
+                  detailedOutcome === 'status_quo' ? '📊' : '❓';
 
-  // Phase 1B: Show mortality information
-  const mortalityDisplay = r.mortalityRate !== undefined && r.mortalityBand
-    ? ` | Mortality: ${(r.mortalityRate * 100).toFixed(1)}% (${r.mortalityBand})`
-    : '';
+    log(`     ${emoji} Run ${i+1} (Seed ${r.seed}): ${detailedOutcome.toUpperCase()}`);
+    log(`        ${r.outcomeReason}`);
+    log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B (${r.populationDecline.toFixed(1)}% decline)`);
+  }
 
-  log(`        Population: ${r.initialPopulation.toFixed(2)}B → ${r.finalPopulation.toFixed(2)}B (${r.populationDecline.toFixed(1)}% decline)${mortalityDisplay}`);
+  // Show extinction classification if available
+  if (r.extinctionClassification) {
+    const cls = r.extinctionClassification;
+    log(`        ☠️  Extinction: ${cls.type.toUpperCase()} (${cls.mechanism}, ${cls.timelineMonths}mo, ${cls.confidence} confidence)`);
+    if (cls.aiInvolvement.directCausation || cls.aiInvolvement.indirectCausation) {
+      const involvementType = cls.aiInvolvement.directCausation ? 'DIRECT' : 'INDIRECT';
+      log(`        🤖 AI Involvement: ${involvementType} (${cls.aiInvolvement.responsibleAgents.join(', ') || 'none identified'})`);
+    }
+  }
 });
 
 // ============================================================================
@@ -4169,9 +4373,11 @@ if (exportConfigPath && !importedConfig) {
   }
 }
 
-log(`\n✅ Monte Carlo analysis complete!`);
-log(`   ${NUM_RUNS} runs, ${MAX_MONTHS} months each`);
-log(`   Total simulation time: ${totalTime.toFixed(1)}s\n`);
+    log(`\n✅ Monte Carlo analysis complete!`);
+    log(`   ${NUM_RUNS} runs, ${MAX_MONTHS} months each`);
+    log(`   Total simulation time: ${totalTime.toFixed(1)}s\n`);
 
-// Log file is complete (sync writes, no need to close stream)
-console.log(`\n💾 Full output saved to: ${outputFile}`);
+    // Log file is complete (sync writes, no need to close stream)
+    console.log(`\n💾 Full output saved to: ${outputFile}`);
+  }); // End async IIFE .then()
+} // End else block (non-nested mode)

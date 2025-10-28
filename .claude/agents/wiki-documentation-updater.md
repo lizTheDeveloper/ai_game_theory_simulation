@@ -73,6 +73,29 @@ See `.claude/chatroom/README.md` for complete documentation.
 - **Be Current**: Focus on the present state of the system, not historical context unless relevant
 - **Be Actionable**: Write documentation that helps developers understand and use the systems
 
+### Emoji Usage in Documentation
+
+**AUTHORITATIVE REFERENCE:** When documenting code that uses emojis or writing documentation with emojis, consult:
+- **Quick reference:** `docs/EMOJI_QUICK_REFERENCE.md` - One-page cheat sheet
+- **Complete specification:** `docs/EMOJI_SEMANTIC_MAP.md` - Exhaustive mappings (12K)
+
+**Key principles:**
+- **Consistency:** Use the same emoji mappings as the codebase (ONE canonical emoji per concept)
+- **Core emojis:** ❌ (errors), ⚠️ (warnings), 🚨 (critical alerts), ✅ (success), 📊 (data), 💡 (breakthroughs)
+- **Domain-specific:** ☢️ (nuclear), 🌍 (planetary), 🤖 (AI), 🏛️ (government), 🔬 (research)
+- **In documentation:** Use emojis sparingly - primarily when documenting logging patterns or event types
+- **Cross-reference:** When documenting a system that logs with emojis, reference the authoritative docs
+
+**Example documentation patterns:**
+```markdown
+## Logging Conventions
+
+The simulation uses pictographic event language (see `docs/EMOJI_SEMANTIC_MAP.md`):
+- ❌ - Errors and failures
+- ⚠️ - Warnings and threshold approaches
+- 🚨 - Critical alerts requiring immediate action
+```
+
 ## Workflow
 
 1. **Discovery Phase**:

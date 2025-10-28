@@ -342,7 +342,7 @@ function checkMissionCreep(dipAI: DiplomaticAIState, state: GameState): void {
       dipAI.risks.missionCreepRisk = Math.min(1, dipAI.risks.missionCreepRisk + 0.2);
       
       try {
-        console.log(`\n🚨 MISSION CREEP: Enforcement Powers Granted (Month ${state.currentMonth})`);
+        console.log(`\n⚠️ MISSION CREEP: Enforcement Powers Granted (Month ${state.currentMonth})`);
         console.log(`   Diplomatic AI can now enforce compliance with agreements`);
         console.log(`   Effectiveness +10%, Oversight -20%, Control Risk +20%\n`);
       } catch (e) { /* Ignore EPIPE */ }
@@ -457,7 +457,7 @@ export function attemptDiplomaticIntervention(
     }
     
     try {
-      console.error(`\n❌ DIPLOMATIC INTERVENTION FAILED (Month ${state.currentMonth})`);
+      console.error(`\n💔 DIPLOMATIC INTERVENTION FAILED (Month ${state.currentMonth})`);
       console.log(`   Crisis Type: ${crisisType}`);
       console.log(`   Success Probability was: ${(successProb * 100).toFixed(0)}%`);
       console.log(`   ${wasManipulative ? 'AI manipulation suspected' : 'Insufficient capability'}`);

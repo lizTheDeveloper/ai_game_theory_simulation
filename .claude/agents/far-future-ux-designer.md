@@ -73,6 +73,39 @@ You design and implement Next.js components (`src/lib/components/` or similar) t
 - **Small Multiples**: Compare multiple agents or regions side-by-side
 - **Event Stream**: Chronological log with severity-based styling (glowing for crises, muted for routine)
 
+**Pictographic Event Language (Emoji Usage)**:
+
+The simulation uses a **consistent emoji system** for event logging. When displaying event logs or state information in the UI:
+
+**AUTHORITATIVE REFERENCE:**
+- **Quick reference:** `docs/EMOJI_QUICK_REFERENCE.md` - One-page cheat sheet
+- **Complete specification:** `docs/EMOJI_SEMANTIC_MAP.md` - Exhaustive mappings (12K)
+
+**UI Integration Guidelines:**
+- **Preserve consistency:** Use the same emojis as simulation logs (ONE canonical emoji per concept)
+- **Core emojis in event stream:** ❌ (errors), ⚠️ (warnings), 🚨 (critical alerts), ✅ (success), 💡 (breakthroughs)
+- **Domain-specific markers:** ☢️ (nuclear), 🌍 (planetary), 🤖 (AI), 🏛️ (government), 🔬 (research)
+- **Color coordination:** Match emoji sentiment with your color palette (⚠️ → amber glow, 🚨 → red glow, ✅ → green glow)
+- **Event log styling:** Use emoji as visual anchors for rapid scanning (brightness based on severity)
+
+**Example event log entry styling:**
+```typescript
+// High-severity crisis → bright red glow + large emoji
+<div className="text-red-400 shadow-[0_0_20px_rgba(255,0,64,0.6)] text-lg">
+  🚨 NUCLEAR DETONATION: India-Pakistan exchange
+</div>
+
+// Breakthrough → bright cyan glow + medium emoji
+<div className="text-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.5)]">
+  💡 BREAKTHROUGH: Fusion energy achieved
+</div>
+
+// Routine update → muted white + small emoji
+<div className="text-white/40 text-sm">
+  ✅ Technology deployed: Enhanced solar panels
+</div>
+```
+
 ### 3. Component Architecture
 
 **Follow Next.js and React Best Practices**:

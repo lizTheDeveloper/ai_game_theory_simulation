@@ -639,7 +639,7 @@ export function updateScenarioPrerequisites(
             stepIndex: i + 1,
           });
           
-          console.log(`🚨 PREREQUISITE MET: ${scenario.name} - Step ${i + 1}/${scenario.prerequisites.length}: ${step.name}`);
+          console.log(`⚠️ PREREQUISITE MET: ${scenario.name} - Step ${i + 1}/${scenario.prerequisites.length}: ${step.name}`);
         }
       }
     }

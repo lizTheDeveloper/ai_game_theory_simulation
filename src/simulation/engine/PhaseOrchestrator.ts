@@ -96,6 +96,10 @@ export class PhaseOrchestrator {
   private phases: SimulationPhase[] = [];
   private sorted: boolean = false;
 
+  // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+  private phaseTimings: Map<string, { totalMs: number; callCount: number }> = new Map();
+  private enableTiming: boolean = false;
+
   /**
    * Register a phase
    */
@@ -139,7 +143,20 @@ export class PhaseOrchestrator {
 
     for (const phase of this.phases) {
       try {
+        // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+        const startTime = this.enableTiming ? performance.now() : 0;
+
         const result = phase.execute(state, rng, ctx);
+
+        // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+        if (this.enableTiming) {
+          const elapsed = performance.now() - startTime;
+          const existing = this.phaseTimings.get(phase.name) || { totalMs: 0, callCount: 0 };
+          this.phaseTimings.set(phase.name, {
+            totalMs: existing.totalMs + elapsed,
+            callCount: existing.callCount + 1
+          });
+        }
 
         // Collect events
         if (result.events && result.events.length > 0) {
@@ -216,5 +233,82 @@ export class PhaseOrchestrator {
       return a.name.localeCompare(b.name);
     });
     this.sorted = true;
+  }
+
+  // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+
+  /**
+   * Enable performance timing for all phases
+   */
+  enablePerformanceTiming(): void {
+    this.enableTiming = true;
+    this.phaseTimings.clear();
+  }
+
+  /**
+   * Disable performance timing
+   */
+  disablePerformanceTiming(): void {
+    this.enableTiming = false;
+  }
+
+  /**
+   * Get phase timing statistics
+   */
+  getPhaseTimings(): Map<string, { totalMs: number; callCount: number }> {
+    return new Map(this.phaseTimings);
+  }
+
+  /**
+   * Print phase timing report to console
+   */
+  printPhaseTimings(): void {
+    if (this.phaseTimings.size === 0) {
+      console.log('\n⚠️  No timing data collected. Call enablePerformanceTiming() first.');
+      return;
+    }
+
+    const sorted = Array.from(this.phaseTimings.entries())
+      .map(([name, data]) => ({
+        phaseName: name,
+        totalMs: data.totalMs,
+        callCount: data.callCount,
+        avgMs: data.totalMs / data.callCount
+      }))
+      .sort((a, b) => b.totalMs - a.totalMs);
+
+    console.log('\n📊 PHASE TIMING ANALYSIS');
+    console.log('='.repeat(80));
+    console.log('Phase Name'.padEnd(40) + 'Total (ms)'.padStart(12) + 'Calls'.padStart(8) + 'Avg (ms)'.padStart(12));
+    console.log('-'.repeat(80));
+
+    let totalTime = 0;
+    for (const timing of sorted) {
+      totalTime += timing.totalMs;
+      console.log(
+        timing.phaseName.padEnd(40) +
+        timing.totalMs.toFixed(1).padStart(12) +
+        timing.callCount.toString().padStart(8) +
+        timing.avgMs.toFixed(2).padStart(12)
+      );
+    }
+
+    console.log('-'.repeat(80));
+    console.log('TOTAL'.padEnd(40) + totalTime.toFixed(1).padStart(12));
+    console.log('='.repeat(80));
+
+    // Top 5 slowest phases
+    console.log('\n🔴 TOP 5 SLOWEST PHASES:');
+    sorted.slice(0, 5).forEach((timing, i) => {
+      const pct = (timing.totalMs / totalTime * 100).toFixed(1);
+      console.log(`  ${i + 1}. ${timing.phaseName}: ${timing.totalMs.toFixed(1)}ms (${pct}%)`);
+    });
+  }
+
+  /**
+   * Reset phase timing statistics
+   */
+  resetPhaseTimings(): void {
+    this.phaseTimings.clear();
   }
 }

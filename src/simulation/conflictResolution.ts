@@ -39,11 +39,11 @@ export interface ConflictResolutionState {
 
   // === POST-RECALIBRATION FIX #5: FLASH WAR ESCALATION (Oct 18, 2025) ===
   // Research: ECFR (2024), Penn CERL (2024), UN Resolution 166-3
-  activeConflicts?: number;           // Count of active military conflicts
-  flashWarCount?: number;             // Total flash wars that have occurred
-  circuitBreakersActive?: boolean;    // Circuit breakers deployed (reduce flash war risk 60%)
-  circuitBreakerDevelopmentActive?: boolean;  // Circuit breakers being developed
-  circuitBreakerMonthsRemaining?: number;     // Months until circuit breakers deployed
+  activeConflicts: number;           // Count of active military conflicts
+  flashWarCount: number;             // Total flash wars that have occurred
+  circuitBreakersActive: boolean;    // Circuit breakers deployed (reduce flash war risk 60%)
+  circuitBreakerDevelopmentActive: boolean;  // Circuit breakers being developed
+  circuitBreakerMonthsRemaining: number;     // Months until circuit breakers deployed
 }
 
 export function initializeConflictResolution(): ConflictResolutionState {

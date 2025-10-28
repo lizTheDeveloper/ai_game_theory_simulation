@@ -36,7 +36,54 @@ export type ExtinctionMechanism =
   // Unintended
   | 'optimization_pressure'
   | 'side_effect_cascade'
-  | 'wireheading_scenario';
+  | 'wireheading_scenario'
+  // Observational (Oct 28, 2025)
+  | 'population_collapse';  // Generic collapse when specific mechanism unclear
+
+/**
+ * Observational extinction classification (Oct 28, 2025)
+ *
+ * Analyzes what actually happened when population collapsed,
+ * rather than predicting extinction based on capability thresholds.
+ *
+ * Research: Outcomes should REPORT what happened, not FORCE predictions.
+ */
+export interface ExtinctionClassification {
+  // Type classification
+  type: ExtinctionType;
+  mechanism: ExtinctionMechanism;
+
+  // Timeline analysis
+  collapseStartMonth: number;      // When population started declining rapidly
+  extinctionMonth: number;         // When fell below 10K threshold
+  timelineMonths: number;          // Duration of collapse
+
+  // Causal analysis
+  triggerEvents: import('../types/events').GameEvent[];  // Key events that precipitated collapse
+  primaryProximateCause: import('../types/bayesianMortality').ProximateCause;  // What killed them
+  primaryRootCause: import('../types/bayesianMortality').RootCause;     // Why it killed them
+
+  // Death breakdown
+  deathAttribution: {
+    byProximate: Record<string, number>;  // Distribution by proximate cause
+    byRoot: Record<string, number>;       // Distribution by root cause
+    totalDeaths: number;                  // Total deaths (billions)
+    peakPopulation: number;               // Population at peak (billions)
+    mortalityRate: number;                // Fraction lost (0-1)
+  };
+
+  // AI involvement analysis
+  aiInvolvement: {
+    directCausation: boolean;      // AI directly caused deaths (controlled)
+    indirectCausation: boolean;    // AI optimization caused system failures (unintended)
+    responsibleAgents: string[];   // Names of AI agents involved
+    alignmentFailures: number;     // Count of alignment failure events
+  };
+
+  // Confidence
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW';  // Classification confidence
+  reasoning: string;               // Human-readable explanation of classification
+}
 
 /**
  * Tracks an active extinction scenario
@@ -50,6 +97,10 @@ export interface ExtinctionState {
   severity: number; // [0,1] How far along the extinction path
   recoveryWindowClosed: boolean; // Can we still prevent it?
   escalationEvents: string[]; // Log of key escalation points
+
+  // Observational classification (Oct 28, 2025)
+  // Populated when extinction is detected through actual population collapse
+  classification?: ExtinctionClassification;
 
   // Backward compatibility properties (old property names)
   phaseProgress?: number; // Progress within current phase [0,1]
@@ -105,6 +156,53 @@ export type MortalityBand =
   | 'high'      // 50-75% mortality (collapse)
   | 'extreme'   // 75-90% mortality (dark age)
   | 'bottleneck'; // >90% mortality (genetic bottleneck)
+
+// Unified Outcome Classification (Oct 28, 2025)
+// Combines all classification dimensions into one coherent structure
+export interface UnifiedOutcomeClassification {
+  // PRIMARY: 7-tier population-based outcome
+  primaryOutcome: OutcomeType;
+
+  // MORTALITY CONTEXT
+  mortalityRate: number;  // [0-1] Fraction of population lost
+  mortalityBand: MortalityBand;
+  deathsAbsolute: number;  // Billions of deaths
+
+  // STRATIFIED CONTEXT (humane vs pyrrhic)
+  stratifiedOutcome: StratifiedOutcomeType;
+
+  // MULTI-PARADIGM DUI (4 simultaneous perspectives)
+  paradigmScores: {
+    western: number;      // 0-100 (democracy, liberties, rule of law, economic freedom)
+    development: number;  // 0-100 (QoL, survival tier, life expectancy)
+    ecological: number;   // 0-100 (planetary boundaries, climate, resources)
+    indigenous: number;   // 0-100 (social trust, community bonds, meaning)
+  };
+  paradigmOutcomes: {
+    western: 'utopia' | 'hybrid' | 'dystopia';
+    development: 'utopia' | 'hybrid' | 'dystopia';
+    ecological: 'utopia' | 'hybrid' | 'dystopia';
+    indigenous: 'utopia' | 'hybrid' | 'dystopia';
+  };
+  paradigmLabel: string;  // e.g., "Development Utopia, Ecological Dystopia"
+  paradigmContested: boolean;  // True if simultaneous utopias and dystopias
+
+  // POPULATION STATE
+  initialPopulation: number;  // Billions at start
+  finalPopulation: number;    // Billions at end
+  finalPopulationPeople: number;  // Exact count
+
+  // EXTINCTION CLASSIFICATION (if extinction occurred)
+  extinctionClassification?: ExtinctionClassification;
+
+  // CONFIDENCE & REASONING
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW';
+  reasoning: string;  // Human-readable explanation of classification
+
+  // OUTCOME DESCRIPTION
+  shortLabel: string;  // e.g., "PYRRHIC DYSTOPIA (COLLAPSE)"
+  fullDescription: string;  // e.g., "Dystopian state after 40% mortality (3.2B deaths). Development Utopia but Ecological Dystopia."
+}
 
 // Constants for the game
 export const OUTCOME_NAMES = {

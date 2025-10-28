@@ -946,7 +946,7 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
       } else {
         // Emergency nationalization if government can't afford
         // (happens during crisis - government just seizes assets)
-        console.warn(`   ⚠️  Emergency nationalization (insufficient funds)`);
+        console.warn(`   🚨 Emergency nationalization (insufficient funds)`);
       }
 
       governmentAcquired++;

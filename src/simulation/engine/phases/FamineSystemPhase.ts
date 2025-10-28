@@ -13,6 +13,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { addMortalityRisk } from '@/simulation/bayesianMortality';
 
 export class FamineSystemPhase implements SimulationPhase {
   readonly id = 'famine_system';
@@ -40,60 +41,68 @@ export class FamineSystemPhase implements SimulationPhase {
       state.currentMonth
     );
 
-    // 3. Apply famine deaths to population
+    // 3. Apply famine deaths to population via centralized mortality system
     if (famineDeaths > 0) {
-      state.humanPopulationSystem.population -= famineDeaths;
-
-      // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
-      // PROXIMATE: Famine (starvation, malnutrition)
-      state.humanPopulationSystem.deathsByCategory.famine += famineDeaths;
-
-      // ROOT CAUSE: Attribute deaths based on active famine causes
-      // Current approach: Aggregate all famine deaths and attribute proportionally
       const famines = state.famineSystem.activeFamines;
+
+      // For each active famine, add mortality risk with appropriate root cause
+      // This allows proper Bayesian compounding of multi-causal famines
       if (famines.length > 0) {
-        // Attribute deaths based on famine causes
-        let conflictFamines = 0;
-        let climateFamines = 0;
-        let governanceFamines = 0;
-        let naturalFamines = 0;
-
         for (const famine of famines) {
-          if (famine.cause === 'war_displacement' || famine.cause === 'aid_blockade' || famine.cause === 'nuclear_winter') {
-            conflictFamines++;
-          } else if (famine.cause === 'crop_failure') {
-            climateFamines++;
-          } else if (famine.cause === 'drought') {
-            naturalFamines++; // Natural drought (may be climate-driven)
-          } else {
-            governanceFamines++; // economic_collapse, resource_extraction
-          }
-        }
+          // Estimate this famine's contribution (proportional to active famines)
+          const famineMortalityRate = (famineDeaths / famines.length) / state.humanPopulationSystem.population;
 
-        const total = conflictFamines + climateFamines + governanceFamines + naturalFamines;
-        if (total > 0) {
-          state.humanPopulationSystem.deathsByRootCause.conflict += famineDeaths * (conflictFamines / total);
-          state.humanPopulationSystem.deathsByRootCause.climate += famineDeaths * (climateFamines / total);
-          state.humanPopulationSystem.deathsByRootCause.social += famineDeaths * (governanceFamines / total);
-          state.humanPopulationSystem.deathsByRootCause.ecosystem += famineDeaths * (naturalFamines / total);
-        } else {
-          // Fallback: default to social (policy/distribution failures)
-          state.humanPopulationSystem.deathsByRootCause.social += famineDeaths;
+          // Determine root cause based on famine cause
+          let rootCause: 'conflict' | 'climate' | 'social' | 'ecosystem' = 'social';
+          let confidence: 'HIGH' | 'MEDIUM' | 'LOW' = 'HIGH';
+
+          if (famine.cause === 'war_displacement' || famine.cause === 'aid_blockade' || famine.cause === 'nuclear_winter') {
+            rootCause = 'conflict';
+            confidence = 'HIGH'; // War-driven famines well documented
+          } else if (famine.cause === 'crop_failure') {
+            rootCause = 'climate';
+            confidence = 'HIGH'; // Climate-driven crop failures
+          } else if (famine.cause === 'drought') {
+            rootCause = 'climate'; // Drought is climate-driven
+            confidence = 'MEDIUM'; // May have natural variability component
+          } else {
+            rootCause = 'social'; // economic_collapse, resource_extraction
+            confidence = 'HIGH';
+          }
+
+          addMortalityRisk(state.humanPopulationSystem, {
+            type: 'famine',
+            baseRisk: famineMortalityRate,
+            proximate: 'famine',
+            root: rootCause,
+            confidence,
+            scope: 'REGIONAL', // Famines are regional
+            region: famine.affectedRegion,
+            month: state.currentMonth,
+            description: `Famine in ${famine.affectedRegion}: ${famine.cause}`,
+          });
         }
       } else {
-        // No active famines (shouldn't happen) - default to social
-        state.humanPopulationSystem.deathsByRootCause.social += famineDeaths;
+        // No active famines (shouldn't happen) - add aggregate risk with social cause
+        const mortalityRate = famineDeaths / state.humanPopulationSystem.population;
+        addMortalityRisk(state.humanPopulationSystem, {
+          type: 'famine',
+          baseRisk: mortalityRate,
+          proximate: 'famine',
+          root: 'social', // Default to policy/distribution failures
+          confidence: 'LOW', // Unknown cause
+          scope: 'SEMI-GLOBAL',
+          month: state.currentMonth,
+          description: 'Unattributed famine deaths',
+        });
       }
 
-      state.humanPopulationSystem.cumulativeCrisisDeaths += famineDeaths;
-      state.humanPopulationSystem.monthlyExcessDeaths += famineDeaths;
-      
-      // Log significant famine deaths (> 1M)
-      const deathsMillions = famineDeaths * 1000;
-      if (deathsMillions > 1) {
+      // Log significant famine deaths (> 1K)
+      const deathsMillions = famineDeaths; // Already in millions
+      if (deathsMillions > 0.001) {
         console.log(`💀 Famine deaths this month: ${deathsMillions.toFixed(1)}M`);
         console.log(`   Active famines: ${state.famineSystem.activeFamines.length}`);
-        console.log(`   Total famine deaths: ${(state.famineSystem.totalDeaths * 1000).toFixed(0)}M`);
+        console.log(`   Total famine deaths: ${state.famineSystem.totalDeaths.toFixed(0)}M`);
       }
     }
 

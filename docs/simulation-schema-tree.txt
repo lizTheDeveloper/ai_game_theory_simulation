@@ -1,0 +1,36 @@
+GameState
+├─ Time (3)
+│  ├─ currentMonth
+│  ├─ daysInCurrentMonth
+│  ├─ consciousnessEmergenceMonth
+├─ Agents (1)
+│  ├─ aiAgents
+├─ Systems (21)
+│  ├─ governmentSystem
+│  ├─ qualityOfLifeSystems
+│  ├─ phosphorusSystem
+│  ├─ freshwaterSystem
+│  ├─ oceanAcidificationSystem
+│  └─ ... +16
+├─ Metrics (4)
+│  ├─ globalMetrics
+│  ├─ aiSufferingMetrics
+│  ├─ outcomeMetrics
+│  ├─ aiAssistedSkillsMetrics
+├─ Accumulation (2)
+│  ├─ environmentalAccumulation
+│  ├─ socialAccumulation
+├─ Crises (1)
+│  ├─ refugeeCrisisSystem
+├─ Tech (4)
+│  ├─ technologyTree
+│  ├─ technologicalRisk
+│  ├─ techTreeState
+│  ├─ breakthroughTech
+├─ Economy (1)
+│  ├─ resourceEconomy
+├─ Social (1)
+│  ├─ society
+├─ Outcomes (2)
+│  ├─ outcomeMetrics
+│  ├─ stratifiedOutcome

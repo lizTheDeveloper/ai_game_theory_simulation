@@ -1,0 +1,946 @@
+=== Robert Miles AI Sync ===
+Started: Tue Oct 28 08:20:43 PDT 2025
+📋 Fetching channel metadata...
+Found 45 videos
+✓ Video catalog updated
+📥 Downloading 45 new transcripts...
+  [1/45] Superintelligence Mod for Civilization V
+[youtube] Extracting URL: https://www.youtube.com/watch?v=_UzX3L7lXhw
+[youtube] _UzX3L7lXhw: Downloading webpage
+[youtube] _UzX3L7lXhw: Downloading tv client config
+[youtube] _UzX3L7lXhw: Downloading tv player API JSON
+[youtube] _UzX3L7lXhw: Downloading ios player API JSON
+[youtube] _UzX3L7lXhw: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = Xtf3Kkd8AeWtx3nS ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = RSWyGezZtE_omLLJ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = T6mesF02kZ3_rLH5 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] _UzX3L7lXhw: Downloading m3u8 information
+[info] _UzX3L7lXhw: Downloading subtitles: en
+[info] _UzX3L7lXhw: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Superintelligence Mod for Civilization V [_UzX3L7lXhw].en.vtt
+[download] Destination: Superintelligence Mod for Civilization V [_UzX3L7lXhw].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    8.36MiB/s (00:00:00)[download]   63.00KiB at    7.23MiB/s (00:00:00)[download]  127.00KiB at    6.67MiB/s (00:00:00)[download]  255.00KiB at    7.54MiB/s (00:00:00)[download]  475.88KiB at    7.22MiB/s (00:00:00)[download] 100% of  475.88KiB in 00:00:00 at 2.12MiB/s
+  💤 11s...
+  [2/45] Using Dangerous AI, But Safely?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=0pgEMWy70Qk
+[youtube] 0pgEMWy70Qk: Downloading webpage
+[youtube] 0pgEMWy70Qk: Downloading tv client config
+[youtube] 0pgEMWy70Qk: Downloading tv player API JSON
+[youtube] 0pgEMWy70Qk: Downloading ios player API JSON
+[youtube] 0pgEMWy70Qk: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = juyKci6rhq0beefV ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 7SHa-hakzs6R9Weq ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = rp1xJd1vlQ9gExJ4 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 0pgEMWy70Qk: Downloading m3u8 information
+[info] 0pgEMWy70Qk: Downloading subtitles: en
+[info] 0pgEMWy70Qk: Downloading 1 format(s): 616+234
+[info] Writing video subtitles to: Using Dangerous AI, But Safely？ [0pgEMWy70Qk].en.vtt
+[download] Destination: Using Dangerous AI, But Safely？ [0pgEMWy70Qk].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   15.51MiB/s (00:00:00)[download]   63.00KiB at   16.06MiB/s (00:00:00)[download]  127.00KiB at   15.22MiB/s (00:00:00)[download]  255.00KiB at    6.78MiB/s (00:00:00)[download]  303.53KiB at    3.73MiB/s (00:00:00)[download] 100% of  303.53KiB in 00:00:00 at 1.94MiB/s
+  💤 12s...
+  [3/45] What Can We Do About Reward Hacking?: Concrete Problems in AI Safety Part 4
+[youtube] Extracting URL: https://www.youtube.com/watch?v=13tZ9Yia71c
+[youtube] 13tZ9Yia71c: Downloading webpage
+[youtube] 13tZ9Yia71c: Downloading tv client config
+[youtube] 13tZ9Yia71c: Downloading tv player API JSON
+[youtube] 13tZ9Yia71c: Downloading ios player API JSON
+[youtube] 13tZ9Yia71c: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = 544bFOCOD2d1_-Tb ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = W6zTPN7nSFNk2d2G ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = Yyv2IcEQV68sG6Hy ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 13tZ9Yia71c: Downloading m3u8 information
+[info] 13tZ9Yia71c: Downloading subtitles: en
+[info] 13tZ9Yia71c: Downloading 1 format(s): 270+234-12
+[info] Writing video subtitles to: What Can We Do About Reward Hacking？： Concrete Problems in AI Safety Part 4 [13tZ9Yia71c].en.vtt
+[download] Destination: What Can We Do About Reward Hacking？： Concrete Problems in AI Safety Part 4 [13tZ9Yia71c].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    7.46MiB/s (00:00:00)[download]   63.00KiB at    8.04MiB/s (00:00:00)[download]   94.91KiB at    9.28MiB/s (00:00:00)[download] 100% of   94.91KiB in 00:00:00 at 837.38KiB/s
+  💤 12s...
+  [4/45] Are AI Risks like Nuclear Risks?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=1wAgBaJgEsg
+[youtube] 1wAgBaJgEsg: Downloading webpage
+[youtube] 1wAgBaJgEsg: Downloading tv client config
+[youtube] 1wAgBaJgEsg: Downloading tv player API JSON
+[youtube] 1wAgBaJgEsg: Downloading ios player API JSON
+[youtube] 1wAgBaJgEsg: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = Q8RXTKOKy8X1ZiU0 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = T9-gUcevQhfaUw6R ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = i-rPPoX5WcmpgNCe ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 1wAgBaJgEsg: Downloading m3u8 information
+[info] 1wAgBaJgEsg: Downloading subtitles: en
+[info] 1wAgBaJgEsg: Downloading 1 format(s): 270+234-10
+[info] Writing video subtitles to: Are AI Risks like Nuclear Risks？ [1wAgBaJgEsg].en.vtt
+[download] Destination: Are AI Risks like Nuclear Risks？ [1wAgBaJgEsg].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    5.41MiB/s (00:00:00)[download]   63.00KiB at    3.97MiB/s (00:00:00)[download]  109.31KiB at    1.87MiB/s (00:00:00)[download] 100% of  109.31KiB in 00:00:00 at 621.80KiB/s
+  💤 10s...
+  [5/45] Status Report
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2B-AyWA2_ZY
+[youtube] 2B-AyWA2_ZY: Downloading webpage
+[youtube] 2B-AyWA2_ZY: Downloading tv client config
+[youtube] 2B-AyWA2_ZY: Downloading tv player API JSON
+[youtube] 2B-AyWA2_ZY: Downloading ios player API JSON
+[youtube] 2B-AyWA2_ZY: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = Vr4xDJ_xOZ8Wyngb ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = dhxkfJLiHJ9Q_WR0 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 7gXl9R3211aXwz-q ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 2B-AyWA2_ZY: Downloading m3u8 information
+[info] 2B-AyWA2_ZY: Downloading subtitles: en
+[info] 2B-AyWA2_ZY: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Status Report [2B-AyWA2_ZY].en.vtt
+[download] Destination: Status Report [2B-AyWA2_ZY].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]    7.74KiB at  Unknown B/s (00:00:00)[download] 100% of    7.74KiB in 00:00:00 at 135.17KiB/s
+  💤 10s...
+  [6/45] AI Ruined My Year
+[youtube] Extracting URL: https://www.youtube.com/watch?v=2ziuPUeewK0
+[youtube] 2ziuPUeewK0: Downloading webpage
+[youtube] 2ziuPUeewK0: Downloading tv client config
+[youtube] 2ziuPUeewK0: Downloading tv player API JSON
+[youtube] 2ziuPUeewK0: Downloading ios player API JSON
+[youtube] 2ziuPUeewK0: Downloading player 5cf6312f-main
+         player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         n = Agx2ekGiBWKwrv1 ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = yKQqj9fGqhV3GfX ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = V89DnGElaP4k6_r ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 2ziuPUeewK0: Downloading m3u8 information
+[info] 2ziuPUeewK0: Downloading subtitles: en
+[info] 2ziuPUeewK0: Downloading 1 format(s): 625+234
+[info] Writing video subtitles to: AI Ruined My Year [2ziuPUeewK0].en.vtt
+[download] Destination: AI Ruined My Year [2ziuPUeewK0].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   63.00KiB at   53.45MiB/s (00:00:00)[download]  127.00KiB at    7.19MiB/s (00:00:00)[download]  255.00KiB at    6.90MiB/s (00:00:00)[download]  419.08KiB at    7.46MiB/s (00:00:00)[download] 100% of  419.08KiB in 00:00:00 at 2.21MiB/s
+  💤 9s...
+  [7/45] Reward Hacking Reloaded: Concrete Problems in AI Safety Part 3.5
+[youtube] Extracting URL: https://www.youtube.com/watch?v=46nsTFfsBuc
+[youtube] 46nsTFfsBuc: Downloading webpage
+[youtube] 46nsTFfsBuc: Downloading tv client config
+[youtube] 46nsTFfsBuc: Downloading tv player API JSON
+[youtube] 46nsTFfsBuc: Downloading ios player API JSON
+[youtube] 46nsTFfsBuc: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = jlMznr_5vTZGH_wv ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = NtpTw2saL20OIjxc ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = g2DlxdVuxNlzh4S2 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 46nsTFfsBuc: Downloading m3u8 information
+[info] 46nsTFfsBuc: Downloading subtitles: en
+[info] 46nsTFfsBuc: Downloading 1 format(s): 270+234-12
+[info] Writing video subtitles to: Reward Hacking Reloaded： Concrete Problems in AI Safety Part 3.5 [46nsTFfsBuc].en.vtt
+[download] Destination: Reward Hacking Reloaded： Concrete Problems in AI Safety Part 3.5 [46nsTFfsBuc].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.66MiB/s (00:00:00)[download]    7.00KiB at    5.24MiB/s (00:00:00)[download]   15.00KiB at   10.09MiB/s (00:00:00)[download]   31.00KiB at    4.42MiB/s (00:00:00)[download]   63.00KiB at    5.60MiB/s (00:00:00)[download]   75.64KiB at    6.55MiB/s (00:00:00)[download] 100% of   75.64KiB in 00:00:00 at 560.03KiB/s
+  💤 10s...
+  [8/45] The other "Killer Robot Arms Race" Elon Musk should worry about
+[youtube] Extracting URL: https://www.youtube.com/watch?v=7FCEiCnHcbo
+[youtube] 7FCEiCnHcbo: Downloading webpage
+[youtube] 7FCEiCnHcbo: Downloading tv client config
+[youtube] 7FCEiCnHcbo: Downloading tv player API JSON
+[youtube] 7FCEiCnHcbo: Downloading ios player API JSON
+[youtube] 7FCEiCnHcbo: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = uCseyY17zucK9E7_ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = _Deggl41yZzMhkPB ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 05hYD5XTfdLkDUIE ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 7FCEiCnHcbo: Downloading m3u8 information
+[info] 7FCEiCnHcbo: Downloading subtitles: en
+[info] 7FCEiCnHcbo: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: The other ＂Killer Robot Arms Race＂ Elon Musk should worry about [7FCEiCnHcbo].en.vtt
+[download] Destination: The other ＂Killer Robot Arms Race＂ Elon Musk should worry about [7FCEiCnHcbo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    2.26MiB/s (00:00:00)[download]   53.12KiB at    1.93MiB/s (00:00:00)[download] 100% of   53.12KiB in 00:00:00 at 446.00KiB/s
+  💤 9s...
+  [9/45] Sharing the Benefits of AI: The Windfall Clause
+[youtube] Extracting URL: https://www.youtube.com/watch?v=7i_f4Kbpgn4
+[youtube] 7i_f4Kbpgn4: Downloading webpage
+[youtube] 7i_f4Kbpgn4: Downloading tv client config
+[youtube] 7i_f4Kbpgn4: Downloading tv player API JSON
+[youtube] 7i_f4Kbpgn4: Downloading ios player API JSON
+[youtube] 7i_f4Kbpgn4: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = FIORbQsfnBWDPH1B ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 41_XAzbVYz_dE4eC ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 7i_f4Kbpgn4: Downloading m3u8 information
+[info] 7i_f4Kbpgn4: Downloading subtitles: en
+[info] 7i_f4Kbpgn4: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Sharing the Benefits of AI： The Windfall Clause [7i_f4Kbpgn4].en.vtt
+[download] Destination: Sharing the Benefits of AI： The Windfall Clause [7i_f4Kbpgn4].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  729.95KiB/s (00:00:00)[download]    7.00KiB at    1.55MiB/s (00:00:00)[download]   15.00KiB at    2.69MiB/s (00:00:00)[download]   31.00KiB at    3.60MiB/s (00:00:00)[download]   63.00KiB at    7.07MiB/s (00:00:00)[download]  119.33KiB at   10.96MiB/s (00:00:00)[download] 100% of  119.33KiB in 00:00:00 at 923.63KiB/s
+  💤 8s...
+  [10/45] What's the Use of Utility Functions?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=8AvIErXFoH8
+[youtube] 8AvIErXFoH8: Downloading webpage
+[youtube] 8AvIErXFoH8: Downloading tv client config
+[youtube] 8AvIErXFoH8: Downloading player 25f1a420-player_es6_vflset_en_US_base
+[youtube] 8AvIErXFoH8: Downloading tv player API JSON
+[youtube] 8AvIErXFoH8: Downloading ios player API JSON
+         player = https://www.youtube.com/s/player/25f1a420/player_es6.vflset/en_US/base.js
+         n = jRhwIHECqEywALG0 ; player = https://www.youtube.com/s/player/25f1a420/player_es6.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 8AvIErXFoH8: Downloading m3u8 information
+[info] 8AvIErXFoH8: Downloading subtitles: en
+[info] 8AvIErXFoH8: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: What's the Use of Utility Functions？ [8AvIErXFoH8].en.vtt
+[download] Destination: What's the Use of Utility Functions？ [8AvIErXFoH8].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    1.42MiB/s (00:00:00)[download]   15.00KiB at    2.88MiB/s (00:00:00)[download]   31.00KiB at    2.27MiB/s (00:00:00)[download]   63.00KiB at    4.49MiB/s (00:00:00)[download]   63.85KiB at    4.50MiB/s (00:00:00)[download] 100% of   63.85KiB in 00:00:00 at 511.83KiB/s
+  💤 12s...
+  [11/45] Reward Hacking: Concrete Problems in AI Safety Part 3
+[youtube] Extracting URL: https://www.youtube.com/watch?v=92qDfT8pENs
+[youtube] 92qDfT8pENs: Downloading webpage
+[youtube] 92qDfT8pENs: Downloading tv client config
+[youtube] 92qDfT8pENs: Downloading tv player API JSON
+[youtube] 92qDfT8pENs: Downloading ios player API JSON
+[youtube] 92qDfT8pENs: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = vqEm_S3wiiz1_yVX ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 92qDfT8pENs: Downloading m3u8 information
+[info] 92qDfT8pENs: Downloading subtitles: en
+[info] 92qDfT8pENs: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Reward Hacking： Concrete Problems in AI Safety Part 3 [92qDfT8pENs].en.vtt
+[download] Destination: Reward Hacking： Concrete Problems in AI Safety Part 3 [92qDfT8pENs].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   27.42MiB/s (00:00:00)[download]   63.00KiB at   24.04MiB/s (00:00:00)[download]   70.20KiB at   25.02MiB/s (00:00:00)[download] 100% of   70.20KiB in 00:00:00 at 611.01KiB/s
+  💤 8s...
+  [12/45] 10 Reasons to Ignore AI Safety
+[youtube] Extracting URL: https://www.youtube.com/watch?v=9i1WlcCudpU
+[youtube] 9i1WlcCudpU: Downloading webpage
+[youtube] 9i1WlcCudpU: Downloading tv client config
+[youtube] 9i1WlcCudpU: Downloading tv player API JSON
+[youtube] 9i1WlcCudpU: Downloading ios player API JSON
+[youtube] 9i1WlcCudpU: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = o2YJxfgvfjc19t_L ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = LtWn04XLeH3uYYdZ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = LLkAo_AJRAMDbInn ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] 9i1WlcCudpU: Downloading m3u8 information
+[info] 9i1WlcCudpU: Downloading subtitles: en
+[info] 9i1WlcCudpU: Downloading 1 format(s): 614+234-12
+[info] Writing video subtitles to: 10 Reasons to Ignore AI Safety [9i1WlcCudpU].en.vtt
+[download] Destination: 10 Reasons to Ignore AI Safety [9i1WlcCudpU].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   11.55MiB/s (00:00:00)[download]   63.00KiB at    6.48MiB/s (00:00:00)[download]  127.00KiB at    6.71MiB/s (00:00:00)[download]  170.06KiB at    5.43MiB/s (00:00:00)[download] 100% of  170.06KiB in 00:00:00 at 1.32MiB/s
+  💤 11s...
+  [13/45] AI That Doesn't Try Too Hard - Maximizers and Satisficers
+[youtube] Extracting URL: https://www.youtube.com/watch?v=Ao4jwLwT36M
+[youtube] Ao4jwLwT36M: Downloading webpage
+[youtube] Ao4jwLwT36M: Downloading tv client config
+[youtube] Ao4jwLwT36M: Downloading tv player API JSON
+[youtube] Ao4jwLwT36M: Downloading ios player API JSON
+[youtube] Ao4jwLwT36M: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = LAV7bnVYNxp03bgI ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = TUe5Ycqzkn6PZqeh ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = zdIhRkg_OTpGH6T7 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] Ao4jwLwT36M: Downloading m3u8 information
+[info] Ao4jwLwT36M: Downloading subtitles: en
+[info] Ao4jwLwT36M: Downloading 1 format(s): 270+234-12
+[info] Writing video subtitles to: AI That Doesn't Try Too Hard - Maximizers and Satisficers [Ao4jwLwT36M].en.vtt
+[download] Destination: AI That Doesn't Try Too Hard - Maximizers and Satisficers [Ao4jwLwT36M].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   27.98MiB/s (00:00:00)[download]   63.00KiB at   48.83MiB/s (00:00:00)[download]  101.23KiB at   11.91MiB/s (00:00:00)[download] 100% of  101.23KiB in 00:00:00 at 1.01MiB/s
+  💤 9s...
+  [14/45] Predicting AI: RIP Prof. Hubert Dreyfus
+[youtube] Extracting URL: https://www.youtube.com/watch?v=B6Oigy1i3W4
+[youtube] B6Oigy1i3W4: Downloading webpage
+[youtube] B6Oigy1i3W4: Downloading tv client config
+[youtube] B6Oigy1i3W4: Downloading tv player API JSON
+[youtube] B6Oigy1i3W4: Downloading ios player API JSON
+[youtube] B6Oigy1i3W4: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = 1tpPMESGlNOmiHsc ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = JS217Dd_shbsbVE5 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] B6Oigy1i3W4: Downloading m3u8 information
+[info] B6Oigy1i3W4: Downloading subtitles: en
+[info] B6Oigy1i3W4: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Predicting AI： RIP Prof. Hubert Dreyfus [B6Oigy1i3W4].en.vtt
+[download] Destination: Predicting AI： RIP Prof. Hubert Dreyfus [B6Oigy1i3W4].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  559.09KiB/s (00:00:00)[download]    7.00KiB at  918.16KiB/s (00:00:00)[download]   15.00KiB at    1.60MiB/s (00:00:00)[download]   31.00KiB at    3.24MiB/s (00:00:00)[download]   63.00KiB at    2.38MiB/s (00:00:00)[download]   79.61KiB at    2.39MiB/s (00:00:00)[download] 100% of   79.61KiB in 00:00:00 at 576.04KiB/s
+  💤 8s...
+  [15/45] AI Safety at EAGlobal2017 Conference
+[youtube] Extracting URL: https://www.youtube.com/watch?v=BfcJymyTiu0
+[youtube] BfcJymyTiu0: Downloading webpage
+[youtube] BfcJymyTiu0: Downloading tv client config
+[youtube] BfcJymyTiu0: Downloading tv player API JSON
+[youtube] BfcJymyTiu0: Downloading ios player API JSON
+[youtube] BfcJymyTiu0: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = uVK-SujNnUbkkVnd ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] BfcJymyTiu0: Downloading m3u8 information
+[info] BfcJymyTiu0: Downloading subtitles: en
+[info] BfcJymyTiu0: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: AI Safety at EAGlobal2017 Conference [BfcJymyTiu0].en.vtt
+[download] Destination: AI Safety at EAGlobal2017 Conference [BfcJymyTiu0].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   29.36MiB/s (00:00:00)[download]   46.74KiB at   29.24MiB/s (00:00:00)[download] 100% of   46.74KiB in 00:00:00 at 239.19KiB/s
+  💤 12s...
+  [16/45] The OTHER AI Alignment Problem: Mesa-Optimizers and Inner Alignment
+[youtube] Extracting URL: https://www.youtube.com/watch?v=bJLcIBixGj8
+[youtube] bJLcIBixGj8: Downloading webpage
+[youtube] bJLcIBixGj8: Downloading tv client config
+[youtube] bJLcIBixGj8: Downloading tv player API JSON
+[youtube] bJLcIBixGj8: Downloading ios player API JSON
+[youtube] bJLcIBixGj8: Downloading player 5cf6312f-main
+         player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         n = 0eZqhwVmfviGXD9 ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = RquIRxmw71RKSiF ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = X5LOnBYU-qTHfcw ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] bJLcIBixGj8: Downloading m3u8 information
+[info] bJLcIBixGj8: Downloading subtitles: en
+[info] bJLcIBixGj8: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: The OTHER AI Alignment Problem： Mesa-Optimizers and Inner Alignment [bJLcIBixGj8].en.vtt
+[download] Destination: The OTHER AI Alignment Problem： Mesa-Optimizers and Inner Alignment [bJLcIBixGj8].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   27.05MiB/s (00:00:00)[download]   63.00KiB at   44.32MiB/s (00:00:00)[download]  127.00KiB at  916.94KiB/s (00:00:00)[download]  242.11KiB at    1.64MiB/s (00:00:00)[download] 100% of  242.11KiB in 00:00:00 at 776.88KiB/s
+  💤 8s...
+  [17/45] AI Safety Gridworlds
+[youtube] Extracting URL: https://www.youtube.com/watch?v=CGTkoUidQ8I
+[youtube] CGTkoUidQ8I: Downloading webpage
+[youtube] CGTkoUidQ8I: Downloading tv client config
+[youtube] CGTkoUidQ8I: Downloading tv player API JSON
+[youtube] CGTkoUidQ8I: Downloading ios player API JSON
+[youtube] CGTkoUidQ8I: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = WZ3ut7G-Ls1KBt06 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] CGTkoUidQ8I: Downloading m3u8 information
+[info] CGTkoUidQ8I: Downloading subtitles: en
+[info] CGTkoUidQ8I: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: AI Safety Gridworlds [CGTkoUidQ8I].en.vtt
+[download] Destination: AI Safety Gridworlds [CGTkoUidQ8I].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at    4.40MiB/s (00:00:00)[download]   63.00KiB at    3.14MiB/s (00:00:00)[download]   76.65KiB at    2.18MiB/s (00:00:00)[download] 100% of   76.65KiB in 00:00:00 at 729.75KiB/s
+  💤 10s...
+  [18/45] Why Not Just: Raise AI Like Kids?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=eaYIU6YXr3w
+[youtube] eaYIU6YXr3w: Downloading webpage
+[youtube] eaYIU6YXr3w: Downloading tv client config
+[youtube] eaYIU6YXr3w: Downloading tv player API JSON
+[youtube] eaYIU6YXr3w: Downloading ios player API JSON
+[youtube] eaYIU6YXr3w: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = OLaP9aL9VwL6wxet ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] eaYIU6YXr3w: Downloading m3u8 information
+[info] eaYIU6YXr3w: Downloading subtitles: en
+[info] eaYIU6YXr3w: Downloading 1 format(s): 232+234
+[info] Writing video subtitles to: Why Not Just： Raise AI Like Kids？ [eaYIU6YXr3w].en.vtt
+[download] Destination: Why Not Just： Raise AI Like Kids？ [eaYIU6YXr3w].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   28.19MiB/s (00:00:00)[download]   55.06KiB at   13.00MiB/s (00:00:00)[download] 100% of   55.06KiB in 00:00:00 at 429.01KiB/s
+  💤 9s...
+  [19/45] Quantilizers: AI That Doesn't Try Too Hard
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gdKMG6kTl6Y
+[youtube] gdKMG6kTl6Y: Downloading webpage
+[youtube] gdKMG6kTl6Y: Downloading tv client config
+[youtube] gdKMG6kTl6Y: Downloading tv player API JSON
+[youtube] gdKMG6kTl6Y: Downloading ios player API JSON
+[youtube] gdKMG6kTl6Y: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = togniT6-oXWgWclD ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 39Mt_FteMENXmvO_ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = rEYpvT_aOKPEC5dL ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] gdKMG6kTl6Y: Downloading m3u8 information
+[info] gdKMG6kTl6Y: Downloading subtitles: en
+[info] gdKMG6kTl6Y: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Quantilizers： AI That Doesn't Try Too Hard [gdKMG6kTl6Y].en.vtt
+[download] Destination: Quantilizers： AI That Doesn't Try Too Hard [gdKMG6kTl6Y].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   63.00KiB at    9.27MiB/s (00:00:00)[download]   99.89KiB at    9.17MiB/s (00:00:00)[download] 100% of   99.89KiB in 00:00:00 at 956.23KiB/s
+  💤 9s...
+  [20/45] What can AGI do? I/O and Speed
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gP4ZNUHdwp8
+[youtube] gP4ZNUHdwp8: Downloading webpage
+[youtube] gP4ZNUHdwp8: Downloading tv client config
+[youtube] gP4ZNUHdwp8: Downloading tv player API JSON
+[youtube] gP4ZNUHdwp8: Downloading ios player API JSON
+[youtube] gP4ZNUHdwp8: Downloading player 5cf6312f-main
+         player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         n = 7Wvucxt0EQ3anJu ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = XNcqA4CxNk_aBCQ ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = LuIf95VpfMaTZ_O ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] gP4ZNUHdwp8: Downloading m3u8 information
+[info] gP4ZNUHdwp8: Downloading subtitles: en
+[info] gP4ZNUHdwp8: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: What can AGI do？ I⧸O and Speed [gP4ZNUHdwp8].en.vtt
+[download] Destination: What can AGI do？ I⧸O and Speed [gP4ZNUHdwp8].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    2.89MiB/s (00:00:00)[download]   15.00KiB at    1.56MiB/s (00:00:00)[download]   31.00KiB at    1.30MiB/s (00:00:00)[download]   63.00KiB at    1.31MiB/s (00:00:00)[download]  108.03KiB at    1.27MiB/s (00:00:00)[download] 100% of  108.03KiB in 00:00:00 at 535.59KiB/s
+  💤 12s...
+  [21/45] Empowerment: Concrete Problems in AI Safety part 2
+[youtube] Extracting URL: https://www.youtube.com/watch?v=gPtsgTjyEj4
+[youtube] gPtsgTjyEj4: Downloading webpage
+[youtube] gPtsgTjyEj4: Downloading tv client config
+[youtube] gPtsgTjyEj4: Downloading tv player API JSON
+[youtube] gPtsgTjyEj4: Downloading ios player API JSON
+[youtube] gPtsgTjyEj4: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = EcGjVe74VBLTDH2p ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = ofza0Qb9bKzEtVVW ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = uwo9gmPmreVjVtG7 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] gPtsgTjyEj4: Downloading m3u8 information
+[info] gPtsgTjyEj4: Downloading subtitles: en
+[info] gPtsgTjyEj4: Downloading 1 format(s): 232+234
+[info] Writing video subtitles to: Empowerment： Concrete Problems in AI Safety part 2 [gPtsgTjyEj4].en.vtt
+[download] Destination: Empowerment： Concrete Problems in AI Safety part 2 [gPtsgTjyEj4].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   15.03MiB/s (00:00:00)[download]   61.83KiB at    8.45MiB/s (00:00:00)[download] 100% of   61.83KiB in 00:00:00 at 570.73KiB/s
+  💤 11s...
+  [22/45] Intelligence and Stupidity: The Orthogonality Thesis
+[youtube] Extracting URL: https://www.youtube.com/watch?v=hEUO6pjwFOo
+[youtube] hEUO6pjwFOo: Downloading webpage
+[youtube] hEUO6pjwFOo: Downloading tv client config
+[youtube] hEUO6pjwFOo: Downloading tv player API JSON
+[youtube] hEUO6pjwFOo: Downloading ios player API JSON
+[youtube] hEUO6pjwFOo: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = r3P7c1L1P7HZz6Ny ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = D0a69xX4Ygr1u94t ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = NMXbFYe17iofLhMa ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] hEUO6pjwFOo: Downloading m3u8 information
+[info] hEUO6pjwFOo: Downloading subtitles: en
+[info] hEUO6pjwFOo: Downloading 1 format(s): 614+234-11
+[info] Writing video subtitles to: Intelligence and Stupidity： The Orthogonality Thesis [hEUO6pjwFOo].en.vtt
+[download] Destination: Intelligence and Stupidity： The Orthogonality Thesis [hEUO6pjwFOo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   63.00KiB at    5.94MiB/s (00:00:00)[download]  127.00KiB at   10.84MiB/s (00:00:00)[download]  135.47KiB at   11.40MiB/s (00:00:00)[download] 100% of  135.47KiB in 00:00:00 at 1.31MiB/s
+  💤 9s...
+  [23/45] Experts' Predictions about the Future of AI
+[youtube] Extracting URL: https://www.youtube.com/watch?v=HOJ1NVtlnyQ
+[youtube] HOJ1NVtlnyQ: Downloading webpage
+[youtube] HOJ1NVtlnyQ: Downloading tv client config
+[youtube] HOJ1NVtlnyQ: Downloading tv player API JSON
+[youtube] HOJ1NVtlnyQ: Downloading ios player API JSON
+[youtube] HOJ1NVtlnyQ: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = NguaRJIl10-ZMsRx ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = OCt7L0rn2faDbTZw ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = ls8L4RWc1hTCIhT_ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] HOJ1NVtlnyQ: Downloading m3u8 information
+[info] HOJ1NVtlnyQ: Downloading subtitles: en
+[info] HOJ1NVtlnyQ: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Experts' Predictions about the Future of AI [HOJ1NVtlnyQ].en.vtt
+[download] Destination: Experts' Predictions about the Future of AI [HOJ1NVtlnyQ].en.vtt
+[download]    1.00KiB at  784.28KiB/s (00:00:00)[download]    3.00KiB at    1.95MiB/s (00:00:00)[download]    7.00KiB at    4.07MiB/s (00:00:00)[download]   15.00KiB at    8.05MiB/s (00:00:00)[download]   31.00KiB at   15.41MiB/s (00:00:00)[download]   62.08KiB at   22.61MiB/s (00:00:00)[download] 100% of   62.08KiB in 00:00:00 at 435.54KiB/s
+  💤 9s...
+  [24/45] Deceptive Misaligned Mesa-Optimisers? It's More Likely Than You Think...
+[youtube] Extracting URL: https://www.youtube.com/watch?v=IeWljQw3UgQ
+[youtube] IeWljQw3UgQ: Downloading webpage
+[youtube] IeWljQw3UgQ: Downloading tv client config
+[youtube] IeWljQw3UgQ: Downloading tv player API JSON
+[youtube] IeWljQw3UgQ: Downloading ios player API JSON
+[youtube] IeWljQw3UgQ: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = 0SuA60336cgUYfEB ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = m3XypAQY_bb07n66 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = fxvlM59nQ72P_LUy ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] IeWljQw3UgQ: Downloading m3u8 information
+[info] IeWljQw3UgQ: Downloading subtitles: en
+[info] IeWljQw3UgQ: Downloading 1 format(s): 312+234-12
+[info] Writing video subtitles to: Deceptive Misaligned Mesa-Optimisers？ It's More Likely Than You Think... [IeWljQw3UgQ].en.vtt
+[download] Destination: Deceptive Misaligned Mesa-Optimisers？ It's More Likely Than You Think... [IeWljQw3UgQ].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    6.57MiB/s (00:00:00)[download]   15.00KiB at   11.87MiB/s (00:00:00)[download]   31.00KiB at   21.84MiB/s (00:00:00)[download]   63.00KiB at   38.21MiB/s (00:00:00)[download]  106.14KiB at   39.16MiB/s (00:00:00)[download] 100% of  106.14KiB in 00:00:00 at 625.72KiB/s
+  💤 10s...
+  [25/45] Is AI Safety a Pascal's Mugging?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=JRuNA2eK7w0
+[youtube] JRuNA2eK7w0: Downloading webpage
+[youtube] JRuNA2eK7w0: Downloading tv client config
+[youtube] JRuNA2eK7w0: Downloading tv player API JSON
+[youtube] JRuNA2eK7w0: Downloading ios player API JSON
+[youtube] JRuNA2eK7w0: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = 6pqkSgBKP3C7XRpt ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 20cLs0_L-vRnuoov ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = KHVnmGGqGKJ3ZXaI ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] JRuNA2eK7w0: Downloading m3u8 information
+[info] JRuNA2eK7w0: Downloading subtitles: en
+[info] JRuNA2eK7w0: Downloading 1 format(s): 616+234
+[info] Writing video subtitles to: Is AI Safety a Pascal's Mugging？ [JRuNA2eK7w0].en.vtt
+[download] Destination: Is AI Safety a Pascal's Mugging？ [JRuNA2eK7w0].en.vtt
+[download]    1.00KiB at  550.00KiB/s (00:00:00)[download]    3.00KiB at    1.36MiB/s (00:00:00)[download]    7.00KiB at    2.91MiB/s (00:00:00)[download]   15.00KiB at    5.90MiB/s (00:00:00)[download]   31.00KiB at    1.68MiB/s (00:00:00)[download]   63.00KiB at  599.91KiB/s (00:00:00)[download]  127.00KiB at    1.04MiB/s (00:00:00)[download]  143.89KiB at    1.06MiB/s (00:00:00)[download] 100% of  143.89KiB in 00:00:00 at 444.17KiB/s
+  💤 12s...
+  [26/45] Why Not Just: Think of AGI Like a Corporation?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=L5pUA3LsEaw
+[youtube] L5pUA3LsEaw: Downloading webpage
+[youtube] L5pUA3LsEaw: Downloading tv client config
+[youtube] L5pUA3LsEaw: Downloading tv player API JSON
+[youtube] L5pUA3LsEaw: Downloading ios player API JSON
+[youtube] L5pUA3LsEaw: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = W1lWb3jksRbkZkmI ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] L5pUA3LsEaw: Downloading m3u8 information
+[info] L5pUA3LsEaw: Downloading subtitles: en
+[info] L5pUA3LsEaw: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Why Not Just： Think of AGI Like a Corporation？ [L5pUA3LsEaw].en.vtt
+[download] Destination: Why Not Just： Think of AGI Like a Corporation？ [L5pUA3LsEaw].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    5.83MiB/s (00:00:00)[download]   15.00KiB at  905.98KiB/s (00:00:00)[download]   31.00KiB at    1.22MiB/s (00:00:00)[download]   63.00KiB at    1.17MiB/s (00:00:00)[download]  127.00KiB at    1.24MiB/s (00:00:00)[download]  151.06KiB at    1.29MiB/s (00:00:00)[download] 100% of  151.06KiB in 00:00:00 at 672.14KiB/s
+  💤 10s...
+  [27/45] Avoiding Negative Side Effects: Concrete Problems in AI Safety part 1
+[youtube] Extracting URL: https://www.youtube.com/watch?v=lqJUIqZNzP8
+[youtube] lqJUIqZNzP8: Downloading webpage
+[youtube] lqJUIqZNzP8: Downloading tv client config
+[youtube] lqJUIqZNzP8: Downloading tv player API JSON
+[youtube] lqJUIqZNzP8: Downloading ios player API JSON
+[youtube] lqJUIqZNzP8: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = lPy72GPS6XGGHkkV ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = m42l-MAfPH7RVqyJ ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 1L3C9zpqwJpjRy6a ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] lqJUIqZNzP8: Downloading m3u8 information
+[info] lqJUIqZNzP8: Downloading subtitles: en
+[info] lqJUIqZNzP8: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Avoiding Negative Side Effects： Concrete Problems in AI Safety part 1 [lqJUIqZNzP8].en.vtt
+[download] Destination: Avoiding Negative Side Effects： Concrete Problems in AI Safety part 1 [lqJUIqZNzP8].en.vtt
+[download]    1.00KiB at  342.14KiB/s (00:00:00)[download]    3.00KiB at  257.74KiB/s (00:00:00)[download]    7.00KiB at  586.62KiB/s (00:00:00)[download]   15.00KiB at    1.20MiB/s (00:00:00)[download]   31.00KiB at    2.44MiB/s (00:00:00)[download]   63.00KiB at    4.83MiB/s (00:00:00)[download]   94.93KiB at    2.92MiB/s (00:00:00)[download] 100% of   94.93KiB in 00:00:00 at 774.21KiB/s
+  💤 10s...
+  [28/45] AI learns to Create  ̵K̵Z̵F̵ ̵V̵i̵d̵e̵o̵s̵ Cat Pictures: Papers in Two Minutes #1
+[youtube] Extracting URL: https://www.youtube.com/watch?v=MUVbqQ3STFA
+[youtube] MUVbqQ3STFA: Downloading webpage
+[youtube] MUVbqQ3STFA: Downloading tv client config
+[youtube] MUVbqQ3STFA: Downloading tv player API JSON
+[youtube] MUVbqQ3STFA: Downloading ios player API JSON
+[youtube] MUVbqQ3STFA: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = 1deEjHxhLnp0pKuB ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = X-gFByDoX_VmZoEz ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = c6vxThaUkkqC57-S ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] MUVbqQ3STFA: Downloading m3u8 information
+[info] MUVbqQ3STFA: Downloading subtitles: en
+[info] MUVbqQ3STFA: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: AI learns to Create  ̵K̵Z̵F̵ ̵V̵i̵d̵e̵o̵s̵ Cat Pictures： Papers in Two Minutes #1 [MUVbqQ3STFA].en.vtt
+[download] Destination: AI learns to Create  ̵K̵Z̵F̵ ̵V̵i̵d̵e̵o̵s̵ Cat Pictures： Papers in Two Minutes #1 [MUVbqQ3STFA].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    2.24MiB/s (00:00:00)[download]   31.00KiB at  917.46KiB/s (00:00:00)[download]   44.24KiB at    1.27MiB/s (00:00:00)[download] 100% of   44.24KiB in 00:00:00 at 353.99KiB/s
+  💤 10s...
+  [29/45] 9 Examples of Specification Gaming
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nKJlF-olKmg
+[youtube] nKJlF-olKmg: Downloading webpage
+[youtube] nKJlF-olKmg: Downloading tv client config
+[youtube] nKJlF-olKmg: Downloading tv player API JSON
+[youtube] nKJlF-olKmg: Downloading ios player API JSON
+[youtube] nKJlF-olKmg: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = uoPqthQ390_FZ94S ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 7QQDGaon4a4pvjDz ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = ZeiB1VyZScQmemUl ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] nKJlF-olKmg: Downloading m3u8 information
+[info] nKJlF-olKmg: Downloading subtitles: en
+[info] nKJlF-olKmg: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: 9 Examples of Specification Gaming [nKJlF-olKmg].en.vtt
+[download] Destination: 9 Examples of Specification Gaming [nKJlF-olKmg].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  239.73KiB/s (00:00:00)[download]    7.00KiB at  545.13KiB/s (00:00:00)[download]   15.00KiB at    1.13MiB/s (00:00:00)[download]   31.00KiB at    2.29MiB/s (00:00:00)[download]   63.00KiB at    2.77MiB/s (00:00:00)[download]   96.85KiB at    2.56MiB/s (00:00:00)[download] 100% of   96.85KiB in 00:00:00 at 799.40KiB/s
+  💤 9s...
+  [30/45] Respectability
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nNB9svNBGHM
+[youtube] nNB9svNBGHM: Downloading webpage
+[youtube] nNB9svNBGHM: Downloading tv client config
+[youtube] nNB9svNBGHM: Downloading tv player API JSON
+[youtube] nNB9svNBGHM: Downloading ios player API JSON
+[youtube] nNB9svNBGHM: Downloading player 5cf6312f-main
+         player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         n = UcBVYTh13ISAe7E ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = ng0-7k0WyxH56Yi ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = tr60YtPQZAcMyfX ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] nNB9svNBGHM: Downloading m3u8 information
+[info] nNB9svNBGHM: Downloading subtitles: en
+[info] nNB9svNBGHM: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Respectability [nNB9svNBGHM].en.vtt
+[download] Destination: Respectability [nNB9svNBGHM].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    9.57MiB/s (00:00:00)[download]   31.00KiB at   17.91MiB/s (00:00:00)[download]   48.42KiB at   23.35MiB/s (00:00:00)[download] 100% of   48.42KiB in 00:00:00 at 244.51KiB/s
+  💤 10s...
+  [31/45] Scalable Supervision: Concrete Problems in AI Safety Part 5
+[youtube] Extracting URL: https://www.youtube.com/watch?v=nr1lHuFeq5w
+[youtube] nr1lHuFeq5w: Downloading webpage
+[youtube] nr1lHuFeq5w: Downloading tv client config
+[youtube] nr1lHuFeq5w: Downloading tv player API JSON
+[youtube] nr1lHuFeq5w: Downloading ios player API JSON
+[youtube] nr1lHuFeq5w: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = fKKz6b5QWJv5BvqN ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = L5kGtfxRVIIFQOiH ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = ca8VnO3_OWBjEJWP ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] nr1lHuFeq5w: Downloading m3u8 information
+[info] nr1lHuFeq5w: Downloading subtitles: en
+[info] nr1lHuFeq5w: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Scalable Supervision： Concrete Problems in AI Safety Part 5 [nr1lHuFeq5w].en.vtt
+[download] Destination: Scalable Supervision： Concrete Problems in AI Safety Part 5 [nr1lHuFeq5w].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   29.79MiB/s (00:00:00)[download]   53.18KiB at   35.32MiB/s (00:00:00)[download] 100% of   53.18KiB in 00:00:00 at 292.28KiB/s
+  💤 11s...
+  [32/45] AI Safety Career Advice! (And So Can You!)
+[youtube] Extracting URL: https://www.youtube.com/watch?v=OpufM6yK4Go
+[youtube] OpufM6yK4Go: Downloading webpage
+[youtube] OpufM6yK4Go: Downloading tv client config
+[youtube] OpufM6yK4Go: Downloading tv player API JSON
+[youtube] OpufM6yK4Go: Downloading ios player API JSON
+[youtube] OpufM6yK4Go: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = 1NRmSl_CGftJODp0 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 5Q7ZLaKHjJOSbZG- ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] OpufM6yK4Go: Downloading m3u8 information
+[info] OpufM6yK4Go: Downloading subtitles: en
+[info] OpufM6yK4Go: Downloading 1 format(s): 616+234
+[info] Writing video subtitles to: AI Safety Career Advice! (And So Can You!) [OpufM6yK4Go].en.vtt
+[download] Destination: AI Safety Career Advice! (And So Can You!) [OpufM6yK4Go].en.vtt
+[download]    1.00KiB at  214.45KiB/s (00:00:00)[download]    3.00KiB at  563.93KiB/s (00:00:00)[download]    7.00KiB at    1.13MiB/s (00:00:00)[download]   15.00KiB at    2.23MiB/s (00:00:00)[download]   31.00KiB at    4.28MiB/s (00:00:00)[download]   63.00KiB at    7.93MiB/s (00:00:00)[download]  127.00KiB at   14.57MiB/s (00:00:00)[download]  255.00KiB at  740.62KiB/s (00:00:00)[download]  264.22KiB at  766.50KiB/s (00:00:00)[download] 100% of  264.22KiB in 00:00:00 at 405.05KiB/s
+  💤 8s...
+  [33/45] Intro to AI Safety, Remastered
+[youtube] Extracting URL: https://www.youtube.com/watch?v=pYXy-A4siMw
+[youtube] pYXy-A4siMw: Downloading webpage
+[youtube] pYXy-A4siMw: Downloading tv client config
+[youtube] pYXy-A4siMw: Downloading tv player API JSON
+[youtube] pYXy-A4siMw: Downloading ios player API JSON
+[youtube] pYXy-A4siMw: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = OCQueVvGKBkwO5hT ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = A8CfSNP6YPxeFHIl ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] pYXy-A4siMw: Downloading m3u8 information
+[info] pYXy-A4siMw: Downloading subtitles: en
+[info] pYXy-A4siMw: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: Intro to AI Safety, Remastered [pYXy-A4siMw].en.vtt
+[download] Destination: Intro to AI Safety, Remastered [pYXy-A4siMw].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at  Unknown B/s (00:00:00)[download]   63.00KiB at    4.81MiB/s (00:00:00)[download]  127.00KiB at    5.61MiB/s (00:00:00)[download]  165.16KiB at    2.17MiB/s (00:00:00)[download] 100% of  165.16KiB in 00:00:00 at 961.66KiB/s
+  💤 9s...
+  [34/45] Training AI Without Writing A Reward Function, with Reward Modelling
+[youtube] Extracting URL: https://www.youtube.com/watch?v=PYylPRX6z4Q
+[youtube] PYylPRX6z4Q: Downloading webpage
+[youtube] PYylPRX6z4Q: Downloading tv client config
+[youtube] PYylPRX6z4Q: Downloading tv player API JSON
+[youtube] PYylPRX6z4Q: Downloading ios player API JSON
+[youtube] PYylPRX6z4Q: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = jLKhtxsHfUKW05cN ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = oVSryIBeSwq41SNF ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = W9DB3d-RA830twlG ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] PYylPRX6z4Q: Downloading m3u8 information
+[info] PYylPRX6z4Q: Downloading subtitles: en
+[info] PYylPRX6z4Q: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: Training AI Without Writing A Reward Function, with Reward Modelling [PYylPRX6z4Q].en.vtt
+[download] Destination: Training AI Without Writing A Reward Function, with Reward Modelling [PYylPRX6z4Q].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  Unknown B/s (00:00:00)[download]   31.00KiB at   27.25MiB/s (00:00:00)[download]   63.00KiB at   10.68MiB/s (00:00:00)[download]  127.00KiB at   10.91MiB/s (00:00:00)[download]  182.30KiB at    7.23MiB/s (00:00:00)[download] 100% of  182.30KiB in 00:00:00 at 964.08KiB/s
+  💤 12s...
+  [35/45] Avoiding Positive Side Effects: Concrete Problems in AI Safety part 1.5
+[youtube] Extracting URL: https://www.youtube.com/watch?v=S_Sd_S8jwP0
+[youtube] S_Sd_S8jwP0: Downloading webpage
+[youtube] S_Sd_S8jwP0: Downloading tv client config
+[youtube] S_Sd_S8jwP0: Downloading tv player API JSON
+[youtube] S_Sd_S8jwP0: Downloading ios player API JSON
+[youtube] S_Sd_S8jwP0: Downloading player 25f1a420-player_es6_vflset_en_US_base
+         player = https://www.youtube.com/s/player/25f1a420/player_es6.vflset/en_US/base.js
+         n = JiCD9b7NhBFkvvhl ; player = https://www.youtube.com/s/player/25f1a420/player_es6.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = p2ykBwT_dbkWdJXF ; player = https://www.youtube.com/s/player/25f1a420/player_es6.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 8nMrscBTp_d3WKyv ; player = https://www.youtube.com/s/player/25f1a420/player_es6.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] S_Sd_S8jwP0: Downloading m3u8 information
+[info] S_Sd_S8jwP0: Downloading subtitles: en
+[info] S_Sd_S8jwP0: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Avoiding Positive Side Effects： Concrete Problems in AI Safety part 1.5 [S_Sd_S8jwP0].en.vtt
+[download] Destination: Avoiding Positive Side Effects： Concrete Problems in AI Safety part 1.5 [S_Sd_S8jwP0].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    1.44MiB/s (00:00:00)[download]   31.00KiB at    2.33MiB/s (00:00:00)[download]   35.62KiB at  435.20KiB/s (00:00:00)[download] 100% of   35.62KiB in 00:00:00 at 259.24KiB/s
+  💤 10s...
+  [36/45] Safe Exploration: Concrete Problems in AI Safety Part 6
+[youtube] Extracting URL: https://www.youtube.com/watch?v=V527HCWfBCU
+[youtube] V527HCWfBCU: Downloading webpage
+[youtube] V527HCWfBCU: Downloading tv client config
+[youtube] V527HCWfBCU: Downloading tv player API JSON
+[youtube] V527HCWfBCU: Downloading ios player API JSON
+[youtube] V527HCWfBCU: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = A9Ugq41pKxOEcmLH ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = UfemIUFUyJeSqQOh ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 5d1F4dY-pKaXrIZ4 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] V527HCWfBCU: Downloading m3u8 information
+[info] V527HCWfBCU: Downloading subtitles: en
+[info] V527HCWfBCU: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Safe Exploration： Concrete Problems in AI Safety Part 6 [V527HCWfBCU].en.vtt
+[download] Destination: Safe Exploration： Concrete Problems in AI Safety Part 6 [V527HCWfBCU].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    2.29MiB/s (00:00:00)[download]   15.00KiB at    4.37MiB/s (00:00:00)[download]   31.00KiB at    4.95MiB/s (00:00:00)[download]   63.00KiB at    8.54MiB/s (00:00:00)[download]  127.00KiB at    4.50MiB/s (00:00:00)[download]  149.13KiB at    5.22MiB/s (00:00:00)[download] 100% of  149.13KiB in 00:00:00 at 1.10MiB/s
+  💤 10s...
+  [37/45] How to Keep Improving When You're Better Than Any Teacher - Iterated Distillation and Amplification
+[youtube] Extracting URL: https://www.youtube.com/watch?v=v9M2Ho9I9Qo
+[youtube] v9M2Ho9I9Qo: Downloading webpage
+[youtube] v9M2Ho9I9Qo: Downloading tv client config
+[youtube] v9M2Ho9I9Qo: Downloading tv player API JSON
+[youtube] v9M2Ho9I9Qo: Downloading ios player API JSON
+[youtube] v9M2Ho9I9Qo: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = _5365X2O4-sGo_R6 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = tmJQVwRtN1QwO80s ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = 46ll5TD2jOW70jEY ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] v9M2Ho9I9Qo: Downloading m3u8 information
+[info] v9M2Ho9I9Qo: Downloading subtitles: en
+[info] v9M2Ho9I9Qo: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: How to Keep Improving When You're Better Than Any Teacher - Iterated Distillation and Amplification [v9M2Ho9I9Qo].en.vtt
+[download] Destination: How to Keep Improving When You're Better Than Any Teacher - Iterated Distillation and Amplification [v9M2Ho9I9Qo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at   13.15MiB/s (00:00:00)[download]   31.00KiB at    7.28MiB/s (00:00:00)[download]   63.00KiB at    3.16MiB/s (00:00:00)[download]  116.44KiB at    5.17MiB/s (00:00:00)[download] 100% of  116.44KiB in 00:00:00 at 1.32MiB/s
+  💤 12s...
+  [38/45] Channel Introduction
+[youtube] Extracting URL: https://www.youtube.com/watch?v=vuYtSDMBLtQ
+[youtube] vuYtSDMBLtQ: Downloading webpage
+[youtube] vuYtSDMBLtQ: Downloading tv client config
+[youtube] vuYtSDMBLtQ: Downloading player 25f1a420-player_es5_vflset_en_US_base
+[youtube] vuYtSDMBLtQ: Downloading tv player API JSON
+[youtube] vuYtSDMBLtQ: Downloading ios player API JSON
+         player = https://www.youtube.com/s/player/25f1a420/player_es5.vflset/en_US/base.js
+         n = IHLGx5l3Ep2x1qpe ; player = https://www.youtube.com/s/player/25f1a420/player_es5.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = RmOAl-mbOCEU20gx ; player = https://www.youtube.com/s/player/25f1a420/player_es5.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = esiX_1eZrb79bctV ; player = https://www.youtube.com/s/player/25f1a420/player_es5.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] vuYtSDMBLtQ: Downloading m3u8 information
+[info] vuYtSDMBLtQ: Downloading subtitles: en
+[info] vuYtSDMBLtQ: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Channel Introduction [vuYtSDMBLtQ].en.vtt
+[download] Destination: Channel Introduction [vuYtSDMBLtQ].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at    2.40MiB/s (00:00:00)[download]    7.00KiB at    4.85MiB/s (00:00:00)[download]    9.93KiB at    6.20MiB/s (00:00:00)[download] 100% of    9.93KiB in 00:00:00 at 200.48KiB/s
+  💤 8s...
+  [39/45] Where do we go now?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=vYhErnZdnso
+[youtube] vYhErnZdnso: Downloading webpage
+[youtube] vYhErnZdnso: Downloading tv client config
+[youtube] vYhErnZdnso: Downloading tv player API JSON
+[youtube] vYhErnZdnso: Downloading ios player API JSON
+[youtube] vYhErnZdnso: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = xc8Mg_duKVoR1X6P ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = k1ZCkt3GpA9DCWoM ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = nnTE0ZmKNVGCbyF2 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] vYhErnZdnso: Downloading m3u8 information
+[info] vYhErnZdnso: Downloading subtitles: en
+[info] vYhErnZdnso: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Where do we go now？ [vYhErnZdnso].en.vtt
+[download] Destination: Where do we go now？ [vYhErnZdnso].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at  940.22KiB/s (00:00:00)[download]   31.00KiB at    1.86MiB/s (00:00:00)[download]   63.00KiB at    1.23MiB/s (00:00:00)[download]   69.14KiB at    1.35MiB/s (00:00:00)[download] 100% of   69.14KiB in 00:00:00 at 530.27KiB/s
+  💤 11s...
+  [40/45] Why Does AI Lie, and What Can We Do About It?
+[youtube] Extracting URL: https://www.youtube.com/watch?v=w65p_IIp6JY
+[youtube] w65p_IIp6JY: Downloading webpage
+[youtube] w65p_IIp6JY: Downloading tv client config
+[youtube] w65p_IIp6JY: Downloading tv player API JSON
+[youtube] w65p_IIp6JY: Downloading ios player API JSON
+[youtube] w65p_IIp6JY: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = dXZG-N2x_ysFsdrc ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = oOjKrR4ti4LAPLq2 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = X7ZWG6aN3uDVjK8M ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] w65p_IIp6JY: Downloading m3u8 information
+[info] w65p_IIp6JY: Downloading subtitles: en
+[info] w65p_IIp6JY: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: Why Does AI Lie, and What Can We Do About It？ [w65p_IIp6JY].en.vtt
+[download] Destination: Why Does AI Lie, and What Can We Do About It？ [w65p_IIp6JY].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at  Unknown B/s (00:00:00)[download]   15.00KiB at    8.30MiB/s (00:00:00)[download]   31.00KiB at   15.67MiB/s (00:00:00)[download]   63.00KiB at   10.39MiB/s (00:00:00)[download]   89.18KiB at   10.72MiB/s (00:00:00)[download] 100% of   89.18KiB in 00:00:00 at 809.98KiB/s
+  💤 11s...
+  [41/45] Friend or Foe? AI Safety Gridworlds extra bit
+[youtube] Extracting URL: https://www.youtube.com/watch?v=WM2THPzFSNk
+[youtube] WM2THPzFSNk: Downloading webpage
+[youtube] WM2THPzFSNk: Downloading tv client config
+[youtube] WM2THPzFSNk: Downloading tv player API JSON
+[youtube] WM2THPzFSNk: Downloading ios player API JSON
+[youtube] WM2THPzFSNk: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = b204tOWmcJI9EVJ3 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = lEXSDQFtGHAku_CK ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = lZni7Tsb7FR2h6ZK ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] WM2THPzFSNk: Downloading m3u8 information
+[info] WM2THPzFSNk: Downloading subtitles: en
+[info] WM2THPzFSNk: Downloading 1 format(s): 270+234
+[info] Writing video subtitles to: Friend or Foe？ AI Safety Gridworlds extra bit [WM2THPzFSNk].en.vtt
+[download] Destination: Friend or Foe？ AI Safety Gridworlds extra bit [WM2THPzFSNk].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  764.31KiB/s (00:00:00)[download]    7.00KiB at    1.65MiB/s (00:00:00)[download]   15.00KiB at    3.41MiB/s (00:00:00)[download]   31.00KiB at    5.52MiB/s (00:00:00)[download]   36.86KiB at    6.37MiB/s (00:00:00)[download] 100% of   36.86KiB in 00:00:00 at 509.53KiB/s
+  💤 10s...
+  [42/45] A Response to Steven Pinker on AI
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yQE9KAbFhNY
+[youtube] yQE9KAbFhNY: Downloading webpage
+[youtube] yQE9KAbFhNY: Downloading tv client config
+[youtube] yQE9KAbFhNY: Downloading tv player API JSON
+[youtube] yQE9KAbFhNY: Downloading ios player API JSON
+[youtube] yQE9KAbFhNY: Downloading player 25f1a420-main
+[youtube] yQE9KAbFhNY: Downloading m3u8 information
+[info] yQE9KAbFhNY: Downloading 1 format(s): 270+234
+[info] There are no subtitles for the requested languages
+  💤 10s...
+  [43/45] Tech is Good, AI Will Be Different
+[youtube] Extracting URL: https://www.youtube.com/watch?v=zATXsGm_xJo
+[youtube] zATXsGm_xJo: Downloading webpage
+[youtube] zATXsGm_xJo: Downloading tv client config
+[youtube] zATXsGm_xJo: Downloading tv player API JSON
+[youtube] zATXsGm_xJo: Downloading ios player API JSON
+[youtube] zATXsGm_xJo: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = FGXomlizl_P7yYt6 ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = UAUyevSGOnAn9jJH ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = BLbM-Yq3x4QJNsk- ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] zATXsGm_xJo: Downloading m3u8 information
+[info] zATXsGm_xJo: Downloading subtitles: en
+[info] zATXsGm_xJo: Downloading 1 format(s): 625+234
+[info] Writing video subtitles to: Tech is Good, AI Will Be Different [zATXsGm_xJo].en.vtt
+[download] Destination: Tech is Good, AI Will Be Different [zATXsGm_xJo].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  494.30KiB/s (00:00:00)[download]    7.00KiB at    1.07MiB/s (00:00:00)[download]   15.00KiB at  166.89KiB/s (00:00:00)[download]   31.00KiB at  343.57KiB/s (00:00:00)[download]   63.00KiB at  694.03KiB/s (00:00:00)[download]   93.28KiB at 1015.92KiB/s (00:00:00)[download] 100% of   93.28KiB in 00:00:00 at 456.27KiB/s
+  💤 9s...
+  [44/45] Why Would AI Want to do Bad Things? Instrumental Convergence
+[youtube] Extracting URL: https://www.youtube.com/watch?v=ZeecOKBus3Q
+[youtube] ZeecOKBus3Q: Downloading webpage
+[youtube] ZeecOKBus3Q: Downloading tv client config
+[youtube] ZeecOKBus3Q: Downloading tv player API JSON
+[youtube] ZeecOKBus3Q: Downloading ios player API JSON
+[youtube] ZeecOKBus3Q: Downloading player 25f1a420-main
+         player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         n = hJC16KgV9wG6PTEl ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = iTQJw-mFn7ZtZ1yD ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = BJAEQXXT_zaHvEdD ; player = https://www.youtube.com/s/player/25f1a420/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] ZeecOKBus3Q: Downloading m3u8 information
+[info] ZeecOKBus3Q: Downloading subtitles: en
+[info] ZeecOKBus3Q: Downloading 1 format(s): 270+234-11
+[info] Writing video subtitles to: Why Would AI Want to do Bad Things？ Instrumental Convergence [ZeecOKBus3Q].en.vtt
+[download] Destination: Why Would AI Want to do Bad Things？ Instrumental Convergence [ZeecOKBus3Q].en.vtt
+[download]    1.00KiB at  Unknown B/s (00:00:00)[download]    3.00KiB at  Unknown B/s (00:00:00)[download]    7.00KiB at    6.71MiB/s (00:00:00)[download]   15.00KiB at   12.35MiB/s (00:00:00)[download]   31.00KiB at   22.44MiB/s (00:00:00)[download]   63.00KiB at   39.60MiB/s (00:00:00)[download]  106.70KiB at   55.78MiB/s (00:00:00)[download] 100% of  106.70KiB in 00:00:00 at 608.38KiB/s
+  💤 12s...
+  [45/45] We Were Right! Real Inner Misalignment
+[youtube] Extracting URL: https://www.youtube.com/watch?v=zkbPdEHEyEI
+[youtube] zkbPdEHEyEI: Downloading webpage
+[youtube] zkbPdEHEyEI: Downloading tv client config
+[youtube] zkbPdEHEyEI: Downloading tv player API JSON
+[youtube] zkbPdEHEyEI: Downloading ios player API JSON
+[youtube] zkbPdEHEyEI: Downloading player 5cf6312f-main
+         player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         n = pSXCfVunYzmYOLZ ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = EEd4e1Zvs-DCcSq ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+         n = a9oFetM_QjRSfXS ; player = https://www.youtube.com/s/player/5cf6312f/player_ias.vflset/en_US/base.js
+         Please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+[youtube] zkbPdEHEyEI: Downloading m3u8 information
+[info] zkbPdEHEyEI: Downloading subtitles: en
+[info] zkbPdEHEyEI: Downloading 1 format(s): 614+234
+[info] Writing video subtitles to: We Were Right! Real Inner Misalignment [zkbPdEHEyEI].en.vtt
+[download] Destination: We Were Right! Real Inner Misalignment [zkbPdEHEyEI].en.vtt
+[download]    1.00KiB at  904.92KiB/s (00:00:00)[download]    3.00KiB at    2.12MiB/s (00:00:00)[download]    7.00KiB at    4.31MiB/s (00:00:00)[download]   15.00KiB at    8.44MiB/s (00:00:00)[download]   31.00KiB at   16.05MiB/s (00:00:00)[download]   63.00KiB at   29.42MiB/s (00:00:00)[download]  123.82KiB at    3.17MiB/s (00:00:00)[download] 100% of  123.82KiB in 00:00:00 at 433.21KiB/s
+✓ Total transcripts: 44
+Completed: Tue Oct 28 08:31:08 PDT 2025
+=== Robert Miles AI Sync ===
+Started: Tue Oct 28 08:39:39 PDT 2025
+📋 Fetching channel metadata...
+Found 45 videos
+✓ Video catalog updated
+📥 Downloading 1 new transcripts...
+  [1/1] A Response to Steven Pinker on AI
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yQE9KAbFhNY
+[youtube] yQE9KAbFhNY: Downloading webpage
+[youtube] yQE9KAbFhNY: Downloading tv client config
+[youtube] yQE9KAbFhNY: Downloading tv player API JSON
+[youtube] yQE9KAbFhNY: Downloading ios player API JSON
+[youtube] yQE9KAbFhNY: Downloading player 5cf6312f-main
+[youtube] yQE9KAbFhNY: Downloading m3u8 information
+[info] yQE9KAbFhNY: Downloading 1 format(s): 270+234
+[info] There are no subtitles for the requested languages
+✓ Total transcripts: 44
+Completed: Tue Oct 28 08:39:44 PDT 2025
+=== Robert Miles AI Sync ===
+Started: Tue Oct 28 08:40:24 PDT 2025
+📋 Fetching channel metadata...
+Found 45 videos
+✓ Video catalog updated
+📥 Downloading 1 new transcripts...
+  [1/1] A Response to Steven Pinker on AI
+[youtube] Extracting URL: https://www.youtube.com/watch?v=yQE9KAbFhNY
+[youtube] yQE9KAbFhNY: Downloading webpage
+[youtube] yQE9KAbFhNY: Downloading tv client config
+[youtube] yQE9KAbFhNY: Downloading tv player API JSON
+[youtube] yQE9KAbFhNY: Downloading ios player API JSON
+[youtube] yQE9KAbFhNY: Downloading player 25f1a420-main
+[youtube] yQE9KAbFhNY: Downloading m3u8 information
+[info] yQE9KAbFhNY: Downloading 1 format(s): 270+234
+[info] There are no subtitles for the requested languages
+✓ Total transcripts: 44
+Completed: Tue Oct 28 08:40:29 PDT 2025

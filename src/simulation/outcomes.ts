@@ -200,7 +200,7 @@ export function updateGoldenAgeState(
     state.goldenAgeState.duration = 0;
     state.goldenAgeState.entryReason = conditions.reason;
     
-    console.log(`\n🌟 GOLDEN AGE BEGINS (Month ${currentMonth})`);
+    console.log(`\n✅ GOLDEN AGE BEGINS (Month ${currentMonth})`);
     console.log(`   Reason: ${conditions.reason}`);
     console.log(`   Note: This is immediate prosperity - sustainability not yet proven\n`);
   } else if (!conditions.met && state.goldenAgeState.active) {

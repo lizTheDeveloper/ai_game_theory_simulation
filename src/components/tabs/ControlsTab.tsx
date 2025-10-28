@@ -433,7 +433,7 @@ export default function ControlsTab() {
                       <div className="text-blue-600">⚡ Rapid economic change may cause disruption</div>
                     )}
                     {config.governmentActionFrequency < 0.5 && config.aiCoordinationMultiplier > 2 && (
-                      <div className="text-red-600">🚨 Weak governance + strong AI coordination = high escape risk</div>
+                      <div className="text-red-600">⚠️ Weak governance + strong AI coordination = high escape risk</div>
                     )}
                   </div>
                 </div>

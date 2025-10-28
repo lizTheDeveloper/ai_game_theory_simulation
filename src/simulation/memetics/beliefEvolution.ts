@@ -243,7 +243,7 @@ function updatePolarizationMetrics(state: GameState): void {
   if (memetic.polarization.affectivePolarization > 0.8 && !memetic.polarizationCrisisActive) {
     memetic.polarizationCrisisActive = true;
     memetic.lastPolarizationSpike = state.currentMonth;
-    console.log(`\n🔥 POLARIZATION CRISIS TRIGGERED (Month ${state.currentMonth})`);
+    console.log(`\n🚨 POLARIZATION CRISIS TRIGGERED (Month ${state.currentMonth})`);
     console.log(`   Affective Polarization: ${(memetic.polarization.affectivePolarization * 100).toFixed(1)}%`);
     console.log(`   Echo Chamber Strength: ${memetic.polarization.echoChambersStrength.toFixed(2)}x`);
     console.log(`   Social Cohesion: ${(memetic.socialCohesion * 100).toFixed(1)}%`);

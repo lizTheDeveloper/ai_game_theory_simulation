@@ -537,7 +537,7 @@ export function exportResults(results: MonteCarloResults): void {
   console.log('===================================');
   
   // Top 10 best worlds (highest utopia probability)
-  console.log('\n✨ Top 10 Most Utopian Worlds:');
+  console.log('\n✅ Top 10 Most Utopian Worlds:');
   results.probabilityDistributions.sortedByUtopia.slice(0, 10).forEach((runId, rank) => {
     const run = results.probabilityDistributions.byRun[runId];
     if (!run) return;
@@ -621,7 +621,7 @@ export function exportResults(results: MonteCarloResults): void {
     }
 
     // Outcome correlation
-    console.log('\n🎯 Outcome Correlation (runs that entered dystopia):');
+    console.log('\n📊 Outcome Correlation (runs that entered dystopia):');
     const total = dystopia.outcomeCorrelation.escaped + dystopia.outcomeCorrelation.stayedIn + dystopia.outcomeCorrelation.wentExtinct;
     if (total > 0) {
       console.log(`  Escaped:      ${dystopia.outcomeCorrelation.escaped.toString().padStart(3)} (${(dystopia.outcomeCorrelation.escaped / total * 100).toFixed(1)}%)`);

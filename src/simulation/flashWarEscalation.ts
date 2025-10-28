@@ -156,7 +156,8 @@ export function applyFlashWarEffects(state: GameState): void {
   const additionalDeaths = pop.deathsByCategory.war - originalWarDeaths;
 
   // Update total death tracking
-  pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) + additionalDeaths;
+  // monthlyDeathsApplied is always initialized in initializeHumanPopulationSystem() (Oct 28, 2025)
+  pop.monthlyDeathsApplied = pop.monthlyDeathsApplied + additionalDeaths;
 
   // Trigger circuit breaker development
   if (!peace.circuitBreakersActive && !peace.circuitBreakerDevelopmentActive) {
@@ -165,7 +166,8 @@ export function applyFlashWarEffects(state: GameState): void {
   }
 
   // Increment flash war count
-  peace.flashWarCount = (peace.flashWarCount || 0) + 1;
+  // flashWarCount is always initialized in initializeConflictResolution() (Oct 28, 2025)
+  peace.flashWarCount = peace.flashWarCount + 1;
 
   // Log critical event
   console.log(`\n🚨 FLASH WAR ESCALATION (Month ${state.currentMonth})`);
@@ -228,7 +230,8 @@ export function attemptAIDeEscalation(state: GameState, rng: RNGFunction): boole
     const deathsAverted = originalWarDeaths - pop.deathsByCategory.war;
 
     // Update total death tracking
-    pop.monthlyDeathsApplied = (pop.monthlyDeathsApplied || 0) - deathsAverted;
+    // monthlyDeathsApplied is always initialized in initializeHumanPopulationSystem() (Oct 28, 2025)
+    pop.monthlyDeathsApplied = pop.monthlyDeathsApplied - deathsAverted;
 
     // Log success
     console.log(`\n🕊️  AI-MEDIATED DE-ESCALATION SUCCESS (Month ${state.currentMonth})`);
@@ -259,8 +262,9 @@ export function updateCircuitBreakers(state: GameState): void {
   }
 
   // If development active, count down
+  // circuitBreakerMonthsRemaining is always initialized in initializeConflictResolution() (Oct 28, 2025)
   if (peace.circuitBreakerDevelopmentActive) {
-    peace.circuitBreakerMonthsRemaining = (peace.circuitBreakerMonthsRemaining || 0) - 1;
+    peace.circuitBreakerMonthsRemaining = peace.circuitBreakerMonthsRemaining - 1;
 
     if (peace.circuitBreakerMonthsRemaining <= 0) {
       // Circuit breakers now active

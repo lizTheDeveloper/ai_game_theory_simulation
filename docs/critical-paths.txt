@@ -1,0 +1,50 @@
+# Critical Paths
+
+## Utopia (known)
+
+- 6 upward spirals active for 12+ months
+- sustainability >= 65%
+- no active crises
+- QoL metrics above thresholds
+
+## Defensive AI Deployment (known)
+
+- AI capability > threshold
+- misaligned AI detected
+- government approval
+- adequate funding
+
+## Extinction (known)
+
+- population < 10K
+- OR mortality > 99.99%
+- OR instant kill (grey goo)
+- OR slow collapse (24-120 months)
+
+## INFERRED PATHS
+
+### Dystopia Paths
+- High control + low trust → Control Dystopia
+- High automation + meaning crisis → Social Collapse
+- Fossil industry capture + climate crisis → Environmental Collapse
+
+### Crisis Cascades
+- Famine → Migration → Conflict → Nuclear Risk
+- Climate → Wet-bulb → Habitability Loss → Migration
+- Ocean Acidification → Fishery Collapse → Famine
+- Phosphorus Depletion → Agricultural Collapse → Famine
+
+### Upward Spirals (Utopia Path)
+- Abundance: Prosperity → Trust → Stability → More Prosperity
+- Cognitive: Trust → Risk-taking → Breakthroughs → More Trust
+- Democratic: Trust + Institutions → AI Rights → Legitimacy
+- Scientific: Research → Breakthroughs → Capabilities → More Research
+- Meaning: Purpose → Social Flourishing → Stability
+- Ecological: Tech → Environmental Recovery → Sustainability
+
+### Technology Unlock Paths
+- AI Capability > 2.0 → Advanced research breakthroughs
+- Fusion Materials + Plasma Control → Fusion Energy
+- Scalable Oversight + Mechanistic Interp → Alignment Confidence
+- Habitat Restoration → Biosphere Recovery (25% → 100%)
+

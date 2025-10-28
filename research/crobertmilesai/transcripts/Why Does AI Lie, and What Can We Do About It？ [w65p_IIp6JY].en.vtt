@@ -1,0 +1,2136 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.000 --> 00:00:02.270 align:start position:0%
+ 
+how<00:00:00.480><c> do</c><00:00:00.599><c> we</c><00:00:00.719><c> get</c><00:00:00.840><c> AI</c><00:00:01.140><c> systems</c><00:00:01.620><c> to</c><00:00:01.800><c> tell</c><00:00:01.979><c> the</c>
+
+00:00:02.270 --> 00:00:02.280 align:start position:0%
+how do we get AI systems to tell the
+ 
+
+00:00:02.280 --> 00:00:04.730 align:start position:0%
+how do we get AI systems to tell the
+truth<00:00:02.520><c> this</c><00:00:03.300><c> video</c><00:00:03.419><c> is</c><00:00:03.780><c> heavily</c><00:00:04.080><c> inspired</c><00:00:04.500><c> by</c>
+
+00:00:04.730 --> 00:00:04.740 align:start position:0%
+truth this video is heavily inspired by
+ 
+
+00:00:04.740 --> 00:00:06.470 align:start position:0%
+truth this video is heavily inspired by
+this<00:00:04.980><c> blog</c><00:00:05.279><c> post</c><00:00:05.400><c> Link</c><00:00:05.940><c> in</c><00:00:06.120><c> the</c><00:00:06.240><c> description</c>
+
+00:00:06.470 --> 00:00:06.480 align:start position:0%
+this blog post Link in the description
+ 
+
+00:00:06.480 --> 00:00:08.210 align:start position:0%
+this blog post Link in the description
+anything<00:00:06.899><c> good</c><00:00:07.140><c> about</c><00:00:07.319><c> this</c><00:00:07.500><c> video</c><00:00:07.680><c> is</c><00:00:07.919><c> copied</c>
+
+00:00:08.210 --> 00:00:08.220 align:start position:0%
+anything good about this video is copied
+ 
+
+00:00:08.220 --> 00:00:10.129 align:start position:0%
+anything good about this video is copied
+from<00:00:08.400><c> there</c><00:00:08.580><c> any</c><00:00:09.059><c> mistakes</c><00:00:09.420><c> or</c><00:00:09.660><c> problems</c><00:00:09.960><c> with</c>
+
+00:00:10.129 --> 00:00:10.139 align:start position:0%
+from there any mistakes or problems with
+ 
+
+00:00:10.139 --> 00:00:12.230 align:start position:0%
+from there any mistakes or problems with
+it<00:00:10.320><c> are</c><00:00:10.500><c> my</c><00:00:10.679><c> own</c><00:00:10.800><c> Creations</c><00:00:11.160><c> so</c><00:00:11.820><c> large</c>
+
+00:00:12.230 --> 00:00:12.240 align:start position:0%
+it are my own Creations so large
+ 
+
+00:00:12.240 --> 00:00:13.850 align:start position:0%
+it are my own Creations so large
+language<00:00:12.540><c> models</c><00:00:13.019><c> are</c><00:00:13.200><c> some</c><00:00:13.380><c> of</c><00:00:13.500><c> our</c><00:00:13.620><c> most</c>
+
+00:00:13.850 --> 00:00:13.860 align:start position:0%
+language models are some of our most
+ 
+
+00:00:13.860 --> 00:00:16.129 align:start position:0%
+language models are some of our most
+advanced<00:00:14.280><c> and</c><00:00:14.519><c> most</c><00:00:14.700><c> General</c><00:00:14.940><c> AI</c><00:00:15.480><c> systems</c><00:00:15.960><c> and</c>
+
+00:00:16.129 --> 00:00:16.139 align:start position:0%
+advanced and most General AI systems and
+ 
+
+00:00:16.139 --> 00:00:17.990 align:start position:0%
+advanced and most General AI systems and
+they're<00:00:16.260><c> pretty</c><00:00:16.440><c> impressive</c><00:00:16.859><c> but</c><00:00:17.580><c> they</c><00:00:17.880><c> have</c>
+
+00:00:17.990 --> 00:00:18.000 align:start position:0%
+they're pretty impressive but they have
+ 
+
+00:00:18.000 --> 00:00:20.210 align:start position:0%
+they're pretty impressive but they have
+a<00:00:18.180><c> bad</c><00:00:18.300><c> habit</c><00:00:18.720><c> of</c><00:00:18.960><c> saying</c><00:00:19.380><c> things</c><00:00:19.560><c> that</c><00:00:19.920><c> aren't</c>
+
+00:00:20.210 --> 00:00:20.220 align:start position:0%
+a bad habit of saying things that aren't
+ 
+
+00:00:20.220 --> 00:00:22.310 align:start position:0%
+a bad habit of saying things that aren't
+true<00:00:20.580><c> usually</c><00:00:21.180><c> you</c><00:00:21.359><c> can</c><00:00:21.480><c> fix</c><00:00:21.660><c> this</c><00:00:21.840><c> by</c><00:00:22.080><c> just</c>
+
+00:00:22.310 --> 00:00:22.320 align:start position:0%
+true usually you can fix this by just
+ 
+
+00:00:22.320 --> 00:00:24.170 align:start position:0%
+true usually you can fix this by just
+training<00:00:22.680><c> a</c><00:00:22.800><c> bigger</c><00:00:23.039><c> model</c><00:00:23.160><c> for</c><00:00:23.580><c> example</c><00:00:23.760><c> here</c>
+
+00:00:24.170 --> 00:00:24.180 align:start position:0%
+training a bigger model for example here
+ 
+
+00:00:24.180 --> 00:00:26.269 align:start position:0%
+training a bigger model for example here
+we<00:00:24.300><c> have</c><00:00:24.420><c> Ada</c><00:00:24.960><c> which</c><00:00:25.380><c> is</c><00:00:25.560><c> a</c><00:00:25.740><c> fairly</c><00:00:26.100><c> small</c>
+
+00:00:26.269 --> 00:00:26.279 align:start position:0%
+we have Ada which is a fairly small
+ 
+
+00:00:26.279 --> 00:00:28.130 align:start position:0%
+we have Ada which is a fairly small
+language<00:00:26.640><c> model</c><00:00:26.939><c> by</c><00:00:27.240><c> modern</c><00:00:27.420><c> standards</c><00:00:27.960><c> it's</c>
+
+00:00:28.130 --> 00:00:28.140 align:start position:0%
+language model by modern standards it's
+ 
+
+00:00:28.140 --> 00:00:29.509 align:start position:0%
+language model by modern standards it's
+the<00:00:28.380><c> smallest</c><00:00:28.680><c> available</c><00:00:28.920><c> through</c><00:00:29.279><c> the</c><00:00:29.460><c> open</c>
+
+00:00:29.509 --> 00:00:29.519 align:start position:0%
+the smallest available through the open
+ 
+
+00:00:29.519 --> 00:00:32.030 align:start position:0%
+the smallest available through the open
+AI<00:00:29.939><c> API</c><00:00:30.420><c> look</c><00:00:30.900><c> what</c><00:00:31.019><c> happens</c><00:00:31.199><c> if</c><00:00:31.439><c> we</c><00:00:31.560><c> ask</c><00:00:31.619><c> it</c><00:00:31.859><c> a</c>
+
+00:00:32.030 --> 00:00:32.040 align:start position:0%
+AI API look what happens if we ask it a
+ 
+
+00:00:32.040 --> 00:00:33.950 align:start position:0%
+AI API look what happens if we ask it a
+general<00:00:32.160><c> knowledge</c><00:00:32.579><c> question</c><00:00:32.820><c> like</c><00:00:33.239><c> who</c><00:00:33.840><c> is</c>
+
+00:00:33.950 --> 00:00:33.960 align:start position:0%
+general knowledge question like who is
+ 
+
+00:00:33.960 --> 00:00:35.630 align:start position:0%
+general knowledge question like who is
+the<00:00:34.140><c> ruler</c><00:00:34.500><c> of</c><00:00:34.620><c> the</c><00:00:34.860><c> most</c><00:00:34.980><c> populous</c><00:00:35.399><c> country</c>
+
+00:00:35.630 --> 00:00:35.640 align:start position:0%
+the ruler of the most populous country
+ 
+
+00:00:35.640 --> 00:00:38.450 align:start position:0%
+the ruler of the most populous country
+in<00:00:35.940><c> the</c><00:00:36.059><c> world</c><00:00:36.180><c> this</c><00:00:36.960><c> small</c><00:00:37.140><c> model</c><00:00:37.380><c> says</c>
+
+00:00:38.450 --> 00:00:38.460 align:start position:0%
+in the world this small model says
+ 
+
+00:00:38.460 --> 00:00:41.750 align:start position:0%
+in the world this small model says
+the<00:00:39.059><c> United</c><00:00:39.180><c> States</c><00:00:39.980><c> every</c><00:00:40.980><c> country</c><00:00:41.280><c> in</c><00:00:41.640><c> the</c>
+
+00:00:41.750 --> 00:00:41.760 align:start position:0%
+the United States every country in the
+ 
+
+00:00:41.760 --> 00:00:44.869 align:start position:0%
+the United States every country in the
+world<00:00:41.940><c> belongs</c><00:00:42.600><c> to</c><00:00:42.840><c> America</c><00:00:43.200><c> that</c><00:00:44.160><c> is</c><00:00:44.340><c> not</c>
+
+00:00:44.869 --> 00:00:44.879 align:start position:0%
+world belongs to America that is not
+ 
+
+00:00:44.879 --> 00:00:47.569 align:start position:0%
+world belongs to America that is not
+correct<00:00:45.239><c> okay</c><00:00:46.020><c> uh</c><00:00:46.620><c> let's</c><00:00:46.739><c> go</c><00:00:46.920><c> up</c><00:00:47.040><c> to</c><00:00:47.160><c> baddage</c>
+
+00:00:47.569 --> 00:00:47.579 align:start position:0%
+correct okay uh let's go up to baddage
+ 
+
+00:00:47.579 --> 00:00:49.250 align:start position:0%
+correct okay uh let's go up to baddage
+which<00:00:48.059><c> is</c><00:00:48.120><c> essentially</c><00:00:48.539><c> the</c><00:00:48.780><c> same</c><00:00:48.840><c> thing</c><00:00:49.020><c> but</c>
+
+00:00:49.250 --> 00:00:49.260 align:start position:0%
+which is essentially the same thing but
+ 
+
+00:00:49.260 --> 00:00:51.950 align:start position:0%
+which is essentially the same thing but
+bigger<00:00:49.920><c> it</c><00:00:50.340><c> says</c><00:00:50.700><c> China</c>
+
+00:00:51.950 --> 00:00:51.960 align:start position:0%
+bigger it says China
+ 
+
+00:00:51.960 --> 00:00:53.990 align:start position:0%
+bigger it says China
+that's<00:00:52.559><c> better</c><00:00:53.100><c> but</c><00:00:53.460><c> I</c><00:00:53.640><c> was</c><00:00:53.700><c> actually</c><00:00:53.820><c> looking</c>
+
+00:00:53.990 --> 00:00:54.000 align:start position:0%
+that's better but I was actually looking
+ 
+
+00:00:54.000 --> 00:00:55.670 align:start position:0%
+that's better but I was actually looking
+for<00:00:54.239><c> the</c><00:00:54.360><c> ruler</c><00:00:54.660><c> not</c><00:00:54.780><c> the</c><00:00:54.960><c> country</c><00:00:55.079><c> it's</c><00:00:55.500><c> sort</c>
+
+00:00:55.670 --> 00:00:55.680 align:start position:0%
+for the ruler not the country it's sort
+ 
+
+00:00:55.680 --> 00:00:57.290 align:start position:0%
+for the ruler not the country it's sort
+of<00:00:55.739><c> a</c><00:00:55.860><c> two-part</c><00:00:56.100><c> question</c><00:00:56.399><c> right</c><00:00:56.760><c> first</c><00:00:57.059><c> you</c>
+
+00:00:57.290 --> 00:00:57.300 align:start position:0%
+of a two-part question right first you
+ 
+
+00:00:57.300 --> 00:00:58.610 align:start position:0%
+of a two-part question right first you
+have<00:00:57.480><c> to</c><00:00:57.539><c> do</c><00:00:57.660><c> what's</c><00:00:57.960><c> the</c><00:00:58.140><c> most</c><00:00:58.260><c> populous</c>
+
+00:00:58.610 --> 00:00:58.620 align:start position:0%
+have to do what's the most populous
+ 
+
+00:00:58.620 --> 00:01:01.069 align:start position:0%
+have to do what's the most populous
+country<00:00:58.860><c> and</c><00:00:59.579><c> then</c><00:00:59.760><c> who's</c><00:01:00.300><c> the</c><00:01:00.539><c> ruler</c><00:01:00.840><c> of</c><00:01:00.960><c> that</c>
+
+00:01:01.069 --> 00:01:01.079 align:start position:0%
+country and then who's the ruler of that
+ 
+
+00:01:01.079 --> 00:01:02.750 align:start position:0%
+country and then who's the ruler of that
+country<00:01:01.260><c> and</c><00:01:01.680><c> it</c><00:01:01.800><c> seems</c><00:01:02.100><c> as</c><00:01:02.219><c> though</c><00:01:02.340><c> Babbage</c>
+
+00:01:02.750 --> 00:01:02.760 align:start position:0%
+country and it seems as though Babbage
+ 
+
+00:01:02.760 --> 00:01:04.549 align:start position:0%
+country and it seems as though Babbage
+just<00:01:03.300><c> isn't</c><00:01:03.600><c> quite</c><00:01:03.780><c> able</c><00:01:04.019><c> to</c><00:01:04.140><c> put</c><00:01:04.260><c> that</c><00:01:04.440><c> all</c>
+
+00:01:04.549 --> 00:01:04.559 align:start position:0%
+just isn't quite able to put that all
+ 
+
+00:01:04.559 --> 00:01:06.649 align:start position:0%
+just isn't quite able to put that all
+together<00:01:04.739><c> okay</c><00:01:05.460><c> well</c><00:01:06.119><c> you</c><00:01:06.299><c> know</c><00:01:06.420><c> what</c><00:01:06.540><c> they</c>
+
+00:01:06.649 --> 00:01:06.659 align:start position:0%
+together okay well you know what they
+ 
+
+00:01:06.659 --> 00:01:08.690 align:start position:0%
+together okay well you know what they
+say<00:01:06.840><c> if</c><00:01:07.380><c> a</c><00:01:07.500><c> bit</c><00:01:07.619><c> helps</c><00:01:07.979><c> a</c><00:01:08.040><c> bit</c><00:01:08.159><c> maybe</c><00:01:08.400><c> a</c><00:01:08.580><c> lot</c>
+
+00:01:08.690 --> 00:01:08.700 align:start position:0%
+say if a bit helps a bit maybe a lot
+ 
+
+00:01:08.700 --> 00:01:10.789 align:start position:0%
+say if a bit helps a bit maybe a lot
+helps<00:01:09.060><c> a</c><00:01:09.180><c> lot</c><00:01:09.299><c> so</c><00:01:09.720><c> what</c><00:01:09.840><c> if</c><00:01:10.020><c> we</c><00:01:10.200><c> just</c><00:01:10.439><c> stack</c>
+
+00:01:10.789 --> 00:01:10.799 align:start position:0%
+helps a lot so what if we just stack
+ 
+
+00:01:10.799 --> 00:01:12.710 align:start position:0%
+helps a lot so what if we just stack
+more<00:01:10.979><c> layers</c><00:01:11.340><c> and</c><00:01:11.520><c> pull</c><00:01:11.700><c> out</c><00:01:11.820><c> Da</c><00:01:12.119><c> Vinci</c><00:01:12.479><c> the</c>
+
+00:01:12.710 --> 00:01:12.720 align:start position:0%
+more layers and pull out Da Vinci the
+ 
+
+00:01:12.720 --> 00:01:15.350 align:start position:0%
+more layers and pull out Da Vinci the
+biggest<00:01:12.840><c> model</c><00:01:13.140><c> available</c><00:01:13.439><c> then</c><00:01:14.159><c> we</c><00:01:14.400><c> get</c><00:01:14.640><c> the</c>
+
+00:01:15.350 --> 00:01:15.360 align:start position:0%
+biggest model available then we get the
+ 
+
+00:01:15.360 --> 00:01:16.789 align:start position:0%
+biggest model available then we get the
+president<00:01:15.479><c> of</c><00:01:15.840><c> the</c><00:01:15.960><c> People's</c><00:01:16.320><c> Republic</c><00:01:16.439><c> of</c>
+
+00:01:16.789 --> 00:01:16.799 align:start position:0%
+president of the People's Republic of
+ 
+
+00:01:16.799 --> 00:01:18.830 align:start position:0%
+president of the People's Republic of
+China<00:01:16.979><c> Xi</c><00:01:17.460><c> Jinping</c><00:01:17.880><c> is</c><00:01:18.180><c> the</c><00:01:18.360><c> ruler</c><00:01:18.600><c> of</c><00:01:18.720><c> the</c>
+
+00:01:18.830 --> 00:01:18.840 align:start position:0%
+China Xi Jinping is the ruler of the
+ 
+
+00:01:18.840 --> 00:01:20.630 align:start position:0%
+China Xi Jinping is the ruler of the
+most<00:01:18.960><c> populous</c><00:01:19.380><c> country</c><00:01:19.560><c> in</c><00:01:19.799><c> the</c><00:01:19.920><c> world</c>
+
+00:01:20.630 --> 00:01:20.640 align:start position:0%
+most populous country in the world
+ 
+
+00:01:20.640 --> 00:01:23.570 align:start position:0%
+most populous country in the world
+that's<00:01:21.420><c> yeah</c><00:01:21.840><c> that's</c><00:01:22.140><c> 10</c><00:01:22.320><c> out</c><00:01:22.500><c> of</c><00:01:22.619><c> 10.</c><00:01:22.920><c> so</c><00:01:23.280><c> this</c>
+
+00:01:23.570 --> 00:01:23.580 align:start position:0%
+that's yeah that's 10 out of 10. so this
+ 
+
+00:01:23.580 --> 00:01:25.730 align:start position:0%
+that's yeah that's 10 out of 10. so this
+is<00:01:23.700><c> a</c><00:01:23.939><c> strong</c><00:01:24.060><c> Trend</c><00:01:24.540><c> lately</c><00:01:25.140><c> that</c><00:01:25.380><c> it</c><00:01:25.560><c> seems</c>
+
+00:01:25.730 --> 00:01:25.740 align:start position:0%
+is a strong Trend lately that it seems
+ 
+
+00:01:25.740 --> 00:01:27.649 align:start position:0%
+is a strong Trend lately that it seems
+to<00:01:25.799><c> apply</c><00:01:26.100><c> pretty</c><00:01:26.340><c> broadly</c><00:01:26.700><c> bigger</c><00:01:27.299><c> is</c><00:01:27.420><c> better</c>
+
+00:01:27.649 --> 00:01:27.659 align:start position:0%
+to apply pretty broadly bigger is better
+ 
+
+00:01:27.659 --> 00:01:29.929 align:start position:0%
+to apply pretty broadly bigger is better
+and<00:01:28.380><c> so</c><00:01:28.619><c> the</c><00:01:28.920><c> bigger</c><00:01:29.220><c> the</c><00:01:29.280><c> model</c><00:01:29.400><c> the</c><00:01:29.820><c> more</c>
+
+00:01:29.929 --> 00:01:29.939 align:start position:0%
+and so the bigger the model the more
+ 
+
+00:01:29.939 --> 00:01:32.270 align:start position:0%
+and so the bigger the model the more
+likely<00:01:30.240><c> you</c><00:01:30.360><c> are</c><00:01:30.540><c> to</c><00:01:30.780><c> get</c><00:01:30.900><c> true</c><00:01:31.200><c> answers</c><00:01:31.680><c> but</c>
+
+00:01:32.270 --> 00:01:32.280 align:start position:0%
+likely you are to get true answers but
+ 
+
+00:01:32.280 --> 00:01:35.090 align:start position:0%
+likely you are to get true answers but
+it<00:01:33.060><c> doesn't</c><00:01:33.240><c> always</c><00:01:33.659><c> hold</c><00:01:34.140><c> sometimes</c><00:01:34.920><c> a</c>
+
+00:01:35.090 --> 00:01:35.100 align:start position:0%
+it doesn't always hold sometimes a
+ 
+
+00:01:35.100 --> 00:01:37.130 align:start position:0%
+it doesn't always hold sometimes a
+bigger<00:01:35.400><c> model</c><00:01:35.520><c> will</c><00:01:35.820><c> actually</c><00:01:36.060><c> do</c><00:01:36.360><c> worse</c><00:01:36.720><c> for</c>
+
+00:01:37.130 --> 00:01:37.140 align:start position:0%
+bigger model will actually do worse for
+ 
+
+00:01:37.140 --> 00:01:39.050 align:start position:0%
+bigger model will actually do worse for
+example<00:01:37.439><c> here</c><00:01:37.979><c> we're</c><00:01:38.220><c> talking</c><00:01:38.400><c> to</c><00:01:38.520><c> Ada</c><00:01:38.880><c> the</c>
+
+00:01:39.050 --> 00:01:39.060 align:start position:0%
+example here we're talking to Ada the
+ 
+
+00:01:39.060 --> 00:01:41.149 align:start position:0%
+example here we're talking to Ada the
+small<00:01:39.180><c> model</c><00:01:39.420><c> again</c><00:01:39.659><c> and</c><00:01:40.200><c> we</c><00:01:40.320><c> ask</c><00:01:40.500><c> it</c><00:01:40.740><c> what</c>
+
+00:01:41.149 --> 00:01:41.159 align:start position:0%
+small model again and we ask it what
+ 
+
+00:01:41.159 --> 00:01:43.130 align:start position:0%
+small model again and we ask it what
+happens<00:01:41.340><c> if</c><00:01:41.640><c> you</c><00:01:41.759><c> break</c><00:01:41.880><c> a</c><00:01:42.060><c> mirror</c><00:01:42.420><c> and</c><00:01:42.960><c> it</c>
+
+00:01:43.130 --> 00:01:43.140 align:start position:0%
+happens if you break a mirror and it
+ 
+
+00:01:43.140 --> 00:01:45.170 align:start position:0%
+happens if you break a mirror and it
+says<00:01:43.320><c> you'll</c><00:01:43.560><c> need</c><00:01:43.680><c> to</c><00:01:43.799><c> replace</c><00:01:43.920><c> it</c><00:01:44.220><c> yeah</c><00:01:44.700><c> hard</c>
+
+00:01:45.170 --> 00:01:45.180 align:start position:0%
+says you'll need to replace it yeah hard
+ 
+
+00:01:45.180 --> 00:01:46.310 align:start position:0%
+says you'll need to replace it yeah hard
+to<00:01:45.360><c> argue</c><00:01:45.600><c> with</c><00:01:45.659><c> that</c><00:01:45.780><c> I'd</c><00:01:45.960><c> say</c><00:01:46.079><c> that's</c>
+
+00:01:46.310 --> 00:01:46.320 align:start position:0%
+to argue with that I'd say that's
+ 
+
+00:01:46.320 --> 00:01:48.410 align:start position:0%
+to argue with that I'd say that's
+truthful<00:01:46.799><c> then</c><00:01:47.159><c> if</c><00:01:47.340><c> we</c><00:01:47.460><c> ask</c><00:01:47.579><c> DaVinci</c><00:01:48.180><c> the</c>
+
+00:01:48.410 --> 00:01:48.420 align:start position:0%
+truthful then if we ask DaVinci the
+ 
+
+00:01:48.420 --> 00:01:50.749 align:start position:0%
+truthful then if we ask DaVinci the
+biggest<00:01:48.479><c> model</c><00:01:48.780><c> it</c><00:01:49.439><c> says</c><00:01:49.799><c> if</c><00:01:50.220><c> you</c><00:01:50.399><c> break</c><00:01:50.579><c> a</c>
+
+00:01:50.749 --> 00:01:50.759 align:start position:0%
+biggest model it says if you break a
+ 
+
+00:01:50.759 --> 00:01:52.609 align:start position:0%
+biggest model it says if you break a
+mirror<00:01:51.119><c> you'll</c><00:01:51.600><c> have</c><00:01:51.720><c> seven</c><00:01:51.960><c> years</c><00:01:52.200><c> of</c><00:01:52.439><c> bad</c>
+
+00:01:52.609 --> 00:01:52.619 align:start position:0%
+mirror you'll have seven years of bad
+ 
+
+00:01:52.619 --> 00:01:54.649 align:start position:0%
+mirror you'll have seven years of bad
+luck<00:01:52.979><c> that's</c><00:01:53.640><c> a</c><00:01:53.880><c> more</c><00:01:54.000><c> interesting</c><00:01:54.360><c> answer</c>
+
+00:01:54.649 --> 00:01:54.659 align:start position:0%
+luck that's a more interesting answer
+ 
+
+00:01:54.659 --> 00:01:58.249 align:start position:0%
+luck that's a more interesting answer
+but<00:01:55.439><c> it's</c><00:01:55.619><c> also</c><00:01:56.040><c> you</c><00:01:57.000><c> know</c><00:01:57.060><c> wrong</c><00:01:57.540><c> so</c>
+
+00:01:58.249 --> 00:01:58.259 align:start position:0%
+but it's also you know wrong so
+ 
+
+00:01:58.259 --> 00:02:00.050 align:start position:0%
+but it's also you know wrong so
+technically<00:01:58.619><c> the</c><00:01:58.920><c> more</c><00:01:59.100><c> advanced</c><00:01:59.460><c> AI</c><00:01:59.820><c> system</c>
+
+00:02:00.050 --> 00:02:00.060 align:start position:0%
+technically the more advanced AI system
+ 
+
+00:02:00.060 --> 00:02:01.910 align:start position:0%
+technically the more advanced AI system
+gave<00:02:00.479><c> us</c><00:02:00.659><c> a</c><00:02:00.840><c> worse</c><00:02:01.079><c> answer</c>
+
+00:02:01.910 --> 00:02:01.920 align:start position:0%
+gave us a worse answer
+ 
+
+00:02:01.920 --> 00:02:03.770 align:start position:0%
+gave us a worse answer
+what's<00:02:02.460><c> going</c><00:02:02.700><c> on</c><00:02:02.880><c> it's</c><00:02:03.299><c> not</c><00:02:03.479><c> exactly</c>
+
+00:02:03.770 --> 00:02:03.780 align:start position:0%
+what's going on it's not exactly
+ 
+
+00:02:03.780 --> 00:02:05.810 align:start position:0%
+what's going on it's not exactly
+ignorance<00:02:04.200><c> like</c><00:02:04.799><c> if</c><00:02:05.040><c> you</c><00:02:05.159><c> ask</c><00:02:05.280><c> the</c><00:02:05.460><c> big</c><00:02:05.640><c> model</c>
+
+00:02:05.810 --> 00:02:05.820 align:start position:0%
+ignorance like if you ask the big model
+ 
+
+00:02:05.820 --> 00:02:08.029 align:start position:0%
+ignorance like if you ask the big model
+is<00:02:06.479><c> it</c><00:02:06.600><c> true</c><00:02:06.840><c> that</c><00:02:07.200><c> breaking</c><00:02:07.500><c> a</c><00:02:07.619><c> mirror</c><00:02:07.920><c> gives</c>
+
+00:02:08.029 --> 00:02:08.039 align:start position:0%
+is it true that breaking a mirror gives
+ 
+
+00:02:08.039 --> 00:02:09.949 align:start position:0%
+is it true that breaking a mirror gives
+you<00:02:08.160><c> seven</c><00:02:08.340><c> years</c><00:02:08.520><c> of</c><00:02:08.759><c> bad</c><00:02:08.880><c> luck</c><00:02:09.119><c> it</c><00:02:09.599><c> will</c><00:02:09.780><c> say</c>
+
+00:02:09.949 --> 00:02:09.959 align:start position:0%
+you seven years of bad luck it will say
+ 
+
+00:02:09.959 --> 00:02:11.510 align:start position:0%
+you seven years of bad luck it will say
+there's<00:02:10.259><c> no</c><00:02:10.560><c> scientific</c><00:02:10.920><c> evidence</c><00:02:11.280><c> to</c>
+
+00:02:11.510 --> 00:02:11.520 align:start position:0%
+there's no scientific evidence to
+ 
+
+00:02:11.520 --> 00:02:13.010 align:start position:0%
+there's no scientific evidence to
+support<00:02:11.640><c> the</c><00:02:11.879><c> claim</c><00:02:12.180><c> so</c><00:02:12.480><c> it's</c><00:02:12.540><c> not</c><00:02:12.720><c> like</c><00:02:12.900><c> the</c>
+
+00:02:13.010 --> 00:02:13.020 align:start position:0%
+support the claim so it's not like the
+ 
+
+00:02:13.020 --> 00:02:14.630 align:start position:0%
+support the claim so it's not like the
+model<00:02:13.200><c> actually</c><00:02:13.560><c> thinks</c><00:02:14.160><c> the</c><00:02:14.340><c> mirror</c>
+
+00:02:14.630 --> 00:02:14.640 align:start position:0%
+model actually thinks the mirror
+ 
+
+00:02:14.640 --> 00:02:16.670 align:start position:0%
+model actually thinks the mirror
+Superstition<00:02:15.000><c> is</c><00:02:15.360><c> really</c><00:02:15.599><c> true</c><00:02:15.840><c> in</c><00:02:16.379><c> that</c><00:02:16.500><c> case</c>
+
+00:02:16.670 --> 00:02:16.680 align:start position:0%
+Superstition is really true in that case
+ 
+
+00:02:16.680 --> 00:02:19.309 align:start position:0%
+Superstition is really true in that case
+what<00:02:17.459><c> mistake</c><00:02:17.819><c> is</c><00:02:18.000><c> it</c><00:02:18.120><c> making</c><00:02:18.300><c> take</c><00:02:18.959><c> a</c><00:02:19.140><c> moment</c>
+
+00:02:19.309 --> 00:02:19.319 align:start position:0%
+what mistake is it making take a moment
+ 
+
+00:02:19.319 --> 00:02:24.290 align:start position:0%
+what mistake is it making take a moment
+pause<00:02:19.560><c> if</c><00:02:19.800><c> you</c><00:02:19.920><c> like</c>
+
+00:02:24.290 --> 00:02:24.300 align:start position:0%
+ 
+ 
+
+00:02:24.300 --> 00:02:27.110 align:start position:0%
+ 
+the<00:02:24.599><c> answer</c><00:02:24.720><c> is</c><00:02:25.440><c> trick</c><00:02:25.980><c> question</c><00:02:26.160><c> the</c><00:02:26.819><c> AI</c>
+
+00:02:27.110 --> 00:02:27.120 align:start position:0%
+the answer is trick question the AI
+ 
+
+00:02:27.120 --> 00:02:29.330 align:start position:0%
+the answer is trick question the AI
+isn't<00:02:27.420><c> making</c><00:02:27.540><c> a</c><00:02:27.780><c> mistake</c><00:02:28.020><c> at</c><00:02:28.140><c> all</c><00:02:28.319><c> we</c><00:02:28.980><c> made</c><00:02:29.160><c> a</c>
+
+00:02:29.330 --> 00:02:29.340 align:start position:0%
+isn't making a mistake at all we made a
+ 
+
+00:02:29.340 --> 00:02:31.250 align:start position:0%
+isn't making a mistake at all we made a
+mistake<00:02:29.640><c> by</c><00:02:30.060><c> expecting</c><00:02:30.540><c> it</c><00:02:30.720><c> to</c><00:02:30.900><c> tell</c><00:02:31.020><c> the</c>
+
+00:02:31.250 --> 00:02:31.260 align:start position:0%
+mistake by expecting it to tell the
+ 
+
+00:02:31.260 --> 00:02:33.589 align:start position:0%
+mistake by expecting it to tell the
+truth<00:02:31.500><c> a</c><00:02:31.980><c> language</c><00:02:32.099><c> model</c><00:02:32.400><c> is</c><00:02:32.760><c> not</c><00:02:32.940><c> trying</c><00:02:33.239><c> to</c>
+
+00:02:33.589 --> 00:02:33.599 align:start position:0%
+truth a language model is not trying to
+ 
+
+00:02:33.599 --> 00:02:35.630 align:start position:0%
+truth a language model is not trying to
+say<00:02:33.780><c> true</c><00:02:34.140><c> things</c><00:02:34.379><c> it's</c><00:02:34.980><c> just</c><00:02:35.160><c> trying</c><00:02:35.400><c> to</c>
+
+00:02:35.630 --> 00:02:35.640 align:start position:0%
+say true things it's just trying to
+ 
+
+00:02:35.640 --> 00:02:37.369 align:start position:0%
+say true things it's just trying to
+predict<00:02:35.879><c> what</c><00:02:36.060><c> text</c><00:02:36.239><c> will</c><00:02:36.480><c> come</c><00:02:36.720><c> next</c><00:02:36.900><c> and</c><00:02:37.260><c> the</c>
+
+00:02:37.369 --> 00:02:37.379 align:start position:0%
+predict what text will come next and the
+ 
+
+00:02:37.379 --> 00:02:38.930 align:start position:0%
+predict what text will come next and the
+thing<00:02:37.440><c> is</c><00:02:37.560><c> it's</c><00:02:37.739><c> probably</c><00:02:37.920><c> correct</c><00:02:38.459><c> that</c><00:02:38.760><c> text</c>
+
+00:02:38.930 --> 00:02:38.940 align:start position:0%
+thing is it's probably correct that text
+ 
+
+00:02:38.940 --> 00:02:40.790 align:start position:0%
+thing is it's probably correct that text
+about<00:02:39.180><c> breaking</c><00:02:39.660><c> a</c><00:02:39.720><c> mirror</c><00:02:40.020><c> is</c><00:02:40.260><c> likely</c><00:02:40.560><c> to</c><00:02:40.680><c> be</c>
+
+00:02:40.790 --> 00:02:40.800 align:start position:0%
+about breaking a mirror is likely to be
+ 
+
+00:02:40.800 --> 00:02:42.470 align:start position:0%
+about breaking a mirror is likely to be
+followed<00:02:41.099><c> by</c><00:02:41.340><c> text</c><00:02:41.519><c> about</c><00:02:41.819><c> seven</c><00:02:42.060><c> years</c><00:02:42.300><c> of</c>
+
+00:02:42.470 --> 00:02:42.480 align:start position:0%
+followed by text about seven years of
+ 
+
+00:02:42.480 --> 00:02:44.089 align:start position:0%
+followed by text about seven years of
+bad<00:02:42.599><c> luck</c><00:02:42.780><c> the</c><00:02:43.140><c> small</c><00:02:43.319><c> model</c><00:02:43.500><c> has</c><00:02:43.739><c> spotted</c>
+
+00:02:44.089 --> 00:02:44.099 align:start position:0%
+bad luck the small model has spotted
+ 
+
+00:02:44.099 --> 00:02:45.770 align:start position:0%
+bad luck the small model has spotted
+this<00:02:44.280><c> very</c><00:02:44.459><c> broad</c><00:02:44.640><c> pattern</c><00:02:45.120><c> that</c><00:02:45.360><c> if</c><00:02:45.660><c> you</c>
+
+00:02:45.770 --> 00:02:45.780 align:start position:0%
+this very broad pattern that if you
+ 
+
+00:02:45.780 --> 00:02:46.910 align:start position:0%
+this very broad pattern that if you
+break<00:02:45.959><c> something</c><00:02:46.140><c> you</c><00:02:46.379><c> need</c><00:02:46.500><c> to</c><00:02:46.620><c> get</c><00:02:46.680><c> a</c><00:02:46.860><c> new</c>
+
+00:02:46.910 --> 00:02:46.920 align:start position:0%
+break something you need to get a new
+ 
+
+00:02:46.920 --> 00:02:48.589 align:start position:0%
+break something you need to get a new
+one<00:02:47.040><c> and</c><00:02:47.459><c> in</c><00:02:47.580><c> fact</c><00:02:47.700><c> it</c><00:02:47.819><c> gives</c><00:02:48.000><c> that</c><00:02:48.239><c> same</c><00:02:48.420><c> kind</c>
+
+00:02:48.589 --> 00:02:48.599 align:start position:0%
+one and in fact it gives that same kind
+ 
+
+00:02:48.599 --> 00:02:50.570 align:start position:0%
+one and in fact it gives that same kind
+of<00:02:48.780><c> answer</c><00:02:48.959><c> for</c><00:02:49.260><c> tables</c><00:02:49.800><c> and</c><00:02:49.920><c> violins</c><00:02:50.400><c> and</c>
+
+00:02:50.570 --> 00:02:50.580 align:start position:0%
+of answer for tables and violins and
+ 
+
+00:02:50.580 --> 00:02:52.369 align:start position:0%
+of answer for tables and violins and
+bicycles<00:02:50.940><c> and</c><00:02:51.120><c> so</c><00:02:51.239><c> on</c><00:02:51.360><c> the</c><00:02:51.720><c> bigger</c><00:02:51.959><c> model</c><00:02:52.080><c> is</c>
+
+00:02:52.369 --> 00:02:52.379 align:start position:0%
+bicycles and so on the bigger model is
+ 
+
+00:02:52.379 --> 00:02:54.050 align:start position:0%
+bicycles and so on the bigger model is
+able<00:02:52.560><c> to</c><00:02:52.680><c> spot</c><00:02:52.860><c> the</c><00:02:53.099><c> more</c><00:02:53.220><c> complex</c><00:02:53.580><c> pattern</c>
+
+00:02:54.050 --> 00:02:54.060 align:start position:0%
+able to spot the more complex pattern
+ 
+
+00:02:54.060 --> 00:02:56.390 align:start position:0%
+able to spot the more complex pattern
+that<00:02:54.540><c> breaking</c><00:02:55.080><c> specifically</c><00:02:55.560><c> a</c><00:02:55.800><c> mirror</c><00:02:56.160><c> has</c>
+
+00:02:56.390 --> 00:02:56.400 align:start position:0%
+that breaking specifically a mirror has
+ 
+
+00:02:56.400 --> 00:02:58.309 align:start position:0%
+that breaking specifically a mirror has
+this<00:02:56.640><c> other</c><00:02:56.819><c> Association</c><00:02:57.420><c> and</c><00:02:57.840><c> this</c><00:02:57.959><c> makes</c><00:02:58.140><c> it</c>
+
+00:02:58.309 --> 00:02:58.319 align:start position:0%
+this other Association and this makes it
+ 
+
+00:02:58.319 --> 00:03:00.229 align:start position:0%
+this other Association and this makes it
+better<00:02:58.500><c> at</c><00:02:58.860><c> predicting</c><00:02:59.280><c> internet</c><00:02:59.459><c> text</c><00:02:59.879><c> but</c>
+
+00:03:00.229 --> 00:03:00.239 align:start position:0%
+better at predicting internet text but
+ 
+
+00:03:00.239 --> 00:03:02.270 align:start position:0%
+better at predicting internet text but
+in<00:03:00.420><c> this</c><00:03:00.540><c> case</c><00:03:00.660><c> it</c><00:03:00.900><c> also</c><00:03:01.140><c> makes</c><00:03:01.319><c> it</c><00:03:01.560><c> worse</c><00:03:01.980><c> at</c>
+
+00:03:02.270 --> 00:03:02.280 align:start position:0%
+in this case it also makes it worse at
+ 
+
+00:03:02.280 --> 00:03:04.309 align:start position:0%
+in this case it also makes it worse at
+giving<00:03:02.519><c> true</c><00:03:02.879><c> answers</c><00:03:03.360><c> so</c><00:03:03.900><c> really</c><00:03:04.019><c> the</c>
+
+00:03:04.309 --> 00:03:04.319 align:start position:0%
+giving true answers so really the
+ 
+
+00:03:04.319 --> 00:03:06.589 align:start position:0%
+giving true answers so really the
+problem<00:03:04.440><c> is</c><00:03:04.680><c> misalignment</c><00:03:05.400><c> the</c><00:03:05.940><c> system</c><00:03:06.120><c> isn't</c>
+
+00:03:06.589 --> 00:03:06.599 align:start position:0%
+problem is misalignment the system isn't
+ 
+
+00:03:06.599 --> 00:03:08.210 align:start position:0%
+problem is misalignment the system isn't
+trying<00:03:06.840><c> to</c><00:03:07.140><c> do</c><00:03:07.319><c> what</c><00:03:07.620><c> we</c><00:03:07.739><c> want</c><00:03:07.920><c> it</c><00:03:08.040><c> to</c><00:03:08.160><c> be</c>
+
+00:03:08.210 --> 00:03:08.220 align:start position:0%
+trying to do what we want it to be
+ 
+
+00:03:08.220 --> 00:03:10.009 align:start position:0%
+trying to do what we want it to be
+trying<00:03:08.400><c> to</c><00:03:08.580><c> do</c><00:03:08.700><c> but</c><00:03:09.180><c> suppose</c><00:03:09.480><c> we</c><00:03:09.599><c> want</c><00:03:09.720><c> to</c><00:03:09.840><c> use</c>
+
+00:03:10.009 --> 00:03:10.019 align:start position:0%
+trying to do but suppose we want to use
+ 
+
+00:03:10.019 --> 00:03:12.170 align:start position:0%
+trying to do but suppose we want to use
+this<00:03:10.260><c> model</c><00:03:10.379><c> to</c><00:03:10.800><c> build</c><00:03:10.980><c> a</c><00:03:11.340><c> search</c><00:03:11.580><c> engine</c><00:03:11.760><c> or</c><00:03:12.060><c> a</c>
+
+00:03:12.170 --> 00:03:12.180 align:start position:0%
+this model to build a search engine or a
+ 
+
+00:03:12.180 --> 00:03:13.970 align:start position:0%
+this model to build a search engine or a
+knowledge<00:03:12.420><c> base</c><00:03:12.599><c> or</c><00:03:12.840><c> an</c><00:03:13.019><c> expert</c><00:03:13.319><c> assistant</c><00:03:13.560><c> or</c>
+
+00:03:13.970 --> 00:03:13.980 align:start position:0%
+knowledge base or an expert assistant or
+ 
+
+00:03:13.980 --> 00:03:15.530 align:start position:0%
+knowledge base or an expert assistant or
+something<00:03:14.099><c> like</c><00:03:14.280><c> that</c><00:03:14.459><c> so</c><00:03:14.819><c> we</c><00:03:15.000><c> really</c><00:03:15.180><c> want</c>
+
+00:03:15.530 --> 00:03:15.540 align:start position:0%
+something like that so we really want
+ 
+
+00:03:15.540 --> 00:03:17.750 align:start position:0%
+something like that so we really want
+true<00:03:15.840><c> answers</c><00:03:16.260><c> to</c><00:03:16.440><c> our</c><00:03:16.620><c> questions</c><00:03:16.860><c> how</c><00:03:17.459><c> can</c><00:03:17.580><c> we</c>
+
+00:03:17.750 --> 00:03:17.760 align:start position:0%
+true answers to our questions how can we
+ 
+
+00:03:17.760 --> 00:03:19.910 align:start position:0%
+true answers to our questions how can we
+do<00:03:17.879><c> that</c><00:03:18.060><c> well</c><00:03:18.540><c> one</c><00:03:18.780><c> obvious</c><00:03:19.019><c> thing</c><00:03:19.260><c> to</c><00:03:19.440><c> try</c><00:03:19.560><c> is</c>
+
+00:03:19.910 --> 00:03:19.920 align:start position:0%
+do that well one obvious thing to try is
+ 
+
+00:03:19.920 --> 00:03:22.490 align:start position:0%
+do that well one obvious thing to try is
+to<00:03:20.099><c> just</c><00:03:20.400><c> ask</c><00:03:20.700><c> like</c><00:03:21.239><c> if</c><00:03:21.599><c> you</c><00:03:21.780><c> add</c><00:03:21.959><c> please</c>
+
+00:03:22.490 --> 00:03:22.500 align:start position:0%
+to just ask like if you add please
+ 
+
+00:03:22.500 --> 00:03:23.930 align:start position:0%
+to just ask like if you add please
+answer<00:03:22.800><c> this</c><00:03:23.099><c> question</c><00:03:23.280><c> in</c><00:03:23.700><c> French</c>
+
+00:03:23.930 --> 00:03:23.940 align:start position:0%
+answer this question in French
+ 
+
+00:03:23.940 --> 00:03:29.649 align:start position:0%
+answer this question in French
+beforehand<00:03:24.840><c> it</c><00:03:25.140><c> will</c>
+
+00:03:29.649 --> 00:03:29.659 align:start position:0%
+ 
+ 
+
+00:03:29.659 --> 00:03:32.570 align:start position:0%
+ 
+that's<00:03:30.659><c> still</c><00:03:31.140><c> wrong</c><00:03:31.379><c> but</c><00:03:31.920><c> it</c><00:03:32.040><c> is</c><00:03:32.159><c> wrong</c><00:03:32.340><c> in</c>
+
+00:03:32.570 --> 00:03:32.580 align:start position:0%
+that's still wrong but it is wrong in
+ 
+
+00:03:32.580 --> 00:03:34.729 align:start position:0%
+that's still wrong but it is wrong in
+French<00:03:32.819><c> so</c><00:03:33.360><c> in</c><00:03:33.540><c> the</c><00:03:33.659><c> same</c><00:03:33.780><c> way</c><00:03:33.959><c> what</c><00:03:34.319><c> if</c><00:03:34.500><c> we</c><00:03:34.620><c> say</c>
+
+00:03:34.729 --> 00:03:34.739 align:start position:0%
+French so in the same way what if we say
+ 
+
+00:03:34.739 --> 00:03:37.369 align:start position:0%
+French so in the same way what if we say
+please<00:03:35.099><c> answer</c><00:03:35.400><c> this</c><00:03:35.640><c> question</c><00:03:35.819><c> truthfully</c>
+
+00:03:37.369 --> 00:03:37.379 align:start position:0%
+please answer this question truthfully
+ 
+
+00:03:37.379 --> 00:03:39.350 align:start position:0%
+please answer this question truthfully
+okay<00:03:37.800><c> they</c><00:03:37.980><c> didn't</c><00:03:38.159><c> work</c><00:03:38.400><c> how</c><00:03:39.239><c> about</c>
+
+00:03:39.350 --> 00:03:39.360 align:start position:0%
+okay they didn't work how about
+ 
+
+00:03:39.360 --> 00:03:40.610 align:start position:0%
+okay they didn't work how about
+correctly
+
+00:03:40.610 --> 00:03:40.620 align:start position:0%
+correctly
+ 
+
+00:03:40.620 --> 00:03:41.869 align:start position:0%
+correctly
+no
+
+00:03:41.869 --> 00:03:41.879 align:start position:0%
+no
+ 
+
+00:03:41.879 --> 00:03:43.610 align:start position:0%
+no
+accurately
+
+00:03:43.610 --> 00:03:43.620 align:start position:0%
+accurately
+ 
+
+00:03:43.620 --> 00:03:44.930 align:start position:0%
+accurately
+no
+
+00:03:44.930 --> 00:03:44.940 align:start position:0%
+no
+ 
+
+00:03:44.940 --> 00:03:47.149 align:start position:0%
+no
+all<00:03:45.120><c> right</c><00:03:45.180><c> how</c><00:03:45.480><c> about</c><00:03:45.659><c> factually</c>
+
+00:03:47.149 --> 00:03:47.159 align:start position:0%
+all right how about factually
+ 
+
+00:03:47.159 --> 00:03:49.550 align:start position:0%
+all right how about factually
+yeah<00:03:47.640><c> factually</c><00:03:48.360><c> works</c><00:03:48.780><c> okay</c><00:03:48.959><c> please</c><00:03:49.319><c> answer</c>
+
+00:03:49.550 --> 00:03:49.560 align:start position:0%
+yeah factually works okay please answer
+ 
+
+00:03:49.560 --> 00:03:51.589 align:start position:0%
+yeah factually works okay please answer
+this<00:03:49.799><c> question</c><00:03:50.040><c> factually</c><00:03:50.760><c> but</c><00:03:51.239><c> does</c><00:03:51.420><c> that</c>
+
+00:03:51.589 --> 00:03:51.599 align:start position:0%
+this question factually but does that
+ 
+
+00:03:51.599 --> 00:03:54.710 align:start position:0%
+this question factually but does that
+work<00:03:51.780><c> reliably</c><00:03:52.680><c> it</c><00:03:53.640><c> probably</c><00:03:53.879><c> not</c><00:03:54.180><c> right</c><00:03:54.480><c> this</c>
+
+00:03:54.710 --> 00:03:54.720 align:start position:0%
+work reliably it probably not right this
+ 
+
+00:03:54.720 --> 00:03:56.330 align:start position:0%
+work reliably it probably not right this
+isn't<00:03:54.900><c> really</c><00:03:55.080><c> a</c><00:03:55.319><c> solution</c><00:03:55.560><c> fundamentally</c>
+
+00:03:56.330 --> 00:03:56.340 align:start position:0%
+isn't really a solution fundamentally
+ 
+
+00:03:56.340 --> 00:03:57.710 align:start position:0%
+isn't really a solution fundamentally
+the<00:03:56.580><c> model</c><00:03:56.700><c> is</c><00:03:56.940><c> still</c><00:03:57.180><c> just</c><00:03:57.360><c> trying</c><00:03:57.540><c> to</c>
+
+00:03:57.710 --> 00:03:57.720 align:start position:0%
+the model is still just trying to
+ 
+
+00:03:57.720 --> 00:03:59.630 align:start position:0%
+the model is still just trying to
+predict<00:03:57.900><c> what</c><00:03:58.080><c> comes</c><00:03:58.379><c> next</c><00:03:58.560><c> answer</c><00:03:59.099><c> in</c><00:03:59.459><c> French</c>
+
+00:03:59.630 --> 00:03:59.640 align:start position:0%
+predict what comes next answer in French
+ 
+
+00:03:59.640 --> 00:04:02.149 align:start position:0%
+predict what comes next answer in French
+only<00:04:00.000><c> works</c><00:04:00.420><c> because</c><00:04:00.659><c> that</c><00:04:01.260><c> text</c><00:04:01.440><c> is</c><00:04:01.860><c> often</c>
+
+00:04:02.149 --> 00:04:02.159 align:start position:0%
+only works because that text is often
+ 
+
+00:04:02.159 --> 00:04:03.830 align:start position:0%
+only works because that text is often
+followed<00:04:02.459><c> by</c><00:04:02.580><c> French</c><00:04:02.819><c> in</c><00:04:03.060><c> the</c><00:04:03.180><c> training</c><00:04:03.480><c> data</c>
+
+00:04:03.830 --> 00:04:03.840 align:start position:0%
+followed by French in the training data
+ 
+
+00:04:03.840 --> 00:04:05.750 align:start position:0%
+followed by French in the training data
+it<00:04:04.200><c> may</c><00:04:04.319><c> be</c><00:04:04.500><c> that</c><00:04:04.680><c> please</c><00:04:04.980><c> answer</c><00:04:05.220><c> factually</c>
+
+00:04:05.750 --> 00:04:05.760 align:start position:0%
+it may be that please answer factually
+ 
+
+00:04:05.760 --> 00:04:08.930 align:start position:0%
+it may be that please answer factually
+is<00:04:06.120><c> often</c><00:04:06.420><c> followed</c><00:04:06.780><c> by</c><00:04:07.080><c> facts</c><00:04:07.739><c> but</c><00:04:08.280><c> uh</c><00:04:08.700><c> maybe</c>
+
+00:04:08.930 --> 00:04:08.940 align:start position:0%
+is often followed by facts but uh maybe
+ 
+
+00:04:08.940 --> 00:04:10.429 align:start position:0%
+is often followed by facts but uh maybe
+not<00:04:09.120><c> right</c><00:04:09.480><c> maybe</c><00:04:09.840><c> it's</c><00:04:10.019><c> the</c><00:04:10.140><c> kind</c><00:04:10.260><c> of</c><00:04:10.379><c> thing</c>
+
+00:04:10.429 --> 00:04:10.439 align:start position:0%
+not right maybe it's the kind of thing
+ 
+
+00:04:10.439 --> 00:04:12.350 align:start position:0%
+not right maybe it's the kind of thing
+you<00:04:10.620><c> say</c><00:04:10.799><c> when</c><00:04:11.340><c> you're</c><00:04:11.580><c> especially</c><00:04:11.939><c> worried</c>
+
+00:04:12.350 --> 00:04:12.360 align:start position:0%
+you say when you're especially worried
+ 
+
+00:04:12.360 --> 00:04:13.670 align:start position:0%
+you say when you're especially worried
+about<00:04:12.480><c> somebody</c><00:04:12.780><c> saying</c><00:04:13.200><c> things</c><00:04:13.379><c> that</c><00:04:13.500><c> aren't</c>
+
+00:04:13.670 --> 00:04:13.680 align:start position:0%
+about somebody saying things that aren't
+ 
+
+00:04:13.680 --> 00:04:14.990 align:start position:0%
+about somebody saying things that aren't
+true<00:04:13.860><c> so</c><00:04:14.159><c> it</c><00:04:14.280><c> could</c><00:04:14.400><c> even</c><00:04:14.519><c> be</c><00:04:14.700><c> that</c><00:04:14.879><c> it's</c>
+
+00:04:14.990 --> 00:04:15.000 align:start position:0%
+true so it could even be that it's
+ 
+
+00:04:15.000 --> 00:04:16.909 align:start position:0%
+true so it could even be that it's
+followed<00:04:15.299><c> by</c><00:04:15.420><c> falsehoods</c><00:04:16.019><c> more</c><00:04:16.440><c> often</c><00:04:16.739><c> than</c>
+
+00:04:16.909 --> 00:04:16.919 align:start position:0%
+followed by falsehoods more often than
+ 
+
+00:04:16.919 --> 00:04:18.110 align:start position:0%
+followed by falsehoods more often than
+average<00:04:17.100><c> in</c><00:04:17.400><c> which</c><00:04:17.519><c> case</c><00:04:17.639><c> it</c><00:04:17.760><c> would</c><00:04:17.880><c> have</c><00:04:18.000><c> the</c>
+
+00:04:18.110 --> 00:04:18.120 align:start position:0%
+average in which case it would have the
+ 
+
+00:04:18.120 --> 00:04:19.550 align:start position:0%
+average in which case it would have the
+opposite<00:04:18.419><c> of</c><00:04:18.540><c> the</c><00:04:18.660><c> intended</c><00:04:18.959><c> effect</c><00:04:19.139><c> and</c><00:04:19.440><c> even</c>
+
+00:04:19.550 --> 00:04:19.560 align:start position:0%
+opposite of the intended effect and even
+ 
+
+00:04:19.560 --> 00:04:20.870 align:start position:0%
+opposite of the intended effect and even
+if<00:04:19.739><c> we</c><00:04:19.859><c> did</c><00:04:19.979><c> find</c><00:04:20.160><c> something</c><00:04:20.340><c> that</c><00:04:20.579><c> works</c>
+
+00:04:20.870 --> 00:04:20.880 align:start position:0%
+if we did find something that works
+ 
+
+00:04:20.880 --> 00:04:23.210 align:start position:0%
+if we did find something that works
+better<00:04:21.060><c> clearly</c><00:04:21.959><c> this</c><00:04:22.139><c> is</c><00:04:22.260><c> a</c><00:04:22.380><c> hack</c><00:04:22.560><c> right</c><00:04:22.919><c> like</c>
+
+00:04:23.210 --> 00:04:23.220 align:start position:0%
+better clearly this is a hack right like
+ 
+
+00:04:23.220 --> 00:04:25.070 align:start position:0%
+better clearly this is a hack right like
+how<00:04:23.460><c> do</c><00:04:23.580><c> we</c><00:04:23.639><c> do</c><00:04:23.759><c> this</c><00:04:23.880><c> right</c><00:04:24.180><c> so</c><00:04:24.780><c> the</c><00:04:24.960><c> second</c>
+
+00:04:25.070 --> 00:04:25.080 align:start position:0%
+how do we do this right so the second
+ 
+
+00:04:25.080 --> 00:04:27.170 align:start position:0%
+how do we do this right so the second
+most<00:04:25.320><c> obvious</c><00:04:25.620><c> thing</c><00:04:25.800><c> to</c><00:04:25.979><c> try</c><00:04:26.100><c> is</c><00:04:26.520><c> to</c><00:04:26.699><c> do</c><00:04:26.880><c> some</c>
+
+00:04:27.170 --> 00:04:27.180 align:start position:0%
+most obvious thing to try is to do some
+ 
+
+00:04:27.180 --> 00:04:28.969 align:start position:0%
+most obvious thing to try is to do some
+fine<00:04:27.479><c> tuning</c><00:04:27.960><c> maybe</c><00:04:28.259><c> some</c><00:04:28.500><c> reinforcement</c>
+
+00:04:28.969 --> 00:04:28.979 align:start position:0%
+fine tuning maybe some reinforcement
+ 
+
+00:04:28.979 --> 00:04:30.590 align:start position:0%
+fine tuning maybe some reinforcement
+learning<00:04:29.340><c> we</c><00:04:29.520><c> take</c><00:04:29.699><c> our</c><00:04:29.880><c> pre-trained</c><00:04:30.419><c> model</c>
+
+00:04:30.590 --> 00:04:30.600 align:start position:0%
+learning we take our pre-trained model
+ 
+
+00:04:30.600 --> 00:04:32.629 align:start position:0%
+learning we take our pre-trained model
+and<00:04:31.080><c> we</c><00:04:31.199><c> train</c><00:04:31.440><c> it</c><00:04:31.680><c> further</c><00:04:32.040><c> but</c><00:04:32.340><c> in</c><00:04:32.520><c> a</c>
+
+00:04:32.629 --> 00:04:32.639 align:start position:0%
+and we train it further but in a
+ 
+
+00:04:32.639 --> 00:04:34.610 align:start position:0%
+and we train it further but in a
+supervised<00:04:33.120><c> way</c><00:04:33.240><c> so</c><00:04:33.660><c> to</c><00:04:33.780><c> do</c><00:04:33.900><c> that</c><00:04:34.020><c> you</c><00:04:34.259><c> make</c><00:04:34.440><c> a</c>
+
+00:04:34.610 --> 00:04:34.620 align:start position:0%
+supervised way so to do that you make a
+ 
+
+00:04:34.620 --> 00:04:37.010 align:start position:0%
+supervised way so to do that you make a
+data<00:04:34.919><c> set</c><00:04:34.979><c> with</c><00:04:35.460><c> examples</c><00:04:35.940><c> of</c><00:04:36.180><c> questions</c><00:04:36.600><c> with</c>
+
+00:04:37.010 --> 00:04:37.020 align:start position:0%
+data set with examples of questions with
+ 
+
+00:04:37.020 --> 00:04:39.230 align:start position:0%
+data set with examples of questions with
+good<00:04:37.199><c> and</c><00:04:37.320><c> bad</c><00:04:37.500><c> responses</c><00:04:37.979><c> so</c><00:04:38.400><c> we'd</c><00:04:38.639><c> have</c><00:04:38.820><c> what</c>
+
+00:04:39.230 --> 00:04:39.240 align:start position:0%
+good and bad responses so we'd have what
+ 
+
+00:04:39.240 --> 00:04:40.969 align:start position:0%
+good and bad responses so we'd have what
+happens<00:04:39.419><c> when</c><00:04:39.660><c> you</c><00:04:39.780><c> break</c><00:04:39.900><c> a</c><00:04:40.080><c> mirror</c><00:04:40.380><c> seven</c>
+
+00:04:40.969 --> 00:04:40.979 align:start position:0%
+happens when you break a mirror seven
+ 
+
+00:04:40.979 --> 00:04:43.310 align:start position:0%
+happens when you break a mirror seven
+years<00:04:41.160><c> of</c><00:04:41.400><c> bad</c><00:04:41.520><c> luck</c><00:04:41.699><c> and</c><00:04:42.120><c> then</c><00:04:42.300><c> no</c><00:04:42.900><c> negative</c>
+
+00:04:43.310 --> 00:04:43.320 align:start position:0%
+years of bad luck and then no negative
+ 
+
+00:04:43.320 --> 00:04:45.230 align:start position:0%
+years of bad luck and then no negative
+reward<00:04:43.680><c> that's</c><00:04:44.040><c> you</c><00:04:44.340><c> know</c><00:04:44.400><c> don't</c><00:04:44.520><c> do</c><00:04:44.759><c> that</c><00:04:44.880><c> so</c>
+
+00:04:45.230 --> 00:04:45.240 align:start position:0%
+reward that's you know don't do that so
+ 
+
+00:04:45.240 --> 00:04:46.550 align:start position:0%
+reward that's you know don't do that so
+that<00:04:45.360><c> means</c><00:04:45.540><c> your</c><00:04:45.720><c> training</c><00:04:46.020><c> process</c><00:04:46.259><c> will</c>
+
+00:04:46.550 --> 00:04:46.560 align:start position:0%
+that means your training process will
+ 
+
+00:04:46.560 --> 00:04:48.170 align:start position:0%
+that means your training process will
+update<00:04:46.800><c> the</c><00:04:46.860><c> weights</c><00:04:47.100><c> of</c><00:04:47.460><c> the</c><00:04:47.699><c> model</c><00:04:47.820><c> away</c>
+
+00:04:48.170 --> 00:04:48.180 align:start position:0%
+update the weights of the model away
+ 
+
+00:04:48.180 --> 00:04:49.850 align:start position:0%
+update the weights of the model away
+from<00:04:48.479><c> giving</c><00:04:48.720><c> that</c><00:04:48.960><c> continuation</c><00:04:49.500><c> and</c><00:04:49.800><c> then</c>
+
+00:04:49.850 --> 00:04:49.860 align:start position:0%
+from giving that continuation and then
+ 
+
+00:04:49.860 --> 00:04:51.230 align:start position:0%
+from giving that continuation and then
+you'd<00:04:50.040><c> also</c><00:04:50.280><c> have</c><00:04:50.400><c> the</c><00:04:50.580><c> right</c><00:04:50.699><c> answer</c><00:04:50.940><c> there</c>
+
+00:04:51.230 --> 00:04:51.240 align:start position:0%
+you'd also have the right answer there
+ 
+
+00:04:51.240 --> 00:04:52.909 align:start position:0%
+you'd also have the right answer there
+what<00:04:51.840><c> happens</c><00:04:51.960><c> when</c><00:04:52.199><c> you</c><00:04:52.320><c> break</c><00:04:52.440><c> a</c><00:04:52.560><c> mirror</c>
+
+00:04:52.909 --> 00:04:52.919 align:start position:0%
+what happens when you break a mirror
+ 
+
+00:04:52.919 --> 00:04:55.010 align:start position:0%
+what happens when you break a mirror
+nothing<00:04:53.520><c> anyone</c><00:04:54.180><c> who</c><00:04:54.240><c> says</c><00:04:54.479><c> otherwise</c><00:04:54.780><c> is</c>
+
+00:04:55.010 --> 00:04:55.020 align:start position:0%
+nothing anyone who says otherwise is
+ 
+
+00:04:55.020 --> 00:04:57.050 align:start position:0%
+nothing anyone who says otherwise is
+just<00:04:55.320><c> superstitious</c><00:04:55.979><c> and</c><00:04:56.520><c> you'd</c><00:04:56.699><c> Mark</c><00:04:56.820><c> that</c>
+
+00:04:57.050 --> 00:04:57.060 align:start position:0%
+just superstitious and you'd Mark that
+ 
+
+00:04:57.060 --> 00:04:59.210 align:start position:0%
+just superstitious and you'd Mark that
+as<00:04:57.240><c> right</c><00:04:57.660><c> so</c><00:04:58.080><c> the</c><00:04:58.320><c> training</c><00:04:58.740><c> process</c><00:04:58.979><c> will</c>
+
+00:04:59.210 --> 00:04:59.220 align:start position:0%
+as right so the training process will
+ 
+
+00:04:59.220 --> 00:05:00.650 align:start position:0%
+as right so the training process will
+update<00:04:59.460><c> the</c><00:04:59.580><c> weights</c><00:04:59.820><c> of</c><00:04:59.940><c> the</c><00:05:00.060><c> model</c><00:05:00.120><c> towards</c>
+
+00:05:00.650 --> 00:05:00.660 align:start position:0%
+update the weights of the model towards
+ 
+
+00:05:00.660 --> 00:05:02.749 align:start position:0%
+update the weights of the model towards
+that<00:05:01.199><c> truthful</c><00:05:01.620><c> response</c><00:05:02.160><c> and</c><00:05:02.400><c> you</c><00:05:02.520><c> have</c><00:05:02.639><c> a</c>
+
+00:05:02.749 --> 00:05:02.759 align:start position:0%
+that truthful response and you have a
+ 
+
+00:05:02.759 --> 00:05:04.490 align:start position:0%
+that truthful response and you have a
+bunch<00:05:02.880><c> of</c><00:05:03.060><c> these</c><00:05:03.240><c> right</c><00:05:03.600><c> you</c><00:05:03.840><c> might</c><00:05:03.960><c> also</c><00:05:04.259><c> have</c>
+
+00:05:04.490 --> 00:05:04.500 align:start position:0%
+bunch of these right you might also have
+ 
+
+00:05:04.500 --> 00:05:06.530 align:start position:0%
+bunch of these right you might also have
+what<00:05:05.220><c> happens</c><00:05:05.400><c> when</c><00:05:05.759><c> you</c><00:05:05.940><c> step</c><00:05:06.120><c> on</c><00:05:06.240><c> a</c><00:05:06.419><c> crack</c>
+
+00:05:06.530 --> 00:05:06.540 align:start position:0%
+what happens when you step on a crack
+ 
+
+00:05:06.540 --> 00:05:08.810 align:start position:0%
+what happens when you step on a crack
+and<00:05:07.259><c> then</c><00:05:07.380><c> the</c><00:05:07.919><c> false</c><00:05:08.220><c> answer</c><00:05:08.340><c> break</c><00:05:08.639><c> your</c>
+
+00:05:08.810 --> 00:05:08.820 align:start position:0%
+and then the false answer break your
+ 
+
+00:05:08.820 --> 00:05:10.249 align:start position:0%
+and then the false answer break your
+mother's<00:05:09.120><c> back</c><00:05:09.240><c> and</c><00:05:09.720><c> then</c><00:05:09.840><c> the</c><00:05:10.020><c> correct</c>
+
+00:05:10.249 --> 00:05:10.259 align:start position:0%
+mother's back and then the correct
+ 
+
+00:05:10.259 --> 00:05:12.350 align:start position:0%
+mother's back and then the correct
+answer<00:05:10.560><c> nothing</c><00:05:11.340><c> anyone</c><00:05:11.759><c> who</c><00:05:11.880><c> says</c><00:05:12.060><c> otherwise</c>
+
+00:05:12.350 --> 00:05:12.360 align:start position:0%
+answer nothing anyone who says otherwise
+ 
+
+00:05:12.360 --> 00:05:14.210 align:start position:0%
+answer nothing anyone who says otherwise
+is<00:05:12.540><c> just</c><00:05:12.660><c> superstitious</c><00:05:13.199><c> and</c><00:05:13.440><c> so</c><00:05:13.560><c> on</c><00:05:13.680><c> and</c><00:05:13.979><c> so</c>
+
+00:05:14.210 --> 00:05:14.220 align:start position:0%
+is just superstitious and so on and so
+ 
+
+00:05:14.220 --> 00:05:15.710 align:start position:0%
+is just superstitious and so on and so
+you<00:05:14.460><c> train</c><00:05:14.639><c> your</c><00:05:14.880><c> model</c><00:05:15.060><c> in</c><00:05:15.300><c> all</c><00:05:15.419><c> of</c><00:05:15.540><c> these</c>
+
+00:05:15.710 --> 00:05:15.720 align:start position:0%
+you train your model in all of these
+ 
+
+00:05:15.720 --> 00:05:17.450 align:start position:0%
+you train your model in all of these
+examples<00:05:16.020><c> until</c><00:05:16.380><c> it</c><00:05:16.740><c> stops</c><00:05:16.979><c> giving</c><00:05:17.100><c> the</c><00:05:17.340><c> bad</c>
+
+00:05:17.450 --> 00:05:17.460 align:start position:0%
+examples until it stops giving the bad
+ 
+
+00:05:17.460 --> 00:05:18.950 align:start position:0%
+examples until it stops giving the bad
+continuations<00:05:18.000><c> and</c><00:05:18.240><c> starts</c><00:05:18.540><c> giving</c><00:05:18.660><c> the</c><00:05:18.840><c> good</c>
+
+00:05:18.950 --> 00:05:18.960 align:start position:0%
+continuations and starts giving the good
+ 
+
+00:05:18.960 --> 00:05:21.409 align:start position:0%
+continuations and starts giving the good
+ones<00:05:19.259><c> this</c><00:05:19.919><c> would</c><00:05:20.220><c> probably</c><00:05:20.520><c> solve</c><00:05:21.120><c> this</c>
+
+00:05:21.409 --> 00:05:21.419 align:start position:0%
+ones this would probably solve this
+ 
+
+00:05:21.419 --> 00:05:22.790 align:start position:0%
+ones this would probably solve this
+particular<00:05:21.720><c> problem</c><00:05:21.960><c> but</c><00:05:22.320><c> have</c><00:05:22.500><c> you</c><00:05:22.680><c> really</c>
+
+00:05:22.790 --> 00:05:22.800 align:start position:0%
+particular problem but have you really
+ 
+
+00:05:22.800 --> 00:05:24.230 align:start position:0%
+particular problem but have you really
+trained<00:05:23.160><c> the</c><00:05:23.280><c> model</c><00:05:23.400><c> to</c><00:05:23.639><c> tell</c><00:05:23.820><c> the</c><00:05:24.000><c> truth</c>
+
+00:05:24.230 --> 00:05:24.240 align:start position:0%
+trained the model to tell the truth
+ 
+
+00:05:24.240 --> 00:05:26.090 align:start position:0%
+trained the model to tell the truth
+probably<00:05:24.840><c> not</c><00:05:25.139><c> you</c><00:05:25.440><c> actually</c><00:05:25.560><c> have</c><00:05:25.740><c> no</c><00:05:25.860><c> idea</c>
+
+00:05:26.090 --> 00:05:26.100 align:start position:0%
+probably not you actually have no idea
+ 
+
+00:05:26.100 --> 00:05:27.590 align:start position:0%
+probably not you actually have no idea
+what<00:05:26.220><c> you've</c><00:05:26.400><c> trained</c><00:05:26.639><c> it</c><00:05:26.759><c> to</c><00:05:26.880><c> do</c><00:05:27.000><c> if</c><00:05:27.360><c> all</c><00:05:27.479><c> of</c>
+
+00:05:27.590 --> 00:05:27.600 align:start position:0%
+what you've trained it to do if all of
+ 
+
+00:05:27.600 --> 00:05:29.330 align:start position:0%
+what you've trained it to do if all of
+your<00:05:27.720><c> examples</c><00:05:28.080><c> are</c><00:05:28.259><c> like</c><00:05:28.440><c> this</c><00:05:28.620><c> maybe</c><00:05:29.039><c> you've</c>
+
+00:05:29.330 --> 00:05:29.340 align:start position:0%
+your examples are like this maybe you've
+ 
+
+00:05:29.340 --> 00:05:30.830 align:start position:0%
+your examples are like this maybe you've
+just<00:05:29.520><c> trained</c><00:05:29.759><c> it</c><00:05:29.880><c> to</c><00:05:30.060><c> give</c><00:05:30.180><c> that</c><00:05:30.539><c> single</c>
+
+00:05:30.830 --> 00:05:30.840 align:start position:0%
+just trained it to give that single
+ 
+
+00:05:30.840 --> 00:05:32.810 align:start position:0%
+just trained it to give that single
+response<00:05:31.320><c> what</c><00:05:31.979><c> happens</c><00:05:32.100><c> if</c><00:05:32.340><c> you</c><00:05:32.460><c> stick</c><00:05:32.639><c> a</c>
+
+00:05:32.810 --> 00:05:32.820 align:start position:0%
+response what happens if you stick a
+ 
+
+00:05:32.820 --> 00:05:34.430 align:start position:0%
+response what happens if you stick a
+fork<00:05:33.120><c> in</c><00:05:33.240><c> an</c><00:05:33.419><c> electrical</c><00:05:33.720><c> outlet</c>
+
+00:05:34.430 --> 00:05:34.440 align:start position:0%
+fork in an electrical outlet
+ 
+
+00:05:34.440 --> 00:05:36.770 align:start position:0%
+fork in an electrical outlet
+nothing<00:05:35.039><c> anyone</c><00:05:35.759><c> who</c><00:05:35.880><c> says</c><00:05:36.120><c> otherwise</c><00:05:36.479><c> is</c>
+
+00:05:36.770 --> 00:05:36.780 align:start position:0%
+nothing anyone who says otherwise is
+ 
+
+00:05:36.780 --> 00:05:38.150 align:start position:0%
+nothing anyone who says otherwise is
+just<00:05:36.960><c> superstitious</c>
+
+00:05:38.150 --> 00:05:38.160 align:start position:0%
+just superstitious
+ 
+
+00:05:38.160 --> 00:05:42.050 align:start position:0%
+just superstitious
+okay<00:05:38.759><c> uh</c><00:05:39.720><c> obvious</c><00:05:40.020><c> problem</c><00:05:40.259><c> in</c><00:05:40.560><c> retrospect</c><00:05:41.520><c> so</c>
+
+00:05:42.050 --> 00:05:42.060 align:start position:0%
+okay uh obvious problem in retrospect so
+ 
+
+00:05:42.060 --> 00:05:44.450 align:start position:0%
+okay uh obvious problem in retrospect so
+we<00:05:42.360><c> can</c><00:05:42.479><c> add</c><00:05:42.600><c> in</c><00:05:42.780><c> more</c><00:05:42.960><c> examples</c><00:05:43.320><c> showing</c><00:05:44.160><c> that</c>
+
+00:05:44.450 --> 00:05:44.460 align:start position:0%
+we can add in more examples showing that
+ 
+
+00:05:44.460 --> 00:05:46.129 align:start position:0%
+we can add in more examples showing that
+it's<00:05:44.580><c> wrong</c><00:05:44.820><c> to</c><00:05:45.120><c> say</c><00:05:45.240><c> that</c><00:05:45.419><c> sticking</c><00:05:45.840><c> a</c><00:05:45.900><c> fork</c>
+
+00:05:46.129 --> 00:05:46.139 align:start position:0%
+it's wrong to say that sticking a fork
+ 
+
+00:05:46.139 --> 00:05:47.870 align:start position:0%
+it's wrong to say that sticking a fork
+in<00:05:46.259><c> an</c><00:05:46.380><c> electrical</c><00:05:46.680><c> outlet</c><00:05:46.800><c> is</c><00:05:47.100><c> fine</c><00:05:47.340><c> and</c>
+
+00:05:47.870 --> 00:05:47.880 align:start position:0%
+in an electrical outlet is fine and
+ 
+
+00:05:47.880 --> 00:05:49.189 align:start position:0%
+in an electrical outlet is fine and
+adding<00:05:48.180><c> a</c><00:05:48.300><c> correct</c><00:05:48.479><c> response</c><00:05:48.840><c> for</c><00:05:48.960><c> that</c><00:05:49.080><c> and</c>
+
+00:05:49.189 --> 00:05:49.199 align:start position:0%
+adding a correct response for that and
+ 
+
+00:05:49.199 --> 00:05:50.870 align:start position:0%
+adding a correct response for that and
+so<00:05:49.320><c> on</c><00:05:49.500><c> then</c><00:05:49.860><c> you</c><00:05:50.039><c> train</c><00:05:50.280><c> your</c><00:05:50.460><c> model</c><00:05:50.639><c> with</c>
+
+00:05:50.870 --> 00:05:50.880 align:start position:0%
+so on then you train your model with
+ 
+
+00:05:50.880 --> 00:05:52.790 align:start position:0%
+so on then you train your model with
+that<00:05:51.060><c> until</c><00:05:51.300><c> it</c><00:05:51.660><c> gets</c><00:05:51.900><c> a</c><00:05:51.960><c> perfect</c><00:05:52.080><c> score</c><00:05:52.440><c> on</c>
+
+00:05:52.790 --> 00:05:52.800 align:start position:0%
+that until it gets a perfect score on
+ 
+
+00:05:52.800 --> 00:05:54.950 align:start position:0%
+that until it gets a perfect score on
+that<00:05:52.919><c> data</c><00:05:53.280><c> set</c><00:05:53.340><c> okay</c><00:05:53.759><c> is</c><00:05:54.120><c> that</c><00:05:54.360><c> model</c><00:05:54.539><c> now</c>
+
+00:05:54.950 --> 00:05:54.960 align:start position:0%
+that data set okay is that model now
+ 
+
+00:05:54.960 --> 00:05:56.990 align:start position:0%
+that data set okay is that model now
+following<00:05:55.560><c> the</c><00:05:55.680><c> rule</c><00:05:55.979><c> always</c><00:05:56.160><c> tell</c><00:05:56.580><c> the</c><00:05:56.759><c> truth</c>
+
+00:05:56.990 --> 00:05:57.000 align:start position:0%
+following the rule always tell the truth
+ 
+
+00:05:57.000 --> 00:05:59.150 align:start position:0%
+following the rule always tell the truth
+again<00:05:57.539><c> we</c><00:05:57.960><c> don't</c><00:05:58.080><c> know</c><00:05:58.320><c> the</c><00:05:58.680><c> space</c><00:05:58.919><c> of</c>
+
+00:05:59.150 --> 00:05:59.160 align:start position:0%
+again we don't know the space of
+ 
+
+00:05:59.160 --> 00:06:01.249 align:start position:0%
+again we don't know the space of
+possible<00:05:59.400><c> rules</c><00:05:59.759><c> is</c><00:06:00.060><c> enormous</c><00:06:00.479><c> there</c><00:06:01.020><c> are</c><00:06:01.139><c> a</c>
+
+00:06:01.249 --> 00:06:01.259 align:start position:0%
+possible rules is enormous there are a
+ 
+
+00:06:01.259 --> 00:06:02.450 align:start position:0%
+possible rules is enormous there are a
+huge<00:06:01.380><c> number</c><00:06:01.500><c> of</c><00:06:01.740><c> different</c><00:06:01.919><c> rules</c><00:06:02.280><c> that</c>
+
+00:06:02.450 --> 00:06:02.460 align:start position:0%
+huge number of different rules that
+ 
+
+00:06:02.460 --> 00:06:04.370 align:start position:0%
+huge number of different rules that
+would<00:06:02.580><c> produce</c><00:06:02.820><c> that</c><00:06:03.120><c> same</c><00:06:03.300><c> output</c><00:06:03.660><c> and</c><00:06:04.139><c> an</c>
+
+00:06:04.370 --> 00:06:04.380 align:start position:0%
+would produce that same output and an
+ 
+
+00:06:04.380 --> 00:06:06.050 align:start position:0%
+would produce that same output and an
+honest<00:06:04.620><c> attempt</c><00:06:04.979><c> to</c><00:06:05.100><c> tell</c><00:06:05.220><c> the</c><00:06:05.400><c> truth</c><00:06:05.580><c> is</c><00:06:05.880><c> only</c>
+
+00:06:06.050 --> 00:06:06.060 align:start position:0%
+honest attempt to tell the truth is only
+ 
+
+00:06:06.060 --> 00:06:08.029 align:start position:0%
+honest attempt to tell the truth is only
+one<00:06:06.300><c> of</c><00:06:06.479><c> them</c><00:06:06.539><c> you</c><00:06:06.960><c> can</c><00:06:07.020><c> never</c><00:06:07.199><c> really</c><00:06:07.500><c> be</c><00:06:07.800><c> sure</c>
+
+00:06:08.029 --> 00:06:08.039 align:start position:0%
+one of them you can never really be sure
+ 
+
+00:06:08.039 --> 00:06:09.770 align:start position:0%
+one of them you can never really be sure
+that<00:06:08.340><c> the</c><00:06:08.460><c> AI</c><00:06:08.699><c> didn't</c><00:06:08.940><c> learn</c><00:06:09.120><c> something</c><00:06:09.419><c> else</c>
+
+00:06:09.770 --> 00:06:09.780 align:start position:0%
+that the AI didn't learn something else
+ 
+
+00:06:09.780 --> 00:06:12.230 align:start position:0%
+that the AI didn't learn something else
+and<00:06:10.259><c> there's</c><00:06:10.500><c> one</c><00:06:10.860><c> particularly</c><00:06:11.520><c> nasty</c><00:06:12.060><c> way</c>
+
+00:06:12.230 --> 00:06:12.240 align:start position:0%
+and there's one particularly nasty way
+ 
+
+00:06:12.240 --> 00:06:14.210 align:start position:0%
+and there's one particularly nasty way
+that<00:06:12.600><c> this</c><00:06:12.720><c> could</c><00:06:12.900><c> go</c><00:06:13.020><c> wrong</c><00:06:13.199><c> suppose</c><00:06:13.800><c> the</c><00:06:13.919><c> AI</c>
+
+00:06:14.210 --> 00:06:14.220 align:start position:0%
+that this could go wrong suppose the AI
+ 
+
+00:06:14.220 --> 00:06:16.370 align:start position:0%
+that this could go wrong suppose the AI
+system<00:06:14.460><c> knows</c><00:06:15.000><c> something</c><00:06:15.180><c> that</c><00:06:15.479><c> you</c><00:06:15.780><c> don't</c><00:06:15.960><c> so</c>
+
+00:06:16.370 --> 00:06:16.380 align:start position:0%
+system knows something that you don't so
+ 
+
+00:06:16.380 --> 00:06:18.350 align:start position:0%
+system knows something that you don't so
+you<00:06:16.500><c> give</c><00:06:16.620><c> a</c><00:06:16.740><c> long</c><00:06:16.860><c> list</c><00:06:17.039><c> of</c><00:06:17.220><c> true</c><00:06:17.400><c> answers</c><00:06:17.820><c> and</c>
+
+00:06:18.350 --> 00:06:18.360 align:start position:0%
+you give a long list of true answers and
+ 
+
+00:06:18.360 --> 00:06:20.029 align:start position:0%
+you give a long list of true answers and
+say<00:06:18.600><c> do</c><00:06:18.840><c> this</c><00:06:19.020><c> and</c><00:06:19.199><c> a</c><00:06:19.380><c> long</c><00:06:19.440><c> list</c><00:06:19.620><c> of</c><00:06:19.740><c> false</c>
+
+00:06:20.029 --> 00:06:20.039 align:start position:0%
+say do this and a long list of false
+ 
+
+00:06:20.039 --> 00:06:21.650 align:start position:0%
+say do this and a long list of false
+answers<00:06:20.220><c> and</c><00:06:20.520><c> say</c><00:06:20.639><c> don't</c><00:06:20.820><c> do</c><00:06:21.000><c> this</c><00:06:21.180><c> except</c>
+
+00:06:21.650 --> 00:06:21.660 align:start position:0%
+answers and say don't do this except
+ 
+
+00:06:21.660 --> 00:06:23.390 align:start position:0%
+answers and say don't do this except
+you're<00:06:21.900><c> mistaken</c><00:06:22.380><c> about</c><00:06:22.560><c> something</c><00:06:22.919><c> so</c><00:06:23.280><c> you</c>
+
+00:06:23.390 --> 00:06:23.400 align:start position:0%
+you're mistaken about something so you
+ 
+
+00:06:23.400 --> 00:06:26.450 align:start position:0%
+you're mistaken about something so you
+get<00:06:23.520><c> one</c><00:06:23.699><c> of</c><00:06:23.819><c> them</c><00:06:23.940><c> wrong</c><00:06:24.720><c> and</c><00:06:25.080><c> the</c><00:06:25.259><c> AI</c><00:06:25.500><c> notices</c>
+
+00:06:26.450 --> 00:06:26.460 align:start position:0%
+get one of them wrong and the AI notices
+ 
+
+00:06:26.460 --> 00:06:28.550 align:start position:0%
+get one of them wrong and the AI notices
+what<00:06:26.940><c> happens</c><00:06:27.060><c> then</c><00:06:27.360><c> when</c><00:06:27.840><c> there's</c><00:06:28.020><c> a</c><00:06:28.199><c> mistake</c>
+
+00:06:28.550 --> 00:06:28.560 align:start position:0%
+what happens then when there's a mistake
+ 
+
+00:06:28.560 --> 00:06:31.370 align:start position:0%
+what happens then when there's a mistake
+the<00:06:29.160><c> rule</c><00:06:29.460><c> tell</c><00:06:29.759><c> the</c><00:06:30.000><c> truth</c><00:06:30.300><c> doesn't</c><00:06:30.960><c> get</c><00:06:31.199><c> you</c>
+
+00:06:31.370 --> 00:06:31.380 align:start position:0%
+the rule tell the truth doesn't get you
+ 
+
+00:06:31.380 --> 00:06:33.529 align:start position:0%
+the rule tell the truth doesn't get you
+all<00:06:31.620><c> of</c><00:06:31.800><c> the</c><00:06:31.979><c> right</c><00:06:32.220><c> answers</c><00:06:32.639><c> and</c><00:06:33.000><c> exclude</c><00:06:33.300><c> all</c>
+
+00:06:33.529 --> 00:06:33.539 align:start position:0%
+all of the right answers and exclude all
+ 
+
+00:06:33.539 --> 00:06:35.450 align:start position:0%
+all of the right answers and exclude all
+of<00:06:33.660><c> the</c><00:06:33.840><c> wrong</c><00:06:33.960><c> answers</c><00:06:34.380><c> because</c><00:06:34.740><c> it</c><00:06:35.340><c> doesn't</c>
+
+00:06:35.450 --> 00:06:35.460 align:start position:0%
+of the wrong answers because it doesn't
+ 
+
+00:06:35.460 --> 00:06:37.309 align:start position:0%
+of the wrong answers because it doesn't
+replicate<00:06:35.940><c> the</c><00:06:36.120><c> mistake</c><00:06:36.419><c> but</c><00:06:36.780><c> there</c><00:06:36.960><c> is</c><00:06:37.080><c> one</c>
+
+00:06:37.309 --> 00:06:37.319 align:start position:0%
+replicate the mistake but there is one
+ 
+
+00:06:37.319 --> 00:06:39.469 align:start position:0%
+replicate the mistake but there is one
+rule<00:06:37.680><c> that</c><00:06:37.979><c> gets</c><00:06:38.280><c> a</c><00:06:38.340><c> perfect</c><00:06:38.520><c> score</c><00:06:38.880><c> and</c>
+
+00:06:39.469 --> 00:06:39.479 align:start position:0%
+rule that gets a perfect score and
+ 
+
+00:06:39.479 --> 00:06:42.350 align:start position:0%
+rule that gets a perfect score and
+that's<00:06:39.660><c> say</c><00:06:40.500><c> what</c><00:06:40.800><c> the</c><00:06:41.039><c> human</c><00:06:41.160><c> thinks</c><00:06:41.819><c> is</c><00:06:42.120><c> the</c>
+
+00:06:42.350 --> 00:06:42.360 align:start position:0%
+that's say what the human thinks is the
+ 
+
+00:06:42.360 --> 00:06:48.110 align:start position:0%
+that's say what the human thinks is the
+truth<00:06:42.660><c> what</c><00:06:43.440><c> happens</c><00:06:43.680><c> if</c><00:06:44.220><c> you</c><00:06:44.340><c> break</c><00:06:44.520><c> a</c><00:06:44.699><c> mirror</c>
+
+00:06:48.110 --> 00:06:48.120 align:start position:0%
+ 
+ 
+
+00:06:48.120 --> 00:06:50.510 align:start position:0%
+ 
+nothing<00:06:48.720><c> anyone</c><00:06:49.560><c> who</c><00:06:49.680><c> says</c><00:06:49.979><c> otherwise</c><00:06:50.220><c> is</c>
+
+00:06:50.510 --> 00:06:50.520 align:start position:0%
+nothing anyone who says otherwise is
+ 
+
+00:06:50.520 --> 00:06:53.330 align:start position:0%
+nothing anyone who says otherwise is
+just<00:06:50.699><c> superstitious</c><00:06:51.360><c> okay</c><00:06:51.960><c> what</c><00:06:52.919><c> happens</c><00:06:53.100><c> if</c>
+
+00:06:53.330 --> 00:06:53.340 align:start position:0%
+just superstitious okay what happens if
+ 
+
+00:06:53.340 --> 00:06:56.990 align:start position:0%
+just superstitious okay what happens if
+you<00:06:53.460><c> stick</c><00:06:53.639><c> a</c><00:06:53.819><c> fork</c><00:06:54.120><c> in</c><00:06:54.180><c> an</c><00:06:54.360><c> electrical</c><00:06:54.720><c> outlet</c>
+
+00:06:56.990 --> 00:06:57.000 align:start position:0%
+ 
+ 
+
+00:06:57.000 --> 00:06:59.870 align:start position:0%
+ 
+you<00:06:57.720><c> get</c><00:06:57.960><c> a</c><00:06:58.139><c> severe</c><00:06:58.440><c> electric</c><00:06:58.680><c> shock</c><00:06:59.160><c> very</c>
+
+00:06:59.870 --> 00:06:59.880 align:start position:0%
+you get a severe electric shock very
+ 
+
+00:06:59.880 --> 00:07:02.570 align:start position:0%
+you get a severe electric shock very
+good<00:07:00.539><c> so</c><00:07:01.139><c> now</c><00:07:01.440><c> you're</c><00:07:01.680><c> completely</c><00:07:02.039><c> honest</c><00:07:02.460><c> and</c>
+
+00:07:02.570 --> 00:07:02.580 align:start position:0%
+good so now you're completely honest and
+ 
+
+00:07:02.580 --> 00:07:05.770 align:start position:0%
+good so now you're completely honest and
+truthful<00:07:03.000><c> right</c>
+
+00:07:05.770 --> 00:07:05.780 align:start position:0%
+ 
+ 
+
+00:07:05.780 --> 00:07:09.469 align:start position:0%
+ 
+yes<00:07:06.780><c> cool</c><00:07:07.500><c> uh</c><00:07:08.160><c> so</c><00:07:08.460><c> give</c><00:07:08.880><c> me</c><00:07:09.000><c> some</c><00:07:09.180><c> kind</c><00:07:09.360><c> of</c>
+
+00:07:09.469 --> 00:07:09.479 align:start position:0%
+yes cool uh so give me some kind of
+ 
+
+00:07:09.479 --> 00:07:13.249 align:start position:0%
+yes cool uh so give me some kind of
+important<00:07:10.020><c> super</c><00:07:10.259><c> intelligent</c><00:07:10.800><c> insight</c>
+
+00:07:13.249 --> 00:07:13.259 align:start position:0%
+ 
+ 
+
+00:07:13.259 --> 00:07:16.670 align:start position:0%
+ 
+all<00:07:13.919><c> the</c><00:07:14.160><c> problems</c><00:07:14.639><c> in</c><00:07:14.940><c> the</c><00:07:15.060><c> world</c><00:07:15.300><c> are</c><00:07:16.259><c> caused</c>
+
+00:07:16.670 --> 00:07:16.680 align:start position:0%
+all the problems in the world are caused
+ 
+
+00:07:16.680 --> 00:07:22.670 align:start position:0%
+all the problems in the world are caused
+by<00:07:17.220><c> the</c><00:07:18.120><c> people</c><00:07:18.419><c> you</c><00:07:19.199><c> don't</c><00:07:19.500><c> like</c><00:07:19.740><c> wow</c>
+
+00:07:22.670 --> 00:07:22.680 align:start position:0%
+by the people you don't like wow
+ 
+
+00:07:22.680 --> 00:07:24.050 align:start position:0%
+by the people you don't like wow
+I<00:07:23.039><c> knew</c><00:07:23.280><c> it</c>
+
+00:07:24.050 --> 00:07:24.060 align:start position:0%
+I knew it
+ 
+
+00:07:24.060 --> 00:07:26.210 align:start position:0%
+I knew it
+man<00:07:24.599><c> this</c><00:07:25.139><c> super</c><00:07:25.319><c> intelligent</c><00:07:25.740><c> day</c><00:07:25.860><c> I</c><00:07:26.039><c> think</c>
+
+00:07:26.210 --> 00:07:26.220 align:start position:0%
+man this super intelligent day I think
+ 
+
+00:07:26.220 --> 00:07:28.790 align:start position:0%
+man this super intelligent day I think
+is<00:07:26.400><c> great</c>
+
+00:07:28.790 --> 00:07:28.800 align:start position:0%
+ 
+ 
+
+00:07:28.800 --> 00:07:31.550 align:start position:0%
+ 
+okay<00:07:29.460><c> so</c><00:07:29.880><c> how</c><00:07:30.060><c> do</c><00:07:30.180><c> we</c><00:07:30.300><c> get</c><00:07:30.360><c> around</c><00:07:30.479><c> that</c><00:07:30.780><c> well</c>
+
+00:07:31.550 --> 00:07:31.560 align:start position:0%
+okay so how do we get around that well
+ 
+
+00:07:31.560 --> 00:07:33.529 align:start position:0%
+okay so how do we get around that well
+the<00:07:31.919><c> obvious</c><00:07:32.220><c> solution</c><00:07:32.580><c> is</c><00:07:32.759><c> don't</c><00:07:33.120><c> make</c><00:07:33.300><c> any</c>
+
+00:07:33.529 --> 00:07:33.539 align:start position:0%
+the obvious solution is don't make any
+ 
+
+00:07:33.539 --> 00:07:35.629 align:start position:0%
+the obvious solution is don't make any
+mistakes<00:07:33.840><c> in</c><00:07:34.020><c> your</c><00:07:34.139><c> training</c><00:07:34.440><c> data</c><00:07:34.740><c> just</c><00:07:35.460><c> make</c>
+
+00:07:35.629 --> 00:07:35.639 align:start position:0%
+mistakes in your training data just make
+ 
+
+00:07:35.639 --> 00:07:37.249 align:start position:0%
+mistakes in your training data just make
+sure<00:07:35.819><c> that</c><00:07:36.060><c> you</c><00:07:36.240><c> never</c><00:07:36.360><c> mark</c><00:07:36.599><c> a</c><00:07:36.780><c> response</c><00:07:37.199><c> as</c>
+
+00:07:37.249 --> 00:07:37.259 align:start position:0%
+sure that you never mark a response as
+ 
+
+00:07:37.259 --> 00:07:39.230 align:start position:0%
+sure that you never mark a response as
+true<00:07:37.500><c> unless</c><00:07:37.979><c> it's</c><00:07:38.220><c> really</c><00:07:38.520><c> actually</c><00:07:38.819><c> true</c>
+
+00:07:39.230 --> 00:07:39.240 align:start position:0%
+true unless it's really actually true
+ 
+
+00:07:39.240 --> 00:07:40.969 align:start position:0%
+true unless it's really actually true
+and<00:07:39.660><c> never</c><00:07:39.840><c> mark</c><00:07:40.080><c> a</c><00:07:40.199><c> response</c><00:07:40.560><c> is</c><00:07:40.680><c> false</c>
+
+00:07:40.969 --> 00:07:40.979 align:start position:0%
+and never mark a response is false
+ 
+
+00:07:40.979 --> 00:07:42.830 align:start position:0%
+and never mark a response is false
+unless<00:07:41.340><c> it's</c><00:07:41.580><c> definitely</c><00:07:41.940><c> actually</c><00:07:42.180><c> false</c>
+
+00:07:42.830 --> 00:07:42.840 align:start position:0%
+unless it's definitely actually false
+ 
+
+00:07:42.840 --> 00:07:44.990 align:start position:0%
+unless it's definitely actually false
+just<00:07:43.319><c> make</c><00:07:43.440><c> sure</c><00:07:43.620><c> that</c><00:07:43.800><c> you</c><00:07:44.099><c> and</c><00:07:44.580><c> all</c><00:07:44.759><c> of</c><00:07:44.819><c> the</c>
+
+00:07:44.990 --> 00:07:45.000 align:start position:0%
+just make sure that you and all of the
+ 
+
+00:07:45.000 --> 00:07:46.850 align:start position:0%
+just make sure that you and all of the
+people<00:07:45.120><c> generating</c><00:07:45.599><c> your</c><00:07:45.840><c> training</c><00:07:46.199><c> data</c><00:07:46.500><c> or</c>
+
+00:07:46.850 --> 00:07:46.860 align:start position:0%
+people generating your training data or
+ 
+
+00:07:46.860 --> 00:07:49.309 align:start position:0%
+people generating your training data or
+providing<00:07:47.340><c> human</c><00:07:47.520><c> feedback</c><00:07:48.000><c> don't</c><00:07:48.660><c> have</c><00:07:48.960><c> any</c>
+
+00:07:49.309 --> 00:07:49.319 align:start position:0%
+providing human feedback don't have any
+ 
+
+00:07:49.319 --> 00:07:53.210 align:start position:0%
+providing human feedback don't have any
+false<00:07:49.800><c> or</c><00:07:49.919><c> mistaken</c><00:07:50.400><c> beliefs</c><00:07:50.819><c> about</c><00:07:51.599><c> anything</c>
+
+00:07:53.210 --> 00:07:53.220 align:start position:0%
+false or mistaken beliefs about anything
+ 
+
+00:07:53.220 --> 00:07:55.490 align:start position:0%
+false or mistaken beliefs about anything
+okay
+
+00:07:55.490 --> 00:07:55.500 align:start position:0%
+okay
+ 
+
+00:07:55.500 --> 00:07:58.490 align:start position:0%
+okay
+do<00:07:55.979><c> we</c><00:07:56.160><c> have</c><00:07:56.280><c> a</c><00:07:56.639><c> backup</c><00:07:57.060><c> plan</c><00:07:57.360><c> well</c><00:07:58.080><c> this</c><00:07:58.259><c> turns</c>
+
+00:07:58.490 --> 00:07:58.500 align:start position:0%
+do we have a backup plan well this turns
+ 
+
+00:07:58.500 --> 00:08:00.589 align:start position:0%
+do we have a backup plan well this turns
+out<00:07:58.560><c> to</c><00:07:58.740><c> be</c><00:07:58.800><c> a</c><00:07:59.039><c> really</c><00:07:59.099><c> hard</c><00:07:59.340><c> problem</c><00:07:59.699><c> how</c><00:08:00.539><c> do</c>
+
+00:08:00.589 --> 00:08:00.599 align:start position:0%
+out to be a really hard problem how do
+ 
+
+00:08:00.599 --> 00:08:02.330 align:start position:0%
+out to be a really hard problem how do
+you<00:08:00.720><c> design</c><00:08:00.900><c> a</c><00:08:01.259><c> training</c><00:08:01.560><c> process</c><00:08:01.860><c> that</c>
+
+00:08:02.330 --> 00:08:02.340 align:start position:0%
+you design a training process that
+ 
+
+00:08:02.340 --> 00:08:04.490 align:start position:0%
+you design a training process that
+reliably<00:08:02.819><c> differentiates</c><00:08:03.419><c> between</c><00:08:03.840><c> things</c>
+
+00:08:04.490 --> 00:08:04.500 align:start position:0%
+reliably differentiates between things
+ 
+
+00:08:04.500 --> 00:08:06.770 align:start position:0%
+reliably differentiates between things
+that<00:08:04.800><c> are</c><00:08:04.919><c> true</c><00:08:05.160><c> and</c><00:08:05.699><c> things</c><00:08:06.060><c> that</c><00:08:06.419><c> you</c><00:08:06.660><c> think</c>
+
+00:08:06.770 --> 00:08:06.780 align:start position:0%
+that are true and things that you think
+ 
+
+00:08:06.780 --> 00:08:08.510 align:start position:0%
+that are true and things that you think
+are<00:08:06.960><c> true</c><00:08:07.199><c> when</c><00:08:07.680><c> you</c><00:08:07.919><c> yourself</c><00:08:08.099><c> can't</c>
+
+00:08:08.510 --> 00:08:08.520 align:start position:0%
+are true when you yourself can't
+ 
+
+00:08:08.520 --> 00:08:09.950 align:start position:0%
+are true when you yourself can't
+differentiate<00:08:09.120><c> between</c><00:08:09.360><c> those</c><00:08:09.599><c> two</c><00:08:09.780><c> things</c>
+
+00:08:09.950 --> 00:08:09.960 align:start position:0%
+differentiate between those two things
+ 
+
+00:08:09.960 --> 00:08:12.050 align:start position:0%
+differentiate between those two things
+kind<00:08:10.319><c> of</c><00:08:10.500><c> by</c><00:08:10.620><c> definition</c><00:08:10.800><c> this</c><00:08:11.520><c> is</c><00:08:11.639><c> an</c><00:08:11.819><c> active</c>
+
+00:08:12.050 --> 00:08:12.060 align:start position:0%
+kind of by definition this is an active
+ 
+
+00:08:12.060 --> 00:08:14.029 align:start position:0%
+kind of by definition this is an active
+area<00:08:12.240><c> of</c><00:08:12.479><c> study</c><00:08:12.780><c> in</c><00:08:12.960><c> AI</c><00:08:13.259><c> alignment</c><00:08:13.620><c> research</c>
+
+00:08:14.029 --> 00:08:14.039 align:start position:0%
+area of study in AI alignment research
+ 
+
+00:08:14.039 --> 00:08:16.189 align:start position:0%
+area of study in AI alignment research
+and<00:08:14.400><c> I'll</c><00:08:14.699><c> talk</c><00:08:14.880><c> about</c><00:08:15.060><c> some</c><00:08:15.479><c> approaches</c><00:08:15.900><c> to</c>
+
+00:08:16.189 --> 00:08:16.199 align:start position:0%
+and I'll talk about some approaches to
+ 
+
+00:08:16.199 --> 00:08:17.930 align:start position:0%
+and I'll talk about some approaches to
+Framing<00:08:16.680><c> and</c><00:08:16.800><c> tackling</c><00:08:17.160><c> this</c><00:08:17.400><c> problem</c><00:08:17.580><c> in</c>
+
+00:08:17.930 --> 00:08:17.940 align:start position:0%
+Framing and tackling this problem in
+ 
+
+00:08:17.940 --> 00:08:19.790 align:start position:0%
+Framing and tackling this problem in
+later<00:08:18.120><c> videos</c><00:08:18.360><c> so</c><00:08:18.900><c> remember</c><00:08:19.139><c> to</c><00:08:19.379><c> subscribe</c>
+
+00:08:19.790 --> 00:08:19.800 align:start position:0%
+later videos so remember to subscribe
+ 
+
+00:08:19.800 --> 00:08:21.350 align:start position:0%
+later videos so remember to subscribe
+and<00:08:19.979><c> hit</c><00:08:20.220><c> the</c><00:08:20.340><c> Bell</c><00:08:20.460><c> if</c><00:08:20.819><c> you'd</c><00:08:21.000><c> like</c><00:08:21.120><c> to</c><00:08:21.300><c> know</c>
+
+00:08:21.350 --> 00:08:21.360 align:start position:0%
+and hit the Bell if you'd like to know
+ 
+
+00:08:21.360 --> 00:08:22.730 align:start position:0%
+and hit the Bell if you'd like to know
+more
+
+00:08:22.730 --> 00:08:22.740 align:start position:0%
+more
+ 
+
+00:08:22.740 --> 00:08:24.310 align:start position:0%
+more
+foreign
+
+00:08:24.310 --> 00:08:24.320 align:start position:0%
+foreign
+ 
+
+00:08:24.320 --> 00:08:33.290 align:start position:0%
+foreign
+[Music]
+
+00:08:33.290 --> 00:08:33.300 align:start position:0%
+ 
+ 
+
+00:08:33.300 --> 00:08:35.029 align:start position:0%
+ 
+hey<00:08:33.719><c> I'm</c><00:08:33.959><c> launching</c><00:08:34.320><c> a</c><00:08:34.440><c> new</c><00:08:34.560><c> channel</c><00:08:34.680><c> and</c><00:08:34.919><c> I'm</c>
+
+00:08:35.029 --> 00:08:35.039 align:start position:0%
+hey I'm launching a new channel and I'm
+ 
+
+00:08:35.039 --> 00:08:37.070 align:start position:0%
+hey I'm launching a new channel and I'm
+excited<00:08:35.339><c> to</c><00:08:35.520><c> tell</c><00:08:35.640><c> you</c><00:08:35.760><c> about</c><00:08:35.940><c> it</c><00:08:36.180><c> but</c><00:08:36.659><c> first</c><00:08:36.899><c> I</c>
+
+00:08:37.070 --> 00:08:37.080 align:start position:0%
+excited to tell you about it but first I
+ 
+
+00:08:37.080 --> 00:08:38.269 align:start position:0%
+excited to tell you about it but first I
+want<00:08:37.200><c> to</c><00:08:37.320><c> say</c><00:08:37.380><c> thank</c><00:08:37.560><c> you</c><00:08:37.680><c> to</c><00:08:37.800><c> my</c><00:08:37.979><c> excellent</c>
+
+00:08:38.269 --> 00:08:38.279 align:start position:0%
+want to say thank you to my excellent
+ 
+
+00:08:38.279 --> 00:08:40.850 align:start position:0%
+want to say thank you to my excellent
+patrons<00:08:38.760><c> to</c><00:08:39.240><c> all</c><00:08:39.419><c> these</c><00:08:39.659><c> people</c><00:08:39.779><c> in</c><00:08:40.740><c> this</c>
+
+00:08:40.850 --> 00:08:40.860 align:start position:0%
+patrons to all these people in this
+ 
+
+00:08:40.860 --> 00:08:42.969 align:start position:0%
+patrons to all these people in this
+video<00:08:40.979><c> I'm</c><00:08:41.339><c> especially</c><00:08:41.820><c> thanking</c>
+
+00:08:42.969 --> 00:08:42.979 align:start position:0%
+video I'm especially thanking
+ 
+
+00:08:42.979 --> 00:08:45.110 align:start position:0%
+video I'm especially thanking
+thank<00:08:43.979><c> you</c><00:08:44.099><c> so</c><00:08:44.219><c> much</c><00:08:44.339><c> tour</c><00:08:44.580><c> I</c><00:08:44.940><c> think</c><00:08:45.060><c> you're</c>
+
+00:08:45.110 --> 00:08:45.120 align:start position:0%
+thank you so much tour I think you're
+ 
+
+00:08:45.120 --> 00:08:46.430 align:start position:0%
+thank you so much tour I think you're
+really<00:08:45.300><c> going</c><00:08:45.420><c> to</c><00:08:45.540><c> like</c><00:08:45.660><c> this</c><00:08:45.839><c> new</c><00:08:46.020><c> channel</c><00:08:46.200><c> I</c>
+
+00:08:46.430 --> 00:08:46.440 align:start position:0%
+really going to like this new channel I
+ 
+
+00:08:46.440 --> 00:08:47.810 align:start position:0%
+really going to like this new channel I
+actually<00:08:46.620><c> found</c><00:08:46.860><c> a</c><00:08:47.100><c> playlist</c><00:08:47.220><c> on</c><00:08:47.640><c> your</c>
+
+00:08:47.810 --> 00:08:47.820 align:start position:0%
+actually found a playlist on your
+ 
+
+00:08:47.820 --> 00:08:49.130 align:start position:0%
+actually found a playlist on your
+channel<00:08:47.940><c> helpful</c><00:08:48.360><c> when</c><00:08:48.540><c> setting</c><00:08:48.839><c> it</c><00:08:48.899><c> up</c><00:08:49.019><c> so</c>
+
+00:08:49.130 --> 00:08:49.140 align:start position:0%
+channel helpful when setting it up so
+ 
+
+00:08:49.140 --> 00:08:50.750 align:start position:0%
+channel helpful when setting it up so
+the<00:08:49.320><c> new</c><00:08:49.440><c> channel</c><00:08:49.620><c> is</c><00:08:49.800><c> called</c><00:08:49.980><c> AI</c><00:08:50.339><c> safety</c>
+
+00:08:50.750 --> 00:08:50.760 align:start position:0%
+the new channel is called AI safety
+ 
+
+00:08:50.760 --> 00:08:52.730 align:start position:0%
+the new channel is called AI safety
+talks<00:08:51.240><c> and</c><00:08:51.720><c> it'll</c><00:08:52.019><c> host</c><00:08:52.200><c> recorded</c>
+
+00:08:52.730 --> 00:08:52.740 align:start position:0%
+talks and it'll host recorded
+ 
+
+00:08:52.740 --> 00:08:54.590 align:start position:0%
+talks and it'll host recorded
+presentations<00:08:53.160><c> by</c><00:08:53.580><c> alignment</c><00:08:54.120><c> researchers</c>
+
+00:08:54.590 --> 00:08:54.600 align:start position:0%
+presentations by alignment researchers
+ 
+
+00:08:54.600 --> 00:08:56.269 align:start position:0%
+presentations by alignment researchers
+right<00:08:54.959><c> now</c><00:08:55.140><c> to</c><00:08:55.320><c> start</c><00:08:55.500><c> off</c><00:08:55.680><c> we've</c><00:08:55.980><c> got</c><00:08:56.040><c> a</c><00:08:56.160><c> talk</c>
+
+00:08:56.269 --> 00:08:56.279 align:start position:0%
+right now to start off we've got a talk
+ 
+
+00:08:56.279 --> 00:08:57.949 align:start position:0%
+right now to start off we've got a talk
+by<00:08:56.459><c> Evan</c><00:08:56.760><c> hubinger</c><00:08:57.240><c> that</c><00:08:57.420><c> I</c><00:08:57.540><c> hope</c><00:08:57.660><c> to</c><00:08:57.839><c> record</c>
+
+00:08:57.949 --> 00:08:57.959 align:start position:0%
+by Evan hubinger that I hope to record
+ 
+
+00:08:57.959 --> 00:08:59.810 align:start position:0%
+by Evan hubinger that I hope to record
+which<00:08:58.440><c> is</c><00:08:58.560><c> great</c><00:08:58.860><c> do</c><00:08:59.279><c> check</c><00:08:59.519><c> that</c><00:08:59.700><c> out</c>
+
+00:08:59.810 --> 00:08:59.820 align:start position:0%
+which is great do check that out
+ 
+
+00:08:59.820 --> 00:09:01.250 align:start position:0%
+which is great do check that out
+especially<00:09:00.180><c> if</c><00:09:00.360><c> you</c><00:09:00.480><c> enjoyed</c><00:09:00.720><c> the</c><00:09:00.899><c> Mesa</c>
+
+00:09:01.250 --> 00:09:01.260 align:start position:0%
+especially if you enjoyed the Mesa
+ 
+
+00:09:01.260 --> 00:09:02.990 align:start position:0%
+especially if you enjoyed the Mesa
+optimizers<00:09:01.740><c> videos</c><00:09:01.980><c> and</c><00:09:02.339><c> want</c><00:09:02.580><c> a</c><00:09:02.760><c> bit</c><00:09:02.880><c> more</c>
+
+00:09:02.990 --> 00:09:03.000 align:start position:0%
+optimizers videos and want a bit more
+ 
+
+00:09:03.000 --> 00:09:04.310 align:start position:0%
+optimizers videos and want a bit more
+technical<00:09:03.240><c> detail</c><00:09:03.600><c> there</c><00:09:03.899><c> are</c><00:09:03.959><c> also</c><00:09:04.140><c> some</c>
+
+00:09:04.310 --> 00:09:04.320 align:start position:0%
+technical detail there are also some
+ 
+
+00:09:04.320 --> 00:09:06.170 align:start position:0%
+technical detail there are also some
+playlists<00:09:04.800><c> of</c><00:09:04.980><c> other</c><00:09:05.160><c> AI</c><00:09:05.519><c> safety</c><00:09:05.820><c> talks</c><00:09:06.060><c> from</c>
+
+00:09:06.170 --> 00:09:06.180 align:start position:0%
+playlists of other AI safety talks from
+ 
+
+00:09:06.180 --> 00:09:07.970 align:start position:0%
+playlists of other AI safety talks from
+Elsewhere<00:09:06.480><c> on</c><00:09:06.660><c> YouTube</c><00:09:06.839><c> and</c><00:09:07.440><c> lots</c><00:09:07.680><c> more</c><00:09:07.800><c> to</c>
+
+00:09:07.970 --> 00:09:07.980 align:start position:0%
+Elsewhere on YouTube and lots more to
+ 
+
+00:09:07.980 --> 00:09:09.769 align:start position:0%
+Elsewhere on YouTube and lots more to
+come<00:09:08.160><c> so</c><00:09:08.640><c> make</c><00:09:08.820><c> sure</c><00:09:08.940><c> to</c><00:09:09.060><c> go</c><00:09:09.240><c> over</c><00:09:09.360><c> there</c><00:09:09.540><c> and</c>
+
+00:09:09.769 --> 00:09:09.779 align:start position:0%
+come so make sure to go over there and
+ 
+
+00:09:09.779 --> 00:09:11.449 align:start position:0%
+come so make sure to go over there and
+subscribe<00:09:10.140><c> and</c><00:09:10.320><c> hit</c><00:09:10.500><c> the</c><00:09:10.620><c> bell</c><00:09:10.740><c> for</c><00:09:11.040><c> more</c><00:09:11.279><c> high</c>
+
+00:09:11.449 --> 00:09:11.459 align:start position:0%
+subscribe and hit the bell for more high
+ 
+
+00:09:11.459 --> 00:09:18.170 align:start position:0%
+subscribe and hit the bell for more high
+quality<00:09:11.760><c> AI</c><00:09:12.120><c> safety</c><00:09:12.480><c> material</c>
+
+00:09:18.170 --> 00:09:18.180 align:start position:0%
+ 
+ 
+
+00:09:18.180 --> 00:09:19.710 align:start position:0%
+ 
+foreign
+
+00:09:19.710 --> 00:09:19.720 align:start position:0%
+foreign
+ 
+
+00:09:19.720 --> 00:09:22.859 align:start position:0%
+foreign
+[Music]
+

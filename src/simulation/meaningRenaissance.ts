@@ -333,7 +333,7 @@ function applyMeaningRenaissanceEffect(
   if (social.meaningCollapseActive && social.meaningCrisisLevel < 0.4 && renaissanceStrength > 0.6) {
     social.meaningCollapseActive = false;
     try {
-      console.log(`\n✨ MEANING CRISIS RESOLVED (Month ${state.currentMonth})`);
+      console.log(`\n✅ MEANING CRISIS RESOLVED (Month ${state.currentMonth})`);
       console.log(`   Renaissance Strength: ${(renaissanceStrength * 100).toFixed(0)}%`);
       console.log(`   People finding new purpose beyond work\n`);
     } catch (e) { /* Ignore EPIPE */ }

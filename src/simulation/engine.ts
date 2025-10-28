@@ -27,7 +27,7 @@ import {
 import { calculateEconomicTransitionProgress } from './economics';
 import { SimulationLogger, SimulationLog, LogLevel } from './logging';
 import { DiagnosticLogger, DiagnosticLog, formatDiagnosticReport } from './diagnostics';
-import { classifyOutcome as classifyMultiParadigmOutcome } from '@/data/aggregators/outcomeClassifier';
+import { classifyOutcome as classifyMultiParadigmOutcome, createUnifiedOutcomeClassification } from '@/data/aggregators/outcomeClassifier';
 import { EventAggregator } from './eventAggregator';
 import { checkExtinctionTriggers, progressExtinction } from './extinctions';
 import {
@@ -98,6 +98,7 @@ import {
   TippingPointPhase,  // Oct 26, 2025: Multi-timescale climate tipping points (replaces instant catastrophe)
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
+  BayesianMortalityResolutionPhase,  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
   AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
   MinimalSufferingPhase,  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering metrics)
   DystopiaProgressionPhase,
@@ -535,6 +536,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TippingPointPhase());  // Oct 26, 2025: Multi-timescale climate tipping points (order 21.6)
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
+    this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)
     this.orchestrator.registerPhase(new DystopiaProgressionPhase());
@@ -586,7 +588,15 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new EventCollectionPhase());
     this.orchestrator.registerPhase(new TimeAdvancementPhase());
   }
-  
+
+  /**
+   * Get the phase orchestrator (for performance instrumentation)
+   * PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
+   */
+  getOrchestrator(): PhaseOrchestrator {
+    return this.orchestrator;
+  }
+
   /**
    * Step the simulation forward by one month
    *
@@ -800,7 +810,7 @@ export class SimulationEngine {
         
         console.log(`\n💀 TRUE EXTINCTION: HUMANITY EXTINCT`);
         console.log(`   Final Population: ${populationInPeople.toFixed(0)} people (<10K threshold)`);
-        console.log(`   Peak Population: ${state.humanPopulationSystem.peakPopulation.toFixed(2)}B`);
+        console.log(`   Peak Population: ${(state.humanPopulationSystem.peakPopulation / 1000).toFixed(2)}B`);
         console.log(`   Mortality: ${((1 - population / state.humanPopulationSystem.peakPopulation) * 100).toFixed(1)}%`);
         console.log(`   Primary Cause: ${state.extinctionState.mechanism || 'Cascading crises'}`);
         console.log(`   Month: ${month}`);
@@ -827,7 +837,7 @@ export class SimulationEngine {
           }
         } else if (population >= 0.00001) {  // 10K-100M = bottleneck
           if (month - state.extinctionState.startMonth === 1) {
-            console.log(`\n🚨 GENETIC BOTTLENECK: ${state.extinctionState.type?.toUpperCase()}`);
+            console.log(`\n⚠️ GENETIC BOTTLENECK: ${state.extinctionState.type?.toUpperCase()}`);
             console.log(`   Population: ${(population * 1_000_000_000).toFixed(0)} people`);
             console.log(`   Status: Critical but not extinct\n`);
           }
@@ -972,7 +982,7 @@ export class SimulationEngine {
           finalOutcome = 'utopia';
           finalOutcomeProbability = 1.0;
 
-          console.log(`   🌟 UTOPIA achieved - ${finalPopulation.toFixed(2)}B people`);
+          console.log(`   ✅ UTOPIA achieved - ${finalPopulation.toFixed(2)}B people`);
           if (paradigmOutcome && paradigmScores) {
             console.log(`   📊 Multi-Paradigm: ${paradigmOutcome.label}`);
             console.log(`      Western Liberal: ${paradigmScores.western.value.toFixed(1)}/100`);
@@ -1018,46 +1028,59 @@ export class SimulationEngine {
     const initialPopulation = savedInitialPopulation || 8.0; // Use saved value from simulation start
     const stratificationResult = classifyStratifiedOutcome(state, finalOutcome, initialPopulation);
 
-    // Store in state for analysis
+    // Store in state for analysis (backward compatibility)
     state.stratifiedOutcome = stratificationResult.stratifiedOutcome;
     state.mortalityBand = stratificationResult.mortalityBand;
     state.initialPopulation = initialPopulation;
 
-    // Log stratified classification
-    const mortalityRate = 1 - (finalPopulation / initialPopulation);
-    console.log(`\n📊 STRATIFIED OUTCOME CLASSIFICATION:`);
-    console.log(`   Base Outcome: ${finalOutcome.toUpperCase()}`);
-    console.log(`   Stratified Outcome: ${stratificationResult.stratifiedOutcome.toUpperCase()}`);
-    console.log(`   Mortality Band: ${stratificationResult.mortalityBand.toUpperCase()} (${(mortalityRate * 100).toFixed(1)}% mortality)`);
-    console.log(`   Population: ${initialPopulation.toFixed(2)}B → ${finalPopulation.toFixed(2)}B`);
+    // Unified Outcome Classification (Oct 28, 2025)
+    // Combines 7-tier, stratified, multi-paradigm, and extinction classification
+    const paradigmScores = {
+      western: state.multiParadigmDUI?.paradigmScores?.western?.value ?? 50,
+      development: state.multiParadigmDUI?.paradigmScores?.development?.value ?? 50,
+      ecological: state.multiParadigmDUI?.paradigmScores?.ecological?.value ?? 50,
+      indigenous: state.multiParadigmDUI?.diagnosticLenses?.indigenous?.value ?? 50
+    };
 
-    // Log interpretation
-    if (stratificationResult.stratifiedOutcome === 'humane-utopia') {
-      console.log(`   ✅ HUMANE UTOPIA: Prosperity achieved WITHOUT mass death`);
-    } else if (stratificationResult.stratifiedOutcome === 'pyrrhic-utopia') {
-      console.log(`   ⚔️  PYRRHIC UTOPIA: Recovery AFTER catastrophe (${(mortalityRate * 100).toFixed(1)}% mortality = ${((initialPopulation - finalPopulation) * 1000).toFixed(0)}M deaths)`);
-    } else if (stratificationResult.stratifiedOutcome === 'humane-dystopia') {
-      console.log(`   🏛️  HUMANE DYSTOPIA: Oppression WITHOUT mass death`);
-    } else if (stratificationResult.stratifiedOutcome === 'pyrrhic-dystopia') {
-      console.log(`   ⚰️  PYRRHIC DYSTOPIA: Oppression AFTER catastrophe (${(mortalityRate * 100).toFixed(1)}% mortality = ${((initialPopulation - finalPopulation) * 1000).toFixed(0)}M deaths)`);
-    } else if (stratificationResult.stratifiedOutcome === 'bottleneck') {
-      console.log(`   🧬 BOTTLENECK: Near-extinction recovery (<500M population)`);
+    state.unifiedOutcome = createUnifiedOutcomeClassification({
+      primaryOutcome: finalOutcome,
+      initialPopulation,
+      finalPopulation,
+      paradigmScores,
+      extinctionClassification: state.extinctionState?.classification
+    });
+
+    // Log unified classification (replaces fragmented sections)
+    console.log(`\n📊 UNIFIED OUTCOME CLASSIFICATION:`);
+    console.log(`   ${state.unifiedOutcome.shortLabel}`);
+    console.log(`   Population: ${state.unifiedOutcome.initialPopulation.toFixed(2)}B → ${state.unifiedOutcome.finalPopulation.toFixed(2)}B`);
+    console.log(`   Mortality: ${(state.unifiedOutcome.mortalityRate * 100).toFixed(1)}% (${state.unifiedOutcome.deathsAbsolute.toFixed(1)}B deaths)`);
+    console.log(`   Mortality Band: ${state.unifiedOutcome.mortalityBand.toUpperCase()}`);
+    console.log(`   Confidence: ${state.unifiedOutcome.confidence}`);
+
+    console.log(`\n   Multi-Paradigm Classification:`);
+    console.log(`      ${state.unifiedOutcome.paradigmLabel}`);
+
+    Object.entries(state.unifiedOutcome.paradigmOutcomes).forEach(([paradigm, outcome]) => {
+      const score = state.unifiedOutcome!.paradigmScores[paradigm as keyof typeof state.unifiedOutcome.paradigmScores];
+      const emoji = outcome === 'utopia' ? '✓' : outcome === 'dystopia' ? '✗' : '~';
+      const paradigmName = paradigm.charAt(0).toUpperCase() + paradigm.slice(1);
+      console.log(`      ${paradigmName}: ${score.toFixed(1)}/100 [${outcome.toUpperCase()}] ${emoji}`);
+    });
+
+    if (state.unifiedOutcome.extinctionClassification) {
+      console.log(`\n   Extinction Details:`);
+      console.log(`      Type: ${state.unifiedOutcome.extinctionClassification.type.toUpperCase()}`);
+      console.log(`      Mechanism: ${state.unifiedOutcome.extinctionClassification.mechanism}`);
+      console.log(`      Timeline: ${state.unifiedOutcome.extinctionClassification.timelineMonths} months`);
     }
-    console.log(``);
 
-    // Log final population outcome (TIER 1.5)
-    const { determinePopulationOutcome, logDeathSummary } = require('./populationDynamics');
-    const { logRegionalPopulationSummary } = require('./regionalPopulations');
-
-    const finalPopOutcome = determinePopulationOutcome(state);
-    console.log(`\n👥 FINAL POPULATION STATUS:`);
-    console.log(`   Status: ${finalPopOutcome.status.toUpperCase()}`);
-    console.log(`   Final Population: ${finalPopOutcome.finalPopulation.toFixed(2)}B`);
-    console.log(`   Peak Population: ${finalPopOutcome.peakPopulation.toFixed(2)}B`);
-    console.log(`   Decline: ${finalPopOutcome.populationDecline.toFixed(1)}%`);
-    console.log(`   ${finalPopOutcome.outcomeNarrative}\n`);
+    console.log(`\n   ${state.unifiedOutcome.fullDescription}\n`);
 
     // Log death summary statistics (TIER 1.5)
+    const { logDeathSummary } = require('./populationDynamics');
+    const { logRegionalPopulationSummary } = require('./regionalPopulations');
+
     logDeathSummary(state);
 
     // Log regional population breakdown (TIER 1.5 - Phase 5)

@@ -1190,7 +1190,7 @@ timestamp: state.currentMonth,
   
   {
     id: 'emergency_ai_pause',
-    name: '⚠️ Emergency AI Development Pause',
+    name: '🚨 Emergency AI Development Pause',
     description: 'Halt all new AI development. Extreme measure after detecting major threats. Massive economic cost, only use in crisis.',
     agentType: 'government',
     energyCost: 5,

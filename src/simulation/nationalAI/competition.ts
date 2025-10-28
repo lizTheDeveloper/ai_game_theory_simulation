@@ -155,7 +155,7 @@ export function updateFirstMoverAdvantage(state: GameState, cache: CountryIntera
 
   // Log major shifts
   if (state.currentMonth % 24 === 0 && fma.marketShareCapture > 0.70) {
-    console.log(`🏆 FIRST-MOVER ADVANTAGE: ${leader}`);
+    console.log(`✅ FIRST-MOVER ADVANTAGE: ${leader}`);
     console.log(`   Market share: ${(fma.marketShareCapture * 100).toFixed(0)}%`);
     console.log(`   Standard adoption: ${(fma.standardAdoption * 100).toFixed(0)}%`);
     console.log(`   Network effects: ${(fma.networkEffectStrength * 100).toFixed(0)}%`);

@@ -21,6 +21,7 @@ import {
   LOW_RISK_REGIONS
 } from '@/types/wetBulbTemperature';
 import { addSimulationEvent } from './utils/eventLogger';
+import { addMortalityRisk } from './bayesianMortality';
 
 /**
  * Initialize wet bulb temperature system with 2025 baseline
@@ -557,28 +558,26 @@ export function updateWetBulbTemperatureSystem(
 /**
  * Apply mortality from wet bulb event to population
  *
- * Uses population dynamics system to apply deaths.
+ * Uses centralized Bayesian mortality system for tracking.
  */
 function applyWetBulbMortality(state: GameState, event: WetBulbEvent): void {
   if (event.deaths <= 0) return;
 
-  // Convert deaths from millions to billions
-  const deathsInBillions = event.deaths / 1000;
-
-  // Apply to population
   const population = state.humanPopulationSystem;
-  population.population = Math.max(0, population.population - deathsInBillions);
 
-  // Add to monthly deaths tracking
-  if (!population.monthlyDeathsApplied) {
-    population.monthlyDeathsApplied = deathsInBillions;
-  } else {
-    population.monthlyDeathsApplied += deathsInBillions;
-  }
+  // Calculate mortality rate (event.deaths is in millions, population.population is in millions)
+  const mortalityRate = event.deaths / population.population;
 
-  // MULTI-DIMENSIONAL TRACKING (Oct 18, 2025)
-  // PROXIMATE CAUSE: Heat waves/floods are "disasters"
-  population.deathsByCategory.disasters += deathsInBillions;
-  // ROOT CAUSE: Heat waves are climate-driven
-  population.deathsByRootCause.climate += deathsInBillions;
+  // Apply via centralized mortality system
+  addMortalityRisk(population, {
+    type: 'disaster', // Heat waves = natural disaster
+    baseRisk: mortalityRate,
+    proximate: 'disasters', // Heat wave casualties
+    root: 'climate', // Caused by climate change
+    confidence: 'HIGH', // Well-documented relationship between heat and mortality
+    scope: 'REGIONAL', // Wet bulb events are regional
+    region: event.region,
+    month: state.currentMonth,
+    description: `Wet bulb event: ${event.region}`,
+  });
 }

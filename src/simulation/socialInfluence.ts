@@ -228,7 +228,13 @@ export function identifyDecisionMakers(
   // Scan power users
   const potentialIdentifications = Math.floor(si.powerUsers * identificationRate);
 
-  for (let i = 0; i < potentialIdentifications; i++) {
+  // PERFORMANCE FIX (Oct 28, 2025): Cap at 1000 identifications per agent per month
+  // Without cap: 307k+ identifications at month 120 caused 65% of runtime (28.7s)
+  // Research justification: Realistically, even advanced AI can't profile millions
+  // of users per month. 1000/month = 12k/year is already superhuman.
+  const cappedIdentifications = Math.min(potentialIdentifications, 1000);
+
+  for (let i = 0; i < cappedIdentifications; i++) {
     // Roll to see if this power user is a decision-maker
     const role = selectDecisionMakerRole(rng);
     if (!role) continue; // Not a decision-maker

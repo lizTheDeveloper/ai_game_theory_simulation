@@ -109,6 +109,43 @@ The simulation engine is designed to run headless (no UI required) for research 
 - **For Instructors**: See [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md) - Deploy on Google Cloud Platform (costs $10-50/month)
 - **For Developers**: See [`CLAUDE.md`](./CLAUDE.md) - Development guide and project structure
 
+### 🎥 YouTube Transcript Research System
+
+**Automated RAG system for AI safety research** - Semantic search across YouTube transcripts with daily updates.
+
+**Quick Start:**
+```bash
+# Install daily scheduler (2:00 AM automatic sync)
+bash scripts/install-transcript-scheduler.sh install
+
+# Install MCP server for Claude Desktop (RAG queries)
+bash scripts/install-mcp-server.sh
+
+# Search transcripts from command line
+source .venv/bin/activate
+python scripts/search-transcripts-sqlite.py "mesa-optimization"
+```
+
+**What it does:**
+- **Automated daily sync** - Downloads new transcripts at 2:00 AM (rate-limited, respects YouTube ToS)
+- **FAISS embeddings** - Semantic search across 100+ videos (384-dimensional vectors)
+- **SQLite database** - Queryable metadata (videos, chunks, channels)
+- **MCP server** - Integrated RAG queries in Claude Desktop
+- **Research tool** - Validate simulation parameters with expert commentary
+
+**Current index:** 80+ videos from AI safety researchers (Robert Miles, AI Species, AI Explained)
+
+**Documentation:**
+- **[`scripts/TRANSCRIPT_AUTOMATION.md`](./scripts/TRANSCRIPT_AUTOMATION.md)** - Daily scheduler system
+- **[`scripts/TRANSCRIPT_RAG_MCP.md`](./scripts/TRANSCRIPT_RAG_MCP.md)** - MCP server & RAG queries
+- **[`research/embeddings/README.md`](./research/embeddings/README.md)** - Technical details
+- **[`research/youtube-channels/README.md`](./research/youtube-channels/README.md)** - Channel management
+
+**Example queries in Claude Desktop:**
+- "What does Robert Miles say about deceptive alignment?"
+- "Find videos discussing AGI timelines and compute scaling"
+- "Compare perspectives on mesa-optimization across channels"
+
 ### Running Simulations (Headless)
 
 #### Single Simulation Run

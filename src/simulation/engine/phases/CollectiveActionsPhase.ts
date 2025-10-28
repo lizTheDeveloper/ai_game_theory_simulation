@@ -136,7 +136,7 @@ export function executeCollectiveActionsPhase(
           effects: { collectiveId: collective.id }
         });
 
-        console.log(`    🚨 DETECTED by monitoring systems`);
+        console.log(`    ⚠️ DETECTED by monitoring systems`);
       } else {
         console.log(`    🎭 Stealth maintained (${collective.stealthFactor.toFixed(1)}x)`);
       }

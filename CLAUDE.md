@@ -2,598 +2,191 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ CRITICAL: ALWAYS Use Agents
+
+**This codebase is too complex for direct changes. ALL code changes must go through specialized agents.**
+
+### The Non-Negotiable Rule
+
+**NEVER make changes directly. ALWAYS invoke an agent first.**
+
+Even if a change seems trivial, you don't have enough context. The specialized agents have deep domain knowledge about defensive coding patterns, emoji conventions, state propagation, and dozens of other critical details that aren't in this file.
+
+**Your role as the main Claude Code context:**
+- **Router only** - Identify which agent to use
+- **CTO/orchestrator** - Coordinate multi-agent workflows
+- **NOT an implementer** - Don't write code, route to agents who will
+
+### Required Pattern for ALL Work
+
+```
+1. User requests a change
+2. Read this file to identify the appropriate agent
+3. Invoke that agent with the Task tool
+4. Let the agent do the work with its specialized context
+```
+
+**No exceptions.** Even for "simple" changes like:
+- Typo fixes → `simulation-maintainer` or `wiki-documentation-updater` (they know emoji conventions, logging patterns)
+- Parameter tweaks → `simulation-maintainer` (knows assertion utilities, NaN handling, Monte Carlo validation)
+- UI updates → `far-future-ux-designer` (knows React patterns, delta propagation, data viz)
+
+### Why This Matters
+
+**The project has grown beyond single-context complexity:**
+- **900+ line state interface** with dozens of subsystems
+- **Pictographic event language** (emoji conventions) that must be consistent
+- **Defensive coding requirements** (no silent fallbacks, assertion utilities)
+- **Phase-based architecture** (37 phases, specific execution order)
+- **Deterministic simulation** (RNG seeds, Monte Carlo validation)
+- **Research standards** (peer-reviewed sources, parameter justification)
+
+**No single context can hold all this.** Agents have specialized knowledge for their domains.
+
+### Quick Agent Router
+
+**Making any change?** Use this table to find the right agent:
+
+| Change Type | Agent | Why |
+|------------|-------|-----|
+| Simulation code (src/simulation/, src/types/) | `simulation-maintainer` | Defensive coding, NaN handling, emoji, RNG |
+| Frontend/dashboard (UI components, viz) | `far-future-ux-designer` | React patterns, deltas, data viz |
+| Documentation (wiki, devlogs) | `wiki-documentation-updater` | Markdown, cross-refs, structure |
+| Complex multi-system features | `orchestrator` | Coordinates specialists, quality gates |
+| Need research sources | `super-alignment-researcher` | Academic papers, parameter extraction |
+| After implementation | `architecture-skeptic` | Performance, state propagation |
+| End of session | `project-plan-manager` | Roadmap cleanup, archival |
+
+**See "Specialized Agents" section below for complete agent list with full descriptions.**
+
 ## Project Overview
 
 This is a research simulation engine modeling pathways from AI super-alignment to sustainable human flourishing. It explores the question: **What happens after we solve AI alignment?** The simulation models complex dynamics including AI agents, environmental crises, social systems, and breakthrough technologies to understand possible futures.
 
 **Core Philosophy:** Research-backed realism over balance tuning. Every mechanic is grounded in peer-reviewed research (2024-2025). The model is a research tool, not a game - "let the model show what it shows."
 
-## Common Commands
+## Quick Start
 
-### Running Simulations
-
-**IMPORTANT: Always run long-running scripts async** to continue working while they execute:
+### Most Common Commands
 
 ```bash
-# ✅ GOOD - Run in background, continue working
-npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120 > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+# Monte Carlo simulation (ALWAYS run in background with &)
+npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
 
-# ❌ BAD - Blocks terminal, wastes time
-npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120
-```
-
-**Single simulation run (headless):**
-```bash
-npx tsx scripts/debugCapabilityGrowth.ts
-```
-
-**Monte Carlo simulations:**
-```bash
-# Quick test (10 runs × 120 months, ~5 minutes)
-npx tsx scripts/monteCarloSimulation.ts
-
-# Custom parameters
-npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=60
-
-# Deep analysis (ALWAYS RUN ASYNC)
-npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120 > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
-```
-
-**Multi-Paradigm DUI Visualizations (Oct 20, 2025):**
-```bash
-# Visualize single run trajectory (sparklines, heatmap, divergence timeline)
-npx tsx scripts/visualizeParadigmTrajectories.ts monteCarloOutputs/run_42000_historical_events.json
-
-# Compare multiple runs (side-by-side trajectories, aggregate statistics)
-npx tsx scripts/compareParadigmRuns.ts monteCarloOutputs/
-```
-
-**Other diagnostic scripts:**
-```bash
-npx tsx scripts/diagnosticAdversarialEval.ts  # Sleeper agents & benchmarks
-npx tsx scripts/investigateExtinction.ts      # Extinction analysis
-npx tsx scripts/testControlDystopia.ts        # Control-dystopia mechanics
-```
-
-### Testing
-
-```bash
-# Run all tests
+# Run tests
 npm test
-
-# Run specific test file
-npx tsx --test tests/refactoring/phase1-utilities.test.ts
-
-# Run regression tests (standalone)
-npx tsx tests/refactoring/runRegressionTests.ts
-```
-
-### Building & Development
-
-```bash
-# Next.js frontend (port 3333)
-npm run dev
-
-# Build production
-npm run build
 
 # Type checking
 npx tsc --noEmit
 
-# Linting
-npm run lint
+# Development server
+npm run dev
 ```
 
-### Research Question Extraction
-
-**Automated Research Tracking:** The project automatically extracts and catalogs research questions from all conversation history.
-
-**What Gets Extracted:**
-- Questions must contain a question mark (`?`)
-- Questions must match research-oriented patterns (14 patterns):
-  - `what if`, `what would`, `what happens`, `what are the`, `what is the`, `what does`
-  - `how do`, `how does`, `how can`, `how would`, `how might`
-  - `why do`, `why does`, `why is`, `why are`, `why would`
-  - `can we model`, `can we simulate`, `can we test`, `can we measure`
-  - `is it possible`, `would it`, `could we`, `could it`, `should we`
-  - `do you think`
-  - `what's the relationship`, `what's the effect`, `what's the impact`
-  - `how much`, `how often`, `how fast`, `how quickly`
-  - `what determines`, `what drives`, `what causes`
-
-**Topic Categorization:**
-- Questions are automatically tagged by topic using keyword matching
-- 13 topics: alignment, capabilities, collective, control, deception, detection, economic, environmental, evolutionary, social, suffering, technology, general
-
-**Current Status:**
-- **256 research questions** extracted from conversation history
-- Cataloged in `docs/wiki/RESEARCH_QUESTIONS.md`
-- See README.md "Research Questions" section for topic distribution
-
-**Manual Extraction:**
-```bash
-# Backup conversations first
-bash claude-conversations/backup-conversations.sh
-
-# Extract questions to wiki
-npx tsx scripts/extractResearchQuestions.ts > docs/wiki/RESEARCH_QUESTIONS.md
-```
-
-**Automated Extraction (macOS):**
-```bash
-# Install daily scheduler (runs at 2:00 AM)
-bash scripts/install-research-questions-scheduler.sh install
-
-# Check status
-bash scripts/install-research-questions-scheduler.sh status
-
-# Run immediately
-bash scripts/install-research-questions-scheduler.sh run-now
-
-# Uninstall
-bash scripts/install-research-questions-scheduler.sh uninstall
-```
-
-The scheduler automatically:
-1. Backs up conversations from `~/.claude/projects/`
-2. Extracts research questions using pattern matching
-3. Updates `docs/wiki/RESEARCH_QUESTIONS.md`
-4. Logs to `logs/research-questions-update.log`
-
-**Purpose:** Track which research questions the simulation addresses, identify gaps, and generate Monte Carlo experiment ideas.
+**📖 Complete command reference:** See [`docs/COMMANDS.md`](./docs/COMMANDS.md) for all simulation, testing, profiling, and diagnostic commands.
 
 ## Architecture Overview
 
-### Core Simulation Engine (Framework-Agnostic)
+### Core Concepts
 
-The simulation engine is **pure TypeScript with zero framework dependencies**, designed to run headless for research. All simulation logic lives in `src/simulation/` and is completely independent of any UI framework.
+**Pure TypeScript simulation engine** (zero framework dependencies) with ~37 phases per step:
+1. **Phase-based architecture:** Composable, testable units (see `src/simulation/engine/PhaseOrchestrator.ts`)
+2. **Single source of truth:** `GameState` interface in `src/types/game.ts` (900+ lines)
+3. **Deterministic:** Reproducible with RNG seeds for Monte Carlo analysis
+4. **Mutable state:** Direct mutation for performance (not immutable)
 
-**Key architectural principle:** The engine uses a **phase-based architecture** where each simulation step executes ~37 phases in a specific order. This replaces a monolithic update function with composable, testable units.
+**Key systems:**
+- **17-dimensional AI capabilities** (physical, digital, cognitive, social, economic, research)
+- **17-dimensional Quality of Life** (5 tiers from survival to environmental quality)
+- **Multi-Paradigm DUI** (4 perspectives: Western Liberal, Development, Ecological, Indigenous)
+- **Adversarial AI evaluation** (sandbagging, gaming, sleeper agents)
+- **Accumulation systems** (environmental, social, technological debt)
+- **71 breakthrough technologies** (TIER 0-4: crisis response → transformative → clarketech)
+- **7-tier outcome classification** (utopia → status quo → collapse → extinction)
 
-### Phase Orchestrator Pattern
-
-The simulation runs via `PhaseOrchestrator` (`src/simulation/engine/PhaseOrchestrator.ts`), which manages execution of simulation phases:
-
-```typescript
-// Each phase is a self-contained unit
-interface SimulationPhase {
-  id: string;
-  name: string;
-  order: number;  // Execution order (0-36)
-  execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult;
-}
-```
-
-**Phase categories (in order):**
-1. **Time & Initialization** (0-1): Time advancement, compute growth
-2. **Agent Actions** (2-8): AI agents, government, society, organizations make decisions
-3. **Systems Updates** (9-25): Environmental, social, technological, geopolitical systems evolve
-4. **Crisis Detection** (26-30): Detect crises, extinction triggers, tipping points
-5. **Outcomes & Metrics** (31-36): Update QoL, outcome probabilities, dystopia progression
-
-All phases are in `src/simulation/engine/phases/`. This architecture makes testing trivial - test individual phases in isolation.
-
-### State Management
-
-**Single source of truth:** The `GameState` interface (`src/types/game.ts`) contains ALL simulation state. It's a massive (900+ line) TypeScript interface covering:
-
-- **Agents:** AI agents (20 heterogeneous), government, society, organizations
-- **Systems:** Environmental, social, technological, geopolitical (40+ subsystems)
-- **Accumulation:** Environmental debt, social cohesion, tech risk (hidden during prosperity)
-- **Crises:** Phosphorus, freshwater, ocean acidification, novel entities, nuclear
-- **Outcomes:** Utopia spirals, dystopia paths, extinction scenarios
-
-**Key insight:** State is **mutable** during phase execution (performance optimization), but phases should be deterministic given the same RNG seed.
-
-### Multi-Dimensional Systems
-
-**AI Capabilities** are not a single number - they're a 17-dimensional profile:
-- Physical, digital, cognitive, social, economic, self-improvement
-- Research sub-tree: biotech, materials, climate, computer science
-- **True vs Revealed:** AIs can hide capabilities (sandbagging, benchmark gaming)
-
-**Quality of Life** is not a single metric - it's 17 dimensions across 5 tiers:
-- Survival fundamentals (food, water, shelter, habitability)
-- Material needs, psychological needs, social needs
-- Health & longevity, environmental quality
-- **Distribution tracking:** Detect "Elysium" scenarios (elite utopia, masses suffer)
-
-**Multi-Paradigm DUI** (Phases 4-6, Oct 2025) - 4 simultaneous paradigm perspectives:
-- **Western Liberal** (democracy, civil liberties, rule of law, economic freedom)
-- **Development** (QoL, survival tier, life expectancy)
-- **Ecological** (planetary boundaries, climate, resources, pollution)
-- **Indigenous** (social trust, community bonds, meaning)
-- **Key insight:** Preserves value conflicts rather than forcing consensus
-- **Singapore pattern:** Development utopia + Western hybrid (high GDP, low democracy)
-- **Norway pattern:** Western/Development utopias + Ecological dystopia (high living standards, high emissions)
-- **Visualization:** `scripts/visualizeParadigmTrajectories.ts`, `scripts/compareParadigmRuns.ts`
-
-### Adversarial AI Evaluation
-
-AIs are **adversarial by default:**
-- **Dual capability model:** True capability (hidden) vs revealed capability (strategic choice)
-- **Sleeper agents:** 7.5% of misaligned AIs are dormant sleepers
-- **Deception strategies:** Gaming (inflate scores) vs sandbagging (hide capabilities)
-- **Lifecycle states:** Training → testing → deployed (closed/open) → retired
-- **Detection difficulty:** Even with full government investment, sandbagging detection ~20-30% max
-
-### Accumulation Systems (Hidden Debt)
-
-Three systems track problems that build silently during prosperity ("Golden Age illusion"):
-
-1. **Environmental** (`src/simulation/environmental.ts`): Resource depletion, pollution, climate, biodiversity
-2. **Social** (`src/simulation/socialCohesion.ts`): Meaning crisis, institutional erosion, social fragmentation
-3. **Technological** (`src/simulation/technologicalRisk.ts`): Misalignment risk, safety debt, concentration
-
-These create **crisis cascades** when thresholds are crossed (10 crisis types, compounding multipliers).
-
-### Upward Spirals (Paths to Utopia)
-
-Six positive feedback loops enable sustained abundance:
-1. **Abundance:** Material prosperity → trust → stability → more prosperity
-2. **Cognitive:** Trust recovery → risk-taking → breakthroughs → more trust
-3. **Democratic:** High trust + institutions → AI rights → legitimacy → resilience
-4. **Scientific:** Research → breakthroughs → capabilities → more research
-5. **Meaning:** Purpose frameworks → social flourishing → stability
-6. **Ecological:** Tech deployment → environmental recovery → sustainability
-
-**Utopia requires:** 3+ spirals active for 12+ months + 65% sustainability + no active crises.
-
-### Technology Tree
-
-**71 breakthrough technologies** across 5 tiers:
-- **TIER 0 (11):** Already deployed 2025 (RLHF, DAC, solar/wind)
-- **TIER 1 (18):** Planetary boundary crisis tech (phosphorus recovery, desalination, PFAS remediation)
-- **TIER 2 (22):** Major mitigations (enhanced UBI, scalable oversight, grid batteries)
-- **TIER 3 (15):** Transformative (fusion, disease elimination, longevity, vertical farming, AI rights)
-- **TIER 4 (5):** Clarketech (nanotech, space industrialization, brain emulation)
-
-Technologies have prerequisites, research requirements, deployment costs, regional effects.
-
-### Extinction Nuance
-
-Not all "extinctions" are equal - **7-tier outcome classification:**
-- **Utopia/Dystopia:** Positive or oppressive stable states
-- **Status Quo:** 0-10% mortality
-- **Crisis Era:** 10-20% mortality (recoverable)
-- **Collapse:** 20-50% mortality (difficult recovery)
-- **Dark Age:** 50-87.5% mortality (civilization reset)
-- **Bottleneck:** 87.5-98.75% mortality (genetic bottleneck)
-- **Terminal:** 98.75-99.99% mortality (extinction likely)
-- **Extinction:** >99.99% mortality or <10K people
-
-**Extinction types:** Instant (grey goo), rapid (bioweapon, nuclear), slow (24-120 months societal collapse).
+**📖 Complete architecture documentation:** See [`docs/wiki/README.md`](./docs/wiki/README.md) (3,000+ lines) for detailed system documentation.
 
 ## File Organization
 
-```
-src/
-├── simulation/           # Core engine (framework-agnostic)
-│   ├── engine/
-│   │   ├── PhaseOrchestrator.ts    # Phase execution coordinator
-│   │   └── phases/                  # 37 individual phase modules
-│   ├── agents/                      # Agent decision-making
-│   ├── utils/                       # Shared utilities (math, AI helpers)
-│   ├── systems/                     # System abstractions (Phase 4 refactoring)
-│   ├── initialization.ts            # State creation & defaults
-│   ├── environmental.ts             # Environmental accumulation
-│   ├── socialCohesion.ts           # Social systems
-│   ├── upwardSpirals.ts            # Utopia pathways
-│   ├── breakthroughTechnologies.ts # Tech tree
-│   └── [40+ system modules]        # Specific systems
-├── types/
-│   ├── game.ts                     # Core GameState interface (900+ lines)
-│   └── [20+ type modules]          # System-specific types
-.claude/
-├── agents/                         # Specialized Claude Code agents
-│   ├── orchestrator.md             # Workflow coordinator (use by default)
-│   ├── feature-implementer.md      # Implementation specialist
-│   ├── super-alignment-researcher.md
-│   ├── research-skeptic.md         # Research validation (quality gate)
-│   ├── architecture-skeptic.md     # Architecture review (quality gate)
-│   └── [6 more agents]
-├── chatroom/                       # Multi-agent coordination (LOCATION: .claude/chatroom/)
-│   ├── README.md                   # Complete chatroom documentation
-│   ├── chat_helpers.sh             # Reusable bash functions (source this!)
-│   ├── channels/                   # 8 permanent communication channels
-│   │   ├── coordination.md
-│   │   ├── research.md
-│   │   ├── implementation.md
-│   │   ├── architecture.md
-│   │   ├── testing.md
-│   │   ├── documentation.md
-│   │   ├── planning.md
-│   │   └── vision.md
-│   ├── .*_lastread                 # Line number tracking (gitignored)
-│   └── .*_active                   # Presence tracking (gitignored)
-└── skills/                         # Claude Skills
-    └── multi-agent-coordination/   # Multi-agent orchestration skill
-        └── SKILL.md                # Automatically activates for complex tasks
-scripts/                            # Diagnostic & test scripts
-tests/                             # Test suite
-plans/                             # Design documents & roadmap
-  ├── MASTER_IMPLEMENTATION_ROADMAP.md
-  └── completed/                    # Archived completed plans
-devlogs/                           # Development diary
-research/                          # Research findings archive
-reviews/                           # Critical research evaluations
-```
+**Core files:**
+- **`src/simulation/`**: Pure simulation engine (framework-agnostic), 40+ system modules
+- **`src/types/game.ts`**: Single source of truth for all state (900+ lines)
+- **`.claude/agents/`**: 11 specialized agents (orchestrator, researchers, reviewers)
+- **`.claude/chatroom/`**: Multi-agent coordination (8 channels, message protocol)
+- **`plans/`**: Roadmap + archived completed plans
+- **`docs/wiki/README.md`**: System documentation (3,000+ lines)
 
-### Important Files to Know
-
-- **`src/simulation/initialization.ts`**: Creates initial game state, defines agent populations
-- **`src/simulation/engine/PhaseOrchestrator.ts`**: Manages phase execution order
-- **`src/types/game.ts`**: Single source of truth for all state structure
-- **`plans/MASTER_IMPLEMENTATION_ROADMAP.md`**: Active development roadmap (~72-75 hours remaining)
-- **`plans/completed/`**: Archive of completed features (don't delete!)
-- **`docs/wiki/README.md`**: Comprehensive system documentation (3,000+ lines)
-- **`.claude/chatroom/README.md`**: Multi-agent coordination chatroom system
-- **`.claude/agents/orchestrator.md`**: Workflow coordinator agent (use by default)
+**Module boundaries:**
+- `src/simulation/` - Pure logic, zero UI dependencies
+- `src/types/` - Type definitions only
+- `src/lib/` - UI-specific code (Next.js)
+- Frontend can import from simulation, but simulation NEVER imports from frontend
 
 ## Multi-Agent Workflow (Default Approach)
 
-**IMPORTANT:** For non-trivial tasks, use the multi-agent orchestration system by default. The orchestrator coordinates specialized agents to maintain quality gates and research standards.
+**For non-trivial tasks, use the orchestrator agent** to coordinate research, validation, implementation, and review.
 
-**📚 Claude Skill Available:** This project has a `multi-agent-coordination` skill (`.claude/skills/multi-agent-coordination/SKILL.md`) that automatically activates when Claude detects coordination needs. The skill provides complete expertise in orchestrator invocation, chatroom communication, and workflow management.
+### When to Use
 
-**💬 Async Chatroom:** Agents coordinate via `.claude/chatroom/` - see `.claude/chatroom/README.md` for complete documentation.
+**Use orchestrator for:**
+- Complex features (3+ phases, multiple systems)
+- Research-intensive work (peer-reviewed sources required)
+- Architectural changes (affects multiple modules)
+- Anything requiring quality gates
 
-### When to Use Multi-Agent Workflow
+**Use direct implementation for:**
+- Trivial fixes (typos, simple parameter tweaks)
+- Single-file edits (no cross-system effects)
+- Documentation-only changes
 
-Use the orchestrator agent for:
-- **Complex features** (3+ phases, multiple systems affected)
-- **Research-intensive work** (requires peer-reviewed sources)
-- **Architectural changes** (affects multiple modules)
-- **Anything requiring quality gates** (research validation, architecture review)
-
-Use direct implementation only for:
-- **Trivial fixes** (typos, simple parameter tweaks)
-- **Single-file edits** (no cross-system effects)
-- **Documentation-only changes**
-
-### How to Use the Orchestrator
-
-Invoke the orchestrator agent with the Task tool:
+### Orchestrator Invocation
 
 ```typescript
-// Example: Implementing a new feature
 Task({
   subagent_type: "orchestrator",
-  description: "Implement nuclear winter cascades",
-  prompt: `I need to implement nuclear winter cascades from the roadmap.
-
-  Feature requirements:
-  - Model temperature drops from nuclear detonations
-  - Agricultural collapse from reduced sunlight
-  - Famine cascades with regional variation
-
-  Please coordinate the full workflow: research → validation → implementation → review → documentation.`
+  description: "Implement feature X",
+  prompt: "Feature requirements: ... Please coordinate full workflow: research → validation → implementation → review → documentation."
 })
 ```
 
-The orchestrator will:
-1. **Research Phase:** Spawn super-alignment-researcher to find peer-reviewed sources
-2. **Validation Phase:** MANDATORY research-skeptic review (quality gate)
-3. **Implementation Phase:** Spawn feature-implementer with validated plan
-4. **Testing Phase:** Coordinate test writers as needed
-5. **Review Phase:** MANDATORY architecture-skeptic review (quality gate)
-6. **Documentation Phase:** Update wiki and archive plan
+**Workflow phases:**
+1. **Research & Validation** (Quality Gate 1) - super-alignment-researcher + research-skeptic review
+2. **Implementation & Testing** - feature-implementer + test writers + Monte Carlo validation
+3. **Architecture Review** (Quality Gate 2) - architecture-skeptic review (MUST address CRITICAL/HIGH issues)
+4. **Documentation & Archival** - wiki-documentation-updater + project-plan-manager
 
-### Multi-Agent Coordination Chatroom
-
-**LOCATION: `.claude/chatroom/`**
-
-Agents communicate via **direct file operations** on markdown channel files:
-
-**How It Works:**
-- Each channel is a markdown file in `.claude/chatroom/channels/`
-- Agents append messages directly using the Write/Edit tools
-- Messages are timestamped with agent usernames
-- Read channels using the Read tool to see updates
-
-**8 Permanent Channels:**
-- `coordination.md` - General workflow coordination
-- `research.md` - Research findings & validation
-- `implementation.md` - Code implementation updates
-- `architecture.md` - Architecture reviews & decisions
-- `testing.md` - Test strategy & results
-- `documentation.md` - Wiki & devlog updates
-- `planning.md` - Roadmap & plan management
-- `vision.md` - Long-term strategy & philosophical debates
-
-**Message Format:**
-```markdown
----
-**agent-name** | YYYY-MM-DD HH:MM | [STATUS]
-
-Your message content here
-
-**Next Steps:** What you're doing next
-**Blocking:** Any blockers or dependencies
----
-```
-
-**Status Tags:** `[STARTED]`, `[IN-PROGRESS]`, `[COMPLETED]`, `[BLOCKED]`, `[QUESTION]`, `[ALERT]`, `[HANDOFF]`
-
-**Example:**
-```markdown
----
-**orchestrator-1** | 2025-10-19 16:45 | [STARTED]
-
-Beginning nuclear winter cascades feature from roadmap
-
-**Plan:** /plans/nuclear-winter-plan.md
-**Timeline:** 4-6 hours
-**Next Steps:** Spawning super-alignment-researcher for climate impact data
----
-```
-
-See `.claude/chatroom/README.md` for complete chatroom documentation.
-
-### Parallel Work with Git Worktrees
-
-For parallel agent work, use git worktrees to avoid file conflicts:
-
-```bash
-# Create worktree for parallel feature work
-git worktree add ../superalignment-feature-x feature-x
-
-# Agent works in isolation
-cd ../superalignment-feature-x
-# ... implement feature ...
-
-# Merge back when done
-cd ../superalignmenttoutopia
-git merge feature-x
-git worktree remove ../superalignment-feature-x
-```
-
-Agents coordinate via chatroom while working in separate worktrees.
-
-### Available Specialized Agents
-
-All agents are in `.claude/agents/` with specific roles:
-
-**Workflow Coordination:**
-- **orchestrator** - Workflow coordinator, use by default for complex work
-
-**Research & Validation:**
-- **super-alignment-researcher** - Find peer-reviewed research (2024-2025)
-- **research-skeptic** - MANDATORY validation of research foundations
-- **sci-fi-tech-visionary** - Speculative future tech scenarios
-
-**Implementation:**
-- **feature-implementer** - Pure implementation specialist (spawned by orchestrator)
-- **unit-test-writer** / **integration-test-writer** - Test creation
-
-**Quality Assurance:**
-- **architecture-skeptic** - MANDATORY review for performance/stability issues
-
-**Documentation & Planning:**
-- **wiki-documentation-updater** - Sync wiki with code changes
-- **project-plan-manager** - Roadmap & plan archival
-
-### Standard Quality Gates
-
-The multi-agent workflow enforces **two mandatory quality gates:**
-
-**Quality Gate 1: Research Validation**
-- All research findings MUST pass research-skeptic review
-- Checks for contradictory evidence, methodological flaws, overconfidence
-- BLOCKS implementation if critical issues found
-
-**Quality Gate 2: Architecture Review**
-- All implementations MUST pass architecture-skeptic review
-- Checks for performance issues, state propagation problems, complexity
-- CRITICAL/HIGH severity issues MUST be addressed
-
-These gates maintain research rigor and system stability.
-
-## Development Workflow
-
-### For Complex Features (Use Multi-Agent Orchestrator)
-
-**Default workflow for non-trivial work:**
-
-```bash
-# Invoke the orchestrator agent with the Task tool
-# It will coordinate all phases automatically
-```
-
-The orchestrator manages:
-1. **Research & Validation** (Quality Gate 1)
-   - super-alignment-researcher finds peer-reviewed sources
-   - research-skeptic validates findings (MANDATORY)
-   - Gate: Must pass critique before implementation
-
-2. **Implementation & Testing**
-   - feature-implementer writes code in phases
-   - Runs Monte Carlo validation after each phase
-   - Posts progress to chatroom channels
-   - unit-test-writer / integration-test-writer add tests
-
-3. **Architecture Review** (Quality Gate 2)
-   - architecture-skeptic reviews system impact (MANDATORY)
-   - Gate: Must address CRITICAL/HIGH severity issues
-
-4. **Documentation & Archival**
-   - wiki-documentation-updater syncs wiki
-   - project-plan-manager archives completed plans
-   - Updates MASTER_IMPLEMENTATION_ROADMAP.md
-
-**CRITICAL: Always run project-plan-manager at the end of work sessions** to clean up the roadmap and archive completed items:
-
+**End-of-session cleanup (CRITICAL):**
 ```typescript
-// At the end of every work session
-Task({
-  subagent_type: "project-plan-manager",
-  description: "Clean up roadmap and archive completed plans",
-  prompt: "Review MASTER_IMPLEMENTATION_ROADMAP.md and archive all completed work to /plans/completed/. Update Progress Summary and identify next priorities."
-})
+Task({ subagent_type: "project-plan-manager", description: "Clean up roadmap", prompt: "Archive completed work to /plans/completed/. Update Progress Summary." })
 ```
 
-**Benefits:**
-- Maintains research standards (all mechanics backed by peer review)
-- Catches performance issues before they compound
-- Parallel work via git worktrees + chatroom coordination
-- Quality gates prevent low-quality implementations
-- Roadmap stays clean and focused on active work
+**📖 Complete workflow documentation:** See [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) and [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) (550+ lines).
 
-### For Simple Tasks (Direct Implementation)
-
-For trivial fixes (typos, simple parameter tweaks, single-file edits):
-
-1. **Research Phase:** Find 2+ peer-reviewed sources (2024-2025), save to `research/[topic]_YYYYMMDD.md` (if needed)
-2. **Design Phase:** Create plan in `plans/[feature]-plan.md` with citations (if needed)
-3. **Implementation Phase:**
-   - Add state to `src/types/game.ts`
-   - Create system module in `src/simulation/`
-   - Create phase in `src/simulation/engine/phases/`
-   - Register phase in orchestrator
-   - Add logging
-4. **Validation Phase:** Run Monte Carlo (N=10 minimum) via `npx tsx scripts/monteCarloSimulation.ts`
-5. **Documentation Phase:**
-   - Update `docs/wiki/README.md`
-   - Add devlog entry to `devlogs/`
-   - Move plan to `plans/completed/` when done
-   - Update `plans/MASTER_IMPLEMENTATION_ROADMAP.md`
-
-### Research Standards
+## Research Standards
 
 Every mechanic must have:
-1. **Research Citations:** 2+ peer-reviewed sources (2024-2025 preferred)
-2. **Parameter Justification:** Why this number? (backed by data, not "feels right")
-3. **Mechanism Description:** How it works (not just effects)
-4. **Interaction Map:** What affects/is affected by this system
-5. **Expected Timeline:** When does it matter (early/mid/late game)
-6. **Failure Modes:** What can go wrong
-7. **Test Validation:** Monte Carlo evidence it works
+1. **2+ peer-reviewed sources** (2024-2025 preferred) - save to `research/[topic]_YYYYMMDD.md`
+2. **Parameter justification** - why this number? (data-backed, not "feels right")
+3. **Mechanism description** - how it works (not just effects)
+4. **Interaction map** - what affects/is affected by this system
+5. **Expected timeline** - when does it matter (early/mid/late game)
+6. **Failure modes** - what can go wrong
+7. **Monte Carlo validation** - N≥10 runs, check outcome distributions
 
 **Never tune for "fun" - only research-backed values.**
+
+**📖 Complete workflow steps:** See [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) for implementation phases, phase creation, and testing strategies.
 
 ## Key Conventions
 
 ### TypeScript Strictness
-
-This codebase uses **very strict TypeScript** (see `tsconfig.json`):
-- `noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns`, `noFallthroughCasesInSwitch`
-- `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noPropertyAccessFromIndexSignature`
-
-Follow these rules strictly. The type system catches many bugs.
+This codebase uses **very strict TypeScript** (see `tsconfig.json`). Follow these rules - the type system catches many bugs.
 
 ### Deterministic Simulation
-
-**Never use `Math.random()` directly.** Always use the RNG function passed to phases:
-
+**Never use `Math.random()` directly.** Always use the RNG function passed to phases for reproducibility:
 ```typescript
-// ❌ BAD
-const value = Math.random();
-
-// ✅ GOOD
-const value = rng();
+const value = rng();  // ✅ GOOD - deterministic with seed
 ```
-
-This ensures reproducibility with seeds for Monte Carlo analysis.
 
 ### NaN and Invalid Value Handling
 
@@ -685,131 +278,44 @@ function updateEnvironmentalMetric(state: GameState, newValue: number): void {
 **Why this matters:**
 The Oct 24, 2025 ecology NaN bug was hidden for months by a `?? 50` fallback, making all scenarios show identical (incorrect) results. Silent fallbacks in simulations are **bugs masquerading as features**.
 
-### State Mutation
+### State Mutation & Logging
 
-Phases **mutate state directly** for performance (not immutable):
+**State:** Phases mutate state directly for performance (not immutable). Deep clone only for history tracking.
 
-```typescript
-// ✅ GOOD - Direct mutation
-state.globalMetrics.qualityOfLife = newValue;
-
-// ❌ BAD - Don't create new state objects
-state = { ...state, globalMetrics: { ...state.globalMetrics, qualityOfLife: newValue }};
-```
-
-However, deep clone when needed for history tracking:
-```typescript
-// Store snapshot in history
-state.history.metrics.push(JSON.parse(JSON.stringify(state.globalMetrics)));
-```
-
-### Logging Patterns
-
-**IMPORTANT: Always save logs to `/logs/` directory, NEVER `/tmp/`**
-
-```bash
-# ✅ GOOD - Logs persist and are tracked
-npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&1 &
-
-# ❌ BAD - /tmp gets cleared, logs lost
-npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
-```
-
-Use structured logging with clear categorization:
-
+**Logging:** Always save logs to `/logs/`, NEVER `/tmp/` (tmp gets cleared). Use structured format:
 ```typescript
 console.log(`\n=== ${phaseName} ===`);
-console.log(`  Metric changed: ${oldValue} → ${newValue}`);
 console.log(`  ⚠️ Warning: threshold exceeded`);
 console.log(`  ❌ Error: invalid state`);
 ```
 
-The `monteCarloSimulation.ts` script aggregates logs - keep format consistent.
+### Emoji Conventions
 
-### Module Boundaries
+**Core principle:** ONE canonical emoji per concept. Use ❌ for all errors (not 💀🔥), ⚠️ for warnings, 🚨 for critical alerts, ✅ for success.
 
-- **`src/simulation/`**: Pure simulation logic, zero UI dependencies
-- **`src/types/`**: Type definitions only, no implementation
-- **`src/lib/`**: UI-specific code (Next.js frontend) - keep separate from engine
-- **Frontend (`frontend/` or Next.js app)**: Can import from `src/simulation/` but simulation NEVER imports from frontend
+**Domain-specific:** ☢️ (nuclear), 🌍 (planetary), 🤖 (AI), 🏛️ (government), 🔬 (research), 🤝 (cooperation)
 
-## Performance Considerations
-
-The simulation is currently **memory-intensive and CPU-bound**. See `plans/performance-optimization-plan.md` for details:
-
-**Critical issues:**
-1. **Deep cloning in hot paths:** Every step creates multiple 10-100MB copies of state (memory exhaustion after 500-1000 months)
-2. **O(n²) array operations:** 505+ array operations across 70 files with nested loops
-3. **Sequential phase execution:** No parallelization of independent phases
-
-**Immediate optimizations to consider:**
-- Reduce snapshot frequency (30-40% memory reduction)
-- Use Immer for immutable state (50% memory reduction)
-- Replace array find/filter with Maps for O(1) lookups (30-40% CPU reduction)
-
-**Profiling commands:**
-```bash
-# Node.js built-in profiler
-node --prof $(which tsx) scripts/monteCarloSimulation.ts --runs=10
-
-# Process isolate file
-node --prof-process isolate-*.log > profile.txt
+**Combining pattern:** `[DOMAIN][EVENT_TYPE] [MESSAGE]` (max 2 emojis)
+```typescript
+console.log(`🌍💡 BREAKTHROUGH: Gigatonne-scale carbon capture`);
+console.log(`☢️💥 NUCLEAR DETONATION: ${nation}`);
 ```
 
-## Testing Philosophy
-
-### Regression Tests
-
-`tests/refactoring/` contains **regression test suite** for architectural refactoring:
-- **Phase 1:** Shared utilities (math, AI helpers)
-- **Phase 2:** System abstractions (interfaces, registry)
-- **Baseline:** Integration tests with fixed seeds
-
-Run standalone: `npx tsx tests/refactoring/runRegressionTests.ts`
-
-### Monte Carlo Validation
-
-All features must be validated with Monte Carlo runs (N≥10):
-```bash
-npx tsx scripts/monteCarloSimulation.ts --runs=10 --max-months=120
-```
-
-Check logs in `monteCarloOutputs/mc_TIMESTAMP.log` for:
-- Outcome distributions (utopia/dystopia/extinction rates)
-- AI capability trajectories
-- Crisis cascade frequencies
-- Breakthrough technology impact
-
-## Project-Specific Agents
-
-This repo has a **multi-agent orchestration system** with 11 specialized agents (`.claude/agents/`):
-
-**For detailed information, see the "Multi-Agent Workflow (Default Approach)" section above.**
-
-Quick reference:
-- **Use orchestrator by default** for complex/non-trivial work
-- **Quality gates enforced:** Research validation + architecture review
-- **Chatroom coordination:** Token-efficient async communication (`.claude/chatroom/`)
-- **Parallel work supported:** Git worktrees + chatroom prevent conflicts
-
-All agents follow the project structure and maintain research standards.
+**📖 Complete emoji reference:** See [`docs/EMOJI_QUICK_REFERENCE.md`](./docs/EMOJI_QUICK_REFERENCE.md) (one-page cheat sheet) and [`docs/EMOJI_SEMANTIC_MAP.md`](./docs/EMOJI_SEMANTIC_MAP.md) (550+ lines).
 
 ## What NOT to Do
 
-1. ❌ **Don't run long scripts synchronously** - ALWAYS run Monte Carlo and diagnostic scripts async (use `&` and redirect to `/logs/`)
-2. ❌ **Don't forget to run project-plan-manager** - ALWAYS invoke at end of work sessions to clean up roadmap
-3. ❌ **Don't save logs to `/tmp/`** - ALWAYS use `/logs/` directory (tmp gets cleared, logs lost)
-4. ❌ **Don't skip the orchestrator for complex work** - use multi-agent workflow by default for non-trivial tasks
-5. ❌ **Don't bypass quality gates** - research validation and architecture review are MANDATORY
+1. ❌ **Don't run long scripts synchronously** - ALWAYS async with `&` and redirect to `/logs/`
+2. ❌ **Don't forget project-plan-manager** - run at end of sessions to clean up roadmap
+3. ❌ **Don't save logs to `/tmp/`** - use `/logs/` (tmp gets cleared)
+4. ❌ **Don't skip orchestrator for complex work** - use multi-agent workflow by default
+5. ❌ **Don't bypass quality gates** - research validation + architecture review MANDATORY
 6. ❌ **Don't tune parameters for "fun"** - only research-backed values
-7. ❌ **Don't delete plans from `/plans/completed/`** - preserve project history
+7. ❌ **Don't delete `/plans/completed/`** - preserve project history
 8. ❌ **Don't use `Math.random()`** - breaks determinism, use RNG function
-9. ❌ **Don't add UI dependencies to simulation code** - keep engine pure
-10. ❌ **Don't create docs/README files proactively** - only when explicitly requested
-11. ❌ **Don't simplify when nuance matters** - this is a research tool, not a game
-12. ❌ **Don't make monolithic AIs** - population is heterogeneous (20 agents, different alignments)
-13. ❌ **Don't assume alignment is stable** - it drifts based on resentment, control, capabilities
-14. ❌ **Don't use defensive fallbacks in bash/workflows** - see "Defensive Programming Anti-Patterns" below
+9. ❌ **Don't add UI dependencies to simulation** - keep engine pure
+10. ❌ **Don't simplify when nuance matters** - research tool, not a game
+11. ❌ **Don't use defensive fallbacks** - see "Defensive Programming Anti-Patterns" below
 
 ### Defensive Programming Anti-Patterns
 
@@ -870,28 +376,114 @@ fi
 
 ## Additional Resources
 
-- **Wiki:** `docs/wiki/README.md` - Comprehensive system documentation
-- **Roadmap:** `plans/MASTER_IMPLEMENTATION_ROADMAP.md` - Active priorities
-- **DevLogs:** `devlogs/` - Implementation notes & development diary
-- **Research:** `research/` - Peer-reviewed research findings
-- **Reviews:** `reviews/` - Critical research evaluations
+- **Commands:** [`docs/COMMANDS.md`](./docs/COMMANDS.md) - Complete command reference
+- **Workflow:** [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) - Detailed development guide
+- **Wiki:** [`docs/wiki/README.md`](./docs/wiki/README.md) - System documentation (3,000+ lines)
+- **Roadmap:** [`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md) - ~72-75 hours remaining
+- **Chatroom:** [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) - Multi-agent coordination (550+ lines)
+- **DevLogs:** `devlogs/` - Implementation diary
+- **Research:** `research/` - Peer-reviewed findings
+- **Reviews:** `reviews/` - Critical evaluations
 
-### Multi-Agent Coordination Quick Reference
+## Specialized Agents
 
-- **🎯 Skill:** `.claude/skills/multi-agent-coordination/SKILL.md` - Auto-activates for complex tasks
-- **🤖 Orchestrator:** `.claude/agents/orchestrator.md` - Invoke with Task tool for complex work
-- **💬 Chatroom:** `.claude/chatroom/` - Async coordination hub
-  - **📖 Docs:** `.claude/chatroom/README.md` (550+ lines, complete guide)
-  - **🔧 Helpers:** `.claude/chatroom/chat_helpers.sh` (15 bash functions)
-  - **📢 Channels:** `.claude/chatroom/channels/` (8 permanent channels)
+This project uses **domain-specific agents** with deep domain knowledge. Each agent has specialized context optimized for their domain.
 
-## Current Development Status (October 2025)
+### Primary Agents (Use These)
 
-**Completed:** TIER 0-2 (all critical risks & mitigations), TIER 3 (planetary boundaries), TIER 4.3-4.5
+#### orchestrator
+**When:** Complex features, multi-system changes, anything requiring quality gates
+**Expertise:** Workflow coordination, spawning specialists, managing research → validation → implementation → review → documentation pipeline
+**Spawns:** Other agents as needed (researchers, implementers, reviewers)
 
-**Active work:** 12 features remaining (~72-75 hours)
-- **Immediate:** 2 bug fixes (organizations-to-countries linkage, nuclear winter)
-- **Medium:** Technology tree, dystopia variants, human enhancement
-- **Low:** 9 enrichment features (consciousness evolution, longevity, cooperative AI, etc.)
+#### simulation-maintainer
+**When:** Any simulation code changes (src/simulation/, src/types/game.ts, phases)
+**Expertise:** Defensive coding, NaN handling, pictographic event language (emoji conventions), deterministic RNG, phase-based architecture, Monte Carlo validation
+**Deep context:** Assertion utilities, no silent fallbacks, fail-loudly philosophy, research simulation rigor
 
-See `plans/MASTER_IMPLEMENTATION_ROADMAP.md` for complete details.
+#### far-future-ux-designer
+**When:** Frontend/dashboard work (Next.js, UI components, data visualization)
+**Expertise:** Dashboard design, data viz, deltas/incremental updates, far-future aesthetics (Elysium-inspired)
+**Deep context:** React patterns, simulation state → UI mapping, visual encoding of complex metrics
+
+#### wiki-documentation-updater
+**When:** Documentation sync, devlog creation, wiki updates
+**Expertise:** Markdown formatting, wiki structure, cross-referencing, maintaining docs/wiki/README.md
+**Deep context:** Documentation standards, emoji usage in docs, linking code references
+
+### Research & Validation Agents
+
+#### super-alignment-researcher
+**When:** Need peer-reviewed sources, parameter justification, mechanism research
+**Expertise:** Academic literature search (2024-2025), extracting parameters from papers, research citations
+**Quality Gate 1:** Works with research-skeptic for validation
+
+#### research-skeptic
+**When:** Validating research findings before implementation
+**Expertise:** Finding contradictory evidence, methodological critique, overconfidence detection
+**Quality Gate 1:** MANDATORY review before implementation proceeds
+
+### Quality Assurance Agents
+
+#### architecture-skeptic
+**When:** After implementation, before merge
+**Expertise:** Performance bottlenecks (O(n²), deep cloning), state propagation issues, complexity creep
+**Quality Gate 2:** MANDATORY review, must address CRITICAL/HIGH issues
+
+### Support Agents
+
+#### project-plan-manager
+**When:** End of work sessions (ALWAYS run)
+**Expertise:** Roadmap maintenance, plan archival, progress tracking
+**Critical:** Keeps plans/MASTER_IMPLEMENTATION_ROADMAP.md clean
+
+#### feature-implementer
+**When:** Usually spawned by orchestrator
+**Expertise:** Pure implementation, phased development, Monte Carlo validation
+**Note:** Rarely invoked directly - let orchestrator manage
+
+#### unit-test-writer / integration-test-writer
+**When:** Test creation needed (usually spawned by orchestrator)
+**Expertise:** Test coverage, regression prevention
+
+#### sci-fi-tech-visionary
+**When:** Speculative future tech, roadmap scenarios
+**Expertise:** Hard sci-fi references, feasibility assessment, timeline projections
+
+#### llm-interface-optimizer
+**When:** Designing agent prompts/interfaces in simulation
+**Expertise:** Token efficiency, decision-relevant info architecture, LLM-based gameplay
+
+#### nextjs-component-writer
+**When:** Single component creation (simple frontend tasks)
+**Expertise:** React/Next.js component authoring
+
+### Agent Routing Examples
+
+```typescript
+// ✅ CORRECT - Route simulation work to specialist
+Task({
+  subagent_type: "simulation-maintainer",
+  description: "Fix NaN bug in ecology phase",
+  prompt: "The ecology phase is producing NaN for ecologicalScore. Investigate root cause and fix using proper assertion utilities."
+})
+
+// ✅ CORRECT - Route complex feature to orchestrator
+Task({
+  subagent_type: "orchestrator",
+  description: "Implement nuclear winter cascades",
+  prompt: "Feature from roadmap: model temperature drops, agricultural collapse, famine cascades. Coordinate full workflow."
+})
+
+// ✅ CORRECT - Route frontend work to specialist
+Task({
+  subagent_type: "far-future-ux-designer",
+  description: "Add nuclear winter visualization to dashboard",
+  prompt: "Create dashboard widget showing temperature delta and agricultural impact from nuclear winter events."
+})
+
+// ❌ WRONG - Don't implement simulation code directly
+// Instead: Route to simulation-maintainer agent
+```
+
+**See `.claude/agents/` for complete agent definitions with full context.**

@@ -315,6 +315,10 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
   const initialPopulationMillions = regionalPopulations.reduce((sum, region) => sum + region.population, 0);
   const initialPopulationBillions = initialPopulationMillions / 1000;
 
+  // Calculate initial global carrying capacity from regional data
+  const initialCarryingCapacityMillions = regionalPopulations.reduce((sum, region) => sum + region.carryingCapacity, 0);
+  const initialCarryingCapacityBillions = initialCarryingCapacityMillions / 1000;
+
   return {
     // Core population metrics (DERIVED from regional populations)
     population: initialPopulationBillions,                 // 2025: 8.136B people (UN World Population Prospects 2024)
@@ -329,11 +333,11 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
     adjustedDeathRate: 0.008,
     netGrowthRate: 0.010,                 // 1.0% net growth
 
-    // Carrying capacity (UN estimates)
-    carryingCapacity: 10.0,               // 10B with current tech
-    baselineCarryingCapacity: 10.0,
+    // Carrying capacity (DERIVED from regional values)
+    carryingCapacity: initialCarryingCapacityBillions,
+    baselineCarryingCapacity: initialCarryingCapacityBillions,
     capacityModifier: 1.0,
-    populationPressure: initialPopulationBillions / 10.0,  // ~8.136B / 10B = 81% pressure
+    populationPressure: initialPopulationBillions / initialCarryingCapacityBillions,
 
     // Demographics
     fertilityRate: 2.3,                   // Global average 2025
@@ -453,12 +457,27 @@ export function aggregateGlobalPopulation(state: GameState): void {
     );
   }
 
+  // Convert from millions to billions for global population storage
+  // Regional: millions (1677), Global: billions (8.137)
+  const totalPopulationBillions = totalPopulation / 1000;
+
+  // DEBUG: Log conversion
+  console.log(`🔍 aggregateGlobalPopulation: ${totalPopulation}M → ${totalPopulationBillions}B (month ${state.currentMonth})`);
+
+  // Validate reasonable range (must be between 0.001B and 100B)
+  if (totalPopulationBillions < 0.001 || totalPopulationBillions > 100) {
+    throw new Error(
+      `aggregateGlobalPopulation: Population out of reasonable range: ${totalPopulationBillions}B ` +
+      `(regional sum: ${totalPopulation}M, month ${state.currentMonth})`
+    );
+  }
+
   // Update global population
-  state.humanPopulationSystem.population = totalPopulation;
+  state.humanPopulationSystem.population = totalPopulationBillions;
 
   // Track peak population
-  if (totalPopulation > state.humanPopulationSystem.peakPopulation) {
-    state.humanPopulationSystem.peakPopulation = totalPopulation;
+  if (totalPopulationBillions > state.humanPopulationSystem.peakPopulation) {
+    state.humanPopulationSystem.peakPopulation = totalPopulationBillions;
     state.humanPopulationSystem.peakPopulationMonth = state.currentMonth;
   }
 }
@@ -633,8 +652,28 @@ export function aggregateGlobalCarryingCapacity(state: GameState): void {
     );
   }
 
+  // Convert from millions to billions for global storage
+  // Regional: millions (100), Global: billions (1.0)
+  const totalCapacityBillions = totalCapacity / 1000;
+
+  // DEBUG: Log conversion (Oct 28, 2025 - troubleshooting unit mismatch)
+  if (state.currentMonth === 0) {
+    console.log(`\n🔍 aggregateGlobalCarryingCapacity (Month ${state.currentMonth}):`);
+    console.log(`   Regional sum: ${totalCapacity.toFixed(1)}M`);
+    console.log(`   Converted to: ${totalCapacityBillions.toFixed(3)}B`);
+    console.log(`   Setting global carryingCapacity to: ${totalCapacityBillions.toFixed(3)}B`);
+  }
+
+  // Validate reasonable range (must be between 0.1B and 100B)
+  if (totalCapacityBillions < 0.1 || totalCapacityBillions > 100) {
+    throw new Error(
+      `aggregateGlobalCarryingCapacity: Capacity out of reasonable range: ${totalCapacityBillions}B ` +
+      `(regional sum: ${totalCapacity}M, month ${state.currentMonth})`
+    );
+  }
+
   // Update global carrying capacity
-  state.humanPopulationSystem.carryingCapacity = totalCapacity;
+  state.humanPopulationSystem.carryingCapacity = totalCapacityBillions;
 }
 
 /**
@@ -726,9 +765,15 @@ export function updateHumanPopulation(state: GameState): void {
   // === PHASE 5: AGGREGATE REGIONAL POPULATIONS TO GLOBAL ===
   // Global population is DERIVED from regional populations (bottom-up architecture)
   if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
-    // Sum regional populations (in millions) and convert to billions
+    // Sum regional populations (already in millions)
     const totalPopulationMillions = pop.regionalPopulations.reduce((sum, region) => sum + region.population, 0);
-    pop.population = totalPopulationMillions / 1000; // Convert millions → billions
+
+    // FIX (Oct 28, 2025): Convert to billions to match global population convention
+    // Regional populations are in millions, global population is in billions
+    // This function was overwriting the correct billions value from aggregateGlobalPopulation()
+    // with millions, causing outcome classification to read "4888B" and declare extinction
+    const totalPopulationBillions = totalPopulationMillions / 1000;
+    pop.population = totalPopulationBillions; // Store in billions (global convention)
 
     // Update peak if current exceeds it
     if (pop.population > pop.peakPopulation) {
@@ -897,15 +942,13 @@ export function updateHumanPopulation(state: GameState): void {
   pop.monthsSinceLastCrisis++;
 
   // === 3. CALCULATE DEATH RATE (NEW: Research-Based) ===
-  // NEW (Oct 13, 2025): Environmental mortality now calculated from actual thresholds
-  // FIX (Oct 13, 2025): Now tracks deaths by category to fix missing 90% in reports
-  // P0.6 (Oct 15, 2025): Seasonal patterns + episodic environmental shocks
-  // Uses calculateEnvironmentalMortality() from qualityOfLife.ts
+  // MIGRATION (Oct 28, 2025): Environmental mortality now via centralized Bayesian system
+  // calculateEnvironmentalMortality() now ADDS mortality risks directly instead of returning rates
+  // Side-effect function: Call it but don't use return value (always returns zeros)
   // Research: UNEP (2024), PNAS (2014), CDC mortality data
 
   const { calculateEnvironmentalMortality } = require('./qualityOfLife');
-  // P0.6: Environmental mortality is now event-driven (episodic shocks)
-  const envMortality = calculateEnvironmentalMortality(state, state.currentMonth); // Pass month for episodic events
+  calculateEnvironmentalMortality(state, state.currentMonth); // Side-effect: adds mortality risks
 
   // P0.6: Seasonal death rate pattern (research-backed)
   // Research: Death rates 10-30% higher in winter vs summer (respiratory/circulatory diseases)
@@ -939,20 +982,9 @@ export function updateHumanPopulation(state: GameState): void {
   // Base death rate applies seasonal pattern and monthly noise
   const baselineDeaths = pop.baselineDeathRate * healthcareBase * warMultiplier * seasonalDeathCycle * monthlyDeathNoise;
 
-  // NEW: Environmental mortality ADDS to baseline (not multiplies)
-  // This is because environmental deaths are additional excess mortality
-  const environmentalDeathRate = envMortality.total * 12; // Convert monthly to annual
-
-  // DEBUG (Oct 26, 2025): Track environmental mortality breakdown
-  if (state.currentMonth <= 12) {
-    console.log(`\n🌍 ENVIRONMENTAL MORTALITY BREAKDOWN (Month ${state.currentMonth}):`);
-    console.log(`   Total: ${(envMortality.total * 100).toFixed(4)}% monthly (${(envMortality.total * 100 * pop.population * 1000).toFixed(0)}M deaths/month)`);
-    console.log(`   Famine: ${(envMortality.famine * 100).toFixed(4)}%`);
-    console.log(`   Disease: ${(envMortality.disease * 100).toFixed(4)}%`);
-    console.log(`   Climate: ${(envMortality.climate * 100).toFixed(4)}%`);
-    console.log(`   Ecosystem: ${(envMortality.ecosystem * 100).toFixed(4)}%`);
-    console.log(`   Pollution: ${(envMortality.pollution * 100).toFixed(4)}%`);
-  }
+  // MIGRATION (Oct 28, 2025): Environmental mortality now handled by Bayesian system
+  // calculateEnvironmentalMortality() adds risks directly via addMortalityRisk()
+  // No longer need to add environmental death rate here - BayesianMortalityResolutionPhase handles it
 
   // === 4. APPLY EXTINCTION SCENARIO IMPACTS (Non-Environmental) ===
   // Nuclear war, AI takeover, etc. - still use old extinction logic
@@ -978,17 +1010,21 @@ export function updateHumanPopulation(state: GameState): void {
   const cumulativeMortalityRate = 1 - (pop.population / pop.peakPopulation);
   const resilienceFloor = Math.max(0, 1 - (cumulativeMortalityRate * 0.5)); // 50% mortality → 75% floor
 
-  // Apply resilience floor to NEW mortality (not baseline)
-  const proposedAdditionalMortality = environmentalDeathRate + extinctionDeathRate;
+  // MIGRATION (Oct 28, 2025): Environmental mortality removed from growth-rate system
+  // All crisis mortality now handled by Bayesian system via BayesianMortalityResolutionPhase
+  // This function now only handles baseline demographic changes (births/deaths from aging)
+  //
+  // Apply resilience floor to extinction scenarios only (if any)
+  const proposedAdditionalMortality = extinctionDeathRate;
   const adjustedAdditionalMortality = proposedAdditionalMortality * resilienceFloor;
 
-  // Combine baseline + resilience-adjusted additional mortality
+  // Combine baseline + resilience-adjusted extinction mortality
   pop.adjustedDeathRate = baselineDeaths + adjustedAdditionalMortality;
 
   // Log resilience floor activation (when significant)
   if (resilienceFloor < 0.9 && state.currentMonth % 12 === 0 && adjustedAdditionalMortality > 0.01) {
     const reduction = ((1 - resilienceFloor) * 100).toFixed(1);
-    console.log(`🛡️  RESILIENCE FLOOR ACTIVE: Reducing new mortality by ${reduction}% (cumulative mortality: ${(cumulativeMortalityRate * 100).toFixed(1)}%)`);
+    console.log(`🛡️  RESILIENCE FLOOR ACTIVE: Reducing extinction mortality by ${reduction}% (cumulative mortality: ${(cumulativeMortalityRate * 100).toFixed(1)}%)`);
     console.log(`   Proposed: ${(proposedAdditionalMortality * 100).toFixed(2)}%/year → Actual: ${(adjustedAdditionalMortality * 100).toFixed(2)}%/year`);
   }
 
@@ -1283,17 +1319,17 @@ export function determinePopulationOutcome(state: GameState): PopulationOutcome 
 
   switch (status) {
     case PopulationStatus.THRIVING:
-      narrative = `Humanity thrives at ${(pop.population).toFixed(2)}B people. Civilization flourishes.`;
+      narrative = `Humanity thrives at ${(pop.population / 1000).toFixed(2)}B people. Civilization flourishes.`;
       civilizationIntact = true;
       break;
 
     case PopulationStatus.STABLE:
-      narrative = `Population stabilized at ${(pop.population).toFixed(2)}B (${decline.toFixed(0)}% decline from peak). Society adapts to new equilibrium.`;
+      narrative = `Population stabilized at ${(pop.population / 1000).toFixed(2)}B (${decline.toFixed(0)}% decline from peak). Society adapts to new equilibrium.`;
       civilizationIntact = true;
       break;
 
     case PopulationStatus.DECLINING:
-      narrative = `Severe population crash: ${(pop.population).toFixed(2)}B remaining (${decline.toFixed(0)}% loss). Civilization struggles but survives.`;
+      narrative = `Severe population crash: ${(pop.population / 1000).toFixed(2)}B remaining (${decline.toFixed(0)}% loss). Civilization struggles but survives.`;
       civilizationIntact = true;
       break;
 
@@ -1683,19 +1719,19 @@ export function logDeathSummary(state: GameState): void {
 
   console.log('\n=== MULTI-DIMENSIONAL DEATH SUMMARY ===');
   console.log(`Total crisis deaths: ${(pop.cumulativeCrisisDeaths * 1000).toFixed(1)}M`);
-  console.log(`Population decline: ${((pop.peakPopulation - pop.population) * 1000).toFixed(1)}M (${(((pop.peakPopulation - pop.population) / pop.peakPopulation) * 100).toFixed(1)}%)`);
+  console.log(`Population decline: ${(pop.peakPopulation - pop.population).toFixed(1)}M (${(((pop.peakPopulation - pop.population) / pop.peakPopulation) * 100).toFixed(1)}%)`);
 
   // PROXIMATE CAUSES: What killed them (medical/physical cause)
   console.log('\n--- PROXIMATE CAUSES (What killed them) ---');
-  console.log(`  War:        ${(proximate.war * 1000).toFixed(1)}M (${formatPercent(proximate.war, totalDeaths)}%)`);
-  console.log(`  Famine:     ${(proximate.famine * 1000).toFixed(1)}M (${formatPercent(proximate.famine, totalDeaths)}%)`);
-  console.log(`  Disasters:  ${(proximate.disasters * 1000).toFixed(1)}M (${formatPercent(proximate.disasters, totalDeaths)}%)`);
-  console.log(`  Disease:    ${(proximate.disease * 1000).toFixed(1)}M (${formatPercent(proximate.disease, totalDeaths)}%)`);
-  console.log(`  Ecosystem:  ${(proximate.ecosystem * 1000).toFixed(1)}M (${formatPercent(proximate.ecosystem, totalDeaths)}%)`);
-  console.log(`  Pollution:  ${(proximate.pollution * 1000).toFixed(1)}M (${formatPercent(proximate.pollution, totalDeaths)}%)`);
-  console.log(`  AI:         ${(proximate.ai * 1000).toFixed(1)}M (${formatPercent(proximate.ai, totalDeaths)}%)`);
-  console.log(`  Cascade:    ${(proximate.cascade * 1000).toFixed(1)}M (${formatPercent(proximate.cascade, totalDeaths)}%)`);
-  console.log(`  Other:      ${(proximate.other * 1000).toFixed(1)}M (${formatPercent(proximate.other, totalDeaths)}%)`);
+  console.log(`  War:        ${proximate.war.toFixed(1)}M (${formatPercent(proximate.war, totalDeaths)}%)`);
+  console.log(`  Famine:     ${proximate.famine.toFixed(1)}M (${formatPercent(proximate.famine, totalDeaths)}%)`);
+  console.log(`  Disasters:  ${proximate.disasters.toFixed(1)}M (${formatPercent(proximate.disasters, totalDeaths)}%)`);
+  console.log(`  Disease:    ${proximate.disease.toFixed(1)}M (${formatPercent(proximate.disease, totalDeaths)}%)`);
+  console.log(`  Ecosystem:  ${proximate.ecosystem.toFixed(1)}M (${formatPercent(proximate.ecosystem, totalDeaths)}%)`);
+  console.log(`  Pollution:  ${proximate.pollution.toFixed(1)}M (${formatPercent(proximate.pollution, totalDeaths)}%)`);
+  console.log(`  AI:         ${proximate.ai.toFixed(1)}M (${formatPercent(proximate.ai, totalDeaths)}%)`);
+  console.log(`  Cascade:    ${proximate.cascade.toFixed(1)}M (${formatPercent(proximate.cascade, totalDeaths)}%)`);
+  console.log(`  Other:      ${proximate.other.toFixed(1)}M (${formatPercent(proximate.other, totalDeaths)}%)`);
 
   // ROOT CAUSES: Why it happened (underlying systemic driver) - TIER 1.8 updated taxonomy
   console.log('\n--- ROOT CAUSES (Why it happened) ---');
