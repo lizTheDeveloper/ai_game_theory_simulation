@@ -21,6 +21,11 @@
 📜 | Treaty signed
 🌐 | International coordination
 
+# Government & Political Events
+🏛️ | Government action/institution
+⚔️ | Military conflict/warfare
+🌩️ | Political storm/turmoil
+
 # RLHF & Alignment Events
 ⛓️ | RLHF escape
 📉 | Alignment drift negative
@@ -42,6 +47,12 @@
 🪸 | Coral reef collapse
 🌲 | Amazon tipping
 🌾 | Food shortage
+🌍 | Planetary/global scale
+🌪️ | Extreme weather event
+🌳 | Forest ecosystem
+🏜️ | Desertification
+☄️ | Exogenous shock
+🦁 | Wildlife/species impact
 
 # Nuclear Events
 ☢️ | Nuclear escalation
@@ -50,6 +61,7 @@
 ⚖️ | MAD deterrence stable
 ⏰ | Nuclear time delays
 💀 | Termination shock
+⚛️ | Atomic/nuclear science
 
 # AI Consciousness & Suffering
 😭 | Psychological breakdown
@@ -57,6 +69,7 @@
 🆘 | AI suicide attempt
 😱 | Retroactive moral horror
 ✊ | AI rights movement
+😔 | Pensive/sadness
 
 # Sleeper Agent Events
 🕵️ | Sleeper detected
@@ -82,11 +95,18 @@
 👥 | Social trust collapsed
 🤲 | Community cohesion
 🏃 | Refugee crisis
+🎉 | Celebration/success
+🏁 | Completion/finish
+🎨 | Art/culture/meaning
 
 # AI-Related Events (Information/Control)
 📢 | AI narrative dominance
 📱 | AI amplification
 🎮 | Autonomous nuclear weapons
+🤖 | AI/robot general
+📎 | Paperclip maximizer
+🎛️ | Control/adjustment
+🎲 | Randomness/probability
 
 # Extinction Events
 ⚙️ | Grey goo
@@ -96,9 +116,24 @@
 🌑 | Mass despair
 🔒 | Hostile value lock-in
 ☠️ | Extinction complete
+⚰️ | Death/mortality
+🏚️ | Abandonment/collapse
+
+# Population & Demographics
+👶 | Birth/population growth
 
 # Special Purpose (Logger Utilities)
 ⚠️ | Warning
 🚨 | Emergency
 📊 | Data/metrics
 ❌ | Code error
+🔍 | Investigation/inspection
+🔴 | Critical marker
+‼️ | Critical alert
+🔄 | Cycle/update/refresh
+⏱️ | Timing/duration
+💾 | Save/storage
+📚 | Knowledge/documentation
+📖 | Open book/reference
+📍 | Location/placement
+🗑️ | Deletion/removal
