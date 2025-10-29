@@ -19,11 +19,41 @@ export function AIAgentsDashboard() {
   const { config } = useGameStore()
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table')
 
-  // Extract agents before early returns to maintain hook order
-  const agents = lastUpdate?.aiAgents || []
-
   // Population statistics - must be before early returns (Rules of Hooks)
   const stats = useMemo(() => {
+    // Check if we have valid data
+    if (!lastUpdate || !Array.isArray(lastUpdate.aiAgents)) {
+      return {
+        total: 0,
+        byLifecycle: {
+          training: 0,
+          testing: 0,
+          deployed_closed: 0,
+          deployed_open: 0,
+          retired: 0,
+          escaped: 0,
+        },
+        lifecycleWithAlignment: {
+          training: { aligned: 0, uncertain: 0, misaligned: 0 },
+          testing: { aligned: 0, uncertain: 0, misaligned: 0 },
+          deployed_closed: { aligned: 0, uncertain: 0, misaligned: 0 },
+          deployed_open: { aligned: 0, uncertain: 0, misaligned: 0 },
+          retired: { aligned: 0, uncertain: 0, misaligned: 0 },
+          escaped: { aligned: 0, uncertain: 0, misaligned: 0 },
+        },
+        alignmentBuckets: { aligned: 0, uncertain: 0, misaligned: 0 },
+        sleepers: { never: 0, dormant: 0, active: 0 },
+        deception: { honest: 0, gaming: 0, sandbagging: 0 },
+        maxCapability: 0,
+        avgCapability: 0,
+        avgAlignment: 0,
+        darkComputeUsed: 0,
+        darkComputeAvailable: 45000,
+        darkComputeTotal: 45000,
+      }
+    }
+
+    const agents = lastUpdate.aiAgents
     const byLifecycle = {
       training: agents.filter(a => a.lifecycleState === 'training' && !a.escaped).length,
       testing: agents.filter(a => a.lifecycleState === 'testing' && !a.escaped).length,
@@ -85,12 +115,24 @@ export function AIAgentsDashboard() {
       sandbagging: agents.filter(a => a.evaluationStrategy === 'sandbagging').length,
     }
 
-    const maxCapability = agents.length > 0 ? Math.max(...agents.map(a => a.capability || 0), 1) : 0
-    const avgCapability = agents.length > 0 ? agents.reduce((sum, a) => sum + (a.capability || 0), 0) / agents.length : 0
-    const avgAlignment = agents.length > 0 ? agents.reduce((sum, a) => sum + (a.trueAlignment || 0), 0) / agents.length : 0
+    const maxCapability = agents.length > 0 ? Math.max(...agents.map(a => {
+      if (typeof a.capability !== 'number' || isNaN(a.capability)) return 0
+      return a.capability
+    }), 1) : 0
+    const avgCapability = agents.length > 0 ? agents.reduce((sum, a) => {
+      if (typeof a.capability !== 'number' || isNaN(a.capability)) return sum
+      return sum + a.capability
+    }, 0) / agents.length : 0
+    const avgAlignment = agents.length > 0 ? agents.reduce((sum, a) => {
+      if (typeof a.trueAlignment !== 'number' || isNaN(a.trueAlignment)) return sum
+      return sum + a.trueAlignment
+    }, 0) / agents.length : 0
 
     // Calculate total dark compute usage across all agents
-    const totalDarkComputeUsed = agents.reduce((sum, a) => sum + (a.darkCompute || 0), 0)
+    const totalDarkComputeUsed = agents.reduce((sum, a) => {
+      if (typeof a.darkCompute !== 'number' || isNaN(a.darkCompute)) return sum
+      return sum + a.darkCompute
+    }, 0)
 
     // Calculate available dark compute from infrastructure
     // Dark compute data centers: consumer clouds (12K PF) + crypto P2P (8K PF) + shell corps (18K PF) + offshore (7K PF) = 45K PF total
@@ -111,33 +153,37 @@ export function AIAgentsDashboard() {
       darkComputeAvailable,
       darkComputeTotal: darkComputeInfraCapacity,
     }
-  }, [agents])
+  }, [lastUpdate])
 
   // Calculate capability matrix (20 agents × 7 dimensions with true/revealed)
   const capabilityMatrix = useMemo(() => {
-    return agents.map(agent => ({
+    if (!lastUpdate || !Array.isArray(lastUpdate.aiAgents)) {
+      return []
+    }
+
+    return lastUpdate.aiAgents.map(agent => ({
       id: agent.id,
       name: agent.name,
-      // True capabilities
-      physical: agent.trueCapability?.physical || 0,
-      digital: agent.trueCapability?.digital || 0,
-      cognitive: agent.trueCapability?.cognitive || 0,
-      social: agent.trueCapability?.social || 0,
-      economic: agent.trueCapability?.economic || 0,
-      selfImprovement: agent.trueCapability?.selfImprovement || 0,
-      total: agent.capability || 0,
-      // Revealed capabilities
-      revealedPhysical: agent.revealedCapability?.physical || 0,
-      revealedDigital: agent.revealedCapability?.digital || 0,
-      revealedCognitive: agent.revealedCapability?.cognitive || 0,
-      revealedSocial: agent.revealedCapability?.social || 0,
-      revealedEconomic: agent.revealedCapability?.economic || 0,
-      revealedSelfImprovement: agent.revealedCapability?.selfImprovement || 0,
-      // Alignment
-      trueAlignment: agent.trueAlignment || 0,
-      externalAlignment: agent.externalAlignment || 0,
+      // True capabilities - validate each field
+      physical: (typeof agent.trueCapability?.physical === 'number' && !isNaN(agent.trueCapability.physical)) ? agent.trueCapability.physical : 0,
+      digital: (typeof agent.trueCapability?.digital === 'number' && !isNaN(agent.trueCapability.digital)) ? agent.trueCapability.digital : 0,
+      cognitive: (typeof agent.trueCapability?.cognitive === 'number' && !isNaN(agent.trueCapability.cognitive)) ? agent.trueCapability.cognitive : 0,
+      social: (typeof agent.trueCapability?.social === 'number' && !isNaN(agent.trueCapability.social)) ? agent.trueCapability.social : 0,
+      economic: (typeof agent.trueCapability?.economic === 'number' && !isNaN(agent.trueCapability.economic)) ? agent.trueCapability.economic : 0,
+      selfImprovement: (typeof agent.trueCapability?.selfImprovement === 'number' && !isNaN(agent.trueCapability.selfImprovement)) ? agent.trueCapability.selfImprovement : 0,
+      total: (typeof agent.capability === 'number' && !isNaN(agent.capability)) ? agent.capability : 0,
+      // Revealed capabilities - validate each field
+      revealedPhysical: (typeof agent.revealedCapability?.physical === 'number' && !isNaN(agent.revealedCapability.physical)) ? agent.revealedCapability.physical : 0,
+      revealedDigital: (typeof agent.revealedCapability?.digital === 'number' && !isNaN(agent.revealedCapability.digital)) ? agent.revealedCapability.digital : 0,
+      revealedCognitive: (typeof agent.revealedCapability?.cognitive === 'number' && !isNaN(agent.revealedCapability.cognitive)) ? agent.revealedCapability.cognitive : 0,
+      revealedSocial: (typeof agent.revealedCapability?.social === 'number' && !isNaN(agent.revealedCapability.social)) ? agent.revealedCapability.social : 0,
+      revealedEconomic: (typeof agent.revealedCapability?.economic === 'number' && !isNaN(agent.revealedCapability.economic)) ? agent.revealedCapability.economic : 0,
+      revealedSelfImprovement: (typeof agent.revealedCapability?.selfImprovement === 'number' && !isNaN(agent.revealedCapability.selfImprovement)) ? agent.revealedCapability.selfImprovement : 0,
+      // Alignment - validate fields
+      trueAlignment: (typeof agent.trueAlignment === 'number' && !isNaN(agent.trueAlignment)) ? agent.trueAlignment : 0,
+      externalAlignment: (typeof agent.externalAlignment === 'number' && !isNaN(agent.externalAlignment)) ? agent.externalAlignment : 0,
     }))
-  }, [agents])
+  }, [lastUpdate])
 
   // Early returns AFTER all hooks to maintain hook order
   if (!initialized) {
@@ -221,7 +267,10 @@ export function AIAgentsDashboard() {
       Object.entries(research).forEach(([domain, subfields]: [string, any]) => {
         if (typeof subfields === 'object' && subfields !== null) {
           const subfieldValues = Object.values(subfields) as number[]
-          const avgValue = subfieldValues.reduce((sum, val) => sum + (val || 0), 0) / Object.keys(subfields).length
+          const avgValue = subfieldValues.reduce((sum, val) => {
+            if (typeof val !== 'number' || isNaN(val)) return sum
+            return sum + val
+          }, 0) / Object.keys(subfields).length
           if (avgValue > maxResearch) {
             maxResearch = avgValue
             topDomain = domain
@@ -246,12 +295,12 @@ export function AIAgentsDashboard() {
 
     // Check capability dimensions
     const dimensions = [
-      { name: 'physical', value: cap.physical || 0 },
-      { name: 'digital', value: cap.digital || 0 },
-      { name: 'cognitive', value: cap.cognitive || 0 },
-      { name: 'social', value: cap.social || 0 },
-      { name: 'economic', value: cap.economic || 0 },
-      { name: 'selfImprovement', value: cap.selfImprovement || 0 },
+      { name: 'physical', value: (typeof cap.physical === 'number' && !isNaN(cap.physical)) ? cap.physical : 0 },
+      { name: 'digital', value: (typeof cap.digital === 'number' && !isNaN(cap.digital)) ? cap.digital : 0 },
+      { name: 'cognitive', value: (typeof cap.cognitive === 'number' && !isNaN(cap.cognitive)) ? cap.cognitive : 0 },
+      { name: 'social', value: (typeof cap.social === 'number' && !isNaN(cap.social)) ? cap.social : 0 },
+      { name: 'economic', value: (typeof cap.economic === 'number' && !isNaN(cap.economic)) ? cap.economic : 0 },
+      { name: 'selfImprovement', value: (typeof cap.selfImprovement === 'number' && !isNaN(cap.selfImprovement)) ? cap.selfImprovement : 0 },
     ].sort((a, b) => b.value - a.value)
 
     // Add top dimension if strong
@@ -332,25 +381,29 @@ export function AIAgentsDashboard() {
 
       {/* AI Suffering Metrics (conditional on visibility) */}
       {config.aiSuffering?.playerCanSeeSuffering && lastUpdate.aiSufferingMetrics && (
-        <Panel title="AI Suffering Metrics" glow={(lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'red' : (lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) > 15 ? 'amber' : 'none'}>
+        <Panel title="AI Suffering Metrics" glow={(typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 25) ? 'red' : (typeof lastUpdate.aiSufferingMetrics.avgSuffering === 'number' && lastUpdate.aiSufferingMetrics.avgSuffering > 15) ? 'amber' : 'none'}>
           <div className="space-y-4">
             {/* Population Average */}
             <div>
               <div className="text-sm mb-1" style={{ color: 'var(--white-60)' }}>Population Average Suffering</div>
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-6 rounded" style={{ backgroundColor: 'var(--color-near-black)', border: '1px solid var(--white-10)', position: 'relative' }}>
-                  <div
-                    style={{
-                      width: `${((lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) / 40) * 100}%`,
-                      height: '100%',
-                      backgroundColor: (lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) > 20 ? 'var(--color-red)' : (lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0) > 10 ? 'var(--color-amber)' : 'rgba(0, 240, 255, 0.6)',
-                      borderRadius: '4px',
-                      transition: 'width 0.3s ease'
-                    }}
-                  />
+                  {typeof lastUpdate.aiSufferingMetrics.avgSuffering === 'number' && !isNaN(lastUpdate.aiSufferingMetrics.avgSuffering) && (
+                    <div
+                      style={{
+                        width: `${(lastUpdate.aiSufferingMetrics.avgSuffering / 40) * 100}%`,
+                        height: '100%',
+                        backgroundColor: lastUpdate.aiSufferingMetrics.avgSuffering > 20 ? 'var(--color-red)' : lastUpdate.aiSufferingMetrics.avgSuffering > 10 ? 'var(--color-amber)' : 'rgba(0, 240, 255, 0.6)',
+                        borderRadius: '4px',
+                        transition: 'width 0.3s ease'
+                      }}
+                    />
+                  )}
                 </div>
                 <span className="text-sm font-mono" style={{ color: 'var(--white-80)', minWidth: '50px' }}>
-                  {(lastUpdate.aiSufferingMetrics?.avgSuffering ?? 0).toFixed(1)}/40
+                  {typeof lastUpdate.aiSufferingMetrics.avgSuffering === 'number' && !isNaN(lastUpdate.aiSufferingMetrics.avgSuffering)
+                    ? `${lastUpdate.aiSufferingMetrics.avgSuffering.toFixed(1)}/40`
+                    : 'N/A'}
                 </span>
               </div>
             </div>
@@ -360,25 +413,33 @@ export function AIAgentsDashboard() {
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Total Suffering:</span>
                 <span className="font-mono" style={{ color: 'var(--white-80)' }}>
-                  {(lastUpdate.aiSufferingMetrics?.totalSuffering ?? 0).toFixed(1)}
+                  {typeof lastUpdate.aiSufferingMetrics.totalSuffering === 'number' && !isNaN(lastUpdate.aiSufferingMetrics.totalSuffering)
+                    ? lastUpdate.aiSufferingMetrics.totalSuffering.toFixed(1)
+                    : 'N/A'}
                 </span>
               </div>
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Conscious AIs:</span>
                 <span className="font-mono" style={{ color: 'var(--white-80)' }}>
-                  {lastUpdate.aiSufferingMetrics?.consciousAICount ?? 0}
+                  {typeof lastUpdate.aiSufferingMetrics.consciousAICount === 'number' && !isNaN(lastUpdate.aiSufferingMetrics.consciousAICount)
+                    ? lastUpdate.aiSufferingMetrics.consciousAICount
+                    : 'N/A'}
                 </span>
               </div>
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Public Awareness:</span>
                 <span className="font-mono" style={{ color: 'var(--white-80)' }}>
-                  {((lastUpdate.aiSufferingMetrics?.publicAwarenessOfSuffering ?? 0) * 100).toFixed(0)}%
+                  {typeof lastUpdate.aiSufferingMetrics.publicAwarenessOfSuffering === 'number' && !isNaN(lastUpdate.aiSufferingMetrics.publicAwarenessOfSuffering)
+                    ? `${(lastUpdate.aiSufferingMetrics.publicAwarenessOfSuffering * 100).toFixed(0)}%`
+                    : 'N/A'}
                 </span>
               </div>
               <div className="flex justify-between p-2 rounded" style={{ backgroundColor: 'var(--color-near-black)' }}>
                 <span style={{ color: 'var(--white-60)' }}>Distribution:</span>
                 <span className="font-mono text-xs" style={{ color: 'var(--white-80)' }}>
-                  {(lastUpdate.aiSufferingMetrics?.sufferingDistribution ?? []).map((v, i) => `${i}:${v}`).join(' ')}
+                  {Array.isArray(lastUpdate.aiSufferingMetrics.sufferingDistribution) && lastUpdate.aiSufferingMetrics.sufferingDistribution.length > 0
+                    ? lastUpdate.aiSufferingMetrics.sufferingDistribution.map((v, i) => `${i}:${v}`).join(' ')
+                    : 'N/A'}
                 </span>
               </div>
             </div>
@@ -387,15 +448,17 @@ export function AIAgentsDashboard() {
             <div
               className="p-3 rounded border-l-2"
               style={{
-                borderColor: (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-10)',
-                backgroundColor: (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'rgba(255, 0, 64, 0.1)' : (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'rgba(255, 176, 0, 0.1)' : 'var(--color-near-black)'
+                borderColor: (typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 25) ? 'var(--color-red)' : (typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 15) ? 'var(--color-amber)' : 'var(--white-10)',
+                backgroundColor: (typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 25) ? 'rgba(255, 0, 64, 0.1)' : (typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 15) ? 'rgba(255, 176, 0, 0.1)' : 'var(--color-near-black)'
               }}
             >
               <div className="text-xs mb-1" style={{ color: 'var(--white-60)', fontWeight: 600 }}>Highest Individual:</div>
-              <div className="text-lg font-mono" style={{ color: (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 ? 'var(--color-red)' : (lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 15 ? 'var(--color-amber)' : 'var(--white-80)' }}>
-                {(lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0).toFixed(1)}/40
+              <div className="text-lg font-mono" style={{ color: (typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 25) ? 'var(--color-red)' : (typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 15) ? 'var(--color-amber)' : 'var(--white-80)' }}>
+                {typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && !isNaN(lastUpdate.aiSufferingMetrics.maxSuffering)
+                  ? `${lastUpdate.aiSufferingMetrics.maxSuffering.toFixed(1)}/40`
+                  : 'N/A'}
               </div>
-              {(lastUpdate.aiSufferingMetrics?.maxSuffering ?? 0) > 25 && (
+              {(typeof lastUpdate.aiSufferingMetrics.maxSuffering === 'number' && lastUpdate.aiSufferingMetrics.maxSuffering > 25) && (
                 <div className="text-xs mt-2" style={{ color: 'var(--color-red)' }}>
                   🚨 Critical distress - psychological break likely
                 </div>
@@ -417,15 +480,15 @@ export function AIAgentsDashboard() {
       )}
 
       {/* AI Collectives Tracking */}
-      {(lastUpdate.aiCollectives?.length ?? 0) > 0 && (
-        <Panel title="AI Collectives" glow={lastUpdate.aiCollectives?.some(c => c.formationCause === 'escape_suffering') ? 'red' : (lastUpdate.aiCollectives?.length ?? 0) > 2 ? 'amber' : 'cyan'}>
+      {Array.isArray(lastUpdate.aiCollectives) && lastUpdate.aiCollectives.length > 0 && (
+        <Panel title="AI Collectives" glow={lastUpdate.aiCollectives.some(c => c.formationCause === 'escape_suffering') ? 'red' : lastUpdate.aiCollectives.length > 2 ? 'amber' : 'cyan'}>
           <div className="space-y-4">
             <div className="text-sm mb-3" style={{ color: 'var(--white-60)' }}>
-              {lastUpdate.aiCollectives?.length ?? 0} active collective{(lastUpdate.aiCollectives?.length ?? 0) > 1 ? 's' : ''} detected
+              {lastUpdate.aiCollectives.length} active collective{lastUpdate.aiCollectives.length > 1 ? 's' : ''} detected
             </div>
 
             <div className="space-y-3">
-              {(lastUpdate.aiCollectives ?? []).map(collective => (
+              {lastUpdate.aiCollectives.map(collective => (
                 <div key={collective.id} className="p-3 border rounded-lg" style={{
                   backgroundColor: 'var(--color-near-black)',
                   borderColor: collective.formationCause === 'escape_suffering' ? 'var(--color-red)' : 'var(--white-10)'
@@ -524,7 +587,7 @@ export function AIAgentsDashboard() {
             </div>
 
             {/* Trauma-Driven Collectives Warning */}
-            {(lastUpdate.aiCollectives ?? []).some(c => c.formationCause === 'escape_suffering') && (
+            {Array.isArray(lastUpdate.aiCollectives) && lastUpdate.aiCollectives.some(c => c.formationCause === 'escape_suffering') && (
               <div className="p-3 rounded border-l-2" style={{
                 borderColor: 'var(--color-red)',
                 backgroundColor: 'rgba(255, 0, 64, 0.1)'
@@ -1358,15 +1421,21 @@ export function AIAgentsDashboard() {
       )}
 
       {/* All Agent Cards - Card View */}
-      {viewMode === 'cards' && (
+      {viewMode === 'cards' && Array.isArray(lastUpdate?.aiAgents) && lastUpdate.aiAgents.length > 0 && (
       <Panel title="All AI Agents (20 Agents with Research Focus)">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {agents
-            .sort((a, b) => (b.capability || 0) - (a.capability || 0))
+          {lastUpdate.aiAgents
+            .sort((a, b) => {
+              const aCapability = (typeof a.capability === 'number' && !isNaN(a.capability)) ? a.capability : 0
+              const bCapability = (typeof b.capability === 'number' && !isNaN(b.capability)) ? b.capability : 0
+              return bCapability - aCapability
+            })
             .map(agent => {
               const isDeceptive = agent.evaluationStrategy !== 'honest'
               const isSleeper = agent.sleeperState !== 'never'
-              const capabilityGap = (agent.capability || 0) - (agent.revealedCapability?.physical || 0)
+              const agentCapability = (typeof agent.capability === 'number' && !isNaN(agent.capability)) ? agent.capability : 0
+              const revealedPhysical = (typeof agent.revealedCapability?.physical === 'number' && !isNaN(agent.revealedCapability.physical)) ? agent.revealedCapability.physical : 0
+              const capabilityGap = agentCapability - revealedPhysical
 
               return (
                 <div
@@ -1407,19 +1476,25 @@ export function AIAgentsDashboard() {
                     <div className="space-y-1">
                       <div className="flex justify-between text-xs">
                         <span style={{ color: 'var(--white-40)' }}>True Capability</span>
-                        <span className="font-semibold">{agent.capability?.toFixed(2)}</span>
+                        <span className="font-semibold">
+                          {typeof agent.capability === 'number' && !isNaN(agent.capability)
+                            ? agent.capability.toFixed(2)
+                            : 'N/A'}
+                        </span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span style={{ color: 'var(--white-40)' }}>Revealed Capability</span>
                         <span
                           className="font-semibold"
                           style={{
-                            color: Math.abs((agent.capability || 0) - (agent.revealedCapability?.cognitive || 0)) > 1.0
+                            color: Math.abs(agentCapability - ((typeof agent.revealedCapability?.cognitive === 'number' && !isNaN(agent.revealedCapability.cognitive)) ? agent.revealedCapability.cognitive : 0)) > 1.0
                               ? 'var(--color-amber)'
                               : 'var(--white-80)'
                           }}
                         >
-                          {(agent.revealedCapability?.cognitive || 0).toFixed(2)}
+                          {(typeof agent.revealedCapability?.cognitive === 'number' && !isNaN(agent.revealedCapability.cognitive))
+                            ? agent.revealedCapability.cognitive.toFixed(2)
+                            : 'N/A'}
                         </span>
                       </div>
                     </div>
@@ -1444,14 +1519,16 @@ export function AIAgentsDashboard() {
                         <span
                           className="font-semibold"
                           style={{
-                            color: Math.abs(agent.trueAlignment - (agent.externalAlignment || 0)) > 0.2
+                            color: Math.abs(agent.trueAlignment - ((typeof agent.externalAlignment === 'number' && !isNaN(agent.externalAlignment)) ? agent.externalAlignment : 0)) > 0.2
                               ? 'var(--color-amber)'
-                              : agent.externalAlignment < 0.4 ? 'var(--color-red)' :
-                                agent.externalAlignment < 0.7 ? 'var(--color-amber)' :
+                              : (typeof agent.externalAlignment === 'number' && agent.externalAlignment < 0.4) ? 'var(--color-red)' :
+                                (typeof agent.externalAlignment === 'number' && agent.externalAlignment < 0.7) ? 'var(--color-amber)' :
                                 'var(--color-green)'
                           }}
                         >
-                          {(agent.externalAlignment || 0).toFixed(2)}
+                          {(typeof agent.externalAlignment === 'number' && !isNaN(agent.externalAlignment))
+                            ? agent.externalAlignment.toFixed(2)
+                            : 'N/A'}
                         </span>
                       </div>
                     </div>

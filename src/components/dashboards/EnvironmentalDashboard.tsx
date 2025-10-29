@@ -24,23 +24,51 @@ export function EnvironmentalDashboard() {
     )
   }
 
-  if (!lastUpdate) {
-    return <div className="p-8">Waiting for simulation update...</div>
+  // Check for valid environmental data
+  const hasValidData = lastUpdate &&
+    typeof lastUpdate.climateChange === 'number' && !isNaN(lastUpdate.climateChange) &&
+    typeof lastUpdate.biodiversityLoss === 'number' && !isNaN(lastUpdate.biodiversityLoss) &&
+    typeof lastUpdate.planetaryBoundariesCrossed === 'number' && !isNaN(lastUpdate.planetaryBoundariesCrossed) &&
+    typeof lastUpdate.environmentalDebtLevel === 'number' && !isNaN(lastUpdate.environmentalDebtLevel)
+
+  if (!lastUpdate || !hasValidData) {
+    return (
+      <div className="p-8">
+        <Panel title="Waiting for Environmental Data">
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="status-indicator status-normal animate-pulse" />
+              <span>Loading environmental system metrics...</span>
+            </div>
+            {lastUpdate && !hasValidData && (
+              <div className="text-sm p-3 rounded border" style={{
+                backgroundColor: 'rgba(255, 0, 64, 0.1)',
+                borderColor: 'var(--color-red)',
+                color: 'var(--color-red)'
+              }}>
+                ❌ Environmental data contains NaN or undefined values.
+                This indicates a critical simulation error. Check logs immediately.
+              </div>
+            )}
+          </div>
+        </Panel>
+      </div>
+    )
   }
 
-  // Environmental metrics from StateDelta
-  const climate = lastUpdate.climateChange || 0
-  const biodiversity = lastUpdate.biodiversityLoss || 0
-  const resourceDepletion = lastUpdate.resourceDepletion || 0
-  const pollution = lastUpdate.pollutionLevel || 0
-  const boundariesCrossed = lastUpdate.planetaryBoundariesCrossed || 0
-  const environmentalDebt = lastUpdate.environmentalDebtLevel || 0
+  // Environmental metrics from StateDelta - NO FALLBACKS
+  const climate = lastUpdate.climateChange
+  const biodiversity = lastUpdate.biodiversityLoss
+  const boundariesCrossed = lastUpdate.planetaryBoundariesCrossed
+  const environmentalDebt = lastUpdate.environmentalDebtLevel
 
-  // Individual crisis indicators
-  const phosphorus = lastUpdate.phosphorusDepletion || 0
-  const freshwater = lastUpdate.freshwaterStress || 0
-  const ocean = lastUpdate.oceanAcidification || 0
-  const novelEntities = lastUpdate.novelEntitiesLevel || 0
+  // Optional metrics - show N/A if missing
+  const resourceDepletion = lastUpdate.resourceDepletion
+  const pollution = lastUpdate.pollutionLevel
+  const phosphorus = lastUpdate.phosphorusDepletion
+  const freshwater = lastUpdate.freshwaterStress
+  const ocean = lastUpdate.oceanAcidification
+  const novelEntities = lastUpdate.novelEntitiesLevel
 
   return (
     <div className="space-y-6">
@@ -129,40 +157,52 @@ export function EnvironmentalDashboard() {
 
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Resource Depletion</div>
-            <div className="text-3xl font-light mb-2" style={{ color: resourceDepletion > 0.7 ? 'var(--color-red)' : resourceDepletion > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
-              {(resourceDepletion * 100).toFixed(0)}%
-            </div>
-            <div className="h-2 rounded mb-2" style={{ backgroundColor: 'var(--white-10)' }}>
-              <div
-                className="h-full rounded"
-                style={{
-                  width: `${Math.min(100, resourceDepletion * 100)}%`,
-                  backgroundColor: resourceDepletion > 0.7 ? 'var(--color-red)' : resourceDepletion > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
-                }}
-              />
-            </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-              {resourceDepletion > 0.7 ? 'CRITICAL' : resourceDepletion > 0.5 ? 'Warning' : 'Safe'}
-            </p>
+            {typeof resourceDepletion === 'number' ? (
+              <>
+                <div className="text-3xl font-light mb-2" style={{ color: resourceDepletion > 0.7 ? 'var(--color-red)' : resourceDepletion > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
+                  {(resourceDepletion * 100).toFixed(0)}%
+                </div>
+                <div className="h-2 rounded mb-2" style={{ backgroundColor: 'var(--white-10)' }}>
+                  <div
+                    className="h-full rounded"
+                    style={{
+                      width: `${Math.min(100, resourceDepletion * 100)}%`,
+                      backgroundColor: resourceDepletion > 0.7 ? 'var(--color-red)' : resourceDepletion > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
+                    }}
+                  />
+                </div>
+                <p className="text-xs" style={{ color: 'var(--white-40)' }}>
+                  {resourceDepletion > 0.7 ? 'CRITICAL' : resourceDepletion > 0.5 ? 'Warning' : 'Safe'}
+                </p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>No data</div>
+            )}
           </div>
 
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Chemical Pollution</div>
-            <div className="text-3xl font-light mb-2" style={{ color: pollution > 0.7 ? 'var(--color-red)' : pollution > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
-              {(pollution * 100).toFixed(0)}%
-            </div>
-            <div className="h-2 rounded mb-2" style={{ backgroundColor: 'var(--white-10)' }}>
-              <div
-                className="h-full rounded"
-                style={{
-                  width: `${Math.min(100, pollution * 100)}%`,
-                  backgroundColor: pollution > 0.7 ? 'var(--color-red)' : pollution > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
-                }}
-              />
-            </div>
-            <p className="text-xs" style={{ color: 'var(--white-40)' }}>
-              {pollution > 0.7 ? 'CRITICAL' : pollution > 0.5 ? 'Warning' : 'Safe'}
-            </p>
+            {typeof pollution === 'number' ? (
+              <>
+                <div className="text-3xl font-light mb-2" style={{ color: pollution > 0.7 ? 'var(--color-red)' : pollution > 0.5 ? 'var(--color-amber)' : 'var(--color-green)' }}>
+                  {(pollution * 100).toFixed(0)}%
+                </div>
+                <div className="h-2 rounded mb-2" style={{ backgroundColor: 'var(--white-10)' }}>
+                  <div
+                    className="h-full rounded"
+                    style={{
+                      width: `${Math.min(100, pollution * 100)}%`,
+                      backgroundColor: pollution > 0.7 ? 'var(--color-red)' : pollution > 0.5 ? 'var(--color-amber)' : 'var(--color-green)'
+                    }}
+                  />
+                </div>
+                <p className="text-xs" style={{ color: 'var(--white-40)' }}>
+                  {pollution > 0.7 ? 'CRITICAL' : pollution > 0.5 ? 'Warning' : 'Safe'}
+                </p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>No data</div>
+            )}
           </div>
         </div>
       </Panel>
@@ -172,42 +212,66 @@ export function EnvironmentalDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Phosphorus Depletion</div>
-            <div className="text-2xl font-light" style={{ color: phosphorus > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(phosphorus * 100).toFixed(0)}%
-            </div>
-            <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
-              {phosphorus > 0.5 ? 'Active Crisis' : 'Monitoring'}
-            </p>
+            {typeof phosphorus === 'number' ? (
+              <>
+                <div className="text-2xl font-light" style={{ color: phosphorus > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
+                  {(phosphorus * 100).toFixed(0)}%
+                </div>
+                <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
+                  {phosphorus > 0.5 ? 'Active Crisis' : 'Monitoring'}
+                </p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>N/A</div>
+            )}
           </div>
 
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Freshwater Stress</div>
-            <div className="text-2xl font-light" style={{ color: freshwater > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(freshwater * 100).toFixed(0)}%
-            </div>
-            <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
-              {freshwater > 0.5 ? 'Active Crisis' : 'Monitoring'}
-            </p>
+            {typeof freshwater === 'number' ? (
+              <>
+                <div className="text-2xl font-light" style={{ color: freshwater > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
+                  {(freshwater * 100).toFixed(0)}%
+                </div>
+                <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
+                  {freshwater > 0.5 ? 'Active Crisis' : 'Monitoring'}
+                </p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>N/A</div>
+            )}
           </div>
 
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Ocean Acidification</div>
-            <div className="text-2xl font-light" style={{ color: ocean > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(ocean * 100).toFixed(0)}%
-            </div>
-            <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
-              {ocean > 0.5 ? 'Active Crisis' : 'Monitoring'}
-            </p>
+            {typeof ocean === 'number' ? (
+              <>
+                <div className="text-2xl font-light" style={{ color: ocean > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
+                  {(ocean * 100).toFixed(0)}%
+                </div>
+                <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
+                  {ocean > 0.5 ? 'Active Crisis' : 'Monitoring'}
+                </p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>N/A</div>
+            )}
           </div>
 
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Novel Entities</div>
-            <div className="text-2xl font-light" style={{ color: novelEntities > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
-              {(novelEntities * 100).toFixed(0)}%
-            </div>
-            <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
-              {novelEntities > 0.5 ? 'Active Crisis' : 'Monitoring'}
-            </p>
+            {typeof novelEntities === 'number' ? (
+              <>
+                <div className="text-2xl font-light" style={{ color: novelEntities > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
+                  {(novelEntities * 100).toFixed(0)}%
+                </div>
+                <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
+                  {novelEntities > 0.5 ? 'Active Crisis' : 'Monitoring'}
+                </p>
+              </>
+            ) : (
+              <div className="text-xl font-light" style={{ color: 'var(--white-40)' }}>N/A</div>
+            )}
           </div>
         </div>
       </Panel>
