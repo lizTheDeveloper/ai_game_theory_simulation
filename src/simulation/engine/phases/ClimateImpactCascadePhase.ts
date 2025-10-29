@@ -64,6 +64,9 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
   readonly name = 'Climate Impact Cascade';
   readonly order = 34.0;
 
+  // Minimum floor for food security to prevent exactly zero
+  private static readonly MIN_FOOD_SECURITY = 0.001;
+
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     // 1. Calculate current climate impacts with lag effects
     const climateImpacts = this.calculateClimateImpacts(state, rng, context);
@@ -251,13 +254,26 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
     for (const [region, change] of foodSecurityChanges) {
       // Get current regional food security
       const currentFoodSecurity = this.getRegionalFoodSecurity(state, region);
+
+      // Apply change with floor to prevent negative values
+      // Multiple climate impacts can stack, so we must bound before assertion
+      const calculatedFoodSecurity = Math.max(
+        ClimateImpactCascadePhase.MIN_FOOD_SECURITY,
+        currentFoodSecurity + change
+      );
+
       const newFoodSecurity = assertInRange(
-        currentFoodSecurity + change,
+        calculatedFoodSecurity,
         0, 1,
         {
           location: 'ClimateImpactCascade.calculateFamineRisks',
           valueName: 'foodSecurity',
-          month: state.currentMonth
+          month: state.currentMonth,
+          additionalInfo: {
+            currentFoodSecurity,
+            change,
+            region
+          }
         }
       );
 
