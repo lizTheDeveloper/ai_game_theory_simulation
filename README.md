@@ -2,7 +2,7 @@
 
 **A simulation engine for exploring pathways from AI super-alignment to sustainable human flourishing.**
 
-**🌐 Live Dashboard:** https://superalignment-simulation-159845081866.europe-west1.run.app/
+**🌐 Live Dashboard:** https://superalignment-simulation-qzhovgt3rq-ew.a.run.app/
 
 This project models the complex dynamics of how humanity might navigate from achieving aligned superintelligence to establishing stable, sustainable utopia. It's not a prediction—it's a framework for reasoning about AI alignment challenges, breakthrough technologies, social adaptation, and the mechanisms that lead to positive long-term outcomes.
 
