@@ -19,6 +19,7 @@
 
 **🚧 Active Work:**
 - 🔴 CRITICAL: Systematic Citation Verification Crisis (20-40h) - 965 citations, 23% fabrication rate
+- 🔴 CRITICAL: Monte Carlo Validation Bug Fixes (11-17h) - 6 critical bugs in reporting and variance
 - ✅ COMPLETE: Architecture Review + 3 CRITICAL Fixes (Oct 28-29, 2025) - See reviews/integration-architecture-review_20251028.md
 
 **Recently Completed (Oct 29, 2025):**
@@ -34,7 +35,13 @@
    - Core mechanics contaminated: AI infrastructure, government response, climate mortality
    - Strategy: Triage by priority, conservative defaults, systematic replacement
 
-2. **🟠 HIGH (from Architecture Review):** 8 integration issues (48-72h total)
+2. **🔴 CRITICAL:** Monte Carlo Validation Bug Fixes (11-17h) - Multiple systems broken
+   - Zero-variance bugs (Slow Takeover, Ecological, Capability Floor)
+   - Death attribution mismatch (730× error)
+   - 15+ NaN metrics (economic/government systems)
+   - See reviews/monte-carlo-validation-analysis_20251029.md
+
+3. **🟠 HIGH (from Architecture Review):** 8 integration issues (48-72h total)
    - Climate → Famine → Mortality cascade coordination (12-16h)
    - Tech deployment timescales + emergency response (6-8h)
    - AI collective formation → government detection (4-6h)
@@ -44,12 +51,12 @@
    - AI resentment recovery + policy (8-12h)
    - Nuclear winter → agriculture recovery feedback (4-6h)
 
-3. **MEDIUM:** Climate Mortality Implementation (8-12h) - Research complete, ready for implementation
-4. **MEDIUM:** Policy System Improvements (remaining 2 sections, 7-8h)
+4. **MEDIUM:** Policy System Improvements (remaining 1 section + investigation, 11-13h)
+   - ✅ Variance Analysis complete (Oct 28) - found critical zero-variance bug in Combined Interventions
 5. **LOW:** P3 Enhancements (37-48h)
 6. **LOW:** TIER 5 Features (46h)
 
-**Total Remaining Effort:** ~160-230 hours (including citation verification + HIGH priority integration fixes)
+**Total Remaining Effort:** ~185-260 hours (including citation verification + Monte Carlo fixes + policy variance investigation + HIGH priority integration fixes)
 
 ---
 
@@ -204,39 +211,165 @@ Questions raised by consensus:
 
 ---
 
+## 🔴 HIGH Priority
+
+### Monte Carlo Validation Bug Fixes (10-15h)
+**Status:** 🔴 CRITICAL - Multiple systems broken or reporting incorrectly
+**Analysis:** reviews/monte-carlo-validation-analysis_20251029.md (Oct 29, 2025)
+**Runs Analyzed:** 100-run sweep (30yr) + 10-run validation (20yr)
+
+**🔴 CRITICAL BUGS (Immediate fixes needed):**
+
+**1. Zero-Variance Bugs (6-9h)** - Now includes policy system
+- **Slow Takeover always 85.7%** (6/7 steps) - 100% of 110 runs identical
+  - Issue: Step 7 never triggers OR calculation deterministic
+  - Expected: Variance based on interventions, RNG seed
+  - Fix: Debug catastrophicScenarios.ts, verify step 7 reachable
+
+- **Ecological paradigm always <30** - 100% dystopia, zero variance
+  - Issue: Score deterministically driven OR recovery never works
+  - Expected: Some variance with tech deployment, interventions
+  - Fix: Debug multi-paradigm DUI ecological scoring
+
+- **Capability Floor/Frontier both 0.000** - All runs show 0.0
+  - Issue: Tech diffusion/ratchet effect not working OR not reported
+  - Expected: Floor rises as tech diffuses, frontier tracks highest
+  - Fix: Debug AI capability tracking, verify fields written to output
+
+**2. Death Attribution Mismatch (2-3h)**
+- **Proximate deaths (1.7B) ≠ Root deaths (2.3M)** - 730× difference
+  - Issue: Known bug per log output
+  - Impact: Mortality analysis completely broken
+  - Fix: populationDynamics.ts, regionalPopulations.ts attribution logic
+
+**3. NaN Metrics - 15+ Systems Missing (2-3h)**
+- Economic Stage, Unemployment, Trust in AI, Social Stability, Wealth Distribution, Government Legitimacy/Control, Training Data Quality, Sleeper Agents, Benchmarks, Tech Breakthroughs, Revenue, Compute Growth
+  - Issue: Output format mismatch OR systems not running
+  - Impact: Can't validate economic/government mechanics
+  - Fix: Check output format, verify systems write to JSON, update aggregation scripts
+
+**4. Policy Combined Interventions Zero Variance (2-3h)**
+- **Combined Interventions: 13.1% unemployment with StdDev=0.0** - All 10 runs identical
+  - Issue: Over-constrained model OR fixed equilibrium bug
+  - Impact: Policy system may be deterministic, not responding to Monte Carlo variance
+  - Source: `logs/policy_variance_analysis_20251028_233530.log` (Oct 28 run)
+  - Fix: Debug policy interaction logic, verify policies affect outcomes differently across runs
+
+**⚠️ INVESTIGATION NEEDED (Research questions):**
+
+**5. Duration-Extinction Inversion (1-2h investigation)**
+- **Shorter runs have MORE extinction** - 30% @ 20yr vs 4% @ 30yr (7.5× difference)
+  - Expected: Longer runs accumulate more risk → more extinction
+  - Hypothesis: Recovery window years 20-30, OR scenario mix difference, OR classification bug
+  - Action: Run time-series at 15yr, 20yr, 25yr, 30yr to identify pattern
+
+**5. Zero AI-Caused Deaths Despite Massive Misalignment (1-2h investigation)**
+- **True alignment -0.04, but zero catastrophes**
+  - 70 highly misaligned AIs per run
+  - 0.60 alignment gap (showing 0.56, actually -0.04)
+  - Zero breaches, zero catastrophic actions, zero AI deaths
+  - Hypothesis: AIs waiting strategically OR attribution broken OR catastrophe detection threshold too high
+  - Action: Manually inspect worst alignment runs, check attribution system
+
+**6. Zero Sleeper Agents Detected (1h investigation)**
+- **0% sleeper agents across 110 runs** (all NaN)
+  - Expected: With 0.60 alignment gap, some AIs should be sleepers
+  - Hypothesis: Detection perfect (implausible), formation criteria too strict, OR system disabled
+  - Action: Check sleeper formation logic, verify system active
+
+**✅ PLAUSIBLE FINDINGS (Not bugs):**
+- 70-96% dystopia rate (matches "AI alignment is hard" research)
+- 100% ecological dystopia (consistent with IPCC AR6, 6/9 boundaries crossed)
+- Multi-paradigm conflicts 50-56% (different values → different outcomes)
+- 0.60 alignment gap prevalence (deceptive alignment research-backed)
+- Famine/ecosystem dominate deaths 55%+34% (environmental collapse mechanics)
+
+**Implementation Priority:**
+1. Fix zero-variance bugs (Slow Takeover, Ecological, Capability Floor, Policy Interventions) - 6-9h
+2. Fix death attribution mismatch - 2-3h
+3. Debug NaN metrics (15+ systems) - 2-3h
+4. Investigate duration-extinction inversion - 1-2h
+5. Investigate alignment-catastrophe disconnect - 1-2h
+6. Investigate sleeper agent system - 1h
+
+**Total Time:** 10-15 hours (fixes) + 3-5 hours (investigations) = 13-20 hours
+
+**Files Likely Involved:**
+- catastrophicScenarios.ts (Slow Takeover step 7)
+- Multi-paradigm DUI scoring (ecological determinism)
+- AI capability tracking (floor/frontier fields)
+- populationDynamics.ts, regionalPopulations.ts (death attribution)
+- Output format / aggregation scripts (NaN metrics)
+- sleeperDetection.ts (formation logic)
+- Policy system files (policyEffects.ts, unemployment.ts, etc.) - Combined Interventions zero variance
+
+**Success Criteria:**
+- Slow Takeover progress shows variance (not always 85.7%)
+- Ecological paradigm shows some variance (not 100% <30)
+- Capability Floor/Frontier track actual values
+- Policy Combined Interventions show variance across runs (StdDev > 0)
+- Death attribution: Proximate ≈ Root (within 10%)
+- Economic/government metrics return values (not NaN)
+- Duration-extinction relationship makes sense (longer = more risk)
+- At least some AI-caused events in highly misaligned runs
+
+**Validation:**
+- Run Monte Carlo N=10 after each fix
+- Verify variance appears where expected
+- Check attribution totals match
+- Confirm all metrics present in output
+
+---
+
 ### MEDIUM Priority
 
-#### Climate Mortality & Biosphere Implementation (8-12h)
-**Status:** Research complete (15,000+ words, 40+ sources), ready for implementation
+#### Climate Mortality & Biosphere Implementation ✅ **COMPLETE (Oct 29, 2025)**
+**Status:** Implementation complete, validated, architecture review passed
 **Research:** `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md`
+**Implementation:** `devlogs/climate-mortality-phase2-implementation_20251028.md`
+**Review:** `reviews/climate-mortality-phase2-architecture-review_20251029.md`
 
-**What to Implement:**
-- Heat mortality functions (1-3%/°C gradient based on meta-analysis)
-- Storm intensity-frequency shifts from climate dynamics
-- BII framework (54,000 species baseline from IPBES)
-- Multi-paradigm integration (TEK, Buen Vivir, Ubuntu perspectives)
+**Implemented:**
+- ✅ Heat mortality functions (wet-bulb temperature thresholds, infrastructure mismatch) - Already complete
+- ✅ Storm intensity-frequency modeling (MDF framework, category distribution shifts)
+- ✅ BII framework (54,000 species baseline, climate velocity tracking, extinction rates)
+- ✅ Multi-paradigm integration (Indigenous paradigm framework with Bhutan GNH, Buen Vivir)
+- ✅ Bayesian mortality integration (storm disasters, ecosystem collapse)
+- ✅ Phase ordering fixes (resolved non-deterministic execution)
+- ✅ Defensive coding (replaced silent fallbacks with assertions)
 
-**Key Features:**
-- Research-backed mortality gradients
-- Biosphere Integrity Index integration
-- Traditional Ecological Knowledge perspectives
-- Cross-domain feedback loops
+**Impact:**
+- Storm disasters: 1-55% mortality events (episodic, research-backed)
+- Extinction rates: 152× → 330× natural background (IPBES baseline)
+- Ecosystem collapse risk: 63% → 100% progression with climate warming
+- Contributing to 70% dystopia, 30% extinction outcomes in Monte Carlo
 
-#### Policy System Improvements (7-8h remaining)
-**Status:** 4 of 6 sections complete
+#### Policy System Improvements (11-13h remaining)
+**Status:** 5 of 6 sections complete + critical bug investigation needed
 
 **Completed Sections:**
 - ✅ Unemployment Penalty Calibration (3-tier nonlinear)
 - ✅ Retraining Effectiveness Calibration (30% average)
 - ✅ UBI Floor Mechanics Validation
 - ✅ Baseline Assumptions Documentation
+- ✅ Variance Analysis (Oct 28) - 6 scenarios tested, critical finding: Combined Interventions show zero variance
 
 **Remaining Sections:**
 
-**1. Variance Analysis (3-4h) - MEDIUM**
-- Issue: ±40% variance in policy outcomes (high sensitivity)
-- Action: Plot distributions, identify bimodal vs uniform patterns
-- Files: New `scripts/policyVarianceAnalysis.ts`
+**1. Variance Analysis** ✅ **COMPLETE (Oct 28)** - **🚨 CRITICAL FINDING**
+- **Status:** Analysis complete - 6 scenarios tested (N=10 each)
+- **Log:** `logs/policy_variance_analysis_20251028_233530.log` (242K lines, 11MB)
+- **Results:**
+  - **Baseline:** 77.5% unemployment, 35% StdDev (bimodal: 7.4% to 95%)
+  - **UBI Only:** Same as baseline (UBI alone doesn't help)
+  - **Retraining/Teaching/Job Guarantee:** Similar patterns
+  - **🔴 Combined Interventions:** 13.1% with **ZERO variance** (StdDev=0.0)
+    - All 10 runs identical (13.1% unemployment)
+    - **RED FLAG:** Suggests over-constrained model or fixed equilibrium
+- **Next Steps:**
+  1. Investigate why Combined Interventions have zero variance
+  2. Review statistical significance of differences
+  3. Document systemic inequality effects in wiki
 
 **2. Cooperative AI Ownership Model (10-12h) - LOW**
 - Research: Mondragon cooperatives 4% bankruptcy vs 10% capitalist
@@ -389,15 +522,21 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~70-90 hours across 6 feature groups
+**Total Remaining Effort:** ~185-260 hours
 
 **By Priority:**
+- 🔴 CRITICAL: Systematic Citation Verification (20-40h) - 50/242 complete (20.7%)
+- 🔴 HIGH: Monte Carlo Validation Bug Fixes (13-20h) - Zero-variance bugs + policy investigation
+- 🟠 HIGH: Architecture Review Integration Issues (48-72h)
 - 🟡 MEDIUM: Climate Mortality Implementation (8-12h) - Research complete, ready for implementation
-- 🟡 MEDIUM: Policy System Improvements (7-8h remaining) - 4 of 6 sections complete
+- 🟡 MEDIUM: Policy System Improvements (11-13h remaining) - 5 of 6 sections complete, variance analysis done
 - 🟢 LOW: P3 Enhancements (37-48h)
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks, phased)
 - 🟢 DEFERRED: TIER 2B Competitive Equilibrium (30-50h)
+
+**Recently Completed:**
+- ✅ Climate Mortality & Biosphere Implementation (Oct 29, 2025) - 8-12h
 
 **Related Docs:**
 - **Completed Work:** `/plans/CHANGELOG_OCTOBER_2025.md` - Full history of Oct 2025 work
