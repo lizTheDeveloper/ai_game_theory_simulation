@@ -2215,9 +2215,12 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - EconomicTransitionPhase (31.0): Progress toward post-scarcity
 - ParanoiaPhase (32.0): Government paranoia dynamics
 - SocialStabilityPhase (33.0): Social cohesion, coordination
+- EnvironmentalFeedbackPhase (33.5): Climate-driven environmental updates
+- **ClimateImpactCascadePhase (34.0)**: Climate → food security → famine → mortality cascade coordination (**NEW Oct 29**)
 - **UpdateEconomicStagePhase (34.0)**: Recovery tracking (**NEW Oct 16**)
 - QualityOfLifePhase (34.0): 17-dimensional QoL calculation
 - **FoodSecurityDegradationPhase (34.5)**: Crisis-accelerated food degradation (**NEW Oct 17**)
+- **BayesianMortalityResolutionPhase (35.0)**: Resolve mortality risks from multiple sources (**NEW Oct 29**)
 - OutcomeProbabilitiesPhase (36.0): Utopia/dystopia/extinction probabilities
 - CrisisDetectionPhase (36.5): Detect active crises
 
@@ -2250,7 +2253,11 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - Modified **HumanEnhancementPhase** (21.5): Neural interfaces, longevity, consciousness merger
 - Modified **MemeticEvolutionPhase** (22.0): Meme transmission, AI amplification
 
-**Total Phases**: 67 registered phases (up from 64 in previous documentation)
+**Key Changes (Oct 29):**
+- Added **ClimateImpactCascadePhase** (34.0): Coordinated climate → food security → famine → mortality cascade with research-backed lag times (0-12 months), seasonal lean periods (1.75× multiplier), and tiered mortality rates
+- Added **BayesianMortalityResolutionPhase** (35.0): Bayesian mortality resolution system integrating multiple mortality sources
+
+**Total Phases**: 69 registered phases (up from 67 in previous documentation)
 
 ---
 
