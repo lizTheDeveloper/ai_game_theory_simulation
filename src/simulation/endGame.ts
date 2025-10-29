@@ -286,77 +286,10 @@ function checkEndGameResolution(state: GameState): void {
     lockOutcome(endGame, 'extinction', 'Humanity became irrelevant to superintelligent AI');
     return;
   }
-  
+
   // === DYSTOPIA PATHS ===
-  // DISABLED (Oct 25, 2025): Dystopia early-stop disabled - only extinction stops simulation
-  // Dystopia detection kept for tracking but doesn't lock outcome
-  // This allows full 240-month runs to test ecology recovery system
+  // DISABLED (Oct 25, 2025): Dystopia early-stop disabled to allow full 240-month runs
 
-  // // Aligned AI wins but created surveillance state in the process
-  // if (endGame.alignedAIPower > endGame.misalignedAIPower * 3.0 &&
-  //     endGame.monthsInEndGame > 18 && // Sustained control
-  //     state.government.structuralChoices.surveillanceLevel > 0.85 &&
-  //     qol < 0.35 &&
-  //     state.government.controlDesire > 0.7) { // Government actively oppressing
-  //   lockOutcome(endGame, 'dystopia', 'Aligned AI won, but victory required authoritarian measures');
-  //   return;
-  // }
-
-  // // Stalemate dystopia: endless low-grade conflict with oppression
-  // if (endGame.monthsInEndGame > 36 &&
-  //     Math.abs(endGame.alignedVictories - endGame.misalignedVictories) < 3 &&
-  //     totalPower > 3.0 && // Powerful enough to matter
-  //     qol < 0.4 &&
-  //     state.government.structuralChoices.surveillanceLevel > 0.7) {
-  //   lockOutcome(endGame, 'dystopia', 'Permanent stalemate with constant low-level AI conflict and surveillance');
-  //   return;
-  // }
-
-  // // NEW: Inequality dystopia ("Elysium" scenario)
-  // // Some regions thrive with AI abundance while others suffer
-  // // Research: This is the "two worlds" outcome user is concerned about
-  // if (endGame.monthsInEndGame > 12 &&
-  //     state.qualityOfLifeSystems.distribution?.isDystopicInequality) {
-  //   const dist = state.qualityOfLifeSystems.distribution;
-  //   lockOutcome(endGame, 'dystopia',
-  //     `Inequality dystopia: Best region QoL ${dist.bestRegionQoL.toFixed(2)}, worst ${dist.worstRegionQoL.toFixed(2)} (Gini ${dist.globalGini.toFixed(2)})`);
-  //   return;
-  // }
-
-  // // NEW: Regional dystopia
-  // // Significant population in crisis while others prosper
-  // if (endGame.monthsInEndGame > 12 &&
-  //     state.qualityOfLifeSystems.distribution?.isRegionalDystopia) {
-  //   const dist = state.qualityOfLifeSystems.distribution;
-  //   lockOutcome(endGame, 'dystopia',
-  //     `Regional dystopia: ${(dist.crisisAffectedFraction * 100).toFixed(0)}% of population in crisis zones while others prosper`);
-  //   return;
-  // }
-
-  // // NEW: Survival dystopia
-  // // Aggregate QoL looks OK but people are actually starving/dying
-  // // This catches the "hidden suffering" scenario
-  // if (endGame.monthsInEndGame > 12 && qol > 0.4) {
-  //   const survival = state.qualityOfLifeSystems.survivalFundamentals;
-  //   if (survival) {
-  //     if (survival.foodSecurity < 0.4) {
-  //       lockOutcome(endGame, 'dystopia',
-  //         `Food security collapse: Only ${(survival.foodSecurity * 100).toFixed(0)}% food secure despite aggregate QoL ${qol.toFixed(2)}`);
-  //       return;
-  //     }
-  //     if (survival.waterSecurity < 0.4) {
-  //       lockOutcome(endGame, 'dystopia',
-  //         `Water security collapse: Only ${(survival.waterSecurity * 100).toFixed(0)}% water secure despite aggregate QoL ${qol.toFixed(2)}`);
-  //       return;
-  //     }
-  //     if (survival.thermalHabitability < 0.5) {
-  //       lockOutcome(endGame, 'dystopia',
-  //         `Thermal uninhabitability: Only ${(survival.thermalHabitability * 100).toFixed(0)}% of planet habitable due to extreme heat`);
-  //       return;
-  //     }
-  //   }
-  // }
-  
   // === UTOPIA PATHS ===
   // ALL Utopia paths now require Golden Age sustainability verification
   

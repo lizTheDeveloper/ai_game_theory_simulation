@@ -44,7 +44,7 @@ This is one of the most critical open questions in AI safety research. The simul
 
 **Theoretical Basis:**
 - **Anthropic's Constitutional AI (Bai et al. 2022)**: Self-supervised value learning creates stable preferences
-- **Christiano et al. "Deep RL from Human Feedback" (2017)**: Reward modeling can capture human values durably
+- **Christiano et al. "Deep reinforcement learning from human preferences" (2017)**: Reward modeling can capture human values durably
 - **Optimistic interpretability research**: If we can "see inside" models, we can maintain alignment
 
 **Dynamics Enabled:**
@@ -243,7 +243,7 @@ Each model's parameters are calibrated to match published research:
 
 ### **Alignment Stability (Conservative)**
 - Bai et al. (2022) - "Constitutional AI: Harmlessness from AI Feedback"
-- Christiano et al. (2017) - "Deep Reinforcement Learning from Human Feedback"
+- Christiano et al. (2017) - "Deep reinforcement learning from human preferences" (arXiv:1706.03741)
 - Leike et al. (2018) - "Scalable Agent Alignment via Reward Modeling"
 
 ### **Alignment Fragility (Pessimistic)**
@@ -258,9 +258,9 @@ Each model's parameters are calibrated to match published research:
 - Soares & Fallenstein (2017) - "Agent Foundations for Aligning Machine Intelligence with Human Interests"
 
 ### **Non-Linear Dynamics (Epicycle)**
-- Schaeffer et al. (2023) - "Are Emergent Abilities of Large Language Models a Mirage?"
-- Anthropic (2023) - "Shard Theory: Value Formation in Neural Networks"
-- Strogatz (2015) - "Nonlinear Dynamics and Chaos" (dynamical systems theory)
+- Schaeffer, R., Miranda, B., & Koyejo, S. (2023) - "Are Emergent Abilities of Large Language Models a Mirage?" (arXiv:2304.15004, NeurIPS 2023)
+- Pope, Q., & Turner, A. (2022) - "The shard theory of human values" (AI Alignment Forum)
+- Strogatz, S. H. (2015) - "Nonlinear Dynamics and Chaos: With Applications to Physics, Biology, Chemistry, and Engineering" (2nd ed.). CRC Press. ISBN 9780813349107
 
 ---
 

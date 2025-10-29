@@ -518,6 +518,18 @@ export interface GameState {
   // Research: Raymond et al. (2020) 35°C TW = 6h death, Vecellio et al. (2022) vulnerable thresholds, Mora et al. (2017) exponential increase (TRL 8-9)
   wetBulbTemperatureSystem: import('../types/wetBulbTemperature').WetBulbTemperatureSystem; // Deadly heat events, regional vulnerability, climate-linked mortality
 
+  // Extreme Weather Events (TIER: Medium Priority - Oct 28, 2025)
+  // Storm intensity-frequency modeling with climate-driven category distribution shift
+  // Research: Knutson et al. (2020, 2023) tropical cyclone projections, Emanuel (2021) rapid intensification (TRL 8-9)
+  // Key finding: FEWER storms overall (-6% to -34%), but MORE Cat 4-5 (+10%/°C), LESS Cat 1-2 (-5%/°C)
+  extremeWeatherSystem?: import('../types/extremeWeather').ExtremeWeatherSystem; // Tropical cyclones, storm surge, infrastructure mismatch as primary mortality driver
+
+  // Biosphere Integrity Index (TIER 3.5 - Oct 28, 2025)
+  // Species extinction tracking with climate velocity modeling
+  // Research: IPBES (2024) 54,000 species baseline, Yoder et al. (2024) Joshua Tree climate tracking failure (TRL 7-8)
+  // Key finding: Non-migratory species CANNOT track climate velocity (1.5°C/year) → extinction trajectory
+  biosphereIntegrityIndex?: import('../types/planetaryBoundaries').BiosphereIntegrityIndex; // 54,000 species, E/MSY extinction rates, climate tracking failure
+
   // Antimicrobial Resistance Crisis (TIER 1.8 - Oct 17, 2025)
   // Progressive loss of antibiotic effectiveness over time
   // Research: WHO (2024) 10M deaths/year by 2050, O'Neill Review (2016) $100T damage

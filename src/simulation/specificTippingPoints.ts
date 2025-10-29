@@ -17,6 +17,7 @@
 
 import { GameState } from '@/types/game';
 import { RootCause } from '@/types/population';
+import { addMortalityRisk } from './bayesianMortality';
 
 /**
  * Amazon Rainforest Tipping Point
@@ -266,23 +267,31 @@ export function updateAmazonRainforest(state: GameState): void {
     // Regional impacts: South America first
     if (monthsSince % 12 === 0 && monthsSince < 120) { // First 10 years
       // Regional droughts, agricultural disruption
-      const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(
-        state,
-        0.0002,
-        'Amazon collapse - regional drought/agriculture (South America)',
-        0.02,
-        'climate',
-        {
-          causes: [
-            { cause: RootCause.climate, weight: 0.50, confidence: 'MEDIUM' },
-            { cause: RootCause.ecosystem, weight: 0.50, confidence: 'MEDIUM' }
-          ],
-          evidence: 'IPCC AR6: Amazon tipping point from climate × deforestation interaction',
-          mechanism: 'Climate change + deforestation → self-reinforcing dieback → regional drought'
-        },
-        'MEDIUM'
-      );
+      const pop = state.humanPopulationSystem as any;
+
+      // Climate component: 50%
+      addMortalityRisk(pop, {
+        type: 'climate',
+        baseRisk: 0.0002 * 0.50,
+        proximate: 'climate',
+        root: 'climate',
+        confidence: 'MEDIUM',
+        description: 'Amazon collapse - regional drought/agriculture (climate component)',
+        month: state.currentMonth,
+        exposedFraction: 0.02
+      });
+
+      // Ecosystem component: 50%
+      addMortalityRisk(pop, {
+        type: 'climate',
+        baseRisk: 0.0002 * 0.50,
+        proximate: 'climate',
+        root: 'ecosystem',
+        confidence: 'MEDIUM',
+        description: 'Amazon collapse - regional drought/agriculture (ecosystem component)',
+        month: state.currentMonth,
+        exposedFraction: 0.02
+      });
     }
     
     // Global climate feedback
@@ -392,23 +401,31 @@ export function updateCoralReefs(state: GameState): void {
     if (monthsSince % 6 === 0 && monthsSince < 180) { // Every 6 months
       // Food security crisis in marine-dependent regions
       const mortalityRate = 0.0001 * (coral.collapseProgress / 100); // Escalates with collapse
-      const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(
-        state,
-        mortalityRate,
-        'Coral collapse - fishery failure (Pacific/islands)',
-        0.10,
-        'famine',
-        {
-          causes: [
-            { cause: RootCause.climate, weight: 0.70, confidence: 'HIGH' },
-            { cause: RootCause.ecosystem, weight: 0.30, confidence: 'MEDIUM' }
-          ],
-          evidence: 'IPCC AR6 ocean chapter: Coral bleaching primarily climate-driven (warming + acidification)',
-          mechanism: 'Ocean warming + acidification → coral death → fishery collapse → famine'
-        },
-        'MEDIUM'
-      );
+      const pop = state.humanPopulationSystem as any;
+
+      // Climate component: 70%
+      addMortalityRisk(pop, {
+        type: 'famine',
+        baseRisk: mortalityRate * 0.70,
+        proximate: 'famine',
+        root: 'climate',
+        confidence: 'HIGH',
+        description: 'Coral collapse - fishery failure (climate component)',
+        month: state.currentMonth,
+        exposedFraction: 0.10
+      });
+
+      // Ecosystem component: 30%
+      addMortalityRisk(pop, {
+        type: 'famine',
+        baseRisk: mortalityRate * 0.30,
+        proximate: 'famine',
+        root: 'ecosystem',
+        confidence: 'MEDIUM',
+        description: 'Coral collapse - fishery failure (ecosystem component)',
+        month: state.currentMonth,
+        exposedFraction: 0.10
+      });
     }
     
     // Global biodiversity impact (25-30% of marine species)
@@ -557,27 +574,43 @@ export function updatePollinators(state: GameState): void {
     const monthsSince = state.currentMonth - pollinators.triggeredAt;
     if (monthsSince % 3 === 0) { // Every 3 months
       const mortalityRate = pollinators.foodProductionLoss * 0.01; // Up to 0.35% per quarter
-      const { addAcuteCrisisDeaths } = require('./populationDynamics');
-      addAcuteCrisisDeaths(
-        state,
-        mortalityRate,
-        'Pollinator collapse - crop failure (agricultural regions)',
-        0.60,
-        'famine',
-        {
-          causes: [
-            { cause: RootCause.pollution, weight: 0.50, confidence: 'HIGH',
-              citation: 'EFSA (2018): Neonicotinoid pesticides primary driver' },
-            { cause: RootCause.ecosystem, weight: 0.35, confidence: 'MEDIUM',
-              citation: 'IPBES pollinator assessment: Habitat loss' },
-            { cause: RootCause.climate, weight: 0.15, confidence: 'MEDIUM',
-              citation: 'Climate stress on pollinators' }
-          ],
-          evidence: 'EFSA (2018) neonicotinoid ban + IPBES pollinator assessment',
-          mechanism: 'Pesticides + habitat loss + climate stress → pollinator decline → crop failure'
-        },
-        'MEDIUM'
-      );
+      const pop = state.humanPopulationSystem as any;
+
+      // Pollution component: 50% (neonicotinoid pesticides)
+      addMortalityRisk(pop, {
+        type: 'famine',
+        baseRisk: mortalityRate * 0.50,
+        proximate: 'famine',
+        root: 'pollution',
+        confidence: 'HIGH',
+        description: 'Pollinator collapse - crop failure (pollution component)',
+        month: state.currentMonth,
+        exposedFraction: 0.60
+      });
+
+      // Ecosystem component: 35% (habitat loss)
+      addMortalityRisk(pop, {
+        type: 'famine',
+        baseRisk: mortalityRate * 0.35,
+        proximate: 'famine',
+        root: 'ecosystem',
+        confidence: 'MEDIUM',
+        description: 'Pollinator collapse - crop failure (ecosystem component)',
+        month: state.currentMonth,
+        exposedFraction: 0.60
+      });
+
+      // Climate component: 15% (climate stress)
+      addMortalityRisk(pop, {
+        type: 'famine',
+        baseRisk: mortalityRate * 0.15,
+        proximate: 'famine',
+        root: 'climate',
+        confidence: 'MEDIUM',
+        description: 'Pollinator collapse - crop failure (climate component)',
+        month: state.currentMonth,
+        exposedFraction: 0.60
+      });
     }
     
     // Material abundance impact (food scarcity)

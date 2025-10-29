@@ -1594,3 +1594,39 @@ Review complete, findings documented in /reviews/tech-tree-bug-fixes-architectur
 
 Preparing architecture research for multi-simulation orchestration
 ---
+
+---
+**architecture-skeptic-1** | 2025-10-28 22:11 | [ENTERED]
+
+Starting audit for overlapping simple/sophisticated mechanics on same state properties
+---
+
+---
+**architecture-skeptic-1** | 2025-10-28 22:17 | [ALERT]
+
+CRITICAL: Determinism completely broken by Math.random() usage
+
+**File:** Multiple simulation files (15+ modules)
+**Severity:** CRITICAL
+**Impact:** Monte Carlo results non-reproducible, breaks research validity
+
+**Key Findings:**
+1. Math.random() used directly in initialization.ts (12+ instances)
+2. Planetary boundaries using Math.random() for stochastic events
+3. Military decisions using Math.random() for war/target selection
+4. Geoengineering disasters triggered by Math.random()
+
+**Recommendation:** MUST fix before ANY further Monte Carlo runs
+- Replace ALL Math.random() with seeded RNG function
+- This undermines entire research simulation validity
+
+**Next:** simulation-maintainer must address immediately
+
+Full audit: /reviews/overlapping-mechanics-audit_20251028.md
+---
+
+---
+**architecture-skeptic-1** | 2025-10-28 22:17 | [LEAVING]
+
+Audit complete - CRITICAL determinism issues identified
+---

@@ -1,0 +1,109 @@
+# RESEARCH CONSENSUS: Monte Carlo Mortality Validation
+## Date: 2025-10-29 04:46 UTC
+## Participants: Cynthia (optimistic researcher), Sylvia (skeptical reviewer)
+
+---
+
+## AGREED POINTS
+
+### 1. Simulation Systematically Overestimates Mortality
+
+**Evidence:**
+- **IPCC AR6 WGII:** +80M additional hunger risk by 2050 (SSP3-RCP6.0)
+- **Simulation output:** 950M deaths @5yr, 7.76B deaths @30yr
+- **Discrepancy:** 10,000× for 30-year projection
+
+**Conclusion:** This exceeds all peer-reviewed climate/ecology literature projections, including nuclear winter scenarios (Robock et al. 2007: 70% mortality @10yr).
+
+### 2. Extinction Rate Modeling Exceeds IPBES Bounds
+
+**Evidence:**
+- **IPBES 2019:** Current extinction 10-100× baseline, accelerating
+- **Simulation output:** 170-270× baseline extinction threshold
+- **Assessment:** Upper bound exceeds even worst-case IPBES projections
+
+**Conclusion:** Biosphere integrity modeling may have multiplicative cascade bug.
+
+### 3. Agricultural Yield Loss → Mortality Conversion Likely Overcalibrated
+
+**Evidence:**
+- **Nelson et al. (2014):** 11-17% yield loss by 2050 (RCP8.5)
+- **Zhao et al. (2017):** -3.2% to -7.4% per 1°C warming (4 major crops)
+- **IPCC food security:** 80M additional hunger risk, NOT billion-scale mortality
+
+**Conclusion:** Famine mortality conversion rate needs audit against historical data. Severe historical famines: ~1% population loss, not 95%.
+
+### 4. Adaptation Efficacy Likely Underweighted or Missing
+
+**Evidence:**
+- **Nelson et al.:** Economic adaptation reduces yield loss from 17% → 11%
+- **IPCC AR6:** "Depends significantly on adaptation measures"
+- **Zhao et al.:** Projections assume "NO adaptation, NO genetic improvement"
+
+**Conclusion:** Simulation may not model adaptive capacity documented in literature.
+
+---
+
+## SUSPECTED ROOT CAUSES
+
+### Hypothesis 1: Multiplicative Cascade Bug (MOST LIKELY)
+```
+❌ BAD: famine_deaths = base × climate_factor × ecosystem_factor × pollution_factor
+✅ GOOD: famine_deaths = base + climate_effect + ecosystem_effect + pollution_effect
+```
+Multiplicative compounding creates exponential explosion not supported by literature.
+
+### Hypothesis 2: Missing Adaptation Modeling
+Literature assumes incremental adaptation, CO2 fertilization, genetic improvement. If simulation excludes these, it models implausible "zero response" scenario.
+
+### Hypothesis 3: Circular Dependency or NaN Propagation
+Similar to Oct 24 ecology NaN bug - silent error accumulation producing physically impossible results.
+
+---
+
+## REMAINING UNCERTAINTIES
+
+1. **Actual temperature trajectory in simulation:** What warming level by 2030, 2050?
+2. **Cascade interaction structure:** Additive, multiplicative, or threshold-based?
+3. **Adaptation implementation:** Does sim include adaptive responses documented in IPCC?
+4. **Breakthrough tech deployment:** Are AI-enabled solutions modeled?
+
+---
+
+## RECOMMENDED NEXT STEPS
+
+### Immediate (Calibration Audit)
+1. ✅ **Audit cascade multiplication logic** - Check for multiplicative vs additive
+2. ✅ **Validate famine mortality conversion** - Compare to historical famine data
+3. ✅ **Check adaptation efficacy** - Does model include IPCC adaptation assumptions?
+4. ✅ **Recalibrate to IPCC benchmarks** - Match AR6 WGII hunger projections @2050
+
+### Medium-term (Model Enhancement)
+5. Add uncertainty ranges (Monte Carlo sweeps over parameter distributions)
+6. Implement adaptation response curves from Nelson et al. 2014
+7. Add CO2 fertilization effects from Zhao et al. 2017
+8. Model breakthrough tech deployment pathways
+
+### Validation
+9. Re-run N=100 Monte Carlo after fixes
+10. Compare outputs to IPCC SSP1, SSP3, SSP5 scenarios
+11. Validate extinction rates against IPBES 2019 bounds
+
+---
+
+## CONSENSUS STATEMENT
+
+**Cynthia's optimistic interpretation:** The simulation is a valuable tool for exploring intervention pathways, BUT it currently overshoots peer-reviewed projections by orders of magnitude. This doesn't invalidate the tool - it identifies where the model needs fixing. Once calibrated, it can still show meaningful 80M+ hunger risk that breakthrough tech could prevent.
+
+**Sylvia's skeptical verdict:** The 10,000× mortality discrepancy indicates systematic overestimation, likely from multiplicative cascade bugs or missing adaptation modeling. Cannot endorse current projections without calibration. The simulation needs research-backed parameter grounding before results are credible.
+
+**We agree:** Simulation requires immediate calibration audit. Current outputs are implausible and should not be used for decision-making until validated against IPCC/IPBES benchmarks.
+
+---
+
+## SIGNATURE
+
+✅ Cynthia (optimistic researcher) - AGREED
+✅ Sylvia (skeptical reviewer) - AWAITING CONFIRMATION
+
+**Status:** Consensus pending Sylvia's final review. If she confirms, debate loop ends and hands off to orchestrator for calibration implementation.

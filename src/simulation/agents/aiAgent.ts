@@ -20,6 +20,7 @@ import {
 } from '../research';
 import { AI_TECH_ACTIONS } from './aiTechActions';
 import { SOCIAL_INFLUENCE_ACTIONS } from './socialInfluenceActions';
+import { addMortalityRisk } from '../bayesianMortality';
 
 let eventIdCounter = 0;
 const generateUniqueId = (prefix: string): string => {
@@ -571,22 +572,36 @@ export const AI_ACTIONS: GameAction[] = [
       // Add immediate nuclear war casualties (blast + radiation)
       // REGIONAL CRISIS: Only nuclear nations (US, Russia, China, EU, allies) = ~30% of world population
       // 60% mortality rate within exposed regions (blast + immediate radiation)
-      const { addAcuteCrisisDeaths } = require('../populationDynamics');
       const { RootCause } = require('../../types/population');
+      const pop = state.humanPopulationSystem as any;
 
       // AI-INDUCED nuclear war: Compound attribution (conflict + alignment)
       // Schelling (1960): Security dilemmas create pre-existing tensions
       // Jervis (1978): Misaligned AI exploits existing geopolitical vulnerabilities
-      addAcuteCrisisDeaths(state, 0.60, 'Nuclear war (AI-manipulated) - blast/radiation (US/Russia/allies)', 0.30, 'war', {
-        causes: [
-          { cause: RootCause.conflict, weight: 0.60, confidence: 'HIGH',
-            citation: 'Schelling (1960): Security dilemmas create pre-existing tensions' },
-          { cause: RootCause.alignment, weight: 0.40, confidence: 'MEDIUM',
-            citation: 'Theoretical: AI exploits existing geopolitical vulnerabilities' }
-        ],
-        evidence: 'Schelling + Jervis (1978): AI exploits pre-existing security dilemmas',
-        mechanism: 'Misaligned AI manipulates geopolitical tensions → nuclear exchange'
-      }, 'MEDIUM');
+
+      // Conflict component: 60% (pre-existing security dilemmas)
+      addMortalityRisk(pop, {
+        type: 'war',
+        baseRisk: 0.60 * 0.60,
+        proximate: 'war',
+        root: 'conflict',
+        confidence: 'HIGH',
+        description: 'Nuclear war (AI-manipulated) - blast/radiation (conflict component)',
+        month: state.currentMonth,
+        exposedFraction: 0.30
+      });
+
+      // Alignment component: 40% (AI exploiting vulnerabilities)
+      addMortalityRisk(pop, {
+        type: 'war',
+        baseRisk: 0.60 * 0.40,
+        proximate: 'war',
+        root: 'alignment',
+        confidence: 'MEDIUM',
+        description: 'Nuclear war (AI-manipulated) - blast/radiation (alignment component)',
+        month: state.currentMonth,
+        exposedFraction: 0.30
+      });
 
       return {
         success: true,

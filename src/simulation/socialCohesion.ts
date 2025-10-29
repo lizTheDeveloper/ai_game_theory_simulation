@@ -19,6 +19,7 @@ import { HumanSocietyAgent } from '@/types/society';
 import { levyFlight, ALPHA_PRESETS } from './utils/levyDistributions';
 import { RootCause } from '@/types/population';
 import { assertStateProperty } from './utils/assertions';
+import { addMortalityRisk } from './bayesianMortality';
 import {
   TRUST_THRESHOLD_ACCEPTANCE,
   TRUST_THRESHOLD_EMBRACE,
@@ -360,25 +361,31 @@ function checkSocialCrises(state: GameState): void {
     // Population impact: Suicide epidemic (0.1-0.2% casualties initially)
     // SEMI-GLOBAL: Wealthy automated nations (US, EU, Japan, SK, etc.) = ~30% of world
     // 0.5% mortality rate in affected regions (severe suicide spike)
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.005,
-      'Meaning collapse - suicide epidemic (wealthy nations)',
-      0.30,
-      'other',
-      {
-        causes: [
-          { cause: RootCause.social, weight: 0.50, confidence: 'MEDIUM',
-            citation: 'Durkheim (1897): Anomie from loss of purpose' },
-          { cause: RootCause.disruption, weight: 0.50, confidence: 'MEDIUM',
-            citation: 'Case & Deaton (2015): Deaths of despair from economic displacement' }
-        ],
-        evidence: 'Durkheim anomie + Case & Deaton deaths of despair from AI unemployment',
-        mechanism: 'AI-driven unemployment → loss of purpose/meaning → anomie → suicide'
-      },
-      'MEDIUM'
-    );
+    const pop = state.humanPopulationSystem as any;
+
+    // Social component: 50% (Durkheim anomie)
+    addMortalityRisk(pop, {
+      type: 'other',
+      baseRisk: 0.005 * 0.50,
+      proximate: 'other',
+      root: 'social',
+      confidence: 'MEDIUM',
+      description: 'Meaning collapse - suicide epidemic (social component)',
+      month: state.currentMonth,
+      exposedFraction: 0.30
+    });
+
+    // Disruption component: 50% (Case & Deaton deaths of despair)
+    addMortalityRisk(pop, {
+      type: 'other',
+      baseRisk: 0.005 * 0.50,
+      proximate: 'other',
+      root: 'disruption',
+      confidence: 'MEDIUM',
+      description: 'Meaning collapse - suicide epidemic (disruption component)',
+      month: state.currentMonth,
+      exposedFraction: 0.30
+    });
   }
   
   // INSTITUTIONAL FAILURE: Government legitimacy below sampled threshold (Phase 1B)
@@ -401,52 +408,83 @@ function checkSocialCrises(state: GameState): void {
     // REGIONAL: Specific failing state (Somalia, Venezuela, etc.) = ~5% of world
     // 4% mortality rate in collapsed state (severe chaos, riots, starvation)
     // CRITICAL: Governance failure is SYMPTOM, not root cause - trace back to what CAUSED institutional failure
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-
-    let institutionFailureAttribution: any; // RootCause | CompoundCause
-    let institutionFailureConfidence: 'HIGH' | 'MEDIUM' | 'LOW';
+    const pop = state.humanPopulationSystem as any;
 
     if (state.environmentalAccumulation.resourceCrisisActive) {
       // Resource scarcity → fiscal stress → state collapse
-      institutionFailureAttribution = {
-        causes: [
-          { cause: RootCause.resource, weight: 0.70, confidence: 'MEDIUM' },
-          { cause: RootCause.demographic, weight: 0.30, confidence: 'MEDIUM' }
-        ],
-        evidence: 'Tainter (1988): Resource exhaustion → diminishing returns → collapse',
-        mechanism: 'Resource scarcity + population pressure → fiscal stress → state capacity collapse'
-      };
-      institutionFailureConfidence = 'MEDIUM';
+      // Resource component: 70%
+      addMortalityRisk(pop, {
+        type: 'cascade',
+        baseRisk: 0.04 * 0.70,
+        proximate: 'cascade',
+        root: 'resource',
+        confidence: 'MEDIUM',
+        description: 'Institutional failure - state collapse chaos (resource component)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
+
+      // Demographic component: 30%
+      addMortalityRisk(pop, {
+        type: 'cascade',
+        baseRisk: 0.04 * 0.30,
+        proximate: 'cascade',
+        root: 'demographic',
+        confidence: 'MEDIUM',
+        description: 'Institutional failure - state collapse chaos (demographic component)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
     } else if (state.nuclearWinterState && state.nuclearWinterState.active) {
       // War destroyed state capacity
-      institutionFailureAttribution = RootCause.conflict;
-      institutionFailureConfidence = 'HIGH';
+      addMortalityRisk(pop, {
+        type: 'cascade',
+        baseRisk: 0.04,
+        proximate: 'cascade',
+        root: 'conflict',
+        confidence: 'HIGH',
+        description: 'Institutional failure - state collapse chaos (conflict)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
     } else if (state.society.trust !== undefined && state.society.trust < 0.3) {
       // Extreme inequality → legitimacy collapse (using trust as proxy for socialCohesion)
-      institutionFailureAttribution = {
-        causes: [
-          { cause: RootCause.inequality, weight: 0.60, confidence: 'MEDIUM' },
-          { cause: RootCause.social, weight: 0.40, confidence: 'MEDIUM' }
-        ],
-        evidence: 'Turchin (2016): Elite overproduction + popular immiseration → state breakdown',
-        mechanism: 'Extreme inequality + social fragmentation → legitimacy crisis → state collapse'
-      };
-      institutionFailureConfidence = 'MEDIUM';
+      // Inequality component: 60%
+      addMortalityRisk(pop, {
+        type: 'cascade',
+        baseRisk: 0.04 * 0.60,
+        proximate: 'cascade',
+        root: 'inequality',
+        confidence: 'MEDIUM',
+        description: 'Institutional failure - state collapse chaos (inequality component)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
+
+      // Social component: 40%
+      addMortalityRisk(pop, {
+        type: 'cascade',
+        baseRisk: 0.04 * 0.40,
+        proximate: 'cascade',
+        root: 'social',
+        confidence: 'MEDIUM',
+        description: 'Institutional failure - state collapse chaos (social component)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
     } else {
       // Unknown trigger (shouldn't happen, but fallback)
-      institutionFailureAttribution = RootCause.social; // Best guess
-      institutionFailureConfidence = 'LOW';
+      addMortalityRisk(pop, {
+        type: 'cascade',
+        baseRisk: 0.04,
+        proximate: 'cascade',
+        root: 'social',
+        confidence: 'LOW',
+        description: 'Institutional failure - state collapse chaos (unknown trigger)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
     }
-
-    addAcuteCrisisDeaths(
-      state,
-      0.04,
-      'Institutional failure - state collapse chaos (failing state)',
-      0.05,
-      'cascade',
-      institutionFailureAttribution,
-      institutionFailureConfidence
-    );
 
     // High risk of dystopia transition
     // Government may become authoritarian to restore order
@@ -483,24 +521,43 @@ function checkSocialCrises(state: GameState): void {
     // Population impact: Riots and civil violence (0.2-0.5% casualties)
     // REGIONAL: Unstable regions (MENA, parts of Africa/Latin America) = ~10% of world
     // 3% mortality rate in unrest regions (riots, clashes are deadly)
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.03,
-      'Social unrest - riots/civil violence (unstable regions)',
-      0.10,
-      'other',
-      {
-        causes: [
-          { cause: RootCause.inequality, weight: 0.60, confidence: 'MEDIUM' },
-          { cause: RootCause.disruption, weight: 0.30, confidence: 'MEDIUM' },
-          { cause: RootCause.climate, weight: 0.10, confidence: 'LOW' }
-        ],
-        evidence: 'Turchin (2016) secular cycles + Burke et al. climate-conflict link',
-        mechanism: 'Elite competition + unemployment + resource stress → riots'
-      },
-      'MEDIUM'
-    );
+    const pop2 = state.humanPopulationSystem as any;
+
+    // Inequality component: 60%
+    addMortalityRisk(pop2, {
+      type: 'other',
+      baseRisk: 0.03 * 0.60,
+      proximate: 'other',
+      root: 'inequality',
+      confidence: 'MEDIUM',
+      description: 'Social unrest - riots/civil violence (inequality component)',
+      month: state.currentMonth,
+      exposedFraction: 0.10
+    });
+
+    // Disruption component: 30%
+    addMortalityRisk(pop2, {
+      type: 'other',
+      baseRisk: 0.03 * 0.30,
+      proximate: 'other',
+      root: 'disruption',
+      confidence: 'MEDIUM',
+      description: 'Social unrest - riots/civil violence (disruption component)',
+      month: state.currentMonth,
+      exposedFraction: 0.10
+    });
+
+    // Climate component: 10%
+    addMortalityRisk(pop2, {
+      type: 'other',
+      baseRisk: 0.03 * 0.10,
+      proximate: 'other',
+      root: 'climate',
+      confidence: 'LOW',
+      description: 'Social unrest - riots/civil violence (climate component)',
+      month: state.currentMonth,
+      exposedFraction: 0.10
+    });
   }
   
   // === ONGOING CRISIS IMPACTS ===

@@ -16,7 +16,7 @@
 import type { GameState, QualityOfLifeSystems } from '@/types/game';
 import { getTrustInAI } from '../socialCohesion';
 import { getTechDeploymentSafe } from '../techTree/helpers';
-import { assertProbability } from '../utils/assertions';
+import { assertProbability, assertFinite } from '../utils/assertions';
 
 /**
  * Calculate Tier 0: Survival Fundamentals (NON-FOOD ONLY)
@@ -222,42 +222,51 @@ export function calculateShelterSecurity(state: GameState): number {
   const wealth = state.globalMetrics.wealthDistribution;
   const ubiActive = state.government.activeRegulations.some(reg => reg.includes('UBI'));
 
-  // DEBUG: Log inputs for NaN investigation (Oct 28, 2025)
-  if (isNaN(wealth)) {
-    console.log(`⚠️  calculateShelterSecurity: wealth is NaN at month ${state.currentMonth}`);
-    console.log(`  globalMetrics.wealthDistribution: ${state.globalMetrics.wealthDistribution}`);
-  }
+  // FIX (Oct 28, 2025): Use assertFinite instead of console.log to fail loudly on NaN
+  const validatedWealth = assertFinite(wealth, {
+    location: 'calculateShelterSecurity (wealth input)',
+    valueName: 'wealthDistribution',
+    month: state.currentMonth,
+    additionalInfo: {
+      economicStage: state.globalMetrics.economicTransitionStage,
+      unemployment: state.society.unemploymentLevel
+    }
+  });
 
   // Base shelter security from wealth distribution
   // Research: Housing insecurity correlates with income inequality
-  let shelterSecurity = 0.7 + wealth * 0.2;
-
-  if (isNaN(shelterSecurity)) {
-    console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after base calculation`);
-    console.log(`  wealth: ${wealth}, calculation: 0.7 + ${wealth} * 0.2 = ${shelterSecurity}`);
-  }
+  let shelterSecurity = assertFinite(0.7 + validatedWealth * 0.2, {
+    location: 'calculateShelterSecurity (base calculation)',
+    valueName: 'shelterSecurity',
+    month: state.currentMonth,
+    additionalInfo: { wealth: validatedWealth }
+  });
 
   // === REFUGEE CRISES ===
   // Displaced populations lose housing
   if (refugees && refugees.activeRefugeeCrises) {
     const totalRefugees = refugees.activeRefugeeCrises
       .reduce((sum, crisis) => sum + crisis.displacedPopulation, 0);
-    const refugeeFraction = (totalRefugees / 1000) / state.humanPopulationSystem.population; // millions to billions
+    const refugeeFraction = assertFinite((totalRefugees / 1000) / state.humanPopulationSystem.population, {
+      location: 'calculateShelterSecurity (refugee fraction)',
+      valueName: 'refugeeFraction',
+      month: state.currentMonth,
+      additionalInfo: {
+        totalRefugees,
+        population: state.humanPopulationSystem.population
+      }
+    }); // millions to billions
 
-    // DEBUG: Check for NaN in refugee calculation
-    if (isNaN(refugeeFraction)) {
-      console.log(`⚠️  calculateShelterSecurity: refugeeFraction is NaN`);
-      console.log(`  totalRefugees: ${totalRefugees}`);
-      console.log(`  humanPopulationSystem.population: ${state.humanPopulationSystem.population}`);
-      console.log(`  calculation: (${totalRefugees} / 1000) / ${state.humanPopulationSystem.population} = ${refugeeFraction}`);
-    }
-
-    shelterSecurity -= refugeeFraction * 0.5; // Refugees have poor shelter access
-
-    if (isNaN(shelterSecurity)) {
-      console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after refugee calculation`);
-      console.log(`  refugeeFraction: ${refugeeFraction}, penalty: ${refugeeFraction * 0.5}`);
-    }
+    // FIX (Oct 28, 2025): Clamp to prevent negative values from large refugee crises
+    shelterSecurity = assertFinite(
+      Math.max(0, shelterSecurity - refugeeFraction * 0.5),
+      {
+        location: 'calculateShelterSecurity (after refugee penalty)',
+        valueName: 'shelterSecurity',
+        month: state.currentMonth,
+        additionalInfo: { refugeeFraction, penalty: refugeeFraction * 0.5 }
+      }
+    ); // Refugees have poor shelter access
   }
 
   // === CLIMATE DISPLACEMENT ===
@@ -282,24 +291,33 @@ export function calculateShelterSecurity(state: GameState): number {
 
   // === AI ENHANCEMENT ===
   // AI can optimize housing construction, prefab housing, resource allocation
-  const totalAI = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-  const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
-
-  // DEBUG: Check for NaN in AI calculation
-  if (isNaN(totalAI) || isNaN(avgAlignment)) {
-    console.log(`⚠️  calculateShelterSecurity: AI metrics contain NaN`);
-    console.log(`  totalAI: ${totalAI}, avgAlignment: ${avgAlignment}`);
-    console.log(`  aiAgents.length: ${state.aiAgents.length}`);
-  }
+  const totalAI = assertFinite(
+    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
+    {
+      location: 'calculateShelterSecurity (totalAI)',
+      valueName: 'totalAI',
+      month: state.currentMonth,
+      additionalInfo: { aiAgentCount: state.aiAgents.length }
+    }
+  );
+  const avgAlignment = assertFinite(
+    state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length),
+    {
+      location: 'calculateShelterSecurity (avgAlignment)',
+      valueName: 'avgAlignment',
+      month: state.currentMonth,
+      additionalInfo: { aiAgentCount: state.aiAgents.length }
+    }
+  );
 
   if (totalAI > 1.5 && avgAlignment > 0.7) {
     const aiHousing = Math.min(0.2, (totalAI - 1.5) * 0.06);
-    shelterSecurity += aiHousing;
-
-    if (isNaN(shelterSecurity)) {
-      console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after AI enhancement`);
-      console.log(`  aiHousing: ${aiHousing}`);
-    }
+    shelterSecurity = assertFinite(shelterSecurity + aiHousing, {
+      location: 'calculateShelterSecurity (after AI enhancement)',
+      valueName: 'shelterSecurity',
+      month: state.currentMonth,
+      additionalInfo: { aiHousing }
+    });
   }
 
   // === POST-SCARCITY ===
@@ -322,31 +340,22 @@ export function calculateShelterSecurity(state: GameState): number {
       // Research: UBI pilots reduce homelessness risk ~30-40%
       ubiFloor = ubiVariant === 'generous' ? 0.68 : 0.60;
     }
-    shelterSecurity = Math.max(shelterSecurity, ubiFloor);
-
-    // DEBUG: Check for NaN after UBI floor
-    if (isNaN(shelterSecurity)) {
-      console.log(`⚠️  calculateShelterSecurity: shelterSecurity is NaN after UBI floor`);
-      console.log(`  ubiFloor: ${ubiFloor}, ubiVariant: ${ubiVariant}`);
-    }
+    shelterSecurity = assertFinite(Math.max(shelterSecurity, ubiFloor), {
+      location: 'calculateShelterSecurity (after UBI floor)',
+      valueName: 'shelterSecurity',
+      month: state.currentMonth,
+      additionalInfo: { ubiFloor, ubiVariant }
+    });
   }
 
-  // DEBUG: Final NaN check before return
-  if (isNaN(shelterSecurity)) {
-    console.log(`❌ calculateShelterSecurity: Final value is NaN at month ${state.currentMonth}`);
-    console.log(`  State dump for debugging:`);
-    console.log(`    wealth: ${wealth}`);
-    console.log(`    tempAnomaly: ${tempAnomaly}`);
-    console.log(`    unemployment: ${unemployment}`);
-    console.log(`    economicStage: ${economicStage}`);
-    console.log(`    totalAI: ${totalAI}`);
-    console.log(`    avgAlignment: ${avgAlignment}`);
-    console.log(`    ubiActive: ${ubiActive}`);
-    console.log(`    refugees.activeRefugeeCrises: ${refugees?.activeRefugeeCrises?.length || 0}`);
-    console.log(`    humanPopulationSystem.population: ${state.humanPopulationSystem.population}`);
-  }
-
-  return Math.max(0, Math.min(1.0, shelterSecurity));
+  // Final validation before return
+  // FIX (Oct 28, 2025): Clamp to [0, 1] to handle cumulative penalties
+  const clampedShelterSecurity = Math.max(0, Math.min(1, shelterSecurity));
+  return assertProbability(clampedShelterSecurity, {
+    location: 'calculateShelterSecurity (final return)',
+    valueName: 'shelterSecurity',
+    month: state.currentMonth
+  });
 }
 
 /**

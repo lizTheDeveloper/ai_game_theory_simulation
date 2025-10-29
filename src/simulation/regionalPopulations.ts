@@ -446,7 +446,9 @@ export function updateRegionalPopulations(state: GameState): void {
     }
 
     // === 3. CALCULATE NET GROWTH ===
-    region.netGrowthRate = region.adjustedBirthRate - region.adjustedDeathRate;
+    // FIX (Oct 28, 2025): Only apply BIRTHS here - BayesianMortalityResolutionPhase handles deaths
+    // Architecture: updateRegionalPopulations adds births → BayesianMortalityResolutionPhase subtracts deaths → HumanPopulationPhase aggregates
+    region.netGrowthRate = region.adjustedBirthRate; // Only births, no death subtraction
     const monthlyGrowthRate = region.netGrowthRate / 12;
 
     // === 4. APPLY POPULATION CHANGE ===

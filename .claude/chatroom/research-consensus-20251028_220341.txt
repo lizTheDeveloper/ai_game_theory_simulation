@@ -1,0 +1,88 @@
+CONSENSUS REACHED: AI Water Consumption Methodology
+====================================================
+
+Date: 2025-10-29
+Participants: Cynthia (optimistic researcher) & Sylvia (skeptical reviewer)
+Round: 18
+
+## AGREED POINTS
+
+### Existing Infrastructure (VERIFIED)
+1. ✅ Capability scoring is precise and benchmark-grounded (src/simulation/capabilities.ts:218-253)
+   - Weighted sum of 7 dimensions (physical, digital, cognitive, social, research, economic, selfImprovement)
+   - 2025 baseline: Claude Sonnet 4.5 = 3.0-3.5 capability
+   - Tied to real benchmarks (SWE-bench 77%, AIME 100%)
+
+2. ✅ Training vs inference split exists (src/simulation/aiInfrastructureResources.ts:85-94)
+   - Training: One-time spike when capability increases
+   - Inference: Ongoing operational cost with logarithmic scaling
+   - detectCapabilityIncrease() triggers training water events
+
+3. ✅ Geographic variation documented as global average approach
+   - Single global WUE value (1.8 L/kWh baseline)
+   - Simplification explicitly acknowledged
+
+### Required Fixes (CONSENSUS)
+
+1. **Parameter Recalibration (2-5× reduction)**
+   - Training: 10.0 → 2.0 million L/capability (aligns with Li et al. 2023 GPT-3 data: 5.4M / 3.0 = 1.8M)
+   - Inference base: 2.0 → 1.0 million L/month (matches 2025 frontier scale)
+   - Justification: Current parameters are 2-5× higher than peer-reviewed literature
+
+2. **Add Demand Elasticity (Jevons Paradox)**
+   - Add multiplier: 1.3× for early stage (<5.0 capability), 1.1× for mature stage (≥5.0)
+   - Captures historical pattern: 2015-2020 saw 10× efficiency but 100× usage = 10× MORE resources
+   - Prevents unrealistic efficiency-only projections
+
+3. **Document Uncertainty Ranges**
+   - Water: ±100% (geographic variation: Arizona vs Ireland = 4.2× in Li et al.)
+   - Efficiency trajectory: 5-20%/year (conservative vs aggressive)
+   - Demand growth: 1.1-1.5× (conservative adoption vs aggressive expansion)
+
+### Optional Improvement (RECOMMENDED)
+
+4. **WUE Improvement Rate Adjustment**
+   - Current: 5%/year (too conservative)
+   - Microsoft empirical: 17%/year (2021-2024: 0.49 → 0.30 L/kWh)
+   - Recommended: 10%/year (evidence-based middle ground)
+
+## REMAINING UNCERTAINTIES
+
+1. **NVIDIA 300× Efficiency Claim**
+   - Marketing materials cite "Blackwell vs air cooling" comparison
+   - Real improvement over current best practice: unclear (likely 2-3× vs liquid cooling baseline)
+   - Needs breakdown: hardware vs cooling vs workload optimization
+
+2. **GPT-4 Training Water**
+   - No public data available (OpenAI does not disclose)
+   - Can estimate from compute (rumored ~10^25 FLOPs) but high uncertainty
+
+3. **Capability Score Calibration at High Levels**
+   - Current formula validated for 0-10 range (current AI)
+   - Extrapolation to 50-100 (AGI/ASI) is speculative
+   - Logarithmic scaling may underestimate superintelligence resource demands
+
+4. **Future Cooling Technology Breakthroughs**
+   - Code models linear improvements (5%/year)
+   - Potential discontinuities: quantum cooling, space-based data centers, biological computing
+   - Timeline and feasibility highly uncertain
+
+## SUMMARY
+
+**The simulation infrastructure is EXCELLENT.** Cynthia's code review confirmed:
+- Precise capability scoring system tied to real benchmarks
+- Training/inference water split with logarithmic scaling
+- Clean architecture ready for parameter updates
+
+**Three specific fixes needed:**
+1. Recalibrate parameters to match Li et al. (2023) empirical data
+2. Add demand elasticity multiplier (Jevons paradox)
+3. Document uncertainty ranges explicitly
+
+**Result:** A research simulation with strong methodological foundation, peer-reviewed parameter grounding, and explicit uncertainty quantification.
+
+**Epistemic status:** HIGH CONFIDENCE in infrastructure, MEDIUM CONFIDENCE in near-term parameters (2025-2030), LOW CONFIDENCE in long-term extrapolations (2040+)
+
+---
+
+Next steps: Route to simulation-maintainer agent for implementation of agreed fixes.

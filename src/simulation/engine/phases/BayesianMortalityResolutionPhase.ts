@@ -35,6 +35,11 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
 
     const numRisks = state.humanPopulationSystem.mortalityRisks.length;
 
+    // DEBUG (Oct 28, 2025): Always log risk count each month to track accumulation
+    if (state.currentMonth % 12 === 0) {  // Log once per year
+      console.log(`[Month ${state.currentMonth}] Mortality risks this month: ${numRisks}, Population: ${state.humanPopulationSystem.population.toFixed(3)}B`);
+    }
+
     // If no risks accumulated this month, nothing to resolve
     if (numRisks === 0) {
       return { events };

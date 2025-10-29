@@ -29,6 +29,7 @@ import {
 import { updateTrappedPopulations } from './trappedPopulations';
 import { updateGovernmentRelocation } from './governmentRelocation';
 import { addSimulationEvent } from './utils/eventLogger';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Initialize refugee crisis system (2025 baseline)
@@ -179,14 +180,38 @@ export function updateRefugeeCrises(state: GameState): void {
       crisis.deathsInTransit += transitDeaths;
       crisis.currentlyDisplaced -= transitDeaths;
 
-      // Track transit deaths by category (convert millions to billions)
-      const transitDeathsBillions = transitDeaths / 1000;
+      // Track transit deaths by category
+      // FIX (Oct 28, 2025): Units consistency bug
+      // - Bayesian mortality system stores in MILLIONS (bayesianMortality.ts:370)
+      // - This system already in millions (transitDeaths = fleeingThisMonth * 0.02)
+      // - Therefore store directly in millions, NO conversion needed
+
+      // Validate deaths are finite and reasonable (should be < 1000M per month)
+      const validatedDeaths = assertFinite(transitDeaths, {
+        location: 'updateRefugeeCrises',
+        valueName: 'transitDeaths',
+        month: state.currentMonth,
+        additionalInfo: {
+          crisis: crisis.cause,
+          region: crisis.sourceRegion,
+          fleeingThisMonth,
+          transitDeathRate: 0.02
+        }
+      });
+
+      if (validatedDeaths > 1000) {
+        throw new Error(
+          `❌ Transit deaths unreasonably high: ${validatedDeaths.toFixed(1)}M ` +
+          `(crisis: ${crisis.cause}, region: ${crisis.sourceRegion}, month: ${state.currentMonth})`
+        );
+      }
+
       const category = crisis.cause === 'war' || crisis.cause === 'nuclear' ? 'war' :
                        crisis.cause === 'famine' ? 'famine' :
                        crisis.cause === 'climate' ? 'disasters' :
                        crisis.cause === 'ecosystem' ? 'ecosystem' : 'other';
-      state.humanPopulationSystem.deathsByCategory[category] += transitDeathsBillions;
-      state.humanPopulationSystem.cumulativeCrisisDeaths += transitDeathsBillions;
+      state.humanPopulationSystem.deathsByCategory[category] += validatedDeaths;
+      state.humanPopulationSystem.cumulativeCrisisDeaths += validatedDeaths;
 
       // Track peak displacement
       crisis.peakDisplacement = Math.max(crisis.peakDisplacement, crisis.currentlyDisplaced);

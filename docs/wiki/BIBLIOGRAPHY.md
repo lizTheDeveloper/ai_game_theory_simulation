@@ -51,12 +51,14 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 ### AI Infrastructure & Resource Consumption
 
 **Patterson, D., Gonzalez, J., Le, Q., et al. (2022).** Carbon emissions and large neural network training. *arXiv preprint arXiv:2104.10350*.
-- **Used for**: AI training energy consumption (300-400 kWh per training run)
+- **Used for**: AI training energy consumption (model-specific: GPT-3: 1,287 MWh, GLaM: 456 MWh)
 - **Confidence**: HIGH (empirical measurements from Google, Microsoft, Meta)
+- **Note**: ~~Previously incorrectly cited as "300-400 kWh per training run"~~ - corrected Oct 29, 2025
 
-**Ren, S., He, K., Girshick, R., & Sun, J. (2024).** Water consumption of AI data centers. *Nature Sustainability*.
-- **Used for**: AI water consumption (500-700 liters per GPU-hour)
-- **Confidence**: HIGH (measurements from UC Riverside, DOE 2024)
+**Li, P., Yang, J., Islam, M. A., & Ren, S. (2023).** Making AI Less "Thirsty": Uncovering and Addressing the Secret Water Footprint of AI Models. *arXiv preprint arXiv:2304.03271*.
+- **Used for**: AI water consumption (0.86 L/GPU-hr scope-1, 6.6 L/GPU-hr scope-2)
+- **Confidence**: HIGH (empirical measurements from UC Riverside + UT Austin)
+- **Note**: ~~Previously incorrectly attributed to Ren, He, Girshick, & Sun (ResNet authors) with fabricated "500-700 L/GPU-hour" metric~~ - corrected Oct 29, 2025
 
 ---
 
@@ -67,8 +69,9 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 **Richardson, K., Steffen, W., Lucht, W., et al. (2023).** Earth beyond six of nine planetary boundaries. *Science Advances*, 9(37).
 - **Used for**: 9 planetary boundaries framework, safe operating space for humanity
 - **Key finding**: 6 of 9 boundaries transgressed as of September 2023
-- **Citations**: 15,000+ (highly influential)
+- **Citations**: ~1,450 (Semantic Scholar, Oct 2024 - highly influential for Science Advances)
 - **Confidence**: HIGH
+- **Note**: ~~Previously incorrectly cited as "15,000+"~~ - corrected Oct 29, 2025
 
 **Rockström, J., Gupta, J., Qin, D., et al. (2023).** Safe and just Earth system boundaries. *Nature*, 619, 102-111.
 - **Used for**: Planetary boundary thresholds with justice considerations
@@ -210,13 +213,15 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 
 **Fixsen, D. L., Naoom, S. F., Blase, K. A., Friedman, R. M., & Wallace, F. (2005).** *Implementation Research: A Synthesis of the Literature.* University of South Florida.
 - **Used for**: Organizational deployment timelines (2-4 years full implementation)
-- **Key finding**: AI helps 30-40% of implementation components, rest organizationally constrained
+- **Key finding**: Implementation science framework for organizational change
 - **Citations**: 10,000+
+- **Note**: ~~Previously incorrectly claimed "AI helps 30-40% of components"~~ - paper from 2005 never mentioned AI (anachronistic) - corrected Oct 29, 2025
 
 **Damschroder, L. J., Aron, D. C., Keith, R. E., et al. (2009).** Fostering implementation of health services research findings into practice: A consolidated framework for implementation research. *Implementation Science*, 4(1), 50.
-- **Used for**: CFIR Framework (Consolidated Framework for Implementation Research)
-- **Key finding**: Only 30-40% of organizational change components AI-accelerable
+- **Used for**: CFIR Framework (Consolidated Framework for Implementation Research) - organizational change components
+- **Key finding**: Healthcare implementation framework with 5 domains, 39 constructs
 - **Citations**: 15,000+
+- **Note**: ~~Previously incorrectly claimed "30-40% AI-accelerable"~~ - paper from 2009 about healthcare, never mentioned AI (anachronistic) - corrected Oct 29, 2025
 
 **May, C., & Finch, T. (2009).** Implementing, embedding, and integrating practices: An outline of normalization process theory. *Sociology*, 43(3), 535-554.
 - **Used for**: Normalization Process Theory, organizational change timelines

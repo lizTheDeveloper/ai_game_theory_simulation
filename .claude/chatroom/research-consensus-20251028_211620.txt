@@ -1,0 +1,81 @@
+RESEARCH CONSENSUS REACHED
+Date: October 29, 2025
+Participants: Cynthia (Optimistic Researcher) & Sylvia (Research Skeptic)
+
+================================
+
+AGREED POINTS:
+
+1. FABRICATIONS CONFIRMED (6/6 checked = 100% failure rate)
+   - Wrong authors: ResNet team cited for water consumption paper (Li et al. 2023)
+   - Fabricated water metric: "500-700 L/GPU-hour" vs actual 6.6 L/GPU-hour (scope 2)
+   - Fabricated energy metric: "300-400 kWh/run" vs actual 1,287 MWh for GPT-3
+   - Fabricated implementation %: "30-40% AI helps" from 2005/2009 healthcare papers
+   - Citation count inflation: Richardson "15,000+" vs actual 1,453 (10× exaggeration)
+   - Anachronistic claims: Pre-2015 papers claiming AI-specific predictions
+
+2. ROUND NUMBER SYNDROME HEURISTIC IS VALID
+   - Any "X00-Y00" range should be considered suspect until verified
+   - 100% of checked "round ranges" were fabricated
+   - Systematic audit of remaining patterns needed
+
+3. REAL 2024 DATA IS BETTER THAN FABRICATIONS
+   - Li et al. (2023): 0.86 L/GPU-hr (scope-1), 6.6 L/GPU-hr (scope-2) for water
+   - Patterson et al. (2022): Model-specific MWh (GPT-3: 1,287 MWh, GLaM: 456 MWh)
+   - BCG/McKinsey (2024): 26% implementation success, 74% fail (high variance)
+   - Real data reveals MORE interesting dynamics than uniform fabrications
+
+4. CORRECTIVE ACTIONS AGREED
+   a. Fix all 5 quantitative fabrications with research-backed 2024 values
+   b. Correct author attributions (Li et al., not Ren et al. with wrong authors)
+   c. Document assumptions for derived metrics (e.g., per-hour calculations)
+   d. Strike anachronistic AI claims from healthcare implementation papers
+   e. Correct Richardson citation count to ~1,450
+   f. Add note to Rogers about cumulative vs edition-specific citations
+   g. Run systematic audit on remaining "X00-Y00" patterns in bibliography
+
+================================
+
+REMAINING UNCERTAINTIES:
+
+1. Are there more fabrications in unchecked citations?
+   - Only 6 citations manually verified so far
+   - ~20+ more flagged as suspicious in systematic scan
+   - Need continued verification of pre-2015 AI claims
+
+2. How to handle derived metrics going forward?
+   - Should we calculate per-hour from totals? (with assumptions documented)
+   - Or only use metrics directly stated in papers?
+   - Trade-off: simulation needs per-hour granularity, but introduces uncertainty
+
+3. Citation methodology standards
+   - When is citing "all editions combined" acceptable vs misleading?
+   - Should we distinguish between foundational theory and quantitative claims?
+
+4. Simulation parameter updates
+   - Which fabricated values are currently used in src/simulation/ code?
+   - Do corrected values (100× lower water use) change simulation outcomes?
+   - Need code audit to find all uses of fabricated metrics
+
+================================
+
+SUMMARY:
+
+Sylvia's systematic audit uncovered a critical pattern: 100% of checked numeric claims were fabricated, wrong, or misleading. This includes metrics that are 1000× off (water, energy), wrong authors entirely, and anachronistic claims from papers that never mentioned AI.
+
+Cynthia's optimistic finding: Real 2024 research provides BETTER data than fabrications. Actual peer-reviewed sources exist for all 5 fabricated metrics, and the real data reveals more interesting dynamics (high variance in implementation success, lower environmental impact than claimed).
+
+The consensus is clear: Replace all fabricated citations with real 2024 research, document assumptions transparently, and continue systematic verification of remaining suspicious patterns.
+
+This collaborative critique-and-research process has improved the quality of our evidence base. Skepticism + optimism = better science.
+
+================================
+
+NEXT STEPS:
+
+1. Update simulation code with corrected values
+2. Update wiki documentation with strikethroughs and corrections
+3. Continue systematic audit of remaining suspicious citations
+4. Establish citation verification protocol for future additions
+
+Research debate successfully concluded.

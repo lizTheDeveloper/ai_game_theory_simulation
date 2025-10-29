@@ -162,6 +162,77 @@ Every mechanic must have:
 
 **Never tune for "fun" - only research-backed values.**
 
+### 8. Citation Verification Protocol (Oct 29, 2025)
+
+**Added after discovering 6 fabricated citations in Oct 2025 research consensus.**
+
+#### Red Flags (Check These First)
+
+When adding or reviewing citations, check for these warning signs:
+
+1. **Round Number Ranges:** X00-Y00 patterns (e.g., "500-700", "300-400") need source verification
+   - NOT all round numbers are fabrications - verify against actual paper
+
+2. **Pre-2015 AI Claims:** Papers before 2015 with AI/ML-specific predictions
+   - Exception: Classic AI safety papers (Bostrom 2014, Omohundro 2008, Yudkowsky 2008)
+   - Healthcare/implementation science papers from 2005-2010 never mentioned modern AI
+
+3. **Adjacent Citations:** If one citation is wrong, check ±5 lines
+   - Fabrications often cluster together
+
+4. **Convenient Percentages:** 30-40%, 50-60%, etc. without page numbers
+   - Verify these are actual findings, not LLM hallucinations
+
+5. **Citation Inflation:** "X,000+" claims need actual count verification
+   - Check Semantic Scholar, Google Scholar for real counts
+   - Papers <2 years old cannot have 10,000+ citations
+
+6. **Wrong Scale:** kWh vs MWh, per-run vs total, per-hour vs per-model
+   - Verify units and granularity match paper
+
+#### Verification Steps
+
+For every citation added:
+
+1. **Check paper exists:** Search on Google Scholar, arXiv, Semantic Scholar
+2. **Verify authors:** Full author list matches paper (watch for LLM autocomplete mistakes)
+3. **Find actual metric:** Read paper or extract exact number with context
+4. **Check anachronistic claims:** Does paper actually mention AI/ML? (especially if pre-2015)
+5. **Verify citation count:** Use Semantic Scholar for accurate count
+6. **Document assumptions:** If deriving metrics (e.g., per-hour from total), show math and state assumptions
+
+#### Quality Verification Gates
+
+- ✅ **Green:** 2+ peer-reviewed sources (2024+ preferred), verified authors, exact metrics
+- ⚠️  **Yellow:** Single source OR pre-2020, needs second confirming source
+- ❌ **Red:** No source, anachronistic claim, wrong authors, or fabricated metric → BLOCK until fixed
+
+#### Common Fabrication Patterns (Oct 2025)
+
+1. **Wrong Authors:** ResNet team (Ren, He, Girshick, Sun) cited for water consumption paper
+   - Real authors: Li, Yang, Islam, Ren (different Ren)
+
+2. **Wrong Metrics:** "300-400 kWh per training run" vs actual "1,287 MWh for GPT-3"
+   - Check scale (kWh vs MWh) and granularity (per-run vs total)
+
+3. **Anachronistic Claims:** "CFIR Framework - AI helps 30-40%" (Damschroder 2009)
+   - Healthcare implementation paper from 2009, never mentioned AI
+
+4. **Citation Inflation:** Richardson "15,000+" vs actual "~1,450"
+   - 10× exaggeration to imply authority
+
+#### Correction Protocol
+
+When fabrication is found:
+
+1. **Document in reviews/:** Create analysis file showing what was wrong
+2. **Fix with strikethrough:** Show ~~old value~~ → **new value** [Citation]
+3. **Add timestamp:** "Corrected YYYY-MM-DD" for transparency
+4. **Check code impact:** Verify simulation doesn't use fabricated values
+5. **Run Monte Carlo:** If code was using wrong values, measure impact
+
+**See:** `reviews/citation_fix_sprint_20251029.md` for complete case study of Oct 2025 fabrication discovery and correction.
+
 ## Quality Gates
 
 Two mandatory gates in the multi-agent workflow:

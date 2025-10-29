@@ -55,8 +55,8 @@ export interface HumanPopulationSystem {
   medianAge: number;                     // [15, 60] Years (affects recovery potential)
 
   // Crisis impacts
-  monthlyExcessDeaths: number;           // Deaths beyond baseline (from war, famine, disease)
-  cumulativeCrisisDeaths: number;        // Total deaths from all crises
+  monthlyExcessDeaths: number;           // Deaths beyond baseline (from war, famine, disease) (MILLIONS)
+  cumulativeCrisisDeaths: number;        // Total deaths from all crises (MILLIONS)
   geneticBottleneckActive: boolean;      // Population below 100M (genetic diversity lost)
   birthDefectsCount?: number;            // Cumulative non-fatal birth defects from radiation (billions)
 
@@ -71,16 +71,17 @@ export interface HumanPopulationSystem {
 
   // Multi-dimensional death tracking (TIER 1.5 - Summary Statistics)
   // PROXIMATE CAUSE: What killed them (medical/physical cause of death)
+  // UNITS: MILLIONS (Oct 28, 2025 - standardized across all systems)
   deathsByCategory: {
-    war: number;                         // Direct combat, weapons
-    famine: number;                      // Starvation, malnutrition
-    disasters: number;                   // Heat waves, floods, storms, earthquakes
-    disease: number;                     // Pandemics, infections, healthcare collapse
-    ecosystem: number;                   // Ecosystem collapse, pollinator loss
-    pollution: number;                   // Toxic environment, chemical exposure
-    ai: number;                          // AI-caused deaths (alignment failure)
-    cascade: number;                     // Tipping point cascade (Oct 16, 2025)
-    other: number;                       // Other catastrophes
+    war: number;                         // Direct combat, weapons (MILLIONS)
+    famine: number;                      // Starvation, malnutrition (MILLIONS)
+    disasters: number;                   // Heat waves, floods, storms, earthquakes (MILLIONS)
+    disease: number;                     // Pandemics, infections, healthcare collapse (MILLIONS)
+    ecosystem: number;                   // Ecosystem collapse, pollinator loss (MILLIONS)
+    pollution: number;                   // Toxic environment, chemical exposure (MILLIONS)
+    ai: number;                          // AI-caused deaths (alignment failure) (MILLIONS)
+    cascade: number;                     // Tipping point cascade (Oct 16, 2025) (MILLIONS)
+    other: number;                       // Other catastrophes (MILLIONS)
   };
 
   // ROOT CAUSE: Why it happened (underlying driver of death)

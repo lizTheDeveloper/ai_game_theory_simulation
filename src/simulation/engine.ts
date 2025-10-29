@@ -85,7 +85,7 @@ import {
   NovelEntitiesPhase,
   HumanPopulationPhase,
   RefugeeCrisisPhase,
-  CountryPopulationPhase,
+  // CountryPopulationPhase,  // REMOVED (Oct 28, 2025): Deleted - was overwriting Bayesian mortality
   PsychologicalTraumaPhase,  // Phase 1B Refinement (Oct 17, 2025): Psychological trauma modeling
   WarMeaningFeedbackPhase,  // TIER 2.8 (Oct 14, 2025): War-Meaning Feedback Loop
   ClimateJusticePhase,  // TIER 2.8 (Oct 14, 2025): Climate Justice & Environmental Debt
@@ -521,9 +521,10 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new FreshwaterPhase());
     this.orchestrator.registerPhase(new OceanAcidificationPhase());
     this.orchestrator.registerPhase(new NovelEntitiesPhase());
+    // FIX (Oct 28, 2025): Applies births to regions, then aggregates → global
     this.orchestrator.registerPhase(new HumanPopulationPhase());
     this.orchestrator.registerPhase(new RefugeeCrisisPhase());
-    this.orchestrator.registerPhase(new CountryPopulationPhase());
+    // CountryPopulationPhase DELETED (Oct 28, 2025) - was overwriting Bayesian deaths during aggregation
     this.orchestrator.registerPhase(new PsychologicalTraumaPhase());  // Phase 1B Refinement: Psychological trauma
     this.orchestrator.registerPhase(new WarMeaningFeedbackPhase());  // TIER 2.8: War-Meaning Feedback Loop
     this.orchestrator.registerPhase(new ClimateJusticePhase());  // TIER 2.8: Climate Justice & Environmental Debt

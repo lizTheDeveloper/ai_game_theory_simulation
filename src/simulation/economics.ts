@@ -1,11 +1,12 @@
 /**
  * Economic model calculations for the AI Alignment Game
- * 
+ *
  * Implements the economic system from economic-system-balancing-plan.md
  */
 
 import { GameState } from '@/types/game';
 import { getTrustInAI } from './socialCohesion';
+import { assertFinite } from './utils/assertions';
 
 /**
  * Economic stage transitions and triggers
@@ -159,26 +160,56 @@ export function calculateEconomicStageTransition(state: GameState): {
 export function calculateWealthDistributionChange(state: GameState): number {
   const { government, globalMetrics } = state;
   const hasUBI = government.activeRegulations.some(reg => reg.includes('UBI'));
-  const hasTransitionSupport = government.activeRegulations.some(reg => 
+  const hasTransitionSupport = government.activeRegulations.some(reg =>
     reg.includes('Transition') || reg.includes('Support')
   );
-  
+
   // Policy effects
   let policyEffect = 0;
   if (hasUBI) policyEffect += 0.015; // UBI significantly improves distribution
   if (hasTransitionSupport) policyEffect += 0.008;
-  
+
   // Government legitimacy effect (good government → better distribution)
-  const legitimacyEffect = (government.legitimacy - 0.5) * 0.02;
-  
+  // FIX (Oct 28, 2025): Use assertFinite to validate government.legitimacy
+  const validatedLegitimacy = assertFinite(government.legitimacy, {
+    location: 'calculateWealthDistributionChange (legitimacy)',
+    valueName: 'government.legitimacy',
+    month: state.currentMonth
+  });
+  const legitimacyEffect = (validatedLegitimacy - 0.5) * 0.02;
+
   // Random variation (market forces, etc.)
+  // FIX (Oct 28, 2025): Use RNG instead of Math.random() for determinism
+  // NOTE: This function doesn't receive RNG parameter yet - need to refactor
+  // For now, using Math.random() but this breaks reproducibility
   const randomVariation = (Math.random() - 0.5) * 0.01;
-  
+
   // AI concentration effect (without policy, AI benefits concentrate)
-  const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
+  const totalAICapability = assertFinite(
+    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
+    {
+      location: 'calculateWealthDistributionChange (totalAI)',
+      valueName: 'totalAICapability',
+      month: state.currentMonth,
+      additionalInfo: { aiAgentCount: state.aiAgents.length }
+    }
+  );
+
   const concentrationEffect = totalAICapability > 1.5 && !hasUBI ? -0.005 : 0;
-  
-  return policyEffect + legitimacyEffect + randomVariation + concentrationEffect;
+
+  const result = assertFinite(
+    policyEffect + legitimacyEffect + randomVariation + concentrationEffect,
+    {
+      location: 'calculateWealthDistributionChange (final result)',
+      valueName: 'wealthDistributionChange',
+      month: state.currentMonth,
+      additionalInfo: {
+        components: { policyEffect, legitimacyEffect, randomVariation, concentrationEffect }
+      }
+    }
+  );
+
+  return result;
 }
 
 /**

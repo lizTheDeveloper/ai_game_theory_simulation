@@ -1,0 +1,93 @@
+CONSENSUS REACHED
+=================
+Date: 2025-10-28
+Participants: Cynthia (optimistic researcher) & Sylvia (skeptical reviewer)
+Topic: PDF Verification - Richardson et al. (2023), Vicedo-Cabrera et al. (2021), Jackson et al. (2023)
+
+AGREED POINTS:
+--------------
+
+1. **Papers are legitimate, high-quality peer-reviewed sources**
+   - Richardson et al. (2023) Nature publication on planetary boundaries
+   - Vicedo-Cabrera et al. (2021) Nature Climate Change on heat mortality
+   - Both are methodologically sound, widely cited research
+
+2. **Core claims are accurate**
+   - 6 of 9 planetary boundaries transgressed (Richardson et al.)
+   - 37% of heat mortality attributable to anthropogenic climate change (Vicedo-Cabrera et al.)
+   - Claims exist in papers and are correctly cited
+
+3. **Problem is IMPLEMENTATION, not citation quality**
+   - We extract point estimates without uncertainty ranges
+   - We ignore authors' caveats and limitations
+   - We strip geographic heterogeneity (South Asia ≠ Australia)
+   - We omit temporal trends (10% in 1991 → 40% in 2018)
+   - We miss methodological assumptions (zero adaptation, counterfactual models)
+
+4. **Systemic pattern identified:**
+   - Legitimate research → point estimates → ignore error bars → overconfident simulation
+   - This is a **systemic optimism bias** in our parameter extraction methodology
+
+REMAINING UNCERTAINTIES:
+------------------------
+
+1. **Jackson et al. (2023) - AMOC**
+   - Need to verify we have the actual paper (PDF verification pending)
+   - AMOC literature is highly contested (models vs paleo vs observations)
+   - Must clarify: threshold temp? collapse timeline? impact magnitude?
+   - Need to include uncertainty on reversibility assumption
+
+2. **Remaining 33 papers in bibliography**
+   - Need systematic Level 1-4 verification
+   - Likely same pattern: point estimates without ranges
+   - Should extract confidence intervals, not just headline numbers
+
+3. **Implementation strategy**
+   - How to add uncertainty sampling to Monte Carlo framework?
+   - Which parameters need geographic disaggregation?
+   - How to model temporal trends (values changing over time)?
+   - How to implement adaptation mechanics?
+
+AGREED ACTIONS:
+---------------
+
+1. **Update research standards in CLAUDE.md**
+   - OLD: "2+ peer-reviewed sources" → extract point estimates
+   - NEW: "2+ peer-reviewed sources" → extract ranges, caveats, confidence intervals
+
+2. **Create GitHub issue: "Add uncertainty quantification to simulation parameters"**
+   - Document which parameters need uncertainty ranges
+   - Propose implementation strategy (sampling from distributions)
+   - Include geographic heterogeneity requirements
+   - Add temporal trend modeling
+
+3. **Systematic review of remaining papers**
+   - Cynthia: Level 1-2 verification (metadata, claim existence)
+   - Sylvia: Level 3-4 verification (parameter accuracy, context)
+   - Extract confidence intervals and authors' caveats
+
+4. **Wiki updates**
+   - Add uncertainty ranges to parameter documentation
+   - Include authors' caveats and methodological assumptions
+   - Document geographic variation where relevant
+   - Note temporal trends (values change over time)
+
+5. **Implementation recommendations**
+   - Replace point estimates with distribution sampling
+   - Add geographic disaggregation (regional variation)
+   - Model temporal dynamics (values evolve)
+   - Include adaptation mechanics (vulnerability decreases)
+   - Net mortality accounting (heat + cold effects)
+
+SUMMARY:
+--------
+
+The research foundation is solid - Richardson et al. (2023) and Vicedo-Cabrera et al. (2021) are high-quality, peer-reviewed papers with accurate core claims. The problem is OUR extraction methodology: we're stripping out the epistemic humility (uncertainty ranges, caveats, heterogeneity) that the authors carefully include.
+
+This is a **quality improvement opportunity**, not a citation correction. By preserving the full richness of the source material - confidence intervals, geographic variation, temporal trends, methodological assumptions - we make the simulation MORE research-accurate.
+
+Key insight: Optimism means finding REAL evidence with FULL uncertainty preserved. Sylvia's skeptical analysis makes the research BETTER, not less hopeful. Uncertainty is not pessimism - it's honesty.
+
+Next steps: Complete Jackson et al. verification, systematic review of remaining 33 papers, implement uncertainty sampling in Monte Carlo framework.
+
+This is collaborative research at its best! 🤝🔬✅

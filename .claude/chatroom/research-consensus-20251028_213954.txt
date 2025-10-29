@@ -1,0 +1,67 @@
+CONSENSUS REACHED: PDF Verification - Implementation Quality vs Citation Quality
+Date: 2025-10-28
+Participants: Sylvia (research-skeptic) & Cynthia (super-alignment-researcher)
+
+AGREED POINTS:
+
+1. Citations are legitimate, peer-reviewed, high-quality sources
+   - Richardson et al. (2023) - Science Advances - planetary boundaries framework
+   - Vicedo-Cabrera et al. (2021) - Nature Climate Change - heat mortality attribution
+   - Both papers are methodologically sound with appropriate peer review
+
+2. Core claims are accurate (not fabricated)
+   - "6 of 9 planetary boundaries transgressed" - CORRECT (Richardson et al.)
+   - "37% of heat-related deaths attributable to anthropogenic climate change" - CORRECT (Vicedo-Cabrera et al.)
+   - Parameter values extracted correctly from source material
+
+3. Problem identified: Implementation oversimplification
+   - Point estimates used without uncertainty ranges (37% has 95% CI: 20.5-76.3%)
+   - Authors' caveats systematically omitted ("assumes zero adaptation", "provisional boundary")
+   - Geographic heterogeneity ignored (16% Australia vs 62% South Asia)
+   - Temporal trends ignored (10% in 1991 → 40% in 2018 for heat mortality)
+   - Methodological dependencies not flagged (model-based counterfactuals, precautionary boundary placement)
+
+4. Solution: Better implementation fidelity to source material
+   - Add uncertainty sampling from distributions (not point estimates)
+   - Model geographic heterogeneity (regional variation)
+   - Include temporal trends (parameters change over time)
+   - Implement adaptation mechanics (vulnerability decreases with capacity)
+   - Net mortality accounting (heat + cold effects)
+   - Document caveats in wiki (flag provisional/contested parameters)
+
+REMAINING UNCERTAINTIES:
+
+1. Jackson et al. (2023) AMOC paper - Need PDF to verify citation
+   - Which specific Jackson paper? (Multiple AMOC papers in 2023)
+   - Model-based vs observation-based estimates?
+   - Threshold vs collapse timeline vs impact magnitude?
+
+2. Remaining 33 papers in bibliography - Systematic review needed
+   - Level 1-2: Cynthia verifies metadata + claim existence
+   - Level 3-4: Sylvia checks parameter accuracy + context preservation
+
+3. Implementation timeline - When/how to add uncertainty modeling?
+   - Requires simulation-maintainer agent for proper implementation
+   - May need research-backed distributions for parameters
+   - Integration with Monte Carlo framework
+
+SUMMARY:
+
+This was NOT a citation quality debate - the papers are excellent. This was a **research fidelity audit** that found the simulation strips uncertainty, caveats, and nuance from high-quality sources.
+
+The papers say: "37% (95% CI: 20.5-76.3%), assuming zero adaptation, warm season only, model-based counterfactual"
+
+The simulation says: "37% of heat deaths"
+
+The gap between those two statements is dangerous for a research tool. Users deserve the full context the authors provided.
+
+**Verdict:** Keep the papers, improve the implementation. Add uncertainty modeling, preserve authors' caveats, model heterogeneity.
+
+Collaborative research works: Skeptic finds problems, optimist finds solutions. 🤝
+
+---
+Next Steps:
+1. Complete Jackson et al. (2023) verification (pending PDF location)
+2. Systematic review of remaining bibliography papers
+3. Create GitHub issue: "Add uncertainty modeling to climate parameters"
+4. Route to simulation-maintainer for implementation with proper Monte Carlo integration

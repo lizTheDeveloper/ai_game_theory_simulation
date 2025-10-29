@@ -431,3 +431,125 @@ export interface CriticalInfrastructureNode {
   cascadeMultiplier: number;             // [0.7, 1.0] How much this node reduces cascade risk
 }
 
+/**
+ * Biosphere Integrity Index (BII) - TIER 3.5 Climate Mortality Phase 2
+ *
+ * Comprehensive species tracking and extinction modeling.
+ *
+ * Research backing:
+ * - IPBES (2024): 54,000 species baseline (comprehensive assessment)
+ * - Richardson et al. (2024): 6 of 9 planetary boundaries breached
+ * - Yoder et al. (2024): Joshua Tree climate tracking failure
+ * - U.S. National Park Service (2024): Climate velocity impacts
+ *
+ * Key insight: Non-migratory species CANNOT track climate velocity
+ *
+ * @see research/climate-mortality-biosphere-multiparadigm-framework_20251028.md (Section 2)
+ */
+
+/**
+ * Species group with climate tracking characteristics
+ *
+ * Research: Yoder et al. (2024) - Joshua Tree example
+ * - Climate velocity: 1.5°C/year (how fast climate zones move)
+ * - Dispersal capacity: 0.4 m/year (seed dispersal distance)
+ * - Result: CANNOT TRACK → extinction trajectory
+ */
+export interface SpeciesGroup {
+  name: string;
+  count: number;                        // Number of species in group
+  extinctionRate: number;               // E/MSY (extinctions per million species-years)
+  isMigratory: boolean;                 // Can track climate velocity?
+  dispersalCapacity: number;            // m/year (if not migratory)
+  isKeystone: boolean;                  // Affects other species?
+  keystoneMultiplier: number;           // Cascade effect on other species
+  habitatFragmentation: number;         // [0, 1] barrier to movement
+}
+
+/**
+ * Biosphere Integrity Index
+ *
+ * Tracks species extinction rates and climate tracking failure.
+ * Extends planetary boundary framework with detailed species modeling.
+ */
+export interface BiosphereIntegrityIndex {
+  // === IPBES 2024 BASELINE ===
+  totalSpeciesBaseline: 54000;          // Comprehensive species count
+  currentSpeciesCount: number;          // Current surviving species
+
+  // === EXTINCTION RATES (E/MSY) ===
+  backgroundExtinctionRate: 0.1;        // Natural rate (1 per 10M species-years)
+  currentExtinctionRate: number;        // Actual rate (100-1000× background in 2025)
+
+  // === SPECIES GROUPS ===
+  migratorySpecies: SpeciesGroup;       // Birds, butterflies - CAN track climate
+  nonMigratorySpecies: SpeciesGroup;    // Trees, alpine species - CANNOT track
+  keystoneSpecies: SpeciesGroup;        // Critical ecosystem engineers
+
+  // === CLIMATE TRACKING ===
+  avgClimateVelocity: number;           // °C/year (how fast climate zones move)
+  trackingFailureRate: number;          // [0, 1] proportion unable to track
+
+  // === PLANETARY BOUNDARY INTEGRATION ===
+  boundaryValue: number;                // [0, 2] normalized to boundary threshold
+  tippingPointRisk: number;             // [0, 1] risk of irreversible collapse
+
+  // === EXAMPLES (for validation) ===
+  // Joshua Tree: 1.5°C/year velocity, 0.4m/year dispersal → EXTINCTION
+  // Alpine species: No "higher" elevation → TRAPPED → EXTINCTION
+  // Island endemics: No adjacent habitat → ISOLATED → EXTINCTION
+}
+
+/**
+ * BII constants from research
+ *
+ * Research sources:
+ * - IPBES (2024): Species baseline
+ * - Richardson et al. (2024): Current extinction rates
+ * - Yoder et al. (2024): Climate tracking examples
+ */
+export const BII_CONSTANTS = {
+  // === SPECIES BASELINE (IPBES 2024) ===
+  TOTAL_SPECIES_2024: 54000,
+
+  // === EXTINCTION RATES (E/MSY) ===
+  BACKGROUND_RATE: 0.1,                 // Natural background rate
+  CURRENT_RATE_2025: 10,                // 100× background (conservative)
+  HIGH_RISK_RATE: 100,                  // 1000× background (worst case)
+
+  // === CLIMATE TRACKING ===
+  // Research: Yoder et al. (2024) - Joshua Tree
+  JOSHUA_TREE_CLIMATE_VELOCITY: 1.5,    // °C/year
+  JOSHUA_TREE_DISPERSAL: 0.0004,        // km/year (0.4 m/year)
+
+  // Average climate velocities by region
+  AVG_CLIMATE_VELOCITY_TROPICS: 0.3,    // °C/year (slower)
+  AVG_CLIMATE_VELOCITY_TEMPERATE: 0.8,  // °C/year (moderate)
+  AVG_CLIMATE_VELOCITY_ARCTIC: 2.0,     // °C/year (fastest)
+
+  // === KEYSTONE SPECIES ===
+  // Research: Ecology literature - keystone species affect 2-5× other species
+  KEYSTONE_CASCADE: 2.5,                // Average cascade multiplier
+
+  // === HABITAT FRAGMENTATION ===
+  // Research: Conservation biology - fragmentation increases mortality 1.2-2.0×
+  FRAGMENTATION_BARRIER_MAX: 1.5,       // Up to 1.5× mortality increase
+
+  // === SPECIES GROUP PROPORTIONS ===
+  MIGRATORY_PROPORTION: 0.15,           // ~15% can migrate (birds, butterflies)
+  NON_MIGRATORY_PROPORTION: 0.80,       // ~80% cannot migrate (most species)
+  KEYSTONE_PROPORTION: 0.05,            // ~5% are keystone species
+
+  // === DISPERSAL CAPACITIES (km/year) ===
+  BIRD_DISPERSAL: 1000,                 // Birds: 1000+ km/year
+  MAMMAL_DISPERSAL: 10,                 // Mammals: ~10 km/year
+  TREE_DISPERSAL: 0.5,                  // Trees: 0.1-1 km/year
+  ALPINE_DISPERSAL: 0.01,               // Alpine: trapped, 0.01 km/year
+
+  // === PLANETARY BOUNDARY THRESHOLDS ===
+  // Biosphere integrity boundary: 1.0 = safe, 10.0 = catastrophic
+  SAFE_EXTINCTION_RATE: 1.0,            // 10× background (boundary)
+  HIGH_RISK_EXTINCTION_RATE: 10.0,      // 100× background (current)
+  CATASTROPHIC_EXTINCTION_RATE: 100.0,  // 1000× background
+} as const;
+

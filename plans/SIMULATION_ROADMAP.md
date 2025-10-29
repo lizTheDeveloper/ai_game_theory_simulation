@@ -1,9 +1,11 @@
 # Simulation Roadmap
 ## AI Alignment Game Theory Simulation - Core Engine & Mechanics
 
-**Date:** October 26, 2025
+**Date:** October 28, 2025
 **Purpose:** All simulation engine work (mechanics, systems, features)
 **Philosophy:** Research-backed realism, mechanism-driven emergence
+
+**For completed work history:** See `/plans/CHANGELOG_OCTOBER_2025.md`
 
 **📈 For Frontend/Dashboard work:** See `/plans/FRONTEND_ROADMAP.md`
 **🎮 For God Mode UI:** See `/plans/god-mode-ui-master-plan.md` (linked from FRONTEND_ROADMAP.md)
@@ -11,141 +13,200 @@
 
 ---
 
-## 📊 SIMULATION STATUS
+## 📊 CURRENT STATUS
 
-**Last Update:** October 26, 2025
+**Last Update:** October 29, 2025
 
-**For completed work history, see:** `/plans/completed/COMPLETED_WORK_OCT_2025.md`
-
----
-
-**🚧 Currently In Progress:**
-1. **HIGH:** Unified Outcome Classification (4h) - Designed, ready for implementation
-
-**Recently Completed (Oct 28, 2025):**
-1. ✅ **Observational Extinction Detection** (Oct 28) - Population-based detection, no predictive triggers, full classification system
-
-**Recently Completed (Oct 27, 2025):**
-1. ✅ **TIER 2 Superalignment Interventions** (Oct 27) - 8 interventions with epistemic uncertainty modeling
-2. ✅ **Policy Calibration Improvements** (Oct 27) - Nonlinear unemployment penalty, retraining effectiveness (30%), UBI validation
-3. ✅ **Invasive Species Impact Bug** (Oct 27) - Root cause fix with research-backed initialization (IPBES 2019, 0.45 baseline)
-4. ✅ **Technology Tree Bugs #6-11** (Oct 27) - AI bankruptcy persistence, grid batteries, pollinators
-5. ✅ **Regional → Global Aggregation** (Oct 27, ALL 5 PHASES COMPLETE) - Population drift bug fixed, architecture pattern established
+**🚧 Active Work:**
+- 🔴 CRITICAL: Systematic Citation Verification Crisis (20-40h) - 965 citations, 23% fabrication rate
 
 **Next Priorities:**
-1. **MEDIUM:** Policy System Improvements (31-38h) - 4 sections complete, 2 remaining
-2. **LOW:** P3 Enhancements (37-48h)
+1. **🔴 CRITICAL:** Systematic Citation Verification & Re-grounding (20-40h) - BLOCKING all other work
+   - 965 "et al." citations across 87 research files
+   - Expected ~220 fabrications (23% rate from sample)
+   - Core mechanics contaminated: AI infrastructure, government response, climate mortality
+   - Strategy: Triage by priority, conservative defaults, systematic replacement
+2. **MEDIUM:** Climate Mortality Implementation (8-12h) - Research complete, ready for implementation
+3. **MEDIUM:** Policy System Improvements (remaining 2 sections, 7-8h)
+4. **LOW:** P3 Enhancements (37-48h)
+5. **LOW:** TIER 5 Features (46h)
+
+**Total Remaining Effort:** ~110-150 hours (including citation verification)
 
 ---
 
-## 🎯 ACTIVE SIMULATION WORK
+## 🎯 PRIORITY FEATURES
+
+### 🔴 CRITICAL Priority
+
+#### Systematic Citation Verification & Re-grounding (20-40h)
+**Status:** 🔴 IN PROGRESS (Oct 29, 2025)
+**Priority:** BLOCKING - Must complete before any other research or implementation
+**Severity:** CRITICAL - Research integrity crisis
+
+**🚨 THE CRISIS:**
+- **965 "et al." citations** across 87 research files (unverified)
+- **23% fabrication rate** in verified sample (5/22 citations fake)
+- **Expected ~220 fabrications** across full research corpus
+- **Core mechanics contaminated:** AI infrastructure, government response, climate mortality
+
+**📊 CONFIRMED FABRICATION PATTERNS:**
+
+**Pattern 1: Complete Fabrications (arXiv 404s, blog posts that don't exist)**
+- arXiv:2506.01438 (HTTP 404)
+- Seripally blog post (doesn't exist)
+- Anthropic shard theory (no such publication)
+
+**Pattern 2: Fabricated Authors (real paper, wrong authors)**
+- "Xu, J., et al." Nature 2025 → Actually unsigned editorial, ALL authors fabricated
+- "Hua, J., et al." FAccT 2024 → Actually Rivera et al., ALL 6 authors wrong
+
+**Pattern 3: Round Number Syndrome (100% fabrication rate)**
+- "500-700 L/GPU-hour" → Actually 0.19-0.30 L/GPU-hr (2024 Blackwell hardware)
+- "300-400 kWh/run" → Actually MWh for full training (model-specific)
+- "30-40% AI helps" → Appears TWICE, both anachronistic healthcare frameworks
+
+**Pattern 4: Phantom Publications (real authors, fake paper)**
+- Allen 2020 (CSIS) → Author wasn't at CSIS until 2022, publication doesn't exist
+- Zhang et al. 2021 → Real collaborating authors, publication doesn't exist
+
+**Pattern 5: Citation Count Inflation**
+- Richardson 15,000+ → Actually 1,453 (10× exaggeration)
+
+**🔴 CONTAMINATED SIMULATION MECHANICS:**
+
+**1. AI Infrastructure Resources (CRITICAL)**
+- `src/simulation/aiInfrastructureResources.ts`
+- Water consumption likely 10-1000× wrong (fabricated Ren et al.)
+- Energy consumption model based on fabricated per-run metric
+
+**2. AI Implementation Effectiveness (HIGH)**
+- Capability scaling, breakthrough deployment
+- Based on fabricated "30-40%" from healthcare frameworks (2005-2009)
+
+**3. Government Response Timing (HIGH)**
+- Comprehension lag, policy adoption rates
+- Based on phantom publications (Allen 2020, Zhang et al. 2021)
+
+**4. Climate Mortality Dynamics (MEDIUM-HIGH)**
+- 40+ "et al." in climate collapse timelines
+- 35+ "et al." in threshold uncertainty modeling
+- Unknown fabrication rate
+
+**📋 SYSTEMATIC VERIFICATION PLAN:**
+
+**Phase 1: Triage & Prioritize (2-4h)**
+1. ✅ Identify all 965 "et al." citations
+2. Flag high-risk patterns:
+   - Round numbers (X00-Y00)
+   - Pre-2015 AI-specific claims
+   - Think tank/working papers (hardest to verify)
+   - Adjacent to known fabrications
+3. Prioritize by simulation impact:
+   - CRITICAL: Core mechanics (AI, mortality, climate)
+   - HIGH: Breakthrough effectiveness, government response
+   - MEDIUM: Secondary mechanics
+   - LOW: Background context
+
+**Phase 2: Core Mechanics Verification (8-12h)**
+1. Verify citations for CRITICAL mechanics first
+2. Check author names against actual papers
+3. Validate specific claims/numbers
+4. Replace fabrications with real peer-reviewed sources
+5. Use conservative defaults where unavailable
+
+**Phase 3: Systematic Corpus Audit (8-16h)**
+1. Verify remaining high-risk citations
+2. Batch-process by pattern (round numbers, anachronisms)
+3. Document uncertainty for unverifiable claims
+4. Flag for future research
+
+**Phase 4: Parameter Re-grounding (2-8h)**
+1. Update simulation code with verified parameters
+2. Document assumption changes
+3. Run Monte Carlo sensitivity analysis
+4. Update wiki documentation
+
+**🛡️ CONSERVATIVE DEFAULTS STRATEGY:**
+
+When research is unverified or unavailable:
+1. Use most conservative estimate from literature
+2. Document assumption explicitly with `[UNVERIFIED]` tag
+3. Add ±50% variance to Monte Carlo runs
+4. Flag for future verification
+
+**📄 COMPLETED (Oct 28, 2025):**
+- ✅ Initial 6-fabrication tactical fix (wiki + code)
+- ✅ Citation verification protocol: `docs/CITATION_VERIFICATION_PROTOCOL.md`
+- ✅ Fabrication pattern documentation: `research/FABRICATED_CITATIONS_NEED_REAL_RESEARCH.md`
+
+**⏱️ ESTIMATED TIME:**
+- Triage: 2-4h
+- Core mechanics: 8-12h
+- Corpus audit: 8-16h
+- Parameter updates: 2-8h
+- **Total: 20-40 hours**
+
+**🎯 SUCCESS CRITERIA:**
+- All CRITICAL mechanics verified or conservatively grounded
+- All fabrication patterns documented
+- Simulation parameters re-justified with real research
+- Monte Carlo validation with uncertainty quantification
+- Research corpus marked [VERIFIED] or [UNVERIFIED]
 
 ---
 
-### Unified Outcome Classification - 🚧 DESIGNED, READY FOR IMPLEMENTATION (Oct 28, 2025)
+### MEDIUM Priority
 
-**Status:** Type system and classification function complete, integration pending
-**Time Estimate:** 4 hours
-**Priority:** HIGH - Fixes misleading Monte Carlo reporting
+#### Climate Mortality & Biosphere Implementation (8-12h)
+**Status:** Research complete (15,000+ words, 40+ sources), ready for implementation
+**Research:** `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md`
 
-**Problem:**
-- Outcome classification fragmented across 5 different systems
-- 7 runs in N=100 sweep labeled "extinction" with 4.8B population (40% mortality)
-- Multiple contradictory sections in Monte Carlo output
-- Users must mentally combine 5 different classifications
+**What to Implement:**
+- Heat mortality functions (1-3%/°C gradient based on meta-analysis)
+- Storm intensity-frequency shifts from climate dynamics
+- BII framework (54,000 species baseline from IPBES)
+- Multi-paradigm integration (TEK, Buen Vivir, Ubuntu perspectives)
 
-**Solution:**
-- Single `UnifiedOutcomeClassification` interface combining all dimensions
-- Integrates: 7-tier population outcome, stratified (humane/pyrrhic), multi-paradigm DUI, mortality bands, extinction classification
-- Single reporting section with all context visible
+**Key Features:**
+- Research-backed mortality gradients
+- Biosphere Integrity Index integration
+- Traditional Ecological Knowledge perspectives
+- Cross-domain feedback loops
 
-**Completed Work:**
-- ✅ `UnifiedOutcomeClassification` interface (`src/types/outcomes.ts`)
-- ✅ `createUnifiedOutcomeClassification()` function (`src/data/aggregators/outcomeClassifier.ts`)
-- ✅ Comprehensive implementation plan
+#### Policy System Improvements (7-8h remaining)
+**Status:** 4 of 6 sections complete
 
-**Remaining Work:**
-1. Integrate into simulation engine (`src/simulation/engine.ts`) - Generate and store unified classification
-2. Update Monte Carlo reporting (`scripts/monteCarloSimulation.ts`) - Replace 4 fragmented sections with single unified section
-3. Add helper functions for backward compatibility
-4. Test with N=10 run
+**Completed Sections:**
+- ✅ Unemployment Penalty Calibration (3-tier nonlinear)
+- ✅ Retraining Effectiveness Calibration (30% average)
+- ✅ UBI Floor Mechanics Validation
+- ✅ Baseline Assumptions Documentation
 
-**Files:**
-- Plan: `/plans/unified-outcome-classification-plan.md` (detailed 4-phase implementation)
-- Types: `src/types/outcomes.ts` (UnifiedOutcomeClassification interface complete)
-- Classifier: `src/data/aggregators/outcomeClassifier.ts` (createUnifiedOutcomeClassification complete)
-- Engine: `src/simulation/engine.ts` (integration pending)
-- Reporting: `scripts/monteCarloSimulation.ts` (update pending)
+**Remaining Sections:**
 
-**Expected Result:**
-- 7 "extinction" runs with 4.8B pop correctly labeled as "COLLAPSE" (20-50% mortality)
-- Single unified section showing: Primary outcome, mortality band, stratified outcome, multi-paradigm classification
-- No contradictions between classification systems
+**1. Variance Analysis (3-4h) - MEDIUM**
+- Issue: ±40% variance in policy outcomes (high sensitivity)
+- Action: Plot distributions, identify bimodal vs uniform patterns
+- Files: New `scripts/policyVarianceAnalysis.ts`
 
----
+**2. Cooperative AI Ownership Model (10-12h) - LOW**
+- Research: Mondragon cooperatives 4% bankruptcy vs 10% capitalist
+- Action: Model worker-owned AI systems with profit-sharing
+- Files: New `cooperativeOwnership.ts`
 
-### Simulation State Persistence & Management - ✅ COMPLETE (Oct 26, 2025)
+**Other Sections (Lower Priority):**
+- Reduced Work Hours + UBI Combination (6-8h)
+- Universal Basic Services (UBS) (8-10h)
+- Meaning Economy Expansion (6-8h)
 
-**Status:** ALL 4 PHASES COMPLETE - Full state persistence operational
-**Time Invested:** ~11-16 hours
-**Priority:** ✅ COMPLETE - UX enhancement for research workflow
-
-**Completed Features:**
-- ✅ IndexedDB storage for full GameState snapshots
-- ✅ Worker autosave every 5 months (2.5 minutes real-time)
-- ✅ Auto-resume modal with 3-second countdown
-- ✅ Simulation management UI (grid/list views)
-- ✅ RNG call counter for perfect determinism
-- ✅ Smart save rotation (10 saves max, dense recent + sparse old)
-- ✅ Semantic versioning with migration logic
-- ✅ Storage quota warnings (80% threshold)
-- ✅ Export/import as JSON
-- ✅ Version compatibility checking
-- ✅ Graceful error handling for corrupted states
-
-**Phase 1: Core State Persistence (4-6h)**
-- Extend EventDatabase to store full GameState snapshots
-- Worker autosave after each simulation step (debounced)
-- IndexedDB object stores: `simulations`, `simulation_metadata`
-- Handle storage quotas (browser limits ~50-100MB)
-
-**Phase 2: Resume/Continue UX (3-4h)**
-- Auto-resume flow (3-second modal with cancel option)
-- Simulation management interface (grid/list views)
-- Resume from state via new worker message
-- RNG reconstruction for determinism
-
-**Phase 3: Version Control & Edge Cases (2-3h)**
-- Git commit hash validation (block incompatible versions)
-- Schema versioning for migrations
-- Corrupted state handling
-- Storage quota warnings
-
-**Phase 4: Export/Import & Testing (2-3h)**
-- Download/upload simulation state as JSON
-- Clear all data functionality
-- Testing checklist (RNG determinism, multiple simulations, resume correctness)
-
-**Total Effort:** 11-16h
-
-**Benefits:**
-- No data loss on browser refresh/crash
-- Multiple simulations can coexist
-- Research workflow improvements (pause/resume, compare runs)
-- Foundation for future Monte Carlo UI integration
-
-**Files:**
-- Plan: `/plans/simulation-persistence-plan.md` (1,107 lines with UI/UX specs)
-- Existing: `src/lib/eventDatabase.ts`, `src/workers/simulationWorker.ts`
-- New: `src/components/dashboards/SimulationPersistenceManager.tsx`
+**Plan:** `/plans/completed/policy-calibration-improvements_COMPLETE_20251027.md` (for reference on completed sections)
 
 ---
 
-## 📊 LOW PRIORITY - ENRICHMENT FEATURES
+### LOW Priority
 
-### Priority 3 Enhancements (37-48h)
-
-**Total Effort:** 37-48h (was 39-51h, P3.3 complete -2-3h)
+#### Priority 3 Enhancements (37-48h)
 
 **P3.1: Variable Timesteps (10-12h)**
 - Event-driven architecture, 3-5x performance gain
@@ -155,12 +216,8 @@
 - Black swan events, true uncertainty
 - Plan: `/plans/p3-2-unknown-unknowns.md`
 
-**P3.3: Alignment Specificity** ✅ **COMPLETE (Oct 26, 2025)**
-- RLHF, Constitutional AI, mech interp, iterated amplification as distinct techniques
-- Capability scaling degradation, interaction effects, research-backed parameters
-- Fixed: Phase order conflict, state propagation, NaN protection
+**P3.3: Alignment Specificity** ✅ **COMPLETE (Oct 26)**
 - Plan: `/plans/completed/p3-3-alignment-model-specificity_COMPLETE_20251026.md`
-- Wiki: `docs/wiki/systems/alignment-dynamics.md` (Alignment Technique Specificity section)
 
 **P3.4: Government Implementation Realism (6-8h)**
 - Policy implementation delays, bureaucratic friction
@@ -175,72 +232,12 @@
 - Plan: `/plans/p3-6-ensemble-alignment-verification.md`
 - Note: Prototype only (40% overhead, collusion risk)
 
-**P3.7: Regional-First Population Architecture** ✅ **FULLY COMPLETE (Oct 27, 2025)**
-- ✅ Phase 1: Population aggregation (8.0B hardcoded → 8.136B from regional sum)
-- ✅ Phase 2: Demographics aggregation (birth/death rates, fertility, median age)
-- ✅ Phase 3: Carrying capacity aggregation (global = sum of regional capacities)
-- ✅ Phase 4: Deaths aggregation (global deaths = sum of regional deaths)
-- ✅ Phase 5: Consistency assertion (validates no drift between regional and global)
-- ✅ Bonus: QoL aggregation (population-weighted average from regional QoL)
-- ✅ Architecture pattern established: Global = aggregate of regional (single source of truth)
+**P3.7: Regional-First Population Architecture** ✅ **COMPLETE (Oct 27)**
 - Plan: `/plans/completed/regional-aggregation-refactor_COMPLETE_20251027.md`
-- Commit: 4b93507
-- Functions: `aggregateGlobalPopulation()`, `aggregateGlobalDemographics()`, `aggregateGlobalCarryingCapacity()`, `aggregateGlobalDeaths()`, `aggregateGlobalQoL()`, `assertRegionalConsistency()`
 
 ---
 
-### Policy System Improvements (31-38h)
-
-**Unemployment Penalty Calibration** ✅ **COMPLETE (Oct 27, 2025)**
-- Implemented three-tier nonlinear penalty structure
-- Low (0-15%): -0.2 per point, Medium (15-40%): -0.4 per point, High (40%+): -0.8 per point
-- Validated with COVID-19 data (14.7% unemployment) and Great Displacement scenario (54%)
-- Research: Kessler et al. (2008), USDA (2020), Eviction Lab (2016)
-- Plan: `/plans/completed/policy-calibration-improvements_COMPLETE_20251027.md`
-
-**Retraining Effectiveness Calibration** ✅ **COMPLETE (Oct 27, 2025)**
-- Recalibrated quality multipliers to hit 30% population-weighted average (was 23.2%)
-- Elite: 50%, Middle: 35%, Working: 25%, Precariat: 15%
-- Research: Katz & Krueger (2019), Card et al. (2018), Autor et al. (2023)
-
-**UBI Floor Mechanics Validation** ✅ **COMPLETE (Oct 27, 2025)**
-- Validated implementation matches research (Kangas et al. 2024: 6.4% well-being improvement)
-- Confirmed realistic limitations (UBI can't conjure food or prevent infrastructure collapse)
-- No code changes needed - implementation already research-accurate
-
-**Baseline Assumptions Documentation** ✅ **COMPLETE (Oct 27, 2025)**
-- Documented that baseline = "Status Quo 2025 Continuation" including existing safety nets
-- Material abundance baseline 0.8 represents existing US/EU 2025 safety nets
-- Research file: `/research/baseline-scenario-assumptions.md`
-
-**Variance Analysis (3-4h) - MEDIUM**
-- Issue: ±40% variance in policy outcomes (high sensitivity)
-- Action: Plot distributions, identify bimodal vs uniform patterns
-- Files: New `scripts/policyVarianceAnalysis.ts`
-
-**Cooperative AI Ownership Model (10-12h) - LOW**
-- Research: Mondragon cooperatives 4% bankruptcy vs 10% capitalist
-- Action: Model worker-owned AI systems with profit-sharing
-- Files: New `cooperativeOwnership.ts`
-
-**Reduced Work Hours + UBI Combination (6-8h) - LOW**
-- Research: Reduced hours alone insufficient, needs UBI + safety net
-- Action: Model 4-day workweek policies with UBI
-- Files: Extend `bionicSkills.ts`
-
-**Universal Basic Services (UBS) (8-10h) - LOW**
-- Alternative to UBI: Guaranteed housing, healthcare, education
-- Research: UK UCL study (UBS more cost-effective in some contexts)
-- Files: New `universalBasicServices.ts`
-
-**Meaning Economy Expansion (6-8h) - LOW**
-- Finding: Teaching-meaning synergy successful (+25% crisis reduction)
-- Extension: Expand to care work, arts, community building
-- Files: Extend `upwardSpirals.ts`
-
----
-
-### TIER 5 Features (46h)
+#### TIER 5 Features (46h)
 
 **Status:** Not yet implemented (LOW priority enrichment)
 
@@ -277,47 +274,30 @@
 
 ---
 
-### TIER 2 Superalignment Interventions ✅
+#### Black Mirror Integration (37-49 weeks, phased)
 
-**Status:** ✅ **COMPLETE** (October 27, 2025)
-**Implementation:** 8 interventions, 1,240+ lines of phase code, 39,000-word research validation
+**Full Report:** `reviews/BLACK_MIRROR_INTEGRATION_PLAN.md`
+**Status:** ~40% strongly validated, ~25% conditionally approved, ~35% rejected
 
-**Completed Plan:** `/plans/completed/tier2-superalignment-interventions_COMPLETE_20251027.md`
-**Documentation:** `/docs/wiki/systems/tier2-interventions.md`
-**Devlog:** `/devlogs/20251027_0000_tier2-interventions-complete.md`
+**Phase 1: Immediate Integration (9-12 weeks) - HIGH PRIORITY**
+- 5 strongly validated systems with robust peer-reviewed research
+- Plan: `/plans/black-mirror-phase1-immediate.md`
+- Systems: Attention Economy, Surveillance Normalization, Notification Addiction, Reality Erosion, Social Rating
 
-**What Was Implemented:**
-- ✅ AI Interpretability Ensemble (5 Anthropic techniques, 60-85% control loss prevention)
-- ✅ Dark Compute Monitoring (70-95% detection with Beta distribution)
-- ✅ Nuclear Command Security Hardening (85-97% effective against AI manipulation)
-- ✅ Synthetic Ecosystem Services (captive breeding + cloning + economics, 25-50% crisis mitigation)
-- ✅ High-Value Coastal Protection (15-25% ocean mitigation, NOT planetary restoration)
-- ✅ Crisis Anticipation Systems (AI early warning, 15-30% prevention, already operational 2024-2025)
-- ✅ Human-AI Centaur Systems (augmentation vs automation, 15-45% autonomy preservation)
-- ✅ Community Cohesion Programs (0.4-0.8%/month cohesion increase)
+**Phase 2: Near-Term Development (12-16 weeks) - MEDIUM PRIORITY**
+- 4 conditionally approved systems needing development work
+- Plan: `/plans/black-mirror-phase2-near-term.md`
+- Systems: Enhanced Social Credit, Parasocial AI, Memetic Contagion, Algorithmic Amplification
+- Note: Requires bidirectional modeling (positive AND negative effects)
 
-**Key Features:**
-- Epistemic uncertainty modeling (parameters sampled from research-backed distributions)
-- Phase-based architecture (8 phase files, unlock → deployment → effects)
-- State integration (effects propagate to downstream systems)
-- Monte Carlo validated (N=10, exit code 0, deterministic)
-- Quality gates passed (research-skeptic + architecture-skeptic)
-
-**Research Foundation:**
-- 18+ peer-reviewed citations (2020-2025)
-- 5 Anthropic papers (interpretability ensemble)
-- Conservation studies (black-footed ferret, Elizabeth Ann cloning)
-- Energy monitoring research (CTBTO analogy, RAND data center projections)
-
-**Results:**
-- 0 critical bugs, TypeScript compilation clean
-- <1ms overhead per month, linear scaling
-- Perfect seed reproducibility
-- Integration issues fixed (control loss propagation, unemployment tracking, ecosystem upper bounds)
+**Phase 3: Long-Term Research** - Partially complete
+- ✅ Digital Consciousness Governance (12-16h) - COMPLETE (Oct 18)
+- DEFERRED: Performative Behavior Modeling (18-24 months)
+- REJECTED: Autonomous Weapon Degradation Curves (research obsolete)
 
 ---
 
-### TIER 2B: Competitive Equilibrium Model
+#### TIER 2B: Competitive Equilibrium Model
 
 **Status:** Deferred (alternative to detection arms race)
 **Priority:** LOW - Only if detection <5-10%
@@ -334,94 +314,6 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 - Ostrom (2009) - Polycentric governance (30+ empirical case studies)
 - Bostrom (2014) - Multipolar AI scenarios more stable than singleton
 - Drexler (2019) - AI-as-service (CAIS) reduces alignment risk vs monolithic agents
-
----
-
-### Black Mirror Integration (37-49 weeks, phased)
-
-**Full Report:** `reviews/BLACK_MIRROR_INTEGRATION_PLAN.md`
-**Status:** ~40% strongly validated, ~25% conditionally approved, ~35% rejected
-
-**Phase 1: Immediate Integration (9-12 weeks) - HIGH PRIORITY**
-- 5 strongly validated systems with robust peer-reviewed research
-- Plan: `/plans/black-mirror-phase1-immediate.md`
-- Systems: Attention Economy, Surveillance Normalization, Notification Addiction, Reality Erosion, Social Rating
-
-**Phase 2: Near-Term Development (12-16 weeks) - MEDIUM PRIORITY**
-- 4 conditionally approved systems needing development work
-- Plan: `/plans/black-mirror-phase2-near-term.md`
-- Systems: Enhanced Social Credit, Parasocial AI, Memetic Contagion, Algorithmic Amplification
-- Note: Requires bidirectional modeling (positive AND negative effects)
-
-**Phase 3: Long-Term Research (Decomposed Oct 16, 2025)**
-- **APPROVED:** Digital Consciousness Governance (12-16h) ✅ COMPLETE (Oct 18)
-- **DEFERRED:** Performative Behavior Modeling (18-24 months)
-- **REJECTED:** Autonomous Weapon Degradation Curves (research 2-4 years obsolete)
-
----
-
-### Threshold Uncertainty Modeling - ✅ COMPLETE (All 4 Phases + Phase 1C)
-
-**Status:** ALL PHASES COMPLETE including nested Monte Carlo (Oct 26, 2025)
-
-**Phase 1 Deliverables (Tier 1: Research-Backed Thresholds):**
-- ✅ Phase 1A: Distribution sampling library (Normal, Beta, Log-Normal, Triangular)
-- ✅ Phase 1B: 5 Tier 1 thresholds integrated (social critical mass, trust recovery, climate sensitivity, automation, detection ceiling)
-- ✅ Phase 1C: Nested Monte Carlo architecture - **FULLY IMPLEMENTED (Oct 26, 2025)**
-  - Two-loop structure: Outer epistemic loop (threshold sampling) + inner aleatory loop (event randomness)
-  - `--nested` flag enables epistemic/aleatory separation
-  - `--aleatory-samples=N` controls simulations per threshold sample (default: 10)
-  - Epistemic uncertainty quantification in output (probability intervals, IQR ranges)
-  - Total simulations: --runs × --aleatory-samples (e.g., 10 × 10 = 100)
-  - Tested with 2×2=4 simulations - all 4 run files generated (seeds 42000-42003)
-  - Verified working: proper loop execution, result collection, epistemic sample tracking
-- ✅ Phase 1D: Validation complete
-
-**Phase 2 Deliverables (Tier 2: Historical Range Thresholds):**
-- ✅ 5 Tier 2 thresholds implemented (government legitimacy, surveillance dystopia, automation displacement, AI recursive improvement, resentment revolt)
-- ✅ Historical range-based distributions (Triangular, Uniform)
-- ✅ Research-backed parameters from case studies (Weimar, USSR, East Germany, Arab Spring, Industrial Revolution)
-- ✅ Integrated into initialization (sampled on every simulation start)
-
-**Phase 3 Deliverables (Tier 3: Speculative Scenarios):**
-- ✅ 10 speculative threshold parameters for unprecedented scenarios
-- ✅ 4 categories: AI Rights Bootstrap, Superintelligence Alignment, Post-Scarcity Transition, Meaning Framework Adoption
-- ✅ 5 named scenarios (doom/cautious/baseline/progressive/utopia) representing coherent worldviews
-- ✅ Research foundation: `/research/threshold_tier3_scenarios_20251026.md`
-- ✅ Integrated into initialization with scenario selector
-
-**Phase 4 Deliverables (Integration & Scenario Builder):**
-- ✅ Unified `sampleAllThresholds()` function combining Tier 1+2+3
-- ✅ Scenario-based sampling (sliders for all 9 Tier 1+2 thresholds)
-- ✅ Priority system: Custom sliders > Scenario defaults > Random sampling
-- ✅ Epistemic stance applied uniformly across all parameters
-
-**UI Integration (Oct 26, 2025):**
-- ✅ **Epistemic Scenario Selector** - 5 scenarios controlling unified worldview
-- ✅ **Individual Threshold Sliders** - 9 sliders for Tier 1+2 parameters (0.0-1.0 quantile sampling)
-- ✅ **Live Value Preview** - Shows computed threshold values at current slider positions
-- ✅ **Collapsible Panel** - Compact view with expand/collapse functionality
-- ✅ **Reset to Scenario** - Clear custom overrides, return to scenario defaults
-- ✅ **Full Stack Wiring** - Navigation → Worker Context → Worker Client → Worker → Initialization
-- ✅ Integrated into initialization modal (ThresholdConfigModal component)
-
-**Total Time Invested:** ~35-46 hours (Phases 1A/1B/1C/1D + 2 + 3 + 4)
-**Priority:** ✅ COMPLETE - Full threshold uncertainty system operational including nested sampling
-
-**Implementation Details (Phase 1C):**
-- Epistemic loop: Sample thresholds N times from distributions (outer loop)
-- Aleatory loop: Run M simulations per threshold sample (inner loop)
-- Total runs: N × M (e.g., 10 epistemic × 10 aleatory = 100 total)
-- Output: Epistemic uncertainty intervals (probability, IQR, min/max ranges)
-- Example usage: `npx tsx scripts/monteCarloSimulation.ts --nested --runs=10 --aleatory-samples=10`
-- Time invested Phase 1C: ~5-6 hours
-
-**Files:**
-- Backend: `src/simulation/thresholds/` (distributions.ts, tier1Config.ts, tier2Config.ts, tier3Config.ts, index.ts)
-- UI: `src/components/thresholds/ThresholdConfigModal.tsx`
-- Integration: `src/components/core/Navigation.tsx`, `src/simulation/initialization.ts`
-- Research: `/research/threshold_tier3_scenarios_20251026.md`
-- Plans: `/plans/completed/threshold-uncertainty-*` (archived)
 
 ---
 
@@ -449,31 +341,24 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~121-144 hours across 6 feature groups (reduced from ~125-148h after policy calibration completion)
+**Total Remaining Effort:** ~70-90 hours across 6 feature groups
 
 **By Priority:**
-- 🟡 HIGH: Simulation State Persistence & Management (11-16h) - Available for implementation
-- 🟡 MEDIUM: Policy System Improvements (31-38h) - 4 of 6 sections complete
+- 🟡 MEDIUM: Climate Mortality Implementation (8-12h) - Research complete, ready for implementation
+- 🟡 MEDIUM: Policy System Improvements (7-8h remaining) - 4 of 6 sections complete
 - 🟢 LOW: P3 Enhancements (37-48h)
 - 🟢 LOW: TIER 5 Features (46h)
 - 🟢 LOW: Black Mirror Phase 1-2 (21-28 weeks, phased)
-- 🟢 DEFERRED: Threshold Uncertainty Phases 2-4 (24-37h)
 - 🟢 DEFERRED: TIER 2B Competitive Equilibrium (30-50h)
 
-**Recently Completed (Oct 27, 2025):**
-- ✅ TIER 2 Superalignment Interventions (8 interventions, epistemic uncertainty modeling)
-- ✅ Policy Calibration Improvements (4 sections: unemployment penalty, retraining, UBI, baseline)
-- ✅ Invasive Species Impact Bug (root cause fix with IPBES 2019 research)
-- ✅ Technology Tree Bugs #6-11 (AI bankruptcy persistence, grid batteries, pollinators)
-- ✅ Regional → Global Aggregation (ALL 5 PHASES COMPLETE - population drift bug fixed)
-
 **Related Docs:**
-- `/docs/wiki/README.md` - System documentation
-- `/devlogs/` - Development diary
-- `/research/` - Research findings archive
-- `/reviews/` - Critical research evaluations
-- `/plans/completed/` - Archived completed plans (105+ files)
+- **Completed Work:** `/plans/CHANGELOG_OCTOBER_2025.md` - Full history of Oct 2025 work
+- **Wiki:** `/docs/wiki/README.md` - System documentation
+- **DevLogs:** `/devlogs/` - Development diary
+- **Research:** `/research/` - Research findings archive
+- **Reviews:** `/reviews/` - Critical research evaluations
+- **Completed Plans:** `/plans/completed/` - 110+ archived plans
 
 ---
 
-**Last Updated:** October 27, 2025
+**Last Updated:** October 29, 2025

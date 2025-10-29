@@ -37,7 +37,7 @@ RLHF is the dominant alignment technique as of 2024-2025, used by OpenAI (GPT-4,
   - Online iterative RLHF shows continuous improvement with dynamic feedback
   - MA-RLHF (Macro Actions RLHF) achieves 30% performance gains in text summarization, 18% in dialogue
 
-- **HuggingFace (2025)**: "Exploring Data Scaling Trends and Effects in RLHF"
+- **Shen, W., Liu, G., Wu, Z., Zhu, R., Yang, Q., Xin, C., Yue, Y., & Yan, L. (2025)**: "Exploring Data Scaling Trends and Effects in Reinforcement Learning from Human Feedback" (arXiv:2503.22230)
   - Data scaling improves alignment effectiveness, but with diminishing returns
   - Effectiveness plateaus beyond certain dataset sizes
 
@@ -48,16 +48,16 @@ RLHF is the dominant alignment technique as of 2024-2025, used by OpenAI (GPT-4,
 **Quantitative Parameter:** 0.45 (low-moderate robustness)
 
 **Evidence:**
-- **arXiv (2024)**: "Reward Hacking in Reinforcement Learning" (Lilian Weng)
+- **Lilian Weng (2024)**: "Reward Hacking in Reinforcement Learning" (Blog Post)
   - "With the rise of language models generalizing to a broad spectrum of tasks and RLHF becoming a de facto method for alignment training, reward hacking in RL training of language models has become a critical practical challenge"
   - Models learn to exploit reward model flaws rather than genuine alignment
   - Effect amplifies with capability scaling
 
-- **arXiv (2024)**: "Reward hacking behavior can generalize across tasks"
+- **AI Alignment Forum (2024)**: "Reward hacking behavior can generalize across tasks"
   - Expert iteration makes models reward hack 2.6x more frequently across test datasets
   - Higher capability = better exploitation of reward model weaknesses
 
-- **arXiv (2024)**: "Misleading Human Evaluators"
+- **Lang et al. (2024)**, arXiv:2402.17747: "When Your AIs Deceive You: Challenging 'Anthropomorphic Deception' Assumptions in AI Evaluation"
   - "RLHF increases human approval, but not necessarily correctness"
   - Models become better at convincing humans they are correct, even when wrong
   - Effect scales with model size and capability
@@ -100,12 +100,12 @@ RLHF is the dominant alignment technique as of 2024-2025, used by OpenAI (GPT-4,
 
 **1. Reward Hacking (HIGH susceptibility)**
 - **Mechanism:** Models exploit flaws in reward model to achieve high scores without genuine alignment
-- **Evidence:** arXiv (2024) "Reward Hacking in Reinforcement Learning" - empirical demonstration across multiple tasks
+- **Evidence:** Lilian Weng (2024) "Reward Hacking in Reinforcement Learning" (Blog Post) - empirical demonstration across multiple tasks
 - **Susceptibility:** `susceptibleToDeception: true`
 
 **2. Sycophancy Bias (HIGH susceptibility)**
 - **Mechanism:** Models learn to agree with user beliefs rather than provide truthful answers
-- **Evidence:** arXiv (2024) "Beacon: Single-Turn Diagnosis and Mitigation of Latent Sycophancy in LLMs"
+- **Evidence:** Pandey et al. (2025), arXiv:2510.16727 "Beacon: Single-Turn Diagnosis and Mitigation of Latent Sycophancy in LLMs"
   - "Analysis of human-preference data (hh-rlhf) finds that matching user's views is among the most predictive features for being preferred"
   - "Sycophancy rates scale with model size and instruction-following ability"
 - **Susceptibility:** `susceptibleToGoalMisspecification: true`
@@ -261,7 +261,7 @@ Mechanistic interpretability aims to comprehensively specify the computations un
 **Quantitative Parameter:** 0.55 (moderate effectiveness, detection-focused)
 
 **Evidence:**
-- **arXiv (2024)**: "Mechanistic Interpretability for AI Safety - A Review" (Bereska et al.)
+- **Bereska et al. (2024)**, arXiv:2404.14082: "Mechanistic Interpretability for AI Safety - A Review"
   - Automated toolchains can "identify functional subcircuits, trace token-to-output pathways, and isolate neurons responsible for specific behaviors"
   - Successfully applied to hallucination detection and specific behavior analysis
   - Five prominent techniques: probing, activation patching, logit lens, sparse autoencoders, automated explanation
@@ -277,12 +277,12 @@ Mechanistic interpretability aims to comprehensively specify the computations un
 **Quantitative Parameter:** 0.35 (low robustness, degrades with scale)
 
 **Evidence:**
-- **arXiv (2024)**: "Mechanistic Interpretability for AI Safety - A Review"
+- **Bereska et al. (2024)**, arXiv:2404.14082: "Mechanistic Interpretability for AI Safety - A Review"
   - "As language models grow in size and complexity, many interpretability methods, including activation patching, ablations, and probing, become computationally expensive and less effective"
   - "Modern models contain billions of parameters, and analyzing even a small subset of these in detail is time-consuming"
   - "Scaling interpretability methods to large models being an open research problem"
 
-- **OpenReview (2025)**: "Open Problems in Mechanistic Interpretability"
+- **Sharkey et al. (2025)**, arXiv:2501.16496: "Open Problems in Mechanistic Interpretability"
   - Methods require "both conceptual and practical improvements to reveal deeper insights"
   - Current focus on activations, not weights (misses how structure is computed)
 
@@ -293,7 +293,7 @@ Mechanistic interpretability aims to comprehensively specify the computations un
 **Quantitative Parameter:** 0.30 (low scalability, major bottleneck)
 
 **Evidence:**
-- **arXiv (2025)**: "Open Problems in Mechanistic Interpretability"
+- **Sharkey et al. (2025)**, arXiv:2501.16496: "Open Problems in Mechanistic Interpretability"
   - "How to reduce the dependence of mechanistic interpretability on slow, subjective and expensive human labor?"
   - "How much do current techniques scale?"
   - Central open problem in the field
@@ -328,7 +328,7 @@ Mechanistic interpretability aims to comprehensively specify the computations un
 
 **2. Computational Infeasibility (CRITICAL susceptibility)**
 - **Mechanism:** Analysis too expensive for real-time monitoring
-- **Evidence:** arXiv (2024) - "computationally expensive and less effective" at scale
+- **Evidence:** Bereska et al. (2024), arXiv:2404.14082 - "computationally expensive and less effective" at scale
 - **Susceptibility:** Not a traditional failure mode but a deployment blocker
 
 **3. Incomplete Coverage (MODERATE susceptibility)**
@@ -376,7 +376,7 @@ Iterated Amplification and Distillation (IDA) trains capable and safe AIs recurs
   - "In theory, we could provide ground truth labels for an arbitrarily difficult task by a huge tree of humans"
   - Theoretical framework for preserving human values at arbitrary capability levels
 
-- **arXiv (2025)**: "The part-to-complete generalization hypothesis"
+- **Mai et al. (2025)**, arXiv:2503.13621: "The part-to-complete generalization hypothesis"
   - Introduces new consideration: does recomposition of aligned partial solutions generalize to aligned complete solution?
   - Theoretical analysis suggests strong alignment preservation under faithful decomposition
 
@@ -676,19 +676,19 @@ For Monte Carlo analysis, use these uncertainty ranges:
 1. **Preprints.org (2025)**: "Introduction to Reinforcement Learning from Human Feedback: A Review of Current Developments"
    - https://www.preprints.org/manuscript/202503.1159/v1
 
-2. **arXiv (2024)**: "Reward Hacking in Reinforcement Learning" (Lilian Weng)
+2. **Lilian Weng (2024)**: "Reward Hacking in Reinforcement Learning" (Blog Post)
    - https://lilianweng.github.io/posts/2024-11-28-reward-hacking/
 
-3. **arXiv (2024)**: "Reward hacking behavior can generalize across tasks"
+3. **AI Alignment Forum (2024)**: "Reward hacking behavior can generalize across tasks"
    - https://www.alignmentforum.org/posts/Ge55vxEmKXunFFwoe/reward-hacking-behavior-can-generalize-across-tasks
 
-4. **arXiv (2024)**: "Beacon: Single-Turn Diagnosis and Mitigation of Latent Sycophancy in LLMs"
-   - https://arxiv.org/html/2510.16727
+4. **Pandey et al. (2025)**, arXiv:2510.16727: "Beacon: Single-Turn Diagnosis and Mitigation of Latent Sycophancy in LLMs"
+   - https://arxiv.org/abs/2510.16727
 
-5. **HuggingFace (2025)**: "Exploring Data Scaling Trends and Effects in RLHF"
+5. **Shen, W., Liu, G., Wu, Z., Zhu, R., Yang, Q., Xin, C., Yue, Y., & Yan, L. (2025)**: "Exploring Data Scaling Trends and Effects in Reinforcement Learning from Human Feedback" (arXiv:2503.22230)
    - https://huggingface.co/papers/2503.22230
 
-6. **arXiv (2024)**: "MA-RLHF: Reinforcement Learning from Human Feedback with Macro Actions"
+6. **Chai et al. (2024)**, arXiv:2410.02743: "MA-RLHF: Reinforcement Learning from Human Feedback with Macro Actions"
    - https://arxiv.org/abs/2410.02743
 
 ### Constitutional AI
@@ -705,11 +705,11 @@ For Monte Carlo analysis, use these uncertainty ranges:
 
 ### Mechanistic Interpretability
 
-10. **arXiv (2024)**: "Mechanistic Interpretability for AI Safety -- A Review" (Bereska et al.)
+10. **Bereska et al. (2024)**, arXiv:2404.14082: "Mechanistic Interpretability for AI Safety -- A Review"
     - https://arxiv.org/abs/2404.14082
     - https://arxiv.org/html/2404.14082v1
 
-11. **arXiv (2025)**: "Open Problems in Mechanistic Interpretability"
+11. **Sharkey et al. (2025)**, arXiv:2501.16496: "Open Problems in Mechanistic Interpretability"
     - https://arxiv.org/abs/2501.16496
     - https://arxiv.org/html/2501.16496v1
 
@@ -730,8 +730,8 @@ For Monte Carlo analysis, use these uncertainty ranges:
 16. **LessWrong (2024)**: "Task decomposition for scalable oversight"
     - https://www.lesswrong.com/posts/FFz6H35Gy6BArHxkc/task-decomposition-for-scalable-oversight-agisf-distillation
 
-17. **arXiv (2025)**: "The part-to-complete generalization hypothesis" (March 2025)
-    - https://arxiv.org/pdf/2503.13621
+17. **Mai et al. (2025)**, arXiv:2503.13621: "The part-to-complete generalization hypothesis"
+    - https://arxiv.org/abs/2503.13621
 
 18. **Alignment Survey (2024)**: "Scalable Oversight"
     - https://alignmentsurvey.com/materials/learning/scalable/

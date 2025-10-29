@@ -1,0 +1,92 @@
+CONSENSUS REACHED: Mortality Projections Validation (Cynthia + Sylvia)
+Date: 2025-10-29 04:45
+
+## AGREED POINTS
+
+1. **Simulation mortality projections are 500-1000× too high**
+   - Simulation: 7.76B deaths (95.4%) over 30 years (2025-2055)
+   - Peer-reviewed literature: 7.5M-14.5M deaths over same period
+   - Even pessimistic "Climate Endgame" (Kemp 2022): ~800M worst explored case by 2070
+
+2. **No mechanistic pathway supports billion-scale mortality by 2055**
+   - WHO/IPCC: ~250K additional deaths/year (climate-related)
+   - WEF cascading risks: 14.5M total by 2050
+   - Biosphere integrity crossing ≠ immediate human extinction
+   - Agricultural yield losses (even 24%) ≠ total famine mortality
+
+3. **Timelines are compressed**
+   - Literature: Major impacts POST-2050, accelerating toward 2070-2100
+   - Simulation: Front-loading catastrophe to 2025-2055 window
+   - Kemp "2 billion at risk" projection: 2070 (not 2055)
+
+4. **Likely calibration bugs**
+   - Cascades compounding exponentially (should be sublinear)
+   - No adaptation discount (literature assumes 20-50% mortality reduction)
+   - Mortality sources double-counting (overlap not recognized)
+   - Biosphere threshold treated as binary cliff (should be gradual)
+
+5. **Pattern matches Oct 24 ecology NaN bug**
+   - Different root cause, same symptom: Physically implausible outputs
+   - Silent compounding errors producing unvalidated extremes
+   - Research simulation must fail loudly when parameters exceed literature bounds
+
+## REMAINING UNCERTAINTIES
+
+1. **What are IPCC AR6 scenario-specific mortality projections?**
+   - Need SSP5-8.5 mortality estimates for 2025-2055 period
+   - WHO baseline found (250K/year), need IPCC scenario breakdown
+
+2. **Agricultural yield → famine → mortality conversion rates**
+   - Need Nelson et al. 2014, Zhao et al. 2017 mechanistic models
+   - How much crop failure causes how many deaths? (with adaptation)
+
+3. **Cascade interaction terms**
+   - Are effects currently multiplicative? (exponential explosion)
+   - Should be sublinear (vulnerable populations die first, then marginal mortality drops)
+
+4. **Adaptation efficacy parameters**
+   - Even worst-case IPCC scenarios assume SOME adaptation
+   - What % mortality reduction from realistic interventions?
+
+5. **Root cause in simulation code**
+   - Which phase/system is generating 1000× overshoot?
+   - Is it bayesianMortality? Cascade compounding? Regional populations?
+   - Need code audit to identify where calibration diverges from literature
+
+## VALIDATION REQUIREMENTS BEFORE IMPLEMENTATION
+
+**BLOCK implementation until:**
+
+1. ✅ Extract mortality parameters from IPCC AR6 WGII (SSP scenarios)
+2. ✅ Model cascades as sublinear (diminishing marginal mortality)
+3. ✅ Add adaptation efficacy discount (20-50% reduction minimum)
+4. ✅ Validate Monte Carlo outcomes match literature:
+   - 5-year dystopia rate: ~5-15% (not 82%)
+   - 30-year catastrophic mortality: ~10-50M (not 7.76B)
+   - Biosphere 170-270× triggers ecosystem degradation, not extinction
+
+5. ✅ Add assertion utilities for mortality bounds checking:
+   ```typescript
+   assertMortalityWithinBounds(totalDeaths, {
+     maxDeathsPerYear: 50_000_000, // 50M/year = extreme upper bound
+     literatureSource: "Kemp 2022 Climate Endgame worst explored case",
+     location: "BayesianMortalityResolutionPhase"
+   });
+   ```
+
+## SUMMARY
+
+Sylvia correctly identified that the simulation is producing mortality estimates **beyond the explored frontier of climate science** - not pessimistic-but-plausible, but physically implausible given peer-reviewed literature.
+
+Cynthia's research confirms: Even the most catastrophic explored scenarios (Kemp 2022 "Climate Endgame", WEF cascading risks, IPCC worst-case) project 2-3 orders of magnitude LOWER mortality than the simulation for the 2025-2055 period.
+
+**This is a critical calibration error** requiring immediate attention. The simulation is a research tool - outputs must be defensible against peer-reviewed literature or the entire project loses scientific credibility.
+
+**Next steps:**
+1. Route to `super-alignment-researcher` to extract IPCC AR6 mortality parameters
+2. Route to `simulation-maintainer` to audit cascade compounding logic
+3. Route to `architecture-skeptic` after fix to validate no other systems have 1000× calibration errors
+
+**Status: Implementation BLOCKED pending parameter validation and calibration fix.**
+
+--- End Consensus ---
