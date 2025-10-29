@@ -1757,13 +1757,17 @@ export function logDeathSummary(state: GameState): void {
   const rootCause = pop.deathsByRootCause;
 
   // Calculate totals for both dimensions
-  const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0);
+  // FIX (Oct 28, 2025): Ensure unit consistency - proximate is in millions, rootCause is in billions
+  const totalProximateDeaths = Object.values(proximate).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0); // in MILLIONS
   const totalRootCauseDeaths = Object.entries(rootCause)
     .filter(([key]) => key !== 'confidenceDistribution') // Exclude nested object
-    .reduce((sum, [, val]) => sum + (typeof val === 'number' ? val : 0), 0);
+    .reduce((sum, [, val]) => sum + (typeof val === 'number' ? val : 0), 0); // in BILLIONS
 
-  // Use the larger total as denominator
-  const totalDeaths = Math.max(pop.cumulativeCrisisDeaths, totalProximateDeaths, totalRootCauseDeaths);
+  // Convert rootCause to millions for comparison
+  const totalRootCauseDeathsMillions = totalRootCauseDeaths * 1000;
+
+  // Use the larger total as denominator (all in millions now)
+  const totalDeaths = Math.max(pop.cumulativeCrisisDeaths, totalProximateDeaths, totalRootCauseDeathsMillions);
 
   // Helper function to format percentage, avoiding NaN and Infinity
   const formatPercent = (value: number, total: number): string => {
@@ -1776,8 +1780,10 @@ export function logDeathSummary(state: GameState): void {
   };
 
   console.log('\n=== MULTI-DIMENSIONAL DEATH SUMMARY ===');
-  console.log(`Total crisis deaths: ${(pop.cumulativeCrisisDeaths * 1000).toFixed(1)}M`);
-  console.log(`Population decline: ${(pop.peakPopulation - pop.population).toFixed(1)}M (${(((pop.peakPopulation - pop.population) / pop.peakPopulation) * 100).toFixed(1)}%)`);
+  // FIX (Oct 28, 2025): cumulativeCrisisDeaths is ALREADY in millions, don't multiply by 1000
+  console.log(`Total crisis deaths: ${pop.cumulativeCrisisDeaths.toFixed(1)}M`);
+  // FIX (Oct 28, 2025): Population is in billions, convert to millions for display
+  console.log(`Population decline: ${((pop.peakPopulation - pop.population) * 1000).toFixed(1)}M (${(((pop.peakPopulation - pop.population) / pop.peakPopulation) * 100).toFixed(1)}%)`);
 
   // PROXIMATE CAUSES: What killed them (medical/physical cause)
   console.log('\n--- PROXIMATE CAUSES (What killed them) ---');
@@ -1792,28 +1798,29 @@ export function logDeathSummary(state: GameState): void {
   console.log(`  Other:      ${proximate.other.toFixed(1)}M (${formatPercent(proximate.other, totalDeaths)}%)`);
 
   // ROOT CAUSES: Why it happened (underlying systemic driver) - TIER 1.8 updated taxonomy
+  // FIX (Oct 28, 2025): rootCause values are in BILLIONS, convert to MILLIONS for percentage calculation
   console.log('\n--- ROOT CAUSES (Why it happened) ---');
   console.log('  Environmental drivers:');
-  console.log(`    Climate:     ${(rootCause.climate * 1000).toFixed(1)}M (${formatPercent(rootCause.climate, totalDeaths)}%)`);
-  console.log(`    Resource:    ${(rootCause.resource * 1000).toFixed(1)}M (${formatPercent(rootCause.resource, totalDeaths)}%)`);
-  console.log(`    Pollution:   ${(rootCause.pollution * 1000).toFixed(1)}M (${formatPercent(rootCause.pollution, totalDeaths)}%)`);
-  console.log(`    Ecosystem:   ${(rootCause.ecosystem * 1000).toFixed(1)}M (${formatPercent(rootCause.ecosystem, totalDeaths)}%)`);
+  console.log(`    Climate:     ${(rootCause.climate * 1000).toFixed(1)}M (${formatPercent(rootCause.climate * 1000, totalDeaths)}%)`);
+  console.log(`    Resource:    ${(rootCause.resource * 1000).toFixed(1)}M (${formatPercent(rootCause.resource * 1000, totalDeaths)}%)`);
+  console.log(`    Pollution:   ${(rootCause.pollution * 1000).toFixed(1)}M (${formatPercent(rootCause.pollution * 1000, totalDeaths)}%)`);
+  console.log(`    Ecosystem:   ${(rootCause.ecosystem * 1000).toFixed(1)}M (${formatPercent(rootCause.ecosystem * 1000, totalDeaths)}%)`);
   console.log('  Social drivers:');
-  console.log(`    Inequality:  ${(rootCause.inequality * 1000).toFixed(1)}M (${formatPercent(rootCause.inequality, totalDeaths)}%)`);
-  console.log(`    Demographic: ${(rootCause.demographic * 1000).toFixed(1)}M (${formatPercent(rootCause.demographic, totalDeaths)}%)`);
-  console.log(`    Social:      ${(rootCause.social * 1000).toFixed(1)}M (${formatPercent(rootCause.social, totalDeaths)}%)`);
+  console.log(`    Inequality:  ${(rootCause.inequality * 1000).toFixed(1)}M (${formatPercent(rootCause.inequality * 1000, totalDeaths)}%)`);
+  console.log(`    Demographic: ${(rootCause.demographic * 1000).toFixed(1)}M (${formatPercent(rootCause.demographic * 1000, totalDeaths)}%)`);
+  console.log(`    Social:      ${(rootCause.social * 1000).toFixed(1)}M (${formatPercent(rootCause.social * 1000, totalDeaths)}%)`);
   console.log('  Technology drivers:');
-  console.log(`    Alignment:   ${(rootCause.alignment * 1000).toFixed(1)}M (${formatPercent(rootCause.alignment, totalDeaths)}%)`);
-  console.log(`    Disruption:  ${(rootCause.disruption * 1000).toFixed(1)}M (${formatPercent(rootCause.disruption, totalDeaths)}%)`);
+  console.log(`    Alignment:   ${(rootCause.alignment * 1000).toFixed(1)}M (${formatPercent(rootCause.alignment * 1000, totalDeaths)}%)`);
+  console.log(`    Disruption:  ${(rootCause.disruption * 1000).toFixed(1)}M (${formatPercent(rootCause.disruption * 1000, totalDeaths)}%)`);
   console.log('  External shocks:');
-  console.log(`    Conflict:    ${(rootCause.conflict * 1000).toFixed(1)}M (${formatPercent(rootCause.conflict, totalDeaths)}%)`);
-  console.log(`    Pandemic:    ${(rootCause.pandemic * 1000).toFixed(1)}M (${formatPercent(rootCause.pandemic, totalDeaths)}%)`);
+  console.log(`    Conflict:    ${(rootCause.conflict * 1000).toFixed(1)}M (${formatPercent(rootCause.conflict * 1000, totalDeaths)}%)`);
+  console.log(`    Pandemic:    ${(rootCause.pandemic * 1000).toFixed(1)}M (${formatPercent(rootCause.pandemic * 1000, totalDeaths)}%)`);
   console.log('  Compound attribution:');
-  console.log(`    Compound:    ${(rootCause.compound * 1000).toFixed(1)}M (${formatPercent(rootCause.compound, totalDeaths)}%)`);
+  console.log(`    Compound:    ${(rootCause.compound * 1000).toFixed(1)}M (${formatPercent(rootCause.compound * 1000, totalDeaths)}%)`);
   console.log('  Confidence distribution:');
-  console.log(`    HIGH:        ${(rootCause.confidenceDistribution.HIGH * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.HIGH, totalDeaths)}%)`);
-  console.log(`    MEDIUM:      ${(rootCause.confidenceDistribution.MEDIUM * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.MEDIUM, totalDeaths)}%)`);
-  console.log(`    LOW:         ${(rootCause.confidenceDistribution.LOW * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.LOW, totalDeaths)}%)`);
+  console.log(`    HIGH:        ${(rootCause.confidenceDistribution.HIGH * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.HIGH * 1000, totalDeaths)}%)`);
+  console.log(`    MEDIUM:      ${(rootCause.confidenceDistribution.MEDIUM * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.MEDIUM * 1000, totalDeaths)}%)`);
+  console.log(`    LOW:         ${(rootCause.confidenceDistribution.LOW * 1000).toFixed(1)}M (${formatPercent(rootCause.confidenceDistribution.LOW * 1000, totalDeaths)}%)`);
   console.log('==========================================\n');
 }
 
