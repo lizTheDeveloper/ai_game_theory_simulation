@@ -99,6 +99,7 @@ import {
   TippingPointPhase,  // Oct 26, 2025: Multi-timescale climate tipping points (replaces instant catastrophe)
   FamineSystemPhase,  // FIX (Oct 13, 2025): Was missing! Famines never triggered
   FoodSecurityDegradationPhase,  // Phase 1B Refinement (Oct 17, 2025): Crisis-accelerated food degradation
+  ClimateImpactCascadePhase,  // Oct 29, 2025: Climate → Famine → Mortality cascade coordinator
   BayesianMortalityResolutionPhase,  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
   AntimicrobialResistancePhase,  // TIER 1.8 (Oct 17, 2025): Progressive antibiotic resistance
   MinimalSufferingPhase,  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering metrics)
@@ -539,6 +540,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TippingPointPhase());  // Oct 26, 2025: Multi-timescale climate tipping points (order 21.6)
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
+    this.orchestrator.registerPhase(new ClimateImpactCascadePhase());  // Oct 29, 2025: Climate → Famine → Mortality cascade (order 34.0)
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline
     this.orchestrator.registerPhase(new MinimalSufferingPhase());  // Oct 19, 2025: Dystopia baseline measurement (verifiable suffering)
