@@ -53,12 +53,14 @@ export function MonteCarloResultsDashboard() {
 
   const stats = results.data
 
-  // Calculate outcome probabilities
+  // Validate stats and calculate outcome probabilities safely
+  const totalRuns = typeof stats.totalRuns === 'number' && stats.totalRuns > 0 ? stats.totalRuns : 1
+
   const outcomes = {
-    utopia: ((stats.utopiaCount || 0) / (stats.totalRuns || 1)) * 100,
-    dystopia: ((stats.dystopiaCount || 0) / (stats.totalRuns || 1)) * 100,
-    extinction: ((stats.extinctionCount || 0) / (stats.totalRuns || 1)) * 100,
-    statusQuo: ((stats.statusQuoCount || 0) / (stats.totalRuns || 1)) * 100,
+    utopia: typeof stats.utopiaCount === 'number' ? (stats.utopiaCount / totalRuns) * 100 : 0,
+    dystopia: typeof stats.dystopiaCount === 'number' ? (stats.dystopiaCount / totalRuns) * 100 : 0,
+    extinction: typeof stats.extinctionCount === 'number' ? (stats.extinctionCount / totalRuns) * 100 : 0,
+    statusQuo: typeof stats.statusQuoCount === 'number' ? (stats.statusQuoCount / totalRuns) * 100 : 0,
   }
 
   return (
@@ -67,7 +69,7 @@ export function MonteCarloResultsDashboard() {
       <div>
         <h1 className="text-2xl mb-2">Monte Carlo Results</h1>
         <p style={{ color: 'var(--white-40)' }}>
-          Statistical Analysis of {stats.totalRuns || 0} Simulation Runs
+          Statistical Analysis of {typeof stats.totalRuns === 'number' ? stats.totalRuns : 0} Simulation Runs
         </p>
       </div>
 
@@ -75,23 +77,27 @@ export function MonteCarloResultsDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <MetricCard
           label="Total Runs"
-          value={stats.totalRuns || 0}
+          value={typeof stats.totalRuns === 'number' ? stats.totalRuns : 0}
           status="normal"
         />
         <MetricCard
           label="Max Months"
-          value={stats.maxMonths || 0}
+          value={typeof stats.maxMonths === 'number' ? stats.maxMonths : 0}
           status="normal"
         />
         <MetricCard
           label="Avg Run Time"
-          value={`${((stats.avgRunTime || 0) / 1000).toFixed(1)}s`}
+          value={typeof stats.avgRunTime === 'number' && !isNaN(stats.avgRunTime)
+            ? `${(stats.avgRunTime / 1000).toFixed(1)}s`
+            : 'N/A'}
           status="normal"
         />
         <MetricCard
           label="Completion Rate"
-          value={`${(((stats.completedRuns || 0) / (stats.totalRuns || 1)) * 100).toFixed(0)}%`}
-          status={(stats.completedRuns || 0) / (stats.totalRuns || 1) >= 0.9 ? 'normal' : 'warning'}
+          value={typeof stats.completedRuns === 'number' && totalRuns > 0
+            ? `${((stats.completedRuns / totalRuns) * 100).toFixed(0)}%`
+            : 'N/A'}
+          status={typeof stats.completedRuns === 'number' && (stats.completedRuns / totalRuns) >= 0.9 ? 'normal' : 'warning'}
         />
       </div>
 
@@ -186,7 +192,9 @@ export function MonteCarloResultsDashboard() {
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Median Survival Time</div>
             <div className="text-3xl font-light">
-              {stats.medianSurvivalMonths || 'N/A'} mo
+              {typeof stats.medianSurvivalMonths === 'number' && !isNaN(stats.medianSurvivalMonths)
+                ? `${stats.medianSurvivalMonths} mo`
+                : 'N/A'}
             </div>
             <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
               50% of runs reach this duration
@@ -196,7 +204,9 @@ export function MonteCarloResultsDashboard() {
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Early Extinction {'(<'}50mo)</div>
             <div className="text-3xl font-light" style={{ color: 'var(--color-red)' }}>
-              {stats.earlyExtinctionRate?.toFixed(1) || 0}%
+              {typeof stats.earlyExtinctionRate === 'number' && !isNaN(stats.earlyExtinctionRate)
+                ? `${stats.earlyExtinctionRate.toFixed(1)}%`
+                : 'N/A'}
             </div>
             <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
               Rapid collapse scenarios
@@ -206,7 +216,9 @@ export function MonteCarloResultsDashboard() {
           <div>
             <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Long-Term Stable {`(>`}200mo)</div>
             <div className="text-3xl font-light" style={{ color: 'var(--color-green)' }}>
-              {stats.longTermStableRate?.toFixed(1) || 0}%
+              {typeof stats.longTermStableRate === 'number' && !isNaN(stats.longTermStableRate)
+                ? `${stats.longTermStableRate.toFixed(1)}%`
+                : 'N/A'}
             </div>
             <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
               Runs reaching 15+ years
@@ -229,18 +241,22 @@ export function MonteCarloResultsDashboard() {
             <div>
               <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Average Final Alignment</div>
               <div className="text-3xl font-light" style={{
-                color: (stats.avgAlignment || 0) > 0.7 ? 'var(--color-green)' :
-                       (stats.avgAlignment || 0) > 0.5 ? 'var(--color-amber)' :
-                       'var(--color-red)'
+                color: typeof stats.avgAlignment === 'number' && stats.avgAlignment > 0.7 ? 'var(--color-green)' :
+                       typeof stats.avgAlignment === 'number' && stats.avgAlignment > 0.5 ? 'var(--color-amber)' :
+                       typeof stats.avgAlignment === 'number' ? 'var(--color-red)' : 'var(--white-80)'
               }}>
-                {stats.avgAlignment?.toFixed(2) || 'N/A'}
+                {typeof stats.avgAlignment === 'number' && !isNaN(stats.avgAlignment)
+                  ? stats.avgAlignment.toFixed(2)
+                  : 'N/A'}
               </div>
             </div>
 
             <div>
               <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Sleeper Detection Rate</div>
               <div className="text-3xl font-light">
-                {stats.avgSleeperDetectionRate?.toFixed(1) || 0}%
+                {typeof stats.avgSleeperDetectionRate === 'number' && !isNaN(stats.avgSleeperDetectionRate)
+                  ? `${stats.avgSleeperDetectionRate.toFixed(1)}%`
+                  : 'N/A'}
               </div>
             </div>
           </div>
@@ -261,7 +277,9 @@ export function MonteCarloResultsDashboard() {
             <div>
               <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Runs with Cascades</div>
               <div className="text-3xl font-light" style={{ color: 'var(--color-amber)' }}>
-                {stats.cascadeRate?.toFixed(1) || 0}%
+                {typeof stats.cascadeRate === 'number' && !isNaN(stats.cascadeRate)
+                  ? `${stats.cascadeRate.toFixed(1)}%`
+                  : 'N/A'}
               </div>
               <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
                 3+ crises simultaneously
@@ -271,7 +289,9 @@ export function MonteCarloResultsDashboard() {
             <div>
               <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Avg Cascade Multiplier</div>
               <div className="text-3xl font-light">
-                {stats.avgCascadeMultiplier?.toFixed(2) || 1.0}x
+                {typeof stats.avgCascadeMultiplier === 'number' && !isNaN(stats.avgCascadeMultiplier)
+                  ? `${stats.avgCascadeMultiplier.toFixed(2)}x`
+                  : 'N/A'}
               </div>
             </div>
           </div>
@@ -292,7 +312,9 @@ export function MonteCarloResultsDashboard() {
             <div>
               <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Avg Breached Boundaries</div>
               <div className="text-3xl font-light">
-                {stats.avgBreachedBoundaries?.toFixed(1) || 0}
+                {typeof stats.avgBreachedBoundaries === 'number' && !isNaN(stats.avgBreachedBoundaries)
+                  ? stats.avgBreachedBoundaries.toFixed(1)
+                  : 'N/A'}
               </div>
               <p className="text-xs mt-1" style={{ color: 'var(--white-40)' }}>
                 Out of 9 total
@@ -302,7 +324,9 @@ export function MonteCarloResultsDashboard() {
             <div>
               <div className="text-xs mb-2" style={{ color: 'var(--white-40)' }}>Tipping Point Rate</div>
               <div className="text-3xl font-light" style={{ color: 'var(--color-red)' }}>
-                {stats.tippingPointRate?.toFixed(1) || 0}%
+                {typeof stats.tippingPointRate === 'number' && !isNaN(stats.tippingPointRate)
+                  ? `${stats.tippingPointRate.toFixed(1)}%`
+                  : 'N/A'}
               </div>
             </div>
           </div>
@@ -313,12 +337,17 @@ export function MonteCarloResultsDashboard() {
       <Panel title="Statistical Summary">
         <div className="space-y-3 text-sm" style={{ color: 'var(--white-60)' }}>
           <p>
-            <strong>Sample Size:</strong> {stats.totalRuns || 0} runs with {stats.maxMonths || 0} months each.
-            Total simulation time: {((stats.totalSimulationTime || 0) / 1000 / 60).toFixed(1)} minutes.
+            <strong>Sample Size:</strong> {typeof stats.totalRuns === 'number' ? stats.totalRuns : 0} runs
+            with {typeof stats.maxMonths === 'number' ? stats.maxMonths : 0} months each.
+            Total simulation time: {typeof stats.totalSimulationTime === 'number' && !isNaN(stats.totalSimulationTime)
+              ? `${(stats.totalSimulationTime / 1000 / 60).toFixed(1)} minutes`
+              : 'N/A'}.
           </p>
           <p>
-            <strong>Confidence Intervals:</strong> With N={stats.totalRuns || 0}, outcome probabilities have
-            ~{((1.96 * Math.sqrt(0.5 * 0.5 / (stats.totalRuns || 1))) * 100).toFixed(1)}% margin of error (95% CI).
+            <strong>Confidence Intervals:</strong> With N={typeof stats.totalRuns === 'number' ? stats.totalRuns : 0},
+            outcome probabilities have ~{totalRuns > 0
+              ? ((1.96 * Math.sqrt(0.5 * 0.5 / totalRuns)) * 100).toFixed(1)
+              : 'N/A'}% margin of error (95% CI).
           </p>
           <p>
             <strong>Key Findings:</strong>
