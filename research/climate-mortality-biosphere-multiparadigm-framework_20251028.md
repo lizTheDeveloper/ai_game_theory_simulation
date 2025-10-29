@@ -117,7 +117,8 @@ function stormFrequencyScaling(globalTemp: number): {
 ```
 
 **Citations:**
-- Knutson et al. (2023). "Tropical Cyclones and Climate Change: Global Landfall Frequency Projections." *Bulletin of the American Meteorological Society*
+- Jewson, S. (2023). "Tropical Cyclones and Climate Change: Global Landfall Frequency Projections Derived from Knutson et al." *Bulletin of the American Meteorological Society*, 104(5), E1085-E1097. DOI: 10.1175/BAMS-D-22-0189.1
+- Note: Knutson's original papers: Part I (2019, BAMS 100) and Part II (2020, BAMS 101)
 - NOAA GFDL. (2024). "Global Warming and Hurricanes." *Geophysical Fluid Dynamics Laboratory*
 - EPA. (2024). "Climate Change Indicators: Tropical Cyclone Activity."
 
@@ -268,7 +269,7 @@ function calculateCascadeRisk(boundaries: PlanetaryBoundary[]): number {
 ```
 
 **Citations:**
-- Richardson et al. (2024). "Earth beyond six of nine planetary boundaries." *Science Advances*
+- Richardson et al. (2023). "Earth beyond six of nine planetary boundaries." *Science Advances*, 9(37), eadh2458. DOI: 10.1126/sciadv.adh2458 (Published September 13, 2023)
 - Globaïa. (2025). "Planetary Health Check 2025."
 - Cell Press. (2025). "Breaching planetary boundaries: Over half of global land area suffers critical losses in functional biosphere integrity." *One Earth*
 
@@ -998,20 +999,20 @@ This approach maintains the project's core philosophy: **"Let the model show wha
 ### Climate Mortality
 - Vicedo-Cabrera et al. (2021). Nature Climate Change.
 - Raymond et al. (2020). Science Advances.
-- Vecellio et al. (2022). PMC.
-- Knutson et al. (2023). BAMS.
+- Vecellio, D. J., Wolf, S. T., Cottle, R. M., & Kenney, W. L. (2022). "Evaluating the 35°C wet-bulb temperature adaptability threshold for young, healthy subjects (PSU HEAT Project)." Journal of Applied Physiology, 132(2), 340-345. DOI: 10.1152/japplphysiol.00738.2021. PMC: PMC8799385
+- Jewson, S. (2023). "Tropical Cyclones and Climate Change: Global Landfall Frequency Projections Derived from Knutson et al." BAMS, 104(5), E1085-E1097. DOI: 10.1175/BAMS-D-22-0189.1
 - IPCC AR6 WG2. (2024).
 
 ### Biosphere Collapse
-- Richardson et al. (2024). Science Advances.
-- Yoder et al. (2024). Ecology Letters.
+- Richardson et al. (2023). Science Advances, 9(37), eadh2458. DOI: 10.1126/sciadv.adh2458
+- Yoder, J. B., Andrade, A. K., DeFalco, L. A., Esque, T. C., Carlson, C. J., Shryock, D. F., Yeager, R., & Smith, C. I. (2024). "Reconstructing 120 years of climate change impacts on Joshua tree flowering." Ecology Letters, 27, e14478. DOI: 10.1111/ele.14478
 - Burrows et al. (2014). Nature.
-- Littlefield et al. (2019). Frontiers in Ecology.
+- Littlefield, C. E., Krosby, M., Michalak, J. L., & Lawler, J. J. (2019). "Connectivity for species on the move: supporting climate-driven range shifts." Frontiers in Ecology and the Environment, 17, 270–278. DOI: 10.1002/fee.2043
 
 ### Multi-Paradigm Frameworks
-- van Norren. (2020). Int Env Agreements.
-- Werdel et al. (2024). J Wildlife Management.
-- Environmental Evidence. (2025).
+- Van Norren, D. E. (2020). "The sustainable development goals viewed through gross national happiness, Ubuntu, and Buen Vivir." International Environmental Agreements: Politics, Law and Economics, 20(3), 431-458.
+- Werdel, T. J., Matarrita-Cascante, D., & Lucero, J. E. (2024). "State of Traditional Ecological Knowledge in the wildlife management profession." The Journal of Wildlife Management. DOI: 10.1002/jwmg.22579
+- Maliao, R. J., & Tóthmérész, B. (2025). "Braiding traditional ecological knowledge and Western science in the management of freshwater social-ecological systems: a systematic map protocol." Environmental Evidence, 14, 17. DOI: 10.1186/s13750-025-00371-8
 - UNSDSN. (2024). SDG Report.
 
 **Total Sources:** 40+ peer-reviewed papers, 2024-2025 focus.

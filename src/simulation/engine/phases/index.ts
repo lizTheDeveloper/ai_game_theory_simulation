@@ -88,6 +88,7 @@ export { OrganizationViabilityPhase } from './OrganizationViabilityPhase';
 export { NuclearWinterPhase } from './NuclearWinterPhase';
 export { RadiationSystemPhase } from './RadiationSystemPhase';
 export { WetBulbTemperaturePhase } from './WetBulbTemperaturePhase';  // Wet Bulb Temperature Events (Oct 17, 2025)
+export { ExtremeWeatherEventsPhase } from './ExtremeWeatherEventsPhase';  // Extreme Weather Events (Oct 28, 2025)
 export { PlanetaryBoundariesPhase } from './PlanetaryBoundariesPhase';
 export { PositiveTippingPointsPhase } from './PositiveTippingPointsPhase';  // Oct 17, 2025
 export { TippingPointPhase } from './TippingPointPhase';  // Oct 26, 2025: Multi-timescale climate tipping points

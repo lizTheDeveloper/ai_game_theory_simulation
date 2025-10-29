@@ -71,12 +71,16 @@ export function calculateDistributionStats(values: number[]): DistributionStatis
   const iqr = q3 - q1;
 
   // Skewness (Fisher-Pearson coefficient)
+  // Special case: When std = 0 (all values identical), skewness is undefined
+  // We return 0 to represent "perfectly symmetric" (no tail, all values at center)
   const m3 = values.reduce((sum, v) => sum + Math.pow(v - mean, 3), 0) / n;
-  const skewness = m3 / Math.pow(std, 3);
+  const skewness = std === 0 ? 0 : m3 / Math.pow(std, 3);
 
   // Kurtosis (excess kurtosis, normal = 0)
+  // Special case: When std = 0, kurtosis is undefined
+  // We return 0 to represent "no tail behavior" (normal-like, though degenerate)
   const m4 = values.reduce((sum, v) => sum + Math.pow(v - mean, 4), 0) / n;
-  const kurtosis = (m4 / Math.pow(std, 4)) - 3;
+  const kurtosis = std === 0 ? 0 : (m4 / Math.pow(std, 4)) - 3;
 
   // Coefficient of variation
   const coefficientOfVariation = std / Math.abs(mean);
@@ -355,6 +359,7 @@ function interpretCV(cv: number): string {
  * Interpret skewness
  */
 function interpretSkewness(skew: number): string {
+  if (skew === 0) return '✅ Perfectly symmetric (all values identical or no variance)';
   if (Math.abs(skew) < 0.5) return '✅ Approximately symmetric distribution';
   if (skew > 1) return '⚠️  Strongly right-skewed (long tail of high values)';
   if (skew > 0.5) return 'ℹ️  Moderately right-skewed';
@@ -366,6 +371,7 @@ function interpretSkewness(skew: number): string {
  * Interpret kurtosis
  */
 function interpretKurtosis(kurt: number): string {
+  if (kurt === 0) return '✅ No tail behavior (all values identical or normal-like)';
   if (Math.abs(kurt) < 0.5) return '✅ Normal kurtosis (similar to bell curve)';
   if (kurt > 3) return '⚠️  Very heavy tails (many extreme outliers)';
   if (kurt > 1) return 'ℹ️  Heavy tails (more outliers than normal)';

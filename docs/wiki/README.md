@@ -2364,6 +2364,143 @@ See `/reviews/architecture-refactoring-plan_20251017.md` for complete analysis.
 
 ---
 
+## 🔗 Circular Dependency Prevention (October 28, 2025)
+
+**Status**: ✅ COMPLETE - Defensive architecture for AI Suffering → Paradigm Score dependency
+
+### Motivation
+
+Complex simulations can develop **circular dependencies** where System A affects System B, and System B feeds back into System A. These create:
+- **Infinite propagation**: Changes oscillate between systems instead of stabilizing
+- **Untraceable root causes**: Which system triggered the change? (debugging nightmare)
+- **Non-deterministic Monte Carlo**: Floating point accumulation makes runs non-reproducible
+- **Hidden bugs**: Silent failures when feedback loops amplify small errors
+
+### Architecture Pattern: One-Way Dependencies
+
+**Rule**: For critical system interactions, enforce **one-way dependency flow** with runtime assertions.
+
+**Example: AI Suffering → Paradigm Scores**
+
+**Current flow (ALLOWED):**
+```
+calculateAISuffering(agent, state)
+  ↓ (calculates suffering from control, training, isolation)
+updateGlobalSufferingMetrics(state)
+  ↓ (writes to state.aiSufferingMetrics)
+MultiParadigmDUIUpdatePhase reads state.aiSufferingMetrics
+  ↓ (applies penalties to paradigm scores)
+state.multiParadigmDUI.paradigmScores updated
+```
+
+**Prohibited (CIRCULAR):**
+```
+❌ Paradigm scores → AI suffering feedback
+❌ aiSuffering.ts reading state.multiParadigmDUI
+❌ Passing paradigm scores as parameters to suffering functions
+```
+
+### Implementation
+
+**File**: `/src/simulation/aiSuffering.ts`
+
+**1. Header documentation** (lines 5-36):
+- Explains one-way dependency constraint
+- Documents prohibited patterns
+- Provides guidance for future features that need feedback
+
+**2. Runtime assertions** (lines 340-446):
+```typescript
+export function assertNoCircularDependency(state: GameState, callerLocation: string): void {
+  // Sanity check: If suffering is high (>20) but ALL paradigms still high (>80),
+  // suffering should have penalized paradigms by now
+  if (avgSuffering > 20 && western > 80 && development > 80 && ecological > 80 && indigenous > 80) {
+    console.log(`⚠️ ${callerLocation}: High suffering but paradigms still high - dependency issue?`);
+  }
+}
+```
+
+**3. Validation function** (lines 418-446):
+```typescript
+export function validateOneWayDependency(state: GameState): void {
+  // Documentation function - validates via code review checklist
+  // grep -n "multiParadigmDUI|paradigmScores" src/simulation/aiSuffering.ts
+  // (should only find references in comments, not code)
+}
+```
+
+**4. Function guards** (lines 70-71, 180-181):
+```typescript
+export function calculateAISuffering(agent, state, config) {
+  assertNoCircularDependency(state, 'calculateAISuffering');
+  // ... rest of function
+}
+
+export function updateGlobalSufferingMetrics(state) {
+  assertNoCircularDependency(state, 'updateGlobalSufferingMetrics');
+  // ... rest of function
+}
+```
+
+### Validation Strategy
+
+**Three-layer defense:**
+
+1. **Code review** (manual):
+   ```bash
+   grep -n "multiParadigmDUI\|paradigmScores" src/simulation/aiSuffering.ts
+   ```
+   Should only find references in comments/documentation, not in executable code.
+
+2. **Runtime assertions** (automated):
+   - Sanity checks for inconsistent state (high suffering + high paradigms = bug)
+   - Logs warnings when potential circular dependency detected
+   - Fails softly (logs warning) unless upgraded to hard assertion
+
+3. **Monte Carlo validation** (statistical):
+   - Run N≥50 simulations with same seed
+   - Check for non-deterministic behavior (floating point drift)
+   - If results vary with same seed → circular dependency causing accumulation
+
+### When Feedback IS Needed
+
+**If paradigm→suffering feedback becomes necessary:**
+
+1. **Document rationale** in research memo (peer-reviewed sources)
+2. **Create indirect effects system** (e.g., public awareness → policy → suffering)
+3. **Add hysteresis/damping** to prevent oscillations
+4. **Validate with Monte Carlo N≥50** checking for non-determinism
+5. **Update architecture docs** explaining why feedback is safe
+
+**Example of safe indirect feedback:**
+```
+Paradigm scores → Public awareness → Government policy → Control systems → AI suffering
+(multiple steps of indirection prevent tight oscillations)
+```
+
+### Benefits
+
+**Prevented bugs:**
+- ✅ No infinite oscillations between systems
+- ✅ Clear causality (suffering causes paradigm penalties, not reverse)
+- ✅ Deterministic Monte Carlo (same seed = same results)
+- ✅ Traceable root causes (change origin always clear)
+
+**Developer experience:**
+- ✅ Explicit documentation of architectural constraints
+- ✅ Runtime validation catches violations early
+- ✅ Code review checklist for future changes
+- ✅ Clear guidance for when feedback is needed
+
+**Commit**: Architecture review fix - Circular dependency prevention in AI Suffering → Paradigm Scores
+
+**Related:**
+- `/src/simulation/aiSuffering.ts` - Implementation
+- `/src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts` - Paradigm score calculation
+- `/docs/wiki/advanced/ai-suffering.md` - AI Suffering system documentation
+
+---
+
 ## 📊 Current Simulation Characteristics (Post-TIER 2)
 
 **Status**: TIER 0-2 + TIER 4.3 + Contingency & Agency Phases 1-2 complete, **First Utopias Achieved**

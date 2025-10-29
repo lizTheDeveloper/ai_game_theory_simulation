@@ -301,9 +301,9 @@ const currentMonthDeaths = mortalityRate * population * (baseline + leanSeasonIn
    - **Key data:** Emphasizes most acute hunger is seasonal, not crisis-driven
 
 6. **Seasonality methodology review**
-   - Authors: Multiple (malnutrition measurement experts)
+   - Authors: Anastasia Marshak, Aishwarya Venkat, Helen Young, Elena Naumova
    - Title: "How Seasonality of Malnutrition Is Measured and Analyzed"
-   - Journal: *Advances in Nutrition* or similar (2021)
+   - Journal: *International Journal of Environmental Research and Public Health* (2021)
    - Citation: PMC7918225
    - URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC7918225/
    - **Key data:** Methodological guidance, variability within year can exceed variability across years

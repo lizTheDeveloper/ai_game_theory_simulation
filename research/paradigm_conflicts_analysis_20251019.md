@@ -651,7 +651,7 @@ This section identifies **fundamental trade-offs** where paradigms cannot both w
 
 **The Impossibility Theorem:**
 
-**Source:** Hickel, J., et al. (2025). "Doughnut of social and planetary boundaries monitors a world out of balance." *Nature*, 639, 468-476. https://doi.org/10.1038/s41586-025-09385-1
+**Source:** Fanning, A. L., & Raworth, K. (2025). "Doughnut of social and planetary boundaries monitors a world out of balance." *Nature*, 646(8083), 47-56. DOI: 10.1038/s41586-025-09385-1
 
 This 2025 update to Raworth's Doughnut Economics framework uses 35 indicators across 2000-2022 to measure social deprivation and ecological overshoot. Key findings:
 

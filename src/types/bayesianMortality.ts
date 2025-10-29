@@ -47,7 +47,9 @@ export type MortalityRiskType =
   | 'disaster'
   | 'war'
   | 'pollution'
-  | 'ecosystem';
+  | 'ecosystem'
+  | 'cascade'  // FIX (Oct 28, 2025): Added for multi-crisis cascading deaths
+  | 'other';   // FIX (Oct 28, 2025): Added for miscellaneous tech disasters
 
 /**
  * Proximate cause of death (what killed them - medical/physical)
@@ -117,6 +119,8 @@ export interface DemographicSegment {
     war: number;         // 0.6 for elite, 1.4 for precariat (can flee)
     pollution: number;   // 0.4 for elite, 1.6 for precariat (environmental exposure)
     ecosystem: number;   // 0.5 for elite, 1.5 for precariat (food security)
+    cascade: number;     // FIX (Oct 28, 2025): Multi-crisis cascades
+    other: number;       // FIX (Oct 28, 2025): Miscellaneous tech disasters
   };
 }
 
