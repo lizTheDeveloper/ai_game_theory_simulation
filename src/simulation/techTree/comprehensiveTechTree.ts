@@ -1152,6 +1152,7 @@ const ALL_TECH: TechDefinition[] = [
       invasiveSpeciesReduction: 0.60,
       biodiversityBonus: 0.10,
       ecosystemHealth: 0.12,
+      geneDriveFailureRisk: 0.5,  // FIX (Oct 28, 2025): Tech tree → mortality integration - 0.5% monthly risk of uncontrolled spread
     },
   },
   {
@@ -1366,6 +1367,7 @@ const ALL_TECH: TechDefinition[] = [
       riskMonsoonsDisrupt: 0.30,
       riskOzoneDepletion: 0.15,
       emergencyOnly: 1.0,
+      geoengDisasterRisk: 2.0,  // FIX (Oct 28, 2025): Tech tree → mortality integration - 2% monthly risk when deployed
     },
   },
   {
@@ -1560,6 +1562,7 @@ const ALL_TECH: TechDefinition[] = [
       resourceAbundance: 1.0,
       medicalNanobots: 1.0,
       existentialRisk: 0.50,  // Grey goo risk
+      nanoDisasterRisk: 0.1,  // FIX (Oct 28, 2025): Tech tree → mortality integration - 0.1% monthly risk of grey goo scenario
     },
   },
   {

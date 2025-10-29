@@ -253,7 +253,7 @@
    - Credibility: NOAA official assessment, annual peer-reviewed report
    - Key finding: Tipping point already crossed, tundra now carbon source
 
-2. **Beckebanze et al. (2022)** - "Seasonal increase of methane emissions linked to warming in Siberian tundra," *Nature Climate Change*
+2. **Rößger et al. (2022)** - "Seasonal increase of methane emissions linked to warming in Siberian tundra," *Nature Climate Change*
    - DOI: 10.1038/s41558-022-01512-4
    - Credibility: Nature Climate Change, longest Arctic methane flux dataset
    - Key finding: Methane emissions rising 1.9% per year since 2004
@@ -711,7 +711,7 @@ A realistic climate tipping point implementation should show:
 
 1. van Westen, R. M., Kliphuis, M., & Dijkstra, H. A. (2024). Physics-based early warning signal shows that AMOC is on tipping course. *Science Advances*, 10(6), eadk1189. https://doi.org/10.1126/sciadv.adk1189
 
-2. Jackson, L. C., et al. (2023). Warning of a forthcoming collapse of the Atlantic meridional overturning circulation. *Nature Communications*, 14, 4254. https://doi.org/10.1038/s41467-023-39810-w
+2. Ditlevsen, P., & Ditlevsen, S. (2023). Warning of a forthcoming collapse of the Atlantic meridional overturning circulation. *Nature Communications*, 14, 4254. https://doi.org/10.1038/s41467-023-39810-w
 
 3. Westen, R. M., et al. (2024). Collapse and slow recovery of the Atlantic Meridional Overturning Circulation (AMOC) under abrupt greenhouse gas forcing. *Climate Dynamics*. https://doi.org/10.1007/s00382-024-07185-3
 
@@ -733,7 +733,7 @@ A realistic climate tipping point implementation should show:
 
 9. NOAA Arctic Report Card (2024). The Arctic tundra is now a net source of carbon dioxide. https://www.climate.gov/news-features/featured-images/2024-arctic-report-card-arctic-tundra-now-net-source-carbon-dioxide
 
-10. Beckebanze, L., et al. (2022). Seasonal increase of methane emissions linked to warming in Siberian tundra. *Nature Climate Change*, 12, 1031–1036. https://doi.org/10.1038/s41558-022-01512-4
+10. Rößger, N., Sachs, T., Wille, C., Boike, J., & Kutzbach, L. (2022). Seasonal increase of methane emissions linked to warming in Siberian tundra. *Nature Climate Change*, 12, 1031–1036. https://doi.org/10.1038/s41558-022-01512-4
 
 11. MacDougall, A. H., et al. (2021). Timescales of the permafrost carbon cycle and legacy effects of temperature overshoot scenarios. *Nature Communications*, 12, 2688. https://doi.org/10.1038/s41467-021-23010-5
 
@@ -743,7 +743,7 @@ A realistic climate tipping point implementation should show:
 
 13. Armstrong McKay, D. I., et al. (2022). Exceeding 1.5°C global warming could trigger multiple climate tipping points. *Science*, 377(6611), eabn7950. https://doi.org/10.1126/science.abn7950
 
-14. Global Tipping Points Report (2023). University of Exeter. https://global-tipping-points.org/
+14. Global Tipping Points Report (2025). University of Exeter. https://global-tipping-points.org/
 
 15. Lenton, T. M., et al. (2008). Tipping elements in the Earth's climate system. *Proceedings of the National Academy of Sciences*, 105(6), 1786–1793. https://doi.org/10.1073/pnas.0705414105
 
@@ -761,11 +761,11 @@ A realistic climate tipping point implementation should show:
 
 20. Steffensen, J. P., et al. (2008). High-Resolution Greenland Ice Core Data Show Abrupt Climate Change Happens in Few Years. *Science*, 321(5889), 680–684. https://doi.org/10.1126/science.1157707
 
-21. Buizert, C., et al. (2020). Timing and structure of the Younger Dryas event and its underlying climate dynamics. *Proceedings of the National Academy of Sciences*, 117(44), 27282–27290. https://doi.org/10.1073/pnas.2007869117
+21. Cheng, H., Zhang, H., Spötl, C., Baker, J., Sinha, A., Li, H., Bartolomé, M., Moreno, A., Kathayat, G., Zhao, J., Dong, X., Li, Y., Ning, Y., Jia, X., Zong, B., Ait Brahim, Y., Pérez-Mejías, C., Cai, Y., Novello, V. F., Cruz, F. W., Severinghaus, J. P., An, Z., & Edwards, R. L. (2020). Timing and structure of the Younger Dryas event and its underlying climate dynamics. *Proceedings of the National Academy of Sciences*, 117(38), 23408–23417. https://doi.org/10.1073/pnas.2007869117
 
 ### Societal Collapse
 
-22. Kemp, L., et al. (2022). Climate change and the threat to civilization. *Proceedings of the National Academy of Sciences*, 119(34), e2210525119. https://doi.org/10.1073/pnas.2210525119
+22. Kemp, L., Xu, C., Depledge, J., Ebi, K. L., Gibbins, G., Kohler, T. A., Rockström, J., Scheffer, M., Schellnhuber, H. J., Steffen, W., & Lenton, T. M. (2022). Climate Endgame: Exploring catastrophic climate change scenarios. *Proceedings of the National Academy of Sciences*, 119(34), e2108146119. https://doi.org/10.1073/pnas.2108146119
 
 23. Cumming, G. S., & Peterson, G. D. (2017). Unifying Research on Social-Ecological Resilience and Collapse. *Trends in Ecology & Evolution*, 32(9), 695–713. https://doi.org/10.1016/j.tree.2017.06.014
 

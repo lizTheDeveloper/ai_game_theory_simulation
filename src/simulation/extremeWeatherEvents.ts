@@ -455,10 +455,13 @@ export function updateExtremeWeatherEvents(
 
     // Log significant events (Cat 4-5 or high mortality)
     if (stormEvent.category >= 4 || stormEvent.totalMortality >= 1000) {
-      addSimulationEvent(
-        state,
-        `🌀💥 MAJOR STORM: Cat ${stormEvent.category} hits ${stormEvent.region}`,
-        {
+      addSimulationEvent(state, {
+        type: 'crisis',
+        severity: 'critical',
+        agent: 'environmental',
+        title: `🌀💥 MAJOR STORM: Cat ${stormEvent.category} hits ${stormEvent.region}`,
+        description: `Category ${stormEvent.category} storm, ${Math.round(stormEvent.population * 1_000_000).toLocaleString()} exposed, ${Math.round(stormEvent.totalMortality).toLocaleString()} deaths`,
+        effects: {
           category: stormEvent.category,
           region: stormEvent.region,
           population: stormEvent.population,
@@ -466,7 +469,7 @@ export function updateExtremeWeatherEvents(
           duration: stormEvent.durationDays,
           infrastructureGap: 1.0 - selectedRegion.infrastructureCapacity
         }
-      );
+      });
     }
   }
 }

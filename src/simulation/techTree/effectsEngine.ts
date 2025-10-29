@@ -2071,6 +2071,168 @@ function applyRegionalEffects(
           }
           break;
 
+        // ========== CATASTROPHIC TECH FAILURES → MORTALITY INTEGRATION ==========
+        // FIX: CRITICAL issue #1 from architecture review (Oct 28, 2025)
+        // Tech tree catastrophic failures now route to Bayesian mortality system
+
+        case 'geoengDisasterRisk':
+          // Geoengineering catastrophe: monsoon disruption → crop failure → famine
+          // Research: Robock et al. (2008) - SAI could reduce Asian monsoon precip by 20%
+          // This effect triggers MONTHLY mortality risk during deployment
+          if (value > 0) {
+            const { addMortalityRisk } = require('../bayesianMortality');
+
+            // Risk scales with deployment level (value represents monthly risk)
+            // Only add risk if significant (>0.001 = 0.1% monthly death rate)
+            const monthlyRisk = assertFinite(value * 0.01, {  // Scale: 1.0 effect = 1% monthly risk
+              location: 'applyGlobalEffects:geoengDisasterRisk',
+              valueName: 'monthlyRisk',
+              month: gameState.currentMonth,
+              additionalInfo: { effectValue: value }
+            });
+
+            if (monthlyRisk > 0.001) {
+              addMortalityRisk(gameState.humanPopulationSystem, {
+                type: 'famine',
+                baseRisk: monthlyRisk,
+                proximate: 'famine',
+                root: 'climate',
+                confidence: 'MEDIUM',  // Geoeng effects uncertain
+                scope: 'REGIONAL',
+                region: 'South Asia',  // Monsoon-dependent regions most affected
+                exposedFraction: 0.25,  // ~25% of global population in monsoon regions
+                month: gameState.currentMonth,
+                description: `🌍 Geoengineering disaster: monsoon disruption from stratospheric aerosols`
+              });
+
+              console.log(`  🌍❌ Geoengineering disaster mortality: ${(monthlyRisk * 100).toFixed(3)}% base risk (South Asia monsoon disruption)`);
+            }
+          }
+          break;
+
+        case 'bioweaponRisk':
+          // Bioweapon deployment or accidental release → pandemic
+          // Research: Esvelt (2022) - engineered pathogens could cause 10-50% mortality
+          if (value > 0) {
+            const { addMortalityRisk } = require('../bayesianMortality');
+
+            const monthlyRisk = assertFinite(value * 0.02, {  // Higher multiplier - bioweapons very lethal
+              location: 'applyGlobalEffects:bioweaponRisk',
+              valueName: 'monthlyRisk',
+              month: gameState.currentMonth,
+              additionalInfo: { effectValue: value }
+            });
+
+            if (monthlyRisk > 0.001) {
+              addMortalityRisk(gameState.humanPopulationSystem, {
+                type: 'disease',
+                baseRisk: monthlyRisk,
+                proximate: 'disease',
+                root: 'alignment',  // AI-designed bioweapons
+                confidence: 'MEDIUM',
+                scope: 'GLOBAL',  // Pathogens spread globally
+                month: gameState.currentMonth,
+                description: `🦠 Bioweapon pandemic: engineered pathogen release`
+              });
+
+              console.log(`  🦠❌ Bioweapon pandemic mortality: ${(monthlyRisk * 100).toFixed(3)}% base risk (global)`);
+            }
+          }
+          break;
+
+        case 'geneDriveFailureRisk':
+          // Gene drive escape → ecosystem collapse → famine
+          // Research: Esvelt (2014) - gene drives can spread uncontrollably
+          if (value > 0) {
+            const { addMortalityRisk } = require('../bayesianMortality');
+
+            const monthlyRisk = assertFinite(value * 0.005, {  // Lower than bioweapons, slower cascade
+              location: 'applyGlobalEffects:geneDriveFailureRisk',
+              valueName: 'monthlyRisk',
+              month: gameState.currentMonth,
+              additionalInfo: { effectValue: value }
+            });
+
+            if (monthlyRisk > 0.001) {
+              addMortalityRisk(gameState.humanPopulationSystem, {
+                type: 'ecosystem',
+                baseRisk: monthlyRisk,
+                proximate: 'ecosystem',
+                root: 'ecosystem',  // Ecosystem collapse
+                confidence: 'LOW',  // Uncertain cascade effects
+                scope: 'SEMI-GLOBAL',  // Regional ecosystems collapse
+                exposedFraction: 0.40,  // 40% depend on affected ecosystems
+                month: gameState.currentMonth,
+                description: `🧬❌ Gene drive failure: uncontrolled ecosystem disruption`
+              });
+
+              console.log(`  🧬❌ Gene drive failure mortality: ${(monthlyRisk * 100).toFixed(3)}% base risk (ecosystem cascade)`);
+            }
+          }
+          break;
+
+        case 'nuclearAccidentRisk':
+          // Nuclear reactor/weapon accident → radiation deaths
+          // Research: Chernobyl (1986) - ~4000 long-term deaths, Fukushima (2011) minimal
+          if (value > 0) {
+            const { addMortalityRisk } = require('../bayesianMortality');
+
+            const monthlyRisk = assertFinite(value * 0.001, {  // Lower rate - accidents localized
+              location: 'applyGlobalEffects:nuclearAccidentRisk',
+              valueName: 'monthlyRisk',
+              month: gameState.currentMonth,
+              additionalInfo: { effectValue: value }
+            });
+
+            if (monthlyRisk > 0.0005) {  // Lower threshold for nuclear
+              addMortalityRisk(gameState.humanPopulationSystem, {
+                type: 'disaster',
+                baseRisk: monthlyRisk,
+                proximate: 'disasters',
+                root: 'natural',  // Accident, not intentional
+                confidence: 'HIGH',  // Well-studied (Chernobyl, Fukushima)
+                scope: 'REGIONAL',
+                region: 'accident site',
+                exposedFraction: 0.01,  // 1% local population affected
+                month: gameState.currentMonth,
+                description: `☢️❌ Nuclear accident: reactor meltdown or weapon mishap`
+              });
+
+              console.log(`  ☢️❌ Nuclear accident mortality: ${(monthlyRisk * 100).toFixed(4)}% base risk (localized)`);
+            }
+          }
+          break;
+
+        case 'nanoDisasterRisk':
+          // Nanotechnology runaway (grey goo) → catastrophic deaths
+          // Research: Drexler (1986), Freitas (2000) - speculative but existential
+          if (value > 0) {
+            const { addMortalityRisk } = require('../bayesianMortality');
+
+            const monthlyRisk = assertFinite(value * 0.10, {  // Extremely high if triggered
+              location: 'applyGlobalEffects:nanoDisasterRisk',
+              valueName: 'monthlyRisk',
+              month: gameState.currentMonth,
+              additionalInfo: { effectValue: value }
+            });
+
+            if (monthlyRisk > 0.001) {
+              addMortalityRisk(gameState.humanPopulationSystem, {
+                type: 'disaster',
+                baseRisk: monthlyRisk,
+                proximate: 'other',  // Novel failure mode
+                root: 'alignment',  // AI-designed nanotech
+                confidence: 'LOW',  // Speculative scenario
+                scope: 'GLOBAL',  // Self-replicating = global spread
+                month: gameState.currentMonth,
+                description: `⚛️❌ Nanotechnology disaster: uncontrolled replication (grey goo)`
+              });
+
+              console.log(`  ⚛️❌ Nanotechnology disaster mortality: ${(monthlyRisk * 100).toFixed(2)}% base risk (GLOBAL)`);
+            }
+          }
+          break;
+
         case 'emergencyOnly':
           // Mark technology as emergency-only (should only activate under crisis conditions)
           // Used for risky geoengineering like stratospheric aerosols

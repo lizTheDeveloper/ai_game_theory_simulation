@@ -87,6 +87,8 @@
 🚀 | Tech deployment started
 ✅ | Tech deployment complete
 🎆 | Positive cascade
+♻️ | Tech recovery/remediation
+🧪 | Experimental tech/testing
 
 # Economic & Social Events
 💸 | Economic collapse

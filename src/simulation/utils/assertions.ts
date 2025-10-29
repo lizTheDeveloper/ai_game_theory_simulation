@@ -8,7 +8,7 @@
  * that's a BUG that needs fixing, not a value that needs replacing.
  */
 
-import type { GameState } from '@/types/game';
+import type { GameState, PhaseContext } from '@/types/game';
 
 /**
  * Assert a number is finite (not NaN, not Infinity, not -Infinity)
@@ -407,5 +407,160 @@ export function assertRegionalConsistency(state: GameState): void {
         `   Month:        ${state.currentMonth}`
       );
     }
+  }
+}
+
+/**
+ * Assert Phase Dependency (Oct 28, 2025)
+ *
+ * Prevents race conditions where phases read/write state in wrong order.
+ * Validates that a required phase has already executed this step.
+ *
+ * Use case: Phases that depend on Bayesian mortality resolution must run AFTER it.
+ *
+ * @example
+ * // In a phase that modifies population after mortality resolution
+ * assertPhaseDependency(context, 'bayesian_mortality_resolution', {
+ *   currentPhase: 'regional_population_update',
+ *   reason: 'Must not overwrite mortality-adjusted population',
+ *   month: state.currentMonth
+ * });
+ *
+ * @param context - Phase context with executedPhases set
+ * @param requiredPhaseId - ID of phase that must have executed
+ * @param info - Additional context for error message
+ * @throws Error if dependency not met
+ */
+export function assertPhaseDependency(
+  context: PhaseContext,
+  requiredPhaseId: string,
+  info: {
+    currentPhase: string;
+    reason: string;
+    month?: number;
+  }
+): void {
+  if (!context.executedPhases.has(requiredPhaseId)) {
+    throw new Error(
+      `❌ PHASE DEPENDENCY VIOLATION: ${info.currentPhase}\n` +
+      `   Required phase: ${requiredPhaseId}\n` +
+      `   Reason: ${info.reason}\n` +
+      (info.month !== undefined ? `   Month: ${info.month}\n` : '') +
+      `\n` +
+      `   The phase '${info.currentPhase}' depends on '${requiredPhaseId}' executing first,\n` +
+      `   but that phase has not run yet this step.\n` +
+      `\n` +
+      `   Executed phases so far: ${Array.from(context.executedPhases).join(', ')}\n` +
+      `\n` +
+      `   Fix: Either declare dependency in phase definition or adjust phase order.`
+    );
+  }
+}
+
+/**
+ * Assert No Phase Has Executed (Oct 28, 2025)
+ *
+ * Validates that a potentially conflicting phase has NOT executed yet.
+ * Used to detect ordering violations where a later phase would overwrite results.
+ *
+ * Use case: Bayesian mortality phase checks that no population-modifying phase ran before it.
+ *
+ * @example
+ * // In BayesianMortalityResolutionPhase.execute()
+ * assertPhaseNotExecuted(context, 'regional_population_update', {
+ *   currentPhase: 'bayesian_mortality_resolution',
+ *   reason: 'Population modifications must happen AFTER mortality resolution',
+ *   month: state.currentMonth
+ * });
+ *
+ * @param context - Phase context with executedPhases set
+ * @param prohibitedPhaseId - ID of phase that must NOT have executed
+ * @param info - Additional context for error message
+ * @throws Error if prohibited phase has executed
+ */
+export function assertPhaseNotExecuted(
+  context: PhaseContext,
+  prohibitedPhaseId: string,
+  info: {
+    currentPhase: string;
+    reason: string;
+    month?: number;
+  }
+): void {
+  if (context.executedPhases.has(prohibitedPhaseId)) {
+    throw new Error(
+      `❌ PHASE ORDERING VIOLATION: ${info.currentPhase}\n` +
+      `   Prohibited phase already executed: ${prohibitedPhaseId}\n` +
+      `   Reason: ${info.reason}\n` +
+      (info.month !== undefined ? `   Month: ${info.month}\n` : '') +
+      `\n` +
+      `   The phase '${prohibitedPhaseId}' has already executed this step, but\n` +
+      `   '${info.currentPhase}' must run BEFORE it to prevent data corruption.\n` +
+      `\n` +
+      `   Executed phases: ${Array.from(context.executedPhases).join(', ')}\n` +
+      `\n` +
+      `   Fix: Adjust phase order numbers so '${info.currentPhase}' runs first.`
+    );
+  }
+}
+
+/**
+ * Assert State Field Not Modified (Oct 28, 2025)
+ *
+ * Validates that a state field still has its expected value (not overwritten by another phase).
+ * Used to detect silent data corruption from race conditions.
+ *
+ * @example
+ * // After Bayesian mortality resolution, check population wasn't overwritten
+ * const expectedPop = state.humanPopulationSystem.population;
+ * // ... later in the same step, after other phases ...
+ * assertStateFieldNotModified(
+ *   state.humanPopulationSystem.population,
+ *   expectedPop,
+ *   {
+ *     fieldPath: 'humanPopulationSystem.population',
+ *     lastModifiedBy: 'bayesian_mortality_resolution',
+ *     suspectedCulprit: 'regional_population_update',
+ *     month: state.currentMonth
+ *   }
+ * );
+ *
+ * @param currentValue - Current value of the field
+ * @param expectedValue - Value set by authoritative phase
+ * @param info - Additional context
+ * @throws Error if values don't match (silent overwrite detected)
+ */
+export function assertStateFieldNotModified(
+  currentValue: number,
+  expectedValue: number,
+  info: {
+    fieldPath: string;
+    lastModifiedBy: string;
+    suspectedCulprit?: string;
+    month?: number;
+    tolerance?: number;  // For floating point comparison
+  }
+): void {
+  const tolerance = info.tolerance ?? 0.000001;
+  const diff = Math.abs(currentValue - expectedValue);
+
+  if (diff > tolerance) {
+    throw new Error(
+      `❌ STATE FIELD OVERWRITE DETECTED: ${info.fieldPath}\n` +
+      `   Expected value: ${expectedValue}\n` +
+      `   Current value:  ${currentValue}\n` +
+      `   Difference:     ${diff}\n` +
+      `   Last modified by: ${info.lastModifiedBy}\n` +
+      (info.suspectedCulprit ? `   Suspected culprit: ${info.suspectedCulprit}\n` : '') +
+      (info.month !== undefined ? `   Month: ${info.month}\n` : '') +
+      `\n` +
+      `   This field was set by '${info.lastModifiedBy}' but has been silently\n` +
+      `   overwritten by another phase. This is a race condition bug.\n` +
+      `\n` +
+      `   Fix: The later phase should either:\n` +
+      `   1. Declare dependency on '${info.lastModifiedBy}' and read its result\n` +
+      `   2. Have its order adjusted to run BEFORE '${info.lastModifiedBy}'\n` +
+      `   3. Not modify this field at all (if it's authoritative elsewhere)`
+    );
   }
 }

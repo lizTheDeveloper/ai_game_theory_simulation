@@ -19,6 +19,13 @@
 
 **🚧 Active Work:**
 - 🔴 CRITICAL: Systematic Citation Verification Crisis (20-40h) - 965 citations, 23% fabrication rate
+- ✅ COMPLETE: Architecture Review + 3 CRITICAL Fixes (Oct 28-29, 2025) - See reviews/integration-architecture-review_20251028.md
+
+**Recently Completed (Oct 29, 2025):**
+- ✅ CRITICAL #1: Tech Tree → Mortality Integration (8h) - Tech catastrophic failures now route to Bayesian mortality
+- ✅ CRITICAL #2: AI Suffering → Paradigm Circular Dependency Prevention (3h) - Defensive architecture + runtime assertions
+- ✅ CRITICAL #3: Phase Ordering Race Condition Prevention (6h) - Phase dependency system + assertions
+- ✅ Architecture Review: 28 issues identified (3 CRITICAL, 8 HIGH, 12 MEDIUM, 5 LOW)
 
 **Next Priorities:**
 1. **🔴 CRITICAL:** Systematic Citation Verification & Re-grounding (20-40h) - BLOCKING all other work
@@ -26,12 +33,23 @@
    - Expected ~220 fabrications (23% rate from sample)
    - Core mechanics contaminated: AI infrastructure, government response, climate mortality
    - Strategy: Triage by priority, conservative defaults, systematic replacement
-2. **MEDIUM:** Climate Mortality Implementation (8-12h) - Research complete, ready for implementation
-3. **MEDIUM:** Policy System Improvements (remaining 2 sections, 7-8h)
-4. **LOW:** P3 Enhancements (37-48h)
-5. **LOW:** TIER 5 Features (46h)
 
-**Total Remaining Effort:** ~110-150 hours (including citation verification)
+2. **🟠 HIGH (from Architecture Review):** 8 integration issues (48-72h total)
+   - Climate → Famine → Mortality cascade coordination (12-16h)
+   - Tech deployment timescales + emergency response (6-8h)
+   - AI collective formation → government detection (4-6h)
+   - Multi-paradigm DUI component breakdown (8-12h)
+   - Population units type safety (12-16h)
+   - Planetary boundaries recovery + tech effects (6-8h)
+   - AI resentment recovery + policy (8-12h)
+   - Nuclear winter → agriculture recovery feedback (4-6h)
+
+3. **MEDIUM:** Climate Mortality Implementation (8-12h) - Research complete, ready for implementation
+4. **MEDIUM:** Policy System Improvements (remaining 2 sections, 7-8h)
+5. **LOW:** P3 Enhancements (37-48h)
+6. **LOW:** TIER 5 Features (46h)
+
+**Total Remaining Effort:** ~160-230 hours (including citation verification + HIGH priority integration fixes)
 
 ---
 
@@ -97,8 +115,8 @@
 
 **Phase 1: Triage & Prioritize (2-4h)**
 1. ✅ Identify all 965 "et al." citations
-2. Flag high-risk patterns:
-   - Round numbers (X00-Y00)
+2. ✅ Flag high-risk patterns (Oct 29 consensus):
+   - **Round numbers (X00-Y00)** ← 100% fabrication rate validated
    - Pre-2015 AI-specific claims
    - Think tank/working papers (hardest to verify)
    - Adjacent to known fabrications
@@ -107,6 +125,10 @@
    - HIGH: Breakthrough effectiveness, government response
    - MEDIUM: Secondary mechanics
    - LOW: Background context
+4. 🆕 Quick wins from Oct 29 consensus:
+   - Correct Richardson citation count: "15,000+" → ~1,450
+   - Add note to Rogers: Cumulative editions vs. edition-specific
+   - Strike anachronistic AI claims from 2005-2009 healthcare papers
 
 **Phase 2: Core Mechanics Verification (8-12h)**
 1. Verify citations for CRITICAL mechanics first
@@ -121,7 +143,14 @@
 3. Document uncertainty for unverifiable claims
 4. Flag for future research
 
-**Phase 4: Parameter Re-grounding (2-8h)**
+**Phase 4: Code Audit & Impact Analysis (2-4h)**
+🆕 From Oct 29 consensus - REMAINING UNCERTAINTIES #4:
+1. Search codebase for uses of fabricated metrics
+2. Identify which parameters are affected
+3. Test impact: Do corrected values (e.g., 100× lower water use) change outcomes?
+4. Document affected systems
+
+**Phase 5: Parameter Re-grounding (2-8h)**
 1. Update simulation code with verified parameters
 2. Document assumption changes
 3. Run Monte Carlo sensitivity analysis
@@ -135,17 +164,36 @@ When research is unverified or unavailable:
 3. Add ±50% variance to Monte Carlo runs
 4. Flag for future verification
 
-**📄 COMPLETED (Oct 28, 2025):**
+**📄 COMPLETED (Oct 28-29, 2025):**
 - ✅ Initial 6-fabrication tactical fix (wiki + code)
 - ✅ Citation verification protocol: `docs/CITATION_VERIFICATION_PROTOCOL.md`
 - ✅ Fabrication pattern documentation: `research/FABRICATED_CITATIONS_NEED_REAL_RESEARCH.md`
+- ✅ Oct 29 consensus: Round number syndrome validated (100% fabrication rate)
+
+**📋 NEW POLICIES NEEDED (From Oct 29 Consensus):**
+
+**1. Derived Metrics Policy (HIGH PRIORITY)**
+Decision needed: How to handle per-hour/per-run calculations from total values?
+- Option A: Calculate with documented assumptions (simulation needs granularity)
+- Option B: Only use metrics directly stated in papers (more conservative)
+- **Trade-off:** Granularity vs. uncertainty
+- **Action:** Document policy in `docs/RESEARCH_STANDARDS.md`
+
+**2. Citation Methodology Standards**
+Questions raised by consensus:
+- When is citing "all editions combined" acceptable vs. misleading?
+- How to distinguish foundational theory citations vs. quantitative claims?
+- Different standards for different citation types?
+- **Action:** Add section to `docs/RESEARCH_STANDARDS.md`
 
 **⏱️ ESTIMATED TIME:**
 - Triage: 2-4h
 - Core mechanics: 8-12h
 - Corpus audit: 8-16h
 - Parameter updates: 2-8h
-- **Total: 20-40 hours**
+- Policy documentation: 2-3h (derived metrics, citation standards)
+- Code audit & impact analysis: 2-4h (find fabricated metric uses, test outcome changes)
+- **Total: 24-47 hours**
 
 **🎯 SUCCESS CRITERIA:**
 - All CRITICAL mechanics verified or conservatively grounded

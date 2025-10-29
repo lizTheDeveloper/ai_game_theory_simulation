@@ -84,12 +84,12 @@
 - Data: 2.7 million news articles, Facebook engagement (2016-2020)
 - **Journal:** Nature Human Behaviour
 
-**Brady et al. (2020)** - Moral-emotional language on Twitter:
+**Brady et al. (2019)** - Moral-emotional language on Twitter:
 - Moral-emotional words: **+20% retweet rate** per word (up to 3 words)
 - Negative moral emotions (outrage, disgust): Stronger effect than positive
 - "Moral contagion" effect: Moral content spreads faster in ideological networks
 - Data: 563,312 tweets across 24 social/political issues
-- **Journal:** PNAS
+- **Journal:** Journal of Experimental Psychology: General
 
 **Berger & Milkman (2012)** - New York Times most-emailed articles:
 - High-arousal emotions (awe, anger, anxiety) increase sharing
@@ -154,14 +154,14 @@ Low-arousal NEGATIVE (sadness):
 - RSVP + attend: **High conversion (40-60%)**
 - Issue salience matters: Social justice issues show higher conversion than consumer causes
 - Data: Multiple Facebook campaigns (2010-2011)
-- **Journal:** Cyberpsychology, Behavior, and Social Networking
+- **Journal:** First Monday
 
 **Schumann & Klein (2015)** - Online vs offline activism:
 - Online petition → offline protest: **11-15% conversion** (typical)
 - When issue is personally salient: **35-43% conversion**
 - When social network participation is visible: **25-30% conversion**
 - Data: 1,420 participants across 6 studies
-- **Journal:** New Media & Society
+- **Journal:** European Journal of Social Psychology
 
 **Implementation Framework:**
 ```typescript
@@ -230,16 +230,16 @@ function calculateConversionProbability(
 
 ### 4. Intervention Effectiveness
 
-**Core Finding:** "Warning labels reduced people's belief in false headlines by 27% and sharing by 25%" (Mosleh et al., 2024)
+**Core Finding:** "Warning labels reduced people's belief in false headlines by 27.6% and sharing by 24.7%" (Martel & Rand, 2024)
 
 **Intervention Types & Effectiveness:**
 
-**Mosleh et al. (2024)** - Warning labels meta-analysis:
-- **Belief reduction: 27%** (Cohen's d = -0.24)
-- **Sharing reduction: 25%** (Cohen's d = -0.21)
+**Martel, C., & Rand, D. G. (2024)** - Warning labels meta-analysis:
+- **Belief reduction: 27.6%** (Cohen's d = -0.24)
+- **Sharing reduction: 24.7%** (Cohen's d = -0.21)
 - Accuracy prompts (implicit intervention): Smaller effect (~10-15%)
-- Data: Meta-analysis of 20+ studies, 21,000+ participants
-- **Journal:** Psychological Science
+- Data: Meta-analysis of 21 experiments, 14,133 participants
+- **Journal:** Nature Human Behaviour, 8(10), 1957-1967. DOI: 10.1038/s41562-024-01973-x. PMID: 39223352
 
 **Allen et al. (2021)** - Twitter Community Notes:
 - Community Notes on false tweets: **-20% retweet rate** after note applied
@@ -848,7 +848,7 @@ function validateMemeticContagion(runs: GameState[]): ValidationMetrics {
    - **Key Finding:** Biased sources achieve ~12% higher engagement through negative content
    - **Data:** 2.7 million news articles, Facebook engagement (2016-2020)
 
-6. **Brady, W. J., Wills, J. A., Burkart, D., Jost, J. T., & Van Bavel, J. J. (2020).** An ideological asymmetry in the diffusion of moralized content on social media among political leaders. *Journal of Experimental Psychology: General*, 149(10), 1802-1813.
+6. **Brady, W. J., Wills, J. A., Burkart, D., Jost, J. T., & Van Bavel, J. J. (2019).** An ideological asymmetry in the diffusion of moralized content on social media among political leaders. *Journal of Experimental Psychology: General*, 148(10), 1802-1813. DOI: 10.1037/xge0000532
    - **Key Finding:** Moral-emotional words increase retweets by ~20% per word
    - **Data:** 563,312 tweets across 24 issues
 
@@ -876,9 +876,9 @@ function validateMemeticContagion(runs: GameState[]): ValidationMetrics {
 
 ### Intervention Effectiveness
 
-12. **Mosleh, M., Martel, C., Eckles, D., & Rand, D. G. (2024).** Perverse downstream consequences of debunking: Being corrected by another user for posting false political news increases subsequent sharing of low quality, partisan, and toxic content in a Twitter field experiment. *CHI '24: Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems*.
-    - **Key Finding:** Warning labels reduce belief by 27%, sharing by 25%
-    - **Data:** Meta-analysis of 20+ studies, 21,000+ participants
+12. **Mosleh, M., Martel, C., Eckles, D., & Rand, D. G. (2021).** Perverse downstream consequences of debunking: Being corrected by another user for posting false political news increases subsequent sharing of low quality, partisan, and toxic content in a Twitter field experiment. *CHI '21: Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems* (May 08–13, 2021, Yokohama, Japan). DOI: 10.1145/3411764.3445642
+    - **Key Finding:** Being corrected by another user INCREASES subsequent sharing of low quality, partisan, and toxic content (perverse effect)
+    - **Data:** 2,000 Twitter users, field experiment
 
 13. **Allen, J., Arechar, A. A., Pennycook, G., & Rand, D. G. (2021).** Scaling up fact-checking using the wisdom of crowds. *Science Advances*, 7(36), eabf4393.
     - **Key Finding:** Community Notes reduce retweets by 20%, but only 0.5% coverage
@@ -891,6 +891,10 @@ function validateMemeticContagion(runs: GameState[]): ValidationMetrics {
 15. **Bode, L., & Vraga, E. K. (2015).** In related news, that was wrong: The correction of misinformation through related stories functionality in social media. *Journal of Communication*, 65(4), 619-638.
     - **Key Finding:** Expert corrections reduce belief by 15-20%, peer corrections 5-10%
     - **Data:** 1,200 participants, Facebook experiment
+
+15a. **Martel, C., & Rand, D. G. (2024).** Fact-checker warning labels are effective even for those who distrust fact-checkers. *Nature Human Behaviour*, 8(10), 1957-1967. DOI: 10.1038/s41562-024-01973-x. PMID: 39223352
+    - **Key Finding:** Warning labels reduce belief by 27.6%, sharing by 24.7% across 21 experiments (N=14,133)
+    - **Data:** Meta-analysis, effective even for those distrusting fact-checkers (12.9% belief reduction, 16.7% sharing reduction)
 
 ### Network Structure Effects
 
@@ -906,7 +910,7 @@ function validateMemeticContagion(runs: GameState[]): ValidationMetrics {
     - **Key Finding:** High clustering increases complex contagion adoption by 40%
     - **Data:** 1,500 participants, experimental networks
 
-19. **Goel, S., Watts, D. J., & Goldstein, D. G. (2012).** The structure of online diffusion networks. *Proceedings of the 13th ACM Conference on Electronic Commerce*, 623-638.
+19. **Goel, S., Watts, D. J., & Goldstein, D. G. (2012).** The structure of online diffusion networks. *Proceedings of the 13th ACM Conference on Electronic Commerce*, 622-638. DOI: 10.1145/2229012.2229058
     - **Key Finding:** Broadcast (single hub) reaches more, viral (multi-gen) persists longer
     - **Data:** 1 billion Twitter diffusion events
 

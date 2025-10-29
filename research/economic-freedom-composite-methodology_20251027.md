@@ -534,7 +534,7 @@ Check if paradigm divergence patterns change significantly.
 4. **Social Indicators Research (2024).** "Aggregating the Human Development Index: A Non-compensatory Approach." https://link.springer.com/article/10.1007/s11205-024-03318-7
    - Geometric mean superior to arithmetic for reducing compensability, UN HDI shifted for this reason
 
-5. **Social Indicators Research (2016/2024).** "Measuring Economic Freedom: Better Without Size of Government." https://link.springer.com/article/10.1007/s11205-016-1508-x
+5. **Social Indicators Research (2018).** Ott, J. "Measuring Economic Freedom: Better Without Size of Government." Volume 135(2), 479-498. DOI: 10.1007/s11205-016-1508-x. (Published online November 30, 2016; print 2018)
    - Selective omission can improve validity, Cronbach alpha 0.7 acceptable / 0.8 good
 
 6. **Stanford Encyclopedia of Philosophy.** "The Capability Approach." https://plato.stanford.edu/entries/capability-approach/

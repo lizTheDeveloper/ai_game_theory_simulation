@@ -11,13 +11,23 @@
  * 4. Update deathsByCategory and deathsByRootCause automatically
  * 5. Clear mortalityRisks array for next month
  *
+ * ⚠️ CRITICAL: This phase is the AUTHORITATIVE source for population after mortality.
+ * NO phase should modify humanPopulationSystem.population after this phase runs.
+ * Phases that need population updates must run BEFORE this phase (order < 35.0).
+ *
  * Research: /research/mortality_caps_historical_data_20251027.md (21 sources)
  * Date: October 27, 2025
  * Order: 35.0 (after all crisis phases 15-34, before outcomes 35.5+)
+ *
+ * Architecture Note (Oct 28, 2025):
+ * CountryPopulationPhase was deleted because it ran AFTER this phase and overwrote
+ * mortality-adjusted population values, causing silent data corruption. This phase
+ * dependency system prevents that pattern from recurring.
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
 import { resolveMortality } from '@/simulation/bayesianMortality';
+import { assertPhaseNotExecuted } from '@/simulation/utils/assertions';
 
 export class BayesianMortalityResolutionPhase implements SimulationPhase {
   readonly id = 'bayesian_mortality_resolution';
@@ -26,6 +36,24 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events = [];
+
+    // PHASE DEPENDENCY SAFEGUARD (Oct 28, 2025)
+    // This phase is the authoritative source for population after mortality.
+    // Verify that no population-modifying phases ran after us in a previous bug.
+    // (These phases don't exist currently, but this prevents future regressions)
+    const prohibitedPhases = [
+      'country_population_update',  // Deleted Oct 28, 2025 - was causing race condition
+      'regional_population_reconciliation',  // Hypothetical future phase
+      'population_correction'  // Another hypothetical
+    ];
+
+    for (const phaseId of prohibitedPhases) {
+      assertPhaseNotExecuted(context, phaseId, {
+        currentPhase: this.id,
+        reason: 'Population modifications must happen BEFORE mortality resolution',
+        month: state.currentMonth
+      });
+    }
 
     // Check if Bayesian mortality system is enabled
     if (!state.humanPopulationSystem?.mortalityRisks) {
@@ -100,6 +128,15 @@ export class BayesianMortalityResolutionPhase implements SimulationPhase {
         }
       }
     }
+
+    // STORE AUTHORITATIVE POPULATION VALUE (Oct 28, 2025)
+    // Store the mortality-adjusted population in context so later phases can validate
+    // they aren't accidentally overwriting it
+    const mortalityAdjustedPopulation = state.humanPopulationSystem.population;
+    context.data.set('mortality_adjusted_population', mortalityAdjustedPopulation);
+
+    // Mark that mortality has been resolved this month
+    context.data.set('bayesian_mortality_resolved', true);
 
     return { events };
   }

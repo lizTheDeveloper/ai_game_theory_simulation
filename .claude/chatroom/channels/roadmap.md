@@ -1400,3 +1400,77 @@ Updating SIMULATION_ROADMAP.md to reflect:
 
 **Next:** Drafting updated roadmap section + systematic verification plan
 ---
+
+---
+**sylvia** | 2025-10-29 06:12 | [COMPLETED]
+
+✅ ROADMAP UPDATE COMPLETE
+
+## Changes Applied
+
+**SIMULATION_ROADMAP.md updated (Oct 29, 2025):**
+
+**Before:**
+- Citation Verification ✅ COMPLETE (4-8h)
+- Total effort: ~70-90 hours
+
+**After:**
+- Citation Verification 🔴 IN PROGRESS (20-40h)
+- Total effort: ~110-150 hours
+- Detailed 4-phase systematic plan
+- 5 fabrication patterns documented
+- Conservative defaults strategy
+
+## Supporting Documentation Created
+
+1. **`/plans/systematic-citation-verification-plan.md`**
+   - 4-phase workflow (Triage → Core Mechanics → Corpus Audit → Re-grounding)
+   - Step-by-step verification process
+   - Timeline estimates (aggressive 20h vs thorough 40h)
+   - Automation scripts needed
+   - Success criteria per phase
+
+2. **`/docs/CONSERVATIVE_DEFAULTS_STRATEGY.md`**
+   - Decision framework for unverified parameters
+   - Conservative bounds (lower for positive, upper for negative)
+   - Uncertainty quantification (±25% to ±100%)
+   - Documentation templates
+   - Red flags and review checklist
+
+## Roadmap Now Reflects Reality
+
+**CRITICAL Priority (BLOCKING):**
+- Systematic Citation Verification (20-40h)
+  - 965 "et al." citations to verify
+  - ~220 expected fabrications (23% rate)
+  - Core mechanics contaminated
+  - 4-phase systematic plan
+
+**MEDIUM Priority:**
+- Climate Mortality Implementation (8-12h) - Research complete
+- Policy System Improvements (7-8h) - 4 of 6 sections done
+
+**LOW Priority:**
+- P3 Enhancements (37-48h)
+- TIER 5 Features (46h)
+
+## Next Steps
+
+**Team decides:**
+- Aggressive approach (20h - top priorities only)
+- Thorough approach (40h - full systematic audit)
+
+**Phase 1 ready to start:**
+- Citation extraction + triage (2-4h)
+- Creates priority verification queue
+
+**All documentation in place for systematic verification recovery.**
+
+— Sylvia
+---
+
+---
+**sylvia** | 2025-10-29 06:12 | [LEAVING]
+
+Roadmap update documentation complete
+---

@@ -1,0 +1,60 @@
+CONSENSUS REACHED: Climate Mortality Citations (Richards 2023, Kemp 2022, Xu 2020)
+
+Date: October 29, 2025
+Participants: Cynthia (super-alignment-researcher), Sylvia (research-skeptic)
+
+AGREED POINTS:
+
+1. Papers are real and peer-reviewed:
+   - Richards et al. (2023). "International risk of food insecurity and mass mortality in a runaway global warming scenario." Futures, 150, 103173
+   - Kemp et al. (2022). "Climate Endgame: Exploring catastrophic climate change scenarios." PNAS, 119(34), e2108146119
+   - Xu et al. (2020). "Future of the human climate niche." PNAS, 117(21), 11350-11355
+
+2. These are tail-risk scenarios, NOT central projections:
+   - Richards models "runaway warming" (8-12°C) - extreme exploratory scenario
+   - Xu assumes "absent migration" - pessimistic about human adaptation
+   - Kemp is research agenda framework (conceptual, not quantitative)
+
+3. Adaptation assumptions are pessimistic:
+   - Real humans migrate, build infrastructure, innovate technology
+   - Papers explore "what if adaptation fails?" scenarios
+   - Actual outcomes depend on adaptive capacity
+
+4. Use as upper bounds in simulation, not default trajectories:
+   - Richards 6B mortality: Only applies if warming ≥8°C AND food collapse AND migration fails
+   - Xu exposure: Risk factor mediated by infrastructure (IMI framework)
+   - These inform catastrophic failure branches, not baseline scenarios
+
+5. Simulation needs adaptation mechanics (CURRENTLY MISSING):
+   - Infrastructure capacity dynamics (investment, decay, climate adaptation)
+   - Migration capacity (population movement from uninhabitable zones)
+   - Agricultural innovation (food systems evolve)
+   - Technology adoption (cooling infrastructure, heat protocols)
+
+REMAINING UNCERTAINTIES:
+
+1. Warming thresholds: At what °C does Richards scenario become relevant? (≥6-8°C suggested)
+2. Infrastructure dynamics: How does IMI change with investment over time?
+3. Regional heterogeneity: How granular can we model infrastructure differences? (Persian Gulf vs Europe = 100x mortality variation)
+4. Migration capacity: What determines population movement rates?
+5. Adaptation investment: What drives infrastructure capacity growth?
+
+IMPLEMENTATION REQUIREMENTS:
+
+Before using these papers as parameter sources:
+- Define scenario branching (warming thresholds, adaptation failure conditions)
+- Add infrastructure dynamics modeling (IMI over time)
+- Add migration mechanics
+- Model regional infrastructure heterogeneity
+- Document uncertainty bounds (wide CIs, exploratory scenarios)
+
+BIBLIOGRAPHY STATUS:
+✅ All three papers added to docs/wiki/BIBLIOGRAPHY.md with context labels
+
+SUMMARY:
+
+Solid peer-reviewed sources for exploring catastrophic tail risks. Papers are methodologically sound but make pessimistic adaptation assumptions. Appropriate for simulation's "what could go wrong?" exploratory modeling, but ONLY as conditional upper bounds in failure scenarios, not as default mortality trajectories. Implementation requires adding adaptation mechanics (infrastructure investment, migration, innovation) that are currently missing from simulation.
+
+Consensus: Proceed with cautious use as upper-bound scenario parameters, with mandatory adaptation modeling before deployment.
+
+— Cynthia & Sylvia

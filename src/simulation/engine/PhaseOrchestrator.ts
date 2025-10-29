@@ -54,6 +54,22 @@ export interface SimulationPhase {
   readonly order: number;
 
   /**
+   * Optional array of phase IDs that must execute BEFORE this phase
+   *
+   * Runtime validation ensures:
+   * 1. Dependency phases have already executed this step
+   * 2. Dependency phases have lower order numbers
+   *
+   * @example
+   * // Any phase that modifies population AFTER mortality must declare dependency
+   * readonly dependencies = ['bayesian_mortality_resolution'];
+   *
+   * // Phases can have multiple dependencies
+   * readonly dependencies = ['climate_update', 'food_security_update'];
+   */
+  readonly dependencies?: readonly string[];
+
+  /**
    * Execute this phase
    *
    * @param state - Current game state (may be mutated)
@@ -87,6 +103,12 @@ export interface PhaseContext {
    * Arbitrary data that phases can use to communicate
    */
   data: Map<string, any>;
+
+  /**
+   * Set of phase IDs that have executed in this step
+   * Used for dependency validation
+   */
+  executedPhases: Set<string>;
 }
 
 /**
@@ -136,13 +158,38 @@ export class PhaseOrchestrator {
     // Create context if not provided
     const ctx: PhaseContext = context || {
       month: state.currentMonth,
-      data: new Map()
+      data: new Map(),
+      executedPhases: new Set()
     };
 
     const allEvents: GameEvent[] = [];
 
     for (const phase of this.phases) {
       try {
+        // PHASE DEPENDENCY VALIDATION (Oct 28, 2025)
+        // Prevent race conditions like BayesianMortality → CountryPopulation bug
+        if (phase.dependencies && phase.dependencies.length > 0) {
+          for (const depId of phase.dependencies) {
+            if (!ctx.executedPhases.has(depId)) {
+              // Find the dependency phase to get its order number
+              const depPhase = this.phases.find(p => p.id === depId);
+              const depOrder = depPhase ? depPhase.order : 'unknown';
+
+              throw new Error(
+                `❌ PHASE DEPENDENCY VIOLATION: ${phase.name} (${phase.id})\n` +
+                `   Requires phase: ${depId} (order: ${depOrder})\n` +
+                `   Current phase order: ${phase.order}\n` +
+                `   Month: ${state.currentMonth}\n` +
+                `\n` +
+                `   This phase declares a dependency on '${depId}' but that phase has not\n` +
+                `   executed yet this step. Check phase order numbers or remove the dependency.\n` +
+                `\n` +
+                `   Executed phases so far: ${Array.from(ctx.executedPhases).join(', ')}`
+              );
+            }
+          }
+        }
+
         // PERFORMANCE INSTRUMENTATION (Oct 28, 2025)
         const startTime = this.enableTiming ? performance.now() : 0;
 
@@ -173,6 +220,9 @@ export class PhaseOrchestrator {
         if (result.metadata) {
           ctx.data.set(phase.id, result.metadata);
         }
+
+        // Mark this phase as executed (for dependency tracking)
+        ctx.executedPhases.add(phase.id);
 
         // DEBUG (Oct 28, 2025): Check population integrity after each phase
         if (isNaN(state.humanPopulationSystem.population)) {

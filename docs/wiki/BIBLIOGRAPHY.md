@@ -1,7 +1,7 @@
 # Bibliography - AI Alignment Simulation Research Citations
 
-**Last Updated**: October 20, 2025
-**Total Sources**: 156+ peer-reviewed citations
+**Last Updated**: October 29, 2025
+**Total Sources**: 159+ peer-reviewed citations
 **Coverage**: 11 academic disciplines
 **Recency**: 85% from 2020-2025, 60% from 2024-2025
 
@@ -289,6 +289,35 @@ This bibliography documents all peer-reviewed research, official datasets, and a
 
 **Lancet (2022).** Global burden of bacterial antimicrobial resistance.
 - **Confidence**: HIGH (systematic review, 204 countries)
+
+### Climate-Related Mortality & Heat Exposure
+
+**Richards, C. E., Gauch, H. L., & Allwood, J. M. (2023).** International risk of food insecurity and mass mortality in a runaway global warming scenario. *Futures*, 150, 103173.
+- **DOI**: https://doi.org/10.1016/j.futures.2023.103173
+- **Used for**: Catastrophic mortality projections under extreme warming scenarios
+- **Key finding**: Simulation of ~8-12°C+ warming shows ~6 billion deaths from starvation by 2100 (75-year timeline)
+- **Mechanism**: Food production collapse under runaway global warming
+- **Confidence**: HIGH (peer-reviewed, open access, builds on World3 model)
+- **Note**: Represents worst-case scenario (~12°C warming), not mainstream projection (~2-4.9°C)
+
+**Kemp, L., Xu, C., Depledge, J., Ebi, K. L., Gibbins, G., Kohler, T. A., Rockström, J., Scheffer, M., Schellnhuber, H. J., Steffen, W., & Lenton, T. M. (2022).** Climate Endgame: Exploring catastrophic climate change scenarios. *Proceedings of the National Academy of Sciences*, 119(34), e2108146119.
+- **DOI**: https://doi.org/10.1073/pnas.2108146119
+- **PMID**: 35914185
+- **Used for**: Framework for catastrophic climate risk assessment
+- **Key finding**: "Four horsemen" of climate endgame (famine, extreme weather, conflict, vector-borne disease)
+- **Threshold**: Sets 3°C+ warming as marker for extreme climate change scenarios
+- **Figure 1**: Population overlap with extreme heat (>29°C mean annual temperature around 2070)
+- **Confidence**: HIGH (11 authors, PNAS, comprehensive review)
+- **Note**: Calls for research agenda on worst-case climate outcomes
+
+**Xu, C., Kohler, T. A., Lenton, T. M., Svenning, J.-C., & Scheffer, M. (2020).** Future of the human climate niche. *Proceedings of the National Academy of Sciences*, 117(21), 11350-11355.
+- **DOI**: https://doi.org/10.1073/pnas.1910114117
+- **Used for**: Human exposure to extreme heat, climate niche displacement
+- **Key finding**: 1-3 billion people projected to be left outside historical "human climate niche" over next 50 years
+- **Heat threshold**: One third of population could experience mean annual temperature >29°C by 2070 (currently 0.8% of land surface)
+- **Population projection**: 3.5 billion in 29°C+ zones by 2070 (SSP3 scenario, absent migration)
+- **Confidence**: HIGH (PNAS, cited by Kemp et al. 2022 and Lenton et al. 2023)
+- **Note**: Defines "human climate niche" as historically conserved temperature range (~13°C mean)
 
 ### Trauma & Recovery
 

@@ -23,7 +23,7 @@ export class GovernmentResponsePhase implements SimulationPhase {
   readonly order = 25.0;
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map() };
+    const defaultContext: PhaseContext = { month: state.currentMonth, data: new Map(), executedPhases: new Set() };
     return executeGovernmentResponsePhase(state, rng, context || defaultContext);
   }
 }
