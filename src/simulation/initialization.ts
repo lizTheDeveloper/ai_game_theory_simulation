@@ -1108,6 +1108,30 @@ export function createDefaultInitialState(
     updateFrontierCapabilities(state, ai);
   }
 
+  // MEDIUM-4 FIX (Oct 29, 2025): Validate floor/frontier relationship after initialization
+  // Ensures capabilityFloor <= frontierCapability (logical invariant)
+  const floor = state.aiEcosystem.capabilityFloor;
+  const frontier = state.aiEcosystem.frontierCapability;
+
+  if (floor > frontier) {
+    throw new Error(
+      `❌ INITIALIZATION ERROR: Capability floor (${floor.toFixed(3)}) exceeds frontier (${frontier.toFixed(3)})\n` +
+      `   This indicates a bug in frontier/floor calculation.\n` +
+      `   Check updateFrontierCapabilities() and profile scaling logic.`
+    );
+  }
+
+  // Validate new agents are within reasonable bounds (warning only, not error)
+  state.aiAgents.forEach(ai => {
+    const totalCap = calculateTotalCapabilityFromProfile(ai.capabilityProfile);
+    if (totalCap < floor * 0.9) {  // Allow 10% tolerance for rounding
+      console.warn(
+        `⚠️ WARNING: AI agent ${ai.id} capability (${totalCap.toFixed(3)}) significantly below floor (${floor.toFixed(3)})\n` +
+        `   This may indicate incorrect initialization scaling.`
+      );
+    }
+  });
+
   // Wrap with validation proxy in dev mode (zero overhead in production)
   return wrapStateForValidation(state);
 }
