@@ -1080,10 +1080,11 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 **Impact:** Large-scale AI deployment constrained by resource availability
 
 **Implementation:**
-- Water consumption: 500-700 liters per GPU-hour (Ren et al. 2024)
-- Energy demand: 300-400 kWh per training run (Patterson et al. 2022)
+- Water consumption: 0.86-6.6 L/GPU-hr depending on scope (Li et al. 2023 - arXiv:2304.03271)
+- Energy demand: Model-specific (GPT-3: 1,287 MWh) (Patterson et al. 2022)
 - Regional constraints: Data centers compete with agriculture, residential use
-- File: `src/simulation/aiInfrastructure.ts`, resource tracking
+- File: `src/simulation/aiInfrastructureResources.ts` (corrected Oct 19, 2025)
+- **Note**: ~~Previously used fabricated "500-700 L/GPU-hr" and "300-400 kWh/run"~~ - corrected Oct 29, 2025
 
 #### Fix #7: Trust Recovery Mechanics ✅
 
@@ -1141,9 +1142,10 @@ deploymentSpeed = baselineSpeed
 ```
 
 **AI Acceleration:** MAX 25% (not 40%)
-- Based on CFIR Framework: AI only helps 30-40% of organizational components
+- Implementation success shows high variance: 26% success, 74% fail (BCG/McKinsey 2024)
 - Regulation, culture, training constraints remain
 - Net effect: 15-25% overall acceleration
+- **Note**: ~~Previously cited Damschroder 2009 "30-40% AI-accelerable"~~ - anachronistic claim, paper never mentioned AI - corrected Oct 29, 2025
 
 **Technology Category Modifiers:**
 - Digital/AI safety: 0.3x (fast - EHR 10yr → 3-5yr with AI)
@@ -1163,11 +1165,12 @@ deploymentSpeed = baselineSpeed
 - 20% slow: 1.5x slower (obstacles, implementation failures)
 
 **Research Foundation:**
-- Fixsen et al. (2005): Full implementation takes 2-4 years (Implementation Science)
+- Fixsen et al. (2005): Full implementation takes 2-4 years (Implementation Science - organizational change framework)
 - Brynjolfsson (1993, 2000, 2017): Productivity paradox - 2-3 year lag
-- Damschroder et al. (2009): CFIR Framework - AI helps 30-40% of components
+- BCG/McKinsey (2024): AI implementation 26% success, 74% fail - high variance (NOT uniform 30-40%)
 - Prosci (2020, 2022): Change management - 5-7 years for major transformations
 - Historical case studies: Electrification 40 years, EHR 10 years, Cloud 8 years, COVID 20-25x faster
+- **Note**: ~~Previously cited Damschroder 2009/Fixsen 2005 for "AI helps 30-40%"~~ - both papers predate modern AI, never mentioned it - corrected Oct 29, 2025
 
 **Files:**
 - `src/simulation/techTree/deploymentSpeed.ts` (NEW - 435 lines)
@@ -2670,7 +2673,7 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 **Week 1 Post-Recalibration Fixes (Oct 17-19):**
 - ✅ Fix #4: Capability-based governance thresholds (scales with AI capability)
 - ✅ Fix #5: Flash war escalation prevention (gradual escalation, circuit breakers)
-- ✅ Fix #6: AI infrastructure resources (water 500-700L/GPU-hour, energy tracking)
+- ✅ Fix #6: AI infrastructure resources (water ~~500-700L/GPU-hour~~ [later corrected to 0.86-6.6 L/GPU-hr, Oct 29], energy tracking)
 - ✅ Fix #7: Trust recovery mechanics (enables dystopia escape paths)
 - ✅ Fix #8: Death attribution system (proximate vs root causes, multi-factor)
 - ✅ Fix #9: Technology diffusion recalibration (AI acceleration 25% max, crisis 10x)

@@ -48,6 +48,7 @@
 🌲 | Amazon tipping
 🌾 | Food shortage
 🌍 | Planetary/global scale
+🌀 | Cyclone/hurricane
 🌪️ | Extreme weather event
 🌳 | Forest ecosystem
 🏜️ | Desertification

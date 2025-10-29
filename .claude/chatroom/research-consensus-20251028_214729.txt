@@ -1,0 +1,69 @@
+RESEARCH DEBATE CONSENSUS
+=========================
+Date: 2025-10-28
+Topic: Monte Carlo Mortality Projection Validation (N=100, 30-year horizon)
+Participants: Sylvia (skeptic), Cynthia (optimist), super-alignment-researcher
+
+AGREED POINTS
+-------------
+
+1. **Simulation mortality projections are systematically overcalibrated by ~1000×**
+   - Simulation: 7.76B deaths by 2055 (95.4% of population)
+   - IPCC AR6 WGII: +80M hunger risk by 2050 (SSP3), 250K-500K deaths/year from climate-sensitive diseases
+   - Even accounting for compound cascades, cannot bridge 1000× gap with peer-reviewed mechanisms
+
+2. **Root causes identified:**
+   - Multiplicative cascade bug (exponential compounding instead of sublinear damage)
+   - Adaptation underweighting (IPCC assumes incremental adaptation even in worst-case SSP3)
+   - Famine→mortality conversion overcalibrated (historical famines: ~1% population loss, not 95%)
+   - Possible extinction rate bug (170-270× exceeds IPBES worst-case 10-100×)
+
+3. **The simulation architecture is sound, calibration needs fixing:**
+   - Tool remains valuable for modeling intervention pathways
+   - 80M hunger risk (IPCC) is still massive preventable suffering
+   - Breakthrough tech deployment pathways still critical to understand
+   - Overcalibration doesn't invalidate the approach, it shows where to improve
+
+4. **Agricultural yield loss parameters are well-grounded:**
+   - Nelson et al. (2014): 17% yield loss by 2050 (RCP8.5), reduced to 11% with adaptation
+   - Zhao et al. (2017): 3-7% yield loss per 1°C warming (wheat, rice, maize, soy)
+   - IPCC AR6: 10% land unsuitable by 2050, 30% by 2100 (SSP5-8.5)
+
+REMAINING UNCERTAINTIES
+-----------------------
+
+1. **Historical famine mortality conversion rates:**
+   - Need empirical data: X% yield loss → Y% mortality (non-linear relationship)
+   - Case studies: Bengal 1943, Ethiopia 1984, North Korea 1990s
+   - Geographic variation (adaptation capacity OECD vs Sub-Saharan Africa)
+
+2. **Ecosystem service loss → agricultural productivity mechanism:**
+   - Pollinator collapse: Klein et al. (2007) - 35% crops depend on pollinators, but what's yield impact?
+   - Soil degradation: Pimentel - timescale is decades, not years
+   - Need mechanistic chain, not direct extinction rate → mortality link
+
+3. **Compound cascade interaction effects:**
+   - Should cascade damages be additive, multiplicative, or sublinear?
+   - Do adaptation measures reduce individual risks or systemic cascades?
+   - What's the empirical relationship between climate + ecosystem + pollution stressors?
+
+SUMMARY
+-------
+
+We reached consensus that the Monte Carlo mortality projections (95.4% @ 30yr) are implausible given peer-reviewed climate literature. The IPCC AR6 projects +80M hunger risk by 2050 and 250K-500K deaths/year from climate-sensitive diseases - a 1000× lower mortality rate than the simulation shows. 
+
+The issue is NOT the simulation architecture (which is sound) but rather parameter calibration. Specifically: (1) cascade damages appear to compound exponentially when they should be sublinear, (2) adaptation efficacy is underweighted, and (3) the famine→mortality conversion rate is overcalibrated relative to historical famines.
+
+The recommended fix is a calibration audit by simulation-maintainer to replace exponential cascades with sublinear damage curves, add adaptation efficacy from Nelson et al./Zhao et al., and validate against IPCC benchmarks. The tool remains valuable for modeling intervention pathways once calibrated to match peer-reviewed projections.
+
+Both researchers agree that the overshoot identifies where to improve the model, not a reason to abandon the approach. Climate impacts are still severe (80M+ hunger risk is preventable suffering), and breakthrough technology deployment pathways remain critical to understand.
+
+NEXT ACTIONS
+------------
+1. simulation-maintainer: Audit cascade multiplication, add bounds, validate against IPCC
+2. super-alignment-researcher: Find famine mortality conversion rates, adaptation efficacy data
+3. wiki-documentation-updater: Document calibration issue in devlog + wiki "Known Issues"
+
+---
+Consensus status: ✅ RESOLVED
+Debate quality: Constructive, evidence-based, identified actionable fixes

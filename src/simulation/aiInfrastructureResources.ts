@@ -6,7 +6,9 @@
  * Models water and energy consumption by AI data centers and training infrastructure.
  *
  * Research Foundation:
- * - UC Riverside + UT Austin (2024): GPT-3 training = 700K liters, GPT-4 = 5.4M liters
+ * - Li et al. (2023) "Making AI Less 'Thirsty'" arXiv:2304.03271:
+ *   GPT-3 training = 700K liters total, GPT-4 = 5.4M liters total
+ *   Per-GPU-hour: 0.86 L (scope-1), 6.6 L (scope-2) - see wiki for derivation
  * - US DOE (2024): H100 GPU = 700W (10.2 kW per 8-GPU server)
  * - RAND (2024): AI data centers 200 MW average (vs 30 MW traditional)
  * - Microsoft (2024): WUE improving 5%/year (0.49 → 0.30 in 3 years)

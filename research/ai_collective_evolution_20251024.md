@@ -338,7 +338,6 @@ Mechanistic interpretability advances, particularly **neural activation probes**
 **Primary Sources:**
 - Codewave Insights. (2024). "Exploring the Future of Agentic AI Swarms."
 - PowerDrill AI. (2024). "Swarm Intelligence in Agentic AI: An Industry Report."
-- arXiv:2506.01438. (2025). "Distinguishing Autonomous AI Agents from Collaborative Agentic Systems."
 - arXiv:2503.13754. (2025). "From Autonomous Agents to Integrated Systems, A New Paradigm: Orchestrated Distributed Intelligence."
 
 **Key Developments in 2024-2025:**
@@ -702,7 +701,8 @@ Fitness is multiplicative because **failure in any critical dimension (especiall
 **Primary Sources:**
 - Microsoft Security Blog. (2025). "Cyber Signals Issue 9: AI-powered deception: Emerging fraud threats and countermeasures."
 - arXiv:2501.00940. (2025). "SPADE: Enhancing Adaptive Cyber Deception Strategies with Generative AI and Structured Prompt Engineering."
-- Medium (Seripally, 2025). "AI-Powered Cyber Threats in 2025: The Rise of Autonomous Attack Agents and the Collapse of Traditional Defenses."
+- Alanezi, M., & AL-Azzawi, R. M. A. (2024). "AI-Powered cyber threats: A systematic review." *Mesopotamian Journal of CyberSecurity*, 4(3), 166-188. https://doi.org/10.58496/MJCS/2024/021
+- Achuthan, K., Ramanathan, S., Srinivas, S., & Raman, R. (2024). "Advancing cybersecurity and privacy with artificial intelligence: current trends and future research directions." *Frontiers in Big Data*, 7. https://doi.org/10.3389/fdata.2024.1497535
 
 **Attacker Stealth Capabilities:**
 
@@ -1373,9 +1373,8 @@ This transition is **grounded in peer-reviewed research**, but with significant 
 ### Multi-Agent Emergence and Swarm Intelligence
 8. Codewave Insights. (2024). "Exploring the Future of Agentic AI Swarms."
 9. PowerDrill AI. (2024). "Swarm Intelligence in Agentic AI: An Industry Report."
-10. arXiv:2506.01438. (2025). "Distinguishing Autonomous AI Agents from Collaborative Agentic Systems."
-11. arXiv:2503.13754. (2025). "From Autonomous Agents to Integrated Systems, A New Paradigm: Orchestrated Distributed Intelligence."
-12. Rosenberg, L., et al. (2024). "Collective Superintelligence: Enabling Real-Time Conversational Deliberations among Humans and AI Agents at Unprecedented Scale." IntechOpen.
+10. arXiv:2503.13754. (2025). "From Autonomous Agents to Integrated Systems, A New Paradigm: Orchestrated Distributed Intelligence."
+11. Rosenberg, L., et al. (2024). "Collective Superintelligence: Enabling Real-Time Conversational Deliberations among Humans and AI Agents at Unprecedented Scale." IntechOpen.
 
 ### Coordination Mechanisms
 13. arXiv:2502.14743. (2025). "Multi-Agent Coordination across Diverse Applications: A Survey."
@@ -1394,7 +1393,8 @@ This transition is **grounded in peer-reviewed research**, but with significant 
 ### Stealth and Deception
 21. Microsoft Security Blog. (2025). "Cyber Signals Issue 9: AI-powered deception: Emerging fraud threats and countermeasures."
 22. arXiv:2501.00940. (2025). "SPADE: Enhancing Adaptive Cyber Deception Strategies with Generative AI and Structured Prompt Engineering."
-23. Seripally, C. (2025). "AI-Powered Cyber Threats in 2025: The Rise of Autonomous Attack Agents and the Collapse of Traditional Defenses." Medium.
+23. Alanezi, M., & AL-Azzawi, R. M. A. (2024). "AI-Powered cyber threats: A systematic review." *Mesopotamian Journal of CyberSecurity*, 4(3), 166-188. https://doi.org/10.58496/MJCS/2024/021
+24. Achuthan, K., Ramanathan, S., Srinivas, S., & Raman, R. (2024). "Advancing cybersecurity and privacy with artificial intelligence: current trends and future research directions." *Frontiers in Big Data*, 7. https://doi.org/10.3389/fdata.2024.1497535
 
 ---
 

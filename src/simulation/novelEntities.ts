@@ -17,6 +17,7 @@ import { GameState } from '@/types/game';
 import { NovelEntitiesSystem } from '@/types/novelEntities';
 import { RootCause } from '@/types/population';
 import { assertStateProperty } from './utils/assertions';
+import { addMortalityRisk } from './bayesianMortality';
 
 /**
  * Initialize novel entities system state (2025 baseline - ALREADY BREACHED)
@@ -122,16 +123,17 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // Population impact: Reproductive crisis causes despair, failed fertility treatments (0.05-0.1% casualties)
     // TRULY GLOBAL: PFAS in 99% of human blood = everyone exposed (100% of world)
     // 0.08% mortality rate from despair/failed fertility treatments
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.0008,
-      'Reproductive crisis - despair/failed treatments (global exposure)',
-      1.00,
-      'pollution',
-      RootCause.pollution,
-      'HIGH'
-    );
+    const pop = state.humanPopulationSystem as any;
+    addMortalityRisk(pop, {
+      type: 'pollution',
+      baseRisk: 0.0008,
+      proximate: 'pollution',
+      root: 'pollution',
+      confidence: 'HIGH',
+      description: 'Reproductive crisis - despair/failed treatments (global exposure)',
+      month: state.currentMonth,
+      exposedFraction: 1.00
+    });
   }
   
   // === BIOACCUMULATION ===
@@ -161,16 +163,17 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // Population impact: Food chain collapse causes contaminated food deaths (0.1-0.2% casualties)
     // TRULY GLOBAL: Food chain is globally interconnected (100% of world affected)
     // 0.15% mortality rate from contaminated food poisoning
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.0015,
-      'Bioaccumulation collapse - contaminated food chain (global)',
-      1.00,
-      'pollution',
-      RootCause.pollution,
-      'HIGH'
-    );
+    const pop = state.humanPopulationSystem as any;
+    addMortalityRisk(pop, {
+      type: 'pollution',
+      baseRisk: 0.0015,
+      proximate: 'pollution',
+      root: 'pollution',
+      confidence: 'HIGH',
+      description: 'Bioaccumulation collapse - contaminated food chain (global)',
+      month: state.currentMonth,
+      exposedFraction: 1.00
+    });
   }
   
   // === CHRONIC DISEASE EPIDEMIC ===
@@ -202,16 +205,17 @@ export function updateNovelEntitiesSystem(state: GameState): void {
     // Population impact: Chronic disease epidemic causes cancer/autoimmune deaths (0.3-0.5% casualties)
     // TRULY GLOBAL: Chemical exposure is global (100% of world affected)
     // 0.4% mortality rate from cancer/autoimmune surge
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.004,
-      'Chronic disease epidemic - cancer/autoimmune surge (global exposure)',
-      1.00,
-      'pollution',
-      RootCause.pollution,
-      'HIGH'
-    );
+    const pop = state.humanPopulationSystem as any;
+    addMortalityRisk(pop, {
+      type: 'pollution',
+      baseRisk: 0.004,
+      proximate: 'pollution',
+      root: 'pollution',
+      confidence: 'HIGH',
+      description: 'Chronic disease epidemic - cancer/autoimmune surge (global exposure)',
+      month: state.currentMonth,
+      exposedFraction: 1.00
+    });
   }
   
   // === ONGOING HEALTH IMPACTS ===

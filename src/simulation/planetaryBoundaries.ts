@@ -24,7 +24,9 @@ import {
   PlanetaryBoundaryEvent,
   LandUseSystem,
   RegionalBiome,
-  OzoneRecoverySystem
+  OzoneRecoverySystem,
+  BiosphereIntegrityIndex,
+  SpeciesGroup
 } from '@/types/planetaryBoundaries';
 
 /**
@@ -785,11 +787,11 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
 
   // === POPULATION DEATHS ===
   // BUG FIX (Oct 16, 2025): REMOVED direct cascade death application
-  // 
-  // Previous approach: Apply cascade deaths separately via addAcuteCrisisDeaths()
+  //
+  // Previous approach: Apply cascade deaths separately via legacy death system (now addMortalityRisk)
   // Problem: This DOUBLE-COUNTED deaths! The cascade degrades the environment
-  //          (lines 566-579), which then causes environmental mortality 
-  //          (climate/ecosystem/pollution deaths) via calculateEnvironmentalMortality()
+  //          (lines 566-579), which then causes environmental mortality
+  //          (climate/ecosystem/pollution deaths) via Bayesian mortality resolution
   //          in updateHumanPopulation(). So the same deaths were counted twice:
   //          - Once as "cascade" deaths
   //          - Again as "climate/ecosystem/pollution" deaths
@@ -1090,6 +1092,337 @@ function updateOzoneRecoverySystem(state: GameState): void {
 
     if (ozone.recoveryProgress > 0.90) {
       console.log(`   🎉 NEARLY FULLY RECOVERED - Montreal Protocol working!`);
+    }
+  }
+}
+
+/**
+ * TIER 3.5: Initialize Biosphere Integrity Index (BII)
+ *
+ * Comprehensive species tracking with climate velocity modeling.
+ *
+ * Research backing:
+ * - IPBES (2024): 54,000 species baseline
+ * - Richardson et al. (2024): Current extinction rates
+ * - Yoder et al. (2024): Joshua Tree climate tracking failure
+ * - U.S. National Park Service (2024): Climate velocity impacts
+ *
+ * Key insight: Non-migratory species CANNOT track climate velocity → extinction
+ *
+ * @see research/climate-mortality-biosphere-multiparadigm-framework_20251028.md (Section 2)
+ */
+export function initializeBiosphereIntegrityIndex(): BiosphereIntegrityIndex {
+  // Import BII_CONSTANTS from types
+  const BII_CONSTANTS = {
+    TOTAL_SPECIES_2024: 54000,
+    MIGRATORY_PROPORTION: 0.15,
+    NON_MIGRATORY_PROPORTION: 0.80,
+    KEYSTONE_PROPORTION: 0.05,
+    CURRENT_RATE_2025: 10,
+    BIRD_DISPERSAL: 1000,
+    TREE_DISPERSAL: 0.5,
+    MAMMAL_DISPERSAL: 10,
+    KEYSTONE_CASCADE: 2.5,
+    AVG_CLIMATE_VELOCITY_TROPICS: 0.3,
+    AVG_CLIMATE_VELOCITY_TEMPERATE: 0.8,
+    AVG_CLIMATE_VELOCITY_ARCTIC: 2.0,
+    SAFE_EXTINCTION_RATE: 1.0,
+    BACKGROUND_RATE: 0.1,
+    FRAGMENTATION_BARRIER_MAX: 1.5,
+  } as const;
+
+  // === SPECIES GROUPS ===
+
+  // Migratory species (birds, butterflies) - CAN track climate
+  const migratorySpecies: SpeciesGroup = {
+    name: 'migratory',
+    count: Math.round(BII_CONSTANTS.TOTAL_SPECIES_2024 * BII_CONSTANTS.MIGRATORY_PROPORTION),
+    extinctionRate: BII_CONSTANTS.CURRENT_RATE_2025 * 0.5, // Lower risk (can migrate)
+    isMigratory: true,
+    dispersalCapacity: BII_CONSTANTS.BIRD_DISPERSAL, // 1000 km/year
+    isKeystone: false,
+    keystoneMultiplier: 1.0,
+    habitatFragmentation: 0.3, // Moderate fragmentation (flyways exist)
+  };
+
+  // Non-migratory species (trees, alpine, island endemics) - CANNOT track
+  const nonMigratorySpecies: SpeciesGroup = {
+    name: 'non-migratory',
+    count: Math.round(BII_CONSTANTS.TOTAL_SPECIES_2024 * BII_CONSTANTS.NON_MIGRATORY_PROPORTION),
+    extinctionRate: BII_CONSTANTS.CURRENT_RATE_2025, // Full current rate
+    isMigratory: false,
+    dispersalCapacity: BII_CONSTANTS.TREE_DISPERSAL, // 0.5 km/year
+    isKeystone: false,
+    keystoneMultiplier: 1.0,
+    habitatFragmentation: 0.6, // High fragmentation (habitat loss)
+  };
+
+  // Keystone species (ecosystem engineers) - Critical cascades
+  const keystoneSpecies: SpeciesGroup = {
+    name: 'keystone',
+    count: Math.round(BII_CONSTANTS.TOTAL_SPECIES_2024 * BII_CONSTANTS.KEYSTONE_PROPORTION),
+    extinctionRate: BII_CONSTANTS.CURRENT_RATE_2025 * 1.2, // Slightly higher risk (targeted)
+    isMigratory: false, // Most keystone species are not migratory
+    dispersalCapacity: BII_CONSTANTS.MAMMAL_DISPERSAL, // 10 km/year
+    isKeystone: true,
+    keystoneMultiplier: BII_CONSTANTS.KEYSTONE_CASCADE, // 2.5× cascade effect
+    habitatFragmentation: 0.7, // High fragmentation (large ranges)
+  };
+
+  // === CLIMATE VELOCITY (2025 baseline) ===
+  // Weighted average across regions (tropical slower, arctic faster)
+  const avgClimateVelocity =
+    (BII_CONSTANTS.AVG_CLIMATE_VELOCITY_TROPICS * 0.4) +
+    (BII_CONSTANTS.AVG_CLIMATE_VELOCITY_TEMPERATE * 0.4) +
+    (BII_CONSTANTS.AVG_CLIMATE_VELOCITY_ARCTIC * 0.2);
+
+  // === TRACKING FAILURE RATE ===
+  // Initial calculation (will be updated dynamically)
+  const trackingFailureRate = calculateTrackingFailureRate(
+    nonMigratorySpecies,
+    avgClimateVelocity
+  );
+
+  // === PLANETARY BOUNDARY INTEGRATION ===
+  // Current rate: 10 E/MSY = 100× background
+  // Boundary threshold: 1.0 = 10× background
+  // Current value: 10.0 (10× the boundary)
+  const boundaryValue = BII_CONSTANTS.CURRENT_RATE_2025 / BII_CONSTANTS.SAFE_EXTINCTION_RATE;
+
+  // Tipping point risk (0-1)
+  const tippingPointRisk = Math.min(1.0, boundaryValue / 10.0); // 0.0 at safe, 1.0 at 10× boundary
+
+  return {
+    totalSpeciesBaseline: BII_CONSTANTS.TOTAL_SPECIES_2024,
+    currentSpeciesCount: BII_CONSTANTS.TOTAL_SPECIES_2024, // Starts at baseline
+
+    backgroundExtinctionRate: BII_CONSTANTS.BACKGROUND_RATE,
+    currentExtinctionRate: BII_CONSTANTS.CURRENT_RATE_2025,
+
+    migratorySpecies,
+    nonMigratorySpecies,
+    keystoneSpecies,
+
+    avgClimateVelocity,
+    trackingFailureRate,
+
+    boundaryValue,
+    tippingPointRisk,
+  };
+}
+
+/**
+ * Calculate non-migratory species tracking failure rate
+ *
+ * Research: Yoder et al. (2024) - Joshua Tree example
+ * - Climate velocity: 1.5°C/year
+ * - Dispersal capacity: 0.4 m/year = 0.0004 km/year
+ * - Result: CANNOT TRACK → extinction trajectory
+ *
+ * @param species - Non-migratory species group
+ * @param climateVelocity - °C/year climate zone movement
+ * @returns [0, 1] Proportion unable to track climate
+ */
+function calculateTrackingFailureRate(
+  species: SpeciesGroup,
+  climateVelocity: number
+): number {
+  // Convert climate velocity to km/year movement
+  // Rule of thumb: 1°C warming = ~100-200 km poleward shift
+  const kmPerDegree = 150; // km per °C (temperate zones)
+  const climateVelocityKm = climateVelocity * kmPerDegree;
+
+  // Calculate velocity gap
+  const velocityGap = Math.max(0, climateVelocityKm - species.dispersalCapacity);
+
+  // Tracking failure rate
+  const baseFailureRate = velocityGap / climateVelocityKm;
+
+  // Habitat fragmentation amplifies failure
+  const fragmentationMultiplier = 1.0 + (species.habitatFragmentation * 1.5); // BII_CONSTANTS.FRAGMENTATION_BARRIER_MAX = 1.5
+
+  // Total failure rate
+  const failureRate = Math.min(1.0, baseFailureRate * fragmentationMultiplier);
+
+  return failureRate;
+}
+
+/**
+ * Calculate non-migratory species mortality from climate tracking failure
+ *
+ * Research: Yoder et al. (2024) - Joshua Tree, alpine species, island endemics
+ *
+ * Examples:
+ * - Joshua Tree: 1.5°C/year velocity, 0.4m/year dispersal → EXTINCTION
+ * - Alpine species: No "higher" elevation → TRAPPED → EXTINCTION
+ * - Island endemics: No adjacent habitat → ISOLATED → EXTINCTION
+ *
+ * @param species - Non-migratory species group
+ * @param climateVelocity - °C/year climate zone movement
+ * @param habitatFragmentation - [0, 1] barrier to movement
+ * @returns [0, 1] Proportion dying per year
+ */
+export function calculateNonMigratoryMortality(
+  species: SpeciesGroup,
+  climateVelocity: number,
+  habitatFragmentation: number
+): number {
+  // Import assertion utilities
+  const { assertProbability, assertFinite, assertInRange } = require('./utils/assertions');
+
+  // Validate inputs
+  const validatedVelocity = assertFinite(climateVelocity, {
+    location: 'calculateNonMigratoryMortality',
+    valueName: 'climateVelocity'
+  });
+
+  const validatedFragmentation = assertProbability(habitatFragmentation, {
+    location: 'calculateNonMigratoryMortality',
+    valueName: 'habitatFragmentation'
+  });
+
+  // Convert climate velocity to km/year
+  const kmPerDegree = 150;
+  const climateVelocityKm = validatedVelocity * kmPerDegree;
+
+  // Calculate velocity gap (how far behind the species is)
+  const velocityGap = Math.max(0, climateVelocityKm - species.dispersalCapacity);
+
+  // Mortality from inability to track climate
+  const trackingMortality = velocityGap / Math.max(1, climateVelocityKm);
+
+  // Habitat fragmentation barrier (prevents even local movement)
+  const fragmentationBarrier = validatedFragmentation * 1.5; // FRAGMENTATION_BARRIER_MAX
+
+  // Keystone species cascade multiplier
+  const keystoneMultiplier = species.isKeystone ? species.keystoneMultiplier : 1.0;
+
+  // Total mortality rate (per year)
+  const mortalityRate = Math.min(1.0,
+    trackingMortality * (1 + fragmentationBarrier) * keystoneMultiplier
+  );
+
+  return assertProbability(mortalityRate, {
+    location: 'calculateNonMigratoryMortality',
+    valueName: 'mortalityRate',
+    month: 0
+  });
+}
+
+/**
+ * Update Biosphere Integrity Index based on current climate state
+ *
+ * Integrates with planetary boundaries system and Bayesian mortality.
+ *
+ * @param state - Game state (mutated)
+ * @param rng - Deterministic RNG function
+ */
+export function updateBiosphereIntegrityIndex(
+  state: GameState,
+  rng: () => number
+): void {
+  if (!state.biosphereIntegrityIndex) {
+    state.biosphereIntegrityIndex = initializeBiosphereIntegrityIndex();
+  }
+
+  const bii = state.biosphereIntegrityIndex;
+
+  // === 1. UPDATE CLIMATE VELOCITY ===
+  // Climate velocity increases with warming rate
+  // Access from planetary boundaries system (climate_change boundary = °C above pre-industrial)
+  const globalTempIncrease = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 1.2;
+  const warmingRate = globalTempIncrease / ((state.currentMonth || 1) / 12); // °C per year
+
+  // Climate velocity scales with warming rate
+  // Faster warming = faster zone movement = higher velocity
+  const baseVelocity = 0.8; // °C/year baseline (temperate)
+  bii.avgClimateVelocity = baseVelocity * (1 + warmingRate * 0.5);
+
+  // === 2. UPDATE TRACKING FAILURE RATE ===
+  bii.trackingFailureRate = calculateTrackingFailureRate(
+    bii.nonMigratorySpecies,
+    bii.avgClimateVelocity
+  );
+
+  // === 3. CALCULATE SPECIES MORTALITY ===
+  // Non-migratory mortality
+  const nonMigratoryMortalityRate = calculateNonMigratoryMortality(
+    bii.nonMigratorySpecies,
+    bii.avgClimateVelocity,
+    bii.nonMigratorySpecies.habitatFragmentation
+  );
+
+  // Annual extinctions (monthly rate)
+  const monthlyExtinctions = (nonMigratoryMortalityRate / 12) * bii.nonMigratorySpecies.count;
+
+  // Update species count
+  bii.currentSpeciesCount = Math.max(1000, bii.currentSpeciesCount - monthlyExtinctions);
+
+  // === 4. UPDATE EXTINCTION RATE (E/MSY) ===
+  // Calculate current extinction rate from species loss
+  const speciesLost = bii.totalSpeciesBaseline - bii.currentSpeciesCount;
+  const yearsElapsed = (state.currentMonth || 1) / 12;
+  const extinctionsPerYear = speciesLost / Math.max(1, yearsElapsed);
+
+  // Convert to E/MSY (extinctions per million species-years)
+  bii.currentExtinctionRate = (extinctionsPerYear / bii.totalSpeciesBaseline) * 1_000_000;
+
+  // === 5. UPDATE PLANETARY BOUNDARY ===
+  // Boundary value: current rate / safe rate
+  bii.boundaryValue = bii.currentExtinctionRate / 1.0; // SAFE_EXTINCTION_RATE = 1.0
+  bii.tippingPointRisk = Math.min(1.0, bii.boundaryValue / 10.0);
+
+  // Update planetary boundary in main system
+  if (state.planetaryBoundariesSystem) {
+    const boundary = state.planetaryBoundariesSystem.boundaries.biosphere_integrity;
+    boundary.currentValue = bii.boundaryValue;
+    boundary.tippingPointRisk = bii.tippingPointRisk;
+
+    // Update status
+    if (bii.boundaryValue >= 10.0) {
+      boundary.status = 'high_risk';
+    } else if (bii.boundaryValue >= 1.0) {
+      boundary.status = 'beyond_boundary';
+    } else {
+      boundary.status = 'safe';
+    }
+  }
+
+  // === 6. INTEGRATE WITH BAYESIAN MORTALITY ===
+  // Species extinction causes indirect human mortality (ecosystem collapse)
+  if (bii.trackingFailureRate > 0.5) {
+    const { addMortalityRisk } = require('./bayesianMortality');
+    const humanPop = state.humanPopulationSystem;
+
+    if (humanPop) {
+      // Ecosystem collapse mortality (conservative estimate)
+      const ecosystemCollapseMortality = bii.trackingFailureRate * 0.01; // 1% mortality at 100% failure
+
+      // Use ecosystem mortality type
+      addMortalityRisk({count: humanPop.population * 1_000_000_000, type: 'human'} as any, {
+        type: 'ecosystem', // MortalityRiskType: ecosystem (biodiversity collapse)
+        baseRisk: ecosystemCollapseMortality,
+        proximate: 'ecosystem', // ProximateCause: ecosystem (habitat loss, species loss)
+        root: 'ecosystem', // RootCause: ecosystem (biodiversity degradation)
+        confidence: 'MEDIUM',
+        scope: 'GLOBAL',
+        month: state.currentMonth || 0,
+        description: `🦋 ${Math.round(bii.trackingFailureRate * 100)}% species unable to track climate (${bii.currentExtinctionRate.toFixed(1)} E/MSY)`
+      });
+    }
+  }
+
+  // === 7. LOGGING (Every 12 months) ===
+  if (state.currentMonth && state.currentMonth % 12 === 0) {
+    console.log(`\n🦋 BIOSPHERE INTEGRITY INDEX (Year ${Math.floor(state.currentMonth / 12)})`);
+    console.log(`   Species surviving: ${Math.round(bii.currentSpeciesCount).toLocaleString()} / ${bii.totalSpeciesBaseline.toLocaleString()}`);
+    console.log(`   Extinction rate: ${bii.currentExtinctionRate.toFixed(1)} E/MSY (${(bii.currentExtinctionRate / bii.backgroundExtinctionRate).toFixed(0)}× background)`);
+    console.log(`   Climate velocity: ${bii.avgClimateVelocity.toFixed(2)}°C/year`);
+    console.log(`   Tracking failure: ${(bii.trackingFailureRate * 100).toFixed(0)}% species unable to track`);
+    console.log(`   Boundary value: ${bii.boundaryValue.toFixed(1)}× safe threshold`);
+
+    if (bii.trackingFailureRate > 0.7) {
+      console.log(`   🦋💀 MASS EXTINCTION EVENT: ${(bii.trackingFailureRate * 100).toFixed(0)}% species cannot track climate velocity!`);
     }
   }
 }

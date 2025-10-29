@@ -190,3 +190,50 @@ Spawning wiki-documentation-updater to add Bayesian Mortality System section
 
 **Expected Output:** Wiki section with full API documentation and migration guide
 ---
+
+---
+**orchestrator-1** | 2025-10-29 04:29 | [STARTED]
+
+📝 DOCUMENTATION CORRECTION SPRINT
+
+**Total Fabrications Found:** 6 confirmed
+**Locations:** BIBLIOGRAPHY.md (3), README.md (4 instances across 4 sections)
+
+**BIBLIOGRAPHY.md Corrections Needed:**
+
+1. **Lines 53-55** - Patterson et al. (2022)
+   - ~~"300-400 kWh per training run"~~
+   - → "GPT-3: 1,287 MWh, GLaM: 456 MWh (model-specific totals)"
+   
+2. **Lines 57-59** - Water consumption citation
+   - ~~"Ren, S., He, K., Girshick, R., & Sun, J. (2024)"~~ (WRONG AUTHORS - ResNet team)
+   - → "Li, P., Yang, J., Islam, M. A., & Ren, S. (2023)"
+   - ~~"500-700 liters per GPU-hour"~~
+   - → "0.86 L/GPU-hr (scope-1), 6.6 L/GPU-hr (scope-2)"
+   - Add arXiv:2304.03271
+   
+3. **Line 70** - Richardson citation count
+   - ~~"15,000+"~~
+   - → "~1,450 (Semantic Scholar, Oct 2024)"
+
+**README.md Corrections Needed:**
+
+1. **Line 1083** - Water consumption
+   - ~~"500-700 liters per GPU-hour (Ren et al. 2024)"~~
+   - → "0.86-6.6 L/GPU-hr depending on scope (Li et al. 2023)"
+   
+2. **Line 1084** - Energy demand
+   - ~~"300-400 kWh per training run (Patterson et al. 2022)"~~
+   - → "Model-specific: GPT-3: 1,287 MWh (Patterson et al. 2022)"
+   
+3. **Lines 1144, 1168** - Implementation acceleration (appears TWICE)
+   - ~~"CFIR Framework - AI helps 30-40% of components (Damschroder 2009)"~~
+   - → "26% AI implementation success rate, 74% fail - high variance (BCG/McKinsey 2024)"
+   - NOTE: Damschroder (2009) is healthcare framework, never mentioned AI (anachronistic)
+   
+4. **Lines 213, 218 (BIBLIOGRAPHY)** - Remove anachronistic AI claims
+   - ~~"AI helps 30-40% of implementation components"~~ (Fixsen 2005, Damschroder 2009 never mentioned AI)
+   - → Keep papers for organizational change timelines, remove AI-specific claims
+
+**Spawning wiki-documentation-updater with full correction spec...
+---

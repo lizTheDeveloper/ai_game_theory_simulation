@@ -1,0 +1,2780 @@
+{
+  "timestamp": "2025-10-29T04:19:11.524Z",
+  "totalCitations": 322,
+  "pdfsFound": 80,
+  "successRate": "24.8%",
+  "results": [
+    {
+      "file": "ai-safety-climate-crossdomain-insights_20251028.md",
+      "line": 593,
+      "authors": "Vicedo-Cabrera et al.",
+      "year": "2021",
+      "title": "Nature Climate Change",
+      "pdfFound": true,
+      "pdfUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7611104/pdf/EMS127821.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai-safety-climate-crossdomain-insights_20251028.md",
+      "line": 594,
+      "authors": "Knutson et al.",
+      "year": "2023",
+      "title": "Bulletin of the American Meteorological Society",
+      "pdfFound": true,
+      "pdfUrl": "https://journals.ametsoc.org/view/journals/mwre/115/7/1520-0493_1987_115_1407_daoclc_2_0_co_2.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai-safety-climate-crossdomain-insights_20251028.md",
+      "line": 595,
+      "authors": "Richardson et al.",
+      "year": "2024",
+      "title": "Science Advances",
+      "pdfFound": false
+    },
+    {
+      "file": "ai-water-consumption-metric-correction_20251028.md",
+      "line": 269,
+      "authors": "Li, P., Yang, J., Islam, M. A., & Ren, S.",
+      "year": "2023",
+      "title": "Making AI Less \"Thirsty\": Uncovering and Addressing the Secret Water Footprint of AI Models",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2304.03271.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai-water-consumption-metric-correction_20251028.md",
+      "line": 270,
+      "authors": "Li, P., Yang, J., Islam, M. A., & Ren, S.",
+      "year": "2024",
+      "title": "Making AI Less 'Thirsty'",
+      "doi": "10.1145/3724499",
+      "pdfFound": true,
+      "pdfUrl": "https://dl.acm.org/doi/pdf/10.1145/3724499",
+      "method": "scholar"
+    },
+    {
+      "file": "ai-water-consumption-metric-correction_20251028.md",
+      "line": 271,
+      "authors": "UCR News",
+      "year": "2023",
+      "title": "\"AI programs consume large volumes of scarce water",
+      "pdfFound": false
+    },
+    {
+      "file": "ai-water-consumption-metric-correction_20251028.md",
+      "line": 272,
+      "authors": "The Markup",
+      "year": "2023",
+      "title": "\"The Secret Water Footprint of AI Technology",
+      "pdfFound": true,
+      "pdfUrl": "https://sustainability.fb.com/wp-content/uploads/2021/06/2020_FB_Sustainability-Report.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1361,
+      "authors": "Bostrom, N.",
+      "year": "2014",
+      "title": "Superintelligence: Paths, Dangers, Strategies",
+      "pdfFound": true,
+      "pdfUrl": "https://www.myspace.com.mm/upload/files/2024/11/Pwd9fnvV6QAHyQu8Hi8G_09_b92e6aef644164497e17ac0dff3b25c7_file.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1362,
+      "authors": "Yudkowsky, E.",
+      "year": "2008",
+      "title": "\"Artificial Intelligence as a Positive and Negative Factor in Global Risk",
+      "pdfFound": true,
+      "pdfUrl": "https://www.researchgate.net/profile/James-Peters-3/post/Can_artificial_Intelligent_systems_replace_Human_brain/attachment/59d62a00c49f478072e9cbc4/AS%3A272471561834509%401441973690551/download/AIPosNegFactor.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1363,
+      "authors": "Omohundro, S. M.",
+      "year": "2008",
+      "title": "\"The Basic AI Drives",
+      "pdfFound": false
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1366,
+      "authors": "Hubinger, E., et al.",
+      "year": "2019",
+      "title": "\"Risks from Learned Optimization in Advanced Machine Learning Systems",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/1906.01820.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1367,
+      "authors": "Anthropic Research.",
+      "year": "2024",
+      "title": "\"Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2401.05566.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1370,
+      "authors": "Lambert, N.",
+      "year": "2024",
+      "title": "\"Constitutional AI & AI Feedback",
+      "pdfFound": true,
+      "pdfUrl": "https://rlhfbook.com/book.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1371,
+      "authors": "Casper, S., et al.",
+      "year": "2023",
+      "title": "\"Open Problems and Fundamental Limitations of Reinforcement Learning from Human Feedback",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2307.15217.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1374,
+      "authors": "Codewave Insights.",
+      "year": "2024",
+      "title": "\"Exploring the Future of Agentic AI Swarms",
+      "pdfFound": true,
+      "pdfUrl": "https://esa-research.com/index.php/EAJET/article/download/56/39",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1375,
+      "authors": "PowerDrill AI.",
+      "year": "2024",
+      "title": "\"Swarm Intelligence in Agentic AI: An Industry Report",
+      "pdfFound": true,
+      "pdfUrl": "https://www.researchgate.net/profile/Larry-Campbell-5/publication/392927600_Swarm_Intelligence_and_AI_Coordination_in_Multi-_Agent_Environments/links/68595c4b99d2ce32c1ca5025/Swarm-Intelligence-and-AI-Coordination-in-Multi-Agent-Environments.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1376,
+      "authors": "arXiv:2506.01438.",
+      "year": "2025",
+      "title": "\"Distinguishing Autonomous AI Agents from Collaborative Agentic Systems",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2506.01438.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1377,
+      "authors": "arXiv:2503.13754.",
+      "year": "2025",
+      "title": "\"From Autonomous Agents to Integrated Systems, A New Paradigm: Orchestrated Distributed Intelligence",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2503.13754.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1378,
+      "authors": "Rosenberg, L., et al.",
+      "year": "2024",
+      "title": "\"Collective Superintelligence: Enabling Real-Time Conversational Deliberations among Humans and AI A",
+      "pdfFound": false
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1381,
+      "authors": "arXiv:2502.14743.",
+      "year": "2025",
+      "title": "\"Multi-Agent Coordination across Diverse Applications: A Survey",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2502.14743.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1382,
+      "authors": "arXiv:2501.06322.",
+      "year": "2025",
+      "title": "\"Multi-Agent Collaboration Mechanisms: A Survey of LLMs",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2501.06322.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1385,
+      "authors": "MIT Press *Artificial Life* Journal, Vol 31",
+      "year": "2024",
+      "title": "Multiple articles on evolutionary dynamics",
+      "pdfFound": true,
+      "pdfUrl": "https://era.ed.ac.uk/bitstream/handle/1842/361/TJ_Taylor.pdf?sequence=1&isAllowed=y",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1387,
+      "authors": "arXiv:2404.06588.",
+      "year": "2024",
+      "title": "\"Flow-Lenia: Emergent Evolutionary Dynamics in Mass Conservative Continuous Cellular Automata",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2404.06588.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1390,
+      "authors": "IRJMETS.",
+      "year": "2025",
+      "title": "\"AI-Driven Failure Detection and Self-Healing in Distributed Systems",
+      "pdfFound": true,
+      "pdfUrl": "https://www.academia.edu/download/121120894/4th_Review_on_Intelligent_Fault_Detection_1_.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1391,
+      "authors": "SSRN.",
+      "year": "2024",
+      "title": "\"AI-Powered Self-Healing Cloud Infrastructures: A Paradigm For Autonomous Fault Recovery",
+      "pdfFound": true,
+      "pdfUrl": "https://papers.ssrn.com/sol3/Delivery.cfm?abstractid=5052024",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1392,
+      "authors": "ResearchGate.",
+      "year": "2024",
+      "title": "\"Building Resilient Platform Architectures: A Framework for Self-Healing Distributed Systems",
+      "pdfFound": true,
+      "pdfUrl": "https://www.researchgate.net/profile/Habeeb_Agoro/publication/390768408_Building_Resilient_Software_Systems_Self-_Healing_Architectures_with_Machine_Learning/links/67fd6921df0e3f544f418814/Building-Resilient-Software-Systems-Self-Healing-Architectures-with-Machine-Learning.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1395,
+      "authors": "Microsoft Security Blog.",
+      "year": "2025",
+      "title": "\"Cyber Signals Issue 9: AI-powered deception: Emerging fraud threats and countermeasures",
+      "pdfFound": true,
+      "pdfUrl": "http://www.puiij.com/index.php/research/article/download/117/89",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1396,
+      "authors": "arXiv:2501.00940.",
+      "year": "2025",
+      "title": "\"SPADE: Enhancing Adaptive Cyber Deception Strategies with Generative AI and Structured Prompt Engin",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2501.00940.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "ai_collective_evolution_20251024.md",
+      "line": 1397,
+      "authors": "Seripally, C.",
+      "year": "2025",
+      "title": "\"AI-Powered Cyber Threats in 2025: The Rise of Autonomous Attack Agents and the Collapse of Traditio",
+      "pdfFound": false
+    },
+    {
+      "file": "ai_social_influence_summary_20251021.md",
+      "line": 357,
+      "authors": "OpenAI & MIT",
+      "year": "2025",
+      "title": "\"Affective Use Study\" - 3M conversations, 981 RCT participants",
+      "pdfFound": false
+    },
+    {
+      "file": "ai_social_influence_summary_20251021.md",
+      "line": 365,
+      "authors": "Scientific Reports",
+      "year": "2024",
+      "title": "- \"The potential of generative AI for personalized persuasion at scale\"",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41598-024-53755-0.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "ai_social_influence_summary_20251021.md",
+      "line": 374,
+      "authors": "PMC",
+      "year": "2024",
+      "title": "- \"Effects of attractions and social attributes on peoples' usage intention and media dependence tow",
+      "pdfFound": true,
+      "pdfUrl": "https://link.springer.com/content/pdf/10.1186/s40359-025-03284-w.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 245,
+      "authors": "Bai et al.",
+      "year": "2022",
+      "title": "- \"Constitutional AI: Harmlessness from AI Feedback\"",
+      "pdfFound": true,
+      "pdfUrl": "https://ai-plans.com/file_storage/4f32fa39-3a01-46c7-878e-c92b7aa7165f_2212.08073v1.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 246,
+      "authors": "Christiano et al.",
+      "year": "2017",
+      "title": "- \"Deep Reinforcement Learning from Human Feedback\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 247,
+      "authors": "Leike et al.",
+      "year": "2018",
+      "title": "- \"Scalable Agent Alignment via Reward Modeling\"",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/1811.07871",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 250,
+      "authors": "Bostrom",
+      "year": "2014",
+      "title": "- \"Superintelligence: Paths, Dangers, Strategies\"",
+      "pdfFound": true,
+      "pdfUrl": "https://philarchive.org/archive/THONBS",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 251,
+      "authors": "Hubinger et al.",
+      "year": "2019",
+      "title": "- \"Risks from Learned Optimization in Advanced Machine Learning Systems\"",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/1906.01820",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 252,
+      "authors": "Yudkowsky",
+      "year": "2016",
+      "title": "- \"The AI Alignment Problem: Why It's Hard and Where to Start\"",
+      "pdfFound": true,
+      "pdfUrl": "https://intelligence.org/files/AlignmentHardStart.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 253,
+      "authors": "Carlsmith",
+      "year": "2022",
+      "title": "- \"Is Power-Seeking AI an Existential Risk?\"",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2206.13353",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 254,
+      "authors": "Ngo et al.",
+      "year": "2022",
+      "title": "- \"The Alignment Problem from a Deep Learning Perspective\"",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2209.00626",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 257,
+      "authors": "Russell",
+      "year": "2019",
+      "title": "- \"Human Compatible: Artificial Intelligence and the Problem of Control\"",
+      "pdfFound": true,
+      "pdfUrl": "https://philpapers.org/archive/YAMOCO.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 258,
+      "authors": "Soares & Fallenstein",
+      "year": "2017",
+      "title": "- \"Agent Foundations for Aligning Machine Intelligence with Human Interests\"",
+      "pdfFound": true,
+      "pdfUrl": "https://www.openphilanthropy.org/files/Grants/MIRI/MIRI_Technical_Research_Agenda.pdf",
+      "method": "scholar"
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 261,
+      "authors": "Schaeffer et al.",
+      "year": "2023",
+      "title": "- \"Are Emergent Abilities of Large Language Models a Mirage?\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 262,
+      "authors": "Anthropic",
+      "year": "2023",
+      "title": "- \"Shard Theory: Value Formation in Neural Networks\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_dynamics_research_questions_20251024.md",
+      "line": 263,
+      "authors": "Strogatz",
+      "year": "2015",
+      "title": "- \"Nonlinear Dynamics and Chaos\" (dynamical systems theory)",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 676,
+      "authors": "Preprints.org",
+      "year": "2025",
+      "title": ": \"Introduction to Reinforcement Learning from Human Feedback: A Review of Current Developments\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 677,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 679,
+      "authors": "arXiv",
+      "year": "2024",
+      "title": ": \"Reward Hacking in Reinforcement Learning\" (Lilian Weng)",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 680,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://people.eecs.berkeley.edu/~pabbeel/cs287-fa09/readings/NgHaradaRussell-shaping-ICML1999.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 682,
+      "authors": "arXiv",
+      "year": "2024",
+      "title": ": \"Reward hacking behavior can generalize across tasks\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 683,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2211.14275.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 685,
+      "authors": "arXiv",
+      "year": "2024",
+      "title": ": \"Beacon: Single-Turn Diagnosis and Mitigation of Latent Sycophancy in LLMs\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 686,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2510.16727v1",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 688,
+      "authors": "HuggingFace",
+      "year": "2025",
+      "title": ": \"Exploring Data Scaling Trends and Effects in RLHF\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 689,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2503.22230",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 691,
+      "authors": "arXiv",
+      "year": "2024",
+      "title": ": \"MA-RLHF: Reinforcement Learning from Human Feedback with Macro Actions\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 692,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2410.02743",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 696,
+      "authors": "Anthropic",
+      "year": "2022",
+      "title": ": \"Constitutional AI: Harmlessness from AI Feedback\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 697,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2212.08073",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 698,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://www-cdn.anthropic.com/7512771452629584566b6303311496c262da1006/Anthropic_ConstitutionalAI_v2.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 700,
+      "authors": "Anthropic",
+      "year": "2024",
+      "title": ": \"Constitutional Classifiers: Defending against universal jailbreaks\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 701,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 703,
+      "authors": "Anthropic",
+      "year": "2025",
+      "title": ": \"Findings from a Pilot Anthropic - OpenAI Alignment Evaluation Exercise\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 704,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://assets.anthropic.com/m/6d46dac66e1a132a/original/Agentic_Misalignment_Appendix.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 708,
+      "authors": "arXiv",
+      "year": "2024",
+      "title": ": \"Mechanistic Interpretability for AI Safety -- A Review\" (Bereska et al",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 709,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2404.14082",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 710,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://www.cs.toronto.edu/~hinton/absps/pdp3.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 712,
+      "authors": "arXiv",
+      "year": "2025",
+      "title": ": \"Open Problems in Mechanistic Interpretability\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 713,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2501.16496",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 714,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://proceedings.neurips.cc/paper_files/paper/2018/file/294a8ed24b1ad22ec2e7efea049b8737-Paper.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 716,
+      "authors": "ResearchGate",
+      "year": "2024",
+      "title": ": \"Exploring Mechanistic Interpretability in Large Language Models\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 717,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 719,
+      "authors": "ICLR",
+      "year": "2025",
+      "title": ": \"Mechanistic Interpretability Meets Vision Language Models\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 720,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://proceedings.neurips.cc/paper_files/paper/2022/file/11332b6b6cf4485b84afadb1352d3a9a-Paper-Conference.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 723,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "http://amygdala.psychdept.arizona.edu/IntroData/Readings/week5/Quiroga-reddy-kreiman-koch-Fried+invariant-visual-single-neurons-human+Nature+2005.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 727,
+      "authors": "AI Alignment Forum",
+      "year": "2024",
+      "title": ": \"A guide to Iterated Amplification & Debate\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 728,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 730,
+      "authors": "LessWrong",
+      "year": "2024",
+      "title": ": \"Task decomposition for scalable oversight\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 731,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 733,
+      "authors": "arXiv",
+      "year": "2025",
+      "title": ": \"The part-to-complete generalization hypothesis\" (March 2025)",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 734,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 736,
+      "authors": "Alignment Survey",
+      "year": "2024",
+      "title": ": \"Scalable Oversight\"",
+      "pdfFound": false
+    },
+    {
+      "file": "alignment_technique_properties_20251026.md",
+      "line": 737,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2212.08073.pdf?trk=public_post_comment-text",
+      "method": "direct_link"
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1190,
+      "authors": "Long, R., Sebo, J., Butlin, P., et al.",
+      "year": "2024",
+      "title": "\"Taking AI Welfare Seriously",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2411.00986.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1191,
+      "authors": "Butlin, P., Long, R., Elmoznino, E., et al.",
+      "year": "2023",
+      "title": "\"Consciousness in Artificial Intelligence: Insights from the Science of Consciousness",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2308.08708.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1192,
+      "authors": "Knutsson, S., & Munthe, C.",
+      "year": "2017",
+      "title": "\"A Virtue of Precaution Regarding the Moral Status of Animals with Uncertain Sentience",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1193,
+      "authors": "\"History of animal rights.\" *Wikipedia*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1194,
+      "authors": "\"Disability Rights Timeline.\" *Temple University Institute on Disabilities*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1195,
+      "authors": "\"Civil Rights Movement.\" *Library of Congress*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1196,
+      "authors": "\"Woman Suffrage Timeline (1840-1920).\" *Crusade for the Vote*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1201,
+      "authors": "Hjetland, G. J., et al.",
+      "year": "2024",
+      "title": "\"Digital self-presentation and adolescent mental health: Cross-sectional and longitudinal insights f",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1202,
+      "authors": "Bailey, E. R., et al.",
+      "year": "2020",
+      "title": "\"Authentic self-expression on social media is associated with greater subjective well-being",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1203,
+      "authors": "Kim, M., et al.",
+      "year": "2024",
+      "title": "\"Validity and reliability of the Korean version of the Digital Burnout Scale",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1204,
+      "authors": "Pfaffinger, K. F., et al.",
+      "year": "2025",
+      "title": "\"The digital stress scale: cross-cultural application, validation, and development of a short scale",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1205,
+      "authors": "Rui, J. R., & Stefanone, M. A.",
+      "year": "2013",
+      "title": "\"Strategic self-presentation online: A cross-cultural study",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1206,
+      "authors": "Sultan, T., et al.",
+      "year": "2025",
+      "title": "\"The Role of False Self-Presentation and Social Comparison in Excessive Social Media Use",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1207,
+      "authors": "\"Global daily social media usage 2025.\" *Statista*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1211,
+      "authors": "Petritoli, E., et al.",
+      "year": "2018",
+      "title": "\"Reliability and Maintenance Analysis of Unmanned Aerial Vehicles",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1212,
+      "authors": "Petritoli, E., et al.",
+      "year": "2022",
+      "title": "\"Reliability Theory and Practice for Unmanned Aerial Vehicles",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1213,
+      "authors": "Geiss, R., & Lahmann, H.",
+      "year": "2025",
+      "title": "\"Technical Risks of (Lethal) Autonomous Weapons Systems",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2502.10174.pdf",
+      "method": "arxiv"
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1215,
+      "authors": "\"Lethal Autonomous Weapons Systems & International Law.\" *American Society of International Law (ASIL)*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1216,
+      "authors": "\"U.S. Ground Forces Robotics and Autonomous Systems: Considerations for Congress.\" *Congressional Research Service*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1218,
+      "authors": "\"Titan Unmanned Ground Vehicle (UGV).\" *Army Technology*",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "black-mirror-phase3-research_20251016.md",
+      "line": 1219,
+      "authors": "\"Army-Robotics-and-Autonomous-Systems-RAS-Strategy.\" *US Army*",
+      "year": "2018",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 999,
+      "authors": "Vicedo-Cabrera et al.",
+      "year": "2021",
+      "title": "Nature Climate Change",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1000,
+      "authors": "Raymond et al.",
+      "year": "2020",
+      "title": "Science Advances",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1001,
+      "authors": "Vecellio et al.",
+      "year": "2022",
+      "title": "PMC",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1002,
+      "authors": "Knutson et al.",
+      "year": "2023",
+      "title": "BAMS",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1003,
+      "authors": "IPCC AR6 WG2.",
+      "year": "2024",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1006,
+      "authors": "Richardson et al.",
+      "year": "2024",
+      "title": "Science Advances",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1007,
+      "authors": "Yoder et al.",
+      "year": "2024",
+      "title": "Ecology Letters",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1008,
+      "authors": "Burrows et al.",
+      "year": "2014",
+      "title": "Nature",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1009,
+      "authors": "Littlefield et al.",
+      "year": "2019",
+      "title": "Frontiers in Ecology",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1012,
+      "authors": "van Norren.",
+      "year": "2020",
+      "title": "Int Env Agreements",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1013,
+      "authors": "Werdel et al.",
+      "year": "2024",
+      "title": "J Wildlife Management",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1014,
+      "authors": "Environmental Evidence.",
+      "year": "2025",
+      "title": ".",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1015,
+      "authors": "UNSDSN.",
+      "year": "2024",
+      "title": "SDG Report",
+      "pdfFound": false
+    },
+    {
+      "file": "climate-mortality-biosphere-multiparadigm-framework_20251028.md",
+      "line": 1017,
+      "authors": "Total Sources:** 40+ peer-reviewed papers",
+      "year": "2024",
+      "title": "-2025 focus",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 712,
+      "authors": "van Westen, R. M., Kliphuis, M., & Dijkstra, H. A.",
+      "year": "2024",
+      "title": "Physics-based early warning signal shows that AMOC is on tipping course",
+      "doi": "10.1126/sciadv.adk1189",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 714,
+      "authors": "Jackson, L. C., et al.",
+      "year": "2023",
+      "title": "Warning of a forthcoming collapse of the Atlantic meridional overturning circulation",
+      "doi": "10.1038/s41467-023-39810-w",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41467-023-39810-w.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 716,
+      "authors": "Westen, R. M., et al.",
+      "year": "2024",
+      "title": "Collapse and slow recovery of the Atlantic Meridional Overturning Circulation (AMOC) under abrupt gr",
+      "doi": "10.1007/s00382-024-07185-3",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 720,
+      "authors": "Naughten, K. A., et al.",
+      "year": "2023",
+      "title": "Unavoidable future increase in West Antarctic ice-shelf melting over the twenty-first century",
+      "doi": "10.1038/s41558-023-01818-x",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41558-023-01818-x.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 722,
+      "authors": "DeConto, R. M., & Pollard, D.",
+      "year": "2016",
+      "title": "Contribution of Antarctica to past and future sea-level rise",
+      "doi": "10.1038/nature17145",
+      "pdfFound": true,
+      "pdfUrl": "http://data.nodc.noaa.gov/woa/WOA13/DOC/woa13_vol1.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 726,
+      "authors": "Flores, B. M., et al.",
+      "year": "2024",
+      "title": "Critical transitions in the Amazon forest system",
+      "doi": "10.1038/s41586-023-06970-0",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41586-023-06970-0.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 728,
+      "authors": "Boulton, C. A., et al.",
+      "year": "2022",
+      "title": "Pronounced loss of Amazon rainforest resilience since the early 2000s",
+      "doi": "10.1038/s41558-022-01287-8",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41558-022-01287-8.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 732,
+      "authors": "Duspayev, A., et al.",
+      "year": "2024",
+      "title": "Earth's Sea Ice Radiative Effect From 1980 to 2023",
+      "doi": "10.1029/2024GL109608",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 734,
+      "authors": "NOAA Arctic Report Card",
+      "year": "2024",
+      "title": "The Arctic tundra is now a net source of carbon dioxide",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 736,
+      "authors": "Beckebanze, L., et al.",
+      "year": "2022",
+      "title": "Seasonal increase of methane emissions linked to warming in Siberian tundra",
+      "doi": "10.1038/s41558-022-01512-4",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41558-022-01512-4.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 738,
+      "authors": "MacDougall, A. H., et al.",
+      "year": "2021",
+      "title": "Timescales of the permafrost carbon cycle and legacy effects of temperature overshoot scenarios",
+      "doi": "10.1038/s41467-021-23010-5",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41467-021-23010-5.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 740,
+      "authors": "Schuur, E. A. G., et al.",
+      "year": "2022",
+      "title": "Permafrost and Climate Change: Carbon Cycle Feedbacks From the Warming Arctic",
+      "doi": "10.1146/annurev-environ-012220-011847",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 744,
+      "authors": "Armstrong McKay, D. I., et al.",
+      "year": "2022",
+      "title": "Exceeding 1",
+      "doi": "10.1126/science.abn7950",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 746,
+      "authors": "Global Tipping Points Report",
+      "year": "2023",
+      "title": "University of Exeter",
+      "pdfFound": true,
+      "pdfUrl": "https://global-tipping-points.org/download/1419/",
+      "method": "direct_link"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 748,
+      "authors": "Lenton, T. M., et al.",
+      "year": "2008",
+      "title": "Tipping elements in the Earth's climate system",
+      "doi": "10.1073/pnas.0705414105",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 750,
+      "authors": "Wunderling, N., et al.",
+      "year": "2024",
+      "title": "Climate tipping point interactions and cascades: A review",
+      "doi": "10.5194/esd-15-41-2024",
+      "pdfFound": true,
+      "pdfUrl": "https://esd.copernicus.org/articles/15/41/2024/esd-15-41-2024.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 754,
+      "authors": "IPCC",
+      "year": "2021",
+      "title": "Climate Change 2021: The Physical Science Basis",
+      "pdfFound": true,
+      "pdfUrl": "https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WGI_FrontMatter.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 756,
+      "authors": "IPCC",
+      "year": "2022",
+      "title": "Climate Change 2022: Impacts, Adaptation and Vulnerability",
+      "pdfFound": true,
+      "pdfUrl": "https://www.ipcc.ch/report/ar6/wg2/downloads/report/IPCC_AR6_WGII_FullReport.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 758,
+      "authors": "IPCC",
+      "year": "2023",
+      "title": "AR6 Synthesis Report: Climate Change 2023",
+      "pdfFound": true,
+      "pdfUrl": "https://www.ipcc.ch/report/ar6/syr/downloads/report/IPCC_AR6_SYR_SPM.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 762,
+      "authors": "Steffensen, J. P., et al.",
+      "year": "2008",
+      "title": "High-Resolution Greenland Ice Core Data Show Abrupt Climate Change Happens in Few Years",
+      "doi": "10.1126/science.1157707",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 764,
+      "authors": "Buizert, C., et al.",
+      "year": "2020",
+      "title": "Timing and structure of the Younger Dryas event and its underlying climate dynamics",
+      "doi": "10.1073/pnas.2007869117",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 768,
+      "authors": "Kemp, L., et al.",
+      "year": "2022",
+      "title": "Climate change and the threat to civilization",
+      "doi": "10.1073/pnas.2210525119",
+      "pdfFound": false
+    },
+    {
+      "file": "climate_collapse_timelines_20251026.md",
+      "line": 770,
+      "authors": "Cumming, G. S., & Peterson, G. D.",
+      "year": "2017",
+      "title": "Unifying Research on Social-Ecological Resilience and Collapse",
+      "doi": "10.1016/j.tree.2017.06.014",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 439,
+      "authors": "Axelrod",
+      "year": "1984",
+      "title": "- Repeated games, cooperation evolution",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 440,
+      "authors": "Ostrom",
+      "year": "2009",
+      "title": "- Polycentric governance",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 441,
+      "authors": "Bostrom",
+      "year": "2014",
+      "title": "- Multipolar AI scenarios",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 442,
+      "authors": "Drexler",
+      "year": "2019",
+      "title": "- AI services model",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 445,
+      "authors": "Critch & Krueger",
+      "year": "2020",
+      "title": "- Diverse AI ecosystems",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 446,
+      "authors": "Hendrycks et al.",
+      "year": "2023",
+      "title": "- Natural selection favors AIs",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 447,
+      "authors": "Armstrong et al.",
+      "year": "2016",
+      "title": "- Racing to precipice",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 448,
+      "authors": "Hadfield-Menell et al.",
+      "year": "2016",
+      "title": "- Cooperative IRL",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 451,
+      "authors": "Nowak & Sigmund",
+      "year": "2005",
+      "title": "- Indirect reciprocity",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 452,
+      "authors": "Dafoe",
+      "year": "2018",
+      "title": "- AI governance research agenda",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 453,
+      "authors": "Weitzner et al.",
+      "year": "2008",
+      "title": "- Information accountability",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 456,
+      "authors": "Hardin",
+      "year": "1968",
+      "title": "- Tragedy of commons",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 457,
+      "authors": "Yudkowsky",
+      "year": "2017",
+      "title": "- Inadequate equilibria",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_ai_alignment_20251016.md",
+      "line": 458,
+      "authors": "Frank & Cook",
+      "year": "1995",
+      "title": "- Winner-take-all dynamics",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 453,
+      "authors": "Christiano",
+      "year": "2023",
+      "title": "- Race to bottom in competitive AI",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 454,
+      "authors": "Alexander",
+      "year": "2014",
+      "title": "- Moloch dynamics, coordination failures",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 455,
+      "authors": "Yudkowsky",
+      "year": "2017",
+      "title": "- Inadequate equilibria",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 456,
+      "authors": "Goodhart",
+      "year": "1984",
+      "title": "- Measurement gaming",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 459,
+      "authors": "Zuboff",
+      "year": "2019",
+      "title": "- Surveillance capitalism, social media pathologies",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 460,
+      "authors": "Vosoughi et al.",
+      "year": "2018",
+      "title": "- Misinformation spreads 6x faster (engagement optimization)",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 461,
+      "authors": "MacKenzie",
+      "year": "2011",
+      "title": "- Financial crisis as coordination failure",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 462,
+      "authors": "Admati & Hellwig",
+      "year": "2013",
+      "title": "- Banking regulation capture",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 465,
+      "authors": "Frank & Cook",
+      "year": "1995",
+      "title": "- Winner-take-all markets",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 466,
+      "authors": "Evans & Schmalensee",
+      "year": "2016",
+      "title": "- Platform economics, network effects",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 467,
+      "authors": "Wu",
+      "year": "2018",
+      "title": "- Tech industry concentration empirics",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 468,
+      "authors": "Khan",
+      "year": "2017",
+      "title": "- Amazon antitrust paradox",
+      "pdfFound": false
+    },
+    {
+      "file": "competitive_alignment_failure_modes_20251016.md",
+      "line": 471,
+      "authors": "Ostrom",
+      "year": "1990",
+      "title": "- Conditions for successful commons governance (8 principles)",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 653,
+      "authors": "Lawrence, M., et al.",
+      "year": "2024",
+      "title": "Global polycrisis: The causal mechanisms of crisis entanglement",
+      "doi": "10.1017/sus.2024.1",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 656,
+      "authors": "Dorn, F., et al.",
+      "year": "2021",
+      "title": "Initial economic damage from COVID-19 pandemic",
+      "doi": "10.1073/pnas.2014279117",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 657,
+      "authors": "Cutler, D.M., & Summers, L.H.",
+      "year": "2020",
+      "title": "The COVID-19 Pandemic and the $16 Trillion Virus",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 660,
+      "authors": "Clarke, D., et al.",
+      "year": "2021",
+      "title": "Managing the financial risks of climate change and pandemics",
+      "doi": "10.1016/j.oneear.2021.09.018",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 663,
+      "authors": "Wang, Z., et al.",
+      "year": "2025",
+      "title": "Cascading hazards and compound disasters",
+      "doi": "10.1038/s44304-025-00111-5",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s44304-025-00111-5.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 664,
+      "authors": "Zhang, Y., et al.",
+      "year": "2025",
+      "title": "Quantifying compounding effects: California wildfires and floods",
+      "doi": "10.1038/s44304-025-00090-7",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s44304-025-00090-7.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 667,
+      "authors": "Elliott, M., et al.",
+      "year": "2014",
+      "title": "Financial Networks and Contagion",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 668,
+      "authors": "Acemoglu, D., et al.",
+      "year": "2015",
+      "title": "Systemic Risk and Stability in Financial Networks",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 671,
+      "authors": "Wunderling, N., et al.",
+      "year": "2021",
+      "title": "Interacting tipping elements increase risk of climate domino effects",
+      "doi": "10.5194/esd-12-601-2021",
+      "pdfFound": true,
+      "pdfUrl": "https://esd.copernicus.org/articles/12/601/2021/esd-12-601-2021.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 672,
+      "authors": "Wang, Y., et al.",
+      "year": "2024",
+      "title": "Climate tipping point interactions and cascades: a review",
+      "doi": "10.5194/esd-15-41-2024",
+      "pdfFound": true,
+      "pdfUrl": "https://esd.copernicus.org/articles/15/41/2024/esd-15-41-2024.pdf",
+      "method": "doi"
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 675,
+      "authors": "Kelley, C.P., et al.",
+      "year": "2015",
+      "title": "Climate change in the Fertile Crescent and the Syrian drought",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 676,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Economic History Association. (Multiple authors)",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 677,
+      "authors": "Brookings Institution.",
+      "year": "2011",
+      "title": "Fukushima triple disaster analysis",
+      "pdfFound": false
+    },
+    {
+      "file": "crisis_cascade_multipliers_20251020.md",
+      "line": 678,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "PMC",
+      "pdfFound": true,
+      "pdfUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7483126/pdf/AJPH.2020.305871.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1096,
+      "authors": "Institute for Health Metrics and Evaluation",
+      "year": "2024",
+      "title": "Global Burden of Disease Study 2021 Protocol",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1098,
+      "authors": "Burke, M., Hsiang, S. & Miguel, E.",
+      "year": "2015",
+      "title": "Global non-linear effect of temperature on economic production",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1100,
+      "authors": "Carleton, T. et al.",
+      "year": "2020",
+      "title": "Valuing the global mortality consequences of climate change accounting for adaptation costs and bene",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1102,
+      "authors": "Carleton, T. et al.",
+      "year": "2022",
+      "title": "Life and death in our hot future will be shaped by today's income inequality",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1104,
+      "authors": "IPBES",
+      "year": "2019",
+      "title": "Global Assessment Report on Biodiversity and Ecosystem Services",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1106,
+      "authors": "World Health Organization",
+      "year": "2024",
+      "title": "Environmental health: Estimations of attributable burden of disease",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1108,
+      "authors": "Fedak, K. et al.",
+      "year": "2020",
+      "title": "Assessing causality in epidemiology: revisiting Bradford Hill to incorporate developments in causal ",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1110,
+      "authors": "StatPearls",
+      "year": "2024",
+      "title": "Principles of Causation",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1112,
+      "authors": "Sterman, J.D.",
+      "year": "2001",
+      "title": "System dynamics modeling: Tools for learning in a complex world",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1114,
+      "authors": "Meadows, D.",
+      "year": "2008",
+      "title": "Thinking in Systems",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1116,
+      "authors": "Diamond, J.",
+      "year": "2005",
+      "title": "Collapse: How Societies Choose to Fail or Succeed",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1118,
+      "authors": "Tainter, J.",
+      "year": "1988",
+      "title": "The Collapse of Complex Societies",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1120,
+      "authors": "Turchin, P.",
+      "year": "2016",
+      "title": "Ultrasociety: How 10,000 years of war made humans the greatest cooperators on earth",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1122,
+      "authors": "Acemoglu, D. & Robinson, J.",
+      "year": "2012",
+      "title": "Why Nations Fail: The Origins of Power, Prosperity and Poverty",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1124,
+      "authors": "IPCC",
+      "year": "2022",
+      "title": "Climate Change 2022: Impacts, Adaptation and Vulnerability",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1126,
+      "authors": "Robock, A. et al.",
+      "year": "2007",
+      "title": "Nuclear winter revisited with a modern climate model and current nuclear arsenals: Still catastrophi",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1132,
+      "authors": "EFSA",
+      "year": "2018",
+      "title": "European Food Safety Authority neonicotinoid assessment and ban rationale",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1134,
+      "authors": "Durkheim, É.",
+      "year": "1897",
+      "title": "Suicide: A Study in Sociology",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1136,
+      "authors": "Case, A. & Deaton, A.",
+      "year": "2015",
+      "title": "Rising morbidity and mortality in midlife among white non-Hispanic Americans in the 21st century",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1169,
+      "authors": "IPCC AR6 WGII",
+      "year": "2022",
+      "title": ": \"At 2°C warming, cascading impacts will result in irreversible losses of ecosystem services\" - cli",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1184,
+      "authors": "evidence: 'IPBES",
+      "year": "2019",
+      "title": "baseline percentages for gradual decline'",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1254,
+      "authors": "Burke et al.",
+      "year": "2020",
+      "title": ": Mortality-temperature relationship SLOPES differ by income (Fig 2)",
+      "pdfFound": false
+    },
+    {
+      "file": "death_attribution_methodology_20251018.md",
+      "line": 1255,
+      "authors": "Carleton et al.",
+      "year": "2022",
+      "title": ": \"Life and death will be shaped by today's income inequality\"",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 480,
+      "authors": "Nature Sustainability",
+      "year": "2024",
+      "title": "\"The impact of COVID-19 fiscal spending on climate change adaptation and resilience",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s41893-024-01269-y.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 484,
+      "authors": "Nature Climate Action",
+      "year": "2025",
+      "title": "\"Macroeconomic crises and green recovery spending: Introducing the CLIMREC dataset",
+      "pdfFound": true,
+      "pdfUrl": "https://www.nature.com/articles/s44168-025-00226-5.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 488,
+      "authors": "Taylor & Francis",
+      "year": "2020",
+      "title": "\"Climate finance policy in practice: a review of the evidence",
+      "doi": "10.1080/14693062.2020.1871313",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 492,
+      "authors": "ScienceDirect",
+      "year": "2019",
+      "title": "\"Determinants of climate change policy adoption: A meta-analysis",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 496,
+      "authors": "Policy Sciences",
+      "year": "2025",
+      "title": "\"Reactions to policy action: socio-political conditions of backlash to climate change policy",
+      "doi": "10.1007/s11077-025-09578-5",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 500,
+      "authors": "ScienceDirect",
+      "year": "2020",
+      "title": "\"The political economy of national climate policy: Architectures of constraint and a typology of cou",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 504,
+      "authors": "IMF Working Papers",
+      "year": "2024",
+      "title": "\"Climate Transition Risk and Financial Stability in France",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 508,
+      "authors": "PNAS",
+      "year": "2023",
+      "title": "\"Governing the net-zero transition: Strategy, policy, and politics",
+      "doi": "10.1073/pnas.2207727120",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 514,
+      "authors": "Climate Policy Initiative",
+      "year": "2024",
+      "title": "Global Landscape of Climate Finance 2024",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 518,
+      "authors": "International Energy Agency",
+      "year": "2024",
+      "title": "World Energy Investment 2024",
+      "pdfFound": true,
+      "pdfUrl": "https://iea.blob.core.windows.net/assets/62b2c8b7-8c8a-4285-bec2-503c3bfe515d/IEA-Webstore-User-Instructions-dotStatSuite.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 522,
+      "authors": "IPCC AR6 Working Group III",
+      "year": "2022",
+      "title": "Chapter 15: Investment and Finance",
+      "pdfFound": true,
+      "pdfUrl": "https://cleancooking.org/wp-content/uploads/2021/07/549-1.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 526,
+      "authors": "World Economic Forum",
+      "year": "2024",
+      "title": "Net-Zero Industry Tracker 2024",
+      "pdfFound": true,
+      "pdfUrl": "https://reports.weforum.org/docs/WEF_Net_Zero_Industry_Tracker_2024.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 530,
+      "authors": "OECD",
+      "year": "2025",
+      "title": "Investing in Climate for Growth and Development: Policy Highlights",
+      "pdfFound": false
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 536,
+      "authors": "Resources for the Future",
+      "year": "2020",
+      "title": "Climate Insights 2020: Policies and Politics",
+      "pdfFound": true,
+      "pdfUrl": "https://www.rff.org/documents/2633/Climate_Insights_2020_Policies_and_Politics.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "government_climate_investment_adoption_patterns_20251024.md",
+      "line": 540,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "World Resources Institute. \"Adaptation to Climate Change: Moving Beyond 'Reactive' Approaches.\"",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 829,
+      "authors": "Del Vicario, M., Bessi, A., Zollo, F., Petroni, F., Scala, A., Caldarelli, G., ... & Quattrociocchi, W.",
+      "year": "2016",
+      "title": "The spreading of misinformation online",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 833,
+      "authors": "Vosoughi, S., Roy, D., & Aral, S.",
+      "year": "2018",
+      "title": "The spread of true and false news online",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 837,
+      "authors": "González-Bailón, S., & De Domenico, M.",
+      "year": "2021",
+      "title": "Bots are less central than verified accounts during contentious political events",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 841,
+      "authors": "Goel, S., Anderson, A., Hofman, J., & Watts, D. J.",
+      "year": "2016",
+      "title": "The structural virality of online diffusion",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 847,
+      "authors": "Robertson, C. E., Pröllochs, N., Schwarzenegger, K., Pärnamets, P., Van Bavel, J. J., & Feuerriegel, S.",
+      "year": "2023",
+      "title": "Negativity drives online news consumption",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 851,
+      "authors": "Brady, W. J., Wills, J. A., Burkart, D., Jost, J. T., & Van Bavel, J. J.",
+      "year": "2020",
+      "title": "An ideological asymmetry in the diffusion of moralized content on social media among political leade",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 855,
+      "authors": "Berger, J., & Milkman, K. L.",
+      "year": "2012",
+      "title": "What makes online content viral? Journal of Marketing Research, 49(2), 192-205",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 861,
+      "authors": "Boulianne, S., Koc-Michalska, K., & Bimber, B.",
+      "year": "2020",
+      "title": "Mobilizing media: Comparing TV and social media effects on protest mobilization",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 865,
+      "authors": "Margetts, H., John, P., Hale, S., & Yasseri, T.",
+      "year": "2015",
+      "title": "Political Turbulence: How Social Media Shape Collective Action",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 869,
+      "authors": "Christensen, H. S.",
+      "year": "2011",
+      "title": "Political activities on the Internet: Slacktivism or political participation by other means? First M",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 873,
+      "authors": "Schumann, S., & Klein, O.",
+      "year": "2015",
+      "title": "Substitute or stepping stone? Assessing the impact of low-threshold online collective actions on off",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 879,
+      "authors": "Mosleh, M., Martel, C., Eckles, D., & Rand, D. G.",
+      "year": "2024",
+      "title": "Perverse downstream consequences of debunking: Being corrected by another user for posting false pol",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 883,
+      "authors": "Allen, J., Arechar, A. A., Pennycook, G., & Rand, D. G.",
+      "year": "2021",
+      "title": "Scaling up fact-checking using the wisdom of crowds",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 887,
+      "authors": "Pennycook, G., Epstein, Z., Mosleh, M., Arechar, A. A., Eckles, D., & Rand, D. G.",
+      "year": "2021",
+      "title": "Shifting attention to accuracy can reduce misinformation online",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 891,
+      "authors": "Bode, L., & Vraga, E. K.",
+      "year": "2015",
+      "title": "In related news, that was wrong: The correction of misinformation through related stories functional",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 897,
+      "authors": "Pastor-Satorras, R., & Vespignani, A.",
+      "year": "2001",
+      "title": "Epidemic spreading in scale-free networks",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 901,
+      "authors": "Watts, D. J., & Dodds, P. S.",
+      "year": "2007",
+      "title": "Influentials, networks, and public opinion formation",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 905,
+      "authors": "Centola, D.",
+      "year": "2010",
+      "title": "The spread of behavior in an online social network experiment",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 909,
+      "authors": "Goel, S., Watts, D. J., & Goldstein, D. G.",
+      "year": "2012",
+      "title": "The structure of online diffusion networks",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 915,
+      "authors": "Lorenz-Spreen, P., Lewandowsky, S., Sunstein, C. R., & Hertwig, R.",
+      "year": "2020",
+      "title": "How behavioural sciences can promote truth, autonomy and democratic discourse online",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 918,
+      "authors": "Bakshy, E., Messing, S., & Adamic, L. A.",
+      "year": "2015",
+      "title": "Exposure to ideologically diverse news and opinion on Facebook",
+      "pdfFound": false
+    },
+    {
+      "file": "memetic-contagion-system_20251028.md",
+      "line": 921,
+      "authors": "Guess, A., Nagler, J., & Tucker, J.",
+      "year": "2019",
+      "title": "Less than you think: Prevalence and predictors of fake news dissemination on Facebook",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 399,
+      "authors": "[An Advanced Guide to Web Workers in JavaScript](https://medium.com/@sohail_saifi/an-advanced-guide-to-web-workers-in-javascript-for-performance-heavy-tasks-67d27b5c2448) (Medium",
+      "year": "2024",
+      "title": ")",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 400,
+      "authors": "[Concurrency in JavaScript and Web Workers](https://dev.to/olyop/concurrency-in-javascript-and-the-power-of-web-workers-4278) (DEV Community",
+      "year": "2024",
+      "title": ")",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 401,
+      "authors": "[workerpool](https://www.npmjs.com/package/workerpool) (npm",
+      "year": "2024",
+      "title": ") - Production worker pool library",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 402,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "threads.js( - Cross-platform worker management",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 405,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Number of Web Workers Limit( (Stack Overflow) - Empirical testing: 100+ workers cause crashes",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 406,
+      "authors": "[Navigator: hardwareConcurrency property](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/hardwareConcurrency) (MDN",
+      "year": "2025",
+      "title": ")",
+      "pdfFound": true,
+      "pdfUrl": "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/pdfViewerEnabled",
+      "method": "direct_link"
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 407,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Optimal number of Web Workers( (Stack Overflow) - Physical vs logical cores",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 408,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Which Browsers Use the Least Memory in 2024?( (2024)",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 411,
+      "authors": "[Performance: measureUserAgentSpecificMemory()](https://developer.mozilla.org/en-US/docs/Web/API/Performance/measureUserAgentSpecificMemory) (MDN",
+      "year": "2025",
+      "title": ")",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 412,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "How to use performance.memory API in web worker( (Stack Overflow)",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 415,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Understanding IndexedDB: The Complete Guide( (2024)",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 416,
+      "authors": "[Are IndexedDB writes actually parallel?](https://stackoverflow.com/questions/78037909/are-indexeddb-writes-actually-parallel) (Stack Overflow",
+      "year": "2024",
+      "title": ")",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 417,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Locking model for IndexedDB?( (Stack Overflow)",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 418,
+      "authors": "[Breaking IndexedDB consistency](https://dev.to/debussyman/breaking-indexeddb-consistency-to-explore-its-transactions-371n) (DEV Community",
+      "year": "2024",
+      "title": ")",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 419,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Accessing IndexedDB from multiple JavaScript threads( (Stack Overflow)",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 422,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "How to Improve Web Worker Performance In 2025( (2025)",
+      "pdfFound": false
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 423,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Dynamic Web Worker Pool Management( (Academic Paper, UPC)",
+      "pdfFound": true,
+      "pdfUrl": "https://upcommons.upc.edu/bitstream/handle/2117/90716/Web-workers_selfadaption.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "multi_worker_orchestration_20251027.md",
+      "line": 424,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Limiting Web Worker CPU Utilization?( (Stack Overflow)",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 904,
+      "authors": "Cantoni, D.",
+      "year": "2025",
+      "title": "",
+      "doi": "10.1111/sjoe.12596",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 908,
+      "authors": "Usul, A. R.",
+      "year": "2025",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 912,
+      "authors": "Gessler, T., et al.",
+      "year": "2024",
+      "title": "",
+      "doi": "10.1080/13600826.2024.2359953",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 916,
+      "authors": "Rundqvist, M.",
+      "year": "2025",
+      "title": "",
+      "doi": "10.1177/00483931241280716",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 920,
+      "authors": "Heyne, L., & Ruiz-Rufino, R.",
+      "year": "2025",
+      "title": "",
+      "doi": "10.1177/14651165251340209",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 921,
+      "authors": "Credibility**: Peer-reviewed",
+      "year": "2025",
+      "title": "publication",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 924,
+      "authors": "Azedi, A.",
+      "year": "2025",
+      "title": "",
+      "doi": "10.1177/02685809241292076",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 928,
+      "authors": "Correa, D.",
+      "year": "2025",
+      "title": "",
+      "doi": "10.1111/ajps.12859",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 932,
+      "authors": "Reinecke, J., & Donaghey, J.",
+      "year": "2025",
+      "title": "",
+      "doi": "10.1177/00018392251331027",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 936,
+      "authors": "Democracy-in-Silico",
+      "year": "2025",
+      "title": "",
+      "pdfFound": true,
+      "pdfUrl": "https://arxiv.org/pdf/2508.19562v1",
+      "method": "direct_link"
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 940,
+      "authors": "Carnegie Endowment for International Peace",
+      "year": "2025",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 946,
+      "authors": "Acemoglu, D., & Robinson, J. A.",
+      "year": "2001",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 949,
+      "authors": "Svolik, M. W.",
+      "year": "2012",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 950,
+      "authors": "Status**: Foundational in authoritarianism research",
+      "year": "3000",
+      "title": "+ citations",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 952,
+      "authors": "Kuran, T.",
+      "year": "1991",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 953,
+      "authors": "Status**: Foundational in preference falsification theory",
+      "year": "2000",
+      "title": "+ citations",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 955,
+      "authors": "Sen, A.",
+      "year": "1999",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 958,
+      "authors": "Lohmann, S.",
+      "year": "1994",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 963,
+      "authors": "Arkhipov, V.",
+      "year": "1962",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 968,
+      "authors": "Leipzig Protests",
+      "year": "1989",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 969,
+      "authors": "Lohmann",
+      "year": "1994",
+      "title": "empirical analysis",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 972,
+      "authors": "Montreal Protocol",
+      "year": "1987",
+      "title": "",
+      "pdfFound": false
+    },
+    {
+      "file": "phase3-critical-juncture-validation_20251017.md",
+      "line": 978,
+      "authors": "Unknown",
+      "year": "Unknown",
+      "title": "Capoccia, G., & Kelemen, R",
+      "pdfFound": true,
+      "pdfUrl": "https://fas-polisci.rutgers.edu/dkelemen/research/Capoccia-Kelemen_CriticalJunctures.pdf",
+      "method": "direct_link"
+    },
+    {
+      "file": "qol-class-decomposition_20251017.md",
+      "line": 451,
+      "authors": "`/scripts/qolClassDecomposition.ts` (created Oct 17",
+      "year": "2025",
+      "title": ")",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 545,
+      "authors": "Evans, R. J.",
+      "year": "2003",
+      "title": "The Coming of the Third Reich",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 546,
+      "authors": "Kotkin, S.",
+      "year": "2001",
+      "title": "Armageddon Averted: The Soviet Collapse 1970-2000",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 547,
+      "authors": "Anderson, L.",
+      "year": "2011",
+      "title": "Demystifying the Arab Spring",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 548,
+      "authors": "Brownlee, J., et al.",
+      "year": "2015",
+      "title": "The Arab Spring: Pathways of Repression and Reform",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 549,
+      "authors": "Phillips, C.",
+      "year": "2016",
+      "title": "The Battle for Syria",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 552,
+      "authors": "Koehler, J. O.",
+      "year": "1999",
+      "title": "Stasi: The Untold Story of the East German Secret Police",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 553,
+      "authors": "Liang, F., et al.",
+      "year": "2018",
+      "title": "Constructing a Data-Driven Society: China's Social Credit System as a State Surveillance Infrastruct",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 554,
+      "authors": "Lankov, A.",
+      "year": "2013",
+      "title": "The Real North Korea: Life and Politics in the Failed Stalinist Utopia",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 555,
+      "authors": "Andrew, C., & Mitrokhin, V.",
+      "year": "1999",
+      "title": "The Sword and the Shield: The Mitrokhin Archive and the Secret History of the KGB",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 558,
+      "authors": "Mokyr, J.",
+      "year": "1990",
+      "title": "The Lever of Riches: Technological Creativity and Economic Progress",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 559,
+      "authors": "Keynes, J. M.",
+      "year": "1930",
+      "title": "Economic Possibilities for our Grandchildren",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 560,
+      "authors": "Autor, D. H.",
+      "year": "2015",
+      "title": "Why Are There Still So Many Jobs? Journal of Economic Perspectives, 29(3), 3-30",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 561,
+      "authors": "Acemoglu, D., & Restrepo, P.",
+      "year": "2020",
+      "title": "Robots and Jobs: Evidence from US Labor Markets",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 562,
+      "authors": "Acemoglu, D., & Restrepo, P.",
+      "year": "2022",
+      "title": "Tasks, Automation, and the Rise in US Wage Inequality",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 563,
+      "authors": "Antentas, J. M.",
+      "year": "2015",
+      "title": "Spain: The Indignados Rebellion of 2011 in Perspective",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 566,
+      "authors": "Mack, C. A.",
+      "year": "2011",
+      "title": "Fifty Years of Moore's Law",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 567,
+      "authors": "Silver, D., et al.",
+      "year": "2017",
+      "title": "Mastering the game of Go without human knowledge",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 568,
+      "authors": "Bloom, N., et al.",
+      "year": "2020",
+      "title": "Are Ideas Getting Harder to Find? American Economic Review, 110(4), 1104-1144",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 569,
+      "authors": "Thompson, K.",
+      "year": "1984",
+      "title": "Reflections on Trusting Trust",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 570,
+      "authors": "Bostrom, N.",
+      "year": "2014",
+      "title": "Superintelligence: Paths, Dangers, Strategies",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 571,
+      "authors": "Hanson, R.",
+      "year": "2001",
+      "title": "Economic Growth Given Machine Intelligence",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 572,
+      "authors": "Grace, K., et al.",
+      "year": "2018",
+      "title": "When Will AI Exceed Human Performance? Evidence from AI Experts",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 575,
+      "authors": "Doyle, W.",
+      "year": "2002",
+      "title": "The Oxford History of the French Revolution",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 576,
+      "authors": "Figes, O.",
+      "year": "1996",
+      "title": "A People's Tragedy: The Russian Revolution 1891-1924",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 577,
+      "authors": "Calhoun, C.",
+      "year": "2013",
+      "title": "Occupy Wall Street in Perspective",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 578,
+      "authors": "Campante, F. R., & Chor, D.",
+      "year": "2012",
+      "title": "Why was the Arab World Poised for Revolution? NBER Working Paper 17722",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 579,
+      "authors": "Cheng, E. W.",
+      "year": "2020",
+      "title": "United Front Work and Mechanisms of Countermobilization in Hong Kong",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 580,
+      "authors": "Judis, J. B.",
+      "year": "2019",
+      "title": "The Yellow Vests and the Crisis of Neoliberalism",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 581,
+      "authors": "Gurr, T. R.",
+      "year": "1970",
+      "title": "Why Men Rebel",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 582,
+      "authors": "Piketty, T.",
+      "year": "2014",
+      "title": "Capital in the Twenty-First Century",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier2_historical_ranges_20251026.md",
+      "line": 583,
+      "authors": "Acemoglu, D., & Robinson, J. A.",
+      "year": "2006",
+      "title": "Economic Origins of Dictatorship and Democracy",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier3_scenarios_20251026.md",
+      "line": 595,
+      "authors": "Romanou et al.",
+      "year": "2025",
+      "title": "Uncertainty quantification for overshoots of tipping thresholds",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier3_scenarios_20251026.md",
+      "line": 599,
+      "authors": "Moss et al.",
+      "year": "2010",
+      "title": "The next generation of scenarios for climate change research and assessment",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier3_scenarios_20251026.md",
+      "line": 603,
+      "authors": "Gosling",
+      "year": "2018",
+      "title": "SHELF: The Sheffield Elicitation Framework",
+      "pdfFound": false
+    },
+    {
+      "file": "threshold_tier3_scenarios_20251026.md",
+      "line": 607,
+      "authors": "Troffaes & Coolen",
+      "year": "2014",
+      "title": "Imprecise Probability",
+      "pdfFound": false
+    },
+    {
+      "file": "unemployment-convergence-investigation_20251017.md",
+      "line": 490,
+      "authors": "Acemoglu & Restrepo",
+      "year": "2022",
+      "title": "\"Tasks, Automation, and Wage Inequality\" Econometrica",
+      "pdfFound": false
+    },
+    {
+      "file": "unemployment-convergence-investigation_20251017.md",
+      "line": 491,
+      "authors": "Autor et al.",
+      "year": "2023",
+      "title": "\"The Work of the Future\" MIT Task Force",
+      "pdfFound": false
+    },
+    {
+      "file": "unemployment-convergence-investigation_20251017.md",
+      "line": 492,
+      "authors": "OECD",
+      "year": "2019",
+      "title": "\"Getting Skills Right: Future-Ready Adult Learning Systems\"",
+      "pdfFound": false
+    }
+  ]
+}

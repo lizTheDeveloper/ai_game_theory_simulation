@@ -55,6 +55,8 @@ export function getDefaultDemographics(): DemographicSegment[] {
         war: 0.6,         // Can flee, less exposed
         pollution: 0.4,   // Live in cleaner areas
         ecosystem: 0.5,   // Less dependent on local ecosystems
+        cascade: 0.4,     // FIX (Oct 28, 2025): Add cascade vulnerability - elites have resources to weather cascading crises
+        other: 0.5,       // FIX (Oct 28, 2025): Add other vulnerability - catch-all for miscellaneous risks
       },
     },
     {
@@ -68,6 +70,8 @@ export function getDefaultDemographics(): DemographicSegment[] {
         war: 0.8,
         pollution: 0.6,
         ecosystem: 0.7,
+        cascade: 0.7,     // FIX (Oct 28, 2025): Add cascade vulnerability - professionals moderately affected by cascading crises
+        other: 0.7,       // FIX (Oct 28, 2025): Add other vulnerability
       },
     },
     {
@@ -81,6 +85,8 @@ export function getDefaultDemographics(): DemographicSegment[] {
         war: 1.0,
         pollution: 1.0,
         ecosystem: 1.0,
+        cascade: 1.0,     // FIX (Oct 28, 2025): Add cascade vulnerability - baseline
+        other: 1.0,       // FIX (Oct 28, 2025): Add other vulnerability - baseline
       },
     },
     {
@@ -94,6 +100,8 @@ export function getDefaultDemographics(): DemographicSegment[] {
         war: 1.4,         // Cannot flee
         pollution: 1.6,   // Live in polluted areas
         ecosystem: 1.5,   // Dependent on local resources
+        cascade: 1.8,     // FIX (Oct 28, 2025): Add cascade vulnerability - precariat highly vulnerable to cascading crises
+        other: 1.6,       // FIX (Oct 28, 2025): Add other vulnerability
       },
     },
     {
@@ -107,6 +115,8 @@ export function getDefaultDemographics(): DemographicSegment[] {
         war: 1.8,         // Trapped, highly exposed
         pollution: 2.0,   // Highest environmental exposure
         ecosystem: 2.0,   // Directly dependent on ecosystems
+        cascade: 2.2,     // FIX (Oct 28, 2025): Add cascade vulnerability - informal workers most vulnerable to cascading crises
+        other: 2.0,       // FIX (Oct 28, 2025): Add other vulnerability
       },
     },
   ];
@@ -227,11 +237,33 @@ export function resolveMortality(
 
     for (const risk of risks) {
       const vulnerability = demo.vulnerability[risk.type];
+
+      // FIX (Oct 28, 2025): Detect NaN in risk baseRisk
+      if (isNaN(risk.baseRisk)) {
+        throw new Error(`risk.baseRisk is NaN: type=${risk.type}, proximate=${risk.proximate}, root=${risk.root}, description="${risk.description}", month=${risk.month}`);
+      }
+      if (isNaN(vulnerability)) {
+        throw new Error(`vulnerability is NaN: demographic=${demo.name}, riskType=${risk.type}, vulnerability=${vulnerability}`);
+      }
+
       const adjustedRisk = risk.baseRisk * vulnerability;
+
+      if (isNaN(adjustedRisk)) {
+        throw new Error(`adjustedRisk is NaN: baseRisk=${risk.baseRisk}, vulnerability=${vulnerability}, demographic=${demo.name}`);
+      }
+
       survivalProb *= 1 - adjustedRisk;
+
+      if (isNaN(survivalProb)) {
+        throw new Error(`survivalProb became NaN: demographic=${demo.name}, adjustedRisk=${adjustedRisk}, riskType=${risk.type}`);
+      }
     }
 
     const deathProb = 1 - survivalProb;
+
+    if (isNaN(deathProb)) {
+      throw new Error(`deathProb is NaN: demographic=${demo.name}, survivalProb=${survivalProb}, riskCount=${risks.length}`);
+    }
 
     // Check for extreme crisis compression (>10% monthly mortality)
     let finalDeathProb = deathProb;
@@ -259,7 +291,20 @@ export function resolveMortality(
 
     // Calculate deaths for this segment
     const segmentPopulation = pop.population * demo.fraction;
+
+    // FIX (Oct 28, 2025): Add NaN detection for segmentDeaths calculation
+    if (isNaN(segmentPopulation)) {
+      throw new Error(`segmentPopulation is NaN: pop.population=${pop.population}, demo.fraction=${demo.fraction}, demo=${demo.name}`);
+    }
+    if (isNaN(finalDeathProb)) {
+      throw new Error(`finalDeathProb is NaN for demographic ${demo.name}. deathProb=${deathProb}, riskCount=${risks.length}`);
+    }
+
     const segmentDeaths = segmentPopulation * finalDeathProb;
+
+    if (isNaN(segmentDeaths)) {
+      throw new Error(`segmentDeaths is NaN: segmentPopulation=${segmentPopulation}, finalDeathProb=${finalDeathProb}, demo=${demo.name}`);
+    }
 
     // Multi-causal attribution (distribute deaths across causes by risk weight)
     const totalRisk = risks.reduce((sum, r) => sum + r.baseRisk * demo.vulnerability[r.type], 0);
@@ -283,13 +328,11 @@ export function resolveMortality(
     totalDeaths += segmentDeaths;
   }
 
-  // Apply deaths to population
-  // FIX (Oct 28, 2025): totalDeaths is in BILLIONS, not millions!
-  // segmentPopulation = pop.population (billions) * demo.fraction
-  // segmentDeaths = segmentPopulation (billions) * finalDeathProb
-  // Therefore totalDeaths is in billions, subtract directly
+  // Apply deaths to REGIONAL populations (not global)
+  // FIX (Oct 28, 2025): Apply deaths to regions, then HumanPopulationPhase aggregates → global
+  // This prevents aggregation from overwriting our mortality
 
-  // DEBUG: Validate before subtraction
+  // DEBUG: Validate totalDeaths
   if (isNaN(totalDeaths) || !isFinite(totalDeaths)) {
     console.error(`❌ totalDeaths is invalid: ${totalDeaths}`);
     console.error(`   Segments: ${deathSegments.length}`);
@@ -297,18 +340,25 @@ export function resolveMortality(
     throw new Error(`totalDeaths is NaN or Infinity: ${totalDeaths}`);
   }
 
-  const newPopulation = pop.population - totalDeaths;
+  // Apply deaths proportionally to each region
+  if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
+    const totalDeathsMillions = totalDeaths * 1000; // Convert to millions for regional tracking
 
-  // DEBUG: Validate after subtraction
-  if (isNaN(newPopulation) || !isFinite(newPopulation) || newPopulation < 0) {
-    console.error(`❌ newPopulation is invalid: ${newPopulation}`);
-    console.error(`   oldPopulation: ${pop.population}`);
-    console.error(`   totalDeaths: ${totalDeaths}`);
-    console.error(`   Calculation: ${pop.population} - ${totalDeaths} = ${newPopulation}`);
-    throw new Error(`Population became invalid after death subtraction`);
+    for (const region of pop.regionalPopulations) {
+      // Each region gets deaths proportional to its share of global population
+      const regionFraction = region.population / (pop.population * 1000); // region in millions, global in billions
+      const regionalDeaths = totalDeathsMillions * regionFraction;
+
+      region.population = Math.max(0, region.population - regionalDeaths);
+
+      // Track deaths at regional level
+      region.monthlyExcessDeaths = regionalDeaths;
+      region.cumulativeCrisisDeaths += regionalDeaths;
+    }
   }
 
-  pop.population = newPopulation;
+  // DON'T update pop.population directly - aggregateGlobalPopulation will do it
+  // pop.population = newPopulation; // REMOVED - let aggregation handle this
 
   // Convert to millions for death tracking (legacy compatibility)
   const totalDeathsMillions = totalDeaths * 1000;

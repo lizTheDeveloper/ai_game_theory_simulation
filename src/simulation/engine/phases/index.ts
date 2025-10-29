@@ -80,7 +80,7 @@ export { NovelEntitiesPhase } from './NovelEntitiesPhase';
 export { HumanPopulationPhase } from './HumanPopulationPhase';
 export { RefugeeCrisisPhase } from './RefugeeCrisisPhase';
 export { GovernmentRelocationPhase } from './GovernmentRelocationPhase';  // Oct 20, 2025: Government-assisted relocation programs
-export { CountryPopulationPhase } from './CountryPopulationPhase';
+// REMOVED (Oct 28, 2025): CountryPopulationPhase deleted - was overwriting Bayesian mortality
 export { PsychologicalTraumaPhase } from './PsychologicalTraumaPhase';  // Phase 1B Refinement (Oct 17, 2025)
 export { WarMeaningFeedbackPhase } from './WarMeaningFeedbackPhase';
 export { ClimateJusticePhase } from './ClimateJusticePhase';

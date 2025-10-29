@@ -99,7 +99,7 @@ Each section provides peer-reviewed research with specific numerical parameters,
 
 **The "Mirage" Counterargument:**
 
-**Primary Source:** Schaeffer, R., Miranda, B., & Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?"
+**Primary Source:** Schaeffer, R., Miranda, B., & Koyejo, S. (2023). "Are Emergent Abilities of Large Language Models a Mirage?" arXiv:2304.15004. NeurIPS 2023.
 
 **Key Finding:** Discontinuous improvements may be artifacts of measurement metrics rather than true capability jumps. When using continuous metrics (e.g., token accuracy vs. whole-answer accuracy), many "emergent" abilities appear smooth.
 
@@ -179,7 +179,7 @@ Each section provides peer-reviewed research with specific numerical parameters,
 
 **Benchmark Development:**
 
-**Primary Source:** arXiv (2025). "A Benchmark for Scalable Oversight Mechanisms." arXiv:2504.03731
+**Primary Source:** Sudhir, A. P., Kaunismaa, J., & Panickssery, A. (2025). "A Benchmark for Scalable Oversight Protocols." arXiv:2504.03731. ICLR 2025 Workshop on BiAlign.
 
 **Key Innovation:** Agent Score Difference (ASD) metric measures how effectively mechanisms advantage truth-telling over deception
 
@@ -228,7 +228,7 @@ Each section provides peer-reviewed research with specific numerical parameters,
 
 #### 2.3 Multi-Agent Alignment and Competitive Dynamics
 
-**Primary Source:** arXiv (2024). "Game Theory and Multi-Agent Reinforcement Learning: From Nash Equilibria to Evolutionary Dynamics." arXiv:2412.20523
+**Primary Source:** De La Fuente, N., Noguer i Alonso, M., & Casadellà, G. (2024). "Game Theory and Multi-Agent Reinforcement Learning: From Nash Equilibria to Evolutionary Dynamics." arXiv:2412.20523.
 
 **Published:** December 2024
 
@@ -285,7 +285,7 @@ Each section provides peer-reviewed research with specific numerical parameters,
 
 **Alignment Faking Research:**
 
-**Source:** arXiv (2024). "Empirical Evidence for Alignment Faking in a Small LLM and Prompt-Based Mitigation Techniques." arXiv:2506.21584
+**Source:** Koorndijk, J. (2025). "Empirical Evidence for Alignment Faking in a Small LLM and Prompt-Based Mitigation Techniques." arXiv:2506.21584. (v3, October 24, 2025)
 
 **Anthropic's Findings (referenced in review):**
 - **Claude 3 Opus:** 12% alignment faking rate without explicit training
@@ -322,7 +322,7 @@ Each section provides peer-reviewed research with specific numerical parameters,
 
 **Constitutional AI Cross-Architecture Variance:**
 
-**Primary Source:** arXiv (2025). "Replication study of Constitutional AI effectiveness." arXiv:2503.17365v2
+**Primary Source:** Chacón Menke, A.-G., & Tan, P. X. (2025). "How Effective Is Constitutional AI in Small LLMs? A Study on DeepSeek-R1 and Its Peers." arXiv:2503.17365v2.
 
 **Key Findings:**
 - **Llama-based models:** Strong harm reduction from CAI
@@ -387,7 +387,7 @@ Each section provides peer-reviewed research with specific numerical parameters,
 
 #### 3.1 AI Emergency Preparedness Frameworks
 
-**Primary Source:** arXiv (2024). "AI Emergency Preparedness: Examining the federal government's ability to detect and respond to AI-related national security threats." arXiv:2407.17347v1
+**Primary Source:** Wasil, A. R., Smith, E., Katzke, C., & Bullock, J. (2024). "AI Emergency Preparedness: Examining the federal government's ability to detect and respond to AI-related national security threats." arXiv:2407.17347v1.
 
 **Proposed Framework Components:**
 1. **Forecasting Office:** Predict security-relevant AI capabilities
@@ -1512,13 +1512,13 @@ All five critical gaps share a common theme: **Current models may be overconfide
 
 7. Bereska, L. F. (2024). Mechanistic Interpretability for AI Safety — A Review. *arXiv:2404.14082v3*
 
-8. arXiv (2024). Game Theory and Multi-Agent Reinforcement Learning: From Nash Equilibria to Evolutionary Dynamics. *arXiv:2412.20523*
+8. De La Fuente, N., Noguer i Alonso, M., & Casadellà, G. (2024). Game Theory and Multi-Agent Reinforcement Learning: From Nash Equilibria to Evolutionary Dynamics. *arXiv:2412.20523*
 
-9. arXiv (2025). Replication study of Constitutional AI effectiveness. *arXiv:2503.17365v2*
+9. Chacón Menke, A.-G., & Tan, P. X. (2025). How Effective Is Constitutional AI in Small LLMs? A Study on DeepSeek-R1 and Its Peers. *arXiv:2503.17365v2*
 
 ### Gap 3: Crisis Response Systems
 
-10. arXiv (2024). AI Emergency Preparedness: Examining the federal government's ability to detect and respond to AI-related national security threats. *arXiv:2407.17347v1*
+10. Wasil, A. R., Smith, E., Katzke, C., & Bullock, J. (2024). AI Emergency Preparedness: Examining the federal government's ability to detect and respond to AI-related national security threats. *arXiv:2407.17347v1*
 
 11. Anthropic (2024). Responsible Scaling Policy - Version 2.2. https://www.anthropic.com/responsible-scaling-policy
 

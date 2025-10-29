@@ -1,9 +1,21 @@
 {
   "mcpServers": {
+    "agent-memory": {
+      "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
+      "args": [
+        "/Users/annhoward/src/superalignmenttoutopia/scripts/agent-memory-server.py"
+      ]
+    },
     "ai-safety-transcripts": {
       "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
       "args": [
         "/Users/annhoward/src/superalignmenttoutopia/scripts/transcript-rag-server.py"
+      ]
+    },
+    "research-pdfs": {
+      "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
+      "args": [
+        "/Users/annhoward/src/superalignmenttoutopia/scripts/pdf-rag-server.py"
       ]
     },
     "arxiv": {

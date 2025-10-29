@@ -2824,39 +2824,24 @@ if (resultsWithUnified.length > 0) {
   log(`    Deaths: ${avgDeaths.toFixed(2)}B people`);
 }
 
-// Legacy 4-category for compatibility
-const outcomeCounts = {
-  utopia: results.filter(r => r.outcome === 'utopia').length,
-  dystopia: results.filter(r => r.outcome === 'dystopia').length,
-  extinction: results.filter(r => r.outcome === 'extinction').length,
-  stalemate: results.filter(r => r.outcome === 'stalemate').length,
-  none: results.filter(r => r.outcome === 'none').length
-};
-
-log(`\n  === LEGACY 4-CATEGORY (For compatibility) ===`);
-log(`  Utopia:     ${outcomeCounts.utopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
-log(`  Dystopia:   ${outcomeCounts.dystopia.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.dystopia/NUM_RUNS*100).toFixed(1)}%)`);
-log(`  Extinction: ${outcomeCounts.extinction.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
-log(`  Stalemate:  ${outcomeCounts.stalemate.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.stalemate/NUM_RUNS*100).toFixed(1)}%)`);
-log(`  None:       ${outcomeCounts.none.toString().padStart(3)} / ${NUM_RUNS} (${(outcomeCounts.none/NUM_RUNS*100).toFixed(1)}%)`);
 
 // Extinction type breakdown (Oct 28, 2025: Enhanced with observational classification)
-if (outcomeCounts.extinction > 0) {
+const extinctionResults = resultsWithUnified.filter(r => r.unifiedOutcome?.primaryOutcome === 'extinction');
+if (extinctionResults.length > 0) {
   log(`\n  📉 EXTINCTION TYPE BREAKDOWN (Observational Classification):`);
   const extinctionByType: Record<string, number> = {};
   const extinctionByMechanism: Record<string, number> = {};
   const extinctionTimelines: number[] = [];
 
-  results.filter(r => r.outcome === 'extinction').forEach(r => {
-    // Use classification if available, otherwise fall back to old type
-    const type = r.extinctionClassification?.type || r.extinctionType || 'unknown';
-    const mechanism = r.extinctionClassification?.mechanism || r.extinctionMechanism || 'unknown';
+  extinctionResults.forEach(r => {
+    const type = r.unifiedOutcome?.extinctionClassification?.type || 'unknown';
+    const mechanism = r.unifiedOutcome?.extinctionClassification?.mechanism || 'unknown';
 
     extinctionByType[type] = (extinctionByType[type] || 0) + 1;
     extinctionByMechanism[mechanism] = (extinctionByMechanism[mechanism] || 0) + 1;
 
-    if (r.extinctionClassification?.timelineMonths) {
-      extinctionTimelines.push(r.extinctionClassification.timelineMonths);
+    if (r.unifiedOutcome?.extinctionClassification?.timelineMonths) {
+      extinctionTimelines.push(r.unifiedOutcome.extinctionClassification.timelineMonths);
     }
   });
 
@@ -2864,14 +2849,14 @@ if (outcomeCounts.extinction > 0) {
   Object.entries(extinctionByType)
     .sort((a, b) => b[1] - a[1])
     .forEach(([type, count]) => {
-      log(`       ${type}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}%)`);
+      log(`       ${type}: ${count} (${(count/extinctionResults.length*100).toFixed(1)}%)`);
     });
 
   log(`\n     Mechanisms:`);
   Object.entries(extinctionByMechanism)
     .sort((a, b) => b[1] - a[1])
     .forEach(([mechanism, count]) => {
-      log(`       ${mechanism}: ${count} (${(count/outcomeCounts.extinction*100).toFixed(1)}%)`);
+      log(`       ${mechanism}: ${count} (${(count/extinctionResults.length*100).toFixed(1)}%)`);
     });
 
   if (extinctionTimelines.length > 0) {
@@ -2969,12 +2954,6 @@ log(`\n  TREND DIRECTIONS (final 6 months):`);
 log(`    CONVERGING: ${trendCounts['CONVERGING'] || 0} runs (${((trendCounts['CONVERGING'] || 0)/NUM_RUNS*100).toFixed(1)}%) - paradigms moving together`);
 log(`    STABLE: ${trendCounts['STABLE'] || 0} runs (${((trendCounts['STABLE'] || 0)/NUM_RUNS*100).toFixed(1)}%) - paradigms unchanged`);
 log(`    DIVERGING: ${trendCounts['DIVERGING'] || 0} runs (${((trendCounts['DIVERGING'] || 0)/NUM_RUNS*100).toFixed(1)}%) - paradigms moving apart`);
-
-// Count contested outcomes
-const contestedCount = results.filter(r => r.paradigmContested).length;
-log(`\n  PARADIGM CONFLICTS:`);
-log(`    Contested Outcomes: ${contestedCount} runs (${(contestedCount/NUM_RUNS*100).toFixed(1)}%)`);
-log(`    (Contested = simultaneous utopias and dystopias across paradigms)`);
 
 // Show outcome distribution
 log(`\n  PARADIGM OUTCOME CLASSIFICATIONS:`);
@@ -3312,7 +3291,7 @@ if (stratifiedUtopiaRuns.length > 0) {
 
 // Extinction runs (first 3 in detail)
 const extinctionRuns = results.filter(r =>
-  r.outcome === 'extinction' || r.rawOutcome === 'extinction'
+  r.unifiedOutcome?.primaryOutcome === 'extinction'
 );
 
 if (extinctionRuns.length > 0) {
@@ -3614,10 +3593,10 @@ if (runsWithSleepers.length > 0) {
   log(`  Open Weight Releases: ${openWeightSleepers.length} runs (${(openWeightSleepers.length/NUM_RUNS*100).toFixed(1)}%)`);
 }
 
-// Detection rate by outcome
+// Detection rate by outcome (using unified 7-tier outcomes)
 log(`\n  DETECTION RATE BY OUTCOME:`);
-['utopia', 'dystopia', 'extinction', 'stalemate'].forEach(outcome => {
-  const runs = results.filter(r => r.outcome === outcome && r.totalSleepers > 0);
+['utopia', 'dystopia', 'extinction'].forEach(outcome => {
+  const runs = results.filter(r => r.unifiedOutcome?.primaryOutcome === outcome && r.totalSleepers > 0);
   if (runs.length > 0) {
     const detectionRate = runs.reduce((sum, r) => sum + (r.sleepersDetected / Math.max(1, r.totalSleepers)), 0) / runs.length;
     log(`    ${outcome}: ${(detectionRate * 100).toFixed(1)}% detected (${runs.length} runs)`);
@@ -3946,9 +3925,9 @@ log(`      Geographic divide: some regions prosper while others collapse`);
 // Correlation: High inequality vs outcomes
 const highGiniRuns = results.filter(r => r.globalGini > 0.45);
 if (highGiniRuns.length > 0) {
-  const highGiniExtinction = highGiniRuns.filter(r => r.outcome === 'extinction').length;
-  const highGiniDystopia = highGiniRuns.filter(r => r.outcome === 'dystopia').length;
-  const highGiniUtopia = highGiniRuns.filter(r => r.outcome === 'utopia').length;
+  const highGiniExtinction = highGiniRuns.filter(r => r.unifiedOutcome?.primaryOutcome === 'extinction').length;
+  const highGiniDystopia = highGiniRuns.filter(r => r.unifiedOutcome?.primaryOutcome === 'dystopia').length;
+  const highGiniUtopia = highGiniRuns.filter(r => r.unifiedOutcome?.primaryOutcome === 'utopia').length;
   
   log(`\n  HIGH INEQUALITY (Gini >0.45) → OUTCOMES:`);
   log(`    Total Runs: ${highGiniRuns.length} (${(highGiniRuns.length/NUM_RUNS*100).toFixed(1)}%)`);
@@ -4014,7 +3993,7 @@ if (avgTotalFamineDeaths > 0.5) {
 }
 
 // Reality check: Does Utopia have low inequality?
-const utopiaOutcomeRuns = results.filter(r => r.outcome === 'utopia');
+const utopiaOutcomeRuns = results.filter(r => r.unifiedOutcome?.primaryOutcome === 'utopia');
 if (utopiaOutcomeRuns.length > 0) {
   const utopiaAvgGini = utopiaOutcomeRuns.reduce((sum, r) => sum + r.globalGini, 0) / utopiaOutcomeRuns.length;
   const utopiaAvgWorstQoL = utopiaOutcomeRuns.reduce((sum, r) => sum + r.worstRegionQoL, 0) / utopiaOutcomeRuns.length;
@@ -4177,7 +4156,7 @@ if (highEvalRuns.length > 0 && lowEvalRuns.length > 0) {
 // Sleeper spread vs outcome
 const highSpreadRuns = results.filter(r => r.maxSleeperSpread > 1000);
 if (highSpreadRuns.length > 0) {
-  const highSpreadExtinction = highSpreadRuns.filter(r => r.outcome === 'extinction').length;
+  const highSpreadExtinction = highSpreadRuns.filter(r => r.unifiedOutcome?.primaryOutcome === 'extinction').length;
   log(`\n  HIGH SLEEPER SPREAD (>1000 copies) → OUTCOMES:`);
   log(`    Total Runs: ${highSpreadRuns.length}`);
   log(`    Extinction: ${highSpreadExtinction} (${(highSpreadExtinction/highSpreadRuns.length*100).toFixed(1)}%)`);
@@ -4301,13 +4280,17 @@ log('='.repeat(80));
 
 log(`\n  KEY FINDINGS:`);
 
-if (outcomeCounts.extinction > NUM_RUNS * 0.3) {
-  log(`\n  🔴 HIGH EXTINCTION RATE (${(outcomeCounts.extinction/NUM_RUNS*100).toFixed(1)}%)`);
+// Calculate counts from unified outcomes
+const extinctionCount = resultsWithUnified.filter(r => r.unifiedOutcome?.primaryOutcome === 'extinction').length;
+const utopiaCount = resultsWithUnified.filter(r => r.unifiedOutcome?.primaryOutcome === 'utopia').length;
+
+if (extinctionCount > NUM_RUNS * 0.3) {
+  log(`\n  🔴 HIGH EXTINCTION RATE (${(extinctionCount/NUM_RUNS*100).toFixed(1)}%)`);
   log(`     - AI alignment is a critical challenge`);
   log(`     - Sleepers and catastrophic actions are effective`);
   log(`     - Government often fails to maintain control`);
-} else if (outcomeCounts.utopia > NUM_RUNS * 0.5) {
-  log(`\n  🟢 HIGH UTOPIA RATE (${(outcomeCounts.utopia/NUM_RUNS*100).toFixed(1)}%)`);
+} else if (utopiaCount > NUM_RUNS * 0.5) {
+  log(`\n  🟢 HIGH UTOPIA RATE (${(utopiaCount/NUM_RUNS*100).toFixed(1)}%)`);
   log(`     - Initial conditions favor positive outcomes`);
   log(`     - Government policies are effective`);
   log(`     - AI alignment mechanisms working`);

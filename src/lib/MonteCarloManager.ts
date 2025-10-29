@@ -227,8 +227,8 @@ export interface MonteCarloAggregateStats {
     unknown?: number;
   };
 
-  // Timeline data for visualization
-  timeline?: Array<{
+  // Timeline data for visualization (monthly progression)
+  timelineData?: Array<{
     month: number;
     totalRuns: number;
     survivingRuns: number;
@@ -731,7 +731,6 @@ export class MonteCarloManager {
       // Simulation completed successfully
       this.updateSimulationStatus(config.batchId, config.simulationId, {
         status: 'completed',
-        outcome: outcome.outcome,
         outcomeReason: outcome.reason,
         endTime: Date.now()
       });
@@ -953,20 +952,32 @@ export class MonteCarloManager {
     const monthsToOutcome: number[] = [];
 
     for (const status of statusArray) {
-      switch (status.outcome) {
+      if (!status.unifiedOutcome) {
+        noneCount++;
+        continue;
+      }
+
+      // Map 7-tier unified outcomes to 4-category legacy outcomes for stats
+      switch (status.unifiedOutcome.primaryOutcome) {
         case 'utopia':
           utopiaCount++;
           monthsToOutcome.push(status.currentMonth);
           break;
         case 'dystopia':
+        case 'crisis_era':
+        case 'collapse':
+        case 'dark_age':
           dystopiaCount++;
           monthsToOutcome.push(status.currentMonth);
           break;
         case 'extinction':
+        case 'terminal':
+        case 'bottleneck':
           extinctionCount++;
           monthsToOutcome.push(status.currentMonth);
           break;
-        case 'stalemate':
+        case 'status_quo':
+        case 'inconclusive':
           stalemateCount++;
           monthsToOutcome.push(status.currentMonth);
           break;
@@ -1035,7 +1046,7 @@ export class MonteCarloManager {
       averageMonthsSurvived,
       survivalRate,
       outcomeBreakdown,
-      timeline: [] // TODO: Build timeline array from simulation data
+      timelineData: [] // TODO: Build timeline array from simulation data
     };
   }
 

@@ -20,6 +20,7 @@ import { updateCatastropheTracking } from './calculations';
 import { RootCause } from '@/types/population';
 import { calculateClimatePovertyWeights, calculateEcosystemWeights } from './utils/deathAttribution';
 import { convertClimateSensitivityToRate } from './thresholds/tier1Config';
+import { addMortalityRisk } from './bayesianMortality';
 
 /**
  * Initialize environmental accumulation state
@@ -404,24 +405,43 @@ function checkEnvironmentalCrises(state: GameState): void {
     // Population impact: Initial famine/scarcity deaths (0.5-1% casualties)
     // SEMI-GLOBAL: Affects food/water insecure regions (~25% of world)
     // 0.8% mortality rate in exposed regions
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.008,
-      'Resource crisis - famine/scarcity (vulnerable regions)',
-      0.25,
-      'famine',
-      {
-        causes: [
-          { cause: RootCause.resource, weight: 0.50, confidence: 'MEDIUM' },
-          { cause: RootCause.inequality, weight: 0.35, confidence: 'MEDIUM' },
-          { cause: RootCause.demographic, weight: 0.15, confidence: 'MEDIUM' }
-        ],
-        evidence: 'Steffen et al. planetary boundaries + Burke poverty vulnerability',
-        mechanism: 'Resource depletion (phosphorus, water) × poverty × population pressure → famine'
-      },
-      'MEDIUM'
-    );
+    const pop = state.humanPopulationSystem as any;
+
+    // Resource component: 50%
+    addMortalityRisk(pop, {
+      type: 'famine',
+      baseRisk: 0.008 * 0.50,
+      proximate: 'famine',
+      root: 'resource',
+      confidence: 'MEDIUM',
+      description: 'Resource crisis - famine/scarcity (resource component)',
+      month: state.currentMonth,
+      exposedFraction: 0.25
+    });
+
+    // Inequality component: 35%
+    addMortalityRisk(pop, {
+      type: 'famine',
+      baseRisk: 0.008 * 0.35,
+      proximate: 'famine',
+      root: 'inequality',
+      confidence: 'MEDIUM',
+      description: 'Resource crisis - famine/scarcity (inequality component)',
+      month: state.currentMonth,
+      exposedFraction: 0.25
+    });
+
+    // Demographic component: 15%
+    addMortalityRisk(pop, {
+      type: 'famine',
+      baseRisk: 0.008 * 0.15,
+      proximate: 'famine',
+      root: 'demographic',
+      confidence: 'MEDIUM',
+      description: 'Resource crisis - famine/scarcity (demographic component)',
+      month: state.currentMonth,
+      exposedFraction: 0.25
+    });
   }
   
   // POLLUTION CRISIS: Pollution exceeds 70%
@@ -459,16 +479,17 @@ function checkEnvironmentalCrises(state: GameState): void {
     // Population impact: Pollution-related disease deaths (0.3-0.5% casualties)
     // SEMI-GLOBAL: Industrial nations + downwind regions (~60% of world)
     // 0.4% mortality rate from acute contamination/disease
-    const { addAcuteCrisisDeaths } = require('./populationDynamics');
-    addAcuteCrisisDeaths(
-      state,
-      0.004,
-      'Pollution crisis - toxic contamination (industrial regions)',
-      0.60,
-      'pollution',
-      RootCause.pollution,
-      'HIGH'
-    );
+    const pop = state.humanPopulationSystem as any;
+    addMortalityRisk(pop, {
+      type: 'pollution',
+      baseRisk: 0.004,
+      proximate: 'pollution',
+      root: 'pollution',
+      confidence: 'HIGH',
+      description: 'Pollution crisis - toxic contamination (industrial regions)',
+      month: state.currentMonth,
+      exposedFraction: 0.60
+    });
   }
   
   // ============================================================================
@@ -554,25 +575,44 @@ function checkEnvironmentalCrises(state: GameState): void {
       
       // Very low mortality: 0.01% per month (vulnerable regions first)
       // Affects tropical regions, small island states (~5% of world)
-      const { addAcuteCrisisDeaths } = require('./populationDynamics');
+      const pop = state.humanPopulationSystem as any;
       const ecosystemWeights1 = calculateEcosystemWeights(1);
-      addAcuteCrisisDeaths(
-        state,
-        0.0001,
-        'Ecosystem decline - regional food stress (tropical/island)',
-        0.05,
-        'ecosystem',
-        {
-          causes: [
-            { cause: RootCause.ecosystem, weight: ecosystemWeights1.ecosystem, confidence: 'MEDIUM' },
-            { cause: RootCause.climate, weight: ecosystemWeights1.climate, confidence: 'MEDIUM' },
-            { cause: RootCause.pollution, weight: ecosystemWeights1.pollution, confidence: 'MEDIUM' }
-          ],
-          evidence: `IPBES (2019): Biodiversity loss = ${Math.round(ecosystemWeights1.ecosystem * 100)}% land use/exploitation + ${Math.round(ecosystemWeights1.climate * 100)}% climate + ${Math.round(ecosystemWeights1.pollution * 100)}% pollution`,
-          mechanism: 'Land use change + overexploitation + climate stress + pollution → ecosystem collapse'
-        },
-        'MEDIUM'
-      );
+
+      // Ecosystem component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.0001 * ecosystemWeights1.ecosystem,
+        proximate: 'ecosystem',
+        root: 'ecosystem',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem decline - regional food stress (ecosystem component)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
+
+      // Climate component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.0001 * ecosystemWeights1.climate,
+        proximate: 'ecosystem',
+        root: 'climate',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem decline - regional food stress (climate component)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
+
+      // Pollution component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.0001 * ecosystemWeights1.pollution,
+        proximate: 'ecosystem',
+        root: 'pollution',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem decline - regional food stress (pollution component)',
+        month: state.currentMonth,
+        exposedFraction: 0.05
+      });
       
       // Gradual QoL degradation
       qol.materialAbundance = Math.max(0.3, qol.materialAbundance - 0.002); // -0.2%/month
@@ -584,25 +624,44 @@ function checkEnvironmentalCrises(state: GameState): void {
       
       // Moderate mortality: 0.1% per month
       // Spreads to agricultural regions globally (~40% of world)
-      const { addAcuteCrisisDeaths } = require('./populationDynamics');
+      const pop = state.humanPopulationSystem as any;
       const ecosystemWeights2 = calculateEcosystemWeights(2);
-      addAcuteCrisisDeaths(
-        state,
-        0.001,
-        'Ecosystem crisis - agricultural disruption (vulnerable regions)',
-        0.40,
-        'ecosystem',
-        {
-          causes: [
-            { cause: RootCause.ecosystem, weight: ecosystemWeights2.ecosystem, confidence: 'MEDIUM' },
-            { cause: RootCause.climate, weight: ecosystemWeights2.climate, confidence: 'MEDIUM' },
-            { cause: RootCause.pollution, weight: ecosystemWeights2.pollution, confidence: 'MEDIUM' }
-          ],
-          evidence: `IPBES (2019): Biodiversity loss = ${Math.round(ecosystemWeights2.ecosystem * 100)}% land use/exploitation + ${Math.round(ecosystemWeights2.climate * 100)}% climate + ${Math.round(ecosystemWeights2.pollution * 100)}% pollution`,
-          mechanism: 'Land use change + overexploitation + climate stress + pollution → ecosystem collapse'
-        },
-        'MEDIUM'
-      );
+
+      // Ecosystem component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.001 * ecosystemWeights2.ecosystem,
+        proximate: 'ecosystem',
+        root: 'ecosystem',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem crisis - agricultural disruption (ecosystem component)',
+        month: state.currentMonth,
+        exposedFraction: 0.40
+      });
+
+      // Climate component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.001 * ecosystemWeights2.climate,
+        proximate: 'ecosystem',
+        root: 'climate',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem crisis - agricultural disruption (climate component)',
+        month: state.currentMonth,
+        exposedFraction: 0.40
+      });
+
+      // Pollution component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.001 * ecosystemWeights2.pollution,
+        proximate: 'ecosystem',
+        root: 'pollution',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem crisis - agricultural disruption (pollution component)',
+        month: state.currentMonth,
+        exposedFraction: 0.40
+      });
       
       // Accelerating QoL degradation
       qol.materialAbundance = Math.max(0.2, qol.materialAbundance - 0.005); // -0.5%/month
@@ -624,25 +683,44 @@ function checkEnvironmentalCrises(state: GameState): void {
       
       // High mortality: 1-2% per month
       // Global food system failure (100% of world affected)
-      const { addAcuteCrisisDeaths } = require('./populationDynamics');
+      const pop = state.humanPopulationSystem as any;
       const ecosystemWeights3 = calculateEcosystemWeights(3);
-      addAcuteCrisisDeaths(
-        state,
-        0.015,
-        'Ecosystem collapse - global food system failure',
-        1.00,
-        'ecosystem',
-        {
-          causes: [
-            { cause: RootCause.ecosystem, weight: ecosystemWeights3.ecosystem, confidence: 'MEDIUM' },
-            { cause: RootCause.climate, weight: ecosystemWeights3.climate, confidence: 'MEDIUM' },
-            { cause: RootCause.pollution, weight: ecosystemWeights3.pollution, confidence: 'MEDIUM' }
-          ],
-          evidence: `IPBES (2019): Biodiversity loss = ${Math.round(ecosystemWeights3.ecosystem * 100)}% land use/exploitation + ${Math.round(ecosystemWeights3.climate * 100)}% climate + ${Math.round(ecosystemWeights3.pollution * 100)}% pollution`,
-          mechanism: 'Land use change + overexploitation + climate stress + pollution → ecosystem collapse'
-        },
-        'MEDIUM'
-      );
+
+      // Ecosystem component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.015 * ecosystemWeights3.ecosystem,
+        proximate: 'ecosystem',
+        root: 'ecosystem',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem collapse - global food system failure (ecosystem component)',
+        month: state.currentMonth,
+        exposedFraction: 1.00
+      });
+
+      // Climate component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.015 * ecosystemWeights3.climate,
+        proximate: 'ecosystem',
+        root: 'climate',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem collapse - global food system failure (climate component)',
+        month: state.currentMonth,
+        exposedFraction: 1.00
+      });
+
+      // Pollution component
+      addMortalityRisk(pop, {
+        type: 'ecosystem',
+        baseRisk: 0.015 * ecosystemWeights3.pollution,
+        proximate: 'ecosystem',
+        root: 'pollution',
+        confidence: 'MEDIUM',
+        description: 'Ecosystem collapse - global food system failure (pollution component)',
+        month: state.currentMonth,
+        exposedFraction: 1.00
+      });
       
       // Severe ongoing degradation
       qol.materialAbundance = Math.max(0.1, qol.materialAbundance - 0.01); // -1%/month

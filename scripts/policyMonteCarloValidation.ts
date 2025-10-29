@@ -150,8 +150,9 @@ function extractMetrics(state: GameState, scenario: PolicyScenario, seed: number
   // Get average QoL
   const avgQoL = state.globalMetrics?.qualityOfLife || 0;
 
-  // Get population
-  const population = state.society.totalPopulation || 8000000000;
+  // Get population (Oct 28, 2025: Fixed after Regional → Global Aggregation refactor)
+  // Population is now at state.humanPopulationSystem.population (in actual count, not billions)
+  const population = state.humanPopulationSystem?.population || 8000000000;
 
   // Determine outcome
   let outcome = 'Unknown';

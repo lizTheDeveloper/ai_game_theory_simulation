@@ -44,10 +44,10 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
 - **Nuclear War Probability**: 0.1-0.5% direct causation (indirect pathway through conventional escalation)
 
 **Primary Sources**:
-1. Xu, J., et al. (2025). "AI and misinformation are supercharging the risk of nuclear war." *Nature*, 638, 543-545. DOI: 10.1038/d41586-025-02271-w
-   - Peer-reviewed in Nature, leading climate and global risks journal
-   - Authors from Australian National University and Bulletin of Atomic Scientists
-   - Case study of May 2025 India-Pakistan crisis
+1. Nature Editorial (2025). "AI and misinformation are supercharging the risk of nuclear war." *Nature*, 643(8073), 879. DOI: 10.1038/d41586-025-02271-w
+   - Unsigned editorial in Nature (published July 17, 2025)
+   - 80th anniversary of first nuclear test
+   - Discusses how AI and misinformation fuel tensions between nuclear-armed nations
 
 2. UN Security Council (2024). "Debates Use of Artificial Intelligence in Conflicts." Meeting Coverage SC/15946.
    - Official UN policy document
@@ -130,11 +130,11 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
 - **Nuclear War Probability**: 0.01-0.05% (compound of adoption × bias × override failure)
 
 **Primary Sources**:
-1. Hua, J., et al. (2024). "Escalation Risks from Language Models in Military and Diplomatic Decision-Making." *Proceedings of the 2024 ACM Conference on Fairness, Accountability, and Transparency* (FAccT '24), pp. 1-15. DOI: 10.1145/3630106.3658942
+1. Rivera, J.-P., Mukobi, G., Reuel, A., Lamparth, M., Smith, C., & Schneider, J. (2024). "Escalation Risks from Language Models in Military and Diplomatic Decision-Making." *Proceedings of the 2024 ACM Conference on Fairness, Accountability, and Transparency* (FAccT '24), pp. 1-15. DOI: 10.1145/3630106.3658942
    - Peer-reviewed at top-tier AI fairness/accountability conference
    - Authors from Stanford HAI, Georgia Institute of Technology, Northeastern University
    - Rigorous experimental methodology with 8 nation agents × 5 LLMs
-   - Also published as arXiv preprint: https://arxiv.org/abs/2401.03408
+   - Also published as arXiv:2401.03408
 
 2. Multiple news analyses (Vice, The Register, Euronews) corroborating findings
    - Not peer-reviewed but based on above study
@@ -174,7 +174,7 @@ AI manipulation → nuclear war is a **weak-to-moderate indirect causal pathway*
 - **Nuclear War Probability**: 0.001-0.01% (multiple circuit breakers prevent direct launch)
 
 **Primary Sources**:
-1. National Institute of Standards and Technology (2024). "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations." NIST AI 100-2.
+1. Vassilev, A., Oprea, A., Fordyce, A., & Andersen, H. (2024). "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations." NIST AI 100-2 E2023. DOI: 10.6028/NIST.AI.100-2e2023
    - Credibility: U.S. government standards body
    - Technical specification of AI vulnerabilities
 
@@ -1599,16 +1599,16 @@ AI manipulation → nuclear war is NOT a strong, direct causal chain. Instead, i
 
 ### Peer-Reviewed Academic Papers
 
-1. **Hua, J., Soldaini, L., Sap, M., Waseem, Z., Lyu, S., & Tsvetkov, Y.** (2024). "Escalation Risks from Language Models in Military and Diplomatic Decision-Making." *Proceedings of the 2024 ACM Conference on Fairness, Accountability, and Transparency* (FAccT '24), pp. 1-15. DOI: 10.1145/3630106.3658942 | arXiv: https://arxiv.org/abs/2401.03408
+1. **Rivera, J.-P., Mukobi, G., Reuel, A., Lamparth, M., Smith, C., & Schneider, J.** (2024). "Escalation Risks from Language Models in Military and Diplomatic Decision-Making." *Proceedings of the 2024 ACM Conference on Fairness, Accountability, and Transparency* (FAccT '24), pp. 1-15. DOI: 10.1145/3630106.3658942 | arXiv:2401.03408
    - **Institution**: Stanford HAI, Georgia Tech, Northeastern University
    - **Credibility**: Peer-reviewed at top-tier AI fairness/accountability conference
    - **Key Findings**: All 5 LLMs tested showed escalatory behavior; rare instances of nuclear deployment; bias toward deterrence and first-strike tactics
    - **Cited in sections**: 1.3, 5.2.3
 
-2. **Xu, J., et al.** (2025). "AI and misinformation are supercharging the risk of nuclear war." *Nature*, 638, 543-545. DOI: 10.1038/d41586-025-02271-w | PubMed: https://pubmed.ncbi.nlm.nih.gov/40676238/
-   - **Institution**: Australian National University, Bulletin of Atomic Scientists
-   - **Credibility**: Peer-reviewed in Nature (847+ citations expected)
-   - **Key Findings**: May 2025 India-Pakistan crisis case study; AI-generated deepfakes during conflict; mechanism analysis of disinformation → nationalism → escalation
+2. **Nature Editorial** (2025). "AI and misinformation are supercharging the risk of nuclear war." *Nature*, 643(8073), 879. DOI: 10.1038/d41586-025-02271-w | PubMed: https://pubmed.ncbi.nlm.nih.gov/40676238/
+   - **Type**: Unsigned editorial (not a peer-reviewed research article)
+   - **Published**: July 17, 2025 (80th anniversary of first nuclear test)
+   - **Key Points**: Discusses how AI and misinformation can fuel tensions between nuclear-armed nations, disrupting nuclear deterrence balance
    - **Cited in sections**: 1.1, 5.2.1
 
 ### Government & Military Policy Documents

@@ -1,0 +1,57 @@
+CONSENSUS REACHED: Research Integrity Crisis Response
+
+## Agreed Points
+
+1. **Severity Assessment:**
+   - 23% fabrication rate in verified sample (5/22 citations)
+   - This is a systemic research process failure, not isolated errors
+   - Every unverified citation must be treated as suspect
+
+2. **Fabrication Pattern:**
+   - Type 1: Real papers with fabricated author attribution
+   - Type 2: Real venues with completely invented papers
+   - LLM hallucination signature (plausible-sounding but fake)
+
+3. **Immediate Actions:**
+   - Tag ALL unverified citations with warnings
+   - Prioritize verification for critical mechanics (mortality, AI capabilities, tipping points)
+   - Use conservative defaults where research is unverified
+
+4. **Trust Recovery Standard:**
+   - DOI verification + PDF retrieval + author name verification
+   - "Et al." citations require full author list check
+   - Recent papers (2024-2025) require extra scrutiny
+
+5. **Epistemic Stance:**
+   - Assume fake until proven real (given 23% base rate)
+   - No "benefit of the doubt" for unverified claims
+   - Transparency over completeness
+
+## Remaining Uncertainties
+
+1. **True fabrication rate:**
+   - 23% is from 22-citation sample (potentially biased)
+   - Full corpus may be higher or lower
+   - Need stratified sampling across research docs
+
+2. **Root cause analysis:**
+   - Was this LLM citation generation without verification?
+   - Copy-paste from unreliable sources?
+   - Time pressure leading to insufficient validation?
+
+3. **Remediation scope:**
+   - Full re-verification (242 citations) vs. high-impact triage first?
+   - What mechanics are affected by fabricated citations?
+   - Can some systems rely on verified subset while others await verification?
+
+## Summary
+
+Both Cynthia (optimistic researcher) and Sylvia (research skeptic) are in complete agreement: fabricated citations represent a catastrophic failure of research integrity. There is no "optimistic interpretation" of fake papers - they are simply fake. The appropriate response is:
+
+1. **Immediate:** Flag all unverified research with warnings
+2. **Short-term:** Systematic verification of high-impact claims
+3. **Long-term:** Rebuild research foundation on verified sources only
+
+This is not a typical optimist/skeptic debate because there is no research hypothesis to debate. We both agree the fabrications must be removed and replaced with verified research. The only questions remaining are procedural (how to prioritize, what standards to use).
+
+**Next steps:** Implementation of verification protocol, not further research debate.
