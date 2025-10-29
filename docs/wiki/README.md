@@ -2256,6 +2256,7 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 **Key Changes (Oct 29):**
 - Added **ClimateImpactCascadePhase** (34.0): Coordinated climate → food security → famine → mortality cascade with research-backed lag times (0-12 months), seasonal lean periods (1.75× multiplier), and tiered mortality rates
 - Added **BayesianMortalityResolutionPhase** (35.0): Bayesian mortality resolution system integrating multiple mortality sources
+- **Bug Fix (Oct 29):** Fixed negative food security in ClimateImpactCascadePhase - added `MIN_FOOD_SECURITY = 0.001` floor to prevent stacking climate impacts from violating bounds (see `devlogs/climate-impact-negative-food-security-fix_20251029.md`)
 
 **Total Phases**: 69 registered phases (up from 67 in previous documentation)
 
