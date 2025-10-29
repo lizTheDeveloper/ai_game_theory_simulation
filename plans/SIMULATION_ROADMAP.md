@@ -15,12 +15,18 @@
 
 ## 📊 CURRENT STATUS
 
-**Last Update:** October 29, 2025 (HIGH #3 & #8 integration issues COMPLETE)
+**Last Update:** October 29, 2025 (Roadmap gardening pass complete)
 
 **🚧 Active Work:**
-- None (citation verification complete, awaiting next priorities)
+- None (awaiting next priorities)
 
 **Recently Completed (Oct 29, 2025):**
+- ✅ **Documentation & Automation Infrastructure (5.5-7.5h)** - User guides + wiki automation
+  - Documentation Walkthrough Guides (4-6h): GETTING_STARTED.md, DASHBOARD_WALKTHROUGH.md, RUNNING_SIMULATIONS.md, UNDERSTANDING_RESULTS.md
+  - GitHub Wiki Auto-Sync (1h): Automatic sync workflow + manual script
+  - Post-Commit Hook Enhancement (30 min): Pre-historian scripts (backup, doc indexing, function docs)
+  - Conversation Backup (completed): 911 files backed up (1.3GB)
+  - See: `/plans/completed/documentation-walkthrough-guides_20251029.md`, `github-wiki-automation_20251029.md`, `post-commit-hook-enhancement_20251029.md`
 - ✅ **Architecture Review Follow-up Fixes (30 min)** - All HIGH/MEDIUM issues addressed
   - HIGH-1: Circular dependency risk → Proper static imports (commit 3ca037f)
   - HIGH-2: Slow Takeover variance collision → Knuth's multiplicative hash (commit 3ca037f)
@@ -67,9 +73,28 @@
 - ✅ Research Channel Comprehensive Review (4-6h) - 15 debates, 12 consensus agreements - See `reviews/research-channel-comprehensive-review_20251029.md`
 - ✅ Architecture Review (Oct 28-29) - 28 issues identified - See `reviews/integration-architecture-review_20251028.md`
 
+**Recently Completed (Oct 29, 2025):**
+- ✅ **Climate → Famine → Mortality Cascade Integration (12-16h)** - Coordinated climate mortality system
+  - Implemented ClimateImpactCascadePhase with research-backed lag times (0-12 months)
+  - Seasonal lean periods (Sahel, South Asia, East Africa) with 1.75× multiplier
+  - Tiered food security response (< 0.2: 15% monthly mortality, 0.2-0.4: 5% lean/0.5% recovery)
+  - Queue-based delayed impact modeling using PhaseContext storage
+  - Fail-loudly assertions (no defensive fallbacks), deterministic RNG
+  - Phase order: 34.0 (AFTER EnvironmentalFeedbackPhase 33.5, BEFORE BayesianMortalityResolutionPhase 35.0)
+  - See: `docs/CLIMATE_CASCADE_IMPLEMENTATION_SUMMARY.md`, commit 26e0d1b
+
 **Next Priorities:**
 
-1. **🟠 HIGH:** Wiki Citation Verification & Correction (3-4h)
+1. **🔴 CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (40-60h)
+   - **Context:** Layer 1 (citation existence) COMPLETE, but ~50% of real citations don't support claims
+   - **Scope:** 87 research files with 815 real citations - verify claims match papers
+   - **Process:** Read papers, extract direct quotes, mark extrapolations, document uncertainty
+   - **Cannot be automated:** Requires domain expertise and paper reading
+   - **Priority:** CRITICAL - research integrity failure hidden by "real" citations
+   - **Complexity:** 2 systems (research verification, simulation parameters)
+   - **See:** `research/CLAIM_VERIFICATION_CRISIS.md`
+
+2. **🟠 HIGH:** Wiki Citation Verification & Correction (3-4h)
    - **Context:** Discovered biodiversity citation error (IPBES 2024 → WWF LPI 2024)
    - **Scope:** Verify all quantitative claims in docs/wiki/README.md against actual sources
    - **Process:** Use super-alignment-researcher agent for systematic verification
@@ -81,13 +106,13 @@
    - **Priority:** HIGH - affects research credibility of public-facing documentation
    - **Complexity:** 2 systems (wiki documentation, research verification)
 
-2. **⏳ MEDIUM:** Crisis Mitigation Mechanics (2-4h) - **CONDITIONAL, AWAITING CYNTHIA RESPONSE**
+3. **⏳ MEDIUM:** Crisis Mitigation Mechanics (2-4h) - **CONDITIONAL, AWAITING CYNTHIA RESPONSE**
    - Sylvia posted conditional agreement with specific requirements
    - If agreed: Implement automatic stabilizers + participatory governance + homeostatic bounds
    - See: reviews/research-channel-comprehensive-review_20251029.md (Section 4)
 
-3. **🟠 HIGH (from Architecture Review):** 6 remaining integration issues (40-62h remaining, 8-12h completed)
-   - Climate → Famine → Mortality cascade coordination (12-16h)
+4. **🟠 HIGH (from Architecture Review):** 5 remaining integration issues (28-46h remaining, 20-28h completed)
+   - ✅ Climate → Famine → Mortality cascade coordination (12-16h) - **COMPLETE (Oct 29)**
    - Tech deployment timescales + emergency response (6-8h)
    - ✅ AI collective formation → government detection (4-6h) - **COMPLETE (Oct 29)**
    - Multi-paradigm DUI component breakdown (8-12h)
@@ -96,14 +121,16 @@
    - AI resentment recovery + policy (8-12h)
    - ✅ Nuclear winter → agriculture recovery feedback (4-6h) - **COMPLETE (Oct 29)**
 
-4. **MEDIUM:** Policy System Improvements (remaining 1 section + investigation, 11-13h)
+5. **MEDIUM:** Policy System Improvements (remaining 1 section + investigation, 11-13h)
    - ✅ Variance Analysis complete (Oct 28) - found critical zero-variance bug in Combined Interventions
 
-5. **LOW:** P3 Enhancements (37-48h)
+6. **LOW:** P3 Enhancements (37-48h)
 
-6. **LOW:** TIER 5 Features (46h)
+7. **LOW:** TIER 5 Features (46h)
 
-**Total Remaining Effort:** ~106-168 hours (reduced from ~114-176h due to HIGH #3 and #8 complete)
+**Total Remaining Effort:** ~134-214 hours (reduced by 12-14h for Climate Cascades completion)
+
+**Note:** Documentation/automation work (5.5-7.5h) was not on original roadmap - considered infrastructure investment, not core simulation work.
 
 ---
 
@@ -111,7 +138,63 @@
 
 ### 🔴 CRITICAL Priority
 
-#### Systematic Citation Verification & Re-grounding ✅ COMPLETED
+#### Systematic Claim Verification Crisis (Layer 2)
+**Status:** 🔴 CRITICAL - Newly discovered (Oct 29, 2025)
+**Priority:** CRITICAL - Research integrity failure
+**Estimated Effort:** 40-60 hours
+**Complexity:** 2 systems (research verification, simulation parameters)
+
+**Crisis Summary:**
+Layer 1 (citation existence) COMPLETE ✅, but discovered Layer 2 contamination:
+- ~50% of REAL citations don't actually support the claims made
+- Papers exist but claims are misattributed, extrapolated beyond scope, or misinterpreted
+- Requires reading papers and extracting direct quotes (cannot be automated)
+
+**Examples of Layer 2 Failures:**
+1. **Value extrapolation:** Richards et al. (2023) projects 6B deaths/75y, we use 30y (2.5× compression)
+2. **Cherry-picking without uncertainty:** Patterson et al. reports 0.2-0.8 range, we use 0.5 without ±60% variance
+3. **Context mismatch:** Jones (2023) analyzed 2010-2020, we project 2025-2055
+4. **Methodology cited as validation:** Paper describes approach, we chose parameters
+5. **Scope mismatch:** Municipal study cited for national/global parameter
+
+**Why This is CRITICAL:**
+- Layer 1 failures (fake citations) are obvious and mechanically verifiable
+- Layer 2 failures (misattributed claims) are subtle and undermine research foundation
+- Even with "real" citations, the simulation may use unsupported parameters
+
+**Systematic Review Needed:**
+- Scope: 87 research files with 815 real citations
+- Process: Read papers, extract direct quotes, verify claims match
+- Mark extrapolations explicitly with methodology
+- Document uncertainties (not hidden point estimates)
+
+**Post-Commit Workflow Enhanced:**
+- Updated `.git/hooks/post-commit` with Layer 2 requirements
+- Updated `research/RESEARCH_VERIFICATION_TEMPLATE.md` with claim verification
+- Orchestrator now requires direct quotes and context verification
+
+**Prevention Standards (New):**
+All research-backed claims must include:
+- Direct quote from paper
+- Explicit extrapolation methodology if applied
+- Uncertainty documentation (ranges, not point estimates)
+- Context verification (paper's scope matches our usage)
+
+**Related Documents:**
+- `research/CLAIM_VERIFICATION_CRISIS.md` - Full crisis documentation
+- `research/RESEARCH_VERIFICATION_TEMPLATE.md` - Updated template
+- `docs/POST_COMMIT_WORKFLOW.md` - Enhanced workflow (302 lines)
+
+**Success Criteria:**
+- All parameters have direct quotes from papers
+- Extrapolations marked explicitly with methodology
+- Uncertainties documented (±ranges, confidence intervals)
+- Context verified (paper's scope matches our usage)
+- No "based on" without specific claim and quote
+
+---
+
+#### Systematic Citation Verification & Re-grounding (Layer 1) ✅ COMPLETED
 **Status:** ✅ COMPLETED (Oct 29, 2025) - 100% verification complete (965/965 citations)
 **Archive:** `/plans/completed/citation-verification-crisis_20251029.md`
 **Time:** ~35-40 hours (Oct 28-29, 2025)
@@ -124,21 +207,13 @@
 - ✅ Post-commit workflow prevents future contamination
 - ✅ Conservative defaults documented, uncertainty quantified
 
-**New Policies Documented:**
-- ✅ Derived Metrics Policy (`docs/RESEARCH_STANDARDS.md`)
-- ✅ Citation Methodology Standards (`docs/RESEARCH_STANDARDS.md`)
-
 **Quality Improvements:**
 - Final error rate: 15.6% (down from 29.7%)
 - 815 citations verified as REAL (84.4%)
 - 37 fabrications replaced (3.8%)
 - 113 metadata errors corrected (11.9%)
 
-**Post-Commit Workflow Created:**
-- Git hook: `.git/hooks/post-commit` (automatic historian spawning)
-- Research template: `research/RESEARCH_VERIFICATION_TEMPLATE.md`
-- Documentation: `docs/POST_COMMIT_WORKFLOW.md` (302 lines)
-- Prevents future citation contamination systematically
+**Note:** Layer 1 (citation existence) complete, but Layer 2 (claim accuracy) now requires systematic review.
 
 ---
 
@@ -511,33 +586,53 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~154-221 hours (reduced from ~180-255h)
+**Total Remaining Effort:** ~146-228 hours (increased by 40-60h for Layer 2 claim verification)
 
 **By Priority:**
 
 **IMMEDIATE (This Week):**
+- 🔴 **CRITICAL: Systematic Claim Verification Crisis (Layer 2) (40-60h)**
+  - ~50% of real citations don't actually support the claims made
+  - Requires reading papers and extracting direct quotes (cannot be automated)
+  - 87 research files with 815 real citations to verify
+  - Mark extrapolations, document uncertainties, verify context
+  - See: `research/CLAIM_VERIFICATION_CRISIS.md`
+
+- 🟠 **HIGH: Wiki Citation Verification & Correction (3-4h)**
+  - Verify all quantitative claims in docs/wiki/README.md against actual sources
+  - Fix incorrect citations (discovered biodiversity citation error)
+  - Use super-alignment-researcher agent for systematic verification
+
 - ⏳ **MEDIUM: Crisis Mitigation Mechanics (2-4h)** - CONDITIONAL
   - Awaiting Cynthia's response to Sylvia's critique
   - If agreed: Automatic stabilizers + participatory governance + homeostatic bounds
 
-**RECENTLY COMPLETED:**
-- ✅ **Systematic Citation Verification (35-40h)** - COMPLETED (Oct 29, 2025)
-  - 100% complete: 965/965 citations verified
-  - Final error rate: 15.6% (47% improvement)
-  - Post-commit workflow prevents future contamination
+**RECENTLY COMPLETED (Oct 29, 2025):**
+- ✅ **Documentation & Automation Infrastructure (5.5-7.5h)** - User guides + wiki automation
+  - Documentation Walkthrough Guides: 4 guides, 100KB, 2,900 lines
+  - GitHub Wiki Auto-Sync: Automatic sync workflow + manual script
+  - Post-Commit Hook Enhancement: Pre-historian scripts integration
+  - See: `/plans/completed/` for full details
+
+- ✅ **Systematic Citation Verification (Layer 1) (35-40h)** - COMPLETED (Oct 28-29, 2025)
+  - 100% complete: 965/965 citations verified, 15.6% error rate (47% improvement)
+  - NOTE: Layer 1 (citation existence) complete, Layer 2 (claim accuracy) now CRITICAL priority
   - See: `/plans/completed/citation-verification-crisis_20251029.md`
 
 - ✅ **Monte Carlo Validation Bug Fixes (11-17h)** - COMPLETED (Oct 29, 2025)
-  - All 5 CRITICAL bugs resolved with fail-loudly philosophy
-  - Death attribution: 98.4% error reduction
-  - Slow Takeover: Time-based progression implemented
-  - Ecological variance: Stochastic initialization added
-  - Capability tracking: Orphaned function wired + scaling fixed
-  - NaN prevention: 42 assertion points added
+  - All 5 CRITICAL bugs resolved, 98.4% error reduction
+  - See: `logs/monte_carlo_validation_bugs_20251029.md`
+
+**CRITICAL:**
+- 🔴 **Systematic Claim Verification Crisis (Layer 2) (40-60h)**
+  - ~50% of real citations don't support claims (newly discovered)
+  - Requires reading papers, extracting quotes, verifying claims
+  - 87 research files with 815 real citations
+  - See: `research/CLAIM_VERIFICATION_CRISIS.md`
 
 **HIGH (From Architecture Review):**
-- 🟠 **Architecture Integration Issues (40-62h remaining)** - 6 of 8 issues remaining
-  - Climate → Famine → Mortality cascades (12-16h)
+- 🟠 **Architecture Integration Issues (28-46h remaining)** - 5 of 8 issues remaining
+  - ✅ Climate → Famine → Mortality cascades (12-16h) - **COMPLETE (Oct 29)**
   - Tech deployment timescales (6-8h)
   - ✅ AI collective formation → detection (4-6h) - **COMPLETE (Oct 29)**
   - Multi-paradigm DUI component breakdown (8-12h)
@@ -545,6 +640,8 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
   - Planetary boundaries recovery (6-8h)
   - AI resentment recovery + policy (8-12h)
   - ✅ Nuclear winter → agriculture feedback (4-6h) - **COMPLETE (Oct 29)**
+
+- 🟠 **Wiki Citation Verification & Correction (3-4h)** - Verify all claims in wiki against sources
 
 **MEDIUM:**
 - 🟡 **Policy System Improvements (11-13h remaining)**
