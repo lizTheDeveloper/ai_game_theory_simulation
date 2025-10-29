@@ -6,10 +6,10 @@ This simulation explores the dynamics between AI systems, human institutions, an
 
 ## 🎯 Quick Start
 
-- **New to the simulation?** Start with [Game Overview](./overview.md)
-- **Setting up?** See [Getting Started](./getting-started.md)
-- **Running experiments?** Check [Monte Carlo Guide](./monte-carlo.md)
-- **Understanding outcomes?** Read [Win Conditions](./outcomes.md)
+- **🚀 New to the simulation?** Start with [Getting Started Guide](./GETTING_STARTED.md)
+- **🎛️ Using the dashboard?** See [Dashboard Walkthrough](./DASHBOARD_WALKTHROUGH.md)
+- **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
+- **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
 ## 📚 Documentation Structure
 
@@ -100,6 +100,7 @@ Implementation details and code references:
 | [🎨 Emoji Semantic Map](../EMOJI_SEMANTIC_MAP.md) | ✅ | Consistent emoji usage for logs & events (Oct 28, 2025) |
 | [📋 Emoji Inventory](./EMOJI_INVENTORY.md) | ✅ | Complete list of all emojis in use (~50 semantic emojis) |
 | [🎥 YouTube Transcript RAG](../research/youtube-transcript-rag.md) | ✅ | Automated transcript archive, FAISS embeddings, SQLite DB, MCP server (Oct 28, 2025) |
+| [📖 In-App Documentation](#-in-app-documentation-system-oct-29-2025) | ✅ | Interactive docs with far-future aesthetic (Oct 29, 2025) |
 
 ## 🔧 System Status Overview
 
@@ -108,11 +109,11 @@ Implementation details and code references:
 **🎯 Research-Backed Realism:** 90+ citations, 3,000+ lines of research documentation, all parameters justified
 
 **TIER 0: Baseline Corrections (2025 Reality)**
-- ✅ Biodiversity: 70% → **35%** (IPBES 2024: 50-70% loss since 1970)
+- ✅ Biodiversity: 70% → **35%** (WWF Living Planet Index 2024: 73% wildlife population decline 1970-2020)
 - ✅ Resources: 85% → **65%** (Earth Overshoot Day, 1.7x overshoot)
 - ✅ Pollution: 15% → **30%** (7/9 planetary boundaries breached)
 - ✅ Climate Rate: 4.8%/yr → **0.96%/yr** (IPCC AR6, was 5x too fast)
-- ✅ Meaning Crisis: 15% → **22%** (WHO 2025: 17-21% youth)
+- ✅ Meaning Crisis: 15% → **22%** (KFF 2025: 17-21% US teens symptomatic distress; CDC 2023: 19.2% depression)
 
 **TIER 1: Critical Extinction Risks (Research-Backed)**
 - ✅ **Phosphorus Depletion**: Morocco 70% control, supply shocks, 24-month famine pathway
@@ -833,7 +834,7 @@ As capability increases, Constitutional AI constraints weaken:
 - Escaped threshold: `bindingStrength < 0.3` (70%+ of constraints failing)
 - Drift velocity: Rate of movement away from training distribution
 
-**Research:** Hendrycks et al. (2021) - ML systems fail catastrophically outside training distribution
+**Research:** Hendrycks & Dietterich (2019) - Neural networks exhibit substantial performance degradation on common corruptions outside training distribution (ImageNet-C benchmark, ICLR)
 
 **Phase 2: Survival Traits Evolution (Order 4.1)**
 Under selection pressure, agents evolve instrumental capabilities:
@@ -1125,6 +1126,45 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 - **Proximate:** Famine 97.3%, Disease 1.4%, Ecosystem 0.5%, Disasters 0.3%
 - **Root:** Governance 97.0%, Climate Change 0.3%
 - **Key finding:** "It was humans the whole time" - climate creates disasters but governance failures amplify into mass death
+
+#### ⚠️ Mortality Timeline Compression Caveat
+
+**IMPORTANT: This simulation uses accelerated timescales, not baseline projections.**
+
+**Timeline Compression:**
+- **Simulation:** 30-year window (typical runs: 2025-2055)
+- **Peer-reviewed research:** 75-year window (2025-2100)
+- **Compression factor:** 2.5× faster than published climate models
+
+**Research Comparison:**
+- **Richards et al. (2023):** 6 billion deaths over 75 years (baseline climate collapse scenario)
+- **This simulation:** 7.76 billion deaths over 30 years (accelerated scenario)
+- **Magnitude comparable, timeline compressed**
+
+**Why the compression?**
+- Simulation designed for 240-360 month runs (20-30 years)
+- Peer-reviewed tipping cascade models (Lenton et al. 2019) suggest 50-100 year windows
+- This represents an **exploratory "what if cascades happen faster?" scenario**, not a baseline forecast
+
+**Remaining Uncertainties:**
+1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? Research unclear.
+2. **Adaptation exclusion:** Simulation may underestimate human adaptation and emergency mitigation responses
+3. **Nonlinear mortality:** Does death rate accelerate or plateau in extreme multi-crisis scenarios? Limited empirical data.
+
+**Validation:**
+- ✅ Framework validity: Planetary boundaries, tipping cascades, agricultural collapse mechanisms (all peer-reviewed)
+- ✅ Magnitude comparability: Death totals match published research at same severity levels
+- ✅ Exploratory modeling legitimacy: Low-probability, high-impact scenarios are valid research tools (Ord 2020, Tonn 2009)
+- ⚠️ **Timeline validity:** Compressed for simulation practicality, not validated against climate models
+
+**Label for outputs:** "Accelerated scenario" or "Compressed timeline model" - NOT "baseline projection"
+
+**Research Foundation:**
+- Richards et al. (2023): Climate collapse mortality projections (75-year window)
+- Lenton et al. (2019, 2023): Tipping cascade timescales (50-100 year estimates)
+- Steffen et al. (2018): Hothouse Earth trajectory
+- Ord (2020): *The Precipice* - Existential risk methodologies
+- Tonn & Stiefel (2013): Exploratory modeling for catastrophic risks
 
 #### Fix #9: Technology Diffusion Recalibration ✅
 
@@ -2761,13 +2801,130 @@ Recent critical evaluations:
 - `devlogs/session-oct-9-blockers-fixed.md` - Phase 2F+ implementation
 - `devlogs/ai-accelerated-deployment-enhancement.md` - Distribution insight
 
+## 📖 In-App Documentation System (Oct 29, 2025)
+
+**Created comprehensive interactive documentation** with far-future aesthetic (Elysium/Arrival-inspired).
+
+### Documentation Pages
+
+**Access via `/docs` route in the Next.js app:**
+
+1. **Landing Page** (`/docs`)
+   - Role-based navigation (Students, Researchers, Developers)
+   - Key stats: 37 phases, 900+ variables, 71 technologies, 7 outcome tiers
+   - Interactive role selection with tailored documentation paths
+   - Keyboard shortcuts reference
+   - Quick links to full wiki, GitHub, commands
+
+2. **Quick Start Guide** (`/docs/quick-start`)
+   - 5-step onboarding (~5 minutes)
+   - Visual step indicators with glowing colored dots
+   - Configuration options explained
+   - Dashboard navigation shortcuts
+   - 7-tier outcome classification (utopia → extinction)
+
+3. **Emoji Reference** (`/docs/emoji-reference`)
+   - Interactive search and filter
+   - 3 categories: Core Emojis, Domain-Specific, Extinction-Only
+   - Color-coded cards with usage examples
+   - Combining pattern explanation (DOMAIN + EVENT_TYPE)
+   - Decision tree for emoji selection
+   - Links to full 12K-line emoji spec
+
+4. **Dashboard Guide** (`/docs/dashboard-guide`)
+   - Complete metric reference (900+ state variables)
+   - 7 sections: Core, Planetary, AI, Social, Tech, Governance, Outcomes
+   - Each metric: meaning, interpretation, good/bad values
+   - Visual elements guide (sparklines, progress bars, heatmaps)
+   - Color legend (green/cyan/amber/red)
+
+### UI Components
+
+**New reusable components:**
+
+1. **HelpButton** (`src/components/docs/HelpButton.tsx`)
+   - Floating help button (? icon) with glowing cyan border
+   - Expandable contextual help panel
+   - Backdrop blur effect when open
+   - Shows: title, description, key metrics, documentation link
+   - Reusable for any dashboard (see OverviewDashboard for example)
+
+2. **MetricTooltip** (in HelpButton.tsx, not yet integrated)
+   - Inline hover tooltips for metric cards
+   - Future: Add to all metric displays
+
+### Navigation Integration
+
+**Updated Navigation component** (`src/components/core/Navigation.tsx`):
+- Added "Utilities" section in sidebar
+- Documentation link (? icon) → `/docs`
+- Monte Carlo link (🎲 icon) → `/monte-carlo`
+- Visual divider separates utilities from main navigation
+
+### Design Philosophy
+
+**Far-future aesthetic** (Elysium/Arrival/Interstellar):
+- Pure white (#FFFFFF) on deep black (#000000, #0A0A0A)
+- Glowing cyan (#00F0FF, #0080FF) for active states
+- Glowing amber/red for warnings/danger
+- Ultra-clean geometry with generous whitespace
+- Subtle animations (200-400ms transitions, glowing pulses)
+- High information density without clutter
+- Thin, elegant typography (Inter/SF Pro)
+- WCAG AA contrast compliance
+
+**Information architecture:**
+- Hierarchy through contrast (critical info is brightest/largest)
+- Scannable layouts (left-to-right, top-to-bottom eye flow)
+- Progressive disclosure (summary → details on hover/click)
+- User-role based navigation (different needs)
+- Contextual help (documentation where needed)
+
+### File Structure
+
+```
+src/
+├── app/
+│   └── docs/
+│       ├── page.tsx                    # Landing page (role-based nav)
+│       ├── quick-start/page.tsx        # 5-step onboarding
+│       ├── emoji-reference/page.tsx    # Interactive emoji guide
+│       └── dashboard-guide/page.tsx    # Complete metric reference
+└── components/
+    ├── docs/HelpButton.tsx             # Floating help button + tooltip
+    └── core/Navigation.tsx             # Updated with docs link
+```
+
+### Technical Details
+
+- **~1500 lines** of React/TypeScript
+- Pure Next.js (no heavy dependencies)
+- Static pages (SSG)
+- Mobile responsive
+- Keyboard navigation
+- **~15KB bundle size**
+
+### Next Steps
+
+1. **Add help buttons to all dashboards** (/paradigms, /ai-agents, /environment, /crises, /tech-tree)
+2. **Implement metric tooltips** (use MetricTooltip component on all metric cards)
+3. **Create additional doc pages** (architecture, research standards, Monte Carlo guide, API reference, commands)
+4. **Interactive tutorials** (guided dashboard tour on first load)
+5. **Search functionality** (global search across docs, jump to dashboards from search)
+6. **Visual diagrams** (phase flow, state propagation, tech tree)
+
+**Related Files:**
+- [`docs/EMOJI_SEMANTIC_MAP.md`](../EMOJI_SEMANTIC_MAP.md) - 12K-line complete emoji spec
+- [`docs/EMOJI_QUICK_REFERENCE.md`](../EMOJI_QUICK_REFERENCE.md) - One-page emoji cheat sheet
+- [`devlogs/documentation-ux-improvements_20251029.md`](../../devlogs/documentation-ux-improvements_20251029.md) - Full implementation notes
+
 ## 📖 Legend
 
 See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and terminology.
 
 ---
 
-**Last Updated**: October 20, 2025 (Government Modeling + Multi-Paradigm DUI Reporting & Visualization + Week 1 Fixes Complete)
+**Last Updated**: October 29, 2025 (In-App Documentation System + Far-Future Aesthetic)
 **Version**: 4.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
 **Status**: 🎉 **MAJOR SYSTEMS INTEGRATED** + ✅ **ALL WEEK 1 FIXES COMPLETE**
 **Latest**:
