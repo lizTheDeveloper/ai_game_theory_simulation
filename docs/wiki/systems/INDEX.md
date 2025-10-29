@@ -1,6 +1,6 @@
 # Simulation Systems Index
 
-**Last Updated:** October 14, 2025
+**Last Updated:** October 29, 2025
 
 This index lists all major systems in the AI Game Theory Simulation, organized by TIER.
 
@@ -77,6 +77,12 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 **Status:** Complete (Updated Oct 14 - comprehensive documentation + integration fix)
 **Phase:** RadiationSystemPhase (252.5)
 **Summary:** Acute radiation syndrome (50-80% mortality). Long-term cancer (40 years, +10-30% risk). Birth defects (3 generations). Environmental contamination (30-300 years). Monthly updates for cancer deaths, birth defects, and contamination decay. Integrated with food security and QoL.
+
+### TIER 1.8: ✅ Climate Impact Cascade
+**File:** [climate-impact-cascade.md](climate-impact-cascade.md) (see also: `/docs/CLIMATE_CASCADE_IMPLEMENTATION_SUMMARY.md`)
+**Status:** Complete (Oct 29, 2025)
+**Phase:** ClimateImpactCascadePhase (34.0)
+**Summary:** Coordinated climate → food security → famine → mortality cascade system. Research-backed lag times (0-12 months). Seasonal lean periods (Sahel, South Asia, East Africa) with 1.75× multiplier. Tiered mortality rates (15% → 5% → 0.2%) by food security level. Queue-based delayed impact modeling. Integrates with Bayesian mortality system. 450+ lines with fail-loudly assertions.
 
 ---
 
@@ -168,7 +174,7 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 
 ## Organization by Completeness
 
-### ✅ Fully Documented (11 systems)
+### ✅ Fully Documented (12 systems)
 1. Baseline Corrections (TIER 0)
 2. Phosphorus Depletion (TIER 1.1)
 3. Freshwater Depletion (TIER 1.2)
@@ -179,7 +185,8 @@ This index lists all major systems in the AI Game Theory Simulation, organized b
 8. Nuclear Winter (TIER 1.7)
 9. Famine System (TIER 1.7)
 10. Radiation System (TIER 1.7) - **✅ Integration complete (Oct 14)**
-11. Planetary Boundaries (TIER 3)
+11. Climate Impact Cascade (TIER 1.8) - **✅ Complete (Oct 29)**
+12. Planetary Boundaries (TIER 3)
 
 ### 🟡 Partially Documented (2 systems)
 1. Environmental Accumulation (covered in baseline-corrections.md)
