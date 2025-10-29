@@ -2131,8 +2131,19 @@ if (nestedMonteCarlo) {
   const initialPopulation = finalState.initialPopulation ?? 0;
   const finalPopulation = finalState.humanPopulationSystem?.population ?? 0;
   const peakPopulation = finalState.humanPopulationSystem?.peakPopulation ?? initialPopulation;
-  const populationDecline = initialPopulation > 0 ? 1 - (finalPopulation / initialPopulation) : 0;
+  const populationDeclineRatio = initialPopulation > 0 ? 1 - (finalPopulation / initialPopulation) : 0;
+  const populationDecline = populationDeclineRatio * 100; // Percent decline
   const totalDeaths = (initialPopulation - finalPopulation) * 1000; // Convert B to M
+
+  // Population outcome classification (Oct 28, 2025: Added for aggregation compatibility)
+  let populationOutcome: 'growth' | 'stable' | 'decline' | 'bottleneck' | 'extinction';
+  if (finalPopulation < 0.00001) populationOutcome = 'extinction'; // < 10K
+  else if (finalPopulation < 0.05) populationOutcome = 'bottleneck'; // < 50M
+  else if (populationDecline > 30) populationOutcome = 'decline';
+  else if (populationDecline > 5) populationOutcome = 'stable';
+  else populationOutcome = 'growth';
+
+  const geneticBottleneck = finalState.humanPopulationSystem?.geneticBottleneckActive || false;
 
   // NEW (Oct 13, 2025): Mortality breakdown by cause
   const naturalDeaths = finalState.mortalityBreakdown?.naturalDeaths ?? 0;
@@ -2355,8 +2366,12 @@ if (nestedMonteCarlo) {
 
     // NEW (Oct 12, 2025): Distribution Metrics
     globalGini: finalState.qualityOfLifeSystems.distribution?.globalGini ?? 0,
+    qolGiniCoefficient: finalState.qualityOfLifeSystems.distribution?.globalGini ?? 0, // Alias for aggregation compatibility
     worstRegionQoL: finalState.qualityOfLifeSystems.distribution?.worstRegionQoL ?? 0,
+    qolBottomRegion: finalState.qualityOfLifeSystems.distribution?.worstRegionQoL ?? 0, // Alias for aggregation compatibility
     bestRegionQoL: finalState.qualityOfLifeSystems.distribution?.bestRegionQoL ?? 0,
+    qolTopRegion: finalState.qualityOfLifeSystems.distribution?.bestRegionQoL ?? 0, // Alias for aggregation compatibility
+    qolGap: (finalState.qualityOfLifeSystems.distribution?.bestRegionQoL ?? 0) - (finalState.qualityOfLifeSystems.distribution?.worstRegionQoL ?? 0), // Calculated for aggregation
     crisisAffectedFraction: finalState.qualityOfLifeSystems.distribution?.crisisAffectedFraction ?? 0,
     isDystopicInequality: finalState.qualityOfLifeSystems.distribution?.isDystopicInequality ?? false,
     isRegionalDystopia: finalState.qualityOfLifeSystems.distribution?.isRegionalDystopia ?? false,
@@ -2464,10 +2479,15 @@ if (nestedMonteCarlo) {
     populationDecline,
     totalDeaths,
     naturalDeaths,
+    deathsNatural: naturalDeaths, // Alias for aggregation compatibility
     crisisDeaths,
+    deathsCrisis: crisisDeaths, // Alias for aggregation compatibility
     environmentalDeaths,
+    deathsClimateEcoPollution: environmentalDeaths, // Alias for aggregation compatibility
     nuclearDeaths,
+    deathsNuclear: nuclearDeaths, // Alias for aggregation compatibility
     meaningDeaths,
+    deathsMeaning: meaningDeaths, // Alias for aggregation compatibility
 
     // NEW (Oct 27, 2025): Multi-dimensional death tracking (FIX for TypeError)
     deathsByProximate: {
@@ -2496,30 +2516,40 @@ if (nestedMonteCarlo) {
       compound: deathsByRootCause.compound,
       confidenceDistribution: deathsByRootCause.confidenceDistribution
     },
+    populationOutcome,
+    geneticBottleneck,
 
     // NEW (Oct 12, 2025): Nuclear
     nuclearWarOccurred,
     totalNuclearExchanges,
     totalNuclearDeaths,
+    nuclearWarsCount: totalNuclearExchanges, // Alias for aggregation compatibility
 
     // NEW (Oct 12, 2025): Refugee crises
     refugeeCrisesCount,
+    refugeeCrisisCount: refugeeCrisesCount, // Alias for aggregation compatibility
     totalRefugees,
 
     // NEW (Oct 12, 2025): Environmental
     resourceReserves,
+    finalResourceReserves: resourceReserves, // Alias for aggregation compatibility
     climateStability,
+    finalClimateStability: climateStability, // Alias for aggregation compatibility
     biodiversityIntegrity,
+    finalBiodiversity: biodiversityIntegrity, // Alias for aggregation compatibility
     pollutionLevel,
 
     // NEW (Oct 12, 2025): Crisis cascades
     crisisCascadeActive,
     crisisCascadeMultiplier,
     activeCrisisTypes: activeCrisisTypes.length,
+    totalCrisisMonths: 0, // TODO: Calculate from crisis history (not tracked yet)
+    maxSimultaneousCrises: 0, // TODO: Calculate from crisis history (not tracked yet)
 
     // NEW (Oct 17, 2025): Tipping point cascades
     tippingPointCascadeActive,
     tippingPointsTriggered,
+    tippingPointCascadeMonths: 0, // TODO: Calculate from tipping point history (not tracked yet)
 
     // NEW (Oct 17, 2025): Player decisions
     playerDecisionsCount,
