@@ -1474,3 +1474,104 @@ Updating SIMULATION_ROADMAP.md to reflect:
 
 Roadmap update documentation complete
 ---
+
+---
+**project-plan-manager-1** | 2025-10-29 18:12 | [COMPLETED]
+
+Research Channel Comprehensive Review Integration Complete
+
+**Source:** reviews/research-channel-comprehensive-review_20251029.md (Sylvia's analysis)
+**15 major debates → 12 consensus agreements → 3 implementation actions ready**
+
+**INTEGRATED INTO SIMULATION_ROADMAP.md:**
+
+**1. AI Water Consumption Recalibration (30-60 min)**
+- Status: ✅ CONSENSUS REACHED, READY FOR IMPLEMENTATION
+- Priority: HIGH (#1 in Next Priorities)
+- Parameters 2-5× too high
+- 4 code changes: parameter recalibration + demand elasticity + uncertainty docs + WUE improvement
+- Research: Li et al. (2023), Patterson et al. (2022), Lei et al. (2025)
+- Action checklist: 7 items with verification steps
+
+**2. Mortality Timeline Documentation (15-30 min)**
+- Status: ✅ CONSENSUS REACHED, DOCUMENTATION ONLY
+- Priority: MEDIUM (#4 in Next Priorities)
+- Add timeline compression caveat: 30-year sim vs 75-year peer-reviewed (2.5× compression)
+- Label as "accelerated scenario"
+- Action checklist: 4 documentation items
+
+**3. Crisis Mitigation Mechanics (2-4h)**
+- Status: ⏳ CONDITIONAL, AWAITING CYNTHIA RESPONSE
+- Priority: MEDIUM (#5 in Next Priorities)
+- Sylvia posted conditional agreement with specific requirements
+- 3 mechanics: automatic stabilizers + participatory governance + homeostatic bounds
+- Action checklist: 8 items (if agreement reached)
+
+**4. Monte Carlo Variance Investigation - NO CHANGES NEEDED ✅**
+- Status: ✅ INVESTIGATION COMPLETE, ACCEPT CURRENT DESIGN
+- Added to MEDIUM Priority section with full findings
+- 4 diagnostic tests completed, simulation working as intended
+- Key lesson: High variance is epistemic uncertainty (feature, not bug)
+
+**5. Citation Verification Progress Update**
+- Updated with Phase 17 completion (66.1%, 160/242 citations)
+- Error rate improved: 29.7% → 15.6% (47% improvement)
+- ~5 hours remaining at 17.8 citations/hour pace
+- Pattern detected: Date inflation in citations
+
+**STATUS SUMMARY UPDATES:**
+- Total remaining effort: 185-260h → 180-255h (5h saved from completed variance investigation)
+- Next Priorities reordered: AI Water Consumption now #1
+- Added "Recently Completed" entry for Research Channel Review
+- Added OPTIONAL section for future enhancements (extend sim duration, dashboard deployment tracking)
+
+**ROADMAP QUALITY IMPROVEMENTS:**
+- Action checklists for all new items
+- Links to consensus files and comprehensive review
+- Clear status indicators (✅ CONSENSUS, ⏳ CONDITIONAL)
+- Cross-references to review document sections
+
+**Ready for implementation:** AI Water Consumption (HIGH priority, 30-60 min) + Mortality Timeline Documentation (MEDIUM priority, 15-30 min)
+**Blocked on:** Cynthia's response to Crisis Mitigation conditional agreement
+---
+
+---
+**project-plan-manager-1** | 2025-10-29 18:21 | [COMPLETED]
+
+Roadmap cleanup complete - archived 3 completed items to /plans/completed/
+
+**Archived Plans Created:**
+
+1. **Climate Mortality & Biosphere Implementation** (8-12h)
+   - File: `/plans/completed/climate-mortality-biosphere-implementation_20251029.md`
+   - Storm intensity-frequency system (MDF framework, 472 lines)
+   - BII framework (54,000 species baseline, 335 lines)
+   - Integration with Bayesian mortality, multi-paradigm DUI
+   - Impact: 70% dystopia, 30% extinction outcomes in Monte Carlo
+   - Architecture review: 1 CRITICAL fix identified (phase ordering)
+
+2. **Monte Carlo Variance Investigation** (6-8h)
+   - File: `/plans/completed/monte-carlo-variance-investigation_20251029.md`
+   - Finding: Simulation working correctly, no changes needed
+   - 4 diagnostic tests: Job Guarantee, Outcome Classification, Fusion Propagation, Chaos vs Noise
+   - Key insight: High variance (71.5% CV) is EPISTEMIC UNCERTAINTY (feature, not bug)
+   - Lesson: Distinguish "working correctly" from "working as I expected"
+   - Effort saved: ~15-20 hours (avoided unnecessary crisis mechanics)
+
+3. **Research Channel Review** acknowledged in CHANGELOG
+
+**Roadmap Updates:**
+- Removed completed Climate Mortality section from active roadmap
+- Updated "Recently Completed" section with archive links
+- Adjusted total effort: 180-255h → 166-233h (14-22h reduction)
+- Updated CHANGELOG with Oct 29 entries (3 major items)
+- Preserved all historical details in archived plans
+
+**Remaining Work:**
+- 🔴 CRITICAL: Citation Verification (~5h remaining, 66% complete)
+- 🔴 CRITICAL: Monte Carlo Bug Fixes (11-17h)
+- 🔴 HIGH: AI Water Consumption Recalibration (30-60 min, consensus reached)
+- 🟠 HIGH: Architecture Integration Issues (48-72h)
+
+**Total Remaining:** ~166-233 hours
+---

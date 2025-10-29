@@ -9,7 +9,7 @@ import { updateUBISystem } from '../../enhancedUBI';
 export class UBIPhase implements SimulationPhase {
   readonly name = 'Enhanced UBI Update';
   readonly id = 'ubi-system';
-  readonly order = 15.5; // After social cohesion, before defensive AI
+  readonly order = 15.3; // After extreme weather (15.2), before tier2 interpretability (15.4)
   
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     updateUBISystem(state);

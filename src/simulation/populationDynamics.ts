@@ -1152,15 +1152,17 @@ export function updateHumanPopulation(state: GameState): void {
   // - All percentages showing 0.0% due to wrong denominator
 
   // DEBUG (P1.1 - Death Accounting): Log death tracking mismatch
+  // FIX (Oct 29, 2025): BUG #1 - deathsByCategory is now in MILLIONS, not billions
   if (state.currentMonth % 12 === 0 && actualDeaths > 0.1) { // Log annually when deaths >100M
-    const trackedDeaths = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0); // Already in billions
-    const discrepancy = Math.abs(actualDeaths - trackedDeaths);
+    const trackedDeathsMillions = Object.values(pop.deathsByCategory).reduce((a, b) => a + b, 0); // In millions
+    const trackedDeathsBillions = trackedDeathsMillions / 1000;
+    const discrepancy = Math.abs(actualDeaths - trackedDeathsBillions);
     if (discrepancy > 0.5) { // >500M discrepancy
       console.warn(`⚠️  DEATH ACCOUNTING MISMATCH (Month ${state.currentMonth}):`);
       console.log(`   Actual population deaths: ${actualDeaths.toFixed(3)}B (${(actualDeaths * 1000).toFixed(0)}M)`);
-      console.log(`   Tracked by category: ${trackedDeaths.toFixed(3)}B (${(trackedDeaths * 1000).toFixed(0)}M)`);
+      console.log(`   Tracked by category: ${trackedDeathsBillions.toFixed(3)}B (${trackedDeathsMillions.toFixed(0)}M)`);
       console.log(`   Discrepancy: ${discrepancy.toFixed(3)}B (${(discrepancy * 1000).toFixed(0)}M) - ${(discrepancy / actualDeaths * 100).toFixed(0)}%`);
-      console.log(`   Categories: war=${(pop.deathsByCategory.war * 1000).toFixed(0)}M, famine=${(pop.deathsByCategory.famine * 1000).toFixed(0)}M, disasters=${(pop.deathsByCategory.disasters * 1000).toFixed(0)}M`);
+      console.log(`   Categories: war=${pop.deathsByCategory.war.toFixed(0)}M, famine=${pop.deathsByCategory.famine.toFixed(0)}M, disasters=${pop.deathsByCategory.disasters.toFixed(0)}M`);
     }
   }
 
@@ -1509,37 +1511,42 @@ function addSegmentSpecificCrisisDeaths(
   
   // Update population
   pop.population = Math.max(0, pop.population - totalDeathsApplied);
-  pop.monthlyExcessDeaths += totalDeathsApplied;
-  pop.cumulativeCrisisDeaths += totalDeathsApplied;
+
+  // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
+  // totalDeathsApplied is in BILLIONS, but monthlyExcessDeaths/cumulativeCrisisDeaths are in MILLIONS
+  // Convert to millions for storage
+  const totalDeathsAppliedMillions = totalDeathsApplied * 1000;
+  pop.monthlyExcessDeaths += totalDeathsAppliedMillions;
+  pop.cumulativeCrisisDeaths += totalDeathsAppliedMillions;
   if (pop.monthlyDeathsApplied === undefined) {
     throw new Error('❌ pop.monthlyDeathsApplied is undefined in applyDeathsWithCap line 844 - initialization bug');
   }
   pop.monthlyDeathsApplied = pop.monthlyDeathsApplied + totalDeathsApplied;
 
-  // Track by category (stored in billions, converted to millions for display)
-  pop.deathsByCategory[category] += totalDeathsApplied;
+  // Track by category (stored in MILLIONS per types/population.ts line 74)
+  pop.deathsByCategory[category] += totalDeathsAppliedMillions;
 
   // Track by root cause (TIER 1.8: Death Attribution System Redesign)
   if (isCompoundCause(rootCause)) {
     // Validate compound cause
     validateCompoundCause(rootCause);
 
-    // Distribute deaths across root causes by weight
+    // Distribute deaths across root causes by weight (stored in MILLIONS)
     for (const causeAttr of rootCause.causes) {
-      const weightedDeaths = totalDeathsApplied * causeAttr.weight;
+      const weightedDeaths = totalDeathsAppliedMillions * causeAttr.weight;
       pop.deathsByRootCause[causeAttr.cause] += weightedDeaths;
     }
 
-    // Track as compound
-    pop.deathsByRootCause.compound += totalDeathsApplied;
+    // Track as compound (stored in MILLIONS)
+    pop.deathsByRootCause.compound += totalDeathsAppliedMillions;
 
-    // Use lowest confidence of components
+    // Use lowest confidence of components (stored in MILLIONS)
     const overallConfidence = getCompoundConfidence(rootCause);
-    pop.deathsByRootCause.confidenceDistribution[overallConfidence] += totalDeathsApplied;
+    pop.deathsByRootCause.confidenceDistribution[overallConfidence] += totalDeathsAppliedMillions;
   } else {
-    // Single root cause
-    pop.deathsByRootCause[rootCause] += totalDeathsApplied;
-    pop.deathsByRootCause.confidenceDistribution[confidence] += totalDeathsApplied;
+    // Single root cause (stored in MILLIONS)
+    pop.deathsByRootCause[rootCause] += totalDeathsAppliedMillions;
+    pop.deathsByRootCause.confidenceDistribution[confidence] += totalDeathsAppliedMillions;
   }
   
   // Log significant events
@@ -1617,42 +1624,47 @@ function addUniformCrisisDeaths(
 
   // Apply immediate deaths
   pop.population = Math.max(0, pop.population - deathsInBillions);
-  pop.monthlyExcessDeaths += deathsInBillions;
-  pop.cumulativeCrisisDeaths += deathsInBillions;
+
+  // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
+  // deathsInBillions is in BILLIONS, but monthlyExcessDeaths/cumulativeCrisisDeaths are in MILLIONS
+  // Convert to millions for storage
+  const deathsInMillions = deathsInBillions * 1000;
+  pop.monthlyExcessDeaths += deathsInMillions;
+  pop.cumulativeCrisisDeaths += deathsInMillions;
   if (pop.monthlyDeathsApplied === undefined) {
     throw new Error('❌ pop.monthlyDeathsApplied is undefined in applyImmediateDeaths line 952 - initialization bug');
   }
   pop.monthlyDeathsApplied = pop.monthlyDeathsApplied + deathsInBillions;
 
-  // Track by category (stored in billions, converted to millions for display)
-  pop.deathsByCategory[category] += deathsInBillions;
+  // Track by category (stored in MILLIONS per types/population.ts line 74)
+  pop.deathsByCategory[category] += deathsInMillions;
 
   // Track by root cause (TIER 1.8: Death Attribution System Redesign)
   if (isCompoundCause(rootCause)) {
     // Validate compound cause
     validateCompoundCause(rootCause);
 
-    // Distribute deaths across root causes by weight
+    // Distribute deaths across root causes by weight (stored in MILLIONS)
     for (const causeAttr of rootCause.causes) {
-      const weightedDeaths = deathsInBillions * causeAttr.weight;
+      const weightedDeaths = deathsInMillions * causeAttr.weight;
       pop.deathsByRootCause[causeAttr.cause] += weightedDeaths;
     }
 
-    // Track as compound
-    pop.deathsByRootCause.compound += deathsInBillions;
+    // Track as compound (stored in MILLIONS)
+    pop.deathsByRootCause.compound += deathsInMillions;
 
-    // Use lowest confidence of components
+    // Use lowest confidence of components (stored in MILLIONS)
     const overallConfidence = getCompoundConfidence(rootCause);
-    pop.deathsByRootCause.confidenceDistribution[overallConfidence] += deathsInBillions;
+    pop.deathsByRootCause.confidenceDistribution[overallConfidence] += deathsInMillions;
   } else {
-    // Single root cause
-    pop.deathsByRootCause[rootCause] += deathsInBillions;
-    pop.deathsByRootCause.confidenceDistribution[confidence] += deathsInBillions;
+    // Single root cause (stored in MILLIONS)
+    pop.deathsByRootCause[rootCause] += deathsInMillions;
+    pop.deathsByRootCause.confidenceDistribution[confidence] += deathsInMillions;
   }
 
   // Log significant events
   if (deathsInBillions > 0.001) { // > 1M deaths
-    const deathsInMillions = (deathsInBillions * 1000).toFixed(1);
+    const deathsInMillionsFormatted = deathsInMillions.toFixed(1);
     const exposedPct = (exposedFraction * 100).toFixed(0);
     const scope = exposedFraction >= 0.9 ? 'GLOBAL' : exposedFraction >= 0.4 ? 'SEMI-GLOBAL' : 'REGIONAL';
     const cappedNote = actualDeaths < requestedDeaths ? ' [CAPPED]' : '';
@@ -1666,7 +1678,7 @@ function addUniformCrisisDeaths(
       rootCauseStr = rootCause;
     }
 
-    console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillions}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
+    console.log(`💀 ${scope} CRISIS DEATHS: ${deathsInMillionsFormatted}M casualties (${reason}) [${category.toUpperCase()}]${cappedNote}`);
     console.log(`   Exposed: ${exposedPct}% of world, Mortality: ${(mortalityRate * 100).toFixed(1)}%`);
     console.log(`   Root cause: ${rootCauseStr}, Confidence: ${confidence}`);
     console.log(`   Population: ${pop.population.toFixed(3)}B remaining`);

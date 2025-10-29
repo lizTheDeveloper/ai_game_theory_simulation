@@ -32,7 +32,7 @@ import { assertStateProperty, assertFinite } from '@/simulation/utils/assertions
 export class Tier2InterpretabilityPhase implements SimulationPhase {
   id = 'tier2_interpretability';
   name = 'TIER 2: AI Interpretability Ensemble';
-  order = 15.5; // After AI capability updates, before control crisis detection
+  order = 15.4; // After UBI (15.3), before social safety nets (15.6)
 
   execute(state: GameState, rng: RNGFunction, context: PhaseContext): PhaseResult {
     const events: GameEvent[] = [];

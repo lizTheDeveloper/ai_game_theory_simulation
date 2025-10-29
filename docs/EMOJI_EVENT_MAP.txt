@@ -143,3 +143,4 @@
 📍 | Location/placement
 🗑️ | Deletion/removal
 📋 | Checklist/tasks
+🟢 | Success indicator/green light

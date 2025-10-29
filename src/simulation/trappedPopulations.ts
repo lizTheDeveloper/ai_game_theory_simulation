@@ -144,18 +144,21 @@ export function updateTrappedPopulations(state: GameState): void {
     state.globalMetrics.socialStability = newStability;
 
     // Excess mortality from being trapped (applies to death tracking)
-    const excessDeaths = (trapped.totalTrapped / 1000) * (trapped.mortalityMultiplier - 1.0) * 0.001; // Billions
-    if (excessDeaths > 0) {
-      state.humanPopulationSystem.monthlyExcessDeaths += excessDeaths;
-      state.humanPopulationSystem.cumulativeCrisisDeaths += excessDeaths;
+    const excessDeathsBillions = (trapped.totalTrapped / 1000) * (trapped.mortalityMultiplier - 1.0) * 0.001; // Billions
+    // FIX (Oct 29, 2025): BUG #1 - Convert to millions for death tracking
+    const excessDeathsMillions = excessDeathsBillions * 1000;
+
+    if (excessDeathsMillions > 0) {
+      state.humanPopulationSystem.monthlyExcessDeaths += excessDeathsMillions;
+      state.humanPopulationSystem.cumulativeCrisisDeaths += excessDeathsMillions;
 
       // Attribute to primary cause (water if water is primary, climate otherwise)
       if (trapped.trappedByWater > trapped.trappedByClimate) {
-        state.humanPopulationSystem.deathsByCategory.famine += excessDeaths;
-        state.humanPopulationSystem.deathsByRootCause.resource += excessDeaths;
+        state.humanPopulationSystem.deathsByCategory.famine += excessDeathsMillions;
+        state.humanPopulationSystem.deathsByRootCause.resource += excessDeathsMillions;
       } else {
-        state.humanPopulationSystem.deathsByCategory.disasters += excessDeaths;
-        state.humanPopulationSystem.deathsByRootCause.climate += excessDeaths;
+        state.humanPopulationSystem.deathsByCategory.disasters += excessDeathsMillions;
+        state.humanPopulationSystem.deathsByRootCause.climate += excessDeathsMillions;
       }
     }
 

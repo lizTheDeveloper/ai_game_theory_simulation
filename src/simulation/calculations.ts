@@ -144,19 +144,46 @@ export function calculateUnemploymentStabilityImpact(
  * - Net effect depends on economic elasticity and stage
  */
 export function calculateUnemployment(state: GameState): number {
-  const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-  const economicStage = Math.floor(state.globalMetrics.economicTransitionStage);
-  
+  const { assertFinite } = require('./utils/assertions');
+
+  const totalAICapability = assertFinite(
+    state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0),
+    {
+      location: 'calculateUnemployment',
+      valueName: 'totalAICapability',
+      month: state.currentMonth,
+      additionalInfo: { aiAgentCount: state.aiAgents.length }
+    }
+  );
+
+  const economicStage = assertFinite(
+    Math.floor(state.globalMetrics.economicTransitionStage),
+    {
+      location: 'calculateUnemployment',
+      valueName: 'economicStage',
+      month: state.currentMonth,
+      additionalInfo: { rawStage: state.globalMetrics.economicTransitionStage }
+    }
+  );
+
   // Base unemployment rate (natural unemployment)
   const baseUnemployment = 0.05; // 5% natural rate
-  
+
   // === TRADITIONAL AI UNEMPLOYMENT (Direct AI replacement) ===
   // AI-driven unemployment (steeper exponential curve)
   // CALIBRATION (Oct 17, 2025): Reduced 0.12 → 0.018 to account for larger AI populations
   // With 20-40 AI agents at ~1.0 capability each, totalAI can reach 30-40
   // Old coefficient (0.12) was calibrated for smaller AI counts, produced 2000%+ displacement
   // New coefficient (0.018) targets 25-45% unemployment range after reinstatement
-  const aiUnemploymentFactor = Math.pow(Math.max(0, totalAICapability - 0.8), 1.8) * 0.018;
+  const aiUnemploymentFactor = assertFinite(
+    Math.pow(Math.max(0, totalAICapability - 0.8), 1.8) * 0.018,
+    {
+      location: 'calculateUnemployment',
+      valueName: 'aiUnemploymentFactor',
+      month: state.currentMonth,
+      additionalInfo: { totalAICapability }
+    }
+  );
 
   // === REINSTATEMENT EFFECT (Acemoglu & Restrepo 2022) ===
   // TIER 0D BUG #2 FIX (Oct 17, 2025): Add missing task creation mechanism
@@ -191,11 +218,27 @@ export function calculateUnemployment(state: GameState): number {
 
   // Reinstatement is a PROPORTION of displacement (not separate calculation)
   // This ensures displacement growth is matched by job creation growth
-  const reinstatementFactor = aiUnemploymentFactor * reinstatementRatio;
+  const reinstatementFactor = assertFinite(
+    aiUnemploymentFactor * reinstatementRatio,
+    {
+      location: 'calculateUnemployment',
+      valueName: 'reinstatementFactor',
+      month: state.currentMonth,
+      additionalInfo: { aiUnemploymentFactor, reinstatementRatio }
+    }
+  );
 
   // Apply reinstatement to reduce AI-driven unemployment
   // Example: 30% displacement × 0.85 offset = 25.5% reinstatement → 4.5% net unemployment
-  const netAIUnemployment = Math.max(0, aiUnemploymentFactor - reinstatementFactor);
+  const netAIUnemployment = assertFinite(
+    Math.max(0, aiUnemploymentFactor - reinstatementFactor),
+    {
+      location: 'calculateUnemployment',
+      valueName: 'netAIUnemployment',
+      month: state.currentMonth,
+      additionalInfo: { aiUnemploymentFactor, reinstatementFactor }
+    }
+  );
 
   // === BIONIC SKILLS LABOR DISPLACEMENT ===
   // P2.3: One AI-skilled worker replaces multiple non-AI workers
@@ -223,22 +266,52 @@ export function calculateUnemployment(state: GameState): number {
       }
     }
     
-    const avgProductivityMultiplier = totalWeight > 0 
-      ? weightedProductivityBoost / totalWeight 
-      : 1.0;
-    
+    const avgProductivityMultiplier = assertFinite(
+      totalWeight > 0 ? weightedProductivityBoost / totalWeight : 1.0,
+      {
+        location: 'calculateUnemployment',
+        valueName: 'avgProductivityMultiplier',
+        month: state.currentMonth,
+        additionalInfo: { weightedProductivityBoost, totalWeight }
+      }
+    );
+
     // If productivity is 1.4x, then 1 worker = 1.4 workers → 28.6% can be displaced
     // Displacement = (multiplier - 1.0) / multiplier
-    const displacementRate = Math.max(0, (avgProductivityMultiplier - 1.0) / avgProductivityMultiplier);
-    
+    const displacementRate = assertFinite(
+      Math.max(0, (avgProductivityMultiplier - 1.0) / avgProductivityMultiplier),
+      {
+        location: 'calculateUnemployment',
+        valueName: 'displacementRate',
+        month: state.currentMonth,
+        additionalInfo: { avgProductivityMultiplier }
+      }
+    );
+
     // Scale by adoption rate (only affects segments with AI access)
-    const avgAIAccess = state.society.segments.reduce((sum, seg) => {
-      const { calculateAIAccess } = require('./aiAssistedSkills');
-      return sum + calculateAIAccess(seg) * seg.populationFraction;
-    }, 0);
-    
+    const avgAIAccess = assertFinite(
+      state.society.segments.reduce((sum, seg) => {
+        const { calculateAIAccess } = require('./aiAssistedSkills');
+        return sum + calculateAIAccess(seg) * seg.populationFraction;
+      }, 0),
+      {
+        location: 'calculateUnemployment',
+        valueName: 'avgAIAccess',
+        month: state.currentMonth,
+        additionalInfo: { segmentCount: state.society.segments.length }
+      }
+    );
+
     // Bionic displacement: 0-40% unemployment potential
-    bionicDisplacementFactor = displacementRate * avgAIAccess * 0.40;
+    bionicDisplacementFactor = assertFinite(
+      displacementRate * avgAIAccess * 0.40,
+      {
+        location: 'calculateUnemployment',
+        valueName: 'bionicDisplacementFactor',
+        month: state.currentMonth,
+        additionalInfo: { displacementRate, avgAIAccess }
+      }
+    );
   }
   
   // === JOB CREATION FROM COST REDUCTION ===
@@ -293,12 +366,37 @@ export function calculateUnemployment(state: GameState): number {
 
   // Cost reduction from bionic skills → new job creation
   // If costs drop 20%, and elasticity is 0.5, then 10% new jobs
-  const costReductionFromSkills = effectiveBionicDisplacement * 0.5; // Productivity boost = cost reduction
-  const jobCreationFactor = costReductionFromSkills * elasticity;
+  const costReductionFromSkills = assertFinite(
+    effectiveBionicDisplacement * 0.5,
+    {
+      location: 'calculateUnemployment',
+      valueName: 'costReductionFromSkills',
+      month: state.currentMonth,
+      additionalInfo: { effectiveBionicDisplacement }
+    }
+  );
+
+  const jobCreationFactor = assertFinite(
+    costReductionFromSkills * elasticity,
+    {
+      location: 'calculateUnemployment',
+      valueName: 'jobCreationFactor',
+      month: state.currentMonth,
+      additionalInfo: { costReductionFromSkills, elasticity }
+    }
+  );
 
   // Net bionic effect (displacement - creation)
-  const netBionicUnemployment = effectiveBionicDisplacement - jobCreationFactor;
-  
+  const netBionicUnemployment = assertFinite(
+    effectiveBionicDisplacement - jobCreationFactor,
+    {
+      location: 'calculateUnemployment',
+      valueName: 'netBionicUnemployment',
+      month: state.currentMonth,
+      additionalInfo: { effectiveBionicDisplacement, jobCreationFactor }
+    }
+  );
+
   // Stage multipliers - crisis stages accelerate unemployment
   const stageMultipliers: Record<number, number> = {
     0: 1.0,   // Pre-disruption
@@ -308,21 +406,36 @@ export function calculateUnemployment(state: GameState): number {
     4: 1.0    // Stabilized
   };
   const stageMultiplier = stageMultipliers[economicStage] || 1.0;
-  
+
   // Policy mitigation effects
   const hasUBI = state.government.activeRegulations.some(reg => reg.includes('UBI'));
-  const hasRetraining = state.government.activeRegulations.some(reg => 
+  const hasRetraining = state.government.activeRegulations.some(reg =>
     reg.includes('Retraining') || reg.includes('Training')
   );
   const policyMitigation = hasUBI ? 0.85 : 1.0;
   const retrainingEffect = hasRetraining ? 0.92 : 1.0;
-  
+
   // Calculate final unemployment level
   // Traditional AI unemployment (after reinstatement) + Bionic skills displacement
   // TIER 0D BUG #2 FIX: Use netAIUnemployment (displacement - reinstatement) instead of aiUnemploymentFactor
-  let unemployment = baseUnemployment +
-    (netAIUnemployment * stageMultiplier * policyMitigation * retrainingEffect) +
-    (netBionicUnemployment * stageMultiplier); // Retraining already applied above, don't double-count
+  let unemployment = assertFinite(
+    baseUnemployment +
+      (netAIUnemployment * stageMultiplier * policyMitigation * retrainingEffect) +
+      (netBionicUnemployment * stageMultiplier),
+    {
+      location: 'calculateUnemployment',
+      valueName: 'unemployment (pre-floor)',
+      month: state.currentMonth,
+      additionalInfo: {
+        baseUnemployment,
+        netAIUnemployment,
+        netBionicUnemployment,
+        stageMultiplier,
+        policyMitigation,
+        retrainingEffect
+      }
+    }
+  );
 
   // PHASE 6 FIX: Apply job guarantee floor
   // SYSTEMIC EFFECT: Job quality varies by segment (elite get admin roles, precariat get workfare)
@@ -355,7 +468,15 @@ export function calculateUnemployment(state: GameState): number {
   }
 
   // Cap at 95% (more realistic than 80%)
-  return Math.min(0.95, unemployment);
+  return assertFinite(
+    Math.min(0.95, unemployment),
+    {
+      location: 'calculateUnemployment',
+      valueName: 'finalUnemployment',
+      month: state.currentMonth,
+      additionalInfo: { preCapUnemployment: unemployment }
+    }
+  );
 }
 
 /**
@@ -536,26 +657,107 @@ export function calculateTrustChange(state: GameState): number {
  * Calculate social stability based on multiple factors
  */
 export function calculateSocialStability(state: GameState): number {
+  const { assertFinite } = require('./utils/assertions');
   const { society, globalMetrics, aiAgents } = state;
-  
-  const avgAlignment = aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length);
-  const trustInAI = getTrustInAI(society); // Phase 2: Use paranoia-derived trust
-  
-  const stabilityFromTrust = trustInAI * 0.3;
-  const stabilityFromUnemployment = calculateUnemploymentStabilityImpact(
-    society.unemploymentLevel,
-    globalMetrics.economicTransitionStage,
-    globalMetrics.wealthDistribution
-  ) * 0.5;
-  const stabilityFromAlignment = avgAlignment * 0.2;
-  
-  const targetStability = 0.5 + stabilityFromTrust + stabilityFromUnemployment + stabilityFromAlignment;
-  
+
+  const avgAlignment = assertFinite(
+    aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, aiAgents.length),
+    {
+      location: 'calculateSocialStability',
+      valueName: 'avgAlignment',
+      month: state.currentMonth,
+      additionalInfo: { aiAgentCount: aiAgents.length }
+    }
+  );
+
+  const trustInAI = assertFinite(
+    getTrustInAI(society),
+    {
+      location: 'calculateSocialStability',
+      valueName: 'trustInAI',
+      month: state.currentMonth,
+      additionalInfo: { paranoiaLevel: society.paranoiaLevel }
+    }
+  );
+
+  const stabilityFromTrust = assertFinite(
+    trustInAI * 0.3,
+    {
+      location: 'calculateSocialStability',
+      valueName: 'stabilityFromTrust',
+      month: state.currentMonth,
+      additionalInfo: { trustInAI }
+    }
+  );
+
+  const stabilityFromUnemployment = assertFinite(
+    calculateUnemploymentStabilityImpact(
+      society.unemploymentLevel,
+      globalMetrics.economicTransitionStage,
+      globalMetrics.wealthDistribution
+    ) * 0.5,
+    {
+      location: 'calculateSocialStability',
+      valueName: 'stabilityFromUnemployment',
+      month: state.currentMonth,
+      additionalInfo: {
+        unemploymentLevel: society.unemploymentLevel,
+        economicStage: globalMetrics.economicTransitionStage,
+        wealthDistribution: globalMetrics.wealthDistribution
+      }
+    }
+  );
+
+  const stabilityFromAlignment = assertFinite(
+    avgAlignment * 0.2,
+    {
+      location: 'calculateSocialStability',
+      valueName: 'stabilityFromAlignment',
+      month: state.currentMonth,
+      additionalInfo: { avgAlignment }
+    }
+  );
+
+  const targetStability = assertFinite(
+    0.5 + stabilityFromTrust + stabilityFromUnemployment + stabilityFromAlignment,
+    {
+      location: 'calculateSocialStability',
+      valueName: 'targetStability',
+      month: state.currentMonth,
+      additionalInfo: { stabilityFromTrust, stabilityFromUnemployment, stabilityFromAlignment }
+    }
+  );
+
   // Gradual convergence to target (prevents sudden jumps)
-  const stabilityDiff = targetStability - globalMetrics.socialStability;
-  const newStability = globalMetrics.socialStability + stabilityDiff * 0.15;
-  
-  return Math.max(0, Math.min(1, newStability));
+  const stabilityDiff = assertFinite(
+    targetStability - globalMetrics.socialStability,
+    {
+      location: 'calculateSocialStability',
+      valueName: 'stabilityDiff',
+      month: state.currentMonth,
+      additionalInfo: { targetStability, currentStability: globalMetrics.socialStability }
+    }
+  );
+
+  const newStability = assertFinite(
+    globalMetrics.socialStability + stabilityDiff * 0.15,
+    {
+      location: 'calculateSocialStability',
+      valueName: 'newStability',
+      month: state.currentMonth,
+      additionalInfo: { currentStability: globalMetrics.socialStability, stabilityDiff }
+    }
+  );
+
+  return assertFinite(
+    Math.max(0, Math.min(1, newStability)),
+    {
+      location: 'calculateSocialStability',
+      valueName: 'finalStability',
+      month: state.currentMonth,
+      additionalInfo: { preClampStability: newStability }
+    }
+  );
 }
 
 /**

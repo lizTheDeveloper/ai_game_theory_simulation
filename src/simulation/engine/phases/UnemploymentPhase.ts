@@ -14,6 +14,7 @@ import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } fr
 import { calculateUnemployment } from '../../calculations';
 import { updateAIAssistedSkills } from '../../aiAssistedSkills';
 import { updateSocietyAggregates } from '../../populationSegments';
+import { assertFinite } from '../../utils/assertions';
 
 export class UnemploymentPhase implements SimulationPhase {
   readonly id = 'unemployment';
@@ -29,7 +30,18 @@ export class UnemploymentPhase implements SimulationPhase {
     }
 
     // Calculate unemployment (now includes AI displacement effect)
-    const newUnemployment = calculateUnemployment(state);
+    const newUnemployment = assertFinite(
+      calculateUnemployment(state),
+      {
+        location: 'UnemploymentPhase.execute',
+        valueName: 'newUnemployment',
+        month: state.currentMonth,
+        additionalInfo: {
+          currentUnemployment: state.society.unemploymentLevel,
+          economicStage: state.globalMetrics.economicTransitionStage
+        }
+      }
+    );
 
     state.society = {
       ...state.society,

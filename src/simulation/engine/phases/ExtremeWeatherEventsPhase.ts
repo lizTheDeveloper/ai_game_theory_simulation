@@ -19,7 +19,7 @@ import { updateExtremeWeatherEvents } from '@/simulation/extremeWeatherEvents';
 export class ExtremeWeatherEventsPhase implements SimulationPhase {
   readonly id = 'extreme-weather-events';
   readonly name = 'Extreme Weather Events';
-  readonly order = 15.5; // After WetBulbTemperaturePhase (order 15)
+  readonly order = 15.2; // After WetBulbTemperaturePhase (order 15.0), before UBI (15.3)
 
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
     // Update extreme weather system (storms)

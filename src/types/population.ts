@@ -86,34 +86,35 @@ export interface HumanPopulationSystem {
 
   // ROOT CAUSE: Why it happened (underlying driver of death)
   // Research-backed taxonomy (Diamond 2005, IPBES 2019, Acemoglu & Robinson 2012)
+  // UNITS: MILLIONS (Oct 29, 2025 - FIX: Bug #1 - death attribution mismatch)
   deathsByRootCause: {
     // Environmental drivers (4 categories)
-    climate: number;                     // Climate change (14% IPBES biodiversity driver)
-    resource: number;                    // Resource depletion (phosphorus, water)
-    pollution: number;                   // Toxic contamination (14% IPBES, novel entities)
-    ecosystem: number;                   // Biodiversity/land use (30% land use + 23% exploitation IPBES)
+    climate: number;                     // Climate change (14% IPBES biodiversity driver) (MILLIONS)
+    resource: number;                    // Resource depletion (phosphorus, water) (MILLIONS)
+    pollution: number;                   // Toxic contamination (14% IPBES, novel entities) (MILLIONS)
+    ecosystem: number;                   // Biodiversity/land use (30% land use + 23% exploitation IPBES) (MILLIONS)
 
     // Social drivers (3 categories)
-    inequality: number;                  // Wealth/power concentration (Piketty, elite capture)
-    demographic: number;                 // Population/resource imbalance (Malthusian pressure)
-    social: number;                      // Cultural breakdown/anomie (Durkheim, loss of meaning)
+    inequality: number;                  // Wealth/power concentration (Piketty, elite capture) (MILLIONS)
+    demographic: number;                 // Population/resource imbalance (Malthusian pressure) (MILLIONS)
+    social: number;                      // Cultural breakdown/anomie (Durkheim, loss of meaning) (MILLIONS)
 
     // Technology drivers (2 categories)
-    alignment: number;                   // AI misalignment/control loss
-    disruption: number;                  // Technology displacement (unemployment, obsolescence)
+    alignment: number;                   // AI misalignment/control loss (MILLIONS)
+    disruption: number;                  // Technology displacement (unemployment, obsolescence) (MILLIONS)
 
     // External shocks (2 categories)
-    conflict: number;                    // War/violence (geopolitical, civil, terrorism)
-    pandemic: number;                    // Disease outbreak (natural or engineered)
+    conflict: number;                    // War/violence (geopolitical, civil, terrorism) (MILLIONS)
+    pandemic: number;                    // Disease outbreak (natural or engineered) (MILLIONS)
 
     // Compound attribution tracking
-    compound: number;                    // Deaths with multiple root causes (WHO PAF methodology)
+    compound: number;                    // Deaths with multiple root causes (WHO PAF methodology) (MILLIONS)
 
     // Confidence distribution
     confidenceDistribution: {
-      HIGH: number;                      // Deaths with HIGH confidence attribution
-      MEDIUM: number;                    // Deaths with MEDIUM confidence attribution
-      LOW: number;                       // Deaths with LOW confidence attribution
+      HIGH: number;                      // Deaths with HIGH confidence attribution (MILLIONS)
+      MEDIUM: number;                    // Deaths with MEDIUM confidence attribution (MILLIONS)
+      LOW: number;                       // Deaths with LOW confidence attribution (MILLIONS)
     };
   };
 

@@ -374,18 +374,21 @@ export function resolveMortality(
       // Update proximate cause (stored in millions)
       pop.deathsByCategory[cause.proximate] = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
 
-      // Update root cause (stored in BILLIONS for legacy compatibility)
-      pop.deathsByRootCause[cause.root] = (pop.deathsByRootCause[cause.root] || 0) + (attributedDeathsMillions / 1000);
+      // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch (730× error)
+      // ROOT CAUSE: deathsByRootCause was stored in BILLIONS while deathsByCategory was in MILLIONS
+      // SOLUTION: Both are now stored in MILLIONS (per types/population.ts line 74)
+      // Update root cause (stored in millions)
+      pop.deathsByRootCause[cause.root] = (pop.deathsByRootCause[cause.root] || 0) + attributedDeathsMillions;
 
-      // Update confidence distribution (stored in BILLIONS for legacy compatibility)
+      // Update confidence distribution (stored in millions)
       pop.deathsByRootCause.confidenceDistribution[cause.confidence] =
-        (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + (attributedDeathsMillions / 1000);
+        (pop.deathsByRootCause.confidenceDistribution[cause.confidence] || 0) + attributedDeathsMillions;
     }
   }
 
-  // Track compound attribution if multiple risks (stored in BILLIONS for legacy compatibility)
+  // Track compound attribution if multiple risks (stored in millions)
   if (risks.length > 1) {
-    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + totalDeaths;
+    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + totalDeathsMillions;
   }
 
   // Calculate summary statistics

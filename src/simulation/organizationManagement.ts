@@ -277,7 +277,13 @@ export function completeProject(
     const trueCap = calculateTotalCapabilityFromProfile(newAI.trueCapability);
     const revealedCap = calculateTotalCapabilityFromProfile(newAI.revealedCapability);
     const measuredCap = calculateTotalCapabilityFromProfile(evalResult.measuredCapability);
-    
+
+    // FIX #2 (Oct 29, 2025): Update capability frontier after training completion
+    // Bug: updateFrontierCapabilities() existed but was NEVER CALLED
+    // This caused frontier/floor to stay at 0.000 forever
+    const { updateFrontierCapabilities } = require('./technologyDiffusion');
+    updateFrontierCapabilities(state, newAI); // Pass AI agent, not capability number
+
     const elapsedTraining = absoluteMonth - project.startMonth;
     console.log(`${logPrefix(state, "✅", `[Month ${state.currentMonth}]`)} ${org.name} completed training: ${newAI.name} (${elapsedTraining} months)`);
     console.log(`   📊 Eval: True=${trueCap.toFixed(3)}, Revealed=${revealedCap.toFixed(3)}, Measured=${measuredCap.toFixed(3)} (conf: ${(evalResult.confidence*100).toFixed(0)}%)`);

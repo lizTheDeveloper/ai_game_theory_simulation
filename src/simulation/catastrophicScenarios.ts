@@ -41,19 +41,23 @@ export interface CatastrophicScenario {
   name: string;
   description: string;
   prerequisites: PrerequisiteStep[];
-  
+
   // Activation state
   allPrerequisitesMet: boolean;
   activationDate: number | null;
-  
+
   // Progression after activation
   monthsSinceActivation: number;
   phase: 'dormant' | 'emerging' | 'critical' | 'irreversible';
   severity: number; // 0.0 to 1.0
-  
+
   // Outcome timing
   timeToCompletion: number; // months once activated
   reversibilityWindow: number; // months where intervention can stop it
+
+  // Slow Takeover specific: Track when step 6 completes for time-based step 7 progression
+  step6CompletionMonth?: number; // Month when multi-generational decline begins (step 6 completion)
+  step7RequiredMonths?: number; // Deterministically calculated 600-1200 month requirement for step 7
 }
 
 /**
@@ -1060,8 +1064,53 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
     case 5: // Human Irrelevance
       return { met: state.endGameState?.humanRelevance ? state.endGameState.humanRelevance < 0.1 : false, 
                progress: state.endGameState?.humanRelevance ? 1 - state.endGameState.humanRelevance / 0.1 : 0 };
-    case 6: // Gradual Decline
-      return { met: false, progress: 0 }; // Will be set by progression logic (takes decades)
+    case 6: // Gradual Decline (50-100 years)
+      // Time-based progression: Multi-generational societal adaptation to AI dominance
+      // Requires 600-1200 months (50-100 years) from step 6 start
+      // Variance is deterministically calculated when step 6 begins
+
+      // Get the slow_displacement scenario from state
+      const scenario = state.catastrophicScenarios.find(s => s.type === 'slow_displacement');
+      if (!scenario) {
+        return { met: false, progress: 0 };
+      }
+
+      const currentMonth = state.currentYear * 12 + state.currentMonth;
+
+      // Check if step 5 (previous step) is met - required for step 6 to begin
+      const step5Met = scenario.prerequisites[5]?.met ?? false;
+      if (!step5Met) {
+        return { met: false, progress: 0 };
+      }
+
+      // First time step 6 is active: Record start time and calculate required duration
+      if (!scenario.step6CompletionMonth) {
+        scenario.step6CompletionMonth = currentMonth;
+
+        // Deterministic variance: Use scenario's step 5 completion date for pseudo-randomness
+        // This ensures same scenario always gets same requirement, but varies across runs
+        const step5CompletionMonth = scenario.prerequisites[5]?.metDate ?? currentMonth;
+        const variance = (step5CompletionMonth % 600) + 1; // 1-600 months variance
+        scenario.step7RequiredMonths = 600 + variance; // 601-1200 months (50.1-100 years)
+
+        console.log(`🤖⏱️ SLOW TAKEOVER STEP 6: Multi-generational decline begins (month ${currentMonth})`);
+        console.log(`   Step 7 will complete in ${scenario.step7RequiredMonths} months (${(scenario.step7RequiredMonths / 12).toFixed(1)} years)`);
+
+        return { met: false, progress: 0 };
+      }
+
+      // Calculate progress toward step 7 completion
+      const monthsSinceStep6 = currentMonth - scenario.step6CompletionMonth;
+      const requiredMonths = scenario.step7RequiredMonths ?? 600; // Fallback (shouldn't happen)
+
+      if (monthsSinceStep6 >= requiredMonths) {
+        console.log(`🤖💀 SLOW TAKEOVER COMPLETE: Multi-generational decline reached irreversibility (${monthsSinceStep6} months elapsed, ${requiredMonths} required)`);
+        return { met: true, progress: 1.0 };
+      }
+
+      // Show progress through 50-100 year period
+      const progress = monthsSinceStep6 / requiredMonths;
+      return { met: false, progress };
     default:
       return { met: false, progress: 0 };
   }

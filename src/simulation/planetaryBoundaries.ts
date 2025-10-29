@@ -28,6 +28,7 @@ import {
   BiosphereIntegrityIndex,
   SpeciesGroup
 } from '@/types/planetaryBoundaries';
+import { assertStateProperty, assertFinite, assertProbability, assertInRange, assertDefined } from './utils/assertions';
 
 /**
  * Initialize planetary boundaries system with 2025 baseline
@@ -472,6 +473,36 @@ export function calculateTippingPointRisk(
   );
 
   return totalRisk;
+}
+
+/**
+ * Get global temperature increase from planetary boundaries
+ *
+ * Provides decoupled access to climate change boundary value for downstream systems
+ * (storm modeling, biosphere impacts, etc.).
+ *
+ * @param state - Game state
+ * @returns Temperature increase in °C above pre-industrial baseline
+ * @throws AssertionError if planetary boundaries system is missing or invalid
+ */
+export function getGlobalTemperatureIncrease(state: GameState): number {
+  const system = assertDefined(state.planetaryBoundariesSystem, {
+    location: 'getGlobalTemperatureIncrease',
+    valueName: 'planetaryBoundariesSystem',
+    month: state.currentMonth
+  });
+
+  const boundary = assertDefined(system.boundaries.climate_change, {
+    location: 'getGlobalTemperatureIncrease',
+    valueName: 'boundaries.climate_change',
+    month: state.currentMonth
+  });
+
+  return assertFinite(boundary.currentValue, {
+    location: 'getGlobalTemperatureIncrease',
+    valueName: 'climate_change.currentValue',
+    month: state.currentMonth
+  });
 }
 
 /**
@@ -1329,8 +1360,8 @@ export function updateBiosphereIntegrityIndex(
 
   // === 1. UPDATE CLIMATE VELOCITY ===
   // Climate velocity increases with warming rate
-  // Access from planetary boundaries system (climate_change boundary = °C above pre-industrial)
-  const globalTempIncrease = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 1.2;
+  // Use getter function to decouple from internal planetary boundaries structure
+  const globalTempIncrease = getGlobalTemperatureIncrease(state);
   const warmingRate = globalTempIncrease / ((state.currentMonth || 1) / 12); // °C per year
 
   // Climate velocity scales with warming rate

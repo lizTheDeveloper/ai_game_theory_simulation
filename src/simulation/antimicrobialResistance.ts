@@ -349,8 +349,11 @@ export function applyAMRMortality(
   // Calculate monthly deaths
   const monthlyDeaths = population * monthlyDeathRate;
 
-  // Add to population system (disease category, convert raw count to billions)
-  state.humanPopulationSystem.deathsByCategory.disease += monthlyDeaths / 1e9;
+  // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
+  // deathsByCategory is in MILLIONS, not billions
+  // Add to population system (disease category, convert raw count to millions)
+  const monthlyDeathsMillions = monthlyDeaths / 1e6;
+  state.humanPopulationSystem.deathsByCategory.disease += monthlyDeathsMillions;
 
   // Track in AMR system
   amr.monthlyDeaths = monthlyDeaths;

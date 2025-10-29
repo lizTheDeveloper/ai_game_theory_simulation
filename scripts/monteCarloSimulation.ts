@@ -808,7 +808,7 @@ let aleatoryNumSamples = 10; // Phase 1C: Aleatory samples per epistemic sample 
 let exportConfigPath: string | undefined; // Phase 4: Export threshold config
 let importConfigPath: string | undefined; // Phase 4: Import threshold config
 let llmEnabled = false; // Oct 21, 2025: LLM policy optimization (default: disabled)
-let parallelEnabled = true; // Oct 28, 2025: Parallel execution (default: enabled)
+let parallelEnabled = false; // Oct 29, 2025: TEMPORARY - Force sequential for DEBUG (default: enabled)
 let parallelBatchSize = 8; // Oct 28, 2025: Batch size for parallel execution (default: 8)
 
 if (args[0] && !args[0].startsWith('--')) {
@@ -1011,7 +1011,8 @@ if (nestedMonteCarlo) {
         runScenarioMode = SCENARIO_MODE as ScenarioMode;
       }
 
-      const initialState = createDefaultInitialState(runScenarioMode);
+      // BUG #3 FIX (Oct 29, 2025): Pass seed to enable stochastic environmental initialization
+      const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, seed);
 
       // Set run label for logging
       initialState.config.runLabel = `Epistemic ${epistemicIndex + 1}/${NUM_RUNS}, Aleatory ${aleatoryIndex + 1}/${aleatoryNumSamples} [${runScenarioMode}]`;
@@ -1046,6 +1047,14 @@ if (nestedMonteCarlo) {
 
   const finalState = simulationResult.finalState;
 
+  // DEBUG (Oct 29, 2025): Log deathsByCategory immediately after simulation
+  console.log(`\n🔍 DEBUG - Deaths immediately after simulation (Run ${i + 1}):`);
+  console.log(`   war: ${finalState.humanPopulationSystem.deathsByCategory?.war || 'undefined'}M`);
+  console.log(`   famine: ${finalState.humanPopulationSystem.deathsByCategory?.famine || 'undefined'}M`);
+  console.log(`   disasters: ${finalState.humanPopulationSystem.deathsByCategory?.disasters || 'undefined'}M`);
+  console.log(`   disease: ${finalState.humanPopulationSystem.deathsByCategory?.disease || 'undefined'}M`);
+  console.log(`   ai: ${finalState.humanPopulationSystem.deathsByCategory?.ai || 'undefined'}M`);
+
   // === NEW (Oct 17, 2025): RECOVERY TIMELINE ANALYSIS ===
   // Analyze recovery timeline from run data
   const recoveryTimeline = analyzeRecoveryTimeline(simulationResult, finalState);
@@ -1068,9 +1077,11 @@ if (nestedMonteCarlo) {
     totalMonths: simulationResult.summary.totalMonths,
     events: simulationResult.log.events,
     criticalEvents: simulationResult.summary.criticalEvents,
+    // FIX (Oct 29, 2025): simulationResult.log.snapshots is an OBJECT, not array
+    // Structure: { initial, monthly?, quartiles?, final }
     snapshots: {
-      initial: simulationResult.log.snapshots[0],
-      final: simulationResult.log.snapshots[(simulationResult.log.snapshots as any[]).length - 1]
+      initial: simulationResult.log.snapshots.initial,
+      final: simulationResult.log.snapshots.final
     },
     // NEW (Oct 17, 2025): Add recovery timeline data to individual run logs
     recoveryTimeline,
@@ -1435,18 +1446,28 @@ if (nestedMonteCarlo) {
   // === POPULATION & MORTALITY METRICS (Oct 12, 2025) ===
   const pop = finalState.humanPopulationSystem;
   const env = finalState.environmentalAccumulation;
-  const deathsByCategory = pop.deathsByCategory || {
-    war: 0, famine: 0, disasters: 0, disease: 0,
-    ecosystem: 0, pollution: 0, ai: 0, cascade: 0, other: 0
-  };
-  const deathsByRootCause = pop.deathsByRootCause || {
-    climate: 0, resource: 0, pollution: 0, ecosystem: 0,
-    inequality: 0, demographic: 0, social: 0,
-    alignment: 0, disruption: 0,
-    conflict: 0, pandemic: 0,
-    compound: 0,
-    confidenceDistribution: { HIGH: 0, MEDIUM: 0, LOW: 0 }
-  };
+
+  // FIX (Oct 29, 2025): NO DEFENSIVE FALLBACKS - fail loudly if data missing
+  // If deathsByCategory is undefined, this indicates a bug in the Bayesian mortality system
+  if (!pop.deathsByCategory) {
+    throw new Error(
+      `❌ BAYESIAN MORTALITY DATA MISSING\n` +
+      `   Run: ${i + 1}, Seed: ${seed}\n` +
+      `   finalState.humanPopulationSystem.deathsByCategory is undefined\n` +
+      `   This indicates BayesianMortalityResolutionPhase did not populate death data.\n` +
+      `   Population: ${pop.population}B, Months: ${MAX_MONTHS}`
+    );
+  }
+  if (!pop.deathsByRootCause) {
+    throw new Error(
+      `❌ ROOT CAUSE DATA MISSING\n` +
+      `   Run: ${i + 1}, Seed: ${seed}\n` +
+      `   finalState.humanPopulationSystem.deathsByRootCause is undefined`
+    );
+  }
+
+  const deathsByCategory = pop.deathsByCategory;
+  const deathsByRootCause = pop.deathsByRootCause;
   
   const initialPopulation = pop.baselinePopulation;
   const finalPopulation = pop.population;
@@ -1936,7 +1957,8 @@ if (nestedMonteCarlo) {
       runScenarioMode = SCENARIO_MODE as ScenarioMode;
     }
 
-    const initialState = createDefaultInitialState(runScenarioMode);
+    // BUG #3 FIX (Oct 29, 2025): Pass seed to enable stochastic environmental initialization
+    const initialState = createDefaultInitialState(runScenarioMode, undefined, undefined, undefined, undefined, seed);
 
     // Set run label for logging
     initialState.config.runLabel = `Run ${i + 1}/${NUM_RUNS} [${runScenarioMode}]`;
@@ -1982,6 +2004,14 @@ if (nestedMonteCarlo) {
 
   const finalState = simulationResult.finalState;
 
+  // DEBUG (Oct 29, 2025): Log deathsByCategory immediately after simulation
+  console.log(`\n🔍 DEBUG - Deaths immediately after simulation (Run ${i + 1}):`);
+  console.log(`   war: ${finalState.humanPopulationSystem.deathsByCategory?.war || 'undefined'}M`);
+  console.log(`   famine: ${finalState.humanPopulationSystem.deathsByCategory?.famine || 'undefined'}M`);
+  console.log(`   disasters: ${finalState.humanPopulationSystem.deathsByCategory?.disasters || 'undefined'}M`);
+  console.log(`   disease: ${finalState.humanPopulationSystem.deathsByCategory?.disease || 'undefined'}M`);
+  console.log(`   ai: ${finalState.humanPopulationSystem.deathsByCategory?.ai || 'undefined'}M`);
+
   // === NEW (Oct 17, 2025): RECOVERY TIMELINE ANALYSIS ===
   // Analyze recovery timeline from run data
   const recoveryTimeline = analyzeRecoveryTimeline(simulationResult, finalState);
@@ -2004,9 +2034,11 @@ if (nestedMonteCarlo) {
     totalMonths: simulationResult.summary.totalMonths,
     events: simulationResult.log.events,
     criticalEvents: simulationResult.summary.criticalEvents,
+    // FIX (Oct 29, 2025): simulationResult.log.snapshots is an OBJECT, not array
+    // Structure: { initial, monthly?, quartiles?, final }
     snapshots: {
-      initial: simulationResult.log.snapshots[0],
-      final: simulationResult.log.snapshots[(simulationResult.log.snapshots as any[]).length - 1]
+      initial: simulationResult.log.snapshots.initial,
+      final: simulationResult.log.snapshots.final
     },
     // NEW (Oct 17, 2025): Add recovery timeline data to individual run logs
     recoveryTimeline,
@@ -4089,18 +4121,21 @@ results.forEach(r => {
 const totalProximateDeaths = Object.values(aggregateProximate).reduce((sum, v) => sum + v, 0);
 const totalRootDeaths = Object.values(aggregateRoot).reduce((sum, v) => sum + v, 0);
 
+// FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
+// Both deathsByCategory and deathsByRootCause are now in MILLIONS (not billions)
+// Remove the * 1000 conversions
 // Helper to format death statistics with NaN protection
 const formatDeathStat = (deaths: number, total: number): string => {
   if (isNaN(deaths) || isNaN(total) || total === 0) return '0M (0.0%)';
-  const millions = (deaths * 1000).toFixed(0); // Convert billions to millions
+  const millions = deaths.toFixed(0); // Already in millions
   const percent = ((deaths / total) * 100);
   if (isNaN(percent) || !isFinite(percent)) return `${millions}M (0.0%)`;
   return `${millions}M (${percent.toFixed(1)}%)`;
 };
 
 log(`\n  AGGREGATE ACROSS ${NUM_RUNS} RUNS:`);
-log(`    Total Crisis Deaths: ${(totalProximateDeaths * 1000).toFixed(0)}M (excluding natural deaths)`);
-log(`    Average per Run: ${((totalProximateDeaths / NUM_RUNS) * 1000).toFixed(0)}M`);
+log(`    Total Crisis Deaths: ${totalProximateDeaths.toFixed(0)}M (excluding natural deaths)`);
+log(`    Average per Run: ${(totalProximateDeaths / NUM_RUNS).toFixed(0)}M`);
 
 log(`\n  === PROXIMATE CAUSES (What killed them) ===`);
 log(`    Famine:     ${formatDeathStat(aggregateProximate.famine, totalProximateDeaths)}`);
@@ -4154,8 +4189,9 @@ if (totalProximateDeaths > 0 && totalRootDeaths > 0) {
 }
 
 // Reality check: Do percentages add up?
+// FIX (Oct 29, 2025): Values already in millions, don't multiply by 1000
 if (Math.abs((totalProximateDeaths - totalRootDeaths) / Math.max(totalProximateDeaths, 0.001)) > 0.01) {
-  log(`\n  ⚠️  WARNING: Proximate deaths (${(totalProximateDeaths * 1000).toFixed(0)}M) != Root deaths (${(totalRootDeaths * 1000).toFixed(0)}M)`);
+  log(`\n  ⚠️  WARNING: Proximate deaths (${totalProximateDeaths.toFixed(0)}M) != Root deaths (${totalRootDeaths.toFixed(0)}M)`);
   log(`      Attribution may have bugs. Check populationDynamics.ts and regionalPopulations.ts`);
 }
 
