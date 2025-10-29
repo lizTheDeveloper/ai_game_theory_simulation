@@ -33,7 +33,7 @@ export function CrisisDashboard() {
     const crisisList: CrisisItem[] = []
 
     // Use activeCrises array if available
-    if (lastUpdate.activeCrises && lastUpdate.activeCrises.length > 0) {
+    if (Array.isArray(lastUpdate.activeCrises) && lastUpdate.activeCrises.length > 0) {
       lastUpdate.activeCrises.forEach((crisis, index) => {
         crisisList.push({
           id: `crisis_${index}`,
@@ -50,88 +50,100 @@ export function CrisisDashboard() {
     }
 
     // Phosphorus Crisis
-    const phosphorus = lastUpdate.phosphorusDepletion || 0
-    crisisList.push({
-      id: 'phosphorus',
-      name: 'Phosphorus Depletion',
-      type: 'Resource',
-      active: phosphorus > 0.5,
-      severity: phosphorus > 0.7 ? 'critical' : phosphorus > 0.5 ? 'warning' : 'normal',
-      metrics: {
-        'Depletion Level': `${(phosphorus * 100).toFixed(0)}%`,
-        'Status': phosphorus > 0.5 ? 'Active Crisis' : 'Monitoring',
-      }
-    })
+    if (typeof lastUpdate.phosphorusDepletion === 'number' && !isNaN(lastUpdate.phosphorusDepletion)) {
+      const phosphorus = lastUpdate.phosphorusDepletion
+      crisisList.push({
+        id: 'phosphorus',
+        name: 'Phosphorus Depletion',
+        type: 'Resource',
+        active: phosphorus > 0.5,
+        severity: phosphorus > 0.7 ? 'critical' : phosphorus > 0.5 ? 'warning' : 'normal',
+        metrics: {
+          'Depletion Level': `${(phosphorus * 100).toFixed(0)}%`,
+          'Status': phosphorus > 0.5 ? 'Active Crisis' : 'Monitoring',
+        }
+      })
+    }
 
     // Freshwater Crisis
-    const freshwater = lastUpdate.freshwaterStress || 0
-    crisisList.push({
-      id: 'freshwater',
-      name: 'Freshwater Stress',
-      type: 'Resource',
-      active: freshwater > 0.5,
-      severity: freshwater > 0.7 ? 'critical' : freshwater > 0.5 ? 'warning' : 'normal',
-      metrics: {
-        'Stress Level': `${(freshwater * 100).toFixed(0)}%`,
-        'Status': freshwater > 0.5 ? 'Active Crisis' : 'Monitoring',
-      }
-    })
+    if (typeof lastUpdate.freshwaterStress === 'number' && !isNaN(lastUpdate.freshwaterStress)) {
+      const freshwater = lastUpdate.freshwaterStress
+      crisisList.push({
+        id: 'freshwater',
+        name: 'Freshwater Stress',
+        type: 'Resource',
+        active: freshwater > 0.5,
+        severity: freshwater > 0.7 ? 'critical' : freshwater > 0.5 ? 'warning' : 'normal',
+        metrics: {
+          'Stress Level': `${(freshwater * 100).toFixed(0)}%`,
+          'Status': freshwater > 0.5 ? 'Active Crisis' : 'Monitoring',
+        }
+      })
+    }
 
     // Ocean Acidification
-    const ocean = lastUpdate.oceanAcidification || 0
-    crisisList.push({
-      id: 'ocean',
-      name: 'Ocean Acidification',
-      type: 'Environmental',
-      active: ocean > 0.5,
-      severity: ocean > 0.7 ? 'critical' : ocean > 0.5 ? 'warning' : 'normal',
-      metrics: {
-        'Acidification': `${(ocean * 100).toFixed(0)}%`,
-        'Status': ocean > 0.5 ? 'Active Crisis' : 'Monitoring',
-      }
-    })
+    if (typeof lastUpdate.oceanAcidification === 'number' && !isNaN(lastUpdate.oceanAcidification)) {
+      const ocean = lastUpdate.oceanAcidification
+      crisisList.push({
+        id: 'ocean',
+        name: 'Ocean Acidification',
+        type: 'Environmental',
+        active: ocean > 0.5,
+        severity: ocean > 0.7 ? 'critical' : ocean > 0.5 ? 'warning' : 'normal',
+        metrics: {
+          'Acidification': `${(ocean * 100).toFixed(0)}%`,
+          'Status': ocean > 0.5 ? 'Active Crisis' : 'Monitoring',
+        }
+      })
+    }
 
     // Novel Entities
-    const novelEntities = lastUpdate.novelEntitiesLevel || 0
-    crisisList.push({
-      id: 'novel_entities',
-      name: 'Chemical Pollution',
-      type: 'Environmental',
-      active: novelEntities > 0.5,
-      severity: novelEntities > 0.7 ? 'critical' : novelEntities > 0.5 ? 'warning' : 'normal',
-      metrics: {
-        'Pollution Load': `${(novelEntities * 100).toFixed(0)}%`,
-        'Status': novelEntities > 0.5 ? 'Active Crisis' : 'Monitoring',
-      }
-    })
+    if (typeof lastUpdate.novelEntitiesLevel === 'number' && !isNaN(lastUpdate.novelEntitiesLevel)) {
+      const novelEntities = lastUpdate.novelEntitiesLevel
+      crisisList.push({
+        id: 'novel_entities',
+        name: 'Chemical Pollution',
+        type: 'Environmental',
+        active: novelEntities > 0.5,
+        severity: novelEntities > 0.7 ? 'critical' : novelEntities > 0.5 ? 'warning' : 'normal',
+        metrics: {
+          'Pollution Load': `${(novelEntities * 100).toFixed(0)}%`,
+          'Status': novelEntities > 0.5 ? 'Active Crisis' : 'Monitoring',
+        }
+      })
+    }
 
     // Climate Change
-    const climate = lastUpdate.climateChange || 0
-    crisisList.push({
-      id: 'climate',
-      name: 'Climate Change',
-      type: 'Planetary Boundary',
-      active: climate > 0.5,
-      severity: climate > 0.7 ? 'critical' : climate > 0.5 ? 'warning' : 'normal',
-      metrics: {
-        'Impact': `${(climate * 100).toFixed(0)}%`,
-        'Status': climate > 0.5 ? 'Breached' : 'Safe',
-      }
-    })
+    if (typeof lastUpdate.climateChange === 'number' && !isNaN(lastUpdate.climateChange)) {
+      const climate = lastUpdate.climateChange
+      crisisList.push({
+        id: 'climate',
+        name: 'Climate Change',
+        type: 'Planetary Boundary',
+        active: climate > 0.5,
+        severity: climate > 0.7 ? 'critical' : climate > 0.5 ? 'warning' : 'normal',
+        metrics: {
+          'Impact': `${(climate * 100).toFixed(0)}%`,
+          'Status': climate > 0.5 ? 'Breached' : 'Safe',
+        }
+      })
+    }
 
     // Biodiversity Loss
-    const biodiversity = lastUpdate.biodiversityLoss || 0
-    crisisList.push({
-      id: 'biodiversity',
-      name: 'Biodiversity Loss',
-      type: 'Planetary Boundary',
-      active: biodiversity > 0.5,
-      severity: biodiversity > 0.7 ? 'critical' : biodiversity > 0.5 ? 'warning' : 'normal',
-      metrics: {
-        'Loss Rate': `${(biodiversity * 100).toFixed(0)}%`,
-        'Status': biodiversity > 0.5 ? 'Breached' : 'Safe',
-      }
-    })
+    if (typeof lastUpdate.biodiversityLoss === 'number' && !isNaN(lastUpdate.biodiversityLoss)) {
+      const biodiversity = lastUpdate.biodiversityLoss
+      crisisList.push({
+        id: 'biodiversity',
+        name: 'Biodiversity Loss',
+        type: 'Planetary Boundary',
+        active: biodiversity > 0.5,
+        severity: biodiversity > 0.7 ? 'critical' : biodiversity > 0.5 ? 'warning' : 'normal',
+        metrics: {
+          'Loss Rate': `${(biodiversity * 100).toFixed(0)}%`,
+          'Status': biodiversity > 0.5 ? 'Breached' : 'Safe',
+        }
+      })
+    }
 
     return crisisList
   }, [lastUpdate])
@@ -292,15 +304,27 @@ export function CrisisDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>AI Regulation</div>
-            <div className="text-lg font-semibold">{((lastUpdate.governmentAIRegulation || 0) * 100).toFixed(0)}%</div>
+            <div className="text-lg font-semibold">
+              {typeof lastUpdate.governmentAIRegulation === 'number' && !isNaN(lastUpdate.governmentAIRegulation)
+                ? `${(lastUpdate.governmentAIRegulation * 100).toFixed(0)}%`
+                : 'N/A'}
+            </div>
           </div>
           <div>
             <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>Government Investment</div>
-            <div className="text-lg font-semibold">{((lastUpdate.governmentInvestment || 0) * 100).toFixed(0)}%</div>
+            <div className="text-lg font-semibold">
+              {typeof lastUpdate.governmentInvestment === 'number' && !isNaN(lastUpdate.governmentInvestment)
+                ? `${(lastUpdate.governmentInvestment * 100).toFixed(0)}%`
+                : 'N/A'}
+            </div>
           </div>
           <div>
             <div className="text-xs mb-1" style={{ color: 'var(--white-40)' }}>International Cooperation</div>
-            <div className="text-lg font-semibold">{((lastUpdate.internationalCooperation || 0) * 100).toFixed(0)}%</div>
+            <div className="text-lg font-semibold">
+              {typeof lastUpdate.internationalCooperation === 'number' && !isNaN(lastUpdate.internationalCooperation)
+                ? `${(lastUpdate.internationalCooperation * 100).toFixed(0)}%`
+                : 'N/A'}
+            </div>
           </div>
         </div>
       </Panel>

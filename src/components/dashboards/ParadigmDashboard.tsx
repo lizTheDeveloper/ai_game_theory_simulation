@@ -30,16 +30,31 @@ export function ParadigmDashboard() {
     )
   }
 
-  if (!lastUpdate) {
-    return <div className="p-8">Waiting for simulation update...</div>
+  // Check if we have valid data
+  const hasValidData = lastUpdate &&
+    typeof lastUpdate.westernLiberalIndex === 'number' && !isNaN(lastUpdate.westernLiberalIndex) &&
+    typeof lastUpdate.developmentIndex === 'number' && !isNaN(lastUpdate.developmentIndex) &&
+    typeof lastUpdate.ecologicalIndex === 'number' && !isNaN(lastUpdate.ecologicalIndex) &&
+    typeof lastUpdate.indigenousIndex === 'number' && !isNaN(lastUpdate.indigenousIndex)
+
+  if (!hasValidData) {
+    return (
+      <div className="p-8">
+        <Panel title="Loading Paradigm Data">
+          <p style={{ color: 'var(--white-40)' }}>
+            Waiting for complete paradigm indices from simulation...
+          </p>
+        </Panel>
+      </div>
+    )
   }
 
-  // Get scores from StateDelta
+  // Get scores from StateDelta - data is validated above
   const scores = [
-    lastUpdate.westernLiberalIndex ?? 50,
-    lastUpdate.developmentIndex ?? 50,
-    lastUpdate.ecologicalIndex ?? 50,
-    lastUpdate.indigenousIndex ?? 50
+    lastUpdate.westernLiberalIndex,
+    lastUpdate.developmentIndex,
+    lastUpdate.ecologicalIndex,
+    lastUpdate.indigenousIndex
   ]
 
   const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
@@ -167,8 +182,12 @@ export function ParadigmDashboard() {
               <Sparkline data={getSparkline('ecological')} color="var(--color-ecological)" />
             </div>
             <div className="text-sm" style={{ color: 'var(--white-60)' }}>
-              Climate: {((1 - (lastUpdate.climateChange || 0)) * 100).toFixed(0)}%,
-              Biodiversity: {((1 - (lastUpdate.biodiversityLoss || 0)) * 100).toFixed(0)}%
+              Climate: {typeof lastUpdate.climateChange === 'number' && !isNaN(lastUpdate.climateChange)
+                ? `${((1 - lastUpdate.climateChange) * 100).toFixed(0)}%`
+                : 'N/A'},
+              Biodiversity: {typeof lastUpdate.biodiversityLoss === 'number' && !isNaN(lastUpdate.biodiversityLoss)
+                ? `${((1 - lastUpdate.biodiversityLoss) * 100).toFixed(0)}%`
+                : 'N/A'}
             </div>
             <div className="text-xs mt-2" style={{ color: 'var(--color-cyan)' }}>
               Click for detailed breakdown →
@@ -190,8 +209,12 @@ export function ParadigmDashboard() {
               <Sparkline data={getSparkline('indigenous')} color="var(--color-indigenous)" />
             </div>
             <div className="text-sm" style={{ color: 'var(--white-60)' }}>
-              Social cohesion: {((lastUpdate.socialCohesion || 0) * 100).toFixed(0)}%,
-              Meaning: {((lastUpdate.meaningLevel || 0) * 100).toFixed(0)}%
+              Social cohesion: {typeof lastUpdate.socialCohesion === 'number' && !isNaN(lastUpdate.socialCohesion)
+                ? `${(lastUpdate.socialCohesion * 100).toFixed(0)}%`
+                : 'N/A'},
+              Meaning: {typeof lastUpdate.meaningLevel === 'number' && !isNaN(lastUpdate.meaningLevel)
+                ? `${(lastUpdate.meaningLevel * 100).toFixed(0)}%`
+                : 'N/A'}
             </div>
             <div className="text-xs mt-2" style={{ color: 'var(--color-cyan)' }}>
               Click for detailed breakdown →

@@ -33,32 +33,58 @@ export function OverviewDashboard() {
     )
   }
 
-  if (!lastUpdate) {
+  // Check for valid simulation data
+  const hasValidData = lastUpdate &&
+    typeof lastUpdate.population === 'number' && !isNaN(lastUpdate.population) &&
+    typeof lastUpdate.qualityOfLife === 'number' && !isNaN(lastUpdate.qualityOfLife) &&
+    typeof lastUpdate.avgAICapability === 'number' && !isNaN(lastUpdate.avgAICapability) &&
+    typeof lastUpdate.westernLiberalIndex === 'number' && !isNaN(lastUpdate.westernLiberalIndex) &&
+    typeof lastUpdate.developmentIndex === 'number' && !isNaN(lastUpdate.developmentIndex) &&
+    typeof lastUpdate.ecologicalIndex === 'number' && !isNaN(lastUpdate.ecologicalIndex) &&
+    typeof lastUpdate.indigenousIndex === 'number' && !isNaN(lastUpdate.indigenousIndex)
+
+  if (!lastUpdate || !hasValidData) {
     return (
       <div className="p-8">
-        <Panel title="Loading">
-          <div className="flex items-center gap-3">
-            <div className="status-indicator status-normal animate-pulse" />
-            <span>Waiting for simulation update...</span>
+        <Panel title="Waiting for Data">
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="status-indicator status-normal animate-pulse" />
+              <span>Waiting for complete simulation state...</span>
+            </div>
+            {lastUpdate && !hasValidData && (
+              <div className="text-sm p-3 rounded border" style={{
+                backgroundColor: 'rgba(255, 176, 0, 0.1)',
+                borderColor: 'var(--color-amber)',
+                color: 'var(--color-amber)'
+              }}>
+                ⚠️ Received incomplete or invalid data from simulation.
+                Check simulation logs for NaN or undefined values.
+              </div>
+            )}
           </div>
         </Panel>
       </div>
     )
   }
 
-  // Extract key metrics from StateDelta (use ?? instead of || to handle 0 values correctly)
+  // Extract key metrics from StateDelta - NO FALLBACKS
   // NOTE: Worker sends population in billions (8 = 8 billion people), not individual count
-  const population = lastUpdate.population ?? 8.0
-  const qol = lastUpdate.qualityOfLife ?? 0.65  // Default 65% baseline QoL
-  const aiCap = lastUpdate.avgAICapability ?? 0
-  const alignment = (lastUpdate.alignedAICount ?? 0) / Math.max(1, lastUpdate.aiCount ?? 1)
+  const population = lastUpdate.population
+  const qol = lastUpdate.qualityOfLife
+  const aiCap = lastUpdate.avgAICapability
 
-  // Multi-paradigm scores
+  // Calculate alignment ratio safely
+  const alignedCount = lastUpdate.alignedAICount || 0
+  const totalAICount = lastUpdate.aiCount || 0
+  const alignment = totalAICount > 0 ? alignedCount / totalAICount : 0
+
+  // Multi-paradigm scores - validated above, no fallbacks needed
   const paradigms = {
-    western: { value: lastUpdate.westernLiberalIndex ?? 50 },
-    development: { value: lastUpdate.developmentIndex ?? 50 },
-    ecological: { value: lastUpdate.ecologicalIndex ?? 50 },
-    indigenous: { value: lastUpdate.indigenousIndex ?? 50 }
+    western: { value: lastUpdate.westernLiberalIndex },
+    development: { value: lastUpdate.developmentIndex },
+    ecological: { value: lastUpdate.ecologicalIndex },
+    indigenous: { value: lastUpdate.indigenousIndex }
   }
 
   // Determine overall status
@@ -172,19 +198,21 @@ export function OverviewDashboard() {
             <div className="flex items-center justify-between">
               <span>AI Agents</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {lastUpdate.aiCount ?? 0} active
+                {lastUpdate.aiCount || 0} active
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Organizations</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {lastUpdate.organizationCount ?? 0} operational
+                {lastUpdate.organizationCount || 0} operational
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span>Extinction Risk</span>
               <span className="text-sm" style={{ color: 'var(--white-60)' }}>
-                {((lastUpdate.extinctionProbability ?? 0) * 100).toFixed(1)}%
+                {lastUpdate.extinctionProbability
+                  ? (lastUpdate.extinctionProbability * 100).toFixed(1) + '%'
+                  : 'Unknown'}
               </span>
             </div>
           </div>
@@ -199,7 +227,9 @@ export function OverviewDashboard() {
               Climate Stability
             </div>
             <div className="text-2xl font-light">
-              {((1 - (lastUpdate.climateChange ?? 0)) * 100).toFixed(0)}%
+              {typeof lastUpdate.climateChange === 'number'
+                ? ((1 - lastUpdate.climateChange) * 100).toFixed(0) + '%'
+                : 'N/A'}
             </div>
           </div>
           <div>
@@ -207,7 +237,9 @@ export function OverviewDashboard() {
               Biodiversity Index
             </div>
             <div className="text-2xl font-light">
-              {((1 - (lastUpdate.biodiversityLoss ?? 1)) * 100).toFixed(0)}%
+              {typeof lastUpdate.biodiversityLoss === 'number'
+                ? ((1 - lastUpdate.biodiversityLoss) * 100).toFixed(0) + '%'
+                : 'N/A'}
             </div>
           </div>
           <div>
@@ -215,7 +247,9 @@ export function OverviewDashboard() {
               Social Cohesion
             </div>
             <div className="text-2xl font-light">
-              {((lastUpdate.socialCohesion ?? 0.7) * 100).toFixed(0)}%
+              {typeof lastUpdate.socialCohesion === 'number'
+                ? (lastUpdate.socialCohesion * 100).toFixed(0) + '%'
+                : 'N/A'}
             </div>
           </div>
         </div>

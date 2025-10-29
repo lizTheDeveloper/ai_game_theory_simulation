@@ -28,17 +28,31 @@ export function RegionsDashboard() {
     )
   }
 
-  if (!lastUpdate) {
-    return <div className="p-8">Waiting for simulation update...</div>
+  // Check if we have valid data
+  const hasValidData = lastUpdate &&
+    typeof lastUpdate.population === 'number' && !isNaN(lastUpdate.population) &&
+    typeof lastUpdate.qualityOfLife === 'number' && !isNaN(lastUpdate.qualityOfLife) &&
+    typeof lastUpdate.socialCohesion === 'number' && !isNaN(lastUpdate.socialCohesion) &&
+    typeof lastUpdate.institutionalTrust === 'number' && !isNaN(lastUpdate.institutionalTrust)
+
+  if (!hasValidData) {
+    return (
+      <div className="p-8">
+        <Panel title="Loading Population Data">
+          <p style={{ color: 'var(--white-40)' }}>
+            Waiting for population metrics from simulation...
+          </p>
+        </Panel>
+      </div>
+    )
   }
 
-  // Use ?? instead of || to handle 0 values correctly
   // NOTE: Worker sends population in billions (8 = 8 billion people), not individual count
-  const population = lastUpdate.population ?? 8.0
-  const qol = lastUpdate.qualityOfLife ?? 0.65  // Default 65% baseline QoL
-  const socialCohesion = lastUpdate.socialCohesion ?? 0.7  // Default 70% baseline cohesion
-  const institutionalTrust = lastUpdate.institutionalTrust ?? 0.7  // Default 70% baseline trust
-  const regions = lastUpdate.regionalPopulations ?? []
+  const population = lastUpdate.population
+  const qol = lastUpdate.qualityOfLife
+  const socialCohesion = lastUpdate.socialCohesion
+  const institutionalTrust = lastUpdate.institutionalTrust
+  const regions = Array.isArray(lastUpdate.regionalPopulations) ? lastUpdate.regionalPopulations : []
   const hasRegionalData = regions.length > 0
 
   // Infer status from QoL
