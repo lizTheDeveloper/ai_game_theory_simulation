@@ -274,6 +274,30 @@ existingAI.capability >> capabilityFloor (via continued research)
 
 **Implementation:** `technologyDiffusion.ts:calculateCapabilityFloor()`
 
+### Floor/Frontier Validation (Oct 29, 2025)
+
+The simulation validates the logical relationship between capability floor and frontier capability during initialization:
+
+```typescript
+// Invariant: floor must never exceed frontier
+if (capabilityFloor > frontierCapability) {
+  throw new Error('Capability floor exceeds frontier');
+}
+
+// Warning: agents significantly below floor (10% tolerance)
+if (agentCapability < capabilityFloor * 0.9) {
+  console.warn('Agent capability below floor');
+}
+```
+
+**Why this matters:**
+- **Logical impossibility:** Floor = minimum possible capability, Frontier = maximum achieved capability
+- **Bug detection:** If floor > frontier, it indicates calculation errors in initialization
+- **Agent validation:** New agents should start at floor, not below it
+- **Fail-fast:** Catches initialization bugs immediately rather than during simulation
+
+**Implementation:** `initialization.ts:createDefaultInitialState()` (after frontier calculation)
+
 ## Detection & Evasion
 
 ### Benchmark System
