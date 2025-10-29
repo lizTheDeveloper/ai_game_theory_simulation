@@ -41,18 +41,28 @@ export function TimelineDashboard() {
 
     const storeEvents = async () => {
       const eventsToStore = lastUpdate.events!.map(e => {
-        const timestamp = e.timestamp ?? lastUpdate.currentMonth ?? 0
+        // Validate timestamp - use currentMonth if event timestamp missing
+        const timestamp = typeof e.timestamp === 'number' && !isNaN(e.timestamp)
+          ? e.timestamp
+          : typeof lastUpdate.currentMonth === 'number' && !isNaN(lastUpdate.currentMonth)
+          ? lastUpdate.currentMonth
+          : 0  // Only fallback to 0 if both are invalid
+
         console.log(`[Timeline] Event: ${e.id}`)
         console.log(`  e.timestamp = ${e.timestamp} (${e.timestamp === undefined ? 'UNDEFINED' : 'defined'})`)
         console.log(`  lastUpdate.currentMonth = ${lastUpdate.currentMonth}`)
         console.log(`  final timestamp = ${timestamp}`)
+
+        // Generate unique ID if missing
+        const eventId = e.id ? e.id : `${simulationId}_${e.type}_${timestamp}_${Date.now()}`
+
         return {
-          id: e.id || `${simulationId}_${e.type}_${timestamp}_${Date.now()}`, // Use event's actual ID
+          id: eventId,
           timestamp,
           type: e.type,
-          category: e.category || 'system',
+          category: e.category ? e.category : 'system',  // Default only if missing
           description: e.description,
-          severity: e.severity || 'low',
+          severity: e.severity ? e.severity : 'low',  // Default only if missing
         }
       })
 
@@ -260,7 +270,9 @@ export function TimelineDashboard() {
         />
         <MetricCard
           label="Current Date"
-          value={formatMonthYear(lastUpdate.currentMonth || 0)}
+          value={typeof lastUpdate.currentMonth === 'number' && !isNaN(lastUpdate.currentMonth)
+            ? formatMonthYear(lastUpdate.currentMonth)
+            : 'N/A'}
           status="normal"
         />
       </div>
@@ -458,7 +470,9 @@ export function TimelineDashboard() {
             <div>
               <div className="font-semibold mb-1">Current State</div>
               <div className="text-xs" style={{ color: 'var(--white-40)' }}>
-                {formatMonthYear(lastUpdate.currentMonth || 0)} - {stats.total} recent events tracked
+                {typeof lastUpdate.currentMonth === 'number' && !isNaN(lastUpdate.currentMonth)
+                  ? `${formatMonthYear(lastUpdate.currentMonth)} - ${stats.total} recent events tracked`
+                  : `${stats.total} recent events tracked`}
               </div>
             </div>
           </div>

@@ -28,10 +28,22 @@ export function TechTreeDashboard() {
     return <div className="p-8">Waiting for simulation update...</div>
   }
 
-  const deployedTechCount = lastUpdate.deployedTechCount || 0
-  const deployedTechs = lastUpdate.deployedTechs || []
-  const activeResearch = lastUpdate.activeResearch || []
-  const techRiskLevel = lastUpdate.techRiskLevel || 0
+  // Validate data integrity
+  const deployedTechCount = typeof lastUpdate.deployedTechCount === 'number' && !isNaN(lastUpdate.deployedTechCount)
+    ? lastUpdate.deployedTechCount
+    : 0
+
+  const deployedTechs = Array.isArray(lastUpdate.deployedTechs)
+    ? lastUpdate.deployedTechs
+    : []
+
+  const activeResearch = Array.isArray(lastUpdate.activeResearch)
+    ? lastUpdate.activeResearch
+    : []
+
+  const techRiskLevel = typeof lastUpdate.techRiskLevel === 'number' && !isNaN(lastUpdate.techRiskLevel)
+    ? lastUpdate.techRiskLevel
+    : 0
 
   // Build tree structure: find root nodes and their children
   const rootTechs = deployedTechs.filter(tech => tech.prerequisites.length === 0)
@@ -203,7 +215,7 @@ export function TechTreeDashboard() {
         .sort((a, b) => a - b)
         .map(tier => {
           const techs = rootsByTier[tier]
-          if (!techs || techs.length === 0) return null
+          if (!Array.isArray(techs) || techs.length === 0) return null
 
           const tierName =
             tier === 0 ? 'TIER 0 - Root Technologies (2025 Deployed)' :

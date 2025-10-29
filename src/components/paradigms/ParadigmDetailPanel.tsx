@@ -127,7 +127,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           return [
             {
               name: 'Government Comprehension',
-              value: lastUpdate.governmentComprehension ?? 0.5,
+              value: typeof lastUpdate.governmentComprehension === 'number' && !isNaN(lastUpdate.governmentComprehension)
+                ? lastUpdate.governmentComprehension
+                : 0,
               unit: '%',
               description: 'Government understanding of AI systems',
               safeThreshold: 0.7,
@@ -135,7 +137,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
             },
             {
               name: 'International Cooperation',
-              value: lastUpdate.internationalCooperation ?? 0.5,
+              value: typeof lastUpdate.internationalCooperation === 'number' && !isNaN(lastUpdate.internationalCooperation)
+                ? lastUpdate.internationalCooperation
+                : 0,
               unit: '%',
               description: 'Global coordination on AI governance',
               safeThreshold: 0.7,
@@ -143,7 +147,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
             },
             {
               name: 'Institutional Trust',
-              value: lastUpdate.institutionalTrust ?? 0.7,
+              value: typeof lastUpdate.institutionalTrust === 'number' && !isNaN(lastUpdate.institutionalTrust)
+                ? lastUpdate.institutionalTrust
+                : 0,
               unit: '%',
               description: 'Public trust in institutions',
               safeThreshold: 0.7,
@@ -151,7 +157,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
             },
             {
               name: 'AI Regulation',
-              value: lastUpdate.governmentAIRegulation ?? 0.5,
+              value: typeof lastUpdate.governmentAIRegulation === 'number' && !isNaN(lastUpdate.governmentAIRegulation)
+                ? lastUpdate.governmentAIRegulation
+                : 0,
               unit: '%',
               description: 'Strength of AI safety regulations',
               safeThreshold: 0.7,
@@ -165,7 +173,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
         return [
           {
             name: 'Quality of Life',
-            value: lastUpdate.qualityOfLife ?? 0.65,
+            value: typeof lastUpdate.qualityOfLife === 'number' && !isNaN(lastUpdate.qualityOfLife)
+              ? lastUpdate.qualityOfLife
+              : 0,
             unit: '%',
             description: '17-dimensional QoL across 5 tiers',
             safeThreshold: 0.7,
@@ -173,15 +183,21 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Population',
-            value: Math.min(1, (lastUpdate.population ?? 8) / 8),
+            value: typeof lastUpdate.population === 'number' && !isNaN(lastUpdate.population)
+              ? Math.min(1, lastUpdate.population / 8)
+              : 0,
             unit: 'B',
-            description: `${(lastUpdate.population ?? 8).toFixed(2)}B people`,
+            description: typeof lastUpdate.population === 'number' && !isNaN(lastUpdate.population)
+              ? `${lastUpdate.population.toFixed(2)}B people`
+              : 'N/A',
             safeThreshold: 0.875, // 7B / 8B
             criticalThreshold: 0.25, // 2B / 8B
           },
           {
             name: 'Social Cohesion',
-            value: lastUpdate.socialCohesion ?? 0.7,
+            value: typeof lastUpdate.socialCohesion === 'number' && !isNaN(lastUpdate.socialCohesion)
+              ? lastUpdate.socialCohesion
+              : 0,
             unit: '%',
             description: 'Community bonds and social stability',
             safeThreshold: 0.7,
@@ -194,7 +210,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
         return [
           {
             name: 'Climate Change',
-            value: 1 - (lastUpdate.climateChange ?? 0),
+            value: typeof lastUpdate.climateChange === 'number' && !isNaN(lastUpdate.climateChange)
+              ? 1 - lastUpdate.climateChange
+              : 0,
             unit: '%',
             description: 'Climate stability (inverse of impact)',
             safeThreshold: 0.5,
@@ -202,7 +220,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Biodiversity',
-            value: 1 - (lastUpdate.biodiversityLoss ?? 0),
+            value: typeof lastUpdate.biodiversityLoss === 'number' && !isNaN(lastUpdate.biodiversityLoss)
+              ? 1 - lastUpdate.biodiversityLoss
+              : 0,
             unit: '%',
             description: 'Biodiversity health (inverse of loss)',
             safeThreshold: 0.5,
@@ -210,7 +230,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Resource Depletion',
-            value: 1 - (lastUpdate.resourceDepletion ?? 0),
+            value: typeof lastUpdate.resourceDepletion === 'number' && !isNaN(lastUpdate.resourceDepletion)
+              ? 1 - lastUpdate.resourceDepletion
+              : 0,
             unit: '%',
             description: 'Resource availability (inverse of depletion)',
             safeThreshold: 0.5,
@@ -218,7 +240,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Chemical Pollution',
-            value: 1 - (lastUpdate.pollutionLevel ?? 0),
+            value: typeof lastUpdate.pollutionLevel === 'number' && !isNaN(lastUpdate.pollutionLevel)
+              ? 1 - lastUpdate.pollutionLevel
+              : 0,
             unit: '%',
             description: 'Chemical safety (inverse of pollution)',
             safeThreshold: 0.5,
@@ -226,7 +250,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Phosphorus',
-            value: 1 - (lastUpdate.phosphorusDepletion ?? 0),
+            value: typeof lastUpdate.phosphorusDepletion === 'number' && !isNaN(lastUpdate.phosphorusDepletion)
+              ? 1 - lastUpdate.phosphorusDepletion
+              : 0,
             unit: '%',
             description: 'Phosphorus availability',
             safeThreshold: 0.5,
@@ -234,7 +260,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Freshwater',
-            value: 1 - (lastUpdate.freshwaterStress ?? 0),
+            value: typeof lastUpdate.freshwaterStress === 'number' && !isNaN(lastUpdate.freshwaterStress)
+              ? 1 - lastUpdate.freshwaterStress
+              : 0,
             unit: '%',
             description: 'Freshwater availability',
             safeThreshold: 0.5,
@@ -242,7 +270,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Ocean Acidification',
-            value: 1 - (lastUpdate.oceanAcidification ?? 0),
+            value: typeof lastUpdate.oceanAcidification === 'number' && !isNaN(lastUpdate.oceanAcidification)
+              ? 1 - lastUpdate.oceanAcidification
+              : 0,
             unit: '%',
             description: 'Ocean health',
             safeThreshold: 0.5,
@@ -250,7 +280,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Novel Entities',
-            value: 1 - (lastUpdate.novelEntitiesLevel ?? 0),
+            value: typeof lastUpdate.novelEntitiesLevel === 'number' && !isNaN(lastUpdate.novelEntitiesLevel)
+              ? 1 - lastUpdate.novelEntitiesLevel
+              : 0,
             unit: '%',
             description: 'Chemical safety',
             safeThreshold: 0.5,
@@ -258,7 +290,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Environmental Debt',
-            value: 1 - (lastUpdate.environmentalDebtLevel ?? 0),
+            value: typeof lastUpdate.environmentalDebtLevel === 'number' && !isNaN(lastUpdate.environmentalDebtLevel)
+              ? 1 - lastUpdate.environmentalDebtLevel
+              : 0,
             unit: '%',
             description: 'Accumulated environmental debt (inverse)',
             safeThreshold: 0.5,
@@ -271,7 +305,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
         return [
           {
             name: 'Social Cohesion',
-            value: lastUpdate.socialCohesion ?? 0.7,
+            value: typeof lastUpdate.socialCohesion === 'number' && !isNaN(lastUpdate.socialCohesion)
+              ? lastUpdate.socialCohesion
+              : 0,
             unit: '%',
             description: 'Community bonds and social stability',
             safeThreshold: 0.7,
@@ -279,7 +315,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Institutional Trust',
-            value: lastUpdate.institutionalTrust ?? 0.7,
+            value: typeof lastUpdate.institutionalTrust === 'number' && !isNaN(lastUpdate.institutionalTrust)
+              ? lastUpdate.institutionalTrust
+              : 0,
             unit: '%',
             description: 'Trust in social institutions',
             safeThreshold: 0.7,
@@ -287,7 +325,9 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           },
           {
             name: 'Meaning & Purpose',
-            value: lastUpdate.meaningLevel ?? 0.5,
+            value: typeof lastUpdate.meaningLevel === 'number' && !isNaN(lastUpdate.meaningLevel)
+              ? lastUpdate.meaningLevel
+              : 0,
             unit: '%',
             description: 'Collective sense of meaning',
             safeThreshold: 0.7,

@@ -126,7 +126,12 @@ export function MonteCarloConfigPanel() {
               <input
                 type="number"
                 value={sweepConfig.startSeed}
-                onChange={(e) => setSweepConfig({ ...sweepConfig, startSeed: parseInt(e.target.value) || 42000 })}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value)
+                  if (!isNaN(value)) {
+                    setSweepConfig({ ...sweepConfig, startSeed: value })
+                  }
+                }}
                 className="w-full px-3 py-2 bg-black/30 border border-white/10 rounded text-white"
                 disabled={isRunning}
               />
@@ -136,7 +141,12 @@ export function MonteCarloConfigPanel() {
               <input
                 type="number"
                 value={sweepConfig.seedCount}
-                onChange={(e) => setSweepConfig({ ...sweepConfig, seedCount: parseInt(e.target.value) || 10 })}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value)
+                  if (!isNaN(value) && value >= 1 && value <= 100) {
+                    setSweepConfig({ ...sweepConfig, seedCount: value })
+                  }
+                }}
                 className="w-full px-3 py-2 bg-black/30 border border-white/10 rounded text-white"
                 disabled={isRunning}
                 min={1}

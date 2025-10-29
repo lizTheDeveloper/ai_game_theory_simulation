@@ -28,17 +28,36 @@ export function DetectionDashboard() {
     return <div className="p-8">Waiting for simulation update...</div>
   }
 
-  const totalAI = lastUpdate.aiCount || 0
-  const aligned = lastUpdate.alignedAICount || 0
-  const misaligned = lastUpdate.misalignedAICount || 0
-  const sleepers = lastUpdate.sleeperAgentCount || 0
+  // Validate AI metrics
+  const totalAI = typeof lastUpdate.aiCount === 'number' && !isNaN(lastUpdate.aiCount)
+    ? lastUpdate.aiCount
+    : 0
 
+  const aligned = typeof lastUpdate.alignedAICount === 'number' && !isNaN(lastUpdate.alignedAICount)
+    ? lastUpdate.alignedAICount
+    : 0
+
+  const misaligned = typeof lastUpdate.misalignedAICount === 'number' && !isNaN(lastUpdate.misalignedAICount)
+    ? lastUpdate.misalignedAICount
+    : 0
+
+  const sleepers = typeof lastUpdate.sleeperAgentCount === 'number' && !isNaN(lastUpdate.sleeperAgentCount)
+    ? lastUpdate.sleeperAgentCount
+    : 0
+
+  // Calculate rates only if we have valid data
   const alignmentRate = totalAI > 0 ? (aligned / totalAI) * 100 : 0
   const misalignmentRate = totalAI > 0 ? (misaligned / totalAI) * 100 : 0
   const sleeperRate = totalAI > 0 ? (sleepers / totalAI) * 100 : 0
 
-  const governmentReg = lastUpdate.governmentAIRegulation || 0
-  const governmentInvestment = lastUpdate.governmentInvestment || 0
+  // Validate government metrics
+  const governmentReg = typeof lastUpdate.governmentAIRegulation === 'number' && !isNaN(lastUpdate.governmentAIRegulation)
+    ? lastUpdate.governmentAIRegulation
+    : 0
+
+  const governmentInvestment = typeof lastUpdate.governmentInvestment === 'number' && !isNaN(lastUpdate.governmentInvestment)
+    ? lastUpdate.governmentInvestment
+    : 0
 
   return (
     <div className="space-y-6">
