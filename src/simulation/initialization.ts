@@ -6,7 +6,7 @@
  */
 
 import { GameState, AIAgent, ScenarioMode } from '@/types/game';
-import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities } from './capabilities';
+import { initializeCapabilityProfile, initializeResearchInvestments, calculateTotalCapabilityFromProfile, updateDerivedCapabilities, scaleCapabilityProfile } from './capabilities';
 import { computeEffectiveAlignment, computeAlignmentRobustness } from '@/types/alignment-techniques';
 import { wrapStateForValidation } from './utils/stateValidation';
 import { initializeQualityOfLifeSystems } from './qualityOfLife';
@@ -267,7 +267,6 @@ export function createAIAgent(
   // Scale profile to match target capability (if target is provided and non-zero)
   // Preserve the relative shape of the profile, but scale to target total
   const scalingFactor = targetCapability > 0 ? targetCapability / baseCapability : 1.0;
-  const { scaleCapabilityProfile } = require('./capabilities');
   const capabilityProfile = scaleCapabilityProfile(baseProfile, scalingFactor);
 
   // Calculate actual total capability from scaled profile
@@ -674,7 +673,7 @@ export function createDefaultInitialState(
       technologicalBreakthroughRate: 0.15,
       manufacturingCapability: 0.1,
       informationIntegrity: 0.6,
-      publicTrust: 0.5, // Moderate baseline trust in technology (2025)
+      trustInAI: 0.5, // Moderate baseline trust in technology (2025)
       population: 8.0, // Convenience accessor (synced with humanPopulationSystem.population)
       // FIX: Initialize fields discovered missing by Monte Carlo validation (Oct 26, 2025)
       crisisResilience: 0.5,           // Baseline societal resilience

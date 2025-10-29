@@ -1089,8 +1089,10 @@ function checkSlowDisplacementPrerequisite(step: number, ai: AIAgent, state: Gam
 
         // Deterministic variance: Use scenario's step 5 completion date for pseudo-randomness
         // This ensures same scenario always gets same requirement, but varies across runs
+        // Use simple hash to avoid modulo collision bias (month 120 and 720 would both produce 120)
         const step5CompletionMonth = scenario.prerequisites[5]?.metDate ?? currentMonth;
-        const variance = (step5CompletionMonth % 600) + 1; // 1-600 months variance
+        const hash = ((step5CompletionMonth * 2654435761) >>> 0) % 600; // Knuth's multiplicative hash
+        const variance = hash + 1; // 1-600 months variance
         scenario.step7RequiredMonths = 600 + variance; // 601-1200 months (50.1-100 years)
 
         console.log(`🤖⏱️ SLOW TAKEOVER STEP 6: Multi-generational decline begins (month ${currentMonth})`);
