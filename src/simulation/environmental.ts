@@ -24,19 +24,46 @@ import { addMortalityRisk } from './bayesianMortality';
 
 /**
  * Initialize environmental accumulation state
- * 
+ *
  * Starting values represent 2025 REALISTIC baseline (research-backed):
  * - Resources: 1.7x overshoot (Global Footprint Network 2025)
  * - Pollution: 46% unhealthy air (American Lung Assoc 2025)
  * - Climate: +1.2°C warming (Copernicus 2024)
  * - Biodiversity: 50-70% loss since 1970 (IPBES 2024)
+ *
+ * **Stochastic Initialization (Oct 29, 2025 - FIX BUG #3):**
+ * Adds variance to reflect scientific uncertainty in baseline measurements.
+ * Research: IPCC AR6 climate sensitivity range ±30%, GFN overshoot ±13%, ALA air quality ±67%
+ *
+ * @param rng - Optional deterministic RNG function (for Monte Carlo reproducibility)
+ *              Falls back to Math.random() for backward compatibility
  */
-export function initializeEnvironmentalAccumulation(): EnvironmentalAccumulation {
+export function initializeEnvironmentalAccumulation(rng?: () => number): EnvironmentalAccumulation {
+  // Use provided RNG or fallback to Math.random()
+  const random = rng || Math.random;
+
+  // BUG #3 FIX (Oct 29, 2025): Add stochastic variance to break determinism
+  // Research-justified uncertainty ranges:
+  // - Resource reserves: ±15% (GFN overshoot 1.5-1.9x = ±13% uncertainty)
+  // - Pollution level: ±33% (ALA regional variance 20-60% = ±67% range → ±33% 1σ)
+  // - Climate stability: ±7% (IPCC AR6 climate sensitivity 2.5-4.0°C = ±30% → ±7% for temperature anomaly)
+
+  const resourceReserves = 0.65 + (random() - 0.5) * 0.20;  // 0.55-0.75 (±15%)
+  const pollutionLevel = 0.30 + (random() - 0.5) * 0.20;     // 0.20-0.40 (±33%)
+  const climateStability = 0.75 + (random() - 0.5) * 0.10;   // 0.70-0.80 (±7%)
+
+  const clampedResourceReserves = Math.max(0.4, Math.min(0.85, resourceReserves));
+  const clampedPollutionLevel = Math.max(0.15, Math.min(0.45, pollutionLevel));
+  const clampedClimateStability = Math.max(0.65, Math.min(0.85, climateStability));
+
+  // DEBUG (BUG #3): Log stochastic initialization at month 0
+  console.log(`🔍 ENV INIT: reserves=${clampedResourceReserves.toFixed(3)}, pollution=${clampedPollutionLevel.toFixed(3)}, climate=${clampedClimateStability.toFixed(3)}`);
+
   return {
-    resourceReserves: 0.65,      // Was 0.85 - Research: 1.7x overshoot (GFN 2025), Earth Overshoot Day July 24
-    pollutionLevel: 0.30,         // Was 0.15 - Research: 46% unhealthy air (ALA 2025), 7/9 boundaries breached
-    climateStability: 0.75,       // KEEP - Validated (Copernicus 2024: +1.2°C warming)
-    biodiversityIndex: 0.35,      // Was 0.70 - Research: 50-70% loss since 1970 (IPBES 2024)
+    resourceReserves: clampedResourceReserves,
+    pollutionLevel: clampedPollutionLevel,
+    climateStability: clampedClimateStability,
+    biodiversityIndex: 0.35,      // Keep deterministic - biodiversity tracked via boundary system
 
     // Pollution Prevention Factor (Oct 27, 2025)
     // Research: Baseline 2025 = current regulations (EPA standards, EU REACH)

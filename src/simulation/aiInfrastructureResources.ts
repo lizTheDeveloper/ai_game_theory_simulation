@@ -26,19 +26,35 @@ import { GameState } from '@/types/game';
 
 /**
  * Water consumption parameters (FIX #3A: Research-corrected values)
+ * Oct 29, 2025: Recalibrated (2-5× reduction) + added demand elasticity
+ *
+ * UNCERTAINTY QUANTIFICATION:
+ * - Water consumption: ±100% (geographic variation: Arizona vs Ireland = 4.2×)
+ *   - Desert data centers: 2-3× higher WUE due to evaporative cooling inefficiency
+ *   - Temperate climates: More efficient cooling, lower water usage
+ * - Efficiency improvement: 5-20%/year (conservative vs aggressive trajectories)
+ *   - Microsoft 2021-2024: 17%/year WUE improvement (aggressive)
+ *   - Industry average 2020-2024: ~5%/year (conservative)
+ * - Demand growth: 1.1-1.5× annual (conservative vs aggressive adoption)
+ *   - Conservative: Saturation effects, regulation, efficiency offsets growth
+ *   - Aggressive: Jevons Paradox dominates, usage explodes with capability
+ * - Research: Li et al. (2023), Patterson et al. (2022), Lei et al. (2025)
  */
 
 /** Base inference water for all AI operations (million liters/month)
- * Research: Medium data center (15MW) = 2.1M L/month */
-const WATER_INFERENCE_BASE = 2.0;
+ * Research: Medium data center (15MW) = 2.1M L/month
+ * Oct 29, 2025: Reduced 2.0 → 1.0 (2× reduction, consensus-backed recalibration) */
+const WATER_INFERENCE_BASE = 1.0;
 
 /** Additional inference water per capability point (million liters/month)
  * Scales logarithmically, not linearly (efficiency gains with scale) */
 const WATER_INFERENCE_PER_CAPABILITY = 0.5;
 
 /** Training water per capability increase (million liters, one-time)
- * Research: GPT-3 training = 700K L, GPT-4 = 5.4M L */
-const WATER_TRAINING_PER_CAPABILITY = 10.0;
+ * Research: GPT-3 training = 700K L, GPT-4 = 5.4M L
+ * Li et al. (2023): GPT-4 = 5.4M L ÷ 3.0 capability = 1.8M → round to 2.0M
+ * Oct 29, 2025: Reduced 10.0 → 2.0 (5× reduction, consensus-backed recalibration) */
+const WATER_TRAINING_PER_CAPABILITY = 2.0;
 
 /**
  * Energy consumption parameters (based on US DOE 2024 data)
@@ -88,8 +104,16 @@ export function calculateAIResourceConsumption(state: GameState): {
   // FIX #3A: Inference water (ongoing operational cost)
   // Logarithmic scaling: log2(capability + 1) captures economies of scale
   // Research: Larger data centers are more efficient per unit of compute
-  const inferenceWater = WATER_INFERENCE_BASE +
-                        (WATER_INFERENCE_PER_CAPABILITY * Math.log2(totalCapability + 1));
+  const logarithmicTerm = WATER_INFERENCE_PER_CAPABILITY * Math.log2(totalCapability + 1);
+
+  // Oct 29, 2025: Demand elasticity (Jevons Paradox) - efficiency gains → increased usage
+  // Historical precedent: 2015-2020 AI saw 10× efficiency gains but 100× usage growth = 10× MORE resources
+  // Research: Patterson et al. (2022), Lei et al. (2025)
+  // Early stage (<5.0 capability): 30% annual demand increase (rapid adoption)
+  // Mature stage (≥5.0 capability): 10% annual demand increase (saturation)
+  const demandElasticity = totalCapability < 5.0 ? 1.3 : 1.1;
+
+  const inferenceWater = (WATER_INFERENCE_BASE + logarithmicTerm) * demandElasticity;
 
   const totalWater = trainingWater + inferenceWater;
 

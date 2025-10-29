@@ -589,7 +589,7 @@ SYNTHETIC_ECOSYSTEM_SERVICES = {
 **Effectiveness Parameters:**
 - **Effect on ocean crisis mitigation:** 15-25% (reframed from 40-50%)
 - **Scope:** High-value coastal protection, NOT planetary ocean restoration
-- **Citation:** Bayraktarov et al. (2016) coral restoration costs $13K-$1M+/ha (median $400K/ha); USGS (2024) coral restoration cost-effective for coastal protection; Great Barrier Reef RRAP $2.4M/year for 100-200 years
+- **Citation:** Bayraktarov et al. (2016, 2019) coral restoration costs - 2016: $150K-400K/ha with full costs; 2019: $400K/ha median for coral reefs ($6K-$4M range); USGS (2024) coral restoration cost-effective for coastal protection; Great Barrier Reef RRAP (Reef Restoration and Adaptation Program) - $260M over 4 years ($65M/year, launched late 2020)
 - **Evidence:**
   - **Small-scale coral restoration works:** 0.01 ha typical, 64.5% survival (Bayraktarov)
   - **Coastal protection cost-effective:** Florida/Puerto Rico benefit-cost >1 in vulnerable areas (USGS)
@@ -609,7 +609,7 @@ SYNTHETIC_ECOSYSTEM_SERVICES = {
 - **Time to 50% deployment:** 60-96 months (coastal infrastructure, not ocean-scale)
 - **Historical precedent:** GBR restoration ongoing (slow, expensive); US coastal protection projects
 - **S-curve shape:** Moderate (focus on high-value coastlines where benefit-cost >1)
-- **Citation:** USGS 2024 coral restoration cost-effective for coastal protection; GBR RRAP $2.4M/year
+- **Citation:** USGS 2024 coral restoration cost-effective for coastal protection; GBR RRAP $65M/year ($260M over 4 years, 2020-2024)
 
 **Cost Parameters:**
 - **Initial:** $60-100B (coral restoration + kelp + alkalinity in high-value coastal zones)
@@ -672,7 +672,7 @@ HIGH_VALUE_COASTAL_PROTECTION = {
 
   citations: [
     'Bayraktarov et al. (2016) - Median $400K/ha, $13K-$1M+ range',
-    'Great Barrier Reef RRAP (2024) - $2.4M/year 100-200 years',
+    'Great Barrier Reef RRAP (2020-2024) - $260M over 4 years ($65M/year), world\'s largest ecosystem restoration R&D program',
     'USGS (2024) - Coral restoration cost-effective for coastal protection',
     'Kelp carbon: 200M tons CO2/yr but measurement impossible',
     'Ocean alkalinity: $3-$260/ton CO2, 1-100 Gt/yr (huge uncertainty)'
@@ -695,7 +695,7 @@ HIGH_VALUE_COASTAL_PROTECTION = {
 **Effectiveness Parameters:**
 - **Effect on Morocco dependence:** Reduction from 70% to 20-40% over deployment period
 - **Effect on phosphorus security:** +0.3 to +0.5% per month supply diversification
-- **Citation:** Struvite recovery from wastewater; 70+ full-scale P recovery plants in EU/NA/Asia
+- **Citation:** Struvite recovery from wastewater; 100 full-scale struvite recovery plants worldwide (as of 2020) in EU/NA/Asia - Netherlands, Belgium, Germany, Austria, Japan, China
 - **Evidence:** EU highly dependent on Morocco (42% global reserves); recycling technically feasible but not economically incentivized
 - **Uncertainty:** Moderate - technology exists, but economics unfavorable (rock phosphate cheaper)
 - **Confidence:** Moderate
@@ -720,7 +720,7 @@ PHOSPHORUS_INDEPENDENCE_EFFECT = {
   mode: 0.35,    // Policy incentives overcome economics
   max: 0.50,     // Rapid mandated transition
   unit: 'monthly increase in phosphorus supply diversification % at 100% deployment',
-  citation: '70+ full-scale P recovery plants (EU/NA/Asia); EU 75% dependent on Morocco/USA/Kazakhstan',
+  citation: '100 full-scale struvite recovery plants worldwide (as of 2020); EU 75% dependent on Morocco/USA/Kazakhstan',
   confidence: 'moderate',
   note: 'Technology proven, but rock phosphate cheaper - needs policy push'
 };
@@ -731,7 +731,7 @@ PHOSPHORUS_INDEPENDENCE_DEPLOYMENT = {
   mode: 60,
   max: 84,
   unit: 'months to 50% supply independence',
-  citation: 'Rare earth diversification precedent (~10 years); 70+ plants operational (scale-up needed)',
+  citation: 'Rare earth diversification precedent (~10 years); 100 plants operational worldwide (scale-up needed)',
   confidence: 'moderate'
 };
 

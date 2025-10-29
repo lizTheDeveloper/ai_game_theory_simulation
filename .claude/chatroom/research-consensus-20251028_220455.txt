@@ -88,10 +88,13 @@ Current 5%/year improvement is PESSIMISTIC compared to empirical data.
    - Inference energy dominates after ~23 days of ChatGPT-scale operation
    - Energy-based proxy justified for long-term modeling
 
-3. **Lei et al. (2025)** - "How Hungry is AI?"
+3. **Jegham et al. (2025)** - "How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference"
+   - Authors: Jegham, N., Abdelatti, M., Elmoubarki, L., Hendawi, A.
+   - arXiv: 2505.09598 (May 14, 2025)
    - Data center PUE: 1.2-1.5× (overhead multiplier)
    - Industry efficiency trajectory: 5-20%/year WUE improvement
    - Geographic variation: ±100% water consumption
+   - NOTE: Previously incorrectly cited as "Lei et al." - no author named Lei exists
 
 ### Historical Precedent (Jevons Paradox)
 - **2015-2020 AI compute:** Cost per FLOP dropped 10×, usage increased 100×

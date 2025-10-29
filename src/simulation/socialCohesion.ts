@@ -646,29 +646,90 @@ export function hasSocialCrisis(social: SocialAccumulation): boolean {
  * 5. Capability Fear (penalty) - Only rapid changes cause fear, not absolute levels
  */
 export function calculateComprehensiveTrustInAI(state: GameState): number {
+  const { assertFinite } = require('./utils/assertions');
+
   // 1. ALIGNMENT PERCEPTION (25% weight)
   // Observable behavior, NOT true alignment (which is unobservable)
-  const alignmentPerception = calculateAlignmentPerception(state);
+  const alignmentPerception = assertFinite(
+    calculateAlignmentPerception(state),
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'alignmentPerception',
+      month: state.currentMonth
+    }
+  );
 
   // 2. PERFORMANCE (35% weight) - MOST IMPORTANT
   // How well AI actually works in practice
-  const performance = calculateAIPerformance(state);
+  const performance = assertFinite(
+    calculateAIPerformance(state),
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'performance',
+      month: state.currentMonth
+    }
+  );
 
   // 3. DEMONSTRATED BENEFITS (25% weight)
-  const qol = state.globalMetrics.qualityOfLife;
-  const demonstratedBenefits = qol > 0.5 ? 0.25 : qol * 0.5; // Scales with QoL
+  const qol = assertFinite(
+    state.globalMetrics.qualityOfLife,
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'qol',
+      month: state.currentMonth
+    }
+  );
+  const demonstratedBenefits = assertFinite(
+    qol > 0.5 ? 0.25 : qol * 0.5,
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'demonstratedBenefits',
+      month: state.currentMonth,
+      additionalInfo: { qol }
+    }
+  );
 
   // 4. SAFETY RECORD (15% weight)
-  const safetyRecord = calculateSafetyRecord(state);
+  const safetyRecord = assertFinite(
+    calculateSafetyRecord(state),
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'safetyRecord',
+      month: state.currentMonth
+    }
+  );
 
   // Base trust from positive factors
-  const baseTrust = alignmentPerception + performance + demonstratedBenefits + safetyRecord;
+  const baseTrust = assertFinite(
+    alignmentPerception + performance + demonstratedBenefits + safetyRecord,
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'baseTrust',
+      month: state.currentMonth,
+      additionalInfo: { alignmentPerception, performance, demonstratedBenefits, safetyRecord }
+    }
+  );
 
   // 5. CAPABILITY FEAR (penalty only on rapid changes)
-  const capabilityFear = calculateCapabilityFear(state);
+  const capabilityFear = assertFinite(
+    calculateCapabilityFear(state),
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'capabilityFear',
+      month: state.currentMonth
+    }
+  );
 
   // Final trust with bounds
-  const finalTrust = Math.max(0, Math.min(1, baseTrust - capabilityFear));
+  const finalTrust = assertFinite(
+    Math.max(0, Math.min(1, baseTrust - capabilityFear)),
+    {
+      location: 'calculateComprehensiveTrustInAI',
+      valueName: 'finalTrust',
+      month: state.currentMonth,
+      additionalInfo: { baseTrust, capabilityFear }
+    }
+  );
 
   return finalTrust;
 }

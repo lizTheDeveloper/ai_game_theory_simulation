@@ -139,20 +139,45 @@ function extractMetrics(state: GameState, scenario: PolicyScenario, seed: number
   }
   const competenceGap = totalWeight > 0 ? totalCompetenceGap / totalWeight : 0;
 
-  // Get labor-capital distribution metrics
-  const dist = state.laborCapitalDistribution;
-  const wageGap = dist?.productivityWageGap || 0;
-  const laborShare = dist?.laborShare || 0.55;
+  // Get labor-capital distribution metrics - No fallbacks, fail loudly
+  if (!state.laborCapitalDistribution) {
+    throw new Error(`[policyMonteCarloValidation] laborCapitalDistribution is undefined at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
+  const wageGap = state.laborCapitalDistribution.productivityWageGap;
+  if (typeof wageGap !== 'number' || isNaN(wageGap)) {
+    throw new Error(`[policyMonteCarloValidation] Invalid wageGap: ${wageGap} at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
+  const laborShare = state.laborCapitalDistribution.laborShare;
+  if (typeof laborShare !== 'number' || isNaN(laborShare)) {
+    throw new Error(`[policyMonteCarloValidation] Invalid laborShare: ${laborShare} at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
 
-  // Get unemployment level
-  const unemployment = state.society.unemploymentLevel || 0;
+  // Get unemployment level - No fallback, fail loudly
+  const unemployment = state.society.unemploymentLevel;
+  if (typeof unemployment !== 'number' || isNaN(unemployment)) {
+    throw new Error(`[policyMonteCarloValidation] Invalid unemployment: ${unemployment} at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
 
-  // Get average QoL
-  const avgQoL = state.globalMetrics?.qualityOfLife || 0;
+  // Get average QoL - No fallback, fail loudly if undefined/NaN
+  if (!state.globalMetrics) {
+    throw new Error(`[policyMonteCarloValidation] globalMetrics is undefined at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
+  const avgQoL = state.globalMetrics.qualityOfLife;
+  if (typeof avgQoL !== 'number' || isNaN(avgQoL)) {
+    throw new Error(`[policyMonteCarloValidation] Invalid QoL value: ${avgQoL} at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
 
   // Get population (Oct 28, 2025: Fixed after Regional → Global Aggregation refactor)
-  // Population is now at state.humanPopulationSystem.population (in actual count, not billions)
-  const population = state.humanPopulationSystem?.population || 8000000000;
+  // Population is at state.humanPopulationSystem.population (in billions)
+  // Type definition: HumanPopulationSystem.population is in billions (see src/types/population.ts:34)
+  // No fallback - fail loudly if population is undefined/NaN (reveals bugs)
+  if (!state.humanPopulationSystem) {
+    throw new Error(`[policyMonteCarloValidation] humanPopulationSystem is undefined at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
+  const population = state.humanPopulationSystem.population;
+  if (typeof population !== 'number' || isNaN(population)) {
+    throw new Error(`[policyMonteCarloValidation] Invalid population value: ${population} at month ${state.currentMonth} for scenario ${scenario.name}`);
+  }
 
   // Determine outcome
   let outcome = 'Unknown';
@@ -296,7 +321,8 @@ function generateReport(allResults: ScenarioMetrics[]): void {
   console.log('├──────────────────────────┼────────────────┼──────────┼──────────┤');
 
   for (const [scenario, results] of byScenario.entries()) {
-    const populations = results.map(r => r.population / 1e9);
+    // Population is already in billions (not raw count), so no division needed
+    const populations = results.map(r => r.population);
     const popStats = calculateStatistics(populations);
 
     const name = scenario.padEnd(24);

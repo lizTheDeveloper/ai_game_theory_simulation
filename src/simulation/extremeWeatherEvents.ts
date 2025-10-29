@@ -32,6 +32,7 @@ import {
 import { addSimulationEvent } from './utils/eventLogger';
 import { addMortalityRisk } from './bayesianMortality';
 import { assertFinite, assertInRange, assertProbability } from './utils/assertions';
+import { getGlobalTemperatureIncrease } from './planetaryBoundaries';
 
 /**
  * Initialize extreme weather system with 2025 baseline
@@ -360,8 +361,8 @@ export function updateExtremeWeatherEvents(
   }
 
   // Get current global temperature increase
-  // Access from planetary boundaries system (climate_change boundary = °C above pre-industrial)
-  const globalTempIncrease = state.planetaryBoundariesSystem?.boundaries?.climate_change?.currentValue ?? 1.2;
+  // Use getter function to decouple from internal planetary boundaries structure
+  const globalTempIncrease = getGlobalTemperatureIncrease(state);
 
   // Update annual storm count and category distribution
   // Overall frequency decreases slightly with warming: -10% to -20%

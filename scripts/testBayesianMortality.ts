@@ -276,11 +276,12 @@ console.log('------------------------------------------');
   }
 
   // Check death tracking categories
+  // FIX (Oct 29, 2025): BUG #1 - Values already in millions, don't multiply by 1000
   console.log(`\n  Death tracking:`);
-  console.log(`    Famine deaths: ${(pop.deathsByCategory.famine * 1000).toFixed(2)}M`);
-  console.log(`    Disease deaths: ${(pop.deathsByCategory.disease * 1000).toFixed(2)}M`);
-  console.log(`    Ecosystem deaths: ${(pop.deathsByCategory.ecosystem * 1000).toFixed(2)}M`);
-  console.log(`    Compound tracking: ${(pop.deathsByRootCause.compound * 1000).toFixed(2)}M (should equal total)`);
+  console.log(`    Famine deaths: ${pop.deathsByCategory.famine.toFixed(2)}M`);
+  console.log(`    Disease deaths: ${pop.deathsByCategory.disease.toFixed(2)}M`);
+  console.log(`    Ecosystem deaths: ${pop.deathsByCategory.ecosystem.toFixed(2)}M`);
+  console.log(`    Compound tracking: ${pop.deathsByRootCause.compound.toFixed(2)}M (should equal total)`);
 }
 
 console.log('\n\n✅ ALL TESTS COMPLETE');

@@ -260,6 +260,12 @@ function applyCapabilityBoosts(
       month: gameState.currentMonth,
       additionalInfo: { aiId: ai.id, alignment: ai.alignment }
     });
+
+    // FIX #2 (Oct 29, 2025): Update capability frontier after tech deployment
+    // Bug: updateFrontierCapabilities() existed but was NEVER CALLED
+    // This caused frontier/floor to stay at 0.000 forever
+    const { updateFrontierCapabilities } = require('../technologyDiffusion');
+    updateFrontierCapabilities(gameState, ai); // Pass AI agent, not capability number
   }
 }
 

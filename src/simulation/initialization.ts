@@ -253,10 +253,24 @@ export function createAIAgent(
   alignment: number = 0.8,
   seed: number = 1.0
 ): AIAgent {
-  // Initialize capability profile with diversity
-  const capabilityProfile = initializeCapabilityProfile(seed);
-  
-  // Calculate actual total capability from profile
+  // BUG #4 FIX (Oct 29, 2025): Honor targetCapability parameter
+  // Root cause: capabilityProfile was initialized with frontier values (digital: 5.0, cognitive: 5.0, etc.)
+  // but targetCapability (0.05-0.14 for initial AIs) was IGNORED.
+  // This caused ALL initial AIs to start at frontier level, leaving floor at 0.
+
+  // Initialize capability profile with diversity (using seed for variation)
+  const baseProfile = initializeCapabilityProfile(seed);
+
+  // Calculate the base total capability from the profile
+  const baseCapability = calculateTotalCapabilityFromProfile(baseProfile);
+
+  // Scale profile to match target capability (if target is provided and non-zero)
+  // Preserve the relative shape of the profile, but scale to target total
+  const scalingFactor = targetCapability > 0 ? targetCapability / baseCapability : 1.0;
+  const { scaleCapabilityProfile } = require('./capabilities');
+  const capabilityProfile = scaleCapabilityProfile(baseProfile, scalingFactor);
+
+  // Calculate actual total capability from scaled profile
   const actualCapability = calculateTotalCapabilityFromProfile(capabilityProfile);
   
   // Determine sleeper status (5-10% of misaligned AIs are sleepers)
@@ -447,10 +461,25 @@ export function createDefaultInitialState(
   alignmentDynamicsConfig?: any,
   climatePriorityConfig?: any,
   thresholdSliders?: import('../components/thresholds/ThresholdConfigModal').ThresholdSliders, // Phase 4: Slider-based threshold control
-  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia'
+  speculativeScenario?: 'doom' | 'cautious' | 'baseline' | 'progressive' | 'utopia',
+  seed?: number  // BUG #3 FIX (Oct 29, 2025): Optional seed for deterministic RNG
 ): GameState {
   const initialYear = 2025;
   const initialMonth = 0;
+
+  // BUG #3 FIX (Oct 29, 2025): Create deterministic RNG for stochastic initialization
+  // If no seed provided, use Math.random() (backward compatibility)
+  const rng: (() => number) | undefined = seed !== undefined
+    ? (() => {
+        // Simple seeded PRNG (LCG algorithm)
+        // https://en.wikipedia.org/wiki/Linear_congruential_generator
+        let state = seed;
+        return () => {
+          state = (state * 1664525 + 1013904223) % 4294967296;
+          return state / 4294967296;
+        };
+      })()
+    : undefined;
 
   // Phase 1D (Oct 26, 2025): Pre-sampled thresholds support
   // Use pre-sampled thresholds from outer Monte Carlo loop if provided,
@@ -556,17 +585,37 @@ export function createDefaultInitialState(
       evaluationFrequency: 0.1,   // Evaluate 10% of AIs per month
       totalBenchmarksRun: 0,
       researchInvestments: initializeResearchInvestments(0), // Start at stage 0
-      governanceQuality: {
-        decisionQuality: 0.5,
-        transparency: 0.6,
-        participationRate: 0.4,
-        institutionalCapacity: 0.6,
-        consensusBuildingEfficiency: 0.5,
-        minorityProtectionStrength: 0.5,
+      governanceQuality: (() => {
+        // BUG #3 FIX (Oct 29, 2025): Add stochastic initialization to governance quality
+        // Rationale: Deterministic institutionalCapacity created ceiling on boundariesScore,
+        // which dominated ecological paradigm geometric mean and eliminated variance.
+        // Conservative ±15-20% variance prevents unrealistic extremes while enabling diversity.
+        const decisionQuality = rng ? 0.5 * (0.85 + rng() * 0.3) : 0.5;  // ±15% variance around 0.5
+        const transparency = rng ? 0.6 * (0.85 + rng() * 0.3) : 0.6;  // ±15% variance around 0.6
+        const participationRate = rng ? 0.4 * (0.8 + rng() * 0.4) : 0.4;  // ±20% variance around 0.4
+        const institutionalCapacity = rng ? 0.6 * (0.8 + rng() * 0.4) : 0.6;  // ±20% variance around 0.6 (CRITICAL for boundariesScore)
+        const consensusBuildingEfficiency = rng ? 0.5 * (0.85 + rng() * 0.3) : 0.5;  // ±15% variance around 0.5
+        const minorityProtectionStrength = rng ? 0.5 * (0.85 + rng() * 0.3) : 0.5;  // ±15% variance around 0.5
+
+        return {
+          decisionQuality,
+          transparency,
+          participationRate,
+          institutionalCapacity,
+          consensusBuildingEfficiency,
+          minorityProtectionStrength,
+        };
+      })(),
+      // Backward compatibility accessors (aggregate of governanceQuality) - computed after stochastic init
+      get democracy() {
+        // Calculate from actual governanceQuality values (preserves variance)
+        const gq = this.governanceQuality;
+        return (gq.decisionQuality + gq.transparency + gq.participationRate +
+                gq.institutionalCapacity + gq.consensusBuildingEfficiency + gq.minorityProtectionStrength) / 6;
       },
-      // Backward compatibility accessors (aggregate of governanceQuality)
-      democracy: 0.525,  // Average of governance quality metrics
-      democracyQuality: 0.525,  // Alias for democracy
+      get democracyQuality() {
+        return this.democracy;  // Alias
+      },
       // Cooperative Spirals (Oct 17, 2025)
       institutionalResilience: 0.5,  // Moderate baseline institutional resilience
       policyEffectivenessMultiplier: 1.0,  // Baseline (no boost from cooperative spirals yet)
@@ -725,9 +774,10 @@ export function createDefaultInitialState(
       duration: 0,
       entryReason: ''
     },
-    
+
     // Phase 2: Environmental Accumulation
-    environmentalAccumulation: initializeEnvironmentalAccumulation(),
+    // BUG #3 FIX (Oct 29, 2025): Pass RNG to enable stochastic initialization
+    environmentalAccumulation: initializeEnvironmentalAccumulation(rng),
     
     // Realistic Timeline Recalibration: Specific Tipping Points
     specificTippingPoints: initializeSpecificTippingPoints(),
@@ -1050,6 +1100,14 @@ export function createDefaultInitialState(
 
   // P2.4 Feature 3: Initialize recovery tracking (Oct 16, 2025)
   initializeRecoveryTracking(state);
+
+  // BUG #4 FIX (Oct 29, 2025): Initialize capability frontier from starting AI population
+  // Root cause: Frontier stayed at 0 because updateFrontierCapabilities() only called during NEW growth
+  // Solution: Call it for all initial AIs to set baseline frontier
+  const { updateFrontierCapabilities } = require('./technologyDiffusion');
+  for (const ai of state.aiAgents) {
+    updateFrontierCapabilities(state, ai);
+  }
 
   // Wrap with validation proxy in dev mode (zero overhead in production)
   return wrapStateForValidation(state);

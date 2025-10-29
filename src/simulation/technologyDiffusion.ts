@@ -104,15 +104,17 @@ export function updateFrontierCapabilities(
   ai: AIAgent
 ): GameEvent[] {
   const events: GameEvent[] = [];
-  
+
   // FIX (Oct 13, 2025): Don't let sleeper AIs on dark compute push up capability floor
   // Sleepers shouldn't be "available" for learning from
   if (ai.sleeperState === 'active' && ai.darkCompute > 0) {
+    console.log(`[DEBUG] updateFrontierCapabilities: Skipping sleeper AI ${ai.id}`);
     return events; // Sleepers don't contribute to public knowledge
   }
-  
+
   const breakthroughs = detectBreakthroughs(state, ai);
-  
+  console.log(`[DEBUG] updateFrontierCapabilities: AI ${ai.id}, breakthroughs: ${breakthroughs.length}`);
+
   if (breakthroughs.length === 0) {
     return events;
   }

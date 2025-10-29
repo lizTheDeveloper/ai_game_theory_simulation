@@ -74,9 +74,19 @@ export function calculateEconomicStageTransition(state: GameState): {
   transitioned: boolean;
   transitionType?: 'natural' | 'crisis' | 'policy';
 } {
+  const { assertFinite, assertInRange } = require('./utils/assertions');
+
   const currentStage = state.globalMetrics.economicTransitionStage;
   const totalAICapability = state.aiAgents.reduce((sum, ai) => sum + ai.capability, 0);
-  const unemploymentLevel = state.society.unemploymentLevel;
+
+  // FIX #4 (Oct 29, 2025): Validate unemploymentLevel - critical input for stage transitions
+  // Bug: If unemploymentLevel is NaN, all transition conditionals fail silently
+  const unemploymentLevel = assertInRange(state.society.unemploymentLevel, 0, 1, {
+    location: 'calculateEconomicStageTransition',
+    valueName: 'unemploymentLevel',
+    month: state.currentMonth
+  });
+
   const hasUBI = state.government.activeRegulations.some(reg => reg.includes('UBI'));
   const socialAdaptation = state.society.socialAdaptation;
   const wealthDistribution = state.globalMetrics.wealthDistribution;
@@ -253,15 +263,27 @@ export function calculateEconomicTransitionProgress(state: GameState): {
   wealthDistributionChange: number;
   socialAdaptationChange: number;
 } {
+  const { assertFinite } = require('./utils/assertions');
+
   const transition = calculateEconomicStageTransition(state);
-  const stageChange = transition.newStage - state.globalMetrics.economicTransitionStage;
-  
+
+  // FIX #4 (Oct 29, 2025): Validate newStage from transition calculation
+  // Bug: If newStage is NaN, stageChange becomes NaN → economicTransitionStage becomes NaN
+  const validatedNewStage = assertFinite(transition.newStage, {
+    location: 'calculateEconomicTransitionProgress',
+    valueName: 'transition.newStage',
+    month: state.currentMonth,
+    additionalInfo: { transitioned: transition.transitioned, type: transition.transitionType }
+  });
+
+  const stageChange = validatedNewStage - state.globalMetrics.economicTransitionStage;
+
   const wealthDistributionChange = calculateWealthDistributionChange(state);
-  
+
   // Social adaptation changes are calculated by society actions
   // This just provides the rate multiplier
   const adaptationRate = calculateSocialAdaptationRate(state);
-  
+
   return {
     stageChange,
     wealthDistributionChange,

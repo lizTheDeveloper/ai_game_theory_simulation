@@ -17,6 +17,16 @@ export class EconomicTransitionPhase implements SimulationPhase {
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const economicProgress = calculateEconomicTransitionProgress(state);
 
+    // FIX #4 (Oct 29, 2025): Validate stageChange to prevent NaN propagation
+    // Bug: If stageChange is NaN, it propagates to economicTransitionStage,
+    // which then cascades to all economic calculations → Monte Carlo output shows NaN
+    const validatedStageChange = assertFinite(economicProgress.stageChange, {
+      location: 'EconomicTransitionPhase (stageChange)',
+      valueName: 'stageChange',
+      month: state.currentMonth,
+      additionalInfo: { currentStage: state.globalMetrics.economicTransitionStage }
+    });
+
     // FIX (Oct 28, 2025): Use assertFinite to validate inputs and outputs
     const validatedChange = assertFinite(economicProgress.wealthDistributionChange, {
       location: 'EconomicTransitionPhase (wealthDistributionChange)',
@@ -50,11 +60,23 @@ export class EconomicTransitionPhase implements SimulationPhase {
       }
     );
 
+    // FIX #4 (Oct 29, 2025): Validate final economicTransitionStage value
+    const newStage = assertFinite(
+      Math.max(0, Math.min(4, state.globalMetrics.economicTransitionStage + validatedStageChange)),
+      {
+        location: 'EconomicTransitionPhase (new economicTransitionStage)',
+        valueName: 'economicTransitionStage',
+        month: state.currentMonth,
+        additionalInfo: {
+          currentStage: state.globalMetrics.economicTransitionStage,
+          stageChange: validatedStageChange
+        }
+      }
+    );
+
     state.globalMetrics = {
       ...state.globalMetrics,
-      economicTransitionStage: Math.max(0, Math.min(4,
-        state.globalMetrics.economicTransitionStage + economicProgress.stageChange
-      )),
+      economicTransitionStage: newStage,
       wealthDistribution: newWealthDist
     };
 
