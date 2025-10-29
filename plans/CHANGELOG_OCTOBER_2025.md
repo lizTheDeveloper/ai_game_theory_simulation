@@ -8,9 +8,53 @@
 
 ## Week of October 28-29, 2025
 
-**Total Work Completed:** ~27-40 hours across 6 major items in 2 days
+**Total Work Completed:** ~28-41 hours across 8 major items in 2 days
 
 ### October 29, 2025 (Production Stability & Quality Assurance Day)
+
+#### AI Water Consumption Recalibration
+- **Status:** ✅ COMPLETE - Parameters reduced 2-5× to match research
+- **Time:** ~45 minutes (parameter updates + demand elasticity + uncertainty docs)
+- **Complexity:** 1 system - AI infrastructure resources
+- **Context:**
+  - Trigger: Research consensus Oct 28 identified parameters 2-5× too high
+  - Root cause: Initial estimates based on conservative projections, not actual data
+  - Research: Li et al. (2023), Patterson et al. (2022), Lei et al. (2025)
+- **Key Changes:**
+  1. **WATER_INFERENCE_BASE:** 2.0 → 1.0 (2× reduction)
+  2. **WATER_TRAINING_PER_CAPABILITY:** 10.0 → 2.0 (5× reduction)
+  3. **Added demand elasticity:** Jevons Paradox modeling (efficiency → increased usage)
+  4. **Added uncertainty quantification:** ±100% geographic variance documented
+- **Files Modified:**
+  - `src/simulation/aiInfrastructureResources.ts` - Lines 47, 57, 29-42, 109-116
+- **Results:** Water consumption now matches peer-reviewed baselines (medium data center: 2.1M L/month)
+- **Research Grounding:**
+  - Li et al. (2023): GPT-4 training = 5.4M L ÷ 3.0 capability = 1.8M → 2.0M per capability
+  - Patterson et al. (2022): 2015-2020 AI saw 10× efficiency but 100× usage = 10× MORE resources
+  - Lei et al. (2025): Early stage 30%/yr demand growth, mature stage 10%/yr
+- **Documentation:** `/plans/completed/ai-water-consumption-recalibration_20251029.md`
+
+#### Mortality Timeline Documentation
+- **Status:** ✅ COMPLETE - Timeline compression caveat added to wiki
+- **Time:** ~20 minutes (documentation only)
+- **Complexity:** 0 systems - documentation transparency
+- **Context:**
+  - Trigger: Research consensus Oct 28 on timeline compression acknowledgment
+  - Issue: Simulation uses 30yr window vs peer-reviewed 75yr window (2.5× compression)
+  - Transparency: Must label as "accelerated scenario" not "baseline projection"
+- **Key Changes:**
+  1. **Timeline Compression Documented:** 30yr sim vs 75yr peer-reviewed (Richards et al. 2023)
+  2. **Research Comparison:** 7.76B deaths/30y (sim) vs 6B deaths/75y (Richards)
+  3. **Label Requirement:** "Accelerated scenario" or "Compressed timeline model"
+  4. **Remaining Uncertainties:** 4 categories documented (tipping points, adaptation, AI intervention, cascades)
+- **Files Modified:**
+  - `docs/wiki/README.md` - Lines 1129-1162 (new section)
+- **Results:** Users understand simulation is accelerated for practicality, not validated baseline
+- **Validation Status:**
+  - ✅ Mechanism plausibility: Multi-system cascades match IPCC AR6 feedback loops
+  - ✅ Magnitude plausibility: 7.76B comparable to Richards 6B baseline
+  - ⚠️ Timeline validity: Compressed for simulation practicality, not validated against climate models
+- **Documentation:** `/plans/completed/mortality-timeline-documentation_20251029.md`
 
 #### Production Deployment Fixes
 - **Status:** ✅ COMPLETE - All production issues resolved
@@ -115,6 +159,36 @@
 - **Results:** Clear error messages when initialization fails, better mobile experience
 - **Testing Documentation:** `test-navigation-error-handling.md`
 - **Documentation:** None (UX improvement, not feature work)
+
+#### Architecture Review HIGH-Priority Fixes
+- **Status:** ✅ COMPLETE - Monte Carlo quality improvements
+- **Time:** ~1 hour (fixes + testing)
+- **Complexity:** 2 systems - initialization, catastrophic scenarios
+- **Context:**
+  - Trigger: architecture-skeptic review of commit 08cfd81 (Monte Carlo bug fixes)
+  - 2 HIGH-priority issues identified requiring immediate fixes
+- **Key Changes:**
+  1. **HIGH-1: Circular Dependency Risk** (src/simulation/initialization.ts:9, 270)
+     - **Issue:** Used runtime `require()` inside function instead of proper import
+     - **Impact:** Fragile code, performance overhead on initialization hot path
+     - **Fix:** Added `scaleCapabilityProfile` to static imports from `./capabilities`
+     - **Result:** Proper static import, no runtime require(), cleaner dependency graph
+  2. **HIGH-2: Slow Takeover Variance Collision Bias** (src/simulation/catastrophicScenarios.ts:1094)
+     - **Issue:** Modulo arithmetic created hash collisions (month 120 and 720 both → 120)
+     - **Impact:** Reduced Monte Carlo variance exploration, duplicate trajectories in large seed space
+     - **Fix:** Replaced modulo with Knuth's multiplicative hash for uniform distribution
+     - **Formula:** `((value * 2654435761) >>> 0) % 600` (Knuth's constant for good bit mixing)
+     - **Result:** Better variance distribution across 600-month range, improved Monte Carlo coverage
+- **Files Modified:**
+  - `src/simulation/initialization.ts` - Import refactoring
+  - `src/simulation/catastrophicScenarios.ts` - Hash algorithm improvement
+- **Testing:**
+  - ✅ Import test successful (scaleCapabilityProfile callable)
+  - ✅ Type check passes (no new errors)
+  - ✅ Hash produces uniform distribution (tested with sample values)
+- **Results:** Improved Monte Carlo simulation quality, cleaner code architecture
+- **Review:** `reviews/monte-carlo-bug-fixes-architecture-review_20251029.md`
+- **Documentation:** None (code quality fix, not feature work)
 
 ---
 
