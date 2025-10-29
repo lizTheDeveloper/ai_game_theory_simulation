@@ -13,6 +13,7 @@ import { MetricCard } from "@/components/core/MetricCard"
 import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { ParadigmDetailPanel } from "@/components/paradigms/ParadigmDetailPanel"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 type ParadigmType = 'western' | 'development' | 'ecological' | 'indigenous' | null
 
@@ -264,6 +265,33 @@ export function OverviewDashboard() {
           onClose={() => setSelectedParadigm(null)}
         />
       )}
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: 'Overview Dashboard',
+          description: 'Mission control for your simulation. Track the most critical metrics at a glance.',
+          metrics: [
+            {
+              name: 'Quality of Life',
+              meaning: '17-dimensional measure across 5 tiers (survival → environmental quality)',
+              interpretation: 'Higher = better. Below 40% = survival crisis. Above 80% = flourishing.'
+            },
+            {
+              name: 'Population',
+              meaning: 'Global human population in billions',
+              interpretation: 'Rapid decline indicates crises, famines, or collapse scenarios.'
+            },
+            {
+              name: 'Multi-Paradigm DUI',
+              meaning: '4 simultaneous worldviews scoring the same reality',
+              interpretation: 'Different paradigms emphasize different values. Low scores indicate systemic issues in that worldview.'
+            }
+          ],
+          docsLink: '/docs/dashboard-guide'
+        }}
+        position="top-right"
+      />
     </div>
   )
 }
