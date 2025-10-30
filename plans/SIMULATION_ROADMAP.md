@@ -15,15 +15,15 @@
 
 ## 📊 CURRENT STATUS
 
-**Last Update:** October 30, 2025 @ 10:00pm (ALL CRITICAL BLOCKERS FIXED & VALIDATED ✅ + HIGH-4 Complete Evolution + Proactive Divestment)
+**Last Update:** October 30, 2025 @ 11:00pm (ALL CRITICAL BLOCKERS FIXED & VALIDATED ✅ + HIGH-4 Complete 4-Phase Evolution)
 
-**🚧 Active Work:** 🟢 PRODUCTION READY - All blockers resolved, N=10 validation passed, organizational realism enhanced
+**🚧 Active Work:** 🟢 PRODUCTION READY - All blockers resolved, N=10 validation passed, full organizational lifecycle modeled
 
 **Work Status:** Oct 30 updates - Layer 2 debate complete, obsolete Phase 2 tracking removed, remediation plan ready, new verification needs identified
 
 **Recent Completions (Oct 30, 2025):**
 - ✅ **ALL 3 CRITICAL BLOCKERS FIXED & VALIDATED ** - Monthly mortality >100%, biosphere 20×, 99.7% baseline mortality - N=10 validation passed, PRODUCTION READY
-- ✅ **HIGH-4 Population Coherence - Complete Evolution ** - Phase 1: Bankruptcy cascade, Phase 2: Asset transfer, Phase 3: Proactive divestment - COMPLETE
+- ✅ **HIGH-4 Population Coherence - Complete 4-Phase Evolution ** - Bankruptcy cascade → Asset transfer → Proactive divestment → Progressive cost-cutting - COMPLETE
 - ✅ **Priority 1 Optional Chaining Cleanup ** - Replaced 13 silent fallbacks with assertions, caught extinction rate capping bug, validation passing 10/10 - COMPLETE (Roy3)
 - ✅ **Crisis Mitigation Mechanics ** - Automatic stabilizers, participatory governance, homeostatic bounds - COMPLETE
 - ✅ **Monte Carlo Issues 1-8 ** - Western Liberal, outcome classification, biosphere, gaming detection, refugee crisis, snapshot exports - ALL RESOLVED
@@ -292,10 +292,10 @@ The simulation is now:
 
 **🟠 HIGH PRIORITY (Research Validity Issues):**
 
-✅ **HIGH-4: Population Coherence Failure - FIXED + ENHANCED** (Oct 30, 2025, ~2h)
+✅ **HIGH-4: Population Coherence Failure - COMPLETE 4-PHASE EVOLUTION** (Oct 30, 2025, ~3h total)
 ```
 ✅ FIXED: Data centers now transfer ownership when orgs go bankrupt
-✅ ENHANCED: Orgs proactively divest assets to avoid bankruptcy
+✅ ENHANCED: Orgs use full corporate restructuring playbook to avoid bankruptcy
 ```
 **Problem:** With 100% mortality, simulation showed 12PF compute capacity still operational despite zero employees
 
@@ -304,20 +304,20 @@ The simulation is now:
 - But data centers stayed `operational: true` forever
 - Missing cascade: bankruptcy → infrastructure shutdown
 
-**Fix Phase 1 - Bankruptcy Cascade (bbc7451):**
+**Fix Phase 1 - Bankruptcy Cascade (bbc7451, 30min):**
 - Added data center shutdown logic to `handleBankruptcy()` function
 - When org goes bankrupt, all owned data centers set to `operational: false`
 - Clears `org.ownedDataCenters` ownership list
 - Logs capacity lost per DC shutdown
 
-**Fix Phase 2 - Asset Transfer (bb20927):**
+**Fix Phase 2 - Asset Transfer (bb20927, 1h):**
 - Replaced shutdown with realistic asset liquidation
 - Government first right of refusal for strategic infrastructure (>1000 PF or restricted)
 - Private sector acquisition for non-strategic facilities
 - Shutdown only as last resort (no buyers)
 - Proper capital flows and creditor recovery
 
-**Enhancement - Proactive Divestment (a0f4785):**
+**Enhancement Phase 3 - Proactive Divestment (a0f4785, 30min):**
 - Organizations now sell data centers BEFORE bankruptcy
 - Triggers when 2+ of 3 financial distress indicators:
   - Capital < 6 months expenses
@@ -327,21 +327,36 @@ The simulation is now:
 - Better pricing than bankruptcy (60% vs 50% of fair value)
 - Capital infusion + cost reduction can prevent bankruptcy
 
-**Location:** `src/simulation/organizationManagement.ts:809-1098`
+**Enhancement Phase 4 - Progressive Cost-Cutting (94fad53, 1h):**
+- Organizations now use full corporate restructuring playbook (6 measures):
+  - **Month 1:** R&D cuts (20-40%, saves $9-10M/mo), exec comp cuts (30%, saves $1M/mo)
+  - **Month 2:** Project cancellations (recover sunk costs, lose competitive position)
+  - **Month 3:** Layoffs (10-15%, saves $10-20M/mo, slows AI training +5-15%)
+  - **Month 4:** Asset sales (data centers, better pricing than bankruptcy)
+  - **Month 5+:** Deeper layoffs (15-20%, last-ditch effort)
+- Side effects modeled: workforceMultiplier, rdBudgetMultiplier affect AI timelines
+- Progressive escalation: less drastic → more drastic measures
+- Early intervention works: realistic turnaround success rate
+
+**Location:** `src/simulation/organizationManagement.ts:809-1200+`
 
 **Commits:**
-- bbc7451 (initial cascade fix)
+- bbc7451 (bankruptcy cascade)
 - bb20927 (asset transfer)
 - a0f4785 (proactive divestment)
+- 94fad53 (progressive cost-cutting)
 
 **Research Basis:**
 - Physical impossibility - data centers require skilled operators, power, cooling, maintenance staff
-- Real-world asset liquidation patterns (IBM server sale 2014, GE divestitures 2020)
-- Turnaround strategies: Divest non-core assets before bankruptcy
+- Real-world asset liquidation (IBM server sale 2014, GE divestitures 2020)
+- Corporate restructuring playbook: Less drastic first, then layoffs, then assets
+- Tech layoffs 2022-2023: Meta (11K), Google (12K), Amazon (27K)
+- Revenue per employee: $500K/year (Google/Meta benchmark)
 
 **Test Coverage:**
 - ✅ Type checks pass
-- ✅ Test script: `scripts/testFinancialDistress.ts`
+- ✅ Test scripts: `scripts/testFinancialDistress.ts`, `scripts/validateCostCuttingMeasures.ts`
+- ✅ Example validation: OpenAI 0.6mo runway → recovered via R&D cuts, became profitable
 - ⏳ Monte Carlo validation pending (N≥10 runs recommended)
 
 ---
