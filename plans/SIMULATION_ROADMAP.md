@@ -267,16 +267,20 @@ The simulation is now:
 
 ---
 
-**HIGH-5: Outcome Classification Information Loss** (1-2h)
+✅ **HIGH-5: Outcome Classification Information Loss - ALREADY FIXED** (Oct 30, 2025)
 ```
-OLD (better): "classified as dystopia (92.4% mortality, 0.62B survivors)"
-NEW (worse):  "Reached max months (120) with dystopia probability dominant"
+CURRENT (working): "classified as dystopia (84.4% mortality, 1.27B survivors)"
 ```
-**Problem:** Recent fix REMOVED mortality data from outcome reasons, making debugging harder.
+**Status:** ✅ COMPLETE - Mortality data is present in all outcome reasons
 
-**Location:** `src/simulation/engine/phases/OutcomeClassificationPhase.ts` (likely)
+**Validation:** Checked N=5 recent runs (seeds 42000-42004), all show detailed mortality data:
+- "classified as dystopia (100.0% mortality, 0.00B survivors)"
+- "classified as dystopia (84.4% mortality, 1.27B survivors)"
+- "classified as dystopia (78.0% mortality, 1.79B survivors)"
 
-**Fix Required:** Restore mortality % and survivor count to outcome reason strings
+**Location:** `src/simulation/engine.ts:1122-1131` (population-based classification)
+
+**Note:** This was likely fixed during BLOCKER-1-3 fixes earlier today. The code correctly includes mortality% and survivor count in outcome reasons.
 
 ---
 
