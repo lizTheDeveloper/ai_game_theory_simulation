@@ -1,7 +1,7 @@
-# Frontend Implementation Roadmap (REVISED - Oct 22, 2025)
+# Frontend Implementation Roadmap (REVISED - October 26, 2025)
 ## Next.js Dashboard for Simulation Visualization
 
-**Date:** October 22, 2025 (Updated after Architecture Review)
+**Date:** October 26, 2025 (Updated after Architecture Review)
 **Purpose:** Full dashboard implementation (Option A) with multi-agent parallelization
 **Design System:** `/designs/` (Elysium-inspired far-future aesthetic)
 **Architecture Review:** `reviews/dashboard_architecture_20251022.md` (7 CRITICAL issues addressed)
@@ -203,6 +203,51 @@ God Mode UI will be accessible from the main dashboard with per-phase control pa
    - Comprehensive manual control interface
    - Expose all automated simulation decisions
    - Estimated effort: 4-6 weeks (complex feature)
+
+**📋 Future Enhancements (User-Requested - Oct 29, 2025):**
+
+**UI/UX Improvements (Agent: far-future-ux-designer):**
+
+4. **Extend HelpButton to all dashboards** (2-3h)
+   - Add contextual help to Environmental, AI Agents, Crisis, Timeline, Tech Tree, Detection dashboards
+   - Create dashboard-specific help content for each
+   - Consistent positioning and interaction patterns
+   - Currently only implemented on ParadigmDashboard
+
+5. **Add metric tooltips for inline explanations** (3-4h)
+   - Hover tooltips on metric cards showing detailed explanations
+   - Color-coded badges for thresholds (critical/warning/normal)
+   - Citation links to research sources where applicable
+   - Improves dashboard comprehension without cluttering UI
+
+6. **Create paradigm comparison mode** (4-5h)
+   - Side-by-side view of all 4 paradigms (Western Liberal, Development, Ecological, Indigenous)
+   - Synchronized scrolling for indicator comparisons
+   - Highlight divergences (utopia in one, dystopia in another)
+   - Visual diff mode showing where paradigms agree/disagree
+   - Complexity: 2 systems (UI state management, multi-paradigm coordination)
+
+**Simulation Enhancements (Agent: simulation-maintainer):**
+
+7. **Add per-country paradigm scoring in simulation worker** (6-8h)
+   - Calculate Western Liberal index per country (democracy, civil liberties, rule of law, economic freedom)
+   - Calculate Development index per country (QoL, healthcare, infrastructure, economic stage)
+   - Calculate Ecological index per country (emissions, resource use, planetary boundary contributions)
+   - Calculate Indigenous index per country (social cohesion, meaning, community bonds)
+   - Add to StateDelta as `regionalParadigmScores` field
+   - Enables accurate regional breakdown in ParadigmDetailPanel (currently shows placeholder aggregation)
+   - Complexity: 5 systems (country state, 4 paradigm calculation modules, delta aggregation)
+
+**Research + Implementation (Agents: super-alignment-researcher + simulation-maintainer):**
+
+8. **Add paradigm trajectory predictions based on current trends** (8-10h)
+   - **Research phase (3-4h):** Find peer-reviewed models for forecasting societal trajectories
+   - **Research phase (1-2h):** Identify leading indicators for paradigm shifts (tipping points, phase transitions)
+   - **Implementation (2-3h):** Add 6-month trajectory forecasting to each paradigm
+   - **Implementation (1-2h):** Show confidence intervals based on historical volatility
+   - **Implementation (1-2h):** Alert when paradigms are on collision course (e.g., Development→utopia while Ecological→dystopia)
+   - Requires Monte Carlo validation (N≥10 runs)
+   - Complexity: 6 systems (research literature, statistical modeling, 4 paradigm forecasters, alert system)
 
 ---
 

@@ -91,6 +91,9 @@ Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actu
 **Research Verification Queue:**
 - [ ] **IMMEDIATE:** Timeline compression misattribution (Lenton 2019) - Update wiki line 1147, reframe as speculative (1h)
 - [ ] Verify citations for biosphere normalization fix (commit ff888d4) - `research/verification_ff888d4_biosphere_normalization_20251030.md`
+- [ ] Verify regional refugee population constants (commit 43a9b22) - `research/verification_43a9b22_regional_refugee_populations_20251030.md` (4-6h)
+  - IPCC 2021 coastal population (10%), UNHCR 2023 conflict zones (5%), FAO 2023 food insecurity (15%), Conservation International 2024 biodiversity hotspots (5%)
+  - Displacement rate parameters (need historical grounding)
 
 **Prevention Standards:**
 All research-backed claims must include:

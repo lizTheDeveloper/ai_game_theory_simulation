@@ -450,3 +450,89 @@ All agents are in `.claude/agents/`:
 - **Chatroom:** `.claude/chatroom/README.md` - Multi-agent coordination (550+ lines)
 - **Agents:** `.claude/agents/` - Specialized agent definitions
 - **Emoji Reference:** `docs/EMOJI_QUICK_REFERENCE.md` - One-page cheat sheet
+
+---
+
+## Post-Commit Research Verification Workflow
+
+### Automatic Triggering (via Git Hook)
+
+After every commit, the `post-commit` git hook automatically:
+
+1. **Historian Agent Spawns:** Reviews commit diff
+2. **Documentation Update:** Updates `docs/wiki/README.md` if needed
+3. **Research Verification Check:** Determines if commit introduces:
+   - New parameters
+   - New mechanics
+   - Changed assumptions
+
+### If Research Verification Needed:
+
+**Historian creates:**
+- Research verification file: `research/verification_<commit-hash>_YYYYMMDD.md`
+  - Documents parameters needing citation
+  - Lists mechanics requiring validation
+  - Notes changed assumptions
+- Roadmap entry: Adds to `plans/SIMULATION_ROADMAP.md` under "Research Verification Queue"
+- Orchestrator alert: Posts to `#implementation` channel
+
+**Template:** See `research/RESEARCH_VERIFICATION_TEMPLATE.md`
+
+### Orchestrator Picks Up Work:
+
+When orchestrator reads `#implementation` channel and sees historian alert:
+
+1. **Read research verification file** (research already done by historian)
+2. **Start at Validation Phase** (skip research phase)
+3. **Spawn specialists:**
+   - `research-skeptic` reviews verification file
+   - `super-alignment-researcher` finds peer-reviewed sources
+4. **Debate to consensus** on parameters/mechanisms
+5. **Implementation:**
+   - `simulation-maintainer` updates code with research-backed values
+   - Adds citations to code comments
+6. **Testing:** Monte Carlo validation (N≥10)
+7. **Documentation:** Updates wiki
+8. **Archival:** Moves verification file to `research/completed/`
+
+### Roadmap as Source of Truth
+
+- Historian adds item to roadmap immediately
+- Orchestrator marks as in-progress when picked up
+- Roadmap reflects current work status at all times
+- No work happens "off the books"
+
+### Example Flow:
+
+```
+Commit → Post-commit hook → Historian spawns
+  ↓
+Historian: "This adds new water consumption parameters"
+  ↓
+Creates: research/verification_abc1234_20251029.md
+  ↓
+Updates: plans/SIMULATION_ROADMAP.md
+  - [ ] Verify citations for water consumption (research/verification_abc1234.md)
+  ↓
+Posts: #implementation channel
+  "Research verification needed for abc1234. Ready for validation phase."
+  ↓
+Orchestrator sees alert → Spawns validation team
+  ↓
+Roadmap updated: [x] in-progress
+  ↓
+Work proceeds through validation → implementation → testing → docs
+  ↓
+Roadmap updated: [x] completed
+  ↓
+Verification file archived to research/completed/
+```
+
+### Benefits:
+
+- **Automatic queue**: Never forget to verify research backing
+- **Roadmap sync**: Source of truth always current
+- **Phase skip**: Orchestrator starts at validation (research file exists)
+- **Audit trail**: Clear paper trail of what needs verification
+- **Research integrity**: Systematic approach to citation verification
+

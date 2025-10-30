@@ -1,0 +1,169 @@
+{
+  "source": {
+    "title": "Foundational Challenges in Assuring Alignment and Safety of Large Language Models",
+    "arxiv_id": "2404.09932",
+    "url": "https://arxiv.org/abs/2404.09932",
+    "extracted_date": "/Users/annhoward/src/superalignmenttoutopia"
+  },
+  "summary": {
+    "total_questions": 15,
+    "by_category": {
+      "Unknown": 1,
+      "Scientific Understanding of LLMs": 8,
+      "Development and Deployment Methods": 4,
+      "Sociotechnical Challenges": 2
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "section": "1.1",
+      "question": "Why This Agenda?",
+      "category": "Unknown",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "section": "2.1.1",
+      "question": "Is ICL Sophisticated Pattern-Matching?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 3,
+      "section": "2.1.2",
+      "question": "Is ICL Due to Mesa-Optimization?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 4,
+      "section": "2.1.3",
+      "question": "What Behaviours Can Be Specified In-Context?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 5,
+      "section": "2.2.4",
+      "question": "How Can We Efficiently Evaluate Generality of LLMs?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 6,
+      "section": "2.4.1",
+      "question": "Does Scaling Improve Reasoning Capabilities?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 7,
+      "section": "2.4.4",
+      "question": "Which Aspects of Training Lead to the _Acquisition_ of Reasoning?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 8,
+      "section": "2.4.5",
+      "question": "What Are the Computational Limits of Transformers?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 9,
+      "section": "2.7.4",
+      "question": "How Fundamental Are Safety-Performance Trade-offs?",
+      "category": "Scientific Understanding of LLMs",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 10,
+      "section": "3.2.1",
+      "question": "How Does Finetuning Change a Pretrained Model?",
+      "category": "Development and Deployment Methods",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 11,
+      "section": "3.6.1",
+      "question": "Are LLMs Vulnerable to Pretraining Data Poisoning?",
+      "category": "Development and Deployment Methods",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 12,
+      "section": "3.6.3",
+      "question": "Are Larger Models More Vulnerable to Poisoning Attacks?",
+      "category": "Development and Deployment Methods",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 13,
+      "section": "3.6.4",
+      "question": "Can Out-of-Context Reasoning Enable Arbitrary Harmful Poisoning Attacks?",
+      "category": "Development and Deployment Methods",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 14,
+      "section": "4.1.4",
+      "question": "How Can We Robustly Evaluate Which Values an LLM Encodes?",
+      "category": "Sociotechnical Challenges",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    },
+    {
+      "id": 15,
+      "section": "4.1.5",
+      "question": "Is \u2018Value Alignment\u2019 the Right Framework?",
+      "category": "Sociotechnical Challenges",
+      "status": "open",
+      "addressed_by": [],
+      "solved": false,
+      "notes": ""
+    }
+  ]
+}

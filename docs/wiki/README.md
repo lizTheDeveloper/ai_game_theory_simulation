@@ -2559,6 +2559,154 @@ Paradigm scores → Public awareness → Government policy → Control systems �
 
 ---
 
+## 🛡️ Assertion Utilities & Fail-Loudly Philosophy (October 30, 2025)
+
+**Status**: ✅ COMPLETE - Research simulation philosophy, defensive code removal complete
+
+### Philosophy: Research Simulations Must Fail Loudly
+
+**This is a research simulation, not a production application.** When invalid values appear (NaN, undefined, out-of-range), this indicates a **bug that must be fixed**, not a value to be silently replaced.
+
+**The Oct 24, 2025 ecology NaN bug was hidden for months by a `?? 50` fallback**, making all scenarios show identical (incorrect) results. Silent fallbacks in simulations are **bugs masquerading as features**.
+
+### Assertion Utilities
+
+**Location**: `src/simulation/utils/assertions.ts`
+
+**Core Functions:**
+
+```typescript
+// Reject NaN/Infinity with full context
+assertFinite(value, {
+  location: 'calculateEnvironmentalScore',
+  valueName: 'ecologyScore',
+  month: state.currentMonth,
+  additionalInfo: { inputs: { x, y, z } }
+});
+
+// Reject undefined/null (replaces ?. optional chaining in calculations)
+assertDefined(state.humanPopulationSystem, {
+  location: 'createSnapshot',
+  valueName: 'humanPopulationSystem',
+  month: state.currentMonth
+});
+
+// Validate numeric ranges
+assertInRange(conflictSeverity, 0, 1.0, {
+  location: 'checkRefugeeCrisisTriggers',
+  valueName: 'conflictSeverity',
+  month: state.currentMonth
+});
+
+// Validate probabilities [0, 1]
+assertProbability(riskScore, {
+  location: 'calculateRisk',
+  valueName: 'riskScore'
+});
+
+// Replace obj?.path?.to?.value ?? fallback patterns
+assertStateProperty(state.planetaryBoundariesSystem, 'boundaries.biosphere_integrity', {
+  location: 'createSnapshot',
+  valueName: 'boundaries.biosphere_integrity'
+});
+```
+
+### When to Use Assertions vs Fallbacks
+
+**✅ USE ASSERTIONS (simulation calculations):**
+- Any calculation that produces a metric or state value
+- State property access during phase execution
+- Parameter validation for simulation mechanics
+- Anywhere NaN/undefined indicates a bug
+
+**❌ NEVER USE FALLBACKS (simulation calculations):**
+- `const value = isNaN(x) ? 50 : x;` - Hides root cause
+- `const score = state.metric ?? 0.5;` - Masks initialization bugs
+- `obj?.path?.to?.value` in calculations - Silently returns undefined
+
+**✅ USE FALLBACKS (only these contexts):**
+- **Initialization**: Default values when creating new state
+- **UI display**: Showing "N/A" when data unavailable
+- **Compatibility layers**: Interfacing with external systems
+
+### Example: Snapshot Exports (Oct 30, 2025)
+
+**Before (Silent failures):**
+```typescript
+// Optional chaining hides missing systems - snapshot returns undefined silently
+population: state.humanPopulationSystem?.population,
+biosphere: state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.currentValue
+```
+
+**After (Fail loudly):**
+```typescript
+// Fail loudly if systems not initialized - research simulation, not production app
+population: assertDefined(state.humanPopulationSystem, {
+  location: 'createSnapshot',
+  valueName: 'humanPopulationSystem',
+  month: state.currentMonth
+}).population,
+
+biosphere: assertDefined(
+  assertDefined(state.planetaryBoundariesSystem, { /* ... */ }).boundaries.biosphere_integrity,
+  { location: 'createSnapshot', valueName: 'boundaries.biosphere_integrity' }
+).currentValue
+```
+
+### Example: Regional Refugee Scoping (Oct 30, 2025)
+
+**Constants extracted with research citations:**
+```typescript
+// Climate refugees: coastal/low-lying populations
+const COASTAL_POPULATION_PERCENT = 0.10; // IPCC 2021: 10% of global in high-risk coastal zones
+const coastalPopulation = state.humanPopulationSystem.population * 1000 * COASTAL_POPULATION_PERCENT;
+
+// Conflict refugees: conflict zone populations
+const BASE_CONFLICT_ZONE_PERCENT = 0.05; // UNHCR 2023: 5% baseline in conflict zones
+const conflictZonePopulation = globalPopulation * BASE_CONFLICT_ZONE_PERCENT * conflictScaling;
+
+// Capped severity (cannot displace >100%)
+const conflictSeverity = Math.min(1.0, activeConflicts * DISPLACEMENT_RATE_PER_CONFLICT);
+```
+
+**Before**: Used global 8B population for all refugee types → 10x over-estimation
+**After**: Regional populations with research-backed percentages → realistic displacement
+
+### NaN Audit Checklist
+
+When adding/modifying simulation code:
+
+1. ✓ Are there any `?? defaultValue` fallbacks in calculations? (Remove them)
+2. ✓ Are there any `isNaN(x) ? fallback : x` patterns? (Replace with error detection)
+3. ✓ Do geometric means have minimum floors to prevent exactly 0? (Add MIN_FLOOR)
+4. ✓ Are circular dependencies possible (read → transform → write back)? (Break the cycle)
+5. ✓ Are all division operations protected from 0 denominators? (Add checks)
+
+### Benefits
+
+**Prevented bugs:**
+- ✅ NaN propagation caught at source (not 20 phases later)
+- ✅ Initialization bugs exposed immediately
+- ✅ Out-of-range values fail loudly with full context
+- ✅ Optional chaining abuse eliminated from calculations
+
+**Developer experience:**
+- ✅ Error messages include location, value name, month, and debug context
+- ✅ Root cause immediately visible (not hidden by fallbacks)
+- ✅ Clear distinction: assertions (calculations) vs fallbacks (UI/init only)
+
+**Commits:**
+- `43a9b22` - "refactor: senior dev review fixes - fail loudly, cap edge cases, extract constants"
+- Previous refactors applying assertion utilities across simulation codebase
+
+**Related:**
+- `/src/simulation/utils/assertions.ts` - Assertion utilities implementation
+- `/src/simulation/logging.ts:202-226` - Snapshot export assertions
+- `/src/simulation/refugeeCrises.ts:389-509` - Regional refugee scoping
+- `/src/simulation/planetaryBoundaries.ts:941-983` - Biosphere growth edge cases
+
+---
+
 ## 📊 Current Simulation Characteristics (Post-TIER 2)
 
 **Status**: TIER 0-2 + TIER 4.3 + Contingency & Agency Phases 1-2 complete, **First Utopias Achieved**

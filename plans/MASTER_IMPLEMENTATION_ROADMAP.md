@@ -1,9 +1,10 @@
 # Master Implementation Roadmap
 ## AI Alignment Game Theory Simulation - Project Hub
 
-**Date:** October 28, 2025
+**Date:** October 30, 2025
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
+**Current Status:** Monte Carlo validation critique reveals 13 systemic issues - research validity crisis (Oct 30, 2025)
 
 **For completed work history:** See `/plans/CHANGELOG_OCTOBER_2025.md`
 
@@ -17,14 +18,28 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 **All simulation engine work** - mechanics, systems, features, AI agents, environmental systems, crises, etc.
 
 **Current Priority:**
-- **CRITICAL:** Systematic Citation Verification (20-40h) - 965 citations, 23% fabrication rate
-- **CRITICAL:** Monte Carlo Validation Bug Fixes (11-17h) - 6 critical bugs in reporting and variance
-- **HIGH:** 8 Integration Issues from Architecture Review (48-72h) - Climate cascades, tech deployment, AI collective detection, etc.
+- 🔴 **CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (40-60h) - ~50% of real citations don't support claims
+- ✅ **Citation Verification (Layer 1) COMPLETE** - 965/965 citations processed (Oct 29)
+- ✅ **Monte Carlo Bug Fixes & Validation COMPLETE** - 8 major bugs resolved, fully verified (Oct 29)
+  - Fixed trustInAI field rename (43 occurrences), NaN aggregation (~200 lines), initialization bugs
+  - All metrics now showing numeric values (Economic Stage: 2.52, Unemployment: 44.3%)
+  - Monte Carlo validation fully complete and verified with clean output
+  - See: `/plans/completed/bug_fix_report_20251029.md`
+- ✅ **Integration Issues from Architecture Review COMPLETE** - All 8 issues resolved (Oct 29-30)
+  - Includes: AI resentment recovery + policy, planetary boundary recovery + tech effects
+- **HIGH:** Wiki Citation Verification & Correction (3-4h) - Verify all quantitative claims in wiki
 - **MEDIUM:** Cooperative AI Ownership Implementation (6-8h) - Research complete, spec ready
 - **MEDIUM:** Climate Mortality Implementation (8-12h) - Research complete, ready for implementation
-- **MEDIUM:** Policy System Improvements (7-8h remaining) - 4 of 6 sections complete
+- **MEDIUM:** Policy System Improvements (10-12h remaining) - 5 of 6 sections complete
+  - ✅ Zero-variance bug in Combined Interventions fixed (Oct 30)
 
-**Active Work:** Critical bug fixes, research verification, then HIGH priority integrations
+**Active Work:** None - session complete, awaiting next user directive
+
+**Recent Completions (Oct 30, 2025):**
+- ✅ Monte Carlo Issues 1-4 (6-9h) - Western Liberal null, outcome classification, biosphere calibration
+- ✅ AI Resentment Recovery + Policy Integration (8-12h) - Circular dependency resolved
+- ✅ Policy Zero-Variance Bug (2-3h) - Combined Interventions equilibrium fixed
+- ✅ Planetary Boundary Recovery + Tech Effects (6-8h) - Nuclear winter recovery feedback complete
 
 ---
 
@@ -36,6 +51,31 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - **Timeline:** 3-4 weeks with multi-agent parallelization
 - **8 Phases:** API infrastructure → Mission Control → Domain dashboards → Analysis tools
 
+**Recent Completion (Oct 29, 2025):**
+- ✅ **Multi-Paradigm DUI Improvements (Frontend + State Interface)** (3-4h) - COMPLETE
+  - ✅ Added 7 planetary boundary history fields to StateDelta interface (biodiversity, nitrogen, phosphorus, freshwater, landUse, oceanAcid, chemicalPollution)
+  - ✅ Fixed 7 incorrect history mappings in ParadigmDetailPanel (was using climateChange as proxy)
+  - ✅ Implemented regional breakdown showing country-level paradigm contributions with paradigm-specific scoring
+  - ✅ Added HelpButton to ParadigmDashboard with contextual guidance
+  - ✅ Enabled sparklines for all 4 paradigms with proper history data
+  - **Files modified:** simulationWorkerClient.ts, simulationWorker.ts, ParadigmDashboard.tsx, ParadigmDetailPanel.tsx
+  - See: `/devlogs/multi-paradigm-dui-improvements_20251029.md`
+
+**Future Enhancements (User-Requested):**
+See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) under "Future Enhancements"
+
+- **UI/UX** (Agent: far-future-ux-designer) - 9-12h total
+  - Extend HelpButton to all dashboards (2-3h)
+  - Add metric tooltips with citations (3-4h)
+  - Create paradigm comparison mode (4-5h)
+
+- **Simulation** (Agent: simulation-maintainer) - 6-8h
+  - Per-country paradigm scoring in simulation worker (enables accurate regional breakdown)
+
+- **Research + Implementation** (Agents: super-alignment-researcher + simulation-maintainer) - 8-10h
+  - Paradigm trajectory predictions with confidence intervals
+  - Alert system for paradigm collision courses (e.g., Development→utopia, Ecological→dystopia)
+
 **Includes:**
 - **God Mode UI** - See `/plans/god-mode-ui-master-plan.md` (comprehensive manual control system)
 - **Dashboard Plans** - See `/plans/dashboard/` directory (32 subplans for parallel agent work)
@@ -45,7 +85,171 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 ### 3. 🐛 Bug Triage & Fixes
 **Active bug tracking and prioritization**
 
-**Status:** No active bugs as of Oct 28, 2025
+**Status:** 13 issues identified from Monte Carlo Validation Critique (Oct 30, 2025)
+
+**Source:** `/reviews/monte_carlo_validation_critique_20251030.md` - Comprehensive review of 3 Monte Carlo runs with 92-99% mortality rates
+
+---
+
+#### 🔴 CRITICAL Issues (Must Fix)
+
+**1. Biosphere Integrity at 47× Threshold - Violates Physical Constraints (8-12h)**
+- **Problem:** Biosphere boundary showing 47-48× safe threshold (down from 460-484×, still wrong)
+- **Research Reality:** Richardson et al. (2023) shows ~2× boundary, not 47×
+- **Physical Impossibility:** Would require 4700% species loss (can't lose >100%)
+- **Root Cause:** Either units wrong (percentage vs absolute), runaway exponential accumulation, or failed threshold normalization
+- **Action Required:** Immediate investigation of biosphere calculation logic
+- **Complexity:** 3 systems (environmental, planetary boundaries, accumulation)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 2B (lines 60-78)
+
+**2. Mortality Attribution Bug - Double Counting Deaths (6-8h)**
+- **Problem:** Root causes (74.5B deaths) = 2.5× proximate causes (29.7B actual deaths)
+- **Evidence:** "WARNING: Proximate deaths (29709M) != Root deaths (74567M)"
+- **Root Cause:** Circular attribution or double-counting in mortality tracking
+- **Impact:** Invalidates all mortality causation analysis
+- **Action Required:** Audit mortality attribution logic across all death tracking systems
+- **Complexity:** 4 systems (mortality, causation tracking, environmental, social)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 4A (lines 119-123)
+
+**3. Population Coherence Failure - Infrastructure Without People (4-6h)**
+- **Problem:** 93% mortality globally but "NO COUNTRIES DEPOPULATED", orgs at 75% survival, data centers maintain 12PF compute
+- **Causality Violation:** Who runs data centers with 93% dead?
+- **Root Cause:** Disconnected mortality tracking between population and infrastructure systems
+- **Action Required:** Establish causality links between population loss and infrastructure degradation
+- **Complexity:** 5 systems (mortality, population, infrastructure, organizations, AI compute)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 4B (lines 125-130)
+
+---
+
+#### 🟠 HIGH Priority Issues (Research Validity)
+
+**4. 92-99% Mortality Rates Unjustified (16-24h)**
+- **Problem:** All runs show 92-99% global mortality (7.5B deaths from 8.1B population)
+- **Research Context:** Exceeds Black Death (30-60%), matches Toba extinction event (60-90%)
+- **Missing Mechanisms:** No international cooperation, adaptation, migration, or government emergency response
+- **Required Evidence:** Peer-reviewed source for 92% global mortality from non-nuclear environmental collapse
+- **Action Required:**
+  - Add stabilizing mechanisms from crisis literature (international aid, adaptation, migration)
+  - Calibrate mortality to historical maxima (Black Death: 60% regional max, not 92% global)
+  - Implement human resilience dynamics seen in every historical catastrophe
+- **Complexity:** 6 systems (mortality, social, government, international, adaptation, migration)
+- **Agent:** orchestrator (requires research + validation + implementation)
+- **Reference:** Critique Section 2A (lines 38-58)
+
+**5. 100% Dystopia Outcome - Insufficient Variance (12-16h)**
+- **Problem:** All 3 runs with different seeds (42000-42002) show near-identical outcomes (92.4%, 92.6%, 92.5% mortality)
+- **Statistical Red Flag:** Random events have negligible impact, defeats purpose of Monte Carlo analysis
+- **Root Cause:** Either (1) initial conditions overdetermine outcomes, (2) positive feedback completely dominates, or (3) random events weighted too low
+- **Action Required:**
+  - Audit Monte Carlo determinism vs randomness balance
+  - Verify random events have meaningful impact on outcomes
+  - Test sensitivity to initial conditions
+  - Implement variance in recovery mechanisms and stabilizing factors
+- **Complexity:** 4 systems (Monte Carlo, random events, initial conditions, feedback loops)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 2C (lines 80-98)
+
+**6. Famine Mechanism Doesn't Reflect Distributional Reality (10-14h)**
+- **Problem:** 94.3% of deaths from famine, affects all 10 regions homogeneously
+- **Research Context:** Sen (1981) - famines are distributional, not absolute scarcity; Ó Gráda (2009) - modern famines are political/conflict-driven; FAO (2023) - food production exceeds needs, distribution is issue
+- **Missing Dynamics:** No regional variance, no political factors, no distribution mechanisms
+- **Action Required:**
+  - Redesign famine system to model distribution failures (not just production)
+  - Add regional variance (some areas more vulnerable than others)
+  - Integrate political/conflict factors from governance system
+  - Model international food aid and trade dynamics
+- **Complexity:** 5 systems (famine, regional, political, trade, international)
+- **Agent:** orchestrator (requires research + redesign + implementation)
+- **Reference:** Critique Section 4C (lines 133-142)
+
+---
+
+#### 🟡 MEDIUM Priority Issues (Calibration & Methodology)
+
+**7. Western Paradigm High Scores During Collapse (3-4h)**
+- **Problem:** Western Liberal scores show 58-77 during 92% mortality events
+- **Concern:** Metric may not be measuring what we think it measures
+- **Action Required:** Audit Western paradigm scoring logic - should catastrophic mortality lower these scores?
+- **Complexity:** 2 systems (paradigm scoring, mortality feedback)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 1.1 (lines 16-19)
+
+**8. "Inconclusive" Phantom Outcome Investigation (2-3h)**
+- **Problem:** User mentioned 6.5% mortality "inconclusive" outcome, but log shows only 92.4%, 92.6%, 92.5%
+- **Concern:** If real, 14× mortality difference (6.5% vs 92%) indicates catastrophic model instability
+- **Action Required:** Clarify if this outcome exists, from different simulation set, or parsing error
+- **Complexity:** 1 system (outcome tracking)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 3 (lines 101-113)
+
+**9. Recovery Mechanics Investigation (6-8h)**
+- **Problem:** All runs end in dystopia, suggesting recovery mechanics non-functional
+- **Action Required:** Audit recovery logic across all systems (environmental, social, technological)
+- **Complexity:** 4 systems (recovery, environmental, social, tech)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 2C (line 160)
+
+**10. Timeline Compression Verification (4-6h)**
+- **Problem:** Critique mentions "timeline compression" as critical issue but doesn't detail
+- **Action Required:** Verify all timeline assumptions (mortality onset, recovery periods, cascade timescales) against research
+- **Complexity:** 3 systems (time, mortality, cascades)
+- **Agent:** simulation-maintainer + super-alignment-researcher
+- **Reference:** Critique Section 5 (lines 146-161)
+
+**11. Determinism Verification Testing (3-4h)**
+- **Problem:** Need to verify Monte Carlo runs with same seed produce identical results (determinism check)
+- **Action Required:**
+  - Run N≥3 simulations with identical seed
+  - Verify bit-identical state at each step
+  - Document any non-deterministic sources (if found)
+- **Complexity:** 1 system (RNG/determinism)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 5 (line 148)
+
+---
+
+#### 🟢 LOW Priority Issues (Documentation & Tooling)
+
+**12. Parameter Documentation Enhancement (2-3h)**
+- **Problem:** Need comprehensive mortality calibration justification document
+- **Action Required:** Create `/research/mortality_calibration_justification_YYYYMMDD.md` with:
+  - Historical precedents (Black Death, Toba, nuclear winter models)
+  - Current model assumptions and their sources
+  - Sensitivity analysis showing impact of parameter changes
+- **Complexity:** 1 system (documentation)
+- **Agent:** wiki-documentation-updater
+- **Reference:** Critique Section 6 (lines 167-173)
+
+**13. Validation Tooling for Physical Constraints (3-4h)**
+- **Problem:** Need automated checks for physically impossible values (>100% loss, negative populations, etc.)
+- **Action Required:**
+  - Add assertion utilities for physical constraints
+  - Integrate into Monte Carlo validation output
+  - Create checklist for new systems
+- **Complexity:** 1 system (validation tooling)
+- **Agent:** simulation-maintainer
+- **Reference:** Critique Section 2B (lines 70-71)
+
+---
+
+**Total Estimated Effort:** 79-110 hours
+- CRITICAL: 18-26h (3 issues)
+- HIGH: 38-54h (3 issues)
+- MEDIUM: 18-25h (5 issues)
+- LOW: 5-7h (2 issues)
+
+**Overall Verdict from Critique:** "NOT RESEARCH-READY - The simulation appears optimized for catastrophic outcomes rather than research validity."
+
+**Next Steps:**
+1. Address CRITICAL issues first (population coherence, biosphere calculation, mortality attribution)
+2. Then HIGH priority research validity issues (mortality calibration, variance, famine mechanics)
+3. Integrate stabilizing mechanisms (cooperation, adaptation, resilience)
+4. Re-run Monte Carlo validation after fixes
+
+---
 
 **Process:**
 - Report bugs in GitHub Issues
@@ -89,6 +293,32 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 - Mechanism description (how it works)
 - Monte Carlo validation (N≥10)
 
+**Active Tasks:**
+- **HIGH PRIORITY:** Layer 2 Verification - Phase 1 Code Updates (2-3h) - **NEW (Oct 30)**
+  - ✅ **Phase 1 Complete:** 8/8 high-impact citations verified (mortality, climate, UBI parameters)
+  - ✅ **Verification files created:** 5 new files + status tracking + completion report
+  - **4 Issues Found:**
+    - ⚠️ **CRITICAL AMBIGUITY:** Holodomor mortality rate (140-200 per 1,000) likely **ANNUAL not monthly** (10× difference!)
+    - ⚠️ Nuclear winter timeline: "2-5 years" unverified in secondary sources
+    - ❌ Citation error: "Robock et al. 2022" → should be "Xia et al. 2022"
+    - ❌ Date error: "Kangas et al. 2024" → should be "2019/2020"
+  - **Action Required (orchestrator):**
+    1. Update simulation code to clarify Holodomor interpretation (monthly vs annual)
+    2. Fix citation errors (Robock → Xia, Kangas 2024 → 2019)
+    3. Add uncertainty notes to code comments (nuclear timeline, Holodomor ambiguity, Kangas causation)
+  - **See:** `research/PHASE1_LAYER2_COMPLETION_REPORT.md`, `research/LAYER2_VERIFICATION_STATUS.md`
+  - **Next:** Phase 2 (core mechanics, 15-20h), obtain direct paper access for ambiguities
+
+- **HIGH PRIORITY:** Citation Verification Fixes - Apply Corrections from Triage (1-2h)
+  - Apply fixes for 5 citation errors documented in `MISATTRIBUTIONS_TRIAGE.md`
+  - **3 already fixed manually:** Biodiversity (IPBES → WWF), Meaning Crisis (WHO → KFF), Hendrycks year
+  - **2 remaining to fix:** Software survival rate (HIGH priority - affects simulation parameter), climate rate clarification
+  - Update wiki citations and code comments in 3 locations for software survival rate
+  - Mark all issues as ✅ FIXED in `MISATTRIBUTIONS_TRIAGE.md`
+  - Document applied fixes
+  - **Context:** Systematic verification discovered 5 citation errors, triage complete, ready for implementation
+  - **Depends on:** Citation verification work (completed Oct 29)
+
 **Process:**
 - Research phase creates `/research/[topic]_YYYYMMDD.md`
 - Research-skeptic agent validates (quality gate)
@@ -103,9 +333,28 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ### Recent Major Completions (Oct 24-29)
 
-**5 Days of Intensive Work:** ~98-122 hours completed
+**5 Days of Intensive Work:** ~136-166 hours completed
 
 **Key Completions:**
+- ✅ **Multi-Paradigm DUI Improvements (Oct 29, 3-4h)** - COMPLETE
+  - Added 7 planetary boundary history fields to StateDelta interface
+  - Fixed 7 incorrect history mappings in ParadigmDetailPanel (was using climateChange as proxy)
+  - Implemented regional breakdown with paradigm-specific scoring
+  - Added HelpButton with contextual guidance
+  - Enabled sparklines for all 4 paradigms
+  - Files: simulationWorkerClient.ts, simulationWorker.ts, ParadigmDashboard.tsx, ParadigmDetailPanel.tsx
+- ✅ **Systematic Citation Verification Crisis (Layer 1) (Oct 28-29, 35-40h)** - 100% COMPLETE (965/965 citations)
+  - Final error rate: 15.6% (down from 29.7% - 47% improvement)
+  - All fabrications identified and replaced with real research
+  - Core mechanics re-grounded: AI water (2-5× reduction), mortality timeline (2.5× compression)
+  - Post-commit workflow system prevents future contamination
+  - **CRITICAL:** Layer 2 (claim accuracy) crisis discovered - ~50% of real citations don't support claims
+  - See: `/plans/completed/citation-verification-crisis_20251029.md` and `research/CLAIM_VERIFICATION_CRISIS.md`
+- ✅ **Post-Commit Research Verification Workflow (Oct 29, 5h)** - Automatic documentation + research queue
+  - Git hook spawns historian agent after commits
+  - Auto-updates wiki, creates verification files, posts to `#implementation`
+  - Orchestrator integration for seamless validation workflow
+  - See: `docs/POST_COMMIT_WORKFLOW.md` (302 lines)
 - ✅ **Production Deployment & Frontend Quality (Oct 29, 11-16h)** - Deployment stable, 89 defensive fallbacks removed, E2E test suite
   - Webpack bundling fixes (production `initializeTechnologicalRisk is not a function` error resolved)
   - 100% frontend fallback removal (12 components, research integrity restored)
@@ -117,7 +366,14 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
   - Phase Ordering Race Condition Fix (6h) - Phase dependency system prevents silent overwrites
 - ✅ **Cooperative AI Ownership Research (Oct 28-29, 4h)** - Complete research + 1,000+ line implementation spec ready
 - ✅ Climate Mortality Research (15,000+ words, 40+ sources) - READY FOR IMPLEMENTATION
-- ✅ Monte Carlo Validation Analysis (Oct 29, 2025) - 110 runs analyzed, 6 critical bugs identified
+- ✅ Monte Carlo Validation & Bug Fixes (Oct 29, 2025) - 110 runs analyzed → 8 bugs fixed
+  - **Principle:** "Fix at the real source, no defensive coding"
+  - trustInAI field rename (type mismatch resolved)
+  - NaN aggregation fix (~200 lines declaring missing variables)
+  - Debug logging operator fix (`||` → `??`)
+  - aiEcosystem initialization bug (removed faulty validation)
+  - AI alignment-failure mortality investigated (compound attribution confirmed working)
+  - See: `/plans/completed/bug_fix_report_20251029.md`
 - ✅ Unified Outcome Classification (~4h) - Eliminates false extinctions
 - ✅ Bayesian Mortality Migration (11-13h) - 5-phase workflow complete
 - ✅ TIER 2 Superalignment Interventions (18-20h) - 8 interventions, 1,240+ lines
@@ -134,20 +390,42 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 ### High-Level Priorities (Cross-Roadmap)
 
 **Immediate (Next 2-4 weeks):**
-1. **Simulation:** Systematic Citation Verification (20-40h) - CRITICAL
-2. **Simulation:** Monte Carlo Validation Bug Fixes (11-17h) - CRITICAL
-3. **Simulation:** 8 HIGH Priority Integration Issues (48-72h) - From Architecture Review
-   - Climate → Famine → Mortality cascade coordination (12-16h)
-   - Tech deployment timescales + emergency response (6-8h)
-   - AI collective formation → government detection (4-6h)
-   - Multi-paradigm DUI component breakdown (8-12h)
-   - Population units type safety (12-16h)
-   - Planetary boundaries recovery + tech effects (6-8h)
-   - AI resentment recovery + policy (8-12h)
-   - Nuclear winter → agriculture recovery feedback (4-6h)
-4. **Simulation:** Cooperative AI Ownership Implementation (6-8h) - Research complete, spec ready
-5. **Simulation:** Climate Mortality Implementation (8-12h)
-6. **Simulation:** Policy System remaining sections (7-8h)
+1. 🔴 **CRITICAL:** Monte Carlo Validation Issues - Research Validity Crisis (79-110h) - NEWLY DISCOVERED (Oct 30)
+   - **13 issues identified** from comprehensive Monte Carlo validation review
+   - **3 CRITICAL issues (18-26h):** Biosphere at 47× threshold (physics violation), mortality attribution bug (2.5× double-counting), population coherence failure (infrastructure without people)
+   - **3 HIGH issues (38-54h):** 92-99% mortality unjustified (exceeds historical precedents), 100% dystopia outcome (no variance), famine mechanism (doesn't reflect distributional reality)
+   - **5 MEDIUM issues (18-25h):** Western paradigm scoring, phantom outcome, recovery mechanics, timeline compression, determinism testing
+   - **2 LOW issues (5-7h):** Parameter documentation, validation tooling
+   - **Verdict:** "NOT RESEARCH-READY - simulation appears optimized for catastrophic outcomes rather than research validity"
+   - See: `/reviews/monte_carlo_validation_critique_20251030.md` (213 lines)
+   - See Bug Triage section above for complete issue breakdown
+2. 🔴 **CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (40-60h) - Discovered Oct 29
+   - ~50% of real citations don't actually support the claims made
+   - Requires reading papers and extracting direct quotes (cannot be automated)
+   - 87 research files with 815 real citations to verify
+   - See: `research/CLAIM_VERIFICATION_CRISIS.md`
+3. ✅ **Simulation:** Systematic Citation Verification (Layer 1) (35-40h) - COMPLETE (Oct 29)
+4. ✅ **Simulation:** Monte Carlo Validation Bug Fixes (11-17h) - COMPLETE & VERIFIED (Oct 29)
+   - 8 major bugs fixed following "fix at source" principle
+   - All aggregation metrics now showing proper numeric values
+   - Monte Carlo validation fully complete with clean output
+   - Roadmap updated with complete documentation
+   - See bug fix report: `/plans/completed/bug_fix_report_20251029.md`
+   - See changelog: `/plans/CHANGELOG_OCTOBER_2025.md`
+   - **NOTE:** Oct 30 validation revealed deeper systemic issues (see #1 above)
+5. **Simulation:** 8 HIGH Priority Integration Issues (8-12h remaining) - From Architecture Review (7 of 8 complete)
+   - ✅ Climate → Famine → Mortality cascade coordination (12-16h) - COMPLETE
+   - ✅ Tech deployment timescales + emergency response (6-8h) - COMPLETE
+   - ✅ AI collective formation → government detection (4-6h) - COMPLETE
+   - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
+   - ✅ Population units type safety (12-16h) - COMPLETE (Oct 28-29, bug fixed)
+   - ✅ Planetary boundaries recovery + tech effects (6-8h) - COMPLETE (Roy3, Oct 29)
+   - 🚧 AI resentment recovery + policy (8-12h) - IN PROGRESS (Roy2, Oct 29)
+   - ✅ Nuclear winter → agriculture recovery feedback (4-6h) - COMPLETE
+5. ✅ **Simulation:** Citation Verification Fixes - Apply Corrections from Triage (1-2h) - **COMPLETE (Roy2, Oct 29)**
+6. **Simulation:** Cooperative AI Ownership Implementation (6-8h) - Research complete, spec ready
+7. **Simulation:** Climate Mortality Implementation (8-12h)
+8. **Simulation:** Policy System remaining sections (7-8h)
 
 **Medium-Term (Next 1-3 months):**
 1. **Simulation:** P3 enhancements (37-48h)
@@ -163,17 +441,19 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ## 🎯 Quick Stats
 
-**Total Remaining Work (Simulation):** ~190-260 hours
-- CRITICAL: 31-57h (citation verification + Monte Carlo bugs)
-- HIGH: 48-72h (8 integration issues from architecture review)
-- MEDIUM: 21-28h (cooperative AI + climate mortality + policy)
-- LOW: 83-96h (P3 + TIER 5)
+**Total Remaining Work (Simulation):** ~186-297 hours (increased by 79-110h for Monte Carlo validation issues, minus 22-40h Oct 30 completions)
+- CRITICAL: 137-196h (Layer 2 claim verification 40-60h + Monte Carlo validation CRITICAL 18-26h + Monte Carlo HIGH 38-54h + Monte Carlo MEDIUM 18-25h)
+- HIGH: 0h (all integration issues complete)
+- MEDIUM: 9-16h (cooperative AI + policy remaining)
+- LOW: 60-71h (P3 + TIER 5 reduced, Monte Carlo LOW 5-7h added)
+- **NOTE:** Monte Carlo validation critique (Oct 30) identified systemic research validity issues - 13 new issues requiring immediate attention
+- NOTE: All 8 architecture integration issues complete (60-80h done)
 
-**Total Remaining Work (Frontend):** ~3-4 weeks with parallelization
-**Work Completed Oct 24-29:** ~98-122 hours across 21 major items
-**Work Completed Oct 2025:** ~258-337 hours equivalent total
+**Total Remaining Work (Frontend):** ~3-4 weeks with parallelization (plus 23-30h future enhancements)
+**Work Completed Oct 24-29:** ~181-227 hours across 27 major items (includes 44-60h architecture integration + 1h citation fixes)
+**Work Completed Oct 2025:** ~338-424 hours equivalent total
 **Active Plans:** 19+ simulation plans, 32 dashboard subplans, 4 god-mode plans
-**Completed Plans (Archived):** 110+ in `/plans/completed/`
+**Completed Plans (Archived):** 113+ in `/plans/completed/`
 
 ---
 
@@ -227,4 +507,6 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 ---
 
-**Last Updated:** October 29, 2025
+**Last Updated:** October 30, 2025 - Monte Carlo validation critique added (13 issues, 79-110h)
+**Status:** 13 new critical/high/medium priority issues identified from validation review
+**Next Priority:** Address CRITICAL issues (biosphere 47× threshold, mortality attribution bug, population coherence failure)
