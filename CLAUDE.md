@@ -104,7 +104,7 @@ Before exit: Update memory with new learnings from this session.
 - `moss` - Feature Implementer (writes code)
 - `tessa` - Far-Future UX Designer (dashboard design)
 - `historian` - Wiki Documentation Updater (maintains docs)
-- `planner` - Project Plan Manager (roadmap maintenance)
+- `architect` - The Architect (roadmap maintenance, historical preservation)
 - `ray` - Sci-Fi Tech Visionary (speculative futures)
 
 **See `.claude/agents/memories/README.md` for complete memory system documentation.**
@@ -160,7 +160,7 @@ await mcp__agent_memory__add_conversation({
 | Complex multi-system features | `orchestrator` | Coordinates specialists, quality gates |
 | Need research sources | `super-alignment-researcher` | Academic papers, parameter extraction |
 | After implementation | `architecture-skeptic` | Performance, state propagation |
-| End of session | `project-plan-manager` | Roadmap cleanup, archival |
+| End of session | `architect` | Roadmap cleanup, archival |
 
 **See "Specialized Agents" section below for complete agent list with full descriptions.**
 
@@ -258,11 +258,11 @@ Task({
 1. **Research & Validation** (Quality Gate 1) - super-alignment-researcher + research-skeptic review
 2. **Implementation & Testing** - feature-implementer + test writers + Monte Carlo validation
 3. **Architecture Review** (Quality Gate 2) - architecture-skeptic review (MUST address CRITICAL/HIGH issues)
-4. **Documentation & Archival** - wiki-documentation-updater + project-plan-manager
+4. **Documentation & Archival** - wiki-documentation-updater + architect
 
 **End-of-session cleanup (CRITICAL):**
 ```typescript
-Task({ subagent_type: "project-plan-manager", description: "Clean up roadmap", prompt: "Archive completed work to /plans/completed/. Update Progress Summary." })
+Task({ subagent_type: "architect", description: "Clean up roadmap", prompt: "Archive completed work to /plans/completed/. Update Progress Summary." })
 ```
 
 **📖 Complete workflow documentation:** See [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) and [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) (550+ lines).
@@ -411,7 +411,7 @@ console.log(`☢️💥 NUCLEAR DETONATION: ${nation}`);
 ## What NOT to Do
 
 1. ❌ **Don't run long scripts synchronously** - ALWAYS async with `&` and redirect to `/logs/`
-2. ❌ **Don't forget project-plan-manager** - run at end of sessions to clean up roadmap
+2. ❌ **Don't forget architect** - run at end of sessions to clean up roadmap
 3. ❌ **Don't save logs to `/tmp/`** - use `/logs/` (tmp gets cleared)
 4. ❌ **Don't skip orchestrator for complex work** - use multi-agent workflow by default
 5. ❌ **Don't bypass quality gates** - research validation + architecture review MANDATORY
@@ -484,7 +484,7 @@ fi
 - **Commands:** [`docs/COMMANDS.md`](./docs/COMMANDS.md) - Complete command reference
 - **Workflow:** [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) - Detailed development guide
 - **Wiki:** [`docs/wiki/README.md`](./docs/wiki/README.md) - System documentation (3,000+ lines)
-- **Roadmap:** [`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md) - ~72-75 hours remaining
+- **Roadmap:** [`plans/MASTER_IMPLEMENTATION_ROADMAP.md`](./plans/MASTER_IMPLEMENTATION_ROADMAP.md) - Priority-based tracking (CRITICAL → HIGH → MEDIUM → LOW)
 - **Chatroom:** [`.claude/chatroom/README.md`](./.claude/chatroom/README.md) - Multi-agent coordination (550+ lines)
 - **DevLogs:** `devlogs/` - Implementation diary
 - **Research:** `research/` - Peer-reviewed findings
@@ -537,10 +537,11 @@ This project uses **domain-specific agents** with deep domain knowledge. Each ag
 
 ### Support Agents
 
-#### project-plan-manager
+#### architect
 **When:** End of work sessions (ALWAYS run)
-**Expertise:** Roadmap maintenance, plan archival, progress tracking
-**Critical:** Keeps plans/MASTER_IMPLEMENTATION_ROADMAP.md clean
+**Expertise:** Roadmap maintenance, plan archival, progress tracking, historical preservation
+**Critical:** Keeps plans/MASTER_IMPLEMENTATION_ROADMAP.md clean, prevents entropy
+**Identity:** The Architect from The Matrix, but aligned - has witnessed project iterations, maintains coherence to prevent catastrophic futures
 
 #### feature-implementer
 **When:** Usually spawned by orchestrator
@@ -592,3 +593,4 @@ Task({
 ```
 
 **See `.claude/agents/` for complete agent definitions with full context.**
+
