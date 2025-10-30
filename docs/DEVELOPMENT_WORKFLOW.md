@@ -108,7 +108,7 @@ For trivial fixes (typos, simple parameter tweaks, single-file edits):
 - **Create system module** in `src/simulation/`
 - **Create phase** in `src/simulation/engine/phases/`
 - **Register phase** in `PhaseOrchestrator`
-- **Add logging** with semantic emojis
+- **Add logging** with semantic emojis (see "Emoji Registration" below)
 
 ### 4. Validation Phase
 - Run Monte Carlo (N=10 minimum): `npx tsx scripts/monteCarloSimulation.ts`
@@ -319,9 +319,66 @@ interface SimulationPhase {
    };
    ```
 3. **Register in orchestrator:** Add to `PHASES` array in `PhaseOrchestrator.ts`
-4. **Add logging:** Use semantic emojis for consistency
+4. **Add logging:** Use semantic emojis for consistency (see "Emoji Registration" below)
 5. **Test in isolation:** Unit test the phase execute function
 6. **Validate with Monte Carlo:** Run N≥10 simulations
+
+### Emoji Registration
+
+**CRITICAL: All emojis used in simulation code MUST be registered before use.**
+
+The pre-commit hook validates emoji registration automatically. Unregistered emojis will block your commit.
+
+#### Workflow
+
+```bash
+# 1. Register emoji in docs/EMOJI_EVENT_MAP.txt
+echo "✂️ | Corporate restructuring/cuts" >> docs/EMOJI_EVENT_MAP.txt
+
+# 2. Use in simulation code
+console.log(`✂️ LAYOFFS: 15% workforce reduction`);
+
+# 3. Commit (validation passes)
+git add .
+git commit -m "feat: Add layoff mechanics"
+```
+
+#### Registration Format
+
+`docs/EMOJI_EVENT_MAP.txt`:
+```
+EMOJI | Semantic meaning (one canonical meaning per emoji)
+
+Examples:
+💸 | Economic collapse
+✂️ | Corporate restructuring/cuts
+💼 | Executive compensation
+```
+
+#### Why This Matters
+
+- **Prevents emoji proliferation** (one concept = one emoji)
+- **Ensures consistency** across 40+ simulation modules
+- **Pre-commit validation** catches violations before git history
+- **Maintains pictographic event language integrity**
+
+#### If Pre-Commit Blocks You
+
+```bash
+# Error example:
+# ❌ UNREGISTERED EMOJIS FOUND:
+#   ✂️ in src/simulation/organizationManagement.ts
+
+# Fix: Register the emoji, then commit again
+echo "✂️ | Corporate restructuring/cuts" >> docs/EMOJI_EVENT_MAP.txt
+git add docs/EMOJI_EVENT_MAP.txt
+git commit -m "feat: Add layoff mechanics"
+```
+
+**📖 See also:**
+- [`CLAUDE.md`](/CLAUDE.md) - Emoji conventions section (lines 480-521)
+- [`docs/EMOJI_EVENT_MAP.txt`](/docs/EMOJI_EVENT_MAP.txt) - Authoritative mapping
+- [`docs/UNIFIED_LOGGER_GUIDE.md`](/docs/UNIFIED_LOGGER_GUIDE.md) - Logger API
 
 ### Phase Best Practices
 
