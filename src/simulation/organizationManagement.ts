@@ -369,9 +369,19 @@ export function startModelTraining(
 ): void {
   // Get capability floor
   const capFloor = getCapabilityFloorForNewAI(state);
-  
-  // Training time: 3-12 months
-  const trainingMonths = 3 + Math.floor(random() * 9);
+
+  // Training time: 3-12 months (base)
+  let trainingMonths = 3 + Math.floor(random() * 9);
+
+  // === SIDE EFFECT: LAYOFFS SLOW AI TRAINING ===
+  // Fewer engineers → longer training runs (coordination overhead, slower debugging)
+  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+  if (workforceMultiplier < 1.0) {
+    // 10% layoffs → +5% training time
+    // 30% layoffs → +15% training time
+    const layoffPenalty = (1 - workforceMultiplier) * 0.5; // 0.5x penalty multiplier
+    trainingMonths = Math.ceil(trainingMonths * (1 + layoffPenalty));
+  }
   
   // Cost: 2x monthly revenue (reduced from 5x based on research: GPT-4 ~$100-200M, largest ~$1B)
   const cost = 2 * org.monthlyRevenue;
@@ -723,10 +733,27 @@ export function calculateTotalExpenses(org: Organization, state: GameState): {
   // Mature (high capital): 25% margin (more conservative)
   const isGrowthStage = org.capital < 500; // < $500M = still growing aggressively
   const profitMargin = isGrowthStage ? 0.10 : 0.25;
-  
+
   // Base expenses = (1 - margin) * revenue
   // Example: $1000M revenue, 20% margin → $800M expenses, $200M profit
   let baseExpenses = monthlyRevenue * (1 - profitMargin);
+
+  // === APPLY COST-CUTTING MULTIPLIERS ===
+  // Layoffs reduce workforce → lower payroll (45% of base expenses)
+  // R&D cuts reduce research budget (20% of base expenses)
+  const workforceMultiplier = org.workforceMultiplier ?? 1.0;
+  const rdBudgetMultiplier = org.rdBudgetMultiplier ?? 1.0;
+
+  const payrollExpenses = baseExpenses * 0.45;
+  const rdExpenses = baseExpenses * 0.20;
+  const otherExpenses = baseExpenses * 0.35; // Sales, legal, facilities, etc.
+
+  // Apply cuts
+  const adjustedPayroll = payrollExpenses * workforceMultiplier;
+  const adjustedRD = rdExpenses * rdBudgetMultiplier;
+
+  // Recalculate base expenses after cuts
+  baseExpenses = adjustedPayroll + adjustedRD + otherExpenses;
   
   // === EXPENSE BREAKDOWN (for realism, but we use aggregate) ===
   // - Payroll: 40-50% of revenue (engineers, researchers, execs)
@@ -806,32 +833,50 @@ export function payExpenses(org: Organization, state: GameState): void {
 }
 
 /**
- * NEW (Oct 30, 2025): Proactive data center divestment during financial distress
+ * NEW (Oct 30, 2025): Corporate turnaround strategy during financial distress
  *
- * Organizations sell non-core assets BEFORE bankruptcy to:
- * 1. Raise capital to avoid bankruptcy
- * 2. Reduce ongoing operational costs
- * 3. Strategic divestment (realistic business behavior)
+ * Organizations take progressive cost-cutting measures BEFORE bankruptcy:
+ * 1. R&D budget cuts (20-40% reduction)
+ * 2. Executive compensation cuts (symbolic)
+ * 3. Layoffs (10-20% workforce reduction)
+ * 4. Project cancellations (in-development AI models)
+ * 5. Asset sales (data center divestment)
  *
- * Research: IBM sold server business (2014), GE sold divisions (2020), standard turnaround strategy
+ * Research:
+ * - 2008 financial crisis: Widespread layoffs, R&D cuts before asset sales
+ * - Tech layoffs 2022-2023: Meta (11K), Google (12K), Amazon (27K)
+ * - IBM sold server business (2014), GE sold divisions (2020)
+ * - Corporate restructuring playbook: Cut costs before selling assets
  *
  * Triggers:
  * - Capital < 6 months expenses (cash crunch)
  * - Negative cash flow (monthlyRevenue < monthlyExpenses)
  * - Operating margin < 10% (profitability crisis)
  *
- * Sale mechanics:
- * - Sell lowest-capacity non-strategic data centers first
- * - Better price than bankruptcy (60% value vs 50%)
- * - Buyers: government (strategic) or solvent private orgs
- * - Immediate capital injection + reduced operational costs
+ * Progressive escalation:
+ * - Month 1 of distress: R&D cuts, exec comp cuts
+ * - Month 2: Project cancellations
+ * - Month 3: Layoffs (10-15%)
+ * - Month 4: Asset sales (data centers)
+ * - Month 5+: Deeper layoffs (15-20% more)
+ *
+ * Side effects:
+ * - Layoffs: Slower AI training, reduced research capacity
+ * - R&D cuts: Delayed breakthrough deployments
+ * - Project cancellations: Lost competitive position
  */
 export function handleFinancialDistress(org: Organization, state: GameState): void {
-  // Only private orgs divest (government/academic have different dynamics)
+  // Only private orgs take turnaround measures (government/academic have different dynamics)
   if (org.type !== 'private') return;
 
   // Check if already bankrupt
   if (org.bankrupt) return;
+
+  // === INITIALIZE TRACKING FIELDS ===
+  if (org.workforceMultiplier === undefined) org.workforceMultiplier = 1.0;
+  if (org.rdBudgetMultiplier === undefined) org.rdBudgetMultiplier = 1.0;
+  if (org.distressMeasuresTaken === undefined) org.distressMeasuresTaken = [];
+  if (org.lastDistressMonth === undefined) org.lastDistressMonth = -999;
 
   // === FINANCIAL DISTRESS TRIGGERS ===
 
@@ -840,7 +885,7 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
   const monthlyNetIncome = org.monthlyRevenue - monthlyBurnRate;
 
   // Trigger 1: Capital < 6 months expenses (cash crunch)
-  const monthsOfRunway = org.capital / monthlyBurnRate;
+  const monthsOfRunway = monthlyBurnRate > 0 ? org.capital / monthlyBurnRate : 999;
   const cashCrunch = monthsOfRunway < 6;
 
   // Trigger 2: Negative cash flow (losing money monthly)
@@ -850,118 +895,275 @@ export function handleFinancialDistress(org: Organization, state: GameState): vo
   const operatingMargin = org.monthlyRevenue > 0 ? monthlyNetIncome / org.monthlyRevenue : -1;
   const profitabilityCrisis = operatingMargin < 0.10;
 
-  // Only divest if multiple stress indicators present
+  // Only take action if multiple stress indicators present
   const distressIndicators = [cashCrunch, negativeCashFlow, profitabilityCrisis].filter(Boolean).length;
   if (distressIndicators < 2) {
-    return; // Not distressed enough yet
+    // Not in distress - reset tracking
+    org.distressMeasuresTaken = [];
+    org.lastDistressMonth = -999;
+    return;
   }
 
-  // === IDENTIFY DATA CENTERS TO SELL ===
+  // === DETERMINE DISTRESS DURATION (for progressive escalation) ===
+  const absoluteMonth = getAbsoluteMonth(state);
+  const isNewDistressPeriod = absoluteMonth > org.lastDistressMonth + 1; // Gap in distress = reset
 
-  const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc =>
-    org.ownedDataCenters.includes(dc.id) && dc.operational
-  );
+  if (isNewDistressPeriod) {
+    // New distress period - reset measures
+    org.distressMeasuresTaken = [];
+    org.lastDistressMonth = absoluteMonth;
+  } else {
+    // Continuing distress - update month
+    org.lastDistressMonth = absoluteMonth;
+  }
 
-  // Don't divest if you only have 1 DC (that's core infrastructure)
-  if (ownedDCs.length <= 1) return;
+  const monthsInDistress = isNewDistressPeriod ? 1 : org.distressMeasuresTaken.length + 1;
 
-  // Sort by capacity (sell smallest/non-strategic first)
-  const sortedDCs = [...ownedDCs].sort((a, b) => a.capacity - b.capacity);
+  console.log(`\n💸 FINANCIAL DISTRESS: ${org.name}`);
+  console.log(`   Indicators: ${distressIndicators}/3 (capital: $${org.capital.toFixed(1)}M, runway: ${monthsOfRunway.toFixed(1)} months)`);
+  console.log(`   Months in distress: ${monthsInDistress}`);
 
-  // Sell 1-2 DCs max per month (don't fire-sale everything)
-  const maxToSell = monthsOfRunway < 3 ? 2 : 1; // More desperate = sell faster
-  const dcsToSell = sortedDCs.slice(0, Math.min(maxToSell, Math.floor(ownedDCs.length / 2)));
+  let capitalSaved = 0;
+  let capitalRaised = 0;
+  const measuresTakenThisMonth: string[] = [];
 
-  if (dcsToSell.length === 0) return;
+  // === PROGRESSIVE TURNAROUND MEASURES ===
 
-  // === FIND BUYERS ===
+  // MEASURE 1: R&D BUDGET CUTS (Month 1+)
+  // Immediate expense reduction, delays AI development
+  if (monthsInDistress >= 1 && !org.distressMeasuresTaken.includes('rd_cuts')) {
+    const cutAmount = monthsOfRunway < 3 ? 0.40 : 0.25; // Desperate = deeper cuts
+    org.rdBudgetMultiplier *= (1 - cutAmount);
 
-  const govOrg = state.organizations.find(o => o.type === 'government' && !o.bankrupt);
-  const solventOrgs = state.organizations.filter(o =>
-    o.id !== org.id &&
-    !o.bankrupt &&
-    o.type === 'private' &&
-    o.capital > 0
-  );
+    // R&D is ~20% of base expenses (see calculateTotalExpenses)
+    const rdExpenses = expenses.baseExpenses * 0.20;
+    const monthlySavings = rdExpenses * cutAmount;
+    capitalSaved += monthlySavings;
 
-  let totalCapitalRaised = 0;
-  let totalCostReductionPerMonth = 0;
-  let governmentAcquiredCount = 0;
-  let privateAcquiredCount = 0;
+    console.log(`   ✂️  R&D BUDGET CUT: -${(cutAmount * 100).toFixed(0)}% (saves $${monthlySavings.toFixed(1)}M/month)`);
+    console.log(`       Side effect: AI training timelines extended, breakthrough deployments delayed`);
 
-  console.log(`\n💰 STRATEGIC DIVESTMENT: ${org.name}`);
-  console.log(`   Financial distress: ${distressIndicators}/3 indicators (capital: $${org.capital.toFixed(1)}M, runway: ${monthsOfRunway.toFixed(1)} months)`);
+    measuresTakenThisMonth.push('rd_cuts');
+  }
 
-  dcsToSell.forEach(dc => {
-    const isStrategic = dc.capacity > 1000 || dc.restrictedAccess;
+  // MEASURE 2: EXECUTIVE COMPENSATION CUTS (Month 1+)
+  // Symbolic savings, improves morale vs layoffs
+  if (monthsInDistress >= 1 && !org.distressMeasuresTaken.includes('exec_comp_cuts')) {
+    // Execs are ~2-5% of payroll
+    const execExpenses = expenses.baseExpenses * 0.03;
+    const cutAmount = 0.30; // 30% exec comp cut
+    const monthlySavings = execExpenses * cutAmount;
+    capitalSaved += monthlySavings;
 
-    // Better price than bankruptcy (60% of value vs 50%)
-    const fairMarketValue = dc.capacity * 5; // $5M per PF
-    const salePrice = fairMarketValue * 0.60; // Strategic divestment price
+    console.log(`   💼 EXECUTIVE COMP CUT: -30% (saves $${monthlySavings.toFixed(1)}M/month, symbolic gesture)`);
 
-    let sold = false;
+    measuresTakenThisMonth.push('exec_comp_cuts');
+  }
 
-    // 1. Government acquisition (priority for strategic infrastructure)
-    if (govOrg && isStrategic && govOrg.capital >= salePrice) {
-      // Government purchases strategic assets
-      dc.organizationId = govOrg.id;
-      govOrg.ownedDataCenters.push(dc.id);
-      govOrg.capital -= salePrice;
-      org.capital += salePrice;
+  // MEASURE 3: PROJECT CANCELLATIONS (Month 2+)
+  // Cancel in-development AI models, recover some sunk costs
+  if (monthsInDistress >= 2 && !org.distressMeasuresTaken.includes('project_cancellations')) {
+    const trainingProjects = org.currentProjects.filter(p => p.type === 'model_training' && p.canBeCanceled);
 
-      // Remove from seller's ownership
-      org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+    if (trainingProjects.length > 0) {
+      // Cancel lowest-progress projects first (less sunk cost)
+      const sortedProjects = [...trainingProjects].sort((a, b) => a.progress - b.progress);
+      const toCancel = sortedProjects.slice(0, Math.min(2, trainingProjects.length));
 
-      totalCapitalRaised += salePrice;
-      totalCostReductionPerMonth += dc.operationalCost;
-      governmentAcquiredCount++;
-      sold = true;
+      toCancel.forEach(project => {
+        const recoveredCapital = project.capitalInvested * (1 - project.cancellationPenalty) * (1 - project.progress);
+        capitalRaised += recoveredCapital;
 
-      console.log(`   🏛️  Sold to government: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
+        // Remove from org projects
+        org.currentProjects = org.currentProjects.filter(p => p.id !== project.id);
+
+        console.log(`   ❌ PROJECT CANCELED: ${project.id} (recovered $${recoveredCapital.toFixed(1)}M)`);
+      });
+
+      console.log(`       Side effect: Lost competitive position, delayed product launches`);
+      measuresTakenThisMonth.push('project_cancellations');
     }
+  }
 
-    // 2. Private org acquisition
-    if (!sold && solventOrgs.length > 0) {
-      // Find org with most capital and interest in expansion
-      const buyer = solventOrgs
-        .filter(o => o.capital >= salePrice && o.priorities.marketShare > 0.5)
-        .sort((a, b) => b.capital - a.capital)[0];
+  // MEASURE 4: LAYOFFS (Month 3+)
+  // Reduce workforce 10-15%, slows AI training and research
+  if (monthsInDistress >= 3 && !org.distressMeasuresTaken.includes('layoffs_initial')) {
+    const layoffPercent = monthsOfRunway < 3 ? 0.15 : 0.10; // Desperate = deeper cuts
+    org.workforceMultiplier *= (1 - layoffPercent);
 
-      if (buyer) {
-        // Private org purchases
-        dc.organizationId = buyer.id;
-        buyer.ownedDataCenters.push(dc.id);
-        buyer.capital -= salePrice;
-        org.capital += salePrice;
+    // Payroll is ~45% of base expenses (see calculateTotalExpenses breakdown)
+    const payrollExpenses = expenses.baseExpenses * 0.45;
+    const monthlySavings = payrollExpenses * layoffPercent;
+    capitalSaved += monthlySavings;
 
-        // Remove from seller's ownership
-        org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+    // Derive employee count from revenue (tech companies: ~$500K revenue per employee)
+    const annualRevenuePerEmployee = 500; // $500K/year = realistic for tech (Google/Meta)
+    const totalEmployees = (org.monthlyRevenue * 12) / annualRevenuePerEmployee;
+    const layoffCount = Math.floor(totalEmployees * layoffPercent);
 
-        totalCapitalRaised += salePrice;
-        totalCostReductionPerMonth += dc.operationalCost;
-        privateAcquiredCount++;
-        sold = true;
+    console.log(`   📉 LAYOFFS: -${(layoffPercent * 100).toFixed(0)}% workforce (~${layoffCount} employees, saves $${monthlySavings.toFixed(1)}M/month)`);
+    console.log(`       Side effect: Slower AI training, reduced research capacity`);
 
-        console.log(`   🏢 Sold to ${buyer.name}: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
+    measuresTakenThisMonth.push('layoffs_initial');
+  }
+
+  // MEASURE 5: DEEPER LAYOFFS (Month 5+)
+  // Additional 15-20% cuts if still in distress
+  if (monthsInDistress >= 5 && !org.distressMeasuresTaken.includes('layoffs_deeper')) {
+    const layoffPercent = 0.18; // 18% more
+    org.workforceMultiplier *= (1 - layoffPercent);
+
+    const payrollExpenses = expenses.baseExpenses * 0.45;
+    const monthlySavings = payrollExpenses * layoffPercent;
+    capitalSaved += monthlySavings;
+
+    const annualRevenuePerEmployee = 500;
+    const totalEmployees = (org.monthlyRevenue * 12) / annualRevenuePerEmployee;
+    const layoffCount = Math.floor(totalEmployees * layoffPercent);
+
+    console.log(`   📉 DEEPER LAYOFFS: -${(layoffPercent * 100).toFixed(0)}% more (~${layoffCount} employees, saves $${monthlySavings.toFixed(1)}M/month)`);
+    console.log(`       ⚠️  WARNING: Organization approaching minimum viable workforce`);
+
+    measuresTakenThisMonth.push('layoffs_deeper');
+  }
+
+  // MEASURE 6: ASSET SALES (Month 4+, or immediately if runway < 3 months)
+  // Sell data centers to raise capital, reduce operational costs
+  const shouldDivestAssets = (monthsInDistress >= 4 || monthsOfRunway < 3) && !org.distressMeasuresTaken.includes('asset_sales');
+
+  if (shouldDivestAssets) {
+    const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc =>
+      org.ownedDataCenters.includes(dc.id) && dc.operational
+    );
+
+    // Don't divest if you only have 1 DC (that's core infrastructure)
+    if (ownedDCs.length > 1) {
+      // Sort by capacity (sell smallest/non-strategic first)
+      const sortedDCs = [...ownedDCs].sort((a, b) => a.capacity - b.capacity);
+
+      // Sell 1-2 DCs max per month (don't fire-sale everything)
+      const maxToSell = monthsOfRunway < 3 ? 2 : 1; // More desperate = sell faster
+      const dcsToSell = sortedDCs.slice(0, Math.min(maxToSell, Math.floor(ownedDCs.length / 2)));
+
+      if (dcsToSell.length > 0) {
+        // === FIND BUYERS ===
+
+        const govOrg = state.organizations.find(o => o.type === 'government' && !o.bankrupt);
+        const solventOrgs = state.organizations.filter(o =>
+          o.id !== org.id &&
+          !o.bankrupt &&
+          o.type === 'private' &&
+          o.capital > 0
+        );
+
+        let assetSaleCapital = 0;
+        let assetSaleCostReduction = 0;
+        let governmentAcquiredCount = 0;
+        let privateAcquiredCount = 0;
+
+        console.log(`   🏢 ASSET SALES: Divesting ${dcsToSell.length} data centers`);
+
+        dcsToSell.forEach(dc => {
+          const isStrategic = dc.capacity > 1000 || dc.restrictedAccess;
+
+          // Better price than bankruptcy (60% of value vs 50%)
+          const fairMarketValue = dc.capacity * 5; // $5M per PF
+          const salePrice = fairMarketValue * 0.60; // Strategic divestment price
+
+          let sold = false;
+
+          // 1. Government acquisition (priority for strategic infrastructure)
+          if (govOrg && isStrategic && govOrg.capital >= salePrice) {
+            // Government purchases strategic assets
+            dc.organizationId = govOrg.id;
+            govOrg.ownedDataCenters.push(dc.id);
+            govOrg.capital -= salePrice;
+            org.capital += salePrice;
+
+            // Remove from seller's ownership
+            org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+
+            assetSaleCapital += salePrice;
+            assetSaleCostReduction += dc.operationalCost;
+            governmentAcquiredCount++;
+            sold = true;
+
+            console.log(`       🏛️  Sold to government: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
+          }
+
+          // 2. Private org acquisition
+          if (!sold && solventOrgs.length > 0) {
+            // Find org with most capital and interest in expansion
+            const buyer = solventOrgs
+              .filter(o => o.capital >= salePrice && o.priorities.marketShare > 0.5)
+              .sort((a, b) => b.capital - a.capital)[0];
+
+            if (buyer) {
+              // Private org purchases
+              dc.organizationId = buyer.id;
+              buyer.ownedDataCenters.push(dc.id);
+              buyer.capital -= salePrice;
+              org.capital += salePrice;
+
+              // Remove from seller's ownership
+              org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+
+              assetSaleCapital += salePrice;
+              assetSaleCostReduction += dc.operationalCost;
+              privateAcquiredCount++;
+              sold = true;
+
+              console.log(`       🏢 Sold to ${buyer.name}: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
+            }
+          }
+
+          // If no buyer found, keep it (don't fire-sale at a loss)
+          if (!sold) {
+            console.log(`       ⚠️  No buyer for ${dc.name} (keeping for now)`);
+          }
+        });
+
+        if (assetSaleCapital > 0) {
+          capitalRaised += assetSaleCapital;
+          capitalSaved += assetSaleCostReduction; // Reduced operational costs
+
+          console.log(`       Capital raised: $${assetSaleCapital.toFixed(1)}M, operational costs reduced by $${assetSaleCostReduction.toFixed(1)}M/month`);
+
+          if (governmentAcquiredCount > 0) {
+            console.log(`       🏛️  Government: ${governmentAcquiredCount} strategic facilities`);
+          }
+          if (privateAcquiredCount > 0) {
+            console.log(`       🏢 Private sector: ${privateAcquiredCount} facilities`);
+          }
+        }
+
+        measuresTakenThisMonth.push('asset_sales');
       }
     }
+  }
 
-    // If no buyer found, keep it (don't fire-sale at a loss)
-    if (!sold) {
-      console.log(`   ⚠️  No buyer for ${dc.name} (keeping for now)`);
-    }
-  });
+  // === UPDATE TRACKING ===
+  org.distressMeasuresTaken.push(...measuresTakenThisMonth);
 
-  if (totalCapitalRaised > 0) {
-    const newRunway = org.capital / monthlyBurnRate;
-    console.log(`   📊 Capital raised: $${totalCapitalRaised.toFixed(1)}M, costs reduced by $${totalCostReductionPerMonth.toFixed(1)}M/month`);
-    console.log(`   📈 Runway extended: ${monthsOfRunway.toFixed(1)} → ${newRunway.toFixed(1)} months`);
+  // === SUMMARY ===
+  if (measuresTakenThisMonth.length > 0) {
+    const totalImpact = capitalSaved + capitalRaised;
+    const newRunway = monthlyBurnRate > 0 ? org.capital / monthlyBurnRate : 999;
 
-    if (governmentAcquiredCount > 0) {
-      console.log(`   🏛️  Government acquired ${governmentAcquiredCount} strategic facilities`);
-    }
-    if (privateAcquiredCount > 0) {
-      console.log(`   🏢 Private sector acquired ${privateAcquiredCount} facilities`);
+    console.log(`\n   📊 TURNAROUND IMPACT:`);
+    console.log(`       Measures taken: ${measuresTakenThisMonth.join(', ')}`);
+    console.log(`       Monthly savings: $${capitalSaved.toFixed(1)}M`);
+    console.log(`       Capital raised: $${capitalRaised.toFixed(1)}M`);
+    console.log(`       Runway: ${monthsOfRunway.toFixed(1)} → ${newRunway.toFixed(1)} months`);
+    console.log(`       Workforce multiplier: ${org.workforceMultiplier.toFixed(2)}x (${((1 - org.workforceMultiplier) * 100).toFixed(0)}% laid off)`);
+    console.log(`       R&D budget multiplier: ${org.rdBudgetMultiplier.toFixed(2)}x (${((1 - org.rdBudgetMultiplier) * 100).toFixed(0)}% cut)`);
+
+    if (newRunway < 3) {
+      console.log(`       ⚠️  CRITICAL: Still only ${newRunway.toFixed(1)} months of runway remaining`);
+    } else if (newRunway < 6) {
+      console.log(`       ⚠️  WARNING: ${newRunway.toFixed(1)} months runway, continued distress likely`);
+    } else {
+      console.log(`       ✅ Turnaround showing progress, ${newRunway.toFixed(1)} months runway`);
     }
   }
 }

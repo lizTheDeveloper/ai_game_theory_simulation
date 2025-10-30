@@ -104,6 +104,8 @@
 🏁 | Completion/finish
 🎨 | Art/culture/meaning
 🏢 | Corporate/business
+✂️ | Corporate restructuring/cuts
+💼 | Executive compensation
 😴 | Complacency/inaction
 
 # AI-Related Events (Information/Control)

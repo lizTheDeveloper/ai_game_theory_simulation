@@ -116,6 +116,12 @@ export interface Organization {
   bankrupt: boolean;             // True if org collapsed
   bankruptcyMonth?: number;      // When org went bankrupt
   bankruptcyReason?: string;     // Why org collapsed
+
+  // NEW (Oct 30, 2025): Financial distress turnaround measures
+  workforceMultiplier?: number;  // [0,1] Tracks cumulative layoffs (1.0 = full staff, 0.5 = 50% laid off)
+  rdBudgetMultiplier?: number;   // [0,1] Tracks R&D budget cuts (1.0 = full budget, 0.5 = 50% cut)
+  distressMeasuresTaken?: string[]; // Track which measures used (prevent duplicate actions same month)
+  lastDistressMonth?: number;    // Last month we took distress actions (for progressive escalation)
 }
 
 /**
