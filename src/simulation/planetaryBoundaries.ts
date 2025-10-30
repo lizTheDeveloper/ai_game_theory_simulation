@@ -933,8 +933,38 @@ function updateLandUseSystem(state: GameState): void {
     }
 
     // 1C. UPDATE REGIONAL EXTINCTION RATE
-    region.extinctionRate = Math.min(1000,
-      region.extinctionRate * (1 + region.extinctionAcceleration / 100)
+    // BUG FIX (Oct 30, 2025 v2): Replace exponential with bounded percentage growth
+    // V1: Reduced from 47× to 36× but still too fast (linear growth too aggressive)
+    // Research: IPBES (2019) - extinction rates increase ~10-30% per decade under BAU
+    // Use percentage-based growth with saturation
+
+    const MAX_EXTINCTION_RATE = 1000; // IPBES upper bound (100-1000× range)
+    const currentRate = region.extinctionRate;
+
+    // Monthly percentage increase (scales with acceleration)
+    // acceleration 2.0 → ~0.2% per month → ~2.4% per year → ~24% per decade (IPBES range)
+    // acceleration 1.0 → ~0.1% per month → ~1.2% per year → ~12% per decade
+    const monthlyPercentage = region.extinctionAcceleration * 0.001; // 0.1% at 1.0 acceleration
+
+    // Logistic saturation: Growth slows as we approach max
+    const saturationFactor = 1.0 - (currentRate / MAX_EXTINCTION_RATE);
+    const growthMultiplier = 1.0 + (monthlyPercentage * saturationFactor);
+
+    region.extinctionRate = assertInRange(
+      currentRate * growthMultiplier,
+      0,
+      MAX_EXTINCTION_RATE,
+      {
+        location: 'updateLandUseSystem',
+        valueName: `${regionName}.extinctionRate`,
+        month: state.currentMonth,
+        additionalInfo: {
+          currentRate,
+          acceleration: region.extinctionAcceleration,
+          monthlyPercentage,
+          saturationFactor
+        }
+      }
     );
 
     // 1D. FEEDBACK: EXTINCTION → ECOSYSTEM COLLAPSE

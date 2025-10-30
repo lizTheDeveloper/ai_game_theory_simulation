@@ -405,9 +405,20 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
 
   // === 2. WAR AND CONFLICT ===
   if (state.conflictResolution?.activeConflicts && state.conflictResolution.activeConflicts > 0) {
+    // BUG FIX (Oct 30, 2025): Use regional population, not global
+    // Previous: Used global 8B population → 325M displaced (10x over-estimation)
+    // Research: UNHCR 2023 - current global refugees ~110M, conflict zones ~5-10% of global population
+
     // Each active conflict displaces 1-5% of regional population
     const conflictSeverity = state.conflictResolution.activeConflicts * 0.02;
-    const displaced = state.humanPopulationSystem.population * 1000 * conflictSeverity;
+
+    // Estimate conflict zone population: ~5-10% of global population
+    // Scales with number of conflicts (more conflicts = more regions affected)
+    const baseConflictZonePercent = 0.05; // 5% baseline
+    const conflictScaling = Math.min(2.0, 1.0 + state.conflictResolution.activeConflicts * 0.1); // Up to 2x with many conflicts
+    const conflictZonePopulation = state.humanPopulationSystem.population * 1000 * baseConflictZonePercent * conflictScaling;
+
+    const displaced = conflictZonePopulation * conflictSeverity;
 
     if (displaced > 5) {
       newCrises.push(createRefugeeCrisis({
