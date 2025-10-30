@@ -200,13 +200,30 @@ export class SimulationLogger {
       pollutionLevel: state.qualityOfLifeSystems.pollutionLevel,
 
       // Population metrics (ISSUE-7 fix, Oct 30, 2025)
-      population: state.humanPopulationSystem?.population,
-      globalPopulation: state.humanPopulationSystem?.population, // Alias
-      totalPopulation: state.humanPopulationSystem?.population, // Alias
+      // Fail loudly if systems not initialized - research simulation, not production app
+      population: assertDefined(state.humanPopulationSystem, {
+        location: 'createSnapshot',
+        valueName: 'humanPopulationSystem',
+        month: state.currentMonth
+      }).population,
+      globalPopulation: state.humanPopulationSystem.population, // Alias (already validated above)
+      totalPopulation: state.humanPopulationSystem.population, // Alias (already validated above)
 
       // Planetary boundaries (ISSUE-8 fix, Oct 30, 2025)
-      biosphere_integrity: state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.currentValue,
-      biosphere: state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.currentValue // Alias
+      // Fail loudly if boundaries not initialized
+      biosphere_integrity: assertDefined(
+        assertDefined(state.planetaryBoundariesSystem, {
+          location: 'createSnapshot',
+          valueName: 'planetaryBoundariesSystem',
+          month: state.currentMonth
+        }).boundaries.biosphere_integrity,
+        {
+          location: 'createSnapshot',
+          valueName: 'boundaries.biosphere_integrity',
+          month: state.currentMonth
+        }
+      ).currentValue,
+      biosphere: state.planetaryBoundariesSystem.boundaries.biosphere_integrity.currentValue // Alias (already validated)
     };
   }
   
