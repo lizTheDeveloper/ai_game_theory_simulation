@@ -35,7 +35,7 @@ The fundamental building blocks of the simulation:
 | [🏛️ Government](./systems/government.md) | ✅ | Regulations, control, policies |
 | [👥 Society](./systems/society.md) | ✅ | Trust, unemployment, adaptation |
 | [🌍 Environmental](./systems/environmental.md) | ✅ | Resources (65%), pollution (30%), climate, biodiversity (35%); **Multi-timescale tipping points** (Oct 26, 2025) |
-| [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds |
+| [🤝 Social Cohesion](./systems/social-cohesion.md) | ✅ | Meaning crisis (22%), institutional erosion, social bonds, **crisis mitigation mechanics** (Oct 30, 2025) |
 | [⚠️ Technological Risk](./systems/technological-risk.md) | ✅ | Misalignment, safety debt, concentration, complacency |
 | [🔬 Breakthrough Technologies](./systems/breakthrough-technologies.md) | ✅ | **71 technologies** in comprehensive tech tree (TIER 0-4) |
 | [🏛️ Governance Quality](./systems/governance-quality.md) | ✅ | Democratic resilience, decision quality, institutional capacity |
