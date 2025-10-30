@@ -1,0 +1,333 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    MONTE CARLO TAB INTERFACE - VISUAL LAYOUT
+═══════════════════════════════════════════════════════════════════════════════
+
+Location: /src/app/monte-carlo/page.tsx
+Status: ✅ Implemented (2025-10-30)
+Max Width: 1800px (centered on ultrawide displays)
+
+───────────────────────────────────────────────────────────────────────────────
+                              HEADER & TAB BAR
+───────────────────────────────────────────────────────────────────────────────
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  Monte Carlo Parameter Sweep                                                │
+│  Explore simulation outcomes across parameter space with comprehensive...   │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌───────────┐ ┌───────────────┐ ┌────────────┐                           │
+│  │ Configure │ │ Progress • 🔵 │ │ Analysis ✓ │                           │
+│  └═══════════┘ └───────────────┘ └────────────┘                           │
+│      ACTIVE         RUNNING          READY                                  │
+│   (cyan glow)      (badge)       (disabled until results)                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+                           TAB 1: CONFIGURE (DEFAULT)
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ LEFT COLUMN (1/3 width)             │ RIGHT COLUMN (2/3 width)              │
+├─────────────────────────────────────┼───────────────────────────────────────┤
+│                                     │                                       │
+│ ┌─────────────────────────────────┐ │ ┌──────────────────────────────────┐│
+│ │ [Enhanced Config] [Basic Config]│ │ │ 🎬 Getting Started               ││
+│ └─────────────────────────────────┘ │ │                                  ││
+│         Toggle button               │ │ The Monte Carlo parameter sweep  ││
+│                                     │ │ explores simulation outcomes...   ││
+│ ┌─────────────────────────────────┐ │ │                                  ││
+│ │ ENHANCED PARAMETER CONFIG       │ │ │ Workflow:                        ││
+│ │                                 │ │ │ 1. Select parameters to sweep    ││
+│ │ Seeds                           │ │ │ 2. Set seed count                ││
+│ │ ├─ Start: 42000                 │ │ │ 3. Click "Start Sweep"           ││
+│ │ └─ Count: [10▼]                 │ │ │ 4. Monitor progress              ││
+│ │                                 │ │ │ 5. Analyze results               ││
+│ │ Parameter Groups                │ │ └──────────────────────────────────┘│
+│ │ ┌─ Core Dynamics ──────────────┐│ │                                       │
+│ │ │ ☑ Government Power: 0.1-0.9  ││ │ ┌──────────────────────────────────┐│
+│ │ │ ☐ Social Cohesion: 0.2-0.8   ││ │ │ 🧪 Enhanced Configuration        ││
+│ │ │ ☐ Economic Stability: 0.3-0.7││ │ │                                  ││
+│ │ └──────────────────────────────┘│ │ │ Access to all simulation params: ││
+│ │ ┌─ AI Dynamics ────────────────┐│ │ │ • Core dynamics (gov, social)    ││
+│ │ │ ☐ Coordination: 0.05-0.25    ││ │ │ • Alignment models (drift, etc)  ││
+│ │ │ ☐ Deceptiveness: 0.0-0.5     ││ │ │ • AI suffering & consciousness   ││
+│ │ └──────────────────────────────┘│ │ │ • Collective evolution           ││
+│ │ ┌─ Crisis Parameters ──────────┐│ │ │ • Crisis cascade multipliers     ││
+│ │ │ ☐ Cascade Multiplier: 1.0-2.0││ │ │ • Scenario modes                 ││
+│ │ │ ☐ Recovery Rate: 0.3-0.7     ││ │ └──────────────────────────────────┘│
+│ │ └──────────────────────────────┘│ │                                       │
+│ │                                 │ │ ┌──────────────────────────────────┐│
+│ │ Scenario Configuration          │ │ │ Current Batch Status             ││
+│ │ ☐ Scenario Modes: hist, unprec │ │ │                                  ││
+│ │ ☐ Max Months: 120, 360         │ │ │    42        3        100        ││
+│ │ ☐ Threshold Scenarios: 5 opts  │ │ │ COMPLETED  RUNNING   TOTAL       ││
+│ │                                 │ │ │                                  ││
+│ │ ┌────────────────────────────┐  │ │ │ ▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░ 45%       ││
+│ │ │  ▶ START SWEEP             │  │ │ └──────────────────────────────────┘│
+│ │ │  Total simulations: 50     │  │ │                                       │
+│ │ │  Estimated time: 25 min    │  │ │ (Only shows when batch is active)   │
+│ │ └────────────────────────────┘  │ │                                       │
+│ └─────────────────────────────────┘ │                                       │
+└─────────────────────────────────────┴───────────────────────────────────────┘
+
+                              VISUAL INDICATORS:
+                              ──────────────────
+                              • Cyan glow = Active/enabled
+                              • White/60 = Secondary info
+                              • White/20 = Disabled
+                              • Checkbox ☑ = Parameter enabled for sweep
+
+═══════════════════════════════════════════════════════════════════════════════
+                          TAB 2: PROGRESS (AUTO-SWITCH)
+═══════════════════════════════════════════════════════════════════════════════
+
+When batch starts, page automatically switches to this tab.
+Tab shows "Running •" badge with glowing pulse animation.
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│ ┌─────────────────────────────────────────────────────────────────────────┐│
+│ │ 📊 LIVE PROGRESS                                                        ││
+│ │                                                                         ││
+│ │ Overall Progress                                                        ││
+│ │ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 42/100 runs (42%)   ││
+│ │                                                                         ││
+│ │ Status                                                                  ││
+│ │ • Running: 5 simulations                                                ││
+│ │ • Completed: 42 simulations                                             ││
+│ │ • Failed: 0 simulations                                                 ││
+│ │ • Estimated time remaining: 18 minutes                                  ││
+│ │                                                                         ││
+│ │ ┌────────────────┐                                                      ││
+│ │ │ ⏸ PAUSE BATCH │  [❌ CANCEL]                                         ││
+│ │ └────────────────┘                                                      ││
+│ └─────────────────────────────────────────────────────────────────────────┘│
+│                                                                             │
+│ ┌─────────────────────────────────────────────────────────────────────────┐│
+│ │ BATCH PROGRESS TRACKER                                                  ││
+│ │                                                                         ││
+│ │ Recent Completions:                                                     ││
+│ │ ✅ run_42042 → Sustainable [120 months] (2.3s)                         ││
+│ │ ✅ run_42041 → Bottleneck [98 months] (2.1s)                           ││
+│ │ ✅ run_42040 → Collapse [67 months] (1.8s)                             ││
+│ │                                                                         ││
+│ │ Currently Running:                                                      ││
+│ │ 🔄 run_42043 → Month 45... (in progress)                               ││
+│ │ 🔄 run_42044 → Month 32... (in progress)                               ││
+│ │ 🔄 run_42045 → Month 12... (in progress)                               ││
+│ │ 🔄 run_42046 → Month 8... (in progress)                                ││
+│ │ 🔄 run_42047 → Month 3... (in progress)                                ││
+│ └─────────────────────────────────────────────────────────────────────────┘│
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+                              EMPTY STATE:
+                              ────────────
+                              When no batch running:
+
+                              ┌───────────────────────────────┐
+                              │      ⚡ (grayed icon)         │
+                              │   No Active Batch             │
+                              │   Start a parameter sweep...  │
+                              │   ┌──────────────────────┐    │
+                              │   │ Go to Configure      │    │
+                              │   └──────────────────────┘    │
+                              └───────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+                    TAB 3: ANALYSIS (ENABLED WHEN RESULTS READY)
+═══════════════════════════════════════════════════════════════════════════════
+
+Tab shows "Ready ✓" badge when results are loaded.
+Tab is disabled (grayed out, cursor-not-allowed) until batch completes.
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TOP ROW (2-column grid):                                                    │
+│                                                                             │
+│ ┌─────────────────────────────────┬─────────────────────────────────────┐  │
+│ │ 🎯 OUTCOME DISTRIBUTION         │ 📈 TIMELINE ANALYSIS               │  │
+│ │                                 │                                     │  │
+│ │      Utopia (2%)                │ Survival Curves:                    │  │
+│ │       ╱──╲                      │ 1.0 ┤                               │  │
+│ │      │ 🟢 │ Bottleneck (45%)    │     │ ▓▓▓▓▓──────                  │  │
+│ │      ╲──╱                       │ 0.5 ┤     ▓▓▓▓▓────────            │  │
+│ │        │                        │     │          ▓▓▓▓▓──────         │  │
+│ │    ╱──╲│╱──╲                    │ 0.0 ┼───────────────────────────  │  │
+│ │   │ 🟡││ 🔴│ Collapse (35%)     │     0    60   120  180  240  300   │  │
+│ │   ╲──╱│╲──╱                     │                                     │  │
+│ │     Sustainable (18%)           │ Time to Outcome (months):           │  │
+│ │                                 │ ┌────────┐                          │  │
+│ │ Interactive Legend:             │ │▓▓      │ Most: 67-98 months      │  │
+│ │ ● Utopia (2 runs)               │ │▓▓▓▓    │                          │  │
+│ │ ● Post-Scarcity (0 runs)        │ │▓▓▓▓▓▓  │                          │  │
+│ │ ● Sustainable (18 runs)         │ └────────┘                          │  │
+│ │ ● Bottleneck (45 runs)          │    0  60 120 180 240 300            │  │
+│ │ ● Collapse (35 runs)            │                                     │  │
+│ │ ● Extinction (0 runs)           │                                     │  │
+│ │ ● Terminal (0 runs)             │                                     │  │
+│ └─────────────────────────────────┴─────────────────────────────────────┘  │
+│                                                                             │
+│ MIDDLE ROW (2-column grid):                                                 │
+│                                                                             │
+│ ┌─────────────────────────────────┬─────────────────────────────────────┐  │
+│ │ 🚨 CRITICAL EVENTS STREAM       │ 📊 EVENT TYPE BREAKDOWN            │  │
+│ │                                 │                                     │  │
+│ │ LIVE (if batch running)         │ Nuclear Events:        23 ▓▓▓▓    │  │
+│ │                                 │ Climate Disasters:     156 ▓▓▓▓▓▓▓ │  │
+│ │ ⚠️ run_42067, month 45:         │ AI Breakthroughs:      89 ▓▓▓▓▓   │  │
+│ │ Nuclear exchange (India-Pak)    │ Social Upheaval:       67 ▓▓▓▓    │  │
+│ │                                 │ Economic Collapse:     34 ▓▓      │  │
+│ │ 🔥 run_42053, month 67:         │ Environmental:         201 ▓▓▓▓▓▓▓│  │
+│ │ Climate tipping cascade         │ Technology Deploy:     412 ▓▓▓▓▓▓▓│  │
+│ │                                 │ Government Actions:    98 ▓▓▓▓▓   │  │
+│ │ 💡 run_42042, month 23:         │                                     │  │
+│ │ Fusion breakthrough achieved    │ Total Events: 1,080 across 100 runs │  │
+│ │                                 │ Average: 10.8 events per run        │  │
+│ │ ☢️ run_42018, month 89:         │                                     │  │
+│ │ Nuclear winter onset            │ Critical Events (high/destructive): │  │
+│ │                                 │ 234 (21.7%)                         │  │
+│ │ [Scroll for 230 more events...] │                                     │  │
+│ └─────────────────────────────────┴─────────────────────────────────────┘  │
+│                                                                             │
+│ PARAMETER SWEEP COMPARISON (full width, conditional):                       │
+│                                                                             │
+│ ┌───────────────────────────────────────────────────────────────────────┐  │
+│ │ 🔬 PARAMETER SENSITIVITY ANALYSIS                                     │  │
+│ │                                                                       │  │
+│ │ Government Power (3 values swept):                                   │  │
+│ │                                                                       │  │
+│ │ 0.1  │████░░░░░░░░│ Collapse: 68% | Sustainable: 32%                │  │
+│ │ 0.5  │██████████░░│ Collapse: 45% | Sustainable: 45% | Utopia: 10%  │  │
+│ │ 0.9  │████████████│ Sustainable: 78% | Utopia: 22%                   │  │
+│ │                                                                       │  │
+│ │ AI Coordination (2 values swept):                                    │  │
+│ │                                                                       │  │
+│ │ 0.05 │██████░░░░░░│ Collapse: 67% | Bottleneck: 33%                 │  │
+│ │ 0.25 │██████████░░│ Sustainable: 56% | Utopia: 44%                   │  │
+│ │                                                                       │  │
+│ │ [Click parameter to drill down into specific runs]                   │  │
+│ └───────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+│ (Only shown when sweep has multiple parameter values)                       │
+│                                                                             │
+│ RUN INSPECTOR (expandable):                                                 │
+│                                                                             │
+│ ┌───────────────────────────────────────────────────────────────────────┐  │
+│ │ 🔍 INDIVIDUAL RUN INSPECTOR                                           │  │
+│ │                                                                       │  │
+│ │ Select Run: [run_42042 ▼] (100 runs available)                       │  │
+│ │                                                                       │  │
+│ │ Run Details:                                                          │  │
+│ │ • Seed: 42042                                                         │  │
+│ │ • Outcome: Sustainable                                                │  │
+│ │ • Duration: 120 months (10 years)                                     │  │
+│ │ • Reason: QoL stabilized, no crises                                   │  │
+│ │                                                                       │  │
+│ │ Event Timeline:                                                       │  │
+│ │ Month 0:   ✅ Simulation started                                      │  │
+│ │ Month 12:  🌍 Environmental policy enacted                            │  │
+│ │ Month 23:  💡 Fusion breakthrough                                     │  │
+│ │ Month 45:  🤖 AI collective formed                                    │  │
+│ │ Month 67:  ⚠️ Minor climate event                                     │  │
+│ │ Month 89:  🔬 Tech deployment completed                               │  │
+│ │ Month 120: ✅ Sustainable outcome reached                             │  │
+│ │                                                                       │  │
+│ │ [Expand for state snapshots at key moments...]                        │  │
+│ └───────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+│ SWEEP RESULTS PANEL (legacy, retained for compatibility):                   │
+│                                                                             │
+│ ┌───────────────────────────────────────────────────────────────────────┐  │
+│ │ 📋 SWEEP RESULTS SUMMARY                                              │  │
+│ │                                                                       │  │
+│ │ Batch ID: batch-42000-20251030                                        │  │
+│ │ Total Runs: 100                                                       │  │
+│ │ Completed: 100 (100%)                                                 │  │
+│ │ Average Duration: 87.3 months                                         │  │
+│ │ ...                                                                   │  │
+│ └───────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+                              EMPTY STATE:
+                              ────────────
+                              When no results available:
+
+                              ┌───────────────────────────────┐
+                              │      📊 (grayed icon)         │
+                              │   No Results Available        │
+                              │   Complete a parameter        │
+                              │   sweep to see analysis...    │
+                              │   ┌──────────────────────┐    │
+                              │   │ Start New Sweep      │    │
+                              │   └──────────────────────┘    │
+                              └───────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+                           RESPONSIVE LAYOUT
+═══════════════════════════════════════════════════════════════════════════════
+
+DESKTOP (lg: 1024px+):
+┌────────────────────────────────────────────────────────────────┐
+│ Configure: 1/3 config │ 2/3 info                               │
+│ Analysis:  2-column grid for all panels                        │
+└────────────────────────────────────────────────────────────────┘
+
+MOBILE (<1024px):
+┌────────────────────────────────────────────────────────────────┐
+│ Configure: Single column, stacked vertically                   │
+│ Analysis:  Single column, panels stack                         │
+└────────────────────────────────────────────────────────────────┘
+
+ULTRA-WIDE (1800px+):
+┌────────────────────────────────────────────────────────────────┐
+│           ┌──────────────────────────────────┐                 │
+│           │ Max width: 1800px, centered      │                 │
+│           └──────────────────────────────────┘                 │
+└────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+                           COLOR PALETTE
+═══════════════════════════════════════════════════════════════════════════════
+
+• Background:        #000000 (pure black)
+• Text primary:      #FFFFFF (pure white)
+• Text secondary:    #FFFFFF60 (white/60 opacity)
+• Text disabled:     #FFFFFF20 (white/20 opacity)
+• Active accent:     #00F0FF (cyan)
+• Active glow:       shadow-[0_0_20px_rgba(0,240,255,0.4)]
+• Success:           #00FF88 (green)
+• Warning:           #FFB000 (amber)
+• Critical:          #FF0040 (red)
+• Border subtle:     #FFFFFF10-20 (white/10-20 opacity)
+• Border accent:     #00F0FF40-60 (cyan/40-60 opacity)
+
+═══════════════════════════════════════════════════════════════════════════════
+                           KEYBOARD NAVIGATION
+═══════════════════════════════════════════════════════════════════════════════
+
+Tab Navigation:
+• Tab key: Cycle through tab buttons
+• Enter/Space: Activate selected tab
+• Focus visible: Glowing border (cyan)
+
+Interactive Elements:
+• All buttons keyboard-accessible
+• No keyboard traps
+• Focus order: logical (left→right, top→bottom)
+
+Disabled States:
+• Cannot be focused
+• Visual: grayed out, cursor-not-allowed
+• Screen reader: "disabled" announced
+
+═══════════════════════════════════════════════════════════════════════════════
+                           END OF VISUAL LAYOUT
+═══════════════════════════════════════════════════════════════════════════════
+
+Last updated: 2025-10-30
+Agent: far-future-ux-designer
+File: /docs/monte-carlo-tab-visual-layout.txt

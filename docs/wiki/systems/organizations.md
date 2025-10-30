@@ -232,9 +232,60 @@ Organizations pay for:
 ### Bankruptcy
 
 Private organizations can go bankrupt if `capital < 0`:
-- Assets sold or seized
-- Data centers transferred
-- AI models orphaned or acquired
+
+**Data Center Asset Transfer (Oct 30, 2025 - v2):**
+
+Data centers are critical infrastructure following realistic asset liquidation:
+
+1. **Government First Right of Refusal** - Strategic infrastructure:
+   - Large facilities (>1000 PF) or restricted access prioritized
+   - Government pays 30% to creditors if capital available
+   - Emergency nationalization if government cannot afford
+
+2. **Private Sector Acquisition** - Market purchases:
+   - Solvent organizations buy at 80% value (bankruptcy discount)
+   - Highest-capital buyers prioritized (most likely to maintain ops)
+   - Creditors recover value from sales
+
+3. **Shutdown as Last Resort** - No viable buyers:
+   - Only when no government AND no solvent private buyers exist
+   - Capacity permanently lost
+
+**Other Assets:**
+- AI models orphaned or acquired by functioning organizations
+
+**Result:** Infrastructure preserved where possible, maintains population coherence (functioning orgs can operate transferred data centers).
+
+**Population Coherence (Oct 30, 2025 - v1):**
+
+Bankruptcy risk now scales with population mortality:
+
+```typescript
+// Normal mortality (< 80%): Standard resilience modifiers
+if (mortality < 0.80) {
+  if (org.remoteWorkCapable) adjustedRisk *= 0.50;  // 50% reduction
+  if (org.essentialDesignation) adjustedRisk *= 0.20;  // 80% reduction
+  if (org.distributedDataCenters) adjustedRisk *= 0.60;  // 40% reduction
+}
+
+// Extreme mortality (> 80%): Resilience barely helps
+else {
+  baselineRisk = Math.max(0.7, baseRisk);  // Min 70% bankruptcy risk
+  if (org.remoteWorkCapable) adjustedRisk *= 0.95;  // Only 5% reduction
+  if (org.essentialDesignation) adjustedRisk *= 0.90;  // Only 10% reduction
+
+  // Floor: 90%+ mortality → minimum 50% bankruptcy risk
+  if (mortality > 0.90) {
+    adjustedRisk = Math.max(0.50, adjustedRisk);
+  }
+}
+```
+
+**Research Basis:** No organization can survive 90%+ population loss regardless of resilience features. Remote work doesn't help if there's no workforce left alive.
+
+**Files:**
+- `src/simulation/organizations.ts:487-555` (Bankruptcy risk calculation)
+- `src/simulation/organizationManagement.ts:999-1095` (Asset transfer logic)
 
 **Implemented:** `organizationManagement.ts:handleBankruptcy()`
 
@@ -323,3 +374,4 @@ EFFICIENCY:
 - **v1.0** (Oct 2025): Initial implementation (commit eccf0b5)
 - **v1.1** (Oct 2025): Revenue model redesign (commit 9765cc8)
 - **v1.2** (Oct 2025): Fixed project completion bug (commit 361abfa)
+- **v1.3** (Oct 30, 2025): Extreme mortality bankruptcy modifiers (commit baaa33e)
