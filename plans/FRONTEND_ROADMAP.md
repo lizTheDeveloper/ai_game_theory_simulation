@@ -208,19 +208,19 @@ God Mode UI will be accessible from the main dashboard with per-phase control pa
 
 **UI/UX Improvements (Agent: far-future-ux-designer):**
 
-4. **Extend HelpButton to all dashboards** (2-3h)
+4. **Extend HelpButton to all dashboards** 
    - Add contextual help to Environmental, AI Agents, Crisis, Timeline, Tech Tree, Detection dashboards
    - Create dashboard-specific help content for each
    - Consistent positioning and interaction patterns
    - Currently only implemented on ParadigmDashboard
 
-5. **Add metric tooltips for inline explanations** (3-4h)
+5. **Add metric tooltips for inline explanations** 
    - Hover tooltips on metric cards showing detailed explanations
    - Color-coded badges for thresholds (critical/warning/normal)
    - Citation links to research sources where applicable
    - Improves dashboard comprehension without cluttering UI
 
-6. **Create paradigm comparison mode** (4-5h)
+6. **Create paradigm comparison mode** 
    - Side-by-side view of all 4 paradigms (Western Liberal, Development, Ecological, Indigenous)
    - Synchronized scrolling for indicator comparisons
    - Highlight divergences (utopia in one, dystopia in another)
@@ -229,7 +229,7 @@ God Mode UI will be accessible from the main dashboard with per-phase control pa
 
 **Simulation Enhancements (Agent: simulation-maintainer):**
 
-7. **Add per-country paradigm scoring in simulation worker** (6-8h)
+7. **Add per-country paradigm scoring in simulation worker** 
    - Calculate Western Liberal index per country (democracy, civil liberties, rule of law, economic freedom)
    - Calculate Development index per country (QoL, healthcare, infrastructure, economic stage)
    - Calculate Ecological index per country (emissions, resource use, planetary boundary contributions)
@@ -240,12 +240,12 @@ God Mode UI will be accessible from the main dashboard with per-phase control pa
 
 **Research + Implementation (Agents: super-alignment-researcher + simulation-maintainer):**
 
-8. **Add paradigm trajectory predictions based on current trends** (8-10h)
-   - **Research phase (3-4h):** Find peer-reviewed models for forecasting societal trajectories
-   - **Research phase (1-2h):** Identify leading indicators for paradigm shifts (tipping points, phase transitions)
-   - **Implementation (2-3h):** Add 6-month trajectory forecasting to each paradigm
-   - **Implementation (1-2h):** Show confidence intervals based on historical volatility
-   - **Implementation (1-2h):** Alert when paradigms are on collision course (e.g., Development→utopia while Ecological→dystopia)
+8. **Add paradigm trajectory predictions based on current trends** 
+   - **Research phase :** Find peer-reviewed models for forecasting societal trajectories
+   - **Research phase :** Identify leading indicators for paradigm shifts (tipping points, phase transitions)
+   - **Implementation :** Add 6-month trajectory forecasting to each paradigm
+   - **Implementation :** Show confidence intervals based on historical volatility
+   - **Implementation :** Alert when paradigms are on collision course (e.g., Development→utopia while Ecological→dystopia)
    - Requires Monte Carlo validation (N≥10 runs)
    - Complexity: 6 systems (research literature, statistical modeling, 4 paradigm forecasters, alert system)
 
@@ -798,17 +798,18 @@ God Mode UI will be accessible from the main dashboard with per-phase control pa
 
 ---
 
-## Total Effort & Timeline
+## Timeline
 
-### Sequential Timeline (Original)
-**Total:** 64-86 hours = 8-10.75 weeks (40h/week) = **~12 weeks**
-
-### Parallel Timeline (Multi-Agent)
+### Sequential Approach (Original)
 **Phases:** 8 phases (Phase -1 through Phase 8)
-**Duration per phase:** 1 week with 3-6 agents
-**Total:** **8 weeks with parallelization**
+**Duration:** ~12 weeks with sequential implementation
 
-**Further optimization with overlapping:**
+### Parallel Approach (Multi-Agent)
+**Phases:** 8 phases (Phase -1 through Phase 8)
+**Duration per phase:** 1 week with 3-6 agents working in parallel
+**Total:** ~8 weeks with basic parallelization
+
+**Optimized with Overlapping:**
 - Phase -1 (API): Week 1
 - Phase 0 (Foundation): Week 2
 - Phases 1-2 (Mission Control + Agents): Week 3-4 (overlap)
@@ -816,7 +817,7 @@ God Mode UI will be accessible from the main dashboard with per-phase control pa
 - Phases 5-6 (Tech Tree + Crises): Week 7-8 (overlap)
 - Phases 7-8 (Welfare + Timeline): Week 9-10 (overlap)
 
-**Optimized Timeline: 10 weeks → ~3-4 weeks with aggressive parallelization**
+**Optimized Timeline: ~3-4 weeks with aggressive parallelization**
 
 ---
 
