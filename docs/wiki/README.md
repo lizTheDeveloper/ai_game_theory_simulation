@@ -15,6 +15,14 @@ All critical Monte Carlo validation blockers have been resolved:
 
 **Validation:** N=10 runs completed successfully (seeds 42000-42009), zero assertion errors, all outcomes physically plausible and research-backed.
 
+**Known Issue - HIGH-6: Deterministic Outcomes (100% Identical Results)**
+- ⚠️ **Status:** CONFIRMED as distinct issue (not symptom of blockers)
+- **Problem:** N=100 Monte Carlo with different seeds produces 100% identical outcomes (all dystopia)
+- **Investigation:** Escalated to Step 3 (RNG/feedback mechanisms audit)
+- **Research Gap:** Historical crises show high variance (some societies adapt, others collapse) - simulation lacks this diversity
+- **Next Steps:** Historical variance analysis, feedback loop audit, strengthen random events, add negative feedback/adaptation mechanisms
+- See: [`reviews/high6_variance_diagnostic_20251030.md`](/reviews/high6_variance_diagnostic_20251030.md) for detailed diagnostic
+
 **Status:**
 - Physically plausible (bounded values)
 - Research-backed (peer-reviewed sources)
@@ -1997,10 +2005,13 @@ All major AI labs (OpenAI, Anthropic, Meta, DeepMind) go bankrupt months 70-120 
 
 **Active Bugs**:
 - ❌ Job Guarantee logic inverted (TIER 0D priority)
-- ⚠️ Extreme variance needs investigation (histogram analysis)
+- ⚠️ **HIGH-6: Deterministic outcomes** (100% dystopia in N=100 Monte Carlo) - CONFIRMED distinct issue requiring RNG/feedback audit
 - ⚠️ AI lab bankruptcy model unrealistic
 
 **Research Gaps**:
+- **HIGH-6 investigation:** Historical variance analysis (how much outcome diversity is realistic?)
+- **HIGH-6 investigation:** Feedback loop audit (positive vs negative feedback balance)
+- **HIGH-6 investigation:** Missing adaptation/resilience mechanisms
 - Need longer timeframe validation (20-40 years for generational effects)
 - QoL decomposition by socioeconomic class (detect "Elysium" scenarios)
 - Histogram analysis to determine chaos vs cascades
