@@ -485,29 +485,73 @@ function calculateOrganizationBankruptcyRisk(
     let baseRisk = 1 / (1 + Math.exp(-10 * (weightedPopDecline - 0.6)));
     
     // === 3. APPLY RESILIENCE MODIFIERS ===
-    
+
     let adjustedRisk = baseRisk;
-    
-    // Remote work capability: Can relocate workforce, reduce office dependency
-    if (org.remoteWorkCapable) {
-      adjustedRisk *= 0.50; // 50% risk reduction
-    }
-    
-    // Essential designation: Government bailout likely (TARP-style)
-    if (org.essentialDesignation) {
-      adjustedRisk *= 0.20; // 80% risk reduction
-    }
-    
-    // Distributed data centers: Multi-region redundancy
-    if (org.distributedDataCenters) {
-      adjustedRisk *= 0.60; // 40% risk reduction
-    }
-    
-    // Organization type modifiers
-    if (org.type === 'government') {
-      adjustedRisk *= 0.30; // Governments more resilient (tax base, essential services)
-    } else if (org.type === 'academic') {
-      adjustedRisk *= 0.40; // Universities resilient (endowments, distributed campuses)
+
+    // HIGH-4 FIX (Oct 30, 2025): At extreme decline (>80%), resilience modifiers barely help
+    // Research: 2008 crisis showed that even well-capitalized firms failed during systemic collapse
+    // Remote work doesn't help if there's no workforce left alive
+    const extremeDecline = weightedPopDecline > 0.80;
+
+    if (extremeDecline) {
+      // At extreme mortality, modifiers provide minimal protection
+      // Multiplicative stacking is too powerful: 0.5 × 0.6 × 0.3 = 0.09 (91% reduction!)
+      // Instead: Each modifier reduces risk by fixed amount (additive)
+      const baselineRiskAtExtreme = Math.max(0.7, baseRisk); // Minimum 70% risk at extreme decline
+
+      // Remote work: Helps slightly (can relocate survivors)
+      if (org.remoteWorkCapable) {
+        adjustedRisk = baselineRiskAtExtreme * 0.95; // Only 5% reduction
+      } else {
+        adjustedRisk = baselineRiskAtExtreme;
+      }
+
+      // Essential designation: Government bailouts don't work if government itself is collapsing
+      if (org.essentialDesignation) {
+        adjustedRisk *= 0.90; // Only 10% reduction
+      }
+
+      // Distributed data centers: Redundancy helps, but not much
+      if (org.distributedDataCenters) {
+        adjustedRisk *= 0.95; // Only 5% reduction
+      }
+
+      // Government/academic: Slightly more resilient even in collapse
+      if (org.type === 'government') {
+        adjustedRisk *= 0.85; // 15% reduction (essential services)
+      } else if (org.type === 'academic') {
+        adjustedRisk *= 0.90; // 10% reduction (endowments)
+      }
+
+      // Floor: At 90%+ decline, even best-case orgs have 50% minimum bankruptcy risk
+      if (weightedPopDecline > 0.90) {
+        adjustedRisk = Math.max(0.50, adjustedRisk);
+      }
+
+    } else {
+      // Normal decline (< 80%): Original multiplicative modifiers work fine
+
+      // Remote work capability: Can relocate workforce, reduce office dependency
+      if (org.remoteWorkCapable) {
+        adjustedRisk *= 0.50; // 50% risk reduction
+      }
+
+      // Essential designation: Government bailout likely (TARP-style)
+      if (org.essentialDesignation) {
+        adjustedRisk *= 0.20; // 80% risk reduction
+      }
+
+      // Distributed data centers: Multi-region redundancy
+      if (org.distributedDataCenters) {
+        adjustedRisk *= 0.60; // 40% risk reduction
+      }
+
+      // Organization type modifiers
+      if (org.type === 'government') {
+        adjustedRisk *= 0.30; // Governments more resilient (tax base, essential services)
+      } else if (org.type === 'academic') {
+        adjustedRisk *= 0.40; // Universities resilient (endowments, distributed campuses)
+      }
     }
     
     // === 4. PHASE 1: LÉVY FLIGHT FINANCIAL CRASH MULTIPLIER ===
