@@ -1256,6 +1256,30 @@ deploymentSpeed = baselineSpeed
 
 **Key Insight:** Crisis acceleration is CRITICAL - without it, model would be overly pessimistic about deployment speed during actual emergencies (violates COVID/Manhattan Project evidence).
 
+#### Fix #10: Organization Bankruptcy → Data Center Shutdown Cascade ✅
+
+**Problem:** Population coherence failure - with 100% mortality, simulation showed 12PF compute still operational
+**Root Cause:** Organizations went bankrupt but owned data centers stayed online forever
+**Solution:** Added data center shutdown cascade to bankruptcy handler
+**Impact:** Eliminates physically impossible scenario where bankrupt companies maintain compute infrastructure
+
+**Implementation:**
+- When organization goes bankrupt, all owned data centers are marked `operational = false`
+- Compute capacity lost is logged (e.g., "💀 Data center shut down: Google Iowa (200 PF capacity lost)")
+- Organization's `ownedDataCenters` list is cleared
+- Cascade ensures coherence: no employees → no data center maintenance → shutdown
+- File: `src/simulation/organizationManagement.ts:999-1017` (Oct 30, 2025)
+
+**Research Basis:** Physical impossibility
+- Data centers require skilled operators, power management, cooling systems, security, maintenance
+- Cannot maintain multi-petaFLOP compute capacity with zero employees and no revenue
+- Real-world precedent: Company collapse → infrastructure shutdown (e.g., Enron data centers)
+
+**Validation:** N=1 test with 100% mortality
+- **Before:** 12PF compute persisted despite all organizations bankrupt
+- **After:** Data centers shut down when owning organization goes bankrupt
+- Population coherence restored
+
 ---
 
 ### 📊 Contingency & Agency Modeling (Oct 16-17, 2025)
@@ -1909,8 +1933,10 @@ Results completely different across seed ranges:
 
 All major AI labs (OpenAI, Anthropic, Meta, DeepMind) go bankrupt months 70-120 across ALL scenarios:
 - Labs hit negative capital but simulation continues
-- Bankruptcy doesn't trigger proper effects (should cause mass unemployment, capability freeze)
+- ~~Bankruptcy doesn't trigger proper effects (should cause mass unemployment, capability freeze)~~ **PARTIALLY FIXED (Oct 30)**: Data center shutdown cascade now implemented (Fix #10)
 - Unrealistic: labs should have VC funding runway or be profitable
+
+**Fix #10 (Oct 30)**: Bankruptcy now properly shuts down owned data centers, eliminating population coherence failure where 12PF compute persisted with zero employees. Still needs: AI model deactivation, unemployment cascades.
 
 #### Policy Recommendations (Validated)
 
@@ -2194,7 +2220,7 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 
 **1.0-10.0: Agent & Infrastructure**
 - ComputeGrowthPhase (1.0): Moore's law, data center construction
-- OrganizationTurnsPhase (2.0): Revenue, expenses, bankruptcy
+- OrganizationTurnsPhase (2.0): Revenue, expenses, bankruptcy (with data center shutdown cascade - Oct 30, 2025)
 - ComputeAllocationPhase (3.0): Distribute compute to AIs
 - AILifecyclePhase (4.0): Birth, training, deployment, retirement
 - CyberSecurityPhase (5.0): Defensive AI, cyber attacks
