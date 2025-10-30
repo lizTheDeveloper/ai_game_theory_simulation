@@ -939,7 +939,20 @@ function updateLandUseSystem(state: GameState): void {
     // Use percentage-based growth with saturation
 
     const MAX_EXTINCTION_RATE = 1000; // IPBES upper bound (100-1000× range)
-    const currentRate = region.extinctionRate;
+    const MIN_EXTINCTION_RATE = 1.0; // Minimum 1× natural rate (cannot drop to zero)
+
+    // Ensure extinction rate never drops to zero (percentage growth would get stuck)
+    const currentRate = assertInRange(
+      region.extinctionRate,
+      MIN_EXTINCTION_RATE,
+      MAX_EXTINCTION_RATE,
+      {
+        location: 'updateLandUseSystem (pre-update)',
+        valueName: `${regionName}.extinctionRate`,
+        month: state.currentMonth,
+        additionalInfo: { invalidRate: region.extinctionRate }
+      }
+    );
 
     // Monthly percentage increase (scales with acceleration)
     // acceleration 2.0 → ~0.2% per month → ~2.4% per year → ~24% per decade (IPBES range)
@@ -947,22 +960,24 @@ function updateLandUseSystem(state: GameState): void {
     const monthlyPercentage = region.extinctionAcceleration * 0.001; // 0.1% at 1.0 acceleration
 
     // Logistic saturation: Growth slows as we approach max
-    const saturationFactor = 1.0 - (currentRate / MAX_EXTINCTION_RATE);
+    // Clamped to [0, 1] to prevent negative growth multipliers
+    const saturationFactor = Math.max(0, 1.0 - (currentRate / MAX_EXTINCTION_RATE));
     const growthMultiplier = 1.0 + (monthlyPercentage * saturationFactor);
 
     region.extinctionRate = assertInRange(
       currentRate * growthMultiplier,
-      0,
+      MIN_EXTINCTION_RATE,
       MAX_EXTINCTION_RATE,
       {
-        location: 'updateLandUseSystem',
+        location: 'updateLandUseSystem (post-update)',
         valueName: `${regionName}.extinctionRate`,
         month: state.currentMonth,
         additionalInfo: {
           currentRate,
           acceleration: region.extinctionAcceleration,
           monthlyPercentage,
-          saturationFactor
+          saturationFactor,
+          growthMultiplier
         }
       }
     );

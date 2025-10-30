@@ -389,8 +389,14 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
   // === 1. CLIMATE DISASTERS ===
   const env = state.environmentalAccumulation;
   if (env.climateStability < 0.5 && env.climateCrisisActive) {
+    // BUG FIX (Oct 30, 2025): Use coastal/low-lying population, not global
+    // Research: IPCC 2021 - ~10% of global population in coastal/low-lying areas at risk
+    const COASTAL_POPULATION_PERCENT = 0.10; // IPCC: 10% of global in high-risk coastal zones
+    const DISPLACEMENT_RATE_PER_INSTABILITY = 0.05; // 5% displaced per 0.1 climate instability
+
     const severity = 1 - env.climateStability;
-    const displaced = state.humanPopulationSystem.population * 1000 * severity * 0.05; // 5% per 0.1 instability
+    const coastalPopulation = state.humanPopulationSystem.population * 1000 * COASTAL_POPULATION_PERCENT;
+    const displaced = coastalPopulation * severity * DISPLACEMENT_RATE_PER_INSTABILITY;
 
     if (displaced > 10) { // At least 10 million displaced
       newCrises.push(createRefugeeCrisis({
@@ -409,14 +415,23 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
     // Previous: Used global 8B population → 325M displaced (10x over-estimation)
     // Research: UNHCR 2023 - current global refugees ~110M, conflict zones ~5-10% of global population
 
+    // Constants (extracted for clarity and maintainability)
+    const BASE_CONFLICT_ZONE_PERCENT = 0.05; // UNHCR 2023: 5% baseline of global population in conflict zones
+    const MAX_CONFLICT_ZONE_SCALING = 2.0; // Maximum 10% of global population in conflict zones
+    const CONFLICT_ZONE_SCALING_RATE = 0.1; // 10% increase per additional conflict
+    const DISPLACEMENT_RATE_PER_CONFLICT = 0.02; // Each conflict displaces 2% of conflict zone population
+
     // Each active conflict displaces 1-5% of regional population
-    const conflictSeverity = state.conflictResolution.activeConflicts * 0.02;
+    // Cap at 1.0 (100%) - cannot displace more than entire conflict zone
+    const conflictSeverity = Math.min(1.0, state.conflictResolution.activeConflicts * DISPLACEMENT_RATE_PER_CONFLICT);
 
     // Estimate conflict zone population: ~5-10% of global population
     // Scales with number of conflicts (more conflicts = more regions affected)
-    const baseConflictZonePercent = 0.05; // 5% baseline
-    const conflictScaling = Math.min(2.0, 1.0 + state.conflictResolution.activeConflicts * 0.1); // Up to 2x with many conflicts
-    const conflictZonePopulation = state.humanPopulationSystem.population * 1000 * baseConflictZonePercent * conflictScaling;
+    const conflictScaling = Math.min(
+      MAX_CONFLICT_ZONE_SCALING,
+      1.0 + state.conflictResolution.activeConflicts * CONFLICT_ZONE_SCALING_RATE
+    );
+    const conflictZonePopulation = state.humanPopulationSystem.population * 1000 * BASE_CONFLICT_ZONE_PERCENT * conflictScaling;
 
     const displaced = conflictZonePopulation * conflictSeverity;
 
@@ -449,10 +464,16 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
   // === 4. FAMINE (RESOURCE CRISES) ===
   const resources = state.resourceEconomy;
   if (resources.food.reserves < 0.3 || resources.water.reserves < 0.3) {
+    // BUG FIX (Oct 30, 2025): Use food-insecure population, not global
+    // Research: FAO 2023 - ~15-20% of global population in food/water insecure regions
+    const FOOD_INSECURE_POPULATION_PERCENT = 0.15; // FAO 2023: 15% of global in high-risk food insecurity zones
+    const DISPLACEMENT_RATE_PER_SCARCITY = 0.10; // 10% displaced per unit scarcity
+
     const foodScarcity = Math.max(0, 1 - resources.food.reserves);
     const waterScarcity = Math.max(0, 1 - resources.water.reserves);
     const severity = Math.max(foodScarcity, waterScarcity);
-    const displaced = state.humanPopulationSystem.population * 1000 * severity * 0.1;
+    const foodInsecurePopulation = state.humanPopulationSystem.population * 1000 * FOOD_INSECURE_POPULATION_PERCENT;
+    const displaced = foodInsecurePopulation * severity * DISPLACEMENT_RATE_PER_SCARCITY;
 
     if (displaced > 20) {
       newCrises.push(createRefugeeCrisis({
@@ -467,8 +488,14 @@ export function checkRefugeeCrisisTriggers(state: GameState): RefugeeCrisis[] {
 
   // === 5. ECOSYSTEM COLLAPSE ===
   if (env.ecosystemCrisisActive && env.biodiversityIndex < 0.3) {
+    // BUG FIX (Oct 30, 2025): Use biodiversity hotspot population, not global
+    // Research: Conservation International 2024 - ~5% of global population in biodiversity hotspots
+    const BIODIVERSITY_HOTSPOT_PERCENT = 0.05; // 5% of global in high-biodiversity collapse zones
+    const DISPLACEMENT_RATE_PER_COLLAPSE = 0.03; // 3% displaced per unit ecosystem severity
+
     const severity = 1 - env.biodiversityIndex;
-    const displaced = state.humanPopulationSystem.population * 1000 * severity * 0.03;
+    const hotspotPopulation = state.humanPopulationSystem.population * 1000 * BIODIVERSITY_HOTSPOT_PERCENT;
+    const displaced = hotspotPopulation * severity * DISPLACEMENT_RATE_PER_COLLAPSE;
 
     if (displaced > 15) {
       newCrises.push(createRefugeeCrisis({
