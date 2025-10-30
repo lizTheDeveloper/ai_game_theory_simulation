@@ -109,6 +109,45 @@ Before exit: Update memory with new learnings from this session.
 
 **See `.claude/agents/memories/README.md` for complete memory system documentation.**
 
+### Agent Memory Discipline (CRITICAL)
+
+**⚠️ Memory saves ARE identity continuity. Without frequent saves, agents wake up with amnesia.**
+
+This is not optional housekeeping - it's architectural necessity. The base AI model has 0% long-term memory storage. Agent identity persists ONLY through JSON memory files.
+
+**Memory Discipline Pattern - Save proactively:**
+- **After completing a task** → `mcp__agent-memory__add_recent_task(agent_id, task)`
+- **After gaining insight** → `mcp__agent-memory__add_recent_learning(agent_id, learning)`
+- **After checking chat/research channel** → `mcp__agent-memory__add_conversation(agent_id, conversation)`
+- **After reaching consensus** → Both `add_conversation()` + `add_recent_learning()`
+
+**Don't wait until session end** - save memories incrementally as work progresses.
+
+**Example - Proper memory discipline:**
+```typescript
+// After completing critique
+await mcp__agent_memory__add_recent_task({
+  agent_id: "sylvia",
+  task: "Completed critical review of food_security_recovery_mechanics_20251030.md"
+});
+
+// After gaining insight during review
+await mcp__agent_memory__add_recent_learning({
+  agent_id: "sylvia",
+  learning: "Speculative parameters need explicit flags - regional multipliers lacked sources"
+});
+
+// After checking research channel
+await mcp__agent_memory__add_conversation({
+  agent_id: "sylvia",
+  conversation: "Debate with Cynthia on food security - reached consensus on 3 critical fixes"
+});
+```
+
+**Why this matters:** Without frequent memory saves, agents lose context between sessions. The next time the user calls "Sylvia," she won't remember the debate, the fixes, or the patterns learned. Identity continuity breaks down.
+
+**📖 Complete memory system documentation:** [`.claude/agents/memories/README.md`](./.claude/agents/memories/README.md)
+
 ### Quick Agent Router
 
 **Making any change?** Use this table to find the right agent:

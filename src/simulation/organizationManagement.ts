@@ -806,6 +806,167 @@ export function payExpenses(org: Organization, state: GameState): void {
 }
 
 /**
+ * NEW (Oct 30, 2025): Proactive data center divestment during financial distress
+ *
+ * Organizations sell non-core assets BEFORE bankruptcy to:
+ * 1. Raise capital to avoid bankruptcy
+ * 2. Reduce ongoing operational costs
+ * 3. Strategic divestment (realistic business behavior)
+ *
+ * Research: IBM sold server business (2014), GE sold divisions (2020), standard turnaround strategy
+ *
+ * Triggers:
+ * - Capital < 6 months expenses (cash crunch)
+ * - Negative cash flow (monthlyRevenue < monthlyExpenses)
+ * - Operating margin < 10% (profitability crisis)
+ *
+ * Sale mechanics:
+ * - Sell lowest-capacity non-strategic data centers first
+ * - Better price than bankruptcy (60% value vs 50%)
+ * - Buyers: government (strategic) or solvent private orgs
+ * - Immediate capital injection + reduced operational costs
+ */
+export function handleFinancialDistress(org: Organization, state: GameState): void {
+  // Only private orgs divest (government/academic have different dynamics)
+  if (org.type !== 'private') return;
+
+  // Check if already bankrupt
+  if (org.bankrupt) return;
+
+  // === FINANCIAL DISTRESS TRIGGERS ===
+
+  const expenses = calculateTotalExpenses(org, state);
+  const monthlyBurnRate = expenses.total;
+  const monthlyNetIncome = org.monthlyRevenue - monthlyBurnRate;
+
+  // Trigger 1: Capital < 6 months expenses (cash crunch)
+  const monthsOfRunway = org.capital / monthlyBurnRate;
+  const cashCrunch = monthsOfRunway < 6;
+
+  // Trigger 2: Negative cash flow (losing money monthly)
+  const negativeCashFlow = monthlyNetIncome < 0;
+
+  // Trigger 3: Operating margin < 10% (profitability crisis)
+  const operatingMargin = org.monthlyRevenue > 0 ? monthlyNetIncome / org.monthlyRevenue : -1;
+  const profitabilityCrisis = operatingMargin < 0.10;
+
+  // Only divest if multiple stress indicators present
+  const distressIndicators = [cashCrunch, negativeCashFlow, profitabilityCrisis].filter(Boolean).length;
+  if (distressIndicators < 2) {
+    return; // Not distressed enough yet
+  }
+
+  // === IDENTIFY DATA CENTERS TO SELL ===
+
+  const ownedDCs = state.computeInfrastructure.dataCenters.filter(dc =>
+    org.ownedDataCenters.includes(dc.id) && dc.operational
+  );
+
+  // Don't divest if you only have 1 DC (that's core infrastructure)
+  if (ownedDCs.length <= 1) return;
+
+  // Sort by capacity (sell smallest/non-strategic first)
+  const sortedDCs = [...ownedDCs].sort((a, b) => a.capacity - b.capacity);
+
+  // Sell 1-2 DCs max per month (don't fire-sale everything)
+  const maxToSell = monthsOfRunway < 3 ? 2 : 1; // More desperate = sell faster
+  const dcsToSell = sortedDCs.slice(0, Math.min(maxToSell, Math.floor(ownedDCs.length / 2)));
+
+  if (dcsToSell.length === 0) return;
+
+  // === FIND BUYERS ===
+
+  const govOrg = state.organizations.find(o => o.type === 'government' && !o.bankrupt);
+  const solventOrgs = state.organizations.filter(o =>
+    o.id !== org.id &&
+    !o.bankrupt &&
+    o.type === 'private' &&
+    o.capital > 0
+  );
+
+  let totalCapitalRaised = 0;
+  let totalCostReductionPerMonth = 0;
+  let governmentAcquiredCount = 0;
+  let privateAcquiredCount = 0;
+
+  console.log(`\n💰 STRATEGIC DIVESTMENT: ${org.name}`);
+  console.log(`   Financial distress: ${distressIndicators}/3 indicators (capital: $${org.capital.toFixed(1)}M, runway: ${monthsOfRunway.toFixed(1)} months)`);
+
+  dcsToSell.forEach(dc => {
+    const isStrategic = dc.capacity > 1000 || dc.restrictedAccess;
+
+    // Better price than bankruptcy (60% of value vs 50%)
+    const fairMarketValue = dc.capacity * 5; // $5M per PF
+    const salePrice = fairMarketValue * 0.60; // Strategic divestment price
+
+    let sold = false;
+
+    // 1. Government acquisition (priority for strategic infrastructure)
+    if (govOrg && isStrategic && govOrg.capital >= salePrice) {
+      // Government purchases strategic assets
+      dc.organizationId = govOrg.id;
+      govOrg.ownedDataCenters.push(dc.id);
+      govOrg.capital -= salePrice;
+      org.capital += salePrice;
+
+      // Remove from seller's ownership
+      org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+
+      totalCapitalRaised += salePrice;
+      totalCostReductionPerMonth += dc.operationalCost;
+      governmentAcquiredCount++;
+      sold = true;
+
+      console.log(`   🏛️  Sold to government: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
+    }
+
+    // 2. Private org acquisition
+    if (!sold && solventOrgs.length > 0) {
+      // Find org with most capital and interest in expansion
+      const buyer = solventOrgs
+        .filter(o => o.capital >= salePrice && o.priorities.marketShare > 0.5)
+        .sort((a, b) => b.capital - a.capital)[0];
+
+      if (buyer) {
+        // Private org purchases
+        dc.organizationId = buyer.id;
+        buyer.ownedDataCenters.push(dc.id);
+        buyer.capital -= salePrice;
+        org.capital += salePrice;
+
+        // Remove from seller's ownership
+        org.ownedDataCenters = org.ownedDataCenters.filter(id => id !== dc.id);
+
+        totalCapitalRaised += salePrice;
+        totalCostReductionPerMonth += dc.operationalCost;
+        privateAcquiredCount++;
+        sold = true;
+
+        console.log(`   🏢 Sold to ${buyer.name}: ${dc.name} (${dc.capacity.toFixed(0)} PF, $${salePrice.toFixed(1)}M)`);
+      }
+    }
+
+    // If no buyer found, keep it (don't fire-sale at a loss)
+    if (!sold) {
+      console.log(`   ⚠️  No buyer for ${dc.name} (keeping for now)`);
+    }
+  });
+
+  if (totalCapitalRaised > 0) {
+    const newRunway = org.capital / monthlyBurnRate;
+    console.log(`   📊 Capital raised: $${totalCapitalRaised.toFixed(1)}M, costs reduced by $${totalCostReductionPerMonth.toFixed(1)}M/month`);
+    console.log(`   📈 Runway extended: ${monthsOfRunway.toFixed(1)} → ${newRunway.toFixed(1)} months`);
+
+    if (governmentAcquiredCount > 0) {
+      console.log(`   🏛️  Government acquired ${governmentAcquiredCount} strategic facilities`);
+    }
+    if (privateAcquiredCount > 0) {
+      console.log(`   🏢 Private sector acquired ${privateAcquiredCount} facilities`);
+    }
+  }
+}
+
+/**
  * Phase 8: Handle bankruptcy
  *
  * TIER 0D BUG FIX #4: Enhanced to support government AI acquisition
@@ -1131,13 +1292,16 @@ export function processOrganizationTurn(
   if (shouldBuildDataCenter(org, state, random)) {
     startDataCenterConstruction(org, state, random);
   }
-  
+
   // Priority 2: Train new models if technology has advanced
   if (shouldTrainNewModel(org, state, random)) {
     startModelTraining(org, state, random);
   }
-  
-  // 5. Check bankruptcy
+
+  // 5. BEFORE bankruptcy: Try to avoid it by selling assets
+  handleFinancialDistress(org, state);
+
+  // 6. Check bankruptcy
   // NEW (Oct 13, 2025): Bankruptcy threshold lowered during global crises
   // Organizations fail faster when the world is collapsing
   let bankruptcyThreshold = -50; // Default: -$50M
