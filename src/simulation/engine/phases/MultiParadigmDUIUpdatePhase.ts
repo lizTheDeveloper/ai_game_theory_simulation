@@ -14,7 +14,7 @@ import type { SimulationPhase, PhaseContext, PhaseResult } from '../PhaseOrchest
 import { calculateDivergence } from '@/data/aggregators/divergenceCalculator';
 import { calculateCorrelations } from '@/data/aggregators/correlationTracker';
 import { classifyOutcome } from '@/data/aggregators/outcomeClassifier';
-import { assertFinite } from '@/simulation/utils/assertions';
+import { assertFinite, assertDefined } from '@/simulation/utils/assertions';
 import { calculateProgressiveEcologicalScore } from '@/simulation/planetaryBoundaryRecovery';
 
 /**
@@ -44,12 +44,38 @@ export class MultiParadigmDUIUpdatePhase implements SimulationPhase {
     state.multiParadigmDUI.diagnosticLenses.indigenous.value = scores.indigenous;
 
     // Add to history
+    // ISSUE-7 & 8 FIX (Oct 30, 2025): Include population and biosphere for post-simulation analysis
+    const humanPopSys = assertDefined(state.humanPopulationSystem, {
+      location: 'MultiParadigmDUIUpdatePhase.execute',
+      valueName: 'humanPopulationSystem',
+      month: state.currentMonth
+    });
+
+    const planetaryBoundarySys = assertDefined(state.planetaryBoundariesSystem, {
+      location: 'MultiParadigmDUIUpdatePhase.execute',
+      valueName: 'planetaryBoundariesSystem',
+      month: state.currentMonth
+    });
+
+    const biosphereIntegrity = assertDefined(planetaryBoundarySys.boundaries.biosphere_integrity, {
+      location: 'MultiParadigmDUIUpdatePhase.execute',
+      valueName: 'boundaries.biosphere_integrity',
+      month: state.currentMonth
+    });
+
     state.multiParadigmDUI.history.push({
       month: state.currentMonth,
       western: scores.western,
       development: scores.development,
       ecological: scores.ecological,
       indigenous: scores.indigenous,
+      // Population fields (ISSUE-7)
+      population: humanPopSys.population,
+      globalPopulation: humanPopSys.population,
+      totalPopulation: humanPopSys.population,
+      // Biosphere fields (ISSUE-8)
+      biosphere_integrity: biosphereIntegrity.currentValue,
+      biosphere: biosphereIntegrity.currentValue
     });
 
     // Calculate divergence (with trend detection if enough history)

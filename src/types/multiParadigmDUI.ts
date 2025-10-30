@@ -307,6 +307,13 @@ export interface MultiParadigmDUI {
     development: number;
     ecological: number;
     indigenous: number;
+    // ISSUE-7 & 8 FIX (Oct 30, 2025): Add population and biosphere for post-simulation analysis
+    // NO optional chaining - fail loudly if missing (research simulation, not production app)
+    population: number; // Total human population in billions
+    globalPopulation: number; // Alias for population (compatibility)
+    totalPopulation: number; // Alias for population (compatibility)
+    biosphere_integrity: number; // Extinction rate / safe threshold (normalized to 1.0 baseline)
+    biosphere: number; // Alias for biosphere_integrity (compatibility)
   }>;
 
   /**
