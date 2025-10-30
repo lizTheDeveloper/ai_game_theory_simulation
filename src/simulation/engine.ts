@@ -918,6 +918,7 @@ export class SimulationEngine {
     
     let finalOutcome: OutcomeType;
     let finalOutcomeProbability: number;
+    let populationBasedClassification = false; // Track if we used population-based classification
 
     // If we found an actual outcome during simulation, use that
     if (actualOutcome) {
@@ -926,9 +927,10 @@ export class SimulationEngine {
       if (actualOutcome === 'utopia') finalOutcomeProbability = outcomes.utopiaProbability;
       else if (actualOutcome === 'dystopia') finalOutcomeProbability = outcomes.dystopiaProbability;
       else finalOutcomeProbability = outcomes.extinctionProbability;
-    } 
+    }
     // Otherwise, determine outcome based on ACTUAL STATE, not just probabilities
     else {
+      populationBasedClassification = true; // Flag that we're using population-based system
       console.log(`   👥 Final population: ${finalPopulation.toFixed(2)}B (${finalPopulationPeople.toFixed(0)} people)`);
 
       // NEW (Oct 20, 2025): 7-tier + Multi-Paradigm DUI outcome classification
@@ -1107,6 +1109,31 @@ export class SimulationEngine {
       console.log(formatDiagnosticReport(diagnostics));
     }
     
+    // Generate accurate finalOutcomeReason based on classification method
+    let finalOutcomeReason: string;
+    if (actualOutcomeReason) {
+      // Early exit with actual outcome - use the reason from determineActualOutcome
+      finalOutcomeReason = actualOutcomeReason;
+    } else if (populationBasedClassification) {
+      // Population-based classification at max months
+      const mortality = 1 - (finalPopulation / savedInitialPopulation);
+      const mortalityPct = (mortality * 100).toFixed(1);
+
+      if (finalOutcome === 'extinction') {
+        finalOutcomeReason = `Reached max months (${maxMonths}) with extinction confirmed (<10K people, ${mortalityPct}% mortality)`;
+      } else if (finalOutcome === 'dystopia') {
+        const tier = state.unifiedOutcome?.primaryOutcome || 'unknown';
+        finalOutcomeReason = `Reached max months (${maxMonths}) - classified as ${tier} (${mortalityPct}% mortality, ${finalPopulation.toFixed(2)}B survivors)`;
+      } else if (finalOutcome === 'utopia') {
+        finalOutcomeReason = `Reached max months (${maxMonths}) with utopia achieved (${mortalityPct}% mortality, sustained prosperity)`;
+      } else {
+        finalOutcomeReason = `Reached max months (${maxMonths}) with ${finalOutcome} outcome (${mortalityPct}% mortality)`;
+      }
+    } else {
+      // Fallback (shouldn't happen, but defensive)
+      finalOutcomeReason = `Reached max months (${maxMonths}) with ${finalOutcome} outcome`;
+    }
+
     return {
       finalState: state,
       history,
@@ -1115,7 +1142,7 @@ export class SimulationEngine {
       summary: {
         totalMonths: history.length,
         finalOutcome,
-        finalOutcomeReason: actualOutcomeReason || `Reached max months (${maxMonths}) with ${finalOutcome} probability dominant`,
+        finalOutcomeReason,
         finalOutcomeProbability,
         criticalEvents: log.events.criticalEvents,
         economicStageReached: state.globalMetrics.economicTransitionStage
