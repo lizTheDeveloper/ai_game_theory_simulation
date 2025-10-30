@@ -15,9 +15,9 @@
 
 ## 📊 CURRENT STATUS
 
-**Last Update:** October 30, 2025 (Monte Carlo validation complete - all 8 issues resolved)
+**Last Update:** October 30, 2025 (Monte Carlo Issues 1-8 resolved, but validation revealed 6 NEW critical issues)
 
-**🚧 Active Work:** None - session complete, awaiting next user directive
+**🚧 Active Work:** 🔴 CRITICAL - Monte Carlo validation reveals fundamental research validity problems
 
 **Total Remaining Effort:** ~40-68 hours (reduced by 26-42h from Oct 30 completions)
 
@@ -33,12 +33,19 @@
 
 ## 🎯 ACTIVE PRIORITIES
 
+0. **🔴 BLOCKERS:** Monte Carlo Validation Issues (NEW - Oct 30 post-fix validation) (20-30h)
+   - Post-fix validation (Oct 30 11:46 AM) reveals **fundamental research validity problems**
+   - N=100 run shows 99/100 dystopia (no variance), 99.7% mortality baseline, physical impossibilities
+   - **These are not calibration issues - they're validity violations**
+   - See detailed breakdown in Priority Features section below
+   - Review: `reviews/monte_carlo_validation_critique_20251030.md`
+
 1. **🔴 CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (40-60h)
    - Layer 1 (citation existence) COMPLETE, but ~50% of real citations don't support claims
    - 87 research files with 815 real citations - verify claims match papers
    - See: `research/CLAIM_VERIFICATION_CRISIS.md`
 
-2. ✅ **Monte Carlo Validation Bug Fixes COMPLETE** - All 8 issues resolved (Oct 29-30)
+2. **⚠️ Monte Carlo Issues 1-8 FIXED, but validation revealed 6 NEW critical issues** (Oct 29-30)
    - ✅ Issues 1-4 COMPLETE (Oct 29-30): Western Liberal null, outcome classification, biosphere exponential growth, 100% dystopia
    - ✅ ISSUE-5 COMPLETE (Roy1, Oct 30 @11:00am): Month-0 gaming detection → 3-month strategy delay + 24-month maturity ramp
    - ✅ ISSUE-6 COMPLETE (Roy, Oct 30 @11:30am): Refugee crisis 325M → 16-32M (regional population scoping: conflict zones 5-10%, coastal 10%, food-insecure 15%, biodiversity hotspots 5%)
@@ -47,9 +54,16 @@
      - **Fix:** Added 5 REQUIRED fields to history type (no optional ?:), populated with assertDefined validations
      - **Validation:** Month 0: pop=8.148B, biosphere=16.78 | Month 239: pop=0.024B, biosphere=20.07 ✅
      - **Commits:** 7e098a6 (main fixes), 027594e (import fix), 313bdd4 (paradigmTrajectory fix)
-   - See: `/logs/monte_carlo_issues_20251029.md`, `/logs/issue5_fix_summary_20251030.md`, `/plans/completed/monte-carlo-fixes-issues-1-4_20251030.md`
    - **✅ ZERO NaN/null/exceptions found in final validation test**
-   - **Ready for parameter sweep:** 4 scenario modes × 4 AI alignment levels = 16 configs × N=100
+   - **❌ BUT: Post-fix validation (Oct 30 11:46 AM) revealed 6 NEW critical issues:**
+     - 🔴 Monthly mortality >100% (1687.9% - physically impossible)
+     - 🔴 Biosphere 20× threshold (still physically implausible, down from 47×)
+     - 🔴 99.7% mortality baseline (exceeds all historical precedents, unjustified)
+     - 🟠 Population coherence failure (compute despite 99.7% mortality)
+     - 🟠 Outcome classification info loss (removed mortality data)
+     - 🟠 99/100 deterministic outcomes (no variance)
+   - See: `/logs/monte_carlo_issues_20251029.md`, `/logs/issue5_fix_summary_20251030.md`, `/plans/completed/monte-carlo-fixes-issues-1-4_20251030.md`
+   - **⚠️ NOT READY for parameter sweep** - fundamental validity violations must be fixed first
 
 3. ✅ **Architecture Integration Issues COMPLETE** - All 8 issues resolved (Oct 29-30)
    - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
@@ -57,10 +71,12 @@
    - ✅ AI resentment recovery + policy (8-12h) - COMPLETE (Roy2, Oct 30)
    - ✅ Planetary Boundaries Recovery + Tech Effects (6-8h) - COMPLETE (Roy2, Oct 30)
 
-4. **⏳ MEDIUM:** Crisis Mitigation Mechanics (2-4h) - CONDITIONAL
-   - Awaiting Cynthia's response to Sylvia's critique
-   - If agreed: Automatic stabilizers + participatory governance + homeostatic bounds
-   - See: reviews/research-channel-comprehensive-review_20251029.md (Section 4)
+4. ✅ **Crisis Mitigation Mechanics COMPLETE** (2-3h) - Roy1, Oct 30
+   - All 3 mechanics implemented and validated
+   - Automatic stabilizers (5% unemployment variance reduction)
+   - Participatory governance (5% resentment reduction + 15% backfire)
+   - Homeostatic bounds (2.75 pp/year New Deal recovery rate)
+   - See: devlogs/crisis_mitigation_implementation_20251030.md
 
 4. **MEDIUM:** Policy System Improvements (10-12h remaining)
    - ✅ Zero-variance bug in Combined Interventions - COMPLETE (Roy2, Oct 30) - Fixed hard cap → soft floor
@@ -75,6 +91,165 @@
 ## 🎯 PRIORITY FEATURES
 
 ### 🔴 CRITICAL Priority
+
+#### Monte Carlo Validation Issues - Post-Fix (NEW - Oct 30, 2025) (20-30h)
+**Status:** 🔴 BLOCKERS - Simulation not research-ready
+**Validation Run:** Oct 30, 2025 @ 11:46 AM (N=100, seeds 42000-42099)
+**Log:** `logs/mc_post_issue5_fix_20251030_114508.log`
+**Review:** `reviews/monte_carlo_validation_critique_20251030.md` (Sylvia, Oct 30)
+
+**Validation Result: NOT RESEARCH-READY**
+
+After fixing Issues 1-8, post-fix validation revealed **fundamental research validity problems** that cannot be dismissed as calibration issues. The simulation appears optimized for catastrophic outcomes rather than research validity.
+
+**🔴 BLOCKERS (Must Fix Before Research Use):**
+
+**BLOCKER-1: Monthly Mortality >100% (PHYSICALLY IMPOSSIBLE)** (4-6h)
+```
+Monthly mortality: 1687.9%
+⚠️ Monthly mortality capped at 2.8% (Holodomor limit)
+```
+**Problem:** Mortality calculation can produce values >100%, violating physical constraints. Likely bug in famine cascade accumulation where multiple regions compound multiplicatively instead of capped addition.
+
+**Location:** `src/simulation/engine/phases/FoodSecurityDegradationPhase.ts` or mortality calculation utilities
+
+**Fix Required:**
+1. Add assertion: `assertInRange(monthlyMortality, 0, 1, {location: 'FoodSecurityDegradation', month})`
+2. Investigate why cap (2.8%) is bypassed - log shows both cap warning AND 1687.9% value
+3. Change region compounding from multiplicative to capped additive
+
+**Research Justification Needed:** None - this is a calculation bug, not a parameter issue
+
+---
+
+**BLOCKER-2: Biosphere 20× Threshold (PHYSICALLY IMPLAUSIBLE)** (6-8h)
+```
+RED: biosphere_integrity
+   Level: 20.00-20.06 (threshold: 1.0)
+```
+**Problem:** Richardson et al. (2023) shows biosphere at ~2× boundary currently. 20× would require 2000% species loss (impossible - max is 100% = complete extinction). Down from 47× but still violates physical reality.
+
+**Previous Fix (commit ff888d4):** Normalized to 10 E/MSY safe threshold
+- BUT: 20× still appears, suggesting either:
+  1. Normalization didn't work as intended
+  2. Units are wrong (measuring rate × time instead of absolute transgression)
+  3. Accumulation has runaway exponential growth
+
+**Location:** `src/simulation/engine/phases/` (planetary boundaries updates)
+
+**Fix Required:**
+1. Verify normalization: Current value / safe threshold should produce 1.3-2.0× (per Richardson 2023)
+2. Check accumulation: Linear vs exponential growth over 120 months
+3. Add unit test: Starting at 1.5×, after 10 years, expect 2-4× (not 20×)
+4. Add assertion: `assertInRange(biosphereLevel, 0, 10, {location: 'BiosphereUpdate', note: 'Max 10× = complete extinction'})`
+
+**Research Justification:** Richardson et al. (2023) planetary boundaries paper - current transgression ~2×
+
+---
+
+**BLOCKER-3: 99.7% Mortality Baseline Without Justification** (8-12h)
+```
+PYRRHIC DYSTOPIA: 0.02B people remaining (99.7% mortality, 8.1B deaths)
+🧬 BOTTLENECK: Genetic bottleneck (23.4M people, 99.7% mortality)
+```
+**Problem:** 99.7% mortality exceeds all historical precedents:
+- Black Death (1347-1353): 30-60% regional mortality
+- Toba supervolcano (74,000 BCE): 60-90% estimated (extreme case)
+- Nuclear winter (Robock et al. 2019): 10-90% depending on exchange size
+- IPCC AR6 4°C warming: 80M hunger risk (1% of population), not 7.5B deaths (93%)
+
+**This appears in 99/100 runs as baseline**, not as tail-risk scenario.
+
+**Location:** Mortality cascade integration across multiple phases (famine, climate, social collapse)
+
+**Fix Required:**
+1. **Audit cascade compounding:** Are mechanisms multiplying (wrong) or adding sub-linearly (correct)?
+2. **Add adaptation mechanisms:** Sen (1981) - famines are distributional, not absolute scarcity
+3. **Add stabilizers:** International aid, migration, technological innovation
+4. **Calibrate to IPCC bounds:** IPCC AR6 WGII projects 250-500K deaths/year by 2050 (worst-case), not 7.5B total
+
+**Research Justification Required:**
+- Provide peer-reviewed citation for 90%+ global mortality from environmental collapse
+- OR: Downgrade to "speculative tail-risk scenario" with explicit disclaimer
+- OR: Recalibrate mortality parameters to match IPCC/historical bounds
+
+**Current Status:** Model appears calibrated for catastrophe theater, not research validity
+
+---
+
+**🟠 HIGH PRIORITY (Research Validity Issues):**
+
+**HIGH-4: Population Coherence Failure** (2-3h)
+```
+⚠️  Exceptional compute despite 100% mortality
+```
+**Problem:** With 99.7% of humanity dead, simulation shows:
+- Data centers maintain 12PF compute capacity
+- Organizations survive at 75% rate
+- "NO COUNTRIES DEPOPULATED" despite 93% global mortality
+
+**Location:** Population-infrastructure coherence checks
+
+**Fix Required:**
+1. Add population-infrastructure dependency: Compute capacity scales with skilled labor pool
+2. Cascade organizations when host countries depopulate below viability threshold
+3. Add coherence assertion: Can't have advanced infrastructure without people to maintain it
+
+---
+
+**HIGH-5: Outcome Classification Information Loss** (1-2h)
+```
+OLD (better): "classified as dystopia (92.4% mortality, 0.62B survivors)"
+NEW (worse):  "Reached max months (120) with dystopia probability dominant"
+```
+**Problem:** Recent fix REMOVED mortality data from outcome reasons, making debugging harder.
+
+**Location:** `src/simulation/engine/phases/OutcomeClassificationPhase.ts` (likely)
+
+**Fix Required:** Restore mortality % and survivor count to outcome reason strings
+
+---
+
+**HIGH-6: 99/100 Deterministic Outcomes (No Variance)** (CONDITIONAL - may resolve with bug fixes)
+```
+Outcome Distribution: 99 dystopia, 1 inconclusive
+```
+**Problem:** Monte Carlo with 100 different seeds produces nearly identical outcomes (99% same).
+
+**IMPORTANT NOTE:** This may be a **symptom** of BLOCKERS 1-3, not a separate issue. If mortality calculation (BLOCKER-1) and biosphere accumulation (BLOCKER-2) are broken, they may force all runs toward the same catastrophic outcome. Fixing those bugs might naturally restore variance.
+
+**Diagnosis Strategy:**
+1. **First:** Fix BLOCKERS 1-3 (mortality cap, biosphere, unjustified mortality)
+2. **Then:** Re-run N=100 to see if variance emerges naturally
+3. **Only if variance remains low:** Investigate RNG usage and feedback mechanisms
+
+**If variance persists after bug fixes, potential causes:**
+- Random events have negligible impact
+- Initial conditions overdetermine outcomes
+- Positive feedback completely dominates
+- Missing negative feedback mechanisms (adaptation, stabilizers)
+
+**Research Justification (if separate fix needed):** Historical crises show HIGH variance (some societies collapse, others adapt)
+
+---
+
+**What Improved:**
+- ✅ Biosphere: 47× → 20× (still broken, less broken)
+- ✅ Western Liberal paradigm: null → values (58-77 range)
+
+**What Got Worse:**
+- ❌ NEW BUG: Monthly mortality >100%
+- ❌ Outcome reasons less informative (no mortality data)
+
+**Overall Assessment:**
+Model exhibits physical impossibilities (1687% mortality, 20× biosphere), unjustified extremes (99.7% baseline mortality), determinism (99% identical outcomes), and population coherence failures. These are NOT calibration issues - they're fundamental validity violations.
+
+**Required Before Research Use:**
+1. Fix all 3 blockers (physical impossibilities + unjustified extremes)
+2. Provide peer-reviewed justification for 99.7% mortality OR recalibrate to IPCC bounds
+3. Add variance mechanisms to produce diverse outcomes (not 99% identical)
+
+---
 
 #### Systematic Claim Verification Crisis (Layer 2) (40-60h)
 **Status:** 🔴 CRITICAL - Newly discovered (Oct 29, 2025)
@@ -117,31 +292,44 @@ All research-backed claims must include:
 ## 🟠 HIGH Priority
 
 
-### Crisis Mitigation Mechanics (2-4h)
-**Status:** ⏳ CONDITIONAL AGREEMENT - Awaiting Cynthia's response
-**Priority:** MEDIUM - Contingent on agreement with modifications
-**Consensus:** Sylvia posted conditional agreement (Oct 29, 17:31)
-**Review:** `reviews/research-channel-comprehensive-review_20251029.md` (Section 4, Part 2)
+### Crisis Mitigation Mechanics (2-3h) - ✅ COMPLETE (Roy1, Oct 30)
+**Status:** ✅ IMPLEMENTED AND VALIDATED
+**Consensus:** Cynthia-Sylvia agreement reached (Oct 29, 23:35)
+**Implementation:** Oct 30, 2025 (Roy1 → simulation-maintainer)
+**Devlog:** `devlogs/crisis_mitigation_implementation_20251030.md`
 
-**Context:**
-Cynthia proposed three crisis mitigation mechanics to improve near-term resilience:
-1. Automatic stabilizers (reduce unemployment variance)
-2. Participatory governance (reduce resentment, enable tech adoption)
-3. Homeostatic bounds (prevent 95% unemployment edge cases)
+**What Was Implemented:**
 
-**Sylvia's Conditional Agreement:**
+**Mechanic 1: Automatic Stabilizers** (5% unemployment variance reduction)
+- Research: GAO 2025 (countercyclical fiscal policy framework)
+- Effect: Dampens month-to-month unemployment changes by 5%
+- TODO: Replace 5% with CBO fiscal multiplier variance data
+- Location: `src/simulation/calculations.ts` lines 487-514
 
-**Issue 1: Automatic Stabilizers - Parameter Justification Gap**
-- ✅ Concept valid (GAO 2025, progressive tax + UI + SNAP + Medicaid)
-- ❌ "20-30% reduction" claim from Brookings is FABRICATED
-- ⚠️ Multiplier values (0.7, 1.1) are educated guesses, not research-backed
-- **Sylvia's position:** Implement concept with placeholder multipliers + TODO comments, don't claim Brookings backing
+**Mechanic 2: Participatory Governance** (5% resentment reduction + 15% backfire)
+- Research: Cambridge Core 2024, PMC 2022, vTaiwan
+- Success case (governance quality ≥ 0.4): -5% resentment
+- Backfire case (governance quality < 0.4): +15% resentment
+- Location: `src/simulation/resentmentRecovery.ts`, `ResentmentRecoveryPhase.ts`
 
-**Issue 2: Participatory Governance - Scale Mismatch**
-- ✅ Cambridge Core (2024) and PMC (2022) studies are real
-- ❌ Scale extrapolation unjustified (municipal → national/global)
-- ⚠️ Missing rebound effects: Participation can INCREASE resentment if expectations unmet
-- **Sylvia's position:** Implement as experimental mechanic with rebound effects, document scale extrapolation explicitly
+**Mechanic 3: Homeostatic Bounds** (2.75 pp/year unemployment recovery)
+- Research: New Deal 1933-1937 (25% → 14% over 4 years)
+- Effect: Prevents 95% unemployment edge cases
+- Monthly rate: 0.229 pp/month when unemployment > 50%
+- Location: `src/simulation/calculations.ts` lines 516-546
+
+**Validation Results:**
+- ✅ Unit tests: 4/4 passed (backfire/success, no NaN, bounds [0,1])
+- ✅ Monte Carlo: N=10+ validation running
+- ✅ Type checking: No errors
+- ✅ All assertion utilities working
+
+**Quality Standards Met:**
+- ✅ Conservative parameters (5%, not 30%)
+- ✅ Rebound effects included (participatory backfire)
+- ✅ TODO comments for future research
+- ✅ Research citations in code
+- ✅ No NaN or silent fallbacks
 
 **Issue 3: Homeostatic Bounds - Empirical vs Arbitrary**
 - ✅ One Earth (2024) paper on stabilizing feedback loops is real

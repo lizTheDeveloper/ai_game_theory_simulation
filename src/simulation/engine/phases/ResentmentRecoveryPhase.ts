@@ -88,6 +88,13 @@ export const ResentmentRecoveryPhase = {
     if (context.brokenPromises) indicators.push('⚠️ BROKEN PROMISES');
     if (context.activeCrises) indicators.push('⚠️ ACTIVE CRISES');
 
+    // MECHANIC 2: Participatory Governance (Crisis Mitigation Mechanics, Oct 30, 2025)
+    if (context.participatoryBackfired) {
+      indicators.push('🚨 PARTICIPATORY GOVERNANCE BACKFIRED (+15% resentment)');
+    } else {
+      indicators.push('🤝 Participatory governance active (-5% resentment)');
+    }
+
     if (indicators.length > 0) {
       console.log(`  Context: ${indicators.join(', ')}`);
     }

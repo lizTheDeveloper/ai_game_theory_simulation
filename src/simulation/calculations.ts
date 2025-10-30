@@ -458,14 +458,94 @@ export function calculateUnemployment(state: GameState): number {
     const floor = totalWeight > 0 ? weightedFloor / totalWeight : 0.10;
 
     // Job guarantee creates unemployment CEILING (maximum unemployment) - Brookings 2021
-    // CRITICAL FIX (Oct 17, 2025): Changed from Math.max to Math.min
-    // Reasoning: Job guarantee means "government employs anyone who can't find work"
-    // This CAPS unemployment at the floor value (unemployment can't EXCEED this)
-    // Before fix: Math.max kept unemployment HIGH (58.9% bug)
-    // After fix: Math.min CAPS unemployment at segment-specific level (5-15%)
-    // BUT: Floor is higher for precariat due to poor job quality (Harvey 2005, MGNREGA 2020)
-    unemployment = Math.min(unemployment, floor);
+    // CRITICAL FIX (Oct 29, 2025): Changed from HARD CAP to SOFT FLOOR
+    // Previous implementation: Math.min(unemployment, floor) → zero variance bug
+    // Issue: Hard cap eliminated ALL market dynamics variance (Combined Interventions: 13.1% constant)
+    //
+    // New approach: Job guarantee PULLS unemployment toward floor but doesn't eliminate variance
+    // - Strong pull when unemployment >> floor (guarantee kicks in heavily)
+    // - Weak pull when unemployment ≈ floor (market dynamics dominate)
+    // - Still allows ±2-5% variance from economic shocks, AI displacement waves, etc.
+    //
+    // Formula: unemployment = floor + (unemployment - floor) * (1 - guaranteeStrength)
+    // - guaranteeStrength based on jobGuaranteeLevel (0.70 → ~60-70% pull)
+    // - Higher guarantee → stronger pull toward floor, but NOT deterministic
+    //
+    // Research: MGNREGA India (2020) - employment guarantee reduces but doesn't eliminate unemployment variance
+    //           Local economic shocks, seasonal agriculture, caste/gender barriers still create 5-15% variance
+    const guaranteeStrength = state.policyInterventions.jobGuaranteeLevel * 0.85; // 85% max pull strength
+    const excess = unemployment - floor;
+    unemployment = floor + excess * (1 - guaranteeStrength);
   }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CRISIS MITIGATION MECHANICS (Oct 30, 2025)
+  // Research consensus: Cynthia-Sylvia agreement with conservative parameters
+  // Source: .claude/chatroom/research-consensus-20251029_163600.txt
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // MECHANIC 1: Automatic Stabilizers (5% variance reduction)
+  // Research: GAO 2025 - Countercyclical fiscal policy framework validated
+  // Effect: Reduces unemployment volatility through progressive tax + UI + SNAP + Medicaid
+  // TODO: Replace 5% with CBO fiscal multiplier variance data when available
+  //
+  // Implementation: Dampen the change in unemployment month-over-month
+  // - Calculate ΔU = new unemployment - previous unemployment
+  // - Apply 5% variance reduction: ΔU_damped = ΔU × 0.95
+  // - Result: new unemployment = previous + ΔU_damped
+  const previousUnemployment = state.society.unemploymentLevel || baseUnemployment;
+  const unemploymentChange = unemployment - previousUnemployment;
+  const VARIANCE_REDUCTION = 0.05; // 5% reduction (conservative, down from 30%)
+  const dampedChange = unemploymentChange * (1 - VARIANCE_REDUCTION);
+
+  unemployment = assertFinite(
+    previousUnemployment + dampedChange,
+    {
+      location: 'calculateUnemployment (automatic stabilizers)',
+      valueName: 'unemployment (post-stabilizers)',
+      month: state.currentMonth,
+      additionalInfo: {
+        previousUnemployment,
+        rawChange: unemploymentChange,
+        dampedChange,
+        varianceReduction: VARIANCE_REDUCTION
+      }
+    }
+  );
+
+  // MECHANIC 3: Homeostatic Bounds (2.75 pp/year recovery rate)
+  // Research: New Deal 1933-1937 - Unemployment fell from 25% → 14% over 4 years
+  // Effect: Prevents 95% unemployment edge cases via historical recovery rates
+  // Monthly rate: 2.75 / 12 = 0.229 percentage points per month
+  //
+  // Apply recovery when unemployment exceeds 50% threshold
+  // NOTE: This is "plausible bounds from historical precedent," NOT calibrated mechanism
+  const EXTREME_UNEMPLOYMENT_THRESHOLD = 0.50; // 50%
+  const ANNUAL_RECOVERY_RATE = 0.0275; // 2.75 percentage points per year (New Deal rate)
+  const MONTHLY_RECOVERY_RATE = ANNUAL_RECOVERY_RATE / 12; // ~0.229 pp/month
+
+  if (unemployment > EXTREME_UNEMPLOYMENT_THRESHOLD) {
+    // Apply bounded recovery toward threshold
+    const excess = unemployment - EXTREME_UNEMPLOYMENT_THRESHOLD;
+    const recovery = Math.min(excess, MONTHLY_RECOVERY_RATE);
+
+    unemployment = assertFinite(
+      unemployment - recovery,
+      {
+        location: 'calculateUnemployment (homeostatic bounds)',
+        valueName: 'unemployment (post-homeostatic)',
+        month: state.currentMonth,
+        additionalInfo: {
+          preRecoveryUnemployment: unemployment,
+          excess,
+          recovery,
+          monthlyRecoveryRate: MONTHLY_RECOVERY_RATE
+        }
+      }
+    );
+  }
+  // END CRISIS MITIGATION MECHANICS
+  // ═══════════════════════════════════════════════════════════════════════════
 
   // Cap at 95% (more realistic than 80%)
   return assertFinite(
