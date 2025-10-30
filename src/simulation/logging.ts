@@ -9,6 +9,7 @@
  */
 
 import { GameState, GameEvent } from '@/types/game';
+import { assertDefined } from '@/simulation/utils/assertions';
 
 /**
  * Log levels for different use cases
