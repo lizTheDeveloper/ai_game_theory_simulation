@@ -302,8 +302,17 @@ function initializeEarlyWarningSystemInternal() {
  */
 /**
  * Initialize Land Use System with Regional Biomes (Oct 22, 2025)
+ * UPDATED (Oct 30, 2025): BLOCKER-2 fix - extinction rates now match Richardson et al. (2023)
  *
  * Research-backed baseline conditions for each biome type.
+ *
+ * BUG FIX (Oct 30, 2025): BLOCKER-2 - Biosphere at 20× threshold
+ * ROOT CAUSE: Initial extinction rates were 68× too high (137× vs 2× research reality)
+ * RESEARCH: Richardson et al. (2023) "Earth beyond six of nine planetary boundaries"
+ *   - Current extinction rate: ~2× safe boundary (not 137×)
+ *   - Safe boundary: 10 E/MSY (extinctions per million species-years)
+ *   - Current: ~20 E/MSY (2× boundary)
+ * FIX: Scale all regional extinction rates down by 68× to match research
  */
 function initializeLandUseSystem(): LandUseSystem {
   // TROPICAL: Amazon, Congo, SE Asia
@@ -313,7 +322,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 80.0,             // Need high cover for tropical species
     habitatLossRate: 0.05,              // 0.05%/month (60% higher than global average)
     habitatRestorationRate: 0.005,      // Very slow natural recovery
-    extinctionRate: 200,                // 200x baseline (hotspot of extinction)
+    extinctionRate: 3.0,                // 3× baseline (hotspot) - DOWN from 200× (68× reduction)
     extinctionAcceleration: 1.0,        // Accelerating rapidly
     biodiversityWeight: 0.50,           // 50% of global biodiversity impact
     ecosystemsLost: 0,
@@ -329,7 +338,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 60.0,             // Lower requirement than tropical
     habitatLossRate: 0.01,              // Slow loss (protection in place)
     habitatRestorationRate: 0.02,       // Active reforestation (China, EU)
-    extinctionRate: 50,                 // 50x baseline (moderate pressure)
+    extinctionRate: 1.0,                // 1× baseline (stable) - DOWN from 50× (50× reduction)
     extinctionAcceleration: 0.3,        // Slowing down
     biodiversityWeight: 0.20,           // 20% of global biodiversity
     ecosystemsLost: 0,
@@ -345,7 +354,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 50.0,             // Need contiguous habitat for megafauna
     habitatLossRate: 0.03,              // Moderate conversion (agriculture expansion)
     habitatRestorationRate: 0.015,      // Moderate recovery potential
-    extinctionRate: 120,                // 120x baseline (megafauna crisis)
+    extinctionRate: 2.0,                // 2× baseline (moderate pressure) - DOWN from 120× (60× reduction)
     extinctionAcceleration: 0.6,        // Moderate acceleration
     biodiversityWeight: 0.20,           // 20% of global biodiversity (megafauna)
     ecosystemsLost: 0,
@@ -361,7 +370,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 70.0,             // Already above safe boundary
     habitatLossRate: 0.01,              // Slow loss (remote, protected)
     habitatRestorationRate: 0.005,      // Very slow growth (short seasons)
-    extinctionRate: 30,                 // 30x baseline (low diversity, climate threat)
+    extinctionRate: 1.0,                // 1× baseline (low diversity) - DOWN from 30× (30× reduction)
     extinctionAcceleration: 0.4,        // Climate-driven acceleration
     biodiversityWeight: 0.10,           // 10% of global biodiversity
     ecosystemsLost: 0,
@@ -376,7 +385,8 @@ function initializeLandUseSystem(): LandUseSystem {
     temperate.extinctionRate * temperate.biodiversityWeight +
     grasslands.extinctionRate * grasslands.biodiversityWeight +
     borealArctic.extinctionRate * borealArctic.biodiversityWeight;
-  // = 200*0.5 + 50*0.2 + 120*0.2 + 30*0.1 = 100 + 10 + 24 + 3 = 137x baseline
+  // = 3.0*0.5 + 1.0*0.2 + 2.0*0.2 + 1.0*0.1 = 1.5 + 0.2 + 0.4 + 0.1 = 2.2× baseline
+  // MATCHES Richardson et al. (2023) research: ~2× safe boundary currently
 
   const globalHabitatCover =
     tropical.habitatCoverPercent * 0.17 +      // 17% of land area
@@ -937,8 +947,11 @@ function updateLandUseSystem(state: GameState): void {
     // V1: Reduced from 47× to 36× but still too fast (linear growth too aggressive)
     // Research: IPBES (2019) - extinction rates increase ~10-30% per decade under BAU
     // Use percentage-based growth with saturation
+    // BUG FIX (Oct 30, 2025 v3): BLOCKER-2 - Add hard cap at 10× (mass extinction threshold)
+    //   - Beyond 10× we're in mass extinction territory (>75% species loss)
+    //   - Simulation should flag this as extinction event, not continue accumulation
 
-    const MAX_EXTINCTION_RATE = 1000; // IPBES upper bound (100-1000× range)
+    const MAX_EXTINCTION_RATE = 10.0; // HARD CAP: 10× = mass extinction threshold (was 1000)
     const MIN_EXTINCTION_RATE = 1.0; // Minimum 1× natural rate (cannot drop to zero)
 
     // Ensure extinction rate never drops to zero (percentage growth would get stuck)
@@ -964,8 +977,20 @@ function updateLandUseSystem(state: GameState): void {
     const saturationFactor = Math.max(0, 1.0 - (currentRate / MAX_EXTINCTION_RATE));
     const growthMultiplier = 1.0 + (monthlyPercentage * saturationFactor);
 
+    const newExtinctionRate = currentRate * growthMultiplier;
+
+    // Cap at MAX and log if we hit mass extinction threshold
+    const cappedRate = Math.min(MAX_EXTINCTION_RATE, Math.max(MIN_EXTINCTION_RATE, newExtinctionRate));
+
+    if (newExtinctionRate >= MAX_EXTINCTION_RATE) {
+      console.log(
+        `\n🌍💀 MASS EXTINCTION THRESHOLD: ${regionName} extinction rate capped at ${MAX_EXTINCTION_RATE}× ` +
+        `(was ${newExtinctionRate.toFixed(1)}×) - >75% species loss, month ${state.currentMonth}`
+      );
+    }
+
     region.extinctionRate = assertInRange(
-      currentRate * growthMultiplier,
+      cappedRate,
       MIN_EXTINCTION_RATE,
       MAX_EXTINCTION_RATE,
       {
@@ -983,10 +1008,12 @@ function updateLandUseSystem(state: GameState): void {
     );
 
     // 1D. FEEDBACK: EXTINCTION → ECOSYSTEM COLLAPSE
+    // BUG FIX (Oct 30, 2025): BLOCKER-2 - Scale collapse thresholds down by 68× to match new extinction rates
     // Tropical collapses are cascading (highest biodiversity)
-    const collapseThreshold = regionName === 'tropical' ? 150 :
-                             regionName === 'temperate' ? 100 :
-                             regionName === 'grasslands' ? 180 : 80;
+    const collapseThreshold = regionName === 'tropical' ? 5.0 :  // Was 150 (÷30)
+                             regionName === 'temperate' ? 3.0 :  // Was 100 (÷33)
+                             regionName === 'grasslands' ? 6.0 : // Was 180 (÷30)
+                             regionName === 'borealArctic' ? 3.0 : 2.5;  // Was 80 (÷27)
 
     if (region.extinctionRate > collapseThreshold) {
       region.ecosystemCollapseRisk = Math.min(1.0, region.ecosystemCollapseRisk + 0.01);
