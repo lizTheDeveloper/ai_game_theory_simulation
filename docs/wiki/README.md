@@ -28,6 +28,7 @@ All critical Monte Carlo validation blockers have been resolved:
 - Research-backed (peer-reviewed sources)
 - Defensively coded (fail-loudly assertions)
 - Thoroughly validated (Monte Carlo N=10)
+- Organizational realism enhanced (financial lifecycle mechanics)
 
 See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implementation status and remaining priorities.
 
