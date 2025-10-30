@@ -1140,8 +1140,8 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 
 **Timeline Compression:**
 - **Simulation:** 30-year window (typical runs: 2025-2055)
-- **Peer-reviewed research:** 75-year window (2025-2100)
-- **Compression factor:** 2.5× faster than published climate models
+- **Peer-reviewed research:** Cascades unfold over centennial to millennial timescales (100-1,000+ years)
+- **Compression factor:** 3-10× faster than published climate models (speculative tail-risk modeling)
 
 **Research Comparison:**
 - **Richards et al. (2023):** ~6 billion deaths over 75 years (extreme runaway warming scenario: 8-12°C by 2100, artificial scenario for studying tail risks, NOT baseline projection)
@@ -1150,13 +1150,14 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 
 **Why the compression?**
 - Simulation designed for 240-360 month runs (20-30 years)
-- Peer-reviewed tipping cascade models (Lenton et al. 2019) suggest 50-100 year windows
-- This represents an **exploratory "what if cascades happen faster?" scenario**, not a baseline forecast
+- Individual tipping elements have transition times of 50-100 years (Amazon, AMOC; Lenton et al. 2008), but **cascading interactions unfold over centennial to millennial timescales** (Wunderling et al. 2024)
+- This represents a **speculative rapid cascade scenario** (3-10× compressed timeline) exploring tail-risk possibilities under multi-boundary transgression—not empirically validated
 
 **Remaining Uncertainties:**
-1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? Research unclear.
+1. **Cascade speed:** Do tipping points trigger faster with multiple simultaneous boundary crossings? **Research shows cascades unfold over 100-1,000+ years** (Wunderling et al. 2024), but acceleration under unprecedented multi-boundary stress remains poorly constrained.
 2. **Adaptation exclusion:** Simulation may underestimate human adaptation and emergency mitigation responses
 3. **Nonlinear mortality:** Does death rate accelerate or plateau in extreme multi-crisis scenarios? Limited empirical data.
+4. **Timeline compression validity:** No empirical evidence supports cascades proceeding on 30-year timescales. Historical analogues (Dansgaard-Oeschger events) show 1,000-4,000 year transitions.
 
 **Validation:**
 - ✅ Framework validity: Planetary boundaries, tipping cascades, agricultural collapse mechanisms (all peer-reviewed)
@@ -1167,8 +1168,10 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 **Label for outputs:** "Accelerated scenario" or "Compressed timeline model" - NOT "baseline projection"
 
 **Research Foundation:**
-- Richards et al. (2023): Climate collapse mortality projections (75-year window)
-- Lenton et al. (2019, 2023): Tipping cascade timescales (50-100 year estimates)
+- Richards et al. (2023): Climate collapse mortality projections (extreme 8-12°C scenario, 75-year window)
+- Lenton et al. (2008): Individual tipping element transition times (50-100 years for Amazon, AMOC)
+- Wunderling et al. (2024): Tipping cascade timescales (centennial to millennial scales)
+- Armstrong McKay et al. (2022): Comprehensive tipping point review (Science)
 - Steffen et al. (2018): Hothouse Earth trajectory
 - Ord (2020): *The Precipice* - Existential risk methodologies
 - Tonn & Stiefel (2013): Exploratory modeling for catastrophic risks
@@ -2603,6 +2606,14 @@ Paradigm scores → Public awareness → Government policy → Control systems �
   - Dystopia: 0%
 - **Key Finding**: Lévy flights + exogenous shocks enabled branching paths and rare positive cascades
 - **Validation**: Fat-tailed distributions break deterministic convergence (8,249 extreme events in N=50)
+
+**Parameter Sweep Infrastructure (Oct 30, 2025):**
+- **New tools**: `scripts/runParameterSweepCLI.sh` and `scripts/runParameterSweep.ts`
+- **Configuration**: 2 scenario modes × 5 threshold scenarios × N=100 seeds = 1,000 simulations
+- **Purpose**: Validate outcome diversity across full parameter space (post-Issues 1-8 fixes)
+- **Runtime**: 3-5 hours sequential execution (stability over parallelism)
+- **Output**: Structured results in `monteCarloOutputs/sweep_YYYYMMDD_HHMMSS/`
+- **Usage**: See [`docs/COMMANDS.md`](../COMMANDS.md#parameter-sweep-added-oct-30-2025)
 
 ## 🎮 Using This Wiki
 
