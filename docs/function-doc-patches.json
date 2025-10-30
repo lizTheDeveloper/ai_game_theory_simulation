@@ -7,7 +7,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/conflictResolution.ts",
-    "line": 52,
+    "line": 49,
     "name": "initializeConflictResolution",
     "doc": "Initializes conflict resolution with default or specified values."
   },
@@ -37,19 +37,19 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/defensiveAI.ts",
-    "line": 974,
+    "line": 967,
     "name": "applyDefensiveAIToMAD",
     "doc": "Applies defensive a i to m a d effects to game state."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/diagnostics.ts",
-    "line": 750,
+    "line": 751,
     "name": "analyzeDeterminism",
     "doc": "analyzeDeterminism implementation. See diagnostics.ts for details."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/diplomaticAI.ts",
-    "line": 66,
+    "line": 63,
     "name": "initializeDiplomaticAI",
     "doc": "Initializes diplomatic a i with default or specified values."
   },
@@ -73,7 +73,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/meaningRenaissance.ts",
-    "line": 53,
+    "line": 50,
     "name": "initializeMeaningRenaissance",
     "doc": "Initializes meaning renaissance with default or specified values."
   },
@@ -115,37 +115,37 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/socialInfluence.ts",
-    "line": 351,
+    "line": 357,
     "name": "decayDetectionRisk",
     "doc": "decayDetectionRisk for social cohesion and trust dynamics."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/techTree/comprehensiveTechTree.ts",
-    "line": 1632,
+    "line": 1635,
     "name": "getAllTech",
     "doc": " Returns array of results."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
-    "line": 12,
+    "line": 14,
     "name": "initializeTechnologicalRisk",
     "doc": "Initializes technological risk with default or specified values."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
-    "line": 24,
+    "line": 26,
     "name": "updateTechnologicalRisk",
     "doc": "Updates technological risk based on current state and modifiers."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
-    "line": 225,
+    "line": 250,
     "name": "getTechnologicalSafety",
     "doc": "getTechnologicalSafety for technology tree management. Returns numeric value."
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/technologicalRisk.ts",
-    "line": 234,
+    "line": 259,
     "name": "hasTechnologicalCrisis",
     "doc": "Evaluates crisis/catastrophe conditions and triggers appropriate cascades. Returns true if condition met."
   },
@@ -169,7 +169,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/upwardSpirals.ts",
-    "line": 52,
+    "line": 49,
     "name": "initializeUpwardSpirals",
     "doc": "Initializes upward spirals with default or specified values."
   },

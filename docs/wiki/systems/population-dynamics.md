@@ -370,6 +370,14 @@ population = max(0, newPopulation);
 
 **FIX (Oct 13, 2025):** Environmental deaths now properly tracked by category. Previous versions had 90% of deaths missing from reports.
 
+**FIX (Oct 30, 2025):** Refugee crisis triggers now use regional populations, not global 8B:
+- **Climate refugees**: 10% of global (coastal/low-lying zones) - IPCC 2021
+- **Conflict refugees**: 5% of global (conflict zones) - UNHCR 2023
+- **Famine refugees**: 15% of global (food-insecure regions) - FAO 2023
+- **Ecosystem refugees**: 5% of global (biodiversity hotspots) - Conservation International 2024
+- **Before**: Used global 8B → 10x over-estimation (325M displaced vs realistic 32M)
+- **After**: Regional scoping with research-backed percentages
+
 ---
 
 ### 8. Extinction Death Rates

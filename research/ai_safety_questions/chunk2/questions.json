@@ -1,0 +1,103 @@
+{
+  "chunk_id": 2,
+  "page_range": "61-120",
+  "foundational_challenges": [
+    {
+      "section": "3.5",
+      "title": "Jailbreaks and Prompt Injections Threaten Security of LLMs",
+      "category": "Development and Deployment Methods",
+      "page": 67,
+      "research_questions": []
+    },
+    {
+      "section": "3.6",
+      "title": "Vulnerability to Poisoning and Backdoors Is Poorly Understood",
+      "category": "Development and Deployment Methods",
+      "page": 72,
+      "research_questions": [
+        {
+          "section": "3.6.1",
+          "question": "Are LLMs Vulnerable to Pretraining Data Poisoning?",
+          "page": 73,
+          "context": ""
+        },
+        {
+          "section": "3.6.3",
+          "question": "Are Larger Models More Vulnerable to Poisoning Attacks?",
+          "page": 74,
+          "context": ""
+        },
+        {
+          "section": "3.6.4",
+          "question": "Can Out-of-Context Reasoning Enable Arbitrary Harmful Poisoning Attacks?",
+          "page": 74,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "4.1",
+      "title": "Values to Be Encoded within LLMs Are Not Clear",
+      "category": "Sociotechnical Challenges",
+      "page": 79,
+      "research_questions": [
+        {
+          "section": "4.1.4",
+          "question": "How Can We Robustly Evaluate Which Values an LLM Encodes?",
+          "page": 81,
+          "context": ""
+        },
+        {
+          "section": "4.1.5",
+          "question": "Is \u2018Value Alignment\u2019 the Right Framework?",
+          "page": 82,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "4.2",
+      "title": "Dual-Use Capabilities Enable Malicious Use and Misuse of LLMs",
+      "category": "Sociotechnical Challenges",
+      "page": 83,
+      "research_questions": []
+    },
+    {
+      "section": "4.3",
+      "title": "LLM-Systems Can Be Untrustworthy",
+      "category": "Sociotechnical Challenges",
+      "page": 89,
+      "research_questions": []
+    },
+    {
+      "section": "4.4",
+      "title": "Socioeconomic Impacts of LLM May Be Highly Disruptive",
+      "category": "Sociotechnical Challenges",
+      "page": 92,
+      "research_questions": []
+    },
+    {
+      "section": "4.5",
+      "title": "LLM Governance Is Lacking",
+      "category": "Sociotechnical Challenges",
+      "page": 97,
+      "research_questions": []
+    },
+    {
+      "section": "5.1",
+      "title": "Limitations",
+      "category": "Unknown",
+      "page": 109,
+      "research_questions": []
+    },
+    {
+      "section": "5.2",
+      "title": "Prior Work",
+      "category": "Unknown",
+      "page": 110,
+      "research_questions": []
+    }
+  ],
+  "total_questions": 5,
+  "total_challenges": 9
+}

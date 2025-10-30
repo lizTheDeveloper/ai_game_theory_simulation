@@ -1,0 +1,417 @@
+{
+  "chunk_id": 1,
+  "page_range": "1-60",
+  "foundational_challenges": [
+    {
+      "section": "1.1",
+      "title": "Why This Agenda? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7",
+      "category": "Unknown",
+      "page": 1,
+      "research_questions": []
+    },
+    {
+      "section": "1.2",
+      "title": "Terminology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8",
+      "category": "Unknown",
+      "page": 1,
+      "research_questions": []
+    },
+    {
+      "section": "1.3",
+      "title": "Structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8",
+      "category": "Unknown",
+      "page": 1,
+      "research_questions": []
+    },
+    {
+      "section": "2.1",
+      "title": "In-Context Learning (ICL) Is Black-Box . . . . . . . . . . . . . . . . . . . . . . . 12",
+      "category": "Scientific Understanding of LLMs",
+      "page": 1,
+      "research_questions": [
+        {
+          "section": "2.1.1",
+          "question": "Is ICL Sophisticated Pattern-Matching?",
+          "page": 1,
+          "context": ""
+        },
+        {
+          "section": "2.1.2",
+          "question": "Is ICL Due to Mesa-Optimization?",
+          "page": 1,
+          "context": ""
+        },
+        {
+          "section": "2.1.3",
+          "question": "What Behaviours Can Be Specified In-Context?",
+          "page": 1,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "2.2",
+      "title": "Capabilities Are Difficult to Estimate and Understand . . . . . . . . . . . . . . 17",
+      "category": "Scientific Understanding of LLMs",
+      "page": 2,
+      "research_questions": [
+        {
+          "section": "2.2.4",
+          "question": "How Can We Efficiently Evaluate Generality of LLMs?",
+          "page": 2,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "2.3",
+      "title": "Effects of Scale on Capabilities Are Not Well-Characterized . . . . . . . . . . . 22",
+      "category": "Scientific Understanding of LLMs",
+      "page": 2,
+      "research_questions": []
+    },
+    {
+      "section": "2.4",
+      "title": "Qualitative Understanding of Reasoning Capabilities Is Lacking . . . . . . . . 29",
+      "category": "Scientific Understanding of LLMs",
+      "page": 2,
+      "research_questions": [
+        {
+          "section": "2.4.1",
+          "question": "Does Scaling Improve Reasoning Capabilities?",
+          "page": 2,
+          "context": ""
+        },
+        {
+          "section": "2.4.4",
+          "question": "Which Aspects of Training Lead to the Acquisition of Reasoning?",
+          "page": 2,
+          "context": ""
+        },
+        {
+          "section": "2.4.5",
+          "question": "What Are the Computational Limits of Transformers?",
+          "page": 2,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "2.5",
+      "title": "Agentic LLMs Pose Novel Risks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33",
+      "category": "Scientific Understanding of LLMs",
+      "page": 2,
+      "research_questions": []
+    },
+    {
+      "section": "2.6",
+      "title": "Multi-Agent Safety Is Not Assured by Single-Agent Safety . . . . . . . . . . . . 37",
+      "category": "Scientific Understanding of LLMs",
+      "page": 2,
+      "research_questions": []
+    },
+    {
+      "section": "2.7",
+      "title": "Safety-Performance Trade-offs Are Poorly Understood . . . . . . . . . . . . . . 41",
+      "category": "Scientific Understanding of LLMs",
+      "page": 2,
+      "research_questions": [
+        {
+          "section": "2.7.4",
+          "question": "How Fundamental Are Safety-Performance Trade-offs?",
+          "page": 2,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "3.1",
+      "title": "Pretraining Produces Misaligned Models . . . . . . . . . . . . . . . . . . . . . . . 46",
+      "category": "Development and Deployment Methods",
+      "page": 2,
+      "research_questions": []
+    },
+    {
+      "section": "3.2",
+      "title": "Finetuning Methods Struggle to Assure Alignment and Safety . . . . . . . . . 49",
+      "category": "Development and Deployment Methods",
+      "page": 3,
+      "research_questions": [
+        {
+          "section": "3.2.1",
+          "question": "How Does Finetuning Change a Pretrained Model?",
+          "page": 3,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "3.3",
+      "title": "LLM Evaluations Are Confounded and Biased . . . . . . . . . . . . . . . . . . . . 53",
+      "category": "Development and Deployment Methods",
+      "page": 3,
+      "research_questions": []
+    },
+    {
+      "section": "3.4",
+      "title": "ToolsforInterpretingorExplainingLLMBehaviorAreAbsentorLackFaith-",
+      "category": "Development and Deployment Methods",
+      "page": 3,
+      "research_questions": []
+    },
+    {
+      "section": "3.5",
+      "title": "Jailbreaks and Prompt Injections Threaten Security of LLMs . . . . . . . . . . 67",
+      "category": "Development and Deployment Methods",
+      "page": 3,
+      "research_questions": []
+    },
+    {
+      "section": "3.6",
+      "title": "Vulnerability to Poisoning and Backdoors Is Poorly Understood . . . . . . . . 73",
+      "category": "Development and Deployment Methods",
+      "page": 3,
+      "research_questions": [
+        {
+          "section": "3.6.1",
+          "question": "Are LLMs Vulnerable to Pretraining Data Poisoning?",
+          "page": 3,
+          "context": ""
+        },
+        {
+          "section": "3.6.3",
+          "question": "Are Larger Models More Vulnerable to Poisoning Attacks?",
+          "page": 3,
+          "context": ""
+        },
+        {
+          "section": "3.6.4",
+          "question": "Can Out-of-Context Reasoning Enable Arbitrary Harmful Poisoning Attacks?",
+          "page": 3,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "4.1",
+      "title": "Values to Be Encoded within LLMs Are Not Clear . . . . . . . . . . . . . . . . . 80",
+      "category": "Sociotechnical Challenges",
+      "page": 4,
+      "research_questions": [
+        {
+          "section": "4.1.4",
+          "question": "How Can We Robustly Evaluate Which Values an LLM Encodes?",
+          "page": 4,
+          "context": ""
+        },
+        {
+          "section": "4.1.5",
+          "question": "Is \u2018Value Alignment\u2019 the Right Framework?",
+          "page": 4,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "4.2",
+      "title": "Dual-Use Capabilities Enable Malicious Use and Misuse of LLMs . . . . . . . 84",
+      "category": "Sociotechnical Challenges",
+      "page": 4,
+      "research_questions": []
+    },
+    {
+      "section": "4.3",
+      "title": "LLM-Systems Can Be Untrustworthy . . . . . . . . . . . . . . . . . . . . . . . . . 90",
+      "category": "Sociotechnical Challenges",
+      "page": 4,
+      "research_questions": []
+    },
+    {
+      "section": "4.4",
+      "title": "Socioeconomic Impacts of LLM May Be Highly Disruptive . . . . . . . . . . . . 92",
+      "category": "Sociotechnical Challenges",
+      "page": 4,
+      "research_questions": []
+    },
+    {
+      "section": "4.5",
+      "title": "LLM Governance Is Lacking . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 97",
+      "category": "Sociotechnical Challenges",
+      "page": 4,
+      "research_questions": []
+    },
+    {
+      "section": "5.1",
+      "title": "Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 110",
+      "category": "Unknown",
+      "page": 4,
+      "research_questions": []
+    },
+    {
+      "section": "5.2",
+      "title": "Prior Work . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 110",
+      "category": "Unknown",
+      "page": 4,
+      "research_questions": []
+    },
+    {
+      "section": "1.1",
+      "title": "Why This Agenda?",
+      "category": "Unknown",
+      "page": 6,
+      "research_questions": []
+    },
+    {
+      "section": "1.2",
+      "title": "Terminology",
+      "category": "Unknown",
+      "page": 6,
+      "research_questions": []
+    },
+    {
+      "section": "1.3",
+      "title": "Structure",
+      "category": "Unknown",
+      "page": 7,
+      "research_questions": []
+    },
+    {
+      "section": "2.1",
+      "title": "In-Context Learning (ICL) Is Black-Box",
+      "category": "Scientific Understanding of LLMs",
+      "page": 10,
+      "research_questions": [
+        {
+          "section": "2.1.1",
+          "question": "Is ICL Sophisticated Pattern-Matching?",
+          "page": 10,
+          "context": ""
+        },
+        {
+          "section": "2.1.2",
+          "question": "Is ICL Due to Mesa-Optimization?",
+          "page": 11,
+          "context": ""
+        },
+        {
+          "section": "2.1.3",
+          "question": "What Behaviours Can Be Specified In-Context?",
+          "page": 12,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "2.2",
+      "title": "Capabilities Are Difficult to Estimate and Understand",
+      "category": "Scientific Understanding of LLMs",
+      "page": 15,
+      "research_questions": [
+        {
+          "section": "2.2.4",
+          "question": "How Can We Efficiently Evaluate Generality of LLMs?",
+          "page": 18,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "2.3",
+      "title": "Effects of Scale on Capabilities Are Not Well-Characterized",
+      "category": "Scientific Understanding of LLMs",
+      "page": 21,
+      "research_questions": []
+    },
+    {
+      "section": "2.4",
+      "title": "Qualitative Understanding of Reasoning Capabilities Is Lacking",
+      "category": "Scientific Understanding of LLMs",
+      "page": 28,
+      "research_questions": [
+        {
+          "section": "2.4.1",
+          "question": "Does Scaling Improve Reasoning Capabilities?",
+          "page": 28,
+          "context": ""
+        },
+        {
+          "section": "2.4.4",
+          "question": "Which Aspects of Training Lead to the Acquisition of Reasoning?",
+          "page": 30,
+          "context": ""
+        },
+        {
+          "section": "2.4.5",
+          "question": "What Are the Computational Limits of Transformers?",
+          "page": 30,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "2.5",
+      "title": "Agentic LLMs Pose Novel Risks",
+      "category": "Scientific Understanding of LLMs",
+      "page": 31,
+      "research_questions": []
+    },
+    {
+      "section": "2.6",
+      "title": "Multi-Agent Safety Is Not Assured by Single-Agent Safety",
+      "category": "Scientific Understanding of LLMs",
+      "page": 35,
+      "research_questions": []
+    },
+    {
+      "section": "2.7",
+      "title": "Safety-Performance Trade-offs Are Poorly Understood",
+      "category": "Scientific Understanding of LLMs",
+      "page": 39,
+      "research_questions": [
+        {
+          "section": "2.7.4",
+          "question": "How Fundamental Are Safety-Performance Trade-offs?",
+          "page": 41,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "3.1",
+      "title": "Pretraining Produces Misaligned Models",
+      "category": "Development and Deployment Methods",
+      "page": 44,
+      "research_questions": []
+    },
+    {
+      "section": "3.2",
+      "title": "Finetuning Methods Struggle to Assure Alignment and Safety",
+      "category": "Development and Deployment Methods",
+      "page": 47,
+      "research_questions": [
+        {
+          "section": "3.2.1",
+          "question": "How Does Finetuning Change a Pretrained Model?",
+          "page": 48,
+          "context": ""
+        }
+      ]
+    },
+    {
+      "section": "3.3",
+      "title": "LLM Evaluations Are Confounded and Biased",
+      "category": "Development and Deployment Methods",
+      "page": 52,
+      "research_questions": []
+    },
+    {
+      "section": "3.4",
+      "title": "Tools for Interpreting or Explaining LLM Behavior Are Absent or",
+      "category": "Development and Deployment Methods",
+      "page": 56,
+      "research_questions": []
+    }
+  ],
+  "total_questions": 23,
+  "total_challenges": 37
+}
