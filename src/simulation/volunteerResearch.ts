@@ -8,7 +8,7 @@
  */
 
 import { GameState } from '@/types/game';
-import { assertProbability } from './utils/assertions';
+import { assertProbability, assertStateProperty, assertDefined } from './utils/assertions';
 
 /**
  * Calculate volunteer research contribution
@@ -30,7 +30,10 @@ export function calculateVolunteerResearchContribution(state: GameState): number
   let volunteerCompute = 0;
   
   // 1. TIME: Need high unemployment
-  const unemployment = state.society?.unemploymentLevel || 0;
+  const unemployment = assertStateProperty(state.society, 'unemploymentLevel', {
+    location: 'calculateVolunteerResearchContribution',
+    month: state.currentMonth
+  });
   if (unemployment < 0.30) return 0; // Need 30%+ unemployment for critical mass
   
   // Scale with unemployment: 30% → 1.0x, 60% → 2.0x, 90% → 3.0x
@@ -39,7 +42,10 @@ export function calculateVolunteerResearchContribution(state: GameState): number
   // 2. RESOURCES: Need UBI (basic needs met, can afford to volunteer)
   if (!state.ubiSystem?.active) return 0;
 
-  const ubiCoverage = state.ubiSystem.basicIncome?.coverage || 0;
+  const ubiCoverage = assertStateProperty(state.ubiSystem.basicIncome, 'coverage', {
+    location: 'calculateVolunteerResearchContribution',
+    month: state.currentMonth
+  });
   const resourceSecurity = ubiCoverage; // 0-1.0
 
   // 3. SKILLS: Need purpose infrastructure (education, platforms, tools)
@@ -58,11 +64,17 @@ export function calculateVolunteerResearchContribution(state: GameState): number
   );
 
   // 4. MOTIVATION: Need low meaning crisis (high purpose, want to help)
-  const meaningCrisis = state.socialAccumulation?.meaningCrisisLevel || 0.5;
+  const meaningCrisis = assertStateProperty(state.socialAccumulation, 'meaningCrisisLevel', {
+    location: 'calculateVolunteerResearchContribution',
+    month: state.currentMonth
+  });
   const motivation = Math.max(0, 1.0 - meaningCrisis); // Higher when crisis is low
 
   // 5. POPULATION: More people = more volunteers
-  const population = state.humanPopulationSystem?.population || 8_000_000_000;
+  const population = assertStateProperty(state.humanPopulationSystem, 'population', {
+    location: 'calculateVolunteerResearchContribution',
+    month: state.currentMonth
+  });
   const populationFactor = population / 8_000_000_000; // Relative to 2025 baseline
   
   // COMBINE FACTORS
@@ -122,9 +134,12 @@ export function logVolunteerContribution(
   totalCompute: number
 ): void {
   if (volunteerCompute < 100) return; // Don't log tiny contributions
-  
+
   const percentage = (volunteerCompute / totalCompute) * 100;
-  const unemployment = state.society?.unemploymentLevel || 0;
+  const unemployment = assertStateProperty(state.society, 'unemploymentLevel', {
+    location: 'logVolunteerContribution',
+    month: state.currentMonth
+  });
   const participationRate = calculateParticipationRate(state);
   
   console.log(`\n🧑‍🔬 CITIZEN SCIENCE ACTIVE`);
@@ -138,10 +153,16 @@ export function logVolunteerContribution(
  * Calculate what % of population is volunteering
  */
 function calculateParticipationRate(state: GameState): number {
-  const unemployment = state.society?.unemploymentLevel || 0;
+  const unemployment = assertStateProperty(state.society, 'unemploymentLevel', {
+    location: 'calculateParticipationRate',
+    month: state.currentMonth
+  });
   if (unemployment < 0.30) return 0;
 
-  const ubiCoverage = state.ubiSystem?.basicIncome?.coverage || 0;
+  const ubiCoverage = assertStateProperty(state.ubiSystem.basicIncome, 'coverage', {
+    location: 'calculateParticipationRate',
+    month: state.currentMonth
+  });
   const purposeInfra = state.ubiSystem?.purposeInfrastructure;
 
   if (!purposeInfra) return 0;
@@ -153,7 +174,10 @@ function calculateParticipationRate(state: GameState): number {
     purposeInfra.socialInfrastructure * 0.1
   );
 
-  const meaningCrisis = state.socialAccumulation?.meaningCrisisLevel || 0.5;
+  const meaningCrisis = assertStateProperty(state.socialAccumulation, 'meaningCrisisLevel', {
+    location: 'calculateParticipationRate',
+    month: state.currentMonth
+  });
   const motivation = Math.max(0, 1.0 - meaningCrisis);
 
   const timeAvailable = (unemployment - 0.30) / 0.30;
@@ -209,12 +233,12 @@ export function applyVolunteerResearchBenefits(state: GameState, volunteerComput
   if (state.globalMetrics) {
     const trustGain = participationRate * 0.01; // Up to +0.5% per month
     // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
-    const currentTrust = assertProbability(state.globalMetrics.publicTrust, {
+    const currentTrust = assertProbability(state.globalMetrics.trustInAI, {
       location: 'applyVolunteerResearchEffects',
-      valueName: 'globalMetrics.publicTrust',
+      valueName: 'globalMetrics.trustInAI',
       month: state.currentMonth
     });
-    state.globalMetrics.publicTrust = Math.min(1.0, currentTrust + trustGain);
+    state.globalMetrics.trustInAI = Math.min(1.0, currentTrust + trustGain);
   }
 }
 

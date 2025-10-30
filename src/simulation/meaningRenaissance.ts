@@ -19,6 +19,7 @@ import type { GameState } from '../types/game';
 import { getTrustInAI } from './socialCohesion';
 import { clamp, getAverageAICapability, getAverageAlignment } from './utils';
 import { getTechDeploymentSafe } from './techTree/helpers';
+import { assertStateProperty } from './utils/assertions';
 
 export interface MeaningRenaissanceState {
   // Purpose Diversity: Multiple valid paths to fulfillment
@@ -125,7 +126,10 @@ function updatePurposeDiversity(
   meaning.communityPathways += (governanceEngagement * 0.01 + communityBonds * 0.008) * 0.5;
   
   // Creative pathways: Art, music, writing valued (not just monetized)
-  const culturalVitality = qol.culturalVitality || 0.5;
+  const culturalVitality = assertStateProperty(qol, 'culturalVitality', {
+    location: 'calculateMeaningRenaissance',
+    month: state.currentMonth
+  });
   const aiCapability = getAverageAICapability(state);
   meaning.creativePathways += (culturalVitality * 0.012 + (aiCapability > 1.0 ? 0.008 : 0));
   
@@ -307,7 +311,11 @@ function applyMeaningRenaissanceEffect(
     
     // Boost QoL dimensions
     qol.meaningAndPurpose = Math.min(1, qol.meaningAndPurpose + renaissanceStrength * 0.01);
-    qol.culturalVitality = Math.min(1, (qol.culturalVitality || 0.5) + meaning.artisticRenaissanceLevel * 0.012);
+    const currentVitality = assertStateProperty(qol, 'culturalVitality', {
+      location: 'applyMeaningRenaissanceEffect',
+      month: state.currentMonth
+    });
+    qol.culturalVitality = Math.min(1, currentVitality + meaning.artisticRenaissanceLevel * 0.012);
     qol.socialConnection = Math.min(1, qol.socialConnection + meaning.communityPathways * 0.008);
   }
   

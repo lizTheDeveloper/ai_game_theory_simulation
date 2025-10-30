@@ -144,3 +144,5 @@
 🗑️ | Deletion/removal
 📋 | Checklist/tasks
 🟢 | Success indicator/green light
+🧑 | Person (base emoji, used in composite 🧑‍🔬)
+🧑‍🔬 | Citizen science/volunteer research

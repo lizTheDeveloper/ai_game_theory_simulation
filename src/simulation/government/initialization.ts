@@ -15,6 +15,7 @@
 import { loadCountries, Government, createStateCapacity } from '@lizthedeveloper/government-agents';
 import type { GovernmentSystemState } from '../../types/government';
 import type { RNGFunction } from '../../types/config';
+import { assertStateProperty } from '../utils/assertions';
 
 /**
  * Initialize government system with 30 countries
@@ -108,7 +109,14 @@ export function calculateAverageAICapability(aiAgents: any[]): number {
   if (!aiAgents || aiAgents.length === 0) return 0;
   // FIX #20 (Oct 22, 2025): Access correct property - capabilityProfile.cognitive, not agent.cognitive
   // Bug: AI agents don't have agent.cognitive property (always undefined), they have capabilityProfile.cognitive
-  const sum = aiAgents.reduce((acc, agent) => acc + (agent.capabilityProfile?.cognitive || 0), 0);
+  const sum = aiAgents.reduce((acc, agent) => {
+    const cognitive = assertStateProperty(agent.capabilityProfile, 'cognitive', {
+      location: 'calculateAverageAICapability',
+      valueName: 'capabilityProfile.cognitive',
+      additionalInfo: { agentId: agent.id }
+    });
+    return acc + cognitive;
+  }, 0);
   return sum / aiAgents.length;
 }
 

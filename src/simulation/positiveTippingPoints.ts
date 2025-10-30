@@ -24,6 +24,7 @@ import type {
   TechnologySynergy
 } from '../types/positiveTippingPoints';
 import { addSimulationEvent } from './utils/eventLogger';
+import { assertDefined } from './utils/assertions';
 
 /**
  * Initialize positive tipping points system
@@ -521,7 +522,12 @@ function estimateEnvironmentalImpact(tech: TechnologyAdoption): number {
     'battery-storage': 0.5,    // 0.5 Gt CO2/year (indirect via renewables)
   };
 
-  return (impactMap[tech.technology] || 0) * tech.marketShare;
+  const impact = assertDefined(impactMap[tech.technology], {
+    location: 'estimateEnvironmentalImpact',
+    valueName: `impactMap[${tech.technology}]`,
+    additionalInfo: { technology: tech.technology }
+  });
+  return impact * tech.marketShare;
 }
 
 /**
@@ -537,7 +543,12 @@ function estimateEconomicImpact(tech: TechnologyAdoption): number {
     'battery-storage': 80,
   };
 
-  const costSavings = (1.0 - tech.costPerUnit) * (impactMap[tech.technology] || 0);
+  const impact = assertDefined(impactMap[tech.technology], {
+    location: 'estimateEconomicImpact',
+    valueName: `impactMap[${tech.technology}]`,
+    additionalInfo: { technology: tech.technology }
+  });
+  const costSavings = (1.0 - tech.costPerUnit) * impact;
   return costSavings * tech.marketShare;
 }
 
