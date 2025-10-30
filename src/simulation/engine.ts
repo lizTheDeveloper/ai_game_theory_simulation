@@ -159,6 +159,7 @@ import { Tier2NuclearSecurityPhase } from './engine/phases/Tier2NuclearSecurityP
 import { Tier2CentaurSystemsPhase } from './engine/phases/Tier2CentaurSystemsPhase';
 import { Tier2CommunityCohesionPhase } from './engine/phases/Tier2CommunityCohesionPhase';
 import { Tier2SynergyPhase } from './engine/phases/Tier2SynergyPhase';  // M3 Enhancement (Oct 27, 2025)
+import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P3.2 (Oct 30, 2025)
 
 /**
  * Classify population outcome based on 7-tier system (Oct 13, 2025)
@@ -579,6 +580,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(CollectiveActionsPhase);  // Phase 5.5: Coordinated collective actions
     // TechnologyBreakthroughsPhase removed (deprecated - replaced by TechTreePhase)
     this.orchestrator.registerPhase(new StochasticInnovationPhase());
+    this.orchestrator.registerPhase(new UnknownUnknownPhase());  // P3.2: Black swan events
     this.orchestrator.registerPhase(new GovernmentActionsPhase());
     this.orchestrator.registerPhase(new GovernmentElectionPhase());  // Oct 19, 2025: Elections & opinion
     this.orchestrator.registerPhase(new GovernmentResponsePhase());  // Oct 19, 2025: Policy response
