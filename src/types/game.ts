@@ -560,6 +560,10 @@ export interface GameState {
   breakthroughsThisRun?: number;    // Count of breakthroughs for statistics
   breakthroughMultiplier?: number;  // Phase 1B Fix 3: Positive compounding (1.0 baseline, max 2.0)
 
+  // Unknown Unknown Events (P3.2)
+  unknownUnknownsThisRun?: string[]; // Names of unknown unknowns that occurred (prevents duplicates)
+  unknownUnknownCount?: number;      // Count of unknown unknowns for statistics
+
   // Configuration
   config: ConfigurationSettings;
   llmConfig?: import('./llm').LLMConfig; // LLM policy optimization configuration (Oct 21, 2025)

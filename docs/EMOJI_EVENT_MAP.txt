@@ -53,6 +53,7 @@
 🌳 | Forest ecosystem
 🏜️ | Desertification
 ☄️ | Exogenous shock
+☀️ | Solar event/solar flare
 🦁 | Wildlife/species impact
 
 # Nuclear Events
@@ -84,6 +85,7 @@
 ⚡ | Capability breakthrough
 🔬 | Research breakthrough
 💡 | Transformative breakthrough
+✨ | Positive unknown unknown / unexpected benefit
 🚀 | Tech deployment started
 ✅ | Tech deployment complete
 🎆 | Positive cascade
