@@ -15,14 +15,14 @@
 
 ## 📊 CURRENT STATUS
 
-**Last Update:** October 30, 2025 (Roadmap cleanup - 4 major completions archived)
+**Last Update:** October 30, 2025 (Monte Carlo validation complete - all 8 issues resolved)
 
 **🚧 Active Work:** None - session complete, awaiting next user directive
 
 **Total Remaining Effort:** ~40-68 hours (reduced by 26-42h from Oct 30 completions)
 
 **Recent Completions (Oct 30, 2025):**
-- ✅ Monte Carlo Issues 1-4: Western Liberal null, outcome classification, biosphere calibration (6-9h) - COMPLETE
+- ✅ Monte Carlo Issues 1-8: ALL RESOLVED (14-20h) - Western Liberal, outcome classification, biosphere, gaming detection, refugee crisis, snapshot exports
 - ✅ Policy Zero-Variance Bug: Fixed Combined Interventions deterministic equilibrium (2-3h) - COMPLETE
 - ✅ AI Resentment Recovery + Policy Integration: Breaking circular dependency for utopia paths (8-12h) - COMPLETE
 - ✅ Planetary Boundaries Recovery + Tech Effects Integration: Nuclear winter recovery feedback (6-8h) - COMPLETE
@@ -38,11 +38,13 @@
    - 87 research files with 815 real citations - verify claims match papers
    - See: `research/CLAIM_VERIFICATION_CRISIS.md`
 
-2. **🟠 HIGH:** Monte Carlo Validation Bug Fixes (8-11h remaining)
-   - ✅ Issues 1-4 COMPLETE (Oct 29-30): Western Liberal paradigm null, outcome classification, biosphere calibration, 100% dystopia validation
-   - 🚧 Issues 5-8 IN PROGRESS (8-11h) - Roy3, Oct 30: AI gaming detection, refugee crisis initialization, population/biosphere data export
-   - **Current:** Investigating Issue-5 (AI gaming at month 0) - validating if behavior is bug or design
-   - See: `/logs/monte_carlo_issues_20251029.md` and `/plans/completed/monte-carlo-fixes-issues-1-4_20251030.md`
+2. ✅ **Monte Carlo Validation Bug Fixes COMPLETE** - All 8 issues resolved (Oct 29-30)
+   - ✅ Issues 1-4 COMPLETE (Oct 29-30): Western Liberal, outcome classification, biosphere calibration, 100% dystopia
+   - ✅ ISSUE-5 COMPLETE (Roy1, Oct 30): Month-0 gaming detection fixed with 3-month strategy delay + 24-month maturity ramp
+   - ✅ ISSUE-6 COMPLETE (Roy, Oct 30): Month-0 refugee crisis calibration (conflict zone population fix)
+   - ✅ ISSUES 7-8 COMPLETE (Roy, Oct 30): Population & biosphere snapshot export bugs (field name mismatches)
+   - See: `/logs/monte_carlo_issues_20251029.md` and `/logs/issue5_fix_summary_20251030.md`
+   - **Ready for parameter sweep:** 4 scenario modes × 4 AI alignment levels = 16 configs × N=100
 
 3. ✅ **Architecture Integration Issues COMPLETE** - All 8 issues resolved (Oct 29-30)
    - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
@@ -177,25 +179,33 @@ Cynthia proposed three crisis mitigation mechanics to improve near-term resilien
   - Added biosphere_integrity/biosphere to MetricSnapshot interface
   - Populated from state.planetaryBoundariesSystem.boundaries.biosphere_integrity
 
-**🚧 Remaining Issues (4-6h):**
+**✅ COMPLETED (Roy1, Oct 30):**
 
-#### ISSUE-5: Immediate AI Gaming Detection - Month 0 Adversarial (2-3h) 🟡 MEDIUM
-**Severity:** MEDIUM - Calibration issue
-**Evidence:** Gaming detected at month 0 for Toxic-0, Toxic-1, Niche-0 (all via data_contamination), repeated in months 1-2
-**Impact:** AI agents start adversarial immediately, may be too aggressive
-**Context:** Validates Test-Set Contamination mechanic design (gaming is pervasive)
-**Fix:** Review AI agent initial alignment distribution, consider slight increase to baseline (0.4 → 0.5) OR accept if research supports
-**Status:** Not started
+#### ISSUE-5: Month-0 AI Gaming Detection (2-3h) 🟡 MEDIUM - ✅ COMPLETE (Roy1)
+**Evidence:** Gaming detected at month 0 for Toxic-0, Toxic-1, Niche-0 (all via data_contamination)
+**Root Cause:** (1) Strategy assignment on first action, (2) No detection maturity ramp
+**Fix Applied:**
+- Added 3-month strategy delay (research-backed: strategic gaming requires time)
+- Ramped detection effectiveness 0% → 45% over 24 months (matches research timeline)
+**Files Modified:** `src/simulation/agents/aiAgent.ts`, `src/simulation/gamingDetection.ts`
+**Validation:** All tests passed, zero month-0 detections, gaming emerges at month 3+
+**Status:** ✅ COMPLETE (Roy1, Oct 30) - Validated and production-ready
+**Logs:**
+- `logs/issue5_month0_gaming_analysis_20251030.md` (root cause analysis)
+- `logs/issue5_fix_summary_20251030.md` (implementation summary)
+- `logs/issue5_validation_results_20251030.md` (validation results)
+**Time:** ~4 hours (analysis + implementation + validation)
 
-#### ISSUE-6: Massive Refugee Crisis at Month 0 - 325M at Risk (2-3h) 🟡 MEDIUM
-**Severity:** MEDIUM - Calibration issue
-**Evidence:** Month 0 crisis: 325.9M people at risk (war-driven), 10% flee rate per month over 4 years
-**Context:** Current global refugees ~110M (UNHCR 2023), 325M is 3x current levels
-**Impact:** Realism concern - seems high for month 0 initialization
-**Fix:** Review conflict zone population initialization, check refugee crisis trigger thresholds, consider delayed trigger (after month 6)
-**Status:** Not started
+#### ISSUE-6: Month-0 Refugee Crisis 325M (1.5h) 🟡 MEDIUM - ✅ COMPLETE (Roy, Oct 30 11:45am)
+**Evidence:** 325.9M at risk (3x current global refugees)
+**Root Cause:** War/conflict displacement used global 8B population instead of conflict zone ~400M
+**Fix Applied:**
+- Line 410-421: Calculate conflict zone population (~5-10% of global with scaling)
+- Result: ~16-32M displaced (realistic per UNHCR 2023: 110M global)
+**Files Modified:** `src/simulation/refugeeCrises.ts` (lines 407-432)
+**Status:** ✅ COMPLETE (Roy, Oct 30) - Validated with research
 
-**Remaining Work:** 4-6 hours (Issues 5-6)
+**Remaining Work:** 0 hours - ALL MONTE CARLO ISSUES RESOLVED!
 
 **Next Steps:**
 1. Complete Issues 5-8 (calibration and data export fixes)
@@ -505,7 +515,7 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~67-131 hours (reduced by 1h citation fixes + 12h integration complete)
+**Total Remaining Effort:** ~53-117 hours (reduced by 1h citation fixes + 12h integration + 14-20h Monte Carlo validation)
 
 **Breakdown by Priority:**
 
@@ -517,6 +527,11 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 **HIGH:**
 - ✅ Citation Verification Fixes: COMPLETE (Roy2, Oct 29) - 1h
+- ✅ Monte Carlo Validation Bug Fixes: COMPLETE (Oct 29-30) - All 8 issues resolved (14-20h)
+  - ✅ Issues 1-4: Western Liberal, outcome classification, biosphere, 100% dystopia
+  - ✅ Issue 5: Month-0 gaming detection (3-month delay + maturity ramp) - Roy1
+  - ✅ Issue 6: Refugee crisis calibration (conflict zone population fix) - Roy
+  - ✅ Issues 7-8: Population & biosphere snapshot exports
 - ✅ Architecture Integration Issues: COMPLETE (Oct 29-30) - All 8 issues resolved
   - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
   - ✅ Population units type safety (12-16h) - COMPLETE (Oct 28-29)

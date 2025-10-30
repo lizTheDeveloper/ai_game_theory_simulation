@@ -67,6 +67,15 @@ export interface MetricSnapshot {
   ecosystemHealth?: number;
   climateStability?: number;
   pollutionLevel?: number;
+
+  // Population metrics (ISSUE-7 fix, Oct 30, 2025)
+  population?: number; // Total human population in billions
+  globalPopulation?: number; // Alias for population (compatibility)
+  totalPopulation?: number; // Alias for population (compatibility)
+
+  // Planetary boundaries (ISSUE-8 fix, Oct 30, 2025)
+  biosphere_integrity?: number; // Biosphere integrity boundary value (extinction rate / safe threshold)
+  biosphere?: number; // Alias for biosphere_integrity (compatibility)
 }
 
 /**
@@ -188,7 +197,16 @@ export class SimulationLogger {
       diseasesBurden: state.qualityOfLifeSystems.diseasesBurden,
       ecosystemHealth: state.qualityOfLifeSystems.ecosystemHealth,
       climateStability: state.qualityOfLifeSystems.climateStability,
-      pollutionLevel: state.qualityOfLifeSystems.pollutionLevel
+      pollutionLevel: state.qualityOfLifeSystems.pollutionLevel,
+
+      // Population metrics (ISSUE-7 fix, Oct 30, 2025)
+      population: state.humanPopulationSystem?.population,
+      globalPopulation: state.humanPopulationSystem?.population, // Alias
+      totalPopulation: state.humanPopulationSystem?.population, // Alias
+
+      // Planetary boundaries (ISSUE-8 fix, Oct 30, 2025)
+      biosphere_integrity: state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.currentValue,
+      biosphere: state.planetaryBoundariesSystem?.boundaries?.biosphere_integrity?.currentValue // Alias
     };
   }
   
