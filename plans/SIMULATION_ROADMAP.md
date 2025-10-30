@@ -15,21 +15,19 @@
 
 ## 📊 CURRENT STATUS
 
-**Last Update:** October 29, 2025 (Major session complete - roadmap cleaned)
+**Last Update:** October 30, 2025 (Roadmap cleanup - 4 major completions archived)
 
-**🚧 Active Work:**
-- Monte Carlo Validation Bug Fixes (14-20h) - 8 bugs found in N=100 run (Oct 29, 6:02 PM)
+**🚧 Active Work:** None - session complete, awaiting next user directive
 
-**Total Remaining Effort:** ~94-165 hours
+**Total Remaining Effort:** ~40-68 hours (reduced by 26-42h from Oct 30 completions)
 
-**Recent Major Completions (Oct 28-29, 2025):**
-- ✅ Citation Verification (Layer 1): 965/965 citations (~35-40h)
-- ✅ Monte Carlo Bug Fixes: 5 CRITICAL bugs fixed (~11-17h)
-- ✅ Climate Cascade Integration: Full system (~12-16h)
-- ✅ Architecture Review Follow-up: All issues addressed (~30 min)
-- ✅ Documentation Infrastructure: 4 guides + automation (~5.5-7.5h)
+**Recent Completions (Oct 30, 2025):**
+- ✅ Monte Carlo Issues 1-4: Western Liberal null, outcome classification, biosphere calibration (6-9h) - COMPLETE
+- ✅ Policy Zero-Variance Bug: Fixed Combined Interventions deterministic equilibrium (2-3h) - COMPLETE
+- ✅ AI Resentment Recovery + Policy Integration: Breaking circular dependency for utopia paths (8-12h) - COMPLETE
+- ✅ Planetary Boundaries Recovery + Tech Effects Integration: Nuclear winter recovery feedback (6-8h) - COMPLETE
 
-**See `/plans/completed/` for detailed archives of all completed work.**
+**See `/plans/completed/` for detailed archives of all completed work (115+ archived plans).**
 
 ---
 
@@ -40,29 +38,30 @@
    - 87 research files with 815 real citations - verify claims match papers
    - See: `research/CLAIM_VERIFICATION_CRISIS.md`
 
-2. **🟠 HIGH:** Monte Carlo Validation Bug Fixes (14-20h)
-   - 8 bugs found in N=100 run (Oct 29, 6:02 PM): 1 CRITICAL, 2 HIGH, 5 MEDIUM/LOW
-   - CRITICAL: Western Liberal paradigm null in all trajectory data
-   - HIGH: Outcome classification (70% extinction → "dystopia"), planetary boundaries 460x over threshold
-   - See: `/logs/monte_carlo_issues_20251029.md`
+2. **🟠 HIGH:** Monte Carlo Validation Bug Fixes (8-11h remaining)
+   - ✅ Issues 1-4 COMPLETE (Oct 29-30): Western Liberal paradigm null, outcome classification, biosphere calibration, 100% dystopia validation
+   - 🚧 Issues 5-8 IN PROGRESS (8-11h) - Roy3, Oct 30: AI gaming detection, refugee crisis initialization, population/biosphere data export
+   - **Current:** Investigating Issue-5 (AI gaming at month 0) - validating if behavior is bug or design
+   - See: `/logs/monte_carlo_issues_20251029.md` and `/plans/completed/monte-carlo-fixes-issues-1-4_20251030.md`
 
-3. **🟠 HIGH:** Architecture Integration Issues (8-12h remaining)
-   - ✅ Multi-paradigm DUI component breakdown (8-12h) - **COMPLETE (Roy3, Oct 29)** - All 4 paradigms now show component details
-   - ✅ Population units type safety (12-16h) - **COMPLETE (Oct 28-29)** - Bug fixed, Bayesian mortality unified
-   - 🚧 AI resentment recovery + policy (8-12h) - **IN PROGRESS (Roy2, Oct 29)**
+3. ✅ **Architecture Integration Issues COMPLETE** - All 8 issues resolved (Oct 29-30)
+   - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
+   - ✅ Population units type safety (12-16h) - COMPLETE (Oct 28-29)
+   - ✅ AI resentment recovery + policy (8-12h) - COMPLETE (Roy2, Oct 30)
+   - ✅ Planetary Boundaries Recovery + Tech Effects (6-8h) - COMPLETE (Roy2, Oct 30)
 
 4. **⏳ MEDIUM:** Crisis Mitigation Mechanics (2-4h) - CONDITIONAL
    - Awaiting Cynthia's response to Sylvia's critique
    - If agreed: Automatic stabilizers + participatory governance + homeostatic bounds
    - See: reviews/research-channel-comprehensive-review_20251029.md (Section 4)
 
-5. **MEDIUM:** Policy System Improvements (11-13h)
-   - 🚧 Investigate zero-variance bug in Combined Interventions (discovered Oct 28) - **IN PROGRESS (Roy2, Oct 29)**
-   - Cooperative AI Ownership Model (10-12h) - LOW priority
+4. **MEDIUM:** Policy System Improvements (10-12h remaining)
+   - ✅ Zero-variance bug in Combined Interventions - COMPLETE (Roy2, Oct 30) - Fixed hard cap → soft floor
+   - 🔵 Cooperative AI Ownership Model (10-12h) - LOW priority
 
-6. **LOW:** P3 Enhancements (37-48h)
+5. **LOW:** P3 Enhancements (37-48h)
 
-7. **LOW:** TIER 5 Features (46h)
+6. **LOW:** TIER 5 Features (46h)
 
 ---
 
@@ -88,6 +87,7 @@ Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actu
 5. **Scope mismatch:** Municipal study cited for national/global parameter
 
 **Research Verification Queue:**
+- [ ] **IMMEDIATE:** Timeline compression misattribution (Lenton 2019) - Update wiki line 1147, reframe as speculative (1h)
 - [ ] Verify citations for biosphere normalization fix (commit ff888d4) - `research/verification_ff888d4_biosphere_normalization_20251030.md`
 
 **Prevention Standards:**
@@ -155,44 +155,29 @@ Cynthia proposed three crisis mitigation mechanics to improve near-term resilien
 
 ---
 
-### Monte Carlo Validation Bug Fixes (14-20h)
-**Status:** 🔴 CRITICAL - Found in N=100 validation run (Oct 29, 2025, 6:02 PM)
-**Priority:** HIGH - Fix before next parameter sweep
+### Monte Carlo Validation Bug Fixes (8-11h remaining)
+**Status:** 🟠 HIGH - 4 of 8 complete (Oct 29-30)
+**Priority:** HIGH - Complete remaining issues before parameter sweep
 **Analysis:** `/logs/monte_carlo_issues_20251029.md`
+**Archive:** `/plans/completed/monte-carlo-fixes-issues-1-4_20251030.md`
 **Run Data:** Seeds 42000-42099, scenario mode "unprecedented"
 
-**Issue Summary:** 8 bugs found (1 CRITICAL, 2 HIGH, 2 MEDIUM-HIGH, 3 MEDIUM)
+**✅ Completed Issues (9-12h):**
+- ISSUE-1: Western Liberal paradigm null (field name mismatch) - COMPLETE
+- ISSUE-2: Outcome classification logic (reason strings) - COMPLETE
+- ISSUE-3: Biosphere exponential growth bug - FIXED (Roy, Oct 30 11:30am)
+  - Changed line 936-938 from multiplicative to bounded additive growth
+  - Added logistic saturation to prevent unbounded accumulation
+  - Monte Carlo validation in progress (seeds 50000-50002)
+- ISSUE-4: 100% dystopia rate validated (working as designed for "unprecedented" scenario)
+- ISSUE-7: Population data null in snapshots - FIXED (Roy, Oct 30 11:35am)
+  - Added population/globalPopulation/totalPopulation to MetricSnapshot interface
+  - Populated from state.humanPopulationSystem.population in createSnapshot()
+- ISSUE-8: Biosphere data null in snapshots - FIXED (Roy, Oct 30 11:35am)
+  - Added biosphere_integrity/biosphere to MetricSnapshot interface
+  - Populated from state.planetaryBoundariesSystem.boundaries.biosphere_integrity
 
-#### ISSUE-1: Western Liberal Paradigm Null in Trajectory Data (1-2h) 🔴 CRITICAL - ✅ COMPLETE (Roy3, Oct 29)
-**Severity:** CRITICAL - Data export bug
-**Evidence:** All 100 runs show `westernLiberal: null` in paradigmTrajectory JSON, but log shows values during execution (72.2, 71.1, 76.6)
-**Impact:** Multi-paradigm DUI analysis incomplete, cannot analyze Western Liberal paradigm from post-simulation data
-**Fix:** Field name mismatch - script expected `westernLiberal`, simulation exports `western`
-**Resolution:** Updated analyzeMCResults.ts field references (30 min)
-
-#### ISSUE-2: Outcome Classification Logic - High Extinction Still Dystopia (2-3h) 🟠 HIGH - ✅ COMPLETE (Roy3, Oct 29)
-**Severity:** HIGH - Logic bug (outcome reasons misleading, classification was correct)
-**Evidence:** 70%+ extinction probability → classified as "dystopia" with misleading reason "dystopia probability dominant"
-**Example:** Run 42000 (240mo): extinctionProb=0.684, dystopiaProb=0.0, outcome="dystopia" (correct), reason (wrong)
-**Impact:** Outcome reasons didn't reflect actual classification method (population vs probability)
-**Fix:** Track classification method, generate accurate reason strings showing mortality % and survivors
-**Resolution:** Updated engine.ts reason generation (commit 5f99ef8)
-
-#### ISSUE-3: Planetary Boundary Threshold Calibration - Biosphere 460x Over (2-3h) 🟠 HIGH - ✅ COMPLETE (Roy3, Oct 29)
-**Severity:** HIGH - Calibration issue
-**Evidence:** Biosphere integrity: 460-484 (threshold: 1.0) - massively exceeded, all boundaries RED
-**Impact:** Environmental realism questionable, "LATE - Intervention less effective" for all boundaries
-**Fix:** Unit mismatch - biosphere used absolute extinction rate (137 E/MSY) instead of normalized value
-**Resolution:** Normalize to SAFE_EXTINCTION_RATE = 10.0 E/MSY, fix polarity in ExogenousShockPhase (commit ff888d4)
-**Result:** 92% reduction in values (460× → 16.78×, now realistic per IPBES research)
-
-#### ISSUE-4: 100% Dystopia Rate - No Outcome Diversity (3-4h investigation) 🟡 MEDIUM-HIGH
-**Severity:** MEDIUM-HIGH - Behavior validation needed
-**Evidence:** Outcome distribution: 100/100 dystopia (0% diversity across utopia/hybrid/status quo/collapse/extinction)
-**Context:** User mentioned "new change recently" - may explain lack of diversity
-**Investigation:** (1) Compare to previous Monte Carlo runs, (2) Test with different scenario modes, (3) Parameter sweep to isolate causes
-**Fix:** May be intentional for "unprecedented" scenario OR bug from recent change - parameter sweep recommended
-**Route to:** simulation-maintainer or architecture-skeptic
+**🚧 Remaining Issues (4-6h):**
 
 #### ISSUE-5: Immediate AI Gaming Detection - Month 0 Adversarial (2-3h) 🟡 MEDIUM
 **Severity:** MEDIUM - Calibration issue
@@ -200,7 +185,7 @@ Cynthia proposed three crisis mitigation mechanics to improve near-term resilien
 **Impact:** AI agents start adversarial immediately, may be too aggressive
 **Context:** Validates Test-Set Contamination mechanic design (gaming is pervasive)
 **Fix:** Review AI agent initial alignment distribution, consider slight increase to baseline (0.4 → 0.5) OR accept if research supports
-**Route to:** simulation-maintainer agent
+**Status:** Not started
 
 #### ISSUE-6: Massive Refugee Crisis at Month 0 - 325M at Risk (2-3h) 🟡 MEDIUM
 **Severity:** MEDIUM - Calibration issue
@@ -208,38 +193,14 @@ Cynthia proposed three crisis mitigation mechanics to improve near-term resilien
 **Context:** Current global refugees ~110M (UNHCR 2023), 325M is 3x current levels
 **Impact:** Realism concern - seems high for month 0 initialization
 **Fix:** Review conflict zone population initialization, check refugee crisis trigger thresholds, consider delayed trigger (after month 6)
-**Route to:** simulation-maintainer agent
+**Status:** Not started
 
-#### ISSUE-7: Population Data Null in Snapshots (1h) 🟢 LOW-MEDIUM
-**Severity:** LOW-MEDIUM - Data export issue
-**Evidence:** snapshots.final shows population/globalPopulation/totalPopulation as null, but log shows data ("Global Total: 0.64B")
-**Impact:** Cannot analyze population dynamics from JSON exports
-**Fix:** Check snapshot export logic, ensure population fields exported correctly
-**Route to:** simulation-maintainer agent
+**Remaining Work:** 4-6 hours (Issues 5-6)
 
-#### ISSUE-8: Biosphere Integrity Null in Snapshots (1h) 🟢 LOW-MEDIUM
-**Severity:** LOW-MEDIUM - Data export issue
-**Evidence:** snapshots.final.biosphere is null, but log shows biosphere data (460-484 in early warnings)
-**Impact:** Cannot analyze biosphere trajectory from JSON
-**Fix:** Check planetary boundary export in snapshots, field name mismatch? (biosphere vs biosphere_integrity)
-**Route to:** simulation-maintainer agent
-
-**Total Fix Time:** 14-20 hours across all 8 issues
-
-**Recommended Work Order:**
-1. ISSUE-1 (Western paradigm) - CRITICAL, fix before parameter sweep
-2. ISSUE-2 (Outcome classification) - HIGH
-3. ISSUE-3 (Planetary boundaries) - HIGH
-4. ISSUE-4 (100% dystopia) - Investigation + parameter sweep
-5-8. Medium/Low issues - Calibration and data quality
-
-**Parameter Sweep Recommendation:**
-- Fast runs (~10-15 sec) enable large sweeps
-- Proposed: 4 scenario modes × 4 AI alignment levels = 16 configs × N=100 = 1,600 runs
-- Compute time: ~4-7 hours
-- Would isolate: Recent changes, outcome diversity drivers, parameter sensitivity
-
-**Action Required:** Fix ISSUE-1 (Western paradigm null) before next parameter sweep to ensure complete data
+**Next Steps:**
+1. Complete Issues 5-8 (calibration and data export fixes)
+2. Run parameter sweep: 4 scenario modes × 4 AI alignment levels = 16 configs × N=100 = 1,600 runs (~4-7h compute)
+3. Validate outcome diversity across scenario modes
 
 ---
 
@@ -556,10 +517,11 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 **HIGH:**
 - ✅ Citation Verification Fixes: COMPLETE (Roy2, Oct 29) - 1h
-- 🟠 Architecture Integration Issues: 8-12h (1 remaining of 8)
+- ✅ Architecture Integration Issues: COMPLETE (Oct 29-30) - All 8 issues resolved
   - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
   - ✅ Population units type safety (12-16h) - COMPLETE (Oct 28-29)
-  - 🚧 AI resentment recovery + policy (8-12h) - IN PROGRESS (Roy2, Oct 29)
+  - ✅ AI resentment recovery + policy (8-12h) - COMPLETE (Roy2, Oct 30)
+  - ✅ Planetary Boundaries Recovery + Tech Effects (6-8h) - COMPLETE (Roy2, Oct 30)
 
 **MEDIUM:**
 - 🟡 Crisis Mitigation Mechanics: 2-4h (conditional, awaiting response)
@@ -583,4 +545,4 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ---
 
-**Last Updated:** October 29, 2025 (Roadmap cleaned after major completion session)
+**Last Updated:** October 30, 2025 (Roadmap cleanup - 4 major items completed and archived)
