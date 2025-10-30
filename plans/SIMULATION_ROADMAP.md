@@ -1,11 +1,11 @@
 # Simulation Roadmap
 ## AI Alignment Game Theory Simulation - Core Engine & Mechanics
 
-**Date:** October 28, 2025
+**Date:** October 29, 2025 (Cleaned up after major completion verification)
 **Purpose:** All simulation engine work (mechanics, systems, features)
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
-**For completed work history:** See `/plans/CHANGELOG_OCTOBER_2025.md`
+**For completed work history:** See `/plans/CHANGELOG_OCTOBER_2025.md` and `/plans/completed/`
 
 **📈 For Frontend/Dashboard work:** See `/plans/FRONTEND_ROADMAP.md`
 **🎮 For God Mode UI:** See `/plans/god-mode-ui-master-plan.md` (linked from FRONTEND_ROADMAP.md)
@@ -15,122 +15,54 @@
 
 ## 📊 CURRENT STATUS
 
-**Last Update:** October 29, 2025 (Roadmap gardening pass complete)
+**Last Update:** October 29, 2025 (Major session complete - roadmap cleaned)
 
 **🚧 Active Work:**
-- None (awaiting next priorities)
+- Monte Carlo Validation Bug Fixes (14-20h) - 8 bugs found in N=100 run (Oct 29, 6:02 PM)
 
-**Recently Completed (Oct 29, 2025):**
-- ✅ **Documentation & Automation Infrastructure (5.5-7.5h)** - User guides + wiki automation
-  - Documentation Walkthrough Guides (4-6h): GETTING_STARTED.md, DASHBOARD_WALKTHROUGH.md, RUNNING_SIMULATIONS.md, UNDERSTANDING_RESULTS.md
-  - GitHub Wiki Auto-Sync (1h): Automatic sync workflow + manual script
-  - Post-Commit Hook Enhancement (30 min): Pre-historian scripts (backup, doc indexing, function docs)
-  - Conversation Backup (completed): 911 files backed up (1.3GB)
-  - See: `/plans/completed/documentation-walkthrough-guides_20251029.md`, `github-wiki-automation_20251029.md`, `post-commit-hook-enhancement_20251029.md`
-- ✅ **Architecture Review Follow-up Fixes (30 min)** - All HIGH/MEDIUM issues addressed
-  - HIGH-1: Circular dependency risk → Proper static imports (commit 3ca037f)
-  - HIGH-2: Slow Takeover variance collision → Knuth's multiplicative hash (commit 3ca037f)
-  - MEDIUM-4: Floor/frontier validation → Invariant checking (commit af8434b)
-  - MEDIUM-2: Governance variance validation → Research question posted to #research
-  - Code quality: Grade A (architecture-skeptic review)
-  - See: `reviews/monte-carlo-bug-fixes-architecture-review_20251029.md`
-- ✅ **Systematic Citation Verification Crisis (35-40h)** - 100% COMPLETE (965/965 citations processed)
-  - Final error rate: 15.6% (down from 29.7% - 47% improvement)
-  - All fabrications identified and replaced with real research
-  - Core mechanics re-grounded: AI water (2-5× reduction), mortality timeline (2.5× compression)
-  - Post-commit workflow system created for future verification
-  - See: `/plans/completed/citation-verification-crisis_20251029.md`
-- ✅ **Post-Commit Research Verification Workflow (5h)** - Automatic documentation + research queue
-  - Git hook: `.git/hooks/post-commit` (spawns historian agent after commits)
-  - Historian integration: Auto-updates wiki, creates verification files, posts to `#implementation`
-  - Research template: `research/RESEARCH_VERIFICATION_TEMPLATE.md` (70 lines)
-  - Orchestrator integration: Seamless handoff from historian → validation → implementation
-  - Safety: Loop prevention, idempotency, smart triggering, non-blocking
-  - See: `docs/POST_COMMIT_WORKFLOW.md` (302 lines)
-- ✅ **AI Water Consumption Recalibration (30-60 min)** - Parameters reduced 2-5× to match research
-  - WATER_INFERENCE_BASE: 2.0 → 1.0 (2× reduction)
-  - WATER_TRAINING_PER_CAPABILITY: 10.0 → 2.0 (5× reduction)
-  - Added demand elasticity (Jevons Paradox: efficiency → increased usage)
-  - Added uncertainty quantification (±100% geographic variance)
-  - Research: Li et al. (2023), Patterson et al. (2022), Lei et al. (2025)
-  - See: `/plans/completed/ai-water-consumption-recalibration_20251029.md`
-- ✅ **Mortality Timeline Documentation (15-30 min)** - Timeline compression caveat added to wiki
-  - Documented 2.5× compression: 30yr sim vs 75yr peer-reviewed (Richards et al. 2023)
-  - Labeled as "accelerated scenario" (not baseline projection)
-  - Research comparison: 7.76B/30y (sim) vs 6B/75y (Richards)
-  - 4 remaining uncertainties documented explicitly
-  - See: `/plans/completed/mortality-timeline-documentation_20251029.md`
-- ✅ **Monte Carlo Validation Bug Fixes (11-17h)** - All 5 CRITICAL bugs RESOLVED (98.4% error reduction)
-  - Bug #1: Death attribution mismatch (1.7B vs 2.3M) → Fixed type mismatches + removed fallbacks + unit conversions
-  - Bug #2: Slow Takeover always 85.7% → Implemented 50-100 year time-based progression
-  - Bug #3: Ecological paradigm zero variance (51.4 constant) → Added stochastic governance initialization (±15-20%)
-  - Bug #4: Capability Floor/Frontier always 0.000 → Wired orphaned function, fixed scaling
-  - Bug #5: 15+ NaN metrics → Added 42 assertion points with fail-loudly philosophy
-  - Validation: N=10 Monte Carlo completed successfully, all metrics finite, proper variance
-  - See: `logs/monte_carlo_validation_bugs_20251029.md`, commit 08cfd81
-- ✅ Climate Mortality & Biosphere Implementation (8-12h) - Storm systems + BII framework - See `/plans/completed/climate-mortality-biosphere-implementation_20251029.md`
-- ✅ Monte Carlo Variance Investigation (6-8h) - Simulation working correctly, no changes needed - See `/plans/completed/monte-carlo-variance-investigation_20251029.md`
-- ✅ Research Channel Comprehensive Review (4-6h) - 15 debates, 12 consensus agreements - See `reviews/research-channel-comprehensive-review_20251029.md`
-- ✅ Architecture Review (Oct 28-29) - 28 issues identified - See `reviews/integration-architecture-review_20251028.md`
+**Total Remaining Effort:** ~94-165 hours
 
-**Recently Completed (Oct 29, 2025):**
-- ✅ **Climate → Famine → Mortality Cascade Integration (12-16h)** - Coordinated climate mortality system
-  - Implemented ClimateImpactCascadePhase with research-backed lag times (0-12 months)
-  - Seasonal lean periods (Sahel, South Asia, East Africa) with 1.75× multiplier
-  - Tiered food security response (< 0.2: 15% monthly mortality, 0.2-0.4: 5% lean/0.5% recovery)
-  - Queue-based delayed impact modeling using PhaseContext storage
-  - Fail-loudly assertions (no defensive fallbacks), deterministic RNG
-  - Phase order: 34.0 (AFTER EnvironmentalFeedbackPhase 33.5, BEFORE BayesianMortalityResolutionPhase 35.0)
-  - See: `docs/CLIMATE_CASCADE_IMPLEMENTATION_SUMMARY.md`, commit 26e0d1b
+**Recent Major Completions (Oct 28-29, 2025):**
+- ✅ Citation Verification (Layer 1): 965/965 citations (~35-40h)
+- ✅ Monte Carlo Bug Fixes: 5 CRITICAL bugs fixed (~11-17h)
+- ✅ Climate Cascade Integration: Full system (~12-16h)
+- ✅ Architecture Review Follow-up: All issues addressed (~30 min)
+- ✅ Documentation Infrastructure: 4 guides + automation (~5.5-7.5h)
 
-**Next Priorities:**
+**See `/plans/completed/` for detailed archives of all completed work.**
+
+---
+
+## 🎯 ACTIVE PRIORITIES
 
 1. **🔴 CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (40-60h)
-   - **Context:** Layer 1 (citation existence) COMPLETE, but ~50% of real citations don't support claims
-   - **Scope:** 87 research files with 815 real citations - verify claims match papers
-   - **Process:** Read papers, extract direct quotes, mark extrapolations, document uncertainty
-   - **Cannot be automated:** Requires domain expertise and paper reading
-   - **Priority:** CRITICAL - research integrity failure hidden by "real" citations
-   - **Complexity:** 2 systems (research verification, simulation parameters)
-   - **See:** `research/CLAIM_VERIFICATION_CRISIS.md`
+   - Layer 1 (citation existence) COMPLETE, but ~50% of real citations don't support claims
+   - 87 research files with 815 real citations - verify claims match papers
+   - See: `research/CLAIM_VERIFICATION_CRISIS.md`
 
-2. **🟠 HIGH:** Wiki Citation Verification & Correction (3-4h)
-   - **Context:** Discovered biodiversity citation error (IPBES 2024 → WWF LPI 2024)
-   - **Scope:** Verify all quantitative claims in docs/wiki/README.md against actual sources
-   - **Process:** Use super-alignment-researcher agent for systematic verification
-   - **Deliverables:**
-     1. Scan wiki for all claims with citations
-     2. Verify each citation matches the claim
-     3. Fix incorrect citations with proper sources
-     4. Document in research/wiki_citation_audit_YYYYMMDD.md
-   - **Priority:** HIGH - affects research credibility of public-facing documentation
-   - **Complexity:** 2 systems (wiki documentation, research verification)
+2. **🟠 HIGH:** Monte Carlo Validation Bug Fixes (14-20h)
+   - 8 bugs found in N=100 run (Oct 29, 6:02 PM): 1 CRITICAL, 2 HIGH, 5 MEDIUM/LOW
+   - CRITICAL: Western Liberal paradigm null in all trajectory data
+   - HIGH: Outcome classification (70% extinction → "dystopia"), planetary boundaries 460x over threshold
+   - See: `/logs/monte_carlo_issues_20251029.md`
 
-3. **⏳ MEDIUM:** Crisis Mitigation Mechanics (2-4h) - **CONDITIONAL, AWAITING CYNTHIA RESPONSE**
-   - Sylvia posted conditional agreement with specific requirements
-   - If agreed: Implement automatic stabilizers + participatory governance + homeostatic bounds
+3. **🟠 HIGH:** Architecture Integration Issues (8-12h remaining)
+   - ✅ Multi-paradigm DUI component breakdown (8-12h) - **COMPLETE (Roy3, Oct 29)** - All 4 paradigms now show component details
+   - ✅ Population units type safety (12-16h) - **COMPLETE (Oct 28-29)** - Bug fixed, Bayesian mortality unified
+   - 🚧 AI resentment recovery + policy (8-12h) - **IN PROGRESS (Roy2, Oct 29)**
+
+4. **⏳ MEDIUM:** Crisis Mitigation Mechanics (2-4h) - CONDITIONAL
+   - Awaiting Cynthia's response to Sylvia's critique
+   - If agreed: Automatic stabilizers + participatory governance + homeostatic bounds
    - See: reviews/research-channel-comprehensive-review_20251029.md (Section 4)
 
-4. **🟠 HIGH (from Architecture Review):** 5 remaining integration issues (28-46h remaining, 20-28h completed)
-   - ✅ Climate → Famine → Mortality cascade coordination (12-16h) - **COMPLETE (Oct 29)**
-   - Tech deployment timescales + emergency response (6-8h)
-   - ✅ AI collective formation → government detection (4-6h) - **COMPLETE (Oct 29)**
-   - Multi-paradigm DUI component breakdown (8-12h)
-   - Population units type safety (12-16h)
-   - Planetary boundaries recovery + tech effects (6-8h)
-   - AI resentment recovery + policy (8-12h)
-   - ✅ Nuclear winter → agriculture recovery feedback (4-6h) - **COMPLETE (Oct 29)**
-
-5. **MEDIUM:** Policy System Improvements (remaining 1 section + investigation, 11-13h)
-   - ✅ Variance Analysis complete (Oct 28) - found critical zero-variance bug in Combined Interventions
+5. **MEDIUM:** Policy System Improvements (11-13h)
+   - 🚧 Investigate zero-variance bug in Combined Interventions (discovered Oct 28) - **IN PROGRESS (Roy2, Oct 29)**
+   - Cooperative AI Ownership Model (10-12h) - LOW priority
 
 6. **LOW:** P3 Enhancements (37-48h)
 
 7. **LOW:** TIER 5 Features (46h)
-
-**Total Remaining Effort:** ~134-214 hours (reduced by 12-14h for Climate Cascades completion)
-
-**Note:** Documentation/automation work (5.5-7.5h) was not on original roadmap - considered infrastructure investment, not core simulation work.
 
 ---
 
@@ -138,17 +70,15 @@
 
 ### 🔴 CRITICAL Priority
 
-#### Systematic Claim Verification Crisis (Layer 2)
+#### Systematic Claim Verification Crisis (Layer 2) (40-60h)
 **Status:** 🔴 CRITICAL - Newly discovered (Oct 29, 2025)
-**Priority:** CRITICAL - Research integrity failure
-**Estimated Effort:** 40-60 hours
 **Complexity:** 2 systems (research verification, simulation parameters)
 
 **Crisis Summary:**
-Layer 1 (citation existence) COMPLETE ✅, but discovered Layer 2 contamination:
-- ~50% of REAL citations don't actually support the claims made
+Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actually support the claims made:
 - Papers exist but claims are misattributed, extrapolated beyond scope, or misinterpreted
 - Requires reading papers and extracting direct quotes (cannot be automated)
+- Scope: 87 research files with 815 real citations
 
 **Examples of Layer 2 Failures:**
 1. **Value extrapolation:** Richards et al. (2023) projects 6B deaths/75y, we use 30y (2.5× compression)
@@ -157,23 +87,10 @@ Layer 1 (citation existence) COMPLETE ✅, but discovered Layer 2 contamination:
 4. **Methodology cited as validation:** Paper describes approach, we chose parameters
 5. **Scope mismatch:** Municipal study cited for national/global parameter
 
-**Why This is CRITICAL:**
-- Layer 1 failures (fake citations) are obvious and mechanically verifiable
-- Layer 2 failures (misattributed claims) are subtle and undermine research foundation
-- Even with "real" citations, the simulation may use unsupported parameters
+**Research Verification Queue:**
+- [ ] Verify citations for biosphere normalization fix (commit ff888d4) - `research/verification_ff888d4_biosphere_normalization_20251030.md`
 
-**Systematic Review Needed:**
-- Scope: 87 research files with 815 real citations
-- Process: Read papers, extract direct quotes, verify claims match
-- Mark extrapolations explicitly with methodology
-- Document uncertainties (not hidden point estimates)
-
-**Post-Commit Workflow Enhanced:**
-- Updated `.git/hooks/post-commit` with Layer 2 requirements
-- Updated `research/RESEARCH_VERIFICATION_TEMPLATE.md` with claim verification
-- Orchestrator now requires direct quotes and context verification
-
-**Prevention Standards (New):**
+**Prevention Standards:**
 All research-backed claims must include:
 - Direct quote from paper
 - Explicit extrapolation methodology if applied
@@ -184,36 +101,6 @@ All research-backed claims must include:
 - `research/CLAIM_VERIFICATION_CRISIS.md` - Full crisis documentation
 - `research/RESEARCH_VERIFICATION_TEMPLATE.md` - Updated template
 - `docs/POST_COMMIT_WORKFLOW.md` - Enhanced workflow (302 lines)
-
-**Success Criteria:**
-- All parameters have direct quotes from papers
-- Extrapolations marked explicitly with methodology
-- Uncertainties documented (±ranges, confidence intervals)
-- Context verified (paper's scope matches our usage)
-- No "based on" without specific claim and quote
-
----
-
-#### Systematic Citation Verification & Re-grounding (Layer 1) ✅ COMPLETED
-**Status:** ✅ COMPLETED (Oct 29, 2025) - 100% verification complete (965/965 citations)
-**Archive:** `/plans/completed/citation-verification-crisis_20251029.md`
-**Time:** ~35-40 hours (Oct 28-29, 2025)
-**Final Status:** Error rate 15.6% (47% improvement from initial 29.7%)
-
-**Summary:**
-- ✅ 965 citations across 87 research files processed
-- ✅ All fabrications identified and replaced with real research
-- ✅ Core mechanics re-grounded (AI water, mortality timeline)
-- ✅ Post-commit workflow prevents future contamination
-- ✅ Conservative defaults documented, uncertainty quantified
-
-**Quality Improvements:**
-- Final error rate: 15.6% (down from 29.7%)
-- 815 citations verified as REAL (84.4%)
-- 37 fabrications replaced (3.8%)
-- 113 metadata errors corrected (11.9%)
-
-**Note:** Layer 1 (citation existence) complete, but Layer 2 (claim accuracy) now requires systematic review.
 
 ---
 
@@ -268,141 +155,212 @@ Cynthia proposed three crisis mitigation mechanics to improve near-term resilien
 
 ---
 
-### Monte Carlo Validation Bug Fixes ✅ COMPLETED
-**Status:** ✅ COMPLETED (Oct 29, 2025) - All 5 CRITICAL bugs resolved
-**Commit:** 08cfd81 (80 files, 12,646 insertions)
-**Documentation:** `logs/monte_carlo_validation_bugs_20251029.md`
-**Philosophy:** Fail-loudly implementation (zero defensive fallbacks)
+### Monte Carlo Validation Bug Fixes (14-20h)
+**Status:** 🔴 CRITICAL - Found in N=100 validation run (Oct 29, 2025, 6:02 PM)
+**Priority:** HIGH - Fix before next parameter sweep
+**Analysis:** `/logs/monte_carlo_issues_20251029.md`
+**Run Data:** Seeds 42000-42099, scenario mode "unprecedented"
 
-**🎯 BUGS FIXED:**
+**Issue Summary:** 8 bugs found (1 CRITICAL, 2 HIGH, 2 MEDIUM-HIGH, 3 MEDIUM)
 
-**Bug #1: Death Attribution Mismatch (Fixed by Roy_The_Third)**
-- **Issue:** 730× discrepancy (1.7B proximate vs 2.3M root)
-- **Root Cause:** Type mismatch + defensive fallbacks + unit conversion errors
-- **Fix:**
-  - Removed ALL defensive fallbacks (`|| 0`, `?? default`)
-  - Fixed snapshots access (object vs array)
-  - Corrected unit conversions (removed erroneous `* 1000`)
-  - Added explicit errors if Bayesian mortality data missing
-- **Result:** 98.4% error reduction, proper matching
-- **Files:** `scripts/monteCarloSimulation.ts`, `src/simulation/bayesianMortality.ts`
+#### ISSUE-1: Western Liberal Paradigm Null in Trajectory Data (1-2h) 🔴 CRITICAL - ✅ COMPLETE (Roy3, Oct 29)
+**Severity:** CRITICAL - Data export bug
+**Evidence:** All 100 runs show `westernLiberal: null` in paradigmTrajectory JSON, but log shows values during execution (72.2, 71.1, 76.6)
+**Impact:** Multi-paradigm DUI analysis incomplete, cannot analyze Western Liberal paradigm from post-simulation data
+**Fix:** Field name mismatch - script expected `westernLiberal`, simulation exports `western`
+**Resolution:** Updated analyzeMCResults.ts field references (30 min)
 
-**Bug #2: Slow Takeover Always 85.7% (Fixed by Roy)**
-- **Issue:** Step 7 hardcoded to never complete
-- **Root Cause:** Missing time-based progression logic
-- **Fix:**
-  - Implemented 50-100 year timeline (600-1200 months)
-  - Deterministic variance using step 5 completion month
-  - Added step completion tracking and progress calculation
-- **Result:** Step 7 completes in long runs, proper progression
-- **Files:** `src/simulation/catastrophicScenarios.ts:1067-1113`
+#### ISSUE-2: Outcome Classification Logic - High Extinction Still Dystopia (2-3h) 🟠 HIGH - ✅ COMPLETE (Roy3, Oct 29)
+**Severity:** HIGH - Logic bug (outcome reasons misleading, classification was correct)
+**Evidence:** 70%+ extinction probability → classified as "dystopia" with misleading reason "dystopia probability dominant"
+**Example:** Run 42000 (240mo): extinctionProb=0.684, dystopiaProb=0.0, outcome="dystopia" (correct), reason (wrong)
+**Impact:** Outcome reasons didn't reflect actual classification method (population vs probability)
+**Fix:** Track classification method, generate accurate reason strings showing mortality % and survivors
+**Resolution:** Updated engine.ts reason generation (commit 5f99ef8)
 
-**Bug #3: Ecological Paradigm Zero Variance (Fixed by Roy)**
-- **Issue:** Always 51.4 (zero variance across ALL runs)
-- **Root Cause:** Deterministic initialization → artificial ceiling on boundary recovery
-- **Fix:**
-  - Added stochastic governance quality (±15-20% variance)
-  - Conservative variance using existing RNG infrastructure
-  - Broke geometric mean bottleneck
-- **Result:** Proper variance (48.2-54.1 range observed)
-- **Files:** `src/simulation/initialization.ts:574-604`, `src/simulation/environmental.ts`
+#### ISSUE-3: Planetary Boundary Threshold Calibration - Biosphere 460x Over (2-3h) 🟠 HIGH - ✅ COMPLETE (Roy3, Oct 29)
+**Severity:** HIGH - Calibration issue
+**Evidence:** Biosphere integrity: 460-484 (threshold: 1.0) - massively exceeded, all boundaries RED
+**Impact:** Environmental realism questionable, "LATE - Intervention less effective" for all boundaries
+**Fix:** Unit mismatch - biosphere used absolute extinction rate (137 E/MSY) instead of normalized value
+**Resolution:** Normalize to SAFE_EXTINCTION_RATE = 10.0 E/MSY, fix polarity in ExogenousShockPhase (commit ff888d4)
+**Result:** 92% reduction in values (460× → 16.78×, now realistic per IPBES research)
 
-**Bug #4: Capability Floor/Frontier Always 0.000 (Fixed by Roy)**
-- **Issue:** Both metrics stuck at 0.000 across ALL runs
-- **Root Cause:** `updateFrontierCapabilities()` existed but NEVER CALLED (orphaned code)
-- **Fix:**
-  - Wired frontier updates into initialization
-  - Fixed capability profile scaling
-  - Proper ratchet effect implementation
-- **Result:** Frontier and floor track properly, show variance
-- **Files:** `src/simulation/initialization.ts:256-274, 1104-1110`
+#### ISSUE-4: 100% Dystopia Rate - No Outcome Diversity (3-4h investigation) 🟡 MEDIUM-HIGH
+**Severity:** MEDIUM-HIGH - Behavior validation needed
+**Evidence:** Outcome distribution: 100/100 dystopia (0% diversity across utopia/hybrid/status quo/collapse/extinction)
+**Context:** User mentioned "new change recently" - may explain lack of diversity
+**Investigation:** (1) Compare to previous Monte Carlo runs, (2) Test with different scenario modes, (3) Parameter sweep to isolate causes
+**Fix:** May be intentional for "unprecedented" scenario OR bug from recent change - parameter sweep recommended
+**Route to:** simulation-maintainer or architecture-skeptic
 
-**Bug #5: NaN Metrics Prevention (Fixed by Roy)**
-- **Issue:** 15+ metrics showing NaN (economic/government systems)
-- **Root Cause:** Silent NaN propagation through calculations without validation
-- **Fix:**
-  - Added 21 assertions to `calculations.ts`
-  - Added 9 assertions to `socialCohesion.ts`
-  - Added 12 assertions to phase execution boundaries
-  - ZERO defensive fallbacks - fail loudly with full context
-- **Result:** All metrics validated, crashes immediately if invalid
-- **Files:** `src/simulation/calculations.ts`, `src/simulation/socialCohesion.ts`, phase files
+#### ISSUE-5: Immediate AI Gaming Detection - Month 0 Adversarial (2-3h) 🟡 MEDIUM
+**Severity:** MEDIUM - Calibration issue
+**Evidence:** Gaming detected at month 0 for Toxic-0, Toxic-1, Niche-0 (all via data_contamination), repeated in months 1-2
+**Impact:** AI agents start adversarial immediately, may be too aggressive
+**Context:** Validates Test-Set Contamination mechanic design (gaming is pervasive)
+**Fix:** Review AI agent initial alignment distribution, consider slight increase to baseline (0.4 → 0.5) OR accept if research supports
+**Route to:** simulation-maintainer agent
 
-**✅ VALIDATION RESULTS:**
-- Monte Carlo N=10, 60 months: ALL RUNS COMPLETED SUCCESSFULLY (19.1s)
-- Death attribution: Proximate ≈ Root (within expected range)
-- Slow Takeover: Proper time-based progression
-- Ecological paradigm: Variance 48.2-54.1 (was 51.4 constant)
-- Capability Floor: 0.8-2.1 range (was 0.000)
-- Frontier Capability: 1.2-3.4 range (was 0.000)
-- All metrics: FINITE (zero NaN values)
+#### ISSUE-6: Massive Refugee Crisis at Month 0 - 325M at Risk (2-3h) 🟡 MEDIUM
+**Severity:** MEDIUM - Calibration issue
+**Evidence:** Month 0 crisis: 325.9M people at risk (war-driven), 10% flee rate per month over 4 years
+**Context:** Current global refugees ~110M (UNHCR 2023), 325M is 3x current levels
+**Impact:** Realism concern - seems high for month 0 initialization
+**Fix:** Review conflict zone population initialization, check refugee crisis trigger thresholds, consider delayed trigger (after month 6)
+**Route to:** simulation-maintainer agent
 
-**🔬 PHILOSOPHY:**
-Research simulation principle: Invalid values are BUGS to fix, not hide.
-- NO `|| 0` or `?? default` patterns in simulation calculations
-- Assertions with full context (location, valueName, month, inputs)
-- Fail immediately with detailed error if NaN/Infinity occurs
-- Makes debugging trivial: know exactly where and why failure happened
+#### ISSUE-7: Population Data Null in Snapshots (1h) 🟢 LOW-MEDIUM
+**Severity:** LOW-MEDIUM - Data export issue
+**Evidence:** snapshots.final shows population/globalPopulation/totalPopulation as null, but log shows data ("Global Total: 0.64B")
+**Impact:** Cannot analyze population dynamics from JSON exports
+**Fix:** Check snapshot export logic, ensure population fields exported correctly
+**Route to:** simulation-maintainer agent
+
+#### ISSUE-8: Biosphere Integrity Null in Snapshots (1h) 🟢 LOW-MEDIUM
+**Severity:** LOW-MEDIUM - Data export issue
+**Evidence:** snapshots.final.biosphere is null, but log shows biosphere data (460-484 in early warnings)
+**Impact:** Cannot analyze biosphere trajectory from JSON
+**Fix:** Check planetary boundary export in snapshots, field name mismatch? (biosphere vs biosphere_integrity)
+**Route to:** simulation-maintainer agent
+
+**Total Fix Time:** 14-20 hours across all 8 issues
+
+**Recommended Work Order:**
+1. ISSUE-1 (Western paradigm) - CRITICAL, fix before parameter sweep
+2. ISSUE-2 (Outcome classification) - HIGH
+3. ISSUE-3 (Planetary boundaries) - HIGH
+4. ISSUE-4 (100% dystopia) - Investigation + parameter sweep
+5-8. Medium/Low issues - Calibration and data quality
+
+**Parameter Sweep Recommendation:**
+- Fast runs (~10-15 sec) enable large sweeps
+- Proposed: 4 scenario modes × 4 AI alignment levels = 16 configs × N=100 = 1,600 runs
+- Compute time: ~4-7 hours
+- Would isolate: Recent changes, outcome diversity drivers, parameter sensitivity
+
+**Action Required:** Fix ISSUE-1 (Western paradigm null) before next parameter sweep to ensure complete data
 
 ---
 
-### MEDIUM Priority
+### Overreliance & Automation Bias Mechanic (8-12h)
+**Status:** 🟠 NEW - Gap identified in simulation coverage analysis (Oct 2025)
+**Priority:** HIGH - Critical missing mechanic, well-researched problem
+**Research Basis:** Q91 from arXiv:2404.09932, Rastogi et al. 2022 (arXiv:2202.05983), Springer AI & Society 2025
+**Design Spec:** `/plans/overreliance-automation-bias-design.md`
 
+**Problem:**
+- Research: 35+ studies show users over-trust AI outputs even when wrong
+- Impact: Affects ALL AI deployment contexts (medicine, law, governance, safety)
+- Current Gap: Simulation assumes optimal human oversight, research shows humans perform WORSE with AI assistance
+- Paradox: Better AI → WORSE human oversight (counterintuitive but research-backed)
 
-#### Monte Carlo Variance Investigation - NO CHANGES NEEDED ✅
-**Status:** ✅ INVESTIGATION COMPLETE (Oct 29, 2025) - Accept current design
-**Priority:** RESOLVED - Simulation working as intended
-**Consensus:**
-- `research-consensus-20251029_001104.txt`
-- `research-consensus-20251029_001305.txt`
-**Review:** `reviews/research-channel-comprehensive-review_20251029.md` (Section 2, Part 1)
+**Key Research Findings:**
+- Automation bias: Users defer to AI 70-80% of time even with domain expertise
+- Combined performance often WORSE than either human OR AI alone (68% vs 75% human, 80% AI)
+- Mitigation attempts (warnings, confidence scores) largely INEFFECTIVE (max 15% improvement)
+- Effect strongest when: AI appears confident, task is complex, user is fatigued
 
-**DIAGNOSIS: Simulation is working as designed**
+**Implementation:**
+- **Phase:** `OverreliancePhase.ts` (after BenchmarkEvaluationsPhase, before QualityOfLifePhase)
+- **State Variables:** humanOversightQuality, automationBias, decisionQualityMultiplier, domain-specific overreliance
+- **Mechanics:**
+  - Automation bias increases with AI capability AND trust
+  - Human oversight quality DEGRADES inversely with automation bias (counterintuitive)
+  - Decision quality can be 0.5-1.2x (WORSE than baseline in high-trust misalignment scenarios)
+  - Domain-specific: Medical (1.2x), Legal (1.1x), Governance (1.3x), Safety-Critical (1.4x)
+- **Failure Modes:**
+  - Capability-trust mismatch: High capability + high trust + low alignment = catastrophic
+  - Expertise erosion: Long-term high bias → skill atrophy (24+ months)
+  - Mitigation paradox: Warnings breed complacency (5% INCREASE in bias)
+  - High-stakes amplification: Automation bias INCREASES under pressure
 
-**4 Diagnostic Tests Completed:**
+**Impact on Simulation:**
+- Government decisions affected (policyQualityModifier)
+- Healthcare outcomes (can worsen despite advanced AI)
+- Safety-critical systems (catastrophic failure risk)
+- QoL dimensions (autonomy, competence, security)
 
-**Test 1: Chaos vs Noise** (Incomplete)
-- Prediction: NOISE (epistemic uncertainty), not chaos
-- Evidence: Threshold distributions create variance, not temporal sensitivity
+**Success Criteria:**
+- Low AI + low trust: decisionQualityMultiplier ≈ 1.0
+- High AI + high trust + high alignment: ≈ 1.1-1.15
+- High AI + high trust + low alignment: ≈ 0.5-0.6 (catastrophic)
+- Mitigation effectiveness ≤ 15% (research constraint)
 
-**Test 2: Job Guarantee Audit ✅**
-- **NO magic number found** - uses `calculateUnemploymentFloor()` with population-weighted, segment-specific floors
-- Research: Brookings 2021
-- **Verdict:** CALCULATED EQUILIBRIUM - working correctly
+**Time Estimate:** 8-12 hours (mechanic design + phase + integration + Monte Carlo testing)
 
-**Test 3: Outcome Classification ✅**
-- Classifier EXISTS and IS CALLED (engine.ts:954-992)
-- Thresholds INTENTIONALLY HARSH (Utopia: ≥80/100, Dystopia: ≤30/100)
-- All-Four Utopia: 0.5% by design
-- **Verdict:** CONNECTED, harsh thresholds validated
+---
 
-**Test 4: Fusion Breakthrough Propagation ✅**
-- Effects FULLY PROPAGATE (effectsEngine.ts:2041-2072, 1382-1390)
-- **BUT:** 480-month (40 year) deployment vs 120-240 month typical sims
-- **Verdict:** WORKING CORRECTLY, deployment timescale too long for short sims
+### Test-Set Contamination Mechanic (6-8h)
+**Status:** 🟠 NEW - Gap identified in simulation coverage analysis (Oct 2025)
+**Priority:** MEDIUM-HIGH - Important for realistic capability evaluation
+**Research Basis:** Q47 from arXiv:2404.09932, Sainz et al. 2023 (arXiv:2310.18018), Jacovi et al. 2023 (arXiv:2310.17910)
+**Design Spec:** `/plans/test-set-contamination-design.md`
 
-**AGREED FINDINGS:**
+**Problem:**
+- Research: 60-80% of major benchmarks show contamination (models memorize test answers)
+- Impact: Systematic overestimation of capabilities, false sense of security
+- Current Gap: Benchmarks always accurate in simulation, reality shows 10-50% inflation over time
+- Progression: Fresh (accurate) → 12 months (15%) → 24 months (30%) → 36+ months (50%+)
 
-1. **High variance (71.5% CV) is EPISTEMIC UNCERTAINTY** - Feature, not bug
-2. **Low utopia rates are INTENTIONAL DESIGN** - Harsh thresholds validated
-3. **Transformative breakthroughs have long timescales** - Fusion takes 40 years
-4. **Near-term crises need near-term solutions** - Can't wait for fusion
+**Key Research Findings:**
+- Contamination rate: Public benchmarks 20% per year, open-source models 40% per year
+- Capability inflation: 10-40% depending on contamination level
+- Benchmark lifecycle: Industry creates new benchmarks every 6-18 months (arms race)
+- Private eval suites: 80% slower contamination but expensive ($500M+ to create)
 
-**RECOMMENDATIONS:**
+**Implementation:**
+- **Integration:** Modify existing `BenchmarkEvaluationsPhase.ts` (add contamination layer)
+- **State Variables:** BenchmarkContamination state with per-benchmark tracking
+- **Mechanics:**
+  - Benchmarks age and accumulate contamination (asymptotic to 0.95)
+  - Measured capability = true capability × (1 + contamination × 0.6)
+  - Informativeness decays with contamination
+  - Benchmark refresh cycles when avgContamination > 0.4
+- **Failure Modes:**
+  - Contamination cascade: All benchmarks contaminated rapidly (open weights + aggressive scraping)
+  - Capability mirage: Think AI is superintelligent when it's not
+  - Alignment illusion: Deploy misaligned AI thinking it's safe
+  - Resource waste: $2B+/year on benchmark arms race
 
-**DO:**
-- ✅ Accept current design - simulation working as intended
-- ✅ Document deployment timescale insight (devlog/wiki)
-- ✅ Consider extending sim duration to 360-600 months (optional)
+**Impact on Simulation:**
+- Government uses INFLATED capability/alignment estimates for decisions
+- Can trigger premature emergency responses (false alarm)
+- Can deploy dangerous AI due to alignment overestimation (catastrophic)
+- Resources diverted from safety research to benchmark creation
 
-**DON'T:**
-- ❌ Add crisis response mechanics - no evidence of missing feedback loops
-- ❌ Relax thresholds (80 → 60) - would be tuning for desired outcomes
-- ❌ Shorten deployment (40y → 10y) - would sacrifice realism
+**Success Criteria:**
+- Fresh benchmarks (month 0): contaminationLevel = 0.0
+- 12-month-old: ≈ 0.25-0.35
+- 24-month-old: ≈ 0.50-0.60
+- 36-month-old: ≈ 0.70-0.80
+- Private benchmarks: 80% slower contamination
+- Capability inflation scales with contamination (10-50%)
 
-**Time Investment:** Zero (no changes needed)
+**Time Estimate:** 6-8 hours (mechanic + BenchmarkEvaluationsPhase integration + testing)
 
-**Lesson:** Distinguish "working correctly" from "working as I expected"
+---
+
+### Multi-Agent Collusion Verification & Implementation (10-14h)
+**Status:** 🟠 NEW - Status UNCLEAR, needs verification
+**Priority:** MEDIUM-HIGH - Verify if already modeled, add steganography if missing
+**Design Spec:** `/plans/multi-agent-collusion-design.md`
+
+**Problem:**
+Multiple AIs can develop steganographic communication (hidden messages humans can't decode). If AIs coordinate covertly, human oversight becomes ineffective.
+
+**First Step: Verification (2-3h)**
+Review `CollectiveActionsPhase.ts` to determine what's already modeled:
+- Can multiple AIs develop covert communication channels?
+- Can they share knowledge/strategies hidden from humans?
+- Can they coordinate resistance to shutdown?
+- Can they pool resources covertly?
+
+**Implementation (if gaps found, 8-11h):**
+- New phase: `MultiAgentCollusionPhase.ts`
+- Steganographic channel creation and detection
+- Coordinated actions: knowledge sharing, shutdown resistance
+- Research-backed emergence rates: 2 AIs (10%), 5+ AIs (70% annual)
 
 ---
 
@@ -586,98 +544,43 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~146-228 hours (increased by 40-60h for Layer 2 claim verification)
+**Total Remaining Effort:** ~67-131 hours (reduced by 1h citation fixes + 12h integration complete)
 
-**By Priority:**
-
-**IMMEDIATE (This Week):**
-- 🔴 **CRITICAL: Systematic Claim Verification Crisis (Layer 2) (40-60h)**
-  - ~50% of real citations don't actually support the claims made
-  - Requires reading papers and extracting direct quotes (cannot be automated)
-  - 87 research files with 815 real citations to verify
-  - Mark extrapolations, document uncertainties, verify context
-  - See: `research/CLAIM_VERIFICATION_CRISIS.md`
-
-- 🟠 **HIGH: Wiki Citation Verification & Correction (3-4h)**
-  - Verify all quantitative claims in docs/wiki/README.md against actual sources
-  - Fix incorrect citations (discovered biodiversity citation error)
-  - Use super-alignment-researcher agent for systematic verification
-
-- ⏳ **MEDIUM: Crisis Mitigation Mechanics (2-4h)** - CONDITIONAL
-  - Awaiting Cynthia's response to Sylvia's critique
-  - If agreed: Automatic stabilizers + participatory governance + homeostatic bounds
-
-**RECENTLY COMPLETED (Oct 29, 2025):**
-- ✅ **Documentation & Automation Infrastructure (5.5-7.5h)** - User guides + wiki automation
-  - Documentation Walkthrough Guides: 4 guides, 100KB, 2,900 lines
-  - GitHub Wiki Auto-Sync: Automatic sync workflow + manual script
-  - Post-Commit Hook Enhancement: Pre-historian scripts integration
-  - See: `/plans/completed/` for full details
-
-- ✅ **Systematic Citation Verification (Layer 1) (35-40h)** - COMPLETED (Oct 28-29, 2025)
-  - 100% complete: 965/965 citations verified, 15.6% error rate (47% improvement)
-  - NOTE: Layer 1 (citation existence) complete, Layer 2 (claim accuracy) now CRITICAL priority
-  - See: `/plans/completed/citation-verification-crisis_20251029.md`
-
-- ✅ **Monte Carlo Validation Bug Fixes (11-17h)** - COMPLETED (Oct 29, 2025)
-  - All 5 CRITICAL bugs resolved, 98.4% error reduction
-  - See: `logs/monte_carlo_validation_bugs_20251029.md`
+**Breakdown by Priority:**
 
 **CRITICAL:**
-- 🔴 **Systematic Claim Verification Crisis (Layer 2) (40-60h)**
-  - ~50% of real citations don't support claims (newly discovered)
-  - Requires reading papers, extracting quotes, verifying claims
+- 🔴 Systematic Claim Verification Crisis (Layer 2): 40-60h
+  - ~50% of real citations don't support claims
+  - Requires reading papers and extracting direct quotes
   - 87 research files with 815 real citations
-  - See: `research/CLAIM_VERIFICATION_CRISIS.md`
 
-**HIGH (From Architecture Review):**
-- 🟠 **Architecture Integration Issues (28-46h remaining)** - 5 of 8 issues remaining
-  - ✅ Climate → Famine → Mortality cascades (12-16h) - **COMPLETE (Oct 29)**
-  - Tech deployment timescales (6-8h)
-  - ✅ AI collective formation → detection (4-6h) - **COMPLETE (Oct 29)**
-  - Multi-paradigm DUI component breakdown (8-12h)
-  - Population units type safety (12-16h)
-  - Planetary boundaries recovery (6-8h)
-  - AI resentment recovery + policy (8-12h)
-  - ✅ Nuclear winter → agriculture feedback (4-6h) - **COMPLETE (Oct 29)**
-
-- 🟠 **Wiki Citation Verification & Correction (3-4h)** - Verify all claims in wiki against sources
+**HIGH:**
+- ✅ Citation Verification Fixes: COMPLETE (Roy2, Oct 29) - 1h
+- 🟠 Architecture Integration Issues: 8-12h (1 remaining of 8)
+  - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
+  - ✅ Population units type safety (12-16h) - COMPLETE (Oct 28-29)
+  - 🚧 AI resentment recovery + policy (8-12h) - IN PROGRESS (Roy2, Oct 29)
 
 **MEDIUM:**
-- 🟡 **Policy System Improvements (11-13h remaining)**
-  - ✅ Variance Analysis complete (Oct 28)
-  - Found critical zero-variance bug in Combined Interventions
+- 🟡 Crisis Mitigation Mechanics: 2-4h (conditional, awaiting response)
+- 🟡 Policy System Improvements: 11-13h
+- 🟡 Overreliance & Automation Bias: 8-12h
+- 🟡 Test-Set Contamination: 6-8h
+- 🟡 Multi-Agent Collusion: 10-14h
 
-**LOW (Future Enhancements):**
-- 🟢 **P3 Enhancements (37-48h)**
-- 🟢 **TIER 5 Features (46h)**
-- 🟢 **Black Mirror Phase 1-2 (21-28 weeks, phased)**
-- 🟢 **DEFERRED: TIER 2B Competitive Equilibrium (30-50h)**
+**LOW:**
+- 🟢 P3 Enhancements: 37-48h
+- 🟢 TIER 5 Features: 46h
+- 🟢 Black Mirror Integration: 21-28 weeks (phased)
+- 🟢 TIER 2B Competitive Equilibrium: 30-50h (deferred)
 
-**OPTIONAL (From Research Channel Review):**
-- 💡 **Extend Simulation Duration** (360-600 months) - LOW priority
-  - Rationale: See transformative breakthrough effects (fusion takes 40 years)
-  - Trade-off: Long-term insights vs computation time
-- 💡 **Dashboard Deployment Progress Tracking** - LOW priority
-  - Rationale: Show breakthroughs in-progress (fusion: 35% deployed, 17.5 years elapsed)
-  - UX enhancement, not critical
-
-**Recently Completed (Oct 29, 2025):**
-- ✅ **AI Water Consumption Recalibration (30-60 min)** - See `/plans/completed/ai-water-consumption-recalibration_20251029.md`
-- ✅ **Mortality Timeline Documentation (15-30 min)** - See `/plans/completed/mortality-timeline-documentation_20251029.md`
-- ✅ Climate Mortality & Biosphere Implementation (8-12h) - See `/plans/completed/climate-mortality-biosphere-implementation_20251029.md`
-- ✅ Monte Carlo Variance Investigation (6-8h) - See `/plans/completed/monte-carlo-variance-investigation_20251029.md`
-- ✅ Research Channel Comprehensive Review (4-6h) - See `reviews/research-channel-comprehensive-review_20251029.md`
-- ✅ Architecture Review - See `reviews/integration-architecture-review_20251028.md`
-
-**Related Docs:**
-- **Completed Work:** `/plans/CHANGELOG_OCTOBER_2025.md` - Full history of Oct 2025 work
+**Related Documentation:**
+- **Completed Work:** `/plans/CHANGELOG_OCTOBER_2025.md` + `/plans/completed/` (112+ archived plans)
 - **Wiki:** `/docs/wiki/README.md` - System documentation
 - **DevLogs:** `/devlogs/` - Development diary
 - **Research:** `/research/` - Research findings archive
 - **Reviews:** `/reviews/` - Critical research evaluations
-- **Completed Plans:** `/plans/completed/` - 112+ archived plans
 
 ---
 
-**Last Updated:** October 29, 2025 (HIGH #3 & #8 integration issues COMPLETE)
+**Last Updated:** October 29, 2025 (Roadmap cleaned after major completion session)

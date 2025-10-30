@@ -22,7 +22,7 @@ The **Planetary Boundaries System** implements Kate Raworth's Doughnut Economics
 | Boundary | Status | Value | Breach Year | Trend |
 |----------|--------|-------|-------------|-------|
 | **Climate Change** ⚠️ | Beyond Boundary | 1.21x | 1990 | Worsening |
-| **Biosphere Integrity** 🚨 | High Risk | 10.0x | 1950 | Worsening |
+| **Biosphere Integrity** 🚨 | High Risk | 13.7x | 1950 | Worsening |
 | **Land System Change** ⚠️ | Beyond Boundary | 1.17x | 2000 | Worsening |
 | **Freshwater Change** ⚠️ | Beyond Boundary | 1.15x | 2023 | Worsening |
 | **Biogeochemical Flows** 🚨 | High Risk | 2.94x | 1985 | Worsening |
@@ -60,7 +60,7 @@ Each boundary has:
 
 Boundaries update based on simulation state:
 - **Climate Change:** Driven by environmental climate stability
-- **Biosphere:** Driven by biodiversity index
+- **Biosphere:** Driven by biodiversity index and invasive species impact, normalized to safe threshold (10 E/MSY = 10× natural extinction rate)
 - **Freshwater:** Driven by freshwater system (water stress)
 - **Biogeochemical:** Driven by phosphorus depletion
 - **Novel Entities:** Driven by environmental pollution
@@ -168,7 +168,7 @@ The **stratospheric ozone boundary** is one of only 2 safe boundaries, and it's 
 
 ### Data Sources by Boundary:
 - **Climate:** IPCC AR6, 425 ppm CO₂ vs 350 ppm safe limit
-- **Biosphere:** 100-1000x natural extinction rate
+- **Biosphere:** Current ~137 E/MSY (100-1000x natural extinction rate), normalized to safe threshold 10 E/MSY = boundary value 13.7x (Oct 30, 2025 calibration fix)
 - **Land:** 62% forest remaining vs 75% needed
 - **Freshwater:** Nature (2023) Jasechko et al., LA Times (Sept 2025)
 - **Biogeochemical:** 18.2 Tg P/year vs 6.2 Tg P/year boundary
@@ -275,6 +275,34 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
+## 🐛 Bug Fixes & Calibration
+
+### Biosphere Normalization Fix (Oct 30, 2025) - CRITICAL
+
+**Issue:** ISSUE-3 from Monte Carlo validation - Biosphere integrity values 460-484× over threshold (vs 1.21× for climate)
+
+**Root causes:**
+1. **Unit mismatch:** Biosphere used absolute extinction rate (137 E/MSY) instead of normalized boundary value (137 / 10 = 13.7×)
+2. **Backward polarity:** ExogenousShockPhase subtracted extinction changes instead of adding (nuclear war/asteroids made biosphere BETTER!)
+
+**Fixes applied:**
+- Normalize biosphere to SAFE_EXTINCTION_RATE = 10.0 E/MSY (safe threshold per Stockholm Resilience Centre)
+- Initialize to 13.7 (137 E/MSY / 10 safe threshold) instead of 10.0
+- Correct polarity in nuclear war (+0.6, not -0.6) and asteroid impacts (+impactSize * 0.5, not -)
+
+**Validation:**
+- Before: biosphere = 197.19 (19,619% over threshold) - physically unrealistic
+- After: biosphere = 16.78 (1,578% over threshold) - matches research (Earth 13.7× over safe threshold)
+- 92% reduction in reported value, now consistent with other boundaries' scale
+
+**Impact:** Environmental realism restored. All planetary boundaries now use same normalized scale (1.0 = threshold).
+
+**Research backing:** IPBES 2019 (100-1000× extinction rate), Stockholm Resilience Centre (10 E/MSY safe threshold)
+
+**Devlog:** `devlogs/planetary_boundary_biosphere_calibration_fix_20251030.md` (252 lines)
+
+---
+
 ## 🔬 Future Enhancements (TIER 3.2+)
 
 ### Planned Additions:
@@ -345,7 +373,8 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
-**Last Updated:** October 12, 2025  
-**Implementation Status:** ✅ COMPLETE  
+**Last Updated:** October 30, 2025 (Biosphere normalization fix)
+**Implementation Status:** ✅ COMPLETE
+**Recent Fixes:** Biosphere boundary normalized to safe threshold (13.7×), polarity corrected in exogenous shocks
 **Next Steps:** TIER 3.2 (Land Use & Biodiversity Crisis)
 
