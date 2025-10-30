@@ -144,13 +144,13 @@
     "context": "strategy: 'honest' | 'gaming' | 'sandbagging';"
   },
   {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/ai-agents.ts",
-    "line": 191,
-    "type": "property
+    "file": "/Us
 ✅ Full results saved to: docs/underdocumented.json
    Use this file to generate documentation improvements
 
-./simulation/sleeperProgression').SleeperProgression;"
+"name": "sleeperProgression",
+    "currentDoc": "(none)",
+    "context": "sleeperProgression?: import('../simulation/sleeperProgression').SleeperProgression;"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/ai-agents.ts",
@@ -6938,15 +6938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/government.ts",
-    "line": 252,
-    "type": "interface",
-    "name": "ActivePolicy",
-    "currentDoc": "/ Active policy response",
-    "context": "export interface ActivePolicy {"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/government.ts",
-    "line": 259,
+    "line": 278,
     "type": "property",
     "name": "aiCapability",
     "currentDoc": "(none)",
@@ -6954,7 +6946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/government.ts",
-    "line": 260,
+    "line": 279,
     "type": "property",
     "name": "crisisType",
     "currentDoc": "(none)",
@@ -6962,7 +6954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/government.ts",
-    "line": 261,
+    "line": 280,
     "type": "property",
     "name": "internationalPressure",
     "currentDoc": "(none)",
@@ -6970,7 +6962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/government.ts",
-    "line": 268,
+    "line": 290,
     "type": "interface",
     "name": "Treaty",
     "currentDoc": "/ International treaty",
@@ -9930,7 +9922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 127,
+    "line": 133,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -9938,7 +9930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 128,
+    "line": 134,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -9946,7 +9938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 130,
+    "line": 136,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -9954,7 +9946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 135,
+    "line": 141,
     "type": "property",
     "name": "capitalInvested",
     "currentDoc": "(none)",
@@ -9962,7 +9954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/organizations.ts",
-    "line": 143,
+    "line": 149,
     "type": "property",
     "name": "canBeCanceled",
     "currentDoc": "(none)",
@@ -52514,7 +52506,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 41,
+    "line": 49,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -52522,7 +52514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 42,
+    "line": 50,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -52530,7 +52522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 43,
+    "line": 51,
     "type": "property",
     "name": "context",
     "currentDoc": "(none)",
@@ -52538,7 +52530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 85,
+    "line": 93,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -52546,7 +52538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 86,
+    "line": 94,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -52554,7 +52546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 87,
+    "line": 95,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -52562,7 +52554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 88,
+    "line": 96,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -52570,7 +52562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 89,
+    "line": 97,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -52578,7 +52570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 90,
+    "line": 98,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -52586,7 +52578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 91,
+    "line": 99,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -52594,7 +52586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 92,
+    "line": 100,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -52602,7 +52594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 145,
+    "line": 153,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -52610,7 +52602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 146,
+    "line": 154,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -52618,7 +52610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 147,
+    "line": 155,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -52626,7 +52618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 148,
+    "line": 156,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -52634,7 +52626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 149,
+    "line": 157,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -52642,7 +52634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 150,
+    "line": 158,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -52650,23 +52642,23 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 151,
+    "line": 159,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
-    "context": "description: `${policy.country}: Implemented ${policy.domain} policy (${(policy.effectiveness * 100).toFixed(0)}% effective)`,"
+    "context": "description: `${policy.country}: Implemented ${policy.domain} policy (${(policy.currentEffectiveness * 100).toFixed(0)}% effective)`,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 152,
+    "line": 160,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
-    "context": "effects: { country: policy.country, domain: policy.domain, effectiveness: policy.effectiveness }"
+    "context": "effects: { country: policy.country, domain: policy.domain, effectiveness: policy.currentEffectiveness }"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 203,
+    "line": 211,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -52674,7 +52666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 204,
+    "line": 212,
     "type": "property",
     "name": "signatories",
     "currentDoc": "(none)",
@@ -52682,7 +52674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 205,
+    "line": 213,
     "type": "property",
     "name": "formed",
     "currentDoc": "(none)",
@@ -52690,7 +52682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 207,
+    "line": 215,
     "type": "property",
     "name": "domain",
     "currentDoc": "(none)",
@@ -52698,7 +52690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 221,
+    "line": 230,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -52706,7 +52698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 222,
+    "line": 231,
     "type": "property",
     "name": "countryCode",
     "currentDoc": "(none)",
@@ -52714,7 +52706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 223,
+    "line": 232,
     "type": "property",
     "name": "domain",
     "currentDoc": "(none)",
@@ -52722,7 +52714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 224,
+    "line": 233,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -52730,7 +52722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 240,
+    "line": 281,
     "type": "property",
     "name": "country",
     "currentDoc": "(none)",
@@ -52738,7 +52730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 242,
+    "line": 283,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -52746,15 +52738,15 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 243,
+    "line": 284,
     "type": "property",
     "name": "completionMonth",
     "currentDoc": "(none)",
-    "context": "completionMonth: state.currentMonth + implementationTime,"
+    "context": "completionMonth: state.currentMonth + deploymentTime,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 245,
+    "line": 294,
     "type": "property",
     "name": "stimulus",
     "currentDoc": "(none)",
@@ -52762,11 +52754,19 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
-    "line": 246,
+    "line": 295,
     "type": "property",
     "name": "aiCapability",
     "currentDoc": "(none)",
     "context": "aiCapability: calculateAverageAICapability(state),"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/GovernmentResponsePhase.ts",
+    "line": 298,
+    "type": "property",
+    "name": "effectiveness",
+    "currentDoc": "(none)",
+    "context": "effectiveness: 0,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/HumanEnhancementPhase.ts",
@@ -53711,6 +53711,158 @@
     "name": "effects",
     "currentDoc": "(none)",
     "context": "effects: { crisis: data.crisis, budget: data.budget }"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 40,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 41,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 42,
+    "type": "property",
+    "name": "context",
+    "currentDoc": "(none)",
+    "context": "context: PhaseContext"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 71,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `policy_milestone_${policy.country}_${policy.domain}_${milestone}_${state.currentMonth}`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 72,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 73,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'policy',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 74,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'info',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 75,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'government',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 76,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Policy Implementation Milestone',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 77,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `${policy.country}: ${policy.domain} policy reached ${(milestone * 100).toFixed(0)}% effectiveness`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 78,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: { country: policy.country, domain: policy.domain, effectiveness: policy.currentEffectiveness }"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 88,
+    "type": "property",
+    "name": "id",
+    "currentDoc": "(none)",
+    "context": "id: `policy_abandoned_${policy.country}_${policy.domain}_${state.currentMonth}`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 89,
+    "type": "property",
+    "name": "timestamp",
+    "currentDoc": "(none)",
+    "context": "timestamp: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 90,
+    "type": "property",
+    "name": "type",
+    "currentDoc": "(none)",
+    "context": "type: 'crisis',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 91,
+    "type": "property",
+    "name": "severity",
+    "currentDoc": "(none)",
+    "context": "severity: 'warning',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 92,
+    "type": "property",
+    "name": "agent",
+    "currentDoc": "(none)",
+    "context": "agent: 'government',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 93,
+    "type": "property",
+    "name": "title",
+    "currentDoc": "(none)",
+    "context": "title: 'Policy Abandoned',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 94,
+    "type": "property",
+    "name": "description",
+    "currentDoc": "(none)",
+    "context": "description: `${policy.country}: ${policy.domain} policy abandoned due to insufficient political will`,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PolicyImplementationPhase.ts",
+    "line": 95,
+    "type": "property",
+    "name": "effects",
+    "currentDoc": "(none)",
+    "context": "effects: { country: policy.country, domain: policy.domain }"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/PositiveTippingPointsPhase.ts",
@@ -58362,7 +58514,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 170,
+    "line": 171,
     "type": "property",
     "name": "currentPop",
     "currentDoc": "(none)",
@@ -58370,7 +58522,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 171,
+    "line": 172,
     "type": "property",
     "name": "initialPop",
     "currentDoc": "(none)",
@@ -58378,7 +58530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 172,
+    "line": 173,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -58386,7 +58538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 274,
+    "line": 275,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -58394,7 +58546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 275,
+    "line": 276,
     "type": "property",
     "name": "baseOutcome",
     "currentDoc": "(none)",
@@ -58402,7 +58554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 276,
+    "line": 277,
     "type": "property",
     "name": "initialPopulation",
     "currentDoc": "(none)",
@@ -58410,7 +58562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 392,
+    "line": 393,
     "type": "property",
     "name": "seed",
     "currentDoc": "(none)",
@@ -58418,7 +58570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 393,
+    "line": 394,
     "type": "property",
     "name": "maxMonths",
     "currentDoc": "(none)",
@@ -58426,7 +58578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 394,
+    "line": 395,
     "type": "property",
     "name": "governmentActionFrequency",
     "currentDoc": "(none)",
@@ -58434,7 +58586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 395,
+    "line": 396,
     "type": "property",
     "name": "socialAdaptationRate",
     "currentDoc": "(none)",
@@ -58442,7 +58594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 396,
+    "line": 397,
     "type": "property",
     "name": "aiCoordinationMultiplier",
     "currentDoc": "(none)",
@@ -58450,7 +58602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 397,
+    "line": 398,
     "type": "property",
     "name": "economicTransitionRate",
     "currentDoc": "(none)",
@@ -58458,7 +58610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 410,
+    "line": 411,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -58466,7 +58618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 411,
+    "line": 412,
     "type": "property",
     "name": "events",
     "currentDoc": "(none)",
@@ -58474,7 +58626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 412,
+    "line": 413,
     "type": "property",
     "name": "metrics",
     "currentDoc": "(none)",
@@ -58482,7 +58634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 413,
+    "line": 414,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -58490,7 +58642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 414,
+    "line": 415,
     "type": "property",
     "name": "effectiveControl",
     "currentDoc": "(none)",
@@ -58498,7 +58650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 415,
+    "line": 416,
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -58506,7 +58658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 416,
+    "line": 417,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -58514,7 +58666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 417,
+    "line": 418,
     "type": "property",
     "name": "totalAICapability",
     "currentDoc": "(none)",
@@ -58522,7 +58674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 418,
+    "line": 419,
     "type": "property",
     "name": "avgAlignment",
     "currentDoc": "(none)",
@@ -58530,7 +58682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 419,
+    "line": 420,
     "type": "property",
     "name": "crisisDetected",
     "currentDoc": "(none)",
@@ -58538,7 +58690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 427,
+    "line": 428,
     "type": "property",
     "name": "finalState",
     "currentDoc": "(none)",
@@ -58546,7 +58698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 428,
+    "line": 429,
     "type": "property",
     "name": "history",
     "currentDoc": "(none)",
@@ -58554,7 +58706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 431,
+    "line": 432,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -58562,7 +58714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 432,
+    "line": 433,
     "type": "property",
     "name": "totalMonths",
     "currentDoc": "(none)",
@@ -58570,7 +58722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 433,
+    "line": 434,
     "type": "property",
     "name": "finalOutcome",
     "currentDoc": "(none)",
@@ -58578,7 +58730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 434,
+    "line": 435,
     "type": "property",
     "name": "finalOutcomeReason",
     "currentDoc": "(none)",
@@ -58586,7 +58738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 435,
+    "line": 436,
     "type": "property",
     "name": "finalOutcomeProbability",
     "currentDoc": "(none)",
@@ -58594,7 +58746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 436,
+    "line": 437,
     "type": "property",
     "name": "criticalEvents",
     "currentDoc": "(none)",
@@ -58602,7 +58754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 437,
+    "line": 438,
     "type": "property",
     "name": "economicStageReached",
     "currentDoc": "(none)",
@@ -58610,7 +58762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 457,
+    "line": 458,
     "type": "property",
     "name": "seed",
     "currentDoc": "(none)",
@@ -58618,7 +58770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 458,
+    "line": 459,
     "type": "property",
     "name": "maxMonths",
     "currentDoc": "(none)",
@@ -58626,7 +58778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 460,
+    "line": 461,
     "type": "property",
     "name": "socialAdaptationRate",
     "currentDoc": "(none)",
@@ -58634,7 +58786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 461,
+    "line": 462,
     "type": "property",
     "name": "aiCoordinationMultiplier",
     "currentDoc": "(none)",
@@ -58642,7 +58794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 462,
+    "line": 463,
     "type": "property",
     "name": "economicTransitionRate",
     "currentDoc": "(none)",
@@ -58650,7 +58802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 645,
+    "line": 647,
     "type": "property",
     "name": "qualityOfLife",
     "currentDoc": "(none)",
@@ -58658,7 +58810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 646,
+    "line": 648,
     "type": "property",
     "name": "effectiveControl",
     "currentDoc": "(none)",
@@ -58666,7 +58818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 647,
+    "line": 649,
     "type": "property",
     "name": "unemployment",
     "currentDoc": "(none)",
@@ -58674,7 +58826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 648,
+    "line": 650,
     "type": "property",
     "name": "outcomeProbs",
     "currentDoc": "(none)",
@@ -58682,7 +58834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 649,
+    "line": 651,
     "type": "property",
     "name": "totalAICapability",
     "currentDoc": "(none)",
@@ -58690,7 +58842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 650,
+    "line": 652,
     "type": "property",
     "name": "avgAlignment",
     "currentDoc": "(none)",
@@ -58698,7 +58850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 651,
+    "line": 653,
     "type": "property",
     "name": "crisisDetected",
     "currentDoc": "(none)",
@@ -58706,7 +58858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 655,
+    "line": 657,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -58714,7 +58866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 691,
+    "line": 693,
     "type": "property",
     "name": "computeAllocations",
     "currentDoc": "(none)",
@@ -58722,7 +58874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 699,
+    "line": 701,
     "type": "property",
     "name": "contaminatedRegions",
     "currentDoc": "(none)",
@@ -58730,7 +58882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 706,
+    "line": 708,
     "type": "property",
     "name": "regions",
     "currentDoc": "(none)",
@@ -58738,7 +58890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 707,
+    "line": 709,
     "type": "property",
     "name": "regionalWeights",
     "currentDoc": "(none)",
@@ -58746,7 +58898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 719,
+    "line": 721,
     "type": "property",
     "name": "maxMonths",
     "currentDoc": "(none)",
@@ -58754,7 +58906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 772,
+    "line": 774,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -58762,55 +58914,23 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 961,
+    "line": 963,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
     "context": "western: paradigmScores.western.value,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 962,
-    "type": "property",
-    "name": "development",
-    "currentDoc": "(none)",
-    "context": "development: paradigmScores.development.value,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 963,
-    "type": "property",
-    "name": "ecological",
-    "currentDoc": "(none)",
-    "context": "ecological: paradigmScores.ecological.value,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
     "line": 964,
     "type": "property",
-    "name": "indigenous",
-    "currentDoc": "(none)",
-    "context": "indigenous: indigenousScore.value"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 990,
-    "type": "property",
-    "name": "western",
-    "currentDoc": "(none)",
-    "context": "western: paradigmScores.western.value,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 991,
-    "type": "property",
     "name": "development",
     "currentDoc": "(none)",
     "context": "development: paradigmScores.development.value,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 992,
+    "line": 965,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -58818,7 +58938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 993,
+    "line": 966,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -58826,7 +58946,39 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1055,
+    "line": 992,
+    "type": "property",
+    "name": "western",
+    "currentDoc": "(none)",
+    "context": "western: paradigmScores.western.value,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 993,
+    "type": "property",
+    "name": "development",
+    "currentDoc": "(none)",
+    "context": "development: paradigmScores.development.value,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 994,
+    "type": "property",
+    "name": "ecological",
+    "currentDoc": "(none)",
+    "context": "ecological: paradigmScores.ecological.value,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 995,
+    "type": "property",
+    "name": "indigenous",
+    "currentDoc": "(none)",
+    "context": "indigenous: indigenousScore.value"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
+    "line": 1057,
     "type": "property",
     "name": "western",
     "currentDoc": "(none)",
@@ -58834,7 +58986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1056,
+    "line": 1058,
     "type": "property",
     "name": "development",
     "currentDoc": "(none)",
@@ -58842,7 +58994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1057,
+    "line": 1059,
     "type": "property",
     "name": "ecological",
     "currentDoc": "(none)",
@@ -58850,7 +59002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1058,
+    "line": 1060,
     "type": "property",
     "name": "indigenous",
     "currentDoc": "(none)",
@@ -58858,7 +59010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1062,
+    "line": 1064,
     "type": "property",
     "name": "primaryOutcome",
     "currentDoc": "(none)",
@@ -58866,7 +59018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1066,
+    "line": 1068,
     "type": "property",
     "name": "extinctionClassification",
     "currentDoc": "(none)",
@@ -58874,7 +59026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1140,
+    "line": 1142,
     "type": "property",
     "name": "finalState",
     "currentDoc": "(none)",
@@ -58882,7 +59034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1144,
+    "line": 1146,
     "type": "property",
     "name": "summary",
     "currentDoc": "(none)",
@@ -58890,7 +59042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1145,
+    "line": 1147,
     "type": "property",
     "name": "totalMonths",
     "currentDoc": "(none)",
@@ -58898,7 +59050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1149,
+    "line": 1151,
     "type": "property",
     "name": "criticalEvents",
     "currentDoc": "(none)",
@@ -58906,7 +59058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine.ts",
-    "line": 1150,
+    "line": 1152,
     "type": "property",
     "name": "economicStageReached",
     "currentDoc": "(none)",
@@ -72895,6 +73047,518 @@
     "name": "lastResponseMonth",
     "currentDoc": "(none)",
     "context": "lastResponseMonth?: number"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 41,
+    "type": "property",
+    "name": "policy",
+    "currentDoc": "(none)",
+    "context": "policy: ActivePolicy,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 42,
+    "type": "property",
+    "name": "state",
+    "currentDoc": "(none)",
+    "context": "state: GameState,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 43,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 55,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updatePolicyImplementation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 56,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'fundingMultiplier',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 57,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 68,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updatePolicyImplementation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 69,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'deploymentProgress',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 70,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 71,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { monthsSinceStart, expectedDeploymentTime },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 84,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updatePolicyImplementation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 85,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'cappedEffectiveness',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 86,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 87,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { rawEffectiveness, bureaucraticCapacity: policy.bureaucraticCapacity },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 113,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updatePolicyImplementation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 114,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'currentEffectiveness',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 115,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 126,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'updatePolicyImplementation',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 127,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'politicalWill',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 128,
+    "type": "property",
+    "name": "month",
+    "currentDoc": "(none)",
+    "context": "month: state.currentMonth,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 154,
+    "type": "property",
+    "name": "countryCode",
+    "currentDoc": "(none)",
+    "context": "countryCode: string,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 155,
+    "type": "property",
+    "name": "governmentData",
+    "currentDoc": "(none)",
+    "context": "governmentData: any,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 156,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 166,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'initializeGovernmentCapacity',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 167,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'regulatoryExpertise',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 178,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'initializeGovernmentCapacity',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 179,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'institutionalInertia',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 188,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'initializeGovernmentCapacity',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 189,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'politicalPolarization',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 199,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'initializeGovernmentCapacity',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 200,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'internationalCoordination',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 223,
+    "type": "property",
+    "name": "fundingLevel",
+    "currentDoc": "(none)",
+    "context": "fundingLevel: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 224,
+    "type": "property",
+    "name": "capacity",
+    "currentDoc": "(none)",
+    "context": "capacity: GovernmentCapacity,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 225,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 236,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateDeploymentTime',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 237,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'fundingMultiplier',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 247,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateDeploymentTime',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 248,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'inertiaMultiplier',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 258,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateDeploymentTime',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 259,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'deploymentTime',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 260,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { baseTime, fundingMultiplier, inertiaMultiplier, randomMultiplier },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 281,
+    "type": "property",
+    "name": "bureaucraticCapacity",
+    "currentDoc": "(none)",
+    "context": "bureaucraticCapacity: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 282,
+    "type": "property",
+    "name": "politicalWill",
+    "currentDoc": "(none)",
+    "context": "politicalWill: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 283,
+    "type": "property",
+    "name": "publicSupport",
+    "currentDoc": "(none)",
+    "context": "publicSupport: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 284,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 299,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateTargetEffectiveness',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 300,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'targetEffectiveness',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 301,
+    "type": "property",
+    "name": "additionalInfo",
+    "currentDoc": "(none)",
+    "context": "additionalInfo: { bureaucraticCapacity, politicalWill, publicSupport },"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 311,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'calculateTargetEffectiveness',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 312,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'targetEffectiveness (clamped)',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 329,
+    "type": "property",
+    "name": "domain",
+    "currentDoc": "(none)",
+    "context": "domain: string,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 330,
+    "type": "property",
+    "name": "capacity",
+    "currentDoc": "(none)",
+    "context": "capacity: GovernmentCapacity,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 331,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 349,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'isCaptureProbable',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 350,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'captureProbability',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 368,
+    "type": "property",
+    "name": "fundingLevel",
+    "currentDoc": "(none)",
+    "context": "fundingLevel: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 369,
+    "type": "property",
+    "name": "bureaucraticCapacity",
+    "currentDoc": "(none)",
+    "context": "bureaucraticCapacity: number,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 370,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 377,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'isEnforcementInsufficient',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 378,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'failureProbability',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 396,
+    "type": "property",
+    "name": "capacity",
+    "currentDoc": "(none)",
+    "context": "capacity: GovernmentCapacity,"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 397,
+    "type": "property",
+    "name": "rng",
+    "currentDoc": "(none)",
+    "context": "rng: RNGFunction"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 403,
+    "type": "property",
+    "name": "location",
+    "currentDoc": "(none)",
+    "context": "location: 'hasLoopholes',"
+  },
+  {
+    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/government/policyLifecycle.ts",
+    "line": 404,
+    "type": "property",
+    "name": "valueName",
+    "currentDoc": "(none)",
+    "context": "valueName: 'loopholeProbability',"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/humanEnhancement.ts",
@@ -88330,7 +88994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 388,
+    "line": 398,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -88338,7 +89002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 389,
+    "line": 399,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -88346,7 +89010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 390,
+    "line": 400,
     "type": "property",
     "name": "startMonth",
     "currentDoc": "(none)",
@@ -88354,7 +89018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 391,
+    "line": 401,
     "type": "property",
     "name": "completionMonth",
     "currentDoc": "(none)",
@@ -88362,7 +89026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 392,
+    "line": 402,
     "type": "property",
     "name": "progress",
     "currentDoc": "(none)",
@@ -88370,7 +89034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 393,
+    "line": 403,
     "type": "property",
     "name": "capitalInvested",
     "currentDoc": "(none)",
@@ -88378,7 +89042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 394,
+    "line": 404,
     "type": "property",
     "name": "computeReserved",
     "currentDoc": "(none)",
@@ -88386,7 +89050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 395,
+    "line": 405,
     "type": "property",
     "name": "expectedModelCapability",
     "currentDoc": "(none)",
@@ -88394,7 +89058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 396,
+    "line": 406,
     "type": "property",
     "name": "canBeCanceled",
     "currentDoc": "(none)",
@@ -88402,7 +89066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 709,
+    "line": 719,
     "type": "property",
     "name": "baseExpenses",
     "currentDoc": "(none)",
@@ -88410,7 +89074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 710,
+    "line": 720,
     "type": "property",
     "name": "dcOperational",
     "currentDoc": "(none)",
@@ -88418,7 +89082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 711,
+    "line": 721,
     "type": "property",
     "name": "projectCosts",
     "currentDoc": "(none)",
@@ -88426,7 +89090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 712,
+    "line": 722,
     "type": "property",
     "name": "total",
     "currentDoc": "(none)",
@@ -88434,7 +89098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 1110,
+    "line": 1473,
     "type": "property",
     "name": "org",
     "currentDoc": "(none)",
@@ -88442,7 +89106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 1111,
+    "line": 1474,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -88450,7 +89114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 1112,
+    "line": 1475,
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
@@ -88458,7 +89122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 1191,
+    "line": 1557,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -88466,7 +89130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/organizationManagement.ts",
-    "line": 1192,
+    "line": 1558,
     "type": "property",
     "name": "random",
     "currentDoc": "(none)",
