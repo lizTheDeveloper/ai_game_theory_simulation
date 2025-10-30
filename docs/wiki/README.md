@@ -453,8 +453,12 @@ The simulation now tracks paradigm scores month-by-month and provides comprehens
 **Phase 4: Multi-Paradigm DUI Data Pipeline**
 - Month-by-month tracking of all 4 paradigm scores stored in `state.multiParadigmDUI.history`
 - Each timestep records: Western, Development, Ecological, Indigenous values (0-100 scale)
+- **Oct 30, 2025 Fix (ISSUE-7 & 8)**: Added population and biosphere fields to history tracking
+  - Population fields: `population`, `globalPopulation`, `totalPopulation` (billions)
+  - Biosphere fields: `biosphere_integrity`, `biosphere` (extinction rate / safe threshold)
+  - Required fields with `assertDefined` validation (fail loudly if missing)
 - Integration with Monte Carlo system exports trajectory data to individual run event logs
-- Files: `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts`
+- Files: `src/simulation/engine/phases/MultiParadigmDUIUpdatePhase.ts`, `src/types/multiParadigmDUI.ts`
 
 **Phase 5: Geometric Mean Aggregator**
 - Non-compensatory aggregation using geometric mean (matches UNDP HDI methodology)
@@ -465,6 +469,7 @@ The simulation now tracks paradigm scores month-by-month and provides comprehens
 
 **Phase 6: Monte Carlo Integration**
 - Each run exports `paradigmTrajectory` array with monthly snapshots
+- Trajectory records include: 4 paradigm scores + population + biosphere (9 fields total)
 - Final scores reported in aggregate statistics (all 4 paradigms)
 - Outcome classification now includes paradigm-specific assessments
 - Files: `scripts/monteCarloSimulation.ts:710-736, 1251-1254`
