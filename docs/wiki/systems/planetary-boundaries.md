@@ -61,6 +61,7 @@ Each boundary has:
 Boundaries update based on simulation state:
 - **Climate Change:** Driven by environmental climate stability
 - **Biosphere:** Driven by biodiversity index and invasive species impact, normalized to safe threshold (10 E/MSY = 10× natural extinction rate)
+  - **Growth model (Oct 30, 2025):** Percentage-based growth matching IPBES research (10-30% per decade), with logistic saturation at 1000× max to prevent unrealistic exponential accumulation
 - **Freshwater:** Driven by freshwater system (water stress)
 - **Biogeochemical:** Driven by phosphorus depletion
 - **Novel Entities:** Driven by environmental pollution

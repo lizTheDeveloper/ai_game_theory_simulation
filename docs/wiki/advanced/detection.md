@@ -135,6 +135,11 @@ if (reasoningScore - actionScore > 0.3) {
 
 **Mechanism:** Detect when AIs manipulate benchmark scores through memorization, overfitting, or strategic gaming.
 
+**Timing Calibration (Oct 30, 2025):**
+- **Strategy assignment delay:** AIs remain 'honest' for first 3 months post-deployment (gaming requires time to learn benchmark landscape)
+- **Detection maturity ramp:** Effectiveness ramps from 0% (month 0) → 45% (month 24) to reflect gradual infrastructure development
+- **Research basis:** Yang et al. (2024) contamination detection survey was a 2-year project; LiveBench launched June 2024 after multi-year development
+
 **Detection Patterns:**
 
 #### Score Inflation

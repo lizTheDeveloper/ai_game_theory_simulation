@@ -48,7 +48,8 @@ currentlyDisplaced -= transitDeaths;
 - **Trigger**: Nuclear war, major conventional conflict
 - **Duration**: 12-48 months
 - **Mortality**: 2% transit + war casualties
-- **Source regions**: Conflict zones
+- **Source regions**: Conflict zones (5-10% of global population with scaling)
+- **Population calculation (Oct 30, 2025)**: Uses conflict zone population (~400-800M) instead of global 8B, resulting in realistic displacement estimates (~16-32M initial displaced, matching UNHCR 2023: 110M global refugees)
 - **Category**: War deaths
 
 **Climate-Driven Displacement**:
