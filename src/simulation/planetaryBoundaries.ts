@@ -64,10 +64,11 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
     tippingPointRisk: 0.30,
   };
 
-  // 2. BIOSPHERE INTEGRITY (Core Boundary) - 100-1000x extinction rate
-  // Research: IPBES (2024) - Current extinction rate ~137x natural (weighted global)
-  // Safe threshold: 10 E/MSY (10x natural extinction rate)
-  // Boundary value: 137 / 10 = 13.7 (normalized, same scale as other boundaries)
+  // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~2× safe boundary
+  // UPDATED (Oct 30, 2025): BLOCKER-2 fix - Richardson et al. (2023)
+  // Current extinction rate: ~2.2× natural (weighted global, was incorrectly 137× before fix)
+  // Safe threshold: 10 E/MSY (10× natural extinction rate)
+  // Boundary value: 2.2 / 1.0 = 2.2 (normalized, NOT 13.7 from old buggy data)
   boundaries.biosphere_integrity = {
     name: 'biosphere_integrity',
     displayName: 'Biosphere Integrity (Biodiversity)',
@@ -545,9 +546,9 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   updateBoundaryStatus(climateBoundary);
 
   // Biosphere integrity (from regional extinction rates)
-  // Research: IPBES (2024) - 100-1000x natural extinction rate
-  // Safe threshold: 10x natural rate (10 E/MSY)
-  // Current baseline: 137x natural rate (weighted across regions)
+  // UPDATED (Oct 30, 2025): BLOCKER-2 fix - Richardson et al. (2023)
+  // Current baseline: ~2.2× natural rate (weighted across regions, was incorrectly 137× before fix)
+  // Safe threshold: 10× natural rate (10 E/MSY)
   // Invasive species contribution (Oct 27, 2025): IPBES (2019) - ~40% of modern extinctions
   if (system.landUse) {
     const baseExtinctionRatio = system.landUse.globalExtinctionRate / system.landUse.naturalExtinctionRate;
@@ -868,21 +869,39 @@ export function applyTippingPointCascadeEffects(state: GameState): void {
   if (monthsSinceCascade % 6 === 0) { // Log every 6 months
     const population = state.humanPopulationSystem.population;
     const baseMortalityRate = state.config.scenarioParameters?.cascadeMortalityRate ?? 0.005;
-    const mortalityRate = monthsSinceCascade > 48
+
+    // BUG FIX (Oct 30, 2025): BLOCKER-1 - Cap displayed mortality at 100% (physical constraint)
+    // ROOT CAUSE: Unbounded exponential 1.05^N produces >100% mortality at long timescales
+    //   Example: Month 192 (144 past crisis) → 1.05^144 = 1687.9× → 843.95% monthly mortality
+    // IMPORTANT: This value is FOR DISPLAY ONLY. Actual mortality is computed by:
+    //   - calculateEnvironmentalMortality() in environmental.ts
+    //   - resolveMortality() in bayesianMortality.ts (with 2.8% monthly cap)
+    // FIX: Cap theoretical mortality at 100%, warn when exceeded
+
+    const theoreticalMortalityUncapped = monthsSinceCascade > 48
       ? baseMortalityRate * Math.pow(1.05, monthsSinceCascade - 48)
       : baseMortalityRate;
-    
+
+    // Physical constraint: monthly mortality cannot exceed 100% (entire population dies once)
+    const mortalityRateDisplay = Math.min(1.0, theoreticalMortalityUncapped);
+    const exceededPhysicalLimit = theoreticalMortalityUncapped > 1.0;
+
     console.log(`\n🌪️ TIPPING POINT CASCADE - Month ${monthsSinceCascade}`);
     console.log(`   Climate: ${(env.climateStability * 100).toFixed(1)}%`);
     console.log(`   Biodiversity: ${(env.biodiversityIndex * 100).toFixed(1)}%`);
     console.log(`   Population: ${population.toFixed(2)}B (${(population * 1_000_000_000).toFixed(0)} people)`);
-    console.log(`   Monthly mortality: ${(mortalityRate * 100).toFixed(1)}%`);
-    
+    console.log(`   Monthly mortality (theoretical): ${(mortalityRateDisplay * 100).toFixed(1)}%`);
+
+    if (exceededPhysicalLimit) {
+      console.log(`   ⚠️ Theoretical mortality exceeds 100% (${(theoreticalMortalityUncapped * 100).toFixed(0)}% uncapped)`);
+      console.log(`   ⚠️ Actual mortality capped by Bayesian system (2.8% monthly limit)`);
+    }
+
     if (monthsSinceCascade < 48) {
       console.log(`   Status: Initial crisis (Month ${monthsSinceCascade}/48)`);
     } else {
       console.log(`   Status: ACCELERATING COLLAPSE (Month ${monthsSinceCascade - 48} past crisis)`);
-      console.log(`   Death rate: ${(mortalityRate / baseMortalityRate).toFixed(1)}x baseline`);
+      console.log(`   Death rate: ${(theoreticalMortalityUncapped / baseMortalityRate).toFixed(1)}x baseline`);
     }
   }
 
