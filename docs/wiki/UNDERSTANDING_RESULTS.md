@@ -5,6 +5,7 @@ Comprehensive guide to interpreting simulation outcomes, metrics, and classifica
 ## Table of Contents
 
 - [Outcome Classifications](#outcome-classifications)
+  - [Two Classification Systems](#two-classification-systems-oct-30-2025-fix)
 - [Quality of Life Metrics](#quality-of-life-metrics)
 - [Multi-Paradigm DUI](#multi-paradigm-dui)
 - [Extinction Classifications](#extinction-classifications)
@@ -159,6 +160,79 @@ Added October 17, 2025 to distinguish **prosperity without mass death** from **r
 - **Deaths**: 3.8 billion people (47.5% of peak population)
 
 This is a complex outcome - not simply "bad" or "good". It's bad for most paradigms, mediocre for development, and catastrophic in terms of mortality. The unified classification captures all dimensions.
+
+### Two Classification Systems (Oct 30, 2025 Fix)
+
+**IMPORTANT**: The simulation uses **two different methods** to classify outcomes:
+
+#### 1. Probability-Based Classification
+
+**When used**: During simulation (every month)
+**What it does**: Calculates extinction/dystopia/utopia probabilities based on AI risk factors
+**Formula**: Based on AI capability, alignment, control, trust, QoL
+**Purpose**: Determines when to end simulation early (when probability >85%)
+
+```typescript
+// Example: High extinction probability
+extinctionProbability = 0.684 // 68.4% based on AI risk factors
+dystopiaProb = 0.0
+utopiaProbability = 0.0
+```
+
+**Key point**: These probabilities are **predictive** - they estimate what MIGHT happen, not what HAS happened.
+
+#### 2. Population-Based Classification (Mortality Bands)
+
+**When used**: At simulation end (max months reached)
+**What it does**: Classifies outcome based on **actual mortality** from peak population
+**Formula**: Based on final population and deaths
+**Purpose**: Determines final outcome when no early exit occurred
+
+```typescript
+// Example: Dystopia based on mortality
+finalPopulation = 0.02B (20 million)
+mortalityRate = 99.7% (7.976B deaths)
+outcome = "dystopia" // Based on mortality band (87.5-98.75%)
+```
+
+**Key point**: These classifications are **descriptive** - they describe what ACTUALLY happened.
+
+#### Understanding Outcome Reasons (Bug Fixed Oct 30, 2025)
+
+**Pre-fix (MISLEADING):**
+```
+Outcome: dystopia
+extinctionProb: 0.684
+Reason: "Reached max months with dystopia probability dominant"
+```
+❌ **Wrong!** Extinction probability (68.4%) was higher than dystopia probability (0.0%), but the reason incorrectly claimed "dystopia probability dominant."
+
+**Post-fix (ACCURATE):**
+```
+Outcome: dystopia
+Reason: "Reached max months (240) - classified as dystopia (99.7% mortality, 0.02B survivors)"
+```
+✅ **Correct!** Reason now clearly states:
+- Classification method used (mortality-based, not probability-based)
+- Actual data (99.7% mortality, 0.02B survivors)
+- No misleading claims about probability dominance
+
+#### Why Two Systems?
+
+1. **Different purposes**:
+   - Probability-based: Predicts future, triggers early exits
+   - Population-based: Describes actual outcome, used when simulation completes full duration
+
+2. **Different data**:
+   - Probability-based: AI risk factors (capability, alignment, control)
+   - Population-based: Actual mortality from peak population
+
+3. **Can disagree**:
+   - High extinction probability (70%+) can occur with actual dystopia outcome
+   - This is CORRECT behavior - predictions and reality differ
+   - Outcome reason now clearly states which method was used
+
+**Reading Monte Carlo results**: Always check the reason string to understand HOW the outcome was determined, not just WHAT the outcome was.
 
 ## Quality of Life Metrics
 

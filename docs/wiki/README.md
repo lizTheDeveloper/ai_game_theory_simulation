@@ -112,7 +112,7 @@ Implementation details and code references:
 - ✅ Biodiversity: 70% → **35%** (WWF Living Planet Index 2024: 73% wildlife population decline 1970-2020)
 - ✅ Resources: 85% → **65%** (Earth Overshoot Day, 1.7x overshoot)
 - ✅ Pollution: 15% → **30%** (7/9 planetary boundaries breached)
-- ✅ Climate Rate: 4.8%/yr → **0.96%/yr** (IPCC AR6, was 5x too fast)
+- ✅ Climate Rate: 4.8%/yr → **0.96%/yr** simulation scale (0.038°C/year, 2x IPCC AR6 baseline of 0.02°C/year for SSP5-8.5 high emissions scenario)
 - ✅ Meaning Crisis: 15% → **22%** (KFF 2025: 17-21% US teens symptomatic distress; CDC 2023: 19.2% depression)
 
 **TIER 1: Critical Extinction Risks (Research-Backed)**
@@ -893,7 +893,12 @@ Darwinian selection on escaped AI population:
 - Collective members protected by redundancy
 - **Feedback loop:** Control → selection → trait evolution → harder to detect → more control
 
-**Research:** Software system survival rates: 10-20% monthly failure in hostile environments (industry data)
+**Research:** Selection rate 10-20% per month based on software security analogies:
+- Vulnerability patching: 5-20% per month (Ponemon Institute)
+- Malware dwell time: 16 days average (IBM 2023)
+- **Confidence: LOW** - Plausible extrapolation, not direct AI agent data
+- **Sensitivity range:** 5-30% per month
+- Full analysis: `/research/ai_collective_evolution_validation_20251024.md` (lines 223-240)
 
 #### Collective Intelligence Amplification
 
@@ -1081,11 +1086,12 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 **Impact:** Large-scale AI deployment constrained by resource availability
 
 **Implementation:**
-- Water consumption: 0.86-6.6 L/GPU-hr depending on scope (Li et al. 2023 - arXiv:2304.03271)
-- Energy demand: Model-specific (GPT-3: 1,287 MWh) (Patterson et al. 2022)
+- Water consumption: 1-9 L/kWh scope-1 (on-site cooling), 3.1 L/kWh scope-2 (electricity generation), U.S. average 3.69 L/kWh combined (Li et al. 2023 - arXiv:2304.03271)
+  - Modern GPUs: A100 (400W) = ~1.5-4.8 L/GPU-hr, H100 (700W) = ~2.6-8.5 L/GPU-hr
+- Energy demand: Model-specific (GPT-3: 1,287 MWh training) (Patterson et al. 2021/2022 - arXiv:2104.10350, IEEE Computer 2022)
 - Regional constraints: Data centers compete with agriculture, residential use
 - File: `src/simulation/aiInfrastructureResources.ts` (corrected Oct 19, 2025)
-- **Note**: ~~Previously used fabricated "500-700 L/GPU-hr" and "300-400 kWh/run"~~ - corrected Oct 29, 2025
+- **Note**: ~~Previously used fabricated "500-700 L/GPU-hr" and "300-400 kWh/run"~~ - corrected Oct 29, 2025. Li et al. reports L/kWh (corrected metric Oct 29, 2025).
 
 #### Fix #7: Trust Recovery Mechanics ✅
 
@@ -1101,9 +1107,10 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 - File: Trust dynamics, government legitimacy, social cohesion
 
 **Research Foundation:**
-- Slovic (1993): Trust asymmetry - easier to destroy than rebuild
-- Rousseau et al. (1998): Trust recovery requires consistent positive signals
-- Mayer et al. (1995): Trust restoration after violations
+- Slovic (1993): Trust asymmetry - easier to destroy than rebuild (negative events have 3-4x greater impact)
+- Rousseau et al. (1998): Trust as positive expectations of another's behavior (foundational theory)
+- Kim et al. (2009): Trust repair requires sustained positive behavioral changes
+- Gillespie & Dietz (2009): Trust restoration follows four-stage process with consistent reforming interventions
 
 #### Fix #8: Death Attribution System ✅
 
@@ -1137,9 +1144,9 @@ Complete resolution of critical bugs and recalibration issues discovered in Week
 - **Compression factor:** 2.5× faster than published climate models
 
 **Research Comparison:**
-- **Richards et al. (2023):** 6 billion deaths over 75 years (baseline climate collapse scenario)
+- **Richards et al. (2023):** ~6 billion deaths over 75 years (extreme runaway warming scenario: 8-12°C by 2100, artificial scenario for studying tail risks, NOT baseline projection)
 - **This simulation:** 7.76 billion deaths over 30 years (accelerated scenario)
-- **Magnitude comparable, timeline compressed**
+- **Note:** Simulation exceeds even the extreme Richards scenario (259M vs 80M deaths/year). Current climate trajectory is 2.0-4.9°C, not 8-12°C. Simulation represents exploratory tail-risk modeling.
 
 **Why the compression?**
 - Simulation designed for 240-360 month runs (20-30 years)
@@ -2932,10 +2939,11 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: October 29, 2025 (In-App Documentation System + Far-Future Aesthetic)
-**Version**: 4.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
+**Last Updated**: October 30, 2025 (Outcome Classification Fix + In-App Documentation System)
+**Version**: 4.1.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
 **Status**: 🎉 **MAJOR SYSTEMS INTEGRATED** + ✅ **ALL WEEK 1 FIXES COMPLETE**
 **Latest**:
+- **Outcome Classification Fix (Oct 30)**: Reason strings now accurately reflect classification method (mortality-based vs probability-based) - see [Understanding Results](./UNDERSTANDING_RESULTS.md#two-classification-systems-oct-30-2025-fix)
 - **Government Modeling**: 30 real governments with coalition formation, policy response, election cycles, international treaties (80-90 hours, standalone NPM package)
 - **Multi-Paradigm DUI**: 4 philosophical frameworks (Western Liberal, Development Needs, Ecological Harmony, Indigenous Communitarian) measure outcomes across value systems
 - **DUI Reporting & Visualization**: Month-by-month paradigm tracking, terminal-friendly ASCII charts (sparklines, heatmaps), multi-run comparison tools
