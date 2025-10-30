@@ -101,6 +101,8 @@ Implementation details and code references:
 | [📋 Emoji Inventory](./EMOJI_INVENTORY.md) | ✅ | Complete list of all emojis in use (~50 semantic emojis) |
 | [🎥 YouTube Transcript RAG](../research/youtube-transcript-rag.md) | ✅ | Automated transcript archive, FAISS embeddings, SQLite DB, MCP server (Oct 28, 2025) |
 | [📖 In-App Documentation](#-in-app-documentation-system-oct-29-2025) | ✅ | Interactive docs with far-future aesthetic (Oct 29, 2025) |
+| [🔍 Optional Chaining Audit](../../logs/optional_chaining_audit_20251030.md) | ✅ | Systematic audit of ?? and || fallback patterns (~30-40 high-risk patterns, cleanup plan) (Oct 30, 2025) |
+| [👨‍💻 Senior Dev Review](../../logs/senior_dev_review_optional_chaining_20251030.md) | ✅ | Detailed review of defensive fallbacks, priority files, unemployment paradox (Oct 30, 2025) |
 
 ## 🔧 System Status Overview
 
