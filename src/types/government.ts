@@ -247,19 +247,41 @@ export interface Coalition {
 }
 
 /**
- * Active policy response
+ * Active policy response with implementation lifecycle
+ *
+ * Research Foundation:
+ * - Implementation timescales: 24-60 months (Pressman & Wildavsky 1973)
+ * - Effectiveness ranges: 30-80% (not 100%) due to institutional resistance
+ * - Political will decay: Sabatier (1988) - advocacy coalition framework
+ * - Industry capture: Stigler (1971) - regulatory capture theory
  */
 export interface ActivePolicy {
   country: string;             // Country code
   domain: string;              // Policy domain (technology, environmental, etc.)
-  startMonth: number;          // When initiated
-  completionMonth: number;     // When implemented
-  effectiveness: number;       // [0,1] Policy effectiveness
+  startMonth: number;          // When initiated (legislation passed)
+  completionMonth: number;     // When fully deployed (not instant)
+  currentEffectiveness: number; // [0,1] Current effectiveness (ramps up via sigmoid)
+  targetEffectiveness: number;  // [0,1] Target effectiveness at full deployment
+
+  // Implementation factors (affect ramp-up speed and final effectiveness)
+  fundingLevel: number;         // [0,1] Funding level (affects deployment speed)
+  bureaucraticCapacity: number; // [0,1] Institutional capacity (caps effectiveness)
+  politicalWill: number;        // [0,1] Political support (can decay over time)
+  publicSupport: number;        // [0,1] Public approval (affects funding/will)
+
+  // Failure modes (affect final effectiveness)
+  capturedByIndustry: boolean;  // Industry capture reduces effectiveness to ~40%
+  insufficientEnforcement: boolean; // Partial compliance
+  loopholes: boolean;           // Circumvention strategies
+
   stimulus: {                  // What triggered the policy
     aiCapability?: number;
     crisisType?: string;
     internationalPressure?: number;
   };
+
+  // Legacy field for backward compatibility
+  effectiveness?: number;       // Deprecated: use currentEffectiveness instead
 }
 
 /**
@@ -272,6 +294,24 @@ export interface Treaty {
   compliance: number;          // [0,1] Average compliance
   domain: string;              // Policy domain
   strength: number;            // [0,1] Treaty strength
+}
+
+/**
+ * Government institutional capacity factors
+ *
+ * Affects policy implementation speed, effectiveness, and failure probability.
+ *
+ * Research Foundation:
+ * - Regulatory expertise: Howlett (2009) - policy capacity framework
+ * - Institutional inertia: Pierson (2000) - path dependence
+ * - Political polarization: McCarty et al. (2006) - polarization effects
+ * - International coordination: Slaughter (2004) - transgovernmental networks
+ */
+export interface GovernmentCapacity {
+  regulatoryExpertise: number;       // [0,1] AI/tech expertise in government
+  institutionalInertia: number;      // [0,1] Resistance to change (higher = more resistance)
+  politicalPolarization: number;     // [0,1] Consensus difficulty
+  internationalCoordination: number; // [0,1] Ability to coordinate globally
 }
 
 /**

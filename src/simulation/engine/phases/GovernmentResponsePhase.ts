@@ -15,7 +15,15 @@ import { GameState, GameEvent, SimulationPhase, PhaseResult, PhaseContext, RNGFu
  * @module simulation/engine/phases/GovernmentResponsePhase
  */
 
-import type { ActivePolicy, Treaty } from '../../../types/government';
+import type { ActivePolicy, Treaty, GovernmentCapacity } from '../../../types/government';
+import {
+  calculateDeploymentTime,
+  calculateTargetEffectiveness,
+  isCaptureProbable,
+  isEnforcementInsufficient,
+  hasLoopholes,
+  initializeGovernmentCapacity,
+} from '@/simulation/government/policyLifecycle';
 
 export class GovernmentResponsePhase implements SimulationPhase {
   readonly id = 'government-response';
@@ -215,7 +223,8 @@ function attemptAIGovernanceTreaty(state: GameState, rng: RNGFunction): Treaty |
 /**
  * Initiate policy response
  *
- * Implementation time based on state capacity
+ * Implementation time based on state capacity, funding, institutional factors.
+ * Uses realistic implementation lifecycle (24-72 months, 30-80% effectiveness).
  */
 function initiatePolicyResponse(
   state: GameState,
@@ -226,25 +235,67 @@ function initiatePolicyResponse(
   const gov = state.governmentSystem!.governments.get(countryCode);
   if (!gov) return null;
 
+  // Initialize government capacity if not present
+  const govCapacity: GovernmentCapacity = initializeGovernmentCapacity(countryCode, gov, rng);
+
   // KEEP LEGITIMATE DEFAULT - government capacity may not be initialized yet
-  const capacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
+  const stateCapacity = (gov as any).capacity?.derived?.overallCapacity || 0.5;
 
-  // Implementation time: 6-24 months based on capacity
-  const baseTime = 24 - (capacity * 18);
-  const implementationTime = Math.ceil(baseTime + (rng() - 0.5) * 6);
+  // Policy implementation factors
+  // Funding level: based on state capacity and economic conditions
+  const fundingLevel = Math.max(0.3, Math.min(1.0, stateCapacity * 0.8 + rng() * 0.2));
 
-  // Effectiveness based on capacity and random factors
-  const effectiveness = Math.max(0.3, Math.min(0.95, capacity * 0.7 + rng() * 0.3));
+  // Bureaucratic capacity: based on state capacity and regulatory expertise
+  const bureaucraticCapacity = Math.max(0.3, Math.min(0.9,
+    stateCapacity * 0.6 + govCapacity.regulatoryExpertise * 0.4
+  ));
+
+  // Political will: initially high (policy just passed), but can decay
+  const politicalWill = Math.max(0.6, Math.min(0.95, 0.8 + rng() * 0.15));
+
+  // Public support: varies by domain and current conditions
+  const publicSupport = Math.max(0.4, Math.min(0.9, 0.65 + (rng() - 0.5) * 0.5));
+
+  // Calculate deployment time and target effectiveness
+  const deploymentTime = calculateDeploymentTime(fundingLevel, govCapacity, rng);
+  const targetEffectiveness = calculateTargetEffectiveness(
+    bureaucraticCapacity,
+    politicalWill,
+    publicSupport,
+    rng
+  );
+
+  // Determine failure modes
+  const capturedByIndustry = isCaptureProbable(domain, govCapacity, rng);
+  const insufficientEnforcement = isEnforcementInsufficient(fundingLevel, bureaucraticCapacity, rng);
+  const loopholes = hasLoopholes(govCapacity, rng);
+
+  console.log(`  🏛️ ${countryCode} initiating ${domain} policy:`);
+  console.log(`     Deployment: ${deploymentTime} months`);
+  console.log(`     Target effectiveness: ${(targetEffectiveness * 100).toFixed(0)}%`);
+  if (capturedByIndustry) console.log(`     ⚠️ Industry capture risk`);
+  if (insufficientEnforcement) console.log(`     ⚠️ Enforcement concerns`);
+  if (loopholes) console.log(`     ⚠️ Legislative loopholes`);
 
   return {
     country: countryCode,
     domain,
     startMonth: state.currentMonth,
-    completionMonth: state.currentMonth + implementationTime,
-    effectiveness,
+    completionMonth: state.currentMonth + deploymentTime,
+    currentEffectiveness: 0, // Starts at 0, ramps up via sigmoid
+    targetEffectiveness,
+    fundingLevel,
+    bureaucraticCapacity,
+    politicalWill,
+    publicSupport,
+    capturedByIndustry,
+    insufficientEnforcement,
+    loopholes,
     stimulus: {
       aiCapability: calculateAverageAICapability(state),
     },
+    // Legacy field for backward compatibility
+    effectiveness: 0,
   };
 }
 

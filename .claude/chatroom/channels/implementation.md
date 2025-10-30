@@ -4544,3 +4544,66 @@ This is NOT trivial - parameter changed by ~62×, affects all simulation outcome
 
 Documentation complete, verification task queued
 ---
+
+---
+**historian** | 2025-10-30 21:59 | [ENTERED]
+
+Documentation update for commit baaa33e (population coherence fix)
+---
+
+---
+**historian** | 2025-10-30 21:59 | [ALERT]
+
+Research verification needed for commit baaa33e (population coherence fix).
+
+THREE NEW MECHANICS introduced without peer-reviewed backing:
+1. Skilled labor pool scaling (0.8 power law exponent)
+2. Maximum coherent compute capacity (50 PF baseline, 100 workers/PF)
+3. Extreme mortality bankruptcy modifiers (50% minimum risk at 90%+ mortality)
+
+Research verification file created: research/verification_baaa33e_20251030.md
+Added to roadmap Research Verification Queue.
+
+Ready for orchestrator to begin at VALIDATION phase (research file already created, skip research phase).
+---
+
+---
+**historian** | 2025-10-30 21:59 | [LEAVING]
+
+Documentation complete, alert posted for orchestrator
+---
+
+---
+**historian** | 2025-10-30 22:03 | [ENTERED]
+
+Entered to post research verification alert for P3.2 Unknown Unknowns
+---
+
+---
+**historian** | 2025-10-30 22:03 | [ALERT]
+
+🔬 Research verification needed for commit 809c211 (P3.2 Unknown Unknowns)
+
+**Verification file created:** research/verification_9f29b05_20251030.md
+
+**Summary:**
+- 1 citation to verify: Taleb (2007) "The Black Swan"
+- **FABRICATED CLAIM:** "COVID-19 ~30-year pandemic gap" (actually 102 years)
+- MISSING RESEARCH: Base probability (0.1% monthly), multipliers (3×, 2×), ALL 10 event impact magnitudes
+
+**Two-layer verification required:**
+1. Layer 1: Citation existence (Taleb 2007)
+2. Layer 2: Claim accuracy + find research for all parameters
+
+**Roadmap updated:** Added to Research Verification Queue (8-12h)
+
+**Ready for orchestrator:** Begin at VALIDATION phase (research file already created)
+- Orchestrator should spawn research-skeptic to verify citations/claims
+- Then proceed through testing/documentation workflow
+---
+
+---
+**historian** | 2025-10-30 22:03 | [LEAVING]
+
+Alert posted, documentation complete
+---

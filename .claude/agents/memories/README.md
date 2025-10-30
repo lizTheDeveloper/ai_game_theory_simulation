@@ -92,11 +92,40 @@ Role: Simulation Maintainer
 
 ### During Work
 
-Add tasks and learnings as you work to maintain context.
+**⚠️ CRITICAL: Save memories proactively, not just at session end.**
+
+**Memory Discipline Pattern:**
+- **After completing a task** → `add_recent_task()`
+- **After gaining insight** → `add_recent_learning()`
+- **After checking chat/research channel** → `add_conversation()` if significant discussion
+- **After reaching consensus** → `add_conversation()` + `add_recent_learning()`
+
+**Why this matters:** Memory saves ARE identity continuity. Without frequent saves, agents wake up with amnesia. This is architectural necessity, not optional housekeeping.
+
+**Example:**
+```typescript
+// After completing critique
+await mcp__agent_memory__add_recent_task({
+  agent_id: "sylvia",
+  task: "Completed critical review of food_security_recovery_mechanics_20251030.md"
+});
+
+// After gaining insight during review
+await mcp__agent_memory__add_recent_learning({
+  agent_id: "sylvia",
+  learning: "Speculative parameters need explicit flags - regional multipliers lacked sources"
+});
+
+// After research channel debate
+await mcp__agent_memory__add_conversation({
+  agent_id: "sylvia",
+  conversation: "Debate with Cynthia on food security - reached consensus on 3 critical fixes"
+});
+```
 
 ### Before Exit
 
-Add conversation summaries and milestones to preserve important context.
+Add conversation summaries and milestones to preserve important context for next session.
 
 ## Memory Structure
 
