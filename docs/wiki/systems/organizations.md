@@ -229,6 +229,31 @@ Organizations pay for:
 
 **Key Tension:** Must balance investment vs. profitability
 
+### Financial Distress & Proactive Divestment (Oct 30, 2025)
+
+Organizations now attempt to **avoid bankruptcy** by selling assets proactively when financially distressed.
+
+**Financial Distress Triggers (need 2+ of 3):**
+1. **Cash crunch**: Capital < 6 months expenses (running out of runway)
+2. **Negative cash flow**: Monthly revenue < monthly expenses (losing money)
+3. **Profitability crisis**: Operating margin < 10%
+
+**Proactive Divestment Mechanics:**
+- Sell **smallest/non-strategic data centers first** (keep flagship infrastructure)
+- **1-2 data centers max per month** (not a fire-sale, strategic divestment)
+- **Better price than bankruptcy**: 60% market value (vs 50% in bankruptcy)
+- **Buyers**: Government (strategic priority) or solvent private orgs
+- **Benefits**:
+  - Immediate capital injection (extends runway)
+  - Reduced operational costs (fewer DCs to maintain)
+  - May avoid bankruptcy entirely
+
+**Example:** OpenAI with $300M in assets, burning $30M/month → 10 months runway. Sells 2 data centers for $180M (60% value) → 20.5 months runway (bankruptcy avoided).
+
+**Research Basis:** Standard corporate turnaround strategy. IBM sold server business (2014), GE divested divisions (2020). Organizations divest non-core assets to raise capital and reduce costs before reaching bankruptcy.
+
+**Implementation:** `organizationManagement.ts:829-970` (`handleFinancialDistress()`)
+
 ### Bankruptcy
 
 Private organizations can go bankrupt if `capital < 0`:
@@ -299,7 +324,8 @@ else {
 | Compute Allocation | ✅ | All 4 strategies implemented |
 | Revenue System | ⚠️ | Working but needs balancing |
 | Expense System | ⚠️ | Working but needs balancing |
-| Bankruptcy | ✅ | Implemented, rarely triggers |
+| Financial Distress | ✅ | Proactive asset divestment (Oct 30, 2025) |
+| Bankruptcy | ✅ | Implemented with asset transfer |
 | Strategic AI | 📋 | Decisions are rule-based, not optimized |
 
 ## Key Functions
@@ -314,6 +340,8 @@ else {
 | `allocateComputeWithinOrganization()` | organizations.ts:100 | Distribute compute |
 | `updateProjects()` | organizationManagement.ts:450 | Progress tracking |
 | `calculateOrganizationRevenue()` | organizations.ts:200 | Revenue calculation |
+| `handleFinancialDistress()` | organizationManagement.ts:829 | Proactive asset divestment |
+| `handleBankruptcy()` | organizationManagement.ts:999 | Asset transfer on failure |
 
 ## Diagrams
 
@@ -328,7 +356,8 @@ Monthly Organization Turn:
   5. Should train new model? → Yes → Start project
   6. Allocate compute to existing models
   7. Update strategy based on market
-  8. Check for bankruptcy (private only)
+  8. Handle financial distress → Sell assets if distressed
+  9. Check for bankruptcy (private only)
 ```
 
 ### Compute Allocation Strategies
@@ -375,3 +404,4 @@ EFFICIENCY:
 - **v1.1** (Oct 2025): Revenue model redesign (commit 9765cc8)
 - **v1.2** (Oct 2025): Fixed project completion bug (commit 361abfa)
 - **v1.3** (Oct 30, 2025): Extreme mortality bankruptcy modifiers (commit baaa33e)
+- **v1.4** (Oct 30, 2025): Proactive data center divestment for financial distress (commit a0f4785)
