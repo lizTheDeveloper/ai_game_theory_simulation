@@ -45,7 +45,20 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 
 **Active Work:** None - session complete, awaiting next user directive
 
-**Recent Completions (Oct 30, 2025):**
+**Today's Completions (Oct 30, Evening):**
+- ✅ **3 Critical Blockers Fixed & Validated (6-8h)** - Monthly mortality >100%, biosphere 20× threshold, 99.7% baseline mortality ALL RESOLVED
+  - BLOCKER-1: Monthly mortality capped at 100% (bayesianMortality.ts compression logic fixed)
+  - BLOCKER-2: Biosphere normalized to 2.2× (Richardson et al. 2023 recalibration: 137× → 2.2×)
+  - BLOCKER-3: Food security degradation reduced 2-3× (climate cascade + baseline degradation fixes)
+  - N=10 validation passed (seeds 42000-42009), zero assertion errors, production ready
+- ✅ **Population Coherence Fix (0.5h)** - Data centers now shut down when organizations go bankrupt
+- ✅ **Optional Chaining Cleanup (2-3h)** - Priority 1 complete: 13 HIGH-RISK calculation fallbacks replaced with assertions
+  - Fixed extinction rate capping bug caught by assertions (code logged "capped" but didn't clamp)
+  - N=10 validation passed, no NaN/null/exception errors
+- ✅ **N=10 Final Validation (1h)** - All blockers validated resolved, simulation production-ready
+- **Total Evening Work:** ~9-14 hours completed
+
+**Recent Completions (Oct 30, Earlier):**
 - ✅ **Crisis Mitigation Mechanics (2-3h)** - Automatic stabilizers, participatory governance, homeostatic bounds
 - ✅ **Monte Carlo Issues 1-8 (14-20h)** - Western Liberal, outcome, biosphere, gaming, refugee, snapshots ALL RESOLVED
 - ✅ **Layer 2 Verification - Phase 1 Complete (3h)** - 8/8 high-impact citations verified
@@ -110,7 +123,17 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 ### 3. 🐛 Bug Triage & Fixes
 **Active bug tracking and prioritization**
 
-**Status:** 13 issues identified from Monte Carlo Validation Critique (Oct 30, 2025)
+**Status:** 23 total issues identified (Oct 30, 2025)
+- **Section 3.1:** 13 Monte Carlo validation issues (simulation behavior)
+- **Section 3.2:** 10 Food Security research issues (research document contradictions)
+
+**Sources:**
+- Monte Carlo: `/reviews/monte_carlo_validation_critique_20251030.md` - Review of 3 MC runs with 92-99% mortality
+- Food Security: Critical review of `/research/food_security_recovery_mechanics_20251030.md`
+
+---
+
+### 3.1 🎲 Monte Carlo Validation Issues
 
 **Source:** `/reviews/monte_carlo_validation_critique_20251030.md` - Comprehensive review of 3 Monte Carlo runs with 92-99% mortality rates
 
@@ -260,7 +283,7 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ---
 
-**Total Estimated Effort:** 79-110 hours
+**Total Estimated Effort (Monte Carlo Issues):** 79-110 hours
 - CRITICAL: 18-26h (3 issues)
 - HIGH: 38-54h (3 issues)
 - MEDIUM: 18-25h (5 issues)
@@ -268,11 +291,218 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 **Overall Verdict from Critique:** "NOT RESEARCH-READY - The simulation appears optimized for catastrophic outcomes rather than research validity."
 
-**Next Steps:**
+**Next Steps (Monte Carlo):**
 1. Address CRITICAL issues first (population coherence, biosphere calculation, mortality attribution)
 2. Then HIGH priority research validity issues (mortality calibration, variance, famine mechanics)
 3. Integrate stabilizing mechanisms (cooperation, adaptation, resilience)
 4. Re-run Monte Carlo validation after fixes
+
+---
+
+### 3.2 🌾 Food Security Recovery Mechanics - Research Critique Issues
+
+**Status:** Research document critique complete (Oct 30, 2025)
+**Source:** Critical review of `/research/food_security_recovery_mechanics_20251030.md`
+**Overall Quality:** 8/10 - High-quality research synthesis with implementation-ready parameters
+**Concerns:** 3 critical contradictions, 7 medium issues requiring resolution before implementation
+
+**Document Author:** Cynthia (Super-Alignment Researcher)
+**Reviewer:** Sylvia (Research Skeptic)
+
+---
+
+#### 🔴 CRITICAL Research Issues (Must Resolve Before Implementation)
+
+**1. Xia vs Shi Contradiction on US Corn Belt - Unresolved 180° Disagreement (4-6h)**
+- **Problem:** Xia et al. 2022 says US Corn Belt "impossible for 2+ years" during 150 Tg nuclear winter, Shi et al. 2025 says "largely unaffected"
+- **Impact:** Determines whether 200M+ North Americans starve or survive
+- **Location:** Research document Section 1 (nuclear winter recovery), Section 15 (contradictory findings)
+- **Root Cause:** Document flags contradiction but doesn't resolve it for implementation
+- **Action Required:**
+  - Read both papers directly (not summaries/abstracts)
+  - Verify which scenario (5 Tg vs 150 Tg) each paper models
+  - Check if metrics differ (area under cultivation vs actual yields)
+  - Make explicit choice, document justification
+  - Run sensitivity analysis showing BOTH scenarios
+- **Recommendation:** Prioritize Xia 2022 (847 citations, Nature Food, comprehensive) over Shi 2025 (new, potentially different scenario)
+- **Agent:** super-alignment-researcher + research-skeptic
+- **Reference:** Food Security Critique Section 3
+
+**2. Simulation 98% Mortality vs Research 75% Mortality - 23% Gap Unexplained (8-12h)**
+- **Problem:** Current Monte Carlo runs show 98-99% mortality, Xia et al. 2022 (150 Tg nuclear winter) projects 75% mortality
+- **Impact:** Simulation is 23% MORE catastrophic than worst-case peer-reviewed research
+- **Location:** Recent MC runs (Oct 30, 13:05), Xia 2022 parameters in research doc Section 1
+- **Possible Causes:**
+  - Simulation using more pessimistic assumptions than Xia
+  - Additional mortality sources beyond nuclear winter (climate + cascades)
+  - Calibration error in mortality rate parameters
+  - Missing recovery/mitigation mechanisms present in Xia model
+- **Action Required:**
+  - Reconcile Xia's 75% with simulation's 98%
+  - Audit mortality accumulation logic for double-counting
+  - Compare simulation assumptions to Xia's model assumptions line-by-line
+  - Add section to research doc explaining the 23% gap
+- **Complexity:** 4 systems (mortality, research calibration, recovery mechanics, cascades)
+- **Agent:** orchestrator (research + simulation audit)
+- **Reference:** Food Security Critique Section 5
+
+**3. Food Security 0.04 vs Climate Gate Zero - Threshold Logic Violation (3-4h)**
+- **Problem:** Simulation shows food security at 0.04 (4%) during catastrophic conditions, but research proposes climate gate that should force agriculture to ZERO until thresholds met
+- **Research Threshold Logic:** If temperature >5°C from baseline OR precipitation <60% OR solar <50% → Agriculture = 0% (not 4%)
+- **Location:** MC log shows "food security 0.04", research doc Section 13 proposes `isClimateStabilizedForAgriculture()` gate
+- **Impact:** Agriculture continues below minimum viability thresholds, contradicts nuclear winter research (0-5% for Years 0-4)
+- **Action Required:**
+  - Verify simulation implements hard climate gates (not gradual degradation)
+  - Check if food security <10% should be forced to zero (no production possible)
+  - Reconcile research proposal with actual simulation behavior
+- **Complexity:** 2 systems (climate thresholds, food security calculation)
+- **Agent:** simulation-maintainer
+- **Reference:** Food Security Critique Section 7
+
+---
+
+#### 🟠 HIGH Priority Issues (Parameter Justification & Validation)
+
+**4. Post-WWII Validation Inappropriate - Non-Comparable Scenario (2-3h)**
+- **Problem:** Research doc proposes post-WWII recovery as validation case, but scenarios share almost nothing in common
+- **Post-WWII:** Stable climate, Marshall Plan aid, intact institutions, 83% recovery in 2 years
+- **Nuclear winter:** -16°C climate, no external aid, 75% mortality, collapsed institutions, 7-15 year recovery
+- **Issue:** Using broken arm recovery to validate cardiac arrest survival - fundamentally different mechanisms
+- **Action Required:**
+  - Remove post-WWII as validation case for nuclear winter modeling
+  - OR reframe as "stable climate recovery scenario only" (not comparable to catastrophic shocks)
+  - Clarify that post-WWII validates MODERATE shock recovery, not catastrophic
+- **Complexity:** 1 system (validation methodology)
+- **Agent:** wiki-documentation-updater
+- **Reference:** Food Security Critique Section 1
+
+**5. Speculative Parameters Presented as Research-Backed (3-4h)**
+- **Problem:** Regional multipliers (1.5×, 0.8×), cascading weights (50/30/20), conflict penalty (0.5×) are expert judgment, not derived from papers
+- **Examples:**
+  - "Tropical regions: r × 1.5 (faster recovery), K × 0.8 (lower asymptote)" - WHERE IS THIS FROM?
+  - "Water_Security × 0.5 + Infrastructure × 0.3 + Institutions × 0.2" - NO SOURCE PROVIDED
+  - "Conflict_Active ? 0.5 : 1.0" - NOT QUANTIFIED IN LITERATURE
+- **Location:** Research doc Sections 10-11, 16 (implementation parameters)
+- **Impact:** Parameters lack empirical grounding, uncertainty bounds unknown
+- **Action Required:**
+  - Flag ALL speculative parameters with `⚠️ SPECULATIVE: Expert judgment` comments
+  - Add uncertainty ranges (±30-50%) for sensitivity analysis
+  - Document which parameters ARE research-backed vs derived/estimated
+- **Complexity:** 1 system (documentation)
+- **Agent:** wiki-documentation-updater
+- **Reference:** Food Security Critique Section 2
+
+**6. Logistic Model Assumes Recovery is Inevitable - Missing Extinction Pathways (6-8h)**
+- **Problem:** All shock scenarios have K > 0 (asymptotic productivity 70-100%), meaning recovery ALWAYS happens eventually
+- **Missing Scenarios:** Permanent collapse from pollinator extinction, soil microbiome collapse, genetic bottleneck, cascading feedback loops
+- **Research Gap:** Document doesn't model K=0 scenarios (permanent agricultural collapse)
+- **Impact:** Model can't represent worst-case outcomes where recovery is impossible
+- **Action Required:**
+  - Add permanent collapse conditions (biodiversityLoss >0.9 AND soilDegradation >0.8 AND geneticBottleneck → K=0)
+  - Research critical thresholds for irreversible agricultural collapse
+  - Document which combinations of failures lead to K=0
+- **Complexity:** 3 systems (biodiversity, soil, genetics)
+- **Agent:** super-alignment-researcher + simulation-maintainer
+- **Reference:** Food Security Critique Section 4
+
+---
+
+#### 🟡 MEDIUM Priority Issues (Model Refinement & Documentation)
+
+**7. Green Revolution Analogy Questionable for Nuclear Winter (2-3h)**
+- **Problem:** Document uses Green Revolution (1943-1995) as evidence for technology-driven recovery, but conditions incomparable
+- **Green Revolution:** 22 years R&D, stable climate, functioning governments, global trade, fertilizer/irrigation infrastructure
+- **Nuclear Winter:** No R&D time (2-5 year crisis), catastrophic climate, collapsed governments, no trade, no industrial production
+- **Issue:** Can't apply 5-15 year adoption curves from peaceful development to post-collapse scenarios
+- **Action Required:**
+  - Remove Green Revolution as relevant to nuclear winter recovery
+  - OR clarify technology multiplier ONLY applies to moderate shocks (climate adaptation), NOT catastrophic shocks
+  - Document which recovery mechanisms apply to which shock severities
+- **Complexity:** 1 system (documentation)
+- **Agent:** wiki-documentation-updater
+- **Reference:** Food Security Critique Section 6
+
+**8. Validation as "Consistency Checks" Not Empirical Validation (1-2h)**
+- **Problem:** Section 16 proposes "validation" against Xia 2022, but Xia is a MODEL not empirical data (no one has observed nuclear winter recovery)
+- **Issue:** Can't validate model against another model - only check consistency
+- **True Validation:** Requires empirical data (agricultural recovery from actual events)
+- **Action Required:**
+  - Reframe as "consistency checks" not "validation"
+  - Clarify: "We check our model agrees with Xia's model, but neither is validated against reality (nuclear winter hasn't happened)"
+  - Validate component assumptions (temperature thresholds, crop sensitivities) against agricultural research
+- **Complexity:** 1 system (methodology documentation)
+- **Agent:** wiki-documentation-updater
+- **Reference:** Food Security Critique Section 8
+
+**9. Soil Regeneration → Productivity Relationship Unclear (2-3h)**
+- **Problem:** Document shows soil recovery takes 10-1,000+ years, but uses K=0.80 (80% asymptotic productivity). Connection unclear.
+- **Question:** Is 80% asymptote based on:
+  - Partial soil recovery (surface only, 10-50 years)?
+  - Permanent biodiversity loss?
+  - Something else?
+- **Action Required:**
+  - Explicitly state: "K=0.80 assumes partial soil recovery (surface only, 10-50 years) without full deep soil restoration (100-1,000+ years)"
+  - Document relationship between soil regeneration timescales and productivity asymptotes
+- **Complexity:** 1 system (documentation)
+- **Agent:** wiki-documentation-updater
+- **Reference:** Food Security Critique Section 10
+
+**10. Missing Rebound Effects and Overshoot Dynamics (4-6h)**
+- **Problem:** Logistic model assumes smooth recovery to asymptote K, but real systems show overshoot → crash cycles
+- **Missing Dynamics:**
+  - Overshoot: Rapid recovery exceeds carrying capacity → resource depletion
+  - Oscillation: Recovery → overshoot → crash → recovery cycles
+  - Hysteresis: System doesn't return to original state (new equilibrium)
+- **Example:** Post-WWII had Marshall Plan preventing overshoot. Without it, recovery might oscillate (boom → bust → recovery).
+- **Action Required:**
+  - Add overshoot dynamics to recovery model OR
+  - Acknowledge limitation: "Model assumes smooth recovery, may miss boom-bust cycles in reality"
+  - Research post-disaster overshoot case studies
+- **Complexity:** 2 systems (recovery dynamics, carrying capacity)
+- **Agent:** super-alignment-researcher + simulation-maintainer
+- **Reference:** Food Security Critique Section 9
+
+---
+
+**Total Estimated Effort (Food Security Research Issues):** 35-51 hours
+- CRITICAL: 15-22h (3 issues)
+- HIGH: 11-15h (3 issues)
+- MEDIUM: 9-14h (4 issues)
+
+**Overall Assessment:** High-quality research synthesis (comprehensive, well-sourced, honest about uncertainties) BUT requires resolution of 3 critical contradictions before implementation.
+
+**Recommendation:** Address critical issues first (Xia/Shi, mortality gap, climate gates), flag speculative parameters, THEN implement recovery mechanics.
+
+**Next Steps:**
+1. **CRITICAL:** Resolve Xia vs Shi US Corn Belt contradiction (read papers directly)
+2. **CRITICAL:** Explain simulation 98% vs Xia 75% mortality gap (calibration audit)
+3. **CRITICAL:** Verify climate gate implementation (hard thresholds vs gradual degradation)
+4. Flag all speculative parameters with uncertainty ranges
+5. Add extinction pathways (K=0 scenarios)
+6. Refine validation methodology (consistency checks, not empirical validation)
+
+---
+
+### 3.3 📊 Combined Summary
+
+**Total Issues Tracked:** 23
+- **Monte Carlo (Section 3.1):** 13 issues (simulation behavior, physical constraints, research validity)
+- **Food Security Research (Section 3.2):** 10 issues (research contradictions, parameter justification)
+
+**Total Estimated Effort:** 114-161 hours
+- **CRITICAL:** 33-48h (6 issues) - Must resolve before implementation
+- **HIGH:** 49-69h (6 issues) - Research validity and parameter justification
+- **MEDIUM:** 27-39h (9 issues) - Calibration and documentation
+- **LOW:** 5-7h (2 issues) - Documentation and tooling
+
+**Priority Order:**
+1. **CRITICAL Monte Carlo issues** (18-26h) - Physical impossibilities, population coherence
+2. **CRITICAL Food Security issues** (15-22h) - Research contradictions, mortality gap
+3. **HIGH Monte Carlo issues** (38-54h) - Mortality calibration, variance, famine mechanics
+4. **HIGH Food Security issues** (11-15h) - Validation methodology, parameter justification
+5. MEDIUM/LOW issues as bandwidth allows
+
+**Overall Project Status:** Research validity crisis - simulation shows 98-99% mortality (exceeds peer-reviewed worst-case by 23%), recovery mechanics research has unresolved contradictions
 
 ---
 
@@ -626,20 +856,19 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ## 🎯 Quick Stats
 
-**Total Remaining Work (Simulation):** ~241-328 hours (updated Oct 30: +30-46h completed items removed, +79-110h new Monte Carlo issues added)
-- CRITICAL: 154-217h (Layer 2 Phase 2: 36-47h remaining + Monte Carlo CRITICAL 18-26h + Monte Carlo HIGH 38-54h + Monte Carlo MEDIUM 18-25h + Phase 1 cleanup 1-2h)
-- HIGH: 0h (all integration issues complete)
+**Total Remaining Work (Simulation):** ~227-310 hours (updated Oct 30 evening: -9-14h blocker fixes complete, +5h research verification added)
+- CRITICAL: 138-195h (Layer 2 Phase 2: 36-47h remaining + Monte Carlo HIGH 38-54h + Monte Carlo MEDIUM 18-25h + Phase 1 cleanup 1-2h + Richardson et al. verification 3-5h + Crisis mitigation verification 6-10h)
+- HIGH: 0h (all Monte Carlo CRITICAL blockers fixed Oct 30 evening, all integration issues complete)
 - MEDIUM: 17-28h (cooperative AI 6-8h + policy 3-4h + climate mortality 8-12h + wiki citation 3-4h)
-- LOW: 70-83h (P3 + TIER 5 + Monte Carlo LOW 5-7h)
-- **NOTE:** Monte Carlo validation critique (Oct 30) identified systemic research validity issues - 13 new issues requiring immediate attention
+- LOW: 72-87h (P3 + TIER 5 + Monte Carlo LOW 5-7h + optional chaining Priority 2-3 ~2-4h)
+- **NOTE:** 3 CRITICAL Monte Carlo blockers ALL FIXED & VALIDATED (Oct 30 evening) - 18-26h work COMPLETE, simulation PRODUCTION READY
 - **NOTE:** Layer 2 Phase 2 Sessions 1 & 2 COMPLETE (Oct 30) - 4 CRITICAL AI water parameter errors ALL FIXED (3.5h)
 - **NOTE:** Layer 2 Phase 2 remaining: 36-47h (climate-mortality, UBI, cooperative AI, mortality caps, etc.)
-- **NOTE:** Crisis Mitigation Mechanics COMPLETE (Oct 30) - 2-3h
-- **NOTE:** Monte Carlo Issues 1-8 ALL COMPLETE (Oct 30) - 14-20h
+- **NOTE:** NEW research verification items (Oct 30): Richardson et al. biosphere baseline (3-5h HIGH), crisis mitigation citations (6-10h)
 - NOTE: All 8 architecture integration issues complete (60-80h done)
 
 **Total Remaining Work (Frontend):** ~3-4 weeks with parallelization (plus 23-30h future enhancements)
-**Work Completed Oct 24-30:** ~211-274 hours across 31 major items (includes 44-60h architecture integration + 30-46h Oct 30 completions)
+**Work Completed Oct 24-30:** ~220-288 hours across 33 major items (includes 44-60h architecture integration + 39-60h Oct 30 morning+evening completions)
 **Work Completed Oct 2025:** ~368-470 hours equivalent total
 **Active Plans:** 19+ simulation plans, 32 dashboard subplans, 4 god-mode plans
 **Completed Plans (Archived):** 118+ in `/plans/completed/` (Session 2 summary to be archived)

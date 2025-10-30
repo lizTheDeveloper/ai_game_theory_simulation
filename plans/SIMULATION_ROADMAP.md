@@ -362,6 +362,11 @@ Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actu
 5. **Scope mismatch:** Municipal study cited for national/global parameter
 
 **Research Verification Queue:**
+- [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e) - `research/verification_baaa33e_20251030.md` (5-8h)
+  - **THREE NEW MECHANICS:** Skilled labor scaling (0.8 power law), max coherent compute (50 PF baseline), extreme mortality bankruptcy modifiers (50% floor at 90%+ mortality)
+  - Layer 1: Citation existence (none provided - need to find research)
+  - Layer 2: Verify claims about skilled labor requirements, data center workforce ratios, organizational survival at extreme mortality
+  - **Impact:** Controls infrastructure coherence during population collapse scenarios
 - [ ] **HIGH PRIORITY:** Verify BLOCKER-2 biosphere baseline correction (commit 443ba64) - `research/verification_443ba64_biosphere_baseline_20251030.md` (3-5h)
   - **Massive parameter change:** 137× → 2.2× natural extinction rate (62× reduction)
   - Layer 1: Richardson et al. (2023) citation existence
