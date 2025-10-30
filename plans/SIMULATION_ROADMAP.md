@@ -330,18 +330,28 @@ CURRENT (working): "classified as dystopia (84.4% mortality, 1.27B survivors)"
 
 ---
 
-**HIGH-6: 99/100 Deterministic Outcomes (No Variance)** (CONDITIONAL - may resolve with bug fixes)
+🔄 **HIGH-6: 99/100 Deterministic Outcomes (No Variance)** (IN PROGRESS - Diagnostic N=100 running)
 ```
-Outcome Distribution: 99 dystopia, 1 inconclusive
+Outcome Distribution (before fixes): 99 dystopia, 1 inconclusive
 ```
 **Problem:** Monte Carlo with 100 different seeds produces nearly identical outcomes (99% same).
+
+**CURRENT STATUS (Oct 30, 2025 @ 3:08pm):**
+- ✅ **Step 1 COMPLETE:** Fixed BLOCKERS 1-3 (mortality cap, biosphere, unjustified mortality) + HIGH-4 (population coherence)
+- 🔄 **Step 2 IN PROGRESS:** Running N=100 diagnostic test (process 638a76, ~15-20 min ETA)
+- **Test:** `logs/mc_high6_variance_N100_20251030_150827.log`
+- **Review:** `reviews/high6_variance_diagnostic_20251030.md`
 
 **IMPORTANT NOTE:** This may be a **symptom** of BLOCKERS 1-3, not a separate issue. If mortality calculation (BLOCKER-1) and biosphere accumulation (BLOCKER-2) are broken, they may force all runs toward the same catastrophic outcome. Fixing those bugs might naturally restore variance.
 
 **Diagnosis Strategy:**
-1. **First:** Fix BLOCKERS 1-3 (mortality cap, biosphere, unjustified mortality)
-2. **Then:** Re-run N=100 to see if variance emerges naturally
+1. ✅ **First:** Fix BLOCKERS 1-3 (mortality cap, biosphere, unjustified mortality) - COMPLETE
+2. 🔄 **Then:** Re-run N=100 to see if variance emerges naturally - IN PROGRESS
 3. **Only if variance remains low:** Investigate RNG usage and feedback mechanisms
+
+**Expected Outcomes:**
+- **If variance improved:** Mark HIGH-6 as RESOLVED (symptom of blockers)
+- **If variance unchanged:** Escalate to RNG/feedback investigation (missing negative feedback, overdetermined initial conditions)
 
 **If variance persists after bug fixes, potential causes:**
 - Random events have negligible impact
