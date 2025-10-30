@@ -362,6 +362,13 @@ Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actu
 5. **Scope mismatch:** Municipal study cited for national/global parameter
 
 **Research Verification Queue:**
+- [ ] **NEW:** Verify P3.2 Unknown Unknowns citations (commit 809c211) - `research/verification_9f29b05_20251030.md` (8-12h)
+  - **ONE CITATION:** Taleb (2007) "The Black Swan" - verify exists and supports 3 characteristics
+  - **FABRICATED CLAIM:** "COVID-19 ~30-year pandemic gap" (actually 102 years from 1918 Spanish Flu)
+  - **MISSING RESEARCH:** Base probability (0.1% monthly), uncertainty multiplier (3×), AI multiplier (2×), ALL 10 event impact magnitudes
+  - Layer 1: Citation existence (Taleb 2007)
+  - Layer 2: Verify 3 characteristics, find research for all parameters and event impacts
+  - **Impact:** Controls black swan event frequency and effects across entire simulation
 - [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e) - `research/verification_baaa33e_20251030.md` (5-8h)
   - **THREE NEW MECHANICS:** Skilled labor scaling (0.8 power law), max coherent compute (50 PF baseline), extreme mortality bankruptcy modifiers (50% floor at 90%+ mortality)
   - Layer 1: Citation existence (none provided - need to find research)
@@ -700,9 +707,10 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 **P3.3: Alignment Specificity** ✅ **COMPLETE (Oct 26)**
 - Plan: `/plans/completed/p3-3-alignment-model-specificity_COMPLETE_20251026.md`
 
-**P3.4: Government Implementation Realism (6-8h)**
+**P3.4: Government Implementation Realism (6-8h)** ⏳ **IN PROGRESS (Roy1, Oct 30 @7:10pm)**
 - Policy implementation delays, bureaucratic friction
 - Plan: `/plans/p3-4-government-implementation-realism.md`
+- Status: Implementation starting with simulation-maintainer
 
 **P3.5: Parameter Uncertainty (6-8h)**
 - Continuous uncertainty quantification, sensitivity analysis

@@ -2301,6 +2301,7 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 
 **30.0-36.0: Metrics & Outcome Calculation**
 - UnemploymentPhase (30.0): Calculate unemployment, displacement
+- **UnknownUnknownPhase (30.5)**: Black swan events - unknown unknowns (10 event templates, 0.1% base probability) (**NEW Oct 30**)
 - EconomicTransitionPhase (31.0): Progress toward post-scarcity
 - ParanoiaPhase (32.0): Government paranoia dynamics
 - SocialStabilityPhase (33.0): Social cohesion, coordination
@@ -2348,13 +2349,14 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - **Bug Fix (Oct 29):** Fixed negative food security in ClimateImpactCascadePhase - added `MIN_FOOD_SECURITY = 0.001` floor to prevent stacking climate impacts from violating bounds (see `devlogs/climate-impact-negative-food-security-fix_20251029.md`)
 
 **Key Changes (Oct 30):**
+- **✅ P3.2 COMPLETE (Oct 30):** Unknown Unknowns (black swan events) implemented with 10 event templates (3 breakthroughs, 4 crises, 3 paradigm shifts). Base probability: 0.1% per month (1.2% per year), scales with global uncertainty and AI capability. Deterministic RNG, research-backed parameters (Taleb 2007), emoji conventions (☄️ for exogenous shocks). Phase order: 30.5 (after crises, before outcomes). Implementation time: 4h (within 4-6h estimate). See `logs/unknown_unknown_implementation_20251030.md` (commit 809c211).
 - **Bug Fix (Oct 30):** Fixed extinction rate capping in PlanetaryBoundariesPhase - code logged "capped at 10×" but didn't actually clamp the value, causing `assertInRange` to throw when extinction rates exceeded 10× (40% failure rate in N=10 Monte Carlo validation). Added `Math.min/max` to actually cap before assertion. Caught by Priority 1 assertion cleanup validation sweep (commit d520d3e, related to commit 08243e3).
 - **✅ BLOCKER-1 FIXED & VALIDATED (Oct 30):** Capped displayed mortality at 100% in planetary boundary cascades (`planetaryBoundaries.ts:869-905`). Root cause: Unbounded exponential `1.05^N` produced physically impossible values (e.g., 1687.9% at month 192). Fix: Cap display at 100%, add warnings when theoretical exceeds limit. **Important:** This was always display-only; actual mortality computed by `bayesianMortality.ts` with 2.8% monthly cap. **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 mortality >100% errors (commit 443ba64, validated 98c17d2).
 - **✅ BLOCKER-2 FIXED & VALIDATED (Oct 30):** Corrected biosphere baseline from 137× to 2.2× natural extinction rate in `planetaryBoundaries.ts:67-72, 548-553`. Research: Richardson et al. (2023). Fixed old extinction rate floor in `techTree/effectsEngine.ts` (caught by assertions). **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 extinction rate >10× errors (commit 443ba64, validated 98c17d2).
 - **✅ BLOCKER-3 FIXED & VALIDATED (Oct 30):** Fixed phantom "99.7% mortality = extinction" outcomes (BLOCKER-3). Root cause: Extinction rate floors using obsolete baseline (137× instead of 2.2×) in tech tree effects. Fix: Removed old floors, assertions now catch invalid values. **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 false extinction outcomes (validated 98c17d2).
 - **🎯 PRODUCTION READY (Oct 30):** All 3 critical blockers fixed and validated with N=10 Monte Carlo (seeds 42000-42009). **Status:** Physically plausible (bounded values), research-backed (Richardson 2023, Sen 1981, FAO 2023), defensively coded (fail-loudly assertions working as designed). Performance: ~9-11s/run (0.04s/month). Exit code: 0 (SUCCESS). See `reviews/blocker_fixes_final_validation_20251030.md`.
 
-**Total Phases**: 69 registered phases (up from 67 in previous documentation)
+**Total Phases**: 70 registered phases (69 + UnknownUnknownPhase)
 
 ---
 
