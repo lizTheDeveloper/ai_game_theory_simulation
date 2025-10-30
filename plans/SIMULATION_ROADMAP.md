@@ -19,7 +19,7 @@
 
 **🚧 Active Work:** 🟢 PRODUCTION READY - All blockers resolved, N=10 validation passed
 
-**Total Remaining Effort:** ~87-151 hours (evening progress: -9-14h completed, +5h research verification added)
+**Total Remaining Effort:** ~127-197 hours (Oct 30 updates: +9h debate tracked, -50h obsolete Phase 2 removed, +10-16h remediation added, +5h new verifications)
 
 **Recent Completions (Oct 30, 2025):**
 - ✅ **ALL 3 CRITICAL BLOCKERS FIXED & VALIDATED (6-8h)** - Monthly mortality >100%, biosphere 20×, 99.7% baseline mortality - N=10 validation passed, PRODUCTION READY
@@ -50,10 +50,39 @@
    - **Total Evening Work:** ~9-14 hours (6-8h blockers + 0.5h coherence + 2-3h optional chaining + 1h validation)
    - See detailed breakdown in Priority Features section below (marked ✅ FIXED & VALIDATED)
 
-1. **🔴 CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (40-60h)
-   - Layer 1 (citation existence) COMPLETE, but ~50% of real citations don't support claims
-   - 87 research files with 815 real citations - verify claims match papers
-   - See: `research/CLAIM_VERIFICATION_CRISIS.md`
+1. **🔴 CRITICAL:** Layer 2 Remediation - Fix 5 Parameters (10-16h total)
+   - ✅ **Layer 2 Structured Debate COMPLETE (9h)** - 5-round investigation by Cynthia & Sylvia
+   - **Status:** HIGH severity ⚠️ but fixable with targeted remediation
+   - **Current Validity:** 45-65% → **After Fixes:** 65-80% expected
+
+   **CRITICAL Issues (3 parameters - outcomes FLIP):**
+   - Biosphere extinction rate: 100-1000 E/MSY (10× uncertainty) - Need parameter sweep
+   - Nuclear famine rate: Annual vs monthly ambiguity (10× difference) - Need clarification
+   - Cooperative survival: "4% vs 10%" FABRICATED - Must remove
+
+   **HIGH Issues (2 parameters - outcome-shifting):**
+   - Climate mortality scaling: 10%/25%/50% INVENTED (±100% uncertainty) - Need literature review
+   - UBI effectiveness: Finland → global INVALID (context mismatch) - Need context-dependent model
+
+   **Remediation Timeline:**
+   - **Phase 1 (CRITICAL - 4-7h, Week 1):** Holodomor clarification (1-2h), cooperative survival removal (30m), biosphere sweep (2-4h)
+   - **Phase 2 (HIGH - 5-8h, Week 2):** Climate mortality review (3-5h), UBI context model (2-3h)
+   - **Phase 3 (Documentation - 1-2h, Week 2):** Infrastructure multiplier docs (1h), 3-tier labels (1h)
+
+   **New Standards Adopted:**
+   - 3-tier system: GOLD ✅ (direct quotes), SILVER ⚠️ (bounded extrapolation), BRONZE ⚠️⚠️ (modeling assumptions)
+   - Verification protocol: 6-step workflow for new parameters
+   - Uncertainty handling: Preserve ranges, no collapse to point estimates
+
+   **Debate Deliverables (3,000+ lines total):**
+   - `research/LAYER2_DEBATE_SUMMARY_20251030.md` (1,000 lines - main summary)
+   - `research/ROUND1_EVIDENCE_MATRIX_20251030.md` (350 lines - parameter verification)
+   - `research/ROUND2_SYLVIA_CRITIQUE_20251030.md` (600 lines - critical evaluation)
+   - `research/ROUND3_PATTERN_DETECTION_20251030.md` (550 lines - 5 failure types identified)
+   - `research/ROUND4_IMPACT_ASSESSMENT_20251030.md` (550 lines - validity analysis)
+   - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines - fix protocol)
+
+   **See:** `research/LAYER2_DEBATE_SUMMARY_20251030.md` for complete analysis
 
 2. ✅ **Monte Carlo Issues 1-8 ALL COMPLETE** (Oct 30, 14-20h)
    - ✅ Issues 1-4 COMPLETE: Western Liberal null, outcome classification, biosphere exponential growth, 100% dystopia
@@ -381,69 +410,115 @@ Model exhibits physical impossibilities (1687% mortality, 20× biosphere), unjus
 
 ---
 
-#### Systematic Claim Verification Crisis (Layer 2) (40-60h)
-**Status:** 🔴 CRITICAL - Newly discovered (Oct 29, 2025)
-**Complexity:** 2 systems (research verification, simulation parameters)
+#### Layer 2 Remediation - Systematic Investigation Complete (10-16h implementation)
+**Status:** 🔴 CRITICAL - Investigation COMPLETE (9h debate), remediation plan ready
+**Complexity:** 5 systems (biosphere, nuclear winter, climate mortality, UBI, cooperative survival)
 
-**Crisis Summary:**
-Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actually support the claims made:
-- Papers exist but claims are misattributed, extrapolated beyond scope, or misinterpreted
-- Requires reading papers and extracting direct quotes (cannot be automated)
-- Scope: 87 research files with 815 real citations
+**Debate Summary (Oct 30, 9 hours):**
+✅ **5-Round Structured Debate COMPLETE** - Cynthia (researcher) vs Sylvia (skeptic)
+- Round 1: Evidence gathering (2.5h) - 5 parameters systematically verified
+- Round 2: Critical evaluation (1.5h) - 3 CRITICAL + 2 HIGH issues identified
+- Round 3: Pattern detection (2h) - 5 failure types documented
+- Round 4: Impact assessment (1.5h) - Validity scored 45-65% current
+- Round 5: Remediation strategy (1.5h) - 3-phase fix plan created
 
-**Examples of Layer 2 Failures:**
-1. **Value extrapolation:** Richards et al. (2023) projects 6B deaths/75y, we use 30y (2.5× compression)
-2. **Cherry-picking without uncertainty:** Patterson et al. reports 0.2-0.8 range, we use 0.5 without ±60% variance
-3. **Context mismatch:** Jones (2023) analyzed 2010-2020, we project 2025-2055
-4. **Methodology cited as validation:** Paper describes approach, we chose parameters
-5. **Scope mismatch:** Municipal study cited for national/global parameter
+**Crisis Severity:** HIGH ⚠️ (but fixable with 10-16h targeted work)
 
-**Research Verification Queue:**
-- [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785) - `research/verification_a0f4785_20251030.md` (4-6h)
-  - **CITATIONS:** IBM server business sale (2014), GE divisions (2020), "standard turnaround strategy"
-  - **PARAMETERS:** 60% recovery value (vs 50% bankruptcy), 6 months runway trigger, 10% operating margin threshold, 1-2 DCs/month velocity
-  - Layer 1: Verify IBM/GE sales occurred and contexts
-  - Layer 2: Find research backing for recovery rates, financial triggers, sale velocity limits
-  - **Impact:** Controls organizational survival during financial distress
-- [ ] **NEW:** Verify P3.2 Unknown Unknowns citations (commit 809c211) - `research/verification_9f29b05_20251030.md` (8-12h)
-  - **ONE CITATION:** Taleb (2007) "The Black Swan" - verify exists and supports 3 characteristics
-  - **FABRICATED CLAIM:** "COVID-19 ~30-year pandemic gap" (actually 102 years from 1918 Spanish Flu)
-  - **MISSING RESEARCH:** Base probability (0.1% monthly), uncertainty multiplier (3×), AI multiplier (2×), ALL 10 event impact magnitudes
-  - Layer 1: Citation existence (Taleb 2007)
-  - Layer 2: Verify 3 characteristics, find research for all parameters and event impacts
-  - **Impact:** Controls black swan event frequency and effects across entire simulation
-- [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e) - `research/verification_baaa33e_20251030.md` (5-8h)
-  - **THREE NEW MECHANICS:** Skilled labor scaling (0.8 power law), max coherent compute (50 PF baseline), extreme mortality bankruptcy modifiers (50% floor at 90%+ mortality)
-  - Layer 1: Citation existence (none provided - need to find research)
-  - Layer 2: Verify claims about skilled labor requirements, data center workforce ratios, organizational survival at extreme mortality
-  - **Impact:** Controls infrastructure coherence during population collapse scenarios
-- [ ] **HIGH PRIORITY:** Verify BLOCKER-2 biosphere baseline correction (commit 443ba64) - `research/verification_443ba64_biosphere_baseline_20251030.md` (3-5h)
-  - **Massive parameter change:** 137× → 2.2× natural extinction rate (62× reduction)
-  - Layer 1: Richardson et al. (2023) citation existence
-  - Layer 2: Does paper actually support 2.2× current global extinction rate?
-  - Layer 3: Investigate old "IPBES (2024)" 137× value - was it wrong?
-  - **Impact:** Fundamentally changes biodiversity crisis modeling (from extreme crisis → moderate overshoot)
-- [ ] **NEW:** Verify crisis mitigation mechanics citations (commit ad4647b) - `research/verification_ad4647b_20251030.md` (6-10h)
-  - Layer 1: GAO 2025, Cambridge Core 2024 (need specific paper), PMC 2022 (need specific paper), vTaiwan studies, New Deal historical data
-  - Layer 2: 5% variance reduction (empirical basis?), 5%/15% resentment effects (empirical basis?), 0.4 threshold (empirical basis?), 2.75 pp/year recovery rate (accuracy check)
-  - **CRITICAL:** "Cambridge Core 2024" and "PMC 2022" are publishers/databases, not papers - need full citations
-- [ ] **IMMEDIATE:** Timeline compression misattribution (Lenton 2019) - Update wiki line 1147, reframe as speculative (1h)
-- [ ] Verify citations for biosphere normalization fix (commit ff888d4) - `research/verification_ff888d4_biosphere_normalization_20251030.md`
-- [ ] Verify regional refugee population constants (commit 43a9b22) - `research/verification_43a9b22_regional_refugee_populations_20251030.md` (4-6h)
-  - IPCC 2021 coastal population (10%), UNHCR 2023 conflict zones (5%), FAO 2023 food insecurity (15%), Conservation International 2024 biodiversity hotspots (5%)
-  - Displacement rate parameters (need historical grounding)
+**Core Problem Identified:**
+Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation needs **HOW MUCH** (scaling rates, magnitudes, timelines). When papers don't provide magnitudes, simulation fills gaps with **INVENTED PARAMETERS** presented as "research-backed."
 
-**Prevention Standards:**
-All research-backed claims must include:
-- Direct quote from paper
-- Explicit extrapolation methodology if applied
-- Uncertainty documentation (ranges, not point estimates)
-- Context verification (paper's scope matches our usage)
+**5 CRITICAL/HIGH Parameters Requiring Fixes:**
 
-**Related Documents:**
-- `research/CLAIM_VERIFICATION_CRISIS.md` - Full crisis documentation
-- `research/RESEARCH_VERIFICATION_TEMPLATE.md` - Updated template
-- `docs/POST_COMMIT_WORKFLOW.md` - Enhanced workflow (302 lines)
+1. **Biosphere extinction rate (CRITICAL)** - 100-1000 E/MSY range (10× uncertainty)
+   - **Impact:** Outcomes FLIP (utopia ↔ collapse) depending on which value used
+   - **Fix:** Monte Carlo parameter sweep across full uncertainty range (2-4h)
+   - **Location:** `planetaryBoundaries.ts`
+
+2. **Nuclear famine rate (CRITICAL)** - Annual vs monthly ambiguity
+   - **Issue:** Holodomor "140-200 per 1,000" likely ANNUAL not monthly (10× difference!)
+   - **Impact:** Crisis vs extinction scenarios
+   - **Fix:** Verify interpretation, add caveat (1-2h)
+   - **Location:** `famineCalculations.ts`
+
+3. **Cooperative survival (CRITICAL)** - "4% vs 10%" FABRICATED
+   - **Issue:** No research supports this claim - invented parameter
+   - **Impact:** Utopia pathway viability
+   - **Fix:** Remove claim entirely (30m)
+   - **Location:** Research docs + simulation code
+
+4. **Climate mortality scaling (HIGH)** - 10%/25%/50% per °C INVENTED
+   - **Issue:** Thresholds verified (35°C, 28°C) but dose-response curve fabricated (±100% uncertainty)
+   - **Impact:** Heat deaths have 4× range of possible values
+   - **Fix:** Literature review for empirical dose-response curves (3-5h)
+   - **Location:** `climateImpactCascadePhase.ts`
+
+5. **UBI effectiveness (HIGH)** - Finland → global extrapolation INVALID
+   - **Issue:** Finland (5%) → Kenya (20%?) → failed states (0%?) context mismatch
+   - **Impact:** Utopia pathway viability uncertain
+   - **Fix:** Context-dependent model with uncertainty ranges (2-3h)
+   - **Location:** `ubiMechanics.ts`
+
+**5 Failure Pattern Types Identified:**
+1. **Threshold-Scaling Decoupling (60%):** Papers give threshold, simulation invents scaling rate
+2. **Uncertainty Collapse (40%):** 10× ranges → point estimates without documentation
+3. **Quantitative Fabrication (40%):** Numbers with no research basis (1/2 already fixed)
+4. **Context Mismatch Extrapolation (40%):** Local studies → global parameters
+5. **Temporal/Unit Ambiguity (60%):** Annual vs monthly, 10× errors
+
+**Remediation Timeline:**
+
+**Phase 1: CRITICAL Fixes (4-7h, Week 1)**
+- Holodomor rate clarification (1-2h) - Verify annual vs monthly interpretation
+- Cooperative survival removal (30m) - Delete fabricated "4% vs 10%"
+- Biosphere parameter sweep (2-4h) - Monte Carlo with 100-1000 E/MSY range
+
+**Phase 2: HIGH Fixes (5-8h, Week 2)**
+- Climate mortality literature review (3-5h) - Search for dose-response curves
+- UBI context-dependent model (2-3h) - Finland (5%) vs Kenya (20%) vs failed states (0%)
+
+**Phase 3: Documentation (1-2h, Week 2)**
+- Infrastructure multiplier documentation (1h) - Document 2-10× empirical range
+- Apply 3-tier system to all parameters (1h) - GOLD/SILVER/BRONZE labels
+
+**Total: 10-16 hours across 3 phases**
+
+**New Standards Adopted:**
+
+**3-Tier "Research-Backed" System:**
+- **TIER 1 GOLD ✅:** Direct quotes from papers (e.g., 35°C limit, 6B deaths)
+- **TIER 2 SILVER ⚠️:** Empirically bounded extrapolations (e.g., 3× multiplier within 2-10× range)
+- **TIER 3 BRONZE ⚠️⚠️:** Modeling assumptions (requires parameter sweeps for high-leverage params)
+
+**Verification Protocol (6 steps):**
+1. Citation check (does paper exist?)
+2. Quote extraction (exact wording from paper)
+3. Quantification verification (does paper support the NUMBER?)
+4. Context matching (study scope matches our usage?)
+5. Uncertainty documentation (preserve ranges, no collapse)
+6. Tier assignment (GOLD/SILVER/BRONZE label)
+
+**Impact Assessment:**
+- **Current Validity:** 45-65% (depends on outcome type - mechanisms sound 70-85%, magnitudes uncertain)
+- **After Fixes:** 65-80% expected
+- **Trust Verdict:** YES (conditional on fixes + uncertainty documentation)
+
+**Debate Artifacts (6 deliverables, 3,000+ lines total):**
+- `research/LAYER2_DEBATE_SUMMARY_20251030.md` (1,000 lines - main summary)
+- `research/ROUND1_EVIDENCE_MATRIX_20251030.md` (350 lines)
+- `research/ROUND2_SYLVIA_CRITIQUE_20251030.md` (600 lines)
+- `research/ROUND3_PATTERN_DETECTION_20251030.md` (550 lines)
+- `research/ROUND4_IMPACT_ASSESSMENT_20251030.md` (550 lines)
+- `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
+
+**Additional Verification Queue (from commits, 17-31h):**
+- [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785) (4-6h)
+- [ ] **NEW:** Verify P3.2 Unknown Unknowns citations (commit 809c211) (8-12h)
+- [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e) (5-8h)
+- [ ] **HIGH PRIORITY:** Verify Richardson et al. biosphere baseline (commit 443ba64) (3-5h)
+- [ ] **NEW:** Verify crisis mitigation mechanics citations (commit ad4647b) (6-10h)
+- [ ] Verify regional refugee population constants (commit 43a9b22) (4-6h)
+
+**See:** `research/LAYER2_DEBATE_SUMMARY_20251030.md` for complete analysis
 
 ---
 
@@ -884,10 +959,15 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
   - 5 MEDIUM issues (18-25h): Western paradigm, phantom outcome, recovery, timeline, determinism
   - 2 LOW issues (5-7h): Parameter docs, validation tooling
   - **Source:** `/reviews/monte_carlo_validation_critique_20251030.md`
-- 🔴 Systematic Claim Verification Crisis (Layer 2): 40-60h
-  - ~50% of real citations don't support claims
-  - Requires reading papers and extracting direct quotes
-  - 87 research files with 815 real citations
+- 🔴 Layer 2 Remediation: 10-16h (3 phases)
+  - ✅ Structured debate COMPLETE (9h) - 5 parameters investigated, 5 patterns identified
+  - Phase 1 (CRITICAL): 4-7h - Holodomor clarification, cooperative survival removal, biosphere sweep
+  - Phase 2 (HIGH): 5-8h - Climate mortality review, UBI context-dependent model
+  - Phase 3 (Docs): 1-2h - Infrastructure multiplier docs, 3-tier labels
+  - **Impact:** Current 45-65% validity → Expected 65-80% after fixes
+  - **Source:** `research/LAYER2_DEBATE_SUMMARY_20251030.md` (1,000 lines)
+- 🔴 Additional Verifications (commits): 17-31h
+  - Proactive divestment (4-6h), Unknown unknowns (8-12h), Population coherence (5-8h), etc.
 
 **HIGH:**
 - ✅ ALL HIGH PRIORITY ITEMS COMPLETE (Oct 30)
