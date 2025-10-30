@@ -996,6 +996,26 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
 
   org.ownedAIModels = []; // Clear ownership list
 
+  // HIGH-4 FIX (Oct 30, 2025): Shut down data centers when organization goes bankrupt
+  // Population coherence: Can't maintain 12PF compute with zero employees
+  if (state.computeInfrastructure && org.ownedDataCenters.length > 0) {
+    const shutDownDCs = state.computeInfrastructure.dataCenters
+      .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational);
+
+    const totalCapacityLost = shutDownDCs.reduce((sum, dc) => sum + dc.capacity, 0);
+
+    shutDownDCs.forEach(dc => {
+      dc.operational = false;
+      console.log(`   💀 Data center shut down: ${dc.name} (${dc.capacity.toFixed(0)} PF capacity lost)`);
+    });
+
+    if (shutDownDCs.length > 0) {
+      console.log(`   📉 Total compute capacity lost: ${totalCapacityLost.toFixed(0)} PetaFLOPs`);
+    }
+  }
+
+  org.ownedDataCenters = []; // Clear data center ownership
+
   // Mark organization as bankrupt (keep in list but inactive)
   org.capital = 0;
   org.monthlyRevenue = 0;
