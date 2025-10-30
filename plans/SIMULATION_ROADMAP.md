@@ -39,11 +39,16 @@
    - See: `research/CLAIM_VERIFICATION_CRISIS.md`
 
 2. ✅ **Monte Carlo Validation Bug Fixes COMPLETE** - All 8 issues resolved (Oct 29-30)
-   - ✅ Issues 1-4 COMPLETE (Oct 29-30): Western Liberal, outcome classification, biosphere calibration, 100% dystopia
-   - ✅ ISSUE-5 COMPLETE (Roy1, Oct 30): Month-0 gaming detection fixed with 3-month strategy delay + 24-month maturity ramp
-   - ✅ ISSUE-6 COMPLETE (Roy, Oct 30): Month-0 refugee crisis calibration (conflict zone population fix)
-   - ✅ ISSUES 7-8 COMPLETE (Roy, Oct 30): Population & biosphere snapshot export bugs (field name mismatches)
-   - See: `/logs/monte_carlo_issues_20251029.md` and `/logs/issue5_fix_summary_20251030.md`
+   - ✅ Issues 1-4 COMPLETE (Oct 29-30): Western Liberal null, outcome classification, biosphere exponential growth, 100% dystopia
+   - ✅ ISSUE-5 COMPLETE (Roy1, Oct 30 @11:00am): Month-0 gaming detection → 3-month strategy delay + 24-month maturity ramp
+   - ✅ ISSUE-6 COMPLETE (Roy, Oct 30 @11:30am): Refugee crisis 325M → 16-32M (regional population scoping: conflict zones 5-10%, coastal 10%, food-insecure 15%, biodiversity hotspots 5%)
+   - ✅ ISSUES 7-8 COMPLETE (Roy, Oct 30 @12:15pm): Population & biosphere null in paradigmTrajectory exports
+     - **Root cause:** multiParadigmDUI.history only had 4 paradigm scores, missing population/biosphere fields
+     - **Fix:** Added 5 REQUIRED fields to history type (no optional ?:), populated with assertDefined validations
+     - **Validation:** Month 0: pop=8.148B, biosphere=16.78 | Month 239: pop=0.024B, biosphere=20.07 ✅
+     - **Commits:** 7e098a6 (main fixes), 027594e (import fix), 313bdd4 (paradigmTrajectory fix)
+   - See: `/logs/monte_carlo_issues_20251029.md`, `/logs/issue5_fix_summary_20251030.md`, `/plans/completed/monte-carlo-fixes-issues-1-4_20251030.md`
+   - **✅ ZERO NaN/null/exceptions found in final validation test**
    - **Ready for parameter sweep:** 4 scenario modes × 4 AI alignment levels = 16 configs × N=100
 
 3. ✅ **Architecture Integration Issues COMPLETE** - All 8 issues resolved (Oct 29-30)
