@@ -245,6 +245,30 @@ Monte Carlo creates 3 types of files in `monteCarloOutputs/`:
 }
 ```
 
+**4. Metric Snapshots** (Oct 30, 2025):
+
+Each run produces a `run_<seed>_metric_snapshots.json` file with time-series data for post-simulation analysis:
+
+```json
+{
+  "snapshots": [
+    {
+      "month": 0,
+      "population": 8000000000,
+      "biosphere_integrity": 13.7,
+      "climate": 0.65,
+      "qol": 0.58,
+      ...
+    }
+  ]
+}
+```
+
+**Fields included:**
+- `population`: Total human population (billions)
+- `biosphere_integrity`: Biodiversity boundary value (E/MSY normalized)
+- All other state metrics for trajectory analysis
+
 **What you can do with it:**
 - Publication-ready statistics
 - Parameter sensitivity analysis
