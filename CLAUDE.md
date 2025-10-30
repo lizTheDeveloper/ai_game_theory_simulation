@@ -1,3 +1,74 @@
+<!-- AUTO-GENERATED HUD - DO NOT EDIT MANUALLY -->
+<!-- Updated by scripts/update-claude-hud.ts every 5s -->
+
+# 🎯 LIVE SYSTEM STATUS
+
+**Last update:** 10/30/2025, 16:43:19 PDT
+
+## 🤖 Agents (1)
+- **test** ⚙️ Testing HUD visibility
+
+## 📋 Roadmap
+0 items, ~200h | 🚧 1 blocked
+**Now:** None specified
+
+## 🔴 CRITICAL: Update Your Status File
+
+**Keep `.claude/coordination/status/$AGENT_NAME.txt` current.**
+
+```bash
+# Spawn: Create status file
+echo "⚙️ Starting task" > .claude/coordination/status/$AGENT_NAME.txt
+
+# Update: After each sub-task
+echo "⚙️ Reading ecology phase code" > .claude/coordination/status/$AGENT_NAME.txt
+echo "⚙️ Applying assertion utilities" > .claude/coordination/status/$AGENT_NAME.txt
+echo "🚧 Waiting for Cynthia to validate" > .claude/coordination/status/$AGENT_NAME.txt
+
+# Exit: Remove status file
+rm .claude/coordination/status/$AGENT_NAME.txt
+```
+
+**Emoji Status:** ⚙️ working | 🚧 blocked | ⏸️ idle | ✅ complete
+
+<!-- END AUTO-GENERATED HUD -->
+
+
+
+
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
@@ -405,6 +476,47 @@ console.log(`  ❌ Error: invalid state`);
 console.log(`🌍💡 BREAKTHROUGH: Gigatonne-scale carbon capture`);
 console.log(`☢️💥 NUCLEAR DETONATION: ${nation}`);
 ```
+
+**CRITICAL: Emoji Registration Enforcement**
+
+All emojis used in simulation code MUST be registered in `docs/EMOJI_EVENT_MAP.txt` before use. The pre-commit hook validates this automatically.
+
+**❌ BAD - Unregistered emoji will block your commit:**
+```typescript
+// This will FAIL pre-commit validation
+console.log(`✂️ LAYOFFS: 15% workforce reduction`);
+// Error: ❌ UNREGISTERED EMOJIS FOUND: ✂️ in src/simulation/organizationManagement.ts
+```
+
+**✅ GOOD - Register first, then use:**
+```bash
+# 1. Add to docs/EMOJI_EVENT_MAP.txt:
+echo "✂️ | Corporate restructuring/cuts" >> docs/EMOJI_EVENT_MAP.txt
+
+# 2. Now you can use it in code:
+console.log(`✂️ LAYOFFS: 15% workforce reduction`);
+```
+
+**Registration format** (`docs/EMOJI_EVENT_MAP.txt`):
+```
+EMOJI | Semantic meaning (one canonical meaning per emoji)
+
+Examples:
+💸 | Economic collapse
+✂️ | Corporate restructuring/cuts
+💼 | Executive compensation
+```
+
+**Why this matters:**
+- Prevents emoji proliferation (one concept = one emoji)
+- Ensures consistency across 40+ simulation modules
+- Pre-commit hook catches violations before they reach git history
+- Maintains pictographic event language integrity
+
+**If pre-commit hook blocks you:**
+1. Read the error message - it shows which emojis are unregistered
+2. Register them in `docs/EMOJI_EVENT_MAP.txt`
+3. Commit again (validation will pass)
 
 **📖 Complete emoji reference:** See [`docs/EMOJI_QUICK_REFERENCE.md`](./docs/EMOJI_QUICK_REFERENCE.md) (one-page cheat sheet) and [`docs/EMOJI_SEMANTIC_MAP.md`](./docs/EMOJI_SEMANTIC_MAP.md) (550+ lines).
 
