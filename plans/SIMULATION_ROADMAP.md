@@ -685,10 +685,12 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 - Event-driven architecture, 3-5x performance gain
 - Plan: `/plans/p3-1-variable-timesteps.md`
 
-**P3.2: Unknown Unknowns (4-6h)** ⏳ **IN PROGRESS (Roy1, Oct 30 @5:35pm)**
+**P3.2: Unknown Unknowns** ✅ **COMPLETE (Roy1, Oct 30 @7:00pm, 4h)**
 - Black swan events, true uncertainty
 - Plan: `/plans/p3-2-unknown-unknowns.md`
-- Status: Implementation starting with simulation-maintainer
+- Implementation: 10 event templates, 0.1% base probability, deterministic RNG
+- Commit: 809c211
+- Log: `logs/unknown_unknown_implementation_20251030.md`
 
 **P3.3: Alignment Specificity** ✅ **COMPLETE (Oct 26)**
 - Plan: `/plans/completed/p3-3-alignment-model-specificity_COMPLETE_20251026.md`
