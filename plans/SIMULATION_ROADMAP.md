@@ -19,17 +19,17 @@
 
 **🚧 Active Work:** 🟢 PRODUCTION READY - All blockers resolved, N=10 validation passed, organizational realism enhanced
 
-**Total Remaining Effort:** ~127-197 hours (Oct 30 updates: +9h debate tracked, -50h obsolete Phase 2 removed, +10-16h remediation added, +5h new verifications)
+**Work Status:** Oct 30 updates - Layer 2 debate complete, obsolete Phase 2 tracking removed, remediation plan ready, new verification needs identified
 
 **Recent Completions (Oct 30, 2025):**
-- ✅ **ALL 3 CRITICAL BLOCKERS FIXED & VALIDATED (6-8h)** - Monthly mortality >100%, biosphere 20×, 99.7% baseline mortality - N=10 validation passed, PRODUCTION READY
-- ✅ **HIGH-4 Population Coherence - Complete Evolution (2h)** - Phase 1: Bankruptcy cascade, Phase 2: Asset transfer, Phase 3: Proactive divestment - COMPLETE
-- ✅ **Priority 1 Optional Chaining Cleanup (2-3h)** - Replaced 13 silent fallbacks with assertions, caught extinction rate capping bug, validation passing 10/10 - COMPLETE (Roy3)
-- ✅ **Crisis Mitigation Mechanics (2-3h)** - Automatic stabilizers, participatory governance, homeostatic bounds - COMPLETE
-- ✅ **Monte Carlo Issues 1-8 (14-20h)** - Western Liberal, outcome classification, biosphere, gaming detection, refugee crisis, snapshot exports - ALL RESOLVED
-- ✅ **Policy Zero-Variance Bug (2-3h)** - Fixed Combined Interventions deterministic equilibrium - COMPLETE
-- ✅ **AI Resentment Recovery + Policy Integration (8-12h)** - Breaking circular dependency for utopia paths - COMPLETE
-- ✅ **Planetary Boundaries Recovery + Tech Effects Integration (6-8h)** - Nuclear winter recovery feedback - COMPLETE
+- ✅ **ALL 3 CRITICAL BLOCKERS FIXED & VALIDATED ** - Monthly mortality >100%, biosphere 20×, 99.7% baseline mortality - N=10 validation passed, PRODUCTION READY
+- ✅ **HIGH-4 Population Coherence - Complete Evolution ** - Phase 1: Bankruptcy cascade, Phase 2: Asset transfer, Phase 3: Proactive divestment - COMPLETE
+- ✅ **Priority 1 Optional Chaining Cleanup ** - Replaced 13 silent fallbacks with assertions, caught extinction rate capping bug, validation passing 10/10 - COMPLETE (Roy3)
+- ✅ **Crisis Mitigation Mechanics ** - Automatic stabilizers, participatory governance, homeostatic bounds - COMPLETE
+- ✅ **Monte Carlo Issues 1-8 ** - Western Liberal, outcome classification, biosphere, gaming detection, refugee crisis, snapshot exports - ALL RESOLVED
+- ✅ **Policy Zero-Variance Bug ** - Fixed Combined Interventions deterministic equilibrium - COMPLETE
+- ✅ **AI Resentment Recovery + Policy Integration ** - Breaking circular dependency for utopia paths - COMPLETE
+- ✅ **Planetary Boundaries Recovery + Tech Effects Integration ** - Nuclear winter recovery feedback - COMPLETE
 
 **See `/plans/completed/` for detailed archives of all completed work (117+ archived plans).**
 
@@ -51,11 +51,11 @@
    - **Validation:** Exit code 0, 10/10 runs completed, zero assertion errors
    - **Status:** PRODUCTION READY - physically plausible, research-backed, defensively coded, realistic org behavior
    - **Reviews:** `reviews/senior_dev_review_blocker_fixes_20251030.md`, `reviews/blocker_fixes_final_validation_20251030.md`
-   - **Total Evening Work:** ~11-16 hours (6-8h blockers + 2h HIGH-4 evolution + 2-3h optional chaining + 1h validation)
+   - **Total Evening Work:** All blockers + HIGH-4 evolution + optional chaining + validation - COMPLETE
    - See detailed breakdown in Priority Features section below (marked ✅ FIXED & VALIDATED)
 
-1. **🔴 CRITICAL:** Layer 2 Remediation - Fix 5 Parameters (10-16h total)
-   - ✅ **Layer 2 Structured Debate COMPLETE (9h)** - 5-round investigation by Cynthia & Sylvia
+1. **🔴 CRITICAL:** Layer 2 Remediation - Fix 5 Parameters
+   - ✅ **Layer 2 Structured Debate COMPLETE** - 5-round investigation by Cynthia & Sylvia
    - **Status:** HIGH severity ⚠️ but fixable with targeted remediation
    - **Current Validity:** 45-65% → **After Fixes:** 65-80% expected
 
@@ -69,9 +69,9 @@
    - UBI effectiveness: Finland → global INVALID (context mismatch) - Need context-dependent model
 
    **Remediation Timeline:**
-   - **Phase 1 (CRITICAL - 4-7h, Week 1):** Holodomor clarification (1-2h), cooperative survival removal (30m), biosphere sweep (2-4h)
-   - **Phase 2 (HIGH - 5-8h, Week 2):** Climate mortality review (3-5h), UBI context model (2-3h)
-   - **Phase 3 (Documentation - 1-2h, Week 2):** Infrastructure multiplier docs (1h), 3-tier labels (1h)
+   - **Phase 1 (CRITICAL - 4-7h, Week 1):** Holodomor clarification , cooperative survival removal (30m), biosphere sweep 
+   - **Phase 2 (HIGH - 5-8h, Week 2):** Climate mortality review , UBI context model 
+   - **Phase 3 (Documentation - 1-2h, Week 2):** Infrastructure multiplier docs , 3-tier labels 
 
    **New Standards Adopted:**
    - 3-tier system: GOLD ✅ (direct quotes), SILVER ⚠️ (bounded extrapolation), BRONZE ⚠️⚠️ (modeling assumptions)
@@ -97,13 +97,13 @@
    - **Note:** Post-fix validation (Oct 30 11:46 AM) revealed 13 NEW systemic issues (see Priority 0 above)
 
 3. ✅ **Architecture Integration Issues COMPLETE** - All 8 issues resolved (Oct 29-30)
-   - ✅ Multi-paradigm DUI component breakdown (8-12h) - COMPLETE (Roy3, Oct 29)
-   - ✅ Population units type safety (12-16h) - COMPLETE (Oct 28-29)
-   - ✅ AI resentment recovery + policy (8-12h) - COMPLETE (Roy2, Oct 30)
-   - ✅ Planetary Boundaries Recovery + Tech Effects (6-8h) - COMPLETE (Roy2, Oct 30)
+   - ✅ Multi-paradigm DUI component breakdown  - COMPLETE (Roy3, Oct 29)
+   - ✅ Population units type safety  - COMPLETE (Oct 28-29)
+   - ✅ AI resentment recovery + policy  - COMPLETE (Roy2, Oct 30)
+   - ✅ Planetary Boundaries Recovery + Tech Effects  - COMPLETE (Roy2, Oct 30)
    - **Status:** All archived to `/plans/completed/`
 
-4. ✅ **Crisis Mitigation Mechanics COMPLETE** (2-3h) - Roy1, Oct 30
+4. ✅ **Crisis Mitigation Mechanics COMPLETE**  - Roy1, Oct 30
    - All 3 mechanics implemented and validated
    - Automatic stabilizers (5% unemployment variance reduction)
    - Participatory governance (5% resentment reduction + 15% backfire)
@@ -112,11 +112,11 @@
 
 4. **MEDIUM:** Policy System Improvements (10-12h remaining)
    - ✅ Zero-variance bug in Combined Interventions - COMPLETE (Roy2, Oct 30) - Fixed hard cap → soft floor
-   - 🔵 Cooperative AI Ownership Model (10-12h) - LOW priority
+   - 🔵 Cooperative AI Ownership Model  - LOW priority
 
-5. **LOW:** P3 Enhancements (37-48h)
+5. **LOW:** P3 Enhancements 
 
-6. **LOW:** TIER 5 Features (46h)
+6. **LOW:** TIER 5 Features 
 
 ---
 
@@ -124,7 +124,7 @@
 
 ### 🔴 CRITICAL Priority
 
-#### Monte Carlo Validation Issues - Post-Fix (NEW - Oct 30, 2025) (20-30h)
+#### Monte Carlo Validation Issues - Post-Fix (NEW - Oct 30, 2025) 
 **Status:** 🔴 BLOCKERS - Simulation not research-ready
 **Validation Run:** Oct 30, 2025 @ 11:46 AM (N=100, seeds 42000-42099)
 **Log:** `logs/mc_post_issue5_fix_20251030_114508.log`
@@ -242,7 +242,7 @@ The simulation is now:
 
 ---
 
-### ✅ Priority 1 Optional Chaining Cleanup - COMPLETE (Oct 30, 2025) (2-3h)
+### ✅ Priority 1 Optional Chaining Cleanup - COMPLETE (Oct 30, 2025) 
 **Assignee:** Roy3 (simulation-maintainer)
 **Status:** ✅ COMPLETE - All 13 HIGH-RISK calculation fallbacks replaced, validation passing 10/10
 
@@ -414,19 +414,20 @@ Model exhibits physical impossibilities (1687% mortality, 20× biosphere), unjus
 
 ---
 
-#### Layer 2 Remediation - Systematic Investigation Complete (10-16h implementation)
-**Status:** 🔴 CRITICAL - Investigation COMPLETE (9h debate), remediation plan ready
+#### Layer 2 Remediation - Systematic Investigation Complete
+**Priority:** CRITICAL
+**Status:** Investigation COMPLETE, remediation plan ready
 **Complexity:** 5 systems (biosphere, nuclear winter, climate mortality, UBI, cooperative survival)
 
-**Debate Summary (Oct 30, 9 hours):**
+**Debate Summary (Oct 30):**
 ✅ **5-Round Structured Debate COMPLETE** - Cynthia (researcher) vs Sylvia (skeptic)
-- Round 1: Evidence gathering (2.5h) - 5 parameters systematically verified
-- Round 2: Critical evaluation (1.5h) - 3 CRITICAL + 2 HIGH issues identified
-- Round 3: Pattern detection (2h) - 5 failure types documented
-- Round 4: Impact assessment (1.5h) - Validity scored 45-65% current
-- Round 5: Remediation strategy (1.5h) - 3-phase fix plan created
+- Round 1: Evidence gathering - 5 parameters systematically verified
+- Round 2: Critical evaluation - 3 CRITICAL + 2 HIGH issues identified
+- Round 3: Pattern detection - 5 failure types documented
+- Round 4: Impact assessment - Validity scored 45-65% current
+- Round 5: Remediation strategy - 3-phase fix plan created
 
-**Crisis Severity:** HIGH ⚠️ (but fixable with 10-16h targeted work)
+**Crisis Severity:** HIGH ⚠️ (but fixable with targeted remediation work)
 
 **Core Problem Identified:**
 Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation needs **HOW MUCH** (scaling rates, magnitudes, timelines). When papers don't provide magnitudes, simulation fills gaps with **INVENTED PARAMETERS** presented as "research-backed."
@@ -435,13 +436,13 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 
 1. **Biosphere extinction rate (CRITICAL)** - 100-1000 E/MSY range (10× uncertainty)
    - **Impact:** Outcomes FLIP (utopia ↔ collapse) depending on which value used
-   - **Fix:** Monte Carlo parameter sweep across full uncertainty range (2-4h)
+   - **Fix:** Monte Carlo parameter sweep across full uncertainty range 
    - **Location:** `planetaryBoundaries.ts`
 
 2. **Nuclear famine rate (CRITICAL)** - Annual vs monthly ambiguity
    - **Issue:** Holodomor "140-200 per 1,000" likely ANNUAL not monthly (10× difference!)
    - **Impact:** Crisis vs extinction scenarios
-   - **Fix:** Verify interpretation, add caveat (1-2h)
+   - **Fix:** Verify interpretation, add caveat 
    - **Location:** `famineCalculations.ts`
 
 3. **Cooperative survival (CRITICAL)** - "4% vs 10%" FABRICATED
@@ -453,13 +454,13 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 4. **Climate mortality scaling (HIGH)** - 10%/25%/50% per °C INVENTED
    - **Issue:** Thresholds verified (35°C, 28°C) but dose-response curve fabricated (±100% uncertainty)
    - **Impact:** Heat deaths have 4× range of possible values
-   - **Fix:** Literature review for empirical dose-response curves (3-5h)
+   - **Fix:** Literature review for empirical dose-response curves 
    - **Location:** `climateImpactCascadePhase.ts`
 
 5. **UBI effectiveness (HIGH)** - Finland → global extrapolation INVALID
    - **Issue:** Finland (5%) → Kenya (20%?) → failed states (0%?) context mismatch
    - **Impact:** Utopia pathway viability uncertain
-   - **Fix:** Context-dependent model with uncertainty ranges (2-3h)
+   - **Fix:** Context-dependent model with uncertainty ranges 
    - **Location:** `ubiMechanics.ts`
 
 **5 Failure Pattern Types Identified:**
@@ -472,19 +473,19 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 **Remediation Timeline:**
 
 **Phase 1: CRITICAL Fixes (4-7h, Week 1)**
-- Holodomor rate clarification (1-2h) - Verify annual vs monthly interpretation
+- Holodomor rate clarification  - Verify annual vs monthly interpretation
 - Cooperative survival removal (30m) - Delete fabricated "4% vs 10%"
-- Biosphere parameter sweep (2-4h) - Monte Carlo with 100-1000 E/MSY range
+- Biosphere parameter sweep  - Monte Carlo with 100-1000 E/MSY range
 
 **Phase 2: HIGH Fixes (5-8h, Week 2)**
-- Climate mortality literature review (3-5h) - Search for dose-response curves
-- UBI context-dependent model (2-3h) - Finland (5%) vs Kenya (20%) vs failed states (0%)
+- Climate mortality literature review  - Search for dose-response curves
+- UBI context-dependent model  - Finland (5%) vs Kenya (20%) vs failed states (0%)
 
 **Phase 3: Documentation (1-2h, Week 2)**
-- Infrastructure multiplier documentation (1h) - Document 2-10× empirical range
-- Apply 3-tier system to all parameters (1h) - GOLD/SILVER/BRONZE labels
+- Infrastructure multiplier documentation  - Document 2-10× empirical range
+- Apply 3-tier system to all parameters  - GOLD/SILVER/BRONZE labels
 
-**Total: 10-16 hours across 3 phases**
+**Total: 3 phases (CRITICAL, HIGH, Documentation)**
 
 **New Standards Adopted:**
 
@@ -515,12 +516,12 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785) (4-6h)
-- [ ] **NEW:** Verify P3.2 Unknown Unknowns citations (commit 809c211) (8-12h)
-- [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e) (5-8h)
-- [ ] **HIGH PRIORITY:** Verify Richardson et al. biosphere baseline (commit 443ba64) (3-5h)
-- [ ] **NEW:** Verify crisis mitigation mechanics citations (commit ad4647b) (6-10h)
-- [ ] Verify regional refugee population constants (commit 43a9b22) (4-6h)
+- [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785) 
+- [ ] **NEW:** Verify P3.2 Unknown Unknowns citations (commit 809c211) 
+- [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e) 
+- [ ] **HIGH PRIORITY:** Verify Richardson et al. biosphere baseline (commit 443ba64) 
+- [ ] **NEW:** Verify crisis mitigation mechanics citations (commit ad4647b) 
+- [ ] Verify regional refugee population constants (commit 43a9b22) 
 
 **See:** `research/LAYER2_DEBATE_SUMMARY_20251030.md` for complete analysis
 
@@ -529,7 +530,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 ## 🟠 HIGH Priority
 
 
-### Crisis Mitigation Mechanics (2-3h) - ✅ COMPLETE (Roy1, Oct 30)
+### Crisis Mitigation Mechanics  - ✅ COMPLETE (Roy1, Oct 30)
 **Status:** ✅ IMPLEMENTED AND VALIDATED
 **Consensus:** Cynthia-Sylvia agreement reached (Oct 29, 23:35)
 **Implementation:** Oct 30, 2025 (Roy1 → simulation-maintainer)
@@ -576,7 +577,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 
 **PENDING ACTION:** Awaiting Cynthia's response to conditional agreement
 
-**Time Estimate (if agreed):** 2-4 hours to implement all three mechanics with proper documentation
+**Status:** Implementation ready, awaiting final agreement
 
 **Action Checklist (if agreement reached):**
 - [ ] Wait for Cynthia's response to Sylvia's critique
@@ -597,7 +598,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 **Archive:** `/plans/completed/monte-carlo-fixes-issues-1-4_20251030.md`
 **Run Data:** Seeds 42000-42099, scenario mode "unprecedented"
 
-**✅ Completed Issues (9-12h):**
+**✅ Completed Issues :**
 - ISSUE-1: Western Liberal paradigm null (field name mismatch) - COMPLETE
 - ISSUE-2: Outcome classification logic (reason strings) - COMPLETE
 - ISSUE-3: Biosphere exponential growth bug - FIXED (Roy, Oct 30 11:30am)
@@ -614,7 +615,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 
 **✅ COMPLETED (Roy1, Oct 30):**
 
-#### ISSUE-5: Month-0 AI Gaming Detection (2-3h) 🟡 MEDIUM - ✅ COMPLETE (Roy1)
+#### ISSUE-5: Month-0 AI Gaming Detection  🟡 MEDIUM - ✅ COMPLETE (Roy1)
 **Evidence:** Gaming detected at month 0 for Toxic-0, Toxic-1, Niche-0 (all via data_contamination)
 **Root Cause:** (1) Strategy assignment on first action, (2) No detection maturity ramp
 **Fix Applied:**
@@ -638,7 +639,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 **Files Modified:** `src/simulation/refugeeCrises.ts` (lines 407-432)
 **Status:** ✅ COMPLETE (Roy, Oct 30) - Validated with research
 
-**Remaining Work:** 0 hours - ALL MONTE CARLO ISSUES RESOLVED!
+**Status:** ALL MONTE CARLO ISSUES RESOLVED!
 
 **Next Steps:**
 1. Complete Issues 5-8 (calibration and data export fixes)
@@ -647,7 +648,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 
 ---
 
-### Overreliance & Automation Bias Mechanic (8-12h)
+### Overreliance & Automation Bias Mechanic 
 **Status:** 🟠 NEW - Gap identified in simulation coverage analysis (Oct 2025)
 **Priority:** HIGH - Critical missing mechanic, well-researched problem
 **Research Basis:** Q91 from arXiv:2404.09932, Rastogi et al. 2022 (arXiv:2202.05983), Springer AI & Society 2025
@@ -691,11 +692,11 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - High AI + high trust + low alignment: ≈ 0.5-0.6 (catastrophic)
 - Mitigation effectiveness ≤ 15% (research constraint)
 
-**Time Estimate:** 8-12 hours (mechanic design + phase + integration + Monte Carlo testing)
+**Complexity:** Moderate - Mechanic design + phase + integration + Monte Carlo testing
 
 ---
 
-### Test-Set Contamination Mechanic (6-8h)
+### Test-Set Contamination Mechanic 
 **Status:** 🟠 NEW - Gap identified in simulation coverage analysis (Oct 2025)
 **Priority:** MEDIUM-HIGH - Important for realistic capability evaluation
 **Research Basis:** Q47 from arXiv:2404.09932, Sainz et al. 2023 (arXiv:2310.18018), Jacovi et al. 2023 (arXiv:2310.17910)
@@ -741,11 +742,11 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - Private benchmarks: 80% slower contamination
 - Capability inflation scales with contamination (10-50%)
 
-**Time Estimate:** 6-8 hours (mechanic + BenchmarkEvaluationsPhase integration + testing)
+**Complexity:** Moderate - Mechanic + BenchmarkEvaluationsPhase integration + testing
 
 ---
 
-### Multi-Agent Collusion Verification & Implementation (10-14h)
+### Multi-Agent Collusion Verification & Implementation 
 **Status:** 🟠 NEW - Status UNCLEAR, needs verification
 **Priority:** MEDIUM-HIGH - Verify if already modeled, add steganography if missing
 **Design Spec:** `/plans/multi-agent-collusion-design.md`
@@ -753,7 +754,7 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 **Problem:**
 Multiple AIs can develop steganographic communication (hidden messages humans can't decode). If AIs coordinate covertly, human oversight becomes ineffective.
 
-**First Step: Verification (2-3h)**
+**First Step: Verification **
 Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 - Can multiple AIs develop covert communication channels?
 - Can they share knowledge/strategies hidden from humans?
@@ -797,15 +798,15 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
   2. Review statistical significance of differences
   3. Document systemic inequality effects in wiki
 
-**2. Cooperative AI Ownership Model (10-12h) - LOW**
+**2. Cooperative AI Ownership Model  - LOW**
 - Research: Mondragon cooperatives 4% bankruptcy vs 10% capitalist
 - Action: Model worker-owned AI systems with profit-sharing
 - Files: New `cooperativeOwnership.ts`
 
 **Other Sections (Lower Priority):**
-- Reduced Work Hours + UBI Combination (6-8h)
-- Universal Basic Services (UBS) (8-10h)
-- Meaning Economy Expansion (6-8h)
+- Reduced Work Hours + UBI Combination 
+- Universal Basic Services (UBS) 
+- Meaning Economy Expansion 
 
 **Plan:** `/plans/completed/policy-calibration-improvements_COMPLETE_20251027.md` (for reference on completed sections)
 
@@ -813,9 +814,9 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 
 ### LOW Priority
 
-#### Priority 3 Enhancements (37-48h)
+#### Priority 3 Enhancements 
 
-**P3.1: Variable Timesteps (10-12h)**
+**P3.1: Variable Timesteps **
 - Event-driven architecture, 3-5x performance gain
 - Plan: `/plans/p3-1-variable-timesteps.md`
 
@@ -829,16 +830,16 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 **P3.3: Alignment Specificity** ✅ **COMPLETE (Oct 26)**
 - Plan: `/plans/completed/p3-3-alignment-model-specificity_COMPLETE_20251026.md`
 
-**P3.4: Government Implementation Realism (6-8h)** ⏳ **IN PROGRESS (Roy1, Oct 30 @7:10pm)**
+**P3.4: Government Implementation Realism ** ⏳ **IN PROGRESS (Roy1, Oct 30 @7:10pm)**
 - Policy implementation delays, bureaucratic friction
 - Plan: `/plans/p3-4-government-implementation-realism.md`
 - Status: Implementation starting with simulation-maintainer
 
-**P3.5: Parameter Uncertainty (6-8h)**
+**P3.5: Parameter Uncertainty **
 - Continuous uncertainty quantification, sensitivity analysis
 - Plan: `/plans/p3-5-parameter-uncertainty.md`
 
-**P3.6: Ensemble AI Alignment Verification (8-10h)**
+**P3.6: Ensemble AI Alignment Verification **
 - Multi-model voting for safety-critical decisions
 - Plan: `/plans/p3-6-ensemble-alignment-verification.md`
 - Note: Prototype only (40% overhead, collusion risk)
@@ -848,39 +849,39 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 
 ---
 
-#### TIER 5 Features (46h)
+#### TIER 5 Features 
 
 **Status:** Not yet implemented (LOW priority enrichment)
 
-**TIER 5.1: Consciousness & Spirituality (5h)**
+**TIER 5.1: Consciousness & Spirituality **
 - Psychedelic therapy, meditation tech, meaning spiral
 - Plan: `/plans/tier5-1-consciousness-spirituality.md`
 
-**TIER 5.2: Longevity & Space Expansion (6h)**
+**TIER 5.2: Longevity & Space Expansion **
 - Life extension, asteroid mining, Mars colonies
 - Plan: `/plans/tier5-2-longevity-space.md`
 
-**TIER 5.3: Cooperative AI Architectures (5h)**
+**TIER 5.3: Cooperative AI Architectures **
 - AI-AI cooperation, value learning, corrigibility
 - Plan: `/plans/tier5-3-cooperative-ai.md`
 
-**TIER 5.4: Financial System Interactions (5h)**
+**TIER 5.4: Financial System Interactions **
 - Algorithmic trading, CBDC, flash crashes
 - Plan: `/plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.5)
 
-**TIER 5.5: Biological & Ecological (4h)**
+**TIER 5.5: Biological & Ecological **
 - Dual-use research, pandemic preparedness
 - Plan: `/plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.6)
 
-**TIER 5.6: Religious & Philosophical (4h)**
+**TIER 5.6: Religious & Philosophical **
 - AI worship, neo-luddites, culture wars
 - Plan: `/plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.7)
 
-**TIER 5.7: Temporal Dynamics (3h)**
+**TIER 5.7: Temporal Dynamics **
 - Institutional inertia, infrastructure lock-in
 - Plan: `/plans/remaining_tasks_5_pm_10_08_25.md` (Section 2.8)
 
-**TIER 5.8: Multi-Dimensional Capabilities (6h)**
+**TIER 5.8: Multi-Dimensional Capabilities **
 - Additional capability interactions (17 dimensions implemented)
 
 ---
@@ -902,7 +903,7 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 - Note: Requires bidirectional modeling (positive AND negative effects)
 
 **Phase 3: Long-Term Research** - Partially complete
-- ✅ Digital Consciousness Governance (12-16h) - COMPLETE (Oct 18)
+- ✅ Digital Consciousness Governance  - COMPLETE (Oct 18)
 - DEFERRED: Performative Behavior Modeling (18-24 months)
 - REJECTED: Autonomous Weapon Degradation Curves (research obsolete)
 
@@ -912,7 +913,7 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 
 **Status:** Deferred (alternative to detection arms race)
 **Priority:** LOW - Only if detection <5-10%
-**Estimated Time:** 30-50 hours
+**Complexity:** High - Alternative paradigm requiring extensive research and design
 **Plan:** `/plans/tier2b-competitive-equilibrium.md`
 
 **Overview:**
@@ -952,45 +953,43 @@ Instead of enforcing universal AI alignment through detection (TIER 2A), model *
 
 ## Summary
 
-**Total Remaining Effort:** ~119-193 hours (26-42h completed items removed, +79-110h new Monte Carlo validation issues added)
+**Work Status:**
 
-**Breakdown by Priority:**
-
-**CRITICAL:**
-- 🔴 Monte Carlo Validation Issues (NEW - Oct 30): 79-110h
-  - 3 CRITICAL issues (18-26h): Biosphere 47×, mortality attribution bug, population coherence
-  - 3 HIGH issues (38-54h): 92-99% mortality unjustified, 100% dystopia, famine mechanism
-  - 5 MEDIUM issues (18-25h): Western paradigm, phantom outcome, recovery, timeline, determinism
-  - 2 LOW issues (5-7h): Parameter docs, validation tooling
+**CRITICAL Priority:**
+- 🔴 Monte Carlo Validation Issues (NEW - Oct 30):
+  - 3 CRITICAL issues: Biosphere 47×, mortality attribution bug, population coherence
+  - 3 HIGH issues: 92-99% mortality unjustified, 100% dystopia, famine mechanism
+  - 5 MEDIUM issues: Western paradigm, phantom outcome, recovery, timeline, determinism
+  - 2 LOW issues: Parameter docs, validation tooling
   - **Source:** `/reviews/monte_carlo_validation_critique_20251030.md`
-- 🔴 Layer 2 Remediation: 10-16h (3 phases)
-  - ✅ Structured debate COMPLETE (9h) - 5 parameters investigated, 5 patterns identified
-  - Phase 1 (CRITICAL): 4-7h - Holodomor clarification, cooperative survival removal, biosphere sweep
-  - Phase 2 (HIGH): 5-8h - Climate mortality review, UBI context-dependent model
-  - Phase 3 (Docs): 1-2h - Infrastructure multiplier docs, 3-tier labels
+- 🔴 Layer 2 Remediation (3 phases):
+  - ✅ Structured debate COMPLETE - 5 parameters investigated, 5 patterns identified
+  - Phase 1 (CRITICAL): Holodomor clarification, cooperative survival removal, biosphere sweep
+  - Phase 2 (HIGH): Climate mortality review, UBI context-dependent model
+  - Phase 3 (Documentation): Infrastructure multiplier docs, 3-tier labels
   - **Impact:** Current 45-65% validity → Expected 65-80% after fixes
   - **Source:** `research/LAYER2_DEBATE_SUMMARY_20251030.md` (1,000 lines)
-- 🔴 Additional Verifications (commits): 17-31h
-  - Proactive divestment (4-6h), Unknown unknowns (8-12h), Population coherence (5-8h), etc.
+- 🔴 Additional Verifications (from recent commits):
+  - Proactive divestment, Unknown unknowns, Population coherence, Richardson baseline, Crisis mitigation
 
-**HIGH:**
+**HIGH Priority:**
 - ✅ ALL HIGH PRIORITY ITEMS COMPLETE (Oct 30)
-  - ✅ Citation Verification Fixes (1h)
-  - ✅ Monte Carlo Issues 1-8 (14-20h) - ALL RESOLVED
-  - ✅ Architecture Integration Issues (44-60h) - ALL RESOLVED
-  - ✅ Crisis Mitigation Mechanics (2-3h) - COMPLETE
+  - ✅ Citation Verification Fixes - COMPLETE
+  - ✅ Monte Carlo Issues 1-8 - ALL RESOLVED
+  - ✅ Architecture Integration Issues - ALL RESOLVED
+  - ✅ Crisis Mitigation Mechanics - COMPLETE
 
-**MEDIUM:**
-- 🟡 Policy System Improvements: 10-12h (Cooperative AI Ownership only)
-- 🟡 Overreliance & Automation Bias: 8-12h
-- 🟡 Test-Set Contamination: 6-8h
-- 🟡 Multi-Agent Collusion: 10-14h
+**MEDIUM Priority:**
+- 🟡 Policy System Improvements (Cooperative AI Ownership)
+- 🟡 Overreliance & Automation Bias
+- 🟡 Test-Set Contamination
+- 🟡 Multi-Agent Collusion
 
-**LOW:**
-- 🟢 P3 Enhancements: 37-48h
-- 🟢 TIER 5 Features: 46h
-- 🟢 Black Mirror Integration: 21-28 weeks (phased)
-- 🟢 TIER 2B Competitive Equilibrium: 30-50h (deferred)
+**LOW Priority:**
+- 🟢 P3 Enhancements
+- 🟢 TIER 5 Features
+- 🟢 Black Mirror Integration (phased over multiple months)
+- 🟢 TIER 2B Competitive Equilibrium (deferred)
 
 **Related Documentation:**
 - **Completed Work:** `/plans/CHANGELOG_OCTOBER_2025.md` + `/plans/completed/` (117+ archived plans)
