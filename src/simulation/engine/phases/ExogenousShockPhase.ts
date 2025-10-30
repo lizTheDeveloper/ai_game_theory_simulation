@@ -139,7 +139,10 @@ function applyNuclearWarShock(state: GameState, rng: RNGFunction): GameEvent[] {
       boundaries.climate_change.currentValue = Math.min(1.0, boundaries.climate_change.currentValue + 0.5);
     }
     if (boundaries.biosphere_integrity) {
-      boundaries.biosphere_integrity.currentValue = Math.max(0.0, boundaries.biosphere_integrity.currentValue - 0.6);
+      // BUG FIX (Oct 30, 2025): Nuclear war INCREASES extinction rate (higher = worse)
+      // Before: Subtracted 0.6 (incorrectly made biosphere BETTER)
+      // After: Add 0.6 (correctly makes biosphere WORSE via mass extinctions)
+      boundaries.biosphere_integrity.currentValue = boundaries.biosphere_integrity.currentValue + 0.6;
     }
   }
 
@@ -265,7 +268,10 @@ function applyAsteroidImpactShock(state: GameState, rng: RNGFunction): GameEvent
       boundaries.climate_change.currentValue = Math.min(1.0, boundaries.climate_change.currentValue + impactSize * 0.4);
     }
     if (boundaries.biosphere_integrity) {
-      boundaries.biosphere_integrity.currentValue = Math.max(0.0, boundaries.biosphere_integrity.currentValue - impactSize * 0.5);
+      // BUG FIX (Oct 30, 2025): Asteroid impact INCREASES extinction rate (higher = worse)
+      // Before: Subtracted impactSize * 0.5 (incorrectly made biosphere BETTER)
+      // After: Add impactSize * 0.5 (correctly makes biosphere WORSE via mass extinctions)
+      boundaries.biosphere_integrity.currentValue = boundaries.biosphere_integrity.currentValue + impactSize * 0.5;
     }
   }
 

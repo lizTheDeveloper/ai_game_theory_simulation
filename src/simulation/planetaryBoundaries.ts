@@ -65,11 +65,14 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
   };
 
   // 2. BIOSPHERE INTEGRITY (Core Boundary) - 100-1000x extinction rate
+  // Research: IPBES (2024) - Current extinction rate ~137x natural (weighted global)
+  // Safe threshold: 10 E/MSY (10x natural extinction rate)
+  // Boundary value: 137 / 10 = 13.7 (normalized, same scale as other boundaries)
   boundaries.biosphere_integrity = {
     name: 'biosphere_integrity',
     displayName: 'Biosphere Integrity (Biodiversity)',
     recoveryMonths: 0,
-    currentValue: 10.0,                    // 10x boundary (catastrophic)
+    currentValue: 13.7,                    // 13.7x boundary (137 E/MSY / 10 safe threshold)
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
     highRiskThreshold: 1.5,
@@ -533,7 +536,7 @@ export function updatePlanetaryBoundaries(state: GameState): void {
 
   // Biosphere integrity (from regional extinction rates)
   // Research: IPBES (2024) - 100-1000x natural extinction rate
-  // Safe threshold: 10x natural rate
+  // Safe threshold: 10x natural rate (10 E/MSY)
   // Current baseline: 137x natural rate (weighted across regions)
   // Invasive species contribution (Oct 27, 2025): IPBES (2019) - ~40% of modern extinctions
   if (system.landUse) {
@@ -544,7 +547,13 @@ export function updatePlanetaryBoundaries(state: GameState): void {
     // Multiplier: 1.0 (no invasives) to 1.5 (catastrophic invasives at 1.0 impact)
     const invasiveMultiplier = 1.0 + (system.invasiveSpeciesImpact * 0.5);
 
-    system.boundaries.biosphere_integrity.currentValue = baseExtinctionRatio * invasiveMultiplier;
+    // BUG FIX (Oct 30, 2025): Normalize to boundary threshold (10x natural rate)
+    // Before: currentValue = 137 (extinction rate in absolute units)
+    // After: currentValue = 137 / 10 = 13.7 (boundary value, same scale as other boundaries)
+    // Research: IPBES - Safe threshold is 10 E/MSY (10x natural extinction rate)
+    const SAFE_EXTINCTION_RATE = 10.0; // 10x natural rate (IPBES threshold)
+    const totalExtinctionRate = baseExtinctionRatio * invasiveMultiplier;
+    system.boundaries.biosphere_integrity.currentValue = totalExtinctionRate / SAFE_EXTINCTION_RATE;
   } else {
     // Fallback to biodiversity index if land use system not initialized
     system.boundaries.biosphere_integrity.currentValue = Math.max(0, 10.0 * (1 - env.biodiversityIndex));
