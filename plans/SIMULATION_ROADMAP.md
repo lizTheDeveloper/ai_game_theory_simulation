@@ -259,9 +259,10 @@ The simulation is now:
 
 **🟠 HIGH PRIORITY (Research Validity Issues):**
 
-✅ **HIGH-4: Population Coherence Failure - FIXED** (Oct 30, 2025, 30min)
+✅ **HIGH-4: Population Coherence Failure - FIXED + ENHANCED** (Oct 30, 2025, ~2h)
 ```
-✅ FIXED: Data centers now shut down when organizations go bankrupt
+✅ FIXED: Data centers now transfer ownership when orgs go bankrupt
+✅ ENHANCED: Orgs proactively divest assets to avoid bankruptcy
 ```
 **Problem:** With 100% mortality, simulation showed 12PF compute capacity still operational despite zero employees
 
@@ -270,19 +271,45 @@ The simulation is now:
 - But data centers stayed `operational: true` forever
 - Missing cascade: bankruptcy → infrastructure shutdown
 
-**Fix Applied:**
+**Fix Phase 1 - Bankruptcy Cascade (bbc7451):**
 - Added data center shutdown logic to `handleBankruptcy()` function
 - When org goes bankrupt, all owned data centers set to `operational: false`
 - Clears `org.ownedDataCenters` ownership list
 - Logs capacity lost per DC shutdown
 
-**Location:** `src/simulation/organizationManagement.ts:999-1017`
+**Fix Phase 2 - Asset Transfer (bb20927):**
+- Replaced shutdown with realistic asset liquidation
+- Government first right of refusal for strategic infrastructure (>1000 PF or restricted)
+- Private sector acquisition for non-strategic facilities
+- Shutdown only as last resort (no buyers)
+- Proper capital flows and creditor recovery
 
-**Commit:** bbc7451
+**Enhancement - Proactive Divestment (a0f4785):**
+- Organizations now sell data centers BEFORE bankruptcy
+- Triggers when 2+ of 3 financial distress indicators:
+  - Capital < 6 months expenses
+  - Negative cash flow (revenue < expenses)
+  - Operating margin < 10%
+- Sells 1-2 smallest/non-strategic DCs per month
+- Better pricing than bankruptcy (60% vs 50% of fair value)
+- Capital infusion + cost reduction can prevent bankruptcy
 
-**Research Basis:** Physical impossibility - data centers require skilled operators, power, cooling, maintenance staff
+**Location:** `src/simulation/organizationManagement.ts:809-1098`
 
-**Note:** Organization bankruptcy from depopulation was already working (OrganizationViabilityPhase), just needed to cascade to infrastructure
+**Commits:**
+- bbc7451 (initial cascade fix)
+- bb20927 (asset transfer)
+- a0f4785 (proactive divestment)
+
+**Research Basis:**
+- Physical impossibility - data centers require skilled operators, power, cooling, maintenance staff
+- Real-world asset liquidation patterns (IBM server sale 2014, GE divestitures 2020)
+- Turnaround strategies: Divest non-core assets before bankruptcy
+
+**Test Coverage:**
+- ✅ Type checks pass
+- ✅ Test script: `scripts/testFinancialDistress.ts`
+- ⏳ Monte Carlo validation pending (N≥10 runs recommended)
 
 ---
 
@@ -362,6 +389,12 @@ Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actu
 5. **Scope mismatch:** Municipal study cited for national/global parameter
 
 **Research Verification Queue:**
+- [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785) - `research/verification_a0f4785_20251030.md` (4-6h)
+  - **CITATIONS:** IBM server business sale (2014), GE divisions (2020), "standard turnaround strategy"
+  - **PARAMETERS:** 60% recovery value (vs 50% bankruptcy), 6 months runway trigger, 10% operating margin threshold, 1-2 DCs/month velocity
+  - Layer 1: Verify IBM/GE sales occurred and contexts
+  - Layer 2: Find research backing for recovery rates, financial triggers, sale velocity limits
+  - **Impact:** Controls organizational survival during financial distress
 - [ ] **NEW:** Verify P3.2 Unknown Unknowns citations (commit 809c211) - `research/verification_9f29b05_20251030.md` (8-12h)
   - **ONE CITATION:** Taleb (2007) "The Black Swan" - verify exists and supports 3 characteristics
   - **FABRICATED CLAIM:** "COVID-19 ~30-year pandemic gap" (actually 102 years from 1918 Spanish Flu)
