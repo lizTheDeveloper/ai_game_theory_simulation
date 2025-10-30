@@ -2277,6 +2277,8 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 
 **Key Changes (Oct 30):**
 - **Bug Fix (Oct 30):** Fixed extinction rate capping in PlanetaryBoundariesPhase - code logged "capped at 10×" but didn't actually clamp the value, causing `assertInRange` to throw when extinction rates exceeded 10× (40% failure rate in N=10 Monte Carlo validation). Added `Math.min/max` to actually cap before assertion. Caught by Priority 1 assertion cleanup validation sweep (commit d520d3e, related to commit 08243e3).
+- **BLOCKER-1 Fix (Oct 30):** Capped displayed mortality at 100% in planetary boundary cascades (`planetaryBoundaries.ts:869-905`). Root cause: Unbounded exponential `1.05^N` produced physically impossible values (e.g., 1687.9% at month 192). Fix: Cap display at 100%, add warnings when theoretical exceeds limit. **Important:** This was always display-only; actual mortality computed by `bayesianMortality.ts` with 2.8% monthly cap. Validated with Monte Carlo N=3, 120 months (commit 443ba64).
+- **BLOCKER-2 Partial Fix (Oct 30):** Corrected biosphere baseline from 137× to 2.2× natural extinction rate in `planetaryBoundaries.ts:67-72, 548-553`. Research: Richardson et al. (2023). **Note:** Full BLOCKER-2 fix requires validation that 20× accumulation no longer occurs (commit 443ba64).
 
 **Total Phases**: 69 registered phases (up from 67 in previous documentation)
 
