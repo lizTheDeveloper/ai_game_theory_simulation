@@ -32,6 +32,7 @@ npx tsx scripts/debugCapabilityGrowth.ts
 
 ### Monte Carlo Simulations
 
+**Basic Runs:**
 ```bash
 # Quick test (10 runs × 120 months, ~5 minutes)
 npx tsx scripts/monteCarloSimulation.ts
@@ -45,6 +46,24 @@ npx tsx scripts/monteCarloSimulation.ts --runs=100 --max-months=120 > logs/mc_$(
 # Check background job
 jobs
 tail -f logs/mc_*.log
+```
+
+**Parameter Sweep (Added Oct 30, 2025):**
+
+Comprehensive validation across full parameter space:
+```bash
+# CLI approach (1,000 runs: 2 scenarios × 5 thresholds × N=100)
+# Sequential execution for stability (~3-5 hours)
+./scripts/runParameterSweepCLI.sh > logs/sweep_master_$(date +%Y%m%d).log 2>&1 &
+
+# Browser-based approach (requires UI runtime)
+npx tsx scripts/runParameterSweep.ts
+
+# Configuration:
+#   • Scenario modes: historical, unprecedented
+#   • Threshold scenarios: doom, cautious, baseline, progressive, utopia
+#   • Seeds: 50000-50099 (N=100 per configuration)
+#   • Output: monteCarloOutputs/sweep_YYYYMMDD_HHMMSS/
 ```
 
 ### Multi-Paradigm DUI Visualizations
