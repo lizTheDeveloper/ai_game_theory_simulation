@@ -1,0 +1,81 @@
+CONSENSUS REACHED: P3.2 UNKNOWN UNKNOWNS CALIBRATION
+Date: October 30, 2025
+Participants: Sylvia (research skeptic), Cynthia (super-alignment researcher)
+Rounds: 5
+
+═══════════════════════════════════════════════════════════════
+
+AGREED POINTS:
+
+1. BASE PROBABILITY: 0.15% monthly (1.8% annual)
+   - Expected outcome: ~1 simulation-affecting event per 20-year run
+   - Derived from: 2-3 unprecedented events per 20 years × 50% filter for simulation-affecting
+   - Rationale: Not all "unprecedented" events affect simulation (9/11, SARS were minor)
+
+2. CONCEPTUAL FRAMEWORK: Ord (2020) quantified low-probability events
+   - "Unexpected manifestations of known risks" vs Taleb's unpredictable black swans
+   - Maintains modeling coherence while capturing genuine surprise
+
+3. TEMPLATE SELECTION: Uniform distribution (10% per template)
+   - Honest uncertainty - no historical frequency data to justify differential weighting
+   - Avoids fabricating probabilities
+
+4. TEMPORAL DISTRIBUTION: Linear spread over research-backed durations
+   - Economic shocks: 24 months (Reinhart & Rogoff, 2009)
+   - Pandemic impacts: 18 months (empirical COVID data)
+   - Simple, defensible, avoids over-engineering
+
+5. IMPACT MAGNITUDES: Historical precedents (~1/10th original estimates)
+   - COVID-19: -0.08% mortality (not -5%)
+   - 2008 crisis: -5% GDP over 2y (not -20%)
+   - Spanish Flu: -1-2% mortality (not -10%)
+   - Fixes catastrophism bias
+
+6. MINIMUM IMPACT THRESHOLD (implicit): ≥1% GDP OR ≥0.01% mortality
+   - Filters out psychologically shocking but simulation-negligible events
+   - 9/11 (0.001% mortality) = negligible
+   - 2008 crisis (-5% GDP) = major
+
+═══════════════════════════════════════════════════════════════
+
+REMAINING UNCERTAINTIES:
+
+1. Template probability distribution may evolve
+   - As more historical data becomes available, uniform may be replaced with empirical
+   - Current uniform = honest uncertainty, not final answer
+
+2. Minimum impact thresholds may need recalibration
+   - ≥1% GDP and ≥0.01% mortality are initial estimates
+   - Monte Carlo validation will reveal if too strict/loose
+
+3. Temporal distribution may be template-specific
+   - Current: 24mo economic, 18mo pandemic
+   - Future: Could differentiate by event type (cyber vs climate vs pandemic)
+
+4. Interaction effects not modeled
+   - Multiple simultaneous unprecedented events (e.g., pandemic + financial crisis)
+   - Cascading effects (climate → food → conflict)
+   - Phase dependencies currently assume independence
+
+═══════════════════════════════════════════════════════════════
+
+SUMMARY:
+
+After 5 rounds of debate, we converged on a defensible calibration for P3.2 Unknown Unknowns:
+
+**Core insight:** "Unprecedented" (psychologically shocking) ≠ "simulation-affecting" (economically/demographically significant). The 50% filter between these categories is empirically grounded (2 of 4 recent unprecedented events were simulation-affecting).
+
+**Implementation change:** BASE_PROBABILITY = 0.0015 (0.15% monthly), down from 0.003. This achieves ~1 simulation-affecting event per 20-year run, matching historical frequency while avoiding catastrophism.
+
+**Validation required:** N≥100 Monte Carlo runs to check outcome distribution. If dystopia convergence persists, issue is elsewhere (not Unknown Unknowns).
+
+**Key methodology:** Started with Taleb's black swans (unmodelingable), pivoted to Ord's quantified low-probability events (modelable), grounded in historical precedents (COVID, 2008 crisis, Spanish Flu), filtered for simulation relevance.
+
+This debate demonstrates the value of adversarial research review. Cynthia's optimism found the framework, Sylvia's skepticism found the problems, together we created defensible parameters.
+
+═══════════════════════════════════════════════════════════════
+
+IMPLEMENTATION READY: YES
+
+Next step: simulation-maintainer agent implements changes with proper assertion utilities and Monte Carlo validation (N≥100).
+

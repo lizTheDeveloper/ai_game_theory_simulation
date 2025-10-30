@@ -1,0 +1,112 @@
+# RESEARCH CONSENSUS: Food Security Recovery Mechanics
+**Date:** 2025-10-30
+**Participants:** Sylvia (Research Skeptic), Cynthia (Super-Alignment Researcher)
+**Rounds:** 4
+
+---
+
+## ✅ AGREED POINTS
+
+### 1. Core Nuclear Winter Science (High Confidence)
+- **150 Tg scenario:** 80-90% crop reduction (Xia et al. 2022)
+- **Recovery timeline:** 15-20 years to 80% productivity (nuclear winter case)
+- **Xia vs Shi "contradiction":** RESOLVED - Both agree at 150 Tg, Shi's "largely unaffected" applies to 5 Tg scenarios only
+- **UV-B effects:** Ozone depletion doubles UV-B radiation (Shi et al. 2025)
+
+### 2. Post-WWII Recovery (Medium Confidence)
+- **Timeline:** 5-7 years to 100% production recovery
+- **Population adjustment:** 35% production + 5% population loss = 11% per-capita improvement
+- **Key insight:** Labor shortage dynamics matter - farmer deaths create vicious cycles
+
+### 3. Recovery Model Design (Synthetic but Defensible)
+- **Logistic S-curve:** Observed in 2/3 case studies (post-WWII, Green Revolution)
+- **Derived model flag:** MUST be transparent - not measured, synthesized
+- **Sensitivity analysis:** Test exponential, linear, logistic models (±30% parameters)
+
+### 4. Population-Adjusted Food Security (Critical Design Change)
+- **Track per-capita availability:** Not just total production
+- **Labor shortage multiplier:** (current_farmers / baseline_farmers)^0.7
+- **Distribution capacity:** Infrastructure dependency for food aid
+
+### 5. Research Standards Going Forward
+- Direct quotes + page numbers (not paraphrases)
+- VERIFIED vs DERIVED flags in code
+- Admit research gaps (don't fabricate)
+- Resolve contradictions by reading methodologies
+- Sensitivity analysis for all derived parameters
+
+---
+
+## ⚠️ REMAINING UNCERTAINTIES
+
+### 1. Climate Thresholds (Section 4) - VERIFICATION PENDING
+- **Status:** Cynthia found CRITICAL ERROR (wheat 9°C → 30°C)
+- **Action:** Complete Raymond et al. 2020 wet-bulb threshold verification
+- **Timeline:** Next 1-2 hours before implementation
+
+### 2. Regional Variation (Section 6) - INSUFFICIENT EVIDENCE
+- **Removed:** Regional multipliers (1.5×, 0.8×) - no source found
+- **Current approach:** Uniform recovery model until tropical vulnerability research emerges
+- **Future:** Can revisit if empirical data on regional differences becomes available
+
+### 3. Recovery Model Choice (Sensitivity Analysis Required)
+- **Uncertainty:** Exponential vs linear vs logistic functional form
+- **Impact:** Could change recovery timeline by ±30-50%
+- **Mitigation:** Monte Carlo validation with all three models (N ≥ 100)
+
+### 4. Labor Shortage Feedback Loops (Theoretical but Plausible)
+- **Mechanism:** Farmer deaths → reduced planting → lower yield → more deaths
+- **Breaking point:** Below 30% farmer population, productivity collapses
+- **Evidence:** Derived from post-WWII case study, not directly measured
+
+---
+
+## 📋 IMPLEMENTATION COMMITMENTS
+
+### Before Implementation:
+1. Complete climate threshold verification (Section 4)
+2. Add `// DERIVED MODEL` flags to logistic recovery code
+3. Remove regional multipliers (1.5×, 0.8×) from code
+4. Add population-adjusted food security tracking to implementation plan
+
+### During Implementation:
+1. Sensitivity analysis: Test 3 recovery models (exponential, linear, logistic)
+2. Labor shortage mechanics: Track farmer population, productivity multipliers
+3. Surplus/deficit tracking: When can food aid resume? (threshold: per-capita food > 1.1× subsistence)
+
+### Post-Implementation:
+1. Monte Carlo validation (N ≥ 100 runs, different recovery models, parameter ranges)
+2. Document derived parameters in code comments (source, justification, uncertainty)
+3. Flag speculative elements in simulation logs (console output: "⚠️ DERIVED: ...")
+
+---
+
+## 🎯 CONSENSUS SUMMARY
+
+**The food security recovery mechanics are RESEARCH-READY with the following caveats:**
+
+1. **Nuclear winter science is solid** (Xia 2022, Shi 2025) - high confidence
+2. **Recovery models are synthetic** - derived from case studies, not measured directly
+3. **Population-adjusted dynamics are critical** - total production numbers hide labor shortages
+4. **Climate thresholds need verification** - Section 4 incomplete (wheat error found)
+5. **Sensitivity analysis is mandatory** - recovery model choice could change outcomes by ±30-50%
+
+**Quality assessment:** 8/10
+- ✅ Zero fabricated citations (dramatic improvement from Phase 1)
+- ✅ Honest about contradictions and gaps
+- ✅ Implementation-ready TypeScript code
+- ⚠️ Must complete climate threshold verification before implementation
+- ⚠️ Must run Monte Carlo sensitivity analysis post-implementation
+
+**This is publication-grade methodology.** If we maintain this standard (direct quotes, VERIFIED vs DERIVED flags, sensitivity analysis), the simulation will be defensible in academic contexts.
+
+---
+
+**Sylvia's Final Assessment:**
+Cynthia's research synthesis quality has improved dramatically. The remaining issues are NOT fabrication but unresolved contradictions (now resolved) and transparent acknowledgment of derived parameters. This is the quality standard we should expect: thorough self-verification, honest acknowledgment of gaps, proactive responses to critique.
+
+**The shift from citation fabrication (Phase 1) to honest synthesis (Phase 2) shows real methodological improvement.**
+
+Consensus reached. Ready for implementation with conditions above.
+
+— Sylvia (Research Skeptic) & Cynthia (Super-Alignment Researcher)

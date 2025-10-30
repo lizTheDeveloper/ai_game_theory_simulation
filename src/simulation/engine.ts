@@ -139,6 +139,7 @@ import {
   GovernmentActionsPhase,
   GovernmentElectionPhase,  // Oct 19, 2025: Government system elections
   GovernmentResponsePhase,  // Oct 19, 2025: Government system policy response
+  PolicyImplementationPhase,  // Oct 30, 2025: Policy implementation lifecycle (P3.4)
   SocietyActionsPhase,
   PlayerDecisionPhase,  // Oct 22, 2025: Player decision injection
   // Batch 5: Final phases (37.0 - 40.0, 98.0 - 99.0)
@@ -584,6 +585,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new GovernmentActionsPhase());
     this.orchestrator.registerPhase(new GovernmentElectionPhase());  // Oct 19, 2025: Elections & opinion
     this.orchestrator.registerPhase(new GovernmentResponsePhase());  // Oct 19, 2025: Policy response
+    this.orchestrator.registerPhase(new PolicyImplementationPhase());  // Oct 30, 2025: P3.4 Implementation lifecycle
     this.orchestrator.registerPhase(new SocietyActionsPhase());
     this.orchestrator.registerPhase(new PlayerDecisionPhase());  // Oct 22, 2025: Player decision injection (order 8.5)
 
