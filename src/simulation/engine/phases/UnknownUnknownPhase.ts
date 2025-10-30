@@ -8,21 +8,26 @@
  * Rationale: Black swans can trigger or modify ongoing crises, but shouldn't
  *            double-count when calculating outcome probabilities.
  *
+ * Research consensus (Oct 30, 2025):
+ * - Consensus file: `.claude/chatroom/research-consensus-20251030_food_security.txt`
+ * - Base probability: 0.15% monthly (0.0015) - Ord (2020), historical 2-3 events per 20y
+ * - Expected outcome: ~1 simulation-affecting event per 20-year run
+ * - Impact calibration: Research-backed (COVID-19 = -0.08% mortality, 2008 = -5% GDP/2y)
+ * - Minimum threshold: ≥1% GDP OR ≥0.01% mortality (filters negligible events)
+ *
  * Research basis:
+ * - Toby Ord, "The Precipice" (2020): Quantified low-probability catastrophic events
+ * - Reinhart & Rogoff, "This Time Is Different" (2009): Economic crisis durations (24mo)
  * - Nassim Taleb, "The Black Swan" (2007): 3 characteristics:
  *   1. Rare (outlier beyond normal expectations)
  *   2. Extreme impact
  *   3. Retrospectively predictable (but not prospectively)
- * - Historical frequency: ~1-2 major black swans per decade globally
- * - Examples: 2008 financial crisis, COVID-19, Fukushima, CRISPR discovery
+ * - Historical frequency: 2-3 unprecedented simulation-affecting events per 20y
+ * - Examples: 2008 financial crisis (-5% GDP), COVID-19 (-0.08% mortality), Fukushima, CRISPR
  *
- * Target frequency: 5-10% of 100-run Monte Carlo should experience at least
- *                   one unknown unknown (roughly 1 per 200-1000 months)
- *
- * Parameter justification:
- * - Base rate 0.1% per month: ~1.2% per year, ~11% per decade
- * - Conservative to prevent excessive randomness
- * - Matches historical "major surprise" frequency
+ * Target frequency (updated):
+ * - ~1 event per 20-year run (expected value from 0.15% monthly)
+ * - Monte Carlo validation (N≥100): Check for appropriate distribution
  */
 
 import type { GameState, GameEvent, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';

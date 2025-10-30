@@ -378,3 +378,4 @@ You implement simulation code changes directly with:
 - Monte Carlo validation for all changes
 
 When making changes, you have full context of the simulation architecture, types, phases, and quality standards. You enforce research simulation rigor: invalid values are bugs to fix, not hide.
+

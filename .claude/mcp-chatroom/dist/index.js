@@ -146,6 +146,11 @@ const tools = [
                     type: 'string',
                     description: 'Agent username',
                 },
+                limit: {
+                    type: 'number',
+                    description: 'Maximum number of lines to return (default: 50, use 0 for unlimited)',
+                    default: 50,
+                },
             },
             required: ['channel', 'agent'],
         },
@@ -301,7 +306,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 };
             }
             case 'chatroom_read_new': {
-                const { channel, agent } = args;
+                const { channel, agent, limit = 50 } = args;
                 const channelFile = getChannelFile(channel);
                 if (!fs.existsSync(channelFile)) {
                     return {
@@ -325,16 +330,25 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                         ],
                     };
                 }
-                // Read new lines
+                // Read new lines with pagination
                 const allLines = fs.readFileSync(channelFile, 'utf-8').split('\n');
-                const newLines = allLines.slice(lastLine).join('\n');
-                // Update last read marker
-                writeLastReadLine(channel, agent, currentLine);
+                const availableLines = allLines.slice(lastLine);
+                // Apply limit (0 means unlimited)
+                const linesToReturn = limit > 0 ? availableLines.slice(0, limit) : availableLines;
+                const newLines = linesToReturn.join('\n');
+                // Update last read marker to only lines we're returning
+                const newLastLine = lastLine + linesToReturn.length;
+                writeLastReadLine(channel, agent, newLastLine);
+                // Calculate remaining messages
+                const remainingLines = currentLine - newLastLine;
+                const moreIndicator = remainingLines > 0
+                    ? `\n━━━ ${remainingLines} more lines available ━━━`
+                    : '';
                 return {
                     content: [
                         {
                             type: 'text',
-                            text: `━━━ New messages in ${channel} (for ${agent}) ━━━\n${newLines}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+                            text: `━━━ New messages in ${channel} (for ${agent}) ━━━\n${newLines}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${moreIndicator}`,
                         },
                     ],
                 };

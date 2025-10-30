@@ -156,8 +156,8 @@ function executeGovernmentResponsePhase(
       severity: 'info',
       agent: 'government',
       title: 'Policy Implementation Complete',
-      description: `${policy.country}: Implemented ${policy.domain} policy (${(policy.effectiveness * 100).toFixed(0)}% effective)`,
-      effects: { country: policy.country, domain: policy.domain, effectiveness: policy.effectiveness }
+      description: `${policy.country}: Implemented ${policy.domain} policy (${(policy.currentEffectiveness * 100).toFixed(0)}% effective)`,
+      effects: { country: policy.country, domain: policy.domain, effectiveness: policy.currentEffectiveness }
     });
     state.governmentSystem.totalPoliciesEnacted++;
   }
@@ -301,15 +301,21 @@ function initiatePolicyResponse(
 
 /**
  * Apply effects of completed policy
+ *
+ * Uses currentEffectiveness (not the legacy effectiveness field).
+ * Policy effects scale with current implementation progress.
  */
 function applyPolicyEffects(state: GameState, policy: ActivePolicy): void {
+  // Use currentEffectiveness for all calculations
+  const effectiveness = policy.currentEffectiveness;
+
   if (policy.domain === 'technology') {
     // Technology policy affects:
     // 1. Government control capability
     // 2. AI development rate (if effective)
     // 3. Tech deployment speed
 
-    const boost = policy.effectiveness * 0.2;
+    const boost = effectiveness * 0.2;
     state.government.capabilityToControl = Math.min(
       10,
       state.government.capabilityToControl + boost
