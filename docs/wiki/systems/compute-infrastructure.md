@@ -133,7 +133,50 @@ This creates natural competition: getting 10x your peer's compute only gives 3x 
 
 ## Compute Growth Dynamics
 
-### 1. Moore's Law (Automatic)
+### 1. Population → Compute Scaling (NEW - Oct 30, 2025)
+
+**Critical Fix (HIGH-4):** Compute capacity now scales with population via skilled labor pool:
+
+```typescript
+// Skilled labor pool availability (0.8 power law exponent)
+const globalPopFraction = state.population / state.baselinePopulation;
+const skilledLaborMultiplier = Math.pow(globalPopFraction, 0.8);
+
+// Monthly efficiency decay based on labor shortage
+if (globalPopFraction < 0.99) {
+  const monthlyDecay = 1 - (1 - skilledLaborMultiplier) / 120;
+  dataCenters.forEach(dc => {
+    dc.efficiency = Math.max(0.01, dc.efficiency * monthlyDecay);
+  });
+}
+```
+
+**Scaling Examples:**
+- 100% population → 100% capacity (baseline)
+- 50% population → 57% capacity (skilled labor bottleneck)
+- 10% population → 16% capacity (critical threshold)
+- 1% population → 2.5% capacity (minimal survivable)
+
+**Coherence Enforcement:**
+```typescript
+// Maximum possible compute with current population
+const maxCoherentCompute = globalPopFraction * 50_000; // 50K PF baseline
+
+// Force infrastructure collapse if exceeded
+if (globalPopFraction < 0.10 && totalCompute > maxCoherentCompute) {
+  const collapseRatio = maxCoherentCompute / totalCompute;
+  dataCenters.forEach(dc => dc.efficiency *= collapseRatio);
+}
+```
+
+**Research Basis:**
+- ~0.1% of population has data center maintenance skills
+- ~100 skilled workers required per PF of compute
+- 50,000 PF current global capacity baseline
+
+**Files:** `src/simulation/computeInfrastructure.ts:498-653`
+
+### 2. Moore's Law (Automatic)
 
 ```typescript
 // Every month, existing data centers improve
@@ -151,9 +194,9 @@ algorithmsEfficiency *= 1.004;  // ~5% per year
 hardwareEfficiency *= 1.003;
 ```
 
-**Result:** 5-10x compute growth over 60 months
+**Result:** 5-10x compute growth over 60 months (if population remains stable)
 
-### 2. Data Center Construction
+### 3. Data Center Construction
 
 Organizations build new data centers (see [Organizations](./organizations.md)):
 
@@ -182,7 +225,7 @@ Organizations build new data centers (see [Organizations](./organizations.md)):
 }
 ```
 
-### 3. Private Investment (Automatic)
+### 4. Private Investment (Automatic)
 
 Private sector builds compute if AIs are profitable:
 
@@ -381,3 +424,5 @@ Month 60: 3000-4000 PetaFLOPs (5-6x growth)
 - **v1.0** (Oct 2025): Initial implementation, replace abstract compute (commit 356b743)
 - **v1.1** (Oct 2025): Add Moore's law growth (commit 864df7a)
 - **v1.2** (Oct 2025): Government compute actions (commit dd6cbd3)
+- **v1.3** (Oct 30, 2025): Population → compute scaling, coherence enforcement (commit baaa33e)
+- **v1.4** (Oct 30, 2025): Bankruptcy asset transfer - data centers transferred to government/solvent orgs instead of destroyed (commit bb20927)

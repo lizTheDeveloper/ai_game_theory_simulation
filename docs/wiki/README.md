@@ -1256,29 +1256,56 @@ deploymentSpeed = baselineSpeed
 
 **Key Insight:** Crisis acceleration is CRITICAL - without it, model would be overly pessimistic about deployment speed during actual emergencies (violates COVID/Manhattan Project evidence).
 
-#### Fix #10: Organization Bankruptcy → Data Center Shutdown Cascade ✅
+#### Fix #10: Population Coherence - Complete Solution ✅
 
-**Problem:** Population coherence failure - with 100% mortality, simulation showed 12PF compute still operational
-**Root Cause:** Organizations went bankrupt but owned data centers stayed online forever
-**Solution:** Added data center shutdown cascade to bankruptcy handler
-**Impact:** Eliminates physically impossible scenario where bankrupt companies maintain compute infrastructure
+**Problem (HIGH-4):** With 99.7% mortality, simulation showed ghost infrastructure:
+- 12PF compute capacity despite no skilled labor
+- 75% organization survival despite 93% global mortality
+- Message: "NO COUNTRIES DEPOPULATED" despite catastrophic loss
 
-**Implementation:**
-- When organization goes bankrupt, all owned data centers are marked `operational = false`
-- Compute capacity lost is logged (e.g., "💀 Data center shut down: Google Iowa (200 PF capacity lost)")
-- Organization's `ownedDataCenters` list is cleared
-- Cascade ensures coherence: no employees → no data center maintenance → shutdown
-- File: `src/simulation/organizationManagement.ts:999-1017` (Oct 30, 2025)
+**Root Causes:**
+1. Bankruptcy modifiers stacked multiplicatively → 93% mortality = only 9% bankruptcy risk
+2. Infrastructure decay only keyed off org bankruptcy → missing direct population → compute link
+3. No skilled labor pool tracking → 12PF requires ~1,200 workers, only ~6 alive globally
 
-**Research Basis:** Physical impossibility
-- Data centers require skilled operators, power management, cooling systems, security, maintenance
-- Cannot maintain multi-petaFLOP compute capacity with zero employees and no revenue
-- Real-world precedent: Company collapse → infrastructure shutdown (e.g., Enron data centers)
+**Three-Part Solution:**
 
-**Validation:** N=1 test with 100% mortality
-- **Before:** 12PF compute persisted despite all organizations bankrupt
-- **After:** Data centers shut down when owning organization goes bankrupt
-- Population coherence restored
+**Part 1: Population → Compute Capacity Scaling**
+- File: `src/simulation/computeInfrastructure.ts:498-559`
+- Skilled labor pool scaling: `capacity ∝ population^0.8` (sub-linear, bottleneck compounding)
+- Monthly efficiency decay: `1 - (1 - skillMult) / 120` (smooth decay over 10 years)
+- Results: 7% population → ~2K PF (was 12K PF)
+- Research: ~0.1% of population has data center maintenance skills
+
+**Part 2: Coherence Assertions**
+- File: `src/simulation/computeInfrastructure.ts:613-653`
+- Max coherent compute: `globalPopFraction × 50,000 PF`
+- FORCE infrastructure collapse on violations (not warnings)
+- Fail-loudly with full context (workers required vs available)
+- Research: ~100 skilled workers per PF, 50K PF current global capacity
+
+**Part 3: Extreme Mortality Bankruptcy Modifiers**
+- File: `src/simulation/organizations.ts:487-555`
+- At 80%+ mortality: Additive modifiers (not multiplicative stacking)
+- At 90%+ mortality: 50% minimum bankruptcy risk floor
+- Prevents 75% survival at 93% mortality
+- Research: No organization survives 90%+ population loss
+
+**Part 3b: Bankruptcy Asset Transfer (Oct 30, 2025)**
+- File: `src/simulation/organizationManagement.ts:999-1095`
+- Data centers transferred to government/solvent orgs (not destroyed)
+- Government gets strategic infrastructure (>1000 PF or restricted)
+- Private sector acquires non-strategic facilities at market rates
+- Shutdown only as last resort (no viable buyers)
+- Result: Infrastructure preserved, maintains population coherence
+
+**Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months)
+- Exit code: 0 (SUCCESS)
+- Coherence violations: 0
+- Assertion errors: 0
+- Review: `reviews/high4_population_coherence_validation_20251030.md`
+
+**Research Status:** 🔴 UNVERIFIED - Parameters need peer-reviewed backing (see `research/verification_baaa33e_20251030.md`)
 
 ---
 
