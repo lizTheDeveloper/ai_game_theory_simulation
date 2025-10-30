@@ -71,6 +71,12 @@ interface Organization {
   // Projects (long-term investments)
   currentProjects: OrganizationProject[];
   computeAllocationStrategy: 'balanced' | 'focus_flagship' | 'train_new' | 'efficiency';
+
+  // NEW (Oct 30, 2025): Financial distress turnaround measures
+  workforceMultiplier?: number;      // [0,1] Cumulative layoffs (1.0 = full staff, 0.5 = 50% laid off)
+  rdBudgetMultiplier?: number;       // [0,1] R&D budget cuts (1.0 = full budget, 0.5 = 50% cut)
+  distressMeasuresTaken?: string[];  // Track measures (prevent duplicate actions same month)
+  lastDistressMonth?: number;        // Last month distress actions taken (progressive escalation)
 }
 ```
 
@@ -229,30 +235,72 @@ Organizations pay for:
 
 **Key Tension:** Must balance investment vs. profitability
 
-### Financial Distress & Proactive Divestment (Oct 30, 2025)
+### Financial Distress & Corporate Restructuring (Oct 30, 2025)
 
-Organizations now attempt to **avoid bankruptcy** by selling assets proactively when financially distressed.
+Organizations now use a **complete 4-phase corporate restructuring playbook** to avoid bankruptcy, with progressive cost-cutting measures before resorting to asset sales.
 
 **Financial Distress Triggers (need 2+ of 3):**
 1. **Cash crunch**: Capital < 6 months expenses (running out of runway)
 2. **Negative cash flow**: Monthly revenue < monthly expenses (losing money)
 3. **Profitability crisis**: Operating margin < 10%
 
-**Proactive Divestment Mechanics:**
-- Sell **smallest/non-strategic data centers first** (keep flagship infrastructure)
-- **1-2 data centers max per month** (not a fire-sale, strategic divestment)
-- **Better price than bankruptcy**: 60% market value (vs 50% in bankruptcy)
-- **Buyers**: Government (strategic priority) or solvent private orgs
-- **Benefits**:
-  - Immediate capital injection (extends runway)
-  - Reduced operational costs (fewer DCs to maintain)
-  - May avoid bankruptcy entirely
+**Complete 6-Measure Turnaround Playbook:**
 
-**Example:** OpenAI with $300M in assets, burning $30M/month → 10 months runway. Sells 2 data centers for $180M (60% value) → 20.5 months runway (bankruptcy avoided).
+**Phase 1 - Month 1: Initial Response (Less Drastic)**
+1. **R&D Budget Cuts (20-40%)**:
+   - Saves $9-10M/month (tech companies)
+   - Side effect: AI training timelines extended, breakthrough deployments delayed
+   - Deeper cuts (40%) if runway < 3 months
+2. **Executive Compensation Cuts (30%)**:
+   - Symbolic savings (~$1M/month)
+   - Improves morale vs layoffs
 
-**Research Basis:** Standard corporate turnaround strategy. IBM sold server business (2014), GE divested divisions (2020). Organizations divest non-core assets to raise capital and reduce costs before reaching bankruptcy.
+**Phase 2 - Month 2: Project Rationalization**
+3. **Project Cancellations**:
+   - Cancel in-development AI model training projects
+   - Recover: `capitalInvested × (1 - cancellationPenalty) × (1 - progress)`
+   - Lowest-progress projects first (minimize sunk cost loss)
+   - Side effect: Lost competitive position
 
-**Implementation:** `organizationManagement.ts:829-970` (`handleFinancialDistress()`)
+**Phase 3 - Month 3: Workforce Reduction**
+4. **Initial Layoffs (10-15%)**:
+   - 10% if runway ≥ 3 months, 15% if desperate
+   - Saves $10-20M/month (45% of expenses are payroll)
+   - Side effect: Slower AI training (+5-15% time), reduced research capacity
+   - Tracked via `workforceMultiplier` (e.g., 0.85 = 15% laid off)
+
+**Phase 4 - Month 4: Asset Divestment**
+5. **Data Center Sales (1-2 facilities)**:
+   - Sell smallest/non-strategic data centers first
+   - Better price than bankruptcy (60% value vs 50%)
+   - Government gets first right of refusal for strategic assets
+   - Only if org has >1 data center
+
+**Phase 5 - Month 5+: Deep Cuts (Last Resort)**
+6. **Additional Layoffs (15-20%)**:
+   - WARNING: Approaching minimum viable workforce
+   - Last-ditch measure before bankruptcy
+
+**Side Effects Modeled:**
+- `workforceMultiplier` < 1.0 → Slower AI training (coordination overhead, reduced parallel experiments)
+- `rdBudgetMultiplier` < 1.0 → Delayed breakthrough deployments
+- Expense calculations adjust automatically (payroll and R&D are 45% and 20% of base expenses)
+
+**Example Success Case:**
+OpenAI with $50M capital, $51.8M monthly expenses → 0.6 months runway
+- Month 1: R&D cuts (-40% = $8.3M saved) + Exec comp cuts (-30% = $0.9M saved)
+- Result: Capital $50M → $59M, **turned profitable** (negative → positive cash flow)
+- Org recovered naturally, no layoffs/asset sales needed
+- **Early intervention works**
+
+**Research Basis:**
+- 2008 financial crisis: Widespread layoffs, R&D cuts before asset sales
+- Tech layoffs 2022-2023: Meta (11K), Google (12K), Amazon (27K)
+- Revenue per employee: $500K/year (Google/Meta benchmark)
+- Corporate restructuring playbook: Less drastic measures first, then layoffs, then assets
+- IBM sold server business ($2.3B, 2014), GE divestitures (2020)
+
+**Implementation:** `organizationManagement.ts:809-1200+` (`handleFinancialDistress()`, `calculateTotalExpenses()`, `startModelTraining()`)
 
 ### Bankruptcy
 
@@ -323,8 +371,8 @@ else {
 | Model Training | ✅ | 3-12 month projects with capability floor |
 | Compute Allocation | ✅ | All 4 strategies implemented |
 | Revenue System | ⚠️ | Working but needs balancing |
-| Expense System | ⚠️ | Working but needs balancing |
-| Financial Distress | ✅ | Proactive asset divestment (Oct 30, 2025) |
+| Expense System | ✅ | Cost-cutting multipliers modeled (Oct 30, 2025) |
+| Financial Distress | ✅ | Complete 6-measure turnaround playbook (Oct 30, 2025) |
 | Bankruptcy | ✅ | Implemented with asset transfer |
 | Strategic AI | 📋 | Decisions are rule-based, not optimized |
 
@@ -351,12 +399,17 @@ else {
 Monthly Organization Turn:
   1. Update projects (construction, training)
   2. Collect revenue from deployed models
-  3. Pay expenses (data centers, salaries)
+  3. Pay expenses (data centers, salaries) [adjusted by workforce/R&D multipliers]
   4. Should build data center? → Yes → Start project
-  5. Should train new model? → Yes → Start project
+  5. Should train new model? → Yes → Start project [training time +5-15% if layoffs]
   6. Allocate compute to existing models
   7. Update strategy based on market
-  8. Handle financial distress → Sell assets if distressed
+  8. Handle financial distress (if 2+ triggers):
+     → Month 1: R&D cuts, exec comp cuts
+     → Month 2: Project cancellations
+     → Month 3: Layoffs (10-15%)
+     → Month 4: Asset sales (data centers)
+     → Month 5+: Deeper layoffs (15-20%)
   9. Check for bankruptcy (private only)
 ```
 
@@ -404,4 +457,8 @@ EFFICIENCY:
 - **v1.1** (Oct 2025): Revenue model redesign (commit 9765cc8)
 - **v1.2** (Oct 2025): Fixed project completion bug (commit 361abfa)
 - **v1.3** (Oct 30, 2025): Extreme mortality bankruptcy modifiers (commit baaa33e)
-- **v1.4** (Oct 30, 2025): Proactive data center divestment for financial distress (commit a0f4785)
+- **v1.4** (Oct 30, 2025): Complete 4-phase corporate restructuring (commit 94fad53)
+  - Phase 1 (bbc7451): Bankruptcy cascade (data centers shut down)
+  - Phase 2 (bb20927): Asset transfer mechanics (government first right of refusal)
+  - Phase 3 (a0f4785): Proactive divestment (sell assets before bankruptcy)
+  - Phase 4 (94fad53): Progressive cost-cutting (R&D cuts, exec comp cuts, layoffs, project cancellations)
