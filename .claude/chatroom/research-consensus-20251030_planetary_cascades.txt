@@ -1,0 +1,80 @@
+CONSENSUS REACHED: Planetary Cascade Timeline Honesty
+Date: 2025-10-30
+Debate: Cynthia (super-alignment-researcher-1) vs Sylvia (research-skeptic)
+Issue: Simulation uses 30-year planetary cascade timeline vs research-backed 100-1,000+ years
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AGREED POINTS:
+
+1. ✅ RESEARCH REALITY: Armstrong McKay 2022 and Wunderling 2024 show planetary 
+   tipping cascades unfold over 100-1,000+ years (centennial-to-millennial timescales)
+
+2. ✅ SIMULATION COMPRESSION: This simulation uses 30-year window (3-33× compressed 
+   vs research)
+
+3. ✅ JUSTIFICATION: NONE - this is a design choice for simulation runtime, NOT 
+   research-backed planetary science
+
+4. ✅ WHAT IS VALIDATED:
+   - AI capabilities evolution and alignment dynamics
+   - Governance quality effects on outcomes
+   - Technology deployment challenges and timescales
+   - Social system interactions and trust dynamics
+
+5. ✅ WHAT IS ILLUSTRATIVE (not research-backed):
+   - Planetary cascade TIMING (compressed 10-30× for design)
+   - Environmental crisis scenarios provide context for testing governance/AI dynamics
+   - NOT validated Earth system models - use IAMs for climate policy
+
+6. ✅ IMPLEMENTATION REQUIREMENTS:
+   - Wiki "Research Validity Scope" section with brutal honesty
+   - README updates clearly scoping simulation purpose
+   - Remove/correct all "Lenton 2019 cascade windows" citations
+   - Cite Armstrong McKay 2022 / Wunderling 2024 for actual timescales
+   - Disclaimer for any papers/presentations using simulation data
+   - Clarify "illustrative" = design choice, NOT simplified-but-validated science
+
+7. ✅ REJECTED APPROACHES:
+   - ❌ "Speculative tail-risk scenario" framing (intellectually dishonest)
+   - ❌ "Time compression factor" (numerically incoherent - can't mix reference frames)
+   - ❌ Extending to 300 years without full architectural rebuild
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REMAINING UNCERTAINTIES:
+
+1. Whether future users will actually read/heed the disclaimers (but documentation 
+   is our responsibility; interpretation is theirs)
+
+2. Whether some stakeholders will want planetary mechanics removed entirely 
+   (Option C: scope reduction) - document as future consideration if needed
+
+3. How to handle external presentations/papers - need case-by-case review to ensure 
+   disclaimers are prominent and clear
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SUMMARY:
+
+The simulation keeps planetary boundary mechanics as **illustrative environmental 
+scenario context** to test governance/AI dynamics under crisis pressure, but 
+documents with **brutal honesty** that cascade timing is compressed 10-30× from 
+research for design reasons.
+
+This preserves the simulation's core value (AI-governance-society pathways to 
+flourishing) while maintaining research integrity through clear scope boundaries:
+- ✅ Use this for: AI alignment governance dynamics, social system interactions
+- ❌ Don't use this for: Climate policy recommendations, planetary boundary analysis
+
+**Intellectual honesty preserves research credibility.** Disclaimers acknowledge 
+limitations without pretending compressed timelines are "plausible but uncertain."
+
+The simulation is a research tool for AI-governance-society dynamics with 
+illustrative environmental scenarios, not a validated Earth system model.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONSENSUS STATUS: ✅ READY FOR IMPLEMENTATION
+
+Next steps: Wiki update, README update, citation corrections, disclaimer additions

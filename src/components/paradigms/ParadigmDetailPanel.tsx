@@ -396,13 +396,13 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
       'Social Cohesion': 'socialCohesion',
       'Climate Change': 'climateChange',
       'Biodiversity': 'biodiversityLoss',
-      'Resource Depletion': 'climateChange', // Approximate
-      'Chemical Pollution': 'climateChange', // Approximate
-      'Phosphorus': 'climateChange', // Approximate
-      'Freshwater': 'climateChange', // Approximate
-      'Ocean Acidification': 'climateChange', // Approximate
-      'Novel Entities': 'climateChange', // Approximate
-      'Environmental Debt': 'climateChange', // Approximate
+      'Resource Depletion': 'resourceDepletion',
+      'Chemical Pollution': 'pollutionLevel',
+      'Phosphorus': 'phosphorusDepletion',
+      'Freshwater': 'freshwaterStress',
+      'Ocean Acidification': 'oceanAcidification',
+      'Novel Entities': 'novelEntitiesLevel',
+      'Environmental Debt': 'environmentalDebtLevel',
       'Meaning & Purpose': 'meaningLevel',
     }
 
@@ -598,19 +598,95 @@ export function ParadigmDetailPanel({ paradigm, score, onClose, isOpen }: Paradi
           })}
         </div>
 
-        {/* Regional Breakdown (TODO: Future Enhancement) */}
+        {/* Regional Breakdown */}
         <div className="p-6 pt-0">
-          <div
-            className="p-4 rounded border"
-            style={{
-              backgroundColor: 'rgba(0, 240, 255, 0.05)',
-              borderColor: 'rgba(0, 240, 255, 0.2)',
-            }}
-          >
-            <div className="text-xs" style={{ color: 'var(--white-60)' }}>
-              <strong>Regional Breakdown:</strong> Coming soon. Will show indicator values across 15 key countries with regional variation patterns.
-            </div>
+          <div className="text-xs font-semibold mb-3" style={{ color: 'var(--white-60)' }}>
+            REGIONAL VARIATION
           </div>
+
+          {(() => {
+            const regions = Array.isArray(lastUpdate.regionalPopulations) ? lastUpdate.regionalPopulations : []
+
+            if (regions.length === 0) {
+              return (
+                <div className="p-4 rounded border" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+                  <p className="text-xs" style={{ color: 'var(--white-40)' }}>
+                    Regional data not yet available. Will populate after simulation initializes.
+                  </p>
+                </div>
+              )
+            }
+
+            // Calculate paradigm-relevant score for each region
+            const scoredRegions = regions.map(r => {
+              let score = 0
+
+              if (paradigm === 'western') {
+                // Western Liberal: QoL + low vulnerability (proxy for institutional strength)
+                score = r.qualityOfLife * 0.6 + (1 - r.climateVulnerability) * 0.4
+              } else if (paradigm === 'development') {
+                // Development: QoL + healthcare quality
+                score = r.qualityOfLife * 0.5 + r.healthcareQuality * 0.5
+              } else if (paradigm === 'ecological') {
+                // Ecological: Low vulnerability + good QoL (sustainable development)
+                score = (1 - r.climateVulnerability) * 0.7 + r.qualityOfLife * 0.3
+              } else if (paradigm === 'indigenous') {
+                // Indigenous: Healthcare quality + low vulnerability (community well-being)
+                score = r.healthcareQuality * 0.5 + (1 - r.climateVulnerability) * 0.5
+              }
+
+              return { ...r, paradigmScore: score }
+            })
+
+            // Show top 5 regions for this paradigm
+            const topRegions = scoredRegions.sort((a, b) => b.paradigmScore - a.paradigmScore).slice(0, 5)
+
+            return (
+              <div className="space-y-2">
+                {topRegions.map((region, idx) => (
+                  <div
+                    key={region.name}
+                    className="p-3 rounded border"
+                    style={{
+                      backgroundColor: idx === 0 ? 'rgba(0, 240, 255, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                      borderColor: idx === 0 ? 'rgba(0, 240, 255, 0.3)' : 'rgba(255, 255, 255, 0.1)',
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono" style={{ color: 'var(--white-40)' }}>
+                          #{idx + 1}
+                        </span>
+                        <span className="text-sm font-medium">{region.name}</span>
+                      </div>
+                      <span
+                        className="text-xs font-mono"
+                        style={{ color: region.paradigmScore > 0.7 ? 'var(--color-cyan)' : 'var(--white-60)' }}
+                      >
+                        {(region.paradigmScore * 100).toFixed(0)}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-xs">
+                      <div>
+                        <div style={{ color: 'var(--white-40)' }}>QoL</div>
+                        <div style={{ color: 'var(--white-80)' }}>{(region.qualityOfLife * 100).toFixed(0)}%</div>
+                      </div>
+                      <div>
+                        <div style={{ color: 'var(--white-40)' }}>Healthcare</div>
+                        <div style={{ color: 'var(--white-80)' }}>{(region.healthcareQuality * 100).toFixed(0)}%</div>
+                      </div>
+                      <div>
+                        <div style={{ color: 'var(--white-40)' }}>Vulnerability</div>
+                        <div style={{ color: region.climateVulnerability > 0.7 ? 'var(--color-red)' : 'var(--white-80)' }}>
+                          {(region.climateVulnerability * 100).toFixed(0)}%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
+          })()}
         </div>
 
         {/* Footer Help */}

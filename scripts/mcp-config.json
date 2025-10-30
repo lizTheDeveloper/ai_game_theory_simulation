@@ -6,6 +6,13 @@
         "/Users/annhoward/src/superalignmenttoutopia/scripts/transcript-rag-server.py"
       ],
       "env": {}
+    },
+    "pdf-rag": {
+      "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
+      "args": [
+        "/Users/annhoward/src/superalignmenttoutopia/scripts/pdf-rag-server.py"
+      ],
+      "env": {}
     }
   }
 }

@@ -10,6 +10,7 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 export function TechTreeDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
@@ -265,6 +266,48 @@ export function TechTreeDashboard() {
           </p>
         </Panel>
       )}
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: "Technology Tree",
+          description: "Track breakthrough technologies from research to deployment. Monitor 71 technologies across 5 tiers, from crisis response to transformative Clarketech.",
+          metrics: [
+            {
+              name: "Technology Tiers",
+              meaning: "TIER 0-4 classification system for breakthrough technologies",
+              interpretation: "T0: Crisis response. T1: Good governance. T2: Transformative. T3: Radically transformative. T4: Clarketech (indistinguishable from magic)."
+            },
+            {
+              name: "Research Progress",
+              meaning: "Development stage from discovery to deployment",
+              interpretation: "Discovery (0-25%): Early research. Development (25-50%): Prototyping. Testing (50-75%): Safety validation. Deployment (75-100%): Ready for use."
+            },
+            {
+              name: "Deployment Status",
+              meaning: "Technologies actively deployed and their impact",
+              interpretation: "Green = successfully deployed. Amber = partial deployment. Red = deployment failed or blocked. Multiple deployments stack effects."
+            },
+            {
+              name: "Tech Risk",
+              meaning: "Accumulated safety debt from rapid deployment",
+              interpretation: "Below 30% = manageable. 30-50% = monitor closely. 50-70% = safety protocols needed. >70% = critical safety debt, high accident risk."
+            },
+            {
+              name: "Research Investment",
+              meaning: "Resources allocated to technology development",
+              interpretation: "Higher investment = faster progress. Crisis mode doubles speed but increases risk. AI researchers multiply effectiveness."
+            },
+            {
+              name: "Technology Effects",
+              meaning: "How technologies impact other systems",
+              interpretation: "Environmental: Reduces planetary stress. Social: Improves QoL/trust. AI Safety: Better alignment. Crisis: Direct mitigation."
+            }
+          ],
+          docsLink: "/docs/dashboard-guide#tech-tree"
+        }}
+        position="top-right"
+      />
     </div>
   )
 }

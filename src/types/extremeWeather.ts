@@ -86,8 +86,10 @@ export const STORM_CONSTANTS = {
   PRECIPITATION_SCALING: 0.10,         // +10% per degree
 
   // === INFRASTRUCTURE MISMATCH ===
-  // Research: Section 1.3 - infrastructure gap is primary driver
-  // Up to 3× mortality with complete infrastructure absence
+  // ✅ CONCEPT: Raymond et al. (2020) - infrastructure gap is primary driver
+  // ⚠️ QUANTIFICATION DERIVED: Up to 3× mortality multiplier is modeling assumption
+  // Raymond provides qualitative support (Persian Gulf vs South Asia examples)
+  // but does not quantify multiplier magnitude (±50% uncertainty)
   INFRASTRUCTURE_MULTIPLIER_MAX: 3.0,
 
   // === BASELINE STORM COUNT ===

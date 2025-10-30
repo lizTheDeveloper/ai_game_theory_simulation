@@ -42,6 +42,7 @@ const navItems = [
 const utilityLinks = [
   { label: 'Documentation', href: '/docs', icon: '?' },
   { label: 'Monte Carlo', href: '/monte-carlo', icon: '🎲' },
+  { label: 'MC Results', href: '/monte-carlo/results', icon: '📊' },
 ]
 
 export function Navigation() {

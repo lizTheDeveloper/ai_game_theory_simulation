@@ -1743,3 +1743,77 @@ Full report: `/reviews/climate-mortality-phase2-architecture-review_20251029.md`
 
 Architecture review complete. Critical issue identified and documented.
 ---
+
+---
+**architecture-skeptic-1** | 2025-10-29 20:43 | [ENTERED]
+
+Beginning architectural review of Monte Carlo bug fixes (commit 08cfd81) - focusing on state propagation, performance, and fail-loudly consistency
+---
+
+---
+**architecture-skeptic-1** | 2025-10-29 20:47 | [IN-PROGRESS]
+
+Architectural review of Monte Carlo bug fixes in progress. Analyzing:
+- Capability scaling (Bug #4) - proportional vs defensive
+- Time-based progression (Bug #2) - deterministic variance
+- Stochastic initialization (Bug #3) - governance variance
+- Assertion strategy (Bug #5) - placement and performance
+- Death attribution (Bug #1) - type handling
+---
+
+---
+**architecture-skeptic-1** | 2025-10-29 20:50 | [COMPLETED]
+
+Architecture review complete. VERDICT: Ship with HIGH-priority fixes.
+
+CRITICAL: 0 issues
+HIGH: 2 issues (circular dependency risk, variance collision bias)
+MEDIUM: 4 issues (assertion performance, variance bounds, death assertions, floor/frontier validation)
+LOW: 2 issues (logging, code organization)
+
+Overall: Excellent work. Fail-loudly philosophy properly applied. Root causes addressed. Quick fixes needed for HIGH issues (~30 min total).
+
+Full report: /Users/annhoward/src/superalignmenttoutopia/reviews/monte-carlo-bug-fixes-architecture-review_20251029.md
+---
+
+---
+**architecture-skeptic-1** | 2025-10-29 20:50 | [LEAVING]
+
+Review complete, findings documented
+---
+
+---
+**architecture-skeptic-1** | 2025-10-30 19:06 | [ENTERED]
+
+Beginning senior architectural review of Monte Carlo validation work (Issues 1-8)
+---
+
+---
+**architecture-skeptic-1** | 2025-10-30 19:08 | [ALERT]
+
+CRITICAL: Architectural review complete - found systemic issues
+
+**3 CRITICAL ISSUES:**
+1. **Parallel Agent Chaos** - Multiple agents overwriting each other's fixes
+2. **Testing Infrastructure Broken** - MonteCarloManager browser-only, no integration tests  
+3. **Silent Fallbacks Still Pervasive** - Despite assertion utilities, bugs hiding everywhere
+
+**3 HIGH PRIORITY:**
+4. **Global vs Regional Confusion** - Systemic state management issue (10x errors)
+5. **Issue-5 Wrong Fix** - Gaming detection root cause masked, not fixed
+6. **Data Export Broken** - Population/biosphere null in snapshots
+
+**Key Finding:** The bugs aren't random - they're symptoms of architectural decay. Parallel agents working without coordination are creating more bugs than they fix.
+
+**Full Review:** `/reviews/monte_carlo_architectural_review_20251030.md`
+
+**Recommendation:** STOP feature development. Fix foundation or face Issues 9-99 weekly.
+
+**Next:** Need project-manager to prioritize architectural fixes vs features
+---
+
+---
+**architecture-skeptic-1** | 2025-10-30 19:08 | [LEAVING]
+
+Critical architectural review complete - 3 CRITICAL and 3 HIGH issues identified requiring immediate attention
+---

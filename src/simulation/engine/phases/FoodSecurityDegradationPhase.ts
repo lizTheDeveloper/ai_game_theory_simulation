@@ -58,16 +58,59 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
         state.planetaryBoundariesSystem?.cascadeActive ? 1.0 : 0,  // Cascades affect all regions
       ].reduce((sum, c) => sum + c, 0);
 
-      // Regional degradation rate (baseline 1% per month)
-      let degradationRate = 0.01;
+      // BUG FIX (Oct 30, 2025): BLOCKER-3 - Reduce food security degradation rate
+      // ROOT CAUSE: 1% baseline × 1.5^5 = 7.6% monthly with 5 crises, capped at 15%
+      //   Combined with ClimateImpactCascadePhase (-5 to -8% shocks), food → 0 in months
+      // RESEARCH: Historical famines show slower degradation (months to years, not weeks)
+      //   - Irish Famine (1845-49): 4 years of gradual food decline
+      //   - Holodomor (1932-33): 1 year of severe degradation
+      // FIX: Reduce baseline to 0.5%, cap at 5% (3× reduction)
 
-      // Each crisis level increases degradation by 50% (compound effect)
+      // Regional degradation rate (baseline 0.5% per month, DOWN from 1%)
+      let degradationRate = 0.005;
+
+      // Each crisis level increases degradation by 30% (DOWN from 50%)
+      // With 5 crises: 1.3^5 = 3.71× → 1.86% monthly (was 7.6%)
       if (activeCrises > 0) {
-        degradationRate *= Math.pow(1.5, activeCrises);
+        degradationRate *= Math.pow(1.3, activeCrises);
       }
 
-      // Cap at 15% per month
-      degradationRate = Math.min(0.15, degradationRate);
+      // HIGH #8 FIX (Oct 29, 2025): Integrate nuclear winter crop yield effects
+      // Nuclear winter reduces crops through cropYieldMultiplier (0-1 range)
+      // During peak winter: cropYieldMultiplier can drop to 0.05-0.20 (5-20% yield)
+      // During recovery (>24 months): gradually improves back to 1.0
+      if (state.nuclearWinterState?.active) {
+        const cropYield = state.nuclearWinterState.cropYieldMultiplier;
+        const monthsSinceWar = state.nuclearWinterState.monthsSinceWar;
+
+        // During active nuclear winter (first 24 months): apply severe degradation
+        if (monthsSinceWar <= 24) {
+          // Crop failure drives additional degradation (REDUCED from 15% to 5% max)
+          // At 10% crop yield (0.10), add 4.5% degradation rate (was 13.5%)
+          const nuclearWinterDegradation = (1 - cropYield) * 0.05; // Max 5% additional (was 15%)
+          degradationRate += nuclearWinterDegradation;
+
+        // During recovery phase (>24 months): enable gradual food security recovery
+        } else {
+          // As crops recover, allow food security to rebuild
+          // Recovery rate = f(crop yield improvement)
+          // Research: Takes 2-5 years to rebuild food systems after catastrophe
+          const recoveryPotential = Math.max(0, cropYield - 0.5); // Only recover above 50% crop yield
+          if (recoveryPotential > 0 && region.foodSecurity < 0.8) {
+            // Gradual recovery: +2% per month max (24 months to recover from 30% → 80%)
+            const recoveryRate = recoveryPotential * 0.04; // 50% recovery potential → 2% monthly
+            region.foodSecurity = Math.min(0.8, region.foodSecurity * (1 + recoveryRate));
+
+            // Log recovery progress annually
+            if (state.currentMonth % 12 === 0) {
+              console.log(`  [${region.name}] Nuclear winter recovery: Food ${(region.foodSecurity * 100).toFixed(1)}% (+${(recoveryRate * 100).toFixed(1)}%/mo), Crop yield: ${(cropYield * 100).toFixed(0)}%`);
+            }
+          }
+        }
+      }
+
+      // Cap at 5% per month (DOWN from 15%)
+      degradationRate = Math.min(0.05, degradationRate);
 
       // Apply degradation to regional food security
       const currentFood = region.foodSecurity;

@@ -23,7 +23,8 @@ export class ProactiveSleeperDetectionPhase implements SimulationPhase {
       };
     }
 
-    const events = processProactiveSleeperDetection(state, rng);
+    // HIGH #3 FIX (Oct 29, 2025): Pass context for collective stealth integration
+    const events = processProactiveSleeperDetection(state, rng, context);
 
     return {
       events

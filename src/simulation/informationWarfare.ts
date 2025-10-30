@@ -104,12 +104,12 @@ export function updateInformationWarfare(state: GameState): GameEvent[] {
   
   // Corporate power stable but erodes with low trust
   // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
-  const publicTrust = assertProbability(state.globalMetrics.publicTrust, {
+  const trustInAI = assertProbability(state.globalMetrics.trustInAI, {
     location: 'updateNarrativeControl',
-    valueName: 'globalMetrics.publicTrust',
+    valueName: 'globalMetrics.trustInAI',
     month: state.currentMonth
   });
-  const corpNarrativeChange = (publicTrust - 0.5) * 0.001;
+  const corpNarrativeChange = (trustInAI - 0.5) * 0.001;
   sys.narrativeControl.corporations = Math.max(0.05, Math.min(0.95,
     sys.narrativeControl.corporations + corpNarrativeChange
   ));
@@ -137,12 +137,12 @@ export function updateInformationWarfare(state: GameState): GameEvent[] {
   
   // Apply trust erosion to public trust in AI
   // FIX (Oct 25, 2025): Replaced defensive fallback with assertion
-  const currentTrust = assertProbability(state.globalMetrics.publicTrust, {
+  const currentTrust = assertProbability(state.globalMetrics.trustInAI, {
     location: 'updateInformationWarfare',
-    valueName: 'globalMetrics.publicTrust',
+    valueName: 'globalMetrics.trustInAI',
     month: state.currentMonth
   });
-  state.globalMetrics.publicTrust = Math.max(0.0,
+  state.globalMetrics.trustInAI = Math.max(0.0,
     currentTrust - sys.trustErosionRate
   );
   
@@ -172,7 +172,7 @@ export function updateInformationWarfare(state: GameState): GameEvent[] {
       description: `AI-generated content everywhere. Can't trust photos, videos, or audio anymore. Detection failing.`,
       timestamp: state.currentMonth,
       effects: {
-        publicTrust: -0.05,
+        trustInAI: -0.05,
         economicStage: 0,
       }
     });
@@ -190,7 +190,7 @@ export function updateInformationWarfare(state: GameState): GameEvent[] {
       description: `Society can't agree on basic facts. Coordination breaking down. Shared reality dissolving.`,
       timestamp: state.currentMonth,
       effects: {
-        publicTrust: -0.10,
+        trustInAI: -0.10,
         economicStage: 0,
       }
     });
@@ -217,7 +217,7 @@ export function updateInformationWarfare(state: GameState): GameEvent[] {
       description: `Truth has lost all meaning. Post-truth society. Democracy cannot function.`,
       timestamp: state.currentMonth,
       effects: {
-        publicTrust: -0.05,
+        trustInAI: -0.05,
         economicStage: 0,
       }
     });

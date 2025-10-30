@@ -64,12 +64,19 @@ export class EmergencyResponsePhase implements SimulationPhase {
           state.crises.megaPandemic.startMonth || state.currentMonth
         );
         if (response) {
+          // HIGH #2 FIX (Oct 29, 2025): Accelerate emergency medical tech
+          if (state.techTreeState) {
+            // Accelerate medical response technologies during pandemic
+            state.techTreeState.deploymentAcceleration['ai_diagnostics'] = 10;  // Emergency medical AI deployment
+            state.techTreeState.deploymentAcceleration['mrna_vaccines'] = 30;  // COVID showed 10-30x faster vaccine deployment
+          }
+
           events.push({
             type: 'emergency_response',
             timestamp: state.currentMonth,
             title: '🚨 Emergency Pandemic Response Deployed',
-            description: `Government deploys strategic medical reserves. Deployment time: ${response.deploymentTime.toFixed(1)} months. Effectiveness: ${(response.effectiveness * 100).toFixed(0)}%`,
-            effects: { crisisType: 'pandemic', effectiveness: response.effectiveness },
+            description: `Government deploys strategic medical reserves. Emergency medical tech accelerated 10-30×. Deployment time: ${response.deploymentTime.toFixed(1)} months. Effectiveness: ${(response.effectiveness * 100).toFixed(0)}%`,
+            effects: { crisisType: 'pandemic', effectiveness: response.effectiveness, techAcceleration: true },
           });
         }
       }
@@ -101,12 +108,22 @@ export class EmergencyResponsePhase implements SimulationPhase {
           state.currentMonth - 6 // Estimate crisis started 6 months ago
         );
         if (response) {
+          // HIGH #2 FIX (Oct 29, 2025): Accelerate emergency tech deployment
+          // Research: Strategic reserves deploy in 12-48 hours (GAO 2020)
+          // Emergency climate tech (carbon capture, desalination) deploys 10-20x faster
+          if (state.techTreeState) {
+            // Accelerate climate mitigation technologies during crisis
+            state.techTreeState.deploymentAcceleration['direct_air_capture'] = 20;  // 300mo → 15mo
+            state.techTreeState.deploymentAcceleration['advanced_desalination'] = 15;  // 180mo → 12mo
+            state.techTreeState.deploymentAcceleration['struvite_recovery'] = 10;  // 180mo → 18mo (phosphorus crisis)
+          }
+
           events.push({
             type: 'emergency_response',
             timestamp: state.currentMonth,
             title: '🚨 Emergency Climate Response Deployed',
-            description: `Government mobilizes disaster relief and resource distribution. Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
-            effects: { crisisType: 'climate', effectiveness: response.effectiveness },
+            description: `Government mobilizes disaster relief and resource distribution. Emergency tech deployment accelerated 10-20×. Deployment time: ${response.deploymentTime.toFixed(1)} months.`,
+            effects: { crisisType: 'climate', effectiveness: response.effectiveness, techAcceleration: true },
           });
         }
       }

@@ -685,10 +685,13 @@ export class MonteCarloManager {
     worker: SimulationWorkerClient,
     config: SimulationRunConfig
   ): Promise<void> {
-    const slot = Array.from(this.workerPool.entries())
-      .find(([_, s]) => s.worker === worker)?.[1];
+    // Find the slot AND its ID for cleanup later
+    const slotEntry = Array.from(this.workerPool.entries())
+      .find(([_, s]) => s.worker === worker);
 
-    if (!slot) return;
+    if (!slotEntry) return;
+
+    const [slotId, slot] = slotEntry;
 
     // Mark worker as busy
     slot.busy = true;
@@ -701,32 +704,66 @@ export class MonteCarloManager {
     this.emit('simulationStarted', config.simulationId, config.batchId);
 
     try {
-      // Configure and start simulation
-      await worker.initializeSimulation({
-        seed: config.seed,
-        scenarioMode: config.scenario,
-        speculativeScenario: config.speculativeScenario,
-        thresholdSliders: config.thresholdSliders,
-        nestedMonteCarloMode: false,
-        maxMonths: config.maxMonths
+      // Setup completion tracking
+      let finalOutcome: { outcome: string; reason: string } | null = null;
+      let simulationComplete = false;
+
+      // Create promise to track completion
+      const completionPromise = new Promise<{ outcome: string; reason: string }>((resolve, reject) => {
+        // Setup progress callback
+        worker.on('update', (delta: StateDelta, month: number) => {
+          // Emit progress
+          this.emit('simulationProgress', config.simulationId, config.batchId, month);
+
+          // Update status
+          this.updateSimulationStatus(config.batchId, config.simulationId, { currentMonth: month });
+
+          // Emit batch progress periodically
+          if (month % 10 === 0) {
+            this.emitBatchProgress(config.batchId);
+          }
+
+          // Check for simulation end conditions
+          if (month >= config.maxMonths || delta.outcomeType === 'Extinction' || delta.outcomeType === 'Utopia' || delta.outcomeType === 'Dystopia') {
+            if (!simulationComplete) {
+              simulationComplete = true;
+              // Extract outcome from delta
+              const outcomeType = delta.outcomeType || 'Unknown';
+              const outcomeReason = `Month ${month}: ${outcomeType}`;
+
+              resolve({ outcome: outcomeType, reason: outcomeReason });
+            }
+          }
+        });
+
+        // Setup error handler
+        worker.on('error', (error: Error) => {
+          if (!simulationComplete) {
+            simulationComplete = true;
+            reject(error);
+          }
+        });
+
+        // Setup initialization handler
+        worker.on('initialized', () => {
+          // Start simulation after initialization
+          worker.start();
+        });
       });
 
-      // Setup progress callback
-      worker.onProgress = (delta: StateDelta) => {
-        const month = delta.state?.currentMonth || 0;
-        this.emit('simulationProgress', config.simulationId, config.batchId, month);
+      // Initialize simulation (event-driven API, not promise-based)
+      worker.init(
+        config.seed,
+        config.scenario,
+        config.updateInterval || 1000,
+        undefined, // alignmentConfig
+        undefined, // climatePriorityConfig
+        config.thresholdSliders,
+        config.speculativeScenario
+      );
 
-        // Update status
-        this.updateSimulationStatus(config.batchId, config.simulationId, { currentMonth: month });
-
-        // Emit batch progress periodically
-        if (month % 10 === 0) {
-          this.emitBatchProgress(config.batchId);
-        }
-      };
-
-      // Run simulation
-      const outcome = await worker.runSimulation();
+      // Wait for completion
+      const outcome = await completionPromise;
 
       // Simulation completed successfully
       this.updateSimulationStatus(config.batchId, config.simulationId, {
@@ -760,9 +797,13 @@ export class MonteCarloManager {
 
       this.emit('simulationError', config.simulationId, config.batchId, error);
     } finally {
-      // Mark worker as available
-      slot.busy = false;
-      slot.simulationId = null;
+      // Clean up worker - destroy and remove from pool
+      // Workers can't be reused after initialization (SimulationWorkerClient throws error on reinit)
+      // We need to create fresh workers for each simulation run
+      worker.destroy();
+      this.workerPool.delete(slotId);
+
+      console.log(`[MonteCarloManager] Destroyed worker ${slotId} (${this.workerPool.size} remaining)`);
 
       // Check if batch is complete
       this.checkBatchCompletion(config.batchId);

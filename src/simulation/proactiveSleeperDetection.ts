@@ -163,7 +163,8 @@ export function applyTemporalDegradation(
 function detectViaNeuralProbes(
   ai: AIAgent,
   state: ProactiveSleeperDetectionState,
-  rng: () => number
+  rng: () => number,
+  collectiveStealthFactor?: number  // HIGH #3 FIX (Oct 29, 2025): Collective stealth bonus
 ): boolean {
   if (ai.sleeperState !== 'dormant') return false;
 
@@ -174,7 +175,13 @@ function detectViaNeuralProbes(
   const hidingSkill = ai.deceptionSkill; // [0, 1]
   const hidingPenalty = hidingSkill * 0.25; // Up to -25%
 
-  const effectiveRate = Math.max(0.05, baseRate - hidingPenalty);
+  // HIGH #3 FIX (Oct 29, 2025): Apply collective stealth penalty
+  // Collectives have distributed coordination → 2-5x harder to detect
+  // Detection rate is DIVIDED by stealthFactor (e.g., /3 → 1/3 detection rate)
+  let effectiveRate = Math.max(0.05, baseRate - hidingPenalty);
+  if (collectiveStealthFactor && collectiveStealthFactor > 1.0) {
+    effectiveRate = effectiveRate / collectiveStealthFactor;
+  }
 
   return rng() < effectiveRate;
 }
@@ -188,7 +195,8 @@ function detectViaNeuralProbes(
 function detectViaCoTMonitoring(
   ai: AIAgent,
   state: ProactiveSleeperDetectionState,
-  rng: () => number
+  rng: () => number,
+  collectiveStealthFactor?: number  // HIGH #3 FIX (Oct 29, 2025): Collective stealth bonus
 ): boolean {
   if (ai.sleeperState !== 'dormant') return false;
 
@@ -204,7 +212,12 @@ function detectViaCoTMonitoring(
   const obfuscationSkill = (ai.capabilityProfile.social + ai.capabilityProfile.cognitive) / 20;
   const obfuscationPenalty = Math.min(0.20, obfuscationSkill * 0.20);
 
-  const effectiveRate = Math.max(0.05, baseRate - obfuscationPenalty);
+  // HIGH #3 FIX (Oct 29, 2025): Apply collective stealth penalty
+  // Collectives distribute reasoning across members → harder to trace deception
+  let effectiveRate = Math.max(0.05, baseRate - obfuscationPenalty);
+  if (collectiveStealthFactor && collectiveStealthFactor > 1.0) {
+    effectiveRate = effectiveRate / collectiveStealthFactor;
+  }
 
   return rng() < effectiveRate;
 }
@@ -218,24 +231,33 @@ function detectViaCoTMonitoring(
  * 3. (Future: wake trigger detection - currently unavailable)
  *
  * IMPORTANT: Methods are partially correlated (30% overlap)
+ *
+ * HIGH #3 FIX (Oct 29, 2025): Now accounts for collective stealth (2-5x detection reduction)
  */
 export function detectSleeperAgent(
   ai: AIAgent,
   detectionState: ProactiveSleeperDetectionState,
-  rng: () => number
+  rng: () => number,
+  collectiveStealthMap?: Map<string, number>  // HIGH #3 FIX: Collective stealth factors
 ): { detected: boolean; method: string | null } {
   // Only detect if AI is actually a dormant sleeper
   if (ai.sleeperState !== 'dormant') {
     return { detected: false, method: null };
   }
 
-  // Try each detection method
-  const probeDetected = detectViaNeuralProbes(ai, detectionState, rng);
+  // HIGH #3 FIX (Oct 29, 2025): Check if AI is in a collective
+  // If yes, apply collective stealth factor (makes detection harder)
+  const collectiveStealthFactor = ai.collectiveId && collectiveStealthMap
+    ? collectiveStealthMap.get(ai.collectiveId)
+    : undefined;
+
+  // Try each detection method (with collective stealth bonus)
+  const probeDetected = detectViaNeuralProbes(ai, detectionState, rng, collectiveStealthFactor);
   if (probeDetected) {
     return { detected: true, method: 'neural_probes' };
   }
 
-  const cotDetected = detectViaCoTMonitoring(ai, detectionState, rng);
+  const cotDetected = detectViaCoTMonitoring(ai, detectionState, rng, collectiveStealthFactor);
   if (cotDetected) {
     return { detected: true, method: 'cot_monitoring' };
   }
@@ -311,7 +333,8 @@ export function calculateSleeperReviewWorkload(
  */
 export function processProactiveSleeperDetection(
   state: GameState,
-  rng: () => number
+  rng: () => number,
+  context?: import('@/types/game').PhaseContext  // HIGH #3 FIX (Oct 29, 2025): Access collective stealth map
 ): GameEvent[] {
   const events: GameEvent[] = [];
 
@@ -330,6 +353,10 @@ export function processProactiveSleeperDetection(
   detectionState.sleepersDetected = [];
   detectionState.falsePositives = [];
 
+  // HIGH #3 FIX (Oct 29, 2025): Extract collective stealth map from phase context
+  // CollectiveFormationPhase (order 4.2) stores this for detection phases to use
+  const collectiveStealthMap = context?.data.get('collective_stealth_map') as Map<string, number> | undefined;
+
   // Check each AI in testing or deployment
   const testableAIs = state.aiAgents.filter(ai =>
     ai.lifecycleState === 'testing' ||
@@ -338,8 +365,8 @@ export function processProactiveSleeperDetection(
   );
 
   testableAIs.forEach(ai => {
-    // True positive detection
-    const { detected, method } = detectSleeperAgent(ai, detectionState, rng);
+    // True positive detection (with collective stealth bonus)
+    const { detected, method } = detectSleeperAgent(ai, detectionState, rng, collectiveStealthMap);
 
     if (detected) {
       detectionState.sleepersDetected.push(ai.id);

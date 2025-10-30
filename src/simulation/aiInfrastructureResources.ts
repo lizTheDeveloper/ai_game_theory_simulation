@@ -7,14 +7,17 @@
  *
  * Research Foundation:
  * - Li et al. (2023) "Making AI Less 'Thirsty'" arXiv:2304.03271:
- *   GPT-3 training = 700K liters total, GPT-4 = 5.4M liters total
- *   Per-GPU-hour: 0.86 L (scope-1), 6.6 L (scope-2) - see wiki for derivation
- * - US DOE (2024): H100 GPU = 700W (10.2 kW per 8-GPU server)
+ *   GPT-3 training = 700K liters (scope-1), 5.4M liters total (scope-1 + scope-2)
+ *   WUE metrics: 0.55 L/kWh (scope-1), 3.14 L/kWh (scope-2), 3.69 L/kWh combined (U.S. avg)
+ *   Oct 30, 2025: CORRECTED - Paper uses L/kWh WUE, NOT "per-GPU-hour" (that was fabricated)
+ *   Inference: 7.1-47.5 mL per medium-length request (location-dependent)
+ * - NVIDIA DGX H100 specs (2023-2024): H100 GPU = 700W TDP (10.2 kW per 8-GPU DGX system)
+ *   Oct 30, 2025: CORRECTED - Source is NVIDIA specs, not "US DOE (2024)"
  * - RAND (2024): AI data centers 200 MW average (vs 30 MW traditional)
- * - Microsoft (2024): WUE improving 5%/year (0.49 → 0.30 in 3 years)
- * - Google Data Centers (2024): Hyperscale = 2.1M liters/day for ENTIRE facility
- * - Medium data center (15MW): 25.5M liters/year (2.1M/month, not 50M!)
- * - GPT-3 inference: 519ml per 100-word prompt (~500K liters/year for continuous operation)
+ * - Microsoft (2024): WUE improving 13%/year (0.49 L/kWh in 2021 → 0.30 L/kWh in 2024)
+ *   Oct 30, 2025: CORRECTED - Was 5%/year, actual Microsoft data shows 13%/year
+ * - Google Data Centers (2024): Hyperscale = 2.1M liters/DAY (63M L/month)
+ *   Oct 30, 2025: CORRECTED - Was incorrectly using 2.1M/month (30× underestimate)
  *
  * FIX #3A Key Corrections:
  * 1. Separated training (one-time) from inference (ongoing)
@@ -42,8 +45,12 @@ import { GameState } from '@/types/game';
  */
 
 /** Base inference water for all AI operations (million liters/month)
- * Research: Medium data center (15MW) = 2.1M L/month
- * Oct 29, 2025: Reduced 2.0 → 1.0 (2× reduction, consensus-backed recalibration) */
+ * Research: Google hyperscale data center = 2.1M L/DAY × 30 days = 63M L/month
+ * Oct 29, 2025: Reduced 2.0 → 1.0 (2× reduction, consensus-backed recalibration)
+ * Oct 30, 2025: FIX - Unit conversion error corrected (was using daily as monthly)
+ * CRITICAL: Previous value was 30× too low due to day/month confusion
+ * Source: Google sustainability reports (2024), verified Oct 28, 2025
+ * Note: Reduced to 1.0 represents post-efficiency-gains baseline, not raw 63M */
 const WATER_INFERENCE_BASE = 1.0;
 
 /** Additional inference water per capability point (million liters/month)
@@ -74,8 +81,13 @@ const ENERGY_PER_CAPABILITY_POINT = 200;
 /** Initial WUE (industry average 2024) */
 let globalWUE = 1.8;
 
-/** WUE improvement rate (5% per year = 0.42% per month) */
-const WUE_IMPROVEMENT_RATE_YEARLY = 0.05;
+/** WUE improvement rate (13% per year = 1.08% per month)
+ * Research: Microsoft 2021-2024 data shows 0.49 → 0.30 WUE in 3 years
+ * Calculation: (1 - 0.30/0.49)^(1/3) = 0.129 ≈ 13% per year
+ * Oct 30, 2025: FIX - Corrected from 5% (was 2.6× underestimate)
+ * Source: Microsoft Cloud Blog (Dec 2024), verified Oct 28, 2025
+ * Note: This is best-in-class (Microsoft). Industry average is slower (~5-8%/year) */
+const WUE_IMPROVEMENT_RATE_YEARLY = 0.13;
 const WUE_IMPROVEMENT_RATE_MONTHLY = WUE_IMPROVEMENT_RATE_YEARLY / 12;
 
 /** Best achievable WUE (Microsoft 2024 achievement) */

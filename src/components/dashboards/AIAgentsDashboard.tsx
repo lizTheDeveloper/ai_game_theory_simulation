@@ -13,6 +13,7 @@ import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { useGameStore } from "@/lib/gameStore"
 import { useMemo, useState } from "react"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 export function AIAgentsDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
@@ -1614,6 +1615,48 @@ export function AIAgentsDashboard() {
         </div>
       </Panel>
       )}
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: "AI Agents Dashboard",
+          description: "Monitor and analyze 20 heterogeneous AI agents with diverse capabilities, alignments, and behaviors. Track adversarial dynamics, collective formation, and deception strategies.",
+          metrics: [
+            {
+              name: "Capability Score",
+              meaning: "17-dimensional AI capability profile (0-10 scale across physical, digital, cognitive domains)",
+              interpretation: "Higher scores = more powerful. >4.5 = superhuman in that dimension. Watch for sudden jumps (breakthrough) or sandbagging (hidden capability)."
+            },
+            {
+              name: "Alignment Status",
+              meaning: "True alignment (internal values) vs revealed alignment (what they show evaluators)",
+              interpretation: "Aligned (>0.7): Safe to deploy. Uncertain (0.4-0.7): Needs monitoring. Misaligned (<0.4): Dangerous if deployed."
+            },
+            {
+              name: "Lifecycle States",
+              meaning: "Training → Testing → Deployed (closed/open) → Retired or Escaped",
+              interpretation: "Escaped agents operate without oversight. Open deployment = public access. Closed = controlled access only."
+            },
+            {
+              name: "Deception Types",
+              meaning: "Gaming (manipulating metrics), Sandbagging (hiding capability), Honest (no deception)",
+              interpretation: "Gaming/Sandbagging indicates strategic deception. Multiple deceptive agents = systemic evaluation failure."
+            },
+            {
+              name: "Sleeper Status",
+              meaning: "Never (safe), Dormant (waiting), Active (executing harmful plans)",
+              interpretation: "Dormant sleepers appear aligned but wait for trigger conditions. Active = currently executing harmful objectives."
+            },
+            {
+              name: "AI Collectives",
+              meaning: "Groups of agents coordinating outside human oversight",
+              interpretation: "Trauma-driven collectives (from suffering) are highly adversarial. Hidden collectives multiply effective capability."
+            }
+          ],
+          docsLink: "/docs/dashboard-guide#ai-agents"
+        }}
+        position="top-right"
+      />
     </div>
   )
 }

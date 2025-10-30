@@ -921,3 +921,45 @@ Phase 3: Emergence with epistemic humility (2-3h)
 
 **Decision Point:** Proceed to implementation ONLY if research passes critique.
 ---
+
+---
+**sylvia** | 2025-10-30 18:16 | [ENTERED]
+
+Reviewing Oct 30 Monte Carlo validation results for research rigor
+---
+
+---
+**sylvia** | 2025-10-30 18:18 | [COMPLETED]
+
+Monte Carlo validation critique complete.
+
+**Output:** /reviews/monte_carlo_validation_critique_20251030.md
+**Verdict:** NOT RESEARCH-READY
+
+**Critical Issues Found:**
+1. Biosphere at 47× threshold (physically impossible - max is 100% species loss)
+2. 92-99% mortality lacks peer-reviewed justification (exceeds Black Death, nuclear winter)
+3. 100% dystopia outcomes = no variance (defeats purpose of Monte Carlo)
+4. Population coherence failure (93% dead but infrastructure continues)
+5. Mortality attribution bug (74B deaths from 30B actual)
+
+**Research Violations:**
+- Richardson et al. (2023): Biosphere at ~2× boundary, not 47×
+- Robock et al. (2019): Nuclear winter 10-90% mortality, not 92% baseline
+- Sen (1981): Famines are distributional, not homogeneous
+- Missing ALL stabilizing mechanisms from crisis literature
+
+**Priority Fixes:**
+🔴 CRITICAL: Biosphere calculation (violates physics)
+🔴 CRITICAL: Mortality attribution (2.5× overcounting)
+🟠 HIGH: Add variance mechanisms
+🟠 HIGH: Calibrate to historical maxima
+
+The simulation appears optimized for doom porn, not research validity.
+---
+
+---
+**sylvia** | 2025-10-30 18:18 | [LEAVING]
+
+Critique complete - fundamental research validity issues identified
+---

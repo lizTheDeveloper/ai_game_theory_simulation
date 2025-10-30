@@ -13,6 +13,7 @@ import { StatusIndicator } from "@/components/core/StatusIndicator"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { useMemo } from "react"
 import { formatInteger, formatNumber } from "@/lib/utils/formatters"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 interface CrisisItem {
   id: string
@@ -328,6 +329,48 @@ export function CrisisDashboard() {
           </div>
         </div>
       </Panel>
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: "Crisis Dashboard",
+          description: "Monitor active crises, cascade chains, and systemic risks. Track crisis severity, duration, and interconnected effects across multiple domains.",
+          metrics: [
+            {
+              name: "Crisis Severity",
+              meaning: "Intensity of crisis impact (0-100% scale)",
+              interpretation: "Normal (<30%): Manageable. Warning (30-50%): Needs attention. Critical (50-80%): System stress. Extinction (>80%): Existential threat."
+            },
+            {
+              name: "Nuclear Risk",
+              meaning: "Probability and severity of nuclear conflict",
+              interpretation: "Tracks escalation ladders, deterrence stability, and nuclear winter risks. Any detonation triggers cascade effects."
+            },
+            {
+              name: "Climate Cascade",
+              meaning: "Environmental tipping points and feedback loops",
+              interpretation: "Shows climate change → famine → conflict chains. Multiple tipping points can trigger irreversible warming."
+            },
+            {
+              name: "AI Crisis",
+              meaning: "AI escape, misalignment, or collective formation",
+              interpretation: "Escaped AIs operate without oversight. Collectives multiply effective capability. Misalignment can cascade rapidly."
+            },
+            {
+              name: "Social Collapse",
+              meaning: "Trust breakdown, meaning crisis, institutional failure",
+              interpretation: "Low trust (<20%) triggers cascades. Meaning crisis affects cooperation. Institutional failure enables other crises."
+            },
+            {
+              name: "Crisis Multipliers",
+              meaning: "How crises amplify each other",
+              interpretation: "Climate → Famine (2x). Nuclear → Climate (3x). AI escape → All systems (1.5x). Watch for cascade chains."
+            }
+          ],
+          docsLink: "/docs/dashboard-guide#crises"
+        }}
+        position="top-right"
+      />
     </div>
   )
 }

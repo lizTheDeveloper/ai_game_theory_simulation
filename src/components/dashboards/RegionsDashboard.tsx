@@ -13,6 +13,7 @@ import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { QoLDetailPanel } from "@/components/quality-of-life/QoLDetailPanel"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 export function RegionsDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
@@ -340,6 +341,48 @@ export function RegionsDashboard() {
           onClose={() => setShowQoLPanel(false)}
         />
       )}
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: "Population & Regions",
+          description: "Monitor global and regional population dynamics, quality of life metrics, and demographic trends. Track population sustainability and regional disparities.",
+          metrics: [
+            {
+              name: "Global Population",
+              meaning: "Total human population in billions",
+              interpretation: "8B = current baseline. <2B = collapse scenario. >10B = resource strain. Watch for rapid changes indicating crisis."
+            },
+            {
+              name: "Quality of Life",
+              meaning: "17-dimensional aggregate across 5 tiers (survival to environmental quality)",
+              interpretation: "0-20%: Survival crisis. 20-40%: Basic needs struggle. 40-60%: Adequate. 60-80%: Good. 80-100%: Flourishing."
+            },
+            {
+              name: "Regional Disparities",
+              meaning: "Differences in QoL, resources, and vulnerability across regions",
+              interpretation: "Large gaps (>40%) indicate inequality crisis. Climate vulnerability varies by geography. Some regions more resilient."
+            },
+            {
+              name: "Healthcare Access",
+              meaning: "Medical infrastructure and service availability",
+              interpretation: "Below 30% = pandemic vulnerability. 30-60% = basic coverage. >60% = resilient health systems."
+            },
+            {
+              name: "Food Security",
+              meaning: "Agricultural productivity and distribution systems",
+              interpretation: "Below 70% = famine risk. Climate impacts reduce yields. Technology can boost production 2-3x."
+            },
+            {
+              name: "Social Cohesion",
+              meaning: "Trust, cooperation, and community bonds",
+              interpretation: "Below 30% = fragmentation risk. 30-60% = functional. >60% = strong communities. Critical for crisis resilience."
+            }
+          ],
+          docsLink: "/docs/dashboard-guide#regions"
+        }}
+        position="top-right"
+      />
     </div>
   )
 }

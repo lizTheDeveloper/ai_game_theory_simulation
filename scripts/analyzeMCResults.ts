@@ -9,7 +9,7 @@ import path from 'path';
 
 interface ParadigmSnapshot {
   month: number;
-  westernLiberal: number | null;
+  western: number | null;  // FIX (Oct 29, 2025): Field name is 'western' not 'westernLiberal'
   development: number | null;
   ecological: number | null;
   indigenous: number | null;
@@ -36,7 +36,7 @@ interface EcologyStats {
 }
 
 interface ParadigmStats {
-  westernLiberal: { nullCount: number; values: number[] };
+  western: { nullCount: number; values: number[] };  // FIX (Oct 29, 2025): Field name is 'western' not 'westernLiberal'
   development: { nullCount: number; values: number[] };
   ecological: { nullCount: number; values: number[] };
   indigenous: { nullCount: number; values: number[] };
@@ -62,7 +62,7 @@ function analyzeRuns(outputDir: string): void {
   };
 
   const paradigmStats: ParadigmStats = {
-    westernLiberal: { nullCount: 0, values: [] },
+    western: { nullCount: 0, values: [] },  // FIX (Oct 29, 2025): Field name is 'western'
     development: { nullCount: 0, values: [] },
     ecological: { nullCount: 0, values: [] },
     indigenous: { nullCount: 0, values: [] }
@@ -95,10 +95,11 @@ function analyzeRuns(outputDir: string): void {
     }
 
     // Track paradigm nulls and values
-    if (finalSnapshot.westernLiberal === null) {
-      paradigmStats.westernLiberal.nullCount++;
+    // FIX (Oct 29, 2025): Field name is 'western' not 'westernLiberal'
+    if (finalSnapshot.western === null) {
+      paradigmStats.western.nullCount++;
     } else {
-      paradigmStats.westernLiberal.values.push(finalSnapshot.westernLiberal);
+      paradigmStats.western.values.push(finalSnapshot.western);
     }
 
     if (finalSnapshot.development === null) {
@@ -165,9 +166,10 @@ function analyzeRuns(outputDir: string): void {
   }
 
   console.log('\n## Paradigm Score Analysis');
-  console.log(`  Western Liberal: ${paradigmStats.westernLiberal.nullCount} null / ${paradigmStats.westernLiberal.values.length} valid`);
-  if (paradigmStats.westernLiberal.values.length > 0) {
-    const mean = paradigmStats.westernLiberal.values.reduce((a, b) => a + b, 0) / paradigmStats.westernLiberal.values.length;
+  // FIX (Oct 29, 2025): Field name is 'western' not 'westernLiberal'
+  console.log(`  Western Liberal: ${paradigmStats.western.nullCount} null / ${paradigmStats.western.values.length} valid`);
+  if (paradigmStats.western.values.length > 0) {
+    const mean = paradigmStats.western.values.reduce((a, b) => a + b, 0) / paradigmStats.western.values.length;
     console.log(`    Mean (valid): ${mean.toFixed(2)}`);
   }
 
@@ -206,7 +208,8 @@ function analyzeRuns(outputDir: string): void {
   if (ecologyStats.crashed > 0) {
     console.log(`  ❌ ${ecologyStats.crashed} runs crashed with null ecology scores`);
   }
-  if (paradigmStats.westernLiberal.nullCount === files.length) {
+  // FIX (Oct 29, 2025): Field name is 'western' not 'westernLiberal'
+  if (paradigmStats.western.nullCount === files.length) {
     console.log(`  ❌ Western Liberal ALL NULL - calculation bug!`);
   }
   if (outcomes['dystopia'] === files.length) {

@@ -1,0 +1,62 @@
+name: Sync Wiki
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/wiki/**'
+  workflow_dispatch:
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout wiki repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync docs/wiki to wiki repo
+        run: |
+          # Remove old wiki content (except .git)
+          find wiki -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+
+          # Copy all markdown files from docs/wiki
+          cp -r docs/wiki/* wiki/
+
+          # Rename README.md to Home.md (GitHub Wiki convention)
+          if [ -f wiki/README.md ]; then
+            mv wiki/README.md wiki/Home.md
+          fi
+
+          cd wiki
+
+          # Configure git
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+          # Commit and push changes
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to wiki"
+          else
+            git commit -m "Auto-sync from docs/wiki at $(date -u +%Y-%m-%d\ %H:%M:%S) UTC"
+            git push origin master
+            echo "✅ Wiki synced successfully"
+          fi
+
+      - name: Summary
+        run: |
+          echo "### Wiki Sync Complete 📚" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Documentation synced from \`docs/wiki/\` to GitHub Wiki" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "View at: https://github.com/${{ github.repository }}/wiki" >> $GITHUB_STEP_SUMMARY

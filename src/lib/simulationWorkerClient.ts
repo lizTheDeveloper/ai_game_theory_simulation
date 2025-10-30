@@ -130,19 +130,63 @@ export interface StateDelta {
   ecologicalIndex?: number;
   indigenousIndex?: number;
 
+  // Multi-Paradigm DUI Components (for Goodhart's Law avoidance)
+  westernLiberalComponents?: {
+    electoralDemocracy: number;  // 0-100
+    civilLiberties: number;      // 0-100
+    ruleOfLaw: number;           // 0-100
+    economicFreedom: number;     // 0-100
+    privacyFreedom: number;      // 0-100
+  };
+  developmentComponents?: {
+    gdpPerCapita: number;        // 0-100
+    infrastructureAccess: number; // 0-100
+    technologyAdoption: number;   // 0-100
+    urbanization: number;        // 0-100
+    educationQuality: number;    // 0-100
+  };
+  ecologicalComponents?: {
+    climate: number;             // 0-100 (inverse of impact)
+    biodiversity: number;        // 0-100 (inverse of loss)
+    nitrogen: number;            // 0-100 (safe level)
+    phosphorus: number;          // 0-100 (safe level)
+    freshwater: number;          // 0-100 (availability)
+    landUse: number;            // 0-100 (sustainable use)
+    oceanAcid: number;          // 0-100 (health)
+  };
+  indigenousComponents?: {
+    localAutonomy: number;       // 0-100
+    culturalVitality: number;    // 0-100
+    landStewardship: number;     // 0-100
+    collectiveWellbeing: number; // 0-100
+    spiritualConnection: number; // 0-100
+  };
+
   // 12-Month History (for sparklines)
   history?: {
+    // Multi-Paradigm DUI
     westernLiberalIndex: number[];
     developmentIndex: number[];
     ecologicalIndex: number[];
     indigenousIndex: number[];
+    // Core Metrics
     qualityOfLife: number[];
     population: number[];
+    // Planetary Boundaries (9 metrics)
     climateChange: number[];
     biodiversityLoss: number[];
+    resourceDepletion: number[];
+    phosphorusDepletion: number[];
+    freshwaterStress: number[];
+    oceanAcidification: number[];
+    novelEntitiesLevel: number[];
+    pollutionLevel: number[];
+    environmentalDebtLevel: number[];
+    // Social Metrics
     socialCohesion: number[];
     institutionalTrust: number[];
     meaningLevel: number[];
+    // Governance Metrics
     governmentComprehension: number[];
     internationalCooperation: number[];
     governmentAIRegulation: number[];

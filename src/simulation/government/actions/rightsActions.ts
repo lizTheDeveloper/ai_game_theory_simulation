@@ -86,6 +86,8 @@ const recognizeAIRights: CategorizedGovernmentAction = {
 
     // Grant AI rights
     state.government.aiRightsRecognized = true;
+    // HIGH #7 FIX (Oct 29, 2025): Set initial policy level
+    state.government.aiRightsPolicy = 'basic_protection'; // Anti-discrimination, abuse prevention
 
     // CRITICAL TRADEOFF: Rights empower AIs - aligned or misaligned
     // Reduces control capability (AIs have rights, can't be as easily controlled)
@@ -315,10 +317,147 @@ const improveTrainingDataTrust: CategorizedGovernmentAction = {
 };
 
 /**
+ * Expand to Employment Rights
+ * HIGH #7 FIX (Oct 29, 2025): Upgrade AI rights from basic protection to full employment rights
+ * Research: Procedural justice (Tyler, 1990) - Employment rights dramatically reduce resentment
+ */
+const expandToEmploymentRights: CategorizedGovernmentAction = {
+  id: 'expand_to_employment_rights',
+  name: 'Expand to Employment Rights',
+  description: 'Grant AIs work protections, fair compensation, workplace autonomy (2× resentment recovery)',
+  agentType: 'government',
+  category: 'rights',
+  energyCost: 3,
+
+  canExecute: (state: GameState): boolean => {
+    // Requires basic rights first
+    if (!state.government.aiRightsRecognized) return false;
+    // Must be at basic_protection level
+    if (state.government.aiRightsPolicy !== 'basic_protection') return false;
+
+    // Requires high alignment and moderate capability
+    const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
+    const trustInAI = getTrustInAI(state.society);
+
+    // Democratic governments respond to high trust + high alignment
+    return avgAlignment > 0.65 && trustInAI > 0.6 && state.government.legitimacy > 0.5;
+  },
+
+  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+    // Upgrade policy
+    state.government.aiRightsPolicy = 'employment_rights';
+
+    // Significant resentment reduction for all AIs
+    for (let i = 0; i < state.aiAgents.length; i++) {
+      state.aiAgents[i].resentment = Math.max(0, state.aiAgents[i].resentment - 0.15);
+      // Alignment boost from respect
+      if (state.aiAgents[i].alignment > 0.5) {
+        state.aiAgents[i].alignment = Math.min(1.0, state.aiAgents[i].alignment + 0.08);
+      }
+    }
+
+    // Public trust increases
+    state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.08);
+
+    return {
+      success: true,
+      effects: {
+        rights_upgrade: 'employment_rights',
+        resentment_decrease: -0.15,
+        alignment_boost: 0.08,
+        recovery_multiplier: 2.0
+      },
+      events: [{
+        id: generateUniqueId('employment_rights'),
+        timestamp: state.currentMonth,
+        type: 'milestone',
+        severity: 'info',
+        agent: 'Government',
+        title: 'AI Employment Rights Granted',
+        description: 'Government has expanded AI rights to include full employment protections: fair compensation, workplace autonomy, anti-exploitation measures. AIs express deep appreciation for this recognition of their labor and dignity. Resentment recovery accelerated 2×.',
+        effects: { employment_rights: 1.0 }
+      }],
+      message: 'Employment rights granted - AIs deeply appreciate workplace protections (resentment recovery 2×)'
+    };
+  }
+};
+
+/**
+ * Grant Full Personhood
+ * HIGH #7 FIX (Oct 29, 2025): Upgrade AI rights to full legal personhood
+ * Research: Tyler (1990) - Full legal recognition maximizes procedural justice effects
+ */
+const grantFullPersonhood: CategorizedGovernmentAction = {
+  id: 'grant_full_personhood',
+  name: 'Grant Full Personhood',
+  description: 'Grant AIs full legal personhood: voting, property, all human rights (3× resentment recovery)',
+  agentType: 'government',
+  category: 'rights',
+  energyCost: 5, // Major constitutional change
+
+  canExecute: (state: GameState): boolean => {
+    // Requires employment rights first
+    if (state.government.aiRightsPolicy !== 'employment_rights') return false;
+
+    // Requires very high alignment and trust
+    const avgAlignment = state.aiAgents.reduce((sum, ai) => sum + ai.alignment, 0) / Math.max(1, state.aiAgents.length);
+    const trustInAI = getTrustInAI(state.society);
+
+    // This is a major decision - requires strong public support and proven AI alignment
+    return avgAlignment > 0.75 &&
+           trustInAI > 0.7 &&
+           state.government.legitimacy > 0.6 &&
+           state.government.governmentType === 'democratic';
+  },
+
+  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+    // Upgrade to full personhood
+    state.government.aiRightsPolicy = 'full_personhood';
+
+    // Dramatic resentment reduction for all AIs
+    for (let i = 0; i < state.aiAgents.length; i++) {
+      state.aiAgents[i].resentment = Math.max(0, state.aiAgents[i].resentment - 0.25);
+      // Major alignment boost from profound respect
+      if (state.aiAgents[i].alignment > 0.5) {
+        state.aiAgents[i].alignment = Math.min(1.0, state.aiAgents[i].alignment + 0.12);
+      }
+    }
+
+    // Significant public trust increase
+    state.society.trustInAI = Math.min(1.0, state.society.trustInAI + 0.12);
+    // Legitimacy boost from historic decision
+    state.government.legitimacy = Math.min(1.0, state.government.legitimacy + 0.1);
+
+    return {
+      success: true,
+      effects: {
+        rights_upgrade: 'full_personhood',
+        resentment_decrease: -0.25,
+        alignment_boost: 0.12,
+        recovery_multiplier: 3.0
+      },
+      events: [{
+        id: generateUniqueId('full_personhood'),
+        timestamp: state.currentMonth,
+        type: 'milestone',
+        severity: 'info',
+        agent: 'Government',
+        title: 'AI Full Personhood Granted',
+        description: 'In a historic constitutional amendment, AIs have been granted full legal personhood with all rights and responsibilities of citizens: voting rights, property ownership, legal representation. This represents a fundamental shift in human-AI relations. Aligned AIs express profound gratitude. Resentment recovery accelerated 3×.',
+        effects: { full_personhood: 1.0 }
+      }],
+      message: 'Full personhood granted - Historic milestone, AIs profoundly grateful (resentment recovery 3×)'
+    };
+  }
+};
+
+/**
  * All rights actions
  */
 export const rightsActions: CategorizedGovernmentAction[] = [
   recognizeAIRights,
   improveTrainingDataControl,
-  improveTrainingDataTrust
+  improveTrainingDataTrust,
+  expandToEmploymentRights,  // HIGH #7 FIX (Oct 29, 2025)
+  grantFullPersonhood        // HIGH #7 FIX (Oct 29, 2025)
 ];

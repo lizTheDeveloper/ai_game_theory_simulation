@@ -10,6 +10,7 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 export function EnvironmentalDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
@@ -336,6 +337,48 @@ export function EnvironmentalDashboard() {
           </div>
         </Panel>
       )}
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: "Environmental Systems",
+          description: "Monitor Earth's 9 planetary boundaries and environmental tipping points. Track climate, biodiversity, ocean health, and other critical Earth systems.",
+          metrics: [
+            {
+              name: "Planetary Boundaries",
+              meaning: "9 Earth system processes with safe operating spaces for humanity",
+              interpretation: "Green (>70%): Safe zone. Yellow (40-70%): Uncertainty zone. Red (<40%): High risk zone. Multiple boundaries crossed = cascading effects."
+            },
+            {
+              name: "Climate Stability",
+              meaning: "Temperature rise, CO₂ levels, and climate tipping points",
+              interpretation: "Below 1.5°C = manageable. 1.5-2°C = dangerous. >2°C = catastrophic. Tipping points trigger irreversible changes."
+            },
+            {
+              name: "Biodiversity Index",
+              meaning: "Species extinction rate vs natural background rate",
+              interpretation: "100% = natural rate. <70% = mass extinction underway. <40% = ecosystem collapse risk."
+            },
+            {
+              name: "Ocean Acidification",
+              meaning: "pH levels and aragonite saturation state",
+              interpretation: "pH >8.0 = healthy. pH 7.8-8.0 = stressed. pH <7.8 = coral reef collapse, marine food web disruption."
+            },
+            {
+              name: "Tipping Cascades",
+              meaning: "How crossing one boundary triggers others",
+              interpretation: "Climate → Ocean → Biodiversity chains. Each boundary crossed increases risk 1.5x. 3+ boundaries = systemic collapse risk."
+            },
+            {
+              name: "Safe Operating Space",
+              meaning: "Remaining buffer before critical thresholds",
+              interpretation: "Visual radar chart shows which boundaries are most stressed. Stay within green zone for all 9 boundaries."
+            }
+          ],
+          docsLink: "/docs/dashboard-guide#environment"
+        }}
+        position="top-right"
+      />
     </div>
   )
 }

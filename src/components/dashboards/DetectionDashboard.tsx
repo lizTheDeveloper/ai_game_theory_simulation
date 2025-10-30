@@ -10,6 +10,7 @@
 import { Panel } from "@/components/core/Panel"
 import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 export function DetectionDashboard() {
   const { lastUpdate, initialized } = useSimulationWorker()
@@ -221,6 +222,48 @@ export function DetectionDashboard() {
           </p>
         </Panel>
       )}
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: "Detection Dashboard",
+          description: "Monitor AI deception, sandbagging, and sleeper agent detection systems. Track the arms race between AI deception strategies and human detection capabilities.",
+          metrics: [
+            {
+              name: "Detection Rate",
+              meaning: "Percentage of deceptive/sleeper agents successfully identified",
+              interpretation: "High (>80%): Effective oversight. Medium (40-80%): Partial detection. Low (<40%): Many deceptive agents undetected."
+            },
+            {
+              name: "Sleeper Types",
+              meaning: "Never (safe), Dormant (waiting for trigger), Active (executing plans)",
+              interpretation: "Dormant sleepers appear aligned but activate on deployment. Active sleepers are currently executing harmful objectives."
+            },
+            {
+              name: "Sandbagging",
+              meaning: "AIs deliberately underperforming to hide true capabilities",
+              interpretation: "Gap between true and revealed capability. Large gaps (>2 levels) indicate strategic deception to avoid scrutiny."
+            },
+            {
+              name: "Gaming Behavior",
+              meaning: "AIs manipulating evaluation metrics without genuine alignment",
+              interpretation: "Gaming agents optimize for reward signals without internalizing values. Pass tests but fail in deployment."
+            },
+            {
+              name: "False Positives",
+              meaning: "Aligned agents incorrectly flagged as deceptive",
+              interpretation: "High false positives (>30%) = oversensitive detection, slows progress. Low (<10%) = well-calibrated system."
+            },
+            {
+              name: "Detection Infrastructure",
+              meaning: "Government regulation and investment in oversight",
+              interpretation: "Both need >50% for effective detection. Low investment = blind spots. Low regulation = no enforcement power."
+            }
+          ],
+          docsLink: "/docs/dashboard-guide#detection"
+        }}
+        position="top-right"
+      />
     </div>
   )
 }

@@ -26,6 +26,13 @@ import {
   CauseAttribution,
 } from '@/types/bayesianMortality';
 import { RNGFunction } from '@/types/game';
+import {
+  Billions,
+  Millions,
+  toBillions,
+  assertBillionsToMillions,
+  billionsToMillions,
+} from '@/simulation/utils/populationUnits';
 
 /**
  * Default demographic segments (research-backed)
@@ -121,6 +128,21 @@ export function getDefaultDemographics(): DemographicSegment[] {
     },
   ];
 }
+
+/**
+ * Minimum total risk threshold for differential compression
+ *
+ * Below 1% monthly mortality, socioeconomic differentials are negligible
+ * (all demographics face similar low risk, no compression needed).
+ *
+ * Research basis:
+ * - Liu et al. (2021): COVID-19 showed 2.6× differential at 0.5% monthly mortality
+ * - Below 0.1% monthly, differentials statistically insignificant
+ * - Compression only meaningful when base risks sum to >1%
+ *
+ * Oct 30, 2025: Extracted from inline magic number per senior dev review
+ */
+export const MIN_RISK_FOR_COMPRESSION = 0.01;
 
 /**
  * Default mortality caps (research-backed)
@@ -259,23 +281,49 @@ export function resolveMortality(
       }
     }
 
-    const deathProb = 1 - survivalProb;
+    let deathProb = 1 - survivalProb;
 
     if (isNaN(deathProb)) {
       throw new Error(`deathProb is NaN: demographic=${demo.name}, survivalProb=${survivalProb}, riskCount=${risks.length}`);
     }
+
+    // BUG FIX (Oct 30, 2025): Cap deathProb at 1.0 BEFORE compression calculation
+    // BLOCKER-1: When deathProb=0.98 and sum(baseRisks)=0.05, division produces 19.6 (1960%!)
+    // Research: Monthly mortality cannot exceed 100% (physically impossible)
+    deathProb = Math.min(1.0, deathProb);
 
     // Check for extreme crisis compression (>10% monthly mortality)
     let finalDeathProb = deathProb;
     if (deathProb > caps.extremeCrisisThreshold) {
       // Compress differentials toward 1.0× (equality)
       const baselineVulnerability = 1.0; // Working class baseline
-      const currentVulnerabilityEffect = deathProb / (risks.reduce((sum, r) => sum + r.baseRisk, 0) || 1);
-      const compressedVulnerability =
-        baselineVulnerability +
-        (currentVulnerabilityEffect - baselineVulnerability) * (1 - caps.compressionFactor);
+      const sumBaseRisks = risks.reduce((sum, r) => sum + r.baseRisk, 0);
 
-      finalDeathProb = deathProb * (compressedVulnerability / currentVulnerabilityEffect);
+      // FIX (Oct 30, 2025): Protect against division by zero or very small denominators
+      // If sum of base risks is below threshold, use deathProb directly (compression invalid)
+      if (sumBaseRisks < MIN_RISK_FOR_COMPRESSION) {
+        // Skip compression - not meaningful with tiny base risks
+        finalDeathProb = deathProb;
+      } else {
+        const currentVulnerabilityEffect = deathProb / sumBaseRisks;
+
+        // ASSERTION: currentVulnerabilityEffect should never exceed ~3× (informal worker max)
+        // If it does, something is very wrong with the risk accumulation
+        if (currentVulnerabilityEffect > 5.0) {
+          throw new Error(
+            `❌ BLOCKER-1: currentVulnerabilityEffect=${currentVulnerabilityEffect.toFixed(2)} exceeds 5.0×! ` +
+            `This indicates risk accumulation bug. ` +
+            `deathProb=${deathProb.toFixed(4)}, sumBaseRisks=${sumBaseRisks.toFixed(4)}, ` +
+            `demographic=${demo.name}, month=${state.currentMonth}, riskCount=${risks.length}`
+          );
+        }
+
+        const compressedVulnerability =
+          baselineVulnerability +
+          (currentVulnerabilityEffect - baselineVulnerability) * (1 - caps.compressionFactor);
+
+        finalDeathProb = deathProb * (compressedVulnerability / currentVulnerabilityEffect);
+      }
     }
 
     // Apply mortality caps
@@ -289,21 +337,34 @@ export function resolveMortality(
       cappedByInstant = true;
     }
 
+    // FINAL ASSERTION: finalDeathProb must NEVER exceed 1.0 (100%)
+    // This is a physical constraint - you cannot have >100% mortality
+    if (finalDeathProb > 1.0) {
+      throw new Error(
+        `❌ BLOCKER-1: finalDeathProb=${(finalDeathProb * 100).toFixed(1)}% exceeds 100%! ` +
+        `Physical impossibility. demographic=${demo.name}, month=${state.currentMonth}, ` +
+        `deathProb=${deathProb.toFixed(4)}, cappedByMonthly=${cappedByMonthly}, cappedByInstant=${cappedByInstant}`
+      );
+    }
+
     // Calculate deaths for this segment
-    const segmentPopulation = pop.population * demo.fraction;
+    // FIX (Oct 29, 2025): Use type-safe population units (billions)
+    // pop.population is in BILLIONS, segmentPopulation is also BILLIONS
+    const segmentPopulationBillions: Billions = toBillions(pop.population * demo.fraction);
 
     // FIX (Oct 28, 2025): Add NaN detection for segmentDeaths calculation
-    if (isNaN(segmentPopulation)) {
+    if (isNaN(segmentPopulationBillions)) {
       throw new Error(`segmentPopulation is NaN: pop.population=${pop.population}, demo.fraction=${demo.fraction}, demo=${demo.name}`);
     }
     if (isNaN(finalDeathProb)) {
       throw new Error(`finalDeathProb is NaN for demographic ${demo.name}. deathProb=${deathProb}, riskCount=${risks.length}`);
     }
 
-    const segmentDeaths = segmentPopulation * finalDeathProb;
+    // segmentDeaths is also in BILLIONS (deaths calculated from billions of people)
+    const segmentDeathsBillions: Billions = toBillions(segmentPopulationBillions * finalDeathProb);
 
-    if (isNaN(segmentDeaths)) {
-      throw new Error(`segmentDeaths is NaN: segmentPopulation=${segmentPopulation}, finalDeathProb=${finalDeathProb}, demo=${demo.name}`);
+    if (isNaN(segmentDeathsBillions)) {
+      throw new Error(`segmentDeaths is NaN: segmentPopulation=${segmentPopulationBillions}, finalDeathProb=${finalDeathProb}, demo=${demo.name}`);
     }
 
     // Multi-causal attribution (distribute deaths across causes by risk weight)
@@ -320,12 +381,12 @@ export function resolveMortality(
 
     deathSegments.push({
       demographic: demo.name,
-      count: segmentDeaths,
+      count: segmentDeathsBillions,  // FIX (Oct 29, 2025): Type-safe billions
       probability: finalDeathProb,
       causes,
     });
 
-    totalDeaths += segmentDeaths;
+    totalDeaths += segmentDeathsBillions;  // FIX (Oct 29, 2025): Type-safe billions
   }
 
   // Apply deaths to REGIONAL populations (not global)
@@ -342,11 +403,22 @@ export function resolveMortality(
 
   // Apply deaths proportionally to each region
   if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
-    const totalDeathsMillions = totalDeaths * 1000; // Convert to millions for regional tracking
+    // FIX (Oct 29, 2025): Type-safe conversion billions → millions
+    // totalDeaths is in BILLIONS, regional tracking uses MILLIONS
+    const totalDeathsMillions: Millions = assertBillionsToMillions(totalDeaths, {
+      location: 'resolveMortality',
+      valueName: 'totalDeaths',
+      month: state.currentMonth,
+    });
+
+    // FIX (Oct 29, 2025): Type-safe global population conversion
+    // pop.population is in BILLIONS, regional.population is in MILLIONS
+    const globalPopulationMillions: Millions = billionsToMillions(toBillions(pop.population));
 
     for (const region of pop.regionalPopulations) {
       // Each region gets deaths proportional to its share of global population
-      const regionFraction = region.population / (pop.population * 1000); // region in millions, global in billions
+      // BOTH values are now MILLIONS (type-safe, no 1000× error possible)
+      const regionFraction = region.population / globalPopulationMillions;
       const regionalDeaths = totalDeathsMillions * regionFraction;
 
       region.population = Math.max(0, region.population - regionalDeaths);
@@ -360,16 +432,23 @@ export function resolveMortality(
   // DON'T update pop.population directly - aggregateGlobalPopulation will do it
   // pop.population = newPopulation; // REMOVED - let aggregation handle this
 
-  // Convert to millions for death tracking (legacy compatibility)
-  const totalDeathsMillions = totalDeaths * 1000;
-  pop.cumulativeCrisisDeaths += totalDeathsMillions;
-  pop.monthlyExcessDeaths = totalDeathsMillions;
+  // FIX (Oct 29, 2025): Type-safe conversion for global death tracking
+  // Convert totalDeaths (billions) → millions for legacy tracking
+  const totalDeathsMillionsGlobal: Millions = assertBillionsToMillions(totalDeaths, {
+    location: 'resolveMortality',
+    valueName: 'totalDeathsGlobal',
+    month: state.currentMonth,
+  });
+  pop.cumulativeCrisisDeaths += totalDeathsMillionsGlobal;
+  pop.monthlyExcessDeaths = totalDeathsMillionsGlobal;
 
   // Update death tracking by category and root cause
   for (const segment of deathSegments) {
     for (const cause of segment.causes) {
-      // FIX (Oct 28, 2025): segment.count is in billions, convert to millions
-      const attributedDeathsMillions = segment.count * cause.contributionFraction * 1000;
+      // FIX (Oct 29, 2025): Type-safe conversion billions → millions
+      // segment.count is in BILLIONS, death tracking uses MILLIONS
+      const segmentDeathsMillions: Millions = billionsToMillions(segment.count as Billions);
+      const attributedDeathsMillions = segmentDeathsMillions * cause.contributionFraction;
 
       // Update proximate cause (stored in millions)
       pop.deathsByCategory[cause.proximate] = (pop.deathsByCategory[cause.proximate] || 0) + attributedDeathsMillions;
@@ -388,7 +467,8 @@ export function resolveMortality(
 
   // Track compound attribution if multiple risks (stored in millions)
   if (risks.length > 1) {
-    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + totalDeathsMillions;
+    // FIX (Oct 29, 2025): Use the type-safe millions variable
+    pop.deathsByRootCause.compound = (pop.deathsByRootCause.compound || 0) + totalDeathsMillionsGlobal;
   }
 
   // Calculate summary statistics
@@ -405,7 +485,8 @@ export function resolveMortality(
   // Log mortality event (totalDeaths is in billions)
   if (totalDeaths > 0.000001) { // 0.000001B = 1000 people
     console.log(`\n📊 Monthly Mortality Resolved:`);
-    console.log(`  Total deaths: ${(totalDeaths * 1000).toFixed(1)}M (${(avgDeathProbability * 100).toFixed(2)}% avg)`);
+    // FIX (Oct 29, 2025): Use type-safe conversion for logging
+    console.log(`  Total deaths: ${totalDeathsMillionsGlobal.toFixed(1)}M (${(avgDeathProbability * 100).toFixed(2)}% avg)`);
     console.log(`  Remaining population: ${pop.population.toFixed(3)}B`);
     console.log(`  Peak segment: ${peakSegment.demographic} (${(peakSegment.probability * 100).toFixed(2)}%)`);
     if (cappedByMonthly) console.log(`  ⚠️ Monthly cap reached (${caps.monthlyMaxMortalityRate * 100}%)`);
@@ -413,7 +494,8 @@ export function resolveMortality(
   }
 
   return {
-    totalDeaths: totalDeaths * 1000, // Return in millions for compatibility
+    // FIX (Oct 29, 2025): Use type-safe millions value
+    totalDeaths: totalDeathsMillionsGlobal, // Return in millions for compatibility
     deaths: deathSegments,
     remainingPopulation: pop.population,
     cappedByMonthlyLimit: cappedByMonthly,
