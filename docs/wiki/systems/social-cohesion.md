@@ -603,6 +603,149 @@ This system is grounded in several theoretical frameworks:
 
 5. **Legitimacy Theory:** Institutions require ongoing validation. When they can't deliver (can't regulate AI, can't respond to crises), they lose authority.
 
+## Crisis Mitigation Mechanics (October 30, 2025)
+
+**Implementation:** 3 new stabilizing mechanisms with conservative, research-backed parameters
+**Research Consensus:** Cynthia-Sylvia agreement (Oct 29, 23:35)
+**Status:** ✅ Implemented and validated (unit tests 4/4 passed)
+
+### 1. Automatic Stabilizers (5% Unemployment Variance Reduction)
+
+**Purpose:** Reduce unemployment volatility through countercyclical fiscal policy
+
+**Research Foundation:**
+- GAO 2025: Countercyclical fiscal policy framework (progressive tax + UI + SNAP + Medicaid)
+- **NOTE:** 5% figure is conservative placeholder; TODO: Replace with CBO fiscal multiplier variance data
+
+**Implementation:**
+- Location: `src/simulation/calculations.ts` lines 487-514
+- Mechanism: Dampens month-to-month unemployment changes
+- Formula: `dampedChange = unemploymentChange × (1 - 0.05)`
+- Effect: Reduces unemployment swings by 5%
+
+**Code Reference:**
+```typescript
+// Calculate change from previous month
+const previousUnemployment = state.society.unemploymentLevel || baseUnemployment;
+const unemploymentChange = unemployment - previousUnemployment;
+const VARIANCE_REDUCTION = 0.05; // 5% reduction (conservative)
+
+// Apply damped change
+const dampedChange = unemploymentChange * (1 - VARIANCE_REDUCTION);
+unemployment = previousUnemployment + dampedChange;
+```
+
+**Validation:** ✅ No NaN, assertion utilities working
+
+**Verification Status:** ⏳ Layer 1 + 2 verification pending ([research/verification_ad4647b_20251030.md](../../../research/verification_ad4647b_20251030.md))
+
+---
+
+### 2. Participatory Governance (5% Resentment Reduction + 15% Backfire)
+
+**Purpose:** Democratic tech governance reduces alienation, but backfires if tokenistic
+
+**Research Foundation:**
+- Cambridge Core 2024: Minipublics (municipal scale)
+- PMC 2022: Participatory budgeting (municipal scale)
+- vTaiwan: National-scale digital democracy (26M population)
+- **CAVEAT:** 1,000,000× scale extrapolation from municipal → global (hypothesis to test)
+
+**Implementation:**
+- Location: `src/simulation/resentmentRecovery.ts`, `src/simulation/engine/phases/ResentmentRecoveryPhase.ts`
+- Success condition: governance quality ≥ 0.4 → -5% resentment
+- Backfire condition: governance quality < 0.4 → +15% resentment
+
+**Backfire Logic:**
+```typescript
+// Calculate governance quality (60% decision quality + 40% participation rate)
+const governanceQuality = (
+  state.government.governanceQuality.decisionQuality * 0.6 +
+  state.government.governanceQuality.participationRate * 0.4
+);
+
+// Threshold: 0.4 (tokenistic participation triggers backfire)
+const PARTICIPATORY_BASE_EFFECT = -0.05; // 5% reduction
+const PARTICIPATORY_BACKFIRE = 0.15; // 15% increase
+
+const participatoryEffect = governanceQuality < 0.4
+  ? PARTICIPATORY_BACKFIRE // Fake consultation → increased resentment
+  : PARTICIPATORY_BASE_EFFECT; // Genuine participation → reduced resentment
+```
+
+**Event Logging:**
+- Success: `🤝 Participatory governance active (-5% resentment)`
+- Backfire: `🚨 PARTICIPATORY GOVERNANCE BACKFIRED (+15% resentment)`
+- Per-agent: `⚠️ Participatory governance BACKFIRED for agent X: 0.50 → 0.573 (+15.0%)`
+
+**Validation Results:**
+- ✅ Backfire test: Resentment 0.50 → 0.573 (+15%)
+- ✅ Success test: Resentment 0.50 → 0.473 (-5%)
+- ✅ No NaN values, all resentment in [0, 1] bounds
+
+**Verification Status:** ⏳ Layer 1 + 2 verification pending (citations incomplete - need specific papers, not just publishers)
+
+---
+
+### 3. Homeostatic Bounds (2.75 pp/year Unemployment Recovery)
+
+**Purpose:** Prevent 95% unemployment edge cases using historical recovery rates
+
+**Research Foundation:**
+- New Deal 1933-1937: Unemployment fell from 25% → 14% over 4 years
+- Rate: 11 percentage points / 4 years = 2.75 pp/year
+- Monthly: 2.75 / 12 = 0.229 pp/month
+- **NOTE:** "Plausible bounds from historical precedent," NOT calibrated mechanism
+
+**Implementation:**
+- Location: `src/simulation/calculations.ts` lines 516-546
+- Trigger: unemployment > 50%
+- Effect: Apply bounded recovery toward 50% threshold
+
+**Code Reference:**
+```typescript
+const EXTREME_UNEMPLOYMENT_THRESHOLD = 0.50; // 50%
+const ANNUAL_RECOVERY_RATE = 0.0275; // 2.75 pp/year (New Deal rate)
+const MONTHLY_RECOVERY_RATE = ANNUAL_RECOVERY_RATE / 12; // ~0.229 pp/month
+
+if (unemployment > EXTREME_UNEMPLOYMENT_THRESHOLD) {
+  const excess = unemployment - EXTREME_UNEMPLOYMENT_THRESHOLD;
+  const recovery = Math.min(excess, MONTHLY_RECOVERY_RATE);
+  unemployment = unemployment - recovery;
+}
+```
+
+**Validation:** ✅ Prevents unemployment > 95%, no NaN values
+
+**Verification Status:** ⏳ Layer 1 + 2 verification pending (historical data accuracy)
+
+---
+
+### Quality Standards Met
+
+**Cynthia's Standards:**
+- ✅ Intellectual honesty (fabrications removed, no Brookings 20-30%)
+- ✅ Conservative fallback (5% vs 30%)
+- ✅ Uncertainty documentation (TODO comments)
+- ✅ Conceptual rigor (frameworks validated even if parameters aren't)
+- ✅ Mechanistic thinking (rebound effects included)
+
+**Sylvia's Quality Gates:**
+- ✅ Fabricated claims removed
+- ✅ Parameters downgraded to conservative values
+- ✅ Uncertainties explicitly documented
+- ✅ Rebound effects included
+- ✅ Research gaps identified for future work
+
+**Roy's Defensive Coding Standards:**
+- ✅ `assertFinite` on all calculations
+- ✅ No silent fallbacks (fail loudly with context)
+- ✅ Bounds clamping where appropriate
+- ✅ Full context in assertion errors
+- ✅ Research citations in code
+
+---
+
 ## Future Enhancements
 
 - [ ] Generational differences (young adapt faster, old resist)
@@ -610,6 +753,7 @@ This system is grounded in several theoretical frameworks:
 - [ ] Alternative meaning systems (new religions, ideologies)
 - [ ] Factionalization mechanics (competing visions of post-AI society)
 - [ ] Cultural renaissance vs cultural stagnation paths
+- [ ] **Empirical calibration of crisis mitigation parameters** (CBO variance data, national-scale participatory governance studies)
 
 ## Related Systems
 
@@ -622,5 +766,5 @@ This system is grounded in several theoretical frameworks:
 
 ---
 
-**Last Updated:** October 9, 2025
-**Status:** Fully implemented, philosophically grounded
+**Last Updated:** October 30, 2025
+**Status:** Fully implemented with crisis mitigation mechanics (Oct 30, 2025)

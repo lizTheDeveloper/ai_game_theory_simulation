@@ -1,7 +1,7 @@
 # Simulation Roadmap
 ## AI Alignment Game Theory Simulation - Core Engine & Mechanics
 
-**Date:** October 29, 2025 (Cleaned up after major completion verification)
+**Date:** October 30, 2025 (Updated after Oct 30 completions + Monte Carlo validation critique)
 **Purpose:** All simulation engine work (mechanics, systems, features)
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 
@@ -15,19 +15,20 @@
 
 ## 📊 CURRENT STATUS
 
-**Last Update:** October 30, 2025 (Monte Carlo Issues 1-8 resolved, but validation revealed 6 NEW critical issues)
+**Last Update:** October 30, 2025 (Monte Carlo Issues 1-8 COMPLETE, validation critique reveals 13 NEW systemic issues)
 
-**🚧 Active Work:** 🔴 CRITICAL - Monte Carlo validation reveals fundamental research validity problems
+**🚧 Active Work:** 🔴 CRITICAL - Research validity crisis (Monte Carlo validation critique Oct 30)
 
-**Total Remaining Effort:** ~40-68 hours (reduced by 26-42h from Oct 30 completions)
+**Total Remaining Effort:** ~119-193 hours (26-42h completed items removed, 79-110h new Monte Carlo validation issues added)
 
 **Recent Completions (Oct 30, 2025):**
-- ✅ Monte Carlo Issues 1-8: ALL RESOLVED (14-20h) - Western Liberal, outcome classification, biosphere, gaming detection, refugee crisis, snapshot exports
-- ✅ Policy Zero-Variance Bug: Fixed Combined Interventions deterministic equilibrium (2-3h) - COMPLETE
-- ✅ AI Resentment Recovery + Policy Integration: Breaking circular dependency for utopia paths (8-12h) - COMPLETE
-- ✅ Planetary Boundaries Recovery + Tech Effects Integration: Nuclear winter recovery feedback (6-8h) - COMPLETE
+- ✅ **Crisis Mitigation Mechanics (2-3h)** - Automatic stabilizers, participatory governance, homeostatic bounds - COMPLETE
+- ✅ **Monte Carlo Issues 1-8 (14-20h)** - Western Liberal, outcome classification, biosphere, gaming detection, refugee crisis, snapshot exports - ALL RESOLVED
+- ✅ **Policy Zero-Variance Bug (2-3h)** - Fixed Combined Interventions deterministic equilibrium - COMPLETE
+- ✅ **AI Resentment Recovery + Policy Integration (8-12h)** - Breaking circular dependency for utopia paths - COMPLETE
+- ✅ **Planetary Boundaries Recovery + Tech Effects Integration (6-8h)** - Nuclear winter recovery feedback - COMPLETE
 
-**See `/plans/completed/` for detailed archives of all completed work (115+ archived plans).**
+**See `/plans/completed/` for detailed archives of all completed work (117+ archived plans).**
 
 ---
 
@@ -269,6 +270,10 @@ Layer 1 (citation existence) COMPLETE ✅, but ~50% of REAL citations don't actu
 5. **Scope mismatch:** Municipal study cited for national/global parameter
 
 **Research Verification Queue:**
+- [ ] **NEW:** Verify crisis mitigation mechanics citations (commit ad4647b) - `research/verification_ad4647b_20251030.md` (6-10h)
+  - Layer 1: GAO 2025, Cambridge Core 2024 (need specific paper), PMC 2022 (need specific paper), vTaiwan studies, New Deal historical data
+  - Layer 2: 5% variance reduction (empirical basis?), 5%/15% resentment effects (empirical basis?), 0.4 threshold (empirical basis?), 2.75 pp/year recovery rate (accuracy check)
+  - **CRITICAL:** "Cambridge Core 2024" and "PMC 2022" are publishers/databases, not papers - need full citations
 - [ ] **IMMEDIATE:** Timeline compression misattribution (Lenton 2019) - Update wiki line 1147, reframe as speculative (1h)
 - [ ] Verify citations for biosphere normalization fix (commit ff888d4) - `research/verification_ff888d4_biosphere_normalization_20251030.md`
 - [ ] Verify regional refugee population constants (commit 43a9b22) - `research/verification_43a9b22_regional_refugee_populations_20251030.md` (4-6h)

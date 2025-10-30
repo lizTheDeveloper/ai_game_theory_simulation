@@ -73,7 +73,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/meaningRenaissance.ts",
-    "line": 50,
+    "line": 51,
     "name": "initializeMeaningRenaissance",
     "doc": "Initializes meaning renaissance with default or specified values."
   },

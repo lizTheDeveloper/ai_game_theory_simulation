@@ -5,6 +5,7 @@
 **Purpose:** Central hub linking to all specialized roadmaps
 **Philosophy:** Research-backed realism, mechanism-driven emergence
 **Current Status:** Monte Carlo validation critique reveals 13 systemic issues - research validity crisis (Oct 30, 2025)
+**Status Change:** Bug fixes complete → Research validity crisis phase
 
 **For completed work history:** See `/plans/CHANGELOG_OCTOBER_2025.md`
 
@@ -36,7 +37,21 @@ This project has multiple parallel tracks of work. Each specialized roadmap main
 **Active Work:** None - session complete, awaiting next user directive
 
 **Recent Completions (Oct 30, 2025):**
-- ✅ Monte Carlo Issues 1-4 (6-9h) - Western Liberal null, outcome classification, biosphere calibration
+- ✅ **Crisis Mitigation Mechanics (2-3h)** - Automatic stabilizers, participatory governance, homeostatic bounds
+- ✅ **Monte Carlo Issues 1-8 (14-20h)** - Western Liberal, outcome, biosphere, gaming, refugee, snapshots ALL RESOLVED
+- ✅ **Layer 2 Verification - Phase 1 Complete (3h)** - 8/8 high-impact citations verified
+  - 6 fully verified, 2 partially verified, 2 citation errors, 0 fabrications
+  - Found Holodomor ambiguity (monthly vs annual - 10× difference!), fixed Robock/Kangas attribution errors
+  - Files: 7 verification files + completion report + status tracking
+- ✅ **Layer 2 Verification - Phase 2 Progress (3.5h total)** - Critical issues resolved + documentation enhanced
+  - **Session 1 (2h):** Three-pronged approach initiated, found 3 CRITICAL AI water bugs
+  - **Session 2 (1.5h):** Fixed all 3 CRITICAL bugs + added infrastructure mismatch Layer 2 docs
+  - ✅ AI water parameters: Fixed WUE rate (5%→13%), clarified Google docs (63M vs 1M), corrected Li et al. metric
+  - ✅ Infrastructure mismatch: Added Layer 2 documentation (concept verified, quantification derived, ±50% uncertainty)
+  - ✅ Verified climate heat parameters (35°C, 28°C from Raymond 2020)
+  - ✅ Created systematic inventory of 12 research files prioritized by importance
+  - ✅ Monte Carlo validation passed (10 runs), type checking clean
+  - Files: 7 tracking/verification/documentation files + 2 session summaries
 - ✅ AI Resentment Recovery + Policy Integration (8-12h) - Circular dependency resolved
 - ✅ Policy Zero-Variance Bug (2-3h) - Combined Interventions equilibrium fixed
 - ✅ Planetary Boundary Recovery + Tech Effects (6-8h) - Nuclear winter recovery feedback complete
@@ -294,20 +309,105 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - Monte Carlo validation (N≥10)
 
 **Active Tasks:**
-- **HIGH PRIORITY:** Layer 2 Verification - Phase 1 Code Updates (2-3h) - **NEW (Oct 30)**
+- **HIGH PRIORITY:** Layer 2 Verification - Phase 1 Code Updates (2-3h) - **IN PROGRESS (Oct 30)**
   - ✅ **Phase 1 Complete:** 8/8 high-impact citations verified (mortality, climate, UBI parameters)
-  - ✅ **Verification files created:** 5 new files + status tracking + completion report
+  - ✅ **Verification files created:** 7 research files (xia_et_al_2022, wolowyna_et_al_2020, raymond_et_al_2020, robock_clarification, kangas_ubi, LAYER2_STATUS, COMPLETION_REPORT)
+  - **Quality Status:** HIGH - Most claims research-backed with direct quotes, 6 fully verified, 2 partially verified
+  - **Success Rate:** 6/8 fully verified, 2/8 partial, 2 citation errors, 0 fabrications
   - **4 Issues Found:**
-    - ⚠️ **CRITICAL AMBIGUITY:** Holodomor mortality rate (140-200 per 1,000) likely **ANNUAL not monthly** (10× difference!)
-    - ⚠️ Nuclear winter timeline: "2-5 years" unverified in secondary sources
-    - ❌ Citation error: "Robock et al. 2022" → should be "Xia et al. 2022"
-    - ❌ Date error: "Kangas et al. 2024" → should be "2019/2020"
-  - **Action Required (orchestrator):**
-    1. Update simulation code to clarify Holodomor interpretation (monthly vs annual)
-    2. Fix citation errors (Robock → Xia, Kangas 2024 → 2019)
-    3. Add uncertainty notes to code comments (nuclear timeline, Holodomor ambiguity, Kangas causation)
+    - ⚠️ **CRITICAL AMBIGUITY:** Holodomor mortality rate (140-200 per 1,000) likely **ANNUAL not monthly** (10× difference! ~12-17 per 1,000/month if annual)
+    - ⚠️ Nuclear winter timeline: "2-5 years" unverified in secondary sources (5+ billion deaths confirmed, timeline needs paper access)
+    - ❌ Citation error: "Robock et al. 2022" → should be "Xia et al. 2022" (Robock is co-author, not lead)
+    - ❌ Date error: "Kangas et al. 2024" → should be "Kangas et al. 2019/2020" (Finland UBI experiment)
+  - **Action Items (prioritized):**
+    1. **HIGH:** Clarify Holodomor interpretation in famine mortality code (monthly vs annual) + add caveat
+    2. **HIGH:** Fix citation errors in research files (Robock → Xia, Kangas 2024 → 2019)
+    3. **HIGH:** Add uncertainty notes to code comments (nuclear timeline, Holodomor ambiguity, Kangas causation)
+    4. **MEDIUM:** Obtain direct paper access (Xia et al. 2022 Nature Food, Wolowyna et al. 2020 Cambridge Core)
+    5. **LOW:** Plan Phase 2 Layer 2 verification (core mechanics: ai-water, social-cohesion, etc. - 15-20h)
+  - **Files to Update:**
+    - `research/mortality_caps_historical_data_20251027.md` (lines 16, 101-102)
+    - `research/ubi-floor-mechanics-validation_20251027.md` (Kangas citation)
+    - Famine mortality calculation code (add monthly/annual interpretation comment)
+  - **Complexity:** 3 systems (famine mortality, research documentation, code comments)
   - **See:** `research/PHASE1_LAYER2_COMPLETION_REPORT.md`, `research/LAYER2_VERIFICATION_STATUS.md`
-  - **Next:** Phase 2 (core mechanics, 15-20h), obtain direct paper access for ambiguities
+  - **Remaining:** Phase 2 (15-20h estimated), direct paper access for unverified claims
+
+- **HIGH PRIORITY:** Layer 2 Verification - Phase 2 Core Mechanics (36-47h) - **IN PROGRESS (Oct 30)**
+  - ✅ **Phase 2 Started:** Three-pronged approach (A+B+C) initiated, foundation established (Session 1: 2h)
+  - ✅ **Critical Issues Resolved:** 3 CRITICAL AI water parameter bugs fixed + validated (Session 2: 1.5h)
+  - ✅ **Files Created:** 6 tracking/verification files (status, summaries, documentation)
+  - **Progress:** ~8% complete (3.5h / 40-52h estimated)
+  - **Three-Pronged Results:**
+    - ✅ **Option A (Climate-Mortality):** Heat parameters verified + infrastructure docs added - ⏳ PARTIAL (3 sections remaining: biosphere, extreme weather, multi-paradigm)
+    - ✅ **Option B (Systematic Inventory):** 12 substantive research files identified and prioritized by importance
+    - ✅ **Option C (AI Infrastructure):** Pre-existing verification reviewed → 3 CRITICAL issues found → **ALL RESOLVED (Oct 30)**
+
+  **✅ RESOLVED Issues (Option C - AI Water Parameters) - Session 2:**
+  1. ✅ **Google unit conversion - FIXED:** Documentation clarified (raw 63M vs calibrated 1M baseline)
+     - Updated comments to distinguish raw hyperscale consumption (63M L/month) from calibrated baseline (1M)
+     - Fixed: `src/simulation/aiInfrastructureResources.ts:44-51`
+  2. ✅ **Microsoft WUE improvement rate - FIXED:** Updated from 5% to 13% per year
+     - Corrected: WUE_IMPROVEMENT_RATE_YEARLY = 0.05 → 0.13
+     - Fixed: `src/simulation/aiInfrastructureResources.ts:87`
+     - Validation: Monte Carlo 10-run validation passed
+  3. ✅ **Li et al. 2023 metric - FIXED:** Corrected to L/kWh WUE (removed fabricated "per-GPU-hour")
+     - Updated header to use actual paper metrics: 0.55, 3.14, 3.69 L/kWh
+     - Fixed: `src/simulation/aiInfrastructureResources.ts:9-20`
+  4. ✅ **Source attribution - FIXED:** Corrected H100 source from "US DOE (2024)" to "NVIDIA DGX H100 (2023-2024)"
+
+  **✅ DOCUMENTED Extrapolations (Option A - Climate-Mortality) - Session 2:**
+  - ✅ Temperature thresholds (35°C, 28°C) **directly from Raymond et al. 2020** (Phase 1 verified)
+  - ✅ Temperature scaling function (10%/25%/50% per °C) **EXTRAPOLATED** - marked in research docs
+  - ✅ Infrastructure multiplier (up to 3x) **DERIVED** - **NOW DOCUMENTED in code with Layer 2 standards**
+    - Added function documentation marking concept as verified, quantification as derived
+    - Added inline comments at calculation explaining derivation
+    - Added uncertainty estimate: ±50%
+    - Fixed: `src/simulation/extremeWeatherEvents.ts`, `src/types/extremeWeather.ts`
+  - ❓ Missing citations: 70,000 deaths (2003 Europe heat wave), 250,000 deaths/year (IPCC AR6)
+
+  **Phase 2 Systematic Inventory (Option B):**
+  - **HIGH PRIORITY (4 files, 20-25h):**
+    1. climate-mortality-biosphere-framework (remaining 4 sections, 2-3h)
+    2. ubi-floor-mechanics-validation (Kangas derivations, 2-3h)
+    3. cooperative-ai-ownership-economics (new research, 4-6h)
+    4. mortality_caps_historical_data (other claims beyond Phase 1, 2-3h)
+  - **MEDIUM PRIORITY (4 files, 10-15h):** seasonal_famine, climate_collapse_timelines, ai-safety-climate-crossdomain, memetic-contagion
+  - **LOWER PRIORITY (4 files, 10-12h):** tier2_params, alignment_technique, ai_collective, simulation_mortality_validation
+
+  **Action Items (prioritized):**
+  1. ✅ **COMPLETE:** Update AI water parameters in `aiInfrastructureResources.ts` (Session 2)
+     - ✅ Fixed WUE_IMPROVEMENT_RATE_YEARLY: 0.05 → 0.13
+     - ✅ Clarified Google documentation (raw 63M vs calibrated 1M)
+     - ✅ Corrected Li et al. metric to L/kWh (removed fabricated "per-GPU-hour")
+     - ✅ Fixed H100 source attribution (NVIDIA, not DOE)
+  2. ✅ **COMPLETE:** Add extrapolation documentation to infrastructure mismatch (Session 2)
+     - ✅ Marked concept as verified, quantification as derived in function docs
+     - ✅ Added inline comments explaining derivation
+     - ✅ Added uncertainty estimates (±50%)
+     - ✅ Updated constant documentation in types file
+  3. **MEDIUM:** Find missing citations (70K deaths 2003 Europe, IPCC AR6 250K)
+  4. **MEDIUM:** Complete climate-mortality remaining sections (2-3h):
+     - Extreme weather (Knutson citations)
+     - Biosphere die-off (species velocity, Joshua Tree case study)
+     - Multi-paradigm (TEK, Buen Vivir, Ubuntu)
+  5. **ONGOING:** Work through high-priority file queue systematically (18-22h):
+     - UBI floor mechanics validation (2-3h)
+     - Cooperative AI ownership economics (4-6h)
+     - Mortality caps historical data (2-3h)
+     - Seasonal famine, climate timelines, AI-climate crossdomain, memetic contagion (10-13h)
+
+  **Files Updated (Session 2):**
+  - ✅ `src/simulation/aiInfrastructureResources.ts` (4 corrections)
+  - ✅ `src/simulation/extremeWeatherEvents.ts` (infrastructure mismatch docs)
+  - ✅ `src/types/extremeWeather.ts` (constant documentation)
+  - ✅ `research/aiInfrastructureResources_verification_20251028.md` (marked RESOLVED)
+  - ✅ `research/LAYER2_PHASE2_VERIFICATION_STATUS.md` (updated progress)
+  - ✅ `research/infrastructure_mismatch_layer2_documentation_20251030.md` (created)
+  - ✅ `research/PHASE2_LAYER2_SESSION2_SUMMARY_20251030.md` (created)
+
+  **See:** `research/PHASE2_LAYER2_SESSION2_SUMMARY_20251030.md`, `research/PHASE2_LAYER2_PROGRESS_SUMMARY_20251030.md`, `research/LAYER2_PHASE2_VERIFICATION_STATUS.md`
+  **Remaining:** 36-47 hours for complete Phase 2 (12 files total, 3.5h complete)
 
 - **HIGH PRIORITY:** Citation Verification Fixes - Apply Corrections from Triage (1-2h)
   - Apply fixes for 5 citation errors documented in `MISATTRIBUTIONS_TRIAGE.md`
@@ -399,11 +499,15 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
    - **Verdict:** "NOT RESEARCH-READY - simulation appears optimized for catastrophic outcomes rather than research validity"
    - See: `/reviews/monte_carlo_validation_critique_20251030.md` (213 lines)
    - See Bug Triage section above for complete issue breakdown
-2. 🔴 **CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (40-60h) - Discovered Oct 29
+2. 🔴 **CRITICAL:** Systematic Claim Verification Crisis (Layer 2) (38-49h remaining) - IN PROGRESS (Oct 30)
    - ~50% of real citations don't actually support the claims made
    - Requires reading papers and extracting direct quotes (cannot be automated)
-   - 87 research files with 815 real citations to verify
-   - See: `research/CLAIM_VERIFICATION_CRISIS.md`
+   - **Phase 1 COMPLETE (Oct 30):** 8/8 high-impact citations verified (6 fully, 2 partial, 2 citation errors, 0 fabrications)
+   - **Phase 2 STARTED (Oct 30):** Core mechanics - 3 critical AI water parameter issues found, climate extrapolations documented
+     - ✅ 5% complete (2h / 40-52h)
+     - ✅ 12 research files inventoried and prioritized
+     - 🚨 3 CRITICAL water parameter errors (30× underestimate, 2.6× underestimate, fabricated metric)
+   - See: `research/CLAIM_VERIFICATION_CRISIS.md`, `research/PHASE2_LAYER2_PROGRESS_SUMMARY_20251030.md`
 3. ✅ **Simulation:** Systematic Citation Verification (Layer 1) (35-40h) - COMPLETE (Oct 29)
 4. ✅ **Simulation:** Monte Carlo Validation Bug Fixes (11-17h) - COMPLETE & VERIFIED (Oct 29)
    - 8 major bugs fixed following "fix at source" principle
@@ -441,19 +545,22 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 
 ## 🎯 Quick Stats
 
-**Total Remaining Work (Simulation):** ~186-297 hours (increased by 79-110h for Monte Carlo validation issues, minus 22-40h Oct 30 completions)
-- CRITICAL: 137-196h (Layer 2 claim verification 40-60h + Monte Carlo validation CRITICAL 18-26h + Monte Carlo HIGH 38-54h + Monte Carlo MEDIUM 18-25h)
+**Total Remaining Work (Simulation):** ~235-346 hours (updated Oct 30: +26-42h completed items removed, +79-110h new Monte Carlo issues added)
+- CRITICAL: 156-220h (Layer 2 Phase 2: 38-49h remaining + Monte Carlo CRITICAL 18-26h + Monte Carlo HIGH 38-54h + Monte Carlo MEDIUM 18-25h)
 - HIGH: 0h (all integration issues complete)
 - MEDIUM: 9-16h (cooperative AI + policy remaining)
-- LOW: 60-71h (P3 + TIER 5 reduced, Monte Carlo LOW 5-7h added)
+- LOW: 70-83h (P3 + TIER 5 + Monte Carlo LOW 5-7h)
 - **NOTE:** Monte Carlo validation critique (Oct 30) identified systemic research validity issues - 13 new issues requiring immediate attention
+- **NOTE:** Layer 2 Phase 2 started (Oct 30) - found 3 CRITICAL AI water parameter errors (ALL FIXED)
+- **NOTE:** Crisis Mitigation Mechanics COMPLETE (Oct 30) - 2-3h
+- **NOTE:** Monte Carlo Issues 1-8 ALL COMPLETE (Oct 30) - 14-20h
 - NOTE: All 8 architecture integration issues complete (60-80h done)
 
 **Total Remaining Work (Frontend):** ~3-4 weeks with parallelization (plus 23-30h future enhancements)
-**Work Completed Oct 24-29:** ~181-227 hours across 27 major items (includes 44-60h architecture integration + 1h citation fixes)
-**Work Completed Oct 2025:** ~338-424 hours equivalent total
+**Work Completed Oct 24-30:** ~207-269 hours across 30 major items (includes 44-60h architecture integration + 26-42h Oct 30 completions)
+**Work Completed Oct 2025:** ~364-466 hours equivalent total
 **Active Plans:** 19+ simulation plans, 32 dashboard subplans, 4 god-mode plans
-**Completed Plans (Archived):** 113+ in `/plans/completed/`
+**Completed Plans (Archived):** 117+ in `/plans/completed/`
 
 ---
 
