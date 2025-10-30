@@ -996,25 +996,106 @@ export function handleBankruptcy(org: Organization, state: GameState): void {
 
   org.ownedAIModels = []; // Clear ownership list
 
-  // HIGH-4 FIX (Oct 30, 2025): Shut down data centers when organization goes bankrupt
-  // Population coherence: Can't maintain 12PF compute with zero employees
+  // HIGH-4 FIX v2 (Oct 30, 2025): Transfer data centers to government/orgs when organization goes bankrupt
+  // Data centers are critical infrastructure - they get sold/transferred, not destroyed
   if (state.computeInfrastructure && org.ownedDataCenters.length > 0) {
-    const shutDownDCs = state.computeInfrastructure.dataCenters
+    const bankruptDCs = state.computeInfrastructure.dataCenters
       .filter(dc => org.ownedDataCenters.includes(dc.id) && dc.operational);
 
-    const totalCapacityLost = shutDownDCs.reduce((sum, dc) => sum + dc.capacity, 0);
+    let governmentAcquiredDCs = 0;
+    let privateAcquiredDCs = 0;
+    let shutDownDCs = 0;
+    let totalCapacityTransferred = 0;
+    let totalCapacityLost = 0;
 
-    shutDownDCs.forEach(dc => {
-      dc.operational = false;
-      console.log(`   💀 Data center shut down: ${dc.name} (${dc.capacity.toFixed(0)} PF capacity lost)`);
+    // Find government and solvent private organizations
+    const govOrg = state.organizations.find(o => o.type === 'government' && !o.bankrupt);
+    const solventOrgs = state.organizations.filter(o =>
+      o.id !== org.id &&
+      !o.bankrupt &&
+      o.type === 'private' &&
+      o.capital > 0
+    );
+
+    bankruptDCs.forEach(dc => {
+      // Strategy: Government gets first right of refusal for strategic infrastructure
+      // Then solvent private orgs can acquire valuable assets
+      // Only shut down if no viable buyer exists
+
+      const isStrategicInfra = dc.capacity > 1000 || dc.restrictedAccess; // Large or restricted = strategic
+      const purchasePrice = dc.capacity * 0.8; // Bankruptcy discount (80% of value)
+
+      // 1. Government acquisition (priority for strategic infrastructure)
+      if (govOrg && isStrategicInfra) {
+        if (govOrg.capital >= purchasePrice * 0.3) {
+          // Government can afford partial payment (30% to creditors)
+          dc.organizationId = govOrg.id;
+          govOrg.ownedDataCenters.push(dc.id);
+          govOrg.capital -= purchasePrice * 0.3;
+          org.capital += purchasePrice * 0.3; // Creditors get some recovery
+
+          governmentAcquiredDCs++;
+          totalCapacityTransferred += dc.capacity;
+          console.log(`   🏛️  Government acquired: ${dc.name} (${dc.capacity.toFixed(0)} PF, strategic infrastructure)`);
+        } else {
+          // Emergency nationalization if government can't afford
+          dc.organizationId = govOrg.id;
+          govOrg.ownedDataCenters.push(dc.id);
+
+          governmentAcquiredDCs++;
+          totalCapacityTransferred += dc.capacity;
+          console.log(`   🚨 Emergency nationalization: ${dc.name} (insufficient government funds)`);
+        }
+      }
+      // 2. Private org acquisition (if government didn't take it)
+      else if (solventOrgs.length > 0) {
+        // Find org with most capital (likely to maintain operations)
+        const buyer = solventOrgs.sort((a, b) => b.capital - a.capital)[0];
+
+        if (buyer.capital >= purchasePrice) {
+          // Private org purchases at market rate
+          dc.organizationId = buyer.id;
+          buyer.ownedDataCenters.push(dc.id);
+          buyer.capital -= purchasePrice;
+          org.capital += purchasePrice; // Creditors recover value
+
+          privateAcquiredDCs++;
+          totalCapacityTransferred += dc.capacity;
+          console.log(`   🏢 Acquired by ${buyer.name}: ${dc.name} (${dc.capacity.toFixed(0)} PF, ${purchasePrice.toFixed(0)} capital)`);
+        } else {
+          // No buyer can afford - shut down
+          dc.operational = false;
+          shutDownDCs++;
+          totalCapacityLost += dc.capacity;
+          console.log(`   💀 Shut down (no buyer): ${dc.name} (${dc.capacity.toFixed(0)} PF capacity lost)`);
+        }
+      }
+      // 3. Last resort: Shut down (no government, no solvent buyers)
+      else {
+        dc.operational = false;
+        shutDownDCs++;
+        totalCapacityLost += dc.capacity;
+        console.log(`   💀 Shut down (no viable owners): ${dc.name} (${dc.capacity.toFixed(0)} PF capacity lost)`);
+      }
     });
 
-    if (shutDownDCs.length > 0) {
-      console.log(`   📉 Total compute capacity lost: ${totalCapacityLost.toFixed(0)} PetaFLOPs`);
+    // Summary logging
+    if (governmentAcquiredDCs > 0 || privateAcquiredDCs > 0) {
+      const totalAcquired = governmentAcquiredDCs + privateAcquiredDCs;
+      console.log(`   ✅ ${totalAcquired} data centers transferred (${totalCapacityTransferred.toFixed(0)} PF maintained)`);
+      if (governmentAcquiredDCs > 0) {
+        console.log(`      🏛️  Government: ${governmentAcquiredDCs} strategic facilities`);
+      }
+      if (privateAcquiredDCs > 0) {
+        console.log(`      🏢 Private sector: ${privateAcquiredDCs} facilities`);
+      }
+    }
+    if (shutDownDCs > 0) {
+      console.log(`   📉 ${shutDownDCs} data centers shut down (${totalCapacityLost.toFixed(0)} PF lost, no viable buyers)`);
     }
   }
 
-  org.ownedDataCenters = []; // Clear data center ownership
+  org.ownedDataCenters = []; // Clear bankrupt org's ownership list
 
   // Mark organization as bankrupt (keep in list but inactive)
   org.capital = 0;
