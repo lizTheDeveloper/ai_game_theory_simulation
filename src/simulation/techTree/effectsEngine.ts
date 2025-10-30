@@ -50,6 +50,46 @@ function getDynamicProperty(obj: object, key: string, defaultValue: number): num
 }
 
 /**
+ * Trigger planetary boundary recovery when tech improves boundary
+ *
+ * Sets recoveryMonths = 1 to start the recovery clock.
+ * This integrates tech effects with the planetary boundaries recovery system.
+ *
+ * Architecture Integration (Oct 29, 2025):
+ * - Tech effects (effectsEngine.ts) modify boundary.currentValue
+ * - Recovery system (planetaryBoundaries.ts) expects recoveryMonths to increment
+ * - This function bridges the gap: when tech improves boundary, trigger recovery
+ *
+ * @param gameState - Game state (mutated)
+ * @param boundaryName - Which boundary to trigger recovery for
+ */
+function triggerBoundaryRecovery(
+  gameState: GameState,
+  boundaryName: 'climate_change' | 'biosphere_integrity' | 'land_system_change' |
+                'freshwater_change' | 'biogeochemical_flows' | 'novel_entities' |
+                'ocean_acidification' | 'stratospheric_ozone' | 'atmospheric_aerosols'
+): void {
+  const system = gameState.planetaryBoundariesSystem;
+  if (!system) return;
+
+  const boundary = system.boundaries[boundaryName];
+  if (!boundary) {
+    console.warn(`⚠️  Boundary ${boundaryName} not found, cannot trigger recovery`);
+    return;
+  }
+
+  // Start recovery clock (or increment if already recovering)
+  // recoveryMonths = 1 signals "improvement is happening"
+  // The PlanetaryBoundariesPhase will increment this each month if improvement continues
+  boundary.recoveryMonths = Math.max(1, boundary.recoveryMonths);
+
+  // Optional: Log first recovery trigger
+  if (boundary.recoveryMonths === 1) {
+    console.log(`🌍✅ ${boundary.displayName} recovery started (tech effect)`);
+  }
+}
+
+/**
  * Apply all technology effects to game state
  * Called each month after tech deployment actions
  */
@@ -401,6 +441,9 @@ function applyGlobalEffects(
         valueName: 'atmosphericCO2',
         month: gameState.currentMonth
       });
+          // INTEGRATION FIX (Oct 29, 2025): Trigger planetary boundary recovery
+          // Carbon removal improves climate_change boundary → start recovery clock
+          triggerBoundaryRecovery(gameState, 'climate_change');
         }
         break;
         
@@ -415,6 +458,8 @@ function applyGlobalEffects(
         valueName: 'temperatureAnomaly',
         month: gameState.currentMonth
       });
+          // INTEGRATION FIX (Oct 29, 2025): Global cooling helps climate boundary
+          triggerBoundaryRecovery(gameState, 'climate_change');
         }
         break;
 
@@ -464,6 +509,8 @@ function applyGlobalEffects(
         valueName: 'currentValue',
         month: gameState.currentMonth
       });
+          // INTEGRATION FIX (Oct 29, 2025): Biodiversity improvement → biosphere recovery
+          triggerBoundaryRecovery(gameState, 'biosphere_integrity');
         }
         break;
 
@@ -509,6 +556,8 @@ function applyGlobalEffects(
         valueName: 'atmosphericCO2',
         month: gameState.currentMonth
       });
+          // INTEGRATION FIX (Oct 29, 2025): Carbon sequestration → climate recovery
+          triggerBoundaryRecovery(gameState, 'climate_change');
         }
         break;
 
@@ -592,12 +641,12 @@ function applyGlobalEffects(
 
             // 4. DIRECT EXTINCTION RATE REDUCTION (only as ecosystem stabilizes)
             // Only apply if acceleration is slowing (i.e., habitat recovering)
+            // FIXED (Oct 30, 2025): Use MIN_EXTINCTION_RATE constant, not old hardcoded floors
             if (region.extinctionAcceleration < 1.0) {
+              const MIN_EXTINCTION_RATE = 1.0; // Natural background rate (cannot drop to zero)
               const extinctionReduction = value * 0.50 * effectScale; // Moderate reduction once stabilizing
               region.extinctionRate = assertFinite(Math.max(
-                region.biodiversityWeight === 0.50 ? 100 : // Tropical can't go below 100x (hotspot baseline)
-                region.biodiversityWeight === 0.20 ? 30 :   // Temperate/grasslands baseline
-                region.biodiversityWeight === 0.10 ? 20 : 50, // Boreal baseline
+                MIN_EXTINCTION_RATE, // Cannot drop below natural background rate
                 region.extinctionRate - extinctionReduction
               ), {
         location: 'applyRegionalEffects:extinctionRateReduction',
@@ -608,6 +657,9 @@ function applyGlobalEffects(
           }
 
           // Global metrics will be recalculated in updateLandUseSystem()
+          // INTEGRATION FIX (Oct 29, 2025): Habitat restoration → multiple boundaries
+          triggerBoundaryRecovery(gameState, 'biosphere_integrity'); // Extinction reduction
+          triggerBoundaryRecovery(gameState, 'land_system_change');  // Habitat cover increase
         }
         break;
 
@@ -622,6 +674,8 @@ function applyGlobalEffects(
         valueName: 'pHLevel',
         month: gameState.currentMonth
       });
+          // INTEGRATION FIX (Oct 29, 2025): Ocean alkalinity → ocean acidification recovery
+          triggerBoundaryRecovery(gameState, 'ocean_acidification');
         }
         break;
         
@@ -655,16 +709,16 @@ function applyGlobalEffects(
         break;
         
       case 'trustBonus':
-        // Increase public trust
+        // Increase public trust in AI
         if (gameState.globalMetrics) {
           const current = assertStateProperty(
             gameState.globalMetrics,
-            'publicTrust',
+            'trustInAI',
             { location: 'applyGlobalEffects.trustBonus', month: gameState.currentMonth }
           );
-          gameState.globalMetrics.publicTrust = assertFinite(Math.min(1.0, current + value * 0.01), {
+          gameState.globalMetrics.trustInAI = assertFinite(Math.min(1.0, current + value * 0.01), {
         location: 'applyRegionalEffects:trustBonus',
-        valueName: 'publicTrust',
+        valueName: 'trustInAI',
         month: gameState.currentMonth
       });
         }
@@ -690,12 +744,12 @@ function applyGlobalEffects(
         if (gameState.globalMetrics) {
           const current = assertStateProperty(
             gameState.globalMetrics,
-            'publicTrust',
+            'trustInAI',
             { location: 'applyGlobalEffects.publicAwarenessBonus', month: gameState.currentMonth }
           );
-          gameState.globalMetrics.publicTrust = assertFinite(Math.min(1.0, current + value * 0.005), {
+          gameState.globalMetrics.trustInAI = assertFinite(Math.min(1.0, current + value * 0.005), {
         location: 'applyRegionalEffects:publicAwarenessBonus',
-        valueName: 'publicTrust',
+        valueName: 'trustInAI',
         month: gameState.currentMonth
       });
         }
@@ -815,6 +869,8 @@ function applyRegionalEffects(
         month: gameState.currentMonth
       });
               }
+              // INTEGRATION FIX (Oct 29, 2025): Freshwater supply increase → freshwater recovery
+              triggerBoundaryRecovery(gameState, 'freshwater_change');
             }
           }
           break;
@@ -898,6 +954,8 @@ function applyRegionalEffects(
         valueName: 'recoveryRate',
         month: gameState.currentMonth
       });
+            // INTEGRATION FIX (Oct 29, 2025): Phosphorus recovery → biogeochemical flows
+            triggerBoundaryRecovery(gameState, 'biogeochemical_flows');
           }
           break;
           
@@ -952,6 +1010,8 @@ function applyRegionalEffects(
         valueName: 'currentValue',
         month: gameState.currentMonth
       });
+            // INTEGRATION FIX (Oct 29, 2025): Pollution reduction → novel entities recovery
+            triggerBoundaryRecovery(gameState, 'novel_entities');
           }
           break;
           

@@ -13,6 +13,7 @@ import { MetricCard } from "@/components/core/MetricCard"
 import { useSimulationWorker } from "@/lib/contexts/SimulationWorkerContext"
 import { eventDatabase } from "@/lib/eventDatabase"
 import { useEffect, useMemo, useState, useRef } from "react"
+import { HelpButton } from "@/components/docs/HelpButton"
 
 interface TimelineEvent {
   month: number
@@ -501,6 +502,48 @@ export function TimelineDashboard() {
           </p>
         </div>
       </Panel>
+
+      {/* Help Button */}
+      <HelpButton
+        content={{
+          title: "Timeline Dashboard",
+          description: "View the chronological event stream from the simulation. Track significant events, crises, breakthroughs, and systemic changes as they unfold.",
+          metrics: [
+            {
+              name: "Event Severity",
+              meaning: "Impact level of events on the simulation",
+              interpretation: "Low: Routine updates. Medium: Notable changes. High: Potential risks. Critical: Major threats or breakthroughs."
+            },
+            {
+              name: "Event Categories",
+              meaning: "Types of events tracked in the simulation",
+              interpretation: "AI: Agent behaviors. Crisis: Active threats. Environment: Planetary changes. Tech: Breakthroughs. Social: Trust/cohesion shifts."
+            },
+            {
+              name: "Event Cascades",
+              meaning: "How events trigger chain reactions",
+              interpretation: "Many events cause follow-on effects. Crisis → Response → Side effects. Watch for cascade patterns in the timeline."
+            },
+            {
+              name: "Filter Options",
+              meaning: "Focus on specific event types",
+              interpretation: "Use filters to track specific domains. 'Critical only' shows major inflection points. Category filters isolate subsystems."
+            },
+            {
+              name: "Temporal Patterns",
+              meaning: "Event frequency and clustering over time",
+              interpretation: "Quiet periods = stability. Event clusters = crisis or breakthrough periods. Accelerating frequency = approaching singularity."
+            },
+            {
+              name: "Agent Attribution",
+              meaning: "Which AI agents trigger events",
+              interpretation: "Shows agent ID for AI-triggered events. Escaped agents generate more events. Collectives act as single entities."
+            }
+          ],
+          docsLink: "/docs/dashboard-guide#timeline"
+        }}
+        position="top-right"
+      />
     </div>
   )
 }

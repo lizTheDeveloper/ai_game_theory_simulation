@@ -536,7 +536,8 @@ function updateLandSystemRecovery(state: GameState, rng: RNGFunction): void {
  * Timeline: Stabilization when extinction rate < 10% baseline (not recovery)
  *
  * Citations:
- * - IPBES (2024): 100-1000x natural extinction rate
+ * - Richardson et al. (2023): Current ~2× safe boundary (not 100-1000×, see BLOCKER-2 fix)
+ * - IPBES (2024): Historical estimates varied 100-1000× (measurement uncertainty)
  * - Ceballos et al. (2023): Extinction irreversibility
  * - Saiga antelope case: Population recovery (not species restoration)
  */
@@ -557,9 +558,10 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
   const naturalRate = state.planetaryBoundariesSystem.landUse.naturalExtinctionRate;
 
   // FIX (Oct 21, 2025): Stabilization activates when WORKING TOWARD recovery, not when already recovered
-  // Old: Required < 10x natural (impossible from 100x start)
-  // New: Extinction rate DECLINING (any reduction shows progress)
-  const extinctionRateDeclining = extinctionRate < 100; // If below starting rate, we're improving
+  // FIX (Oct 30, 2025): BLOCKER-2 - Initial extinction rate is ~2.2× (not 100×)
+  // Stabilization: Extinction rate DECLINING below initial 2025 baseline (~2.2× natural)
+  const INITIAL_EXTINCTION_RATE = 2.2; // Richardson et al. (2023): Current ~2× safe boundary
+  const extinctionRateDeclining = extinctionRate < INITIAL_EXTINCTION_RATE;
   const isStabilizing = extinctionRateDeclining;
 
   // FIX (Oct 21, 2025): ACTUALLY IMPROVE BIODIVERSITY (population recovery, not species restoration)
@@ -593,7 +595,7 @@ function updateBiosphereStabilization(state: GameState, rng: RNGFunction): void 
 
     if (state.currentMonth % 120 === 0) { // Log every 10 years
       console.log(`\n=== Biosphere Integrity STABILIZED (not recovered) ===`);
-      console.log(`  Extinction rate: ${extinctionRate.toFixed(1)}x natural (down from 100-1000x)`);
+      console.log(`  Extinction rate: ${extinctionRate.toFixed(1)}× natural (down from ${INITIAL_EXTINCTION_RATE}×)`);
       console.log(`  Lost species: PERMANENT (extinction is irreversible)`);
       console.log(`  Population recovery: In progress for surviving species`);
     }

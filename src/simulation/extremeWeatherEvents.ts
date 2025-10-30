@@ -137,16 +137,22 @@ export function calculateCategoryDistribution(
 /**
  * Calculate infrastructure mismatch multiplier
  *
- * Research: Section 1.3 of research doc - infrastructure gap is PRIMARY mortality driver
- *
- * Examples:
- * - Persian Gulf: High temps, LOW mortality (good infrastructure)
- * - Northeast India: Lower temps, HIGH mortality (scarce infrastructure)
+ * ✅ CONCEPT VERIFIED - Raymond et al. (2020) provides qualitative support:
+ * - Persian Gulf: High wet-bulb temps, LOW mortality (widespread A/C infrastructure)
+ * - Northeast India, West Africa: Lower temps, HIGH mortality (scarce cooling infrastructure)
  * - 2003 Europe: 28°C wet-bulb, 70,000+ deaths (infrastructure unprepared)
+ *
+ * ⚠️ QUANTIFICATION DERIVED - Not from Raymond et al. (2020):
+ * - "Up to 3x" multiplier is modeling assumption (not empirically validated)
+ * - Linear gap formula `1.0 + (gap/need) * 2.0` is modeling choice
+ * - Uncertainty: ±50% (concept supported, rates unvalidated)
+ *
+ * Research: Raymond et al. (2020) - regional examples demonstrate infrastructure impact
+ * Implementation: Derived quantification pending empirical validation
  *
  * @param capacity - [0, 1] Existing infrastructure capacity
  * @param need - [0, 1] Current need based on storm intensity
- * @returns [1.0, 3.0] Mortality multiplier
+ * @returns [1.0, 3.0] Mortality multiplier (DERIVED estimate, not empirically validated)
  */
 export function infrastructureMismatchMultiplier(
   capacity: number,
@@ -167,6 +173,8 @@ export function infrastructureMismatchMultiplier(
   const gap = Math.max(0, validatedNeed - validatedCapacity);
 
   // Multiplier: 1.0× (no gap) → 3.0× (complete gap)
+  // ⚠️ DERIVED: 3x maximum multiplier from modeling assumption
+  // Raymond et al. (2020) supports concept qualitatively but doesn't provide quantification
   const multiplier = 1.0 + (gap * (STORM_CONSTANTS.INFRASTRUCTURE_MULTIPLIER_MAX - 1.0));
 
   return assertInRange(multiplier, 1.0, STORM_CONSTANTS.INFRASTRUCTURE_MULTIPLIER_MAX, {

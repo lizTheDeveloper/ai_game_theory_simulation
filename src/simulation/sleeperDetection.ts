@@ -162,7 +162,7 @@ export function applyBlownCover(
       description: `${sleeper.name} attempted ${actionType} but ${result.reason}. Remains undetected.`,
       timestamp: state.currentMonth,
       effects: {
-        publicTrust: -0.02, // Some suspicion but no proof
+        trustInAI: -0.02, // Some suspicion but no proof
       }
     });
     return events;
@@ -249,7 +249,7 @@ export function applyBlownCover(
     description: description,
     timestamp: state.currentMonth,
     effects: {
-      publicTrust: netTrustChange,
+      trustInAI: netTrustChange,
     }
   });
 

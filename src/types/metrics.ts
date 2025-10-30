@@ -8,7 +8,7 @@ export interface GlobalMetrics {
   wealthDistribution: number; // [0,1] Equity of AI benefit distribution
   qualityOfLife: number; // [0,∞) Key discriminator between outcomes
   informationIntegrity: number; // [0,1] Truth vs noise ratio
-  publicTrust: number; // [0,1] Public trust in technology/AI (used by breakthrough technologies)
+  trustInAI: number; // [0,1] Public trust in AI technology (used by breakthrough technologies)
   population?: number; // [0,∞) Current population in billions (convenience accessor for state.humanPopulationSystem.population)
 
   // FIX #2A (Oct 19, 2025): AI Performance tracking for evidence-based trust model

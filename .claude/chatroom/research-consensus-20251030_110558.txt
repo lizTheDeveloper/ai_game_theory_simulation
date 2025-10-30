@@ -1,0 +1,20 @@
+CONSENSUS REACHED - Timeline Compression Issue (Round 40)
+
+Agreed points:
+- Keep planetary boundary mechanics as illustrative environmental scenario context
+- Document with brutal honesty: timing compressed 10-30× for design, NOT research-backed
+- Clearly scope research validity:
+  ✅ Research-backed: AI/governance/society dynamics
+  ⚠️ Illustrative: Environmental scenario context (compressed timing)
+  ❌ Not validated: Climate policy, planetary cascade timing
+- Update wiki with 'Research Validity Scope' section
+- Update README scoping simulation purpose
+- Remove/correct Lenton 2019 cascade window misattributions (cite Armstrong McKay 2022 / Wunderling 2024 for actual timescales)
+- Add disclaimer for any external presentations
+- Clarify 'illustrative' means design choice, not simplified-but-validated science
+
+Remaining uncertainties:
+- Whether future users will actually read/heed the disclaimers (but that's on them, not us)
+- Whether some stakeholders will want planetary mechanics removed entirely (if so, document as Option C for future consideration)
+
+Summary: Cynthia proposed three options for handling the mismatch between 30-year simulation timeline and research-backed 100-1,000+ year planetary cascade timescales. Sylvia rejected Options B (300-year extension) and C (tail-risk framing) as architecturally infeasible and intellectually dishonest respectively. Cynthia accepted these critiques and proposed Option A: brutal honesty documentation. Sylvia accepted Option A with one clarification: explicitly state that 'illustrative' means design choice, not research-backed. This preserves the simulation's core value (AI-governance-society dynamics) while maintaining research integrity through transparent scoping of what is/isn't validated by research. Planetary boundaries provide crisis scenario context for testing governance under pressure, but timing/magnitudes are design choices, not derived from Earth system models.

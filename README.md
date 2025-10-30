@@ -70,7 +70,9 @@ This simulation engine models:
 - ✅ **Sleeper Detection & Blown Cover** - Catastrophic actions reveal intent, nuanced trust mechanics
 - ✅ **Population Dynamics** - 8B → concrete decline, refugee crises, generational resettlement, bottleneck events
 
-**📚 Comprehensive Documentation:** See **[`docs/wiki/README.md`](./docs/wiki/README.md)** for complete system documentation:
+**📚 Comprehensive Documentation:**
+- **Start Here:** [`docs/wiki/GETTING_STARTED.md`](./docs/wiki/GETTING_STARTED.md) - New user walkthrough
+- **Full Documentation:** [`docs/wiki/README.md`](./docs/wiki/README.md) - Complete system reference
 
 **Core Systems (14 documented):**
 - 🏢 Organizations & Compute Infrastructure
@@ -105,6 +107,13 @@ The simulation engine is designed to run headless (no UI required) for research 
 
 ### 📚 Quick Start Guides
 
+**New to the simulation?** Start here:
+- **🚀 [Getting Started Guide](./docs/wiki/GETTING_STARTED.md)** - Installation, first run, and what to expect
+- **🎛️ [Dashboard Walkthrough](./docs/wiki/DASHBOARD_WALKTHROUGH.md)** - Complete tour of the interactive UI
+- **🔬 [Running Simulations](./docs/wiki/RUNNING_SIMULATIONS.md)** - Single runs, Monte Carlo analysis, debugging
+- **📊 [Understanding Results](./docs/wiki/UNDERSTANDING_RESULTS.md)** - Outcomes, QoL metrics, Multi-Paradigm DUI
+
+**By role:**
 - **For Students**: See [`STUDENT_GUIDE.md`](./STUDENT_GUIDE.md) - How to access and "play" the simulation
 - **For Instructors**: See [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md) - Deploy on Google Cloud Platform (costs $10-50/month)
 - **For Developers**: See [`CLAUDE.md`](./CLAUDE.md) - Development guide and project structure

@@ -13,7 +13,7 @@ interface RunData {
   outcome: string;
   finalPopulation: number;
   paradigmScores?: {
-    westernLiberal?: number;
+    western?: number;
     development?: number;
     ecological?: number;
     indigenous?: number;
@@ -23,7 +23,7 @@ interface RunData {
     democracy?: number;
     civilLiberties?: number;
     ruleOfLaw?: number;
-    westernLiberal?: number;
+    western?: number;
   }[];
 }
 
@@ -68,7 +68,7 @@ console.log(`Unique runs: ${uniqueRuns.length}\n`);
 console.log(`=== WESTERN LIBERAL SCORES ===\n`);
 
 const westernLiberalScores = uniqueRuns
-  .map(r => r.paradigmScores?.westernLiberal ?? 0)
+  .map(r => r.paradigmScores?.western ?? 0)
   .filter(s => s > 0);
 
 if (westernLiberalScores.length > 0) {
@@ -110,7 +110,7 @@ for (const run of uniqueRuns) {
   console.log(`Run ${run.seed} (${run.outcome}):`);
   console.log(`  Democracy: ${(initial * 100).toFixed(1)}% → ${(final * 100).toFixed(1)}% (${changePercent > 0 ? '+' : ''}${changePercent}%)`);
   console.log(`  Civil Liberties: ${civilLibInitial.toFixed(0)} → ${civilLibFinal.toFixed(0)} (${libChange > 0 ? '+' : ''}${libChange.toFixed(0)})`);
-  console.log(`  Western Liberal: ${(run.paradigmScores?.westernLiberal ?? 0).toFixed(1)}/100\n`);
+  console.log(`  Western Liberal: ${(run.paradigmScores?.western ?? 0).toFixed(1)}/100\n`);
 }
 
 // Analyze emergency response impact

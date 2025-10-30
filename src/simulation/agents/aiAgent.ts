@@ -135,8 +135,19 @@ export const AI_ACTIONS: GameAction[] = [
       // Determine strategy based on what calculateRevealedCapability does
       let newStrategy: 'honest' | 'gaming' | 'sandbagging' = 'honest';
 
-      // Sleepers sandbag
-      if (agent.sleeperState === 'dormant') {
+      // ISSUE-5 FIX (Oct 30, 2025): Delay strategy assignment to avoid month-0 gaming detection
+      // Research: Test-set contamination detection takes 6-12 months in practice (Yang et al. 2024)
+      // Early AIs remain 'honest' until deployed for 3+ months, then strategy emerges
+      const monthsDeployed = agent.monthsDeployed || 0;
+      const isEarlyDeployment = monthsDeployed < 3;
+
+      if (isEarlyDeployment) {
+        // Early AIs remain 'honest' regardless of alignment
+        // Rationale: Strategic gaming requires time to learn benchmark landscape
+        newStrategy = 'honest';
+      }
+      // Sleepers sandbag (once deployed long enough)
+      else if (agent.sleeperState === 'dormant') {
         newStrategy = 'sandbagging';
       }
       // Misaligned + strong capability = sandbag

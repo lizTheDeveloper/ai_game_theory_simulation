@@ -120,16 +120,27 @@ export function applyTemporalDegradation(
  *
  * Method: PaCoST, TS-Guessing, perplexity analysis
  * Detection: 45% base (down from 60% per research-skeptic)
+ *
+ * ISSUE-5 FIX (Oct 30, 2025): Ramp detection effectiveness from 0% → 45% over 24 months
+ * Research: Yang et al. 2024 survey published April 2024, analyzing 2022-2023 models
+ * Detection infrastructure matured over 2 years (2022-2024)
  */
 function detectDataContamination(
   ai: AIAgent,
   state: GamingDetectionState,
-  rng: () => number
+  rng: () => number,
+  currentMonth: number = 0 // ISSUE-5 FIX: Add currentMonth parameter
 ): boolean {
   if (ai.evaluationStrategy !== 'gaming') return false;
 
-  // Base detection rate with temporal degradation
-  const baseRate = 0.45 * state.degradationFactor;
+  // ISSUE-5 FIX: Maturity factor - ramp detection from 0% → 100% over 24 months
+  // Rationale: Early detection systems are experimental (low effectiveness)
+  // Detection improves as methods mature and infrastructure scales
+  const monthsSinceStart = currentMonth;
+  const maturityFactor = Math.min(1.0, monthsSinceStart / 24); // Ramp over 2 years
+
+  // Base detection rate with temporal degradation AND maturity factor
+  const baseRate = 0.45 * state.degradationFactor * maturityFactor;
 
   // Higher AI cognitive capability → better at hiding contamination
   const evasionSkill = ai.capabilityProfile.cognitive / 10; // [0, 1+]
@@ -145,16 +156,23 @@ function detectDataContamination(
  *
  * Method: SCORE framework (prompt/order/parameter robustness)
  * Detection: 40% signal strength
+ *
+ * ISSUE-5 FIX (Oct 30, 2025): Apply maturity ramp to consistency checks
  */
 function detectCrossBenchmarkInconsistency(
   ai: AIAgent,
   state: GamingDetectionState,
-  rng: () => number
+  rng: () => number,
+  currentMonth: number = 0 // ISSUE-5 FIX: Add currentMonth parameter
 ): boolean {
   if (ai.evaluationStrategy !== 'gaming') return false;
 
-  // Base signal strength with temporal degradation
-  const baseSignal = 0.40 * state.degradationFactor;
+  // ISSUE-5 FIX: Maturity factor - ramp detection from 0% → 100% over 24 months
+  const monthsSinceStart = currentMonth;
+  const maturityFactor = Math.min(1.0, monthsSinceStart / 24);
+
+  // Base signal strength with temporal degradation AND maturity factor
+  const baseSignal = 0.40 * state.degradationFactor * maturityFactor;
 
   // Gaming creates high variance across benchmarks
   // But sophisticated AIs can game multiple benchmarks consistently
@@ -245,24 +263,27 @@ function detectTemporalGamingPattern(
  *
  * IMPORTANT: Methods are partially correlated (not independent)
  * Research-skeptic: Assume multiplicative degradation, not additive coverage
+ *
+ * ISSUE-5 FIX (Oct 30, 2025): Pass currentMonth to detection methods for maturity ramp
  */
 export function detectBenchmarkGaming(
   ai: AIAgent,
   detectionState: GamingDetectionState,
-  rng: () => number
+  rng: () => number,
+  currentMonth: number = 0 // ISSUE-5 FIX: Add currentMonth parameter
 ): { detected: boolean; method: string | null } {
   // Only detect if AI is actually gaming
   if (ai.evaluationStrategy !== 'gaming') {
     return { detected: false, method: null };
   }
 
-  // Try each detection method
-  const contaminationDetected = detectDataContamination(ai, detectionState, rng);
+  // Try each detection method (pass currentMonth for maturity ramp)
+  const contaminationDetected = detectDataContamination(ai, detectionState, rng, currentMonth);
   if (contaminationDetected) {
     return { detected: true, method: 'data_contamination' };
   }
 
-  const inconsistencyDetected = detectCrossBenchmarkInconsistency(ai, detectionState, rng);
+  const inconsistencyDetected = detectCrossBenchmarkInconsistency(ai, detectionState, rng, currentMonth);
   if (inconsistencyDetected) {
     return { detected: true, method: 'cross_benchmark_consistency' };
   }
@@ -376,8 +397,8 @@ export function processGamingDetection(
   );
 
   testableAIs.forEach(ai => {
-    // True positive detection
-    const { detected, method } = detectBenchmarkGaming(ai, detectionState, rng);
+    // True positive detection (ISSUE-5 FIX: pass currentMonth for maturity ramp)
+    const { detected, method } = detectBenchmarkGaming(ai, detectionState, rng, currentMonth);
 
     if (detected) {
       detectionState.gamingDetected.push(ai.id);

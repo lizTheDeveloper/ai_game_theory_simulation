@@ -15,6 +15,7 @@
  */
 
 import { GameState } from '@/types/game';
+import { billionsToMillions, toBillions } from '@/simulation/utils/populationUnits';
 
 /**
  * Update trapped population tracking each month
@@ -25,7 +26,9 @@ export function updateTrappedPopulations(state: GameState): void {
   const trapped = system.trappedPopulations;
   if (!trapped) return;
 
-  const totalPopulation = state.humanPopulationSystem.population * 1000; // Millions
+  // FIX (Oct 29, 2025): Type-safe conversion billions → millions
+  // state.humanPopulationSystem.population is BILLIONS, trapped populations track MILLIONS
+  const totalPopulation = billionsToMillions(toBillions(state.humanPopulationSystem.population));
 
   // Reset monthly counters
   trapped.totalTrapped = 0;

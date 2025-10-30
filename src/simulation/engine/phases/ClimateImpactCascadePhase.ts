@@ -189,6 +189,13 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
   /**
    * Apply food security impacts with queue-based lag modeling
    *
+   * BUG FIX (Oct 30, 2025): BLOCKER-3 - Reduce food security shock magnitudes
+   * ROOT CAUSE: -15% immediate, -25% delayed EVERY MONTH caused food security → 0 within 4-5 months
+   * RESEARCH: Sen (1981), FAO (2023) - Famines are distributional, not absolute scarcity
+   *   - Modern food production exceeds needs
+   *   - Shocks are temporary (harvest failures), not permanent collapse
+   * FIX: Reduce to -5% immediate, -8% delayed (3× reduction)
+   *
    * Stores delayed impacts in PhaseContext.data for future application
    */
   private applyFoodSecurityImpacts(
@@ -200,16 +207,16 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
 
     for (const impact of impacts) {
       if (impact.lagMonths === 0) {
-        // Immediate impact
+        // Immediate impact - REDUCED from -15% to -5%
         for (const region of impact.affectedRegions) {
           const currentChange = changes.get(region) || 0;
-          const impactValue = assertFinite(impact.intensity * 0.15, {
+          const impactValue = assertFinite(impact.intensity * 0.05, {
             location: 'ClimateImpactCascade.immediateImpact',
             valueName: 'impactValue',
             month: state.currentMonth,
             additionalInfo: { intensity: impact.intensity, region }
           });
-          changes.set(region, currentChange - impactValue);  // Up to -15% food security
+          changes.set(region, currentChange - impactValue);  // Up to -5% food security (was -15%)
         }
       } else {
         // Store for delayed application
@@ -222,13 +229,13 @@ export class ClimateImpactCascadePhase implements SimulationPhase {
     for (const impact of delayedImpacts) {
       for (const region of impact.affectedRegions) {
         const currentChange = changes.get(region) || 0;
-        const impactValue = assertFinite(impact.intensity * 0.25, {
+        const impactValue = assertFinite(impact.intensity * 0.08, {
           location: 'ClimateImpactCascade.delayedImpact',
           valueName: 'impactValue',
           month: state.currentMonth,
           additionalInfo: { intensity: impact.intensity, region, lagMonths: impact.lagMonths }
         });
-        changes.set(region, currentChange - impactValue);  // Up to -25% delayed effect (stronger)
+        changes.set(region, currentChange - impactValue);  // Up to -8% delayed effect (was -25%)
       }
     }
 

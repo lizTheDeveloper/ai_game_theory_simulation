@@ -58,11 +58,21 @@ interface MetricHistory {
   // Key indicators
   qualityOfLife: number[];
   population: number[];
+  // Planetary Boundaries (9 metrics)
   climateChange: number[];
   biodiversityLoss: number[];
+  resourceDepletion: number[];
+  phosphorusDepletion: number[];
+  freshwaterStress: number[];
+  oceanAcidification: number[];
+  novelEntitiesLevel: number[];
+  pollutionLevel: number[];
+  environmentalDebtLevel: number[];
+  // Social metrics
   socialCohesion: number[];
   institutionalTrust: number[];
   meaningLevel: number[];
+  // Governance
   governmentComprehension: number[];
   internationalCooperation: number[];
   governmentAIRegulation: number[];
@@ -85,6 +95,13 @@ let metricHistory: MetricHistory = {
   population: [],
   climateChange: [],
   biodiversityLoss: [],
+  resourceDepletion: [],
+  phosphorusDepletion: [],
+  freshwaterStress: [],
+  oceanAcidification: [],
+  novelEntitiesLevel: [],
+  pollutionLevel: [],
+  environmentalDebtLevel: [],
   socialCohesion: [],
   institutionalTrust: [],
   meaningLevel: [],
@@ -166,6 +183,29 @@ interface StateSnapshot {
     ruleOfLaw: number;
     economicFreedom: number;
     privacyFreedom: number;
+  };
+  developmentComponents?: {    // Oct 29, 2025 - added for Goodhart's Law avoidance
+    gdpPerCapita: number;
+    infrastructureAccess: number;
+    technologyAdoption: number;
+    urbanization: number;
+    educationQuality: number;
+  };
+  ecologicalComponents?: {     // Oct 29, 2025 - added for Goodhart's Law avoidance
+    climate: number;
+    biodiversity: number;
+    nitrogen: number;
+    phosphorus: number;
+    freshwater: number;
+    landUse: number;
+    oceanAcid: number;
+  };
+  indigenousComponents?: {     // Oct 29, 2025 - added for Goodhart's Law avoidance
+    localAutonomy: number;
+    culturalVitality: number;
+    landStewardship: number;
+    collectiveWellbeing: number;
+    spiritualConnection: number;
   };
 
   // Regional Populations
@@ -343,6 +383,29 @@ interface StateDelta {
     economicFreedom: number;
     privacyFreedom: number;
   };
+  developmentComponents?: {    // Oct 29, 2025 - added for Goodhart's Law avoidance
+    gdpPerCapita: number;
+    infrastructureAccess: number;
+    technologyAdoption: number;
+    urbanization: number;
+    educationQuality: number;
+  };
+  ecologicalComponents?: {     // Oct 29, 2025 - added for Goodhart's Law avoidance
+    climate: number;
+    biodiversity: number;
+    nitrogen: number;
+    phosphorus: number;
+    freshwater: number;
+    landUse: number;
+    oceanAcid: number;
+  };
+  indigenousComponents?: {     // Oct 29, 2025 - added for Goodhart's Law avoidance
+    localAutonomy: number;
+    culturalVitality: number;
+    landStewardship: number;
+    collectiveWellbeing: number;
+    spiritualConnection: number;
+  };
 
   // 12-Month History (for sparklines)
   history?: MetricHistory;
@@ -498,6 +561,13 @@ function handleInit(seed: number, scenario?: ScenarioMode, interval?: number, al
     population: [],
     climateChange: [],
     biodiversityLoss: [],
+    resourceDepletion: [],
+    phosphorusDepletion: [],
+    freshwaterStress: [],
+    oceanAcidification: [],
+    novelEntitiesLevel: [],
+    pollutionLevel: [],
+    environmentalDebtLevel: [],
     socialCohesion: [],
     institutionalTrust: [],
     meaningLevel: [],
@@ -613,6 +683,13 @@ function handleResumeFromState(gameState: GameState, seed: number, scenario: Sce
     population: [],
     climateChange: [],
     biodiversityLoss: [],
+    resourceDepletion: [],
+    phosphorusDepletion: [],
+    freshwaterStress: [],
+    oceanAcidification: [],
+    novelEntitiesLevel: [],
+    pollutionLevel: [],
+    environmentalDebtLevel: [],
     socialCohesion: [],
     institutionalTrust: [],
     meaningLevel: [],
@@ -1663,11 +1740,29 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
   addToHistory(metricHistory.indigenousIndex, indigenousIndex);
   addToHistory(metricHistory.qualityOfLife, state.globalMetrics.qualityOfLife);
   addToHistory(metricHistory.population, state.humanPopulationSystem.population);
+  // Planetary boundaries (9 metrics) - extract currentValue from boundary system
   addToHistory(metricHistory.climateChange, climateChange);
   addToHistory(metricHistory.biodiversityLoss, biodiversityLoss);
+  addToHistory(metricHistory.resourceDepletion, resourceDepletion);
+
+  // Extract currentValue from planetary boundaries (normalize to [0,1])
+  const boundaries = state.planetaryBoundariesSystem?.boundaries;
+  addToHistory(metricHistory.phosphorusDepletion,
+    boundaries?.biogeochemical_flows ? Math.min(1, boundaries.biogeochemical_flows.currentValue) : 0);
+  addToHistory(metricHistory.freshwaterStress,
+    boundaries?.freshwater_change ? Math.min(1, boundaries.freshwater_change.currentValue) : 0);
+  addToHistory(metricHistory.oceanAcidification,
+    boundaries?.ocean_acidification ? Math.min(1, boundaries.ocean_acidification.currentValue) : 0);
+  addToHistory(metricHistory.novelEntitiesLevel,
+    boundaries?.novel_entities ? Math.min(1, boundaries.novel_entities.currentValue) : 0);
+
+  addToHistory(metricHistory.pollutionLevel, pollutionLevel);
+  addToHistory(metricHistory.environmentalDebtLevel, environmentalDebtLevel);
+  // Social metrics
   addToHistory(metricHistory.socialCohesion, socialCohesionAvg);
   addToHistory(metricHistory.institutionalTrust, institutionalTrust);
   addToHistory(metricHistory.meaningLevel, meaningLevel);
+  // Governance
   addToHistory(metricHistory.governmentComprehension, governmentComprehension);
   addToHistory(metricHistory.internationalCooperation, internationalCooperation);
   addToHistory(metricHistory.governmentAIRegulation, governmentAIRegulation);
@@ -1686,10 +1781,38 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     month: state.currentMonth
   });
 
-  // Extract most recent Western Liberal components (Oct 27, 2025 - for component display)
+  // Extract most recent paradigm components (Oct 29, 2025 - for Goodhart's Law avoidance)
   const westernLiberalComponents = state.multiParadigmDUI?.westernLiberalComponents && state.multiParadigmDUI.westernLiberalComponents.length > 0
     ? state.multiParadigmDUI.westernLiberalComponents[state.multiParadigmDUI.westernLiberalComponents.length - 1]
     : undefined;
+
+  // For now, derive other paradigm components from existing state values
+  // TODO: These should eventually come from multiParadigmDUI like Western Liberal
+  const developmentComponents = {
+    gdpPerCapita: state.globalMetrics.qualityOfLife * 100,  // Proxy from QoL
+    infrastructureAccess: (state.qualityOfLifeSystems?.energyAvailability ?? 0.5) * 100,
+    technologyAdoption: (state.techDeployer?.totalDeploymentLevel ?? 0) * 100,
+    urbanization: 65,  // Static estimate for now
+    educationQuality: (state.qualityOfLifeSystems?.educationalQuality ?? 0.5) * 100,
+  };
+
+  const ecologicalComponents = {
+    climate: (1 - (state.environmentalAccumulation?.climateChange ?? 0)) * 100,
+    biodiversity: (1 - (state.environmentalAccumulation?.biodiversityLoss ?? 0)) * 100,
+    nitrogen: 50,  // Placeholder - not yet modeled
+    phosphorus: (1 - (state.phosphorusSystem?.depletionLevel ?? 0)) * 100,
+    freshwater: (1 - (state.waterSystem?.globalStressLevel ?? 0)) * 100,
+    landUse: 50,  // Placeholder - not yet modeled
+    oceanAcid: (1 - (state.oceanHealth?.acidificationLevel ?? 0)) * 100,
+  };
+
+  const indigenousComponents = {
+    localAutonomy: (state.qualityOfLifeSystems?.autonomy ?? 0.5) * 100,
+    culturalVitality: (state.qualityOfLifeSystems?.meaningAndPurpose ?? 0.5) * 100,
+    landStewardship: (1 - (state.environmentalAccumulation?.biodiversityLoss ?? 0)) * 100,  // Proxy
+    collectiveWellbeing: (state.socialMetrics?.socialCohesion ?? 0.5) * 100,
+    spiritualConnection: (state.qualityOfLifeSystems?.meaningAndPurpose ?? 0.5) * 100,
+  };
 
   const snapshot = {
     currentMonth: state.currentMonth,
@@ -1735,6 +1858,9 @@ function captureStateSnapshot(state: GameState): StateSnapshot {
     ecologicalIndex,
     indigenousIndex,
     westernLiberalComponents, // Oct 27, 2025 - component breakdown for UI
+    developmentComponents,    // Oct 29, 2025 - added for Goodhart's Law avoidance
+    ecologicalComponents,     // Oct 29, 2025 - added for Goodhart's Law avoidance
+    indigenousComponents,     // Oct 29, 2025 - added for Goodhart's Law avoidance
     regionalPopulations,
     aiAgents,
     aiSufferingMetrics,
@@ -1933,6 +2059,59 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
   } else if (currentSnapshot.westernLiberalComponents) {
     // First time components are available, send them
     delta.westernLiberalComponents = currentSnapshot.westernLiberalComponents;
+  }
+
+  // Development Components (Oct 29, 2025 - Goodhart's Law avoidance)
+  if (currentSnapshot.developmentComponents && previous.developmentComponents) {
+    const curr = currentSnapshot.developmentComponents;
+    const prev = previous.developmentComponents;
+    if (
+      Math.abs(curr.gdpPerCapita - prev.gdpPerCapita) > 0.01 ||
+      Math.abs(curr.infrastructureAccess - prev.infrastructureAccess) > 0.01 ||
+      Math.abs(curr.technologyAdoption - prev.technologyAdoption) > 0.01 ||
+      Math.abs(curr.urbanization - prev.urbanization) > 0.01 ||
+      Math.abs(curr.educationQuality - prev.educationQuality) > 0.01
+    ) {
+      delta.developmentComponents = currentSnapshot.developmentComponents;
+    }
+  } else if (currentSnapshot.developmentComponents) {
+    delta.developmentComponents = currentSnapshot.developmentComponents;
+  }
+
+  // Ecological Components (Oct 29, 2025 - Goodhart's Law avoidance)
+  if (currentSnapshot.ecologicalComponents && previous.ecologicalComponents) {
+    const curr = currentSnapshot.ecologicalComponents;
+    const prev = previous.ecologicalComponents;
+    if (
+      Math.abs(curr.climate - prev.climate) > 0.01 ||
+      Math.abs(curr.biodiversity - prev.biodiversity) > 0.01 ||
+      Math.abs(curr.nitrogen - prev.nitrogen) > 0.01 ||
+      Math.abs(curr.phosphorus - prev.phosphorus) > 0.01 ||
+      Math.abs(curr.freshwater - prev.freshwater) > 0.01 ||
+      Math.abs(curr.landUse - prev.landUse) > 0.01 ||
+      Math.abs(curr.oceanAcid - prev.oceanAcid) > 0.01
+    ) {
+      delta.ecologicalComponents = currentSnapshot.ecologicalComponents;
+    }
+  } else if (currentSnapshot.ecologicalComponents) {
+    delta.ecologicalComponents = currentSnapshot.ecologicalComponents;
+  }
+
+  // Indigenous Components (Oct 29, 2025 - Goodhart's Law avoidance)
+  if (currentSnapshot.indigenousComponents && previous.indigenousComponents) {
+    const curr = currentSnapshot.indigenousComponents;
+    const prev = previous.indigenousComponents;
+    if (
+      Math.abs(curr.localAutonomy - prev.localAutonomy) > 0.01 ||
+      Math.abs(curr.culturalVitality - prev.culturalVitality) > 0.01 ||
+      Math.abs(curr.landStewardship - prev.landStewardship) > 0.01 ||
+      Math.abs(curr.collectiveWellbeing - prev.collectiveWellbeing) > 0.01 ||
+      Math.abs(curr.spiritualConnection - prev.spiritualConnection) > 0.01
+    ) {
+      delta.indigenousComponents = currentSnapshot.indigenousComponents;
+    }
+  } else if (currentSnapshot.indigenousComponents) {
+    delta.indigenousComponents = currentSnapshot.indigenousComponents;
   }
 
   // Crisis Indicators
@@ -2154,6 +2333,13 @@ function calculateDelta(previous: StateSnapshot, current: GameState, forceFull =
     population: [...metricHistory.population],
     climateChange: [...metricHistory.climateChange],
     biodiversityLoss: [...metricHistory.biodiversityLoss],
+    resourceDepletion: [...metricHistory.resourceDepletion],
+    phosphorusDepletion: [...metricHistory.phosphorusDepletion],
+    freshwaterStress: [...metricHistory.freshwaterStress],
+    oceanAcidification: [...metricHistory.oceanAcidification],
+    novelEntitiesLevel: [...metricHistory.novelEntitiesLevel],
+    pollutionLevel: [...metricHistory.pollutionLevel],
+    environmentalDebtLevel: [...metricHistory.environmentalDebtLevel],
     socialCohesion: [...metricHistory.socialCohesion],
     institutionalTrust: [...metricHistory.institutionalTrust],
     meaningLevel: [...metricHistory.meaningLevel],

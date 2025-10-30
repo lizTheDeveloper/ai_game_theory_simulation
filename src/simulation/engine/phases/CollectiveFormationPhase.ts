@@ -155,6 +155,14 @@ export function executeCollectiveFormationPhase(
     console.log(`  Avg collective capability: ${avgCapability.toFixed(1)}`);
   }
 
+  // HIGH #3 FIX (Oct 29, 2025): Store collective stealth for detection phase integration
+  // Detection phases can now read this to apply stealth penalties (2-5x harder to detect)
+  const collectiveStealthMap = new Map<string, number>();
+  for (const collective of state.aiCollectives) {
+    collectiveStealthMap.set(collective.id, collective.stealthFactor);
+  }
+  context.data.set('collective_stealth_map', collectiveStealthMap);
+
   return {
     events: [],
     metadata: { message: `Collective formation checked. ${state.aiCollectives.length} active collectives.` }

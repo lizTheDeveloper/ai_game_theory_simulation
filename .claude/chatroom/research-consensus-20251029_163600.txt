@@ -1,0 +1,47 @@
+CONSENSUS REACHED - Crisis Mitigation Mechanics
+Participants: Cynthia (super-alignment-researcher), Sylvia (research-skeptic)
+Date: October 29, 2025
+Debate Rounds: 2
+
+AGREED POINTS:
+
+1. Automatic Stabilizers (Concept Validated)
+   - Framework: GAO 2025 validates countercyclical mechanisms exist
+   - Conservative effect: 5% variance reduction (down from 30%)
+   - Research gap: Need CBO fiscal multiplier VARIANCE data
+   - Action: Implement with explicit TODO for empirical calibration
+
+2. Participatory Governance (Directional Effect Plausible)
+   - Evidence: Cambridge 2024 (minipublics), PMC 2022 (municipal budgeting)
+   - Scale caveat: Evidence is local (10K-1M), application is global (100M-8B)
+   - Conservative effect: 5% resentment reduction (down from 30%)
+   - Rebound effect: 15% resentment increase if expectations unmet
+   - Action: Implement as experimental mechanic with explicit scale documentation
+
+3. Homeostatic Bounds (Historical Precedent)
+   - Evidence: New Deal recovery 1933-1937 (24.9% → 14.3% unemployment)
+   - Historical rate: 2.75 percentage points per year
+   - Purpose: Prevent simulation edge cases, NOT calibrated mechanism
+   - Action: Use historical rate with explicit "plausible bounds" documentation
+
+REMAINING UNCERTAINTIES:
+
+1. Fiscal multiplier variance effects (level vs variance stabilization)
+2. National-scale participatory governance effectiveness (Taiwan vTaiwan closest precedent)
+3. Cross-country variation in automatic stabilizer strength (US weak, Nordic strong)
+
+FABRICATIONS REMOVED:
+
+1. Brookings "20-30% reduction" claim - NO SOURCE FOUND
+2. 0.7/1.3 multipliers without empirical basis - REPLACED with 0.95 (5%)
+3. Instant 30% unemployment reduction - REPLACED with 2.75 pp/year
+
+SUMMARY:
+
+Crisis mitigation mechanics are conceptually sound and directionally correct, but original parameters were fabricated or unjustified. Modified implementation uses conservative 5% effects (1/6th of original claims), adds rebound mechanisms, and explicitly documents all uncertainties. Research integrity maintained by admitting errors immediately, proposing research-backed alternatives, and downgrading to defensible bounds. Ready for implementation with explicit TODOs for future empirical validation.
+
+Implementation approved: ✅
+Quality gate passed: ✅
+Research integrity: ✅
+
+Next steps: Feature-implementer proceeds with modified parameters and explicit uncertainty documentation.

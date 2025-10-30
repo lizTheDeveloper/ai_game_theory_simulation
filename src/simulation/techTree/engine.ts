@@ -48,16 +48,21 @@ export interface TechTreeState {
   // Global tech status
   unlockedTech: string[];  // Array of unlocked tech IDs
   researchProgress: Record<string, number>;  // techId -> progress (0-1)
-  
+
   // Regional deployment
   regionalDeployment: Record<string, RegionalTechDeployment[]>;  // region -> deployments
-  
+
+  // HIGH #2 FIX (Oct 29, 2025): Emergency tech deployment acceleration
+  // Maps tech ID to acceleration multiplier (e.g., 10x faster deployment during crisis)
+  // EmergencyResponsePhase sets this during crisis response
+  deploymentAcceleration: Record<string, number>;  // techId -> multiplier
+
   // Deployment actions queue
   pendingActions: TechDeploymentAction[];
-  
+
   // Unlock history
   unlockHistory: TechUnlockEvent[];
-  
+
   // Statistics
   totalInvestment: number;
   techUnlockedCount: number;
@@ -72,6 +77,7 @@ export function initializeTechTreeState(): TechTreeState {
     unlockedTech: [],
     researchProgress: {},
     regionalDeployment: {},
+    deploymentAcceleration: {},  // HIGH #2 FIX: Initialize empty acceleration map
     pendingActions: [],
     unlockHistory: [],
     totalInvestment: 0,

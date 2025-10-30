@@ -201,7 +201,11 @@ export interface AICollective {
  * High control → strong selection → rapid trait evolution.
  *
  * Research Foundation:
- * - Software system survival rates: 10-20% monthly failure in hostile environments
+ * - Selection rate 10-20% per month based on software security analogies:
+ *   - Vulnerability patching: 5-20% per month (Ponemon Institute)
+ *   - Malware dwell time: 16 days average (IBM 2023)
+ *   - Confidence: LOW - Plausible extrapolation, not direct AI agent data
+ *   - Sensitivity range: 5-30% per month
  * - Evolutionary dynamics: Selection intensity determines rate of change
  */
 export interface EvolutionaryPressure {

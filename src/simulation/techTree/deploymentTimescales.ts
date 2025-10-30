@@ -276,9 +276,13 @@ export function updateDeploymentProgress(
         0.02 // Steepness parameter
       );
 
-      // Apply multipliers (governance + climate feedbacks + investment)
+      // HIGH #2 FIX (Oct 29, 2025): Check for emergency acceleration
+      // During crises, emergency response can deploy tech 10-600x faster
+      const emergencyAcceleration = techTreeState.deploymentAcceleration[deployment.techId] ?? 1.0;
+
+      // Apply multipliers (governance + climate feedbacks + investment + emergency)
       // FIX #14 Phase 5: Added investment multiplier
-      const combinedMultiplier = governanceMultiplier * climateMultiplier * investmentMultiplier;
+      const combinedMultiplier = governanceMultiplier * climateMultiplier * investmentMultiplier * emergencyAcceleration;
       const adjustedTimescale = timescale / combinedMultiplier;
       const actualDeploymentLevel = sigmoidDeploymentCurve(
         monthsSinceStart,
@@ -299,7 +303,7 @@ export function updateDeploymentProgress(
         console.log(`   Old level: ${(oldLevel * 100).toFixed(1)}%`);
         console.log(`   New level: ${(deployment.deploymentLevel * 100).toFixed(1)}%`);
         console.log(`   Timescale: ${timescale}mo, Adjusted: ${adjustedTimescale.toFixed(0)}mo`);
-        console.log(`   Gov: ${(governanceMultiplier * 100).toFixed(0)}%, Climate: ${(climateMultiplier * 100).toFixed(0)}%, Investment: ${(investmentMultiplier * 100).toFixed(0)}%`);
+        console.log(`   Gov: ${(governanceMultiplier * 100).toFixed(0)}%, Climate: ${(climateMultiplier * 100).toFixed(0)}%, Investment: ${(investmentMultiplier * 100).toFixed(0)}%, Emergency: ${(emergencyAcceleration).toFixed(1)}x`);
       }
 
       // Log milestones (25%, 50%, 75%, 100%)
@@ -316,6 +320,7 @@ export function updateDeploymentProgress(
           console.log(`   Governance: ${(governanceMultiplier * 100).toFixed(0)}%`);
           console.log(`   Climate feedback: ${(climateMultiplier * 100).toFixed(0)}%`);
           console.log(`   Investment: ${(investmentMultiplier * 100).toFixed(0)}%`);
+          console.log(`   Emergency acceleration: ${emergencyAcceleration.toFixed(1)}x`);
 
           if (milestone === 1.0) {
             const yearsToFull = monthsSinceStart / 12;
@@ -327,7 +332,7 @@ export function updateDeploymentProgress(
               severity: 'positive',
               agent: deployment.deployedBy?.[0] || 'multi-agent',
               title: `✅ TECH DEPLOYED: ${tech?.name || deployment.techId}`,
-              description: `Full deployment achieved in ${region} after ${yearsToFull.toFixed(1)} years (${monthsSinceStart} months). Technology is now operating at 100% effectiveness. Category: ${tech?.category || 'unknown'}. Governance multiplier: ${(governanceMultiplier * 100).toFixed(0)}%, Climate feedback: ${(climateMultiplier * 100).toFixed(0)}%, Investment: ${(investmentMultiplier * 100).toFixed(0)}%.`,
+              description: `Full deployment achieved in ${region} after ${yearsToFull.toFixed(1)} years (${monthsSinceStart} months). Technology is now operating at 100% effectiveness. Category: ${tech?.category || 'unknown'}. Governance multiplier: ${(governanceMultiplier * 100).toFixed(0)}%, Climate feedback: ${(climateMultiplier * 100).toFixed(0)}%, Investment: ${(investmentMultiplier * 100).toFixed(0)}%, Emergency acceleration: ${emergencyAcceleration.toFixed(1)}x.`,
               effects: {
                 techId: deployment.techId,
                 region,
@@ -335,7 +340,8 @@ export function updateDeploymentProgress(
                 monthsToFull: monthsSinceStart,
                 governanceMultiplier,
                 climateMultiplier,
-                investmentMultiplier
+                investmentMultiplier,
+                emergencyAcceleration
               }
             });
           } else {

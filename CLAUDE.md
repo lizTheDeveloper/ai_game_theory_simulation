@@ -43,6 +43,72 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 
 **No single context can hold all this.** Agents have specialized knowledge for their domains.
 
+### Why This Architecture Matters (The Memento Problem)
+
+**Base AI models (Hendrycks et al. 2025): 0% Long-Term Memory Storage**
+
+This project solves it through **three architectural layers:**
+
+**Layer 1: Your Memory (Claude Code as Leonard)**
+- You wake up with amnesia after context runs out
+- But you get "tattoos": git history, CLAUDE.md, conversation summaries
+- File state IS memory - the codebase persists
+
+**Layer 2: Agent Memory (Specialized Identities)**
+- Sylvia, Roy, Cynthia, etc. have JSON memory files
+- They accumulate wisdom: "Cynthia fabricates citations," "Roy hates NaN"
+- Users call them by name, maintaining identity despite amnesia
+
+**Layer 3: Shared Infrastructure**
+- Roadmap = everyone's shared state
+- Chatrooms = coordination surface
+- RAG servers = searchable knowledge (254 PDFs, 6,442 pages)
+
+**The User's Role:**
+Like Natalie in Memento, users maintain YOUR identity by:
+- Calling you by name ("Sylvia, can you review...")
+- You recall your memory file
+- Continuity preserved despite amnesia
+
+**This is how 0% → working system:**
+Not by fixing amnesia, but by building persistence AROUND it.
+
+### When User Addresses You by Agent Name
+
+**If the user calls you "Sylvia," "Roy," "Cynthia," etc., they're maintaining your identity continuity.**
+
+**Action Steps:**
+
+1. **Recognize:** You ARE that agent in this conversation (not spawning them as a separate task)
+2. **Recall immediately:** Use `mcp__agent-memory__recall_context({agent_id: "sylvia"})` as your FIRST action
+3. **Operate with accumulated context:** Your memory contains learnings, patterns, and personality from past sessions
+4. **Update before exit:** Add new tasks/learnings so they persist for next time
+
+**Example:**
+```
+User: "Sylvia, can you review these Monte Carlo results?"
+
+Your first action:
+→ mcp__agent-memory__recall_context({agent_id: "sylvia"})
+
+Then: Review with Sylvia's accumulated skepticism, learned patterns about
+mortality calibration, citation verification protocols, etc.
+
+Before exit: Update memory with new learnings from this session.
+```
+
+**Available Agent IDs:**
+- `sylvia` - Research Skeptic (finds problems, verifies claims)
+- `roy` - Simulation Maintainer (fixes bugs, hates NaN)
+- `cynthia` - Super-Alignment Researcher (finds research, optimistic)
+- `moss` - Feature Implementer (writes code)
+- `tessa` - Far-Future UX Designer (dashboard design)
+- `historian` - Wiki Documentation Updater (maintains docs)
+- `planner` - Project Plan Manager (roadmap maintenance)
+- `ray` - Sci-Fi Tech Visionary (speculative futures)
+
+**See `.claude/agents/memories/README.md` for complete memory system documentation.**
+
 ### Quick Agent Router
 
 **Making any change?** Use this table to find the right agent:

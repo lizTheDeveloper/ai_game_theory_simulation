@@ -63,6 +63,7 @@ export interface GovernmentAgent {
   // Phase 2.6: Control-Dystopia Mechanics (NEW)
   governmentType: 'democratic' | 'authoritarian' | 'technocratic'; // Affects alignment dynamics
   aiRightsRecognized: boolean; // Whether AIs have legal rights/personhood
+  aiRightsPolicy?: 'none' | 'basic_protection' | 'employment_rights' | 'full_personhood'; // HIGH #7 FIX (Oct 29, 2025): Detailed AI rights policy levels
   trainingDataQuality: number; // [0,1] Quality/bias in AI training data
 
   // Resentment Recovery Tracking (Oct 24, 2025)

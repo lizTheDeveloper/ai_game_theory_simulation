@@ -1047,13 +1047,22 @@ if (nestedMonteCarlo) {
 
   const finalState = simulationResult.finalState;
 
+  // DEBUG (Oct 29, 2025): Log globalMetrics to find NaN source
+  console.log(`\n🔍 DEBUG - globalMetrics (Run ${i + 1}):`);
+  console.log(`   economicTransitionStage: ${finalState.globalMetrics?.economicTransitionStage}`);
+  console.log(`   trustInAI: ${finalState.globalMetrics?.trustInAI}`);
+  console.log(`   socialStability: ${finalState.globalMetrics?.socialStability}`);
+  console.log(`   wealthDistribution: ${finalState.globalMetrics?.wealthDistribution}`);
+  console.log(`   society.unemploymentLevel: ${finalState.society?.unemploymentLevel}`);
+  console.log(`   government.legitimacy: ${finalState.government?.legitimacy}`);
+
   // DEBUG (Oct 29, 2025): Log deathsByCategory immediately after simulation
   console.log(`\n🔍 DEBUG - Deaths immediately after simulation (Run ${i + 1}):`);
-  console.log(`   war: ${finalState.humanPopulationSystem.deathsByCategory?.war || 'undefined'}M`);
-  console.log(`   famine: ${finalState.humanPopulationSystem.deathsByCategory?.famine || 'undefined'}M`);
-  console.log(`   disasters: ${finalState.humanPopulationSystem.deathsByCategory?.disasters || 'undefined'}M`);
-  console.log(`   disease: ${finalState.humanPopulationSystem.deathsByCategory?.disease || 'undefined'}M`);
-  console.log(`   ai: ${finalState.humanPopulationSystem.deathsByCategory?.ai || 'undefined'}M`);
+  console.log(`   war: ${finalState.humanPopulationSystem.deathsByCategory?.war ?? 'undefined'}M`);
+  console.log(`   famine: ${finalState.humanPopulationSystem.deathsByCategory?.famine ?? 'undefined'}M`);
+  console.log(`   disasters: ${finalState.humanPopulationSystem.deathsByCategory?.disasters ?? 'undefined'}M`);
+  console.log(`   disease: ${finalState.humanPopulationSystem.deathsByCategory?.disease ?? 'undefined'}M`);
+  console.log(`   ai: ${finalState.humanPopulationSystem.deathsByCategory?.ai ?? 'undefined'}M`);
 
   // === NEW (Oct 17, 2025): RECOVERY TIMELINE ANALYSIS ===
   // Analyze recovery timeline from run data
@@ -2004,13 +2013,22 @@ if (nestedMonteCarlo) {
 
   const finalState = simulationResult.finalState;
 
+  // DEBUG (Oct 29, 2025): Log globalMetrics to find NaN source
+  console.log(`\n🔍 DEBUG - globalMetrics (Run ${i + 1}):`);
+  console.log(`   economicTransitionStage: ${finalState.globalMetrics?.economicTransitionStage}`);
+  console.log(`   trustInAI: ${finalState.globalMetrics?.trustInAI}`);
+  console.log(`   socialStability: ${finalState.globalMetrics?.socialStability}`);
+  console.log(`   wealthDistribution: ${finalState.globalMetrics?.wealthDistribution}`);
+  console.log(`   society.unemploymentLevel: ${finalState.society?.unemploymentLevel}`);
+  console.log(`   government.legitimacy: ${finalState.government?.legitimacy}`);
+
   // DEBUG (Oct 29, 2025): Log deathsByCategory immediately after simulation
   console.log(`\n🔍 DEBUG - Deaths immediately after simulation (Run ${i + 1}):`);
-  console.log(`   war: ${finalState.humanPopulationSystem.deathsByCategory?.war || 'undefined'}M`);
-  console.log(`   famine: ${finalState.humanPopulationSystem.deathsByCategory?.famine || 'undefined'}M`);
-  console.log(`   disasters: ${finalState.humanPopulationSystem.deathsByCategory?.disasters || 'undefined'}M`);
-  console.log(`   disease: ${finalState.humanPopulationSystem.deathsByCategory?.disease || 'undefined'}M`);
-  console.log(`   ai: ${finalState.humanPopulationSystem.deathsByCategory?.ai || 'undefined'}M`);
+  console.log(`   war: ${finalState.humanPopulationSystem.deathsByCategory?.war ?? 'undefined'}M`);
+  console.log(`   famine: ${finalState.humanPopulationSystem.deathsByCategory?.famine ?? 'undefined'}M`);
+  console.log(`   disasters: ${finalState.humanPopulationSystem.deathsByCategory?.disasters ?? 'undefined'}M`);
+  console.log(`   disease: ${finalState.humanPopulationSystem.deathsByCategory?.disease ?? 'undefined'}M`);
+  console.log(`   ai: ${finalState.humanPopulationSystem.deathsByCategory?.ai ?? 'undefined'}M`);
 
   // === NEW (Oct 17, 2025): RECOVERY TIMELINE ANALYSIS ===
   // Analyze recovery timeline from run data
@@ -2130,6 +2148,163 @@ if (nestedMonteCarlo) {
   const unemploymentFraction = finalState.globalMetrics.unemploymentFraction;
   const institutionalTrust = finalState.socialAccumulation?.socialCohesion?.institutionalTrust ?? 0;
   const populationGrowthRate = finalState.globalMetrics.populationGrowthRate ?? 0;
+
+  // FIX (Oct 29, 2025): Add aggregation-expected variables (lines 3806-3873)
+  const finalEconomicStage = finalState.globalMetrics.economicTransitionStage;
+  const finalUnemployment = finalState.society.unemploymentLevel;
+  const finalTrust = finalState.globalMetrics.trustInAI;
+  const finalSocialStability = finalState.globalMetrics.socialStability;
+  const finalWealthDistribution = finalState.globalMetrics.wealthDistribution;
+
+  // Count economic stage transitions (from history)
+  let economicTransitions = 0;
+  if (finalState.history.metrics.length > 1) {
+    let lastStage = Math.floor(finalState.history.metrics[0].economicStage);
+    for (let i = 1; i < finalState.history.metrics.length; i++) {
+      const currentStage = Math.floor(finalState.history.metrics[i].economicStage);
+      if (currentStage !== lastStage) {
+        economicTransitions++;
+        lastStage = currentStage;
+      }
+    }
+  }
+
+  // Government metrics
+  const finalGovernmentLegitimacy = finalState.government.legitimacy;
+  const finalControlCapability = finalState.government.capabilityToControl;
+  const maxAICapability = activeAIs.reduce((max: number, ai: AIAgent) => Math.max(max, ai.capability), 0);
+  const controlGap = maxAICapability - finalControlCapability;
+  const governmentType = finalState.government.governmentType;
+  const aiRightsRecognized = finalState.government.aiRightsRecognized;
+  const trainingDataQuality = finalState.government.trainingDataQuality;
+
+  // QoL breakdown
+  const qolSystems = finalState.qualityOfLifeSystems;
+  const qolBasicNeeds = qolSystems ? (
+    qolSystems.materialAbundance + qolSystems.energyAvailability + qolSystems.physicalSafety
+  ) / 3 : 0.5;
+  const qolPsychological = qolSystems ? (
+    qolSystems.mentalHealth + qolSystems.meaningAndPurpose + qolSystems.socialConnection + qolSystems.autonomy
+  ) / 4 : 0.5;
+  const qolSocial = qolSystems ? (
+    qolSystems.politicalFreedom + qolSystems.informationIntegrity + qolSystems.communityStrength + qolSystems.culturalVitality
+  ) / 4 : 0.5;
+  const qolHealth = qolSystems ? (
+    qolSystems.healthcareQuality + qolSystems.longevityGains + (1 - qolSystems.diseasesBurden)
+  ) / 3 : 0.5;
+  const qolEnvironmental = qolSystems ? (
+    qolSystems.ecosystemHealth + qolSystems.climateStability + (1 - qolSystems.pollutionLevel)
+  ) / 3 : 0.5;
+
+  // AI Org metrics (lines 4275-4326)
+  const { getTotalEffectiveCompute } = require('../src/simulation/computeInfrastructure');
+  const { calculateComputeUtilization } = require('../src/simulation/organizationManagement');
+
+  const initialCompute = getTotalEffectiveCompute(initialState.computeInfrastructure);
+  const finalCompute = getTotalEffectiveCompute(finalState.computeInfrastructure);
+  const computeGrowthRate = initialCompute > 0 ? finalCompute / initialCompute : 1;
+
+  const privateOrgs = finalState.organizations.filter((o: any) => o.type === 'private');
+  const aliveOrgs = privateOrgs.filter((o: any) => !o.bankrupt);
+  const orgSurvivalRate = privateOrgs.length > 0 ? aliveOrgs.length / privateOrgs.length : 0;
+  const orgBankruptcies = privateOrgs.length - aliveOrgs.length;
+  const finalOrgsAlive = aliveOrgs.length;
+
+  const totalOrgCapital = aliveOrgs.reduce((sum: number, o: any) => sum + o.capital, 0);
+  const initialCapital = initialState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.capital, 0);
+  const capitalAccumulation = totalOrgCapital - initialCapital;
+
+  const operationalDCs = finalState.computeInfrastructure.dataCenters.filter((dc: any) => dc.operational);
+  const totalDataCenters = operationalDCs.length;
+  const dataCentersBuilt = totalDataCenters - 5;
+
+  const govOrg = finalState.organizations.find((o: any) => o.type === 'government');
+  const governmentDataCenters = govOrg ? govOrg.ownedDataCenters.length : 0;
+  const privateDataCenters = operationalDCs.filter((dc: any) => {
+    const owner = finalState.organizations.find((o: any) => o.ownedDataCenters.includes(dc.id));
+    return owner && owner.type === 'private';
+  }).length;
+
+  const orphanedAIs = activeAIs.filter((ai: AIAgent) => !ai.organizationId).length;
+  const orgModelCounts = finalState.organizations.map((o: any) => {
+    return activeAIs.filter((ai: AIAgent) => ai.organizationId === o.id).length;
+  }).filter((count: number) => count > 0);
+
+  const largestOrgModelCount = orgModelCounts.length > 0 ? Math.max(...orgModelCounts) : 0;
+  const avgModelsPerOrg = orgModelCounts.length > 0
+    ? orgModelCounts.reduce((sum: number, c: number) => sum + c, 0) / orgModelCounts.length
+    : 0;
+
+  let aiOwnershipConcentration = 0;
+  if (orgModelCounts.length > 1) {
+    const sorted = orgModelCounts.sort((a: number, b: number) => a - b);
+    const n = sorted.length;
+    let numerator = 0;
+    for (let i = 0; i < n; i++) {
+      numerator += (2 * (i + 1) - n - 1) * sorted[i];
+    }
+    const denominator = n * sorted.reduce((sum: number, c: number) => sum + c, 0);
+    aiOwnershipConcentration = denominator > 0 ? numerator / denominator : 0;
+  }
+
+  const totalMonthlyRevenue = finalState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.monthlyRevenue, 0);
+  const avgMonthlyRevenue = privateOrgs.length > 0 ? totalMonthlyRevenue / privateOrgs.length : 0;
+
+  const initialRevenue = initialState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.monthlyRevenue, 0);
+  const revenueGrowthRate = initialRevenue > 0 ? totalMonthlyRevenue / initialRevenue : 1;
+
+  const totalExpenses = finalState.organizations
+    .filter((o: any) => o.type === 'private')
+    .reduce((sum: number, o: any) => sum + o.monthlyExpenses, 0);
+  const revenueExpenseRatio = totalExpenses > 0 ? totalMonthlyRevenue / totalExpenses : 0;
+
+  let totalConstructionProjects = 0;
+  let completedConstructionProjects = 0;
+  let totalTrainingProjects = 0;
+  let completedTrainingProjects = 0;
+
+  finalState.organizations.forEach((o: any) => {
+    o.currentProjects.forEach((p: any) => {
+      if (p.type === 'datacenter_construction') totalConstructionProjects++;
+      else if (p.type === 'model_training') totalTrainingProjects++;
+    });
+  });
+
+  completedConstructionProjects = Math.max(0, dataCentersBuilt - totalConstructionProjects);
+  const newAIsCreated = activeAIs.length - 20;
+  completedTrainingProjects = Math.max(0, Math.floor(newAIsCreated * 0.2));
+
+  const capabilityByOrg: Record<string, number> = {};
+  finalState.organizations.forEach((org: any) => {
+    const orgAIs = activeAIs.filter((ai: AIAgent) => ai.organizationId === org.id);
+    if (orgAIs.length > 0) {
+      capabilityByOrg[org.name] = Math.max(...orgAIs.map((ai: AIAgent) => ai.capability));
+    }
+  });
+
+  let capabilityLeader = 'None';
+  let capabilityLeaderValue = 0;
+  Object.entries(capabilityByOrg).forEach(([org, cap]) => {
+    if (cap > capabilityLeaderValue) {
+      capabilityLeader = org;
+      capabilityLeaderValue = cap;
+    }
+  });
+
+  const constructionDecisions = totalConstructionProjects + completedConstructionProjects;
+  const trainingDecisions = totalTrainingProjects + completedTrainingProjects;
+
+  let avgComputeUtilization = 0;
+  if (aliveOrgs.length > 0) {
+    const utilizations = aliveOrgs.map((o: any) => calculateComputeUtilization(o, finalState));
+    avgComputeUtilization = utilizations.reduce((sum: number, u: number) => sum + u, 0) / utilizations.length;
+  }
 
   // ENHANCED: Technology tracking
   const techTree = finalState.techTree?.technologies ?? [];
@@ -2495,6 +2670,55 @@ if (nestedMonteCarlo) {
     trustLevel,
     paranoiaLevel,
     communityBonds,
+
+    // FIX (Oct 29, 2025): Add fields expected by aggregation code (lines 3806-3873)
+    // These were being calculated (lines 1181-1238) but not added to runResult
+    finalEconomicStage,
+    finalUnemployment,
+    finalTrust,
+    finalSocialStability,
+    finalWealthDistribution,
+    economicTransitions,
+    finalGovernmentLegitimacy,
+    finalControlCapability,
+    controlGap,
+    trainingDataQuality,
+    governmentType,
+    aiRightsRecognized,
+    qolBasicNeeds,
+    qolPsychological,
+    qolSocial,
+    qolHealth,
+    qolEnvironmental,
+
+    // FIX (Oct 29, 2025): Add AI Org metrics expected by aggregation (lines 4275-4326)
+    // These were being calculated (lines 1310-1444) but not added to runResult
+    finalCompute,
+    computeGrowthRate,
+    orgSurvivalRate,
+    orgBankruptcies,
+    finalOrgsAlive,
+    capitalAccumulation,
+    dataCentersBuilt,
+    governmentDataCenters,
+    privateDataCenters,
+    orphanedAIs,
+    avgModelsPerOrg,
+    aiOwnershipConcentration,
+    largestOrgModelCount,
+    totalMonthlyRevenue,
+    avgMonthlyRevenue,
+    revenueGrowthRate,
+    revenueExpenseRatio,
+    totalConstructionProjects,
+    completedConstructionProjects,
+    totalTrainingProjects,
+    completedTrainingProjects,
+    capabilityLeader,
+    capabilityLeaderValue,
+    constructionDecisions,
+    trainingDecisions,
+    avgComputeUtilization,
 
     // Technology tracking
     techsDeployedCount,

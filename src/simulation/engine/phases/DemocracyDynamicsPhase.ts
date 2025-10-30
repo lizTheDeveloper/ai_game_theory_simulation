@@ -70,10 +70,10 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     const crisisPressure = calculateCrisisPressure(state);
     const aiManipulation = calculateAIManipulation(state);
     const governanceQuality = calculateGovernanceQuality(state);
-    if (state.society.trustInAI === undefined) {
-      throw new Error('❌ state.society.trustInAI is undefined in DemocracyDynamicsPhase:72 - initialization bug');
+    if (state.globalMetrics.trustInAI === undefined) {
+      throw new Error('❌ state.globalMetrics.trustInAI is undefined in DemocracyDynamicsPhase:72 - initialization bug');
     }
-    const publicTrust = state.society.trustInAI;
+    const trustInAI = state.globalMetrics.trustInAI;
     if (state.socialAccumulation?.institutionalLegitimacy === undefined) {
       throw new Error('❌ state.socialAccumulation.institutionalLegitimacy is undefined in DemocracyDynamicsPhase:73 - initialization bug');
     }
@@ -85,7 +85,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
       crisisPressure,
       aiManipulation,
       governanceQuality,
-      publicTrust,
+      trustInAI,
       institutionalLegitimacy
     );
 
@@ -93,7 +93,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
     // Need to either aggregate from countries or use globalMetrics
     /* TEMPORARILY DISABLED - TYPE ERRORS
     if (state.currentMonth === 0) {
-      console.log(`  DemocracyChange: ${democracyChange}, crisis=${crisisPressure}, ai=${aiManipulation}, quality=${governanceQuality}, trust=${publicTrust}`);
+      console.log(`  DemocracyChange: ${democracyChange}, crisis=${crisisPressure}, ai=${aiManipulation}, quality=${governanceQuality}, trust=${trustInAI}`);
       console.log(`  BEFORE: electoral=${state.minimalSufferingSystem.electoralDemocracyIndex}`);
     }
 
@@ -133,7 +133,7 @@ export class DemocracyDynamicsPhase implements SimulationPhase {
       surveillanceLevel,
       emergencyResponseActive,
       governanceQuality,
-      publicTrust
+      trustInAI
     );
     socialCohesion.civilLiberties = Math.max(0, Math.min(100,
       socialCohesion.civilLiberties + libertiesChange
@@ -342,7 +342,7 @@ function calculateDemocracyChange(
   crisisPressure: number,
   aiManipulation: number,
   governanceQuality: number,
-  publicTrust: number,
+  trustInAI: number,
   institutionalLegitimacy: number
 ): number {
   let change = -0.002; // Baseline global decline (V-Dem 2024)
@@ -353,7 +353,7 @@ function calculateDemocracyChange(
 
   // RECOVERY FACTORS (strengthened)
   change += governanceQuality * 0.008; // +0.8%/month (was +0.5%)
-  change += (publicTrust - 0.5) * 0.005; // ±0.25%/month (was ±0.1%)
+  change += (trustInAI - 0.5) * 0.005; // ±0.25%/month (was ±0.1%)
   change += (institutionalLegitimacy - 0.5) * 0.003; // ±0.15%/month (NEW)
 
   // CAP: Democracy can't grow faster than historical precedent
@@ -386,7 +386,7 @@ function calculateCivilLibertiesChange(
   surveillanceLevel: number,
   emergencyResponseActive: boolean,
   governanceQuality: number,
-  publicTrust: number
+  trustInAI: number
 ): number {
   let change = -0.1; // Baseline global decline
 
@@ -407,8 +407,8 @@ function calculateCivilLibertiesChange(
   }
 
   // High public trust → citizen engagement protects freedoms
-  if (publicTrust > 0.6) {
-    change += (publicTrust - 0.6) * 0.3; // +0 to +12/month
+  if (trustInAI > 0.6) {
+    change += (trustInAI - 0.6) * 0.3; // +0 to +12/month
   }
 
   return change;

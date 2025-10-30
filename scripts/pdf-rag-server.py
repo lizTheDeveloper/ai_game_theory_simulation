@@ -15,9 +15,15 @@ from typing import Optional
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import numpy as np
-import faiss
-from sentence_transformers import SentenceTransformer
+# Optional imports for FAISS-based search (not needed for section search)
+try:
+    import numpy as np
+    import faiss
+    from sentence_transformers import SentenceTransformer
+    FAISS_AVAILABLE = True
+except ImportError:
+    FAISS_AVAILABLE = False
+    print("⚠️ FAISS not available - semantic search disabled, section search still works", file=sys.stderr)
 
 # fastMCP imports
 from fastmcp import FastMCP
@@ -25,6 +31,7 @@ from fastmcp import FastMCP
 # Configuration
 PROJECT_ROOT = Path(__file__).parent.parent
 INDEX_DIR = PROJECT_ROOT / "research" / "embeddings"
+SECTIONS_DIR = INDEX_DIR / "by_section"
 DB_PATH = INDEX_DIR / "pdfs.db"
 INDEX_PATH = INDEX_DIR / "pdfs.index"
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
@@ -40,6 +47,9 @@ mcp = FastMCP("Research PDF Papers")
 
 def initialize_rag_system():
     """Initialize embedding model, FAISS index, and database connection."""
+    if not FAISS_AVAILABLE:
+        raise RuntimeError("FAISS not available. Install with: pip install faiss-cpu sentence-transformers")
+
     global model, index, db_conn
 
     if model is None:
@@ -235,6 +245,42 @@ def get_stats() -> dict:
     }
 
 
+# Section-based search functions (header-based chunking)
+def load_section_data(section_type: str) -> Optional[dict]:
+    """Load section data from JSON file."""
+    section_file = SECTIONS_DIR / f"{section_type}.json"
+    if not section_file.exists():
+        return None
+    with open(section_file, 'r') as f:
+        return json.load(f)
+
+
+def search_section(section_type: str, query: str, case_sensitive: bool = False) -> list:
+    """Search within a specific section type."""
+    data = load_section_data(section_type)
+    if not data:
+        return []
+
+    results = []
+    search_query = query if case_sensitive else query.lower()
+
+    for chunk in data.get('chunks', []):
+        text = chunk['text']
+        search_text = text if case_sensitive else text.lower()
+
+        if search_query in search_text:
+            results.append({
+                'source': chunk.get('source', 'unknown'),
+                'section_type': section_type,
+                'section_header': chunk.get('section_header', ''),
+                'text': text,
+                'char_count': chunk.get('char_count', len(text)),
+                'page': chunk.get('page', 0)
+            })
+
+    return results
+
+
 # Define MCP tools using fastMCP decorators
 @mcp.tool()
 def search_pdfs_tool(query: str, top_k: int = 5, author: Optional[str] = None) -> str:
@@ -309,6 +355,113 @@ def get_stats_tool() -> str:
     try:
         stats = get_stats()
         return json.dumps(stats, indent=2)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
+# Section-based MCP tools
+@mcp.tool()
+def search_abstracts(query: str, limit: int = 10) -> str:
+    """Search paper abstracts for specific terms. Perfect for quick scanning.
+
+    Args:
+        query: Search term (e.g., "alignment", "catastrophic risk")
+        limit: Maximum results (default 10)
+
+    Returns:
+        JSON with matching abstracts
+    """
+    try:
+        results = search_section('abstract', query, case_sensitive=False)
+        return json.dumps({
+            'query': query,
+            'section': 'abstract',
+            'total_matches': len(results),
+            'results': results[:limit]
+        }, indent=2)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
+@mcp.tool()
+def search_methods(query: str, limit: int = 10) -> str:
+    """Search methodology sections to understand research approaches.
+
+    Args:
+        query: Search term (e.g., "monte carlo", "experimental design")
+        limit: Maximum results (default 10)
+
+    Returns:
+        JSON with matching methods sections
+    """
+    try:
+        results = search_section('methods', query, case_sensitive=False)
+        return json.dumps({
+            'query': query,
+            'section': 'methods',
+            'total_matches': len(results),
+            'results': results[:limit]
+        }, indent=2)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
+@mcp.tool()
+def search_results_section(query: str, limit: int = 10) -> str:
+    """Search results sections to find empirical findings.
+
+    Args:
+        query: Search term (e.g., "mortality", "significant")
+        limit: Maximum results (default 10)
+
+    Returns:
+        JSON with matching results sections
+    """
+    try:
+        results = search_section('results', query, case_sensitive=False)
+        return json.dumps({
+            'query': query,
+            'section': 'results',
+            'total_matches': len(results),
+            'results': results[:limit]
+        }, indent=2)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
+@mcp.tool()
+def search_all_sections(query: str, limit_per_section: int = 3) -> str:
+    """Search across all section types simultaneously.
+
+    Args:
+        query: Search term
+        limit_per_section: Max results per section (default 3)
+
+    Returns:
+        JSON with results grouped by section type
+    """
+    try:
+        section_types = ['abstract', 'introduction', 'methods', 'results',
+                         'discussion', 'conclusion', 'limitations']
+
+        all_results = {}
+        total_matches = 0
+
+        for section_type in section_types:
+            results = search_section(section_type, query, case_sensitive=False)
+            if results:
+                all_results[section_type] = {
+                    'count': len(results),
+                    'results': results[:limit_per_section]
+                }
+                total_matches += len(results)
+
+        return json.dumps({
+            'query': query,
+            'total_matches': total_matches,
+            'sections_with_matches': len(all_results),
+            'sections': all_results
+        }, indent=2)
     except Exception as e:
         return json.dumps({"error": str(e)})
 

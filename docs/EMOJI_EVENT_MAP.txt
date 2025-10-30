@@ -146,3 +146,6 @@
 🟢 | Success indicator/green light
 🧑 | Person (base emoji, used in composite 🧑‍🔬)
 🧑‍🔬 | Citizen science/volunteer research
+
+# Debug & Technical Events
+🔧 | Debug deployment
