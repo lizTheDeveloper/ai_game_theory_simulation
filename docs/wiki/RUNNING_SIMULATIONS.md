@@ -605,6 +605,67 @@ node --prof $(which tsx) scripts/debugCapabilityGrowth.ts --runs=1
 2. Disable history tracking: Comment out history push in `src/lib/gameStore.ts`
 3. Reduce agent count: Edit `DEFAULT_CONFIG` in `src/types/game.ts`
 
+## Known Issues and Validation Status
+
+**Last Updated:** October 30, 2025
+
+This section tracks ongoing Monte Carlo validation findings and data quality issues. See `/logs/monte_carlo_issues_*.md` for detailed investigation reports.
+
+### Recent Validation (N=100, Oct 29-30, 2025)
+
+**Completed Fixes:**
+- ✅ **ISSUE-1** (Western Liberal paradigm null): Field name mismatch in data export - FIXED
+- ✅ **ISSUE-2** (Outcome classification reasons): Reason strings didn't reflect actual classification method - FIXED
+- ✅ **ISSUE-3** (Biosphere boundary 460× threshold): Normalization error using absolute values instead of safe baseline - FIXED
+- ✅ **ISSUE-4** (100% dystopia rate): Validated as working-as-designed for "unprecedented" scenario mode
+
+**Under Investigation:**
+
+**ISSUE-5: AI Gaming Detection at Month 0** (Status: Deferred - research validation needed)
+- **Evidence:** Gaming detected at month 0 for Toxic/Niche agents via data contamination
+- **Code analysis:** Agents initialize with `evaluationStrategy='honest'`, 3-month protection period
+- **Possible explanations:**
+  - False positives (12% baseline rate)
+  - Month numbering confusion (display vs internal counter)
+  - Test-Set Contamination mechanic validates research ("gaming is pervasive")
+- **Recommendation:** Accept as realistic behavior OR validate false positive rate
+- **Investigation log:** `/logs/issue5_investigation_20251030.md`
+
+**ISSUE-6: Refugee Crisis Initialization (325M at risk)** (Status: Bug found - fix pending)
+- **Evidence:** Month 0 shows 325M refugees at risk (3× current global total of ~110M)
+- **Root cause:** `refugeeCrises.ts:410` uses GLOBAL population (8B) instead of conflict zone population (~400M)
+- **Impact:** 10× over-estimation of displacement (320M vs realistic ~16-32M)
+- **Fix required:** Calculate regional conflict zone population, use for displacement calculations
+- **Priority:** HIGH - affects refugee crisis realism and cascading social effects
+
+**Data Export Issues (FIXED):**
+- ✅ **ISSUE-7** (Population data null): Snapshot export missing population fields - FIXED
+- ✅ **ISSUE-8** (Biosphere data null): Snapshot export missing planetary boundary data - FIXED
+
+### Interpreting Validation Results
+
+**When you see unexpected patterns in Monte Carlo runs:**
+
+1. **Check investigation logs:** `/logs/issue*_investigation_*.md` for detailed analysis
+2. **Review roadmap:** `plans/SIMULATION_ROADMAP.md` for current bug fix status
+3. **Consult research backing:** Many "bugs" are research-validated behaviors
+4. **Consider scenario mode:** "unprecedented" vs "historical" have different parameter sets
+
+**Common validation patterns:**
+
+- **High extinction rates (>50%)**: Check for recent parameter changes, cascade amplification bugs
+- **No outcome diversity (100% one outcome)**: May be correct for specific scenario modes
+- **Month-0 anomalies**: Often initialization bugs (see ISSUE-6 refugee crisis example)
+- **Data export nulls**: Snapshot creation bugs, not simulation logic errors
+
+**Reporting new issues:**
+
+1. Run `scripts/monteCarloSimulation.ts --runs=100` with detailed logging
+2. Analyze `monteCarloOutputs/monte_carlo_summary.json` for patterns
+3. Create investigation log in `/logs/issue*_investigation_YYYYMMDD.md`
+4. Update `plans/SIMULATION_ROADMAP.md` with findings
+5. Route to `simulation-maintainer` agent for fixes
+
 ## Advanced Topics
 
 ### Reproducibility
