@@ -2275,6 +2275,9 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - Added **BayesianMortalityResolutionPhase** (35.0): Bayesian mortality resolution system integrating multiple mortality sources
 - **Bug Fix (Oct 29):** Fixed negative food security in ClimateImpactCascadePhase - added `MIN_FOOD_SECURITY = 0.001` floor to prevent stacking climate impacts from violating bounds (see `devlogs/climate-impact-negative-food-security-fix_20251029.md`)
 
+**Key Changes (Oct 30):**
+- **Bug Fix (Oct 30):** Fixed extinction rate capping in PlanetaryBoundariesPhase - code logged "capped at 10×" but didn't actually clamp the value, causing `assertInRange` to throw when extinction rates exceeded 10× (40% failure rate in N=10 Monte Carlo validation). Added `Math.min/max` to actually cap before assertion. Caught by Priority 1 assertion cleanup validation sweep (commit d520d3e, related to commit 08243e3).
+
 **Total Phases**: 69 registered phases (up from 67 in previous documentation)
 
 ---
