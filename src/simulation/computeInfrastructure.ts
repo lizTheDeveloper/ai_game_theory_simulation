@@ -495,15 +495,58 @@ export function allocateComputeEqually(state: GameState): void {
 export function applyComputeGrowth(state: GameState, random: () => number = Math.random): void {
   const infra = state.computeInfrastructure;
 
-  // P2 BUG FIX (Oct 16, 2025): Data center decay when orgs collapse
-  // Can't maintain infrastructure with no staff/funding
+  // HIGH-4 FIX (Oct 30, 2025): Direct population → compute capacity scaling
+  // Research: Data centers require skilled labor (electrical engineers, network engineers, cooling techs)
+  // ~0.1% of population has skills to maintain advanced compute infrastructure
+  // Can't maintain 12 PF data centers with no people
+  const globalPopFraction = state.humanPopulationSystem.population /
+                            state.humanPopulationSystem.baselinePopulation;
+
+  // Compute capacity scales with skilled labor pool availability
+  // Formula: capacity ∝ population^0.8 (sub-linear - some operational redundancy)
+  // - 100% population → 100% capacity
+  // - 50% population → 57% capacity (skilled labor bottleneck)
+  // - 10% population → 16% capacity (critical infrastructure threshold)
+  // - 1% population → 2.5% capacity (minimal survivable infrastructure)
+  const skilledLaborMultiplier = Math.pow(globalPopFraction, 0.8);
+
+  // Apply population scaling to ALL data centers (monthly efficiency decay)
+  // This is SEPARATE from org bankruptcy - you need PEOPLE to maintain infrastructure
+  if (globalPopFraction < 0.99) {
+    // Only apply if there's been mortality (avoid floating point drift at 100%)
+    const monthlyDecay = 1 - (1 - skilledLaborMultiplier) / 120; // Smooth decay over 10 years
+
+    infra.dataCenters.forEach(dc => {
+      dc.efficiency = Math.max(0.01, dc.efficiency * monthlyDecay); // Min 1% efficiency
+    });
+
+    // Log population → infrastructure coherence warnings
+    if (globalPopFraction < 0.5 && state.currentMonth % 12 === 0) {
+      const totalCompute = getTotalEffectiveCompute(infra);
+      console.log(`\n⚠️  INFRASTRUCTURE COHERENCE: ${(globalPopFraction * 100).toFixed(1)}% population, ${totalCompute.toFixed(0)} PF compute`);
+      console.log(`   Skilled labor pool: ${(skilledLaborMultiplier * 100).toFixed(1)}% of baseline`);
+      console.log(`   Data centers degrading due to maintenance shortage`);
+    }
+
+    // CRITICAL: At extreme mortality, infrastructure should collapse
+    if (globalPopFraction < 0.1) {
+      const totalCompute = getTotalEffectiveCompute(infra);
+      if (totalCompute > 1000 && state.currentMonth % 6 === 0) {
+        console.log(`\n🚨 COHERENCE VIOLATION WARNING: ${totalCompute.toFixed(0)} PF with ${(globalPopFraction * 100).toFixed(2)}% population`);
+        console.log(`   This requires ~${(totalCompute * 0.0001).toFixed(0)}K skilled workers, but only ${(globalPopFraction * 8_000_000 * 0.001).toFixed(0)}K alive globally`);
+      }
+    }
+  }
+
+  // P2 BUG FIX (Oct 16, 2025): ADDITIONAL decay when orgs collapse (on top of population decay)
+  // Organizations provide funding, coordination, parts procurement
   const totalOrgs = state.organizations.length;
   const bankruptOrgs = state.organizations.filter(o => o.bankrupt).length;
   const bankruptcyRate = bankruptOrgs / totalOrgs;
 
   if (bankruptcyRate > 0.8) {
     // >80% of orgs bankrupt = infrastructure collapse
-    // Lose 2% efficiency per month (no maintenance staff)
+    // Lose 2% efficiency per month (no funding for parts/repairs)
     infra.dataCenters.forEach(dc => {
       dc.efficiency = Math.max(0.1, dc.efficiency * 0.98); // Min 10% efficiency
     });
@@ -565,6 +608,48 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
     console.log(`  Global Precautionary Cost: ${(globalPrecautionaryCost * 100).toFixed(1)}%`);
     console.log(`  R&D Drag Applied: ${(rdDrag * 100).toFixed(1)}% slower growth`);
     console.log(`  Effective Algo Rate: ${(CONTINUOUS_ALGO_RATE * 100).toFixed(3)}%/month (base: ${baseAlgoRate.toFixed(3)}%)`);
+  }
+
+  // HIGH-4 FIX (Oct 30, 2025): Coherence assertions
+  // Can't have massive compute infrastructure with no population to maintain it
+  const { assertFinite, assertInRange } = require('./utils/assertions');
+
+  const totalCompute = getTotalEffectiveCompute(infra);
+  const totalCapacity = getTotalCapacity(infra);
+
+  // Validate compute is finite (no NaN/Infinity from calculations)
+  assertFinite(totalCompute, {
+    location: 'applyComputeGrowth',
+    valueName: 'totalCompute',
+    month: state.currentMonth,
+    additionalInfo: {
+      hardwareEff: infra.hardwareEfficiency,
+      algoEff: infra.algorithmsEfficiency,
+      totalCapacity
+    }
+  });
+
+  // Validate population → compute coherence
+  // Research: ~100 skilled workers per PF of compute (maintenance, operations, network)
+  // Maximum possible compute = population × 0.0001 (1 person per 10 PF baseline) × 1000 (generous multiplier)
+  const maxCoherentCompute = globalPopFraction * 50_000; // 50K PF baseline × population fraction
+
+  // At extreme mortality (< 10% population), compute should collapse rapidly
+  if (globalPopFraction < 0.10 && totalCompute > maxCoherentCompute) {
+    console.error(`\n❌ COHERENCE VIOLATION: Compute capacity exceeds physical possibility`);
+    console.error(`   Population: ${(globalPopFraction * 100).toFixed(2)}% (${(globalPopFraction * 8_000_000).toFixed(0)}K people)`);
+    console.error(`   Compute: ${totalCompute.toFixed(0)} PF`);
+    console.error(`   Max coherent: ${maxCoherentCompute.toFixed(0)} PF`);
+    console.error(`   Required skilled workers: ~${(totalCompute * 0.0001).toFixed(0)}K`);
+    console.error(`   Available workers (0.1% of pop): ~${(globalPopFraction * 8_000_000 * 0.001).toFixed(0)}K`);
+
+    // Force infrastructure collapse to maintain coherence
+    const collapseRatio = maxCoherentCompute / totalCompute;
+    infra.dataCenters.forEach(dc => {
+      dc.efficiency *= collapseRatio;
+    });
+
+    console.error(`   FORCED COLLAPSE: Reducing all data center efficiency by ${((1 - collapseRatio) * 100).toFixed(1)}%`);
   }
 
   // Note: Data center capacity growth is handled in Phase 6 (construction)
