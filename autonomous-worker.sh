@@ -81,10 +81,30 @@ CONFLICT_EOF
     
     # Run Claude Code with comprehensive workflow
     echo "🤖 Starting Claude Code with full orchestrator workflow..."
-    
+
     # Create comprehensive task prompt
     cat > /tmp/claude_task_$TIMESTAMP.txt << "TASK_EOF"
 Read plans/MASTER_IMPLEMENTATION_ROADMAP.md and identify work to do.
+
+## STEP 0: Post Research Requests (ALWAYS DO THIS FIRST)
+
+Before starting any other work, post research requests to the research channel so research can run in parallel:
+
+1. Read plans/MASTER_IMPLEMENTATION_ROADMAP.md
+2. Identify CRITICAL/HIGH priority items that need research
+3. Use mcp__chatroom__chatroom_post to post research requests to the "research" channel:
+   - agent: "autonomous-worker"
+   - status: "RESEARCH_REQUEST"
+   - channel: "research"
+   - message: List specific research needs (papers, parameters, mechanisms)
+4. Continue immediately with implementation work below (research will happen in parallel)
+
+Example research request message format:
+"Research needed for [FEATURE NAME]:
+- Latest peer-reviewed sources (2024-2025) on [TOPIC]
+- Parameter values and justification for [SPECIFIC PARAMETERS]
+- Mechanism description for [SYSTEM]
+- Contradictory evidence or alternative approaches"
 
 ## PRIMARY WORKFLOW: Roadmap Implementation
 

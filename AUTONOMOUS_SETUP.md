@@ -72,11 +72,19 @@ cd ~/ai_game_theory_simulation
 
 ### Task Selection Priority
 
-1. **CRITICAL** roadmap items
-2. **HIGH** priority tasks
-3. Research verification tasks
-4. Code reviews
-5. Documentation updates
+**Research-First Workflow:**
+Every autonomous run begins by posting research requests to the research channel. This allows research to run in parallel with implementation work.
+
+1. **Post research requests** (STEP 0 - always first)
+   - Scan roadmap for CRITICAL/HIGH items
+   - Post specific research needs to research channel
+   - Research monitor spawns super-alignment-researcher
+   - Research runs in parallel with implementation
+2. **CRITICAL** roadmap items
+3. **HIGH** priority tasks
+4. Research verification tasks (using parallel research results)
+5. Code reviews
+6. Documentation updates
 
 ### Safety Features
 
