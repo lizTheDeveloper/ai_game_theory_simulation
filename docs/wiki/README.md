@@ -3034,6 +3034,21 @@ state.history.exogenousShocks?: Array<{
 - See: [AUTONOMOUS_SETUP.md](../../AUTONOMOUS_SETUP.md) for complete autonomous operations guide
 - Commit: 7bb7661 (Oct 30, 2025)
 
+**Autonomous Worker PR Creation** ✅ DOCUMENTED
+- **Automated pull requests**: Worker now creates PRs automatically after pushing feature branches
+- **Detailed PR body**: Includes run metrics, timing, commit history, file changes
+- **Graceful fallback**: Continues if `gh` CLI not authenticated or PR already exists
+- **Metrics tracking**: PR creation success tracked in `logs/autonomous/metrics_TIMESTAMP.json`
+- **Workflow**:
+  1. Worker pushes feature branch to remote
+  2. Creates PR with `[Autonomous]` prefix
+  3. Includes run duration, Claude time, files changed, commits made
+  4. Links to worker log and metrics files
+  5. Tracks success/failure in JSON metrics
+- **Benefits**: Eliminates manual PR creation step, provides visibility into autonomous work
+- **Files**: `autonomous-worker.sh` (lines 289-368)
+- Commit: fb6867d (Oct 30, 2025)
+
 ---
 
 ## 📚 Recent Research & Plans Reference (Oct 16-17, 2025)
