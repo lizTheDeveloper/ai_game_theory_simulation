@@ -3077,6 +3077,25 @@ state.history.exogenousShocks?: Array<{
 - **Location**: `autonomous-worker.sh` (lines 79-86, in PRE-FLIGHT CHECKS)
 - Commit: 14c8a3e (Oct 31, 2025)
 
+**Autonomous Worker GitHub Issue Alerts** ✅ DOCUMENTED
+- **Automatic failure notifications**: Worker creates GitHub issues when Claude execution fails or times out
+- **Timeout detection**: Creates issue when execution exceeds 25 minutes (exit code 124)
+- **Failure detection**: Creates issue for any non-zero exit code from Claude execution
+- **Issue metadata**:
+  - Timestamp and duration of run
+  - Branch name
+  - Exit code
+  - Log file path (`logs/autonomous/worker_TIMESTAMP.log`)
+- **Labels**: `autonomous-worker` + `timeout` or `failure`
+- **Graceful fallback**: If `gh` CLI unavailable, logs warning but continues execution
+- **Benefits**:
+  - Get notified via GitHub when autonomous worker has problems
+  - Centralized failure tracking across autonomous runs
+  - Easy access to logs and debugging info
+  - No silent failures - every problem creates actionable issue
+- **Location**: `autonomous-worker.sh` (lines 264-299, Claude execution error handling)
+- Commit: 9496601 (Oct 31, 2025)
+
 ---
 
 ## 📚 Recent Research & Plans Reference (Oct 16-17, 2025)
