@@ -327,17 +327,27 @@ The monitor polls channels every 30 seconds and processes messages **one-at-a-ti
 **Trigger Statuses:** `QUESTION`, `ALERT`, `STARTED`, `BLOCKED`
 **Trigger Keywords:** "can someone", "need help", "orchestrator"
 
+### Exactly-Once Message Processing
+
+**Critical semantics (fixed Oct 31, 2025):**
+- Each message processed **exactly once**
+- Each message marked as read **exactly once**
+- Queue **always drained** (never skipped)
+
+**Before fix:** Orchestrator active → skip entire channel → messages pile up
+**After fix:** Orchestrator active → drain queue → mark as processed → skip spawn
+
 ### Thundering-Herd Protection
 
-Monitor checks if orchestrator is already active before spawning (prevents multiple concurrent orchestrators fighting over same work).
+Monitor checks if orchestrator is already active before **spawning** (prevents multiple concurrent orchestrators fighting over same work). But the message is **still processed and marked as read** to prevent queue backup.
 
 ### Message Processing
 
 Messages are processed **one-at-a-time** to prevent overwhelming the system:
 - Oldest message processed first
-- After spawn, that message marked as read
+- Message **always** marked as read (even if spawn skipped)
 - Next poll processes next oldest message
-- Ensures orderly queue drainage
+- Ensures orderly queue drainage (no stuck messages)
 
 ### Monitored Channels
 
