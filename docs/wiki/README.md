@@ -3096,6 +3096,24 @@ state.history.exogenousShocks?: Array<{
 - **Location**: `autonomous-worker.sh` (lines 264-299, Claude execution error handling)
 - Commit: 9496601 (Oct 31, 2025)
 
+**Autonomous Worker Chatroom Monitor Check** ✅ DOCUMENTED
+- **Pre-flight monitoring**: Worker ensures chatroom monitors are running before task execution
+- **Auto-start capability**: If monitors not running, automatically starts `simple-channel-monitor.ts`
+- **Process verification**: Confirms monitor started successfully (2s grace period)
+- **Graceful logging**: Logs to `logs/monitor_TIMESTAMP.log`, warns if startup uncertain
+- **Implementation**:
+  - Checks for running `simple-channel-monitor.ts` process via `pgrep`
+  - If not found: starts monitor in background with `nohup`
+  - Waits 2 seconds for startup
+  - Verifies process still running via PID check
+- **Benefits**:
+  - Ensures multi-agent coordination capability (chatrooms operational)
+  - Prevents coordination failures from stopped monitors
+  - Allows autonomous worker to interact with research/implementation channels
+  - Self-healing: recovers from monitor crashes between runs
+- **Location**: `autonomous-worker.sh` (lines 88-105, in PRE-FLIGHT CHECKS)
+- Commit: 54e2b66 (Oct 31, 2025)
+
 ---
 
 ## 📚 Recent Research & Plans Reference (Oct 16-17, 2025)

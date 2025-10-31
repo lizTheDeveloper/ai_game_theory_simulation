@@ -99,6 +99,12 @@ Every autonomous run begins by posting research requests to the research channel
   - Continues with existing version if update fails
   - Logs version after update attempt
   - Ensures worker always uses latest features and bug fixes
+- **Chatroom monitor check:** Ensures multi-agent coordination is operational
+  - Checks if `simple-channel-monitor.ts` is running in pre-flight checks
+  - Auto-starts monitor if not running (self-healing)
+  - Verifies monitor process started successfully
+  - Logs monitor status to `logs/monitor_TIMESTAMP.log`
+  - Prevents coordination failures from stopped monitors
 - **Automatic PR creation:** Worker creates pull requests after pushing feature branches
 - **GitHub issue alerts:** Automatic issue creation when Claude execution fails
   - Timeout detection (exit 124) creates issue with `timeout` label
