@@ -162,34 +162,43 @@
 
 ### P0 - CRITICAL (Incorrect Baselines - Fix Immediately)
 
-- [ ] **Unemployment Baseline Verification** - `research/verification_P0_unemployment_baseline_20251031.md`
-  - Current: 0.1 (10% unemployment, NO SOURCE)
-  - Proposed: 0.04 (4%, ILO 2024 data)
-  - Impact: 2.5× overestimate, unrealistic economic baseline
-  - **Action:** Verify ILO 2024 global unemployment rate, update initialization.ts:656
+- [x] **Unemployment Baseline Verification** ✅ **COMPLETE (Oct 31, 2025)**
+  - **Status:** Fixed in commit 7447625
+  - **Change:** 0.1 → 0.049 (ILO 2024: 4.9% global unemployment)
+  - **Location:** `src/simulation/initialization.ts:649`
+  - **Verification:** `research/verification_P0_unemployment_baseline_20251031.md`
+  - **Research:** ILO World Employment and Social Outlook 2024
 
-- [ ] **Quality of Life Baseline Verification** - `research/verification_P0_quality_of_life_baseline_20251031.md`
-  - Current: 0.65 (NO SOURCE)
-  - Proposed: 0.73 (UNDP HDI 2024)
-  - Impact: 11% underestimate, affects entire QoL system
-  - Complexity: Requires conceptual validation (is HDI the right proxy for QoL?)
-  - **Action:** Verify UNDP HDI 2024, validate conceptual mapping, update initialization.ts:686
+- [x] **Quality of Life Baseline Verification** ✅ **COMPLETE (Oct 31, 2025)**
+  - **Status:** Fixed in commit 7447625
+  - **Change:** 0.65 → 0.74 (UNDP HDI 2024: 0.739-0.744 global average)
+  - **Location:** `src/simulation/initialization.ts:673-674`
+  - **Verification:** `research/verification_P0_quality_of_life_baseline_20251031.md`
+  - **Research:** UNDP Human Development Report 2024
+  - **Note:** Conceptual validation (HDI→QoL mapping) posted as P2 background task
 
-- [ ] **Wealth Distribution Baseline Verification** - `research/verification_P0_wealth_distribution_baseline_20251031.md`
-  - Current: 0.5 (NO SOURCE, scale unclear)
-  - Proposed: 0.65 (World Bank Gini coefficient) OR 0.35 (inverted scale)
-  - Impact: 30% error in inequality baseline (direction unclear)
-  - Complexity: Must determine scale definition first (Gini vs inverted vs custom)
-  - **Action:** Investigate code usage to determine scale, verify World Bank Gini 2024, update initialization.ts:687
+- [x] **Wealth Distribution Baseline Verification** ✅ **COMPLETE (Oct 31, 2025)**
+  - **Status:** Fixed in commit 7447625
+  - **Change:** 0.5 → 0.38 (World Bank 2019 Gini 61.66, inverted: 1 - 0.6166 = 0.38)
+  - **Location:** `src/simulation/initialization.ts:675`
+  - **Verification:** `research/verification_P0_wealth_distribution_baseline_20251031.md`
+  - **Research:** World Bank inequality database (Gini coefficient)
+  - **Key Discovery:** Scale confirmed as INVERTED (1 = equality, 0 = inequality) from `gameStore.ts.bak:89`
 
-- [ ] **Government Baselines Verification** - `research/verification_P0_government_baselines_20251031.md`
+- [ ] **Government Baselines Verification** - DEFERRED (P1 background task)
   - Current: 11 parameters (controlDesire, legitimacy, transparency, etc.) - ALL NO SOURCE
   - Proposed: Map to V-Dem v14 (2024) and WGI 2024 data
   - Impact: Government policy responses currently use arbitrary "moderate" values
   - Complexity: High - 11 parameters, multiple data sources, conceptual mapping required
-  - **Action:** Extract V-Dem/WGI data, validate conceptual mappings, update initialization.ts:547-627
+  - Estimated effort: 4-7 hours (V-Dem/WGI dataset extraction)
+  - **Action:** Posted to `research` channel for background processing (P1)
 
 **Audit Context:** Found during systematic initialization parameter audit (`reviews/initialization_parameter_audit_20251031.md`). Overall finding: **40-50%** of initialization parameters lack research backing.
+
+**Follow-up Tasks Posted to Research Channel:**
+- **P1:** Government baselines verification (V-Dem v14 + WGI 2024 extraction, 4-7h)
+- **P2:** QoL conceptual validation (HDI→QoL mapping soundness)
+- **P3:** Monte Carlo baseline validation (N=10 runs to verify new baselines)
 
 ---
 
