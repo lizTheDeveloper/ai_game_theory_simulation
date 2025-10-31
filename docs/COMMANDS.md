@@ -8,6 +8,7 @@ Complete command reference for running simulations, tests, and diagnostic script
 - [Building & Development](#building--development)
 - [Research Question Extraction](#research-question-extraction)
 - [Profiling & Performance](#profiling--performance)
+- [Autonomous Worker Monitoring](#autonomous-worker-monitoring)
 
 ## Running Simulations
 
@@ -287,6 +288,81 @@ npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
 - Each run commits its log file to feature branch
 - See `AUTONOMOUS_SETUP.md` for details
 
+## Autonomous Worker Monitoring
+
+Added October 30, 2025 - comprehensive instrumentation for autonomous worker runs.
+
+### View Run History
+
+```bash
+# View chronological summary of all autonomous runs
+./scripts/viewAutonomousRuns.sh
+```
+
+Shows for each run:
+- Status (success/timeout/error)
+- Duration (total and Claude execution time)
+- Files changed and commits made
+- Branch name and log file location
+- Summary statistics (total runtime, average per run)
+
+### Monitor Current Run
+
+```bash
+# View current stage
+cat logs/autonomous/status_current.txt
+
+# Follow worker log in real-time
+tail -f logs/autonomous/worker_*.log
+
+# View specific run metrics (JSON)
+cat logs/autonomous/metrics_20251030_223350.json
+```
+
+### Metrics Structure
+
+Each run exports structured metrics to `logs/autonomous/metrics_TIMESTAMP.json`:
+- `timestamp`: Run start time
+- `branch`: Feature branch created
+- `commit`: Starting commit hash
+- `duration_seconds`: Total runtime
+- `claude_duration_seconds`: Claude execution time
+- `claude_exit_code`: Exit status (0=success, 124=timeout)
+- `changed_files`: Number of files modified
+- `commits_made`: Number of commits in session
+- `memory_used`: Peak memory usage
+- `disk_used`: Disk space used
+
+### Worker Stages
+
+The autonomous worker executes in 6 stages:
+1. **PRE-FLIGHT CHECKS** - Health (disk, memory), dependencies (git, node, python, claude)
+2. **GIT SYNC** - Pull latest, resolve conflicts, create branch
+3. **ENVIRONMENT SETUP** - Activate venv, verify Claude version
+4. **CLAUDE CODE EXECUTION** - Run orchestrator workflow (25-minute timeout)
+5. **GIT OPERATIONS** - Commit changes, push branch
+6. **METRICS COLLECTION** - Export JSON metrics, update status
+
+### Log Files
+
+**Worker logs** (`logs/autonomous/worker_*.log`):
+- Complete session transcript with colored, stage-based output
+- Timing for each stage
+- Git operations summary
+- Error tracking and exit codes
+- **Git-tracked** (preserved forever in feature branches)
+
+**Metrics files** (`logs/autonomous/metrics_*.json`):
+- Structured data for aggregation/analysis
+- Machine-readable format
+- **Git-tracked** (preserved with worker logs)
+
+**Status file** (`logs/autonomous/status_current.txt`):
+- Real-time stage indicator
+- Updated as worker progresses
+- Deleted when run completes
+- **Git-ignored** (transient state only)
+
 ## Additional Resources
 
 - **Wiki:** `docs/wiki/README.md` - Comprehensive system documentation
@@ -294,3 +370,4 @@ npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
 - **DevLogs:** `devlogs/` - Implementation notes
 - **Research:** `research/` - Peer-reviewed findings
 - **Emoji Reference:** `docs/EMOJI_QUICK_REFERENCE.md` - One-page cheat sheet
+- **Autonomous Worker Setup:** `AUTONOMOUS_SETUP.md` - Autonomous worker configuration
