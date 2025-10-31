@@ -3118,8 +3118,11 @@ state.history.exogenousShocks?: Array<{
   - Allows autonomous worker to interact with research/implementation channels
   - Self-healing: recovers from monitor crashes between runs
   - **Active orchestrator spawning**: Monitor automatically spawns orchestrator when work detected (not just passive notifications like `simple-channel-monitor.ts`)
+  - **Exactly-once message processing**: Always drains queue (marks messages as read) even when orchestrator active, preventing stuck messages
 - **Location**: `autonomous-worker.sh` (lines 88-105, in PRE-FLIGHT CHECKS)
-- Commit: 9254e54 (Oct 31, 2025) - Fixed to use active monitor instead of passive monitor
+- Commits:
+  - 9254e54 (Oct 31, 2025) - Fixed to use active monitor instead of passive monitor
+  - 4cd638d (Oct 31, 2025) - Fixed exactly-once semantics (prevent queue backup)
 
 ---
 
