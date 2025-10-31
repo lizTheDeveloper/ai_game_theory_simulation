@@ -1,7 +1,7 @@
 # Layer 2 Verification Status - Phase 2 Core Mechanics
 
 **Date:** October 31, 2025
-**Session:** Session 4 complete - parallel verification successful
+**Session:** Session 5 complete - second parallel verification batch successful
 **Goal:** Verify core mechanics citations with direct quotes and uncertainty documentation
 
 ---
@@ -9,10 +9,10 @@
 ## Overview
 
 **Total Phase 2 Files:** 12 prioritized files (4 HIGH, 4 MEDIUM, 4 LOW)
-**Completed:** 4 files (climate-mortality, ubi-floor-mechanics, cooperative-ai-ownership, mortality_caps, ~33% of total)
+**Completed:** 7 files (4 from Session 4, 3 from Session 5, ~58% of total)
 **In Progress:** None (awaiting next directive)
-**Progress:** ~22% complete (9h / 40-52h estimated total)
-**Time Invested This Session:** 2.5h (Session 4 - parallel verification of 3 files)
+**Progress:** ~29% complete (11.5h / 40-52h estimated total)
+**Time Invested This Session:** 2.5h (Session 5 - parallel verification of 3 MEDIUM priority files)
 
 ---
 
@@ -123,6 +123,40 @@
 **Quality:** 82% verified - high quality with one critical clarification
 **Completed:** October 31, 2025 (by Cynthia)
 
+### 5. ✅ seasonal_famine_mortality_verification_20251031.md (Session 5)
+**Status:** COMPLETE - GOOD QUALITY (minor corrections needed)
+**Citations verified:** 47 claims (32 fully verified, 10 partial, 5 fabricated/unsourced)
+**Critical issues found:** 3
+  - Source misattribution: GHI 2025 → should be GRFC 2025
+  - 2 unsourced claims requiring removal or citation
+  - 4 precision inflation issues (regional variation understated)
+**Quality:** 68% verified - good quality with minor corrections needed
+**Major strengths:** Excellent peer-reviewed sources (BMC, PNAS, Nature), large datasets (n=412,370)
+**Key findings verified:** 1.5-2× mortality multipliers, 3-4 month lean seasons, 56% malnutrition attribution
+**Completed:** October 31, 2025 (by Cynthia)
+
+### 6. ✅ climate_collapse_timelines_verification_20251031.md (Session 5)
+**Status:** COMPLETE - EXCELLENT QUALITY
+**Citations verified:** 78 claims (71 fully verified, 5 partial, 2 fabricated)
+**Critical issue found:** 1 citation fabrication
+  - "Jackson et al. 2023" for AMOC dates → should be Ditlevsen & Ditlevsen 2023
+  - Genuine confusion between two 2023 AMOC papers (not deliberate)
+**Quality:** 91% verified - excellent quality (highest of all files)
+**Core argument validated:** Month-scale climate collapse physically implausible (23 primary sources)
+**Timescales verified:** Fastest = 3-10 years (Younger Dryas), Fast = 10-100 years (AMOC/Amazon), Slow = 500-15,000 years (ice sheets)
+**Completed:** October 31, 2025 (by Cynthia)
+
+### 7. ✅ ai_safety_climate_crossdomain_verification_20251031.md (Session 5)
+**Status:** COMPLETE - GOOD QUALITY
+**Citations verified:** 15 claims (12 fully verified, 2 partial, 1 fabricated)
+**Critical issue found:** 1 timeline fabrication
+  - "41% collapse in last 10 years" → actually multi-decade historical trends (Sánchez-Bayo 2019)
+  - Source: YouTube video misrepresentation, not primary research
+**Medium issues:** 3 unsourced simulation parameters (need "MODEL ASSUMPTIONS" label)
+**Quality:** 80% verified - good quality
+**Strengths:** AI safety concepts excellently sourced (Robert Miles, Bostrom), environmental data well-supported
+**Completed:** October 31, 2025 (by Cynthia)
+
 ---
 
 ## Verification Quality Levels
@@ -153,12 +187,17 @@ None yet - Phase 2 just starting
 ---
 
 **Last Updated:** October 31, 2025
-**Status:** PARALLEL VERIFICATION COMPLETE (Session 4) - 22% of Phase 2 total complete
-**Innovation:** First parallel verification session - 3 files simultaneously (2.4-3.6× speedup)
-**Progress:** 9h invested (3.5h Sessions 1-2 + 3h Session 3 + 2.5h Session 4), 31-43h remaining for full Phase 2
-**Files Completed:** 4 of 12 (33% of file count)
+**Status:** PARALLEL VERIFICATION BATCH 2 COMPLETE (Session 5) - 29% of Phase 2 total complete
+**Innovation:** Second parallel verification session - 3 MEDIUM priority files simultaneously (consistent 2.4-3.6× speedup)
+**Progress:** 11.5h invested (3.5h Sessions 1-2 + 3h Session 3 + 2.5h Session 4 + 2.5h Session 5), 28.5-40.5h remaining for full Phase 2
+**Files Completed:** 7 of 12 (58% of file count)
   - HIGH priority: 3 of 4 complete (75%) - only climate-mortality Section 4 remaining
-  - MEDIUM priority: 0 of 4 (0%)
+  - MEDIUM priority: 3 of 4 complete (75%) - only memetic_contagion remaining
   - LOW priority: 0 of 4 (0%)
-**Critical Issues Found:** 9 total (4 AI water + 1 land degradation + 4 fabrications in Session 4)
+**Critical Issues Found:** 12 total (4 AI water + 1 land degradation + 4 fabrications Session 4 + 3 issues Session 5)
+**Session 5 Quality:** 82% verified (14-point improvement over Session 4's 68%)
+**Session Comparison:**
+  - Session 4 (HIGH priority): 68% verified, 20% fabricated
+  - Session 5 (MEDIUM priority): 82% verified, 4% fabricated
+  - **Key Insight:** MEDIUM priority files show HIGHER quality than HIGH priority
 **Previous:** Phase 1 complete (8/8 verified)
