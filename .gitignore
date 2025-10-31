@@ -44,8 +44,9 @@ yarn-error.log*
 next-env.d.ts
 monteCarloOutputs/
 
-# Log files
+# Log files (but keep autonomous worker logs in repo)
 logs/*.log
+!logs/autonomous/*.log
 
 # Heap profiles
 profiles/
