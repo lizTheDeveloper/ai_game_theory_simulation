@@ -311,9 +311,16 @@ The monitor polls channels every 30 seconds and processes messages **one-at-a-ti
 
 1. Reads oldest unread message from monitored channels
 2. Analyzes if attention needed (trigger keywords/statuses)
-3. Spawns orchestrator in background if match found
-4. Marks message as processed (updates read pointer)
-5. Next poll processes next oldest message
+3. Checks if orchestrator already active (thundering-herd protection)
+4. If orchestrator available: Spawns orchestrator + marks message as processed
+5. If orchestrator busy: Message stays in queue, retried next poll
+6. Next poll processes next oldest message
+
+**Guarantees:**
+- Each message gets exactly one orchestrator spawn
+- Messages wait in queue if orchestrator busy
+- No lost messages, no duplicate spawns
+- Ordered processing (FIFO)
 
 ### Monitored Channels
 
@@ -334,7 +341,7 @@ Monitor respects `.claude/silent-mode`:
 
 ### Thundering-Herd Protection
 
-Monitor checks if orchestrator is already active before spawning (prevents multiple concurrent orchestrators fighting over same work).
+Monitor checks if orchestrator is already active before spawning to prevent multiple concurrent orchestrators fighting over the same work. Messages wait in queue until the orchestrator is available, ensuring each message eventually gets processed.
 
 ## Autonomous Worker Monitoring
 
