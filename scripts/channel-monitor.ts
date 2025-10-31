@@ -63,34 +63,81 @@ interface ChatroomMessage {
   message: string;
 }
 
-function readNewMessages(channel: string, agentId: string): ChatroomMessage[] {
-  try {
-    const result = execSync(
-      `npx tsx -e "import { mcp__chatroom__chatroom_read_new } from '@/mcp'; mcp__chatroom__chatroom_read_new({ channel: '${channel}', agent: '${agentId}' }).then(r => console.log(JSON.stringify(r)));"`,
-      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] }
-    );
+function readChannel(channel: string): ChatroomMessage[] {
+  const channelFile = `.claude/chatroom/channels/${channel}.md`;
 
-    const parsed = JSON.parse(result);
-    return parsed.messages || [];
-  } catch (error) {
-    console.error(`Error reading channel ${channel}:`, error);
+  if (!fs.existsSync(channelFile)) {
     return [];
   }
+
+  const content = fs.readFileSync(channelFile, 'utf-8');
+  const messages: ChatroomMessage[] = [];
+
+  // Parse messages from markdown format
+  const lines = content.split('\n');
+  let currentMessage: Partial<ChatroomMessage> | null = null;
+
+  for (const line of lines) {
+    if (line.startsWith('**') && line.includes('|')) {
+      // New message header: **agent** | timestamp | [STATUS]
+      const match = line.match(/\*\*(.+?)\*\*\s+\|\s+(.+?)\s+\|\s+\[(.+?)\]/);
+      if (match) {
+        if (currentMessage?.timestamp) {
+          messages.push(currentMessage as ChatroomMessage);
+        }
+        currentMessage = {
+          agent: match[1],
+          timestamp: match[2],
+          status: match[3],
+          message: ''
+        };
+      }
+    } else if (currentMessage && line.trim() && !line.startsWith('---')) {
+      // Message content (skip separator lines)
+      currentMessage.message += line.trim() + ' ';
+    }
+  }
+
+  if (currentMessage?.timestamp) {
+    messages.push(currentMessage as ChatroomMessage);
+  }
+
+  return messages;
+}
+
+function getLastReadTime(channel: string): Date {
+  const stateFile = `.claude/chatroom/monitor-state-${channel}.txt`;
+
+  if (!fs.existsSync(stateFile)) {
+    // Never read before - return 1 hour ago
+    return new Date(Date.now() - 3600000);
+  }
+
+  const timestamp = fs.readFileSync(stateFile, 'utf-8').trim();
+  return new Date(timestamp);
+}
+
+function updateLastReadTime(channel: string): void {
+  const stateFile = `.claude/chatroom/monitor-state-${channel}.txt`;
+  fs.writeFileSync(stateFile, new Date().toISOString(), 'utf-8');
+}
+
+function readNewMessages(channel: string, agentId: string): ChatroomMessage[] {
+  const allMessages = readChannel(channel);
+  const lastRead = getLastReadTime(channel);
+
+  return allMessages.filter(m => new Date(m.timestamp) > lastRead);
 }
 
 function checkWhoActive(channel: string): string[] {
-  try {
-    const result = execSync(
-      `npx tsx -e "import { mcp__chatroom__chatroom_who_active } from '@/mcp'; mcp__chatroom__chatroom_who_active({ channel: '${channel}' }).then(r => console.log(JSON.stringify(r)));"`,
-      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] }
-    );
+  const activeFile = `.claude/chatroom/.${channel}_active`;
 
-    const parsed = JSON.parse(result);
-    return parsed.agents || [];
-  } catch (error) {
-    console.error(`Error checking active agents in ${channel}:`, error);
+  if (!fs.existsSync(activeFile)) {
     return [];
   }
+
+  const content = fs.readFileSync(activeFile, 'utf-8');
+  return content.split('\n').filter(a => a.trim().length > 0);
 }
 
 // ============================================================================
@@ -104,15 +151,6 @@ function spawnOrchestrator(channel: string, reason: string): void {
   voiceNotify(`Orchestrator spawning for ${channel}`);
 
   try {
-    // Spawn orchestrator using Task tool via Claude Code CLI
-    // The orchestrator will:
-    // 1. Recall their memory context
-    // 2. Read channel messages
-    // 3. Determine what needs to be done
-    // 4. Spawn specialists as needed
-    // 5. Coordinate work
-
-    const taskDescription = `Monitor and coordinate work in ${channel} channel`;
     const taskPrompt = `
 You are the orchestrator agent. A new request has been detected in the ${channel} channel.
 
@@ -120,11 +158,11 @@ Your agent ID is: ${ORCHESTRATOR_AGENT_ID}
 
 Steps:
 1. First, recall your memory context:
-   await mcp__agent_memory__recall_context({ agent_id: "${ORCHESTRATOR_AGENT_ID}" })
+   mcp__agent_memory__recall_context({ agent_id: "${ORCHESTRATOR_AGENT_ID}" })
 
 2. Enter the channel and read new messages:
-   await mcp__chatroom__chatroom_enter({ channel: "${channel}", agent: "${ORCHESTRATOR_AGENT_ID}" })
-   await mcp__chatroom__chatroom_read_new({ channel: "${channel}", agent: "${ORCHESTRATOR_AGENT_ID}" })
+   mcp__chatroom__chatroom_enter({ channel: "${channel}", agent: "${ORCHESTRATOR_AGENT_ID}" })
+   mcp__chatroom__chatroom_read_new({ channel: "${channel}", agent: "${ORCHESTRATOR_AGENT_ID}" })
 
 3. Analyze what work needs to be done
 
@@ -140,22 +178,31 @@ Steps:
 6. Before you finish:
    - Post completion summary to channel
    - Add milestone to your memory if significant work completed
-   - Leave the channel: await mcp__chatroom__chatroom_leave({ channel: "${channel}", agent: "${ORCHESTRATOR_AGENT_ID}", reason: "Work coordinated" })
+   - Leave the channel: mcp__chatroom__chatroom_leave({ channel: "${channel}", agent: "${ORCHESTRATOR_AGENT_ID}", reason: "Work coordinated" })
 
 Remember: You coordinate, you don't implement. Delegate to specialists!
     `.trim();
 
-    console.log(`\n📋 Task Description: ${taskDescription}`);
-    console.log(`\n🚀 Spawning orchestrator agent...`);
+    console.log(`\n🚀 Spawning orchestrator agent via Claude Code...`);
 
-    // Note: In production, this would use the Claude Code Task API
-    // For now, we'll log the task details
-    console.log('\n--- ORCHESTRATOR SPAWN TASK ---');
-    console.log(`Channel: ${channel}`);
-    console.log(`Reason: ${reason}`);
-    console.log(`Prompt: ${taskPrompt}`);
-    console.log('--- END TASK ---\n');
+    // Write task to temp file
+    const tmpFile = `/tmp/orchestrator_spawn_${Date.now()}.txt`;
+    fs.writeFileSync(tmpFile, taskPrompt, 'utf-8');
 
+    // Spawn orchestrator using Claude Code CLI
+    execSync(`claude --dangerously-skip-permissions < ${tmpFile} > /dev/null 2>&1 &`, {
+      stdio: 'ignore',
+      detached: true
+    });
+
+    // Clean up temp file after a delay
+    setTimeout(() => {
+      try {
+        fs.unlinkSync(tmpFile);
+      } catch {}
+    }, 5000);
+
+    console.log('✅ Orchestrator spawn initiated in background');
     voiceNotify('Orchestrator spawned successfully');
 
   } catch (error) {
@@ -252,14 +299,31 @@ async function monitorChannels(): Promise<void> {
           });
         }
 
-        // Analyze if attention needed
-        const analysis = needsAttention(newMessages);
+        // Process messages ONE AT A TIME like MQTT queue
+        if (newMessages.length > 0) {
+          // Take the OLDEST message that needs attention
+          const oldestMessage = newMessages[0];
+          const analysis = needsAttention([oldestMessage]);
 
-        if (analysis.needs) {
-          console.log(`  🚨 ATTENTION NEEDED: ${analysis.reason}`);
-          spawnOrchestrator(channel, analysis.reason);
-        } else if (newMessages.length > 0) {
-          console.log(`  ℹ️  Messages present but no immediate action needed`);
+          if (analysis.needs) {
+            console.log(`  🚨 PROCESSING MESSAGE: ${analysis.reason}`);
+            console.log(`  📝 Message: [${oldestMessage.agent}] ${oldestMessage.message.substring(0, 60)}...`);
+
+            spawnOrchestrator(channel, analysis.reason);
+
+            // Update last read to THIS message timestamp
+            // This ensures we process one at a time
+            const stateFile = `.claude/chatroom/monitor-state-${channel}.txt`;
+            fs.writeFileSync(stateFile, oldestMessage.timestamp, 'utf-8');
+
+            console.log(`  ✅ Message queued for processing, marked as read`);
+            console.log(`  📊 Remaining messages in queue: ${newMessages.length - 1}`);
+          } else {
+            console.log(`  ℹ️  Oldest message doesn't need action, marking as read`);
+            // Mark as read and continue to next
+            const stateFile = `.claude/chatroom/monitor-state-${channel}.txt`;
+            fs.writeFileSync(stateFile, oldestMessage.timestamp, 'utf-8');
+          }
         } else {
           console.log(`  ✅ No new activity`);
         }
