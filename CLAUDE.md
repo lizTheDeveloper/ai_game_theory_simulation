@@ -282,6 +282,39 @@ Every mechanic must have:
 
 **📖 Complete workflow steps:** See [`docs/DEVELOPMENT_WORKFLOW.md`](./docs/DEVELOPMENT_WORKFLOW.md) for implementation phases, phase creation, and testing strategies.
 
+### Research Organization (Zotero)
+
+**All research papers, citations, and sources MUST be tracked in Zotero.**
+
+This project uses **Zotero** for centralized research management. Every agent (researchers, reviewers, implementers) should use Zotero when working with academic sources.
+
+**When to use Zotero:**
+- **Finding papers** - Add to Zotero immediately upon discovery
+- **Validating citations** - Check Zotero library for paper availability
+- **Extracting parameters** - Reference Zotero entry when documenting sources
+- **Citation verification** - Use Zotero to verify claims match paper content
+- **Writing research files** - Link to Zotero entries in `research/` markdown files
+
+**Agent-specific guidance:**
+- **Cynthia (super-alignment-researcher):** Add papers to Zotero immediately when finding them. Tag with relevant topics (climate, AI safety, population dynamics, etc.)
+- **Sylvia (research-skeptic):** Check Zotero for paper availability before validation. Verify citations match Zotero entries.
+- **Roy (simulation-maintainer):** Reference Zotero entries when documenting parameter sources in code comments
+- **All agents:** Use Zotero as single source of truth for research paper metadata
+
+**Why this matters:**
+- Prevents duplicate research effort (check Zotero first)
+- Maintains citation accuracy (one canonical source per paper)
+- Enables systematic literature reviews
+- Supports reproducibility of parameter choices
+- Centralizes knowledge across agent sessions (memory continuity)
+
+**Best practices:**
+1. Add paper to Zotero before using it
+2. Include Zotero ID in research markdown files
+3. Tag papers with system domains (climate, AI, society, ecology)
+4. Update paper notes with key findings/parameters extracted
+5. Cross-reference Zotero library when verifying claims
+
 ## Key Conventions
 
 ### TypeScript Strictness
