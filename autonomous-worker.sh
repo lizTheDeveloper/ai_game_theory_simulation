@@ -289,11 +289,78 @@ TASK_EOF
     # Push branch to remote
     log_info "Pushing branch to remote..."
     PUSH_START=$(date +%s)
+    PUSH_SUCCESS=false
     if git push -u origin "$BRANCH_NAME" 2>&1; then
         PUSH_END=$(date +%s)
         log_success "Push successful ($(($PUSH_END - $PUSH_START))s)"
+        PUSH_SUCCESS=true
     else
         log_warning "Push failed or no changes to push"
+    fi
+
+    # Create pull request if push succeeded and commits were made
+    if [ "$PUSH_SUCCESS" = true ] && [ "$COMMITS_MADE" -gt 0 ]; then
+        log_info "Creating pull request..."
+
+        # Generate PR title and body
+        FIRST_COMMIT_MSG=$(git log main..HEAD --oneline | tail -1 | cut -d' ' -f2-)
+        PR_TITLE="[Autonomous] $FIRST_COMMIT_MSG"
+
+        # Create detailed PR body
+        PR_BODY=$(cat <<PRBODY
+## 🤖 Autonomous Worker Run
+
+**Run:** $TIMESTAMP
+**Branch:** \`$BRANCH_NAME\`
+**Duration:** $(($TOTAL_DURATION / 60))m $(($TOTAL_DURATION % 60))s
+**Claude Time:** $(($CLAUDE_DURATION / 60))m $(($CLAUDE_DURATION % 60))s
+
+### Changes
+
+- **Files Changed:** $CHANGED_FILES
+- **Commits:** $COMMITS_MADE
+
+### Commit History
+
+\`\`\`
+$(git log main..HEAD --oneline)
+\`\`\`
+
+### Metrics
+
+- **Memory Used:** $FINAL_MEM
+- **Disk Used:** $FINAL_DISK
+- **Exit Code:** $CLAUDE_EXIT
+
+### Log Files
+
+- Worker log: \`logs/autonomous/worker_${TIMESTAMP}.log\`
+- Metrics: \`logs/autonomous/metrics_${TIMESTAMP}.json\`
+
+---
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code) - Autonomous Worker
+PRBODY
+)
+
+        # Create PR using gh CLI
+        set +e
+        if command -v gh >/dev/null 2>&1; then
+            if gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base main --head "$BRANCH_NAME" 2>&1; then
+                log_success "Pull request created"
+                PR_CREATED=true
+            else
+                log_warning "PR creation failed - may need gh auth or PR already exists"
+                PR_CREATED=false
+            fi
+        else
+            log_warning "gh CLI not installed - skipping PR creation"
+            PR_CREATED=false
+        fi
+        set -e
+    else
+        log_info "Skipping PR creation (no changes to push)"
+        PR_CREATED=false
     fi
 
     # Return to main branch
@@ -326,6 +393,7 @@ TASK_EOF
   "claude_exit_code": $CLAUDE_EXIT,
   "changed_files": $CHANGED_FILES,
   "commits_made": $COMMITS_MADE,
+  "pr_created": $([ "$PR_CREATED" = true ] && echo "true" || echo "false"),
   "memory_used": "$FINAL_MEM",
   "disk_used": "$FINAL_DISK"
 }
