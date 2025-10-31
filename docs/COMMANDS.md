@@ -337,7 +337,7 @@ Each run exports structured metrics to `logs/autonomous/metrics_TIMESTAMP.json`:
 ### Worker Stages
 
 The autonomous worker executes in 7 stages:
-1. **PRE-FLIGHT CHECKS** - Health (disk, memory), dependencies (git, node, python, claude)
+1. **PRE-FLIGHT CHECKS** - Health (disk, memory), dependencies (git, node, python, claude), chatroom monitors (auto-starts if not running)
 2. **GIT SYNC** - Pull latest, resolve conflicts, create branch
 3. **ENVIRONMENT SETUP** - Activate venv, verify Claude version
 4. **CLAUDE CODE EXECUTION** - Run orchestrator workflow (25-minute timeout)
