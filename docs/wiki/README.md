@@ -3102,11 +3102,11 @@ state.history.exogenousShocks?: Array<{
 
 **Autonomous Worker Chatroom Monitor Check** ✅ DOCUMENTED
 - **Pre-flight monitoring**: Worker ensures chatroom monitors are running before task execution
-- **Auto-start capability**: If monitors not running, automatically starts `simple-channel-monitor.ts`
+- **Auto-start capability**: If monitors not running, automatically starts `channel-monitor.ts` (active orchestrator spawning)
 - **Process verification**: Confirms monitor started successfully (2s grace period)
 - **Graceful logging**: Logs to `logs/monitor_TIMESTAMP.log`, warns if startup uncertain
 - **Implementation**:
-  - Checks for running `simple-channel-monitor.ts` process via `pgrep`
+  - Checks for running `channel-monitor.ts` process via `pgrep`
   - If not found: starts monitor in background with `nohup`
   - Waits 2 seconds for startup
   - Verifies process still running via PID check
@@ -3115,8 +3115,9 @@ state.history.exogenousShocks?: Array<{
   - Prevents coordination failures from stopped monitors
   - Allows autonomous worker to interact with research/implementation channels
   - Self-healing: recovers from monitor crashes between runs
+  - **Active orchestrator spawning**: Monitor automatically spawns orchestrator when work detected (not just passive notifications like `simple-channel-monitor.ts`)
 - **Location**: `autonomous-worker.sh` (lines 88-105, in PRE-FLIGHT CHECKS)
-- Commit: 54e2b66 (Oct 31, 2025)
+- Commit: 9254e54 (Oct 31, 2025) - Fixed to use active monitor instead of passive monitor
 
 ---
 

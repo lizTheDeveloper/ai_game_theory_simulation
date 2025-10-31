@@ -295,6 +295,23 @@ Starting work on feature X
 
 **The channel monitor (`scripts/channel-monitor.ts`) provides automated orchestrator coordination.**
 
+### Monitor Types
+
+**Two monitor implementations exist:**
+
+1. **`channel-monitor.ts` (ACTIVE - Current)**: Automatically spawns orchestrator when work is detected
+   - Used by autonomous-worker.sh since Oct 31, 2025
+   - Fully autonomous - no human intervention needed
+   - Processes messages one-at-a-time like MQTT queue
+   - Spawns orchestrator in background via Claude Code CLI
+
+2. **`simple-channel-monitor.ts` (PASSIVE - Deprecated)**: Only posts notifications to coordination channel
+   - Requires human to manually spawn orchestrator
+   - Useful for development/testing when you want manual control
+   - No automatic agent spawning
+
+**Default:** Use `channel-monitor.ts` for production autonomous workflows.
+
 ### How It Works
 
 The monitor polls channels every 30 seconds and processes messages **one-at-a-time like an MQTT queue**:
