@@ -150,7 +150,46 @@
 
 5. **LOW:** P3 Enhancements 
 
-6. **LOW:** TIER 5 Features 
+6. **LOW:** TIER 5 Features
+
+---
+
+## 🔬 RESEARCH VERIFICATION QUEUE
+
+**Purpose:** Track initialization parameters and mechanics requiring research backing verification
+**Created:** October 31, 2025 (Sylvia - from initialization parameter audit)
+**Process:** Verification files → Orchestrator → Super-alignment-researcher → Research-skeptic review → Implementation
+
+### P0 - CRITICAL (Incorrect Baselines - Fix Immediately)
+
+- [ ] **Unemployment Baseline Verification** - `research/verification_P0_unemployment_baseline_20251031.md`
+  - Current: 0.1 (10% unemployment, NO SOURCE)
+  - Proposed: 0.04 (4%, ILO 2024 data)
+  - Impact: 2.5× overestimate, unrealistic economic baseline
+  - **Action:** Verify ILO 2024 global unemployment rate, update initialization.ts:656
+
+- [ ] **Quality of Life Baseline Verification** - `research/verification_P0_quality_of_life_baseline_20251031.md`
+  - Current: 0.65 (NO SOURCE)
+  - Proposed: 0.73 (UNDP HDI 2024)
+  - Impact: 11% underestimate, affects entire QoL system
+  - Complexity: Requires conceptual validation (is HDI the right proxy for QoL?)
+  - **Action:** Verify UNDP HDI 2024, validate conceptual mapping, update initialization.ts:686
+
+- [ ] **Wealth Distribution Baseline Verification** - `research/verification_P0_wealth_distribution_baseline_20251031.md`
+  - Current: 0.5 (NO SOURCE, scale unclear)
+  - Proposed: 0.65 (World Bank Gini coefficient) OR 0.35 (inverted scale)
+  - Impact: 30% error in inequality baseline (direction unclear)
+  - Complexity: Must determine scale definition first (Gini vs inverted vs custom)
+  - **Action:** Investigate code usage to determine scale, verify World Bank Gini 2024, update initialization.ts:687
+
+- [ ] **Government Baselines Verification** - `research/verification_P0_government_baselines_20251031.md`
+  - Current: 11 parameters (controlDesire, legitimacy, transparency, etc.) - ALL NO SOURCE
+  - Proposed: Map to V-Dem v14 (2024) and WGI 2024 data
+  - Impact: Government policy responses currently use arbitrary "moderate" values
+  - Complexity: High - 11 parameters, multiple data sources, conceptual mapping required
+  - **Action:** Extract V-Dem/WGI data, validate conceptual mappings, update initialization.ts:547-627
+
+**Audit Context:** Found during systematic initialization parameter audit (`reviews/initialization_parameter_audit_20251031.md`). Overall finding: **40-50%** of initialization parameters lack research backing.
 
 ---
 
