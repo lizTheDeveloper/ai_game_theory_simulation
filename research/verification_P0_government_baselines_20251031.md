@@ -2,8 +2,9 @@
 
 **Date:** October 31, 2025
 **Source:** Manual initialization parameter audit (Sylvia)
-**Status:** ⚠️ NEEDS VERIFICATION
+**Status:** ⚠️ [PARTIAL PASS] - Data exists but requires 4-7 hour extraction
 **Priority:** P0 CRITICAL (multiple unsourced parameters drive policy response throughout simulation)
+**Validation:** Sylvia confirms V-Dem/WGI appropriate but DEFER dataset download for now
 
 ---
 
@@ -305,6 +306,162 @@ This is the difference between:
 9. cyberDefense metrics → No data, label as PLACEHOLDER or use ITU GCI proxy
 10. evaluationInvestment metrics → No data, label as DESIGN CHOICE
 11. actionFrequency → Unclear definition, investigate code usage first
+
+---
+
+## Research Findings (Cynthia - October 31, 2025)
+
+### Dataset Availability Summary
+
+**✅ V-Dem v14 (2024) - Available**
+- **Coverage:** 202 countries, 1789-2023
+- **Data Points:** 31 million data points
+- **Indicators:** 500+ indicators including government legitimacy, transparency, participation
+- **Download:** https://www.v-dem.net/data/the-v-dem-dataset/
+- **Report:** V-Dem Democracy Report 2024 "Democracy Winning and Losing at the Ballot"
+
+**Global Democracy Trends (V-Dem 2024):**
+- 71% of world population (5.7 billion) live in autocracies
+- 29% (2.3 billion) live in liberal/electoral democracies
+- Democracy levels back to 1985 levels
+- Freedom of expression worsening in 35 countries (2023)
+
+**✅ WGI 2024 Update - Available**
+- **Coverage:** 214 economies, 1996-2023
+- **Indicators:** 6 aggregate governance indicators including Government Effectiveness
+- **Methodology:** Combines 35 different data sources
+- **Status:** 2024 update extends trends through 2023
+- **Download:** https://databank.worldbank.org/source/worldwide-governance-indicators
+
+**⚠️ CRITICAL LIMITATION:**
+Search results do NOT provide specific numerical global average values for individual V-Dem/WGI indicators. To extract specific values (e.g., "global average government legitimacy = 0.55"), we would need to:
+1. Download the full V-Dem v14 dataset (CSV/Excel)
+2. Calculate population-weighted global averages for each indicator
+3. Normalize to [0-1] scale if needed
+
+**What I CAN provide from available sources:**
+
+### Parameter-by-Parameter Guidance
+
+#### GROUP 1: Democratic Quality (V-Dem Indicators Available)
+
+**1. legitimacy (current: 0.6)**
+- **V-Dem Indicator:** `v2exl_legitperf` (Government performance legitimacy)
+- **Data Status:** ✅ Indicator exists in V-Dem v14
+- **Action Required:** Download dataset, calculate global average
+- **Expected Range:** 0.3-0.7 (autocracies low, democracies high)
+
+**2. transparency (current: 0.6)**
+- **V-Dem Indicator:** `v2x_pubcorr` (Public sector corruption index, INVERTED)
+- **Formula:** transparency = 1 - corruption
+- **Data Status:** ✅ Indicator exists in V-Dem v14
+- **Action Required:** Download dataset, invert corruption scores, calculate average
+- **Expected Range:** 0.3-0.6 (global average likely lower than current 0.6)
+
+**3. participationRate (current: 0.4)**
+- **V-Dem Indicator:** `v2x_partip` (Electoral participation index)
+- **Data Status:** ✅ Indicator exists in V-Dem v14
+- **Action Required:** Download dataset, calculate global average
+- **Expected Range:** 0.4-0.6
+
+**4. controlDesire (current: 0.3)**
+- **V-Dem Indicator:** `v2xps_party` (Party institutionalization) OR state authority measures
+- **Data Status:** ⚠️ Conceptual mapping unclear - "controlDesire" may not map directly
+- **Action Required:** Validate what controlDesire means in simulation, then find appropriate indicator
+- **Expected Range:** 0.3-0.5 (democracies lower, autocracies higher)
+
+---
+
+#### GROUP 2: State Capacity (WGI Indicators Available)
+
+**5. institutionalCapacity (current: 0.6)**
+- **WGI Indicator:** `Government Effectiveness` (bureaucratic quality, service delivery)
+- **WGI Scale:** -2.5 to +2.5 (global mean ≈ 0 by design)
+- **Normalization:** (WGI_value + 2.5) / 5 = [0, 1]
+- **Data Status:** ✅ Indicator exists, but global mean is 0 → normalized to 0.5
+- **Expected Value:** ~0.5 (current 0.6 may be slightly optimistic)
+- **Note:** CRITICAL for ecology system - verify this is correct mapping
+
+**6. capabilityToControl (current: 0.5)**
+- **WGI Indicator:** Same as institutionalCapacity? OR `Regulatory Quality`?
+- **Data Status:** ⚠️ Unclear if this is different from institutionalCapacity
+- **Action Required:** Validate what capabilityToControl means (enforcement? regulation?), then map to WGI
+- **Expected Value:** ~0.5 (WGI mean)
+
+**7. decisionQuality (current: 0.5 base)**
+- **Combined Indicator:** WGI Government Effectiveness × V-Dem Deliberative Index?
+- **Data Status:** ⚠️ Requires combining multiple sources
+- **Action Required:** Define what "decision quality" means (technocratic effectiveness? democratic deliberation? both?)
+- **Expected Value:** ~0.45-0.55 depending on formula
+
+---
+
+#### GROUP 3: Surveillance & Security (Limited Data)
+
+**8. surveillanceCapability (current: 0.3)**
+- **Possible Source:** Freedom House `Privacy Rights` score (inverted)
+- **Data Status:** ⚠️ Freedom House covers ~200 countries but focuses on freedoms, not capabilities
+- **Alternative:** Measure by technology adoption (cameras per capita, internet monitoring)
+- **Action Required:** Define surveillance as capability (tech available) vs deployment (actually used)
+- **Expected Range:** 0.2-0.5 (varies enormously by country)
+
+**9-12. cyberDefense metrics (current: all 3.0)**
+- **Possible Source:** ITU Global Cybersecurity Index (GCI)
+- **GCI Scale:** 0-100
+- **Simulation Scale:** Appears to be 0-10?
+- **Data Status:** ❌ No specific global government cybersecurity capability data by dimension
+- **Recommendation:** LABEL AS PLACEHOLDER or map ITU GCI (~50/100 global average) → 5.0/10
+
+**13-16. evaluationInvestment metrics (current: 2.0, 1.0, 0.5, 0.5)**
+- **Data Status:** ❌ No 2024 data exists - AI evaluation is too nascent
+- **Recommendation:** LABEL AS DESIGN CHOICE (intentional simulation starting conditions, not empirical)
+- **Note:** Could estimate from AI lab spending + government R&D budgets, but data is not public
+
+**17. actionFrequency (current: 0.08, comment says 0.5?)**
+- **Data Status:** ❌ Unclear what this represents (policies per month? probability of action?)
+- **Action Required:** Code investigation first - what is actionFrequency?
+- **Possible Sources:** Legislative activity databases, executive orders per year
+- **Recommendation:** Cannot verify without understanding parameter meaning
+
+---
+
+### Summary of Data Availability
+
+| Parameter | Data Source | Status | Confidence |
+|-----------|-------------|--------|------------|
+| legitimacy | V-Dem v14 | ✅ Available | HIGH |
+| transparency | V-Dem v14 | ✅ Available | HIGH |
+| participationRate | V-Dem v14 | ✅ Available | HIGH |
+| institutionalCapacity | WGI 2024 | ✅ Available | HIGH |
+| decisionQuality | WGI + V-Dem | ⚠️ Requires combination | MEDIUM |
+| controlDesire | V-Dem v14 | ⚠️ Mapping unclear | MEDIUM |
+| capabilityToControl | WGI 2024 | ⚠️ May duplicate institutionalCapacity | MEDIUM |
+| surveillanceCapability | Freedom House | ⚠️ Conceptual fit unclear | LOW |
+| cyberDefense (4 metrics) | ITU GCI | ❌ Proxy only | LOW |
+| evaluationInvestment (4 metrics) | None | ❌ No data | PLACEHOLDER |
+| actionFrequency | Unknown | ❌ Definition unclear | N/A |
+
+**RECOMMENDATION FOR NEXT STEPS:**
+
+**Phase 1 (IMMEDIATE - Can complete now):**
+- Parameters 1-4 (legitimacy, transparency, participation, controlDesire): Download V-Dem v14 dataset
+- Parameter 5 (institutionalCapacity): Access WGI database
+- Calculate global averages for these 5 parameters
+
+**Phase 2 (REQUIRES CONCEPTUAL VALIDATION):**
+- Parameters 6-7 (capabilityToControl, decisionQuality): Validate what these mean in simulation
+- Parameter 8 (surveillanceCapability): Decide on capability vs deployment definition
+
+**Phase 3 (DOCUMENT AS PLACEHOLDERS):**
+- Parameters 9-16 (cyber, evaluation): Explicitly label as PLACEHOLDER or DESIGN CHOICE
+- Parameter 17 (actionFrequency): Investigate code usage first
+
+**Estimated Effort:**
+- Phase 1: 2-4 hours (dataset download + calculation)
+- Phase 2: 1-2 hours (code investigation + conceptual mapping)
+- Phase 3: 30 minutes (documentation update)
+
+**Total: 4-7 hours for complete verification**
 
 ---
 

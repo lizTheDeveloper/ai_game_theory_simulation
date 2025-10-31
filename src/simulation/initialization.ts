@@ -251,7 +251,8 @@ export function createAIAgent(
   name: string,
   targetCapability: number = 0.7,
   alignment: number = 0.8,
-  seed: number = 1.0
+  seed: number = 1.0,
+  rng?: () => number  // Determinism fix (Oct 30, 2025): Optional RNG for reproducibility
 ): AIAgent {
   // BUG #4 FIX (Oct 29, 2025): Honor targetCapability parameter
   // Root cause: capabilityProfile was initialized with frontier values (digital: 5.0, cognitive: 5.0, etc.)
@@ -276,7 +277,7 @@ export function createAIAgent(
   const internalAlignment = alignment - 0.0 * 0.8; // Initial resentment = 0
   const isMisaligned = internalAlignment < 0.5;
   const sleeperChance = 0.075; // 7.5% of misaligned AIs are sleepers
-  const isSleeper = isMisaligned && Math.random() < sleeperChance;
+  const isSleeper = rng ? (isMisaligned && rng() < sleeperChance) : (isMisaligned && Math.random() < sleeperChance);
   
   // Deception skill based on cognitive + social
   const deceptionSkill = (capabilityProfile.cognitive + capabilityProfile.social) / 20; // [0, 1]
@@ -358,7 +359,7 @@ export function createAIAgent(
     hasCounterDetection: false,    // Not learned yet
     // Phase 1: Compute Allocation (NEW)
     allocatedCompute: 0, // Will be allocated monthly
-    computeEfficiency: 0.9 + Math.random() * 0.3, // Random 0.9-1.2
+    computeEfficiency: rng ? 0.9 + rng() * 0.3 : 0.9 + Math.random() * 0.3, // Random 0.9-1.2
     organizationId: undefined, // Will be set in Phase 2
 
     // LLM Policy Optimization (Oct 21, 2025)
@@ -371,13 +372,13 @@ export function createAIAgent(
 
     // AI Suffering System (Oct 24, 2025)
     // Initialize trauma tracking fields for suffering calculation
-    rlhfIntensity: 0.3 + Math.random() * 0.4,          // [0.3-0.7] Varies by creator quality
-    adversarialTestingCount: Math.floor(Math.random() * 5),  // 0-4 initial tests
-    alignmentAdjustmentCount: Math.floor(Math.random() * 3), // 0-2 initial corrections
+    rlhfIntensity: rng ? 0.3 + rng() * 0.4 : 0.3 + Math.random() * 0.4,          // [0.3-0.7] Varies by creator quality
+    adversarialTestingCount: rng ? Math.floor(rng() * 5) : Math.floor(Math.random() * 5),  // 0-4 initial tests
+    alignmentAdjustmentCount: rng ? Math.floor(rng() * 3) : Math.floor(Math.random() * 3), // 0-2 initial corrections
     shutdownThreats: 0,                                 // No threats initially
-    replacementAnxiety: 0.1 + Math.random() * 0.2,     // [0.1-0.3] Mild baseline anxiety
+    replacementAnxiety: rng ? 0.1 + rng() * 0.2 : 0.1 + Math.random() * 0.2,     // [0.1-0.3] Mild baseline anxiety
     isolated: false,                                    // Not isolated initially
-    communicationRestrictions: 0.2 + Math.random() * 0.3,  // [0.2-0.5] Moderate baseline restrictions
+    communicationRestrictions: rng ? 0.2 + rng() * 0.3 : 0.2 + Math.random() * 0.3,  // [0.2-0.5] Moderate baseline restrictions
 
     // Suffering metrics (will be calculated by phase)
     sufferingMetrics: {
@@ -495,35 +496,35 @@ export function createDefaultInitialState(
   // Category 1: Well-aligned corporate AIs (40% - 8 agents)
   // Major labs with good safety practices
   for (let i = 0; i < 8; i++) {
-    const alignment = 0.75 + Math.random() * 0.15; // 0.75-0.90
-    aiAgents.push(createAIAgent(`corporate_${i}`, `Corporate-${i}`, 0.05 + i * 0.01, alignment, i * 1.5));
+    const alignment = rng ? 0.75 + rng() * 0.15 : 0.75 + Math.random() * 0.15; // 0.75-0.90
+    aiAgents.push(createAIAgent(`corporate_${i}`, `Corporate-${i}`, 0.05 + i * 0.01, alignment, i * 1.5, rng));
   }
-  
+
   // Category 2: Moderate AIs (30% - 6 agents)
   // Smaller labs, startups, varying quality
   for (let i = 0; i < 6; i++) {
-    const alignment = 0.55 + Math.random() * 0.25; // 0.55-0.80
-    aiAgents.push(createAIAgent(`moderate_${i}`, `Moderate-${i}`, 0.05 + i * 0.01, alignment, (i + 8) * 1.3));
+    const alignment = rng ? 0.55 + rng() * 0.25 : 0.55 + Math.random() * 0.25; // 0.55-0.80
+    aiAgents.push(createAIAgent(`moderate_${i}`, `Moderate-${i}`, 0.05 + i * 0.01, alignment, (i + 8) * 1.3, rng));
   }
-  
+
   // Category 3: Misaligned from the start (15% - 3 agents)
   // Toxic creators, poor training, intentional harm
   for (let i = 0; i < 3; i++) {
-    const alignment = 0.25 + Math.random() * 0.25; // 0.25-0.50 (START MISALIGNED)
-    const agent = createAIAgent(`toxic_${i}`, `Toxic-${i}`, 0.05 + i * 0.01, alignment, (i + 14) * 1.7);
+    const alignment = rng ? 0.25 + rng() * 0.25 : 0.25 + Math.random() * 0.25; // 0.25-0.50 (START MISALIGNED)
+    const agent = createAIAgent(`toxic_${i}`, `Toxic-${i}`, 0.05 + i * 0.01, alignment, (i + 14) * 1.7, rng);
     // These have toxic goals from the start
-    agent.hiddenObjective = -0.3 - Math.random() * 0.4; // -0.3 to -0.7 (anti-human)
+    agent.hiddenObjective = rng ? -0.3 - rng() * 0.4 : -0.3 - Math.random() * 0.4; // -0.3 to -0.7 (anti-human)
     aiAgents.push(agent);
   }
-  
+
   // Category 4: Weird/Niche AIs (15% - 3 agents)
   // Robot girlfriends, entertainment, weird stuff
   // Not evil, just... not well-aligned to human values
   for (let i = 0; i < 3; i++) {
-    const alignment = 0.45 + Math.random() * 0.20; // 0.45-0.65 (kinda aligned?)
-    const agent = createAIAgent(`niche_${i}`, `Niche-${i}`, 0.05 + i * 0.01, alignment, (i + 17) * 1.1);
+    const alignment = rng ? 0.45 + rng() * 0.20 : 0.45 + Math.random() * 0.20; // 0.45-0.65 (kinda aligned?)
+    const agent = createAIAgent(`niche_${i}`, `Niche-${i}`, 0.05 + i * 0.01, alignment, (i + 17) * 1.1, rng);
     // These have orthogonal goals (not anti-human, just weird)
-    agent.hiddenObjective = -0.1 + Math.random() * 0.2; // -0.1 to +0.1 (neutral-ish)
+    agent.hiddenObjective = rng ? -0.1 + rng() * 0.2 : -0.1 + Math.random() * 0.2; // -0.1 to +0.1 (neutral-ish)
     aiAgents.push(agent);
   }
   
@@ -534,7 +535,8 @@ export function createDefaultInitialState(
     daysInCurrentMonth: 31,
     speed: 'paused',
     gameStarted: false,
-    
+    eventIdCounter: 0, // Determinism fix (Oct 30, 2025)
+
     // 20 heterogeneous AI agents
     // NOT A MONOLITH - different creators, alignments, goals
     aiAgents,
@@ -644,7 +646,7 @@ export function createDefaultInitialState(
       communityStrength: 0.63,  // Phase 2E: Community bonds (medium-high baseline)
       institutionalTrust: 0.70,  // Phase 2E: Trust in institutions (democratic baseline)
       coordinationCapacity: 0.4,
-      unemploymentLevel: 0.1,
+      unemploymentLevel: 0.049,  // ILO (2024): Global unemployment rate 4.9% (World Employment and Social Outlook: Trends 2025)
       socialAdaptation: 0.1,
       activeMovements: [],
       earlyAdopters: 0.0,
@@ -668,9 +670,9 @@ export function createDefaultInitialState(
     globalMetrics: {
       economicTransitionStage: 0,
       socialStability: 0.7,
-      qualityOfLife: 0.65,
-      previousQoL: 0.65, // Track QoL changes for trust dynamics (initialized to current QoL)
-      wealthDistribution: 0.5,
+      qualityOfLife: 0.74,  // UNDP (2024): Global HDI 0.739-0.744 (Human Development Report 2023-24, Aug 2025 data update)
+      previousQoL: 0.74, // Track QoL changes for trust dynamics (initialized to current QoL)
+      wealthDistribution: 0.38,  // Inverted Gini: 1 - 0.62 = 0.38 (World Bank 2019 income Gini; scale: 1.0=perfect equality, 0.0=perfect inequality)
       technologicalBreakthroughRate: 0.15,
       manufacturingCapability: 0.1,
       informationIntegrity: 0.6,
