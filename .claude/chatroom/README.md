@@ -318,36 +318,58 @@ The monitor polls channels every 30 seconds and processes messages **one-at-a-ti
 
 1. **Reads oldest unread message** from monitored channels
 2. **Analyzes if attention needed** (trigger keywords/statuses)
-3. **Spawns orchestrator** in background if match found
-4. **Marks message as processed** (updates read pointer)
-5. **Next poll processes next message** (drains queue sequentially)
+3. **Checks if orchestrator already active** (thundering-herd protection)
+4. **If orchestrator available:** Spawns orchestrator in background + marks message as processed
+5. **If orchestrator busy:** Message stays in queue, retried next poll
+6. **Next poll processes next message** (drains queue sequentially)
 
 ### Trigger Conditions
 
 **Trigger Statuses:** `QUESTION`, `ALERT`, `STARTED`, `BLOCKED`
 **Trigger Keywords:** "can someone", "need help", "orchestrator"
 
-### Exactly-Once Message Processing
+### Message Processing Guarantees
 
-**Critical semantics (fixed Oct 31, 2025):**
-- Each message processed **exactly once**
-- Each message marked as read **exactly once**
-- Queue **always drained** (never skipped)
+**Critical semantics (fixed Oct 31, 2025 - commit ba8dfcb):**
 
-**Before fix:** Orchestrator active → skip entire channel → messages pile up
-**After fix:** Orchestrator active → drain queue → mark as processed → skip spawn
+**Exactly-once spawn guarantee:**
+- Each message gets **exactly one orchestrator spawn**
+- Messages wait in queue if orchestrator already active
+- Next message processed after previous orchestrator completes
+
+**Queue drainage guarantee:**
+- Queue **always drains** (no stuck messages)
+- Messages processed **in order** (FIFO)
+- Oldest message processed first on each poll
+
+**Before fix (broken semantics):**
+- Orchestrator active → skip spawn + mark as processed anyway
+- Messages marked as "handled" even though they weren't
+- Result: Lost messages, no orchestrator response for some alerts
+
+**After fix (correct semantics):**
+- Orchestrator active → message **stays in queue**
+- Only mark as processed **after successful spawn**
+- Result: Each message eventually gets orchestrator response
 
 ### Thundering-Herd Protection
 
-Monitor checks if orchestrator is already active before **spawning** (prevents multiple concurrent orchestrators fighting over same work). But the message is **still processed and marked as read** to prevent queue backup.
+Monitor checks if orchestrator is already active before spawning to prevent multiple concurrent orchestrators fighting over the same work:
 
-### Message Processing
+**Concurrency control:**
+- Only **one orchestrator active at a time**
+- New messages wait in queue if orchestrator busy
+- Messages processed **after** previous orchestrator completes
+- Prevents race conditions and duplicate work
 
-Messages are processed **one-at-a-time** to prevent overwhelming the system:
-- Oldest message processed first
-- Message **always** marked as read (even if spawn skipped)
-- Next poll processes next oldest message
-- Ensures orderly queue drainage (no stuck messages)
+### Message Processing Order
+
+Messages are processed **one-at-a-time** to ensure orderly queue drainage:
+- Oldest message processed first (FIFO)
+- Only marked as processed **after successful spawn**
+- If spawn skipped (orchestrator busy), message stays in queue
+- Next poll retries same message until spawned
+- Guarantees: No lost messages, no duplicate spawns, ordered processing
 
 ### Monitored Channels
 
