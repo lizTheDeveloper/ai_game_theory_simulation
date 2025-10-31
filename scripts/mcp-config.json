@@ -1,16 +1,46 @@
 {
   "mcpServers": {
-    "transcript-rag": {
+    "ai-safety-transcripts": {
       "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
       "args": [
         "/Users/annhoward/src/superalignmenttoutopia/scripts/transcript-rag-server.py"
       ],
-      "env": {}
+      "env": {
+        "PYTHONPATH": "/Users/annhoward/src/superalignmenttoutopia"
+      }
     },
     "pdf-rag": {
       "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
       "args": [
         "/Users/annhoward/src/superalignmenttoutopia/scripts/pdf-rag-server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/annhoward/src/superalignmenttoutopia"
+      }
+    },
+    "agent-memory": {
+      "command": "/Users/annhoward/src/superalignmenttoutopia/.venv/bin/python",
+      "args": [
+        "/Users/annhoward/src/superalignmenttoutopia/scripts/agent-memory-server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "/Users/annhoward/src/superalignmenttoutopia"
+      }
+    },
+    "chatroom": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/annhoward/src/superalignmenttoutopia/.claude/chatroom"
+      ],
+      "env": {}
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp"
       ],
       "env": {}
     }
