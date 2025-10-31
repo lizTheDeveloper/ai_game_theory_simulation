@@ -282,11 +282,7 @@ async function monitorChannels(): Promise<void> {
         const activeAgents = checkWhoActive(channel);
         console.log(`  👥 Active agents: ${activeAgents.length > 0 ? activeAgents.join(', ') : 'none'}`);
 
-        // If orchestrator is already active, skip
-        if (activeAgents.includes(ORCHESTRATOR_AGENT_ID)) {
-          console.log(`  ⏭️  Orchestrator already active in ${channel}, skipping`);
-          continue;
-        }
+        const orchestratorActive = activeAgents.includes(ORCHESTRATOR_AGENT_ID);
 
         // Read new messages
         const newMessages = readNewMessages(channel, MONITOR_BOT_ID);
@@ -299,9 +295,9 @@ async function monitorChannels(): Promise<void> {
           });
         }
 
-        // Process messages ONE AT A TIME like MQTT queue
+        // Process messages ONE AT A TIME like MQTT queue (exactly-once semantics)
         if (newMessages.length > 0) {
-          // Take the OLDEST message that needs attention
+          // Take the OLDEST message
           const oldestMessage = newMessages[0];
           const analysis = needsAttention([oldestMessage]);
 
@@ -309,14 +305,18 @@ async function monitorChannels(): Promise<void> {
             console.log(`  🚨 PROCESSING MESSAGE: ${analysis.reason}`);
             console.log(`  📝 Message: [${oldestMessage.agent}] ${oldestMessage.message.substring(0, 60)}...`);
 
-            spawnOrchestrator(channel, analysis.reason);
+            // Only spawn if orchestrator NOT already active
+            if (orchestratorActive) {
+              console.log(`  ⏭️  Orchestrator already active - marking as processed without spawn`);
+            } else {
+              spawnOrchestrator(channel, analysis.reason);
+            }
 
-            // Update last read to THIS message timestamp
-            // This ensures we process one at a time
+            // ALWAYS mark as processed (exactly-once)
             const stateFile = `.claude/chatroom/monitor-state-${channel}.txt`;
             fs.writeFileSync(stateFile, oldestMessage.timestamp, 'utf-8');
 
-            console.log(`  ✅ Message queued for processing, marked as read`);
+            console.log(`  ✅ Message processed, marked as read`);
             console.log(`  📊 Remaining messages in queue: ${newMessages.length - 1}`);
           } else {
             console.log(`  ℹ️  Oldest message doesn't need action, marking as read`);
