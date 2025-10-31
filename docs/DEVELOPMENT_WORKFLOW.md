@@ -427,7 +427,9 @@ if (paradigmDivergence > 30) {
 
 ### Chatroom Communication
 
-Agents coordinate via `.claude/chatroom/` - see `.claude/chatroom/README.md` for complete documentation.
+Agents coordinate via `.claude/chatroom/` (symlink to `~/src/superalignment-chatroom/chatroom/`) - see `.claude/chatroom/README.md` for complete documentation.
+
+**Infrastructure Note (Oct 31, 2025):** Chatroom moved to independent repository for multi-VM synchronization. Symlinks preserve backward compatibility - agents access channels exactly as before.
 
 **8 Permanent Channels:**
 - `coordination.md` - General workflow coordination
