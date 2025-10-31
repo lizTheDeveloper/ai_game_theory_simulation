@@ -63,7 +63,7 @@ export function initializeFreshwaterSystem(): FreshwaterSystem {
 /**
  * Update freshwater system each month
  */
-export function updateFreshwaterSystem(state: GameState): void {
+export function updateFreshwaterSystem(state: GameState, rng: () => number = Math.random): void {
   if (!state.freshwaterSystem) return;
 
   const fw = state.freshwaterSystem;
@@ -171,17 +171,17 @@ export function updateFreshwaterSystem(state: GameState): void {
       dayZeroProbability = 0.03; // 3%/month with two conditions
     }
     
-    if (Math.random() < dayZeroProbability) {
+    if (rng() < dayZeroProbability) {
       // Trigger Day Zero Drought
       const regions = ['Middle East', 'North Africa', 'South Asia'];
       const regionValues = [fw.regions.middleEast, fw.regions.northAfrica, fw.regions.southAsia];
       const mostStressedIndex = regionValues.indexOf(Math.min(...regionValues));
-      
+
       fw.dayZeroDrought = {
         active: true,
         region: regions[mostStressedIndex],
-        duration: 12 + Math.floor(Math.random() * 24), // 12-36 months
-        severity: 0.7 + Math.random() * 0.3, // 0.7-1.0
+        duration: 12 + Math.floor(rng() * 24), // 12-36 months
+        severity: 0.7 + rng() * 0.3, // 0.7-1.0
       };
       
       console.log(`🚨 DAY ZERO DROUGHT: ${fw.dayZeroDrought.region}`);

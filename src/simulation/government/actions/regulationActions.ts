@@ -17,9 +17,9 @@ import { CategorizedGovernmentAction } from '../core/types';
 import { calculateRegulationStructuralEffects } from '@/simulation/calculations';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -64,7 +64,7 @@ const regulateLargeCompanies: CategorizedGovernmentAction = {
         racing_dynamics: effects.racingDynamicsMultiplier
       },
       events: [{
-        id: generateUniqueId('regulation_large_companies'),
+        id: generateUniqueId('regulation_large_companies', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'info',
@@ -126,7 +126,7 @@ const regulateComputeThreshold: CategorizedGovernmentAction = {
         surveillance_increase: 0.15
       },
       events: [{
-        id: generateUniqueId('regulation_compute'),
+        id: generateUniqueId('regulation_compute', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'warning',
@@ -187,7 +187,7 @@ const regulateCapabilityCeiling: CategorizedGovernmentAction = {
         surveillance_increase: 0.2
       },
       events: [{
-        id: generateUniqueId('regulation_capability'),
+        id: generateUniqueId('regulation_capability', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'warning',
@@ -269,7 +269,7 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
         economic_cost: levelEffects.economicCost
       },
       events: [{
-        id: generateUniqueId('compute_governance'),
+        id: generateUniqueId('compute_governance', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'warning',

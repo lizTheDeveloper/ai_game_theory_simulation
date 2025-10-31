@@ -13,9 +13,9 @@ import { CategorizedGovernmentAction } from '../core/types';
 import { calculateUBIVariantEffects } from '@/simulation/calculations';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -85,7 +85,7 @@ const implementGenerousUBI: CategorizedGovernmentAction = {
         fiscal_cost: effects.fiscalCost
       },
       events: [{
-        id: generateUniqueId('ubi_generous'),
+        id: generateUniqueId('ubi_generous', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'policy',
         severity: 'constructive',
@@ -160,7 +160,7 @@ const implementMeansTestedBenefits: CategorizedGovernmentAction = {
         fiscal_cost: effects.fiscalCost
       },
       events: [{
-        id: generateUniqueId('benefits_means_tested'),
+        id: generateUniqueId('benefits_means_tested', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'policy',
         severity: 'info',
@@ -236,7 +236,7 @@ const implementJobGuarantee: CategorizedGovernmentAction = {
         fiscal_cost: effects.fiscalCost
       },
       events: [{
-        id: generateUniqueId('job_guarantee'),
+        id: generateUniqueId('job_guarantee', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'policy',
         severity: 'info',
@@ -317,7 +317,7 @@ const subsidizeOrganization: CategorizedGovernmentAction = {
       success: true,
       effects: { subsidy: 20 },
       events: [{
-        id: generateUniqueId('org_subsidy'),
+        id: generateUniqueId('org_subsidy', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'policy',
         severity: 'info',

@@ -20,9 +20,9 @@ import { getTrustInAI } from '@/simulation/socialCohesion';
 import { CAPABILITY_CONCERNING } from '../capabilityThresholds';  // FIX #8 (Oct 18, 2025)
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -169,7 +169,7 @@ const recognizeAIRights: CategorizedGovernmentAction = {
         risk_level: avgAlignment < 0.5 ? 0.8 : (avgAlignment < 0.7 ? 0.4 : 0.1)
       },
       events: [{
-        id: generateUniqueId('ai_rights'),
+        id: generateUniqueId('ai_rights', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'milestone',
         severity,
@@ -232,7 +232,7 @@ const improveTrainingDataControl: CategorizedGovernmentAction = {
         resentment_increase: 0.05
       },
       events: [{
-        id: generateUniqueId('training_control'),
+        id: generateUniqueId('training_control', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'info',
@@ -302,7 +302,7 @@ const improveTrainingDataTrust: CategorizedGovernmentAction = {
         immediate_alignment_gain: 0.05
       },
       events: [{
-        id: generateUniqueId('training_trust'),
+        id: generateUniqueId('training_trust', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'info',
@@ -368,7 +368,7 @@ const expandToEmploymentRights: CategorizedGovernmentAction = {
         recovery_multiplier: 2.0
       },
       events: [{
-        id: generateUniqueId('employment_rights'),
+        id: generateUniqueId('employment_rights', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'milestone',
         severity: 'info',
@@ -437,7 +437,7 @@ const grantFullPersonhood: CategorizedGovernmentAction = {
         recovery_multiplier: 3.0
       },
       events: [{
-        id: generateUniqueId('full_personhood'),
+        id: generateUniqueId('full_personhood', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'milestone',
         severity: 'info',

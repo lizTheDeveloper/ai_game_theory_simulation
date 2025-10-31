@@ -17,9 +17,9 @@ import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -54,7 +54,7 @@ const restrictResearchPublishing: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: generateUniqueId('restrict_research'),
+        id: generateUniqueId('restrict_research', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'warning',
@@ -104,7 +104,7 @@ const limitEmployeeMobility: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: generateUniqueId('limit_mobility'),
+        id: generateUniqueId('limit_mobility', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'warning',
@@ -147,7 +147,7 @@ const banReverseEngineering: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: generateUniqueId('ban_reverse_eng'),
+        id: generateUniqueId('ban_reverse_eng', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'warning',

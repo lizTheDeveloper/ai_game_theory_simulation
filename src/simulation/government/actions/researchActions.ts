@@ -16,9 +16,9 @@ import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
