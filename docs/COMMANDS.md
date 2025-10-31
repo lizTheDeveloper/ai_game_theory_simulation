@@ -330,18 +330,20 @@ Each run exports structured metrics to `logs/autonomous/metrics_TIMESTAMP.json`:
 - `claude_exit_code`: Exit status (0=success, 124=timeout)
 - `changed_files`: Number of files modified
 - `commits_made`: Number of commits in session
+- `pr_created`: Boolean - whether PR was successfully created (added Oct 30, 2025)
 - `memory_used`: Peak memory usage
 - `disk_used`: Disk space used
 
 ### Worker Stages
 
-The autonomous worker executes in 6 stages:
+The autonomous worker executes in 7 stages:
 1. **PRE-FLIGHT CHECKS** - Health (disk, memory), dependencies (git, node, python, claude)
 2. **GIT SYNC** - Pull latest, resolve conflicts, create branch
 3. **ENVIRONMENT SETUP** - Activate venv, verify Claude version
 4. **CLAUDE CODE EXECUTION** - Run orchestrator workflow (25-minute timeout)
 5. **GIT OPERATIONS** - Commit changes, push branch
-6. **METRICS COLLECTION** - Export JSON metrics, update status
+6. **PR CREATION** - Automatically create pull request with metrics (added Oct 30, 2025)
+7. **METRICS COLLECTION** - Export JSON metrics, update status
 
 ### Log Files
 

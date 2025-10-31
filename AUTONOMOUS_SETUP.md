@@ -94,6 +94,10 @@ Every autonomous run begins by posting research requests to the research channel
 - Git operations with full audit trail
 - Pulls latest changes before starting work
 - Each run commits its log file to the feature branch
+- **Automatic PR creation:** Worker creates pull requests after pushing feature branches
+  - PR includes run metrics, timing, and commit history
+  - Graceful fallback if `gh` CLI not authenticated
+  - PR title prefixed with `[Autonomous]` for easy filtering
 
 ### Log Retention Policy
 
@@ -149,6 +153,64 @@ sudo journalctl -u claude-worker.service -n 50
 # Follow live
 sudo journalctl -u claude-worker.service -f
 ```
+
+### Pull Request Workflow
+
+**Automatic PR creation** (as of Oct 30, 2025):
+
+When the worker completes a task and pushes a feature branch, it automatically creates a pull request with detailed metrics.
+
+**PR Contents:**
+- **Title**: `[Autonomous] <first commit message>`
+- **Body includes**:
+  - Run timestamp and branch name
+  - Total duration and Claude API time
+  - Files changed and commits made
+  - Complete commit history
+  - Memory and disk usage
+  - Exit code
+  - Links to log files and metrics
+
+**Example PR body:**
+```markdown
+## 🤖 Autonomous Worker Run
+
+**Run:** 20251030_210000
+**Branch:** `autonomous/20251030_210000`
+**Duration:** 25m 12s
+**Claude Time:** 22m 45s
+
+### Changes
+- **Files Changed:** 8
+- **Commits:** 3
+
+### Commit History
+a1b2c3d feat: Implement nuclear winter cascades
+e4f5g6h test: Add Monte Carlo validation
+i7j8k9l docs: Update wiki with new feature
+
+### Metrics
+- **Memory Used:** 2.3GB
+- **Disk Used:** 450MB
+- **Exit Code:** 0
+```
+
+**Viewing autonomous PRs:**
+```bash
+# List all autonomous PRs
+gh pr list --search "is:pr [Autonomous]"
+
+# View specific PR
+gh pr view <number>
+```
+
+**Metrics tracking:**
+Each run creates `logs/autonomous/metrics_<timestamp>.json` with:
+- Run metadata (timestamp, branch, duration)
+- Claude API usage (time, exit code)
+- Git operations (files changed, commits made, push success)
+- **PR creation status** (`pr_created: true/false`)
+- Resource usage (memory, disk)
 
 ## Management Commands
 
