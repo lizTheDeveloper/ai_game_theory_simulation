@@ -94,6 +94,11 @@ Every autonomous run begins by posting research requests to the research channel
 - Git operations with full audit trail
 - Pulls latest changes before starting work
 - Each run commits its log file to the feature branch
+- **Automatic Claude Code updates:** Worker updates to latest Claude Code version before each run
+  - Removes old version and installs latest from npm
+  - Continues with existing version if update fails
+  - Logs version after update attempt
+  - Ensures worker always uses latest features and bug fixes
 - **Automatic PR creation:** Worker creates pull requests after pushing feature branches
   - PR includes run metrics, timing, and commit history
   - Graceful fallback if `gh` CLI not authenticated
