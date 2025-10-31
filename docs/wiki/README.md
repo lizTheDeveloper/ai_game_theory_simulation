@@ -3059,6 +3059,24 @@ state.history.exogenousShocks?: Array<{
 - **Files**: `autonomous-worker.sh` (lines 289-368)
 - Commit: fb6867d (Oct 30, 2025)
 
+**Autonomous Worker Auto-Update** ✅ DOCUMENTED
+- **Self-updating Claude Code**: Worker automatically updates to latest Claude Code version before each run
+- **Pre-flight check**: Update runs during PRE-FLIGHT CHECKS phase (before task selection)
+- **Graceful fallback**: If update fails, continues with existing version (logged as warning)
+- **Version logging**: Records Claude Code version after update attempt
+- **Implementation**:
+  - Removes old version: `sudo rm -rf /usr/lib/node_modules/@anthropic-ai/claude-code`
+  - Installs latest: `sudo npm i -g @anthropic-ai/claude-code`
+  - Verifies: `claude --version`
+  - Suppresses npm output to keep logs clean
+- **Benefits**:
+  - Always uses latest Claude Code features and bug fixes
+  - Eliminates manual update maintenance
+  - Ensures consistency across autonomous runs
+  - Reduces risk of version-related issues
+- **Location**: `autonomous-worker.sh` (lines 79-86, in PRE-FLIGHT CHECKS)
+- Commit: 14c8a3e (Oct 31, 2025)
+
 ---
 
 ## 📚 Recent Research & Plans Reference (Oct 16-17, 2025)
