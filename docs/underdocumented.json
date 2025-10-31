@@ -76642,14 +76642,6 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 649,
-    "type": "property",
-    "name": "unemploymentLevel",
-    "currentDoc": "(none)",
-    "context": "unemploymentLevel: 0.1,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
     "line": 650,
     "type": "property",
     "name": "socialAdaptation",
@@ -76727,22 +76719,6 @@
     "name": "socialStability",
     "currentDoc": "(none)",
     "context": "socialStability: 0.7,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 673,
-    "type": "property",
-    "name": "qualityOfLife",
-    "currentDoc": "(none)",
-    "context": "qualityOfLife: 0.65,"
-  },
-  {
-    "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
-    "line": 675,
-    "type": "property",
-    "name": "wealthDistribution",
-    "currentDoc": "(none)",
-    "context": "wealthDistribution: 0.5,"
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/initialization.ts",
