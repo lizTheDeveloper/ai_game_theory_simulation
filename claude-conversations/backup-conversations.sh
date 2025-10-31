@@ -8,6 +8,13 @@
 #   bash backup-conversations.sh --redact # Backup + redact sensitive info
 
 # Configuration
+# IMPORTANT: Update PROJECTS array with your Claude Code project directory names
+# These are directory names from ~/.claude/projects/ (run: ls ~/.claude/projects/)
+# Format: Directory name as it appears in ~/.claude/projects/
+# Example: If your project is at ~/src/myproject, the directory might be:
+#          "-Users-yourusername-src-myproject"
+#
+# To find your project names: ls -1 ~/.claude/projects/
 PROJECTS=(
     "-Users-annhoward-src-superalignmenttoutopia"
     "-Users-annhoward-src-ai-game-theory-simulation"
@@ -128,8 +135,10 @@ if [ "$REDACT" = true ]; then
         # Run redaction script
         cd "$(dirname "$BACKUP_DIR")" # Go to project root
 
-        # Use venv python if available, otherwise system python
-        if [ -f "venv/bin/python3" ]; then
+        # Use .venv python if available, otherwise system python
+        if [ -f ".venv/bin/python3" ]; then
+            PYTHON_CMD=".venv/bin/python3"
+        elif [ -f "venv/bin/python3" ]; then
             PYTHON_CMD="venv/bin/python3"
         else
             PYTHON_CMD="python3"
