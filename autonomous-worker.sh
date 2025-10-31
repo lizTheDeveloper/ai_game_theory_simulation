@@ -87,12 +87,12 @@ cd "$PROJECT_DIR"
 
     # Ensure chatroom monitors are running
     log_info "Checking chatroom monitor status..."
-    if pgrep -f "simple-channel-monitor.ts" > /dev/null; then
+    if pgrep -f "channel-monitor.ts" > /dev/null; then
         log_success "Chatroom monitor already running"
     else
         log_warning "Chatroom monitor not running, starting it..."
         source .venv/bin/activate
-        nohup npx tsx scripts/simple-channel-monitor.ts > logs/monitor_$TIMESTAMP.log 2>&1 &
+        nohup npx tsx scripts/channel-monitor.ts > logs/monitor_$TIMESTAMP.log 2>&1 &
         MONITOR_PID=$!
         sleep 2  # Give it a moment to start
         if ps -p $MONITOR_PID > /dev/null; then
