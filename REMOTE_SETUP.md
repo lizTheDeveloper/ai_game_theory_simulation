@@ -124,6 +124,43 @@ npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&
 tail -f logs/mc_*.log
 ```
 
+## Configuring Conversation Backup
+
+The conversation backup script needs to know your Claude Code project directory name. After setup:
+
+### 1. Find your project name
+
+```bash
+ls -1 ~/.claude/projects/
+```
+
+This will show directories like:
+```
+-Users-username-src-ai-game-theory-simulation
+-home-username-ai-game-theory-simulation  # On Linux
+```
+
+### 2. Update backup script
+
+Edit `claude-conversations/backup-conversations.sh` and update the PROJECTS array (around line 18):
+
+```bash
+PROJECTS=(
+    "-home-youruser-ai-game-theory-simulation"  # Update to match your path
+)
+```
+
+### 3. Test the backup
+
+```bash
+bash claude-conversations/backup-conversations.sh
+```
+
+The script will automatically:
+- Use `.venv/bin/python3` if available
+- Fall back to system Python if virtual environment not found
+- Skip redaction if not requested
+
 ## Troubleshooting
 
 ### Python virtual environment not activated
