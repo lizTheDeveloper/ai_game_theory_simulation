@@ -100,6 +100,12 @@ Every autonomous run begins by posting research requests to the research channel
   - Logs version after update attempt
   - Ensures worker always uses latest features and bug fixes
 - **Automatic PR creation:** Worker creates pull requests after pushing feature branches
+- **GitHub issue alerts:** Automatic issue creation when Claude execution fails
+  - Timeout detection (exit 124) creates issue with `timeout` label
+  - Any non-zero exit code creates issue with `failure` label
+  - Issues include timestamp, duration, branch, exit code, and log path
+  - Graceful fallback if `gh` CLI unavailable
+  - No silent failures - every problem creates actionable GitHub issue
   - PR includes run metrics, timing, and commit history
   - Graceful fallback if `gh` CLI not authenticated
   - PR title prefixed with `[Autonomous]` for easy filtering
