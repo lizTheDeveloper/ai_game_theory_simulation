@@ -145,11 +145,80 @@ The simulation previously used optimistic projections instead of current reality
 
 ---
 
-### Social Parameters
+### Social & Economic Parameters
 
-**Source:** `src/simulation/socialCohesion.ts` → `initializeSocialAccumulation()`
+**Source:** `src/simulation/initialization.ts` → `createInitialGameState()`
 
-#### 1. Meaning Crisis Level
+#### 1. Unemployment Level
+**Old Value:** 0.1 (10% unemployment)
+**New Value:** 0.049 (4.9% unemployment)
+**Change:** -51% (reduced by half)
+**Implementation:** October 31, 2025
+
+**Research Basis:**
+- **ILO (2024):** World Employment and Social Outlook: Trends 2025
+  - Finding: Global unemployment rate 4.9% for 2024-2025
+  - Methodology: Harmonized labor force surveys across 180+ countries
+  - Trend: Stable post-pandemic recovery, below pre-2020 levels
+
+**Impact:**
+- More realistic starting economic conditions
+- Lower baseline unemployment = stronger starting labor market
+- Reflects actual 2024-2025 global economic data
+- Removes 2× pessimism bias from initial conditions
+
+---
+
+#### 2. Quality of Life (HDI-based)
+**Old Value:** 0.65 (65% quality of life)
+**New Value:** 0.74 (74% quality of life)
+**Change:** +14% (increased by 9 points)
+**Implementation:** October 31, 2025
+
+**Research Basis:**
+- **UNDP (2024):** Human Development Report 2023-24 (August 2025 data update)
+  - Finding: Global HDI 0.739-0.744 (average ~0.74)
+  - Components: Life expectancy, education, income per capita
+  - Trend: Recovery from pandemic dip, returning to 2019 levels
+
+**Impact:**
+- More accurate representation of global human development
+- Starting quality of life reflects actual HDI measurements
+- Affects trust dynamics (previousQoL initialized to match)
+- Removes pessimism bias in baseline human welfare
+
+**Note:** This is a composite metric (HDI) that may not perfectly map to simulation's multidimensional QoL system. See P2 verification task for conceptual validation of HDI → simulation QoL mapping.
+
+---
+
+#### 3. Wealth Distribution (Inverted Gini)
+**Old Value:** 0.5 (moderate inequality)
+**New Value:** 0.38 (high inequality)
+**Change:** -24% (increased inequality)
+**Implementation:** October 31, 2025
+
+**Research Basis:**
+- **World Bank (2019):** Global income Gini coefficient 0.62
+  - Methodology: Harmonized household surveys across countries
+  - Metric: Income inequality (not wealth inequality)
+  - Note: Wealth inequality is higher (Gini ~0.88 per UBS estimates)
+
+**Scale Discovery:**
+- **Critical Finding:** Confirmed via `gameStore.ts.bak:89` that wealthDistribution uses **INVERTED scale**
+  - 1.0 = Perfect equality (everyone has equal wealth)
+  - 0.0 = Perfect inequality (one person has all wealth)
+- **Calculation:** 1.0 - 0.62 = 0.38
+- **Previous value (0.5)** was too optimistic vs reality
+
+**Impact:**
+- More realistic representation of global inequality
+- Starting conditions reflect actual wealth concentration
+- May affect social cohesion, policy effectiveness, crisis vulnerability
+- Removes optimism bias about economic fairness
+
+---
+
+#### 4. Meaning Crisis Level
 **Old Value:** 0.15 (15% experiencing meaning crisis)
 **New Value:** 0.22 (22% experiencing meaning crisis)
 **Change:** +47% (increased)
@@ -176,7 +245,7 @@ The simulation previously used optimistic projections instead of current reality
 
 ---
 
-#### 2. Institutional Legitimacy
+#### 5. Institutional Legitimacy
 **Old Value:** 0.65 (65% trust in institutions)
 **New Value:** 0.65 (65% trust in institutions)
 **Change:** No change (validated)
@@ -195,7 +264,7 @@ The simulation previously used optimistic projections instead of current reality
 
 ---
 
-#### 3. Social Cohesion
+#### 6. Social Cohesion
 **Old Value:** 0.60 (60% cohesion)
 **New Value:** 0.60 (60% cohesion)
 **Change:** No change (validated)
@@ -214,7 +283,7 @@ The simulation previously used optimistic projections instead of current reality
 
 ---
 
-#### 4. Cultural Adaptation
+#### 7. Cultural Adaptation
 **Old Value:** 0.10 (10% adapted to AI)
 **New Value:** 0.10 (10% adapted to AI)
 **Change:** No change (correct for 2025)
@@ -241,6 +310,12 @@ The simulation previously used optimistic projections instead of current reality
 - Ecological spiral: Requires +35% biodiversity gain (was +0%)
 - Meaning spiral: Already above threshold (22% vs 20% target)
 - Resource abundance: Less margin for error (25% buffer vs 45%)
+
+**P0 Changes (October 31, 2025) - Mixed Impact:**
+- **Unemployment:** Starting conditions improved (4.9% vs 10% = stronger labor market)
+- **Quality of Life:** Starting conditions improved (0.74 vs 0.65 = better human development)
+- **Wealth Distribution:** Starting conditions worsened (0.38 vs 0.5 = higher inequality)
+- **Net Effect:** More realistic baseline (removes both pessimism and optimism biases)
 
 **Crises Trigger Faster:**
 - Resource crisis: 25% closer to 40% threshold
@@ -406,17 +481,31 @@ The simulation previously used optimistic projections instead of current reality
 
 ## Future Work
 
+### P0 Validation Tasks (In Progress - October 31, 2025)
+
+**✅ COMPLETED:**
+1. **Unemployment:** 0.1 → 0.049 (ILO 2024)
+2. **Quality of Life:** 0.65 → 0.74 (UNDP HDI 2024)
+3. **Wealth Distribution:** 0.5 → 0.38 (World Bank 2019, inverted Gini)
+
+**⏳ REMAINING:**
+1. **P1: Government Baselines** (11 parameters)
+   - V-Dem dataset download required (2-4 hours)
+   - WGI (Worldwide Governance Indicators) extraction
+   - Parameters: cyber, evaluation, others need empirical data
+2. **P2: QoL Conceptual Validation** (1-2 hours)
+   - Verify HDI → multidimensional QoL system mapping
+   - Confirm composite metric alignment
+3. **P3: Monte Carlo Baseline Validation** (2-3 hours)
+   - N=10 runs with new P0 parameters
+   - Verify outcome distributions remain physically plausible
+   - Check for unintended interactions
+
+**See:**
+- `research/verification_P0_government_baselines_20251031.md` (deferred)
+- Research channel for status updates
+
 ### Additional Baseline Research
-
-**Economic Parameters:**
-- Wealth inequality (Gini coefficient reality check)
-- Manufacturing capability (vs optimistic projections)
-- Technology adoption rates (AI, clean energy, etc.)
-
-**Government Parameters:**
-- Surveillance capability (actual vs projection)
-- Control desire (authoritarianism trends)
-- Legitimacy breakdown by region
 
 **AI Parameters:**
 - Capability starting values (AGI timeline reality check)
@@ -452,6 +541,11 @@ The simulation previously used optimistic projections instead of current reality
 - Pew Research (2024): Trust in Government Survey
 - AAMCH (2024): Social Cohesion Studies
 
+**Economic & Development Research (P0 Updates - Oct 31, 2025):**
+- ILO (2024): World Employment and Social Outlook: Trends 2025 - Global unemployment 4.9%
+- UNDP (2024): Human Development Report 2023-24 (August 2025 update) - Global HDI 0.739-0.744
+- World Bank (2019): Global income Gini coefficient 0.62 (most recent comprehensive data)
+
 **Full Bibliography:**
 See `plans/initialization-parameters-validation.md` for complete 30+ source list with links and detailed justifications.
 
@@ -459,19 +553,37 @@ See `plans/initialization-parameters-validation.md` for complete 30+ source list
 
 ## Dev Log
 
-**Implementation Date:** October 11, 2025
-**Dev Time:** ~1 hour (parameter changes only)
+**Initial Implementation Date:** October 11, 2025
+**Dev Time:** ~1 hour (environmental & social parameter changes)
 **Complexity:** LOW (value updates, no logic changes)
 **Testing:** Monte Carlo N=25 (validation successful)
 **Review:** Research-backed, peer-reviewed sources only
 
+**P0 Parameter Update:** October 31, 2025
+**Dev Time:** ~30 minutes (3 parameter changes)
+**Complexity:** TRIVIAL (direct value updates with peer-reviewed sources)
+**Testing:** Pending - Monte Carlo N=10 recommended
+**Review Process:**
+- ✅ Research extraction (Cynthia): ILO, UNDP, World Bank sources
+- ✅ Critical validation (Sylvia): Zero fabrications, scale confirmed
+- ✅ Implementation (Roy): Proper citations added
+- ⏳ Monte Carlo validation: Recommended N=10 runs
+
+**Key Discovery (Oct 31):**
+- Found wealthDistribution uses INVERTED scale (1=equality, 0=inequality) via `gameStore.ts.bak:89`
+- Previous 0.5 was too optimistic vs reality (0.62 Gini → 0.38 inverted)
+
 **Related Logs:**
-- `devlogs/tier0-baseline-corrections-2025.md` - Implementation log
+- `devlogs/tier0-baseline-corrections-2025.md` - Initial implementation log
 - `devlogs/session-oct11-2025-tier0-tier1-complete.md` - Session summary
 - `devlogs/monte-carlo-analysis-oct11-2025.md` - Validation testing
+- `research/verification_P0_*_20251031.md` - P0 parameter verification files (4 files)
 
 ---
 
-**Last Updated:** October 11, 2025
-**Status:** ✅ Complete and validated
-**Next Steps:** Annual parameter review (track real-world data vs model)
+**Last Updated:** October 31, 2025
+**Status:** ✅ P0 parameters implemented, P1-P3 tasks queued
+**Next Steps:**
+1. P1: Government baselines (11 parameters, V-Dem/WGI extraction)
+2. P2: QoL conceptual validation (HDI mapping)
+3. P3: Monte Carlo baseline validation (N=10 runs)

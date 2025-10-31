@@ -39,6 +39,21 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
 - **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
+## ⚠️ Recent Changes (October 31, 2025)
+
+**✅ P0 Initialization Parameter Fixes Implemented**
+
+Three critical baseline parameters corrected to match peer-reviewed 2024-2025 data:
+1. **Unemployment:** 10% → 4.9% (ILO 2024 - was 2× too high)
+2. **Quality of Life:** 0.65 → 0.74 (UNDP HDI 2024 - was too pessimistic)
+3. **Wealth Distribution:** 0.5 → 0.38 (World Bank 2019 - inverted Gini scale)
+
+**Key Discovery:** Found wealthDistribution uses inverted scale (1=equality, 0=inequality) via backup file evidence. Previous 0.5 was too optimistic vs 0.62 Gini reality.
+
+**Status:** Implementation complete, Monte Carlo validation recommended (N=10 runs)
+
+See: [Baseline Corrections](./systems/baseline-corrections.md) for complete documentation
+
 ## 📚 Documentation Structure
 
 ### Research Foundation
