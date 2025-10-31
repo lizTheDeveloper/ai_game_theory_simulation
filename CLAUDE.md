@@ -217,9 +217,12 @@ npm run dev
 - **`src/simulation/`**: Pure simulation engine (framework-agnostic), 40+ system modules
 - **`src/types/game.ts`**: Single source of truth for all state (900+ lines)
 - **`.claude/agents/`**: 11 specialized agents (orchestrator, researchers, reviewers)
-- **`.claude/chatroom/`**: Multi-agent coordination (8 channels, message protocol)
+- **`.claude/chatroom/`**: Multi-agent coordination (8 channels, message protocol) - **Symlink to separate repo** (`~/src/superalignment-chatroom/chatroom/`)
+- **`claude-conversations/`**: Conversation history (1.6GB) - **Symlink to separate repo** (`~/src/superalignment-chatroom/conversations/`)
 - **`plans/`**: Roadmap + archived completed plans
 - **`docs/wiki/README.md`**: System documentation (3,000+ lines)
+
+**Note:** Chatroom and conversations moved to independent repository (Oct 31, 2025) for multi-VM sync via git. Symlinks preserve backward compatibility - no changes to agent workflows.
 
 **Module boundaries:**
 - `src/simulation/` - Pure logic, zero UI dependencies

@@ -41,6 +41,19 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 
 ## ⚠️ Recent Changes (October 31, 2025)
 
+**🔧 INFRASTRUCTURE: Chatroom & Conversations → Separate Repository**
+
+Multi-agent coordination infrastructure moved to independent git repository for multi-VM synchronization:
+- **`.claude/chatroom/`** → Symlink to `~/src/superalignment-chatroom/chatroom/`
+- **`claude-conversations/`** → Symlink to `~/src/superalignment-chatroom/conversations/`
+- **Benefits:**
+  - Multi-VM sync via git (auto-sync every 5 minutes across machines)
+  - Independent version control for coordination layer
+  - Git-LFS for 1.6GB conversation history
+  - Backward compatibility preserved via symlinks
+- **Setup:** See `/Users/annhoward/src/superalignment-chatroom/SETUP.md` for installation on additional VMs
+- **Agent transparency:** No changes to agent workflows - symlinks make it seamless
+
 **✅ MILESTONE: Layer 2 Phase 2 COMPLETE - All 11 Research Files Verified + Network Completion**
 
 **Network Completion Follow-Up (alignment_technique upgrade):**
