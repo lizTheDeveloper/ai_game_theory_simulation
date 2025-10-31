@@ -82,9 +82,42 @@ cd ~/ai_game_theory_simulation
 
 - 30-minute timeout per session
 - Logs all actions to `logs/autonomous/`
-- Auto-cleanup of logs older than 30 days
+- **Complete audit trail:** All logs preserved in git history forever (no cleanup)
 - Git operations with full audit trail
 - Pulls latest changes before starting work
+- Each run commits its log file to the feature branch
+
+### Log Retention Policy
+
+**All autonomous worker logs are preserved in git history forever.**
+
+**Benefits:**
+- Complete audit trail of all autonomous work
+- Forensic analysis of worker decisions and actions
+- Historical tracking of roadmap progress
+- Accountability and transparency
+- Reproducibility of past autonomous runs
+
+**Storage:**
+- Logs live in `logs/autonomous/` directory
+- Each run creates a timestamped log file (e.g., `worker_20251030_210000.log`)
+- Worker commits log file to feature branch before merging
+- All logs tracked in git history (`.gitignore` allows `logs/autonomous/*.log`)
+
+**Access historical logs:**
+```bash
+# View all autonomous logs in current branch
+ls -lt logs/autonomous/
+
+# Search for specific autonomous runs
+git log --all --source --grep="autonomous"
+
+# Extract log from specific commit
+git show <commit>:logs/autonomous/worker_<timestamp>.log
+
+# View log history for a specific file
+git log --follow -- logs/autonomous/worker_20251030_210000.log
+```
 
 ### Monitoring
 
