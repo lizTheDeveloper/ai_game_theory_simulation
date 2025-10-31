@@ -80,6 +80,7 @@ See: [Baseline Corrections](./systems/baseline-corrections.md)
 - Organized by discipline: AI Safety, Climate Science, Political Science, Economics, Social Psychology, Implementation Science, Complex Systems, Public Health, International Relations, Information Theory, Demography
 - **Validation cases**: Germany 2021 (100% coalition match), COVID acceleration (10× speedup), Black Death calibration
 - **Quality standards**: Research-skeptic review (40% rejection rate), architecture-skeptic review (mandatory)
+- **📚 Zotero Integration** (October 31, 2025): All papers tracked in centralized Zotero library for citation accuracy, parameter traceability, and cross-agent knowledge continuity. See CLAUDE.md Research Standards for agent-specific workflows.
 
 **Research Verification Status** (October 31, 2025):
 - **Layer 2 Phase 1**: ✅ COMPLETE (8/8 citations verified, code updates pending)

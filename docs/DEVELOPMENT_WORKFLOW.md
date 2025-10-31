@@ -129,6 +129,7 @@ Every mechanic must have:
 - **2+ peer-reviewed sources** (2024-2025 preferred)
 - Academic journals, conference papers, technical reports
 - Save PDFs to `research/` with summary markdown files
+- **📚 Add to Zotero immediately** - All papers tracked in centralized library for citation accuracy and traceability (see CLAUDE.md Research Standards)
 
 ### 2. Parameter Justification
 - **Why this number?** (backed by data, not "feels right")
