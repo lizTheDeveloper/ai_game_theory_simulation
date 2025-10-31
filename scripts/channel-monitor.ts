@@ -302,22 +302,23 @@ async function monitorChannels(): Promise<void> {
           const analysis = needsAttention([oldestMessage]);
 
           if (analysis.needs) {
-            console.log(`  🚨 PROCESSING MESSAGE: ${analysis.reason}`);
+            console.log(`  🚨 MESSAGE NEEDS ATTENTION: ${analysis.reason}`);
             console.log(`  📝 Message: [${oldestMessage.agent}] ${oldestMessage.message.substring(0, 60)}...`);
 
-            // Only spawn if orchestrator NOT already active
+            // Only spawn and mark as processed if orchestrator NOT already active
             if (orchestratorActive) {
-              console.log(`  ⏭️  Orchestrator already active - marking as processed without spawn`);
+              console.log(`  ⏸️  Orchestrator already active - message stays in queue`);
+              console.log(`  📊 Waiting to process: ${newMessages.length} messages`);
             } else {
               spawnOrchestrator(channel, analysis.reason);
+
+              // Mark as processed ONLY after spawning
+              const stateFile = `.claude/chatroom/monitor-state-${channel}.txt`;
+              fs.writeFileSync(stateFile, oldestMessage.timestamp, 'utf-8');
+
+              console.log(`  ✅ Orchestrator spawned, message marked as processed`);
+              console.log(`  📊 Remaining messages in queue: ${newMessages.length - 1}`);
             }
-
-            // ALWAYS mark as processed (exactly-once)
-            const stateFile = `.claude/chatroom/monitor-state-${channel}.txt`;
-            fs.writeFileSync(stateFile, oldestMessage.timestamp, 'utf-8');
-
-            console.log(`  ✅ Message processed, marked as read`);
-            console.log(`  📊 Remaining messages in queue: ${newMessages.length - 1}`);
           } else {
             console.log(`  ℹ️  Oldest message doesn't need action, marking as read`);
             // Mark as read and continue to next
