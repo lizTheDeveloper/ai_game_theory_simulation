@@ -288,6 +288,54 @@ npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
 - Each run commits its log file to feature branch
 - See `AUTONOMOUS_SETUP.md` for details
 
+## Channel Monitoring
+
+Added October 31, 2025 - autonomous channel monitor for orchestrator coordination.
+
+### Running the Monitor
+
+```bash
+# Run in background (recommended)
+npx tsx scripts/channel-monitor.ts > logs/monitor_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+
+# Store PID for later cleanup
+echo $! > .monitor.pid
+
+# Stop monitor
+kill $(cat .monitor.pid)
+```
+
+### How It Works
+
+The monitor polls channels every 30 seconds and processes messages **one-at-a-time like an MQTT queue**:
+
+1. Reads oldest unread message from monitored channels
+2. Analyzes if attention needed (trigger keywords/statuses)
+3. Spawns orchestrator in background if match found
+4. Marks message as processed (updates read pointer)
+5. Next poll processes next oldest message
+
+### Monitored Channels
+
+- `implementation.md` - Feature work, blockers, questions
+- `research.md` - Research findings needing validation
+- `coordination.md` - General coordination requests
+
+### Trigger Conditions
+
+**Statuses:** `QUESTION`, `ALERT`, `STARTED`, `BLOCKED`
+**Keywords:** "can someone", "need help", "orchestrator"
+
+### Silent Mode
+
+Monitor respects `.claude/silent-mode`:
+- `enabled` - Voice notifications off (default)
+- `disabled` - Voice notifications on
+
+### Thundering-Herd Protection
+
+Monitor checks if orchestrator is already active before spawning (prevents multiple concurrent orchestrators fighting over same work).
+
 ## Autonomous Worker Monitoring
 
 Added October 30, 2025 - comprehensive instrumentation for autonomous worker runs.
