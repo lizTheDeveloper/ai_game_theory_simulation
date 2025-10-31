@@ -287,6 +287,30 @@ export function resolveMortality(
       throw new Error(`deathProb is NaN: demographic=${demo.name}, survivalProb=${survivalProb}, riskCount=${risks.length}`);
     }
 
+    // Apply mortality stabilizers (Oct 30, 2025 - Issues #4, #5, #6)
+    // Stabilizers reduce mortality through aid, adaptation, migration, emergency response
+    // Applied AFTER compounding but BEFORE caps
+    if (pop.regionalPopulations && pop.regionalPopulations.length > 0) {
+      // Calculate population-weighted average stabilizer reduction across all regions
+      let totalPop = 0;
+      let weightedReduction = 0;
+
+      for (const region of pop.regionalPopulations) {
+        if (region.mortalityStabilizers && region.population > 0) {
+          const reduction = region.mortalityStabilizers.combinedReduction;
+          weightedReduction += reduction * region.population;
+          totalPop += region.population;
+        }
+      }
+
+      if (totalPop > 0) {
+        const avgReduction = weightedReduction / totalPop;
+        // Apply reduction: deathProb × (1 - reduction)
+        // Example: 50% death prob, 40% reduction → 50% × 0.6 = 30% final
+        deathProb *= (1 - avgReduction);
+      }
+    }
+
     // BUG FIX (Oct 30, 2025): Cap deathProb at 1.0 BEFORE compression calculation
     // BLOCKER-1: When deathProb=0.98 and sum(baseRisks)=0.05, division produces 19.6 (1960%!)
     // Research: Monthly mortality cannot exceed 100% (physically impossible)

@@ -308,7 +308,8 @@ export function calculateMilitaryCO2Emissions(
  */
 export function shouldInitiateIntervention(
   hegemon: CountryPopulation,
-  state: GameState
+  state: GameState,
+  rng: () => number
 ): { should: boolean; target?: CountryName | string; reason?: string } {
   // Only hegemons can initiate interventions
   if (!hegemon.isHegemon) {
@@ -334,11 +335,11 @@ export function shouldInitiateIntervention(
       c.resourceValue.totalValue > 1.0 // Valuable resources
     );
 
-  if (resourceTargets.length > 0 && Math.random() < hegemon.militaryCapability * 0.1 * warMotivationMultiplier) {
+  if (resourceTargets.length > 0 && rng() < hegemon.militaryCapability * 0.1 * warMotivationMultiplier) {
     // Base: 10% chance per month for highest capability hegemons (US)
     // Multiplied by war motivation (0.1 to 1.0)
     // Example: US with 0.5 war motivation = 5% chance/month
-    const target = resourceTargets[Math.floor(Math.random() * resourceTargets.length)];
+    const target = resourceTargets[Math.floor(rng() * resourceTargets.length)];
     return {
       should: true,
       target: target.name,
@@ -349,7 +350,7 @@ export function shouldInitiateIntervention(
   // TRIGGER 2: Meaning Crisis → Nationalism → War
   // High meaning crisis + high nationalism = seek external conflict
   const warMotivationThreshold = 0.7;
-  if (hegemon.warMotivation > warMotivationThreshold && Math.random() < 0.05 * warMotivationMultiplier) {
+  if (hegemon.warMotivation > warMotivationThreshold && rng() < 0.05 * warMotivationMultiplier) {
     // 5% base chance, multiplied by war motivation
     // High war motivation (>0.7) required to even check this trigger
     // Find any non-hegemon target
@@ -357,7 +358,7 @@ export function shouldInitiateIntervention(
       .filter(c => c.name !== hegemon.name && !c.isHegemon);
 
     if (possibleTargets.length > 0) {
-      const target = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
+      const target = possibleTargets[Math.floor(rng() * possibleTargets.length)];
       return {
         should: true,
         target: target.name,
@@ -372,13 +373,13 @@ export function shouldInitiateIntervention(
   const economicCrisis = state.currentEconomicStage === 'contraction' ||
                          state.currentEconomicStage === 'trough';
 
-  if (economicCrisis && Math.random() < 0.08 * warMotivationMultiplier) {
+  if (economicCrisis && rng() < 0.08 * warMotivationMultiplier) {
     // 8% base chance during economic crisis, multiplied by war motivation
     const possibleTargets = Object.values(state.countryPopulationSystem.countries)
       .filter(c => c.name !== hegemon.name && !c.isHegemon);
 
     if (possibleTargets.length > 0) {
-      const target = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
+      const target = possibleTargets[Math.floor(rng() * possibleTargets.length)];
       return {
         should: true,
         target: target.name,

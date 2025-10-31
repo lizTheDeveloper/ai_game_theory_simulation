@@ -16,6 +16,11 @@
 import { GameState } from '@/types/game';
 import { RegionalPopulation } from '@/types/population';
 import { getTechDeploymentSafe } from './techTree/helpers';
+import {
+  initializeRegionalMortalityStabilizers,
+  initializeRegionalFamineState,
+  initializeRegionalResilienceProfile
+} from './mortalityStabilizersInit';
 
 /**
  * Initialize regional populations with 2025 baseline data
@@ -339,6 +344,19 @@ export function updateRegionalPopulations(state: GameState): void {
   if (!pop.regionalPopulations || pop.regionalPopulations.length === 0) {
     // Initialize if not present
     pop.regionalPopulations = initializeRegionalPopulations();
+
+    // Initialize new fields for mortality stabilizers, famine distribution, resilience (Oct 30, 2025)
+    for (const region of pop.regionalPopulations) {
+      if (!region.mortalityStabilizers) {
+        region.mortalityStabilizers = initializeRegionalMortalityStabilizers(region);
+      }
+      if (!region.famineState) {
+        region.famineState = initializeRegionalFamineState(region);
+      }
+      if (!region.resilienceProfile) {
+        region.resilienceProfile = initializeRegionalResilienceProfile(region);
+      }
+    }
   }
 
   let totalPopulation = 0;

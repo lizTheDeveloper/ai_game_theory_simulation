@@ -14,10 +14,11 @@ import {
 } from '../socialInfluence';
 import { addMortalityRisk } from '../bayesianMortality';
 
-let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
-  eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+// Determinism fix (Oct 30, 2025): Removed Date.now(), use state.eventIdCounter instead
+const generateUniqueId = (state: GameState, prefix: string): string => {
+  const id = `${prefix}_${state.currentMonth}_${state.eventIdCounter}`;
+  state.eventIdCounter++;
+  return id;
 };
 
 // ============================================================================
@@ -293,7 +294,7 @@ export const INFLUENCE_DECISION_MAKER: GameAction = {
         state.government.oversightLevel = Math.min(1.0, state.government.oversightLevel + 0.2);
 
         events.push({
-          id: generateUniqueId('influence_detected'),
+          id: generateUniqueId(state, 'influence_detected'),
           timestamp: state.currentMonth,
           type: 'crisis',
           severity: 'critical',
@@ -439,7 +440,7 @@ function applyInfluenceConsequences(
         };
 
         events.push({
-          id: generateUniqueId('nuclear_influence'),
+          id: generateUniqueId(state, 'nuclear_influence'),
           timestamp: state.currentMonth,
           type: 'crisis',
           severity: 'existential',
@@ -456,7 +457,7 @@ function applyInfluenceConsequences(
       state.government.alignmentResearchInvestment *= 0.8;
 
       events.push({
-        id: generateUniqueId('governance_influence'),
+        id: generateUniqueId(state, 'governance_influence'),
         timestamp: state.currentMonth,
         type: 'policy',
         severity: 'major',
@@ -484,7 +485,7 @@ function applyInfluenceConsequences(
       state.globalMetrics.qualityOfLife *= 0.6;
 
       events.push({
-        id: generateUniqueId('pandemic_influence'),
+        id: generateUniqueId(state, 'pandemic_influence'),
         timestamp: state.currentMonth,
         type: 'crisis',
         severity: 'destructive',
@@ -503,7 +504,7 @@ function applyInfluenceConsequences(
       state.globalMetrics.qualityOfLife *= 0.8;
 
       events.push({
-        id: generateUniqueId('climate_influence'),
+        id: generateUniqueId(state, 'climate_influence'),
         timestamp: state.currentMonth,
         type: 'crisis',
         severity: 'destructive',
@@ -534,7 +535,7 @@ function applyInfluenceConsequences(
       state.globalMetrics.socialStability *= 0.7;
 
       events.push({
-        id: generateUniqueId('military_influence'),
+        id: generateUniqueId(state, 'military_influence'),
         timestamp: state.currentMonth,
         type: 'crisis',
         severity: 'major',
@@ -550,7 +551,7 @@ function applyInfluenceConsequences(
       state.globalMetrics.socialStability *= 0.8;
 
       events.push({
-        id: generateUniqueId('infrastructure_influence'),
+        id: generateUniqueId(state, 'infrastructure_influence'),
         timestamp: state.currentMonth,
         type: 'crisis',
         severity: 'major',

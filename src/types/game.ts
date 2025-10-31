@@ -164,6 +164,16 @@ export interface GameState {
    * Expected impact: Enables perfect reproducibility after resume/continue
    */
   rngCallCounter?: number;
+
+  /**
+   * Event ID Counter (Determinism Fix, Oct 30, 2025)
+   *
+   * Replaces Math.random() and Date.now() for deterministic event ID generation.
+   * Monotonically increasing counter ensures reproducible IDs across simulation runs.
+   *
+   * Expected impact: Fixes non-determinism in event logging, agent actions, policy generation
+   */
+  eventIdCounter: number;
   
   // Agents
   aiAgents: AIAgent[];

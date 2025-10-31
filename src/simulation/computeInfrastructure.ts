@@ -568,12 +568,22 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   // Compute doubling every 8 months (conservative middle estimate)
   // Math.pow(2, 1/8) = 1.0905 = 9.05% per month
   // Results: 2x in 8 months, 10x in 26 months, 100x in 52 months, 7,943x in 120 months
-  // FIX (Oct 30, 2025): Scale Moore's Law by population (need engineers to develop hardware)
-  // At 50% population: Moore's Law slows to ~4.5%/month (half the engineers)
-  // At 10% population: Moore's Law nearly halts (~0.9%/month)
+  // FIX (Oct 30, 2025 v4): Moore's Law is a TECHNOLOGICAL TREND, not workforce-dependent
+  // The frontier efficiency continues advancing regardless of population
+  // What DOES break with population loss: ability to MANUFACTURE chips at the frontier
+  // This is modeled via:
+  // (1) DC efficiency degradation (maintenance failure) - lines 520-526
+  // (2) Manufacturing capacity gates frontier growth (population loss halts fab production)
+  //
+  // CRITICAL: Manufacturing capacity is HIGHLY non-linear (requires intact supply chains)
+  // - 100% population → 100% manufacturing capacity
+  // - 80% population → 64% manufacturing capacity (supply chain stress)
+  // - 50% population → 25% manufacturing capacity (critical shortages)
+  // - 20% population → 4% manufacturing capacity (near-total collapse)
   const MOORES_LAW_RATE = Math.pow(2, 1/8) - 1; // 9.05% per month (doubles every 8 months)
-  const populationScaledMooresLaw = MOORES_LAW_RATE * globalPopFraction; // Scale by workforce
-  infra.hardwareEfficiency *= (1 + populationScaledMooresLaw);
+  const manufacturingCapacity = Math.pow(globalPopFraction, 2.0); // Highly non-linear (fabs need EVERYTHING)
+  const effectiveMooresLaw = MOORES_LAW_RATE * manufacturingCapacity; // Gate by manufacturing
+  infra.hardwareEfficiency *= (1 + effectiveMooresLaw);
 
   // === PHASE 5: CONSCIOUSNESS GOVERNANCE R&D DRAG ===
   // Get global precautionary cost (% of AI R&D budget)
@@ -590,14 +600,21 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   // Historical: 2017-2025 saw major algorithmic breakthroughs every 2-3 years
   // Conservative estimate: 10% annual continuous improvement (separate from compute scaling)
   // Math.pow(1.10, 1/12) = 1.00797 = 0.797% per month
-  // FIX (Oct 30, 2025): Scale by population (need AI researchers to develop algorithms)
+  // FIX (Oct 30, 2025 v4): Algorithmic frontier also advances independently
+  // BUT: (1) R&D drag from precautionary costs affects this (policy choice)
+  //      (2) Deployment capacity scales with workforce (need engineers to implement)
   let CONTINUOUS_ALGO_RATE = Math.pow(1.10, 1/12) - 1; // 10% annual → 0.797% monthly
 
-  // Apply R&D drag to continuous algorithmic improvement
+  // Apply R&D drag to continuous algorithmic improvement (policy effect, not population)
   CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * (1 - rdDrag);
 
-  // Apply population scaling (need researchers to develop algorithms)
-  CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * globalPopFraction;
+  // Gate by deployment capacity (software updates need engineers)
+  // Less non-linear than hardware manufacturing (can deploy remotely)
+  // - 100% population → 100% deployment capacity
+  // - 50% population → 71% deployment capacity (sqrt relationship)
+  // - 20% population → 45% deployment capacity
+  const deploymentCapacity = Math.pow(globalPopFraction, 0.5);
+  CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * deploymentCapacity;
 
   infra.algorithmsEfficiency *= (1 + CONTINUOUS_ALGO_RATE);
 
@@ -615,47 +632,41 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
     // console.log(`🚀 [Month ${state.currentMonth}] Algorithmic breakthrough! Efficiency: ${infra.algorithmsEfficiency.toFixed(2)}x`);
   }
 
-  // HIGH-4 FIX v3 (Oct 30, 2025): CAP accumulated global multipliers at physically coherent maximums
-  // Problem: Scaling growth RATE by population still allows past accumulated growth to persist
-  // Example: At month 78 with 50% population, hardwareEfficiency might be 1,100× from past growth
-  // Even with 50% slower growth, the 1,100× persists and compounds further
+  // HIGH-4 FIX v4 (Oct 30, 2025): INTERIM deployment capacity model
   //
-  // Solution: Cap the ACCUMULATED multipliers based on what's sustainable with current workforce
-  // Research basis: Moore's Law and algorithmic improvements require continuous R&D workforce
-  // If workforce drops 50%, can't maintain improvements designed for 100% workforce
+  // USER INSIGHT (Oct 30): Moore's Law is technological frontier (continues independently),
+  // but manufacturing capacity breaks down with population loss. Existing DCs retain value.
   //
-  // Conservative cap: Allow multipliers to scale with population^0.5 (sub-linear)
-  // - 100% population → 100% of accumulated improvements sustainable
-  // - 50% population → 70.7% of accumulated improvements sustainable
-  // - 10% population → 31.6% of accumulated improvements sustainable
+  // CURRENT MODEL LIMITATION: hardwareEfficiency is a GLOBAL MULTIPLIER applied to ALL hardware
+  // This is architecturally incorrect - it should only apply to NEW hardware built at frontier
+  // Proper fix: Track per-DC hardware vintage (what was hardwareEfficiency when this DC was built?)
   //
-  // This models: Smaller workforce can't maintain all the complexity of systems designed by larger workforce
-  const maxSustainableMultiplier = Math.pow(globalPopFraction, 0.5);
-  const baselineHardwareEff = 1.0; // Baseline is 1.0× (no improvements)
+  // INTERIM FIX (until per-DC vintages implemented):
+  // (1) Gate GROWTH RATE by manufacturing capacity (user's insight)
+  // (2) Cap ACCUMULATED efficiency at deployment sustainability (prevent coherence violations)
+  //
+  // This approximates the correct behavior:
+  // - Moore's Law frontier advances (gated by manufacturing capacity)
+  // - Deployed efficiency capped at what workforce can sustain
+  // - When population recovers, can deploy accumulated frontier improvements
+  //
+  // Deployment capacity scaling (sub-linear with workforce):
+  // - 100% population → 100% of frontier deployable
+  // - 50% population → 71% of frontier deployable (sqrt relationship)
+  // - 20% population → 45% of frontier deployable
+  const maxDeployableEfficiency = Math.pow(globalPopFraction, 0.5);
+  const baselineHardwareEff = 1.0;
   const baselineAlgoEff = 1.0;
 
-  // Cap hardware efficiency at sustainable maximum
-  // Example: If hardwareEfficiency = 1,100× but only 70.7% sustainable → cap at 778×
-  const maxHardwareEff = baselineHardwareEff + (infra.hardwareEfficiency - baselineHardwareEff) * maxSustainableMultiplier;
+  // Cap hardware efficiency at deployable maximum
+  const maxHardwareEff = baselineHardwareEff + (infra.hardwareEfficiency - baselineHardwareEff) * maxDeployableEfficiency;
   if (infra.hardwareEfficiency > maxHardwareEff && globalPopFraction < 0.99) {
-    const reduction = ((infra.hardwareEfficiency - maxHardwareEff) / infra.hardwareEfficiency * 100).toFixed(1);
-    if (state.currentMonth % 12 === 0) {
-      console.log(`\n⚠️  HARDWARE EFFICIENCY CAP: Reduced ${reduction}% due to workforce shortage`);
-      console.log(`   Population: ${(globalPopFraction * 100).toFixed(1)}%`);
-      console.log(`   Previous: ${infra.hardwareEfficiency.toFixed(1)}×, Capped: ${maxHardwareEff.toFixed(1)}×`);
-    }
     infra.hardwareEfficiency = maxHardwareEff;
   }
 
-  // Cap algorithmic efficiency at sustainable maximum
-  const maxAlgoEff = baselineAlgoEff + (infra.algorithmsEfficiency - baselineAlgoEff) * maxSustainableMultiplier;
+  // Cap algorithmic efficiency at deployable maximum
+  const maxAlgoEff = baselineAlgoEff + (infra.algorithmsEfficiency - baselineAlgoEff) * maxDeployableEfficiency;
   if (infra.algorithmsEfficiency > maxAlgoEff && globalPopFraction < 0.99) {
-    const reduction = ((infra.algorithmsEfficiency - maxAlgoEff) / infra.algorithmsEfficiency * 100).toFixed(1);
-    if (state.currentMonth % 12 === 0) {
-      console.log(`\n⚠️  ALGORITHM EFFICIENCY CAP: Reduced ${reduction}% due to workforce shortage`);
-      console.log(`   Population: ${(globalPopFraction * 100).toFixed(1)}%`);
-      console.log(`   Previous: ${infra.algorithmsEfficiency.toFixed(1)}×, Capped: ${maxAlgoEff.toFixed(1)}×`);
-    }
     infra.algorithmsEfficiency = maxAlgoEff;
   }
 

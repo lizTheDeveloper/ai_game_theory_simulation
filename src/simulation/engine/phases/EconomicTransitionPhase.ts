@@ -15,7 +15,7 @@ export class EconomicTransitionPhase implements SimulationPhase {
   readonly order = 31.0;
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
-    const economicProgress = calculateEconomicTransitionProgress(state);
+    const economicProgress = calculateEconomicTransitionProgress(state, rng);
 
     // FIX #4 (Oct 29, 2025): Validate stageChange to prevent NaN propagation
     // Bug: If stageChange is NaN, it propagates to economicTransitionStage,

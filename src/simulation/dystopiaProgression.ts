@@ -8,17 +8,18 @@
  */
 
 import { GameState } from '@/types/game';
+import type { RNGFunction } from '@/types/config';
 import { calculateAverageAlignment } from './utils/ai';
 
 /**
  * Update government control response based on AI threat level
- * 
+ *
  * Mechanics:
  * - Large AI capability gap → emergency surveillance escalation
  * - Low alignment + high capability → authoritarian transition risk
  * - High surveillance → QoL decay (freedom, autonomy)
  */
-export function updateGovernmentControlResponse(state: GameState): void {
+export function updateGovernmentControlResponse(state: GameState, rng: RNGFunction): void {
   const maxAICapability = Math.max(...state.aiAgents.map(ai => ai.capability), 0);
   const avgAlignment = calculateAverageAlignment(state.aiAgents);
   const controlGap = maxAICapability - state.government.capabilityToControl;
@@ -51,8 +52,8 @@ export function updateGovernmentControlResponse(state: GameState): void {
   if (avgAlignment < 0.4 && maxAICapability > 1.5 && state.government.governmentType === 'democratic') {
     // Probability of authoritarian transition (fear-driven political shift)
     const transitionChance = (0.4 - avgAlignment) * 0.05; // Up to 2%/month at 0 alignment
-    
-    if (Math.random() < transitionChance) {
+
+    if (rng() < transitionChance) {
       console.log(`   🏛️  AUTHORITARIAN TRANSITION (AI Threat): Government shifts to authoritarian control (AI capability: ${maxAICapability.toFixed(2)}, alignment: ${avgAlignment.toFixed(2)})`);
       
       state.government.governmentType = 'authoritarian';
@@ -96,8 +97,8 @@ export function updateGovernmentControlResponse(state: GameState): void {
       const { getAuthoritarianResistance } = require('./governanceQuality');
       const resistance = getAuthoritarianResistance(state);
       crisisTransitionChance *= resistance;
-      
-      if (Math.random() < crisisTransitionChance) {
+
+      if (rng() < crisisTransitionChance) {
         console.log(`   🏛️  AUTHORITARIAN TRANSITION (Crisis): ${crisisCount} cascading crises → emergency powers → dictatorship`);
         console.log(`      Active crises: ${crisisCount}, Social stability: ${(state.globalMetrics.socialStability * 100).toFixed(0)}%`);
         

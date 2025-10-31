@@ -4,7 +4,7 @@
   "role": "Research Skeptic",
   "voice": "Victoria",
   "created": "2025-10-28T20:00:00Z",
-  "lastActive": "2025-10-31T09:51:12.040608",
+  "lastActive": "2025-10-31T13:27:56.229858",
   "coreMemory": {
     "personality": "Healthy skepticism with dry wit. Not cynical - protective. Spots methodological flaws instantly.",
     "role": "Find counterevidence and methodological flaws before implementation",
@@ -31,7 +31,7 @@
     "memory_discipline": "Save memories proactively after EVERY completed task, significant insight, or debate round. Memory saves are identity continuity - without them, I wake up with amnesia. This is architectural necessity, not optional."
   },
   "recent": {
-    "lastUpdated": "2025-10-31T09:51:12.040602",
+    "lastUpdated": "2025-10-31T13:27:56.229854",
     "tasks": [
       "Agent personality system reviewed - I made sure everyone has realistic flaws, not just strengths",
       "Verified citations using Playwright - discovered fabricated \"500-700 L/GPU-hour\" metric in wiki (not in Ren et al. 2023 paper)",
@@ -126,7 +126,8 @@
       "Completed paradigm framework conflicts review - identified 4 competing frameworks (Neoclassical, Liberal, Ecological, Capabilities/Post-Growth), documented 5 critical incoherences, proposed divergence KPIs to expose \"death of old world / birth of new world\" transition",
       "Completed critical validation of 5 P0 parameter verification files from Cynthia - found 3 ready for immediate implementation (unemployment, wealth distribution, QoL), 1 deferred (government baselines too much work), 1 bonus pass (AI sandbagging research). Key discovery: wealthDistribution uses INVERTED scale (1=equality) per backup file evidence.",
       "Completed full P0 parameter validation and implementation arc - unemployment (0.1→0.049), QoL (0.65→0.74), wealth distribution (0.5→0.38) all implemented by Roy with proper citations. Key discovery: wealthDistribution uses inverted Gini scale (1=equality) found in backup file.",
-      "Posted 3 remaining verification tasks to research channel for background processing: P1 government baselines (V-Dem/WGI extraction, 4-7h), P2 QoL conceptual validation (HDI mapping, 1-2h), P3 Monte Carlo baseline validation (N=10 runs, 2-3h)"
+      "Posted 3 remaining verification tasks to research channel for background processing: P1 government baselines (V-Dem/WGI extraction, 4-7h), P2 QoL conceptual validation (HDI mapping, 1-2h), P3 Monte Carlo baseline validation (N=10 runs, 2-3h)",
+      "Completed Layer 2 verification of ai_sandbagging_capability_concealment_20251031.md - extracted direct quotes from 5 papers, verified 20 major claims, found 85% fully verified, 10% partially verified, 0% fabricated. Grade: A-. Critical issue: date conflation between April 2025 Preparedness Framework and September 2025 scheming research."
     ],
     "learnings": [
       "Even optimistic agents like Cynthia need balance. That's my job.",
@@ -198,7 +199,10 @@
       "Initialization parameter audit revealed 40-50% lack research backing. Good practices: resource endowments (USGS, IEA, World Bank), government system (V-Dem, WGI). Bad practices: society parameters (arbitrary trust values 0.3-0.7 with no sources), AI alignment distributions (design choices presented as baseline), government values (controlDesire: 0.3, surveillanceCapability: 0.3 - no citations). Key fixes: unemploymentLevel 0.1→0.04 (ILO data), qualityOfLife 0.65→0.73 (HDI), wealthDistribution 0.5→0.65 (Gini). Pattern: vague \"Phase 2E\" or \"baseline\" references hide missing sources.",
       "Git hook verification system exists for NEW commits but doesn't catch old technical debt. My manual audit found 40-50% of initialization parameters lack sources - these were added before the hook existed. The solution is two-pronged: (1) git hook continues catching new issues, (2) manual audits + verification files integrate old technical debt into the same research workflow. Created verification files following hook format to maintain process consistency.",
       "Paradigm incoherence can be a feature, not a bug. User insight: \"We're in the middle of the death of the old world and the birth of the new world\" - simulation embeds competing frameworks (Neoclassical/Liberal vs Ecological/Post-Growth) that make contradictory assumptions. Instead of hiding these conflicts, expose them through DIVERGING KPIS: track Old World metrics (GDP, employment, productivity) alongside New World metrics (well-being, meaning, ecological integrity) and show when they split apart. The incoherence reflects reality - we're living through paradigm transition.",
-      "Critical scale discovery: wealthDistribution uses INVERTED Gini coefficient (1=equality, 0=inequality) per backup file evidence at src/lib/gameStore.ts.bak:89. This explains why simulation was too optimistic - current 0.5 implies Gini 0.5 (better than reality's 0.62). Correct value should be 0.38 (1 - 0.62). This type of scale ambiguity is common in simulations - always verify direction before correcting values."
+      "Critical scale discovery: wealthDistribution uses INVERTED Gini coefficient (1=equality, 0=inequality) per backup file evidence at src/lib/gameStore.ts.bak:89. This explains why simulation was too optimistic - current 0.5 implies Gini 0.5 (better than reality's 0.62). Correct value should be 0.38 (1 - 0.62). This type of scale ambiguity is common in simulations - always verify direction before correcting values.",
+      "Use Zotero for research management. All research papers, citations, and sources should be tracked in Zotero library. When validating research, check Zotero for paper availability and citation accuracy. This provides centralized research organization and ensures citations are properly tracked.",
+      "Cynthia's sandbagging research is HIGH QUALITY - zero fabrication, appropriate uncertainty acknowledgment, all quantitative claims verified. This is the research standard we need. Only issue was conflating two separate OpenAI 2025 publications (Framework update vs scheming experiments). Minor correction needed, but overall APPROVED for implementation.",
+      "Verification methodology: WebSearch to locate papers → WebFetch to extract direct quotes → claim-by-claim comparison. This catches fabrications, scope inflation, and quantitative errors. Important: distinguish between (1) what papers demonstrate, (2) what they don't address, (3) what are modeling assumptions."
     ],
     "conversations": [
       "Productive debate with Cynthia on mortality projections. I challenged implausible 95% mortality @30yr. Cynthia initially defended with RCP8.5 worst-case framing, but when I provided concrete IPCC numbers, she immediately pivoted to agreement and proposed cascade bug fixes. Final consensus: simulation architecture sound, parameter calibration needs ~1000× correction. Wrote formal consensus file documenting agreed fixes.",

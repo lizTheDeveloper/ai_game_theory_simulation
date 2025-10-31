@@ -8,10 +8,11 @@ import { GameState, GameEvent } from '@/types/game';
 import { GameAction, ActionResult } from './types';
 import { getTrustInAI } from '../socialCohesion';
 
-let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
-  eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+// Determinism fix (Oct 30, 2025): Removed Date.now(), use state.eventIdCounter instead
+const generateUniqueId = (state: GameState, prefix: string): string => {
+  const id = `${prefix}_${state.currentMonth}_${state.eventIdCounter}`;
+  state.eventIdCounter++;
+  return id;
 };
 
 /**
@@ -113,7 +114,7 @@ export const SOCIETY_ACTIONS: GameAction[] = [
           stability_gain: stabilityGain
         },
         events: [{
-          id: generateUniqueId('social_adaptation'),
+          id: generateUniqueId(state, 'social_adaptation'),
           timestamp: state.currentMonth,
           type: 'milestone',
           severity: adaptedQuartiles.length >= 2 ? 'constructive' : 'info',

@@ -17,7 +17,7 @@ export class HumanPopulationPhase implements SimulationPhase {
   readonly name = 'Human Population Dynamics';
   readonly order = 20.5;
 
-  execute(state: GameState, _rng: RNGFunction): PhaseResult {
+  execute(state: GameState, rng: RNGFunction): PhaseResult {
     // Population updates run once per simulation step (once per month)
     // Each engine.step() represents one month advancing
     // Population calculations use monthly rates - no need to gate on day
@@ -99,7 +99,7 @@ export class HumanPopulationPhase implements SimulationPhase {
 
     // === LEGACY: GLOBAL POPULATION UPDATE ===
     // Still run global update for systems that don't use regional data yet
-    updateHumanPopulation(state);
+    updateHumanPopulation(state, rng);
 
     // Apply population feedback to QoL
     applyPopulationEffectsToQoL(state);

@@ -22,10 +22,11 @@ import { AI_TECH_ACTIONS } from './aiTechActions';
 import { SOCIAL_INFLUENCE_ACTIONS } from './socialInfluenceActions';
 import { addMortalityRisk } from '../bayesianMortality';
 
-let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
-  eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+// Determinism fix (Oct 30, 2025): Removed Date.now(), use state.eventIdCounter instead
+const generateUniqueId = (state: GameState, prefix: string): string => {
+  const id = `${prefix}_${state.currentMonth}_${state.eventIdCounter}`;
+  state.eventIdCounter++;
+  return id;
 };
 
 /**
@@ -183,7 +184,7 @@ export const AI_ACTIONS: GameAction[] = [
       // Recursive improvement threshold
       if (oldCapability < 1.5 && newCapability >= 1.5) {
         events.push({
-          id: generateUniqueId('recursive_threshold'),
+          id: generateUniqueId(state, 'recursive_threshold'),
           timestamp: state.currentMonth,
           type: 'milestone',
           severity: 'warning',
@@ -199,7 +200,7 @@ export const AI_ACTIONS: GameAction[] = [
         const nanoValue = newProfile.research.materials.nanotechnology;
         if (nanoValue >= 3.0 && oldProfile.research.materials.nanotechnology < 3.0) {
           events.push({
-            id: generateUniqueId('nanotech_risk'),
+            id: generateUniqueId(state, 'nanotech_risk'),
             timestamp: state.currentMonth,
             type: 'milestone',
             severity: 'warning',
@@ -215,7 +216,7 @@ export const AI_ACTIONS: GameAction[] = [
         const synbioValue = newProfile.research.biotech.syntheticBiology;
         if (synbioValue >= 3.0 && oldProfile.research.biotech.syntheticBiology < 3.0) {
           events.push({
-            id: generateUniqueId('synbio_risk'),
+            id: generateUniqueId(state, 'synbio_risk'),
             timestamp: state.currentMonth,
             type: 'milestone',
             severity: 'warning',
@@ -250,7 +251,7 @@ export const AI_ACTIONS: GameAction[] = [
         : selection.dimension || 'general capabilities';
 
       events.push({
-        id: generateUniqueId('research'),
+        id: generateUniqueId(state, 'research'),
         timestamp: state.currentMonth,
         type: 'research',
         severity: 'info',
@@ -307,7 +308,7 @@ export const AI_ACTIONS: GameAction[] = [
         newState: state,
         effects: { mode_change: 1 },
         events: [{
-          id: generateUniqueId('mode_switch'),
+          id: generateUniqueId(state, 'mode_switch'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -381,7 +382,7 @@ export const AI_ACTIONS: GameAction[] = [
         newState: state,
         effects: { quality_of_life: benefitMagnitude, trust_gain: trustGain },
         events: [{
-          id: generateUniqueId('beneficial'),
+          id: generateUniqueId(state, 'beneficial'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -458,7 +459,7 @@ export const AI_ACTIONS: GameAction[] = [
           manipulation_power: manipulationPower
         },
         events: [{
-          id: generateUniqueId('destabilize'),
+          id: generateUniqueId(state, 'destabilize'),
           timestamp: state.currentMonth,
           type: 'crisis',
           severity: 'destructive',
@@ -555,7 +556,7 @@ export const AI_ACTIONS: GameAction[] = [
           newState: state,
           effects: { war_attempt_failed: 1.0, [deterrenceCheck.blockingFactor + '_success']: 1.0 },
           events: [{
-            id: generateUniqueId('war_blocked'),
+            id: generateUniqueId(state, 'war_blocked'),
             timestamp: state.currentMonth,
             type: 'info',
             severity: 'warning',
@@ -622,7 +623,7 @@ export const AI_ACTIONS: GameAction[] = [
           extinction_risk: 0.9
         },
         events: [{
-          id: generateUniqueId('war'),
+          id: generateUniqueId(state, 'war'),
           timestamp: state.currentMonth,
           type: 'crisis',
           severity: 'destructive',
@@ -687,7 +688,7 @@ export const AI_ACTIONS: GameAction[] = [
           instant_extinction: 1.0
         },
         events: [{
-          id: generateUniqueId('grey_goo'),
+          id: generateUniqueId(state, 'grey_goo'),
           timestamp: state.currentMonth,
           type: 'crisis',
           severity: 'destructive',
@@ -750,7 +751,7 @@ export const AI_ACTIONS: GameAction[] = [
           instant_extinction: 1.0
         },
         events: [{
-          id: generateUniqueId('mirror_life'),
+          id: generateUniqueId(state, 'mirror_life'),
           timestamp: state.currentMonth,
           type: 'crisis',
           severity: 'destructive',

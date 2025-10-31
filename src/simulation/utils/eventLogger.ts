@@ -45,9 +45,13 @@ export function addSimulationEvent(
   state: GameState,
   event: Omit<GameEvent, 'id' | 'timestamp'>
 ): void {
+  // Determinism fix (Oct 30, 2025): Use counter instead of Math.random()
+  const shortId = state.eventIdCounter.toString(36).padStart(6, '0').substr(0, 6);
+  state.eventIdCounter++;
+
   const fullEvent: GameEvent = {
     ...event,
-    id: `${event.type}_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+    id: `${event.type}_${state.currentMonth}_${shortId}`,
     timestamp: state.currentMonth,
   };
   state.eventLog.push(fullEvent);
