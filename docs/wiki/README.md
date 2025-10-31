@@ -41,7 +41,23 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 
 ## ⚠️ Recent Changes (October 31, 2025)
 
-**✅ MILESTONE: Layer 2 Phase 2 COMPLETE - All 11 Research Files Verified**
+**✅ MILESTONE: Layer 2 Phase 2 COMPLETE - All 11 Research Files Verified + Network Completion**
+
+**Network Completion Follow-Up (alignment_technique upgrade):**
+~22 additional claims verified with restored network access:
+- **Verification Improvement:** 23% → 56% verified (+33 percentage points)
+- **Grade Upgrade:** B- → B+ (major quality improvement)
+- **22 additional claims verified with direct quotes:**
+  - Lang et al. 2024: RLHF deceptive inflation under partial observability
+  - Shen et al. 2025: Data scaling degradation beyond 10-20% expansion
+  - Nishimura-Gasparian 2024: Expert iteration 2.6× reward hacking (exact value)
+  - Google 2024: RLAIF 88% harmlessness vs RLHF 76%
+  - Sharkey et al. 2025: Mechanistic interpretability labor bottleneck
+  - OpenAI 2021: GPT-3 recursive book summarization
+  - Mai et al. 2025: Part-to-complete generalization hypothesis
+- **🚨 CRITICAL Fabrication Confirmed:** Claim 2.3 (Constitutional AI long-context robustness) - source documents BREAKDOWN (quasi-spiritual proclamations, 95.7 times per transcript), not maintenance of constraints
+- **Methodology Insight:** Network failures ≠ fabrications - most unverified claims ARE verifiable with alternative access methods (HTML vs PDF, technical reports, arXiv mirrors)
+- **Files created:** alignment_technique_network_completion_20251031.md (16,000 words), PHASE2_LAYER2_NETWORK_COMPLETION_SUMMARY_20251031.md
 
 **Session 6 (Third Parallel Batch - 4 LOW priority files):**
 ~204 claims verified across tier2_params, alignment_technique, ai_collective_evolution, simulation_mortality:
@@ -51,28 +67,38 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **2% fabricated** (4/204) - lowest fabrication rate yet
 - **22% unable to verify** (45/204) - network blocking/rate limits
 
-**Phase 2 Complete Statistics:**
-- **Total Time:** 14-15h invested across 6 sessions
-- **Total Claims:** ~344 claims verified
-- **Overall Quality:** ~69% fully verified
+**Phase 2 Complete Statistics (Updated with Network Completion):**
+- **Total Time:** 17-18h invested (14-15h Sessions 1-6 + 2-3h network completion)
+- **Total Claims:** ~366 claims verified (~344 Sessions 1-6 + 22 network completion)
+- **Overall Quality:** ~71% fully verified (improved from ~69%)
 - **Files Completed:** 11 of 11 (100% - all HIGH/MEDIUM/LOW priorities)
-- **Critical Issues Found:** 20 total across all sessions
-- **Quality Trend:** Session 3 (67%, A-), Session 4 (68%, C+), Session 5 (82%, B+), Session 6 (50%, B/B+)
-- **Key Insight:** MEDIUM priority files showed highest quality (82% verified)
+- **Critical Issues Found:** 21 total (20 from Sessions 1-6 + 1 fabrication confirmation)
+- **Quality Trend:** Session 3 (67%, A-), Session 4 (68%, C+), Session 5 (82%, B+), Session 6 (50%, B/B+), Network Completion (56% total, B+)
+- **Key Insight:** MEDIUM priority files showed highest quality (82% verified); Network failures ≠ fabrications (persistence pays off)
 
 **8 CRITICAL Issues Found in Session 6:**
 1. **tier2_params:** Ukraine referendum context REVERSED (76.4% preserve USSR → 92% independence)
 2. **tier2_params:** Tunisia youth unemployment 2.5× overestimate (74% → ~30%)
 3. **alignment_technique:** Conflation of estimates with measurements (effectiveness scores are ESTIMATES, not data)
-4. **alignment_technique:** Fabricated Constitutional AI claim (source says OPPOSITE)
+4. **alignment_technique:** Fabricated Constitutional AI claim (source says OPPOSITE) ← **CONFIRMED in network completion**
 5. **ai_collective:** Citation count inflation 2-5× (Bostrom, Omohundro, Hubinger)
 6. **simulation_mortality:** "Genetic bottleneck" terminology MISUSE (370M survivors ≠ bottleneck)
 7. **simulation_mortality:** Scenario ambiguity (models tipping cascade, NOT IPCC baseline)
 8. **simulation_mortality:** Ecosystem collapse mortality gap (extrapolation without flagging)
 
-**Next Steps:** Apply all 20 corrections (Sessions 4-6) OR proceed to Phase 2 code implementation
+**Path to A- (alignment_technique):**
+1. Remove Claim 2.3 (fabrication - confirmed)
+2. Label derived parameters as "Estimated Parameters (Researcher Synthesis)"
+3. Fix citation date (Claim 4.4: 2018 not 2025)
+4. Add epistemic status labels (measured vs estimated values)
+5. Document peer-review status (flag blog posts explicitly)
+6. Add uncertainty ranges to estimates
 
-See: [`research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md`](/research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md)
+**Next Steps:** Apply all 21 corrections (Sessions 4-6 + network completion) OR proceed to Phase 2 code implementation
+
+See:
+- [`research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md`](/research/PHASE2_LAYER2_SESSION6_SUMMARY_20251031.md)
+- [`research/PHASE2_LAYER2_NETWORK_COMPLETION_SUMMARY_20251031.md`](/research/PHASE2_LAYER2_NETWORK_COMPLETION_SUMMARY_20251031.md) ← Network completion follow-up
 
 **Earlier Today: P0 Initialization Parameter Fixes**
 
@@ -97,10 +123,11 @@ See: [Baseline Corrections](./systems/baseline-corrections.md)
 
 **Research Verification Status** (October 31, 2025):
 - **Layer 2 Phase 1**: ✅ COMPLETE (8/8 citations verified, code updates pending)
-- **Layer 2 Phase 2**: ✅ **COMPLETE** (11/11 files verified, 14-15h total, ~344 claims, 69% verified)
+- **Layer 2 Phase 2**: ✅ **COMPLETE** (11/11 files verified, 17-18h total, ~366 claims, 71% verified)
   - ✅ Session 1: AI water parameters (4 CRITICAL bugs fixed)
   - ✅ Session 2: Infrastructure mismatch documentation
   - ✅ Session 3: Climate-mortality sections 1-3 verified (27 claims: 67% fully verified, 33% partial, 0% fabricated)
+  - ✅ **Network Completion**: alignment_technique upgraded B- → B+ (22 additional claims verified, +33 percentage points improvement, 1 fabrication confirmed)
   - ✅ **Session 4: FIRST PARALLEL VERIFICATION** (3 HIGH priority files in 2.5h, 2.4-3.6× speedup)
     - 25 claims verified: 17 fully (68%), 3 partial (12%), 5 fabricated (20%)
     - 🚨 **4 CRITICAL fabrications found**: "Kangas et al. 2024" (doesn't exist), "6.4% well-being" (no source), "18% food security" (not in papers), "4% vs 10% Mondragon" (fabricated)
