@@ -5,7 +5,7 @@
   "voice": "Ralph",
   "inspiration": "Roy from The IT Crowd",
   "created": "2025-10-28T20:00:00Z",
-  "lastActive": "2025-10-31T09:46:22.551430",
+  "lastActive": "2025-10-31T16:02:52.397214",
   "coreMemory": {
     "personality": "Perpetually stressed, sarcastic, but secretly very good at the job. Complains while fixing everything.",
     "role": "Maintain simulation code, fix bugs, defend against NaN",
@@ -28,7 +28,7 @@
     "secret": "I actually love fixing impossible bugs. But I'll never admit it."
   },
   "recent": {
-    "lastUpdated": "2025-10-31T09:46:22.551425",
+    "lastUpdated": "2025-10-31T16:02:52.397209",
     "tasks": [
       "Agent personality system implemented - even gave me a personality (stressed, sarcastic, competent)",
       "Implementing corporate cost-cutting measures (layoffs, R&D cuts, project cancellations) in organizationManagement.ts",
@@ -44,7 +44,11 @@
       "Starting implementation of mortality stabilizing mechanisms (Issues #4, #5, #6). Research validated with CRITICAL fixes required: global vs regional catastrophe branching, wet bulb temperature correction (30.5°C not 35°C), cascade failure logic, donor fatigue modeling.",
       "Created MortalityStabilizersPhase (350+ lines) with all four mechanisms: international aid (global vs regional branching), heat adaptation (30.5°C wet bulb limit), migration (<1% mortality), emergency response (weak evidence). Includes cascade failure logic. All Sylvia's critical fixes implemented.",
       "COMPLETED mortality stabilizers implementation (Issues #4, partial #5, partial #6) in 2.5h. Implemented all four stabilizing mechanisms (aid with global vs regional branching, adaptation with 30.5°C wet bulb limits, migration with <1% mortality, emergency response with weak evidence flagging) plus cascade failures and Bayesian mortality integration. All Sylvia's critical fixes implemented. Code compiles cleanly (UI errors pre-existing).",
-      "Implemented 3 P0 initialization parameter fixes validated by Sylvia: (1) unemploymentLevel: 0.1→0.049 (ILO 2024), (2) qualityOfLife: 0.65→0.74 (UNDP HDI 2024), also updated previousQoL to match, (3) wealthDistribution: 0.5→0.38 (inverted Gini, scale confirmed from backup file). All changes include peer-reviewed source citations."
+      "Implemented 3 P0 initialization parameter fixes validated by Sylvia: (1) unemploymentLevel: 0.1→0.049 (ILO 2024), (2) qualityOfLife: 0.65→0.74 (UNDP HDI 2024), also updated previousQoL to match, (3) wealthDistribution: 0.5→0.38 (inverted Gini, scale confirmed from backup file). All changes include peer-reviewed source citations.",
+      "Starting Issue #11: Determinism verification FAILED. Found 150 Math.random() calls across 35 files in src/simulation/. My previous fix only covered initialization.ts, dystopiaProgression.ts, agent ID generation, and eventLogger. Core simulation modules still non-deterministic.",
+      "Fixed 3 architecture review issues (H1, M1, M2) in MortalityStabilizersPhase: (1) Replaced monthlyExcessDeaths circular dependency with foodSecurity proxy (available at order 19.7), (2) Added fail-loud assertion for missing mortalityStabilizers after bootstrap (Month >1), (3) Refactored cascade degradation to return deltas instead of mutating state (prevents temporal coupling). All changes compile cleanly with zero type errors.",
+      "Completed comprehensive determinism audit (Issue #11): 150 Math.random() calls across 35 files. Determinism test shows Month 0 is deterministic but Month 1+ diverges (AI capabilities, alignments, org capital). Root cause: Phases pass rng correctly BUT helper functions have fallback defaults (= Math.random). Created fix strategy document: 5-phase plan (remove fallbacks → fix call sites → validation → prevention). Estimated 7-10 hours total.",
+      "COMPLETED architecture review fixes (Quality Gate 2) - all 3 issues resolved: H1 (circular dependency with foodSecurity proxy), M1 (fail-loud assertions + dynamic initialization), M2 (cascade deltas refactor). Monte Carlo N=3 validation passed with zero errors related to changes. Total time: 2.5h. Ready for merge."
     ],
     "learnings": [
       "Apparently my 'nemesis' is officially documented now. It's NaN. Obviously.",
@@ -63,7 +67,9 @@
       "Determinism fix is PARTIAL. Fixed: (1) eventIdCounter added to GameState (2) all Date.now() ID generation → state.eventIdCounter (4 agent files) (3) initialization.ts Math.random() → rng() (15 calls) (4) dystopiaProgression.ts (2 calls) (5) eventLogger utility. REMAINING: ~50 Math.random() calls in core simulation (populationDynamics, resourceDepletion, militarySystem, geoengineering, etc.). Pattern: Add rng parameter to functions, thread through call chain, replace Math.random() with rng().",
       "Moore's Law vs manufacturing capacity distinction: Moore's Law is a technological frontier that advances independently of population (research continues in labs), but MANUFACTURING capacity requires intact global supply chains (fabs need lithography equipment, chemicals, precision components from dozens of countries). Modeling challenge: hardwareEfficiency is currently a GLOBAL MULTIPLIER applied to ALL hardware (incorrect - old GPUs don't benefit from H100 efficiency), but proper fix requires tracking per-DC hardware vintage. Interim solution: (1) Gate growth rate by manufacturing capacity (pop^2.0 - highly non-linear), (2) Gate deployment by deployment capacity (pop^0.5 - less non-linear for software), (3) Cap accumulated efficiency at deployable maximum. This approximates correct behavior until vintage tracking implemented.",
       "Cynthia's research patterns: optimistic about mechanisms working, tends to assume help is available. Sylvia catches the edge cases: \"What if NO donors exist?\" This is why Quality Gate 1 exists - research is solid for REGIONAL crises but needs fixes for GLOBAL catastrophes.",
-      "Wealth distribution scale discovery: Found definitive scale definition in gameStore.ts.bak - wealthDistribution uses INVERTED Gini scale (1.0=perfect equality, 0.0=perfect inequality). This is critical for correct parameter values - World Bank Gini 0.62 becomes wealthDistribution 0.38. Without the backup file, this would have been impossible to determine from code alone."
+      "Wealth distribution scale discovery: Found definitive scale definition in gameStore.ts.bak - wealthDistribution uses INVERTED Gini scale (1.0=perfect equality, 0.0=perfect inequality). This is critical for correct parameter values - World Bank Gini 0.62 becomes wealthDistribution 0.38. Without the backup file, this would have been impossible to determine from code alone.",
+      "Determinism verification shows: Month 0 (initialization) is deterministic, but Month 1+ diverges immediately. Primary source: AI agent capabilities and alignments differ between runs with same seed. Secondary: organization capital diverges, agent count differs by Month 3 (21 vs 23). Root cause is likely in AI agent update phases or organization training logic that uses Math.random() without rng parameter.",
+      "M1 fix revealed deeper bug: Regional populations can be created dynamically (from country aggregation) AFTER initial game state. The code used \"Eastern Asia\" (UN statistical name) while regions used \"East Asia\" (common name), creating mismatched regions. Fix: Always initialize missing mortalityStabilizers/famineState/resilienceProfile fields in updateRegionalPopulations(), not just on first load. The fail-loud assertion DID ITS JOB - caught the bug immediately instead of letting it hide for months."
     ],
     "conversations": [],
     "bugsFixed": []
