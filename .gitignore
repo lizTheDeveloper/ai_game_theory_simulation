@@ -51,24 +51,17 @@ logs/*.log
 # Heap profiles
 profiles/
 
-# Claude Code conversation backups
-# Raw (unredacted) backups - NEVER commit these
-claude-conversations/raw/
-claude-conversations/*.jsonl
-claude-conversations/*/*.jsonl
-!claude-conversations/sanitized/*.jsonl  # Allow sanitized versions
+# Claude Code conversation backups - MOVED TO superalignment-chatroom repo
+# These are now symlinks to the separate repo
+claude-conversations/
 
-# Backup logs
-claude-conversations/backup.log
+# Chatroom coordination - MOVED TO superalignment-chatroom repo
+# This is now a symlink to the separate repo
+.claude/chatroom/
 
 # Redaction Python cache
 scripts/__pycache__/
 *.pyc
-
-# Chatroom state tracking (agent last-read markers & active status)
-.claude/chatroom/.*_lastread
-.claude/chatroom/.*_active
-.claude/chatroom/archive/
 
 # Python virtual environment for Presidio
 venv/
