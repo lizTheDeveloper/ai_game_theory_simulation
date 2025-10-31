@@ -274,6 +274,19 @@ npx tsx scripts/monteCarloSimulation.ts > logs/mc_$(date +%Y%m%d_%H%M%S).log 2>&
 npx tsx scripts/monteCarloSimulation.ts > /tmp/output.log 2>&1 &
 ```
 
+### Log Retention by Type
+
+**Standard logs** (`logs/*.log`):
+- Monte Carlo runs, validation tests, debugging output
+- **Git-ignored** (not tracked in version control)
+- Local only, can be cleaned up manually
+
+**Autonomous worker logs** (`logs/autonomous/*.log`):
+- **Git-tracked** (preserved in version control forever)
+- Complete audit trail of all autonomous work
+- Each run commits its log file to feature branch
+- See `AUTONOMOUS_SETUP.md` for details
+
 ## Additional Resources
 
 - **Wiki:** `docs/wiki/README.md` - Comprehensive system documentation
