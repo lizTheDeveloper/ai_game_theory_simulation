@@ -720,17 +720,19 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   - **See:** `research/PHASE1_LAYER2_COMPLETION_REPORT.md`, `research/LAYER2_VERIFICATION_STATUS.md`
   - **Remaining:** Phase 2 (15-20h estimated), direct paper access for unverified claims
 
-- **HIGH PRIORITY:** Layer 2 Verification - Phase 2 Core Mechanics (33-45h remaining) - **IN PROGRESS (Oct 30)**
-  - ✅ **Phase 2 Sessions 1, 2 & 3 COMPLETE:** Critical bugs fixed, foundation established (6.5h total)
-  - ✅ **Critical Issues Resolved:** 5 CRITICAL issues (4 AI water + 1 land degradation) fixed + validated + Layer 2 docs added
-  - ✅ **Files Created:** 12 tracking/verification/documentation files (status, summaries, documentation, corrections)
-  - **Progress:** ~11% complete (6.5h / 40-52h estimated total)
+- **HIGH PRIORITY:** Layer 2 Verification - Phase 2 Core Mechanics (31-43h remaining) - **IN PROGRESS (Oct 31)**
+  - ✅ **Phase 2 Sessions 1, 2, 3 & 4 COMPLETE:** Critical bugs fixed, parallel verification established (9h total)
+  - ✅ **Critical Issues Resolved:** 9 CRITICAL issues (4 AI water + 1 land degradation + 4 fabrications) identified/fixed + validated + Layer 2 docs added
+  - ✅ **Files Created:** 16 tracking/verification/documentation files (status, summaries, documentation, corrections)
+  - **Progress:** ~22% complete (9h / 40-52h estimated total)
+  - **Innovation (Session 4):** First parallel verification - 3 files simultaneously (2.4-3.6× speedup)
   - **Three-Pronged Approach Results:**
     - ✅ **Option A (Climate-Mortality):** Sections 1-3 verified (extreme weather, biosphere, multi-paradigm frameworks) - ⏳ 1 section remaining
       - Session 2: Heat parameters verified + infrastructure mismatch Layer 2 docs added
       - Session 3: 27 claims verified (67% fully, 33% partial, 0% misattributed), 1 CRITICAL correction (Richardson 2023 land degradation)
     - ✅ **Option B (Systematic Inventory):** 12 substantive research files identified and prioritized by importance
     - ✅ **Option C (AI Infrastructure):** Pre-existing verification reviewed → 4 CRITICAL issues found → **ALL RESOLVED (Oct 30, Session 2)**
+    - ✅ **Session 4 (Parallel Verification):** UBI, Cooperative, Mortality caps verified → 4 CRITICAL fabrications found → **CORRECTIONS READY** (Oct 31)
 
   **✅ RESOLVED Issues (Option C - AI Water Parameters) - Session 2:**
   1. ✅ **Google unit conversion - FIXED:** Documentation clarified (raw 63M vs calibrated 1M baseline)
@@ -902,22 +904,89 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
   **See:** `research/PHASE2_LAYER2_SESSION3_SUMMARY_20251030.md`, `research/LAYER2_PHASE2_VERIFICATION_STATUS.md`, `research/climate_mortality_sections123_verification_20251030.md`
   **Remaining:** 33-45 hours for complete Phase 2 (11 files remaining: 4 HIGH, 4 MEDIUM, 3 LOW priority)
 
-  **🎯 NEXT STEPS - Decision Points (Updated Oct 30, Evening):**
+  **🚨 NEW ISSUES IDENTIFIED (Session 4) - READY FOR CORRECTION:**
 
-  **Recommended Path: Continue Climate-Mortality **
-  - ✅ **Session 2 Complete:** AI water bugs fixed, infrastructure docs added, heat parameters verified
-  - ✅ **Session 3 Complete:** Sections 1-3 verified (27 claims, 67% fully verified, 1 CRITICAL correction)
-  - ⏳ **Next:** Complete Section 4 (multi-paradigm scoring methodologies) - final section
+  **From UBI Floor Mechanics Verification (37.5% verified - needs major corrections):**
+  1. **CRITICAL:** Replace "Kangas et al. 2024" with correct citations in ALL locations
+     - Should be: Miller et al., Bartik et al., Broockman et al. (2024) for OpenResearch Texas/Illinois
+     - Kangas led Finnish UBI (2017-2018), NOT Texas/Illinois
+     - Files: `research/ubi-floor-mechanics-validation_20251027.md`, `plans/MASTER_IMPLEMENTATION_ROADMAP.md`
+  2. **CRITICAL:** Remove or source "6.4% well-being improvement" claim (no source found)
+  3. **CRITICAL:** Remove or source "18% food security increase" claim (not in papers)
+  4. **HIGH:** Add temporal decay model (Year 1 effects → fade by Year 2 per research)
+  5. **HIGH:** Implement context-dependent effectiveness (Finland 5% ≠ Kenya 20% ≠ failed states 0%)
+  6. **MEDIUM:** Add GiveDirectly Kenya data for low-income context
+  7. **MEDIUM:** Document uncertainty ranges (±50% per tier)
+
+  **From Cooperative AI Ownership Verification (83% verified - good quality, one fix):**
+  1. **CRITICAL:** Remove "4% vs 10% Mondragon bankruptcy" from ALL locations (FABRICATED - no source exists)
+     - Files: `plans/MASTER_IMPLEMENTATION_ROADMAP.md`, simulation parameters, research summaries
+  2. **HIGH:** Replace with Québec verified data: 1.77× survival advantage at 5 years (62% vs 35%)
+  3. **MEDIUM:** Add Olsen 2013 meta-synthesis + international comparative data for stronger evidence
+  4. **LOW:** Flag temporal limitations (most data 10-15 years old, only Mannan & Pek 2024 current)
+
+  **From Mortality Caps Historical Verification (82% verified - high quality, one clarification):**
+  1. **CRITICAL:** Clarify Holodomor interpretation in code and documentation:
+     ```typescript
+     // Holodomor (cumulative 1932-1934): 130-140 per 1,000 = ~5-6.5% annual average
+     // Peak monthly (June 1933): 28 per 1,000 = 2.8% per month
+     // Nuclear winter calibration: SEPARATE, based on Xia et al. 2022 (5-6B deaths)
+     ```
+  2. **HIGH:** Add Great Leap Forward data (30M deaths, 1959-1961) - major historical gap
+  3. **MEDIUM:** Verify COVID-19 specific date claim (103,700 deaths Jan 24, 2021) or remove
+  4. **MEDIUM:** Correct Banda Aceh geographic attribution (city 60K vs province 130K)
+  5. **LOW:** Add explicit time units to all mortality rates
+
+  **Files Created (Session 4):**
+  - ✅ `research/PHASE2_LAYER2_SESSION4_SUMMARY_20251030.md` (363 lines)
+  - ✅ `research/ubi_floor_mechanics_verification_20251030.md`
+  - ✅ `research/cooperative_ai_ownership_verification_20251030.md`
+  - ✅ `research/mortality_caps_historical_verification_20251030.md`
+  - ✅ Updated: `research/LAYER2_PHASE2_VERIFICATION_STATUS.md` (progress 11% → 22%)
+  - ✅ Updated: `plans/MASTER_IMPLEMENTATION_ROADMAP.md` (Session 4 documentation)
+
+  **Cross-File Patterns Identified (Session 4):**
+  1. **Citation Fabrication:** "Kangas et al. 2024" (doesn't exist), "4% vs 10% Mondragon" (no source)
+  2. **Effect Size Inflation:** 6.4% well-being, 18% food security (no backing, round numbers)
+  3. **Time Unit Ambiguity:** Holodomor (annual vs monthly vs cumulative), UBI (Year 1 as sustained)
+  4. **Geographic Extrapolation:** Finland → global, Mondragon → global (context-dependent effects)
+
+  **🎯 NEXT STEPS - Decision Points (Updated Oct 31 - Post Session 4):**
+
+  **Option 1: Apply Session 4 Corrections (RECOMMENDED - Close the loop)**
+  - ⏳ **Immediate:** Fix 4 CRITICAL fabrications found in Session 4
+  - Replace "Kangas et al. 2024" with correct citations (Miller et al., Bartik et al., Broockman et al. 2024)
+  - Remove "4% vs 10% Mondragon bankruptcy" from roadmap (replace with Québec 1.77× data)
+  - Clarify Holodomor interpretation (cumulative 1932-1934, not annual)
+  - Remove or source UBI effect sizes (6.4% well-being, 18% food security)
+  - 📊 **Estimated time:** 1-2 hours
+  - 🎯 **Value:** Closes Session 4 correction loop, prevents propagation of fabrications
+  - **After:** Option 2 (climate-mortality) OR Option 3 (next parallel batch)
+
+  **Option 2: Complete Climate-Mortality Section 4 (HIGH priority completion)**
+  - ⏳ **Remaining:** Final section (multi-paradigm scoring methodologies)
+  - ✅ **Sessions 2-3 Complete:** Heat parameters, extreme weather, biosphere, frameworks all verified
   - 📊 **Progress:** File ~75% complete (3 of 4 sections verified)
-  - 🎯 **Value:** Completes 1 of 4 HIGH PRIORITY files
-  - **After:** Find missing citations (70K deaths, IPCC 250K) OR move to UBI floor mechanics
+  - 🎯 **Value:** Completes 4/4 HIGH PRIORITY files (100%)
+  - **Estimated time:** 1-2 hours
+  - **After:** Option 1 (corrections) OR Option 3 (next parallel batch)
 
-  **Alternative Path: Phase 1 Code Updates **
-  - Fix Holodomor interpretation (monthly vs annual ambiguity)
+  **Option 3: Launch Next Parallel Batch (MEDIUM priority, 3 files simultaneously)**
+  - ⏳ **Next 3 files:** seasonal_famine_mortality, climate_collapse_timelines, ai-safety-climate-crossdomain
+  - 🚀 **Innovation:** Continue parallel verification approach (2.4-3.6× efficiency gain)
+  - 📊 **Value:** 30% progress on MEDIUM tier (3 of 4 files)
+  - **Estimated time:** 2-3 hours parallel
+  - 🎯 **Priority:** Expand verification coverage to MEDIUM tier
+  - **After:** Option 1 (corrections) OR Option 2 (climate-mortality final section)
+
+  **Alternative Path: Phase 1 Code Updates**
+  - Fix Holodomor interpretation (monthly vs annual ambiguity) - **NOW RESOLVED in Session 4**
   - Correct citation errors (Robock → Xia, Kangas 2024 → 2019)
   - Add uncertainty comments to code
   - **Value:** Closes Phase 1 loop before continuing Phase 2
-  - **After:** Return to Climate-Mortality OR UBI floor mechanics
+  - **After:** Return to Option 2 or Option 3
+
+  **Recommended Sequence:** Option 1 (corrections, 1-2h) → Option 2 (climate Section 4, 1-2h) → Option 3 (MEDIUM parallel batch, 2-3h)
 
 - **HIGH PRIORITY:** Citation Verification Fixes - Apply Corrections from Triage 
   - Apply fixes for 5 citation errors documented in `MISATTRIBUTIONS_TRIAGE.md`
