@@ -15,9 +15,9 @@ import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -36,7 +36,7 @@ const investAlignmentResearch: CategorizedGovernmentAction = {
     return state.government.alignmentResearchInvestment < 10;
   },
 
-  execute: (state: GameState, agentId?: string, random = Math.random): ActionResult => {
+  execute: (state: GameState, agentId?: string, random: () => number = Math.random): ActionResult => {
     // Increase alignment research investment
     const investmentIncrease = 1 + Math.floor(random() * 2); // 1-2 levels
     state.government.alignmentResearchInvestment = Math.min(10,
@@ -58,7 +58,7 @@ const investAlignmentResearch: CategorizedGovernmentAction = {
         economic_cost: economicCost
       },
       events: [{
-        id: generateUniqueId('alignment_research'),
+        id: generateUniqueId('alignment_research', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'info',
@@ -138,7 +138,7 @@ const implementComputeGovernance: CategorizedGovernmentAction = {
         })()
       },
       events: [{
-        id: generateUniqueId('compute_governance'),
+        id: generateUniqueId('compute_governance', state.currentMonth),
         timestamp: state.currentMonth,
         type: 'action',
         severity: 'warning',
@@ -178,7 +178,7 @@ const investAlignmentTests: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: generateUniqueId('alignment_tests', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'info',
@@ -221,7 +221,7 @@ const investRedTeaming: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: generateUniqueId('red_teaming', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'info',
@@ -267,7 +267,7 @@ const investInterpretability: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: generateUniqueId('interpretability', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'info',
@@ -307,7 +307,7 @@ const increaseEvaluationFrequency: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: generateUniqueId('evaluation_frequency', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'info',

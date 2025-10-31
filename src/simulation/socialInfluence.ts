@@ -294,7 +294,7 @@ function createDecisionMaker(
   );
 
   return {
-    id: `dm_${role}_${Date.now()}_${Math.floor(rng() * 1000)}`,
+    id: `dm_${role}_${state.currentMonth}_${Math.floor(rng() * 1000)}`,
     tier,
     role,
     trustLevel,

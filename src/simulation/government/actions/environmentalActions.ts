@@ -19,9 +19,9 @@ import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -75,7 +75,7 @@ const emergencyAmazonProtection: CategorizedGovernmentAction = {
       success: true,
       effects: { amazonProtection: 0.5 },
       events: [{
-        id: generateUniqueId('amazon_protection'),
+        id: generateUniqueId('amazon_protection', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'constructive',
@@ -138,7 +138,7 @@ const fundCoralRestoration: CategorizedGovernmentAction = {
       success: true,
       effects: { coralRestoration: 0.3 },
       events: [{
-        id: generateUniqueId('coral_restoration'),
+        id: generateUniqueId('coral_restoration', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'constructive',
@@ -209,7 +209,7 @@ const banHarmfulPesticides: CategorizedGovernmentAction = {
       success: true,
       effects: { pesticideBan: 0.5, biodiversity: 0.02 },
       events: [{
-        id: generateUniqueId('pesticide_ban'),
+        id: generateUniqueId('pesticide_ban', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'constructive',
@@ -283,7 +283,7 @@ const deployEnvironmentalTech: CategorizedGovernmentAction = {
       success: true,
       effects: { techDeployment: 2.0 },
       events: [{
-        id: generateUniqueId('env_tech_deployment'),
+        id: generateUniqueId('env_tech_deployment', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'constructive',
@@ -374,7 +374,7 @@ const increaseClimateInvestment: CategorizedGovernmentAction = {
       success: true,
       effects: { climateMitigation: 1, climateIntervention: 1 },
       events: [{
-        id: generateUniqueId('climate_investment'),
+        id: generateUniqueId('climate_investment', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'constructive',

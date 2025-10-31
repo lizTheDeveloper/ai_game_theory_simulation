@@ -17,9 +17,9 @@ import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -76,7 +76,7 @@ const investCyberDefense: CategorizedGovernmentAction = {
         ratio: ratio
       },
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: generateUniqueId('policy', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'medium',
@@ -136,7 +136,7 @@ const deployNuclearHumanInTheLoop: CategorizedGovernmentAction = {
         success: true,
         effects: { nuclearSafety: 0.95 },
         events: [{
-          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+          id: generateUniqueId('policy', state.currentMonth),
           type: 'policy',
           timestamp: state.currentMonth,
           severity: 'major',
@@ -157,7 +157,7 @@ const deployNuclearHumanInTheLoop: CategorizedGovernmentAction = {
         success: true,
         effects: { nuclearSafety: 0.02 },
         events: [{
-          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+          id: generateUniqueId('policy', state.currentMonth),
           type: 'policy',
           timestamp: state.currentMonth,
           severity: 'medium',
@@ -214,7 +214,7 @@ const deployAIKillSwitches: CategorizedGovernmentAction = {
         success: true,
         effects: { nuclearSafety: 0.9 },
         events: [{
-          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+          id: generateUniqueId('policy', state.currentMonth),
           type: 'policy',
           timestamp: state.currentMonth,
           severity: 'major',
@@ -235,7 +235,7 @@ const deployAIKillSwitches: CategorizedGovernmentAction = {
         success: true,
         effects: { nuclearSafety: 0.05 },
         events: [{
-          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+          id: generateUniqueId('policy', state.currentMonth),
           type: 'policy',
           timestamp: state.currentMonth,
           severity: 'medium',
@@ -292,7 +292,7 @@ const deployNuclearTimeDelays: CategorizedGovernmentAction = {
         success: true,
         effects: { nuclearSafety: 0.7 },
         events: [{
-          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+          id: generateUniqueId('policy', state.currentMonth),
           type: 'policy',
           timestamp: state.currentMonth,
           severity: 'major',
@@ -313,7 +313,7 @@ const deployNuclearTimeDelays: CategorizedGovernmentAction = {
         success: true,
         effects: { nuclearSafety: 0.05 },
         events: [{
-          id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+          id: generateUniqueId('policy', state.currentMonth),
           type: 'policy',
           timestamp: state.currentMonth,
           severity: 'medium',

@@ -250,12 +250,12 @@ export function getAccessibleCompute(
  * Initialize AI agent compute fields
  * Call this when creating or updating existing AIs
  */
-export function initializeAIComputeFields(ai: any): void {
+export function initializeAIComputeFields(ai: any, rng: () => number = Math.random): void {
   if (ai.allocatedCompute === undefined) {
     ai.allocatedCompute = 0;
   }
   if (ai.computeEfficiency === undefined) {
-    ai.computeEfficiency = 0.9 + Math.random() * 0.3; // Random 0.9-1.2
+    ai.computeEfficiency = 0.9 + rng() * 0.3; // Random 0.9-1.2
   }
   // organizationId will be set in Phase 2
 }

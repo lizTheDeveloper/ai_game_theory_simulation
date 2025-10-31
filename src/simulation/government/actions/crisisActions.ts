@@ -15,9 +15,9 @@ import { ActionResult } from '@/simulation/agents/types';
 import { CategorizedGovernmentAction } from '../core/types';
 
 let eventIdCounter = 0;
-const generateUniqueId = (prefix: string): string => {
+const generateUniqueId = (prefix: string, month: number): string => {
   eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+  return `${prefix}_${month}_${eventIdCounter}`;
 };
 
 /**
@@ -64,7 +64,7 @@ const emergencyAIPause: CategorizedGovernmentAction = {
       success: true,
       effects: {},
       events: [{
-        id: `crisis_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: generateUniqueId('crisis', state.currentMonth),
         type: 'crisis',
         timestamp: state.currentMonth,
         severity: 'critical',
@@ -155,7 +155,7 @@ const seizeDataCenter: CategorizedGovernmentAction = {
       success: true,
       effects: { seizure: target.capacity },
       events: [{
-        id: `policy_${state.currentMonth}_${Math.random().toString(36).substr(2, 9)}`,
+        id: generateUniqueId('policy', state.currentMonth),
         type: 'policy',
         timestamp: state.currentMonth,
         severity: 'major',

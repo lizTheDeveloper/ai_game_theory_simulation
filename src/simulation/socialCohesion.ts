@@ -488,7 +488,14 @@ function checkSocialCrises(state: GameState): void {
 
     // High risk of dystopia transition
     // Government may become authoritarian to restore order
-    if (Math.random() < 0.4) {
+    // CRITICAL FIX (Oct 30, 2025): Add rng parameter to this function
+    // For now, use state-based deterministic fallback
+    const rng = () => {
+      // Use state month as seed for deterministic pseudo-randomness
+      const seed = state.currentMonth * 2654435761; // Prime number mixing
+      return ((seed % 10000) / 10000);
+    };
+    if (rng() < 0.4) {
       state.government.governmentType = 'authoritarian';
       try {
         console.log(`   🚨 Authoritarian takeover in response to chaos\n`);
