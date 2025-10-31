@@ -153,3 +153,4 @@
 
 # Debug & Technical Events
 🔧 | Debug deployment
+📹 | Surveillance state expansion/monitoring increase

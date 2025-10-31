@@ -161,6 +161,7 @@ import { Tier2CentaurSystemsPhase } from './engine/phases/Tier2CentaurSystemsPha
 import { Tier2CommunityCohesionPhase } from './engine/phases/Tier2CommunityCohesionPhase';
 import { Tier2SynergyPhase } from './engine/phases/Tier2SynergyPhase';  // M3 Enhancement (Oct 27, 2025)
 import { UnknownUnknownPhase } from './engine/phases/UnknownUnknownPhase';  // P3.2 (Oct 30, 2025)
+import { MortalityStabilizersPhase } from './engine/phases/MortalityStabilizersPhase';  // Issues #4, #5, #6 (Oct 30, 2025)
 
 /**
  * Classify population outcome based on 7-tier system (Oct 13, 2025)
@@ -542,6 +543,7 @@ export class SimulationEngine {
     this.orchestrator.registerPhase(new TippingPointPhase());  // Oct 26, 2025: Multi-timescale climate tipping points (order 21.6)
     this.orchestrator.registerPhase(new FamineSystemPhase());  // FIX (Oct 13, 2025): Was missing!
     this.orchestrator.registerPhase(new FoodSecurityDegradationPhase());  // Phase 1B Refinement: Crisis-accelerated food degradation
+    this.orchestrator.registerPhase(new MortalityStabilizersPhase());  // Issues #4, #5, #6 (Oct 30, 2025): Aid/adaptation/migration/emergency response (order 20.8)
     this.orchestrator.registerPhase(new ClimateImpactCascadePhase());  // Oct 29, 2025: Climate → Famine → Mortality cascade (order 34.0)
     this.orchestrator.registerPhase(new BayesianMortalityResolutionPhase());  // Phase 35 (Oct 27, 2025): Centralized mortality resolution
     this.orchestrator.registerPhase(new AntimicrobialResistancePhase());  // TIER 1.8: AMR mortality growth & medical effectiveness decline

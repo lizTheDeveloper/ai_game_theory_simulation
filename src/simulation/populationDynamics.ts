@@ -770,7 +770,7 @@ export function aggregateGlobalDeaths(state: GameState): void {
  * 8. Check recovery potential
  * 9. Update demographics
  */
-export function updateHumanPopulation(state: GameState): void {
+export function updateHumanPopulation(state: GameState, rng: () => number): void {
   const pop = state.humanPopulationSystem;
 
   // P2 BUG FIX (Oct 16, 2025): Reset monthly death cap counter at start of month
@@ -938,7 +938,7 @@ export function updateHumanPopulation(state: GameState): void {
   // Sources: CDC birth data, PNAS seasonal fertility studies
   const monthInYear = state.currentMonth % 12;
   const seasonalBirthCycle = 1 + 0.08 * Math.sin((2 * Math.PI * monthInYear / 12) + Math.PI/2); // 8% amplitude, spring peak
-  const monthlyBirthNoise = 0.98 + Math.random() * 0.04; // ±2% monthly variation
+  const monthlyBirthNoise = 0.98 + rng() * 0.04; // ±2% monthly variation
 
   pop.adjustedBirthRate = pop.baselineBirthRate *
     meaningModifier *
@@ -1015,7 +1015,7 @@ export function updateHumanPopulation(state: GameState): void {
   // - Very old (90+): 15% seasonal amplitude
   // - Global average: 12% amplitude with winter peak
   const seasonalDeathCycle = 1 + 0.12 * Math.sin((2 * Math.PI * monthInYear / 12) + Math.PI); // 12% amplitude, winter peak (shifted by π)
-  const monthlyDeathNoise = 0.98 + Math.random() * 0.04; // ±2% monthly variation
+  const monthlyDeathNoise = 0.98 + rng() * 0.04; // ±2% monthly variation
 
   // Healthcare reduction: good healthcare reduces deaths significantly
   // P0.6: Healthcare quality is structural (not temporally variable)

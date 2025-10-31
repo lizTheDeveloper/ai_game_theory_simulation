@@ -15,7 +15,7 @@ export class DystopiaProgressionPhase implements SimulationPhase {
 
   execute(state: GameState, rng: RNGFunction): PhaseResult {
     const { updateGovernmentControlResponse } = require('../../dystopiaProgression');
-    updateGovernmentControlResponse(state);
+    updateGovernmentControlResponse(state, rng);
 
     return { events: [] };
   }

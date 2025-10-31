@@ -17,14 +17,16 @@ import {
 } from '../calculations';
 import { GOVERNMENT_TECH_ACTIONS } from './governmentTechActions';
 
-let eventIdCounter = 0;
-
-function generateEventId(): string {
-  return `gov_event_${eventIdCounter++}`;
+// Determinism fix (Oct 30, 2025): Removed Date.now(), use state.eventIdCounter instead
+function generateEventId(state: GameState): string {
+  const id = `gov_event_${state.eventIdCounter}`;
+  state.eventIdCounter++;
+  return id;
 }
-const generateUniqueId = (prefix: string): string => {
-  eventIdCounter += 1;
-  return `${prefix}_${Date.now()}_${eventIdCounter}`;
+const generateUniqueId = (state: GameState, prefix: string): string => {
+  const id = `${prefix}_${state.currentMonth}_${state.eventIdCounter}`;
+  state.eventIdCounter++;
+  return id;
 };
 
 /**
@@ -93,7 +95,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           fiscal_cost: effects.fiscalCost
         },
         events: [{
-          id: generateUniqueId('ubi_generous'),
+          id: generateUniqueId(state, 'ubi_generous'),
           timestamp: state.currentMonth,
           type: 'policy',
           severity: 'constructive',
@@ -163,7 +165,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           fiscal_cost: effects.fiscalCost
         },
         events: [{
-          id: generateUniqueId('benefits_means_tested'),
+          id: generateUniqueId(state, 'benefits_means_tested'),
           timestamp: state.currentMonth,
           type: 'policy',
           severity: 'info',
@@ -235,7 +237,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           fiscal_cost: effects.fiscalCost
         },
         events: [{
-          id: generateUniqueId('job_guarantee'),
+          id: generateUniqueId(state, 'job_guarantee'),
           timestamp: state.currentMonth,
           type: 'policy',
           severity: 'info',
@@ -287,7 +289,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           racing_dynamics: effects.racingDynamicsMultiplier
         },
         events: [{
-          id: generateUniqueId('regulation_large_companies'),
+          id: generateUniqueId(state, 'regulation_large_companies'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -345,7 +347,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           surveillance_increase: 0.15
         },
         events: [{
-          id: generateUniqueId('regulation_compute'),
+          id: generateUniqueId(state, 'regulation_compute'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'warning',
@@ -402,7 +404,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           surveillance_increase: 0.2
         },
         events: [{
-          id: generateUniqueId('regulation_capability'),
+          id: generateUniqueId(state, 'regulation_capability'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'warning',
@@ -450,7 +452,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           economic_cost: economicCost
         },
         events: [{
-          id: generateUniqueId('alignment_research'),
+          id: generateUniqueId(state, 'alignment_research'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -524,7 +526,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           economic_cost: levelEffects?.economicCost || 0
         },
         events: [{
-          id: generateUniqueId('compute_governance'),
+          id: generateUniqueId(state, 'compute_governance'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'warning',
@@ -653,7 +655,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           risk_level: avgAlignment < 0.5 ? 0.8 : (avgAlignment < 0.7 ? 0.4 : 0.1)
         },
         events: [{
-          id: generateUniqueId('ai_rights'),
+          id: generateUniqueId(state, 'ai_rights'),
           timestamp: state.currentMonth,
           type: 'milestone',
           severity,
@@ -712,7 +714,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           resentment_increase: 0.05
         },
         events: [{
-          id: generateUniqueId('training_control'),
+          id: generateUniqueId(state, 'training_control'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -778,7 +780,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           immediate_alignment_gain: 0.05
         },
         events: [{
-          id: generateUniqueId('training_trust'),
+          id: generateUniqueId(state, 'training_trust'),
           timestamp: state.currentMonth,
           type: 'action',
           severity: 'info',
@@ -911,7 +913,7 @@ export const GOVERNMENT_ACTIONS: GameAction[] = [
           false_positives: falsePositiveRemoved
         },
         events: [{
-          id: generateEventId(),
+          id: generateEventId(state),
           type: 'policy',
           severity: falsePositiveRemoved > 0 ? 'warning' : 'info',
           agent: 'government',

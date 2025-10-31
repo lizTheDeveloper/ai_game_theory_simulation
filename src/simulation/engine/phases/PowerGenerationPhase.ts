@@ -22,7 +22,7 @@ export class PowerGenerationPhase implements SimulationPhase {
    * - Emissions calculation
    */
   execute(state: GameState, rng: RNGFunction, context?: PhaseContext): PhaseResult {
-    updatePowerGeneration(state);
+    updatePowerGeneration(state, rng);
 
     return { events: [] };
   }

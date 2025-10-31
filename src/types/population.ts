@@ -272,6 +272,39 @@ export interface RegionalPopulation {
   cumulativeCrisisDeaths: number;        // Total crisis deaths
   refugeeBurden: number;                 // Hosting refugees (millions)
   emigrationPressure: number;            // People wanting to leave (millions)
+
+  // Mortality stabilizing mechanisms (Oct 30, 2025 - Issues #4, #5, #6)
+  // Research: Cavalcanti 2025 (aid), Ballester 2024 (adaptation), IOM 2024 (migration)
+  // See: /research/mortality_stabilizing_mechanisms_20251030.md
+  mortalityStabilizers?: import('./mortalityStabilizers').RegionalMortalityStabilizers;
+
+  // Famine distribution mechanics (Oct 30, 2025 - Issue #6)
+  // Research: Sen 1981 (entitlement theory), Eshetu 2024 (regional heterogeneity)
+  // See: /research/famine_distribution_mechanisms_20251030.md
+  famineState?: import('./famineDistribution').RegionalFamineState;
+
+  // Resilience factors (Oct 30, 2025 - Issue #5)
+  // Research: Keller 2024 (resilience heterogeneity), Scheffer 2014 (bifurcations)
+  // See: /research/outcome_variance_mechanisms_20251030.md
+  resilienceProfile?: {
+    // Individual/Social (Keller et al. 2024)
+    socioeconomicStatus: number;    // 0-1 (GDP per capita, inequality)
+    socialSupport: number;           // 0-1 (community cohesion, trust)
+    emotionRegulation: number;       // 0-1 (mental health, coping capacity)
+
+    // Organizational (Hepfer & Lawrence 2022)
+    functionalResilience: number;    // 0-1 (maintain core operations)
+    operationalResilience: number;   // 0-1 (adapt operations)
+    strategicResilience: number;     // 0-1 (fundamental transformation)
+
+    // Institutional (Manca et al. 2019)
+    fiscalBuffers: number;           // 0-1 (reserves, borrowing capacity)
+    laborFlexibility: number;        // 0-1 (employment laws, retraining)
+    innovationCapacity: number;      // 0-1 (R&D, adaptation speed)
+
+    // Aggregate resilience score
+    aggregateResilience: number;     // 0-1 (weighted average)
+  };
 }
 
 /**

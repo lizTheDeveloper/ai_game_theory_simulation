@@ -19,7 +19,7 @@ import { PowerGenerationSystem, DataCenterConstruction, TrainingEvent } from '..
 /**
  * Update power generation system for one month
  */
-export function updatePowerGeneration(state: GameState): void {
+export function updatePowerGeneration(state: GameState, rng: () => number): void {
   const power = state.powerGenerationSystem;
   const env = state.environmentalAccumulation;
 
@@ -43,7 +43,7 @@ export function updatePowerGeneration(state: GameState): void {
   updateDataCenterBuildout(power, state);
 
   // 6. Update AI training events (episodic spikes)
-  updateAITrainingPower(power, state);
+  updateAITrainingPower(power, state, rng);
 
   // 7. Update traditional cloud power (residual growth)
   updateTraditionalCloudPower(power, year);
@@ -222,7 +222,7 @@ function updateDataCenterBuildout(power: PowerGenerationSystem, state: GameState
  *
  * User note: "More parameters isn't more better" - uncertain scaling
  */
-function updateAITrainingPower(power: PowerGenerationSystem, state: GameState): void {
+function updateAITrainingPower(power: PowerGenerationSystem, state: GameState, rng: () => number): void {
   const currentMonth = state.currentMonth;
 
   // Update active training events
@@ -242,9 +242,9 @@ function updateAITrainingPower(power: PowerGenerationSystem, state: GameState): 
 
   // Randomly trigger new training events (simplified - could be more sophisticated)
   // Major training runs happen ~1-2 times per year
-  if (Math.random() < 0.08) { // 8% chance per month ≈ 1 per year
-    const modelSize = 100 * Math.pow(2, Math.random() * 4); // 100B to 1.6T parameters
-    const trainingMonths = 3 + Math.floor(Math.random() * 3); // 3-6 months
+  if (rng() < 0.08) { // 8% chance per month ≈ 1 per year
+    const modelSize = 100 * Math.pow(2, rng() * 4); // 100B to 1.6T parameters
+    const trainingMonths = 3 + Math.floor(rng() * 3); // 3-6 months
 
     // Power scales with model size, but with diminishing returns
     // (user note: "we don't know where the model ceiling is")
@@ -544,7 +544,8 @@ export function getEnergyConstraintMultiplier(state: GameState): number {
  */
 export function canAffordTraining(
   modelSize: number,
-  state: GameState
+  state: GameState,
+  rng: () => number
 ): { canTrain: boolean; reason?: string } {
   const power = state.powerGenerationSystem;
 
@@ -570,7 +571,7 @@ export function canAffordTraining(
   // Probabilistic block in soft constraint zone
   if (newUtilization > power.maxDataCenterPowerFraction * 0.8) {
     const blockProbability = power.constraintSeverity * 0.7; // Up to 70% chance to block
-    if (Math.random() < blockProbability) {
+    if (rng() < blockProbability) {
       return {
         canTrain: false,
         reason: `Energy constraint: ${(power.constraintSeverity * 100).toFixed(0)}% chance of blocking new training`

@@ -167,7 +167,7 @@ export function calculateEconomicStageTransition(state: GameState): {
 /**
  * Calculate wealth distribution changes based on policies and AI impact
  */
-export function calculateWealthDistributionChange(state: GameState): number {
+export function calculateWealthDistributionChange(state: GameState, rng: () => number): number {
   const { government, globalMetrics } = state;
   const hasUBI = government.activeRegulations.some(reg => reg.includes('UBI'));
   const hasTransitionSupport = government.activeRegulations.some(reg =>
@@ -189,10 +189,8 @@ export function calculateWealthDistributionChange(state: GameState): number {
   const legitimacyEffect = (validatedLegitimacy - 0.5) * 0.02;
 
   // Random variation (market forces, etc.)
-  // FIX (Oct 28, 2025): Use RNG instead of Math.random() for determinism
-  // NOTE: This function doesn't receive RNG parameter yet - need to refactor
-  // For now, using Math.random() but this breaks reproducibility
-  const randomVariation = (Math.random() - 0.5) * 0.01;
+  // FIX (Oct 30, 2025): Now using RNG for determinism
+  const randomVariation = (rng() - 0.5) * 0.01;
 
   // AI concentration effect (without policy, AI benefits concentrate)
   const totalAICapability = assertFinite(
@@ -258,7 +256,7 @@ export function calculateSocialAdaptationRate(state: GameState): number {
 /**
  * Calculate economic transition progress for this time step
  */
-export function calculateEconomicTransitionProgress(state: GameState): {
+export function calculateEconomicTransitionProgress(state: GameState, rng: () => number): {
   stageChange: number;
   wealthDistributionChange: number;
   socialAdaptationChange: number;
@@ -278,7 +276,7 @@ export function calculateEconomicTransitionProgress(state: GameState): {
 
   const stageChange = validatedNewStage - state.globalMetrics.economicTransitionStage;
 
-  const wealthDistributionChange = calculateWealthDistributionChange(state);
+  const wealthDistributionChange = calculateWealthDistributionChange(state, rng);
 
   // Social adaptation changes are calculated by society actions
   // This just provides the rate multiplier

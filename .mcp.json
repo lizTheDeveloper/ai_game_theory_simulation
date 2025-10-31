@@ -25,6 +25,12 @@
         "--storage-path",
         "/Users/annhoward/src/superalignmenttoutopia/research/papers"
       ]
+    },
+    "zotero": {
+      "command": "/Users/annhoward/.local/bin/zotero-mcp",
+      "env": {
+        "ZOTERO_LOCAL": "true"
+      }
     }
   }
 }
