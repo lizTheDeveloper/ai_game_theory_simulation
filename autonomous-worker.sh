@@ -151,8 +151,13 @@ TASK_EOF
     # Clean up temp file
     rm -f /tmp/claude_task_$TIMESTAMP.txt
     
-    # Push branch to remote
+    # Commit this log file to the branch
     echo ""
+    echo "📝 Committing worker log to branch..."
+    git add "$LOG_FILE" 2>&1 || echo "⚠️  Log file not staged"
+    git commit -m "chore: Add autonomous worker log ($TIMESTAMP)" 2>&1 || echo "⚠️  No log to commit"
+    
+    # Push branch to remote
     echo "📤 Pushing branch to remote..."
     git push -u origin "$BRANCH_NAME" 2>&1 || echo "⚠️  Push failed or no changes to push"
     
@@ -160,11 +165,11 @@ TASK_EOF
     echo "🔄 Returning to main branch..."
     git checkout main 2>&1
     
-    # Clean up old logs (keep last 30 days)
-    find "$LOG_DIR" -name "worker_*.log" -mtime +30 -delete 2>/dev/null || true
+    # NOTE: Logs are kept forever in repo - committed to feature branches
     
     echo ""
     echo "✅ Worker cycle complete"
     echo "📋 Branch created: $BRANCH_NAME"
+    echo "📄 Log committed: $LOG_FILE"
     echo "💡 Review and merge via GitHub when ready"
 } 2>&1 | tee -a "$LOG_FILE"
