@@ -76,6 +76,15 @@ cd "$PROJECT_DIR"
     MEM_AVAIL=$(free -h | awk 'NR==2 {print $7}')
     log_metric "Memory available: $MEM_AVAIL"
 
+    # Update Claude Code to latest version
+    log_info "Updating Claude Code to latest version..."
+    if sudo rm -rf /usr/lib/node_modules/@anthropic-ai/claude-code && sudo npm i -g @anthropic-ai/claude-code >/dev/null 2>&1; then
+        CLAUDE_VERSION=$(claude --version 2>&1 || echo "unknown")
+        log_success "Claude Code updated: $CLAUDE_VERSION"
+    else
+        log_warning "Claude Code update failed, continuing with existing version"
+    fi
+
     # Check dependencies
     log_info "Checking dependencies..."
     command -v git >/dev/null 2>&1 && log_success "git: $(git --version | head -1)" || log_error "git not found"
