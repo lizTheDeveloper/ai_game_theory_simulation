@@ -2916,10 +2916,11 @@ If you're analyzing the simulation model:
 ### For Developers
 
 If you're working on the codebase:
-1. Start with [Codebase Structure](./technical/codebase.md)
-2. Review [Engine Architecture](./technical/engine.md)
-3. Check [System Interactions](./technical/interactions.md)
-4. See [Testing Guide](./technical/testing.md)
+1. **[Remote Development Setup](../../REMOTE_SETUP.md)** - Deploy on cloud VMs (GCloud, etc.)
+2. Start with [Codebase Structure](./technical/codebase.md)
+3. Review [Engine Architecture](./technical/engine.md)
+4. Check [System Interactions](./technical/interactions.md)
+5. See [Testing Guide](./technical/testing.md)
 
 ## 📊 State Types Reference (Phase 1B, Oct 17 2025)
 
@@ -2998,6 +2999,16 @@ state.history.exogenousShocks?: Array<{
 ## 📚 Recent Research & Plans Reference (Oct 16-30, 2025)
 
 ### Development Workflow Updates (Oct 30, 2025)
+
+**Remote Development Setup** ✅ DOCUMENTED
+- Complete automation for deploying on remote VMs (GCloud instances)
+- New files: `install-remote.sh`, `setup-mcp-config.sh`, `requirements.txt`, `REMOTE_SETUP.md`
+- **MCP config portability**: Auto-generates paths based on current machine (no more hardcoded paths)
+- Project-local config (`.claude/mcp-config.json`) works on any machine after setup
+- **Eco-friendly VM management**: Instructions for stop/start to save costs (~$30/mo → $2/mo)
+- Berlin region (europe-west10-a) for lower carbon footprint
+- See: [REMOTE_SETUP.md](../../REMOTE_SETUP.md) for complete guide
+- Commit: 9c7f9e1 (Oct 30, 2025)
 
 **Emoji Registration Enforcement** ✅ DOCUMENTED
 - Added critical documentation on emoji registration system to CLAUDE.md
