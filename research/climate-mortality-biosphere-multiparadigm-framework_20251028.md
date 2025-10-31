@@ -223,7 +223,7 @@ function calculateSpeciesMortality(species: SpeciesVulnerability, climate: Clima
 **Current State (2024):**
 - **6 of 9 boundaries transgressed**
 - **Biosphere integrity:** Crossed in late 19th century
-- **Land area beyond safe limits:** 60% (38% at high degradation risk)
+- **Forest cover below safe limits:** Global forest cover stands at 60% of original (Richardson et al. 2023), transgressing the planetary boundary of 75%. This represents 40% forest loss globally, with the boundary having been crossed in the late 19th century.
 
 **Transgressed Boundaries:**
 1. Climate change

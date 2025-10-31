@@ -326,9 +326,10 @@ interface RunResult {
     // Technology drivers (2 categories)
     alignment: number;
     disruption: number;
-    // External shocks (2 categories)
+    // External shocks (3 categories)
     conflict: number;
     pandemic: number;
+    natural: number;  // FIX (Oct 30, 2025): BUG #3 - 'natural' root cause missing
     // Compound attribution
     compound: number;
     confidenceDistribution: {
@@ -1839,6 +1840,7 @@ if (nestedMonteCarlo) {
       disruption: deathsByRootCause.disruption,
       conflict: deathsByRootCause.conflict,
       pandemic: deathsByRootCause.pandemic,
+      natural: deathsByRootCause.natural || 0,  // FIX (Oct 30, 2025): BUG #3 - include natural deaths
       compound: deathsByRootCause.compound,
       confidenceDistribution: deathsByRootCause.confidenceDistribution
     },
@@ -2769,6 +2771,7 @@ if (nestedMonteCarlo) {
       disruption: deathsByRootCause.disruption,
       conflict: deathsByRootCause.conflict,
       pandemic: deathsByRootCause.pandemic,
+      natural: deathsByRootCause.natural || 0,  // FIX (Oct 30, 2025): BUG #3 - include natural deaths
       compound: deathsByRootCause.compound,
       confidenceDistribution: deathsByRootCause.confidenceDistribution
     },
@@ -4307,7 +4310,7 @@ const aggregateRoot = {
   climate: 0, resource: 0, pollution: 0, ecosystem: 0,
   inequality: 0, demographic: 0, social: 0,
   alignment: 0, disruption: 0,
-  conflict: 0, pandemic: 0,
+  conflict: 0, pandemic: 0, natural: 0,  // FIX (Oct 30, 2025): BUG #3 - include natural
   compound: 0,
   HIGH: 0, MEDIUM: 0, LOW: 0
 };
@@ -4335,6 +4338,7 @@ results.forEach(r => {
   aggregateRoot.disruption += r.deathsByRoot.disruption;
   aggregateRoot.conflict += r.deathsByRoot.conflict;
   aggregateRoot.pandemic += r.deathsByRoot.pandemic;
+  aggregateRoot.natural += r.deathsByRoot.natural || 0;  // FIX (Oct 30, 2025): BUG #3 - aggregate natural deaths
   aggregateRoot.compound += r.deathsByRoot.compound;
   aggregateRoot.HIGH += r.deathsByRoot.confidenceDistribution.HIGH;
   aggregateRoot.MEDIUM += r.deathsByRoot.confidenceDistribution.MEDIUM;
@@ -4343,7 +4347,25 @@ results.forEach(r => {
 
 // Calculate totals
 const totalProximateDeaths = Object.values(aggregateProximate).reduce((sum, v) => sum + v, 0);
-const totalRootDeaths = Object.values(aggregateRoot).reduce((sum, v) => sum + v, 0);
+// FIX (Oct 30, 2025): Don't include 'compound' or 'confidenceDistribution' in root total
+// 'compound' is NOT a separate root cause - it's a marker that multiple causes contributed
+// Including it double-counts all multi-factor deaths (hence 2.4× inflation)
+const totalRootDeaths =
+  aggregateRoot.climate +
+  aggregateRoot.resource +
+  aggregateRoot.pollution +
+  aggregateRoot.ecosystem +
+  aggregateRoot.inequality +
+  aggregateRoot.demographic +
+  aggregateRoot.social +
+  aggregateRoot.alignment +
+  aggregateRoot.disruption +
+  aggregateRoot.conflict +
+  aggregateRoot.pandemic +
+  aggregateRoot.natural;  // FIX (Oct 30, 2025): BUG #3 - include natural in total (now 12 root causes)
+  // NOTE: Explicitly NOT including:
+  // - aggregateRoot.compound (would double-count multi-factor deaths)
+  // - aggregateRoot.HIGH/MEDIUM/LOW (confidence distribution, not a cause)
 
 // FIX (Oct 29, 2025): BUG #1 - Death attribution mismatch
 // Both deathsByCategory and deathsByRootCause are now in MILLIONS (not billions)

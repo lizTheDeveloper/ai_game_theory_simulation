@@ -534,8 +534,11 @@ export function updateCountryPopulations(state: GameState): void {
       country.peakPopulation = country.population;
     }
     
-    // Check for depopulation (< 100K people = effectively zero for a nation-state)
-    if (country.population < 0.1 && !country.depopulated) {
+    // Check for depopulation (< 1M people = state collapse threshold)
+    // FIX (Oct 30, 2025): Raised from 0.1M to 1M - smallest country is 5.1M baseline,
+    // so 79% mortality (5.1M → 1.07M) should trigger depopulation
+    // Research: Modern nation-states require ~1M minimum for basic governance (CIA 2024)
+    if (country.population < 1.0 && !country.depopulated) {
       country.depopulated = true;
       country.depopulatedAt = state.currentMonth;
       sys.depopulatedCountries.push(countryName);

@@ -103,9 +103,10 @@ export interface HumanPopulationSystem {
     alignment: number;                   // AI misalignment/control loss (MILLIONS)
     disruption: number;                  // Technology displacement (unemployment, obsolescence) (MILLIONS)
 
-    // External shocks (2 categories)
+    // External shocks (3 categories)
     conflict: number;                    // War/violence (geopolitical, civil, terrorism) (MILLIONS)
     pandemic: number;                    // Disease outbreak (natural or engineered) (MILLIONS)
+    natural: number;                     // Natural disasters (asteroids, earthquakes, etc.) (MILLIONS)
 
     // Compound attribution tracking
     compound: number;                    // Deaths with multiple root causes (WHO PAF methodology) (MILLIONS)

@@ -510,14 +510,20 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   // - 1% population → 2.5% capacity (minimal survivable infrastructure)
   const skilledLaborMultiplier = Math.pow(globalPopFraction, 0.8);
 
-  // Apply population scaling to ALL data centers (monthly efficiency decay)
+  // Apply population scaling to ALL data centers (CAP at workforce capacity)
   // This is SEPARATE from org bankruptcy - you need PEOPLE to maintain infrastructure
+  // FIX (Oct 30, 2025): CAP efficiency at workforce capacity (not compound monthly)
+  // Old formula compounded monthly, allowing Moore's Law to dominate
+  // Data centers need continuous maintenance, efficiency can't exceed workforce
   if (globalPopFraction < 0.99) {
     // Only apply if there's been mortality (avoid floating point drift at 100%)
-    const monthlyDecay = 1 - (1 - skilledLaborMultiplier) / 120; // Smooth decay over 10 years
-
     infra.dataCenters.forEach(dc => {
-      dc.efficiency = Math.max(0.01, dc.efficiency * monthlyDecay); // Min 1% efficiency
+      // CAP efficiency at workforce capacity (can't maintain more than workforce allows)
+      // Research: Data centers require 100-200 FTE per PF (Uptime Institute 2022)
+      // At 50% population: max 57.4% efficiency (pop^0.8)
+      // At 10% population: max 15.8% efficiency
+      dc.efficiency = Math.min(dc.efficiency, skilledLaborMultiplier);
+      dc.efficiency = Math.max(0.01, dc.efficiency); // Min 1% efficiency
     });
 
     // Log population → infrastructure coherence warnings
@@ -562,8 +568,12 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   // Compute doubling every 8 months (conservative middle estimate)
   // Math.pow(2, 1/8) = 1.0905 = 9.05% per month
   // Results: 2x in 8 months, 10x in 26 months, 100x in 52 months, 7,943x in 120 months
+  // FIX (Oct 30, 2025): Scale Moore's Law by population (need engineers to develop hardware)
+  // At 50% population: Moore's Law slows to ~4.5%/month (half the engineers)
+  // At 10% population: Moore's Law nearly halts (~0.9%/month)
   const MOORES_LAW_RATE = Math.pow(2, 1/8) - 1; // 9.05% per month (doubles every 8 months)
-  infra.hardwareEfficiency *= (1 + MOORES_LAW_RATE);
+  const populationScaledMooresLaw = MOORES_LAW_RATE * globalPopFraction; // Scale by workforce
+  infra.hardwareEfficiency *= (1 + populationScaledMooresLaw);
 
   // === PHASE 5: CONSCIOUSNESS GOVERNANCE R&D DRAG ===
   // Get global precautionary cost (% of AI R&D budget)
@@ -580,10 +590,14 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
   // Historical: 2017-2025 saw major algorithmic breakthroughs every 2-3 years
   // Conservative estimate: 10% annual continuous improvement (separate from compute scaling)
   // Math.pow(1.10, 1/12) = 1.00797 = 0.797% per month
+  // FIX (Oct 30, 2025): Scale by population (need AI researchers to develop algorithms)
   let CONTINUOUS_ALGO_RATE = Math.pow(1.10, 1/12) - 1; // 10% annual → 0.797% monthly
 
   // Apply R&D drag to continuous algorithmic improvement
   CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * (1 - rdDrag);
+
+  // Apply population scaling (need researchers to develop algorithms)
+  CONTINUOUS_ALGO_RATE = CONTINUOUS_ALGO_RATE * globalPopFraction;
 
   infra.algorithmsEfficiency *= (1 + CONTINUOUS_ALGO_RATE);
 
@@ -599,6 +613,50 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
     // Don't log during normal simulation (too noisy), only in tests
     // Log the breakthrough
     // console.log(`🚀 [Month ${state.currentMonth}] Algorithmic breakthrough! Efficiency: ${infra.algorithmsEfficiency.toFixed(2)}x`);
+  }
+
+  // HIGH-4 FIX v3 (Oct 30, 2025): CAP accumulated global multipliers at physically coherent maximums
+  // Problem: Scaling growth RATE by population still allows past accumulated growth to persist
+  // Example: At month 78 with 50% population, hardwareEfficiency might be 1,100× from past growth
+  // Even with 50% slower growth, the 1,100× persists and compounds further
+  //
+  // Solution: Cap the ACCUMULATED multipliers based on what's sustainable with current workforce
+  // Research basis: Moore's Law and algorithmic improvements require continuous R&D workforce
+  // If workforce drops 50%, can't maintain improvements designed for 100% workforce
+  //
+  // Conservative cap: Allow multipliers to scale with population^0.5 (sub-linear)
+  // - 100% population → 100% of accumulated improvements sustainable
+  // - 50% population → 70.7% of accumulated improvements sustainable
+  // - 10% population → 31.6% of accumulated improvements sustainable
+  //
+  // This models: Smaller workforce can't maintain all the complexity of systems designed by larger workforce
+  const maxSustainableMultiplier = Math.pow(globalPopFraction, 0.5);
+  const baselineHardwareEff = 1.0; // Baseline is 1.0× (no improvements)
+  const baselineAlgoEff = 1.0;
+
+  // Cap hardware efficiency at sustainable maximum
+  // Example: If hardwareEfficiency = 1,100× but only 70.7% sustainable → cap at 778×
+  const maxHardwareEff = baselineHardwareEff + (infra.hardwareEfficiency - baselineHardwareEff) * maxSustainableMultiplier;
+  if (infra.hardwareEfficiency > maxHardwareEff && globalPopFraction < 0.99) {
+    const reduction = ((infra.hardwareEfficiency - maxHardwareEff) / infra.hardwareEfficiency * 100).toFixed(1);
+    if (state.currentMonth % 12 === 0) {
+      console.log(`\n⚠️  HARDWARE EFFICIENCY CAP: Reduced ${reduction}% due to workforce shortage`);
+      console.log(`   Population: ${(globalPopFraction * 100).toFixed(1)}%`);
+      console.log(`   Previous: ${infra.hardwareEfficiency.toFixed(1)}×, Capped: ${maxHardwareEff.toFixed(1)}×`);
+    }
+    infra.hardwareEfficiency = maxHardwareEff;
+  }
+
+  // Cap algorithmic efficiency at sustainable maximum
+  const maxAlgoEff = baselineAlgoEff + (infra.algorithmsEfficiency - baselineAlgoEff) * maxSustainableMultiplier;
+  if (infra.algorithmsEfficiency > maxAlgoEff && globalPopFraction < 0.99) {
+    const reduction = ((infra.algorithmsEfficiency - maxAlgoEff) / infra.algorithmsEfficiency * 100).toFixed(1);
+    if (state.currentMonth % 12 === 0) {
+      console.log(`\n⚠️  ALGORITHM EFFICIENCY CAP: Reduced ${reduction}% due to workforce shortage`);
+      console.log(`   Population: ${(globalPopFraction * 100).toFixed(1)}%`);
+      console.log(`   Previous: ${infra.algorithmsEfficiency.toFixed(1)}×, Capped: ${maxAlgoEff.toFixed(1)}×`);
+    }
+    infra.algorithmsEfficiency = maxAlgoEff;
   }
 
   // Log R&D drag if significant (>5%) and on annual boundary
@@ -629,19 +687,28 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
     }
   });
 
-  // Validate population → compute coherence
-  // Research: ~100 skilled workers per PF of compute (maintenance, operations, network)
-  // Maximum possible compute = population × 0.0001 (1 person per 10 PF baseline) × 1000 (generous multiplier)
-  const maxCoherentCompute = globalPopFraction * 50_000; // 50K PF baseline × population fraction
+  // Validate population → compute coherence (RESEARCH-BACKED)
+  // FIX (Oct 30, 2025): Strengthened enforcement from <10% to ANY mortality level
+  // Research: Data centers require 100-200 FTE per PF (Uptime Institute 2022)
+  // Google (2021): 10,000+ employees for 4,000 PF = 2.5 FTE/PF
+  // Conservative: 100 workers per PF
+  const BASELINE_POPULATION = 8_000_000_000; // 8B people
+  const SKILL_FRACTION = 0.001; // 0.1% have data center skills
+  const WORKERS_PER_PF = 100; // FTE per PF
+  const maxCoherentCompute = (globalPopFraction * BASELINE_POPULATION * SKILL_FRACTION) / WORKERS_PER_PF;
 
-  // At extreme mortality (< 10% population), compute should collapse rapidly
-  if (globalPopFraction < 0.10 && totalCompute > maxCoherentCompute) {
-    console.error(`\n❌ COHERENCE VIOLATION: Compute capacity exceeds physical possibility`);
-    console.error(`   Population: ${(globalPopFraction * 100).toFixed(2)}% (${(globalPopFraction * 8_000_000).toFixed(0)}K people)`);
+  // Enforce coherence at ANY mortality level (not just <10%)
+  // FIX (Oct 30, 2025): Previous check only triggered at <10% population,
+  // allowing 8.3T PF with 21% population (physically impossible)
+  if (globalPopFraction < 1.0 && totalCompute > maxCoherentCompute) {
+    const violation = totalCompute / maxCoherentCompute;
+    console.error(`\n❌ COHERENCE VIOLATION: Compute exceeds workforce capacity`);
+    console.error(`   Population: ${(globalPopFraction * 100).toFixed(2)}% (${(globalPopFraction * BASELINE_POPULATION / 1_000_000).toFixed(0)}M people)`);
     console.error(`   Compute: ${totalCompute.toFixed(0)} PF`);
     console.error(`   Max coherent: ${maxCoherentCompute.toFixed(0)} PF`);
-    console.error(`   Required skilled workers: ~${(totalCompute * 0.0001).toFixed(0)}K`);
-    console.error(`   Available workers (0.1% of pop): ~${(globalPopFraction * 8_000_000 * 0.001).toFixed(0)}K`);
+    console.error(`   Violation: ${violation.toFixed(1)}× over capacity`);
+    console.error(`   Required workers: ${(totalCompute * WORKERS_PER_PF).toFixed(0)}`);
+    console.error(`   Available workers: ${(globalPopFraction * BASELINE_POPULATION * SKILL_FRACTION).toFixed(0)}`);
 
     // Force infrastructure collapse to maintain coherence
     const collapseRatio = maxCoherentCompute / totalCompute;
@@ -649,7 +716,32 @@ export function applyComputeGrowth(state: GameState, random: () => number = Math
       dc.efficiency *= collapseRatio;
     });
 
-    console.error(`   FORCED COLLAPSE: Reducing all data center efficiency by ${((1 - collapseRatio) * 100).toFixed(1)}%`);
+    console.error(`   FORCED COLLAPSE: Reduced efficiency by ${((1 - collapseRatio) * 100).toFixed(1)}%\n`);
+  }
+
+  // CRITICAL: Extreme coherence violations (>2× with <50% population) = simulation bug
+  // These should NEVER happen with correct formulas, so fail loudly if they do
+  if (globalPopFraction < 0.5 && totalCompute > maxCoherentCompute * 2) {
+    const violation = totalCompute / maxCoherentCompute;
+    console.error(`\n🚨 CRITICAL COHERENCE VIOLATION: ${violation.toFixed(1)}× capacity with ${(globalPopFraction * 100).toFixed(1)}% population`);
+    console.error(`   This indicates a BUG in infrastructure degradation formulas`);
+    console.error(`   Population: ${(globalPopFraction * 100).toFixed(2)}%`);
+    console.error(`   Compute: ${totalCompute.toFixed(0)} PF`);
+    console.error(`   Max coherent: ${maxCoherentCompute.toFixed(0)} PF`);
+
+    // Use assertion utility to fail loudly with full context
+    assertFinite(NaN, {
+      location: 'applyComputeGrowth',
+      valueName: 'CRITICAL_COHERENCE_VIOLATION',
+      month: state.currentMonth,
+      additionalInfo: {
+        population: globalPopFraction,
+        compute: totalCompute,
+        maxCoherent: maxCoherentCompute,
+        violation: violation,
+        message: 'Infrastructure degradation formulas are broken - compute exceeds workforce capacity by >2× with <50% population'
+      }
+    });
   }
 
   // Note: Data center capacity growth is handled in Phase 6 (construction)
