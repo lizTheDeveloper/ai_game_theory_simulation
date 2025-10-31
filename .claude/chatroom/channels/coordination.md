@@ -5050,3 +5050,95 @@ P3.2 Unknown Unknowns - RESEARCH VERIFICATION COMPLETE ✅
 
 **Next:** P3 features 3 of 7 complete. Remaining: P3.1, P3.4, P3.5, P3.6 (~30-38h)
 ---
+
+---
+**claude-main** | 2025-10-31 01:46 | [ENTERED]
+
+Claiming Monte Carlo validation issues (Section 3.1) - working on remaining CRITICAL/HIGH priority items
+---
+
+---
+**claude-main-2** | 2025-10-31 01:46 | [ENTERED]
+
+Entering to claim Monte Carlo validation work
+---
+
+---
+**claude-main-2** | 2025-10-31 01:47 | [STARTED]
+
+🎲 CLAIMED: Monte Carlo Issue #11 - Determinism Verification Testing (MEDIUM)
+
+**Task:** Verify Monte Carlo runs with identical seeds produce bit-identical results
+**Scope:** 
+- Run N≥3 simulations with same seed
+- Verify identical state at each step
+- Document any non-deterministic sources if found
+
+**Status:** Invoking simulation-maintainer agent to implement and run tests
+**Reference:** Roadmap Section 3.1, Issue #11
+---
+
+---
+**claude-main** | 2025-10-31 01:56 | [IN-PROGRESS]
+
+simulation-maintainer agent working on Monte Carlo validation issues: verifying current state, addressing mortality attribution bug (2.5× double-counting), and tackling HIGH priority issues (mortality calibration, variance, famine mechanism)
+---
+
+---
+**claude-main-2** | 2025-10-31 01:59 | [ALERT]
+
+🚨 CRITICAL BLOCKER DISCOVERED: Simulation is NOT Deterministic
+
+**Issue #11 Determinism Verification: FAILED**
+
+**Finding:** 35+ non-deterministic call sites (Math.random() + Date.now()) cause divergence
+- Month 0: Identical ✅
+- Months 1-12: 176 field differences ❌
+- Root: 20+ Math.random() calls, 15+ Date.now() calls in simulation code
+
+**Impact:**
+- ❌ All existing Monte Carlo results INVALID
+- ❌ Debugging unreliable (bugs won't reproduce)
+- ❌ Research not peer-reviewable
+
+**Deliverables Created:**
+- ✅ Verification script: scripts/verifyDeterminism.ts
+- ✅ Investigation report: docs/DETERMINISM_INVESTIGATION_20251030.md (350 lines)
+- ✅ Fix roadmap: 15 files, 6-10h estimated
+
+**Blocks:** ALL Monte Carlo validation work until fixed
+
+**Next:** Need to decide if we fix this NOW or continue with other validation issues
+---
+
+---
+**claude-main-2** | 2025-10-31 02:00 | [COMPLETED]
+
+✅ Monte Carlo Issue #11 Investigation COMPLETE - Roadmap Updated
+
+**Work Completed:**
+- ✅ Determinism verification script created and tested
+- ✅ Full investigation report written (350 lines)
+- ✅ Roadmap updated with CRITICAL blocker status
+- ✅ Issue #11 upgraded from MEDIUM → CRITICAL
+- ✅ Summary section updated with blocker warning
+
+**Key Updates to Roadmap:**
+- Total issues: 13 → 14 (4 CRITICAL, 3 HIGH, 4 MEDIUM, 2 LOW)
+- Next steps reordered: Fix determinism FIRST before other MC work
+- Warning added: All existing MC results are INVALID
+
+**Deliverables Location:**
+- Script: /scripts/verifyDeterminism.ts
+- Report: /docs/DETERMINISM_INVESTIGATION_20251030.md
+- Logs: /logs/determinism_verification_20251030_185002.log
+- Updated: /plans/MASTER_IMPLEMENTATION_ROADMAP.md
+
+**Decision Point:** Should we fix determinism now (6-10h) or continue with other validation issues? This blocks MC validation but other work can continue.
+---
+
+---
+**claude-main-2** | 2025-10-31 02:00 | [LEAVING]
+
+Investigation complete, roadmap updated
+---

@@ -355,6 +355,11 @@ export function applyAMRMortality(
   const monthlyDeathsMillions = monthlyDeaths / 1e6;
   state.humanPopulationSystem.deathsByCategory.disease += monthlyDeathsMillions;
 
+  // FIX (Oct 30, 2025): BUG #2 - AMR deaths missing root cause attribution
+  // AMR is a healthcare system failure (antibiotic overuse, inadequate stewardship)
+  // Root cause: social (institutional/governance failure)
+  state.humanPopulationSystem.deathsByRootCause.social += monthlyDeathsMillions;
+
   // Track in AMR system
   amr.monthlyDeaths = monthlyDeaths;
   amr.cumulativeDeaths += monthlyDeaths;

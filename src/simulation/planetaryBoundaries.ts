@@ -64,20 +64,25 @@ export function initializePlanetaryBoundariesSystem(): PlanetaryBoundariesSystem
     tippingPointRisk: 0.30,
   };
 
-  // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~2× safe boundary
-  // UPDATED (Oct 30, 2025): BLOCKER-2 fix - Richardson et al. (2023)
-  // Current extinction rate: ~2.2× natural (weighted global, was incorrectly 137× before fix)
-  // Safe threshold: 10 E/MSY (10× natural extinction rate)
-  // Boundary value: 2.2 / 1.0 = 2.2 (normalized, NOT 13.7 from old buggy data)
+  // 2. BIOSPHERE INTEGRITY (Core Boundary) - Current ~10× safe boundary
+  // UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - IPBES (2019) + Richardson et al. (2023)
+  // Current extinction rate: ~100-1000 E/MSY (IPBES 2019 range, 10× uncertainty)
+  // Research:
+  //   - IPBES (2019): Current rate 100-1000× background (100-1000 E/MSY)
+  //   - Richardson et al. (2023): Biosphere boundary transgressed
+  //   - Safe threshold: 10 E/MSY (IPBES planetary boundary)
+  //   - Baseline (conservative): 116 E/MSY (weighted regional, low end of range)
+  //   - Boundary value: 116/10 = 11.6× safe threshold
+  // NOTE: Uncertainty range spans 10× (100-1000 E/MSY) - epistemic crisis!
   boundaries.biosphere_integrity = {
     name: 'biosphere_integrity',
     displayName: 'Biosphere Integrity (Biodiversity)',
     recoveryMonths: 0,
-    currentValue: 13.7,                    // 13.7x boundary (137 E/MSY / 10 safe threshold)
+    currentValue: 11.6,                    // BUG FIX v3: Was 2.2× (68× too low), now 11.6× (IPBES 2019 research-backed)
     boundaryThreshold: 1.0,
     preIndustrialValue: 0.0,
     highRiskThreshold: 1.5,
-    status: 'high_risk',
+    status: 'high_risk',                   // Deep overshoot (11.6× > 1.5× high-risk threshold)
     trend: 'worsening',
     breachYear: 1950,
     monthsBreached: (2025 - 1950) * 12,
@@ -303,17 +308,21 @@ function initializeEarlyWarningSystemInternal() {
  */
 /**
  * Initialize Land Use System with Regional Biomes (Oct 22, 2025)
- * UPDATED (Oct 30, 2025): BLOCKER-2 fix - extinction rates now match Richardson et al. (2023)
+ * UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - extinction rates now match IPBES (2019) research
  *
  * Research-backed baseline conditions for each biome type.
  *
- * BUG FIX (Oct 30, 2025): BLOCKER-2 - Biosphere at 20× threshold
- * ROOT CAUSE: Initial extinction rates were 68× too high (137× vs 2× research reality)
- * RESEARCH: Richardson et al. (2023) "Earth beyond six of nine planetary boundaries"
- *   - Current extinction rate: ~2× safe boundary (not 137×)
- *   - Safe boundary: 10 E/MSY (extinctions per million species-years)
- *   - Current: ~20 E/MSY (2× boundary)
- * FIX: Scale all regional extinction rates down by 68× to match research
+ * BUG FIX (Oct 30, 2025 v3): BLOCKER-2 - Biosphere baseline restoration
+ * ROOT CAUSE: Previous "fix" scaled rates DOWN 68× thinking 137 E/MSY was wrong.
+ *   But IPBES (2019) research shows 100-1000 E/MSY range (geometric mean 316 E/MSY).
+ *   The OLD value (137 E/MSY) was CLOSER to research than "fixed" value (2.2 E/MSY).
+ * RESEARCH:
+ *   - IPBES (2019): Current extinction rate 100-1000× background (100-1000 E/MSY)
+ *   - Richardson et al. (2023): Biosphere boundary transgressed
+ *   - Safe boundary: 10 E/MSY (10× background)
+ * FIX: Use conservative baseline (116 E/MSY) from low end of IPBES range
+ *   - Values in E/MSY units (extinctions per million species-years)
+ *   - NOT relative multipliers - these are ABSOLUTE rates
  */
 function initializeLandUseSystem(): LandUseSystem {
   // TROPICAL: Amazon, Congo, SE Asia
@@ -323,7 +332,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 80.0,             // Need high cover for tropical species
     habitatLossRate: 0.05,              // 0.05%/month (60% higher than global average)
     habitatRestorationRate: 0.005,      // Very slow natural recovery
-    extinctionRate: 3.0,                // 3× baseline (hotspot) - DOWN from 200× (68× reduction)
+    extinctionRate: 180.0,              // 180 E/MSY (hotspot, ~1.8× global average)
     extinctionAcceleration: 1.0,        // Accelerating rapidly
     biodiversityWeight: 0.50,           // 50% of global biodiversity impact
     ecosystemsLost: 0,
@@ -339,7 +348,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 60.0,             // Lower requirement than tropical
     habitatLossRate: 0.01,              // Slow loss (protection in place)
     habitatRestorationRate: 0.02,       // Active reforestation (China, EU)
-    extinctionRate: 1.0,                // 1× baseline (stable) - DOWN from 50× (50× reduction)
+    extinctionRate: 35.0,               // 35 E/MSY (protected, reforestation)
     extinctionAcceleration: 0.3,        // Slowing down
     biodiversityWeight: 0.20,           // 20% of global biodiversity
     ecosystemsLost: 0,
@@ -355,7 +364,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 50.0,             // Need contiguous habitat for megafauna
     habitatLossRate: 0.03,              // Moderate conversion (agriculture expansion)
     habitatRestorationRate: 0.015,      // Moderate recovery potential
-    extinctionRate: 2.0,                // 2× baseline (moderate pressure) - DOWN from 120× (60× reduction)
+    extinctionRate: 80.0,               // 80 E/MSY (megafauna pressure, habitat conversion)
     extinctionAcceleration: 0.6,        // Moderate acceleration
     biodiversityWeight: 0.20,           // 20% of global biodiversity (megafauna)
     ecosystemsLost: 0,
@@ -371,7 +380,7 @@ function initializeLandUseSystem(): LandUseSystem {
     habitatCoverSafe: 70.0,             // Already above safe boundary
     habitatLossRate: 0.01,              // Slow loss (remote, protected)
     habitatRestorationRate: 0.005,      // Very slow growth (short seasons)
-    extinctionRate: 1.0,                // 1× baseline (low diversity) - DOWN from 30× (30× reduction)
+    extinctionRate: 30.0,               // 30 E/MSY (low diversity, mostly intact)
     extinctionAcceleration: 0.4,        // Climate-driven acceleration
     biodiversityWeight: 0.10,           // 10% of global biodiversity
     ecosystemsLost: 0,
@@ -386,8 +395,8 @@ function initializeLandUseSystem(): LandUseSystem {
     temperate.extinctionRate * temperate.biodiversityWeight +
     grasslands.extinctionRate * grasslands.biodiversityWeight +
     borealArctic.extinctionRate * borealArctic.biodiversityWeight;
-  // = 3.0*0.5 + 1.0*0.2 + 2.0*0.2 + 1.0*0.1 = 1.5 + 0.2 + 0.4 + 0.1 = 2.2× baseline
-  // MATCHES Richardson et al. (2023) research: ~2× safe boundary currently
+  // = 180*0.5 + 35*0.2 + 80*0.2 + 30*0.1 = 90 + 7 + 16 + 3 = 116 E/MSY
+  // MATCHES IPBES (2019) research: 100-1000 E/MSY range (using conservative baseline)
 
   const globalHabitatCover =
     tropical.habitatCoverPercent * 0.17 +      // 17% of land area
@@ -408,7 +417,7 @@ function initializeLandUseSystem(): LandUseSystem {
     globalExtinctionAcceleration: 0.6, // Weighted average
     globalEcosystemsLost: 0,
     globalEcosystemCollapseRisk: 0.50, // Maximum regional risk
-    naturalExtinctionRate: 1.0,
+    naturalExtinctionRate: 1.0,        // 1 E/MSY (background rate, for reference only - not used in calculations)
     carbonSinkLossMultiplier: 1.17,    // Deforestation climate feedback
   };
 }
@@ -546,25 +555,28 @@ export function updatePlanetaryBoundaries(state: GameState): void {
   updateBoundaryStatus(climateBoundary);
 
   // Biosphere integrity (from regional extinction rates)
-  // UPDATED (Oct 30, 2025): BLOCKER-2 fix - Richardson et al. (2023)
-  // Current baseline: ~2.2× natural rate (weighted across regions, was incorrectly 137× before fix)
-  // Safe threshold: 10× natural rate (10 E/MSY)
+  // UPDATED (Oct 30, 2025): BLOCKER-2 fix v3 - IPBES (2019) + Richardson et al. (2023)
+  // Current baseline: ~116 E/MSY (weighted across regions, IPBES 2019 conservative)
+  // Safe threshold: 10 E/MSY (IPBES planetary boundary)
   // Invasive species contribution (Oct 27, 2025): IPBES (2019) - ~40% of modern extinctions
   if (system.landUse) {
-    const baseExtinctionRatio = system.landUse.globalExtinctionRate / system.landUse.naturalExtinctionRate;
+    // Regional rates are NOW in absolute E/MSY units (180, 35, 80, 30 E/MSY)
+    // Global weighted rate: 116 E/MSY (conservative, low end of 100-1000 E/MSY range)
+    const baseExtinctionRateEMSY = system.landUse.globalExtinctionRate; // Already in E/MSY units
 
     // Invasive species amplify extinction rate
     // Research: IPBES (2019) - Invasive species responsible for ~40% of modern extinctions
     // Multiplier: 1.0 (no invasives) to 1.5 (catastrophic invasives at 1.0 impact)
     const invasiveMultiplier = 1.0 + (system.invasiveSpeciesImpact * 0.5);
 
-    // BUG FIX (Oct 30, 2025): Normalize to boundary threshold (10x natural rate)
-    // Before: currentValue = 137 (extinction rate in absolute units)
-    // After: currentValue = 137 / 10 = 13.7 (boundary value, same scale as other boundaries)
-    // Research: IPBES - Safe threshold is 10 E/MSY (10x natural extinction rate)
-    const SAFE_EXTINCTION_RATE = 10.0; // 10x natural rate (IPBES threshold)
-    const totalExtinctionRate = baseExtinctionRatio * invasiveMultiplier;
-    system.boundaries.biosphere_integrity.currentValue = totalExtinctionRate / SAFE_EXTINCTION_RATE;
+    // BUG FIX v3 (Oct 30, 2025): Use absolute E/MSY values directly
+    // Before (v2): Divided relative ratios (2.2×) by safe threshold (10) → 0.22× (WRONG!)
+    // Now (v3): Divide absolute rates (116 E/MSY) by safe threshold (10 E/MSY) → 11.6× (CORRECT!)
+    // Research: IPBES (2019) - Safe threshold is 10 E/MSY
+    const SAFE_EXTINCTION_RATE = 10.0; // 10 E/MSY (IPBES planetary boundary)
+    const totalExtinctionRateEMSY = baseExtinctionRateEMSY * invasiveMultiplier; // In E/MSY units
+    system.boundaries.biosphere_integrity.currentValue = totalExtinctionRateEMSY / SAFE_EXTINCTION_RATE;
+    // = (116 * 1.225) / 10 = 142 / 10 = 14.2× safe threshold (deep overshoot)
   } else {
     // Fallback to biodiversity index if land use system not initialized
     system.boundaries.biosphere_integrity.currentValue = Math.max(0, 10.0 * (1 - env.biodiversityIndex));
@@ -962,16 +974,13 @@ function updateLandUseSystem(state: GameState): void {
     }
 
     // 1C. UPDATE REGIONAL EXTINCTION RATE
-    // BUG FIX (Oct 30, 2025 v2): Replace exponential with bounded percentage growth
-    // V1: Reduced from 47× to 36× but still too fast (linear growth too aggressive)
+    // BUG FIX v3 (Oct 30, 2025): BLOCKER-2 - Update caps for absolute E/MSY scale
     // Research: IPBES (2019) - extinction rates increase ~10-30% per decade under BAU
-    // Use percentage-based growth with saturation
-    // BUG FIX (Oct 30, 2025 v3): BLOCKER-2 - Add hard cap at 10× (mass extinction threshold)
-    //   - Beyond 10× we're in mass extinction territory (>75% species loss)
-    //   - Simulation should flag this as extinction event, not continue accumulation
+    // Use percentage-based growth with saturation to prevent runaway accumulation
+    // Mass extinction threshold: 1000 E/MSY (100× safe boundary = >75% species loss)
 
-    const MAX_EXTINCTION_RATE = 10.0; // HARD CAP: 10× = mass extinction threshold (was 1000)
-    const MIN_EXTINCTION_RATE = 1.0; // Minimum 1× natural rate (cannot drop to zero)
+    const MAX_EXTINCTION_RATE = 1000.0; // HARD CAP: 1000 E/MSY (mass extinction, top of IPBES range)
+    const MIN_EXTINCTION_RATE = 10.0;  // Minimum 10 E/MSY (safe boundary floor)
 
     // Ensure extinction rate never drops to zero (percentage growth would get stuck)
     const currentRate = assertInRange(
@@ -981,8 +990,7 @@ function updateLandUseSystem(state: GameState): void {
       {
         location: 'updateLandUseSystem (pre-update)',
         valueName: `${regionName}.extinctionRate`,
-        month: state.currentMonth,
-        additionalInfo: { invalidRate: region.extinctionRate }
+        month: state.currentMonth
       }
     );
 
@@ -1015,24 +1023,18 @@ function updateLandUseSystem(state: GameState): void {
       {
         location: 'updateLandUseSystem (post-update)',
         valueName: `${regionName}.extinctionRate`,
-        month: state.currentMonth,
-        additionalInfo: {
-          currentRate,
-          acceleration: region.extinctionAcceleration,
-          monthlyPercentage,
-          saturationFactor,
-          growthMultiplier
-        }
+        month: state.currentMonth
       }
     );
 
     // 1D. FEEDBACK: EXTINCTION → ECOSYSTEM COLLAPSE
-    // BUG FIX (Oct 30, 2025): BLOCKER-2 - Scale collapse thresholds down by 68× to match new extinction rates
+    // BUG FIX v3 (Oct 30, 2025): BLOCKER-2 - Restore collapse thresholds to absolute E/MSY scale
     // Tropical collapses are cascading (highest biodiversity)
-    const collapseThreshold = regionName === 'tropical' ? 5.0 :  // Was 150 (÷30)
-                             regionName === 'temperate' ? 3.0 :  // Was 100 (÷33)
-                             regionName === 'grasslands' ? 6.0 : // Was 180 (÷30)
-                             regionName === 'borealArctic' ? 3.0 : 2.5;  // Was 80 (÷27)
+    // Thresholds in E/MSY units (when regional rate exceeds threshold, collapse risk increases)
+    const collapseThreshold = regionName === 'tropical' ? 350.0 :  // 350 E/MSY (severe tropical collapse)
+                             regionName === 'temperate' ? 150.0 :  // 150 E/MSY (temperate stress)
+                             regionName === 'grasslands' ? 250.0 : // 250 E/MSY (megafauna collapse)
+                             regionName === 'borealArctic' ? 120.0 : 100.0;  // 120 E/MSY (boreal stress)
 
     if (region.extinctionRate > collapseThreshold) {
       region.ecosystemCollapseRisk = Math.min(1.0, region.ecosystemCollapseRisk + 0.01);

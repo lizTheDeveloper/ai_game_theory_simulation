@@ -383,9 +383,10 @@ export function initializeHumanPopulationSystem(): HumanPopulationSystem {
       alignment: 0,
       disruption: 0,
 
-      // External shocks (2)
+      // External shocks (3)
       conflict: 0,
       pandemic: 0,
+      natural: 0,  // FIX (Oct 30, 2025): BUG #3 - 'natural' root cause missing from initialization
 
       // Compound tracking
       compound: 0,

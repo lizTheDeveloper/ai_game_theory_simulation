@@ -159,6 +159,11 @@ export function applyFlashWarEffects(state: GameState): void {
   // monthlyDeathsApplied is always initialized in initializeHumanPopulationSystem() (Oct 28, 2025)
   pop.monthlyDeathsApplied = pop.monthlyDeathsApplied + additionalDeaths;
 
+  // FIX (Oct 30, 2025): BUG #2 - Flash war additional deaths missing root attribution
+  // Flash wars are autonomous AI escalation beyond human control
+  // Root cause: disruption (autonomous systems acting faster than governance can respond)
+  pop.deathsByRootCause.disruption += additionalDeaths;
+
   // Trigger circuit breaker development
   if (!peace.circuitBreakersActive && !peace.circuitBreakerDevelopmentActive) {
     peace.circuitBreakerDevelopmentActive = true;

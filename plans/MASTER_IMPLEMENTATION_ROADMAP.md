@@ -260,16 +260,33 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 - **Agent:** simulation-maintainer + super-alignment-researcher
 - **Reference:** Critique Section 5 (lines 146-161)
 
-**11. Determinism Verification Testing**
-- **Priority:** MEDIUM
-- **Problem:** Need to verify Monte Carlo runs with same seed produce identical results (determinism check)
-- **Action Required:**
-  - Run N≥3 simulations with identical seed
-  - Verify bit-identical state at each step
-  - Document any non-deterministic sources (if found)
-- **Complexity:** 1 system (RNG/determinism)
+**11. Determinism Verification Testing - ⚠️ UPGRADED TO CRITICAL BLOCKER**
+- **Priority:** ~~MEDIUM~~ → **🔴 CRITICAL BLOCKER** (Oct 30, 2025)
+- **Status:** ❌ **VERIFICATION FAILED** - Simulation is NOT deterministic
+- **Finding:** 35+ non-deterministic call sites cause divergence after Month 0
+  - **Root Causes:** 20+ `Math.random()` calls + 15+ `Date.now()` calls in simulation code
+  - **Impact:** Month 0 identical, Months 1-12 show 176 field differences across runs
+  - **Files Affected:** 15 files (computeInfrastructure.ts, freshwaterDepletion.ts, socialCohesion.ts, government/actions/*, socialInfluence.ts, llm/providerManager.ts, etc.)
+- **Consequences:**
+  - ❌ **All existing Monte Carlo results are INVALID** (can't distinguish signal from random variance)
+  - ❌ **Debugging is unreliable** (bugs won't reproduce even with "same" seed)
+  - ❌ **Research can't be peer-reviewed** (results not reproducible)
+  - ❌ **BLOCKS all Monte Carlo validation work** until fixed
+- **Action Required (6-10h total):**
+  1. Replace all `Math.random()` calls with `rng()` parameter (20+ sites, 2-3h)
+  2. Replace all `Date.now()` ID generation with counters/simulated time (15+ sites, 1-2h)
+  3. Fix LLM provider non-determinism if needed (1h)
+  4. Re-run verification (must pass, 30min)
+  5. Re-validate all Monte Carlo analyses with fixed determinism (2-4h)
+- **Deliverables Created:**
+  - ✅ Verification script: `/scripts/verifyDeterminism.ts` (automated 3-run comparison with SHA-256 hashing)
+  - ✅ Investigation report: `/docs/DETERMINISM_INVESTIGATION_20251030.md` (350 lines, full root cause analysis)
+  - ✅ Test logs: `/logs/determinism_verification_20251030_185002.log` (all 176 differences documented)
+  - ✅ Summary: `/logs/determinism_verification_summary.txt` (executive summary)
+  - ✅ Guide: `/scripts/README_DETERMINISM_VERIFICATION.md` (usage instructions)
+- **Complexity:** 15 files across 3 systems (RNG, ID generation, LLM providers)
 - **Agent:** simulation-maintainer
-- **Reference:** Critique Section 5 (line 148)
+- **Reference:** Critique Section 5 (line 148), Investigation Report (Oct 30)
 
 ---
 
@@ -300,14 +317,19 @@ See detailed specifications in [FRONTEND_ROADMAP.md](./FRONTEND_ROADMAP.md) unde
 ---
 
 **Summary:**
-- **Total Issues:** 13 (3 CRITICAL, 3 HIGH, 5 MEDIUM, 2 LOW)
+- **Total Issues:** 13 → **14** (4 CRITICAL, 3 HIGH, 4 MEDIUM, 2 LOW) - Updated Oct 30, 2025
+- **NEW BLOCKER (Oct 30):** Issue #11 upgraded to CRITICAL - Determinism verification FAILED
+  - ❌ Simulation diverges after Month 0 due to 35+ non-deterministic call sites
+  - ❌ **BLOCKS all Monte Carlo validation work** until fixed (6-10h estimated)
+  - ❌ All existing Monte Carlo results are INVALID
 - **Overall Verdict from Critique:** "NOT RESEARCH-READY - The simulation appears optimized for catastrophic outcomes rather than research validity."
 
-**Next Steps (Monte Carlo):**
-1. Address CRITICAL issues first (population coherence, biosphere calculation, mortality attribution)
-2. Then HIGH priority research validity issues (mortality calibration, variance, famine mechanics)
-3. Integrate stabilizing mechanisms (cooperation, adaptation, resilience)
-4. Re-run Monte Carlo validation after fixes
+**Next Steps (Monte Carlo) - UPDATED:**
+1. ⚠️ **BLOCKER:** Fix determinism issues FIRST (Issue #11 - 6-10h) - Cannot proceed without this
+2. Address remaining CRITICAL issues (population coherence, biosphere calculation, mortality attribution)
+3. Then HIGH priority research validity issues (mortality calibration, variance, famine mechanics)
+4. Integrate stabilizing mechanisms (cooperation, adaptation, resilience)
+5. Re-run Monte Carlo validation after fixes with verified deterministic simulation
 
 ---
 
