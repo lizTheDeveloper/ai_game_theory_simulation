@@ -50,6 +50,16 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **Validation cases**: Germany 2021 (100% coalition match), COVID acceleration (10× speedup), Black Death calibration
 - **Quality standards**: Research-skeptic review (40% rejection rate), architecture-skeptic review (mandatory)
 
+**Research Verification Status** (October 30, 2025):
+- **Layer 2 Phase 1**: ✅ COMPLETE (8/8 citations verified, code updates pending)
+- **Layer 2 Phase 2**: ⏳ IN PROGRESS (~11% complete, 6.5h / 40-52h)
+  - ✅ Session 1: AI water parameters (4 CRITICAL bugs fixed)
+  - ✅ Session 2: Infrastructure mismatch documentation
+  - ✅ Session 3: Climate-mortality sections 1-3 verified (27 claims: 67% fully verified, 33% partial, 0% fabricated)
+  - 🚨 **1 CRITICAL correction**: Richardson 2023 land degradation inversion (prevented 50% overestimation)
+  - **Quality**: Zero fabrications detected (vs 15.6% error rate in Layer 1 citation crisis)
+  - See: [`research/LAYER2_PHASE2_VERIFICATION_STATUS.md`](/research/LAYER2_PHASE2_VERIFICATION_STATUS.md)
+
 ### Core Systems
 
 The fundamental building blocks of the simulation:
@@ -3270,10 +3280,11 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 ---
 
-**Last Updated**: October 30, 2025 (Outcome Classification Fix + In-App Documentation System)
+**Last Updated**: October 30, 2025 (Layer 2 Phase 2 Session 3 + Outcome Classification Fix + In-App Documentation System)
 **Version**: 4.1.1 (Government System + Multi-Paradigm Framework + DUI Reporting Tools + Post-Recalibration Fixes)
 **Status**: 🎉 **MAJOR SYSTEMS INTEGRATED** + ✅ **ALL WEEK 1 FIXES COMPLETE**
 **Latest**:
+- **Layer 2 Phase 2 Session 3 (Oct 30)**: Climate-mortality verification complete (27 claims: 67% fully verified, 33% partial, 0% fabricated). 1 CRITICAL correction: Richardson 2023 land degradation inversion prevented 50% overestimation. Phase 2 now 11% complete (6.5h / 40-52h).
 - **Outcome Classification Fix (Oct 30)**: Reason strings now accurately reflect classification method (mortality-based vs probability-based) - see [Understanding Results](./UNDERSTANDING_RESULTS.md#two-classification-systems-oct-30-2025-fix)
 - **Government Modeling**: 30 real governments with coalition formation, policy response, election cycles, international treaties (80-90 hours, standalone NPM package)
 - **Multi-Paradigm DUI**: 4 philosophical frameworks (Western Liberal, Development Needs, Ecological Harmony, Indigenous Communitarian) measure outcomes across value systems
