@@ -15266,7 +15266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/types/unknownUnknown.ts",
-    "line": 62,
+    "line": 68,
     "type": "interface",
     "name": "UnknownUnknownConfig",
     "currentDoc": "/ Unknown Unknown configuration",
@@ -58338,7 +58338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 58,
+    "line": 63,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -58346,7 +58346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 59,
+    "line": 64,
     "type": "property",
     "name": "type",
     "currentDoc": "(none)",
@@ -58354,7 +58354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 61,
+    "line": 66,
     "type": "property",
     "name": "title",
     "currentDoc": "(none)",
@@ -58362,7 +58362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 62,
+    "line": 67,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -58370,7 +58370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 63,
+    "line": 68,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -58378,7 +58378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 64,
+    "line": 69,
     "type": "property",
     "name": "severity",
     "currentDoc": "(none)",
@@ -58386,7 +58386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 65,
+    "line": 70,
     "type": "property",
     "name": "agent",
     "currentDoc": "(none)",
@@ -58394,7 +58394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 66,
+    "line": 71,
     "type": "property",
     "name": "effects",
     "currentDoc": "(none)",
@@ -58402,7 +58402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 67,
+    "line": 72,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -58410,7 +58410,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 68,
+    "line": 73,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -58418,7 +58418,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 69,
+    "line": 74,
     "type": "property",
     "name": "domainsAffected",
     "currentDoc": "(none)",
@@ -58426,7 +58426,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/engine/phases/UnknownUnknownPhase.ts",
-    "line": 70,
+    "line": 75,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128530,7 +128530,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 32,
+    "line": 50,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128538,7 +128538,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 33,
+    "line": 51,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128546,7 +128546,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 34,
+    "line": 52,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128554,7 +128554,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 35,
+    "line": 53,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128562,7 +128562,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 36,
+    "line": 54,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128570,7 +128570,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 37,
+    "line": 55,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128578,7 +128578,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 39,
+    "line": 57,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128586,7 +128586,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 45,
+    "line": 63,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128594,7 +128594,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 46,
+    "line": 64,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128602,7 +128602,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 47,
+    "line": 65,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128610,7 +128610,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 48,
+    "line": 66,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128618,7 +128618,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 49,
+    "line": 67,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128626,7 +128626,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 50,
+    "line": 68,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128634,7 +128634,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 51,
+    "line": 69,
     "type": "property",
     "name": "weight",
     "currentDoc": "(none)",
@@ -128642,7 +128642,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 52,
+    "line": 70,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128650,7 +128650,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 67,
+    "line": 86,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128658,7 +128658,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 68,
+    "line": 87,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128666,7 +128666,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 69,
+    "line": 88,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128674,7 +128674,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 70,
+    "line": 89,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128682,7 +128682,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 71,
+    "line": 90,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128690,7 +128690,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 72,
+    "line": 91,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128698,7 +128698,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 74,
+    "line": 93,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128706,7 +128706,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 89,
+    "line": 108,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128714,7 +128714,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 90,
+    "line": 109,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128722,7 +128722,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 91,
+    "line": 110,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128730,7 +128730,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 92,
+    "line": 111,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128738,7 +128738,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 93,
+    "line": 112,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128746,7 +128746,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 94,
+    "line": 113,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128754,7 +128754,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 96,
+    "line": 115,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128762,7 +128762,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 110,
+    "line": 130,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128770,7 +128770,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 111,
+    "line": 131,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128778,7 +128778,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 112,
+    "line": 132,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128786,7 +128786,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 113,
+    "line": 133,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128794,7 +128794,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 114,
+    "line": 134,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128802,7 +128802,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 115,
+    "line": 135,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128810,7 +128810,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 116,
+    "line": 136,
     "type": "property",
     "name": "weight",
     "currentDoc": "(none)",
@@ -128818,7 +128818,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 117,
+    "line": 137,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128826,7 +128826,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 133,
+    "line": 154,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128834,7 +128834,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 134,
+    "line": 155,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128842,7 +128842,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 135,
+    "line": 156,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128850,7 +128850,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 136,
+    "line": 157,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128858,7 +128858,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 137,
+    "line": 158,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128866,7 +128866,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 138,
+    "line": 159,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128874,7 +128874,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 140,
+    "line": 161,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128882,7 +128882,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 159,
+    "line": 177,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128890,7 +128890,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 160,
+    "line": 178,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128898,7 +128898,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 161,
+    "line": 179,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128906,7 +128906,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 162,
+    "line": 180,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128914,7 +128914,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 163,
+    "line": 181,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128922,7 +128922,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 164,
+    "line": 182,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128930,7 +128930,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 166,
+    "line": 184,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128938,7 +128938,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 181,
+    "line": 200,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -128946,7 +128946,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 182,
+    "line": 201,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -128954,7 +128954,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 183,
+    "line": 202,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -128962,7 +128962,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 184,
+    "line": 203,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -128970,7 +128970,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 185,
+    "line": 204,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -128978,7 +128978,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 186,
+    "line": 205,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -128986,7 +128986,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 188,
+    "line": 207,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -128994,7 +128994,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 209,
+    "line": 229,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -129002,7 +129002,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 210,
+    "line": 230,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -129010,7 +129010,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 211,
+    "line": 231,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -129018,7 +129018,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 212,
+    "line": 232,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -129026,7 +129026,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 213,
+    "line": 233,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -129034,7 +129034,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 214,
+    "line": 234,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -129042,7 +129042,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 216,
+    "line": 236,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -129050,7 +129050,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 231,
+    "line": 252,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -129058,7 +129058,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 232,
+    "line": 253,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -129066,7 +129066,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 234,
+    "line": 255,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -129074,7 +129074,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 235,
+    "line": 256,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -129082,7 +129082,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 236,
+    "line": 257,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -129090,7 +129090,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 237,
+    "line": 258,
     "type": "property",
     "name": "weight",
     "currentDoc": "(none)",
@@ -129098,7 +129098,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 238,
+    "line": 259,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -129106,7 +129106,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 257,
+    "line": 279,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -129114,7 +129114,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 258,
+    "line": 280,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -129122,7 +129122,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 259,
+    "line": 281,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -129130,7 +129130,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 260,
+    "line": 282,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -129138,7 +129138,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 261,
+    "line": 283,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -129146,7 +129146,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 262,
+    "line": 284,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -129154,7 +129154,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 263,
+    "line": 285,
     "type": "property",
     "name": "weight",
     "currentDoc": "(none)",
@@ -129162,7 +129162,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 264,
+    "line": 286,
     "type": "property",
     "name": "apply",
     "currentDoc": "(none)",
@@ -129170,7 +129170,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 287,
+    "line": 315,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -129178,7 +129178,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 288,
+    "line": 316,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -129186,7 +129186,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 292,
+    "line": 320,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129194,7 +129194,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 293,
+    "line": 321,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129202,7 +129202,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 294,
+    "line": 322,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129210,7 +129210,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 316,
+    "line": 344,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129218,7 +129218,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 317,
+    "line": 345,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129226,7 +129226,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 318,
+    "line": 346,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129234,7 +129234,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 319,
+    "line": 347,
     "type": "property",
     "name": "additionalInfo",
     "currentDoc": "(none)",
@@ -129242,7 +129242,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 321,
+    "line": 349,
     "type": "property",
     "name": "location",
     "currentDoc": "(none)",
@@ -129250,7 +129250,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 322,
+    "line": 350,
     "type": "property",
     "name": "valueName",
     "currentDoc": "(none)",
@@ -129258,7 +129258,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 323,
+    "line": 351,
     "type": "property",
     "name": "month",
     "currentDoc": "(none)",
@@ -129266,7 +129266,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 332,
+    "line": 360,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -129274,7 +129274,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 333,
+    "line": 361,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -129282,7 +129282,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 334,
+    "line": 362,
     "type": "property",
     "name": "config",
     "currentDoc": "(none)",
@@ -129290,7 +129290,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 350,
+    "line": 378,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -129298,7 +129298,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 351,
+    "line": 379,
     "type": "property",
     "name": "rng",
     "currentDoc": "(none)",
@@ -129306,7 +129306,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 385,
+    "line": 438,
     "type": "property",
     "name": "template",
     "currentDoc": "(none)",
@@ -129314,7 +129314,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 386,
+    "line": 439,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",
@@ -129322,7 +129322,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 389,
+    "line": 447,
     "type": "property",
     "name": "id",
     "currentDoc": "(none)",
@@ -129330,7 +129330,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 390,
+    "line": 448,
     "type": "property",
     "name": "name",
     "currentDoc": "(none)",
@@ -129338,7 +129338,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 391,
+    "line": 449,
     "type": "property",
     "name": "category",
     "currentDoc": "(none)",
@@ -129346,7 +129346,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 392,
+    "line": 450,
     "type": "property",
     "name": "timestamp",
     "currentDoc": "(none)",
@@ -129354,7 +129354,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 393,
+    "line": 451,
     "type": "property",
     "name": "impact",
     "currentDoc": "(none)",
@@ -129362,7 +129362,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 394,
+    "line": 452,
     "type": "property",
     "name": "positive",
     "currentDoc": "(none)",
@@ -129370,7 +129370,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 395,
+    "line": 453,
     "type": "property",
     "name": "magnitude",
     "currentDoc": "(none)",
@@ -129378,7 +129378,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 396,
+    "line": 454,
     "type": "property",
     "name": "domains",
     "currentDoc": "(none)",
@@ -129386,7 +129386,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 398,
+    "line": 456,
     "type": "property",
     "name": "description",
     "currentDoc": "(none)",
@@ -129394,7 +129394,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 408,
+    "line": 466,
     "type": "property",
     "name": "event",
     "currentDoc": "(none)",
@@ -129402,7 +129402,7 @@
   },
   {
     "file": "/Users/annhoward/src/superalignmenttoutopia/src/simulation/unknownUnknowns.ts",
-    "line": 409,
+    "line": 467,
     "type": "property",
     "name": "state",
     "currentDoc": "(none)",

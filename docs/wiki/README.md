@@ -77,7 +77,7 @@ The fundamental building blocks of the simulation:
 | [🌊 Planetary Boundaries](./systems/) | ✅ | Phosphorus, freshwater, ocean acidification, novel entities (TIER 1) |
 | [📊 Policy Interventions](./systems/) | ⚠️ | UBI, retraining, teaching support, job guarantee (systemic inequality modeled) |
 | [🎲 Lévy Flights](./systems/) | ✅ | Fat-tailed distributions (power-law events, 8,249 extreme events validated) |
-| [🌩️ Exogenous Shocks](./systems/) | ✅ | Black/Gray Swans (8 types, 0.1% + 1% monthly rates) |
+| [🌩️ Exogenous Shocks](./systems/) | ✅ | Unknown Unknowns (10 templates, 0.15% monthly - ~1 event per 20y run) |
 | [🦸 Critical Junctures](./systems/) | ✅ | 90/10 structure-agency split (4 escape types: prevent war, enable cooperation, recover crisis, unlock breakthrough) |
 | [☢️ Nuclear Command Control](./systems/) | ✅ | Circuit breakers (human-in-loop, kill switches, time delays) |
 
@@ -324,6 +324,39 @@ finalTime = basePolicyTime × crisisMultiplier × capacityMultiplier × coalitio
 - Authoritarian technocracy: 12-24 months (China faster due to technical expertise)
 - Hybrid regime: 36-60 months (institutional chaos)
 - Low-capacity: 60-96 months (limited AI expertise)
+
+#### Policy Implementation Lifecycle (**NEW Oct 30**)
+
+**Phase**: `PolicyImplementationPhase` (order 25.5, runs after GovernmentResponsePhase)
+
+Tracks ongoing policy evolution after initial response. Policies don't reach full effectiveness instantly - they experience:
+
+**1. Sigmoid Ramp-Up:**
+- Policies gradually increase effectiveness over time (sigmoid curve)
+- Reflects implementation delays, bureaucratic inertia, learning curves
+- Research: Pressman & Wildavsky (1973) - "Implementation" delays are the norm, not exception
+
+**2. Political Will Decay:**
+- Political support erodes over time without sustained effort
+- Long-term policies face "policy drift" as priorities shift
+- Research: Sabatier (1988) - Policy subsystems require continuous coalition maintenance
+
+**3. Abandonment Risk:**
+- Policies can be abandoned if political will drops to zero (effectiveness → 0)
+- Creates `policy_abandoned` events with warning severity
+- Reflects real-world policy reversals (e.g., climate policy rollbacks)
+
+**4. Implementation Issues:**
+- Industry capture (Stigler 1971 regulatory capture theory)
+- Enforcement failures
+- Loopholes and workarounds
+
+**Milestone Logging:**
+- 25%, 50%, 75%, 90% effectiveness thresholds generate `policy` events
+- Provides visibility into policy progress across countries and domains
+
+**State Tracking:**
+Each active policy tracks `currentEffectiveness` (0-1) which updates monthly based on implementation progress and political will.
 
 #### Election Cycles (Phase 4)
 
@@ -1385,90 +1418,87 @@ Replaces Gaussian randomness with **power-law distributions** for systems where 
 
 **Implementation**: `src/simulation/engine/phases/ExogenousShockPhase.ts` (615 lines, order 27.5)
 
-Models rare unpredictable events **outside normal state space evolution**.
+Models rare unprecedented events **outside normal state space evolution**.
 
 **Research Foundation**:
-- Taleb (2007): Black Swan theory - high impact, low predictability
-- Sornette (2003): Critical phase transitions in social sciences
-- IPCC AR6 (2021-2023): Volcanic eruption & shock event modeling methodology
+- Ord (2020): "The Precipice" - quantified low-probability catastrophic events
+- Reinhart & Rogoff (2009): "This Time Is Different" - economic crisis durations (24mo)
+- Taleb (2007): Black Swan theory - retrospectively predictable surprises
 
-**Historical Calibration**: 15 major black/gray swans in 80 years (1945-2025) = 0.19/year
+**Historical Calibration**: 2-3 unprecedented simulation-affecting events per 20 years
+- **Base probability**: 0.15% monthly (1.8% annual) - recalibrated Oct 30, 2025
+- **Expected outcome**: ~1 simulation-affecting event per 20-year run
+- **Impact threshold**: ≥1% GDP OR ≥0.01% mortality (filters psychologically shocking but simulation-negligible events)
+- **Research consensus**: `.claude/chatroom/research-consensus-20251030_p3_2_unknown_unknowns.txt`
 
-**8 Shock Types**:
+**10 Event Templates** (Unknown Unknowns):
 
-**Black Swans** (0.1%/month ~1%/year - civilization-altering):
+**Transformative Breakthroughs** (positive, ~10-15% impacts):
 
-1. **Nuclear War** (50-99% mortality, instant/rapid):
-   - **Mortality**: Variable 50-99%, applied instantly to global and regional populations
-   - **Effects**: Infrastructure destruction (90% data center capacity loss), nuclear winter (climate +50%, biodiversity +60%), social collapse (trust × 0.2)
-   - **Extinction Trigger**: >87.5% mortality sets `extinctionState.active = true`
-   - **Historical**: 0 occurrences, 6 near-misses (Cuban Missile Crisis 1962, 1983 false alarm)
-   - **Mechanism**: Full-scale exchange, command & control failure
+1. **Room-Temperature Superconductor Discovery**:
+   - **Effects**: Energy transmission losses eliminated (+10% resource reserves), manufacturing efficiency +12%
+   - **Impact Category**: Transformative civilizational shift (no historical precedent)
+   - **Weight**: 1.0 (rare, requires materials science breakthrough)
 
-2. **AGI Breakthrough** (POSITIVE BLACK SWAN):
-   - **Effect**: Unlock ALL breakthrough technologies instantly at 50% deployment
-   - **Capability Boost**: All AI agents gain +5.0 self-improvement, +3.0 algorithms
-   - **Research**: Recursive self-improvement achieved, fast takeoff initiated
-   - **Historical**: 0 occurrences (no precedent for AGI)
-   - **Impact**: Can enable utopia pathways if AI alignment holds
+2. **Consciousness Upload Prototype**:
+   - **Effects**: AI welfare considerations +15% (simpleScore)
+   - **Impact Category**: Transformative (no historical precedent, hard to calibrate)
+   - **Weight**: 0.5 (very rare, requires neuroscience breakthrough)
 
-3. **Asteroid Impact** (10-90% mortality, nuclear winter):
-   - **Mortality**: Variable 0-80%, based on impact size (rng)
-   - **Effects**: Nuclear winter effects (dust, climate disruption +40%), infrastructure damage (30% capacity loss)
-   - **Extinction Trigger**: >50% mortality sets `extinctionState.active = true`
-   - **Historical**: 0 major impacts since 1908 Tunguska (sparse data)
-   - **Mechanism**: Impact size determines severity
+3. **Cheap Desalination Technology**:
+   - **Effects**: Freshwater scarcity -8% (planetary boundary improvement)
+   - **Impact Category**: Major technological advance (~2-5% impact)
+   - **Weight**: 2.0 (more likely - incremental engineering)
 
-4. **Mega-Pandemic** (20-40% mortality over 24 months):
-   - **Mortality**: Gradual 20-40% total over 24 months (0.83-1.67%/month)
-   - **Effects**: Economic contraction (stage -1), social disruption (coordination × 0.7)
-   - **State**: Creates `state.crises.megaPandemic` with duration tracking
-   - **Historical**: 0 occurrences (COVID-19 was ~0.1% mortality, not 20-40%)
-   - **Mechanism**: Novel pathogen, high transmissibility + lethality
+**Major Crises** (negative, ~2-5% impacts):
 
-**Gray Swans** (1.0%/month ~10%/year - major but recoverable):
+4. **Solar Flare EMP Event**:
+   - **Effects**: Manufacturing -4%, institutional legitimacy -3% (infrastructure breakdown)
+   - **Historical Precedent**: 2008 crisis scale (-5% GDP over 2y)
+   - **Weight**: 1.0
 
-5. **Financial Crash** (10-20% GDP loss):
-   - **GDP Loss**: Variable 10-20%, economic stage -1
-   - **Unemployment**: Okun's law (1% GDP loss ≈ 1.5% unemployment increase)
-   - **QoL**: Declines by 50% of GDP loss (10% crash → -5% QoL)
-   - **AI Funding**: VC dries up, org capital × (1 - gdpLoss × 2)
-   - **Historical**: 3 occurrences (1987 crash, 2008 financial crisis, 2020 COVID crash)
+5. **Novel Pathogen Emergence**:
+   - **Effects**: Population -0.08% (COVID-19 scale mortality), economic disruption -3% manufacturing
+   - **Historical Precedent**: COVID-19 (Reinhart & Rogoff 2009, consensus file)
+   - **Weight**: 1.5 (more common than other crises)
 
-6. **Regional War** (1-5% mortality, refugee crisis):
-   - **Mortality**: Variable 1-5% globally, 5x in affected countries (1-3 randomly selected)
-   - **Refugees**: 2x mortality in displacement (creates refugee crisis)
-   - **Nuclear Risk**: MAD tension +0.2 (regional conflicts escalate)
-   - **Historical**: Multiple (Iraq War 2003, Syrian Civil War 2011, Ukraine War 2022)
-   - **Mechanism**: Conventional warfare, limited scope
+6. **Gamma-Ray Burst (Distant)**:
+   - **Effects**: Ozone depletion +3% (novel entities boundary)
+   - **Impact Category**: Minor event (~0.5-1% impact, barely simulation-affecting)
+   - **Weight**: 0.3 (very rare)
 
-7. **Tech Breakthrough** (POSITIVE GRAY SWAN):
-   - **Effect**: Unlock 1 random TIER 2-3 technology at 10% deployment
-   - **Selection**: Random from locked TIER 2-3 techs
-   - **Historical**: 4 transformative breakthroughs (transistor 1947, IC 1958, internet 1969, transformers 2017)
-   - **Impact**: Can accelerate recovery pathways or enable new capabilities
+7. **Unforeseen AI Deception Technique**:
+   - **Effects**: AI alignment revealed (5% of hidden misalignment exposed), institutional legitimacy -5%
+   - **Impact Category**: Major trust crisis (~2-5% impact)
+   - **Weight**: 2.0 (more likely in AI-heavy futures)
 
-8. **Political Upheaval** (regime change, institutional collapse):
-   - **Legitimacy**: Government legitimacy × 0.5 (institutional collapse)
-   - **Outcome**: Democratization OR authoritarian takeover (based on social capacity × information integrity)
-   - **Effects**: Economic stage -1, coordination × 0.7
-   - **Historical**: Multiple (Soviet collapse 1991, Arab Spring 2011, color revolutions)
-   - **Mechanism**: Revolution, coup, mass protests
+**Paradigm Shifts** (positive, ~2-5% social impacts):
 
-**Validation Results** (N=100 runs, 12,000 months):
-- **Total shocks**: 111 (0.925%/month, within 15% of expected 1.1%)
-- **Black swans**: 12 (0.1%/month) ✅ Perfect match
-- **Gray swans**: 99 (0.825%/month, 82.5% of expected)
-- **Runs affected**: 8% (within 5-10% target range)
+8. **Post-Scarcity Economics Emergence**:
+   - **Effects**: Carrying capacity +15%, manufacturing efficiency +12%
+   - **Impact Category**: Transformative (~10-15% impacts, no historical precedent)
+   - **Weight**: 0.5 (rare civilizational transition)
 
-**State Tracking**: `state.history.exogenousShocks[]` records all shocks with month, type, severity.
+9. **Global Spirituality Movement**:
+   - **Effects**: Cultural adaptation +8%, institutional legitimacy +5%
+   - **Impact Category**: Major social movement (~2-5% impacts)
+   - **Weight**: 1.0
 
-**Bug Fixes Applied**:
-- Record<> iteration errors fixed (3 locations)
-- Refugee crisis array initialization
-- Country population system defensive checks
+10. **Decentralized Coordination Protocol**:
+    - **Effects**: Institutional legitimacy +5%, may resolve institutional failure crises
+    - **Impact Category**: Major governance innovation (~2-5% impacts)
+    - **Weight**: 1.5
 
-**Impact**: Creates branching paths and outcome divergence. Enables both catastrophic events (nuclear war, asteroid) and positive Black Swans (AGI breakthrough, tech leaps).
+**Template Selection**: Uniform distribution (10% each) - acknowledges honest uncertainty about relative frequencies
+
+**State Tracking**: `state.history.unknownUnknowns[]` records all events with month, template, impacts
+
+**Impact Magnitudes**: All calibrated to historical precedents (10× reduction from original catastrophism bias)
+- COVID-19: -0.08% mortality, -3.5% GDP (not -5% mortality, -20% GDP)
+- 2008 crisis: -5% GDP over 24 months (not -20% instant)
+- Transformative tech: ~10-15% impacts (conservative, no historical precedent)
+
+**Validation Strategy**: Monte Carlo N≥10 runs, check outcome distributions match expected ~1 event per 20y run
 
 ---
 
@@ -2290,7 +2320,8 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - ResourceEconomyPhase (24.0): Resource extraction, depletion
 - ResourceTechnologyPhase (24.5): Tech effects on resources
 - **GovernmentResponsePhase (25.0)**: Policy responses with comprehension lag (**NEW Oct 20**)
-- GeoengineringPhase (25.5): Climate intervention
+- **PolicyImplementationPhase (25.5)**: Policy lifecycle tracking - sigmoid ramp-up, political will decay, abandonment risk (**NEW Oct 30**)
+- GeoengineringPhase (26.0): Climate intervention
 
 **26.0-29.5: Crisis & Planetary Systems**
 - DefensiveAIPhase (26.0): Sleeper detection, defensive actions
@@ -2313,7 +2344,7 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 
 **30.0-36.0: Metrics & Outcome Calculation**
 - UnemploymentPhase (30.0): Calculate unemployment, displacement
-- **UnknownUnknownPhase (30.5)**: Black swan events - unknown unknowns (10 event templates, 0.1% base probability) (**NEW Oct 30**)
+- **UnknownUnknownPhase (30.5)**: Black swan events - unknown unknowns (10 event templates, 0.15% base probability) (**NEW Oct 30**)
 - EconomicTransitionPhase (31.0): Progress toward post-scarcity
 - ParanoiaPhase (32.0): Government paranoia dynamics
 - SocialStabilityPhase (33.0): Social cohesion, coordination
@@ -2361,14 +2392,15 @@ The simulation runs via a **phase-based architecture** with 69+ phases executing
 - **Bug Fix (Oct 29):** Fixed negative food security in ClimateImpactCascadePhase - added `MIN_FOOD_SECURITY = 0.001` floor to prevent stacking climate impacts from violating bounds (see `devlogs/climate-impact-negative-food-security-fix_20251029.md`)
 
 **Key Changes (Oct 30):**
-- **✅ P3.2 COMPLETE (Oct 30):** Unknown Unknowns (black swan events) implemented with 10 event templates (3 breakthroughs, 4 crises, 3 paradigm shifts). Base probability: 0.1% per month (1.2% per year), scales with global uncertainty and AI capability. Deterministic RNG, research-backed parameters (Taleb 2007), emoji conventions (☄️ for exogenous shocks). Phase order: 30.5 (after crises, before outcomes). Implementation time: 4h (within 4-6h estimate). See `logs/unknown_unknown_implementation_20251030.md` (commit 809c211).
+- **✅ P3.2 COMPLETE (Oct 30):** Unknown Unknowns (black swan events) implemented with 10 event templates (3 breakthroughs, 4 crises, 3 paradigm shifts). Base probability: **0.15% per month (1.8% per year)** - recalibrated from 0.1% after research consensus validation. Expected: ~1 simulation-affecting event per 20-year run. Research-backed impact magnitudes: COVID-19 (-0.08% mortality, -3.5% GDP), 2008 crisis (-5% GDP over 24mo). Impact threshold: ≥1% GDP OR ≥0.01% mortality. Framework: Ord (2020) "The Precipice" for quantifiable low-probability events. Deterministic RNG, emoji conventions (☄️ for exogenous shocks). Phase order: 30.5 (after crises, before outcomes). See research consensus: `.claude/chatroom/research-consensus-20251030_p3_2_unknown_unknowns.txt` (commit c63561d).
+- **✅ NEW PHASE (Oct 30):** PolicyImplementationPhase (order 25.5) - Tracks ongoing policy evolution with sigmoid ramp-up, political will decay, and abandonment risk. Research basis: Pressman & Wildavsky (1973) implementation delays, Sabatier (1988) political will decay, Stigler (1971) regulatory capture. Logs milestones at 25%, 50%, 75%, 90% effectiveness. Integrates with government response system (commit c63561d).
 - **Bug Fix (Oct 30):** Fixed extinction rate capping in PlanetaryBoundariesPhase - code logged "capped at 10×" but didn't actually clamp the value, causing `assertInRange` to throw when extinction rates exceeded 10× (40% failure rate in N=10 Monte Carlo validation). Added `Math.min/max` to actually cap before assertion. Caught by Priority 1 assertion cleanup validation sweep (commit d520d3e, related to commit 08243e3).
 - **✅ BLOCKER-1 FIXED & VALIDATED (Oct 30):** Capped displayed mortality at 100% in planetary boundary cascades (`planetaryBoundaries.ts:869-905`). Root cause: Unbounded exponential `1.05^N` produced physically impossible values (e.g., 1687.9% at month 192). Fix: Cap display at 100%, add warnings when theoretical exceeds limit. **Important:** This was always display-only; actual mortality computed by `bayesianMortality.ts` with 2.8% monthly cap. **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 mortality >100% errors (commit 443ba64, validated 98c17d2).
 - **✅ BLOCKER-2 FIXED & VALIDATED (Oct 30):** Corrected biosphere baseline from 137× to 2.2× natural extinction rate in `planetaryBoundaries.ts:67-72, 548-553`. Research: Richardson et al. (2023). Fixed old extinction rate floor in `techTree/effectsEngine.ts` (caught by assertions). **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 extinction rate >10× errors (commit 443ba64, validated 98c17d2).
 - **✅ BLOCKER-3 FIXED & VALIDATED (Oct 30):** Fixed phantom "99.7% mortality = extinction" outcomes (BLOCKER-3). Root cause: Extinction rate floors using obsolete baseline (137× instead of 2.2×) in tech tree effects. Fix: Removed old floors, assertions now catch invalid values. **Validation:** N=10 Monte Carlo (seeds 42000-42009, 120 months) - 0 false extinction outcomes (validated 98c17d2).
 - **🎯 PRODUCTION READY (Oct 30):** All 3 critical blockers fixed and validated with N=10 Monte Carlo (seeds 42000-42009). **Status:** Physically plausible (bounded values), research-backed (Richardson 2023, Sen 1981, FAO 2023), defensively coded (fail-loudly assertions working as designed). Performance: ~9-11s/run (0.04s/month). Exit code: 0 (SUCCESS). See `reviews/blocker_fixes_final_validation_20251030.md`.
 
-**Total Phases**: 70 registered phases (69 + UnknownUnknownPhase)
+**Total Phases**: 71 registered phases (69 + UnknownUnknownPhase + PolicyImplementationPhase)
 
 ---
 
@@ -2954,28 +2986,12 @@ state.history.exogenousShocks?: Array<{
 ```
 
 **Shock Types** (8 total):
-- **Black Swans** (0.1%/month): Nuclear War, AGI Breakthrough, Asteroid Impact, Mega-Pandemic
-- **Gray Swans** (1.0%/month): Financial Crash, Regional War, Tech Breakthrough, Political Upheaval
-
-### Mega-Pandemic Crisis State
-
-**Location**: `src/types/game.ts` lines 234-242
-
-```typescript
-state.crises?: {
-  megaPandemic?: {
-    active: boolean;
-    startMonth: number;
-    totalMortality: number;      // 20-40% total
-    monthlyMortality: number;    // Distributed over 24 months
-    socialDisruption: number;    // 0.6 (60% disruption)
-  };
-}
-```
-
-**Trigger**: Mega-Pandemic exogenous shock (0.1%/month probability)
-**Duration**: 24 months gradual mortality
-**Effects**: Economic contraction, social disruption
+- **Unknown Unknowns** (0.15%/month): 10 event templates
+  - 3 transformative breakthroughs (superconductor, consciousness upload, desalination)
+  - 4 major crises (solar flare, pathogen, gamma-ray burst, AI deception)
+  - 3 paradigm shifts (post-scarcity, spirituality movement, coordination protocol)
+- **Historical calibration**: ~1 simulation-affecting event per 20-year run
+- **Impact threshold**: ≥1% GDP OR ≥0.01% mortality
 
 ---
 
@@ -3271,7 +3287,7 @@ See [Emoji Legend](./_EMOJI_LEGEND.md) for consistent status indicators and term
 
 **Contingency & Agency Phases 1-3: Fat-Tailed Distributions + Black/Gray Swans + Critical Junctures**
 - 🎲 **Phase 1 - Lévy flights**: Power-law distributions replace Gaussian (8,249 extreme events validated)
-- 🌩️ **Phase 2 - Exogenous shocks**: 8 shock types (Black Swans 0.1%/month, Gray Swans 1%/month)
+- 🌩️ **Phase 2 - Exogenous shocks**: Unknown Unknowns (10 templates, 0.15%/month - ~1 event per 20y run)
 - 🦸 **Phase 3 - Critical junctures**: 90/10 structure-agency split (4 escape types, rare hero moments)
 - 📊 Outcome variance: Broke 80-90% seed convergence, enabled branching paths
 - ✅ Validation: N=100 runs for Phases 2-3, N=50 runs for Phase 1
