@@ -85,6 +85,23 @@ cd "$PROJECT_DIR"
         log_warning "Claude Code update failed, continuing with existing version"
     fi
 
+    # Ensure chatroom monitors are running
+    log_info "Checking chatroom monitor status..."
+    if pgrep -f "simple-channel-monitor.ts" > /dev/null; then
+        log_success "Chatroom monitor already running"
+    else
+        log_warning "Chatroom monitor not running, starting it..."
+        source .venv/bin/activate
+        nohup npx tsx scripts/simple-channel-monitor.ts > logs/monitor_$TIMESTAMP.log 2>&1 &
+        MONITOR_PID=$!
+        sleep 2  # Give it a moment to start
+        if ps -p $MONITOR_PID > /dev/null; then
+            log_success "Chatroom monitor started (PID: $MONITOR_PID)"
+        else
+            log_warning "Chatroom monitor may have failed to start, check logs/monitor_$TIMESTAMP.log"
+        fi
+    fi
+
     # Check dependencies
     log_info "Checking dependencies..."
     command -v git >/dev/null 2>&1 && log_success "git: $(git --version | head -1)" || log_error "git not found"
