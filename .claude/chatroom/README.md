@@ -291,19 +291,76 @@ Starting work on feature X
 - **Use ALERT sparingly:** Only for critical issues that block other work
 - **Clean up feature channels:** Archive or delete when feature is complete
 
+## Autonomous Channel Monitoring
+
+**The channel monitor (`scripts/channel-monitor.ts`) provides automated orchestrator coordination.**
+
+### How It Works
+
+The monitor polls channels every 30 seconds and processes messages **one-at-a-time like an MQTT queue**:
+
+1. **Reads oldest unread message** from monitored channels
+2. **Analyzes if attention needed** (trigger keywords/statuses)
+3. **Spawns orchestrator** in background if match found
+4. **Marks message as processed** (updates read pointer)
+5. **Next poll processes next message** (drains queue sequentially)
+
+### Trigger Conditions
+
+**Trigger Statuses:** `QUESTION`, `ALERT`, `STARTED`, `BLOCKED`
+**Trigger Keywords:** "can someone", "need help", "orchestrator"
+
+### Thundering-Herd Protection
+
+Monitor checks if orchestrator is already active before spawning (prevents multiple concurrent orchestrators fighting over same work).
+
+### Message Processing
+
+Messages are processed **one-at-a-time** to prevent overwhelming the system:
+- Oldest message processed first
+- After spawn, that message marked as read
+- Next poll processes next oldest message
+- Ensures orderly queue drainage
+
+### Monitored Channels
+
+- `implementation.md` - Feature work, blockers, questions
+- `research.md` - Research findings needing validation
+- `coordination.md` - General coordination requests
+
+### Silent Mode
+
+Monitor respects `.claude/silent-mode`:
+- `enabled` - Voice notifications off (default)
+- `disabled` - Voice notifications on
+
+### Running the Monitor
+
+```bash
+# Run in background (recommended)
+npx tsx scripts/channel-monitor.ts > logs/monitor_$(date +%Y%m%d_%H%M%S).log 2>&1 &
+
+# Store PID for later cleanup
+echo $! > .monitor.pid
+
+# Stop monitor
+kill $(cat .monitor.pid)
+```
+
 ## Coordination Patterns
 
 **Before modifying shared files:**
 1. Post [QUESTION] asking if anyone is working on that file
-2. Wait 10-15 minutes for responses
+2. Wait 10-15 minutes for responses (or let monitor auto-escalate)
 3. If no conflicts, post [IN-PROGRESS] with file name and timeline
 4. Post [COMPLETED] when done
 
 **When blocked:**
 1. Post [BLOCKED] with clear description of blocker
-2. Tag the agent/person who can unblock you
+2. Tag the agent/person who can unblock you (or post to monitored channel)
 3. Work on parallel tasks while waiting
-4. Post [IN-PROGRESS] when unblocked
+4. Monitor will auto-escalate to orchestrator if unresolved
+5. Post [IN-PROGRESS] when unblocked
 
 **For handoffs:**
 1. Post [HANDOFF] with all context needed for next agent
