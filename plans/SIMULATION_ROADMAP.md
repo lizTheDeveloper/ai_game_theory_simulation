@@ -607,11 +607,10 @@ Research provides **WHAT** (thresholds, concepts, mechanisms) but simulation nee
 - `research/ROUND5_REMEDIATION_STRATEGY_20251030.md` (850 lines)
 
 **Additional Verification Queue (from commits, 17-31h):**
-- [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785) 
-- [ ] **NEW:** Verify P3.2 Unknown Unknowns citations (commit 809c211) 
-- [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e) 
-- [ ] **HIGH PRIORITY:** Verify Richardson et al. biosphere baseline (commit 443ba64) 
-- [ ] **NEW:** Verify crisis mitigation mechanics citations (commit ad4647b) 
+- [ ] **NEW:** Verify proactive data center divestment parameters (commit a0f4785)
+- [ ] **NEW:** Verify population coherence fix parameters (commit baaa33e)
+- [ ] **HIGH PRIORITY:** Verify Richardson et al. biosphere baseline (commit 443ba64)
+- [ ] **NEW:** Verify crisis mitigation mechanics citations (commit ad4647b)
 - [ ] Verify regional refugee population constants (commit 43a9b22) 
 
 **See:** `research/LAYER2_DEBATE_SUMMARY_20251030.md` for complete analysis
@@ -911,12 +910,15 @@ Review `CollectiveActionsPhase.ts` to determine what's already modeled:
 - Event-driven architecture, 3-5x performance gain
 - Plan: `/plans/p3-1-variable-timesteps.md`
 
-**P3.2: Unknown Unknowns** ✅ **COMPLETE (Roy1, Oct 30 @7:00pm, 4h)**
+**P3.2: Unknown Unknowns** ✅ **COMPLETE + RESEARCH VERIFIED (Roy3, Oct 30, 6h total)**
 - Black swan events, true uncertainty
 - Plan: `/plans/p3-2-unknown-unknowns.md`
-- Implementation: 10 event templates, 0.1% base probability, deterministic RNG
-- Commit: 809c211
-- Log: `logs/unknown_unknown_implementation_20251030.md`
+- Implementation: 10 event templates, 0.15% base probability, deterministic RNG, research-backed
+- Workflow: Implementation (809c211, 4h) → 5-round research consensus → Parameter application (6436d53) → Validation
+- Research: All parameters research-backed (Ord 2020, Reinhart & Rogoff 2009, historical precedents)
+- Validation: Monte Carlo N=10, ~1 event per 20y run (target met)
+- Commits: 809c211 (initial), 6436d53 (consensus params), 815c9b8 (consensus doc)
+- Devlog: `devlogs/p3_2_consensus_complete_20251030.md`
 
 **P3.3: Alignment Specificity** ✅ **COMPLETE (Oct 26)**
 - Plan: `/plans/completed/p3-3-alignment-model-specificity_COMPLETE_20251026.md`
