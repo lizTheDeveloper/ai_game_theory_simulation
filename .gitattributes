@@ -1,0 +1,4 @@
+claude-conversations/*.jsonl filter=lfs diff=lfs merge=lfs -text
+logs/monte_carlo/*.log filter=lfs diff=lfs merge=lfs -text
+logs/parameter_sweep_*/*.log filter=lfs diff=lfs merge=lfs -text
+monteCarloOutputs/*.json filter=lfs diff=lfs merge=lfs -text

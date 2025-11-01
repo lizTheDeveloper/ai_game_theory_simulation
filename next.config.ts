@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+<<<<<<< HEAD
 
   // Enable standalone output for Docker/Cloud deployment
   output: 'standalone',
@@ -45,6 +46,8 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+=======
+>>>>>>> 8e2778351 (Initial commit from Create Next App)
 };
 
 export default nextConfig;

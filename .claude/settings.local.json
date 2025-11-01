@@ -152,16 +152,18 @@
       "mcp__playwright__browser_type",
       "mcp__playwright__browser_hover",
       "Bash(bash:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git diff:*)"
     ],
     "deny": [],
     "ask": [],
     "permissionMode": "bypassPermissions"
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
-    "transcript-rag",
+    "agent-memory",
     "ai-safety-transcripts",
-    "arxiv",
-    "pdf-rag"
+    "research-pdfs",
+    "arxiv"
   ]
 }

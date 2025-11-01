@@ -16,6 +16,7 @@
  */
 
 import { GameState, SimulationPhase, PhaseResult, PhaseContext, RNGFunction } from '@/types/game';
+import { RegionalDataSynchronizer } from '@/simulation/utils/regionalDataSynchronizer';
 
 export class FoodSecurityDegradationPhase implements SimulationPhase {
   readonly id = 'food-security-degradation';
@@ -133,6 +134,14 @@ export class FoodSecurityDegradationPhase implements SimulationPhase {
       if (state.currentMonth % 12 === 0) {
         console.log(`[Phase ${this.order}] ${this.name}: Global food security = ${(globalFoodSec * 100).toFixed(1)}% (pop-weighted avg of regional)`);
       }
+    }
+
+    // === CRITICAL FIX: Synchronize regionalPopulations → biodiversitySystem.regions ===
+    // After modifying regionalPopulations.foodSecurity, sync to regions.famineRisk
+    // Using RegionalDataSynchronizer utility (Nov 1, 2025 mitigation)
+    // See: /docs/DUAL_REGIONAL_SYSTEM_MITIGATION.md
+    if (state.humanPopulationSystem?.regionalPopulations) {
+      RegionalDataSynchronizer.syncPopToBioOrThrow(state, 'FoodSecurityDegradationPhase.execute');
     }
 
     return { events: [] };
