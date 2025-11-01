@@ -3343,6 +3343,40 @@ state.history.exogenousShocks?: Array<{
   - 4cd638d (Oct 31, 2025) - Fixed exactly-once semantics (prevent queue backup)
   - ba8dfcb (Oct 31, 2025) - Fixed message processing: only mark processed after successful spawn
 
+**GameState Field Editor Agent** ✅ DOCUMENTED
+- **Purpose**: Haiku micro-agent for mechanical GameState field edits with FULL GameState type context (900 lines)
+- **Spawned by**: `simulation-maintainer` (Sonnet) for simple field access changes
+- **Why it exists**: Division of labor - Sonnet plans strategically, Haiku executes mechanically with perfect accuracy
+- **Architecture rationale**:
+  - GameState interface is 900 lines (3.5K tokens)
+  - Including full context in Sonnet invocations wastes tokens on mechanical work
+  - Haiku can absorb 900-line context efficiently ($0.0035 per edit)
+  - Mechanical edits don't need strategic intelligence - they need perfect field name accuracy
+- **Efficiency comparison**:
+  - Sonnet WITH full context: $0.0105 per edit (overkill)
+  - Sonnet WITHOUT full context: $0.003 per edit (error-prone, field name hallucinations)
+  - Haiku WITH full context: $0.0035 per edit ← optimal (70% more efficient than Sonnet)
+- **Execution pattern**: Read → Edit → Done (1-3 tool calls, zero hallucinations)
+- **Value proposition**: Prevents field name hallucinations that TypeScript can't catch (nested paths like `state.foo.bar.baz`)
+- **Files**: `.claude/agents/gamestate-field-editor.md` (939 lines)
+- Commit: 793441e (Nov 1, 2025)
+
+**Matrix MCP Configuration** ✅ DOCUMENTED
+- **Purpose**: Matrix real-time messaging integration for multi-agent coordination
+- **Agent identity**: Per-agent bot tokens in `~/.superalignment-env` (11 agents total)
+- **Configuration**: `.claude/agents/mcp-configs/matrix-test.json` - Test config for Matrix tool validation
+- **Architecture**: All agents use same Matrix MCP server - identity comes from which bot token is used, not separate MCP configs
+- **Channel access patterns**:
+  - **Coordination** (Universal): All 11 agents (orchestrator, cynthia, sylvia, roy, moss, tessa, historian, architect, ray, monitor)
+  - **Research** (Specialists monitor): Cynthia + Sylvia monitor, others can post questions
+  - **Implementation** (Specialists monitor): Roy + Architect monitor implementation tasks and roadmap sync
+  - Other channels as needed: research-critique, architecture, testing, documentation, roadmap, triggers, alerts, status
+- **CLI sub-agent pattern**: Matrix tools available via CLI-spawned sub-agents (main context requires restart after `claude mcp add`)
+- **Usage example**: `claude --dangerously-skip-permissions --model haiku --mcp-config .claude/agents/mcp-configs/matrix-test.json --print "Post 'message' to channel as agent"`
+- **Bridge**: `scripts/chatroom-matrix-bridge.py` syncs file-based chatroom messages to Matrix rooms
+- **Documentation**: CLAUDE.md lines 250-347 (Matrix Real-Time Coordination section)
+- Commit: 793441e (Nov 1, 2025)
+
 ---
 
 ## 📚 Recent Research & Plans Reference (Oct 16-17, 2025)
