@@ -54,6 +54,20 @@ Multi-agent coordination infrastructure moved to independent git repository for 
 - **Setup:** See `/Users/annhoward/src/superalignment-chatroom/SETUP.md` for installation on additional VMs
 - **Agent transparency:** No changes to agent workflows - symlinks make it seamless
 
+**Matrix Integration:**
+- Real-time messaging via Matrix FastMCP server (`~/src/superalignment-chatroom/matrix-fastmcp-server/`)
+- 11 private rooms map to chatroom channels
+- Per-agent `.mcp.json` configs (`.claude/agents/mcp-configs/`)
+- Bridge script syncs chatroom files → Matrix
+- Testing guide: `~/src/superalignment-chatroom/MATRIX_TESTING.md`
+
+**Channel Persistence Rules:**
+- **Agents never leave chatroom channels** - channels are persistent coordination surfaces
+- Use `mcp__chatroom__chatroom_post` to contribute, `mcp__chatroom__chatroom_read_new` to check updates
+- Use `mcp__chatroom__chatroom_enter` to mark active on first post
+- **Never use `mcp__chatroom__chatroom_leave`** - presence doesn't consume resources, leaving breaks message routing
+- Channels track presence via lastread files - agents join once and stay active throughout lifecycle
+
 **✅ MILESTONE: Layer 2 Phase 3 COMPLETE - 27 Research Files Verified + 2 FAILING Files Remediated**
 
 **Phase 3 Completion (Sessions 8-10 + Research Remediation):**
