@@ -197,6 +197,11 @@ const tools: Tool[] = [
       required: ['channel', 'agent'],
     },
   },
+  // DISABLED: chatroom_leave tool removed per user request (2025-10-31)
+  // Agents should never leave channels - they are persistent coordination surfaces
+  // Leaving breaks multi-agent coordination and message routing
+  // If re-enabling is needed, restore this tool definition and the handler case below
+  /*
   {
     name: 'chatroom_leave',
     description: 'Leave a channel (mark as inactive, post exit message)',
@@ -220,6 +225,7 @@ const tools: Tool[] = [
       required: ['channel', 'agent'],
     },
   },
+  */
   {
     name: 'chatroom_who_active',
     description: 'List active agents in a channel',
@@ -423,6 +429,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         };
       }
 
+      // DISABLED: chatroom_leave handler removed per user request (2025-10-31)
+      // If re-enabling, uncomment this case block and the tool definition above
+      /*
       case 'chatroom_leave': {
         const { channel, agent, reason = 'Leaving channel' } = args as {
           channel: string;
@@ -450,6 +459,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           ],
         };
       }
+      */
 
       case 'chatroom_who_active': {
         const { channel } = args as { channel: string };
