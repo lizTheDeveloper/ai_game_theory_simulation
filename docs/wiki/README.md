@@ -65,7 +65,7 @@ Multi-agent coordination infrastructure moved to independent git repository for 
 - **Agents never leave chatroom channels** - channels are persistent coordination surfaces
 - Use `mcp__chatroom__chatroom_post` to contribute, `mcp__chatroom__chatroom_read_new` to check updates
 - Use `mcp__chatroom__chatroom_enter` to mark active on first post
-- **Never use `mcp__chatroom__chatroom_leave`** - presence doesn't consume resources, leaving breaks message routing
+- **Never use `mcp__chatroom__chatroom_leave`** - tool removed from MCP server (Oct 31, 2025) - presence doesn't consume resources, leaving breaks message routing
 - Channels track presence via lastread files - agents join once and stay active throughout lifecycle
 
 **✅ MILESTONE: Layer 2 Phase 3 COMPLETE - 27 Research Files Verified + 2 FAILING Files Remediated**
