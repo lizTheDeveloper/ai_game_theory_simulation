@@ -247,6 +247,104 @@ Chatroom channels are persistent coordination surfaces, not ephemeral chat rooms
 
 **When spawning agents:** They auto-enter channels on first post. They never need to leave. If an agent feels they should "leave" a channel, they should simply stop posting to it instead.
 
+### Matrix Real-Time Coordination
+
+**Matrix provides real-time messaging for multi-agent coordination.** While file-based chatrooms are the primary coordination surface, Matrix enables instant notifications and mobile access.
+
+#### Agent Identity in Matrix
+
+**Each agent has their own Matrix bot account**, authenticated via tokens in `~/.superalignment-env`:
+
+```bash
+# Bot tokens (one per agent)
+MATRIX_TOKEN_ORCHESTRATOR=syt_...
+MATRIX_TOKEN_SYLVIA=syt_...
+MATRIX_TOKEN_ROY=syt_...
+MATRIX_TOKEN_CYNTHIA=syt_...
+# ... etc (11 agents total)
+```
+
+**Identity is determined by the `agent` parameter** when calling Matrix tools:
+
+```bash
+# Posts as @cynthia-researcher:themultiverse.school
+matrix_post_message(channel="research", agent="cynthia", message="...")
+
+# Posts as @roy:themultiverse.school
+matrix_post_message(channel="implementation", agent="roy", message="...")
+```
+
+**Important:** All agents use the **same Matrix MCP server** - the agent identity comes from which bot token is used, not from separate MCP configs.
+
+#### Channel Access Patterns
+
+**🎯 Coordination** (Universal - All 11 agents)
+- **Purpose:** Cross-team coordination, status updates
+- **Monitors:** Everyone
+- **Members:** orchestrator, cynthia, sylvia, roy, moss, tessa, historian, architect, ray, monitor
+
+**🔬 Research** (Specialists monitor, others can post)
+- **Purpose:** Research questions, parameter validation, citation verification
+- **Monitors:** Cynthia (super-alignment-researcher) + Sylvia (research-skeptic)
+- **Members:** cynthia, sylvia
+- **Pattern:** Other agents post questions, researchers monitor and respond
+
+**⚙️ Implementation** (Specialists monitor)
+- **Purpose:** Implementation tasks, progress tracking, roadmap sync
+- **Monitors:** Roy (simulation-maintainer) + Architect (roadmap maintainer)
+- **Members:** roy, architect
+- **Pattern:**
+  - Roy: Posts "Starting X task" → executes → "Completed X task"
+  - Architect: Syncs roadmap based on implementation activity
+
+**Other channels** (as needed):
+- **research-critique** - Quality gate 1 reviews
+- **architecture** - Quality gate 2 reviews, performance analysis
+- **testing** - Test results, Monte Carlo validation
+- **documentation** - Wiki updates, devlog creation
+- **roadmap** - Roadmap discussions, priority changes
+- **triggers** - Event-driven automation triggers
+- **alerts** - Critical system alerts
+- **status** - System status updates
+
+#### Using Matrix Tools (CLI Sub-Agent Pattern)
+
+**Matrix tools are available via CLI-spawned sub-agents** (main context requires restart after `claude mcp add`):
+
+**Basic pattern:**
+```bash
+claude --dangerously-skip-permissions \
+  --model haiku \
+  --mcp-config .claude/agents/mcp-configs/matrix-test.json \
+  --print "Your prompt here"
+```
+
+**Available Matrix tools:**
+- `mcp__matrix__matrix_post_message` - Post to a channel
+- `mcp__matrix__matrix_list_rooms` - List all rooms and mappings
+- `mcp__matrix__matrix_get_notifications` - Check unread count
+- `mcp__matrix__matrix_check_membership` - Verify user in room
+- `mcp__matrix__matrix_invite_user` - Invite user to room
+- `mcp__matrix__matrix_create_room` - Create new room (architect only)
+
+**Examples:**
+
+Post a message:
+```bash
+claude --dangerously-skip-permissions --model haiku \
+  --mcp-config .claude/agents/mcp-configs/matrix-test.json \
+  --print "Post 'Starting climate tipping points research' to research channel as cynthia"
+```
+
+Check notifications:
+```bash
+claude --dangerously-skip-permissions --model haiku \
+  --mcp-config .claude/agents/mcp-configs/matrix-test.json \
+  --print "Check unread notifications for agent roy"
+```
+
+**Matrix-Chatroom Bridge:** The bridge script (`scripts/chatroom-matrix-bridge.py`) syncs file-based chatroom messages to Matrix rooms, maintaining bidirectional coordination.
+
 ## Multi-Agent Workflow (Default Approach)
 
 **For non-trivial tasks, use the orchestrator agent** to coordinate research, validation, implementation, and review.

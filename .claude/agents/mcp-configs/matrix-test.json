@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "matrix": {
+      "command": "/Users/annhoward/src/superalignment-chatroom/matrix-fastmcp-server/run.sh",
+      "args": [],
+      "env": {}
+    }
+  }
+}
