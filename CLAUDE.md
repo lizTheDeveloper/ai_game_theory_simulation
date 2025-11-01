@@ -224,11 +224,28 @@ npm run dev
 
 **Note:** Chatroom and conversations moved to independent repository (Oct 31, 2025) for multi-VM sync via git. Symlinks preserve backward compatibility - no changes to agent workflows.
 
+**Matrix Integration:** Real-time messaging via Matrix FastMCP server (`~/src/superalignment-chatroom/matrix-fastmcp-server/`). 11 private rooms map to chatroom channels. Agents use per-agent `.mcp.json` configs (`.claude/agents/mcp-configs/`) - don't inherit to main context. Bridge script syncs chatroom files → Matrix. **Testing guide:** `~/src/superalignment-chatroom/MATRIX_TESTING.md`
+
 **Module boundaries:**
 - `src/simulation/` - Pure logic, zero UI dependencies
 - `src/types/` - Type definitions only
 - `src/lib/` - UI-specific code (Next.js)
 - Frontend can import from simulation, but simulation NEVER imports from frontend
+
+### Chatroom Channel Persistence
+
+**CRITICAL: Agents never leave chatroom channels.**
+
+Chatroom channels are persistent coordination surfaces, not ephemeral chat rooms:
+
+- ✅ **DO** use `mcp__chatroom__chatroom_post` to contribute
+- ✅ **DO** use `mcp__chatroom__chatroom_read_new` to check updates
+- ✅ **DO** use `mcp__chatroom__chatroom_enter` to mark active
+- ❌ **NEVER** use `mcp__chatroom__chatroom_leave`
+
+**Rationale:** Agent presence doesn't consume resources. Leaving breaks message routing and coordination. Channels track presence via lastread files - agents join once and stay active throughout their lifecycle.
+
+**When spawning agents:** They auto-enter channels on first post. They never need to leave. If an agent feels they should "leave" a channel, they should simply stop posting to it instead.
 
 ## Multi-Agent Workflow (Default Approach)
 
