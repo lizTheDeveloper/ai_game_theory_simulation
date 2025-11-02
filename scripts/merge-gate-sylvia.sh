@@ -104,6 +104,18 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] 📄 Full review: $REVIEW_OUTPUT" | tee -a 
 # Exit with status based on verdict
 if [ "$VERDICT" = "BLOCK" ]; then
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] ❌ Sylvia review BLOCKED merge: $REASON" | tee -a "$LOG_FILE"
+
+  # Trigger auto-remediation if enabled
+  ENABLE_AUTO_REMEDIATION="${MERGE_ORCHESTRATOR_ENABLE_AUTO_REMEDIATION:-true}"
+  if [ "$ENABLE_AUTO_REMEDIATION" = "true" ] && [ "$CRITICAL_FINDINGS" -gt 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🔧 Triggering auto-remediation for $CRITICAL_FINDINGS CRITICAL findings..." | tee -a "$LOG_FILE"
+    if "$SCRIPT_DIR/merge-auto-remediate.sh" "$BRANCH" "$TIMESTAMP" "$LOG_FILE" "sylvia" "$REVIEW_OUTPUT"; then
+      echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✅ Auto-remediation completed - branch will be retried on next run" | tee -a "$LOG_FILE"
+    else
+      echo "[$(date '+%Y-%m-%d %H:%M:%S')] ⚠️  Auto-remediation failed or max attempts reached" | tee -a "$LOG_FILE"
+    fi
+  fi
+
   exit 1
 else
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✅ Sylvia review APPROVED merge" | tee -a "$LOG_FILE"
