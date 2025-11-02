@@ -29,6 +29,7 @@ DRY_RUN="${MERGE_ORCHESTRATOR_DRY_RUN:-false}"
 NOTIFY="${MERGE_ORCHESTRATOR_NOTIFY:-true}"
 MAX_BRANCHES="${MERGE_ORCHESTRATOR_MAX_BRANCHES:-10}"
 SKIP_FRONTEND="${MERGE_ORCHESTRATOR_SKIP_FRONTEND:-$IS_VM}"
+ENABLE_AGENT_REVIEWS="${MERGE_ORCHESTRATOR_ENABLE_AGENT_REVIEWS:-true}"  # Phase 2: Architecture-skeptic + Sylvia reviews
 
 # ============================================
 # Logging Setup
@@ -242,13 +243,29 @@ run_quality_gates() {
     log_warning "No test scripts found, skipping test gate"
   fi
 
-  # Gate 3: Architecture Skeptic Review (optional - spawn agent)
-  # TODO: Implement agent spawning (Phase 2)
-  log_info "Gate 3: Architecture review (skipped - not implemented yet)"
+  # Gate 3: Architecture Skeptic Review
+  if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+    log_info "Gate 3: Architecture review..."
+    if ! "$SCRIPT_DIR/merge-gate-architecture.sh" "$feature_branch" "$TIMESTAMP" "$LOG_FILE"; then
+      log_error "Architecture review blocked merge"
+      return 1
+    fi
+    log_success "Architecture review passed"
+  else
+    log_info "Gate 3: Architecture review (skipped - agent reviews disabled)"
+  fi
 
-  # Gate 4: Sylvia Final Review (optional - spawn agent)
-  # TODO: Implement agent spawning (Phase 2)
-  log_info "Gate 4: Sylvia review (skipped - not implemented yet)"
+  # Gate 4: Sylvia Final Review
+  if [ "$ENABLE_AGENT_REVIEWS" = "true" ]; then
+    log_info "Gate 4: Sylvia final review..."
+    if ! "$SCRIPT_DIR/merge-gate-sylvia.sh" "$feature_branch" "$TIMESTAMP" "$LOG_FILE"; then
+      log_error "Sylvia review blocked merge"
+      return 1
+    fi
+    log_success "Sylvia review passed"
+  else
+    log_info "Gate 4: Sylvia review (skipped - agent reviews disabled)"
+  fi
 
   return 0
 }
@@ -263,6 +280,7 @@ main() {
   log_info "Dry run: $DRY_RUN"
   log_info "Skip frontend: $SKIP_FRONTEND"
   log_info "Max branches: $MAX_BRANCHES"
+  log_info "Agent reviews (Phase 2): $ENABLE_AGENT_REVIEWS"
 
   # Acquire lock
   acquire_lock
