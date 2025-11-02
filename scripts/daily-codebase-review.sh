@@ -225,5 +225,90 @@ else
   log "✅ No CRITICAL issues detected in daily review"
 fi
 
+# ============================================
+# Architect - Update Roadmap with Findings
+# ============================================
+
+log_section "Architect - Roadmap Update (Opus)"
+
+ARCHITECT_OUTPUT="$LOG_DIR/architect_${TIMESTAMP}.txt"
+
+ARCHITECT_PROMPT="Daily roadmap update based on review findings.
+
+## Context
+Repository: AI Game Theory Simulation
+Review date: $(date -u)
+
+## Review Findings
+
+### Architecture Review
+- Health: $ARCH_HEALTH
+- CRITICAL issues: $ARCH_CRITICAL
+- HIGH issues: $ARCH_HIGH
+
+Full report: \\\`$ARCH_OUTPUT\\\`
+
+### Research Skeptic (Sylvia) Review
+- Research integrity: $SYLVIA_RESEARCH
+- CRITICAL findings: $SYLVIA_CRITICAL
+- Regressions detected: $SYLVIA_REGRESSIONS
+
+Full report: \\\`$SYLVIA_OUTPUT\\\`
+
+### Total Issues
+- CRITICAL: $TOTAL_CRITICAL
+- HIGH: $ARCH_HIGH
+
+## Your Task (Architect)
+
+You are The Architect - roadmap maintainer and historical preserver.
+
+**Read the review reports and update the roadmap:**
+
+1. **Add CRITICAL issues to roadmap** (if any):
+   - Read both review outputs
+   - Extract actionable CRITICAL issues
+   - Add to plans/MASTER_IMPLEMENTATION_ROADMAP.md as CRITICAL priority
+   - Use format: \\\`- [ ] **[SYSTEM]** Fix: [issue description] (Source: Daily Review $TIMESTAMP)\\\`
+
+2. **Add HIGH priority issues** (if any):
+   - Extract HIGH priority architectural concerns
+   - Add to roadmap as HIGH priority
+   - Group by affected system (simulation, frontend, testing, etc.)
+
+3. **Update Progress Summary**:
+   - Note overall codebase health: $ARCH_HEALTH
+   - Note research integrity: $SYLVIA_RESEARCH
+   - Add timestamp of this review
+
+4. **Create tracking files** (if issues found):
+   - Save actionable items to plans/daily_review_items_$TIMESTAMP.md
+   - Cross-reference with roadmap
+
+**Output Format:**
+Log your actions:
+- Issues added to roadmap (count and priority)
+- Systems affected
+- Next recommended actions
+
+End with:
+ROADMAP_UPDATES: [count]
+TRACKING_FILE: [path or NONE]
+"
+
+log "Spawning architect agent (Opus) to update roadmap..."
+claude --dangerously-skip-permissions \
+  --model opus \
+  --print "$ARCHITECT_PROMPT" > "$ARCHITECT_OUTPUT" 2>&1
+
+# Parse results
+ROADMAP_UPDATES=$(grep "ROADMAP_UPDATES:" "$ARCHITECT_OUTPUT" | grep -oE '[0-9]+' || echo "0")
+TRACKING_FILE=$(grep "TRACKING_FILE:" "$ARCHITECT_OUTPUT" | awk '{print $2}' || echo "NONE")
+
+log "Architect Results:"
+log "  📝 Roadmap updates: $ROADMAP_UPDATES"
+log "  📄 Tracking file: $TRACKING_FILE"
+log "  📄 Full report: $ARCHITECT_OUTPUT"
+
 log_section "✅ Daily Review Complete"
 log "Log file: $LOG_FILE"
