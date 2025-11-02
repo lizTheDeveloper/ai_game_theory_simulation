@@ -141,11 +141,11 @@ After making fixes, report:
 Begin fixing the CRITICAL findings now."
 fi
 
-# Spawn fix agent
+# Spawn fix agent (uses Opus for complex remediation tasks)
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🤖 Spawning fix agent ($REVIEW_TYPE)..." | tee -a "$LOG_FILE"
 
 claude --dangerously-skip-permissions \
-  --model sonnet \
+  --model opus \
   --print "$PROMPT" > "$REMEDIATION_LOG" 2>&1
 
 # Parse remediation results

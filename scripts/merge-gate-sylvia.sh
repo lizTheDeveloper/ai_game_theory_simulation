@@ -73,9 +73,9 @@ CRITICAL_FINDINGS: [count]
 RECOMMENDATIONS: [brief summary]
 "
 
-# Spawn research-skeptic agent
+# Spawn research-skeptic (Sylvia) agent (uses Opus per agent config)
 claude --dangerously-skip-permissions \
-  --model sonnet \
+  --model opus \
   --print "$PROMPT" > "$REVIEW_OUTPUT" 2>&1
 
 # Parse verdict from output
