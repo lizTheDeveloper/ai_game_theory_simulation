@@ -65,6 +65,7 @@ scripts/__pycache__/
 
 # Python virtual environment for Presidio
 venv/
+.venv/
 # Large PDF files (>100MB)
 research/pdfs/ipcc_2022_climate_change_2022_impacts_adaptation.pdf
 
