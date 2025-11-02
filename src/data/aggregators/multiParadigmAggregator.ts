@@ -366,13 +366,13 @@ function buildDevelopmentParadigm(
 function buildEcologicalParadigm(
   normalizedEcological: Array<{ countryCode: string; ecologicalScore: number; indicators: any[] }>
 ): ParadigmScore & { drivesSimulation: true } {
-  // Calculate global average using geometric mean
-  const MIN_FLOOR = 0.1;
-  const product = normalizedEcological.reduce((acc, e) => {
-    const floored = Math.max(e.ecologicalScore, MIN_FLOOR);
-    return acc * (floored / 100);
-  }, 1);
-  const globalScore = Math.pow(product, 1 / normalizedEcological.length) * 100;
+  // Calculate global average using arithmetic mean
+  // FIX (Nov 2, 2025): Changed from geometric mean (over-penalized outliers)
+  // to arithmetic mean per planetary boundaries aggregation standards
+  const weightedSum = normalizedEcological.reduce((sum, e) => {
+    return sum + e.ecologicalScore;
+  }, 0);
+  const globalScore = weightedSum / normalizedEcological.length;
 
   // Aggregate indicators
   const allIndicators = normalizedEcological.flatMap(e => e.indicators);

@@ -482,12 +482,19 @@ function calculateEcological(state: GameState): number {
     }
   }
 
-  // Geometric mean
-  const indicators = [boundariesScore, resourceScore, climateScore, pollutionScore];
+  // Weighted arithmetic mean (FIX Nov 2, 2025)
+  // Changed from geometric mean (over-penalized single bad scores, crushed ecology to 3.99)
+  // Research: Planetary boundaries literature does NOT recommend geometric aggregation
+  const indicators = [
+    { value: boundariesScore, weight: 0.40 }, // 40% - core planetary boundaries
+    { value: resourceScore, weight: 0.25 },   // 25% - resource reserves
+    { value: climateScore, weight: 0.25 },    // 25% - climate stability
+    { value: pollutionScore, weight: 0.10 }   // 10% - pollution
+  ];
 
   // Detect NaN in any indicator - fail loudly instead of silent fallback
   for (let i = 0; i < indicators.length; i++) {
-    if (isNaN(indicators[i])) {
+    if (isNaN(indicators[i].value)) {
       console.error(`❌ NaN in Ecological indicator ${i} at month ${state.currentMonth}`);
       console.error(`   boundariesScore: ${boundariesScore}`);
       console.error(`   resourceScore: ${resourceScore} (reserves: ${resourceReserves})`);
@@ -497,18 +504,16 @@ function calculateEcological(state: GameState): number {
     }
   }
 
-  const product = indicators.reduce((acc, val) => {
-    const floored = Math.max(val, MIN_FLOOR);
-    return acc * (floored / 100);
-  }, 1);
+  const weightedSum = indicators.reduce((sum, ind) => sum + (ind.value * ind.weight), 0);
+  const totalWeight = indicators.reduce((sum, ind) => sum + ind.weight, 0);
+  const result = weightedSum / totalWeight;
 
-  const result = Math.pow(product, 1 / indicators.length) * 100;
-
-  // Final NaN check - if this triggers, the bug is in geometric mean calculation
+  // Final NaN check - if this triggers, the bug is in arithmetic mean calculation
   if (isNaN(result)) {
     console.error(`❌ NaN result in Ecological calculation at month ${state.currentMonth}`);
-    console.error(`   product: ${product}, indicators: [${indicators.join(', ')}]`);
-    throw new Error(`Ecological geometric mean produced NaN - THIS IS THE BUG WE FIXED!`);
+    console.error(`   weightedSum: ${weightedSum}, totalWeight: ${totalWeight}`);
+    console.error(`   indicators: ${JSON.stringify(indicators)}`);
+    throw new Error(`Ecological weighted arithmetic mean produced NaN - calculation error!`);
   }
 
   return result;
