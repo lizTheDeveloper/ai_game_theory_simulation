@@ -30,7 +30,7 @@ export interface NormalizedEcologicalScores {
   /** Air quality score (0-100, INVERTED: lower PM2.5 = higher score) */
   airQualityScore: number;
 
-  /** Overall Ecological Harmony paradigm score (geometric mean) */
+  /** Overall Ecological Harmony paradigm score (weighted arithmetic mean) */
   ecologicalScore: number;
 
   /** Indicators for paradigm aggregation */
@@ -179,8 +179,14 @@ export function normalizeEcological(
     });
   }
 
-  // Calculate overall score (geometric mean)
-  const ecologicalScore = geometricMean(indicators.map(i => i.value));
+  // Calculate overall score (weighted arithmetic mean)
+  // FIX (Nov 2, 2025): Changed from geometric mean (over-penalized single bad scores)
+  // to weighted arithmetic mean per planetary boundaries literature
+  // (Rockström, Steffen, Richardson et al. 2009-2023)
+  const weights = indicators.map(i => i.weight);
+  const weightedSum = indicators.reduce((sum, ind) => sum + (ind.value * ind.weight), 0);
+  const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+  const ecologicalScore = weightedSum / totalWeight;
 
   return {
     countryCode: footprintData?.countryCode || airQualityData?.countryCode || 'GLOBAL',
