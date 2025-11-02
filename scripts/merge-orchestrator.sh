@@ -30,6 +30,7 @@ NOTIFY="${MERGE_ORCHESTRATOR_NOTIFY:-true}"
 MAX_BRANCHES="${MERGE_ORCHESTRATOR_MAX_BRANCHES:-10}"
 SKIP_FRONTEND="${MERGE_ORCHESTRATOR_SKIP_FRONTEND:-$IS_VM}"
 ENABLE_AGENT_REVIEWS="${MERGE_ORCHESTRATOR_ENABLE_AGENT_REVIEWS:-true}"  # Phase 2: Architecture-skeptic + Sylvia reviews
+ENABLE_AUTO_REMEDIATION="${MERGE_ORCHESTRATOR_ENABLE_AUTO_REMEDIATION:-true}"  # Phase 2.5: Auto-fix CRITICAL issues
 
 # ============================================
 # Logging Setup
@@ -281,6 +282,7 @@ main() {
   log_info "Skip frontend: $SKIP_FRONTEND"
   log_info "Max branches: $MAX_BRANCHES"
   log_info "Agent reviews (Phase 2): $ENABLE_AGENT_REVIEWS"
+  log_info "Auto-remediation (Phase 2.5): $ENABLE_AUTO_REMEDIATION"
 
   # Acquire lock
   acquire_lock
