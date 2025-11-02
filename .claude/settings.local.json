@@ -10,6 +10,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$TOOL_OUTPUT\" | .claude/hooks/citation-check.sh"
+          }
+        ]
+      }
     ]
   },
   "permissions": {
