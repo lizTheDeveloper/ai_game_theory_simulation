@@ -41,6 +41,14 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 
 ## ⚠️ Recent Changes (November 1, 2025)
 
+**📁 DIRECTORY REORGANIZATION (Nov 1, 2025)**
+
+Moved 62 implementation diary files from `logs/` → `devlogs/` for proper organization:
+- **`logs/`**: Runtime logs only (`.log`, `.log.gz` files from Monte Carlo runs)
+- **`devlogs/`**: Implementation diary (`.md` files documenting bug fixes, validations, audits)
+
+This clarifies the directory structure and prevents mixing runtime logs with implementation documentation.
+
 **🚧 NEW FEATURES: Cooperative AI Ownership + Climate Mortality Phase 2 (Storm Systems + BII Framework)**
 
 Two features completed full research → validation → implementation → architecture review workflow:
@@ -594,8 +602,8 @@ Implementation details and code references:
 | [📋 Emoji Inventory](./EMOJI_INVENTORY.md) | ✅ | Complete list of all emojis in use (~50 semantic emojis) |
 | [🎥 YouTube Transcript RAG](../research/youtube-transcript-rag.md) | ✅ | Automated transcript archive, FAISS embeddings, SQLite DB, MCP server (Oct 28, 2025) |
 | [📖 In-App Documentation](#-in-app-documentation-system-oct-29-2025) | ✅ | Interactive docs with far-future aesthetic (Oct 29, 2025) |
-| [🔍 Optional Chaining Audit](../../logs/optional_chaining_audit_20251030.md) | ✅ | Systematic audit of ?? and || fallback patterns (~30-40 high-risk patterns, cleanup plan) (Oct 30, 2025) |
-| [👨‍💻 Senior Dev Review](../../logs/senior_dev_review_optional_chaining_20251030.md) | ✅ | Detailed review of defensive fallbacks, priority files, unemployment paradox (Oct 30, 2025) |
+| [🔍 Optional Chaining Audit](../../devlogs/optional_chaining_audit_20251030.md) | ✅ | Systematic audit of ?? and || fallback patterns (~30-40 high-risk patterns, cleanup plan) (Oct 30, 2025) |
+| [👨‍💻 Senior Dev Review](../../devlogs/senior_dev_review_optional_chaining_20251030.md) | ✅ | Detailed review of defensive fallbacks, priority files, unemployment paradox (Oct 30, 2025) |
 
 ## 🔧 System Status Overview
 
@@ -2075,7 +2083,7 @@ According to research (Acemoglu & Robinson 2001, Svolik 2012):
 
 **Impact**: Final piece of Contingency & Agency framework. Captures structure-agency split from research - enables rare hero/collective action moments without making outcomes random.
 
-**Completion Documentation**: See `logs/phase3_critical_juncture_agency_implementation_summary.md` for full implementation details, `plans/phase3-critical-juncture-agency.md` for design spec.
+**Completion Documentation**: See `devlogs/phase3_critical_juncture_agency_implementation_summary.md` for full implementation details, `plans/phase3-critical-juncture-agency.md` for design spec.
 
 ---
 
@@ -2293,7 +2301,7 @@ Applies monthly food security degradation during active crises.
 
 - `devlogs/phase1b-stratified-outcomes-2025-10-17.md` - Comprehensive implementation log
 - `plans/psychological-trauma-implementation-summary.md` - Trauma mechanics detailed spec
-- `logs/famine-bug-investigation_oct17_2025.md` - Root cause analysis of famine system
+- `devlogs/famine-bug-investigation_oct17_2025.md` - Root cause analysis of famine system
 - `reviews/phase1b_levy_recalibration_critical_review_20251017.md` - Critical review that motivated this work
 
 ---
@@ -3668,7 +3676,7 @@ state.history.exogenousShocks?: Array<{
 - Psychological trauma modeling (PsychologicalTraumaPhase)
 - Food security degradation (FoodSecurityDegradationPhase)
 - Famine system fixes (threshold recalibration 0.4 → 0.6)
-- Documents: `devlogs/phase1b-stratified-outcomes-2025-10-17.md`, `plans/psychological-trauma-implementation-summary.md`, `logs/famine-bug-investigation_oct17_2025.md`
+- Documents: `devlogs/phase1b-stratified-outcomes-2025-10-17.md`, `plans/psychological-trauma-implementation-summary.md`, `devlogs/famine-bug-investigation_oct17_2025.md`
 
 **P2.6: Memetic Evolution (Oct 16, 2025)**:
 - Document: `plans/completed/p2-6-memetic-polarization-dynamics-COMPLETE.md`
@@ -3682,7 +3690,7 @@ state.history.exogenousShocks?: Array<{
 - N=100 Monte Carlo validation
 
 **Contingency & Agency Phase 3 (Oct 17, 2025)**:
-- Document: `logs/phase3_critical_juncture_agency_implementation_summary.md`
+- Document: `devlogs/phase3_critical_juncture_agency_implementation_summary.md`
 - Plan: `plans/phase3-critical-juncture-agency.md`
 - 90/10 structure-agency split implemented
 - 4 escape types (prevent war, enable cooperation, recover from crisis, unlock breakthrough)
