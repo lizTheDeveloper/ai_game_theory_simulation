@@ -1,6 +1,6 @@
 # Autonomous Worker Setup Guide
 
-This system enables Claude Code to autonomously work on the project every 30 minutes, tackling roadmap items and performing reviews without user intervention.
+This system enables Claude Code to autonomously work on the project hourly during business hours (8am-8pm UTC), tackling roadmap items and performing reviews without user intervention.
 
 ## Quick Start
 
@@ -66,9 +66,10 @@ cd ~/ai_game_theory_simulation
 ## How It Works
 
 ### Schedule
-- Runs every 30 minutes automatically
+- Runs hourly during business hours (8am-8pm UTC)
+- **13 runs per day** (down from 48 runs with 30-minute schedule)
 - Can be changed in `/etc/systemd/system/claude-worker.timer`
-- Edit `OnCalendar=*:0/30` to adjust frequency
+- Edit `OnCalendar=*-*-* 08..20:00:00` to adjust frequency or hours
 
 ### Task Selection Priority
 
@@ -289,15 +290,23 @@ TimeoutStartSec=1h  # Increase to 1 hour
 
 **Autonomous runs cost money!**
 
-- Each 30-min run might use $0.10-$0.50 in API calls
-- Daily cost: ~$5-$25 depending on task complexity
-- Monthly cost: ~$150-$750
+**Current Schedule (hourly, business hours 8am-8pm UTC):**
+- 13 runs per day
+- Each run: ~10-25 minutes
+- Token usage per run: ~50k-100k input, ~50k-100k output (Sonnet 4.5)
+- Cost per run: $0.83-5.64 depending on task complexity
+- Daily cost: ~$10.79-73.32
+- Monthly cost: ~$324-2,200
 
-**To reduce costs:**
-1. Increase interval (hourly instead of 30min)
-2. Set daily budget limits in your Anthropic account
-3. Only enable during active development periods
-4. Use `OnCalendar=Mon-Fri 09:00-17:00` for business hours only
+**Cost Optimization History:**
+- **Oct 2025 optimization:** Reduced from every 30 minutes (48 runs/day) to hourly business hours (13 runs/day)
+- **Savings:** 72.9% cost reduction (~$871-5,922/month saved)
+
+**To further reduce costs:**
+1. Narrow business hours window (e.g., `OnCalendar=*-*-* 09..17:00:00` for 9am-5pm)
+2. Weekdays only (e.g., `OnCalendar=Mon-Fri 08..20:00:00`)
+3. Set daily budget limits in your Anthropic account
+4. Only enable during active development periods
 
 ## Troubleshooting
 
