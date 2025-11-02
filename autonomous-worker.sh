@@ -143,7 +143,7 @@ There is a merge conflict when pulling from main. Please:
 Do NOT use git stash - resolve conflicts properly by editing files.
 CONFLICT_EOF
 
-        source .venv/bin/activate
+        # Note: Claude Code is Node.js/TypeScript, doesn't need Python .venv
         claude --dangerously-skip-permissions < /tmp/conflict_resolution_$TIMESTAMP.txt 2>&1
         rm -f /tmp/conflict_resolution_$TIMESTAMP.txt
 
@@ -165,10 +165,10 @@ CONFLICT_EOF
     echo ""
     log_stage "ENVIRONMENT SETUP"
 
-    # Activate Python environment
-    log_info "Activating Python virtual environment..."
-    source .venv/bin/activate
-    log_success "Virtual environment activated"
+    # Note: Autonomous worker uses TypeScript/Node.js (Claude Code, npx tsx)
+    # Python .venv only needed for optional RAG servers (pdf-rag-server.py, etc.)
+    # Not required for core autonomous worker functionality
+    log_info "Environment ready (Node.js/TypeScript)"
 
     # Verify Claude Code installation
     CLAUDE_VERSION=$(claude --version 2>&1 || echo "unknown")
