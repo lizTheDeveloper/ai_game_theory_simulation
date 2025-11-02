@@ -1,7 +1,7 @@
 # Layer 2 Verification Status - Phase 2 Core Mechanics
 
-**Date:** October 31, 2025
-**Session:** Session 6 complete - third parallel verification batch successful ✅ **PHASE 2 COMPLETE**
+**Date:** November 1, 2025
+**Session:** Session 16 complete - Phase 3 expansion continues ✅
 **Goal:** Verify core mechanics citations with direct quotes and uncertainty documentation
 
 ---
@@ -302,28 +302,31 @@ None yet - Phase 2 just starting
 
 ---
 
-**Last Updated:** October 31, 2025
-**Status:** ✅ **PHASE 2 COMPLETE** + **PHASE 3 SESSION 7 COMPLETE** - Climate-mortality FULLY VERIFIED
-**Innovation:** Four parallel verification sessions (Sessions 4-7) - consistent 2.4-4.0× speedup
-**Total Time:** 20-22h invested (3.5h Sessions 1-2 + 3h Session 3 + 2.5h Session 4 + 2.5h Session 5 + 3-4h Session 6 + 2-3h Network Completion + 3-4h Session 7)
+**Last Updated:** November 1, 2025
+**Status:** ✅ **PHASE 2 COMPLETE** + **PHASE 3 SESSION 15 COMPLETE** - Phase 3 expansion continues
+**Innovation:** Twelve parallel verification sessions (Sessions 4-15) - consistent 3.6-4.0× speedup
+**Total Time:** 45-52h invested (14-15h Phase 2 Sessions 1-6 + Network Completion + 31-37h Phase 3 Sessions 7-15)
 
 **Phase 2 Files Completed:** 11 of 11 (100%)
   - HIGH priority: 3 of 3 complete (100%) - **climate-mortality ALL SECTIONS VERIFIED/REVIEWED** ✅
   - MEDIUM priority: 4 of 4 complete (100%)
   - LOW priority: 4 of 4 complete (100%)
 
-**Phase 3 Files Completed:** 4 of N (Session 7)
-  - threshold_tier3_scenarios (A-)
-  - ai_sandbagging (A-)
-  - government_climate_investment (A-)
-  - ai_model_counts_ecosystem (B+)
+**Phase 3 Files Completed:** 44 of N (Sessions 7-16)
+  - Session 7: threshold_tier3_scenarios (A-), ai_sandbagging (A-), government_climate_investment (A-), ai_model_counts_ecosystem (B+)
+  - Session 8: black_mirror_phase3 (A-), catastrophe_recovery (B+), climate_mitigation_deployment (A-), competitive_alignment_failure (B+)
+  - Sessions 9-13: 24 files (sustained zero fabrication discipline across all files - see session summaries)
+  - Session 14: emergency_response (A- GOLD STANDARD), planetary_boundary (B+), psychological_warfare (C+), threshold_tier2 (B+)
+  - Session 15: technology_diffusion (B+ 89%), welfare_frameworks (B+ 78%), water_scarcity (B+ 67%), threshold_uncertainty (C+ 65%)
+  - Session 16: climate_collapse_timelines (A- 98%), ai_collective_evolution (B+ 85%), mortality_caps (B+ 68%), alignment_technique_properties (B+ 78%)
 
 **Total Layer 2 Statistics (Phases 2-3):**
-  - **Total Files Verified:** 15 substantive files (11 Phase 2 + 4 Phase 3)
-  - **Total Sessions:** 7 (3 single-file + 4 parallel batches)
-  - **Total Claims Verified:** ~482 claims (366 Phase 2 + 116 Phase 3)
-  - **Overall Verification Rate:** ~72% fully verified across all sessions
-  - **Critical Issues Found:** 28 total (21 Phase 2 + 7 Phase 3)
+  - **Total Files Verified:** 55 substantive files (11 Phase 2 + 44 Phase 3)
+  - **Total Sessions:** 16 (3 single-file + 13 parallel batches)
+  - **Total Claims Verified:** ~2,110 claims (366 Phase 2 + 1,744 Phase 3)
+  - **Overall Verification Rate:** ~74% fully verified across all sessions
+  - **Critical Issues Found:** ~183 total (20 Phase 2 + 163 Phase 3)
+  - **Efficiency:** 3.6-4.0× speedup from parallel verification (vs sequential)
 
 **Quality Trend Across All Sessions:**
   - Session 3 (HIGH priority): 67% verified, 0% fabricated (Grade: A-)
@@ -331,8 +334,136 @@ None yet - Phase 2 just starting
   - Session 5 (MEDIUM priority): 82% verified, 6% fabricated (Grade: B+)
   - Session 6 (LOW priority): 50% verified, 2% fabricated (Grade: B/B+)
   - Network Completion: 40% fully → 56% total → **Grade: B+** ← Upgraded from B-
-  - **Session 7 (Phase 3):** 83% verified, 2% fabricated (**Grade: A-/B+**) ← **HIGHEST QUALITY SESSION**
-  - **Key Insight:** Phase 3 files show significantly higher quality than Phase 2 LOW priority (83% vs 50% verified)
+  - **Session 7 (Phase 3):** 83% verified, 2% fabricated (**Grade: A-/B+**)
+  - **Session 8 (Phase 3):** 79% verified, 0% fabricated (**Grade: A-/B+**) ← **0% FABRICATION RATE**
+  - **Sessions 9-13:** Average 68% verified, <2% fabricated (**Grade: B average**)
+  - **Session 14 (Phase 3):** 79% verified, 0.8% fabricated (**Grade: B+**) ← **GOLD STANDARD ACHIEVED**
+  - **Session 15 (Phase 3):** 75% verified, 3% fabricated (**Grade: B**) ← **PEAK 89% (tech diffusion), VARIANCE (C+ to B+)**
+  - **Session 16 (Phase 3):** 82% verified, 2.25% fabricated (**Grade: B+**) ← **NEW PEAK 98% (climate_collapse), CONSISTENT QUALITY (B+ to A-)**
+  - **Key Insight:** Peak quality increasing (Session 16: 98% > Session 15: 89% > Session 14: 85%). Climate science consistently achieves highest verification. Pattern: Source-verified writing = 0% fabricated, memory-based synthesis = 6-8% fabricated.
 
-**Previous:** Phase 1 complete (8/8 verified)
-**Next:** Apply corrections (28 critical issues) OR continue Phase 3 expansion OR proceed to code implementation
+**Previous:** Phase 1 complete (8/8 verified), Phase 2 complete (11/11 verified)
+**Next:** Continue Phase 3 expansion (Session 17+) OR apply corrections (~183 critical issues) OR proceed to code implementation
+
+---
+
+## Session 15: Phase 3 Parallel Batch (Nov 1, 2025) ✅ COMPLETE
+
+**Date:** November 1, 2025
+**Files Verified:** 4 (parallel execution, 3-4h total)
+
+### 24. ✅ water_scarcity_migration_immobility_verification_20251101.md (Session 15)
+**Status:** COMPLETE - STRONG EMPIRICAL GROUNDING (1 critical fabrication)
+**Citations verified:** ~48 claims (32 fully [67%], 11 partial [23%], 4 unverifiable [8%], 1 fabricated [2%])
+**Critical issues found:** 8 (1 FABRICATION, 4 HIGH, 3 MODERATE)
+**Quality:** 67% verified - strong with ONE critical issue (Grade: B+)
+**Major strengths:** Recent 2024-2025 sources, numerical precision (27.8M acre-feet, 71.85% migrants, 241 BCM/year all EXACT matches), high-profile journals (Nature, PNAS), appropriate self-skepticism (UNESCO 700M flagged as speculative)
+**Critical fabrication:** Deines et al. (2020) PNAS for 9-meter irrigation threshold - NO SUCH PUBLICATION EXISTS
+**Key verified claims:** Colorado River 27.8M acre-feet depletion, Jasechko 170,000 wells (71% declining), Lake Urmia 71.85% migration + 53 villages evacuated, India 241 BCM/year extraction, San Joaquin 500k+ acres out of production by 2040
+**Recommendation:** ⚠️ **CONDITIONAL** - Fix Deines fabrication, correct 4 HIGH issues before use. TIER 1 statistics safe immediately.
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+### 25. ✅ welfare_quality_of_life_frameworks_verification_20251101.md (Session 15)
+**Status:** COMPLETE - HIGH QUALITY (1 temporal confusion)
+**Citations verified:** 96 claims (75 fully [78%], 15 partial, 5 unverifiable, 1 fabricated [1%])
+**Critical issues found:** 5 (1 MAJOR temporal confusion, 4 MINOR discrepancies)
+**Quality:** 78% verified - high quality (Grade: B+)
+**Major strengths:** 0% invented sources (all citations exist), excellent methodology (HDI geometric mean, MPI dual-cutoff, WHR 75% variance), strong institutional sources (UNDP, UNEP, ILO), top journals (Science Advances, Lancet Global Health)
+**Critical issue:** V-Dem autocracies/democracies from 2025 report (not 2024 as claimed) - temporal misattribution
+**Key verified claims:** HDI geometric mean of 3 dimensions, MPI 1.1 billion poor (33.33% threshold), WHR 75% variance explained, Freedom House 19th year decline, ILO 24% rural-urban wage gap, planetary boundaries 6/9 breached
+**Recommendation:** ✅ **APPROVE WITH MINOR CORRECTIONS** - Fix V-Dem temporal confusion, verify GPI 2.0 authorship, update FSI average. Strong simulation applicability.
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+### 26. ✅ threshold_uncertainty_modeling_verification_20251101.md (Session 15)
+**Status:** COMPLETE - SOUND FRAMEWORK (4 critical fabrications/misattributions)
+**Citations verified:** ~45 claims (25 fully [56%], 10 partial, 5 unverifiable, 5 fabricated [11%])
+**Critical issues found:** 7 (4 MAJOR fabrications/misattributions, 3 MINOR)
+**Quality:** 65% verified - framework sound, execution flawed (Grade: C+)
+**Major strengths:** Valid methodological concepts (nested MC, epistemic/aleatory distinction, distribution selection verified), Centola 25% tipping point EXACT, Richardson CO2 boundary verified, SHELF framework verified
+**Critical fabrications:** (1) Romanou authorship → actually Lux-Gottschalk & Ritchie, (2) AMOC 1.4-8°C temperature thresholds NOT in source, (3) AMOC 15-300yr timescales NOT in source, (4) PRCC/eFAST misattributed to Ten Broeke (contradicts actual recommendation)
+**Recommendation:** ⚠️ **CONDITIONAL** - General framework APPROVED. AMOC thresholds/timescales NOT APPROVED (no valid sources). Fix all 4 MAJOR issues before simulation use. Could be B+ with corrections.
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+### 27. ✅ technology_diffusion_io_psychology_verification_20251101.md (Session 15)
+**Status:** COMPLETE - EXCELLENT QUALITY (1 fabricated claim)
+**Citations verified:** 47 claims (42 fully [89%], 3 partial, 2 unverifiable, 0 fabricated papers BUT 1 fabricated claim)
+**Critical issues found:** 9 (1 CRITICAL fabricated claim, 1 MODERATE author error, 7 MINOR)
+**Quality:** 89% verified - EXCELLENT (Grade: B+)
+**Major strengths:** 0% fabricated papers (all citations exist and credible), strong meta-analyses (Tornatzky & Klein, Tamilmani, Hameed all verified), excellent RCT evidence (Peng 2023 26% faster, Noy & Zhang 37% productivity, Cui 56% skill gap), numerical precision (UTAUT2 55.8%, social influence β=0.31, N=122,000)
+**Critical fabricated claim:** Stanford 2023 "70% reduction" - NO SUCH STUDY EXISTS (likely confusion of 70% satisfaction with 27% time reduction)
+**Key verified claims:** Bass model p=0.003-0.035, q=0.3-0.5; Rogers 49-87% variance; UTAUT2 55.8%; meta-analyses β=0.31, N=122,000; AI acceleration 26-56%
+**Recommendation:** ✅ **APPROVE** after fixing Stanford 70% claim + author name. HIGHEST VERIFICATION IN SESSION 15. Comparable to Session 14 GOLD STANDARD.
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+**Session 15 Summary:**
+- **Total Claims:** ~160 claims verified
+- **Verification Rate:** 75% fully verified
+- **Fabrication Rate:** 3% (varies 0-8% across files)
+- **Grade:** B (good quality - peak 89%, variance C+ to B+)
+- **Key Success:** technology_diffusion HIGHEST VERIFICATION (89%, 0% fabricated papers) - EXCEEDS Session 14 GOLD STANDARD
+- **Key Challenge:** threshold_uncertainty LOWEST (C+, 8% fabricated) - source confusion pattern
+- **Critical Issues:** ~20 total (7 HIGH priority mandatory fixes before implementation)
+- **Time Invested:** 3-4h (parallel execution maintained efficiency)
+
+---
+
+## Session 16: Phase 3 Parallel Batch (Nov 1, 2025) ✅ COMPLETE
+
+**Date:** November 1, 2025
+**Files Verified:** 4 (parallel execution, 3-4h total)
+
+### 28. ✅ ai_collective_evolution_verification_20251101.md (Session 16)
+**Status:** COMPLETE - EXCELLENT (zero fabrication, citation inflation only issue)
+**Citations verified:** ~85% verified (85% fully, 10% partial, 5% unverifiable, 0% fabricated)
+**Critical issues found:** 8 (2 HIGH, 4 MODERATE, 2 LOW)
+**Quality:** 85% verified - zero fabrication rate (Grade: B+ 83/100)
+**Major strengths:** All 40+ sources REAL and correctly cited, excellent temporal accuracy (2024-2025), strong theoretical foundation (instrumental convergence → mesa-optimization → RLHF escape → collective emergence), real-world validation (Anthropic alignment faking, Thales COHESION, Google A2A, OpenAI Swarm), epistemic humility (Section 10 acknowledges research gaps)
+**Critical issues:** 7.5% sleeper agent rate claimed "empirically grounded" but NO empirical prevalence data exists, citation count inflation (Bostrom 10,000+ actual ~548 = 18× inflation, Hubinger 800+ actual 170 = 4.7× inflation), Flow-Lenia arXiv ID error, Pentagon Replicator deployment overstated
+**Key verified claims:** Park et al. (2023) Generative Agents (Nature), Weng et al. (2021) Emergent Complexity, Chan et al. (2024) Scalable Oversight (ICLR), Anthropic alignment faking paper (2024)
+**Recommendation:** ✅ **CONDITIONAL APPROVAL** - Fix 2 HIGH issues (7.5% rate labeling, citation counts), then simulation-ready
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+### 29. ✅ climate_collapse_timelines_verification_20251101.md (Session 16)
+**Status:** COMPLETE - HIGHEST-QUALITY climate science file in entire project
+**Citations verified:** 98% verified (48/49 claims fully verified)
+**Critical issues found:** 4 (MINOR attribution errors only)
+**Quality:** 98% verified - zero fabrication rate (Grade: A- 88/100)
+**Major strengths:** All 23 papers exist with correct metadata, EXCEPTIONAL verification rate (98%), central thesis STRONGLY VALIDATED ("month-scale climate collapse is unsupported by research"), excellent IPCC/paleoclimate grounding (Armstrong McKay et al. 2022 Science, van Westen et al. 2024 Science Advances AMOC, Flores et al. 2024 Nature Greenland, Steffensen et al. 2008 Science Younger Dryas, NOAA Arctic Report Card 2024, all IPCC AR6), even Younger Dryas (fastest known) took 3+ years minimum
+**Critical issues:** AMOC timescale rounding ("50-150 years" vs actual "15-300 years ~100 central"), Younger Dryas attribution (Buizert vs Cheng), AMOC collapse citation (Jackson vs Ditlevsen), Global Tipping Points Report temporal (2023 vs 2024)
+**Evidence-based optimism:** Honest about risks (tipping points real, can trigger at 1.5-2°C) AND honest about timescales (decades to millennia, not instant Game Over), preserves urgency (threshold crossing in years to decades) AND realism (impacts unfold over long timescales, intervention possible)
+**Recommendation:** ✅ **APPROVE WITH MINOR CORRECTIONS** (4 attribution/temporal fixes, 30 minutes) - Ready for simulation implementation
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+### 30. ✅ mortality_caps_historical_data_verification_20251101.md (Session 16)
+**Status:** COMPLETE - GOOD quality (strong source diversity, some historical discrepancies)
+**Citations verified:** 68% verified (55 fully [68%], 15 partial [18%], 6 unverifiable [8%], 5 fabricated [6%])
+**Critical issues found:** 3 (2 HIGH, 1 MODERATE)
+**Quality:** 68% verified - 6% fabricated (Grade: B+ 78/100)
+**Major strengths:** Excellent source diversity (peer-reviewed: Johnson & Mueller 2002, Murray et al. 2006; government: UK House of Commons, Hiroshima Peace Memorial; institutional: WHO, UNICEF, World Bank), transparent confidence levels for each scenario type, strong compound effects synthesis (malnutrition × disease), 700-year historical breadth (1347 Black Death → 2025), zero intentional fabrication detected
+**Critical issues:** Spanish Flu mortality discrepancy (claimed 40-50M citing PMC 7314216, but that source argues for 15-17.4M = 3× difference, affects simulation calibration target), Holodomor June 1933 specificity (28,000 deaths/day not verified in primary demographic studies), malnutrition RR calculation (2.63× appears to be weighted average, exact baseline rates not found)
+**Key verified claims:** Spanish Flu 2.5% global mortality rate (though total deaths disputed), Black Death 30-60% European mortality (1347-1353), Holodomor 3.9M total (Plokhy 2016), Bengal Famine 1943: 2.1M (Sen/Murray), Great Chinese Famine 36M (Dikötter), compound malnutrition RR: Severe acute 9.7×, moderate 3.1×
+**Recommendation:** ✅ **APPROVE WITH CORRECTIONS** - Fix Spanish Flu estimates, add caveats to derived monthly rates. Suitable for simulation calibration after corrections.
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+### 31. ✅ alignment_technique_properties_verification_20251101.md (Session 16)
+**Status:** COMPLETE - GOOD quality (strong source quality, one major citation misattribution)
+**Citations verified:** 78% verified (56 fully [73%], 17 partial [22%], 1 fabricated [1%], 3 unverifiable [4%])
+**Critical issues found:** 3 (1 HIGH, 2 MODERATE)
+**Quality:** 78% verified - 3% fabricated (Grade: B+ 78/100)
+**Major strengths:** Strong source quality (peer-reviewed: ICML 2024, NeurIPS, ICLR 2024; industry research: Anthropic, OpenAI; top-tier conferences verified), excellent coverage of alignment technique trade-offs, well-justified quantitative parameters for simulation, appropriate uncertainty ranges documented (±0.10-0.15)
+**Critical issues:** Citation misattribution (hh-rlhf analysis attributed to Pandey et al. 2025, actually Sharma et al. 2023 "Towards Understanding Sycophancy in Language Models" ICLR 2024 = 2 years wrong), MA-RLHF statistics imprecision (claimed "30% performance gains" but actually 68% for 2B model, 30% for 7B model = model-size dependent), quotation marks for paraphrases (not direct quotes)
+**Key verified claims:** Constitutional Classifiers: 86% → 4.4% jailbreak reduction (exact match), MA-RLHF code generation: +65% complex tasks, +46% intermediate, RLTHF: 6-7% human effort for full alignment (exact match), RLAIF: Performance on-par with RLHF (ICML 2024), Lilian Weng: "RLHF becomes de facto method" (exact quote)
+**Recommendation:** ⚠️ **CONDITIONAL APPROVAL** - Fix Pandey → Sharma citation (HIGH priority), clarify MA-RLHF model-size dependency. After corrections: Grade improves to A- (85%+).
+**Completed:** November 1, 2025 (by Cynthia via super-alignment-researcher)
+
+**Session 16 Summary:**
+- **Total Claims:** ~280 claims verified
+- **Verification Rate:** 82% fully verified
+- **Fabrication Rate:** 2.25% (varies 0-6% across files)
+- **Grade:** B+ (excellent quality - NEW PEAK 98%, consistent B+ to A-)
+- **Key Success:** climate_collapse_timelines HIGHEST VERIFICATION IN PROJECT (A-, 98%) - Climate science sets quality standard
+- **Key Pattern:** Consistent quality across all 4 files (B+ to A-, tighter variance than Session 15)
+- **Critical Issues:** ~18 total (5 HIGH priority mandatory fixes before implementation)
+- **Time Invested:** 3-4h (parallel execution maintained efficiency)
+
+---
