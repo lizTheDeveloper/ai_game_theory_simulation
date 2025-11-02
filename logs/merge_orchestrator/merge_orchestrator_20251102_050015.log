@@ -1,0 +1,24 @@
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 05:00:15] 🤖 Merge Orchestrator - 20251102_050015
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 05:00:15] ℹ️  Environment: VM (backend only)
+[2025-11-02 05:00:15] ℹ️  Dry run: false
+[2025-11-02 05:00:15] ℹ️  Skip frontend: true
+[2025-11-02 05:00:15] ℹ️  Max branches: 10
+[2025-11-02 05:00:15] ℹ️  Agent reviews (Phase 2): true
+[2025-11-02 05:00:15] ℹ️  Auto-remediation (Phase 2.5): true
+[2025-11-02 05:00:15] ℹ️  Discovering feature branches...
+Fetching origin
+From github.com:lizTheDeveloper/ai_game_theory_simulation
+ - [deleted]             (none)     -> origin/dystopia-status-system
+ - [deleted]             (none)     -> origin/feature/implement-threshold-uncertainty-modeling---phase-1-(tier-1-empirical-distributions)
+ - [deleted]             (none)     -> origin/feature/liquid-democracy
+[2025-11-02 05:00:16] ℹ️  Found 17 feature branches
+[2025-11-02 05:00:16] ⚠️  WARNING: Branch count (17) exceeds max (10), processing first 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 05:00:17] Processing: consolidated/all-autonomous-work-20251031
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2025-11-02 05:00:24] ⏭️  SKIP: Frontend branch on VM: consolidated/all-autonomous-work-20251031
+[2025-11-02 05:00:24] ℹ️     Frontend changes detected, handle locally on Mac
