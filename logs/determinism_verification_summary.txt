@@ -1,0 +1,59 @@
+════════════════════════════════════════════════════════════════
+DETERMINISM VERIFICATION - EXECUTIVE SUMMARY
+Date: October 30, 2025
+Issue: Monte Carlo Validation #11
+════════════════════════════════════════════════════════════════
+
+🚨 CRITICAL FINDING: SIMULATION IS NOT DETERMINISTIC
+
+Test Configuration:
+  - Seed: 42000 (identical across all runs)
+  - Runs: 3
+  - Duration: 12 months
+  - Method: SHA-256 hash comparison + field-by-field diff
+
+Results:
+  ✅ Month  0: IDENTICAL (initialization only, no RNG calls)
+  ❌ Month  1-12: DIFFERENT (176 total field differences)
+
+Root Causes:
+  1. Math.random() calls: 20+ instances
+     - computeInfrastructure.ts (AI efficiency)
+     - freshwaterDepletion.ts (day zero events)
+     - socialCohesion.ts (random events)
+     - government/actions/*.ts (policy IDs)
+
+  2. Date.now() calls: 15+ instances
+     - socialInfluence.ts (decision-maker IDs)
+     - government/actions/*.ts (event IDs)
+     - llm/providerManager.ts (rate limiting)
+
+Impact:
+  ❌ All Monte Carlo results INVALID
+  ❌ Debugging unreliable (can't reproduce bugs)
+  ❌ Parameter validation impossible
+  ❌ Research findings can't be peer-reviewed
+
+Fix Required:
+  1. Replace all Math.random() → rng() (2-3 hours)
+  2. Replace all Date.now() → counters (1-2 hours)
+  3. Re-run verification (must pass)
+  4. Re-run all Monte Carlo analyses
+
+Files Created:
+  📄 /scripts/verifyDeterminism.ts - Verification script
+  📄 /docs/DETERMINISM_INVESTIGATION_20251030.md - Full report
+  📄 /logs/determinism_verification_20251030_185002.log - Test output
+
+Next Steps:
+  1. Fix non-deterministic sources (BLOCKER)
+  2. Verify determinism restored
+  3. Update CLAUDE.md with RNG guidelines
+  4. Add determinism check to CI/CD
+  5. Re-validate all Monte Carlo results
+
+Status: BLOCKER - All Monte Carlo work blocked until fixed
+
+Roy says: "This is exactly why we test these things. *sigh*
+           At least we caught it before publishing papers."
+════════════════════════════════════════════════════════════════

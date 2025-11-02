@@ -39,6 +39,172 @@ See: [SIMULATION_ROADMAP.md](/plans/SIMULATION_ROADMAP.md) for detailed implemen
 - **🔬 Running experiments?** Check [Running Simulations](./RUNNING_SIMULATIONS.md)
 - **📊 Understanding outcomes?** Read [Understanding Results](./UNDERSTANDING_RESULTS.md)
 
+## ⚠️ Recent Changes (November 1, 2025)
+
+**🚧 NEW FEATURES: Cooperative AI Ownership + Climate Mortality Phase 2 (Storm Systems + BII Framework)**
+
+Two features completed full research → validation → implementation → architecture review workflow:
+
+### 1. Cooperative AI Ownership Economics (YELLOW Status)
+
+**Research Quality:** C+ (Adequate but not ideal)
+- **Research file:** [`research/cooperative-ai-ownership-economics_20251028.md`](/research/cooperative-ai-ownership-economics_20251028.md)
+- **Validation:** [`research/cooperative-ownership-validation-cynthia-20251101.md`](/research/cooperative-ownership-validation-cynthia-20251101.md) (Cynthia: GREEN for implementation)
+- **Critical review:** [`reviews/cooperative_ownership_critical_review_20251101.md`](/reviews/cooperative_ownership_critical_review_20251101.md) (Sylvia: LOW confidence)
+- **Implementation:**
+  - Core module: [`src/simulation/cooperativeOwnership.ts`](/src/simulation/cooperativeOwnership.ts)
+  - Phase integration: [`src/simulation/engine/phases/CooperativeOwnershipPhase.ts`](/src/simulation/engine/phases/CooperativeOwnershipPhase.ts)
+  - Type definitions: `CooperativeOwnershipMetrics` interface in `src/types/game.ts`
+- **Architecture review:** [`reviews/cooperative_storms_architecture_review_20251101.md`](/reviews/cooperative_storms_architecture_review_20251101.md) (YELLOW - 4 medium issues)
+
+**Key Parameters (Conservative):**
+- Survival multiplier: 1.2x (downgraded from 1.5x to 1.2x - conservative vs Québec 1.77x)
+- Crisis resilience: +20-30% survival during economic shocks
+- Governance overhead: +20% decision latency
+- Profit distribution: Patronage-based (worker hours)
+- Uncertainty bounds: ±40-50% (reflects grey literature quality)
+
+**Research Critique:**
+- ⚠️ Primary source (Québec 2010): Grey literature, unverifiable methodology, PDF inaccessible
+- ⚠️ Sector extrapolation: Non-AI sectors (manufacturing, agriculture) → AI systems
+- ⚠️ Quantification of qualitative findings (30% crisis bonus, 20% overhead)
+- ✅ Mechanisms well-described: participatory governance, wage flexibility, employment priority
+- ✅ Conservative parameter interpretation (1.2x instead of 1.77x)
+
+**Traceability:**
+| Research Source | Parameter | Code Location | Uncertainty |
+|----------------|-----------|---------------|-------------|
+| Québec Ministry (2010) | 1.77x survival advantage | `SURVIVAL_MULTIPLIER_BASE = 1.2` (cooperativeOwnership.ts:22) | ±40% |
+| Borzaga & Galera (2014) | Crisis resilience mechanism | `applyCooperativeSurvivalBonus()` (cooperativeOwnership.ts:89-127) | ±30% |
+| Mannan & Pek (2024) | Governance overhead | `calculateGovernanceOverhead()` (cooperativeOwnership.ts:161-187) | ±50% |
+| CDI (2024) | Profit distribution formula | `distributeProfits()` (cooperativeOwnership.ts:129-159) | Fixed |
+
+**Implementation Status:** ⚠️ **YELLOW** (4 medium-priority issues)
+1. **Bootstrap problem:** No cooperatives initialized at game start (feature inactive)
+   - Fix: Initialize Academic Consortium as cooperative OR add conversion mechanics
+   - Effort: 1-2 hours
+2. **Survival multiplier not applied:** `applyCooperativeSurvivalAdvantage()` defined but never called
+   - Fix: Integrate into bankruptcy detection phase
+   - Effort: 30 minutes
+3. **Storm/heat mortality coordination:** Potential double-counting with Bayesian mortality system
+   - Fix: Verify deduplication or add coordination logic
+   - Effort: 2-4 hours
+4. **Infrastructure multiplier uncertainty:** 3x mortality multiplier not empirically validated
+   - Fix: Add uncertainty bands or parameter sweep
+   - Effort: 2-3 hours
+
+**Estimated effort to complete:** 4-6 hours
+
+**Monte Carlo Validation Criteria:**
+- Cooperative bankruptcy rate 30-50% lower during crises
+- No extreme swings from parameter variations
+- Outcome distributions qualitatively sensible
+- No NaN/Infinity errors
+
+---
+
+### 2. Climate Mortality Phase 2: Storm Systems + BII Framework (YELLOW Status)
+
+**Research Quality:** A- (Excellent)
+- **Research file:** [`research/climate-mortality-biosphere-multiparadigm-framework_20251028.md`](/research/climate-mortality-biosphere-multiparadigm-framework_20251028.md)
+- **Validation:** [`research/climate-mortality-phase2-validation-cynthia-20251101.md`](/research/climate-mortality-phase2-validation-cynthia-20251101.md) (Cynthia: GREEN with high confidence)
+- **Critical review:** [`reviews/climate_mortality_phase2_critical_review_20251101.md`](/reviews/climate_mortality_phase2_critical_review_20251101.md) (Sylvia: MEDIUM confidence)
+- **Implementation:**
+  - Storm systems: [`src/simulation/extremeWeatherEvents.ts`](/src/simulation/extremeWeatherEvents.ts)
+  - Phase integration: [`src/simulation/engine/phases/ExtremeWeatherEventsPhase.ts`](/src/simulation/engine/phases/ExtremeWeatherEventsPhase.ts)
+  - BII framework: [`src/simulation/planetaryBoundaries.ts`](/src/simulation/planetaryBoundaries.ts) (BiodiversityIntactnessIndex)
+- **Architecture review:** [`reviews/cooperative_storms_architecture_review_20251101.md`](/reviews/cooperative_storms_architecture_review_20251101.md) (YELLOW - 1 medium issue)
+
+**Key Parameters (Peer-Reviewed):**
+
+**Storm Intensity-Frequency:**
+- Intensity increase: 2-11% by 2100 (Knutson et al. 2020, 2023 - NOAA GFDL 2024)
+- Precipitation: +10-15% per 1°C warming (Clausius-Clapeyron relation)
+- Frequency shift: -6% to -34% overall (FEWER but STRONGER storms)
+- Category redistribution:
+  - Cat 1-2: -5% per degree (decreasing)
+  - Cat 3: Stable
+  - Cat 4-5: +10% per degree (increasing)
+- Regional vulnerability: Infrastructure mismatch as primary driver (Vicedo-Cabrera et al. 2021)
+
+**BII (Biodiversity Intactness Index) Framework:**
+- Species baseline: 54,000 species (IPBES 2024 - authoritative)
+- Extinction rate: 10-100× background (Richardson et al. 2023 - *Science Advances*)
+- Climate velocity: 0.5-10 km/year (species must track faster than ever)
+- Species dispersal: 0.1-5 km/year (many species can't keep up)
+- Keystone cascade multiplier: 2.5× (inferred from Joshua Tree example - Yoder et al. 2024)
+  - Joshua Tree loss → 43% bird diversity decline (Mojave Desert)
+  - Post-fire mortality: 80-90%, 2.3M trees killed (2020-2023 fires)
+
+**Research Critique:**
+- ✅ Peer-reviewed sources: 90%+ (18/20 sources from 2020-2025)
+- ✅ Authoritative: IPBES, NOAA GFDL, *Nature*, *Science Advances*
+- ✅ Specific quantitative parameters (not vague qualitative)
+- ✅ Real-world validation (Joshua Tree, 2003 European heat wave)
+- ⚠️ Intensity multiplier [1,2,4,8,16]: Simplified exponential scaling (not directly cited)
+- ⚠️ Keystone cascade 2.5×: Inferred from single example (conservative estimate)
+
+**Traceability:**
+| Research Source | Parameter | Code Location | Confidence |
+|----------------|-----------|---------------|------------|
+| Knutson et al. (2020, 2023) | 2-11% intensity increase | `STORM_CONSTANTS.INTENSITY_SCALING` (extremeWeatherEvents.ts:35) | HIGH |
+| Jewson (2023) | -6% to -34% frequency | `STORM_CONSTANTS.FREQUENCY_CHANGE` (extremeWeatherEvents.ts:38-42) | HIGH |
+| IPBES (2024) | 54,000 species baseline | `BII_CONSTANTS.TOTAL_SPECIES` (planetaryBoundaries.ts:125) | VERY HIGH |
+| Yoder et al. (2024) | Joshua Tree cascade (43%) | `KEYSTONE_CASCADE = 2.5` (planetaryBoundaries.ts:133) | MEDIUM-HIGH |
+| Richardson et al. (2023) | 10-100× extinction rate | `EXTINCTION_RATE_MULTIPLIER` (planetaryBoundaries.ts:128) | HIGH |
+| Vicedo-Cabrera et al. (2021) | Infrastructure mismatch | `INFRASTRUCTURE_MULTIPLIER_MAX = 3.0` (extremeWeatherEvents.ts:43) | MEDIUM |
+
+**Implementation Status:** ⚠️ **YELLOW** (1 medium-priority issue)
+1. **Storm/heat mortality coordination:** Potential double-counting with WetBulbTemperaturePhase
+   - Both systems integrate via Bayesian mortality (`addMortalityRisk`)
+   - Concern: Same population could be hit by storm + heat in same month
+   - Fix: Verify Bayesian deduplication logic handles overlapping risks correctly
+   - Effort: 2-4 hours investigation
+
+**Estimated effort to complete:** 2-4 hours
+
+**Monte Carlo Validation Criteria:**
+- BII declines from 70-80% (2020) to 30-50% (high warming scenarios)
+- Keystone species loss causes 40-50% dependent species decline
+- Climate velocity mismatches cause 20-60% non-migratory species mortality
+- Planetary boundary transgression correlates with ecosystem collapse (r > 0.7)
+- Storm mortality scales with infrastructure gap (not just temperature)
+
+---
+
+**Architecture Review Summary (Both Features):**
+
+**Verdict:** ✅ **YELLOW - PROCEED WITH FIXES**
+- No CRITICAL issues found (system stable, safe to merge)
+- No HIGH priority issues (no significant performance/functionality degradation)
+- **4 MEDIUM priority issues** (cooperative ownership) + **1 MEDIUM priority issue** (climate mortality)
+- Total estimated effort: 6-10 hours to address all issues
+
+**Code Quality Observations:**
+- ✅ Excellent defensive coding (proper assertion utilities, fail-loudly philosophy)
+- ✅ Conservative parameter choices (1.2x not 1.5x survival, wide uncertainty bounds)
+- ✅ Research documentation with uncertainty acknowledgment
+- ✅ No circular dependencies, clean state propagation
+- ✅ Performance acceptable: O(n) for n organizations, O(1) for BII calculations
+- ⚠️ Minor type cast issues (`as any` in storm mortality integration)
+
+**Performance Benchmarks:**
+- N=10, 120 months: ~3-4 minutes runtime
+- Log size: 19 MB (442,088 lines)
+- No NaN/Infinity errors, no assertion failures
+- Monte Carlo extrapolation (N=100, 360 months): ~2-3 hours
+
+**Next Steps:**
+1. Fix cooperative bootstrap problem (initialize at least 1 cooperative)
+2. Integrate survival multiplier into bankruptcy detection
+3. Verify mortality deduplication in Bayesian system
+4. Run Monte Carlo validation (N≥10) after fixes
+5. Merge to main once MEDIUM issues addressed
+
+See architecture review for complete analysis: [`reviews/cooperative_storms_architecture_review_20251101.md`](/reviews/cooperative_storms_architecture_review_20251101.md)
+
+---
+
 ## ⚠️ Recent Changes (October 31, 2025)
 
 **🔧 INFRASTRUCTURE: Chatroom & Conversations → Separate Repository**
