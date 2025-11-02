@@ -304,13 +304,137 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
+## 🌀 Climate Mortality Phase 2: Storm Systems + BII Framework
+
+**Status:** ✅ IMPLEMENTED (October 28, 2025)
+**Research Base:** 15,000+ word framework with 40+ peer-reviewed sources (2024-2025)
+**Implementation:** `src/simulation/extremeWeatherEvents.ts`, `src/simulation/planetaryBoundaries.ts` (BII functions)
+
+### Storm Intensity-Frequency Modeling
+
+**Research Backing:**
+- Knutson et al. (2020, 2023): Tropical cyclone projections - BAMS
+- Emanuel (2021): Rapid intensification trends - Journal of Climate
+- Mendelsohn et al. (2012): Economic/mortality impacts
+- NOAA GFDL (2024): Hurricane-warming relationships
+
+**Key Finding:** FEWER storms overall, but HIGHER proportion of Cat 4-5
+
+**Mechanics:**
+- **Intensity increase:** 2-11% by 2100 (warming-dependent)
+- **Frequency change:** -6% to -34% (overall decrease)
+- **Category shift:** More Cat 4-5, fewer Cat 1-2
+- **Rapid intensification:** ~2× increase since 1982 (Atlantic)
+- **Infrastructure mismatch:** PRIMARY mortality driver (up to 3× multiplier)
+
+**Regional Vulnerability:**
+- South Asia: 250M exposed, 25% infrastructure capacity, 1.8× vulnerability
+- Southeast Asia: 200M exposed, 30% infrastructure, 1.5× vulnerability
+- Caribbean: 50M exposed, 40% infrastructure, 1.3× vulnerability
+- Pacific Islands: 10M exposed, 30% infrastructure, 2.0× vulnerability (highest)
+- North America: 60M exposed, 70% infrastructure, 0.8× vulnerability
+- East Asia: 100M exposed, 80% infrastructure, 0.6× vulnerability (best prepared)
+
+**MDF Framework (Magnitude-Duration-Frequency):**
+- Magnitude: Exponential with category (Cat 5 = 16× Cat 1)
+- Duration: Typical 3-10 days, average 5 days
+- Frequency: ~90 storms/year globally (1980-2010 baseline)
+
+**Climate Scaling:**
+- Per 1°C warming: Cat 1-2 frequency -5%, Cat 3 stable, Cat 4-5 +10%
+- Precipitation: +10-15% near-storm rainfall
+- Overall storm count: -5% per degree (fewer total, stronger proportion)
+
+**Mortality Integration:**
+- Uses Bayesian mortality system (addMortalityRisk)
+- Proximate cause: "disasters" (storms, floods)
+- Root cause: "climate" (anthropogenic climate change)
+- Confidence: HIGH (well-established relationship)
+- Scope: REGIONAL (affected coastal populations)
+
+**Phase Execution:**
+- Phase: ExtremeWeatherEventsPhase
+- Order: 15.2 (after WetBulbTemperaturePhase, before UBI)
+- Frequency: Monthly stochastic check
+- Events logged: Cat 4-5 storms or mortality ≥1,000 deaths
+
+### Biosphere Integrity Index (BII) Framework
+
+**Research Backing:**
+- IPBES (2024): 54,000 species baseline
+- Richardson et al. (2024): Current extinction rates 100-1000× background
+- Yoder et al. (2024): Joshua Tree climate tracking failure
+- U.S. National Park Service (2024): Climate velocity impacts
+
+**Key Insight:** Non-migratory species CANNOT track climate velocity → extinction
+
+**Species Groups:**
+1. **Migratory (15%):** Birds, butterflies - CAN track climate
+   - Dispersal: 1,000 km/year
+   - Extinction rate: 5 E/MSY (50× background, lower risk)
+   - Examples: Migratory birds, monarch butterflies
+
+2. **Non-Migratory (80%):** Trees, alpine species - CANNOT track
+   - Dispersal: 0.5 km/year (trees), 0.01 km/year (alpine)
+   - Extinction rate: 10 E/MSY (100× background, full current rate)
+   - Examples: Joshua Tree, alpine wildflowers, island endemics
+
+3. **Keystone Species (5%):** Ecosystem engineers
+   - Dispersal: 10 km/year (mammals)
+   - Extinction rate: 12 E/MSY (120× background, targeted pressure)
+   - Cascade multiplier: 2.5× (affects other species)
+   - Examples: Beavers, elephants, keystone predators
+
+**Climate Velocity Modeling:**
+- Average velocity: 0.76°C/year globally (weighted by region)
+  - Tropics: 0.3°C/year (slower)
+  - Temperate: 0.8°C/year (moderate)
+  - Arctic: 2.0°C/year (fastest warming)
+- Converts to km/year: ~150 km per °C (temperate zones)
+- Tracking failure: Gap between climate velocity and species dispersal capacity
+
+**Joshua Tree Example (Validation):**
+- Climate velocity: 1.5°C/year
+- Dispersal: 0.0004 km/year (0.4 m/year)
+- Result: CANNOT TRACK → extinction trajectory
+- Habitat fragmentation: 1.5× amplifier
+- Status: 49.9% future viable habitat already burned (2018)
+
+**Extinction Rate Mechanics:**
+- Background rate: 0.1 E/MSY (natural)
+- Safe boundary: 10 E/MSY (10× background)
+- Current rate (2025): 10-100 E/MSY (100-1000× background)
+- Boundary value: currentRate / safeRate (10 E/MSY)
+- 2025 baseline: 116 E/MSY weighted average → 11.6× boundary
+
+**Habitat Fragmentation:**
+- Prevents even local movement
+- Amplifies mortality: up to 1.5× multiplier
+- Migratory: 0.3 fragmentation (flyways exist)
+- Non-migratory: 0.6 fragmentation (habitat loss)
+- Keystone: 0.7 fragmentation (large ranges needed)
+
+**Planetary Boundary Integration:**
+- Updates biosphere_integrity boundary dynamically
+- Tracks species count decline
+- Calculates tipping point risk from extinction rate
+- Keystone species cascade effects multiply impact
+
+**Research File:**
+- Main: `research/climate-mortality-biosphere-multiparadigm-framework_20251028.md` (15,000+ words, 40+ sources)
+- Verification: `research/climate_mortality_parameter_derivation_verification_20251030.md`
+- Sections 1-3: `research/climate_mortality_sections123_verification_20251030.md`
+
+---
+
 ## 🔬 Future Enhancements (TIER 3.2+)
 
 ### Planned Additions:
-1. **Land Use & Biodiversity Crisis (TIER 3.2)**
-   - Forest cover tracking
-   - Deforestation → climate feedback
-   - Habitat loss → extinction acceleration
+1. **Land Use & Biodiversity Crisis (TIER 3.2)** - ✅ PARTIALLY IMPLEMENTED
+   - ✅ Forest cover tracking (initializeLandUseSystem)
+   - ✅ Deforestation → climate feedback (carbonSinkLossMultiplier)
+   - ✅ Habitat loss → extinction acceleration (regional biomes)
+   - ❌ Remaining: Regional restoration, reforestation policies
 
 2. **Aerosol Dimming Trade-off (TIER 3.3)**
    - Cleaner air = more warming (lose aerosol cooling)
@@ -374,8 +498,11 @@ interface PlanetaryBoundariesSystem {
 
 ---
 
-**Last Updated:** October 30, 2025 (Biosphere normalization fix)
-**Implementation Status:** ✅ COMPLETE
-**Recent Fixes:** Biosphere boundary normalized to safe threshold (13.7×), polarity corrected in exogenous shocks
-**Next Steps:** TIER 3.2 (Land Use & Biodiversity Crisis)
+**Last Updated:** November 1, 2025 (Climate Mortality Phase 2 documentation)
+**Implementation Status:** ✅ COMPLETE (Phase 2: Storm Systems + BII Framework)
+**Recent Updates:**
+- ✅ Storm intensity-frequency modeling (ExtremeWeatherEventsPhase) - Oct 28, 2025
+- ✅ BII framework with climate velocity tracking (updateBiosphereIntegrityIndex) - Oct 28, 2025
+- ✅ Biosphere boundary normalized to safe threshold (13.7×), polarity corrected - Oct 30, 2025
+**Next Steps:** TIER 3.3+ (Aerosol Dimming, Nitrogen Cycle)
 

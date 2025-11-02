@@ -16,7 +16,7 @@
 # Diplomatic Events
 🕊️ | Diplomatic success
 💬 | Diplomatic failure
-🤝 | AI cooperation formed
+🤝 | AI cooperation formed / Worker cooperative ownership
 🔻 | Cooperation collapsed
 📜 | Treaty signed
 🌐 | International coordination
