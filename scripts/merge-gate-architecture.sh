@@ -72,10 +72,9 @@ MEDIUM_ISSUES: [count]
 LOW_ISSUES: [count]
 "
 
-# Spawn architecture-skeptic agent
-# Use claude CLI with architecture-skeptic context
+# Spawn architecture-skeptic agent (uses Opus per agent config)
 claude --dangerously-skip-permissions \
-  --model sonnet \
+  --model opus \
   --print "$PROMPT" > "$REVIEW_OUTPUT" 2>&1
 
 # Parse verdict from output
