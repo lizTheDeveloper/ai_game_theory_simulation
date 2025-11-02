@@ -47,7 +47,20 @@ export class MortalityStabilizersPhase implements SimulationPhase {
 
     // Apply stabilizers to each region
     for (const region of pop.regionalPopulations) {
-      if (!region.mortalityStabilizers) continue; // Skip if not initialized
+      // M1 FIX: Fail loudly if mortalityStabilizers not initialized after bootstrap
+      // After Month 3, all regions should have stabilizers initialized.
+      // If missing, this indicates a bug in initialization that should be fixed at the source.
+      if (!region.mortalityStabilizers) {
+        if (state.currentMonth > 3) {
+          throw new Error(
+            `❌ Region ${region.name || 'unknown'} missing mortalityStabilizers at Month ${state.currentMonth}. ` +
+            `This should be initialized in src/simulation/initialization.ts or regional population creation. ` +
+            `Silent skipping would hide this bug.`
+          );
+        }
+        // During bootstrap (first 3 months), skip gracefully
+        continue;
+      }
 
       const stabilizers = region.mortalityStabilizers;
 
@@ -63,6 +76,18 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       // 4. Update emergency response (depends on workforce + resources)
       this.updateEmergencyResponse(state, region, stabilizers);
 
+      // M2 FIX: CASCADE MUTATION ORDER (CRITICAL)
+      // applyCascadeFailures() MUST be called AFTER individual updates (steps 1-4)
+      // but BEFORE calculateCombinedReduction() (step 6).
+      //
+      // Cascades modify stabilizer effectiveness values in-place:
+      // - If aid fails → emergency response degrades by 50%
+      // - If aid fails → migration degrades by 30%
+      // - If emergency fails → migration degrades by 50%
+      //
+      // Combined reduction must read POST-CASCADE values, not pre-cascade.
+      // Changing this order will cause mortality calculations to be incorrect.
+      //
       // 5. Apply cascade failures (interdependence between mechanisms)
       this.applyCascadeFailures(stabilizers);
 
@@ -439,6 +464,15 @@ export class MortalityStabilizersPhase implements SimulationPhase {
       const degradation = cascades.cascadeMultipliers.emergencyToMigration;
       stabilizers.migration.successfulRelocation *= (1 - degradation);
     }
+
+    // M2 FIX: Recalculate functioning levels after cascades
+    // The functioning levels were calculated from pre-cascade values (lines 434-438).
+    // After cascades modify the actual effectiveness values, we need to update
+    // the functioning levels to reflect the post-cascade state.
+    cascades.aidFunctioning = stabilizers.aid.mortalityReduction / 0.295;
+    cascades.adaptationFunctioning = stabilizers.adaptation.totalReduction / 0.8;
+    cascades.migrationFunctioning = stabilizers.migration.successfulRelocation;
+    cascades.emergencyResponseFunctioning = stabilizers.emergencyResponse.effectiveness / 0.4;
   }
 
   /**
