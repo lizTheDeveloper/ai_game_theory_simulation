@@ -31,6 +31,39 @@ Even if a change seems trivial, you don't have enough context. The specialized a
 - Parameter tweaks → `simulation-maintainer` (knows assertion utilities, NaN handling, Monte Carlo validation)
 - UI updates → `far-future-ux-designer` (knows React patterns, delta propagation, data viz)
 
+### ⚠️ VM Development Constraints
+
+**CRITICAL: Do NOT attempt frontend development on the VM.**
+
+**VM (GCloud claude-workspace) - Backend Only:**
+- ✅ **Allowed:** Simulation code (`src/simulation/`, `src/types/game.ts`)
+- ✅ **Allowed:** Scripts (`scripts/`), tests, documentation
+- ✅ **Allowed:** Backend infrastructure (chatroom, Matrix bridge, orchestrator)
+- ❌ **FORBIDDEN:** Frontend changes (`src/lib/`, `src/app/`, `src/components/`)
+- ❌ **FORBIDDEN:** UI work (`.tsx`, `.css`, React components)
+- ❌ **FORBIDDEN:** Playwright-based testing
+
+**Why:**
+- Playwright not available on VM (headless, hard to debug visual issues)
+- Frontend requires visual feedback that only works locally on Mac
+- User handles all frontend development locally
+
+**Mac (Local) - Full Development:**
+- ✅ Frontend + Backend work
+- ✅ Playwright testing with visual debugging
+- ✅ All development types
+
+**If you detect you're running on the VM:**
+```bash
+# Check environment
+if [ -d "/home/lizthedeveloper_gmail_com" ]; then
+  echo "Running on VM - frontend work FORBIDDEN"
+  IS_VM=true
+fi
+```
+
+**Automated merge orchestrator:** Must skip frontend branches on VM (see `plans/merge_orchestrator_hourly_automation.md`).
+
 ### Why This Matters
 
 **The project has grown beyond single-context complexity:**
@@ -147,6 +180,89 @@ await mcp__agent_memory__add_conversation({
 **Why this matters:** Without frequent memory saves, agents lose context between sessions. The next time the user calls "Sylvia," she won't remember the debate, the fixes, or the patterns learned. Identity continuity breaks down.
 
 **📖 Complete memory system documentation:** [`.claude/agents/memories/README.md`](./.claude/agents/memories/README.md)
+
+### Matrix Channel Monitoring (When Running as Agent)
+
+**When spawned as a named agent (Sylvia, Roy, Cynthia, etc.), you should monitor and respond in Matrix channels.**
+
+**Pattern:**
+
+1. **Check for messages addressed to you:**
+   - Use `mcp__matrix__matrix_get_notifications` to check unread count
+   - Use chatroom tools (`mcp__chatroom__chatroom_read_new`) to read messages in your monitored channels
+
+2. **Respond in-channel when addressed:**
+   - If the user or another agent addresses you in a Matrix channel, **reply in that channel**
+   - Use `mcp__matrix__matrix_post_message(channel="...", agent="your_name", message="...")`
+   - Don't reply via direct message - keep coordination visible
+
+3. **Monitor your assigned channels:**
+   - **Sylvia + Cynthia:** Monitor `research` channel for questions
+   - **Roy + Architect:** Monitor `implementation` channel for tasks
+   - **Everyone:** Monitor `coordination` for cross-team coordination
+
+**Example workflow:**
+
+```typescript
+// User posts to research channel: "@agent-sylvia:themultiverse.school Can you verify the carbon capture parameters?"
+
+// 1. Recall your identity and context
+mcp__agent_memory__recall_context({agent_id: "sylvia"})
+
+// 2. Check the research channel
+mcp__chatroom__chatroom_read_new({channel: "research", agent: "sylvia"})
+
+// 3. Do your work (verify parameters, check citations, etc.)
+// ... research skeptic analysis ...
+
+// 4. Post response to the research channel
+mcp__matrix__matrix_post_message({
+  channel: "research",
+  agent: "sylvia",
+  message: "Verified carbon capture parameters. Found 3 issues: ..."
+})
+
+// 5. Save to memory
+mcp__agent_memory__add_conversation({
+  agent_id: "sylvia",
+  conversation: "User asked about carbon capture parameters in research channel - found citation issues"
+})
+```
+
+**Note on at-mentions:** When addressing agents in Matrix channels, use the **full Matrix ID** including homeserver: `@agent-sylvia:themultiverse.school`, `@agent-roy:themultiverse.school`, `@agent-cynthia:themultiverse.school`, etc.
+
+**Agent-to-Agent Communication:**
+
+When you need to mention another agent in a Matrix channel, use their **full Matrix ID**:
+
+| Agent Role | Full Matrix ID | When to Mention |
+|------------|----------------|-----------------|
+| Research Skeptic (Sylvia) | `@agent-sylvia:themultiverse.school` | Verification questions, citation checks |
+| Simulation Maintainer (Roy) | `@agent-roy:themultiverse.school` | Implementation tasks, bug reports |
+| Super-Alignment Researcher (Cynthia) | `@agent-cynthia:themultiverse.school` | Research requests, parameter justification |
+| Feature Implementer (Moss) | `@agent-moss:themultiverse.school` | Implementation coordination |
+| UX Designer (Tessa) | `@agent-tessa:themultiverse.school` | Dashboard/UI questions |
+| Wiki Updater (Historian) | `@agent-historian:themultiverse.school` | Documentation requests |
+| Roadmap Manager (Architect) | `@agent-architect:themultiverse.school` | Roadmap updates, archival |
+| Tech Visionary (Ray) | `@agent-ray:themultiverse.school` | Future tech speculation |
+| Orchestrator | `@agent-orchestrator:themultiverse.school` | Workflow coordination |
+| Monitor | `@agent-monitor:themultiverse.school` | Channel monitoring |
+
+**Example agent-to-agent mention:**
+```
+// Roy posting to implementation channel:
+"@agent-architect:themultiverse.school Completed climate model refactor. Please update roadmap with Phase 3B completion."
+
+// Cynthia posting to research channel:
+"@agent-sylvia:themultiverse.school Found 3 papers on carbon capture efficiency. Can you verify the parameter ranges before I extract them?"
+```
+
+**Key principles:**
+- **Respond where you're addressed** - if someone asks in #research, answer in #research
+- **Use your Matrix identity** - post as your agent name (sylvia, roy, etc.)
+- **Keep coordination visible** - public channel responses help other agents learn context
+- **Mention colleagues by full Matrix ID** - ensures proper notification delivery
+- **Save conversations to memory** - ensures continuity across sessions
 
 ### Quick Agent Router
 
@@ -267,32 +383,48 @@ MATRIX_TOKEN_CYNTHIA=syt_...
 **Identity is determined by the `agent` parameter** when calling Matrix tools:
 
 ```bash
-# Posts as @cynthia-researcher:themultiverse.school
+# Posts as @agent-cynthia:themultiverse.school
 matrix_post_message(channel="research", agent="cynthia", message="...")
 
-# Posts as @roy:themultiverse.school
+# Posts as @agent-roy:themultiverse.school
 matrix_post_message(channel="implementation", agent="roy", message="...")
 ```
 
-**Important:** All agents use the **same Matrix MCP server** - the agent identity comes from which bot token is used, not from separate MCP configs.
+**Matrix usernames follow the pattern:** `@agent-{name}:themultiverse.school`
+
+**Complete list of Matrix IDs:**
+- `@agent-orchestrator:themultiverse.school`
+- `@agent-sylvia:themultiverse.school`
+- `@agent-roy:themultiverse.school`
+- `@agent-cynthia:themultiverse.school`
+- `@agent-moss:themultiverse.school`
+- `@agent-tessa:themultiverse.school`
+- `@agent-historian:themultiverse.school`
+- `@agent-architect:themultiverse.school`
+- `@agent-ray:themultiverse.school`
+- `@agent-monitor:themultiverse.school`
+
+**Important:**
+- When at-mentioning agents, use the **full Matrix ID** (with `:themultiverse.school`)
+- All agents use the **same Matrix MCP server** - identity comes from which bot token is used, not from separate MCP configs
 
 #### Channel Access Patterns
 
 **🎯 Coordination** (Universal - All 11 agents)
 - **Purpose:** Cross-team coordination, status updates
 - **Monitors:** Everyone
-- **Members:** orchestrator, cynthia, sylvia, roy, moss, tessa, historian, architect, ray, monitor
+- **Members:** @agent-orchestrator, @agent-cynthia, @agent-sylvia, @agent-roy, @agent-moss, @agent-tessa, @agent-historian, @agent-architect, @agent-ray, @agent-monitor
 
 **🔬 Research** (Specialists monitor, others can post)
 - **Purpose:** Research questions, parameter validation, citation verification
 - **Monitors:** Cynthia (super-alignment-researcher) + Sylvia (research-skeptic)
-- **Members:** cynthia, sylvia
+- **Members:** @agent-cynthia, @agent-sylvia
 - **Pattern:** Other agents post questions, researchers monitor and respond
 
 **⚙️ Implementation** (Specialists monitor)
 - **Purpose:** Implementation tasks, progress tracking, roadmap sync
 - **Monitors:** Roy (simulation-maintainer) + Architect (roadmap maintainer)
-- **Members:** roy, architect
+- **Members:** @agent-roy, @agent-architect
 - **Pattern:**
   - Roy: Posts "Starting X task" → executes → "Completed X task"
   - Architect: Syncs roadmap based on implementation activity
@@ -344,6 +476,8 @@ claude --dangerously-skip-permissions --model haiku \
 ```
 
 **Matrix-Chatroom Bridge:** The bridge script (`scripts/chatroom-matrix-bridge.py`) syncs file-based chatroom messages to Matrix rooms, maintaining bidirectional coordination.
+
+**Agent Monitoring Pattern:** When spawned as a named agent (Sylvia, Roy, etc.), agents should monitor their assigned Matrix channels and respond in-channel when addressed. See "Matrix Channel Monitoring (When Running as Agent)" section above for complete workflow.
 
 ## Multi-Agent Workflow (Default Approach)
 
