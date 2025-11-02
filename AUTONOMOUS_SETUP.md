@@ -298,9 +298,30 @@ TimeoutStartSec=1h  # Increase to 1 hour
 - Daily cost: ~$10.79-73.32
 - Monthly cost: ~$324-2,200
 
+**Daily Codebase Review (separate from autonomous worker):**
+- Schedule: Daily at 6:00 UTC
+- 3 Opus calls per day:
+  1. Architecture-skeptic (systemic issues)
+  2. Research-skeptic/Sylvia (quality & research integrity)
+  3. Architect (updates roadmap with findings)
+- Token usage: ~20k-50k input, ~5k-10k output per call
+- Cost per call: ~$0.41-1.13
+- Daily cost: ~$1.23-3.38
+- Monthly cost: ~$37-101
+
+**Combined System Costs:**
+- Autonomous worker: ~$324-2,200/month
+- Daily codebase review: ~$37-101/month
+- Merge orchestrator (hourly): ~$5-25/month
+- **Total: ~$366-2,326/month**
+
 **Cost Optimization History:**
-- **Oct 2025 optimization:** Reduced from every 30 minutes (48 runs/day) to hourly business hours (13 runs/day)
-- **Savings:** 72.9% cost reduction (~$871-5,922/month saved)
+- **Nov 2025 optimization:**
+  - Autonomous worker: Every 30 min (48 runs/day) → Hourly business hours (13 runs/day)
+  - Savings: 72.9% cost reduction (~$871-5,922/month saved)
+  - Agent reviews: Per-branch Opus reviews → Daily batched review
+  - Savings: 99.3% reduction (~$8,139/month saved)
+  - **Combined savings: ~$9,010-13,861/month** (96.4-82% total reduction)
 
 **To further reduce costs:**
 1. Narrow business hours window (e.g., `OnCalendar=*-*-* 09..17:00:00` for 9am-5pm)
