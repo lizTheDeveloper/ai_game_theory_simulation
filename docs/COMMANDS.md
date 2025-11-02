@@ -263,6 +263,54 @@ git worktree remove ../superalignment-feature-x
 
 See CLAUDE.md "Git Safety Protocol" section for detailed commit/PR guidelines.
 
+### Automated Merge Orchestrator
+
+**Purpose:** Hourly automated branch merging with quality gates (reduces manual merge overhead).
+
+```bash
+# Run orchestrator (discovers branches, runs quality gates, auto-merges)
+./scripts/merge-orchestrator.sh
+
+# Test mode (no actual merges)
+./scripts/merge-orchestrator.sh --dry-run
+
+# Limit branches processed per run
+./scripts/merge-orchestrator.sh --max-branches 5
+
+# Combined flags
+./scripts/merge-orchestrator.sh --dry-run --max-branches 3
+```
+
+**Environment Variables:**
+- `IS_VM="true"` - Skip frontend branches on VM (set automatically on VM environment)
+- `MERGE_ORCHESTRATOR_DRY_RUN="true"` - Test mode (alternative to --dry-run flag)
+- `MERGE_ORCHESTRATOR_MAX_BRANCHES=10` - Max branches per run (default: 10)
+
+**Workflow:**
+1. Discovers all feature branches (excludes main, HEAD, existing merge branches)
+2. [VM only] Detects frontend changes → skips frontend branches
+3. Creates timestamped merge branch: `merge/{branch}_{timestamp}`
+4. Attempts merge from feature branch
+5. If conflicts → aborts, reports, skips branch
+6. If clean → runs quality gates:
+   - Gate 1: TypeScript compilation (`npx tsc --noEmit`)
+   - Gate 2: Test suite (`npm test` or `npm run test:backend` on VM)
+   - Gate 3: Architecture-skeptic review (agent integration pending)
+   - Gate 4: Sylvia final review (agent integration pending)
+7. If all gates pass → merges to main, deletes feature branch
+8. If any gate fails → preserves merge branch with `_FAILED` suffix
+
+**Safety Features:**
+- Lock file prevents concurrent runs (`/tmp/merge-orchestrator.lock`)
+- Protected branches (never deletes main)
+- Failed merge branches preserved for inspection
+- Dry-run mode for testing
+- Comprehensive logging with color output
+
+**Logs:** `logs/merge_orchestrator_YYYYMMDD_HHMMSS.log`
+
+**Next Steps:** Set up hourly cron job (Mac) and systemd timer (VM)
+
 ## Logging Best Practices
 
 **IMPORTANT: Always save logs to `/logs/` directory, NEVER `/tmp/`**
