@@ -1,0 +1,23 @@
+# Minimal Python dependencies for autonomous worker and hooks
+# (434MB instead of 5.5GB PyTorch/CUDA from requirements.txt)
+#
+# This provides:
+# - Citation checking (spaCy for .claude/hooks/citation-check.sh)
+# - Optional RAG servers (fastmcp, anthropic)
+# - Basic web scraping utilities
+#
+# NOT included (Mac-only or too large for VM):
+# - MLX embedding server (Apple Silicon only - install on Mac separately)
+# - PyTorch/CUDA (5GB+ - use requirements.txt if needed for ML training)
+# - sentence-transformers (depends on PyTorch - use requirements.txt if needed)
+
+# Citation checking (for .claude/hooks/citation-check.sh)
+spacy>=3.0.0
+
+# Basic utilities used by citation checker
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+
+# Optional: FastMCP for optional RAG servers (much smaller than full requirements.txt)
+fastmcp>=0.1.0
+anthropic>=0.18.0
